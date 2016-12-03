@@ -1,3 +1,4 @@
+lxml
 apscheduler
 requests
 cachetools
