@@ -107,4 +107,4 @@ def _load_commands():
 
 if __name__ == '__main__':
     _load_commands()
-    app.run(host='127.0.0.1', port=8888)
+    app.run(host=os.environ.get('HOST'), port=os.environ.get('PORT'))

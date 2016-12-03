@@ -147,7 +147,7 @@ def _subscribe_interactively(args_text, ctx_msg, source):
         if s.data['need_confirm']:
             if a.strip() != '1':
                 # Cancel
-                core.echo('已放弃更改～')
+                core.echo('已放弃更改～', c)
                 return True
         core.echo('请发送想要获取推送的时间（格式如 20:05）：', c)
         s.state += 1

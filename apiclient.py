@@ -1,3 +1,5 @@
+import os
+
 import requests
 
 
@@ -16,4 +18,4 @@ class ApiClient:
             return None
 
 
-client = ApiClient('http://127.0.0.1:5000/openqq')
+client = ApiClient(os.environ.get('QQ_API_URL'))
