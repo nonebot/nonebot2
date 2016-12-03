@@ -20,7 +20,7 @@ _scheduler = BackgroundScheduler(
         'default': SQLAlchemyJobStore(url=_db_url)
     },
     executors={
-        'default': ProcessPoolExecutor(max_workers=2)
+        'default': ProcessPoolExecutor(max_workers=5)
     },
     timezone=pytz.timezone('Asia/Shanghai')
 )
@@ -152,16 +152,44 @@ def add_job(args_text, ctx_msg, internal=False):
 @cr.restrict(full_command_only=True, group_admin_only=True)
 def remove_job(args_text, ctx_msg, internal=False):
     job_id_without_suffix = args_text.strip()
+    if not job_id_without_suffix:
+        _send_text('请指定计划任务的 ID', ctx_msg, internal)
+        return False
     job_id = job_id_without_suffix + '_' + get_target(ctx_msg)
     try:
         _scheduler.remove_job(job_id, 'default')
         _send_text('成功删除计划任务 ' + job_id_without_suffix, ctx_msg, internal)
+        return True
     except JobLookupError:
         _send_text('没有找到计划任务 ' + job_id_without_suffix, ctx_msg, internal)
+        return False
+
+
+@cr.register('get_job', 'get-job', 'get')
+@cr.restrict(full_command_only=True)
+def get_job(args_text, ctx_msg, internal=False):
+    job_id_without_suffix = args_text.strip()
+    if not job_id_without_suffix:
+        _send_text('请指定计划任务的 ID', ctx_msg, internal)
+        return None
+    job_id = job_id_without_suffix + '_' + get_target(ctx_msg)
+    job = _scheduler.get_job(job_id, 'default')
+    if internal:
+        return job
+    reply = '找到计划任务如下：\n'
+    reply += 'ID：' + job_id_without_suffix + '\n'
+    reply += '下次触发时间：\n%s\n' % job.next_run_time.strftime('%Y-%m-%d %H:%M')
+    reply += '命令：\n'
+    command_list = job.kwargs['command_list']
+    if len(command_list) > 1:
+        reply += reduce(lambda x, y: x[0] + ' ' + x[1] + '\n' + y[0] + ' ' + y[1], command_list)
+    else:
+        reply += command_list[0][0] + ' ' + command_list[0][1]
+    _send_text(reply, ctx_msg, internal)
 
 
 @cr.register('list_jobs', 'list-jobs', 'list')
-@cr.restrict(full_command_only=True, group_admin_only=True)
+@cr.restrict(full_command_only=True)
 def list_jobs(_, ctx_msg, internal=False):
     target = get_target(ctx_msg)
     job_id_suffix = '_' + target
@@ -173,6 +201,7 @@ def list_jobs(_, ctx_msg, internal=False):
         job_id = job.id[:-len(job_id_suffix)]
         command_list = job.kwargs['command_list']
         reply = 'ID：' + job_id + '\n'
+        reply += '下次触发时间：\n%s\n' % job.next_run_time.strftime('%Y-%m-%d %H:%M')
         reply += '命令：\n'
         if len(command_list) > 1:
             reply += reduce(lambda x, y: x[0] + ' ' + x[1] + '\n' + y[0] + ' ' + y[1], command_list)
@@ -213,7 +242,7 @@ def _send_add_job_help_msg(ctx_msg, internal):
     )
     core.echo(
         '--multi 为可选项，表示读取多条命令\n'
-        'job_id 为必填项，允许使用符合正则 [_\-a-zA-Z0-9] 的字符，作为计划任务的唯一标识\n'
+        'job_id 为必填项，允许使用符合正则 [_\-a-zA-Z0-9] 的字符，作为计划任务的唯一标识，如果指定重复的 ID，则会覆盖原先已有的\n'
         'command 为必填项，从 job_id 之后第一个非空白字符开始，如果加了 --multi 选项，则每行算一条命令，否则一直到消息结束算作一整条命令（注意这里的命令不要加 / 前缀）\n'
         '\n'
         '例 1：\n'

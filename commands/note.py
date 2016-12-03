@@ -5,7 +5,7 @@ import pytz
 
 from command import CommandRegistry
 from commands import core
-from interactive import get_session, has_session, remove_session
+from interactive import *
 from little_shit import get_default_db_path, get_source, get_target
 
 __registry__ = cr = CommandRegistry()
@@ -32,9 +32,9 @@ _cmd_remove = 'note.remove'
 @cr.register('记笔记', '添加笔记')
 @cr.register('take', 'add', hidden=True)
 @cr.restrict(group_admin_only=True)
-def take(args_text, ctx_msg, force=False):
+def take(args_text, ctx_msg, allow_interactive=True):
     source = get_source(ctx_msg)
-    if not force and (not args_text or has_session(source, _cmd_take)):
+    if allow_interactive and (not args_text or has_session(source, _cmd_take)):
         # Be interactive
         return _take_interactively(args_text, ctx_msg, source)
 
@@ -74,9 +74,9 @@ def list_all(_, ctx_msg):
 @cr.register('删除笔记')
 @cr.register('remove', 'delete', hidden=True)
 @cr.restrict(group_admin_only=True)
-def remove(args_text, ctx_msg, force=False):
+def remove(args_text, ctx_msg, allow_interactive=True):
     source = get_source(ctx_msg)
-    if not force and (not args_text or has_session(source, _cmd_remove)):
+    if allow_interactive and (not args_text or has_session(source, _cmd_remove)):
         # Be interactive
         return _remove_interactively(args_text, ctx_msg, source)
 
@@ -123,7 +123,7 @@ def _take_interactively(args_text, ctx_msg, source):
         s.state += 1
 
     def save_content(s, a, c):
-        take(a, c, force=True)
+        take(a, c, allow_interactive=False)
         return True
 
     if _cmd_take not in _state_machines:
@@ -144,7 +144,7 @@ def _remove_interactively(args_text, ctx_msg, source):
         s.state += 1
 
     def remove_note(s, a, c):
-        remove(a, c, force=True)
+        remove(a, c, allow_interactive=False)
         return True
 
     if _cmd_remove not in _state_machines:
