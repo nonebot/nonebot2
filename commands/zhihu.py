@@ -21,7 +21,6 @@ def zhihu_daily(args_text, ctx_msg):
             sub_url = '/latest'
         else:
             m = re.match('(\d{4})-(\d{2})-(\d{2})', arg)
-            # and arg >= '20130519':
             if m and ''.join(m.groups()) >= '20130519':
                 thedate = date(year=int(m.group(1)), month=int(m.group(2)), day=int(m.group(3)))
                 sub_url = '/before/' + (thedate + timedelta(days=1)).strftime('%Y%m%d')
