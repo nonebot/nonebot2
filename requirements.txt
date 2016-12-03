@@ -4,3 +4,4 @@ requests
 cachetools
 pytz
 flask
+sqlalchemy
