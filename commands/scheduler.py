@@ -9,6 +9,7 @@ from apscheduler.executors.pool import ProcessPoolExecutor
 from apscheduler.jobstores.base import JobLookupError
 
 from command import CommandRegistry, hub as cmdhub
+from command import CommandNotExistsError, CommandScopeError, CommandPermissionError
 from commands import core
 from little_shit import get_db_dir, get_command_args_start_flags, get_target
 
@@ -44,10 +45,19 @@ class _IncompleteArgsError(Exception):
     pass
 
 
-def _call_commands(command_list, ctx_msg):
-    print('Doing jobs: ', command_list)
+def _call_commands(job_id, command_list, ctx_msg):
     for command in command_list:
-        cmdhub.call(command[0], command[1], ctx_msg)
+        try:
+            cmdhub.call(command[0], command[1], ctx_msg)
+        except CommandNotExistsError:
+            core.echo('没有找到计划任务 %s 中的命令 %s' % (job_id, command[0]), ctx_msg)
+        except CommandPermissionError:
+            core.echo('你没有权限执行计划任务 %s 中的命令 %s' % (job_id, command[0]), ctx_msg)
+        except CommandScopeError as se:
+            core.echo(
+                '计划任务 %s 中的命令 %s 不支持 %s' % (job_id, command[0], se.msg_type),
+                ctx_msg
+            )
 
 
 @cr.register('add_job', 'add-job', 'add')
@@ -90,7 +100,6 @@ def add_job(args_text, ctx_msg, internal=False):
             except ValueError:
                 # Split failed, which means format is not correct
                 raise _InvalidTriggerArgsError
-        trigger_args['day_of_week'] -= 1  # Because APScheduler's day of week is from 0 to 6
 
         # Parse '--multi' option
         multi = False
@@ -124,10 +133,14 @@ def add_job(args_text, ctx_msg, internal=False):
                 tmp.append('')
             command_list.append(tuple(tmp))
 
-        job_args = {'command_list': command_list, 'ctx_msg': ctx_msg}
+        job_args = {
+            'job_id': job_id_without_suffix,
+            'command_list': command_list,
+            'ctx_msg': ctx_msg
+        }
         job = _scheduler.add_job(_call_commands, kwargs=job_args, trigger='cron', **trigger_args,
                                  id=job_id, replace_existing=True, misfire_grace_time=30)
-        _send_text('成功添加计划任务，ID：' + job_id_without_suffix, ctx_msg, internal)
+        _send_text('成功添加计划任务 ' + job_id_without_suffix, ctx_msg, internal)
         return job
     except _InvalidTriggerArgsError:
         _send_add_job_trigger_args_invalid_msg(ctx_msg, internal)
@@ -142,9 +155,9 @@ def remove_job(args_text, ctx_msg, internal=False):
     job_id = job_id_without_suffix + '_' + get_target(ctx_msg)
     try:
         _scheduler.remove_job(job_id, 'default')
-        _send_text('成功删除计划任务，ID：' + job_id_without_suffix, ctx_msg, internal)
+        _send_text('成功删除计划任务 ' + job_id_without_suffix, ctx_msg, internal)
     except JobLookupError:
-        _send_text('没有找到这个 ID 的计划任务', ctx_msg, internal)
+        _send_text('没有找到计划任务 ' + job_id_without_suffix, ctx_msg, internal)
 
 
 @cr.register('list_jobs', 'list-jobs', 'list')
@@ -189,10 +202,10 @@ def _send_add_job_help_msg(ctx_msg, internal):
         '  -H 时，0 到 23\n'
         '  -d 日，1 到 31\n'
         '  -m 月，1 到 12\n'
-        '  -w 星期，1 到 7，其中 7 表示星期天\n'
+        '  -w 星期，0 到 6，其中 0 表示星期一，6 表示星期天\n'
         '  以上选项的值的表示法和下面的 cron 模式相同\n'
         'cron：\n'
-        '  此模式和 Linux 的 crontab 文件的格式、顺序相同，一共 5 个用空格隔开的参数\n'
+        '  此模式和 Linux 的 crontab 文件的格式、顺序相同（除了星期是从 0 到 6），一共 5 个用空格隔开的参数\n'
         '\n'
         '剩下三个参数见下一条',
         ctx_msg,
