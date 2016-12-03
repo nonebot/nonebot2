@@ -10,7 +10,10 @@ class ApiClient:
         return newclient
 
     def __call__(self, *args, **kwargs):
-        return requests.get(self.url, params=kwargs)
+        try:
+            return requests.get(self.url, params=kwargs)
+        except requests.exceptions.ConnectionError:
+            return None
 
 
 client = ApiClient('http://127.0.0.1:5000/openqq')

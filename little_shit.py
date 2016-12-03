@@ -3,7 +3,7 @@ import os
 from config import config
 
 
-class SkipException(BaseException):
+class SkipException(Exception):
     pass
 
 
@@ -25,7 +25,7 @@ def get_db_dir():
 
 
 def get_default_db_path():
-    return os.path.join(get_db_dir(), 'default.db')
+    return os.path.join(get_db_dir(), 'default.sqlite')
 
 
 def get_tmp_dir():

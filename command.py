@@ -7,15 +7,15 @@ from little_shit import SkipException, get_command_name_separators
 _command_name_seps = get_command_name_separators()
 
 
-class CommandNotExistsError(BaseException):
+class CommandNotExistsError(Exception):
     pass
 
 
-class CommandPermissionError(BaseException):
+class CommandPermissionError(Exception):
     pass
 
 
-class CommandScopeError(BaseException):
+class CommandScopeError(Exception):
     def __init__(self, msg_type):
         self.msg_type = msg_type
 

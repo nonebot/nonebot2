@@ -91,7 +91,7 @@ def _index():
     return '', 204
 
 
-def load_commands():
+def _load_commands():
     command_mod_files = filter(
         lambda filename: filename.endswith('.py') and not filename.startswith('_'),
         os.listdir(get_commands_dir())
@@ -106,5 +106,5 @@ def load_commands():
 
 
 if __name__ == '__main__':
-    load_commands()
+    _load_commands()
     app.run(host='127.0.0.1', port=8888)
