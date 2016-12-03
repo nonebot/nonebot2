@@ -90,6 +90,7 @@ def add_job(args_text, ctx_msg, internal=False):
             except ValueError:
                 # Split failed, which means format is not correct
                 raise _InvalidTriggerArgsError
+        trigger_args['day_of_week'] -= 1  # Because APScheduler's day of week is from 0 to 6
 
         # Parse '--multi' option
         multi = False
