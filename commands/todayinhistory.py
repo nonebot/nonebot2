@@ -9,10 +9,10 @@ __registry__ = cr = CommandRegistry()
 
 @cr.register('today_in_history', '历史上的今天')
 def today_in_history(_, ctx_msg):
-    core.echo('正在查询，请稍等……', ctx_msg)
     resp = requests.get('http://tool.lu/todayonhistory/')
     ok = False
     if resp.status_code == 200:
+        core.echo('历史上的今天：', ctx_msg)
         html = etree.HTML(resp.text)
         li_elems = html.xpath('//ul[@id="tohlis"]/li')
         # reply = reduce(lambda x, y: x.text + '\n' + y.text, li_elems)
