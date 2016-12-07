@@ -1,5 +1,6 @@
 import functools
 import re
+import os
 
 from apiclient import client as api
 from little_shit import SkipException, get_command_name_separators
@@ -155,7 +156,7 @@ class CommandRegistry:
 
         try:
             if func.superuser_only:
-                check(str(ctx_msg.get('sender_qq')) == '1002647525')
+                check(str(ctx_msg.get('sender_qq')) == os.environ.get('SUPER_USER_QQ'))
             if ctx_msg.get('type') == 'group_message':
                 allowed_roles = {'owner', 'admin', 'member'}
                 if func.group_admin_only:
@@ -178,7 +179,7 @@ class CommandRegistry:
                     # This is strange, not likely happens
                     raise SkipException
         except SkipException:
-            if not str(ctx_msg.get('sender_qq')) == '1002647525':
+            if not str(ctx_msg.get('sender_qq')) == os.environ.get('SUPER_USER_QQ'):
                 # Not allowed
                 return False
 
