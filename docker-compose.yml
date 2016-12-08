@@ -1,0 +1,34 @@
+version: '2'
+services:
+  mojo-smartqq-api:
+    image: sjdy521/mojo-webqq
+    container_name: mojo-smartqq-api
+    networks:
+      - my-net
+    expose:
+      - '5000'
+    volumes:
+      - /tmp:/tmp
+    environment:
+      - PORT=5000
+      - POST_API=http://qq-bot:8888
+    restart: always
+  qq-bot:
+    image: daocloud.io/richardchien/qq-bot
+    container_name: qq-bot
+    networks:
+      - my-net
+    expose:
+      - '8888'
+    volumes:
+      - ./data/qq-bot:/data
+    environment:
+      - TURING123_API_KEY=YOUR_API_KEY
+      - HOST=0.0.0.0
+      - PORT=8888
+      - QQ_API_URL=http://mojo-smartqq-api:5000/openqq
+      - SUPER_USER_QQ=12345678
+    restart: always
+networks:
+  my-net:
+    driver: bridge
