@@ -3,6 +3,7 @@ MAINTAINER Richard Chien <richardchienthebest@gmail.com>
 
 COPY *.py ./
 COPY commands commands
+COPY filters filters
 COPY requirements.txt requirements.txt
 
 RUN pip install --upgrade pip
