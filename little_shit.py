@@ -16,6 +16,10 @@ def get_root_dir():
     return os.path.split(os.path.realpath(__file__))[0]
 
 
+def get_filters_dir():
+    return _mkdir_if_not_exists_and_return_path(os.path.join(get_root_dir(), 'filters'))
+
+
 def get_commands_dir():
     return _mkdir_if_not_exists_and_return_path(os.path.join(get_root_dir(), 'commands'))
 

@@ -10,6 +10,7 @@ from config import config
 from command import hub as cmdhub
 from command import CommandNotExistsError, CommandScopeError, CommandPermissionError
 from apiclient import client as api
+from filter import apply_filters
 
 app = Flask(__name__)
 
@@ -29,11 +30,13 @@ def _send_text(text, ctx_msg):
 @app.route('/', methods=['POST'])
 def _index():
     ctx_msg = request.json
-    source = get_source(ctx_msg)
     try:
         if ctx_msg.get('msg_class') != 'recv':
             raise SkipException
+        if not apply_filters(ctx_msg):
+            raise SkipException
         content = ctx_msg.get('content', '')
+        source = get_source(ctx_msg)
         if content.startswith('@'):
             my_group_nick = ctx_msg.get('receiver')
             if not my_group_nick:
@@ -91,6 +94,16 @@ def _index():
     return '', 204
 
 
+def _load_filters():
+    filter_mod_files = filter(
+        lambda filename: filename.endswith('.py') and not filename.startswith('_'),
+        os.listdir(get_filters_dir())
+    )
+    command_mods = [os.path.splitext(file)[0] for file in filter_mod_files]
+    for mod_name in command_mods:
+        importlib.import_module('filters.' + mod_name)
+
+
 def _load_commands():
     command_mod_files = filter(
         lambda filename: filename.endswith('.py') and not filename.startswith('_'),
@@ -106,5 +119,6 @@ def _load_commands():
 
 
 if __name__ == '__main__':
+    _load_filters()
     _load_commands()
-    app.run(host=os.environ.get('HOST'), port=os.environ.get('PORT'))
+    app.run(host=os.environ.get('HOST', '0.0.0.0'), port=os.environ.get('PORT', '8080'))
