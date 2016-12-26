@@ -22,4 +22,4 @@ self.$config = {
     ]
   },
   plugins: []
-}
+};
