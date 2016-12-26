@@ -7,7 +7,7 @@ from little_shit import get_target
 from commands import core
 
 _freq_count = TTLDict(maxsize=10000, ttl=2 * 60 * 60)
-_max_message_count_per_hour = 150
+_max_message_count_per_hour = 120
 
 
 def _limiter(ctx_msg):
