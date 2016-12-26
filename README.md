@@ -25,7 +25,7 @@ python app.py
 
 ## 使用
 
-![](https://raw.githubusercontent.com/CCZU-DEV/xiaokai-bot/master/docs/assets/Screenshot.png)
+![](https://ww3.sinaimg.cn/large/006tNbRwgw1fb4a75bp2dj30ku1nsaey.jpg)
 
 ## 局限性
 
