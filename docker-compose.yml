@@ -14,7 +14,7 @@ services:
       - POST_API=http://qq-bot:8888
     restart: always
   qq-bot:
-    image: daocloud.io/richardchien/qq-bot
+    image: daocloud.io/richardchien/xiaokai-bot
     container_name: qq-bot
     networks:
       - my-net
