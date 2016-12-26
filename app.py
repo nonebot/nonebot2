@@ -3,7 +3,7 @@ import importlib
 
 from flask import Flask, request
 
-from little_shit import *
+from little_shit import SkipException, get_filters_dir
 from filter import apply_filters
 
 app = Flask(__name__)
