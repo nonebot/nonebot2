@@ -3,7 +3,6 @@ self.$config = {
   home: 'https://raw.githubusercontent.com/CCZU-DEV/xiaokai-bot/master/README.md',
   repo: 'CCZU-DEV/xiaokai-bot',
   url: 'https://cczu-dev.github.io/xiaokai-bot',
-  'edit-link': 'https://github.com/CCZU-DEV/xiaokai-bot/blob/master/docs',
   nav: {
     default: [
       {
