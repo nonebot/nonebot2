@@ -4,18 +4,69 @@ import requests
 
 
 class ApiClient:
-    def __init__(self, base_url):
-        self.url = base_url
+    qq_api_url = os.environ.get('QQ_API_URL')
+    wx_api_url = os.environ.get('WX_API_URL')
 
-    def __getattr__(self, item):
-        newclient = ApiClient(self.url + '/' + item)
-        return newclient
-
-    def __call__(self, *args, **kwargs):
+    def send_group_message(self, content: str, ctx_msg: dict):
         try:
-            return requests.get(self.url, params=kwargs)
+            if ctx_msg.get('via') == 'qq' and self.qq_api_url:
+                params = {'content': content}
+                if ctx_msg.get('group_uid'):
+                    params['uid'] = ctx_msg.get('group_uid')
+                elif ctx_msg.get('group_id'):
+                    params['id'] = ctx_msg.get('group_id')
+                return requests.get(self.qq_api_url + '/send_group_message', params=params)
+            elif ctx_msg.get('via') == 'wx' and self.wx_api_url:
+                params = {'content': content}
+                if ctx_msg.get('group_id'):
+                    params['id'] = ctx_msg.get('group_id')
+                return requests.get(self.wx_api_url + '/send_group_message', params=params)
         except requests.exceptions.ConnectionError:
-            return None
+            pass
+        return None
+
+    def send_discuss_message(self, content: str, ctx_msg: dict):
+        try:
+            if ctx_msg.get('via') == 'qq' and self.qq_api_url:
+                params = {'content': content}
+                if ctx_msg.get('discuss_id'):
+                    params['id'] = ctx_msg.get('discuss_id')
+                return requests.get(self.qq_api_url + '/send_discuss_message', params=params)
+        except requests.exceptions.ConnectionError:
+            pass
+        return None
+
+    def send_friend_message(self, content: str, ctx_msg: dict):
+        try:
+            if ctx_msg.get('via') == 'qq' and self.qq_api_url:
+                params = {'content': content}
+                if ctx_msg.get('sender_uid'):
+                    params['uid'] = ctx_msg.get('sender_uid')
+                elif ctx_msg.get('sender_id'):
+                    params['id'] = ctx_msg.get('sender_id')
+                return requests.get(self.qq_api_url + '/send_friend_message', params=params)
+            elif ctx_msg.get('via') == 'wx' and self.wx_api_url:
+                params = {'content': content}
+                if ctx_msg.get('sender_account'):
+                    params['account'] = ctx_msg.get('sender_account')
+                elif ctx_msg.get('sender_id'):
+                    params['id'] = ctx_msg.get('sender_id')
+                return requests.get(self.wx_api_url + '/send_friend_message', params=params)
+        except requests.exceptions.ConnectionError:
+            pass
+        return None
+
+    def get_group_info(self, via):
+        url = None
+        if via == 'qq':
+            url = self.qq_api_url
+        elif via == 'wx':
+            url = self.wx_api_url
+        if url:
+            try:
+                return requests.get(url + '/get_group_info')
+            except requests.exceptions.ConnectionError:
+                return None
 
 
-client = ApiClient(os.environ.get('QQ_API_URL'))
+client = ApiClient()

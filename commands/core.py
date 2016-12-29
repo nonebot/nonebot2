@@ -11,9 +11,11 @@ __registry__ = cr = CommandRegistry()
 def echo(args_text, ctx_msg):
     msg_type = ctx_msg.get('type')
     if msg_type == 'group_message':
-        api.send_group_message(gnumber=ctx_msg.get('gnumber'), content=args_text)
-    elif msg_type == 'message':
-        api.send_message(qq=ctx_msg.get('sender_qq'), content=args_text)
+        api.send_group_message(content=args_text, ctx_msg=ctx_msg)
+    elif msg_type == 'discuss_message':
+        api.send_discuss_message(content=args_text, ctx_msg=ctx_msg)
+    elif msg_type == 'friend_message':
+        api.send_friend_message(content=args_text, ctx_msg=ctx_msg)
 
 
 @cr.register('chat', '聊天')
@@ -23,8 +25,10 @@ def chat(args_text, ctx_msg):
         'key': os.environ.get('TURING123_API_KEY'),
         'info': args_text
     }
-    if 'sender_qq' in ctx_msg:
-        data['userid'] = ctx_msg.get('sender_qq')
+    if ctx_msg.get('sender_uid'):
+        data['userid'] = ctx_msg.get('sender_uid')
+    elif ctx_msg.get('sender_id'):
+        data['userid'] = ctx_msg.get('sender_id')[-32:]
     resp = requests.post(url, data=data)
     if resp.status_code == 200:
         json = resp.json()

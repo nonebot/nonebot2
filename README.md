@@ -1,6 +1,6 @@
 # XiaoKai Bot 小开机器人
 
-基于 [sjdy521/Mojo-Webqq](https://github.com/sjdy521/Mojo-Webqq) 实现的自动处理 QQ 消息的机器人，支持自定义插件。
+基于 [sjdy521/Mojo-Webqq](https://github.com/sjdy521/Mojo-Webqq) 和 [sjdy521/Mojo-Weixin](https://github.com/sjdy521/Mojo-Weixin) 实现的自动处理 QQ 和微信消息的机器人，支持自定义插件。
 
 ## 快速开始
 
@@ -14,7 +14,7 @@
 
 #### 手动运行
 
-首先需要运行 sjdy521/Mojo-Webqq，具体见它的 GitHub 仓库的使用教程。然后运行：
+首先需要运行 sjdy521/Mojo-Webqq 或 sjdy521/Mojo-Webqq，具体见它们的 GitHub 仓库的使用教程。然后运行：
 
 ```sh
 pip install -r requirements.txt

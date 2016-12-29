@@ -8,7 +8,6 @@ from filter import add_filter
 from command import CommandNotExistsError, CommandScopeError, CommandPermissionError
 from little_shit import *
 from commands import core
-from apiclient import client as api
 from command import hub as cmdhub
 
 _fallback_command = config.get('fallback_command')
@@ -40,14 +39,11 @@ def _dispatch_command(ctx_msg):
                 raise SkipException
             at_me = '@' + my_group_nick
             if not content.startswith(at_me):
-                my_nick = api.get_user_info().json().get('nick', my_group_nick)
-                at_me = '@' + my_nick
-                if not content.startswith(at_me):
-                    raise SkipException
+                raise SkipException
             content = content[len(at_me):]
         else:
             # Not starts with '@'
-            if ctx_msg.get('type') == 'group_message':
+            if ctx_msg.get('type') == 'group_message' or ctx_msg.get('type') == 'discuss_message':
                 # And it's a group message, so we don't reply
                 raise SkipException
         content = content.lstrip()

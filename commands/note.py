@@ -1,4 +1,5 @@
 import sqlite3
+from functools import wraps
 from datetime import datetime
 
 import pytz
@@ -25,6 +26,19 @@ def _open_db_conn():
     return conn
 
 
+def _check_target(func):
+    @wraps(func)
+    def wrapper(args_text, ctx_msg, *args, **kwargs):
+        target = get_target(ctx_msg)
+        if not target:
+            core.echo('似乎出错了，请稍后再试吧～', ctx_msg)
+            return
+        else:
+            return func(args_text, ctx_msg, *args, **kwargs)
+
+    return wrapper
+
+
 _cmd_take = 'note.take'
 _cmd_remove = 'note.remove'
 
@@ -32,6 +46,7 @@ _cmd_remove = 'note.remove'
 @cr.register('记笔记', '添加笔记')
 @cr.register('take', 'add', hidden=True)
 @cr.restrict(group_admin_only=True)
+@_check_target
 def take(args_text, ctx_msg, allow_interactive=True):
     source = get_source(ctx_msg)
     if allow_interactive and (not args_text or has_session(source, _cmd_take)):
@@ -52,6 +67,7 @@ def take(args_text, ctx_msg, allow_interactive=True):
 
 @cr.register('列出所有笔记')
 @cr.register('list', hidden=True)
+@_check_target
 def list_all(_, ctx_msg):
     conn = _open_db_conn()
     target = get_target(ctx_msg)
@@ -74,6 +90,7 @@ def list_all(_, ctx_msg):
 @cr.register('删除笔记')
 @cr.register('remove', 'delete', hidden=True)
 @cr.restrict(group_admin_only=True)
+@_check_target
 def remove(args_text, ctx_msg, allow_interactive=True):
     source = get_source(ctx_msg)
     if allow_interactive and (not args_text or has_session(source, _cmd_remove)):
@@ -101,6 +118,7 @@ def remove(args_text, ctx_msg, allow_interactive=True):
 @cr.register('清空笔记', '清空所有笔记', '删除所有笔记')
 @cr.register('clear', hidden=True)
 @cr.restrict(group_admin_only=True)
+@_check_target
 def clear(_, ctx_msg):
     conn = _open_db_conn()
     target = get_target(ctx_msg)

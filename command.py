@@ -65,7 +65,7 @@ class CommandRegistry:
     # noinspection PyMethodMayBeStatic
     def restrict(self, full_command_only=False, superuser_only=False,
                  group_owner_only=False, group_admin_only=False,
-                 allow_private=True, allow_group=True):
+                 allow_private=True, allow_discuss=True, allow_group=True):
         """
         Give a command some restriction.
         This decorator must be put below all register() decorators.
@@ -81,6 +81,7 @@ class CommandRegistry:
         :param group_owner_only: group owner only when processing group message
         :param group_admin_only: group admin only when processing group message
         :param allow_private: allow private message
+        :param allow_discuss: allow discuss message
         :param allow_group: allow group message
         """
 
@@ -94,6 +95,7 @@ class CommandRegistry:
             func.group_admin_only = group_admin_only
             # Scope
             func.allow_private = allow_private
+            func.allow_discuss = allow_discuss
             func.allow_group = allow_group
             return func
 
@@ -114,9 +116,14 @@ class CommandRegistry:
         if command_name in self.command_map:
             func = self.command_map[command_name]
             if not self._check_scope(func, ctx_msg):
-                raise CommandScopeError(
-                    '群组消息' if ctx_msg.get('type') == 'group_message' else '私聊消息'
-                )
+                msg_type = ctx_msg.get('type')
+                if msg_type == 'group_message':
+                    msg_type_str = '群组消息'
+                elif msg_type == 'discuss_message':
+                    msg_type_str = '讨论组消息'
+                else:
+                    msg_type_str = '私聊消息'
+                raise CommandScopeError(msg_type_str)
             if not self._check_permission(func, ctx_msg):
                 raise CommandPermissionError
             return func(args_text, ctx_msg, **options)
@@ -133,8 +140,10 @@ class CommandRegistry:
         allowed_msg_type = set()
         if func.allow_group:
             allowed_msg_type.add('group_message')
+        if func.allow_discuss:
+            allowed_msg_type.add('discuss_message')
         if func.allow_private:
-            allowed_msg_type.add('message')
+            allowed_msg_type.add('friend_message')
 
         if ctx_msg.get('type') in allowed_msg_type:
             return True
@@ -156,34 +165,35 @@ class CommandRegistry:
 
         try:
             if func.superuser_only:
-                check(str(ctx_msg.get('sender_qq')) == os.environ.get('SUPER_USER_QQ'))
-            if ctx_msg.get('type') == 'group_message':
+                raise SkipException
+            if ctx_msg.get('type') == 'group_message' and ctx_msg.get('via') == 'qq':
                 allowed_roles = {'owner', 'admin', 'member'}
                 if func.group_admin_only:
                     allowed_roles = allowed_roles.intersection({'owner', 'admin'})
                 if func.group_owner_only:
                     allowed_roles = allowed_roles.intersection({'owner'})
                 groups = list(filter(
-                    lambda g: str(g.get('gnumber')) == str(ctx_msg.get('gnumber')),
-                    api.get_group_info().json()
+                    lambda g: g.get('group_uid') == ctx_msg.get('group_uid'),
+                    api.get_group_info(via='qq').json()
                 ))
                 if len(groups) <= 0 or 'member' not in groups[0]:
                     # This is strange, not likely happens
                     raise SkipException
 
                 members = list(filter(
-                    lambda m: str(m.get('qq')) == str(ctx_msg.get('sender_qq')),
+                    lambda m: str(m.get('uid')) == str(ctx_msg.get('sender_uid')),
                     groups[0].get('member')
                 ))
                 if len(members) <= 0 or members[0].get('role') not in allowed_roles:
                     # This is strange, not likely happens
                     raise SkipException
         except SkipException:
-            if not str(ctx_msg.get('sender_qq')) == os.environ.get('SUPER_USER_QQ'):
-                # Not allowed
+            if ctx_msg.get('via') == 'qq' and ctx_msg.get('sender_uid') != os.environ.get('QQ_SUPER_USER'):
+                return False
+            elif ctx_msg.get('via') == 'wx' and ctx_msg.get('sender_account') != os.environ.get('WX_SUPER_USER'):
                 return False
 
-        # Still alive, so let it go
+        # Still alive, let go
         return True
 
     def has(self, command_name):

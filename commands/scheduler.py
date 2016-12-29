@@ -1,6 +1,6 @@
 import os
 import re
-from functools import reduce
+from functools import reduce, wraps
 
 import pytz
 from apscheduler.schedulers.background import BackgroundScheduler
@@ -60,8 +60,22 @@ def _call_commands(job_id, command_list, ctx_msg):
             )
 
 
+def _check_target(func):
+    @wraps(func)
+    def wrapper(args_text, ctx_msg, internal=False, *args, **kwargs):
+        target = get_target(ctx_msg)
+        if not target:
+            _send_fail_to_get_target_msg(ctx_msg, internal)
+            return None
+        else:
+            return func(args_text, ctx_msg, internal, *args, **kwargs)
+
+    return wrapper
+
+
 @cr.register('add_job', 'add-job', 'add')
 @cr.restrict(full_command_only=True, group_admin_only=True)
+@_check_target
 def add_job(args_text, ctx_msg, internal=False):
     if args_text.strip() in ('', 'help', '-h', '--help') and not internal:
         _send_add_job_help_msg(ctx_msg, internal)
@@ -150,6 +164,7 @@ def add_job(args_text, ctx_msg, internal=False):
 
 @cr.register('remove_job', 'remove-job', 'remove')
 @cr.restrict(full_command_only=True, group_admin_only=True)
+@_check_target
 def remove_job(args_text, ctx_msg, internal=False):
     job_id_without_suffix = args_text.strip()
     if not job_id_without_suffix:
@@ -167,6 +182,7 @@ def remove_job(args_text, ctx_msg, internal=False):
 
 @cr.register('get_job', 'get-job', 'get')
 @cr.restrict(full_command_only=True)
+@_check_target
 def get_job(args_text, ctx_msg, internal=False):
     job_id_without_suffix = args_text.strip()
     if not job_id_without_suffix:
@@ -190,6 +206,7 @@ def get_job(args_text, ctx_msg, internal=False):
 
 @cr.register('list_jobs', 'list-jobs', 'list')
 @cr.restrict(full_command_only=True)
+@_check_target
 def list_jobs(_, ctx_msg, internal=False):
     target = get_target(ctx_msg)
     job_id_suffix = '_' + target
@@ -217,6 +234,15 @@ def list_jobs(_, ctx_msg, internal=False):
 def _send_text(text, ctx_msg, internal):
     if not internal:
         core.echo(text, ctx_msg)
+
+
+def _send_fail_to_get_target_msg(ctx_msg, internal):
+    _send_text(
+        '无法获取 target，可能因为不支持当前消息类型（如，不支持微信群组消息）'
+        '或由于延迟还没能加载到用户的固定 ID（如，微信号）',
+        ctx_msg,
+        internal
+    )
 
 
 def _send_add_job_help_msg(ctx_msg, internal):
