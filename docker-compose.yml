@@ -11,7 +11,7 @@ services:
       - /tmp:/tmp
     environment:
       - PORT=5000
-      - POST_API=http://qq-bot:8888/qq/
+      - POST_API=http://xiaokai-bot:8888/qq/
     restart: always
   mojo-weixin-api:
     image: daocloud.io/richardchien/mojo-weixin
@@ -24,11 +24,11 @@ services:
       - /tmp:/tmp
     environment:
       - PORT=5001
-      - POST_API=http://qq-bot:8888/wx/
+      - POST_API=http://xiaokai-bot:8888/wx/
     restart: always
-  qq-bot:
+  xiaokai-bot:
     image: daocloud.io/richardchien/xiaokai-bot
-    container_name: qq-bot
+    container_name: xiaokai-bot
     networks:
       - my-net
     expose:
