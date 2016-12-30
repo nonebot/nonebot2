@@ -3,6 +3,7 @@ import re
 from functools import reduce, wraps
 
 import pytz
+import requests
 from apscheduler.schedulers.background import BackgroundScheduler
 from apscheduler.jobstores.sqlalchemy import SQLAlchemyJobStore
 from apscheduler.executors.pool import ProcessPoolExecutor
@@ -71,6 +72,24 @@ def _check_target(func):
             return func(args_text, ctx_msg, internal, *args, **kwargs)
 
     return wrapper
+
+
+@cr.register('cron_check', 'cron-check', 'cron_test', 'cron-test')
+def cron_check(args_text, ctx_msg):
+    cron = args_text.strip()
+    if not cron:
+        core.echo('请指定要检查的 Cron 时间表达式', ctx_msg)
+        return
+
+    resp = requests.post('http://tool.lu/crontab/ajax.html', data={'expression': cron})
+    if resp.status_code == 200:
+        data = resp.json()
+        if data.get('status') and 'dates' in data:
+            reply = '接下来 7 次的执行时间：\n' + '\n'.join(data['dates'])
+            core.echo(reply, ctx_msg)
+            return
+
+    core.echo('检查失败，可能因为表达式格式错误或服务器连接不上', ctx_msg)
 
 
 @cr.register('add_job', 'add-job', 'add')

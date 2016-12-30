@@ -7,6 +7,16 @@ class ApiClient:
     qq_api_url = os.environ.get('QQ_API_URL')
     wx_api_url = os.environ.get('WX_API_URL')
 
+    def send_message(self, content: str, ctx_msg: dict):
+        msg_type = ctx_msg.get('type')
+        if msg_type == 'group_message':
+            return self.send_group_message(content=content, ctx_msg=ctx_msg)
+        elif msg_type == 'discuss_message':
+            return self.send_discuss_message(content=content, ctx_msg=ctx_msg)
+        elif msg_type == 'friend_message':
+            return self.send_friend_message(content=content, ctx_msg=ctx_msg)
+        return None
+
     def send_group_message(self, content: str, ctx_msg: dict):
         try:
             if ctx_msg.get('via') == 'qq' and self.qq_api_url:

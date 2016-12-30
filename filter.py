@@ -10,5 +10,5 @@ def apply_filters(ctx_msg):
     return True
 
 
-def add_filter(func, priority):
+def add_filter(func, priority=0):
     _filters.append((priority, func))

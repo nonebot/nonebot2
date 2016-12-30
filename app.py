@@ -30,7 +30,6 @@ def _main(ctx_msg: dict):
             raise SkipException
         if not apply_filters(ctx_msg):
             raise SkipException
-        print(ctx_msg)
     except SkipException:
         # Skip this message
         pass

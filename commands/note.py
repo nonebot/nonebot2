@@ -65,7 +65,7 @@ def take(args_text, ctx_msg, allow_interactive=True):
     core.echo('好的，记下了～', ctx_msg)
 
 
-@cr.register('列出所有笔记')
+@cr.register('列出所有笔记', '查看所有笔记', '所有笔记')
 @cr.register('list', hidden=True)
 @_check_target
 def list_all(_, ctx_msg):

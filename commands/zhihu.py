@@ -12,7 +12,7 @@ from little_shit import SkipException, get_source
 __registry__ = cr = CommandRegistry()
 
 
-@cr.register('zhihu-daily', 'zhihu', '知乎日报')
+@cr.register('zhihu_daily', 'zhihu-daily', 'zhihu', '知乎日报')
 def zhihu_daily(args_text, ctx_msg):
     arg = args_text.strip()
     reply = None

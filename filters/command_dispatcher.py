@@ -74,6 +74,8 @@ def _dispatch_command(ctx_msg):
             # Starting a new command, so remove any previous command session
             interactive.remove_session(source)
 
+        command[0] = command[0].lower()
+        ctx_msg['command'] = command[0]
         cmdhub.call(command[0], command[1], ctx_msg)
     except SkipException:
         # Skip this message
