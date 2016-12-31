@@ -98,6 +98,7 @@ def cron_check(args_text, ctx_msg):
 def add_job(args_text, ctx_msg, internal=False):
     if args_text.strip() in ('', 'help', '-h', '--help') and not internal:
         _send_add_job_help_msg(ctx_msg, internal)
+        return
 
     args_text = args_text.lstrip()
     try:
