@@ -31,22 +31,8 @@ def _load_commands():
 
 def _dispatch_command(ctx_msg):
     try:
-        content = ctx_msg.get('content', '')
+        content = ctx_msg.get('content', '').lstrip()
         source = get_source(ctx_msg)
-        if content.startswith('@'):
-            my_group_nick = ctx_msg.get('receiver')
-            if not my_group_nick:
-                raise SkipException
-            at_me = '@' + my_group_nick
-            if not content.startswith(at_me):
-                raise SkipException
-            content = content[len(at_me):]
-        else:
-            # Not starts with '@'
-            if ctx_msg.get('type') == 'group_message' or ctx_msg.get('type') == 'discuss_message':
-                # And it's a group message, so we don't reply
-                raise SkipException
-        content = content.lstrip()
         start_flag = None
         for flag in _command_start_flags:
             # Match the command start flag
