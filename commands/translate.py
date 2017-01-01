@@ -97,6 +97,6 @@ def translate_to(args_text, ctx_msg):
         data = resp.json()
         print(data)
         if 'trans_result' in data:
-            core.echo('翻译结果：\n' + '\n'.join([x['dst'] for x in data['trans_result']]), ctx_msg)
+            core.echo('翻译结果（百度翻译）：\n' + '\n'.join([x['dst'] for x in data['trans_result']]), ctx_msg)
             return
     core.echo('翻译失败，可能因为后台接口的频率限制或服务器连接不上', ctx_msg)

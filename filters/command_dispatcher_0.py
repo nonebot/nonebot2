@@ -30,30 +30,33 @@ def _load_commands():
 
 
 def _dispatch_command(ctx_msg):
+    # noinspection PyBroadException
     try:
-        content = ctx_msg.get('content', '').lstrip()
+        text = ctx_msg.get('text', '').lstrip()
+        if not text:
+            raise SkipException
         source = get_source(ctx_msg)
         start_flag = None
         for flag in _command_start_flags:
             # Match the command start flag
-            if content.startswith(flag):
+            if text.startswith(flag):
                 start_flag = flag
                 break
-        if not start_flag or len(content) <= len(start_flag):
+        if not start_flag or len(text) <= len(start_flag):
             # No command, check if a session exists
             if interactive.has_session(source):
-                command = [interactive.get_session(source).cmd, content]
+                command = [interactive.get_session(source).cmd, text]
             else:
                 # Use fallback
                 if _fallback_command:
-                    command = [_fallback_command, content]
+                    command = [_fallback_command, text]
                 else:
                     # No fallback
                     raise SkipException
         else:
             # Split command and arguments
             command = re.split('|'.join(_command_args_start_flags),
-                               content[len(start_flag):], 1)
+                               text[len(start_flag):], 1)
             if len(command) == 1:
                 # Add an empty argument
                 command.append('')

@@ -1,3 +1,7 @@
+"""
+This filter just log message to stdout.
+"""
+
 from filter import add_filter
 
 
