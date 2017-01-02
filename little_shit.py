@@ -1,4 +1,6 @@
 import os
+import random
+from datetime import datetime
 
 from config import config
 
@@ -41,20 +43,21 @@ def get_source(ctx_msg):
     Source is used to distinguish the interactive sessions.
     Note: This value may change after restarting the bot.
 
-    :return: an unique value representing a source, or None if the 'via' field is not recognized
+    :return: an unique value representing a source, or a random value if something strange happened
     """
     if ctx_msg.get('via') == 'qq':
-        if ctx_msg.get('type') == 'group_message':
+        if ctx_msg.get('type') == 'group_message' and ctx_msg.get('group_uid') and ctx_msg.get('sender_uid'):
             return 'g' + ctx_msg.get('group_uid') + 'p' + ctx_msg.get('sender_uid')
-        elif ctx_msg.get('type') == 'discuss_message':
+        elif ctx_msg.get('type') == 'discuss_message' and ctx_msg.get('discuss_id') and ctx_msg.get('sender_uid'):
             return 'd' + ctx_msg.get('discuss_id') + 'p' + ctx_msg.get('sender_uid')
-        else:
-            return 'p' + str(ctx_msg.get('sender_uid'))
+        elif ctx_msg.get('type') == 'friend_message' and ctx_msg.get('sender_uid'):
+            return 'p' + ctx_msg.get('sender_uid')
     elif ctx_msg.get('via') == 'wx':
-        if ctx_msg.get('type') == 'group_message':
+        if ctx_msg.get('type') == 'group_message' and ctx_msg.get('group_id') and ctx_msg.get('sender_id'):
             return 'g' + ctx_msg.get('group_id') + 'p' + ctx_msg.get('sender_id')
-        else:
+        elif ctx_msg.get('type') == 'friend_message' and ctx_msg.get('sender_id'):
             return 'p' + ctx_msg.get('sender_id')
+    return str(int(datetime.now().timestamp())) + str(random.randint(100, 999))
 
 
 def get_target(ctx_msg):
@@ -65,16 +68,16 @@ def get_target(ctx_msg):
     :return: an unique value representing a target, or None if there is no persistent unique value
     """
     if ctx_msg.get('via') == 'qq':
-        if ctx_msg.get('type') == 'group_message':
-            return 'g' + str(ctx_msg.get('group_uid'))
+        if ctx_msg.get('type') == 'group_message' and ctx_msg.get('group_uid'):
+            return 'g' + ctx_msg.get('group_uid')
         elif ctx_msg.get('type') == 'discuss_message':
             # TODO: 看看讨论组 ID 重新启动会不会变
             pass
-        elif ctx_msg.get('type') == 'friend_message':
-            return 'p' + str(ctx_msg.get('sender_uid'))
+        elif ctx_msg.get('type') == 'friend_message' and ctx_msg.get('sender_uid'):
+            return 'p' + ctx_msg.get('sender_uid')
     elif ctx_msg.get('via') == 'wx':
         if ctx_msg.get('type') == 'friend_message' and ctx_msg.get('sender_account'):
-            return 'p' + str(ctx_msg.get('sender_account'))
+            return 'p' + ctx_msg.get('sender_account')
     return None
 
 
