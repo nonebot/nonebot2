@@ -2,8 +2,9 @@ FROM python:3.5.1
 MAINTAINER Richard Chien <richardchienthebest@gmail.com>
 
 COPY *.py ./
-COPY commands commands
 COPY filters filters
+COPY commands commands
+COPY nl_processors nl_processors
 COPY requirements.txt requirements.txt
 
 RUN pip install --upgrade pip
