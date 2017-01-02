@@ -10,7 +10,7 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 RUN apt-get update \
-    && apt-get install -y ffmpeg \
+    && apt-get install -y libav-tools \
     && rm -rf /var/lib/apt/lists/*
 
 CMD python app.py
