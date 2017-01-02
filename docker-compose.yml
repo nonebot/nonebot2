@@ -44,6 +44,11 @@ services:
       - QQ_SUPER_USER=12345678
       - WX_API_URL=http://mojo-weixin-api:5001/openwx
       - WX_SUPER_USER=abcdedfh
+      - BAIDU_FANYI_APP_ID=YOUR_APP_ID
+      - BAIDU_FANYI_API_KEY=YOUR_API_KEY
+      - BAIDU_SPEECH_API_KEY=YOUR_API_KEY
+      - BAIDU_SPEECH_SECRET_KEY=YOUR_SECRET_KEY
+      - BING_SPEECH_API_KEY=YOUR_API_KEY
     restart: always
 networks:
   my-net:
