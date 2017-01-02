@@ -47,7 +47,27 @@ _lang_alias_map = {
     '汉语': 'zh',
     '英文': 'en',
     '日文': 'jp',
-    '韩文': 'kor'
+    '韩文': 'kor',
+    '法文': 'fra',
+    '西班牙文': 'spa',
+    '阿拉伯文': 'ara',
+    '俄文': 'ru',
+    '葡萄牙文': 'pt',
+    '德文': 'de',
+    '意大利文': 'it',
+    '希腊文': 'el',
+    '荷兰文': 'nl',
+    '波兰文': 'pl',
+    '保加利亚文': 'bul',
+    '爱沙尼亚文': 'est',
+    '丹麦文': 'dan',
+    '芬兰文': 'fin',
+    '捷克文': 'cs',
+    '罗马尼亚文': 'rom',
+    '斯洛文尼亚文': 'slo',
+    '瑞典文': 'swe',
+    '匈牙利文': 'hu',
+    '越南文': 'vie'
 }
 
 
@@ -67,7 +87,7 @@ def translate(args_text, ctx_msg):
         return translate_to('简体中文 ' + args_text, ctx_msg)
 
 
-@cr.register('translate_to', 'translate-to', '翻译到', '翻译成')
+@cr.register('translate_to', 'translate-to', '翻译到', '翻译成', '翻译为')
 def translate_to(args_text, ctx_msg):
     args = args_text.strip().split(' ', 1)
     if len(args) < 2 or (args[0] not in _lang_map and args[0] not in _lang_alias_map):

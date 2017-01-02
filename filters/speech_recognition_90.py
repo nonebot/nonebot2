@@ -80,6 +80,7 @@ def _filter(ctx_msg):
             if text:
                 reply = '识别结果（百度语音识别）：\n%s\n\n下面将把识别到的内容作为文字消息处理……' % text
                 ctx_msg['text'] = text
+                ctx_msg['from_voice'] = True
             else:
                 reply = '抱歉哦，没有识别出你说的是什么'
             core.echo(reply, ctx_msg)
