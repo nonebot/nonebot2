@@ -2,9 +2,10 @@
 This filter intercepts messages that contains content not allowed and move text content to 'text' field.
 """
 
-from filter import add_filter
+from filter import as_filter
 
 
+@as_filter(priority=100)
 def _filter(ctx_msg):
     if ctx_msg.get('via') == 'wx':
         msg_format = ctx_msg.get('format')
@@ -17,6 +18,3 @@ def _filter(ctx_msg):
     elif ctx_msg.get('via') == 'qq':
         ctx_msg['text'] = ctx_msg.get('content')
     return True
-
-
-add_filter(_filter, 100)

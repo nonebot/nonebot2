@@ -10,7 +10,7 @@ import requests
 from pydub import AudioSegment
 import speech_recognition as sr
 
-from filter import add_filter
+from filter import as_filter
 from commands import core
 
 
@@ -55,6 +55,7 @@ def _recognize_bing(wav_path, api_key, language='zh-CN'):
         return None
 
 
+@as_filter(priority=90)
 def _filter(ctx_msg):
     if ctx_msg.get('via') == 'wx' and ctx_msg.get('format') == 'media' and ctx_msg.get('media_type') == 'voice':
         m = re.match('\[语音\]\(([/_A-Za-z0-9]+\.mp3)\)', ctx_msg.get('content'))
@@ -83,6 +84,3 @@ def _filter(ctx_msg):
                 reply = '抱歉哦，没有识别出你说的是什么'
             core.echo(reply, ctx_msg)
             os.remove(wav_path)
-
-
-add_filter(_filter, 90)

@@ -2,9 +2,10 @@
 This filter intercepts messages not intended to the bot and removes the beginning "@xxx".
 """
 
-from filter import add_filter
+from filter import as_filter
 
 
+@as_filter(priority=50)
 def _split_at_xiaokai(ctx_msg):
     if ctx_msg.get('type') == 'group_message' or ctx_msg.get('type') == 'discuss_message':
         text = ctx_msg.get('text', '')
@@ -21,6 +22,3 @@ def _split_at_xiaokai(ctx_msg):
             return False
         ctx_msg['text'] = text.lstrip()
     return True
-
-
-add_filter(_split_at_xiaokai, priority=50)

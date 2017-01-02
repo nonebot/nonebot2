@@ -4,7 +4,7 @@ import importlib
 
 import interactive
 from config import config
-from filter import add_filter
+from filter import as_filter
 from command import CommandNotExistsError, CommandScopeError, CommandPermissionError
 from little_shit import *
 from commands import core
@@ -29,8 +29,8 @@ def _load_commands():
             print('Failed to load command module "' + mod_name + '.py".', file=sys.stderr)
 
 
+@as_filter(priority=0)
 def _dispatch_command(ctx_msg):
-    # noinspection PyBroadException
     try:
         text = ctx_msg.get('text', '').lstrip()
         if not text:
@@ -78,4 +78,3 @@ def _dispatch_command(ctx_msg):
 
 
 _load_commands()
-add_filter(_dispatch_command, 0)

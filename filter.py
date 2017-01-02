@@ -10,5 +10,13 @@ def apply_filters(ctx_msg):
     return True
 
 
-def add_filter(func, priority=0):
+def add_filter(func, priority=10):
     _filters.append((priority, func))
+
+
+def as_filter(priority=10):
+    def decorator(func):
+        add_filter(func, priority)
+        return func
+
+    return decorator
