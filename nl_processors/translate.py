@@ -3,14 +3,14 @@ import re
 from nl_processor import as_processor
 
 _query_lang_matcher = [
-    re.compile('[把将]?[ ,.，。]?(.*?)[ ,.，。]?(?:这[个]?(?:词[组]?|句(?:子|话)?|短语))翻译[成为到](\w+?[文语])(?![ :：,，.。])'),
-    re.compile('(\w+?)[ ,.，。]?(?:这[个]?(?:词[组]?|句(?:子|话)?|短语))?[的用](\w+?[文语])')
+    re.compile('[把将]?[\s,.，。]?(.*?)[\s,.，。]?(?:这[个]?(?:词[组]?|句(?:子|话)?|短语))?翻译[成为到](\w+?[文语])(?![\s:：,，.。])'),
+    re.compile('(\w+?)[\s,.，。]?(?:这[个]?(?:词[组]?|句(?:子|话)?|短语))?[的用](\w+?[文语])')
 ]
 
 _lang_query_matcher = [
-    re.compile('[把将]?(?:(?:这[个]?|[下后][面]?)(?:词[组]?|句(?:子|话)?|短语))翻译[成为到](\w+?[文语])[ :：,，.。](.*)'),
+    re.compile('.*[把将]?(?:(?:这[个]?|[下后][面]?)(?:词[组]?|句(?:子|话)?|短语))?翻译[成为到]\s*(\w+?[文语])[\s:：,，](.*)'),
     re.compile('[用]?(\w+[文语])\w+?(?:说|讲|表达|表示)(.*)(?:这[个]?(?:词[组]?|句(?:子|话)?|短语))'),
-    re.compile('[用]?(\w+[文语])\w+?(?:说|讲|表达|表示)(.*)')
+    re.compile('[用]?(\w+[文语])\w+?(?:说|讲|表达|表示)(.*)'),
 ]
 
 
@@ -27,5 +27,6 @@ def _processor(sentence, segmentation):
                 lang, query = m.group(2), m.group(1)
             break
     if lang and query:
+        print('翻译: 目标语言:', lang, ', 待翻译文本:', query)
         return 90, 'translate.translate_to', ' '.join((lang.strip(), query.strip(' ,，'))), None
     return None

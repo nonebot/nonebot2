@@ -26,7 +26,9 @@ def parse_potential_commands(sentence):
         for regex in processor[0]:
             for word, flag in segmentation:
                 if re.match(regex, word):
-                    potential_commands.append(processor[1](sentence, segmentation))
+                    result = processor[1](sentence, segmentation)
+                    if result:
+                        potential_commands.append(result)
                     processed = True
                     # A word matched, skip the rest of words
                     break
@@ -34,5 +36,7 @@ def parse_potential_commands(sentence):
                 # Current processor has processed, skip the rest of keywords
                 break
     for func in _processors_without_keyword:
-        potential_commands.append(func(sentence, segmentation))
+        result = func(sentence, segmentation)
+        if result:
+            potential_commands.append(result)
     return potential_commands
