@@ -35,6 +35,7 @@ services:
       - '8888'
     volumes:
       - ./data/qq-bot:/data
+      - /tmp:/tmp
     environment:
       - TURING123_API_KEY=YOUR_API_KEY
       - HOST=0.0.0.0
