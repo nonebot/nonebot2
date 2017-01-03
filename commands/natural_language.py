@@ -23,6 +23,11 @@ def process(args_text, ctx_msg, internal=False):
     potential_commands = sorted(filter(lambda x: x[0] > 60, potential_commands), key=lambda x: x[0], reverse=True)
     if len(potential_commands) > 0:
         most_possible_cmd = potential_commands[0]
+        core.echo(
+            '识别出最可能的等价命令：\n' + ' '.join((most_possible_cmd[1], most_possible_cmd[2])),
+            ctx_msg,
+            internal
+        )
         ctx_msg['parsed_data'] = most_possible_cmd[3]
         cmdhub.call(most_possible_cmd[1], most_possible_cmd[2], ctx_msg)
     else:
