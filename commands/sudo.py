@@ -69,7 +69,7 @@ def block_list(_, ctx_msg, internal=False):
         # This is a shit code, and should be changed later sometime.
         core.echo('已屏蔽的用户：\n' + ', '.join([t[1:] for t in blocked_targets]), ctx_msg)
     else:
-        core.echo('还没有屏蔽过用户')
+        core.echo('还没有屏蔽过用户', ctx_msg)
 
 
 @cr.register('unblock')
