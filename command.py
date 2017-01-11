@@ -150,6 +150,7 @@ class CommandRegistry:
             return True
         return False
 
+    # noinspection PyTypeChecker
     @staticmethod
     def _check_permission(func, ctx_msg):
         """
@@ -170,11 +171,11 @@ class CommandRegistry:
             if ctx_msg.get('type') == 'group_message' and ctx_msg.get('via') == 'qq':
                 allowed_roles = {'owner', 'admin', 'member'}
                 if func.group_admin_only:
-                    allowed_roles = allowed_roles.intersection({'owner', 'admin'})
+                    allowed_roles.intersection_update({'owner', 'admin'})
                 if func.group_owner_only:
-                    allowed_roles = allowed_roles.intersection({'owner'})
+                    allowed_roles.intersection_update({'owner'})
                 groups = list(filter(
-                    lambda g: g.get('group_uid') == ctx_msg.get('group_uid'),
+                    lambda g: str(g.get('id')) == ctx_msg.get('group_id'),
                     api.get_group_info(ctx_msg).json()
                 ))
                 if len(groups) <= 0 or 'member' not in groups[0]:
@@ -182,7 +183,7 @@ class CommandRegistry:
                     raise SkipException
 
                 members = list(filter(
-                    lambda m: str(m.get('uid')) == str(ctx_msg.get('sender_uid')),
+                    lambda m: str(m.get('id')) == ctx_msg.get('sender_id'),
                     groups[0].get('member')
                 ))
                 if len(members) <= 0 or members[0].get('role') not in allowed_roles:
