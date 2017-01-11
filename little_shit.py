@@ -92,3 +92,11 @@ def get_command_name_separators():
 
 def get_command_args_start_flags():
     return tuple(sorted(('[ \t\n]',) + config['command_args_start_flags'], reverse=True))
+
+
+def get_fallback_command():
+    return config.get('fallback_command')
+
+
+def get_fallback_command_after_nl_processors():
+    return config.get('fallback_command_after_nl_processors')

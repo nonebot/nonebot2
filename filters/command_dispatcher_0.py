@@ -3,14 +3,13 @@ import sys
 import importlib
 
 import interactive
-from config import config
 from filter import as_filter
 from command import CommandNotExistsError, CommandScopeError, CommandPermissionError
 from little_shit import *
 from commands import core
 from command import hub as cmdhub
 
-_fallback_command = config.get('fallback_command')
+_fallback_command = get_fallback_command()
 _command_start_flags = get_command_start_flags()
 _command_args_start_flags = get_command_args_start_flags()
 
@@ -42,7 +41,8 @@ def _dispatch_command(ctx_msg):
             if text.startswith(flag):
                 start_flag = flag
                 break
-        if not start_flag or len(text) <= len(start_flag):
+        if start_flag is None or len(text) <= len(start_flag):
+            # Note: use `start_flag is None` here because empty string is allowed to be the start flag
             # No command, check if a session exists
             if interactive.has_session(source):
                 command = [interactive.get_session(source).cmd, text]
@@ -60,7 +60,7 @@ def _dispatch_command(ctx_msg):
             if len(command) == 1:
                 # Add an empty argument
                 command.append('')
-            # Starting a new command, so remove any previous command session
+            # Starting a new command, so remove previous command session, if any
             interactive.remove_session(source)
 
         command[0] = command[0].lower()
