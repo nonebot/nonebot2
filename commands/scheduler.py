@@ -46,18 +46,18 @@ class _IncompleteArgsError(Exception):
     pass
 
 
-def _call_commands(job_id, command_list, ctx_msg):
+def _call_commands(job_id, command_list, ctx_msg, internal=False):
     for command in command_list:
         try:
             cmdhub.call(command[0], command[1], ctx_msg)
         except CommandNotExistsError:
-            core.echo('没有找到计划任务 %s 中的命令 %s' % (job_id, command[0]), ctx_msg)
+            core.echo('没有找到计划任务 %s 中的命令 %s' % (job_id, command[0]), ctx_msg, internal)
         except CommandPermissionError:
-            core.echo('你没有权限执行计划任务 %s 中的命令 %s' % (job_id, command[0]), ctx_msg)
+            core.echo('你没有权限执行计划任务 %s 中的命令 %s' % (job_id, command[0]), ctx_msg, internal)
         except CommandScopeError as se:
             core.echo(
                 '计划任务 %s 中的命令 %s 不支持 %s' % (job_id, command[0], se.msg_type),
-                ctx_msg
+                ctx_msg, internal
             )
 
 
@@ -212,15 +212,15 @@ def get_job(args_text, ctx_msg, internal=False):
     job = _scheduler.get_job(job_id, 'default')
     if internal:
         return job
+    if not job:
+        core.echo('没有找到该计划任务，请指定正确的计划任务 ID', ctx_msg, internal)
+        return
     reply = '找到计划任务如下：\n'
     reply += 'ID：' + job_id_without_suffix + '\n'
     reply += '下次触发时间：\n%s\n' % job.next_run_time.strftime('%Y-%m-%d %H:%M')
     reply += '命令：\n'
     command_list = job.kwargs['command_list']
-    if len(command_list) > 1:
-        reply += reduce(lambda x, y: x[0] + ' ' + x[1] + '\n' + y[0] + ' ' + y[1], command_list)
-    else:
-        reply += command_list[0][0] + ' ' + command_list[0][1]
+    reply += _convert_command_list_to_str(command_list)
     _send_text(reply, ctx_msg, internal)
 
 
@@ -240,15 +240,36 @@ def list_jobs(_, ctx_msg, internal=False):
         reply = 'ID：' + job_id + '\n'
         reply += '下次触发时间：\n%s\n' % job.next_run_time.strftime('%Y-%m-%d %H:%M')
         reply += '命令：\n'
-        if len(command_list) > 1:
-            reply += reduce(lambda x, y: x[0] + ' ' + x[1] + '\n' + y[0] + ' ' + y[1], command_list)
-        else:
-            reply += command_list[0][0] + ' ' + command_list[0][1]
+        reply += _convert_command_list_to_str(command_list)
         _send_text(reply, ctx_msg, internal)
     if len(jobs):
         _send_text('以上', ctx_msg, internal)
     else:
         _send_text('还没有添加计划任务', ctx_msg, internal)
+
+
+@cr.register('execute_job', 'execute-job', 'execute', 'exec', 'trigger', 'do')
+@cr.restrict(full_command_only=True, group_admin_only=True)
+@_check_target
+def execute_job(args_text, ctx_msg, internal=False):
+    job = get_job(args_text, ctx_msg, internal=True)
+    if not job:
+        core.echo('没有找到该计划任务，请指定正确的计划任务 ID', ctx_msg, internal)
+        return
+    job_id_suffix = '_' + get_target(ctx_msg)
+    job_id = job.id[:-len(job_id_suffix)]
+    _call_commands(job_id, job.kwargs['command_list'], job.kwargs['ctx_msg'], internal)
+
+
+def _convert_command_list_to_str(command_list):
+    s = ''
+    if len(command_list) > 1:
+        for c in command_list:
+            s += c[0] + (' ' + c[1] if c[1] else '') + '\n'
+        s = s.rstrip('\n')
+    else:
+        s = command_list[0][0] + ' ' + command_list[0][1]
+    return s
 
 
 def _send_text(text, ctx_msg, internal):
