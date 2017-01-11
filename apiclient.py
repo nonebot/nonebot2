@@ -73,16 +73,16 @@ class ApiClient:
             pass
         return None
 
-    def get_group_info(self, via):
-        url = self._api_url(via)
+    def get_group_info(self, ctx_msg: dict):
+        url = self._api_url(ctx_msg.get('via'))
         if url:
             try:
                 return requests.get(url + '/get_group_info')
             except requests.exceptions.ConnectionError:
                 return None
 
-    def get_user_info(self, via):
-        url = self._api_url(via)
+    def get_user_info(self, ctx_msg: dict):
+        url = self._api_url(ctx_msg.get('via'))
         if url:
             try:
                 return requests.get(url + '/get_user_info')

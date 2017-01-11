@@ -174,7 +174,7 @@ class CommandRegistry:
                     allowed_roles = allowed_roles.intersection({'owner'})
                 groups = list(filter(
                     lambda g: g.get('group_uid') == ctx_msg.get('group_uid'),
-                    api.get_group_info(via='qq').json()
+                    api.get_group_info(ctx_msg).json()
                 ))
                 if len(groups) <= 0 or 'member' not in groups[0]:
                     # This is strange, not likely happens

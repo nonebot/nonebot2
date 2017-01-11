@@ -16,10 +16,10 @@ def _split_at_xiaokai(ctx_msg):
                 return False
             at_me = '@' + my_group_nick
             if not text.startswith(at_me):
-                user_info = api.get_user_info().json()
+                user_info = api.get_user_info(ctx_msg).json()
                 if not user_info:
                     return False
-                my_nick = user_info.get('nick')
+                my_nick = user_info.get('name')
                 if not my_nick:
                     return False
                 at_me = '@' + my_nick
