@@ -74,9 +74,6 @@ def get_target(ctx_msg):
     if ctx_msg.get('via') == 'qq':
         if ctx_msg.get('type') == 'group_message' and ctx_msg.get('group_uid'):
             return 'g' + ctx_msg.get('group_uid')
-        elif ctx_msg.get('type') == 'discuss_message':
-            # TODO: 看看讨论组 ID 重新启动会不会变
-            pass
         elif ctx_msg.get('type') == 'friend_message' and ctx_msg.get('sender_uid'):
             return 'p' + ctx_msg.get('sender_uid')
     elif ctx_msg.get('via') == 'wx':
