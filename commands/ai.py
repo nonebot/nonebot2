@@ -43,4 +43,5 @@ def xiaoice(args_text, ctx_msg, internal=False):
             reply = json['reply']
             core.echo(reply, ctx_msg, internal)
             return reply
+    core.echo('小冰没有回复，请稍后再试', ctx_msg, internal)
     return None
