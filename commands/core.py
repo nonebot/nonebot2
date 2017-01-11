@@ -1,8 +1,4 @@
-import os
-import requests
-
 from command import CommandRegistry
-from little_shit import get_source
 from apiclient import client as api
 
 __registry__ = cr = CommandRegistry()
@@ -14,31 +10,6 @@ def echo(args_text, ctx_msg, internal=False):
         return None
     else:
         return api.send_message(args_text, ctx_msg)
-
-
-@cr.register('tuling123', 'chat', '聊天')
-def tuling123(args_text, ctx_msg, internal=False):
-    url = 'http://www.tuling123.com/openapi/api'
-    data = {
-        'key': os.environ.get('TURING123_API_KEY'),
-        'info': args_text,
-        'userid': get_source(ctx_msg)
-    }
-    resp = requests.post(url, data=data)
-    if resp.status_code == 200:
-        json = resp.json()
-        if internal:
-            return json
-        if int(json.get('code', 0)) == 100000:
-            reply = json.get('text', '')
-        else:
-            # Is not text type
-            reply = '腊鸡图灵机器人返回了一堆奇怪的东西，就不发出来了'
-    else:
-        if internal:
-            return None
-        reply = '腊鸡图灵机器人出问题了，先不管他，过会儿再玩他'
-    echo(reply, ctx_msg)
 
 
 @cr.register('help', '帮助', '用法', '使用帮助', '使用指南', '使用说明', '使用方法', '怎么用')

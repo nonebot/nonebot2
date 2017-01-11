@@ -4,7 +4,7 @@ import requests
 from lxml import etree
 
 from command import CommandRegistry
-from commands import core
+from commands import core, ai
 
 __registry__ = cr = CommandRegistry()
 
@@ -73,14 +73,14 @@ def weather(args_text, ctx_msg):
         core.echo('请在命令后加上要查的城市哦～（命令和城市用空格或逗号隔开）', ctx_msg)
         return
 
-    data = core.tuling123(city + '天气', ctx_msg, internal=True)
+    data = ai.tuling123(city + '天气', ctx_msg, internal=True)
     core.echo(data.get('text', ''), ctx_msg)
 
 
 @cr.register('joke')
 @cr.register('笑话', '说笑话', '说个笑话')
 def weather(_, ctx_msg):
-    data = core.tuling123('说个笑话', ctx_msg, internal=True)
+    data = ai.tuling123('说个笑话', ctx_msg, internal=True)
     core.echo(data.get('text', ''), ctx_msg)
 
 
@@ -91,7 +91,7 @@ def weather(args_text, ctx_msg):
     if not query:
         core.echo('请在命令后加上要查的关键词哦～（命令和关键词用空格或逗号隔开）', ctx_msg)
         return
-    data = core.tuling123('百科 ' + query, ctx_msg, internal=True)
+    data = ai.tuling123('百科 ' + query, ctx_msg, internal=True)
     core.echo(data.get('text', ''), ctx_msg)
 
 

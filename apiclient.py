@@ -89,5 +89,12 @@ class ApiClient:
             except requests.exceptions.ConnectionError:
                 return None
 
+    def wx_consult(self, account, content):
+        if self.wx_api_url:
+            try:
+                return requests.get(self.wx_api_url + '/consult', params={'account': account, 'content': content})
+            except requests.exceptions.ConnectionError:
+                return None
+
 
 client = ApiClient()
