@@ -4,6 +4,7 @@ This filter recognizes speech in voice message and stores it in 'text' field of 
 
 import re
 import os
+import sys
 import base64
 
 import requests
@@ -57,7 +58,7 @@ def _recognize_bing(wav_path, api_key, language='zh-CN'):
 
 @as_filter(priority=90)
 def _filter(ctx_msg):
-    if ctx_msg.get('via') == 'wx' and ctx_msg.get('format') == 'media' and ctx_msg.get('media_type') == 'voice':
+    if ctx_msg.get('format') == 'media' and ctx_msg.get('media_type') == 'voice':
         m = re.match('\[语音\]\(([/_A-Za-z0-9]+\.mp3)\)', ctx_msg.get('content'))
         if m:
             core.echo('正在识别语音内容，请稍等……', ctx_msg)
@@ -65,20 +66,31 @@ def _filter(ctx_msg):
             wav_path = os.path.splitext(mp3_path)[0] + '.wav'
             voice = AudioSegment.from_mp3(mp3_path)
             voice.export(wav_path, format='wav')
-            text = _recognize_baidu(
-                wav_path,
-                ctx_msg.get('sender_id')[-60:],
-                os.environ.get('BAIDU_SPEECH_API_KEY'),
-                os.environ.get('BAIDU_SPEECH_SECRET_KEY'),
-                language='zh'
-            )
-            # text = _recognize_bing(
-            #     wav_path,
-            #     os.environ.get('BING_SPEECH_API_KEY'),
-            #     language='zh-CN'
-            # )
+
+            service = os.environ.get('SPEECH_RECOGNITION_SERVICE', '').lower()
+            text = None
+            service_full_name = None
+            if service == 'baidu':
+                service_full_name = '百度语音识别'
+                text = _recognize_baidu(
+                    wav_path,
+                    ctx_msg.get('sender_id')[-60:],
+                    os.environ.get('BAIDU_SPEECH_API_KEY'),
+                    os.environ.get('BAIDU_SPEECH_SECRET_KEY'),
+                    language='zh'
+                )
+            elif service == 'bing':
+                service_full_name = '必应语音识别'
+                text = _recognize_bing(
+                    wav_path,
+                    os.environ.get('BING_SPEECH_API_KEY'),
+                    language='zh-CN'
+                )
+            else:
+                print('Unknown speech recognition service name.', file=sys.stderr)
+
             if text:
-                reply = '识别结果（百度语音识别）：\n%s\n\n下面将把识别到的内容作为文字消息处理……' % text
+                reply = '识别结果（' + service_full_name + '）：\n%s\n\n下面将把识别到的内容作为文字消息处理……' % text
                 ctx_msg['text'] = text
                 ctx_msg['from_voice'] = True
             else:

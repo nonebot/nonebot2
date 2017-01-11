@@ -7,6 +7,13 @@ class ApiClient:
     qq_api_url = os.environ.get('QQ_API_URL')
     wx_api_url = os.environ.get('WX_API_URL')
 
+    def _api_url(self, via):
+        if via == 'qq':
+            return self.qq_api_url
+        elif via == 'wx':
+            return self.wx_api_url
+        return None
+
     def send_message(self, content: str, ctx_msg: dict):
         msg_type = ctx_msg.get('type')
         if msg_type == 'group_message':
@@ -67,14 +74,18 @@ class ApiClient:
         return None
 
     def get_group_info(self, via):
-        url = None
-        if via == 'qq':
-            url = self.qq_api_url
-        elif via == 'wx':
-            url = self.wx_api_url
+        url = self._api_url(via)
         if url:
             try:
                 return requests.get(url + '/get_group_info')
+            except requests.exceptions.ConnectionError:
+                return None
+
+    def get_user_info(self, via):
+        url = self._api_url(via)
+        if url:
+            try:
+                return requests.get(url + '/get_user_info')
             except requests.exceptions.ConnectionError:
                 return None
 
