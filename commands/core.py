@@ -2,6 +2,7 @@ import os
 import requests
 
 from command import CommandRegistry
+from little_shit import get_source
 from apiclient import client as api
 
 __registry__ = cr = CommandRegistry()
@@ -20,12 +21,9 @@ def tuling123(args_text, ctx_msg, internal=False):
     url = 'http://www.tuling123.com/openapi/api'
     data = {
         'key': os.environ.get('TURING123_API_KEY'),
-        'info': args_text
+        'info': args_text,
+        'userid': get_source(ctx_msg)
     }
-    if ctx_msg.get('sender_uid'):
-        data['userid'] = ctx_msg.get('sender_uid')
-    elif ctx_msg.get('sender_id'):
-        data['userid'] = ctx_msg.get('sender_id').strip('@')[-32:]
     resp = requests.post(url, data=data)
     if resp.status_code == 200:
         json = resp.json()

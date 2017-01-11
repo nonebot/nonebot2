@@ -1,4 +1,5 @@
 import os
+import hashlib
 import random
 from datetime import datetime
 
@@ -47,21 +48,24 @@ def get_source(ctx_msg):
     Source is used to distinguish the interactive sessions.
     Note: This value may change after restarting the bot.
 
-    :return: an unique value representing a source, or a random value if something strange happened
+    :return: a 32 character unique string (md5) representing a source, or a random value if something strange happened
     """
+    source = None
     if ctx_msg.get('via') == 'qq':
         if ctx_msg.get('type') == 'group_message' and ctx_msg.get('group_uid') and ctx_msg.get('sender_uid'):
-            return 'g' + ctx_msg.get('group_uid') + 'p' + ctx_msg.get('sender_uid')
+            source = 'g' + ctx_msg.get('group_uid') + 'p' + ctx_msg.get('sender_uid')
         elif ctx_msg.get('type') == 'discuss_message' and ctx_msg.get('discuss_id') and ctx_msg.get('sender_uid'):
-            return 'd' + ctx_msg.get('discuss_id') + 'p' + ctx_msg.get('sender_uid')
+            source = 'd' + ctx_msg.get('discuss_id') + 'p' + ctx_msg.get('sender_uid')
         elif ctx_msg.get('type') == 'friend_message' and ctx_msg.get('sender_uid'):
-            return 'p' + ctx_msg.get('sender_uid')
+            source = 'p' + ctx_msg.get('sender_uid')
     elif ctx_msg.get('via') == 'wx':
         if ctx_msg.get('type') == 'group_message' and ctx_msg.get('group_id') and ctx_msg.get('sender_id'):
-            return 'g' + ctx_msg.get('group_id') + 'p' + ctx_msg.get('sender_id')
+            source = 'g' + ctx_msg.get('group_id') + 'p' + ctx_msg.get('sender_id')
         elif ctx_msg.get('type') == 'friend_message' and ctx_msg.get('sender_id'):
-            return 'p' + ctx_msg.get('sender_id')
-    return str(int(datetime.now().timestamp())) + str(random.randint(100, 999))
+            source = 'p' + ctx_msg.get('sender_id')
+    if not source:
+        source = str(int(datetime.now().timestamp())) + str(random.randint(100, 999))
+    return hashlib.md5(source.encode('utf-8')).hexdigest()
 
 
 def get_target(ctx_msg):
@@ -69,7 +73,8 @@ def get_target(ctx_msg):
     Target is used to distinguish the records in database.
     Note: This value will not change after restarting the bot.
 
-    :return: an unique value representing a target, or None if there is no persistent unique value
+    :return: an unique string (account id with some flags) representing a target,
+             or None if there is no persistent unique value
     """
     if ctx_msg.get('via') == 'qq':
         if ctx_msg.get('type') == 'group_message' and ctx_msg.get('group_uid'):

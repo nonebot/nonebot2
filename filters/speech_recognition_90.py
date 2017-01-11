@@ -13,6 +13,7 @@ import speech_recognition as sr
 
 from filter import as_filter
 from commands import core
+from little_shit import get_source
 
 
 def _recognize_baidu(wav_path, unique_id, api_key, secret_key, language='zh'):
@@ -74,7 +75,7 @@ def _filter(ctx_msg):
                 service_full_name = '百度语音识别'
                 text = _recognize_baidu(
                     wav_path,
-                    ctx_msg.get('sender_id')[-60:],
+                    get_source(ctx_msg),
                     os.environ.get('BAIDU_SPEECH_API_KEY'),
                     os.environ.get('BAIDU_SPEECH_SECRET_KEY'),
                     language='zh'
