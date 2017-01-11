@@ -83,15 +83,19 @@ def get_target(ctx_msg):
 
 
 def get_command_start_flags():
-    return tuple(sorted(config['command_start_flags'], reverse=True))
+    return tuple(sorted(config.get('command_start_flags', ('',)), reverse=True))
 
 
 def get_command_name_separators():
-    return tuple(sorted(config['command_name_separators'], reverse=True))
+    return tuple(sorted(('\.',) + config.get('command_name_separators', ()), reverse=True))
 
 
 def get_command_args_start_flags():
-    return tuple(sorted(('[ \t\n]',) + config['command_args_start_flags'], reverse=True))
+    return tuple(sorted(('[ \t\n]',) + config.get('command_args_start_flags', ()), reverse=True))
+
+
+def get_command_args_separators():
+    return tuple(sorted(('[ \t\n]',) + config.get('command_args_separators', ()), reverse=True))
 
 
 def get_fallback_command():

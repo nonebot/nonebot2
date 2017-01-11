@@ -3,9 +3,10 @@ import re
 import os
 
 from apiclient import client as api
-from little_shit import SkipException, get_command_name_separators
+from little_shit import SkipException, get_command_name_separators, get_command_args_separators
 
 _command_name_seps = get_command_name_separators()
+_command_args_seps = get_command_args_separators()
 
 
 class CommandNotExistsError(Exception):
@@ -288,3 +289,14 @@ class CommandHub:
 
 
 hub = CommandHub()
+
+
+def split_args(maxsplit=0):
+    def decorator(func):
+        def wrapper(args_text, *args, **kwargs):
+            args_list = list(filter(lambda arg: arg, re.split('|'.join(_command_args_seps), args_text, maxsplit)))
+            return func(args_list, *args, **kwargs)
+
+        return wrapper
+
+    return decorator
