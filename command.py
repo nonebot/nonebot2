@@ -294,8 +294,11 @@ hub = CommandHub()
 
 def split_args(maxsplit=0):
     def decorator(func):
-        def wrapper(args_text, *args, **kwargs):
-            args_list = list(filter(lambda arg: arg, re.split('|'.join(_command_args_seps), args_text, maxsplit)))
+        def wrapper(argument, *args, **kwargs):
+            if isinstance(argument, (list, tuple)):
+                args_list = list(argument)
+            else:
+                args_list = list(filter(lambda arg: arg, re.split('|'.join(_command_args_seps), argument, maxsplit)))
             return func(args_list, *args, **kwargs)
 
         return wrapper

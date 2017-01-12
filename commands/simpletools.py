@@ -65,8 +65,8 @@ def short_url(args_text, ctx_msg):
         core.echo('生成失败，可能因为链接格式错误或服务器连接不上', ctx_msg)
 
 
-@cr.register('weather')
-@cr.register('天气', '查天气')
+# @cr.register('weather')
+# @cr.register('天气', '查天气')
 def weather(args_text, ctx_msg):
     city = args_text.strip()
     if not city:

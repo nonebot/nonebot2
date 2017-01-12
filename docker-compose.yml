@@ -50,6 +50,7 @@ services:
       - BAIDU_SPEECH_API_KEY=YOUR_API_KEY
       - BAIDU_SPEECH_SECRET_KEY=YOUR_SECRET_KEY
       - BING_SPEECH_API_KEY=YOUR_API_KEY
+      - HEWEATHER_API_KEY=YOUR_API_KEY
     restart: always
 networks:
   my-net:
