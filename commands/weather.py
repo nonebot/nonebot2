@@ -1,12 +1,13 @@
 import os
-from datetime import datetime
+import json
+import sqlite3
+from datetime import datetime, timedelta
 
 import requests
-import jieba
 
 from command import CommandRegistry, split_args
 from commands import core
-from little_shit import get_source
+from little_shit import get_source, get_db_dir, get_tmp_dir
 from interactive import *
 
 __registry__ = cr = CommandRegistry()
@@ -14,9 +15,7 @@ __registry__ = cr = CommandRegistry()
 _api_key = os.environ.get('HEWEATHER_API_KEY')
 _base_api_url = 'https://free-api.heweather.com/v5'
 _search_api_url = _base_api_url + '/search'
-_forecast_api_url = _base_api_url + '/forecast'
-_now_api_url = _base_api_url + '/now'
-_suggestion_api_url = _base_api_url + '/suggestion'
+_detail_api_url = _base_api_url + '/weather'
 
 _cmd_weather = 'weather.weather'
 _cmd_suggestion = 'weather.suggestion'
@@ -34,21 +33,19 @@ def weather(args, ctx_msg, allow_interactive=True):
         return _do_interactively(_cmd_weather, weather, args, ctx_msg, source)
 
     city_id = args[0]
-    session = requests.Session()
-    params = {'city': city_id, 'key': _api_key}
     text = ''
 
-    # Get real-time weather
-    data_now = session.get(_now_api_url, params=params).json()
-    if data_now and 'HeWeather5' in data_now and data_now['HeWeather5'][0].get('status') == 'ok':
-        now = data_now['HeWeather5'][0]['now']
-        text += '实时：\n%s，气温%s˚C，体感温度%s˚C，%s%s级，能见度%skm' \
-                % (now['cond']['txt'], now['tmp'], now['fl'], now['wind']['dir'], now['wind']['sc'], now['vis'])
+    data = _get_weather(city_id)
+    if data:
+        text += '%s天气\n更新时间：%s' % (data['basic']['city'], data['basic']['update']['loc'])
 
-    # Get forecast
-    data_forecast = session.get(_forecast_api_url, params=params).json()
-    if data_forecast and 'HeWeather5' in data_forecast and data_forecast['HeWeather5'][0].get('status') == 'ok':
-        daily_forecast = data_forecast['HeWeather5'][0]['daily_forecast']
+        now = data['now']
+        aqi = data['aqi']['city']
+        text += '\n\n实时：\n%s，气温%s˚C，体感温度%s˚C，%s%s级，能见度%skm，空气质量指数：%s，%s，PM2.5：%s，PM10：%s' \
+                % (now['cond']['txt'], now['tmp'], now['fl'], now['wind']['dir'], now['wind']['sc'], now['vis'],
+                   aqi['aqi'], aqi['qlty'], aqi['pm25'], aqi['pm10'])
+
+        daily_forecast = data['daily_forecast']
         text += '\n\n预报：\n'
 
         for forecast in daily_forecast:
@@ -64,7 +61,6 @@ def weather(args, ctx_msg, allow_interactive=True):
             text += '降雨概率%s%%' % forecast['pop']
             text += '\n'
 
-    text = text.rstrip()
     if text:
         core.echo(text, ctx_msg)
     else:
@@ -81,14 +77,11 @@ def suggestion(args, ctx_msg, allow_interactive=True):
         return _do_interactively(_cmd_suggestion, suggestion, args, ctx_msg, source)
 
     city_id = args[0]
-    session = requests.Session()
-    params = {'city': city_id, 'key': _api_key}
     text = ''
 
-    # Get suggestion
-    data_suggestion = session.get(_suggestion_api_url, params=params).json()
-    if data_suggestion and 'HeWeather5' in data_suggestion and data_suggestion['HeWeather5'][0].get('status') == 'ok':
-        data = data_suggestion['HeWeather5'][0]['suggestion']
+    data = _get_weather(city_id)
+    if data:
+        data = data['suggestion']
         text += '生活指数：\n\n' \
                 '舒适度：%s\n\n' \
                 '洗车指数：%s\n\n' \
@@ -122,42 +115,27 @@ def _do_interactively(command_name, func, args, ctx_msg, source):
             core.echo('你输入的城市不正确哦，请重新发送命令～', c)
             return True
 
-        prov = None
-        city = a[0]
-        # Try to split province and city if possible
-        tmp = jieba.lcut(city)
-        if len(tmp) == 2:
-            prov, city = tmp
+        city_list = _get_city_list(a[0])
 
-        resp = requests.get(_search_api_url, params={
-            'city': city,
-            'key': _api_key
-        })
-        data = resp.json()
-        if resp.status_code == 200 and data and 'HeWeather5' in data:
-            city_list = data['HeWeather5']
-            if city_list[0].get('status') != 'ok':
-                core.echo('没有找到你输入的城市哦，请重新发送命令～', c)
-                return True
+        if not city_list:
+            core.echo('没有找到你输入的城市哦，请重新发送命令～', c)
+            return True
 
-            if prov:
-                city_list = list(filter(lambda c: c['basic']['prov'] == prov, city_list))
+        s.data['city_list'] = city_list
 
-            s.data['city_list'] = city_list
+        if len(city_list) == 1:
+            # Directly choose the first one
+            choose_city(s, ['1'], c)
+            return True
 
-            if len(city_list) == 1:
-                # Directly choose the first one
-                choose_city(s, ['1'], c)
-                return True
-
-            # Here comes more than one city with the same name
-            core.echo(
-                '找到 %d 个重名城市，请选择你要查询的那个，发送它的序号：\n\n' % len(city_list)
-                + '\n'.join(
-                    [str(i + 1) + '. ' + c['basic']['prov'] + c['basic']['city'] for i, c in enumerate(city_list)]
-                ),
-                c
-            )
+        # Here comes more than one city with the same name
+        core.echo(
+            '找到 %d 个重名城市，请选择你要查询的那个，发送它的序号：\n\n' % len(city_list)
+            + '\n'.join(
+                [str(i + 1) + '. ' + c['prov'] + c['city'] for i, c in enumerate(city_list)]
+            ),
+            c
+        )
 
         s.state += 1
 
@@ -172,7 +150,7 @@ def _do_interactively(command_name, func, args, ctx_msg, source):
             core.echo('你输入的序号超出范围了，请重新发送命令～', c)
             return True
 
-        city_id = city_list[choice]['basic']['id']
+        city_id = city_list[choice]['id']
         # sess.data['func']([city_id], c, allow_interactive=False)
         func([city_id], c, allow_interactive=False)
         return True
@@ -189,3 +167,49 @@ def _do_interactively(command_name, func, args, ctx_msg, source):
     if _state_machines[command_name][sess.state](sess, args, ctx_msg):
         # Done
         remove_session(source, command_name)
+
+
+_weather_db_path = os.path.join(get_db_dir(), 'weather.sqlite')
+
+
+def _get_city_list(city_name):
+    city_name = city_name.lower()
+    if not os.path.exists(_weather_db_path):
+        resp = requests.get('http://7xo46j.com1.z0.glb.clouddn.com/weather.sqlite', stream=True)
+        with resp.raw as s, open(_weather_db_path, 'wb') as d:
+            d.write(s.read())
+
+    conn = sqlite3.connect(_weather_db_path)
+    cities = list(conn.execute(
+        'SELECT code, name, province FROM city WHERE name = ? OR name_en = ? OR province || name = ?',
+        (city_name, city_name, city_name)
+    ))
+    return [{'id': x[0], 'city': x[1], 'prov': x[2]} for x in cities]
+
+
+_weather_cache_dir = os.path.join(get_tmp_dir(), 'weather')
+
+
+def _get_weather(city_id):
+    if not os.path.exists(_weather_cache_dir):
+        os.makedirs(_weather_cache_dir)
+
+    file_name = city_id + '.json'
+    file_path = os.path.join(_weather_cache_dir, file_name)
+    if os.path.exists(file_path):
+        update_time = datetime.fromtimestamp(os.path.getmtime(file_path))
+        if (datetime.now() - update_time) < timedelta(hours=1):
+            with open(file_path, 'r') as f:
+                data = json.load(f)
+            data['from_cache'] = True
+            return data
+
+    data = requests.get(_detail_api_url, params={'city': city_id, 'key': _api_key}).json()
+    if data and 'HeWeather5' in data and data['HeWeather5'][0].get('status') == 'ok':
+        data = data['HeWeather5'][0]
+        with open(file_path, 'w') as f:
+            json.dump(data, f)
+        data['from_cache'] = False
+        return data
+
+    return None

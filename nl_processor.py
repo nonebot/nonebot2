@@ -39,4 +39,5 @@ def parse_potential_commands(sentence):
         result = func(sentence, segmentation)
         if result:
             potential_commands.append(result)
+    print('可能的命令:', potential_commands)
     return potential_commands
