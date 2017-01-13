@@ -1,6 +1,6 @@
 import sqlite3
 
-from command import CommandRegistry, split_args
+from command import CommandRegistry, split_arguments
 from commands import core
 from little_shit import get_default_db_path, get_target
 
@@ -26,16 +26,16 @@ def test(_, ctx_msg):
 
 @cr.register('block')
 @cr.restrict(full_command_only=True, superuser_only=True)
-@split_args(maxsplit=2)
-def block(args, ctx_msg):
+@split_arguments(maxsplit=2)
+def block(_, ctx_msg, argv=None):
     def _send_error_msg():
         core.echo('参数不正确。\n\n正确使用方法：\nsudo.block wx|qq <account-to-block>', ctx_msg)
 
-    if len(args) != 2:
+    if len(argv) != 2:
         _send_error_msg()
         return
 
-    via, account = args
+    via, account = argv
     # Get a target using a fake context message
     target = get_target({
         'via': via,
@@ -74,16 +74,16 @@ def block_list(_, ctx_msg, internal=False):
 
 @cr.register('unblock')
 @cr.restrict(full_command_only=True, superuser_only=True)
-@split_args(maxsplit=2)
-def unblock(args, ctx_msg):
+@split_arguments(maxsplit=2)
+def unblock(_, ctx_msg, argv=None):
     def _send_error_msg():
         core.echo('参数不正确。\n\n正确使用方法：\nsudo.unblock wx|qq <account-to-unblock>', ctx_msg)
 
-    if len(args) != 2:
+    if len(argv) != 2:
         _send_error_msg()
         return
 
-    via, account = args
+    via, account = argv
     # Get a target using a fake context message
     target = get_target({
         'via': via,

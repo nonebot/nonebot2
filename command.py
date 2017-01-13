@@ -292,14 +292,33 @@ class CommandHub:
 hub = CommandHub()
 
 
-def split_args(maxsplit=0):
+class CommandArgumentError(Exception):
+    pass
+
+
+def split_arguments(maxsplit=0):
+    """
+    To use this decorator, you should add a parameter exactly named 'argv' to the function of the command,
+    which will be set to the split argument list when called.
+
+    However, the first parameter, typically 'args_text', will remain to be the whole argument string, like before.
+
+    :param maxsplit: max split time
+    """
+
     def decorator(func):
+        @functools.wraps(func)
         def wrapper(argument, *args, **kwargs):
-            if isinstance(argument, (list, tuple)):
-                args_list = list(argument)
+            if argument is None:
+                raise CommandArgumentError
+            if kwargs.get('argv') is not None:
+                argv = kwargs['argv']
+                del kwargs['argv']
+            elif isinstance(argument, (list, tuple)):
+                argv = list(argument)
             else:
-                args_list = list(filter(lambda arg: arg, re.split('|'.join(_command_args_seps), argument, maxsplit)))
-            return func(args_list, *args, **kwargs)
+                argv = list(filter(lambda arg: arg, re.split('|'.join(_command_args_seps), argument, maxsplit)))
+            return func(argument, argv=argv, *args, **kwargs)
 
         return wrapper
 

@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 
 import requests
 
-from command import CommandRegistry, split_args
+from command import CommandRegistry, split_arguments
 from commands import core
 from little_shit import get_source, get_db_dir, get_tmp_dir
 from interactive import *
@@ -25,14 +25,14 @@ _weekday_string = ['周一', '周二', '周三', '周四', '周五', '周六', '
 
 @cr.register('weather')
 @cr.register('天气', '查天气', '天气预报', '查天气预报')
-@split_args()
-def weather(args, ctx_msg, allow_interactive=True):
+@split_arguments()
+def weather(args_text, ctx_msg, argv: list = None, allow_interactive=True):
     source = get_source(ctx_msg)
-    if allow_interactive and (len(args) < 1 or not args[0].startswith('CN') or has_session(source, _cmd_weather)):
+    if allow_interactive and (not argv or not argv[0].startswith('CN') or has_session(source, _cmd_weather)):
         # Be interactive
-        return _do_interactively(_cmd_weather, weather, args, ctx_msg, source)
+        return _do_interactively(_cmd_weather, weather, args_text.strip(), ctx_msg, source)
 
-    city_id = args[0]
+    city_id = argv[0]
     text = ''
 
     data = _get_weather(city_id)
@@ -41,12 +41,13 @@ def weather(args, ctx_msg, allow_interactive=True):
 
         now = data['now']
         aqi = data['aqi']['city']
-        text += '\n\n实时：\n%s，气温%s˚C，体感温度%s˚C，%s%s级，能见度%skm，空气质量指数：%s，%s，PM2.5：%s，PM10：%s' \
+        text += '\n\n实时：\n\n%s，气温%s˚C，体感温度%s˚C，%s%s级，' \
+                '能见度%skm，空气质量指数：%s，%s，PM2.5：%s，PM10：%s' \
                 % (now['cond']['txt'], now['tmp'], now['fl'], now['wind']['dir'], now['wind']['sc'], now['vis'],
                    aqi['aqi'], aqi['qlty'], aqi['pm25'], aqi['pm10'])
 
         daily_forecast = data['daily_forecast']
-        text += '\n\n预报：\n'
+        text += '\n\n预报：\n\n'
 
         for forecast in daily_forecast:
             d = datetime.strptime(forecast['date'], '%Y-%m-%d')
@@ -59,24 +60,25 @@ def weather(args, ctx_msg, allow_interactive=True):
             text += forecast['tmp']['min'] + '~' + forecast['tmp']['max'] + '°C，'
             text += forecast['wind']['dir'] + forecast['wind']['sc'] + '级，'
             text += '降雨概率%s%%' % forecast['pop']
-            text += '\n'
+            text += '\n\n'
 
+    text = text.rstrip()
     if text:
         core.echo(text, ctx_msg)
     else:
         core.echo('查询失败了，请稍后再试哦～', ctx_msg)
 
 
-@cr.register('suggestion')
+@cr.register('suggestion', hidden=True)
 @cr.register('生活指数', '生活建议', '天气建议')
-@split_args()
-def suggestion(args, ctx_msg, allow_interactive=True):
+@split_arguments()
+def suggestion(args_text, ctx_msg, argv: list = None, allow_interactive=True):
     source = get_source(ctx_msg)
-    if allow_interactive and (len(args) < 1 or not args[0].startswith('CN') or has_session(source, _cmd_suggestion)):
+    if allow_interactive and (len(argv) < 1 or not argv[0].startswith('CN') or has_session(source, _cmd_suggestion)):
         # Be interactive
-        return _do_interactively(_cmd_suggestion, suggestion, args, ctx_msg, source)
+        return _do_interactively(_cmd_suggestion, suggestion, args_text.strip(), ctx_msg, source)
 
-    city_id = args[0]
+    city_id = argv[0]
     text = ''
 
     data = _get_weather(city_id)
@@ -101,9 +103,9 @@ def suggestion(args, ctx_msg, allow_interactive=True):
 _state_machines = {}
 
 
-def _do_interactively(command_name, func, args, ctx_msg, source):
+def _do_interactively(command_name, func, args_text, ctx_msg, source):
     def ask_for_city(s, a, c):
-        if len(a) > 0:
+        if a:
             if search_city(s, a, c):
                 return True
         else:
@@ -111,11 +113,11 @@ def _do_interactively(command_name, func, args, ctx_msg, source):
         s.state += 1
 
     def search_city(s, a, c):
-        if len(a) < 1:
+        if not a:
             core.echo('你输入的城市不正确哦，请重新发送命令～', c)
             return True
 
-        city_list = _get_city_list(a[0])
+        city_list = _get_city_list(a)
 
         if not city_list:
             core.echo('没有找到你输入的城市哦，请重新发送命令～', c)
@@ -125,7 +127,7 @@ def _do_interactively(command_name, func, args, ctx_msg, source):
 
         if len(city_list) == 1:
             # Directly choose the first one
-            choose_city(s, ['1'], c)
+            choose_city(s, '1', c)
             return True
 
         # Here comes more than one city with the same name
@@ -140,11 +142,11 @@ def _do_interactively(command_name, func, args, ctx_msg, source):
         s.state += 1
 
     def choose_city(s, a, c):
-        if len(a) != 1 or not a[0].isdigit():
+        if not a or not a.isdigit():
             core.echo('你输入的序号不正确哦，请重新发送命令～', c)
             return True
 
-        choice = int(a[0]) - 1  # Should be from 0 to len(city_list) - 1
+        choice = int(a) - 1  # Should be from 0 to len(city_list) - 1
         city_list = s.data['city_list']
         if choice < 0 or choice >= len(city_list):
             core.echo('你输入的序号超出范围了，请重新发送命令～', c)
@@ -164,7 +166,7 @@ def _do_interactively(command_name, func, args, ctx_msg, source):
 
     sess = get_session(source, command_name)
     sess.data['func'] = func
-    if _state_machines[command_name][sess.state](sess, args, ctx_msg):
+    if _state_machines[command_name][sess.state](sess, args_text, ctx_msg):
         # Done
         remove_session(source, command_name)
 

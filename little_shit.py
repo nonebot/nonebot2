@@ -1,9 +1,11 @@
 import os
 import hashlib
 import random
+import functools
 from datetime import datetime
 
 from config import config
+from apiclient import client as api
 
 
 class SkipException(Exception):
@@ -87,6 +89,23 @@ def get_target(ctx_msg):
     return None
 
 
+def check_target(func):
+    """
+    This decorator checks whether there is a target value, and prevent calling the function if not.
+    """
+
+    @functools.wraps(func)
+    def wrapper(args_text, ctx_msg, *args, **kwargs):
+        target = get_target(ctx_msg)
+        if not target:
+            api.send_message('当前语境无法使用这个命令，请尝试发送私聊消息或稍后再试吧～', ctx_msg)
+            return
+        else:
+            return func(args_text, ctx_msg, *args, **kwargs)
+
+    return wrapper
+
+
 def get_command_start_flags():
     return tuple(sorted(config.get('command_start_flags', ('',)), reverse=True))
 
@@ -96,11 +115,11 @@ def get_command_name_separators():
 
 
 def get_command_args_start_flags():
-    return tuple(sorted(('[ \t\n]',) + config.get('command_args_start_flags', ()), reverse=True))
+    return tuple(sorted(('[ \t\n]+',) + config.get('command_args_start_flags', ()), reverse=True))
 
 
 def get_command_args_separators():
-    return tuple(sorted(('[ \t\n]',) + config.get('command_args_separators', ()), reverse=True))
+    return tuple(sorted(('[ \t\n]+',) + config.get('command_args_separators', ()), reverse=True))
 
 
 def get_fallback_command():

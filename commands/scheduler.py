@@ -29,6 +29,7 @@ _scheduler = BackgroundScheduler(
 _command_args_start_flags = get_command_args_start_flags()
 
 _args_split_sep = '[ \n\t]'
+_job_id_suffix_start = '@'
 
 
 def _init():
@@ -148,7 +149,7 @@ def add_job(args_text, ctx_msg, internal=False):
         if len(tmp) < 2:
             raise _IncompleteArgsError
         job_id_without_suffix, command_raw = tmp
-        job_id = job_id_without_suffix + '_' + get_target(ctx_msg)
+        job_id = job_id_without_suffix + _job_id_suffix_start + get_target(ctx_msg)
         command_list = []
         if multi:
             command_raw_list = command_raw.split('\n')
@@ -190,7 +191,7 @@ def remove_job(args_text, ctx_msg, internal=False):
     if not job_id_without_suffix:
         _send_text('请指定计划任务的 ID', ctx_msg, internal)
         return False
-    job_id = job_id_without_suffix + '_' + get_target(ctx_msg)
+    job_id = job_id_without_suffix + _job_id_suffix_start + get_target(ctx_msg)
     try:
         _scheduler.remove_job(job_id, 'default')
         _send_text('成功删除计划任务 ' + job_id_without_suffix, ctx_msg, internal)
@@ -208,9 +209,11 @@ def get_job(args_text, ctx_msg, internal=False):
     if not job_id_without_suffix:
         _send_text('请指定计划任务的 ID', ctx_msg, internal)
         return None
-    job_id = job_id_without_suffix + '_' + get_target(ctx_msg)
+    job_id = job_id_without_suffix + _job_id_suffix_start + get_target(ctx_msg)
     job = _scheduler.get_job(job_id, 'default')
     if internal:
+        if job:
+            job.id = job_id_without_suffix
         return job
     if not job:
         core.echo('没有找到该计划任务，请指定正确的计划任务 ID', ctx_msg, internal)
@@ -220,7 +223,7 @@ def get_job(args_text, ctx_msg, internal=False):
     reply += '下次触发时间：\n%s\n' % job.next_run_time.strftime('%Y-%m-%d %H:%M')
     reply += '命令：\n'
     command_list = job.kwargs['command_list']
-    reply += _convert_command_list_to_str(command_list)
+    reply += convert_command_list_to_str(command_list)
     _send_text(reply, ctx_msg, internal)
 
 
@@ -229,9 +232,11 @@ def get_job(args_text, ctx_msg, internal=False):
 @_check_target
 def list_jobs(_, ctx_msg, internal=False):
     target = get_target(ctx_msg)
-    job_id_suffix = '_' + target
+    job_id_suffix = _job_id_suffix_start + target
     jobs = list(filter(lambda j: j.id.endswith(job_id_suffix), _scheduler.get_jobs('default')))
     if internal:
+        for job in jobs:
+            job.id = job.id[:-len(job_id_suffix)]
         return jobs
 
     for job in jobs:
@@ -240,7 +245,7 @@ def list_jobs(_, ctx_msg, internal=False):
         reply = 'ID：' + job_id + '\n'
         reply += '下次触发时间：\n%s\n' % job.next_run_time.strftime('%Y-%m-%d %H:%M')
         reply += '命令：\n'
-        reply += _convert_command_list_to_str(command_list)
+        reply += convert_command_list_to_str(command_list)
         _send_text(reply, ctx_msg, internal)
     if len(jobs):
         _send_text('以上', ctx_msg, internal)
@@ -256,12 +261,12 @@ def execute_job(args_text, ctx_msg, internal=False):
     if not job:
         core.echo('没有找到该计划任务，请指定正确的计划任务 ID', ctx_msg, internal)
         return
-    job_id_suffix = '_' + get_target(ctx_msg)
+    job_id_suffix = _job_id_suffix_start + get_target(ctx_msg)
     job_id = job.id[:-len(job_id_suffix)]
     _call_commands(job_id, job.kwargs['command_list'], job.kwargs['ctx_msg'], internal)
 
 
-def _convert_command_list_to_str(command_list):
+def convert_command_list_to_str(command_list):
     s = ''
     if len(command_list) > 1:
         for c in command_list:

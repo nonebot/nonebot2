@@ -104,13 +104,13 @@ Source 表示命令的来源（由谁发出），Target 表示命令将对谁产
 
 ## 命令参数
 
-命令的函数的第一个参数为命令参数，默认情况下，是一个字符串，即用户发送的消息中命令后面的内容，可以自行切割、分析。如果需要使用默认的命令参数分隔符，可以使用 `command.py` 中的 `split_args` 装饰器，使用之后，命令的函数接收到的第一个参数将变为命令参数列表，而不再是字符串。例如：
+命令的函数的第一个参数为命令参数，默认情况下，是一个字符串，即用户发送的消息中命令后面的内容，可以自行切割、分析。如果需要使用默认的命令参数分隔符，可以使用 `command.py` 中的 `split_arguments` 装饰器，使用之后，命令的函数将接受到一个名为 `argv` 的参数，为分割后的参数列表，而原先第一个参数还保留为原字符串。例如：
 
 ```python
 @__registry__.register('test')
 @__registry__.restrict(group_admin_only=True)
-@split_args()
-def test(args, ctx_msg):
-    if len(args) > 0:
+@split_arguments()
+def test(args_text, ctx_msg, argv=None):
+    if argv:
         print(args[0])
 ```
