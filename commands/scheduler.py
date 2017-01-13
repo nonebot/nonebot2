@@ -176,6 +176,8 @@ def add_job(args_text, ctx_msg, internal=False):
         job = _scheduler.add_job(_call_commands, kwargs=job_args, trigger='cron', **trigger_args,
                                  id=job_id, replace_existing=True, misfire_grace_time=30)
         _send_text('成功添加计划任务 ' + job_id_without_suffix, ctx_msg, internal)
+        if job:
+            job.id = job_id_without_suffix
         return job
     except _InvalidTriggerArgsError:
         _send_add_job_trigger_args_invalid_msg(ctx_msg, internal)

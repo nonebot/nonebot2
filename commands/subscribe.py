@@ -16,9 +16,9 @@ _scheduler_job_id_prefix = _cmd_subscribe + '_'
 @cr.restrict(group_admin_only=True)
 @split_arguments(maxsplit=1)
 @check_target
-def subscribe(args_text, ctx_msg, argv=None, allow_interactive=True):
+def subscribe(args_text, ctx_msg, argv=None, internal=False, allow_interactive=True):
     source = get_source(ctx_msg)
-    if allow_interactive and has_session(source, _cmd_subscribe):
+    if not internal and allow_interactive and has_session(source, _cmd_subscribe):
         # Already in a session, no need to pass in data,
         # because the interactive version of this command will take care of it
         return _subscribe_interactively(args_text, ctx_msg, source, None)
@@ -36,7 +36,7 @@ def subscribe(args_text, ctx_msg, argv=None, allow_interactive=True):
                 # Got command
                 data['command'] = argv[1]
 
-    if allow_interactive:
+    if not internal and allow_interactive:
         if data.keys() != {'command', 'hour', 'minute'}:
             # First visit and data is not enough
             return _subscribe_interactively(args_text, ctx_msg, source, data)
@@ -45,17 +45,18 @@ def subscribe(args_text, ctx_msg, argv=None, allow_interactive=True):
     hour, minute = data['hour'], data['minute']
     command = data['command']
     job = scheduler.add_job(
-        '-H %s -M %s %s %s' % (hour, minute, _scheduler_job_id_prefix + str(datetime.now().timestamp()), command),
+        '-H %s -M %s %s %s' % (hour, minute, _scheduler_job_id_prefix + str(int(datetime.now().timestamp())), command),
         ctx_msg, internal=True
     )
+    if internal:
+        return job
     if job:
         # Succeeded to add a job
-        print('成功订阅:', hour, minute, command)
         reply = '订阅成功，我会在每天 %s 推送哦～' % ':'.join((hour, minute))
     else:
         reply = '订阅失败，可能后台出了点小问题～'
 
-    core.echo(reply, ctx_msg)
+    core.echo(reply, ctx_msg, internal)
 
 
 @cr.register('subscribe_list', 'subscribe-list', '订阅列表', '查看订阅', '查看所有订阅', '所有订阅')
@@ -76,7 +77,7 @@ def subscribe_list(_, ctx_msg, internal=False):
 
     for index, job in enumerate(jobs):
         command_list = job.kwargs['command_list']
-        reply = 'ID：' + str(index + 1) + '\n'
+        reply = 'ID：' + job.id[len(_scheduler_job_id_prefix):] + '\n'
         reply += '下次推送时间：\n%s\n' % job.next_run_time.strftime('%Y-%m-%d %H:%M')
         reply += '命令：\n'
         reply += scheduler.convert_command_list_to_str(command_list)
@@ -94,20 +95,17 @@ def unsubscribe(_, ctx_msg, argv=None, internal=False):
                   '你可以通过「查看所有订阅」命令来查看所有订阅项目的 ID', ctx_msg, internal)
         return
 
-    jobs = subscribe_list('', ctx_msg, internal=True)
-    min_id = 1
-    max_id = len(jobs)
-    if not all(map(lambda x: x.isdigit() and int(x) in range(min_id, max_id + 1), argv)):
-        core.echo('请输入正确的 ID 哦～\n\n'
-                  '你可以通过「查看所有订阅」命令来查看所有订阅项目的 ID', ctx_msg, internal)
-
     result = []
-    for i in argv:
-        result.append(scheduler.remove_job(jobs[int(i) - 1].id, ctx_msg, internal=True))
+    for job_id_without_prefix in argv:
+        result.append(scheduler.remove_job(_scheduler_job_id_prefix + job_id_without_prefix, ctx_msg, internal=True))
+
+    if internal:
+        return result[0] if len(result) == 1 else result
+
     if all(result):
         core.echo('取消订阅成功～', ctx_msg, internal)
     else:
-        core.echo('出了点小问题，可能有一些订阅项目没有成功取消订阅，请使用「查看所有订阅」命令来检查哦～',
+        core.echo('可能有订阅 ID 没有找到，请使用「查看所有订阅」命令来检查哦～',
                   ctx_msg, internal)
 
 
