@@ -2,12 +2,12 @@ import re
 
 from nl_processor import as_processor
 
-_keywords = ('天气', '气温', '空气(质量)?', '温度', '多少度', '(风|雨|雪|冰雹|霜|雾|霾)')
+_keywords = ('天气', '气温', '空气(质量)?', '温度', '多少度', '风|雨|雪|冰雹|霜|雾|霾')
 
 
 def _match_keywords(word):
     for regex in _keywords:
-        if re.match(regex, word):
+        if re.search(regex, word):
             return True
     return False
 

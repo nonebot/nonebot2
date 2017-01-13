@@ -25,7 +25,7 @@ def parse_potential_commands(sentence):
         processed = False
         for regex in processor[0]:
             for word, flag in segmentation:
-                if re.match(regex, word):
+                if re.search(regex, word):
                     result = processor[1](sentence, segmentation)
                     if result:
                         potential_commands.append(result)
