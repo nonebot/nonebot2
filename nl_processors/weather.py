@@ -38,7 +38,7 @@ def _processor(sentence, segmentation):
             continue
 
         flag = seg.flag
-        score_dict = {'v': -10, 'l': -8, 'n': -5, 'p': -3, 't': +3, 'other': -1}
+        score_dict = {'v': -10, 'l': -8, 'n': -5, 'p': -3, 'y': 0, 't': +3, 'other': -1}
         for k, v in score_dict.items():
             if flag.startswith(k):
                 possibility += v
