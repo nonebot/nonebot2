@@ -1,5 +1,11 @@
 # XiaoKai Bot 小开机器人
 
+[![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/CCZU-DEV/xiaokai-bot/blob/master/LICENSE)
+[![Build Status](https://travis-ci.org/CCZU-DEV/xiaokai-bot.svg?branch=master)](https://travis-ci.org/CCZU-DEV/xiaokai-bot)
+[![Docker Repository](https://img.shields.io/badge/docker-richardchien%2Fxiaokai--bot-blue.svg)](https://hub.docker.com/r/richardchien/xiaokai-bot/)
+[![QQ](https://img.shields.io/badge/qq-1647869577-orange.svg)](#)
+[![WeChat](https://img.shields.io/badge/wechat-cczu__xiaokai-brightgreen.svg)](#)
+
 基于 [sjdy521/Mojo-Webqq](https://github.com/sjdy521/Mojo-Webqq) 和 [sjdy521/Mojo-Weixin](https://github.com/sjdy521/Mojo-Weixin) 实现的自动处理 QQ 和微信消息的机器人，支持自定义插件。
 
 ## 快速开始
