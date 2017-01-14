@@ -1,0 +1,15 @@
+sudo: required
+
+language: python
+python:
+  - "3.5"
+
+services:
+  - docker
+
+script:
+  - docker login -e $DOCKER_EMAIL -u $DOCKER_USER -p $DOCKER_PASS
+  - export TAG=`if [[ $TRAVIS_BRANCH =~ ^v[0-9.]+$ ]]; then echo ${TRAVIS_BRANCH#v}; else echo $TRAVIS_BRANCH; fi`
+  - docker build -f Dockerfile -t $DOCKER_REPO:$TAG .
+  - if [[ $TRAVIS_BRANCH" =~ "^v[0-9.]+$ ]]; then docker tag $DOCKER_REPO:$TAG $DOCKER_REPO:latest; fi
+  - docker push $DOCKER_REPO

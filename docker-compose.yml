@@ -1,7 +1,7 @@
 version: '2'
 services:
   mojo-webqq-api:
-    image: daocloud.io/richardchien/mojo-webqq
+    image: sjdy521/mojo-webqq
     container_name: mojo-webqq-api
     networks:
       - my-net
@@ -10,11 +10,11 @@ services:
     volumes:
       - /tmp:/tmp
     environment:
-      - PORT=5000
-      - POST_API=http://xiaokai-bot:8888/qq/
+      - MOJO_WEBQQ_PLUGIN_OPENQQ_PORT=5000
+      - MOJO_WEBQQ_PLUGIN_OPENQQ_POST_API=http://xiaokai-bot:8888/qq/
     restart: always
   mojo-weixin-api:
-    image: daocloud.io/richardchien/mojo-weixin
+    image: sjdy521/mojo-weixin
     container_name: mojo-weixin-api
     networks:
       - my-net
@@ -23,18 +23,18 @@ services:
     volumes:
       - /tmp:/tmp
     environment:
-      - PORT=5001
-      - POST_API=http://xiaokai-bot:8888/wx/
+      - MOJO_WEIXIN_PLUGIN_OPENQQ_PORT=5001
+      - MOJO_WEIXIN_PLUGIN_OPENQQ_POST_API=http://xiaokai-bot:8888/wx/
     restart: always
   xiaokai-bot:
-    image: daocloud.io/richardchien/xiaokai-bot
+    image: richardchien/xiaokai-bot
     container_name: xiaokai-bot
     networks:
       - my-net
     expose:
       - '8888'
     volumes:
-      - ./data/qq-bot:/data
+      - ./data/xiaokai-bot:/data
       - /tmp:/tmp
     environment:
       - TURING123_API_KEY=YOUR_API_KEY

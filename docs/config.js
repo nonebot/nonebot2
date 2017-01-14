@@ -1,25 +1,28 @@
 self.$config = {
-  title: 'XiaoKai Bot 文档',
-  home: 'https://raw.githubusercontent.com/CCZU-DEV/xiaokai-bot/master/README.md',
-  repo: 'CCZU-DEV/xiaokai-bot',
-  url: 'https://cczu-dev.github.io/xiaokai-bot',
-  nav: {
-    default: [
-      {
-        title: '首页', path: '/'
-      },
-      {
-        title: '编写插件', type: 'dropdown',
-        items: [
-          {
-            title: '过滤器', path: '/Write_Filter'
-          },
-          {
-            title: '命令', path: '/Write_Command'
-          }
+    title: 'XiaoKai Bot 文档',
+    home: 'https://raw.githubusercontent.com/CCZU-DEV/xiaokai-bot/master/README.md',
+    repo: 'CCZU-DEV/xiaokai-bot',
+    url: 'https://cczu-dev.github.io/xiaokai-bot',
+    nav: {
+        default: [
+            {
+                title: '首页', path: '/'
+            },
+            {
+                title: '编写插件', type: 'dropdown',
+                items: [
+                    {
+                        title: '过滤器', path: '/Write_Filter'
+                    },
+                    {
+                        title: '命令', path: '/Write_Command'
+                    },
+                    {
+                        title: '自然语言处理器', path: '/Write_NLProcessor'
+                    }
+                ]
+            }
         ]
-      }
-    ]
-  },
-  plugins: []
+    },
+    plugins: []
 };
