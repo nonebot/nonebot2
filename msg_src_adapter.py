@@ -46,7 +46,7 @@ class Adapter(object):
             if 'user_tid' in target and 'sender_tid' in target:
                 del target['user_tid']
 
-    def get_login_info(self, ctx_msg: dict):
+    def get_login_info(self):
         return {}
 
     def is_sender_superuser(self, ctx_msg: dict):

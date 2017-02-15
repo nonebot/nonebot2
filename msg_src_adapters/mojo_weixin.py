@@ -52,7 +52,7 @@ class MojoWeixinAdapter(Adapter):
 
         return new_ctx
 
-    def get_login_info(self, ctx_msg: dict):
+    def get_login_info(self):
         json = requests.get(self.api_url + '/get_user_info').json()
         if json:
             json['user_tid'] = json.get('id')

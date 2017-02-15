@@ -6,7 +6,7 @@
 [![QQ](https://img.shields.io/badge/qq-1647869577-orange.svg)](#)
 [![WeChat](https://img.shields.io/badge/wechat-cczu__xiaokai-brightgreen.svg)](#)
 
-用 Python 编写的即时聊天平台机器人，通过适配器模式支持使用多种 bot 框架／平台作为消息源（目前支持 Mojo-Webqq、Mojo-Weixin），支持自定义插件。
+用 Python 编写的即时聊天平台机器人，通过适配器模式支持使用多种 bot 框架／平台作为消息源（目前支持 [Mojo-Webqq](https://github.com/sjdy521/Mojo-Webqq)、[Mojo-Weixin](https://github.com/sjdy521/Mojo-Weixin)、[CoolQ HTTP API](https://github.com/richardchien/coolq-http-api)），支持自定义插件。
 
 请注意区分此程序和其它模拟登录或封装接口的聊天平台**客户端**，此程序不负责登录或维护即时聊天平台的账号的状态，而只负责收到消息之后对消息的分析、处理、回复等逻辑，本程序通过适配器来与所支持的聊天平台客户端进行通讯，通常包括上报数据的统一化、调用接口获取额外信息、发送消息等，而这些聊天平台客户端（很多时候它们的项目名称也是「某某 bot」，相当于机器人的前端）需要你自行运行。
 
