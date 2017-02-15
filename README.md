@@ -87,7 +87,7 @@ python3 app.py
 
 ### 命令
 
-命令分发器（`filters/command_dispatcher.py`)是一个预设的优先级为 0 的过滤器，它根据命令的开始标志判断消息中有没有指定命令，如果指定了，则执行指定的命令，如果没指定，则看当前用户有没有开启交互式会话，如果开启了会话，则执行会话指定的命令，否则，使用默认的 fallback 命令（`config.py` 中 `fallback_command` 指定，默认为 `natural_language.process`）。
+命令分发器（`filters/command_dispatcher0.py`)是一个预设的优先级为 0 的过滤器，它根据命令的开始标志判断消息中有没有指定命令，如果指定了，则执行指定的命令，如果没指定，则看当前用户有没有开启交互式会话，如果开启了会话，则执行会话指定的命令，否则，使用默认的 fallback 命令（`config.py` 中 `fallback_command` 指定，默认为 `natural_language.process`）。
 
 ### 自然语言处理器
 
