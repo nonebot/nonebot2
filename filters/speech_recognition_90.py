@@ -1,5 +1,7 @@
 """
 This filter recognizes speech in voice message and stores it in 'text' field of context message.
+
+NOTE! This filter is only for Mojo-Weixin platform.
 """
 
 import re
@@ -59,7 +61,7 @@ def _recognize_bing(wav_path, api_key, language='zh-CN'):
 
 @as_filter(priority=90)
 def _filter(ctx_msg):
-    if ctx_msg.get('format') == 'media' and ctx_msg.get('media_type') == 'voice':
+    if ctx_msg.get('format') == 'media' and ctx_msg['raw_ctx'].get('media_type') == 'voice':
         m = re.match('\[语音\]\(([/_A-Za-z0-9]+\.mp3)\)', ctx_msg.get('content'))
         if m:
             core.echo('正在识别语音内容，请稍等……', ctx_msg)

@@ -1,31 +1,5 @@
 version: '2'
 services:
-  mojo-webqq-api:
-    image: sjdy521/mojo-webqq
-    container_name: mojo-webqq-api
-    networks:
-      - my-net
-    expose:
-      - '5000'
-    volumes:
-      - /tmp:/tmp
-    environment:
-      - MOJO_WEBQQ_PLUGIN_OPENQQ_PORT=5000
-      - MOJO_WEBQQ_PLUGIN_OPENQQ_POST_API=http://xiaokai-bot:8888/qq/
-    restart: always
-  mojo-weixin-api:
-    image: sjdy521/mojo-weixin
-    container_name: mojo-weixin-api
-    networks:
-      - my-net
-    expose:
-      - '5001'
-    volumes:
-      - /tmp:/tmp
-    environment:
-      - MOJO_WEIXIN_PLUGIN_OPENQQ_PORT=5001
-      - MOJO_WEIXIN_PLUGIN_OPENQQ_POST_API=http://xiaokai-bot:8888/wx/
-    restart: always
   xiaokai-bot:
     image: richardchien/xiaokai-bot
     container_name: xiaokai-bot
@@ -40,10 +14,6 @@ services:
       - TURING123_API_KEY=YOUR_API_KEY
       - HOST=0.0.0.0
       - PORT=8888
-      - QQ_API_URL=http://mojo-webqq-api:5000/openqq
-      - QQ_SUPER_USER=12345678
-      - WX_API_URL=http://mojo-weixin-api:5001/openwx
-      - WX_SUPER_USER=abcdedfh
       - BAIDU_FANYI_APP_ID=YOUR_APP_ID
       - BAIDU_FANYI_API_KEY=YOUR_API_KEY
       - SPEECH_RECOGNITION_SERVICE=baidu|bing
