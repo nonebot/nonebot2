@@ -3,7 +3,8 @@ import requests
 
 from command import CommandRegistry
 from commands import core
-from little_shit import get_source
+from little_shit import get_source, get_message_sources
+from msg_src_adapter import get_adapter
 
 __registry__ = cr = CommandRegistry()
 
@@ -32,15 +33,19 @@ def tuling123(args_text, ctx_msg, internal=False):
         reply = '腊鸡图灵机器人出问题了，先不管他，过会儿再玩他'
     core.echo(reply, ctx_msg)
 
-# TODO: 加入微信消息源之后修改
-# @cr.register('xiaoice', '小冰')
-# def xiaoice(args_text, ctx_msg, internal=False):
-#     resp = api.wx_consult(account='xiaoice-ms', content=args_text)
-#     if resp:
-#         json = resp.json()
-#         if json and json.get('reply'):
-#             reply = json['reply']
-#             core.echo(reply, ctx_msg, internal)
-#             return reply
-#     core.echo('小冰没有回复，请稍后再试', ctx_msg, internal)
-#     return None
+
+@cr.register('xiaoice', '小冰')
+def xiaoice(args_text, ctx_msg, internal=False):
+    msg_sources = get_message_sources()
+    for src in msg_sources:
+        if src['via'] == 'mojo_weixin':
+            # Only MojoWeixin support this function
+            adapter = get_adapter('mojo_weixin', src['login_id'])
+            if adapter:
+                json = adapter.consult(account='xiaoice-ms', content=args_text)
+                if json and json.get('reply'):
+                    reply = json['reply']
+                    core.echo(reply, ctx_msg, internal)
+                    return reply
+    core.echo('小冰现在无法回复，请稍后再试', ctx_msg, internal)
+    return None

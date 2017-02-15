@@ -23,8 +23,6 @@ def _main(ctx_msg: dict):
         if not adapter:
             raise SkipException
         ctx_msg = adapter.unitize_context(ctx_msg)
-        if ctx_msg.get('post_type') != 'message':
-            raise SkipException
         if not apply_filters(ctx_msg):
             raise SkipException
     except SkipException:

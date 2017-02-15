@@ -36,18 +36,18 @@ class Adapter(object):
         elif msg_type == 'private' and hasattr(self, 'send_private_message'):
             if 'user_id' not in target and 'sender_id' in target:
                 target['user_id'] = target['sender_id']  # compatible with ctx_msg
-            elif 'user_tid' not in target and 'sender_tid' in target:
+            if 'user_tid' not in target and 'sender_tid' in target:
                 target['user_tid'] = target.get('sender_tid')  # compatible with ctx_msg
 
             self.send_private_message(target, content)
 
             if 'user_id' in target and 'sender_id' in target:
                 del target['user_id']
-            elif 'user_tid' in target and 'sender_tid' in target:
+            if 'user_tid' in target and 'sender_tid' in target:
                 del target['user_tid']
 
     def get_login_info(self, ctx_msg: dict):
-        return {'user_id': ctx_msg.get('login_id')}
+        return {}
 
     def is_sender_superuser(self, ctx_msg: dict):
         return ctx_msg.get('sender_id') == self.superuser_id
@@ -125,6 +125,8 @@ def get_adapter(via: str, login_id: str):
             get_message_sources()
         ))
         if len(msg_src_list):
+            if via not in _adapter_classes:
+                return None
             _adapter_instances[key] = _adapter_classes[via](msg_src_list[0])
             return _adapter_instances[key]
         else:

@@ -19,7 +19,7 @@ def as_processor(keywords=None):
 
 def parse_potential_commands(sentence):
     segmentation = list(jieba.posseg.cut(sentence=sentence))
-    print('分词结果:', ['[' + s.flag + ']' + s.word for s in segmentation])
+    print('分词结果:', ' '.join(['[' + s.flag + ']' + s.word for s in segmentation]))
     potential_commands = []
     for processor in _processors:
         processed = False
