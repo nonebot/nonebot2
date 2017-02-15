@@ -18,6 +18,13 @@ config = {
             'login_id': 'your_login_id',
             'superuser_id': 'your_superuser_id',
             'api_url': 'http://127.0.0.1:5001/openwx',
+        },
+        {
+            'via': 'coolq_http_api',
+            'login_id': '12345678',
+            'superuser_id': '23456789',
+            'api_url': 'http://192.168.0.100:5700',
+            'token': 'HJGiudaUYSDkn'
         }
     ]
 }
