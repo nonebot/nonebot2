@@ -1,11 +1,8 @@
+import importlib
 import os
-import hashlib
-import random
 import functools
-from datetime import datetime
 
 from config import config
-from apiclient import client as api
 
 
 class SkipException(Exception):
@@ -21,16 +18,21 @@ def get_root_dir():
     return os.path.split(os.path.realpath(__file__))[0]
 
 
-def get_filters_dir():
-    return _mkdir_if_not_exists_and_return_path(os.path.join(get_root_dir(), 'filters'))
+def get_plugin_dir(plugin_dir_name):
+    return _mkdir_if_not_exists_and_return_path(os.path.join(get_root_dir(), plugin_dir_name))
 
 
-def get_commands_dir():
-    return _mkdir_if_not_exists_and_return_path(os.path.join(get_root_dir(), 'commands'))
-
-
-def get_nl_processors_dir():
-    return _mkdir_if_not_exists_and_return_path(os.path.join(get_root_dir(), 'nl_processors'))
+def load_plugins(plugin_dir_name, module_callback=None):
+    plugin_dir = get_plugin_dir(plugin_dir_name)
+    plugin_files = filter(
+        lambda filename: filename.endswith('.py') and not filename.startswith('_'),
+        os.listdir(plugin_dir)
+    )
+    plugins = [os.path.splitext(file)[0] for file in plugin_files]
+    for mod_name in plugins:
+        mod = importlib.import_module(plugin_dir_name + '.' + mod_name)
+        if module_callback:
+            module_callback(mod)
 
 
 def get_db_dir():
@@ -46,47 +48,13 @@ def get_tmp_dir():
 
 
 def get_source(ctx_msg):
-    """
-    Source is used to distinguish the interactive sessions.
-    Note: This value may change after restarting the bot.
-
-    :return: a 32 character unique string (md5) representing a source, or a random value if something strange happened
-    """
-    source = None
-    if ctx_msg.get('via') == 'qq':
-        if ctx_msg.get('type') == 'group_message' and ctx_msg.get('group_uid') and ctx_msg.get('sender_uid'):
-            source = 'g' + ctx_msg.get('group_uid') + 'p' + ctx_msg.get('sender_uid')
-        elif ctx_msg.get('type') == 'discuss_message' and ctx_msg.get('discuss_id') and ctx_msg.get('sender_uid'):
-            source = 'd' + ctx_msg.get('discuss_id') + 'p' + ctx_msg.get('sender_uid')
-        elif ctx_msg.get('type') == 'friend_message' and ctx_msg.get('sender_uid'):
-            source = 'p' + ctx_msg.get('sender_uid')
-    elif ctx_msg.get('via') == 'wx':
-        if ctx_msg.get('type') == 'group_message' and ctx_msg.get('group_id') and ctx_msg.get('sender_id'):
-            source = 'g' + ctx_msg.get('group_id') + 'p' + ctx_msg.get('sender_id')
-        elif ctx_msg.get('type') == 'friend_message' and ctx_msg.get('sender_id'):
-            source = 'p' + ctx_msg.get('sender_id')
-    if not source:
-        source = str(int(datetime.now().timestamp())) + str(random.randint(100, 999))
-    return hashlib.md5(source.encode('utf-8')).hexdigest()
+    from msg_src_adapter import get_adapter_by_ctx
+    return get_adapter_by_ctx(ctx_msg).get_source(ctx_msg)
 
 
 def get_target(ctx_msg):
-    """
-    Target is used to distinguish the records in database.
-    Note: This value will not change after restarting the bot.
-
-    :return: an unique string (account id with some flags) representing a target,
-             or None if there is no persistent unique value
-    """
-    if ctx_msg.get('via') == 'qq':
-        if ctx_msg.get('type') == 'group_message' and ctx_msg.get('group_uid'):
-            return 'g' + ctx_msg.get('group_uid')
-        elif ctx_msg.get('type') == 'friend_message' and ctx_msg.get('sender_uid'):
-            return 'p' + ctx_msg.get('sender_uid')
-    elif ctx_msg.get('via') == 'wx':
-        if ctx_msg.get('type') == 'friend_message' and ctx_msg.get('sender_account'):
-            return 'p' + ctx_msg.get('sender_account')
-    return None
+    from msg_src_adapter import get_adapter_by_ctx
+    return get_adapter_by_ctx(ctx_msg).get_target(ctx_msg)
 
 
 def check_target(func):
@@ -96,9 +64,11 @@ def check_target(func):
 
     @functools.wraps(func)
     def wrapper(args_text, ctx_msg, *args, **kwargs):
-        target = get_target(ctx_msg)
+        from msg_src_adapter import get_adapter_by_ctx
+        adapter = get_adapter_by_ctx(ctx_msg)
+        target = adapter.get_target(ctx_msg)
         if not target:
-            api.send_message('当前语境无法使用这个命令，请尝试发送私聊消息或稍后再试吧～', ctx_msg)
+            adapter.send_message(ctx_msg, '当前语境无法使用这个命令，请尝试发送私聊消息或稍后再试吧～')
             return
         else:
             return func(args_text, ctx_msg, *args, **kwargs)
@@ -128,3 +98,7 @@ def get_fallback_command():
 
 def get_fallback_command_after_nl_processors():
     return config.get('fallback_command_after_nl_processors')
+
+
+def get_message_sources():
+    return config.get('message_sources', [])

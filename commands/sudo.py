@@ -26,22 +26,21 @@ def test(_, ctx_msg):
 
 @cr.register('block')
 @cr.restrict(full_command_only=True, superuser_only=True)
-@split_arguments(maxsplit=2)
+@split_arguments(maxsplit=1)
 def block(_, ctx_msg, argv=None):
     def _send_error_msg():
-        core.echo('参数不正确。\n\n正确使用方法：\nsudo.block wx|qq <account-to-block>', ctx_msg)
+        core.echo('参数不正确。\n\n正确使用方法：\nsudo.block <account-to-block>', ctx_msg)
 
-    if len(argv) != 2:
+    if len(argv) != 1:
         _send_error_msg()
         return
 
-    via, account = argv
+    account = argv[0]
     # Get a target using a fake context message
     target = get_target({
-        'via': via,
-        'type': 'friend_message',
-        'sender_uid': account,
-        'sender_account': account
+        'via': 'default',
+        'msg_type': 'private',
+        'sender_id': account
     })
 
     if not target:
@@ -65,31 +64,28 @@ def block_list(_, ctx_msg, internal=False):
     if internal:
         return blocked_targets
     if blocked_targets:
-        # `t[1:]` to reply user account, without target prefix 'p'.
-        # This is a shit code, and should be changed later sometime.
-        core.echo('已屏蔽的用户：\n' + ', '.join([t[1:] for t in blocked_targets]), ctx_msg)
+        core.echo('已屏蔽的用户：\n' + ', '.join(blocked_targets), ctx_msg)
     else:
         core.echo('还没有屏蔽过用户', ctx_msg)
 
 
 @cr.register('unblock')
 @cr.restrict(full_command_only=True, superuser_only=True)
-@split_arguments(maxsplit=2)
+@split_arguments(maxsplit=1)
 def unblock(_, ctx_msg, argv=None):
     def _send_error_msg():
-        core.echo('参数不正确。\n\n正确使用方法：\nsudo.unblock wx|qq <account-to-unblock>', ctx_msg)
+        core.echo('参数不正确。\n\n正确使用方法：\nsudo.unblock <account-to-unblock>', ctx_msg)
 
-    if len(argv) != 2:
+    if len(argv) != 1:
         _send_error_msg()
         return
 
-    via, account = argv
+    account = argv[0]
     # Get a target using a fake context message
     target = get_target({
-        'via': via,
-        'type': 'friend_message',
-        'sender_uid': account,
-        'sender_account': account
+        'via': 'default',
+        'msg_type': 'private',
+        'sender_id': account
     })
 
     if not target:

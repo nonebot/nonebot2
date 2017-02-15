@@ -5,4 +5,19 @@ config = {
     'command_name_separators': ('->', '::', '/'),  # Regex
     'command_args_start_flags': ('，', '：', ',', ', ', ':', ': '),  # Regex
     'command_args_separators': ('，', ','),  # Regex
+
+    'message_sources': [
+        {
+            'via': 'mojo_weixin',
+            'login_id': 'rcdevtest',
+            'superuser_id': 'richard_chien_0',
+            'api_url': 'http://127.0.0.1:5001/openwx',
+        },
+        {
+            'via': 'mojo_webqq',
+            'login_id': '3281334718',
+            'superuser_id': '1002647525',
+            'api_url': 'http://127.0.0.1:5000/openqq',
+        }
+    ]
 }

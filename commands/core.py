@@ -1,5 +1,5 @@
 from command import CommandRegistry
-from apiclient import client as api
+from msg_src_adapter import get_adapter_by_ctx
 
 __registry__ = cr = CommandRegistry()
 
@@ -9,7 +9,10 @@ def echo(args_text, ctx_msg, internal=False):
     if internal:
         return None
     else:
-        return api.send_message(args_text, ctx_msg)
+        return get_adapter_by_ctx(ctx_msg).send_message(
+            target=ctx_msg,
+            content=args_text
+        )
 
 
 @cr.register('help', '帮助', '用法', '使用帮助', '使用指南', '使用说明', '使用方法', '怎么用')

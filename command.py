@@ -1,9 +1,8 @@
 import functools
 import re
-import os
 
-from apiclient import client as api
-from little_shit import SkipException, get_command_name_separators, get_command_args_separators
+from little_shit import get_command_name_separators, get_command_args_separators
+from msg_src_adapter import get_adapter_by_ctx
 
 _command_name_seps = get_command_name_separators()
 _command_args_seps = get_command_args_separators()
@@ -117,13 +116,15 @@ class CommandRegistry:
         if command_name in self.command_map:
             func = self.command_map[command_name]
             if not self._check_scope(func, ctx_msg):
-                msg_type = ctx_msg.get('type')
-                if msg_type == 'group_message':
+                msg_type = ctx_msg.get('msg_type')
+                if msg_type == 'group':
                     msg_type_str = '群组消息'
-                elif msg_type == 'discuss_message':
+                elif msg_type == 'discuss':
                     msg_type_str = '讨论组消息'
-                else:
+                elif msg_type == 'private':
                     msg_type_str = '私聊消息'
+                else:
+                    msg_type_str = '未知来源消息'
                 raise CommandScopeError(msg_type_str)
             if not self._check_permission(func, ctx_msg):
                 raise CommandPermissionError
@@ -140,13 +141,13 @@ class CommandRegistry:
         """
         allowed_msg_type = set()
         if func.allow_group:
-            allowed_msg_type.add('group_message')
+            allowed_msg_type.add('group')
         if func.allow_discuss:
-            allowed_msg_type.add('discuss_message')
+            allowed_msg_type.add('discuss')
         if func.allow_private:
-            allowed_msg_type.add('friend_message')
+            allowed_msg_type.add('private')
 
-        if ctx_msg.get('type') in allowed_msg_type:
+        if ctx_msg.get('msg_type') in allowed_msg_type:
             return True
         return False
 
@@ -160,39 +161,23 @@ class CommandRegistry:
         :param ctx_msg: context message
         :return: permitted or not
         """
+        adapter = get_adapter_by_ctx(ctx_msg)
+        if adapter.is_sender_superuser(ctx_msg):
+            return True  # Superuser is the BIG BOSS
 
-        def check(b):
-            if not b:
-                raise SkipException
+        if func.superuser_only:
+            return False
 
-        try:
-            if func.superuser_only:
-                raise SkipException
-            if ctx_msg.get('type') == 'group_message' and ctx_msg.get('via') == 'qq':
-                allowed_roles = {'owner', 'admin', 'member'}
-                if func.group_admin_only:
-                    allowed_roles.intersection_update({'owner', 'admin'})
-                if func.group_owner_only:
-                    allowed_roles.intersection_update({'owner'})
-                groups = list(filter(
-                    lambda g: str(g.get('id')) == ctx_msg.get('group_id'),
-                    api.get_group_info(ctx_msg).json()
-                ))
-                if len(groups) <= 0 or 'member' not in groups[0]:
-                    # This is strange, not likely happens
-                    raise SkipException
+        if ctx_msg.get('msg_type') == 'group':
+            # TODO: 在酷 Q 测试一下
+            allowed_roles = {'owner', 'admin', 'member'}
+            if func.group_admin_only:
+                allowed_roles.intersection_update({'owner', 'admin'})
+            if func.group_owner_only:
+                allowed_roles.intersection_update({'owner'})
 
-                members = list(filter(
-                    lambda m: str(m.get('id')) == ctx_msg.get('sender_id'),
-                    groups[0].get('member')
-                ))
-                if len(members) <= 0 or members[0].get('role') not in allowed_roles:
-                    # This is strange, not likely happens
-                    raise SkipException
-        except SkipException:
-            if ctx_msg.get('via') == 'qq' and ctx_msg.get('sender_uid') != os.environ.get('QQ_SUPER_USER'):
-                return False
-            elif ctx_msg.get('via') == 'wx' and ctx_msg.get('sender_account') != os.environ.get('WX_SUPER_USER'):
+            role = adapter.get_sender_group_role(ctx_msg)
+            if role not in allowed_roles:
                 return False
 
         # Still alive, let go

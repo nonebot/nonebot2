@@ -1,31 +1,29 @@
 import os
-import importlib
 
 from flask import Flask, request
 
-from little_shit import SkipException, get_filters_dir
+from little_shit import SkipException, load_plugins
 from filter import apply_filters
+from msg_src_adapter import get_adapter
 
 app = Flask(__name__)
 
 
-@app.route('/qq/', methods=['POST'])
-def _handle_qq_message():
+@app.route('/<string:via>/<string:login_id>', methods=['POST'], strict_slashes=False)
+def _handle_via_account(via: str, login_id: str):
     ctx_msg = request.json
-    ctx_msg['via'] = 'qq'
-    return _main(ctx_msg)
-
-
-@app.route('/wx/', methods=['POST'])
-def _handle_wx_message():
-    ctx_msg = request.json
-    ctx_msg['via'] = 'wx'
+    ctx_msg['via'] = via
+    ctx_msg['login_id'] = login_id
     return _main(ctx_msg)
 
 
 def _main(ctx_msg: dict):
     try:
-        if ctx_msg.get('post_type') != 'receive_message':
+        adapter = get_adapter(ctx_msg.get('via'), ctx_msg.get('login_id'))
+        if not adapter:
+            raise SkipException
+        ctx_msg = adapter.unitize_context(ctx_msg)
+        if ctx_msg.get('post_type') != 'message':
             raise SkipException
         if not apply_filters(ctx_msg):
             raise SkipException
@@ -36,16 +34,7 @@ def _main(ctx_msg: dict):
     return '', 204
 
 
-def _load_filters():
-    filter_mod_files = filter(
-        lambda filename: filename.endswith('.py') and not filename.startswith('_'),
-        os.listdir(get_filters_dir())
-    )
-    command_mods = [os.path.splitext(file)[0] for file in filter_mod_files]
-    for mod_name in command_mods:
-        importlib.import_module('filters.' + mod_name)
-
-
 if __name__ == '__main__':
-    _load_filters()
+    load_plugins('msg_src_adapters')
+    load_plugins('filters')
     app.run(host=os.environ.get('HOST', '0.0.0.0'), port=os.environ.get('PORT', '8080'))

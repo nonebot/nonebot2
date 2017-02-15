@@ -8,7 +8,7 @@ from filter import as_filter
 @as_filter(priority=100)
 def _filter(ctx_msg):
     msg_format = ctx_msg.get('format')
-    if msg_format != 'text' and ctx_msg.get('type') != 'friend_message':
+    if msg_format != 'text' and ctx_msg.get('msg_type') != 'private':
         return False
     if msg_format not in ('text', 'media'):
         return False

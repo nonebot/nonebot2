@@ -4,7 +4,6 @@ import requests
 from command import CommandRegistry
 from commands import core
 from little_shit import get_source
-from apiclient import client as api
 
 __registry__ = cr = CommandRegistry()
 
@@ -33,15 +32,15 @@ def tuling123(args_text, ctx_msg, internal=False):
         reply = '腊鸡图灵机器人出问题了，先不管他，过会儿再玩他'
     core.echo(reply, ctx_msg)
 
-
-@cr.register('xiaoice', '小冰')
-def xiaoice(args_text, ctx_msg, internal=False):
-    resp = api.wx_consult(account='xiaoice-ms', content=args_text)
-    if resp:
-        json = resp.json()
-        if json and json.get('reply'):
-            reply = json['reply']
-            core.echo(reply, ctx_msg, internal)
-            return reply
-    core.echo('小冰没有回复，请稍后再试', ctx_msg, internal)
-    return None
+# TODO: 加入微信消息源之后修改
+# @cr.register('xiaoice', '小冰')
+# def xiaoice(args_text, ctx_msg, internal=False):
+#     resp = api.wx_consult(account='xiaoice-ms', content=args_text)
+#     if resp:
+#         json = resp.json()
+#         if json and json.get('reply'):
+#             reply = json['reply']
+#             core.echo(reply, ctx_msg, internal)
+#             return reply
+#     core.echo('小冰没有回复，请稍后再试', ctx_msg, internal)
+#     return None

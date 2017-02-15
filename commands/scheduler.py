@@ -1,6 +1,6 @@
 import os
 import re
-from functools import reduce, wraps
+from functools import wraps
 
 import pytz
 import requests

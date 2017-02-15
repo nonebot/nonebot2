@@ -1,6 +1,5 @@
 import re
 import sys
-import importlib
 
 import interactive
 from filter import as_filter
@@ -12,20 +11,6 @@ from command import hub as cmdhub
 _fallback_command = get_fallback_command()
 _command_start_flags = get_command_start_flags()
 _command_args_start_flags = get_command_args_start_flags()
-
-
-def _load_commands():
-    command_mod_files = filter(
-        lambda filename: filename.endswith('.py') and not filename.startswith('_'),
-        os.listdir(get_commands_dir())
-    )
-    command_mods = [os.path.splitext(file)[0] for file in command_mod_files]
-    for mod_name in command_mods:
-        cmd_mod = importlib.import_module('commands.' + mod_name)
-        try:
-            cmdhub.add_registry(mod_name, cmd_mod.__registry__)
-        except AttributeError:
-            print('Failed to load command module "' + mod_name + '.py".', file=sys.stderr)
 
 
 @as_filter(priority=0)
@@ -77,4 +62,12 @@ def _dispatch_command(ctx_msg):
         core.echo('这个命令不支持' + se.msg_type + '哦～', ctx_msg)
 
 
-_load_commands()
+def _add_registry_mod_cb(mod):
+    mod_name = mod.__name__.split('.')[1]
+    try:
+        cmdhub.add_registry(mod_name, mod.__registry__)
+    except AttributeError:
+        print('Failed to load command module "' + mod_name + '.py".', file=sys.stderr)
+
+
+load_plugins('commands', module_callback=_add_registry_mod_cb)
