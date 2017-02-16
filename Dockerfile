@@ -2,6 +2,7 @@ FROM python:3.5.1
 MAINTAINER Richard Chien <richardchienthebest@gmail.com>
 
 COPY *.py ./
+COPY msg_src_adapters msg_src_adapters
 COPY filters filters
 COPY commands commands
 COPY nl_processors nl_processors
