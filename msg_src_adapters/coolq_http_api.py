@@ -18,9 +18,8 @@ class CoolQHttpApiAdapter(Adapter):
 
     def unitize_context(self, ctx_msg: dict):
         # Check token
-        if self.token:
-            if flask_req.headers.get('Authorization', '') != 'token ' + self.token:
-                return None
+        if flask_req.headers.get('Authorization') != self.session.headers.get('Authorization'):
+            return None
 
         new_ctx = {'raw_ctx': ctx_msg, 'post_type': ctx_msg['post_type'], 'via': ctx_msg['via'],
                    'login_id': ctx_msg['login_id']}

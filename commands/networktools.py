@@ -28,13 +28,12 @@ def ip(args_text, ctx_msg):
     resp = requests.get(chinaz_url % query)
     if resp.status_code == 200:
         html = etree.HTML(resp.text)
-        p_elems = html.xpath('//*[@id="leftinfo"]/div[3]/div[2]/p')
-        if len(p_elems) > 1:
-            p_elems = p_elems[1:]
-            reply = 'ChinaZ:'
+        p_elems = html.xpath('//p[@class="WhwtdWrap bor-b1s col-gray03"]')
+        if len(p_elems) > 0:
+            reply = 'ChinaZ.com:'
             for p_elem in p_elems:
                 span_elems = p_elem.getchildren()
-                reply += '\n' + span_elems[1].text.replace('.', '_') + ', ' + span_elems[3].text
+                reply += '\n' + span_elems[1].text + ', ' + span_elems[3].text
             core.echo(reply, ctx_msg)
             found = True
 
@@ -44,7 +43,7 @@ def ip(args_text, ctx_msg):
         # Example: 'IP：123.125.114.144 来自：北京市 联通'
         items = resp.text.strip().split('：')
         if len(items) == 3:
-            reply = 'IP_CN:\n' + items[1].split(' ')[0].replace('.', '_') + ', ' + items[2]
+            reply = 'IP.cn:\n' + items[1].split(' ')[0] + ', ' + items[2]
             core.echo(reply, ctx_msg)
             found = True
 
@@ -53,7 +52,7 @@ def ip(args_text, ctx_msg):
     if resp.status_code == 200 and resp.text.strip():
         # Example: '["中国","江苏","常州","","教育网"]'
         parts = json.loads(resp.text)
-        reply = 'IPIP_NET\n' + query.replace('.', '_') + ' ' + ''.join(parts)
+        reply = 'IPIP.net\n' + query + ' ' + ''.join(parts)
         core.echo(reply, ctx_msg)
         found = True
 
