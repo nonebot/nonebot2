@@ -15,7 +15,7 @@ class MojoWeixinAdapter(Adapter):
         new_ctx = {'raw_ctx': ctx_msg, 'post_type': ctx_msg['post_type'], 'via': ctx_msg['via'],
                    'login_id': ctx_msg['login_id']}
 
-        if ctx_msg['type'].endswith('group_notice'):
+        if new_ctx['post_type'] == 'receive_message' and ctx_msg.get('type', '').endswith('notice'):
             new_ctx['post_type'] = 'notice'  # Make 'group_notice' a notice but not a message, and ignore it later
 
         if new_ctx['post_type'] != 'receive_message':
