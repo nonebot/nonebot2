@@ -2,9 +2,11 @@
 
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/CCZU-DEV/xiaokai-bot/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/CCZU-DEV/xiaokai-bot.svg?branch=master)](https://travis-ci.org/CCZU-DEV/xiaokai-bot)
-[![Docker Repository](https://img.shields.io/badge/docker-richardchien%2Fxiaokai--bot-blue.svg)](https://hub.docker.com/r/richardchien/xiaokai-bot/)
-[![QQ](https://img.shields.io/badge/qq-1647869577-orange.svg)](#)
-[![WeChat](https://img.shields.io/badge/wechat-cczu__xiaokai-brightgreen.svg)](#)
+[![Release](https://img.shields.io/github/release/CCZU-DEV/xiaokai-bot.svg)](https://github.com/CCZU-DEV/xiaokai-bot/releases)
+[![Docker Repository](https://img.shields.io/badge/docker-richardchien/xiaokai--bot-blue.svg)](https://hub.docker.com/r/richardchien/xiaokai-bot/)
+[![Docker Pulls](https://img.shields.io/docker/pulls/richardchien/xiaokai-bot.svg)](https://hub.docker.com/r/richardchien/xiaokai-bot/)
+![QQ](https://img.shields.io/badge/qq-1647869577-orange.svg)
+![WeChat](https://img.shields.io/badge/wechat-cczu__xiaokai-brightgreen.svg)
 
 用 Python 编写的即时聊天平台机器人，通过适配器模式支持使用多种 bot 框架／平台作为消息源（目前支持 [Mojo-Webqq](https://github.com/sjdy521/Mojo-Webqq)、[Mojo-Weixin](https://github.com/sjdy521/Mojo-Weixin)、[CoolQ HTTP API](https://github.com/richardchien/coolq-http-api)），支持自定义插件。
 
