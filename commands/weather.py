@@ -41,7 +41,7 @@ def weather(args_text, ctx_msg, argv: list = None, allow_interactive=True):
 
         now = data['now']
         aqi = data['aqi']['city']
-        text += '\n\n实时：\n\n%s，气温%s˚C，体感温度%s˚C，%s%s级，' \
+        text += '\n\n实时：\n\n%s，气温%s°C，体感温度%s°C，%s%s级，' \
                 '能见度%skm，空气质量指数：%s，%s，PM2.5：%s，PM10：%s' \
                 % (now['cond']['txt'], now['tmp'], now['fl'], now['wind']['dir'], now['wind']['sc'], now['vis'],
                    aqi['aqi'], aqi['qlty'], aqi['pm25'], aqi['pm10'])
