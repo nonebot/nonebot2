@@ -2,7 +2,7 @@
 
 [![License](https://img.shields.io/badge/license-GPLv3-blue.svg)](https://github.com/CCZU-DEV/xiaokai-bot/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/CCZU-DEV/xiaokai-bot.svg?branch=master)](https://travis-ci.org/CCZU-DEV/xiaokai-bot)
-[![Release](https://img.shields.io/github/release/CCZU-DEV/xiaokai-bot.svg)](https://github.com/CCZU-DEV/xiaokai-bot/releases)
+[![Tag](https://img.shields.io/github/tag/CCZU-DEV/xiaokai-bot.svg)](https://github.com/CCZU-DEV/xiaokai-bot/tags)
 [![Docker Repository](https://img.shields.io/badge/docker-richardchien/xiaokai--bot-blue.svg)](https://hub.docker.com/r/richardchien/xiaokai-bot/)
 [![Docker Pulls](https://img.shields.io/docker/pulls/richardchien/xiaokai-bot.svg)](https://hub.docker.com/r/richardchien/xiaokai-bot/)
 ![QQ](https://img.shields.io/badge/qq-1647869577-orange.svg)
