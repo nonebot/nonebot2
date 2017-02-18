@@ -15,8 +15,8 @@ _command_args_start_flags = get_command_args_start_flags()
 
 @as_filter(priority=0)
 def _dispatch_command(ctx_msg):
+    text = ctx_msg.get('text', '').lstrip()
     try:
-        text = ctx_msg.get('text', '').lstrip()
         if not text:
             raise SkipException
         source = get_source(ctx_msg)
@@ -26,6 +26,7 @@ def _dispatch_command(ctx_msg):
             if text.startswith(flag):
                 start_flag = flag
                 break
+        ctx_msg['start_flag'] = start_flag
         if start_flag is None or len(text) <= len(start_flag):
             # Note: use `start_flag is None` here because empty string is allowed to be the start flag
             # No command, check if a session exists
@@ -35,6 +36,7 @@ def _dispatch_command(ctx_msg):
                 # Use fallback
                 if _fallback_command:
                     command = [_fallback_command, text]
+                    ctx_msg['is_fallback'] = True
                 else:
                     # No fallback
                     raise SkipException
@@ -55,7 +57,15 @@ def _dispatch_command(ctx_msg):
         # Skip this message
         pass
     except CommandNotExistsError:
-        core.echo('暂时还没有这个命令哦～', ctx_msg)
+        if ctx_msg['start_flag'] == '' and _fallback_command:
+            # Empty command start flag is allowed, use fallback
+            command = [_fallback_command, text]
+            command[0] = command[0].lower()
+            ctx_msg['command'] = command[0]
+            ctx_msg['is_fallback'] = True
+            cmdhub.call(command[0], command[1], ctx_msg)
+        else:
+            core.echo('暂时还没有这个命令哦～', ctx_msg)
     except CommandPermissionError:
         core.echo('你没有权限使用这个命令哦～', ctx_msg)
     except CommandScopeError as se:

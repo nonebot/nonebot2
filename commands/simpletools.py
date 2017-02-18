@@ -79,14 +79,14 @@ def weather(args_text, ctx_msg):
 
 @cr.register('joke')
 @cr.register('笑话', '说笑话', '说个笑话')
-def weather(_, ctx_msg):
+def joke(_, ctx_msg):
     data = ai.tuling123('说个笑话', ctx_msg, internal=True)
     core.echo(data.get('text', ''), ctx_msg)
 
 
 @cr.register('baike')
 @cr.register('百科', '查百科')
-def weather(args_text, ctx_msg):
+def baike(args_text, ctx_msg):
     query = args_text.strip()
     if not query:
         core.echo('请在命令后加上要查的关键词哦～（命令和关键词用空格或逗号隔开）', ctx_msg)

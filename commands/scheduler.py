@@ -324,6 +324,7 @@ def _send_add_job_help_msg(ctx_msg, internal):
         '/scheduler.add_job 0 22 * * * --multi zhihu-daily-job\n'
         'zhihu\n'
         'echo 今天又是很棒的一天哦！\n'
+        '\n'
         '例 2：\n'
         '以下命令将每 5 分钟发送一条提示：\n'
         '/scheduler.add_job -M */5 tip-job echo 提示内容',

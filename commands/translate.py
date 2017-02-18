@@ -115,7 +115,6 @@ def translate_to(args_text, ctx_msg):
     })
     if resp.status_code == 200:
         data = resp.json()
-        print(data)
         if 'trans_result' in data:
             core.echo('翻译结果（百度翻译）：\n' + '\n'.join([x['dst'] for x in data['trans_result']]), ctx_msg)
             return

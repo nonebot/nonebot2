@@ -85,11 +85,11 @@ def get_command_name_separators():
 
 
 def get_command_args_start_flags():
-    return tuple(sorted(('[ \t\n]+',) + config.get('command_args_start_flags', ()), reverse=True))
+    return tuple(sorted(('[ \\t\\n]+',) + config.get('command_args_start_flags', ()), reverse=True))
 
 
 def get_command_args_separators():
-    return tuple(sorted(('[ \t\n]+',) + config.get('command_args_separators', ()), reverse=True))
+    return tuple(sorted(('[ \\t\\n]+',) + config.get('command_args_separators', ()), reverse=True))
 
 
 def get_fallback_command():
