@@ -24,6 +24,5 @@ def _processor(sentence, segmentation):
             lang, query = m.group('lang'), m.group('query')
             break
     if lang and query:
-        print('翻译: 目标语言:', lang, ', 待翻译文本:', query)
         return 90, 'translate.translate_to', ' '.join((lang.strip(), query.strip(' ,，'))), None
     return None

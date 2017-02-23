@@ -13,6 +13,7 @@ _command_start_flags = get_command_start_flags()
 _command_args_start_flags = get_command_args_start_flags()
 
 
+# noinspection PyBroadException
 @as_filter(priority=0)
 def _dispatch_command(ctx_msg):
     text = ctx_msg.get('text', '').lstrip()
@@ -41,14 +42,18 @@ def _dispatch_command(ctx_msg):
                     # No fallback
                     raise SkipException
         else:
-            # Split command and arguments
-            command = re.split('|'.join(_command_args_start_flags),
-                               text[len(start_flag):], 1)
-            if len(command) == 1:
-                # Add an empty argument
-                command.append('')
-            # Starting a new command, so remove previous command session, if any
-            interactive.remove_session(source)
+            if start_flag == '' and interactive.has_session(source):
+                # Start flag is empty, so we don't override any sessions
+                command = [interactive.get_session(source).cmd, text]
+            else:
+                # Split command and arguments
+                command = re.split('|'.join(_command_args_start_flags),
+                                   text[len(start_flag):], 1)
+                if len(command) == 1:
+                    # Add an empty argument
+                    command.append('')
+                # Starting a new command, so remove previous command session, if any
+                interactive.remove_session(source)
 
         command[0] = command[0].lower()
         ctx_msg['command'] = command[0]
@@ -70,6 +75,10 @@ def _dispatch_command(ctx_msg):
         core.echo('你没有权限使用这个命令哦～', ctx_msg)
     except CommandScopeError as se:
         core.echo('这个命令不支持' + se.msg_type + '哦～', ctx_msg)
+    except Exception as e:
+        # Ignore all exceptions raised during command running
+        print(e)
+        core.echo('程序执行命令时发生了一点错误，可能没法回复啦～', ctx_msg)
 
 
 def _add_registry_mod_cb(mod):

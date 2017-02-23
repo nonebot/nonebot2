@@ -302,7 +302,30 @@ def split_arguments(maxsplit=0):
             elif isinstance(argument, (list, tuple)):
                 argv = list(argument)
             else:
-                argv = list(filter(lambda arg: arg, re.split('|'.join(_command_args_seps), argument, maxsplit)))
+                regexp = re.compile('|'.join(_command_args_seps))
+                if maxsplit == 0:
+                    argv = list(filter(lambda arg: arg, regexp.split(argument)))
+                else:
+                    cur = 0
+                    tmp_argument = argument
+                    argv = []
+                    while cur <= maxsplit:
+                        sl = regexp.split(tmp_argument, 1)
+                        if len(sl) == 1:
+                            if sl[0]:
+                                argv.append(sl[0])
+                            break
+                        # Here len(sl) is > 1 (== 2)
+                        if not sl[0]:
+                            tmp_argument = sl[1]
+                            continue
+                        if cur < maxsplit:
+                            argv.append(sl[0])
+                            tmp_argument = sl[1]
+                        else:
+                            # Last time
+                            argv.append(tmp_argument)
+                        cur += 1
             return func(argument, argv=argv, *args, **kwargs)
 
         return wrapper

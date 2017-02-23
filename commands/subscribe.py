@@ -45,7 +45,8 @@ def subscribe(args_text, ctx_msg, argv=None, internal=False, allow_interactive=T
     hour, minute = data['hour'], data['minute']
     command = data['command']
     job = scheduler.add_job(
-        '-H %s -M %s %s %s' % (hour, minute, _scheduler_job_id_prefix + str(int(datetime.now().timestamp())), command),
+        '-H %s -M %s --multi %s %s' % (
+        hour, minute, _scheduler_job_id_prefix + str(int(datetime.now().timestamp())), command),
         ctx_msg, internal=True
     )
     if internal:
@@ -138,7 +139,7 @@ def _subscribe_interactively(args_text, ctx_msg, source, data):
     if 'command' not in sess.data:
         # Ask for command
         core.echo(
-            '请输入你需要订阅的命令（包括所需的参数），不需要加开头的斜杠哦～\n\n'
+            '请输入你需要订阅的命令（包括所需的参数），每行一条，不需要加开头的斜杠哦～\n\n'
             '例如（序号后的）：\n'
             '(1) 天气 南京\n'
             '(2) 知乎日报\n'
