@@ -14,7 +14,7 @@ def _processor_anime_index(sentence, segmentation):
     args_text = month if month else ''
     args_text = (str(year) + ' ' + args_text) if year else args_text
 
-    possibility = 80
+    possibility = 90
     if '哪些' in sentence or '什么' in sentence:
         possibility += 3
     if not re.search('b\s*站', sentence.lower()):
@@ -25,9 +25,9 @@ def _processor_anime_index(sentence, segmentation):
 
 @as_processor(keywords=('更新',))
 def _processor_anime_timeline(sentence, segmentation):
-    m = re.match('(?P<day_str>(?:前|昨|今|明|大?后)天)?(?P<name>.+?)'
+    m = re.match('(?:b\s*站)?(?P<day_str>(?:前|昨|今|明|大?后)天)?(?P<name>.+?)'
                  '(?P<day_str2>(?:前|昨|今|明|大?后)天)?(?:会|有)?更(?:不更)?新',
-                 sentence)
+                 sentence.lower())
     day_str, name = None, None
     if m:
         day_str = m.group('day_str') or m.group('day_str2')
@@ -36,9 +36,11 @@ def _processor_anime_timeline(sentence, segmentation):
     if not name:
         return None
 
-    possibility = 80
+    possibility = 90
     if not day_str:
         possibility -= 5
+    if '吗' in sentence:
+        possibility += 5
     if not re.search('b\s*站', sentence.lower()):
         possibility -= 10
 
@@ -46,3 +48,18 @@ def _processor_anime_timeline(sentence, segmentation):
     delta_day = delta_day_dict.get(day_str, 0)
 
     return possibility, 'bilibili.anime_timeline', str(delta_day) + ' ' + name, None
+
+
+@as_processor(keywords=('更新',))
+def _processor_anime_timeline_2(sentence, segmentation):
+    m = re.match('(?:b\s*站)?(?P<name>.+?)(?:(?:什么|啥)时候)?(?:会|有)?更新', sentence.lower())
+    name = m.group('name') if m else None
+
+    if not name:
+        return None
+
+    possibility = 90
+    if not re.search('b\s*站', sentence.lower()):
+        possibility -= 10
+
+    return possibility, 'bilibili.anime_timeline', name, None
