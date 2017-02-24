@@ -76,7 +76,7 @@ def anime_timeline(args_text, ctx_msg, internal=False, argv=None):
 
     if re.fullmatch('\d{1,2}-\d{1,2}', argv[0]):
         # month-day
-        date_str = argv[0]
+        date_str = '%02d-%02d' % tuple(map(lambda x: int(x), argv[0].split('-')))
         argv = argv[1:]
     elif re.fullmatch('-?\d', argv[0]):
         # timedelta (days)
