@@ -28,7 +28,7 @@ _scheduler = BackgroundScheduler(
 
 _command_args_start_flags = get_command_args_start_flags()
 
-_args_split_sep = '[ \n\t]'
+_args_split_sep = ' |\r?\n|\t'
 _job_id_suffix_start = '@'
 
 
@@ -152,7 +152,7 @@ def add_job(args_text, ctx_msg, internal=False):
         job_id = job_id_without_suffix + _job_id_suffix_start + get_target(ctx_msg)
         command_list = []
         if multi:
-            command_raw_list = command_raw.split('\n')
+            command_raw_list = re.split('\r?\n', command_raw)
             for cmd_raw in command_raw_list:
                 cmd_raw = cmd_raw.lstrip()
                 if not cmd_raw:
