@@ -1,8 +1,7 @@
-self.$config = {
+docute.init({
     title: 'XiaoKai Bot 文档',
     home: 'https://raw.githubusercontent.com/CCZU-DEV/xiaokai-bot/master/README.md',
     repo: 'CCZU-DEV/xiaokai-bot',
-    url: 'https://cczu-dev.github.io/xiaokai-bot',
     nav: {
         default: [
             {
@@ -34,4 +33,4 @@ self.$config = {
         ]
     },
     plugins: []
-};
+});
