@@ -2,3 +2,6 @@
 *.iml
 data
 config.py
+__pycache__
+.venv
+venv
