@@ -29,7 +29,7 @@ def anime_index(_, ctx_msg, argv=None):
         core.echo('抱歉无法识别的输入的参数，下面将给出本季度的番剧～', ctx_msg)
 
     quarter = math.ceil(month / 3)
-    json = requests.get('http://bangumi.bilibili.com/web_api/season/index'
+    json = requests.get('http://bangumi.bilibili.com/web_api/season/index_global'
                         '?page=1&page_size=20&version=0&is_finish=0'
                         '&start_year=%d&quarter=%d&tag_id=&index_type=1&index_sort=0' % (year, quarter)).json()
     if json and json.get('result') and int(json['result'].get('count', 0)) > 0:
