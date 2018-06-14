@@ -1,10 +1,1 @@
-lxml
-apscheduler
-requests
-cachetools
-pytz
-flask
-sqlalchemy
-pydub
-SpeechRecognition
-jieba
+aiocqhttp
