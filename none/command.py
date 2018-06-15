@@ -1,43 +1,61 @@
 import re
-from typing import Tuple, Union, Callable, Iterable, Dict, Any
+from typing import Tuple, Union, Callable, Iterable, Dict, Any, Optional
 
 from aiocqhttp import CQHttp
 
-from . import permissions as perm, logger
+from . import permissions as perm
 
-_command_tree = {}
+# Key: str (one segment of command name)
+# Value: subtree or a leaf Command object
+_registry = {}
 
 # Key: str
 # Value: tuple that identifies a command
-_command_aliases = {}
+_aliases = {}
 
 # Key: context source
 # Value: Command object
-_command_sessions = {}
+_sessions = {}
 
-
-# TODO: Command 类只用来表示注册的命令，Session 类用来在运行时表示命令的参数等
 
 class Command:
-    __slots__ = ('name', 'arg', 'images', 'data', 'last_interaction')
+    __slots__ = ('name', 'func', 'permission')
 
-    def __init__(self, name: Tuple[str]):
+    def __init__(self, name: Tuple[str], func: Callable, permission: int):
         self.name = name
+        self.func = func
+        self.permission = permission
 
-    async def __call__(self, bot: CQHttp, ctx: Dict[str, Any],
-                       *args, **kwargs) -> bool:
-        logger.info(repr(self.images))
-        cmd_tree = _command_tree
-        for part in self.name:
-            if part not in cmd_tree:
-                return False
-            cmd_tree = cmd_tree[part]
-        cmd = cmd_tree
-        if 'func' not in cmd or not isinstance(cmd['func'], Callable):
-            return False
+    async def run(self, bot, ctx, session,
+                  *args, **kwargs) -> Any:
         # TODO: check permission
-        await cmd['func'](bot, ctx, self)
-        return True
+        if isinstance(self.func, Callable):
+            return await self.func(bot, ctx, session)
+        return None
+
+
+def _find_command(name: Tuple[str]) -> Optional[Command]:
+    if not name:
+        return None
+
+    cmd_tree = _registry
+    for part in name[:-1]:
+        if part not in cmd_tree:
+            return False
+        cmd_tree = cmd_tree[part]
+
+    return cmd_tree.get(name[-1])
+
+
+class Session:
+    __slots__ = ('cmd', 'arg', 'images', 'data', 'last_interaction')
+
+    def __init__(self, cmd: Command, arg: str = ''):
+        self.cmd = cmd
+        self.arg = arg
+        self.images = []
+        self.data = {}
+        self.last_interaction = None
 
 
 async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
@@ -63,7 +81,7 @@ async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
         return False
 
     cmd_name_text, *cmd_remained = full_command.split(maxsplit=1)
-    cmd_name = _command_aliases.get(cmd_name_text)
+    cmd_name = _aliases.get(cmd_name_text)
 
     if not cmd_name:
         for sep in bot.config.COMMAND_SEP:
@@ -76,11 +94,15 @@ async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
         else:
             cmd_name = (cmd_name_text,)
 
-    cmd = Command(cmd_name)
-    cmd.arg = ''.join(cmd_remained)
-    cmd.images = [s.data['url'] for s in ctx['message']
-                  if s.type == 'image' and 'url' in s.data]
-    return await cmd(bot, ctx)
+    cmd = _find_command(cmd_name)
+    if not cmd:
+        return False
+
+    session = Session(cmd, ''.join(cmd_remained))
+    session.images = [s.data['url'] for s in ctx['message']
+                      if s.type == 'image' and 'url' in s.data]
+    await cmd.run(bot, ctx, session)
+    return True
 
 
 def on_command(name: Union[str, Tuple[str]], aliases: Iterable = (),
@@ -92,17 +114,14 @@ def on_command(name: Union[str, Tuple[str]], aliases: Iterable = (),
             raise ValueError('the name of a command must not be empty')
 
         cmd_name = name if isinstance(name, tuple) else (name,)
-        current_parent = _command_tree
+        current_parent = _registry
         for parent_key in cmd_name[:-1]:
             current_parent[parent_key] = {}
             current_parent = current_parent[parent_key]
-        current_parent[cmd_name[-1]] = {
-            'name': cmd_name,
-            'func': func,
-            'permission': permission
-        }
+        current_parent[cmd_name[-1]] = Command(
+            name=cmd_name, func=func, permission=permission)
         for alias in aliases:
-            _command_aliases[alias] = cmd_name
+            _aliases[alias] = cmd_name
         return func
 
     return deco
