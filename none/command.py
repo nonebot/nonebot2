@@ -1,7 +1,8 @@
 import re
 from typing import Tuple, Union, Callable, Iterable, Dict, Any, Optional
 
-from aiocqhttp import CQHttp
+from aiocqhttp import CQHttp, Error as CQHttpError
+from aiocqhttp.message import Message
 
 from . import permissions as perm
 
@@ -29,7 +30,34 @@ class Command:
     async def run(self, bot, ctx, session,
                   *args, **kwargs) -> Any:
         # TODO: check permission
-        if isinstance(self.func, Callable):
+        permission = 0
+        if ctx['user_id'] in bot.config.SUPERUSERS:
+            permission |= perm.IS_SUPERUSER
+        if ctx['message_type'] == 'private':
+            if ctx['sub_type'] == 'friend':
+                permission |= perm.IS_PRIVATE_FRIEND
+            elif ctx['sub_type'] == 'group':
+                permission |= perm.IS_PRIVATE_GROUP
+            elif ctx['sub_type'] == 'discuss':
+                permission |= perm.IS_PRIVATE_DISCUSS
+            elif ctx['sub_type'] == 'other':
+                permission |= perm.IS_PRIVATE_OTHER
+        elif ctx['message_type'] == 'group':
+            permission |= perm.IS_GROUP_MEMBER
+            if not ctx['anonymous']:
+                try:
+                    member_info = await bot.get_group_member_info(**ctx)
+                    if member_info:
+                        if member_info['role'] == 'owner':
+                            permission |= perm.IS_GROUP_OWNER
+                        elif member_info['role'] == 'admin':
+                            permission |= perm.IS_GROUP_ADMIN
+                except CQHttpError:
+                    pass
+        elif ctx['message_type'] == 'discuss':
+            permission |= perm.IS_DISCUSS
+
+        if isinstance(self.func, Callable) and permission & self.permission:
             return await self.func(bot, ctx, session)
         return None
 
@@ -48,11 +76,13 @@ def _find_command(name: Tuple[str]) -> Optional[Command]:
 
 
 class Session:
-    __slots__ = ('cmd', 'arg', 'images', 'data', 'last_interaction')
+    __slots__ = ('cmd', 'arg', 'arg_text',
+                 'images', 'data', 'last_interaction')
 
     def __init__(self, cmd: Command, arg: str = ''):
         self.cmd = cmd
         self.arg = arg
+        self.arg_text = Message(arg).extract_plain_text()
         self.images = []
         self.data = {}
         self.last_interaction = None
@@ -60,7 +90,7 @@ class Session:
 
 async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
     # TODO: check if there is a session
-    msg_text = ctx['message'].extract_plain_text().lstrip()
+    msg_text = str(ctx['message']).lstrip()
 
     for start in bot.config.COMMAND_START:
         if isinstance(start, type(re.compile(''))):
@@ -98,7 +128,7 @@ async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
     if not cmd:
         return False
 
-    session = Session(cmd, ''.join(cmd_remained))
+    session = Session(cmd=cmd, arg=''.join(cmd_remained))
     session.images = [s.data['url'] for s in ctx['message']
                       if s.type == 'image' and 'url' in s.data]
     await cmd.run(bot, ctx, session)

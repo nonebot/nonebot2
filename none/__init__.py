@@ -1,4 +1,5 @@
 import os
+import sys
 import importlib
 import logging
 import re
@@ -9,6 +10,11 @@ from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
 
 logger = logging.getLogger('none')
+default_handler = logging.StreamHandler(sys.stdout)
+default_handler.setFormatter(logging.Formatter(
+    '[%(asctime)s] %(levelname)s: %(message)s'
+))
+logger.addHandler(default_handler)
 
 from .plugin import handle_message, handle_notice, handle_request
 from .command import on_command
