@@ -27,9 +27,7 @@ class Command:
         self.func = func
         self.permission = permission
 
-    async def run(self, bot, ctx, session,
-                  *args, **kwargs) -> Any:
-        # TODO: check permission
+    async def run(self, bot, ctx, session) -> Any:
         permission = 0
         if ctx['user_id'] in bot.config.SUPERUSERS:
             permission |= perm.IS_SUPERUSER
@@ -69,7 +67,7 @@ def _find_command(name: Tuple[str]) -> Optional[Command]:
     cmd_tree = _registry
     for part in name[:-1]:
         if part not in cmd_tree:
-            return False
+            return None
         cmd_tree = cmd_tree[part]
 
     return cmd_tree.get(name[-1])
