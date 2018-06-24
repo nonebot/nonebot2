@@ -74,16 +74,25 @@ def _find_command(name: Tuple[str]) -> Optional[Command]:
 
 
 class Session:
-    __slots__ = ('cmd', 'arg', 'arg_text',
-                 'images', 'data', 'last_interaction')
+    __slots__ = ('cmd', 'ctx',
+                 'current_key', 'current_arg', 'current_arg_text',
+                 'images', 'args', 'last_interaction')
 
-    def __init__(self, cmd: Command, arg: str = ''):
+    def __init__(self, cmd: Command, ctx: Dict[str, Any],
+                 current_arg: str = ''):
         self.cmd = cmd
-        self.arg = arg
-        self.arg_text = Message(arg).extract_plain_text()
+        self.ctx = ctx
+        self.current_key = None
+        self.current_arg = current_arg
+        self.current_arg_text = Message(current_arg).extract_plain_text()
         self.images = []
-        self.data = {}
+        self.args = {}
         self.last_interaction = None
+
+    def require_arg(self, key: str, *,
+                    interactive: bool = True, prompt: str = ''):
+        # TODO: 检查 key 是否在 args 中，如果不在，抛出异常，保存 session，等待用户填充
+        pass
 
 
 async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
@@ -126,7 +135,7 @@ async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
     if not cmd:
         return False
 
-    session = Session(cmd=cmd, arg=''.join(cmd_remained))
+    session = Session(cmd=cmd, ctx=ctx, current_arg=''.join(cmd_remained))
     session.images = [s.data['url'] for s in ctx['message']
                       if s.type == 'image' and 'url' in s.data]
     await cmd.run(bot, ctx, session)
@@ -150,6 +159,9 @@ def on_command(name: Union[str, Tuple[str]], aliases: Iterable = (),
             name=cmd_name, func=func, permission=permission)
         for alias in aliases:
             _aliases[alias] = cmd_name
+
+        # TODO: 给 func 添加一个 argparser 装饰器，用于注册它的参数解析器
+
         return func
 
     return deco
