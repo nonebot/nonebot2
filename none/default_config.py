@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 API_ROOT = ''
 SECRET = ''
 ACCESS_TOKEN = ''
@@ -8,3 +10,4 @@ DEBUG = True
 SUPERUSERS = set()
 COMMAND_START = {'/', '!', '／', '！'}
 COMMAND_SEP = {'/', '.'}
+SESSION_EXPIRE_TIMEOUT = timedelta(minutes=5)

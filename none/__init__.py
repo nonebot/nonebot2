@@ -17,7 +17,7 @@ default_handler.setFormatter(logging.Formatter(
 logger.addHandler(default_handler)
 
 from .plugin import handle_message, handle_notice, handle_request
-from .command import on_command, call_command
+from .command import on_command
 
 
 def create_bot(config_object: Any = None):
