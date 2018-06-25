@@ -1,13 +1,16 @@
 import re
 import asyncio
 from datetime import datetime
-from typing import Tuple, Union, Callable, Iterable, Dict, Any, Optional, List
+from typing import (
+    Tuple, Union, Callable, Iterable, Dict, Any, Optional, List, Sequence
+)
 
 from aiocqhttp import CQHttp, Error as CQHttpError
 from aiocqhttp.message import Message
 
 from . import permissions as perm
 from .helpers import context_source
+from .expression import render
 
 # Key: str (one segment of command name)
 # Value: subtree or a leaf Command object
@@ -160,7 +163,8 @@ class Session:
             return False
         return True
 
-    def require_arg(self, key: str, prompt: str, *,
+    def require_arg(self, key: str, prompt: str = None, *,
+                    prompt_expr: Union[str, Sequence[str], Callable] = None,
                     interactive: bool = True) -> Any:
         """
         Get an argument with a given key.
@@ -174,6 +178,7 @@ class Session:
 
         :param key: argument key
         :param prompt: prompt to ask the user
+        :param prompt_expr: prompt expression to ask the user
         :param interactive: should enter interactive mode while key missing
         :return: the argument value
         :raise FurtherInteractionNeeded: further interaction is needed
@@ -184,6 +189,8 @@ class Session:
 
         self.current_key = key
         # ask the user for more information
+        if prompt_expr is not None:
+            prompt = render(prompt_expr, key=key)
         asyncio.ensure_future(self.send(prompt))
         raise FurtherInteractionNeeded
 
@@ -195,6 +202,11 @@ class Session:
         except CQHttpError:
             if not ignore_failure:
                 raise
+
+    async def send_expr(self,
+                        expr: Union[str, Sequence[str], Callable],
+                        **kwargs):
+        return await self.send(render(expr, **kwargs))
 
 
 def _new_command_session(bot: CQHttp,

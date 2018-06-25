@@ -55,14 +55,14 @@ _plugins = set()
 
 def load_plugins():
     _plugins.clear()
-    root_dir = os.path.dirname(__path__[0])
-    plugins_dir = os.path.join(root_dir, 'plugins')
+    none_dir = __path__[0]
+    plugins_dir = os.path.join(none_dir, 'plugins')
     saved_cwd = os.getcwd()
-    os.chdir(root_dir)
+    os.chdir(none_dir)
     for item in os.listdir(plugins_dir):
         path = os.path.join(plugins_dir, item)
         if os.path.isfile(path) and \
-                (path.startswith('_') or not path.endswith('.py')):
+                (item.startswith('_') or not item.endswith('.py')):
             continue
         if os.path.isdir(path) and \
                 (path.startswith('_') or not os.path.exists(
@@ -73,7 +73,7 @@ def load_plugins():
         if not m:
             continue
 
-        mod_name = 'plugins.' + m.group(1)
+        mod_name = 'none.plugins.' + m.group(1)
         try:
             _plugins.add(importlib.import_module(mod_name))
             logger.info('Succeeded to import "{}"'.format(mod_name))
