@@ -106,6 +106,24 @@ def on_command(name: Union[str, Tuple[str]], *,
     return deco
 
 
+class CommandGroup:
+    __slots__ = ('basename', 'permission')
+
+    def __init__(self, name: Union[str, Tuple[str]], permission: int = None):
+        self.basename = name if isinstance(name, tuple) else (name,)
+        self.permission = permission
+
+    def command(self, name: Union[str, Tuple[str]], *,
+                aliases: Iterable = None, permission: int = None) -> Callable:
+        name = self.basename + (name if isinstance(name, tuple) else (name,))
+        kwargs = {}
+        if aliases is not None:
+            kwargs['aliases'] = aliases
+        if permission is not None:
+            kwargs['permission'] = permission
+        return on_command(name, **kwargs)
+
+
 def _find_command(name: Union[str, Tuple[str]]) -> Optional[Command]:
     cmd_name = name if isinstance(name, tuple) else (name,)
 
