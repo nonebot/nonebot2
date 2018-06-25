@@ -74,7 +74,8 @@ async def calculate_permission(bot: CQHttp, ctx: Dict[str, Any]) -> int:
     return permission
 
 
-def on_command(name: Union[str, Tuple[str]], aliases: Iterable = (),
+def on_command(name: Union[str, Tuple[str]], *,
+               aliases: Iterable = (),
                permission: int = perm.EVERYONE) -> Callable:
     def deco(func: Callable) -> Callable:
         if not isinstance(name, (str, tuple)):
@@ -85,7 +86,7 @@ def on_command(name: Union[str, Tuple[str]], aliases: Iterable = (),
         cmd_name = name if isinstance(name, tuple) else (name,)
         current_parent = _registry
         for parent_key in cmd_name[:-1]:
-            current_parent[parent_key] = {}
+            current_parent[parent_key] = current_parent.get(parent_key) or {}
             current_parent = current_parent[parent_key]
         cmd = Command(name=cmd_name, func=func, permission=permission)
         current_parent[cmd_name[-1]] = cmd
