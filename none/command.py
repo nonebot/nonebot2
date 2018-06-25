@@ -27,8 +27,9 @@ class Command:
         self.func = func
         self.permission = permission
 
-    async def run(self, bot, ctx, session) -> Any:
+    async def run(self, bot, session) -> bool:
         permission = 0
+        ctx = session.ctx
         if ctx['user_id'] in bot.config.SUPERUSERS:
             permission |= perm.IS_SUPERUSER
         if ctx['message_type'] == 'private':
@@ -56,8 +57,9 @@ class Command:
             permission |= perm.IS_DISCUSS
 
         if isinstance(self.func, Callable) and permission & self.permission:
-            return await self.func(bot, ctx, session)
-        return None
+            await self.func(bot, session)
+            return True
+        return False
 
 
 def _find_command(name: Tuple[str]) -> Optional[Command]:
@@ -89,8 +91,8 @@ class Session:
         self.args = {}
         self.last_interaction = None
 
-    def require_arg(self, key: str, *,
-                    interactive: bool = True, prompt: str = ''):
+    def require_arg(self, key: str, prompt: str = '', *,
+                    interactive: bool = True):
         # TODO: 检查 key 是否在 args 中，如果不在，抛出异常，保存 session，等待用户填充
         pass
 
@@ -138,8 +140,7 @@ async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
     session = Session(cmd=cmd, ctx=ctx, current_arg=''.join(cmd_remained))
     session.images = [s.data['url'] for s in ctx['message']
                       if s.type == 'image' and 'url' in s.data]
-    await cmd.run(bot, ctx, session)
-    return True
+    return await cmd.run(bot, session)
 
 
 def on_command(name: Union[str, Tuple[str]], aliases: Iterable = (),

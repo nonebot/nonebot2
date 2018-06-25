@@ -7,16 +7,10 @@ from none.helpers import send
 
 
 @none.on_command('echo')
-async def echo(bot, ctx, session: Session):
-    text = session.require_arg('text')
-    await send(bot, session.ctx, text)
-
-
-@echo.argparser
-def _(session: Session):
-    session.args['text'] = session.current_arg
+async def echo(bot, session: Session):
+    await send(bot, session.ctx, session.current_arg)
 
 
 @none.on_command('say', permission=perm.SUPERUSER)
-async def _(bot, ctx, session: Session):
+async def _(bot, session: Session):
     await send(bot, session.ctx, unescape(session.current_arg))
