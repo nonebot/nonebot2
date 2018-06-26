@@ -53,30 +53,29 @@ def create_bot(config_object: Any = None):
 _plugins = set()
 
 
-def load_plugins():
-    _plugins.clear()
-    none_dir = __path__[0]
-    plugins_dir = os.path.join(none_dir, 'plugins')
-    saved_cwd = os.getcwd()
-    os.chdir(none_dir)
-    for item in os.listdir(plugins_dir):
-        path = os.path.join(plugins_dir, item)
+def load_plugins(plugin_dir: str, module_prefix: str):
+    for name in os.listdir(plugin_dir):
+        path = os.path.join(plugin_dir, name)
         if os.path.isfile(path) and \
-                (item.startswith('_') or not item.endswith('.py')):
+                (name.startswith('_') or not name.endswith('.py')):
             continue
         if os.path.isdir(path) and \
-                (path.startswith('_') or not os.path.exists(
+                (name.startswith('_') or not os.path.exists(
                     os.path.join(path, '__init__.py'))):
             continue
 
-        m = re.match(r'([_A-Z0-9a-z]+)(.py)?', item)
+        m = re.match(r'([_A-Z0-9a-z]+)(.py)?', name)
         if not m:
             continue
 
-        mod_name = 'none.plugins.' + m.group(1)
+        mod_name = f'{module_prefix}.{m.group(1)}'
         try:
             _plugins.add(importlib.import_module(mod_name))
             logger.info('Succeeded to import "{}"'.format(mod_name))
         except ImportError:
             logger.warning('Failed to import "{}"'.format(mod_name))
-    os.chdir(saved_cwd)
+
+
+def load_builtin_plugins():
+    plugin_dir = os.path.join(os.path.dirname(__file__), 'plugins')
+    load_plugins(plugin_dir, 'none.plugins')
