@@ -2,11 +2,10 @@ import random
 from typing import Union, Sequence, Callable
 
 from aiocqhttp import message
-from aiocqhttp.message import Message
 
 
 def render(expr: Union[str, Sequence[str], Callable], *, escape_args=True,
-           **kwargs) -> Message:
+           **kwargs) -> str:
     if isinstance(expr, Callable):
         expr = expr()
     elif isinstance(expr, Sequence):

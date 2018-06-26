@@ -1,6 +1,6 @@
-import none
 from none.command import Session, CommandGroup
-from none.expressions import weather as expr
+
+from . import expressions as expr
 
 w = CommandGroup('weather')
 
@@ -14,7 +14,7 @@ async def weather(session: Session):
 @weather.args_parser
 async def _(session: Session):
     if session.current_key:
-        session.args[session.current_key] = session.current_arg.strip()
+        session.args[session.current_key] = session.current_arg_text.strip()
 
 
 @w.command('suggestion', aliases=('生活指数', '生活建议', '生活提示'))
