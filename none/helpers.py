@@ -1,4 +1,9 @@
-from typing import Dict, Any
+from typing import Dict, Any, Union, List, Sequence, Callable, Optional
+
+from aiocqhttp import CQHttp, Error as CQHttpError
+from aiocqhttp.bus import EventBus
+
+from . import expression
 
 
 def context_source(ctx: Dict[str, Any]) -> str:
@@ -10,3 +15,48 @@ def context_source(ctx: Dict[str, Any]) -> str:
     if ctx.get('user_id'):
         src += f'/user/{ctx["user_id"]}'
     return src
+
+
+async def send(bot: CQHttp, ctx: Dict[str, Any],
+               message: Union[str, Dict[str, Any], List[Dict[str, Any]]],
+               *, ignore_failure: bool = True) -> None:
+    try:
+        if ctx.get('post_type') == 'message':
+            await bot.send(ctx, message)
+        else:
+            ctx = ctx.copy()
+            if 'message' in ctx:
+                del ctx['message']
+            if 'group_id' in ctx:
+                await bot.send_group_msg(**ctx, message=message)
+            elif 'discuss_id' in ctx:
+                await bot.send_discuss_msg(**ctx, message=message)
+            elif 'user_id' in ctx:
+                await bot.send_private_msg(**ctx, message=message)
+    except CQHttpError:
+        if not ignore_failure:
+            raise
+
+
+async def send_expr(bot: CQHttp, ctx: Dict[str, Any],
+                    expr: Union[str, Sequence[str], Callable],
+                    **kwargs):
+    return await send(bot, ctx, expression.render(expr, **kwargs))
+
+
+def make_event_deco(post_type: str, bus: EventBus) -> Callable:
+    def deco_deco(arg: Optional[Union[str, Callable]] = None,
+                  *events: str) -> Callable:
+        def deco(func: Callable) -> Callable:
+            if isinstance(arg, str):
+                for e in [arg] + list(events):
+                    bus.subscribe(f'{post_type}.{e}', func)
+            else:
+                bus.subscribe(post_type, func)
+            return func
+
+        if isinstance(arg, Callable):
+            return deco(arg)
+        return deco
+
+    return deco_deco

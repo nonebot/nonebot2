@@ -2,7 +2,7 @@ import re
 import asyncio
 from datetime import datetime
 from typing import (
-    Tuple, Union, Callable, Iterable, Dict, Any, Optional, List, Sequence
+    Tuple, Union, Callable, Iterable, Dict, Any, Optional, Sequence
 )
 
 from aiocqhttp import CQHttp, Error as CQHttpError
@@ -11,6 +11,7 @@ from aiocqhttp.message import Message
 from . import permissions as perm
 from .helpers import context_source
 from .expression import render
+from .session import BaseSession
 
 # Key: str (one segment of command name)
 # Value: subtree or a leaf Command object
@@ -148,16 +149,14 @@ class _FurtherInteractionNeeded(Exception):
     pass
 
 
-class Session:
-    __slots__ = ('bot', 'cmd', 'ctx',
-                 'current_key', 'current_arg', 'current_arg_text',
+class CommandSession(BaseSession):
+    __slots__ = ('cmd', 'current_key', 'current_arg', 'current_arg_text',
                  'images', 'args', 'last_interaction')
 
-    def __init__(self, bot: CQHttp, cmd: Command, ctx: Dict[str, Any], *,
+    def __init__(self, bot: CQHttp, ctx: Dict[str, Any], cmd: Command, *,
                  current_arg: str = '', args: Dict[str, Any] = None):
-        self.bot = bot
+        super().__init__(bot, ctx)
         self.cmd = cmd
-        self.ctx = ctx
         self.current_key = None
         self.current_arg = current_arg
         self.current_arg_text = Message(current_arg).extract_plain_text()
@@ -218,23 +217,9 @@ class Session:
         asyncio.ensure_future(self.send(prompt))
         raise _FurtherInteractionNeeded
 
-    async def send(self,
-                   message: Union[str, Dict[str, Any], List[Dict[str, Any]]],
-                   *, ignore_failure: bool = True) -> None:
-        try:
-            await self.bot.send(self.ctx, message)
-        except CQHttpError:
-            if not ignore_failure:
-                raise
-
-    async def send_expr(self,
-                        expr: Union[str, Sequence[str], Callable],
-                        **kwargs):
-        return await self.send(render(expr, **kwargs))
-
 
 def _new_command_session(bot: CQHttp,
-                         ctx: Dict[str, Any]) -> Optional[Session]:
+                         ctx: Dict[str, Any]) -> Optional[CommandSession]:
     """
     Create a new session for a command.
 
@@ -245,7 +230,7 @@ def _new_command_session(bot: CQHttp,
 
     :param bot: CQHttp instance
     :param ctx: message context
-    :return: Session object or None
+    :return: CommandSession object or None
     """
     msg_text = str(ctx['message']).lstrip()
 
@@ -285,7 +270,7 @@ def _new_command_session(bot: CQHttp,
     if not cmd:
         return None
 
-    return Session(bot, cmd, ctx, current_arg=''.join(cmd_remained))
+    return CommandSession(bot, ctx, cmd, current_arg=''.join(cmd_remained))
 
 
 async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:

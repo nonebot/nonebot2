@@ -1,5 +1,4 @@
 import os
-import sys
 import importlib
 import logging
 import re
@@ -9,15 +8,9 @@ from typing import Any
 from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
 
-logger = logging.getLogger('none')
-default_handler = logging.StreamHandler(sys.stdout)
-default_handler.setFormatter(logging.Formatter(
-    '[%(asctime)s] %(levelname)s: %(message)s'
-))
-logger.addHandler(default_handler)
-
-from . import plugin
-from .plugin import *
+from .message import handle_message
+from .notice import handle_notice
+from .logger import logger
 
 
 def create_bot(config_object: Any = None):
@@ -37,15 +30,16 @@ def create_bot(config_object: Any = None):
 
     @bot.on_message
     async def _(ctx):
-        asyncio.ensure_future(plugin.handle_message(bot, ctx))
+        asyncio.ensure_future(handle_message(bot, ctx))
 
     @bot.on_notice
     async def _(ctx):
-        asyncio.ensure_future(plugin.handle_notice(bot, ctx))
+        asyncio.ensure_future(handle_notice(bot, ctx))
 
     @bot.on_request
     async def _(ctx):
-        asyncio.ensure_future(plugin.handle_request(bot, ctx))
+        pass
+        # asyncio.ensure_future(plugin.handle_request(bot, ctx))
 
     return bot
 
@@ -79,3 +73,7 @@ def load_plugins(plugin_dir: str, module_prefix: str):
 def load_builtin_plugins():
     plugin_dir = os.path.join(os.path.dirname(__file__), 'plugins')
     load_plugins(plugin_dir, 'none.plugins')
+
+
+from .command import on_command
+from .notice import on_notice

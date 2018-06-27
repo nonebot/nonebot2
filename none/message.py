@@ -3,12 +3,8 @@ from typing import Dict, Any
 from aiocqhttp import CQHttp
 from aiocqhttp.message import MessageSegment
 
-from . import logger
-from .command import on_command, handle_command
-
-__all__ = [
-    'on_command',
-]
+from .command import handle_command
+from .logger import logger
 
 
 async def handle_message(bot: CQHttp, ctx: Dict[str, Any]) -> None:
@@ -27,11 +23,3 @@ async def handle_message(bot: CQHttp, ctx: Dict[str, Any]) -> None:
         return
     else:
         await bot.send(ctx, '你在说什么我看不懂诶')
-
-
-async def handle_notice(bot: CQHttp, ctx: Dict[str, Any]) -> None:
-    pass
-
-
-async def handle_request(bot: CQHttp, ctx: Dict[str, Any]) -> None:
-    pass
