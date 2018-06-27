@@ -16,8 +16,8 @@ default_handler.setFormatter(logging.Formatter(
 ))
 logger.addHandler(default_handler)
 
-from .plugin import handle_message, handle_notice, handle_request
-from .command import on_command
+from . import plugin
+from .plugin import *
 
 
 def create_bot(config_object: Any = None):
@@ -37,15 +37,15 @@ def create_bot(config_object: Any = None):
 
     @bot.on_message
     async def _(ctx):
-        asyncio.ensure_future(handle_message(bot, ctx))
+        asyncio.ensure_future(plugin.handle_message(bot, ctx))
 
     @bot.on_notice
     async def _(ctx):
-        asyncio.ensure_future(handle_notice(bot, ctx))
+        asyncio.ensure_future(plugin.handle_notice(bot, ctx))
 
     @bot.on_request
     async def _(ctx):
-        asyncio.ensure_future(handle_request(bot, ctx))
+        asyncio.ensure_future(plugin.handle_request(bot, ctx))
 
     return bot
 
