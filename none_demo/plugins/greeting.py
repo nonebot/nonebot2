@@ -1,7 +1,6 @@
 from aiocqhttp import Error as CQHttpError
 
-import none
-from none.notice import NoticeSession
+from none import on_notice, NoticeSession
 
 GROUP_GREETING = (
     '欢迎新同学 {name}[]！[CQ:face,id=63][CQ:face,id=63][CQ:face,id=63]',
@@ -11,7 +10,7 @@ GROUP_GREETING = (
 )
 
 
-@none.on_notice('group_increase')
+@on_notice('group_increase')
 async def _(session: NoticeSession):
     try:
         info = await session.bot.get_group_member_info(**session.ctx,

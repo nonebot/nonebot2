@@ -9,8 +9,8 @@ from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
 
 from .message import handle_message
-from .notice import handle_notice
-from .logger import logger
+from .notice_request import handle_notice_or_request
+from .log import logger
 
 
 def create_bot(config_object: Any = None):
@@ -34,12 +34,11 @@ def create_bot(config_object: Any = None):
 
     @bot.on_notice
     async def _(ctx):
-        asyncio.ensure_future(handle_notice(bot, ctx))
+        asyncio.ensure_future(handle_notice_or_request(bot, ctx))
 
     @bot.on_request
     async def _(ctx):
-        pass
-        # asyncio.ensure_future(plugin.handle_request(bot, ctx))
+        asyncio.ensure_future(handle_notice_or_request(bot, ctx))
 
     return bot
 
@@ -75,5 +74,8 @@ def load_builtin_plugins():
     load_plugins(plugin_dir, 'none.plugins')
 
 
-from .command import on_command
-from .notice import on_notice
+from .command import on_command, CommandSession
+from .notice_request import (
+    on_notice, NoticeSession,
+    on_request, RequestSession,
+)

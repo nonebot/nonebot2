@@ -4,7 +4,7 @@ from aiocqhttp import CQHttp
 from aiocqhttp.message import MessageSegment
 
 from .command import handle_command
-from .logger import logger
+from .log import logger
 
 
 async def handle_message(bot: CQHttp, ctx: Dict[str, Any]) -> None:

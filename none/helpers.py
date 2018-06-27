@@ -1,7 +1,6 @@
-from typing import Dict, Any, Union, List, Sequence, Callable, Optional
+from typing import Dict, Any, Union, List, Sequence, Callable
 
 from aiocqhttp import CQHttp, Error as CQHttpError
-from aiocqhttp.bus import EventBus
 
 from . import expression
 
@@ -42,21 +41,3 @@ async def send_expr(bot: CQHttp, ctx: Dict[str, Any],
                     expr: Union[str, Sequence[str], Callable],
                     **kwargs):
     return await send(bot, ctx, expression.render(expr, **kwargs))
-
-
-def make_event_deco(post_type: str, bus: EventBus) -> Callable:
-    def deco_deco(arg: Optional[Union[str, Callable]] = None,
-                  *events: str) -> Callable:
-        def deco(func: Callable) -> Callable:
-            if isinstance(arg, str):
-                for e in [arg] + list(events):
-                    bus.subscribe(f'{post_type}.{e}', func)
-            else:
-                bus.subscribe(post_type, func)
-            return func
-
-        if isinstance(arg, Callable):
-            return deco(arg)
-        return deco
-
-    return deco_deco
