@@ -8,7 +8,7 @@ setup(
     version='0.0.1',
     packages=find_packages(include=('none', 'none.*')),
     url='https://github.com/richardchien/none-bot',
-    license='AGPL-3.0',
+    license='MIT License',
     author='Richard Chien',
     author_email='richardchienthebest@gmail.com',
     description='A QQ bot framework',
