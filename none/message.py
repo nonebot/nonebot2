@@ -8,6 +8,7 @@ from .log import logger
 
 
 async def handle_message(bot: CQHttp, ctx: Dict[str, Any]) -> None:
+    # TODO: 支持让插件自己选择是否响应没有 at 的消息
     if ctx['message_type'] != 'private':
         # group or discuss
         first_message_seg = ctx['message'][0]
