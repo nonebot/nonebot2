@@ -1,4 +1,4 @@
-from none.command import CommandSession, CommandGroup
+from none.command import CommandSession, CommandGroup, permissions as perm
 
 from . import expressions as expr
 

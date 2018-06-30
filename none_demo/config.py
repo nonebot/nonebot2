@@ -2,6 +2,7 @@ import re
 
 from none.default_config import *
 
+HOST = '0.0.0.0'
 SECRET = 'abc'
 
 SUPERUSERS = {1002647525}

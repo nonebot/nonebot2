@@ -1,6 +1,7 @@
 from aiocqhttp.message import unescape
 
-from none import on_command, CommandSession, permissions as perm
+from none import on_command, CommandSession
+from none.command import permissions as perm
 
 
 @on_command('echo')
