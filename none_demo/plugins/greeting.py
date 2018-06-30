@@ -12,6 +12,8 @@ GROUP_GREETING = (
 
 @on_notice('group_increase')
 async def _(session: NoticeSession):
+    if session.ctx['group_id'] not in (201865589, 672076603):
+        return
     try:
         info = await session.bot.get_group_member_info(**session.ctx,
                                                        no_cache=True)
