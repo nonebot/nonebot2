@@ -1,6 +1,6 @@
 from aiocqhttp import Error as CQHttpError
 
-from none import on_notice, NoticeSession
+from none import on_notice, NoticeSession, on_request, RequestSession
 
 GROUP_GREETING = (
     '欢迎新同学 {name}[]！[CQ:face,id=63][CQ:face,id=63][CQ:face,id=63]',
@@ -21,3 +21,9 @@ async def _(session: NoticeSession):
         await session.send_expr(GROUP_GREETING, name=name, **session.ctx)
     except CQHttpError:
         pass
+
+
+@on_request('group')
+async def _(session: RequestSession):
+    if session.ctx['group_id'] == 672076603:
+        await session.approve()

@@ -1,6 +1,6 @@
 from typing import Dict, Any, Optional, Callable, Union
 
-from aiocqhttp import CQHttp
+from aiocqhttp import CQHttp, Error as CQHttpError
 from aiocqhttp.bus import EventBus
 
 from .session import BaseSession
@@ -44,7 +44,33 @@ class RequestSession(BaseSession):
     def __init__(self, bot: CQHttp, ctx: Dict[str, Any]):
         super().__init__(bot, ctx)
 
-    # TODO: 添加 approve、deny 等方法
+    async def approve(self, remark: str = ''):
+        # TODO: should use ".handle_quick_operation" action in the future
+        try:
+            if self.ctx['request_type'] == 'friend':
+                await self.bot.set_friend_add_request(**self.ctx,
+                                                      approve=True,
+                                                      remark=remark)
+            elif self.ctx['request_type'] == 'group':
+                await self.bot.set_group_add_request(**self.ctx,
+                                                     type=self.ctx['sub_type'],
+                                                     approve=True)
+        except CQHttpError:
+            pass
+
+    async def reject(self, reason: str = ''):
+        # TODO: should use ".handle_quick_operation" action in the future
+        try:
+            if self.ctx['request_type'] == 'friend':
+                await self.bot.set_friend_add_request(**self.ctx,
+                                                      approve=False)
+            elif self.ctx['request_type'] == 'group':
+                await self.bot.set_group_add_request(**self.ctx,
+                                                     type=self.ctx['sub_type'],
+                                                     approve=False,
+                                                     reason=reason)
+        except CQHttpError:
+            pass
 
 
 async def handle_notice_or_request(bot: CQHttp, ctx: Dict[str, Any]) -> None:
