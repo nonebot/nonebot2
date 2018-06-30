@@ -188,7 +188,7 @@ class _FurtherInteractionNeeded(Exception):
 
 class CommandSession(BaseSession):
     __slots__ = ('cmd', 'current_key', 'current_arg', 'current_arg_text',
-                 'images', 'args', 'last_interaction')
+                 'current_arg_images', 'args', 'last_interaction')
 
     def __init__(self, bot: CQHttp, ctx: Dict[str, Any], cmd: Command, *,
                  current_arg: str = '', args: Optional[Dict[str, Any]] = None):
@@ -197,8 +197,8 @@ class CommandSession(BaseSession):
         self.current_key = None
         self.current_arg = current_arg
         self.current_arg_text = Message(current_arg).extract_plain_text()
-        self.images = [s.data['url'] for s in ctx['message']
-                       if s.type == 'image' and 'url' in s.data]
+        self.current_arg_images = [s.data['url'] for s in ctx['message']
+                                   if s.type == 'image' and 'url' in s.data]
         self.args = args or {}
         self.last_interaction = None
 
@@ -212,8 +212,8 @@ class CommandSession(BaseSession):
         self.ctx = ctx
         self.current_arg = current_arg
         self.current_arg_text = Message(current_arg).extract_plain_text()
-        self.images = [s.data['url'] for s in ctx['message']
-                       if s.type == 'image' and 'url' in s.data]
+        self.current_arg_images = [s.data['url'] for s in ctx['message']
+                                   if s.type == 'image' and 'url' in s.data]
 
     @property
     def is_valid(self) -> bool:
