@@ -263,6 +263,10 @@ def _new_command_session(bot: CQHttp,
     :param ctx: message context
     :return: CommandSession object or None
     """
+    if not ctx['to_me']:
+        # TODO: 支持不需要 at 的命令
+        return None
+
     msg_text = str(ctx['message']).lstrip()
 
     for start in bot.config.COMMAND_START:
