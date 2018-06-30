@@ -27,12 +27,14 @@ _sessions = {}
 
 
 class Command:
-    __slots__ = ('name', 'func', 'permission', 'args_parser_func')
+    __slots__ = ('name', 'func', 'permission', 'only_to_me', 'args_parser_func')
 
-    def __init__(self, name: Tuple[str], func: Callable, permission: int):
+    def __init__(self, name: Tuple[str], func: Callable, permission: int, *,
+                 only_to_me: bool):
         self.name = name
         self.func = func
         self.permission = permission
+        self.only_to_me = only_to_me
         self.args_parser_func = None
 
     async def run(self, session, *, permission: Optional[int] = None) -> bool:
@@ -97,7 +99,8 @@ async def _calculate_permission(bot: CQHttp, ctx: Dict[str, Any]) -> int:
 
 def on_command(name: Union[str, Tuple[str]], *,
                aliases: Iterable = (),
-               permission: int = perm.EVERYBODY) -> Callable:
+               permission: int = perm.EVERYBODY,
+               only_to_me: bool = True) -> Callable:
     def deco(func: Callable) -> Callable:
         if not isinstance(name, (str, tuple)):
             raise TypeError('the name of a command must be a str or tuple')
@@ -109,7 +112,8 @@ def on_command(name: Union[str, Tuple[str]], *,
         for parent_key in cmd_name[:-1]:
             current_parent[parent_key] = current_parent.get(parent_key) or {}
             current_parent = current_parent[parent_key]
-        cmd = Command(name=cmd_name, func=func, permission=permission)
+        cmd = Command(name=cmd_name, func=func, permission=permission,
+                      only_to_me=only_to_me)
         current_parent[cmd_name[-1]] = cmd
         for alias in aliases:
             _aliases[alias] = cmd_name
@@ -129,20 +133,19 @@ class CommandGroup:
     Group a set of commands with same name prefix.
     """
 
-    __slots__ = ('basename', 'permission')
+    __slots__ = ('basename', 'permission', 'only_to_me')
 
     def __init__(self, name: Union[str, Tuple[str]],
-                 permission: Optional[int] = None):
-        """
-        :param name: name prefix of commands in this group
-        :param permission: default permission
-        """
+                 permission: Optional[int] = None, *,
+                 only_to_me: Optional[bool] = None):
         self.basename = (name,) if isinstance(name, str) else name
         self.permission = permission
+        self.only_to_me = only_to_me
 
     def command(self, name: Union[str, Tuple[str]], *,
                 aliases: Optional[Iterable] = None,
-                permission: Optional[int] = None) -> Callable:
+                permission: Optional[int] = None,
+                only_to_me: Optional[bool] = None) -> Callable:
         sub_name = (name,) if isinstance(name, str) else name
         name = self.basename + sub_name
 
@@ -153,6 +156,10 @@ class CommandGroup:
             kwargs['permission'] = permission
         elif self.permission is not None:
             kwargs['permission'] = self.permission
+        if only_to_me is not None:
+            kwargs['only_to_me'] = only_to_me
+        elif self.only_to_me is not None:
+            kwargs['only_to_me'] = self.only_to_me
         return on_command(name, **kwargs)
 
 
@@ -263,10 +270,6 @@ def _new_command_session(bot: CQHttp,
     :param ctx: message context
     :return: CommandSession object or None
     """
-    if not ctx['to_me']:
-        # TODO: 支持不需要 at 的命令
-        return None
-
     msg_text = str(ctx['message']).lstrip()
 
     for start in bot.config.COMMAND_START:
@@ -303,6 +306,8 @@ def _new_command_session(bot: CQHttp,
 
     cmd = _find_command(cmd_name)
     if not cmd:
+        return None
+    if cmd.only_to_me and not ctx['to_me']:
         return None
 
     return CommandSession(bot, ctx, cmd, current_arg=''.join(cmd_remained))
