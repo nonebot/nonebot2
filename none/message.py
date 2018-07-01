@@ -4,8 +4,8 @@ from aiocqhttp import CQHttp
 from aiocqhttp.message import MessageSegment
 
 from .command import handle_command
+from .natural_language import handle_natural_language
 from .log import logger
-from .helpers import send
 
 
 async def handle_message(bot: CQHttp, ctx: Dict[str, Any]) -> None:
@@ -23,9 +23,10 @@ async def handle_message(bot: CQHttp, ctx: Dict[str, Any]) -> None:
 
     handled = await handle_command(bot, ctx)
     if handled:
-        logger.debug('Message is handled as a command')
+        logger.debug('Message is handled as command')
         return
-    elif ctx['to_me']:
-        await send(bot, ctx, '你在说什么我看不懂诶')
 
-    # TODO: NLP
+    handled = await handle_natural_language(bot, ctx)
+    if handled:
+        logger.debug('Message is handled as natural language')
+        return

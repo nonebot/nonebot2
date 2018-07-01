@@ -1,4 +1,4 @@
-from none.command import CommandSession, CommandGroup
+from none import CommandSession, CommandGroup
 
 from . import expressions as expr
 
@@ -15,6 +15,26 @@ async def weather(session: CommandSession):
 async def _(session: CommandSession):
     if session.current_key:
         session.args[session.current_key] = session.current_arg_text.strip()
+
+
+# @on_natural_language(keywords={'天气', '雨', '雪', '晴', '阴', '多云', '冰雹'},
+#                      only_to_me=False)
+# async def weather_nlp(session: NaturalLanguageSession):
+#     return NLPResult(89.5, ('weather', 'weather'), {'city': '南京'})
+#
+#
+# @weather_nlp.condition
+# async def _(session: NaturalLanguageSession):
+#     keywords = {'天气', '雨', '雪', '晴', '阴', '多云', '冰雹'}
+#     for kw in keywords:
+#         if kw in session.text:
+#             keyword_hit = True
+#             break
+#     else:
+#         keyword_hit = False
+#     if session.ctx['to_me'] and keyword_hit:
+#         return True
+#     return False
 
 
 @w.command('suggestion', aliases=('生活指数', '生活建议', '生活提示'))

@@ -74,7 +74,7 @@ def load_builtin_plugins():
     load_plugins(plugin_dir, 'none.plugins')
 
 
-from .command import on_command, CommandSession
+from .command import on_command, CommandSession, CommandGroup
 from .notice_request import (
     on_notice, NoticeSession,
     on_request, RequestSession,

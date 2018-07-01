@@ -5,13 +5,13 @@ from typing import (
     Tuple, Union, Callable, Iterable, Dict, Any, Optional, Sequence
 )
 
-from aiocqhttp import CQHttp, Error as CQHttpError
+from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
 
-from . import permissions as perm
-from ..helpers import context_source
-from ..expression import render
-from ..session import BaseSession
+from . import permission as perm
+from .helpers import context_source
+from .expression import render
+from .session import BaseSession
 
 # Key: str (one segment of command name)
 # Value: subtree or a leaf Command object
@@ -37,64 +37,25 @@ class Command:
         self.only_to_me = only_to_me
         self.args_parser_func = None
 
-    async def run(self, session, *, permission: Optional[int] = None) -> bool:
+    async def run(self, session, check_perm: bool = True) -> bool:
         """
         Run the command in a given session.
 
         :param session: CommandSession object
-        :param permission: the permission the caller owns
+        :param check_perm: should check permission before running
         :return: the command is finished
         """
-        if permission is None:
-            permission = await _calculate_permission(session.bot, session.ctx)
-        if self.func and permission & self.permission:
+        if check_perm:
+            has_perm = await perm.check_permission(
+                session.bot, session.ctx, self.permission)
+        else:
+            has_perm = True
+        if self.func and has_perm:
             if self.args_parser_func:
                 await self.args_parser_func(session)
             await self.func(session)
             return True
         return False
-
-
-async def _calculate_permission(bot: CQHttp, ctx: Dict[str, Any]) -> int:
-    """
-    Calculate the permission OWNED by the current context.
-
-    This is different from the permission REQUIRED by a command.
-    The result of this function should be made a bit-and with
-    the permission required by some command to check whether
-    the context is allowed to call the command.
-
-    :param bot: CQHttp instance
-    :param ctx: message context
-    :return: the calculated permission value
-    """
-    permission = 0
-    if ctx['user_id'] in bot.config.SUPERUSERS:
-        permission |= perm.IS_SUPERUSER
-    if ctx['message_type'] == 'private':
-        if ctx['sub_type'] == 'friend':
-            permission |= perm.IS_PRIVATE_FRIEND
-        elif ctx['sub_type'] == 'group':
-            permission |= perm.IS_PRIVATE_GROUP
-        elif ctx['sub_type'] == 'discuss':
-            permission |= perm.IS_PRIVATE_DISCUSS
-        elif ctx['sub_type'] == 'other':
-            permission |= perm.IS_PRIVATE_OTHER
-    elif ctx['message_type'] == 'group':
-        permission |= perm.IS_GROUP_MEMBER
-        if not ctx['anonymous']:
-            try:
-                member_info = await bot.get_group_member_info(**ctx)
-                if member_info:
-                    if member_info['role'] == 'owner':
-                        permission |= perm.IS_GROUP_OWNER
-                    elif member_info['role'] == 'admin':
-                        permission |= perm.IS_GROUP_ADMIN
-            except CQHttpError:
-                pass
-    elif ctx['message_type'] == 'discuss':
-        permission |= perm.IS_DISCUSS
-    return permission
 
 
 def on_command(name: Union[str, Tuple[str]], *,
@@ -325,10 +286,13 @@ async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
     """
     src = context_source(ctx)
     session = None
+    check_perm = True
     if _sessions.get(src):
         session = _sessions[src]
         if session and session.is_valid:
             session.refresh(ctx, current_arg=str(ctx['message']))
+            # there is no need to check permission for existing session
+            check_perm = False
         else:
             # the session is expired, remove it
             del _sessions[src]
@@ -340,7 +304,7 @@ async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
         _sessions[src] = session
 
     try:
-        res = await session.cmd.run(session)
+        res = await session.cmd.run(session, check_perm=check_perm)
         # the command is finished, remove the session
         del _sessions[src]
         return res
