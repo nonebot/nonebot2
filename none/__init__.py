@@ -75,6 +75,7 @@ def load_builtin_plugins():
 
 
 from .command import on_command, CommandSession, CommandGroup
+from .natural_language import on_natural_language, NLPSession, NLPResult
 from .notice_request import (
     on_notice, NoticeSession,
     on_request, RequestSession,

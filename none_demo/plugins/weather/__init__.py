@@ -1,4 +1,7 @@
-from none import CommandSession, CommandGroup
+from none import (
+    CommandSession, CommandGroup,
+    on_natural_language, NLPSession, NLPResult
+)
 
 from . import expressions as expr
 
@@ -7,34 +10,24 @@ w = CommandGroup('weather')
 
 @w.command('weather', aliases=('天气', '天气预报'))
 async def weather(session: CommandSession):
-    city = session.require_arg('city', prompt_expr=expr.WHICH_CITY)
+    city = session.get('city', prompt_expr=expr.WHICH_CITY)
     await session.send_expr(expr.REPORT, city=city)
 
 
 @weather.args_parser
 async def _(session: CommandSession):
+    striped_arg = session.current_arg_text.strip()
     if session.current_key:
-        session.args[session.current_key] = session.current_arg_text.strip()
+        session.args[session.current_key] = striped_arg
+    elif striped_arg:
+        session.args['city'] = striped_arg
 
 
-# @on_natural_language(keywords={'天气', '雨', '雪', '晴', '阴', '多云', '冰雹'},
-#                      only_to_me=False)
-# async def weather_nlp(session: NaturalLanguageSession):
-#     return NLPResult(89.5, ('weather', 'weather'), {'city': '南京'})
-#
-#
-# @weather_nlp.condition
-# async def _(session: NaturalLanguageSession):
-#     keywords = {'天气', '雨', '雪', '晴', '阴', '多云', '冰雹'}
-#     for kw in keywords:
-#         if kw in session.text:
-#             keyword_hit = True
-#             break
-#     else:
-#         keyword_hit = False
-#     if session.ctx['to_me'] and keyword_hit:
-#         return True
-#     return False
+@on_natural_language({'天气', '雨', '雪', '晴', '阴'}, only_to_me=False)
+async def _(session: NLPSession):
+    if not ('?' in session.msg_text or '？' in session.msg_text):
+        return None
+    return NLPResult(90.0, ('weather', 'weather'), {})
 
 
 @w.command('suggestion', aliases=('生活指数', '生活建议', '生活提示'))

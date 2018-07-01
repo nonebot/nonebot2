@@ -8,6 +8,7 @@ PORT = 8080
 DEBUG = True
 
 SUPERUSERS = set()
+NICKNAME = ''
 COMMAND_START = {'/', '!', '／', '！'}
 COMMAND_SEP = {'/', '.'}
 SESSION_EXPIRE_TIMEOUT = timedelta(minutes=5)

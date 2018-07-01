@@ -29,7 +29,7 @@ _sessions = {}
 class Command:
     __slots__ = ('name', 'func', 'permission', 'only_to_me', 'args_parser_func')
 
-    def __init__(self, name: Tuple[str], func: Callable, permission: int, *,
+    def __init__(self, *, name: Tuple[str], func: Callable, permission: int,
                  only_to_me: bool):
         self.name = name
         self.func = func
@@ -79,11 +79,11 @@ def on_command(name: Union[str, Tuple[str]], *,
         for alias in aliases:
             _aliases[alias] = cmd_name
 
-        def args_parser(parser_func: Callable):
+        def args_parser_deco(parser_func: Callable):
             cmd.args_parser_func = parser_func
             return parser_func
 
-        func.args_parser = args_parser
+        func.args_parser = args_parser_deco
         return func
 
     return deco
@@ -156,10 +156,10 @@ class CommandSession(BaseSession):
         super().__init__(bot, ctx)
         self.cmd = cmd
         self.current_key = None
-        self.current_arg = current_arg
-        self.current_arg_text = Message(current_arg).extract_plain_text()
-        self.current_arg_images = [s.data['url'] for s in ctx['message']
-                                   if s.type == 'image' and 'url' in s.data]
+        self.current_arg = None
+        self.current_arg_text = None
+        self.current_arg_images = None
+        self.refresh(ctx, current_arg=current_arg)
         self.args = args or {}
         self.last_interaction = None
 
@@ -172,8 +172,9 @@ class CommandSession(BaseSession):
         """
         self.ctx = ctx
         self.current_arg = current_arg
-        self.current_arg_text = Message(current_arg).extract_plain_text()
-        self.current_arg_images = [s.data['url'] for s in ctx['message']
+        current_arg_as_msg = Message(current_arg)
+        self.current_arg_text = current_arg_as_msg.extract_plain_text()
+        self.current_arg_images = [s.data['url'] for s in current_arg_as_msg
                                    if s.type == 'image' and 'url' in s.data]
 
     @property
@@ -185,36 +186,37 @@ class CommandSession(BaseSession):
             return False
         return True
 
-    def require_arg(self, key: str, prompt: str = None, *,
-                    prompt_expr: Union[str, Sequence[str], Callable] = None,
-                    interactive: bool = True) -> Any:
+    def get(self, key: str, *, prompt: str = None,
+            prompt_expr: Union[str, Sequence[str], Callable] = None) -> Any:
         """
         Get an argument with a given key.
 
-        If "interactive" is True, and the argument does not exist
-        in the current session, a FurtherInteractionNeeded exception
-        will be raised, and the caller of the command will know
-        it should keep the session for further interaction with the user.
-
-        If "interactive" is False, missed key will cause a result of None.
+        If the argument does not exist in the current session,
+        a FurtherInteractionNeeded exception will be raised,
+        and the caller of the command will know it should keep
+        the session for further interaction with the user.
 
         :param key: argument key
         :param prompt: prompt to ask the user
         :param prompt_expr: prompt expression to ask the user
-        :param interactive: should enter interactive mode while key missing
         :return: the argument value
         :raise FurtherInteractionNeeded: further interaction is needed
         """
-        value = self.args.get(key)
-        if value is not None or not interactive:
+        value = self.get_optional(key)
+        if value is not None:
             return value
 
         self.current_key = key
         # ask the user for more information
         if prompt_expr is not None:
             prompt = render(prompt_expr, key=key)
-        asyncio.ensure_future(self.send(prompt))
+        if prompt:
+            asyncio.ensure_future(self.send(prompt))
         raise _FurtherInteractionNeeded
+
+    def get_optional(self, key: str,
+                     default: Optional[Any] = None) -> Optional[Any]:
+        return self.args.get(key, default)
 
 
 def _new_command_session(bot: CQHttp,
@@ -301,12 +303,40 @@ async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
         session = _new_command_session(bot, ctx)
         if not session:
             return False
-        _sessions[src] = session
 
+    return await _real_run_command(session, src, check_perm=check_perm)
+
+
+async def call_command(bot: CQHttp, ctx: Dict[str, Any],
+                       name: Union[str, Tuple[str]],
+                       args: Dict[str, Any]) -> bool:
+    """
+    Call a command internally.
+
+    This function is typically called by some other commands
+    or "handle_natural_language" when handling NLPResult object.
+
+    :param bot: CQHttp instance
+    :param ctx: message context
+    :param name: command name
+    :param args: command args
+    :return: the command is successfully called
+    """
+    cmd = _find_command(name)
+    if not cmd:
+        return False
+    session = CommandSession(bot, ctx, cmd, args=args)
+    return await _real_run_command(session, context_source(session.ctx),
+                                   check_perm=False)
+
+
+async def _real_run_command(session: CommandSession,
+                            ctx_src: str, **kwargs) -> bool:
+    _sessions[ctx_src] = session
     try:
-        res = await session.cmd.run(session, check_perm=check_perm)
+        res = await session.cmd.run(session, **kwargs)
         # the command is finished, remove the session
-        del _sessions[src]
+        del _sessions[ctx_src]
         return res
     except _FurtherInteractionNeeded:
         session.last_interaction = datetime.now()
