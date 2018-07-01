@@ -28,6 +28,14 @@ class NLProcessor:
 def on_natural_language(keywords: Union[Optional[Iterable], Callable] = None, *,
                         permission: int = perm.EVERYBODY,
                         only_to_me: bool = True) -> Callable:
+    """
+    Decorator to register a function as a natural language processor.
+
+    :param keywords: keywords to respond, if None, respond to all messages
+    :param permission: permission required by the processor
+    :param only_to_me: only handle messages to me
+    """
+
     def deco(func: Callable) -> Callable:
         nl_processor = NLProcessor(func=func, keywords=keywords,
                                    permission=permission, only_to_me=only_to_me)
@@ -61,12 +69,23 @@ NLPResult = namedtuple('NLPResult', (
 
 
 async def handle_natural_language(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
+    """
+    Handle a message as natural language.
+
+    This function is typically called by "handle_message".
+
+    :param bot: CQHttp instance
+    :param ctx: message context
+    :return: the message is handled as natural language
+    """
     msg = str(ctx['message'])
     if bot.config.NICKNAME:
+        # check if the user is calling to me with my nickname
         m = re.search(rf'^{bot.config.NICKNAME}[\s,，]+', msg)
         if m:
             ctx['to_me'] = True
             msg = msg[m.end():]
+
     session = NLPSession(bot, ctx, msg)
 
     coros = []
@@ -86,10 +105,12 @@ async def handle_natural_language(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
             coros.append(p.func(session))
 
     if coros:
+        # wait for possible results, and sort them by confidence
         results = sorted(filter(lambda r: r, await asyncio.gather(*coros)),
                          key=lambda r: r.confidence, reverse=True)
         logger.debug(results)
         if results and results[0].confidence >= 60.0:
+            # choose the result with highest confidence
             return await call_command(bot, ctx,
                                       results[0].cmd_name, results[0].cmd_args)
     return False

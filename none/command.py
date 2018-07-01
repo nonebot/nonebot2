@@ -9,7 +9,7 @@ from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
 
 from . import permission as perm
-from .helpers import context_source
+from .helpers import context_id
 from .expression import render
 from .session import BaseSession
 
@@ -21,8 +21,8 @@ _registry = {}
 # Value: tuple that identifies a command
 _aliases = {}
 
-# Key: context source
-# Value: Session object
+# Key: context id
+# Value: CommandSession object
 _sessions = {}
 
 
@@ -62,6 +62,15 @@ def on_command(name: Union[str, Tuple[str]], *,
                aliases: Iterable = (),
                permission: int = perm.EVERYBODY,
                only_to_me: bool = True) -> Callable:
+    """
+    Decorator to register a function as a command.
+
+    :param name: command name (e.g. 'echo' or ('random', 'number'))
+    :param aliases: aliases of command name, for convenient access
+    :param permission: permission required by the command
+    :param only_to_me: only handle messages to me
+    """
+
     def deco(func: Callable) -> Callable:
         if not isinstance(name, (str, tuple)):
             raise TypeError('the name of a command must be a str or tuple')
@@ -93,7 +102,6 @@ class CommandGroup:
     """
     Group a set of commands with same name prefix.
     """
-
     __slots__ = ('basename', 'permission', 'only_to_me')
 
     def __init__(self, name: Union[str, Tuple[str]],
@@ -140,9 +148,8 @@ def _find_command(name: Union[str, Tuple[str]]) -> Optional[Command]:
 
 class _FurtherInteractionNeeded(Exception):
     """
-    Raised by session.require_arg() indicating
-    that the command should enter interactive mode
-    to ask the user for some arguments.
+    Raised by session.get() indicating that the command should
+    enter interactive mode to ask the user for some arguments.
     """
     pass
 
@@ -154,14 +161,14 @@ class CommandSession(BaseSession):
     def __init__(self, bot: CQHttp, ctx: Dict[str, Any], cmd: Command, *,
                  current_arg: str = '', args: Optional[Dict[str, Any]] = None):
         super().__init__(bot, ctx)
-        self.cmd = cmd
-        self.current_key = None
-        self.current_arg = None
-        self.current_arg_text = None
-        self.current_arg_images = None
+        self.cmd = cmd  # Command object
+        self.current_key = None  # current key that the command handler needs
+        self.current_arg = None  # current argument (with potential CQ codes)
+        self.current_arg_text = None  # current argument without any CQ codes
+        self.current_arg_images = None  # image urls in current argument
         self.refresh(ctx, current_arg=current_arg)
         self.args = args or {}
-        self.last_interaction = None
+        self.last_interaction = None  # last interaction time of this session
 
     def refresh(self, ctx: Dict[str, Any], *, current_arg: str = '') -> None:
         """
@@ -224,26 +231,25 @@ def _new_command_session(bot: CQHttp,
     """
     Create a new session for a command.
 
-    This will firstly attempt to parse the current message as
-    a command, and if succeeded, it then create a session for
-    the command and return. If the message is not a valid command,
-    None will be returned.
+    This will attempt to parse the current message as a command,
+    and if succeeded, it then create a session for the command and return.
+    If the message is not a valid command, None will be returned.
 
     :param bot: CQHttp instance
     :param ctx: message context
     :return: CommandSession object or None
     """
-    msg_text = str(ctx['message']).lstrip()
+    msg = str(ctx['message']).lstrip()
 
     for start in bot.config.COMMAND_START:
         if isinstance(start, type(re.compile(''))):
-            m = start.search(msg_text)
+            m = start.search(msg)
             if m:
-                full_command = msg_text[len(m.group(0)):].lstrip()
+                full_command = msg[len(m.group(0)):].lstrip()
                 break
         elif isinstance(start, str):
-            if msg_text.startswith(start):
-                full_command = msg_text[len(start):].lstrip()
+            if msg.startswith(start):
+                full_command = msg[len(start):].lstrip()
                 break
     else:
         # it's not a command
@@ -286,25 +292,24 @@ async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
     :param ctx: message context
     :return: the message is handled as a command
     """
-    src = context_source(ctx)
+    ctx_id = context_id(ctx)
     session = None
     check_perm = True
-    if _sessions.get(src):
-        session = _sessions[src]
+    if _sessions.get(ctx_id):
+        session = _sessions[ctx_id]
         if session and session.is_valid:
             session.refresh(ctx, current_arg=str(ctx['message']))
             # there is no need to check permission for existing session
             check_perm = False
         else:
             # the session is expired, remove it
-            del _sessions[src]
+            del _sessions[ctx_id]
             session = None
     if not session:
         session = _new_command_session(bot, ctx)
         if not session:
             return False
-
-    return await _real_run_command(session, src, check_perm=check_perm)
+    return await _real_run_command(session, ctx_id, check_perm=check_perm)
 
 
 async def call_command(bot: CQHttp, ctx: Dict[str, Any],
@@ -316,6 +321,10 @@ async def call_command(bot: CQHttp, ctx: Dict[str, Any],
     This function is typically called by some other commands
     or "handle_natural_language" when handling NLPResult object.
 
+    Note: After calling this function, any previous command session
+    will be overridden, even if the command being called here does
+    not need further interaction (a.k.a asking the user for more info).
+
     :param bot: CQHttp instance
     :param ctx: message context
     :param name: command name
@@ -326,17 +335,17 @@ async def call_command(bot: CQHttp, ctx: Dict[str, Any],
     if not cmd:
         return False
     session = CommandSession(bot, ctx, cmd, args=args)
-    return await _real_run_command(session, context_source(session.ctx),
+    return await _real_run_command(session, context_id(session.ctx),
                                    check_perm=False)
 
 
 async def _real_run_command(session: CommandSession,
-                            ctx_src: str, **kwargs) -> bool:
-    _sessions[ctx_src] = session
+                            ctx_id: str, **kwargs) -> bool:
+    _sessions[ctx_id] = session
     try:
         res = await session.cmd.run(session, **kwargs)
         # the command is finished, remove the session
-        del _sessions[ctx_src]
+        del _sessions[ctx_id]
         return res
     except _FurtherInteractionNeeded:
         session.last_interaction = datetime.now()

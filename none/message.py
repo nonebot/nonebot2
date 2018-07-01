@@ -23,7 +23,7 @@ async def handle_message(bot: CQHttp, ctx: Dict[str, Any]) -> None:
 
     handled = await handle_command(bot, ctx)
     if handled:
-        logger.debug('Message is handled as command')
+        logger.debug('Message is handled as a command')
         return
 
     handled = await handle_natural_language(bot, ctx)

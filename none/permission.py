@@ -44,6 +44,14 @@ _MinContext = namedtuple('MinContext', _min_context_fields)
 
 async def check_permission(bot: CQHttp, ctx: Dict[str, Any],
                            permission_required: int) -> bool:
+    """
+    Check if the context has the permission required.
+
+    :param bot: CQHttp instance
+    :param ctx: message context
+    :param permission_required: permission required
+    :return: the context has the permission
+    """
     min_ctx_kwargs = {}
     for field in _min_context_fields:
         if field in ctx:
@@ -54,7 +62,7 @@ async def check_permission(bot: CQHttp, ctx: Dict[str, Any],
     return await _check(bot, min_ctx, permission_required)
 
 
-@cached(ttl=2 * 60)  # cache the result for 1 minute
+@cached(ttl=2 * 60)  # cache the result for 2 minute
 async def _check(bot: CQHttp, min_ctx: _MinContext,
                  permission_required: int) -> bool:
     permission = 0

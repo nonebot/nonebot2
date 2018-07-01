@@ -13,7 +13,7 @@ from .notice_request import handle_notice_or_request
 from .log import logger
 
 
-def create_bot(config_object: Any = None):
+def create_bot(config_object: Any = None) -> CQHttp:
     if config_object is None:
         from . import default_config as config_object
 
@@ -46,7 +46,7 @@ def create_bot(config_object: Any = None):
 _plugins = set()
 
 
-def load_plugins(plugin_dir: str, module_prefix: str):
+def load_plugins(plugin_dir: str, module_prefix: str) -> None:
     for name in os.listdir(plugin_dir):
         path = os.path.join(plugin_dir, name)
         if os.path.isfile(path) and \
@@ -69,7 +69,7 @@ def load_plugins(plugin_dir: str, module_prefix: str):
             logger.warning('Failed to import "{}"'.format(mod_name))
 
 
-def load_builtin_plugins():
+def load_builtin_plugins() -> None:
     plugin_dir = os.path.join(os.path.dirname(__file__), 'plugins')
     load_plugins(plugin_dir, 'none.plugins')
 

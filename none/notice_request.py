@@ -82,7 +82,7 @@ async def handle_notice_or_request(bot: CQHttp, ctx: Dict[str, Any]) -> None:
 
     if post_type == 'notice':
         session = NoticeSession(bot, ctx)
-    else:
+    else:  # must be 'request'
         session = RequestSession(bot, ctx)
 
     logger.debug(f'Emitting event: {event}')
