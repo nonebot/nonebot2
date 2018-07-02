@@ -1,5 +1,5 @@
-import sys
 import logging
+import sys
 
 logger = logging.getLogger('none')
 default_handler = logging.StreamHandler(sys.stdout)

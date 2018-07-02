@@ -1,7 +1,6 @@
 from os import path
 
 import none
-
 from none_demo import config
 
 bot = none.create_bot(config)

@@ -1,5 +1,5 @@
-import re
 import asyncio
+import re
 from datetime import datetime
 from typing import (
     Tuple, Union, Callable, Iterable, Dict, Any, Optional, Sequence
@@ -9,8 +9,8 @@ from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
 
 from . import permission as perm
-from .helpers import context_id
 from .expression import render
+from .helpers import context_id
 from .session import BaseSession
 
 # Key: str (one segment of command name)
@@ -27,7 +27,8 @@ _sessions = {}
 
 
 class Command:
-    __slots__ = ('name', 'func', 'permission', 'only_to_me', 'args_parser_func')
+    __slots__ = (
+    'name', 'func', 'permission', 'only_to_me', 'args_parser_func')
 
     def __init__(self, *, name: Tuple[str], func: Callable, permission: int,
                  only_to_me: bool):

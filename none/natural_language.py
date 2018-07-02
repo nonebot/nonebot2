@@ -1,5 +1,5 @@
-import re
 import asyncio
+import re
 from collections import namedtuple
 from typing import Dict, Any, Iterable, Optional, Callable, Union
 
@@ -7,9 +7,9 @@ from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
 
 from . import permission as perm
-from .session import BaseSession
 from .command import call_command
 from .log import logger
+from .session import BaseSession
 
 _nl_processors = set()
 

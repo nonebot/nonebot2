@@ -1,16 +1,16 @@
-import os
+import asyncio
 import importlib
 import logging
+import os
 import re
-import asyncio
 from typing import Any
 
 from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
 
+from .log import logger
 from .message import handle_message
 from .notice_request import handle_notice_or_request
-from .log import logger
 
 
 def create_bot(config_object: Any = None) -> CQHttp:

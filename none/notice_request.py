@@ -3,8 +3,8 @@ from typing import Dict, Any, Optional, Callable, Union
 from aiocqhttp import CQHttp, Error as CQHttpError
 from aiocqhttp.bus import EventBus
 
-from .session import BaseSession
 from .log import logger
+from .session import BaseSession
 
 _bus = EventBus()
 

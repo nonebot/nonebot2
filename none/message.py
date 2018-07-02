@@ -4,8 +4,8 @@ from aiocqhttp import CQHttp
 from aiocqhttp.message import MessageSegment
 
 from .command import handle_command
-from .natural_language import handle_natural_language
 from .log import logger
+from .natural_language import handle_natural_language
 
 
 async def handle_message(bot: CQHttp, ctx: Dict[str, Any]) -> None:
