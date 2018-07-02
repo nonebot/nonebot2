@@ -45,30 +45,24 @@ class RequestSession(BaseSession):
         super().__init__(bot, ctx)
 
     async def approve(self, remark: str = ''):
-        # TODO: should use ".handle_quick_operation" action in the future
         try:
-            if self.ctx['request_type'] == 'friend':
-                await self.bot.set_friend_add_request(**self.ctx,
-                                                      approve=True,
-                                                      remark=remark)
-            elif self.ctx['request_type'] == 'group':
-                await self.bot.set_group_add_request(**self.ctx,
-                                                     type=self.ctx['sub_type'],
-                                                     approve=True)
+            await self.bot.call_action(
+                action='.handle_quick_operation_async',
+                self_id=self.ctx.get('self_id'),
+                context=self.ctx,
+                operation={'approve': True, 'remark': remark}
+            )
         except CQHttpError:
             pass
 
     async def reject(self, reason: str = ''):
-        # TODO: should use ".handle_quick_operation" action in the future
         try:
-            if self.ctx['request_type'] == 'friend':
-                await self.bot.set_friend_add_request(**self.ctx,
-                                                      approve=False)
-            elif self.ctx['request_type'] == 'group':
-                await self.bot.set_group_add_request(**self.ctx,
-                                                     type=self.ctx['sub_type'],
-                                                     approve=False,
-                                                     reason=reason)
+            await self.bot.call_action(
+                action='.handle_quick_operation_async',
+                self_id=self.ctx.get('self_id'),
+                context=self.ctx,
+                operation={'approve': False, 'reason': reason}
+            )
         except CQHttpError:
             pass
 
