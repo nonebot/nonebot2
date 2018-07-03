@@ -28,7 +28,7 @@ _sessions = {}
 
 class Command:
     __slots__ = (
-    'name', 'func', 'permission', 'only_to_me', 'args_parser_func')
+        'name', 'func', 'permission', 'only_to_me', 'args_parser_func')
 
     def __init__(self, *, name: Tuple[str], func: Callable, permission: int,
                  only_to_me: bool):
@@ -242,19 +242,25 @@ def _new_command_session(bot: CQHttp,
     """
     msg = str(ctx['message']).lstrip()
 
+    matched_start = None
     for start in bot.config.COMMAND_START:
         if isinstance(start, type(re.compile(''))):
             m = start.search(msg)
-            if m:
-                full_command = msg[len(m.group(0)):].lstrip()
-                break
+            if m and m.start(0) == 0:
+                if matched_start is None or \
+                        len(m.group(0)) > len(matched_start):
+                    matched_start = m.group(0)
         elif isinstance(start, str):
             if msg.startswith(start):
-                full_command = msg[len(start):].lstrip()
-                break
-    else:
+                if matched_start is None or \
+                        len(start) > len(matched_start):
+                    matched_start = start
+
+    if matched_start is None:
         # it's not a command
         return None
+
+    full_command = msg[len(matched_start):].lstrip()
 
     if not full_command:
         # command is empty
