@@ -244,17 +244,21 @@ def _new_command_session(bot: CQHttp,
 
     matched_start = None
     for start in bot.config.COMMAND_START:
+        # loop through COMMAND_START to find the longest matched start
+        curr_matched_start = None
         if isinstance(start, type(re.compile(''))):
             m = start.search(msg)
             if m and m.start(0) == 0:
-                if matched_start is None or \
-                        len(m.group(0)) > len(matched_start):
-                    matched_start = m.group(0)
+                curr_matched_start = m.group(0)
         elif isinstance(start, str):
             if msg.startswith(start):
-                if matched_start is None or \
-                        len(start) > len(matched_start):
-                    matched_start = start
+                curr_matched_start = start
+
+        if curr_matched_start is not None and \
+                (matched_start is None or
+                 len(curr_matched_start) > len(matched_start)):
+            # a longer start, use it
+            matched_start = curr_matched_start
 
     if matched_start is None:
         # it's not a command
@@ -271,13 +275,19 @@ def _new_command_session(bot: CQHttp,
 
     if not cmd_name:
         for sep in bot.config.COMMAND_SEP:
+            # loop through COMMAND_SEP to find the most optimized split
+            curr_cmd_name = None
             if isinstance(sep, type(re.compile(''))):
-                cmd_name = tuple(sep.split(cmd_name_text))
-                break
+                curr_cmd_name = tuple(sep.split(cmd_name_text))
             elif isinstance(sep, str):
-                cmd_name = tuple(cmd_name_text.split(sep))
-                break
-        else:
+                curr_cmd_name = tuple(cmd_name_text.split(sep))
+
+            if curr_cmd_name is not None and \
+                    (not cmd_name or len(curr_cmd_name) > len(cmd_name)):
+                # a more optimized split, use it
+                cmd_name = curr_cmd_name
+
+        if not cmd_name:
             cmd_name = (cmd_name_text,)
 
     cmd = _find_command(cmd_name)
