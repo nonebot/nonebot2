@@ -34,4 +34,7 @@ async def _(session: CommandSession):
 
 @on_natural_language
 async def _(session: NLPSession):
-    return NLPResult(60.0, 'tuling', {'message': session.msg, 'one_time': True})
+    return NLPResult(60.0, 'tuling', {
+        'message': session.msg,
+        'one_time': True
+    })
