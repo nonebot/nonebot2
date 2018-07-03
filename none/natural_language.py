@@ -25,8 +25,8 @@ class NLProcessor:
         self.only_to_me = only_to_me
 
 
-def on_natural_language(keywords: Union[Optional[Iterable], Callable] = None, *,
-                        permission: int = perm.EVERYBODY,
+def on_natural_language(keywords: Union[Optional[Iterable], Callable] = None,
+                        *, permission: int = perm.EVERYBODY,
                         only_to_me: bool = True) -> Callable:
     """
     Decorator to register a function as a natural language processor.
@@ -38,7 +38,8 @@ def on_natural_language(keywords: Union[Optional[Iterable], Callable] = None, *,
 
     def deco(func: Callable) -> Callable:
         nl_processor = NLProcessor(func=func, keywords=keywords,
-                                   permission=permission, only_to_me=only_to_me)
+                                   permission=permission,
+                                   only_to_me=only_to_me)
         _nl_processors.add(nl_processor)
         return func
 
