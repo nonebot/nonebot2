@@ -14,7 +14,7 @@ setup(
     description='A QQ bot framework',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    install_requires=['aiocqhttp>=0.4', 'aiocache'],
+    install_requires=['aiocqhttp>=0.5', 'aiocache'],
     python_requires='>=3.6',
     platforms='any',
     classifiers=(
