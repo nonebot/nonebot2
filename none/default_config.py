@@ -1,3 +1,4 @@
+import os
 from datetime import timedelta
 
 API_ROOT = ''
@@ -12,3 +13,5 @@ NICKNAME = ''
 COMMAND_START = {'/', '!', '／', '！'}
 COMMAND_SEP = {'/', '.'}
 SESSION_EXPIRE_TIMEOUT = timedelta(minutes=5)
+
+DATA_FOLDER = os.path.join(os.getcwd(), 'data')

@@ -3,7 +3,7 @@ import importlib
 import logging
 import os
 import re
-from typing import Any
+from typing import Any, Optional
 
 from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
@@ -13,45 +13,86 @@ from .log import logger
 
 
 class NoneBot(CQHttp):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.config = default_config
+    def __init__(self, config_object: Any = None):
+        if config_object is None:
+            config_object = default_config
+
+        super_kwargs = {k.lower(): v for k, v in config_object.__dict__.items()
+                        if k.isupper() and not k.startswith('_')}
+        super().__init__(message_class=Message, **super_kwargs)
+
+        self.config = config_object
+        self.asgi.debug = self.config.DEBUG
+
+        from .message import handle_message
+        from .notice_request import handle_notice_or_request
+
+        @self.on_message
+        async def _(ctx):
+            asyncio.ensure_future(handle_message(self, ctx))
+
+        @self.on_notice
+        async def _(ctx):
+            asyncio.ensure_future(handle_notice_or_request(self, ctx))
+
+        @self.on_request
+        async def _(ctx):
+            asyncio.ensure_future(handle_notice_or_request(self, ctx))
+
+    def run(self, host=None, port=None, *args, **kwargs):
+        super().run(host=host, port=port, loop=asyncio.get_event_loop(),
+                    *args, **kwargs)
+
+    def get_data_folder(self,
+                        *sub_folder: str) -> Optional[str]:
+        folder = self.config.DATA_FOLDER
+        if not folder:
+            return None
+
+        if sub_folder:
+            folder = os.path.join(folder, *sub_folder)
+
+        if not os.path.isdir(folder):
+            os.makedirs(folder, 0o755, exist_ok=True)
+        return folder
+
+    def get_data_file(self, path: str, *others: str) -> Optional[str]:
+        rel_path = os.path.join(path, *others)
+        parent = self.get_data_folder(os.path.dirname(rel_path))
+        if not parent:
+            return None
+        return os.path.join(parent, os.path.basename(rel_path))
 
 
-def create_bot(config_object: Any = None) -> NoneBot:
-    if config_object is None:
-        config_object = default_config
+_bot = None
 
-    kwargs = {k.lower(): v for k, v in config_object.__dict__.items()
-              if k.isupper() and not k.startswith('_')}
 
-    bot = NoneBot(message_class=Message, **kwargs)
-    bot.config = config_object
-    if bot.config.DEBUG:
+def init(config_object: Any = None) -> NoneBot:
+    global _bot
+    _bot = NoneBot(config_object)
+    if _bot.config.DEBUG:
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)
-    bot.asgi.debug = bot.config.DEBUG
+    return _bot
 
-    from .message import handle_message
-    from .notice_request import handle_notice_or_request
 
-    @bot.on_message
-    async def _(ctx):
-        asyncio.ensure_future(handle_message(bot, ctx))
+def get_bot() -> NoneBot:
+    if _bot is None:
+        raise ValueError('NoneBot instance has not been initialized')
+    # noinspection PyTypeChecker
+    return _bot
 
-    @bot.on_notice
-    async def _(ctx):
-        asyncio.ensure_future(handle_notice_or_request(bot, ctx))
 
-    @bot.on_request
-    async def _(ctx):
-        asyncio.ensure_future(handle_notice_or_request(bot, ctx))
-
-    return bot
+def run(host: str = None, port: int = None, *args, **kwargs) -> None:
+    get_bot().run(host=host, port=port, *args, **kwargs)
 
 
 _plugins = set()
+
+
+def clear_plugins() -> None:
+    _plugins.clear()
 
 
 def load_plugins(plugin_dir: str, module_prefix: str) -> None:
