@@ -82,8 +82,10 @@ async def handle_natural_language(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
     if bot.config.NICKNAME:
         # check if the user is calling me with my nickname
         if not isinstance(bot.config.NICKNAME, Iterable):
+            # noinspection PyUnusedLocal
             nicknames = (bot.config.NICKNAME,)
         else:
+            # noinspection PyUnusedLocal
             nicknames = filter(lambda n: n, bot.config.NICKNAME)
         m = re.search(rf'^({"|".join(nicknames)})[\s,，]+', msg)
         if m:
