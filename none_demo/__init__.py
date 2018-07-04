@@ -3,8 +3,8 @@ from os import path
 import none
 from none_demo import config
 
-bot = none.init(config)
-app = bot.asgi
+none.init(config)
+app = none.get_bot().asgi
 
 if __name__ == '__main__':
     none.load_builtin_plugins()

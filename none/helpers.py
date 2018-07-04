@@ -6,9 +6,7 @@ from . import NoneBot, expression
 
 
 def context_id(ctx: Dict[str, Any]) -> str:
-    """
-    Calculate a unique id representing the current user.
-    """
+    """Calculate a unique id representing the current user."""
     src = ''
     if ctx.get('group_id'):
         src += f'/group/{ctx["group_id"]}'
@@ -22,9 +20,7 @@ def context_id(ctx: Dict[str, Any]) -> str:
 async def send(bot: NoneBot, ctx: Dict[str, Any],
                message: Union[str, Dict[str, Any], List[Dict[str, Any]]],
                *, ignore_failure: bool = True) -> None:
-    """
-    Send a message ignoring failure by default.
-    """
+    """Send a message ignoring failure by default."""
     try:
         if ctx.get('post_type') == 'message':
             await bot.send(ctx, message)
@@ -46,7 +42,5 @@ async def send(bot: NoneBot, ctx: Dict[str, Any],
 async def send_expr(bot: NoneBot, ctx: Dict[str, Any],
                     expr: Union[str, Sequence[str], Callable],
                     **kwargs):
-    """
-    Sending a expression message ignoring failure by default.
-    """
+    """Sending a expression message ignoring failure by default."""
     return await send(bot, ctx, expression.render(expr, **kwargs))

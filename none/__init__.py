@@ -67,17 +67,30 @@ class NoneBot(CQHttp):
 _bot = None
 
 
-def init(config_object: Any = None) -> NoneBot:
+def init(config_object: Any = None) -> None:
+    """
+    Initialize NoneBot instance.
+
+    This function must be called at the very beginning of code,
+    otherwise the get_bot() function will return None and nothing
+    is gonna work properly.
+
+    :param config_object: configuration object
+    """
     global _bot
     _bot = NoneBot(config_object)
     if _bot.config.DEBUG:
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)
-    return _bot
 
 
 def get_bot() -> NoneBot:
+    """
+    Get the NoneBot instance.
+
+    :raise ValueError: instance not initialized
+    """
     if _bot is None:
         raise ValueError('NoneBot instance has not been initialized')
     # noinspection PyTypeChecker
@@ -85,6 +98,7 @@ def get_bot() -> NoneBot:
 
 
 def run(host: str = None, port: int = None, *args, **kwargs) -> None:
+    """Run the NoneBot instance."""
     get_bot().run(host=host, port=port, *args, **kwargs)
 
 
