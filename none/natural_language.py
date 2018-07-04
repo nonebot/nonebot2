@@ -3,10 +3,9 @@ import re
 from collections import namedtuple
 from typing import Dict, Any, Iterable, Optional, Callable, Union
 
-from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
 
-from . import permission as perm
+from . import NoneBot, permission as perm
 from .command import call_command
 from .log import logger
 from .session import BaseSession
@@ -53,7 +52,7 @@ def on_natural_language(keywords: Union[Optional[Iterable], Callable] = None,
 class NLPSession(BaseSession):
     __slots__ = ('msg', 'msg_text', 'msg_images')
 
-    def __init__(self, bot: CQHttp, ctx: Dict[str, Any], msg: str):
+    def __init__(self, bot: NoneBot, ctx: Dict[str, Any], msg: str):
         super().__init__(bot, ctx)
         self.msg = msg
         tmp_msg = Message(msg)
@@ -69,13 +68,13 @@ NLPResult = namedtuple('NLPResult', (
 ))
 
 
-async def handle_natural_language(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
+async def handle_natural_language(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
     """
     Handle a message as natural language.
 
     This function is typically called by "handle_message".
 
-    :param bot: CQHttp instance
+    :param bot: NoneBot instance
     :param ctx: message context
     :return: the message is handled as natural language
     """

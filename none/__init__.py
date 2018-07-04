@@ -8,25 +8,33 @@ from typing import Any
 from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
 
+from . import default_config
 from .log import logger
-from .message import handle_message
-from .notice_request import handle_notice_or_request
 
 
-def create_bot(config_object: Any = None) -> CQHttp:
+class NoneBot(CQHttp):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.config = default_config
+
+
+def create_bot(config_object: Any = None) -> NoneBot:
     if config_object is None:
-        from . import default_config as config_object
+        config_object = default_config
 
     kwargs = {k.lower(): v for k, v in config_object.__dict__.items()
               if k.isupper() and not k.startswith('_')}
 
-    bot = CQHttp(message_class=Message, **kwargs)
+    bot = NoneBot(message_class=Message, **kwargs)
     bot.config = config_object
     if bot.config.DEBUG:
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)
     bot.asgi.debug = bot.config.DEBUG
+
+    from .message import handle_message
+    from .notice_request import handle_notice_or_request
 
     @bot.on_message
     async def _(ctx):

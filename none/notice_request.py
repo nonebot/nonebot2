@@ -1,8 +1,9 @@
 from typing import Dict, Any, Optional, Callable, Union
 
-from aiocqhttp import CQHttp, Error as CQHttpError
+from aiocqhttp import Error as CQHttpError
 from aiocqhttp.bus import EventBus
 
+from . import NoneBot
 from .log import logger
 from .session import BaseSession
 
@@ -34,14 +35,14 @@ on_request = _make_event_deco('request')
 class NoticeSession(BaseSession):
     __slots__ = ()
 
-    def __init__(self, bot: CQHttp, ctx: Dict[str, Any]):
+    def __init__(self, bot: NoneBot, ctx: Dict[str, Any]):
         super().__init__(bot, ctx)
 
 
 class RequestSession(BaseSession):
     __slots__ = ()
 
-    def __init__(self, bot: CQHttp, ctx: Dict[str, Any]):
+    def __init__(self, bot: NoneBot, ctx: Dict[str, Any]):
         super().__init__(bot, ctx)
 
     async def approve(self, remark: str = ''):
@@ -67,7 +68,7 @@ class RequestSession(BaseSession):
             pass
 
 
-async def handle_notice_or_request(bot: CQHttp, ctx: Dict[str, Any]) -> None:
+async def handle_notice_or_request(bot: NoneBot, ctx: Dict[str, Any]) -> None:
     post_type = ctx['post_type']  # "notice" or "request"
     detail_type = ctx[f'{post_type}_type']
     event = f'{post_type}.{detail_type}'

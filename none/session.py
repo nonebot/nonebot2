@@ -1,14 +1,13 @@
 from typing import Union, Callable, Dict, Any, List, Sequence
 
-from aiocqhttp import CQHttp
-
+from . import NoneBot
 from .helpers import send, send_expr
 
 
 class BaseSession:
     __slots__ = ('bot', 'ctx')
 
-    def __init__(self, bot: CQHttp, ctx: Dict[str, Any]):
+    def __init__(self, bot: NoneBot, ctx: Dict[str, Any]):
         self.bot = bot
         self.ctx = ctx
 

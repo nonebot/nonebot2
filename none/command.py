@@ -5,10 +5,9 @@ from typing import (
     Tuple, Union, Callable, Iterable, Dict, Any, Optional, Sequence
 )
 
-from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
 
-from . import permission as perm
+from . import NoneBot, permission as perm
 from .expression import render
 from .helpers import context_id
 from .session import BaseSession
@@ -159,7 +158,7 @@ class CommandSession(BaseSession):
     __slots__ = ('cmd', 'current_key', 'current_arg', 'current_arg_text',
                  'current_arg_images', 'args', 'last_interaction')
 
-    def __init__(self, bot: CQHttp, ctx: Dict[str, Any], cmd: Command, *,
+    def __init__(self, bot: NoneBot, ctx: Dict[str, Any], cmd: Command, *,
                  current_arg: str = '', args: Optional[Dict[str, Any]] = None):
         super().__init__(bot, ctx)
         self.cmd = cmd  # Command object
@@ -227,7 +226,7 @@ class CommandSession(BaseSession):
         return self.args.get(key, default)
 
 
-def _new_command_session(bot: CQHttp,
+def _new_command_session(bot: NoneBot,
                          ctx: Dict[str, Any]) -> Optional[CommandSession]:
     """
     Create a new session for a command.
@@ -236,7 +235,7 @@ def _new_command_session(bot: CQHttp,
     and if succeeded, it then create a session for the command and return.
     If the message is not a valid command, None will be returned.
 
-    :param bot: CQHttp instance
+    :param bot: NoneBot instance
     :param ctx: message context
     :return: CommandSession object or None
     """
@@ -299,13 +298,13 @@ def _new_command_session(bot: CQHttp,
     return CommandSession(bot, ctx, cmd, current_arg=''.join(cmd_remained))
 
 
-async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
+async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
     """
     Handle a message as a command.
 
     This function is typically called by "handle_message".
 
-    :param bot: CQHttp instance
+    :param bot: NoneBot instance
     :param ctx: message context
     :return: the message is handled as a command
     """
@@ -329,7 +328,7 @@ async def handle_command(bot: CQHttp, ctx: Dict[str, Any]) -> bool:
     return await _real_run_command(session, ctx_id, check_perm=check_perm)
 
 
-async def call_command(bot: CQHttp, ctx: Dict[str, Any],
+async def call_command(bot: NoneBot, ctx: Dict[str, Any],
                        name: Union[str, Tuple[str]],
                        args: Dict[str, Any]) -> bool:
     """
@@ -342,7 +341,7 @@ async def call_command(bot: CQHttp, ctx: Dict[str, Any],
     will be overridden, even if the command being called here does
     not need further interaction (a.k.a asking the user for more info).
 
-    :param bot: CQHttp instance
+    :param bot: NoneBot instance
     :param ctx: message context
     :param name: command name
     :param args: command args

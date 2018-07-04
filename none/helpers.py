@@ -1,8 +1,8 @@
 from typing import Dict, Any, Union, List, Sequence, Callable
 
-from aiocqhttp import CQHttp, Error as CQHttpError
+from aiocqhttp import Error as CQHttpError
 
-from . import expression
+from . import NoneBot, expression
 
 
 def context_id(ctx: Dict[str, Any]) -> str:
@@ -19,7 +19,7 @@ def context_id(ctx: Dict[str, Any]) -> str:
     return src
 
 
-async def send(bot: CQHttp, ctx: Dict[str, Any],
+async def send(bot: NoneBot, ctx: Dict[str, Any],
                message: Union[str, Dict[str, Any], List[Dict[str, Any]]],
                *, ignore_failure: bool = True) -> None:
     """
@@ -43,7 +43,7 @@ async def send(bot: CQHttp, ctx: Dict[str, Any],
             raise
 
 
-async def send_expr(bot: CQHttp, ctx: Dict[str, Any],
+async def send_expr(bot: NoneBot, ctx: Dict[str, Any],
                     expr: Union[str, Sequence[str], Callable],
                     **kwargs):
     """

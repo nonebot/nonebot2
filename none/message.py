@@ -1,14 +1,14 @@
 from typing import Dict, Any
 
-from aiocqhttp import CQHttp
 from aiocqhttp.message import MessageSegment
 
+from . import NoneBot
 from .command import handle_command
 from .log import logger
 from .natural_language import handle_natural_language
 
 
-async def handle_message(bot: CQHttp, ctx: Dict[str, Any]) -> None:
+async def handle_message(bot: NoneBot, ctx: Dict[str, Any]) -> None:
     if ctx['message_type'] != 'private':
         # group or discuss
         ctx['to_me'] = False
