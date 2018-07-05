@@ -33,6 +33,7 @@ IS_GROUP = GROUP
 IS_SUPERUSER = 0xFFFF
 
 _min_context_fields = (
+    'self_id',
     'message_type',
     'sub_type',
     'user_id',
@@ -84,6 +85,7 @@ async def _check(bot: NoneBot, min_ctx: _MinContext,
         if not min_ctx.anonymous:
             try:
                 member_info = await bot.get_group_member_info(
+                    self_id=min_ctx.self_id,
                     group_id=min_ctx.group_id,
                     user_id=min_ctx.user_id,
                     no_cache=True
