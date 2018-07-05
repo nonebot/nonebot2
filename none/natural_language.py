@@ -117,6 +117,7 @@ async def handle_natural_language(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
         logger.debug(results)
         if results and results[0].confidence >= 60.0:
             # choose the result with highest confidence
-            return await call_command(bot, ctx,
-                                      results[0].cmd_name, results[0].cmd_args)
+            return await call_command(bot, ctx, results[0].cmd_name,
+                                      args=results[0].cmd_args,
+                                      check_perm=False)
     return False

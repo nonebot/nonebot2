@@ -37,25 +37,37 @@ class Command:
         self.only_to_me = only_to_me
         self.args_parser_func = None
 
-    async def run(self, session, check_perm: bool = True) -> bool:
+    async def run(self, session, *,
+                  check_perm: bool = True,
+                  dry: bool = False) -> bool:
         """
         Run the command in a given session.
 
         :param session: CommandSession object
         :param check_perm: should check permission before running
-        :return: the command is finished
+        :param dry: just check any prerequisite, without actually running
+        :return: the command is finished (or can be run, given dry == True)
         """
-        if check_perm:
-            has_perm = await perm.check_permission(
-                session.bot, session.ctx, self.permission)
-        else:
-            has_perm = True
+        has_perm = await self._check_perm(session) if check_perm else True
         if self.func and has_perm:
+            if dry:
+                return True
             if self.args_parser_func:
                 await self.args_parser_func(session)
             await self.func(session)
             return True
         return False
+
+    async def _check_perm(self, session) -> bool:
+        """
+        Check if the session has sufficient permission to
+        call the command.
+
+        :param session: CommandSession object
+        :return: the session has the permission
+        """
+        return await perm.check_permission(session.bot, session.ctx,
+                                           self.permission)
 
 
 def on_command(name: Union[str, Tuple[str]], *,
@@ -226,31 +238,25 @@ class CommandSession(BaseSession):
         return self.args.get(key, default)
 
 
-def _new_command_session(bot: NoneBot,
-                         ctx: Dict[str, Any]) -> Optional[CommandSession]:
+def parse_command(bot: NoneBot,
+                  cmd_string: str) -> Tuple[Optional[Command], Optional[str]]:
     """
-    Create a new session for a command.
-
-    This will attempt to parse the current message as a command,
-    and if succeeded, it then create a session for the command and return.
-    If the message is not a valid command, None will be returned.
+    Parse a command string (typically from a message).
 
     :param bot: NoneBot instance
-    :param ctx: message context
-    :return: CommandSession object or None
+    :param cmd_string: command string
+    :return: (Command object, current arg string)
     """
-    msg = str(ctx['message']).lstrip()
-
     matched_start = None
     for start in bot.config.COMMAND_START:
         # loop through COMMAND_START to find the longest matched start
         curr_matched_start = None
         if isinstance(start, type(re.compile(''))):
-            m = start.search(msg)
+            m = start.search(cmd_string)
             if m and m.start(0) == 0:
                 curr_matched_start = m.group(0)
         elif isinstance(start, str):
-            if msg.startswith(start):
+            if cmd_string.startswith(start):
                 curr_matched_start = start
 
         if curr_matched_start is not None and \
@@ -261,13 +267,13 @@ def _new_command_session(bot: NoneBot,
 
     if matched_start is None:
         # it's not a command
-        return None
+        return None, None
 
-    full_command = msg[len(matched_start):].lstrip()
+    full_command = cmd_string[len(matched_start):].lstrip()
 
     if not full_command:
         # command is empty
-        return None
+        return None, None
 
     cmd_name_text, *cmd_remained = full_command.split(maxsplit=1)
     cmd_name = _aliases.get(cmd_name_text)
@@ -291,11 +297,9 @@ def _new_command_session(bot: NoneBot,
 
     cmd = _find_command(cmd_name)
     if not cmd:
-        return None
-    if cmd.only_to_me and not ctx['to_me']:
-        return None
+        return None, None
 
-    return CommandSession(bot, ctx, cmd, current_arg=''.join(cmd_remained))
+    return cmd, ''.join(cmd_remained)
 
 
 async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
@@ -322,48 +326,65 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
             del _sessions[ctx_id]
             session = None
     if not session:
-        session = _new_command_session(bot, ctx)
-        if not session:
+        cmd, current_arg = parse_command(bot, str(ctx['message']).lstrip())
+        if not cmd or cmd.only_to_me and not ctx['to_me']:
             return False
+        session = CommandSession(bot, ctx, cmd, current_arg=current_arg)
     return await _real_run_command(session, ctx_id, check_perm=check_perm)
 
 
 async def call_command(bot: NoneBot, ctx: Dict[str, Any],
-                       name: Union[str, Tuple[str]],
-                       args: Dict[str, Any]) -> bool:
+                       name: Union[str, Tuple[str]], *,
+                       current_arg: str = '',
+                       args: Optional[Dict[str, Any]] = None,
+                       check_perm: bool = True,
+                       disable_interaction: bool = False) -> bool:
     """
     Call a command internally.
 
     This function is typically called by some other commands
     or "handle_natural_language" when handling NLPResult object.
 
-    Note: After calling this function, any previous command session
-    will be overridden, even if the command being called here does
-    not need further interaction (a.k.a asking the user for more info).
+    Note: If disable_interaction is not True, after calling this function,
+    any previous command session will be overridden, even if the command
+    being called here does not need further interaction (a.k.a asking
+    the user for more info).
 
     :param bot: NoneBot instance
     :param ctx: message context
     :param name: command name
+    :param current_arg: command current argument string
     :param args: command args
+    :param check_perm: should check permission before running command
+    :param disable_interaction: disable the command's further interaction
     :return: the command is successfully called
     """
     cmd = _find_command(name)
     if not cmd:
         return False
-    session = CommandSession(bot, ctx, cmd, args=args)
+    session = CommandSession(bot, ctx, cmd, current_arg=current_arg, args=args)
     return await _real_run_command(session, context_id(session.ctx),
-                                   check_perm=False)
+                                   check_perm=check_perm,
+                                   disable_interaction=disable_interaction)
 
 
 async def _real_run_command(session: CommandSession,
-                            ctx_id: str, **kwargs) -> bool:
-    _sessions[ctx_id] = session
+                            ctx_id: str,
+                            disable_interaction: bool = False,
+                            **kwargs) -> bool:
+    if not disable_interaction:
+        # override session only when not disabling interaction
+        _sessions[ctx_id] = session
     try:
         res = await session.cmd.run(session, **kwargs)
-        # the command is finished, remove the session
-        del _sessions[ctx_id]
+        if not disable_interaction:
+            # the command is finished, remove the session
+            del _sessions[ctx_id]
         return res
     except _FurtherInteractionNeeded:
+        if disable_interaction:
+            # if the command needs further interaction, we view it as failed
+            return False
         session.last_interaction = datetime.now()
         # return True because this step of the session is successful
         return True
