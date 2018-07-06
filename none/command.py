@@ -89,7 +89,7 @@ def on_command(name: Union[str, Tuple[str]], *,
         if not name:
             raise ValueError('the name of a command must not be empty')
 
-        cmd_name = name if isinstance(name, tuple) else (name,)
+        cmd_name = (name,) if isinstance(name, str) else name
         current_parent = _registry
         for parent_key in cmd_name[:-1]:
             current_parent[parent_key] = current_parent.get(parent_key) or {}

@@ -8,14 +8,13 @@ from typing import Any, Optional
 from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
 
-from . import default_config
 from .log import logger
 
 
 class NoneBot(CQHttp):
     def __init__(self, config_object: Any = None):
         if config_object is None:
-            config_object = default_config
+            from . import default_config as config_object
 
         super_kwargs = {k.lower(): v for k, v in config_object.__dict__.items()
                         if k.isupper() and not k.startswith('_')}
@@ -64,7 +63,7 @@ class NoneBot(CQHttp):
         return os.path.join(parent, os.path.basename(rel_path))
 
 
-_bot = None
+_bot: Optional[NoneBot] = None
 
 
 def init(config_object: Any = None) -> None:
@@ -93,7 +92,6 @@ def get_bot() -> NoneBot:
     """
     if _bot is None:
         raise ValueError('NoneBot instance has not been initialized')
-    # noinspection PyTypeChecker
     return _bot
 
 
