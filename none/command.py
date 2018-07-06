@@ -160,8 +160,16 @@ def _find_command(name: Union[str, Tuple[str]]) -> Optional[Command]:
 
 class _FurtherInteractionNeeded(Exception):
     """
-    Raised by session.get() indicating that the command should
+    Raised by session.pause() indicating that the command should
     enter interactive mode to ask the user for some arguments.
+    """
+    pass
+
+
+class _FinishException(Exception):
+    """
+    Raised by session.finish() indicating that the command session
+    should be stop and removed.
     """
     pass
 
@@ -229,13 +237,24 @@ class CommandSession(BaseSession):
         # ask the user for more information
         if prompt_expr is not None:
             prompt = render(prompt_expr, key=key)
-        if prompt:
-            asyncio.ensure_future(self.send(prompt))
-        raise _FurtherInteractionNeeded
+        self.pause(prompt)
 
     def get_optional(self, key: str,
                      default: Optional[Any] = None) -> Optional[Any]:
+        """Simply get a argument with given key."""
         return self.args.get(key, default)
+
+    def pause(self, message=None) -> None:
+        """Pause the session for further interaction."""
+        if message:
+            asyncio.ensure_future(self.send(message))
+        raise _FurtherInteractionNeeded
+
+    def finish(self, message=None) -> None:
+        """Finish the session."""
+        if message:
+            asyncio.ensure_future(self.send(message))
+        raise _FinishException
 
 
 def parse_command(bot: NoneBot,
@@ -387,4 +406,6 @@ async def _real_run_command(session: CommandSession,
             return False
         session.last_interaction = datetime.now()
         # return True because this step of the session is successful
+        return True
+    except _FinishException:
         return True

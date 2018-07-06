@@ -15,5 +15,6 @@ async def _(session: NLPSession):
             _last_session.msg == session.msg:
         result = NLPResult(61.0, 'echo', {'message': _last_session.msg})
         _last_session = None
-    _last_session = session
+    else:
+        _last_session = session
     return result
