@@ -16,9 +16,11 @@ class NoneBot(CQHttp):
         if config_object is None:
             from . import default_config as config_object
 
-        super_kwargs = {k.lower(): v for k, v in config_object.__dict__.items()
-                        if k.isupper() and not k.startswith('_')}
-        super().__init__(message_class=Message, **super_kwargs)
+        config_dict = {k: v for k, v in config_object.__dict__.items()
+                       if k.isupper() and not k.startswith('_')}
+        logger.debug(f'Loaded configurations: {config_dict}')
+        super().__init__(message_class=Message,
+                         **{k.lower(): v for k, v in config_dict.items()})
 
         self.config = config_object
         self.asgi.debug = self.config.DEBUG
@@ -39,28 +41,9 @@ class NoneBot(CQHttp):
             asyncio.ensure_future(handle_notice_or_request(self, ctx))
 
     def run(self, host=None, port=None, *args, **kwargs):
+        logger.info(f'Running on {host}:{port}')
         super().run(host=host, port=port, loop=asyncio.get_event_loop(),
                     *args, **kwargs)
-
-    def get_data_folder(self,
-                        *sub_folder: str) -> Optional[str]:
-        folder = self.config.DATA_FOLDER
-        if not folder:
-            return None
-
-        if sub_folder:
-            folder = os.path.join(folder, *sub_folder)
-
-        if not os.path.isdir(folder):
-            os.makedirs(folder, 0o755, exist_ok=True)
-        return folder
-
-    def get_data_file(self, path: str, *others: str) -> Optional[str]:
-        rel_path = os.path.join(path, *others)
-        parent = self.get_data_folder(os.path.dirname(rel_path))
-        if not parent:
-            return None
-        return os.path.join(parent, os.path.basename(rel_path))
 
 
 _bot: Optional[NoneBot] = None
@@ -103,11 +86,14 @@ def run(host: str = None, port: int = None, *args, **kwargs) -> None:
 _plugins = set()
 
 
-def clear_plugins() -> None:
-    _plugins.clear()
-
-
 def load_plugins(plugin_dir: str, module_prefix: str) -> None:
+    """
+    Find all non-hidden modules or packages in a given directory,
+    and import them with the given module prefix.
+
+    :param plugin_dir: plugin directory to search
+    :param module_prefix: module prefix used while importing
+    """
     for name in os.listdir(plugin_dir):
         path = os.path.join(plugin_dir, name)
         if os.path.isfile(path) and \
@@ -125,12 +111,15 @@ def load_plugins(plugin_dir: str, module_prefix: str) -> None:
         mod_name = f'{module_prefix}.{m.group(1)}'
         try:
             _plugins.add(importlib.import_module(mod_name))
-            logger.info('Succeeded to import "{}"'.format(mod_name))
+            logger.info(f'Succeeded to import "{mod_name}"')
         except ImportError:
-            logger.warning('Failed to import "{}"'.format(mod_name))
+            logger.warning(f'Failed to import "{mod_name}"')
 
 
 def load_builtin_plugins() -> None:
+    """
+    Load built-in plugins distributed along with "none" package.
+    """
     plugin_dir = os.path.join(os.path.dirname(__file__), 'plugins')
     load_plugins(plugin_dir, 'none.plugins')
 

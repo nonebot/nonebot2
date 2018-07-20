@@ -89,6 +89,7 @@ async def handle_natural_language(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
             nicknames = filter(lambda n: n, bot.config.NICKNAME)
         m = re.search(rf'^({"|".join(nicknames)})[\s,，]+', msg)
         if m:
+            logger.debug(f'User is calling me {m.group(1)}')
             ctx['to_me'] = True
             msg = msg[m.end():]
 
@@ -114,10 +115,13 @@ async def handle_natural_language(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
         # wait for possible results, and sort them by confidence
         results = sorted(filter(lambda r: r, await asyncio.gather(*coros)),
                          key=lambda r: r.confidence, reverse=True)
-        logger.debug(results)
+        logger.debug(f'NLP results: {results}')
         if results and results[0].confidence >= 60.0:
             # choose the result with highest confidence
+            logger.debug(f'NLP result with highest confidence: {results[0]}')
             return await call_command(bot, ctx, results[0].cmd_name,
                                       args=results[0].cmd_args,
                                       check_perm=False)
+        else:
+            logger.debug('No NLP result having enough confidence')
     return False

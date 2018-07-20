@@ -1,3 +1,10 @@
+"""
+Provide logger object.
+
+Any other modules in "none" should use "logger" from this module
+to log messages.
+"""
+
 import logging
 import sys
 

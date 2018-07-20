@@ -76,9 +76,19 @@ async def handle_notice_or_request(bot: NoneBot, ctx: Dict[str, Any]) -> None:
         event += f'.{ctx["sub_type"]}'
 
     if post_type == 'notice':
+        _log_notice(ctx)
         session = NoticeSession(bot, ctx)
     else:  # must be 'request'
+        _log_request(ctx)
         session = RequestSession(bot, ctx)
 
     logger.debug(f'Emitting event: {event}')
     await _bus.emit(event, session)
+
+
+def _log_notice(ctx: Dict[str, Any]) -> None:
+    logger.info(f'Notice: {ctx}')
+
+
+def _log_request(ctx: Dict[str, Any]) -> None:
+    logger.info(f'Request: {ctx}')

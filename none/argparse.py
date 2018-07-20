@@ -8,6 +8,11 @@ class ParserExit(RuntimeError):
 
 
 class ArgumentParser(ArgumentParser):
+    """
+    An ArgumentParser wrapper that avoid printing messages to
+    standard I/O.
+    """
+
     def _print_message(self, *args, **kwargs):
         # do nothing
         pass

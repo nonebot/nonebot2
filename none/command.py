@@ -8,6 +8,7 @@ from typing import (
 from aiocqhttp.message import Message
 
 from . import NoneBot, permission as perm
+from .log import logger
 from .expression import render
 from .helpers import context_id
 from .session import BaseSession
@@ -26,8 +27,8 @@ _sessions = {}
 
 
 class Command:
-    __slots__ = (
-        'name', 'func', 'permission', 'only_to_me', 'args_parser_func')
+    __slots__ = ('name', 'func', 'permission',
+                 'only_to_me', 'args_parser_func')
 
     def __init__(self, *, name: Tuple[str], func: Callable, permission: int,
                  only_to_me: bool):
@@ -266,6 +267,8 @@ def parse_command(bot: NoneBot,
     :param cmd_string: command string
     :return: (Command object, current arg string)
     """
+    logger.debug(f'Parsing command: {cmd_string}')
+
     matched_start = None
     for start in bot.config.COMMAND_START:
         # loop through COMMAND_START to find the longest matched start
@@ -286,8 +289,11 @@ def parse_command(bot: NoneBot,
 
     if matched_start is None:
         # it's not a command
+        logger.debug('It\'s not a command')
         return None, None
 
+    logger.debug(f'Matched command start: '
+                 f'{matched_start}{"(space)" if not matched_start else ""}')
     full_command = cmd_string[len(matched_start):].lstrip()
 
     if not full_command:
@@ -314,10 +320,13 @@ def parse_command(bot: NoneBot,
         if not cmd_name:
             cmd_name = (cmd_name_text,)
 
+    logger.debug(f'Split command name: {cmd_name}')
     cmd = _find_command(cmd_name)
     if not cmd:
+        logger.debug(f'Command {cmd_name} not found')
         return None, None
 
+    logger.debug(f'Command {cmd.name} found, function: {cmd.func}')
     return cmd, ''.join(cmd_remained)
 
 
@@ -337,11 +346,13 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
     if _sessions.get(ctx_id):
         session = _sessions[ctx_id]
         if session and session.is_valid:
+            logger.debug(f'Session of command {session.cmd.name} exists')
             session.refresh(ctx, current_arg=str(ctx['message']))
             # there is no need to check permission for existing session
             check_perm = False
         else:
             # the session is expired, remove it
+            logger.debug(f'Session of command {session.cmd.name} is expired')
             del _sessions[ctx_id]
             session = None
     if not session:
@@ -349,6 +360,7 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
         if not cmd or cmd.only_to_me and not ctx['to_me']:
             return False
         session = CommandSession(bot, ctx, cmd, current_arg=current_arg)
+        logger.debug(f'New session of command {session.cmd.name} created')
     return await _real_run_command(session, ctx_id, check_perm=check_perm)
 
 
@@ -395,6 +407,7 @@ async def _real_run_command(session: CommandSession,
         # override session only when not disabling interaction
         _sessions[ctx_id] = session
     try:
+        logger.debug(f'Running command {session.cmd.name}')
         res = await session.cmd.run(session, **kwargs)
         if not disable_interaction:
             # the command is finished, remove the session
@@ -404,8 +417,11 @@ async def _real_run_command(session: CommandSession,
         if disable_interaction:
             # if the command needs further interaction, we view it as failed
             return False
+        logger.debug(f'Further interaction needed for '
+                     f'command {session.cmd.name}')
         session.last_interaction = datetime.now()
         # return True because this step of the session is successful
         return True
     except _FinishException:
+        logger.debug(f'Session of command {session.cmd.name} finished')
         return True

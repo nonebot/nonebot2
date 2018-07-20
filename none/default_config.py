@@ -1,3 +1,19 @@
+"""
+Default configurations.
+
+Any derived configurations must import everything from this module
+at the very beginning of their code, and then set their own value
+to override the default one.
+
+For example:
+
+>>> from none.default_config import *
+>>> PORT = 9090
+>>> DEBUG = False
+>>> SUPERUSERS.add(123456)
+>>> NICKNAME = '小明'
+"""
+
 import os
 from datetime import timedelta
 
