@@ -10,7 +10,7 @@ from aiocqhttp.message import Message
 from . import NoneBot, permission as perm
 from .log import logger
 from .expression import render
-from .helpers import context_id
+from .helpers import context_id, send_expr
 from .session import BaseSession
 
 # Key: str (one segment of command name)
@@ -182,7 +182,7 @@ class _FinishException(Exception):
 
 class CommandSession(BaseSession):
     __slots__ = ('cmd', 'current_key', 'current_arg', 'current_arg_text',
-                 'current_arg_images', 'args', 'last_interaction')
+                 'current_arg_images', 'args', '_last_interaction', '_running')
 
     def __init__(self, bot: NoneBot, ctx: Dict[str, Any], cmd: Command, *,
                  current_arg: str = '', args: Optional[Dict[str, Any]] = None):
@@ -194,7 +194,19 @@ class CommandSession(BaseSession):
         self.current_arg_images = None  # image urls in current argument
         self.refresh(ctx, current_arg=current_arg)
         self.args = args or {}
-        self.last_interaction = None  # last interaction time of this session
+        self._last_interaction = None  # last interaction time of this session
+        self._running = False
+
+    @property
+    def running(self):
+        return self._running
+
+    @running.setter
+    def running(self, value):
+        if self._running is True and value is False:
+            # change status from running to not running, record the time
+            self._last_interaction = datetime.now()
+        self._running = value
 
     def refresh(self, ctx: Dict[str, Any], *, current_arg: str = '') -> None:
         """
@@ -213,8 +225,8 @@ class CommandSession(BaseSession):
     @property
     def is_valid(self) -> bool:
         """Check if the session is expired or not."""
-        if self.last_interaction and \
-                datetime.now() - self.last_interaction > \
+        if self._last_interaction and \
+                datetime.now() - self._last_interaction > \
                 self.bot.config.SESSION_EXPIRE_TIMEOUT:
             return False
         return True
@@ -350,7 +362,15 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
     check_perm = True
     if _sessions.get(ctx_id):
         session = _sessions[ctx_id]
-        if session and session.is_valid:
+        if session.running:
+            logger.warning(f'There is a session of command '
+                           f'{session.cmd.name} running, notify the user')
+            asyncio.ensure_future(
+                send_expr(bot, ctx, bot.config.SESSION_RUNNING_EXPRESSION))
+            # pretend we are successful, so that NLP won't handle it
+            return True
+
+        if session.is_valid:
             logger.debug(f'Session of command {session.cmd.name} exists')
             session.refresh(ctx, current_arg=str(ctx['message']))
             # there is no need to check permission for existing session
@@ -414,6 +434,7 @@ async def _real_run_command(session: CommandSession,
         _sessions[ctx_id] = session
     try:
         logger.debug(f'Running command {session.cmd.name}')
+        session.running = True
         res = await session.cmd.run(session, **kwargs)
         raise _FinishException(res)
     except _FurtherInteractionNeeded:
@@ -422,11 +443,12 @@ async def _real_run_command(session: CommandSession,
             return False
         logger.debug(f'Further interaction needed for '
                      f'command {session.cmd.name}')
-        session.last_interaction = datetime.now()
+        session.running = False
         # return True because this step of the session is successful
         return True
     except _FinishException as e:
         logger.debug(f'Session of command {session.cmd.name} finished')
+        session.running = False
         if not disable_interaction:
             # the command is finished, remove the session
             del _sessions[ctx_id]

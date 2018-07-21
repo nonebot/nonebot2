@@ -29,5 +29,6 @@ NICKNAME = ''
 COMMAND_START = {'/', '!', '／', '！'}
 COMMAND_SEP = {'/', '.'}
 SESSION_EXPIRE_TIMEOUT = timedelta(minutes=5)
+SESSION_RUNNING_EXPRESSION = '您有命令正在执行，请稍后再试'
 
 DATA_FOLDER = os.path.join(os.getcwd(), 'data')
