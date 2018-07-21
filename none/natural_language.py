@@ -87,7 +87,7 @@ async def handle_natural_language(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
         else:
             # noinspection PyUnusedLocal
             nicknames = filter(lambda n: n, bot.config.NICKNAME)
-        m = re.search(rf'^({"|".join(nicknames)})[\s,，]+', msg)
+        m = re.search(rf'^({"|".join(nicknames)})[\s,，]+', msg, re.IGNORECASE)
         if m:
             logger.debug(f'User is calling me {m.group(1)}')
             ctx['to_me'] = True
