@@ -71,6 +71,9 @@ def get_bot() -> NoneBot:
     """
     Get the NoneBot instance.
 
+    The result is ensured to be not None, otherwise an exception will
+    be raised.
+
     :raise ValueError: instance not initialized
     """
     if _bot is None:
