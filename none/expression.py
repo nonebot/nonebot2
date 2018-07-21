@@ -16,7 +16,7 @@ def render(expr: Union[str, Sequence[str], Callable], *, escape_args=True,
     """
     if isinstance(expr, Callable):
         expr = expr()
-    elif isinstance(expr, Sequence):
+    elif isinstance(expr, Sequence) and not isinstance(expr, str):
         expr = random.choice(expr)
     if escape_args:
         for k, v in kwargs.items():
