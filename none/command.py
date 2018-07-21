@@ -172,7 +172,12 @@ class _FinishException(Exception):
     Raised by session.finish() indicating that the command session
     should be stop and removed.
     """
-    pass
+
+    def __init__(self, result: bool = True):
+        """
+        :param result: succeeded to call the command
+        """
+        self.result = result
 
 
 class CommandSession(BaseSession):
@@ -358,6 +363,7 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
     if not session:
         cmd, current_arg = parse_command(bot, str(ctx['message']).lstrip())
         if not cmd or cmd.only_to_me and not ctx['to_me']:
+            logger.debug('Not to me, ignored')
             return False
         session = CommandSession(bot, ctx, cmd, current_arg=current_arg)
         logger.debug(f'New session of command {session.cmd.name} created')
@@ -409,10 +415,7 @@ async def _real_run_command(session: CommandSession,
     try:
         logger.debug(f'Running command {session.cmd.name}')
         res = await session.cmd.run(session, **kwargs)
-        if not disable_interaction:
-            # the command is finished, remove the session
-            del _sessions[ctx_id]
-        return res
+        raise _FinishException(res)
     except _FurtherInteractionNeeded:
         if disable_interaction:
             # if the command needs further interaction, we view it as failed
@@ -422,6 +425,9 @@ async def _real_run_command(session: CommandSession,
         session.last_interaction = datetime.now()
         # return True because this step of the session is successful
         return True
-    except _FinishException:
+    except _FinishException as e:
         logger.debug(f'Session of command {session.cmd.name} finished')
-        return True
+        if not disable_interaction:
+            # the command is finished, remove the session
+            del _sessions[ctx_id]
+        return e.result
