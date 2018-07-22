@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setup(
     name='none-bot',
-    version='0.0.1',
+    version='0.1.0',
     packages=find_packages(include=('none', 'none.*')),
     url='https://github.com/richardchien/none-bot',
     license='MIT License',
@@ -14,7 +14,7 @@ setup(
     description='A QQ bot framework',
     long_description=long_description,
     long_description_content_type="text/markdown",
-    install_requires=['aiocqhttp>=0.5', 'aiocache'],
+    install_requires=['aiocqhttp>=0.6', 'aiocache>=0.10'],
     python_requires='>=3.6',
     platforms='any',
     classifiers=(
