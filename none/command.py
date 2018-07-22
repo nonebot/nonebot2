@@ -438,18 +438,18 @@ async def _real_run_command(session: CommandSession,
         res = await session.cmd.run(session, **kwargs)
         raise _FinishException(res)
     except _FurtherInteractionNeeded:
+        session.running = False
         if disable_interaction:
             # if the command needs further interaction, we view it as failed
             return False
         logger.debug(f'Further interaction needed for '
                      f'command {session.cmd.name}')
-        session.running = False
         # return True because this step of the session is successful
         return True
     except _FinishException as e:
-        logger.debug(f'Session of command {session.cmd.name} finished')
         session.running = False
-        if not disable_interaction:
+        logger.debug(f'Session of command {session.cmd.name} finished')
+        if ctx_id in _sessions:
             # the command is finished, remove the session
             del _sessions[ctx_id]
         return e.result
