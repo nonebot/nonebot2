@@ -208,6 +208,10 @@ class CommandSession(BaseSession):
             self._last_interaction = datetime.now()
         self._running = value
 
+    @property
+    def is_first_run(self):
+        return self._last_interaction is None
+
     def refresh(self, ctx: Dict[str, Any], *, current_arg: str = '') -> None:
         """
         Refill the session with a new message context.
@@ -449,7 +453,7 @@ async def _real_run_command(session: CommandSession,
     except _FinishException as e:
         session.running = False
         logger.debug(f'Session of command {session.cmd.name} finished')
-        if ctx_id in _sessions:
+        if not disable_interaction and ctx_id in _sessions:
             # the command is finished, remove the session
             del _sessions[ctx_id]
         return e.result
