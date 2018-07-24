@@ -3,7 +3,7 @@ from typing import Dict, Any
 from aiocqhttp.message import MessageSegment
 
 from . import NoneBot
-from .command import handle_command
+from .command import handle_command, SwitchException
 from .log import logger
 from .natural_language import handle_natural_language
 
@@ -23,7 +23,14 @@ async def handle_message(bot: NoneBot, ctx: Dict[str, Any]) -> None:
     else:
         ctx['to_me'] = True
 
-    handled = await handle_command(bot, ctx)
+    while True:
+        try:
+            handled = await handle_command(bot, ctx)
+            break
+        except SwitchException as e:
+            # we are sure that there is no session existing now
+            ctx['message'] = e.new_ctx_message
+            ctx['to_me'] = True
     if handled:
         logger.info(f'Message {ctx["message_id"]} is handled as a command')
         return

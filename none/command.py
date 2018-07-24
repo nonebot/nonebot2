@@ -170,7 +170,7 @@ class _FurtherInteractionNeeded(Exception):
 class _FinishException(Exception):
     """
     Raised by session.finish() indicating that the command session
-    should be stop and removed.
+    should be stopped and removed.
     """
 
     def __init__(self, result: bool = True):
@@ -178,6 +178,24 @@ class _FinishException(Exception):
         :param result: succeeded to call the command
         """
         self.result = result
+
+
+class SwitchException(Exception):
+    """
+    Raised by session.switch() indicating that the command session
+    should be stopped and replaced with a new one (going through
+    handle_message() again).
+
+    Since the new context message will go through handle_message()
+    again, the later function should be notified. So this exception
+    is designed to be propagated to handle_message().
+    """
+
+    def __init__(self, new_ctx_message: Message):
+        """
+        :param new_ctx_message: new message which should be placed in context
+        """
+        self.new_ctx_message = new_ctx_message
 
 
 class CommandSession(BaseSession):
@@ -277,6 +295,26 @@ class CommandSession(BaseSession):
         if message:
             asyncio.ensure_future(self.send(message))
         raise _FinishException
+
+    # noinspection PyMethodMayBeStatic
+    def switch(self, new_ctx_message: Any) -> None:
+        """
+        Finish the session and switch to a new (fake) message context.
+
+        The user may send another command (or another intention as natural
+        language) when interacting with the current session. In this case,
+        the session may not understand what the user is saying, so it
+        should call this method and pass in that message, then NoneBot will
+        handle the situation properly.
+        """
+        if self.is_first_run:
+            # if calling this method during first run,
+            # we think the command is not handled
+            raise _FinishException(result=False)
+
+        if not isinstance(new_ctx_message, Message):
+            new_ctx_message = Message(new_ctx_message)
+        raise SwitchException(new_ctx_message)
 
 
 def parse_command(bot: NoneBot,
@@ -433,9 +471,11 @@ async def _real_run_command(session: CommandSession,
                             ctx_id: str,
                             disable_interaction: bool = False,
                             **kwargs) -> bool:
+    session_overridden = False
     if not disable_interaction:
         # override session only when not disabling interaction
         _sessions[ctx_id] = session
+        session_overridden = True
     try:
         logger.debug(f'Running command {session.cmd.name}')
         session.running = True
@@ -450,10 +490,20 @@ async def _real_run_command(session: CommandSession,
                      f'command {session.cmd.name}')
         # return True because this step of the session is successful
         return True
-    except _FinishException as e:
+    except (_FinishException, SwitchException) as e:
         session.running = False
         logger.debug(f'Session of command {session.cmd.name} finished')
-        if not disable_interaction and ctx_id in _sessions:
+        if session_overridden:
             # the command is finished, remove the session
             del _sessions[ctx_id]
-        return e.result
+
+        if isinstance(e, _FinishException):
+            return e.result
+        elif isinstance(e, SwitchException):
+            # we are guaranteed that the session is not first run here
+            if ctx_id in _sessions:
+                # make sure there is no session waiting
+                del _sessions[ctx_id]
+            logger.debug(f'Session of command {session.cmd.name} switching,'
+                         f'new context message: {e.new_ctx_message}')
+            raise e  # this is intended to be propagated to handle_message()
