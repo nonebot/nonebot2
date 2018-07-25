@@ -15,7 +15,7 @@ def render(expr: Union[str, Sequence[str], Callable], *, escape_args=True,
     :return: the rendered message
     """
     if isinstance(expr, Callable):
-        expr = expr()
+        expr = expr(**kwargs)
     elif isinstance(expr, Sequence) and not isinstance(expr, str):
         expr = random.choice(expr)
     if escape_args:
