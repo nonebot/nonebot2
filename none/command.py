@@ -504,6 +504,6 @@ async def _real_run_command(session: CommandSession,
             if ctx_id in _sessions:
                 # make sure there is no session waiting
                 del _sessions[ctx_id]
-            logger.debug(f'Session of command {session.cmd.name} switching,'
+            logger.debug(f'Session of command {session.cmd.name} switching, '
                          f'new context message: {e.new_ctx_message}')
             raise e  # this is intended to be propagated to handle_message()
