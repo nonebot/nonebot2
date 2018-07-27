@@ -14,31 +14,36 @@ _nl_processors = set()
 
 
 class NLProcessor:
-    __slots__ = ('func', 'keywords', 'permission', 'only_to_me')
+    __slots__ = ('func', 'keywords', 'permission',
+                 'only_to_me', 'only_short_message')
 
     def __init__(self, *, func: Callable, keywords: Optional[Iterable],
-                 permission: int, only_to_me: bool):
+                 permission: int, only_to_me: bool, only_short_message: bool):
         self.func = func
         self.keywords = keywords
         self.permission = permission
         self.only_to_me = only_to_me
+        self.only_short_message = only_short_message
 
 
 def on_natural_language(keywords: Union[Optional[Iterable], Callable] = None,
                         *, permission: int = perm.EVERYBODY,
-                        only_to_me: bool = True) -> Callable:
+                        only_to_me: bool = True,
+                        only_short_message: bool = True) -> Callable:
     """
     Decorator to register a function as a natural language processor.
 
     :param keywords: keywords to respond, if None, respond to all messages
     :param permission: permission required by the processor
     :param only_to_me: only handle messages to me
+    :param only_short_message: only handle short message
     """
 
     def deco(func: Callable) -> Callable:
         nl_processor = NLProcessor(func=func, keywords=keywords,
                                    permission=permission,
-                                   only_to_me=only_to_me)
+                                   only_to_me=only_to_me,
+                                   only_short_message=only_short_message)
         _nl_processors.add(nl_processor)
         return func
 
@@ -95,8 +100,19 @@ async def handle_natural_language(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
 
     session = NLPSession(bot, ctx, msg)
 
+    # use msg_text here because CQ code "share" may be very long,
+    # at the same time some plugins may want to handle it
+    msg_text_length = len(session.msg_text)
+
     coros = []
     for p in _nl_processors:
+        if p.only_short_message and \
+                msg_text_length > bot.config.SHORT_MESSAGE_MAX_LENGTH:
+            continue
+
+        if p.only_to_me and not ctx['to_me']:
+            continue
+
         should_run = await perm.check_permission(bot, ctx, p.permission)
         if should_run and p.keywords:
             for kw in p.keywords:
@@ -105,8 +121,6 @@ async def handle_natural_language(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
             else:
                 # no keyword matches
                 should_run = False
-        if should_run and p.only_to_me and not ctx['to_me']:
-            should_run = False
 
         if should_run:
             coros.append(p.func(session))
