@@ -404,6 +404,13 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
     check_perm = True
     if _sessions.get(ctx_id):
         session = _sessions[ctx_id]
+
+        # wait for 1.5 seconds (at most) if the current session is running
+        retry = 5
+        while session.running and retry > 0:
+            retry -= 1
+            await asyncio.sleep(0.3)
+
         if session.running:
             logger.warning(f'There is a session of command '
                            f'{session.cmd.name} running, notify the user')
