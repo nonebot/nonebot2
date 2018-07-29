@@ -1,3 +1,4 @@
+import hashlib
 from typing import Dict, Any, Union, List, Sequence, Callable
 
 from aiocqhttp import Error as CQHttpError
@@ -5,16 +6,40 @@ from aiocqhttp import Error as CQHttpError
 from . import NoneBot, expression
 
 
-def context_id(ctx: Dict[str, Any]) -> str:
-    """Calculate a unique id representing the current user."""
-    src = ''
-    if ctx.get('group_id'):
-        src += f'/group/{ctx["group_id"]}'
-    elif ctx.get('discuss_id'):
-        src += f'/discuss/{ctx["discuss_id"]}'
-    if ctx.get('user_id'):
-        src += f'/user/{ctx["user_id"]}'
-    return src
+def context_id(ctx: Dict[str, Any], *,
+               mode: str = 'default', use_hash: bool = False) -> str:
+    """
+    Calculate a unique id representing the current context.
+
+    mode:
+      default: one id for one context
+      group: one id for one group or discuss
+      user: one id for one user
+
+    :param ctx: the context dict
+    :param mode: unique id mode: "default", "group", or "user"
+    :param use_hash: use md5 to hash the id or not
+    """
+    ctx_id = ''
+    if mode == 'default':
+        if ctx.get('group_id'):
+            ctx_id += f'/group/{ctx["group_id"]}'
+        elif ctx.get('discuss_id'):
+            ctx_id += f'/discuss/{ctx["discuss_id"]}'
+        if ctx.get('user_id'):
+            ctx_id += f'/user/{ctx["user_id"]}'
+    elif mode == 'group':
+        if ctx.get('group_id'):
+            ctx_id += f'/group/{ctx["group_id"]}'
+        elif ctx.get('discuss_id'):
+            ctx_id += f'/discuss/{ctx["discuss_id"]}'
+    elif mode == 'user':
+        if ctx.get('user_id'):
+            ctx_id += f'/user/{ctx["user_id"]}'
+
+    if ctx_id and use_hash:
+        ctx_id = hashlib.md5(ctx_id.encode('ascii')).hexdigest()
+    return ctx_id
 
 
 async def send(bot: NoneBot, ctx: Dict[str, Any],
