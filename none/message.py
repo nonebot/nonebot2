@@ -1,4 +1,5 @@
-from typing import Dict, Any
+import asyncio
+from typing import Dict, Any, Callable
 
 from aiocqhttp.message import MessageSegment
 
@@ -7,9 +8,22 @@ from .command import handle_command, SwitchException
 from .log import logger
 from .natural_language import handle_natural_language
 
+_message_preprocessors = set()
+
+
+def message_preprocessor(func: Callable) -> Callable:
+    _message_preprocessors.add(func)
+    return func
+
 
 async def handle_message(bot: NoneBot, ctx: Dict[str, Any]) -> None:
     _log_message(ctx)
+
+    coros = []
+    for processor in _message_preprocessors:
+        coros.append(processor(ctx))
+    if coros:
+        await asyncio.wait(coros)
 
     if ctx['message_type'] != 'private':
         # group or discuss

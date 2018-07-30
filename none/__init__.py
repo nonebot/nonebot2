@@ -127,6 +127,7 @@ def load_builtin_plugins() -> None:
     load_plugins(plugin_dir, 'none.plugins')
 
 
+from .message import message_preprocessor
 from .command import on_command, CommandSession, CommandGroup
 from .natural_language import on_natural_language, NLPSession, NLPResult
 from .notice_request import (
