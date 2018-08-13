@@ -5,7 +5,7 @@ module.exports = {
         repo: 'richardchien/none-bot',
         docsDir: 'docs',
         editLinks: true,
-        editLinkText: '编辑页面',
+        editLinkText: '在 GitHub 上编辑此页',
         lastUpdated: '上次更新',
         nav: [
             { text: '指南', link: '/guide/' },
