@@ -13,8 +13,8 @@ module.exports = {
         lastUpdated: '上次更新',
         activeHeaderLinks: false,
         nav: [
-            { text: '指南', link: '/guide/' },
-            { text: '术语表', link: '/glossary' },
+            { text: '入门指南', link: '/guide/' },
+            { text: '术语表', link: '/glossary.md' },
         ],
         sidebar: {
             '/guide/': [
@@ -25,6 +25,7 @@ module.exports = {
                         '',
                         'installation',
                         'getting-started',
+                        'whats-happened',
                     ]
                 }
             ]

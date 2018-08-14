@@ -1,5 +1,6 @@
 ---
 home: true
+heroImage: /hero.png
 actionText: 即刻开始
 actionLink: /guide/
 features:
