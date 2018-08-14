@@ -19,7 +19,7 @@ module.exports = {
         sidebar: {
             '/guide/': [
                 {
-                    title: '指南',
+                    title: '入门指南',
                     collapsable: false,
                     children: [
                         '',
