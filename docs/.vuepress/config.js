@@ -26,6 +26,11 @@ module.exports = {
                         'installation',
                         'getting-started',
                         'whats-happened',
+                        'basic-configurations',
+                        'write-commands',
+                        'write-nl-processors',
+                        'tuling',
+                        'group-management',
                     ]
                 }
             ]

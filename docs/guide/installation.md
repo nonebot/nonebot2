@@ -26,7 +26,7 @@ python setup.py install
 
 前往酷 Q 官方论坛的 [版本发布](https://cqp.cc/b/news) 页面根据需要下载最新版本的酷 Q Air 或 Pro，解压后启动 `CQA.exe` 或 `CQP.exe` 并登录 QQ 机器人账号。
 
-如果你的操作系统是 Linux 或 macOS，可以使用版本发布页中酷 Q 官方提供的 Docker 镜像，也可以直接跳至下一个标题，使用 CoolQ HTTP API 插件官方提供的 Docker 镜像。
+如果你的操作系统是 Linux 或 macOS，可以使用版本发布页中酷 Q 官方提供的 Docker 镜像，也可以直接跳至下一节，使用 CoolQ HTTP API 插件官方提供的 Docker 镜像。
 
 ::: tip 提示
 如果这是你第一次使用酷 Q，建议完成它自带的新手教程，从而对酷 Q 的运行机制有所了解。
