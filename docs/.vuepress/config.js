@@ -13,13 +13,15 @@ module.exports = {
         lastUpdated: '上次更新',
         activeHeaderLinks: false,
         nav: [
-            { text: '入门指南', link: '/guide/' },
+            { text: '指南', link: '/guide/' },
+            { text: '进阶', link: '/advanced/' },
+            { text: '配置', link: '/configurations.md' },
             { text: '术语表', link: '/glossary.md' },
         ],
         sidebar: {
             '/guide/': [
                 {
-                    title: '入门指南',
+                    title: '指南',
                     collapsable: false,
                     children: [
                         '',
@@ -31,9 +33,19 @@ module.exports = {
                         'write-nl-processors',
                         'tuling',
                         'group-management',
+                        'whats-next',
                     ]
                 }
-            ]
+            ],
+            '/advanced/': [
+                {
+                    title: '进阶',
+                    collapsable: false,
+                    children: [
+                        '',
+                    ]
+                }
+            ],
         },
     }
 }
