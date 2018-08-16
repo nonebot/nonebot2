@@ -57,7 +57,9 @@ if __name__ == '__main__':
 
 NoneBot 的内置插件只包含了两个命令，`echo` 和 `say`，两者的功能都是重复发送者的话，区别在于，`echo` 命令任何人都可以调用（不限制权限），但只能原样重复消息，不能手动指定要发送的 CQ 码，`say` 命令只有超级用户（通常是你自己，需要在配置中指定，下一章会介绍）可以调用，可以在消息中指定要发送的 CQ 码，如下图：
 
-![Echo and Say](./assets/echo_and_say.png)
+<p style="text-align: center">
+  <img alt="Echo and Say" src="./assets/echo_and_say.png" />
+</p>
 
 最后，`none.run(host='127.0.0.1', port=8080)` 让 NoneBot 跑在了地址 `127.0.0.1:8080` 上，向 CoolQ HTTP API 插件提供 `/`、`/ws/event/`、`/ws/api/` 三个入口，在我们的反向 WebSocket 配置中，插件利用了后两个入口。
 
