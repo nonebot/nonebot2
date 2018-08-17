@@ -40,7 +40,12 @@ class NoneBot(CQHttp):
         async def _(ctx):
             asyncio.ensure_future(handle_notice_or_request(self, ctx))
 
-    def run(self, host=None, port=None, *args, **kwargs):
+    def run(self, host: str = None, port: int = None, *args, **kwargs):
+        host = host or self.config.HOST
+        port = port or self.config.PORT
+        if 'debug' not in kwargs:
+            kwargs['debug'] = self.config.DEBUG
+
         logger.info(f'Running on {host}:{port}')
         super().run(host=host, port=port, loop=asyncio.get_event_loop(),
                     *args, **kwargs)
