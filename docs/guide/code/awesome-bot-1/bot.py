@@ -1,6 +1,8 @@
 import none
 
+import config
+
 if __name__ == '__main__':
-    none.init()
+    none.init(config)
     none.load_builtin_plugins()
-    none.run(host='127.0.0.1', port=8080)
+    none.run()
