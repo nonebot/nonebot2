@@ -7,8 +7,6 @@
 使用你最熟悉的编辑器或 IDE，创建一个名为 `bot.py` 的文件，内容如下：
 
 ```python
-# bot.py
-
 import none
 
 if __name__ == '__main__':
