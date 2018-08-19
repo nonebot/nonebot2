@@ -39,5 +39,5 @@ async def _(session: NLPSession):
             # ns 词性表示地名
             city = word.word
 
-    # 返回处理结果，3 个参数分别为置信度、命令名、命令会话的参数
+    # 返回处理结果，三个参数分别为置信度、命令名、命令会话的参数
     return NLPResult(90.0, 'weather', {'city': city})
