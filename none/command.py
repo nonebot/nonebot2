@@ -431,7 +431,10 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
             session = None
     if not session:
         cmd, current_arg = parse_command(bot, str(ctx['message']).lstrip())
-        if not cmd or cmd.only_to_me and not ctx['to_me']:
+        if not cmd:
+            logger.debug('Not a known command, ignored')
+            return False
+        if cmd.only_to_me and not ctx['to_me']:
             logger.debug('Not to me, ignored')
             return False
         session = CommandSession(bot, ctx, cmd, current_arg=current_arg)
