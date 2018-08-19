@@ -36,6 +36,10 @@ CoolQ HTTP API 插件中的一个术语，表示其与通过 web 技术编写的
 
 目前 CoolQ HTTP API 插件支持 HTTP、WebSocket、反向 WebSocket 三种通信方式，见 [通信方式](https://cqhttp.cc/docs/#/CommunicationMethods)，NoneBot 支持其中的 HTTP 和反向 WebSocket。
 
+## 负载均衡
+
+多个 QQ 连接到同一个后端，使用同一套逻辑分别服务不同的用户和群，以防止单个 QQ 无法承受过大的消息量或被腾讯封禁。
+
 ## 命令
 
 NoneBot 主要支持的插件形式之一，主要用于处理符合特定格式的、意图明确的用户消息，例如：
@@ -54,6 +58,10 @@ note.add 这是一条笔记
 docker run hello-world
 ```
 
+## 可交互命令
+
+能够和用户「对话」的命令，称为可交互命令。
+
 ## 命令处理器
 
 或称为「命令处理函数」，有时也简称为「命令」，是 NoneBot 插件中实际用于实现某个命令功能的函数。
@@ -67,3 +75,23 @@ from none import on_command
 async def echo(session):
     pass
 ```
+
+## 自然语言处理器
+
+或称为「自然语言处理函数」，是 NoneBot 插件中用于将用户的自然语言消息解析为命令和参数的函数。
+
+通过 `none.on_natural_language` 装饰器可以将一个函数注册为自然语言处理器，例如：
+
+```python
+from none import on_natural_language
+
+@on_natural_language
+async def _(session):
+    pass
+```
+
+## 会话
+
+或称为「Session」，是命令处理器、自然语言处理器等插件形式被调用时传入的一个包含有当前消息上下文的对象，它根据当前的插件形式的不同而不同，例如命令处理器拿到的 Session 是 `CommandSession` 类型，而自然语言处理器拿到的是 `NLPSession` 类型，不同类型的 Session 包含的属性不太一样，能进行的操作也有所区别。
+
+特别地，命令的 Session 在需要和用户交互的情况下，会一直保留到下一次调用，以保证命令的多次交互能够共享数据。
