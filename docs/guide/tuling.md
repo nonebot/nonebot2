@@ -183,7 +183,7 @@ async def call_tuling_api(session: CommandSession, text: str) -> Optional[str]:
 
 ### 构造请求数据
 
-第一段高亮部分是根据图灵机器人的文档构造请求数据，其中有两个需要注意的地方：第 16、17 和 21 行。
+第一段高亮部分是根据图灵机器人的文档构造请求数据，其中有几个需要注意的地方：第 16、17 和 21 行。
 
 第 16 行通过 `session.bot.config` 访问了 NoneBot 的配置对象，`session.bot` 就是当前正在运行的 NoneBot 对象，你在其它任何地方都可以这么用（前提是已经调用过 `none.init()`）。
 
