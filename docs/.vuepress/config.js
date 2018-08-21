@@ -1,7 +1,7 @@
 module.exports = {
     title: 'NoneBot',
     description: '基于酷 Q 的 Python 异步 QQ 机器人框架',
-    serviceWorker: true,
+    // serviceWorker: true,
     markdown: {
         lineNumbers: true
     },
