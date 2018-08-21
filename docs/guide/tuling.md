@@ -205,7 +205,17 @@ async def call_tuling_api(session: CommandSession, text: str) -> Optional[str]:
 
 命令处理器这部分虽然代码比较少，但引入了不少新的概念。
 
-```python
+```python {1,3-8,13,16,18}
+from aiocqhttp.message import escape
+
+EXPR_DONT_UNDERSTAND = (
+    '我现在还不太明白你在说什么呢，但没关系，以后的我会变得更强呢！',
+    '我有点看不懂你的意思呀，可以跟我聊些简单的话题嘛',
+    '其实我不太明白你的意思……',
+    '抱歉哦，我现在的能力还不能够明白你在说什么，但我会加油的～'
+)
+
+
 @on_command('tuling')
 async def tuling(session: CommandSession):
     message = session.get_optional('message')
@@ -216,4 +226,22 @@ async def tuling(session: CommandSession):
         await session.send_expr(EXPR_DONT_UNDERSTAND)
 ```
 
-未完待续……
+### 可选参数
+
+首先看第 13 行，`session.get_optional()` 可用于获取命令的可选参数，也就是说，从 `session.args` 中尝试获取一个参数，如果没有，返回 `None`，但并不会中断命令的执行，比较类似于 `dict.get()` 方法。
+
+### 消息转义
+
+再看第 16 行，在调用 `session.send()` 之前先对 `reply` 调用了 `escape()`，这个 `escape()` 函数是 `aiocqhttp.message` 模块提供的，用于将字符串中的某些特殊字符进行转义。具体来说，这些特殊字符是酷 Q 看作是 CQ 码的一部分的那些字符，包括 `&`、`[`、`]`、`,`。
+
+CQ 码是酷 Q 用来表示非文本消息的一种表示方法，形如 `[CQ:image,file=ABC.jpg]`。具体的格式规则，请参考酷 Q 文档的 [CQ 码](https://d.cqp.me/Pro/CQ%E7%A0%81) 和 CoolQ HTTP API 插件文档的 [CQ 码](https://cqhttp.cc/docs/#/CQCode)。
+
+### 发送 Expression
+
+第 18 行使用了 NoneBot 中 Expression 这个概念，或称为「表达」。
+
+Expression 可以是一个 `str`、元素类型是 `str` 的序列（一般为 `list` 或 `tuple`）或返回类型为 `str` 的 `Callable`。`session.send_expr()` 内部会调用 `none.expression.render()` 函数来将 Expression 渲染成字符串。
+
+`render()` 首先判断 Expression 的类型，如果 Expression 是一个序列，则首先随机取其中的一个元素，如果是一个 `Callable`，则调用函数获取返回值。拿到最终的 `str` 类型的 Expression 之后，对它调用 `str.format()` 方法，格式化参数传入 `render()` 函数的命名参数（`**kwargs`），也即 `session.send_expr()` 的命名参数，最后返回格式化后的结果。特别地，如果 Expression 是个 `Callable`，在调用它获取返回值的时候，也会传入 `**kwargs`，以便函数根据参数来构造字符串。
+
+你可以通过使用序列或 `Callable` 类型的 Expression 来让机器人的回复显得更加自然，甚至，可以利用更高级的人工智能技术来生成对话。

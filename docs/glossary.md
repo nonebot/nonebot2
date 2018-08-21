@@ -10,7 +10,7 @@ sidebar: auto
 
 ## CoolQ HTTP API 插件
 
-[CoolQ HTTP API 插件](https://github.com/richardchien/coolq-http-api) 是酷 Q 的一个第三方插件，用于将酷 Q 所提供的所有 DLL 接口转换为 HTTP 或 WebSocket 的 web 形式，从而使利用任意语言编写酷 Q 插件成为可能。
+[CoolQ HTTP API 插件](https://cqhttp.cc/) 是酷 Q 的一个第三方插件，用于将酷 Q 所提供的所有 DLL 接口转换为 HTTP 或 WebSocket 的 web 形式，从而使利用任意语言编写酷 Q 插件成为可能。
 
 有时被称为 cqhttp、CQHttp、酷 Q HTTP API 等。
 
@@ -98,6 +98,14 @@ async def _(session):
 
 ## 上下文（Context）
 
+通常通过 `session.ctx` 访问，是 CoolQ HTTP API 插件发送给 NoneBot 的原始事件数据，包含当前事件的来源信息、内容等，具体请参考 CoolQ HTTP API 插件文档的 [事件上报](https://cqhttp.cc/docs/#/Post).
+
 ## 表达（Expression）
 
+是 NoneBot 支持的一种消息渲染的机制，可以通过随机选择或函数生成+字符串格式化的方式根据参数生成出自然的、不固定的消息回复，提升用户体验。
+
+Expression 可以是一个 `str`、元素类型是 `str` 的序列（一般为 `list` 或 `tuple`）或返回类型为 `str` 的 `Callable`。
+
 ## CQ 码
+
+是酷 Q 用来表示非文本消息的一种表示方法，形如 `[CQ:image,file=ABC.jpg]`。具体的格式规则，请参考酷 Q 文档的 [CQ 码](https://d.cqp.me/Pro/CQ%E7%A0%81) 和 CoolQ HTTP API 插件文档的 [CQ 码](https://cqhttp.cc/docs/#/CQCode)。
