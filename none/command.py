@@ -400,17 +400,16 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
     :return: the message is handled as a command
     """
     ctx_id = context_id(ctx)
-    session = None
+
+    # wait for 1.5 seconds (at most) if the current session is running
+    retry = 5
+    while retry > 0 and _sessions.get(ctx_id) and _sessions[ctx_id].running:
+        retry -= 1
+        await asyncio.sleep(0.3)
+
     check_perm = True
-    if _sessions.get(ctx_id):
-        session = _sessions[ctx_id]
-
-        # wait for 1.5 seconds (at most) if the current session is running
-        retry = 5
-        while session.running and retry > 0:
-            retry -= 1
-            await asyncio.sleep(0.3)
-
+    session = _sessions.get(ctx_id)
+    if session:
         if session.running:
             logger.warning(f'There is a session of command '
                            f'{session.cmd.name} running, notify the user')
@@ -427,8 +426,10 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
         else:
             # the session is expired, remove it
             logger.debug(f'Session of command {session.cmd.name} is expired')
-            del _sessions[ctx_id]
+            if ctx_id in _sessions:
+                del _sessions[ctx_id]
             session = None
+
     if not session:
         cmd, current_arg = parse_command(bot, str(ctx['message']).lstrip())
         if not cmd:
@@ -439,6 +440,7 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
             return False
         session = CommandSession(bot, ctx, cmd, current_arg=current_arg)
         logger.debug(f'New session of command {session.cmd.name} created')
+
     return await _real_run_command(session, ctx_id, check_perm=check_perm)
 
 
@@ -481,11 +483,9 @@ async def _real_run_command(session: CommandSession,
                             ctx_id: str,
                             disable_interaction: bool = False,
                             **kwargs) -> bool:
-    session_overridden = False
     if not disable_interaction:
-        # override session only when not disabling interaction
+        # override session only when interaction is not disabled
         _sessions[ctx_id] = session
-        session_overridden = True
     try:
         logger.debug(f'Running command {session.cmd.name}')
         session.running = True
@@ -503,14 +503,18 @@ async def _real_run_command(session: CommandSession,
     except (_FinishException, SwitchException) as e:
         session.running = False
         logger.debug(f'Session of command {session.cmd.name} finished')
-        if session_overridden:
-            # the command is finished, remove the session
+        if not disable_interaction and ctx_id in _sessions:
+            # the command is finished, remove the session,
+            # but if interaction is disabled during this command call,
+            # we leave the _sessions untouched.
             del _sessions[ctx_id]
 
         if isinstance(e, _FinishException):
             return e.result
         elif isinstance(e, SwitchException):
-            # we are guaranteed that the session is not first run here
+            # we are guaranteed that the session is not first run here,
+            # which means interaction is definitely enabled,
+            # so we can safely touch _sessions here.
             if ctx_id in _sessions:
                 # make sure there is no session waiting
                 del _sessions[ctx_id]
