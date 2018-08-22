@@ -55,4 +55,4 @@ async def _(session: NoticeSession):
 这里最好预先判断一下是不是你想发送的群（通过 `session.ctx['group_id']`），否则机器人所在的任何群有新成员进入它都会欢迎。
 :::
 
-总的来说这些 `on_*` 装饰器用起来都是差不多的，这里的 `group_increase` 表示群成员增加，其它的通知类型可以参考 [CoolQ HTTP API 插件的事件上报](https://cqhttp.cc/docs/#/Post?id=%E5%8A%A0%E5%A5%BD%E5%8F%8B%E8%AF%B7%E6%B1%82) 的 `notice_type`。
+总的来说这些 `on_*` 装饰器用起来都是差不多的，这里的 `group_increase` 表示群成员增加，其它的通知类型可以参考 [CoolQ HTTP API 插件的事件上报](https://cqhttp.cc/docs/#/Post?id=%E7%BE%A4%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0) 的 `notice_type`。
