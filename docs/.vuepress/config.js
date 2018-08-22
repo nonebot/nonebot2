@@ -29,10 +29,10 @@ module.exports = {
                         'getting-started',
                         'whats-happened',
                         'basic-configuration',
-                        'writing-commands',
-                        'writing-nl-processors',
+                        'command',
+                        'nl-processor',
                         'tuling',
-                        'handling-notices-and-requests',
+                        'notice-and-request',
                         'whats-next',
                     ]
                 }
