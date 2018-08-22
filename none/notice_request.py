@@ -45,7 +45,12 @@ class RequestSession(BaseSession):
     def __init__(self, bot: NoneBot, ctx: Dict[str, Any]):
         super().__init__(bot, ctx)
 
-    async def approve(self, remark: str = ''):
+    async def approve(self, remark: str = '') -> None:
+        """
+        Approve the request.
+
+        :param remark: remark of friend (only works in friend request)
+        """
         try:
             await self.bot.call_action(
                 action='.handle_quick_operation_async',
@@ -56,7 +61,12 @@ class RequestSession(BaseSession):
         except CQHttpError:
             pass
 
-    async def reject(self, reason: str = ''):
+    async def reject(self, reason: str = '') -> None:
+        """
+        Reject the request.
+
+        :param reason: reason to reject (only works in group request)
+        """
         try:
             await self.bot.call_action(
                 action='.handle_quick_operation_async',
