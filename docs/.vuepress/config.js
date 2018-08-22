@@ -28,7 +28,7 @@ module.exports = {
                         'installation',
                         'getting-started',
                         'whats-happened',
-                        'basic-configurations',
+                        'basic-configuration',
                         'writing-commands',
                         'writing-nl-processors',
                         'tuling',
@@ -43,6 +43,15 @@ module.exports = {
                     collapsable: false,
                     children: [
                         '',
+                        'message',
+                        'session',
+                        'permission',
+                        'decorator',
+                        'logging',
+                        'configuration',
+                        'argparse',
+                        'larger-application',
+                        'deployment',
                     ]
                 }
             ],
