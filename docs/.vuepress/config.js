@@ -1,7 +1,6 @@
 module.exports = {
     title: 'NoneBot',
     description: '基于酷 Q 的 Python 异步 QQ 机器人框架',
-    serviceWorker: true,
     markdown: {
         lineNumbers: true
     },
@@ -12,12 +11,6 @@ module.exports = {
         editLinkText: '在 GitHub 上编辑此页',
         lastUpdated: '上次更新',
         activeHeaderLinks: false,
-        serviceWorker: {
-            updatePopup: {
-                message: "发现新内容可用",
-                buttonText: "刷新"
-            }
-        },
         nav: [
             { text: '指南', link: '/guide/' },
             { text: '进阶', link: '/advanced/' },
