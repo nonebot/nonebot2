@@ -4,6 +4,18 @@ module.exports = {
     markdown: {
         lineNumbers: true
     },
+    head: [
+        ['link', { rel: 'icon', href: `/logo.png` }],
+        ['link', { rel: 'manifest', href: '/manifest.json' }],
+        ['meta', { name: 'theme-color', content: '#ffffff' }],
+        ['meta', { name: 'application-name', content: 'NoneBot' }],
+        ['meta', { name: 'apple-mobile-web-app-title', content: 'NoneBot' }],
+        ['meta', { name: 'apple-mobile-web-app-capable', content: 'yes' }],
+        ['link', { rel: 'apple-touch-icon', href: `/icons/apple-touch-icon.png` }],
+        ['link', { rel: 'mask-icon', href: '/icons/safari-pinned-tab.svg', color: '#5bbad5' }],
+        ['meta', { name: 'msapplication-TileImage', content: '/icons/mstile-150x150.png' }],
+        ['meta', { name: 'msapplication-TileColor', content: '#00aba9' }]
+    ],
     themeConfig: {
         repo: 'richardchien/none-bot',
         docsDir: 'docs',
