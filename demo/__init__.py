@@ -6,13 +6,11 @@ from demo import config
 none.init(config)
 
 
-@none.scheduler.scheduled_job('interval', seconds=3)
+@none.scheduler.scheduled_job('interval', seconds=20)
 async def cb():
     bot_ = none.get_bot()
     try:
-        await bot_.send_private_msg(self_id=3281334718,
-                                    user_id=1002647525,
-                                    message='哇')
+        await bot_.send_private_msg(user_id=1002647525, message='哇')
     except Exception as e:
         none.logger.exception(e)
 
