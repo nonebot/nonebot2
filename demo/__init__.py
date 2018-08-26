@@ -4,7 +4,18 @@ import none
 from demo import config
 
 none.init(config)
-app = none.get_bot().asgi
+
+
+@none.scheduler.scheduled_job('interval', seconds=3)
+async def cb():
+    bot_ = none.get_bot()
+    try:
+        await bot_.send_private_msg(self_id=3281334718,
+                                    user_id=1002647525,
+                                    message='哇')
+    except Exception as e:
+        none.logger.exception(e)
+
 
 if __name__ == '__main__':
     none.load_builtin_plugins()

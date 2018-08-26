@@ -30,3 +30,7 @@ COMMAND_SEP = {'/', '.'}
 SESSION_EXPIRE_TIMEOUT = timedelta(minutes=5)
 SESSION_RUNNING_EXPRESSION = '您有命令正在执行，请稍后再试'
 SHORT_MESSAGE_MAX_LENGTH = 50
+
+APSCHEDULER_CONFIG = {
+    'apscheduler.timezone': 'Asia/Shanghai'
+}

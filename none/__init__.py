@@ -9,6 +9,12 @@ from aiocqhttp import CQHttp
 from aiocqhttp.message import Message
 
 from .log import logger
+from .scheduler import Scheduler
+
+if Scheduler:
+    scheduler = Scheduler()
+else:
+    scheduler = None
 
 
 class NoneBot(CQHttp):
@@ -39,6 +45,9 @@ class NoneBot(CQHttp):
         @self.on_request
         async def _(ctx):
             asyncio.ensure_future(handle_notice_or_request(self, ctx))
+
+        if scheduler:
+            scheduler.configure(self.config.APSCHEDULER_CONFIG)
 
     def run(self, host: str = None, port: int = None, *args, **kwargs):
         host = host or self.config.HOST
@@ -88,6 +97,8 @@ def get_bot() -> NoneBot:
 
 def run(host: str = None, port: int = None, *args, **kwargs) -> None:
     """Run the NoneBot instance."""
+    if scheduler and not scheduler.running:
+        scheduler.start()
     get_bot().run(host=host, port=port, *args, **kwargs)
 
 
