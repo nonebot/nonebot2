@@ -46,9 +46,6 @@ class NoneBot(CQHttp):
         async def _(ctx):
             asyncio.ensure_future(handle_notice_or_request(self, ctx))
 
-        if scheduler:
-            scheduler.configure(self.config.APSCHEDULER_CONFIG)
-
     def run(self, host: str = None, port: int = None, *args, **kwargs):
         host = host or self.config.HOST
         port = port or self.config.PORT
@@ -75,10 +72,15 @@ def init(config_object: Any = None) -> None:
     """
     global _bot
     _bot = NoneBot(config_object)
+
     if _bot.config.DEBUG:
         logger.setLevel(logging.DEBUG)
     else:
         logger.setLevel(logging.INFO)
+
+    if scheduler and not scheduler.running:
+        scheduler.configure(_bot.config.APSCHEDULER_CONFIG)
+        scheduler.start()
 
 
 def get_bot() -> NoneBot:
@@ -97,8 +99,6 @@ def get_bot() -> NoneBot:
 
 def run(host: str = None, port: int = None, *args, **kwargs) -> None:
     """Run the NoneBot instance."""
-    if scheduler and not scheduler.running:
-        scheduler.start()
     get_bot().run(host=host, port=port, *args, **kwargs)
 
 
