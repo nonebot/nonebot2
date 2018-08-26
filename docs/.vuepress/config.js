@@ -32,6 +32,7 @@ module.exports = {
                         'nl-processor',
                         'tuling',
                         'notice-and-request',
+                        'scheduler',
                         'whats-next',
                     ]
                 }
@@ -46,6 +47,7 @@ module.exports = {
                         'session',
                         'permission',
                         'decorator',
+                        'scheduler',
                         'logging',
                         'configuration',
                         'argparse',
