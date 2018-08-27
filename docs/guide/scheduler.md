@@ -43,7 +43,7 @@ async def _():
         pass
 ```
 
-这里最主要的就是第 8 行，`none.scheduler.scheduled_job()` 是一个装饰器，第一个参数是触发器类型（这里是 `cron`，表示使用 [Cron](https://apscheduler.readthedocs.io/en/latest/modules/triggers/cron.html#module-apscheduler.triggers.cron)) 类型的触发参数）。这里 `hour='*'` 表示每小时都执行，`minute` 和 `second` 不填时默认为 `0`，也就是说装饰器所装饰的这个函数会在每小时的第一秒被执行。
+这里最主要的就是第 8 行，`none.scheduler.scheduled_job()` 是一个装饰器，第一个参数是触发器类型（这里是 `cron`，表示使用 [Cron](https://apscheduler.readthedocs.io/en/latest/modules/triggers/cron.html#module-apscheduler.triggers.cron) 类型的触发参数）。这里 `hour='*'` 表示每小时都执行，`minute` 和 `second` 不填时默认为 `0`，也就是说装饰器所装饰的这个函数会在每小时的第一秒被执行。
 
 除了 `cron`，还有两种触发器类型 `interval` 和 `date`。例如，你可以使用 `none.scheduler.scheduled_job('interval', minutes=10)` 来每十分钟执行一次任务。
 
