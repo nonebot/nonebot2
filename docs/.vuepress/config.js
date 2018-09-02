@@ -55,8 +55,8 @@ module.exports = {
                     collapsable: false,
                     children: [
                         '',
-                        'message',
                         'session',
+                        'message',
                         'permission',
                         'decorator',
                         'scheduler',
