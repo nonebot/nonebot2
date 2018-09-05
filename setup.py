@@ -16,7 +16,7 @@ setup(
     long_description_content_type='text/markdown',
     install_requires=['aiocqhttp>=0.6', 'aiocache>=0.10'],
     extras_require={
-        'Scheduler': ['apscheduler>=1.2'],
+        'scheduler': ['apscheduler>=1.2'],
     },
     python_requires='>=3.6',
     platforms='any',
