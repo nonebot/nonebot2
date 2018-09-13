@@ -117,11 +117,44 @@ async def get_weather_of_city(city: str) -> str:
 
 上面的代码中基本上每一行做了什么都在注释里写了，下面详细解释几个重要的地方。
 
-要理解这段代码，我们要先单独看 6～13 行这个函数。首先，`session.get()` 函数调用尝试从当前 Session 对象中获取 `city` 这个参数，所有的参数都被存储在 `session.args` 变量（一个 `dict`）中，如果发现存在，则直接返回，并赋值给 `city` 变量，而如果 `city` 参数不存在，`session.get()` 会**中断**这次命令处理的流程，并保存当前会话（Session），然后向用户发送 `prompt` 参数的内容。这里的「中断」，意味着如果当前不存在 `city` 参数，第 9 行之后的代码将不会被执行，这是通过抛出异常做到的。
+要理解这段代码，我们要先单独看这个函数：
 
-向用户发送 `prompt` 中的提示之后，会话会进入等待状态，此时我们称之为「当前用户正在 weather 命令的会话中」，当用户再次发送消息时，NoneBot 会唤起这个等待中的会话，并重新执行命令，也就是**从头开始**重新执行 6～13 行这个函数，如果用户在一定时间内（默认 5 分钟，可通过 `SESSION_EXPIRE_TIMEOUT` 配置项来更改）都没有再次跟机器人发消息，则会话因超时被关闭。
+```python
+# on_command 装饰器将函数声明为一个命令处理器
+# 这里 weather 为命令的名字，同时允许使用别名「天气」「天气预报」「查天气」
+@on_command('weather', aliases=('天气', '天气预报', '查天气'))
+async def weather(session: CommandSession):
+    # 从 Session 对象中获取城市名称（city），如果当前不存在，则询问用户
+    city = session.get('city', prompt='你想查询哪个城市的天气呢？')
+    # 获取城市的天气预报
+    weather_report = await get_weather_of_city(city)
+    # 向用户发送天气预报
+    await session.send(weather_report)
+```
 
-你可能想问了，既然是重新执行，那到第 9 行不还是会中断吗？这时候就需要参数解析器出场了，也就是 18～28 行这个函数。参数解析器的参数和命令处理函数一样，都是当前命令的 Session 对象，并且，它们会在命令处理函数之前执行，以确保正确解析参数以供后者使用。
+首先，`session.get()` 函数调用尝试从当前 Session 对象中获取 `city` 这个参数，所有的参数都被存储在 `session.args` 变量（一个 `dict`）中，如果发现存在，则直接返回，并赋值给 `city` 变量，而如果 `city` 参数不存在，`session.get()` 会**中断**这次命令处理的流程，并保存当前会话（Session），然后向用户发送 `prompt` 参数的内容。这里的「中断」，意味着如果当前不存在 `city` 参数，`session.get()` 之后的代码将不会被执行，这是通过抛出异常做到的。
+
+向用户发送 `prompt` 中的提示之后，会话会进入等待状态，此时我们称之为「当前用户正在 weather 命令的会话中」，当用户再次发送消息时，NoneBot 会唤起这个等待中的会话，并重新执行命令，也就是**从头开始**重新执行上面的这个函数，如果用户在一定时间内（默认 5 分钟，可通过 `SESSION_EXPIRE_TIMEOUT` 配置项来更改）都没有再次跟机器人发消息，则会话因超时被关闭。
+
+你可能想问了，既然是重新执行，那执行到 `session.get()` 的时候不还是会中断吗？这时候就需要参数解析器出场了，也下面这个函数：
+
+```python
+# weather.args_parser 装饰器将函数声明为 weather 命令的参数解析器
+# 命令解析器用于将用户输入的参数解析成命令真正需要的数据
+@weather.args_parser
+async def _(session: CommandSession):
+    # 去掉消息首尾的空白符
+    stripped_arg = session.current_arg_text.strip()
+    if session.current_key:
+        # 如果当前正在向用户询问更多信息（本例中只有可能是要查询的城市），则直接赋值
+        session.args[session.current_key] = stripped_arg
+    elif stripped_arg:
+        # 如果当前没有在询问，但用户已经发送了内容，则理解为要查询的城市
+        # 这种情况通常是用户直接将城市名跟在命令名后面，作为参数传入
+        session.args['city'] = stripped_arg
+```
+
+参数解析器的参数和命令处理函数一样，都是当前命令的 Session 对象，并且，它们会在命令处理函数之前执行，以确保正确解析参数以供后者使用。
 
 上面的例子中，参数解析器会判断 `session.current_key` 是否为空，如果不为空，说明此前已经经历过「`session.get()` 发现所需参数不存在，然后提示用户输入」这个过程了，因为在这个过程中，`session.current_key` 会被赋值为所需的参数名字，在本例中是 `city`，于是，参数解析器将此刻的用户输入（`session.current_arg_text`，Session 的这个属性保存用户发送的消息中纯文本的部分）当做当前所需参数的值，赋值给 `session.args[session.current_key]`（之前提到，Session 中，参数保存在 `args` 属性）；相反，如果 `session.current_key` 为空，则表示目前还没有调用过 `session.get()`，而这个时候如果用户发送的消息中，存在命令参数，解析器会把它理解为要查询的城市名，赋值给 `session.args['city']`，此时用户发送的完整消息可能是这样的：
 
