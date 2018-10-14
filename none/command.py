@@ -247,7 +247,8 @@ class CommandSession(BaseSession):
     @property
     def is_valid(self) -> bool:
         """Check if the session is expired or not."""
-        if self._last_interaction and \
+        if self.bot.config.SESSION_EXPIRE_TIMEOUT and \
+                self._last_interaction and \
                 datetime.now() - self._last_interaction > \
                 self.bot.config.SESSION_EXPIRE_TIMEOUT:
             return False

@@ -3,8 +3,10 @@ from typing import Union, Sequence, Callable
 
 from aiocqhttp import message
 
+Expression_T = Union[str, Sequence[str], Callable]
 
-def render(expr: Union[str, Sequence[str], Callable], *, escape_args=True,
+
+def render(expr: Expression_T, *, escape_args=True,
            **kwargs) -> str:
     """
     Render an expression to message string.

@@ -15,21 +15,25 @@ For example:
 """
 
 from datetime import timedelta
+from typing import Container, Union, Iterable, Pattern, Optional
 
-API_ROOT = ''
-SECRET = ''
-ACCESS_TOKEN = ''
-HOST = '127.0.0.1'
-PORT = 8080
-DEBUG = True
+from .expression import Expression_T
 
-SUPERUSERS = set()
-NICKNAME = ''
-COMMAND_START = {'/', '!', '／', '！'}
-COMMAND_SEP = {'/', '.'}
-SESSION_EXPIRE_TIMEOUT = timedelta(minutes=5)
-SESSION_RUNNING_EXPRESSION = '您有命令正在执行，请稍后再试'
-SHORT_MESSAGE_MAX_LENGTH = 50
+API_ROOT: str = ''
+SECRET: str = ''
+ACCESS_TOKEN: str = ''
+HOST: str = '127.0.0.1'
+PORT: int = 8080
+DEBUG: bool = True
+
+SUPERUSERS: Container[int] = set()
+NICKNAME: Union[str, Iterable[str]] = ''
+COMMAND_START: Iterable[Union[str, Pattern]] = {'/', '!', '／', '！'}
+COMMAND_SEP: Iterable[Union[str, Pattern]] = {'/', '.'}
+SESSION_EXPIRE_TIMEOUT: Optional[timedelta] = timedelta(minutes=5)
+SESSION_RUN_TIMEOUT: Optional[timedelta] = None
+SESSION_RUNNING_EXPRESSION: Expression_T = '您有命令正在执行，请稍后再试'
+SHORT_MESSAGE_MAX_LENGTH: int = 50
 
 APSCHEDULER_CONFIG = {
     'apscheduler.timezone': 'Asia/Shanghai'
