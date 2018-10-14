@@ -5,10 +5,9 @@ from typing import (
     Tuple, Union, Callable, Iterable, Dict, Any, Optional, Sequence
 )
 
-from aiocqhttp.message import Message
-
 from . import NoneBot, permission as perm
 from .log import logger
+from .message import Message
 from .expression import render
 from .helpers import context_id, send_expr
 from .session import BaseSession
@@ -28,14 +27,15 @@ _sessions = {}
 
 class Command:
     __slots__ = ('name', 'func', 'permission',
-                 'only_to_me', 'args_parser_func')
+                 'only_to_me', 'privileged', 'args_parser_func')
 
     def __init__(self, *, name: Tuple[str], func: Callable, permission: int,
-                 only_to_me: bool):
+                 only_to_me: bool, privileged: bool):
         self.name = name
         self.func = func
         self.permission = permission
         self.only_to_me = only_to_me
+        self.privileged = privileged
         self.args_parser_func = None
 
     async def run(self, session, *,
@@ -74,7 +74,8 @@ class Command:
 def on_command(name: Union[str, Tuple[str]], *,
                aliases: Iterable = (),
                permission: int = perm.EVERYBODY,
-               only_to_me: bool = True) -> Callable:
+               only_to_me: bool = True,
+               privileged: bool = False) -> Callable:
     """
     Decorator to register a function as a command.
 
@@ -82,6 +83,7 @@ def on_command(name: Union[str, Tuple[str]], *,
     :param aliases: aliases of command name, for convenient access
     :param permission: permission required by the command
     :param only_to_me: only handle messages to me
+    :param privileged: can be run even when there is already a session
     """
 
     def deco(func: Callable) -> Callable:
@@ -96,7 +98,7 @@ def on_command(name: Union[str, Tuple[str]], *,
             current_parent[parent_key] = current_parent.get(parent_key) or {}
             current_parent = current_parent[parent_key]
         cmd = Command(name=cmd_name, func=func, permission=permission,
-                      only_to_me=only_to_me)
+                      only_to_me=only_to_me, privileged=privileged)
         current_parent[cmd_name[-1]] = cmd
         for alias in aliases:
             _aliases[alias] = cmd_name
@@ -400,16 +402,25 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
     :param ctx: message context
     :return: the message is handled as a command
     """
+    cmd, current_arg = parse_command(bot, str(ctx['message']).lstrip())
+    is_privileged_cmd = cmd and cmd.privileged
+    disable_interaction = is_privileged_cmd
+
+    if is_privileged_cmd:
+        logger.debug(f'Command {cmd.name} is a privileged command')
+
     ctx_id = context_id(ctx)
 
-    # wait for 1.5 seconds (at most) if the current session is running
-    retry = 5
-    while retry > 0 and _sessions.get(ctx_id) and _sessions[ctx_id].running:
-        retry -= 1
-        await asyncio.sleep(0.3)
+    if not is_privileged_cmd:
+        # wait for 1.5 seconds (at most) if the current session is running
+        retry = 5
+        while retry > 0 and \
+                _sessions.get(ctx_id) and _sessions[ctx_id].running:
+            retry -= 1
+            await asyncio.sleep(0.3)
 
     check_perm = True
-    session = _sessions.get(ctx_id)
+    session = _sessions.get(ctx_id) if not is_privileged_cmd else None
     if session:
         if session.running:
             logger.warning(f'There is a session of command '
@@ -432,7 +443,6 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
             session = None
 
     if not session:
-        cmd, current_arg = parse_command(bot, str(ctx['message']).lstrip())
         if not cmd:
             logger.debug('Not a known command, ignored')
             return False
@@ -442,7 +452,8 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
         session = CommandSession(bot, ctx, cmd, current_arg=current_arg)
         logger.debug(f'New session of command {session.cmd.name} created')
 
-    return await _real_run_command(session, ctx_id, check_perm=check_perm)
+    return await _real_run_command(session, ctx_id, check_perm=check_perm,
+                                   disable_interaction=disable_interaction)
 
 
 async def call_command(bot: NoneBot, ctx: Dict[str, Any],
@@ -490,8 +501,16 @@ async def _real_run_command(session: CommandSession,
     try:
         logger.debug(f'Running command {session.cmd.name}')
         session.running = True
-        res = await session.cmd.run(session, **kwargs)
-        raise _FinishException(res)
+        future = asyncio.ensure_future(session.cmd.run(session, **kwargs))
+        timeout = None
+        if session.bot.config.SESSION_RUN_TIMEOUT:
+            timeout = session.bot.config.SESSION_RUN_TIMEOUT.total_seconds()
+        try:
+            await asyncio.wait_for(future, timeout)
+            raise _FinishException(future.result())
+        except asyncio.TimeoutError:
+            # if timeout happens, we think the session is finished
+            raise _FinishException(True)
     except _FurtherInteractionNeeded:
         session.running = False
         if disable_interaction:
@@ -522,3 +541,16 @@ async def _real_run_command(session: CommandSession,
             logger.debug(f'Session of command {session.cmd.name} switching, '
                          f'new context message: {e.new_ctx_message}')
             raise e  # this is intended to be propagated to handle_message()
+
+
+def kill_current_session(bot: NoneBot, ctx: Dict[str, Any]) -> None:
+    """
+    Force kill current session of the given context,
+    despite whether it is running or not.
+
+    :param bot: NoneBot instance
+    :param ctx: message context
+    """
+    ctx_id = context_id(ctx)
+    if ctx_id in _sessions:
+        del _sessions[ctx_id]
