@@ -1,7 +1,7 @@
 import asyncio
-from typing import Dict, Any, Callable
+from typing import Callable
 
-from aiocqhttp.message import MessageSegment
+from aiocqhttp.message import *
 
 from . import NoneBot
 from .command import handle_command, SwitchException
