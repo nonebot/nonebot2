@@ -3,11 +3,10 @@ import re
 from collections import namedtuple
 from typing import Dict, Any, Iterable, Optional, Callable, Union
 
-from aiocqhttp.message import Message
-
 from . import NoneBot, permission as perm
 from .command import call_command
 from .log import logger
+from .message import Message
 from .session import BaseSession
 
 _nl_processors = set()

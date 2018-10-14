@@ -1,7 +1,7 @@
 import random
 from typing import Union, Sequence, Callable
 
-from aiocqhttp import message
+from .message import escape
 
 Expression_T = Union[str, Sequence[str], Callable]
 
@@ -23,5 +23,5 @@ def render(expr: Expression_T, *, escape_args=True,
     if escape_args:
         for k, v in kwargs.items():
             if isinstance(v, str):
-                kwargs[k] = message.escape(v)
+                kwargs[k] = escape(v)
     return expr.format(**kwargs)
