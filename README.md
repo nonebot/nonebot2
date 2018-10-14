@@ -1,6 +1,6 @@
 # NoneBot
 
-[![License](https://img.shields.io/pypi/l/none-bot.svg)](LICENSE)
+[![License](https://img.shields.io/github/license/richardchien/none-bot.svg)](LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/none-bot.svg)](https://pypi.python.org/pypi/none-bot)
 ![Python](https://img.shields.io/badge/python-3.6%2B-blue.svg)
 [![QQ 群](https://img.shields.io/badge/qq%E7%BE%A4-201865589-orange.svg)](https://jq.qq.com/?_wv=1027&k=5Euplde)
