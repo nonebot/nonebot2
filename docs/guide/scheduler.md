@@ -1,4 +1,4 @@
-# 添加计划任务 <Badge text="0.3.0+" type="tip"/>
+# 添加计划任务
 
 实际应用中还经常会有定时执行任务的需求，为了方便这类需求的开发，NoneBot 可选地包含了计划任务功能。
 
@@ -6,14 +6,14 @@
 本章的完整代码可以在 [awesome-bot-6](https://github.com/richardchien/none-bot/tree/master/docs/guide/code/awesome-bot-6) 查看。
 :::
 
-## 安装 APScheduler
+## 安装 `scheduler` 可选功能
 
 计划任务功能在 NoneBot 中是可选功能，只有当同时安装了 [APScheduler](https://github.com/agronholm/apscheduler) 时，才会启用。
 
-使用下面命令安装 APScheduler：
+使用下面命令安装可选功能（会自动安装 APScheduler）：
 
 ```bash
-pip install apscheduler
+pip install none-bot[scheduler]
 ```
 
 安装成功之后就可以通过 `none.scheduler` 访问 [`AsyncIOScheduler`](https://apscheduler.readthedocs.io/en/latest/modules/schedulers/asyncio.html#apscheduler.schedulers.asyncio.AsyncIOScheduler) 对象。
