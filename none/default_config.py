@@ -15,13 +15,13 @@ For example:
 """
 
 from datetime import timedelta
-from typing import Container, Union, Iterable, Pattern, Optional
+from typing import Container, Union, Iterable, Pattern, Optional, Dict, Any
 
 from .expression import Expression_T
 
 API_ROOT: str = ''
-SECRET: str = ''
 ACCESS_TOKEN: str = ''
+SECRET: str = ''
 HOST: str = '127.0.0.1'
 PORT: int = 8080
 DEBUG: bool = True
@@ -35,6 +35,6 @@ SESSION_RUN_TIMEOUT: Optional[timedelta] = None
 SESSION_RUNNING_EXPRESSION: Expression_T = '您有命令正在执行，请稍后再试'
 SHORT_MESSAGE_MAX_LENGTH: int = 50
 
-APSCHEDULER_CONFIG = {
+APSCHEDULER_CONFIG: Dict[str, Any] = {
     'apscheduler.timezone': 'Asia/Shanghai'
 }

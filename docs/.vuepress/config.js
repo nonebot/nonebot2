@@ -26,7 +26,7 @@ module.exports = {
         nav: [
             { text: '指南', link: '/guide/' },
             { text: '进阶', link: '/advanced/' },
-            { text: '配置', link: '/configurations.md' },
+            { text: 'API', link: '/api.md' },
             { text: '术语表', link: '/glossary.md' },
         ],
         sidebar: {
