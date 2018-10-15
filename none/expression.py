@@ -1,13 +1,11 @@
 import random
-from typing import Union, Sequence, Callable
+from typing import Sequence, Callable
 
 from .message import escape
+from .typing import Expression_T
 
-Expression_T = Union[str, Sequence[str], Callable]
 
-
-def render(expr: Expression_T, *, escape_args=True,
-           **kwargs) -> str:
+def render(expr: Expression_T, *, escape_args: bool = True, **kwargs) -> str:
     """
     Render an expression to message string.
 

@@ -1,13 +1,13 @@
 import asyncio
 import re
-from collections import namedtuple
-from typing import Dict, Any, Iterable, Optional, Callable, Union
+from typing import Iterable, Optional, Callable, Union, NamedTuple
 
 from . import NoneBot, permission as perm
 from .command import call_command
 from .log import logger
 from .message import Message
 from .session import BaseSession
+from .typing import Context_T, CommandName_T, CommandArgs_T
 
 _nl_processors = set()
 
@@ -56,7 +56,7 @@ def on_natural_language(keywords: Union[Optional[Iterable], Callable] = None,
 class NLPSession(BaseSession):
     __slots__ = ('msg', 'msg_text', 'msg_images')
 
-    def __init__(self, bot: NoneBot, ctx: Dict[str, Any], msg: str):
+    def __init__(self, bot: NoneBot, ctx: Context_T, msg: str):
         super().__init__(bot, ctx)
         self.msg = msg
         tmp_msg = Message(msg)
@@ -65,14 +65,13 @@ class NLPSession(BaseSession):
                            if s.type == 'image' and 'url' in s.data]
 
 
-NLPResult = namedtuple('NLPResult', (
-    'confidence',
-    'cmd_name',
-    'cmd_args',
-))
+class NLPResult(NamedTuple):
+    confidence: float
+    cmd_name: Union[str, CommandName_T]
+    cmd_args: Optional[CommandArgs_T] = None
 
 
-async def handle_natural_language(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
+async def handle_natural_language(bot: NoneBot, ctx: Context_T) -> bool:
     """
     Handle a message as natural language.
 

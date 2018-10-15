@@ -1,10 +1,10 @@
 from collections import namedtuple
-from typing import Dict, Any
 
 from aiocache import cached
-from aiocqhttp import Error as CQHttpError
 
 from . import NoneBot
+from .exceptions import CQHttpError
+from .typing import Context_T
 
 PRIVATE_FRIEND = 0x0001
 PRIVATE_GROUP = 0x0002
@@ -45,7 +45,7 @@ _min_context_fields = (
 _MinContext = namedtuple('MinContext', _min_context_fields)
 
 
-async def check_permission(bot: NoneBot, ctx: Dict[str, Any],
+async def check_permission(bot: NoneBot, ctx: Context_T,
                            permission_required: int) -> bool:
     """
     Check if the context has the permission required.

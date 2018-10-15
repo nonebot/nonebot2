@@ -7,6 +7,7 @@ from . import NoneBot
 from .command import handle_command, SwitchException
 from .log import logger
 from .natural_language import handle_natural_language
+from .typing import Context_T
 
 _message_preprocessors = set()
 
@@ -16,12 +17,12 @@ def message_preprocessor(func: Callable) -> Callable:
     return func
 
 
-async def handle_message(bot: NoneBot, ctx: Dict[str, Any]) -> None:
+async def handle_message(bot: NoneBot, ctx: Context_T) -> None:
     _log_message(ctx)
 
     coros = []
     for processor in _message_preprocessors:
-        coros.append(processor(ctx))
+        coros.append(processor(bot, ctx))
     if coros:
         await asyncio.wait(coros)
 
@@ -56,7 +57,7 @@ async def handle_message(bot: NoneBot, ctx: Dict[str, Any]) -> None:
         return
 
 
-def _log_message(ctx: Dict[str, Any]) -> None:
+def _log_message(ctx: Context_T) -> None:
     msg_from = f'{ctx["user_id"]}'
     if ctx['message_type'] == 'group':
         msg_from += f'@[群:{ctx["group_id"]}]'

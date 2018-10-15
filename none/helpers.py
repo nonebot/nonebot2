@@ -1,12 +1,11 @@
 import hashlib
-from typing import Dict, Any, Union, List, Sequence, Callable
-
-from aiocqhttp import Error as CQHttpError
 
 from . import NoneBot, expression
+from .exceptions import CQHttpError
+from .typing import Context_T, Message_T, Expression_T
 
 
-def context_id(ctx: Dict[str, Any], *,
+def context_id(ctx: Context_T, *,
                mode: str = 'default', use_hash: bool = False) -> str:
     """
     Calculate a unique id representing the current context.
@@ -42,9 +41,8 @@ def context_id(ctx: Dict[str, Any], *,
     return ctx_id
 
 
-async def send(bot: NoneBot, ctx: Dict[str, Any],
-               message: Union[str, Dict[str, Any], List[Dict[str, Any]]],
-               *, ignore_failure: bool = True) -> None:
+async def send(bot: NoneBot, ctx: Context_T, message: Message_T, *,
+               ignore_failure: bool = True) -> None:
     """Send a message ignoring failure by default."""
     try:
         if ctx.get('post_type') == 'message':
@@ -64,8 +62,7 @@ async def send(bot: NoneBot, ctx: Dict[str, Any],
             raise
 
 
-async def send_expr(bot: NoneBot, ctx: Dict[str, Any],
-                    expr: Union[str, Sequence[str], Callable],
-                    **kwargs):
+async def send_expr(bot: NoneBot, ctx: Context_T,
+                    expr: Expression_T, **kwargs):
     """Sending a expression message ignoring failure by default."""
     return await send(bot, ctx, expression.render(expr, **kwargs))

@@ -5,11 +5,11 @@ import os
 import re
 from typing import Any, Optional
 
+import aiocqhttp.message
 from aiocqhttp import CQHttp
-from aiocqhttp.message import Message
 
 from .log import logger
-from .scheduler import Scheduler
+from .sched import Scheduler
 
 if Scheduler:
     scheduler = Scheduler()
@@ -18,14 +18,14 @@ else:
 
 
 class NoneBot(CQHttp):
-    def __init__(self, config_object: Any = None):
+    def __init__(self, config_object: Optional[Any] = None):
         if config_object is None:
             from . import default_config as config_object
 
         config_dict = {k: v for k, v in config_object.__dict__.items()
                        if k.isupper() and not k.startswith('_')}
         logger.debug(f'Loaded configurations: {config_dict}')
-        super().__init__(message_class=Message,
+        super().__init__(message_class=aiocqhttp.message.Message,
                          **{k.lower(): v for k, v in config_dict.items()})
 
         self.config = config_object
@@ -46,7 +46,8 @@ class NoneBot(CQHttp):
         async def _(ctx):
             asyncio.ensure_future(handle_notice_or_request(self, ctx))
 
-    def run(self, host: str = None, port: int = None, *args, **kwargs):
+    def run(self, host: Optional[str] = None, port: Optional[int] = None,
+            *args, **kwargs) -> None:
         host = host or self.config.HOST
         port = port or self.config.PORT
         if 'debug' not in kwargs:
@@ -60,7 +61,7 @@ class NoneBot(CQHttp):
 _bot: Optional[NoneBot] = None
 
 
-def init(config_object: Any = None) -> None:
+def init(config_object: Optional[Any] = None) -> None:
     """
     Initialize NoneBot instance.
 
@@ -97,7 +98,8 @@ def get_bot() -> NoneBot:
     return _bot
 
 
-def run(host: str = None, port: int = None, *args, **kwargs) -> None:
+def run(host: Optional[str] = None, port: Optional[int] = None,
+        *args, **kwargs) -> None:
     """Run the NoneBot instance."""
     get_bot().run(host=host, port=port, *args, **kwargs)
 
@@ -143,6 +145,7 @@ def load_builtin_plugins() -> None:
     load_plugins(plugin_dir, 'none.plugins')
 
 
+from .exceptions import *
 from .message import message_preprocessor, Message, MessageSegment
 from .command import on_command, CommandSession, CommandGroup
 from .natural_language import on_natural_language, NLPSession, NLPResult

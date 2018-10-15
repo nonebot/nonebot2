@@ -2,15 +2,18 @@ import asyncio
 import re
 from datetime import datetime
 from typing import (
-    Tuple, Union, Callable, Iterable, Dict, Any, Optional, Sequence
+    Tuple, Union, Callable, Iterable, Any, Optional
 )
 
 from . import NoneBot, permission as perm
-from .log import logger
-from .message import Message
 from .expression import render
 from .helpers import context_id, send_expr
+from .log import logger
+from .message import Message
 from .session import BaseSession
+from .typing import (
+    Context_T, CommandName_T, CommandArgs_T, Expression_T, Message_T
+)
 
 # Key: str (one segment of command name)
 # Value: subtree or a leaf Command object
@@ -29,8 +32,8 @@ class Command:
     __slots__ = ('name', 'func', 'permission',
                  'only_to_me', 'privileged', 'args_parser_func')
 
-    def __init__(self, *, name: Tuple[str], func: Callable, permission: int,
-                 only_to_me: bool, privileged: bool):
+    def __init__(self, *, name: CommandName_T, func: Callable,
+                 permission: int, only_to_me: bool, privileged: bool):
         self.name = name
         self.func = func
         self.permission = permission
@@ -71,8 +74,8 @@ class Command:
                                            self.permission)
 
 
-def on_command(name: Union[str, Tuple[str]], *,
-               aliases: Iterable = (),
+def on_command(name: Union[str, CommandName_T], *,
+               aliases: Iterable[str] = (),
                permission: int = perm.EVERYBODY,
                only_to_me: bool = True,
                privileged: bool = False) -> Callable:
@@ -117,19 +120,22 @@ class CommandGroup:
     """
     Group a set of commands with same name prefix.
     """
-    __slots__ = ('basename', 'permission', 'only_to_me')
+    __slots__ = ('basename', 'permission', 'only_to_me', 'privileged')
 
-    def __init__(self, name: Union[str, Tuple[str]],
+    def __init__(self, name: Union[str, CommandName_T],
                  permission: Optional[int] = None, *,
-                 only_to_me: Optional[bool] = None):
+                 only_to_me: Optional[bool] = None,
+                 privileged: Optional[bool] = None):
         self.basename = (name,) if isinstance(name, str) else name
         self.permission = permission
         self.only_to_me = only_to_me
+        self.privileged = privileged
 
-    def command(self, name: Union[str, Tuple[str]], *,
-                aliases: Optional[Iterable] = None,
+    def command(self, name: Union[str, CommandName_T], *,
+                aliases: Optional[Iterable[str]] = None,
                 permission: Optional[int] = None,
-                only_to_me: Optional[bool] = None) -> Callable:
+                only_to_me: Optional[bool] = None,
+                privileged: Optional[bool] = None) -> Callable:
         sub_name = (name,) if isinstance(name, str) else name
         name = self.basename + sub_name
 
@@ -144,10 +150,14 @@ class CommandGroup:
             kwargs['only_to_me'] = only_to_me
         elif self.only_to_me is not None:
             kwargs['only_to_me'] = self.only_to_me
+        if privileged is not None:
+            kwargs['privileged'] = privileged
+        elif self.privileged is not None:
+            kwargs['privileged'] = self.privileged
         return on_command(name, **kwargs)
 
 
-def _find_command(name: Union[str, Tuple[str]]) -> Optional[Command]:
+def _find_command(name: Union[str, CommandName_T]) -> Optional[Command]:
     cmd_name = (name,) if isinstance(name, str) else name
     if not cmd_name:
         return None
@@ -204,8 +214,8 @@ class CommandSession(BaseSession):
     __slots__ = ('cmd', 'current_key', 'current_arg', 'current_arg_text',
                  'current_arg_images', 'args', '_last_interaction', '_running')
 
-    def __init__(self, bot: NoneBot, ctx: Dict[str, Any], cmd: Command, *,
-                 current_arg: str = '', args: Optional[Dict[str, Any]] = None):
+    def __init__(self, bot: NoneBot, ctx: Context_T, cmd: Command, *,
+                 current_arg: str = '', args: Optional[CommandArgs_T] = None):
         super().__init__(bot, ctx)
         self.cmd = cmd  # Command object
         self.current_key = None  # current key that the command handler needs
@@ -218,21 +228,21 @@ class CommandSession(BaseSession):
         self._running = False
 
     @property
-    def running(self):
+    def running(self) -> bool:
         return self._running
 
     @running.setter
-    def running(self, value):
+    def running(self, value) -> None:
         if self._running is True and value is False:
             # change status from running to not running, record the time
             self._last_interaction = datetime.now()
         self._running = value
 
     @property
-    def is_first_run(self):
+    def is_first_run(self) -> bool:
         return self._last_interaction is None
 
-    def refresh(self, ctx: Dict[str, Any], *, current_arg: str = '') -> None:
+    def refresh(self, ctx: Context_T, *, current_arg: str = '') -> None:
         """
         Refill the session with a new message context.
 
@@ -256,8 +266,9 @@ class CommandSession(BaseSession):
             return False
         return True
 
-    def get(self, key: str, *, prompt: str = None,
-            prompt_expr: Union[str, Sequence[str], Callable] = None) -> Any:
+    def get(self, key: Any, *,
+            prompt: Optional[Message_T] = None,
+            prompt_expr: Optional[Expression_T] = None) -> Any:
         """
         Get an argument with a given key.
 
@@ -270,7 +281,6 @@ class CommandSession(BaseSession):
         :param prompt: prompt to ask the user
         :param prompt_expr: prompt expression to ask the user
         :return: the argument value
-        :raise FurtherInteractionNeeded: further interaction is needed
         """
         value = self.get_optional(key)
         if value is not None:
@@ -282,25 +292,24 @@ class CommandSession(BaseSession):
             prompt = render(prompt_expr, key=key)
         self.pause(prompt)
 
-    def get_optional(self, key: str,
+    def get_optional(self, key: Any,
                      default: Optional[Any] = None) -> Optional[Any]:
         """Simply get a argument with given key."""
         return self.args.get(key, default)
 
-    def pause(self, message=None) -> None:
+    def pause(self, message: Optional[Message_T] = None) -> None:
         """Pause the session for further interaction."""
         if message:
             asyncio.ensure_future(self.send(message))
         raise _FurtherInteractionNeeded
 
-    def finish(self, message=None) -> None:
+    def finish(self, message: Optional[Message_T] = None) -> None:
         """Finish the session."""
         if message:
             asyncio.ensure_future(self.send(message))
         raise _FinishException
 
-    # noinspection PyMethodMayBeStatic
-    def switch(self, new_ctx_message: Any) -> None:
+    def switch(self, new_ctx_message: Message_T) -> None:
         """
         Finish the session and switch to a new (fake) message context.
 
@@ -392,7 +401,7 @@ def parse_command(bot: NoneBot,
     return cmd, ''.join(cmd_remained)
 
 
-async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
+async def handle_command(bot: NoneBot, ctx: Context_T) -> bool:
     """
     Handle a message as a command.
 
@@ -456,10 +465,10 @@ async def handle_command(bot: NoneBot, ctx: Dict[str, Any]) -> bool:
                                    disable_interaction=disable_interaction)
 
 
-async def call_command(bot: NoneBot, ctx: Dict[str, Any],
-                       name: Union[str, Tuple[str]], *,
+async def call_command(bot: NoneBot, ctx: Context_T,
+                       name: Union[str, CommandName_T], *,
                        current_arg: str = '',
-                       args: Optional[Dict[str, Any]] = None,
+                       args: Optional[CommandArgs_T] = None,
                        check_perm: bool = True,
                        disable_interaction: bool = False) -> bool:
     """
@@ -543,7 +552,7 @@ async def _real_run_command(session: CommandSession,
             raise e  # this is intended to be propagated to handle_message()
 
 
-def kill_current_session(bot: NoneBot, ctx: Dict[str, Any]) -> None:
+def kill_current_session(bot: NoneBot, ctx: Context_T) -> None:
     """
     Force kill current session of the given context,
     despite whether it is running or not.
