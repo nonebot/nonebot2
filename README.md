@@ -20,7 +20,7 @@ NoneBot 在其底层与酷 Q 交互的部分使用 [python-aiocqhttp](https://gi
 
 ## 文档
 
-文档目前「指南」部分已经完成，「进阶」部分尚未完成，你可以在 [这里](https://none.rclab.tk/) 查看正在编写中的文档，对于文档中目前尚未写到的部分，请先参考 [richardchien/maruko](https://github.com/richardchien/maruko) 项目。
+文档目前「指南」和「API」部分已经完成，「进阶」部分尚未完成，你可以在 [这里](https://none.rclab.tk/) 查看正在编写中的文档。
 
 ## 贡献
 
