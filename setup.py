@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setup(
     name='none-bot',
-    version='0.3.2',
+    version='0.4.0',
     packages=find_packages(include=('none', 'none.*')),
     url='https://github.com/richardchien/none-bot',
     license='MIT License',

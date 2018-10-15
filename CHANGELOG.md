@@ -1,5 +1,11 @@
 # 更新日志
 
+## v0.4.0
+
+- `message_preprocessor` 装饰器现要求被装饰函数接收 `bot` 和 `ctx` 两个参数
+- 调整了 Type Hint，使其更准确，并新增 `none.typing` 模块，提供部分常用类型
+- 规范部分模块的导入，现可通过 `none.Message` 访问 `aiocqhttp.Message`，通过 `none.CQHttpError` 访问 `aiocqhttp.Error`
+
 ## v0.3.2
 
 - `none.message` 模块现已导入所有 `aiocqhttp.message` 中的内容，因此不必再从后者导入 `Message`、`escape` 等类和函数
