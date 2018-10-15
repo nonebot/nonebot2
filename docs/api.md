@@ -10,6 +10,8 @@ sidebar: auto
 
 除了 Python 内置的类型，下面还出现了如下 NoneBot 自定类型，实际上它们是 Python 内置类型的别名。
 
+以下类型均可从 `none.typing` 模块导入。
+
 ### `Context_T`
 
 - **类型:** `Dict[str, Any]`
@@ -300,7 +302,190 @@ sidebar: auto
 
   APScheduler 的配置对象，见 [Configuring the scheduler](https://apscheduler.readthedocs.io/en/latest/userguide.html#configuring-the-scheduler)。
 
-## none 模块
+## `none` 模块
+
+### 快捷导入
+
+为方便使用，`none` 模块从子模块导入了部分内容：
+
+- `CQHttpError` -> `none.exceptions.CQHttpError`
+- `message_preprocessor` -> `none.message.message_preprocessor`
+- `Message` -> `none.message.Message`
+- `MessageSegment` -> `none.message.MessageSegment`
+- `on_command` -> `none.command.on_command`
+- `CommandSession` -> `none.command.CommandSession`
+- `CommandGroup` -> `none.command.CommandGroup`
+- `on_natural_language` -> `none.natural_language.on_natural_language`
+- `NLPSession` -> `none.natural_language.NLPSession`
+- `NLPResult` -> `none.natural_language.NLPResult`
+- `on_notice` -> `none.notice_request.on_notice`
+- `NoticeSession` -> `none.notice_request.NoticeSession`
+- `on_request` -> `none.notice_request.on_request`
+- `RequestSession` -> `none.notice_request.RequestSession`
+
+### `scheduler`
+
+- **类型:** `Scheduler`
+
+- **说明:**
+
+  全局的计划任务对象，只有当 Python 环境中安装了 APScheduler 时才有效，否则为 `None`。
+
+### _class_ `NoneBot`
+
+继承自 `aiocqhttp.CQHttp`。
+
+#### `config`
+
+- **类型:** `Any`
+
+- **说明:**
+
+  配置对象，类型不限，只要能够通过 `__getattr__` 和 `__dict__` 分别访问到单个和所有配置项即可。
+
+#### `__init__(config_object=None)`
+
+- **说明:**
+
+  初始化 NoneBot 对象。配置对象会被保存到 `config` 属性，并且被传入父类的初始化函数。
+
+- **参数:**
+
+  - `config_object: Optional[Any]`: 配置对象，若没有传入，则使用默认配置
+
+- **用法:**
+
+  ```python
+  import config
+  bot = NoneBot(config)
+  ```
+
+#### `run(host=None, port=None, *args, **kwargs)`
+
+- **说明:**
+
+  运行 NoneBot。
+
+- **参数:**
+
+  - `host: Optional[str]`: 主机名／IP
+  - `port: Optional[int]`: 端口
+  - `*args: Any`: 其它传入 `CQHttp.run()` 的位置参数
+  - `**kwargs: Any`: 其它传入 `CQHttp.run()` 的命名参数
+
+### `init(config_object=None)`
+
+- **说明:**
+
+  初始化全局 NoneBot 对象。
+
+- **参数:**
+
+  - `config_object: Optional[Any]`: 配置对象，若没有传入，则使用默认配置
+
+- **返回:**
+
+  - `None`
+
+- **用法:**
+
+  ```python
+  import config
+  none.init(config)
+  ```
+
+  导入 `config` 模块并初始化全局 NoneBot 对象。
+
+### `get_bot()`
+
+- **说明:**
+
+  获取全局 NoneBot 对象。可用于在计划任务的回调中获取当前 NoneBot 对象。
+
+- **返回:**
+
+  - `NoneBot`: 全局 NoneBot 对象
+
+- **异常:**
+
+  - `ValueError`: 全局 NoneBot 对象尚未初始化
+
+- **用法:**
+
+  ```python
+  bot = none.get_bot()
+  ```
+
+### `run(host=None, port=None, *args, **kwargs)`
+
+- **说明:**
+
+  运行全局 NoneBot 对象。
+
+- **参数:**
+
+  - `host: Optional[str]`: 主机名／IP，若不传入则使用配置文件中指定的值
+  - `port: Optional[int]`: 端口，若不传入则使用配置文件中指定的值
+  - `*args: Any`: 其它传入 `CQHttp.run()` 的位置参数
+  - `**kwargs: Any`: 其它传入 `CQHttp.run()` 的命名参数
+
+- **返回:**
+
+  - `None`
+
+- **用法:**
+
+  ```python
+  none.run(host='127.0.0.1', port=8080)
+  ```
+
+  在 `127.0.0.1:8080` 运行全局 NoneBot 对象。
+
+### `load_plugins(plugin_dir, module_prefix)`
+
+- **说明:**
+
+  查找指定路径（相对或绝对）中的非隐藏模块（隐藏模块名字以 `_` 开头）并通过指定的模块前缀导入。
+
+- **参数:**
+
+  - `plugin_dir: str`: 插件目录
+  - `module_prefix: str`: 模块前缀
+
+- **返回:**
+
+  - `None`
+
+- **用法:**
+
+  ```python
+  none.load_plugins(path.join(path.dirname(__file__), 'plugins'),
+                    'maruko.plugins')
+  ```
+
+  加载 `plugins` 目录下的插件。
+
+### `load_builtin_plugins()`
+
+- **说明:**
+
+  加载内置插件。
+
+- **返回:**
+
+  - `None`
+
+- **用法:**
+
+  ```python
+  none.load_builtin_plugins()
+  ```
+
+## `none.exceptions` 模块
+
+### _class_ `CQHttpError`
+
+等价于 `aiocqhttp.Error`。
 
 ## `none.message` 模块
 
@@ -351,7 +536,7 @@ sidebar: auto
 
   消息段数据。
 
-#### `__init__(self, d=None, *, type=None, data=None)`
+#### `__init__(d=None, *, type=None, data=None)`
 
 - **说明:**
 
@@ -638,7 +823,7 @@ sidebar: auto
 
 从 `aiocqhttp.message` 模块导入，继承自 `list`，用于表示一个消息。该类型是合法的 `Message_T`。
 
-#### `__init__(self, msg=None)`
+#### `__init__(msg=None)`
 
 - **说明:**
 
@@ -793,7 +978,7 @@ sidebar: auto
   - `aliases: Iterable[str]`: 命令别名
   - `permission: int`: 命令所需要的权限，不满足权限的用户将无法触发该命令
   - `only_to_me: bool`: 是否只响应确定是在和「我」（机器人）说话的命令
-  - `privileged: bool`: 是否特权命令，若是，则无论当前是否有命令会话正在运行，都会运行该命令，但运行后不会保留 Session
+  - `privileged: bool`: 是否特权命令，若是，则无论当前是否有命令会话正在运行，都会运行该命令，但运行不会覆盖已有会话，也不会保留新创建的会话
 
 - **要求:**
 
@@ -912,6 +1097,228 @@ sidebar: auto
 
   注册 `('scheduler', 'add')` 命令。
 
+### _class_ `CommandSession`
+
+继承自 `BaseSession` 类，表示命令 Session。
+
+#### `current_key`
+
+- **类型:** `Optional[Any]`
+
+- **说明:**
+
+  命令会话当前正在询问用户的参数的键（`args` 属性的键）。第一次运行会话时，该属性为 `None`。
+
+#### `current_arg`
+
+- **类型:** `str`
+
+- **说明:**
+
+  命令会话当前参数。实际上是酷 Q 收到的消息去掉命令名的剩下部分，因此可能存在 CQ 码。
+
+#### `current_arg_text`
+
+- **类型:** `str`
+
+- **说明:**
+
+  `current_arg` 属性的纯文本部分（不包含 CQ 码），各部分使用空格连接。
+
+#### `current_arg_images`
+
+- **类型:** `List[str]`
+
+- **说明:**
+
+  `current_arg` 属性中所有图片的 URL 的列表，如果参数中没有图片，则为 `[]`。
+
+#### `args`
+
+- **类型:** `Dict[Any, Any]`
+
+- **说明:**
+
+  命令会话已获得的所有参数。
+
+#### _property_ `is_first_run`
+
+- **类型:** `bool`
+
+- **说明:**
+
+  命令会话是否第一次运行。
+
+#### `get(key, *, prompt=None, prompt_expr=None)`
+
+- **说明:**
+
+  从 `args` 属性获取参数，如果参数不存在，则暂停当前会话，向用户发送提示，并等待用户的新一轮交互。
+
+  如果需要暂停当前会话，则命令处理器中，此函数调用之后的语句将不会被执行（除非捕获了此函数抛出的特殊异常）。
+
+- **参数:**
+
+  - `key: Any`: 参数的键
+  - `prompt: Optional[Message_T]`: 提示的消息内容
+  - `prompt_expr: Optional[Expression_T]`: 提示的 Expression 内容，这个和 `prompt` 两者选其一，如果都不传，则不发送提示消息
+
+- **返回:**
+
+  - `Any`: 参数的值
+
+- **用法:**
+
+  ```python
+  location = session.get('location', prompt='请输入要查询的地区')
+  ```
+
+  获取位置信息，如果当前还不知道，则询问用户。
+
+#### `get_optional(key, default=None)`
+
+- **说明:**
+
+  从 `args` 属性获取参数，如果参数不存在，则返回默认值。等价于 `args.get(key, default)`。
+
+- **参数:**
+
+  - `key: Any`: 参数的键
+  - `default: Optional[Any]`: 默认值
+
+- **返回:**
+
+  - `Any`: 参数的值，或 `default` 参数给出的默认值
+
+- **用法:**
+
+  ```python
+  time = session.get_optional('time')
+  ```
+
+  获取可选的时间参数。
+
+#### `pause(message=None)`
+
+- **说明:**
+
+  暂停当前命令会话，并发送消息。此函数调用之后的语句将不会被执行（除非捕获了此函数抛出的特殊异常）。
+
+- **参数:**
+
+  - `message: Optional[Message_T]`: 要发送的消息，若不传入则不发送
+
+- **用法:**
+
+  ```python
+  session.pause('请继续发送要处理的图片，发送 done 结束')
+  ```
+
+  需要连续接收用户输入，并且过程中不需要改变 `current_key` 时，使用此函数暂停会话。
+
+#### `finish(message=None)`
+
+- **说明:**
+
+  结束当前命令会话，并发送消息。此函数调用之后的语句将不会被执行（除非捕获了此函数抛出的特殊异常）。
+
+  调用此函数后，命令将被视为已经完成，当前命令会话将被移除。
+
+- **参数:**
+
+  - `message: Optional[Message_T]`: 要发送的消息，若不传入则不发送
+
+- **用法:**
+
+  ```python
+  session.finish('感谢您的使用～')
+  ```
+
+#### `switch(new_ctx_message)`
+
+- **说明:**
+
+  结束当前会话，改变当前消息事件上下文中的消息内容，然后重新处理消息事件上下文。
+
+  此函数可用于从一个命令中跳出，将用户输入的剩余部分作为新的消息来处理，例如可实现以下对话：
+
+  ```
+  用户：帮我查下天气
+  Bot：你要查询哪里的天气呢？
+  用户：算了，帮我查下今天下午南京到上海的火车票吧
+  Bot：今天下午南京到上海的火车票有如下班次：blahblahblah
+  ```
+
+  这里进行到第三行时，命令期待的是一个地点，但实际发现消息的开头是「算了」，于是调用 `switch('帮我查下今天下午南京到上海的火车票吧')`，结束天气命令，将剩下来的内容作为新的消息来处理（触发火车票插件的自然语言处理器，进而调用火车票查询命令）。
+
+- **参数:**
+
+  - `new_ctx_message: Message_T`: 要覆盖消息事件上下文的新消息内容
+
+- **用法:**
+
+  ```python
+  @my_cmd.args_parser
+  async def _(session: CommandSession)
+      if not session.is_first_run and session.current_arg.startswith('算了，'):
+          session.switch(session.current_arg[len('算了，'):])
+  ```
+
+  使用「算了」来取消当前命令，转而进入新的消息处理流程。这个例子比较简单，实际应用中可以使用更复杂的 NLP 技术来判断。
+
+### _coroutine_ `call_command(bot, ctx, name, *, current_arg='', args=None, check_perm=True, disable_interaction=False)`
+
+- **说明:**
+
+  从内部直接调用命令。可用于在一个插件中直接调用另一个插件的命令。
+
+- **参数:**
+
+  - `bot: NoneBot`: NoneBot 对象
+  - `ctx: Context_T`: 事件上下文对象
+  - `name: Union[str, CommandName_T]`: 要调用的命令名
+  - `current_arg: str`: 命令会话的 `current_arg` 属性
+  - `args: Optional[CommandArgs_T]`: 命令会话的 `args` 属性
+  - `check_perm: bool`: 是否检查命令的权限，若否，则即使当前事件上下文并没有权限调用这里指定的命令，也仍然会调用成功
+  - `disable_interaction: bool`: 是否禁用交互功能，若是，则该命令的会话不会覆盖任何当前已存在的命令会话，新创建的会话也不会保留
+
+- **返回:**
+
+  - `bool`: 命令是否调用成功
+
+- **用法:**
+
+  ```python
+  await call_command(bot, ctx, 'say', current_arg='[CQ:face,id=14]', check_perm=False)
+  ```
+
+  从内部调用 `say` 命令，且不检查权限。
+
+### `kill_current_session(bot, ctx)`
+
+- **说明:**
+
+  强行移除当前已存在的任何命令会话，即使它正在运行。该函数可用于强制移除执行时间超过预期的命令，以保证新的消息不会被拒绝服务。
+
+- **参数:**
+
+  - `bot: NoneBot`: NoneBot 对象
+  - `ctx: Context_T`: 事件上下文对象
+
+- **返回:**
+
+  - `None`
+
+- **用法:**
+
+  ```python
+  @on_command('kill', privileged=True)
+  async def _(session: CommandSession):
+      kill_current_session(session.bot, session.ctx)
+  ```
+
+  在特权命令 `kill` 中强行移除当前正在运行的会话。
+
 ## `none.natural_language` 模块
 
 ### _decorator_ `on_natural_language(keywords=None, *, permission=EVERYBODY, only_to_me=True, only_short_message=True)`
@@ -956,7 +1363,7 @@ sidebar: auto
 
 - **说明:**
 
-  以字符串形式表示的消息内容，已去除开头的 @ 和机器人称呼。
+  以字符串形式表示的消息内容，已去除开头的 @ 和机器人称呼，可能存在 CQ 码。
 
 #### `msg_text`
 
@@ -1091,6 +1498,7 @@ sidebar: auto
   同意当前请求。
 
 - **参数:**
+
   - `remark: str`: 好友备注，只在好友请求时有效
 
 - **返回:**
