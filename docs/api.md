@@ -341,7 +341,7 @@ sidebar: auto
 
 - **说明:**
 
-  配置对象，类型不限，只要能够通过 `__getattr__` 和 `__dict__` 分别访问到单个和所有配置项即可。
+  配置对象。
 
 #### `__init__(config_object=None)`
 
@@ -349,22 +349,19 @@ sidebar: auto
 
   初始化 NoneBot 对象。配置对象会被保存到 `config` 属性，并且被传入父类的初始化函数。
 
+  不建议手动创建 NoneBot 对象，而应该使用全局的 `init()` 函数。
+
 - **参数:**
 
-  - `config_object: Optional[Any]`: 配置对象，若没有传入，则使用默认配置
-
-- **用法:**
-
-  ```python
-  import config
-  bot = NoneBot(config)
-  ```
+  - `config_object: Optional[Any]`: 配置对象，类型不限，只要能够通过 `__getattr__` 和 `__dict__` 分别访问到单个和所有配置项即可，若没有传入，则使用默认配置
 
 #### `run(host=None, port=None, *args, **kwargs)`
 
 - **说明:**
 
   运行 NoneBot。
+
+  不建议直接运行 NoneBot 对象，而应该使用全局的 `run()` 函数。
 
 - **参数:**
 
@@ -381,7 +378,7 @@ sidebar: auto
 
 - **参数:**
 
-  - `config_object: Optional[Any]`: 配置对象，若没有传入，则使用默认配置
+  - `config_object: Optional[Any]`: 配置对象，类型不限，只要能够通过 `__getattr__` 和 `__dict__` 分别访问到单个和所有配置项即可，若没有传入，则使用默认配置
 
 - **返回:**
 
