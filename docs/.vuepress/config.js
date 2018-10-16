@@ -28,6 +28,7 @@ module.exports = {
             { text: '进阶', link: '/advanced/' },
             { text: 'API', link: '/api.md' },
             { text: '术语表', link: '/glossary.md' },
+            { text: '更新日志', link: '/changelog.md' },
         ],
         sidebar: {
             '/guide/': [
