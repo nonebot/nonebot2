@@ -12,7 +12,7 @@ sidebar: auto
 
 [CoolQ HTTP API 插件](https://cqhttp.cc/) 是酷 Q 的一个第三方插件，用于将酷 Q 所提供的所有 DLL 接口转换为 HTTP 或 WebSocket 的 web 形式，从而使利用任意语言编写酷 Q 插件成为可能。
 
-有时被称为 cqhttp、CQHttp、酷 Q HTTP API 等。
+有时被称为 cqhttp、CQHTTP、酷 Q HTTP API 等。
 
 ## aiocqhttp
 

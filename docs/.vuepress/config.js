@@ -45,6 +45,7 @@ module.exports = {
                         'nl-processor',
                         'tuling',
                         'notice-and-request',
+                        'calling-cqhttp-api',
                         'scheduler',
                         'whats-next',
                     ]
