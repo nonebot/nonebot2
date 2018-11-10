@@ -413,6 +413,8 @@ async def handle_command(bot: NoneBot, ctx: Context_T) -> bool:
     """
     cmd, current_arg = parse_command(bot, str(ctx['message']).lstrip())
     is_privileged_cmd = cmd and cmd.privileged
+    if is_privileged_cmd and cmd.only_to_me and not ctx['to_me']:
+        is_privileged_cmd = False
     disable_interaction = is_privileged_cmd
 
     if is_privileged_cmd:
