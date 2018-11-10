@@ -133,8 +133,9 @@ def load_plugins(plugin_dir: str, module_prefix: str) -> None:
         try:
             _plugins.add(importlib.import_module(mod_name))
             logger.info(f'Succeeded to import "{mod_name}"')
-        except ImportError:
-            logger.warning(f'Failed to import "{mod_name}"')
+        except Exception as e:
+            logger.error(f'Failed to import "{mod_name}", error: {e}')
+            logger.exception(e)
 
 
 def load_builtin_plugins() -> None:
