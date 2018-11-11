@@ -4,6 +4,12 @@ sidebar: auto
 
 # 更新日志
 
+## v0.4.1
+
+- `load_plugins()` 导入模块失败时打印错误信息，且日志级别从 warning 改为 error
+- 修复 `CommandName_T` 的问题
+- 修复特权命令在不满足 `to_me` 条件时没有被当做现有 session 的新参数的问题
+
 ## v0.4.0
 
 - `message_preprocessor` 装饰器现要求被装饰函数接收 `bot` 和 `ctx` 两个参数
