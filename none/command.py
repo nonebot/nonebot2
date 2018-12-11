@@ -521,10 +521,12 @@ async def _real_run_command(session: CommandSession,
             await asyncio.wait_for(future, timeout)
             handled = future.result()
         except asyncio.TimeoutError:
-            # if timeout happens, absolutely the command was executed (but may not finished)
             handled = True
+        except (_FurtherInteractionNeeded,
+                _FinishException,
+                SwitchException) as e:
+            raise e
         except Exception as e:
-            # if any other exception happens, the command was executed but failed
             logger.exception(e)
             handled = True
         raise _FinishException(handled)
