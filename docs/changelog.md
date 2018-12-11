@@ -4,6 +4,10 @@ sidebar: auto
 
 # 更新日志
 
+## v0.4.2
+
+- 修复命令处理器中抛出异常导致运行超时 `SESSION_RUN_TIMEOUT` 不生效的问题
+
 ## v0.4.1
 
 - `load_plugins()` 导入模块失败时打印错误信息，且日志级别从 warning 改为 error
