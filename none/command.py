@@ -516,12 +516,18 @@ async def _real_run_command(session: CommandSession,
         timeout = None
         if session.bot.config.SESSION_RUN_TIMEOUT:
             timeout = session.bot.config.SESSION_RUN_TIMEOUT.total_seconds()
+
         try:
             await asyncio.wait_for(future, timeout)
-            raise _FinishException(future.result())
+            handled = future.result()
         except asyncio.TimeoutError:
-            # if timeout happens, we think the session is finished
-            raise _FinishException(True)
+            # if timeout happens, absolutely the command was executed (but may not finished)
+            handled = True
+        except Exception as e:
+            # if any other exception happens, the command was executed but failed
+            logger.exception(e)
+            handled = True
+        raise _FinishException(handled)
     except _FurtherInteractionNeeded:
         session.running = False
         if disable_interaction:
