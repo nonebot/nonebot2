@@ -36,7 +36,7 @@ def on_natural_language(keywords: Union[Optional[Iterable], Callable] = None,
     """
     Decorator to register a function as a natural language processor.
 
-    :param keywords: keywords to respond, if None, respond to all messages
+    :param keywords: keywords to respond to, if None, respond to all messages
     :param permission: permission required by the processor
     :param only_to_me: only handle messages to me
     :param only_short_message: only handle short messages
