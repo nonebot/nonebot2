@@ -930,6 +930,28 @@ sidebar: auto
   msg.extend('[CQ:face,id=14]')
   ```
 
+#### `extract_plain_text(reduce=False)`
+
+- **说明:**
+
+  从消息中提取类型为 `text` 的消息段，使用空格拼接。
+
+- **参数:**
+
+  - `reduce: bool`: 是否先化简消息段列表（合并相邻的 `text` 段），对于从酷 Q 收到的消息，通常不需要开启
+
+- **返回:**
+
+  - `str`: 消息文本字符串
+
+- **用法:**
+
+  ```python
+  text = session.ctx['message'].extract_plain_text()
+  ```
+
+  提取事件上报的原始消息中的纯文本部分。
+
 ### `escape(s, *, escape_comma=True)`
 
 - **说明:**
