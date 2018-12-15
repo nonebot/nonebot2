@@ -16,6 +16,7 @@ module.exports = {
         ['meta', { name: 'msapplication-TileImage', content: '/icons/mstile-150x150.png' }],
         ['meta', { name: 'msapplication-TileColor', content: '#00aba9' }]
     ],
+    ga: 'UA-115509121-2',
     themeConfig: {
         repo: 'richardchien/none-bot',
         docsDir: 'docs',
