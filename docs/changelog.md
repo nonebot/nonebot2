@@ -4,6 +4,10 @@ sidebar: auto
 
 # 更新日志
 
+## next
+
+- 自然语言处理器支持响应只有机器人昵称而没有实际内容的消息，通过 `on_natural_language` 的 `allow_empty_message` 参数开启（默认关闭）
+
 ## v0.4.2
 
 - 修复命令处理器中抛出异常导致运行超时 `SESSION_RUN_TIMEOUT` 不生效的问题

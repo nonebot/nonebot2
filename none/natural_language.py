@@ -14,35 +14,41 @@ _nl_processors = set()
 
 class NLProcessor:
     __slots__ = ('func', 'keywords', 'permission',
-                 'only_to_me', 'only_short_message')
+                 'only_to_me', 'only_short_message',
+                 'allow_empty_message')
 
     def __init__(self, *, func: Callable, keywords: Optional[Iterable],
-                 permission: int, only_to_me: bool, only_short_message: bool):
+                 permission: int, only_to_me: bool, only_short_message: bool,
+                 allow_empty_message: bool):
         self.func = func
         self.keywords = keywords
         self.permission = permission
         self.only_to_me = only_to_me
         self.only_short_message = only_short_message
+        self.allow_empty_message = allow_empty_message
 
 
 def on_natural_language(keywords: Union[Optional[Iterable], Callable] = None,
                         *, permission: int = perm.EVERYBODY,
                         only_to_me: bool = True,
-                        only_short_message: bool = True) -> Callable:
+                        only_short_message: bool = True,
+                        allow_empty_message: bool = False) -> Callable:
     """
     Decorator to register a function as a natural language processor.
 
     :param keywords: keywords to respond, if None, respond to all messages
     :param permission: permission required by the processor
     :param only_to_me: only handle messages to me
-    :param only_short_message: only handle short message
+    :param only_short_message: only handle short messages
+    :param allow_empty_message: handle empty messages
     """
 
     def deco(func: Callable) -> Callable:
         nl_processor = NLProcessor(func=func, keywords=keywords,
                                    permission=permission,
                                    only_to_me=only_to_me,
-                                   only_short_message=only_short_message)
+                                   only_short_message=only_short_message,
+                                   allow_empty_message=allow_empty_message)
         _nl_processors.add(nl_processor)
         return func
 
@@ -89,7 +95,8 @@ async def handle_natural_language(bot: NoneBot, ctx: Context_T) -> bool:
             nicknames = (bot.config.NICKNAME,)
         else:
             nicknames = filter(lambda n: n, bot.config.NICKNAME)
-        m = re.search(rf'^({"|".join(nicknames)})[\s,，]+', msg, re.IGNORECASE)
+        m = re.search(rf'^{"|".join(nicknames)}([\s,，]|$)',
+                      msg, re.IGNORECASE)
         if m:
             logger.debug(f'User is calling me {m.group(1)}')
             ctx['to_me'] = True
@@ -103,6 +110,10 @@ async def handle_natural_language(bot: NoneBot, ctx: Context_T) -> bool:
 
     coros = []
     for p in _nl_processors:
+        if not p.allow_empty_message and not session.msg:
+            # don't allow empty msg, but it is one, so skip to next
+            continue
+
         if p.only_short_message and \
                 msg_text_length > bot.config.SHORT_MESSAGE_MAX_LENGTH:
             continue
