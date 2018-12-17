@@ -1340,7 +1340,7 @@ sidebar: auto
 
 ## `none.natural_language` 模块
 
-### _decorator_ `on_natural_language(keywords=None, *, permission=EVERYBODY, only_to_me=True, only_short_message=True)`
+### _decorator_ `on_natural_language(keywords=None, *, permission=EVERYBODY, only_to_me=True, only_short_message=True, allow_empty_message=False)`
 
 - **说明:**
 
@@ -1352,6 +1352,7 @@ sidebar: auto
   - `permission: int`: 自然语言处理器所需要的权限，不满足权限的用户将无法触发该处理器
   - `only_to_me: bool`: 是否只响应确定是在和「我」（机器人）说话的消息
   - `only_short_message: bool`: 是否只响应短消息
+  - `allow_empty_message: bool`: 是否响应内容为空的消息（只有@或机器人昵称）
 
 - **要求:**
 
