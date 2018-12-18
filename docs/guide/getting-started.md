@@ -35,7 +35,7 @@ python bot.py
 
 单纯运行 NoneBot 实例并不会产生任何效果，因为此刻酷 Q 这边还不知道 NoneBot 的存在，也就无法把消息发送给它，因此现在需要对 CoolQ HTTP API 插件做一个简单的配置来让它把消息等事件上报给 NoneBot。
 
-如果你在之前已经按照 [安装](/guide/installation.md) 的建议使用默认配置运行了一次 CoolQ HTTP API 插件，此时酷 Q 的 `app\io.github.richardchien.coolqhttpapi\config\` 目录中应该已经有了一个名为 `<user-id>.json` 的文件（`<user-id>` 为你登录的 QQ 账号）。修改这个文件，**添加**如下配置项：
+如果你在之前已经按照 [安装](/guide/installation.md) 的建议使用默认配置运行了一次 CoolQ HTTP API 插件，此时酷 Q 的 `data\app\io.github.richardchien.coolqhttpapi\config\` 目录中应该已经有了一个名为 `<user-id>.json` 的文件（`<user-id>` 为你登录的 QQ 账号）。修改这个文件，**添加**如下配置项：
 
 ```json
 {
