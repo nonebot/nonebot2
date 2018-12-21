@@ -4,6 +4,10 @@ sidebar: auto
 
 # 更新日志
 
+## next
+
+- 修复调用不存在的多级命令（例如 `/echo/nonexist`）时，抛出异常导致 WebSocket 连接断开的问题
+
 ## v0.4.3
 
 - 自然语言处理器支持响应只有机器人昵称而没有实际内容的消息，通过 `on_natural_language` 的 `allow_empty_message` 参数开启（默认关闭）
