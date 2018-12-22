@@ -2,7 +2,7 @@
 
 `none.argparse` 模块主要继承自 Python 内置的同名模块（`argparse`），用于解析命令的参数。在需要编写类 shell 语法的命令的时候，使用此模块可以大大提高开发效率。
 
-「类 shell 语法」指的是形如 `some-command --debug --verbose -n 3 --name=some-name argument1 argument 2` 的类似于mo shell 命令的语法。
+「类 shell 语法」指的是形如 `some-command --verbose -n 3 --name=some-name argument1 argument2` 的类似于 shell 命令的语法。
 
 下面给出一个使用 `argparse` 模块的实际例子：
 
