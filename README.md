@@ -16,7 +16,7 @@ NoneBot 在其底层与酷 Q 交互的部分使用 [python-aiocqhttp](https://gi
 
 得益于 Python 的 [asyncio](https://docs.python.org/3/library/asyncio.html) 机制，NoneBot 处理消息的吞吐量有了很大的保障，再配合 CoolQ HTTP API 插件可选的 WebSocket 通信方式（也是最建议的通信方式），NoneBot 的性能可以达到 HTTP 通信方式的两倍以上，相较于传统同步 I/O 的 HTTP 通信，更是有质的飞跃。
 
-需要注意的是，NoneBot 仅支持 Python 3.6+ 及 CoolQ HTTP API 插件 v4.2+。
+需要注意的是，NoneBot 仅支持 Python 3.6.1+ 及 CoolQ HTTP API 插件 v4.2+。
 
 ## 示意图
 
