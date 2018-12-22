@@ -2,16 +2,17 @@ from none import (
     CommandSession, CommandGroup,
     on_natural_language, NLPSession, NLPResult
 )
+from none.helpers import render_expression as __
 
-from . import expressions as expr
+from . import expressions as e
 
 w = CommandGroup('weather')
 
 
 @w.command('weather', aliases=('天气', '天气预报'))
 async def weather(session: CommandSession):
-    city = session.get('city', prompt_expr=expr.WHICH_CITY)
-    await session.send_expr(expr.REPORT, city=city)
+    city = session.get('city', prompt=__(e.WHICH_CITY))
+    await session.send(__(e.REPORT, city=city))
 
 
 @weather.args_parser

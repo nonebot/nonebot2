@@ -1,5 +1,3 @@
-import asyncio
-
 from none import (
     on_command, CommandSession,
     on_natural_language, NLPSession, NLPResult
@@ -12,7 +10,7 @@ async def tuling(session: CommandSession):
 
     finish = message in ('结束', '拜拜', '再见')
     if finish:
-        asyncio.ensure_future(session.send('拜拜啦，你忙吧，下次想聊天随时找我哦~'))
+        session.finish('拜拜啦，你忙吧，下次想聊天随时找我哦~')
         return
 
     # call tuling api
@@ -20,10 +18,9 @@ async def tuling(session: CommandSession):
 
     one_time = session.get_optional('one_time', False)
     if one_time:
-        asyncio.ensure_future(session.send(reply))
+        session.finish(reply)
     else:
-        del session.args['message']
-        session.get('message', prompt=reply)
+        session.pause(reply)
 
 
 @tuling.args_parser
