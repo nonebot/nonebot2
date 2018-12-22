@@ -1,8 +1,9 @@
 import asyncio
 import re
+import shlex
 from datetime import datetime
 from typing import (
-    Tuple, Union, Callable, Iterable, Any, Optional
+    Tuple, Union, Callable, Iterable, Any, Optional, List
 )
 
 from . import NoneBot, permission as perm
@@ -73,11 +74,31 @@ class Command:
                                            self.permission)
 
 
+class CommandFunc:
+    __slots__ = ('cmd', 'func')
+
+    def __init__(self, cmd: Command, func: Callable):
+        self.cmd = cmd
+        self.func = func
+
+    def __call__(self, *args, **kwargs):
+        return self.func(*args, **kwargs)
+
+    def args_parser(self, parser_func: Callable):
+        """
+        Decorator to register a function as the arguments parser of
+        the corresponding command.
+        """
+        self.cmd.args_parser_func = parser_func
+        return parser_func
+
+
 def on_command(name: Union[str, CommandName_T], *,
                aliases: Iterable[str] = (),
                permission: int = perm.EVERYBODY,
                only_to_me: bool = True,
-               privileged: bool = False) -> Callable:
+               privileged: bool = False,
+               shell_like: bool = False) -> Callable:
     """
     Decorator to register a function as a command.
 
@@ -86,6 +107,7 @@ def on_command(name: Union[str, CommandName_T], *,
     :param permission: permission required by the command
     :param only_to_me: only handle messages to me
     :param privileged: can be run even when there is already a session
+    :param shell_like: use shell-like syntax to split arguments
     """
 
     def deco(func: Callable) -> Callable:
@@ -95,22 +117,25 @@ def on_command(name: Union[str, CommandName_T], *,
             raise ValueError('the name of a command must not be empty')
 
         cmd_name = (name,) if isinstance(name, str) else name
+
+        cmd = Command(name=cmd_name, func=func, permission=permission,
+                      only_to_me=only_to_me, privileged=privileged)
+        if shell_like:
+            async def shell_like_args_parser(session):
+                session.args['argv'] = shlex.split(session.current_arg)
+
+            cmd.args_parser_func = shell_like_args_parser
+
         current_parent = _registry
         for parent_key in cmd_name[:-1]:
             current_parent[parent_key] = current_parent.get(parent_key) or {}
             current_parent = current_parent[parent_key]
-        cmd = Command(name=cmd_name, func=func, permission=permission,
-                      only_to_me=only_to_me, privileged=privileged)
         current_parent[cmd_name[-1]] = cmd
+
         for alias in aliases:
             _aliases[alias] = cmd_name
 
-        def args_parser_deco(parser_func: Callable):
-            cmd.args_parser_func = parser_func
-            return parser_func
-
-        func.args_parser = args_parser_deco
-        return func
+        return CommandFunc(cmd, func)
 
     return deco
 
@@ -119,22 +144,26 @@ class CommandGroup:
     """
     Group a set of commands with same name prefix.
     """
-    __slots__ = ('basename', 'permission', 'only_to_me', 'privileged')
+    __slots__ = ('basename', 'permission', 'only_to_me', 'privileged',
+                 'shell_like')
 
     def __init__(self, name: Union[str, CommandName_T],
                  permission: Optional[int] = None, *,
                  only_to_me: Optional[bool] = None,
-                 privileged: Optional[bool] = None):
+                 privileged: Optional[bool] = None,
+                 shell_like: Optional[bool] = None):
         self.basename = (name,) if isinstance(name, str) else name
         self.permission = permission
         self.only_to_me = only_to_me
         self.privileged = privileged
+        self.shell_like = shell_like
 
     def command(self, name: Union[str, CommandName_T], *,
                 aliases: Optional[Iterable[str]] = None,
                 permission: Optional[int] = None,
                 only_to_me: Optional[bool] = None,
-                privileged: Optional[bool] = None) -> Callable:
+                privileged: Optional[bool] = None,
+                shell_like: Optional[bool] = None) -> Callable:
         sub_name = (name,) if isinstance(name, str) else name
         name = self.basename + sub_name
 
@@ -153,6 +182,10 @@ class CommandGroup:
             kwargs['privileged'] = privileged
         elif self.privileged is not None:
             kwargs['privileged'] = self.privileged
+        if shell_like is not None:
+            kwargs['shell_like'] = shell_like
+        elif self.shell_like is not None:
+            kwargs['shell_like'] = self.shell_like
         return on_command(name, **kwargs)
 
 
@@ -238,8 +271,26 @@ class CommandSession(BaseSession):
         self._running = value
 
     @property
+    def is_valid(self) -> bool:
+        """Check if the session is expired or not."""
+        if self.bot.config.SESSION_EXPIRE_TIMEOUT and \
+                self._last_interaction and \
+                datetime.now() - self._last_interaction > \
+                self.bot.config.SESSION_EXPIRE_TIMEOUT:
+            return False
+        return True
+
+    @property
     def is_first_run(self) -> bool:
         return self._last_interaction is None
+
+    @property
+    def argv(self) -> List[str]:
+        """
+        Shell-like argument list.
+        Only available while shell_like is True in on_command decorator.
+        """
+        return self.get_optional('argv', [])
 
     def refresh(self, ctx: Context_T, *, current_arg: str = '') -> None:
         """
@@ -254,16 +305,6 @@ class CommandSession(BaseSession):
         self.current_arg_text = current_arg_as_msg.extract_plain_text()
         self.current_arg_images = [s.data['url'] for s in current_arg_as_msg
                                    if s.type == 'image' and 'url' in s.data]
-
-    @property
-    def is_valid(self) -> bool:
-        """Check if the session is expired or not."""
-        if self.bot.config.SESSION_EXPIRE_TIMEOUT and \
-                self._last_interaction and \
-                datetime.now() - self._last_interaction > \
-                self.bot.config.SESSION_EXPIRE_TIMEOUT:
-            return False
-        return True
 
     def get(self, key: Any, *,
             prompt: Optional[Message_T] = None) -> Any:
