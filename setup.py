@@ -5,7 +5,7 @@ with open('README.md', 'r', encoding='utf-8') as f:
 
 setup(
     name='none-bot',
-    version='0.4.3',
+    version='0.5.0',
     packages=find_packages(include=('none', 'none.*')),
     url='https://github.com/richardchien/none-bot',
     license='MIT License',
@@ -21,7 +21,7 @@ setup(
     python_requires='>=3.6',
     platforms='any',
     classifiers=(
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Framework :: Robot Framework',
         'Framework :: Robot Framework :: Library',
         'License :: OSI Approved :: MIT License',

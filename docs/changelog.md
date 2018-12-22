@@ -4,7 +4,7 @@ sidebar: auto
 
 # 更新日志
 
-## next
+## v0.5.0
 
 - 修复调用不存在的多级命令（例如 `/echo/nonexist`）时，抛出异常导致 WebSocket 连接断开的问题
 - 调整 Expression 相关接口：移除了所有 `send_expr()` 函数和方法，移除了 `CommandSession.get()` 方法的 `prompt_expr` 参数，移除了 `none.expression` 模块，原 `render()` 函数移动到 `none.helpers` 模块并改名为 `render_expression()`
