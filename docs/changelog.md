@@ -8,6 +8,9 @@ sidebar: auto
 
 - 修复调用不存在的多级命令（例如 `/echo/nonexist`）时，抛出异常导致 WebSocket 连接断开的问题
 - 调整 Expression 相关接口：移除了所有 `send_expr()` 函数和方法，移除了 `CommandSession.get()` 方法的 `prompt_expr` 参数，移除了 `none.expression` 模块，原 `render()` 函数移动到 `none.helpers` 模块并改名为 `render_expression()`
+- 修改 `none.argparse.ArgumentParser` 类的构造方法和 `parse_args()` 方法：构造方法新增 `session` 参数，可传入 `CommandSession` 对象；`parse_args()` 方法可直接用于解析参数，用户输入的参数错误，会发送错误提示或使用帮助
+- `on_command` 装饰器新增 `shell_like` 参数，设为 `True`（默认 `False`）将自动以类 shell 语法分割命令参数 `current_arg`（不再需要自行编写 args parser），并将分割后的参数列表放入 `session.args['argv']`
+- `CommandSession` 类新增 `argv` 只读属性，用于获取 `session.args['argv']`，如不存在，则返回空列表
 
 ## v0.4.3
 

@@ -983,7 +983,7 @@ sidebar: auto
 
 ## `none.command` 模块
 
-### _decorator_ `on_command(name, *, aliases=(), permission=perm.EVERYBODY, only_to_me=True, privileged=False)`
+### _decorator_ `on_command(name, *, aliases=(), permission=perm.EVERYBODY, only_to_me=True, privileged=False, shell_like=False )`
 
 - **说明:**
 
@@ -998,6 +998,7 @@ sidebar: auto
   - `permission: int`: 命令所需要的权限，不满足权限的用户将无法触发该命令
   - `only_to_me: bool`: 是否只响应确定是在和「我」（机器人）说话的命令
   - `privileged: bool`: 是否特权命令，若是，则无论当前是否有命令会话正在运行，都会运行该命令，但运行不会覆盖已有会话，也不会保留新创建的会话
+  - `shell_like: bool`: 是否使用类 shell 语法，若是，则会自动使用 `shlex` 模块进行分割（无需手动编写参数解析器），分割后的参数列表放入 `session.args['argv']`
 
 - **要求:**
 
@@ -1023,6 +1024,8 @@ sidebar: auto
 - **说明:**
 
   将函数装饰为命令参数解析器。
+
+  如果已经在 `on_command` 装饰器中使用了 `shell_like=True`，则无需手动使用编写参数解析器。
 
 - **要求:**
 
@@ -1077,7 +1080,15 @@ sidebar: auto
 
   命令组内命令的默认 `privileged` 属性。
 
-#### `__init__(name, permission=None, *, only_to_me=None, privileged=None)`
+#### `shell_like`
+
+- **类型:** `Optional[bool]`
+
+- **说明:**
+
+  命令组内命令的默认 `shell_like` 属性。
+
+#### `__init__(name, permission=None, *, only_to_me=None, privileged=None, shell_like=None)`
 
 - **说明:**
 
@@ -1089,8 +1100,9 @@ sidebar: auto
   - `permission: Optional[int]`: 对应 `permission` 属性
   - `only_to_me: Optional[bool]`: 对应 `only_to_me` 属性
   - `privileged: Optional[bool]`: 对应 `privileged` 属性
+  - `shell_like: Optional[bool]`: 对应 `shell_like` 属性
 
-#### _decorator_ `command(name, *, aliases=None, permission=None, only_to_me=None, privileged=None)`
+#### _decorator_ `command(name, *, aliases=None, permission=None, only_to_me=None, privileged=None, shell_like=None)`
 
 - **说明:**
 
@@ -1103,6 +1115,7 @@ sidebar: auto
   - `permission: Optional[int]`: 同上
   - `only_to_me: Optional[bool]`: 同上
   - `privileged: Optional[bool]`: 同上
+  - `shell_like: Optional[bool]`: 同上
 
 - **用法:**
 
@@ -1160,13 +1173,29 @@ sidebar: auto
 
   命令会话已获得的所有参数。
 
-#### _property_ `is_first_run`
+#### _readonly property_ `is_first_run`
 
 - **类型:** `bool`
 
 - **说明:**
 
   命令会话是否第一次运行。
+
+#### _readonly property_ `argv`
+
+- **类型:** `List[str]`
+
+- **说明:**
+
+  命令参数列表，本质上是 `session.get_optional('argv', [])`，通常搭配 `on_command(..., shell_like=True)` 使用。
+
+- **用法:**
+
+  ```python
+  @on_command('some_cmd', shell_like=True)
+  async def _(session: CommandSession):
+      argv = session.argv
+  ```
 
 #### `get(key, *, prompt=None)`
 
@@ -1774,52 +1803,66 @@ async def _(session):
 
 ### _class_ `ArgumentParser`
 
-继承自 `argparse.ArgumentParser` 类，修改部分函数实现使其不再打印文本到标准输出、并且不再在参数错误时直接退出程序。
+继承自 `argparse.ArgumentParser` 类，修改部分函数实现使其适用于命令型聊天机器人。
 
-此类可用于命令参数的解析。基本用法和 Python 内置的 `argparse.ArgumentParser` 类一致，区别是当它需要导致程序退出时，行为改变为抛出 `none.argparse.ParserExit` 异常。
+此类可用于命令参数的解析。基本用法和 Python 内置的 `argparse.ArgumentParser` 类一致，下面主要列出与 Python 原生含义和行为不同的属性和方法。
 
 - **用法:**
 
   ```python
-  parser = ArgumentParser()
-  parser.add_argument('-S', '--second')
-  parser.add_argument('-M', '--minute')
-  parser.add_argument('-H', '--hour')
-  parser.add_argument('-d', '--day')
-  parser.add_argument('-m', '--month')
-  parser.add_argument('-w', '--day-of-week')
-  parser.add_argument('-f', '--force', action='store_true', default=False)
-  parser.add_argument('-v', '--verbose', action='store_true', default=False)
-  parser.add_argument('--name', required=True)
-  parser.add_argument('commands', nargs='+')
+  USAGE = r"""
+  创建计划任务
 
-  argv = ['-S', '*/10', '-v', '--force', '--name', 'test', 'echo wow']
+  使用方法：
+  XXXXXX
+  """.strip()
 
-  try:
-      return parser.parse_args(argv)
-  except ParserExit as e:
-      if e.status == 0:
-          # --help
-          await session.send(help_msg)
-      else:
-          await session.send('参数不足或不正确，请使用 --help 参数查询使用帮助')
+  @on_command('schedule', shell_like=True)
+  async def _(session: CommandSession):
+      parser = ArgumentParser(session=session, usage=USAGE)
+      parser.add_argument('-S', '--second')
+      parser.add_argument('-M', '--minute')
+      parser.add_argument('-H', '--hour')
+      parser.add_argument('-d', '--day')
+      parser.add_argument('-m', '--month')
+      parser.add_argument('-w', '--day-of-week')
+      parser.add_argument('-f', '--force', action='store_true', default=False)
+      parser.add_argument('-v', '--verbose', action='store_true', default=False)
+      parser.add_argument('--name', required=True)
+      parser.add_argument('commands', nargs='+')
+
+      args = parser.parse_args(session.argv)
+      name = args.name
+      # ...
   ```
 
-### _class_ `ParserExit`
-
-继承自 `RuntimeError` 类，在 `ArgumentParser` 解析出错时抛出。
-
-#### `status`
+#### `__init__(session=None, usage=None, **kwargs)`
 
 - **说明:**
 
-  `argparse.ArgumentParser` 类的 `exit()` 方法的 `status` 参数。
+  初始化 `ArgumentParser` 对象。
 
-#### `message`
+- **参数:**
+
+  - `session: CommandSession`: 当前需要解析参数的命令会话，用于解析失败或遇到 `--help` 时发送提示消息
+  - `usage: str`: 命令的使用帮助，在参数为空或遇到 `--help` 时发送
+  - `**kwargs: Any`: 和 Python `argparse.ArgumentParser` 类一致
+
+#### `parse_args(args=None, namespace=None)`
 
 - **说明:**
 
-  `argparse.ArgumentParser` 类的 `exit()` 方法的 `message` 参数。
+  解析参数。
+
+  Python 原生的「打印到控制台」行为变为「发送消息到用户」，「退出程序」变为「结束当前命令会话」。
+
+- **参数:**
+
+  和 Python `argparse.ArgumentParser` 类一致。
+
+- **异常:**
+
+  无。
 
 ## `none.sched` 模块
 
