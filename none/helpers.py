@@ -1,7 +1,10 @@
 import hashlib
+import random
+from typing import Sequence, Callable
 
-from . import NoneBot, expression
+from . import NoneBot
 from .exceptions import CQHttpError
+from .message import escape
 from .typing import Context_T, Message_T, Expression_T
 
 
@@ -62,7 +65,22 @@ async def send(bot: NoneBot, ctx: Context_T, message: Message_T, *,
             raise
 
 
-async def send_expr(bot: NoneBot, ctx: Context_T,
-                    expr: Expression_T, **kwargs):
-    """Sending a expression message ignoring failure by default."""
-    return await send(bot, ctx, expression.render(expr, **kwargs))
+def render_expression(expr: Expression_T, *,
+                      escape_args: bool = True, **kwargs) -> str:
+    """
+    Render an expression to message string.
+
+    :param expr: expression to render
+    :param escape_args: should escape arguments or not
+    :param kwargs: keyword arguments used in str.format()
+    :return: the rendered message
+    """
+    if isinstance(expr, Callable):
+        expr = expr(**kwargs)
+    elif isinstance(expr, Sequence) and not isinstance(expr, str):
+        expr = random.choice(expr)
+    if escape_args:
+        for k, v in kwargs.items():
+            if isinstance(v, str):
+                kwargs[k] = escape(v)
+    return expr.format(**kwargs)

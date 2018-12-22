@@ -1,6 +1,6 @@
 from . import NoneBot
-from .helpers import send, send_expr
-from .typing import Context_T, Message_T, Expression_T
+from .helpers import send
+from .typing import Context_T, Message_T
 
 
 class BaseSession:
@@ -15,7 +15,3 @@ class BaseSession:
         """Send a message ignoring failure by default."""
         return await send(self.bot, self.ctx, message,
                           ignore_failure=ignore_failure)
-
-    async def send_expr(self, expr: Expression_T, **kwargs):
-        """Sending a expression message ignoring failure by default."""
-        return await send_expr(self.bot, self.ctx, expr, **kwargs)

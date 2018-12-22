@@ -6,13 +6,12 @@ from typing import (
 )
 
 from . import NoneBot, permission as perm
-from .expression import render
-from .helpers import context_id, send_expr
+from .helpers import context_id, send, render_expression
 from .log import logger
 from .message import Message
 from .session import BaseSession
 from .typing import (
-    Context_T, CommandName_T, CommandArgs_T, Expression_T, Message_T
+    Context_T, CommandName_T, CommandArgs_T, Message_T
 )
 
 # Key: str (one segment of command name)
@@ -267,8 +266,7 @@ class CommandSession(BaseSession):
         return True
 
     def get(self, key: Any, *,
-            prompt: Optional[Message_T] = None,
-            prompt_expr: Optional[Expression_T] = None) -> Any:
+            prompt: Optional[Message_T] = None) -> Any:
         """
         Get an argument with a given key.
 
@@ -279,7 +277,6 @@ class CommandSession(BaseSession):
 
         :param key: argument key
         :param prompt: prompt to ask the user
-        :param prompt_expr: prompt expression to ask the user
         :return: the argument value
         """
         value = self.get_optional(key)
@@ -288,8 +285,6 @@ class CommandSession(BaseSession):
 
         self.current_key = key
         # ask the user for more information
-        if prompt_expr is not None:
-            prompt = render(prompt_expr, key=key)
         self.pause(prompt)
 
     def get_optional(self, key: Any,
@@ -436,8 +431,10 @@ async def handle_command(bot: NoneBot, ctx: Context_T) -> bool:
         if session.running:
             logger.warning(f'There is a session of command '
                            f'{session.cmd.name} running, notify the user')
-            asyncio.ensure_future(
-                send_expr(bot, ctx, bot.config.SESSION_RUNNING_EXPRESSION))
+            asyncio.ensure_future(send(
+                bot, ctx,
+                render_expression(bot.config.SESSION_RUNNING_EXPRESSION)
+            ))
             # pretend we are successful, so that NLP won't handle it
             return True
 

@@ -17,7 +17,7 @@ For example:
 from datetime import timedelta
 from typing import Container, Union, Iterable, Pattern, Optional, Dict, Any
 
-from .expression import Expression_T
+from .typing import Expression_T
 
 API_ROOT: str = ''
 ACCESS_TOKEN: str = ''
