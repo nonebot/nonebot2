@@ -26,17 +26,18 @@ async def handle_message(bot: NoneBot, ctx: Context_T) -> None:
     if coros:
         await asyncio.wait(coros)
 
-    if ctx['message_type'] != 'private':
-        # group or discuss
-        ctx['to_me'] = False
-        first_message_seg = ctx['message'][0]
-        if first_message_seg == MessageSegment.at(ctx['self_id']):
+    if 'to_me' not in ctx:
+        if ctx['message_type'] != 'private':
+            # group or discuss
+            ctx['to_me'] = False
+            first_message_seg = ctx['message'][0]
+            if first_message_seg == MessageSegment.at(ctx['self_id']):
+                ctx['to_me'] = True
+                del ctx['message'][0]
+            if not ctx['message']:
+                ctx['message'].append(MessageSegment.text(''))
+        else:
             ctx['to_me'] = True
-            del ctx['message'][0]
-        if not ctx['message']:
-            ctx['message'].append(MessageSegment.text(''))
-    else:
-        ctx['to_me'] = True
 
     while True:
         try:
