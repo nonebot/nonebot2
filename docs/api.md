@@ -1168,7 +1168,7 @@ sidebar: auto
 
   命令会话是否第一次运行。
 
-#### `get(key, *, prompt=None, prompt_expr=None)`
+#### `get(key, *, prompt=None)`
 
 - **说明:**
 
@@ -1180,7 +1180,6 @@ sidebar: auto
 
   - `key: Any`: 参数的键
   - `prompt: Optional[Message_T]`: 提示的消息内容
-  - `prompt_expr: Optional[Expression_T]`: 提示的 Expression 内容，这个和 `prompt` 两者选其一，如果都不传，则不发送提示消息
 
 - **返回:**
 
@@ -1623,63 +1622,6 @@ sidebar: auto
 
   在当前 Session 对应的上下文中发送 `hello`。
 
-#### _coroutine_ `send_expr(expr, **kwargs)`
-
-- **说明:**
-
-  渲染 Expression，并发送生成的消息到 Session 对应的上下文中。
-
-- **参数:**
-
-  - `expr: Expression_T`: 要发送的 Expression
-  - `**kwargs: Any`: 传入 `none.expression.render()` 的命名参数
-
-- **返回:**
-
-  - `None`
-
-- **异常:**
-
-  - `CQHttpError`: 发送失败时抛出，实际由 [aiocqhttp] 抛出，等价于 `aiocqhttp.Error`
-
-- **用法:**
-
-  ```python
-  await session.send_expr(
-      expr=['你好，{username}！',
-            '欢迎回来，{username}～'],
-      username=username
-  )
-  ```
-
-## `none.expression` 模块
-
-### `render(expr, *, escape_args=True, **kwargs)`
-
-- **说明:**
-
-  渲染 Expression。
-
-- **参数:**
-
-  - `expr: Expression_T`: 要渲染的 Expression
-  - `escape_args: bool`: 是否对渲染参数进行转义
-  - `**kwargs: Any`: 渲染参数，用于 `str.format()` 或 Expression 函数调用传参
-
-- **返回:**
-
-  - `str`: 渲染出的消息字符串
-
-- **用法:**
-
-  ```python
-  msg = render(
-      expr=['你好，{username}！',
-            '欢迎回来，{username}～'],
-      username=username
-  )
-  ```
-
 ## `none.permission` 模块
 
 ### 权限声明常量
@@ -1803,34 +1745,27 @@ async def _(session):
   await send(bot, ctx, 'hello')
   ```
 
-### _coroutine_ `send_expr(bot, ctx, expr, **kwargs)`
+### `render_expression(expr, *, escape_args=True, **kwargs)`
 
 - **说明:**
 
-  渲染 Expression，并发送生成的消息到指定事件上下文中。
+  渲染 Expression。
 
 - **参数:**
 
-  - `bot: NoneBot`: NoneBot 对象
-  - `ctx: Context_T`: 事件上下文对象
-  - `expr: Expression_T`: 要发送的 Expression
-  - `**kwargs: Any`: 传入 `none.expression.render()` 的命名参数
+  - `expr: Expression_T`: 要渲染的 Expression
+  - `escape_args: bool`: 是否对渲染参数进行转义
+  - `**kwargs: Any`: 渲染参数，用于 `str.format()` 或 Expression 函数调用传参
 
 - **返回:**
 
-  - `None`
-
-- **异常:**
-
-  - `CQHttpError`: 发送失败时抛出，实际由 [aiocqhttp] 抛出，等价于 `aiocqhttp.Error`
+  - `str`: 渲染出的消息字符串
 
 - **用法:**
 
   ```python
-  await send_expr(
-      bot, ctx,
-      expr=['你好，{username}！',
-            '欢迎回来，{username}～'],
+  msg = render_expression(
+      ['你好，{username}！', '欢迎，{username}～'],
       username=username
   )
   ```
