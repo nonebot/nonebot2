@@ -28,7 +28,7 @@ import aiohttp
 from aiocqhttp.message import escape
 from none import on_command, CommandSession
 from none import on_natural_language, NLPSession, NLPResult
-from none.helpers import context_id
+from none.helpers import context_id, render_expression
 
 # 定义无法获取图灵回复时的「表达（Expression）」
 EXPR_DONT_UNDERSTAND = (
@@ -53,9 +53,8 @@ async def tuling(session: CommandSession):
         await session.send(escape(reply))
     else:
         # 如果调用失败，或者它返回的内容我们目前处理不了，发送无法获取图灵回复时的「表达」
-        # session.send_expr() 内部会调用 none.expression.render()
-        # 该函数会将一个「表达」渲染成一个字符串消息
-        await session.send_expr(EXPR_DONT_UNDERSTAND)
+        # 这里的 render_expression() 函数会将一个「表达」渲染成一个字符串消息
+        await session.send(render_expression(EXPR_DONT_UNDERSTAND))
 
 
 @on_natural_language
@@ -223,7 +222,7 @@ async def tuling(session: CommandSession):
     if reply:
         await session.send(escape(reply))
     else:
-        await session.send_expr(EXPR_DONT_UNDERSTAND)
+        await session.send(render_expression(EXPR_DONT_UNDERSTAND))
 ```
 
 ### 可选参数
@@ -240,8 +239,8 @@ CQ 码是酷 Q 用来表示非文本消息的一种表示方法，形如 `[CQ:im
 
 第 18 行使用了 NoneBot 中 Expression 这个概念，或称为「表达」。
 
-Expression 可以是一个 `str`、元素类型是 `str` 的序列（一般为 `list` 或 `tuple`）或返回类型为 `str` 的 `Callable`。`session.send_expr()` 内部会调用 `none.expression.render()` 函数来将 Expression 渲染成字符串。
+Expression 可以是一个 `str`、元素类型是 `str` 的序列（一般为 `list` 或 `tuple`）或返回类型为 `str` 的 `Callable`。
 
-`render()` 首先判断 Expression 的类型，如果 Expression 是一个序列，则首先随机取其中的一个元素，如果是一个 `Callable`，则调用函数获取返回值。拿到最终的 `str` 类型的 Expression 之后，对它调用 `str.format()` 方法，格式化参数传入 `render()` 函数的命名参数（`**kwargs`），也即 `session.send_expr()` 的命名参数，最后返回格式化后的结果。特别地，如果 Expression 是个 `Callable`，在调用它获取返回值的时候，也会传入 `**kwargs`，以便函数根据参数来构造字符串。
+`render_expression()` 函数用于将 Expression 渲染成字符串。它首先判断 Expression 的类型，如果 Expression 是一个序列，则首先随机取其中的一个元素，如果是一个 `Callable`，则调用函数获取返回值。拿到最终的 `str` 类型的 Expression 之后，对它调用 `str.format()` 方法，格式化参数传入 `render_expression()` 函数的命名参数（`**kwargs`），最后返回格式化后的结果。特别地，如果 Expression 是个 `Callable`，在调用它获取返回值的时候，也会传入 `**kwargs`，以便函数根据参数来构造字符串。
 
 你可以通过使用序列或 `Callable` 类型的 Expression 来让机器人的回复显得更加自然，甚至，可以利用更高级的人工智能技术来生成对话。

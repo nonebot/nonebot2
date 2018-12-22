@@ -5,7 +5,7 @@ import aiohttp
 from aiocqhttp.message import escape
 from none import on_command, CommandSession
 from none import on_natural_language, NLPSession, NLPResult
-from none.helpers import context_id
+from none.helpers import context_id, render_expression
 
 # 定义无法获取图灵回复时的「表达（Expression）」
 EXPR_DONT_UNDERSTAND = (
@@ -30,9 +30,8 @@ async def tuling(session: CommandSession):
         await session.send(escape(reply))
     else:
         # 如果调用失败，或者它返回的内容我们目前处理不了，发送无法获取图灵回复时的「表达」
-        # session.send_expr() 内部会调用 none.expression.render()
-        # 该函数会将一个「表达」渲染成一个字符串消息
-        await session.send_expr(EXPR_DONT_UNDERSTAND)
+        # 这里的 render_expression() 函数会将一个「表达」渲染成一个字符串消息
+        await session.send(render_expression(EXPR_DONT_UNDERSTAND))
 
 
 @on_natural_language
