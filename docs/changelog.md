@@ -6,7 +6,7 @@ sidebar: auto
 
 ## v0.5.1
 
-- 给所有发送消息的函数和方法（`BaseSession.send()`、`CommandSession.pause()`、`CommandSession.finish()` 等）新增了 `**kwargs`，并将此参数继续传递给 python-aiocqhttp 的 `CQHttp.send()` 方法，从而支持 `at_sender` 参数（默认 `False`）
+- 给所有发送消息的函数和方法（`BaseSession.send()`、`CommandSession.pause()`、`CommandSession.finish()` 等）新增了 `**kwargs`，并将此参数继续传递给 python-aiocqhttp 的 `CQHttp.send()` 方法，从而支持 `at_sender` 参数（默认 `False`），**注意，此功能需要安装 `aiocqhttp>=0.6.7`**
 - `BaseSession.send()` 方法新增 `ensure_private` 参数，类型 `bool`，默认 `False`，可用于确保发送消息到私聊（对于群消息，会私聊发送给发送人）
 
 ## v0.5.0
