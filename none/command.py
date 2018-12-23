@@ -307,7 +307,7 @@ class CommandSession(BaseSession):
                                    if s.type == 'image' and 'url' in s.data]
 
     def get(self, key: Any, *,
-            prompt: Optional[Message_T] = None) -> Any:
+            prompt: Optional[Message_T] = None, **kwargs) -> Any:
         """
         Get an argument with a given key.
 
@@ -326,23 +326,23 @@ class CommandSession(BaseSession):
 
         self.current_key = key
         # ask the user for more information
-        self.pause(prompt)
+        self.pause(prompt, **kwargs)
 
     def get_optional(self, key: Any,
                      default: Optional[Any] = None) -> Optional[Any]:
         """Simply get a argument with given key."""
         return self.args.get(key, default)
 
-    def pause(self, message: Optional[Message_T] = None) -> None:
+    def pause(self, message: Optional[Message_T] = None, **kwargs) -> None:
         """Pause the session for further interaction."""
         if message:
-            asyncio.ensure_future(self.send(message))
+            asyncio.ensure_future(self.send(message, **kwargs))
         raise _FurtherInteractionNeeded
 
-    def finish(self, message: Optional[Message_T] = None) -> None:
+    def finish(self, message: Optional[Message_T] = None, **kwargs) -> None:
         """Finish the session."""
         if message:
-            asyncio.ensure_future(self.send(message))
+            asyncio.ensure_future(self.send(message, **kwargs))
         raise _FinishException
 
     def switch(self, new_ctx_message: Message_T) -> None:

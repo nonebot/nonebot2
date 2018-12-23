@@ -44,22 +44,17 @@ def context_id(ctx: Context_T, *,
     return ctx_id
 
 
-async def send(bot: NoneBot, ctx: Context_T, message: Message_T, *,
-               ignore_failure: bool = True) -> None:
+async def send(bot: NoneBot, ctx: Context_T,
+               message: Message_T, *,
+               ensure_private: bool = False,
+               ignore_failure: bool = True,
+               **kwargs) -> None:
     """Send a message ignoring failure by default."""
     try:
-        if ctx.get('post_type') == 'message':
-            await bot.send(ctx, message)
-        else:
+        if ensure_private:
             ctx = ctx.copy()
-            if 'message' in ctx:
-                del ctx['message']
-            if 'group_id' in ctx:
-                await bot.send_group_msg(**ctx, message=message)
-            elif 'discuss_id' in ctx:
-                await bot.send_discuss_msg(**ctx, message=message)
-            elif 'user_id' in ctx:
-                await bot.send_private_msg(**ctx, message=message)
+            ctx['message_type'] = 'private'
+        await bot.send(ctx, message, **kwargs)
     except CQHttpError:
         if not ignore_failure:
             raise

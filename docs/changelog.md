@@ -4,6 +4,11 @@ sidebar: auto
 
 # 更新日志
 
+## next
+
+- 给所有发送消息的函数和方法（`BaseSession.send()`、`CommandSession.pause()`、`CommandSession.finish()` 等）新增了 `**kwargs`，并将此参数继续传递给 python-aiocqhttp 的 `CQHttp.send()` 方法，从而支持 `at_sender` 参数（默认 `False`）
+- `BaseSession.send()` 方法新增 `ensure_private` 参数，类型 `bool`，默认 `False`，可用于确保发送消息到私聊（对于群消息，会私聊发送给发送人）
+
 ## v0.5.0
 
 - 修复调用不存在的多级命令（例如 `/echo/nonexist`）时，抛出异常导致 WebSocket 连接断开的问题
