@@ -1197,7 +1197,7 @@ sidebar: auto
       argv = session.argv
   ```
 
-#### `get(key, *, prompt=None)`
+#### `get(key, *, prompt=None, **kwargs)`
 
 - **说明:**
 
@@ -1209,6 +1209,7 @@ sidebar: auto
 
   - `key: Any`: 参数的键
   - `prompt: Optional[Message_T]`: 提示的消息内容
+  - `**kwargs: Any`: 其它传入 `BaseSession.send()` 的命名参数
 
 - **返回:**
 
@@ -1245,7 +1246,7 @@ sidebar: auto
 
   获取可选的时间参数。
 
-#### `pause(message=None)`
+#### `pause(message=None, **kwargs)`
 
 - **说明:**
 
@@ -1254,6 +1255,7 @@ sidebar: auto
 - **参数:**
 
   - `message: Optional[Message_T]`: 要发送的消息，若不传入则不发送
+  - `**kwargs: Any`: 其它传入 `BaseSession.send()` 的命名参数
 
 - **用法:**
 
@@ -1263,7 +1265,7 @@ sidebar: auto
 
   需要连续接收用户输入，并且过程中不需要改变 `current_key` 时，使用此函数暂停会话。
 
-#### `finish(message=None)`
+#### `finish(message=None, **kwargs)`
 
 - **说明:**
 
@@ -1274,6 +1276,7 @@ sidebar: auto
 - **参数:**
 
   - `message: Optional[Message_T]`: 要发送的消息，若不传入则不发送
+  - `**kwargs: Any`: 其它传入 `BaseSession.send()` 的命名参数
 
 - **用法:**
 
@@ -1625,7 +1628,7 @@ sidebar: auto
 
   获取当前事件上下文的 `user_id` 字段。
 
-#### _coroutine_ `send(message, *, ignore_failure=True)`
+#### _coroutine_ `send(message, *, at_sender=False, ensure_private=False, ignore_failure=True, **kwargs)`
 
 - **说明:**
 
@@ -1633,7 +1636,10 @@ sidebar: auto
 
 - **参数:**
   - `message: Message_T`: 要发送的消息内容
+  - `at_sender: bool`: 是否 @ 发送者，对私聊不起作用
+  - `ensure_private: bool`: 确保消息发送到私聊，对于群组和讨论组消息上下文，会私聊发送者
   - `ignore_failure: bool`: 发送失败时忽略 `CQHttpError` 异常
+  - `**kwargs: Any`: 其它传入 `CQHttp.send()` 的命名参数
 
 - **返回:**
 
@@ -1747,7 +1753,7 @@ async def _(session):
 
   获取当前 Session 的事件上下文对应的唯一 ID，并进行 MD5 哈希，得到的结果可用于图灵机器人等 API 的调用。
 
-### _coroutine_ `send(bot, ctx, message, *, ignore_failure=True)`
+### _coroutine_ `send(bot, ctx, message, *, ensure_private=False, ignore_failure=True, **kwargs)`
 
 - **说明:**
 
@@ -1758,7 +1764,9 @@ async def _(session):
   - `bot: NoneBot`: NoneBot 对象
   - `ctx: Context_T`: 事件上下文对象
   - `message: Message_T`: 要发送的消息内容
+  - `ensure_private: bool`: 确保消息发送到私聊，对于群组和讨论组消息上下文，会私聊发送者
   - `ignore_failure: bool`: 发送失败时忽略 `CQHttpError` 异常
+  - `**kwargs: Any`: 其它传入 `CQHttp.send()` 的命名参数
 
 - **返回:**
 
