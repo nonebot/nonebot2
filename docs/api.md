@@ -1618,7 +1618,7 @@ sidebar: auto
 
 - **说明:**
 
-  酷 Q HTTP API 上报的事件数据对象，或称事件上下文。
+  酷 Q HTTP API 上报的事件数据对象，或称事件上下文，具体请参考 [事件上报](https://cqhttp.cc/docs/#/Post)。
 
 - **用法:**
 
