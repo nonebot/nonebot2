@@ -4,6 +4,10 @@ sidebar: auto
 
 # 更新日志
 
+## next
+
+- 修复自然语言处理器匹配机器人昵称时的 bug
+
 ## v0.5.1
 
 - 给所有发送消息的函数和方法（`BaseSession.send()`、`CommandSession.pause()`、`CommandSession.finish()` 等）新增了 `**kwargs`，并将此参数继续传递给 python-aiocqhttp 的 `CQHttp.send()` 方法，从而支持 `at_sender` 参数（默认 `False`），**注意，此功能需要安装 `aiocqhttp>=0.6.7`**
