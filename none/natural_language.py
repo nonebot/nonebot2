@@ -109,7 +109,7 @@ async def handle_natural_language(bot: NoneBot, ctx: Context_T) -> bool:
     # at the same time some plugins may want to handle it
     msg_text_length = len(session.msg_text)
 
-    coros = []
+    futures = []
     for p in _nl_processors:
         if not p.allow_empty_message and not session.msg:
             # don't allow empty msg, but it is one, so skip to next
@@ -132,11 +132,19 @@ async def handle_natural_language(bot: NoneBot, ctx: Context_T) -> bool:
                 should_run = False
 
         if should_run:
-            coros.append(p.func(session))
+            futures.append(asyncio.ensure_future(p.func(session)))
 
-    if coros:
+    if futures:
         # wait for possible results, and sort them by confidence
-        results = sorted(filter(lambda r: r, await asyncio.gather(*coros)),
+        results = []
+        for fut in futures:
+            try:
+                results.append(await fut)
+            except Exception as e:
+                logger.error('An exception occurred while running '
+                             'some natural language processor:')
+                logger.exception(e)
+        results = sorted(filter(lambda r: r, results),
                          key=lambda r: r.confidence, reverse=True)
         logger.debug(f'NLP results: {results}')
         if results and results[0].confidence >= 60.0:

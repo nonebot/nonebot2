@@ -94,7 +94,11 @@ async def handle_notice_or_request(bot: NoneBot, ctx: Context_T) -> None:
         session = RequestSession(bot, ctx)
 
     logger.debug(f'Emitting event: {event}')
-    await _bus.emit(event, session)
+    try:
+        await _bus.emit(event, session)
+    except Exception as e:
+        logger.error(f'An exception occurred while handling event {event}:')
+        logger.exception(e)
 
 
 def _log_notice(ctx: Context_T) -> None:

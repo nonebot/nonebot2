@@ -400,7 +400,7 @@ def parse_command(bot: NoneBot,
         return None, None
 
     logger.debug(f'Matched command start: '
-                 f'{matched_start}{"(space)" if not matched_start else ""}')
+                 f'{matched_start}{"(empty)" if not matched_start else ""}')
     full_command = cmd_string[len(matched_start):].lstrip()
 
     if not full_command:
@@ -565,6 +565,8 @@ async def _real_run_command(session: CommandSession,
                 SwitchException) as e:
             raise e
         except Exception as e:
+            logger.error(f'An exception occurred while '
+                         f'running command {session.cmd.name}:')
             logger.exception(e)
             handled = True
         raise _FinishException(handled)
