@@ -200,7 +200,8 @@ def _find_command(name: Union[str, CommandName_T]) -> Optional[Command]:
             return None
         cmd_tree = cmd_tree[part]
 
-    return cmd_tree.get(cmd_name[-1])
+    cmd = cmd_tree.get(cmd_name[-1])
+    return cmd if isinstance(cmd, Command) else None
 
 
 class _FurtherInteractionNeeded(Exception):
