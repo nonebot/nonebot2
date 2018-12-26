@@ -107,14 +107,34 @@ def run(host: Optional[str] = None, port: Optional[int] = None,
 _plugins = set()
 
 
-def load_plugins(plugin_dir: str, module_prefix: str) -> None:
+def load_plugin(module_name: str) -> bool:
+    """
+    Load a module as a plugin.
+
+    :param module_name: name of module to import
+    :return: successful or not
+    """
+    # TODO: 更新文档
+    try:
+        _plugins.add(importlib.import_module(module_name))
+        logger.info(f'Succeeded to import "{module_name}"')
+        return True
+    except Exception as e:
+        logger.error(f'Failed to import "{module_name}", error: {e}')
+        logger.exception(e)
+        return False
+
+
+def load_plugins(plugin_dir: str, module_prefix: str) -> int:
     """
     Find all non-hidden modules or packages in a given directory,
     and import them with the given module prefix.
 
     :param plugin_dir: plugin directory to search
     :param module_prefix: module prefix used while importing
+    :return: number of plugins successfully loaded
     """
+    count = 0
     for name in os.listdir(plugin_dir):
         path = os.path.join(plugin_dir, name)
         if os.path.isfile(path) and \
@@ -129,21 +149,17 @@ def load_plugins(plugin_dir: str, module_prefix: str) -> None:
         if not m:
             continue
 
-        mod_name = f'{module_prefix}.{m.group(1)}'
-        try:
-            _plugins.add(importlib.import_module(mod_name))
-            logger.info(f'Succeeded to import "{mod_name}"')
-        except Exception as e:
-            logger.error(f'Failed to import "{mod_name}", error: {e}')
-            logger.exception(e)
+        if load_plugin(f'{module_prefix}.{m.group(1)}'):
+            count += 1
+    return count
 
 
-def load_builtin_plugins() -> None:
+def load_builtin_plugins() -> int:
     """
     Load built-in plugins distributed along with "none" package.
     """
     plugin_dir = os.path.join(os.path.dirname(__file__), 'plugins')
-    load_plugins(plugin_dir, 'none.plugins')
+    return load_plugins(plugin_dir, 'none.plugins')
 
 
 from .exceptions import *
