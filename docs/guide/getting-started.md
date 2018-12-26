@@ -64,7 +64,11 @@ python bot.py
 这表示 CoolQ HTTP API 插件已经成功地连接上了 NoneBot，与此同时，插件的日志文件中也会输出反向 WebSocket 连接成功的日志。
 
 ::: warning 注意
-如果到这一步你没有看到上面这样的日志，请注意检查配置中的 IP 和端口是否确实可以访问。
+如果到这一步你没有看到上面这样的日志，而是出现了 `ASGI Framework Lifespan error, continuing without Lifespan support`，请查看插件的日志文件中是否在不断尝试重连（可通过将插件的 `show_log_console` 配置项设置为 `true` 来显示日志控制台，方便调试），如果没有在不断重连，也说明连接成功.
+
+除此之外，也可以直接向机器人随便发送一些消息，观察 NoneBot 运行日志中是否有输出，如果有，说明连接成功。
+
+如果 NoneBot 运行日志中没有任何访问日志，插件的日志中也在不断重连，请注意检查配置中的 IP 和端口是否确实可以访问。
 :::
 
 现在，尝试向你的 QQ 机器人账号发送如下内容：
