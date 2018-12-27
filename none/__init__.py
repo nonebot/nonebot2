@@ -114,7 +114,6 @@ def load_plugin(module_name: str) -> bool:
     :param module_name: name of module to import
     :return: successful or not
     """
-    # TODO: 更新文档
     try:
         _plugins.add(importlib.import_module(module_name))
         logger.info(f'Succeeded to import "{module_name}"')
