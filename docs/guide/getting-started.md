@@ -22,7 +22,7 @@ if __name__ == '__main__':
 3. 在地址 `127.0.0.1:8080` 运行 NoneBot
 
 ::: tip 提示
-这里 `nonebot.run()` 的参数 `host='127.0.0.1'` 表示让 NoneBot 监听本地环回地址，如果你的酷 Q 运行在非本机的其它位置，例如 Docker 容器内、局域网内的另一台机器上等，则这里需要修改 `host` 参数为希望让 CoolQ HTTP API 插件访问的 IP。如果不清楚该使用哪个 IP，或者希望本机的所有 IP 都被监听，可以使用 `0.0.0.0`。
+这里 `nonebot.run()` 的参数 `host='127.0.0.1'` 表示让 NoneBot 监听本地环回地址，如果你的 酷Q 运行在非本机的其它位置，例如 Docker 容器内、局域网内的另一台机器上等，则这里需要修改 `host` 参数为希望让 CoolQ HTTP API 插件访问的 IP。如果不清楚该使用哪个 IP，或者希望本机的所有 IP 都被监听，可以使用 `0.0.0.0`。
 :::
 
 在命令行使用如下命令即可运行这个 NoneBot 实例：
@@ -33,9 +33,9 @@ python bot.py
 
 ## 配置 CoolQ HTTP API 插件
 
-单纯运行 NoneBot 实例并不会产生任何效果，因为此刻酷 Q 这边还不知道 NoneBot 的存在，也就无法把消息发送给它，因此现在需要对 CoolQ HTTP API 插件做一个简单的配置来让它把消息等事件上报给 NoneBot。
+单纯运行 NoneBot 实例并不会产生任何效果，因为此刻 酷Q 这边还不知道 NoneBot 的存在，也就无法把消息发送给它，因此现在需要对 CoolQ HTTP API 插件做一个简单的配置来让它把消息等事件上报给 NoneBot。
 
-如果你在之前已经按照 [安装](/guide/installation.md) 的建议使用默认配置运行了一次 CoolQ HTTP API 插件，此时酷 Q 的 `data\app\io.github.richardchien.coolqhttpapi\config\` 目录中应该已经有了一个名为 `<user-id>.json` 的文件（`<user-id>` 为你登录的 QQ 账号）。修改这个文件，**添加**如下配置项：
+如果你在之前已经按照 [安装](/guide/installation.md) 的建议使用默认配置运行了一次 CoolQ HTTP API 插件，此时 酷Q 的 `data\app\io.github.richardchien.coolqhttpapi\config\` 目录中应该已经有了一个名为 `<user-id>.json` 的文件（`<user-id>` 为你登录的 QQ 账号）。修改这个文件，**添加**如下配置项：
 
 ```json
 {
@@ -47,10 +47,10 @@ python bot.py
 ```
 
 ::: tip 提示
-这里的 `127.0.0.1:8080` 对应 `nonebot.run()` 中传入的 `host` 和 `port`，如果在 `nonebot.run()` 中传入的 `host` 是 `0.0.0.0`，则插件的配置中需使用任意一个能够访问到 NoneBot 所在环境的 IP。特别地，如果你的酷 Q 运行在 Docker 容器中，NoneBot 运行在宿主机中，则默认情况下这里需使用 `172.17.0.1`（不同机器有可能不同，需使用 `docker inspect bridge` 查看，具体见 Docker 文档的 [Configure networking](https://docs.docker.com/network/)）。
+这里的 `127.0.0.1:8080` 对应 `nonebot.run()` 中传入的 `host` 和 `port`，如果在 `nonebot.run()` 中传入的 `host` 是 `0.0.0.0`，则插件的配置中需使用任意一个能够访问到 NoneBot 所在环境的 IP。特别地，如果你的 酷Q 运行在 Docker 容器中，NoneBot 运行在宿主机中，则默认情况下这里需使用 `172.17.0.1`（不同机器有可能不同，需使用 `docker inspect bridge` 查看，具体见 Docker 文档的 [Configure networking](https://docs.docker.com/network/)）。
 :::
 
-修改之后，在酷 Q 的应用菜单中重启 CoolQ HTTP API 插件，或直接重启酷 Q，以使新的配置文件生效。
+修改之后，在 酷Q 的应用菜单中重启 CoolQ HTTP API 插件，或直接重启 酷Q，以使新的配置文件生效。
 
 ## 历史性的第一次对话
 

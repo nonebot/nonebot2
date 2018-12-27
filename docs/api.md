@@ -18,7 +18,7 @@ sidebar: auto
 
 - **说明:**
 
-  酷 Q HTTP API 上报的事件数据对象的类型。
+  酷Q HTTP API 上报的事件数据对象的类型。
 
 ### `Message_T`
 
@@ -62,7 +62,7 @@ sidebar: auto
 
 - **说明:**
 
-  酷 Q HTTP API 插件的 HTTP 接口地址，如果不使用 HTTP 通信，则无需设置。
+  酷Q HTTP API 插件的 HTTP 接口地址，如果不使用 HTTP 通信，则无需设置。
 
 - **用法:**
 
@@ -70,7 +70,7 @@ sidebar: auto
   API_ROOT = 'http://127.0.0.1:5700'
   ```
 
-  告诉 NoneBot 酷 Q HTTP API 插件的 HTTP 服务运行在 `http://127.0.0.1:5700`。
+  告诉 NoneBot 酷Q HTTP API 插件的 HTTP 服务运行在 `http://127.0.0.1:5700`。
 
 ### `ACCESS_TOKEN`
 
@@ -80,7 +80,7 @@ sidebar: auto
 
 - **说明:**
 
-  需要和酷 Q HTTP API 插件的配置中的 `access_token` 相同。
+  需要和 酷Q HTTP API 插件的配置中的 `access_token` 相同。
 
 ### `SECRET`
 
@@ -90,7 +90,7 @@ sidebar: auto
 
 - **说明:**
 
-  需要和酷 Q HTTP API 插件的配置中的 `secret` 相同。
+  需要和 酷Q HTTP API 插件的配置中的 `secret` 相同。
 
 ### `HOST`
 
@@ -1072,7 +1072,7 @@ sidebar: auto
 
 - **参数:**
 
-  - `reduce: bool`: 是否先化简消息段列表（合并相邻的 `text` 段），对于从酷 Q 收到的消息，通常不需要开启
+  - `reduce: bool`: 是否先化简消息段列表（合并相邻的 `text` 段），对于从 酷Q 收到的消息，通常不需要开启
 
 - **返回:**
 
@@ -1281,7 +1281,7 @@ sidebar: auto
 
 - **说明:**
 
-  命令会话当前参数。实际上是酷 Q 收到的消息去掉命令名的剩下部分，因此可能存在 CQ 码。
+  命令会话当前参数。实际上是 酷Q 收到的消息去掉命令名的剩下部分，因此可能存在 CQ 码。
 
 #### `current_arg_text`
 
@@ -1751,7 +1751,7 @@ sidebar: auto
 
 - **说明:**
 
-  酷 Q HTTP API 上报的事件数据对象，或称事件上下文，具体请参考 [事件上报](https://cqhttp.cc/docs/#/Post)。
+  酷Q HTTP API 上报的事件数据对象，或称事件上下文，具体请参考 [事件上报](https://cqhttp.cc/docs/#/Post)。
 
 - **用法:**
 

@@ -49,7 +49,7 @@ async def tuling(session: CommandSession):
     reply = await call_tuling_api(session, message)
     if reply:
         # 如果调用图灵机器人成功，得到了回复，则转义之后发送给用户
-        # 转义会把消息中的某些特殊字符做转换，以避免酷 Q 将它们理解为 CQ 码
+        # 转义会把消息中的某些特殊字符做转换，以避免 酷Q 将它们理解为 CQ 码
         await session.send(escape(reply))
     else:
         # 如果调用失败，或者它返回的内容我们目前处理不了，发送无法获取图灵回复时的「表达」
@@ -231,9 +231,9 @@ async def tuling(session: CommandSession):
 
 ### 消息转义
 
-再看第 16 行，在调用 `session.send()` 之前先对 `reply` 调用了 `escape()`，这个 `escape()` 函数是 `aiocqhttp.message` 模块提供的，用于将字符串中的某些特殊字符进行转义。具体来说，这些特殊字符是酷 Q 看作是 CQ 码的一部分的那些字符，包括 `&`、`[`、`]`、`,`。
+再看第 16 行，在调用 `session.send()` 之前先对 `reply` 调用了 `escape()`，这个 `escape()` 函数是 `aiocqhttp.message` 模块提供的，用于将字符串中的某些特殊字符进行转义。具体来说，这些特殊字符是 酷Q 看作是 CQ 码的一部分的那些字符，包括 `&`、`[`、`]`、`,`。
 
-CQ 码是酷 Q 用来表示非文本消息的一种表示方法，形如 `[CQ:image,file=ABC.jpg]`。具体的格式规则，请参考酷 Q 文档的 [CQ 码](https://d.cqp.me/Pro/CQ%E7%A0%81) 和 CoolQ HTTP API 插件文档的 [CQ 码](https://cqhttp.cc/docs/#/CQCode)。
+CQ 码是 酷Q 用来表示非文本消息的一种表示方法，形如 `[CQ:image,file=ABC.jpg]`。具体的格式规则，请参考 酷Q 文档的 [CQ 码](https://d.cqp.me/Pro/CQ%E7%A0%81) 和 CoolQ HTTP API 插件文档的 [CQ 码](https://cqhttp.cc/docs/#/CQCode)。
 
 ### 发送 Expression
 

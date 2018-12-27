@@ -1,6 +1,6 @@
 module.exports = {
     title: 'NoneBot',
-    description: '基于酷 Q 的 Python 异步 QQ 机器人框架',
+    description: '基于 酷Q 的 Python 异步 QQ 机器人框架',
     markdown: {
         lineNumbers: true
     },

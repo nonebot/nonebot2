@@ -4,15 +4,15 @@ sidebar: auto
 
 # 术语表
 
-## 酷 Q
+## 酷Q
 
-[酷 Q](https://cqp.cc) 是一个易语言编写的 QQ 机器人平台，其本身没有任何具体的功能，只是负责实现 QQ 协议，并以 DLL 导出函数的形式向插件提供 API 和事件上报。
+[酷Q](https://cqp.cc) 是一个易语言编写的 QQ 机器人平台，其本身没有任何具体的功能，只是负责实现 QQ 协议，并以 DLL 导出函数的形式向插件提供 API 和事件上报。
 
 ## CoolQ HTTP API 插件
 
-[CoolQ HTTP API 插件](https://cqhttp.cc/) 是酷 Q 的一个第三方插件，用于将酷 Q 所提供的所有 DLL 接口转换为 HTTP 或 WebSocket 的 web 形式，从而使利用任意语言编写酷 Q 插件成为可能。
+[CoolQ HTTP API 插件](https://cqhttp.cc/) 是 酷Q 的一个第三方插件，用于将 酷Q 所提供的所有 DLL 接口转换为 HTTP 或 WebSocket 的 web 形式，从而使利用任意语言编写 酷Q 插件成为可能。
 
-有时被称为 cqhttp、CQHTTP、酷 Q HTTP API 等。
+有时被称为 cqhttp、CQHTTP、酷Q HTTP API 等。
 
 ## aiocqhttp
 
@@ -32,7 +32,7 @@ sidebar: auto
 
 ## 通信方式
 
-CoolQ HTTP API 插件中的一个术语，表示其与通过 web 技术编写的酷 Q 插件之间通信的手段。
+CoolQ HTTP API 插件中的一个术语，表示其与通过 web 技术编写的 酷Q 插件之间通信的手段。
 
 目前 CoolQ HTTP API 插件支持 HTTP、WebSocket、反向 WebSocket 三种通信方式，见 [通信方式](https://cqhttp.cc/docs/#/CommunicationMethods)，NoneBot 支持其中的 HTTP 和反向 WebSocket。
 
@@ -108,7 +108,7 @@ Expression 可以是一个 `str`、元素类型是 `str` 的序列（一般为 `
 
 ## CQ 码
 
-是酷 Q 用来表示非文本消息的一种表示方法，形如 `[CQ:image,file=ABC.jpg]`。具体的格式规则，请参考酷 Q 文档的 [CQ 码](https://d.cqp.me/Pro/CQ%E7%A0%81) 和 CoolQ HTTP API 插件文档的 [CQ 码](https://cqhttp.cc/docs/#/CQCode)。
+是 酷Q 用来表示非文本消息的一种表示方法，形如 `[CQ:image,file=ABC.jpg]`。具体的格式规则，请参考 酷Q 文档的 [CQ 码](https://d.cqp.me/Pro/CQ%E7%A0%81) 和 CoolQ HTTP API 插件文档的 [CQ 码](https://cqhttp.cc/docs/#/CQCode)。
 
 ## 消息段
 
