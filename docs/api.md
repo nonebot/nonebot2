@@ -343,6 +343,22 @@ sidebar: auto
 
   配置对象。
 
+#### `asgi`
+
+- **类型:** `Quart`
+
+- **说明:**
+
+  ASGI 对象，继承自 `aiocqhttp.CQHttp`，目前等价于 `server_app`。
+
+#### `server_app`
+
+- **类型:** `Quart`
+
+- **说明:**
+
+  内部的 Quart 对象，继承自 `aiocqhttp.CQHttp`。
+
 #### `__init__(config_object=None)`
 
 - **说明:**
@@ -369,6 +385,102 @@ sidebar: auto
   - `port: Optional[int]`: 端口
   - `*args: Any`: 其它传入 `CQHttp.run()` 的位置参数
   - `**kwargs: Any`: 其它传入 `CQHttp.run()` 的命名参数
+
+#### _decorator_ `on_message(*events)`
+
+- **说明:**
+
+  将函数装饰为消息事件的处理函数，继承自 `aiocqhttp.CQHttp`。
+
+  监听所有消息事件时，可以不加括号。
+
+- **参数:**
+
+  - `*events: str`: 消息事件名，例如 `private`、`group`、`private.friend`，不传入表示监听所有消息事件
+
+- **用法:**
+
+  ```python
+  bot = none.get_bot()
+
+  @bot.on_message('group')
+  async def handle_group_message(ctx: Context_T)
+      pass
+  ```
+
+  注册群消息事件处理函数。
+
+#### _decorator_ `on_notice(*events)`
+
+- **说明:**
+
+  将函数装饰为通知事件的处理函数，继承自 `aiocqhttp.CQHttp`。
+
+  监听所有通知事件时，可以不加括号。
+
+- **参数:**
+
+  - `*events: str`: 消息事件名，例如 `group_increase`、`group_decrease.leave`、`friend_add`，不传入表示监听所有通知事件
+
+- **用法:**
+
+  ```python
+  bot = none.get_bot()
+
+  @bot.on_notice('group_increase')
+  async def handle_group_increase(ctx: Context_T)
+      pass
+  ```
+
+  注册群成员减少事件处理函数。
+
+#### _decorator_ `on_request(*events)`
+
+- **说明:**
+
+  将函数装饰为请求事件的处理函数，继承自 `aiocqhttp.CQHttp`。
+
+  监听所有请求事件时，可以不加括号。
+
+- **参数:**
+
+  - `*events: str`: 消息事件名，例如 `friend`、`group`、`group.add`，不传入表示监听所有请求事件
+
+- **用法:**
+
+  ```python
+  bot = none.get_bot()
+
+  @bot.on_request('friend', 'group.invite')
+  async def handle_request(ctx: Context_T)
+      pass
+  ```
+
+  注册加好友和邀请入群请求事件处理函数。
+
+#### _decorator_ `on_meta_event(*events)`
+
+- **说明:**
+
+  将函数装饰为元事件的处理函数，继承自 `aiocqhttp.CQHttp`。
+
+  监听所有元事件时，可以不加括号。
+
+- **参数:**
+
+  - `*events: str`: 消息事件名，例如 `heartbeat`，不传入表示监听所有元事件
+
+- **用法:**
+
+  ```python
+  bot = none.get_bot()
+
+  @bot.on_meta_event('heartbeat')
+  async def handle_heartbeat(ctx: Context_T)
+      pass
+  ```
+
+  注册心跳元事件处理函数。
 
 ### `init(config_object=None)`
 
@@ -1005,7 +1117,7 @@ sidebar: auto
 
 ## `none.command` 模块
 
-### _decorator_ `on_command(name, *, aliases=(), permission=perm.EVERYBODY, only_to_me=True, privileged=False, shell_like=False )`
+### _decorator_ `on_command(name, *, aliases=(), permission=perm.EVERYBODY, only_to_me=True, privileged=False, shell_like=False)`
 
 - **说明:**
 
