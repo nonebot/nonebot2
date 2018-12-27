@@ -1,4 +1,0 @@
-{
-    "python.pythonPath": "${workspaceFolder}/venv/bin/python",
-    "search.usePCRE2": true
-}
