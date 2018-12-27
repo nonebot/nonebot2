@@ -438,6 +438,28 @@ sidebar: auto
 
   在 `127.0.0.1:8080` 运行全局 NoneBot 对象。
 
+### `load_plugin(module_name)`
+
+- **说明:**
+
+  加载插件（等价于导入模块）。
+
+- **参数:**
+
+  - `module_name: str`: 模块名
+
+- **返回:**
+
+  - `bool`: 加载成功
+
+- **用法:**
+
+  ```python
+  none.load_plugin('none.plugins.base')
+  ```
+
+  加载 `none.plugins.base` 插件。
+
 ### `load_plugins(plugin_dir, module_prefix)`
 
 - **说明:**
@@ -451,7 +473,7 @@ sidebar: auto
 
 - **返回:**
 
-  - `None`
+  - `int:` 加载成功的插件数量
 
 - **用法:**
 
@@ -470,7 +492,7 @@ sidebar: auto
 
 - **返回:**
 
-  - `None`
+  - `int:` 加载成功的插件数量
 
 - **用法:**
 

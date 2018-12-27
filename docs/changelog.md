@@ -7,6 +7,7 @@ sidebar: auto
 ## next
 
 - 修复使用多级命令时，命令查找会出现异常的情况
+- 调整 `none.load_plugins()` 等方法，返回加载成功的插件数量，并新增 `none.load_plugin()` 方法用于加载单个插件模块
 
 ## v0.5.2
 
