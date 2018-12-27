@@ -1478,7 +1478,7 @@ sidebar: auto
 
   从内部调用 `say` 命令，且不检查权限。
 
-### `kill_current_session(bot, ctx)`
+### `kill_current_session(ctx)`
 
 - **说明:**
 
@@ -1486,7 +1486,6 @@ sidebar: auto
 
 - **参数:**
 
-  - `bot: NoneBot`: NoneBot 对象
   - `ctx: Context_T`: 事件上下文对象
 
 - **返回:**
@@ -1498,7 +1497,7 @@ sidebar: auto
   ```python
   @on_command('kill', privileged=True)
   async def _(session: CommandSession):
-      kill_current_session(session.bot, session.ctx)
+      kill_current_session(session.ctx)
   ```
 
   在特权命令 `kill` 中强行移除当前正在运行的会话。

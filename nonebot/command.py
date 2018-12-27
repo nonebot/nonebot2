@@ -603,12 +603,11 @@ async def _real_run_command(session: CommandSession,
             raise e  # this is intended to be propagated to handle_message()
 
 
-def kill_current_session(bot: NoneBot, ctx: Context_T) -> None:
+def kill_current_session(ctx: Context_T) -> None:
     """
     Force kill current session of the given context,
     despite whether it is running or not.
 
-    :param bot: NoneBot instance
     :param ctx: message context
     """
     ctx_id = context_id(ctx)
