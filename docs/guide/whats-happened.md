@@ -43,17 +43,17 @@ CoolQ HTTP API 插件通过反向 WebSocket 将消息事件发送到 NoneBot 后
 到这里，我们先暂停一下对消息事件的行踪的描述，回头来说一下最小实例的代码：
 
 ```python
-import none
+import nonebot
 
 if __name__ == '__main__':
-    none.init()
-    none.load_builtin_plugins()
-    none.run(host='127.0.0.1', port=8080)
+    nonebot.init()
+    nonebot.load_builtin_plugins()
+    nonebot.run(host='127.0.0.1', port=8080)
 ```
 
-第 4 行的 `none.init()` 首先初始化 `none` 包，这是无论如何都需要写的一行代码，并且必须在使用 NoneBot 的任何功能之前调用。
+第 4 行的 `nonebot.init()` 首先初始化 `nonebot` 包，这是无论如何都需要写的一行代码，并且必须在使用 NoneBot 的任何功能之前调用。
 
-随后，`none.load_builtin_plugins()` 加载了 NoneBot 的内置插件，这一步不是必须的，尤其在你编写了自己的插件之后，可能会不再需要内置插件。
+随后，`nonebot.load_builtin_plugins()` 加载了 NoneBot 的内置插件，这一步不是必须的，尤其在你编写了自己的插件之后，可能会不再需要内置插件。
 
 NoneBot 的内置插件只包含了两个命令，`echo` 和 `say`，两者的功能都是重复发送者的话，区别在于，`echo` 命令任何人都可以调用（不限制权限），但只能原样重复消息，不能手动指定要发送的 CQ 码，`say` 命令只有超级用户（通常是你自己，需要在配置中指定，下一章会介绍）可以调用，可以在消息中指定要发送的 CQ 码，如下图：
 
@@ -61,7 +61,7 @@ NoneBot 的内置插件只包含了两个命令，`echo` 和 `say`，两者的�
   <img alt="Echo and Say" src="./assets/echo_and_say.png" />
 </p>
 
-最后，`none.run(host='127.0.0.1', port=8080)` 让 NoneBot 跑在了地址 `127.0.0.1:8080` 上，向 CoolQ HTTP API 插件提供 `/`、`/ws/event/`、`/ws/api/` 三个入口，在我们的反向 WebSocket 配置中，插件利用了后两个入口。
+最后，`nonebot.run(host='127.0.0.1', port=8080)` 让 NoneBot 跑在了地址 `127.0.0.1:8080` 上，向 CoolQ HTTP API 插件提供 `/`、`/ws/event/`、`/ws/api/` 三个入口，在我们的反向 WebSocket 配置中，插件利用了后两个入口。
 
 ### 命令处理器
 

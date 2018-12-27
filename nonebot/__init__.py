@@ -155,10 +155,10 @@ def load_plugins(plugin_dir: str, module_prefix: str) -> int:
 
 def load_builtin_plugins() -> int:
     """
-    Load built-in plugins distributed along with "none" package.
+    Load built-in plugins distributed along with "nonebot" package.
     """
     plugin_dir = os.path.join(os.path.dirname(__file__), 'plugins')
-    return load_plugins(plugin_dir, 'none.plugins')
+    return load_plugins(plugin_dir, 'nonebot.plugins')
 
 
 from .exceptions import *

@@ -1,6 +1,6 @@
 # 类 Shell 的参数解析
 
-`none.argparse` 模块主要继承自 Python 内置的同名模块（`argparse`），用于解析命令的参数。在需要编写类 shell 语法的命令的时候，使用此模块可以大大提高开发效率。
+`nonebot.argparse` 模块主要继承自 Python 内置的同名模块（`argparse`），用于解析命令的参数。在需要编写类 shell 语法的命令的时候，使用此模块可以大大提高开发效率。
 
 「类 shell 语法」指的是形如 `some-command --verbose -n 3 --name=some-name argument1 argument2` 的类似于 shell 命令的语法。
 
@@ -101,6 +101,6 @@ COMMAND：
 
 `on_command` 的 `shell_like=True` 参数告诉 NoneBot 这个命令需要使用类 shell 语法，NoneBot 会自动添加命令参数解析器来使用 Python 内置的 `shlex` 包分割参数。分割后的参数被放在 `session.args['argv']`，可通过 `session.argv` 属性来快速获得。
 
-命令处理函数中，使用 `none.argparse` 模块包装后的 `ArgumentParser` 类来解析参数，具体 `ArgumentParser` 添加参数的方法，请参考 [`argparse`](https://docs.python.org/3/library/argparse.html)。在使用 `add_argument()` 方法添加需要解析的参数后，使用 `parse_args()` 方法最终将 `argv` 解析为 `argparse.Namespace` 对象。
+命令处理函数中，使用 `nonebot.argparse` 模块包装后的 `ArgumentParser` 类来解析参数，具体 `ArgumentParser` 添加参数的方法，请参考 [`argparse`](https://docs.python.org/3/library/argparse.html)。在使用 `add_argument()` 方法添加需要解析的参数后，使用 `parse_args()` 方法最终将 `argv` 解析为 `argparse.Namespace` 对象。
 
 特别地，`parse_args()` 方法如果遇到需要打印帮助或报错并退出程序的情况（具体可以通过使用 Python 内置的 `argparse.ArgumentParser` 来体验），行为会更改为发送消息给当前 session 对应的上下文。注意到，`ArgumentParser` 类初始化时传入了 `session` 和 `usage` 参数，分别用于发送消息和使用帮助的内容。

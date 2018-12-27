@@ -1,4 +1,4 @@
-from none import (
+from nonebot import (
     on_command, CommandSession,
     on_natural_language, NLPSession, NLPResult
 )

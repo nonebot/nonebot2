@@ -1,5 +1,5 @@
-from none import on_command, CommandSession
-from none import on_natural_language, NLPSession, NLPResult
+from nonebot import on_command, CommandSession
+from nonebot import on_natural_language, NLPSession, NLPResult
 from jieba import posseg
 
 from .data_source import get_weather_of_city

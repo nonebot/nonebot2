@@ -64,4 +64,4 @@ sidebar: auto
 
 ## v0.2.2
 
-- 修复快速的连续消息导致报错问题 [#5](https://github.com/richardchien/none-bot/issues/5)
+- 修复快速的连续消息导致报错问题 [#5](https://github.com/richardchien/nonebot/issues/5)

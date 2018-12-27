@@ -10,7 +10,7 @@ sidebar: auto
 
 除了 Python 内置的类型，下面还出现了如下 NoneBot 自定类型，实际上它们是 Python 内置类型的别名。
 
-以下类型均可从 `none.typing` 模块导入。
+以下类型均可从 `nonebot.typing` 模块导入。
 
 ### `Context_T`
 
@@ -26,7 +26,7 @@ sidebar: auto
 
 - **说明:**
 
-  消息对象的类型，通常表示 NoneBot 提供的消息相关接口所支持的类型，`none.message.Message` 也是一个合法的 `Message_T`。
+  消息对象的类型，通常表示 NoneBot 提供的消息相关接口所支持的类型，`nonebot.message.Message` 也是一个合法的 `Message_T`。
 
 ### `Expression_T`
 
@@ -302,26 +302,26 @@ sidebar: auto
 
   APScheduler 的配置对象，见 [Configuring the scheduler](https://apscheduler.readthedocs.io/en/latest/userguide.html#configuring-the-scheduler)。
 
-## `none` 模块
+## `nonebot` 模块
 
 ### 快捷导入
 
-为方便使用，`none` 模块从子模块导入了部分内容：
+为方便使用，`nonebot` 模块从子模块导入了部分内容：
 
-- `CQHttpError` -> `none.exceptions.CQHttpError`
-- `message_preprocessor` -> `none.message.message_preprocessor`
-- `Message` -> `none.message.Message`
-- `MessageSegment` -> `none.message.MessageSegment`
-- `on_command` -> `none.command.on_command`
-- `CommandSession` -> `none.command.CommandSession`
-- `CommandGroup` -> `none.command.CommandGroup`
-- `on_natural_language` -> `none.natural_language.on_natural_language`
-- `NLPSession` -> `none.natural_language.NLPSession`
-- `NLPResult` -> `none.natural_language.NLPResult`
-- `on_notice` -> `none.notice_request.on_notice`
-- `NoticeSession` -> `none.notice_request.NoticeSession`
-- `on_request` -> `none.notice_request.on_request`
-- `RequestSession` -> `none.notice_request.RequestSession`
+- `CQHttpError` -> `nonebot.exceptions.CQHttpError`
+- `message_preprocessor` -> `nonebot.message.message_preprocessor`
+- `Message` -> `nonebot.message.Message`
+- `MessageSegment` -> `nonebot.message.MessageSegment`
+- `on_command` -> `nonebot.command.on_command`
+- `CommandSession` -> `nonebot.command.CommandSession`
+- `CommandGroup` -> `nonebot.command.CommandGroup`
+- `on_natural_language` -> `nonebot.natural_language.on_natural_language`
+- `NLPSession` -> `nonebot.natural_language.NLPSession`
+- `NLPResult` -> `nonebot.natural_language.NLPResult`
+- `on_notice` -> `nonebot.notice_request.on_notice`
+- `NoticeSession` -> `nonebot.notice_request.NoticeSession`
+- `on_request` -> `nonebot.notice_request.on_request`
+- `RequestSession` -> `nonebot.notice_request.RequestSession`
 
 ### `scheduler`
 
@@ -401,7 +401,7 @@ sidebar: auto
 - **用法:**
 
   ```python
-  bot = none.get_bot()
+  bot = nonebot.get_bot()
 
   @bot.on_message('group')
   async def handle_group_message(ctx: Context_T)
@@ -425,7 +425,7 @@ sidebar: auto
 - **用法:**
 
   ```python
-  bot = none.get_bot()
+  bot = nonebot.get_bot()
 
   @bot.on_notice('group_increase')
   async def handle_group_increase(ctx: Context_T)
@@ -449,7 +449,7 @@ sidebar: auto
 - **用法:**
 
   ```python
-  bot = none.get_bot()
+  bot = nonebot.get_bot()
 
   @bot.on_request('friend', 'group.invite')
   async def handle_request(ctx: Context_T)
@@ -473,7 +473,7 @@ sidebar: auto
 - **用法:**
 
   ```python
-  bot = none.get_bot()
+  bot = nonebot.get_bot()
 
   @bot.on_meta_event('heartbeat')
   async def handle_heartbeat(ctx: Context_T)
@@ -500,7 +500,7 @@ sidebar: auto
 
   ```python
   import config
-  none.init(config)
+  nonebot.init(config)
   ```
 
   导入 `config` 模块并初始化全局 NoneBot 对象。
@@ -522,7 +522,7 @@ sidebar: auto
 - **用法:**
 
   ```python
-  bot = none.get_bot()
+  bot = nonebot.get_bot()
   ```
 
 ### `run(host=None, port=None, *args, **kwargs)`
@@ -545,7 +545,7 @@ sidebar: auto
 - **用法:**
 
   ```python
-  none.run(host='127.0.0.1', port=8080)
+  nonebot.run(host='127.0.0.1', port=8080)
   ```
 
   在 `127.0.0.1:8080` 运行全局 NoneBot 对象。
@@ -567,10 +567,10 @@ sidebar: auto
 - **用法:**
 
   ```python
-  none.load_plugin('none.plugins.base')
+  nonebot.load_plugin('nonebot.plugins.base')
   ```
 
-  加载 `none.plugins.base` 插件。
+  加载 `nonebot.plugins.base` 插件。
 
 ### `load_plugins(plugin_dir, module_prefix)`
 
@@ -590,8 +590,8 @@ sidebar: auto
 - **用法:**
 
   ```python
-  none.load_plugins(path.join(path.dirname(__file__), 'plugins'),
-                    'maruko.plugins')
+  nonebot.load_plugins(path.join(path.dirname(__file__), 'plugins'),
+                       'maruko.plugins')
   ```
 
   加载 `plugins` 目录下的插件。
@@ -609,16 +609,16 @@ sidebar: auto
 - **用法:**
 
   ```python
-  none.load_builtin_plugins()
+  nonebot.load_builtin_plugins()
   ```
 
-## `none.exceptions` 模块
+## `nonebot.exceptions` 模块
 
 ### _class_ `CQHttpError`
 
 等价于 `aiocqhttp.Error`。
 
-## `none.message` 模块
+## `nonebot.message` 模块
 
 ### _decorator_ `message_preprocessor`
 
@@ -1115,7 +1115,7 @@ sidebar: auto
 
   - `str`: 去转义后的字符串
 
-## `none.command` 模块
+## `nonebot.command` 模块
 
 ### _decorator_ `on_command(name, *, aliases=(), permission=perm.EVERYBODY, only_to_me=True, privileged=False, shell_like=False)`
 
@@ -1503,7 +1503,7 @@ sidebar: auto
 
   在特权命令 `kill` 中强行移除当前正在运行的会话。
 
-## `none.natural_language` 模块
+## `nonebot.natural_language` 模块
 
 ### _decorator_ `on_natural_language(keywords=None, *, permission=EVERYBODY, only_to_me=True, only_short_message=True, allow_empty_message=False)`
 
@@ -1600,7 +1600,7 @@ sidebar: auto
 
   初始化 `NLPResult` 对象，参数即为上面的三个属性。
 
-## `none.notice_request` 模块
+## `nonebot.notice_request` 模块
 
 ### _decorator_ `on_notice(*events)`
 
@@ -1724,7 +1724,7 @@ sidebar: auto
   await session.reject()
   ```
 
-## `none.session` 模块
+## `nonebot.session` 模块
 
 ### _class_ `BaseSession`
 
@@ -1791,7 +1791,7 @@ sidebar: auto
 
   在当前 Session 对应的上下文中发送 `hello`。
 
-## `none.permission` 模块
+## `nonebot.permission` 模块
 
 ### 权限声明常量
 
@@ -1813,7 +1813,7 @@ sidebar: auto
 例如下面的代码中，只有私聊和群管理员可以访问 `hello` 命令：
 
 ```python
-@none.on_command('hello', permission=PRIVATE | GROUP_ADMIN)
+@nonebot.on_command('hello', permission=PRIVATE | GROUP_ADMIN)
 async def _(session):
     pass
 ```
@@ -1842,7 +1842,7 @@ async def _(session):
   has_perm = await check_permission(bot, ctx, cmd.permission)
   ```
 
-## `none.log` 模块
+## `nonebot.log` 模块
 
 ### `logger`
 
@@ -1858,7 +1858,7 @@ async def _(session):
   logger.debug('Some log message here')
   ```
 
-## `none.helpers` 模块
+## `nonebot.helpers` 模块
 
 ### `context_id(ctx, *, mode='default', use_hash=False)`
 
@@ -1941,7 +1941,7 @@ async def _(session):
   )
   ```
 
-## `none.argparse` 模块
+## `nonebot.argparse` 模块
 
 ### _class_ `ArgumentParser`
 
@@ -2006,7 +2006,7 @@ async def _(session):
 
   无。
 
-## `none.sched` 模块
+## `nonebot.sched` 模块
 
 ### _class_ `Scheduler`
 

@@ -1,8 +1,8 @@
-import none
+import nonebot
 
 import config
 
 if __name__ == '__main__':
-    none.init(config)
-    none.load_builtin_plugins()
-    none.run()
+    nonebot.init(config)
+    nonebot.load_builtin_plugins()
+    nonebot.run()

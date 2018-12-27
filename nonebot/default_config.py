@@ -7,7 +7,7 @@ to override the default one.
 
 For example:
 
->>> from none.default_config import *
+>>> from nonebot.default_config import *
 >>> PORT = 9090
 >>> DEBUG = False
 >>> SUPERUSERS.add(123456)

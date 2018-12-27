@@ -66,10 +66,10 @@ docker run hello-world
 
 或称为「命令处理函数」，有时也简称为「命令」，是 NoneBot 插件中实际用于实现某个命令功能的函数。
 
-通过 `none.on_command` 装饰器可以将一个函数注册为命令处理器，例如：
+通过 `nonebot.on_command` 装饰器可以将一个函数注册为命令处理器，例如：
 
 ```python
-from none import on_command
+from nonebot import on_command
 
 @on_command('echo')
 async def echo(session):
@@ -80,10 +80,10 @@ async def echo(session):
 
 或称为「自然语言处理函数」，是 NoneBot 插件中用于将用户的自然语言消息解析为命令和参数的函数。
 
-通过 `none.on_natural_language` 装饰器可以将一个函数注册为自然语言处理器，例如：
+通过 `nonebot.on_natural_language` 装饰器可以将一个函数注册为自然语言处理器，例如：
 
 ```python
-from none import on_natural_language
+from nonebot import on_natural_language
 
 @on_natural_language
 async def _(session):

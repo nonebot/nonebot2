@@ -5,7 +5,7 @@
 本章将介绍如何在插件中处理通知和请求。
 
 ::: tip 提示
-本章的完整代码可以在 [awesome-bot-5](https://github.com/richardchien/none-bot/tree/master/docs/guide/code/awesome-bot-5) 查看。
+本章的完整代码可以在 [awesome-bot-5](https://github.com/richardchien/nonebot/tree/master/docs/guide/code/awesome-bot-5) 查看。
 :::
 
 ## 自动同意加群请求
@@ -15,7 +15,7 @@
 新建 `awesome/plugins/group_admin.py`，编写代码如下：
 
 ```python
-from none import on_request, RequestSession
+from nonebot import on_request, RequestSession
 
 
 # 将函数注册为群请求处理器
@@ -41,7 +41,7 @@ async def _(session: RequestSession):
 新成员入群之后，为了活跃气氛，我们可能希望机器人发一段欢迎消息。只需下面的代码即可实现：
 
 ```python
-from none import on_notice, NoticeSession
+from nonebot import on_notice, NoticeSession
 
 
 # 将函数注册为群成员增加通知处理器

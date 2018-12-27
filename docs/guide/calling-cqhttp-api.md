@@ -16,7 +16,7 @@ await bot.send_private_msg(user_id=12345678, message='你好～')
 
 1. **所有参数必须为命名参数（keyword argument）**，否则无法正确调用
 2. 这种调用全都是异步调用，因此需要适当 `await`
-2. **调用失败时（没有权限、对方不是好友、无 API 连接等）可能抛出 `none.CQHttpError` 异常**，注意捕获
+2. **调用失败时（没有权限、对方不是好友、无 API 连接等）可能抛出 `nonebot.CQHttpError` 异常**，注意捕获
 
 另外，在需要动态性的场合，除了使用 `getattr()` 方法外，还可以直接调用 `bot.call_action()` 方法，传入 `action` 和 `params` 即可，例如上例中，`action` 为 `'send_private_msg'`，`params` 为 `{'user_id': 12345678, 'message': '你好～'}`。
 

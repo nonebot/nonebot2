@@ -3,9 +3,9 @@ from typing import Optional
 
 import aiohttp
 from aiocqhttp.message import escape
-from none import on_command, CommandSession
-from none import on_natural_language, NLPSession, NLPResult
-from none.helpers import context_id, render_expression
+from nonebot import on_command, CommandSession
+from nonebot import on_natural_language, NLPSession, NLPResult
+from nonebot.helpers import context_id, render_expression
 
 # 定义无法获取图灵回复时的「表达（Expression）」
 EXPR_DONT_UNDERSTAND = (

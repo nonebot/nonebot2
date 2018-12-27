@@ -3,7 +3,7 @@
 到目前为止我们还在使用 NoneBot 的默认行为，在开始编写自己的插件之前，我们先尝试在配置文件上动动手脚，让 NoneBot 表现出不同的行为。
 
 ::: tip 提示
-本章的完整代码可以在 [awesome-bot-1](https://github.com/richardchien/none-bot/tree/master/docs/guide/code/awesome-bot-1) 查看。
+本章的完整代码可以在 [awesome-bot-1](https://github.com/richardchien/nonebot/tree/master/docs/guide/code/awesome-bot-1) 查看。
 :::
 
 ## 项目结构
@@ -33,7 +33,7 @@ awesome-bot
 因此下面我们往 `config.py` 中填充如下内容：
 
 ```python
-from none.default_config import *
+from nonebot.default_config import *
 
 SUPERUSERS = {12345678}
 ```
@@ -45,17 +45,17 @@ SUPERUSERS = {12345678}
 `config.py` 写好之后，修改 `bot.py` 如下：
 
 ```python {3,6}
-import none
+import nonebot
 
 import config
 
 if __name__ == '__main__':
-    none.init(config)
-    none.load_builtin_plugins()
-    none.run(host='127.0.0.1', port=8080)
+    nonebot.init(config)
+    nonebot.load_builtin_plugins()
+    nonebot.run(host='127.0.0.1', port=8080)
 ```
 
-第 3 行导入 `config.py` 模块，第 6 行将 `config.py` 作为配置对象传给 `none.init()` 函数，这样 NoneBot 就知道了超级用户有哪些。
+第 3 行导入 `config.py` 模块，第 6 行将 `config.py` 作为配置对象传给 `nonebot.init()` 函数，这样 NoneBot 就知道了超级用户有哪些。
 
 重启 NoneBot 后再次尝试发送：
 
@@ -70,7 +70,7 @@ if __name__ == '__main__':
 目前我们发送的命令都必须以一个特殊符号 `/` 开头，实际上，NoneBot 默认支持以 `/`、`／`、`!`、`！` 其中之一作为开头，现在我们希望能够不需要特殊符号开头就可以调用命令，要做到这一点非常简单，在 `config.py` 添加一行即可：
 
 ```python {4}
-from none.default_config import *
+from nonebot.default_config import *
 
 SUPERUSERS = {12345678}
 COMMAND_START.add('')
@@ -88,7 +88,7 @@ COMMAND_START = {'/', '!', '／', '！'}
 
 ```python
 import re
-from none.default_config import *
+from nonebot.default_config import *
 
 COMMAND_START = ['', re.compile(r'[/!]+')]
 ```
@@ -103,10 +103,10 @@ COMMAND_START = ['', re.compile(r'[/!]+')]
 
 ## 配置监听的 IP 和端口
 
-当有了配置文件之后，我们可能会希望将 `none.run()` 参数中的 `host` 和 `port` 移动到配置文件中，毕竟这两项是有可能随着运行场景的变化而有不同的需求的，把它们放到配置文件中有利于配置和代码的解耦。这同样很容易做到，只需进行如下配置：
+当有了配置文件之后，我们可能会希望将 `nonebot.run()` 参数中的 `host` 和 `port` 移动到配置文件中，毕竟这两项是有可能随着运行场景的变化而有不同的需求的，把它们放到配置文件中有利于配置和代码的解耦。这同样很容易做到，只需进行如下配置：
 
 ```python {3-4}
-from none.default_config import *
+from nonebot.default_config import *
 
 HOST = '0.0.0.0'
 PORT = 8080
@@ -115,17 +115,17 @@ PORT = 8080
 然后在 `bot.py` 中就不再需要传入 `host` 和 `port`，如下：
 
 ```python {8}
-import none
+import nonebot
 
 import config
 
 if __name__ == '__main__':
-    none.init(config)
-    none.load_builtin_plugins()
-    none.run()
+    nonebot.init(config)
+    nonebot.load_builtin_plugins()
+    nonebot.run()
 ```
 
-实际上，不需要配置这两项也可以直接使用 `none.run()`，NoneBot 会使用如下默认配置：
+实际上，不需要配置这两项也可以直接使用 `nonebot.run()`，NoneBot 会使用如下默认配置：
 
 ```python
 HOST = '127.0.0.1'

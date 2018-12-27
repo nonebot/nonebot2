@@ -9,14 +9,14 @@
 可以使用 pip 安装已发布的最新版本：
 
 ```bash
-pip install none-bot
+pip install nonebot
 ```
 
 如果你需要使用最新的（可能尚未发布的）特性，可以克隆 Git 仓库后手动安装：
 
 ```bash
-git clone https://github.com/richardchien/none-bot.git
-cd none-bot
+git clone https://github.com/richardchien/nonebot.git
+cd nonebot
 python setup.py install
 ```
 

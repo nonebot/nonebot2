@@ -7,7 +7,7 @@
 不过还是有解决方案的，市面上有一些提供智能聊天机器人接口的厂商，本章我们以 [图灵机器人](http://www.tuling123.com/) 为例，因为它的使用比较广泛，接入也比较简单，不过缺点是免费调用次数比较少。
 
 ::: tip 提示
-本章的完整代码可以在 [awesome-bot-4](https://github.com/richardchien/none-bot/tree/master/docs/guide/code/awesome-bot-4) 查看。
+本章的完整代码可以在 [awesome-bot-4](https://github.com/richardchien/nonebot/tree/master/docs/guide/code/awesome-bot-4) 查看。
 :::
 
 ## 注册图灵机器人账号
@@ -26,9 +26,9 @@ from typing import Optional
 
 import aiohttp
 from aiocqhttp.message import escape
-from none import on_command, CommandSession
-from none import on_natural_language, NLPSession, NLPResult
-from none.helpers import context_id, render_expression
+from nonebot import on_command, CommandSession
+from nonebot import on_natural_language, NLPSession, NLPResult
+from nonebot.helpers import context_id, render_expression
 
 # 定义无法获取图灵回复时的「表达（Expression）」
 EXPR_DONT_UNDERSTAND = (
@@ -184,9 +184,9 @@ async def call_tuling_api(session: CommandSession, text: str) -> Optional[str]:
 
 第一段高亮部分是根据图灵机器人的文档构造请求数据，其中有几个需要注意的地方：第 16、17 和 21 行。
 
-第 16 行通过 `session.bot.config` 访问了 NoneBot 的配置对象，`session.bot` 就是当前正在运行的 NoneBot 对象，你在其它任何地方都可以这么用（前提是已经调用过 `none.init()`）。
+第 16 行通过 `session.bot.config` 访问了 NoneBot 的配置对象，`session.bot` 就是当前正在运行的 NoneBot 对象，你在其它任何地方都可以这么用（前提是已经调用过 `nonebot.init()`）。
 
-第 17 和 21 行调用了 `context_id()` 函数，这是 `none.helpers` 模块中提供的一个函数，用于计算 Context 的独特 ID，有三种模式可以选择（通过 `mode` 参数传入）：`default`、`group`、`user`，默认 `default`，它们的效果如下表：
+第 17 和 21 行调用了 `context_id()` 函数，这是 `nonebot.helpers` 模块中提供的一个函数，用于计算 Context 的独特 ID，有三种模式可以选择（通过 `mode` 参数传入）：`default`、`group`、`user`，默认 `default`，它们的效果如下表：
 
 | 模式 | 效果 |
 | ------------ | --- |

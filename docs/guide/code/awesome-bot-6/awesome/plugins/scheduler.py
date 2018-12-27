@@ -1,13 +1,13 @@
 from datetime import datetime
 
-import none
+import nonebot
 import pytz
 from aiocqhttp.exceptions import Error as CQHttpError
 
 
-@none.scheduler.scheduled_job('cron', hour='*')
+@nonebot.scheduler.scheduled_job('cron', hour='*')
 async def _():
-    bot = none.get_bot()
+    bot = nonebot.get_bot()
     now = datetime.now(pytz.timezone('Asia/Shanghai'))
     try:
         await bot.send_group_msg(group_id=672076603,

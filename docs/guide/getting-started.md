@@ -7,12 +7,12 @@
 使用你最熟悉的编辑器或 IDE，创建一个名为 `bot.py` 的文件，内容如下：
 
 ```python
-import none
+import nonebot
 
 if __name__ == '__main__':
-    none.init()
-    none.load_builtin_plugins()
-    none.run(host='127.0.0.1', port=8080)
+    nonebot.init()
+    nonebot.load_builtin_plugins()
+    nonebot.run(host='127.0.0.1', port=8080)
 ```
 
 `if __name__ == '__main__'` 语句块的这几行代码将依次：
@@ -22,7 +22,7 @@ if __name__ == '__main__':
 3. 在地址 `127.0.0.1:8080` 运行 NoneBot
 
 ::: tip 提示
-这里 `none.run()` 的参数 `host='127.0.0.1'` 表示让 NoneBot 监听本地环回地址，如果你的酷 Q 运行在非本机的其它位置，例如 Docker 容器内、局域网内的另一台机器上等，则这里需要修改 `host` 参数为希望让 CoolQ HTTP API 插件访问的 IP。如果不清楚该使用哪个 IP，或者希望本机的所有 IP 都被监听，可以使用 `0.0.0.0`。
+这里 `nonebot.run()` 的参数 `host='127.0.0.1'` 表示让 NoneBot 监听本地环回地址，如果你的酷 Q 运行在非本机的其它位置，例如 Docker 容器内、局域网内的另一台机器上等，则这里需要修改 `host` 参数为希望让 CoolQ HTTP API 插件访问的 IP。如果不清楚该使用哪个 IP，或者希望本机的所有 IP 都被监听，可以使用 `0.0.0.0`。
 :::
 
 在命令行使用如下命令即可运行这个 NoneBot 实例：
@@ -47,7 +47,7 @@ python bot.py
 ```
 
 ::: tip 提示
-这里的 `127.0.0.1:8080` 对应 `none.run()` 中传入的 `host` 和 `port`，如果在 `none.run()` 中传入的 `host` 是 `0.0.0.0`，则插件的配置中需使用任意一个能够访问到 NoneBot 所在环境的 IP。特别地，如果你的酷 Q 运行在 Docker 容器中，NoneBot 运行在宿主机中，则默认情况下这里需使用 `172.17.0.1`（不同机器有可能不同，需使用 `docker inspect bridge` 查看，具体见 Docker 文档的 [Configure networking](https://docs.docker.com/network/)）。
+这里的 `127.0.0.1:8080` 对应 `nonebot.run()` 中传入的 `host` 和 `port`，如果在 `nonebot.run()` 中传入的 `host` 是 `0.0.0.0`，则插件的配置中需使用任意一个能够访问到 NoneBot 所在环境的 IP。特别地，如果你的酷 Q 运行在 Docker 容器中，NoneBot 运行在宿主机中，则默认情况下这里需使用 `172.17.0.1`（不同机器有可能不同，需使用 `docker inspect bridge` 查看，具体见 Docker 文档的 [Configure networking](https://docs.docker.com/network/)）。
 :::
 
 修改之后，在酷 Q 的应用菜单中重启 CoolQ HTTP API 插件，或直接重启酷 Q，以使新的配置文件生效。

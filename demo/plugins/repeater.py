@@ -1,4 +1,4 @@
-from none import on_natural_language, NLPSession, NLPResult
+from nonebot import on_natural_language, NLPSession, NLPResult
 
 _last_session = None
 

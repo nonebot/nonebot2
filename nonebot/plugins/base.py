@@ -1,5 +1,5 @@
-from none import on_command, CommandSession, permission as perm
-from none.message import unescape
+from nonebot import on_command, CommandSession, permission as perm
+from nonebot.message import unescape
 
 
 @on_command('echo')

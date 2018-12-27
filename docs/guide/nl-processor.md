@@ -9,7 +9,7 @@
 ```
 
 ::: tip 提示
-本章的完整代码可以在 [awesome-bot-3](https://github.com/richardchien/none-bot/tree/master/docs/guide/code/awesome-bot-3) 查看。
+本章的完整代码可以在 [awesome-bot-3](https://github.com/richardchien/nonebot/tree/master/docs/guide/code/awesome-bot-3) 查看。
 :::
 
 ## 调整项目结构
@@ -38,7 +38,7 @@ awesome-bot
 `weather/__init__.py` 内容如下：
 
 ```python
-from none import on_command, CommandSession
+from nonebot import on_command, CommandSession
 
 from .data_source import get_weather_of_city
 
@@ -71,8 +71,8 @@ async def get_weather_of_city(city: str) -> str:
 在 `weather/__init__.py` 文件添加内容如下：
 
 ```python {2,23-29}
-from none import on_command, CommandSession
-from none import on_natural_language, NLPSession, NLPResult
+from nonebot import on_command, CommandSession
+from nonebot import on_natural_language, NLPSession, NLPResult
 
 from .data_source import get_weather_of_city
 
@@ -143,8 +143,8 @@ pip install jieba
 有了结巴分词之后，扩充 `weather/__init__.py` 如下：
 
 ```python {3,29-43}
-from none import on_command, CommandSession
-from none import on_natural_language, NLPSession, NLPResult
+from nonebot import on_command, CommandSession
+from nonebot import on_natural_language, NLPSession, NLPResult
 from jieba import posseg
 
 from .data_source import get_weather_of_city

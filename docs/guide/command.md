@@ -3,7 +3,7 @@
 本章将以一个天气查询插件为例，教你如何编写自己的命令。
 
 ::: tip 提示
-本章的完整代码可以在 [awesome-bot-2](https://github.com/richardchien/none-bot/tree/master/docs/guide/code/awesome-bot-2) 查看。
+本章的完整代码可以在 [awesome-bot-2](https://github.com/richardchien/nonebot/tree/master/docs/guide/code/awesome-bot-2) 查看。
 :::
 
 ## 创建插件目录
@@ -36,23 +36,23 @@ awesome-bot
 ```python {1,9-10}
 from os import path
 
-import none
+import nonebot
 
 import config
 
 if __name__ == '__main__':
-    none.init(config)
-    none.load_plugins(path.join(path.dirname(__file__), 'awesome', 'plugins'),
+    nonebot.init(config)
+    nonebot.load_plugins(path.join(path.dirname(__file__), 'awesome', 'plugins'),
                       'awesome.plugins')
-    none.run()
+    nonebot.run()
 ```
 
-这里的重点在于 `none.load_plugins()` 函数的两个参数。第一个参数是插件目录的路径，这里根据 `bot.py` 的所在路径和相对路径拼接得到；第二个参数是导入插件模块时使用的模块名前缀，这个前缀要求必须是一个当前 Python 解释器可以导入的模块前缀，NoneBot 会在它后面加上插件的模块名共同组成完整的模块名来让解释器导入，因此这里我们传入 `awesome.plugins`，当运行 `bot.py` 的时候，Python 解释器就能够正确导入 `awesome.plugins.weather` 这个插件模块了。
+这里的重点在于 `nonebot.load_plugins()` 函数的两个参数。第一个参数是插件目录的路径，这里根据 `bot.py` 的所在路径和相对路径拼接得到；第二个参数是导入插件模块时使用的模块名前缀，这个前缀要求必须是一个当前 Python 解释器可以导入的模块前缀，NoneBot 会在它后面加上插件的模块名共同组成完整的模块名来让解释器导入，因此这里我们传入 `awesome.plugins`，当运行 `bot.py` 的时候，Python 解释器就能够正确导入 `awesome.plugins.weather` 这个插件模块了。
 
 尝试运行 `python bot.py`，可以看到日志输出了类似如下内容：
 
 ```
-[2018-08-18 21:46:55,425 none] INFO: Succeeded to import "awesome.plugins.weather"
+[2018-08-18 21:46:55,425 nonebot] INFO: Succeeded to import "awesome.plugins.weather"
 ```
 
 这表示 NoneBot 已经成功加载到了 `weather` 插件。
@@ -73,7 +73,7 @@ set PYTHONPATH=.  # Windows
 好了，现在已经确保插件可以正确加载，我们可以开始编写命令的实际代码了。在 `weather.py` 中添加如下代码：
 
 ```python
-from none import on_command, CommandSession
+from nonebot import on_command, CommandSession
 
 
 # on_command 装饰器将函数声明为一个命令处理器

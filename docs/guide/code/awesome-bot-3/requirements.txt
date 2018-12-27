@@ -1,2 +1,2 @@
-none-bot>=0.2.1
+nonebot>=1.0.0
 jieba

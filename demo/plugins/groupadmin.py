@@ -1,7 +1,7 @@
 from aiocqhttp import Error as CQHttpError
 
-from none import on_notice, NoticeSession, on_request, RequestSession
-from none.helpers import render_expression as __
+from nonebot import on_notice, NoticeSession, on_request, RequestSession
+from nonebot.helpers import render_expression as __
 
 GROUP_GREETING = (
     '欢迎新同学 {name}[]！[CQ:face,id=63][CQ:face,id=63][CQ:face,id=63]',

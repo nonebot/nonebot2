@@ -1,5 +1,5 @@
-from none import on_request, RequestSession
-from none import on_notice, NoticeSession
+from nonebot import on_request, RequestSession
+from nonebot import on_notice, NoticeSession
 
 
 # 将函数注册为群请求处理器
