@@ -4,6 +4,11 @@ sidebar: auto
 
 # 更新日志
 
+## v1.0.0
+
+- 更改包名为 `nonebot`，请注意修改导入语句，原先 `import none` 改为 `import nonebot`，`from none import something` 改为 `from nonebot import something`，`none.something` 改为 `nonebot.something`，如果代码量比较大，可以使用 `import nonebot as none`，以避免过多更改
+- `nonebot.command.kill_current_session()` 方法去掉了 `bot` 参数，现只需传入 `ctx`
+
 ## v0.5.3
 
 - 修复使用多级命令时，命令查找会出现异常的情况
