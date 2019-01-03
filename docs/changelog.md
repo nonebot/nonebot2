@@ -4,6 +4,11 @@ sidebar: auto
 
 # 更新日志
 
+## next
+
+- 插件模块现可通过 `__plugin_name__` 和 `__plugin_usage__` 来分别指定插件名称和插件使用方法（两者均不强制，若不设置则默认为 None）
+- 新增 `none.get_loaded_plugins()` 函数用于获取所有已加载的插件集合
+
 ## v1.0.0
 
 - 更改包名为 `nonebot`，请注意修改导入语句，原先 `import none` 改为 `import nonebot`，`from none import something` 改为 `from nonebot import something`，`none.something` 改为 `nonebot.something`，如果代码量比较大，可以使用 `import nonebot as none`，以避免过多更改
