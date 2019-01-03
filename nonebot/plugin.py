@@ -73,4 +73,9 @@ def load_builtin_plugins() -> int:
 
 
 def get_loaded_plugins() -> Set[Plugin]:
+    """
+    Get all plugins loaded.
+
+    :return: a set of Plugin objects
+    """
     return _plugins
