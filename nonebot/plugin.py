@@ -1,12 +1,16 @@
 import importlib
 import os
 import re
-from collections import namedtuple
-from typing import Set
+from typing import Any, Set, NamedTuple
 
 from .log import logger
 
-Plugin = namedtuple('Plugin', ['module', 'name', 'usage'])
+
+class Plugin(NamedTuple):
+    module: Any
+    name: str = None
+    usage: str = None
+
 
 _plugins: Set[Plugin] = set()
 
