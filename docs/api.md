@@ -309,6 +309,10 @@ sidebar: auto
 为方便使用，`nonebot` 模块从子模块导入了部分内容：
 
 - `CQHttpError` -> `nonebot.exceptions.CQHttpError`
+- `load_plugin` -> `nonebot.plugin.load_plugin`
+- `load_plugins` -> `nonebot.plugin.load_plugins`
+- `load_builtin_plugins` -> `nonebot.plugin.load_builtin_plugins`
+- `get_loaded_plugins` -> `nonebot.plugin.get_loaded_plugins`
 - `message_preprocessor` -> `nonebot.message.message_preprocessor`
 - `Message` -> `nonebot.message.Message`
 - `MessageSegment` -> `nonebot.message.MessageSegment`
@@ -370,6 +374,32 @@ sidebar: auto
 - **参数:**
 
   - `config_object: Optional[Any]`: 配置对象，类型不限，只要能够通过 `__getattr__` 和 `__dict__` 分别访问到单个和所有配置项即可，若没有传入，则使用默认配置
+
+#### `__getattr__(item)`
+
+- **说明:**
+
+  获取用于 API 调用的 `Callable` 对象。
+
+  对返回结果进行函数调用会调用 CQHTTP 的相应 API，请注意捕获 `CQHttpError` 异常，具体请参考 python-aiocqhttp 的 [README](https://github.com/richardchien/python-aiocqhttp#api-%E8%B0%83%E7%94%A8)。
+
+- **参数:**
+
+  - `item: str`: 要调用的 API 动作名，请参考 CQHTTP 插件文档的 [API 列表](https://cqhttp.cc/docs/#/API?id=api-%E5%88%97%E8%A1%A8)
+
+- **返回:**
+
+  - `Callable`: 用于 API 调用的 `Callable` 对象
+
+- **用法:**
+
+  ```python
+  bot = nonebot.get_bot()
+  try:
+      info = await bot.get_group_member_info(group_id=1234567, user_id=12345678)
+  except CQHttpError as e:
+      logger.exception(e)
+  ```
 
 #### `run(host=None, port=None, *args, **kwargs)`
 
@@ -550,6 +580,42 @@ sidebar: auto
 
   在 `127.0.0.1:8080` 运行全局 NoneBot 对象。
 
+## `nonebot.exceptions` 模块
+
+### _class_ `CQHttpError`
+
+等价于 `aiocqhttp.Error`。
+
+## `nonebot.plugin` 模块 <Badge text="1.1.0+"/>
+
+### _class_ `Plugin`
+
+用于包装已加载的插件模块的类。
+
+#### `module`
+
+- **类型:** `Any`
+
+- **说明:**
+
+  已加载的插件模块（importlib 导入的 Python 模块）。
+
+#### `name`
+
+- **类型:** `Optional[str]`
+
+- **说明:**
+
+  插件名称，从插件模块的 `__plugin_name__` 特殊变量获得，如果没有此变量，则为 `None`。
+
+#### `usage`
+
+- **类型:** `Optional[Any]`
+
+- **说明:**
+
+  插件使用方法，从插件模块的 `__plugin_usage__` 特殊变量获得，如果没有此变量，则为 `None`。
+
 ### `load_plugin(module_name)`
 
 - **说明:**
@@ -567,10 +633,10 @@ sidebar: auto
 - **用法:**
 
   ```python
-  nonebot.load_plugin('nonebot.plugins.base')
+  nonebot.plugin.load_plugin('nonebot_tuling')
   ```
 
-  加载 `nonebot.plugins.base` 插件。
+  加载 `nonebot_tuling` 插件。
 
 ### `load_plugins(plugin_dir, module_prefix)`
 
@@ -590,8 +656,7 @@ sidebar: auto
 - **用法:**
 
   ```python
-  nonebot.load_plugins(path.join(path.dirname(__file__), 'plugins'),
-                       'maruko.plugins')
+  nonebot.plugin.load_plugins(path.join(path.dirname(__file__), 'plugins'), 'amadeus.plugins')
   ```
 
   加载 `plugins` 目录下的插件。
@@ -609,14 +674,26 @@ sidebar: auto
 - **用法:**
 
   ```python
-  nonebot.load_builtin_plugins()
+  nonebot.plugin.load_builtin_plugins()
   ```
 
-## `nonebot.exceptions` 模块
+### `get_loaded_plugins()`
 
-### _class_ `CQHttpError`
+- **说明:**
 
-等价于 `aiocqhttp.Error`。
+  获取已经加载的插件集合。
+
+- **返回:**
+
+  - `Set[Plugin]:` 已加载的插件集合
+
+- **用法:**
+
+  ```python
+  plugins = nonebot.plugin.get_loaded_plugins()
+  await session.send('我现在支持以下功能：\n\n' +
+                     '\n'.join(map(lambda p: p.name, filter(lambda p: p.name, plugins))))
+  ```
 
 ## `nonebot.message` 模块
 
