@@ -1,6 +1,6 @@
 import hashlib
 import random
-from typing import Sequence, Callable
+from typing import Sequence, Callable, Any
 
 from . import NoneBot
 from .exceptions import CQHttpError
@@ -48,16 +48,17 @@ async def send(bot: NoneBot, ctx: Context_T,
                message: Message_T, *,
                ensure_private: bool = False,
                ignore_failure: bool = True,
-               **kwargs) -> None:
+               **kwargs) -> Any:
     """Send a message ignoring failure by default."""
     try:
         if ensure_private:
             ctx = ctx.copy()
             ctx['message_type'] = 'private'
-        await bot.send(ctx, message, **kwargs)
+        return await bot.send(ctx, message, **kwargs)
     except CQHttpError:
         if not ignore_failure:
             raise
+        return None
 
 
 def render_expression(expr: Expression_T, *,
