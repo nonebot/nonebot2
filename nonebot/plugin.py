@@ -1,15 +1,15 @@
 import importlib
 import os
 import re
-from typing import Any, Set, NamedTuple
+from typing import Any, Set, NamedTuple, Optional
 
 from .log import logger
 
 
 class Plugin(NamedTuple):
     module: Any
-    name: str = None
-    usage: str = None
+    name: Optional[str] = None
+    usage: Optional[Any] = None
 
 
 _plugins: Set[Plugin] = set()
