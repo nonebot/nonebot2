@@ -381,7 +381,7 @@ sidebar: auto
 
   获取用于 API 调用的 `Callable` 对象。
 
-  对返回结果进行函数调用会调用 CQHTTP 的相应 API，请注意捕获 `CQHttpError` 异常，具体请参考 python-aiocqhttp 的 [README](https://github.com/richardchien/python-aiocqhttp#api-%E8%B0%83%E7%94%A8)。
+  对返回结果进行函数调用会调用 CQHTTP 的相应 API，请注意捕获 `CQHttpError` 异常，具体请参考 aiocqhttp 的 [API 调用](https://github.com/richardchien/python-aiocqhttp#api-%E8%B0%83%E7%94%A8)。
 
 - **参数:**
 
@@ -1853,7 +1853,7 @@ sidebar: auto
 
 - **返回:**
 
-  - `None`
+  - `Any`: 返回 CQHTTP 插件发送消息接口的调用返回值，具体见 aiocqhttp 的 [API 调用](https://github.com/richardchien/python-aiocqhttp#api-%E8%B0%83%E7%94%A8)
 
 - **异常:**
 
@@ -1980,7 +1980,7 @@ async def _(session):
 
 - **返回:**
 
-  - `None`
+  - `Any`: 返回 CQHTTP 插件发送消息接口的调用返回值，具体见 aiocqhttp 的 [API 调用](https://github.com/richardchien/python-aiocqhttp#api-%E8%B0%83%E7%94%A8)
 
 - **异常:**
 
