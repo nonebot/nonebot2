@@ -10,6 +10,10 @@ class BaseSession:
         self.bot = bot
         self.ctx = ctx
 
+    @property
+    def self_id(self) -> int:
+        return self.ctx['self_id']
+
     async def send(self, message: Message_T, *,
                    at_sender: bool = False,
                    ensure_private: bool = False,
