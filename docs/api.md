@@ -1838,6 +1838,22 @@ sidebar: auto
 
   获取当前事件上下文的 `user_id` 字段。
 
+#### _readonly property_ `self_id` <Badge text="1.1.0+"/>
+
+- **类型:** `int`
+
+- **说明:**
+
+  当前 session 对应的 QQ 机器人账号，在多个机器人账号使用同一个 NoneBot 后端时可用于区分当前收到消息或事件的是哪一个机器人。
+
+  等价于 `session.ctx['self_id']`。
+
+- **用法:**
+
+  ```python
+  await bot.send_private_msg(self_id=session.self_id, user_id=12345678, message='Hello')
+  ```
+
 #### _coroutine_ `send(message, *, at_sender=False, ensure_private=False, ignore_failure=True, **kwargs)`
 
 - **说明:**
@@ -1853,7 +1869,7 @@ sidebar: auto
 
 - **返回:**
 
-  - `Any`: 返回 CQHTTP 插件发送消息接口的调用返回值，具体见 aiocqhttp 的 [API 调用](https://github.com/richardchien/python-aiocqhttp#api-%E8%B0%83%E7%94%A8)
+  - `Any` <Badge text="1.1.0+"/>: 返回 CQHTTP 插件发送消息接口的调用返回值，具体见 aiocqhttp 的 [API 调用](https://github.com/richardchien/python-aiocqhttp#api-%E8%B0%83%E7%94%A8)
 
 - **异常:**
 
@@ -1980,7 +1996,7 @@ async def _(session):
 
 - **返回:**
 
-  - `Any`: 返回 CQHTTP 插件发送消息接口的调用返回值，具体见 aiocqhttp 的 [API 调用](https://github.com/richardchien/python-aiocqhttp#api-%E8%B0%83%E7%94%A8)
+  - `Any` <Badge text="1.1.0+"/>: 返回 CQHTTP 插件发送消息接口的调用返回值，具体见 aiocqhttp 的 [API 调用](https://github.com/richardchien/python-aiocqhttp#api-%E8%B0%83%E7%94%A8)
 
 - **异常:**
 
