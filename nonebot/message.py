@@ -59,10 +59,11 @@ async def handle_message(bot: NoneBot, ctx: Context_T) -> None:
 
 
 def _log_message(ctx: Context_T) -> None:
-    msg_from = f'{ctx["user_id"]}'
+    msg_from = str(ctx['user_id'])
     if ctx['message_type'] == 'group':
         msg_from += f'@[群:{ctx["group_id"]}]'
     elif ctx['message_type'] == 'discuss':
         msg_from += f'@[讨论组:{ctx["discuss_id"]}]'
-    logger.info(f'Message {ctx["message_id"]} from {msg_from}: '
+    logger.info(f'Self: {ctx["self_id"]}, '
+                f'Message {ctx["message_id"]} from {msg_from}: '
                 f'{ctx["message"]}')
