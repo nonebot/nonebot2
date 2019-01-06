@@ -20,6 +20,9 @@ def message_preprocessor(func: Callable) -> Callable:
 async def handle_message(bot: NoneBot, ctx: Context_T) -> None:
     _log_message(ctx)
 
+    if not ctx['message']:
+        ctx['message'].append(MessageSegment.text(''))
+
     coros = []
     for processor in _message_preprocessors:
         coros.append(processor(bot, ctx))
@@ -27,17 +30,35 @@ async def handle_message(bot: NoneBot, ctx: Context_T) -> None:
         await asyncio.wait(coros)
 
     if 'to_me' not in ctx:
-        if ctx['message_type'] != 'private':
+        if ctx['message_type'] == 'private':
+            ctx['to_me'] = True
+        else:
             # group or discuss
             ctx['to_me'] = False
-            first_message_seg = ctx['message'][0]
-            if first_message_seg == MessageSegment.at(ctx['self_id']):
+            at_me_seg = MessageSegment.at(ctx['self_id'])
+
+            # check the first segment
+            first_msg_seg = ctx['message'][0]
+            if first_msg_seg == at_me_seg:
                 ctx['to_me'] = True
                 del ctx['message'][0]
+
+            if not ctx['to_me']:
+                # check the last segment
+                i = -1
+                last_msg_seg = ctx['message'][i]
+                if last_msg_seg.type == 'text' and \
+                        not last_msg_seg.data['text'].strip() and \
+                        len(ctx['message']) >= 2:
+                    i -= 1
+                    last_msg_seg = ctx['message'][i]
+
+                if last_msg_seg == at_me_seg:
+                    ctx['to_me'] = True
+                    del ctx['message'][i:]
+
             if not ctx['message']:
                 ctx['message'].append(MessageSegment.text(''))
-        else:
-            ctx['to_me'] = True
 
     while True:
         try:
