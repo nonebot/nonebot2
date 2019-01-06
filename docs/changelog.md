@@ -6,9 +6,9 @@ sidebar: auto
 
 ## next
 
-- 插件模块现可通过 `__plugin_name__` 和 `__plugin_usage__` 来分别指定插件名称和插件使用方法（两者均不强制，若不设置则默认为 None）
-- 新增 `none.get_loaded_plugins()` 函数用于获取所有已加载的插件集合
-- `BaseSession.send()` 方法和 `none.helpers.send()` 函数现返回 API 调用返回值（即 CQHTTP 插件的返回结果的 `data` 字段）
+- 插件模块现可通过 `__plugin_name__` 和 `__plugin_usage__` 来分别指定插件名称和插件使用方法（两者均不强制，若不设置则默认为 `None`）
+- 新增 `nonebot.plugin.get_loaded_plugins()` 函数用于获取所有已加载的插件集合
+- `BaseSession.send()` 方法和 `nonebot.helpers.send()` 函数现返回 API 调用返回值（即 CQHTTP 插件的返回结果的 `data` 字段）
 - `BaseSession` 新增 `self_id` 属性，可通过 `session.self_id` 代替 `session.ctx['self_id']` 来获取当前机器人账号
 
 ## v1.0.0
