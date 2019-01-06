@@ -312,7 +312,7 @@ sidebar: auto
 - `load_plugin` -> `nonebot.plugin.load_plugin`
 - `load_plugins` -> `nonebot.plugin.load_plugins`
 - `load_builtin_plugins` -> `nonebot.plugin.load_builtin_plugins`
-- `get_loaded_plugins` -> `nonebot.plugin.get_loaded_plugins`
+- `get_loaded_plugins` <Badge text="1.1.0+"/> -> `nonebot.plugin.get_loaded_plugins`
 - `message_preprocessor` -> `nonebot.message.message_preprocessor`
 - `Message` -> `nonebot.message.Message`
 - `MessageSegment` -> `nonebot.message.MessageSegment`
@@ -1207,7 +1207,7 @@ sidebar: auto
   - `name: Union[str, CommandName_T]`: 命令名，如果传入的是字符串则会自动转为元组
   - `aliases: Iterable[str]`: 命令别名
   - `permission: int`: 命令所需要的权限，不满足权限的用户将无法触发该命令
-  - `only_to_me: bool`: 是否只响应确定是在和「我」（机器人）说话的命令
+  - `only_to_me: bool`: 是否只响应确定是在和「我」（机器人）说话的命令（在开头或结尾 @ 了机器人）
   - `privileged: bool`: 是否特权命令，若是，则无论当前是否有命令会话正在运行，都会运行该命令，但运行不会覆盖已有会话，也不会保留新创建的会话
   - `shell_like: bool`: 是否使用类 shell 语法，若是，则会自动使用 `shlex` 模块进行分割（无需手动编写参数解析器），分割后的参数列表放入 `session.args['argv']`
 
@@ -1591,9 +1591,9 @@ sidebar: auto
 
   - `keywords: Optional[Iterable]`: 要响应的关键词，若传入 `None`，则响应所有消息
   - `permission: int`: 自然语言处理器所需要的权限，不满足权限的用户将无法触发该处理器
-  - `only_to_me: bool`: 是否只响应确定是在和「我」（机器人）说话的消息
+  - `only_to_me: bool`: 是否只响应确定是在和「我」（机器人）说话的消息（在开头或结尾 @ 了机器人，或在开头称呼了机器人昵称）
   - `only_short_message: bool`: 是否只响应短消息
-  - `allow_empty_message: bool`: 是否响应内容为空的消息（只有@或机器人昵称）
+  - `allow_empty_message: bool`: 是否响应内容为空的消息（只有 @ 或机器人昵称）
 
 - **要求:**
 
