@@ -1,15 +1,20 @@
 import importlib
 import os
 import re
-from typing import Any, Set, NamedTuple, Optional
+from typing import Any, Set, Optional
 
 from .log import logger
 
 
-class Plugin(NamedTuple):
-    module: Any
-    name: Optional[str] = None
-    usage: Optional[Any] = None
+class Plugin:
+    __slots__ = ('module', 'name', 'usage')
+
+    def __init__(self, module: Any,
+                 name: Optional[str] = None,
+                 usage: Optional[Any] = None):
+        self.module = module
+        self.name = name
+        self.usage = usage
 
 
 _plugins: Set[Plugin] = set()
