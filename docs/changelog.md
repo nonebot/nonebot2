@@ -4,6 +4,10 @@ sidebar: auto
 
 # 更新日志
 
+## next
+
+- 修复交互式对话中，`ctx['to_me']` 没有置为 `True` 的 bug
+
 ## v1.1.0
 
 - 插件模块现可通过 `__plugin_name__` 和 `__plugin_usage__` 来分别指定插件名称和插件使用方法（两者均不强制，若不设置则默认为 `None`）
