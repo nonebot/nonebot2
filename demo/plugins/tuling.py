@@ -3,6 +3,13 @@ from nonebot import (
     on_natural_language, NLPSession, NLPResult
 )
 
+__plugin_name__ = '智能聊天'
+__plugin_usage__ = r"""
+智能聊天功能使用帮助
+
+直接跟我聊天即可～
+""".strip()
+
 
 @on_command('tuling', aliases=('聊天', '对话'))
 async def tuling(session: CommandSession):

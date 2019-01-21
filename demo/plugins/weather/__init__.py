@@ -6,6 +6,13 @@ from nonebot.helpers import render_expression as __
 
 from . import expressions as e
 
+__plugin_name__ = '天气'
+__plugin_usage__ = r"""
+天气功能使用帮助
+
+天气  [城市名称]
+""".strip()
+
 w = CommandGroup('weather')
 
 
