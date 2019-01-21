@@ -3,7 +3,7 @@ import re
 import shlex
 from datetime import datetime
 from typing import (
-    Tuple, Union, Callable, Iterable, Any, Optional, List
+    Tuple, Union, Callable, Iterable, Any, Optional, List, Dict
 )
 
 from . import NoneBot, permission as perm
@@ -15,17 +15,17 @@ from .typing import (
     Context_T, CommandName_T, CommandArgs_T, Message_T
 )
 
-# Key: str (one segment of command name)
-# Value: subtree or a leaf Command object
-_registry = {}
+# key: one segment of command name
+# value: subtree or a leaf Command object
+_registry = {}  # type: Dict[str, Union[Dict, Command]]
 
-# Key: str
-# Value: tuple that identifies a command
-_aliases = {}
+# key: alias
+# value: real command name
+_aliases = {}  # type: Dict[str, CommandName_T]
 
-# Key: context id
-# Value: CommandSession object
-_sessions = {}
+# key: context id
+# value: CommandSession object
+_sessions = {}  # type: Dict[str, CommandSession]
 
 
 class Command:
@@ -244,8 +244,9 @@ class SwitchException(Exception):
 
 
 class CommandSession(BaseSession):
-    __slots__ = ('cmd', 'current_key', 'current_arg', 'current_arg_text',
-                 'current_arg_images', 'args', '_last_interaction', '_running')
+    __slots__ = ('cmd', 'current_key', 'current_arg',
+                 'current_arg_text', 'current_arg_images',
+                 'args', '_last_interaction', '_running')
 
     def __init__(self, bot: NoneBot, ctx: Context_T, cmd: Command, *,
                  current_arg: str = '', args: Optional[CommandArgs_T] = None):
@@ -288,7 +289,7 @@ class CommandSession(BaseSession):
     @property
     def argv(self) -> List[str]:
         """
-        Shell-like argument list.
+        Shell-like argument list, similar to sys.argv.
         Only available while shell_like is True in on_command decorator.
         """
         return self.get_optional('argv', [])
