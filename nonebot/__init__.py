@@ -106,7 +106,8 @@ from .plugin import (load_plugin, load_plugins, load_builtin_plugins,
                      get_loaded_plugins)
 from .message import message_preprocessor, Message, MessageSegment
 from .command import on_command, CommandSession, CommandGroup
-from .natural_language import on_natural_language, NLPSession, NLPResult
+from .natural_language import (on_natural_language, NLPSession, NLPResult,
+                               IntentCommand)
 from .notice_request import (on_notice, NoticeSession,
                              on_request, RequestSession)
 
@@ -117,6 +118,6 @@ __all__ = [
     'get_loaded_plugins',
     'message_preprocessor', 'Message', 'MessageSegment',
     'on_command', 'CommandSession', 'CommandGroup',
-    'on_natural_language', 'NLPSession', 'NLPResult',
+    'on_natural_language', 'NLPSession', 'NLPResult', 'IntentCommand',
     'on_notice', 'NoticeSession', 'on_request', 'RequestSession',
 ]

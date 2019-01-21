@@ -72,9 +72,29 @@ class NLPSession(BaseSession):
 
 
 class NLPResult(NamedTuple):
+    """
+    Deprecated.
+    Use class IntentCommand instead.
+    """
     confidence: float
     cmd_name: Union[str, CommandName_T]
     cmd_args: Optional[CommandArgs_T] = None
+
+    def to_intent_command(self):
+        return IntentCommand(confidence=self.confidence,
+                             name=self.cmd_name,
+                             args=self.cmd_args,
+                             current_arg=None)
+
+
+class IntentCommand(NamedTuple):
+    """
+    To represent a command that we think the user may be intended to call.
+    """
+    confidence: float
+    name: Union[str, CommandName_T]
+    args: Optional[CommandArgs_T] = None
+    current_arg: Optional[str] = None
 
 
 async def handle_natural_language(bot: NoneBot, ctx: Context_T) -> bool:
@@ -135,24 +155,34 @@ async def handle_natural_language(bot: NoneBot, ctx: Context_T) -> bool:
             futures.append(asyncio.ensure_future(p.func(session)))
 
     if futures:
-        # wait for possible results, and sort them by confidence
-        results = []
+        # wait for intent commands, and sort them by confidence
+        intent_commands = []
         for fut in futures:
             try:
-                results.append(await fut)
+                res = await fut
+                if isinstance(res, NLPResult):
+                    intent_commands.append(res.to_intent_command())
+                elif isinstance(res, IntentCommand):
+                    intent_commands.append(res)
             except Exception as e:
                 logger.error('An exception occurred while running '
                              'some natural language processor:')
                 logger.exception(e)
-        results = sorted(filter(lambda r: r, results),
-                         key=lambda r: r.confidence, reverse=True)
-        logger.debug(f'NLP results: {results}')
-        if results and results[0].confidence >= 60.0:
-            # choose the result with highest confidence
-            logger.debug(f'NLP result with highest confidence: {results[0]}')
-            return await call_command(bot, ctx, results[0].cmd_name,
-                                      args=results[0].cmd_args,
-                                      check_perm=False)
+
+        intent_commands.sort(key=lambda ic: ic.confidence, reverse=True)
+        logger.debug(f'Intent commands: {intent_commands}')
+
+        if intent_commands and intent_commands[0].confidence >= 60.0:
+            # choose the intent command with highest confidence
+            chosen_cmd = intent_commands[0]
+            logger.debug(
+                f'Intent command with highest confidence: {chosen_cmd}')
+            return await call_command(
+                bot, ctx, chosen_cmd.name,
+                args=chosen_cmd.args,
+                current_arg=chosen_cmd.current_arg,
+                check_perm=False
+            )
         else:
-            logger.debug('No NLP result having enough confidence')
+            logger.debug('No intent command has enough confidence')
     return False
