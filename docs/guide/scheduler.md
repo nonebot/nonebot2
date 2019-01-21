@@ -13,7 +13,7 @@
 使用下面命令安装可选功能（会自动安装 APScheduler）：
 
 ```bash
-pip install nonebot[scheduler]
+pip install "nonebot[scheduler]"
 ```
 
 安装成功之后就可以通过 `nonebot.scheduler` 访问 [`AsyncIOScheduler`](https://apscheduler.readthedocs.io/en/latest/modules/schedulers/asyncio.html#apscheduler.schedulers.asyncio.AsyncIOScheduler) 对象。

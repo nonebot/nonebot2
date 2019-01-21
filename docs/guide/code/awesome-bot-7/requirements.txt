@@ -1,0 +1,4 @@
+nonebot>=1.0.0
+jieba
+aiohttp
+pytz

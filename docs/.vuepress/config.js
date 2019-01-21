@@ -48,6 +48,7 @@ module.exports = {
                         'notice-and-request',
                         'calling-cqhttp-api',
                         'scheduler',
+                        'usage',
                         'whats-next',
                     ]
                 }
