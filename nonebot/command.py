@@ -482,6 +482,8 @@ async def handle_command(bot: NoneBot, ctx: Context_T) -> bool:
 
         if session.is_valid:
             logger.debug(f'Session of command {session.cmd.name} exists')
+            # since it's in a session, the user must be talking to me
+            ctx['to_me'] = True
             session.refresh(ctx, current_arg=str(ctx['message']))
             # there is no need to check permission for existing session
             check_perm = False
