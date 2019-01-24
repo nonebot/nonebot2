@@ -462,7 +462,7 @@ sidebar: auto
       pass
   ```
 
-  注册群成员减少事件处理函数。
+  注册群成员增加事件处理函数。
 
 #### _decorator_ `on_request(*events)`
 
