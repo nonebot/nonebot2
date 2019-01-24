@@ -110,6 +110,7 @@ from .natural_language import (on_natural_language, NLPSession, NLPResult,
                                IntentCommand)
 from .notice_request import (on_notice, NoticeSession,
                              on_request, RequestSession)
+from .helpers import context_id
 
 __all__ = [
     'NoneBot', 'scheduler', 'init', 'get_bot', 'run',
@@ -120,4 +121,5 @@ __all__ = [
     'on_command', 'CommandSession', 'CommandGroup',
     'on_natural_language', 'NLPSession', 'NLPResult', 'IntentCommand',
     'on_notice', 'NoticeSession', 'on_request', 'RequestSession',
+    'context_id',
 ]
