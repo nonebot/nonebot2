@@ -24,7 +24,7 @@ setup(
     },
     python_requires='>=3.6.1',
     platforms='any',
-    classifiers=(
+    classifiers=[
         'Development Status :: 5 - Production/Stable',
         'Framework :: Robot Framework',
         'Framework :: Robot Framework :: Library',
@@ -34,5 +34,5 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
-    ),
+    ],
 )
