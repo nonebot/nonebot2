@@ -3,8 +3,7 @@ import re
 import shlex
 from datetime import datetime
 from typing import (
-    Tuple, Union, Callable, Iterable, Any, Optional, List, Dict,
-    Awaitable
+    Tuple, Union, Callable, Iterable, Any, Optional, List, Dict
 )
 
 from nonebot import NoneBot, permission as perm
@@ -68,19 +67,8 @@ class Command:
             if session.current_arg_filters is not None and \
                     session.current_key is not None:
                 # argument-level filters are given, use them
-                arg = session.current_arg
-                for f in session.current_arg_filters:
-                    try:
-                        res = f(arg)
-                        if isinstance(res, Awaitable):
-                            res = await res
-                        arg = res
-                    except ValidateError as e:
-                        # validation failed
-                        session.pause(e.message)
-
-                # passed all filters
-                session.state[session.current_key] = arg
+                await argfilter.run_arg_filters(
+                    session, session.current_arg_filters)
             else:
                 # fallback to command-level args_parser_func
                 if self.args_parser_func:
