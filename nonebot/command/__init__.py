@@ -156,55 +156,6 @@ def on_command(name: Union[str, CommandName_T], *,
     return deco
 
 
-class CommandGroup:
-    """
-    Group a set of commands with same name prefix.
-    """
-    __slots__ = ('basename', 'permission', 'only_to_me', 'privileged',
-                 'shell_like')
-
-    def __init__(self, name: Union[str, CommandName_T],
-                 permission: Optional[int] = None, *,
-                 only_to_me: Optional[bool] = None,
-                 privileged: Optional[bool] = None,
-                 shell_like: Optional[bool] = None):
-        self.basename = (name,) if isinstance(name, str) else name
-        self.permission = permission  # TODO: use .pyi
-        self.only_to_me = only_to_me
-        self.privileged = privileged
-        self.shell_like = shell_like
-
-    def command(self, name: Union[str, CommandName_T], *,
-                aliases: Optional[Iterable[str]] = None,
-                permission: Optional[int] = None,
-                only_to_me: Optional[bool] = None,
-                privileged: Optional[bool] = None,
-                shell_like: Optional[bool] = None) -> Callable:
-        sub_name = (name,) if isinstance(name, str) else name
-        name = self.basename + sub_name
-
-        kwargs = {}
-        if aliases is not None:
-            kwargs['aliases'] = aliases
-        if permission is not None:
-            kwargs['permission'] = permission
-        elif self.permission is not None:
-            kwargs['permission'] = self.permission
-        if only_to_me is not None:
-            kwargs['only_to_me'] = only_to_me
-        elif self.only_to_me is not None:
-            kwargs['only_to_me'] = self.only_to_me
-        if privileged is not None:
-            kwargs['privileged'] = privileged
-        elif self.privileged is not None:
-            kwargs['privileged'] = self.privileged
-        if shell_like is not None:
-            kwargs['shell_like'] = shell_like
-        elif self.shell_like is not None:
-            kwargs['shell_like'] = self.shell_like
-        return on_command(name, **kwargs)
-
-
 def _find_command(name: Union[str, CommandName_T]) -> Optional[Command]:
     cmd_name = (name,) if isinstance(name, str) else name
     if not cmd_name:
@@ -686,3 +637,6 @@ def kill_current_session(ctx: Context_T) -> None:
     ctx_id = context_id(ctx)
     if ctx_id in _sessions:
         del _sessions[ctx_id]
+
+
+from nonebot.command.group import CommandGroup

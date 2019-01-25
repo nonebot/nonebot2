@@ -114,12 +114,18 @@ from .helpers import context_id
 
 __all__ = [
     'NoneBot', 'scheduler', 'init', 'get_bot', 'run',
+
     'CQHttpError',
+
     'load_plugin', 'load_plugins', 'load_builtin_plugins',
     'get_loaded_plugins',
+
     'message_preprocessor', 'Message', 'MessageSegment',
+
     'on_command', 'CommandSession', 'CommandGroup',
+
     'on_natural_language', 'NLPSession', 'NLPResult', 'IntentCommand',
     'on_notice', 'NoticeSession', 'on_request', 'RequestSession',
+
     'context_id',
 ]
