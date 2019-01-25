@@ -1,11 +1,10 @@
-from typing import Callable, Any, Awaitable, Union, List, TYPE_CHECKING
+from typing import Awaitable, List, TYPE_CHECKING
 
 from nonebot.helpers import render_expression
+from nonebot.typing import Filter_T
 
 if TYPE_CHECKING:
     from nonebot.command import CommandSession
-
-ArgFilter_T = Callable[[Any], Union[Any, Awaitable[Any]]]
 
 
 class ValidateError(ValueError):
@@ -14,7 +13,7 @@ class ValidateError(ValueError):
 
 
 async def run_arg_filters(session: 'CommandSession',
-                          arg_filters: List[ArgFilter_T]) -> None:
+                          arg_filters: List[Filter_T]) -> None:
     """
     Run a specific list of argument filters on a command session.
 

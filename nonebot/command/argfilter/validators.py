@@ -1,7 +1,7 @@
 import re
 from typing import Callable, Any
 
-from nonebot.command.argfilter import ValidateError, ArgFilter_T
+from nonebot.command.argfilter import ValidateError, Filter_T
 
 
 class BaseValidator:
@@ -16,7 +16,7 @@ def _raise_failure(message):
     raise ValidateError(message)
 
 
-def not_empty(message=None) -> ArgFilter_T:
+def not_empty(message=None) -> Filter_T:
     """
     Validate any object to ensure it's not empty (is None or has no elements).
     """
@@ -32,7 +32,7 @@ def not_empty(message=None) -> ArgFilter_T:
 
 
 def fit_size(min_length: int = 0, max_length: int = None,
-             message=None) -> ArgFilter_T:
+             message=None) -> Filter_T:
     """
     Validate any sized object to ensure the size/length
     is in a given range [min_length, max_length].
@@ -49,7 +49,7 @@ def fit_size(min_length: int = 0, max_length: int = None,
 
 
 def match_regex(pattern: str, message=None, *, flags=0,
-                fullmatch: bool = False) -> ArgFilter_T:
+                fullmatch: bool = False) -> Filter_T:
     """
     Validate any string object to ensure it matches a given pattern.
     """
@@ -69,7 +69,7 @@ def match_regex(pattern: str, message=None, *, flags=0,
 
 
 def ensure_true(bool_func: Callable[[Any], bool],
-                message=None) -> ArgFilter_T:
+                message=None) -> Filter_T:
     """
     Validate any object to ensure the result of applying
     a boolean function to it is True.
@@ -83,7 +83,7 @@ def ensure_true(bool_func: Callable[[Any], bool],
     return validate
 
 
-def between_inclusive(start=None, end=None, message=None) -> ArgFilter_T:
+def between_inclusive(start=None, end=None, message=None) -> Filter_T:
     """
     Validate any comparable object to ensure it's between
     `start` and `end` inclusively.

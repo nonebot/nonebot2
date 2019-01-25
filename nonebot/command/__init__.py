@@ -7,13 +7,14 @@ from typing import (
 )
 
 from nonebot import NoneBot, permission as perm
-from nonebot.command.argfilter import ArgFilter_T, ValidateError
+from nonebot.command.argfilter import ValidateError
 from nonebot.helpers import context_id, send, render_expression
 from nonebot.log import logger
 from nonebot.message import Message
 from nonebot.session import BaseSession
 from nonebot.typing import (
-    Context_T, CommandName_T, CommandArgs_T, Message_T, State_T
+    Context_T, CommandName_T, CommandArgs_T, Message_T, State_T,
+    Filter_T
 )
 
 # key: one segment of command name
@@ -231,7 +232,7 @@ class CommandSession(BaseSession):
         self.current_key: Optional[str] = None
 
         # initialize current argument filters
-        self.current_arg_filters: Optional[List[ArgFilter_T]] = None
+        self.current_arg_filters: Optional[List[Filter_T]] = None
 
         self._current_send_kwargs: Dict[str, Any] = {}
 
@@ -332,7 +333,7 @@ class CommandSession(BaseSession):
 
     def get(self, key: str, *,
             prompt: Optional[Message_T] = None,
-            arg_filters: Optional[List[ArgFilter_T]] = None,
+            arg_filters: Optional[List[Filter_T]] = None,
             **kwargs) -> Any:
         """
         Get an argument with a given key.
