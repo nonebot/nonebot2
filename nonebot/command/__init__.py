@@ -76,6 +76,9 @@ class Command:
                 # fallback to command-level args_parser_func
                 if self.args_parser_func:
                     await self.args_parser_func(session)
+                elif session.current_key is not None:
+                    # no args_parser_func, fallback to default behavior
+                    await argfilter.run_arg_filters(session, [])
 
             await self.func(session)
             return True
