@@ -3,7 +3,8 @@ import re
 import shlex
 from datetime import datetime
 from typing import (
-    Tuple, Union, Callable, Iterable, Any, Optional, List, Dict
+    Tuple, Union, Callable, Iterable, Any, Optional, List, Dict,
+    Awaitable
 )
 
 from nonebot import NoneBot, permission as perm
@@ -71,15 +72,34 @@ class Command:
             if session.current_arg_filters is not None and \
                     session.current_key is not None:
                 # argument-level filters are given, use them
-                await argfilter.run_arg_filters(
-                    session, session.current_arg_filters)
+                arg = session.current_arg
+                for f in session.current_arg_filters:
+                    try:
+                        res = f(arg)
+                        if isinstance(res, Awaitable):
+                            res = await res
+                        arg = res
+                    except ValidateError as e:
+                        # validation failed
+                        failure_message = e.message
+                        if failure_message is None:
+                            config = session.bot.config
+                            failure_message = render_expression(
+                                config.DEFAULT_VALIDATION_FAILURE_EXPRESSION
+                            )
+                        # noinspection PyProtectedMember
+                        session.pause(failure_message,
+                                      **session._current_send_kwargs)
+
+                # passed all filters
+                session.state[session.current_key] = arg
             else:
                 # fallback to command-level args_parser_func
                 if self.args_parser_func:
                     await self.args_parser_func(session)
                 elif session.current_key is not None:
                     # no args_parser_func, fallback to default behavior
-                    await argfilter.run_arg_filters(session, [])
+                    session.state[session.current_key] = session.current_arg
 
             await self.func(session)
             return True
