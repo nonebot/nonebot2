@@ -44,7 +44,8 @@ async def run_arg_filters(session: 'CommandSession',
                 failure_message = render_expression(
                     session.bot.config.DEFAULT_VALIDATION_FAILURE_EXPRESSION
                 )
-            session.pause(failure_message)
+            # noinspection PyProtectedMember
+            session.pause(failure_message, **session._current_send_kwargs)
 
     # passed all filters
     session.state[session.current_key] = arg

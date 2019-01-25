@@ -260,7 +260,8 @@ class SwitchException(Exception):
 
 
 class CommandSession(BaseSession):
-    __slots__ = ('cmd', 'current_key', 'current_arg_filters',
+    __slots__ = ('cmd',
+                 'current_key', 'current_arg_filters', '_current_send_kwargs',
                  'current_arg', '_current_arg_text', '_current_arg_images',
                  '_state', '_last_interaction', '_running')
 
@@ -274,6 +275,8 @@ class CommandSession(BaseSession):
 
         # initialize current argument filters
         self.current_arg_filters: Optional[List[ArgFilter_T]] = None
+
+        self._current_send_kwargs: Dict[str, Any] = {}
 
         # initialize current argument
         self.current_arg: str = ''  # with potential CQ codes
@@ -392,8 +395,7 @@ class CommandSession(BaseSession):
 
         self.current_key = key
         self.current_arg_filters = arg_filters
-        # TODO: self.current_send_kwargs
-        # ask the user for more information
+        self._current_send_kwargs = kwargs
         self.pause(prompt, **kwargs)
 
     def get_optional(self, key: str,
