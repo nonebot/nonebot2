@@ -52,6 +52,31 @@ sidebar: auto
 
   命令参数的类型。
 
+### `State_T` <Badge text="1.2.0+"/>
+
+- **类型:** `Dict[str, Any]`
+
+- **说明:**
+
+  命令会话的状态（`state` 属性）的类型。
+
+### `Filter_T` <Badge text="1.2.0+"/>
+
+- **类型:** `Callable[[Any], Union[Any, Awaitable[Any]]]`
+
+- **说明:**
+
+  过滤器的类型。
+
+  例如：
+
+  ```python
+  async def validate(value):
+      if value > 100:
+          raise ValidateError('数值必须小于 100')
+      return value
+  ```
+
 ## 配置
 
 ### `API_ROOT`
@@ -292,6 +317,24 @@ sidebar: auto
 
   设置最大长度为 100。
 
+### `DEFAULT_VALIDATION_FAILURE_EXPRESSION` <Badge text="1.2.0+"/>
+
+- **类型:** `Expression_T`
+
+- **默认值:** `'您的输入不符合要求，请重新输入'`
+
+- **说明:**
+
+  命令参数验证失败（验证器抛出 `ValidateError` 异常）、且验证器没有指定错误信息时，默认向用户发送的错误提示。
+
+- **用法:**
+
+  ```python
+  DEFAULT_VALIDATION_FAILURE_EXPRESSION = '你发送的内容格式不太对呢，请检查一下再发送哦～'
+  ```
+
+  设置更亲切的默认错误提示。
+
 ### `APSCHEDULER_CONFIG`
 
 - **类型:** `Dict[str, Any]`
@@ -326,6 +369,7 @@ sidebar: auto
 - `NoticeSession` -> `nonebot.notice_request.NoticeSession`
 - `on_request` -> `nonebot.notice_request.on_request`
 - `RequestSession` -> `nonebot.notice_request.RequestSession`
+- `context_id` <Badge text="1.2.0+"/> -> `nonebot.helpers.context_id`
 
 ### `scheduler`
 
@@ -1234,9 +1278,11 @@ sidebar: auto
 
 - **说明:**
 
-  将函数装饰为命令参数解析器。
+  将函数装饰为命令层面的参数解析器，将在命令实际处理函数之前被运行。
 
   如果已经在 `on_command` 装饰器中使用了 `shell_like=True`，则无需手动使用编写参数解析器。
+
+  如果使用 `CommandSession#get()` 方法获取参数，并且传入了 `arg_filters`（相当于单个参数层面的参数解析器），则不会再运行此装饰器注册的命令层面的参数解析器；相反，如果没有传入 `arg_filters`，则会运行。
 
 - **要求:**
 
@@ -1250,7 +1296,7 @@ sidebar: auto
       stripped_text = session.current_arg_text.strip()
       if not session.current_key and stripped_text:
           session.current_key = 'initial_arg'
-      session.args[session.current_key] = stripped_text
+      session.state[session.current_key] = stripped_text  # 若使用 1.1.0 及以下版本，请使用 session.args
   ```
 
   一个典型的命令参数解析器。
@@ -1344,41 +1390,29 @@ sidebar: auto
 
 继承自 `BaseSession` 类，表示命令 Session。
 
-#### `current_key`
+#### _readonly property_ `state` <Badge text="1.2.0+"/>
 
-- **类型:** `Optional[Any]`
-
-- **说明:**
-
-  命令会话当前正在询问用户的参数的键（`args` 属性的键）。第一次运行会话时，该属性为 `None`。
-
-#### `current_arg`
-
-- **类型:** `str`
+- **类型:** `State_T`
 
 - **说明:**
 
-  命令会话当前参数。实际上是 酷Q 收到的消息去掉命令名的剩下部分，因此可能存在 CQ 码。
+  命令会话的状态数据（包括已获得的所有参数）。
 
-#### `current_arg_text`
+  属性本身只读，但属性中的内容可读写。
 
-- **类型:** `str`
+- **用法:**
 
-- **说明:**
+  ```python
+  if not session.state.get('initialized'):
+      # ... 初始化工作
+      session.state['initialized'] = True
+  ```
 
-  `current_arg` 属性的纯文本部分（不包含 CQ 码），各部分使用空格连接。
+  在命令处理函数的开头进行**每次命令调用只应该执行一次的初始化操作**。
 
-#### `current_arg_images`
+#### _readonly property_ `args` <Badge text="1.2.0-" type="error"/>
 
-- **类型:** `List[str]`
-
-- **说明:**
-
-  `current_arg` 属性中所有图片的 URL 的列表，如果参数中没有图片，则为 `[]`。
-
-#### `args`
-
-- **类型:** `Dict[Any, Any]`
+- **类型:** `CommandArgs_T`
 
 - **说明:**
 
@@ -1392,13 +1426,45 @@ sidebar: auto
 
   命令会话是否第一次运行。
 
+#### `current_key`
+
+- **类型:** `Optional[str]`
+
+- **说明:**
+
+  命令会话当前正在询问用户的参数的键（或称参数的名字）。第一次运行会话时，该属性为 `None`。
+
+#### `current_arg`
+
+- **类型:** `str`
+
+- **说明:**
+
+  命令会话当前参数。实际上是 酷Q 收到的消息去掉命令名的剩下部分，因此可能存在 CQ 码。
+
+#### _readonly property_ `current_arg_text`
+
+- **类型:** `str`
+
+- **说明:**
+
+  `current_arg` 属性的纯文本部分（不包含 CQ 码），各部分使用空格连接。
+
+#### _readonly property_ `current_arg_images`
+
+- **类型:** `List[str]`
+
+- **说明:**
+
+  `current_arg` 属性中所有图片的 URL 的列表，如果参数中没有图片，则为 `[]`。
+
 #### _readonly property_ `argv`
 
 - **类型:** `List[str]`
 
 - **说明:**
 
-  命令参数列表，本质上是 `session.get_optional('argv', [])`，通常搭配 `on_command(..., shell_like=True)` 使用。
+  命令参数列表，类似于 `sys.argv`，本质上是 `session.state.get('argv', [])`，**需要搭配 `on_command(..., shell_like=True)` 使用**。
 
 - **用法:**
 
@@ -1408,18 +1474,21 @@ sidebar: auto
       argv = session.argv
   ```
 
-#### `get(key, *, prompt=None, **kwargs)`
+#### `get(key, *, prompt=None, arg_filters=None, **kwargs)`
 
 - **说明:**
 
-  从 `args` 属性获取参数，如果参数不存在，则暂停当前会话，向用户发送提示，并等待用户的新一轮交互。
+  从 `state` 属性获取参数，如果参数不存在，则暂停当前会话，向用户发送提示，并等待用户的新一轮交互。
 
   如果需要暂停当前会话，则命令处理器中，此函数调用之后的语句将不会被执行（除非捕获了此函数抛出的特殊异常）。
+
+  注意，一旦传入 `arg_filters` 参数（参数过滤器），则等用户再次输入时，_command_func._`args_parser` 所注册的参数解析函数将不会被运行，而会在对 `current_arg` 依次运行过滤器之后直接将其放入 `state` 属性中。
 
 - **参数:**
 
   - `key: Any`: 参数的键
   - `prompt: Optional[Message_T]`: 提示的消息内容
+  - `arg_filters: Optional[List[Filter_T]]` <Badge text="1.2.0+"/>: 用于处理和验证用户输入的参数的过滤器
   - `**kwargs: Any`: 其它传入 `BaseSession.send()` 的命名参数
 
 - **返回:**
@@ -1434,7 +1503,23 @@ sidebar: auto
 
   获取位置信息，如果当前还不知道，则询问用户。
 
-#### `get_optional(key, default=None)`
+  ```python
+  from nonebot.command.argfilter import extractors, validators
+
+  time = session.get(
+      'time', prompt='你需要我在什么时间提醒你呢？',
+      arg_filters=[
+          extractors.extract_text,  # 取纯文本部分
+          str.strip,  # 去掉两边空白字符
+          # 正则匹配输入格式
+          validators.match_regex(r'^\d{4}-\d{2}-\d{2}$', '格式不对啦，请重新输入')
+      ]
+  )
+  ```
+
+  获取时间信息，如果当前还不知道，则询问用户，等待用户输入之后，会依次运行 `arg_filters` 参数中的过滤器，以确保参数内容和格式符合要求。
+
+#### `get_optional(key, default=None)` <Badge text="1.2.0-" type="error"/>
 
 - **说明:**
 
@@ -1538,8 +1623,8 @@ sidebar: auto
   - `bot: NoneBot`: NoneBot 对象
   - `ctx: Context_T`: 事件上下文对象
   - `name: Union[str, CommandName_T]`: 要调用的命令名
-  - `current_arg: str`: 命令会话的 `current_arg` 属性
-  - `args: Optional[CommandArgs_T]`: 命令会话的 `args` 属性
+  - `current_arg: str`: 命令会话的当前输入参数
+  - `args: Optional[CommandArgs_T]`: 命令会话的（初始）参数（将会被并入命令会话的 `state` 属性）
   - `check_perm: bool`: 是否检查命令的权限，若否，则即使当前事件上下文并没有权限调用这里指定的命令，也仍然会调用成功
   - `disable_interaction: bool`: 是否禁用交互功能，若是，则该命令的会话不会覆盖任何当前已存在的命令会话，新创建的会话也不会保留
 
@@ -1578,6 +1663,180 @@ sidebar: auto
   ```
 
   在特权命令 `kill` 中强行移除当前正在运行的会话。
+
+## `nonebot.command.argfilter` 模块 <Badge text="1.2.0+"/>
+
+本模块主要用于命令参数过滤相关的功能。
+
+命令参数过滤器主要有下面几种：
+
+- 提取器，从用户输入的原始参数内容中提取需要的内容，`extractors` 子模块中提供了一些常用提取器
+- 修剪器，将用户输入的原始参数内容进行适当修建，例如 `str.strip` 可以去掉两遍的空白字符
+- 验证器，验证参数的格式、长度等是否符合要求，`validators` 子模块中提供了一些常用验证器
+- 转换器，将参数进行类型或格式上的转换，例如 `int` 可以将字符串转换成整数，`converters` 子模块中提供了一些常用转换器
+
+### _class_ `ValidateError`
+
+用于表示验证失败的异常类。
+
+#### `message`
+
+- **类型:** `Optional[Message_T]`
+
+- **说明:**
+
+  验证失败时要发送的错误提示消息。如果为 `None`，则使用配置中的 `DEFAULT_VALIDATION_FAILURE_EXPRESSION`。
+
+## `nonebot.command.argfilter.extractors` 模块 <Badge text="1.2.0+"/>
+
+提供几种常用的提取器。
+
+### `extract_text`
+
+- **说明:**
+
+  提取消息中的纯文本部分（使用空格合并纯文本消息段）。
+
+- **输入类型:** `Message_T`
+
+- **输出类型:** `str`
+
+### `extract_image_urls`
+
+- **说明:**
+
+  提取消息中的图片 URL 列表。
+
+- **输入类型:** `Message_T`
+
+- **输出类型:** `List[str]`
+
+### `extract_numbers`
+
+- **说明:**
+
+  提取消息中的所有数字（浮点数）。
+
+- **输入类型:** `Message_T`
+
+- **输出类型:** `List[float]`
+
+## `nonebot.command.argfilter.validators` 模块 <Badge text="1.2.0+"/>
+
+提供几种常用的验证器。
+
+这些验证器的工厂函数全都接受可选参数 `message: Optional[Message_T]`，用于在验证失败时向用户发送错误提示。使用这些的验证器时，必须先调用验证器的工厂函数，其返回结果才是真正的验证器，例如：
+
+```python
+session.get('arg1', prompt='请输入 arg1：',
+            arg_filters=[extract_text， not_empty('输入不能为空')])
+```
+
+注意 `extract_text` 和 `not_empty` 使用上的区别。
+
+### `not_empty(message=None)`
+
+- **说明:**
+
+  验证输入不为空。
+
+- **输入类型:** `Any`
+
+- **输出类型:** `Any`
+
+### `fit_size(min_length=0, max_length=None, message=None)`
+
+- **说明:**
+
+  验证输入的长度（大小）在 `min_length` 到 `max_length` 之间（包括两者）。
+
+- **参数:**
+
+  - `min_length: int`: 最小长度
+  - `max_length: Optional[int]`: 最大长度
+
+- **输入类型:** `Sized`
+
+- **输出类型:** `Sized`
+
+### `match_regex(pattern, message=None, *, flags=0, fullmatch=False)`
+
+- **说明:**
+
+  验证输入是否匹配正则表达式。
+
+- **参数:**
+
+  - `pattern: str`: 正则表达式
+  - `flags`: 传入 `re.compile()` 的标志
+  - `fullmatch: bool`: 是否使用完全匹配（`re.fullmatch()`）
+
+- **输入类型:** `str`
+
+- **输出类型:** `str`
+
+### `ensure_true(bool_func, message=None)`
+
+- **说明:**
+
+  验证输入是否能使给定布尔函数返回 `True`。
+
+- **参数:**
+
+  - `bool_func: Callable[[Any], bool]`: 接受输入、返回布尔值的函数
+
+- **输入类型:** `Any`
+
+- **输出类型:** `Any`
+
+### `between_inclusive(start=None, end=None, message=None)`
+
+- **说明:**
+
+  验证输入是否在 `start` 到 `end` 之间（包括两者）。
+
+- **参数:**
+
+  - `start`: 范围开始
+  - `end`: 范围结束
+
+- **输入类型:** `Comparable`
+
+- **输出类型:** `Comparable`
+
+## `nonebot.command.argfilter.converters` 模块 <Badge text="1.2.0+"/>
+
+提供几种常用的转换器。
+
+### `simple_chinese_to_bool`
+
+- **说明:**
+
+  将中文（`好`、`不行` 等）转换成布尔值。
+
+- **输入类型:** `str`
+
+- **输出类型:** `Optional[bool]`
+
+### `split_nonempty_lines`
+
+- **说明:**
+
+  按行切割文本，并忽略所有空行。
+
+- **输入类型:** `str`
+
+- **输出类型:** `List[str]`
+
+### `split_nonempty_stripped_lines`
+
+- **说明:**
+
+  按行切割文本，并对每一行进行 `str.strip`，再忽略所有空行。
+
+- **输入类型:** `str`
+
+- **输出类型:** `List[str]`
 
 ## `nonebot.natural_language` 模块
 
@@ -1642,7 +1901,49 @@ sidebar: auto
 
   消息内容中所有图片的 URL 的列表，如果消息中没有图片，则为 `[]`。
 
-### _class_ `NLPResult`
+### _class_ `IntentCommand` <Badge text="1.2.0+"/>
+
+用于表示自然语言处理之后得到的意图命令，是一个 namedtuple，由自然语言处理器返回。
+
+#### `confidence`
+
+- **类型:** `float`
+
+- **说明:**
+
+  意图的置信度，即表示对当前推测的用户意图有多大把握。
+
+#### `name`
+
+- **类型:** `Union[str, CommandName_T]`
+
+- **说明:**
+
+  命令的名字。
+
+#### `args`
+
+- **类型:** `Optional[CommandArgs_T]`
+
+- **说明:**
+
+  命令的（初始）参数。
+
+#### `current_arg`
+
+- **类型:** `Optional[str]`
+
+- **说明:**
+
+  命令的当前输入参数。
+
+#### `__init__(confidence, name, args=None, current_arg=None)`
+
+- **说明:**
+
+  初始化 `IntentCommand` 对象，参数即为上面的几个属性。
+
+### _class_ `NLPResult` <Badge text="1.2.0-" type="error"/>
 
 用于表示自然语言处理的结果，是一个 namedtuple，由自然语言处理器返回。
 

@@ -4,9 +4,100 @@ sidebar: auto
 
 # 更新日志
 
-## next
+## v1.2.0
+
+#### 新增
+
+- 新增 `nonebot.natual_language.IntentCommand` 类，用于替代旧的 `NLPResult`（后者已弃用），使该类的意义更明确，并新增 `current_arg` 属性，可用于设置 `IntentCommand` 被调用时的 `current_arg`
+- `nonebot` 模块新增了 `nonebot.helpers.context_id` 的快捷导入，以后可以直接通过 `nonebot.context_id` 使用
+- `CommandSession` 类新增 `state` 属性，用于替代旧的 `args`（后者已弃用），明确其用于维持 session 状态的作用，本质上和原来的 `args` 等价
+- `CommandSession` 类的 `get()` 方法新增 `arg_filters` 参数，表示正在询问用户的参数的过滤器，用于避免为每个参数编写 `args_parser`（一旦在 `get()` 时使用了 `arg_filters`，命令全局的 `args_parser` 将不会对这个参数运行），具体请参考 API 文档中的示例
+- 新增 `nonebot.command.argfilter` 模块，内置了几种常用的参数过滤器，分别在 `extractors`、`validators`、`converters` 子模块
+- 新增配置项 `DEFAULT_VALIDATION_FAILURE_EXPRESSION`，用于设置命令参数验证失败时的默认提示消息
+- `nonebot.typing` 模块新增 `State_T` 和 `Filter_T`
+
+#### 变更
+
+- `CommandSession` 类的 `current_arg_text` 和 `current_arg_images` 现变更为只读属性
+- 当使用 `CommandSession#get()` 方法获取参数后，若没有编写 `args_parser` 也没有传入 `arg_filters`，现在将会默认把用户输入直接当做参数，避免不断重复询问
+
+#### 修复
 
 - 修复交互式对话中，`ctx['to_me']` 没有置为 `True` 的 bug
+
+#### 弃用
+
+下述弃用内容可能会在若干版本后彻底移除，请适当做迁移。
+
+- 弃用 `nonebot.natual_language.NLPResult` 类，请使用 `IntentCommand` 类替代
+- 弃用 `CommandSession` 类的 `args` 属性，请使用 `state` 属性替代
+- 弃用 `CommandSession` 类的 `get_optional()` 方法，请使用 `state.get()` 替代
+
+#### 例子
+
+以一个例子总结本次更新：
+
+```python
+from nonebot import *
+from nonebot.command.argfilter import validators, extractors, ValidateError
+
+
+async def my_custom_validator(value):
+    if len(value) < 8:
+        raise ValidateError('长度必须至少是 8 哦')
+    return value
+
+
+@on_command('demo')
+async def demo(session: CommandSession):
+    arg1_derived = session.state.get('arg1_derived')  # 从会话状态里尝试获取
+    if arg1_derived is None:
+        arg1: int = session.get(
+            'arg1',
+            prompt='请输入参数1',
+            arg_filters=[
+                extractors.extract_text,  # 提取纯文本部分
+                str.strip,  # 去掉两边的空白
+                validators.not_empty(),
+                validators.match_regex(r'[0-9a-zA-Z]{6,20}', '必须为6~20位字符'),
+                my_custom_validator,  # 自定义验证器
+                int,  # 转换成 int
+                validators.ensure_true(lambda x: x > 20000000, '必须大于2000000')
+            ],
+            at_sender=True,
+        )
+        arg1_derived = arg1 + 42
+        session.state['arg1_derived'] = arg1_derived  # 修改会话状态
+
+    arg2 = session.get(
+        'arg2',
+        prompt='请输入参数2',
+        arg_filters=[
+            extractors.extract_image_urls,  # 提取图片 URL 列表
+            '\n'.join,  # 使用换行符拼接 URL 列表
+            validators.not_empty('请至少发送一张图片'),
+        ]
+    )
+
+    arg3 = session.get('arg3', prompt='你的arg3是什么呢？')
+
+    reply = f'arg1_derived:\n{arg1_derived}\n\narg2:\n{arg2}\n\narg3:\n{arg3}'
+    session.finish(reply)
+
+
+@demo.args_parser
+async def _(session: CommandSession):
+    if session.is_first_run and session.current_arg_text.strip():
+        # 第一次运行，如果有参数，则设置给 arg3
+        session.state['arg3'] = session.current_arg_text.strip()
+
+    # 如果不需要对参数进行特殊处理，则不用再手动加入 state，NoneBot 会自动放进去
+
+
+@on_natural_language(keywords={'demo'})
+async def _(session: NLPSession):
+    return IntentCommand(90.0, 'demo', current_arg='这是我的arg3')
+```
 
 ## v1.1.0
 
