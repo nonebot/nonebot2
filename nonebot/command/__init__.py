@@ -289,14 +289,6 @@ class CommandSession(BaseSession):
         return self._last_interaction is None
 
     @property
-    def argv(self) -> List[str]:
-        """
-        Shell-like argument list, similar to sys.argv.
-        Only available while shell_like is True in on_command decorator.
-        """
-        return self.state.get('argv', [])
-
-    @property
     def current_arg_text(self) -> str:
         """
         Plain text part in the current argument, without any CQ codes.
@@ -317,6 +309,14 @@ class CommandSession(BaseSession):
                 if s.type == 'image' and 'url' in s.data
             ]
         return self._current_arg_images
+
+    @property
+    def argv(self) -> List[str]:
+        """
+        Shell-like argument list, similar to sys.argv.
+        Only available while shell_like is True in on_command decorator.
+        """
+        return self.state.get('argv', [])
 
     def refresh(self, ctx: Context_T, *, current_arg: str = '') -> None:
         """
