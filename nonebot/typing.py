@@ -4,5 +4,5 @@ Context_T = Dict[str, Any]
 Message_T = Union[str, Dict[str, Any], List[Dict[str, Any]]]
 Expression_T = Union[str, Sequence[str], Callable]
 CommandName_T = Tuple[str, ...]
-CommandArgs_T = Dict[str, Any]  # deprecated, use `State_T` instead
+CommandArgs_T = Dict[str, Any]
 State_T = Dict[str, Any]
