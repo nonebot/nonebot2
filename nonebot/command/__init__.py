@@ -260,8 +260,8 @@ class SwitchException(Exception):
 
 
 class CommandSession(BaseSession):
-    __slots__ = ('cmd', 'current_key', 'current_arg', 'current_arg_filters',
-                 'current_arg_text', 'current_arg_images',
+    __slots__ = ('cmd', 'current_key', 'current_arg_filters',
+                 'current_arg', '_current_arg_text', '_current_arg_images',
                  '_state', '_last_interaction', '_running')
 
     def __init__(self, bot: NoneBot, ctx: Context_T, cmd: Command, *,
@@ -272,18 +272,19 @@ class CommandSession(BaseSession):
         # unique key of the argument that is currently requesting (asking)
         self.current_key: Optional[str] = None
 
-        # initialize current argument
-        self.current_arg: str = ''  # with potential CQ codes
-        self.current_arg_text: str = ''  # without any CQ codes TODO: property
-        self.current_arg_images: List[str] = []  # image urls
-        self.refresh(ctx, current_arg=current_arg)  # fill the above
-
         # initialize current argument filters
         self.current_arg_filters: Optional[List[ArgFilter_T]] = None
+
+        # initialize current argument
+        self.current_arg: str = ''  # with potential CQ codes
+        self._current_arg_text = None
+        self._current_arg_images = None
+        self.refresh(ctx, current_arg=current_arg)  # fill the above
 
         self._state: State_T = {}
         if args:
             self._state.update(args)
+
         self._last_interaction = None  # last interaction time of this session
         self._running = False
 
@@ -335,6 +336,28 @@ class CommandSession(BaseSession):
         """
         return self.state.get('argv', [])
 
+    @property
+    def current_arg_text(self) -> str:
+        """
+        Plain text part in the current argument, without any CQ codes.
+        """
+        if self._current_arg_text is None:
+            self._current_arg_text = Message(
+                self.current_arg).extract_plain_text()
+        return self._current_arg_text
+
+    @property
+    def current_arg_images(self) -> List[str]:
+        """
+        Images (as list of urls) in the current argument.
+        """
+        if self._current_arg_images is None:
+            self._current_arg_images = [
+                s.data['url'] for s in Message(self.current_arg)
+                if s.type == 'image' and 'url' in s.data
+            ]
+        return self._current_arg_images
+
     def refresh(self, ctx: Context_T, *, current_arg: str = '') -> None:
         """
         Refill the session with a new message context.
@@ -344,10 +367,8 @@ class CommandSession(BaseSession):
         """
         self.ctx = ctx
         self.current_arg = current_arg
-        current_arg_as_msg = Message(current_arg)
-        self.current_arg_text = current_arg_as_msg.extract_plain_text()
-        self.current_arg_images = [s.data['url'] for s in current_arg_as_msg
-                                   if s.type == 'image' and 'url' in s.data]
+        self._current_arg_text = None
+        self._current_arg_images = None
 
     def get(self, key: str, *,
             prompt: Optional[Message_T] = None,
@@ -363,7 +384,7 @@ class CommandSession(BaseSession):
 
         :param key: argument key
         :param prompt: prompt to ask the user
-        :param arg_filters: argument filters for next user input
+        :param arg_filters: argument filters for the next user input
         :return: the argument value
         """
         if key in self.state:
