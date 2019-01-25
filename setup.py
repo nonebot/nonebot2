@@ -1,12 +1,14 @@
-from setuptools import setup, find_packages
+from setuptools import setup, find_packages, findall
 
 with open('README.md', 'r', encoding='utf-8') as f:
     long_description = f.read()
 
+packages = find_packages(include=('nonebot', 'nonebot.*'))
+stub_files = list(filter(lambda x: x.endswith('.pyi'), findall('nonebot')))
+
 setup(
     name='nonebot',
     version='1.1.0',
-    packages=find_packages(include=('nonebot', 'nonebot.*')),
     url='https://github.com/richardchien/nonebot',
     license='MIT License',
     author='Richard Chien',
@@ -14,6 +16,8 @@ setup(
     description='An asynchronous QQ bot framework based on CoolQ.',
     long_description=long_description,
     long_description_content_type='text/markdown',
+    packages=packages,
+    data_files=stub_files,
     install_requires=['aiocqhttp>=0.6.7', 'aiocache>=0.10'],
     extras_require={
         'scheduler': ['apscheduler>=1.2'],
