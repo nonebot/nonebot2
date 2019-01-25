@@ -32,8 +32,11 @@ CommandHandler_T = Callable[['CommandSession'], Any]
 
 
 class Command:
-    __slots__ = ('name', 'func', 'permission',
-                 'only_to_me', 'privileged', 'args_parser_func')
+    __slots__ = ('name', 'func',
+                 'permission',
+                 'only_to_me',
+                 'privileged',
+                 'args_parser_func')
 
     def __init__(self, *,
                  name: CommandName_T,
