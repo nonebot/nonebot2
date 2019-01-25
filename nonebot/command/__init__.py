@@ -97,8 +97,9 @@ class Command:
                 # fallback to command-level args_parser_func
                 if self.args_parser_func:
                     await self.args_parser_func(session)
-                elif session.current_key is not None:
-                    # no args_parser_func, fallback to default behavior
+                if session.current_key is not None and \
+                        session.current_key not in session.state:
+                    # args_parser_func didn't set state, here we set it
                     session.state[session.current_key] = session.current_arg
 
             await self.func(session)
