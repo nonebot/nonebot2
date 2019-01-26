@@ -25,19 +25,21 @@ def context_id(ctx: Context_T, *,
     ctx_id = ''
     if mode == 'default':
         if ctx.get('group_id'):
-            ctx_id += f'/group/{ctx["group_id"]}'
+            ctx_id = f'/group/{ctx["group_id"]}'
         elif ctx.get('discuss_id'):
-            ctx_id += f'/discuss/{ctx["discuss_id"]}'
+            ctx_id = f'/discuss/{ctx["discuss_id"]}'
         if ctx.get('user_id'):
             ctx_id += f'/user/{ctx["user_id"]}'
     elif mode == 'group':
         if ctx.get('group_id'):
-            ctx_id += f'/group/{ctx["group_id"]}'
+            ctx_id = f'/group/{ctx["group_id"]}'
         elif ctx.get('discuss_id'):
-            ctx_id += f'/discuss/{ctx["discuss_id"]}'
+            ctx_id = f'/discuss/{ctx["discuss_id"]}'
+        elif ctx.get('user_id'):
+            ctx_id = f'/user/{ctx["user_id"]}'
     elif mode == 'user':
         if ctx.get('user_id'):
-            ctx_id += f'/user/{ctx["user_id"]}'
+            ctx_id = f'/user/{ctx["user_id"]}'
 
     if ctx_id and use_hash:
         ctx_id = hashlib.md5(ctx_id.encode('ascii')).hexdigest()
