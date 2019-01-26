@@ -8,7 +8,7 @@ stub_files = list(filter(lambda x: x.endswith('.pyi'), findall('nonebot')))
 
 setup(
     name='nonebot',
-    version='1.2.0',
+    version='1.2.1',
     url='https://github.com/richardchien/nonebot',
     license='MIT License',
     author='Richard Chien',

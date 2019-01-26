@@ -59,14 +59,16 @@ module.exports = {
                     collapsable: false,
                     children: [
                         '',
-                        'session',
+                        'command-session',
+                        'command-argument',
+                        'command-group',
                         'message',
                         'permission',
                         'decorator',
+                        'database',
                         'scheduler',
                         'logging',
                         'configuration',
-                        'argparse',
                         'larger-application',
                         'deployment',
                     ]

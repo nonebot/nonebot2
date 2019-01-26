@@ -2,9 +2,18 @@
 
 到目前为止，我们都在调用 `CommandSession` 类的 `send()` 方法，而这个方法只能回复给消息的发送方，不能手动指定发送者，因此当我们需要实现将收到的消息经过处理后转发给另一个接收方这样的功能时，这个方法就用不了了。
 
-幸运的是，`NoneBot` 类是继承自 [python-aiocqhttp] 的 `CQHttp` 类的，而这个类实现了一个 `__getattr__()` 方法，由此提供了直接通过 bot 对象调用 CQHTTP 的 API 的能力，如下：
+幸运的是，`NoneBot` 类是继承自 [python-aiocqhttp] 的 `CQHttp` 类的，而这个类实现了一个 `__getattr__()` 方法，由此提供了直接通过 bot 对象调用 CQHTTP 的 API 的能力。
 
 [python-aiocqhttp]: https://github.com/richardchien/python-aiocqhttp
+
+要获取 bot 对象，可以通过如下两种方式：
+
+```python
+bot = session.bot
+bot = nonebot.get_bot()
+```
+
+Bot 对象的使用方式如下：
 
 ```python
 await bot.send_private_msg(user_id=12345678, message='你好～')
@@ -14,10 +23,19 @@ await bot.send_private_msg(user_id=12345678, message='你好～')
 
 通过这种方式调用 API 时，需要注意下面几点：
 
-1. **所有参数必须为命名参数（keyword argument）**，否则无法正确调用
-2. 这种调用**全都是异步调用**，因此需要适当 `await`
-3. **调用失败时（没有权限、对方不是好友、无 API 连接等）可能抛出 `nonebot.CQHttpError` 异常**，注意捕获
-4. **当多个机器人使用同一个 NoneBot 后端时**，可能需要加上参数 `self_id=<机器人QQ号>`，例如 `await bot.get_group_list(self_id=session.ctx['self_id'])`
+- **所有参数必须为命名参数（keyword argument）**，否则无法正确调用
+- 这种调用**全都是异步调用**，因此需要适当 `await`
+- **调用失败时（没有权限、对方不是好友、无 API 连接等）可能抛出 `nonebot.CQHttpError` 异常**，注意捕获，例如：
+  ```python
+  try:
+      info = await bot.get_group_list()
+  except CQHttpError:
+      pass
+  ```
+- **当多个机器人使用同一个 NoneBot 后端时**，可能需要加上参数 `self_id=<机器人QQ号>`，例如：
+  ```python
+  info = await bot.get_group_list(self_id=ctx['self_id'])
+  ```
 
 另外，在需要动态性的场合，除了使用 `getattr()` 方法外，还可以直接调用 `bot.call_action()` 方法，传入 `action` 和 `params` 即可，例如上例中，`action` 为 `'send_private_msg'`，`params` 为 `{'user_id': 12345678, 'message': '你好～'}`。
 

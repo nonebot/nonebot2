@@ -25,7 +25,7 @@ awesome-bot
 上一章中我们知道 NoneBot 内置了 `echo` 和 `say` 命令，我们已经测试了 `echo` 命令，并且正确地收到了机器人的回复，现在来尝试向它发送一个 `say` 命令：
 
 ```
-/say [CQ:music,type=163,id=478490650]
+/say [CQ:music,type=qq,id=209249583]
 ```
 
 可以预料，命令不会起任何效果，因为我们提到过，`say` 命令只有超级用户可以调用，而现在我们还没有将自己的 QQ 号配置为超级用户。
@@ -38,7 +38,7 @@ from nonebot.default_config import *
 SUPERUSERS = {12345678}
 ```
 
-这里的第 1 行是从 NoneBot 的默认配置中导入所有项，通常这是必须的，除非你知道自己在做什么，否则始终应该在配置文件的开头写上这一行。
+**这里的第 1 行是从 NoneBot 的默认配置中导入所有项，通常这是必须的，除非你知道自己在做什么，否则始终应该在配置文件的开头写上这一行。**
 
 之后就是配置 `SUPERUSERS` 了，这个配置项的要求是值为 `int` 类型的**容器**，也就是说，可以是 `set`、`list`、`tuple` 等类型，元素类型为 `int`；`12345678` 是你想设置为超级用户的 QQ。
 
@@ -60,7 +60,7 @@ if __name__ == '__main__':
 重启 NoneBot 后再次尝试发送：
 
 ```
-/say [CQ:music,type=163,id=478490650]
+/say [CQ:music,type=qq,id=209249583]
 ```
 
 可以看到这次机器人成功地给你回复了一个音乐分享消息。
@@ -73,7 +73,7 @@ if __name__ == '__main__':
 from nonebot.default_config import *
 
 SUPERUSERS = {12345678}
-COMMAND_START.add('')
+COMMAND_START = {'', '/', '!', '／', '！'}
 ```
 
 首先需要知道，NoneBot 默认的 `COMMAND_START` 是一个 `set` 对象，如下：
@@ -82,9 +82,9 @@ COMMAND_START.add('')
 COMMAND_START = {'/', '!', '／', '！'}
 ```
 
-因此调用 `COMMAND_START.add('')` 将会向 `set` 中添加一个空字符串，也就告诉了 NoneBot，我们希望不需要任何起始字符也能调用命令。
+这表示会尝试把 `/`、`!`、`／`、`！` 开头的消息理解成命令。而我们上面修改了的 `COMMAND_START` 加入了空字符串 `''`，也就告诉了 NoneBot，我们希望不需要任何起始字符也能调用命令。
 
-当然，你可以直接覆盖整个 `COMMAND_START`，其值和 `SUPERUSERS` 一样，可以是 `list`、`tuple`、`set` 等任意容器类型，元素类型可以是 `str` 或正则表达式，例如：
+`COMMAND_START` 的值和 `SUPERUSERS` 一样，可以是 `list`、`tuple`、`set` 等任意容器类型，元素类型可以是 `str` 或正则表达式，例如：
 
 ```python
 import re

@@ -4,7 +4,7 @@ from typing import Optional
 import aiohttp
 from aiocqhttp.message import escape
 from nonebot import on_command, CommandSession
-from nonebot import on_natural_language, NLPSession, NLPResult
+from nonebot import on_natural_language, NLPSession, IntentCommand
 from nonebot.helpers import context_id, render_expression
 
 __plugin_name__ = '智能聊天'
@@ -27,7 +27,7 @@ EXPR_DONT_UNDERSTAND = (
 @on_command('tuling')
 async def tuling(session: CommandSession):
     # 获取可选参数，这里如果没有 message 参数，命令不会被中断，message 变量会是 None
-    message = session.get_optional('message')
+    message = session.state.get('message')
 
     # 通过封装的函数获取图灵机器人的回复
     reply = await call_tuling_api(session, message)
@@ -45,7 +45,7 @@ async def tuling(session: CommandSession):
 async def _(session: NLPSession):
     # 以置信度 60.0 返回 tuling 命令
     # 确保任何消息都在且仅在其它自然语言处理器无法理解的时候使用 tuling 命令
-    return NLPResult(60.0, 'tuling', {'message': session.msg_text})
+    return IntentCommand(60.0, 'tuling', args={'message': session.msg_text})
 
 
 async def call_tuling_api(session: CommandSession, text: str) -> Optional[str]:

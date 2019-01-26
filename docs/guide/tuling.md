@@ -27,7 +27,7 @@ from typing import Optional
 import aiohttp
 from aiocqhttp.message import escape
 from nonebot import on_command, CommandSession
-from nonebot import on_natural_language, NLPSession, NLPResult
+from nonebot import on_natural_language, NLPSession, IntentCommand
 from nonebot.helpers import context_id, render_expression
 
 # 定义无法获取图灵回复时的「表达（Expression）」
@@ -43,7 +43,7 @@ EXPR_DONT_UNDERSTAND = (
 @on_command('tuling')
 async def tuling(session: CommandSession):
     # 获取可选参数，这里如果没有 message 参数，命令不会被中断，message 变量会是 None
-    message = session.get_optional('message')
+    message = session.state.get('message')
 
     # 通过封装的函数获取图灵机器人的回复
     reply = await call_tuling_api(session, message)
@@ -61,7 +61,7 @@ async def tuling(session: CommandSession):
 async def _(session: NLPSession):
     # 以置信度 60.0 返回 tuling 命令
     # 确保任何消息都在且仅在其它自然语言处理器无法理解的时候使用 tuling 命令
-    return NLPResult(60.0, 'tuling', {'message': session.msg_text})
+    return IntentCommand(60.0, 'tuling', args={'message': session.msg_text})
 
 
 async def call_tuling_api(session: CommandSession, text: str) -> Optional[str]:
@@ -126,7 +126,7 @@ TULING_API_KEY = ''
 ```python {3}
 @on_natural_language
 async def _(session: NLPSession):
-    return NLPResult(60.0, 'tuling', {'message': session.msg_text})
+    return IntentCommand(60.0, 'tuling', args={'message': session.msg_text})
 ```
 
 根据我们前面一章中已经知道的用法，这里就是直接返回置信度为 60.0 的 `tuling` 命令。之所以返回置信度 60.0，是因为自然语言处理器所返回的结果最终会按置信度排序，取置信度最高且大于等于 60.0 的结果来执行。把置信度设为 60.0 可以保证一条消息无法被其它自然语言处理器理解的时候 fallback 到 `tuling` 命令。
@@ -217,7 +217,7 @@ EXPR_DONT_UNDERSTAND = (
 
 @on_command('tuling')
 async def tuling(session: CommandSession):
-    message = session.get_optional('message')
+    message = session.state.get('message')
     reply = await call_tuling_api(session, message)
     if reply:
         await session.send(escape(reply))
@@ -227,7 +227,7 @@ async def tuling(session: CommandSession):
 
 ### 可选参数
 
-首先看第 13 行，`session.get_optional()` 可用于获取命令的可选参数，也就是说，从 `session.args` 中尝试获取一个参数，如果没有，返回 `None`，但并不会中断命令的执行，比较类似于 `dict.get()` 方法。
+首先看第 13 行，`session.state.get()` 可用于获取命令的可选参数，也就是说，从 `session.state` 中尝试获取一个参数（还记得 `IntentCommand` 的 `args` 参数内容会全部进入 `CommandSession` 的 `state` 吗），如果没有，返回 `None`，但并不会中断命令的执行。其实这就是 `dict.get()` 方法。
 
 ### 消息转义
 

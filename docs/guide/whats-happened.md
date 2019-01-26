@@ -18,10 +18,10 @@
 
 CoolQ HTTP API 插件收到消息后，会将其包装为一个统一的事件格式，并对消息内容进行一个初步的处理，例如编码转换、数组化、CQ 码增强等，这里的细节目前为止不需要完全明白，在需要的时候，可以去参考 CoolQ HTTP API 插件的 [文档](https://cqhttp.cc/docs/)。
 
-接着，插件把包装好的事件转换成 JSON 格式，并通过反向 WebSocket 客户端的 Event 客户端发送出去。这里的 Event 客户端，连接的就是我们在它的配置中指定的 `ws_reverse_event_url`，即 NoneBot 监听的 WebSocket 入口之一（另一个是 API）。
+接着，插件把包装好的事件转换成 JSON 格式，并通过「反向 WebSocket」发送给 NoneBot。这里的「反向 WebSocket」，连接的就是我们在 CoolQ HTTP API 插件的配置中指定的 `ws_reverse_url`，即 NoneBot 监听的 WebSocket 入口。
 
 ::: tip 提示
-反向 WebSocket 的 Event 和 API 客户端都是在插件启动时建立连接的，在恰当配置了 `ws_reverse_reconnect_interval` 和 `ws_reverse_reconnect_on_code_1000` 之后，会在断线时自动尝试重连。
+「反向 WebSocket」是 CoolQ HTTP API 插件的一种通信方式，表示插件作为客户端，主动去连接配置文件中指定的 `ws_reverse_url`。除此之外还有 HTTP、（正向）WebSocket 等方式。
 :::
 
 ## NoneBot 出场
@@ -42,7 +42,7 @@ CoolQ HTTP API 插件通过反向 WebSocket 将消息事件发送到 NoneBot 后
 
 到这里，我们先暂停一下对消息事件的行踪的描述，回头来说一下最小实例的代码：
 
-```python
+```python {4-6}
 import nonebot
 
 if __name__ == '__main__':
@@ -61,7 +61,7 @@ NoneBot 的内置插件只包含了两个命令，`echo` 和 `say`，两者的�
   <img alt="Echo and Say" src="./assets/echo_and_say.png" />
 </p>
 
-最后，`nonebot.run(host='127.0.0.1', port=8080)` 让 NoneBot 跑在了地址 `127.0.0.1:8080` 上，向 CoolQ HTTP API 插件提供 `/`、`/ws/event/`、`/ws/api/` 三个入口，在我们的反向 WebSocket 配置中，插件利用了后两个入口。
+最后，`nonebot.run(host='127.0.0.1', port=8080)` 让 NoneBot 跑在了地址 `127.0.0.1:8080` 上，向 CoolQ HTTP API 插件提供 `/`、`/ws/`、`/ws/event/`、`/ws/api/` 四个入口，在我们的反向 WebSocket 配置中，插件利用了第二个入口。
 
 ### 命令处理器
 
@@ -72,7 +72,7 @@ NoneBot 的内置插件只包含了两个命令，`echo` 和 `say`，两者的�
 ```python
 @on_command('echo')
 async def echo(session: CommandSession):
-    await session.send(session.get_optional('message') or session.current_arg)
+    await session.send(session.state.get('message') or session.current_arg)
 ```
 
 你现在不用关心它是如何从 Session 中拿到参数的，只需看到，命令处理器中实际内容只有一行 `session.send()` 函数调用，这个调用会直接把参数中的消息内容原样发送。

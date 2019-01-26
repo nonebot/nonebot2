@@ -53,10 +53,16 @@ async def weather(session: CommandSession):
 @weather.args_parser
 async def _(session: CommandSession):
     stripped_arg = session.current_arg_text.strip()
-    if session.current_key:
-        session.args[session.current_key] = stripped_arg
-    elif stripped_arg:
-        session.args['city'] = stripped_arg
+
+    if session.is_first_run:
+        if stripped_arg:
+            session.state['city'] = stripped_arg
+        return
+
+    if not stripped_arg:
+        session.pause('要查询的城市名称不能为空呢，请重新输入')
+
+    session.state[session.current_key] = stripped_arg
 ```
 
 `weather/data_source.py` 内容如下：
@@ -70,9 +76,9 @@ async def get_weather_of_city(city: str) -> str:
 
 在 `weather/__init__.py` 文件添加内容如下：
 
-```python {2,23-29}
+```python {2,29-35}
 from nonebot import on_command, CommandSession
-from nonebot import on_natural_language, NLPSession, NLPResult
+from nonebot import on_natural_language, NLPSession, IntentCommand
 
 from .data_source import get_weather_of_city
 
@@ -87,22 +93,28 @@ async def weather(session: CommandSession):
 @weather.args_parser
 async def _(session: CommandSession):
     stripped_arg = session.current_arg_text.strip()
-    if session.current_key:
-        session.args[session.current_key] = stripped_arg
-    elif stripped_arg:
-        session.args['city'] = stripped_arg
+
+    if session.is_first_run:
+        if stripped_arg:
+            session.state['city'] = stripped_arg
+        return
+
+    if not stripped_arg:
+        session.pause('要查询的城市名称不能为空呢，请重新输入')
+
+    session.state[session.current_key] = stripped_arg
 
 
 # on_natural_language 装饰器将函数声明为一个自然语言处理器
 # keywords 表示需要响应的关键词，类型为任意可迭代对象，元素类型为 str
 # 如果不传入 keywords，则响应所有没有被当作命令处理的消息
-@on_natural_language(keywords=('天气',))
+@on_natural_language(keywords={'天气'})
 async def _(session: NLPSession):
-    # 返回处理结果，3 个参数分别为置信度、命令名、命令会话的参数
-    return NLPResult(90.0, 'weather', {})
+    # 返回意图命令，前两个参数必填，分别表示置信度和意图命令名
+    return IntentCommand(90.0, 'weather')
 ```
 
-代码中的注释已经进行了大部分解释，这里再详细介绍一下 `NLPResult` 这个类。
+代码中的注释已经进行了大部分解释，这里再详细介绍一下 `IntentCommand` 这个类。
 
 在 NoneBot 中，自然语言处理器的工作方式就是将用户的自然语言消息解析成一个命令和命令所需的参数，由于自然语言消息的模糊性，在解析时不可能完全确定用户的意图，因此还需要返回一个置信度作为这个命令的确定程度。
 
@@ -110,7 +122,9 @@ async def _(session: NLPSession):
 置信度的计算需要自然语言处理器的编写者进行恰当的设计，以确保各插件之间的功能不会互相冲突。
 :::
 
-在实际项目中，很多插件都会注册有自然语言处理器，其中每个都按照它的解析情况返回 `NLPResult` 对象，NoneBot 会将所有自然语言处理器返回的 `NLPResult` 对象按置信度排序，取置信度最高且大于等于 60.0 的结果中的命令来执行，`NLPResult` 的第三个参数（上面代码中的 `{}`）会被赋值给命令的 `session.args`（还记得上一章中用到这个属性吗）。
+在实际项目中，很多插件都会注册有自然语言处理器，其中每个都按照它的解析情况返回 `IntentCommand` 对象（也可能不返回），NoneBot 会将所有自然语言处理器返回的 `IntentCommand` 对象按置信度排序，**取置信度最高且大于等于 60.0 的意图命令来执行**。
+
+<!-- 除了上面雏形中填的两个必要参数（置信度和命令名），`IntentCommand` 还接受 `args`（类型 `dict`）和 `current_arg`（类型 `str`）参数，也就是命令所需的参数。当一个意图命令被选中（置信度最高）时，NoneBot 会根据这个意图命令给出的命令名、命令参数来创建命令会话（`CommandSession`），其中 `args` 参数的内容会被全部放入 `CommandSession` 的 `state` 属性中，也就是前一章中用到的的 `session.state`，而 `current_arg` 将可以通过 `session.current_arg` 访问。后面的代码中将会用到 `current_arg` 参数。 -->
 
 目前的代码中，直接根据关键词 `天气` 做出响应，无论消息其它部分是什么，只要包含关键词 `天气`，就会理解为 `weather` 命令。
 
@@ -142,9 +156,9 @@ pip install jieba
 
 有了结巴分词之后，扩充 `weather/__init__.py` 如下：
 
-```python {3,29-43}
+```python {3,35-49}
 from nonebot import on_command, CommandSession
-from nonebot import on_natural_language, NLPSession, NLPResult
+from nonebot import on_natural_language, NLPSession, IntentCommand
 from jieba import posseg
 
 from .data_source import get_weather_of_city
@@ -160,21 +174,27 @@ async def weather(session: CommandSession):
 @weather.args_parser
 async def _(session: CommandSession):
     stripped_arg = session.current_arg_text.strip()
-    if session.current_key:
-        session.args[session.current_key] = stripped_arg
-    elif stripped_arg:
-        session.args['city'] = stripped_arg
+
+    if session.is_first_run:
+        if stripped_arg:
+            session.state['city'] = stripped_arg
+        return
+
+    if not stripped_arg:
+        session.pause('要查询的城市名称不能为空呢，请重新输入')
+
+    session.state[session.current_key] = stripped_arg
 
 
 # on_natural_language 装饰器将函数声明为一个自然语言处理器
 # keywords 表示需要响应的关键词，类型为任意可迭代对象，元素类型为 str
 # 如果不传入 keywords，则响应所有没有被当作命令处理的消息
-@on_natural_language(keywords=('天气',))
+@on_natural_language(keywords={'天气'})
 async def _(session: NLPSession):
     # 去掉消息首尾的空白符
-    stripped_msg_text = session.msg_text.strip()
+    stripped_msg = session.msg_text.strip()
     # 对消息进行分词和词性标注
-    words = posseg.lcut(stripped_msg_text)
+    words = posseg.lcut(stripped_msg)
 
     city = None
     # 遍历 posseg.lcut 返回的列表
@@ -184,11 +204,17 @@ async def _(session: NLPSession):
             # ns 词性表示地名
             city = word.word
 
-    # 返回处理结果，3 个参数分别为置信度、命令名、命令会话的参数
-    return NLPResult(90.0, 'weather', {'city': city})
+    # 返回意图命令，前两个参数必填，分别表示置信度和意图命令名
+    return IntentCommand(90.0, 'weather', current_arg=city or '')
 ```
 
-我们使用结巴分词的 posseg 模块进行词性标注，然后找出第一个标记为 `ns`（表示地名，其它词性见 [ICTCLAS 汉语词性标注集](https://gist.github.com/luw2007/6016931#ictclas-%E6%B1%89%E8%AF%AD%E8%AF%8D%E6%80%A7%E6%A0%87%E6%B3%A8%E9%9B%86)）的词，赋值给 `city`，进而作为 `weather` 命令的参数传入 `NLPResult`。
+这里我们首先使用结巴分词的 posseg 模块进行词性标注，然后找出第一个标记为 `ns`（表示地名，其它词性见 [ICTCLAS 汉语词性标注集](https://gist.github.com/luw2007/6016931#ictclas-%E6%B1%89%E8%AF%AD%E8%AF%8D%E6%80%A7%E6%A0%87%E6%B3%A8%E9%9B%86)）的词，赋值给 `city`，进而作为 `weather` 命令的参数传入 `IntentCommand`（如果 `city` 为空，则给 `current_arg` 传入空字符串）。
+
+::: tip 提示
+这里使用了 `current_arg`，因为之前编写的天气命令能够处理第一次运行时就附带了参数（城市名）的情况。
+
+你也可以在你自己的功能中使用 `args` 传入更复杂的初始参数。
+:::
 
 现在运行 NoneBot，尝试向机器人分别发送下面两句话：
 
@@ -199,9 +225,24 @@ async def _(session: NLPSession):
 
 如果一切顺利，第一句它会问你要查询哪个城市，第二句会直接识别到城市。
 
+## 理清自然语言处理器的逻辑
+
+为了更好地理解自然语言处理器，这里再来尝试理清楚它的逻辑。
+
+**自然语言处理器的核心功能，是从用户的任意消息中识别意图，并产生一个包含有初始参数的意图命令。**
+
+比如上面例子中的自然语言处理器所做的事情，就是进行如下所示的意图识别：
+
+```
+今天天气怎么样？  =>  /天气
+今天南京天气怎么样？  =>  /天气 南京
+```
+
+箭头左边是用户发送的**没有明确格式的任意消息**，右边是自然语言处理器从中识别出的**真正意图所对应的命令**。
+
 ## 优化群聊中的使用体验
 
-到目前为止我们都只关注了私聊的情况，实际上我们的天气插件在群聊中也可以正常工作，但是有一个问题，我们必须@机器人，它才会回复。一种解决办法是，给 `on_natural_language` 装饰器添加参数 `only_to_me=False`，这样的话，机器人将会响应所有群聊中含有 `天气` 关键词的消息，这对于某些功能的插件来说可能比较适用。另一种办法是通过配置项 `NICKNAME` 设置机器人的昵称，例如：
+到目前为止我们都只关注了私聊的情况，实际上我们的天气插件在群聊中也可以正常工作，但是有一个问题，我们必须 @ 机器人，它才会回复。一种解决办法是，给 `on_natural_language` 装饰器添加参数 `only_to_me=False`，这样的话，机器人将会响应所有群聊中含有 `天气` 关键词的消息，这对于某些功能的插件来说可能比较适用。另一种办法是通过配置项 `NICKNAME` 设置机器人的昵称，例如：
 
 ```python
 NICKNAME = {'小明', '明明'}
@@ -213,7 +254,7 @@ NICKNAME = {'小明', '明明'}
 小明，今天天气怎么样？
 ```
 
-此处 `小明` 和@的效果相同。
+此处 `小明` 和 @ 的效果相同。
 
 ## 更精确的自然语言理解
 

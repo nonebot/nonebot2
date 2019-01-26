@@ -1,3 +1,3 @@
-nonebot>=1.0.0
+nonebot>=1.1.0
 jieba
 aiohttp

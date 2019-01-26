@@ -1,4 +1,8 @@
-# 类 Shell 的参数解析
+# 命令参数
+
+## `session.get()` 和参数解析器
+
+## 类 Shell 参数解析
 
 `nonebot.argparse` 模块主要继承自 Python 内置的同名模块（`argparse`），用于解析命令的参数。在需要编写类 shell 语法的命令的时候，使用此模块可以大大提高开发效率。
 
@@ -97,7 +101,7 @@ COMMAND：
 """.strip()
 ```
 
-上面的例子出自 [cczu-osa/amadeus](https://github.com/cczu-osa/amadeus) 项目的计划任务插件，这里我们只关注前 15 行。
+上面的例子出自 [cczu-osa/aki](https://github.com/cczu-osa/aki) 项目的计划任务插件，这里我们只关注前 15 行。
 
 `on_command` 的 `shell_like=True` 参数告诉 NoneBot 这个命令需要使用类 shell 语法，NoneBot 会自动添加命令参数解析器来使用 Python 内置的 `shlex` 包分割参数。分割后的参数被放在 `session.args['argv']`，可通过 `session.argv` 属性来快速获得。
 

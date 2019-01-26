@@ -4,6 +4,10 @@ sidebar: auto
 
 # 更新日志
 
+## v1.2.1
+
+- 修复 `nonebot.helpers.context_id` 的 `group` 模式无法正确产生私聊用户 ID 的 bug
+
 ## v1.2.0
 
 #### 新增

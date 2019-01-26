@@ -16,11 +16,11 @@ NoneBot 在其底层与 酷Q 交互的部分使用 [python-aiocqhttp](https://gi
 
 得益于 Python 的 [asyncio](https://docs.python.org/3/library/asyncio.html) 机制，NoneBot 处理消息的吞吐量有了很大的保障，再配合 CoolQ HTTP API 插件可选的 WebSocket 通信方式（也是最建议的通信方式），NoneBot 的性能可以达到 HTTP 通信方式的两倍以上，相较于传统同步 I/O 的 HTTP 通信，更是有质的飞跃。
 
-需要注意的是，NoneBot 仅支持 Python 3.6.1+ 及 CoolQ HTTP API 插件 v4.2+。
+需要注意的是，NoneBot 仅支持 Python 3.6.1+ 及 CoolQ HTTP API 插件 v4.7+。
 
 ## 它如何工作？
 
-NoneBot 的运行离不开 酷Q 和 CoolQ HTTP API 插件。酷Q 扮演着「无头 QQ 客户端」的角色，它进行实际的消息、通知、请求的接收和发送，当 酷Q 收到消息时，它将这个消息包装为一个事件（通知和请求同理），并通过它自己的插件机制将事件传送给 CoolQ HTTP API 插件，后者再根据其配置中的 `post_url` 或 `ws_reverse_event_url` 等项来将事件发送至 NoneBot。
+NoneBot 的运行离不开 酷Q 和 CoolQ HTTP API 插件。酷Q 扮演着「无头 QQ 客户端」的角色，它进行实际的消息、通知、请求的接收和发送，当 酷Q 收到消息时，它将这个消息包装为一个事件（通知和请求同理），并通过它自己的插件机制将事件传送给 CoolQ HTTP API 插件，后者再根据其配置中的 `post_url` 或 `ws_reverse_url` 等项来将事件发送至 NoneBot。
 
 在 NoneBot 收到事件前，它底层的 aiocqhttp 实际已经先看到了事件，aiocqhttp 根据事件的类型信息，通知到 NoneBot 的相应函数。特别地，对于消息类型的事件，还将消息内容转换成了 `aiocqhttp.message.Message` 类型，以便处理。
 

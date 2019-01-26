@@ -4,4 +4,4 @@ HOST = '0.0.0.0'
 PORT = 8080
 
 SUPERUSERS = {12345678}
-COMMAND_START.add('')
+COMMAND_START = {'', '/', '!', '／', '！'}
