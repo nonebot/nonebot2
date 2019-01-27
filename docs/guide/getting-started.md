@@ -49,13 +49,14 @@ Running on https://127.0.0.1:8080 (CTRL + C to quit)
 
 ```json
 {
-    "ws_reverse_url": "ws://127.0.0.1:8080/ws/",
+    "ws_reverse_api_url": "ws://127.0.0.1:8080/ws/api/",
+    "ws_reverse_event_url": "ws://127.0.0.1:8080/ws/event/",
     "use_ws_reverse": true
 }
 ```
 
 ::: tip 提示
-这里的 `127.0.0.1:8080` 对应 `nonebot.run()` 中传入的 `host` 和 `port`，如果在 `nonebot.run()` 中传入的 `host` 是 `0.0.0.0`，则插件的配置中需使用任意一个能够访问到 NoneBot 所在环境的 IP。特别地，如果你的 酷Q 运行在 Docker 容器中，NoneBot 运行在宿主机中，则默认情况下这里需使用 `172.17.0.1`（不同机器有可能不同，需使用 `docker inspect bridge` 查看，具体见 Docker 文档的 [Configure networking](https://docs.docker.com/network/)）。
+**这里的 `127.0.0.1:8080` 对应 `nonebot.run()` 中传入的 `host` 和 `port`**，如果在 `nonebot.run()` 中传入的 `host` 是 `0.0.0.0`，则插件的配置中需使用任意一个能够访问到 NoneBot 所在环境的 IP，**不要直接填 `0.0.0.0`**。特别地，如果你的 酷Q 运行在 Docker 容器中，NoneBot 运行在宿主机中，则默认情况下这里需使用 `172.17.0.1`（不同机器有可能不同，需使用 `docker inspect bridge` 查看，具体见 Docker 文档的 [Configure networking](https://docs.docker.com/network/)）。
 :::
 
 ::: warning 注意
@@ -66,11 +67,11 @@ Running on https://127.0.0.1:8080 (CTRL + C to quit)
 
 ## 历史性的第一次对话
 
-一旦新的配置文件正确生效之后，NoneBot 所在的控制台（如果正在运行的话）应该会输出类似下面的内容（两条路径为 `/ws/` 的访问日志）：
+一旦新的配置文件正确生效之后，NoneBot 所在的控制台（如果正在运行的话）应该会输出类似下面的内容（两条访问日志）：
 
 ```
-[2019-01-26 16:23:17,159] 172.29.84.18:50639 GET /ws/ 1.1 101 - 986
-[2019-01-26 16:23:17,201] 172.29.84.18:53839 GET /ws/ 1.1 101 - 551
+[2019-01-26 16:23:17,159] 172.29.84.18:50639 GET /ws/api/ 1.1 101 - 986
+[2019-01-26 16:23:17,201] 172.29.84.18:53839 GET /ws/event/ 1.1 101 - 551
 ```
 
 这表示 CoolQ HTTP API 插件已经成功地连接上了 NoneBot，与此同时，插件的日志文件中也会输出反向 WebSocket 连接成功的日志。
