@@ -63,22 +63,23 @@ async def send(bot: NoneBot, ctx: Context_T,
         return None
 
 
-def render_expression(expr: Expression_T, *,
+def render_expression(expr: Expression_T, *args,
                       escape_args: bool = True, **kwargs) -> str:
     """
     Render an expression to message string.
 
     :param expr: expression to render
     :param escape_args: should escape arguments or not
+    :param args: positional arguments used in str.format()
     :param kwargs: keyword arguments used in str.format()
     :return: the rendered message
     """
     if isinstance(expr, Callable):
-        expr = expr(**kwargs)
+        expr = expr(*args, **kwargs)
     elif isinstance(expr, Sequence) and not isinstance(expr, str):
         expr = random.choice(expr)
     if escape_args:
         for k, v in kwargs.items():
             if isinstance(v, str):
                 kwargs[k] = escape(v)
-    return expr.format(**kwargs)
+    return expr.format(*args, **kwargs)
