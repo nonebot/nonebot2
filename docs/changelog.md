@@ -4,6 +4,11 @@ sidebar: auto
 
 # 更新日志
 
+## v1.2.2
+
+- 修复 `nonebot.natual_language.IntentCommand` 类 `current_arg` 参数默认为 `None` 导致的 bug
+- `nonebot.helpers.render_expression` 函数新增 `*args` 用于向 Expression 传递位置参数
+
 ## v1.2.1
 
 - 修复 `nonebot.helpers.context_id` 的 `group` 模式无法正确产生私聊用户 ID 的 bug

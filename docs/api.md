@@ -2309,7 +2309,7 @@ async def _(session):
   await send(bot, ctx, 'hello')
   ```
 
-### `render_expression(expr, *, escape_args=True, **kwargs)`
+### `render_expression(expr, *args, escape_args=True, **kwargs)`
 
 - **说明:**
 
@@ -2319,7 +2319,8 @@ async def _(session):
 
   - `expr: Expression_T`: 要渲染的 Expression
   - `escape_args: bool`: 是否对渲染参数进行转义
-  - `**kwargs: Any`: 渲染参数，用于 `str.format()` 或 Expression 函数调用传参
+  - `*args: Any`: 渲染参数，用于 `str.format()` 或 Expression 函数调用时传入位置参数
+  - `**kwargs: Any`: 渲染参数，用于 `str.format()` 或 Expression 函数调用时传入命名参数
 
 - **返回:**
 
@@ -2328,10 +2329,11 @@ async def _(session):
 - **用法:**
 
   ```python
-  msg = render_expression(
+  msg1 = render_expression(
       ['你好，{username}！', '欢迎，{username}～'],
       username=username
   )
+  msg2 = render_expression('你所查询的城市是{}', city)
   ```
 
 ## `nonebot.argparse` 模块
