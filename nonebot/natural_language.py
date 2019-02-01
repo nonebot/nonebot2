@@ -83,8 +83,7 @@ class NLPResult(NamedTuple):
     def to_intent_command(self):
         return IntentCommand(confidence=self.confidence,
                              name=self.cmd_name,
-                             args=self.cmd_args,
-                             current_arg=None)
+                             args=self.cmd_args)
 
 
 class IntentCommand(NamedTuple):
@@ -94,7 +93,7 @@ class IntentCommand(NamedTuple):
     confidence: float
     name: Union[str, CommandName_T]
     args: Optional[CommandArgs_T] = None
-    current_arg: Optional[str] = None
+    current_arg: str = ''
 
 
 async def handle_natural_language(bot: NoneBot, ctx: Context_T) -> bool:
