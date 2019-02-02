@@ -51,8 +51,7 @@ class NoneBot(CQHttp):
             kwargs['debug'] = self.config.DEBUG
 
         logger.info(f'Running on {host}:{port}')
-        super().run(host=host, port=port, loop=asyncio.get_event_loop(),
-                    *args, **kwargs)
+        super().run(host=host, port=port, *args, **kwargs)
 
 
 _bot: Optional[NoneBot] = None
