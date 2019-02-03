@@ -75,9 +75,14 @@ def init(config_object: Optional[Any] = None) -> None:
     else:
         logger.setLevel(logging.INFO)
 
+    _bot.server_app.before_serving(_start_scheduler)
+
+
+def _start_scheduler():
     if scheduler and not scheduler.running:
         scheduler.configure(_bot.config.APSCHEDULER_CONFIG)
         scheduler.start()
+        logger.info('Scheduler started')
 
 
 def get_bot() -> NoneBot:
