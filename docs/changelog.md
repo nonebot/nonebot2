@@ -4,6 +4,12 @@ sidebar: auto
 
 # 更新日志
 
+## v1.2.3
+
+- 修复 `nonebot.scheduler` 过早启动导致使用 Hypercorn 部署时计划任务无法运行的问题
+
+同时使用计划任务功能和 Hypercorn 部署的用户请务必升级到此版本！
+
 ## v1.2.2
 
 - 修复 `nonebot.natual_language.IntentCommand` 类 `current_arg` 参数默认为 `None` 导致的 bug
