@@ -115,7 +115,7 @@ async def handle_natural_language(bot: NoneBot, ctx: Context_T) -> bool:
         else:
             nicknames = filter(lambda n: n, bot.config.NICKNAME)
         nickname_regex = '|'.join(nicknames)
-        m = re.search(rf'^({nickname_regex})([\s,，]|$)', msg, re.IGNORECASE)
+        m = re.search(rf'^({nickname_regex})([\s,，]*|$)', msg, re.IGNORECASE)
         if m:
             nickname = m.group(1)
             logger.debug(f'User is calling me {nickname}')
