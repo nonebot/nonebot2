@@ -33,6 +33,7 @@ COMMAND_SEP: Iterable[Union[str, Pattern]] = {'/', '.'}
 SESSION_EXPIRE_TIMEOUT: Optional[timedelta] = timedelta(minutes=5)
 SESSION_RUN_TIMEOUT: Optional[timedelta] = None
 SESSION_RUNNING_EXPRESSION: Expression_T = '您有命令正在执行，请稍后再试'
+SESSION_CANCEL_EXPRESSION = '好的'
 SHORT_MESSAGE_MAX_LENGTH: int = 50
 DEFAULT_VALIDATION_FAILURE_EXPRESSION: Expression_T = '您的输入不符合要求，请重新输入'
 
