@@ -73,6 +73,7 @@ class Command:
                     session.current_key is not None:
                 # argument-level filters are given, use them
                 arg = session.current_arg
+                config = session.bot.config
                 for f in session.current_arg_filters:
                     try:
                         res = f(arg)
@@ -81,9 +82,21 @@ class Command:
                         arg = res
                     except ValidateError as e:
                         # validation failed
+                        if config.MAX_VALIDATION_FAILURES > 0:
+                            # should check number of validation failures
+                            session.state['__validation_failure_num'] = \
+                                session.state.get(
+                                    '__validation_failure_num', 0) + 1
+
+                            if session.state['__validation_failure_num'] >= \
+                                    config.MAX_VALIDATION_FAILURES:
+                                # noinspection PyProtectedMember
+                                session.finish(render_expression(
+                                    config.TOO_MANY_VALIDATION_FAILURES_EXPRESSION
+                                ), **session._current_send_kwargs)
+
                         failure_message = e.message
                         if failure_message is None:
-                            config = session.bot.config
                             failure_message = render_expression(
                                 config.DEFAULT_VALIDATION_FAILURE_EXPRESSION
                             )
