@@ -1,5 +1,4 @@
 import asyncio
-import re
 from typing import Iterable, Optional, Callable, Union, NamedTuple
 
 from . import NoneBot, permission as perm
@@ -106,23 +105,7 @@ async def handle_natural_language(bot: NoneBot, ctx: Context_T) -> bool:
     :param ctx: message context
     :return: the message is handled as natural language
     """
-    msg = str(ctx['message'])
-    if bot.config.NICKNAME:
-        # check if the user is calling me with my nickname
-        if isinstance(bot.config.NICKNAME, str) or \
-                not isinstance(bot.config.NICKNAME, Iterable):
-            nicknames = (bot.config.NICKNAME,)
-        else:
-            nicknames = filter(lambda n: n, bot.config.NICKNAME)
-        nickname_regex = '|'.join(nicknames)
-        m = re.search(rf'^({nickname_regex})([\s,，]*|$)', msg, re.IGNORECASE)
-        if m:
-            nickname = m.group(1)
-            logger.debug(f'User is calling me {nickname}')
-            ctx['to_me'] = True
-            msg = msg[m.end():]
-
-    session = NLPSession(bot, ctx, msg)
+    session = NLPSession(bot, ctx, str(ctx['message']))
 
     # use msg_text here because CQ code "share" may be very long,
     # at the same time some plugins may want to handle it

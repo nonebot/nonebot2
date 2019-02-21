@@ -29,36 +29,10 @@ async def handle_message(bot: NoneBot, ctx: Context_T) -> None:
     if coros:
         await asyncio.wait(coros)
 
-    if 'to_me' not in ctx:
-        if ctx['message_type'] == 'private':
-            ctx['to_me'] = True
-        else:
-            # group or discuss
-            ctx['to_me'] = False
-            at_me_seg = MessageSegment.at(ctx['self_id'])
-
-            # check the first segment
-            first_msg_seg = ctx['message'][0]
-            if first_msg_seg == at_me_seg:
-                ctx['to_me'] = True
-                del ctx['message'][0]
-
-            if not ctx['to_me']:
-                # check the last segment
-                i = -1
-                last_msg_seg = ctx['message'][i]
-                if last_msg_seg.type == 'text' and \
-                        not last_msg_seg.data['text'].strip() and \
-                        len(ctx['message']) >= 2:
-                    i -= 1
-                    last_msg_seg = ctx['message'][i]
-
-                if last_msg_seg == at_me_seg:
-                    ctx['to_me'] = True
-                    del ctx['message'][i:]
-
-            if not ctx['message']:
-                ctx['message'].append(MessageSegment.text(''))
+    raw_to_me = ctx.get('to_me', False)
+    _check_at_me(bot, ctx)
+    _check_calling_me_nickname(bot, ctx)
+    ctx['to_me'] = raw_to_me or ctx['to_me']
 
     while True:
         try:
@@ -77,6 +51,62 @@ async def handle_message(bot: NoneBot, ctx: Context_T) -> None:
         logger.info(f'Message {ctx["message_id"]} is handled '
                     f'as natural language')
         return
+
+
+def _check_at_me(bot: NoneBot, ctx: Context_T) -> None:
+    if ctx['message_type'] == 'private':
+        ctx['to_me'] = True
+    else:
+        # group or discuss
+        ctx['to_me'] = False
+        at_me_seg = MessageSegment.at(ctx['self_id'])
+
+        # check the first segment
+        first_msg_seg = ctx['message'][0]
+        if first_msg_seg == at_me_seg:
+            ctx['to_me'] = True
+            del ctx['message'][0]
+
+        if not ctx['to_me']:
+            # check the last segment
+            i = -1
+            last_msg_seg = ctx['message'][i]
+            if last_msg_seg.type == 'text' and \
+                    not last_msg_seg.data['text'].strip() and \
+                    len(ctx['message']) >= 2:
+                i -= 1
+                last_msg_seg = ctx['message'][i]
+
+            if last_msg_seg == at_me_seg:
+                ctx['to_me'] = True
+                del ctx['message'][i:]
+
+        if not ctx['message']:
+            ctx['message'].append(MessageSegment.text(''))
+
+
+def _check_calling_me_nickname(bot: NoneBot, ctx: Context_T) -> None:
+    first_msg_seg = ctx['message'][0]
+    if first_msg_seg.type != 'text':
+        return
+
+    first_text = first_msg_seg.data['text']
+
+    if bot.config.NICKNAME:
+        # check if the user is calling me with my nickname
+        if isinstance(bot.config.NICKNAME, str) or \
+                not isinstance(bot.config.NICKNAME, Iterable):
+            nicknames = (bot.config.NICKNAME,)
+        else:
+            nicknames = filter(lambda n: n, bot.config.NICKNAME)
+        nickname_regex = '|'.join(nicknames)
+        m = re.search(rf'^({nickname_regex})([\s,，]*|$)',
+                      first_text, re.IGNORECASE)
+        if m:
+            nickname = m.group(1)
+            logger.debug(f'User is calling me {nickname}')
+            ctx['to_me'] = True
+            first_msg_seg.data['text'] = first_text[m.end():]
 
 
 def _log_message(ctx: Context_T) -> None:
