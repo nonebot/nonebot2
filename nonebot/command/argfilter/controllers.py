@@ -10,7 +10,7 @@ def handle_cancellation(session: CommandSession):
     """
 
     def control(value):
-        if _is_cancellation(value):
+        if _is_cancellation(value) is True:
             session.finish(render_expression(
                 session.bot.config.SESSION_CANCEL_EXPRESSION))
         return value
@@ -18,7 +18,7 @@ def handle_cancellation(session: CommandSession):
     return control
 
 
-async def _is_cancellation(sentence: str) -> bool:
+def _is_cancellation(sentence: str) -> bool:
     for kw in ('算', '别', '不', '停', '取消'):
         if kw in sentence:
             # a keyword matches
