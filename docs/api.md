@@ -335,6 +335,58 @@ sidebar: auto
 
   设置更亲切的默认错误提示。
 
+### `MAX_VALIDATION_FAILURES` <Badge text="1.3.0+"/>
+
+- **类型:** `int`
+
+- **默认值:** `3`
+
+- **说明:**
+
+  命令参数验证允许的最大失败次数，用户输入错误达到这个次数之后，将会提示用户输入错误太多次，并结束命令会话。
+
+  设置为 `0` 将不会检查验证失败次数。
+
+### `TOO_MANY_VALIDATION_FAILURES_EXPRESSION` <Badge text="1.3.0+"/>
+
+- **类型:** `Expression_T`
+
+- **默认值:** `'您输入错误太多次啦，如需重试，请重新触发本功能'`
+
+- **说明:**
+
+  命令参数验证失败达到 `MAX_VALIDATION_FAILURES` 次之后，向用户发送的提示。
+
+- **用法:**
+
+  ```python
+  TOO_MANY_VALIDATION_FAILURES_EXPRESSION = (
+      '你输错太多次啦，需要的时候再叫我吧',
+      '你输错太多次了，建议先看看使用帮助哦～',
+  )
+  ```
+
+### `SESSION_CANCEL_EXPRESSION` <Badge text="1.3.0+"/>
+
+- **类型:** `Expression_T`
+
+- **默认值:** `'好的'`
+
+- **说明:**
+
+  `nonebot.command.argfilter.controllers.handle_cancellation()` 控制器在用户发送了 `算了`、`取消` 等取消指令后，结束当前命令会话时，向用户发送的提示。
+
+- **用法:**
+
+  ```python
+  SESSION_CANCEL_EXPRESSION = (
+      '好的',
+      '好的吧',
+      '好吧，那奶茶就不打扰啦',
+      '那奶茶先不打扰小主人啦',
+  )
+  ```
+
 ### `APSCHEDULER_CONFIG`
 
 - **类型:** `Dict[str, Any]`
@@ -1251,7 +1303,7 @@ sidebar: auto
   - `name: Union[str, CommandName_T]`: 命令名，如果传入的是字符串则会自动转为元组
   - `aliases: Iterable[str]`: 命令别名
   - `permission: int`: 命令所需要的权限，不满足权限的用户将无法触发该命令
-  - `only_to_me: bool`: 是否只响应确定是在和「我」（机器人）说话的命令（在开头或结尾 @ 了机器人）
+  - `only_to_me: bool`: 是否只响应确定是在和「我」（机器人）说话的命令（在开头或结尾 @ 了机器人，或在开头称呼了机器人昵称）
   - `privileged: bool`: 是否特权命令，若是，则无论当前是否有命令会话正在运行，都会运行该命令，但运行不会覆盖已有会话，也不会保留新创建的会话
   - `shell_like: bool`: 是否使用类 shell 语法，若是，则会自动使用 `shlex` 模块进行分割（无需手动编写参数解析器），分割后的参数列表放入 `session.args['argv']`
 
@@ -1510,6 +1562,7 @@ sidebar: auto
       'time', prompt='你需要我在什么时间提醒你呢？',
       arg_filters=[
           extractors.extract_text,  # 取纯文本部分
+          controllers.handle_cancellation(session),  # 处理用户可能的取消指令
           str.strip,  # 去掉两边空白字符
           # 正则匹配输入格式
           validators.match_regex(r'^\d{4}-\d{2}-\d{2}$', '格式不对啦，请重新输入')
@@ -1674,6 +1727,7 @@ sidebar: auto
 - 修剪器，将用户输入的原始参数内容进行适当修建，例如 `str.strip` 可以去掉两遍的空白字符
 - 验证器，验证参数的格式、长度等是否符合要求，`validators` 子模块中提供了一些常用验证器
 - 转换器，将参数进行类型或格式上的转换，例如 `int` 可以将字符串转换成整数，`converters` 子模块中提供了一些常用转换器
+- 控制器，根据用户输入或当前会话状态对会话进行相关控制，例如当用户发送 `算了` 时停止当前会话，`controllers` 子模块中提供了一些常用控制器
 
 ### _class_ `ValidateError`
 
@@ -1837,6 +1891,28 @@ session.get('arg1', prompt='请输入 arg1：',
 - **输入类型:** `str`
 
 - **输出类型:** `List[str]`
+
+## `nonebot.command.argfilter.controllers` 模块 <Badge text="1.3.0+"/>
+
+提供几种常用的控制器。
+
+这些验证器通常需要提供一些参数进行一次调用，返回的结果才是真正的验证器，其中的技巧在于通过闭包使要控制的对象能够被内部函数访问。
+
+### `handle_cancellation(session)`
+
+- **说明:**
+
+  在用户发送 `算了`、`不用了`、`取消吧`、`停` 之类的话的时候，结束当前传入的命令会话（调用 `session.finish()`），并发送配置项 `SESSION_CANCEL_EXPRESSION` 所填的内容。
+
+  如果不是上述取消指令，则将输入原样输出。
+
+- **参数:**
+
+  - `session: CommandSession`: 要控制的命令会话
+
+- **输入类型:** `Any`
+
+- **输出类型:** `Any`
 
 ## `nonebot.natural_language` 模块
 

@@ -4,6 +4,13 @@ sidebar: auto
 
 # 更新日志
 
+## v1.3.0
+
+- 允许机器人昵称和消息主体之间不使用空格或逗号分隔，即支持 `奶茶帮我查下天气` 这种用法
+- 在处理命令之前检查机器人昵称，即在不编写自然语言处理器的情况下可以通过 `奶茶，echo 喵` 触发 `echo` 命令，而不再强制需要 at，其它命令同理
+- 新增一种命令参数过滤器——控制器，在 `nonebot.command.argfilter.controllers` 模块，用于在过滤命令参数时对命令会话进行控制，内置了 `handle_cancellation()` 控制器允许用户取消正在进行的命令
+- 新增命令参数验证失败次数的检查，可通过配置项 `MAX_VALIDATION_FAILURES` 和 `TOO_MANY_VALIDATION_FAILURES_EXPRESSION` 来配置最大失败次数和失败过多后的提示
+
 ## v1.2.3
 
 - 修复 `nonebot.scheduler` 过早启动导致使用 Hypercorn 部署时计划任务无法运行的问题
