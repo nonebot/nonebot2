@@ -38,12 +38,12 @@ SESSION_RUNNING_EXPRESSION: Expression_T = '您有命令正在执行，请稍后
 
 SHORT_MESSAGE_MAX_LENGTH: int = 50
 
-SESSION_CANCEL_EXPRESSION = '好的'
-
 DEFAULT_VALIDATION_FAILURE_EXPRESSION: Expression_T = '您的输入不符合要求，请重新输入'
-MAX_VALIDATION_FAILURES = 3
+MAX_VALIDATION_FAILURES: int = 3
 TOO_MANY_VALIDATION_FAILURES_EXPRESSION: Expression_T = \
     '您输入错误太多次啦，如需重试，请重新触发本功能'
+
+SESSION_CANCEL_EXPRESSION: Expression_T = '好的'
 
 APSCHEDULER_CONFIG: Dict[str, Any] = {
     'apscheduler.timezone': 'Asia/Shanghai'
