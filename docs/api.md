@@ -840,7 +840,7 @@ sidebar: auto
 
   消息段数据。
 
-#### `__init__(d=None, *, type=None, data=None)`
+#### `__init__(d=None, *, type_=None, data=None)`
 
 - **说明:**
 
@@ -849,7 +849,7 @@ sidebar: auto
 - **参数:**
 
   - `d: Dict[str, Any]`: 当有此参数且此参数中有 `type` 字段时，由此参数构造消息段
-  - `type: str`: 当没有传入 `d` 参数或 `d` 参数无法识别时，此参数必填，对应消息段的 `type` 字段
+  - `type_: str`: 当没有传入 `d` 参数或 `d` 参数无法识别时，此参数必填，对应消息段的 `type` 字段
   - `data: Dict[str, str]`: 对应消息段的 `data` 字段，若不传入则初始化为 `{}`
 
 - **异常:**
@@ -860,7 +860,7 @@ sidebar: auto
 
   ```python
   seg1 = MessageSegment({'type': 'face', 'data': {'id': '123'}})
-  seg2 = MessageSegment(type='face', data={'id': '123'})
+  seg2 = MessageSegment(type_='face', data={'id': '123'})
   ```
 
 #### `__str__()`
