@@ -42,6 +42,9 @@ def on_natural_language(keywords: Union[Optional[Iterable], Callable] = None,
     :param allow_empty_message: handle empty messages
     """
 
+    if isinstance(keywords, str):
+        keywords = (keywords,)
+
     def deco(func: Callable) -> Callable:
         nl_processor = NLProcessor(func=func, keywords=keywords,
                                    permission=permission,
