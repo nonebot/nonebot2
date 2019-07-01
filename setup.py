@@ -8,7 +8,7 @@ stub_files = list(filter(lambda x: x.endswith('.pyi'), findall('nonebot')))
 
 setup(
     name='nonebot',
-    version='1.3.0',
+    version='1.3.1',
     url='https://github.com/richardchien/nonebot',
     license='MIT License',
     author='Richard Chien',
@@ -18,7 +18,7 @@ setup(
     long_description_content_type='text/markdown',
     packages=packages,
     data_files=stub_files,
-    install_requires=['aiocqhttp>=0.6.7', 'aiocache>=0.10'],
+    install_requires=['aiocqhttp>=0.6.8', 'aiocache>=0.10'],
     extras_require={
         'scheduler': ['apscheduler>=1.2'],
     },
