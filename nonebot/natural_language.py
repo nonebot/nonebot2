@@ -27,7 +27,7 @@ class NLProcessor:
         self.allow_empty_message = allow_empty_message
 
 
-def on_natural_language(keywords: Union[Optional[Iterable], Callable] = None,
+def on_natural_language(keywords: Union[Optional[Iterable], str, Callable] = None,
                         *, permission: int = perm.EVERYBODY,
                         only_to_me: bool = True,
                         only_short_message: bool = True,
@@ -42,9 +42,6 @@ def on_natural_language(keywords: Union[Optional[Iterable], Callable] = None,
     :param allow_empty_message: handle empty messages
     """
 
-    if isinstance(keywords, str):
-        keywords = (keywords,)
-
     def deco(func: Callable) -> Callable:
         nl_processor = NLProcessor(func=func, keywords=keywords,
                                    permission=permission,
@@ -58,6 +55,8 @@ def on_natural_language(keywords: Union[Optional[Iterable], Callable] = None,
         # here "keywords" is the function to be decorated
         return on_natural_language()(keywords)
     else:
+        if isinstance(keywords, str):
+            keywords = (keywords,)
         return deco
 
 
