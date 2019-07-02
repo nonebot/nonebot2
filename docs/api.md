@@ -2393,7 +2393,7 @@ async def _(session):
 
 - **参数:**
 
-  - `expr: Expression_T`: 要渲染的 Expression
+  - `expr: Expression_T`: 要渲染的 Expression，当 Expression 为非字符串的 Squence 类型时则会随机选择其中一项
   - `escape_args: bool`: 是否对渲染参数进行转义
   - `*args: Any`: 渲染参数，用于 `str.format()` 或 Expression 函数调用时传入位置参数
   - `**kwargs: Any`: 渲染参数，用于 `str.format()` 或 Expression 函数调用时传入命名参数
