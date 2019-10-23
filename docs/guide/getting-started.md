@@ -56,7 +56,7 @@ Running on https://127.0.0.1:8080 (CTRL + C to quit)
 ```
 
 ::: tip 提示
-**这里的 `127.0.0.1:8080` 对应 `nonebot.run()` 中传入的 `host` 和 `port`**，如果在 `nonebot.run()` 中传入的 `host` 是 `0.0.0.0`，则插件的配置中需使用任意一个能够访问到 NoneBot 所在环境的 IP，**不要直接填 `0.0.0.0`**。特别地，如果你的 酷Q 运行在 Docker 容器中，NoneBot 运行在宿主机中，则默认情况下这里需使用 `172.17.0.1`（不同机器有可能不同，如果是 macOS 系统或者 Windows 系统，可以考虑使用 `host.docker.internal`，具体解释详见 Docker 文档的 [Use cases and workarounds](https://docs.docker.com/docker-for-mac/networking/#use-cases-and-workarounds) 的「I WANT TO CONNECT FROM A CONTAINER TO A SERVICE ON THE HOST」小标题）。
+**这里的 `127.0.0.1:8080` 对应 `nonebot.run()` 中传入的 `host` 和 `port`**，如果在 `nonebot.run()` 中传入的 `host` 是 `0.0.0.0`，则插件的配置中需使用任意一个能够访问到 NoneBot 所在环境的 IP，**不要直接填 `0.0.0.0`**。特别地，如果你的 酷Q 运行在 Docker 容器中，NoneBot 运行在宿主机中，则默认情况下这里需使用 `172.17.0.1`（即宿主机在 Docker 默认网桥上的 IP，不同机器有可能不同，如果是 macOS 系统或者 Windows 系统，可以考虑使用 `host.docker.internal`，具体解释详见 Docker 文档的 [Use cases and workarounds](https://docs.docker.com/docker-for-mac/networking/#use-cases-and-workarounds) 的「I WANT TO CONNECT FROM A CONTAINER TO A SERVICE ON THE HOST」小标题）。
 :::
 
 ::: warning 注意
