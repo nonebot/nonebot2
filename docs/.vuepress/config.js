@@ -66,6 +66,7 @@ module.exports = {
                         'permission',
                         'decorator',
                         'database',
+                        'server-app',
                         'scheduler',
                         'logging',
                         'configuration',
