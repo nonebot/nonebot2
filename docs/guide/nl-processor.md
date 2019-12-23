@@ -203,6 +203,7 @@ async def _(session: NLPSession):
         if word.flag == 'ns':
             # ns 词性表示地名
             city = word.word
+            break
 
     # 返回意图命令，前两个参数必填，分别表示置信度和意图命令名
     return IntentCommand(90.0, 'weather', current_arg=city or '')
