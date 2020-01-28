@@ -6,6 +6,11 @@
 
 [python-aiocqhttp]: https://github.com/richardchien/python-aiocqhttp
 
+因为需要使用HTTP通信，需配置酷Q HTTP API 插件的 HTTP 接口地址。需要在config.py中添加
+```python
+API_ROOT = 'http://127.0.0.1:5700' # 默认端口为5700
+```
+
 要获取 bot 对象，可以通过如下两种方式：
 
 ```python
