@@ -6,6 +6,14 @@
 
 [python-aiocqhttp]: https://github.com/richardchien/python-aiocqhttp
 
+::: tip 提示
+如果你在使用 HTTP 通信，要调用 CQHTTP API 要在 `config.py` 中添加：
+
+```python
+API_ROOT = 'http://127.0.0.1:5700'  # 这里 IP 和端口应与 CQHTTP 配置中的 `host` 和 `port` 对应
+```
+:::
+
 要获取 bot 对象，可以通过如下两种方式：
 
 ```python
