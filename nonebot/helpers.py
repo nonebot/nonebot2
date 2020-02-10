@@ -79,7 +79,8 @@ def render_expression(expr: Expression_T, *args,
     elif isinstance(expr, Sequence) and not isinstance(expr, str):
         expr = random.choice(expr)
     if escape_args:
-        for k, v in kwargs.items():
-            if isinstance(v, str):
-                kwargs[k] = escape(v)
+        return expr.format(
+            *[escape(s) if isinstance(s, str) else s for s in args],
+            **{k: escape(v) if isinstance(v, str) else v for k, v in kwargs}
+        )
     return expr.format(*args, **kwargs)
