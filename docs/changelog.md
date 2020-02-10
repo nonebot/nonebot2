@@ -4,6 +4,13 @@ sidebar: auto
 
 # 更新日志
 
+## v1.4.0
+
+- 提升 aiocqhttp 依赖版本至 1.2，提升最低 Python 版本至 3.7
+- 修复 `command.group` 的 stub 文件问题
+- 修复 `helpers.render_expression` 没有转义位置参数的 bug
+- 修复 `argparse.ArgumentParser` 在没有必填参数时不能正确使用的 bug
+
 ## v1.3.1
 
 - `on_natural_language` 装饰器的 `keywords` 参数现可直接传字符串

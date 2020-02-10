@@ -7,7 +7,7 @@ packages = find_packages(include=('nonebot', 'nonebot.*'))
 
 setup(
     name='nonebot',
-    version='1.3.1',
+    version='1.4.0',
     url='https://github.com/richardchien/nonebot',
     license='MIT License',
     author='Richard Chien',
@@ -19,11 +19,11 @@ setup(
     package_data={
         '': ['*.pyi'],
     },
-    install_requires=['aiocqhttp>=0.6.8', 'aiocache>=0.10'],
+    install_requires=['aiocqhttp>=1.2,<1.3', 'aiocache>=0.10,<1.0'],
     extras_require={
-        'scheduler': ['apscheduler>=1.2'],
+        'scheduler': ['apscheduler'],
     },
-    python_requires='>=3.6.1',
+    python_requires='>=3.7',
     platforms='any',
     classifiers=[
         'Development Status :: 5 - Production/Stable',
