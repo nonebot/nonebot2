@@ -1,10 +1,9 @@
-from setuptools import setup, find_packages, findall
+from setuptools import setup, find_packages
 
 with open('README.md', 'r', encoding='utf-8') as f:
     long_description = f.read()
 
 packages = find_packages(include=('nonebot', 'nonebot.*'))
-stub_files = list(filter(lambda x: x.endswith('.pyi'), findall('nonebot')))
 
 setup(
     name='nonebot',
@@ -17,7 +16,9 @@ setup(
     long_description=long_description,
     long_description_content_type='text/markdown',
     packages=packages,
-    data_files=stub_files,
+    package_data={
+        '': ['*.pyi'],
+    },
     install_requires=['aiocqhttp>=0.6.8', 'aiocache>=0.10'],
     extras_require={
         'scheduler': ['apscheduler>=1.2'],
@@ -31,8 +32,5 @@ setup(
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3 :: Only',
-        'Programming Language :: Python :: 3.6',
-        'Programming Language :: Python :: 3.7',
     ],
 )
