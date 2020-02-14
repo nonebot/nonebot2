@@ -81,6 +81,7 @@ def render_expression(expr: Expression_T, *args,
     if escape_args:
         return expr.format(
             *[escape(s) if isinstance(s, str) else s for s in args],
-            **{k: escape(v) if isinstance(v, str) else v for k, v in kwargs.items()}
+            **{k: escape(v) if isinstance(v, str) else v
+               for k, v in kwargs.items()}
         )
     return expr.format(*args, **kwargs)
