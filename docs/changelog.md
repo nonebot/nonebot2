@@ -4,8 +4,10 @@ sidebar: auto
 
 # 更新日志
 
-## master
+## v1.4.1
 
+- `on_command` 装饰器的 `aliases` 参数现支持字符串类型
+- 在命令注册失败时，给出警告信息
 - 修复 `helpers.render_expression` 的 bug
 
 ## v1.4.0
