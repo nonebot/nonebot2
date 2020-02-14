@@ -4,6 +4,10 @@ sidebar: auto
 
 # 更新日志
 
+## master
+
+- 修复 `helpers.render_expression` 的 bug
+
 ## v1.4.0
 
 - 提升 aiocqhttp 依赖版本至 1.2，提升最低 Python 版本至 3.7
