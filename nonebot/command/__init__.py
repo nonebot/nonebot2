@@ -1,6 +1,7 @@
 import asyncio
 import re
 import shlex
+import warnings
 from datetime import datetime
 from typing import (
     Tuple, Union, Callable, Iterable, Any, Optional, List, Dict,
@@ -130,6 +131,12 @@ class Command:
         return await perm.check_permission(session.bot, session.ctx,
                                            self.permission)
 
+    def __repr__(self):
+        return f'<Command, name={self.name.__repr__()}>'
+
+    def __str__(self):
+        return self.__repr__()
+
 
 class CommandFunc:
     __slots__ = ('cmd', 'func')
@@ -187,6 +194,12 @@ def on_command(name: Union[str, CommandName_T], *,
         for parent_key in cmd_name[:-1]:
             current_parent[parent_key] = current_parent.get(parent_key) or {}
             current_parent = current_parent[parent_key]
+            if not isinstance(current_parent, dict):
+                warnings.warn(f'{current_parent} is not a registry dict')
+                return func
+        if cmd_name[-1] in current_parent:
+            warnings.warn(f'There is already a command named {cmd_name}')
+            return func
         current_parent[cmd_name[-1]] = cmd
 
         nonlocal aliases
