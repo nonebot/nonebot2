@@ -151,7 +151,7 @@ class CommandFunc:
 
 
 def on_command(name: Union[str, CommandName_T], *,
-               aliases: Iterable[str] = (),
+               aliases: Union[Iterable[str], str] = (),
                permission: int = perm.EVERYBODY,
                only_to_me: bool = True,
                privileged: bool = False,
@@ -189,6 +189,9 @@ def on_command(name: Union[str, CommandName_T], *,
             current_parent = current_parent[parent_key]
         current_parent[cmd_name[-1]] = cmd
 
+        nonlocal aliases
+        if isinstance(aliases, str):
+            aliases = (aliases,)
         for alias in aliases:
             _aliases[alias] = cmd_name
 

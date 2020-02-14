@@ -17,7 +17,7 @@ class CommandGroup:
                  shell_like: bool = ...): ...
 
     def command(self, name: Union[str, CommandName_T], *,
-                aliases: Iterable[str] = ...,
+                aliases: Union[Iterable[str], str] = ...,
                 permission: int = ...,
                 only_to_me: bool = ...,
                 privileged: bool = ...,
