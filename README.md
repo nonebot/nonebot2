@@ -2,7 +2,8 @@
 
 [![License](https://img.shields.io/github/license/richardchien/nonebot.svg)](LICENSE)
 [![PyPI](https://img.shields.io/pypi/v/nonebot.svg)](https://pypi.python.org/pypi/nonebot)
-![Python](https://img.shields.io/badge/python-3.6%2B-blue.svg)
+![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)
+![CQHTTP Version](https://img.shields.io/badge/cqhttp-4.8+-black.svg)
 [![QQ 群](https://img.shields.io/badge/qq%E7%BE%A4-768887710-orange.svg)](https://jq.qq.com/?_wv=1027&k=5OFifDh)
 [![Telegram](https://img.shields.io/badge/telegram-chat-blue.svg)](https://t.me/cqhttp)
 [![QQ 版本发布群](https://img.shields.io/badge/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E7%BE%A4-218529254-green.svg)](https://jq.qq.com/?_wv=1027&k=5Nl0zhE)
@@ -18,7 +19,7 @@ NoneBot 在其底层与 酷Q 交互的部分使用 [python-aiocqhttp](https://gi
 
 得益于 Python 的 [asyncio](https://docs.python.org/3/library/asyncio.html) 机制，NoneBot 处理消息的吞吐量有了很大的保障，再配合 CoolQ HTTP API 插件可选的 WebSocket 通信方式（也是最建议的通信方式），NoneBot 的性能可以达到 HTTP 通信方式的两倍以上，相较于传统同步 I/O 的 HTTP 通信，更是有质的飞跃。
 
-需要注意的是，NoneBot 仅支持 Python 3.6.1+ 及 CoolQ HTTP API 插件 v4.7+。
+需要注意的是，NoneBot 仅支持 Python 3.7+ 及 CoolQ HTTP API 插件 v4.8+。
 
 ## 示意图
 
