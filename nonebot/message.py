@@ -79,7 +79,7 @@ def _check_at_me(bot: NoneBot, ctx: Context_T) -> None:
 
             if last_msg_seg == at_me_seg:
                 ctx['to_me'] = True
-                del ctx['message'][i:]
+                del ctx['message'][i:]ctx["message"]
 
         if not ctx['message']:
             ctx['message'].append(MessageSegment.text(''))
@@ -117,4 +117,4 @@ def _log_message(ctx: Context_T) -> None:
         msg_from += f'@[讨论组:{ctx["discuss_id"]}]'
     logger.info(f'Self: {ctx["self_id"]}, '
                 f'Message {ctx["message_id"]} from {msg_from}: '
-                f'{ctx["message"].__repr__()}')
+                f'{str(ctx["message"]).__repr__()}')
