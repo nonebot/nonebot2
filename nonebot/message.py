@@ -79,7 +79,7 @@ def _check_at_me(bot: NoneBot, ctx: Context_T) -> None:
 
             if last_msg_seg == at_me_seg:
                 ctx['to_me'] = True
-                del ctx['message'][i:]ctx["message"]
+                del ctx['message'][i:]
 
         if not ctx['message']:
             ctx['message'].append(MessageSegment.text(''))
