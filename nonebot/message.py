@@ -117,4 +117,4 @@ def _log_message(ctx: Context_T) -> None:
         msg_from += f'@[讨论组:{ctx["discuss_id"]}]'
     logger.info(f'Self: {ctx["self_id"]}, '
                 f'Message {ctx["message_id"]} from {msg_from}: '
-                f'{ctx["message"]}')
+                f'{str(ctx["message"]).__repr__()}')
