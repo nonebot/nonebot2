@@ -3,6 +3,7 @@ import re
 import shlex
 import warnings
 from datetime import datetime
+from functools import partial
 from typing import (
     Tuple, Union, Callable, Iterable, Any, Optional, List, Dict,
     Awaitable
@@ -271,7 +272,7 @@ class CommandSession(BaseSession):
     __slots__ = ('cmd',
                  'current_key', 'current_arg_filters', '_current_send_kwargs',
                  'current_arg', '_current_arg_text', '_current_arg_images',
-                 '_state', '_last_interaction', '_running')
+                 '_state', '_last_interaction', '_running', '_run_future')
 
     def __init__(self, bot: NoneBot, ctx: Context_T, cmd: Command, *,
                  current_arg: str = '', args: Optional[CommandArgs_T] = None):
@@ -291,6 +292,8 @@ class CommandSession(BaseSession):
         self._current_arg_text = None
         self._current_arg_images = None
         self.refresh(ctx, current_arg=current_arg)  # fill the above
+
+        self._run_future = partial(asyncio.run_coroutine_threadsafe, loop=bot.loop)
 
         self._state: State_T = {}
         if args:
@@ -418,13 +421,13 @@ class CommandSession(BaseSession):
     def pause(self, message: Optional[Message_T] = None, **kwargs) -> None:
         """Pause the session for further interaction."""
         if message:
-            asyncio.ensure_future(self.send(message, **kwargs))
+            self._run_future(self.send(message, **kwargs))
         raise _PauseException
 
     def finish(self, message: Optional[Message_T] = None, **kwargs) -> None:
         """Finish the session."""
         if message:
-            asyncio.ensure_future(self.send(message, **kwargs))
+            self._run_future(self.send(message, **kwargs))
         raise _FinishException
 
     def switch(self, new_ctx_message: Message_T) -> None:
