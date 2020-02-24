@@ -293,7 +293,8 @@ class CommandSession(BaseSession):
         self._current_arg_images = None
         self.refresh(ctx, current_arg=current_arg)  # fill the above
 
-        self._run_future = partial(asyncio.run_coroutine_threadsafe, loop=bot.loop)
+        self._run_future = partial(asyncio.run_coroutine_threadsafe,
+                                   loop=bot.loop)
 
         self._state: State_T = {}
         if args:
