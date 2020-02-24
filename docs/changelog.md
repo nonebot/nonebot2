@@ -4,6 +4,11 @@ sidebar: auto
 
 # 更新日志
 
+## v1.4.2
+
+- 修复 `CommandSession` 的部分方法在多线程条件下出错
+- 优化日志输出多行消息的方法
+
 ## v1.4.1
 
 - `on_command` 装饰器的 `aliases` 参数现支持字符串类型
