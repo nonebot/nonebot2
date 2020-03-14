@@ -139,25 +139,6 @@ class Command:
         return self.__repr__()
 
 
-class CommandFunc:
-    __slots__ = ('cmd', 'func')
-
-    def __init__(self, cmd: Command, func: CommandHandler_T):
-        self.cmd = cmd
-        self.func = func
-
-    def __call__(self, session: 'CommandSession') -> Any:
-        return self.func(session)
-
-    def args_parser(self, parser_func: CommandHandler_T) -> CommandHandler_T:
-        """
-        Decorator to register a function as the arguments parser of
-        the corresponding command.
-        """
-        self.cmd.args_parser_func = parser_func
-        return parser_func
-
-
 def on_command(name: Union[str, CommandName_T], *,
                aliases: Union[Iterable[str], str] = (),
                permission: int = perm.EVERYBODY,
@@ -209,7 +190,16 @@ def on_command(name: Union[str, CommandName_T], *,
         for alias in aliases:
             _aliases[alias] = cmd_name
 
-        return CommandFunc(cmd, func)
+        def args_parser(parser_func: CommandHandler_T) -> CommandHandler_T:
+            """
+            Decorator to register a function as the arguments parser of
+            the corresponding command.
+            """
+            cmd.args_parser_func = parser_func
+            return parser_func
+
+        func.args_parser = args_parser
+        return func
 
     return deco
 
