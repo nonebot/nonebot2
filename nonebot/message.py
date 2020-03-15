@@ -1,13 +1,13 @@
 import asyncio
 from typing import Callable
 
+from aiocqhttp import Event as CQEvent
 from aiocqhttp.message import *
 
 from . import NoneBot
 from .command import handle_command, SwitchException
 from .log import logger
 from .natural_language import handle_natural_language
-from .typing import Context_T
 
 _message_preprocessors = set()
 
@@ -17,76 +17,77 @@ def message_preprocessor(func: Callable) -> Callable:
     return func
 
 
-async def handle_message(bot: NoneBot, ctx: Context_T) -> None:
-    _log_message(ctx)
+async def handle_message(bot: NoneBot, event: CQEvent) -> None:
+    _log_message(event)
 
-    if not ctx['message']:
-        ctx['message'].append(MessageSegment.text(''))
+    assert isinstance(event.message, Message)
+    if not event.message:
+        event.message.append(MessageSegment.text(''))
 
     coros = []
-    for processor in _message_preprocessors:
-        coros.append(processor(bot, ctx))
+    for preprocessor in _message_preprocessors:
+        coros.append(preprocessor(bot, event))
     if coros:
         await asyncio.wait(coros)
 
-    raw_to_me = ctx.get('to_me', False)
-    _check_at_me(bot, ctx)
-    _check_calling_me_nickname(bot, ctx)
-    ctx['to_me'] = raw_to_me or ctx['to_me']
+    raw_to_me = event.get('to_me', False)
+    _check_at_me(bot, event)
+    _check_calling_me_nickname(bot, event)
+    event['to_me'] = raw_to_me or event['to_me']
 
     while True:
         try:
-            handled = await handle_command(bot, ctx)
+            handled = await handle_command(bot, event)
             break
         except SwitchException as e:
             # we are sure that there is no session existing now
-            ctx['message'] = e.new_ctx_message
-            ctx['to_me'] = True
+            event['message'] = e.new_message
+            event['to_me'] = True
     if handled:
-        logger.info(f'Message {ctx["message_id"]} is handled as a command')
+        logger.info(f'Message {event.message_id} is handled as a command')
         return
 
-    handled = await handle_natural_language(bot, ctx)
+    handled = await handle_natural_language(bot, event)
     if handled:
-        logger.info(f'Message {ctx["message_id"]} is handled '
+        logger.info(f'Message {event.message_id} is handled '
                     f'as natural language')
         return
 
 
-def _check_at_me(bot: NoneBot, ctx: Context_T) -> None:
-    if ctx['message_type'] == 'private':
-        ctx['to_me'] = True
+def _check_at_me(bot: NoneBot, event: CQEvent) -> None:
+    if event.detail_type == 'private':
+        event['to_me'] = True
     else:
         # group or discuss
-        ctx['to_me'] = False
-        at_me_seg = MessageSegment.at(ctx['self_id'])
+        event['to_me'] = False
+        at_me_seg = MessageSegment.at(event.self_id)
 
         # check the first segment
-        first_msg_seg = ctx['message'][0]
+        first_msg_seg = event.message[0]
         if first_msg_seg == at_me_seg:
-            ctx['to_me'] = True
-            del ctx['message'][0]
+            event['to_me'] = True
+            del event.message[0]
 
-        if not ctx['to_me']:
+        if not event['to_me']:
             # check the last segment
             i = -1
-            last_msg_seg = ctx['message'][i]
+            last_msg_seg = event.message[i]
             if last_msg_seg.type == 'text' and \
                     not last_msg_seg.data['text'].strip() and \
-                    len(ctx['message']) >= 2:
+                    len(event.message) >= 2:
                 i -= 1
-                last_msg_seg = ctx['message'][i]
+                last_msg_seg = event.message[i]
 
             if last_msg_seg == at_me_seg:
-                ctx['to_me'] = True
-                del ctx['message'][i:]
+                event['to_me'] = True
+                del event.message[i:]
 
-        if not ctx['message']:
-            ctx['message'].append(MessageSegment.text(''))
+        if not event.message:
+            event.message.append(MessageSegment.text(''))
 
 
-def _check_calling_me_nickname(bot: NoneBot, ctx: Context_T) -> None:
-    first_msg_seg = ctx['message'][0]
+def _check_calling_me_nickname(bot: NoneBot, event: CQEvent) -> None:
+    first_msg_seg = event.message[0]
     if first_msg_seg.type != 'text':
         return
 
@@ -105,16 +106,16 @@ def _check_calling_me_nickname(bot: NoneBot, ctx: Context_T) -> None:
         if m:
             nickname = m.group(1)
             logger.debug(f'User is calling me {nickname}')
-            ctx['to_me'] = True
+            event['to_me'] = True
             first_msg_seg.data['text'] = first_text[m.end():]
 
 
-def _log_message(ctx: Context_T) -> None:
-    msg_from = str(ctx['user_id'])
-    if ctx['message_type'] == 'group':
-        msg_from += f'@[群:{ctx["group_id"]}]'
-    elif ctx['message_type'] == 'discuss':
-        msg_from += f'@[讨论组:{ctx["discuss_id"]}]'
-    logger.info(f'Self: {ctx["self_id"]}, '
-                f'Message {ctx["message_id"]} from {msg_from}: '
-                f'{str(ctx["message"]).__repr__()}')
+def _log_message(event: CQEvent) -> None:
+    msg_from = str(event.user_id)
+    if event.detail_type == 'group':
+        msg_from += f'@[群:{event.group_id}]'
+    elif event.detail_type == 'discuss':
+        msg_from += f'@[讨论组:{event.discuss_id}]'
+    logger.info(f'Self: {event.self_id}, '
+                f'Message {event.message_id} from {msg_from}: '
+                f'{str(event.message).__repr__()}')

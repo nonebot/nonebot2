@@ -2,7 +2,7 @@ import asyncio
 import logging
 from typing import Any, Optional
 
-import aiocqhttp.message
+import aiocqhttp
 from aiocqhttp import CQHttp
 
 from .log import logger
@@ -32,16 +32,16 @@ class NoneBot(CQHttp):
         from .notice_request import handle_notice_or_request
 
         @self.on_message
-        async def _(ctx):
-            asyncio.ensure_future(handle_message(self, ctx))
+        async def _(event: aiocqhttp.Event):
+            asyncio.create_task(handle_message(self, event))
 
         @self.on_notice
-        async def _(ctx):
-            asyncio.ensure_future(handle_notice_or_request(self, ctx))
+        async def _(event: aiocqhttp.Event):
+            asyncio.create_task(handle_notice_or_request(self, event))
 
         @self.on_request
-        async def _(ctx):
-            asyncio.ensure_future(handle_notice_or_request(self, ctx))
+        async def _(event: aiocqhttp.Event):
+            asyncio.create_task(handle_notice_or_request(self, event))
 
     def run(self, host: Optional[str] = None, port: Optional[int] = None,
             *args, **kwargs) -> None:

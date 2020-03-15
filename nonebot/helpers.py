@@ -2,51 +2,53 @@ import hashlib
 import random
 from typing import Sequence, Callable, Any
 
+from aiocqhttp import Event as CQEvent
+
 from . import NoneBot
 from .exceptions import CQHttpError
 from .message import escape
-from .typing import Context_T, Message_T, Expression_T
+from .typing import Message_T, Expression_T
 
 
-def context_id(ctx: Context_T, *,
+def context_id(event: CQEvent, *,
                mode: str = 'default', use_hash: bool = False) -> str:
     """
-    Calculate a unique id representing the current context.
+    Calculate a unique id representing the context of the given event.
 
     mode:
       default: one id for one context
       group: one id for one group or discuss
       user: one id for one user
 
-    :param ctx: the context dict
+    :param event: the event object
     :param mode: unique id mode: "default", "group", or "user"
     :param use_hash: use md5 to hash the id or not
     """
     ctx_id = ''
     if mode == 'default':
-        if ctx.get('group_id'):
-            ctx_id = f'/group/{ctx["group_id"]}'
-        elif ctx.get('discuss_id'):
-            ctx_id = f'/discuss/{ctx["discuss_id"]}'
-        if ctx.get('user_id'):
-            ctx_id += f'/user/{ctx["user_id"]}'
+        if event.group_id:
+            ctx_id = f'/group/{event.group_id}'
+        elif event.discuss_id:
+            ctx_id = f'/discuss/{event.discuss_id}'
+        if event.user_id:
+            ctx_id += f'/user/{event.user_id}'
     elif mode == 'group':
-        if ctx.get('group_id'):
-            ctx_id = f'/group/{ctx["group_id"]}'
-        elif ctx.get('discuss_id'):
-            ctx_id = f'/discuss/{ctx["discuss_id"]}'
-        elif ctx.get('user_id'):
-            ctx_id = f'/user/{ctx["user_id"]}'
+        if event.group_id:
+            ctx_id = f'/group/{event.group_id}'
+        elif event.discuss_id:
+            ctx_id = f'/discuss/{event.discuss_id}'
+        elif event.user_id:
+            ctx_id = f'/user/{event.user_id}'
     elif mode == 'user':
-        if ctx.get('user_id'):
-            ctx_id = f'/user/{ctx["user_id"]}'
+        if event.user_id:
+            ctx_id = f'/user/{event.user_id}'
 
     if ctx_id and use_hash:
         ctx_id = hashlib.md5(ctx_id.encode('ascii')).hexdigest()
     return ctx_id
 
 
-async def send(bot: NoneBot, ctx: Context_T,
+async def send(bot: NoneBot, event: CQEvent,
                message: Message_T, *,
                ensure_private: bool = False,
                ignore_failure: bool = True,
@@ -54,9 +56,9 @@ async def send(bot: NoneBot, ctx: Context_T,
     """Send a message ignoring failure by default."""
     try:
         if ensure_private:
-            ctx = ctx.copy()
-            ctx['message_type'] = 'private'
-        return await bot.send(ctx, message, **kwargs)
+            event = event.copy()
+            event['message_type'] = 'private'
+        return await bot.send(event, message, **kwargs)
     except CQHttpError:
         if not ignore_failure:
             raise

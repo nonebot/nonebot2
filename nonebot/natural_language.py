@@ -1,12 +1,14 @@
 import asyncio
 from typing import Iterable, Optional, Callable, Union, NamedTuple
 
+from aiocqhttp import Event as CQEvent
+
 from . import NoneBot, permission as perm
 from .command import call_command
 from .log import logger
 from .message import Message
 from .session import BaseSession
-from .typing import Context_T, CommandName_T, CommandArgs_T
+from .typing import CommandName_T, CommandArgs_T
 
 _nl_processors = set()
 
@@ -27,11 +29,12 @@ class NLProcessor:
         self.allow_empty_message = allow_empty_message
 
 
-def on_natural_language(keywords: Union[Optional[Iterable], str, Callable] = None,
-                        *, permission: int = perm.EVERYBODY,
-                        only_to_me: bool = True,
-                        only_short_message: bool = True,
-                        allow_empty_message: bool = False) -> Callable:
+def on_natural_language(
+        keywords: Union[Optional[Iterable], str, Callable] = None, *,
+        permission: int = perm.EVERYBODY,
+        only_to_me: bool = True,
+        only_short_message: bool = True,
+        allow_empty_message: bool = False) -> Callable:
     """
     Decorator to register a function as a natural language processor.
 
@@ -63,8 +66,8 @@ def on_natural_language(keywords: Union[Optional[Iterable], str, Callable] = Non
 class NLPSession(BaseSession):
     __slots__ = ('msg', 'msg_text', 'msg_images')
 
-    def __init__(self, bot: NoneBot, ctx: Context_T, msg: str):
-        super().__init__(bot, ctx)
+    def __init__(self, bot: NoneBot, event: CQEvent, msg: str):
+        super().__init__(bot, event)
         self.msg = msg
         tmp_msg = Message(msg)
         self.msg_text = tmp_msg.extract_plain_text()
@@ -97,17 +100,17 @@ class IntentCommand(NamedTuple):
     current_arg: str = ''
 
 
-async def handle_natural_language(bot: NoneBot, ctx: Context_T) -> bool:
+async def handle_natural_language(bot: NoneBot, event: CQEvent) -> bool:
     """
     Handle a message as natural language.
 
     This function is typically called by "handle_message".
 
     :param bot: NoneBot instance
-    :param ctx: message context
+    :param event: message event
     :return: the message is handled as natural language
     """
-    session = NLPSession(bot, ctx, str(ctx['message']))
+    session = NLPSession(bot, event, str(event.message))
 
     # use msg_text here because CQ code "share" may be very long,
     # at the same time some plugins may want to handle it
@@ -123,10 +126,10 @@ async def handle_natural_language(bot: NoneBot, ctx: Context_T) -> bool:
                 msg_text_length > bot.config.SHORT_MESSAGE_MAX_LENGTH:
             continue
 
-        if p.only_to_me and not ctx['to_me']:
+        if p.only_to_me and not event['to_me']:
             continue
 
-        should_run = await perm.check_permission(bot, ctx, p.permission)
+        should_run = await perm.check_permission(bot, event, p.permission)
         if should_run and p.keywords:
             for kw in p.keywords:
                 if kw in session.msg_text:
@@ -162,7 +165,7 @@ async def handle_natural_language(bot: NoneBot, ctx: Context_T) -> bool:
             logger.debug(
                 f'Intent command with highest confidence: {chosen_cmd}')
             return await call_command(
-                bot, ctx, chosen_cmd.name,
+                bot, event, chosen_cmd.name,
                 args=chosen_cmd.args,
                 current_arg=chosen_cmd.current_arg,
                 check_perm=False

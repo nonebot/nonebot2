@@ -1,10 +1,10 @@
 from collections import namedtuple
 
 from aiocache import cached
+from aiocqhttp import Event as CQEvent
 
 from . import NoneBot
 from .exceptions import CQHttpError
-from .typing import Context_T
 
 PRIVATE_FRIEND = 0x0001
 PRIVATE_GROUP = 0x0002
@@ -32,7 +32,7 @@ IS_GROUP_OWNER = GROUP_ADMIN | GROUP_OWNER
 IS_GROUP = GROUP
 IS_SUPERUSER = 0xFFFF
 
-_min_context_fields = (
+_min_event_fields = (
     'self_id',
     'message_type',
     'sub_type',
@@ -42,52 +42,52 @@ _min_context_fields = (
     'anonymous',
 )
 
-_MinContext = namedtuple('MinContext', _min_context_fields)
+_MinEvent = namedtuple('MinEvent', _min_event_fields)
 
 
-async def check_permission(bot: NoneBot, ctx: Context_T,
+async def check_permission(bot: NoneBot, event: CQEvent,
                            permission_required: int) -> bool:
     """
-    Check if the context has the permission required.
+    Check if the event context has the permission required.
 
     :param bot: NoneBot instance
-    :param ctx: message context
+    :param event: message event
     :param permission_required: permission required
     :return: the context has the permission
     """
-    min_ctx_kwargs = {}
-    for field in _min_context_fields:
-        if field in ctx:
-            min_ctx_kwargs[field] = ctx[field]
+    min_event_kwargs = {}
+    for field in _min_event_fields:
+        if field in event:
+            min_event_kwargs[field] = event[field]
         else:
-            min_ctx_kwargs[field] = None
-    min_ctx = _MinContext(**min_ctx_kwargs)
-    return await _check(bot, min_ctx, permission_required)
+            min_event_kwargs[field] = None
+    min_event = _MinEvent(**min_event_kwargs)
+    return await _check(bot, min_event, permission_required)
 
 
 @cached(ttl=2 * 60)  # cache the result for 2 minute
-async def _check(bot: NoneBot, min_ctx: _MinContext,
+async def _check(bot: NoneBot, min_event: _MinEvent,
                  permission_required: int) -> bool:
     permission = 0
-    if min_ctx.user_id in bot.config.SUPERUSERS:
+    if min_event.user_id in bot.config.SUPERUSERS:
         permission |= IS_SUPERUSER
-    if min_ctx.message_type == 'private':
-        if min_ctx.sub_type == 'friend':
+    if min_event.message_type == 'private':
+        if min_event.sub_type == 'friend':
             permission |= IS_PRIVATE_FRIEND
-        elif min_ctx.sub_type == 'group':
+        elif min_event.sub_type == 'group':
             permission |= IS_PRIVATE_GROUP
-        elif min_ctx.sub_type == 'discuss':
+        elif min_event.sub_type == 'discuss':
             permission |= IS_PRIVATE_DISCUSS
-        elif min_ctx.sub_type == 'other':
+        elif min_event.sub_type == 'other':
             permission |= IS_PRIVATE_OTHER
-    elif min_ctx.message_type == 'group':
+    elif min_event.message_type == 'group':
         permission |= IS_GROUP_MEMBER
-        if not min_ctx.anonymous:
+        if not min_event.anonymous:
             try:
                 member_info = await bot.get_group_member_info(
-                    self_id=min_ctx.self_id,
-                    group_id=min_ctx.group_id,
-                    user_id=min_ctx.user_id,
+                    self_id=min_event.self_id,
+                    group_id=min_event.group_id,
+                    user_id=min_event.user_id,
                     no_cache=True
                 )
                 if member_info:
@@ -97,7 +97,7 @@ async def _check(bot: NoneBot, min_ctx: _MinContext,
                         permission |= IS_GROUP_ADMIN
             except CQHttpError:
                 pass
-    elif min_ctx.message_type == 'discuss':
+    elif min_event.message_type == 'discuss':
         permission |= IS_DISCUSS
 
     return bool(permission & permission_required)

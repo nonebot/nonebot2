@@ -9,6 +9,8 @@ from typing import (
     Awaitable
 )
 
+from aiocqhttp import Event as CQEvent
+
 from nonebot import NoneBot, permission as perm
 from nonebot.command.argfilter import ValidateError
 from nonebot.helpers import context_id, send, render_expression
@@ -16,8 +18,7 @@ from nonebot.log import logger
 from nonebot.message import Message
 from nonebot.session import BaseSession
 from nonebot.typing import (
-    Context_T, CommandName_T, CommandArgs_T, Message_T, State_T,
-    Filter_T
+    CommandName_T, CommandArgs_T, Message_T, State_T, Filter_T
 )
 
 # key: one segment of command name
@@ -129,7 +130,7 @@ class Command:
         :param session: CommandSession object
         :return: the session has the permission
         """
-        return await perm.check_permission(session.bot, session.ctx,
+        return await perm.check_permission(session.bot, session.event,
                                            self.permission)
 
     def __repr__(self):
@@ -166,6 +167,17 @@ def on_command(name: Union[str, CommandName_T], *,
 
         cmd = Command(name=cmd_name, func=func, permission=permission,
                       only_to_me=only_to_me, privileged=privileged)
+
+        def args_parser(parser_func: CommandHandler_T) -> CommandHandler_T:
+            """
+            Decorator to register a function as the arguments parser of
+            the corresponding command.
+            """
+            cmd.args_parser_func = parser_func
+            return parser_func
+
+        func.args_parser = args_parser
+
         if shell_like:
             async def shell_like_args_parser(session):
                 session.args['argv'] = shlex.split(session.current_arg)
@@ -190,15 +202,6 @@ def on_command(name: Union[str, CommandName_T], *,
         for alias in aliases:
             _aliases[alias] = cmd_name
 
-        def args_parser(parser_func: CommandHandler_T) -> CommandHandler_T:
-            """
-            Decorator to register a function as the arguments parser of
-            the corresponding command.
-            """
-            cmd.args_parser_func = parser_func
-            return parser_func
-
-        func.args_parser = args_parser
         return func
 
     return deco
@@ -246,16 +249,16 @@ class SwitchException(Exception):
     should be stopped and replaced with a new one (going through
     handle_message() again).
 
-    Since the new context message will go through handle_message()
-    again, the later function should be notified. So this exception
-    is designed to be propagated to handle_message().
+    Since the new message will go through handle_message() again,
+    the later function should be notified. So this exception is
+    intended to be propagated to handle_message().
     """
 
-    def __init__(self, new_ctx_message: Message):
+    def __init__(self, new_message: Message):
         """
-        :param new_ctx_message: new message which should be placed in context
+        :param new_message: new message which should be placed in event
         """
-        self.new_ctx_message = new_ctx_message
+        self.new_message = new_message
 
 
 class CommandSession(BaseSession):
@@ -264,9 +267,9 @@ class CommandSession(BaseSession):
                  'current_arg', '_current_arg_text', '_current_arg_images',
                  '_state', '_last_interaction', '_running', '_run_future')
 
-    def __init__(self, bot: NoneBot, ctx: Context_T, cmd: Command, *,
+    def __init__(self, bot: NoneBot, event: CQEvent, cmd: Command, *,
                  current_arg: str = '', args: Optional[CommandArgs_T] = None):
-        super().__init__(bot, ctx)
+        super().__init__(bot, event)
         self.cmd = cmd  # Command object
 
         # unique key of the argument that is currently requesting (asking)
@@ -281,7 +284,7 @@ class CommandSession(BaseSession):
         self.current_arg: str = ''  # with potential CQ codes
         self._current_arg_text = None
         self._current_arg_images = None
-        self.refresh(ctx, current_arg=current_arg)  # fill the above
+        self.refresh(event, current_arg=current_arg)  # fill the above
 
         self._run_future = partial(asyncio.run_coroutine_threadsafe,
                                    loop=bot.loop)
@@ -363,14 +366,14 @@ class CommandSession(BaseSession):
         """
         return self.state.get('argv', [])
 
-    def refresh(self, ctx: Context_T, *, current_arg: str = '') -> None:
+    def refresh(self, event: CQEvent, *, current_arg: str = '') -> None:
         """
-        Refill the session with a new message context.
+        Refill the session with a new message event.
 
-        :param ctx: new message context
+        :param event: new message event
         :param current_arg: new command argument as a string
         """
-        self.ctx = ctx
+        self.event = event
         self.current_arg = current_arg
         self._current_arg_text = None
         self._current_arg_images = None
@@ -421,9 +424,9 @@ class CommandSession(BaseSession):
             self._run_future(self.send(message, **kwargs))
         raise _FinishException
 
-    def switch(self, new_ctx_message: Message_T) -> None:
+    def switch(self, new_message: Message_T) -> None:
         """
-        Finish the session and switch to a new (fake) message context.
+        Finish the session and switch to a new (fake) message event.
 
         The user may send another command (or another intention as natural
         language) when interacting with the current session. In this case,
@@ -436,9 +439,9 @@ class CommandSession(BaseSession):
             # we think the command is not handled
             raise _FinishException(result=False)
 
-        if not isinstance(new_ctx_message, Message):
-            new_ctx_message = Message(new_ctx_message)
-        raise SwitchException(new_ctx_message)
+        if not isinstance(new_message, Message):
+            new_message = Message(new_message)
+        raise SwitchException(new_message)
 
 
 def parse_command(bot: NoneBot,
@@ -513,26 +516,26 @@ def parse_command(bot: NoneBot,
     return cmd, ''.join(cmd_remained)
 
 
-async def handle_command(bot: NoneBot, ctx: Context_T) -> bool:
+async def handle_command(bot: NoneBot, event: CQEvent) -> bool:
     """
     Handle a message as a command.
 
     This function is typically called by "handle_message".
 
     :param bot: NoneBot instance
-    :param ctx: message context
+    :param event: message event
     :return: the message is handled as a command
     """
-    cmd, current_arg = parse_command(bot, str(ctx['message']).lstrip())
+    cmd, current_arg = parse_command(bot, str(event.message).lstrip())
     is_privileged_cmd = cmd and cmd.privileged
-    if is_privileged_cmd and cmd.only_to_me and not ctx['to_me']:
+    if is_privileged_cmd and cmd.only_to_me and not event['to_me']:
         is_privileged_cmd = False
     disable_interaction = is_privileged_cmd
 
     if is_privileged_cmd:
         logger.debug(f'Command {cmd.name} is a privileged command')
 
-    ctx_id = context_id(ctx)
+    ctx_id = context_id(event)
 
     if not is_privileged_cmd:
         # wait for 1.5 seconds (at most) if the current session is running
@@ -549,7 +552,7 @@ async def handle_command(bot: NoneBot, ctx: Context_T) -> bool:
             logger.warning(f'There is a session of command '
                            f'{session.cmd.name} running, notify the user')
             asyncio.ensure_future(send(
-                bot, ctx,
+                bot, event,
                 render_expression(bot.config.SESSION_RUNNING_EXPRESSION)
             ))
             # pretend we are successful, so that NLP won't handle it
@@ -558,8 +561,8 @@ async def handle_command(bot: NoneBot, ctx: Context_T) -> bool:
         if session.is_valid:
             logger.debug(f'Session of command {session.cmd.name} exists')
             # since it's in a session, the user must be talking to me
-            ctx['to_me'] = True
-            session.refresh(ctx, current_arg=str(ctx['message']))
+            event['to_me'] = True
+            session.refresh(event, current_arg=str(event['message']))
             # there is no need to check permission for existing session
             check_perm = False
         else:
@@ -573,17 +576,17 @@ async def handle_command(bot: NoneBot, ctx: Context_T) -> bool:
         if not cmd:
             logger.debug('Not a known command, ignored')
             return False
-        if cmd.only_to_me and not ctx['to_me']:
+        if cmd.only_to_me and not event['to_me']:
             logger.debug('Not to me, ignored')
             return False
-        session = CommandSession(bot, ctx, cmd, current_arg=current_arg)
+        session = CommandSession(bot, event, cmd, current_arg=current_arg)
         logger.debug(f'New session of command {session.cmd.name} created')
 
     return await _real_run_command(session, ctx_id, check_perm=check_perm,
                                    disable_interaction=disable_interaction)
 
 
-async def call_command(bot: NoneBot, ctx: Context_T,
+async def call_command(bot: NoneBot, event: CQEvent,
                        name: Union[str, CommandName_T], *,
                        current_arg: str = '',
                        args: Optional[CommandArgs_T] = None,
@@ -601,7 +604,7 @@ async def call_command(bot: NoneBot, ctx: Context_T,
     the user for more info).
 
     :param bot: NoneBot instance
-    :param ctx: message context
+    :param event: message event
     :param name: command name
     :param current_arg: command current argument string
     :param args: command args
@@ -612,10 +615,13 @@ async def call_command(bot: NoneBot, ctx: Context_T,
     cmd = _find_command(name)
     if not cmd:
         return False
-    session = CommandSession(bot, ctx, cmd, current_arg=current_arg, args=args)
-    return await _real_run_command(session, context_id(session.ctx),
-                                   check_perm=check_perm,
-                                   disable_interaction=disable_interaction)
+    session = CommandSession(bot, event, cmd,
+                             current_arg=current_arg, args=args)
+    return await _real_run_command(
+        session, context_id(session.event),
+        check_perm=check_perm,
+        disable_interaction=disable_interaction
+    )
 
 
 async def _real_run_command(session: CommandSession,
@@ -674,18 +680,18 @@ async def _real_run_command(session: CommandSession,
                 # make sure there is no session waiting
                 del _sessions[ctx_id]
             logger.debug(f'Session of command {session.cmd.name} switching, '
-                         f'new context message: {e.new_ctx_message}')
+                         f'new message: {e.new_message}')
             raise e  # this is intended to be propagated to handle_message()
 
 
-def kill_current_session(ctx: Context_T) -> None:
+def kill_current_session(event: CQEvent) -> None:
     """
-    Force kill current session of the given context,
+    Force kill current session of the given event context,
     despite whether it is running or not.
 
-    :param ctx: message context
+    :param event: message event
     """
-    ctx_id = context_id(ctx)
+    ctx_id = context_id(event)
     if ctx_id in _sessions:
         del _sessions[ctx_id]
 

@@ -1,18 +1,28 @@
+from aiocqhttp import Event as CQEvent
+
 from . import NoneBot
 from .helpers import send
-from .typing import Context_T, Message_T
+from .typing import Message_T
 
 
 class BaseSession:
-    __slots__ = ('bot', 'ctx')
+    __slots__ = ('bot', 'event')
 
-    def __init__(self, bot: NoneBot, ctx: Context_T):
+    def __init__(self, bot: NoneBot, event: CQEvent):
         self.bot = bot
-        self.ctx = ctx
+        self.event = event
+
+    @property
+    def ctx(self) -> CQEvent:
+        return self.event
+
+    @ctx.setter
+    def ctx(self, val: CQEvent) -> None:
+        self.event = val
 
     @property
     def self_id(self) -> int:
-        return self.ctx['self_id']
+        return self.event.self_id
 
     async def send(self, message: Message_T, *,
                    at_sender: bool = False,
@@ -28,7 +38,7 @@ class BaseSession:
         :param ignore_failure: if any CQHttpError raised, ignore it
         :return: the result returned by CQHTTP
         """
-        return await send(self.bot, self.ctx, message,
+        return await send(self.bot, self.event, message,
                           at_sender=at_sender,
                           ensure_private=ensure_private,
                           ignore_failure=ignore_failure, **kwargs)
