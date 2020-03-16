@@ -4,10 +4,12 @@ sidebar: auto
 
 # 更新日志
 
-## next
+## v1.5.0
 
+- 新增 `nonebot.on_startup` 装饰器，用于注册 NoneBot 启动时回调函数
+- 新增 `nonebot.on_websocket_connect` 装饰器，用于注册 CQHTTP 反向 WebSocket 连接时回调函数（要求 CQHTTP v4.14+）
 - 弃用 `session.ctx` 属性，请使用 `session.event` 替代，该对象类型为 `aiocqhttp.Event`，可通过 property 访问内容
-- 移除 `nonebot.tying.Context_T`，请使用 `aiocqhttp.Event` 替代
+- 弃用 `nonebot.tying.Context_T`，请使用 `aiocqhttp.Event` 替代
 - 修复 `@on_command` 装饰后命令处理函数 docstring 丢失问题
 
 ## v1.4.2
