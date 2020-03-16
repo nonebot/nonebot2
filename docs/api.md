@@ -2253,7 +2253,7 @@ session.get('arg1', prompt='请输入 arg1：',
 
 #### `ctx` <Badge text="1.5.0-" type="error"/>
 
-- **类型:** `Context_T`
+- **类型:** `aiocqhttp.Event`
 
 - **说明:**
 
