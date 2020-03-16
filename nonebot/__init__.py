@@ -1,6 +1,6 @@
 import asyncio
 import logging
-from typing import Any, Optional
+from typing import Any, Optional, Callable, Awaitable
 
 import aiocqhttp
 from aiocqhttp import CQHttp
@@ -105,6 +105,28 @@ def run(host: Optional[str] = None, port: Optional[int] = None,
     get_bot().run(host=host, port=port, *args, **kwargs)
 
 
+def on_startup(func: Callable[[], Awaitable[None]]) \
+        -> Callable[[], Awaitable[None]]:
+    """
+    Decorator to register a function as startup callback.
+    """
+    return get_bot().server_app.before_serving(func)
+
+
+def on_websocket_connect(func: Callable[[], Awaitable[None]]) \
+        -> Callable[[], Awaitable[None]]:
+    """
+    Decorator to register a function as websocket connect callback.
+
+    Only work with CQHTTP v4.14+.
+    """
+
+    async def _func(event: aiocqhttp.Event):
+        await func()
+
+    return get_bot().on_meta_event('lifecycle.connect')(_func)
+
+
 from .exceptions import *
 from .plugin import (load_plugin, load_plugins, load_builtin_plugins,
                      get_loaded_plugins)
@@ -118,6 +140,8 @@ from .helpers import context_id
 
 __all__ = [
     'NoneBot', 'scheduler', 'init', 'get_bot', 'run',
+
+    'on_startup', 'on_websocket_connect',
 
     'CQHttpError',
 
