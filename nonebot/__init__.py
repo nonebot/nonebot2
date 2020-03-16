@@ -113,18 +113,14 @@ def on_startup(func: Callable[[], Awaitable[None]]) \
     return get_bot().server_app.before_serving(func)
 
 
-def on_websocket_connect(func: Callable[[], Awaitable[None]]) \
+def on_websocket_connect(func: Callable[[aiocqhttp.Event], Awaitable[None]]) \
         -> Callable[[], Awaitable[None]]:
     """
     Decorator to register a function as websocket connect callback.
 
     Only work with CQHTTP v4.14+.
     """
-
-    async def _func(event: aiocqhttp.Event):
-        await func()
-
-    return get_bot().on_meta_event('lifecycle.connect')(_func)
+    return get_bot().on_meta_event('lifecycle.connect')(func)
 
 
 from .exceptions import *
