@@ -62,7 +62,7 @@ if __name__ == '__main__':
 ::: warning 注意
 如果你运行时没有输出成功导入插件的日志，请确保你的当前工作目录是在 `awesome-bot` 项目的主目录中。
 
-如果仍然不行，尝试在先 `awesome-bot` 主目录中执行下面的命令：
+如果仍然不行，尝试先在 `awesome-bot` 主目录中执行下面的命令：
 
 ```bash
 export PYTHONPATH=.  # Linux / macOS

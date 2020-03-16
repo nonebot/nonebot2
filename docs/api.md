@@ -12,13 +12,13 @@ sidebar: auto
 
 以下类型均可从 `nonebot.typing` 模块导入。
 
-### `Context_T`
+### `Context_T` <Badge text="1.5.0-" type="error"/>
 
 - **类型:** `Dict[str, Any]`
 
 - **说明:**
 
-  酷Q HTTP API 上报的事件数据对象的类型。
+  CQHTTP 上报的事件数据对象的类型。
 
 ### `Message_T`
 
@@ -87,7 +87,7 @@ sidebar: auto
 
 - **说明:**
 
-  酷Q HTTP API 插件的 HTTP 接口地址，如果不使用 HTTP 通信，则无需设置。
+  CQHTTP 插件的 HTTP 接口地址，如果不使用 HTTP 通信，则无需设置。
 
 - **用法:**
 
@@ -95,7 +95,7 @@ sidebar: auto
   API_ROOT = 'http://127.0.0.1:5700'
   ```
 
-  告诉 NoneBot 酷Q HTTP API 插件的 HTTP 服务运行在 `http://127.0.0.1:5700`。
+  告诉 NoneBot CQHTTP 插件的 HTTP 服务运行在 `http://127.0.0.1:5700`。
 
 ### `ACCESS_TOKEN`
 
@@ -105,7 +105,7 @@ sidebar: auto
 
 - **说明:**
 
-  需要和 酷Q HTTP API 插件的配置中的 `access_token` 相同。
+  需要和 CQHTTP 插件的配置中的 `access_token` 相同。
 
 ### `SECRET`
 
@@ -115,7 +115,7 @@ sidebar: auto
 
 - **说明:**
 
-  需要和 酷Q HTTP API 插件的配置中的 `secret` 相同。
+  需要和 CQHTTP 插件的配置中的 `secret` 相同。
 
 ### `HOST`
 
@@ -530,7 +530,7 @@ sidebar: auto
   bot = nonebot.get_bot()
 
   @bot.on_message('group')
-  async def handle_group_message(ctx: Context_T)
+  async def handle_group_message(event: aiocqhttp.Event)
       pass
   ```
 
@@ -554,7 +554,7 @@ sidebar: auto
   bot = nonebot.get_bot()
 
   @bot.on_notice('group_increase')
-  async def handle_group_increase(ctx: Context_T)
+  async def handle_group_increase(event: aiocqhttp.Event)
       pass
   ```
 
@@ -578,7 +578,7 @@ sidebar: auto
   bot = nonebot.get_bot()
 
   @bot.on_request('friend', 'group.invite')
-  async def handle_request(ctx: Context_T)
+  async def handle_request(event: aiocqhttp.Event)
       pass
   ```
 
@@ -602,7 +602,7 @@ sidebar: auto
   bot = nonebot.get_bot()
 
   @bot.on_meta_event('heartbeat')
-  async def handle_heartbeat(ctx: Context_T)
+  async def handle_heartbeat(event: aiocqhttp.Event)
       pass
   ```
 
@@ -801,10 +801,10 @@ sidebar: auto
 
 - **要求:**
 
-  被装饰函数必须是一个 async 函数，且必须接收且仅接收两个位置参数，类型分别为 `NoneBot` 和 `Context_T`，即形如：
+  被装饰函数必须是一个 async 函数，且必须接收且仅接收两个位置参数，类型分别为 `NoneBot` 和 `aiocqhttp.Event`，即形如：
 
   ```python
-  async def func(bot: NoneBot, ctx: Context_T):
+  async def func(bot: NoneBot, event: aiocqhttp.Event):
       pass
   ```
 
@@ -812,11 +812,11 @@ sidebar: auto
 
   ```python
   @message_preprocessor
-  async def _(bot: NoneBot, ctx: Context_T):
-      ctx['preprocessed'] = True
+  async def _(bot: NoneBot, event: aiocqhttp.Event):
+      event['preprocessed'] = True
   ```
 
-  在所有消息处理之前，向消息事件上下文对象中加入 `preprocessed` 字段。
+  在所有消息处理之前，向消息事件对象中加入 `preprocessed` 字段。
 
 ### _class_ `MessageSegment`
 
@@ -1160,7 +1160,7 @@ sidebar: auto
 - **用法:**
 
   ```python
-  str(ctx['message'])
+  str(event.message)
   ```
 
 #### `__add__(other)`
@@ -1254,7 +1254,7 @@ sidebar: auto
 - **用法:**
 
   ```python
-  text = session.ctx['message'].extract_plain_text()
+  text = session.event.message.extract_plain_text()
   ```
 
   提取事件上报的原始消息中的纯文本部分。
@@ -1301,7 +1301,7 @@ sidebar: auto
 - **参数:**
 
   - `name: Union[str, CommandName_T]`: 命令名，如果传入的是字符串则会自动转为元组
-  - `aliases: Iterable[str]`: 命令别名
+  - `aliases: Union[Iterable[str], str]`: 命令别名
   - `permission: int`: 命令所需要的权限，不满足权限的用户将无法触发该命令
   - `only_to_me: bool`: 是否只响应确定是在和「我」（机器人）说话的命令（在开头或结尾 @ 了机器人，或在开头称呼了机器人昵称）
   - `privileged: bool`: 是否特权命令，若是，则无论当前是否有命令会话正在运行，都会运行该命令，但运行不会覆盖已有会话，也不会保留新创建的会话
@@ -1319,7 +1319,7 @@ sidebar: auto
 - **用法:**
 
   ```python
-  @on_command('echo')
+  @on_command('echo', aliases=('复读',))
   async def _(session: CommandSession):
       await session.send(session.current_arg)
   ```
@@ -1633,11 +1633,11 @@ sidebar: auto
   session.finish('感谢您的使用～')
   ```
 
-#### `switch(new_ctx_message)`
+#### `switch(new_message)`
 
 - **说明:**
 
-  结束当前会话，改变当前消息事件上下文中的消息内容，然后重新处理消息事件上下文。
+  结束当前会话，改变当前消息事件中的消息内容，然后重新处理消息事件。
 
   此函数可用于从一个命令中跳出，将用户输入的剩余部分作为新的消息来处理，例如可实现以下对话：
 
@@ -1652,7 +1652,7 @@ sidebar: auto
 
 - **参数:**
 
-  - `new_ctx_message: Message_T`: 要覆盖消息事件上下文的新消息内容
+  - `new_message: Message_T`: 要覆盖消息事件的新消息内容
 
 - **用法:**
 
@@ -1665,7 +1665,7 @@ sidebar: auto
 
   使用「算了」来取消当前命令，转而进入新的消息处理流程。这个例子比较简单，实际应用中可以使用更复杂的 NLP 技术来判断。
 
-### _coroutine_ `call_command(bot, ctx, name, *, current_arg='', args=None, check_perm=True, disable_interaction=False)`
+### _coroutine_ `call_command(bot, event, name, *, current_arg='', args=None, check_perm=True, disable_interaction=False)`
 
 - **说明:**
 
@@ -1674,7 +1674,7 @@ sidebar: auto
 - **参数:**
 
   - `bot: NoneBot`: NoneBot 对象
-  - `ctx: Context_T`: 事件上下文对象
+  - `event: aiocqhttp.Event`: 事件对象
   - `name: Union[str, CommandName_T]`: 要调用的命令名
   - `current_arg: str`: 命令会话的当前输入参数
   - `args: Optional[CommandArgs_T]`: 命令会话的（初始）参数（将会被并入命令会话的 `state` 属性）
@@ -1688,12 +1688,12 @@ sidebar: auto
 - **用法:**
 
   ```python
-  await call_command(bot, ctx, 'say', current_arg='[CQ:face,id=14]', check_perm=False)
+  await call_command(bot, event, 'say', current_arg='[CQ:face,id=14]', check_perm=False)
   ```
 
   从内部调用 `say` 命令，且不检查权限。
 
-### `kill_current_session(ctx)`
+### `kill_current_session(event)`
 
 - **说明:**
 
@@ -1701,7 +1701,7 @@ sidebar: auto
 
 - **参数:**
 
-  - `ctx: Context_T`: 事件上下文对象
+  - `event: aiocqhttp.Event`: 事件对象
 
 - **返回:**
 
@@ -1712,7 +1712,7 @@ sidebar: auto
   ```python
   @on_command('kill', privileged=True)
   async def _(session: CommandSession):
-      kill_current_session(session.ctx)
+      kill_current_session(session.event)
   ```
 
   在特权命令 `kill` 中强行移除当前正在运行的会话。
@@ -2079,7 +2079,7 @@ session.get('arg1', prompt='请输入 arg1：',
   ```python
   @on_notice
   async def _(session: NoticeSession):
-      logger.info('有新的通知事件：%s', session.ctx)
+      logger.info('有新的通知事件：%s', session.event)
 
   @on_notice('group_increase')
   async def _(session: NoticeSession):
@@ -2112,7 +2112,7 @@ session.get('arg1', prompt='请输入 arg1：',
   ```python
   @on_request
   async def _(session: RequestSession):
-      logger.info('有新的请求事件：%s', session.ctx)
+      logger.info('有新的请求事件：%s', session.event)
 
   @on_request('group')
   async def _(session: RequestSession):
@@ -2199,13 +2199,30 @@ session.get('arg1', prompt='请输入 arg1：',
 
   在当前 Session 对应的上下文中发送 `hello`。
 
-#### `ctx`
+#### `event` <Badge text="1.5.0+"/>
+
+- **类型:** `aiocqhttp.Event`
+
+- **说明:**
+
+  CQHTTP 上报的事件数据对象，具体请参考 [`aiocqhttp.Event`](https://python-aiocqhttp.cqp.moe/module/aiocqhttp/index.html#aiocqhttp.Event) 和 [事件上报](https://cqhttp.cc/docs/#/Post)。
+
+- **用法:**
+
+  ```python
+  user_id = session.event['user_id']
+  group_id = session.event.group_id
+  ```
+
+  获取当前事件的 `user_id` 和 `group_id` 字段。
+
+#### `ctx` <Badge text="1.5.0-" type="error"/>
 
 - **类型:** `Context_T`
 
 - **说明:**
 
-  酷Q HTTP API 上报的事件数据对象，或称事件上下文，具体请参考 [事件上报](https://cqhttp.cc/docs/#/Post)。
+  CQHTTP 上报的事件数据对象，或称事件上下文，具体请参考 [事件上报](https://cqhttp.cc/docs/#/Post)。
 
 - **用法:**
 
@@ -2213,7 +2230,7 @@ session.get('arg1', prompt='请输入 arg1：',
   user_id = session.ctx['user_id']
   ```
 
-  获取当前事件上下文的 `user_id` 字段。
+  获取当前事件的 `user_id` 字段。
 
 #### _readonly property_ `self_id` <Badge text="1.1.0+"/>
 
@@ -2223,7 +2240,7 @@ session.get('arg1', prompt='请输入 arg1：',
 
   当前 session 对应的 QQ 机器人账号，在多个机器人账号使用同一个 NoneBot 后端时可用于区分当前收到消息或事件的是哪一个机器人。
 
-  等价于 `session.ctx['self_id']`。
+  等价于 `session.event.self_id`。
 
 - **用法:**
 
@@ -2289,7 +2306,7 @@ async def _(session):
 
 需要注意的是，当一个用户是「群管理员」时，ta 同时也是「群成员」；当 ta 是「群主」时，ta 同时也是「群管理员」和「群成员」。
 
-### _coroutine_ `check_permission(bot, ctx, permission_required)`
+### _coroutine_ `check_permission(bot, event, permission_required)`
 
 - **说明:**
 
@@ -2298,17 +2315,17 @@ async def _(session):
 - **参数:**
 
   - `bot: NoneBot`: NoneBot 对象
-  - `ctx: Context_T`: 消息事件上下文对象
+  - `event: aiocqhttp.Event`: 消息事件对象
   - `permission_required: int`: 要求的权限值
 
 - **返回:**
 
-  - `bool`: 消息事件上下文所对应的用户是否具有所要求的权限
+  - `bool`: 消息事件所对应的上下文是否具有所要求的权限
 
 - **用法:**
 
   ```python
-  has_perm = await check_permission(bot, ctx, cmd.permission)
+  has_perm = await check_permission(bot, event, cmd.permission)
   ```
 
 ## `nonebot.log` 模块
@@ -2329,15 +2346,15 @@ async def _(session):
 
 ## `nonebot.helpers` 模块
 
-### `context_id(ctx, *, mode='default', use_hash=False)`
+### `context_id(event, *, mode='default', use_hash=False)`
 
 - **说明:**
 
-  获取事件上下文的唯一 ID。
+  获取事件对应的上下文的唯一 ID。
 
 - **参数:**
 
-  - `ctx: Context_T`: 事件上下文对象
+  - `event: aiocqhttp.Event`: 事件对象
   - `mode: str`: ID 的计算模式
     - `'default'`: 默认模式，任何一个上下文都有其唯一 ID
     - `'group'`: 群组模式，同一个群组或讨论组的上下文（即使是不同用户）具有相同 ID
@@ -2346,26 +2363,26 @@ async def _(session):
 
 - **返回:**
 
-  - `str`: 事件上下文的唯一 ID
+  - `str`: 事件对应的上下文的唯一 ID
 
 - **用法:**
 
   ```python
-  ctx_id = context_id(session.ctx, use_hash=True)
+  ctx_id = context_id(session.event, use_hash=True)
   ```
 
-  获取当前 Session 的事件上下文对应的唯一 ID，并进行 MD5 哈希，得到的结果可用于图灵机器人等 API 的调用。
+  获取当前 Session 的事件对应的上下文的唯一 ID，并进行 MD5 哈希，得到的结果可用于图灵机器人等 API 的调用。
 
-### _coroutine_ `send(bot, ctx, message, *, ensure_private=False, ignore_failure=True, **kwargs)`
+### _coroutine_ `send(bot, event, message, *, ensure_private=False, ignore_failure=True, **kwargs)`
 
 - **说明:**
 
-  发送消息到指定事件上下文中。
+  发送消息到指定事件的上下文中。
 
 - **参数:**
 
   - `bot: NoneBot`: NoneBot 对象
-  - `ctx: Context_T`: 事件上下文对象
+  - `event: aiocqhttp.Event`: 事件对象
   - `message: Message_T`: 要发送的消息内容
   - `ensure_private: bool`: 确保消息发送到私聊，对于群组和讨论组消息上下文，会私聊发送者
   - `ignore_failure: bool`: 发送失败时忽略 `CQHttpError` 异常
@@ -2382,7 +2399,7 @@ async def _(session):
 - **用法:**
 
   ```python
-  await send(bot, ctx, 'hello')
+  await send(bot, event, 'hello')
   ```
 
 ### `render_expression(expr, *args, escape_args=True, **kwargs)`

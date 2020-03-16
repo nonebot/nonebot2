@@ -4,15 +4,13 @@
 
 ## 事件数据
 
-在 [发生了什么？](./whats-happened.md) 中我们提到，收到 酷Q 事件后，CQHTTP 通过反向 WebSocket 给 NoneBot 发送事件数据。这些数据被 NoneBot 放在了 `session.ctx` 中，是一个字典，你可以通过断点调试或打印等方式查看它的内容，其中的字段名和含义见 CQHTTP 的 [事件列表](https://cqhttp.cc/docs/#/Post?id=事件列表) 中的「上报数据」。
+在 [发生了什么？](./whats-happened.md) 中我们提到，收到 酷Q 事件后，CQHTTP 通过反向 WebSocket 给 NoneBot 发送事件数据。这些数据被 aiocqhttp 包装为 [`aiocqhttp.Event`](https://python-aiocqhttp.cqp.moe/module/aiocqhttp/#aiocqhttp.Event) 对象，随后被 NoneBot 放在了 `session.event` 属性。该对象本质上是一个字典（但也提供了属性来获取其中的字段），你可以通过断点调试或打印等方式查看它的内容，其中的字段名和含义见 CQHTTP 的 [事件列表](https://cqhttp.cc/docs/#/Post?id=事件列表) 中的「上报数据」。
 
 ## API 调用
 
 前面我们已经多次调用 `CommandSession` 类的 `send()` 方法，而这个方法只能回复给消息的发送方，不能手动指定发送者，因此当我们需要实现将收到的消息经过处理后转发给另一个接收方这样的功能时，这个方法就用不了了。
 
-幸运的是，`NoneBot` 类是继承自 [python-aiocqhttp] 的 `CQHttp` 类的，而这个类实现了 `__getattr__()` 魔术方法，由此提供了直接通过 bot 对象调用 CQHTTP 的 API 的能力。
-
-[python-aiocqhttp]: https://github.com/cqmoe/python-aiocqhttp
+幸运的是，`NoneBot` 类是继承自 aiocqhttp 的 [`CQHttp` 类](https://python-aiocqhttp.cqp.moe/module/aiocqhttp/#aiocqhttp.CQHttp) 的，而这个类实现了 `__getattr__()` 魔术方法，由此提供了直接通过 bot 对象调用 CQHTTP 的 API 的能力。
 
 ::: tip 提示
 如果你在使用 HTTP 通信，要调用 CQHTTP API 要在 `config.py` 中添加：
@@ -50,7 +48,7 @@ await bot.send_private_msg(user_id=12345678, message='你好～')
   ```
 - **当多个机器人使用同一个 NoneBot 后端时**，可能需要加上参数 `self_id=<机器人QQ号>`，例如：
   ```python
-  info = await bot.get_group_list(self_id=ctx['self_id'])
+  info = await bot.get_group_list(self_id=event.self_id)
   ```
 
 另外，在需要动态性的场合，除了使用 `getattr()` 方法外，还可以直接调用 `bot.call_action()` 方法，传入 `action` 和 `params` 即可，例如上例中，`action` 为 `'send_private_msg'`，`params` 为 `{'user_id': 12345678, 'message': '你好～'}`。
@@ -61,12 +59,12 @@ await bot.send_private_msg(user_id=12345678, message='你好～')
 await bot.send_private_msg(user_id=12345678, message='你好～')
 await bot.send_group_msg(group_id=123456, message='大家好～')
 
-ctx = session.ctx.copy()
-del ctx['message']
-await bot.send_msg(**ctx, message='喵～')
+params = session.event.copy()
+del params['message']
+await bot.send_msg(**params, message='喵～')
 
-await bot.delete_msg(**session.ctx)
-await bot.set_group_card(**session.ctx, card='新人请改群名片')
+await bot.delete_msg(**session.event)
+await bot.set_group_card(**session.event, card='新人请改群名片')
 self_info = await bot.get_login_info()
 group_member_info = await bot.get_group_member_info(group_id=123456, user_id=12345678, no_cache=True)
 ```

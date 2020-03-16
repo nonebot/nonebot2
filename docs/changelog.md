@@ -4,6 +4,12 @@ sidebar: auto
 
 # 更新日志
 
+## next
+
+- 弃用 `session.ctx` 属性，请使用 `session.event` 替代，该对象类型为 `aiocqhttp.Event`，可通过 property 访问内容
+- 移除 `nonebot.tying.Context_T`，请使用 `aiocqhttp.Event` 替代
+- 修复 `@on_command` 装饰后命令处理函数 docstring 丢失问题
+
 ## v1.4.2
 
 - 修复 `CommandSession` 的部分方法在多线程条件下出错

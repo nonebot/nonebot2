@@ -23,7 +23,7 @@ NoneBot 在其底层与 酷Q 交互的部分使用 [python-aiocqhttp](https://gi
 
 ## 示意图
 
-![](diagram.png)
+![](docs/assets/diagram.png)
 
 ## 文档
 

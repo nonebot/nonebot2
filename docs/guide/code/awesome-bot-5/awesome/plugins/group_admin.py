@@ -6,7 +6,7 @@ from nonebot import on_notice, NoticeSession
 @on_request('group')
 async def _(session: RequestSession):
     # 判断验证信息是否符合要求
-    if session.ctx['comment'] == '暗号':
+    if session.event.comment == '暗号':
         # 验证信息正确，同意入群
         await session.approve()
         return

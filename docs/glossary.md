@@ -8,15 +8,15 @@ sidebar: auto
 
 [酷Q](https://cqp.cc) 是一个易语言编写的 QQ 机器人平台，其本身没有任何具体的功能，只是负责实现 QQ 协议，并以 DLL 导出函数的形式向插件提供 API 和事件上报。
 
-## CoolQ HTTP API 插件
+## CQHTTP 插件
 
-[CoolQ HTTP API 插件](https://cqhttp.cc/) 是 酷Q 的一个第三方插件，用于将 酷Q 所提供的所有 DLL 接口转换为 HTTP 或 WebSocket 的 web 形式，从而使利用任意语言编写 酷Q 插件成为可能。
+[CQHTTP 插件](https://cqhttp.cc/)即 CoolQ HTTP API 插件，是 酷Q 的一个第三方插件，用于将 酷Q 所提供的所有 DLL 接口转换为 HTTP 或 WebSocket 的 web 形式，从而使利用任意语言编写 酷Q 插件成为可能。
 
 有时被称为 cqhttp、CQHTTP、酷Q HTTP API 等。
 
 ## aiocqhttp
 
-[aiocqhttp](https://github.com/richardchien/python-aiocqhttp)（或称 python-aiocqhttp）是 CoolQ HTTP API 插件的一个 Python 异步 SDK，基于 asyncio，在 Quart 的基础上封装了与 CoolQ HTTP API 插件的网络交互。
+[aiocqhttp](https://github.com/richardchien/python-aiocqhttp)（或称 python-aiocqhttp）是 CQHTTP 插件的一个 Python 异步 SDK，基于 asyncio，在 Quart 的基础上封装了与 CQHTTP 插件的网络交互。
 
 ## asyncio
 
@@ -32,9 +32,9 @@ sidebar: auto
 
 ## 通信方式
 
-CoolQ HTTP API 插件中的一个术语，表示其与通过 web 技术编写的 酷Q 插件之间通信的手段。
+CQHTTP 插件中的一个术语，表示其与通过 web 技术编写的 酷Q 插件之间通信的手段。
 
-目前 CoolQ HTTP API 插件支持 HTTP、WebSocket、反向 WebSocket 三种通信方式，见 [通信方式](https://cqhttp.cc/docs/#/CommunicationMethods)，NoneBot 支持其中的 HTTP 和反向 WebSocket。
+目前 CQHTTP 插件支持 HTTP、WebSocket、反向 WebSocket 三种通信方式，见 [通信方式](https://cqhttp.cc/docs/#/CommunicationMethods)，NoneBot 支持其中的 HTTP 和反向 WebSocket。
 
 ## 负载均衡
 
@@ -96,10 +96,6 @@ async def _(session):
 
 特别地，命令的 Session 在需要和用户交互的情况下，会一直保留到下一次调用，以保证命令的多次交互能够共享数据。
 
-## 上下文（Context）
-
-通常通过 `session.ctx` 访问，是 CoolQ HTTP API 插件发送给 NoneBot 的原始事件数据，包含当前事件的来源信息、内容等，具体请参考 CoolQ HTTP API 插件文档的 [事件上报](https://cqhttp.cc/docs/#/Post).
-
 ## 表达（Expression）
 
 是 NoneBot 支持的一种消息渲染的机制，可以通过随机选择或函数生成+字符串格式化的方式根据参数生成出自然的、不固定的消息回复，提升用户体验。
@@ -108,11 +104,11 @@ Expression 可以是一个 `str`、元素类型是 `str` 的序列（一般为 `
 
 ## CQ 码
 
-是 酷Q 用来表示非文本消息的一种表示方法，形如 `[CQ:image,file=ABC.jpg]`。具体的格式规则，请参考 酷Q 文档的 [CQ 码](https://d.cqp.me/Pro/CQ%E7%A0%81) 和 CoolQ HTTP API 插件文档的 [CQ 码](https://cqhttp.cc/docs/#/CQCode)。
+是 酷Q 用来表示非文本消息的一种表示方法，形如 `[CQ:image,file=ABC.jpg]`。具体的格式规则，请参考 酷Q 文档的 [CQ 码](https://d.cqp.me/Pro/CQ%E7%A0%81) 和 CQHTTP 插件文档的 [CQ 码](https://cqhttp.cc/docs/#/CQCode)。
 
 ## 消息段
 
-是 CoolQ HTTP API 定义的、和 CQ 码可以互相转换的一个消息表示格式，具体表示方式见 [消息格式](https://cqhttp.cc/docs/#/Message)。
+是 CQHTTP 定义的、和 CQ 码可以互相转换的一个消息表示格式，具体表示方式见 [消息格式](https://cqhttp.cc/docs/#/Message)。
 
 除了纯文本消息段之外，每一个消息段都和一个 CQ 码对应，例如下面这个消息段：
 

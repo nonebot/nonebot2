@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "docs:dev": "vuepress dev -h 0.0.0.0 -p 9090 --debug docs",
+    "docs:dev": "vuepress dev -h 127.0.0.1 -p 8888 --debug docs",
     "docs:build": "vuepress build docs"
   },
   "devDependencies": {
