@@ -453,7 +453,7 @@ def parse_command(bot: NoneBot,
     :param cmd_string: command string
     :return: (Command object, current arg string)
     """
-    logger.debug(f'Parsing command: {cmd_string}')
+    logger.debug(f'Parsing command: {repr(cmd_string)}')
 
     matched_start = None
     for start in bot.config.COMMAND_START:

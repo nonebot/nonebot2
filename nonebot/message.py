@@ -118,4 +118,4 @@ def _log_message(event: CQEvent) -> None:
         msg_from += f'@[讨论组:{event.discuss_id}]'
     logger.info(f'Self: {event.self_id}, '
                 f'Message {event.message_id} from {msg_from}: '
-                f'{str(event.message).__repr__()}')
+                f'{repr(str(event.message))}')
