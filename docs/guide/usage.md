@@ -4,7 +4,7 @@
 
 现在，为了让用户能够更方便的使用，是时候编写一个使用帮助了。
 
-::: tip 提示
+:::tip 提示
 本章的完整代码可以在 [awesome-bot-7](https://github.com/richardchien/nonebot/tree/master/docs/guide/code/awesome-bot-7) 查看。
 :::
 

@@ -2,7 +2,7 @@
 
 本章将以一个天气查询插件为例，教你如何编写自己的命令。
 
-::: tip 提示
+:::tip 提示
 本章的完整代码可以在 [awesome-bot-2](https://github.com/richardchien/nonebot/tree/master/docs/guide/code/awesome-bot-2) 查看。
 :::
 
@@ -59,7 +59,7 @@ if __name__ == '__main__':
 
 这表示 NoneBot 已经成功加载到了 `weather` 插件。
 
-::: warning 注意
+:::warning 注意
 如果你运行时没有输出成功导入插件的日志，请确保你的当前工作目录是在 `awesome-bot` 项目的主目录中。
 
 如果仍然不行，尝试先在 `awesome-bot` 主目录中执行下面的命令：
@@ -120,7 +120,7 @@ async def get_weather_of_city(city: str) -> str:
     return f'{city}的天气是……'
 ```
 
-::: tip 提示
+:::tip 提示
 从这里开始，你需要对 Python 的 asyncio 编程有所了解，因为 NoneBot 是完全基于 asyncio 的，具体可以参考 [廖雪峰的 Python 教程](https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/00143208573480558080fa77514407cb23834c78c6c7309000)。
 :::
 
@@ -149,7 +149,7 @@ async def weather(session: CommandSession):
 
 你可能想问了，既然是重新执行，那执行到 `session.get()` 的时候不还是会中断吗？实际上，NoneBot 在 1.0.0 及更早版本中确实是这样的，必须手动编写下面要说的参数解析器，才能够让 `session.get()` 正确返回；而从 1.1.0 版本开始，NoneBot 会默认地把用户的完整输入作为当前询问内容的回答放进会话状态。
 
-::: tip 提示
+:::tip 提示
 删掉下面这段参数解析器，天气命令也可以正常使用，可以尝试不同的输入，看看行为上有什么不同。
 :::
 
@@ -186,7 +186,7 @@ async def _(session: CommandSession):
 
 如果不是第一次运行，那就说明命令处理函数中向用户询问了更多信息，导致会话被中断，并等待用户回复（也就是 `session.get()` 的效果）。这时候需要判断用户输入是不是有效，因为我们已经明确地询问了，如果用户此时发送了空白字符，显然这是没有意义的内容，需要提示用户重新发送。相反，如果有效的话，则直接以 `session.current_key` 作为 key（也就是 `session.get()` 的第一个参数，上例中只有可能是 `city`），将输入内容存入会话状态。
 
-::: tip 提示
+:::tip 提示
 上面用了 `session.current_arg_text` 来获取用户当前输入的参数，这表示从用户输入中提取纯文本部分，也就是说不包含图片、表情、语音、卡片分享等。
 
 如果需要用户输入的原始内容，请使用 `session.current_arg`，里面可能包含 CQ 码。除此之外，还可以通过 `session.current_arg_images` 获取消息中的图片 URL 列表。

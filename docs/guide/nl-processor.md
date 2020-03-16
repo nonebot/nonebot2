@@ -8,7 +8,7 @@
 今天南京天气怎么样？
 ```
 
-::: tip 提示
+:::tip 提示
 本章的完整代码可以在 [awesome-bot-3](https://github.com/richardchien/nonebot/tree/master/docs/guide/code/awesome-bot-3) 查看。
 :::
 
@@ -118,11 +118,11 @@ async def _(session: NLPSession):
 
 在 NoneBot 中，自然语言处理器的工作方式就是将用户的自然语言消息解析成一个命令和命令所需的参数，由于自然语言消息的模糊性，在解析时不可能完全确定用户的意图，因此还需要返回一个置信度作为这个命令的确定程度。
 
-::: warning 注意
+:::warning 注意
 这里的「置信度」与统计学中的置信度没有任何关系，只表示对「当前用户输入的意图是触发某命令」这件事有多大把握，应理解为普通意义的「confidence」。
 :::
 
-::: tip 提示
+:::tip 提示
 置信度的计算需要自然语言处理器的编写者进行恰当的设计，以确保各插件之间的功能不会互相冲突。
 :::
 
@@ -152,7 +152,7 @@ async def _(session: NLPSession):
 pip install jieba
 ```
 
-::: tip 提示
+:::tip 提示
 如果你没有使用过结巴分词，建议先前往它的 [项目主页](https://github.com/fxsjy/jieba) 查看代码示例以了解基本用法。
 :::
 
@@ -215,7 +215,7 @@ async def _(session: NLPSession):
 
 这里我们首先使用结巴分词的 posseg 模块进行词性标注，然后找出第一个标记为 `ns`（表示地名，其它词性见 [ICTCLAS 汉语词性标注集](https://gist.github.com/luw2007/6016931#ictclas-%E6%B1%89%E8%AF%AD%E8%AF%8D%E6%80%A7%E6%A0%87%E6%B3%A8%E9%9B%86)）的词，赋值给 `city`，进而作为 `weather` 命令的参数传入 `IntentCommand`（如果 `city` 为空，则给 `current_arg` 传入空字符串）。
 
-::: tip 提示
+:::tip 提示
 这里使用了 `current_arg`，因为之前编写的天气命令能够处理第一次运行时就附带了参数（城市名）的情况。
 
 你也可以在你自己的功能中使用 `args` 传入更复杂的初始参数。

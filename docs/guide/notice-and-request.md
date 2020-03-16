@@ -4,7 +4,7 @@
 
 本章将介绍如何在插件中处理通知和请求。
 
-::: tip 提示
+:::tip 提示
 本章的完整代码可以在 [awesome-bot-5](https://github.com/richardchien/nonebot/tree/master/docs/guide/code/awesome-bot-5) 查看。
 :::
 
@@ -51,7 +51,7 @@ async def _(session: NoticeSession):
     await session.send('欢迎新朋友～')
 ```
 
-::: warning 注意
+:::warning 注意
 这里最好预先判断一下是不是你想发送的群（通过 `session.event.group_id`），否则机器人所在的任何群有新成员进入它都会欢迎。
 :::
 

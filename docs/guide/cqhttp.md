@@ -12,7 +12,7 @@
 
 幸运的是，`NoneBot` 类是继承自 aiocqhttp 的 [`CQHttp` 类](https://python-aiocqhttp.cqp.moe/module/aiocqhttp/#aiocqhttp.CQHttp) 的，而这个类实现了 `__getattr__()` 魔术方法，由此提供了直接通过 bot 对象调用 CQHTTP 的 API 的能力。
 
-::: tip 提示
+:::tip 提示
 如果你在使用 HTTP 通信，要调用 CQHTTP API 要在 `config.py` 中添加：
 
 ```python

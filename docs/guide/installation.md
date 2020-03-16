@@ -2,7 +2,7 @@
 
 ## NoneBot
 
-::: warning 注意
+:::warning 注意
 请确保你的 Python 版本 >= 3.7。
 :::
 
@@ -28,7 +28,7 @@ python setup.py install
 
 如果你的操作系统是 Linux 或 macOS，可以使用版本发布页中 酷Q 官方提供的 Docker 镜像，也可以直接跳至下一个标题，使用 CQHTTP 插件官方提供的 Docker 镜像。
 
-::: tip 提示
+:::tip 提示
 如果这是你第一次使用 酷Q，建议完成它自带的新手教程，以对 酷Q 的运行机制有所了解。
 :::
 
@@ -36,6 +36,6 @@ python setup.py install
 
 前往 [CQHTTP 插件文档](https://cqhttp.cc/docs/)，按照其教程的「使用方法」安装插件。安装后，请先使用默认配置运行，并查看 酷Q 日志窗口的输出，以确定插件的加载、配置的生成和读取、插件版本等符合预期。
 
-::: warning 注意
+:::warning 注意
 请确保你安装的插件版本 >= 4.8，通常建议插件在大版本内尽量及时升级至最新版本。
 :::
