@@ -676,6 +676,41 @@ sidebar: auto
 
   在 `127.0.0.1:8080` 运行全局 NoneBot 对象。
 
+### _decorator_ `on_startup` <Badge text="1.5.0+"/>
+
+- **说明:**
+
+  将函数装饰为 NoneBot 启动时的回调函数。
+
+- **用法:**
+
+  ```python
+  @on_startup
+  async def startup()
+      await db.init()
+  ```
+
+  注册启动时回调，初始化数据库。
+
+### _decorator_ `on_websocket_connect` <Badge text="1.5.0+"/>
+
+- **说明:**
+
+  将函数装饰为 CQHTTP 反向 WebSocket 连接建立时的回调函数。
+
+  该装饰器等价于 `@bot.on_meta_event('lifecycle.connect')`，只在 CQHTTP v4.14+ 有用。
+
+- **用法:**
+
+  ```python
+  @on_websocket_connect
+  async def connect(event: aiocqhttp.Event):
+      bot = nonebot.get_bot()
+      groups = await bot.get_group_list()
+  ```
+
+  注册 WebSocket 连接时回调，获取群列表。
+
 ## `nonebot.exceptions` 模块
 
 ### _class_ `CQHttpError`
