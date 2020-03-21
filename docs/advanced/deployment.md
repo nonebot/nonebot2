@@ -2,7 +2,7 @@
 
 ## 基本部署
 
-NoneBot 所基于的 python-aiocqhttp 库使用的 web 框架是 Quart，因此 NoneBot 的部署方法和 Quart 一致（[Deploying Quart](https://pgjones.gitlab.io/quart/deployment.html)）。
+NoneBot 所基于的 python-aiocqhttp 库使用的 web 框架是 Quart，因此 NoneBot 的部署方法和 Quart 一致（[Deploying Quart](https://pgjones.gitlab.io/quart/tutorials/deployment.html)）。
 
 Quart 官方建议使用 Hypercorn 来部署，这需要一个 ASGI app 对象，在 NoneBot 中，可使用 `nonebot.get_bot().asgi` 获得 ASGI app 对象。
 
