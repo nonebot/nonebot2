@@ -1,26 +1,111 @@
-import importlib
 import os
 import re
-from typing import Any, Set, Optional
+import warnings
+import importlib
+from types import ModuleType
+from typing import Any, Set, Dict, Optional
 
 from .log import logger
+from .command import Command, CommandManager
+from .natural_language import NLProcessor, NLPManager
+from .notice_request import _bus, EventHandler
 
 
 class Plugin:
-    __slots__ = ('module', 'name', 'usage')
+    __slots__ = ('module', 'name', 'usage', 'commands', 'nl_processors', 'event_handlers')
 
-    def __init__(self, module: Any,
+    def __init__(self, module: ModuleType,
                  name: Optional[str] = None,
-                 usage: Optional[Any] = None):
+                 usage: Optional[Any] = None,
+                 commands: Set[Command] = set(),
+                 nl_processors: Set[NLProcessor] = set(),
+                 event_handlers: Set[EventHandler] = set()):
         self.module = module
         self.name = name
         self.usage = usage
+        self.commands = commands
+        self.nl_processors = nl_processors
+        self.event_handlers = event_handlers
+
+class PluginManager:
+    _plugins: Dict[str, Plugin] = {}
+    _anonymous_plugins: Set[Plugin] = set()
+    
+    def __init__(self):
+        self.cmd_manager = CommandManager()
+        self.nlp_manager = NLPManager()
+    
+    @classmethod
+    def add_plugin(cls, plugin: Plugin) -> None:
+        """Register a plugin
+        
+        Args:
+            plugin (Plugin): Plugin object
+        """
+        if plugin.name:
+            if plugin.name in cls._plugins:
+                warnings.warn(f"Plugin {plugin.name} already exists")
+                return
+            cls._plugins[plugin.name] = plugin
+        else:
+            cls._anonymous_plugins.add(plugin)
+    
+    @classmethod
+    def get_plugin(cls, name: str) -> Optional[Plugin]:
+        return cls._plugins.get(name)
+    
+    # TODO: plugin重加载
+    @classmethod
+    def reload_plugin(cls, plugin: Plugin) -> None:
+        pass
+
+    @classmethod
+    def switch_plugin_global(cls, name: str, state: Optional[bool] = None) -> None:
+        """Change plugin state globally or simply switch it if `state` is None
+        
+        Args:
+            name (str): Plugin name
+            state (Optional[bool]): State to change to. Defaults to None.
+        """
+        plugin = cls.get_plugin(name)
+        if not plugin:
+            warnings.warn(f"Plugin {name} not found")
+            return
+        for command in plugin.commands:
+            CommandManager.switch_command_global(command.name, state)
+        for nl_processor in plugin.nl_processors:
+            NLPManager.switch_processor_global(nl_processor, state)
+        for event_handler in plugin.event_handlers:
+            for event in event_handler.events:
+                if event_handler.func in _bus._subscribers[event] and not state:
+                    _bus.unsubscribe(event, event_handler.func)
+                elif event_handler.func not in _bus._subscribers[event] and state != False:
+                    _bus.subscribe(event, event_handler.func)
+
+    def switch_plugin(self, name: str, state: Optional[bool] = None) -> None:
+        """Change plugin state or simply switch it if `state` is None
+        
+        Args:
+            name (str): Plugin name
+            state (Optional[bool]): State to change to. Defaults to None.
+        """
+        plugin = self.get_plugin(name)
+        if not plugin:
+            warnings.warn(f"Plugin {name} not found")
+            return
+        for command in plugin.commands:
+            self.cmd_manager.switch_command(command.name, state)
+        for nl_processor in plugin.nl_processors:
+            self.nlp_manager.switch_processor(nl_processor, state)
+        # for event_handler in plugin.event_handlers:
+        #     for event in event_handler.events:
+        #         if event_handler.func in _bus._subscribers[event] and not state:
+        #             _bus.unsubscribe(event, event_handler.func)
+        #         elif event_handler.func not in _bus._subscribers[event] and state != False:
+        #             _bus.subscribe(event, event_handler.func)
 
 
-_plugins: Set[Plugin] = set()
-
-
-def load_plugin(module_name: str) -> bool:
+def load_plugin(module_name: str) -> Optional[Plugin]:
     """
     Load a module as a plugin.
 
@@ -31,16 +116,33 @@ def load_plugin(module_name: str) -> bool:
         module = importlib.import_module(module_name)
         name = getattr(module, '__plugin_name__', None)
         usage = getattr(module, '__plugin_usage__', None)
-        _plugins.add(Plugin(module, name, usage))
+        commands = set()
+        nl_processors = set()
+        event_handlers = set()
+        for attr in dir(module):
+            func = getattr(module, attr)
+            if isinstance(func, Command):
+                commands.add(func)
+            elif isinstance(func, NLProcessor):
+                nl_processors.add(func)
+            elif isinstance(func, EventHandler):
+                event_handlers.add(func)
+        plugin = Plugin(module, name, usage, commands, nl_processors, event_handlers)
+        PluginManager.add_plugin(plugin)
         logger.info(f'Succeeded to import "{module_name}"')
-        return True
+        return plugin
     except Exception as e:
         logger.error(f'Failed to import "{module_name}", error: {e}')
         logger.exception(e)
-        return False
+        return None
 
 
-def load_plugins(plugin_dir: str, module_prefix: str) -> int:
+# TODO: plugin重加载
+def reload_plugin(module_name: str) -> Optional[Plugin]:
+    pass
+
+
+def load_plugins(plugin_dir: str, module_prefix: str) -> Set[Plugin]:
     """
     Find all non-hidden modules or packages in a given directory,
     and import them with the given module prefix.
@@ -49,7 +151,7 @@ def load_plugins(plugin_dir: str, module_prefix: str) -> int:
     :param module_prefix: module prefix used while importing
     :return: number of plugins successfully loaded
     """
-    count = 0
+    count = set()
     for name in os.listdir(plugin_dir):
         path = os.path.join(plugin_dir, name)
         if os.path.isfile(path) and \
@@ -64,12 +166,13 @@ def load_plugins(plugin_dir: str, module_prefix: str) -> int:
         if not m:
             continue
 
-        if load_plugin(f'{module_prefix}.{m.group(1)}'):
-            count += 1
+        result = load_plugin(f'{module_prefix}.{m.group(1)}')
+        if result:
+            count.add(result)
     return count
 
 
-def load_builtin_plugins() -> int:
+def load_builtin_plugins() -> Set[Plugin]:
     """
     Load built-in plugins distributed along with "nonebot" package.
     """
@@ -83,4 +186,4 @@ def get_loaded_plugins() -> Set[Plugin]:
 
     :return: a set of Plugin objects
     """
-    return _plugins
+    return set(PluginManager._plugins.values()) | PluginManager._anonymous_plugins

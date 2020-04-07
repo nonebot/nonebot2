@@ -1,13 +1,15 @@
+import re
 import asyncio
-from typing import Callable
+from typing import Callable, Iterable
 
 from aiocqhttp import Event as CQEvent
-from aiocqhttp.message import *
+from aiocqhttp.message import escape, unescape, Message, MessageSegment
 
 from . import NoneBot
-from .command import handle_command, SwitchException
 from .log import logger
 from .natural_language import handle_natural_language
+from .command import handle_command, SwitchException
+from .plugin import PluginManager
 
 _message_preprocessors = set()
 
@@ -22,11 +24,12 @@ async def handle_message(bot: NoneBot, event: CQEvent) -> None:
 
     assert isinstance(event.message, Message)
     if not event.message:
-        event.message.append(MessageSegment.text(''))
+        event.message.append(MessageSegment.text(''))  # type: ignore
 
     coros = []
+    plugin_manager = PluginManager()
     for preprocessor in _message_preprocessors:
-        coros.append(preprocessor(bot, event))
+        coros.append(preprocessor(bot, event, plugin_manager))
     if coros:
         await asyncio.wait(coros)
 
@@ -37,7 +40,7 @@ async def handle_message(bot: NoneBot, event: CQEvent) -> None:
 
     while True:
         try:
-            handled = await handle_command(bot, event)
+            handled = await handle_command(bot, event, plugin_manager.cmd_manager)
             break
         except SwitchException as e:
             # we are sure that there is no session existing now
@@ -47,7 +50,7 @@ async def handle_message(bot: NoneBot, event: CQEvent) -> None:
         logger.info(f'Message {event.message_id} is handled as a command')
         return
 
-    handled = await handle_natural_language(bot, event)
+    handled = await handle_natural_language(bot, event, plugin_manager.nlp_manager)
     if handled:
         logger.info(f'Message {event.message_id} is handled '
                     f'as natural language')

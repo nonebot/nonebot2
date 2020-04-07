@@ -1,5 +1,6 @@
 import asyncio
-from typing import Iterable, Optional, Callable, Union, NamedTuple
+import warnings
+from typing import Set, Iterable, Optional, Callable, Union, NamedTuple
 
 from aiocqhttp import Event as CQEvent
 
@@ -10,13 +11,10 @@ from .message import Message
 from .session import BaseSession
 from .typing import CommandName_T, CommandArgs_T
 
-_nl_processors = set()
-
 
 class NLProcessor:
-    __slots__ = ('func', 'keywords', 'permission',
-                 'only_to_me', 'only_short_message',
-                 'allow_empty_message')
+    __slots__ = ('func', 'keywords', 'permission', 'only_to_me',
+                 'only_short_message', 'allow_empty_message')
 
     def __init__(self, *, func: Callable, keywords: Optional[Iterable],
                  permission: int, only_to_me: bool, only_short_message: bool,
@@ -29,8 +27,80 @@ class NLProcessor:
         self.allow_empty_message = allow_empty_message
 
 
+class NLPManager:
+    _nl_processors: Set[NLProcessor] = set()
+
+    def __init__(self):
+        self.nl_processors = NLPManager._nl_processors.copy()
+
+    @classmethod
+    def add_nl_processor(cls, processor: NLProcessor) -> None:
+        """Register a natural language processor
+        
+        Args:
+            processor (NLProcessor): Processor object
+        """
+        if processor in cls._nl_processors:
+            warnings.warn(f"NLProcessor {processor} already exists")
+            return
+        cls._nl_processors.add(processor)
+
+    @classmethod
+    def remove_nl_processor(cls, processor: NLProcessor) -> bool:
+        """Remove a natural language processor globally
+        
+        Args:
+            processor (NLProcessor): Processor to remove
+        
+        Returns:
+            bool: Success or not
+        """
+        if processor in cls._nl_processors:
+            cls._nl_processors.remove(processor)
+            return True
+        return False
+
+    @classmethod
+    def switch_processor_global(cls,
+                                processor: NLProcessor,
+                                state: Optional[bool] = None) -> Optional[bool]:
+        """Remove or add a processor
+        
+        Args:
+            processor (NLProcessor): Processor object
+        
+        Returns:
+            bool: True if removed, False if added
+        """
+        if processor in cls._nl_processors and not state:
+            cls._nl_processors.remove(processor)
+            return True
+        elif processor not in cls._nl_processors and state != False:
+            cls._nl_processors.add(processor)
+            return False
+
+    def switch_processor(self,
+                         processor: NLProcessor,
+                         state: Optional[bool] = None) -> Optional[bool]:
+        """Remove or add processor
+        
+        Args:
+            processor (NLProcessor): Processor to remove
+        
+        Returns:
+            bool: True if removed, False if added
+        """
+        if processor in self.nl_processors and not state:
+            self.nl_processors.remove(processor)
+            return True
+        elif processor not in self.nl_processors and state != False:
+            self.nl_processors.add(processor)
+            return False
+
+
 def on_natural_language(
-        keywords: Union[Optional[Iterable], str, Callable] = None, *,
+        keywords: Union[Optional[Iterable], str, Callable] = None,
+        *,
         permission: int = perm.EVERYBODY,
         only_to_me: bool = True,
         only_short_message: bool = True,
@@ -45,14 +115,16 @@ def on_natural_language(
     :param allow_empty_message: handle empty messages
     """
 
-    def deco(func: Callable) -> Callable:
-        nl_processor = NLProcessor(func=func, keywords=keywords,
-                                   permission=permission,
-                                   only_to_me=only_to_me,
-                                   only_short_message=only_short_message,
-                                   allow_empty_message=allow_empty_message)
-        _nl_processors.add(nl_processor)
-        return func
+    def deco(func: Callable) -> NLProcessor:
+        nl_processor = NLProcessor(
+            func=func,
+            keywords=keywords,  # type: ignore
+            permission=permission,
+            only_to_me=only_to_me,
+            only_short_message=only_short_message,
+            allow_empty_message=allow_empty_message)
+        NLPManager.add_nl_processor(nl_processor)
+        return nl_processor
 
     if isinstance(keywords, Callable):
         # here "keywords" is the function to be decorated
@@ -71,8 +143,11 @@ class NLPSession(BaseSession):
         self.msg = msg
         tmp_msg = Message(msg)
         self.msg_text = tmp_msg.extract_plain_text()
-        self.msg_images = [s.data['url'] for s in tmp_msg
-                           if s.type == 'image' and 'url' in s.data]
+        self.msg_images = [
+            s.data['url']
+            for s in tmp_msg
+            if s.type == 'image' and 'url' in s.data
+        ]
 
 
 class NLPResult(NamedTuple):
@@ -100,7 +175,8 @@ class IntentCommand(NamedTuple):
     current_arg: str = ''
 
 
-async def handle_natural_language(bot: NoneBot, event: CQEvent) -> bool:
+async def handle_natural_language(bot: NoneBot, event: CQEvent,
+                                  manager: NLPManager) -> bool:
     """
     Handle a message as natural language.
 
@@ -108,6 +184,7 @@ async def handle_natural_language(bot: NoneBot, event: CQEvent) -> bool:
 
     :param bot: NoneBot instance
     :param event: message event
+    :param manager: natural language processor manager
     :return: the message is handled as natural language
     """
     session = NLPSession(bot, event, str(event.message))
@@ -117,7 +194,7 @@ async def handle_natural_language(bot: NoneBot, event: CQEvent) -> bool:
     msg_text_length = len(session.msg_text)
 
     futures = []
-    for p in _nl_processors:
+    for p in manager.nl_processors:
         if not p.allow_empty_message and not session.msg:
             # don't allow empty msg, but it is one, so skip to next
             continue
@@ -164,12 +241,12 @@ async def handle_natural_language(bot: NoneBot, event: CQEvent) -> bool:
             chosen_cmd = intent_commands[0]
             logger.debug(
                 f'Intent command with highest confidence: {chosen_cmd}')
-            return await call_command(
-                bot, event, chosen_cmd.name,
-                args=chosen_cmd.args,
-                current_arg=chosen_cmd.current_arg,
-                check_perm=False
-            )
+            return await call_command(bot,
+                                      event,
+                                      chosen_cmd.name,
+                                      args=chosen_cmd.args,
+                                      current_arg=chosen_cmd.current_arg,
+                                      check_perm=False)  # type: ignore
         else:
             logger.debug('No intent command has enough confidence')
     return False

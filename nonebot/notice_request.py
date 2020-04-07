@@ -1,4 +1,4 @@
-from typing import Optional, Callable, Union
+from typing import List, Optional, Callable, Union
 
 from aiocqhttp import Event as CQEvent
 from aiocqhttp.bus import EventBus
@@ -10,20 +10,29 @@ from .session import BaseSession
 
 _bus = EventBus()
 
+class EventHandler:
+    __slots__ = ('events', 'func')
+    
+    def __init__(self, events: List[str], func: Callable):
+        self.events = events
+        self.func = func
+
 
 def _make_event_deco(post_type: str) -> Callable:
     def deco_deco(arg: Optional[Union[str, Callable]] = None,
                   *events: str) -> Callable:
-        def deco(func: Callable) -> Callable:
+        def deco(func: Callable) -> EventHandler:
             if isinstance(arg, str):
-                for e in [arg] + list(events):
-                    _bus.subscribe(f'{post_type}.{e}', func)
+                events_tmp = list(map(lambda x: f"{post_type}.{x}", [arg] + list(events)))
+                for e in events_tmp:
+                    _bus.subscribe(e, func)
+                return EventHandler(events_tmp, func)
             else:
                 _bus.subscribe(post_type, func)
-            return func
+                return EventHandler([post_type], func)
 
         if isinstance(arg, Callable):
-            return deco(arg)
+            return deco(arg)  # type: ignore
         return deco
 
     return deco_deco
