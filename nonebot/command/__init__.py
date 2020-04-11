@@ -3,7 +3,7 @@ import shlex
 import asyncio
 import warnings
 from datetime import datetime
-from functools import partial
+from functools import partial, update_wrapper
 from typing import (Tuple, Union, Callable, Iterable, Any, Optional, List, Dict,
                     Awaitable)
 
@@ -27,7 +27,8 @@ CommandHandler_T = Callable[['CommandSession'], Any]
 
 class Command:
     __slots__ = ('name', 'func', 'permission', 'only_to_me', 'privileged',
-                 'args_parser_func')
+                 'args_parser_func', '__name__', '__qualname__', '__doc__',
+                 '__annotations__', '__dict__')
 
     def __init__(self, *, name: CommandName_T, func: CommandHandler_T,
                  permission: int, only_to_me: bool, privileged: bool):
@@ -401,6 +402,8 @@ def on_command(name: Union[str, CommandName_T],
 
         CommandManager.add_command(cmd_name, cmd)
         CommandManager.add_aliases(aliases, cmd)
+
+        update_wrapper(wrapper=cmd, wrapped=func)  # type: ignore
 
         return cmd
 
