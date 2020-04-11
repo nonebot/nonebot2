@@ -61,10 +61,11 @@ class NLPManager:
         return False
 
     @classmethod
-    def switch_processor_global(cls,
-                                processor: NLProcessor,
-                                state: Optional[bool] = None) -> Optional[bool]:
-        """Remove or add a processor
+    def switch_nlprocessor_global(cls,
+                                  processor: NLProcessor,
+                                  state: Optional[bool] = None
+                                 ) -> Optional[bool]:
+        """Remove or add a natural language processor globally
         
         Args:
             processor (NLProcessor): Processor object
@@ -79,10 +80,10 @@ class NLPManager:
             cls._nl_processors.add(processor)
             return False
 
-    def switch_processor(self,
-                         processor: NLProcessor,
-                         state: Optional[bool] = None) -> Optional[bool]:
-        """Remove or add processor
+    def switch_nlprocessor(self,
+                           processor: NLProcessor,
+                           state: Optional[bool] = None) -> Optional[bool]:
+        """Remove or add a natural language processor
         
         Args:
             processor (NLProcessor): Processor to remove

@@ -19,6 +19,19 @@ def message_preprocessor(func: Callable) -> Callable:
     return func
 
 
+class CanceledException(Exception):
+    """
+    Raised by message_preprocessor indicating that
+    the bot should ignore the message
+    """
+
+    def __init__(self, reason):
+        """
+        :param reason: reason to ignore the message
+        """
+        self.reason = reason
+
+
 async def handle_message(bot: NoneBot, event: CQEvent) -> None:
     _log_message(event)
 
@@ -26,17 +39,21 @@ async def handle_message(bot: NoneBot, event: CQEvent) -> None:
     if not event.message:
         event.message.append(MessageSegment.text(''))  # type: ignore
 
+    raw_to_me = event.get('to_me', False)
+    _check_at_me(bot, event)
+    _check_calling_me_nickname(bot, event)
+    event['to_me'] = raw_to_me or event['to_me']
+
     coros = []
     plugin_manager = PluginManager()
     for preprocessor in _message_preprocessors:
         coros.append(preprocessor(bot, event, plugin_manager))
     if coros:
-        await asyncio.wait(coros)
-
-    raw_to_me = event.get('to_me', False)
-    _check_at_me(bot, event)
-    _check_calling_me_nickname(bot, event)
-    event['to_me'] = raw_to_me or event['to_me']
+        try:
+            await asyncio.gather(*coros)
+        except CanceledException:
+            logger.info(f'Message {event["message_id"]} is ignored')
+            return
 
     while True:
         try:
