@@ -1,5 +1,6 @@
 import asyncio
 import warnings
+from functools import update_wrapper
 from typing import Set, Iterable, Optional, Callable, Union, NamedTuple
 
 from aiocqhttp import Event as CQEvent
@@ -14,7 +15,8 @@ from .typing import CommandName_T, CommandArgs_T
 
 class NLProcessor:
     __slots__ = ('func', 'keywords', 'permission', 'only_to_me',
-                 'only_short_message', 'allow_empty_message')
+                 'only_short_message', 'allow_empty_message', '__name__', '__qualname__', '__doc__',
+                 '__annotations__', '__dict__')
 
     def __init__(self, *, func: Callable, keywords: Optional[Iterable],
                  permission: int, only_to_me: bool, only_short_message: bool,
@@ -125,6 +127,7 @@ def on_natural_language(
             only_short_message=only_short_message,
             allow_empty_message=allow_empty_message)
         NLPManager.add_nl_processor(nl_processor)
+        update_wrapper(wrapper=nl_processor, wrapped=func)  # type: ignore
         return nl_processor
 
     if isinstance(keywords, Callable):

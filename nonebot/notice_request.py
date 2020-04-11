@@ -1,3 +1,4 @@
+from functools import update_wrapper
 from typing import List, Optional, Callable, Union
 
 from aiocqhttp import Event as CQEvent
@@ -11,7 +12,8 @@ from .session import BaseSession
 _bus = EventBus()
 
 class EventHandler:
-    __slots__ = ('events', 'func')
+    __slots__ = ('events', 'func', '__name__', '__qualname__', '__doc__',
+                 '__annotations__', '__dict__')
     
     def __init__(self, events: List[str], func: Callable):
         self.events = events
@@ -26,10 +28,12 @@ def _make_event_deco(post_type: str) -> Callable:
                 events_tmp = list(map(lambda x: f"{post_type}.{x}", [arg] + list(events)))
                 for e in events_tmp:
                     _bus.subscribe(e, func)
-                return EventHandler(events_tmp, func)
+                handler = EventHandler(events_tmp, func)
+                return update_wrapper(handler, func)  # type: ignore
             else:
                 _bus.subscribe(post_type, func)
-                return EventHandler([post_type], func)
+                handler = EventHandler([post_type], func)
+                return update_wrapper(handler, func)  # type: ignore
 
         if isinstance(arg, Callable):
             return deco(arg)  # type: ignore
