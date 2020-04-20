@@ -56,6 +56,7 @@ services:
       - CQHTTP_WS_REVERSE_EVENT_URL=ws://nonebot:8080/ws/event/
     depends_on:
       - nonebot
+    ports: 9000:9000 # noVNC 端口，用于从浏览器控制 酷Q
 
   nonebot:
     build: ./nonebot # 构建nonebot执行环境，Dockerfile见下面的例子
