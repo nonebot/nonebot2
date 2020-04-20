@@ -45,6 +45,4 @@ TOO_MANY_VALIDATION_FAILURES_EXPRESSION: Expression_T = \
 
 SESSION_CANCEL_EXPRESSION: Expression_T = '好的'
 
-APSCHEDULER_CONFIG: Dict[str, Any] = {
-    'apscheduler.timezone': 'Asia/Shanghai'
-}
+APSCHEDULER_CONFIG: Dict[str, Any] = {'apscheduler.timezone': 'Asia/Shanghai'}

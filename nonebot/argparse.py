@@ -4,6 +4,7 @@ from .command import CommandSession
 
 
 class ParserExit(RuntimeError):
+
     def __init__(self, status=0, message=None):
         self.status = status
         self.message = message

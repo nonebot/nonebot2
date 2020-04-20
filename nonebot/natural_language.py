@@ -15,8 +15,7 @@ from .typing import CommandName_T, CommandArgs_T
 
 class NLProcessor:
     __slots__ = ('func', 'keywords', 'permission', 'only_to_me',
-                 'only_short_message', 'allow_empty_message', '__name__', '__qualname__', '__doc__',
-                 '__annotations__', '__dict__')
+                 'only_short_message', 'allow_empty_message')
 
     def __init__(self, *, func: Callable, keywords: Optional[Iterable],
                  permission: int, only_to_me: bool, only_short_message: bool,
@@ -99,44 +98,6 @@ class NLPManager:
         elif processor not in self.nl_processors and state != False:
             self.nl_processors.add(processor)
             return False
-
-
-def on_natural_language(
-        keywords: Union[Optional[Iterable], str, Callable] = None,
-        *,
-        permission: int = perm.EVERYBODY,
-        only_to_me: bool = True,
-        only_short_message: bool = True,
-        allow_empty_message: bool = False) -> Callable:
-    """
-    Decorator to register a function as a natural language processor.
-
-    :param keywords: keywords to respond to, if None, respond to all messages
-    :param permission: permission required by the processor
-    :param only_to_me: only handle messages to me
-    :param only_short_message: only handle short messages
-    :param allow_empty_message: handle empty messages
-    """
-
-    def deco(func: Callable) -> NLProcessor:
-        nl_processor = NLProcessor(
-            func=func,
-            keywords=keywords,  # type: ignore
-            permission=permission,
-            only_to_me=only_to_me,
-            only_short_message=only_short_message,
-            allow_empty_message=allow_empty_message)
-        NLPManager.add_nl_processor(nl_processor)
-        update_wrapper(wrapper=nl_processor, wrapped=func)  # type: ignore
-        return nl_processor
-
-    if isinstance(keywords, Callable):
-        # here "keywords" is the function to be decorated
-        return on_natural_language()(keywords)
-    else:
-        if isinstance(keywords, str):
-            keywords = (keywords,)
-        return deco
 
 
 class NLPSession(BaseSession):

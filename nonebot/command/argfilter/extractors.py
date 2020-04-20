@@ -14,8 +14,11 @@ def _extract_text(arg: Message_T) -> str:
 def _extract_image_urls(arg: Message_T) -> List[str]:
     """Extract all image urls from a message-like object."""
     arg_as_msg = Message(arg)
-    return [s.data['url'] for s in arg_as_msg
-            if s.type == 'image' and 'url' in s.data]
+    return [
+        s.data['url']
+        for s in arg_as_msg
+        if s.type == 'image' and 'url' in s.data
+    ]
 
 
 def _extract_numbers(arg: Message_T) -> List[float]:

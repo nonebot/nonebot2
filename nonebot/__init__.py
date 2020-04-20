@@ -15,12 +15,16 @@ else:
 
 
 class NoneBot(CQHttp):
+
     def __init__(self, config_object: Optional[Any] = None):
         if config_object is None:
             from . import default_config as config_object
 
-        config_dict = {k: v for k, v in config_object.__dict__.items()
-                       if k.isupper() and not k.startswith('_')}
+        config_dict = {
+            k: v
+            for k, v in config_object.__dict__.items()
+            if k.isupper() and not k.startswith('_')
+        }
         logger.debug(f'Loaded configurations: {config_dict}')
         super().__init__(message_class=aiocqhttp.message.Message,
                          **{k.lower(): v for k, v in config_dict.items()})
@@ -43,8 +47,11 @@ class NoneBot(CQHttp):
         async def _(event: aiocqhttp.Event):
             asyncio.create_task(handle_notice_or_request(self, event))
 
-    def run(self, host: Optional[str] = None, port: Optional[int] = None,
-            *args, **kwargs) -> None:
+    def run(self,
+            host: Optional[str] = None,
+            port: Optional[int] = None,
+            *args,
+            **kwargs) -> None:
         host = host or self.config.HOST
         port = port or self.config.PORT
         if 'debug' not in kwargs:
@@ -99,8 +106,8 @@ def get_bot() -> NoneBot:
     return _bot
 
 
-def run(host: Optional[str] = None, port: Optional[int] = None,
-        *args, **kwargs) -> None:
+def run(host: Optional[str] = None, port: Optional[int] = None, *args,
+        **kwargs) -> None:
     """Run the NoneBot instance."""
     get_bot().run(host=host, port=port, *args, **kwargs)
 
@@ -125,31 +132,40 @@ def on_websocket_connect(func: Callable[[aiocqhttp.Event], Awaitable[None]]) \
 
 from .exceptions import *
 from .message import message_preprocessor, Message, MessageSegment
-from .plugin import (load_plugin, load_plugins, load_builtin_plugins,
+from .plugin import (on_command, on_natural_language, on_notice, on_request,
+                     load_plugin, load_plugins, load_builtin_plugins,
                      get_loaded_plugins)
-from .command import on_command, CommandSession, CommandGroup
-from .natural_language import (on_natural_language, NLPSession, NLPResult,
-                               IntentCommand)
-from .notice_request import (on_notice, NoticeSession,
-                             on_request, RequestSession)
+from .command import CommandSession, CommandGroup
+from .natural_language import NLPSession, NLPResult, IntentCommand
+from .notice_request import NoticeSession, RequestSession
 from .helpers import context_id
 
 __all__ = [
-    'NoneBot', 'scheduler', 'init', 'get_bot', 'run',
-
-    'on_startup', 'on_websocket_connect',
-
+    'NoneBot',
+    'scheduler',
+    'init',
+    'get_bot',
+    'run',
+    'on_startup',
+    'on_websocket_connect',
     'CQHttpError',
-
-    'load_plugin', 'load_plugins', 'load_builtin_plugins',
+    'load_plugin',
+    'load_plugins',
+    'load_builtin_plugins',
     'get_loaded_plugins',
-
-    'message_preprocessor', 'Message', 'MessageSegment',
-
-    'on_command', 'CommandSession', 'CommandGroup',
-
-    'on_natural_language', 'NLPSession', 'NLPResult', 'IntentCommand',
-    'on_notice', 'NoticeSession', 'on_request', 'RequestSession',
-
+    'message_preprocessor',
+    'Message',
+    'MessageSegment',
+    'on_command',
+    'CommandSession',
+    'CommandGroup',
+    'on_natural_language',
+    'NLPSession',
+    'NLPResult',
+    'IntentCommand',
+    'on_notice',
+    'NoticeSession',
+    'on_request',
+    'RequestSession',
     'context_id',
 ]

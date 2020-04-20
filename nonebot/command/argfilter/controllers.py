@@ -11,8 +11,8 @@ def handle_cancellation(session: CommandSession):
 
     def control(value):
         if _is_cancellation(value) is True:
-            session.finish(render_expression(
-                session.bot.config.SESSION_CANCEL_EXPRESSION))
+            session.finish(
+                render_expression(session.bot.config.SESSION_CANCEL_EXPRESSION))
         return value
 
     return control

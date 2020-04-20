@@ -10,8 +10,8 @@ from .message import escape
 from .typing import Message_T, Expression_T
 
 
-def context_id(event: CQEvent, *,
-               mode: str = 'default', use_hash: bool = False) -> str:
+def context_id(event: CQEvent, *, mode: str = 'default',
+               use_hash: bool = False) -> str:
     """
     Calculate a unique id representing the context of the given event.
 
@@ -48,8 +48,10 @@ def context_id(event: CQEvent, *,
     return ctx_id
 
 
-async def send(bot: NoneBot, event: CQEvent,
-               message: Message_T, *,
+async def send(bot: NoneBot,
+               event: CQEvent,
+               message: Message_T,
+               *,
                ensure_private: bool = False,
                ignore_failure: bool = True,
                **kwargs) -> Any:
@@ -65,8 +67,10 @@ async def send(bot: NoneBot, event: CQEvent,
         return None
 
 
-def render_expression(expr: Expression_T, *args,
-                      escape_args: bool = True, **kwargs) -> str:
+def render_expression(expr: Expression_T,
+                      *args,
+                      escape_args: bool = True,
+                      **kwargs) -> str:
     """
     Render an expression to message string.
 
@@ -82,8 +86,8 @@ def render_expression(expr: Expression_T, *args,
         expr = random.choice(expr)
     if escape_args:
         return expr.format(
-            *[escape(s) if isinstance(s, str) else s for s in args],
-            **{k: escape(v) if isinstance(v, str) else v
-               for k, v in kwargs.items()}
-        )
+            *[escape(s) if isinstance(s, str) else s for s in args], **{
+                k: escape(v) if isinstance(v, str) else v
+                for k, v in kwargs.items()
+            })
     return expr.format(*args, **kwargs)

@@ -5,6 +5,7 @@ except ImportError:
     AsyncIOScheduler = None
 
 if AsyncIOScheduler:
+
     class Scheduler(AsyncIOScheduler):
         pass
 else:

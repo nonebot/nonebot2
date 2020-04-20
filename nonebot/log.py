@@ -10,7 +10,6 @@ import sys
 
 logger = logging.getLogger('nonebot')
 default_handler = logging.StreamHandler(sys.stdout)
-default_handler.setFormatter(logging.Formatter(
-    '[%(asctime)s %(name)s] %(levelname)s: %(message)s'
-))
+default_handler.setFormatter(
+    logging.Formatter('[%(asctime)s %(name)s] %(levelname)s: %(message)s'))
 logger.addHandler(default_handler)

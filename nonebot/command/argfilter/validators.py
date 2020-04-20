@@ -6,6 +6,7 @@ from nonebot.typing import Filter_T
 
 
 class BaseValidator:
+
     def __init__(self, message=None):
         self.message = message
 
@@ -69,8 +70,7 @@ def match_regex(pattern: str, message=None, *, flags=0,
     return validate
 
 
-def ensure_true(bool_func: Callable[[Any], bool],
-                message=None) -> Filter_T:
+def ensure_true(bool_func: Callable[[Any], bool], message=None) -> Filter_T:
     """
     Validate any object to ensure the result of applying
     a boolean function to it is True.

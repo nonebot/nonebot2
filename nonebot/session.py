@@ -24,7 +24,9 @@ class BaseSession:
     def self_id(self) -> int:
         return self.event.self_id
 
-    async def send(self, message: Message_T, *,
+    async def send(self,
+                   message: Message_T,
+                   *,
                    at_sender: bool = False,
                    ensure_private: bool = False,
                    ignore_failure: bool = True,
@@ -38,7 +40,10 @@ class BaseSession:
         :param ignore_failure: if any CQHttpError raised, ignore it
         :return: the result returned by CQHTTP
         """
-        return await send(self.bot, self.event, message,
+        return await send(self.bot,
+                          self.event,
+                          message,
                           at_sender=at_sender,
                           ensure_private=ensure_private,
-                          ignore_failure=ignore_failure, **kwargs)
+                          ignore_failure=ignore_failure,
+                          **kwargs)

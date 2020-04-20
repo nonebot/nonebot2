@@ -1,20 +1,29 @@
 import os
 import re
+import shlex
 import warnings
 import importlib
 from types import ModuleType
-from typing import Any, Set, Dict, Optional
+from typing import Any, Set, Dict, Union, Optional, Iterable, Callable
 
 from .log import logger
+from nonebot import permission as perm
 from .command import Command, CommandManager
 from .natural_language import NLProcessor, NLPManager
 from .notice_request import _bus, EventHandler
+from .typing import CommandName_T, CommandHandler_T
+
+_tmp_command: Set[Command] = set()
+_tmp_nl_processor: Set[NLProcessor] = set()
+_tmp_event_handler: Set[EventHandler] = set()
 
 
 class Plugin:
-    __slots__ = ('module', 'name', 'usage', 'commands', 'nl_processors', 'event_handlers')
+    __slots__ = ('module', 'name', 'usage', 'commands', 'nl_processors',
+                 'event_handlers')
 
-    def __init__(self, module: ModuleType,
+    def __init__(self,
+                 module: ModuleType,
                  name: Optional[str] = None,
                  usage: Optional[Any] = None,
                  commands: Set[Command] = set(),
@@ -27,40 +36,58 @@ class Plugin:
         self.nl_processors = nl_processors
         self.event_handlers = event_handlers
 
+
 class PluginManager:
     _plugins: Dict[str, Plugin] = {}
-    _anonymous_plugins: Set[Plugin] = set()
-    
+
     def __init__(self):
         self.cmd_manager = CommandManager()
         self.nlp_manager = NLPManager()
-    
+
     @classmethod
-    def add_plugin(cls, plugin: Plugin) -> None:
+    def add_plugin(cls, module_path: str, plugin: Plugin) -> None:
         """Register a plugin
         
         Args:
+            name (str): module path
             plugin (Plugin): Plugin object
         """
-        if plugin.name:
-            if plugin.name in cls._plugins:
-                warnings.warn(f"Plugin {plugin.name} already exists")
-                return
-            cls._plugins[plugin.name] = plugin
-        else:
-            cls._anonymous_plugins.add(plugin)
-    
-    @classmethod
-    def get_plugin(cls, name: str) -> Optional[Plugin]:
-        return cls._plugins.get(name)
-    
-    # TODO: plugin重加载
-    @classmethod
-    def reload_plugin(cls, plugin: Plugin) -> None:
-        pass
+        if module_path in cls._plugins:
+            warnings.warn(f"Plugin {module_path} already exists")
+            return
+        cls._plugins[module_path] = plugin
 
     @classmethod
-    def switch_plugin_global(cls, name: str, state: Optional[bool] = None) -> None:
+    def get_plugin(cls, module_path: str) -> Optional[Plugin]:
+        """Get plugin object by plugin path
+        
+        Args:
+            name (str): plugin path
+        
+        Returns:
+            Optional[Plugin]: Plugin object
+        """
+        return cls._plugins.get(module_path, None)
+
+    @classmethod
+    def remove_plugin(cls, module_path: str) -> bool:
+        plugin = cls.get_plugin(module_path)
+        if not plugin:
+            warnings.warn(f"Plugin {module_path} not exists")
+            return False
+        for command in plugin.commands:
+            CommandManager.remove_command(command.name)
+        for nl_processor in plugin.nl_processors:
+            NLPManager.remove_nl_processor(nl_processor)
+        for event_handler in plugin.event_handlers:
+            for event in event_handler.events:
+                _bus.unsubscribe(event, event_handler.func)
+        del cls._plugins[module_path]
+        return True
+
+    @classmethod
+    def switch_plugin_global(cls, name: str,
+                             state: Optional[bool] = None) -> None:
         """Change plugin state globally or simply switch it if `state` is None
         
         Args:
@@ -79,11 +106,13 @@ class PluginManager:
             for event in event_handler.events:
                 if event_handler.func in _bus._subscribers[event] and not state:
                     _bus.unsubscribe(event, event_handler.func)
-                elif event_handler.func not in _bus._subscribers[event] and state != False:
+                elif event_handler.func not in _bus._subscribers[
+                        event] and state != False:
                     _bus.subscribe(event, event_handler.func)
 
     @classmethod
-    def switch_command_global(cls, name: str, state: Optional[bool] = None) -> None:
+    def switch_command_global(cls, name: str,
+                              state: Optional[bool] = None) -> None:
         """Change plugin command state globally or simply switch it if `state` is None
         
         Args:
@@ -96,9 +125,10 @@ class PluginManager:
             return
         for command in plugin.commands:
             CommandManager.switch_command_global(command.name, state)
-    
+
     @classmethod
-    def switch_nlprocessor_global(cls, name: str, state: Optional[bool] = None) -> None:
+    def switch_nlprocessor_global(cls, name: str,
+                                  state: Optional[bool] = None) -> None:
         """Change plugin nlprocessor state globally or simply switch it if `state` is None
         
         Args:
@@ -113,7 +143,8 @@ class PluginManager:
             NLPManager.switch_nlprocessor_global(processor, state)
 
     @classmethod
-    def switch_eventhandler_global(cls, name: str, state: Optional[bool] = None) -> None:
+    def switch_eventhandler_global(cls, name: str,
+                                   state: Optional[bool] = None) -> None:
         """Change plugin event handler state globally or simply switch it if `state` is None
         
         Args:
@@ -128,7 +159,8 @@ class PluginManager:
             for event in event_handler.events:
                 if event_handler.func in _bus._subscribers[event] and not state:
                     _bus.unsubscribe(event, event_handler.func)
-                elif event_handler.func not in _bus._subscribers[event] and state != False:
+                elif event_handler.func not in _bus._subscribers[
+                        event] and state != False:
                     _bus.subscribe(event, event_handler.func)
 
     def switch_plugin(self, name: str, state: Optional[bool] = None) -> None:
@@ -151,7 +183,7 @@ class PluginManager:
             self.cmd_manager.switch_command(command.name, state)
         for nl_processor in plugin.nl_processors:
             self.nlp_manager.switch_nlprocessor(nl_processor, state)
-    
+
     def switch_command(self, name: str, state: Optional[bool] = None) -> None:
         """Change plugin command state or simply switch it if `state` is None
         
@@ -166,7 +198,8 @@ class PluginManager:
         for command in plugin.commands:
             self.cmd_manager.switch_command(command.name, state)
 
-    def switch_nlprocessor(self, name: str, state: Optional[bool] = None) -> None:
+    def switch_nlprocessor(self, name: str,
+                           state: Optional[bool] = None) -> None:
         """Change plugin nlprocessor state or simply switch it if `state` is None
         
         Args:
@@ -181,41 +214,42 @@ class PluginManager:
             self.nlp_manager.switch_nlprocessor(processor, state)
 
 
-def load_plugin(module_name: str) -> Optional[Plugin]:
+def load_plugin(module_path: str) -> Optional[Plugin]:
+    """Load a module as a plugin
+    
+    Args:
+        module_path (str): path of module to import
+    
+    Returns:
+        Optional[Plugin]: Plugin object loaded
     """
-    Load a module as a plugin.
-
-    :param module_name: name of module to import
-    :return: successful or not
-    """
+    # Make sure tmp is clean
+    _tmp_command.clear()
+    _tmp_nl_processor.clear()
+    _tmp_event_handler.clear()
     try:
-        module = importlib.import_module(module_name)
+        module = importlib.import_module(module_path)
         name = getattr(module, '__plugin_name__', None)
         usage = getattr(module, '__plugin_usage__', None)
-        commands = set()
-        nl_processors = set()
-        event_handlers = set()
-        for attr in dir(module):
-            func = getattr(module, attr)
-            if isinstance(func, Command):
-                commands.add(func)
-            elif isinstance(func, NLProcessor):
-                nl_processors.add(func)
-            elif isinstance(func, EventHandler):
-                event_handlers.add(func)
-        plugin = Plugin(module, name, usage, commands, nl_processors, event_handlers)
-        PluginManager.add_plugin(plugin)
-        logger.info(f'Succeeded to import "{module_name}"')
+        commands = _tmp_command.copy()
+        nl_processors = _tmp_nl_processor.copy()
+        event_handlers = _tmp_event_handler.copy()
+        plugin = Plugin(module, name, usage, commands, nl_processors,
+                        event_handlers)
+        PluginManager.add_plugin(module_path, plugin)
+        logger.info(f'Succeeded to import "{module_path}"')
         return plugin
     except Exception as e:
-        logger.error(f'Failed to import "{module_name}", error: {e}')
+        logger.error(f'Failed to import "{module_path}", error: {e}')
         logger.exception(e)
         return None
 
 
-# TODO: plugin重加载
-def reload_plugin(module_name: str) -> Optional[Plugin]:
-    pass
+def reload_plugin(module_path: str) -> Optional[Plugin]:
+    result = PluginManager.remove_plugin(module_path)
+    if not result:
+        return None
+    return load_plugin(module_path)
 
 
 def load_plugins(plugin_dir: str, module_prefix: str) -> Set[Plugin]:
@@ -262,4 +296,121 @@ def get_loaded_plugins() -> Set[Plugin]:
 
     :return: a set of Plugin objects
     """
-    return set(PluginManager._plugins.values()) | PluginManager._anonymous_plugins
+    return set(PluginManager._plugins.values())
+
+
+def on_command(name: Union[str, CommandName_T],
+               *,
+               aliases: Union[Iterable[str], str] = (),
+               permission: int = perm.EVERYBODY,
+               only_to_me: bool = True,
+               privileged: bool = False,
+               shell_like: bool = False) -> Callable:
+    """
+    Decorator to register a function as a command.
+
+    :param name: command name (e.g. 'echo' or ('random', 'number'))
+    :param aliases: aliases of command name, for convenient access
+    :param permission: permission required by the command
+    :param only_to_me: only handle messages to me
+    :param privileged: can be run even when there is already a session
+    :param shell_like: use shell-like syntax to split arguments
+    """
+
+    def deco(func: CommandHandler_T) -> CommandHandler_T:
+        if not isinstance(name, (str, tuple)):
+            raise TypeError('the name of a command must be a str or tuple')
+        if not name:
+            raise ValueError('the name of a command must not be empty')
+
+        cmd_name = (name,) if isinstance(name, str) else name
+
+        cmd = Command(name=cmd_name,
+                      func=func,
+                      permission=permission,
+                      only_to_me=only_to_me,
+                      privileged=privileged)
+
+        if shell_like:
+
+            async def shell_like_args_parser(session):
+                session.args['argv'] = shlex.split(session.current_arg)
+
+            cmd.args_parser_func = shell_like_args_parser
+
+        CommandManager.add_command(cmd_name, cmd)
+        CommandManager.add_aliases(aliases, cmd)
+
+        _tmp_command.add(cmd)
+        func.args_parser = cmd.args_parser
+
+        return func
+
+    return deco
+
+
+def on_natural_language(
+        keywords: Union[Optional[Iterable], str, Callable] = None,
+        *,
+        permission: int = perm.EVERYBODY,
+        only_to_me: bool = True,
+        only_short_message: bool = True,
+        allow_empty_message: bool = False) -> Callable:
+    """
+    Decorator to register a function as a natural language processor.
+
+    :param keywords: keywords to respond to, if None, respond to all messages
+    :param permission: permission required by the processor
+    :param only_to_me: only handle messages to me
+    :param only_short_message: only handle short messages
+    :param allow_empty_message: handle empty messages
+    """
+
+    def deco(func: Callable) -> Callable:
+        nl_processor = NLProcessor(
+            func=func,
+            keywords=keywords,  # type: ignore
+            permission=permission,
+            only_to_me=only_to_me,
+            only_short_message=only_short_message,
+            allow_empty_message=allow_empty_message)
+        NLPManager.add_nl_processor(nl_processor)
+        _tmp_nl_processor.add(nl_processor)
+        return func
+
+    if isinstance(keywords, Callable):
+        # here "keywords" is the function to be decorated
+        return on_natural_language()(keywords)
+    else:
+        if isinstance(keywords, str):
+            keywords = (keywords,)
+        return deco
+
+
+def _make_event_deco(post_type: str) -> Callable:
+
+    def deco_deco(arg: Optional[Union[str, Callable]] = None,
+                  *events: str) -> Callable:
+
+        def deco(func: Callable) -> Callable:
+            if isinstance(arg, str):
+                events_tmp = list(
+                    map(lambda x: f"{post_type}.{x}", [arg] + list(events)))
+                for e in events_tmp:
+                    _bus.subscribe(e, func)
+                handler = EventHandler(events_tmp, func)
+            else:
+                _bus.subscribe(post_type, func)
+                handler = EventHandler([post_type], func)
+            _tmp_event_handler.add(handler)
+            return func
+
+        if isinstance(arg, Callable):
+            return deco(arg)  # type: ignore
+        return deco
+
+    return deco_deco
+
+
+on_notice = _make_event_deco('notice')
+on_request = _make_event_deco('request')

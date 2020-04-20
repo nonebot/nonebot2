@@ -88,8 +88,7 @@ async def _check(bot: NoneBot, min_event: _MinEvent,
                     self_id=min_event.self_id,
                     group_id=min_event.group_id,
                     user_id=min_event.user_id,
-                    no_cache=True
-                )
+                    no_cache=True)
                 if member_info:
                     if member_info['role'] == 'owner':
                         permission |= IS_GROUP_OWNER

@@ -57,7 +57,8 @@ async def handle_message(bot: NoneBot, event: CQEvent) -> None:
 
     while True:
         try:
-            handled = await handle_command(bot, event, plugin_manager.cmd_manager)
+            handled = await handle_command(bot, event,
+                                           plugin_manager.cmd_manager)
             break
         except SwitchException as e:
             # we are sure that there is no session existing now
@@ -67,7 +68,8 @@ async def handle_message(bot: NoneBot, event: CQEvent) -> None:
         logger.info(f'Message {event.message_id} is handled as a command')
         return
 
-    handled = await handle_natural_language(bot, event, plugin_manager.nlp_manager)
+    handled = await handle_natural_language(bot, event,
+                                            plugin_manager.nlp_manager)
     if handled:
         logger.info(f'Message {event.message_id} is handled '
                     f'as natural language')
@@ -121,8 +123,8 @@ def _check_calling_me_nickname(bot: NoneBot, event: CQEvent) -> None:
         else:
             nicknames = filter(lambda n: n, bot.config.NICKNAME)
         nickname_regex = '|'.join(nicknames)
-        m = re.search(rf'^({nickname_regex})([\s,，]*|$)',
-                      first_text, re.IGNORECASE)
+        m = re.search(rf'^({nickname_regex})([\s,，]*|$)', first_text,
+                      re.IGNORECASE)
         if m:
             nickname = m.group(1)
             logger.debug(f'User is calling me {nickname}')

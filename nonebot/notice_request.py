@@ -11,39 +11,13 @@ from .session import BaseSession
 
 _bus = EventBus()
 
+
 class EventHandler:
-    __slots__ = ('events', 'func', '__name__', '__qualname__', '__doc__',
-                 '__annotations__', '__dict__')
-    
+    __slots__ = ('events', 'func')
+
     def __init__(self, events: List[str], func: Callable):
         self.events = events
         self.func = func
-
-
-def _make_event_deco(post_type: str) -> Callable:
-    def deco_deco(arg: Optional[Union[str, Callable]] = None,
-                  *events: str) -> Callable:
-        def deco(func: Callable) -> EventHandler:
-            if isinstance(arg, str):
-                events_tmp = list(map(lambda x: f"{post_type}.{x}", [arg] + list(events)))
-                for e in events_tmp:
-                    _bus.subscribe(e, func)
-                handler = EventHandler(events_tmp, func)
-                return update_wrapper(handler, func)  # type: ignore
-            else:
-                _bus.subscribe(post_type, func)
-                handler = EventHandler([post_type], func)
-                return update_wrapper(handler, func)  # type: ignore
-
-        if isinstance(arg, Callable):
-            return deco(arg)  # type: ignore
-        return deco
-
-    return deco_deco
-
-
-on_notice = _make_event_deco('notice')
-on_request = _make_event_deco('request')
 
 
 class NoticeSession(BaseSession):
@@ -66,12 +40,13 @@ class RequestSession(BaseSession):
         :param remark: remark of friend (only works in friend request)
         """
         try:
-            await self.bot.call_action(
-                action='.handle_quick_operation_async',
-                self_id=self.event.self_id,
-                context=self.event,
-                operation={'approve': True, 'remark': remark}
-            )
+            await self.bot.call_action(action='.handle_quick_operation_async',
+                                       self_id=self.event.self_id,
+                                       context=self.event,
+                                       operation={
+                                           'approve': True,
+                                           'remark': remark
+                                       })
         except CQHttpError:
             pass
 
@@ -82,12 +57,13 @@ class RequestSession(BaseSession):
         :param reason: reason to reject (only works in group request)
         """
         try:
-            await self.bot.call_action(
-                action='.handle_quick_operation_async',
-                self_id=self.event.self_id,
-                context=self.event,
-                operation={'approve': False, 'reason': reason}
-            )
+            await self.bot.call_action(action='.handle_quick_operation_async',
+                                       self_id=self.event.self_id,
+                                       context=self.event,
+                                       operation={
+                                           'approve': False,
+                                           'reason': reason
+                                       })
         except CQHttpError:
             pass
 

@@ -15,20 +15,17 @@ from nonebot.helpers import context_id, send, render_expression
 from nonebot.log import logger
 from nonebot.message import Message
 from nonebot.session import BaseSession
-from nonebot.typing import (CommandName_T, CommandArgs_T, Message_T, State_T,
-                            Filter_T)
+from nonebot.typing import (CommandName_T, CommandArgs_T, CommandHandler_T,
+                            Message_T, State_T, Filter_T)
 
 # key: context id
 # value: CommandSession object
 _sessions = {}  # type: Dict[str, "CommandSession"]
 
-CommandHandler_T = Callable[['CommandSession'], Any]
-
 
 class Command:
     __slots__ = ('name', 'func', 'permission', 'only_to_me', 'privileged',
-                 'args_parser_func', '__name__', '__qualname__', '__doc__',
-                 '__annotations__', '__dict__')
+                 'args_parser_func')
 
     def __init__(self, *, name: CommandName_T, func: CommandHandler_T,
                  permission: int, only_to_me: bool, privileged: bool):
@@ -359,55 +356,6 @@ class CommandManager:
         """
         self.switches[cmd_name] = not self.switches[
             cmd_name] if state is None else bool(state)
-
-
-def on_command(name: Union[str, CommandName_T],
-               *,
-               aliases: Union[Iterable[str], str] = (),
-               permission: int = perm.EVERYBODY,
-               only_to_me: bool = True,
-               privileged: bool = False,
-               shell_like: bool = False) -> Callable:
-    """
-    Decorator to register a function as a command.
-
-    :param name: command name (e.g. 'echo' or ('random', 'number'))
-    :param aliases: aliases of command name, for convenient access
-    :param permission: permission required by the command
-    :param only_to_me: only handle messages to me
-    :param privileged: can be run even when there is already a session
-    :param shell_like: use shell-like syntax to split arguments
-    """
-
-    def deco(func: CommandHandler_T) -> Command:
-        if not isinstance(name, (str, tuple)):
-            raise TypeError('the name of a command must be a str or tuple')
-        if not name:
-            raise ValueError('the name of a command must not be empty')
-
-        cmd_name = (name,) if isinstance(name, str) else name
-
-        cmd = Command(name=cmd_name,
-                      func=func,
-                      permission=permission,
-                      only_to_me=only_to_me,
-                      privileged=privileged)
-
-        if shell_like:
-
-            async def shell_like_args_parser(session):
-                session.args['argv'] = shlex.split(session.current_arg)
-
-            cmd.args_parser_func = shell_like_args_parser
-
-        CommandManager.add_command(cmd_name, cmd)
-        CommandManager.add_aliases(aliases, cmd)
-
-        update_wrapper(wrapper=cmd, wrapped=func)  # type: ignore
-
-        return cmd
-
-    return deco
 
 
 class _PauseException(Exception):
