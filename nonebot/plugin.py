@@ -9,8 +9,8 @@ from typing import Any, Set, Dict, Union, Optional, Iterable, Callable
 from .log import logger
 from nonebot import permission as perm
 from .command import Command, CommandManager
-from .natural_language import NLProcessor, NLPManager
 from .notice_request import _bus, EventHandler
+from .natural_language import NLProcessor, NLPManager
 from .typing import CommandName_T, CommandHandler_T
 
 _tmp_command: Set[Command] = set()
@@ -49,7 +49,7 @@ class PluginManager:
         """Register a plugin
         
         Args:
-            name (str): module path
+            module_path (str): module path
             plugin (Plugin): Plugin object
         """
         if module_path in cls._plugins:
@@ -59,10 +59,10 @@ class PluginManager:
 
     @classmethod
     def get_plugin(cls, module_path: str) -> Optional[Plugin]:
-        """Get plugin object by plugin path
+        """Get plugin object by plugin module path
         
         Args:
-            name (str): plugin path
+            module_path (str): Plugin module path
         
         Returns:
             Optional[Plugin]: Plugin object
@@ -71,6 +71,17 @@ class PluginManager:
 
     @classmethod
     def remove_plugin(cls, module_path: str) -> bool:
+        """Remove a plugin by plugin module path
+        
+        ** Warning: This function not remove plugin actually! **
+        ** Just remove command, nlprocessor and event handlers **
+
+        Args:
+            module_path (str): Plugin module path
+
+        Returns:
+            bool: Success or not
+        """
         plugin = cls.get_plugin(module_path)
         if not plugin:
             warnings.warn(f"Plugin {module_path} not exists")
@@ -86,17 +97,18 @@ class PluginManager:
         return True
 
     @classmethod
-    def switch_plugin_global(cls, name: str,
+    def switch_plugin_global(cls,
+                             module_path: str,
                              state: Optional[bool] = None) -> None:
         """Change plugin state globally or simply switch it if `state` is None
         
         Args:
-            name (str): Plugin name
+            module_path (str): Plugin module path
             state (Optional[bool]): State to change to. Defaults to None.
         """
-        plugin = cls.get_plugin(name)
+        plugin = cls.get_plugin(module_path)
         if not plugin:
-            warnings.warn(f"Plugin {name} not found")
+            warnings.warn(f"Plugin {module_path} not found")
             return
         for command in plugin.commands:
             CommandManager.switch_command_global(command.name, state)
@@ -111,49 +123,52 @@ class PluginManager:
                     _bus.subscribe(event, event_handler.func)
 
     @classmethod
-    def switch_command_global(cls, name: str,
+    def switch_command_global(cls,
+                              module_path: str,
                               state: Optional[bool] = None) -> None:
         """Change plugin command state globally or simply switch it if `state` is None
         
         Args:
-            name (str): Plugin name
+            module_path (str): Plugin module path
             state (Optional[bool]): State to change to. Defaults to None.
         """
-        plugin = cls.get_plugin(name)
+        plugin = cls.get_plugin(module_path)
         if not plugin:
-            warnings.warn(f"Plugin {name} not found")
+            warnings.warn(f"Plugin {module_path} not found")
             return
         for command in plugin.commands:
             CommandManager.switch_command_global(command.name, state)
 
     @classmethod
-    def switch_nlprocessor_global(cls, name: str,
+    def switch_nlprocessor_global(cls,
+                                  module_path: str,
                                   state: Optional[bool] = None) -> None:
         """Change plugin nlprocessor state globally or simply switch it if `state` is None
         
         Args:
-            name (str): Plugin name
+            module_path (str): Plugin module path
             state (Optional[bool]): State to change to. Defaults to None.
         """
-        plugin = cls.get_plugin(name)
+        plugin = cls.get_plugin(module_path)
         if not plugin:
-            warnings.warn(f"Plugin {name} not found")
+            warnings.warn(f"Plugin {module_path} not found")
             return
         for processor in plugin.nl_processors:
             NLPManager.switch_nlprocessor_global(processor, state)
 
     @classmethod
-    def switch_eventhandler_global(cls, name: str,
+    def switch_eventhandler_global(cls,
+                                   module_path: str,
                                    state: Optional[bool] = None) -> None:
         """Change plugin event handler state globally or simply switch it if `state` is None
         
         Args:
-            name (str): Plugin name
+            module_path (str): Plugin module path
             state (Optional[bool]): State to change to. Defaults to None.
         """
-        plugin = cls.get_plugin(name)
+        plugin = cls.get_plugin(module_path)
         if not plugin:
-            warnings.warn(f"Plugin {name} not found")
+            warnings.warn(f"Plugin {module_path} not found")
             return
         for event_handler in plugin.event_handlers:
             for event in event_handler.events:
@@ -163,52 +178,54 @@ class PluginManager:
                         event] and state != False:
                     _bus.subscribe(event, event_handler.func)
 
-    def switch_plugin(self, name: str, state: Optional[bool] = None) -> None:
+    def switch_plugin(self, module_path: str,
+                      state: Optional[bool] = None) -> None:
         """Change plugin state or simply switch it if `state` is None
         
         Tips:
             This method will only change the state of the plugin's
             commands and natural language processors since change 
-            state of the event handler partially is meaningless.
+            state of the event handler for message is meaningless.
         
         Args:
-            name (str): Plugin name
+            module_path (str): Plugin module path
             state (Optional[bool]): State to change to. Defaults to None.
         """
-        plugin = self.get_plugin(name)
+        plugin = self.get_plugin(module_path)
         if not plugin:
-            warnings.warn(f"Plugin {name} not found")
+            warnings.warn(f"Plugin {module_path} not found")
             return
         for command in plugin.commands:
             self.cmd_manager.switch_command(command.name, state)
         for nl_processor in plugin.nl_processors:
             self.nlp_manager.switch_nlprocessor(nl_processor, state)
 
-    def switch_command(self, name: str, state: Optional[bool] = None) -> None:
+    def switch_command(self, module_path: str,
+                       state: Optional[bool] = None) -> None:
         """Change plugin command state or simply switch it if `state` is None
         
         Args:
-            name (str): Plugin name
+            module_path (str): Plugin module path
             state (Optional[bool]): State to change to. Defaults to None.
         """
-        plugin = self.get_plugin(name)
+        plugin = self.get_plugin(module_path)
         if not plugin:
-            warnings.warn(f"Plugin {name} not found")
+            warnings.warn(f"Plugin {module_path} not found")
             return
         for command in plugin.commands:
             self.cmd_manager.switch_command(command.name, state)
 
-    def switch_nlprocessor(self, name: str,
+    def switch_nlprocessor(self, module_path: str,
                            state: Optional[bool] = None) -> None:
         """Change plugin nlprocessor state or simply switch it if `state` is None
         
         Args:
-            name (str): Plugin name
+            module_path (str): Plugin module path
             state (Optional[bool]): State to change to. Defaults to None.
         """
-        plugin = self.get_plugin(name)
+        plugin = self.get_plugin(module_path)
         if not plugin:
-            warnings.warn(f"Plugin {name} not found")
+            warnings.warn(f"Plugin {module_path} not found")
             return
         for processor in plugin.nl_processors:
             self.nlp_manager.switch_nlprocessor(processor, state)

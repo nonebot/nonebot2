@@ -5,8 +5,8 @@ from aiocqhttp import Event as CQEvent
 from aiocqhttp.bus import EventBus
 
 from . import NoneBot
-from .exceptions import CQHttpError
 from .log import logger
+from .exceptions import CQHttpError
 from .session import BaseSession
 
 _bus = EventBus()

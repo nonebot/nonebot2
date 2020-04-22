@@ -1,6 +1,6 @@
 from typing import Union, Callable
 
-from nonebot.command import on_command
+from nonebot.plugin import on_command
 from nonebot.typing import CommandName_T
 
 

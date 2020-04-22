@@ -131,11 +131,11 @@ def on_websocket_connect(func: Callable[[aiocqhttp.Event], Awaitable[None]]) \
 
 
 from .exceptions import *
-from .message import message_preprocessor, Message, MessageSegment
+from .command import CommandSession, CommandGroup
 from .plugin import (on_command, on_natural_language, on_notice, on_request,
                      load_plugin, load_plugins, load_builtin_plugins,
                      get_loaded_plugins)
-from .command import CommandSession, CommandGroup
+from .message import message_preprocessor, Message, MessageSegment
 from .natural_language import NLPSession, NLPResult, IntentCommand
 from .notice_request import NoticeSession, RequestSession
 from .helpers import context_id

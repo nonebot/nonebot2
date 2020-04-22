@@ -2,11 +2,11 @@ import hashlib
 import random
 from typing import Sequence, Callable, Any
 
+from aiocqhttp.message import escape
 from aiocqhttp import Event as CQEvent
 
 from . import NoneBot
 from .exceptions import CQHttpError
-from .message import escape
 from .typing import Message_T, Expression_T
 
 

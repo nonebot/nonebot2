@@ -1,8 +1,8 @@
 import re
 from typing import Callable, Any
 
-from nonebot.command.argfilter import ValidateError
 from nonebot.typing import Filter_T
+from nonebot.command.argfilter import ValidateError
 
 
 class BaseValidator:

@@ -8,12 +8,12 @@ from typing import (Tuple, Union, Callable, Iterable, Any, Optional, List, Dict,
                     Awaitable)
 
 from aiocqhttp import Event as CQEvent
+from aiocqhttp.message import Message
 
 from nonebot import NoneBot, permission as perm
 from nonebot.command.argfilter import ValidateError
 from nonebot.helpers import context_id, send, render_expression
 from nonebot.log import logger
-from nonebot.message import Message
 from nonebot.session import BaseSession
 from nonebot.typing import (CommandName_T, CommandArgs_T, CommandHandler_T,
                             Message_T, State_T, Filter_T)

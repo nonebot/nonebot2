@@ -1,7 +1,8 @@
 import re
 from typing import List
 
-from nonebot.message import Message
+from aiocqhttp.message import Message
+
 from nonebot.typing import Message_T
 
 

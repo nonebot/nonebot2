@@ -4,11 +4,11 @@ from functools import update_wrapper
 from typing import Set, Iterable, Optional, Callable, Union, NamedTuple
 
 from aiocqhttp import Event as CQEvent
+from aiocqhttp.message import Message
 
+from .log import logger
 from . import NoneBot, permission as perm
 from .command import call_command
-from .log import logger
-from .message import Message
 from .session import BaseSession
 from .typing import CommandName_T, CommandArgs_T
 
