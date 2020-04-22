@@ -4,6 +4,12 @@ sidebar: auto
 
 # 更新日志
 
+## v1.6.0
+
+- 新增 `PluginManager` `CommandManager` `NLPManager` 管理类，用于插件的开启与关闭
+- 修改 `message_preprocessor` 在消息预处理阶段可以进行针对该消息的插件开启与关闭
+- 移动 `on_command` `on_natural_language` `on_notice` `on_request` 装饰器至 plugin 模块
+
 ## v1.5.0
 
 - 新增 `nonebot.on_startup` 装饰器，用于注册 NoneBot 启动时回调函数

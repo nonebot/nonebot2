@@ -1,5 +1,6 @@
 import os
 import re
+import sys
 import shlex
 import warnings
 import importlib
@@ -266,18 +267,44 @@ def reload_plugin(module_path: str) -> Optional[Plugin]:
     result = PluginManager.remove_plugin(module_path)
     if not result:
         return None
-    return load_plugin(module_path)
+
+    for module in list(
+            filter(lambda x: x.startswith(module_path), sys.modules.keys())):
+        del sys.modules[module]
+
+    _tmp_command.clear()
+    _tmp_nl_processor.clear()
+    _tmp_event_handler.clear()
+    try:
+        module = importlib.import_module(module_path)
+        name = getattr(module, '__plugin_name__', None)
+        usage = getattr(module, '__plugin_usage__', None)
+        commands = _tmp_command.copy()
+        nl_processors = _tmp_nl_processor.copy()
+        event_handlers = _tmp_event_handler.copy()
+        plugin = Plugin(module, name, usage, commands, nl_processors,
+                        event_handlers)
+        PluginManager.add_plugin(module_path, plugin)
+        logger.info(f'Succeeded to reload "{module_path}"')
+        return plugin
+    except Exception as e:
+        logger.error(f'Failed to reload "{module_path}", error: {e}')
+        logger.exception(e)
+        return None
 
 
 def load_plugins(plugin_dir: str, module_prefix: str) -> Set[Plugin]:
-    """
-    Find all non-hidden modules or packages in a given directory,
+    """Find all non-hidden modules or packages in a given directory,
     and import them with the given module prefix.
 
-    :param plugin_dir: plugin directory to search
-    :param module_prefix: module prefix used while importing
-    :return: number of plugins successfully loaded
+    Args:
+        plugin_dir (str): Plugin directory to search
+        module_prefix (str): Module prefix used while importing
+
+    Returns:
+        Set[Plugin]: Set of plugin objects successfully loaded
     """
+
     count = set()
     for name in os.listdir(plugin_dir):
         path = os.path.join(plugin_dir, name)

@@ -52,6 +52,14 @@ sidebar: auto
 
   命令参数的类型。
 
+### `CommandHandler_T` <Badge text="1.6.0+"/>
+
+- **类型:** `Callable[[CommandSession], Any]`
+
+- **说明:**
+
+  命令处理函数
+
 ### `State_T` <Badge text="1.2.0+"/>
 
 - **类型:** `Dict[str, Any]`
@@ -725,7 +733,7 @@ sidebar: auto
 
 #### `module`
 
-- **类型:** `Any`
+- **类型:** `ModuleType`
 
 - **说明:**
 
@@ -747,6 +755,152 @@ sidebar: auto
 
   插件使用方法，从插件模块的 `__plugin_usage__` 特殊变量获得，如果没有此变量，则为 `None`。
 
+#### `commands` <Badge text="1.6.0+"/>
+
+- **类型:** `Set[Command]`
+
+- **说明:**
+
+  插件包含的命令，通过 `on_command` 装饰器注册。
+
+#### `nl_processors` <Badge text="1.6.0+"/>
+
+- **类型:** `Set[NLProcessor]`
+
+- **说明:**
+
+  插件包含的自然语言处理器，通过 `on_natural_language` 装饰器注册。
+
+#### `event_handlers` <Badge text="1.6.0+"/>
+
+- **类型:** `Set[EventHandler]`
+
+- **说明:**
+
+  插件包含的事件处理器（包含通知、请求），通过 `on_notice` 以及 `on_request` 装饰器注册。
+
+<!-- TODO: 完善PluginManager -->
+
+### _class_ `PluginManager` <Badge text="1.6.0+" />
+
+插件管理器：用于管理插件的加载以及插件中命令、自然语言处理器、事件处理器的开关
+
+#### `cmd_manager`
+
+- **类型:** `CommandManager`
+
+- **说明:**
+
+  命令管理器实例
+
+#### `nlp_manager`
+
+- **类型:** `NLPManager`
+
+- **说明:**
+
+  自然语言管理器实例
+
+#### _class method_ `add_plugin(cls, module_path, plugin)`
+
+- **说明:**
+
+- **参数:**
+
+- **返回:**
+
+- **用法:**
+
+#### _class method_ `get_plugin(cls, module_path)`
+
+- **说明:**
+
+- **参数:**
+
+- **返回:**
+
+- **用法:**
+
+#### _class method_ `remove_plugin(cls, module_path)`
+
+- **说明:**
+
+- **参数:**
+
+- **返回:**
+
+- **用法:**
+
+#### _class method_ `switch_plugin_global(cls, module_path, state=None)`
+
+- **说明:**
+
+- **参数:**
+
+- **返回:**
+
+- **用法:**
+
+#### _class method_ `switch_command_global(cls, module_path, state=None)`
+
+- **说明:**
+
+- **参数:**
+
+- **返回:**
+
+- **用法:**
+
+#### _class method_ `switch_nlprocessor_global(cls, module_path, state=None)`
+
+- **说明:**
+
+- **参数:**
+
+- **返回:**
+
+- **用法:**
+
+#### _class method_ `switch_eventhandler_global(cls, module_path, state=None)`
+
+- **说明:**
+
+- **参数:**
+
+- **返回:**
+
+- **用法:**
+
+#### `switch_plugin(cls, module_path, state=None)`
+
+- **说明:**
+
+- **参数:**
+
+- **返回:**
+
+- **用法:**
+
+#### `switch_command(cls, module_path, state=None)`
+
+- **说明:**
+
+- **参数:**
+
+- **返回:**
+
+- **用法:**
+
+#### `switch_nlprocessor(cls, module_path, state=None)`
+
+- **说明:**
+
+- **参数:**
+
+- **返回:**
+
+- **用法:**
+
 ### `load_plugin(module_name)`
 
 - **说明:**
@@ -755,11 +909,11 @@ sidebar: auto
 
 - **参数:**
 
-  - `module_name: str`: 模块名
+  - `module_path: str`: 模块路径
 
-- **返回:**
+- **返回:** <Badge text="1.6.0+" />
 
-  - `bool`: 加载成功
+  - `Optional[Plugin]`: 加载后生成的 Plugin 对象
 
 - **用法:**
 
@@ -768,6 +922,32 @@ sidebar: auto
   ```
 
   加载 `nonebot_tuling` 插件。
+
+### `reload_plugin(module_name)` <Badge text="1.6.0+" />
+
+- **说明:**
+
+  :::danger
+  该函数为强制重载，可能导致不可预测的错误！
+  :::
+
+  重载插件（等价于）。
+
+- **参数:**
+
+  - `module_path: str`: 模块路径
+
+- **返回:**
+
+  - `Optional[Plugin]`: 重载后生成的 Plugin 对象
+
+- **用法:**
+
+  ```python
+  nonebot.plugin.reload_plugin('nonebot_tuling')
+  ```
+
+  重载 `nonebot_tuling` 插件。
 
 ### `load_plugins(plugin_dir, module_prefix)`
 
@@ -780,14 +960,14 @@ sidebar: auto
   - `plugin_dir: str`: 插件目录
   - `module_prefix: str`: 模块前缀
 
-- **返回:**
+- **返回:** <Badge text="1.6.0+" />
 
-  - `int:` 加载成功的插件数量
+  - `Set[Plugin]`: 加载成功的插件 Plugin 对象
 
 - **用法:**
 
   ```python
-  nonebot.plugin.load_plugins(path.join(path.dirname(__file__), 'plugins'), 'amadeus.plugins')
+  nonebot.plugin.load_plugins(path.join(path.dirname(__file__), 'plugins'), 'plugins')
   ```
 
   加载 `plugins` 目录下的插件。
@@ -1280,7 +1460,7 @@ sidebar: auto
 
 - **参数:**
 
-  - `reduce: bool`: 是否先化简消息段列表（合并相邻的 `text` 段），对于从 酷Q 收到的消息，通常不需要开启
+  - `reduce: bool`: 是否先化简消息段列表（合并相邻的 `text` 段），对于从 酷 Q 收到的消息，通常不需要开启
 
 - **返回:**
 
@@ -1325,7 +1505,7 @@ sidebar: auto
 
 ## `nonebot.command` 模块
 
-### _decorator_ `on_command(name, *, aliases=(), permission=perm.EVERYBODY, only_to_me=True, privileged=False, shell_like=False)`
+### _decorator_ `on_command(name, *, aliases=(), permission=perm.EVERYBODY, only_to_me=True, privileged=False, shell_like=False)` <Badge text="1.6.0-" type="error" />
 
 - **说明:**
 
@@ -1527,7 +1707,7 @@ sidebar: auto
 
 - **说明:**
 
-  命令会话当前参数。实际上是 酷Q 收到的消息去掉命令名的剩下部分，因此可能存在 CQ 码。
+  命令会话当前参数。实际上是 酷 Q 收到的消息去掉命令名的剩下部分，因此可能存在 CQ 码。
 
 #### _readonly property_ `current_arg_text`
 
@@ -1951,7 +2131,7 @@ session.get('arg1', prompt='请输入 arg1：',
 
 ## `nonebot.natural_language` 模块
 
-### _decorator_ `on_natural_language(keywords=None, *, permission=EVERYBODY, only_to_me=True, only_short_message=True, allow_empty_message=False)`
+### _decorator_ `on_natural_language(keywords=None, *, permission=EVERYBODY, only_to_me=True, only_short_message=True, allow_empty_message=False)` <Badge text="1.6.0-" type="error" />
 
 - **说明:**
 
@@ -2090,7 +2270,7 @@ session.get('arg1', prompt='请输入 arg1：',
 
 ## `nonebot.notice_request` 模块
 
-### _decorator_ `on_notice(*events)`
+### _decorator_ `on_notice(*events)` <Badge text="1.6.0-" type="error"/>
 
 - **说明:**
 
@@ -2123,7 +2303,7 @@ session.get('arg1', prompt='请输入 arg1：',
 
   收到所有通知时打日志，收到新成员进群通知时除了打日志还发送欢迎信息。
 
-### _decorator_ `on_request(*events)`
+### _decorator_ `on_request(*events)` <Badge text="1.6.0-" type="error" />
 
 - **说明:**
 
@@ -2290,6 +2470,7 @@ session.get('arg1', prompt='请输入 arg1：',
   发送消息到 Session 对应的上下文中。
 
 - **参数:**
+
   - `message: Message_T`: 要发送的消息内容
   - `at_sender: bool`: 是否 @ 发送者，对私聊不起作用
   - `ensure_private: bool`: 确保消息发送到私聊，对于群组和讨论组消息上下文，会私聊发送者
