@@ -783,7 +783,7 @@ sidebar: auto
 
 <!-- TODO: 完善PluginManager -->
 
-插件管理器：用于管理插件的加载以及插件中命令、自然语言处理器、事件处理器的开关
+插件管理器：用于管理插件的加载以及插件中命令、自然语言处理器、事件处理器的开关。
 
 #### `cmd_manager`
 
@@ -791,7 +791,7 @@ sidebar: auto
 
 - **说明:**
 
-  命令管理器实例
+  命令管理器实例。
 
 #### `nlp_manager`
 
@@ -799,35 +799,67 @@ sidebar: auto
 
 - **说明:**
 
-  自然语言管理器实例
+  自然语言管理器实例。
 
 #### _class method_ `add_plugin(cls, module_path, plugin)`
 
 - **说明:**
 
+  注册一个 `Plugin` 对象。
+
 - **参数:**
+
+  - `module_path: str`: 模块路径
+  - `plugin: Plugin`: Plugin 对象
 
 - **返回:**
 
+  None
+
 - **用法:**
+
+  ```python
+  plugin = Plugin(module, name, usage, commands, nl_processors, event_handlers)
+  PluginManager.add_plugin("path.to.plugin", plugin)
+  ```
 
 #### _class method_ `get_plugin(cls, module_path)`
 
 - **说明:**
 
+  获取一个已经注册的 `Plugin` 对象。
+
 - **参数:**
+
+  - `module_path: str`: 模块路径
 
 - **返回:**
 
+  - `Optional[Plugin]`: Plugin 对象
+
 - **用法:**
+
+  ```python
+  plugin = PluginManager.get_plugin("path.to.plugin")
+  ```
 
 #### _class method_ `remove_plugin(cls, module_path)`
 
 - **说明:**
 
+  删除 Plugin 中的所有命令、自然语言处理器、事件处理器并移除 Plugin 对象。
+
+  :::danger
+  这个方法实际并没有完全移除 Plugin 。仅是移除 Plugin 中的所有命令、自然语言处理器以及事件处理器。
+  :::
+
 - **参数:**
 
+  - `module_path: str`: 模块路径
+
 - **返回:**
+
+  - `bool`: 是否移除了插件
 
 - **用法:**
 
@@ -835,73 +867,211 @@ sidebar: auto
 
 - **说明:**
 
+  根据 `state` 更改 plugin 中 commands, nl_processors, event_handlers 的全局状态。
+
+  :::warning
+  更改插件状态并不会影响插件内 message_preprocessor, scheduler 等状态
+  :::
+
 - **参数:**
+
+  - `module_path: str`: 模块路径
+  - `state: Optional[bool]`:
+    - `None(default)`: 切换状态，即 开 -> 关、关 -> 开
+    - `bool`: 切换至指定状态，`True` -> 开、`False` -> 关
 
 - **返回:**
 
+  None
+
 - **用法:**
+
+  ```python
+  from nonebot import message_preprocessor
+
+  # 全局关闭插件 path.to.plugin , 对所有消息生效
+  PluginManager.switch_plugin_global("path.to.plugin", state=False)
+
+  @message_preprocessor
+  async def processor(bot: NoneBot, event: CQEvent, plugin_manager: PluginManager):
+      plugin_manager.switch_plugin_global("path.to.plugin", state=False)
+  ```
 
 #### _class method_ `switch_command_global(cls, module_path, state=None)`
 
 - **说明:**
 
+  根据 `state` 更改 plugin 中 commands 的全局状态。
+
 - **参数:**
+
+  - `module_path: str`: 模块路径
+  - `state: Optional[bool]`:
+    - `None(default)`: 切换状态，即 开 -> 关、关 -> 开
+    - `bool`: 切换至指定状态，`True` -> 开、`False` -> 关
 
 - **返回:**
 
+  None
+
 - **用法:**
+
+  ```python
+  from nonebot import message_preprocessor
+
+  # 全局关闭插件 path.to.plugin 中所有命令, 对所有消息生效
+  PluginManager.switch_command_global("path.to.plugin", state=False)
+
+  @message_preprocessor
+  async def processor(bot: NoneBot, event: CQEvent, plugin_manager: PluginManager):
+      plugin_manager.switch_command_global("path.to.plugin", state=False)
+  ```
 
 #### _class method_ `switch_nlprocessor_global(cls, module_path, state=None)`
 
 - **说明:**
 
+  根据 `state` 更改 plugin 中 nl_processors 的全局状态。
+
 - **参数:**
+
+  - `module_path: str`: 模块路径
+  - `state: Optional[bool]`:
+    - `None(default)`: 切换状态，即 开 -> 关、关 -> 开
+    - `bool`: 切换至指定状态，`True` -> 开、`False` -> 关
 
 - **返回:**
 
+  None
+
 - **用法:**
+
+  ```python
+  from nonebot import message_preprocessor
+
+  # 全局关闭插件 path.to.plugin 中所有自然语言处理器, 对所有消息生效
+  PluginManager.switch_nlprocessor_global("path.to.plugin", state=False)
+
+  @message_preprocessor
+  async def processor(bot: NoneBot, event: CQEvent, plugin_manager: PluginManager):
+      plugin_manager.switch_nlprocessor_global("path.to.plugin", state=False)
+  ```
 
 #### _class method_ `switch_eventhandler_global(cls, module_path, state=None)`
 
 - **说明:**
 
+  根据 `state` 更改 plugin 中 event handlers 的全局状态。
+
 - **参数:**
+
+  - `module_path: str`: 模块路径
+  - `state: Optional[bool]`:
+    - `None(default)`: 切换状态，即 开 -> 关、关 -> 开
+    - `bool`: 切换至指定状态，`True` -> 开、`False` -> 关
 
 - **返回:**
 
+  None
+
 - **用法:**
+
+  ```python
+  from nonebot import message_preprocessor
+
+  # 全局关闭插件 path.to.plugin 中所有事件处理器, 对所有消息生效
+  PluginManager.switch_eventhandler_global("path.to.plugin", state=False)
+
+  @message_preprocessor
+  async def processor(bot: NoneBot, event: CQEvent, plugin_manager: PluginManager):
+      plugin_manager.switch_eventhandler_global("path.to.plugin", state=False)
+  ```
 
 #### `switch_plugin(cls, module_path, state=None)`
 
 - **说明:**
 
+  根据 `state` 修改 plugin 的状态。仅对当前消息有效。
+
 - **参数:**
+
+  - `module_path: str`: 模块路径
+  - `state: Optional[bool]`:
+    - `None(default)`: 切换状态，即 开 -> 关、关 -> 开
+    - `bool`: 切换至指定状态，`True` -> 开、`False` -> 关
 
 - **返回:**
 
+  None
+
 - **用法:**
+
+  ```python
+  from nonebot import message_preprocessor
+
+  # 关闭插件 path.to.plugin , 仅对当前消息生效
+  @message_preprocessor
+  async def processor(bot: NoneBot, event: CQEvent, plugin_manager: PluginManager):
+      plugin_manager.switch_plugin("path.to.plugin", state=False)
+  ```
 
 #### `switch_command(cls, module_path, state=None)`
 
 - **说明:**
 
+  根据 `state` 修改 plugin 中 commands 的状态。仅对当前消息有效。
+
 - **参数:**
+
+  - `module_path: str`: 模块路径
+  - `state: Optional[bool]`:
+    - `None(default)`: 切换状态，即 开 -> 关、关 -> 开
+    - `bool`: 切换至指定状态，`True` -> 开、`False` -> 关
 
 - **返回:**
 
+  None
+
 - **用法:**
+
+  ```python
+  from nonebot import message_preprocessor
+
+  # 关闭插件 path.to.plugin 中所有命令, 仅对当前消息生效
+  @message_preprocessor
+  async def processor(bot: NoneBot, event: CQEvent, plugin_manager: PluginManager):
+      plugin_manager.switch_command("path.to.plugin", state=False)
+  ```
 
 #### `switch_nlprocessor(cls, module_path, state=None)`
 
 - **说明:**
 
+  根据 `state` 修改 plugin 中 nl_processors 的状态。仅对当前消息有效。
+
 - **参数:**
+
+  - `module_path: str`: 模块路径
+  - `state: Optional[bool]`:
+    - `None(default)`: 切换状态，即 开 -> 关、关 -> 开
+    - `bool`: 切换至指定状态，`True` -> 开、`False` -> 关
 
 - **返回:**
 
+  None
+
 - **用法:**
 
-### `load_plugin(module_name)`
+  ```python
+  from nonebot import message_preprocessor
+
+  # 关闭插件 path.to.plugin 中所有自然语言处理器, 仅对当前消息生效
+  @message_preprocessor
+  async def processor(bot: NoneBot, event: CQEvent, plugin_manager: PluginManager):
+      plugin_manager.switch_nlprocessor("path.to.plugin", state=False)
+  ```
+
+### `load_plugin(module_path)`
 
 - **说明:**
 
@@ -923,15 +1093,15 @@ sidebar: auto
 
   加载 `nonebot_tuling` 插件。
 
-### `reload_plugin(module_name)` <Badge text="1.6.0+" />
+### `reload_plugin(module_path)` <Badge text="1.6.0+" />
 
 - **说明:**
+
+  重载插件。
 
   :::danger
   该函数为强制重载，可能导致不可预测的错误！
   :::
-
-  重载插件（等价于）。
 
 - **参数:**
 
@@ -962,7 +1132,7 @@ sidebar: auto
 
 - **返回:** <Badge text="1.6.0+" />
 
-  - `Set[Plugin]`: 加载成功的插件 Plugin 对象
+  - `Set[Plugin]`: 加载成功的 Plugin 对象
 
 - **用法:**
 
@@ -978,9 +1148,9 @@ sidebar: auto
 
   加载内置插件。
 
-- **返回:**
+- **返回:** <Badge text="1.6.0+" />
 
-  - `int:` 加载成功的插件数量
+  - `Set[Plugin]:`: 加载成功的 Plugin 对象
 
 - **用法:**
 
@@ -1010,7 +1180,7 @@ sidebar: auto
 
 - **说明:**
 
-  将函数装饰为命令处理器。
+  将函数装饰为命令处理器 `CommandHandler_T` 。
 
   被装饰的函数将会获得一个 `args_parser` 属性，是一个装饰器，下面会有详细说明。
 
