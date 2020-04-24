@@ -7,7 +7,7 @@ packages = find_packages(include=('nonebot', 'nonebot.*'))
 
 setup(
     name='nonebot',
-    version='1.5.0',
+    version='1.6.0',
     url='https://github.com/richardchien/nonebot',
     license='MIT License',
     author='Richard Chien',

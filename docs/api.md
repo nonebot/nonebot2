@@ -416,18 +416,18 @@ sidebar: auto
 - `load_plugins` -> `nonebot.plugin.load_plugins`
 - `load_builtin_plugins` -> `nonebot.plugin.load_builtin_plugins`
 - `get_loaded_plugins` <Badge text="1.1.0+"/> -> `nonebot.plugin.get_loaded_plugins`
+- `on_command` -> `nonebot.plugin.on_command`
+- `on_natural_language` -> `nonebot.plugin.on_natural_language`
+- `on_notice` -> `nonebot.plugin.on_notice`
+- `on_request` -> `nonebot.plugin.on_request`
 - `message_preprocessor` -> `nonebot.message.message_preprocessor`
 - `Message` -> `nonebot.message.Message`
 - `MessageSegment` -> `nonebot.message.MessageSegment`
-- `on_command` -> `nonebot.command.on_command`
 - `CommandSession` -> `nonebot.command.CommandSession`
 - `CommandGroup` -> `nonebot.command.CommandGroup`
-- `on_natural_language` -> `nonebot.natural_language.on_natural_language`
 - `NLPSession` -> `nonebot.natural_language.NLPSession`
 - `NLPResult` -> `nonebot.natural_language.NLPResult`
-- `on_notice` -> `nonebot.notice_request.on_notice`
 - `NoticeSession` -> `nonebot.notice_request.NoticeSession`
-- `on_request` -> `nonebot.notice_request.on_request`
 - `RequestSession` -> `nonebot.notice_request.RequestSession`
 - `context_id` <Badge text="1.2.0+"/> -> `nonebot.helpers.context_id`
 
@@ -779,9 +779,9 @@ sidebar: auto
 
   插件包含的事件处理器（包含通知、请求），通过 `on_notice` 以及 `on_request` 装饰器注册。
 
-<!-- TODO: 完善PluginManager -->
-
 ### _class_ `PluginManager` <Badge text="1.6.0+" />
+
+<!-- TODO: 完善PluginManager -->
 
 插件管理器：用于管理插件的加载以及插件中命令、自然语言处理器、事件处理器的开关
 
@@ -1005,6 +1005,141 @@ sidebar: auto
   await session.send('我现在支持以下功能：\n\n' +
                      '\n'.join(map(lambda p: p.name, filter(lambda p: p.name, plugins))))
   ```
+
+### _decorator_ `on_command(name, *, aliases=(), permission=perm.EVERYBODY, only_to_me=True, privileged=False, shell_like=False)` <Badge text="1.6.0+" />
+
+- **说明:**
+
+  将函数装饰为命令处理器。
+
+  被装饰的函数将会获得一个 `args_parser` 属性，是一个装饰器，下面会有详细说明。
+
+- **参数:**
+
+  - `name: Union[str, CommandName_T]`: 命令名，如果传入的是字符串则会自动转为元组
+  - `aliases: Union[Iterable[str], str]`: 命令别名
+  - `permission: int`: 命令所需要的权限，不满足权限的用户将无法触发该命令
+  - `only_to_me: bool`: 是否只响应确定是在和「我」（机器人）说话的命令（在开头或结尾 @ 了机器人，或在开头称呼了机器人昵称）
+  - `privileged: bool`: 是否特权命令，若是，则无论当前是否有命令会话正在运行，都会运行该命令，但运行不会覆盖已有会话，也不会保留新创建的会话
+  - `shell_like: bool`: 是否使用类 shell 语法，若是，则会自动使用 `shlex` 模块进行分割（无需手动编写参数解析器），分割后的参数列表放入 `session.args['argv']`
+
+- **要求:**
+
+  被装饰函数必须是一个 async 函数，且必须接收且仅接收一个位置参数，类型为 `CommandSession`，即形如：
+
+  ```python
+  async def func(session: CommandSession):
+      pass
+  ```
+
+- **用法:**
+
+  ```python
+  @on_command('echo', aliases=('复读',))
+  async def _(session: CommandSession):
+      await session.send(session.current_arg)
+  ```
+
+  一个简单的复读命令。
+
+### _decorator_ `on_natural_language(keywords=None, *, permission=EVERYBODY, only_to_me=True, only_short_message=True, allow_empty_message=False)` <Badge text="1.6.0+" />
+
+- **说明:**
+
+  将函数装饰为自然语言处理器。
+
+- **参数:**
+
+  - `keywords: Optional[Union[Iterable, str]]`: 要响应的关键词，若传入 `None`，则响应所有消息
+  - `permission: int`: 自然语言处理器所需要的权限，不满足权限的用户将无法触发该处理器
+  - `only_to_me: bool`: 是否只响应确定是在和「我」（机器人）说话的消息（在开头或结尾 @ 了机器人，或在开头称呼了机器人昵称）
+  - `only_short_message: bool`: 是否只响应短消息
+  - `allow_empty_message: bool`: 是否响应内容为空的消息（只有 @ 或机器人昵称）
+
+- **要求:**
+
+  被装饰函数必须是一个 async 函数，且必须接收且仅接收一个位置参数，类型为 `NLPSession`，即形如：
+
+  ```python
+  async def func(session: NLPSession):
+      pass
+  ```
+
+- **用法:**
+
+  ```python
+  @on_natural_language({'天气'}, only_to_me=False)
+  async def _(session: NLPSession):
+      return NLPResult(100.0, ('weather',), None)
+  ```
+
+  响应所有带有「天气」关键词的消息，当做 `weather` 命令处理。
+
+### _decorator_ `on_notice(*events)` <Badge text="1.6.0+" />
+
+- **说明:**
+
+  将函数装饰为通知处理器。
+
+- **参数:**
+
+  - `*events: str`: 要处理的通知类型（`notice_type`），若不传入，则处理所有通知
+
+- **要求:**
+
+  被装饰函数必须是一个 async 函数，且必须接收且仅接收一个位置参数，类型为 `NoticeSession`，即形如：
+
+  ```python
+  async def func(session: NoticeSession):
+      pass
+  ```
+
+- **用法:**
+
+  ```python
+  @on_notice
+  async def _(session: NoticeSession):
+      logger.info('有新的通知事件：%s', session.event)
+
+  @on_notice('group_increase')
+  async def _(session: NoticeSession):
+      await session.send('欢迎新朋友～')
+  ```
+
+  收到所有通知时打日志，收到新成员进群通知时除了打日志还发送欢迎信息。
+
+### _decorator_ `on_request(*events)` <Badge text="1.6.0+" />
+
+- **说明:**
+
+  将函数装饰为请求处理器。
+
+- **参数:**
+
+  - `*events: str`: 要处理的请求类型（`request_type`），若不传入，则处理所有请求
+
+- **要求:**
+
+  被装饰函数必须是一个 async 函数，且必须接收且仅接收一个位置参数，类型为 `RequestSession`，即形如：
+
+  ```python
+  async def func(session: RequestSession):
+      pass
+  ```
+
+- **用法:**
+
+  ```python
+  @on_request
+  async def _(session: RequestSession):
+      logger.info('有新的请求事件：%s', session.event)
+
+  @on_request('group')
+  async def _(session: RequestSession):
+      await session.approve()
+  ```
+
+  收到所有请求时打日志，收到群请求时除了打日志还同意请求。
 
 ## `nonebot.message` 模块
 
@@ -2270,7 +2405,7 @@ session.get('arg1', prompt='请输入 arg1：',
 
 ## `nonebot.notice_request` 模块
 
-### _decorator_ `on_notice(*events)` <Badge text="1.6.0-" type="error"/>
+### _decorator_ `on_notice(*events)` <Badge text="1.6.0-" type="error" />
 
 - **说明:**
 
