@@ -183,6 +183,11 @@ class CommandManager:
             bool: Success or not
         """
         if cmd_name in cls._commands:
+            cmd = cls._commands[cmd_name]
+            for alias in list(
+                    filter(lambda x: cls._aliases[x] == cmd,
+                           cls._aliases.keys())):
+                del cls._aliases[alias]
             del cls._commands[cmd_name]
             if cmd_name in cls._switches:
                 del cls._switches[cmd_name]

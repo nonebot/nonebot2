@@ -781,8 +781,6 @@ sidebar: auto
 
 ### _class_ `PluginManager` <Badge text="1.6.0+" />
 
-<!-- TODO: 完善PluginManager -->
-
 插件管理器：用于管理插件的加载以及插件中命令、自然语言处理器、事件处理器的开关。
 
 #### `cmd_manager`
@@ -1212,6 +1210,33 @@ sidebar: auto
 
   一个简单的复读命令。
 
+### _decorator_ _command_func._`args_parser`
+
+- **说明:**
+
+  将函数装饰为命令层面的参数解析器，将在命令实际处理函数之前被运行。
+
+  如果已经在 `on_command` 装饰器中使用了 `shell_like=True`，则无需手动使用编写参数解析器。
+
+  如果使用 `CommandSession#get()` 方法获取参数，并且传入了 `arg_filters`（相当于单个参数层面的参数解析器），则不会再运行此装饰器注册的命令层面的参数解析器；相反，如果没有传入 `arg_filters`，则会运行。
+
+- **要求:**
+
+  对被装饰函数的要求同 `on_command` 装饰器。
+
+- **用法:**
+
+  ```python
+  @my_cmd.args_parser
+  async def _(session: CommandSession):
+      stripped_text = session.current_arg_text.strip()
+      if not session.current_key and stripped_text:
+          session.current_key = 'initial_arg'
+      session.state[session.current_key] = stripped_text  # 若使用 1.1.0 及以下版本，请使用 session.args
+  ```
+
+  一个典型的命令参数解析器。
+
 ### _decorator_ `on_natural_language(keywords=None, *, permission=EVERYBODY, only_to_me=True, only_short_message=True, allow_empty_message=False)` <Badge text="1.6.0+" />
 
 - **说明:**
@@ -1321,10 +1346,10 @@ sidebar: auto
 
 - **要求:**
 
-  被装饰函数必须是一个 async 函数，且必须接收且仅接收两个位置参数，类型分别为 `NoneBot` 和 `aiocqhttp.Event`，即形如：
+  被装饰函数必须是一个 async 函数，且必须接收且仅接收三个位置参数，类型分别为 `NoneBot` 、 `aiocqhttp.Event` 和 `nonebot.plugin.PluginManager`，即形如：
 
   ```python
-  async def func(bot: NoneBot, event: aiocqhttp.Event):
+  async def func(bot: NoneBot, event: aiocqhttp.Event, plugin_manager: PluginManager):
       pass
   ```
 
@@ -1332,8 +1357,11 @@ sidebar: auto
 
   ```python
   @message_preprocessor
-  async def _(bot: NoneBot, event: aiocqhttp.Event):
-      event['preprocessed'] = True
+  async def _(bot: NoneBot, event: aiocqhttp.Event, plugin_manager: PluginManager):
+      event["preprocessed"] = True
+
+      # 关闭某个插件，仅对当前消息生效
+      plugin_manager.switch_plugin("path.to.plugin", state=False)
   ```
 
   在所有消息处理之前，向消息事件对象中加入 `preprocessed` 字段。
@@ -1846,33 +1874,6 @@ sidebar: auto
 
   一个简单的复读命令。
 
-### _decorator_ _command_func._`args_parser`
-
-- **说明:**
-
-  将函数装饰为命令层面的参数解析器，将在命令实际处理函数之前被运行。
-
-  如果已经在 `on_command` 装饰器中使用了 `shell_like=True`，则无需手动使用编写参数解析器。
-
-  如果使用 `CommandSession#get()` 方法获取参数，并且传入了 `arg_filters`（相当于单个参数层面的参数解析器），则不会再运行此装饰器注册的命令层面的参数解析器；相反，如果没有传入 `arg_filters`，则会运行。
-
-- **要求:**
-
-  对被装饰函数的要求同 `on_command` 装饰器。
-
-- **用法:**
-
-  ```python
-  @my_cmd.args_parser
-  async def _(session: CommandSession):
-      stripped_text = session.current_arg_text.strip()
-      if not session.current_key and stripped_text:
-          session.current_key = 'initial_arg'
-      session.state[session.current_key] = stripped_text  # 若使用 1.1.0 及以下版本，请使用 session.args
-  ```
-
-  一个典型的命令参数解析器。
-
 ### _class_ `CommandGroup`
 
 命令组，用于声明一组有相同名称前缀的命令。
@@ -1957,6 +1958,175 @@ sidebar: auto
   ```
 
   注册 `('scheduler', 'add')` 命令。
+
+### _class_ `CommandManager` <Badge text="1.6.0+" />
+
+#### `commands`
+
+- **类型:** `Dict[CommandName_T, Command]`
+
+- **说明:**
+
+  命令字典。
+
+#### `aliases`
+
+- **类型:** `Dict[str, Command]`
+
+- **说明:**
+
+  命令别名字典。
+
+#### `switches`
+
+- **类型:** `Dict[CommandName_T, bool]`
+
+- **说明:**
+
+  命令开关状态字典。
+
+#### _class method_ `add_command(cls, cmd_name, cmd)`
+
+- **说明:**
+
+  注册一个 `Command` 对象。
+
+- **参数:**
+
+  - `cmd_name: CommandName_T`: 命令名称
+  - `cmd: Command`: 命令对象
+
+- **返回:**
+
+  None
+
+- **用法:**
+
+  ```python
+  cmd = Command(name, func, permission, only_to_me, privileged)
+  CommandManager.add_command(name, cmd)
+  ```
+
+#### _class method_ `add_aliases(cls, aliases, cmd)`
+
+- **说明:**
+
+  为 `Command` 添加命令别名。
+
+- **参数:**
+
+  - `aliases: Union[Iterable[str], str]`: 命令别名列表
+
+- **返回:**
+
+  None
+
+- **用法:**
+
+  ```python
+  cmd = Command(name, func, permission, only_to_me, privileged)
+  CommandManager.add_aliases({"别名", "test"}, cmd)
+  ```
+
+#### _class method_ `reload_command(cls, cmd_name, cmd)`
+
+- **说明:**
+
+  更新一个已存在的命令。
+
+- **参数:**
+
+  - `cmd_name: CommandName_T`: 命令名称
+  - `cmd: Command`: 命令对象
+
+- **返回:**
+
+  None
+
+- **用法:**
+
+  ```python
+  cmd = Command(name, func, permission, only_to_me, privileged)
+  CommandManager.reload_command(name, cmd)
+  ```
+
+#### _class method_ `remove_command(cls, cmd_name)`
+
+- **说明:**
+
+  移除一个已存在的命令。
+
+- **参数:**
+
+  - `cmd_name: CommandName_T`: 命令名称
+
+- **返回:**
+
+  - `bool`: 是否成功移除命令
+
+- **用法:**
+
+  ```python
+  CommandManager.remove_command(("test", ))
+  ```
+
+#### _class method_ `switch_command_global(cls, cmd_name, state)`
+
+- **说明:**
+
+  根据 `state` 更改 command 的全局状态。
+
+- **参数:**
+
+  - `cmd_name: CommandName_T`: 命令名称
+  - `state: Optional[bool]`:
+    - `None(default)`: 切换状态，即 开 -> 关、关 -> 开
+    - `bool`: 切换至指定状态，`True` -> 开、`False` -> 关
+
+- **返回:**
+
+  None
+
+- **用法:**
+
+  ```python
+  from nonebot import message_preprocessor
+
+  # 全局关闭命令test, 对所有消息生效
+  CommandManager.switch_command_global(("test", ), state=False)
+
+  @message_preprocessor
+  async def processor(bot: NoneBot, event: CQEvent, plugin_manager: PluginManager):
+      plugin_manager.cmd_manager.switch_command_global(("test", ), state=False)
+  ```
+
+#### `switch_command(self, cmd_name, state)`
+
+- **说明:**
+
+  根据 `state` 更改 command 的状态。仅对当前消息有效。
+
+- **参数:**
+
+  - `cmd_name: CommandName_T`: 命令名称
+  - `state: Optional[bool]`:
+    - `None(default)`: 切换状态，即 开 -> 关、关 -> 开
+    - `bool`: 切换至指定状态，`True` -> 开、`False` -> 关
+
+- **返回:**
+
+  None
+
+- **用法:**
+
+  ```python
+  from nonebot import message_preprocessor
+
+  # 关闭命令test, 仅对当前消息生效
+  @message_preprocessor
+  async def processor(bot: NoneBot, event: CQEvent, plugin_manager: PluginManager):
+      plugin_manager.cmd_manager.switch_command(("test", ), state=False)
+  ```
 
 ### _class_ `CommandSession`
 
