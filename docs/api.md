@@ -1344,7 +1344,7 @@ sidebar: auto
 
   将函数装饰为消息预处理器。
 
-- **要求:**
+- **要求:** <Badge text="1.6.0+" />
 
   被装饰函数必须是一个 async 函数，且必须接收且仅接收三个位置参数，类型分别为 `NoneBot` 、 `aiocqhttp.Event` 和 `nonebot.plugin.PluginManager`，即形如：
 
@@ -1365,6 +1365,24 @@ sidebar: auto
   ```
 
   在所有消息处理之前，向消息事件对象中加入 `preprocessed` 字段。
+
+### _exception_ `CanceledException` <Badge text="1.6.0+" />
+
+- **说明:**
+
+  取消消息处理异常
+
+- **要求:**
+
+  在消息预处理函数 `message_preprocessor` 中可以选择抛出该异常来阻止响应该消息。
+
+- **用法:**
+
+  ```python
+  @message_preprocessor
+  async def _(bot: NoneBot, event: aiocqhttp.Event, plugin_manager: PluginManager):
+      raise CanceledException(reason)
+  ```
 
 ### _class_ `MessageSegment`
 
