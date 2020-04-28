@@ -18,7 +18,7 @@ module.exports = {
     ],
     ga: 'UA-115509121-2',
     themeConfig: {
-        repo: 'richardchien/nonebot',
+        repo: 'nonebot/nonebot',
         docsDir: 'docs',
         editLinks: true,
         editLinkText: '在 GitHub 上编辑此页',
