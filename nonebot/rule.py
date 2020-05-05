@@ -1,11 +1,13 @@
 import re
-from typing import Union, Callable
+from typing import Union, Callable, Optional
+
+from .event import Event
 
 
 class Rule:
 
-    def __init__(self, checker: Callable[["Event"], bool]):
-        self.checker = checker
+    def __init__(self, checker: Optional[Callable[[Event], bool]] = None):
+        self.checker = checker or (lambda event: True)
 
     def __call__(self, event):
         return self.checker(event)

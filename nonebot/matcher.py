@@ -1,101 +1,162 @@
 import re
 import copy
 from functools import wraps
-from typing import Union, Optional
+from typing import Type, Union, Optional, Callable
 
-from .rule import Rule, startswith, regex, user
+from .event import Event
 from .typing import Scope, Handler
-from .exception import BlockedException, RejectedException
+from .rule import Rule, startswith, regex, user
+from .exception import PausedException, RejectedException, FinishedException
 
 
 class Matcher:
 
-    def __init__(self,
-                 rule: Rule,
-                 scope: Scope = "ALL",
-                 permission: str = "ALL",
-                 block: bool = True,
-                 *,
-                 handlers: list = [],
-                 state: dict = {},
-                 temp: bool = False):
-        self.rule = rule
-        self.scope = scope
-        self.permission = permission
-        self.block = block
-        self.handlers = handlers
-        self.state = state
-        self.temp = temp
+    rule: Rule = Rule()
+    scope: Scope = "ALL"
+    permission: str = "ALL"
+    block: bool = True
+    handlers: list = []
+    temp: bool = False
 
-        def _default_parser(event: "Event", state: dict):
-            state[state.pop("_current_arg")] = event.message
+    _default_state: dict = {}
+    _default_parser: Optional[Callable[[Event, dict], None]] = None
+    _args_parser: Optional[Callable[[Event, dict], None]] = None
 
-        self._args_parser = _default_parser
+    def __init__(self):
+        self.handlers = self.handlers.copy()
+        self.state = self._default_state.copy()
+        self.parser = self._args_parser or self._default_parser
 
-    def __call__(self, func: Handler) -> Handler:
-        self.handlers.append(func)
+    @classmethod
+    def new(cls,
+            rule: Rule = Rule(),
+            scope: Scope = "ALL",
+            permission: str = "ALL",
+            block: bool = True,
+            handlers: list = [],
+            temp: bool = False,
+            *,
+            default_state: dict = {},
+            default_parser: Optional[Callable[[Event, dict], None]] = None,
+            args_parser: Optional[Callable[[Event, dict], None]] = None):
 
-        # TODO: export some functions
-        func.args_parser = self.args_parser
-        func.receive = self.receive
-        func.got = self.got
+        # class NewMatcher(cls):
+        #     rule: Rule = rule
+        #     scope: Scope = scope
+        #     permission: str = permission
+        #     block: bool = block
+        #     handlers: list = handlers
+        #     temp: bool = temp
 
+        #     _default_state = default_state
+
+        NewMatcher = type(
+            "Matcher", (cls,), {
+                "rule": rule,
+                "scope": scope,
+                "permission": permission,
+                "block": block,
+                "handlers": handlers,
+                "temp": temp,
+                "_default_state": default_state,
+                "_default_parser": default_parser,
+                "_args_parser": args_parser,
+            })
+
+        return NewMatcher
+
+    @classmethod
+    def args_parser(cls, func: Callable[[Event, dict], None]):
+        cls._default_parser = func
         return func
 
-    def args_parser(self, func):
-        self._args_parser = func
-        return func
-
-    def receive(self):
+    @classmethod
+    def receive(cls):
 
         def _decorator(func: Handler) -> Handler:
 
             @wraps(func)
-            def _handler(event: "Event", state: dict):
-                # TODO: add tmp matcher to matcher tree
-                matcher = Matcher(user(event.user_id) & self.rule,
-                                  scope=self.scope,
-                                  permission=self.permission,
-                                  block=self.block,
-                                  handlers=self.handlers,
-                                  state=state,
-                                  temp=True)
-                matcher.args_parser(self._args_parser)
-                raise BlockedException
+            def _handler(event: Event, state: dict):
+                raise PausedException
 
-            self.handlers.append(_handler)
+            cls.handlers.append(_handler)
 
             return func
 
         return _decorator
 
-    def got(self, key, args_parser=None):
+    @classmethod
+    def got(cls,
+            key: str,
+            args_parser: Optional[Callable[[Event, dict], None]] = None):
 
         def _decorator(func: Handler) -> Handler:
 
             @wraps(func)
-            def _handler(event: "Event", state: dict):
+            def _handler(event: Event, state: dict):
                 if key not in state:
-                    state["_current_arg"] = key
-
-                    # TODO: add tmp matcher to matcher tree
-                    matcher = copy.copy(self)
+                    if state.get("__current_arg__", None) == key:
+                        state[key] = event.message
+                        del state["__current_arg__"]
+                        return func(event, state)
+                    state["__current_arg__"] = key
+                    cls._args_parser = args_parser
                     raise RejectedException
+
                 return func(event, state)
 
-            self.handlers.append(_handler)
+            cls.handlers.append(_handler)
 
             return func
 
         return _decorator
 
-    def finish(self):
-        # BlockedException用于阻止后续handler继续执行
-        raise BlockedException
+    @classmethod
+    def finish(cls):
+        raise FinishedException
 
-    def reject(self):
-        # RejectedException用于阻止后续handler继续执行并将当前handler放回队列
+    @classmethod
+    def reject(cls):
         raise RejectedException
+
+    async def run(self, event):
+        if not self.rule(event):
+            return
+
+        try:
+            if self.parser:
+                await self.parser(event, state)  # type: ignore
+
+            for _ in range(len(self.handlers)):
+                handler = self.handlers.pop(0)
+                await handler(event, self.state)
+        except RejectedException:
+            # TODO: add tmp matcher to matcher tree
+            self.handlers.insert(handler, 0)
+            matcher = Matcher.new(self.rule,
+                                  self.scope,
+                                  self.permission,
+                                  self.block,
+                                  self.handlers,
+                                  temp=True,
+                                  default_state=self.state,
+                                  default_parser=self._default_parser,
+                                  args_parser=self._args_parser)
+            return
+        except PausedException:
+            # TODO: add tmp matcher to matcher tree
+            matcher = Matcher.new(self.rule,
+                                  self.scope,
+                                  self.permission,
+                                  self.block,
+                                  self.handlers,
+                                  temp=True,
+                                  default_state=self.state,
+                                  default_parser=self._default_parser,
+                                  args_parser=self._args_parser)
+            return
+        except FinishedException:
+            return
 
 
 def on_message(rule: Rule,
@@ -104,23 +165,23 @@ def on_message(rule: Rule,
                block=True,
                *,
                handlers=[],
-               state={},
-               temp=False) -> Matcher:
+               temp=False,
+               state={}) -> Type[Matcher]:
     # TODO: add matcher to matcher tree
-    return Matcher(rule,
-                   scope,
-                   permission,
-                   block,
-                   handlers=handlers,
-                   state=state,
-                   temp=temp)
+    return Matcher.new(rule,
+                       scope,
+                       permission,
+                       block,
+                       handlers=handlers,
+                       temp=temp,
+                       default_state=state)
 
 
 def on_startswith(msg,
                   start: int = None,
                   end: int = None,
                   rule: Optional[Rule] = None,
-                  **kwargs) -> Matcher:
+                  **kwargs) -> Type[Matcher]:
     return on_message(startswith(msg, start, end) &
                       rule, **kwargs) if rule else on_message(
                           startswith(msg, start, end), **kwargs)
@@ -129,7 +190,7 @@ def on_startswith(msg,
 def on_regex(pattern,
              flags: Union[int, re.RegexFlag] = 0,
              rule: Optional[Rule] = None,
-             **kwargs) -> Matcher:
+             **kwargs) -> Type[Matcher]:
     return on_message(regex(pattern, flags) &
                       rule, **kwargs) if rule else on_message(
                           regex(pattern, flags), **kwargs)
