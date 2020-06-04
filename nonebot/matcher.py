@@ -88,6 +88,7 @@ class Matcher:
     @classmethod
     def got(cls,
             key: str,
+            prompt: Optional[str] = None,
             args_parser: Optional[Callable[[Event, dict], None]] = None):
 
         def _decorator(func: Handler) -> Handler:
@@ -112,11 +113,11 @@ class Matcher:
         return _decorator
 
     @classmethod
-    def finish(cls):
+    def finish(cls, prompt: Optional[str] = None):
         raise FinishedException
 
     @classmethod
-    def reject(cls):
+    def reject(cls, prompt: Optional[str] = None):
         raise RejectedException
 
     async def run(self, event):
