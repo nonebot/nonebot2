@@ -28,17 +28,19 @@ class Matcher:
         self.parser = self._args_parser or self._default_parser
 
     @classmethod
-    def new(cls,
-            rule: Rule = Rule(),
-            scope: Scope = "ALL",
-            permission: str = "ALL",
-            block: bool = True,
-            handlers: list = [],
-            temp: bool = False,
-            *,
-            default_state: dict = {},
-            default_parser: Optional[Callable[[Event, dict], None]] = None,
-            args_parser: Optional[Callable[[Event, dict], None]] = None):
+    def new(
+        cls,
+        rule: Rule = Rule(),
+        scope: Scope = "ALL",
+        permission: str = "ALL",
+        block: bool = True,
+        handlers: list = [],
+        temp: bool = False,
+        *,
+        default_state: dict = {},
+        default_parser: Optional[Callable[[Event, dict], None]] = None,
+        args_parser: Optional[Callable[[Event, dict], None]] = None
+    ) -> Type["Matcher"]:
 
         # class NewMatcher(cls):
         #     rule: Rule = rule
@@ -51,7 +53,7 @@ class Matcher:
         #     _default_state = default_state
 
         NewMatcher = type(
-            "Matcher", (cls,), {
+            "Matcher", (Matcher,), {
                 "rule": rule,
                 "scope": scope,
                 "permission": permission,
@@ -178,20 +180,19 @@ def on_message(rule: Rule,
                        default_state=state)
 
 
-def on_startswith(msg,
-                  start: int = None,
-                  end: int = None,
-                  rule: Optional[Rule] = None,
-                  **kwargs) -> Type[Matcher]:
-    return on_message(startswith(msg, start, end) &
-                      rule, **kwargs) if rule else on_message(
-                          startswith(msg, start, end), **kwargs)
+# def on_startswith(msg,
+#                   start: int = None,
+#                   end: int = None,
+#                   rule: Optional[Rule] = None,
+#                   **kwargs) -> Type[Matcher]:
+#     return on_message(startswith(msg, start, end) &
+#                       rule, **kwargs) if rule else on_message(
+#                           startswith(msg, start, end), **kwargs)
 
-
-def on_regex(pattern,
-             flags: Union[int, re.RegexFlag] = 0,
-             rule: Optional[Rule] = None,
-             **kwargs) -> Type[Matcher]:
-    return on_message(regex(pattern, flags) &
-                      rule, **kwargs) if rule else on_message(
-                          regex(pattern, flags), **kwargs)
+# def on_regex(pattern,
+#              flags: Union[int, re.RegexFlag] = 0,
+#              rule: Optional[Rule] = None,
+#              **kwargs) -> Type[Matcher]:
+#     return on_message(regex(pattern, flags) &
+#                       rule, **kwargs) if rule else on_message(
+#                           regex(pattern, flags), **kwargs)

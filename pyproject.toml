@@ -1,0 +1,42 @@
+[tool.poetry]
+name = "nonebot"
+version = "2.0.0"
+description = "An asynchronous QQ bot framework."
+authors = ["Richard Chien <richardchienthebest@gmail.com>", "yanyongyu <yanyongyu_1@126.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://nonebot.cqp.moe/"
+repository = "https://github.com/nonebot/nonebot"
+documentation = "https://nonebot.cqp.moe/"
+keywords = ["bot", "qq", "qqbot", "cqhttp", "coolq"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Framework :: Robot Framework",
+  "Framework :: Robot Framework :: Library",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3"
+]
+packages = [
+  { include = "nonebot" },
+  { include = "nonebot_test" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+apscheduler = { version = "^3.6.3", optional = true }
+
+[tool.poetry.dev-dependencies]
+yapf = "^0.30.0"
+
+[tool.poetry.extras]
+scheduler = ["apscheduler"]
+
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+default = true
+
+[build-system]
+requires = ["poetry>=0.12"]
+build-backend = "poetry.masonry.api"
