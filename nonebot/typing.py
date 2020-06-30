@@ -1,4 +1,6 @@
-from typing import Literal, Callable
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
 
-Scope = Literal["PRIVATE", "DISCUSS", "GROUP", "ALL"]
-Handler = Callable[["Event", dict], None]
+from typing import Callable, Awaitable
+
+Handler = Callable[["Bot", "Event", dict], Awaitable[None]]

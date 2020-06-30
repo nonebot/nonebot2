@@ -1,3 +1,7 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+
 class PausedException(Exception):
     """Block a message from further handling and try to receive a new message"""
     pass
