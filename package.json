@@ -1,0 +1,31 @@
+{
+  "name": "nonebot",
+  "version": "2.0.0",
+  "description": "An asynchronous QQ bot framework.",
+  "homepage": "https://nonebot.cqp.moe/",
+  "main": "index.js",
+  "contributors": [
+    {
+      "name": "Richard Chien",
+      "email": "richardchienthebest@gmail.com"
+    },
+    {
+      "name": "yanyongyu",
+      "email": "yanyongyu_1@126.com"
+    }
+  ],
+  "repository": "https://github.com/nonebot/nonebot/nonebot",
+  "bugs": {
+    "url": "https://github.com/nonebot/nonebot/issues"
+  },
+  "scripts": {
+    "dev": "vuepress dev docs",
+    "build": "vuepress build docs"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "vuepress": "^1.3.1",
+    "@vuepress/plugin-back-to-top": "^1.3.1",
+    "@vuepress/plugin-medium-zoom": "^1.3.1"
+  }
+}

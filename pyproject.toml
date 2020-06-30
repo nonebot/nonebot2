@@ -28,6 +28,7 @@ apscheduler = { version = "^3.6.3", optional = true }
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.30.0"
+sphinx = "^3.1.1"
 
 [tool.poetry.extras]
 scheduler = ["apscheduler"]
