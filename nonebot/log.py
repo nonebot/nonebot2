@@ -5,6 +5,8 @@ import sys
 import logging
 
 logger = logging.getLogger("nonebot")
+"""nonebot logger"""
+
 default_handler = logging.StreamHandler(sys.stdout)
 default_handler.setFormatter(
     logging.Formatter("[%(asctime)s %(name)s] %(levelname)s: %(message)s"))

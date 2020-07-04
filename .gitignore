@@ -186,3 +186,5 @@ typings/
 .idea
 .vscode
 dev
+docs_build/_build
+!tests/.env

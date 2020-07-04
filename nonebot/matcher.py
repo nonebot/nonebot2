@@ -14,6 +14,8 @@ matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
 
 
 class Matcher:
+    """`Matcher`类
+    """
 
     rule: Rule = Rule()
     handlers: List[Handler] = []
@@ -26,6 +28,8 @@ class Matcher:
     # _args_parser: Optional[Callable[[Event, dict], None]] = None
 
     def __init__(self):
+        """实例化 Matcher 以便运行
+        """
         self.handlers = self.handlers.copy()
         self.state = self._default_state.copy()
         # self.parser = self._args_parser or self._default_parser
@@ -38,6 +42,11 @@ class Matcher:
             priority: int = 1,
             *,
             default_state: dict = {}) -> Type["Matcher"]:
+        """创建新的 Matcher
+
+        Returns:
+            Type["Matcher"]: 新的 Matcher 类
+        """
 
         NewMatcher = type(
             "Matcher", (Matcher,), {
@@ -52,6 +61,18 @@ class Matcher:
 
         return NewMatcher
 
+    @classmethod
+    def check_rule(cls, event: Event) -> bool:
+        """检查 Matcher 的 Rule 是否成立
+
+        Args:
+            event (Event): 消息事件
+
+        Returns:
+            bool: 条件成立与否
+        """
+        return cls.rule(event)
+
     # @classmethod
     # def args_parser(cls, func: Callable[[Event, dict], None]):
     #     cls._default_parser = func
@@ -59,6 +80,7 @@ class Matcher:
 
     @classmethod
     def handle(cls):
+        """直接处理消息事件"""
 
         def _decorator(func: Handler) -> Handler:
             cls.handlers.append(func)
@@ -68,6 +90,7 @@ class Matcher:
 
     @classmethod
     def receive(cls):
+        """接收一条新消息并处理"""
 
         def _decorator(func: Handler) -> Handler:
 
@@ -117,6 +140,7 @@ class Matcher:
     # def reject(cls, prompt: Optional[str] = None):
     #     raise RejectedException
 
+    # 运行handlers
     async def run(self, bot, event):
         if not self.rule(event):
             return

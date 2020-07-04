@@ -24,11 +24,15 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.7"
+fastapi = "^0.58.1"
+uvicorn = "^0.11.5"
+pydantic = {extras = ["dotenv"], version = "^1.5.1"}
 apscheduler = { version = "^3.6.3", optional = true }
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.30.0"
 sphinx = "^3.1.1"
+sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
 
 [tool.poetry.extras]
 scheduler = ["apscheduler"]

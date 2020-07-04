@@ -12,16 +12,16 @@ class Rule:
     def __init__(self, checker: Optional[Callable[[Event], bool]] = None):
         self.checker = checker or (lambda event: True)
 
-    def __call__(self, event):
+    def __call__(self, event: Event) -> bool:
         return self.checker(event)
 
-    def __and__(self, other):
+    def __and__(self, other: "Rule") -> "Rule":
         return Rule(lambda event: self.checker(event) and other.checker(event))
 
-    def __or__(self, other):
+    def __or__(self, other: "Rule") -> "Rule":
         return Rule(lambda event: self.checker(event) or other.checker(event))
 
-    def __neg__(self):
+    def __neg__(self) -> "Rule":
         return Rule(lambda event: not self.checker(event))
 
 

@@ -1,4 +1,8 @@
-nonebot package
+---
+sidebar: auto
+---
+
+nonebot api reference
 ===============
 
 .. automodule:: nonebot
@@ -6,31 +10,7 @@ nonebot package
    :undoc-members:
    :show-inheritance:
 
-nonebot.event module
---------------------
-
-.. automodule:: nonebot.event
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-nonebot.exception module
-------------------------
-
-.. automodule:: nonebot.exception
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-nonebot.log module
-------------------
-
-.. automodule:: nonebot.log
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
-nonebot.matcher module
+`nonebot.matcher` 模块
 ----------------------
 
 .. automodule:: nonebot.matcher
@@ -38,7 +18,7 @@ nonebot.matcher module
    :undoc-members:
    :show-inheritance:
 
-nonebot.plugin module
+`nonebot.plugin` 模块
 ---------------------
 
 .. automodule:: nonebot.plugin
@@ -46,7 +26,7 @@ nonebot.plugin module
    :undoc-members:
    :show-inheritance:
 
-nonebot.rule module
+`nonebot.rule` 模块
 -------------------
 
 .. automodule:: nonebot.rule
@@ -54,7 +34,31 @@ nonebot.rule module
    :undoc-members:
    :show-inheritance:
 
-nonebot.typing module
+`nonebot.event` 模块
+--------------------
+
+.. automodule:: nonebot.event
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+`nonebot.exception` 模块
+------------------------
+
+.. automodule:: nonebot.exception
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+`nonebot.log` 模块
+------------------
+
+.. automodule:: nonebot.log
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+`nonebot.typing` 模块
 ---------------------
 
 .. automodule:: nonebot.typing
