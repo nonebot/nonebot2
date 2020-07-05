@@ -7,9 +7,9 @@ import importlib
 from types import ModuleType
 from typing import Set, Dict, Type, Optional
 
-from .log import logger
-from .rule import Rule
-from .matcher import Matcher
+from nonebot.rule import Rule
+from nonebot.log import logger
+from nonebot.matcher import Matcher
 
 plugins: Dict[str, "Plugin"] = {}
 

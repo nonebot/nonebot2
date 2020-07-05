@@ -5,10 +5,10 @@ from functools import wraps
 from collections import defaultdict
 from typing import Type, List, Dict, Optional, Callable
 
-from .event import Event
-from .typing import Handler
-from .rule import Rule, user
-from .exception import PausedException, RejectedException, FinishedException
+from nonebot.event import Event
+from nonebot.typing import Handler
+from nonebot.rule import Rule, user
+from nonebot.exception import PausedException, RejectedException, FinishedException
 
 matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
 

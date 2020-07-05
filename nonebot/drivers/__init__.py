@@ -7,6 +7,9 @@ from ipaddress import IPv4Address
 
 class BaseDriver(object):
 
+    def __init__(self):
+        raise NotImplementedError
+
     @property
     def server_app(self):
         raise NotImplementedError
@@ -24,4 +27,10 @@ class BaseDriver(object):
             port: Optional[int] = None,
             *args,
             **kwargs):
+        raise NotImplementedError
+
+    async def _handle_http(self):
+        raise NotImplementedError
+
+    async def _handle_ws_reverse(self):
         raise NotImplementedError

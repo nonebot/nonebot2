@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import sys
+import json
 import logging
 from typing import Optional
 from ipaddress import IPv4Address
 
 import uvicorn
-from fastapi import FastAPI
+from fastapi import Body, FastAPI, WebSocket
 
-from . import BaseDriver
+from nonebot.log import logger
+from nonebot.drivers import BaseDriver
 
 
 class Driver(BaseDriver):
@@ -23,6 +24,9 @@ class Driver(BaseDriver):
         )
 
         self.config = config
+
+        self._server_app.post("/coolq/")(self._handle_http)
+        self._server_app.websocket("/coolq/ws")(self._handle_ws_reverse)
 
     @property
     def server_app(self):
@@ -76,3 +80,18 @@ class Driver(BaseDriver):
                     debug=self.config.debug,
                     log_config=LOGGING_CONFIG,
                     **kwargs)
+
+    async def _handle_http(self, data: dict = Body(...)):
+        logger.debug(f"Received message: {data}")
+        return {"status": 200, "message": "success"}
+
+    async def _handle_ws_reverse(self, websocket: WebSocket):
+        await websocket.accept()
+        while True:
+            try:
+                data = await websocket.receive_json()
+            except json.decoder.JSONDecodeError as e:
+                logger.exception(e)
+                continue
+
+            logger.debug(f"Received message: {data}")

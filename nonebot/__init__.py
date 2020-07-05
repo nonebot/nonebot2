@@ -6,9 +6,9 @@ import importlib
 from typing import Optional
 from ipaddress import IPv4Address
 
-from .log import logger
-from .config import Env, Config
-from .drivers import BaseDriver
+from nonebot.log import logger
+from nonebot.config import Env, Config
+from nonebot.drivers import BaseDriver
 
 _driver: Optional[BaseDriver] = None
 
@@ -48,4 +48,4 @@ def run(host: Optional[IPv4Address] = None,
     get_driver().run(host, port, *args, **kwargs)
 
 
-from .plugin import load_plugins, get_loaded_plugins
+from nonebot.plugin import load_plugins, get_loaded_plugins

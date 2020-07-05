@@ -1,9 +1,9 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from .log import logger
-from .event import Event
-from .matcher import matchers
+from nonebot.log import logger
+from nonebot.event import Event
+from nonebot.matcher import matchers
 
 
 async def handle_message(bot, event: Event):

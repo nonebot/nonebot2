@@ -4,7 +4,7 @@
 import re
 from typing import Union, Callable, Optional
 
-from .event import Event
+from nonebot.event import Event
 
 
 class Rule:
