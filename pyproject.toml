@@ -28,6 +28,7 @@ fastapi = "^0.58.1"
 uvicorn = "^0.11.5"
 pydantic = {extras = ["dotenv"], version = "^1.5.1"}
 apscheduler = { version = "^3.6.3", optional = true }
+httpx = "^0.13.3"
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.30.0"

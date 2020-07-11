@@ -7,15 +7,18 @@ from typing import Optional
 from ipaddress import IPv4Address
 
 import uvicorn
+from starlette.websockets import WebSocketDisconnect
 from fastapi import Body, FastAPI, WebSocket
 
 from nonebot.log import logger
+from nonebot.config import Config
 from nonebot.drivers import BaseDriver
+from nonebot.adapters.coolq import Bot as CoolQBot
 
 
 class Driver(BaseDriver):
 
-    def __init__(self, config):
+    def __init__(self, config: Config):
         self._server_app = FastAPI(
             debug=config.debug,
             openapi_url=None,
@@ -25,8 +28,10 @@ class Driver(BaseDriver):
 
         self.config = config
 
-        self._server_app.post("/coolq/")(self._handle_http)
-        self._server_app.websocket("/coolq/ws")(self._handle_ws_reverse)
+        self._server_app.post("/{adapter}/")(self._handle_http)
+        self._server_app.post("/{adapter}/http")(self._handle_http)
+        self._server_app.websocket("/{adapter}/ws")(self._handle_ws_reverse)
+        self._server_app.websocket("/{adapter}/ws/")(self._handle_ws_reverse)
 
     @property
     def server_app(self):
@@ -81,11 +86,16 @@ class Driver(BaseDriver):
                     log_config=LOGGING_CONFIG,
                     **kwargs)
 
-    async def _handle_http(self, data: dict = Body(...)):
+    async def _handle_http(self, adapter: str, data: dict = Body(...)):
+        # TODO: Check authorization
         logger.debug(f"Received message: {data}")
+        if adapter == "coolq":
+            bot = CoolQBot("http", self.config)
+            await bot.handle_message(data)
         return {"status": 200, "message": "success"}
 
-    async def _handle_ws_reverse(self, websocket: WebSocket):
+    async def _handle_ws_reverse(self, adapter: str, websocket: WebSocket):
+        # TODO: Check authorization
         await websocket.accept()
         while True:
             try:
@@ -93,5 +103,11 @@ class Driver(BaseDriver):
             except json.decoder.JSONDecodeError as e:
                 logger.exception(e)
                 continue
+            except WebSocketDisconnect:
+                logger.error("WebSocket Disconnect")
+                return
 
             logger.debug(f"Received message: {data}")
+            if adapter == "coolq":
+                bot = CoolQBot("websocket", self.config, websocket=websocket)
+                await bot.handle_message(data)

@@ -13,8 +13,6 @@ nonebot.init()
 app = nonebot.get_asgi()
 
 nonebot.load_plugins("test_plugins")
-print(nonebot.get_loaded_plugins())
-print(matchers)
 
 if __name__ == "__main__":
     nonebot.run(app="bot:app")

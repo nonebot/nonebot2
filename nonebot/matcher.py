@@ -94,7 +94,6 @@ class Matcher:
 
         def _decorator(func: Handler) -> Handler:
 
-            @wraps(func)
             async def _handler(bot, event: Event, state: dict):
                 raise PausedException
 

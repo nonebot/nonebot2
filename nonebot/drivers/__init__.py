@@ -4,10 +4,12 @@
 from typing import Optional
 from ipaddress import IPv4Address
 
+from nonebot.config import Config
+
 
 class BaseDriver(object):
 
-    def __init__(self):
+    def __init__(self, config: Config):
         raise NotImplementedError
 
     @property
@@ -33,4 +35,7 @@ class BaseDriver(object):
         raise NotImplementedError
 
     async def _handle_ws_reverse(self):
+        raise NotImplementedError
+
+    async def _handle_http_api(self):
         raise NotImplementedError

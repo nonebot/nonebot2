@@ -10,4 +10,12 @@ test_matcher = on_message(Rule(), state={"default": 1})
 
 @test_matcher.handle()
 async def test_handler(bot, event: Event, state: dict):
-    print(state)
+    print("Test Matcher Received:", event)
+    print("Current State:", state)
+    state["message1"] = event.get("raw_message")
+
+
+@test_matcher.receive()
+async def test_receive(bot, event: Event, state: dict):
+    print("Test Matcher Received next time:", event)
+    print("Current State:", state)
