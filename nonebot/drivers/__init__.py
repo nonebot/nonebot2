@@ -39,3 +39,29 @@ class BaseDriver(object):
 
     async def _handle_http_api(self):
         raise NotImplementedError
+
+
+class BaseWebSocket(object):
+
+    def __init__(self, websocket):
+        self._websocket = websocket
+
+    @property
+    def websocket(self):
+        return self._websocket
+
+    @property
+    def closed(self):
+        raise NotImplementedError
+
+    async def accept(self):
+        raise NotImplementedError
+
+    async def close(self):
+        raise NotImplementedError
+
+    async def receive(self) -> dict:
+        raise NotImplementedError
+
+    async def send(self, data: dict):
+        raise NotImplementedError

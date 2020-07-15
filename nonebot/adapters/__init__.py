@@ -21,21 +21,45 @@ class BaseBot(object):
 class BaseMessageSegment(dict):
 
     def __init__(self,
-                 d: Optional[Dict[str, Any]] = None,
-                 *,
                  type_: Optional[str] = None,
                  data: Optional[Dict[str, str]] = None):
         super().__init__()
-        if isinstance(d, dict) and d.get('type'):
-            self.update(d)
-        elif type_:
+        if type_:
             self.type = type_
             self.data = data
         else:
-            raise ValueError('the "type" field cannot be None or empty')
+            raise ValueError('The "type" field cannot be empty')
 
     def __str__(self):
         raise NotImplementedError
+
+    def __getitem__(self, item):
+        if item not in ("type", "data"):
+            raise KeyError(f'Key "{item}" is not allowed')
+        return super().__getitem__(item)
+
+    def __setitem__(self, key, value):
+        if key not in ("type", "data"):
+            raise KeyError(f'Key "{key}" is not allowed')
+        return super().__setitem__(key, value)
+
+    # TODO: __eq__ __add__
+
+    @property
+    def type(self) -> str:
+        return self["type"]
+
+    @type.setter
+    def type(self, value: str):
+        self["type"] = value
+
+    @property
+    def data(self) -> Dict[str, str]:
+        return self["data"]
+
+    @data.setter
+    def data(self, data: Optional[Dict[str, str]]):
+        self["data"] = data or {}
 
 
 class BaseMessage(list):

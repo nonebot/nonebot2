@@ -5,13 +5,40 @@ import httpx
 
 from nonebot.event import Event
 from nonebot.config import Config
-from nonebot.adapters import BaseBot, BaseMessage, BaseMessageSegment
 from nonebot.message import handle_event
+from nonebot.drivers import BaseWebSocket
+from nonebot.adapters import BaseBot, BaseMessage, BaseMessageSegment
+
+
+def escape(s: str, *, escape_comma: bool = True) -> str:
+    """
+    对字符串进行 CQ 码转义。
+
+    ``escape_comma`` 参数控制是否转义逗号（``,``）。
+    """
+    s = s.replace("&", "&amp;") \
+        .replace("[", "&#91;") \
+        .replace("]", "&#93;")
+    if escape_comma:
+        s = s.replace(",", "&#44;")
+    return s
+
+
+def unescape(s: str) -> str:
+    """对字符串进行 CQ 码去转义。"""
+    return s.replace("&#44;", ",") \
+        .replace("&#91;", "[") \
+        .replace("&#93;", "]") \
+        .replace("&amp;", "&")
 
 
 class Bot(BaseBot):
 
-    def __init__(self, type_: str, config: Config, *, websocket=None):
+    def __init__(self,
+                 type_: str,
+                 config: Config,
+                 *,
+                 websocket: BaseWebSocket = None):
         if type_ not in ["http", "websocket"]:
             raise ValueError("Unsupported connection type")
         self.type = type_
@@ -33,7 +60,32 @@ class Bot(BaseBot):
 
 
 class MessageSegment(BaseMessageSegment):
-    pass
+
+    def __str__(self):
+        type_ = self.type
+        data = self.data.copy()
+
+        # process special types
+        if type_ == "text":
+            return escape(data.get("text", ""), escape_comma=False)
+        elif type_ == "at_all":
+            type_ = "at"
+            data = {"qq": "all"}
+
+        params = ",".join([f"{k}={escape(str(v))}" for k, v in data.items()])
+        return f"[CQ:{type_}{',' if params else ''}{params}]"
+
+    @staticmethod
+    def at(user_id: int) -> "MessageSegment":
+        return MessageSegment("at", {"qq": str(user_id)})
+
+    @staticmethod
+    def at_all() -> "MessageSegment":
+        return MessageSegment("at_all")
+
+    @staticmethod
+    def dice() -> "MessageSegment":
+        return MessageSegment(type_="dice")
 
 
 class Message(BaseMessage):

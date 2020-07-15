@@ -7,12 +7,13 @@ from typing import Optional
 from ipaddress import IPv4Address
 
 import uvicorn
+from fastapi.security import OAuth2PasswordBearer
 from starlette.websockets import WebSocketDisconnect
-from fastapi import Body, FastAPI, WebSocket
+from fastapi import Body, FastAPI, WebSocket as FastAPIWebSocket
 
 from nonebot.log import logger
 from nonebot.config import Config
-from nonebot.drivers import BaseDriver
+from nonebot.drivers import BaseDriver, BaseWebSocket
 from nonebot.adapters.coolq import Bot as CoolQBot
 
 
@@ -86,7 +87,11 @@ class Driver(BaseDriver):
                     log_config=LOGGING_CONFIG,
                     **kwargs)
 
-    async def _handle_http(self, adapter: str, data: dict = Body(...)):
+    async def _handle_http(self,
+                           adapter: str,
+                           data: dict = Body(...),
+                           access_token: str = OAuth2PasswordBearer(
+                               "/", auto_error=False)):
         # TODO: Check authorization
         logger.debug(f"Received message: {data}")
         if adapter == "coolq":
@@ -94,20 +99,57 @@ class Driver(BaseDriver):
             await bot.handle_message(data)
         return {"status": 200, "message": "success"}
 
-    async def _handle_ws_reverse(self, adapter: str, websocket: WebSocket):
+    async def _handle_ws_reverse(self,
+                                 adapter: str,
+                                 websocket: FastAPIWebSocket,
+                                 access_token: str = OAuth2PasswordBearer(
+                                     "/", auto_error=False)):
+        websocket = WebSocket(websocket)
+
         # TODO: Check authorization
         await websocket.accept()
-        while True:
-            try:
-                data = await websocket.receive_json()
-            except json.decoder.JSONDecodeError as e:
-                logger.exception(e)
+
+        while not websocket.closed:
+            data = await websocket.receive()
+
+            if not data:
                 continue
-            except WebSocketDisconnect:
-                logger.error("WebSocket Disconnect")
-                return
 
             logger.debug(f"Received message: {data}")
             if adapter == "coolq":
                 bot = CoolQBot("websocket", self.config, websocket=websocket)
                 await bot.handle_message(data)
+
+
+class WebSocket(BaseWebSocket):
+
+    def __init__(self, websocket: FastAPIWebSocket):
+        super().__init__(websocket)
+        self._closed = None
+
+    @property
+    def closed(self):
+        return self._closed
+
+    async def accept(self):
+        await self.websocket.accept()
+        self._closed = False
+
+    async def close(self):
+        await self.websocket.close()
+        self._closed = True
+
+    async def receive(self) -> Optional[dict]:
+        data = None
+        try:
+            data = await self.websocket.receive_json()
+        except ValueError:
+            logger.debug("Received an invalid json message.")
+        except WebSocketDisconnect:
+            self._closed = True
+            logger.error("WebSocket disconnected by peer.")
+
+        return data
+
+    async def send(self, data: dict) -> None:
+        await self.websocket.send_json(data)
