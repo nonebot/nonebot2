@@ -4,6 +4,9 @@
 from nonebot.rule import Rule
 from nonebot.event import Event
 from nonebot.plugin import on_message
+from nonebot.adapters.coolq import Message
+
+print(repr(Message("asdfasdf[CQ:at,qq=123][CQ:at,qq=all]")))
 
 test_matcher = on_message(Rule(), state={"default": 1})
 
