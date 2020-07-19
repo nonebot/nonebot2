@@ -8,7 +8,7 @@ readme = "README.md"
 homepage = "https://nonebot.cqp.moe/"
 repository = "https://github.com/nonebot/nonebot"
 documentation = "https://nonebot.cqp.moe/"
-keywords = ["bot", "qq", "qqbot", "cqhttp", "coolq"]
+keywords = ["bot", "qq", "qqbot", "mirai", "coolq"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Framework :: Robot Framework",
@@ -17,18 +17,15 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3"
 ]
-packages = [
-  { include = "nonebot" },
-  { include = "nonebot_test" }
-]
 
 [tool.poetry.dependencies]
 python = "^3.7"
+httpx = "^0.13.3"
 fastapi = "^0.58.1"
 uvicorn = "^0.11.5"
-pydantic = {extras = ["dotenv"], version = "^1.5.1"}
+pydantic = { extras = ["dotenv"], version = "^1.5.1" }
 apscheduler = { version = "^3.6.3", optional = true }
-httpx = "^0.13.3"
+nonebot-test = { version = "^0.1.0", optional = true }
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.30.0"
@@ -36,6 +33,7 @@ sphinx = "^3.1.1"
 sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
 
 [tool.poetry.extras]
+test = ["nonebot-test"]
 scheduler = ["apscheduler"]
 
 [[tool.poetry.source]]
