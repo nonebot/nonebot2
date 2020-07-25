@@ -63,11 +63,7 @@ class Bot(BaseBot):
         if "message" in event.keys():
             event["message"] = Message(event["message"])
 
-        # TODO: Handle Meta Event
-        if event.type == "meta_event":
-            pass
-        else:
-            await handle_event(self, event)
+        await handle_event(self, event)
 
     async def call_api(self, api: str, data: dict):
         # TODO: Call API

@@ -62,7 +62,7 @@ class Matcher:
         return NewMatcher
 
     @classmethod
-    def check_rule(cls, event: Event) -> bool:
+    def check_rule(cls, bot, event: Event) -> bool:
         """检查 Matcher 的 Rule 是否成立
 
         Args:
@@ -71,7 +71,7 @@ class Matcher:
         Returns:
             bool: 条件成立与否
         """
-        return cls.rule(event)
+        return cls.rule(bot, event)
 
     # @classmethod
     # def args_parser(cls, func: Callable[[Event, dict], None]):
@@ -141,9 +141,6 @@ class Matcher:
 
     # 运行handlers
     async def run(self, bot, event):
-        if not self.rule(event):
-            return
-
         try:
             # if self.parser:
             #     await self.parser(event, state)  # type: ignore

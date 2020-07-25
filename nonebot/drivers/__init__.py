@@ -45,10 +45,6 @@ class BaseDriver(abc.ABC):
     async def _handle_ws_reverse(self):
         raise NotImplementedError
 
-    @abc.abstractmethod
-    async def _handle_http_api(self):
-        raise NotImplementedError
-
 
 class BaseWebSocket(object):
 
