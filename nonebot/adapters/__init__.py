@@ -11,7 +11,12 @@ from nonebot.config import Config
 class BaseBot(abc.ABC):
 
     @abc.abstractmethod
-    def __init__(self, type: str, config: Config, *, websocket=None):
+    def __init__(self,
+                 type: str,
+                 config: Config,
+                 self_id: int,
+                 *,
+                 websocket=None):
         raise NotImplementedError
 
     @abc.abstractmethod

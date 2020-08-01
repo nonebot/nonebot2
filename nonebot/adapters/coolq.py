@@ -10,6 +10,7 @@ from nonebot.event import Event
 from nonebot.config import Config
 from nonebot.message import handle_event
 from nonebot.drivers import BaseWebSocket
+from nonebot.exception import ApiNotAvailable
 from nonebot.adapters import BaseBot, BaseMessage, BaseMessageSegment
 
 
@@ -44,6 +45,7 @@ class Bot(BaseBot):
     def __init__(self,
                  connection_type: str,
                  config: Config,
+                 self_id: int,
                  *,
                  websocket: BaseWebSocket = None):
         if connection_type not in ["http", "websocket"]:
@@ -51,6 +53,7 @@ class Bot(BaseBot):
         self.type = "coolq"
         self.connection_type = connection_type
         self.config = config
+        self.self_id = self_id
         self.websocket = websocket
 
     async def handle_message(self, message: dict):
@@ -70,7 +73,24 @@ class Bot(BaseBot):
         if self.type == "websocket":
             pass
         elif self.type == "http":
-            pass
+            api_root = self.config.api_root.get(self.self_id)
+            if not api_root:
+                raise ApiNotAvailable
+            elif not api_root.endswith("/"):
+                api_root += "/"
+
+            headers = {}
+            if self.config.access_token:
+                headers["Authorization"] = "Bearer " + self.config.access_token
+
+            async with httpx.AsyncClient() as client:
+                response = await client.post(api_root + api)
+
+            if 200 <= response.status_code < 300:
+                # TODO: handle http api response
+                return ...
+            raise httpx.HTTPError(
+                "<HttpFailed {0.status_code} for url: {0.url}>", response)
 
 
 class MessageSegment(BaseMessageSegment):

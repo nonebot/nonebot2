@@ -28,3 +28,8 @@ class RejectedException(Exception):
 class FinishedException(Exception):
     """Finish handling a message"""
     pass
+
+
+class ApiNotAvailable(Exception):
+    """Api is not available"""
+    pass

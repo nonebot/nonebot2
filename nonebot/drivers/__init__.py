@@ -67,7 +67,7 @@ class BaseWebSocket(object):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def close(self):
+    async def close(self, code: int):
         raise NotImplementedError
 
     @abc.abstractmethod
