@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 from functools import wraps
+from datetime import datetime
 from collections import defaultdict
 from typing import Type, List, Dict, Optional, Callable
 
@@ -20,6 +21,7 @@ class Matcher:
     rule: Rule = Rule()
     handlers: List[Handler] = []
     temp: bool = False
+    expire_time: Optional[datetime] = None
     priority: int = 1
 
     _default_state: dict = {}
@@ -41,7 +43,8 @@ class Matcher:
             temp: bool = False,
             priority: int = 1,
             *,
-            default_state: dict = {}) -> Type["Matcher"]:
+            default_state: dict = {},
+            expire_time: Optional[datetime] = None) -> Type["Matcher"]:
         """创建新的 Matcher
 
         Returns:
@@ -53,6 +56,7 @@ class Matcher:
                 "rule": rule,
                 "handlers": handlers,
                 "temp": temp,
+                "expire_time": expire_time,
                 "priority": priority,
                 "_default_state": default_state
             })
@@ -154,7 +158,9 @@ class Matcher:
                                   self.handlers,
                                   temp=True,
                                   priority=0,
-                                  default_state=self.state)
+                                  default_state=self.state,
+                                  expire_time=datetime.now() +
+                                  bot.config.session_expire_timeout)
             matchers[0].append(matcher)
             return
         except PausedException:
@@ -162,7 +168,9 @@ class Matcher:
                                   self.handlers,
                                   temp=True,
                                   priority=0,
-                                  default_state=self.state)
+                                  default_state=self.state,
+                                  expire_time=datetime.now() +
+                                  bot.config.session_expire_timeout)
             matchers[0].append(matcher)
             return
         except FinishedException:

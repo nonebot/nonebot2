@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import asyncio
+from datetime import datetime
 from typing import Set, Callable
 
 from nonebot.log import logger
@@ -30,10 +31,19 @@ async def handle_event(bot, event: Event):
             return
 
     for priority in sorted(matchers.keys()):
-        for index in range(len(matchers[priority])):
+        index = 0
+        while index <= len(matchers[priority]):
             Matcher = matchers[priority][index]
+
+            # Delete expired Matcher
+            if datetime.now() > Matcher.expire_time:
+                del matchers[priority][index]
+                continue
+
+            # Check rule
             try:
                 if not Matcher.check_rule(bot, event):
+                    index += 1
                     continue
             except Exception as e:
                 logger.error(
@@ -42,6 +52,7 @@ async def handle_event(bot, event: Event):
                 continue
 
             matcher = Matcher()
+            # TODO: BeforeMatcherRun
             if Matcher.temp:
                 del matchers[priority][index]
 

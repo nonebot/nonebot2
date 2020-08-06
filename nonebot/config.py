@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from datetime import timedelta
 from ipaddress import IPv4Address
 from typing import Set, Dict, Union, Optional
 
@@ -29,6 +30,7 @@ class Config(BaseSettings):
     # bot runtime configs
     superusers: Set[int] = set()
     nickname: Union[str, Set[str]] = ""
+    session_expire_timeout: timedelta = timedelta(minutes=2)
 
     # custom configs
     custom_config: dict = {}

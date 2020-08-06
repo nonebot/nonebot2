@@ -4,7 +4,7 @@
 from nonebot.rule import Rule
 from nonebot.event import Event
 from nonebot.plugin import on_message
-from nonebot.adapters.coolq import Message
+from nonebot.adapters.cqhttp import Message
 
 print(repr(Message("asdfasdf[CQ:at,qq=123][CQ:at,qq=all]")))
 
