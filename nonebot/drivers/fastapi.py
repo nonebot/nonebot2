@@ -14,7 +14,7 @@ from fastapi import Body, FastAPI, WebSocket as FastAPIWebSocket
 from nonebot.log import logger
 from nonebot.config import Config
 from nonebot.drivers import BaseDriver, BaseWebSocket
-from nonebot.adapters.coolq import Bot as CoolQBot
+from nonebot.adapters.cqhttp import Bot as CQBot
 
 
 class Driver(BaseDriver):
@@ -94,8 +94,8 @@ class Driver(BaseDriver):
                                "/", auto_error=False)):
         # TODO: Check authorization
         logger.debug(f"Received message: {data}")
-        if adapter == "coolq":
-            bot = CoolQBot("http", self.config)
+        if adapter == "cqhttp":
+            bot = CQBot("http", self.config)
             await bot.handle_message(data)
         return {"status": 200, "message": "success"}
 
@@ -116,8 +116,8 @@ class Driver(BaseDriver):
                 continue
 
             logger.debug(f"Received message: {data}")
-            if adapter == "coolq":
-                bot = CoolQBot("websocket", self.config, websocket=websocket)
+            if adapter == "cqhttp":
+                bot = CQBot("websocket", self.config, websocket=websocket)
                 await bot.handle_message(data)
 
 
