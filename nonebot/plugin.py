@@ -7,9 +7,9 @@ import importlib
 from types import ModuleType
 from typing import Set, Dict, Type, Optional
 
-from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.matcher import Matcher
+from nonebot.rule import Rule, metaevent, message, notice, request
 
 plugins: Dict[str, "Plugin"] = {}
 
@@ -26,13 +26,58 @@ class Plugin(object):
         self.matchers = matchers
 
 
+def on_metaevent(rule: Rule,
+                 *,
+                 handlers=[],
+                 temp=False,
+                 priority: int = 1,
+                 state={}) -> Type[Matcher]:
+    matcher = Matcher.new(metaevent() & rule,
+                          temp=temp,
+                          priority=priority,
+                          handlers=handlers,
+                          default_state=state)
+    _tmp_matchers.add(matcher)
+    return matcher
+
+
 def on_message(rule: Rule,
                *,
                handlers=[],
                temp=False,
                priority: int = 1,
                state={}) -> Type[Matcher]:
-    matcher = Matcher.new(rule,
+    matcher = Matcher.new(message() & rule,
+                          temp=temp,
+                          priority=priority,
+                          handlers=handlers,
+                          default_state=state)
+    _tmp_matchers.add(matcher)
+    return matcher
+
+
+def on_notice(rule: Rule,
+              *,
+              handlers=[],
+              temp=False,
+              priority: int = 1,
+              state={}) -> Type[Matcher]:
+    matcher = Matcher.new(notice() & rule,
+                          temp=temp,
+                          priority=priority,
+                          handlers=handlers,
+                          default_state=state)
+    _tmp_matchers.add(matcher)
+    return matcher
+
+
+def on_request(rule: Rule,
+               *,
+               handlers=[],
+               temp=False,
+               priority: int = 1,
+               state={}) -> Type[Matcher]:
+    matcher = Matcher.new(request() & rule,
                           temp=temp,
                           priority=priority,
                           handlers=handlers,

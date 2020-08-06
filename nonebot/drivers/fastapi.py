@@ -3,18 +3,19 @@
 
 import json
 import logging
-from typing import Optional
+from typing import Dict, Optional
 from ipaddress import IPv4Address
 
 import uvicorn
 from fastapi.security import OAuth2PasswordBearer
 from starlette.websockets import WebSocketDisconnect
-from fastapi import Body, FastAPI, WebSocket as FastAPIWebSocket
+from fastapi import Body, status, Header, FastAPI, WebSocket as FastAPIWebSocket
 
 from nonebot.log import logger
 from nonebot.config import Config
-from nonebot.drivers import BaseDriver, BaseWebSocket
+from nonebot.adapters import BaseBot
 from nonebot.adapters.cqhttp import Bot as CQBot
+from nonebot.drivers import BaseDriver, BaseWebSocket
 
 
 class Driver(BaseDriver):
@@ -28,6 +29,7 @@ class Driver(BaseDriver):
         )
 
         self.config = config
+        self._clients: Dict[int, BaseBot] = {}
 
         self._server_app.post("/{adapter}/")(self._handle_http)
         self._server_app.post("/{adapter}/http")(self._handle_http)
@@ -43,8 +45,12 @@ class Driver(BaseDriver):
         return self._server_app
 
     @property
-    def logger(self):
+    def logger(self) -> logging.Logger:
         return logging.getLogger("fastapi")
+
+    @property
+    def bots(self) -> Dict[int, BaseBot]:
+        return self._clients
 
     def run(self,
             host: Optional[IPv4Address] = None,
@@ -102,12 +108,22 @@ class Driver(BaseDriver):
     async def _handle_ws_reverse(self,
                                  adapter: str,
                                  websocket: FastAPIWebSocket,
+                                 self_id: int = Header(None),
                                  access_token: str = OAuth2PasswordBearer(
                                      "/", auto_error=False)):
         websocket = WebSocket(websocket)
 
         # TODO: Check authorization
+
+        # Create Bot Object
+        if adapter == "coolq":
+            bot = CQBot("websocket", self.config, self_id, websocket=websocket)
+        else:
+            await websocket.close(code=status.WS_1003_UNSUPPORTED_DATA)
+            return
+
         await websocket.accept()
+        self._clients[self_id] = bot
 
         while not websocket.closed:
             data = await websocket.receive()
@@ -115,10 +131,9 @@ class Driver(BaseDriver):
             if not data:
                 continue
 
-            logger.debug(f"Received message: {data}")
-            if adapter == "cqhttp":
-                bot = CQBot("websocket", self.config, websocket=websocket)
-                await bot.handle_message(data)
+            await bot.handle_message(data)
+
+        del self._clients[self_id]
 
 
 class WebSocket(BaseWebSocket):
@@ -135,8 +150,8 @@ class WebSocket(BaseWebSocket):
         await self.websocket.accept()
         self._closed = False
 
-    async def close(self):
-        await self.websocket.close()
+    async def close(self, code: int = status.WS_1000_NORMAL_CLOSURE):
+        await self.websocket.close(code=code)
         self._closed = True
 
     async def receive(self) -> Optional[dict]:
