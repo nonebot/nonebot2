@@ -137,8 +137,12 @@ class MessageSegment(BaseMessageSegment):
         return MessageSegment("face", {"id": str(id_)})
 
     @staticmethod
+    def forward(id_: str) -> "MessageSegment":
+        return MessageSegment("forward", {"id": id_})
+
+    @staticmethod
     def image(file: str) -> "MessageSegment":
-        return MessageSegment("image", {"file": "file"})
+        return MessageSegment("image", {"file": file})
 
     @staticmethod
     def location(latitude: float,
@@ -192,6 +196,19 @@ class MessageSegment(BaseMessageSegment):
             })
 
     @staticmethod
+    def node(id_: int) -> "MessageSegment":
+        return MessageSegment("node", {"id": str(id_)})
+
+    @staticmethod
+    def node_custom(name: str, uin: int,
+                    content: "Message") -> "MessageSegment":
+        return MessageSegment("node", {
+            "name": name,
+            "uin": str(uin),
+            "content": str(content)
+        })
+
+    @staticmethod
     def poke(type_: str = "Poke") -> "MessageSegment":
         if type_ not in ["Poke"]:
             raise ValueError(
@@ -202,6 +219,10 @@ class MessageSegment(BaseMessageSegment):
     @staticmethod
     def record(file: str, magic: bool = False) -> "MessageSegment":
         return MessageSegment("record", {"file": file, "magic": _b2s(magic)})
+
+    @staticmethod
+    def replay(id_: int) -> "MessageSegment":
+        return MessageSegment("replay", {"id": str(id_)})
 
     @staticmethod
     def share(url: str = "",
