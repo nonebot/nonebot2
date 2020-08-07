@@ -3,10 +3,10 @@
 
 import logging
 import importlib
-from typing import Optional
 from ipaddress import IPv4Address
 
 from nonebot.log import logger
+from nonebot.typing import Optional
 from nonebot.config import Env, Config
 from nonebot.drivers import BaseDriver
 

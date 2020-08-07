@@ -3,9 +3,9 @@
 
 import abc
 from functools import reduce
-from typing import Dict, Union, Iterable, Optional
 
 from nonebot.config import Config
+from nonebot.typing import Dict, Union, Iterable, Optional
 
 
 class BaseBot(abc.ABC):

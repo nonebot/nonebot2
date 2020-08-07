@@ -2,9 +2,9 @@
 # -*- coding: utf-8 -*-
 
 import re
-from typing import Union, Callable, Optional
 
 from nonebot.event import Event
+from nonebot.typing import Union, Callable, Optional
 
 
 class Rule:

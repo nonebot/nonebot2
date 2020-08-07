@@ -2,10 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import abc
-from typing import Optional
 from ipaddress import IPv4Address
 
 from nonebot.config import Config
+from nonebot.typing import Optional
 
 
 class BaseDriver(abc.ABC):

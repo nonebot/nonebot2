@@ -2,7 +2,6 @@
 # -*- coding: utf-8 -*-
 
 import re
-from typing import Tuple, Iterable, Optional
 
 import httpx
 
@@ -11,6 +10,7 @@ from nonebot.config import Config
 from nonebot.message import handle_event
 from nonebot.drivers import BaseWebSocket
 from nonebot.exception import ApiNotAvailable
+from nonebot.typing import Tuple, Iterable, Optional
 from nonebot.adapters import BaseBot, BaseMessage, BaseMessageSegment
 
 

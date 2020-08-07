@@ -3,11 +3,11 @@
 
 import asyncio
 from datetime import datetime
-from typing import Set, Callable
 
 from nonebot.log import logger
 from nonebot.event import Event
 from nonebot.matcher import matchers
+from nonebot.typing import Set, Callable
 from nonebot.exception import IgnoredException
 
 _event_preprocessors: Set[Callable] = set()

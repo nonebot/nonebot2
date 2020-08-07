@@ -5,10 +5,11 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from ipaddress import IPv4Address
-from typing import Set, Dict, Union, Mapping, Optional
 
 from pydantic import BaseSettings
 from pydantic.env_settings import SettingsError, env_file_sentinel, read_env_file
+
+from nonebot.typing import Set, Dict, Union, Mapping, Optional
 
 
 class BaseConfig(BaseSettings):

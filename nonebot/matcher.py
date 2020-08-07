@@ -4,11 +4,11 @@
 from functools import wraps
 from datetime import datetime
 from collections import defaultdict
-from typing import Type, List, Dict, Optional, Callable
 
 from nonebot.event import Event
 from nonebot.typing import Handler
 from nonebot.rule import Rule, user
+from nonebot.typing import Type, List, Dict, Optional, Callable
 from nonebot.exception import PausedException, RejectedException, FinishedException
 
 matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)

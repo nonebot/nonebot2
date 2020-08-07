@@ -3,7 +3,6 @@
 
 import json
 import logging
-from typing import Dict, Optional
 from ipaddress import IPv4Address
 
 import uvicorn
@@ -14,6 +13,7 @@ from fastapi import Body, status, Header, FastAPI, WebSocket as FastAPIWebSocket
 from nonebot.log import logger
 from nonebot.config import Config
 from nonebot.adapters import BaseBot
+from nonebot.typing import Dict, Optional
 from nonebot.adapters.cqhttp import Bot as CQBot
 from nonebot.drivers import BaseDriver, BaseWebSocket
 

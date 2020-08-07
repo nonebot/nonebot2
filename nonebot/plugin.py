@@ -4,11 +4,10 @@
 import os
 import re
 import importlib
-from types import ModuleType
-from typing import Set, Dict, Type, Optional
 
 from nonebot.log import logger
 from nonebot.matcher import Matcher
+from nonebot.typing import Set, Dict, Type, Optional, ModuleType
 from nonebot.rule import Rule, metaevent, message, notice, request
 
 plugins: Dict[str, "Plugin"] = {}
