@@ -29,7 +29,7 @@ def get_asgi():
     return driver.asgi
 
 
-def init(*, _env_file=None, **kwargs):
+def init(*, _env_file: Optional[str] = None, **kwargs):
     global _driver
     env = Env()
     config = Config(**kwargs, _env_file=_env_file or f".env.{env.environment}")
