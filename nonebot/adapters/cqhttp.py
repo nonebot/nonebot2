@@ -10,7 +10,7 @@ from nonebot.config import Config
 from nonebot.message import handle_event
 from nonebot.drivers import BaseWebSocket
 from nonebot.exception import ApiNotAvailable
-from nonebot.typing import Tuple, Iterable, Optional
+from nonebot.typing import Tuple, Iterable, Optional, overrides
 from nonebot.adapters import BaseBot, BaseMessage, BaseMessageSegment
 
 
@@ -50,12 +50,15 @@ class Bot(BaseBot):
                  websocket: BaseWebSocket = None):
         if connection_type not in ["http", "websocket"]:
             raise ValueError("Unsupported connection type")
-        self.type = "coolq"
-        self.connection_type = connection_type
-        self.config = config
-        self.self_id = self_id
-        self.websocket = websocket
 
+        super().__init__(connection_type, config, self_id, websocket=websocket)
+
+    @property
+    @overrides(BaseBot)
+    def type(self) -> str:
+        return "cqhttp"
+
+    @overrides(BaseBot)
     async def handle_message(self, message: dict):
         # TODO: convert message into event
         event = Event.from_payload(message)
@@ -68,6 +71,7 @@ class Bot(BaseBot):
 
         await handle_event(self, event)
 
+    @overrides(BaseBot)
     async def call_api(self, api: str, data: dict):
         # TODO: Call API
         if self.type == "websocket":

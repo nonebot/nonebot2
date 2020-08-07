@@ -5,6 +5,7 @@ import abc
 from functools import reduce
 
 from nonebot.config import Config
+from nonebot.drivers import BaseWebSocket
 from nonebot.typing import Dict, Union, Iterable, Optional
 
 
@@ -12,11 +13,19 @@ class BaseBot(abc.ABC):
 
     @abc.abstractmethod
     def __init__(self,
-                 type: str,
+                 connection_type: str,
                  config: Config,
                  self_id: int,
                  *,
-                 websocket=None):
+                 websocket: BaseWebSocket = None):
+        self.connection_type = connection_type
+        self.config = config
+        self.self_id = self_id
+        self.websocket = websocket
+
+    @property
+    @abc.abstractmethod
+    def type(self) -> str:
         raise NotImplementedError
 
     @abc.abstractmethod

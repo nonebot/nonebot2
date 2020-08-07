@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import json
 import logging
 from ipaddress import IPv4Address
 
@@ -13,14 +12,16 @@ from fastapi import Body, status, Header, FastAPI, WebSocket as FastAPIWebSocket
 from nonebot.log import logger
 from nonebot.config import Config
 from nonebot.adapters import BaseBot
-from nonebot.typing import Dict, Optional
 from nonebot.adapters.cqhttp import Bot as CQBot
+from nonebot.typing import Dict, Optional, overrides
 from nonebot.drivers import BaseDriver, BaseWebSocket
 
 
 class Driver(BaseDriver):
 
     def __init__(self, config: Config):
+        super().__init__(config)
+
         self._server_app = FastAPI(
             debug=config.debug,
             openapi_url=None,
@@ -28,30 +29,27 @@ class Driver(BaseDriver):
             redoc_url=None,
         )
 
-        self.config = config
-        self._clients: Dict[int, BaseBot] = {}
-
         self._server_app.post("/{adapter}/")(self._handle_http)
         self._server_app.post("/{adapter}/http")(self._handle_http)
         self._server_app.websocket("/{adapter}/ws")(self._handle_ws_reverse)
         self._server_app.websocket("/{adapter}/ws/")(self._handle_ws_reverse)
 
     @property
+    @overrides(BaseDriver)
     def server_app(self):
         return self._server_app
 
     @property
+    @overrides(BaseDriver)
     def asgi(self):
         return self._server_app
 
     @property
+    @overrides(BaseDriver)
     def logger(self) -> logging.Logger:
         return logging.getLogger("fastapi")
 
-    @property
-    def bots(self) -> Dict[int, BaseBot]:
-        return self._clients
-
+    @overrides(BaseDriver)
     def run(self,
             host: Optional[IPv4Address] = None,
             port: Optional[int] = None,
@@ -93,6 +91,7 @@ class Driver(BaseDriver):
                     log_config=LOGGING_CONFIG,
                     **kwargs)
 
+    @overrides(BaseDriver)
     async def _handle_http(self,
                            adapter: str,
                            data: dict = Body(...),
@@ -105,6 +104,7 @@ class Driver(BaseDriver):
             await bot.handle_message(data)
         return {"status": 200, "message": "success"}
 
+    @overrides(BaseDriver)
     async def _handle_ws_reverse(self,
                                  adapter: str,
                                  websocket: FastAPIWebSocket,
@@ -143,17 +143,21 @@ class WebSocket(BaseWebSocket):
         self._closed = None
 
     @property
+    @overrides(BaseWebSocket)
     def closed(self):
         return self._closed
 
+    @overrides(BaseWebSocket)
     async def accept(self):
         await self.websocket.accept()
         self._closed = False
 
+    @overrides(BaseWebSocket)
     async def close(self, code: int = status.WS_1000_NORMAL_CLOSURE):
         await self.websocket.close(code=code)
         self._closed = True
 
+    @overrides(BaseWebSocket)
     async def receive(self) -> Optional[dict]:
         data = None
         try:
@@ -166,5 +170,6 @@ class WebSocket(BaseWebSocket):
 
         return data
 
+    @overrides(BaseWebSocket)
     async def send(self, data: dict) -> None:
         await self.websocket.send_json(data)

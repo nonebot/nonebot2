@@ -5,14 +5,16 @@ import abc
 from ipaddress import IPv4Address
 
 from nonebot.config import Config
-from nonebot.typing import Optional
+from nonebot.adapters import BaseBot
+from nonebot.typing import Dict, Optional
 
 
 class BaseDriver(abc.ABC):
 
     @abc.abstractmethod
     def __init__(self, config: Config):
-        raise NotImplementedError
+        self.config = config
+        self._clients: Dict[int, BaseBot] = {}
 
     @property
     @abc.abstractmethod
@@ -28,6 +30,10 @@ class BaseDriver(abc.ABC):
     @abc.abstractmethod
     def logger(self):
         raise NotImplementedError
+
+    @property
+    def bots(self) -> Dict[int, BaseBot]:
+        return self._clients
 
     @abc.abstractmethod
     def run(self,
