@@ -99,6 +99,7 @@ class Bot(BaseBot):
 
 class MessageSegment(BaseMessageSegment):
 
+    @overrides(BaseMessageSegment)
     def __str__(self):
         type_ = self.type
         data = self.data.copy()
@@ -115,6 +116,10 @@ class MessageSegment(BaseMessageSegment):
 
         params = ",".join([f"{k}={escape(str(v))}" for k, v in data.items()])
         return f"[CQ:{type_}{',' if params else ''}{params}]"
+
+    @overrides(BaseMessageSegment)
+    def __add__(self, other) -> "Message":
+        return Message(self) + other
 
     @staticmethod
     def anonymous(ignore_failure: bool = False) -> "MessageSegment":
@@ -248,6 +253,7 @@ class MessageSegment(BaseMessageSegment):
 class Message(BaseMessage):
 
     @staticmethod
+    @overrides(BaseMessage)
     def _construct(msg: str) -> Iterable[MessageSegment]:
 
         def _iter_message() -> Iterable[Tuple[str, str]]:

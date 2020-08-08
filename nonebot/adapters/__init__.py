@@ -3,6 +3,9 @@
 
 import abc
 from functools import reduce
+from dataclasses import dataclass
+
+# from pydantic.dataclasses import dataclass  # dataclass with validation
 
 from nonebot.config import Config
 from nonebot.drivers import BaseWebSocket
@@ -37,51 +40,65 @@ class BaseBot(abc.ABC):
         raise NotImplementedError
 
 
-class BaseMessageSegment(dict):
+@dataclass
+class BaseMessageSegment(abc.ABC):
+    type: str
+    data: Dict[str, str] = {}
 
-    def __init__(self,
-                 type_: Optional[str] = None,
-                 data: Optional[Dict[str, str]] = None):
-        super().__init__()
-        if type_:
-            self.type = type_
-            self.data = data
-        else:
-            raise ValueError('The "type" field cannot be empty')
-
+    @abc.abstractmethod
     def __str__(self):
         raise NotImplementedError
 
-    def __getitem__(self, item):
-        if item not in ("type", "data"):
-            raise KeyError(f'Key "{item}" is not allowed')
-        return super().__getitem__(item)
-
-    def __setitem__(self, key, value):
-        if key not in ("type", "data"):
-            raise KeyError(f'Key "{key}" is not allowed')
-        return super().__setitem__(key, value)
-
-    # TODO: __eq__ __add__
-
-    @property
-    def type(self) -> str:
-        return self["type"]
-
-    @type.setter
-    def type(self, value: str):
-        self["type"] = value
-
-    @property
-    def data(self) -> Dict[str, str]:
-        return self["data"]
-
-    @data.setter
-    def data(self, data: Optional[Dict[str, str]]):
-        self["data"] = data or {}
+    @abc.abstractmethod
+    def __add__(self, other):
+        raise NotImplementedError
 
 
-class BaseMessage(list):
+# class BaseMessageSegment(dict):
+
+#     def __init__(self,
+#                  type_: Optional[str] = None,
+#                  data: Optional[Dict[str, str]] = None):
+#         super().__init__()
+#         if type_:
+#             self.type = type_
+#             self.data = data
+#         else:
+#             raise ValueError('The "type" field cannot be empty')
+
+#     def __str__(self):
+#         raise NotImplementedError
+
+#     def __getitem__(self, item):
+#         if item not in ("type", "data"):
+#             raise KeyError(f'Key "{item}" is not allowed')
+#         return super().__getitem__(item)
+
+#     def __setitem__(self, key, value):
+#         if key not in ("type", "data"):
+#             raise KeyError(f'Key "{key}" is not allowed')
+#         return super().__setitem__(key, value)
+
+#     # TODO: __eq__ __add__
+
+#     @property
+#     def type(self) -> str:
+#         return self["type"]
+
+#     @type.setter
+#     def type(self, value: str):
+#         self["type"] = value
+
+#     @property
+#     def data(self) -> Dict[str, str]:
+#         return self["data"]
+
+#     @data.setter
+#     def data(self, data: Optional[Dict[str, str]]):
+#         self["data"] = data or {}
+
+
+class BaseMessage(list, abc.ABC):
 
     def __init__(self,
                  message: Union[str, BaseMessageSegment, "BaseMessage"] = None,
@@ -99,6 +116,7 @@ class BaseMessage(list):
         return ''.join((str(seg) for seg in self))
 
     @staticmethod
+    @abc.abstractmethod
     def _construct(msg: str) -> Iterable[BaseMessageSegment]:
         raise NotImplementedError
 

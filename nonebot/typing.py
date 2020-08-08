@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from abc import ABC
 from types import ModuleType
 from typing import TYPE_CHECKING
 from typing import Any, Set, List, Dict, Type, Tuple, Mapping
@@ -13,9 +12,9 @@ if TYPE_CHECKING:
     from nonebot.event import Event
 
 
-def overrides(InterfaceClass: ABC):
+def overrides(InterfaceClass: object):
 
-    def overrider(func):
+    def overrider(func: Callable) -> Callable:
         assert func.__name__ in dir(
             InterfaceClass), f"Error method: {func.__name__}"
         return func
