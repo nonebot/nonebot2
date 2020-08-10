@@ -5,12 +5,12 @@ import re
 
 import httpx
 
-from nonebot.event import Event
+# from nonebot.event import Event
 from nonebot.config import Config
 from nonebot.message import handle_event
 from nonebot.exception import ApiNotAvailable
-from nonebot.adapters import BaseBot, BaseMessage, BaseMessageSegment
 from nonebot.typing import Tuple, Iterable, Optional, overrides, WebSocket
+from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
 
 
 def escape(s: str, *, escape_comma: bool = True) -> str:
@@ -60,13 +60,13 @@ class Bot(BaseBot):
     @overrides(BaseBot)
     async def handle_message(self, message: dict):
         # TODO: convert message into event
-        event = Event.from_payload(message)
+        event = Event(message)
 
         if not event:
             return
 
-        if "message" in event.keys():
-            event["message"] = Message(event["message"])
+        # if "message" in event.keys():
+        #     event["message"] = Message(event["message"])
 
         await handle_event(self, event)
 
@@ -94,6 +94,39 @@ class Bot(BaseBot):
                 return ...
             raise httpx.HTTPError(
                 "<HttpFailed {0.status_code} for url: {0.url}>", response)
+
+
+class Event(BaseEvent):
+
+    @property
+    @overrides(BaseEvent)
+    def type(self):
+        return self._raw_event["post_type"]
+
+    @type.setter
+    @overrides(BaseEvent)
+    def type(self, value):
+        self._raw_event["post_type"] = value
+
+    @property
+    @overrides(BaseEvent)
+    def detail_type(self):
+        return self._raw_event[f"{self.type}_type"]
+
+    @detail_type.setter
+    @overrides(BaseEvent)
+    def detail_type(self, value):
+        self._raw_event[f"{self.type}_type"] = value
+
+    @property
+    @overrides(BaseEvent)
+    def sub_type(self):
+        return self._raw_event["sub_type"]
+
+    @type.setter
+    @overrides(BaseEvent)
+    def sub_type(self, value):
+        self._raw_event["sub_type"] = value
 
 
 class MessageSegment(BaseMessageSegment):

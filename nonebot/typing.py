@@ -8,10 +8,9 @@ from typing import Union, TypeVar, Optional, Iterable, Callable, Awaitable
 
 # import some modules needed when checking types
 if TYPE_CHECKING:
-    from nonebot.event import Event as EventClass
     from nonebot.matcher import Matcher as MatcherClass
     from nonebot.drivers import BaseDriver, BaseWebSocket
-    from nonebot.adapters import BaseBot, BaseMessage, BaseMessageSegment
+    from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
 
 
 def overrides(InterfaceClass: object):
@@ -28,7 +27,7 @@ Driver = TypeVar("Driver", bound="BaseDriver")
 WebSocket = TypeVar("WebSocket", bound="BaseWebSocket")
 
 Bot = TypeVar("Bot", bound="BaseBot")
-Event = TypeVar("Event", bound="EventClass")
+Event = TypeVar("Event", bound="BaseEvent")
 Message = TypeVar("Message", bound="BaseMessage")
 MessageSegment = TypeVar("MessageSegment", bound="BaseMessageSegment")
 

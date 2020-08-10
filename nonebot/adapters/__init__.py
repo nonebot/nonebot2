@@ -4,6 +4,7 @@
 import abc
 from functools import reduce
 from dataclasses import dataclass, field
+from nonebot.rule import notice
 
 from nonebot.config import Config
 from nonebot.typing import Dict, Union, Iterable, WebSocket
@@ -37,6 +38,46 @@ class BaseBot(abc.ABC):
         raise NotImplementedError
 
 
+class BaseEvent(abc.ABC):
+
+    def __init__(self, raw_event: dict):
+        self._raw_event = raw_event
+
+    def __repr__(self) -> str:
+        # TODO: pretty print
+        return f"<Event: >"
+
+    @property
+    @abc.abstractmethod
+    def type(self):
+        raise NotImplementedError
+
+    @type.setter
+    @abc.abstractmethod
+    def type(self, value):
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def detail_type(self):
+        raise NotImplementedError
+
+    @detail_type.setter
+    @abc.abstractmethod
+    def detail_type(self, value):
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def sub_type(self):
+        raise NotImplementedError
+
+    @sub_type.setter
+    @abc.abstractmethod
+    def sub_type(self, value):
+        raise NotImplementedError
+
+
 @dataclass
 class BaseMessageSegment(abc.ABC):
     type: str
@@ -49,50 +90,6 @@ class BaseMessageSegment(abc.ABC):
     @abc.abstractmethod
     def __add__(self, other):
         raise NotImplementedError
-
-
-# class BaseMessageSegment(dict):
-
-#     def __init__(self,
-#                  type_: Optional[str] = None,
-#                  data: Optional[Dict[str, str]] = None):
-#         super().__init__()
-#         if type_:
-#             self.type = type_
-#             self.data = data
-#         else:
-#             raise ValueError('The "type" field cannot be empty')
-
-#     def __str__(self):
-#         raise NotImplementedError
-
-#     def __getitem__(self, item):
-#         if item not in ("type", "data"):
-#             raise KeyError(f'Key "{item}" is not allowed')
-#         return super().__getitem__(item)
-
-#     def __setitem__(self, key, value):
-#         if key not in ("type", "data"):
-#             raise KeyError(f'Key "{key}" is not allowed')
-#         return super().__setitem__(key, value)
-
-#     # TODO: __eq__ __add__
-
-#     @property
-#     def type(self) -> str:
-#         return self["type"]
-
-#     @type.setter
-#     def type(self, value: str):
-#         self["type"] = value
-
-#     @property
-#     def data(self) -> Dict[str, str]:
-#         return self["data"]
-
-#     @data.setter
-#     def data(self, data: Optional[Dict[str, str]]):
-#         self["data"] = data or {}
 
 
 class BaseMessage(list, abc.ABC):
