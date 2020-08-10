@@ -6,14 +6,14 @@ import importlib
 from ipaddress import IPv4Address
 
 from nonebot.log import logger
-from nonebot.typing import Optional
+from nonebot.typing import Union, Optional, NoReturn
 from nonebot.config import Env, Config
 from nonebot.drivers import BaseDriver
 
 _driver: Optional[BaseDriver] = None
 
 
-def get_driver() -> BaseDriver:
+def get_driver() -> Union[NoReturn, BaseDriver]:
     if _driver is None:
         raise ValueError("NoneBot has not been initialized.")
     return _driver
@@ -38,7 +38,7 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
     logger.debug(f"Loaded config: {config.dict()}")
 
     Driver = getattr(importlib.import_module(config.driver), "Driver")
-    _driver = Driver(config)
+    _driver = Driver(env, config)
 
 
 def run(host: Optional[IPv4Address] = None,

@@ -8,10 +8,9 @@ import httpx
 from nonebot.event import Event
 from nonebot.config import Config
 from nonebot.message import handle_event
-from nonebot.drivers import BaseWebSocket
 from nonebot.exception import ApiNotAvailable
-from nonebot.typing import Tuple, Iterable, Optional, overrides
 from nonebot.adapters import BaseBot, BaseMessage, BaseMessageSegment
+from nonebot.typing import Tuple, Iterable, Optional, overrides, WebSocket
 
 
 def escape(s: str, *, escape_comma: bool = True) -> str:
@@ -47,7 +46,7 @@ class Bot(BaseBot):
                  config: Config,
                  self_id: int,
                  *,
-                 websocket: BaseWebSocket = None):
+                 websocket: WebSocket = None):
         if connection_type not in ["http", "websocket"]:
             raise ValueError("Unsupported connection type")
 

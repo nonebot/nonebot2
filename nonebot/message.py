@@ -5,20 +5,19 @@ import asyncio
 from datetime import datetime
 
 from nonebot.log import logger
-from nonebot.event import Event
 from nonebot.matcher import matchers
-from nonebot.typing import Set, Callable
 from nonebot.exception import IgnoredException
+from nonebot.typing import Bot, Set, Event, PreProcessor
 
-_event_preprocessors: Set[Callable] = set()
+_event_preprocessors: Set[PreProcessor] = set()
 
 
-def event_preprocessor(func: Callable) -> Callable:
+def event_preprocessor(func: PreProcessor) -> PreProcessor:
     _event_preprocessors.add(func)
     return func
 
 
-async def handle_event(bot, event: Event):
+async def handle_event(bot: Bot, event: Event):
     # TODO: PreProcess
     coros = []
     for preprocessor in _event_preprocessors:

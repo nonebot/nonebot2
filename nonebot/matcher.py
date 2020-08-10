@@ -5,10 +5,9 @@ from functools import wraps
 from datetime import datetime
 from collections import defaultdict
 
-from nonebot.event import Event
-from nonebot.typing import Handler
 from nonebot.rule import Rule, user
-from nonebot.typing import Type, List, Dict, Optional, Callable
+from nonebot.typing import Bot, Event, Handler
+from nonebot.typing import Type, List, Dict, Optional, NoReturn
 from nonebot.exception import PausedException, RejectedException, FinishedException
 
 matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
@@ -66,7 +65,7 @@ class Matcher:
         return NewMatcher
 
     @classmethod
-    def check_rule(cls, bot, event: Event) -> bool:
+    def check_rule(cls, bot: Bot, event: Event) -> bool:
         """检查 Matcher 的 Rule 是否成立
 
         Args:
@@ -98,7 +97,7 @@ class Matcher:
 
         def _decorator(func: Handler) -> Handler:
 
-            async def _handler(bot, event: Event, state: dict):
+            async def _handler(bot: Bot, event: Event, state: dict) -> NoReturn:
                 raise PausedException
 
             cls.handlers.append(_handler)
@@ -144,7 +143,7 @@ class Matcher:
     #     raise RejectedException
 
     # 运行handlers
-    async def run(self, bot, event):
+    async def run(self, bot: Bot, event: Event):
         try:
             # if self.parser:
             #     await self.parser(event, state)  # type: ignore

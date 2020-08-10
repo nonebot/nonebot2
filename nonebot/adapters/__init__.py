@@ -3,13 +3,10 @@
 
 import abc
 from functools import reduce
-from dataclasses import dataclass
-
-# from pydantic.dataclasses import dataclass  # dataclass with validation
+from dataclasses import dataclass, field
 
 from nonebot.config import Config
-from nonebot.drivers import BaseWebSocket
-from nonebot.typing import Dict, Union, Iterable, Optional
+from nonebot.typing import Dict, Union, Iterable, WebSocket
 
 
 class BaseBot(abc.ABC):
@@ -20,7 +17,7 @@ class BaseBot(abc.ABC):
                  config: Config,
                  self_id: int,
                  *,
-                 websocket: BaseWebSocket = None):
+                 websocket: WebSocket = None):
         self.connection_type = connection_type
         self.config = config
         self.self_id = self_id
@@ -43,7 +40,7 @@ class BaseBot(abc.ABC):
 @dataclass
 class BaseMessageSegment(abc.ABC):
     type: str
-    data: Dict[str, str] = {}
+    data: Dict[str, str] = field(default_factory=lambda: {})
 
     @abc.abstractmethod
     def __str__(self):

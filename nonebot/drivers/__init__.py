@@ -4,17 +4,17 @@
 import abc
 from ipaddress import IPv4Address
 
-from nonebot.config import Config
-from nonebot.adapters import BaseBot
-from nonebot.typing import Dict, Optional
+from nonebot.config import Env, Config
+from nonebot.typing import Bot, Dict, Optional
 
 
 class BaseDriver(abc.ABC):
 
     @abc.abstractmethod
-    def __init__(self, config: Config):
+    def __init__(self, env: Env, config: Config):
+        self.env = env.environment
         self.config = config
-        self._clients: Dict[int, BaseBot] = {}
+        self._clients: Dict[int, Bot] = {}
 
     @property
     @abc.abstractmethod
@@ -32,7 +32,7 @@ class BaseDriver(abc.ABC):
         raise NotImplementedError
 
     @property
-    def bots(self) -> Dict[int, BaseBot]:
+    def bots(self) -> Dict[int, Bot]:
         return self._clients
 
     @abc.abstractmethod
@@ -59,7 +59,6 @@ class BaseWebSocket(object):
         self._websocket = websocket
 
     @property
-    @abc.abstractmethod
     def websocket(self):
         return self._websocket
 
