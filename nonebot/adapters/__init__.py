@@ -95,11 +95,12 @@ class BaseMessageSegment(abc.ABC):
 class BaseMessage(list, abc.ABC):
 
     def __init__(self,
-                 message: Union[str, BaseMessageSegment, "BaseMessage"] = None,
+                 message: Union[str, dict, list, BaseMessageSegment,
+                                "BaseMessage"] = None,
                  *args,
                  **kwargs):
         super().__init__(*args, **kwargs)
-        if isinstance(message, str):
+        if isinstance(message, (str, dict, list)):
             self.extend(self._construct(message))
         elif isinstance(message, BaseMessage):
             self.extend(message)
@@ -111,7 +112,7 @@ class BaseMessage(list, abc.ABC):
 
     @staticmethod
     @abc.abstractmethod
-    def _construct(msg: str) -> Iterable[BaseMessageSegment]:
+    def _construct(msg: Union[str, dict, list]) -> Iterable[BaseMessageSegment]:
         raise NotImplementedError
 
     def __add__(

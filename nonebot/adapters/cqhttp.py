@@ -5,12 +5,11 @@ import re
 
 import httpx
 
-# from nonebot.event import Event
 from nonebot.config import Config
 from nonebot.message import handle_event
 from nonebot.exception import ApiNotAvailable
-from nonebot.typing import Tuple, Iterable, Optional, overrides, WebSocket
 from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
+from nonebot.typing import Union, Tuple, Iterable, Optional, overrides, WebSocket
 
 
 def escape(s: str, *, escape_comma: bool = True) -> str:
@@ -97,6 +96,10 @@ class Bot(BaseBot):
 
 
 class Event(BaseEvent):
+
+    def __init__(self, raw_event: dict):
+
+        super().__init__(raw_event)
 
     @property
     @overrides(BaseEvent)
@@ -286,7 +289,14 @@ class Message(BaseMessage):
 
     @staticmethod
     @overrides(BaseMessage)
-    def _construct(msg: str) -> Iterable[MessageSegment]:
+    def _construct(msg: Union[str, dict, list]) -> Iterable[MessageSegment]:
+        if isinstance(msg, dict):
+            yield MessageSegment(msg["type"], msg.get("data") or {})
+            return
+        elif isinstance(msg, list):
+            for seg in msg:
+                yield MessageSegment(seg["type"], seg.get("data") or {})
+            return
 
         def _iter_message() -> Iterable[Tuple[str, str]]:
             text_begin = 0

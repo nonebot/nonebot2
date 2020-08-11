@@ -14,9 +14,9 @@ from fastapi import Body, Header, Response, WebSocket as FastAPIWebSocket
 from nonebot.log import logger
 from nonebot.config import Env, Config
 from nonebot.utils import DataclassEncoder
-from nonebot.typing import Optional, overrides
 from nonebot.adapters.cqhttp import Bot as CQBot
 from nonebot.drivers import BaseDriver, BaseWebSocket
+from nonebot.typing import Optional, Callable, overrides
 
 
 class Driver(BaseDriver):
@@ -38,7 +38,7 @@ class Driver(BaseDriver):
 
     @property
     @overrides(BaseDriver)
-    def server_app(self):
+    def server_app(self) -> FastAPI:
         return self._server_app
 
     @property
@@ -50,6 +50,14 @@ class Driver(BaseDriver):
     @overrides(BaseDriver)
     def logger(self) -> logging.Logger:
         return logging.getLogger("fastapi")
+
+    @overrides(BaseDriver)
+    def on_startup(self, func: Callable) -> Callable:
+        return self.server_app.on_event("startup")(func)
+
+    @overrides(BaseDriver)
+    def on_shutdown(self, func: Callable) -> Callable:
+        return self.server_app.on_event("shutdown")(func)
 
     @overrides(BaseDriver)
     def run(self,

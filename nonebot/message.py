@@ -18,7 +18,6 @@ def event_preprocessor(func: PreProcessor) -> PreProcessor:
 
 
 async def handle_event(bot: Bot, event: Event):
-    # TODO: PreProcess
     coros = []
     for preprocessor in _event_preprocessors:
         coros.append(preprocessor(bot, event))
