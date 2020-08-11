@@ -4,10 +4,9 @@
 import abc
 from functools import reduce
 from dataclasses import dataclass, field
-from nonebot.rule import notice
 
 from nonebot.config import Config
-from nonebot.typing import Dict, Union, Iterable, WebSocket
+from nonebot.typing import Dict, Union, Optional, Iterable, WebSocket
 
 
 class BaseBot(abc.ABC):
@@ -49,32 +48,32 @@ class BaseEvent(abc.ABC):
 
     @property
     @abc.abstractmethod
-    def type(self):
+    def type(self) -> str:
         raise NotImplementedError
 
     @type.setter
     @abc.abstractmethod
-    def type(self, value):
+    def type(self, value) -> None:
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
-    def detail_type(self):
+    def detail_type(self) -> str:
         raise NotImplementedError
 
     @detail_type.setter
     @abc.abstractmethod
-    def detail_type(self, value):
+    def detail_type(self, value) -> None:
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
-    def sub_type(self):
+    def sub_type(self) -> Optional[str]:
         raise NotImplementedError
 
     @sub_type.setter
     @abc.abstractmethod
-    def sub_type(self, value):
+    def sub_type(self, value) -> None:
         raise NotImplementedError
 
 
