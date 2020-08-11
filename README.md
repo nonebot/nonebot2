@@ -1,3 +1,6 @@
+<div align=center>
+  <img src="docs/.vuepress/public/logo.png" width="200" height="200">
+
 # NoneBot
 
 [![License](https://img.shields.io/github/license/richardchien/nonebot.svg)](LICENSE)
@@ -8,6 +11,8 @@
 [![Telegram](https://img.shields.io/badge/telegram-chat-blue.svg)](https://t.me/cqhttp)
 [![QQ 版本发布群](https://img.shields.io/badge/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E7%BE%A4-218529254-green.svg)](https://jq.qq.com/?_wv=1027&k=5Nl0zhE)
 [![Telegram 版本发布频道](https://img.shields.io/badge/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E9%A2%91%E9%81%93-join-green.svg)](https://t.me/cqhttp_release)
+
+</div>
 
 ## 简介
 
