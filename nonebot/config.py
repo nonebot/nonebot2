@@ -98,7 +98,8 @@ class Config(BaseConfig):
     debug: bool = False
 
     # bot connection configs
-    api_root: Dict[int, str] = {}
+    api_root: Dict[str, str] = {}
+    api_timeout: float = 60.
     access_token: Optional[str] = None
 
     # bot runtime configs

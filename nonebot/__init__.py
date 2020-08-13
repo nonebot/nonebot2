@@ -6,9 +6,10 @@ import importlib
 from ipaddress import IPv4Address
 
 from nonebot.log import logger
-from nonebot.typing import Union, Optional, NoReturn
 from nonebot.config import Env, Config
 from nonebot.drivers import BaseDriver
+from nonebot.adapters.cqhttp import Bot as CQBot
+from nonebot.typing import Union, Optional, NoReturn
 
 _driver: Optional[BaseDriver] = None
 
@@ -39,6 +40,8 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
 
     Driver = getattr(importlib.import_module(config.driver), "Driver")
     _driver = Driver(env, config)
+
+    _driver.register_adapter("cqhttp", CQBot)
 
 
 def run(host: Optional[IPv4Address] = None,

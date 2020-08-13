@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import typing
 from functools import wraps
 from datetime import datetime
 from collections import defaultdict
@@ -150,6 +151,10 @@ class Matcher:
 
             for _ in range(len(self.handlers)):
                 handler = self.handlers.pop(0)
+                annotation = typing.get_type_hints(handler)
+                BotType = annotation.get("bot")
+                if BotType and not isinstance(bot, BotType):
+                    continue
                 await handler(bot, event, self.state)
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore

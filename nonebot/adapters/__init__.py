@@ -2,26 +2,32 @@
 # -*- coding: utf-8 -*-
 
 import abc
-from functools import reduce
+from functools import reduce, partial
 from dataclasses import dataclass, field
 
 from nonebot.config import Config
-from nonebot.typing import Dict, Union, Optional, Iterable, WebSocket
+from nonebot.typing import Driver, WebSocket
+from nonebot.typing import Any, Dict, Union, Optional, Callable, Iterable, Awaitable
 
 
 class BaseBot(abc.ABC):
 
     @abc.abstractmethod
     def __init__(self,
+                 driver: Driver,
                  connection_type: str,
                  config: Config,
-                 self_id: int,
+                 self_id: str,
                  *,
                  websocket: WebSocket = None):
+        self.driver = driver
         self.connection_type = connection_type
         self.config = config
         self.self_id = self_id
         self.websocket = websocket
+
+    def __getattr__(self, name: str) -> Callable[..., Awaitable[Any]]:
+        return partial(self.call_api, name)
 
     @property
     @abc.abstractmethod
@@ -37,6 +43,7 @@ class BaseBot(abc.ABC):
         raise NotImplementedError
 
 
+# TODO: improve event
 class BaseEvent(abc.ABC):
 
     def __init__(self, raw_event: dict):

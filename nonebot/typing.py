@@ -35,5 +35,5 @@ PreProcessor = Callable[[Bot, Event], Union[Awaitable[None],
                                             Awaitable[NoReturn]]]
 
 Matcher = TypeVar("Matcher", bound="MatcherClass")
-Handler = Callable[["Bot", Event, dict], Union[Awaitable[None],
-                                               Awaitable[NoReturn]]]
+Handler = Callable[[Bot, Event, Dict[Any, Any]], Union[Awaitable[None],
+                                                       Awaitable[NoReturn]]]

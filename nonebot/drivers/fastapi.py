@@ -106,14 +106,15 @@ class Driver(BaseDriver):
                            adapter: str,
                            response: Response,
                            data: dict = Body(...),
-                           x_self_id: int = Header(None),
+                           x_self_id: str = Header(None),
                            access_token: str = OAuth2PasswordBearer(
                                "/", auto_error=False)):
         # TODO: Check authorization
 
         # Create Bot Object
-        if adapter == "cqhttp":
-            bot = CQBot("http", self.config, x_self_id)
+        if adapter in self._adapters:
+            BotClass = self._adapters[adapter]
+            bot = BotClass(self, "http", self.config, x_self_id)
         else:
             response.status_code = status.HTTP_404_NOT_FOUND
             return {"status": 404, "message": "adapter not found"}
@@ -125,7 +126,7 @@ class Driver(BaseDriver):
     async def _handle_ws_reverse(self,
                                  adapter: str,
                                  websocket: FastAPIWebSocket,
-                                 x_self_id: int = Header(None),
+                                 x_self_id: str = Header(None),
                                  access_token: str = OAuth2PasswordBearer(
                                      "/", auto_error=False)):
         websocket = WebSocket(websocket)
@@ -134,7 +135,8 @@ class Driver(BaseDriver):
 
         # Create Bot Object
         if adapter == "coolq":
-            bot = CQBot("websocket",
+            bot = CQBot(self,
+                        "websocket",
                         self.config,
                         x_self_id,
                         websocket=websocket)

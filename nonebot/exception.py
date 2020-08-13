@@ -1,6 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from nonebot.typing import Optional
+
 
 class IgnoredException(Exception):
     """
@@ -33,3 +35,21 @@ class FinishedException(Exception):
 class ApiNotAvailable(Exception):
     """Api is not available"""
     pass
+
+
+class NetworkError(Exception):
+    """There is something error with the network"""
+    pass
+
+
+class ActionFailed(Exception):
+    """The action call returned a failed response"""
+
+    def __init__(self, retcode: Optional[int]):
+        self.retcode = retcode
+
+    def __repr__(self):
+        return f"<ActionFailed, retcode={self.retcode}>"
+
+    def __str__(self):
+        return self.__repr__()
