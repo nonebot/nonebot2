@@ -11,6 +11,11 @@ from nonebot.drivers import BaseDriver
 from nonebot.adapters.cqhttp import Bot as CQBot
 from nonebot.typing import Union, Optional, NoReturn
 
+try:
+    import nonebot_test
+except ImportError:
+    nonebot_test = None
+
 _driver: Optional[BaseDriver] = None
 
 
@@ -41,7 +46,12 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
     Driver = getattr(importlib.import_module(config.driver), "Driver")
     _driver = Driver(env, config)
 
+    # register build-in adapters
     _driver.register_adapter("cqhttp", CQBot)
+
+    # load nonebot test frontend if debug
+    if config.debug and nonebot_test:
+        nonebot_test.init()
 
 
 def run(host: Optional[IPv4Address] = None,

@@ -16,8 +16,9 @@ class BaseConfig(BaseSettings):
 
     def _build_environ(
             self,
-            _env_file: Union[Path, str,
-                             None] = None) -> Dict[str, Optional[str]]:
+            _env_file: Union[Path, str, None] = None,
+            _env_file_encoding: Optional[str] = None
+    ) -> Dict[str, Optional[str]]:
         """
         Build environment variables suitable for passing to the Model.
         """
@@ -28,13 +29,16 @@ class BaseConfig(BaseSettings):
         else:
             env_vars = {k.lower(): v for k, v in os.environ.items()}
 
+        env_file_vars: Dict[str, Optional[str]] = {}
         env_file = _env_file if _env_file != env_file_sentinel else self.__config__.env_file
-        env_file_vars = {}
+        env_file_encoding = _env_file_encoding if _env_file_encoding is not None else self.__config__.env_file_encoding
         if env_file is not None:
             env_path = Path(env_file)
             if env_path.is_file():
                 env_file_vars = read_env_file(
-                    env_path, case_sensitive=self.__config__.case_sensitive)
+                    env_path,
+                    encoding=env_file_encoding,
+                    case_sensitive=self.__config__.case_sensitive)
                 env_vars = {**env_file_vars, **env_vars}
 
         for field in self.__fields__.values():
