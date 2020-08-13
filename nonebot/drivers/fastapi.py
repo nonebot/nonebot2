@@ -38,6 +38,11 @@ class Driver(BaseDriver):
 
     @property
     @overrides(BaseDriver)
+    def type(self) -> str:
+        return "fastapi"
+
+    @property
+    @overrides(BaseDriver)
     def server_app(self) -> FastAPI:
         return self._server_app
 

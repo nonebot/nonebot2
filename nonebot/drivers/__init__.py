@@ -23,6 +23,11 @@ class BaseDriver(abc.ABC):
 
     @property
     @abc.abstractmethod
+    def type(self):
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
     def server_app(self):
         raise NotImplementedError
 
