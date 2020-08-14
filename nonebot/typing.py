@@ -8,6 +8,7 @@ from typing import Union, TypeVar, Optional, Iterable, Callable, Awaitable
 
 # import some modules needed when checking types
 if TYPE_CHECKING:
+    from nonebot.rule import BaseRule
     from nonebot.matcher import Matcher as MatcherClass
     from nonebot.drivers import BaseDriver, BaseWebSocket
     from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
@@ -37,3 +38,8 @@ PreProcessor = Callable[[Bot, Event], Union[Awaitable[None],
 Matcher = TypeVar("Matcher", bound="MatcherClass")
 Handler = Callable[[Bot, Event, Dict[Any, Any]], Union[Awaitable[None],
                                                        Awaitable[NoReturn]]]
+Rule = TypeVar("Rule", bound="BaseRule")
+_RuleChecker_Return = TypeVar("_RuleChecker_Return", bool, Awaitable[bool])
+RuleChecker = Callable[[Bot, Event], _RuleChecker_Return]
+SyncRuleChecker = RuleChecker[Bot, Event, bool]
+AsyncRuleChecker = RuleChecker[Bot, Event, Awaitable[bool]]

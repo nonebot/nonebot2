@@ -4,6 +4,7 @@
 import abc
 from ipaddress import IPv4Address
 
+from nonebot.log import logger
 from nonebot.config import Env, Config
 from nonebot.typing import Bot, Dict, Type, Optional, Callable
 
@@ -20,6 +21,7 @@ class BaseDriver(abc.ABC):
     @classmethod
     def register_adapter(cls, name: str, adapter: Type[Bot]):
         cls._adapters[name] = adapter
+        logger.debug(f'Succeeded to load adapter "{name}"')
 
     @property
     @abc.abstractmethod

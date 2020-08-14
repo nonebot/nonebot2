@@ -7,19 +7,18 @@ from ipaddress import IPv4Address
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
-from nonebot.drivers import BaseDriver
 from nonebot.adapters.cqhttp import Bot as CQBot
-from nonebot.typing import Union, Optional, NoReturn
+from nonebot.typing import Type, Union, Driver, Optional, NoReturn
 
 try:
     import nonebot_test
 except ImportError:
     nonebot_test = None
 
-_driver: Optional[BaseDriver] = None
+_driver: Optional[Driver] = None
 
 
-def get_driver() -> Union[NoReturn, BaseDriver]:
+def get_driver() -> Union[NoReturn, Driver]:
     if _driver is None:
         raise ValueError("NoneBot has not been initialized.")
     return _driver
@@ -43,14 +42,16 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
     logger.setLevel(logging.DEBUG if config.debug else logging.INFO)
     logger.debug(f"Loaded config: {config.dict()}")
 
-    Driver = getattr(importlib.import_module(config.driver), "Driver")
-    _driver = Driver(env, config)
+    DriverClass: Type[Driver] = getattr(importlib.import_module(config.driver),
+                                        "Driver")
+    _driver = DriverClass(env, config)
 
     # register build-in adapters
     _driver.register_adapter("cqhttp", CQBot)
 
     # load nonebot test frontend if debug
     if config.debug and nonebot_test:
+        logger.debug("Loading nonebot test frontend...")
         nonebot_test.init()
 
 

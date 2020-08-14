@@ -152,15 +152,16 @@ class Driver(BaseDriver):
         await websocket.accept()
         self._clients[x_self_id] = bot
 
-        while not websocket.closed:
-            data = await websocket.receive()
+        try:
+            while not websocket.closed:
+                data = await websocket.receive()
 
-            if not data:
-                continue
+                if not data:
+                    continue
 
-            await bot.handle_message(data)
-
-        del self._clients[x_self_id]
+                await bot.handle_message(data)
+        finally:
+            del self._clients[x_self_id]
 
 
 class WebSocket(BaseWebSocket):

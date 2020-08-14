@@ -193,6 +193,26 @@ class Event(BaseEvent):
     def sub_type(self, value) -> None:
         self._raw_event["sub_type"] = value
 
+    @property
+    @overrides(BaseEvent)
+    def message(self) -> Optional["Message"]:
+        return self._raw_event.get("message")
+
+    @message.setter
+    @overrides(BaseEvent)
+    def message(self, value) -> None:
+        self._raw_event["message"] = value
+
+    @property
+    @overrides(BaseEvent)
+    def raw_message(self) -> Optional[str]:
+        return self._raw_event.get("raw_message")
+
+    @raw_message.setter
+    @overrides(BaseEvent)
+    def raw_message(self, value) -> None:
+        self._raw_event["raw_message"] = value
+
 
 class MessageSegment(BaseMessageSegment):
 

@@ -7,8 +7,8 @@ import importlib
 
 from nonebot.log import logger
 from nonebot.matcher import Matcher
-from nonebot.typing import Set, Dict, Type, Optional, ModuleType
 from nonebot.rule import Rule, metaevent, message, notice, request
+from nonebot.typing import Set, Dict, Type, Union, Optional, ModuleType, RuleChecker
 
 plugins: Dict[str, "Plugin"] = {}
 
@@ -25,7 +25,7 @@ class Plugin(object):
         self.matchers = matchers
 
 
-def on_metaevent(rule: Rule,
+def on_metaevent(rule: Union[Rule, RuleChecker] = Rule(),
                  *,
                  handlers=[],
                  temp=False,
@@ -40,7 +40,7 @@ def on_metaevent(rule: Rule,
     return matcher
 
 
-def on_message(rule: Rule,
+def on_message(rule: Union[Rule, RuleChecker] = Rule(),
                *,
                handlers=[],
                temp=False,
@@ -55,7 +55,7 @@ def on_message(rule: Rule,
     return matcher
 
 
-def on_notice(rule: Rule,
+def on_notice(rule: Union[Rule, RuleChecker] = Rule(),
               *,
               handlers=[],
               temp=False,
@@ -70,7 +70,7 @@ def on_notice(rule: Rule,
     return matcher
 
 
-def on_request(rule: Rule,
+def on_request(rule: Union[Rule, RuleChecker] = Rule(),
                *,
                handlers=[],
                temp=False,

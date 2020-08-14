@@ -6,9 +6,7 @@ from nonebot.typing import Event
 from nonebot.plugin import on_message
 from nonebot.adapters.cqhttp import Bot, Message
 
-print(repr(Message("asdfasdf[CQ:at,qq=123][CQ:at,qq=all]")))
-
-test_matcher = on_message(Rule(), state={"default": 1})
+test_matcher = on_message(state={"default": 1})
 
 
 @test_matcher.handle()

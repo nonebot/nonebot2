@@ -6,7 +6,7 @@ from functools import reduce, partial
 from dataclasses import dataclass, field
 
 from nonebot.config import Config
-from nonebot.typing import Driver, WebSocket
+from nonebot.typing import Driver, Message, WebSocket
 from nonebot.typing import Any, Dict, Union, Optional, Callable, Iterable, Awaitable
 
 
@@ -81,6 +81,26 @@ class BaseEvent(abc.ABC):
     @sub_type.setter
     @abc.abstractmethod
     def sub_type(self, value) -> None:
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def message(self) -> Optional[Message]:
+        raise NotImplementedError
+
+    @message.setter
+    @abc.abstractmethod
+    def message(self, value) -> None:
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def raw_message(self) -> Optional[str]:
+        raise NotImplementedError
+
+    @raw_message.setter
+    @abc.abstractmethod
+    def raw_message(self, value) -> None:
         raise NotImplementedError
 
 
