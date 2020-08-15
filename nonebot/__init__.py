@@ -10,11 +10,6 @@ from nonebot.config import Env, Config
 from nonebot.adapters.cqhttp import Bot as CQBot
 from nonebot.typing import Type, Union, Driver, Optional, NoReturn
 
-try:
-    import nonebot_test
-except ImportError:
-    nonebot_test = None
-
 _driver: Optional[Driver] = None
 
 
@@ -32,6 +27,17 @@ def get_app():
 def get_asgi():
     driver = get_driver()
     return driver.asgi
+
+
+def get_bots():
+    driver = get_driver()
+    return driver.bots
+
+
+try:
+    import nonebot_test
+except ImportError:
+    nonebot_test = None
 
 
 def init(*, _env_file: Optional[str] = None, **kwargs):
