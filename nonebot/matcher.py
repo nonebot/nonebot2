@@ -6,8 +6,8 @@ from functools import wraps
 from datetime import datetime
 from collections import defaultdict
 
-from nonebot.rule import Rule, user
-from nonebot.typing import Bot, Event, Handler
+from nonebot.rule import SyncRule, user
+from nonebot.typing import Bot, Rule, Event, Handler
 from nonebot.typing import Type, List, Dict, Optional, NoReturn
 from nonebot.exception import PausedException, RejectedException, FinishedException
 
@@ -18,7 +18,7 @@ class Matcher:
     """`Matcher`类
     """
 
-    rule: Rule = Rule()
+    rule: Rule = SyncRule()
     handlers: List[Handler] = []
     temp: bool = False
     expire_time: Optional[datetime] = None
@@ -38,7 +38,7 @@ class Matcher:
 
     @classmethod
     def new(cls,
-            rule: Rule = Rule(),
+            rule: Rule = SyncRule(),
             handlers: list = [],
             temp: bool = False,
             priority: int = 1,
@@ -66,7 +66,7 @@ class Matcher:
         return NewMatcher
 
     @classmethod
-    def check_rule(cls, bot: Bot, event: Event) -> bool:
+    async def check_rule(cls, bot: Bot, event: Event) -> bool:
         """检查 Matcher 的 Rule 是否成立
 
         Args:
@@ -75,7 +75,7 @@ class Matcher:
         Returns:
             bool: 条件成立与否
         """
-        return cls.rule(bot, event)
+        return await cls.rule(bot, event)
 
     # @classmethod
     # def args_parser(cls, func: Callable[[Event, dict], None]):

@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os
-import re
+import pkgutil
 import importlib
+from importlib.util import module_from_spec
 
 from nonebot.log import logger
 from nonebot.matcher import Matcher
-from nonebot.rule import Rule, metaevent, message, notice, request
-from nonebot.typing import Set, Dict, Type, Union, Optional, ModuleType, RuleChecker
+from nonebot.rule import SyncRule, metaevent, message, notice, request
+from nonebot.typing import Set, Dict, Type, Rule, Union, Optional, ModuleType, RuleChecker
 
 plugins: Dict[str, "Plugin"] = {}
 
@@ -25,7 +25,7 @@ class Plugin(object):
         self.matchers = matchers
 
 
-def on_metaevent(rule: Union[Rule, RuleChecker] = Rule(),
+def on_metaevent(rule: Union[Rule, RuleChecker] = SyncRule(),
                  *,
                  handlers=[],
                  temp=False,
@@ -40,7 +40,7 @@ def on_metaevent(rule: Union[Rule, RuleChecker] = Rule(),
     return matcher
 
 
-def on_message(rule: Union[Rule, RuleChecker] = Rule(),
+def on_message(rule: Union[Rule, RuleChecker] = SyncRule(),
                *,
                handlers=[],
                temp=False,
@@ -55,7 +55,7 @@ def on_message(rule: Union[Rule, RuleChecker] = Rule(),
     return matcher
 
 
-def on_notice(rule: Union[Rule, RuleChecker] = Rule(),
+def on_notice(rule: Union[Rule, RuleChecker] = SyncRule(),
               *,
               handlers=[],
               temp=False,
@@ -70,7 +70,7 @@ def on_notice(rule: Union[Rule, RuleChecker] = Rule(),
     return matcher
 
 
-def on_request(rule: Union[Rule, RuleChecker] = Rule(),
+def on_request(rule: Union[Rule, RuleChecker] = SyncRule(),
                *,
                handlers=[],
                temp=False,
@@ -117,26 +117,26 @@ def load_plugin(module_path: str) -> Optional[Plugin]:
         return None
 
 
-def load_plugins(plugin_dir: str) -> Set[Plugin]:
-    plugins = set()
-    for name in os.listdir(plugin_dir):
-        path = os.path.join(plugin_dir, name)
-        if os.path.isfile(path) and \
-                (name.startswith("_") or not name.endswith(".py")):
-            continue
-        if os.path.isdir(path) and \
-                (name.startswith("_") or not os.path.exists(
-                    os.path.join(path, "__init__.py"))):
+def load_plugins(*plugin_dir: str) -> Set[Plugin]:
+    loaded_plugins = set()
+    for module_info in pkgutil.iter_modules(plugin_dir):
+        _tmp_matchers.clear()
+        name = module_info.name
+        if name.startswith("_"):
             continue
 
-        m = re.match(r"([_A-Z0-9a-z]+)(.py)?", name)
-        if not m:
-            continue
+        try:
+            spec = module_info.module_finder.find_spec(name)
+            module = module_from_spec(spec)
 
-        result = load_plugin(f"{plugin_dir.replace(os.sep, '.')}.{m.group(1)}")
-        if result:
-            plugins.add(result)
-    return plugins
+            plugin = Plugin(name, module, _tmp_matchers.copy())
+            plugins[name] = plugin
+            loaded_plugins.add(plugin)
+            logger.info(f"Succeeded to import \"{name}\"")
+        except Exception as e:
+            logger.error(f"Failed to import \"{name}\", error: {e}")
+            logger.exception(e)
+    return loaded_plugins
 
 
 def get_loaded_plugins() -> Set[Plugin]:

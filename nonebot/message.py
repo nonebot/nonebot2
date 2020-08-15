@@ -40,7 +40,7 @@ async def handle_event(bot: Bot, event: Event):
 
             # Check rule
             try:
-                if not Matcher.check_rule(bot, event):
+                if not await Matcher.check_rule(bot, event):
                     index += 1
                     continue
             except Exception as e:
