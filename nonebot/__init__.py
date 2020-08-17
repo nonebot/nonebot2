@@ -4,10 +4,6 @@
 import logging
 import importlib
 from ipaddress import IPv4Address
-
-from nonebot.log import logger
-from nonebot.config import Env, Config
-from nonebot.adapters.cqhttp import Bot as CQBot
 from nonebot.typing import Type, Union, Driver, Optional, NoReturn
 
 _driver: Optional[Driver] = None
@@ -33,6 +29,10 @@ def get_bots():
     driver = get_driver()
     return driver.bots
 
+
+from nonebot.log import logger
+from nonebot.config import Env, Config
+from nonebot.adapters.cqhttp import Bot as CQBot
 
 try:
     import nonebot_test

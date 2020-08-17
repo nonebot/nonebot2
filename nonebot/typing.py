@@ -8,9 +8,10 @@ from typing import Union, TypeVar, Optional, Iterable, Callable, Awaitable
 
 # import some modules needed when checking types
 if TYPE_CHECKING:
-    from nonebot.rule import BaseRule
+    from nonebot.rule import Rule as RuleClass
     from nonebot.matcher import Matcher as MatcherClass
     from nonebot.drivers import BaseDriver, BaseWebSocket
+    from nonebot.permission import Permission as PermissionClass
     from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
 
 
@@ -32,14 +33,13 @@ Event = TypeVar("Event", bound="BaseEvent")
 Message = TypeVar("Message", bound="BaseMessage")
 MessageSegment = TypeVar("MessageSegment", bound="BaseMessageSegment")
 
-PreProcessor = Callable[[Bot, Event], Union[Awaitable[None],
-                                            Awaitable[NoReturn]]]
+PreProcessor = Callable[[Bot, Event, dict], Union[Awaitable[None],
+                                                  Awaitable[NoReturn]]]
 
 Matcher = TypeVar("Matcher", bound="MatcherClass")
 Handler = Callable[[Bot, Event, Dict[Any, Any]], Union[Awaitable[None],
                                                        Awaitable[NoReturn]]]
-Rule = TypeVar("Rule", bound="BaseRule")
-_RuleChecker_Return = TypeVar("_RuleChecker_Return", bool, Awaitable[bool])
-RuleChecker = Callable[[Bot, Event], _RuleChecker_Return]
-SyncRuleChecker = RuleChecker[Bot, Event, bool]
-AsyncRuleChecker = RuleChecker[Bot, Event, Awaitable[bool]]
+Rule = TypeVar("Rule", bound="RuleClass")
+RuleChecker = Callable[[Bot, Event, dict], Awaitable[bool]]
+Permission = TypeVar("Permission", bound="PermissionClass")
+PermissionChecker = Callable[[Bot, Event], Awaitable[bool]]

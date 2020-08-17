@@ -85,6 +85,16 @@ class BaseEvent(abc.ABC):
 
     @property
     @abc.abstractmethod
+    def user_id(self) -> Optional[int]:
+        raise NotImplementedError
+
+    @user_id.setter
+    @abc.abstractmethod
+    def user_id(self, value) -> None:
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
     def message(self) -> Optional[Message]:
         raise NotImplementedError
 
@@ -101,6 +111,21 @@ class BaseEvent(abc.ABC):
     @raw_message.setter
     @abc.abstractmethod
     def raw_message(self, value) -> None:
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def plain_text(self) -> Optional[str]:
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def sender(self) -> Optional[dict]:
+        raise NotImplementedError
+
+    @sender.setter
+    @abc.abstractmethod
+    def sender(self, value) -> None:
         raise NotImplementedError
 
 

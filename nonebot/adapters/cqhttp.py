@@ -142,7 +142,10 @@ class Bot(BaseBot):
 
             try:
                 async with httpx.AsyncClient(headers=headers) as client:
-                    response = await client.post(api_root + api, json=data)
+                    response = await client.post(
+                        api_root + api,
+                        json=data,
+                        timeout=self.config.api_timeout)
 
                 if 200 <= response.status_code < 300:
                     result = response.json()
@@ -195,6 +198,16 @@ class Event(BaseEvent):
 
     @property
     @overrides(BaseEvent)
+    def user_id(self) -> Optional[int]:
+        return self._raw_event.get("user_id")
+
+    @user_id.setter
+    @overrides(BaseEvent)
+    def user_id(self, value) -> None:
+        self._raw_event["user_id"] = value
+
+    @property
+    @overrides(BaseEvent)
     def message(self) -> Optional["Message"]:
         return self._raw_event.get("message")
 
@@ -212,6 +225,21 @@ class Event(BaseEvent):
     @overrides(BaseEvent)
     def raw_message(self, value) -> None:
         self._raw_event["raw_message"] = value
+
+    @property
+    @overrides(BaseEvent)
+    def plain_text(self) -> Optional[str]:
+        return self.message and self.message.extract_plain_text()
+
+    @property
+    @overrides(BaseEvent)
+    def sender(self) -> Optional[dict]:
+        return self._raw_event.get("sender")
+
+    @sender.setter
+    @overrides(BaseEvent)
+    def sender(self, value) -> None:
+        self._raw_event["sender"] = value
 
 
 class MessageSegment(BaseMessageSegment):

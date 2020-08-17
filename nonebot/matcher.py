@@ -6,8 +6,9 @@ from functools import wraps
 from datetime import datetime
 from collections import defaultdict
 
-from nonebot.rule import SyncRule, user
-from nonebot.typing import Bot, Rule, Event, Handler
+from nonebot.rule import Rule
+from nonebot.permission import Permission, EVERYBODY, USER
+from nonebot.typing import Bot, Event, Handler
 from nonebot.typing import Type, List, Dict, Optional, NoReturn
 from nonebot.exception import PausedException, RejectedException, FinishedException
 
@@ -18,7 +19,8 @@ class Matcher:
     """`Matcher`类
     """
 
-    rule: Rule = SyncRule()
+    rule: Rule = Rule()
+    permission: Permission = Permission()
     handlers: List[Handler] = []
     temp: bool = False
     expire_time: Optional[datetime] = None
@@ -38,7 +40,8 @@ class Matcher:
 
     @classmethod
     def new(cls,
-            rule: Rule = SyncRule(),
+            rule: Rule = Rule(),
+            permission: Permission = Permission(),
             handlers: list = [],
             temp: bool = False,
             priority: int = 1,
@@ -54,6 +57,7 @@ class Matcher:
         NewMatcher = type(
             "Matcher", (Matcher,), {
                 "rule": rule,
+                "permission": permission,
                 "handlers": handlers,
                 "temp": temp,
                 "expire_time": expire_time,
@@ -66,7 +70,11 @@ class Matcher:
         return NewMatcher
 
     @classmethod
-    async def check_rule(cls, bot: Bot, event: Event) -> bool:
+    async def check_perm(cls, bot: Bot, event: Event) -> bool:
+        return await cls.permission(bot, event)
+
+    @classmethod
+    async def check_rule(cls, bot: Bot, event: Event, state: dict) -> bool:
         """检查 Matcher 的 Rule 是否成立
 
         Args:
@@ -75,7 +83,7 @@ class Matcher:
         Returns:
             bool: 条件成立与否
         """
-        return await cls.rule(bot, event)
+        return await cls.rule(bot, event, state)
 
     # @classmethod
     # def args_parser(cls, func: Callable[[Event, dict], None]):
@@ -144,10 +152,13 @@ class Matcher:
     #     raise RejectedException
 
     # 运行handlers
-    async def run(self, bot: Bot, event: Event):
+    async def run(self, bot: Bot, event: Event, state):
         try:
             # if self.parser:
             #     await self.parser(event, state)  # type: ignore
+
+            # Refresh preprocess state
+            self.state.update(state)
 
             for _ in range(len(self.handlers)):
                 handler = self.handlers.pop(0)
@@ -158,23 +169,25 @@ class Matcher:
                 await handler(bot, event, self.state)
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
-            matcher = Matcher.new(user(event.user_id) & self.rule,
-                                  self.handlers,
-                                  temp=True,
-                                  priority=0,
-                                  default_state=self.state,
-                                  expire_time=datetime.now() +
-                                  bot.config.session_expire_timeout)
+            matcher = Matcher.new(
+                self.rule,
+                USER(event.user_id, perm=self.permission),  # type:ignore
+                self.handlers,
+                temp=True,
+                priority=0,
+                default_state=self.state,
+                expire_time=datetime.now() + bot.config.session_expire_timeout)
             matchers[0].append(matcher)
             return
         except PausedException:
-            matcher = Matcher.new(user(event.user_id) & self.rule,
-                                  self.handlers,
-                                  temp=True,
-                                  priority=0,
-                                  default_state=self.state,
-                                  expire_time=datetime.now() +
-                                  bot.config.session_expire_timeout)
+            matcher = Matcher.new(
+                self.rule,
+                USER(event.user_id, perm=self.permission),  # type:ignore
+                self.handlers,
+                temp=True,
+                priority=0,
+                default_state=self.state,
+                expire_time=datetime.now() + bot.config.session_expire_timeout)
             matchers[0].append(matcher)
             return
         except FinishedException:

@@ -103,12 +103,14 @@ class Config(BaseConfig):
 
     # bot connection configs
     api_root: Dict[str, str] = {}
-    api_timeout: float = 60.
+    api_timeout: Optional[float] = 60.
     access_token: Optional[str] = None
 
     # bot runtime configs
     superusers: Set[int] = set()
     nickname: Union[str, Set[str]] = ""
+    command_start: Set[str] = {"/"}
+    command_sep: Set[str] = {"."}
     session_expire_timeout: timedelta = timedelta(minutes=2)
 
     # custom configs

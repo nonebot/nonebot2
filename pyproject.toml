@@ -21,6 +21,7 @@ classifiers = [
 [tool.poetry.dependencies]
 python = "^3.7"
 httpx = "^0.13.3"
+pygtrie = "^2.3.3"
 fastapi = "^0.58.1"
 uvicorn = "^0.11.5"
 pydantic = { extras = ["dotenv"], version = "^1.6.1" }
