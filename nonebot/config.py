@@ -6,7 +6,7 @@ from pathlib import Path
 from datetime import timedelta
 from ipaddress import IPv4Address
 
-from pydantic import BaseSettings
+from pydantic import BaseSettings, IPvAnyAddress
 from pydantic.env_settings import SettingsError, env_file_sentinel, read_env_file
 
 from nonebot.typing import Set, Dict, Union, Mapping, Optional
@@ -96,7 +96,7 @@ class Config(BaseConfig):
     """
     # nonebot configs
     driver: str = "nonebot.drivers.fastapi"
-    host: IPv4Address = IPv4Address("127.0.0.1")
+    host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
     port: int = 8080
     secret: Optional[str] = None
     debug: bool = False

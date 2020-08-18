@@ -27,7 +27,7 @@ module.exports = {
     editLinkText: "在 GitHub 上编辑此页",
     docsDir: "docs",
     lastUpdated: "上次更新",
-    nav: [{ text: "API", link: "/api.md" }],
+    nav: [{ text: "API", link: "/api/" }],
     sidebar: {}
   },
 

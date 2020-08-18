@@ -2,11 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import abc
-from ipaddress import IPv4Address
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
-from nonebot.typing import Bot, Dict, Type, Optional, Callable
+from nonebot.typing import Bot, Dict, Type, Union, Optional, Callable
 
 
 class BaseDriver(abc.ABC):
@@ -57,7 +56,7 @@ class BaseDriver(abc.ABC):
 
     @abc.abstractmethod
     def run(self,
-            host: Optional[IPv4Address] = None,
+            host: Optional[str] = None,
             port: Optional[int] = None,
             *args,
             **kwargs):

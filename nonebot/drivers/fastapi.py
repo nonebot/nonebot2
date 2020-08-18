@@ -3,7 +3,6 @@
 
 import json
 import logging
-from ipaddress import IPv4Address
 
 import uvicorn
 from fastapi import FastAPI, status
@@ -16,7 +15,7 @@ from nonebot.config import Env, Config
 from nonebot.utils import DataclassEncoder
 from nonebot.adapters.cqhttp import Bot as CQBot
 from nonebot.drivers import BaseDriver, BaseWebSocket
-from nonebot.typing import Optional, Callable, overrides
+from nonebot.typing import Union, Optional, Callable, overrides
 
 
 class Driver(BaseDriver):
@@ -66,7 +65,7 @@ class Driver(BaseDriver):
 
     @overrides(BaseDriver)
     def run(self,
-            host: Optional[IPv4Address] = None,
+            host: Optional[str] = None,
             port: Optional[int] = None,
             *,
             app: Optional[str] = None,
@@ -99,7 +98,7 @@ class Driver(BaseDriver):
             },
         }
         uvicorn.run(app or self.server_app,
-                    host=host or str(self.config.host),
+                    host=str(host) or str(self.config.host),
                     port=port or self.config.port,
                     reload=app and self.config.debug,
                     debug=self.config.debug,
