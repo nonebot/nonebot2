@@ -7,9 +7,9 @@ from datetime import datetime
 from collections import defaultdict
 
 from nonebot.rule import Rule
-from nonebot.permission import Permission, EVERYBODY, USER
-from nonebot.typing import Bot, Event, Handler
-from nonebot.typing import Type, List, Dict, Optional, NoReturn
+from nonebot.permission import Permission, USER
+from nonebot.typing import Bot, Event, Handler, ArgsParser
+from nonebot.typing import Type, List, Dict, Callable, Optional, NoReturn
 from nonebot.exception import PausedException, RejectedException, FinishedException
 
 matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
@@ -28,15 +28,13 @@ class Matcher:
 
     _default_state: dict = {}
 
-    # _default_parser: Optional[Callable[[Event, dict], None]] = None
-    # _args_parser: Optional[Callable[[Event, dict], None]] = None
+    _default_parser: Optional[ArgsParser] = None
 
     def __init__(self):
         """实例化 Matcher 以便运行
         """
         self.handlers = self.handlers.copy()
         self.state = self._default_state.copy()
-        # self.parser = self._args_parser or self._default_parser
 
     @classmethod
     def new(cls,
@@ -85,13 +83,13 @@ class Matcher:
         """
         return await cls.rule(bot, event, state)
 
-    # @classmethod
-    # def args_parser(cls, func: Callable[[Event, dict], None]):
-    #     cls._default_parser = func
-    #     return func
+    @classmethod
+    def args_parser(cls, func: ArgsParser) -> ArgsParser:
+        cls._default_parser = func
+        return func
 
     @classmethod
-    def handle(cls):
+    def handle(cls) -> Callable[[Handler], Handler]:
         """直接处理消息事件"""
 
         def _decorator(func: Handler) -> Handler:
@@ -101,7 +99,7 @@ class Matcher:
         return _decorator
 
     @classmethod
-    def receive(cls):
+    def receive(cls) -> Callable[[Handler], Handler]:
         """接收一条新消息并处理"""
 
         def _decorator(func: Handler) -> Handler:
@@ -109,54 +107,65 @@ class Matcher:
             async def _handler(bot: Bot, event: Event, state: dict) -> NoReturn:
                 raise PausedException
 
-            cls.handlers.append(_handler)
+            if cls.handlers:
+                # 已有前置handlers则接受一条新的消息，否则视为接收初始消息
+                cls.handlers.append(_handler)
             cls.handlers.append(func)
 
             return func
 
         return _decorator
 
-    # @classmethod
-    # def got(cls,
-    #         key: str,
-    #         prompt: Optional[str] = None,
-    #         args_parser: Optional[Callable[[Event, dict], None]] = None):
+    @classmethod
+    def got(
+        cls,
+        key: str,
+        prompt: Optional[str] = None,
+        args_parser: Optional[ArgsParser] = None
+    ) -> Callable[[Handler], Handler]:
 
-    #     def _decorator(func: Handler) -> Handler:
+        def _decorator(func: Handler) -> Handler:
 
-    #         @wraps(func)
-    #         def _handler(event: Event, state: dict):
-    #             if key not in state:
-    #                 if state.get("__current_arg__", None) == key:
-    #                     state[key] = event.message
-    #                     del state["__current_arg__"]
-    #                     return func(event, state)
-    #                 state["__current_arg__"] = key
-    #                 cls._args_parser = args_parser
-    #                 raise RejectedException
+            async def _key_getter(bot: Bot, event: Event, state: dict):
+                if key not in state:
+                    state["_current_key"] = key
+                    if prompt:
+                        await bot.send_private_msg(user_id=event.user_id,
+                                                   message=prompt)
+                    raise PausedException
 
-    #             return func(event, state)
+            async def _key_parser(bot: Bot, event: Event, state: dict):
+                parser = args_parser or cls._default_parser
+                if parser:
+                    await parser(bot, event, state)
+                else:
+                    state[state["_current_key"]] = str(event.message)
 
-    #         cls.handlers.append(_handler)
+            if cls.handlers:
+                # 已有前置handlers则接受一条新的消息，否则视为接收初始消息
+                cls.handlers.append(_key_getter)
+            cls.handlers.append(_key_parser)
+            cls.handlers.append(func)
 
-    #         return func
+            return func
 
-    #     return _decorator
+        return _decorator
 
-    # @classmethod
-    # def finish(cls, prompt: Optional[str] = None):
-    #     raise FinishedException
+    @classmethod
+    def finish(cls) -> NoReturn:
+        raise FinishedException
 
-    # @classmethod
-    # def reject(cls, prompt: Optional[str] = None):
-    #     raise RejectedException
+    @classmethod
+    def pause(cls) -> NoReturn:
+        raise PausedException
+
+    @classmethod
+    def reject(cls) -> NoReturn:
+        raise RejectedException
 
     # 运行handlers
-    async def run(self, bot: Bot, event: Event, state):
+    async def run(self, bot: Bot, event: Event, state: dict):
         try:
-            # if self.parser:
-            #     await self.parser(event, state)  # type: ignore
-
             # Refresh preprocess state
             self.state.update(state)
 
@@ -167,6 +176,7 @@ class Matcher:
                 if BotType and not isinstance(bot, BotType):
                     continue
                 await handler(bot, event, self.state)
+
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
             matcher = Matcher.new(

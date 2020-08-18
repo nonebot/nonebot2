@@ -37,9 +37,11 @@ PreProcessor = Callable[[Bot, Event, dict], Union[Awaitable[None],
                                                   Awaitable[NoReturn]]]
 
 Matcher = TypeVar("Matcher", bound="MatcherClass")
-Handler = Callable[[Bot, Event, Dict[Any, Any]], Union[Awaitable[None],
-                                                       Awaitable[NoReturn]]]
+Handler = Callable[[Bot, Event, dict], Union[Awaitable[None],
+                                             Awaitable[NoReturn]]]
 Rule = TypeVar("Rule", bound="RuleClass")
 RuleChecker = Callable[[Bot, Event, dict], Awaitable[bool]]
 Permission = TypeVar("Permission", bound="PermissionClass")
 PermissionChecker = Callable[[Bot, Event], Awaitable[bool]]
+ArgsParser = Callable[[Bot, Event, dict], Union[Awaitable[None],
+                                                Awaitable[NoReturn]]]
