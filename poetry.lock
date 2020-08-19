@@ -600,10 +600,9 @@ unify = "*"
 yapf = "*"
 
 [package.source]
-reference = "88a68ed340013067a1c673bdf7541680c581fa60"
+reference = "b7ca9332c2e4c5e50110d6477dd28821c74da778"
 type = "git"
 url = "https://github.com/nonebot/sphinx-markdown-builder.git"
-
 [[package]]
 category = "dev"
 description = "sphinxcontrib-applehelp is a sphinx extension which outputs Apple help books"
