@@ -70,6 +70,9 @@ html_static_path = ['_static']
 
 # -- Extension configuration -------------------------------------------------
 
+# -- Options for autodoc extension ----------------------------------------------
+autodoc_default_options = {'member-order': 'bysource'}
+
 # -- Options for todo extension ----------------------------------------------
 
 # If true, `todo` and `todoList` produce output, else they produce nothing.

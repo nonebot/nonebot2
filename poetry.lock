@@ -600,7 +600,7 @@ unify = "*"
 yapf = "*"
 
 [package.source]
-reference = "b7ca9332c2e4c5e50110d6477dd28821c74da778"
+reference = "85ffe5c872e0ad57bfd1b5432d49e03a2f900a8f"
 type = "git"
 url = "https://github.com/nonebot/sphinx-markdown-builder.git"
 [[package]]

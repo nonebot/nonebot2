@@ -1,6 +1,37 @@
 # NoneBot 模块
 
 
+### `get_driver()`
+
+
+* **说明**
+
+    获取全局 Driver 对象。可用于在计划任务的回调中获取当前 Driver 对象。
+
+
+
+* **返回**
+
+    
+    * `Driver`: 全局 Driver 对象
+
+
+
+* **异常**
+
+    
+    * `ValueError`: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+
+
+
+* **用法**
+
+
+```python
+driver = nonebot.get_driver()
+```
+
+
 ### `get_app()`
 
 
@@ -91,37 +122,6 @@ asgi = nonebot.get_asgi()
 
 ```python
 bots = nonebot.get_bots()
-```
-
-
-### `get_driver()`
-
-
-* **说明**
-
-    获取全局 Driver 对象。可用于在计划任务的回调中获取当前 Driver 对象。
-
-
-
-* **返回**
-
-    
-    * `Driver`: 全局 Driver 对象
-
-
-
-* **异常**
-
-    
-    * `ValueError`: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
-
-
-
-* **用法**
-
-
-```python
-driver = nonebot.get_driver()
 ```
 
 

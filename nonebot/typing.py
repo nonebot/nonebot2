@@ -105,11 +105,60 @@ PreProcessor = Callable[[Bot, Event, dict], Union[Awaitable[None],
 """
 
 Matcher = TypeVar("Matcher", bound="MatcherClass")
+"""
+:类型: `Matcher`
+
+:说明:
+
+  Matcher 即响应事件的处理类。通过 Rule 判断是否响应事件，运行 Handler。
+"""
+Rule = TypeVar("Rule", bound="RuleClass")
+"""
+:类型: `Rule`
+
+:说明:
+
+  Rule 即判断是否响应事件的处理类。内部存储 RuleChecker ，返回全为 True 则响应事件。
+"""
+RuleChecker = Callable[[Bot, Event, dict], Awaitable[bool]]
+"""
+:类型: `Callable[[Bot, Event, dict], Awaitable[bool]]`
+
+:说明:
+
+  RuleChecker 即判断是否响应事件的处理函数。
+"""
+Permission = TypeVar("Permission", bound="PermissionClass")
+"""
+:类型: `Permission`
+
+:说明:
+
+  Permission 即判断是否响应消息的处理类。内部存储 PermissionChecker ，返回只要有一个 True 则响应消息。
+"""
+PermissionChecker = Callable[[Bot, Event], Awaitable[bool]]
+"""
+:类型: `Callable[[Bot, Event], Awaitable[bool]]`
+
+:说明:
+
+  RuleChecker 即判断是否响应消息的处理函数。
+"""
 Handler = Callable[[Bot, Event, dict], Union[Awaitable[None],
                                              Awaitable[NoReturn]]]
-Rule = TypeVar("Rule", bound="RuleClass")
-RuleChecker = Callable[[Bot, Event, dict], Awaitable[bool]]
-Permission = TypeVar("Permission", bound="PermissionClass")
-PermissionChecker = Callable[[Bot, Event], Awaitable[bool]]
+"""
+:类型: `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+
+:说明:
+
+  Handler 即事件的处理函数。
+"""
 ArgsParser = Callable[[Bot, Event, dict], Union[Awaitable[None],
                                                 Awaitable[NoReturn]]]
+"""
+:类型: `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+
+:说明:
+
+  ArgsParser 即消息参数解析函数，在 Matcher.got 获取参数时被运行。
+"""
