@@ -600,7 +600,7 @@ unify = "*"
 yapf = "*"
 
 [package.source]
-reference = "85ffe5c872e0ad57bfd1b5432d49e03a2f900a8f"
+reference = "a70465ccfe577aee1612c987d20c0db93036e5d6"
 type = "git"
 url = "https://github.com/nonebot/sphinx-markdown-builder.git"
 [[package]]
@@ -852,6 +852,7 @@ test = []
 
 [metadata]
 content-hash = "4d16d7ad0930bc9851802bc149f843c4e990a987e89414d765579ea8dccc8d6e"
+lock-version = "1.0"
 python-versions = "^3.7"
 
 [metadata.files]

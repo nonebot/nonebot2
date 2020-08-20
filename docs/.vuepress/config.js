@@ -28,7 +28,43 @@ module.exports = {
     docsDir: "docs",
     lastUpdated: "上次更新",
     nav: [{ text: "API", link: "/api/" }],
-    sidebar: {}
+    sidebar: {
+      "/api/": [
+        {
+          title: "NoneBot Api Reference",
+          path: "",
+          collapsable: false,
+          sidebarDepth: 3,
+          children: [
+            {
+              title: "nonebot 模块",
+              path: "nonebot",
+              sidebar: "auto"
+            },
+            {
+              title: "nonebot.typing 模块",
+              path: "typing",
+              sidebar: "auto"
+            },
+            {
+              title: "nonebot.log 模块",
+              path: "log",
+              sidebar: "auto"
+            },
+            {
+              title: "nonebot.exception 模块",
+              path: "exception",
+              sidebar: "auto"
+            },
+            {
+              title: "nonebot.config 模块",
+              path: "config",
+              sidebar: "auto"
+            }
+          ]
+        }
+      ]
+    }
   },
 
   plugins: ["@vuepress/plugin-back-to-top", "@vuepress/plugin-medium-zoom"]

@@ -5,7 +5,7 @@ from nonebot.plugin import on_metaevent
 from nonebot.typing import Bot, Event
 
 
-def heartbeat(bot: Bot, event: Event) -> bool:
+async def heartbeat(bot: Bot, event: Event, state: dict) -> bool:
     return event.detail_type == "heartbeat"
 
 

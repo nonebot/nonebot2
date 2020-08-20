@@ -2,5 +2,5 @@ NoneBot.config 模块
 ===================
 
 .. automodule:: nonebot.config
-   :members:
+   :members: Env, Config
    :show-inheritance:

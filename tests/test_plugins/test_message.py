@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from nonebot.rule import Rule
 from nonebot.typing import Event
 from nonebot.plugin import on_message
 from nonebot.adapters.cqhttp import Bot
@@ -14,6 +13,7 @@ async def test_handler(bot: Bot, event: Event, state: dict):
     print("Test Matcher Received:", event)
     print("Current State:", state)
     state["event"] = event
+    await bot.send_private_msg(message="Received", user_id=event.user_id)
 
 
 @test_message.receive()

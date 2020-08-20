@@ -9,7 +9,7 @@ from ipaddress import IPv4Address
 from pydantic import BaseSettings, IPvAnyAddress
 from pydantic.env_settings import SettingsError, env_file_sentinel, read_env_file
 
-from nonebot.typing import Set, Dict, Union, Mapping, Optional
+from nonebot.typing import Any, Set, Dict, Union, Mapping, Optional
 
 
 class BaseConfig(BaseSettings):
@@ -73,9 +73,24 @@ class BaseConfig(BaseSettings):
 
         return d
 
+    def __getattr__(self, name: str) -> Any:
+        return self.__dict__.get(name)
+
 
 class Env(BaseSettings):
+    """
+    运行环境配置。大小写不敏感。
+
+    将会从 ``nonebot.init 参数`` > ``环境变量`` > ``.env 环境配置文件`` 的优先级读取配置。
+    """
+
     environment: str = "prod"
+    """
+    - 类型: ``str``
+    - 默认值: ``"prod"``
+    - 说明:
+      当前环境名。 NoneBot 将从 ``.env.{environment}`` 文件中加载配置。
+    """
 
     class Config:
         env_file = ".env"
@@ -83,23 +98,52 @@ class Env(BaseSettings):
 
 class Config(BaseConfig):
     """
-    NoneBot Config Object
+    NoneBot 主要配置。大小写不敏感。
 
-    configs:
-
-    ### `driver`
-
-    - 类型: `str`
-    - 默认值: `"nonebot.drivers.fastapi"`
-    - 说明:
-      nonebot 运行使用后端框架封装 Driver 。继承自 nonebot.driver.BaseDriver 。
+    除了 NoneBot 的配置项外，还可以自行添加配置项到 ``.env.{environment}`` 文件中。这些配置将会一起带入 ``Config`` 类中。
     """
     # nonebot configs
     driver: str = "nonebot.drivers.fastapi"
+    """
+    - 类型: ``str``
+    - 默认值: ``"nonebot.drivers.fastapi"``
+    - 说明:
+      NoneBot 运行所使用的 ``Driver`` 。继承自 ``nonebot.driver.BaseDriver`` 。
+    """
     host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
+    """
+    - 类型: ``IPvAnyAddress``
+    - 默认值: ``127.0.0.1``
+    - 说明:
+      NoneBot 的 HTTP 和 WebSocket 服务端监听的 IP／主机名。
+    """
     port: int = 8080
+    """
+    - 类型: ``int``
+    - 默认值: ``8080``
+    - 说明:
+      NoneBot 的 HTTP 和 WebSocket 服务端监听的端口。
+    """
     secret: Optional[str] = None
+    """
+    - 类型: ``Optional[str]``
+    - 默认值: ``None``
+    - 说明:
+      上报连接 NoneBot 所需的密钥。
+    - 示例:
+
+    .. code-block:: http
+
+        POST /cqhttp/ HTTP/1.1
+        Authorization: Bearer kSLuTF2GC2Q4q4ugm3
+    """
     debug: bool = False
+    """
+    - 类型: ``bool``
+    - 默认值: ``False``
+    - 说明:
+      是否以调试模式运行 NoneBot。
+    """
 
     # bot connection configs
     api_root: Dict[str, str] = {}
