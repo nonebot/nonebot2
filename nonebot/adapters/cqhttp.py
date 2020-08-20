@@ -67,7 +67,7 @@ class ResultStore:
                 future.set_result(result)
 
     @classmethod
-    async def fetch(cls, seq: int, timeout: float) -> Dict[str, Any]:
+    async def fetch(cls, seq: int, timeout: Optional[float]) -> Dict[str, Any]:
         future = asyncio.get_event_loop().create_future()
         cls._futures[seq] = future
         try:
@@ -137,7 +137,7 @@ class Bot(BaseBot):
                 api_root += "/"
 
             headers = {}
-            if self.config.access_token:
+            if self.config.access_token is not None:
                 headers["Authorization"] = "Bearer " + self.config.access_token
 
             try:

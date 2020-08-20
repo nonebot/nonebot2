@@ -23,10 +23,12 @@ module.exports = {
 
   themeConfig: {
     repo: "nonebot/nonebot",
+    docsDir: "docs",
+    docsBranch: "dev2",
     editLinks: true,
     editLinkText: "在 GitHub 上编辑此页",
-    docsDir: "docs",
     lastUpdated: "上次更新",
+    smoothScroll: true,
     nav: [{ text: "API", link: "/api/" }],
     sidebar: {
       "/api/": [

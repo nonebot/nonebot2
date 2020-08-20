@@ -5,10 +5,9 @@ import json
 import logging
 
 import uvicorn
-from fastapi import FastAPI, status
-from fastapi.security import OAuth2PasswordBearer
-from starlette.websockets import WebSocketDisconnect
-from fastapi import Body, Header, Response, WebSocket as FastAPIWebSocket
+from fastapi import FastAPI, status, HTTPException
+from fastapi import Body, Header, Response, Depends
+from starlette.websockets import WebSocketDisconnect, WebSocket as FastAPIWebSocket
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
@@ -16,6 +15,18 @@ from nonebot.utils import DataclassEncoder
 from nonebot.adapters.cqhttp import Bot as CQBot
 from nonebot.drivers import BaseDriver, BaseWebSocket
 from nonebot.typing import Union, Optional, Callable, overrides
+
+
+def get_auth_bearer(access_token: Optional[str] = Header(
+    None, alias="Authorization")):
+    if not access_token:
+        return None
+    scheme, _, param = access_token.partition(" ")
+    if scheme.lower() != "bearer":
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                            detail="Not authenticated",
+                            headers={"WWW-Authenticate": "Bearer"})
+    return param
 
 
 class Driver(BaseDriver):
@@ -106,14 +117,18 @@ class Driver(BaseDriver):
                     **kwargs)
 
     @overrides(BaseDriver)
-    async def _handle_http(self,
-                           adapter: str,
-                           response: Response,
-                           data: dict = Body(...),
-                           x_self_id: str = Header(None),
-                           access_token: str = OAuth2PasswordBearer(
-                               "/", auto_error=False)):
-        # TODO: Check authorization
+    async def _handle_http(
+        self,
+        adapter: str,
+        response: Response,
+        data: dict = Body(...),
+        x_self_id: str = Header(None),
+        access_token: Optional[str] = Depends(get_auth_bearer)):
+        secret = self.config.secret
+        if secret is not None and secret != access_token:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                detail="Not authenticated",
+                                headers={"WWW-Authenticate": "Bearer"})
 
         # Create Bot Object
         if adapter in self._adapters:
@@ -127,15 +142,19 @@ class Driver(BaseDriver):
         return {"status": 200, "message": "success"}
 
     @overrides(BaseDriver)
-    async def _handle_ws_reverse(self,
-                                 adapter: str,
-                                 websocket: FastAPIWebSocket,
-                                 x_self_id: str = Header(None),
-                                 access_token: str = OAuth2PasswordBearer(
-                                     "/", auto_error=False)):
-        websocket = WebSocket(websocket)
+    async def _handle_ws_reverse(
+        self,
+        adapter: str,
+        websocket: FastAPIWebSocket,
+        x_self_id: str = Header(None),
+        access_token: Optional[str] = Depends(get_auth_bearer)):
+        secret = self.config.secret
+        if secret is not None and secret != access_token:
+            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                detail="Not authenticated",
+                                headers={"WWW-Authenticate": "Bearer"})
 
-        # TODO: Check authorization
+        websocket = WebSocket(websocket)
 
         # Create Bot Object
         if adapter == "coolq":

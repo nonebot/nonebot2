@@ -1,5 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+配置
+====
+
+NoneBot 使用 `pydantic`_ 以及 `python-dotenv`_ 来读取配置。
+
+配置项需符合特殊格式或 json 序列化格式。详情见 `pydantic Field Type`_ 文档。
+
+.. _pydantic:
+    https://pydantic-docs.helpmanual.io/
+.. _python-dotenv:
+    https://saurabh-kumar.com/python-dotenv/
+.. _pydantic Field Type:
+    https://pydantic-docs.helpmanual.io/usage/types/
+"""
 
 import os
 from pathlib import Path
@@ -100,7 +115,8 @@ class Config(BaseConfig):
     """
     NoneBot 主要配置。大小写不敏感。
 
-    除了 NoneBot 的配置项外，还可以自行添加配置项到 ``.env.{environment}`` 文件中。这些配置将会一起带入 ``Config`` 类中。
+    除了 NoneBot 的配置项外，还可以自行添加配置项到 ``.env.{environment}`` 文件中。
+    这些配置将会在 json 反序列化后一起带入 ``Config`` 类中。
     """
     # nonebot configs
     driver: str = "nonebot.drivers.fastapi"
@@ -147,15 +163,80 @@ class Config(BaseConfig):
 
     # bot connection configs
     api_root: Dict[str, str] = {}
+    """
+    - 类型: ``Dict[str, str]``
+    - 默认值: ``{}``
+    - 说明:
+      以机器人 ID 为键，上报地址为值的字典，环境变量或文件中应使用 json 序列化。
+    - 示例:
+
+    .. code-block:: plain
+
+        API_ROOT={"123456": "http://127.0.0.1:5700"}
+    """
     api_timeout: Optional[float] = 60.
+    """
+    - 类型: ``Optional[float]``
+    - 默认值: ``60.``
+    - 说明:
+      API 请求超时时间，单位: 秒。
+    """
     access_token: Optional[str] = None
+    """
+    - 类型: ``Optional[str]``
+    - 默认值: ``None``
+    - 说明:
+      API 请求所需密钥，会在调用 API 时在请求头中携带。
+    """
 
     # bot runtime configs
     superusers: Set[int] = set()
+    """
+    - 类型: ``Set[int]``
+    - 默认值: ``set()``
+    - 说明:
+      机器人超级用户。
+    - 示例:
+
+    .. code-block:: plain
+
+        SUPER_USERS=[12345789]
+    """
     nickname: Union[str, Set[str]] = ""
+    """
+    - 类型: ``Union[str, Set[str]]``
+    - 默认值: ``""``
+    - 说明:
+      机器人昵称。
+    """
     command_start: Set[str] = {"/"}
+    """
+    - 类型: ``Set[str]``
+    - 默认值: ``{"/"}``
+    - 说明:
+      命令的起始标记，用于判断一条消息是不是命令。
+    """
     command_sep: Set[str] = {"."}
+    """
+    - 类型: ``Set[str]``
+    - 默认值: ``{"."}``
+    - 说明:
+      命令的分隔标记，用于将文本形式的命令切分为元组（实际的命令名）。
+    """
     session_expire_timeout: timedelta = timedelta(minutes=2)
+    """
+    - 类型: ``timedelta``
+    - 默认值: ``timedelta(minutes=2)``
+    - 说明:
+      等待用户回复的超时时间。
+    - 示例:
+
+    .. code-block:: plain
+
+        SESSION_EXPIRE_TIMEOUT=120  # 单位: 秒
+        SESSION_EXPIRE_TIMEOUT=[DD ][HH:MM]SS[.ffffff]
+        SESSION_EXPIRE_TIMEOUT=P[DD]DT[HH]H[MM]M[SS]S  # ISO 8601
+    """
 
     # custom configs
     # custom configs can be assigned during nonebot.init
