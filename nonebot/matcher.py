@@ -19,6 +19,7 @@ class Matcher:
     """`Matcher`类
     """
 
+    type: str = ""
     rule: Rule = Rule()
     permission: Permission = Permission()
     handlers: List[Handler] = []
@@ -38,6 +39,7 @@ class Matcher:
 
     @classmethod
     def new(cls,
+            type_: str = "",
             rule: Rule = Rule(),
             permission: Permission = Permission(),
             handlers: list = [],
@@ -54,6 +56,7 @@ class Matcher:
 
         NewMatcher = type(
             "Matcher", (Matcher,), {
+                "type": type_,
                 "rule": rule,
                 "permission": permission,
                 "handlers": handlers,
@@ -69,7 +72,8 @@ class Matcher:
 
     @classmethod
     async def check_perm(cls, bot: Bot, event: Event) -> bool:
-        return await cls.permission(bot, event)
+        return (event.type == (cls.type or event.type) and
+                await cls.permission(bot, event))
 
     @classmethod
     async def check_rule(cls, bot: Bot, event: Event, state: dict) -> bool:
@@ -180,6 +184,7 @@ class Matcher:
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
             matcher = Matcher.new(
+                self.type,
                 self.rule,
                 USER(event.user_id, perm=self.permission),  # type:ignore
                 self.handlers,
@@ -191,6 +196,7 @@ class Matcher:
             return
         except PausedException:
             matcher = Matcher.new(
+                self.type,
                 self.rule,
                 USER(event.user_id, perm=self.permission),  # type:ignore
                 self.handlers,

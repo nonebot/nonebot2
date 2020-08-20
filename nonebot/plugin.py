@@ -8,8 +8,8 @@ from importlib.util import module_from_spec
 
 from nonebot.log import logger
 from nonebot.matcher import Matcher
+from nonebot.permission import Permission
 from nonebot.rule import Rule, startswith, endswith, command, regex
-from nonebot.permission import Permission, METAEVENT, MESSAGE, NOTICE, REQUEST
 from nonebot.typing import Set, Dict, Type, Tuple, Union, Optional, ModuleType, RuleChecker
 
 plugins: Dict[str, "Plugin"] = {}
@@ -27,14 +27,33 @@ class Plugin(object):
         self.matchers = matchers
 
 
+def on(rule: Union[Rule, RuleChecker] = Rule(),
+       permission: Permission = Permission(),
+       *,
+       handlers=[],
+       temp=False,
+       priority: int = 1,
+       state={}) -> Type[Matcher]:
+    matcher = Matcher.new("",
+                          Rule() & rule,
+                          permission,
+                          temp=temp,
+                          priority=priority,
+                          handlers=handlers,
+                          default_state=state)
+    _tmp_matchers.add(matcher)
+    return matcher
+
+
 def on_metaevent(rule: Union[Rule, RuleChecker] = Rule(),
                  *,
                  handlers=[],
                  temp=False,
                  priority: int = 1,
                  state={}) -> Type[Matcher]:
-    matcher = Matcher.new(Rule() & rule,
-                          METAEVENT,
+    matcher = Matcher.new("meta_event",
+                          Rule() & rule,
+                          Permission(),
                           temp=temp,
                           priority=priority,
                           handlers=handlers,
@@ -44,13 +63,14 @@ def on_metaevent(rule: Union[Rule, RuleChecker] = Rule(),
 
 
 def on_message(rule: Union[Rule, RuleChecker] = Rule(),
-               permission: Permission = MESSAGE,
+               permission: Permission = Permission(),
                *,
                handlers=[],
                temp=False,
                priority: int = 1,
                state={}) -> Type[Matcher]:
-    matcher = Matcher.new(Rule() & rule,
+    matcher = Matcher.new("message",
+                          Rule() & rule,
                           permission,
                           temp=temp,
                           priority=priority,
@@ -66,8 +86,9 @@ def on_notice(rule: Union[Rule, RuleChecker] = Rule(),
               temp=False,
               priority: int = 1,
               state={}) -> Type[Matcher]:
-    matcher = Matcher.new(Rule() & rule,
-                          NOTICE,
+    matcher = Matcher.new("notice",
+                          Rule() & rule,
+                          Permission(),
                           temp=temp,
                           priority=priority,
                           handlers=handlers,
@@ -82,8 +103,9 @@ def on_request(rule: Union[Rule, RuleChecker] = Rule(),
                temp=False,
                priority: int = 1,
                state={}) -> Type[Matcher]:
-    matcher = Matcher.new(Rule() & rule,
-                          REQUEST,
+    matcher = Matcher.new("request",
+                          Rule() & rule,
+                          Permission(),
                           temp=temp,
                           priority=priority,
                           handlers=handlers,
@@ -94,7 +116,7 @@ def on_request(rule: Union[Rule, RuleChecker] = Rule(),
 
 def on_startswith(msg: str,
                   rule: Optional[Union[Rule, RuleChecker]] = None,
-                  permission: Permission = MESSAGE,
+                  permission: Permission = Permission(),
                   **kwargs) -> Type[Matcher]:
     return on_message(startswith(msg) &
                       rule, permission, **kwargs) if rule else on_message(
@@ -103,7 +125,7 @@ def on_startswith(msg: str,
 
 def on_endswith(msg: str,
                 rule: Optional[Union[Rule, RuleChecker]] = None,
-                permission: Permission = MESSAGE,
+                permission: Permission = Permission(),
                 **kwargs) -> Type[Matcher]:
     return on_message(endswith(msg) &
                       rule, permission, **kwargs) if rule else on_message(
@@ -112,7 +134,7 @@ def on_endswith(msg: str,
 
 def on_command(cmd: Tuple[str],
                rule: Optional[Union[Rule, RuleChecker]] = None,
-               permission: Permission = MESSAGE,
+               permission: Permission = Permission(),
                **kwargs) -> Type[Matcher]:
     return on_message(command(cmd) &
                       rule, permission, **kwargs) if rule else on_message(
@@ -122,10 +144,11 @@ def on_command(cmd: Tuple[str],
 def on_regex(pattern: str,
              flags: Union[int, re.RegexFlag] = 0,
              rule: Optional[Rule] = None,
+             permission: Permission = Permission(),
              **kwargs) -> Type[Matcher]:
     return on_message(regex(pattern, flags) &
-                      rule, **kwargs) if rule else on_message(
-                          regex(pattern, flags), **kwargs)
+                      rule, permission, **kwargs) if rule else on_message(
+                          regex(pattern, flags), permission, **kwargs)
 
 
 def load_plugin(module_path: str) -> Optional[Plugin]:
