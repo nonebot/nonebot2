@@ -157,12 +157,13 @@ class Driver(BaseDriver):
         websocket = WebSocket(websocket)
 
         # Create Bot Object
-        if adapter == "coolq":
-            bot = CQBot(self,
-                        "websocket",
-                        self.config,
-                        x_self_id,
-                        websocket=websocket)
+        if adapter in self._adapters:
+            BotClass = self._adapters[adapter]
+            bot = BotClass(self,
+                           "websocket",
+                           self.config,
+                           x_self_id,
+                           websocket=websocket)
         else:
             await websocket.close(code=status.WS_1003_UNSUPPORTED_DATA)
             return
