@@ -51,7 +51,16 @@ class BaseEvent(abc.ABC):
 
     def __repr__(self) -> str:
         # TODO: pretty print
-        return f"<Event: >"
+        return f"<Event: {self.type}/{self.detail_type} {self.raw_message}>"
+
+    @property
+    def raw_event(self) -> dict:
+        return self._raw_event
+
+    @property
+    @abc.abstractmethod
+    def self_id(self) -> str:
+        raise NotImplementedError
 
     @property
     @abc.abstractmethod
@@ -91,6 +100,16 @@ class BaseEvent(abc.ABC):
     @user_id.setter
     @abc.abstractmethod
     def user_id(self, value) -> None:
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def to_me(self) -> Optional[bool]:
+        raise NotImplementedError
+
+    @to_me.setter
+    @abc.abstractmethod
+    def to_me(self, value) -> None:
         raise NotImplementedError
 
     @property

@@ -7,11 +7,12 @@ import asyncio
 
 import httpx
 
+from nonebot.log import logger
 from nonebot.config import Config
 from nonebot.message import handle_event
-from nonebot.typing import overrides, Driver, WebSocket, NoReturn
 from nonebot.typing import Any, Dict, Union, Tuple, Iterable, Optional
 from nonebot.exception import NetworkError, ActionFailed, ApiNotAvailable
+from nonebot.typing import overrides, Driver, WebSocket, NoReturn
 from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
 
 
@@ -39,6 +40,67 @@ def unescape(s: str) -> str:
 
 def _b2s(b: bool) -> str:
     return str(b).lower()
+
+
+def _check_at_me(bot: "Bot", event: "Event"):
+    if event.type != "message":
+        return
+
+    if event.detail_type == "private":
+        event.to_me = True
+    else:
+        event.to_me = False
+        at_me_seg = MessageSegment.at(event.self_id)
+
+        # check the first segment
+        first_msg_seg = event.message[0]
+        if first_msg_seg == at_me_seg:
+            event.to_me = True
+            del event.message[0]
+
+        if not event.to_me:
+            # check the last segment
+            i = -1
+            last_msg_seg = event.message[i]
+            if last_msg_seg.type == "text" and \
+                    not last_msg_seg.data["text"].strip() and \
+                    len(event.message) >= 2:
+                i -= 1
+                last_msg_seg = event.message[i]
+
+            if last_msg_seg == at_me_seg:
+                event.to_me = True
+                del event.message[i:]
+
+        if not event.message:
+            event.message.append(MessageSegment.text(""))
+
+
+def _check_nickname(bot: "Bot", event: "Event"):
+    if event.type != "message":
+        return
+
+    first_msg_seg = event.message[0]
+    if first_msg_seg.type != "text":
+        return
+
+    first_text = first_msg_seg.data["text"]
+
+    if bot.config.NICKNAME:
+        # check if the user is calling me with my nickname
+        if isinstance(bot.config.NICKNAME, str) or \
+                not isinstance(bot.config.NICKNAME, Iterable):
+            nicknames = (bot.config.NICKNAME,)
+        else:
+            nicknames = filter(lambda n: n, bot.config.NICKNAME)
+        nickname_regex = "|".join(nicknames)
+        m = re.search(rf"^({nickname_regex})([\s,，]*|$)", first_text,
+                      re.IGNORECASE)
+        if m:
+            nickname = m.group(1)
+            logger.debug(f"User is calling me {nickname}")
+            event.to_me = True
+            first_msg_seg.data["text"] = first_text[m.end():]
 
 
 def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
@@ -108,6 +170,10 @@ class Bot(BaseBot):
 
         event = Event(message)
 
+        # Check whether user is calling me
+        _check_at_me(self, event)
+        _check_nickname(self, event)
+
         await handle_event(self, event)
 
     @overrides(BaseBot)
@@ -168,6 +234,11 @@ class Event(BaseEvent):
 
     @property
     @overrides(BaseEvent)
+    def self_id(self) -> str:
+        return str(self._raw_event["self_id"])
+
+    @property
+    @overrides(BaseEvent)
     def type(self) -> str:
         return self._raw_event["post_type"]
 
@@ -208,6 +279,16 @@ class Event(BaseEvent):
 
     @property
     @overrides(BaseEvent)
+    def to_me(self) -> Optional[bool]:
+        return self._raw_event.get("to_me")
+
+    @to_me.setter
+    @overrides(BaseEvent)
+    def to_me(self, value) -> None:
+        self._raw_event["to_me"] = value
+
+    @property
+    @overrides(BaseEvent)
     def message(self) -> Optional["Message"]:
         return self._raw_event.get("message")
 
@@ -245,6 +326,18 @@ class Event(BaseEvent):
 class MessageSegment(BaseMessageSegment):
 
     @overrides(BaseMessageSegment)
+    def __init__(self, type: str, data: Dict[str, str]) -> None:
+        if type == "at" and data.get("qq") == "all":
+            type = "at_all"
+            data.clear()
+        elif type == "shake":
+            type = "poke"
+            data = {"type": "Poke"}
+        elif type == "text":
+            data["text"] = unescape(data["text"])
+        super().__init__(type=type, data=data)
+
+    @overrides(BaseMessageSegment)
     def __str__(self):
         type_ = self.type
         data = self.data.copy()
@@ -271,7 +364,7 @@ class MessageSegment(BaseMessageSegment):
         return MessageSegment("anonymous", {"ignore": _b2s(ignore_failure)})
 
     @staticmethod
-    def at(user_id: int) -> "MessageSegment":
+    def at(user_id: Union[int, str]) -> "MessageSegment":
         return MessageSegment("at", {"qq": str(user_id)})
 
     @staticmethod

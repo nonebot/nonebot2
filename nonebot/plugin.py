@@ -33,12 +33,14 @@ def on(rule: Union[Rule, RuleChecker] = Rule(),
        handlers=[],
        temp=False,
        priority: int = 1,
+       block: bool = False,
        state={}) -> Type[Matcher]:
     matcher = Matcher.new("",
                           Rule() & rule,
                           permission,
                           temp=temp,
                           priority=priority,
+                          block=block,
                           handlers=handlers,
                           default_state=state)
     _tmp_matchers.add(matcher)
@@ -50,12 +52,14 @@ def on_metaevent(rule: Union[Rule, RuleChecker] = Rule(),
                  handlers=[],
                  temp=False,
                  priority: int = 1,
+                 block: bool = False,
                  state={}) -> Type[Matcher]:
     matcher = Matcher.new("meta_event",
                           Rule() & rule,
                           Permission(),
                           temp=temp,
                           priority=priority,
+                          block=block,
                           handlers=handlers,
                           default_state=state)
     _tmp_matchers.add(matcher)
@@ -68,12 +72,14 @@ def on_message(rule: Union[Rule, RuleChecker] = Rule(),
                handlers=[],
                temp=False,
                priority: int = 1,
+               block: bool = True,
                state={}) -> Type[Matcher]:
     matcher = Matcher.new("message",
                           Rule() & rule,
                           permission,
                           temp=temp,
                           priority=priority,
+                          block=block,
                           handlers=handlers,
                           default_state=state)
     _tmp_matchers.add(matcher)
@@ -85,12 +91,14 @@ def on_notice(rule: Union[Rule, RuleChecker] = Rule(),
               handlers=[],
               temp=False,
               priority: int = 1,
+              block: bool = False,
               state={}) -> Type[Matcher]:
     matcher = Matcher.new("notice",
                           Rule() & rule,
                           Permission(),
                           temp=temp,
                           priority=priority,
+                          block=block,
                           handlers=handlers,
                           default_state=state)
     _tmp_matchers.add(matcher)
@@ -102,12 +110,14 @@ def on_request(rule: Union[Rule, RuleChecker] = Rule(),
                handlers=[],
                temp=False,
                priority: int = 1,
+               block: bool = False,
                state={}) -> Type[Matcher]:
     matcher = Matcher.new("request",
                           Rule() & rule,
                           Permission(),
                           temp=temp,
                           priority=priority,
+                          block=block,
                           handlers=handlers,
                           default_state=state)
     _tmp_matchers.add(matcher)

@@ -8,7 +8,13 @@
 这些异常并非所有需要用户处理，在 NoneBot 内部运行时被捕获，并进行对应操作。
 """
 
-from nonebot.typing import Optional
+from nonebot.typing import List, Type, Optional
+
+
+class _ExceptionContainer(Exception):
+
+    def __init__(self, exceptions: List[Type[Exception]]) -> None:
+        self.exceptions = exceptions
 
 
 class IgnoredException(Exception):
@@ -37,12 +43,12 @@ class PausedException(Exception):
     """
     :说明:
 
-      指示 NoneBot 结束当前 Handler 并等待下一条消息后继续下一个 Handler。
+      指示 NoneBot 结束当前 ``Handler`` 并等待下一条消息后继续下一个 ``Handler``。
       可用于用户输入新信息。
 
     :用法:
 
-      可以在 Handler 中通过 Matcher.pause() 抛出。
+      可以在 ``Handler`` 中通过 ``Matcher.pause()`` 抛出。
     """
     pass
 
@@ -51,12 +57,12 @@ class RejectedException(Exception):
     """
     :说明:
 
-      指示 NoneBot 结束当前 Handler 并等待下一条消息后重新运行当前 Handler。
+      指示 NoneBot 结束当前 ``Handler`` 并等待下一条消息后重新运行当前 ``Handler``。
       可用于用户重新输入。
 
     :用法:
 
-      可以在 Handler 中通过 Matcher.reject() 抛出。
+      可以在 ``Handler`` 中通过 ``Matcher.reject()`` 抛出。
     """
     pass
 
@@ -65,12 +71,38 @@ class FinishedException(Exception):
     """
     :说明:
 
-      指示 NoneBot 结束当前 Handler 且后续 Handler 不再被运行。
+      指示 NoneBot 结束当前 ``Handler`` 且后续 ``Handler`` 不再被运行。
       可用于结束用户会话。
 
     :用法:
 
-      可以在 Handler 中通过 Matcher.finish() 抛出。
+      可以在 ``Handler`` 中通过 ``Matcher.finish()`` 抛出。
+    """
+    pass
+
+
+class ExpiredException(Exception):
+    """
+    :说明:
+
+      指示 NoneBot 当前 ``Matcher`` 已失效。
+
+    :用法:
+
+      当 ``Matcher`` 运行前检查时抛出。
+    """
+    pass
+
+
+class StopPropagation(Exception):
+    """
+    :说明:
+
+      指示 NoneBot 终止事件向下层传播。
+
+    :用法:
+
+      在 ``Matcher.block == True`` 时抛出。
     """
     pass
 

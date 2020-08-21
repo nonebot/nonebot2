@@ -7,8 +7,10 @@ from datetime import datetime
 from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.matcher import matchers
-from nonebot.exception import IgnoredException
-from nonebot.typing import Bot, Set, Event, PreProcessor
+from nonebot.typing import Set, Type, Union, NoReturn
+from nonebot.typing import Bot, Event, Matcher, PreProcessor
+from nonebot.exception import IgnoredException, ExpiredException
+from nonebot.exception import StopPropagation, _ExceptionContainer
 
 _event_preprocessors: Set[PreProcessor] = set()
 
@@ -16,6 +18,38 @@ _event_preprocessors: Set[PreProcessor] = set()
 def event_preprocessor(func: PreProcessor) -> PreProcessor:
     _event_preprocessors.add(func)
     return func
+
+
+async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
+                       state: dict) -> Union[None, NoReturn]:
+    if datetime.now() > Matcher.expire_time:
+        raise _ExceptionContainer([ExpiredException])
+
+    try:
+        if not await Matcher.check_perm(
+                bot, event) or not await Matcher.check_rule(bot, event, state):
+            return
+    except Exception as e:
+        logger.error(f"Rule check failed for matcher {Matcher}. Ignored.")
+        logger.exception(e)
+        return
+
+    matcher = Matcher()
+    # TODO: BeforeMatcherRun
+    try:
+        logger.debug(f"Running matcher {matcher}")
+        await matcher.run(bot, event, state)
+    except Exception as e:
+        logger.error(f"Running matcher {matcher} failed.")
+        logger.exception(e)
+
+    exceptions = []
+    if Matcher.temp:
+        exceptions.append(ExpiredException)
+    if Matcher.block:
+        exceptions.append(StopPropagation)
+    if exceptions:
+        raise _ExceptionContainer(exceptions)
 
 
 async def handle_event(bot: Bot, event: Event):
@@ -33,37 +67,24 @@ async def handle_event(bot: Bot, event: Event):
     # Trie Match
     _, _ = TrieRule.get_value(bot, event, state)
 
+    break_flag = False
     for priority in sorted(matchers.keys()):
-        index = 0
-        while index <= len(matchers[priority]):
-            Matcher = matchers[priority][index]
+        if break_flag:
+            break
 
-            # Delete expired Matcher
-            if datetime.now() > Matcher.expire_time:
-                del matchers[priority][index]
-                continue
+        pending_tasks = [
+            _run_matcher(matcher, bot, event, state.copy())
+            for matcher in matchers[priority]
+        ]
 
-            # Check rule
-            try:
-                if not await Matcher.check_perm(
-                        bot, event) or not await Matcher.check_rule(
-                            bot, event, state):
-                    index += 1
-                    continue
-            except Exception as e:
-                logger.error(
-                    f"Rule check failed for matcher {Matcher}. Ignored.")
-                logger.exception(e)
-                continue
+        results = await asyncio.gather(*pending_tasks, return_exceptions=True)
 
-            matcher = Matcher()
-            # TODO: BeforeMatcherRun
-            if Matcher.temp:
-                del matchers[priority][index]
-
-            try:
-                await matcher.run(bot, event, state)
-            except Exception as e:
-                logger.error(f"Running matcher {matcher} failed.")
-                logger.exception(e)
-            return
+        i = 0
+        for index, result in enumerate(results):
+            if isinstance(result, _ExceptionContainer):
+                e_list = result.exceptions
+                if StopPropagation in e_list:
+                    break_flag = True
+                if ExpiredException in e_list:
+                    del matchers[priority][index - i]
+                    i += 1

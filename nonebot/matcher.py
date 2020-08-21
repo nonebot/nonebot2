@@ -26,6 +26,7 @@ class Matcher:
     temp: bool = False
     expire_time: Optional[datetime] = None
     priority: int = 1
+    block: bool = False
 
     _default_state: dict = {}
 
@@ -45,6 +46,7 @@ class Matcher:
             handlers: list = [],
             temp: bool = False,
             priority: int = 1,
+            block: bool = False,
             *,
             default_state: dict = {},
             expire_time: Optional[datetime] = None) -> Type["Matcher"]:
@@ -63,6 +65,7 @@ class Matcher:
                 "temp": temp,
                 "expire_time": expire_time,
                 "priority": priority,
+                "block": block,
                 "_default_state": default_state
             })
 
