@@ -109,15 +109,16 @@ class Matcher:
     def receive(cls) -> Callable[[Handler], Handler]:
         """接收一条新消息并处理"""
 
+        async def _handler(bot: Bot, event: Event, state: dict) -> NoReturn:
+            raise PausedException
+
+        if cls.handlers:
+            # 已有前置handlers则接受一条新的消息，否则视为接收初始消息
+            cls.handlers.append(_handler)
+
         def _decorator(func: Handler) -> Handler:
-
-            async def _handler(bot: Bot, event: Event, state: dict) -> NoReturn:
-                raise PausedException
-
-            if cls.handlers:
-                # 已有前置handlers则接受一条新的消息，否则视为接收初始消息
-                cls.handlers.append(_handler)
-            cls.handlers.append(func)
+            if cls.handlers[-1] is not func:
+                cls.handlers.append(func)
 
             return func
 
@@ -131,28 +132,29 @@ class Matcher:
         args_parser: Optional[ArgsParser] = None
     ) -> Callable[[Handler], Handler]:
 
+        async def _key_getter(bot: Bot, event: Event, state: dict):
+            if key not in state:
+                state["_current_key"] = key
+                if prompt:
+                    await bot.send_private_msg(user_id=event.user_id,
+                                               message=prompt)
+                raise PausedException
+
+        async def _key_parser(bot: Bot, event: Event, state: dict):
+            parser = args_parser or cls._default_parser
+            if parser:
+                await parser(bot, event, state)
+            else:
+                state[state["_current_key"]] = str(event.message)
+
+        if cls.handlers:
+            # 已有前置handlers则接受一条新的消息，否则视为接收初始消息
+            cls.handlers.append(_key_getter)
+        cls.handlers.append(_key_parser)
+
         def _decorator(func: Handler) -> Handler:
-
-            async def _key_getter(bot: Bot, event: Event, state: dict):
-                if key not in state:
-                    state["_current_key"] = key
-                    if prompt:
-                        await bot.send_private_msg(user_id=event.user_id,
-                                                   message=prompt)
-                    raise PausedException
-
-            async def _key_parser(bot: Bot, event: Event, state: dict):
-                parser = args_parser or cls._default_parser
-                if parser:
-                    await parser(bot, event, state)
-                else:
-                    state[state["_current_key"]] = str(event.message)
-
-            if cls.handlers:
-                # 已有前置handlers则接受一条新的消息，否则视为接收初始消息
-                cls.handlers.append(_key_getter)
-            cls.handlers.append(_key_parser)
-            cls.handlers.append(func)
+            if cls.handlers[-1] is not func:
+                cls.handlers.append(func)
 
             return func
 
