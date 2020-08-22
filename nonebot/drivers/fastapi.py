@@ -108,9 +108,9 @@ class Driver(BaseDriver):
             },
         }
         uvicorn.run(app or self.server_app,
-                    host=str(host) or str(self.config.host),
+                    host=host or str(self.config.host),
                     port=port or self.config.port,
-                    reload=app and self.config.debug,
+                    reload=bool(app) and self.config.debug,
                     debug=self.config.debug,
                     log_config=LOGGING_CONFIG,
                     **kwargs)

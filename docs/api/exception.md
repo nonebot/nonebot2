@@ -31,14 +31,14 @@
 
 * **说明**
 
-    指示 NoneBot 结束当前 Handler 并等待下一条消息后继续下一个 Handler。
+    指示 NoneBot 结束当前 `Handler` 并等待下一条消息后继续下一个 `Handler`。
     可用于用户输入新信息。
 
 
 
 * **用法**
 
-    可以在 Handler 中通过 Matcher.pause() 抛出。
+    可以在 `Handler` 中通过 `Matcher.pause()` 抛出。
 
 
 
@@ -49,14 +49,14 @@
 
 * **说明**
 
-    指示 NoneBot 结束当前 Handler 并等待下一条消息后重新运行当前 Handler。
+    指示 NoneBot 结束当前 `Handler` 并等待下一条消息后重新运行当前 `Handler`。
     可用于用户重新输入。
 
 
 
 * **用法**
 
-    可以在 Handler 中通过 Matcher.reject() 抛出。
+    可以在 `Handler` 中通过 `Matcher.reject()` 抛出。
 
 
 
@@ -67,14 +67,48 @@
 
 * **说明**
 
-    指示 NoneBot 结束当前 Handler 且后续 Handler 不再被运行。
+    指示 NoneBot 结束当前 `Handler` 且后续 `Handler` 不再被运行。
     可用于结束用户会话。
 
 
 
 * **用法**
 
-    可以在 Handler 中通过 Matcher.finish() 抛出。
+    可以在 `Handler` 中通过 `Matcher.finish()` 抛出。
+
+
+
+## _exception_ `ExpiredException`
+
+基类：`Exception`
+
+
+* **说明**
+
+    指示 NoneBot 当前 `Matcher` 已失效。
+
+
+
+* **用法**
+
+    当 `Matcher` 运行前检查时抛出。
+
+
+
+## _exception_ `StopPropagation`
+
+基类：`Exception`
+
+
+* **说明**
+
+    指示 NoneBot 终止事件向下层传播。
+
+
+
+* **用法**
+
+    在 `Matcher.block == True` 时抛出。
 
 
 

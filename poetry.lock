@@ -197,7 +197,7 @@ description = "Chromium HSTS Preload list as a Python package and updated daily"
 name = "hstspreload"
 optional = false
 python-versions = ">=3.6"
-version = "2020.8.12"
+version = "2020.8.18"
 
 [package.source]
 reference = "aliyun"
@@ -600,7 +600,7 @@ unify = "*"
 yapf = "*"
 
 [package.source]
-reference = "a70465ccfe577aee1612c987d20c0db93036e5d6"
+reference = "1438d33cbeaab0230c9f7e33bd059eb9f57c86d6"
 type = "git"
 url = "https://github.com/nonebot/sphinx-markdown-builder.git"
 [[package]]
@@ -852,7 +852,6 @@ test = []
 
 [metadata]
 content-hash = "4d16d7ad0930bc9851802bc149f843c4e990a987e89414d765579ea8dccc8d6e"
-lock-version = "1.0"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -905,8 +904,8 @@ hpack = [
     {file = "hpack-3.0.0.tar.gz", hash = "sha256:8eec9c1f4bfae3408a3f30500261f7e6a65912dc138526ea054f9ad98892e9d2"},
 ]
 hstspreload = [
-    {file = "hstspreload-2020.8.12-py3-none-any.whl", hash = "sha256:64f4441066d5544873faccf2e0b5757c6670217d34dc31d362ca2977f44604ff"},
-    {file = "hstspreload-2020.8.12.tar.gz", hash = "sha256:3f5c324b1eb9d924e32ffeb5fe265b879806b6e346b765f57566410344f4b41e"},
+    {file = "hstspreload-2020.8.18-py3-none-any.whl", hash = "sha256:5e3b6b2376c6f412086ee21cdd29cd5e0af5b28c967e5f1f026323d0f31dc84b"},
+    {file = "hstspreload-2020.8.18.tar.gz", hash = "sha256:13cf2e9fcd064cd81d220432de9a66dd7e4f10862a03574c45e5f61fc522f312"},
 ]
 html2text = [
     {file = "html2text-2020.1.16-py3-none-any.whl", hash = "sha256:c7c629882da0cf377d66f073329ccf34a12ed2adf0169b9285ae4e63ef54c82b"},

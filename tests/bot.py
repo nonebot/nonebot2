@@ -7,7 +7,6 @@ import sys
 sys.path.insert(0, os.path.abspath(".."))
 
 import nonebot
-from nonebot.matcher import matchers
 
 nonebot.init()
 app = nonebot.get_asgi()
