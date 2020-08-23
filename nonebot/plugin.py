@@ -142,7 +142,7 @@ def on_endswith(msg: str,
                           startswith(msg), permission, **kwargs)
 
 
-def on_command(cmd: Union[str, Tuple[str]],
+def on_command(cmd: Union[str, Tuple[str, ...]],
                rule: Optional[Union[Rule, RuleChecker]] = None,
                permission: Permission = Permission(),
                **kwargs) -> Type[Matcher]:

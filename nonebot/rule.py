@@ -105,7 +105,7 @@ def keyword(msg: str) -> Rule:
     return Rule(_keyword)
 
 
-def command(command: Tuple[str]) -> Rule:
+def command(command: Tuple[str, ...]) -> Rule:
     config = get_driver().config
     command_start = config.command_start
     command_sep = config.command_sep
