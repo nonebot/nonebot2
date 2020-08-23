@@ -148,19 +148,17 @@ class Driver(BaseDriver):
         access_token: Optional[str] = Depends(get_auth_bearer)):
         secret = self.config.secret
         if secret is not None and secret != access_token:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                                detail="Not authenticated",
-                                headers={"WWW-Authenticate": "Bearer"})
+            await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
 
         websocket = WebSocket(websocket)
 
         if not x_self_id:
             logger.error(f"Error Connection Unkown: self_id {x_self_id}")
-            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN)
+            await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
 
         if x_self_id in self._clients:
             logger.error(f"Error Connection Conflict: self_id {x_self_id}")
-            raise HTTPException(status_code=status.HTTP_409_CONFLICT)
+            await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
 
         # Create Bot Object
         if adapter in self._adapters:

@@ -65,7 +65,8 @@ async def handle_event(bot: Bot, event: Event):
             return
 
     # Trie Match
-    _, _ = TrieRule.get_value(bot, event, state)
+    if event.type == "message":
+        _, _ = TrieRule.get_value(bot, event, state)
 
     break_flag = False
     for priority in sorted(matchers.keys()):

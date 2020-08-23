@@ -12,6 +12,6 @@ async def heartbeat(bot: Bot, event: Event, state: dict) -> bool:
 test_matcher = on_metaevent(heartbeat)
 
 
-@test_matcher.handle()
+@test_matcher.receive()
 async def handle_heartbeat(bot: Bot, event: Event, state: dict):
     print("[i] Heartbeat")

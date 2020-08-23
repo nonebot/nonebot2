@@ -10,13 +10,12 @@ test_message = on_message(state={"default": 1})
 
 @test_message.handle()
 async def test_handler(bot: Bot, event: Event, state: dict):
-    print("Test Matcher Received:", event)
-    print("Current State:", state)
+    print("[*] Test Matcher Received:", event)
     state["event"] = event
     await bot.send_private_msg(message="Received", user_id=event.user_id)
 
 
 @test_message.receive()
 async def test_receive(bot: Bot, event: Event, state: dict):
-    print("Test Matcher Received next time:", event)
-    print("Current State:", state)
+    print("[*] Test Matcher Received next time:", event)
+    print("[*] Current State:", state)

@@ -147,9 +147,7 @@ class Matcher:
             else:
                 state[state["_current_key"]] = str(event.message)
 
-        if cls.handlers:
-            # 已有前置handlers则接受一条新的消息，否则视为接收初始消息
-            cls.handlers.append(_key_getter)
+        cls.handlers.append(_key_getter)
         cls.handlers.append(_key_parser)
 
         def _decorator(func: Handler) -> Handler:

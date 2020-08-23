@@ -125,3 +125,11 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
         return bool(pattern.search(str(event.message)))
 
     return Rule(_regex)
+
+
+def to_me() -> Rule:
+
+    async def _to_me(bot: Bot, event: Event, state: dict) -> bool:
+        return bool(event.to_me)
+
+    return Rule(_to_me)
