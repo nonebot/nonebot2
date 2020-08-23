@@ -24,8 +24,10 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "vuepress": "^1.3.1",
     "@vuepress/plugin-back-to-top": "^1.3.1",
-    "@vuepress/plugin-medium-zoom": "^1.3.1"
+    "@vuepress/plugin-medium-zoom": "^1.3.1",
+    "vuepress": "^1.3.1",
+    "vuepress-plugin-versioning": "^4.5.0",
+    "vuepress-theme-titanium": "^4.5.1"
   }
 }
