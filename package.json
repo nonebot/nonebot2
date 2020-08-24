@@ -4,8 +4,7 @@
   "description": "An asynchronous QQ bot framework.",
   "homepage": "https://nonebot.cqp.moe/",
   "main": "index.js",
-  "contributors": [
-    {
+  "contributors": [{
       "name": "Richard Chien",
       "email": "richardchienthebest@gmail.com"
     },

@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-from nonebot.plugin import on_metaevent
 from nonebot.typing import Bot, Event
+from nonebot.plugin import on_metaevent
 
 
 async def heartbeat(bot: Bot, event: Event, state: dict) -> bool:

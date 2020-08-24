@@ -22,7 +22,7 @@ def event_preprocessor(func: PreProcessor) -> PreProcessor:
 
 async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
                        state: dict) -> Union[None, NoReturn]:
-    if datetime.now() > Matcher.expire_time:
+    if Matcher.expire_time and datetime.now() > Matcher.expire_time:
         raise _ExceptionContainer([ExpiredException])
 
     try:
@@ -65,8 +65,7 @@ async def handle_event(bot: Bot, event: Event):
             return
 
     # Trie Match
-    if event.type == "message":
-        _, _ = TrieRule.get_value(bot, event, state)
+    _, _ = TrieRule.get_value(bot, event, state)
 
     break_flag = False
     for priority in sorted(matchers.keys()):
