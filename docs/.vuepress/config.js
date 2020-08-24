@@ -1,4 +1,6 @@
-module.exports = {
+const path = require("path");
+
+module.exports = context => ({
   title: "NoneBot",
   description: "基于 酷Q 的 Python 异步 QQ 机器人框架",
   markdown: {
@@ -20,54 +22,79 @@ module.exports = {
       { name: "apple-mobile-web-app-status-bar-style", content: "black" }
     ]
   ],
-
-  themeConfig: {
-    repo: "nonebot/nonebot",
-    docsDir: "docs",
-    docsBranch: "dev2",
-    editLinks: true,
-    editLinkText: "在 GitHub 上编辑此页",
-    lastUpdated: "上次更新",
-    smoothScroll: true,
-    nav: [{ text: "API", link: "/api/" }],
-    sidebar: {
-      "/api/": [
-        {
-          title: "NoneBot Api Reference",
-          path: "",
-          collapsable: false,
-          sidebarDepth: 3,
-          children: [
-            {
-              title: "nonebot 模块",
-              path: "nonebot",
-              sidebar: "auto"
-            },
-            {
-              title: "nonebot.typing 模块",
-              path: "typing",
-              sidebar: "auto"
-            },
-            {
-              title: "nonebot.log 模块",
-              path: "log",
-              sidebar: "auto"
-            },
-            {
-              title: "nonebot.exception 模块",
-              path: "exception",
-              sidebar: "auto"
-            },
-            {
-              title: "nonebot.config 模块",
-              path: "config",
-              sidebar: "auto"
-            }
-          ]
-        }
-      ]
+  locales: {
+    "/": {
+      lang: "zh-CN",
+      title: "NoneBot",
+      description: "基于 酷Q 的 Python 异步 QQ 机器人框架"
     }
   },
 
-  plugins: ["@vuepress/plugin-back-to-top", "@vuepress/plugin-medium-zoom"]
-};
+  theme: "titanium",
+  themeConfig: {
+    logo: "/logo.png",
+    repo: "nonebot/nonebot",
+    docsDir: "docs",
+    docsBranch: "dev2",
+    docsDirVersioned: "archive",
+    docsDirPages: "pages",
+    editLinks: true,
+    smoothScroll: true,
+
+    locales: {
+      "/": {
+        label: "简体中文",
+        selectText: "Languages",
+        editLinkText: "在 GitHub 上编辑此页",
+        lastUpdated: "上次更新",
+        nav: [{ text: "API", link: "/api/" }],
+        sidebar: {
+          "/api/": [
+            {
+              title: "NoneBot Api Reference",
+              path: "",
+              collapsable: false,
+              children: [
+                {
+                  title: "nonebot 模块",
+                  path: "nonebot"
+                },
+                {
+                  title: "nonebot.typing 模块",
+                  path: "typing"
+                },
+                {
+                  title: "nonebot.log 模块",
+                  path: "log"
+                },
+                {
+                  title: "nonebot.exception 模块",
+                  path: "exception"
+                },
+                {
+                  title: "nonebot.config 模块",
+                  path: "config"
+                }
+              ]
+            }
+          ]
+        }
+      }
+    }
+  },
+
+  plugins: [
+    "@vuepress/plugin-back-to-top",
+    "@vuepress/plugin-medium-zoom",
+    [
+      "versioning",
+      {
+        versionedSourceDir: path.resolve(context.sourceDir, "..", "archive"),
+        pagesSourceDir: path.resolve(context.sourceDir, "..", "pages"),
+        onNewVersion(version, versionDestPath) {
+          console.log(`Created version ${version} in ${versionDestPath}`);
+        }
+      }
+    ]
+  ]
+});

@@ -11,8 +11,8 @@ test_command = on_command("帮助", to_me())
 
 @test_command.handle()
 async def test_handler(bot: Bot, event: Event, state: dict):
-    print("[!] Command:", state["_prefix"])
-    args = str(event.message)[len(state["_prefix"]):].strip()
+    args = str(event.message)[len(list(state["_prefix"].keys())[0]):].strip()
+    print("[!] Command:", state["_prefix"], "Args:", args)
     if args:
         state["help"] = args
     else:
