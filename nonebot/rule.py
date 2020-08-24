@@ -59,6 +59,11 @@ class TrieRule:
     @classmethod
     def get_value(cls, bot: Bot, event: Event,
                   state: dict) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        if event.type != "message":
+            state["_prefix"] = {}
+            state["_suffix"] = {}
+            return {}, {}
+
         prefix = None
         suffix = None
         message = event.message[0]
@@ -109,8 +114,12 @@ def command(command: Tuple[str]) -> Rule:
     config = get_driver().config
     command_start = config.command_start
     command_sep = config.command_sep
-    for start, sep in product(command_start, command_sep):
-        TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
+    if len(command) == 1:
+        for start in command_start:
+            TrieRule.add_prefix(f"{start}{command[0]}", command)
+    else:
+        for start, sep in product(command_start, command_sep):
+            TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
 
     async def _command(bot: Bot, event: Event, state: dict) -> bool:
         return command in state["_prefix"].values()

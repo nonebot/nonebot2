@@ -2,9 +2,10 @@
 # -*- coding: utf-8 -*-
 
 import re
+import sys
 import pkgutil
 import importlib
-from importlib.util import module_from_spec
+from importlib._bootstrap import _load
 
 from nonebot.log import logger
 from nonebot.matcher import Matcher
@@ -185,9 +186,12 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
         if name.startswith("_"):
             continue
 
+        spec = module_info.module_finder.find_spec(name)
+        if spec.name in sys.modules:
+            continue
+
         try:
-            spec = module_info.module_finder.find_spec(name)
-            module = module_from_spec(spec)
+            module = _load(spec)
 
             plugin = Plugin(name, module, _tmp_matchers.copy())
             plugins[name] = plugin

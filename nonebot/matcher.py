@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import typing
+import inspect
 from functools import wraps
 from datetime import datetime
 from collections import defaultdict
@@ -37,6 +38,13 @@ class Matcher:
         """
         self.handlers = self.handlers.copy()
         self.state = self._default_state.copy()
+
+    def __repr__(self) -> str:
+        return (f"<Matcher {self.type}, priority={self.priority},"
+                f" temp={self.temp}, expire={self.expire_time}>")
+
+    def __str__(self) -> str:
+        return self.__repr__()
 
     @classmethod
     def new(cls,
@@ -117,7 +125,7 @@ class Matcher:
             cls.handlers.append(_handler)
 
         def _decorator(func: Handler) -> Handler:
-            if cls.handlers[-1] is not func:
+            if not cls.handlers or cls.handlers[-1] is not func:
                 cls.handlers.append(func)
 
             return func
@@ -141,6 +149,8 @@ class Matcher:
                 raise PausedException
 
         async def _key_parser(bot: Bot, event: Event, state: dict):
+            if key in state:
+                return
             parser = args_parser or cls._default_parser
             if parser:
                 await parser(bot, event, state)
@@ -151,8 +161,15 @@ class Matcher:
         cls.handlers.append(_key_parser)
 
         def _decorator(func: Handler) -> Handler:
-            if cls.handlers[-1] is not func:
-                cls.handlers.append(func)
+            if not hasattr(cls.handlers[-1], "__wrapped__"):
+                parser = cls.handlers.pop()
+
+                @wraps(func)
+                async def wrapper(bot: Bot, event: Event, state: dict):
+                    await parser(bot, event, state)
+                    await func(bot, event, state)
+
+                cls.handlers.append(wrapper)
 
             return func
 
@@ -180,34 +197,35 @@ class Matcher:
                 handler = self.handlers.pop(0)
                 annotation = typing.get_type_hints(handler)
                 BotType = annotation.get("bot")
-                if BotType and not isinstance(bot, BotType):
+                if BotType and inspect.isclass(BotType) and not isinstance(
+                        bot, BotType):
                     continue
                 await handler(bot, event, self.state)
 
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
-            matcher = Matcher.new(
+            Matcher.new(
                 self.type,
-                self.rule,
+                Rule(),
                 USER(event.user_id, perm=self.permission),  # type:ignore
                 self.handlers,
                 temp=True,
                 priority=0,
+                block=True,
                 default_state=self.state,
                 expire_time=datetime.now() + bot.config.session_expire_timeout)
-            matchers[0].append(matcher)
             return
         except PausedException:
-            matcher = Matcher.new(
+            Matcher.new(
                 self.type,
-                self.rule,
+                Rule(),
                 USER(event.user_id, perm=self.permission),  # type:ignore
                 self.handlers,
                 temp=True,
                 priority=0,
+                block=True,
                 default_state=self.state,
                 expire_time=datetime.now() + bot.config.session_expire_timeout)
-            matchers[0].append(matcher)
             return
         except FinishedException:
             return
