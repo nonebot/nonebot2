@@ -53,15 +53,31 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
 
 
 async def handle_event(bot: Bot, event: Event):
+    log_msg = f"{bot.type.upper()} Bot {event.self_id} [{event.name}]: "
+    if event.type == "message":
+        log_msg += f"Message {event.id} from "
+        log_msg += str(event.user_id)
+        if event.detail_type == "group":
+            log_msg += f"@[群:{event.group_id}]: "
+        log_msg += repr(str(event.message))
+    elif event.type == "notice":
+        log_msg += f"Notice {event.raw_event}"
+    elif event.type == "request":
+        log_msg += f"Request {event.raw_event}"
+    elif event.type == "meta_event":
+        log_msg += f"MetaEvent {event.raw_event}"
+    logger.info(log_msg)
+
     coros = []
     state = {}
     for preprocessor in _event_preprocessors:
         coros.append(preprocessor(bot, event, state))
     if coros:
         try:
+            logger.debug("Running PreProcessors...")
             await asyncio.gather(*coros)
         except IgnoredException:
-            logger.info(f"Event {event} is ignored")
+            logger.info(f"Event {event.name} is ignored")
             return
 
     # Trie Match
@@ -77,6 +93,7 @@ async def handle_event(bot: Bot, event: Event):
             for matcher in matchers[priority]
         ]
 
+        logger.debug(f"Checking for all matchers in priority {priority}...")
         results = await asyncio.gather(*pending_tasks, return_exceptions=True)
 
         i = 0
@@ -85,6 +102,7 @@ async def handle_event(bot: Bot, event: Event):
                 e_list = result.exceptions
                 if StopPropagation in e_list:
                     break_flag = True
+                    logger.debug("Stop event propafation")
                 if ExpiredException in e_list:
                     del matchers[priority][index - i]
                     i += 1

@@ -1,19 +1,20 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import hmac
 import json
 import logging
 
 import uvicorn
+from fastapi.responses import Response
 from fastapi import Body, status, Header, FastAPI, Depends, HTTPException
 from starlette.websockets import WebSocketDisconnect, WebSocket as FastAPIWebSocket
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
 from nonebot.utils import DataclassEncoder
-from nonebot.adapters.cqhttp import Bot as CQBot
 from nonebot.drivers import BaseDriver, BaseWebSocket
-from nonebot.typing import Union, Optional, Callable, overrides
+from nonebot.typing import Optional, Callable, overrides
 
 
 def get_auth_bearer(access_token: Optional[str] = Header(
@@ -116,28 +117,50 @@ class Driver(BaseDriver):
                     **kwargs)
 
     @overrides(BaseDriver)
-    async def _handle_http(
-        self,
-        adapter: str,
-        data: dict = Body(...),
-        x_self_id: str = Header(None),
-        access_token: Optional[str] = Depends(get_auth_bearer)):
-        secret = self.config.secret
-        if secret is not None and secret != access_token:
-            raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                                detail="Not authenticated",
-                                headers={"WWW-Authenticate": "Bearer"})
+    async def _handle_http(self,
+                           adapter: str,
+                           data: dict = Body(...),
+                           x_self_id: Optional[str] = Header(None),
+                           x_signature: Optional[str] = Header(None)):
+        # 检查self_id
+        if not x_self_id:
+            logger.warning("Missing X-Self-ID Header")
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST,
+                                detail="Missing X-Self-ID Header")
 
-        # Create Bot Object
+        # 检查签名
+        secret = self.config.secret
+        if secret:
+            if not x_signature:
+                logger.warning("Missing Signature Header")
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
+                                    detail="Missing Signature")
+            sig = hmac.new(secret.encode("utf-8"),
+                           json.dumps(data).encode(), "sha1").hexdigest()
+            if x_signature != "sha1=" + sig:
+                logger.warning("Signature Header is invalid")
+                raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                                    detail="Signature is invalid")
+
+        if not isinstance(data, dict):
+            logger.warning("Data received is invalid")
+            raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
+
+        if x_self_id in self._clients:
+            logger.warning("There's already a reverse websocket api connection,"
+                           "so the event may be handled twice.")
+
+        # 创建 Bot 对象
         if adapter in self._adapters:
             BotClass = self._adapters[adapter]
             bot = BotClass(self, "http", self.config, x_self_id)
         else:
+            logger.warning("Unknown adapter")
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail="adapter not found")
 
         await bot.handle_message(data)
-        return {"status": 200, "message": "success"}
+        return Response("", 204)
 
     @overrides(BaseDriver)
     async def _handle_ws_reverse(
@@ -146,19 +169,21 @@ class Driver(BaseDriver):
         websocket: FastAPIWebSocket,
         x_self_id: str = Header(None),
         access_token: Optional[str] = Depends(get_auth_bearer)):
+        ws = WebSocket(websocket)
+
         secret = self.config.secret
         if secret is not None and secret != access_token:
-            await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
-
-        websocket = WebSocket(websocket)
+            logger.warning("Authorization Header is invalid"
+                           if access_token else "Missing Authorization Header")
+            await ws.close(code=status.WS_1008_POLICY_VIOLATION)
 
         if not x_self_id:
-            logger.error(f"Error Connection Unkown: self_id {x_self_id}")
-            await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
+            logger.warning(f"Missing X-Self-ID Header")
+            await ws.close(code=status.WS_1008_POLICY_VIOLATION)
 
         if x_self_id in self._clients:
-            logger.error(f"Error Connection Conflict: self_id {x_self_id}")
-            await websocket.close(code=status.WS_1008_POLICY_VIOLATION)
+            logger.warning(f"Connection Conflict: self_id {x_self_id}")
+            await ws.close(code=status.WS_1008_POLICY_VIOLATION)
 
         # Create Bot Object
         if adapter in self._adapters:
@@ -167,17 +192,18 @@ class Driver(BaseDriver):
                            "websocket",
                            self.config,
                            x_self_id,
-                           websocket=websocket)
+                           websocket=ws)
         else:
+            logger.warning("Unknown adapter")
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail="adapter not found")
 
-        await websocket.accept()
+        await ws.accept()
         self._clients[x_self_id] = bot
 
         try:
-            while not websocket.closed:
-                data = await websocket.receive()
+            while not ws.closed:
+                data = await ws.receive()
 
                 if not data:
                     continue
@@ -213,8 +239,11 @@ class WebSocket(BaseWebSocket):
         data = None
         try:
             data = await self.websocket.receive_json()
+            if not isinstance(data, dict):
+                data = None
+                raise ValueError
         except ValueError:
-            logger.debug("Received an invalid json message.")
+            logger.warning("Received an invalid json message.")
         except WebSocketDisconnect:
             self._closed = True
             logger.error("WebSocket disconnected by peer.")

@@ -147,6 +147,7 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
     """
     global _driver
     env = Env()
+    logger.debug(f"Current Env: {env.environment}")
     config = Config(**kwargs, _env_file=_env_file or f".env.{env.environment}")
 
     logger.setLevel(logging.DEBUG if config.debug else logging.INFO)

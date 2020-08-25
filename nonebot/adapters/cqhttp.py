@@ -168,9 +168,14 @@ class Bot(BaseBot):
         if not message:
             return
 
+        if "post_type" not in message:
+            ResultStore.add_result(message)
+            return
+
         event = Event(message)
 
         # Check whether user is calling me
+        # TODO: Check reply
         _check_at_me(self, event)
         _check_nickname(self, event)
 
@@ -264,8 +269,26 @@ class Event(BaseEvent):
 
     @property
     @overrides(BaseEvent)
+    def id(self) -> Optional[int]:
+        return self._raw_event.get("message_id") or self._raw_event.get("flag")
+
+    @property
+    @overrides(BaseEvent)
+    def name(self) -> str:
+        n = self.type + "." + self.detail_type
+        if self.sub_type:
+            n += "." + self.sub_type
+        return n
+
+    @property
+    @overrides(BaseEvent)
     def self_id(self) -> str:
         return str(self._raw_event["self_id"])
+
+    @property
+    @overrides(BaseEvent)
+    def time(self) -> int:
+        return self._raw_event["time"]
 
     @property
     @overrides(BaseEvent)
