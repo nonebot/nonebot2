@@ -42,6 +42,10 @@ class BaseBot(abc.ABC):
     async def call_api(self, api: str, data: dict):
         raise NotImplementedError
 
+    @abc.abstractmethod
+    async def send(self, *args, **kwargs):
+        raise NotImplementedError
+
 
 # TODO: improve event
 class BaseEvent(abc.ABC):
@@ -100,6 +104,16 @@ class BaseEvent(abc.ABC):
     @user_id.setter
     @abc.abstractmethod
     def user_id(self, value) -> None:
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def group_id(self) -> Optional[int]:
+        raise NotImplementedError
+
+    @group_id.setter
+    @abc.abstractmethod
+    def group_id(self, value) -> None:
         raise NotImplementedError
 
     @property

@@ -223,6 +223,36 @@ class Bot(BaseBot):
             except httpx.HTTPError:
                 raise NetworkError("HTTP request failed")
 
+    @overrides(BaseBot)
+    async def send(self, event: "Event", message: Union[str, "Message",
+                                                        "MessageSegment"],
+                   **kwargs) -> Union[Any, NoReturn]:
+        msg = message if isinstance(message, Message) else Message(message)
+
+        at_sender = kwargs.pop("at_sender", False) and bool(event.user_id)
+
+        params = {}
+        if event.user_id:
+            params["user_id"] = event.user_id
+        if event.group_id:
+            params["group_id"] = event.group_id
+        params.update(kwargs)
+
+        if "message_type" not in params:
+            if "group_id" in params:
+                params["message_type"] = "group"
+            elif "user_id" in params:
+                params["message_type"] = "private"
+            else:
+                raise ValueError("Cannot guess message type to reply!")
+
+        if at_sender and params["message_type"] != "private":
+            params["message"] = MessageSegment.at(params["user_id"]) + \
+                MessageSegment.text(" ") + msg
+        else:
+            params["message"] = msg
+        return await self.send_msg(**params)
+
 
 class Event(BaseEvent):
 
@@ -276,6 +306,16 @@ class Event(BaseEvent):
     @overrides(BaseEvent)
     def user_id(self, value) -> None:
         self._raw_event["user_id"] = value
+
+    @property
+    @overrides(BaseEvent)
+    def group_id(self) -> Optional[int]:
+        return self._raw_event.get("group_id")
+
+    @group_id.setter
+    @overrides(BaseEvent)
+    def group_id(self, value) -> None:
+        self._raw_event["group_id"] = value
 
     @property
     @overrides(BaseEvent)
