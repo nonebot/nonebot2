@@ -179,7 +179,7 @@ class BaseEvent(abc.ABC):
 @dataclass
 class BaseMessageSegment(abc.ABC):
     type: str
-    data: Dict[str, str] = field(default_factory=lambda: {})
+    data: Dict[str, Union[str, list]] = field(default_factory=lambda: {})
 
     @abc.abstractmethod
     def __str__(self):
