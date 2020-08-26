@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "nonebot"
 version = "2.0.0"
-description = "An asynchronous QQ bot framework."
-authors = ["Richard Chien <richardchienthebest@gmail.com>", "yanyongyu <yanyongyu_1@126.com>"]
+description = "An asynchronous python bot framework."
+authors = ["yanyongyu <yanyongyu_1@126.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://nonebot.cqp.moe/"
+homepage = "https://docs.nonebot.dev/"
 repository = "https://github.com/nonebot/nonebot"
-documentation = "https://nonebot.cqp.moe/"
+documentation = "https://docs.nonebot.dev/"
 keywords = ["bot", "qq", "qqbot", "mirai", "coolq"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",

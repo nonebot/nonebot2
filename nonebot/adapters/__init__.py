@@ -42,6 +42,10 @@ class BaseBot(abc.ABC):
     async def call_api(self, api: str, data: dict):
         raise NotImplementedError
 
+    @abc.abstractmethod
+    async def send(self, *args, **kwargs):
+        raise NotImplementedError
+
 
 # TODO: improve event
 class BaseEvent(abc.ABC):
@@ -50,8 +54,7 @@ class BaseEvent(abc.ABC):
         self._raw_event = raw_event
 
     def __repr__(self) -> str:
-        # TODO: pretty print
-        return f"<Event: {self.type}/{self.detail_type} {self.raw_message}>"
+        return f"<Event {self.self_id}: {self.name} {self.time}>"
 
     @property
     def raw_event(self) -> dict:
@@ -59,7 +62,22 @@ class BaseEvent(abc.ABC):
 
     @property
     @abc.abstractmethod
+    def id(self) -> int:
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def name(self) -> str:
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
     def self_id(self) -> str:
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def time(self) -> int:
         raise NotImplementedError
 
     @property
@@ -100,6 +118,16 @@ class BaseEvent(abc.ABC):
     @user_id.setter
     @abc.abstractmethod
     def user_id(self, value) -> None:
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def group_id(self) -> Optional[int]:
+        raise NotImplementedError
+
+    @group_id.setter
+    @abc.abstractmethod
+    def group_id(self, value) -> None:
         raise NotImplementedError
 
     @property
@@ -151,7 +179,7 @@ class BaseEvent(abc.ABC):
 @dataclass
 class BaseMessageSegment(abc.ABC):
     type: str
-    data: Dict[str, str] = field(default_factory=lambda: {})
+    data: Dict[str, Union[str, list]] = field(default_factory=lambda: {})
 
     @abc.abstractmethod
     def __str__(self):

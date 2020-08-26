@@ -24,6 +24,5 @@ async def test_handler(bot: Bot, event: Event, state: dict):
 async def test_handler(bot: Bot, event: Event, state: dict):
     print("[!] Command 帮助:", state["help"])
     if state["help"] not in ["test1", "test2"]:
-        await bot.send_private_msg(message=f"{state['help']} 不支持，请重新输入！")
-        test_command.reject()
+        await test_command.reject(f"{state['help']} 不支持，请重新输入！")
     await bot.send_private_msg(message=f"{state['help']} 帮助:\n...")
