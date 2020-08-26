@@ -4,18 +4,21 @@
 日志
 ====
 
-NoneBot 使用标准库 `logging`_ 来记录日志信息。
+NoneBot 使用 `loguru`_ 来记录日志信息。
 
-自定义 logger 请参考 `logging`_ 文档。
+自定义 logger 请参考 `loguru`_ 文档。
 
-.. _logging:
-    https://docs.python.org/3/library/logging.html
+.. _loguru:
+    https://github.com/Delgan/loguru
 """
 
 import sys
-import logging
+# import logging
 
-logger = logging.getLogger("nonebot")
+from loguru import logger as logger_
+
+# logger = logging.getLogger("nonebot")
+logger = logger_
 """
 :说明:
 
@@ -38,7 +41,13 @@ logger = logging.getLogger("nonebot")
     logger = logging.getLogger("nonebot")
 """
 
-default_handler = logging.StreamHandler(sys.stdout)
-default_handler.setFormatter(
-    logging.Formatter("[%(asctime)s %(name)s] %(levelname)s: %(message)s"))
-logger.addHandler(default_handler)
+# default_handler = logging.StreamHandler(sys.stdout)
+# default_handler.setFormatter(
+#     logging.Formatter("[%(asctime)s %(name)s] %(levelname)s: %(message)s"))
+# logger.addHandler(default_handler)
+
+logger.remove()
+default_format = ("<lvl>{level: <8}</lvl>|"
+                  "<green>{time:MM-DD HH:mm:ss}</green>|"
+                  "<lvl>{message}</lvl>")
+logger.add(sys.stdout, colorize=True, format=default_format)
