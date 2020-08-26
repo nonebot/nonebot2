@@ -12,7 +12,7 @@ test_message = on_message(state={"default": 1})
 async def test_handler(bot: Bot, event: Event, state: dict):
     print("[*] Test Matcher Received:", event)
     state["event"] = event
-    await bot.send_private_msg(message="Received", user_id=event.user_id)
+    await bot.send(message="Received", event=event)
 
 
 @test_message.receive()

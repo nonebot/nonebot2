@@ -195,9 +195,10 @@ class Bot(BaseBot):
     @overrides(BaseBot)
     async def call_api(self, api: str, **data) -> Union[Any, NoReturn]:
         if "self_id" in data:
-            self_id = str(data.pop("self_id"))
-            bot = self.driver.bots[self_id]
-            return await bot.call_api(api, **data)
+            self_id = data.pop("self_id")
+            if self_id:
+                bot = self.driver.bots[str(self_id)]
+                return await bot.call_api(api, **data)
 
         if self.type == "websocket":
             seq = ResultStore.get_seq()
