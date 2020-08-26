@@ -34,6 +34,9 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
         logger.exception(e)
         return
 
+    # TODO: log matcher
+    logger.info(f"Event will be handled by {Matcher}")
+
     matcher = Matcher()
     # TODO: BeforeMatcherRun
     try:
@@ -102,7 +105,7 @@ async def handle_event(bot: Bot, event: Event):
                 e_list = result.exceptions
                 if StopPropagation in e_list:
                     break_flag = True
-                    logger.debug("Stop event propafation")
+                    logger.debug("Stop event propagation")
                 if ExpiredException in e_list:
                     del matchers[priority][index - i]
                     i += 1
