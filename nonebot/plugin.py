@@ -168,6 +168,8 @@ def load_plugin(module_path: str) -> Optional[Plugin]:
     try:
         _tmp_matchers.clear()
         module = importlib.import_module(module_path)
+        for m in _tmp_matchers:
+            m.module = module_path
         plugin = Plugin(module_path, module, _tmp_matchers.copy())
         plugins[module_path] = plugin
         logger.opt(colors=True).info(f'Succeeded to import "{module_path}"')
@@ -193,6 +195,8 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
         try:
             module = _load(spec)
 
+            for m in _tmp_matchers:
+                m.module = name
             plugin = Plugin(name, module, _tmp_matchers.copy())
             plugins[name] = plugin
             loaded_plugins.add(plugin)

@@ -74,9 +74,9 @@ class LoguruHandler(logging.Handler):
 logger.remove()
 default_filter = Filter()
 default_format = (
-    "<g>{time:MM-DD HH:mm:ss}</g>|"
-    "<lvl>{level: ^8}</lvl>|"
-    "<c><u>{name}</u></c>| "
+    "<g>{time:MM-DD HH:mm:ss}</g> "
+    "[<lvl>{level}</lvl>] "
+    "<c><u>{name}</u></c> | "
     # "<c>{function}:{line}</c>| "
     "{message}")
 logger.add(sys.stdout,

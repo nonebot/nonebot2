@@ -30,8 +30,8 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
                 bot, event) or not await Matcher.check_rule(bot, event, state):
             return
     except Exception as e:
-        logger.error(f"Rule check failed for matcher {Matcher}. Ignored.")
-        logger.exception(e)
+        logger.opt(colors=True, exception=e).error(
+            f"<r><bg #f8bbd0>Rule check failed for {Matcher}.</bg #f8bbd0></r>")
         return
 
     # TODO: log matcher
@@ -43,8 +43,9 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
         logger.debug(f"Running matcher {matcher}")
         await matcher.run(bot, event, state)
     except Exception as e:
-        logger.error(f"Running matcher {matcher} failed.")
-        logger.exception(e)
+        logger.opt(colors=True, exception=e).error(
+            f"<r><bg #f8bbd0>Running matcher {matcher} failed.</bg #f8bbd0></r>"
+        )
 
     exceptions = []
     if Matcher.temp:
@@ -56,20 +57,23 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
 
 
 async def handle_event(bot: Bot, event: Event):
-    log_msg = f"{bot.type.upper()} Bot {event.self_id} [{event.name}]: "
+    log_msg = f"<m>{bot.type.upper()} </m>| {event.self_id} [{event.name}]: "
     if event.type == "message":
         log_msg += f"Message {event.id} from "
         log_msg += str(event.user_id)
         if event.detail_type == "group":
-            log_msg += f"@[群:{event.group_id}]: "
-        log_msg += repr(str(event.message))
+            log_msg += f"@[群:{event.group_id}]:"
+
+        log_msg += ' "' + "".join(
+            map(lambda x: str(x) if x.type == "text" else f"<le>{x!s}</le>",
+                event.message)) + '"'  # type: ignore
     elif event.type == "notice":
         log_msg += f"Notice {event.raw_event}"
     elif event.type == "request":
         log_msg += f"Request {event.raw_event}"
     elif event.type == "meta_event":
         log_msg += f"MetaEvent {event.raw_event}"
-    logger.info(log_msg)
+    logger.opt(colors=True).info(log_msg)
 
     coros = []
     state = {}
@@ -80,7 +84,8 @@ async def handle_event(bot: Bot, event: Event):
             logger.debug("Running PreProcessors...")
             await asyncio.gather(*coros)
         except IgnoredException:
-            logger.info(f"Event {event.name} is ignored")
+            logger.opt(
+                colors=True).info(f"Event {event.name} is <b>ignored</b>")
             return
 
     # Trie Match
@@ -96,7 +101,7 @@ async def handle_event(bot: Bot, event: Event):
             for matcher in matchers[priority]
         ]
 
-        logger.debug(f"Checking for all matchers in priority {priority}...")
+        logger.debug(f"Checking for matchers in priority {priority}...")
         results = await asyncio.gather(*pending_tasks, return_exceptions=True)
 
         i = 0
@@ -104,8 +109,12 @@ async def handle_event(bot: Bot, event: Event):
             if isinstance(result, _ExceptionContainer):
                 e_list = result.exceptions
                 if StopPropagation in e_list:
-                    break_flag = True
-                    logger.debug("Stop event propagation")
+                    if not break_flag:
+                        break_flag = True
+                        logger.debug("Stop event propagation")
                 if ExpiredException in e_list:
+                    logger.debug(
+                        f"Matcher {matchers[priority][index - i]} will be removed."
+                    )
                     del matchers[priority][index - i]
                     i += 1

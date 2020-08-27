@@ -27,6 +27,10 @@ from nonebot.typing import overrides, Driver, WebSocket, NoReturn
 from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
 
 
+def log(level: str, message: str):
+    return logger.opt(colors=True).log(level, "<m>CQHTTP</m> | " + message)
+
+
 def escape(s: str, *, escape_comma: bool = True) -> str:
     """
     对字符串进行 CQ 码转义。
@@ -109,7 +113,7 @@ def _check_nickname(bot: "Bot", event: "Event"):
                       re.IGNORECASE)
         if m:
             nickname = m.group(1)
-            logger.debug(f"User is calling me {nickname}")
+            log("DEBUG", f"User is calling me {nickname}")
             event.to_me = True
             first_msg_seg.data["text"] = first_text[m.end():]
 
@@ -200,6 +204,7 @@ class Bot(BaseBot):
                 bot = self.driver.bots[str(self_id)]
                 return await bot.call_api(api, **data)
 
+        log("DEBUG", f"Calling API <y>{api}</y>")
         if self.type == "websocket":
             seq = ResultStore.get_seq()
             await self.websocket.send({
@@ -403,7 +408,7 @@ class MessageSegment(BaseMessageSegment):
     @overrides(BaseMessageSegment)
     def __init__(self, type: str, data: Dict[str, Union[str, list]]) -> None:
         if type == "text":
-            data["text"] = unescape(data["text"])
+            data["text"] = unescape(data["text"])  # type: ignore
         super().__init__(type=type, data=data)
 
     @overrides(BaseMessageSegment)
@@ -413,7 +418,9 @@ class MessageSegment(BaseMessageSegment):
 
         # process special types
         if type_ == "text":
-            return escape(data.get("text", ""), escape_comma=False)
+            return escape(
+                data.get("text", ""),  # type: ignore
+                escape_comma=False)
 
         params = ",".join(
             [f"{k}={escape(str(v))}" for k, v in data.items() if v is not None])
@@ -449,7 +456,7 @@ class MessageSegment(BaseMessageSegment):
 
     @staticmethod
     def forward(id_: str) -> "MessageSegment":
-        logger.warning("Forward Message only can be received!")
+        log("WARNING", "Forward Message only can be received!")
         return MessageSegment("forward", {"id": id_})
 
     @staticmethod

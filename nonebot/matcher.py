@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from nonebot.log import logger
 import typing
 import inspect
 from functools import wraps
@@ -19,9 +20,21 @@ current_bot: ContextVar = ContextVar("current_bot")
 current_event: ContextVar = ContextVar("current_event")
 
 
-class Matcher:
+class MatcherMeta(type):
+
+    def __repr__(self) -> str:
+        return (f"<Matcher from {self.module or 'unknow'}, "  # type: ignore
+                f"type={self.type}, priority={self.priority}, "  # type: ignore
+                f"temp={self.temp}>")  # type: ignore
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
+
+class Matcher(metaclass=MatcherMeta):
     """`Matcher`类
     """
+    module: Optional[str] = None
 
     type: str = ""
     rule: Rule = Rule()
@@ -43,8 +56,8 @@ class Matcher:
         self.state = self._default_state.copy()
 
     def __repr__(self) -> str:
-        return (f"<Matcher {self.type}, priority={self.priority},"
-                f" temp={self.temp}, expire={self.expire_time}>")
+        return (f"<Matcher from {self.module or 'unknow'}, type={self.type}, "
+                f"priority={self.priority}, temp={self.temp}>")
 
     def __str__(self) -> str:
         return self.__repr__()
@@ -59,6 +72,7 @@ class Matcher:
             priority: int = 1,
             block: bool = False,
             *,
+            module: Optional[str] = None,
             default_state: Optional[dict] = None,
             expire_time: Optional[datetime] = None) -> Type["Matcher"]:
         """创建新的 Matcher
@@ -69,6 +83,7 @@ class Matcher:
 
         NewMatcher = type(
             "Matcher", (Matcher,), {
+                "module": module,
                 "type": type_,
                 "rule": rule,
                 "permission": permission,
@@ -253,5 +268,6 @@ class Matcher:
         except FinishedException:
             pass
         finally:
+            logger.info(f"Matcher {self} running complete")
             current_bot.reset(b_t)
             current_event.reset(e_t)
