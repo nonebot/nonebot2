@@ -170,11 +170,11 @@ def load_plugin(module_path: str) -> Optional[Plugin]:
         module = importlib.import_module(module_path)
         plugin = Plugin(module_path, module, _tmp_matchers.copy())
         plugins[module_path] = plugin
-        logger.info(f"Succeeded to import \"{module_path}\"")
+        logger.opt(colors=True).info(f'Succeeded to import "{module_path}"')
         return plugin
     except Exception as e:
-        logger.error(f"Failed to import \"{module_path}\", error: {e}")
-        logger.exception(e)
+        logger.opt(colors=True, exception=e).error(
+            f'<r><bg #f8bbd0>Failed to import "{module_path}"</bg #f8bbd0></r>')
         return None
 
 
@@ -196,10 +196,10 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
             plugin = Plugin(name, module, _tmp_matchers.copy())
             plugins[name] = plugin
             loaded_plugins.add(plugin)
-            logger.info(f"Succeeded to import \"{name}\"")
+            logger.opt(colors=True).info(f'Succeeded to import "<y>{name}</y>"')
         except Exception as e:
-            logger.error(f"Failed to import \"{name}\", error: {e}")
-            logger.exception(e)
+            logger.opt(colors=True, exception=e).error(
+                f'<r><bg #f8bbd0>Failed to import "{name}"</bg #f8bbd0></r>')
     return loaded_plugins
 
 

@@ -109,8 +109,8 @@ def get_bots() -> Dict[str, Bot]:
     return driver.bots
 
 
-from nonebot.log import logger
 from nonebot.config import Env, Config
+from nonebot.log import logger, default_filter
 from nonebot.adapters.cqhttp import Bot as CQBot
 
 try:
@@ -147,11 +147,13 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
     """
     global _driver
     env = Env()
-    logger.debug(f"Current Env: {env.environment}")
+    logger.opt(
+        colors=True).debug(f"Current <y><b>Env: {env.environment}</b></y>")
     config = Config(**kwargs, _env_file=_env_file or f".env.{env.environment}")
 
-    logger.setLevel(logging.DEBUG if config.debug else logging.INFO)
-    logger.debug(f"Loaded config: {config.dict()}")
+    default_filter.level = "DEBUG" if config.debug else "INFO"
+    logger.opt(
+        colors=True).debug(f"Loaded <y><b>Config</b></y>: {config.dict()}")
 
     DriverClass: Type[Driver] = getattr(importlib.import_module(config.driver),
                                         "Driver")
@@ -196,4 +198,4 @@ def run(host: Optional[str] = None,
     get_driver().run(host, port, *args, **kwargs)
 
 
-from nonebot.plugin import load_plugins, get_loaded_plugins
+from nonebot.plugin import load_plugin, load_plugins, get_loaded_plugins

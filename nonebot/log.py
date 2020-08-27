@@ -13,7 +13,7 @@ NoneBot 使用 `loguru`_ 来记录日志信息。
 """
 
 import sys
-# import logging
+import logging
 
 from loguru import logger as logger_
 
@@ -35,10 +35,6 @@ logger = logger_
 .. code-block:: python
 
     from nonebot.log import logger
-
-    # 也可以这样
-    import logging
-    logger = logging.getLogger("nonebot")
 """
 
 # default_handler = logging.StreamHandler(sys.stdout)
@@ -46,8 +42,45 @@ logger = logger_
 #     logging.Formatter("[%(asctime)s %(name)s] %(levelname)s: %(message)s"))
 # logger.addHandler(default_handler)
 
+
+class Filter:
+
+    def __init__(self) -> None:
+        self.level = "DEBUG"
+
+    def __call__(self, record):
+        record["name"] = record["name"].split(".")[0]
+        levelno = logger.level(self.level).no
+        return record["level"].no >= levelno
+
+
+class LoguruHandler(logging.Handler):
+
+    def emit(self, record):
+        try:
+            level = logger.level(record.levelname).name
+        except ValueError:
+            level = record.levelno
+
+        frame, depth = logging.currentframe(), 2
+        while frame.f_code.co_filename == logging.__file__:
+            frame = frame.f_back
+            depth += 1
+
+        logger.opt(depth=depth,
+                   exception=record.exc_info).log(level, record.getMessage())
+
+
 logger.remove()
-default_format = ("<lvl>{level: <8}</lvl>|"
-                  "<green>{time:MM-DD HH:mm:ss}</green>|"
-                  "<lvl>{message}</lvl>")
-logger.add(sys.stdout, colorize=True, format=default_format)
+default_filter = Filter()
+default_format = (
+    "<g>{time:MM-DD HH:mm:ss}</g>|"
+    "<lvl>{level: ^8}</lvl>|"
+    "<c><u>{name}</u></c>| "
+    # "<c>{function}:{line}</c>| "
+    "{message}")
+logger.add(sys.stdout,
+           colorize=True,
+           diagnose=False,
+           filter=default_filter,
+           format=default_format)

@@ -20,7 +20,8 @@ class BaseDriver(abc.ABC):
     @classmethod
     def register_adapter(cls, name: str, adapter: Type[Bot]):
         cls._adapters[name] = adapter
-        logger.debug(f'Succeeded to load adapter "{name}"')
+        logger.opt(
+            colors=True).debug(f'Succeeded to load adapter "<y>{name}</y>"')
 
     @property
     @abc.abstractmethod

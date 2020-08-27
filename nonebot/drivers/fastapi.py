@@ -84,17 +84,18 @@ class Driver(BaseDriver):
         LOGGING_CONFIG = {
             "version": 1,
             "disable_existing_loggers": False,
-            "formatters": {
-                "default": {
-                    "()": "logging.Formatter",
-                    "fmt": "[%(asctime)s %(name)s] %(levelname)s: %(message)s",
-                },
-            },
+            # "formatters": {
+            #     "default": {
+            #         "()": "logging.Formatter",
+            #         "fmt": "[%(asctime)s %(name)s] %(levelname)s: %(message)s",
+            #     },
+            # },
             "handlers": {
                 "default": {
-                    "formatter": "default",
-                    "class": "logging.StreamHandler",
-                    "stream": "ext://sys.stdout",
+                    "class": "nonebot.log.LoguruHandler",
+                    # "formatter": "default",
+                    # "class": "logging.StreamHandler",
+                    # "stream": "ext://sys.stdout",
                 },
             },
             "loggers": {
