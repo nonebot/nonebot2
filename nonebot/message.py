@@ -34,7 +34,6 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
             f"<r><bg #f8bbd0>Rule check failed for {Matcher}.</bg #f8bbd0></r>")
         return
 
-    # TODO: log matcher
     logger.info(f"Event will be handled by {Matcher}")
 
     matcher = Matcher()

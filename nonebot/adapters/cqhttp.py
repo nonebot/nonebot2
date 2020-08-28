@@ -57,6 +57,19 @@ def _b2s(b: Optional[bool]) -> Optional[str]:
     return b if b is None else str(b).lower()
 
 
+async def _check_reply(bot: "Bot", event: "Event"):
+    if event.type != "message":
+        return
+
+    first_msg_seg = event.message[0]
+    if first_msg_seg.type == "reply":
+        msg_id = first_msg_seg.data["id"]
+        event.reply = await bot.get_msg(message_id=msg_id)
+        if event.reply["sender"]["user_id"] == event.self_id:
+            event.to_me = True
+        del event.message[0]
+
+
 def _check_at_me(bot: "Bot", event: "Event"):
     if event.type != "message":
         return
@@ -64,7 +77,6 @@ def _check_at_me(bot: "Bot", event: "Event"):
     if event.detail_type == "private":
         event.to_me = True
     else:
-        event.to_me = False
         at_me_seg = MessageSegment.at(event.self_id)
 
         # check the first segment
@@ -150,7 +162,7 @@ class ResultStore:
         try:
             return await asyncio.wait_for(future, timeout)
         except asyncio.TimeoutError:
-            raise NetworkError("WebSocket API call timeout")
+            raise NetworkError("WebSocket API call timeout") from None
         finally:
             del cls._futures[seq]
 
@@ -190,7 +202,7 @@ class Bot(BaseBot):
         event = Event(message)
 
         # Check whether user is calling me
-        # TODO: Check reply
+        await _check_reply(self, event)
         _check_at_me(self, event)
         _check_nickname(self, event)
 
@@ -205,7 +217,7 @@ class Bot(BaseBot):
                 return await bot.call_api(api, **data)
 
         log("DEBUG", f"Calling API <y>{api}</y>")
-        if self.type == "websocket":
+        if self.connection_type == "websocket":
             seq = ResultStore.get_seq()
             await self.websocket.send({
                 "action": api,
@@ -217,7 +229,7 @@ class Bot(BaseBot):
             return _handle_api_result(await ResultStore.fetch(
                 seq, self.config.api_timeout))
 
-        elif self.type == "http":
+        elif self.connection_type == "http":
             api_root = self.config.api_root.get(self.self_id)
             if not api_root:
                 raise ApiNotAvailable
@@ -376,6 +388,16 @@ class Event(BaseEvent):
     @overrides(BaseEvent)
     def message(self, value) -> None:
         self._raw_event["message"] = value
+
+    @property
+    @overrides(BaseEvent)
+    def reply(self) -> Optional[dict]:
+        return self._raw_event.get("reply")
+
+    @reply.setter
+    @overrides(BaseEvent)
+    def reply(self, value) -> None:
+        self._raw_event["reply"] = value
 
     @property
     @overrides(BaseEvent)

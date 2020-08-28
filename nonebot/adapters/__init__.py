@@ -152,6 +152,16 @@ class BaseEvent(abc.ABC):
 
     @property
     @abc.abstractmethod
+    def reply(self) -> Optional[dict]:
+        raise NotImplementedError
+
+    @reply.setter
+    @abc.abstractmethod
+    def reply(self, value) -> None:
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
     def raw_message(self) -> Optional[str]:
         raise NotImplementedError
 

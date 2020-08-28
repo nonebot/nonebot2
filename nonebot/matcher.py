@@ -28,7 +28,7 @@ class MatcherMeta(type):
                 f"temp={self.temp}>")  # type: ignore
 
     def __str__(self) -> str:
-        return self.__repr__()
+        return repr(self)
 
 
 class Matcher(metaclass=MatcherMeta):

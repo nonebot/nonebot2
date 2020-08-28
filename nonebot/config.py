@@ -174,10 +174,10 @@ class Config(BaseConfig):
 
         API_ROOT={"123456": "http://127.0.0.1:5700"}
     """
-    api_timeout: Optional[float] = 60.
+    api_timeout: Optional[float] = 30.
     """
     - 类型: ``Optional[float]``
-    - 默认值: ``60.``
+    - 默认值: ``30.``
     - 说明:
       API 请求超时时间，单位: 秒。
     """
