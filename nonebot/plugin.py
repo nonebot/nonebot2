@@ -5,6 +5,7 @@ import re
 import sys
 import pkgutil
 import importlib
+from dataclasses import dataclass
 from importlib._bootstrap import _load
 
 from nonebot.log import logger
@@ -19,13 +20,11 @@ plugins: Dict[str, "Plugin"] = {}
 _tmp_matchers: Set[Type[Matcher]] = set()
 
 
+@dataclass(eq=False)
 class Plugin(object):
-
-    def __init__(self, name: str, module: ModuleType,
-                 matchers: Set[Type[Matcher]]):
-        self.name = name
-        self.module = module
-        self.matchers = matchers
+    name: str
+    module: ModuleType
+    matcher: Set[Type[Matcher]]
 
 
 def on(rule: Union[Rule, RuleChecker] = Rule(),
