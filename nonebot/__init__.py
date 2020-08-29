@@ -201,4 +201,6 @@ def run(host: Optional[str] = None,
     get_driver().run(host, port, *args, **kwargs)
 
 
-from nonebot.plugin import load_plugin, load_plugins, get_loaded_plugins
+from nonebot.plugin import on_message, on_notice, on_request, on_metaevent
+from nonebot.plugin import on_startswith, on_endswith, on_command, on_regex
+from nonebot.plugin import load_plugin, load_plugins, load_builtin_plugins, get_loaded_plugins
