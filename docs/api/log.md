@@ -7,9 +7,9 @@ sidebarDepth: 0
 
 ## 日志
 
-NoneBot 使用标准库 [logging](https://docs.python.org/3/library/logging.html) 来记录日志信息。
+NoneBot 使用 [loguru](https://github.com/Delgan/loguru) 来记录日志信息。
 
-自定义 logger 请参考 [logging](https://docs.python.org/3/library/logging.html) 文档。
+自定义 logger 请参考 [loguru](https://github.com/Delgan/loguru) 文档。
 
 
 ## `logger`

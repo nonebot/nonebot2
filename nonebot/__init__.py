@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import logging
 import importlib
 from nonebot.typing import Bot, Dict, Type, Union, Driver, Optional, NoReturn
 
@@ -84,7 +83,7 @@ def get_asgi():
     return driver.asgi
 
 
-def get_bots() -> Dict[str, Bot]:
+def get_bots() -> Union[NoReturn, Dict[str, Bot]]:
     """
     :说明:
 
@@ -109,8 +108,8 @@ def get_bots() -> Dict[str, Bot]:
     return driver.bots
 
 
-from nonebot.log import logger
 from nonebot.config import Env, Config
+from nonebot.log import logger, default_filter
 from nonebot.adapters.cqhttp import Bot as CQBot
 
 try:
@@ -146,24 +145,29 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
 
     """
     global _driver
-    env = Env()
-    logger.debug(f"Current Env: {env.environment}")
-    config = Config(**kwargs, _env_file=_env_file or f".env.{env.environment}")
+    if not _driver:
+        logger.debug("NoneBot is initializing...")
+        env = Env()
+        logger.opt(
+            colors=True).debug(f"Current <y><b>Env: {env.environment}</b></y>")
+        config = Config(**kwargs,
+                        _env_file=_env_file or f".env.{env.environment}")
 
-    logger.setLevel(logging.DEBUG if config.debug else logging.INFO)
-    logger.debug(f"Loaded config: {config.dict()}")
+        default_filter.level = "DEBUG" if config.debug else "INFO"
+        logger.opt(
+            colors=True).debug(f"Loaded <y><b>Config</b></y>: {config.dict()}")
 
-    DriverClass: Type[Driver] = getattr(importlib.import_module(config.driver),
-                                        "Driver")
-    _driver = DriverClass(env, config)
+        DriverClass: Type[Driver] = getattr(
+            importlib.import_module(config.driver), "Driver")
+        _driver = DriverClass(env, config)
 
-    # register build-in adapters
-    _driver.register_adapter("cqhttp", CQBot)
+        # register build-in adapters
+        _driver.register_adapter("cqhttp", CQBot)
 
-    # load nonebot test frontend if debug
-    if config.debug and nonebot_test:
-        logger.debug("Loading nonebot test frontend...")
-        nonebot_test.init()
+        # load nonebot test frontend if debug
+        if config.debug and nonebot_test:
+            logger.debug("Loading nonebot test frontend...")
+            nonebot_test.init()
 
 
 def run(host: Optional[str] = None,
@@ -193,7 +197,10 @@ def run(host: Optional[str] = None,
         nonebot.run(host="127.0.0.1", port=8080)
 
     """
+    logger.info("Running NoneBot...")
     get_driver().run(host, port, *args, **kwargs)
 
 
-from nonebot.plugin import load_plugins, get_loaded_plugins
+from nonebot.plugin import on_message, on_notice, on_request, on_metaevent
+from nonebot.plugin import on_startswith, on_endswith, on_command, on_regex
+from nonebot.plugin import load_plugin, load_plugins, load_builtin_plugins, get_loaded_plugins

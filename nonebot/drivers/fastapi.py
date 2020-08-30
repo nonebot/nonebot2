@@ -84,17 +84,9 @@ class Driver(BaseDriver):
         LOGGING_CONFIG = {
             "version": 1,
             "disable_existing_loggers": False,
-            "formatters": {
-                "default": {
-                    "()": "logging.Formatter",
-                    "fmt": "[%(asctime)s %(name)s] %(levelname)s: %(message)s",
-                },
-            },
             "handlers": {
                 "default": {
-                    "formatter": "default",
-                    "class": "logging.StreamHandler",
-                    "stream": "ext://sys.stdout",
+                    "class": "nonebot.log.LoguruHandler",
                 },
             },
             "loggers": {
@@ -200,6 +192,9 @@ class Driver(BaseDriver):
 
         await ws.accept()
         self._clients[x_self_id] = bot
+        logger.opt(colors=True).info(
+            f"WebSocket Connection from <y>{adapter.upper()} "
+            f"Bot {x_self_id}</y> Accepted!")
 
         try:
             while not ws.closed:

@@ -27,15 +27,16 @@ fastapi = "^0.58.1"
 uvicorn = "^0.11.5"
 pydantic = { extras = ["dotenv"], version = "^1.6.1" }
 apscheduler = { version = "^3.6.3", optional = true }
-nonebot-test = { version = "^0.1.0", optional = true }
+# nonebot-test = { version = "^0.1.0", optional = true }
 
+loguru = "^0.5.1"
 [tool.poetry.dev-dependencies]
 yapf = "^0.30.0"
 sphinx = "^3.1.1"
 sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
 
 [tool.poetry.extras]
-test = ["nonebot-test"]
+# test = ["nonebot-test"]
 scheduler = ["apscheduler"]
 
 [[tool.poetry.source]]

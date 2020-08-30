@@ -27,6 +27,10 @@ from nonebot.typing import overrides, Driver, WebSocket, NoReturn
 from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
 
 
+def log(level: str, message: str):
+    return logger.opt(colors=True).log(level, "<m>CQHTTP</m> | " + message)
+
+
 def escape(s: str, *, escape_comma: bool = True) -> str:
     """
     对字符串进行 CQ 码转义。
@@ -53,6 +57,19 @@ def _b2s(b: Optional[bool]) -> Optional[str]:
     return b if b is None else str(b).lower()
 
 
+async def _check_reply(bot: "Bot", event: "Event"):
+    if event.type != "message":
+        return
+
+    first_msg_seg = event.message[0]
+    if first_msg_seg.type == "reply":
+        msg_id = first_msg_seg.data["id"]
+        event.reply = await bot.get_msg(message_id=msg_id)
+        if event.reply["sender"]["user_id"] == event.self_id:
+            event.to_me = True
+        del event.message[0]
+
+
 def _check_at_me(bot: "Bot", event: "Event"):
     if event.type != "message":
         return
@@ -60,7 +77,6 @@ def _check_at_me(bot: "Bot", event: "Event"):
     if event.detail_type == "private":
         event.to_me = True
     else:
-        event.to_me = False
         at_me_seg = MessageSegment.at(event.self_id)
 
         # check the first segment
@@ -109,7 +125,7 @@ def _check_nickname(bot: "Bot", event: "Event"):
                       re.IGNORECASE)
         if m:
             nickname = m.group(1)
-            logger.debug(f"User is calling me {nickname}")
+            log("DEBUG", f"User is calling me {nickname}")
             event.to_me = True
             first_msg_seg.data["text"] = first_text[m.end():]
 
@@ -146,7 +162,7 @@ class ResultStore:
         try:
             return await asyncio.wait_for(future, timeout)
         except asyncio.TimeoutError:
-            raise NetworkError("WebSocket API call timeout")
+            raise NetworkError("WebSocket API call timeout") from None
         finally:
             del cls._futures[seq]
 
@@ -186,7 +202,7 @@ class Bot(BaseBot):
         event = Event(message)
 
         # Check whether user is calling me
-        # TODO: Check reply
+        await _check_reply(self, event)
         _check_at_me(self, event)
         _check_nickname(self, event)
 
@@ -200,7 +216,8 @@ class Bot(BaseBot):
                 bot = self.driver.bots[str(self_id)]
                 return await bot.call_api(api, **data)
 
-        if self.type == "websocket":
+        log("DEBUG", f"Calling API <y>{api}</y>")
+        if self.connection_type == "websocket":
             seq = ResultStore.get_seq()
             await self.websocket.send({
                 "action": api,
@@ -212,7 +229,7 @@ class Bot(BaseBot):
             return _handle_api_result(await ResultStore.fetch(
                 seq, self.config.api_timeout))
 
-        elif self.type == "http":
+        elif self.connection_type == "http":
             api_root = self.config.api_root.get(self.self_id)
             if not api_root:
                 raise ApiNotAvailable
@@ -374,6 +391,16 @@ class Event(BaseEvent):
 
     @property
     @overrides(BaseEvent)
+    def reply(self) -> Optional[dict]:
+        return self._raw_event.get("reply")
+
+    @reply.setter
+    @overrides(BaseEvent)
+    def reply(self, value) -> None:
+        self._raw_event["reply"] = value
+
+    @property
+    @overrides(BaseEvent)
     def raw_message(self) -> Optional[str]:
         return self._raw_event.get("raw_message")
 
@@ -403,7 +430,7 @@ class MessageSegment(BaseMessageSegment):
     @overrides(BaseMessageSegment)
     def __init__(self, type: str, data: Dict[str, Union[str, list]]) -> None:
         if type == "text":
-            data["text"] = unescape(data["text"])
+            data["text"] = unescape(data["text"])  # type: ignore
         super().__init__(type=type, data=data)
 
     @overrides(BaseMessageSegment)
@@ -413,7 +440,9 @@ class MessageSegment(BaseMessageSegment):
 
         # process special types
         if type_ == "text":
-            return escape(data.get("text", ""), escape_comma=False)
+            return escape(
+                data.get("text", ""),  # type: ignore
+                escape_comma=False)
 
         params = ",".join(
             [f"{k}={escape(str(v))}" for k, v in data.items() if v is not None])
@@ -449,7 +478,7 @@ class MessageSegment(BaseMessageSegment):
 
     @staticmethod
     def forward(id_: str) -> "MessageSegment":
-        logger.warning("Forward Message only can be received!")
+        log("WARNING", "Forward Message only can be received!")
         return MessageSegment("forward", {"id": id_})
 
     @staticmethod

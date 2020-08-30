@@ -74,13 +74,21 @@ class TrieRule:
             suffix = cls.suffix.longest_prefix(
                 message_r.data["text"].rstrip()[::-1])
 
-        state["_prefix"] = {prefix.key: prefix.value} if prefix else {}
-        state["_suffix"] = {suffix.key: suffix.value} if suffix else {}
+        state["_prefix"] = {
+            "raw_command": prefix.key,
+            "command": prefix.value
+        } if prefix else {}
+        state["_suffix"] = {
+            "raw_command": suffix.key,
+            "command": suffix.value
+        } if suffix else {}
 
         return ({
-            prefix.key: prefix.value
+            "raw_command": prefix.key,
+            "command": prefix.value
         } if prefix else {}, {
-            suffix.key: suffix.value
+            "raw_command": suffix.key,
+            "command": suffix.value
         } if suffix else {})
 
 
@@ -122,7 +130,7 @@ def command(command: Tuple[str, ...]) -> Rule:
             TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
 
     async def _command(bot: Bot, event: Event, state: dict) -> bool:
-        return command in state["_prefix"].values()
+        return command == state["_prefix"]["command"]
 
     return Rule(_command)
 
