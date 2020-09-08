@@ -3,6 +3,7 @@
 
 import hmac
 import json
+import asyncio
 import logging
 
 import uvicorn
@@ -151,7 +152,7 @@ class Driver(BaseDriver):
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail="adapter not found")
 
-        await bot.handle_message(data)
+        asyncio.create_task(bot.handle_message(data))
         return Response("", 204)
 
     @overrides(BaseDriver)
@@ -203,7 +204,7 @@ class Driver(BaseDriver):
                 if not data:
                     continue
 
-                await bot.handle_message(data)
+                asyncio.create_task(bot.handle_message(data))
         finally:
             del self._clients[x_self_id]
 
