@@ -60,9 +60,15 @@ class TrieRule:
     def get_value(cls, bot: Bot, event: Event,
                   state: dict) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         if event.type != "message":
-            state["_prefix"] = {}
-            state["_suffix"] = {}
-            return {}, {}
+            state["_prefix"] = {"raw_command": None, "command": None}
+            state["_suffix"] = {"raw_command": None, "command": None}
+            return {
+                "raw_command": None,
+                "command": None
+            }, {
+                "raw_command": None,
+                "command": None
+            }
 
         prefix = None
         suffix = None
@@ -77,19 +83,31 @@ class TrieRule:
         state["_prefix"] = {
             "raw_command": prefix.key,
             "command": prefix.value
-        } if prefix else {}
+        } if prefix else {
+            "raw_command": None,
+            "command": None
+        }
         state["_suffix"] = {
             "raw_command": suffix.key,
             "command": suffix.value
-        } if suffix else {}
+        } if suffix else {
+            "raw_command": None,
+            "command": None
+        }
 
         return ({
             "raw_command": prefix.key,
             "command": prefix.value
-        } if prefix else {}, {
+        } if prefix else {
+            "raw_command": None,
+            "command": None
+        }, {
             "raw_command": suffix.key,
             "command": suffix.value
-        } if suffix else {})
+        } if suffix else {
+            "raw_command": None,
+            "command": None
+        })
 
 
 def startswith(msg: str) -> Rule:
