@@ -84,6 +84,9 @@ def _check_at_me(bot: "Bot", event: "Event"):
         if first_msg_seg == at_me_seg:
             event.to_me = True
             del event.message[0]
+            if event.message[0].type == "text":
+                event.message[0].data["text"] = event.message[0].data[
+                    "text"].lstrip()
 
         if not event.to_me:
             # check the last segment

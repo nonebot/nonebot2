@@ -20,7 +20,7 @@ nonebot.init()
 app = nonebot.get_asgi()
 
 # load builtin plugin
-nonebot.load_plugin("nonebot.plugins.base")
+nonebot.load_builtin_plugins()
 
 # load local plugins
 nonebot.load_plugins("test_plugins")

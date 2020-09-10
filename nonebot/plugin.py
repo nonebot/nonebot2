@@ -151,6 +151,8 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
 
     async def _strip_cmd(bot, event, state: dict):
         message = event.message
+        print(message[0].data)
+        print(state["_prefix"])
         event.message = message.__class__(
             str(message)[len(state["_prefix"]["raw_command"]):].strip())
 

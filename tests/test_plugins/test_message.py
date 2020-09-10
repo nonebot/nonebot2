@@ -1,11 +1,12 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+from nonebot.rule import to_me
 from nonebot.typing import Event
 from nonebot.plugin import on_message
 from nonebot.adapters.cqhttp import Bot
 
-test_message = on_message(state={"default": 1})
+test_message = on_message(to_me(), state={"default": 1})
 
 
 @test_message.handle()
