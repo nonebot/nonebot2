@@ -77,16 +77,20 @@ module.exports = context => ({
                   path: "typing"
                 },
                 {
+                  title: "nonebot.config 模块",
+                  path: "config"
+                },
+                {
+                  title: "nonebot.sched 模块",
+                  path: "sched"
+                },
+                {
                   title: "nonebot.log 模块",
                   path: "log"
                 },
                 {
                   title: "nonebot.exception 模块",
                   path: "exception"
-                },
-                {
-                  title: "nonebot.config 模块",
-                  path: "config"
                 }
               ]
             }

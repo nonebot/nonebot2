@@ -24,7 +24,7 @@ pip install .
 
 A task scheduling library for Python.
 
-可用于定时任务，后台执行任务等
+可用于计划任务，后台执行任务等
 
 ```bash
 pip install nonebot2[scheduler]

@@ -10,7 +10,13 @@
     * [nonebot.typing](typing.html)
 
 
+    * [nonebot.config](config.html)
+
+
+    * [nonebot.sched](sched.html)
+
+
     * [nonebot.log](log.html)
 
 
-    * [nonebot.config](config.html)
+    * [nonebot.exception](exception.html)
