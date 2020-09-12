@@ -17,6 +17,9 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3"
 ]
+packages = [
+  { include = "nonebot" }
+]
 include = ["nonebot/py.typed"]
 
 [tool.poetry.dependencies]
