@@ -39,8 +39,17 @@ NoneBot 使用 [loguru](https://github.com/Delgan/loguru) 来记录日志信息�
 
 ```python
 from nonebot.log import logger
-
-# 也可以这样
-import logging
-logger = logging.getLogger("nonebot")
 ```
+
+
+## _class_ `LoguruHandler`
+
+基类：`logging.Handler`
+
+
+### `emit(record)`
+
+Do whatever it takes to actually log the specified logging record.
+
+This version is intended to be implemented by subclasses and so
+raises a NotImplementedError.

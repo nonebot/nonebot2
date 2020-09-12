@@ -47,8 +47,21 @@ module.exports = context => ({
         selectText: "Languages",
         editLinkText: "在 GitHub 上编辑此页",
         lastUpdated: "上次更新",
-        nav: [{ text: "API", link: "/api/" }],
+        nav: [
+          { text: "主页", link: "/" },
+          { text: "指南", link: "/guide/" },
+          { text: "API", link: "/api/" }
+        ],
         sidebar: {
+          "/guide/": [
+            {
+              title: "指南",
+              path: "",
+              collapsable: false,
+              sidebar: "auto",
+              children: ["", "installation"]
+            }
+          ],
           "/api/": [
             {
               title: "NoneBot Api Reference",
