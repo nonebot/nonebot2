@@ -19,4 +19,7 @@
     * [nonebot.log](log.html)
 
 
+    * [nonebot.utils](utils.html)
+
+
     * [nonebot.exception](exception.html)

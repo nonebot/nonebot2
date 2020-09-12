@@ -89,6 +89,10 @@ module.exports = context => ({
                   path: "log"
                 },
                 {
+                  title: "nonebot.utils 模块",
+                  path: "utils"
+                },
+                {
                   title: "nonebot.exception 模块",
                   path: "exception"
                 }
