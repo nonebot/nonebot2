@@ -61,13 +61,16 @@ async def _check_reply(bot: "Bot", event: "Event"):
     if event.type != "message":
         return
 
-    first_msg_seg = event.message[0]
-    if first_msg_seg.type == "reply":
-        msg_id = first_msg_seg.data["id"]
-        event.reply = await bot.get_msg(message_id=msg_id)
-        if event.reply["sender"]["user_id"] == event.self_id:
-            event.to_me = True
-        del event.message[0]
+    try:
+        index = list(map(lambda x: x.type == "reply",
+                         event.message)).index(True)
+    except ValueError:
+        return
+    msg_seg = event.message[index]
+    event.reply = await bot.get_msg(message_id=msg_seg.data["id"])
+    if event.reply["sender"]["user_id"] == event.self_id:
+        event.to_me = True
+    del event.message[index]
 
 
 def _check_at_me(bot: "Bot", event: "Event"):
@@ -87,6 +90,15 @@ def _check_at_me(bot: "Bot", event: "Event"):
             if event.message[0].type == "text":
                 event.message[0].data["text"] = event.message[0].data[
                     "text"].lstrip()
+                if not event.message[0].data["text"]:
+                    del event.message[0]
+            if event.message[0] == at_me_seg:
+                del event.message[0]
+                if event.message[0].type == "text":
+                    event.message[0].data["text"] = event.message[0].data[
+                        "text"].lstrip()
+                    if not event.message[0].data["text"]:
+                        del event.message[0]
 
         if not event.to_me:
             # check the last segment
