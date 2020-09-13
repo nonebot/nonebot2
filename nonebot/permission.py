@@ -30,7 +30,7 @@ class Permission:
         if isinstance(other, Permission):
             checkers |= other.checkers
         elif asyncio.iscoroutinefunction(other):
-            checkers.add(other)
+            checkers.add(other)  # type: ignore
         else:
             checkers.add(run_sync(other))
         return Permission(*checkers)

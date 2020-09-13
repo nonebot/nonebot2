@@ -155,19 +155,29 @@ class TrieRule:
 
 
 def startswith(msg: str) -> Rule:
-    TrieRule.add_prefix(msg, (msg,))
+    """
+    :说明:
+      匹配消息开头
+    :参数:
+      * ``msg: str``: 消息开头字符串
+    """
 
     async def _startswith(bot: Bot, event: Event, state: dict) -> bool:
-        return msg in state["_prefix"]
+        return event.plain_text.startswith(msg)
 
     return Rule(_startswith)
 
 
 def endswith(msg: str) -> Rule:
-    TrieRule.add_suffix(msg, (msg,))
+    """
+    :说明:
+      匹配消息结尾
+    :参数:
+      * ``msg: str``: 消息结尾字符串
+    """
 
     async def _endswith(bot: Bot, event: Event, state: dict) -> bool:
-        return msg in state["_suffix"]
+        return event.plain_text.endswith(msg)
 
     return Rule(_endswith)
 
