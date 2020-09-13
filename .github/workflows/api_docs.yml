@@ -1,0 +1,31 @@
+name: Build API Doc
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+    branches: [ master, dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Install Dependences
+        run: pip3 install .
+
+      - name: Build Doc
+        run: sphinx-build -M markdown ./docs_build ./build
+      
+      - name: Copy Files
+        run: cp ./build/markdown/*.md ./docs/api/
+      
+      - run: |
+          git config user.name nonebot
+          git config user.email nonebot@nonebot.dev
+          git add .
+          git commit -m ":memo: update api docs"
+          git push
