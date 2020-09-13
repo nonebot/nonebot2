@@ -1,5 +1,15 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+规则
+====
+
+每个 ``Matcher`` 拥有一个 ``Rule`` ，其中是 ``RuleChecker`` 的集合，只有当所有 ``RuleChecker`` 检查结果为 ``True`` 时继续运行。
+
+\:\:\:tip 提示
+``RuleChecker`` 既可以是 async function 也可以是 sync function
+\:\:\:
+"""
 
 import re
 import asyncio
@@ -10,28 +20,62 @@ from pygtrie import CharTrie
 from nonebot import get_driver
 from nonebot.log import logger
 from nonebot.utils import run_sync
-from nonebot.typing import Bot, Any, Dict, Event, Union, Tuple, NoReturn, RuleChecker
+from nonebot.typing import Bot, Any, Dict, Event, Union, Tuple, NoReturn, Callable, Awaitable, RuleChecker
 
 
 class Rule:
+    """
+    :说明:
+      ``Matcher`` 规则类，当事件传递时，在 ``Matcher`` 运行前进行检查。
+    :示例:
+
+    .. code-block:: python
+
+        Rule(async_function) & sync_function
+        # 等价于
+        from nonebot.utils import run_sync
+        Rule(async_function, run_sync(sync_function))
+    """
     __slots__ = ("checkers",)
 
-    def __init__(self, *checkers: RuleChecker) -> None:
-        self.checkers = list(checkers)
+    def __init__(
+            self, *checkers: Callable[[Bot, Event, dict],
+                                      Awaitable[bool]]) -> None:
+        """
+        :参数:
+          * ``*checkers: Callable[[Bot, Event, dict], Awaitable[bool]]``: **异步** RuleChecker
+        """
+        self.checkers = set(checkers)
+        """
+        :说明:
+          存储 ``RuleChecker``
+        :类型:
+          * ``Set[Callable[[Bot, Event, dict], Awaitable[bool]]]``
+        """
 
     async def __call__(self, bot: Bot, event: Event, state: dict) -> bool:
+        """
+        :说明:
+          检查是否符合所有规则
+        :参数:
+          * ``bot: Bot``: Bot 对象
+          * ``event: Event``: Event 对象
+          * ``state: dict``: 当前 State
+        :返回:
+          - ``bool``
+        """
         results = await asyncio.gather(
             *map(lambda c: c(bot, event, state), self.checkers))
         return all(results)
 
     def __and__(self, other: Union["Rule", RuleChecker]) -> "Rule":
-        checkers = [*self.checkers]
+        checkers = self.checkers.copy()
         if isinstance(other, Rule):
-            checkers.extend(other.checkers)
+            checkers |= other.checkers
         elif asyncio.iscoroutinefunction(other):
-            checkers.append(other)
+            checkers.add(other)  # type: ignore
         else:
-            checkers.append(run_sync(other))
+            checkers.add(run_sync(other))
         return Rule(*checkers)
 
     def __or__(self, other) -> NoReturn:

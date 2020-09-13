@@ -156,7 +156,7 @@ bots = nonebot.get_bots()
 * **返回**
 
     
-    * None
+    * `None`
 
 
 
@@ -196,7 +196,7 @@ nonebot.init(database=Database(...))
 * **返回**
 
     
-    * None
+    * `None`
 
 
 

@@ -19,6 +19,9 @@
     * [nonebot.log](log.html)
 
 
+    * [nonebot.rule](rule.html)
+
+
     * [nonebot.utils](utils.html)
 
 

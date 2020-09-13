@@ -16,7 +16,7 @@ def run_sync(func: Callable[..., Any]) -> Callable[..., Awaitable[Any]]:
     :参数:
       * ``func: Callable[..., Any]``: 被装饰的同步函数
     :返回:
-      - Callable[..., Awaitable[Any]]
+      - ``Callable[..., Awaitable[Any]]``
     """
 
     @wraps(func)
@@ -31,10 +31,8 @@ def run_sync(func: Callable[..., Any]) -> Callable[..., Awaitable[Any]]:
 
 class DataclassEncoder(json.JSONEncoder):
     """
-    :类型:
-      ``json.JSONEncoder``
     :说明:
-      ``JSONEncoder`` used when encoding ``Message`` (List of dataclasses)
+      在JSON序列化 ``Message`` (List[Dataclass]) 时使用的 ``JSONEncoder``
     """
 
     @overrides(json.JSONEncoder)

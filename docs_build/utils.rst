@@ -4,8 +4,9 @@ sidebarDepth: 0
 ---
 
 NoneBot.utils 模块
-=================
+==================
 
-.. automodule:: nonebot.utils
-   :members:
-   :show-inheritance:
+
+.. autodecorator:: nonebot.utils.run_sync
+.. autoclass:: nonebot.utils.DataclassEncoder
+  :show-inheritance:

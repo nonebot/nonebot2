@@ -46,7 +46,7 @@ def overrides(InterfaceClass: object):
 
 Driver = TypeVar("Driver", bound="BaseDriver")
 """
-:类型: `BaseDriver`
+:类型: ``BaseDriver``
 
 :说明:
 
@@ -54,7 +54,7 @@ Driver = TypeVar("Driver", bound="BaseDriver")
 """
 WebSocket = TypeVar("WebSocket", bound="BaseWebSocket")
 """
-:类型: `BaseWebSocket`
+:类型: ``BaseWebSocket``
 
 :说明:
 
@@ -63,7 +63,7 @@ WebSocket = TypeVar("WebSocket", bound="BaseWebSocket")
 
 Bot = TypeVar("Bot", bound="BaseBot")
 """
-:类型: `BaseBot`
+:类型: ``BaseBot``
 
 :说明:
 
@@ -71,7 +71,7 @@ Bot = TypeVar("Bot", bound="BaseBot")
 """
 Event = TypeVar("Event", bound="BaseEvent")
 """
-:类型: `BaseEvent`
+:类型: ``BaseEvent``
 
 :说明:
 
@@ -79,7 +79,7 @@ Event = TypeVar("Event", bound="BaseEvent")
 """
 Message = TypeVar("Message", bound="BaseMessage")
 """
-:类型: `BaseMessage`
+:类型: ``BaseMessage``
 
 :说明:
 
@@ -87,7 +87,7 @@ Message = TypeVar("Message", bound="BaseMessage")
 """
 MessageSegment = TypeVar("MessageSegment", bound="BaseMessageSegment")
 """
-:类型: `BaseMessageSegment`
+:类型: ``BaseMessageSegment``
 
 :说明:
 
@@ -97,7 +97,7 @@ MessageSegment = TypeVar("MessageSegment", bound="BaseMessageSegment")
 PreProcessor = Callable[[Bot, Event, dict], Union[Awaitable[None],
                                                   Awaitable[NoReturn]]]
 """
-:类型: `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+:类型: ``Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]``
 
 :说明:
 
@@ -106,7 +106,7 @@ PreProcessor = Callable[[Bot, Event, dict], Union[Awaitable[None],
 
 Matcher = TypeVar("Matcher", bound="MatcherClass")
 """
-:类型: `Matcher`
+:类型: ``Matcher``
 
 :说明:
 
@@ -114,15 +114,15 @@ Matcher = TypeVar("Matcher", bound="MatcherClass")
 """
 Rule = TypeVar("Rule", bound="RuleClass")
 """
-:类型: `Rule`
+:类型: ``Rule``
 
 :说明:
 
   Rule 即判断是否响应事件的处理类。内部存储 RuleChecker ，返回全为 True 则响应事件。
 """
-RuleChecker = Callable[[Bot, Event, dict], Awaitable[bool]]
+RuleChecker = Callable[[Bot, Event, dict], Union[bool, Awaitable[bool]]]
 """
-:类型: `Callable[[Bot, Event, dict], Awaitable[bool]]`
+:类型: ``Callable[[Bot, Event, dict], Union[bool, Awaitable[bool]]]``
 
 :说明:
 
@@ -130,15 +130,15 @@ RuleChecker = Callable[[Bot, Event, dict], Awaitable[bool]]
 """
 Permission = TypeVar("Permission", bound="PermissionClass")
 """
-:类型: `Permission`
+:类型: ``Permission``
 
 :说明:
 
   Permission 即判断是否响应消息的处理类。内部存储 PermissionChecker ，返回只要有一个 True 则响应消息。
 """
-PermissionChecker = Callable[[Bot, Event], Awaitable[bool]]
+PermissionChecker = Callable[[Bot, Event], Union[bool, Awaitable[bool]]]
 """
-:类型: `Callable[[Bot, Event], Awaitable[bool]]`
+:类型: ``Callable[[Bot, Event], Union[bool, Awaitable[bool]]]``
 
 :说明:
 
@@ -147,7 +147,7 @@ PermissionChecker = Callable[[Bot, Event], Awaitable[bool]]
 Handler = Callable[[Bot, Event, dict], Union[Awaitable[None],
                                              Awaitable[NoReturn]]]
 """
-:类型: `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+:类型: ``Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]``
 
 :说明:
 
@@ -156,7 +156,7 @@ Handler = Callable[[Bot, Event, dict], Union[Awaitable[None],
 ArgsParser = Callable[[Bot, Event, dict], Union[Awaitable[None],
                                                 Awaitable[NoReturn]]]
 """
-:类型: `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+:类型: ``Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]``
 
 :说明:
 

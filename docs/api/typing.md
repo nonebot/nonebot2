@@ -19,7 +19,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    BaseDriver
+    `BaseDriver`
 
 
 
@@ -35,7 +35,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    BaseWebSocket
+    `BaseWebSocket`
 
 
 
@@ -51,7 +51,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    BaseBot
+    `BaseBot`
 
 
 
@@ -67,7 +67,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    BaseEvent
+    `BaseEvent`
 
 
 
@@ -83,7 +83,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    BaseMessage
+    `BaseMessage`
 
 
 
@@ -99,7 +99,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    BaseMessageSegment
+    `BaseMessageSegment`
 
 
 
@@ -115,7 +115,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]
+    `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
 
 
 
@@ -131,7 +131,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    Matcher
+    `Matcher`
 
 
 
@@ -147,7 +147,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    Rule
+    `Rule`
 
 
 
@@ -163,7 +163,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    Callable[[Bot, Event, dict], Awaitable[bool]]
+    `Callable[[Bot, Event, dict], Union[bool, Awaitable[bool]]]`
 
 
 
@@ -179,7 +179,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    Permission
+    `Permission`
 
 
 
@@ -195,7 +195,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    Callable[[Bot, Event], Awaitable[bool]]
+    `Callable[[Bot, Event], Union[bool, Awaitable[bool]]]`
 
 
 
@@ -211,7 +211,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]
+    `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
 
 
 
@@ -227,7 +227,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]
+    `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
 
 
 

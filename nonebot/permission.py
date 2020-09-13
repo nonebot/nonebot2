@@ -4,14 +4,15 @@
 import asyncio
 
 from nonebot.utils import run_sync
-from nonebot.typing import Bot, Event, Union, NoReturn, PermissionChecker
+from nonebot.typing import Bot, Event, Union, NoReturn, Callable, Awaitable, PermissionChecker
 
 
 class Permission:
     __slots__ = ("checkers",)
 
-    def __init__(self, *checkers: PermissionChecker) -> None:
-        self.checkers = list(checkers)
+    def __init__(self, *checkers: Callable[[Bot, Event],
+                                           Awaitable[bool]]) -> None:
+        self.checkers = set(checkers)
 
     async def __call__(self, bot: Bot, event: Event) -> bool:
         if not self.checkers:
@@ -25,13 +26,13 @@ class Permission:
 
     def __or__(self, other: Union["Permission",
                                   PermissionChecker]) -> "Permission":
-        checkers = [*self.checkers]
+        checkers = self.checkers.copy()
         if isinstance(other, Permission):
-            checkers.extend(other.checkers)
+            checkers |= other.checkers
         elif asyncio.iscoroutinefunction(other):
-            checkers.append(other)
+            checkers.add(other)
         else:
-            checkers.append(run_sync(other))
+            checkers.add(run_sync(other))
         return Permission(*checkers)
 
 

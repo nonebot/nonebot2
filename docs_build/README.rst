@@ -7,5 +7,6 @@ NoneBot Api Reference
   - `nonebot.config <config.html>`_
   - `nonebot.sched <sched.html>`_
   - `nonebot.log <log.html>`_
+  - `nonebot.rule <rule.html>`_
   - `nonebot.utils <utils.html>`_
   - `nonebot.exception <exception.html>`_
