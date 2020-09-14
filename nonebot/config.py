@@ -79,6 +79,9 @@ class BaseConfig(BaseSettings):
 
         if env_file_vars:
             for env_name, env_val in env_file_vars.items():
+                if (env_val is None or
+                        len(env_val) == 0) and env_name in env_vars:
+                    env_val = env_vars[env_name]
                 try:
                     env_val = self.__config__.json_loads(env_val)
                 except ValueError as e:
