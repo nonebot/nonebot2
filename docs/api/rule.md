@@ -7,7 +7,7 @@ sidebarDepth: 0
 
 ## 规则
 
-每个 `Matcher` 拥有一个 `Rule` ，其中是 `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
+每个 `Matcher` 拥有一个 `Rule` ，其中是 **异步** `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
 
 :::tip 提示
 `RuleChecker` 既可以是 async function 也可以是 sync function
@@ -88,3 +88,35 @@ Rule(async_function, run_sync(sync_function))
 
     
     * `bool`
+
+
+
+## `startswith(msg)`
+
+
+* **说明**
+
+    匹配消息开头
+
+
+
+* **参数**
+
+    
+    * `msg: str`: 消息开头字符串
+
+
+
+## `endswith(msg)`
+
+
+* **说明**
+
+    匹配消息结尾
+
+
+
+* **参数**
+
+    
+    * `msg: str`: 消息结尾字符串

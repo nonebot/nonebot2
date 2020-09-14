@@ -93,6 +93,10 @@ module.exports = context => ({
                   path: "rule"
                 },
                 {
+                  title: "nonebot.permission 模块",
+                  path: "permission"
+                },
+                {
                   title: "nonebot.utils 模块",
                   path: "utils"
                 },

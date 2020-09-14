@@ -22,6 +22,9 @@
     * [nonebot.rule](rule.html)
 
 
+    * [nonebot.permission](permission.html)
+
+
     * [nonebot.utils](utils.html)
 
 
