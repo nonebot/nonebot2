@@ -170,7 +170,7 @@ class Config(BaseConfig):
       以机器人 ID 为键，上报地址为值的字典，环境变量或文件中应使用 json 序列化。
     - 示例:
 
-    .. code-block:: plain
+    .. code-block:: default
 
         API_ROOT={"123456": "http://127.0.0.1:5700"}
     """
@@ -198,7 +198,7 @@ class Config(BaseConfig):
       机器人超级用户。
     - 示例:
 
-    .. code-block:: plain
+    .. code-block:: default
 
         SUPER_USERS=[12345789]
     """
@@ -231,7 +231,7 @@ class Config(BaseConfig):
       等待用户回复的超时时间。
     - 示例:
 
-    .. code-block:: plain
+    .. code-block:: default
 
         SESSION_EXPIRE_TIMEOUT=120  # 单位: 秒
         SESSION_EXPIRE_TIMEOUT=[DD ][HH:MM]SS[.ffffff]

@@ -59,7 +59,7 @@ module.exports = context => ({
               path: "",
               collapsable: false,
               sidebar: "auto",
-              children: ["", "installation"]
+              children: ["", "installation", "getting-started"]
             }
           ],
           "/api/": [
