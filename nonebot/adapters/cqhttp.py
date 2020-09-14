@@ -214,14 +214,19 @@ class Bot(BaseBot):
             ResultStore.add_result(message)
             return
 
-        event = Event(message)
+        try:
+            event = Event(message)
 
-        # Check whether user is calling me
-        await _check_reply(self, event)
-        _check_at_me(self, event)
-        _check_nickname(self, event)
+            # Check whether user is calling me
+            await _check_reply(self, event)
+            _check_at_me(self, event)
+            _check_nickname(self, event)
 
-        await handle_event(self, event)
+            await handle_event(self, event)
+        except Exception as e:
+            logger.opt(colors=True, exception=e).error(
+                f"<r><bg #f8bbd0>Failed to handle event. Raw: {message}</bg #f8bbd0></r>"
+            )
 
     @overrides(BaseBot)
     async def call_api(self, api: str, **data) -> Union[Any, NoReturn]:
