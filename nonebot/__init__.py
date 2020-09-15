@@ -147,10 +147,10 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
     """
     global _driver
     if not _driver:
-        logger.debug("NoneBot is initializing...")
+        logger.info("NoneBot is initializing...")
         env = Env()
         logger.opt(
-            colors=True).debug(f"Current <y><b>Env: {env.environment}</b></y>")
+            colors=True).info(f"Current <y><b>Env: {env.environment}</b></y>")
         config = Config(**kwargs,
                         _env_file=_env_file or f".env.{env.environment}")
 

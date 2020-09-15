@@ -143,19 +143,6 @@ class Config(BaseConfig):
     - 说明:
       NoneBot 的 HTTP 和 WebSocket 服务端监听的端口。
     """
-    secret: Optional[str] = None
-    """
-    - 类型: ``Optional[str]``
-    - 默认值: ``None``
-    - 说明:
-      上报连接 NoneBot 所需的密钥。
-    - 示例:
-
-    .. code-block:: http
-
-        POST /cqhttp/ HTTP/1.1
-        Authorization: Bearer kSLuTF2GC2Q4q4ugm3
-    """
     debug: bool = False
     """
     - 类型: ``bool``
@@ -189,7 +176,26 @@ class Config(BaseConfig):
     - 类型: ``Optional[str]``
     - 默认值: ``None``
     - 说明:
-      API 请求所需密钥，会在调用 API 时在请求头中携带。
+      API 请求以及上报所需密钥，在请求头中携带。
+    - 示例:
+
+    .. code-block:: http
+
+        POST /cqhttp/ HTTP/1.1
+        Authorization: Bearer kSLuTF2GC2Q4q4ugm3
+    """
+    secret: Optional[str] = None
+    """
+    - 类型: ``Optional[str]``
+    - 默认值: ``None``
+    - 说明:
+      HTTP POST 形式上报所需签名，在请求头中携带。
+    - 示例:
+
+    .. code-block:: http
+
+        POST /cqhttp/ HTTP/1.1
+        X-Signature: sha1=f9ddd4863ace61e64f462d41ca311e3d2c1176e2
     """
 
     # bot runtime configs
