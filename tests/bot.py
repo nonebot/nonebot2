@@ -28,6 +28,7 @@ nonebot.load_plugins("test_plugins")
 # modify some config / config depends on loaded configs
 config = nonebot.get_driver().config
 config.custom_config3 = config.custom_config1
+config.custom_config4 = "New custom config"
 
 if __name__ == "__main__":
     nonebot.run(app="bot:app")
