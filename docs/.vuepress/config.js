@@ -20,6 +20,14 @@ module.exports = context => ({
     [
       "meta",
       { name: "apple-mobile-web-app-status-bar-style", content: "black" }
+    ],
+    [
+      "link",
+      {
+        rel: "stylesheet",
+        href:
+          "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"
+      }
     ]
   ],
   locales: {
@@ -59,7 +67,12 @@ module.exports = context => ({
               path: "",
               collapsable: false,
               sidebar: "auto",
-              children: ["", "installation", "getting-started"]
+              children: [
+                "",
+                "installation",
+                "getting-started",
+                "creating-a-project"
+              ]
             }
           ],
           "/api/": [
@@ -123,6 +136,14 @@ module.exports = context => ({
         onNewVersion(version, versionDestPath) {
           console.log(`Created version ${version} in ${versionDestPath}`);
         }
+      }
+    ],
+    [
+      "container",
+      {
+        type: "vue",
+        before: '<pre class="vue-container"><code>',
+        after: "</code></pre>"
       }
     ]
   ]

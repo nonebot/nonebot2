@@ -15,7 +15,8 @@ pip install nonebot2
 ```bash
 git clone https://github.com/nonebot/nonebot2.git
 cd nonebot2
-pip install .
+poetry install --no-dev  # 推荐
+pip install .  # 不推荐
 ```
 
 ## 额外依赖
