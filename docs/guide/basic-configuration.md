@@ -44,7 +44,7 @@ CUSTOM_CONFIG1="config in env file"
 CUSTOM_CONFIG2=  # 留空则从系统环境变量读取，如不存在则为空字符串
 ```
 
-详细的配置项参考 [Config Reference](/api/config.md) 。
+详细的配置项参考 [Config Reference](../api/config.md) 。
 
 ## bot.py 文件
 

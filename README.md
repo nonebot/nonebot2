@@ -30,10 +30,10 @@ NoneBot2 是一个可扩展的 Python 异步机器人框架，它会对机器人
 
 ## 文档
 
-文档目前尚未完成，「API」部分由 sphinx 自动生成，你可以在 [这里](https://docs.nonebot.dev/) 查看。
+文档目前尚未完成，「API」部分由 sphinx 自动生成，你可以在 [这里](https://v2.nonebot.dev/) 查看。
 
 ## 贡献
 
-如果你在使用过程中发现任何问题，可以 [提交 issue](https://github.com/nonebot/nonebot/issues/new) 或自行 fork 修改后提交 pull request。
+如果你在使用过程中发现任何问题，可以 [提交 issue](https://github.com/nonebot/nonebot2/issues/new) 或自行 fork 修改后提交 pull request。
 
 如果你要提交 pull request，请确保你的代码风格和项目已有的代码保持一致，遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/)，变量命名清晰，有适当的注释。
