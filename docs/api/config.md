@@ -67,7 +67,7 @@ NoneBot 运行所使用的 `Driver` 。继承自 `nonebot.driver.BaseDriver` 。
 
 
 * 说明:
-NoneBot 的 HTTP 和 WebSocket 服务端监听的 IP／主机名。
+NoneBot 的 HTTP 和 WebSocket 服务端监听的 IP/主机名。
 
 
 ### `port`
@@ -81,27 +81,6 @@ NoneBot 的 HTTP 和 WebSocket 服务端监听的 IP／主机名。
 
 * 说明:
 NoneBot 的 HTTP 和 WebSocket 服务端监听的端口。
-
-
-### `secret`
-
-
-* 类型: `Optional[str]`
-
-
-* 默认值: `None`
-
-
-* 说明:
-上报连接 NoneBot 所需的密钥。
-
-
-* 示例:
-
-```http
-POST /cqhttp/ HTTP/1.1
-Authorization: Bearer kSLuTF2GC2Q4q4ugm3
-```
 
 
 ### `debug`
@@ -132,7 +111,7 @@ Authorization: Bearer kSLuTF2GC2Q4q4ugm3
 
 * 示例:
 
-```plain
+```default
 API_ROOT={"123456": "http://127.0.0.1:5700"}
 ```
 
@@ -160,7 +139,36 @@ API 请求超时时间，单位: 秒。
 
 
 * 说明:
-API 请求所需密钥，会在调用 API 时在请求头中携带。
+API 请求以及上报所需密钥，在请求头中携带。
+
+
+* 示例:
+
+```http
+POST /cqhttp/ HTTP/1.1
+Authorization: Bearer kSLuTF2GC2Q4q4ugm3
+```
+
+
+### `secret`
+
+
+* 类型: `Optional[str]`
+
+
+* 默认值: `None`
+
+
+* 说明:
+HTTP POST 形式上报所需签名，在请求头中携带。
+
+
+* 示例:
+
+```http
+POST /cqhttp/ HTTP/1.1
+X-Signature: sha1=f9ddd4863ace61e64f462d41ca311e3d2c1176e2
+```
 
 
 ### `superusers`
@@ -178,7 +186,7 @@ API 请求所需密钥，会在调用 API 时在请求头中携带。
 
 * 示例:
 
-```plain
+```default
 SUPER_USERS=[12345789]
 ```
 
@@ -237,7 +245,7 @@ SUPER_USERS=[12345789]
 
 * 示例:
 
-```plain
+```default
 SESSION_EXPIRE_TIMEOUT=120  # 单位: 秒
 SESSION_EXPIRE_TIMEOUT=[DD ][HH:MM]SS[.ffffff]
 SESSION_EXPIRE_TIMEOUT=P[DD]DT[HH]H[MM]M[SS]S  # ISO 8601

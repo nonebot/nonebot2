@@ -134,7 +134,7 @@ class Config(BaseConfig):
     - 类型: ``IPvAnyAddress``
     - 默认值: ``127.0.0.1``
     - 说明:
-      NoneBot 的 HTTP 和 WebSocket 服务端监听的 IP／主机名。
+      NoneBot 的 HTTP 和 WebSocket 服务端监听的 IP/主机名。
     """
     port: int = 8080
     """
