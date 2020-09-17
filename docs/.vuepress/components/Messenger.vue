@@ -19,22 +19,7 @@
                 <h3 class="white--text">NoneBot</h3>
               </v-col>
               <v-col class="text-right">
-                <v-tooltip top>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn class="mr-2" icon small v-bind="attrs" v-on="on"
-                      ><v-icon small>fa-terminal</v-icon></v-btn
-                    >
-                  </template>
-                  <span>Terminal</span>
-                </v-tooltip>
-                <v-tooltip top>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-btn icon small v-bind="attrs" v-on="on"
-                      ><v-icon small>fa-trash-alt</v-icon></v-btn
-                    >
-                  </template>
-                  <span>Clear</span>
-                </v-tooltip>
+                <v-icon small>fa-user</v-icon>
               </v-col>
             </v-row>
           </v-toolbar>
@@ -136,9 +121,9 @@
               </v-col>
             </v-row>
           </v-container>
-        </v-card></v-main
-      ></v-app
-    >
+        </v-card>
+      </v-main>
+    </v-app>
   </div>
 </template>
 

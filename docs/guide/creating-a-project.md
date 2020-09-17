@@ -19,9 +19,9 @@ nb create
 AweSome-Bot
 ├── `awesome_bot` _(**或是 src**)_
 │   └── `plugins`
-├── `.env`
-├── `.env.dev`
-├── `.env.prod`
+├── `.env` _(**可选的**)_
+├── `.env.dev` _(**可选的**)_
+├── `.env.prod` _(**可选的**)_
 ├── .gitignore
 ├── `bot.py`
 ├── docker-compose.yml
