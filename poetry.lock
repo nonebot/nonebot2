@@ -197,7 +197,7 @@ description = "Chromium HSTS Preload list as a Python package and updated daily"
 name = "hstspreload"
 optional = false
 python-versions = ">=3.6"
-version = "2020.9.9"
+version = "2020.9.15"
 
 [package.source]
 reference = "aliyun"
@@ -427,7 +427,7 @@ description = "Pygments is a syntax highlighting package written in Python."
 name = "pygments"
 optional = false
 python-versions = ">=3.5"
-version = "2.6.1"
+version = "2.7.1"
 
 [package.source]
 reference = "aliyun"
@@ -620,7 +620,7 @@ unify = "*"
 yapf = "*"
 
 [package.source]
-reference = "1438d33cbeaab0230c9f7e33bd059eb9f57c86d6"
+reference = "792133d3bb15b956e5150c158371eb71f5670844"
 type = "git"
 url = "https://github.com/nonebot/sphinx-markdown-builder.git"
 [[package]]
@@ -942,8 +942,8 @@ hpack = [
     {file = "hpack-3.0.0.tar.gz", hash = "sha256:8eec9c1f4bfae3408a3f30500261f7e6a65912dc138526ea054f9ad98892e9d2"},
 ]
 hstspreload = [
-    {file = "hstspreload-2020.9.9-py3-none-any.whl", hash = "sha256:dcaa0cdc68e3cc581817c72adb5e9dacc992574397e01c9bab66759d41af72f5"},
-    {file = "hstspreload-2020.9.9.tar.gz", hash = "sha256:61bcfe25cd4c97f014292576863fe142e962fbff6157ea567188a10341b134ef"},
+    {file = "hstspreload-2020.9.15-py3-none-any.whl", hash = "sha256:c09f02dd4b7e3953a8353836aea964b868b22905bdb6d8932ca4b273df0f820f"},
+    {file = "hstspreload-2020.9.15.tar.gz", hash = "sha256:059fc2ead7bb83ea9e85d06c1afc7112413f1d2a81e6448bd276af6bced035ac"},
 ]
 html2text = [
     {file = "html2text-2020.1.16-py3-none-any.whl", hash = "sha256:c7c629882da0cf377d66f073329ccf34a12ed2adf0169b9285ae4e63ef54c82b"},
@@ -1054,8 +1054,8 @@ pydash = [
     {file = "pydash-4.8.0.tar.gz", hash = "sha256:546afa043ed1defa3122383bebe8b7072f43554ccc5f0c4360638f99e5ed7327"},
 ]
 pygments = [
-    {file = "Pygments-2.6.1-py3-none-any.whl", hash = "sha256:ff7a40b4860b727ab48fad6360eb351cc1b33cbf9b15a0f689ca5353e9463324"},
-    {file = "Pygments-2.6.1.tar.gz", hash = "sha256:647344a061c249a3b74e230c739f434d7ea4d8b1d5f3721bc0f3558049b38f44"},
+    {file = "Pygments-2.7.1-py3-none-any.whl", hash = "sha256:307543fe65c0947b126e83dd5a61bd8acbd84abec11f43caebaf5534cbc17998"},
+    {file = "Pygments-2.7.1.tar.gz", hash = "sha256:926c3f319eda178d1bd90851e4317e6d8cdb5e292a3386aac9bd75eca29cf9c7"},
 ]
 pygtrie = [
     {file = "pygtrie-2.3.3.tar.gz", hash = "sha256:2204dbd95584f67821da5b3771c4305ac5585552b3230b210f1f05322608db2c"},
