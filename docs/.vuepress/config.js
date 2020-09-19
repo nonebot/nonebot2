@@ -72,7 +72,8 @@ module.exports = context => ({
                 "installation",
                 "getting-started",
                 "creating-a-project",
-                "basic-configuration"
+                "basic-configuration",
+                "writing-a-plugin"
               ]
             }
           ],
