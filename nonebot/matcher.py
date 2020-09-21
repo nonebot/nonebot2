@@ -101,8 +101,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def check_perm(cls, bot: Bot, event: Event) -> bool:
-        return (event.type == (cls.type or event.type) and
-                await cls.permission(bot, event))
+        return await cls.permission(bot, event)
 
     @classmethod
     async def check_rule(cls, bot: Bot, event: Event, state: dict) -> bool:
@@ -114,7 +113,8 @@ class Matcher(metaclass=MatcherMeta):
         Returns:
             bool: 条件成立与否
         """
-        return await cls.rule(bot, event, state)
+        return (event.type == (cls.type or event.type) and
+                await cls.rule(bot, event, state))
 
     @classmethod
     def args_parser(cls, func: ArgsParser) -> ArgsParser:
