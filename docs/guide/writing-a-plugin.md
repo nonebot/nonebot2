@@ -132,8 +132,9 @@ async def get_weather(city: str):
 ```python{4}
 from nonebot import on_command
 from nonebot.rule import to_me
+from nonebot.permission import Permission
 
-weather = on_command("天气", rule=to_me(), priority=5)
+weather = on_command("天气", rule=to_me(), permission=Permission(), priority=5)
 ```
 
 在上方代码中，我们注册了一个事件响应器 `Matcher`，它由几个部分组成：
@@ -142,11 +143,11 @@ weather = on_command("天气", rule=to_me(), priority=5)
 2. `"天气"` 指定 command 参数 - 命令名
 3. `rule` 补充事件响应器的匹配规则
 4. `priority` 事件响应器优先级
-5. `permission` 事件响应器的“使用权限”
+5. `block` 是否阻止事件传递
 
 其他详细配置可以参考 API 文档，下面我们详细说明各个部分：
 
-#### 事件响应器类型
+#### 事件响应器类型 type
 
 事件响应器类型其实就是对应 `Event.type` ，NoneBot 提供了一个基础类型事件响应器 `on()` 以及一些内置的事件响应器。
 
@@ -160,7 +161,7 @@ weather = on_command("天气", rule=to_me(), priority=5)
 - `on_command(str|tuple)` ~ `on("message", command(str|tuple))`: 命令处理器
 - `on_regax(pattern_str)` ~ `on("message", regax(pattern_str))`: 正则匹配处理器
 
-#### 匹配规则
+#### 匹配规则 rule
 
 事件响应器的匹配规则即 `Rule`，由非负个 `RuleChecker` 组成，当所有 `RuleChecker` 返回 `True` 时匹配成功。这些 `RuleChecker` 的形式如下：
 
@@ -183,3 +184,24 @@ Rule(async_checker1) & sync_checker & async_checker2
 :::danger 警告
 `Rule(*checkers)` 只接受 async function，或使用 `nonebot.utils.run_sync` 自行包裹 sync function。在使用 `与 &` 时，NoneBot 会自动包裹 sync function
 :::
+
+#### 优先级 priority
+
+事件响应器的优先级代表事件响应器的执行顺序，同一优先级的事件响应器会 **同时执行！**
+
+:::tip 提示
+使用 `nonebot-test` 可以看到当前所有事件响应器的执行流程，有助理解事件响应流程！
+
+```bash
+pip install nonebot2[test]
+```
+
+:::
+
+#### 阻断 block
+
+当有任意事件响应器发出了阻止事件传递信号时，该事件将不再会传递给下一优先级，直接结束处理。
+
+NoneBot 内置的事件响应器中，所有 `message` 类的事件响应器默认会阻断事件传递，其他则不会。
+
+### 编写事件处理函数 [Handler](../api/typing.md#Handler)

@@ -60,6 +60,7 @@ module.exports = context => ({
           { text: "指南", link: "/guide/" },
           { text: "API", link: "/api/" }
         ],
+        sidebarDepth: 2,
         sidebar: {
           "/guide/": [
             {
