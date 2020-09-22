@@ -204,4 +204,55 @@ pip install nonebot2[test]
 
 NoneBot 内置的事件响应器中，所有 `message` 类的事件响应器默认会阻断事件传递，其他则不会。
 
-### 编写事件处理函数 [Handler](../api/typing.md#Handler)
+### 编写事件处理函数 [Handler](../api/typing.md#handler)
+
+```python{1,2,8,9}
+@weather.handle()
+async def handle_first_receive(bot: Bot, event: Event, state: dict):
+    args = str(event.message).strip()  # 首次发送命令时跟随的参数，例：/天气 上海，则args为上海
+    if args:
+        state["city"] = args  # 如果用户发送了参数则直接赋值
+
+
+@weather.got("city", prompt="你想查询哪个城市的天气呢？")
+async def handle_city(bot: Bot, event: Event, state: dict):
+    city = state["city"]
+    if city not in ["上海", "北京"]:
+        await weather.reject("你想查询的城市暂不支持，请重新输入！")
+    city_weather = await get_weather(city)
+    await weather.finish(city_weather)
+```
+
+在上面的代码中，我们给 `weather` 事件响应器添加了两个事件处理函数：`handle_first_receive`, `handle_city`
+
+其中有几个要点，我们一一解释：
+
+#### 添加一个事件处理函数
+
+在事件响应器响应事件时，事件处理函数会依次顺序执行，也就是说，与添加顺序一致。
+
+我们可以使用 `@matcher.handle()` 装饰器来简单地为该事件响应器添加一个处理函数。
+
+同时，NoneBot 内置了几种添加事件处理函数方式以方便处理：
+
+- `@matcher.receive()`: 指示 NoneBot 接收一条新的用户消息以继续执行后续处理函数。
+- `@matcher.got(key, [prompt="请输入key"], [args_parser=function])`: 指示 NoneBot 当 `state` 中不存在 `key` 时向用户发送 `prompt` 等待用户回复并赋值给 `state[key]`
+
+这些装饰器可以套娃使用！例如：
+
+```python
+@matcher.got("key1")
+@matcher.got("key2")
+async def handle(bot: Bot, event: Event, state: dict):
+    pass
+```
+
+#### 事件处理函数参数
+
+事件处理函数类型为 `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]` 。
+
+参数分别为：
+
+1. [nonebot.typing.Bot](../api/typing.md#bot): 即事件上报连接对应的 Bot 对象，为 BaseBot 的子类。特别注意，此处的类型注释可以替换为指定的 Bot 类型，例如：`nonebot.adapters.cqhttp.Bot`，只有在上报事件的 Bot 类型与类型注释相符时才会执行该处理函数！可用于多平台进行不同的处理。
+2. [nonebot.typing.Event](../api/typing.md#event):
+3. `state`:
