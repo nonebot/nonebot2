@@ -37,4 +37,4 @@ jobs:
           git config user.email nonebot@nonebot.dev
           git add .
           git diff-index --quiet HEAD || git commit -m ":memo: update api docs"
-          git push
+          git push origin HEAD:${{github.event.pull_request.head.ref}}
