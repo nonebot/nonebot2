@@ -13,11 +13,17 @@ jobs:
       - uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.sha }}
+          
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+          architecture: "x64"
 
       - name: Install Dependences
         run: |
-          pip3 install poetry
-          poetry install
+          python -m pip install --upgrade pip
+          pip install .
 
       - name: Build Doc
         run: sphinx-build -M markdown ./docs_build ./build
