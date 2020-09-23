@@ -36,5 +36,5 @@ jobs:
           git config user.name nonebot
           git config user.email nonebot@nonebot.dev
           git add .
-          git commit -m ":memo: update api docs"
+          git diff-index --quiet HEAD || git commit -m ":memo: update api docs"
           git push
