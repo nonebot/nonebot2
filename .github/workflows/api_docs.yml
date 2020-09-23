@@ -23,7 +23,8 @@ jobs:
       - name: Install Dependences
         run: |
           python -m pip install --upgrade pip
-          pip install .
+          pip install poetry
+          poetry install
 
       - name: Build Doc
         run: sphinx-build -M markdown ./docs_build ./build
