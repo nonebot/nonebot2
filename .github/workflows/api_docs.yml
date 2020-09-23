@@ -27,7 +27,7 @@ jobs:
           poetry install
 
       - name: Build Doc
-        run: sphinx-build -M markdown ./docs_build ./build
+        run: poetry run sphinx-build -M markdown ./docs_build ./build
       
       - name: Copy Files
         run: cp ./build/markdown/*.md ./docs/api/
