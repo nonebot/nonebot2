@@ -1,0 +1,88 @@
+{
+  "locales": {
+    "/": {
+      "label": "简体中文",
+      "selectText": "Languages",
+      "editLinkText": "在 GitHub 上编辑此页",
+      "lastUpdated": "上次更新",
+      "nav": [
+        {
+          "text": "主页",
+          "link": "/"
+        },
+        {
+          "text": "指南",
+          "link": "/guide/"
+        },
+        {
+          "text": "API",
+          "link": "/api/"
+        }
+      ],
+      "sidebarDepth": 2,
+      "sidebar": {
+        "/guide/": [
+          {
+            "title": "指南",
+            "path": "",
+            "collapsable": false,
+            "sidebar": "auto",
+            "children": [
+              "",
+              "installation",
+              "getting-started",
+              "creating-a-project",
+              "basic-configuration",
+              "writing-a-plugin"
+            ]
+          }
+        ],
+        "/api/": [
+          {
+            "title": "NoneBot Api Reference",
+            "path": "",
+            "collapsable": false,
+            "children": [
+              {
+                "title": "nonebot 模块",
+                "path": "nonebot"
+              },
+              {
+                "title": "nonebot.typing 模块",
+                "path": "typing"
+              },
+              {
+                "title": "nonebot.config 模块",
+                "path": "config"
+              },
+              {
+                "title": "nonebot.sched 模块",
+                "path": "sched"
+              },
+              {
+                "title": "nonebot.log 模块",
+                "path": "log"
+              },
+              {
+                "title": "nonebot.rule 模块",
+                "path": "rule"
+              },
+              {
+                "title": "nonebot.permission 模块",
+                "path": "permission"
+              },
+              {
+                "title": "nonebot.utils 模块",
+                "path": "utils"
+              },
+              {
+                "title": "nonebot.exception 模块",
+                "path": "exception"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  }
+}

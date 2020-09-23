@@ -114,7 +114,8 @@ class Driver(BaseDriver):
                            adapter: str,
                            data: dict = Body(...),
                            x_self_id: Optional[str] = Header(None),
-                           x_signature: Optional[str] = Header(None)):
+                           x_signature: Optional[str] = Header(None),
+                           auth: Optional[str] = Depends(get_auth_bearer)):
         # 检查self_id
         if not x_self_id:
             logger.warning("Missing X-Self-ID Header")
@@ -134,6 +135,14 @@ class Driver(BaseDriver):
                 logger.warning("Signature Header is invalid")
                 raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
                                     detail="Signature is invalid")
+
+        access_token = self.config.access_token
+        if access_token and access_token != auth:
+            logger.warning("Authorization Header is invalid"
+                           if auth else "Missing Authorization Header")
+            raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,
+                                detail="Authorization Header is invalid"
+                                if auth else "Missing Authorization Header")
 
         if not isinstance(data, dict):
             logger.warning("Data received is invalid")
@@ -161,22 +170,25 @@ class Driver(BaseDriver):
         adapter: str,
         websocket: FastAPIWebSocket,
         x_self_id: str = Header(None),
-        access_token: Optional[str] = Depends(get_auth_bearer)):
+        auth: Optional[str] = Depends(get_auth_bearer)):
         ws = WebSocket(websocket)
 
-        secret = self.config.secret
-        if secret is not None and secret != access_token:
+        access_token = self.config.access_token
+        if access_token and access_token != auth:
             logger.warning("Authorization Header is invalid"
-                           if access_token else "Missing Authorization Header")
+                           if auth else "Missing Authorization Header")
             await ws.close(code=status.WS_1008_POLICY_VIOLATION)
+            return
 
         if not x_self_id:
             logger.warning(f"Missing X-Self-ID Header")
             await ws.close(code=status.WS_1008_POLICY_VIOLATION)
+            return
 
         if x_self_id in self._clients:
             logger.warning(f"Connection Conflict: self_id {x_self_id}")
             await ws.close(code=status.WS_1008_POLICY_VIOLATION)
+            return
 
         # Create Bot Object
         if adapter in self._adapters:

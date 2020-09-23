@@ -20,6 +20,14 @@ module.exports = context => ({
     [
       "meta",
       { name: "apple-mobile-web-app-status-bar-style", content: "black" }
+    ],
+    [
+      "link",
+      {
+        rel: "stylesheet",
+        href:
+          "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"
+      }
     ]
   ],
   locales: {
@@ -47,8 +55,29 @@ module.exports = context => ({
         selectText: "Languages",
         editLinkText: "在 GitHub 上编辑此页",
         lastUpdated: "上次更新",
-        nav: [{ text: "API", link: "/api/" }],
+        nav: [
+          { text: "主页", link: "/" },
+          { text: "指南", link: "/guide/" },
+          { text: "API", link: "/api/" }
+        ],
+        sidebarDepth: 2,
         sidebar: {
+          "/guide/": [
+            {
+              title: "指南",
+              path: "",
+              collapsable: false,
+              sidebar: "auto",
+              children: [
+                "",
+                "installation",
+                "getting-started",
+                "creating-a-project",
+                "basic-configuration",
+                "writing-a-plugin"
+              ]
+            }
+          ],
           "/api/": [
             {
               title: "NoneBot Api Reference",
@@ -64,16 +93,32 @@ module.exports = context => ({
                   path: "typing"
                 },
                 {
+                  title: "nonebot.config 模块",
+                  path: "config"
+                },
+                {
+                  title: "nonebot.sched 模块",
+                  path: "sched"
+                },
+                {
                   title: "nonebot.log 模块",
                   path: "log"
                 },
                 {
-                  title: "nonebot.exception 模块",
-                  path: "exception"
+                  title: "nonebot.rule 模块",
+                  path: "rule"
                 },
                 {
-                  title: "nonebot.config 模块",
-                  path: "config"
+                  title: "nonebot.permission 模块",
+                  path: "permission"
+                },
+                {
+                  title: "nonebot.utils 模块",
+                  path: "utils"
+                },
+                {
+                  title: "nonebot.exception 模块",
+                  path: "exception"
                 }
               ]
             }
@@ -94,6 +139,14 @@ module.exports = context => ({
         onNewVersion(version, versionDestPath) {
           console.log(`Created version ${version} in ${versionDestPath}`);
         }
+      }
+    ],
+    [
+      "container",
+      {
+        type: "vue",
+        before: '<pre class="vue-container"><code>',
+        after: "</code></pre>"
       }
     ]
   ]

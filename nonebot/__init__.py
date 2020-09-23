@@ -108,6 +108,7 @@ def get_bots() -> Union[NoReturn, Dict[str, Bot]]:
     return driver.bots
 
 
+from nonebot.sched import scheduler
 from nonebot.config import Env, Config
 from nonebot.log import logger, default_filter
 from nonebot.adapters.cqhttp import Bot as CQBot
@@ -135,7 +136,7 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
 
     :返回:
 
-      - `None`
+      - ``None``
 
     :用法:
 
@@ -146,10 +147,10 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
     """
     global _driver
     if not _driver:
-        logger.debug("NoneBot is initializing...")
+        logger.info("NoneBot is initializing...")
         env = Env()
         logger.opt(
-            colors=True).debug(f"Current <y><b>Env: {env.environment}</b></y>")
+            colors=True).info(f"Current <y><b>Env: {env.environment}</b></y>")
         config = Config(**kwargs,
                         _env_file=_env_file or f".env.{env.environment}")
 
@@ -168,6 +169,9 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
         if config.debug and nonebot_test:
             logger.debug("Loading nonebot test frontend...")
             nonebot_test.init()
+
+    if scheduler:
+        _driver.on_startup(_start_scheduler)
 
 
 def run(host: Optional[str] = None,
@@ -188,7 +192,7 @@ def run(host: Optional[str] = None,
 
     :返回:
 
-      - `None`
+      - ``None``
 
     :用法:
 
@@ -199,6 +203,13 @@ def run(host: Optional[str] = None,
     """
     logger.info("Running NoneBot...")
     get_driver().run(host, port, *args, **kwargs)
+
+
+async def _start_scheduler():
+    if scheduler and not scheduler.running:
+        scheduler.configure(_driver.config.apscheduler_config)
+        scheduler.start()
+        logger.opt(colors=True).info("<y>Scheduler Started</y>")
 
 
 from nonebot.plugin import on_message, on_notice, on_request, on_metaevent

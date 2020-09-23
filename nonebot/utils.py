@@ -10,6 +10,14 @@ from nonebot.typing import Any, Callable, Awaitable, overrides
 
 
 def run_sync(func: Callable[..., Any]) -> Callable[..., Awaitable[Any]]:
+    """
+    :说明:
+      一个用于包装 sync function 为 async function 的装饰器
+    :参数:
+      * ``func: Callable[..., Any]``: 被装饰的同步函数
+    :返回:
+      - ``Callable[..., Awaitable[Any]]``
+    """
 
     @wraps(func)
     async def _wrapper(*args: Any, **kwargs: Any) -> Any:
@@ -22,6 +30,10 @@ def run_sync(func: Callable[..., Any]) -> Callable[..., Awaitable[Any]]:
 
 
 class DataclassEncoder(json.JSONEncoder):
+    """
+    :说明:
+      在JSON序列化 ``Message`` (List[Dataclass]) 时使用的 ``JSONEncoder``
+    """
 
     @overrides(json.JSONEncoder)
     def default(self, o):

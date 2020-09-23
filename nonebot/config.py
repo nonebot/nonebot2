@@ -79,6 +79,9 @@ class BaseConfig(BaseSettings):
 
         if env_file_vars:
             for env_name, env_val in env_file_vars.items():
+                if (env_val is None or
+                        len(env_val) == 0) and env_name in env_vars:
+                    env_val = env_vars[env_name]
                 try:
                     env_val = self.__config__.json_loads(env_val)
                 except ValueError as e:
@@ -131,7 +134,7 @@ class Config(BaseConfig):
     - 类型: ``IPvAnyAddress``
     - 默认值: ``127.0.0.1``
     - 说明:
-      NoneBot 的 HTTP 和 WebSocket 服务端监听的 IP／主机名。
+      NoneBot 的 HTTP 和 WebSocket 服务端监听的 IP/主机名。
     """
     port: int = 8080
     """
@@ -139,19 +142,6 @@ class Config(BaseConfig):
     - 默认值: ``8080``
     - 说明:
       NoneBot 的 HTTP 和 WebSocket 服务端监听的端口。
-    """
-    secret: Optional[str] = None
-    """
-    - 类型: ``Optional[str]``
-    - 默认值: ``None``
-    - 说明:
-      上报连接 NoneBot 所需的密钥。
-    - 示例:
-
-    .. code-block:: http
-
-        POST /cqhttp/ HTTP/1.1
-        Authorization: Bearer kSLuTF2GC2Q4q4ugm3
     """
     debug: bool = False
     """
@@ -170,7 +160,7 @@ class Config(BaseConfig):
       以机器人 ID 为键，上报地址为值的字典，环境变量或文件中应使用 json 序列化。
     - 示例:
 
-    .. code-block:: plain
+    .. code-block:: default
 
         API_ROOT={"123456": "http://127.0.0.1:5700"}
     """
@@ -186,7 +176,26 @@ class Config(BaseConfig):
     - 类型: ``Optional[str]``
     - 默认值: ``None``
     - 说明:
-      API 请求所需密钥，会在调用 API 时在请求头中携带。
+      API 请求以及上报所需密钥，在请求头中携带。
+    - 示例:
+
+    .. code-block:: http
+
+        POST /cqhttp/ HTTP/1.1
+        Authorization: Bearer kSLuTF2GC2Q4q4ugm3
+    """
+    secret: Optional[str] = None
+    """
+    - 类型: ``Optional[str]``
+    - 默认值: ``None``
+    - 说明:
+      HTTP POST 形式上报所需签名，在请求头中携带。
+    - 示例:
+
+    .. code-block:: http
+
+        POST /cqhttp/ HTTP/1.1
+        X-Signature: sha1=f9ddd4863ace61e64f462d41ca311e3d2c1176e2
     """
 
     # bot runtime configs
@@ -198,7 +207,7 @@ class Config(BaseConfig):
       机器人超级用户。
     - 示例:
 
-    .. code-block:: plain
+    .. code-block:: default
 
         SUPER_USERS=[12345789]
     """
@@ -231,11 +240,21 @@ class Config(BaseConfig):
       等待用户回复的超时时间。
     - 示例:
 
-    .. code-block:: plain
+    .. code-block:: default
 
         SESSION_EXPIRE_TIMEOUT=120  # 单位: 秒
         SESSION_EXPIRE_TIMEOUT=[DD ][HH:MM]SS[.ffffff]
         SESSION_EXPIRE_TIMEOUT=P[DD]DT[HH]H[MM]M[SS]S  # ISO 8601
+    """
+    apscheduler_config: dict = {"apscheduler.timezone": "Asia/Shanghai"}
+    """
+    - 类型: ``dict``
+    - 默认值: ``{"apscheduler.timezone": "Asia/Shanghai"}``
+    - 说明:
+      APScheduler 的配置对象，见 `Configuring the Scheduler`_
+
+    .. _Configuring the Scheduler:
+        https://apscheduler.readthedocs.io/en/latest/userguide.html#configuring-the-scheduler
     """
 
     # custom configs

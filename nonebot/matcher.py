@@ -6,8 +6,8 @@ import typing
 import inspect
 from functools import wraps
 from datetime import datetime
+from contextvars import ContextVar
 from collections import defaultdict
-from contextvars import Context, ContextVar, copy_context
 
 from nonebot.rule import Rule
 from nonebot.permission import Permission, USER
@@ -101,8 +101,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def check_perm(cls, bot: Bot, event: Event) -> bool:
-        return (event.type == (cls.type or event.type) and
-                await cls.permission(bot, event))
+        return await cls.permission(bot, event)
 
     @classmethod
     async def check_rule(cls, bot: Bot, event: Event, state: dict) -> bool:
@@ -114,7 +113,8 @@ class Matcher(metaclass=MatcherMeta):
         Returns:
             bool: 条件成立与否
         """
-        return await cls.rule(bot, event, state)
+        return (event.type == (cls.type or event.type) and
+                await cls.rule(bot, event, state))
 
     @classmethod
     def args_parser(cls, func: ArgsParser) -> ArgsParser:
@@ -166,8 +166,8 @@ class Matcher(metaclass=MatcherMeta):
                 raise PausedException
 
         async def _key_parser(bot: Bot, event: Event, state: dict):
-            if key in state:
-                return
+            # if key in state:
+            #     return
             parser = args_parser or cls._default_parser
             if parser:
                 await parser(bot, event, state)
@@ -252,6 +252,7 @@ class Matcher(metaclass=MatcherMeta):
                 temp=True,
                 priority=0,
                 block=True,
+                module=self.module,
                 default_state=self.state,
                 expire_time=datetime.now() + bot.config.session_expire_timeout)
         except PausedException:
@@ -263,6 +264,7 @@ class Matcher(metaclass=MatcherMeta):
                 temp=True,
                 priority=0,
                 block=True,
+                module=self.module,
                 default_state=self.state,
                 expire_time=datetime.now() + bot.config.session_expire_timeout)
         except FinishedException:

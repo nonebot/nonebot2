@@ -197,7 +197,7 @@ description = "Chromium HSTS Preload list as a Python package and updated daily"
 name = "hstspreload"
 optional = false
 python-versions = ">=3.6"
-version = "2020.8.18"
+version = "2020.9.15"
 
 [package.source]
 reference = "aliyun"
@@ -338,14 +338,14 @@ description = "Python logging made (stupidly) simple"
 name = "loguru"
 optional = false
 python-versions = ">=3.5"
-version = "0.5.1"
+version = "0.5.2"
 
 [package.dependencies]
 colorama = ">=0.3.4"
 win32-setctime = ">=1.0.0"
 
 [package.extras]
-dev = ["codecov (>=2.0.15)", "colorama (>=0.3.4)", "flake8 (>=3.7.7)", "isort (>=4.3.20)", "tox (>=3.9.0)", "tox-travis (>=0.12)", "pytest (>=4.6.2)", "pytest-cov (>=2.7.1)", "Sphinx (>=2.2.1)", "sphinx-autobuild (>=0.7.1)", "sphinx-rtd-theme (>=0.4.3)", "black (>=19.3b0)"]
+dev = ["codecov (>=2.0.15)", "colorama (>=0.3.4)", "flake8 (>=3.7.7)", "tox (>=3.9.0)", "tox-travis (>=0.12)", "pytest (>=4.6.2)", "pytest-cov (>=2.7.1)", "Sphinx (>=2.2.1)", "sphinx-autobuild (>=0.7.1)", "sphinx-rtd-theme (>=0.4.3)", "black (>=19.10b0)", "isort (>=5.1.1)"]
 
 [package.source]
 reference = "aliyun"
@@ -427,7 +427,7 @@ description = "Pygments is a syntax highlighting package written in Python."
 name = "pygments"
 optional = false
 python-versions = ">=3.5"
-version = "2.6.1"
+version = "2.7.1"
 
 [package.source]
 reference = "aliyun"
@@ -620,10 +620,9 @@ unify = "*"
 yapf = "*"
 
 [package.source]
-reference = "1438d33cbeaab0230c9f7e33bd059eb9f57c86d6"
+reference = "792133d3bb15b956e5150c158371eb71f5670844"
 type = "git"
 url = "https://github.com/nonebot/sphinx-markdown-builder.git"
-
 [[package]]
 category = "dev"
 description = "sphinxcontrib-applehelp is a sphinx extension which outputs Apple help books"
@@ -861,7 +860,7 @@ marker = "sys_platform == \"win32\""
 name = "win32-setctime"
 optional = false
 python-versions = ">=3.5"
-version = "1.0.1"
+version = "1.0.2"
 
 [package.extras]
 dev = ["pytest (>=4.6.2)", "black (>=19.3b0)"]
@@ -885,10 +884,12 @@ type = "legacy"
 url = "https://mirrors.aliyun.com/pypi/simple"
 
 [extras]
+full = []
 scheduler = ["apscheduler"]
 
 [metadata]
-content-hash = "2e8f1fc9fcb89a528ecbebbf0f2315abf39e3de8eb40c133b91085a784e49173"
+content-hash = "3a0f821e8ecef5548fa95e88cee11ff12910d08bed1633d8d03280f65d0bc1bf"
+lock-version = "1.0"
 python-versions = "^3.7"
 
 [metadata.files]
@@ -941,8 +942,8 @@ hpack = [
     {file = "hpack-3.0.0.tar.gz", hash = "sha256:8eec9c1f4bfae3408a3f30500261f7e6a65912dc138526ea054f9ad98892e9d2"},
 ]
 hstspreload = [
-    {file = "hstspreload-2020.8.18-py3-none-any.whl", hash = "sha256:5e3b6b2376c6f412086ee21cdd29cd5e0af5b28c967e5f1f026323d0f31dc84b"},
-    {file = "hstspreload-2020.8.18.tar.gz", hash = "sha256:13cf2e9fcd064cd81d220432de9a66dd7e4f10862a03574c45e5f61fc522f312"},
+    {file = "hstspreload-2020.9.15-py3-none-any.whl", hash = "sha256:c09f02dd4b7e3953a8353836aea964b868b22905bdb6d8932ca4b273df0f820f"},
+    {file = "hstspreload-2020.9.15.tar.gz", hash = "sha256:059fc2ead7bb83ea9e85d06c1afc7112413f1d2a81e6448bd276af6bced035ac"},
 ]
 html2text = [
     {file = "html2text-2020.1.16-py3-none-any.whl", hash = "sha256:c7c629882da0cf377d66f073329ccf34a12ed2adf0169b9285ae4e63ef54c82b"},
@@ -987,8 +988,8 @@ jinja2 = [
     {file = "Jinja2-2.11.2.tar.gz", hash = "sha256:89aab215427ef59c34ad58735269eb58b1a5808103067f7bb9d5836c651b3bb0"},
 ]
 loguru = [
-    {file = "loguru-0.5.1-py3-none-any.whl", hash = "sha256:e5d362a43cd2fc2da63551d79a6830619c4d5b3a8b976515748026f92f351b61"},
-    {file = "loguru-0.5.1.tar.gz", hash = "sha256:70201d5fce26da89b7a5f168caa2bb674e06b969829f56737db1d6472e53e7c3"},
+    {file = "loguru-0.5.2-py3-none-any.whl", hash = "sha256:a5e5e196b9958feaf534ac2050171d16576bae633074ce3e73af7dda7e9a58ae"},
+    {file = "loguru-0.5.2.tar.gz", hash = "sha256:5aecbf13bc8e2f6e5a5d0475460a345b44e2885464095ea7de44e8795857ad33"},
 ]
 markupsafe = [
     {file = "MarkupSafe-1.1.1-cp27-cp27m-macosx_10_6_intel.whl", hash = "sha256:09027a7803a62ca78792ad89403b1b7a73a01c8cb65909cd876f7fcebd79b161"},
@@ -1053,8 +1054,8 @@ pydash = [
     {file = "pydash-4.8.0.tar.gz", hash = "sha256:546afa043ed1defa3122383bebe8b7072f43554ccc5f0c4360638f99e5ed7327"},
 ]
 pygments = [
-    {file = "Pygments-2.6.1-py3-none-any.whl", hash = "sha256:ff7a40b4860b727ab48fad6360eb351cc1b33cbf9b15a0f689ca5353e9463324"},
-    {file = "Pygments-2.6.1.tar.gz", hash = "sha256:647344a061c249a3b74e230c739f434d7ea4d8b1d5f3721bc0f3558049b38f44"},
+    {file = "Pygments-2.7.1-py3-none-any.whl", hash = "sha256:307543fe65c0947b126e83dd5a61bd8acbd84abec11f43caebaf5534cbc17998"},
+    {file = "Pygments-2.7.1.tar.gz", hash = "sha256:926c3f319eda178d1bd90851e4317e6d8cdb5e292a3386aac9bd75eca29cf9c7"},
 ]
 pygtrie = [
     {file = "pygtrie-2.3.3.tar.gz", hash = "sha256:2204dbd95584f67821da5b3771c4305ac5585552b3230b210f1f05322608db2c"},
@@ -1178,8 +1179,8 @@ websockets = [
     {file = "websockets-8.1.tar.gz", hash = "sha256:5c65d2da8c6bce0fca2528f69f44b2f977e06954c8512a952222cea50dad430f"},
 ]
 win32-setctime = [
-    {file = "win32_setctime-1.0.1-py3-none-any.whl", hash = "sha256:568fd636c68350bcc54755213fe01966fe0a6c90b386c0776425944a0382abef"},
-    {file = "win32_setctime-1.0.1.tar.gz", hash = "sha256:b47e5023ec7f0b4962950902b15bc56464a380d869f59d27dbf9ab423b23e8f9"},
+    {file = "win32_setctime-1.0.2-py3-none-any.whl", hash = "sha256:02b4c5959ca0b195f45c98115826c6e8a630b7cf648e724feaab1a5aa6250640"},
+    {file = "win32_setctime-1.0.2.tar.gz", hash = "sha256:47aa7c43548c1fc0a4f026d1944b748b37036df116c7c4cf908e82638d854313"},
 ]
 yapf = [
     {file = "yapf-0.30.0-py2.py3-none-any.whl", hash = "sha256:3abf61ba67cf603069710d30acbc88cfe565d907e16ad81429ae90ce9651e0c9"},
