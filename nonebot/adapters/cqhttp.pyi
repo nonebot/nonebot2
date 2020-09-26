@@ -1,5 +1,7 @@
+import asyncio
+
 from nonebot.adapters import BaseBot
-from nonebot.typing import Any, Dict, List, Union, Optional
+from nonebot.typing import Any, Dict, List, Union, Optional, Iterable
 
 
 def log(level: str, message: str):
@@ -104,7 +106,20 @@ def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
 
 
 class ResultStore:
-    ...
+    _seq: int = ...
+    _futures: Dict[int, asyncio.Future] = ...
+
+    @classmethod
+    def get_seq(cls) -> int:
+        ...
+
+    @classmethod
+    def add_result(cls, result: Dict[str, Any]):
+        ...
+
+    @classmethod
+    async def fetch(cls, seq: int, timeout: Optional[float]) -> Dict[str, Any]:
+        ...
 
 
 class Bot(BaseBot):
@@ -782,12 +797,239 @@ class Bot(BaseBot):
 
 
 class Event:
-    ...
+
+    def __init__(self, raw_event: dict):
+        ...
+
+    @property
+    def id(self) -> Optional[int]:
+        ...
+
+    @property
+    def name(self) -> str:
+        ...
+
+    @property
+    def self_id(self) -> str:
+        ...
+
+    @property
+    def time(self) -> int:
+        ...
+
+    @property
+    def type(self) -> str:
+        ...
+
+    @type.setter
+    def type(self, value) -> None:
+        ...
+
+    @property
+    def detail_type(self) -> str:
+        ...
+
+    @detail_type.setter
+    def detail_type(self, value) -> None:
+        ...
+
+    @property
+    def sub_type(self) -> Optional[str]:
+        ...
+
+    @type.setter
+    def sub_type(self, value) -> None:
+        ...
+
+    @property
+    def user_id(self) -> Optional[int]:
+        ...
+
+    @user_id.setter
+    def user_id(self, value) -> None:
+        ...
+
+    @property
+    def group_id(self) -> Optional[int]:
+        ...
+
+    @group_id.setter
+    def group_id(self, value) -> None:
+        ...
+
+    @property
+    def to_me(self) -> Optional[bool]:
+        ...
+
+    @to_me.setter
+    def to_me(self, value) -> None:
+        ...
+
+    @property
+    def message(self) -> Optional["Message"]:
+        ...
+
+    @message.setter
+    def message(self, value) -> None:
+        ...
+
+    @property
+    def reply(self) -> Optional[dict]:
+        ...
+
+    @reply.setter
+    def reply(self, value) -> None:
+        ...
+
+    @property
+    def raw_message(self) -> Optional[str]:
+        ...
+
+    @raw_message.setter
+    def raw_message(self, value) -> None:
+        ...
+
+    @property
+    def plain_text(self) -> Optional[str]:
+        ...
+
+    @property
+    def sender(self) -> Optional[dict]:
+        ...
+
+    @sender.setter
+    def sender(self, value) -> None:
+        ...
 
 
 class MessageSegment:
-    ...
+
+    def __init__(self, type: str, data: Dict[str, Union[str, list]]) -> None:
+        ...
+
+    def __str__(self):
+        ...
+
+    def __add__(self, other) -> "Message":
+        ...
+
+    @staticmethod
+    def anonymous(ignore_failure: Optional[bool] = None) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def at(user_id: Union[int, str]) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def contact_group(group_id: int) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def contact_user(user_id: int) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def dice() -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def face(id_: int) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def forward(id_: str) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def image(file: str,
+              type_: Optional[str] = None,
+              cache: bool = True,
+              proxy: bool = True,
+              timeout: Optional[int] = None) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def json(data: str) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def location(latitude: float,
+                 longitude: float,
+                 title: Optional[str] = None,
+                 content: Optional[str] = None) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def music(type_: str, id_: int) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def music_custom(url: str,
+                     audio: str,
+                     title: str,
+                     content: Optional[str] = None,
+                     img_url: Optional[str] = None) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def node(id_: int) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def node_custom(user_id: int, nickname: str,
+                    content: Union[str, "Message"]) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def poke(type_: str, id_: str) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def record(file: str,
+               magic: Optional[bool] = None,
+               cache: Optional[bool] = None,
+               proxy: Optional[bool] = None,
+               timeout: Optional[int] = None) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def reply(id_: int) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def rps() -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def shake() -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def share(url: str = "",
+              title: str = "",
+              content: Optional[str] = None,
+              img_url: Optional[str] = None) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def text(text: str) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def video(file: str,
+              cache: Optional[bool] = None,
+              proxy: Optional[bool] = None,
+              timeout: Optional[int] = None) -> "MessageSegment":
+        ...
+
+    @staticmethod
+    def xml(data: str) -> "MessageSegment":
+        ...
 
 
 class Message:
-    ...
+
+    @staticmethod
+    def _construct(msg: Union[str, dict, list]) -> Iterable[MessageSegment]:
+        ...
