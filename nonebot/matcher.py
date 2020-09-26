@@ -166,8 +166,8 @@ class Matcher(metaclass=MatcherMeta):
                 raise PausedException
 
         async def _key_parser(bot: Bot, event: Event, state: dict):
-            # if key in state:
-            #     return
+            if key in state and "_current_key" not in state:
+                return
             parser = args_parser or cls._default_parser
             if parser:
                 await parser(bot, event, state)
@@ -185,6 +185,8 @@ class Matcher(metaclass=MatcherMeta):
                 async def wrapper(bot: Bot, event: Event, state: dict):
                     await parser(bot, event, state)
                     await func(bot, event, state)
+                    if "_current_key" in state:
+                        del state["_current_key"]
 
                 cls.handlers.append(wrapper)
 
