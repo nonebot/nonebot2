@@ -159,14 +159,17 @@ class Matcher(metaclass=MatcherMeta):
     ) -> Callable[[Handler], Handler]:
 
         async def _key_getter(bot: Bot, event: Event, state: dict):
+            state["_current_key"] = key
             if key not in state:
-                state["_current_key"] = key
                 if prompt:
                     await bot.send(event=event, message=prompt)
                 raise PausedException
+            else:
+                state["_skip_key"] = True
 
         async def _key_parser(bot: Bot, event: Event, state: dict):
-            if key in state and "_current_key" not in state:
+            if key in state and state.get("_skip_key"):
+                del state["_skip_key"]
                 return
             parser = args_parser or cls._default_parser
             if parser:
