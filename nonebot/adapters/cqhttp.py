@@ -28,14 +28,29 @@ from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
 
 
 def log(level: str, message: str):
+    """
+    :说明:
+
+      用于打印 CQHTTP 日志。
+
+    :参数:
+
+      * ``level: str``: 日志等级
+      * ``message: str``: 日志信息
+    """
     return logger.opt(colors=True).log(level, "<m>CQHTTP</m> | " + message)
 
 
 def escape(s: str, *, escape_comma: bool = True) -> str:
     """
-    对字符串进行 CQ 码转义。
+    :说明:
 
-    ``escape_comma`` 参数控制是否转义逗号（``,``）。
+      对字符串进行 CQ 码转义。
+
+    :参数:
+
+      * ``s: str``: 需要转义的字符串
+      * ``escape_comma: bool``: 是否转义逗号（``,``）。
     """
     s = s.replace("&", "&amp;") \
         .replace("[", "&#91;") \
@@ -46,7 +61,15 @@ def escape(s: str, *, escape_comma: bool = True) -> str:
 
 
 def unescape(s: str) -> str:
-    """对字符串进行 CQ 码去转义。"""
+    """
+    :说明:
+
+      对字符串进行 CQ 码去转义。
+
+    :参数:
+
+      * ``s: str``: 需要转义的字符串
+    """
     return s.replace("&#44;", ",") \
         .replace("&#91;", "[") \
         .replace("&#93;", "]") \
@@ -54,10 +77,21 @@ def unescape(s: str) -> str:
 
 
 def _b2s(b: Optional[bool]) -> Optional[str]:
+    """转换布尔值为字符串。"""
     return b if b is None else str(b).lower()
 
 
 async def _check_reply(bot: "Bot", event: "Event"):
+    """
+    :说明:
+
+      检查消息中存在的回复，去除并赋值 ``event.reply``, ``event.to_me``
+
+    :参数:
+
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+    """
     if event.type != "message":
         return
 
@@ -74,6 +108,16 @@ async def _check_reply(bot: "Bot", event: "Event"):
 
 
 def _check_at_me(bot: "Bot", event: "Event"):
+    """
+    :说明:
+
+      检查消息开头或结尾是否存在 @机器人，去除并赋值 ``event.to_me``
+
+    :参数:
+
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+    """
     if event.type != "message":
         return
 
@@ -119,6 +163,16 @@ def _check_at_me(bot: "Bot", event: "Event"):
 
 
 def _check_nickname(bot: "Bot", event: "Event"):
+    """
+    :说明:
+
+      检查消息开头是否存在，去除并赋值 ``event.to_me``
+
+    :参数:
+
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+    """
     if event.type != "message":
         return
 
@@ -146,6 +200,15 @@ def _check_nickname(bot: "Bot", event: "Event"):
 
 
 def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
+    """
+    :说明:
+
+      处理 API 请求返回值。
+
+    :参数:
+
+      * ``result: Optional[Dict[str, Any]]``: API 返回数据
+    """
     if isinstance(result, dict):
         if result.get("status") == "failed":
             raise ActionFailed(retcode=result.get("retcode"))
