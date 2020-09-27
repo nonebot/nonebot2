@@ -242,17 +242,17 @@ def get_loaded_plugins() -> Set[Plugin]:
 
 class CommandGroup:
 
-    def __init__(self, name: Union[str, Tuple[str, ...]], **kwargs):
-        self.basename = (name,) if isinstance(name, str) else name
+    def __init__(self, cmd: Union[str, Tuple[str, ...]], **kwargs):
+        self.basecmd = (cmd,) if isinstance(cmd, str) else cmd
         if "aliases" in kwargs:
             del kwargs["aliases"]
         self.base_kwargs = kwargs
 
-    def command(self, name: Union[str, Tuple[str, ...]],
+    def command(self, cmd: Union[str, Tuple[str, ...]],
                 **kwargs) -> Union[Type[Matcher], MatcherGroup]:
-        sub_name = (name,) if isinstance(name, str) else name
-        name = self.basename + sub_name
+        sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
+        cmd = self.basecmd + sub_cmd
 
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
-        return on_command(name, **final_kwargs)
+        return on_command(cmd, **final_kwargs)
