@@ -9,9 +9,9 @@ from dataclasses import dataclass
 from importlib._bootstrap import _load
 
 from nonebot.log import logger
-from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.typing import Handler, RuleChecker
+from nonebot.matcher import Matcher, MatcherGroup
 from nonebot.rule import Rule, startswith, endswith, command, regex
 from nonebot.typing import Set, List, Dict, Type, Tuple, Union, Optional, ModuleType
 
@@ -27,7 +27,7 @@ class Plugin(object):
     matcher: Set[Type[Matcher]]
 
 
-def on(rule: Union[Rule, RuleChecker] = Rule(),
+def on(rule: Optional[Union[Rule, RuleChecker]] = None,
        permission: Permission = Permission(),
        *,
        handlers: Optional[List[Handler]] = None,
@@ -47,7 +47,7 @@ def on(rule: Union[Rule, RuleChecker] = Rule(),
     return matcher
 
 
-def on_metaevent(rule: Union[Rule, RuleChecker] = Rule(),
+def on_metaevent(rule: Optional[Union[Rule, RuleChecker]] = None,
                  *,
                  handlers: Optional[List[Handler]] = None,
                  temp: bool = False,
@@ -66,7 +66,7 @@ def on_metaevent(rule: Union[Rule, RuleChecker] = Rule(),
     return matcher
 
 
-def on_message(rule: Union[Rule, RuleChecker] = Rule(),
+def on_message(rule: Optional[Union[Rule, RuleChecker]] = None,
                permission: Permission = Permission(),
                *,
                handlers: Optional[List[Handler]] = None,
@@ -86,7 +86,7 @@ def on_message(rule: Union[Rule, RuleChecker] = Rule(),
     return matcher
 
 
-def on_notice(rule: Union[Rule, RuleChecker] = Rule(),
+def on_notice(rule: Optional[Union[Rule, RuleChecker]] = None,
               *,
               handlers: Optional[List[Handler]] = None,
               temp: bool = False,
@@ -105,7 +105,7 @@ def on_notice(rule: Union[Rule, RuleChecker] = Rule(),
     return matcher
 
 
-def on_request(rule: Union[Rule, RuleChecker] = Rule(),
+def on_request(rule: Optional[Union[Rule, RuleChecker]] = None,
                *,
                handlers: Optional[List[Handler]] = None,
                temp: bool = False,
@@ -125,7 +125,7 @@ def on_request(rule: Union[Rule, RuleChecker] = Rule(),
 
 
 def on_startswith(msg: str,
-                  rule: Optional[Union[Rule, RuleChecker]] = None,
+                  rule: Optional[Optional[Union[Rule, RuleChecker]]] = None,
                   permission: Permission = Permission(),
                   **kwargs) -> Type[Matcher]:
     return on_message(startswith(msg) &
@@ -134,7 +134,7 @@ def on_startswith(msg: str,
 
 
 def on_endswith(msg: str,
-                rule: Optional[Union[Rule, RuleChecker]] = None,
+                rule: Optional[Optional[Union[Rule, RuleChecker]]] = None,
                 permission: Permission = Permission(),
                 **kwargs) -> Type[Matcher]:
     return on_message(endswith(msg) &
@@ -143,9 +143,10 @@ def on_endswith(msg: str,
 
 
 def on_command(cmd: Union[str, Tuple[str, ...]],
+               alias: Set[Union[str, Tuple[str, ...]]] = None,
                rule: Optional[Union[Rule, RuleChecker]] = None,
                permission: Permission = Permission(),
-               **kwargs) -> Type[Matcher]:
+               **kwargs) -> Union[Type[Matcher], MatcherGroup]:
     if isinstance(cmd, str):
         cmd = (cmd,)
 
@@ -157,10 +158,21 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
     handlers = kwargs.pop("handlers", [])
     handlers.insert(0, _strip_cmd)
 
-    return on_message(
-        command(cmd) &
-        rule, permission, handlers=handlers, **kwargs) if rule else on_message(
-            command(cmd), permission, handlers=handlers, **kwargs)
+    if alias:
+        alias = set(map(lambda x: (x,) if isinstance(x, str) else x, alias))
+        group = MatcherGroup("message",
+                             Rule() & rule,
+                             permission,
+                             handlers=handlers,
+                             **kwargs)
+        for cmd_ in [cmd, *alias]:
+            group.new(rule=command(cmd_))
+        return group
+    else:
+        return on_message(
+            command(cmd) & rule, permission, handlers=handlers, **
+            kwargs) if rule else on_message(
+                command(cmd), permission, handlers=handlers, **kwargs)
 
 
 def on_regex(pattern: str,
@@ -234,3 +246,21 @@ def load_builtin_plugins():
 
 def get_loaded_plugins() -> Set[Plugin]:
     return set(plugins.values())
+
+
+class CommandGroup:
+
+    def __init__(self, name: Union[str, Tuple[str, ...]], **kwargs):
+        self.basename = (name,) if isinstance(name, str) else name
+        if "aliases" in kwargs:
+            del kwargs["aliases"]
+        self.base_kwargs = kwargs
+
+    def command(self, name: Union[str, Tuple[str, ...]],
+                **kwargs) -> Union[Type[Matcher], MatcherGroup]:
+        sub_name = (name,) if isinstance(name, str) else name
+        name = self.basename + sub_name
+
+        final_kwargs = self.base_kwargs.copy()
+        final_kwargs.update(kwargs)
+        return on_command(name, **final_kwargs)
