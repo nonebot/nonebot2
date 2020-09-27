@@ -139,8 +139,8 @@ def on_endswith(msg: str,
 
 
 def on_command(cmd: Union[str, Tuple[str, ...]],
-               alias: Set[Union[str, Tuple[str, ...]]] = None,
                rule: Optional[Union[Rule, RuleChecker]] = None,
+               aliases: Set[Union[str, Tuple[str, ...]]] = None,
                **kwargs) -> Union[Type[Matcher], MatcherGroup]:
     if isinstance(cmd, str):
         cmd = (cmd,)
@@ -153,14 +153,14 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
     handlers = kwargs.pop("handlers", [])
     handlers.insert(0, _strip_cmd)
 
-    if alias:
-        alias = set(map(lambda x: (x,) if isinstance(x, str) else x, alias))
+    if aliases:
+        aliases = set(map(lambda x: (x,) if isinstance(x, str) else x, aliases))
         group = MatcherGroup("message",
                              Rule() & rule,
                              handlers=handlers,
                              **kwargs)
-        for cmd_ in [cmd, *alias]:
-            group.new(rule=command(cmd_))
+        for cmd_ in [cmd, *aliases]:
+            _tmp_matchers.add(group.new(rule=command(cmd_)))
         return group
     else:
         return on_message(command(cmd) & rule, handlers=handlers, **
