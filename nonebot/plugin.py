@@ -28,7 +28,7 @@ class Plugin(object):
 
 
 def on(rule: Optional[Union[Rule, RuleChecker]] = None,
-       permission: Permission = Permission(),
+       permission: Optional[Permission] = None,
        *,
        handlers: Optional[List[Handler]] = None,
        temp: bool = False,
@@ -37,7 +37,7 @@ def on(rule: Optional[Union[Rule, RuleChecker]] = None,
        state: Optional[dict] = None) -> Type[Matcher]:
     matcher = Matcher.new("",
                           Rule() & rule,
-                          permission,
+                          permission or Permission(),
                           temp=temp,
                           priority=priority,
                           block=block,
@@ -67,7 +67,7 @@ def on_metaevent(rule: Optional[Union[Rule, RuleChecker]] = None,
 
 
 def on_message(rule: Optional[Union[Rule, RuleChecker]] = None,
-               permission: Permission = Permission(),
+               permission: Optional[Permission] = None,
                *,
                handlers: Optional[List[Handler]] = None,
                temp: bool = False,
@@ -76,7 +76,7 @@ def on_message(rule: Optional[Union[Rule, RuleChecker]] = None,
                state: Optional[dict] = None) -> Type[Matcher]:
     matcher = Matcher.new("message",
                           Rule() & rule,
-                          permission,
+                          permission or Permission(),
                           temp=temp,
                           priority=priority,
                           block=block,
@@ -126,26 +126,21 @@ def on_request(rule: Optional[Union[Rule, RuleChecker]] = None,
 
 def on_startswith(msg: str,
                   rule: Optional[Optional[Union[Rule, RuleChecker]]] = None,
-                  permission: Permission = Permission(),
                   **kwargs) -> Type[Matcher]:
-    return on_message(startswith(msg) &
-                      rule, permission, **kwargs) if rule else on_message(
-                          startswith(msg), permission, **kwargs)
+    return on_message(startswith(msg) & rule, **kwargs) if rule else on_message(
+        startswith(msg), **kwargs)
 
 
 def on_endswith(msg: str,
                 rule: Optional[Optional[Union[Rule, RuleChecker]]] = None,
-                permission: Permission = Permission(),
                 **kwargs) -> Type[Matcher]:
-    return on_message(endswith(msg) &
-                      rule, permission, **kwargs) if rule else on_message(
-                          startswith(msg), permission, **kwargs)
+    return on_message(endswith(msg) & rule, **kwargs) if rule else on_message(
+        startswith(msg), **kwargs)
 
 
 def on_command(cmd: Union[str, Tuple[str, ...]],
                alias: Set[Union[str, Tuple[str, ...]]] = None,
                rule: Optional[Union[Rule, RuleChecker]] = None,
-               permission: Permission = Permission(),
                **kwargs) -> Union[Type[Matcher], MatcherGroup]:
     if isinstance(cmd, str):
         cmd = (cmd,)
@@ -162,27 +157,24 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
         alias = set(map(lambda x: (x,) if isinstance(x, str) else x, alias))
         group = MatcherGroup("message",
                              Rule() & rule,
-                             permission,
                              handlers=handlers,
                              **kwargs)
         for cmd_ in [cmd, *alias]:
             group.new(rule=command(cmd_))
         return group
     else:
-        return on_message(
-            command(cmd) & rule, permission, handlers=handlers, **
-            kwargs) if rule else on_message(
-                command(cmd), permission, handlers=handlers, **kwargs)
+        return on_message(command(cmd) & rule, handlers=handlers, **
+                          kwargs) if rule else on_message(
+                              command(cmd), handlers=handlers, **kwargs)
 
 
 def on_regex(pattern: str,
              flags: Union[int, re.RegexFlag] = 0,
              rule: Optional[Rule] = None,
-             permission: Permission = Permission(),
              **kwargs) -> Type[Matcher]:
     return on_message(regex(pattern, flags) &
-                      rule, permission, **kwargs) if rule else on_message(
-                          regex(pattern, flags), permission, **kwargs)
+                      rule, **kwargs) if rule else on_message(
+                          regex(pattern, flags), **kwargs)
 
 
 def load_plugin(module_path: str) -> Optional[Plugin]:

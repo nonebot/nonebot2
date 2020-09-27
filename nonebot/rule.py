@@ -20,7 +20,7 @@ from pygtrie import CharTrie
 from nonebot import get_driver
 from nonebot.log import logger
 from nonebot.utils import run_sync
-from nonebot.typing import Bot, Any, Dict, Event, Union, Tuple, NoReturn, Callable, Awaitable, RuleChecker
+from nonebot.typing import Bot, Any, Dict, Event, Union, Tuple, NoReturn, Optional, Callable, Awaitable, RuleChecker
 
 
 class Rule:
@@ -68,9 +68,11 @@ class Rule:
             *map(lambda c: c(bot, event, state), self.checkers))
         return all(results)
 
-    def __and__(self, other: Union["Rule", RuleChecker]) -> "Rule":
+    def __and__(self, other: Optional[Union["Rule", RuleChecker]]) -> "Rule":
         checkers = self.checkers.copy()
-        if isinstance(other, Rule):
+        if other is None:
+            return self
+        elif isinstance(other, Rule):
             checkers |= other.checkers
         elif asyncio.iscoroutinefunction(other):
             checkers.add(other)  # type: ignore
