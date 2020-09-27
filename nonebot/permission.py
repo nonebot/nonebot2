@@ -14,7 +14,7 @@
 import asyncio
 
 from nonebot.utils import run_sync
-from nonebot.typing import Bot, Event, Union, NoReturn, Callable, Awaitable, PermissionChecker
+from nonebot.typing import Bot, Event, Union, NoReturn, Optional, Callable, Awaitable, PermissionChecker
 
 
 class Permission:
@@ -53,10 +53,13 @@ class Permission:
     def __and__(self, other) -> NoReturn:
         raise RuntimeError("And operation between Permissions is not allowed.")
 
-    def __or__(self, other: Union["Permission",
-                                  PermissionChecker]) -> "Permission":
+    def __or__(
+        self, other: Optional[Union["Permission",
+                                    PermissionChecker]]) -> "Permission":
         checkers = self.checkers.copy()
-        if isinstance(other, Permission):
+        if other is None:
+            return self
+        elif isinstance(other, Permission):
             checkers |= other.checkers
         elif asyncio.iscoroutinefunction(other):
             checkers.add(other)  # type: ignore
