@@ -3,7 +3,9 @@ name: Build API Doc
 on:
   pull_request:
     types: [ opened, synchronize, reopened ]
-    branches: [ master, dev ]
+    branches:
+      - master
+      - dev
 
 jobs:
   build:
