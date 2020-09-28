@@ -18,7 +18,7 @@ def log(level: str, message: str):
     ...
 
 
-def escape(s: str, *, escape_comma: bool = True) -> str:
+def escape(s: str, *, escape_comma: bool = ...) -> str:
     """
     :说明:
 
@@ -128,8 +128,8 @@ class Bot(BaseBot):
                                *,
                                user_id: int,
                                message: Union[str, Message],
-                               auto_escape: bool = False,
-                               self_id: Optional[int] = None) -> Dict[str, Any]:
+                               auto_escape: bool = ...,
+                               self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -148,8 +148,8 @@ class Bot(BaseBot):
                              *,
                              group_id: int,
                              message: Union[str, Message],
-                             auto_escape: bool = False,
-                             self_id: Optional[int] = None) -> Dict[str, Any]:
+                             auto_escape: bool = ...,
+                             self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -166,12 +166,12 @@ class Bot(BaseBot):
 
     async def send_msg(self,
                        *,
-                       message_type: Optional[str] = None,
-                       user_id: Optional[int] = None,
-                       group_id: Optional[int] = None,
+                       message_type: Optional[str] = ...,
+                       user_id: Optional[int] = ...,
+                       group_id: Optional[int] = ...,
                        message: Union[str, Message],
-                       auto_escape: bool = False,
-                       self_id: Optional[int] = None) -> Dict[str, Any]:
+                       auto_escape: bool = ...,
+                       self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -191,7 +191,7 @@ class Bot(BaseBot):
     async def delete_msg(self,
                          *,
                          message_id: int,
-                         self_id: Optional[int] = None) -> None:
+                         self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -207,7 +207,7 @@ class Bot(BaseBot):
     async def get_msg(self,
                       *,
                       message_id: int,
-                      self_id: Optional[int] = None) -> Dict[str, Any]:
+                      self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -223,7 +223,7 @@ class Bot(BaseBot):
     async def get_forward_msg(self,
                               *,
                               id: int,
-                              self_id: Optional[int] = None) -> None:
+                              self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -239,8 +239,8 @@ class Bot(BaseBot):
     async def send_like(self,
                         *,
                         user_id: int,
-                        times: int = 1,
-                        self_id: Optional[int] = None) -> None:
+                        times: int = ...,
+                        self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -258,8 +258,8 @@ class Bot(BaseBot):
                              *,
                              group_id: int,
                              user_id: int,
-                             reject_add_request: bool = False,
-                             self_id: Optional[int] = None) -> None:
+                             reject_add_request: bool = ...,
+                             self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -278,8 +278,8 @@ class Bot(BaseBot):
                             *,
                             group_id: int,
                             user_id: int,
-                            duration: int = 30 * 60,
-                            self_id: Optional[int] = None) -> None:
+                            duration: int = ...,
+                            self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -297,11 +297,10 @@ class Bot(BaseBot):
     async def set_group_anonymous_ban(self,
                                       *,
                                       group_id: int,
-                                      anonymous: Optional[Dict[str,
-                                                               Any]] = None,
-                                      anonymous_flag: Optional[str] = None,
-                                      duration: int = 30 * 60,
-                                      self_id: Optional[int] = None) -> None:
+                                      anonymous: Optional[Dict[str, Any]] = ...,
+                                      anonymous_flag: Optional[str] = ...,
+                                      duration: int = ...,
+                                      self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -320,8 +319,8 @@ class Bot(BaseBot):
     async def set_group_whole_ban(self,
                                   *,
                                   group_id: int,
-                                  enable: bool = True,
-                                  self_id: Optional[int] = None) -> None:
+                                  enable: bool = ...,
+                                  self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -339,8 +338,8 @@ class Bot(BaseBot):
                               *,
                               group_id: int,
                               user_id: int,
-                              enable: bool = True,
-                              self_id: Optional[int] = None) -> None:
+                              enable: bool = ...,
+                              self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -358,8 +357,8 @@ class Bot(BaseBot):
     async def set_group_anonymous(self,
                                   *,
                                   group_id: int,
-                                  enable: bool = True,
-                                  self_id: Optional[int] = None) -> None:
+                                  enable: bool = ...,
+                                  self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -377,8 +376,8 @@ class Bot(BaseBot):
                              *,
                              group_id: int,
                              user_id: int,
-                             card: str = "",
-                             self_id: Optional[int] = None) -> None:
+                             card: str = ...,
+                             self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -397,7 +396,7 @@ class Bot(BaseBot):
                              *,
                              group_id: int,
                              group_name: str,
-                             self_id: Optional[int] = None) -> None:
+                             self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -414,8 +413,8 @@ class Bot(BaseBot):
     async def set_group_leave(self,
                               *,
                               group_id: int,
-                              is_dismiss: bool = False,
-                              self_id: Optional[int] = None) -> None:
+                              is_dismiss: bool = ...,
+                              self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -433,9 +432,9 @@ class Bot(BaseBot):
                                       *,
                                       group_id: int,
                                       user_id: int,
-                                      special_title: str = "",
-                                      duration: int = -1,
-                                      self_id: Optional[int] = None) -> None:
+                                      special_title: str = ...,
+                                      duration: int = ...,
+                                      self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -454,9 +453,9 @@ class Bot(BaseBot):
     async def set_friend_add_request(self,
                                      *,
                                      flag: str,
-                                     approve: bool = True,
-                                     remark: str = "",
-                                     self_id: Optional[int] = None) -> None:
+                                     approve: bool = ...,
+                                     remark: str = ...,
+                                     self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -475,9 +474,9 @@ class Bot(BaseBot):
                                     *,
                                     flag: str,
                                     sub_type: str,
-                                    approve: bool = True,
-                                    reason: str = "",
-                                    self_id: Optional[int] = None) -> None:
+                                    approve: bool = ...,
+                                    reason: str = ...,
+                                    self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -495,7 +494,7 @@ class Bot(BaseBot):
 
     async def get_login_info(self,
                              *,
-                             self_id: Optional[int] = None) -> Dict[str, Any]:
+                             self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -507,12 +506,11 @@ class Bot(BaseBot):
         """
         ...
 
-    async def get_stranger_info(
-            self,
-            *,
-            user_id: int,
-            no_cache: bool = False,
-            self_id: Optional[int] = None) -> Dict[str, Any]:
+    async def get_stranger_info(self,
+                                *,
+                                user_id: int,
+                                no_cache: bool = ...,
+                                self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -528,7 +526,7 @@ class Bot(BaseBot):
 
     async def get_friend_list(self,
                               *,
-                              self_id: Optional[int] = None
+                              self_id: Optional[int] = ...
                              ) -> List[Dict[str, Any]]:
         """
         :说明:
@@ -544,8 +542,8 @@ class Bot(BaseBot):
     async def get_group_info(self,
                              *,
                              group_id: int,
-                             no_cache: bool = False,
-                             self_id: Optional[int] = None) -> Dict[str, Any]:
+                             no_cache: bool = ...,
+                             self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -561,7 +559,7 @@ class Bot(BaseBot):
 
     async def get_group_list(self,
                              *,
-                             self_id: Optional[int] = None
+                             self_id: Optional[int] = ...
                             ) -> List[Dict[str, Any]]:
         """
         :说明:
@@ -579,8 +577,8 @@ class Bot(BaseBot):
             *,
             group_id: int,
             user_id: int,
-            no_cache: bool = False,
-            self_id: Optional[int] = None) -> Dict[str, Any]:
+            no_cache: bool = ...,
+            self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -599,7 +597,7 @@ class Bot(BaseBot):
             self,
             *,
             group_id: int,
-            self_id: Optional[int] = None) -> List[Dict[str, Any]]:
+            self_id: Optional[int] = ...) -> List[Dict[str, Any]]:
         """
         :说明:
 
@@ -612,12 +610,12 @@ class Bot(BaseBot):
         """
         ...
 
-    async def get_group_honor_info(
-            self,
-            *,
-            group_id: int,
-            type: str = "all",
-            self_id: Optional[int] = None) -> Dict[str, Any]:
+    async def get_group_honor_info(self,
+                                   *,
+                                   group_id: int,
+                                   type: str = ...,
+                                   self_id: Optional[int] = ...
+                                  ) -> Dict[str, Any]:
         """
         :说明:
 
@@ -633,8 +631,8 @@ class Bot(BaseBot):
 
     async def get_cookies(self,
                           *,
-                          domain: str = "",
-                          self_id: Optional[int] = None) -> Dict[str, Any]:
+                          domain: str = ...,
+                          self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -649,7 +647,7 @@ class Bot(BaseBot):
 
     async def get_csrf_token(self,
                              *,
-                             self_id: Optional[int] = None) -> Dict[str, Any]:
+                             self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -663,8 +661,8 @@ class Bot(BaseBot):
 
     async def get_credentials(self,
                               *,
-                              domain: str = "",
-                              self_id: Optional[int] = None) -> Dict[str, Any]:
+                              domain: str = ...,
+                              self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -681,7 +679,7 @@ class Bot(BaseBot):
                          *,
                          file: str,
                          out_format: str,
-                         self_id: Optional[int] = None) -> Dict[str, Any]:
+                         self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -698,7 +696,7 @@ class Bot(BaseBot):
     async def get_image(self,
                         *,
                         file: str,
-                        self_id: Optional[int] = None) -> Dict[str, Any]:
+                        self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -713,7 +711,7 @@ class Bot(BaseBot):
 
     async def can_send_image(self,
                              *,
-                             self_id: Optional[int] = None) -> Dict[str, Any]:
+                             self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -727,7 +725,7 @@ class Bot(BaseBot):
 
     async def can_send_record(self,
                               *,
-                              self_id: Optional[int] = None) -> Dict[str, Any]:
+                              self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -741,7 +739,7 @@ class Bot(BaseBot):
 
     async def get_status(self,
                          *,
-                         self_id: Optional[int] = None) -> Dict[str, Any]:
+                         self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -755,7 +753,7 @@ class Bot(BaseBot):
 
     async def get_version_info(self,
                                *,
-                               self_id: Optional[int] = None) -> Dict[str, Any]:
+                               self_id: Optional[int] = ...) -> Dict[str, Any]:
         """
         :说明:
 
@@ -769,8 +767,8 @@ class Bot(BaseBot):
 
     async def set_restart(self,
                           *,
-                          delay: int = 0,
-                          self_id: Optional[int] = None) -> None:
+                          delay: int = ...,
+                          self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -783,7 +781,7 @@ class Bot(BaseBot):
         """
         ...
 
-    async def clean_cache(self, *, self_id: Optional[int] = None) -> None:
+    async def clean_cache(self, *, self_id: Optional[int] = ...) -> None:
         """
         :说明:
 
@@ -914,7 +912,7 @@ class MessageSegment:
         ...
 
     @staticmethod
-    def anonymous(ignore_failure: Optional[bool] = None) -> "MessageSegment":
+    def anonymous(ignore_failure: Optional[bool] = ...) -> "MessageSegment":
         ...
 
     @staticmethod
@@ -943,10 +941,10 @@ class MessageSegment:
 
     @staticmethod
     def image(file: str,
-              type_: Optional[str] = None,
-              cache: bool = True,
-              proxy: bool = True,
-              timeout: Optional[int] = None) -> "MessageSegment":
+              type_: Optional[str] = ...,
+              cache: bool = ...,
+              proxy: bool = ...,
+              timeout: Optional[int] = ...) -> "MessageSegment":
         ...
 
     @staticmethod
@@ -956,8 +954,8 @@ class MessageSegment:
     @staticmethod
     def location(latitude: float,
                  longitude: float,
-                 title: Optional[str] = None,
-                 content: Optional[str] = None) -> "MessageSegment":
+                 title: Optional[str] = ...,
+                 content: Optional[str] = ...) -> "MessageSegment":
         ...
 
     @staticmethod
@@ -968,8 +966,8 @@ class MessageSegment:
     def music_custom(url: str,
                      audio: str,
                      title: str,
-                     content: Optional[str] = None,
-                     img_url: Optional[str] = None) -> "MessageSegment":
+                     content: Optional[str] = ...,
+                     img_url: Optional[str] = ...) -> "MessageSegment":
         ...
 
     @staticmethod
@@ -987,10 +985,10 @@ class MessageSegment:
 
     @staticmethod
     def record(file: str,
-               magic: Optional[bool] = None,
-               cache: Optional[bool] = None,
-               proxy: Optional[bool] = None,
-               timeout: Optional[int] = None) -> "MessageSegment":
+               magic: Optional[bool] = ...,
+               cache: Optional[bool] = ...,
+               proxy: Optional[bool] = ...,
+               timeout: Optional[int] = ...) -> "MessageSegment":
         ...
 
     @staticmethod
@@ -1006,10 +1004,10 @@ class MessageSegment:
         ...
 
     @staticmethod
-    def share(url: str = "",
-              title: str = "",
-              content: Optional[str] = None,
-              img_url: Optional[str] = None) -> "MessageSegment":
+    def share(url: str = ...,
+              title: str = ...,
+              content: Optional[str] = ...,
+              img_url: Optional[str] = ...) -> "MessageSegment":
         ...
 
     @staticmethod
@@ -1018,9 +1016,9 @@ class MessageSegment:
 
     @staticmethod
     def video(file: str,
-              cache: Optional[bool] = None,
-              proxy: Optional[bool] = None,
-              timeout: Optional[int] = None) -> "MessageSegment":
+              cache: Optional[bool] = ...,
+              proxy: Optional[bool] = ...,
+              timeout: Optional[int] = ...) -> "MessageSegment":
         ...
 
     @staticmethod

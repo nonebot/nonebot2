@@ -140,7 +140,7 @@ def on_endswith(msg: str,
 
 def on_command(cmd: Union[str, Tuple[str, ...]],
                rule: Optional[Union[Rule, RuleChecker]] = None,
-               aliases: Set[Union[str, Tuple[str, ...]]] = None,
+               aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
                **kwargs) -> Union[Type[Matcher], MatcherGroup]:
     if isinstance(cmd, str):
         cmd = (cmd,)
