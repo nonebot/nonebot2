@@ -3,9 +3,6 @@ name: Build API Doc
 on:
   pull_request:
     types: [ opened, synchronize, reopened ]
-    branches:
-      - master
-      - dev
 
 jobs:
   build:
@@ -32,7 +29,7 @@ jobs:
         run: poetry run sphinx-build -M markdown ./docs_build ./build
       
       - name: Copy Files
-        run: cp ./build/markdown/*.md ./docs/api/
+        run: cp -r ./build/markdown/* ./docs/api/
       
       - run: |
           git config user.name nonebot
