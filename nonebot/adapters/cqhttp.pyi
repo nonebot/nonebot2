@@ -1,107 +1,40 @@
 import asyncio
 
+from nonebot.config import Config
 from nonebot.adapters import BaseBot
-from nonebot.typing import Any, Dict, List, Union, Optional, Iterable
+from nonebot.typing import Any, Dict, List, Union, Driver, Optional, NoReturn, WebSocket, Iterable
 
 
 def log(level: str, message: str):
-    """
-    :说明:
-
-      用于打印 CQHTTP 日志。
-
-    :参数:
-
-      * ``level: str``: 日志等级
-      * ``message: str``: 日志信息
-    """
     ...
 
 
 def escape(s: str, *, escape_comma: bool = ...) -> str:
-    """
-    :说明:
-
-      对字符串进行 CQ 码转义。
-
-    :参数:
-
-      * ``s: str``: 需要转义的字符串
-      * ``escape_comma: bool``: 是否转义逗号（``,``）。
-    """
     ...
 
 
 def unescape(s: str) -> str:
-    """
-    :说明:
-
-      对字符串进行 CQ 码去转义。
-
-    :参数:
-
-      * ``s: str``: 需要转义的字符串
-    """
     ...
 
 
 def _b2s(b: Optional[bool]) -> Optional[str]:
-    """转换布尔值为字符串。"""
     ...
 
 
 async def _check_reply(bot: "Bot", event: "Event"):
-    """
-    :说明:
-
-      检查消息中存在的回复，去除并赋值 ``event.reply``, ``event.to_me``
-
-    :参数:
-
-      * ``bot: Bot``: Bot 对象
-      * ``event: Event``: Event 对象
-    """
     ...
 
 
 def _check_at_me(bot: "Bot", event: "Event"):
-    """
-    :说明:
-
-      检查消息开头或结尾是否存在 @机器人，去除并赋值 ``event.to_me``
-
-    :参数:
-
-      * ``bot: Bot``: Bot 对象
-      * ``event: Event``: Event 对象
-    """
     ...
 
 
 def _check_nickname(bot: "Bot", event: "Event"):
-    """
-    :说明:
-
-      检查消息开头是否存在，去除并赋值 ``event.to_me``
-
-    :参数:
-
-      * ``bot: Bot``: Bot 对象
-      * ``event: Event``: Event 对象
-    """
     ...
 
 
-def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
-    """
-    :说明:
-
-      处理 API 请求返回值。
-
-    :参数:
-
-      * ``result: Optional[Dict[str, Any]]``: API 返回数据
-    """
+def _handle_api_result(
+        result: Optional[Dict[str, Any]]) -> Union[Any, NoReturn]:
     ...
 
 
@@ -123,6 +56,29 @@ class ResultStore:
 
 
 class Bot(BaseBot):
+
+    def __init__(self,
+                 driver: Driver,
+                 connection_type: str,
+                 config: Config,
+                 self_id: str,
+                 *,
+                 websocket: WebSocket = None):
+        ...
+
+    def type(self) -> str:
+        ...
+
+    async def handle_message(self, message: dict):
+        ...
+
+    async def call_api(self, api: str, **data) -> Union[Any, NoReturn]:
+        ...
+
+    async def send(self, event: "Event", message: Union[str, "Message",
+                                                        "MessageSegment"],
+                   **kwargs) -> Union[Any, NoReturn]:
+        ...
 
     async def send_private_msg(self,
                                *,
