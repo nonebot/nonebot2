@@ -11,3 +11,4 @@ NoneBot Api Reference
   - `nonebot.permission <permission.html>`_
   - `nonebot.utils <utils.html>`_
   - `nonebot.exception <exception.html>`_
+  - `nonebot.adapters.cqhttp <adapters/cqhttp.html>`_

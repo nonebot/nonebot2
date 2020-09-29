@@ -199,7 +199,8 @@ def _check_nickname(bot: "Bot", event: "Event"):
             first_msg_seg.data["text"] = first_text[m.end():]
 
 
-def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
+def _handle_api_result(
+        result: Optional[Dict[str, Any]]) -> Union[Any, NoReturn]:
     """
     :说明:
 
@@ -208,6 +209,14 @@ def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
     :参数:
 
       * ``result: Optional[Dict[str, Any]]``: API 返回数据
+
+    :返回:
+
+        - ``Any``: API 调用返回数据
+
+    :异常:
+
+        - ``ActionFailed``: API 调用失败
     """
     if isinstance(result, dict):
         if result.get("status") == "failed":
@@ -246,6 +255,9 @@ class ResultStore:
 
 
 class Bot(BaseBot):
+    """
+    CQHTTP 协议 Bot 适配
+    """
 
     def __init__(self,
                  driver: Driver,
@@ -266,10 +278,18 @@ class Bot(BaseBot):
     @property
     @overrides(BaseBot)
     def type(self) -> str:
+        """
+        - 返回: ``"cqhttp"``
+        """
         return "cqhttp"
 
     @overrides(BaseBot)
     async def handle_message(self, message: dict):
+        """
+        :说明:
+
+          调用 `_check_reply <#async-check-reply-bot-event>`_, `_check_at_me <#check-at-me-bot-event>`_, `_check_nickname <#check-nickname-bot-event>`_ 处理事件并转换为 `Event <#class-event>`_
+        """
         if not message:
             return
 
@@ -293,6 +313,25 @@ class Bot(BaseBot):
 
     @overrides(BaseBot)
     async def call_api(self, api: str, **data) -> Union[Any, NoReturn]:
+        """
+        :说明:
+
+          调用 CQHTTP 协议 API
+
+        :参数:
+
+          * ``api: str``: API 名称
+          * ``**data: Any``: API 参数
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+
+        :异常:
+
+          - ``NetworkError``: 网络错误
+          - ``ActionFailed``: API 调用失败
+        """
         if "self_id" in data:
             self_id = data.pop("self_id")
             if self_id:
@@ -341,12 +380,36 @@ class Bot(BaseBot):
                 raise NetworkError("HTTP request failed")
 
     @overrides(BaseBot)
-    async def send(self, event: "Event", message: Union[str, "Message",
-                                                        "MessageSegment"],
+    async def send(self,
+                   event: "Event",
+                   message: Union[str, "Message", "MessageSegment"],
+                   at_sender: bool = False,
                    **kwargs) -> Union[Any, NoReturn]:
+        """
+        :说明:
+
+          根据 ``event``  向触发事件的主体发送消息。
+
+        :参数:
+
+          * ``event: Event``: Event 对象
+          * ``message: Union[str, Message, MessageSegment]``: 要发送的消息
+          * ``at_sender: bool``: 是否 @ 事件主体
+          * ``**kwargs``: 覆盖默认参数
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+
+        :异常:
+
+          - ``ValueError``: 缺少 ``user_id``, ``group_id``
+          - ``NetworkError``: 网络错误
+          - ``ActionFailed``: API 调用失败
+        """
         msg = message if isinstance(message, Message) else Message(message)
 
-        at_sender = kwargs.pop("at_sender", False) and bool(event.user_id)
+        at_sender = at_sender and bool(event.user_id)
 
         params = {}
         if event.user_id:
