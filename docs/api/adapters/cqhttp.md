@@ -158,9 +158,9 @@ sidebarDepth: 0
 
 ## _class_ `Bot`
 
-基类：`nonebot.adapters.BaseBot`
+基类：[`nonebot.adapters.BaseBot`](#None)
 
-CQHTTP 协议 Bot 适配
+CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 
 
 ### _property_ `type`
@@ -261,14 +261,151 @@ CQHTTP 协议 Bot 适配
 
 ## _class_ `Event`
 
-基类：`nonebot.adapters.BaseEvent`
+基类：[`nonebot.adapters.BaseEvent`](#None)
+
+CQHTTP 协议 Event 适配。继承属性参考 [BaseEvent](./#class-baseevent) 。
+
+
+### _property_ `id`
+
+
+* 类型: `Optional[int]`
+
+
+* 说明: 事件/消息 ID
+
+
+### _property_ `name`
+
+
+* 类型: `str`
+
+
+* 说明: 事件名称，由类型与 `.` 组合而成
+
+
+### _property_ `self_id`
+
+
+* 类型: `str`
+
+
+* 说明: 机器人自身 ID
+
+
+### _property_ `time`
+
+
+* 类型: `int`
+
+
+* 说明: 事件发生时间
+
+
+### _property_ `type`
+
+
+* 类型: `str`
+
+
+* 说明: 事件类型
+
+
+### _property_ `detail_type`
+
+
+* 类型: `str`
+
+
+* 说明: 事件详细类型
+
+
+### _property_ `sub_type`
+
+
+* 类型: `str`
+
+
+* 说明: 事件类型
+
+
+### _property_ `user_id`
+
+
+* 类型: `Optional[int]`
+
+
+* 说明: 事件主体 ID
+
+
+### _property_ `group_id`
+
+
+* 类型: `Optional[int]`
+
+
+* 说明: 事件主体群 ID
+
+
+### _property_ `to_me`
+
+
+* 类型: `Optional[bool]`
+
+
+* 说明: 消息是否与机器人相关
+
+
+### _property_ `message`
+
+
+* 类型: `Optional[Message]`
+
+
+* 说明: 消息内容
+
+
+### _property_ `reply`
+
+
+* 类型: `Optional[dict]`
+
+
+* 说明: 回复消息详情
+
+
+### _property_ `raw_message`
+
+
+* 类型: `Optional[str]`
+
+
+* 说明: 原始消息
+
+
+### _property_ `plain_text`
+
+
+* 类型: `Optional[str]`
+
+
+* 说明: 纯文本消息内容
+
+
+### _property_ `sender`
+
+
+* 类型: `Optional[dict]`
+
+
+* 说明: 消息发送者信息
 
 
 ## _class_ `MessageSegment`
 
-基类：`nonebot.adapters.BaseMessageSegment`
+基类：[`nonebot.adapters.BaseMessageSegment`](#None)
 
 
 ## _class_ `Message`
 
-基类：`nonebot.adapters.BaseMessage`
+基类：[`nonebot.adapters.BaseMessage`](#None)
