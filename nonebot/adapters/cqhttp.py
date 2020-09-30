@@ -28,14 +28,29 @@ from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
 
 
 def log(level: str, message: str):
+    """
+    :说明:
+
+      用于打印 CQHTTP 日志。
+
+    :参数:
+
+      * ``level: str``: 日志等级
+      * ``message: str``: 日志信息
+    """
     return logger.opt(colors=True).log(level, "<m>CQHTTP</m> | " + message)
 
 
 def escape(s: str, *, escape_comma: bool = True) -> str:
     """
-    对字符串进行 CQ 码转义。
+    :说明:
 
-    ``escape_comma`` 参数控制是否转义逗号（``,``）。
+      对字符串进行 CQ 码转义。
+
+    :参数:
+
+      * ``s: str``: 需要转义的字符串
+      * ``escape_comma: bool``: 是否转义逗号（``,``）。
     """
     s = s.replace("&", "&amp;") \
         .replace("[", "&#91;") \
@@ -46,7 +61,15 @@ def escape(s: str, *, escape_comma: bool = True) -> str:
 
 
 def unescape(s: str) -> str:
-    """对字符串进行 CQ 码去转义。"""
+    """
+    :说明:
+
+      对字符串进行 CQ 码去转义。
+
+    :参数:
+
+      * ``s: str``: 需要转义的字符串
+    """
     return s.replace("&#44;", ",") \
         .replace("&#91;", "[") \
         .replace("&#93;", "]") \
@@ -54,10 +77,21 @@ def unescape(s: str) -> str:
 
 
 def _b2s(b: Optional[bool]) -> Optional[str]:
+    """转换布尔值为字符串。"""
     return b if b is None else str(b).lower()
 
 
 async def _check_reply(bot: "Bot", event: "Event"):
+    """
+    :说明:
+
+      检查消息中存在的回复，去除并赋值 ``event.reply``, ``event.to_me``
+
+    :参数:
+
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+    """
     if event.type != "message":
         return
 
@@ -74,6 +108,16 @@ async def _check_reply(bot: "Bot", event: "Event"):
 
 
 def _check_at_me(bot: "Bot", event: "Event"):
+    """
+    :说明:
+
+      检查消息开头或结尾是否存在 @机器人，去除并赋值 ``event.to_me``
+
+    :参数:
+
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+    """
     if event.type != "message":
         return
 
@@ -119,6 +163,16 @@ def _check_at_me(bot: "Bot", event: "Event"):
 
 
 def _check_nickname(bot: "Bot", event: "Event"):
+    """
+    :说明:
+
+      检查消息开头是否存在，去除并赋值 ``event.to_me``
+
+    :参数:
+
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+    """
     if event.type != "message":
         return
 
@@ -145,7 +199,25 @@ def _check_nickname(bot: "Bot", event: "Event"):
             first_msg_seg.data["text"] = first_text[m.end():]
 
 
-def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
+def _handle_api_result(
+        result: Optional[Dict[str, Any]]) -> Union[Any, NoReturn]:
+    """
+    :说明:
+
+      处理 API 请求返回值。
+
+    :参数:
+
+      * ``result: Optional[Dict[str, Any]]``: API 返回数据
+
+    :返回:
+
+        - ``Any``: API 调用返回数据
+
+    :异常:
+
+        - ``ActionFailed``: API 调用失败
+    """
     if isinstance(result, dict):
         if result.get("status") == "failed":
             raise ActionFailed(retcode=result.get("retcode"))
@@ -183,6 +255,9 @@ class ResultStore:
 
 
 class Bot(BaseBot):
+    """
+    CQHTTP 协议 Bot 适配。继承属性参考 `BaseBot <./#class-basebot>`_ 。
+    """
 
     def __init__(self,
                  driver: Driver,
@@ -203,10 +278,18 @@ class Bot(BaseBot):
     @property
     @overrides(BaseBot)
     def type(self) -> str:
+        """
+        - 返回: ``"cqhttp"``
+        """
         return "cqhttp"
 
     @overrides(BaseBot)
     async def handle_message(self, message: dict):
+        """
+        :说明:
+
+          调用 `_check_reply <#async-check-reply-bot-event>`_, `_check_at_me <#check-at-me-bot-event>`_, `_check_nickname <#check-nickname-bot-event>`_ 处理事件并转换为 `Event <#class-event>`_
+        """
         if not message:
             return
 
@@ -230,6 +313,25 @@ class Bot(BaseBot):
 
     @overrides(BaseBot)
     async def call_api(self, api: str, **data) -> Union[Any, NoReturn]:
+        """
+        :说明:
+
+          调用 CQHTTP 协议 API
+
+        :参数:
+
+          * ``api: str``: API 名称
+          * ``**data: Any``: API 参数
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+
+        :异常:
+
+          - ``NetworkError``: 网络错误
+          - ``ActionFailed``: API 调用失败
+        """
         if "self_id" in data:
             self_id = data.pop("self_id")
             if self_id:
@@ -278,12 +380,36 @@ class Bot(BaseBot):
                 raise NetworkError("HTTP request failed")
 
     @overrides(BaseBot)
-    async def send(self, event: "Event", message: Union[str, "Message",
-                                                        "MessageSegment"],
+    async def send(self,
+                   event: "Event",
+                   message: Union[str, "Message", "MessageSegment"],
+                   at_sender: bool = False,
                    **kwargs) -> Union[Any, NoReturn]:
+        """
+        :说明:
+
+          根据 ``event``  向触发事件的主体发送消息。
+
+        :参数:
+
+          * ``event: Event``: Event 对象
+          * ``message: Union[str, Message, MessageSegment]``: 要发送的消息
+          * ``at_sender: bool``: 是否 @ 事件主体
+          * ``**kwargs``: 覆盖默认参数
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+
+        :异常:
+
+          - ``ValueError``: 缺少 ``user_id``, ``group_id``
+          - ``NetworkError``: 网络错误
+          - ``ActionFailed``: API 调用失败
+        """
         msg = message if isinstance(message, Message) else Message(message)
 
-        at_sender = kwargs.pop("at_sender", False) and bool(event.user_id)
+        at_sender = at_sender and bool(event.user_id)
 
         params = {}
         if event.user_id:
@@ -309,6 +435,9 @@ class Bot(BaseBot):
 
 
 class Event(BaseEvent):
+    """
+    CQHTTP 协议 Event 适配。继承属性参考 `BaseEvent <./#class-baseevent>`_ 。
+    """
 
     def __init__(self, raw_event: dict):
         if "message" in raw_event:
@@ -319,11 +448,19 @@ class Event(BaseEvent):
     @property
     @overrides(BaseEvent)
     def id(self) -> Optional[int]:
+        """
+        - 类型: ``Optional[int]``
+        - 说明: 事件/消息 ID
+        """
         return self._raw_event.get("message_id") or self._raw_event.get("flag")
 
     @property
     @overrides(BaseEvent)
     def name(self) -> str:
+        """
+        - 类型: ``str``
+        - 说明: 事件名称，由类型与 ``.`` 组合而成
+        """
         n = self.type + "." + self.detail_type
         if self.sub_type:
             n += "." + self.sub_type
@@ -332,16 +469,28 @@ class Event(BaseEvent):
     @property
     @overrides(BaseEvent)
     def self_id(self) -> str:
+        """
+        - 类型: ``str``
+        - 说明: 机器人自身 ID
+        """
         return str(self._raw_event["self_id"])
 
     @property
     @overrides(BaseEvent)
     def time(self) -> int:
+        """
+        - 类型: ``int``
+        - 说明: 事件发生时间
+        """
         return self._raw_event["time"]
 
     @property
     @overrides(BaseEvent)
     def type(self) -> str:
+        """
+        - 类型: ``str``
+        - 说明: 事件类型
+        """
         return self._raw_event["post_type"]
 
     @type.setter
@@ -352,6 +501,10 @@ class Event(BaseEvent):
     @property
     @overrides(BaseEvent)
     def detail_type(self) -> str:
+        """
+        - 类型: ``str``
+        - 说明: 事件详细类型
+        """
         return self._raw_event[f"{self.type}_type"]
 
     @detail_type.setter
@@ -362,6 +515,10 @@ class Event(BaseEvent):
     @property
     @overrides(BaseEvent)
     def sub_type(self) -> Optional[str]:
+        """
+        - 类型: ``Optional[str]``
+        - 说明: 事件子类型
+        """
         return self._raw_event.get("sub_type")
 
     @type.setter
@@ -372,6 +529,10 @@ class Event(BaseEvent):
     @property
     @overrides(BaseEvent)
     def user_id(self) -> Optional[int]:
+        """
+        - 类型: ``Optional[int]``
+        - 说明: 事件主体 ID
+        """
         return self._raw_event.get("user_id")
 
     @user_id.setter
@@ -382,6 +543,10 @@ class Event(BaseEvent):
     @property
     @overrides(BaseEvent)
     def group_id(self) -> Optional[int]:
+        """
+        - 类型: ``Optional[int]``
+        - 说明: 事件主体群 ID
+        """
         return self._raw_event.get("group_id")
 
     @group_id.setter
@@ -392,6 +557,10 @@ class Event(BaseEvent):
     @property
     @overrides(BaseEvent)
     def to_me(self) -> Optional[bool]:
+        """
+        - 类型: ``Optional[bool]``
+        - 说明: 消息是否与机器人相关
+        """
         return self._raw_event.get("to_me")
 
     @to_me.setter
@@ -402,6 +571,10 @@ class Event(BaseEvent):
     @property
     @overrides(BaseEvent)
     def message(self) -> Optional["Message"]:
+        """
+        - 类型: ``Optional[Message]``
+        - 说明: 消息内容
+        """
         return self._raw_event.get("message")
 
     @message.setter
@@ -412,6 +585,10 @@ class Event(BaseEvent):
     @property
     @overrides(BaseEvent)
     def reply(self) -> Optional[dict]:
+        """
+        - 类型: ``Optional[dict]``
+        - 说明: 回复消息详情
+        """
         return self._raw_event.get("reply")
 
     @reply.setter
@@ -422,6 +599,10 @@ class Event(BaseEvent):
     @property
     @overrides(BaseEvent)
     def raw_message(self) -> Optional[str]:
+        """
+        - 类型: ``Optional[str]``
+        - 说明: 原始消息
+        """
         return self._raw_event.get("raw_message")
 
     @raw_message.setter
@@ -432,11 +613,19 @@ class Event(BaseEvent):
     @property
     @overrides(BaseEvent)
     def plain_text(self) -> Optional[str]:
+        """
+        - 类型: ``Optional[str]``
+        - 说明: 纯文本消息内容
+        """
         return self.message and self.message.extract_plain_text()
 
     @property
     @overrides(BaseEvent)
     def sender(self) -> Optional[dict]:
+        """
+        - 类型: ``Optional[dict]``
+        - 说明: 消息发送者信息
+        """
         return self._raw_event.get("sender")
 
     @sender.setter

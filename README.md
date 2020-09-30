@@ -1,10 +1,10 @@
 <div align=center>
-  <img src="docs/.vuepress/public/logo.png" width="200" height="200">
+  <img src="./docs/.vuepress/public/logo.png" width="200" height="200">
 
 # NoneBot
 
-[![License](https://img.shields.io/github/license/richardchien/nonebot.svg)](LICENSE)
-[![PyPI](https://img.shields.io/pypi/v/nonebot.svg)](https://pypi.python.org/pypi/nonebot)
+[![License](https://img.shields.io/github/license/nonebot/nonebot2.svg)](LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/nonebot2.svg)](https://pypi.python.org/pypi/nonebot2)
 ![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)
 ![CQHTTP Version](https://img.shields.io/badge/cqhttp-11+-black.svg)
 [![QQ 群](https://img.shields.io/badge/qq%E7%BE%A4-768887710-orange.svg)](https://jq.qq.com/?_wv=1027&k=5OFifDh)
@@ -15,8 +15,6 @@
 </div>
 
 ## 简介
-
-**NoneBot2 尚在开发中**
 
 NoneBot2 是一个可扩展的 Python 异步机器人框架，它会对机器人收到的消息进行解析和处理，并以插件化的形式，分发给消息所对应的命令处理器和自然语言处理器，来完成具体的功能。
 

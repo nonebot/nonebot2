@@ -119,6 +119,14 @@ module.exports = context => ({
                 {
                   title: "nonebot.exception 模块",
                   path: "exception"
+                },
+                {
+                  title: "nonebot.adapters 模块",
+                  path: "adapters/"
+                },
+                {
+                  title: "nonebot.adapters.cqhttp 模块",
+                  path: "adapters/cqhttp"
                 }
               ]
             }

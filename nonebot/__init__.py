@@ -109,6 +109,7 @@ def get_bots() -> Union[NoReturn, Dict[str, Bot]]:
 
 
 from nonebot.sched import scheduler
+from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.log import logger, default_filter
 from nonebot.adapters.cqhttp import Bot as CQBot
@@ -155,8 +156,8 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
                         _env_file=_env_file or f".env.{env.environment}")
 
         default_filter.level = "DEBUG" if config.debug else "INFO"
-        logger.opt(
-            colors=True).debug(f"Loaded <y><b>Config</b></y>: {config.dict()}")
+        logger.opt(colors=True).debug(
+            f"Loaded <y><b>Config</b></y>: {escape_tag(str(config.dict()))}")
 
         DriverClass: Type[Driver] = getattr(
             importlib.import_module(config.driver), "Driver")
@@ -213,5 +214,5 @@ async def _start_scheduler():
 
 
 from nonebot.plugin import on_message, on_notice, on_request, on_metaevent
-from nonebot.plugin import on_startswith, on_endswith, on_command, on_regex
+from nonebot.plugin import on_startswith, on_endswith, on_command, on_regex, CommandGroup
 from nonebot.plugin import load_plugin, load_plugins, load_builtin_plugins, get_loaded_plugins

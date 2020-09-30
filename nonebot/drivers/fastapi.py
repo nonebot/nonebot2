@@ -200,8 +200,8 @@ class Driver(BaseDriver):
                            websocket=ws)
         else:
             logger.warning("Unknown adapter")
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                                detail="adapter not found")
+            await ws.close(code=status.WS_1008_POLICY_VIOLATION)
+            return
 
         await ws.accept()
         self._clients[x_self_id] = bot

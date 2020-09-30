@@ -6,6 +6,7 @@ from datetime import datetime
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
+from nonebot.utils import escape_tag
 from nonebot.matcher import matchers
 from nonebot.typing import Set, Type, Union, NoReturn
 from nonebot.typing import Bot, Event, Matcher, PreProcessor
@@ -64,7 +65,9 @@ async def handle_event(bot: Bot, event: Event):
             log_msg += f"@[群:{event.group_id}]:"
 
         log_msg += ' "' + "".join(
-            map(lambda x: str(x) if x.type == "text" else f"<le>{x!s}</le>",
+            map(
+                lambda x: escape_tag(str(x))
+                if x.type == "text" else f"<le>{escape_tag(str(x))}</le>",
                 event.message)) + '"'  # type: ignore
     elif event.type == "notice":
         log_msg += f"Notice {event.raw_event}"

@@ -1,7 +1,7 @@
 <template>
   <div class="qq-chat">
-    <v-app
-      ><v-main>
+    <v-app>
+      <v-main>
         <v-card class="elevation-6">
           <v-toolbar color="primary" dark dense flat>
             <v-row no-gutters>
@@ -139,19 +139,15 @@ export default {
       default: () => []
     }
   },
-  data: () => ({
-    wow: null
-  }),
   methods: {
     initWOW: function() {
-      this.wow = new WOW({
+      new WOW({
         noxClass: "wow",
         animateClass: "animate__animated",
         offset: 0,
         mobile: true,
         live: true
-      });
-      this.wow.init();
+      }).init();
     }
   },
   mounted() {
@@ -167,6 +163,7 @@ export default {
 
 .chat {
   min-height: 150px;
+  overflow-x: hidden;
 }
 .chat-bg {
   background-color: #f3f6f9;
@@ -212,5 +209,11 @@ export default {
   border-radius: 10px;
   padding: 5px 12px;
   font-size: 12px;
+}
+</style>
+
+<style>
+.v-application--wrap {
+  min-height: 0 !important;
 }
 </style>

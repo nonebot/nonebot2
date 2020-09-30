@@ -142,6 +142,22 @@ sidebarDepth: 0
 
 
 
+## `MatcherGroup`
+
+
+* **类型**
+
+    `MatcherGroup`
+
+
+
+* **说明**
+
+    MatcherGroup 为 Matcher 的集合。可以共享 Handler。
+
+
+
+
 ## `Rule`
 
 

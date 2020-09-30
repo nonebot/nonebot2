@@ -52,6 +52,9 @@ class BaseEvent(abc.ABC):
 
     def __init__(self, raw_event: dict):
         self._raw_event = raw_event
+        """
+        原始 event
+        """
 
     def __repr__(self) -> str:
         return f"<Event {self.self_id}: {self.name} {self.time}>"

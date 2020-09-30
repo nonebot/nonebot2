@@ -28,10 +28,10 @@ from typing import Union, TypeVar, Optional, Iterable, Callable, Awaitable
 # import some modules needed when checking types
 if TYPE_CHECKING:
     from nonebot.rule import Rule as RuleClass
-    from nonebot.matcher import Matcher as MatcherClass
     from nonebot.drivers import BaseDriver, BaseWebSocket
     from nonebot.permission import Permission as PermissionClass
     from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
+    from nonebot.matcher import Matcher as MatcherClass, MatcherGroup as MatcherGroupClass
 
 
 def overrides(InterfaceClass: object):
@@ -111,6 +111,14 @@ Matcher = TypeVar("Matcher", bound="MatcherClass")
 :说明:
 
   Matcher 即响应事件的处理类。通过 Rule 判断是否响应事件，运行 Handler。
+"""
+MatcherGroup = TypeVar("MatcherGroup", bound="MatcherGroupClass")
+"""
+:类型: ``MatcherGroup``
+
+:说明:
+
+  MatcherGroup 为 Matcher 的集合。可以共享 Handler。
 """
 Rule = TypeVar("Rule", bound="RuleClass")
 """
