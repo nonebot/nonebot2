@@ -159,7 +159,7 @@ weather = on_command("天气", rule=to_me(), permission=Permission(), priority=5
 - `on_startswith(str)` ~ `on("message", startswith(str))`: 消息开头匹配处理器
 - `on_endswith(str)` ~ `on("message", endswith(str))`: 消息结尾匹配处理器
 - `on_command(str|tuple)` ~ `on("message", command(str|tuple))`: 命令处理器
-- `on_regax(pattern_str)` ~ `on("message", regax(pattern_str))`: 正则匹配处理器
+- `on_regex(pattern_str)` ~ `on("message", regex(pattern_str))`: 正则匹配处理器
 
 #### 匹配规则 rule
 

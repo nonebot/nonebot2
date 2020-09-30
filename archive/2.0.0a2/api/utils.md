@@ -6,6 +6,29 @@ sidebarDepth: 0
 # NoneBot.utils 模块
 
 
+## `escape_tag(s)`
+
+
+* **说明**
+
+    用于记录带颜色日志时转义 `<tag>` 类型特殊标签
+
+
+
+* **参数**
+
+    
+    * `s: str`: 需要转义的字符串
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
 ## `run_sync(func)`
 
 
