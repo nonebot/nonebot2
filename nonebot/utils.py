@@ -1,12 +1,17 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 
+import re
 import json
 import asyncio
 import dataclasses
 from functools import wraps, partial
 
 from nonebot.typing import Any, Callable, Awaitable, overrides
+
+
+def escape_tag(s: str) -> str:
+    return re.sub(r"</?((?:[fb]g\s)?[^<>\s]*)>", r"\\\g<0>", s)
 
 
 def run_sync(func: Callable[..., Any]) -> Callable[..., Awaitable[Any]]:
