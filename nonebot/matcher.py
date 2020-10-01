@@ -304,8 +304,11 @@ class MatcherGroup:
         self.priority = priority
         self.block = block
         self.module = module
-        self.default_state = default_state
         self.expire_time = expire_time
+
+        self._default_state = default_state
+
+        self._default_parser: Optional[ArgsParser] = None
 
     def __repr__(self) -> str:
         return (
@@ -335,7 +338,8 @@ class MatcherGroup:
                               priority=priority or self.priority,
                               block=block or self.block,
                               module=module or self.module,
-                              default_state=default_state or self.default_state,
+                              default_state=default_state or
+                              self._default_state,
                               expire_time=expire_time or self.expire_time)
         self.matchers.append(matcher)
         return matcher
