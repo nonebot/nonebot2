@@ -265,7 +265,7 @@ class Bot(BaseBot):
                  config: Config,
                  self_id: str,
                  *,
-                 websocket: WebSocket = None):
+                 websocket: Optional[WebSocket] = None):
         if connection_type not in ["http", "websocket"]:
             raise ValueError("Unsupported connection type")
 

@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+协议适配基类
+===========
+
+各协议请继承以下基类，并使用 ``driver.register_adapter`` 注册适配器
+"""
 
 import abc
 from functools import reduce, partial
@@ -11,6 +17,9 @@ from nonebot.typing import Any, Dict, Union, Optional, Callable, Iterable, Await
 
 
 class BaseBot(abc.ABC):
+    """
+    Bot 基类。用于处理上报消息，并提供 API 调用接口。
+    """
 
     @abc.abstractmethod
     def __init__(self,
@@ -19,12 +28,25 @@ class BaseBot(abc.ABC):
                  config: Config,
                  self_id: str,
                  *,
-                 websocket: WebSocket = None):
+                 websocket: Optional[WebSocket] = None):
+        """
+        :参数:
+          * ``driver: Driver``: Driver 对象
+          * ``connection_type: str``: http 或者 websocket
+          * ``config: Config``: Config 对象
+          * ``self_id: str``: 机器人 ID
+          * ``websocket: Optional[WebSocket]``: Websocket 连接对象
+        """
         self.driver = driver
+        """Driver 对象"""
         self.connection_type = connection_type
+        """连接类型"""
         self.config = config
+        """Config 配置对象"""
         self.self_id = self_id
+        """机器人 ID"""
         self.websocket = websocket
+        """Websocket 连接对象"""
 
     def __getattr__(self, name: str) -> Callable[..., Awaitable[Any]]:
         return partial(self.call_api, name)
@@ -32,60 +54,96 @@ class BaseBot(abc.ABC):
     @property
     @abc.abstractmethod
     def type(self) -> str:
+        """Adapter 类型"""
         raise NotImplementedError
 
     @abc.abstractmethod
     async def handle_message(self, message: dict):
+        """
+        :说明:
+          处理上报消息的函数，转换为 ``Event`` 事件后调用 ``nonebot.message.handle_event`` 进一步处理事件。
+        :参数:
+          * ``message: dict``: 收到的上报消息
+        """
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def call_api(self, api: str, data: dict):
+    async def call_api(self, api: str, **data):
+        """
+        :说明:
+          调用机器人 API 接口，可以通过该函数或直接通过 bot 属性进行调用
+        :参数:
+          * ``api: str``: API 名称
+          * ``**data``: API 数据
+        :示例:
+
+        .. code-block:: python
+
+            await bot.call_api("send_msg", data={"message": "hello world"})
+            await bot.send_msg(message="hello world")
+        """
         raise NotImplementedError
 
     @abc.abstractmethod
     async def send(self, *args, **kwargs):
+        """
+        :说明:
+          调用机器人基础发送消息接口
+        :参数:
+          * ``*args``
+          * ``**kwargs``
+        """
         raise NotImplementedError
 
 
-# TODO: improve event
 class BaseEvent(abc.ABC):
+    """
+    Event 基类。提供上报信息的关键信息，其余信息可从原始上报消息获取。
+    """
 
     def __init__(self, raw_event: dict):
+        """
+        :参数:
+          * ``raw_event: dict``: 原始上报消息
+        """
         self._raw_event = raw_event
-        """
-        原始 event
-        """
 
     def __repr__(self) -> str:
         return f"<Event {self.self_id}: {self.name} {self.time}>"
 
     @property
     def raw_event(self) -> dict:
+        """原始上报消息"""
         return self._raw_event
 
     @property
     @abc.abstractmethod
     def id(self) -> int:
+        """事件 ID"""
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
     def name(self) -> str:
+        """事件名称"""
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
     def self_id(self) -> str:
+        """机器人 ID"""
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
     def time(self) -> int:
+        """事件发生时间"""
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
     def type(self) -> str:
+        """事件主类型"""
         raise NotImplementedError
 
     @type.setter
@@ -96,6 +154,7 @@ class BaseEvent(abc.ABC):
     @property
     @abc.abstractmethod
     def detail_type(self) -> str:
+        """事件详细类型"""
         raise NotImplementedError
 
     @detail_type.setter
@@ -106,6 +165,7 @@ class BaseEvent(abc.ABC):
     @property
     @abc.abstractmethod
     def sub_type(self) -> Optional[str]:
+        """事件子类型"""
         raise NotImplementedError
 
     @sub_type.setter
@@ -116,6 +176,7 @@ class BaseEvent(abc.ABC):
     @property
     @abc.abstractmethod
     def user_id(self) -> Optional[int]:
+        """触发事件的主体 ID"""
         raise NotImplementedError
 
     @user_id.setter
@@ -126,6 +187,7 @@ class BaseEvent(abc.ABC):
     @property
     @abc.abstractmethod
     def group_id(self) -> Optional[int]:
+        """触发事件的主体群 ID"""
         raise NotImplementedError
 
     @group_id.setter
@@ -136,6 +198,7 @@ class BaseEvent(abc.ABC):
     @property
     @abc.abstractmethod
     def to_me(self) -> Optional[bool]:
+        """事件是否为发送给机器人的消息"""
         raise NotImplementedError
 
     @to_me.setter
@@ -146,6 +209,7 @@ class BaseEvent(abc.ABC):
     @property
     @abc.abstractmethod
     def message(self) -> Optional[Message]:
+        """消息内容"""
         raise NotImplementedError
 
     @message.setter
@@ -156,6 +220,7 @@ class BaseEvent(abc.ABC):
     @property
     @abc.abstractmethod
     def reply(self) -> Optional[dict]:
+        """回复的消息"""
         raise NotImplementedError
 
     @reply.setter
@@ -166,6 +231,7 @@ class BaseEvent(abc.ABC):
     @property
     @abc.abstractmethod
     def raw_message(self) -> Optional[str]:
+        """原始消息"""
         raise NotImplementedError
 
     @raw_message.setter
@@ -176,11 +242,13 @@ class BaseEvent(abc.ABC):
     @property
     @abc.abstractmethod
     def plain_text(self) -> Optional[str]:
+        """纯文本消息"""
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
     def sender(self) -> Optional[dict]:
+        """消息发送者信息"""
         raise NotImplementedError
 
     @sender.setter
