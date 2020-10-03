@@ -344,4 +344,5 @@ class BaseMessage(list, abc.ABC):
         def _concat(x: str, y: BaseMessageSegment) -> str:
             return f"{x} {y.data['text']}" if y.type == "text" else x
 
-        return reduce(_concat, self, "")
+        plain_text = reduce(_concat, self, "")
+        return plain_text[1:] if plain_text else plain_text
