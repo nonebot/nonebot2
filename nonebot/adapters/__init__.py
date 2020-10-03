@@ -259,8 +259,17 @@ class BaseEvent(abc.ABC):
 
 @dataclass
 class BaseMessageSegment(abc.ABC):
+    """消息段基类"""
     type: str
+    """
+    - 类型: ``str``
+    - 说明: 消息段类型
+    """
     data: Dict[str, Union[str, list]] = field(default_factory=lambda: {})
+    """
+    - 类型: ``Dict[str, Union[str, list]]``
+    - 说明: 消息段数据
+    """
 
     @abc.abstractmethod
     def __str__(self):
@@ -272,12 +281,17 @@ class BaseMessageSegment(abc.ABC):
 
 
 class BaseMessage(list, abc.ABC):
+    """消息数组"""
 
     def __init__(self,
                  message: Union[str, dict, list, BaseMessageSegment,
                                 "BaseMessage"] = None,
                  *args,
                  **kwargs):
+        """
+        :参数:
+          * ``message: Union[str, dict, list, MessageSegment, Message]``: 消息内容
+        """
         super().__init__(*args, **kwargs)
         if isinstance(message, (str, dict, list)):
             self.extend(self._construct(message))
@@ -311,6 +325,12 @@ class BaseMessage(list, abc.ABC):
         return result.__add__(self)
 
     def append(self, obj: Union[str, BaseMessageSegment]) -> "BaseMessage":
+        """
+        :说明:
+          添加一个消息段到消息数组末尾
+        :参数:
+          * ``obj: Union[str, MessageSegment]``: 要添加的消息段
+        """
         if isinstance(obj, BaseMessageSegment):
             if obj.type == "text" and self and self[-1].type == "text":
                 self[-1].data["text"] += obj.data["text"]
@@ -325,11 +345,21 @@ class BaseMessage(list, abc.ABC):
     def extend(
         self, obj: Union["BaseMessage",
                          Iterable[BaseMessageSegment]]) -> "BaseMessage":
+        """
+        :说明:
+          拼接一个消息数组或多个消息段到消息数组末尾
+        :参数:
+          * ``obj: Union[Message, Iterable[MessageSegment]]``: 要添加的消息数组
+        """
         for segment in obj:
             self.append(segment)
         return self
 
     def reduce(self) -> None:
+        """
+        :说明:
+          缩减消息数组，即拼接相邻纯文本消息段
+        """
         index = 0
         while index < len(self):
             if index > 0 and self[
@@ -340,6 +370,10 @@ class BaseMessage(list, abc.ABC):
                 index += 1
 
     def extract_plain_text(self) -> str:
+        """
+        :说明:
+          提取消息内纯文本消息
+        """
 
         def _concat(x: str, y: BaseMessageSegment) -> str:
             return f"{x} {y.data['text']}" if y.type == "text" else x
