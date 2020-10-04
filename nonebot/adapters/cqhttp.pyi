@@ -858,7 +858,7 @@ class Event:
 
 class MessageSegment:
 
-    def __init__(self, type: str, data: Dict[str, Union[str, list]]) -> None:
+    def __init__(self, type: str, data: Dict[str, Any]) -> None:
         ...
 
     def __str__(self):

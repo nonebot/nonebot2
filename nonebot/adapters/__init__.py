@@ -265,7 +265,7 @@ class BaseMessageSegment(abc.ABC):
     - 类型: ``str``
     - 说明: 消息段类型
     """
-    data: Dict[str, Union[str, list]] = field(default_factory=lambda: {})
+    data: Dict[str, Any] = field(default_factory=lambda: {})
     """
     - 类型: ``Dict[str, Union[str, list]]``
     - 说明: 消息段数据
@@ -278,6 +278,11 @@ class BaseMessageSegment(abc.ABC):
     @abc.abstractmethod
     def __add__(self, other):
         raise NotImplementedError
+
+    @classmethod
+    @abc.abstractmethod
+    def text(cls, text: str) -> "BaseMessageSegment":
+        return cls("text", {"text": text})
 
 
 class BaseMessage(list, abc.ABC):

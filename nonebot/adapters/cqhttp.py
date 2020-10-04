@@ -637,9 +637,9 @@ class Event(BaseEvent):
 class MessageSegment(BaseMessageSegment):
 
     @overrides(BaseMessageSegment)
-    def __init__(self, type: str, data: Dict[str, Union[str, list]]) -> None:
+    def __init__(self, type: str, data: Dict[str, Any]) -> None:
         if type == "text":
-            data["text"] = unescape(data["text"])  # type: ignore
+            data["text"] = unescape(data["text"])
         super().__init__(type=type, data=data)
 
     @overrides(BaseMessageSegment)
