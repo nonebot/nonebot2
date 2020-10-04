@@ -791,7 +791,7 @@ class Event:
     def sub_type(self) -> Optional[str]:
         ...
 
-    @type.setter
+    @sub_type.setter
     def sub_type(self, value) -> None:
         ...
 

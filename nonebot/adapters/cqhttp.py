@@ -521,7 +521,7 @@ class Event(BaseEvent):
         """
         return self._raw_event.get("sub_type")
 
-    @type.setter
+    @sub_type.setter
     @overrides(BaseEvent)
     def sub_type(self, value) -> None:
         self._raw_event["sub_type"] = value
