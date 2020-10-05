@@ -7,10 +7,10 @@ sidebarDepth: 0
 
 ## 规则
 
-每个 `Matcher` 拥有一个 `Rule` ，其中是 **异步** `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
+每个事件响应器 `Matcher` 拥有一个匹配规则 `Rule` ，其中是 **异步** `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
 
 :::tip 提示
-`RuleChecker` 既可以是 async function 也可以是 sync function
+`RuleChecker` 既可以是 async function 也可以是 sync function，但在最终会被 `nonebot.utils.run_sync` 转换为 async function
 :::
 
 
@@ -120,3 +120,83 @@ Rule(async_function, run_sync(sync_function))
 
     
     * `msg: str`: 消息结尾字符串
+
+
+
+## `keyword(msg)`
+
+
+* **说明**
+
+    匹配消息关键词
+
+
+
+* **参数**
+
+    
+    * `msg: str`: 关键词
+
+
+
+## `command(command)`
+
+
+* **说明**
+
+    命令形式匹配，根据配置里提供的 `command_start`, `command_sep` 判断消息是否为命令。
+
+
+
+* **参数**
+
+    
+    * `command: Tuples[str, ...]`: 命令内容
+
+
+
+* **示例**
+
+    使用默认 `command_start`, `command_sep` 配置
+
+    命令 `("test",)` 可以匹配：`/test` 开头的消息
+    命令 `("test", "sub")` 可以匹配”`/test.sub` 开头的消息
+
+
+:::tip 提示
+命令内容与后续消息间无需空格！
+:::
+
+
+## `regex(regex, flags=0)`
+
+
+* **说明**
+
+    根据正则表达式进行匹配
+
+
+
+* **参数**
+
+    
+    * `regex: str`: 正则表达式
+
+
+    * `flags: Union[int, re.RegexFlag]`: 正则标志
+
+
+
+## `to_me()`
+
+
+* **说明**
+
+    通过 `event.to_me` 判断消息是否是发送给机器人
+
+
+
+* **参数**
+
+    
+    * 无

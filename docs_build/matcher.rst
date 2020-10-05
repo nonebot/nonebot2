@@ -3,10 +3,10 @@ contentSidebar: true
 sidebarDepth: 0
 ---
 
-NoneBot.adapters.cqhttp 模块
-============================
+NoneBot.matcher 模块
+====================
 
-.. automodule:: nonebot.adapters.cqhttp
+.. automodule:: nonebot.matcher
    :members:
    :private-members:
    :show-inheritance:

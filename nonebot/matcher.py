@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+事件响应器
+==========
+
+该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行 对话 。
+"""
 
 from nonebot.log import logger
 import typing
@@ -18,7 +24,7 @@ from nonebot.exception import PausedException, RejectedException, FinishedExcept
 matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
 """
 :类型: ``Dict[int, List[Type[Matcher]]]``
-:说明: 用于存储当前所有的 ``Matcher``
+:说明: 用于存储当前所有的事件响应器
 """
 current_bot: ContextVar = ContextVar("current_bot")
 current_event: ContextVar = ContextVar("current_event")
@@ -36,22 +42,65 @@ class MatcherMeta(type):
 
 
 class Matcher(metaclass=MatcherMeta):
-    """`Matcher`类
-    """
+    """事件响应器类"""
     module: Optional[str] = None
+    """
+    :类型: ``Optional[str]``
+    :说明: 事件响应器所在模块名称
+    """
 
     type: str = ""
+    """
+    :类型: ``str``
+    :说明: 事件响应器类型
+    """
     rule: Rule = Rule()
+    """
+    :类型: ``Rule``
+    :说明: 事件响应器匹配规则
+    """
     permission: Permission = Permission()
+    """
+    :类型: ``Permission``
+    :说明: 事件响应器触发权限
+    """
     handlers: List[Handler] = []
-    temp: bool = False
-    expire_time: Optional[datetime] = None
+    """
+    :类型: ``List[Handler]``
+    :说明: 事件响应器拥有的事件处理函数列表
+    """
     priority: int = 1
+    """
+    :类型: ``int``
+    :说明: 事件响应器优先级
+    """
     block: bool = False
+    """
+    :类型: ``bool``
+    :说明: 事件响应器是否阻止事件传播
+    """
+    temp: bool = False
+    """
+    :类型: ``bool``
+    :说明: 事件响应器是否为临时
+    """
+    expire_time: Optional[datetime] = None
+    """
+    :类型: ``Optional[datetime]``
+    :说明: 事件响应器过期时间点
+    """
 
     _default_state: dict = {}
+    """
+    :类型: ``dict``
+    :说明: 事件响应器默认状态
+    """
 
     _default_parser: Optional[ArgsParser] = None
+    """
+    :类型: ``Optional[ArgsParser]``
+    :说明: 事件响应器默认参数解析函数
+    """
 
     def __init__(self):
         """实例化 Matcher 以便运行
@@ -69,9 +118,9 @@ class Matcher(metaclass=MatcherMeta):
     @classmethod
     def new(cls,
             type_: str = "",
-            rule: Rule = Rule(),
-            permission: Permission = Permission(),
-            handlers: Optional[list] = None,
+            rule: Optional[Rule] = None,
+            permission: Optional[Permission] = None,
+            handlers: Optional[List[Handler]] = None,
             temp: bool = False,
             priority: int = 1,
             block: bool = False,
@@ -79,18 +128,30 @@ class Matcher(metaclass=MatcherMeta):
             module: Optional[str] = None,
             default_state: Optional[dict] = None,
             expire_time: Optional[datetime] = None) -> Type["Matcher"]:
-        """创建新的 Matcher
-
-        Returns:
-            Type["Matcher"]: 新的 Matcher 类
+        """
+        :说明:
+          创建一个新的事件响应器，并存储至 `matchers <#matchers>`_
+        :参数:
+          * ``type_: str``: 事件响应器类型，与 ``event.type`` 一致时触发，空字符串表示任意
+          * ``rule: Optional[Rule]``: 匹配规则
+          * ``permission: Optional[Permission]``: 权限
+          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``temp: bool``: 是否为临时事件响应器，即触发一次后删除
+          * ``priority: int``: 响应优先级
+          * ``block: bool``: 是否阻止事件向更低优先级的响应器传播
+          * ``module: Optional[str]``: 事件响应器所在模块名称
+          * ``default_state: Optional[dict]``: 默认状态 ``state``
+          * ``expire_time: Optional[datetime]``: 事件响应器最终有效时间点，过时即被删除
+        :返回:
+          - ``Type[Matcher]``: 新的事件响应器类
         """
 
         NewMatcher = type(
             "Matcher", (Matcher,), {
                 "module": module,
                 "type": type_,
-                "rule": rule,
-                "permission": permission,
+                "rule": rule or Rule(),
+                "permission": permission or Permission(),
                 "handlers": handlers or [],
                 "temp": temp,
                 "expire_time": expire_time,
@@ -105,23 +166,40 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def check_perm(cls, bot: Bot, event: Event) -> bool:
+        """
+        :说明:
+          检查是否满足触发权限
+        :参数:
+          * ``bot: Bot``: Bot 对象
+          * ``event: Event``: 上报事件
+        :返回:
+          - ``bool``: 是否满足权限
+        """
         return await cls.permission(bot, event)
 
     @classmethod
     async def check_rule(cls, bot: Bot, event: Event, state: dict) -> bool:
-        """检查 Matcher 的 Rule 是否成立
-
-        Args:
-            event (Event): 消息事件
-
-        Returns:
-            bool: 条件成立与否
+        """
+        :说明:
+          检查是否满足匹配规则
+        :参数:
+          * ``bot: Bot``: Bot 对象
+          * ``event: Event``: 上报事件
+          * ``state: dict``: 当前状态
+        :返回:
+          - ``bool``: 是否满足匹配规则
         """
         return (event.type == (cls.type or event.type) and
                 await cls.rule(bot, event, state))
 
     @classmethod
     def args_parser(cls, func: ArgsParser) -> ArgsParser:
+        """
+        :说明:
+          用于装饰一个函数来更改当前事件响应器的默认参数解析函数
+        :参数:
+          * ``func: ArgsParser``: 参数解析函数
+        """
         cls._default_parser = func
         return func
 

@@ -323,10 +323,10 @@ CQHTTP 协议 Event 适配。继承属性参考 [BaseEvent](./#class-baseevent) 
 ### _property_ `sub_type`
 
 
-* 类型: `str`
+* 类型: `Optional[str]`
 
 
-* 说明: 事件类型
+* 说明: 事件子类型
 
 
 ### _property_ `user_id`
