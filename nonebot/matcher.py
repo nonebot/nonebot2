@@ -16,6 +16,10 @@ from nonebot.typing import Bot, Event, Handler, Message, ArgsParser, MessageSegm
 from nonebot.exception import PausedException, RejectedException, FinishedException
 
 matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
+"""
+:类型: ``Dict[int, List[Type[Matcher]]]``
+:说明: 用于存储当前所有的 ``Matcher``
+"""
 current_bot: ContextVar = ContextVar("current_bot")
 current_event: ContextVar = ContextVar("current_event")
 
