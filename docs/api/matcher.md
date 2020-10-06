@@ -182,6 +182,11 @@ sidebarDepth: 0
 
 
 
+### `__init__()`
+
+实例化 Matcher 以便运行
+
+
 ### `handlers`
 
 
@@ -307,7 +312,7 @@ sidebarDepth: 0
 
 * **说明**
 
-    用于装饰一个函数来更改当前事件响应器的默认参数解析函数
+    装饰一个函数来更改当前事件响应器的默认参数解析函数
 
 
 
@@ -320,9 +325,161 @@ sidebarDepth: 0
 
 ### _classmethod_ `handle()`
 
-直接处理消息事件
+
+* **说明**
+
+    装饰一个函数来向事件响应器直接添加一个处理函数
+
+
+
+* **参数**
+
+    
+    * 无
+
 
 
 ### _classmethod_ `receive()`
 
-接收一条新消息并处理
+
+* **说明**
+
+    装饰一个函数来指示 NoneBot 在接收用户新的一条消息后继续运行该函数
+
+
+
+* **参数**
+
+    
+    * 无
+
+
+
+### _classmethod_ `got(key, prompt=None, args_parser=None)`
+
+
+* **说明**
+
+    装饰一个函数来指示 NoneBot 当要获取的 `key` 不存在时接收用户新的一条消息并经过 `ArgsParser` 处理后再运行该函数，如果 `key` 已存在则直接继续运行
+
+
+
+* **参数**
+
+    
+    * `key: str`: 参数名
+
+
+    * `prompt: Optional[Union[str, Message, MessageSegment]]`: 在参数不存在时向用户发送的消息
+
+
+    * `args_parser: Optional[ArgsParser]`: 可选参数解析函数，空则使用默认解析函数
+
+
+
+### _async classmethod_ `send(message)`
+
+
+* **说明**
+
+    发送一条消息给当前交互用户
+
+
+
+* **参数**
+
+    
+    * `message: Union[str, Message, MessageSegment]`: 消息内容
+
+
+
+### _async classmethod_ `finish(message=None)`
+
+
+* **说明**
+
+    发送一条消息给当前交互用户并结束当前事件响应器
+
+
+
+* **参数**
+
+    
+    * `message: Union[str, Message, MessageSegment]`: 消息内容
+
+
+
+### _async classmethod_ `pause(prompt=None)`
+
+
+* **说明**
+
+    发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续下一个处理函数
+
+
+
+* **参数**
+
+    
+    * `prompt: Union[str, Message, MessageSegment]`: 消息内容
+
+
+
+### _async classmethod_ `reject(prompt=None)`
+
+
+* **说明**
+
+    发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后重新运行当前处理函数
+
+
+
+* **参数**
+
+    
+    * `prompt: Union[str, Message, MessageSegment]`: 消息内容
+
+
+
+## _class_ `MatcherGroup`
+
+基类：`object`
+
+事件响应器组合，统一管理。用法同 `Matcher`
+
+
+### `__init__(type_='', rule=None, permission=None, handlers=None, temp=False, priority=1, block=False, *, module=None, default_state=None, expire_time=None)`
+
+
+* **说明**
+
+    创建一个事件响应器组合，参数为默认值，与 `Matcher.new` 一致
+
+
+
+### `matchers`
+
+
+* **类型**
+
+    `List[Type[Matcher]]`
+
+
+
+* **说明**
+
+    组内事件响应器列表
+
+
+
+### `new(type_='', rule=None, permission=None, handlers=None, temp=False, priority=1, block=False, *, module=None, default_state=None, expire_time=None)`
+
+
+* **说明**
+
+    在组中创建一个新的事件响应器，参数留空则使用组合默认值
+
+
+:::danger 警告
+如果使用 handlers 参数覆盖组合默认值则该事件响应器不会随组合一起添加新的事件处理函数
+:::

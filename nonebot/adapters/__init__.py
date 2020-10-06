@@ -85,12 +85,15 @@ class BaseBot(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def send(self, *args, **kwargs):
+    async def send(self, event: "BaseEvent",
+                   message: Union[str, "BaseMessage",
+                                  "BaseMessageSegment"], **kwargs):
         """
         :说明:
           调用机器人基础发送消息接口
         :参数:
-          * ``*args``
+          * ``event: Event``: 上报事件
+          * ``message: Union[str, Message, MessageSegment]``: 要发送的消息
           * ``**kwargs``
         """
         raise NotImplementedError

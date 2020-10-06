@@ -113,7 +113,7 @@ await bot.send_msg(message="hello world")
 ```
 
 
-### _abstract async_ `send(*args, **kwargs)`
+### _abstract async_ `send(event, message, **kwargs)`
 
 
 * **说明**
@@ -125,7 +125,10 @@ await bot.send_msg(message="hello world")
 * **参数**
 
     
-    * `*args`
+    * `event: Event`: 上报事件
+
+
+    * `message: Union[str, Message, MessageSegment]`: 要发送的消息
 
 
     * `**kwargs`

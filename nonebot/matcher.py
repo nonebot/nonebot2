@@ -196,7 +196,7 @@ class Matcher(metaclass=MatcherMeta):
     def args_parser(cls, func: ArgsParser) -> ArgsParser:
         """
         :说明:
-          用于装饰一个函数来更改当前事件响应器的默认参数解析函数
+          装饰一个函数来更改当前事件响应器的默认参数解析函数
         :参数:
           * ``func: ArgsParser``: 参数解析函数
         """
@@ -205,7 +205,12 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def handle(cls) -> Callable[[Handler], Handler]:
-        """直接处理消息事件"""
+        """
+        :说明:
+          装饰一个函数来向事件响应器直接添加一个处理函数
+        :参数:
+          * 无
+        """
 
         def _decorator(func: Handler) -> Handler:
             cls.handlers.append(func)
@@ -215,7 +220,12 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def receive(cls) -> Callable[[Handler], Handler]:
-        """接收一条新消息并处理"""
+        """
+        :说明:
+          装饰一个函数来指示 NoneBot 在接收用户新的一条消息后继续运行该函数
+        :参数:
+          * 无
+        """
 
         async def _receive(bot: Bot, event: Event, state: dict) -> NoReturn:
             raise PausedException
@@ -236,9 +246,17 @@ class Matcher(metaclass=MatcherMeta):
     def got(
         cls,
         key: str,
-        prompt: Optional[str] = None,
+        prompt: Optional[Union[str, Message, MessageSegment]] = None,
         args_parser: Optional[ArgsParser] = None
     ) -> Callable[[Handler], Handler]:
+        """
+        :说明:
+          装饰一个函数来指示 NoneBot 当要获取的 ``key`` 不存在时接收用户新的一条消息并经过 ``ArgsParser`` 处理后再运行该函数，如果 ``key`` 已存在则直接继续运行
+        :参数:
+          * ``key: str``: 参数名
+          * ``prompt: Optional[Union[str, Message, MessageSegment]]``: 在参数不存在时向用户发送的消息
+          * ``args_parser: Optional[ArgsParser]``: 可选参数解析函数，空则使用默认解析函数
+        """
 
         async def _key_getter(bot: Bot, event: Event, state: dict):
             state["_current_key"] = key
@@ -281,6 +299,12 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def send(cls, message: Union[str, Message, MessageSegment]):
+        """
+        :说明:
+          发送一条消息给当前交互用户
+        :参数:
+          * ``message: Union[str, Message, MessageSegment]``: 消息内容
+        """
         bot = current_bot.get()
         event = current_event.get()
         await bot.send(event=event, message=message)
@@ -288,12 +312,18 @@ class Matcher(metaclass=MatcherMeta):
     @classmethod
     async def finish(
         cls,
-        prompt: Optional[Union[str, Message,
-                               MessageSegment]] = None) -> NoReturn:
+        message: Optional[Union[str, Message,
+                                MessageSegment]] = None) -> NoReturn:
+        """
+        :说明:
+          发送一条消息给当前交互用户并结束当前事件响应器
+        :参数:
+          * ``message: Union[str, Message, MessageSegment]``: 消息内容
+        """
         bot = current_bot.get()
         event = current_event.get()
-        if prompt:
-            await bot.send(event=event, message=prompt)
+        if message:
+            await bot.send(event=event, message=message)
         raise FinishedException
 
     @classmethod
@@ -301,6 +331,12 @@ class Matcher(metaclass=MatcherMeta):
         cls,
         prompt: Optional[Union[str, Message,
                                MessageSegment]] = None) -> NoReturn:
+        """
+        :说明:
+          发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续下一个处理函数
+        :参数:
+          * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
+        """
         bot = current_bot.get()
         event = current_event.get()
         if prompt:
@@ -312,6 +348,12 @@ class Matcher(metaclass=MatcherMeta):
         cls,
         prompt: Optional[Union[str, Message,
                                MessageSegment]] = None) -> NoReturn:
+        """
+        :说明:
+          发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后重新运行当前处理函数
+        :参数:
+          * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
+        """
         bot = current_bot.get()
         event = current_event.get()
         if prompt:
@@ -369,11 +411,12 @@ class Matcher(metaclass=MatcherMeta):
 
 
 class MatcherGroup:
+    """事件响应器组合，统一管理。用法同 ``Matcher``"""
 
     def __init__(self,
                  type_: str = "",
-                 rule: Rule = Rule(),
-                 permission: Permission = Permission(),
+                 rule: Optional[Rule] = None,
+                 permission: Optional[Permission] = None,
                  handlers: Optional[list] = None,
                  temp: bool = False,
                  priority: int = 1,
@@ -382,11 +425,19 @@ class MatcherGroup:
                  module: Optional[str] = None,
                  default_state: Optional[dict] = None,
                  expire_time: Optional[datetime] = None):
+        """
+        :说明:
+          创建一个事件响应器组合，参数为默认值，与 ``Matcher.new`` 一致
+        """
         self.matchers: List[Type[Matcher]] = []
+        """
+        :类型: ``List[Type[Matcher]]``
+        :说明: 组内事件响应器列表
+        """
 
         self.type = type_
-        self.rule = rule
-        self.permission = permission
+        self.rule = rule or Rule()
+        self.permission = permission or Permission()
         self.handlers = handlers
         self.temp = temp
         self.priority = priority
@@ -408,8 +459,8 @@ class MatcherGroup:
 
     def new(self,
             type_: str = "",
-            rule: Rule = Rule(),
-            permission: Permission = Permission(),
+            rule: Optional[Rule] = None,
+            permission: Optional[Permission] = None,
             handlers: Optional[list] = None,
             temp: bool = False,
             priority: int = 1,
@@ -418,6 +469,14 @@ class MatcherGroup:
             module: Optional[str] = None,
             default_state: Optional[dict] = None,
             expire_time: Optional[datetime] = None) -> Type[Matcher]:
+        """
+        :说明:
+          在组中创建一个新的事件响应器，参数留空则使用组合默认值
+
+        \:\:\:danger 警告
+        如果使用 handlers 参数覆盖组合默认值则该事件响应器不会随组合一起添加新的事件处理函数
+        \:\:\:
+        """
         matcher = Matcher.new(type_=type_ or self.type,
                               rule=self.rule & rule,
                               permission=permission or self.permission,
@@ -438,7 +497,6 @@ class MatcherGroup:
         return func
 
     def handle(self) -> Callable[[Handler], Handler]:
-        """直接处理消息事件"""
 
         def _decorator(func: Handler) -> Handler:
             self.handlers.append(func)
@@ -447,7 +505,6 @@ class MatcherGroup:
         return _decorator
 
     def receive(self) -> Callable[[Handler], Handler]:
-        """接收一条新消息并处理"""
 
         async def _receive(bot: Bot, event: Event, state: dict) -> NoReturn:
             raise PausedException
@@ -510,14 +567,19 @@ class MatcherGroup:
 
         return _decorator
 
-    async def finish(
-        self,
-        prompt: Optional[Union[str, Message,
-                               MessageSegment]] = None) -> NoReturn:
+    async def send(self, message: Union[str, Message, MessageSegment]):
         bot = current_bot.get()
         event = current_event.get()
-        if prompt:
-            await bot.send(event=event, message=prompt)
+        await bot.send(event=event, message=message)
+
+    async def finish(
+        self,
+        message: Optional[Union[str, Message,
+                                MessageSegment]] = None) -> NoReturn:
+        bot = current_bot.get()
+        event = current_event.get()
+        if message:
+            await bot.send(event=event, message=message)
         raise FinishedException
 
     async def pause(
