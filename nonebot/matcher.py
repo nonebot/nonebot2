@@ -280,12 +280,18 @@ class Matcher(metaclass=MatcherMeta):
         return _decorator
 
     @classmethod
+    async def send(cls, message: Union[str, Message, MessageSegment]):
+        bot = current_bot.get()
+        event = current_event.get()
+        await bot.send(event=event, message=message)
+
+    @classmethod
     async def finish(
         cls,
         prompt: Optional[Union[str, Message,
                                MessageSegment]] = None) -> NoReturn:
-        bot: Bot = current_bot.get()
-        event: Event = current_event.get()
+        bot = current_bot.get()
+        event = current_event.get()
         if prompt:
             await bot.send(event=event, message=prompt)
         raise FinishedException
@@ -295,8 +301,8 @@ class Matcher(metaclass=MatcherMeta):
         cls,
         prompt: Optional[Union[str, Message,
                                MessageSegment]] = None) -> NoReturn:
-        bot: Bot = current_bot.get()
-        event: Event = current_event.get()
+        bot = current_bot.get()
+        event = current_event.get()
         if prompt:
             await bot.send(event=event, message=prompt)
         raise PausedException
@@ -306,8 +312,8 @@ class Matcher(metaclass=MatcherMeta):
         cls,
         prompt: Optional[Union[str, Message,
                                MessageSegment]] = None) -> NoReturn:
-        bot: Bot = current_bot.get()
-        event: Event = current_event.get()
+        bot = current_bot.get()
+        event = current_event.get()
         if prompt:
             await bot.send(event=event, message=prompt)
         raise RejectedException
@@ -508,8 +514,8 @@ class MatcherGroup:
         self,
         prompt: Optional[Union[str, Message,
                                MessageSegment]] = None) -> NoReturn:
-        bot: Bot = current_bot.get()
-        event: Event = current_event.get()
+        bot = current_bot.get()
+        event = current_event.get()
         if prompt:
             await bot.send(event=event, message=prompt)
         raise FinishedException
@@ -518,8 +524,8 @@ class MatcherGroup:
         self,
         prompt: Optional[Union[str, Message,
                                MessageSegment]] = None) -> NoReturn:
-        bot: Bot = current_bot.get()
-        event: Event = current_event.get()
+        bot = current_bot.get()
+        event = current_event.get()
         if prompt:
             await bot.send(event=event, message=prompt)
         raise PausedException
@@ -528,8 +534,8 @@ class MatcherGroup:
         self,
         prompt: Optional[Union[str, Message,
                                MessageSegment]] = None) -> NoReturn:
-        bot: Bot = current_bot.get()
-        event: Event = current_event.get()
+        bot = current_bot.get()
+        event = current_event.get()
         if prompt:
             await bot.send(event=event, message=prompt)
         raise RejectedException
