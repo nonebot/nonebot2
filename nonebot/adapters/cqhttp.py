@@ -182,13 +182,13 @@ def _check_nickname(bot: "Bot", event: "Event"):
 
     first_text = first_msg_seg.data["text"]
 
-    if bot.config.NICKNAME:
+    if bot.config.nickname:
         # check if the user is calling me with my nickname
-        if isinstance(bot.config.NICKNAME, str) or \
-                not isinstance(bot.config.NICKNAME, Iterable):
-            nicknames = (bot.config.NICKNAME,)
+        if isinstance(bot.config.nickname, str) or \
+                not isinstance(bot.config.nickname, Iterable):
+            nicknames = (bot.config.nickname,)
         else:
-            nicknames = filter(lambda n: n, bot.config.NICKNAME)
+            nicknames = filter(lambda n: n, bot.config.nickname)
         nickname_regex = "|".join(nicknames)
         m = re.search(rf"^({nickname_regex})([\s,，]*|$)", first_text,
                       re.IGNORECASE)
