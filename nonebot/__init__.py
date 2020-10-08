@@ -1,5 +1,27 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+快捷导入
+========
+
+为方便使用，``nonebot`` 模块从子模块导入了部分内容
+
+- ``on_message`` => ``nonebot.plugin.on_message``
+- ``on_notice`` => ``nonebot.plugin.on_notice``
+- ``on_request`` => ``nonebot.plugin.on_request``
+- ``on_metaevent`` => ``nonebot.plugin.on_metaevent``
+- ``on_startswith`` => ``nonebot.plugin.on_startswith``
+- ``on_endswith`` => ``nonebot.plugin.on_endswith``
+- ``on_command`` => ``nonebot.plugin.on_command``
+- ``on_regex`` => ``nonebot.plugin.on_regex``
+- ``on_regex`` => ``nonebot.plugin.on_regex``
+- ``on_regex`` => ``nonebot.plugin.on_regex``
+- ``CommandGroup`` => ``nonebot.plugin.CommandGroup``
+- ``load_plugin`` => ``nonebot.plugin.load_plugin``
+- ``load_plugins`` => ``nonebot.plugin.load_plugins``
+- ``load_builtin_plugins`` => ``nonebot.plugin.load_builtin_plugins``
+- ``get_loaded_plugins`` => ``nonebot.plugin.get_loaded_plugins``
+"""
 
 import importlib
 from nonebot.typing import Bot, Dict, Type, Union, Driver, Optional, NoReturn
