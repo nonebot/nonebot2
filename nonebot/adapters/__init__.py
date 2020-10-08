@@ -285,6 +285,9 @@ class BaseMessageSegment(abc.ABC):
     def __getitem__(self, key):
         return getattr(self, key)
 
+    def __setitem__(self, key, value):
+        return setattr(self, key, value)
+
     @classmethod
     @abc.abstractmethod
     def text(cls, text: str) -> "BaseMessageSegment":
