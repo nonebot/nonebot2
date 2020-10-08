@@ -282,6 +282,9 @@ class BaseMessageSegment(abc.ABC):
     def __add__(self, other):
         raise NotImplementedError
 
+    def __getitem__(self, key):
+        return getattr(self, key)
+
     @classmethod
     @abc.abstractmethod
     def text(cls, text: str) -> "BaseMessageSegment":
