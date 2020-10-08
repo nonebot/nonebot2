@@ -74,7 +74,7 @@ async def handle_event(bot: Bot, event: Event):
     elif event.type == "request":
         log_msg += f"Request {event.raw_event}"
     elif event.type == "meta_event":
-        log_msg += f"MetaEvent {event.raw_event}"
+        log_msg += f"MetaEvent {event.detail_type}"
     logger.opt(colors=True).info(log_msg)
 
     coros = []
