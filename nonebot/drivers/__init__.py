@@ -1,5 +1,11 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+后端驱动适配基类
+===============
+
+各驱动请继承以下基类
+"""
 
 import abc
 
@@ -9,7 +15,15 @@ from nonebot.typing import Bot, Dict, Type, Union, Optional, Callable
 
 
 class BaseDriver(abc.ABC):
+    """
+    Driver 基类。将后端框架封装，以满足适配器使用。
+    """
+
     _adapters: Dict[str, Type[Bot]] = {}
+    """
+    :类型: ``Dict[str, Type[Bot]]``
+    :说明: 已注册的适配器列表
+    """
 
     @abc.abstractmethod
     def __init__(self, env: Env, config: Config):
