@@ -194,10 +194,10 @@ SUPER_USERS=[12345789]
 ### `nickname`
 
 
-* 类型: `Union[str, Set[str]]`
+* 类型: `Set[str]`
 
 
-* 默认值: `""`
+* 默认值: `set()`
 
 
 * 说明:

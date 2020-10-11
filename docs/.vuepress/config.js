@@ -125,6 +125,14 @@ module.exports = context => ({
                   path: "exception"
                 },
                 {
+                  title: "nonebot.drivers 模块",
+                  path: "drivers/"
+                },
+                {
+                  title: "nonebot.drivers.fastapi 模块",
+                  path: "drivers/fastapi"
+                },
+                {
                   title: "nonebot.adapters 模块",
                   path: "adapters/"
                 },
