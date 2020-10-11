@@ -41,9 +41,9 @@ module.exports = context => ({
   theme: "titanium",
   themeConfig: {
     logo: "/logo.png",
-    repo: "nonebot/nonebot",
+    repo: "nonebot/nonebot2",
     docsDir: "docs",
-    docsBranch: "dev2",
+    docsBranch: "dev",
     docsDirVersioned: "archive",
     docsDirPages: "pages",
     editLinks: true,
