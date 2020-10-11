@@ -89,20 +89,12 @@ module.exports = context => ({
                   path: "nonebot"
                 },
                 {
-                  title: "nonebot.typing 模块",
-                  path: "typing"
-                },
-                {
                   title: "nonebot.config 模块",
                   path: "config"
                 },
                 {
-                  title: "nonebot.sched 模块",
-                  path: "sched"
-                },
-                {
-                  title: "nonebot.log 模块",
-                  path: "log"
+                  title: "nonebot.matcher 模块",
+                  path: "matcher"
                 },
                 {
                   title: "nonebot.rule 模块",
@@ -113,12 +105,32 @@ module.exports = context => ({
                   path: "permission"
                 },
                 {
+                  title: "nonebot.sched 模块",
+                  path: "sched"
+                },
+                {
+                  title: "nonebot.log 模块",
+                  path: "log"
+                },
+                {
                   title: "nonebot.utils 模块",
                   path: "utils"
                 },
                 {
+                  title: "nonebot.typing 模块",
+                  path: "typing"
+                },
+                {
                   title: "nonebot.exception 模块",
                   path: "exception"
+                },
+                {
+                  title: "nonebot.drivers 模块",
+                  path: "drivers/"
+                },
+                {
+                  title: "nonebot.drivers.fastapi 模块",
+                  path: "drivers/fastapi"
                 },
                 {
                   title: "nonebot.adapters 模块",

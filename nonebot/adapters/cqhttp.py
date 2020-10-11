@@ -182,13 +182,13 @@ def _check_nickname(bot: "Bot", event: "Event"):
 
     first_text = first_msg_seg.data["text"]
 
-    if bot.config.NICKNAME:
+    if bot.config.nickname:
         # check if the user is calling me with my nickname
-        if isinstance(bot.config.NICKNAME, str) or \
-                not isinstance(bot.config.NICKNAME, Iterable):
-            nicknames = (bot.config.NICKNAME,)
+        if isinstance(bot.config.nickname, str) or \
+                not isinstance(bot.config.nickname, Iterable):
+            nicknames = (bot.config.nickname,)
         else:
-            nicknames = filter(lambda n: n, bot.config.NICKNAME)
+            nicknames = filter(lambda n: n, bot.config.nickname)
         nickname_regex = "|".join(nicknames)
         m = re.search(rf"^({nickname_regex})([\s,，]*|$)", first_text,
                       re.IGNORECASE)
@@ -265,7 +265,7 @@ class Bot(BaseBot):
                  config: Config,
                  self_id: str,
                  *,
-                 websocket: WebSocket = None):
+                 websocket: Optional[WebSocket] = None):
         if connection_type not in ["http", "websocket"]:
             raise ValueError("Unsupported connection type")
 
@@ -521,7 +521,7 @@ class Event(BaseEvent):
         """
         return self._raw_event.get("sub_type")
 
-    @type.setter
+    @sub_type.setter
     @overrides(BaseEvent)
     def sub_type(self, value) -> None:
         self._raw_event["sub_type"] = value
@@ -637,9 +637,9 @@ class Event(BaseEvent):
 class MessageSegment(BaseMessageSegment):
 
     @overrides(BaseMessageSegment)
-    def __init__(self, type: str, data: Dict[str, Union[str, list]]) -> None:
+    def __init__(self, type: str, data: Dict[str, Any]) -> None:
         if type == "text":
-            data["text"] = unescape(data["text"])  # type: ignore
+            data["text"] = unescape(data["text"])
         super().__init__(type=type, data=data)
 
     @overrides(BaseMessageSegment)
