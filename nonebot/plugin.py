@@ -27,7 +27,8 @@ class Plugin(object):
     matcher: Set[Type[Matcher]]
 
 
-def on(rule: Optional[Union[Rule, RuleChecker]] = None,
+def on(type: str = "",
+       rule: Optional[Union[Rule, RuleChecker]] = None,
        permission: Optional[Permission] = None,
        *,
        handlers: Optional[List[Handler]] = None,
@@ -35,7 +36,7 @@ def on(rule: Optional[Union[Rule, RuleChecker]] = None,
        priority: int = 1,
        block: bool = False,
        state: Optional[dict] = None) -> Type[Matcher]:
-    matcher = Matcher.new("",
+    matcher = Matcher.new(type,
                           Rule() & rule,
                           permission or Permission(),
                           temp=temp,
