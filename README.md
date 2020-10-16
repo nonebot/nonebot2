@@ -3,8 +3,11 @@
 </p>
 
 <div align="center">
-  <h1>NoneBot</h1>
-  <em>✨ Python 异步机器人框架 ✨</em>
+
+# NoneBot
+
+_✨ Python 异步机器人框架 ✨_
+
 </div>
 
 <p align="center">
