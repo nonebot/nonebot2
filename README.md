@@ -2,13 +2,10 @@
   <a href="https://v2.nonebot.dev/"><img src="https://raw.githubusercontent.com/nonebot/nonebot2/master/docs/.vuepress/public/logo.png" width="200" height="200" alt="nonebot"></a>
 </p>
 
-<div align="center">
-
-# NoneBot
-
-_✨ Python 异步机器人框架 ✨_
-
-</div>
+<p align="center">
+  <h1>NoneBot</h1>
+  <em>✨ Python 异步机器人框架 ✨</em>
+</p>
 
 <p align="center">
   <a href="https://raw.githubusercontent.com/nonebot/nonebot2/master/LICENSE">
