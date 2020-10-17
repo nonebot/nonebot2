@@ -1,10 +1,10 @@
 const path = require("path");
 
-module.exports = context => ({
+module.exports = (context) => ({
   title: "NoneBot",
   description: "基于 酷Q 的 Python 异步 QQ 机器人框架",
   markdown: {
-    lineNumbers: true
+    lineNumbers: true,
   },
   /**
    * Extra tags to be injected to the page HTML `<head>`
@@ -19,26 +19,26 @@ module.exports = context => ({
     ["meta", { name: "apple-mobile-web-app-capable", content: "yes" }],
     [
       "meta",
-      { name: "apple-mobile-web-app-status-bar-style", content: "black" }
+      { name: "apple-mobile-web-app-status-bar-style", content: "black" },
     ],
     [
       "link",
       {
         rel: "stylesheet",
         href:
-          "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"
-      }
-    ]
+          "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css",
+      },
+    ],
   ],
   locales: {
     "/": {
       lang: "zh-CN",
       title: "NoneBot",
-      description: "基于 酷Q 的 Python 异步 QQ 机器人框架"
-    }
+      description: "基于 酷Q 的 Python 异步 QQ 机器人框架",
+    },
   },
 
-  theme: "titanium",
+  theme: "nonebot",
   themeConfig: {
     logo: "/logo.png",
     repo: "nonebot/nonebot2",
@@ -58,7 +58,7 @@ module.exports = context => ({
         nav: [
           { text: "主页", link: "/" },
           { text: "指南", link: "/guide/" },
-          { text: "API", link: "/api/" }
+          { text: "API", link: "/api/" },
         ],
         sidebarDepth: 2,
         sidebar: {
@@ -74,9 +74,9 @@ module.exports = context => ({
                 "getting-started",
                 "creating-a-project",
                 "basic-configuration",
-                "writing-a-plugin"
-              ]
-            }
+                "writing-a-plugin",
+              ],
+            },
           ],
           "/api/": [
             {
@@ -86,66 +86,66 @@ module.exports = context => ({
               children: [
                 {
                   title: "nonebot 模块",
-                  path: "nonebot"
+                  path: "nonebot",
                 },
                 {
                   title: "nonebot.config 模块",
-                  path: "config"
+                  path: "config",
                 },
                 {
                   title: "nonebot.matcher 模块",
-                  path: "matcher"
+                  path: "matcher",
                 },
                 {
                   title: "nonebot.rule 模块",
-                  path: "rule"
+                  path: "rule",
                 },
                 {
                   title: "nonebot.permission 模块",
-                  path: "permission"
+                  path: "permission",
                 },
                 {
                   title: "nonebot.sched 模块",
-                  path: "sched"
+                  path: "sched",
                 },
                 {
                   title: "nonebot.log 模块",
-                  path: "log"
+                  path: "log",
                 },
                 {
                   title: "nonebot.utils 模块",
-                  path: "utils"
+                  path: "utils",
                 },
                 {
                   title: "nonebot.typing 模块",
-                  path: "typing"
+                  path: "typing",
                 },
                 {
                   title: "nonebot.exception 模块",
-                  path: "exception"
+                  path: "exception",
                 },
                 {
                   title: "nonebot.drivers 模块",
-                  path: "drivers/"
+                  path: "drivers/",
                 },
                 {
                   title: "nonebot.drivers.fastapi 模块",
-                  path: "drivers/fastapi"
+                  path: "drivers/fastapi",
                 },
                 {
                   title: "nonebot.adapters 模块",
-                  path: "adapters/"
+                  path: "adapters/",
                 },
                 {
                   title: "nonebot.adapters.cqhttp 模块",
-                  path: "adapters/cqhttp"
-                }
-              ]
-            }
-          ]
-        }
-      }
-    }
+                  path: "adapters/cqhttp",
+                },
+              ],
+            },
+          ],
+        },
+      },
+    },
   },
 
   plugins: [
@@ -158,16 +158,16 @@ module.exports = context => ({
         pagesSourceDir: path.resolve(context.sourceDir, "..", "pages"),
         onNewVersion(version, versionDestPath) {
           console.log(`Created version ${version} in ${versionDestPath}`);
-        }
-      }
+        },
+      },
     ],
     [
       "container",
       {
         type: "vue",
         before: '<pre class="vue-container"><code>',
-        after: "</code></pre>"
-      }
-    ]
-  ]
+        after: "</code></pre>",
+      },
+    ],
+  ],
 });
