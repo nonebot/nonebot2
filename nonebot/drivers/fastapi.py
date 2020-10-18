@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
+"""
+FastAPI 驱动适配
+================
+
+后端使用方法请参考: `FastAPI 文档`_
+
+.. _FastAPI 文档:
+    https://fastapi.tiangolo.com/
+"""
 
 import hmac
 import json
@@ -31,6 +40,7 @@ def get_auth_bearer(access_token: Optional[str] = Header(
 
 
 class Driver(BaseDriver):
+    """FastAPI 驱动框架"""
 
     def __init__(self, env: Env, config: Config):
         super().__init__(env, config)
@@ -50,29 +60,35 @@ class Driver(BaseDriver):
     @property
     @overrides(BaseDriver)
     def type(self) -> str:
+        """驱动名称: ``fastapi``"""
         return "fastapi"
 
     @property
     @overrides(BaseDriver)
     def server_app(self) -> FastAPI:
+        """``FastAPI APP`` 对象"""
         return self._server_app
 
     @property
     @overrides(BaseDriver)
     def asgi(self):
+        """``FastAPI APP`` 对象"""
         return self._server_app
 
     @property
     @overrides(BaseDriver)
     def logger(self) -> logging.Logger:
+        """fastapi 使用的 logger"""
         return logging.getLogger("fastapi")
 
     @overrides(BaseDriver)
     def on_startup(self, func: Callable) -> Callable:
+        """参考文档: `Events <https://fastapi.tiangolo.com/advanced/events/#startup-event>`_"""
         return self.server_app.on_event("startup")(func)
 
     @overrides(BaseDriver)
     def on_shutdown(self, func: Callable) -> Callable:
+        """参考文档: `Events <https://fastapi.tiangolo.com/advanced/events/#startup-event>`_"""
         return self.server_app.on_event("shutdown")(func)
 
     @overrides(BaseDriver)
@@ -82,6 +98,7 @@ class Driver(BaseDriver):
             *,
             app: Optional[str] = None,
             **kwargs):
+        """使用 ``uvicorn`` 启动 FastAPI"""
         LOGGING_CONFIG = {
             "version": 1,
             "disable_existing_loggers": False,

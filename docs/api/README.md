@@ -10,6 +10,9 @@
     * [nonebot.config](config.html)
 
 
+    * [nonebot.plugin](plugin.html)
+
+
     * [nonebot.matcher](matcher.html)
 
 

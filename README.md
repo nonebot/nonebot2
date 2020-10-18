@@ -1,18 +1,45 @@
-<div align=center>
-  <img src="./docs/.vuepress/public/logo.png" width="200" height="200">
+<p align="center">
+  <a href="https://v2.nonebot.dev/"><img src="https://raw.githubusercontent.com/nonebot/nonebot2/master/docs/.vuepress/public/logo.png" width="200" height="200" alt="nonebot"></a>
+</p>
+
+<div align="center">
 
 # NoneBot
 
-[![License](https://img.shields.io/github/license/nonebot/nonebot2.svg)](LICENSE)
-[![PyPI](https://img.shields.io/pypi/v/nonebot2.svg)](https://pypi.python.org/pypi/nonebot2)
-![Python Version](https://img.shields.io/badge/python-3.7+-blue.svg)
-![CQHTTP Version](https://img.shields.io/badge/cqhttp-11+-black.svg)
-[![QQ 群](https://img.shields.io/badge/qq%E7%BE%A4-768887710-orange.svg)](https://jq.qq.com/?_wv=1027&k=5OFifDh)
-[![Telegram](https://img.shields.io/badge/telegram-chat-blue.svg)](https://t.me/cqhttp)
-[![QQ 版本发布群](https://img.shields.io/badge/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E7%BE%A4-218529254-green.svg)](https://jq.qq.com/?_wv=1027&k=5Nl0zhE)
-[![Telegram 版本发布频道](https://img.shields.io/badge/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E9%A2%91%E9%81%93-join-green.svg)](https://t.me/cqhttp_release)
+_✨ Python 异步机器人框架 ✨_
 
 </div>
+
+<p align="center">
+  <a href="https://raw.githubusercontent.com/nonebot/nonebot2/master/LICENSE">
+    <img src="https://img.shields.io/github/license/nonebot/nonebot2.svg" alt="license">
+  </a>
+  <a href="https://pypi.python.org/pypi/nonebot2">
+    <img src="https://img.shields.io/pypi/v/nonebot2.svg" alt="pypi">
+  </a>
+  <img src="https://img.shields.io/badge/python-3.7+-blue.svg" alt="python">
+  <img src="https://img.shields.io/badge/cqhttp-11+-black.svg" alt="cqhttp"><br />
+  <a href="https://jq.qq.com/?_wv=1027&k=5OFifDh">
+    <img src="https://img.shields.io/badge/qq%E7%BE%A4-768887710-orange.svg" alt="QQ Chat">
+  </a>
+  <a href="https://t.me/cqhttp">
+    <img src="https://img.shields.io/badge/telegram-chat-blue.svg" alt="Telegram Chat">
+  </a>
+  <a href="https://jq.qq.com/?_wv=1027&k=5Nl0zhE">
+    <img src="https://img.shields.io/badge/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E7%BE%A4-218529254-green.svg" alt="QQ Release">
+  </a>
+  <a href="https://t.me/cqhttp_release">
+    <img src="https://img.shields.io/badge/版本发布频道-join-green.svg" alt="Telegram Release">
+  </a>
+</p>
+
+<p align="center">
+  <a href="https://v2.nonebot.dev/">文档</a>
+  ·
+  <a href="https://v2.nonebot.dev/guide/installation.html">安装</a>
+  ·
+  <a href="https://v2.nonebot.dev/guide/getting-started.html">开始使用</a>
+</p>
 
 ## 简介
 
@@ -25,6 +52,11 @@ NoneBot2 是一个可扩展的 Python 异步机器人框架，它会对机器人
 得益于 Python 的 [asyncio](https://docs.python.org/3/library/asyncio.html) 机制，NoneBot 处理消息的吞吐量有了很大的保障，再配合 WebSocket 通信方式（也是最建议的通信方式），NoneBot 的性能可以达到 HTTP 通信方式的两倍以上，相较于传统同步 I/O 的 HTTP 通信，更是有质的飞跃。
 
 需要注意的是，NoneBot 仅支持 Python 3.7+ 及 CQHTTP(OneBot) 插件 v11+。
+
+此外，NoneBot2 还有可配套使用的额外脚手架/框架：
+
+- [NB-CLI](https://github.com/nonebot/nb-cli)
+- [NoneBot-Test](https://github.com/nonebot/nonebot-test)
 
 ## 文档
 

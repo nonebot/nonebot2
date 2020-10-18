@@ -18,7 +18,8 @@ class Plugin(object):
     matcher: Set[Type[Matcher]]
 
 
-def on(rule: Optional[Union[Rule, RuleChecker]] = ...,
+def on(type: str = ...,
+       rule: Optional[Union[Rule, RuleChecker]] = ...,
        permission: Optional[Permission] = ...,
        *,
        handlers: Optional[List[Handler]] = ...,

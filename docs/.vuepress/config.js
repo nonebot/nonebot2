@@ -38,12 +38,12 @@ module.exports = context => ({
     }
   },
 
-  theme: "titanium",
+  theme: "nonebot",
   themeConfig: {
     logo: "/logo.png",
-    repo: "nonebot/nonebot",
+    repo: "nonebot/nonebot2",
     docsDir: "docs",
-    docsBranch: "dev2",
+    docsBranch: "dev",
     docsDirVersioned: "archive",
     docsDirPages: "pages",
     editLinks: true,
@@ -91,6 +91,10 @@ module.exports = context => ({
                 {
                   title: "nonebot.config 模块",
                   path: "config"
+                },
+                {
+                  title: "nonebot.plugin 模块",
+                  path: "plugin"
                 },
                 {
                   title: "nonebot.matcher 模块",

@@ -186,6 +186,10 @@ Rule(async_function, run_sync(sync_function))
     * `flags: Union[int, re.RegexFlag]`: 正则标志
 
 
+:::tip 提示
+正则表达式匹配使用 search 而非 match，如需从头匹配请使用 `r"^xxx"` 来确保匹配开头
+:::
+
 
 ## `to_me()`
 
