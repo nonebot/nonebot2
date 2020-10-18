@@ -93,6 +93,10 @@ module.exports = context => ({
                   path: "config"
                 },
                 {
+                  title: "nonebot.plugin 模块",
+                  path: "plugin"
+                },
+                {
                   title: "nonebot.matcher 模块",
                   path: "matcher"
                 },
