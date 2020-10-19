@@ -496,6 +496,7 @@ class MatcherGroup:
         return matcher
 
     def args_parser(self, func: ArgsParser) -> ArgsParser:
+        self._default_parser = func
         for matcher in self.matchers:
             matcher.args_parser(func)
         return func
