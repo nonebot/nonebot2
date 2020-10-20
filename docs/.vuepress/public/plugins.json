@@ -1,0 +1,8 @@
+[
+  {
+    "name": "nonebot-plugin-status",
+    "desc": "通过戳一戳获取服务器状态",
+    "author": "nonebot",
+    "repo": "nonebot/nonebot2"
+  }
+]

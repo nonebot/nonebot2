@@ -79,7 +79,8 @@ module.exports = context => ({
         nav: [
           { text: "主页", link: "/" },
           { text: "指南", link: "/guide/" },
-          { text: "API", link: "/api/" }
+          { text: "API", link: "/api/" },
+          { text: "插件广场", link: "/plugin-store" }
         ],
         sidebarDepth: 2,
         sidebar: {
