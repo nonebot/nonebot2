@@ -570,37 +570,38 @@ class MatcherGroup:
 
         return _decorator
 
-    async def send(self, message: Union[str, Message, MessageSegment]):
+    async def send(self, message: Union[str, Message, MessageSegment],
+                   **kwargs):
         bot = current_bot.get()
         event = current_event.get()
-        await bot.send(event=event, message=message)
+        await bot.send(event=event, message=message, **kwargs)
 
-    async def finish(
-        self,
-        message: Optional[Union[str, Message,
-                                MessageSegment]] = None) -> NoReturn:
+    async def finish(self,
+                     message: Optional[Union[str, Message,
+                                             MessageSegment]] = None,
+                     **kwargs) -> NoReturn:
         bot = current_bot.get()
         event = current_event.get()
         if message:
-            await bot.send(event=event, message=message)
+            await bot.send(event=event, message=message, **kwargs)
         raise FinishedException
 
-    async def pause(
-        self,
-        prompt: Optional[Union[str, Message,
-                               MessageSegment]] = None) -> NoReturn:
+    async def pause(self,
+                    prompt: Optional[Union[str, Message,
+                                           MessageSegment]] = None,
+                    **kwargs) -> NoReturn:
         bot = current_bot.get()
         event = current_event.get()
         if prompt:
-            await bot.send(event=event, message=prompt)
+            await bot.send(event=event, message=prompt, **kwargs)
         raise PausedException
 
-    async def reject(
-        self,
-        prompt: Optional[Union[str, Message,
-                               MessageSegment]] = None) -> NoReturn:
+    async def reject(self,
+                     prompt: Optional[Union[str, Message,
+                                            MessageSegment]] = None,
+                     **kwargs) -> NoReturn:
         bot = current_bot.get()
         event = current_event.get()
         if prompt:
-            await bot.send(event=event, message=prompt)
+            await bot.send(event=event, message=prompt, **kwargs)
         raise RejectedException
