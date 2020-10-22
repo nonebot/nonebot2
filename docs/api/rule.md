@@ -139,7 +139,7 @@ Rule(async_function, run_sync(sync_function))
 
 
 
-## `command(command)`
+## `command(*cmds)`
 
 
 * **说明**
@@ -151,7 +151,7 @@ Rule(async_function, run_sync(sync_function))
 * **参数**
 
     
-    * `command: Tuples[str, ...]`: 命令内容
+    * `*cmds: Union[str, Tuple[str, ...]]`: 命令内容
 
 
 
