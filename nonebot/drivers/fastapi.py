@@ -30,7 +30,7 @@ def get_auth_bearer(access_token: Optional[str] = Header(
     if not access_token:
         return None
     scheme, _, param = access_token.partition(" ")
-    if scheme.lower() != "bearer":
+    if scheme.lower() not in ["bearer", "token"]:
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
                             detail="Not authenticated",
                             headers={"WWW-Authenticate": "Bearer"})
