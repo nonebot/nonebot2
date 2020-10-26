@@ -247,8 +247,12 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     pattern = re.compile(regex, flags)
 
     async def _regex(bot: Bot, event: Event, state: dict) -> bool:
-        return bool(pattern.search(str(event.message)))
-
+        matched_string = pattern.search(str(event.message))
+        if matched_string:
+            state["matched_string"] = matched_string.group()
+            return True
+        else:
+            return False
     return Rule(_regex)
 
 
