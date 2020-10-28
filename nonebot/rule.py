@@ -236,7 +236,7 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     :说明:
       根据正则表达式进行匹配。
       
-      可以通过 ``state["matched"]`` 获取正则表达式匹配成功的文本。
+      可以通过 ``state["_matched"]`` 获取正则表达式匹配成功的文本。
     :参数:
       * ``regex: str``: 正则表达式
       * ``flags: Union[int, re.RegexFlag]``: 正则标志
@@ -251,9 +251,10 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     async def _regex(bot: Bot, event: Event, state: dict) -> bool:
         matched = pattern.search(str(event.message))
         if matched:
-            state["matched"] = matched.group()
+            state["_matched"] = matched.group()
             return True
         else:
+            state["_matched"] = None
             return False
     return Rule(_regex)
 
