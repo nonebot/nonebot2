@@ -4,46 +4,46 @@
 * **模块索引**
 
     
-    * [nonebot](nonebot.html)
+    * [nonebot](nonebot.md)
 
 
-    * [nonebot.config](config.html)
+    * [nonebot.config](config.md)
 
 
-    * [nonebot.plugin](plugin.html)
+    * [nonebot.plugin](plugin.md)
 
 
-    * [nonebot.matcher](matcher.html)
+    * [nonebot.matcher](matcher.md)
 
 
-    * [nonebot.rule](rule.html)
+    * [nonebot.rule](rule.md)
 
 
-    * [nonebot.permission](permission.html)
+    * [nonebot.permission](permission.md)
 
 
-    * [nonebot.sched](sched.html)
+    * [nonebot.sched](sched.md)
 
 
-    * [nonebot.log](log.html)
+    * [nonebot.log](log.md)
 
 
-    * [nonebot.utils](utils.html)
+    * [nonebot.utils](utils.md)
 
 
-    * [nonebot.typing](typing.html)
+    * [nonebot.typing](typing.md)
 
 
-    * [nonebot.exception](exception.html)
+    * [nonebot.exception](exception.md)
 
 
     * [nonebot.drivers](drivers/)
 
 
-    * [nonebot.drivers.fastapi](drivers/fastapi.html)
+    * [nonebot.drivers.fastapi](drivers/fastapi.md)
 
 
     * [nonebot.adapters](adapters/)
 
 
-    * [nonebot.adapters.cqhttp](adapters/cqhttp.html)
+    * [nonebot.adapters.cqhttp](adapters/cqhttp.md)
