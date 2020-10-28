@@ -234,7 +234,9 @@ def command(command: Tuple[str, ...]) -> Rule:
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     """
     :说明:
-      根据正则表达式进行匹配
+      根据正则表达式进行匹配。
+      
+      可以通过 ``state["matched"]`` 获取正则表达式匹配成功的文本。
     :参数:
       * ``regex: str``: 正则表达式
       * ``flags: Union[int, re.RegexFlag]``: 正则标志
@@ -247,9 +249,9 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     pattern = re.compile(regex, flags)
 
     async def _regex(bot: Bot, event: Event, state: dict) -> bool:
-        matched_string = pattern.search(str(event.message))
-        if matched_string:
-            state["matched_string"] = matched_string.group()
+        matched = pattern.search(str(event.message))
+        if matched:
+            state["matched"] = matched.group()
             return True
         else:
             return False
