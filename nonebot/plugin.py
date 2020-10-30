@@ -16,7 +16,7 @@ from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.typing import Handler, RuleChecker
-from nonebot.rule import Rule, startswith, endswith, command, regex
+from nonebot.rule import Rule, startswith, endswith, keyword, command, regex
 from nonebot.typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, ModuleType
 
 plugins: Dict[str, "Plugin"] = {}
@@ -232,8 +232,7 @@ def on_startswith(msg: str,
     :返回:
       - ``Type[Matcher]``
     """
-    return on_message(startswith(msg) & rule, **kwargs) if rule else on_message(
-        startswith(msg), **kwargs)
+    return on_message(startswith(msg) & rule, **kwargs)
 
 
 def on_endswith(msg: str,
@@ -254,8 +253,28 @@ def on_endswith(msg: str,
     :返回:
       - ``Type[Matcher]``
     """
-    return on_message(endswith(msg) & rule, **kwargs) if rule else on_message(
-        startswith(msg), **kwargs)
+    return on_message(endswith(msg) & rule, **kwargs)
+
+
+def on_keyword(keywords: Set[str],
+               rule: Optional[Union[Rule, RuleChecker]] = None,
+               **kwargs) -> Type[Matcher]:
+    """
+    :说明:
+      注册一个消息事件响应器，并且当消息纯文本部分包含关键词时响应。
+    :参数:
+      * ``keywords: Set[str]``: 关键词列表
+      * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+      * ``permission: Optional[Permission]``: 事件响应权限
+      * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+      * ``priority: int``: 事件响应器优先级
+      * ``block: bool``: 是否阻止事件向更低优先级传递
+      * ``state: Optional[dict]``: 默认的 state
+    :返回:
+      - ``Type[Matcher]``
+    """
+    return on_message(keyword(*keywords) & rule, **kwargs)
 
 
 def on_command(cmd: Union[str, Tuple[str, ...]],
@@ -290,9 +309,7 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
     handlers.insert(0, _strip_cmd)
 
     commands = set([cmd]) | (aliases or set())
-    return on_message(command(*commands) & rule, handlers=handlers, **
-                      kwargs) if rule else on_message(
-                          command(*commands), handlers=handlers, **kwargs)
+    return on_message(command(*commands) & rule, handlers=handlers, **kwargs)
 
 
 def on_regex(pattern: str,
@@ -317,9 +334,7 @@ def on_regex(pattern: str,
     :返回:
       - ``Type[Matcher]``
     """
-    return on_message(regex(pattern, flags) &
-                      rule, **kwargs) if rule else on_message(
-                          regex(pattern, flags), **kwargs)
+    return on_message(regex(pattern, flags) & rule, **kwargs)
 
 
 class CommandGroup:
