@@ -394,9 +394,6 @@ sidebarDepth: 0
     * `Type[Matcher]`
 
 
-    * `MatcherGroup`
-
-
 
 ## `on_regex(pattern, flags=0, rule=None, **kwargs)`
 
@@ -508,9 +505,6 @@ sidebarDepth: 0
 
     
     * `Type[Matcher]`
-
-
-    * `MatcherGroup`
 
 
 

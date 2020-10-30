@@ -139,19 +139,21 @@ Rule(async_function, run_sync(sync_function))
 
 
 
-## `command(command)`
+## `command(*cmds)`
 
 
 * **说明**
 
     命令形式匹配，根据配置里提供的 `command_start`, `command_sep` 判断消息是否为命令。
 
+    可以通过 `state["_prefix"]["command"]` 获取匹配成功的命令（例：`("test",)`），通过 `state["_prefix"]["raw_command"]` 获取匹配成功的原始命令文本（例：`"/test"`）。
+
 
 
 * **参数**
 
     
-    * `command: Tuples[str, ...]`: 命令内容
+    * `*cmds: Union[str, Tuple[str, ...]]`: 命令内容
 
 
 

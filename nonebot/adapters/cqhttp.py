@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 CQHTTP (OneBot) v11 协议适配
 ============================

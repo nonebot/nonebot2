@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 规则
 ====
@@ -198,12 +196,14 @@ def keyword(msg: str) -> Rule:
     return Rule(_keyword)
 
 
-def command(command: Tuple[str, ...]) -> Rule:
+def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
     """
     :说明:
       命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
+
+      可以通过 ``state["_prefix"]["command"]`` 获取匹配成功的命令（例：``("test",)``），通过 ``state["_prefix"]["raw_command"]`` 获取匹配成功的原始命令文本（例：``"/test"``）。
     :参数:
-      * ``command: Tuples[str, ...]``: 命令内容
+      * ``*cmds: Union[str, Tuple[str, ...]]``: 命令内容
     :示例:
       使用默认 ``command_start``, ``command_sep`` 配置
 
@@ -218,15 +218,20 @@ def command(command: Tuple[str, ...]) -> Rule:
     config = get_driver().config
     command_start = config.command_start
     command_sep = config.command_sep
-    if len(command) == 1:
-        for start in command_start:
-            TrieRule.add_prefix(f"{start}{command[0]}", command)
-    else:
-        for start, sep in product(command_start, command_sep):
-            TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
+    commands = list(cmds)
+    for index, command in enumerate(commands):
+        if isinstance(command, str):
+            commands[index] = command = (command,)
+
+        if len(command) == 1:
+            for start in command_start:
+                TrieRule.add_prefix(f"{start}{command[0]}", command)
+        else:
+            for start, sep in product(command_start, command_sep):
+                TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
 
     async def _command(bot: Bot, event: Event, state: dict) -> bool:
-        return command == state["_prefix"]["command"]
+        return state["_prefix"]["command"] in commands
 
     return Rule(_command)
 
@@ -234,7 +239,9 @@ def command(command: Tuple[str, ...]) -> Rule:
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     """
     :说明:
-      根据正则表达式进行匹配
+      根据正则表达式进行匹配。
+      
+      可以通过 ``state["_matched"]`` 获取正则表达式匹配成功的文本。
     :参数:
       * ``regex: str``: 正则表达式
       * ``flags: Union[int, re.RegexFlag]``: 正则标志
@@ -247,8 +254,13 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     pattern = re.compile(regex, flags)
 
     async def _regex(bot: Bot, event: Event, state: dict) -> bool:
-        return bool(pattern.search(str(event.message)))
-
+        matched = pattern.search(str(event.message))
+        if matched:
+            state["_matched"] = matched.group()
+            return True
+        else:
+            state["_matched"] = None
+            return False
     return Rule(_regex)
 
 

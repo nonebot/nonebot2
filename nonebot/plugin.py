@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 插件
 ====
@@ -15,9 +13,9 @@ from dataclasses import dataclass
 from importlib._bootstrap import _load
 
 from nonebot.log import logger
+from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.typing import Handler, RuleChecker
-from nonebot.matcher import Matcher, MatcherGroup
 from nonebot.rule import Rule, startswith, endswith, command, regex
 from nonebot.typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, ModuleType
 
@@ -263,7 +261,7 @@ def on_endswith(msg: str,
 def on_command(cmd: Union[str, Tuple[str, ...]],
                rule: Optional[Union[Rule, RuleChecker]] = None,
                aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
-               **kwargs) -> Union[Type[Matcher], MatcherGroup]:
+               **kwargs) -> Type[Matcher]:
     """
     :说明:
       注册一个消息事件响应器，并且当消息以指定命令开头时响应。
@@ -281,10 +279,7 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
       * ``state: Optional[dict]``: 默认的 state
     :返回:
       - ``Type[Matcher]``
-      - ``MatcherGroup``
     """
-    if isinstance(cmd, str):
-        cmd = (cmd,)
 
     async def _strip_cmd(bot, event, state: dict):
         message = event.message
@@ -294,19 +289,10 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
     handlers = kwargs.pop("handlers", [])
     handlers.insert(0, _strip_cmd)
 
-    if aliases:
-        aliases = set(map(lambda x: (x,) if isinstance(x, str) else x, aliases))
-        group = MatcherGroup("message",
-                             Rule() & rule,
-                             handlers=handlers,
-                             **kwargs)
-        for cmd_ in [cmd, *aliases]:
-            _tmp_matchers.add(group.new(rule=command(cmd_)))
-        return group
-    else:
-        return on_message(command(cmd) & rule, handlers=handlers, **
-                          kwargs) if rule else on_message(
-                              command(cmd), handlers=handlers, **kwargs)
+    commands = set([cmd]) | (aliases or set())
+    return on_message(command(*commands) & rule, handlers=handlers, **
+                      kwargs) if rule else on_message(
+                          command(*commands), handlers=handlers, **kwargs)
 
 
 def on_regex(pattern: str,
@@ -359,7 +345,7 @@ class CommandGroup:
         """
 
     def command(self, cmd: Union[str, Tuple[str, ...]],
-                **kwargs) -> Union[Type[Matcher], MatcherGroup]:
+                **kwargs) -> Type[Matcher]:
         """
         :说明:
           注册一个新的命令。
@@ -368,7 +354,6 @@ class CommandGroup:
           * ``**kwargs``: 其他传递给 ``on_command`` 的参数，将会覆盖命令组默认值
         :返回:
           - ``Type[Matcher]``
-          - ``MatcherGroup``
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
