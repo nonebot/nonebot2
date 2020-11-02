@@ -182,16 +182,17 @@ def endswith(msg: str) -> Rule:
     return Rule(_endswith)
 
 
-def keyword(msg: str) -> Rule:
+def keyword(*keywords: str) -> Rule:
     """
     :说明:
       匹配消息关键词
     :参数:
-      * ``msg: str``: 关键词
+      * ``*keywords: str``: 关键词
     """
 
     async def _keyword(bot: Bot, event: Event, state: dict) -> bool:
-        return bool(event.plain_text and msg in event.plain_text)
+        return bool(event.plain_text and
+                    any(keyword in event.plain_text for keyword in keywords))
 
     return Rule(_keyword)
 
@@ -240,7 +241,7 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     """
     :说明:
       根据正则表达式进行匹配。
-      
+
       可以通过 ``state["_matched"]`` 获取正则表达式匹配成功的文本。
     :参数:
       * ``regex: str``: 正则表达式
@@ -261,6 +262,7 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
         else:
             state["_matched"] = None
             return False
+
     return Rule(_regex)
 
 

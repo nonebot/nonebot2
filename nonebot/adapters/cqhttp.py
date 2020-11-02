@@ -633,6 +633,9 @@ class Event(BaseEvent):
 
 
 class MessageSegment(BaseMessageSegment):
+    """
+    CQHTTP 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
+    """
 
     @overrides(BaseMessageSegment)
     def __init__(self, type: str, data: Dict[str, Any]) -> None:
@@ -811,6 +814,9 @@ class MessageSegment(BaseMessageSegment):
 
 
 class Message(BaseMessage):
+    """
+    CQHTTP 协议 Message 适配。
+    """
 
     @staticmethod
     @overrides(BaseMessage)

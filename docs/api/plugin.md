@@ -346,6 +346,50 @@ sidebarDepth: 0
 
 
 
+## `on_keyword(keywords, rule=None, **kwargs)`
+
+
+* **说明**
+
+    注册一个消息事件响应器，并且当消息纯文本部分包含关键词时响应。
+
+
+
+* **参数**
+
+    
+    * `keywords: Set[str]`: 关键词列表
+
+
+    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+
+
+    * `permission: Optional[Permission]`: 事件响应权限
+
+
+    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+
+
+    * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+
+
+    * `priority: int`: 事件响应器优先级
+
+
+    * `block: bool`: 是否阻止事件向更低优先级传递
+
+
+    * `state: Optional[dict]`: 默认的 state
+
+
+
+* **返回**
+
+    
+    * `Type[Matcher]`
+
+
+
 ## `on_command(cmd, rule=None, aliases=None, **kwargs)`
 
 

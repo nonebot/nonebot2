@@ -405,7 +405,11 @@ CQHTTP 协议 Event 适配。继承属性参考 [BaseEvent](./#class-baseevent) 
 
 基类：[`nonebot.adapters.BaseMessageSegment`](#None)
 
+CQHTTP 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
+
 
 ## _class_ `Message`
 
 基类：[`nonebot.adapters.BaseMessage`](#None)
+
+CQHTTP 协议 Message 适配。

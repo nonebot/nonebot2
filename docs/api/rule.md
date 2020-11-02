@@ -123,7 +123,7 @@ Rule(async_function, run_sync(sync_function))
 
 
 
-## `keyword(msg)`
+## `keyword(*keywords)`
 
 
 * **说明**
@@ -135,7 +135,7 @@ Rule(async_function, run_sync(sync_function))
 * **参数**
 
     
-    * `msg: str`: 关键词
+    * `*keywords: str`: 关键词
 
 
 
@@ -175,7 +175,9 @@ Rule(async_function, run_sync(sync_function))
 
 * **说明**
 
-    根据正则表达式进行匹配
+    根据正则表达式进行匹配。
+
+    可以通过 `state["_matched"]` 获取正则表达式匹配成功的文本。
 
 
 
