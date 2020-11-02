@@ -1,11 +1,13 @@
 ---
-
 name: Plugin Publish
 about: Publish your plugin to nonebot homepage and nb-cli
 title: "Plugin: blabla 的插件"
 labels: Plugin
 assignees: ""
----**你的插件名称：**
+
+---
+
+**你的插件名称：**
 
 例：复读机
 
