@@ -1,14 +1,50 @@
 <template>
   <div class="plugins">
-    <!-- TODO: Search and New -->
-    <hr />
     <v-app>
       <v-main>
+        <v-row>
+          <v-col cols="12" sm="4">
+            <v-text-field
+              v-model="filterText"
+              dense
+              rounded
+              outlined
+              clearable
+              hide-details
+              label="Filter Plugin"
+            >
+              <template v-slot:prepend-inner>
+                <div class="v-input__icon v-input__icon--prepend-inner">
+                  <v-icon small>fa-filter</v-icon>
+                </div>
+              </template>
+            </v-text-field>
+          </v-col>
+          <v-col cols="12" sm="4">
+            <v-btn
+              block
+              color="primary"
+              target="_blank"
+              rel="noopener noreferrer"
+              href="https://github.com/nonebot/nonebot2/issues/new?template=plugin-publish.md"
+              >Publish Your Plugin
+            </v-btn>
+          </v-col>
+          <v-col cols="12" sm="4">
+            <v-pagination
+              v-model="page"
+              :length="pageNum"
+              prev-icon="fa-caret-left"
+              next-icon="fa-caret-right"
+            ></v-pagination>
+          </v-col>
+        </v-row>
+        <hr />
         <v-row>
           <v-col
             cols="12"
             sm="6"
-            v-for="(plugin, index) in plugins"
+            v-for="(plugin, index) in filteredPlugins"
             :key="index"
           >
             <v-card>
@@ -27,6 +63,12 @@
                 </a>
               </v-card-title>
               <v-card-text>{{ plugin.desc }}</v-card-text>
+              <v-card-text>
+                <v-icon x-small>fa-fingerprint</v-icon>
+                {{ plugin.id }}
+                <v-icon x-small class="ml-2">fa-user</v-icon>
+                {{ plugin.author }}
+              </v-card-text>
               <v-card-actions>
                 <v-btn
                   block
@@ -40,6 +82,16 @@
                 <v-snackbar v-model="snackbar">Copied!</v-snackbar>
               </v-card-actions>
             </v-card>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
+            <v-pagination
+              v-model="page"
+              :length="pageNum"
+              prev-icon="fa-caret-left"
+              next-icon="fa-caret-right"
+            ></v-pagination>
           </v-col>
         </v-row>
       </v-main>
@@ -56,8 +108,25 @@ export default {
   data() {
     return {
       plugins: plugins,
-      snackbar: false
+      snackbar: false,
+      filterText: "",
+      page: 1
     };
+  },
+  computed: {
+    pageNum() {
+      return Math.ceil(this.filteredPlugins.length / 10);
+    },
+    filteredPlugins() {
+      return this.plugins.filter(plugin => {
+        return (
+          plugin.id.indexOf(this.filterText) != -1 ||
+          plugin.name.indexOf(this.filterText) != -1 ||
+          plugin.desc.indexOf(this.filterText) != -1 ||
+          plugin.author.indexOf(this.filterText) != -1
+        );
+      });
+    }
   },
   methods: {
     repoLink(repo) {
