@@ -188,3 +188,5 @@ typings/
 dev
 docs_build/_build
 !tests/.env
+start-venv-nb2.bat
+.venv
