@@ -377,7 +377,7 @@ sidebarDepth: 0
 
 
 
-### _async classmethod_ `send(message)`
+### _async classmethod_ `send(message, **kwargs)`
 
 
 * **说明**
@@ -392,8 +392,11 @@ sidebarDepth: 0
     * `message: Union[str, Message, MessageSegment]`: 消息内容
 
 
+    * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
 
-### _async classmethod_ `finish(message=None)`
+
+
+### _async classmethod_ `finish(message=None, **kwargs)`
 
 
 * **说明**
@@ -408,8 +411,11 @@ sidebarDepth: 0
     * `message: Union[str, Message, MessageSegment]`: 消息内容
 
 
+    * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
 
-### _async classmethod_ `pause(prompt=None)`
+
+
+### _async classmethod_ `pause(prompt=None, **kwargs)`
 
 
 * **说明**
@@ -424,8 +430,11 @@ sidebarDepth: 0
     * `prompt: Union[str, Message, MessageSegment]`: 消息内容
 
 
+    * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
 
-### _async classmethod_ `reject(prompt=None)`
+
+
+### _async classmethod_ `reject(prompt=None, **kwargs)`
 
 
 * **说明**
@@ -438,6 +447,9 @@ sidebarDepth: 0
 
     
     * `prompt: Union[str, Message, MessageSegment]`: 消息内容
+
+
+    * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
 
 
 

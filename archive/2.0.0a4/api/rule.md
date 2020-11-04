@@ -123,7 +123,7 @@ Rule(async_function, run_sync(sync_function))
 
 
 
-## `keyword(msg)`
+## `keyword(*keywords)`
 
 
 * **说明**
@@ -135,23 +135,25 @@ Rule(async_function, run_sync(sync_function))
 * **参数**
 
     
-    * `msg: str`: 关键词
+    * `*keywords: str`: 关键词
 
 
 
-## `command(command)`
+## `command(*cmds)`
 
 
 * **说明**
 
     命令形式匹配，根据配置里提供的 `command_start`, `command_sep` 判断消息是否为命令。
 
+    可以通过 `state["_prefix"]["command"]` 获取匹配成功的命令（例：`("test",)`），通过 `state["_prefix"]["raw_command"]` 获取匹配成功的原始命令文本（例：`"/test"`）。
+
 
 
 * **参数**
 
     
-    * `command: Tuples[str, ...]`: 命令内容
+    * `*cmds: Union[str, Tuple[str, ...]]`: 命令内容
 
 
 
@@ -173,7 +175,9 @@ Rule(async_function, run_sync(sync_function))
 
 * **说明**
 
-    根据正则表达式进行匹配
+    根据正则表达式进行匹配。
+
+    可以通过 `state["_matched"]` 获取正则表达式匹配成功的文本。
 
 
 
@@ -185,6 +189,10 @@ Rule(async_function, run_sync(sync_function))
 
     * `flags: Union[int, re.RegexFlag]`: 正则标志
 
+
+:::tip 提示
+正则表达式匹配使用 search 而非 match，如需从头匹配请使用 `r"^xxx"` 来确保匹配开头
+:::
 
 
 ## `to_me()`

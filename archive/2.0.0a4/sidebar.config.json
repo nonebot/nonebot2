@@ -1,4 +1,5 @@
 {
+  "sidebar": {},
   "locales": {
     "/": {
       "label": "简体中文",
@@ -17,6 +18,10 @@
         {
           "text": "API",
           "link": "/api/"
+        },
+        {
+          "text": "插件广场",
+          "link": "/plugin-store"
         }
       ],
       "sidebarDepth": 2,
@@ -50,6 +55,10 @@
               {
                 "title": "nonebot.config 模块",
                 "path": "config"
+              },
+              {
+                "title": "nonebot.plugin 模块",
+                "path": "plugin"
               },
               {
                 "title": "nonebot.matcher 模块",
