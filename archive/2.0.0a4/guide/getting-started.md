@@ -136,11 +136,11 @@ QQ 协议端举例:
 现在，尝试向你的 QQ 机器人账号发送如下内容：
 
 ```default
-/say 你好，世界
+/echo 你好，世界
 ```
 
 到这里如果一切 OK，你应该会收到机器人给你回复了 `你好，世界`。这一历史性的对话标志着你已经成功地运行了一个 NoneBot 的最小实例，开始了编写更强大的 QQ 机器人的创意之旅！
 
 <ClientOnly>
-  <Messenger :messages="[{ position: 'right', msg: '/say 你好，世界' }, { position: 'left', msg: '你好，世界' }]"/>
+  <Messenger :messages="[{ position: 'right', msg: '/echo 你好，世界' }, { position: 'left', msg: '你好，世界' }]"/>
 </ClientOnly>

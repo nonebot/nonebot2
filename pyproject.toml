@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot2"
-version = "2.0.0a3"
+version = "2.0.0a4"
 description = "An asynchronous python bot framework."
 authors = ["yanyongyu <yanyongyu_1@126.com>"]
 license = "MIT"
@@ -24,7 +24,7 @@ include = ["nonebot/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.7"
-httpx = "^0.13.3"
+httpx = "^0.16.1"
 loguru = "^0.5.1"
 pygtrie = "^2.3.3"
 fastapi = "^0.58.1"
@@ -32,7 +32,7 @@ uvicorn = "^0.11.5"
 pydantic = { extras = ["dotenv"], version = "^1.6.1" }
 apscheduler = { version = "^3.6.3", optional = true }
 nonebot-test = { version = "^0.1.0", optional = true }
-nb-cli = { version="^0.1.0", optional = true }
+nb-cli = { version="^0.2.0", optional = true }
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.30.0"
