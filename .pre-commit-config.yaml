@@ -1,0 +1,9 @@
+repos:
+-   repo: local
+    hooks:
+    - id: track-version
+      name: Track Version
+      description: This hook ensures that the version.py file updates version info from pyproject.toml
+      language: python
+      entry: python "nonebot/gen_version.py"
+
