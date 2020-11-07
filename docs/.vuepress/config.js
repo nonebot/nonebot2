@@ -86,8 +86,7 @@ module.exports = context => ({
         sidebar: {
           "/guide/": [
             {
-              title: "指南",
-              path: "",
+              title: "开始",
               collapsable: false,
               sidebar: "auto",
               children: [
@@ -95,7 +94,15 @@ module.exports = context => ({
                 "installation",
                 "getting-started",
                 "creating-a-project",
-                "basic-configuration",
+                "basic-configuration"
+              ]
+            },
+            {
+              title: "编写插件",
+              collapsable: false,
+              sidebar: "auto",
+              children: [
+                "loading-a-plugin",
                 "writing-a-plugin"
               ]
             }
