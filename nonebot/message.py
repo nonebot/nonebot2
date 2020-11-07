@@ -5,16 +5,34 @@ from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.utils import escape_tag
 from nonebot.matcher import matchers
-from nonebot.typing import Set, Type, Union, NoReturn
-from nonebot.typing import Bot, Event, Matcher, PreProcessor
 from nonebot.exception import IgnoredException, ExpiredException
 from nonebot.exception import StopPropagation, _ExceptionContainer
+from nonebot.typing import Set, Type, Union, NoReturn, Bot, Event, Matcher
+from nonebot.typing import EventPreProcessor, RunPreProcessor, EventPostProcessor, RunPostProcessor
 
-_event_preprocessors: Set[PreProcessor] = set()
+_event_preprocessors: Set[EventPreProcessor] = set()
+_event_postprocessors: Set[EventPostProcessor] = set()
+_run_preprocessors: Set[RunPreProcessor] = set()
+_run_postprocessors: Set[RunPostProcessor] = set()
 
 
-def event_preprocessor(func: PreProcessor) -> PreProcessor:
+def event_preprocessor(func: EventPreProcessor) -> EventPreProcessor:
     _event_preprocessors.add(func)
+    return func
+
+
+def event_postprocessor(func: EventPostProcessor) -> EventPostProcessor:
+    _event_postprocessors.add(func)
+    return func
+
+
+def run_preprocessor(func: RunPreProcessor) -> RunPreProcessor:
+    _run_preprocessors.add(func)
+    return func
+
+
+def run_postprocessor(func: RunPostProcessor) -> RunPostProcessor:
+    _run_postprocessors.add(func)
     return func
 
 
@@ -35,7 +53,24 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
     logger.info(f"Event will be handled by {Matcher}")
 
     matcher = Matcher()
-    # TODO: BeforeMatcherRun
+
+    coros = list(
+        map(lambda x: x(matcher, bot, event, state), _run_preprocessors))
+    if coros:
+        try:
+            await asyncio.gather(*coros)
+        except IgnoredException:
+            logger.opt(colors=True).info(
+                f"Matcher {matcher} running is <b>cancelled</b>")
+            return
+        except Exception as e:
+            logger.opt(colors=True, exception=e).error(
+                "<r><bg #f8bbd0>Error when running RunPreProcessors. "
+                "Running cancelled!</bg #f8bbd0></r>")
+            return
+
+    exceptions = []
+
     try:
         logger.debug(f"Running matcher {matcher}")
         await matcher.run(bot, event, state)
@@ -43,12 +78,24 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
         logger.opt(colors=True, exception=e).error(
             f"<r><bg #f8bbd0>Running matcher {matcher} failed.</bg #f8bbd0></r>"
         )
+        exceptions.append(e)
 
-    exceptions = []
     if Matcher.temp:
         exceptions.append(ExpiredException)
     if Matcher.block:
         exceptions.append(StopPropagation)
+
+    coros = list(
+        map(lambda x: x(matcher, exceptions, bot, event, state),
+            _run_postprocessors))
+    if coros:
+        try:
+            await asyncio.gather(*coros)
+        except Exception as e:
+            logger.opt(colors=True, exception=e).error(
+                "<r><bg #f8bbd0>Error when running RunPostProcessors</bg #f8bbd0></r>"
+            )
+
     if exceptions:
         raise _ExceptionContainer(exceptions)
 
@@ -77,10 +124,8 @@ async def handle_event(bot: Bot, event: Event):
     if show_log:
         logger.opt(colors=True).info(log_msg)
 
-    coros = []
     state = {}
-    for preprocessor in _event_preprocessors:
-        coros.append(preprocessor(bot, event, state))
+    coros = list(map(lambda x: x(bot, event, state), _event_preprocessors))
     if coros:
         try:
             logger.debug("Running PreProcessors...")
@@ -88,6 +133,11 @@ async def handle_event(bot: Bot, event: Event):
         except IgnoredException:
             logger.opt(
                 colors=True).info(f"Event {event.name} is <b>ignored</b>")
+            return
+        except Exception as e:
+            logger.opt(colors=True, exception=e).error(
+                "<r><bg #f8bbd0>Error when running EventPreProcessors. "
+                "Event ignored!</bg #f8bbd0></r>")
             return
 
     # Trie Match
@@ -121,3 +171,13 @@ async def handle_event(bot: Bot, event: Event):
                     )
                     del matchers[priority][index - i]
                     i += 1
+
+    coros = list(map(lambda x: x(bot, event, state), _event_postprocessors))
+    if coros:
+        try:
+            logger.debug("Running PostProcessors...")
+            await asyncio.gather(*coros)
+        except Exception as e:
+            logger.opt(colors=True, exception=e).error(
+                "<r><bg #f8bbd0>Error when running EventPostProcessors</bg #f8bbd0></r>"
+            )
