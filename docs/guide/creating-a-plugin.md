@@ -71,7 +71,7 @@ foo
 
 #### config.py
 
-在该文件中使用 `pydantic` 定义插件所需要的配置项。
+在该文件中使用 `pydantic` 定义插件所需要的配置项以及类型。
 
 示例：
 
@@ -81,9 +81,6 @@ from pydantic import BaseSetting
 
 class Config(BaseSetting):
 
-    # nonebot config
-    superusers: Set[int]
-
     # plugin custom config
     plugin_setting: str = "default"
 
@@ -91,9 +88,25 @@ class Config(BaseSetting):
         extra = "ignore"
 ```
 
+并在 `__init__.py` 文件中添加以下行
+
+```python
+import nonebot
+from .config import Config
+
+global_config = nonebot.get_bot().config
+plugin_config = Config(**global_config.dict())
+```
+
+此时就可以通过 `plugin_config.plugin_setting` 获取到插件所需要的配置项了。
+
 #### data_source.py
 
 在该文件中编写数据获取函数。
+
+:::warning 警告
+数据获取应尽量使用**异步**处理！例如使用 [httpx](https://www.python-httpx.org/) 而非 [requests](https://requests.readthedocs.io/en/master/)
+:::
 
 #### model.py
 
