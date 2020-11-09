@@ -3,7 +3,7 @@ home: true
 heroImage: /logo.png
 tagline: An asynchronous QQ bot framework.
 actionText: 开始使用
-actionLink: /guide/
+actionLink: guide/
 features:
   - title: 简洁
     details: 提供极其简洁易懂的 API，使你可以毫无压力地开始验证你的绝佳创意，只需编写最少量的代码，即可实现丰富的功能。

@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 事件响应器
 ==========
@@ -262,7 +260,8 @@ class Matcher(metaclass=MatcherMeta):
             state["_current_key"] = key
             if key not in state:
                 if prompt:
-                    await bot.send(event=event, message=prompt)
+                    await bot.send(event=event,
+                                   message=str(prompt).format(**state))
                 raise PausedException
             else:
                 state["_skip_key"] = True
@@ -298,66 +297,70 @@ class Matcher(metaclass=MatcherMeta):
         return _decorator
 
     @classmethod
-    async def send(cls, message: Union[str, Message, MessageSegment]):
+    async def send(cls, message: Union[str, Message, MessageSegment], **kwargs):
         """
         :说明:
           发送一条消息给当前交互用户
         :参数:
           * ``message: Union[str, Message, MessageSegment]``: 消息内容
+          * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         bot = current_bot.get()
         event = current_event.get()
-        await bot.send(event=event, message=message)
+        await bot.send(event=event, message=message, **kwargs)
 
     @classmethod
-    async def finish(
-        cls,
-        message: Optional[Union[str, Message,
-                                MessageSegment]] = None) -> NoReturn:
+    async def finish(cls,
+                     message: Optional[Union[str, Message,
+                                             MessageSegment]] = None,
+                     **kwargs) -> NoReturn:
         """
         :说明:
           发送一条消息给当前交互用户并结束当前事件响应器
         :参数:
           * ``message: Union[str, Message, MessageSegment]``: 消息内容
+          * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         bot = current_bot.get()
         event = current_event.get()
         if message:
-            await bot.send(event=event, message=message)
+            await bot.send(event=event, message=message, **kwargs)
         raise FinishedException
 
     @classmethod
-    async def pause(
-        cls,
-        prompt: Optional[Union[str, Message,
-                               MessageSegment]] = None) -> NoReturn:
+    async def pause(cls,
+                    prompt: Optional[Union[str, Message,
+                                           MessageSegment]] = None,
+                    **kwargs) -> NoReturn:
         """
         :说明:
           发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续下一个处理函数
         :参数:
           * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
+          * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         bot = current_bot.get()
         event = current_event.get()
         if prompt:
-            await bot.send(event=event, message=prompt)
+            await bot.send(event=event, message=prompt, **kwargs)
         raise PausedException
 
     @classmethod
-    async def reject(
-        cls,
-        prompt: Optional[Union[str, Message,
-                               MessageSegment]] = None) -> NoReturn:
+    async def reject(cls,
+                     prompt: Optional[Union[str, Message,
+                                            MessageSegment]] = None,
+                     **kwargs) -> NoReturn:
         """
         :说明:
           发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后重新运行当前处理函数
         :参数:
           * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
+          * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         bot = current_bot.get()
         event = current_event.get()
         if prompt:
-            await bot.send(event=event, message=prompt)
+            await bot.send(event=event, message=prompt, **kwargs)
         raise RejectedException
 
     # 运行handlers
@@ -492,6 +495,7 @@ class MatcherGroup:
         return matcher
 
     def args_parser(self, func: ArgsParser) -> ArgsParser:
+        self._default_parser = func
         for matcher in self.matchers:
             matcher.args_parser(func)
         return func
@@ -532,7 +536,8 @@ class MatcherGroup:
             state["_current_key"] = key
             if key not in state:
                 if prompt:
-                    await bot.send(event=event, message=prompt)
+                    await bot.send(event=event,
+                                   message=str(prompt).format(state))
                 raise PausedException
             else:
                 state["_skip_key"] = True
@@ -567,37 +572,38 @@ class MatcherGroup:
 
         return _decorator
 
-    async def send(self, message: Union[str, Message, MessageSegment]):
+    async def send(self, message: Union[str, Message, MessageSegment],
+                   **kwargs):
         bot = current_bot.get()
         event = current_event.get()
-        await bot.send(event=event, message=message)
+        await bot.send(event=event, message=message, **kwargs)
 
-    async def finish(
-        self,
-        message: Optional[Union[str, Message,
-                                MessageSegment]] = None) -> NoReturn:
+    async def finish(self,
+                     message: Optional[Union[str, Message,
+                                             MessageSegment]] = None,
+                     **kwargs) -> NoReturn:
         bot = current_bot.get()
         event = current_event.get()
         if message:
-            await bot.send(event=event, message=message)
+            await bot.send(event=event, message=message, **kwargs)
         raise FinishedException
 
-    async def pause(
-        self,
-        prompt: Optional[Union[str, Message,
-                               MessageSegment]] = None) -> NoReturn:
+    async def pause(self,
+                    prompt: Optional[Union[str, Message,
+                                           MessageSegment]] = None,
+                    **kwargs) -> NoReturn:
         bot = current_bot.get()
         event = current_event.get()
         if prompt:
-            await bot.send(event=event, message=prompt)
+            await bot.send(event=event, message=prompt, **kwargs)
         raise PausedException
 
-    async def reject(
-        self,
-        prompt: Optional[Union[str, Message,
-                               MessageSegment]] = None) -> NoReturn:
+    async def reject(self,
+                     prompt: Optional[Union[str, Message,
+                                            MessageSegment]] = None,
+                     **kwargs) -> NoReturn:
         bot = current_bot.get()
         event = current_event.get()
         if prompt:
-            await bot.send(event=event, message=prompt)
+            await bot.send(event=event, message=prompt, **kwargs)
         raise RejectedException

@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 协议适配基类
 ============
@@ -287,6 +285,9 @@ class BaseMessageSegment(abc.ABC):
 
     def __setitem__(self, key, value):
         return setattr(self, key, value)
+
+    def get(self, key, default=None):
+        return getattr(self, key, default)
 
     @classmethod
     @abc.abstractmethod

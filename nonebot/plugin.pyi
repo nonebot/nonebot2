@@ -1,10 +1,6 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import re
-from typing import overload
 
-from nonebot.typing import Rule, Matcher, Handler, Permission, RuleChecker, MatcherGroup
+from nonebot.typing import Rule, Matcher, Handler, Permission, RuleChecker
 from nonebot.typing import Set, List, Dict, Type, Tuple, Union, Optional, ModuleType
 
 plugins: Dict[str, "Plugin"] = ...
@@ -18,7 +14,8 @@ class Plugin(object):
     matcher: Set[Type[Matcher]]
 
 
-def on(rule: Optional[Union[Rule, RuleChecker]] = ...,
+def on(type: str = ...,
+       rule: Optional[Union[Rule, RuleChecker]] = ...,
        permission: Optional[Permission] = ...,
        *,
        handlers: Optional[List[Handler]] = ...,
@@ -72,8 +69,8 @@ def on_request(rule: Optional[Union[Rule, RuleChecker]] = ...,
 
 def on_startswith(msg: str,
                   rule: Optional[Optional[Union[Rule, RuleChecker]]] = ...,
-                  permission: Optional[Permission] = ...,
                   *,
+                  permission: Optional[Permission] = ...,
                   handlers: Optional[List[Handler]] = ...,
                   temp: bool = ...,
                   priority: int = ...,
@@ -84,8 +81,8 @@ def on_startswith(msg: str,
 
 def on_endswith(msg: str,
                 rule: Optional[Optional[Union[Rule, RuleChecker]]] = ...,
-                permission: Optional[Permission] = ...,
                 *,
+                permission: Optional[Permission] = ...,
                 handlers: Optional[List[Handler]] = ...,
                 temp: bool = ...,
                 priority: int = ...,
@@ -94,12 +91,10 @@ def on_endswith(msg: str,
     ...
 
 
-@overload
-def on_command(cmd: Union[str, Tuple[str, ...]],
-               rule: Optional[Union[Rule, RuleChecker]] = ...,
-               aliases: None = ...,
-               permission: Optional[Permission] = ...,
+def on_keyword(keywords: Set[str],
+               rule: Optional[Optional[Union[Rule, RuleChecker]]] = ...,
                *,
+               permission: Optional[Permission] = ...,
                handlers: Optional[List[Handler]] = ...,
                temp: bool = ...,
                priority: int = ...,
@@ -108,25 +103,24 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
     ...
 
 
-@overload
 def on_command(cmd: Union[str, Tuple[str, ...]],
                rule: Optional[Union[Rule, RuleChecker]] = ...,
-               aliases: Set[Union[str, Tuple[str, ...]]] = ...,
-               permission: Optional[Permission] = ...,
+               aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
                *,
+               permission: Optional[Permission] = ...,
                handlers: Optional[List[Handler]] = ...,
                temp: bool = ...,
                priority: int = ...,
                block: bool = ...,
-               state: Optional[dict] = ...) -> MatcherGroup:
+               state: Optional[dict] = ...) -> Type[Matcher]:
     ...
 
 
 def on_regex(pattern: str,
              flags: Union[int, re.RegexFlag] = 0,
              rule: Optional[Rule] = ...,
-             permission: Optional[Permission] = ...,
              *,
+             permission: Optional[Permission] = ...,
              handlers: Optional[List[Handler]] = ...,
              temp: bool = ...,
              priority: int = ...,
@@ -165,16 +159,15 @@ class CommandGroup:
                  state: Optional[dict] = ...):
         ...
 
-    def command(
-            self,
-            cmd: Union[str, Tuple[str, ...]],
-            rule: Optional[Union[Rule, RuleChecker]] = ...,
-            aliases: Set[Union[str, Tuple[str, ...]]] = ...,
-            permission: Optional[Permission] = ...,
-            *,
-            handlers: Optional[List[Handler]] = ...,
-            temp: bool = ...,
-            priority: int = ...,
-            block: bool = ...,
-            state: Optional[dict] = ...) -> Union[Type[Matcher], MatcherGroup]:
+    def command(self,
+                cmd: Union[str, Tuple[str, ...]],
+                rule: Optional[Union[Rule, RuleChecker]] = ...,
+                aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
+                permission: Optional[Permission] = ...,
+                *,
+                handlers: Optional[List[Handler]] = ...,
+                temp: bool = ...,
+                priority: int = ...,
+                block: bool = ...,
+                state: Optional[dict] = ...) -> Type[Matcher]:
         ...

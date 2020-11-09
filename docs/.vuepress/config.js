@@ -13,7 +13,8 @@ module.exports = context => ({
    */
   head: [
     ["link", { rel: "icon", href: "/logo.png" }],
-    ["meta", { name: "theme-color", content: "#d32f2f" }],
+    ["link", { rel: "manifest", href: "/manifest.json" }],
+    ["meta", { name: "theme-color", content: "#ea5252" }],
     ["meta", { name: "application-name", content: "NoneBot" }],
     ["meta", { name: "apple-mobile-web-app-title", content: "NoneBot" }],
     ["meta", { name: "apple-mobile-web-app-capable", content: "yes" }],
@@ -21,6 +22,26 @@ module.exports = context => ({
       "meta",
       { name: "apple-mobile-web-app-status-bar-style", content: "black" }
     ],
+    [
+      "link",
+      { rel: "apple-touch-icon", href: "/icons/apple-touch-icon-180x180.png" }
+    ],
+    [
+      "link",
+      {
+        rel: "mask-icon",
+        href: "/icons/safari-pinned-tab.svg",
+        color: "#ea5252"
+      }
+    ],
+    [
+      "meta",
+      {
+        name: "msapplication-TileImage",
+        content: "/icons/mstile-150x150.png"
+      }
+    ],
+    ["meta", { name: "msapplication-TileColor", content: "#ea5252" }],
     [
       "link",
       {
@@ -38,12 +59,12 @@ module.exports = context => ({
     }
   },
 
-  theme: "titanium",
+  theme: "nonebot",
   themeConfig: {
     logo: "/logo.png",
-    repo: "nonebot/nonebot",
+    repo: "nonebot/nonebot2",
     docsDir: "docs",
-    docsBranch: "dev2",
+    docsBranch: "dev",
     docsDirVersioned: "archive",
     docsDirPages: "pages",
     editLinks: true,
@@ -58,14 +79,14 @@ module.exports = context => ({
         nav: [
           { text: "主页", link: "/" },
           { text: "指南", link: "/guide/" },
-          { text: "API", link: "/api/" }
+          { text: "API", link: "/api/" },
+          { text: "插件广场", link: "/plugin-store" }
         ],
         sidebarDepth: 2,
         sidebar: {
           "/guide/": [
             {
-              title: "指南",
-              path: "",
+              title: "开始",
               collapsable: false,
               sidebar: "auto",
               children: [
@@ -73,8 +94,17 @@ module.exports = context => ({
                 "installation",
                 "getting-started",
                 "creating-a-project",
-                "basic-configuration",
-                "writing-a-plugin"
+                "basic-configuration"
+              ]
+            },
+            {
+              title: "编写插件",
+              collapsable: false,
+              sidebar: "auto",
+              children: [
+                "loading-a-plugin",
+                "creating-a-plugin",
+                "creating-a-matcher"
               ]
             }
           ],
@@ -91,6 +121,10 @@ module.exports = context => ({
                 {
                   title: "nonebot.config 模块",
                   path: "config"
+                },
+                {
+                  title: "nonebot.plugin 模块",
+                  path: "plugin"
                 },
                 {
                   title: "nonebot.matcher 模块",
@@ -125,6 +159,14 @@ module.exports = context => ({
                   path: "exception"
                 },
                 {
+                  title: "nonebot.drivers 模块",
+                  path: "drivers/"
+                },
+                {
+                  title: "nonebot.drivers.fastapi 模块",
+                  path: "drivers/fastapi"
+                },
+                {
                   title: "nonebot.adapters 模块",
                   path: "adapters/"
                 },
@@ -143,6 +185,16 @@ module.exports = context => ({
   plugins: [
     "@vuepress/plugin-back-to-top",
     "@vuepress/plugin-medium-zoom",
+    [
+      "@vuepress/pwa",
+      {
+        serviceWorker: true,
+        updatePopup: {
+          message: "发现新内容",
+          buttonText: "刷新"
+        }
+      }
+    ],
     [
       "versioning",
       {

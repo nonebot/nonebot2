@@ -1,7 +1,7 @@
 import asyncio
 
 from nonebot.config import Config
-from nonebot.adapters import BaseBot
+from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
 from nonebot.typing import Any, Dict, List, Union, Driver, Optional, NoReturn, WebSocket, Iterable
 
 
@@ -750,7 +750,7 @@ class Bot(BaseBot):
         ...
 
 
-class Event:
+class Event(BaseEvent):
 
     def __init__(self, raw_event: dict):
         ...
@@ -856,7 +856,7 @@ class Event:
         ...
 
 
-class MessageSegment:
+class MessageSegment(BaseMessageSegment):
 
     def __init__(self, type: str, data: Dict[str, Any]) -> None:
         ...
@@ -982,7 +982,7 @@ class MessageSegment:
         ...
 
 
-class Message:
+class Message(BaseMessage):
 
     @staticmethod
     def _construct(msg: Union[str, dict, list]) -> Iterable[MessageSegment]:

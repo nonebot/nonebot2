@@ -16,18 +16,22 @@
   },
   "scripts": {
     "dev": "vuepress dev docs",
-    "build": "vuepress build docs"
+    "build": "vuepress build docs",
+    "lint": "npx prettier -c docs/**/* !docs/api/**/*",
+    "lint:fix": "npx prettier --write docs/**/* !docs/api/**/*"
   },
   "license": "MIT",
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^1.5.4",
-    "@vuepress/plugin-medium-zoom": "^1.5.4",
-    "vuepress": "^1.5.4",
-    "vuepress-plugin-versioning": "^4.5.0",
-    "vuepress-theme-titanium": "^4.5.1"
+    "@vuepress/plugin-back-to-top": "^1.7.1",
+    "@vuepress/plugin-medium-zoom": "^1.7.1",
+    "@vuepress/plugin-pwa": "^1.7.1",
+    "vuepress": "^1.7.1",
+    "vuepress-plugin-versioning": "git+https://github.com/nonebot/vuepress-plugin-versioning.git",
+    "vuepress-theme-nonebot": "git+https://github.com/nonebot/vuepress-theme-nonebot.git"
   },
   "dependencies": {
-    "vuetify": "^2.3.10",
+    "copy-to-clipboard": "^3.3.1",
+    "vuetify": "^2.3.16",
     "wowjs": "^1.1.3"
   }
 }

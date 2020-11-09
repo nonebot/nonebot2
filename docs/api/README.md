@@ -10,6 +10,9 @@
     * [nonebot.config](config.html)
 
 
+    * [nonebot.plugin](plugin.html)
+
+
     * [nonebot.matcher](matcher.html)
 
 
@@ -32,6 +35,12 @@
 
 
     * [nonebot.exception](exception.html)
+
+
+    * [nonebot.drivers](drivers/)
+
+
+    * [nonebot.drivers.fastapi](drivers/fastapi.html)
 
 
     * [nonebot.adapters](adapters/)

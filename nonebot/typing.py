@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 类型
 ====
@@ -94,14 +92,41 @@ MessageSegment = TypeVar("MessageSegment", bound="BaseMessageSegment")
   所有 MessageSegment 的基类。
 """
 
-PreProcessor = Callable[[Bot, Event, dict], Union[Awaitable[None],
-                                                  Awaitable[NoReturn]]]
+EventPreProcessor = Callable[[Bot, Event, dict], Union[Awaitable[None],
+                                                       Awaitable[NoReturn]]]
 """
 :类型: ``Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]``
 
 :说明:
 
-  消息预处理函数 PreProcessor 类型
+  事件预处理函数 EventPreProcessor 类型
+"""
+EventPostProcessor = Callable[[Bot, Event, dict], Union[Awaitable[None],
+                                                        Awaitable[NoReturn]]]
+"""
+:类型: ``Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]``
+
+:说明:
+
+  事件预处理函数 EventPostProcessor 类型
+"""
+RunPreProcessor = Callable[["Matcher", Bot, Event, dict],
+                           Union[Awaitable[None], Awaitable[NoReturn]]]
+"""
+:类型: ``Callable[[Matcher, Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]``
+
+:说明:
+
+  事件响应器运行前预处理函数 RunPreProcessor 类型
+"""
+RunPostProcessor = Callable[["Matcher", List[Any], Bot, Event, dict],
+                            Union[Awaitable[None], Awaitable[NoReturn]]]
+"""
+:类型: ``Callable[[Matcher, List[Any], Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]``
+
+:说明:
+
+  事件响应器运行前预处理函数 RunPostProcessor 类型，第二个参数包含运行时产生的错误以及 ``ExpiredException``, ``StopPropagation`` (如果存在)
 """
 
 Matcher = TypeVar("Matcher", bound="MatcherClass")
