@@ -103,7 +103,8 @@ module.exports = context => ({
               sidebar: "auto",
               children: [
                 "loading-a-plugin",
-                "creating-a-plugin"
+                "creating-a-plugin",
+                "creating-a-matcher"
               ]
             }
           ],
