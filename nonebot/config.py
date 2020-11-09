@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 配置
 ====
@@ -211,10 +209,10 @@ class Config(BaseConfig):
 
         SUPER_USERS=[12345789]
     """
-    nickname: Union[str, Set[str]] = ""
+    nickname: Set[str] = set()
     """
-    - 类型: ``Union[str, Set[str]]``
-    - 默认值: ``""``
+    - 类型: ``Set[str]``
+    - 默认值: ``set()``
     - 说明:
       机器人昵称。
     """

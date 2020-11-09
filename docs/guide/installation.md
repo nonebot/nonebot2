@@ -6,7 +6,10 @@
 请确保你的 Python 版本 >= 3.7。
 :::
 
+请在安装 nonebot2 之前卸载 nonebot 1.x
+
 ```bash
+pip uninstall nonebot
 pip install nonebot2
 ```
 

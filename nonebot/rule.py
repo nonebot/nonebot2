@@ -1,13 +1,11 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 """
 规则
 ====
 
-每个 ``Matcher`` 拥有一个 ``Rule`` ，其中是 **异步** ``RuleChecker`` 的集合，只有当所有 ``RuleChecker`` 检查结果为 ``True`` 时继续运行。
+每个事件响应器 ``Matcher`` 拥有一个匹配规则 ``Rule`` ，其中是 **异步** ``RuleChecker`` 的集合，只有当所有 ``RuleChecker`` 检查结果为 ``True`` 时继续运行。
 
 \:\:\:tip 提示
-``RuleChecker`` 既可以是 async function 也可以是 sync function
+``RuleChecker`` 既可以是 async function 也可以是 sync function，但在最终会被 ``nonebot.utils.run_sync`` 转换为 async function
 \:\:\:
 """
 
@@ -184,41 +182,97 @@ def endswith(msg: str) -> Rule:
     return Rule(_endswith)
 
 
-def keyword(msg: str) -> Rule:
+def keyword(*keywords: str) -> Rule:
+    """
+    :说明:
+      匹配消息关键词
+    :参数:
+      * ``*keywords: str``: 关键词
+    """
 
     async def _keyword(bot: Bot, event: Event, state: dict) -> bool:
-        return bool(event.plain_text and msg in event.plain_text)
+        return bool(event.plain_text and
+                    any(keyword in event.plain_text for keyword in keywords))
 
     return Rule(_keyword)
 
 
-def command(command: Tuple[str, ...]) -> Rule:
+def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
+    """
+    :说明:
+      命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
+
+      可以通过 ``state["_prefix"]["command"]`` 获取匹配成功的命令（例：``("test",)``），通过 ``state["_prefix"]["raw_command"]`` 获取匹配成功的原始命令文本（例：``"/test"``）。
+    :参数:
+      * ``*cmds: Union[str, Tuple[str, ...]]``: 命令内容
+    :示例:
+      使用默认 ``command_start``, ``command_sep`` 配置
+
+      命令 ``("test",)`` 可以匹配：``/test`` 开头的消息
+      命令 ``("test", "sub")`` 可以匹配”``/test.sub`` 开头的消息
+
+    \:\:\:tip 提示
+    命令内容与后续消息间无需空格！
+    \:\:\:
+    """
+
     config = get_driver().config
     command_start = config.command_start
     command_sep = config.command_sep
-    if len(command) == 1:
-        for start in command_start:
-            TrieRule.add_prefix(f"{start}{command[0]}", command)
-    else:
-        for start, sep in product(command_start, command_sep):
-            TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
+    commands = list(cmds)
+    for index, command in enumerate(commands):
+        if isinstance(command, str):
+            commands[index] = command = (command,)
+
+        if len(command) == 1:
+            for start in command_start:
+                TrieRule.add_prefix(f"{start}{command[0]}", command)
+        else:
+            for start, sep in product(command_start, command_sep):
+                TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
 
     async def _command(bot: Bot, event: Event, state: dict) -> bool:
-        return command == state["_prefix"]["command"]
+        return state["_prefix"]["command"] in commands
 
     return Rule(_command)
 
 
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
+    """
+    :说明:
+      根据正则表达式进行匹配。
+
+      可以通过 ``state["_matched"]`` 获取正则表达式匹配成功的文本。
+    :参数:
+      * ``regex: str``: 正则表达式
+      * ``flags: Union[int, re.RegexFlag]``: 正则标志
+
+    \:\:\:tip 提示
+    正则表达式匹配使用 search 而非 match，如需从头匹配请使用 ``r"^xxx"`` 来确保匹配开头
+    \:\:\:
+    """
+
     pattern = re.compile(regex, flags)
 
     async def _regex(bot: Bot, event: Event, state: dict) -> bool:
-        return bool(pattern.search(str(event.message)))
+        matched = pattern.search(str(event.message))
+        if matched:
+            state["_matched"] = matched.group()
+            return True
+        else:
+            state["_matched"] = None
+            return False
 
     return Rule(_regex)
 
 
 def to_me() -> Rule:
+    """
+    :说明:
+      通过 ``event.to_me`` 判断消息是否是发送给机器人
+    :参数:
+      * 无
+    """
 
     async def _to_me(bot: Bot, event: Event, state: dict) -> bool:
         return bool(event.to_me)

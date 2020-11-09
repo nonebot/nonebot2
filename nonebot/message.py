@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 import asyncio
 from datetime import datetime
 
@@ -57,6 +54,7 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
 
 
 async def handle_event(bot: Bot, event: Event):
+    show_log = True
     log_msg = f"<m>{bot.type.upper()} </m>| {event.self_id} [{event.name}]: "
     if event.type == "message":
         log_msg += f"Message {event.id} from "
@@ -74,8 +72,10 @@ async def handle_event(bot: Bot, event: Event):
     elif event.type == "request":
         log_msg += f"Request {event.raw_event}"
     elif event.type == "meta_event":
-        log_msg += f"MetaEvent {event.raw_event}"
-    logger.opt(colors=True).info(log_msg)
+        # log_msg += f"MetaEvent {event.detail_type}"
+        show_log = False
+    if show_log:
+        logger.opt(colors=True).info(log_msg)
 
     coros = []
     state = {}
@@ -103,7 +103,8 @@ async def handle_event(bot: Bot, event: Event):
             for matcher in matchers[priority]
         ]
 
-        logger.debug(f"Checking for matchers in priority {priority}...")
+        if show_log:
+            logger.debug(f"Checking for matchers in priority {priority}...")
         results = await asyncio.gather(*pending_tasks, return_exceptions=True)
 
         i = 0

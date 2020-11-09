@@ -1,6 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-
 from nonebot.typing import Bot, Event
 from nonebot.plugin import on_metaevent
 
