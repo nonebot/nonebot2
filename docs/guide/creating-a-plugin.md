@@ -1,21 +1,19 @@
-# 编写插件
+# 创建插件
 
-本章将以一个天气查询插件为例，教学如何编写自己的命令。
+如果之前使用 `nb-cli` 生成了项目结构，那我们已经有了一个空的插件目录 `Awesome-Bot/awesome_bot/plugins`，并且它已在 `bot.py` 中被加载，我们现在可以开始创建插件了！
 
-## 创建插件
+插件通常有两种形式，下面分别介绍
 
-现在我们已经有了一个空的插件目录，我们可以开始创建插件了！插件有两种形式
+## 单文件形式
 
-### 单文件形式
-
-在插件目录下创建名为 `weather.py` 的 Python 文件，暂时留空，此时目录结构如下：
+在插件目录下创建名为 `foo.py` 的 Python 文件，暂时留空，此时目录结构如下：
 
 <!-- prettier-ignore-start -->
 :::vue
 AweSome-Bot
 ├── awesome_bot
 │   └── plugins
-│      └── `weather.py`
+│      └── `foo.py`
 ├── .env
 ├── .env.dev
 ├── .env.prod
@@ -30,16 +28,16 @@ AweSome-Bot
 
 这个时候它已经可以被称为一个插件了，尽管它还什么都没做。
 
-### 包形式
+## 包形式(推荐)
 
-在插件目录下创建文件夹 `weather`，并在该文件夹下创建文件 `__init__.py`，此时目录结构如下：
+在插件目录下创建文件夹 `foo`，并在该文件夹下创建文件 `__init__.py`，此时目录结构如下：
 
 <!-- prettier-ignore-start -->
 :::vue
 AweSome-Bot
 ├── awesome_bot
 │   └── plugins
-│      └── `weather`
+│      └── `foo`
 │         └── `__init__.py`
 ├── .env
 ├── .env.dev
@@ -53,7 +51,53 @@ AweSome-Bot
 :::
 <!-- prettier-ignore-end -->
 
-这个时候 `weather` 就是一个合法的 Python 包了，同时也是合法的 NoneBot 插件，插件内容可以在 `__init__.py` 中编写。
+这个时候 `foo` 就是一个合法的 Python 包了，同时也是合法的 NoneBot 插件，插件内容可以在 `__init__.py` 中编写。
+
+### 推荐结构(仅供参考)
+
+<!-- prettier-ignore-start -->
+:::vue
+foo
+├── `__init__.py`
+├── `config.py`
+├── `data_source.py`
+└── `model.py`
+:::
+<!-- prettier-ignore-end -->
+
+#### \_\_init\_\_.py
+
+在该文件中编写各类事件响应及处理逻辑。
+
+#### config.py
+
+在该文件中使用 `pydantic` 定义插件所需要的配置项。
+
+示例：
+
+```python
+from pydantic import BaseSetting
+
+
+class Config(BaseSetting):
+
+    # nonebot config
+    superusers: Set[int]
+
+    # plugin custom config
+    plugin_setting: str = "default"
+
+    class Config:
+        extra = "ignore"
+```
+
+#### data_source.py
+
+在该文件中编写数据获取函数。
+
+#### model.py
+
+在该文件中编写数据库模型。
 
 ## 编写真正的内容
 
