@@ -13,7 +13,16 @@ pip uninstall nonebot
 pip install nonebot2
 ```
 
-如果你需要使用最新的（可能尚未发布的）特性，可以克隆 Git 仓库后手动安装：
+如果你需要使用最新的（可能尚未发布的）特性，可以直接从GitHub仓库安装：
+
+```bash
+# master
+poetry add git+https://github.com/nonebot/nonebot2.git#master
+# dev
+poetry add git+https://github.com/nonebot/nonebot2.git#dev
+```
+
+或者克隆 Git 仓库后手动安装：
 
 ```bash
 git clone https://github.com/nonebot/nonebot2.git
