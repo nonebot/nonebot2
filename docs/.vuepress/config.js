@@ -104,7 +104,8 @@ module.exports = context => ({
               children: [
                 "loading-a-plugin",
                 "creating-a-plugin",
-                "creating-a-matcher"
+                "creating-a-matcher",
+                "creating-a-handler"
               ]
             }
           ],
