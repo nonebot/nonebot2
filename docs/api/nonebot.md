@@ -28,13 +28,10 @@ sidebarDepth: 0
 * `on_endswith` => `nonebot.plugin.on_endswith`
 
 
+* `on_keyword` => `nonebot.plugin.on_keyword`
+
+
 * `on_command` => `nonebot.plugin.on_command`
-
-
-* `on_regex` => `nonebot.plugin.on_regex`
-
-
-* `on_regex` => `nonebot.plugin.on_regex`
 
 
 * `on_regex` => `nonebot.plugin.on_regex`
