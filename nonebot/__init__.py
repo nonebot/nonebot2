@@ -10,9 +10,8 @@
 - ``on_metaevent`` => ``nonebot.plugin.on_metaevent``
 - ``on_startswith`` => ``nonebot.plugin.on_startswith``
 - ``on_endswith`` => ``nonebot.plugin.on_endswith``
+- ``on_keyword`` => ``nonebot.plugin.on_keyword``
 - ``on_command`` => ``nonebot.plugin.on_command``
-- ``on_regex`` => ``nonebot.plugin.on_regex``
-- ``on_regex`` => ``nonebot.plugin.on_regex``
 - ``on_regex`` => ``nonebot.plugin.on_regex``
 - ``CommandGroup`` => ``nonebot.plugin.CommandGroup``
 - ``load_plugin`` => ``nonebot.plugin.load_plugin``
@@ -233,6 +232,6 @@ async def _start_scheduler():
         logger.opt(colors=True).info("<y>Scheduler Started</y>")
 
 
-from nonebot.plugin import on_message, on_notice, on_request, on_metaevent
-from nonebot.plugin import on_startswith, on_endswith, on_command, on_regex, CommandGroup
+from nonebot.plugin import on_message, on_notice, on_request, on_metaevent, CommandGroup
+from nonebot.plugin import on_startswith, on_endswith, on_keyword, on_command, on_regex
 from nonebot.plugin import load_plugin, load_plugins, load_builtin_plugins, get_loaded_plugins
