@@ -106,8 +106,8 @@ rule 的出现使得 nonebot 对事件的响应可以非常自由，nonebot 内�
 
 - [startswith(msg)](../api/rule.md#startswith-msg)
 - [endswith(msg)](../api/rule.md#endswith-msg)
-- [keyword(*keywords)](../api/rule.md#keyword-keywords)
-- [command(*cmds)](../api/rule.md#command-cmds)
+- [keyword(\*keywords)](../api/rule.md#keyword-keywords)
+- [command(\*cmds)](../api/rule.md#command-cmds)
 - [regex(regex, flag)](../api/rule.md#regex-regex-flags-0)
 
 以上规则都是返回类型为 `Rule` 的函数，`Rule` 由非负个 `RuleChecker` 组成，当所有 `RuleChecker` 返回 `True` 时匹配成功。这些 `Rule`, `RuleChecker` 的形式如下：
@@ -125,7 +125,7 @@ def check(arg1, args2):
 
     async def _checker(bot: Bot, event: Event, state: dict) -> bool:
         return bool(arg1 + arg2)
-    
+
     return Rule(_check)
 ```
 
@@ -137,7 +137,7 @@ from nonebot.rule import Rule
 Rule(async_checker1) & sync_checker & async_checker2
 ```
 
-***请勿将事件处理的逻辑写入 `rule` 中，这会使得事件处理返回奇怪的响应。***
+**_请勿将事件处理的逻辑写入 `rule` 中，这会使得事件处理返回奇怪的响应。_**
 
 :::danger 警告
 `Rule(*checkers)` 只接受 async function，或使用 `nonebot.utils.run_sync` 自行包裹 sync function。在使用 `与 &` 时，NoneBot 会自动包裹 sync function

@@ -13,7 +13,7 @@ pip uninstall nonebot
 pip install nonebot2
 ```
 
-如果你需要使用最新的（可能尚未发布的）特性，可以直接从GitHub仓库安装：
+如果你需要使用最新的（可能尚未发布的）特性，可以直接从 GitHub 仓库安装：
 
 ```bash
 # master
