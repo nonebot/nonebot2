@@ -11,7 +11,7 @@ from dataclasses import dataclass, field
 
 from nonebot.config import Config
 from nonebot.typing import Driver, Message, WebSocket
-from nonebot.typing import Any, Dict, Union, Optional, Callable, Iterable, Awaitable
+from nonebot.typing import Any, Dict, Union, Optional, NoReturn, Callable, Iterable, Awaitable
 
 
 class BaseBot(abc.ABC):
@@ -53,6 +53,13 @@ class BaseBot(abc.ABC):
     @abc.abstractmethod
     def type(self) -> str:
         """Adapter 类型"""
+        raise NotImplementedError
+
+    @classmethod
+    @abc.abstractmethod
+    async def check_permission(cls, driver: Driver, connection_type: str,
+                               headers: dict,
+                               body: Optional[dict]) -> Union[str, NoReturn]:
         raise NotImplementedError
 
     @abc.abstractmethod

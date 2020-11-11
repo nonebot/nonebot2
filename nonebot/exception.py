@@ -105,6 +105,29 @@ class StopPropagation(Exception):
     pass
 
 
+class RequestDenied(Exception):
+    """
+    :说明:
+
+      Bot 连接请求不合法。
+
+    :参数:
+
+      * ``status_code: int``: HTTP 状态码
+      * ``reason: str``: 拒绝原因
+    """
+
+    def __init__(self, status_code: int, reason: str):
+        self.status_code = status_code
+        self.reason = reason
+
+    def __repr__(self):
+        return f"<RequestDenied, status_code={self.status_code}, reason={self.reason}>"
+
+    def __str__(self):
+        return self.__repr__()
+
+
 class ApiNotAvailable(Exception):
     """
     :说明:
@@ -131,7 +154,7 @@ class ActionFailed(Exception):
 
     :参数:
 
-      * ``retcode``: 错误代码
+      * ``retcode: Optional[int]``: 错误代码
     """
 
     def __init__(self, retcode: Optional[int]):
