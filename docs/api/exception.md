@@ -117,6 +117,27 @@ sidebarDepth: 0
 
 
 
+## _exception_ `RequestDenied`
+
+基类：`Exception`
+
+
+* **说明**
+
+    Bot 连接请求不合法。
+
+
+
+* **参数**
+
+    
+    * `status_code: int`: HTTP 状态码
+
+
+    * `reason: str`: 拒绝原因
+
+
+
 ## _exception_ `ApiNotAvailable`
 
 基类：`Exception`
@@ -153,4 +174,4 @@ sidebarDepth: 0
 * **参数**
 
     
-    * `retcode`: 错误代码
+    * `retcode: Optional[int]`: 错误代码

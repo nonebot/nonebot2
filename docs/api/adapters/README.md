@@ -69,6 +69,45 @@ Websocket 连接对象
 Adapter 类型
 
 
+### _abstract async classmethod_ `check_permission(driver, connection_type, headers, body)`
+
+
+* **说明**
+
+    检查连接请求是否合法的函数，如果合法则返回当前连接 `唯一标识符`，通常为机器人 ID；如果不合法则抛出 `RequestDenied` 异常。
+
+
+
+* **参数**
+
+    
+    * `driver: Driver`: Driver 对象
+
+
+    * `connection_type: str`: 连接类型
+
+
+    * `headers: dict`: 请求头
+
+
+    * `body: Optional[dict]`: 请求数据，WebSocket 连接该部分为空
+
+
+
+* **返回**
+
+    
+    * `str`: 连接唯一标识符
+
+
+
+* **异常**
+
+    
+    * `RequestDenied`: 请求非法
+
+
+
 ### _abstract async_ `handle_message(message)`
 
 
@@ -108,7 +147,7 @@ Adapter 类型
 
 
 ```python
-await bot.call_api("send_msg", data={"message": "hello world"})
+await bot.call_api("send_msg", message="hello world"})
 await bot.send_msg(message="hello world")
 ```
 

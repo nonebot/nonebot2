@@ -169,6 +169,15 @@ CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 * 返回: `"cqhttp"`
 
 
+### _async classmethod_ `check_permission(driver, connection_type, headers, body)`
+
+
+* **说明**
+
+    CQHTTP (OneBot) 协议鉴权。参考 [鉴权](https://github.com/howmanybots/onebot/blob/master/v11/specs/communication/authorization.md)
+
+
+
 ### _async_ `handle_message(message)`
 
 

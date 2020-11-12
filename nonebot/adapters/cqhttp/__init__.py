@@ -296,6 +296,10 @@ class Bot(BaseBot):
     async def check_permission(cls, driver: Driver, connection_type: str,
                                headers: dict,
                                body: Optional[dict]) -> Union[str, NoReturn]:
+        """
+        :说明:
+          CQHTTP (OneBot) 协议鉴权。参考 `鉴权 <https://github.com/howmanybots/onebot/blob/master/v11/specs/communication/authorization.md>`_
+        """
         x_self_id = headers.get("x-self-id")
         x_signature = headers.get("x-signature")
         access_token = get_auth_bearer(headers.get("authorization"))

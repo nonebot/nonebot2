@@ -17,19 +17,6 @@ sidebarDepth: 0
 FastAPI 驱动框架
 
 
-### `__init__(env, config)`
-
-
-* **参数**
-
-
-
-* `env: Env`: 包含环境信息的 Env 对象
-
-
-* `config: Config`: 包含配置信息的 Config 对象
-
-
 ### _property_ `type`
 
 驱动名称: `fastapi`
@@ -65,12 +52,12 @@ fastapi 使用的 logger
 使用 `uvicorn` 启动 FastAPI
 
 
-### _async_ `_handle_http(adapter, data=Body(Ellipsis), x_self_id=Header(None), x_signature=Header(None), auth=Depends(get_auth_bearer))`
+### _async_ `_handle_http(adapter, request, data=Body(Ellipsis))`
 
 用于处理 HTTP 类型请求的函数
 
 
-### _async_ `_handle_ws_reverse(adapter, websocket, x_self_id=Header(None), auth=Depends(get_auth_bearer))`
+### _async_ `_handle_ws_reverse(adapter, websocket)`
 
 用于处理 WebSocket 类型请求的函数
 
@@ -78,16 +65,6 @@ fastapi 使用的 logger
 ## _class_ `WebSocket`
 
 基类：[`nonebot.drivers.BaseWebSocket`](#None)
-
-
-### `__init__(websocket)`
-
-
-* **参数**
-
-
-
-* `websocket: Any`: WebSocket 连接对象
 
 
 ### _property_ `closed`
