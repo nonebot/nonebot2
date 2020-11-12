@@ -23,7 +23,7 @@ async def handle_city(bot: Bot, event: Event, state: dict):
 
 在之前的样例中，我们定义了两个函数 `handle_first_receive`, `handle_city`，他们被事件响应器的装饰器装饰从而成为事件响应器的事件处理函数。
 
-:::tips 提示
+:::tip 提示
 在事件响应器中，事件处理函数是**顺序**执行的！
 :::
 
@@ -64,7 +64,6 @@ async def handle2(bot: Bot, event: Event, state: dict):
 
 `args_parser` 为参数处理函数，在这里传入一个新的函数以覆盖默认的参数处理。详情参照 [args_parser](#参数处理函数-args-parser)
 
-
 特别的，这些装饰器都可以套娃使用：
 
 ```python
@@ -83,8 +82,9 @@ async def handle(bot: Bot, event: Event, state: dict):
 1. [nonebot.typing.Bot](../api/typing.md#bot): 即事件上报连接对应的 Bot 对象，为 BaseBot 的子类。特别注意，此处的类型注释可以替换为指定的 Bot 类型，例如：`nonebot.adapters.cqhttp.Bot`，只有在上报事件的 Bot 类型与类型注释相符时才会执行该处理函数！可用于多平台进行不同的处理。
 2. [nonebot.typing.Event](../api/typing.md#event): 即上报事件对象，可以获取到上报的所有信息。
 3. `state`: 状态字典，可以存储任意的信息，其中还包含一些特殊的值以获取 NoneBot 内部处理时的一些信息，如：
-  - `state["_current_key"]`: 存储当前 `got` 获取的参数名
-  - `state["_prefix"]`, `state["_suffix"]`: 存储当前 TRIE 匹配的前缀/后缀，可以通过该值获取用户命令的原始命令
+
+- `state["_current_key"]`: 存储当前 `got` 获取的参数名
+- `state["_prefix"]`, `state["_suffix"]`: 存储当前 TRIE 匹配的前缀/后缀，可以通过该值获取用户命令的原始命令
 
 ### 参数处理函数 args_parser
 
