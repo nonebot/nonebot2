@@ -105,7 +105,8 @@ module.exports = context => ({
                 "loading-a-plugin",
                 "creating-a-plugin",
                 "creating-a-matcher",
-                "creating-a-handler"
+                "creating-a-handler",
+                "end-or-start"
               ]
             }
           ],
