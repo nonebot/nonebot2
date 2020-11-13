@@ -13,6 +13,9 @@
     * [nonebot.plugin](plugin.html)
 
 
+    * [nonebot.message](message.html)
+
+
     * [nonebot.matcher](matcher.html)
 
 

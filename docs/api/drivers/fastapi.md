@@ -12,7 +12,7 @@ sidebarDepth: 0
 
 ## _class_ `Driver`
 
-基类：[`nonebot.drivers.BaseDriver`](#None)
+基类：[`nonebot.drivers.BaseDriver`](README.md#nonebot.drivers.BaseDriver)
 
 FastAPI 驱动框架
 
@@ -64,7 +64,7 @@ fastapi 使用的 logger
 
 ## _class_ `WebSocket`
 
-基类：[`nonebot.drivers.BaseWebSocket`](#None)
+基类：[`nonebot.drivers.BaseWebSocket`](README.md#nonebot.drivers.BaseWebSocket)
 
 
 ### _property_ `closed`

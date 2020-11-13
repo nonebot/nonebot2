@@ -129,6 +129,10 @@ module.exports = context => ({
                   path: "plugin"
                 },
                 {
+                  title: "nonebot.message 模块",
+                  path: "message"
+                },
+                {
                   title: "nonebot.matcher 模块",
                   path: "matcher"
                 },
