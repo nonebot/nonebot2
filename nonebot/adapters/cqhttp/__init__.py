@@ -115,6 +115,8 @@ async def _check_reply(bot: "Bot", event: "Event"):
     if event.reply["sender"]["user_id"] == event.self_id:
         event.to_me = True
     del event.message[index]
+    if not event.message:
+        event.message.append(MessageSegment.text(""))
 
 
 def _check_at_me(bot: "Bot", event: "Event"):
@@ -137,8 +139,7 @@ def _check_at_me(bot: "Bot", event: "Event"):
         at_me_seg = MessageSegment.at(event.self_id)
 
         # check the first segment
-        first_msg_seg = event.message[0]
-        if first_msg_seg == at_me_seg:
+        if event.message[0] == at_me_seg:
             event.to_me = True
             del event.message[0]
             if event.message[0].type == "text":
@@ -192,13 +193,9 @@ def _check_nickname(bot: "Bot", event: "Event"):
 
     first_text = first_msg_seg.data["text"]
 
-    if bot.config.nickname:
+    nicknames = set(filter(lambda n: n, bot.config.nickname))
+    if nicknames:
         # check if the user is calling me with my nickname
-        if isinstance(bot.config.nickname, str) or \
-                not isinstance(bot.config.nickname, Iterable):
-            nicknames = (bot.config.nickname,)
-        else:
-            nicknames = filter(lambda n: n, bot.config.nickname)
         nickname_regex = "|".join(nicknames)
         m = re.search(rf"^({nickname_regex})([\s,，]*|$)", first_text,
                       re.IGNORECASE)
