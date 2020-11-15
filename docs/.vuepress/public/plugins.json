@@ -1,10 +1,10 @@
 [
   {
-    "id": "nonebot-plugin-status",
+    "id": "nonebot_plugin_status",
     "link": "nonebot-plugin-status",
-    "name": "状态监控",
+    "name": "服务器状态查看",
     "desc": "通过戳一戳获取服务器状态",
-    "author": "nonebot",
-    "repo": "nonebot/nonebot2"
+    "author": "yanyongyu",
+    "repo": "cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_status"
   }
 ]
