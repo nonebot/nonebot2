@@ -17,7 +17,7 @@ assignees: ""
 
 **插件 import 使用的名称**
 
-例：nonebot-plugin-example
+例：nonebot_plugin_example
 
 **插件 install 使用的名称**
 
