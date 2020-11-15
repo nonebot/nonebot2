@@ -142,4 +142,3 @@ Rule(async_checker1) & sync_checker & async_checker2
 :::danger 警告
 `Rule(*checkers)` 只接受 async function，或使用 `nonebot.utils.run_sync` 自行包裹 sync function。在使用 `与 &` 时，NoneBot 会自动包裹 sync function
 :::
-t
