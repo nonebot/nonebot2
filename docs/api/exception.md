@@ -83,23 +83,6 @@ sidebarDepth: 0
 
 
 
-## _exception_ `ExpiredException`
-
-基类：`Exception`
-
-
-* **说明**
-
-    指示 NoneBot 当前 `Matcher` 已失效。
-
-
-
-* **用法**
-
-    当 `Matcher` 运行前检查时抛出。
-
-
-
 ## _exception_ `StopPropagation`
 
 基类：`Exception`

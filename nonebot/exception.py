@@ -9,12 +9,6 @@
 from nonebot.typing import List, Type, Optional
 
 
-class _ExceptionContainer(Exception):
-
-    def __init__(self, exceptions: List[Type[Exception]]) -> None:
-        self.exceptions = exceptions
-
-
 class IgnoredException(Exception):
     """
     :说明:
@@ -75,19 +69,6 @@ class FinishedException(Exception):
     :用法:
 
       可以在 ``Handler`` 中通过 ``Matcher.finish()`` 抛出。
-    """
-    pass
-
-
-class ExpiredException(Exception):
-    """
-    :说明:
-
-      指示 NoneBot 当前 ``Matcher`` 已失效。
-
-    :用法:
-
-      当 ``Matcher`` 运行前检查时抛出。
     """
     pass
 
