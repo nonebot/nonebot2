@@ -178,8 +178,8 @@ async def handle_event(bot: Bot, event: Event):
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
     :示例:
-    
-    ..code-block:: python
+
+    .. code-block:: python
 
         import asyncio
         asyncio.create_task(handle_event(bot, event))
