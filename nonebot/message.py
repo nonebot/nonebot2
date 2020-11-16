@@ -9,10 +9,9 @@ from datetime import datetime
 from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.utils import escape_tag
-from nonebot.matcher import matchers
-from nonebot.exception import IgnoredException, ExpiredException
-from nonebot.exception import StopPropagation, _ExceptionContainer
-from nonebot.typing import Set, Type, Union, NoReturn, Bot, Event, Matcher
+from nonebot.matcher import matchers, Matcher
+from nonebot.typing import Set, Type, Union, Iterable, NoReturn, Bot, Event
+from nonebot.exception import IgnoredException, ExpiredException, StopPropagation
 from nonebot.typing import EventPreProcessor, RunPreProcessor, EventPostProcessor, RunPostProcessor
 
 _event_preprocessors: Set[EventPreProcessor] = set()
@@ -41,20 +40,46 @@ def run_postprocessor(func: RunPostProcessor) -> RunPostProcessor:
     return func
 
 
+async def _check_matcher(priority: int, bot: Bot, event: Event,
+                         state: dict) -> Iterable[Type[Matcher]]:
+    current_matchers = matchers[priority].copy()
+
+    async def _check(Matcher: Type[Matcher], bot: Bot, event: Event,
+                     state: dict) -> Optional[Type[Matcher]]:
+        try:
+            if await Matcher.check_perm(
+                    bot, event) and await Matcher.check_rule(bot, event, state):
+                return Matcher
+        except Exception as e:
+            logger.opt(colors=True, exception=e).error(
+                f"<r><bg #f8bbd0>Rule check failed for {Matcher}.</bg #f8bbd0></r>"
+            )
+        return None
+
+    async def _check_expire(Matcher: Type[Matcher]) -> Optional[Type[Matcher]]:
+        if Matcher.temp or (Matcher.expire_time and
+                            datetime.now() > Matcher.expire_time):
+            return Matcher
+        return None
+
+    checking_tasks = [
+        _check(Matcher, bot, event, state) for Matcher in current_matchers
+    ]
+    checking_expire_tasks = [
+        _check_expire(Matcher) for Matcher in current_matchers
+    ]
+    results = await asyncio.gather(*checking_tasks, return_exceptions=True)
+    expired = await asyncio.gather(*checking_expire_tasks)
+    for expired_matcher in filter(lambda x: issubclass(Matcher), expired):
+        try:
+            matchers[priority].remove(expired_matcher)
+        except Exception:
+            pass
+    return filter(lambda x: issubclass(Matcher), results)
+
+
 async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
                        state: dict) -> Union[None, NoReturn]:
-    if Matcher.expire_time and datetime.now() > Matcher.expire_time:
-        raise _ExceptionContainer([ExpiredException])
-
-    try:
-        if not await Matcher.check_perm(
-                bot, event) or not await Matcher.check_rule(bot, event, state):
-            return
-    except Exception as e:
-        logger.opt(colors=True, exception=e).error(
-            f"<r><bg #f8bbd0>Rule check failed for {Matcher}.</bg #f8bbd0></r>")
-        return
-
     logger.info(f"Event will be handled by {Matcher}")
 
     matcher = Matcher()
@@ -74,7 +99,7 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
                 "Running cancelled!</bg #f8bbd0></r>")
             return
 
-    exceptions = []
+    exception = None
 
     try:
         logger.debug(f"Running matcher {matcher}")
@@ -83,15 +108,10 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
         logger.opt(colors=True, exception=e).error(
             f"<r><bg #f8bbd0>Running matcher {matcher} failed.</bg #f8bbd0></r>"
         )
-        exceptions.append(e)
-
-    if Matcher.temp:
-        exceptions.append(ExpiredException)
-    if Matcher.block:
-        exceptions.append(StopPropagation)
+        exception = e
 
     coros = list(
-        map(lambda x: x(matcher, exceptions, bot, event, state),
+        map(lambda x: x(matcher, exception, bot, event, state),
             _run_postprocessors))
     if coros:
         try:
@@ -101,8 +121,8 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
                 "<r><bg #f8bbd0>Error when running RunPostProcessors</bg #f8bbd0></r>"
             )
 
-    if exceptions:
-        raise _ExceptionContainer(exceptions)
+    if matcher.block:
+        raise StopPropagation
 
 
 async def handle_event(bot: Bot, event: Event):
@@ -153,29 +173,23 @@ async def handle_event(bot: Bot, event: Event):
         if break_flag:
             break
 
-        pending_tasks = [
-            _run_matcher(matcher, bot, event, state.copy())
-            for matcher in matchers[priority]
-        ]
-
         if show_log:
             logger.debug(f"Checking for matchers in priority {priority}...")
+
+        run_matchers = _check_matcher(priority, bot, event, state)
+
+        pending_tasks = [
+            _run_matcher(matcher, bot, event, state.copy())
+            for matcher in run_matchers
+        ]
+
         results = await asyncio.gather(*pending_tasks, return_exceptions=True)
 
-        i = 0
-        for index, result in enumerate(results):
-            if isinstance(result, _ExceptionContainer):
-                e_list = result.exceptions
-                if StopPropagation in e_list:
-                    if not break_flag:
-                        break_flag = True
-                        logger.debug("Stop event propagation")
-                if ExpiredException in e_list:
-                    logger.debug(
-                        f"Matcher {matchers[priority][index - i]} will be removed."
-                    )
-                    del matchers[priority][index - i]
-                    i += 1
+        for result in results:
+            if result is StopPropagation:
+                if not break_flag:
+                    break_flag = True
+                    logger.debug("Stop event propagation")
 
     coros = list(map(lambda x: x(bot, event, state), _event_postprocessors))
     if coros:

@@ -9,12 +9,6 @@
 from nonebot.typing import List, Type, Optional
 
 
-class _ExceptionContainer(Exception):
-
-    def __init__(self, exceptions: List[Type[Exception]]) -> None:
-        self.exceptions = exceptions
-
-
 class IgnoredException(Exception):
     """
     :说明:
