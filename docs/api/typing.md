@@ -163,13 +163,13 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Matcher, List[Any], Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[[Matcher, Optional[Exception], Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
 
 
 
 * **说明**
 
-    事件响应器运行前预处理函数 RunPostProcessor 类型，第二个参数包含运行时产生的错误以及 `ExpiredException`, `StopPropagation` (如果存在)
+    事件响应器运行前预处理函数 RunPostProcessor 类型，第二个参数为运行时产生的错误（如果存在）
 
 
 
