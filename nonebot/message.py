@@ -10,8 +10,8 @@ from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.utils import escape_tag
 from nonebot.matcher import matchers, Matcher
-from nonebot.typing import Set, Type, Union, Iterable, NoReturn, Bot, Event
-from nonebot.exception import IgnoredException, ExpiredException, StopPropagation
+from nonebot.typing import Set, Type, Union, Optional, Iterable, NoReturn, Bot, Event
+from nonebot.exception import IgnoredException, StopPropagation
 from nonebot.typing import EventPreProcessor, RunPreProcessor, EventPostProcessor, RunPostProcessor
 
 _event_preprocessors: Set[EventPreProcessor] = set()
@@ -70,12 +70,12 @@ async def _check_matcher(priority: int, bot: Bot, event: Event,
     ]
     results = await asyncio.gather(*checking_tasks, return_exceptions=True)
     expired = await asyncio.gather(*checking_expire_tasks)
-    for expired_matcher in filter(lambda x: issubclass(Matcher), expired):
+    for expired_matcher in filter(lambda x: x and x in results, expired):
         try:
             matchers[priority].remove(expired_matcher)
         except Exception:
             pass
-    return filter(lambda x: issubclass(Matcher), results)
+    return filter(lambda x: x, results)
 
 
 async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
@@ -176,7 +176,7 @@ async def handle_event(bot: Bot, event: Event):
         if show_log:
             logger.debug(f"Checking for matchers in priority {priority}...")
 
-        run_matchers = _check_matcher(priority, bot, event, state)
+        run_matchers = await _check_matcher(priority, bot, event, state)
 
         pending_tasks = [
             _run_matcher(matcher, bot, event, state.copy())
