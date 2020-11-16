@@ -73,19 +73,6 @@ class FinishedException(Exception):
     pass
 
 
-class ExpiredException(Exception):
-    """
-    :说明:
-
-      指示 NoneBot 当前 ``Matcher`` 已失效。
-
-    :用法:
-
-      当 ``Matcher`` 运行前检查时抛出。
-    """
-    pass
-
-
 class StopPropagation(Exception):
     """
     :说明:
