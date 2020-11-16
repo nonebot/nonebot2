@@ -137,7 +137,7 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
 * **示例**
 
 
-..code-block:: python
-
-> import asyncio
-> asyncio.create_task(handle_event(bot, event))
+```python
+import asyncio
+asyncio.create_task(handle_event(bot, event))
+```
