@@ -86,8 +86,7 @@ module.exports = context => ({
         sidebar: {
           "/guide/": [
             {
-              title: "指南",
-              path: "",
+              title: "开始",
               collapsable: false,
               sidebar: "auto",
               children: [
@@ -95,8 +94,19 @@ module.exports = context => ({
                 "installation",
                 "getting-started",
                 "creating-a-project",
-                "basic-configuration",
-                "writing-a-plugin"
+                "basic-configuration"
+              ]
+            },
+            {
+              title: "编写插件",
+              collapsable: false,
+              sidebar: "auto",
+              children: [
+                "loading-a-plugin",
+                "creating-a-plugin",
+                "creating-a-matcher",
+                "creating-a-handler",
+                "end-or-start"
               ]
             }
           ],
@@ -117,6 +127,10 @@ module.exports = context => ({
                 {
                   title: "nonebot.plugin 模块",
                   path: "plugin"
+                },
+                {
+                  title: "nonebot.message 模块",
+                  path: "message"
                 },
                 {
                   title: "nonebot.matcher 模块",

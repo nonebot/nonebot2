@@ -12,6 +12,8 @@ CQHTTP (OneBot) v11 协议适配
 
 import re
 import sys
+import hmac
+import json
 import asyncio
 
 import httpx
@@ -19,10 +21,10 @@ import httpx
 from nonebot.log import logger
 from nonebot.config import Config
 from nonebot.message import handle_event
-from nonebot.typing import Any, Dict, Union, Tuple, Iterable, Optional
-from nonebot.exception import NetworkError, ActionFailed, ApiNotAvailable
 from nonebot.typing import overrides, Driver, WebSocket, NoReturn
+from nonebot.typing import Any, Dict, Union, Tuple, Iterable, Optional
 from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
+from nonebot.exception import NetworkError, ActionFailed, RequestDenied, ApiNotAvailable
 
 
 def log(level: str, message: str):
@@ -37,6 +39,16 @@ def log(level: str, message: str):
       * ``message: str``: 日志信息
     """
     return logger.opt(colors=True).log(level, "<m>CQHTTP</m> | " + message)
+
+
+def get_auth_bearer(
+        access_token: Optional[str] = None) -> Union[Optional[str], NoReturn]:
+    if not access_token:
+        return None
+    scheme, _, param = access_token.partition(" ")
+    if scheme.lower() not in ["bearer", "token"]:
+        raise RequestDenied(401, "Not authenticated")
+    return param
 
 
 def escape(s: str, *, escape_comma: bool = True) -> str:
@@ -103,6 +115,8 @@ async def _check_reply(bot: "Bot", event: "Event"):
     if event.reply["sender"]["user_id"] == event.self_id:
         event.to_me = True
     del event.message[index]
+    if not event.message:
+        event.message.append(MessageSegment.text(""))
 
 
 def _check_at_me(bot: "Bot", event: "Event"):
@@ -125,8 +139,7 @@ def _check_at_me(bot: "Bot", event: "Event"):
         at_me_seg = MessageSegment.at(event.self_id)
 
         # check the first segment
-        first_msg_seg = event.message[0]
-        if first_msg_seg == at_me_seg:
+        if event.message[0] == at_me_seg:
             event.to_me = True
             del event.message[0]
             if event.message[0].type == "text":
@@ -180,13 +193,9 @@ def _check_nickname(bot: "Bot", event: "Event"):
 
     first_text = first_msg_seg.data["text"]
 
-    if bot.config.nickname:
+    nicknames = set(filter(lambda n: n, bot.config.nickname))
+    if nicknames:
         # check if the user is calling me with my nickname
-        if isinstance(bot.config.nickname, str) or \
-                not isinstance(bot.config.nickname, Iterable):
-            nicknames = (bot.config.nickname,)
-        else:
-            nicknames = filter(lambda n: n, bot.config.nickname)
         nickname_regex = "|".join(nicknames)
         m = re.search(rf"^({nickname_regex})([\s,，]*|$)", first_text,
                       re.IGNORECASE)
@@ -264,8 +273,6 @@ class Bot(BaseBot):
                  self_id: str,
                  *,
                  websocket: Optional[WebSocket] = None):
-        if connection_type not in ["http", "websocket"]:
-            raise ValueError("Unsupported connection type")
 
         super().__init__(driver,
                          connection_type,
@@ -280,6 +287,51 @@ class Bot(BaseBot):
         - 返回: ``"cqhttp"``
         """
         return "cqhttp"
+
+    @classmethod
+    @overrides(BaseBot)
+    async def check_permission(cls, driver: Driver, connection_type: str,
+                               headers: dict,
+                               body: Optional[dict]) -> Union[str, NoReturn]:
+        """
+        :说明:
+          CQHTTP (OneBot) 协议鉴权。参考 `鉴权 <https://github.com/howmanybots/onebot/blob/master/v11/specs/communication/authorization.md>`_
+        """
+        x_self_id = headers.get("x-self-id")
+        x_signature = headers.get("x-signature")
+        access_token = get_auth_bearer(headers.get("authorization"))
+
+        # 检查连接方式
+        if connection_type not in ["http", "websocket"]:
+            log("WARNING", "Unsupported connection type")
+            raise RequestDenied(405, "Unsupported connection type")
+
+        # 检查self_id
+        if not x_self_id:
+            log("WARNING", "Missing X-Self-ID Header")
+            raise RequestDenied(400, "Missing X-Self-ID Header")
+
+        # 检查签名
+        secret = driver.config.secret
+        if secret and connection_type == "http":
+            if not x_signature:
+                log("WARNING", "Missing Signature Header")
+                raise RequestDenied(401, "Missing Signature")
+            sig = hmac.new(secret.encode("utf-8"),
+                           json.dumps(body).encode(), "sha1").hexdigest()
+            if x_signature != "sha1=" + sig:
+                log("WARNING", "Signature Header is invalid")
+                raise RequestDenied(403, "Signature is invalid")
+
+        access_token = driver.config.access_token
+        if access_token and access_token != access_token:
+            log(
+                "WARNING", "Authorization Header is invalid"
+                if access_token else "Missing Authorization Header")
+            raise RequestDenied(
+                403, "Authorization Header is invalid"
+                if access_token else "Missing Authorization Header")
+        return str(x_self_id)
 
     @overrides(BaseBot)
     async def handle_message(self, message: dict):

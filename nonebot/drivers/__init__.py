@@ -1,6 +1,6 @@
 """
 后端驱动适配基类
-===============
+=================
 
 各驱动请继承以下基类
 """
@@ -27,6 +27,7 @@ class BaseDriver(abc.ABC):
     def __init__(self, env: Env, config: Config):
         """
         :参数:
+
           * ``env: Env``: 包含环境信息的 Env 对象
           * ``config: Config``: 包含配置信息的 Config 对象
         """
@@ -136,6 +137,7 @@ class BaseWebSocket(object):
     def __init__(self, websocket):
         """
         :参数:
+
           * ``websocket: Any``: WebSocket 连接对象
         """
         self._websocket = websocket

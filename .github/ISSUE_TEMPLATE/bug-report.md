@@ -26,7 +26,7 @@ A clear and concise description of what you expected to happen.
 
  - OS: [e.g. Linux]
  - Python Version: [e.g. 3.8]
- - Nonebot Version [e.g. 2.0.0]
+ - Nonebot Version: [e.g. 2.0.0]
 
 **截图**
 

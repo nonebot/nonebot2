@@ -260,7 +260,8 @@ class Matcher(metaclass=MatcherMeta):
             state["_current_key"] = key
             if key not in state:
                 if prompt:
-                    await bot.send(event=event, message=prompt)
+                    await bot.send(event=event,
+                                   message=str(prompt).format(**state))
                 raise PausedException
             else:
                 state["_skip_key"] = True
@@ -535,7 +536,8 @@ class MatcherGroup:
             state["_current_key"] = key
             if key not in state:
                 if prompt:
-                    await bot.send(event=event, message=prompt)
+                    await bot.send(event=event,
+                                   message=str(prompt).format(state))
                 raise PausedException
             else:
                 state["_skip_key"] = True
