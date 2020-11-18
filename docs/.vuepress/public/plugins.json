@@ -6,5 +6,13 @@
     "desc": "通过戳一戳获取服务器状态",
     "author": "yanyongyu",
     "repo": "cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_status"
+  },
+  {
+    "id": "haruka_bot",
+    "link": "haruka-bot",
+    "name": "HarukaBot",
+    "desc": "将B站UP主的动态和直播信息推送至QQ",
+    "author": "SK-415",
+    "repo": "SK-415/HarukaBot"
   }
 ]
