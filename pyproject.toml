@@ -43,7 +43,7 @@ sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-bu
 cli = ["nb-cli"]
 test = ["nonebot-test"]
 scheduler = ["apscheduler"]
-full = ["nb-cli", "nonebot-test", "scheduler"]
+full = ["nb-cli", "nonebot-test", "apscheduler"]
 
 [[tool.poetry.source]]
 name = "aliyun"
