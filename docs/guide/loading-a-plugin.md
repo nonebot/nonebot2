@@ -83,7 +83,39 @@ if __name__ == "__main__":
 
 <!-- TODO: 子插件 -->
 
-~~待填坑~~
+在插件中同样可以加载子插件，例如如下插件目录结构：
+
+<!-- prettier-ignore-start -->
+:::vue
+foo_plugin
+├── `plugins`
+│   ├── `sub_plugin1`
+│   │  └── \_\_init\_\_.py
+│   └── `sub_plugin2.py`
+├── `__init__.py`
+└── config.py
+:::
+<!-- prettier-ignore-end -->
+
+在插件目录下的 `__init__.py` 中添加如下代码：
+
+```python
+from pathlib import Path
+
+import nonebot
+
+# store all subplugins
+_sub_plugins = set()
+# load sub plugins
+_sub_plugins |= nonebot.load_plugins(
+    str((Path(__file__).parent / "plugins").resolve()))
+```
+
+插件将会被加载并存储于 `_sub_plugins` 中。
+
+:::tip 提示
+如果在父插件中需要定义事件响应器，应在**子插件被加载后**进行定义
+:::
 
 ## 运行结果
 
