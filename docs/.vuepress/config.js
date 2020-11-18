@@ -79,8 +79,10 @@ module.exports = context => ({
         nav: [
           { text: "主页", link: "/" },
           { text: "指南", link: "/guide/" },
+          { text: "进阶", link: "/advanced/" },
           { text: "API", link: "/api/" },
-          { text: "插件广场", link: "/plugin-store" }
+          { text: "插件广场", link: "/plugin-store" },
+          { text: "更新日志", link: "/changelog" }
         ],
         sidebarDepth: 2,
         sidebar: {
@@ -107,6 +109,19 @@ module.exports = context => ({
                 "creating-a-matcher",
                 "creating-a-handler",
                 "end-or-start"
+              ]
+            }
+          ],
+          "/advanced/": [
+            {
+              title: "进阶",
+              collapsable: false,
+              sidebar: "auto",
+              children: [
+                "",
+                "scheduler",
+                "permission",
+                "runtime-hook"
               ]
             }
           ],
