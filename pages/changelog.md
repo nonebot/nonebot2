@@ -6,6 +6,8 @@ sidebar: auto
 
 ## v2.0.0a6
 
+- 修复 block 失效问题 (hotfix)
+
 ## v2.0.0a5
 
 - 更新插件指南文档
