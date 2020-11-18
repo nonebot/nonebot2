@@ -244,7 +244,7 @@ async def handle_event(bot: Bot, event: Event):
         results = await asyncio.gather(*pending_tasks, return_exceptions=True)
 
         for result in results:
-            if result is StopPropagation:
+            if isinstance(result, StopPropagation):
                 if not break_flag:
                     break_flag = True
                     logger.debug("Stop event propagation")
