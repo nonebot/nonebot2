@@ -18,12 +18,6 @@ NoneBot2 是一个可扩展的 Python 异步机器人框架，它会对机器人
 
 需要注意的是，NoneBot 仅支持 Python 3.7+ 及 CQHTTP(OneBot) 插件 v11+。
 
-## 它如何工作？
-
-<!-- TODO: how to work -->
-
-~~未填坑~~
-
 ## 特色
 
 - 提供直观的测试前端
