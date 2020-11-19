@@ -153,7 +153,7 @@ async def arg_handle(bot: Bot, event: Event, state: dict):
     if state["arg1"] not in ["allow", "list"]:
         await matcher.reject("参数不正确！请重新输入")
     # 发送一些信息
-    await bot.send("message")
+    await bot.send(event, "message")
     await matcher.send("message")
     await matcher.finish("message")
 ```
