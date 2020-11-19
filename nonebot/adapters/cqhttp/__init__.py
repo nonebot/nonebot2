@@ -118,6 +118,9 @@ async def _check_reply(bot: "Bot", event: "Event"):
     del event.message[index]
     if len(event.message) > index and event.message[index].type == "at":
         del event.message[index]
+        if len(event.message) > index and event.message[index].type == "test":
+            event.message[index].data["text"] = event.message[index].data[
+                "text"].strip()
     if not event.message:
         event.message.append(MessageSegment.text(""))
 
