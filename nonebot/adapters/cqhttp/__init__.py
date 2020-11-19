@@ -112,14 +112,14 @@ async def _check_reply(bot: "Bot", event: "Event"):
         return
     msg_seg = event.message[index]
     event.reply = await bot.get_msg(message_id=msg_seg.data["id"])
-    if event.reply["sender"]["user_id"] == event.self_id:
+    if event.reply["sender"]["user_id"] == int(event.self_id):  # TODO 这里一个int一个str需要修改
         event.to_me = True
     del event.message[index]
     if not event.message:
         event.message.append(MessageSegment.text(""))
 
 
-def _check_at_me(bot: "Bot", event: "Event"):
+def _check_at_me(bot: "Bot", event: "Event"):  # TODO 只有开头at机器人才会识别,其他的不管  应该删除前面两个如果存在的at以及后面正文前面的空格
     """
     :说明:
 
@@ -138,8 +138,8 @@ def _check_at_me(bot: "Bot", event: "Event"):
     else:
         at_me_seg = MessageSegment.at(event.self_id)
 
-        # check the first segment
-        if event.message[0] == at_me_seg:
+        # check the first segment   at 空 at
+        if event.message[0] == at_me_seg:   # TODO 有时候不能正常判断
             event.to_me = True
             del event.message[0]
             if event.message[0].type == "text":
@@ -147,13 +147,14 @@ def _check_at_me(bot: "Bot", event: "Event"):
                     "text"].lstrip()
                 if not event.message[0].data["text"]:
                     del event.message[0]
-            if event.message[0] == at_me_seg:
-                del event.message[0]
-                if event.message[0].type == "text":
-                    event.message[0].data["text"] = event.message[0].data[
-                        "text"].lstrip()
-                    if not event.message[0].data["text"]:
-                        del event.message[0]
+            if event.message:
+                if event.message[0] == at_me_seg:
+                    del event.message[0]
+                    if event.message[0].type == "text":
+                        event.message[0].data["text"] = event.message[0].data[
+                            "text"].lstrip()
+                        if not event.message[0].data["text"]:
+                            del event.message[0]
 
         if not event.to_me:
             # check the last segment
