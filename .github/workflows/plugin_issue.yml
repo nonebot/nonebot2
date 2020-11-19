@@ -3,7 +3,7 @@ name: 'Plugin Issue Bot'
 on:
   push:
     branches:
-      - main
+      - master
   issues:
     types: [opened, edited]
   pull_request:
