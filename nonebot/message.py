@@ -92,7 +92,7 @@ async def _check_matcher(priority: int, bot: Bot, event: Event,
     async def _check(Matcher: Type[Matcher], bot: Bot, event: Event,
                      state: dict) -> Optional[Type[Matcher]]:
         try:
-            if (Matcher.expire_time and datetime.now() <= Matcher.expire_time
+            if (not Matcher.expire_time or datetime.now() <= Matcher.expire_time
                ) and await Matcher.check_perm(
                    bot, event) and await Matcher.check_rule(bot, event, state):
                 return Matcher
