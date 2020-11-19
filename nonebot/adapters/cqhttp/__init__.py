@@ -115,7 +115,7 @@ async def _check_reply(bot: "Bot", event: "Event"):
     # ensure string comparation
     if str(event.reply["sender"]["user_id"]) == str(event.self_id):
         event.to_me = True
-    del event.message[index]
+    del event.message[index], event.message[index]
     if not event.message:
         event.message.append(MessageSegment.text(""))
 
