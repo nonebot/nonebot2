@@ -92,8 +92,9 @@ async def _check_matcher(priority: int, bot: Bot, event: Event,
     async def _check(Matcher: Type[Matcher], bot: Bot, event: Event,
                      state: dict) -> Optional[Type[Matcher]]:
         try:
-            if await Matcher.check_perm(
-                    bot, event) and await Matcher.check_rule(bot, event, state):
+            if (Matcher.expire_time and datetime.now() <= Matcher.expire_time
+               ) and await Matcher.check_perm(
+                   bot, event) and await Matcher.check_rule(bot, event, state):
                 return Matcher
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
@@ -149,6 +150,8 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
     try:
         logger.debug(f"Running matcher {matcher}")
         await matcher.run(bot, event, state)
+    except StopPropagation as e:
+        exception = e
     except Exception as e:
         logger.opt(colors=True, exception=e).error(
             f"<r><bg #f8bbd0>Running matcher {matcher} failed.</bg #f8bbd0></r>"
@@ -166,7 +169,7 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
                 "<r><bg #f8bbd0>Error when running RunPostProcessors</bg #f8bbd0></r>"
             )
 
-    if matcher.block:
+    if matcher.block or isinstance(exception, StopPropagation):
         raise StopPropagation
 
 
