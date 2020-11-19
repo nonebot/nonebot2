@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "nonebot2"
-version = "2.0.0a4"
+version = "2.0.0-alpha.6"
 description = "An asynchronous python bot framework."
 authors = ["yanyongyu <yanyongyu_1@126.com>"]
 license = "MIT"
 readme = "README.md"
-homepage = "https://docs.nonebot.dev/"
+homepage = "https://v2.nonebot.dev/"
 repository = "https://github.com/nonebot/nonebot2"
-documentation = "https://docs.nonebot.dev/"
+documentation = "https://v2.nonebot.dev/"
 keywords = ["bot", "qq", "qqbot", "mirai", "coolq"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -43,7 +43,7 @@ sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-bu
 cli = ["nb-cli"]
 test = ["nonebot-test"]
 scheduler = ["apscheduler"]
-full = ["nb-cli", "nonebot-test", "scheduler"]
+full = ["nb-cli", "nonebot-test", "apscheduler"]
 
 [[tool.poetry.source]]
 name = "aliyun"

@@ -9,6 +9,11 @@ def log(level: str, message: str):
     ...
 
 
+def get_auth_bearer(
+        access_token: Optional[str] = ...) -> Union[Optional[str], NoReturn]:
+    ...
+
+
 def escape(s: str, *, escape_comma: bool = ...) -> str:
     ...
 
@@ -67,6 +72,12 @@ class Bot(BaseBot):
         ...
 
     def type(self) -> str:
+        ...
+
+    @classmethod
+    async def check_permission(cls, driver: Driver, connection_type: str,
+                               headers: dict,
+                               body: Optional[dict]) -> Union[str, NoReturn]:
         ...
 
     async def handle_message(self, message: dict):

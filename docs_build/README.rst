@@ -5,6 +5,7 @@ NoneBot Api Reference
   - `nonebot <nonebot.html>`_
   - `nonebot.config <config.html>`_
   - `nonebot.plugin <plugin.html>`_
+  - `nonebot.message <message.html>`_
   - `nonebot.matcher <matcher.html>`_
   - `nonebot.rule <rule.html>`_
   - `nonebot.permission <permission.html>`_
