@@ -1,41 +1,151 @@
+"""
+事件处理
+========
+
+NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供了多个插槽以进行事件的预处理等。
+"""
+
 import asyncio
 from datetime import datetime
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.utils import escape_tag
-from nonebot.matcher import matchers
-from nonebot.typing import Set, Type, Union, NoReturn
-from nonebot.typing import Bot, Event, Matcher, PreProcessor
-from nonebot.exception import IgnoredException, ExpiredException
-from nonebot.exception import StopPropagation, _ExceptionContainer
+from nonebot.matcher import matchers, Matcher
+from nonebot.typing import Set, Type, Union, Optional, Iterable, NoReturn, Bot, Event
+from nonebot.exception import IgnoredException, StopPropagation
+from nonebot.typing import EventPreProcessor, RunPreProcessor, EventPostProcessor, RunPostProcessor
 
-_event_preprocessors: Set[PreProcessor] = set()
+_event_preprocessors: Set[EventPreProcessor] = set()
+_event_postprocessors: Set[EventPostProcessor] = set()
+_run_preprocessors: Set[RunPreProcessor] = set()
+_run_postprocessors: Set[RunPostProcessor] = set()
 
 
-def event_preprocessor(func: PreProcessor) -> PreProcessor:
+def event_preprocessor(func: EventPreProcessor) -> EventPreProcessor:
+    """
+    :说明:
+      事件预处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之前执行。
+    :参数:
+      事件预处理函数接收三个参数。
+
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+      * ``state: dict``: 当前 State
+    """
     _event_preprocessors.add(func)
     return func
 
 
+def event_postprocessor(func: EventPostProcessor) -> EventPostProcessor:
+    """
+    :说明:
+      事件后处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之后执行。
+    :参数:
+      事件后处理函数接收三个参数。
+
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+      * ``state: dict``: 当前事件运行前 State
+    """
+    _event_postprocessors.add(func)
+    return func
+
+
+def run_preprocessor(func: RunPreProcessor) -> RunPreProcessor:
+    """
+    :说明:
+      运行预处理。装饰一个函数，使它在每次事件响应器运行前执行。
+    :参数:
+      运行预处理函数接收四个参数。
+
+      * ``matcher: Matcher``: 当前要运行的事件响应器
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+      * ``state: dict``: 当前 State
+    """
+    _run_preprocessors.add(func)
+    return func
+
+
+def run_postprocessor(func: RunPostProcessor) -> RunPostProcessor:
+    """
+    :说明:
+      运行后处理。装饰一个函数，使它在每次事件响应器运行后执行。
+    :参数:
+      运行后处理函数接收五个参数。
+
+      * ``matcher: Matcher``: 运行完毕的事件响应器
+      * ``exception: Optional[Exception]``: 事件响应器运行错误（如果存在）
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+      * ``state: dict``: 当前 State
+    """
+    _run_postprocessors.add(func)
+    return func
+
+
+async def _check_matcher(priority: int, bot: Bot, event: Event,
+                         state: dict) -> Iterable[Type[Matcher]]:
+    current_matchers = matchers[priority].copy()
+
+    async def _check(Matcher: Type[Matcher], bot: Bot, event: Event,
+                     state: dict) -> Optional[Type[Matcher]]:
+        try:
+            if await Matcher.check_perm(
+                    bot, event) and await Matcher.check_rule(bot, event, state):
+                return Matcher
+        except Exception as e:
+            logger.opt(colors=True, exception=e).error(
+                f"<r><bg #f8bbd0>Rule check failed for {Matcher}.</bg #f8bbd0></r>"
+            )
+        return None
+
+    async def _check_expire(Matcher: Type[Matcher]) -> Optional[Type[Matcher]]:
+        if Matcher.temp or (Matcher.expire_time and
+                            datetime.now() > Matcher.expire_time):
+            return Matcher
+        return None
+
+    checking_tasks = [
+        _check(Matcher, bot, event, state) for Matcher in current_matchers
+    ]
+    checking_expire_tasks = [
+        _check_expire(Matcher) for Matcher in current_matchers
+    ]
+    results = await asyncio.gather(*checking_tasks, return_exceptions=True)
+    expired = await asyncio.gather(*checking_expire_tasks)
+    for expired_matcher in filter(lambda x: x and x in results, expired):
+        try:
+            matchers[priority].remove(expired_matcher)
+        except Exception:
+            pass
+    return filter(lambda x: x, results)
+
+
 async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
                        state: dict) -> Union[None, NoReturn]:
-    if Matcher.expire_time and datetime.now() > Matcher.expire_time:
-        raise _ExceptionContainer([ExpiredException])
-
-    try:
-        if not await Matcher.check_perm(
-                bot, event) or not await Matcher.check_rule(bot, event, state):
-            return
-    except Exception as e:
-        logger.opt(colors=True, exception=e).error(
-            f"<r><bg #f8bbd0>Rule check failed for {Matcher}.</bg #f8bbd0></r>")
-        return
-
     logger.info(f"Event will be handled by {Matcher}")
 
     matcher = Matcher()
-    # TODO: BeforeMatcherRun
+
+    coros = list(
+        map(lambda x: x(matcher, bot, event, state), _run_preprocessors))
+    if coros:
+        try:
+            await asyncio.gather(*coros)
+        except IgnoredException:
+            logger.opt(colors=True).info(
+                f"Matcher {matcher} running is <b>cancelled</b>")
+            return
+        except Exception as e:
+            logger.opt(colors=True, exception=e).error(
+                "<r><bg #f8bbd0>Error when running RunPreProcessors. "
+                "Running cancelled!</bg #f8bbd0></r>")
+            return
+
+    exception = None
+
     try:
         logger.debug(f"Running matcher {matcher}")
         await matcher.run(bot, event, state)
@@ -43,17 +153,37 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
         logger.opt(colors=True, exception=e).error(
             f"<r><bg #f8bbd0>Running matcher {matcher} failed.</bg #f8bbd0></r>"
         )
+        exception = e
 
-    exceptions = []
-    if Matcher.temp:
-        exceptions.append(ExpiredException)
-    if Matcher.block:
-        exceptions.append(StopPropagation)
-    if exceptions:
-        raise _ExceptionContainer(exceptions)
+    coros = list(
+        map(lambda x: x(matcher, exception, bot, event, state),
+            _run_postprocessors))
+    if coros:
+        try:
+            await asyncio.gather(*coros)
+        except Exception as e:
+            logger.opt(colors=True, exception=e).error(
+                "<r><bg #f8bbd0>Error when running RunPostProcessors</bg #f8bbd0></r>"
+            )
+
+    if matcher.block:
+        raise StopPropagation
 
 
 async def handle_event(bot: Bot, event: Event):
+    """
+    :说明:
+       处理一个事件。调用该函数以实现分发事件。
+    :参数:
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+    :示例:
+
+    .. code-block:: python
+
+        import asyncio
+        asyncio.create_task(handle_event(bot, event))
+    """
     show_log = True
     log_msg = f"<m>{bot.type.upper()} </m>| {event.self_id} [{event.name}]: "
     if event.type == "message":
@@ -77,10 +207,8 @@ async def handle_event(bot: Bot, event: Event):
     if show_log:
         logger.opt(colors=True).info(log_msg)
 
-    coros = []
     state = {}
-    for preprocessor in _event_preprocessors:
-        coros.append(preprocessor(bot, event, state))
+    coros = list(map(lambda x: x(bot, event, state), _event_preprocessors))
     if coros:
         try:
             logger.debug("Running PreProcessors...")
@@ -88,6 +216,11 @@ async def handle_event(bot: Bot, event: Event):
         except IgnoredException:
             logger.opt(
                 colors=True).info(f"Event {event.name} is <b>ignored</b>")
+            return
+        except Exception as e:
+            logger.opt(colors=True, exception=e).error(
+                "<r><bg #f8bbd0>Error when running EventPreProcessors. "
+                "Event ignored!</bg #f8bbd0></r>")
             return
 
     # Trie Match
@@ -98,26 +231,30 @@ async def handle_event(bot: Bot, event: Event):
         if break_flag:
             break
 
-        pending_tasks = [
-            _run_matcher(matcher, bot, event, state.copy())
-            for matcher in matchers[priority]
-        ]
-
         if show_log:
             logger.debug(f"Checking for matchers in priority {priority}...")
+
+        run_matchers = await _check_matcher(priority, bot, event, state)
+
+        pending_tasks = [
+            _run_matcher(matcher, bot, event, state.copy())
+            for matcher in run_matchers
+        ]
+
         results = await asyncio.gather(*pending_tasks, return_exceptions=True)
 
-        i = 0
-        for index, result in enumerate(results):
-            if isinstance(result, _ExceptionContainer):
-                e_list = result.exceptions
-                if StopPropagation in e_list:
-                    if not break_flag:
-                        break_flag = True
-                        logger.debug("Stop event propagation")
-                if ExpiredException in e_list:
-                    logger.debug(
-                        f"Matcher {matchers[priority][index - i]} will be removed."
-                    )
-                    del matchers[priority][index - i]
-                    i += 1
+        for result in results:
+            if isinstance(result, StopPropagation):
+                if not break_flag:
+                    break_flag = True
+                    logger.debug("Stop event propagation")
+
+    coros = list(map(lambda x: x(bot, event, state), _event_postprocessors))
+    if coros:
+        try:
+            logger.debug("Running PostProcessors...")
+            await asyncio.gather(*coros)
+        except Exception as e:
+            logger.opt(colors=True, exception=e).error(
+                "<r><bg #f8bbd0>Error when running EventPostProcessors</bg #f8bbd0></r>"
+            )

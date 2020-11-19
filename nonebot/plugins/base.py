@@ -26,9 +26,9 @@ echo = on_command("echo", to_me())
 
 @echo.handle()
 async def echo_escape(bot: Bot, event: Event, state: dict):
-    Message = event.message.__class__
-    MessageSegment = event.message[0].__class__
+    # Message = event.message.__class__
+    # MessageSegment = event.message[0].__class__
 
-    message = Message().append(  # type: ignore
-        MessageSegment.text(str(event.message)))
-    await bot.send(message=message, event=event)
+    # message = Message().append(  # type: ignore
+    #     MessageSegment.text(str(event.message)))
+    await bot.send(message=event.message, event=event)

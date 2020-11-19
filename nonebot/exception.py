@@ -9,12 +9,6 @@
 from nonebot.typing import List, Type, Optional
 
 
-class _ExceptionContainer(Exception):
-
-    def __init__(self, exceptions: List[Type[Exception]]) -> None:
-        self.exceptions = exceptions
-
-
 class IgnoredException(Exception):
     """
     :说明:
@@ -79,19 +73,6 @@ class FinishedException(Exception):
     pass
 
 
-class ExpiredException(Exception):
-    """
-    :说明:
-
-      指示 NoneBot 当前 ``Matcher`` 已失效。
-
-    :用法:
-
-      当 ``Matcher`` 运行前检查时抛出。
-    """
-    pass
-
-
 class StopPropagation(Exception):
     """
     :说明:
@@ -103,6 +84,29 @@ class StopPropagation(Exception):
       在 ``Matcher.block == True`` 时抛出。
     """
     pass
+
+
+class RequestDenied(Exception):
+    """
+    :说明:
+
+      Bot 连接请求不合法。
+
+    :参数:
+
+      * ``status_code: int``: HTTP 状态码
+      * ``reason: str``: 拒绝原因
+    """
+
+    def __init__(self, status_code: int, reason: str):
+        self.status_code = status_code
+        self.reason = reason
+
+    def __repr__(self):
+        return f"<RequestDenied, status_code={self.status_code}, reason={self.reason}>"
+
+    def __str__(self):
+        return self.__repr__()
 
 
 class ApiNotAvailable(Exception):
@@ -131,7 +135,7 @@ class ActionFailed(Exception):
 
     :参数:
 
-      * ``retcode``: 错误代码
+      * ``retcode: Optional[int]``: 错误代码
     """
 
     def __init__(self, retcode: Optional[int]):
