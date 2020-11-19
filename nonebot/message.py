@@ -149,6 +149,8 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
     try:
         logger.debug(f"Running matcher {matcher}")
         await matcher.run(bot, event, state)
+    except StopPropagation as e:
+        exception = e
     except Exception as e:
         logger.opt(colors=True, exception=e).error(
             f"<r><bg #f8bbd0>Running matcher {matcher} failed.</bg #f8bbd0></r>"
@@ -166,7 +168,7 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
                 "<r><bg #f8bbd0>Error when running RunPostProcessors</bg #f8bbd0></r>"
             )
 
-    if matcher.block:
+    if matcher.block or isinstance(exception, StopPropagation):
         raise StopPropagation
 
 
