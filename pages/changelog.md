@@ -7,6 +7,7 @@ sidebar: auto
 ## v2.0.0a6
 
 - 修复 block 失效问题 (hotfix)
+- 修复 cqhttp 检查 to me 时出现 IndexError
 
 ## v2.0.0a5
 
