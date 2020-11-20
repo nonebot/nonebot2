@@ -5,7 +5,7 @@ on:
     branches:
       - master
   issues:
-    types: [opened, edited]
+    types: [opened, reopened, edited]
   pull_request:
     types: [closed]
 
@@ -18,7 +18,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: NoneBot2 Plugin Issue Bot
-        uses: he0119/nonebot2-plugin-issue-bot@v0.1
+        uses: he0119/nonebot2-plugin-issue-bot@v0.2
         with:
           token: ${{ secrets.GH_TOKEN }}
           base: master
