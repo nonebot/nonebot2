@@ -1,0 +1,25 @@
+name: 'Plugin Issue Bot'
+
+on:
+  push:
+    branches:
+      - master
+  issues:
+    types: [opened, edited]
+  pull_request:
+    types: [closed]
+
+jobs:
+  issue_bot:
+    runs-on: ubuntu-latest
+    name: plugin issue bot
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: NoneBot2 Plugin Issue Bot
+        uses: he0119/nonebot2-plugin-issue-bot@v0.1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          base: master
+          path: docs/.vuepress/public/plugins.json
