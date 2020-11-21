@@ -1,17 +1,32 @@
 import re
+from contextvars import ContextVar
 
 from nonebot.typing import Rule, Matcher, Handler, Permission, RuleChecker
 from nonebot.typing import Set, List, Dict, Type, Tuple, Union, Optional, ModuleType
 
 plugins: Dict[str, "Plugin"] = ...
 
-_tmp_matchers: Set[Type[Matcher]] = ...
+_tmp_matchers: ContextVar[Set[Type[Matcher]]] = ...
+_export: ContextVar["Export"] = ...
+
+
+class Export(dict):
+
+    def __call__(self, func, **kwargs):
+        ...
+
+    def __setattr__(self, name, value):
+        ...
+
+    def __getattr__(self, name):
+        ...
 
 
 class Plugin(object):
     name: str
     module: ModuleType
     matcher: Set[Type[Matcher]]
+    export: Export
 
 
 def on(type: str = ...,
@@ -146,6 +161,14 @@ def get_plugin(name: str) -> Optional[Plugin]:
 
 
 def get_loaded_plugins() -> Set[Plugin]:
+    ...
+
+
+def export() -> Export:
+    ...
+
+
+def require(name: str) -> Export:
     ...
 
 

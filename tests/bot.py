@@ -22,6 +22,8 @@ nonebot.load_builtin_plugins()
 # load local plugins
 nonebot.load_plugins("test_plugins")
 
+print(nonebot.require("test_export"))
+
 # modify some config / config depends on loaded configs
 config = nonebot.get_driver().config
 config.custom_config3 = config.custom_config1
