@@ -459,10 +459,22 @@ def load_builtin_plugins() -> Optional[Plugin]:
     return load_plugin("nonebot.plugins.base")
 
 
+def get_plugin(name: str) -> Optional[Plugin]:
+    """
+    :说明:
+      获取当前导入的某个插件。
+    :参数:
+      * ``name: str``: 插件名，与 ``load_plugin`` 参数一致。如果为 ``load_plugins`` 导入的插件，则为文件(夹)名。
+    :返回:
+      - ``Optional[Plugin]``
+    """
+    return plugins.get(name)
+
+
 def get_loaded_plugins() -> Set[Plugin]:
     """
     :说明:
-      获取当前已导入的插件。
+      获取当前已导入的所有插件。
     :返回:
       - ``Set[Plugin]``
     """
