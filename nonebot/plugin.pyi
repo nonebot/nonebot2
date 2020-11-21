@@ -141,6 +141,10 @@ def load_builtin_plugins():
     ...
 
 
+def get_plugin(name: str) -> Optional[Plugin]:
+    ...
+
+
 def get_loaded_plugins() -> Set[Plugin]:
     ...
 
