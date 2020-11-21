@@ -25,6 +25,37 @@ sidebarDepth: 0
 
 
 
+## _class_ `Export`
+
+基类：`dict`
+
+
+* **说明**
+
+    插件导出内容以使得其他插件可以获得。
+
+
+
+* **示例**
+
+
+```python
+nonebot.export().default = "bar"
+
+@nonebot.export()
+def some_function():
+    pass
+
+# this don't work under python 3.9
+# use
+# export = nonebot.export(); @export.sub
+# instead
+@nonebot.export().sub
+def something_else():
+    pass
+```
+
+
 ## _class_ `Plugin`
 
 基类：`object`
@@ -57,6 +88,15 @@ sidebarDepth: 0
 
 
 * **说明**: 插件内定义的 `Matcher`
+
+
+### `export`
+
+
+* **类型**: `Export`
+
+
+* **说明**: 插件内定义的导出内容
 
 
 ## `on(type='', rule=None, permission=None, *, handlers=None, temp=False, priority=1, block=False, state=None)`
@@ -614,12 +654,35 @@ sidebarDepth: 0
 
 
 
+## `get_plugin(name)`
+
+
+* **说明**
+
+    获取当前导入的某个插件。
+
+
+
+* **参数**
+
+    
+    * `name: str`: 插件名，与 `load_plugin` 参数一致。如果为 `load_plugins` 导入的插件，则为文件(夹)名。
+
+
+
+* **返回**
+
+    
+    * `Optional[Plugin]`
+
+
+
 ## `get_loaded_plugins()`
 
 
 * **说明**
 
-    获取当前已导入的插件。
+    获取当前已导入的所有插件。
 
 
 
@@ -627,3 +690,42 @@ sidebarDepth: 0
 
     
     * `Set[Plugin]`
+
+
+
+## `export()`
+
+
+* **说明**
+
+    获取插件的导出内容对象
+
+
+
+* **返回**
+
+    
+    * `Export`
+
+
+
+## `require(name)`
+
+
+* **说明**
+
+    获取一个插件的导出内容
+
+
+
+* **参数**
+
+    
+    * `name: str`: 插件名，与 `load_plugin` 参数一致。如果为 `load_plugins` 导入的插件，则为文件(夹)名。
+
+
+
+* **返回**
+
+    
+    * `Optional[Export]`
