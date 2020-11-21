@@ -17,7 +17,10 @@
 - ``load_plugin`` => ``nonebot.plugin.load_plugin``
 - ``load_plugins`` => ``nonebot.plugin.load_plugins``
 - ``load_builtin_plugins`` => ``nonebot.plugin.load_builtin_plugins``
+- ``get_plugin`` => ``nonebot.plugin.get_plugin``
 - ``get_loaded_plugins`` => ``nonebot.plugin.get_loaded_plugins``
+- ``export`` => ``nonebot.plugin.export``
+- ``require`` => ``nonebot.plugin.require``
 """
 
 import importlib
@@ -239,4 +242,5 @@ async def _start_scheduler():
 
 from nonebot.plugin import on_message, on_notice, on_request, on_metaevent, CommandGroup
 from nonebot.plugin import on_startswith, on_endswith, on_keyword, on_command, on_regex
-from nonebot.plugin import load_plugin, load_plugins, load_builtin_plugins, get_loaded_plugins
+from nonebot.plugin import load_plugin, load_plugins, load_builtin_plugins
+from nonebot.plugin import export, require, get_plugin, get_loaded_plugins

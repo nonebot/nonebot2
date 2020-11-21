@@ -112,9 +112,17 @@ async def _check_reply(bot: "Bot", event: "Event"):
         return
     msg_seg = event.message[index]
     event.reply = await bot.get_msg(message_id=msg_seg.data["id"])
-    if event.reply["sender"]["user_id"] == event.self_id:
+    # ensure string comparation
+    if str(event.reply["sender"]["user_id"]) == str(event.self_id):
         event.to_me = True
     del event.message[index]
+    if len(event.message) > index and event.message[index].type == "at":
+        del event.message[index]
+    if len(event.message) > index and event.message[index].type == "text":
+        event.message[index].data["text"] = event.message[index].data[
+            "text"].lstrip()
+        if not event.message[index].data["text"]:
+            del event.message[index]
     if not event.message:
         event.message.append(MessageSegment.text(""))
 
@@ -142,14 +150,14 @@ def _check_at_me(bot: "Bot", event: "Event"):
         if event.message[0] == at_me_seg:
             event.to_me = True
             del event.message[0]
-            if event.message[0].type == "text":
+            if event.message and event.message[0].type == "text":
                 event.message[0].data["text"] = event.message[0].data[
                     "text"].lstrip()
                 if not event.message[0].data["text"]:
                     del event.message[0]
-            if event.message[0] == at_me_seg:
+            if event.message and event.message[0] == at_me_seg:
                 del event.message[0]
-                if event.message[0].type == "text":
+                if event.message and event.message[0].type == "text":
                     event.message[0].data["text"] = event.message[0].data[
                         "text"].lstrip()
                     if not event.message[0].data["text"]:

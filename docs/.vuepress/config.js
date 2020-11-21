@@ -1,6 +1,7 @@
 const path = require("path");
 
 module.exports = context => ({
+  base: process.env.VUEPRESS_BASE || "/",
   title: "NoneBot",
   description: "基于 酷Q 的 Python 异步 QQ 机器人框架",
   markdown: {
@@ -117,12 +118,7 @@ module.exports = context => ({
               title: "进阶",
               collapsable: false,
               sidebar: "auto",
-              children: [
-                "",
-                "scheduler",
-                "permission",
-                "runtime-hook"
-              ]
+              children: ["", "scheduler", "permission", "runtime-hook"]
             }
           ],
           "/api/": [
