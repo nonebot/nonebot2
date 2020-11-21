@@ -44,6 +44,10 @@ class Export(dict):
         def some_function():
             pass
 
+        # this don't work under python 3.9
+        # use
+        # export = nonebot.export(); @export.sub
+        # instead
         @nonebot.export().sub
         def something_else():
             pass
@@ -86,6 +90,10 @@ class Plugin(object):
     - **说明**: 插件内定义的 ``Matcher``
     """
     export: Export
+    """
+    - **类型**: ``Export``
+    - **说明**: 插件内定义的导出内容
+    """
 
 
 def on(type: str = "",
@@ -539,9 +547,23 @@ def get_loaded_plugins() -> Set[Plugin]:
 
 
 def export() -> Export:
+    """
+    :说明:
+      获取插件的导出内容对象
+    :返回:
+      - ``Export``
+    """
     return _export.get()
 
 
 def require(name: str) -> Optional[Export]:
+    """
+    :说明:
+      获取一个插件的导出内容
+    :参数:
+      * ``name: str``: 插件名，与 ``load_plugin`` 参数一致。如果为 ``load_plugins`` 导入的插件，则为文件(夹)名。
+    :返回:
+      - ``Optional[Export]``
+    """
     plugin = get_plugin(name)
     return plugin.export if plugin else None
