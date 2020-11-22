@@ -22,5 +22,13 @@
     "desc": "基于规则的授权管理",
     "author": "Lancercmd",
     "repo": "Lancercmd/nonebot_plugin_rauthman"
+  },
+  {
+    "id": "nonebot_plugin_docs",
+    "link": "nonebot-plugin-docs",
+    "author": "nonebot",
+    "desc": "在本地浏览NoneBot文档",
+    "name": "NoneBot离线文档",
+    "repo": "yanyongyu/nonebot2/tree/master/packages/nonebot-plugin-docs"
   }
 ]
