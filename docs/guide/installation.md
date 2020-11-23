@@ -44,7 +44,8 @@ pip install nonebot2[scheduler]
 poetry add nonebot2[scheduler]
 ```
 
-[View On GitHub](https://github.com/agronholm/apscheduler)
+[![apscheduler](https://img.shields.io/github/stars/agronholm/apscheduler?style=social)](https://github.com/agronholm/apscheduler)
+
 
 ### NoneBot-Test
 
@@ -57,7 +58,7 @@ pip install nonebot2[test]
 poetry add nonebot2[test]
 ```
 
-[View On GitHub](https://github.com/nonebot/nonebot-test)
+[![nonebot-test](https://img.shields.io/github/stars/nonebot/nonebot-test?style=social)](https://github.com/nonebot/nonebot-test)
 
 ### CLI
 
@@ -70,7 +71,7 @@ pip install nonebot2[cli]
 poetry add nonebot2[cli]
 ```
 
-[View On GitHub](https://github.com/yanyongyu/nb-cli)
+[![nb-cli](https://img.shields.io/github/stars/nonebot/nb-cli?style=social)](https://github.com/yanyongyu/nb-cli)
 
 ### 我全都要
 
