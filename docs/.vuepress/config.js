@@ -125,6 +125,14 @@ module.exports = context => ({
                 "runtime-hook",
                 "export-and-require"
               ]
+            },
+            {
+              title: "发布",
+              collapsable: false,
+              sidebar: "auto",
+              children: [
+                "publish-plugin"
+              ]
             }
           ],
           "/api/": [
