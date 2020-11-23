@@ -118,7 +118,13 @@ module.exports = context => ({
               title: "进阶",
               collapsable: false,
               sidebar: "auto",
-              children: ["", "scheduler", "permission", "runtime-hook"]
+              children: [
+                "",
+                "scheduler",
+                "permission",
+                "runtime-hook",
+                "export-and-require"
+              ]
             }
           ],
           "/api/": [
