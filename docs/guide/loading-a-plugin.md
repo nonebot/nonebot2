@@ -52,12 +52,7 @@ if __name__ == "__main__":
 :::
 
 :::danger 警告
-插件间不应该存在过多的耦合，如果确实需要导入某个插件内的数据，可以使用如下两种方法：
-
-1. (推荐) `from plugin_name import xxx` 而非 `from awesome_bot.plugins.plugin_name import xxx`
-2. 在需要导入其他插件的文件中添加 `__package__ = "plugins"; from .plugin_name import xxx` (将共同的上层目录设定为父包后使用相对导入)
-
-具体可以参考：[nonebot/nonebot2#32](https://github.com/nonebot/nonebot2/issues/32)
+插件间不应该存在过多的耦合，如果确实需要导入某个插件内的数据，可以参考 [进阶-跨插件访问](../advanced/export-and-require.md)
 :::
 
 ## 加载单个插件
@@ -112,10 +107,6 @@ _sub_plugins |= nonebot.load_plugins(
 ```
 
 插件将会被加载并存储于 `_sub_plugins` 中。
-
-:::tip 提示
-如果在父插件中需要定义事件响应器，应在**子插件被加载后**进行定义
-:::
 
 ## 运行结果
 
