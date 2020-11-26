@@ -5,6 +5,7 @@
 NoneBot 使用 `pydantic`_ 以及 `python-dotenv`_ 来读取配置。
 
 配置项需符合特殊格式或 json 序列化格式。详情见 `pydantic Field Type`_ 文档。
+还是在这里测试
 
 .. _pydantic:
     https://pydantic-docs.helpmanual.io/
