@@ -12,6 +12,7 @@ NoneBot 使用 `pydantic`_ 以及 `python-dotenv`_ 来读取配置。
     https://saurabh-kumar.com/python-dotenv/
 .. _pydantic Field Type:
     https://pydantic-docs.helpmanual.io/usage/types/
+    随便测试一下
 """
 
 import os
