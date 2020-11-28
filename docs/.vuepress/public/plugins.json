@@ -29,7 +29,7 @@
     "author": "nonebot",
     "desc": "在本地浏览NoneBot文档",
     "name": "NoneBot离线文档",
-    "repo": "yanyongyu/nonebot2/tree/master/packages/nonebot-plugin-docs"
+    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-plugin-docs"
   },
   {
     "id": "nonebot_plugin_sentry",
