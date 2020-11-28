@@ -11,8 +11,8 @@ _✨ NoneBot 本地文档插件 ✨_
 </div>
 
 <p align="center">
-  <a href="https://raw.githubusercontent.com/yanyongyu/nonebot2/master/LICENSE">
-    <img src="https://img.shields.io/github/license/yanyongyu/nonebot2.svg" alt="license">
+  <a href="https://raw.githubusercontent.com/nonebot/nonebot2/master/LICENSE">
+    <img src="https://img.shields.io/github/license/nonebot/nonebot2.svg" alt="license">
   </a>
   <a href="https://pypi.python.org/pypi/nonebot-plugin-docs">
     <img src="https://img.shields.io/pypi/v/nonebot-plugin-docs.svg" alt="pypi">
