@@ -1,11 +1,3 @@
-<!--
- * @Author         : yanyongyu
- * @Date           : 2020-11-22 01:19:19
- * @LastEditors    : yanyongyu
- * @LastEditTime   : 2020-11-22 02:51:14
- * @Description    : None
- * @GitHub         : https://github.com/yanyongyu
--->
 <p align="center">
   <a href="https://v2.nonebot.dev/"><img src="https://raw.githubusercontent.com/nonebot/nonebot2/master/docs/.vuepress/public/logo.png" width="200" height="200" alt="nonebot"></a>
 </p>

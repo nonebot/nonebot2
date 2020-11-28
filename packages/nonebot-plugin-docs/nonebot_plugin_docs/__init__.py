@@ -1,15 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-@Author         : yanyongyu
-@Date           : 2020-11-22 00:56:58
-@LastEditors    : yanyongyu
-@LastEditTime   : 2020-11-22 01:00:29
-@Description    : None
-@GitHub         : https://github.com/yanyongyu
-"""
-__author__ = "yanyongyu"
-
 import importlib
 
 import nonebot

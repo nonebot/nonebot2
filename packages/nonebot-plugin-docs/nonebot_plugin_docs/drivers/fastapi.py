@@ -1,15 +1,3 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-@Author         : yanyongyu
-@Date           : 2020-11-22 00:56:31
-@LastEditors    : yanyongyu
-@LastEditTime   : 2020-11-22 02:16:42
-@Description    : None
-@GitHub         : https://github.com/yanyongyu
-"""
-__author__ = "yanyongyu"
-
 from pathlib import Path
 
 from nonebot.drivers.fastapi import Driver
