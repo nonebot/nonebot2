@@ -14,5 +14,29 @@
     "desc": "将B站UP主的动态和直播信息推送至QQ",
     "author": "SK-415",
     "repo": "SK-415/HarukaBot"
+  },
+  {
+    "id": "nonebot_plugin_rauthman",
+    "link": "nonebot-plugin-rauthman",
+    "name": "rauthman",
+    "desc": "基于规则的授权管理",
+    "author": "Lancercmd",
+    "repo": "Lancercmd/nonebot_plugin_rauthman"
+  },
+  {
+    "id": "nonebot_plugin_docs",
+    "link": "nonebot-plugin-docs",
+    "author": "nonebot",
+    "desc": "在本地浏览NoneBot文档",
+    "name": "NoneBot离线文档",
+    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-plugin-docs"
+  },
+  {
+    "id": "nonebot_plugin_sentry",
+    "link": "nonebot-plugin-sentry",
+    "author": "yanyongyu",
+    "desc": "使用Sentry监控机器人日志并处理报错",
+    "name": "Sentry日志监控",
+    "repo": "cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_sentry"
   }
 ]
