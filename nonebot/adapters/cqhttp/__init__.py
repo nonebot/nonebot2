@@ -303,6 +303,7 @@ class Bot(BaseBot):
                                body: Optional[dict]) -> Union[str, NoReturn]:
         """
         :说明:
+
           CQHTTP (OneBot) 协议鉴权。参考 `鉴权 <https://github.com/howmanybots/onebot/blob/master/v11/specs/communication/authorization.md>`_
         """
         x_self_id = headers.get("x-self-id")

@@ -24,7 +24,9 @@ from nonebot.typing import Bot, Any, Dict, Event, Union, Tuple, NoReturn, Option
 class Rule:
     """
     :说明:
+
       ``Matcher`` 规则类，当事件传递时，在 ``Matcher`` 运行前进行检查。
+
     :示例:
 
     .. code-block:: python
@@ -41,25 +43,35 @@ class Rule:
                                       Awaitable[bool]]) -> None:
         """
         :参数:
+
           * ``*checkers: Callable[[Bot, Event, dict], Awaitable[bool]]``: **异步** RuleChecker
+
         """
         self.checkers = set(checkers)
         """
         :说明:
+
           存储 ``RuleChecker``
+
         :类型:
+
           * ``Set[Callable[[Bot, Event, dict], Awaitable[bool]]]``
         """
 
     async def __call__(self, bot: Bot, event: Event, state: dict) -> bool:
         """
         :说明:
+
           检查是否符合所有规则
+
         :参数:
+
           * ``bot: Bot``: Bot 对象
           * ``event: Event``: Event 对象
           * ``state: dict``: 当前 State
+
         :返回:
+
           - ``bool``
         """
         results = await asyncio.gather(
@@ -157,8 +169,11 @@ class TrieRule:
 def startswith(msg: str) -> Rule:
     """
     :说明:
+
       匹配消息开头
+
     :参数:
+
       * ``msg: str``: 消息开头字符串
     """
 
@@ -171,8 +186,11 @@ def startswith(msg: str) -> Rule:
 def endswith(msg: str) -> Rule:
     """
     :说明:
+
       匹配消息结尾
+
     :参数:
+
       * ``msg: str``: 消息结尾字符串
     """
 
@@ -185,8 +203,11 @@ def endswith(msg: str) -> Rule:
 def keyword(*keywords: str) -> Rule:
     """
     :说明:
+
       匹配消息关键词
+
     :参数:
+
       * ``*keywords: str``: 关键词
     """
 
@@ -200,12 +221,17 @@ def keyword(*keywords: str) -> Rule:
 def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
     """
     :说明:
+
       命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
 
       可以通过 ``state["_prefix"]["command"]`` 获取匹配成功的命令（例：``("test",)``），通过 ``state["_prefix"]["raw_command"]`` 获取匹配成功的原始命令文本（例：``"/test"``）。
+
     :参数:
+
       * ``*cmds: Union[str, Tuple[str, ...]]``: 命令内容
+
     :示例:
+
       使用默认 ``command_start``, ``command_sep`` 配置
 
       命令 ``("test",)`` 可以匹配：``/test`` 开头的消息
@@ -240,10 +266,13 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     """
     :说明:
+
       根据正则表达式进行匹配。
 
       可以通过 ``state["_matched"]`` 获取正则表达式匹配成功的文本。
+
     :参数:
+
       * ``regex: str``: 正则表达式
       * ``flags: Union[int, re.RegexFlag]``: 正则标志
 
@@ -269,8 +298,11 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
 def to_me() -> Rule:
     """
     :说明:
+
       通过 ``event.to_me`` 判断消息是否是发送给机器人
+
     :参数:
+
       * 无
     """
 

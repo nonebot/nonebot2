@@ -18,7 +18,6 @@ class IgnoredException(Exception):
     :参数:
 
       * ``reason``: 忽略事件的原因
-
     """
 
     def __init__(self, reason):

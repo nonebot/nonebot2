@@ -33,7 +33,9 @@ _export: ContextVar["Export"] = ContextVar("_export")
 class Export(dict):
     """
     :说明:
+
       插件导出内容以使得其他插件可以获得。
+
     :示例:
 
     .. code-block:: python
@@ -107,8 +109,11 @@ def on(type: str = "",
        state: Optional[dict] = None) -> Type[Matcher]:
     """
     :说明:
+
       注册一个基础事件响应器，可自定义类型。
+
     :参数:
+
       * ``type: str``: 事件响应器类型
       * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
       * ``permission: Optional[Permission]``: 事件响应权限
@@ -117,7 +122,9 @@ def on(type: str = "",
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[dict]``: 默认的 state
+
     :返回:
+
       - ``Type[Matcher]``
     """
     matcher = Matcher.new(type,
@@ -141,15 +148,20 @@ def on_metaevent(rule: Optional[Union[Rule, RuleChecker]] = None,
                  state: Optional[dict] = None) -> Type[Matcher]:
     """
     :说明:
+
       注册一个元事件响应器。
+
     :参数:
+
       * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
       * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[dict]``: 默认的 state
+
     :返回:
+
       - ``Type[Matcher]``
     """
     matcher = Matcher.new("meta_event",
@@ -174,8 +186,11 @@ def on_message(rule: Optional[Union[Rule, RuleChecker]] = None,
                state: Optional[dict] = None) -> Type[Matcher]:
     """
     :说明:
+
       注册一个消息事件响应器。
+
     :参数:
+
       * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
       * ``permission: Optional[Permission]``: 事件响应权限
       * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
@@ -183,7 +198,9 @@ def on_message(rule: Optional[Union[Rule, RuleChecker]] = None,
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[dict]``: 默认的 state
+
     :返回:
+
       - ``Type[Matcher]``
     """
     matcher = Matcher.new("message",
@@ -207,15 +224,20 @@ def on_notice(rule: Optional[Union[Rule, RuleChecker]] = None,
               state: Optional[dict] = None) -> Type[Matcher]:
     """
     :说明:
+
       注册一个通知事件响应器。
+
     :参数:
+
       * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
       * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[dict]``: 默认的 state
+
     :返回:
+
       - ``Type[Matcher]``
     """
     matcher = Matcher.new("notice",
@@ -239,15 +261,20 @@ def on_request(rule: Optional[Union[Rule, RuleChecker]] = None,
                state: Optional[dict] = None) -> Type[Matcher]:
     """
     :说明:
+
       注册一个请求事件响应器。
+
     :参数:
+
       * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
       * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[dict]``: 默认的 state
+
     :返回:
+
       - ``Type[Matcher]``
     """
     matcher = Matcher.new("request",
@@ -267,8 +294,11 @@ def on_startswith(msg: str,
                   **kwargs) -> Type[Matcher]:
     """
     :说明:
+
       注册一个消息事件响应器，并且当消息的**文本部分**以指定内容开头时响应。
+
     :参数:
+
       * ``msg: str``: 指定消息开头内容
       * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
       * ``permission: Optional[Permission]``: 事件响应权限
@@ -277,7 +307,9 @@ def on_startswith(msg: str,
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[dict]``: 默认的 state
+
     :返回:
+
       - ``Type[Matcher]``
     """
     return on_message(startswith(msg) & rule, **kwargs)
@@ -288,8 +320,11 @@ def on_endswith(msg: str,
                 **kwargs) -> Type[Matcher]:
     """
     :说明:
+
       注册一个消息事件响应器，并且当消息的**文本部分**以指定内容结尾时响应。
+
     :参数:
+
       * ``msg: str``: 指定消息结尾内容
       * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
       * ``permission: Optional[Permission]``: 事件响应权限
@@ -298,7 +333,9 @@ def on_endswith(msg: str,
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[dict]``: 默认的 state
+
     :返回:
+
       - ``Type[Matcher]``
     """
     return on_message(endswith(msg) & rule, **kwargs)
@@ -309,8 +346,11 @@ def on_keyword(keywords: Set[str],
                **kwargs) -> Type[Matcher]:
     """
     :说明:
+
       注册一个消息事件响应器，并且当消息纯文本部分包含关键词时响应。
+
     :参数:
+
       * ``keywords: Set[str]``: 关键词列表
       * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
       * ``permission: Optional[Permission]``: 事件响应权限
@@ -319,7 +359,9 @@ def on_keyword(keywords: Set[str],
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[dict]``: 默认的 state
+
     :返回:
+
       - ``Type[Matcher]``
     """
     return on_message(keyword(*keywords) & rule, **kwargs)
@@ -331,10 +373,13 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
                **kwargs) -> Type[Matcher]:
     """
     :说明:
+
       注册一个消息事件响应器，并且当消息以指定命令开头时响应。
 
       命令匹配规则参考: `命令形式匹配 <rule.html#command-command>`_
+
     :参数:
+
       * ``cmd: Union[str, Tuple[str, ...]]``: 指定命令内容
       * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
       * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
@@ -344,7 +389,9 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[dict]``: 默认的 state
+
     :返回:
+
       - ``Type[Matcher]``
     """
 
@@ -366,10 +413,13 @@ def on_regex(pattern: str,
              **kwargs) -> Type[Matcher]:
     """
     :说明:
+
       注册一个消息事件响应器，并且当消息匹配正则表达式时响应。
 
       命令匹配规则参考: `正则匹配 <rule.html#regex-regex-flags-0>`_
+
     :参数:
+
       * ``pattern: str``: 正则表达式
       * ``flags: Union[int, re.RegexFlag]``: 正则匹配标志
       * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
@@ -379,7 +429,9 @@ def on_regex(pattern: str,
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[dict]``: 默认的 state
+
     :返回:
+
       - ``Type[Matcher]``
     """
     return on_message(regex(pattern, flags) & rule, **kwargs)
@@ -391,6 +443,7 @@ class CommandGroup:
     def __init__(self, cmd: Union[str, Tuple[str, ...]], **kwargs):
         """
         :参数:
+
           * ``cmd: Union[str, Tuple[str, ...]]``: 命令前缀
           * ``**kwargs``: 其他传递给 ``on_command`` 的参数默认值，参考 `on_command <#on-command-cmd-rule-none-aliases-none-kwargs>`_
         """
@@ -411,11 +464,16 @@ class CommandGroup:
                 **kwargs) -> Type[Matcher]:
         """
         :说明:
+
           注册一个新的命令。
+
         :参数:
+
           * ``cmd: Union[str, Tuple[str, ...]]``: 命令前缀
           * ``**kwargs``: 其他传递给 ``on_command`` 的参数，将会覆盖命令组默认值
+
         :返回:
+
           - ``Type[Matcher]``
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
@@ -429,10 +487,15 @@ class CommandGroup:
 def load_plugin(module_path: str) -> Optional[Plugin]:
     """
     :说明:
+
       使用 ``importlib`` 加载单个插件，可以是本地插件或是通过 ``pip`` 安装的插件。
+
     :参数:
+
       * ``module_path: str``: 插件名称 ``path.to.your.plugin``
+
     :返回:
+
       - ``Optional[Plugin]``
     """
 
@@ -469,10 +532,15 @@ def load_plugin(module_path: str) -> Optional[Plugin]:
 def load_plugins(*plugin_dir: str) -> Set[Plugin]:
     """
     :说明:
+
       导入目录下多个插件，以 ``_`` 开头的插件不会被导入！
+
     :参数:
+
       - ``*plugin_dir: str``: 插件路径
+
     :返回:
+
       - ``Set[Plugin]``
     """
 
@@ -517,8 +585,11 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
 def load_builtin_plugins() -> Optional[Plugin]:
     """
     :说明:
+
       导入 NoneBot 内置插件
+
     :返回:
+
       - ``Plugin``
     """
     return load_plugin("nonebot.plugins.base")
@@ -527,10 +598,15 @@ def load_builtin_plugins() -> Optional[Plugin]:
 def get_plugin(name: str) -> Optional[Plugin]:
     """
     :说明:
+
       获取当前导入的某个插件。
+
     :参数:
+
       * ``name: str``: 插件名，与 ``load_plugin`` 参数一致。如果为 ``load_plugins`` 导入的插件，则为文件(夹)名。
+
     :返回:
+
       - ``Optional[Plugin]``
     """
     return plugins.get(name)
@@ -539,8 +615,11 @@ def get_plugin(name: str) -> Optional[Plugin]:
 def get_loaded_plugins() -> Set[Plugin]:
     """
     :说明:
+
       获取当前已导入的所有插件。
+
     :返回:
+
       - ``Set[Plugin]``
     """
     return set(plugins.values())
@@ -549,8 +628,11 @@ def get_loaded_plugins() -> Set[Plugin]:
 def export() -> Export:
     """
     :说明:
+
       获取插件的导出内容对象
+
     :返回:
+
       - ``Export``
     """
     return _export.get()
@@ -559,10 +641,15 @@ def export() -> Export:
 def require(name: str) -> Optional[Export]:
     """
     :说明:
+
       获取一个插件的导出内容
+
     :参数:
+
       * ``name: str``: 插件名，与 ``load_plugin`` 参数一致。如果为 ``load_plugins`` 导入的插件，则为文件(夹)名。
+
     :返回:
+
       - ``Optional[Export]``
     """
     plugin = get_plugin(name)

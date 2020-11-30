@@ -101,8 +101,7 @@ class Matcher(metaclass=MatcherMeta):
     """
 
     def __init__(self):
-        """实例化 Matcher 以便运行
-        """
+        """实例化 Matcher 以便运行"""
         self.handlers = self.handlers.copy()
         self.state = self._default_state.copy()
 
@@ -128,8 +127,11 @@ class Matcher(metaclass=MatcherMeta):
             expire_time: Optional[datetime] = None) -> Type["Matcher"]:
         """
         :说明:
+
           创建一个新的事件响应器，并存储至 `matchers <#matchers>`_
+
         :参数:
+
           * ``type_: str``: 事件响应器类型，与 ``event.type`` 一致时触发，空字符串表示任意
           * ``rule: Optional[Rule]``: 匹配规则
           * ``permission: Optional[Permission]``: 权限
@@ -140,7 +142,9 @@ class Matcher(metaclass=MatcherMeta):
           * ``module: Optional[str]``: 事件响应器所在模块名称
           * ``default_state: Optional[dict]``: 默认状态 ``state``
           * ``expire_time: Optional[datetime]``: 事件响应器最终有效时间点，过时即被删除
+
         :返回:
+
           - ``Type[Matcher]``: 新的事件响应器类
         """
 
@@ -166,11 +170,16 @@ class Matcher(metaclass=MatcherMeta):
     async def check_perm(cls, bot: Bot, event: Event) -> bool:
         """
         :说明:
+
           检查是否满足触发权限
+
         :参数:
+
           * ``bot: Bot``: Bot 对象
           * ``event: Event``: 上报事件
+
         :返回:
+
           - ``bool``: 是否满足权限
         """
         return await cls.permission(bot, event)
@@ -179,12 +188,17 @@ class Matcher(metaclass=MatcherMeta):
     async def check_rule(cls, bot: Bot, event: Event, state: dict) -> bool:
         """
         :说明:
+
           检查是否满足匹配规则
+
         :参数:
+
           * ``bot: Bot``: Bot 对象
           * ``event: Event``: 上报事件
           * ``state: dict``: 当前状态
+
         :返回:
+
           - ``bool``: 是否满足匹配规则
         """
         return (event.type == (cls.type or event.type) and
@@ -194,8 +208,11 @@ class Matcher(metaclass=MatcherMeta):
     def args_parser(cls, func: ArgsParser) -> ArgsParser:
         """
         :说明:
+
           装饰一个函数来更改当前事件响应器的默认参数解析函数
+
         :参数:
+
           * ``func: ArgsParser``: 参数解析函数
         """
         cls._default_parser = func
@@ -205,8 +222,11 @@ class Matcher(metaclass=MatcherMeta):
     def handle(cls) -> Callable[[Handler], Handler]:
         """
         :说明:
+
           装饰一个函数来向事件响应器直接添加一个处理函数
+
         :参数:
+
           * 无
         """
 
@@ -220,8 +240,11 @@ class Matcher(metaclass=MatcherMeta):
     def receive(cls) -> Callable[[Handler], Handler]:
         """
         :说明:
+
           装饰一个函数来指示 NoneBot 在接收用户新的一条消息后继续运行该函数
+
         :参数:
+
           * 无
         """
 
@@ -249,8 +272,11 @@ class Matcher(metaclass=MatcherMeta):
     ) -> Callable[[Handler], Handler]:
         """
         :说明:
+
           装饰一个函数来指示 NoneBot 当要获取的 ``key`` 不存在时接收用户新的一条消息并经过 ``ArgsParser`` 处理后再运行该函数，如果 ``key`` 已存在则直接继续运行
+
         :参数:
+
           * ``key: str``: 参数名
           * ``prompt: Optional[Union[str, Message, MessageSegment]]``: 在参数不存在时向用户发送的消息
           * ``args_parser: Optional[ArgsParser]``: 可选参数解析函数，空则使用默认解析函数
@@ -300,8 +326,11 @@ class Matcher(metaclass=MatcherMeta):
     async def send(cls, message: Union[str, Message, MessageSegment], **kwargs):
         """
         :说明:
+
           发送一条消息给当前交互用户
+
         :参数:
+
           * ``message: Union[str, Message, MessageSegment]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
@@ -316,8 +345,11 @@ class Matcher(metaclass=MatcherMeta):
                      **kwargs) -> NoReturn:
         """
         :说明:
+
           发送一条消息给当前交互用户并结束当前事件响应器
+
         :参数:
+
           * ``message: Union[str, Message, MessageSegment]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
@@ -334,8 +366,11 @@ class Matcher(metaclass=MatcherMeta):
                     **kwargs) -> NoReturn:
         """
         :说明:
+
           发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续下一个处理函数
+
         :参数:
+
           * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
@@ -352,8 +387,11 @@ class Matcher(metaclass=MatcherMeta):
                      **kwargs) -> NoReturn:
         """
         :说明:
+
           发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后重新运行当前处理函数
+
         :参数:
+
           * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
@@ -430,6 +468,7 @@ class MatcherGroup:
                  expire_time: Optional[datetime] = None):
         """
         :说明:
+
           创建一个事件响应器组合，参数为默认值，与 ``Matcher.new`` 一致
         """
         self.matchers: List[Type[Matcher]] = []
@@ -474,6 +513,7 @@ class MatcherGroup:
             expire_time: Optional[datetime] = None) -> Type[Matcher]:
         """
         :说明:
+
           在组中创建一个新的事件响应器，参数留空则使用组合默认值
 
         \:\:\:danger 警告

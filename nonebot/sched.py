@@ -19,8 +19,11 @@ if AsyncIOScheduler:
     scheduler = AsyncIOScheduler()
     """
     :类型:
+
       ``Optional[apscheduler.schedulers.asyncio.AsyncIOScheduler]``
+
     :说明:
+
       当可选依赖 ``APScheduler`` 未安装时，``scheduler`` 为 None
 
       使用 ``pip install nonebot[scheduler]`` 安装可选依赖

@@ -125,6 +125,7 @@ class Config(BaseConfig):
     - 类型: ``str``
     - 默认值: ``"nonebot.drivers.fastapi"``
     - 说明:
+
       NoneBot 运行所使用的 ``Driver`` 。继承自 ``nonebot.driver.BaseDriver`` 。
     """
     host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
@@ -132,6 +133,7 @@ class Config(BaseConfig):
     - 类型: ``IPvAnyAddress``
     - 默认值: ``127.0.0.1``
     - 说明:
+
       NoneBot 的 HTTP 和 WebSocket 服务端监听的 IP/主机名。
     """
     port: int = 8080
@@ -139,6 +141,7 @@ class Config(BaseConfig):
     - 类型: ``int``
     - 默认值: ``8080``
     - 说明:
+
       NoneBot 的 HTTP 和 WebSocket 服务端监听的端口。
     """
     debug: bool = False
@@ -146,6 +149,7 @@ class Config(BaseConfig):
     - 类型: ``bool``
     - 默认值: ``False``
     - 说明:
+
       是否以调试模式运行 NoneBot。
     """
 
@@ -155,7 +159,9 @@ class Config(BaseConfig):
     - 类型: ``Dict[str, str]``
     - 默认值: ``{}``
     - 说明:
+
       以机器人 ID 为键，上报地址为值的字典，环境变量或文件中应使用 json 序列化。
+
     - 示例:
 
     .. code-block:: default
@@ -167,6 +173,7 @@ class Config(BaseConfig):
     - 类型: ``Optional[float]``
     - 默认值: ``30.``
     - 说明:
+
       API 请求超时时间，单位: 秒。
     """
     access_token: Optional[str] = None
@@ -174,7 +181,9 @@ class Config(BaseConfig):
     - 类型: ``Optional[str]``
     - 默认值: ``None``
     - 说明:
+
       API 请求以及上报所需密钥，在请求头中携带。
+
     - 示例:
 
     .. code-block:: http
@@ -187,7 +196,9 @@ class Config(BaseConfig):
     - 类型: ``Optional[str]``
     - 默认值: ``None``
     - 说明:
+
       HTTP POST 形式上报所需签名，在请求头中携带。
+
     - 示例:
 
     .. code-block:: http
@@ -202,7 +213,9 @@ class Config(BaseConfig):
     - 类型: ``Set[int]``
     - 默认值: ``set()``
     - 说明:
+
       机器人超级用户。
+
     - 示例:
 
     .. code-block:: default
@@ -214,6 +227,7 @@ class Config(BaseConfig):
     - 类型: ``Set[str]``
     - 默认值: ``set()``
     - 说明:
+
       机器人昵称。
     """
     command_start: Set[str] = {"/"}
@@ -221,6 +235,7 @@ class Config(BaseConfig):
     - 类型: ``Set[str]``
     - 默认值: ``{"/"}``
     - 说明:
+
       命令的起始标记，用于判断一条消息是不是命令。
     """
     command_sep: Set[str] = {"."}
@@ -228,6 +243,7 @@ class Config(BaseConfig):
     - 类型: ``Set[str]``
     - 默认值: ``{"."}``
     - 说明:
+
       命令的分隔标记，用于将文本形式的命令切分为元组（实际的命令名）。
     """
     session_expire_timeout: timedelta = timedelta(minutes=2)
@@ -235,7 +251,9 @@ class Config(BaseConfig):
     - 类型: ``timedelta``
     - 默认值: ``timedelta(minutes=2)``
     - 说明:
+
       等待用户回复的超时时间。
+
     - 示例:
 
     .. code-block:: default
@@ -249,6 +267,7 @@ class Config(BaseConfig):
     - 类型: ``dict``
     - 默认值: ``{"apscheduler.timezone": "Asia/Shanghai"}``
     - 说明:
+
       APScheduler 的配置对象，见 `Configuring the Scheduler`_
 
     .. _Configuring the Scheduler:
