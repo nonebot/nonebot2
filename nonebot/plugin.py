@@ -46,10 +46,11 @@ class Export(dict):
         def some_function():
             pass
 
-        # this don't work under python 3.9
+        # this doesn't work before python 3.9
         # use
         # export = nonebot.export(); @export.sub
         # instead
+        # See also PEP-614: https://www.python.org/dev/peps/pep-0614/
         @nonebot.export().sub
         def something_else():
             pass
