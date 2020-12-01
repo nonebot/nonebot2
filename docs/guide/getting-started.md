@@ -46,7 +46,7 @@ python bot.py
 
 目前支持的协议有:
 
-- [OneBot(CQHTTP)](https://github.com/howmanybots/onebot)
+- [OneBot(CQHTTP)](https://github.com/howmanybots/onebot/blob/master/README.md)
 
 QQ 协议端举例:
 
