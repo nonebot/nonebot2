@@ -24,6 +24,12 @@ pip uninstall nonebot
    pip install nb-cli
    ```
 
+3. 点个 star 吧
+
+   nonebot2: [![nb-cli](https://img.shields.io/github/stars/nonebot/nonebot2?style=social)](https://github.com/nonebot/nonebot2)
+
+   nb-cli: [![nb-cli](https://img.shields.io/github/stars/nonebot/nb-cli?style=social)](https://github.com/nonebot/nb-cli)
+
 ### 不使用脚手架(纯净安装)
 
 ```bash
