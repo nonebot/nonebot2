@@ -140,11 +140,6 @@ from nonebot.config import Env, Config
 from nonebot.log import logger, default_filter
 from nonebot.adapters.cqhttp import Bot as CQBot
 
-try:
-    import nonebot_test
-except ImportError:
-    nonebot_test = None
-
 
 def init(*, _env_file: Optional[str] = None, **kwargs):
     """
@@ -191,11 +186,6 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
 
         # register build-in adapters
         _driver.register_adapter("cqhttp", CQBot)
-
-        # load nonebot test frontend if debug
-        if config.debug and nonebot_test:
-            logger.debug("Loading nonebot test frontend...")
-            nonebot_test.init()
 
 
 def run(host: Optional[str] = None,
