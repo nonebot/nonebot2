@@ -26,16 +26,16 @@ include = ["nonebot/py.typed"]
 python = "^3.7"
 httpx = "^0.16.1"
 loguru = "^0.5.1"
-pygtrie = "^2.3.3"
+pygtrie = "^2.4.1"
 fastapi = "^0.58.1"
 uvicorn = "^0.11.5"
-pydantic = { extras = ["dotenv"], version = "^1.6.1" }
+pydantic = { extras = ["dotenv"], version = "^1.7.2" }
 nonebot-test = { version = "^0.1.0", optional = true }
 nb-cli = { version="^0.2.0", optional = true }
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.30.0"
-sphinx = "^3.1.1"
+sphinx = "^3.3.1"
 sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
 
 [tool.poetry.extras]

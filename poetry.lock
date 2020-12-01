@@ -1466,7 +1466,7 @@ test = ["nonebot-test"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "6f8201e7f1a3226e97cf4ff6ff0504d4c5da6c4978e17a1f135a063ea0726524"
+content-hash = "41612f19273363123bb11f78e16c66b18b8af22388360c89a4a8dafe9f2dd294"
 
 [metadata.files]
 aiofiles = [
