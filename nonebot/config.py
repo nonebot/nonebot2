@@ -262,17 +262,6 @@ class Config(BaseConfig):
         SESSION_EXPIRE_TIMEOUT=[DD ][HH:MM]SS[.ffffff]
         SESSION_EXPIRE_TIMEOUT=P[DD]DT[HH]H[MM]M[SS]S  # ISO 8601
     """
-    apscheduler_config: dict = {"apscheduler.timezone": "Asia/Shanghai"}
-    """
-    - **类型**: ``dict``
-    - **默认值**: ``{"apscheduler.timezone": "Asia/Shanghai"}``
-    :说明:
-
-      APScheduler 的配置对象，见 `Configuring the Scheduler`_
-
-    .. _Configuring the Scheduler:
-        https://apscheduler.readthedocs.io/en/latest/userguide.html#configuring-the-scheduler
-    """
 
     # custom configs
     # custom configs can be assigned during nonebot.init

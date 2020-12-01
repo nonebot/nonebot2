@@ -130,9 +130,7 @@ module.exports = context => ({
               title: "发布",
               collapsable: false,
               sidebar: "auto",
-              children: [
-                "publish-plugin"
-              ]
+              children: ["publish-plugin"]
             }
           ],
           "/api/": [
@@ -168,10 +166,6 @@ module.exports = context => ({
                 {
                   title: "nonebot.permission 模块",
                   path: "permission"
-                },
-                {
-                  title: "nonebot.sched 模块",
-                  path: "sched"
                 },
                 {
                   title: "nonebot.log 模块",
