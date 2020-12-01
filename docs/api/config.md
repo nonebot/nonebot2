@@ -283,17 +283,3 @@ SESSION_EXPIRE_TIMEOUT=120  # 单位: 秒
 SESSION_EXPIRE_TIMEOUT=[DD ][HH:MM]SS[.ffffff]
 SESSION_EXPIRE_TIMEOUT=P[DD]DT[HH]H[MM]M[SS]S  # ISO 8601
 ```
-
-
-### `apscheduler_config`
-
-
-* **类型**: `dict`
-
-
-* **默认值**: `{"apscheduler.timezone": "Asia/Shanghai"}`
-
-
-* **说明**
-
-    APScheduler 的配置对象，见 [Configuring the Scheduler](https://apscheduler.readthedocs.io/en/latest/userguide.html#configuring-the-scheduler)

@@ -9,7 +9,6 @@ NoneBot Api Reference
   - `nonebot.matcher <matcher.html>`_
   - `nonebot.rule <rule.html>`_
   - `nonebot.permission <permission.html>`_
-  - `nonebot.sched <sched.html>`_
   - `nonebot.log <log.html>`_
   - `nonebot.utils <utils.html>`_
   - `nonebot.typing <typing.html>`_

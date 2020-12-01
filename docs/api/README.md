@@ -25,9 +25,6 @@
     * [nonebot.permission](permission.html)
 
 
-    * [nonebot.sched](sched.html)
-
-
     * [nonebot.log](log.html)
 
 

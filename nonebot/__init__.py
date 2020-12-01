@@ -135,7 +135,6 @@ def get_bots() -> Union[NoReturn, Dict[str, Bot]]:
     return driver.bots
 
 
-from nonebot.sched import scheduler
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.log import logger, default_filter
@@ -198,9 +197,6 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
             logger.debug("Loading nonebot test frontend...")
             nonebot_test.init()
 
-    if scheduler:
-        _driver.on_startup(_start_scheduler)
-
 
 def run(host: Optional[str] = None,
         port: Optional[int] = None,
@@ -231,13 +227,6 @@ def run(host: Optional[str] = None,
     """
     logger.info("Running NoneBot...")
     get_driver().run(host, port, *args, **kwargs)
-
-
-async def _start_scheduler():
-    if scheduler and not scheduler.running:
-        scheduler.configure(_driver.config.apscheduler_config)
-        scheduler.start()
-        logger.opt(colors=True).info("<y>Scheduler Started</y>")
 
 
 from nonebot.plugin import on_message, on_notice, on_request, on_metaevent, CommandGroup
