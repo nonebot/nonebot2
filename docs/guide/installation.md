@@ -76,11 +76,11 @@ nb plugin install xxx
 
 ~~自用插件~~ ~~确信~~
 
-- [nonebot-plugin-docs](https://github.com/nonebot/nonebot2/tree/master/packages/nonebot-plugin-docs)
-- [nonebot-plugin-test](https://github.com/nonebot/nonebot-plugin-test)
-- [nonebot-plugin-apscheduler](https://github.com/nonebot/nonebot-plugin-apscheduler)
-- [nonebot-plugin-sentry](https://github.com/cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_sentry)
-- [nonebot-plugin-status](https://github.com/cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_status)
+- [NoneBot-Plugin-Docs](https://github.com/nonebot/nonebot2/tree/master/packages/nonebot-plugin-docs) 离线文档插件
+- [NoneBot-Plugin-Test](https://github.com/nonebot/plugin-test) 本地机器人测试前端插件
+- [NoneBot-Plugin-APScheduler](https://github.com/nonebot/plugin-apscheduler) 定时任务插件
+- [NoneBot-Plugin-Sentry](https://github.com/cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_sentry) Sentry 在线日志分析插件
+- [NoneBot-Plugin-Status](https://github.com/cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_status) 服务器状态查看插件
 
 ### 其他插件
 
