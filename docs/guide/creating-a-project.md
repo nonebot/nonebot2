@@ -4,15 +4,11 @@
 
 ## 目录结构
 
-首先，我们可以使用 `nb-cli` 或者自行创建项目目录：
+首先，我们可以使用 `nb-cli` 或者自行创建完整的项目目录：
 
 ```bash
-pip install nonebot2[cli]
-# pip install nb-cli
 nb create
 ```
-
-这将创建默认的目录结构
 
 <!-- prettier-ignore-start -->
 :::vue
