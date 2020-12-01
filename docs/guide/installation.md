@@ -56,3 +56,32 @@ cd nonebot2
 poetry install --no-dev  # 推荐
 pip install .  # 不推荐
 ```
+
+## 安装插件
+
+插件可以通过 `nb-cli` 进行安装，也可以自行安装并加载插件。
+
+```bash
+# 列出所有的插件
+nb plugin list
+# 搜索插件
+nb plugin search xxx
+# 安装插件
+nb plugin install xxx
+```
+
+如果急于上线 Bot 或想要使用现成的插件，以下插件可作为参考：
+
+### 官方插件
+
+~~自用插件~~ ~~确信~~
+
+- [nonebot-plugin-docs](https://github.com/nonebot/nonebot2/tree/master/packages/nonebot-plugin-docs)
+- [nonebot-plugin-test](https://github.com/nonebot/nonebot-plugin-test)
+- [nonebot-plugin-apscheduler](https://github.com/nonebot/nonebot-plugin-apscheduler)
+- [nonebot-plugin-sentry](https://github.com/cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_sentry)
+- [nonebot-plugin-status](https://github.com/cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_status)
+
+### 其他插件
+
+还有更多的插件在 [这里](/plugin-store.md) 等着你发现～
