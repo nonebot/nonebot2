@@ -123,7 +123,8 @@ class BaseDriver(abc.ABC):
           * ``*args``
           * ``**kwargs``
         """
-        raise NotImplementedError
+        logger.opt(colors=True).debug(
+            f"<g>Loaded adapters: {', '.join(self._adapters)}</g>")
 
     @abc.abstractmethod
     async def _handle_http(self):

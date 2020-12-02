@@ -138,7 +138,6 @@ def get_bots() -> Union[NoReturn, Dict[str, Bot]]:
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.log import logger, default_filter
-from nonebot.adapters.cqhttp import Bot as CQBot
 
 
 def init(*, _env_file: Optional[str] = None, **kwargs):
@@ -183,9 +182,6 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
         DriverClass: Type[Driver] = getattr(
             importlib.import_module(config.driver), "Driver")
         _driver = DriverClass(env, config)
-
-        # register build-in adapters
-        _driver.register_adapter("cqhttp", CQBot)
 
 
 def run(host: Optional[str] = None,
