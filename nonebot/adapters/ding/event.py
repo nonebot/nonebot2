@@ -1,4 +1,5 @@
-from typing import Literal, Union
+from typing import Literal
+
 from nonebot.adapters import BaseEvent
 from nonebot.typing import Optional
 

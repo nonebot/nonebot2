@@ -137,27 +137,27 @@ class BaseBot(abc.ABC):
         raise NotImplementedError
 
 
-T = TypeVar("T", dict, BaseModel)
+T = TypeVar("T", bound=BaseModel)
 
 
-class BaseEvent(abc.ABC, Generic[T]):
+class BaseEvent(Generic[T], abc.ABC):
     """
     Event 基类。提供上报信息的关键信息，其余信息可从原始上报消息获取。
     """
 
-    def __init__(self, raw_event: T):
+    def __init__(self, raw_event: Union[dict, T]):
         """
         :参数:
 
           * ``raw_event: T``: 原始上报消息
         """
-        self._raw_event: T = raw_event
+        self._raw_event = raw_event
 
     def __repr__(self) -> str:
         return f"<Event {self.self_id}: {self.name} {self.time}>"
 
     @property
-    def raw_event(self) -> T:
+    def raw_event(self) -> Union[dict, T]:
         """原始上报消息"""
         return self._raw_event
 
