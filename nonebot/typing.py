@@ -21,7 +21,7 @@
 from types import ModuleType
 from typing import NoReturn, TYPE_CHECKING
 from typing import Any, Set, List, Dict, Type, Tuple, Mapping
-from typing import Union, TypeVar, Optional, Iterable, Callable, Awaitable
+from typing import Union, TypeVar, Optional, Iterable, Callable, Awaitable, Generic
 
 # import some modules needed when checking types
 if TYPE_CHECKING:

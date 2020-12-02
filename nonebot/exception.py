@@ -145,3 +145,9 @@ class ActionFailed(Exception):
 
     def __str__(self):
         return self.__repr__()
+
+
+class AdapterException(Exception):
+
+    def __init__(self, adapter_name) -> None:
+        self.adapter_name = adapter_name
