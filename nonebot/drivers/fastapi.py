@@ -98,6 +98,7 @@ class Driver(BaseDriver):
             app: Optional[str] = None,
             **kwargs):
         """使用 ``uvicorn`` 启动 FastAPI"""
+        super().run(host, port, app, **kwargs)
         LOGGING_CONFIG = {
             "version": 1,
             "disable_existing_loggers": False,
