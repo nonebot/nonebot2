@@ -176,7 +176,7 @@ await bot.send_msg(message="hello world")
 
 ## _class_ `BaseEvent`
 
-基类：`abc.ABC`, `typing.Generic`
+基类：`typing.Generic`, `abc.ABC`
 
 Event 基类。提供上报信息的关键信息，其余信息可从原始上报消息获取。
 
