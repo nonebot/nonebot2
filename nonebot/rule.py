@@ -130,11 +130,10 @@ class TrieRule:
         suffix = None
         message = event.message[0]
         if message.type == "text":
-            prefix = cls.prefix.longest_prefix(message.data["text"].lstrip())
+            prefix = cls.prefix.longest_prefix(str(message).lstrip())
         message_r = event.message[-1]
         if message_r.type == "text":
-            suffix = cls.suffix.longest_prefix(
-                message_r.data["text"].rstrip()[::-1])
+            suffix = cls.suffix.longest_prefix(str(message_r).rstrip()[::-1])
 
         state["_prefix"] = {
             "raw_command": prefix.key,

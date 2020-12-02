@@ -313,10 +313,19 @@ class BaseMessageSegment(abc.ABC):
 
     @abc.abstractmethod
     def __str__(self):
+        """该消息段所代表的 str，在命令匹配部分使用"""
         raise NotImplementedError
 
     @abc.abstractmethod
     def __add__(self, other):
+        """你需要在这里实现不同消息段的合并：
+        比如：
+            if isinstance(other, str):
+                ...
+            elif isinstance(other, MessageSegment):
+                ...
+        注意：不能返回 self，需要返回一个新生成的对象
+        """
         raise NotImplementedError
 
     def __getitem__(self, key):
@@ -390,10 +399,7 @@ class BaseMessage(list, abc.ABC):
           * ``obj: Union[str, MessageSegment]``: 要添加的消息段
         """
         if isinstance(obj, BaseMessageSegment):
-            if obj.type == "text" and self and self[-1].type == "text":
-                self[-1].data["text"] += obj.data["text"]
-            else:
-                super().append(obj)
+            super().append(obj)
         elif isinstance(obj, str):
             self.extend(self._construct(obj))
         else:
@@ -420,13 +426,13 @@ class BaseMessage(list, abc.ABC):
         """
         :说明:
 
-          缩减消息数组，即拼接相邻纯文本消息段
+          缩减消息数组，即按 MessageSegment 的实现拼接相邻消息段
         """
         index = 0
         while index < len(self):
             if index > 0 and self[
                     index - 1].type == "text" and self[index].type == "text":
-                self[index - 1].data["text"] += self[index].data["text"]
+                self[index - 1] += self[index]
                 del self[index]
             else:
                 index += 1
@@ -439,7 +445,7 @@ class BaseMessage(list, abc.ABC):
         """
 
         def _concat(x: str, y: BaseMessageSegment) -> str:
-            return f"{x} {y.data['text']}" if y.type == "text" else x
+            return f"{x} {y}" if y.type == "text" else x
 
         plain_text = reduce(_concat, self, "")
         return plain_text[1:] if plain_text else plain_text
