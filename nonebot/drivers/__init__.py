@@ -123,8 +123,8 @@ class BaseDriver(abc.ABC):
           * ``*args``
           * ``**kwargs``
         """
-        logger.opt(
-            colors=True).debug(f"Loaded adapters: {', '.join(self._adapters)}")
+        logger.opt(colors=True).debug(
+            f"<g>Loaded adapters: {', '.join(self._adapters)}</g>")
 
     @abc.abstractmethod
     async def _handle_http(self):
