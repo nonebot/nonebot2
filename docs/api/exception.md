@@ -158,3 +158,9 @@ sidebarDepth: 0
 
     
     * `retcode: Optional[int]`: 错误代码
+
+
+
+## _exception_ `AdapterException`
+
+基类：`Exception`
