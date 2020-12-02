@@ -11,6 +11,8 @@ sidebar: auto
 - 修改 cqhttp 检查 reply 时未去除后续 at 以及空格
 - 添加 get_plugin 获取插件函数
 - 添加插件 export, require 方法
+- 移除内置 apscheduler 定时任务支持
+- 移除内置协议适配默认加载
 
 ## v2.0.0a6
 
