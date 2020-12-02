@@ -4,6 +4,7 @@ import asyncio
 import dataclasses
 from functools import wraps, partial
 
+from nonebot.log import logger
 from nonebot.typing import Any, Callable, Awaitable, overrides
 
 
@@ -61,3 +62,22 @@ class DataclassEncoder(json.JSONEncoder):
         if dataclasses.is_dataclass(o):
             return dataclasses.asdict(o)
         return super().default(o)
+
+
+def logger_wrapper(logger_name: str):
+
+    def log(level: str, message: str):
+        """
+        :说明:
+
+        用于打印 adapter 的日志。
+
+        :参数:
+
+        * ``level: Literal['WARNING', 'DEBUG', 'INFO']``: 日志等级
+        * ``message: str``: 日志信息
+        """
+        return logger.opt(colors=True).log(level,
+                                           f"<m>{logger_name}</m> | " + message)
+
+    return log
