@@ -39,7 +39,16 @@ def get_auth_bearer(access_token: Optional[str] = Header(
 
 
 class Driver(BaseDriver):
-    """FastAPI 驱动框架"""
+    """
+    FastAPI 驱动框架
+
+    :上报地址:
+
+      * ``/{adapter name}/``: HTTP POST 上报
+      * ``/{adapter name}/http/``: HTTP POST 上报
+      * ``/{adapter name}/ws``: WebSocket 上报
+      * ``/{adapter name}/ws/``: WebSocket 上报
+    """
 
     def __init__(self, env: Env, config: Config):
         super().__init__(env, config)

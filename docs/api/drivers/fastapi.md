@@ -17,6 +17,22 @@ sidebarDepth: 0
 FastAPI 驱动框架
 
 
+* **上报地址**
+
+    
+    * `/{adapter name}/`: HTTP POST 上报
+
+
+    * `/{adapter name}/http/`: HTTP POST 上报
+
+
+    * `/{adapter name}/ws`: WebSocket 上报
+
+
+    * `/{adapter name}/ws/`: WebSocket 上报
+
+
+
 ### _property_ `type`
 
 驱动名称: `fastapi`
