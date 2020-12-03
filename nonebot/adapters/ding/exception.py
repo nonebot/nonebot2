@@ -1,4 +1,4 @@
-from nonebot.exception import AdapterException
+from nonebot.exception import AdapterException, ActionFailed, ApiNotAvailable
 
 
 class DingAdapterException(AdapterException):
@@ -10,10 +10,10 @@ class DingAdapterException(AdapterException):
     """
 
     def __init__(self) -> None:
-        super().__init__("DING")
+        super().__init__("ding")
 
 
-class ApiError(DingAdapterException):
+class ApiError(DingAdapterException, ActionFailed):
     """
     :说明:
 
@@ -30,7 +30,7 @@ class ApiError(DingAdapterException):
         return f"<ApiError errcode={self.errcode} errmsg={self.errmsg}>"
 
 
-class SessionExpired(DingAdapterException):
+class SessionExpired(DingAdapterException, ApiNotAvailable):
     """
     :说明:
 
@@ -39,4 +39,4 @@ class SessionExpired(DingAdapterException):
     """
 
     def __repr__(self) -> str:
-        return f"<sessionWebhook is Expired>"
+        return f"<Session Webhook is Expired>"

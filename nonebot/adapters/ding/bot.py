@@ -1,18 +1,19 @@
-from datetime import datetime
 import httpx
+from datetime import datetime
 
 from nonebot.log import logger
 from nonebot.config import Config
+from nonebot.adapters import BaseBot
 from nonebot.message import handle_event
 from nonebot.typing import Driver, NoReturn
 from nonebot.typing import Any, Union, Optional
-from nonebot.adapters import BaseBot
 from nonebot.exception import NetworkError, RequestDenied, ApiNotAvailable
-from .exception import ApiError, SessionExpired
-from .utils import check_legal, log
+
 from .event import Event
-from .message import Message, MessageSegment
 from .model import MessageModel
+from .utils import check_legal, log
+from .message import Message, MessageSegment
+from .exception import ApiError, SessionExpired
 
 
 class Bot(BaseBot):
@@ -38,12 +39,11 @@ class Bot(BaseBot):
                                body: Optional[dict]) -> Union[str, NoReturn]:
         """
         :说明:
+
           钉钉协议鉴权。参考 `鉴权 <https://ding-doc.dingtalk.com/doc#/serverapi2/elzz1p>`_
         """
         timestamp = headers.get("timestamp")
         sign = headers.get("sign")
-        log("DEBUG", "headers: {}".format(headers))
-        log("DEBUG", "body: {}".format(body))
 
         # 检查 timestamp
         if not timestamp:
@@ -69,7 +69,6 @@ class Bot(BaseBot):
         message = MessageModel.parse_obj(body)
         if not message:
             return
-        log("DEBUG", "message: {}".format(message))
 
         try:
             event = Event(message)
@@ -110,7 +109,6 @@ class Bot(BaseBot):
                 return await bot.call_api(api, **data)
 
         log("DEBUG", f"Calling API <y>{api}</y>")
-        log("DEBUG", f"Calling data <y>{data}</y>")
 
         if api == "send_message":
             raw_event: MessageModel = data["raw_event"]
@@ -149,7 +147,7 @@ class Bot(BaseBot):
                 raise NetworkError("HTTP request failed")
 
     async def send(self,
-                   event: "Event",
+                   event: Event,
                    message: Union[str, "Message", "MessageSegment"],
                    at_sender: bool = False,
                    **kwargs) -> Union[Any, NoReturn]:
@@ -176,10 +174,8 @@ class Bot(BaseBot):
           - ``ActionFailed``: API 调用失败
         """
         msg = message if isinstance(message, Message) else Message(message)
-        log("DEBUG", f"send -> msg: {msg}")
 
         at_sender = at_sender and bool(event.user_id)
-        log("DEBUG", f"send -> at_sender: {at_sender}")
         params = {"raw_event": event.raw_event}
         params.update(kwargs)
 
@@ -187,6 +183,5 @@ class Bot(BaseBot):
             params["message"] = f"@{event.user_id} " + msg
         else:
             params["message"] = msg
-        log("DEBUG", f"send -> params: {params}")
 
         return await self.call_api("send_message", **params)

@@ -155,17 +155,5 @@ class ActionFailed(AdapterException):
     :说明:
 
       API 请求成功返回数据，但 API 操作失败。
-
-    :参数:
-
-      * ``retcode: Optional[int]``: 错误代码
     """
-
-    def __init__(self, retcode: Optional[int]):
-        self.retcode = retcode
-
-    def __repr__(self):
-        return f"<ActionFailed, retcode={self.retcode}>"
-
-    def __str__(self):
-        return self.__repr__()
+    pass

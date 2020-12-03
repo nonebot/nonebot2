@@ -8,15 +8,16 @@ import httpx
 
 from nonebot.log import logger
 from nonebot.config import Config
-from nonebot.message import handle_event
-from nonebot.typing import overrides, Driver, WebSocket, NoReturn
-from nonebot.typing import Any, Dict, Union, Optional
 from nonebot.adapters import BaseBot
-from nonebot.exception import NetworkError, ActionFailed, RequestDenied, ApiNotAvailable
+from nonebot.message import handle_event
+from nonebot.typing import Any, Dict, Union, Optional
+from nonebot.typing import overrides, Driver, WebSocket, NoReturn
+from nonebot.exception import NetworkError, RequestDenied, ApiNotAvailable
 
-from .message import Message, MessageSegment
-from .utils import log, get_auth_bearer
 from .event import Event
+from .exception import ApiError
+from .utils import log, get_auth_bearer
+from .message import Message, MessageSegment
 
 
 async def _check_reply(bot: "Bot", event: "Event"):
@@ -159,11 +160,11 @@ def _handle_api_result(
 
     :异常:
 
-        - ``ActionFailed``: API 调用失败
+        - ``ApiError``: API 调用失败
     """
     if isinstance(result, dict):
         if result.get("status") == "failed":
-            raise ActionFailed(retcode=result.get("retcode"))
+            raise ApiError(retcode=result.get("retcode"))
         return result.get("data")
 
 
@@ -317,7 +318,7 @@ class Bot(BaseBot):
         :异常:
 
           - ``NetworkError``: 网络错误
-          - ``ActionFailed``: API 调用失败
+          - ``ApiError``: API 调用失败
         """
         if "self_id" in data:
             self_id = data.pop("self_id")
@@ -368,8 +369,8 @@ class Bot(BaseBot):
 
     @overrides(BaseBot)
     async def send(self,
-                   event: "Event",
-                   message: Union[str, "Message", "MessageSegment"],
+                   event: Event,
+                   message: Union[str, Message, MessageSegment],
                    at_sender: bool = False,
                    **kwargs) -> Union[Any, NoReturn]:
         """
@@ -392,7 +393,7 @@ class Bot(BaseBot):
 
           - ``ValueError``: 缺少 ``user_id``, ``group_id``
           - ``NetworkError``: 网络错误
-          - ``ActionFailed``: API 调用失败
+          - ``ApiError``: API 调用失败
         """
         msg = message if isinstance(message, Message) else Message(message)
 
