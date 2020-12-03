@@ -555,8 +555,8 @@ class MatcherGroup:
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
-        final_kwargs["type"] = "meta_event"
-        matcher = Matcher.new(**final_kwargs)
+        final_kwargs.pop("type", None)
+        matcher = Matcher.new("meta_event", **final_kwargs)
         self.matchers.append(matcher)
         _tmp_matchers.get().add(matcher)
         return matcher
@@ -583,8 +583,8 @@ class MatcherGroup:
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
-        final_kwargs["type"] = "message"
-        matcher = Matcher.new(**final_kwargs)
+        final_kwargs.pop("type", None)
+        matcher = Matcher.new("message", **final_kwargs)
         self.matchers.append(matcher)
         _tmp_matchers.get().add(matcher)
         return matcher
@@ -610,8 +610,8 @@ class MatcherGroup:
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
-        final_kwargs["type"] = "notice"
-        matcher = Matcher.new(**final_kwargs)
+        final_kwargs.pop("type", None)
+        matcher = Matcher.new("notice", **final_kwargs)
         self.matchers.append(matcher)
         _tmp_matchers.get().add(matcher)
         return matcher
@@ -637,8 +637,8 @@ class MatcherGroup:
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
-        final_kwargs["type"] = "request"
-        matcher = Matcher.new(**final_kwargs)
+        final_kwargs.pop("type", None)
+        matcher = Matcher.new("request", **final_kwargs)
         self.matchers.append(matcher)
         _tmp_matchers.get().add(matcher)
         return matcher

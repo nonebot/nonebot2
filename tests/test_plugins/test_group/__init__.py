@@ -1,6 +1,7 @@
 from nonebot.rule import to_me
-from nonebot import CommandGroup
+from nonebot import CommandGroup, MatcherGroup
 
-test = CommandGroup("test", rule=to_me())
+cmd = CommandGroup("test", rule=to_me())
+match = MatcherGroup(priority=2)
 
-from . import commands
+from . import commands, matches
