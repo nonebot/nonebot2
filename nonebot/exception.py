@@ -148,6 +148,15 @@ class ActionFailed(Exception):
 
 
 class AdapterException(Exception):
+    """
+    :说明:
 
-    def __init__(self, adapter_name) -> None:
+      代表 Adapter 抛出的异常，所有的 Adapter 都要在内部继承自这个 `Exception`
+
+    :参数:
+
+      * ``adapter_name: str``: 标识 adapter
+    """
+
+    def __init__(self, adapter_name: str) -> None:
         self.adapter_name = adapter_name

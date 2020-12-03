@@ -1,9 +1,7 @@
-from typing import Literal
+from typing import Literal, Union, Optional
 
 from nonebot.adapters import BaseEvent
-from nonebot.typing import Optional
 
-from .utils import log
 from .message import Message
 from .model import MessageModel, ConversationType, TextMessage
 
@@ -15,9 +13,7 @@ class Event(BaseEvent):
 
     def __init__(self, message: MessageModel):
         super().__init__(message)
-        if not message.msgtype:
-            log("ERROR", "message has no msgtype")
-        # 目前钉钉机器人只能接收到 text 类型的消息
+        # 其实目前钉钉机器人只能接收到 text 类型的消息
         self._message = Message(getattr(message, message.msgtype or "text"))
 
     @property
@@ -37,12 +33,9 @@ class Event(BaseEvent):
     def name(self) -> str:
         """
         - 类型: ``str``
-        - 说明: 事件名称，由类型与 ``.`` 组合而成
+        - 说明: 事件名称，由 `type`.`detail_type` 组合而成
         """
-        n = self.type + "." + self.detail_type
-        if self.sub_type:
-            n += "." + self.sub_type
-        return n
+        return self.type + "." + self.detail_type
 
     @property
     def self_id(self) -> str:
@@ -89,12 +82,12 @@ class Event(BaseEvent):
             self.raw_event.conversationType = ConversationType.group
 
     @property
-    def sub_type(self) -> Optional[str]:
+    def sub_type(self) -> None:
         """
-        - 类型: ``Optional[str]``
-        - 说明: 事件子类型
+        - 类型: ``None``
+        - 说明: 钉钉适配器无事件子类型
         """
-        return ""
+        return None
 
     @sub_type.setter
     def sub_type(self, value) -> None:
@@ -134,7 +127,7 @@ class Event(BaseEvent):
 
     @to_me.setter
     def to_me(self, value) -> None:
-        self.raw_event.isInAtList = value
+        pass
 
     @property
     def message(self) -> Optional["Message"]:
@@ -157,7 +150,7 @@ class Event(BaseEvent):
         raise ValueError("暂不支持 reply")
 
     @property
-    def raw_message(self) -> Optional[TextMessage]:
+    def raw_message(self) -> Optional[Union[TextMessage]]:
         """
         - 类型: ``Optional[str]``
         - 说明: 原始消息

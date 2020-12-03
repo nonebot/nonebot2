@@ -4,7 +4,7 @@ import httpx
 from nonebot.log import logger
 from nonebot.config import Config
 from nonebot.message import handle_event
-from nonebot.typing import Driver, WebSocket, NoReturn
+from nonebot.typing import Driver, NoReturn
 from nonebot.typing import Any, Union, Optional
 from nonebot.adapters import BaseBot
 from nonebot.exception import NetworkError, RequestDenied, ApiNotAvailable
@@ -20,19 +20,10 @@ class Bot(BaseBot):
     钉钉 协议 Bot 适配。继承属性参考 `BaseBot <./#class-basebot>`_ 。
     """
 
-    def __init__(self,
-                 driver: Driver,
-                 connection_type: str,
-                 config: Config,
-                 self_id: str,
-                 *,
-                 websocket: Optional[WebSocket] = None):
+    def __init__(self, driver: Driver, connection_type: str, config: Config,
+                 self_id: str, **kwargs):
 
-        super().__init__(driver,
-                         connection_type,
-                         config,
-                         self_id,
-                         websocket=websocket)
+        super().__init__(driver, connection_type, config, self_id, **kwargs)
 
     @property
     def type(self) -> str:
@@ -56,26 +47,19 @@ class Bot(BaseBot):
 
         # 检查 timestamp
         if not timestamp:
-            log("WARNING", "Missing `timestamp` Header")
             raise RequestDenied(400, "Missing `timestamp` Header")
         # 检查 sign
         if not sign:
-            log("WARNING", "Missing `sign` Header")
             raise RequestDenied(400, "Missing `sign` Header")
         # 校验 sign 和 timestamp，判断是否是来自钉钉的合法请求
         if not check_legal(timestamp, sign, driver):
-            log("WARNING", "Signature Header is invalid")
             raise RequestDenied(403, "Signature is invalid")
         # 检查连接方式
         if connection_type not in ["http"]:
-            log("WARNING", "Unsupported connection type")
             raise RequestDenied(405, "Unsupported connection type")
 
         access_token = driver.config.access_token
         if access_token and access_token != access_token:
-            log(
-                "WARNING", "Authorization Header is invalid"
-                if access_token else "Missing Authorization Header")
             raise RequestDenied(
                 403, "Authorization Header is invalid"
                 if access_token else "Missing Authorization Header")
@@ -116,6 +100,9 @@ class Bot(BaseBot):
           - ``NetworkError``: 网络错误
           - ``ActionFailed``: API 调用失败
         """
+        if self.connection_type != "http":
+            log("ERROR", "Only support http connection.")
+            return
         if "self_id" in data:
             self_id = data.pop("self_id")
             if self_id:
@@ -125,9 +112,9 @@ class Bot(BaseBot):
         log("DEBUG", f"Calling API <y>{api}</y>")
         log("DEBUG", f"Calling data <y>{data}</y>")
 
-        if self.connection_type == "http" and api == "post_webhook":
+        if api == "send_message":
             raw_event: MessageModel = data["raw_event"]
-
+            # 确保 sessionWebhook 没有过期
             if int(datetime.now().timestamp()) > int(
                     raw_event.sessionWebhookExpiredTime / 1000):
                 raise SessionExpired
@@ -202,4 +189,4 @@ class Bot(BaseBot):
             params["message"] = msg
         log("DEBUG", f"send -> params: {params}")
 
-        return await self.call_api("post_webhook", **params)
+        return await self.call_api("send_message", **params)

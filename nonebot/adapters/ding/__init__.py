@@ -12,4 +12,4 @@
 from .bot import Bot
 from .event import Event
 from .message import Message, MessageSegment
-from .exception import ApiError, SessionExpired, AdapterException
+from .exception import ApiError, SessionExpired, DingAdapterException

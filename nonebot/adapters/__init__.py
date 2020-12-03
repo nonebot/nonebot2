@@ -140,7 +140,7 @@ class BaseBot(abc.ABC):
 T = TypeVar("T", bound=BaseModel)
 
 
-class BaseEvent(Generic[T], abc.ABC):
+class BaseEvent(abc.ABC, Generic[T]):
     """
     Event 基类。提供上报信息的关键信息，其余信息可从原始上报消息获取。
     """
@@ -149,7 +149,7 @@ class BaseEvent(Generic[T], abc.ABC):
         """
         :参数:
 
-          * ``raw_event: T``: 原始上报消息
+          * ``raw_event: Union[dict, T]``: 原始上报消息
         """
         self._raw_event = raw_event
 
