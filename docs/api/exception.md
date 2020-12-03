@@ -164,3 +164,15 @@ sidebarDepth: 0
 ## _exception_ `AdapterException`
 
 基类：`Exception`
+
+
+* **说明**
+
+    代表 Adapter 抛出的异常，所有的 Adapter 都要在内部继承自这个 Exception
+
+
+
+* **参数**
+
+    
+    * `adapter_name: str`: 标识 adapter
