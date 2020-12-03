@@ -11,7 +11,7 @@ import nonebot
 
 nonebot.init()
 # 加载 nonebot 内置插件
-nonebot.load_bulitin_plugins()
+nonebot.load_builtin_plugins()
 
 app = nonebot.get_asgi()
 
