@@ -188,13 +188,143 @@ class CommandGroup:
 
     def command(self,
                 cmd: Union[str, Tuple[str, ...]],
+                *,
                 rule: Optional[Union[Rule, RuleChecker]] = ...,
                 aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
                 permission: Optional[Permission] = ...,
-                *,
                 handlers: Optional[List[Handler]] = ...,
                 temp: bool = ...,
                 priority: int = ...,
                 block: bool = ...,
                 state: Optional[dict] = ...) -> Type[Matcher]:
+        ...
+
+
+class MatcherGroup:
+
+    def __init__(self,
+                 *,
+                 type: str = ...,
+                 rule: Optional[Union[Rule, RuleChecker]] = ...,
+                 permission: Optional[Permission] = ...,
+                 handlers: Optional[List[Handler]] = ...,
+                 temp: bool = ...,
+                 priority: int = ...,
+                 block: bool = ...,
+                 state: Optional[dict] = ...):
+        ...
+
+    def on(self,
+           *,
+           type: str = ...,
+           rule: Optional[Union[Rule, RuleChecker]] = ...,
+           permission: Optional[Permission] = ...,
+           handlers: Optional[List[Handler]] = ...,
+           temp: bool = ...,
+           priority: int = ...,
+           block: bool = ...,
+           state: Optional[dict] = ...) -> Type[Matcher]:
+        ...
+
+    def on_metaevent(self,
+                     *,
+                     rule: Optional[Union[Rule, RuleChecker]] = None,
+                     handlers: Optional[List[Handler]] = None,
+                     temp: bool = False,
+                     priority: int = 1,
+                     block: bool = False,
+                     state: Optional[dict] = None) -> Type[Matcher]:
+        ...
+
+    def on_message(self,
+                   *,
+                   rule: Optional[Union[Rule, RuleChecker]] = None,
+                   permission: Optional[Permission] = None,
+                   handlers: Optional[List[Handler]] = None,
+                   temp: bool = False,
+                   priority: int = 1,
+                   block: bool = True,
+                   state: Optional[dict] = None) -> Type[Matcher]:
+        ...
+
+    def on_notice(self,
+                  *,
+                  rule: Optional[Union[Rule, RuleChecker]] = None,
+                  handlers: Optional[List[Handler]] = None,
+                  temp: bool = False,
+                  priority: int = 1,
+                  block: bool = False,
+                  state: Optional[dict] = None) -> Type[Matcher]:
+        ...
+
+    def on_request(self,
+                   *,
+                   rule: Optional[Union[Rule, RuleChecker]] = None,
+                   handlers: Optional[List[Handler]] = None,
+                   temp: bool = False,
+                   priority: int = 1,
+                   block: bool = False,
+                   state: Optional[dict] = None) -> Type[Matcher]:
+        ...
+
+    def on_startswith(self,
+                      *,
+                      msg: str,
+                      rule: Optional[Optional[Union[Rule, RuleChecker]]] = ...,
+                      permission: Optional[Permission] = ...,
+                      handlers: Optional[List[Handler]] = ...,
+                      temp: bool = ...,
+                      priority: int = ...,
+                      block: bool = ...,
+                      state: Optional[dict] = ...) -> Type[Matcher]:
+        ...
+
+    def on_endswith(self,
+                    *,
+                    msg: str,
+                    rule: Optional[Optional[Union[Rule, RuleChecker]]] = ...,
+                    permission: Optional[Permission] = ...,
+                    handlers: Optional[List[Handler]] = ...,
+                    temp: bool = ...,
+                    priority: int = ...,
+                    block: bool = ...,
+                    state: Optional[dict] = ...) -> Type[Matcher]:
+        ...
+
+    def on_keyword(self,
+                   *,
+                   keywords: Set[str],
+                   rule: Optional[Optional[Union[Rule, RuleChecker]]] = ...,
+                   permission: Optional[Permission] = ...,
+                   handlers: Optional[List[Handler]] = ...,
+                   temp: bool = ...,
+                   priority: int = ...,
+                   block: bool = ...,
+                   state: Optional[dict] = ...) -> Type[Matcher]:
+        ...
+
+    def on_command(self,
+                   *,
+                   cmd: Union[str, Tuple[str, ...]],
+                   rule: Optional[Union[Rule, RuleChecker]] = ...,
+                   aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
+                   permission: Optional[Permission] = ...,
+                   handlers: Optional[List[Handler]] = ...,
+                   temp: bool = ...,
+                   priority: int = ...,
+                   block: bool = ...,
+                   state: Optional[dict] = ...) -> Type[Matcher]:
+        ...
+
+    def on_regex(self,
+                 *,
+                 pattern: str,
+                 flags: Union[int, re.RegexFlag] = 0,
+                 rule: Optional[Rule] = ...,
+                 permission: Optional[Permission] = ...,
+                 handlers: Optional[List[Handler]] = ...,
+                 temp: bool = ...,
+                 priority: int = ...,
+                 block: bool = ...,
+                 state: Optional[dict] = ...) -> Type[Matcher]:
         ...
