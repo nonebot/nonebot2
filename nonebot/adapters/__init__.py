@@ -453,4 +453,4 @@ class BaseMessage(list, abc.ABC):
             return f"{x} {y}" if y.type == "text" else x
 
         plain_text = reduce(_concat, self, "")
-        return plain_text.strip()
+        return plain_text[1:] if plain_text else plain_text
