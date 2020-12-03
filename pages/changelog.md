@@ -13,6 +13,8 @@ sidebar: auto
 - 添加插件 export, require 方法
 - 移除内置 apscheduler 定时任务支持
 - 移除内置协议适配默认加载
+- 新增**钉钉**协议适配
+- 移除原有共享型 `MatcherGroup` 改为默认型 `MatcherGroup`
 
 ## v2.0.0a6
 
