@@ -10,7 +10,7 @@ class DingAdapterException(AdapterException):
     """
 
     def __init__(self) -> None:
-        super.__init__("DING")
+        super().__init__("DING")
 
 
 class ApiError(DingAdapterException):
@@ -22,6 +22,7 @@ class ApiError(DingAdapterException):
     """
 
     def __init__(self, errcode: int, errmsg: str):
+        super().__init__()
         self.errcode = errcode
         self.errmsg = errmsg
 
