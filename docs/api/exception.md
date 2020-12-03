@@ -180,10 +180,3 @@ sidebarDepth: 0
 * **说明**
 
     API 请求成功返回数据，但 API 操作失败。
-
-
-
-* **参数**
-
-    
-    * `retcode: Optional[int]`: 错误代码
