@@ -9,6 +9,7 @@ import re
 import sys
 import pkgutil
 import importlib
+from datetime import datetime
 from dataclasses import dataclass
 from importlib._bootstrap import _load
 from contextvars import Context, ContextVar, copy_context
@@ -18,7 +19,7 @@ from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.typing import Handler, RuleChecker
 from nonebot.rule import Rule, startswith, endswith, keyword, command, regex
-from nonebot.typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, ModuleType
+from nonebot.typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, ArgsParser, ModuleType
 
 plugins: Dict[str, "Plugin"] = {}
 """
@@ -483,6 +484,314 @@ class CommandGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         return on_command(cmd, **final_kwargs)
+
+
+class MatcherGroup:
+    """事件响应器组合，统一管理。为 ``Matcher`` 创建提供默认属性。"""
+
+    def __init__(self, **kwargs):
+        """
+        :说明:
+
+          创建一个事件响应器组合，参数为默认值，与 ``on`` 一致
+        """
+        self.matchers: List[Type[Matcher]] = []
+        """
+        :类型: ``List[Type[Matcher]]``
+        :说明: 组内事件响应器列表
+        """
+        self.base_kwargs: Dict[str, Any] = kwargs
+        """
+        - **类型**: ``Dict[str, Any]``
+        - **说明**: 其他传递给 ``on`` 的参数默认值
+        """
+
+    def on(self, **kwargs) -> Type[Matcher]:
+        """
+        :说明:
+
+          注册一个基础事件响应器，可自定义类型。
+
+        :参数:
+
+          * ``type: str``: 事件响应器类型
+          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``permission: Optional[Permission]``: 事件响应权限
+          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+          * ``priority: int``: 事件响应器优先级
+          * ``block: bool``: 是否阻止事件向更低优先级传递
+          * ``state: Optional[dict]``: 默认的 state
+
+        :返回:
+
+          - ``Type[Matcher]``
+        """
+        final_kwargs = self.base_kwargs.copy()
+        final_kwargs.update(kwargs)
+        matcher = Matcher.new(**final_kwargs)
+        self.matchers.append(matcher)
+        _tmp_matchers.get().add(matcher)
+        return matcher
+
+    def on_metaevent(self, **kwargs) -> Type[Matcher]:
+        """
+        :说明:
+
+          注册一个元事件响应器。
+
+        :参数:
+
+          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+          * ``priority: int``: 事件响应器优先级
+          * ``block: bool``: 是否阻止事件向更低优先级传递
+          * ``state: Optional[dict]``: 默认的 state
+
+        :返回:
+
+          - ``Type[Matcher]``
+        """
+        final_kwargs = self.base_kwargs.copy()
+        final_kwargs.update(kwargs)
+        final_kwargs["type"] = "meta_event"
+        matcher = Matcher.new(**final_kwargs)
+        self.matchers.append(matcher)
+        _tmp_matchers.get().add(matcher)
+        return matcher
+
+    def on_message(self, **kwargs) -> Type[Matcher]:
+        """
+        :说明:
+
+          注册一个消息事件响应器。
+
+        :参数:
+
+          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``permission: Optional[Permission]``: 事件响应权限
+          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+          * ``priority: int``: 事件响应器优先级
+          * ``block: bool``: 是否阻止事件向更低优先级传递
+          * ``state: Optional[dict]``: 默认的 state
+
+        :返回:
+
+          - ``Type[Matcher]``
+        """
+        final_kwargs = self.base_kwargs.copy()
+        final_kwargs.update(kwargs)
+        final_kwargs["type"] = "message"
+        matcher = Matcher.new(**final_kwargs)
+        self.matchers.append(matcher)
+        _tmp_matchers.get().add(matcher)
+        return matcher
+
+    def on_notice(self, **kwargs) -> Type[Matcher]:
+        """
+        :说明:
+
+          注册一个通知事件响应器。
+
+        :参数:
+
+          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+          * ``priority: int``: 事件响应器优先级
+          * ``block: bool``: 是否阻止事件向更低优先级传递
+          * ``state: Optional[dict]``: 默认的 state
+
+        :返回:
+
+          - ``Type[Matcher]``
+        """
+        final_kwargs = self.base_kwargs.copy()
+        final_kwargs.update(kwargs)
+        final_kwargs["type"] = "notice"
+        matcher = Matcher.new(**final_kwargs)
+        self.matchers.append(matcher)
+        _tmp_matchers.get().add(matcher)
+        return matcher
+
+    def on_request(self, **kwargs) -> Type[Matcher]:
+        """
+        :说明:
+
+          注册一个请求事件响应器。
+
+        :参数:
+
+          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+          * ``priority: int``: 事件响应器优先级
+          * ``block: bool``: 是否阻止事件向更低优先级传递
+          * ``state: Optional[dict]``: 默认的 state
+
+        :返回:
+
+          - ``Type[Matcher]``
+        """
+        final_kwargs = self.base_kwargs.copy()
+        final_kwargs.update(kwargs)
+        final_kwargs["type"] = "request"
+        matcher = Matcher.new(**final_kwargs)
+        self.matchers.append(matcher)
+        _tmp_matchers.get().add(matcher)
+        return matcher
+
+    def on_startswith(self,
+                      msg: str,
+                      rule: Optional[Optional[Union[Rule, RuleChecker]]] = None,
+                      **kwargs) -> Type[Matcher]:
+        """
+        :说明:
+
+          注册一个消息事件响应器，并且当消息的**文本部分**以指定内容开头时响应。
+
+        :参数:
+
+          * ``msg: str``: 指定消息开头内容
+          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``permission: Optional[Permission]``: 事件响应权限
+          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+          * ``priority: int``: 事件响应器优先级
+          * ``block: bool``: 是否阻止事件向更低优先级传递
+          * ``state: Optional[dict]``: 默认的 state
+
+        :返回:
+
+          - ``Type[Matcher]``
+        """
+        return self.on_message(rule=startswith(msg) & rule, **kwargs)
+
+    def on_endswith(self,
+                    msg: str,
+                    rule: Optional[Optional[Union[Rule, RuleChecker]]] = None,
+                    **kwargs) -> Type[Matcher]:
+        """
+        :说明:
+
+          注册一个消息事件响应器，并且当消息的**文本部分**以指定内容结尾时响应。
+
+        :参数:
+
+          * ``msg: str``: 指定消息结尾内容
+          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``permission: Optional[Permission]``: 事件响应权限
+          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+          * ``priority: int``: 事件响应器优先级
+          * ``block: bool``: 是否阻止事件向更低优先级传递
+          * ``state: Optional[dict]``: 默认的 state
+
+        :返回:
+
+          - ``Type[Matcher]``
+        """
+        return self.on_message(rule=endswith(msg) & rule, **kwargs)
+
+    def on_keyword(self,
+                   keywords: Set[str],
+                   rule: Optional[Union[Rule, RuleChecker]] = None,
+                   **kwargs) -> Type[Matcher]:
+        """
+        :说明:
+
+          注册一个消息事件响应器，并且当消息纯文本部分包含关键词时响应。
+
+        :参数:
+
+          * ``keywords: Set[str]``: 关键词列表
+          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``permission: Optional[Permission]``: 事件响应权限
+          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+          * ``priority: int``: 事件响应器优先级
+          * ``block: bool``: 是否阻止事件向更低优先级传递
+          * ``state: Optional[dict]``: 默认的 state
+
+        :返回:
+
+          - ``Type[Matcher]``
+        """
+        return self.on_message(rule=keyword(*keywords) & rule, **kwargs)
+
+    def on_command(self,
+                   cmd: Union[str, Tuple[str, ...]],
+                   rule: Optional[Union[Rule, RuleChecker]] = None,
+                   aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
+                   **kwargs) -> Type[Matcher]:
+        """
+        :说明:
+
+          注册一个消息事件响应器，并且当消息以指定命令开头时响应。
+
+          命令匹配规则参考: `命令形式匹配 <rule.html#command-command>`_
+
+        :参数:
+
+          * ``cmd: Union[str, Tuple[str, ...]]``: 指定命令内容
+          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
+          * ``permission: Optional[Permission]``: 事件响应权限
+          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+          * ``priority: int``: 事件响应器优先级
+          * ``block: bool``: 是否阻止事件向更低优先级传递
+          * ``state: Optional[dict]``: 默认的 state
+
+        :返回:
+
+          - ``Type[Matcher]``
+        """
+
+        async def _strip_cmd(bot, event, state: dict):
+            message = event.message
+            event.message = message.__class__(
+                str(message)[len(state["_prefix"]["raw_command"]):].strip())
+
+        handlers = kwargs.pop("handlers", [])
+        handlers.insert(0, _strip_cmd)
+
+        commands = set([cmd]) | (aliases or set())
+        return self.on_message(rule=command(*commands) & rule,
+                               handlers=handlers,
+                               **kwargs)
+
+    def on_regex(self,
+                 pattern: str,
+                 flags: Union[int, re.RegexFlag] = 0,
+                 rule: Optional[Rule] = None,
+                 **kwargs) -> Type[Matcher]:
+        """
+        :说明:
+
+          注册一个消息事件响应器，并且当消息匹配正则表达式时响应。
+
+          命令匹配规则参考: `正则匹配 <rule.html#regex-regex-flags-0>`_
+
+        :参数:
+
+          * ``pattern: str``: 正则表达式
+          * ``flags: Union[int, re.RegexFlag]``: 正则匹配标志
+          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``permission: Optional[Permission]``: 事件响应权限
+          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+          * ``priority: int``: 事件响应器优先级
+          * ``block: bool``: 是否阻止事件向更低优先级传递
+          * ``state: Optional[dict]``: 默认的 state
+
+        :返回:
+
+          - ``Type[Matcher]``
+        """
+        return self.on_message(rule=regex(pattern, flags) & rule, **kwargs)
 
 
 def load_plugin(module_path: str) -> Optional[Plugin]:
