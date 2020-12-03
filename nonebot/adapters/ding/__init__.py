@@ -9,7 +9,9 @@
 
 """
 
+from .utils import log
 from .bot import Bot
 from .event import Event
 from .message import Message, MessageSegment
-from .exception import ApiError, SessionExpired, DingAdapterException
+from .exception import (DingAdapterException, ApiNotAvailable, NetworkError,
+                        ActionFailed, SessionExpired)

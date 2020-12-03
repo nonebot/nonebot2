@@ -1,19 +1,20 @@
-import httpx
+import hmac
+import base64
 from datetime import datetime
 
+import httpx
 from nonebot.log import logger
 from nonebot.config import Config
 from nonebot.adapters import BaseBot
 from nonebot.message import handle_event
-from nonebot.typing import Driver, NoReturn
-from nonebot.typing import Any, Union, Optional
-from nonebot.exception import NetworkError, RequestDenied, ApiNotAvailable
+from nonebot.exception import RequestDenied
+from nonebot.typing import Any, Union, Driver, Optional, NoReturn
 
+from .utils import log
 from .event import Event
 from .model import MessageModel
-from .utils import check_legal, log
 from .message import Message, MessageSegment
-from .exception import ApiError, SessionExpired
+from .exception import NetworkError, ApiNotAvailable, ActionFailed, SessionExpired
 
 
 class Bot(BaseBot):
@@ -35,8 +36,7 @@ class Bot(BaseBot):
 
     @classmethod
     async def check_permission(cls, driver: Driver, connection_type: str,
-                               headers: dict,
-                               body: Optional[dict]) -> Union[str, NoReturn]:
+                               headers: dict, body: Optional[dict]) -> str:
         """
         :说明:
 
@@ -45,25 +45,29 @@ class Bot(BaseBot):
         timestamp = headers.get("timestamp")
         sign = headers.get("sign")
 
-        # 检查 timestamp
-        if not timestamp:
-            raise RequestDenied(400, "Missing `timestamp` Header")
-        # 检查 sign
-        if not sign:
-            raise RequestDenied(400, "Missing `sign` Header")
-        # 校验 sign 和 timestamp，判断是否是来自钉钉的合法请求
-        if not check_legal(timestamp, sign, driver):
-            raise RequestDenied(403, "Signature is invalid")
         # 检查连接方式
         if connection_type not in ["http"]:
             raise RequestDenied(405, "Unsupported connection type")
 
-        access_token = driver.config.access_token
-        if access_token and access_token != access_token:
-            raise RequestDenied(
-                403, "Authorization Header is invalid"
-                if access_token else "Missing Authorization Header")
-        return body.get("chatbotUserId")
+        # 检查 timestamp
+        if not timestamp:
+            raise RequestDenied(400, "Missing `timestamp` Header")
+
+        # 检查 sign
+        secret = driver.config.secret
+        if secret:
+            if not sign:
+                log("WARNING", "Missing Signature Header")
+                raise RequestDenied(400, "Missing `sign` Header")
+            string_to_sign = f"{timestamp}\n{secret}"
+            sig = hmac.new(secret.encode("utf-8"),
+                           string_to_sign.encode("utf-8"), "sha256").digest()
+            if sign != base64.b64encode(sig).decode("utf-8"):
+                log("WARNING", "Signature Header is invalid")
+                raise RequestDenied(403, "Signature is invalid")
+        else:
+            log("WARNING", "Ding signature check ignored!")
+        return body["chatbotUserId"]
 
     async def handle_message(self, body: dict):
         message = MessageModel.parse_obj(body)
@@ -79,7 +83,10 @@ class Bot(BaseBot):
             )
         return
 
-    async def call_api(self, api: str, **data) -> Union[Any, NoReturn]:
+    async def call_api(self,
+                       api: str,
+                       event: Optional[Event] = None,
+                       **data) -> Union[Any, NoReturn]:
         """
         :说明:
 
@@ -111,13 +118,15 @@ class Bot(BaseBot):
         log("DEBUG", f"Calling API <y>{api}</y>")
 
         if api == "send_message":
-            raw_event: MessageModel = data["raw_event"]
-            # 确保 sessionWebhook 没有过期
-            if int(datetime.now().timestamp()) > int(
-                    raw_event.sessionWebhookExpiredTime / 1000):
-                raise SessionExpired
+            if event:
+                # 确保 sessionWebhook 没有过期
+                if int(datetime.now().timestamp()) > int(
+                        event.raw_event.sessionWebhookExpiredTime / 1000):
+                    raise SessionExpired
 
-            target = raw_event.sessionWebhook
+                target = event.raw_event.sessionWebhook
+            else:
+                target = None
 
             if not target:
                 raise ApiNotAvailable
@@ -136,8 +145,8 @@ class Bot(BaseBot):
                     result = response.json()
                     if isinstance(result, dict):
                         if result.get("errcode") != 0:
-                            raise ApiError(errcode=result.get("errcode"),
-                                           errmsg=result.get("errmsg"))
+                            raise ActionFailed(errcode=result.get("errcode"),
+                                               errmsg=result.get("errmsg"))
                         return result
                 raise NetworkError(f"HTTP request received unexpected "
                                    f"status code: {response.status_code}")
@@ -176,7 +185,8 @@ class Bot(BaseBot):
         msg = message if isinstance(message, Message) else Message(message)
 
         at_sender = at_sender and bool(event.user_id)
-        params = {"raw_event": event.raw_event}
+        params = {}
+        params["event"] = event
         params.update(kwargs)
 
         if at_sender and event.detail_type != "private":

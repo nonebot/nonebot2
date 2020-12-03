@@ -14,3 +14,4 @@ from .event import Event
 from .message import Message, MessageSegment
 from .utils import log, escape, unescape, _b2s
 from .bot import Bot, _check_at_me, _check_nickname, _check_reply, _handle_api_result
+from .exception import CQHTTPAdapterException, ApiNotAvailable, ActionFailed, NetworkError

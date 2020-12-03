@@ -247,7 +247,7 @@ class Bot(BaseBot):
         """
         x_self_id = headers.get("x-self-id")
         x_signature = headers.get("x-signature")
-        access_token = get_auth_bearer(headers.get("authorization"))
+        token = get_auth_bearer(headers.get("authorization"))
 
         # 检查连接方式
         if connection_type not in ["http", "websocket"]:
@@ -272,13 +272,13 @@ class Bot(BaseBot):
                 raise RequestDenied(403, "Signature is invalid")
 
         access_token = driver.config.access_token
-        if access_token and access_token != access_token:
+        if access_token and access_token != token:
             log(
                 "WARNING", "Authorization Header is invalid"
-                if access_token else "Missing Authorization Header")
+                if token else "Missing Authorization Header")
             raise RequestDenied(
                 403, "Authorization Header is invalid"
-                if access_token else "Missing Authorization Header")
+                if token else "Missing Authorization Header")
         return str(x_self_id)
 
     @overrides(BaseBot)

@@ -1,6 +1,5 @@
-from typing import Literal, Union, Optional
-
 from nonebot.adapters import BaseEvent
+from nonebot.typing import Union, Optional
 
 from .message import Message
 from .model import MessageModel, ConversationType, TextMessage
@@ -67,7 +66,7 @@ class Event(BaseEvent):
         pass
 
     @property
-    def detail_type(self) -> Literal["private", "group"]:
+    def detail_type(self) -> str:
         """
         - 类型: ``str``
         - 说明: 事件详细类型
@@ -124,10 +123,6 @@ class Event(BaseEvent):
         - 说明: 消息是否与机器人相关
         """
         return self.detail_type == "private" or self.raw_event.isInAtList
-
-    @to_me.setter
-    def to_me(self, value) -> None:
-        pass
 
     @property
     def message(self) -> Optional["Message"]:
