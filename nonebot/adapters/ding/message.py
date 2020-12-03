@@ -45,8 +45,8 @@ class MessageSegment(BaseMessageSegment):
         self.data["at"]["isAtAll"] = value
 
     @staticmethod
-    def text(text: str) -> "MessageSegment":
-        return MessageSegment("text", {"text": {"content": text.strip()}})
+    def text(text_: str) -> "MessageSegment":
+        return MessageSegment("text", {"text": {"content": text_.strip()}})
 
     @staticmethod
     def markdown(title: str, text: str) -> "MessageSegment":
@@ -130,4 +130,4 @@ class Message(BaseMessage):
         elif isinstance(msg, TextMessage):
             yield MessageSegment("text", {"text": msg.dict()})
         elif isinstance(msg, str):
-            yield MessageSegment.text(str)
+            yield MessageSegment.text(msg)
