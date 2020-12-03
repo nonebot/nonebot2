@@ -6,8 +6,6 @@
 这些异常并非所有需要用户处理，在 NoneBot 内部运行时被捕获，并进行对应操作。
 """
 
-from nonebot.typing import Optional
-
 
 class NoneBotException(Exception):
     """

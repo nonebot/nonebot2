@@ -1,4 +1,8 @@
-from nonebot.exception import AdapterException, ActionFailed
+from nonebot.typing import Optional
+from nonebot.exception import (AdapterException, ActionFailed as
+                               BaseActionFailed, NetworkError as
+                               BaseNetworkError, ApiNotAvailable as
+                               BaseApiNotAvailable)
 
 
 class CQHTTPAdapterException(AdapterException):
@@ -7,7 +11,7 @@ class CQHTTPAdapterException(AdapterException):
         super().__init__("cqhttp")
 
 
-class ApiError(CQHTTPAdapterException, ActionFailed):
+class ActionFailed(BaseActionFailed, CQHTTPAdapterException):
     """
     :说明:
 
@@ -27,3 +31,29 @@ class ApiError(CQHTTPAdapterException, ActionFailed):
 
     def __str__(self):
         return self.__repr__()
+
+
+class NetworkError(BaseNetworkError, CQHTTPAdapterException):
+    """
+    :说明:
+
+      网络错误。
+
+    :参数:
+
+      * ``retcode: Optional[int]``: 错误码
+    """
+
+    def __init__(self, msg: Optional[str] = None):
+        super().__init__()
+        self.msg = msg
+
+    def __repr__(self):
+        return f"<NetWorkError message={self.msg}>"
+
+    def __str__(self):
+        return self.__repr__()
+
+
+class ApiNotAvailable(BaseApiNotAvailable, CQHTTPAdapterException):
+    pass

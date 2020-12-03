@@ -3,6 +3,7 @@ import re
 from nonebot.typing import overrides
 from nonebot.typing import Any, Dict, Union, Tuple, Iterable, Optional
 from nonebot.adapters import BaseMessage, BaseMessageSegment
+
 from .utils import log, escape, unescape, _b2s
 
 

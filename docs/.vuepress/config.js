@@ -198,6 +198,10 @@ module.exports = context => ({
                 {
                   title: "nonebot.adapters.cqhttp 模块",
                   path: "adapters/cqhttp"
+                },
+                {
+                  title: "nonebot.adapters.ding 模块",
+                  path: "adapters/ding"
                 }
               ]
             }

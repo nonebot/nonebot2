@@ -17,3 +17,4 @@ NoneBot Api Reference
   - `nonebot.drivers.fastapi <drivers/fastapi.html>`_
   - `nonebot.adapters <adapters/>`_
   - `nonebot.adapters.cqhttp <adapters/cqhttp.html>`_
+  - `nonebot.adapters.ding <adapters/ding.html>`_

@@ -10,14 +10,24 @@ from nonebot.log import logger
 from nonebot.config import Config
 from nonebot.adapters import BaseBot
 from nonebot.message import handle_event
+from nonebot.exception import RequestDenied
 from nonebot.typing import Any, Dict, Union, Optional
 from nonebot.typing import overrides, Driver, WebSocket, NoReturn
-from nonebot.exception import NetworkError, RequestDenied, ApiNotAvailable
 
 from .event import Event
-from .exception import ApiError
-from .utils import log, get_auth_bearer
 from .message import Message, MessageSegment
+from .exception import NetworkError, ApiNotAvailable, ActionFailed
+from .utils import log
+
+
+def get_auth_bearer(
+        access_token: Optional[str] = None) -> Union[Optional[str], NoReturn]:
+    if not access_token:
+        return None
+    scheme, _, param = access_token.partition(" ")
+    if scheme.lower() not in ["bearer", "token"]:
+        raise RequestDenied(401, "Not authenticated")
+    return param
 
 
 async def _check_reply(bot: "Bot", event: "Event"):
@@ -160,11 +170,11 @@ def _handle_api_result(
 
     :异常:
 
-        - ``ApiError``: API 调用失败
+        - ``ActionFailed``: API 调用失败
     """
     if isinstance(result, dict):
         if result.get("status") == "failed":
-            raise ApiError(retcode=result.get("retcode"))
+            raise ActionFailed(retcode=result.get("retcode"))
         return result.get("data")
 
 
@@ -318,7 +328,7 @@ class Bot(BaseBot):
         :异常:
 
           - ``NetworkError``: 网络错误
-          - ``ApiError``: API 调用失败
+          - ``ActionFailed``: API 调用失败
         """
         if "self_id" in data:
             self_id = data.pop("self_id")
@@ -393,7 +403,7 @@ class Bot(BaseBot):
 
           - ``ValueError``: 缺少 ``user_id``, ``group_id``
           - ``NetworkError``: 网络错误
-          - ``ApiError``: API 调用失败
+          - ``ActionFailed``: API 调用失败
         """
         msg = message if isinstance(message, Message) else Message(message)
 

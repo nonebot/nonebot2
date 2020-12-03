@@ -10,7 +10,7 @@ CQHTTP (OneBot) v11 协议适配
     https://github.com/howmanybots/onebot/blob/master/README.md
 """
 
-from .utils import log
 from .event import Event
 from .message import Message, MessageSegment
-from .bot import Bot, _check_at_me, _check_nickname, _check_reply
+from .utils import log, escape, unescape, _b2s
+from .bot import Bot, _check_at_me, _check_nickname, _check_reply, _handle_api_result
