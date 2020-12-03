@@ -1,19 +1,7 @@
-from nonebot.typing import NoReturn
-from nonebot.typing import Union, Optional
-from nonebot.exception import RequestDenied
+from nonebot.typing import Optional
 from nonebot.utils import logger_wrapper
 
 log = logger_wrapper("CQHTTP")
-
-
-def get_auth_bearer(
-        access_token: Optional[str] = None) -> Union[Optional[str], NoReturn]:
-    if not access_token:
-        return None
-    scheme, _, param = access_token.partition(" ")
-    if scheme.lower() not in ["bearer", "token"]:
-        raise RequestDenied(401, "Not authenticated")
-    return param
 
 
 def escape(s: str, *, escape_comma: bool = True) -> str:

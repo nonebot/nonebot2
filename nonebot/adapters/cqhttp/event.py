@@ -1,6 +1,5 @@
-from nonebot.typing import overrides
-from nonebot.typing import Optional
 from nonebot.adapters import BaseEvent
+from nonebot.typing import Optional, overrides
 
 from .message import Message
 

@@ -8,15 +8,26 @@ import httpx
 
 from nonebot.log import logger
 from nonebot.config import Config
-from nonebot.message import handle_event
-from nonebot.typing import overrides, Driver, WebSocket, NoReturn
-from nonebot.typing import Any, Dict, Union, Optional
 from nonebot.adapters import BaseBot
-from nonebot.exception import NetworkError, ActionFailed, RequestDenied, ApiNotAvailable
+from nonebot.message import handle_event
+from nonebot.exception import RequestDenied
+from nonebot.typing import Any, Dict, Union, Optional
+from nonebot.typing import overrides, Driver, WebSocket, NoReturn
 
-from .message import Message, MessageSegment
-from .utils import log, get_auth_bearer
 from .event import Event
+from .message import Message, MessageSegment
+from .exception import NetworkError, ApiNotAvailable, ActionFailed
+from .utils import log
+
+
+def get_auth_bearer(
+        access_token: Optional[str] = None) -> Union[Optional[str], NoReturn]:
+    if not access_token:
+        return None
+    scheme, _, param = access_token.partition(" ")
+    if scheme.lower() not in ["bearer", "token"]:
+        raise RequestDenied(401, "Not authenticated")
+    return param
 
 
 async def _check_reply(bot: "Bot", event: "Event"):
@@ -236,7 +247,7 @@ class Bot(BaseBot):
         """
         x_self_id = headers.get("x-self-id")
         x_signature = headers.get("x-signature")
-        access_token = get_auth_bearer(headers.get("authorization"))
+        token = get_auth_bearer(headers.get("authorization"))
 
         # 检查连接方式
         if connection_type not in ["http", "websocket"]:
@@ -261,13 +272,13 @@ class Bot(BaseBot):
                 raise RequestDenied(403, "Signature is invalid")
 
         access_token = driver.config.access_token
-        if access_token and access_token != access_token:
+        if access_token and access_token != token:
             log(
                 "WARNING", "Authorization Header is invalid"
-                if access_token else "Missing Authorization Header")
+                if token else "Missing Authorization Header")
             raise RequestDenied(
                 403, "Authorization Header is invalid"
-                if access_token else "Missing Authorization Header")
+                if token else "Missing Authorization Header")
         return str(x_self_id)
 
     @overrides(BaseBot)
@@ -368,8 +379,8 @@ class Bot(BaseBot):
 
     @overrides(BaseBot)
     async def send(self,
-                   event: "Event",
-                   message: Union[str, "Message", "MessageSegment"],
+                   event: Event,
+                   message: Union[str, Message, MessageSegment],
                    at_sender: bool = False,
                    **kwargs) -> Union[Any, NoReturn]:
         """

@@ -5,7 +5,7 @@ import dataclasses
 from functools import wraps, partial
 
 from nonebot.log import logger
-from nonebot.typing import Any, Callable, Awaitable, overrides
+from nonebot.typing import Any, Optional, Callable, Awaitable, overrides
 
 
 def escape_tag(s: str) -> str:
@@ -65,19 +65,20 @@ class DataclassEncoder(json.JSONEncoder):
 
 
 def logger_wrapper(logger_name: str):
+    """
+    :说明:
 
-    def log(level: str, message: str):
-        """
-        :说明:
+    用于打印 adapter 的日志。
 
-        用于打印 adapter 的日志。
+    :log 参数:
 
-        :参数:
+    * ``level: Literal['WARNING', 'DEBUG', 'INFO']``: 日志等级
+    * ``message: str``: 日志信息
+    * ``exception: Optional[Exception]``: 异常信息
+    """
 
-        * ``level: Literal['WARNING', 'DEBUG', 'INFO']``: 日志等级
-        * ``message: str``: 日志信息
-        """
-        return logger.opt(colors=True).log(level,
-                                           f"<m>{logger_name}</m> | " + message)
+    def log(level: str, message: str, exception: Optional[Exception] = None):
+        return logger.opt(colors=True, exception=exception).log(
+            level, f"<m>{logger_name}</m> | " + message)
 
     return log

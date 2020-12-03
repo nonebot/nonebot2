@@ -1,12 +1,11 @@
 import asyncio
 
 from nonebot.config import Config
-from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
-from nonebot.typing import Any, Dict, List, Union, Driver, Optional, NoReturn, WebSocket, Iterable
+from nonebot.adapters import BaseBot
+from nonebot.typing import Any, Dict, List, Union, Driver, Optional, NoReturn, WebSocket
 
-
-def log(level: str, message: str):
-    ...
+from .event import Event
+from .message import Message, MessageSegment
 
 
 def get_auth_bearer(
@@ -14,27 +13,15 @@ def get_auth_bearer(
     ...
 
 
-def escape(s: str, *, escape_comma: bool = ...) -> str:
+async def _check_reply(bot: "Bot", event: Event):
     ...
 
 
-def unescape(s: str) -> str:
+def _check_at_me(bot: "Bot", event: Event):
     ...
 
 
-def _b2s(b: Optional[bool]) -> Optional[str]:
-    ...
-
-
-async def _check_reply(bot: "Bot", event: "Event"):
-    ...
-
-
-def _check_at_me(bot: "Bot", event: "Event"):
-    ...
-
-
-def _check_nickname(bot: "Bot", event: "Event"):
+def _check_nickname(bot: "Bot", event: Event):
     ...
 
 
@@ -86,8 +73,8 @@ class Bot(BaseBot):
     async def call_api(self, api: str, **data) -> Union[Any, NoReturn]:
         ...
 
-    async def send(self, event: "Event", message: Union[str, "Message",
-                                                        "MessageSegment"],
+    async def send(self, event: Event, message: Union[str, Message,
+                                                      MessageSegment],
                    **kwargs) -> Union[Any, NoReturn]:
         ...
 
@@ -758,243 +745,4 @@ class Bot(BaseBot):
 
           * ``self_id``: 机器人 QQ 号
         """
-        ...
-
-
-class Event(BaseEvent):
-
-    def __init__(self, raw_event: dict):
-        ...
-
-    @property
-    def id(self) -> Optional[int]:
-        ...
-
-    @property
-    def name(self) -> str:
-        ...
-
-    @property
-    def self_id(self) -> str:
-        ...
-
-    @property
-    def time(self) -> int:
-        ...
-
-    @property
-    def type(self) -> str:
-        ...
-
-    @type.setter
-    def type(self, value) -> None:
-        ...
-
-    @property
-    def detail_type(self) -> str:
-        ...
-
-    @detail_type.setter
-    def detail_type(self, value) -> None:
-        ...
-
-    @property
-    def sub_type(self) -> Optional[str]:
-        ...
-
-    @sub_type.setter
-    def sub_type(self, value) -> None:
-        ...
-
-    @property
-    def user_id(self) -> Optional[int]:
-        ...
-
-    @user_id.setter
-    def user_id(self, value) -> None:
-        ...
-
-    @property
-    def group_id(self) -> Optional[int]:
-        ...
-
-    @group_id.setter
-    def group_id(self, value) -> None:
-        ...
-
-    @property
-    def to_me(self) -> Optional[bool]:
-        ...
-
-    @to_me.setter
-    def to_me(self, value) -> None:
-        ...
-
-    @property
-    def message(self) -> Optional["Message"]:
-        ...
-
-    @message.setter
-    def message(self, value) -> None:
-        ...
-
-    @property
-    def reply(self) -> Optional[dict]:
-        ...
-
-    @reply.setter
-    def reply(self, value) -> None:
-        ...
-
-    @property
-    def raw_message(self) -> Optional[str]:
-        ...
-
-    @raw_message.setter
-    def raw_message(self, value) -> None:
-        ...
-
-    @property
-    def plain_text(self) -> Optional[str]:
-        ...
-
-    @property
-    def sender(self) -> Optional[dict]:
-        ...
-
-    @sender.setter
-    def sender(self, value) -> None:
-        ...
-
-
-class MessageSegment(BaseMessageSegment):
-
-    def __init__(self, type: str, data: Dict[str, Any]) -> None:
-        ...
-
-    def __str__(self):
-        ...
-
-    def __add__(self, other) -> "Message":
-        ...
-
-    @staticmethod
-    def anonymous(ignore_failure: Optional[bool] = ...) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def at(user_id: Union[int, str]) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def contact_group(group_id: int) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def contact_user(user_id: int) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def dice() -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def face(id_: int) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def forward(id_: str) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def image(file: str,
-              type_: Optional[str] = ...,
-              cache: bool = ...,
-              proxy: bool = ...,
-              timeout: Optional[int] = ...) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def json(data: str) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def location(latitude: float,
-                 longitude: float,
-                 title: Optional[str] = ...,
-                 content: Optional[str] = ...) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def music(type_: str, id_: int) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def music_custom(url: str,
-                     audio: str,
-                     title: str,
-                     content: Optional[str] = ...,
-                     img_url: Optional[str] = ...) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def node(id_: int) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def node_custom(user_id: int, nickname: str,
-                    content: Union[str, "Message"]) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def poke(type_: str, id_: str) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def record(file: str,
-               magic: Optional[bool] = ...,
-               cache: Optional[bool] = ...,
-               proxy: Optional[bool] = ...,
-               timeout: Optional[int] = ...) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def reply(id_: int) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def rps() -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def shake() -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def share(url: str = ...,
-              title: str = ...,
-              content: Optional[str] = ...,
-              img_url: Optional[str] = ...) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def text(text: str) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def video(file: str,
-              cache: Optional[bool] = ...,
-              proxy: Optional[bool] = ...,
-              timeout: Optional[int] = ...) -> "MessageSegment":
-        ...
-
-    @staticmethod
-    def xml(data: str) -> "MessageSegment":
-        ...
-
-
-class Message(BaseMessage):
-
-    @staticmethod
-    def _construct(msg: Union[str, dict, list]) -> Iterable[MessageSegment]:
         ...

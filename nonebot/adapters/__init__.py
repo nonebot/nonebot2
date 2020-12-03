@@ -9,9 +9,11 @@ import abc
 from functools import reduce, partial
 from dataclasses import dataclass, field
 
+from pydantic import BaseModel
+
 from nonebot.config import Config
 from nonebot.typing import Driver, Message, WebSocket
-from nonebot.typing import Any, Dict, Union, Optional, NoReturn, Callable, Iterable, Awaitable
+from nonebot.typing import Any, Dict, Union, Optional, NoReturn, Callable, Iterable, Awaitable, TypeVar, Generic
 
 
 class BaseBot(abc.ABC):
@@ -135,16 +137,19 @@ class BaseBot(abc.ABC):
         raise NotImplementedError
 
 
-class BaseEvent(abc.ABC):
+T = TypeVar("T", bound=BaseModel)
+
+
+class BaseEvent(abc.ABC, Generic[T]):
     """
     Event 基类。提供上报信息的关键信息，其余信息可从原始上报消息获取。
     """
 
-    def __init__(self, raw_event: dict):
+    def __init__(self, raw_event: Union[dict, T]):
         """
         :参数:
 
-          * ``raw_event: dict``: 原始上报消息
+          * ``raw_event: Union[dict, T]``: 原始上报消息
         """
         self._raw_event = raw_event
 
@@ -152,7 +157,7 @@ class BaseEvent(abc.ABC):
         return f"<Event {self.self_id}: {self.name} {self.time}>"
 
     @property
-    def raw_event(self) -> dict:
+    def raw_event(self) -> Union[dict, T]:
         """原始上报消息"""
         return self._raw_event
 
@@ -347,17 +352,17 @@ class BaseMessage(list, abc.ABC):
     """消息数组"""
 
     def __init__(self,
-                 message: Union[str, dict, list, BaseMessageSegment,
+                 message: Union[str, dict, list, BaseModel, BaseMessageSegment,
                                 "BaseMessage"] = None,
                  *args,
                  **kwargs):
         """
         :参数:
 
-          * ``message: Union[str, dict, list, MessageSegment, Message]``: 消息内容
+          * ``message: Union[str, dict, list, BaseModel, MessageSegment, Message]``: 消息内容
         """
         super().__init__(*args, **kwargs)
-        if isinstance(message, (str, dict, list)):
+        if isinstance(message, (str, dict, list, BaseModel)):
             self.extend(self._construct(message))
         elif isinstance(message, BaseMessage):
             self.extend(message)

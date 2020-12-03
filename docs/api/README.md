@@ -47,3 +47,6 @@
 
 
     * [nonebot.adapters.cqhttp](adapters/cqhttp.html)
+
+
+    * [nonebot.adapters.ding](adapters/ding.html)

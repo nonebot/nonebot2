@@ -5,29 +5,6 @@ sidebarDepth: 0
 
 # NoneBot.adapters.cqhttp 模块
 
-## CQHTTP (OneBot) v11 协议适配
-
-协议详情请看: [CQHTTP](https://github.com/howmanybots/onebot/blob/master/README.md) | [OneBot](https://github.com/howmanybots/onebot/blob/master/README.md)
-
-
-## `log(level, message)`
-
-
-* **说明**
-
-    用于打印 CQHTTP 日志。
-
-
-
-* **参数**
-
-    
-    * `level: str`: 日志等级
-
-
-    * `message: str`: 日志信息
-
-
 
 ## `escape(s, *, escape_comma=True)`
 
@@ -64,9 +41,50 @@ sidebarDepth: 0
 
 
 
-## `_b2s(b)`
+## _exception_ `CQHTTPAdapterException`
 
-转换布尔值为字符串。
+基类：[`nonebot.exception.AdapterException`](../exception.md#nonebot.exception.AdapterException)
+
+
+## _exception_ `ActionFailed`
+
+基类：[`nonebot.exception.ActionFailed`](../exception.md#nonebot.exception.ActionFailed), `nonebot.adapters.cqhttp.exception.CQHTTPAdapterException`
+
+
+* **说明**
+
+    API 请求返回错误信息。
+
+
+
+* **参数**
+
+    
+    * `retcode: Optional[int]`: 错误码
+
+
+
+## _exception_ `NetworkError`
+
+基类：[`nonebot.exception.NetworkError`](../exception.md#nonebot.exception.NetworkError), `nonebot.adapters.cqhttp.exception.CQHTTPAdapterException`
+
+
+* **说明**
+
+    网络错误。
+
+
+
+* **参数**
+
+    
+    * `retcode: Optional[int]`: 错误码
+
+
+
+## _exception_ `ApiNotAvailable`
+
+基类：[`nonebot.exception.ApiNotAvailable`](../exception.md#nonebot.exception.ApiNotAvailable), `nonebot.adapters.cqhttp.exception.CQHTTPAdapterException`
 
 
 ## _async_ `_check_reply(bot, event)`
