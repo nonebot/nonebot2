@@ -40,6 +40,9 @@ sidebarDepth: 0
 * `CommandGroup` => `nonebot.plugin.CommandGroup`
 
 
+* `MatcherGroup` => `nonebot.plugin.MatcherGroup`
+
+
 * `load_plugin` => `nonebot.plugin.load_plugin`
 
 

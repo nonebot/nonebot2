@@ -14,6 +14,7 @@
 - ``on_command`` => ``nonebot.plugin.on_command``
 - ``on_regex`` => ``nonebot.plugin.on_regex``
 - ``CommandGroup`` => ``nonebot.plugin.CommandGroup``
+- ``Matchergroup`` => ``nonebot.plugin.MatcherGroup``
 - ``load_plugin`` => ``nonebot.plugin.load_plugin``
 - ``load_plugins`` => ``nonebot.plugin.load_plugins``
 - ``load_builtin_plugins`` => ``nonebot.plugin.load_builtin_plugins``
