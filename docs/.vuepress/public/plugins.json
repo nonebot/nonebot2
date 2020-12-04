@@ -46,5 +46,13 @@
     "desc": "在浏览器中测试你的 NoneBot 机器人",
     "name": "前端测试机器人插件",
     "repo": "nonebot/plugin-test"
+  },
+  {
+    "id": "nonebot_plugin_apscheduler",
+    "link": "nonebot-plugin-apscheduler",
+    "author": "yanyongyu",
+    "desc": "APScheduler 定时任务插件",
+    "name": "定时任务",
+    "repo": "nonebot/plugin-apscheduler"
   }
 ]
