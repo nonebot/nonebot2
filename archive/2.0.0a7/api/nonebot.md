@@ -28,13 +28,10 @@ sidebarDepth: 0
 * `on_endswith` => `nonebot.plugin.on_endswith`
 
 
+* `on_keyword` => `nonebot.plugin.on_keyword`
+
+
 * `on_command` => `nonebot.plugin.on_command`
-
-
-* `on_regex` => `nonebot.plugin.on_regex`
-
-
-* `on_regex` => `nonebot.plugin.on_regex`
 
 
 * `on_regex` => `nonebot.plugin.on_regex`
@@ -52,7 +49,16 @@ sidebarDepth: 0
 * `load_builtin_plugins` => `nonebot.plugin.load_builtin_plugins`
 
 
+* `get_plugin` => `nonebot.plugin.get_plugin`
+
+
 * `get_loaded_plugins` => `nonebot.plugin.get_loaded_plugins`
+
+
+* `export` => `nonebot.plugin.export`
+
+
+* `require` => `nonebot.plugin.require`
 
 
 ## `get_driver()`

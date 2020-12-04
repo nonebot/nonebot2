@@ -16,20 +16,27 @@
           "link": "/guide/"
         },
         {
+          "text": "进阶",
+          "link": "/advanced/"
+        },
+        {
           "text": "API",
           "link": "/api/"
         },
         {
           "text": "插件广场",
           "link": "/plugin-store"
+        },
+        {
+          "text": "更新日志",
+          "link": "/changelog"
         }
       ],
       "sidebarDepth": 2,
       "sidebar": {
         "/guide/": [
           {
-            "title": "指南",
-            "path": "",
+            "title": "开始",
             "collapsable": false,
             "sidebar": "auto",
             "children": [
@@ -37,8 +44,41 @@
               "installation",
               "getting-started",
               "creating-a-project",
-              "basic-configuration",
-              "writing-a-plugin"
+              "basic-configuration"
+            ]
+          },
+          {
+            "title": "编写插件",
+            "collapsable": false,
+            "sidebar": "auto",
+            "children": [
+              "loading-a-plugin",
+              "creating-a-plugin",
+              "creating-a-matcher",
+              "creating-a-handler",
+              "end-or-start"
+            ]
+          }
+        ],
+        "/advanced/": [
+          {
+            "title": "进阶",
+            "collapsable": false,
+            "sidebar": "auto",
+            "children": [
+              "",
+              "scheduler",
+              "permission",
+              "runtime-hook",
+              "export-and-require"
+            ]
+          },
+          {
+            "title": "发布",
+            "collapsable": false,
+            "sidebar": "auto",
+            "children": [
+              "publish-plugin"
             ]
           }
         ],
@@ -61,6 +101,10 @@
                 "path": "plugin"
               },
               {
+                "title": "nonebot.message 模块",
+                "path": "message"
+              },
+              {
                 "title": "nonebot.matcher 模块",
                 "path": "matcher"
               },
@@ -71,10 +115,6 @@
               {
                 "title": "nonebot.permission 模块",
                 "path": "permission"
-              },
-              {
-                "title": "nonebot.sched 模块",
-                "path": "sched"
               },
               {
                 "title": "nonebot.log 模块",
@@ -107,6 +147,10 @@
               {
                 "title": "nonebot.adapters.cqhttp 模块",
                 "path": "adapters/cqhttp"
+              },
+              {
+                "title": "nonebot.adapters.ding 模块",
+                "path": "adapters/ding"
               }
             ]
           }

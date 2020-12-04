@@ -11,9 +11,20 @@ sidebarDepth: 0
 这些异常并非所有需要用户处理，在 NoneBot 内部运行时被捕获，并进行对应操作。
 
 
-## _exception_ `IgnoredException`
+## _exception_ `NoneBotException`
 
 基类：`Exception`
+
+
+* **说明**
+
+    所有 NoneBot 发生的异常基类。
+
+
+
+## _exception_ `IgnoredException`
+
+基类：`nonebot.exception.NoneBotException`
 
 
 * **说明**
@@ -31,7 +42,7 @@ sidebarDepth: 0
 
 ## _exception_ `PausedException`
 
-基类：`Exception`
+基类：`nonebot.exception.NoneBotException`
 
 
 * **说明**
@@ -49,7 +60,7 @@ sidebarDepth: 0
 
 ## _exception_ `RejectedException`
 
-基类：`Exception`
+基类：`nonebot.exception.NoneBotException`
 
 
 * **说明**
@@ -67,7 +78,7 @@ sidebarDepth: 0
 
 ## _exception_ `FinishedException`
 
-基类：`Exception`
+基类：`nonebot.exception.NoneBotException`
 
 
 * **说明**
@@ -83,26 +94,9 @@ sidebarDepth: 0
 
 
 
-## _exception_ `ExpiredException`
-
-基类：`Exception`
-
-
-* **说明**
-
-    指示 NoneBot 当前 `Matcher` 已失效。
-
-
-
-* **用法**
-
-    当 `Matcher` 运行前检查时抛出。
-
-
-
 ## _exception_ `StopPropagation`
 
-基类：`Exception`
+基类：`nonebot.exception.NoneBotException`
 
 
 * **说明**
@@ -117,9 +111,48 @@ sidebarDepth: 0
 
 
 
+## _exception_ `RequestDenied`
+
+基类：`nonebot.exception.NoneBotException`
+
+
+* **说明**
+
+    Bot 连接请求不合法。
+
+
+
+* **参数**
+
+    
+    * `status_code: int`: HTTP 状态码
+
+
+    * `reason: str`: 拒绝原因
+
+
+
+## _exception_ `AdapterException`
+
+基类：`nonebot.exception.NoneBotException`
+
+
+* **说明**
+
+    代表 `Adapter` 抛出的异常，所有的 `Adapter` 都要在内部继承自这个 `Exception`
+
+
+
+* **参数**
+
+    
+    * `adapter_name: str`: 标识 adapter
+
+
+
 ## _exception_ `ApiNotAvailable`
 
-基类：`Exception`
+基类：`nonebot.exception.AdapterException`
 
 
 * **说明**
@@ -130,7 +163,7 @@ sidebarDepth: 0
 
 ## _exception_ `NetworkError`
 
-基类：`Exception`
+基类：`nonebot.exception.AdapterException`
 
 
 * **说明**
@@ -141,16 +174,9 @@ sidebarDepth: 0
 
 ## _exception_ `ActionFailed`
 
-基类：`Exception`
+基类：`nonebot.exception.AdapterException`
 
 
 * **说明**
 
     API 请求成功返回数据，但 API 操作失败。
-
-
-
-* **参数**
-
-    
-    * `retcode`: 错误代码

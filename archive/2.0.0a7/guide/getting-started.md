@@ -4,38 +4,53 @@
 
 ## 最小实例
 
-使用你最熟悉的编辑器或 IDE，创建一个名为 `bot.py` 的文件，内容如下：
+如果你已经按照推荐方式安装了 `nb-cli`，使用脚手架创建一个空项目：
+
+```bash
+nb create
+```
+
+根据脚手架引导，将在当前目录下创建一个项目目录，项目目录内包含 `bot.py`。
+
+如果未安装 `nb-cli`，使用你最熟悉的编辑器或 IDE，创建一个名为 `bot.py` 的文件，内容如下：
 
 ```python{3,4,7}
 import nonebot
+from nonebot.adapters.cqhttp import Bot as CQHTTPBot
 
 nonebot.init()
+driver = nonebot.get_driver()
+driver.register_adapter("cqhttp", CQHTTPBot)
 nonebot.load_builtin_plugins()
 
 if __name__ == "__main__":
     nonebot.run()
 ```
 
-这几行高亮代码将依次：
+## 解读
 
-1. 使用默认配置初始化 NoneBot 包
+在上方 `bot.py` 中，这几行高亮代码将依次：
+
+1. 使用默认配置初始化 NoneBot
 2. 加载 NoneBot 内置的插件
 3. 在地址 `127.0.0.1:8080` 运行 NoneBot
 
 在命令行使用如下命令即可运行这个 NoneBot 实例：
 
 ```bash
+# nb-cli
+nb run
+# 其他
 python bot.py
 ```
 
 运行后会产生如下日志：
 
-```default
+```plain
 09-14 21:02:00 [INFO] nonebot | Succeeded to import "nonebot.plugins.base"
 09-14 21:02:00 [INFO] nonebot | Running NoneBot...
 09-14 21:02:00 [INFO] uvicorn | Started server process [1234]
 09-14 21:02:00 [INFO] uvicorn | Waiting for application startup.
-09-14 21:02:00 [INFO] nonebot | Scheduler Started
 09-14 21:02:00 [INFO] uvicorn | Application startup complete.
 09-14 21:02:00 [INFO] uvicorn | Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
 ```
@@ -46,23 +61,23 @@ python bot.py
 
 目前支持的协议有:
 
-- [OneBot(CQHTTP)](https://github.com/howmanybots/onebot)
+- [OneBot(CQHTTP)](https://github.com/howmanybots/onebot/blob/master/README.md)
 
 QQ 协议端举例:
 
-- [Mirai](https://github.com/mamoe/mirai) + [cqhttp-mirai](https://github.com/yyuueexxiinngg/cqhttp-mirai)
-- [cqhttp-mirai-embedded](https://github.com/yyuueexxiinngg/cqhttp-mirai/tree/embedded)
-- [Mirai](https://github.com/mamoe/mirai) + [Mirai Native](https://github.com/iTXTech/mirai-native) + [CQHTTP](https://github.com/richardchien/coolq-http-api)
 - [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) (基于 [MiraiGo](https://github.com/Mrs4s/MiraiGo))
+- [cqhttp-mirai-embedded](https://github.com/yyuueexxiinngg/cqhttp-mirai/tree/embedded)
+- [Mirai](https://github.com/mamoe/mirai) + [cqhttp-mirai](https://github.com/yyuueexxiinngg/cqhttp-mirai)
+- [Mirai](https://github.com/mamoe/mirai) + [Mirai Native](https://github.com/iTXTech/mirai-native) + [CQHTTP](https://github.com/richardchien/coolq-http-api)
 - [OICQ-http-api](https://github.com/takayama-lily/onebot) (基于 [OICQ](https://github.com/takayama-lily/oicq))
 
 这里以 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) 为例
 
-1. 下载 go-cqhttp 对应平台的 release 文件
-2. 双击 exe 文件或者使用 `./go-cqhttp` 启动
+1. 下载 go-cqhttp 对应平台的 release 文件，[点此前往](https://github.com/Mrs4s/go-cqhttp/releases)
+2. 运行 exe 文件或者使用 `./go-cqhttp` 启动
 3. 生成默认配置文件并修改默认配置
 
-```json{2,3,30-31}
+```json{2,3,35-36,42}
 {
   "uin": 你的QQ号,
   "password": "你的密码",
@@ -74,6 +89,11 @@ QQ 协议端举例:
     "enabled": true,
     "relogin_delay": 3,
     "max_relogin_times": 0
+  },
+  "_rate_limit": {
+    "enabled": false,
+    "frequency": 0,
+    "bucket_size": 0
   },
   "ignore_invalid_cqcode": false,
   "force_fragmented": true,
@@ -99,9 +119,16 @@ QQ 协议端举例:
       "reverse_reconnect_interval": 3000
     }
   ],
-  "post_message_format": "string",
+  "post_message_format": "array",
+  "use_sso_address": false,
   "debug": false,
-  "log_level": ""
+  "log_level": "",
+  "web_ui": {
+    "enabled": true,
+    "host": "0.0.0.0",
+    "web_ui_port": 9999,
+    "web_input": false
+  }
 }
 ```
 

@@ -23,6 +23,8 @@ driver.register_adapter("ding", DingBot)
 
 # load builtin plugin
 nonebot.load_builtin_plugins()
+nonebot.load_plugin("nonebot_plugin_apscheduler")
+nonebot.load_plugin("nonebot_plugin_test")
 
 # load local plugins
 nonebot.load_plugins("test_plugins")

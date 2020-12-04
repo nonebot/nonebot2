@@ -54,8 +54,6 @@ sidebarDepth: 0
 
 ## _class_ `DataclassEncoder`
 
-基类：`json.encoder.JSONEncoder`
-
 
 * **说明**
 

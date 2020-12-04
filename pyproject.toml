@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot2"
-version = "2.0.0-alpha.6"
+version = "2.0.0-alpha.7"
 description = "An asynchronous python bot framework."
 authors = ["yanyongyu <yanyongyu_1@126.com>"]
 license = "MIT"
@@ -35,6 +35,8 @@ pydantic = { extras = ["dotenv"], version = "^1.7.2" }
 yapf = "^0.30.0"
 sphinx = "^3.3.1"
 nb-cli = { version = "^0.2.0", optional = true }
+nonebot-plugin-test = { version = "^0.1.0", optional = true }
+nonebot-plugin-apscheduler = { version = "^0.1.0", optional = true }
 sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
 
 [[tool.poetry.source]]

@@ -110,7 +110,7 @@ sidebarDepth: 0
 
 
 
-## `PreProcessor`
+## `EventPreProcessor`
 
 
 * **类型**
@@ -121,7 +121,55 @@ sidebarDepth: 0
 
 * **说明**
 
-    消息预处理函数 PreProcessor 类型
+    事件预处理函数 EventPreProcessor 类型
+
+
+
+
+## `EventPostProcessor`
+
+
+* **类型**
+
+    `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+
+
+
+* **说明**
+
+    事件预处理函数 EventPostProcessor 类型
+
+
+
+
+## `RunPreProcessor`
+
+
+* **类型**
+
+    `Callable[[Matcher, Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+
+
+
+* **说明**
+
+    事件响应器运行前预处理函数 RunPreProcessor 类型
+
+
+
+
+## `RunPostProcessor`
+
+
+* **类型**
+
+    `Callable[[Matcher, Optional[Exception], Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+
+
+
+* **说明**
+
+    事件响应器运行前预处理函数 RunPostProcessor 类型，第二个参数为运行时产生的错误（如果存在）
 
 
 
