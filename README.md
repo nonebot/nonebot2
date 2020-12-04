@@ -39,28 +39,62 @@ _✨ Python 异步机器人框架 ✨_
   <a href="https://v2.nonebot.dev/guide/installation.html">安装</a>
   ·
   <a href="https://v2.nonebot.dev/guide/getting-started.html">开始使用</a>
+  ·
+  <a href="#插件">文档打不开？</a>
 </p>
 
 ## 简介
 
-NoneBot2 是一个可扩展的 Python 异步机器人框架，它会对机器人收到的消息进行解析和处理，并以插件化的形式，分发给消息所对应的命令处理器和自然语言处理器，来完成具体的功能。
+NoneBot2 是一个可扩展的 Python 异步机器人框架，它会对机器人收到的事件进行解析和处理，并以插件化的形式，按优先级分发给事件所对应的事件响应器，来完成具体的功能。
 
-除了起到解析消息的作用，NoneBot 还为插件提供了大量实用的预设操作和权限控制机制，尤其对于命令处理器，它更是提供了完善且易用的会话机制和内部调用机制，以分别适应命令的连续交互和插件内部功能复用等需求。
+除了起到解析事件的作用，NoneBot 还为插件提供了大量实用的预设操作和权限控制机制。对于命令处理，它更是提供了完善且易用的会话机制和内部调用机制，以分别适应命令的连续交互和插件内部功能复用等需求。
 
-目前 NoneBot2 在 [FastAPI](https://fastapi.tiangolo.com/) 的基础上封装了与 [CQHTTP(OneBot) 协议](http://cqhttp.cc/)插件的网络交互。
+得益于 Python 的 [asyncio](https://docs.python.org/3/library/asyncio.html) 机制，NoneBot 处理事件的吞吐量有了很大的保障，再配合 WebSocket 通信方式（也是最建议的通信方式），NoneBot 的性能可以达到 HTTP 通信方式的两倍以上，相较于传统同步 I/O 的 HTTP 通信，更是有质的飞跃。
 
-得益于 Python 的 [asyncio](https://docs.python.org/3/library/asyncio.html) 机制，NoneBot 处理消息的吞吐量有了很大的保障，再配合 WebSocket 通信方式（也是最建议的通信方式），NoneBot 的性能可以达到 HTTP 通信方式的两倍以上，相较于传统同步 I/O 的 HTTP 通信，更是有质的飞跃。
+## 特色
 
-需要注意的是，NoneBot 仅支持 Python 3.7+ 及 CQHTTP(OneBot) 插件 v11+。
+NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义**，并且可以作为插件进行**替换/添加**！
 
-此外，NoneBot2 还有可配套使用的额外脚手架/框架：
+目前 NoneBot2 内置的驱动框架：
 
-- [NB-CLI](https://github.com/nonebot/nb-cli)
-- [NoneBot-Test](https://github.com/nonebot/nonebot-test)
+- [FastAPI](https://fastapi.tiangolo.com/)
 
-## 文档
+目前 NoneBot2 内置的协议适配：
 
-文档目前尚未完成，「API」部分由 sphinx 自动生成，你可以在 [这里](https://v2.nonebot.dev/) 查看。
+- [CQHTTP(OneBot) 协议](https://github.com/howmanybots/onebot/blob/master/README.md)
+- [钉钉](https://ding-doc.dingtalk.com/doc#/serverapi2/krgddi) _开发中_
+- [Telegram](https://core.telegram.org/bots/api) _计划中_
+
+## 即刻开始
+
+~~完整~~文档可以在 [这里](https://v2.nonebot.dev/) 查看。
+
+懒得看文档？下面是快速安装指南：~~这是坏文明~~
+
+1. (可选)使用你喜欢的 Python 环境管理工具创建新的虚拟环境。
+2. 使用 `pip` (或其他) 安装 NoneBot 脚手架。
+
+   ```bash
+   pip install nb-cli
+   ```
+
+3. 使用脚手架创建项目
+
+   ```bash
+   nb create
+   ```
+
+## 插件
+
+此外，NoneBot2 还有丰富的官方以及第三方现成的插件供大家使用：
+
+- [NoneBot-Plugin-Docs](https://github.com/nonebot/nonebot2/tree/master/packages/nonebot-plugin-docs)：离线文档至本地使用(别再说文档打不开了！)
+
+  ```bash
+  nb plugin install nonebot_plugin_docs
+  ```
+
+- 其他插件请查看 [插件商店](https://v2.nonebot.dev/plugin-store.html)
 
 ## 贡献
 

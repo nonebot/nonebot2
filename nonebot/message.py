@@ -25,8 +25,11 @@ _run_postprocessors: Set[RunPostProcessor] = set()
 def event_preprocessor(func: EventPreProcessor) -> EventPreProcessor:
     """
     :说明:
+
       事件预处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之前执行。
+
     :参数:
+
       事件预处理函数接收三个参数。
 
       * ``bot: Bot``: Bot 对象
@@ -40,8 +43,11 @@ def event_preprocessor(func: EventPreProcessor) -> EventPreProcessor:
 def event_postprocessor(func: EventPostProcessor) -> EventPostProcessor:
     """
     :说明:
+
       事件后处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之后执行。
+
     :参数:
+
       事件后处理函数接收三个参数。
 
       * ``bot: Bot``: Bot 对象
@@ -55,8 +61,11 @@ def event_postprocessor(func: EventPostProcessor) -> EventPostProcessor:
 def run_preprocessor(func: RunPreProcessor) -> RunPreProcessor:
     """
     :说明:
+
       运行预处理。装饰一个函数，使它在每次事件响应器运行前执行。
+
     :参数:
+
       运行预处理函数接收四个参数。
 
       * ``matcher: Matcher``: 当前要运行的事件响应器
@@ -71,8 +80,11 @@ def run_preprocessor(func: RunPreProcessor) -> RunPreProcessor:
 def run_postprocessor(func: RunPostProcessor) -> RunPostProcessor:
     """
     :说明:
+
       运行后处理。装饰一个函数，使它在每次事件响应器运行后执行。
+
     :参数:
+
       运行后处理函数接收五个参数。
 
       * ``matcher: Matcher``: 运行完毕的事件响应器
@@ -176,10 +188,14 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
 async def handle_event(bot: Bot, event: Event):
     """
     :说明:
+
        处理一个事件。调用该函数以实现分发事件。
+
     :参数:
+
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
+
     :示例:
 
     .. code-block:: python

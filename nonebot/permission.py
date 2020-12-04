@@ -22,24 +22,33 @@ class Permission:
                                            Awaitable[bool]]) -> None:
         """
         :参数:
+
           * ``*checkers: Callable[[Bot, Event], Awaitable[bool]]``: **异步** PermissionChecker
         """
         self.checkers = set(checkers)
         """
         :说明:
+
           存储 ``PermissionChecker``
+
         :类型:
+
           * ``Set[Callable[[Bot, Event], Awaitable[bool]]]``
         """
 
     async def __call__(self, bot: Bot, event: Event) -> bool:
         """
         :说明:
+
           检查是否满足某个权限
+
         :参数:
+
           * ``bot: Bot``: Bot 对象
           * ``event: Event``: Event 对象
+
         :返回:
+
           - ``bool``
         """
         if not self.checkers:
@@ -103,8 +112,11 @@ METAEVENT = Permission(_metaevent)
 def USER(*user: int, perm: Permission = Permission()):
     """
     :说明:
+
       在白名单内且满足 perm
+
     :参数:
+
       * ``*user: int``: 白名单
       * ``perm: Permission``: 需要同时满足的权限
     """

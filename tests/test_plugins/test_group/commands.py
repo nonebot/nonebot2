@@ -1,9 +1,9 @@
 from nonebot.typing import Bot, Event
 from nonebot.permission import GROUP_OWNER
 
-from . import test
+from . import cmd
 
-test_1 = test.command("1", aliases={"test"}, permission=GROUP_OWNER)
+test_1 = cmd.command("1", aliases={"test"}, permission=GROUP_OWNER)
 
 
 @test_1.handle()
