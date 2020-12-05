@@ -8,7 +8,7 @@ from nonebot.config import Config
 from nonebot.adapters import BaseBot
 from nonebot.message import handle_event
 from nonebot.exception import RequestDenied
-from nonebot.typing import Any, Union, Driver, Optional, NoReturn
+from nonebot.typing import Any, Union, Driver, Optional
 
 from .utils import log
 from .event import Event
@@ -86,7 +86,7 @@ class Bot(BaseBot):
     async def call_api(self,
                        api: str,
                        event: Optional[Event] = None,
-                       **data) -> Union[Any, NoReturn]:
+                       **data) -> Any:
         """
         :说明:
 
@@ -159,7 +159,7 @@ class Bot(BaseBot):
                    event: Event,
                    message: Union[str, "Message", "MessageSegment"],
                    at_sender: bool = False,
-                   **kwargs) -> Union[Any, NoReturn]:
+                   **kwargs) -> Any:
         """
         :说明:
 

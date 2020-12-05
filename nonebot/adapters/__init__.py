@@ -13,7 +13,7 @@ from pydantic import BaseModel
 
 from nonebot.config import Config
 from nonebot.typing import Driver, Message, WebSocket
-from nonebot.typing import Any, Dict, Union, Optional, NoReturn, Callable, Iterable, Awaitable, TypeVar, Generic
+from nonebot.typing import Any, Dict, Union, Optional, Callable, Iterable, Awaitable, TypeVar, Generic
 
 
 class BaseBot(abc.ABC):
@@ -61,8 +61,7 @@ class BaseBot(abc.ABC):
     @classmethod
     @abc.abstractmethod
     async def check_permission(cls, driver: Driver, connection_type: str,
-                               headers: dict,
-                               body: Optional[dict]) -> Union[str, NoReturn]:
+                               headers: dict, body: Optional[dict]) -> str:
         """
         :说明:
 

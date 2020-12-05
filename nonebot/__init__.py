@@ -26,7 +26,7 @@
 
 import importlib
 import pkg_resources
-from nonebot.typing import Bot, Dict, Type, Union, Driver, Optional, NoReturn
+from nonebot.typing import Bot, Dict, Type, Union, Driver, Optional
 
 _dist: pkg_resources.Distribution = pkg_resources.get_distribution("nonebot2")
 __version__ = _dist.version
@@ -35,7 +35,7 @@ VERSION = _dist.parsed_version
 _driver: Optional[Driver] = None
 
 
-def get_driver() -> Union[NoReturn, Driver]:
+def get_driver() -> Driver:
     """
     :说明:
 
@@ -111,7 +111,7 @@ def get_asgi():
     return driver.asgi
 
 
-def get_bots() -> Union[NoReturn, Dict[str, Bot]]:
+def get_bots() -> Dict[str, Bot]:
     """
     :说明:
 
