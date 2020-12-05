@@ -7,14 +7,17 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
 
 import asyncio
 from datetime import datetime
+from typing import Set, Type, Optional, Iterable, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.utils import escape_tag
 from nonebot.matcher import matchers, Matcher
-from nonebot.typing import Set, Type, Optional, Iterable, Bot, Event
 from nonebot.exception import IgnoredException, StopPropagation
-from nonebot.typing import EventPreProcessor, RunPreProcessor, EventPostProcessor, RunPostProcessor
+from nonebot.typing import State, EventPreProcessor, RunPreProcessor, EventPostProcessor, RunPostProcessor
+
+if TYPE_CHECKING:
+    from nonebot.adapters import BaseBot as Bot, BaseEvent as Event
 
 _event_preprocessors: Set[EventPreProcessor] = set()
 _event_postprocessors: Set[EventPostProcessor] = set()
@@ -34,7 +37,7 @@ def event_preprocessor(func: EventPreProcessor) -> EventPreProcessor:
 
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
-      * ``state: dict``: 当前 State
+      * ``state: State``: 当前 State
     """
     _event_preprocessors.add(func)
     return func
@@ -52,7 +55,7 @@ def event_postprocessor(func: EventPostProcessor) -> EventPostProcessor:
 
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
-      * ``state: dict``: 当前事件运行前 State
+      * ``state: State``: 当前事件运行前 State
     """
     _event_postprocessors.add(func)
     return func
@@ -71,7 +74,7 @@ def run_preprocessor(func: RunPreProcessor) -> RunPreProcessor:
       * ``matcher: Matcher``: 当前要运行的事件响应器
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
-      * ``state: dict``: 当前 State
+      * ``state: State``: 当前 State
     """
     _run_preprocessors.add(func)
     return func
@@ -91,18 +94,18 @@ def run_postprocessor(func: RunPostProcessor) -> RunPostProcessor:
       * ``exception: Optional[Exception]``: 事件响应器运行错误（如果存在）
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
-      * ``state: dict``: 当前 State
+      * ``state: State``: 当前 State
     """
     _run_postprocessors.add(func)
     return func
 
 
-async def _check_matcher(priority: int, bot: Bot, event: Event,
-                         state: dict) -> Iterable[Type[Matcher]]:
+async def _check_matcher(priority: int, bot: "Bot", event: "Event",
+                         state: State) -> Iterable[Type[Matcher]]:
     current_matchers = matchers[priority].copy()
 
-    async def _check(Matcher: Type[Matcher], bot: Bot, event: Event,
-                     state: dict) -> Optional[Type[Matcher]]:
+    async def _check(Matcher: Type[Matcher], bot: "Bot", event: "Event",
+                     state: State) -> Optional[Type[Matcher]]:
         try:
             if (not Matcher.expire_time or datetime.now() <= Matcher.expire_time
                ) and await Matcher.check_perm(
@@ -136,8 +139,8 @@ async def _check_matcher(priority: int, bot: Bot, event: Event,
     return filter(lambda x: x, results)
 
 
-async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
-                       state: dict) -> None:
+async def _run_matcher(Matcher: Type[Matcher], bot: "Bot", event: "Event",
+                       state: State) -> None:
     logger.info(f"Event will be handled by {Matcher}")
 
     matcher = Matcher()
@@ -186,7 +189,7 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
     return
 
 
-async def handle_event(bot: Bot, event: Event):
+async def handle_event(bot: "Bot", event: "Event"):
     """
     :说明:
 

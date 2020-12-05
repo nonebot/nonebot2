@@ -1,8 +1,12 @@
 import re
+from types import ModuleType
 from contextvars import ContextVar
+from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional
 
-from nonebot.typing import Rule, Matcher, Handler, Permission, RuleChecker
-from nonebot.typing import Set, List, Dict, Type, Tuple, Union, Optional, ModuleType
+from nonebot.rule import Rule
+from nonebot.matcher import Matcher
+from nonebot.permission import Permission
+from nonebot.typing import State, Handler, RuleChecker
 
 plugins: Dict[str, "Plugin"] = ...
 
@@ -37,7 +41,7 @@ def on(type: str = ...,
        temp: bool = ...,
        priority: int = ...,
        block: bool = ...,
-       state: Optional[dict] = ...) -> Type[Matcher]:
+       state: Optional[State] = ...) -> Type[Matcher]:
     ...
 
 
@@ -47,7 +51,7 @@ def on_metaevent(rule: Optional[Union[Rule, RuleChecker]] = ...,
                  temp: bool = ...,
                  priority: int = ...,
                  block: bool = ...,
-                 state: Optional[dict] = ...) -> Type[Matcher]:
+                 state: Optional[State] = ...) -> Type[Matcher]:
     ...
 
 
@@ -58,7 +62,7 @@ def on_message(rule: Optional[Union[Rule, RuleChecker]] = ...,
                temp: bool = ...,
                priority: int = ...,
                block: bool = ...,
-               state: Optional[dict] = ...) -> Type[Matcher]:
+               state: Optional[State] = ...) -> Type[Matcher]:
     ...
 
 
@@ -68,7 +72,7 @@ def on_notice(rule: Optional[Union[Rule, RuleChecker]] = ...,
               temp: bool = ...,
               priority: int = ...,
               block: bool = ...,
-              state: Optional[dict] = ...) -> Type[Matcher]:
+              state: Optional[State] = ...) -> Type[Matcher]:
     ...
 
 
@@ -78,7 +82,7 @@ def on_request(rule: Optional[Union[Rule, RuleChecker]] = ...,
                temp: bool = ...,
                priority: int = ...,
                block: bool = ...,
-               state: Optional[dict] = ...) -> Type[Matcher]:
+               state: Optional[State] = ...) -> Type[Matcher]:
     ...
 
 
@@ -90,7 +94,7 @@ def on_startswith(msg: str,
                   temp: bool = ...,
                   priority: int = ...,
                   block: bool = ...,
-                  state: Optional[dict] = ...) -> Type[Matcher]:
+                  state: Optional[State] = ...) -> Type[Matcher]:
     ...
 
 
@@ -102,7 +106,7 @@ def on_endswith(msg: str,
                 temp: bool = ...,
                 priority: int = ...,
                 block: bool = ...,
-                state: Optional[dict] = ...) -> Type[Matcher]:
+                state: Optional[State] = ...) -> Type[Matcher]:
     ...
 
 
@@ -114,7 +118,7 @@ def on_keyword(keywords: Set[str],
                temp: bool = ...,
                priority: int = ...,
                block: bool = ...,
-               state: Optional[dict] = ...) -> Type[Matcher]:
+               state: Optional[State] = ...) -> Type[Matcher]:
     ...
 
 
@@ -127,7 +131,7 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
                temp: bool = ...,
                priority: int = ...,
                block: bool = ...,
-               state: Optional[dict] = ...) -> Type[Matcher]:
+               state: Optional[State] = ...) -> Type[Matcher]:
     ...
 
 
@@ -140,7 +144,7 @@ def on_regex(pattern: str,
              temp: bool = ...,
              priority: int = ...,
              block: bool = ...,
-             state: Optional[dict] = ...) -> Type[Matcher]:
+             state: Optional[State] = ...) -> Type[Matcher]:
     ...
 
 
@@ -183,8 +187,9 @@ class CommandGroup:
                  temp: bool = ...,
                  priority: int = ...,
                  block: bool = ...,
-                 state: Optional[dict] = ...):
-        ...
+                 state: Optional[State] = ...):
+        self.basecmd: Tuple[str, ...] = ...
+        self.base_kwargs: Dict[str, Any] = ...
 
     def command(self,
                 cmd: Union[str, Tuple[str, ...]],
@@ -196,7 +201,7 @@ class CommandGroup:
                 temp: bool = ...,
                 priority: int = ...,
                 block: bool = ...,
-                state: Optional[dict] = ...) -> Type[Matcher]:
+                state: Optional[State] = ...) -> Type[Matcher]:
         ...
 
 
@@ -211,7 +216,7 @@ class MatcherGroup:
                  temp: bool = ...,
                  priority: int = ...,
                  block: bool = ...,
-                 state: Optional[dict] = ...):
+                 state: Optional[State] = ...):
         ...
 
     def on(self,
@@ -223,7 +228,7 @@ class MatcherGroup:
            temp: bool = ...,
            priority: int = ...,
            block: bool = ...,
-           state: Optional[dict] = ...) -> Type[Matcher]:
+           state: Optional[State] = ...) -> Type[Matcher]:
         ...
 
     def on_metaevent(self,
@@ -233,7 +238,7 @@ class MatcherGroup:
                      temp: bool = False,
                      priority: int = 1,
                      block: bool = False,
-                     state: Optional[dict] = None) -> Type[Matcher]:
+                     state: Optional[State] = None) -> Type[Matcher]:
         ...
 
     def on_message(self,
@@ -244,7 +249,7 @@ class MatcherGroup:
                    temp: bool = False,
                    priority: int = 1,
                    block: bool = True,
-                   state: Optional[dict] = None) -> Type[Matcher]:
+                   state: Optional[State] = None) -> Type[Matcher]:
         ...
 
     def on_notice(self,
@@ -254,7 +259,7 @@ class MatcherGroup:
                   temp: bool = False,
                   priority: int = 1,
                   block: bool = False,
-                  state: Optional[dict] = None) -> Type[Matcher]:
+                  state: Optional[State] = None) -> Type[Matcher]:
         ...
 
     def on_request(self,
@@ -264,7 +269,7 @@ class MatcherGroup:
                    temp: bool = False,
                    priority: int = 1,
                    block: bool = False,
-                   state: Optional[dict] = None) -> Type[Matcher]:
+                   state: Optional[State] = None) -> Type[Matcher]:
         ...
 
     def on_startswith(self,
@@ -276,7 +281,7 @@ class MatcherGroup:
                       temp: bool = ...,
                       priority: int = ...,
                       block: bool = ...,
-                      state: Optional[dict] = ...) -> Type[Matcher]:
+                      state: Optional[State] = ...) -> Type[Matcher]:
         ...
 
     def on_endswith(self,
@@ -288,7 +293,7 @@ class MatcherGroup:
                     temp: bool = ...,
                     priority: int = ...,
                     block: bool = ...,
-                    state: Optional[dict] = ...) -> Type[Matcher]:
+                    state: Optional[State] = ...) -> Type[Matcher]:
         ...
 
     def on_keyword(self,
@@ -300,7 +305,7 @@ class MatcherGroup:
                    temp: bool = ...,
                    priority: int = ...,
                    block: bool = ...,
-                   state: Optional[dict] = ...) -> Type[Matcher]:
+                   state: Optional[State] = ...) -> Type[Matcher]:
         ...
 
     def on_command(self,
@@ -313,7 +318,7 @@ class MatcherGroup:
                    temp: bool = ...,
                    priority: int = ...,
                    block: bool = ...,
-                   state: Optional[dict] = ...) -> Type[Matcher]:
+                   state: Optional[State] = ...) -> Type[Matcher]:
         ...
 
     def on_regex(self,
@@ -326,5 +331,5 @@ class MatcherGroup:
                  temp: bool = ...,
                  priority: int = ...,
                  block: bool = ...,
-                 state: Optional[dict] = ...) -> Type[Matcher]:
+                 state: Optional[State] = ...) -> Type[Matcher]:
         ...

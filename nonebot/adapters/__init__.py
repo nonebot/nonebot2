@@ -8,12 +8,14 @@
 import abc
 from functools import reduce, partial
 from dataclasses import dataclass, field
+from typing import Any, Dict, Union, TypeVar, Optional, Callable, Iterable, Awaitable, Generic, TYPE_CHECKING
 
 from pydantic import BaseModel
 
 from nonebot.config import Config
-from nonebot.typing import Driver, Message, WebSocket
-from nonebot.typing import Any, Dict, Union, Optional, Callable, Iterable, Awaitable, TypeVar, Generic
+
+if TYPE_CHECKING:
+    from nonebot.drivers import BaseDriver as Driver, BaseWebSocket as WebSocket
 
 
 class BaseBot(abc.ABC):
@@ -23,12 +25,12 @@ class BaseBot(abc.ABC):
 
     @abc.abstractmethod
     def __init__(self,
-                 driver: Driver,
+                 driver: "Driver",
                  connection_type: str,
                  config: Config,
                  self_id: str,
                  *,
-                 websocket: Optional[WebSocket] = None):
+                 websocket: Optional["WebSocket"] = None):
         """
         :参数:
 
@@ -60,7 +62,7 @@ class BaseBot(abc.ABC):
 
     @classmethod
     @abc.abstractmethod
-    async def check_permission(cls, driver: Driver, connection_type: str,
+    async def check_permission(cls, driver: "Driver", connection_type: str,
                                headers: dict, body: Optional[dict]) -> str:
         """
         :说明:
@@ -252,7 +254,7 @@ class BaseEvent(abc.ABC, Generic[T]):
 
     @property
     @abc.abstractmethod
-    def message(self) -> Optional[Message]:
+    def message(self) -> Optional["BaseMessage"]:
         """消息内容"""
         raise NotImplementedError
 
@@ -373,7 +375,9 @@ class BaseMessage(list, abc.ABC):
 
     @staticmethod
     @abc.abstractmethod
-    def _construct(msg: Union[str, dict, list]) -> Iterable[BaseMessageSegment]:
+    def _construct(
+            msg: Union[str, dict, list,
+                       BaseModel]) -> Iterable[BaseMessageSegment]:
         raise NotImplementedError
 
     def __add__(

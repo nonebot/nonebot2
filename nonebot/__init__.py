@@ -26,7 +26,13 @@
 
 import importlib
 import pkg_resources
-from nonebot.typing import Bot, Dict, Type, Union, Driver, Optional
+from typing import Dict, Type, Optional
+
+from nonebot.utils import escape_tag
+from nonebot.config import Env, Config
+from nonebot.adapters import BaseBot as Bot
+from nonebot.log import logger, default_filter
+from nonebot.drivers import BaseDriver as Driver
 
 _dist: pkg_resources.Distribution = pkg_resources.get_distribution("nonebot2")
 __version__ = _dist.version
@@ -134,11 +140,6 @@ def get_bots() -> Dict[str, Bot]:
     """
     driver = get_driver()
     return driver.bots
-
-
-from nonebot.utils import escape_tag
-from nonebot.config import Env, Config
-from nonebot.log import logger, default_filter
 
 
 def init(*, _env_file: Optional[str] = None, **kwargs):

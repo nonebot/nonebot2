@@ -5,19 +5,24 @@
 该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行 对话 。
 """
 
-from nonebot.log import logger
 import typing
 import inspect
 from functools import wraps
 from datetime import datetime
 from contextvars import ContextVar
 from collections import defaultdict
+from typing import Type, List, Dict, Union, Callable, Optional, NoReturn, TYPE_CHECKING
 
 from nonebot.rule import Rule
+from nonebot.log import logger
 from nonebot.permission import Permission, USER
-from nonebot.typing import Type, List, Dict, Union, Callable, Optional, NoReturn
-from nonebot.typing import Bot, Event, Handler, Message, ArgsParser, MessageSegment
+from nonebot.typing import State, Handler, ArgsParser
 from nonebot.exception import PausedException, RejectedException, FinishedException
+
+if TYPE_CHECKING:
+    from nonebot.adapters import (BaseBot as Bot, BaseEvent as Event,
+                                  BaseMessage as Message, BaseMessageSegment as
+                                  MessageSegment)
 
 matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
 """
@@ -88,9 +93,9 @@ class Matcher(metaclass=MatcherMeta):
     :说明: 事件响应器过期时间点
     """
 
-    _default_state: dict = {}
+    _default_state: State = {}
     """
-    :类型: ``dict``
+    :类型: ``State``
     :说明: 事件响应器默认状态
     """
 
@@ -123,7 +128,7 @@ class Matcher(metaclass=MatcherMeta):
             block: bool = False,
             *,
             module: Optional[str] = None,
-            default_state: Optional[dict] = None,
+            default_state: Optional[State] = None,
             expire_time: Optional[datetime] = None) -> Type["Matcher"]:
         """
         :说明:
@@ -140,7 +145,7 @@ class Matcher(metaclass=MatcherMeta):
           * ``priority: int``: 响应优先级
           * ``block: bool``: 是否阻止事件向更低优先级的响应器传播
           * ``module: Optional[str]``: 事件响应器所在模块名称
-          * ``default_state: Optional[dict]``: 默认状态 ``state``
+          * ``default_state: Optional[State]``: 默认状态 ``state``
           * ``expire_time: Optional[datetime]``: 事件响应器最终有效时间点，过时即被删除
 
         :返回:
@@ -167,7 +172,7 @@ class Matcher(metaclass=MatcherMeta):
         return NewMatcher
 
     @classmethod
-    async def check_perm(cls, bot: Bot, event: Event) -> bool:
+    async def check_perm(cls, bot: "Bot", event: "Event") -> bool:
         """
         :说明:
 
@@ -185,7 +190,7 @@ class Matcher(metaclass=MatcherMeta):
         return await cls.permission(bot, event)
 
     @classmethod
-    async def check_rule(cls, bot: Bot, event: Event, state: dict) -> bool:
+    async def check_rule(cls, bot: "Bot", event: "Event", state: State) -> bool:
         """
         :说明:
 
@@ -195,7 +200,7 @@ class Matcher(metaclass=MatcherMeta):
 
           * ``bot: Bot``: Bot 对象
           * ``event: Event``: 上报事件
-          * ``state: dict``: 当前状态
+          * ``state: State``: 当前状态
 
         :返回:
 
@@ -248,7 +253,8 @@ class Matcher(metaclass=MatcherMeta):
           * 无
         """
 
-        async def _receive(bot: Bot, event: Event, state: dict) -> NoReturn:
+        async def _receive(bot: "Bot", event: "Event",
+                           state: State) -> NoReturn:
             raise PausedException
 
         if cls.handlers:
@@ -267,7 +273,7 @@ class Matcher(metaclass=MatcherMeta):
     def got(
         cls,
         key: str,
-        prompt: Optional[Union[str, Message, MessageSegment]] = None,
+        prompt: Optional[Union[str, "Message", "MessageSegment"]] = None,
         args_parser: Optional[ArgsParser] = None
     ) -> Callable[[Handler], Handler]:
         """
@@ -282,7 +288,7 @@ class Matcher(metaclass=MatcherMeta):
           * ``args_parser: Optional[ArgsParser]``: 可选参数解析函数，空则使用默认解析函数
         """
 
-        async def _key_getter(bot: Bot, event: Event, state: dict):
+        async def _key_getter(bot: "Bot", event: "Event", state: State):
             state["_current_key"] = key
             if key not in state:
                 if prompt:
@@ -292,7 +298,7 @@ class Matcher(metaclass=MatcherMeta):
             else:
                 state["_skip_key"] = True
 
-        async def _key_parser(bot: Bot, event: Event, state: dict):
+        async def _key_parser(bot: "Bot", event: "Event", state: State):
             if key in state and state.get("_skip_key"):
                 del state["_skip_key"]
                 return
@@ -310,7 +316,7 @@ class Matcher(metaclass=MatcherMeta):
                 parser = cls.handlers.pop()
 
                 @wraps(func)
-                async def wrapper(bot: Bot, event: Event, state: dict):
+                async def wrapper(bot: "Bot", event: "Event", state: State):
                     await parser(bot, event, state)
                     await func(bot, event, state)
                     if "_current_key" in state:
@@ -323,7 +329,8 @@ class Matcher(metaclass=MatcherMeta):
         return _decorator
 
     @classmethod
-    async def send(cls, message: Union[str, Message, MessageSegment], **kwargs):
+    async def send(cls, message: Union[str, "Message", "MessageSegment"],
+                   **kwargs):
         """
         :说明:
 
@@ -340,8 +347,8 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def finish(cls,
-                     message: Optional[Union[str, Message,
-                                             MessageSegment]] = None,
+                     message: Optional[Union[str, "Message",
+                                             "MessageSegment"]] = None,
                      **kwargs) -> NoReturn:
         """
         :说明:
@@ -361,8 +368,8 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def pause(cls,
-                    prompt: Optional[Union[str, Message,
-                                           MessageSegment]] = None,
+                    prompt: Optional[Union[str, "Message",
+                                           "MessageSegment"]] = None,
                     **kwargs) -> NoReturn:
         """
         :说明:
@@ -382,8 +389,8 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def reject(cls,
-                     prompt: Optional[Union[str, Message,
-                                            MessageSegment]] = None,
+                     prompt: Optional[Union[str, "Message",
+                                            "MessageSegment"]] = None,
                      **kwargs) -> NoReturn:
         """
         :说明:
@@ -402,7 +409,7 @@ class Matcher(metaclass=MatcherMeta):
         raise RejectedException
 
     # 运行handlers
-    async def run(self, bot: Bot, event: Event, state: dict):
+    async def run(self, bot: "Bot", event: "Event", state: State):
         b_t = current_bot.set(bot)
         e_t = current_event.set(event)
         try:

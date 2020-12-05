@@ -3,9 +3,10 @@ import json
 import asyncio
 import dataclasses
 from functools import wraps, partial
+from typing import Any, Optional, Callable, Awaitable
 
 from nonebot.log import logger
-from nonebot.typing import Any, Optional, Callable, Awaitable, overrides
+from nonebot.typing import overrides
 
 
 def escape_tag(s: str) -> str:

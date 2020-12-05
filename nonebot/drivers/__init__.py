@@ -6,10 +6,13 @@
 """
 
 import abc
+from typing import Dict, Type, Optional, Callable, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
-from nonebot.typing import Bot, Dict, Type, Union, Optional, Callable
+
+if TYPE_CHECKING:
+    from nonebot.adapters import BaseBot as Bot
 
 
 class BaseDriver(abc.ABC):
@@ -17,7 +20,7 @@ class BaseDriver(abc.ABC):
     Driver 基类。将后端框架封装，以满足适配器使用。
     """
 
-    _adapters: Dict[str, Type[Bot]] = {}
+    _adapters: Dict[str, Type["Bot"]] = {}
     """
     :类型: ``Dict[str, Type[Bot]]``
     :说明: 已注册的适配器列表
@@ -41,14 +44,14 @@ class BaseDriver(abc.ABC):
         :类型: ``Config``
         :说明: 配置对象
         """
-        self._clients: Dict[str, Bot] = {}
+        self._clients: Dict[str, "Bot"] = {}
         """
         :类型: ``Dict[str, Bot]``
         :说明: 已连接的 Bot
         """
 
     @classmethod
-    def register_adapter(cls, name: str, adapter: Type[Bot]):
+    def register_adapter(cls, name: str, adapter: Type["Bot"]):
         """
         :说明:
 
@@ -88,7 +91,7 @@ class BaseDriver(abc.ABC):
         raise NotImplementedError
 
     @property
-    def bots(self) -> Dict[str, Bot]:
+    def bots(self) -> Dict[str, "Bot"]:
         """
         :类型: ``Dict[str, Bot]``
         :说明: 获取当前所有已连接的 Bot

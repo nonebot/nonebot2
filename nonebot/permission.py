@@ -10,16 +10,21 @@
 """
 
 import asyncio
+from typing import Union, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
 
 from nonebot.utils import run_sync
-from nonebot.typing import Bot, Event, Union, NoReturn, Optional, Callable, Awaitable, PermissionChecker
+from nonebot.typing import PermissionChecker
+
+if TYPE_CHECKING:
+    from nonebot.adapters import BaseBot as Bot, BaseEvent as Event
 
 
 class Permission:
     __slots__ = ("checkers",)
 
-    def __init__(self, *checkers: Callable[[Bot, Event],
-                                           Awaitable[bool]]) -> None:
+    def __init__(
+            self, *checkers: Callable[["Bot", "Event"],
+                                      Awaitable[bool]]) -> None:
         """
         :参数:
 
@@ -36,7 +41,7 @@ class Permission:
           * ``Set[Callable[[Bot, Event], Awaitable[bool]]]``
         """
 
-    async def __call__(self, bot: Bot, event: Event) -> bool:
+    async def __call__(self, bot: "Bot", event: "Event") -> bool:
         """
         :说明:
 
@@ -75,19 +80,19 @@ class Permission:
         return Permission(*checkers)
 
 
-async def _message(bot: Bot, event: Event) -> bool:
+async def _message(bot: "Bot", event: "Event") -> bool:
     return event.type == "message"
 
 
-async def _notice(bot: Bot, event: Event) -> bool:
+async def _notice(bot: "Bot", event: "Event") -> bool:
     return event.type == "notice"
 
 
-async def _request(bot: Bot, event: Event) -> bool:
+async def _request(bot: "Bot", event: "Event") -> bool:
     return event.type == "request"
 
 
-async def _metaevent(bot: Bot, event: Event) -> bool:
+async def _metaevent(bot: "Bot", event: "Event") -> bool:
     return event.type == "meta_event"
 
 
@@ -121,28 +126,28 @@ def USER(*user: int, perm: Permission = Permission()):
       * ``perm: Permission``: 需要同时满足的权限
     """
 
-    async def _user(bot: Bot, event: Event) -> bool:
+    async def _user(bot: "Bot", event: "Event") -> bool:
         return event.type == "message" and event.user_id in user and await perm(
             bot, event)
 
     return Permission(_user)
 
 
-async def _private(bot: Bot, event: Event) -> bool:
+async def _private(bot: "Bot", event: "Event") -> bool:
     return event.type == "message" and event.detail_type == "private"
 
 
-async def _private_friend(bot: Bot, event: Event) -> bool:
+async def _private_friend(bot: "Bot", event: "Event") -> bool:
     return (event.type == "message" and event.detail_type == "private" and
             event.sub_type == "friend")
 
 
-async def _private_group(bot: Bot, event: Event) -> bool:
+async def _private_group(bot: "Bot", event: "Event") -> bool:
     return (event.type == "message" and event.detail_type == "private" and
             event.sub_type == "group")
 
 
-async def _private_other(bot: Bot, event: Event) -> bool:
+async def _private_other(bot: "Bot", event: "Event") -> bool:
     return (event.type == "message" and event.detail_type == "private" and
             event.sub_type == "other")
 
@@ -165,21 +170,21 @@ PRIVATE_OTHER = Permission(_private_other)
 """
 
 
-async def _group(bot: Bot, event: Event) -> bool:
+async def _group(bot: "Bot", event: "Event") -> bool:
     return event.type == "message" and event.detail_type == "group"
 
 
-async def _group_member(bot: Bot, event: Event) -> bool:
+async def _group_member(bot: "Bot", event: "Event") -> bool:
     return (event.type == "message" and event.detail_type == "group" and
             event.sender.get("role") == "member")
 
 
-async def _group_admin(bot: Bot, event: Event) -> bool:
+async def _group_admin(bot: "Bot", event: "Event") -> bool:
     return (event.type == "message" and event.detail_type == "group" and
             event.sender.get("role") == "admin")
 
 
-async def _group_owner(bot: Bot, event: Event) -> bool:
+async def _group_owner(bot: "Bot", event: "Event") -> bool:
     return (event.type == "message" and event.detail_type == "group" and
             event.sender.get("role") == "owner")
 
@@ -206,7 +211,7 @@ GROUP_OWNER = Permission(_group_owner)
 """
 
 
-async def _superuser(bot: Bot, event: Event) -> bool:
+async def _superuser(bot: "Bot", event: "Event") -> bool:
     return event.type == "message" and event.user_id in bot.config.superusers
 
 

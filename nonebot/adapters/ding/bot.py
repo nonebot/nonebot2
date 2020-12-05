@@ -1,6 +1,7 @@
 import hmac
 import base64
 from datetime import datetime
+from typing import Any, Union, Optional, TYPE_CHECKING
 
 import httpx
 from nonebot.log import logger
@@ -8,7 +9,6 @@ from nonebot.config import Config
 from nonebot.adapters import BaseBot
 from nonebot.message import handle_event
 from nonebot.exception import RequestDenied
-from nonebot.typing import Any, Union, Driver, Optional
 
 from .utils import log
 from .event import Event
@@ -16,13 +16,16 @@ from .model import MessageModel
 from .message import Message, MessageSegment
 from .exception import NetworkError, ApiNotAvailable, ActionFailed, SessionExpired
 
+if TYPE_CHECKING:
+    from nonebot.drivers import BaseDriver as Driver
+
 
 class Bot(BaseBot):
     """
     钉钉 协议 Bot 适配。继承属性参考 `BaseBot <./#class-basebot>`_ 。
     """
 
-    def __init__(self, driver: Driver, connection_type: str, config: Config,
+    def __init__(self, driver: "Driver", connection_type: str, config: Config,
                  self_id: str, **kwargs):
 
         super().__init__(driver, connection_type, config, self_id, **kwargs)
@@ -35,7 +38,7 @@ class Bot(BaseBot):
         return "ding"
 
     @classmethod
-    async def check_permission(cls, driver: Driver, connection_type: str,
+    async def check_permission(cls, driver: "Driver", connection_type: str,
                                headers: dict, body: Optional[dict]) -> str:
         """
         :说明:

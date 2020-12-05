@@ -8,34 +8,22 @@ FastAPI 驱动适配
     https://fastapi.tiangolo.com/
 """
 
-import hmac
 import json
 import asyncio
 import logging
+from typing import Optional, Callable
 
 import uvicorn
 from fastapi.responses import Response
-from fastapi import Body, status, Header, Request, FastAPI, Depends, HTTPException
+from fastapi import Body, status, Request, FastAPI, HTTPException
 from starlette.websockets import WebSocketDisconnect, WebSocket as FastAPIWebSocket
 
 from nonebot.log import logger
+from nonebot.typing import overrides
 from nonebot.config import Env, Config
 from nonebot.utils import DataclassEncoder
 from nonebot.exception import RequestDenied
 from nonebot.drivers import BaseDriver, BaseWebSocket
-from nonebot.typing import Optional, Callable, overrides
-
-
-def get_auth_bearer(access_token: Optional[str] = Header(
-    None, alias="Authorization")):
-    if not access_token:
-        return None
-    scheme, _, param = access_token.partition(" ")
-    if scheme.lower() not in ["bearer", "token"]:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Not authenticated",
-                            headers={"WWW-Authenticate": "Bearer"})
-    return param
 
 
 class Driver(BaseDriver):

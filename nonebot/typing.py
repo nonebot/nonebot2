@@ -29,7 +29,7 @@ if TYPE_CHECKING:
     from nonebot.drivers import BaseDriver, BaseWebSocket
     from nonebot.permission import Permission as PermissionClass
     from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
-    from nonebot.matcher import Matcher as MatcherClass, MatcherGroup as MatcherGroupClass
+    from nonebot.matcher import Matcher as MatcherClass
 
 
 def overrides(InterfaceClass: object):
@@ -92,34 +92,42 @@ MessageSegment = TypeVar("MessageSegment", bound="BaseMessageSegment")
   所有 MessageSegment 的基类。
 """
 
-EventPreProcessor = Callable[[Bot, Event, dict], Awaitable[None]]
+State = Dict[Any, Any]
 """
-:类型: ``Callable[[Bot, Event, dict], Awaitable[None]]``
+:类型: ``Dict[Any, Any]``
+
+:说明:
+
+  事件处理状态 State 类型
+"""
+EventPreProcessor = Callable[[Bot, Event, State], Awaitable[None]]
+"""
+:类型: ``Callable[[Bot, Event, State], Awaitable[None]]``
 
 :说明:
 
   事件预处理函数 EventPreProcessor 类型
 """
-EventPostProcessor = Callable[[Bot, Event, dict], Awaitable[None]]
+EventPostProcessor = Callable[[Bot, Event, State], Awaitable[None]]
 """
-:类型: ``Callable[[Bot, Event, dict], Awaitable[None]]``
+:类型: ``Callable[[Bot, Event, State], Awaitable[None]]``
 
 :说明:
 
   事件预处理函数 EventPostProcessor 类型
 """
-RunPreProcessor = Callable[["Matcher", Bot, Event, dict], Awaitable[None]]
+RunPreProcessor = Callable[["Matcher", Bot, Event, State], Awaitable[None]]
 """
-:类型: ``Callable[[Matcher, Bot, Event, dict], Awaitable[None]]``
+:类型: ``Callable[[Matcher, Bot, Event, State], Awaitable[None]]``
 
 :说明:
 
   事件响应器运行前预处理函数 RunPreProcessor 类型
 """
-RunPostProcessor = Callable[["Matcher", Optional[Exception], Bot, Event, dict],
+RunPostProcessor = Callable[["Matcher", Optional[Exception], Bot, Event, State],
                             Awaitable[None]]
 """
-:类型: ``Callable[[Matcher, Optional[Exception], Bot, Event, dict], Awaitable[None]]``
+:类型: ``Callable[[Matcher, Optional[Exception], Bot, Event, State], Awaitable[None]]``
 
 :说明:
 
@@ -134,14 +142,6 @@ Matcher = TypeVar("Matcher", bound="MatcherClass")
 
   Matcher 即响应事件的处理类。通过 Rule 判断是否响应事件，运行 Handler。
 """
-MatcherGroup = TypeVar("MatcherGroup", bound="MatcherGroupClass")
-"""
-:类型: ``MatcherGroup``
-
-:说明:
-
-  MatcherGroup 为 Matcher 的集合。可以共享 Handler。
-"""
 Rule = TypeVar("Rule", bound="RuleClass")
 """
 :类型: ``Rule``
@@ -150,9 +150,9 @@ Rule = TypeVar("Rule", bound="RuleClass")
 
   Rule 即判断是否响应事件的处理类。内部存储 RuleChecker ，返回全为 True 则响应事件。
 """
-RuleChecker = Callable[[Bot, Event, dict], Union[bool, Awaitable[bool]]]
+RuleChecker = Callable[[Bot, Event, State], Union[bool, Awaitable[bool]]]
 """
-:类型: ``Callable[[Bot, Event, dict], Union[bool, Awaitable[bool]]]``
+:类型: ``Callable[[Bot, Event, State], Union[bool, Awaitable[bool]]]``
 
 :说明:
 
@@ -174,17 +174,17 @@ PermissionChecker = Callable[[Bot, Event], Union[bool, Awaitable[bool]]]
 
   RuleChecker 即判断是否响应消息的处理函数。
 """
-Handler = Callable[[Bot, Event, dict], Awaitable[None]]
+Handler = Callable[[Bot, Event, State], Awaitable[None]]
 """
-:类型: ``Callable[[Bot, Event, dict], Awaitable[None]]``
+:类型: ``Callable[[Bot, Event, State], Awaitable[None]]``
 
 :说明:
 
   Handler 即事件的处理函数。
 """
-ArgsParser = Callable[[Bot, Event, dict], Awaitable[None]]
+ArgsParser = Callable[[Bot, Event, State], Awaitable[None]]
 """
-:类型: ``Callable[[Bot, Event, dict], Awaitable[None]]``
+:类型: ``Callable[[Bot, Event, State], Awaitable[None]]``
 
 :说明:
 

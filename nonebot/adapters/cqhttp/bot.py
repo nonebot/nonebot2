@@ -3,21 +3,24 @@ import sys
 import hmac
 import json
 import asyncio
+from typing import Any, Dict, Union, Optional, TYPE_CHECKING
 
 import httpx
 
 from nonebot.log import logger
 from nonebot.config import Config
+from nonebot.typing import overrides
 from nonebot.adapters import BaseBot
 from nonebot.message import handle_event
 from nonebot.exception import RequestDenied
-from nonebot.typing import Any, Dict, Union, Optional
-from nonebot.typing import overrides, Driver, WebSocket
 
 from .event import Event
 from .message import Message, MessageSegment
 from .exception import NetworkError, ApiNotAvailable, ActionFailed
 from .utils import log
+
+if TYPE_CHECKING:
+    from nonebot.drivers import BaseDriver as Driver, BaseWebSocket as WebSocket
 
 
 def get_auth_bearer(access_token: Optional[str] = None) -> Optional[str]:
@@ -212,12 +215,12 @@ class Bot(BaseBot):
     """
 
     def __init__(self,
-                 driver: Driver,
+                 driver: "Driver",
                  connection_type: str,
                  config: Config,
                  self_id: str,
                  *,
-                 websocket: Optional[WebSocket] = None):
+                 websocket: Optional["WebSocket"] = None):
 
         super().__init__(driver,
                          connection_type,
@@ -235,7 +238,7 @@ class Bot(BaseBot):
 
     @classmethod
     @overrides(BaseBot)
-    async def check_permission(cls, driver: Driver, connection_type: str,
+    async def check_permission(cls, driver: "Driver", connection_type: str,
                                headers: dict, body: Optional[dict]) -> str:
         """
         :说明:

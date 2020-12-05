@@ -18,11 +18,10 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from ipaddress import IPv4Address
+from typing import Any, Set, Dict, Union, Mapping, Optional
 
 from pydantic import BaseSettings, IPvAnyAddress
 from pydantic.env_settings import SettingsError, env_file_sentinel, read_env_file
-
-from nonebot.typing import Any, Set, Dict, Union, Mapping, Optional
 
 
 class BaseConfig(BaseSettings):
@@ -56,7 +55,7 @@ class BaseConfig(BaseSettings):
 
         for field in self.__fields__.values():
             env_val: Optional[str] = None
-            for env_name in field.field_info.extra['env_names']:
+            for env_name in field.field_info.extra["env_names"]:
                 env_val = env_vars.get(env_name)
                 if env_name in env_file_vars:
                     del env_file_vars[env_name]

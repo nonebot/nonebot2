@@ -9,17 +9,17 @@ import re
 import sys
 import pkgutil
 import importlib
-from datetime import datetime
+from types import ModuleType
 from dataclasses import dataclass
 from importlib._bootstrap import _load
 from contextvars import Context, ContextVar, copy_context
+from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional
 
 from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
-from nonebot.typing import Handler, RuleChecker
+from nonebot.typing import State, Handler, RuleChecker
 from nonebot.rule import Rule, startswith, endswith, keyword, command, regex
-from nonebot.typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, ArgsParser, ModuleType
 
 plugins: Dict[str, "Plugin"] = {}
 """
@@ -108,7 +108,7 @@ def on(type: str = "",
        temp: bool = False,
        priority: int = 1,
        block: bool = False,
-       state: Optional[dict] = None) -> Type[Matcher]:
+       state: Optional[State] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -123,7 +123,7 @@ def on(type: str = "",
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[dict]``: 默认的 state
+      * ``state: Optional[State]``: 默认的 state
 
     :返回:
 
@@ -147,7 +147,7 @@ def on_metaevent(rule: Optional[Union[Rule, RuleChecker]] = None,
                  temp: bool = False,
                  priority: int = 1,
                  block: bool = False,
-                 state: Optional[dict] = None) -> Type[Matcher]:
+                 state: Optional[State] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -160,7 +160,7 @@ def on_metaevent(rule: Optional[Union[Rule, RuleChecker]] = None,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[dict]``: 默认的 state
+      * ``state: Optional[State]``: 默认的 state
 
     :返回:
 
@@ -185,7 +185,7 @@ def on_message(rule: Optional[Union[Rule, RuleChecker]] = None,
                temp: bool = False,
                priority: int = 1,
                block: bool = True,
-               state: Optional[dict] = None) -> Type[Matcher]:
+               state: Optional[State] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -199,7 +199,7 @@ def on_message(rule: Optional[Union[Rule, RuleChecker]] = None,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[dict]``: 默认的 state
+      * ``state: Optional[State]``: 默认的 state
 
     :返回:
 
@@ -223,7 +223,7 @@ def on_notice(rule: Optional[Union[Rule, RuleChecker]] = None,
               temp: bool = False,
               priority: int = 1,
               block: bool = False,
-              state: Optional[dict] = None) -> Type[Matcher]:
+              state: Optional[State] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -236,7 +236,7 @@ def on_notice(rule: Optional[Union[Rule, RuleChecker]] = None,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[dict]``: 默认的 state
+      * ``state: Optional[State]``: 默认的 state
 
     :返回:
 
@@ -260,7 +260,7 @@ def on_request(rule: Optional[Union[Rule, RuleChecker]] = None,
                temp: bool = False,
                priority: int = 1,
                block: bool = False,
-               state: Optional[dict] = None) -> Type[Matcher]:
+               state: Optional[State] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -273,7 +273,7 @@ def on_request(rule: Optional[Union[Rule, RuleChecker]] = None,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[dict]``: 默认的 state
+      * ``state: Optional[State]``: 默认的 state
 
     :返回:
 
@@ -308,7 +308,7 @@ def on_startswith(msg: str,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[dict]``: 默认的 state
+      * ``state: Optional[State]``: 默认的 state
 
     :返回:
 
@@ -334,7 +334,7 @@ def on_endswith(msg: str,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[dict]``: 默认的 state
+      * ``state: Optional[State]``: 默认的 state
 
     :返回:
 
@@ -360,7 +360,7 @@ def on_keyword(keywords: Set[str],
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[dict]``: 默认的 state
+      * ``state: Optional[State]``: 默认的 state
 
     :返回:
 
@@ -390,14 +390,14 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[dict]``: 默认的 state
+      * ``state: Optional[State]``: 默认的 state
 
     :返回:
 
       - ``Type[Matcher]``
     """
 
-    async def _strip_cmd(bot, event, state: dict):
+    async def _strip_cmd(bot, event, state: State):
         message = event.message
         event.message = message.__class__(
             str(message)[len(state["_prefix"]["raw_command"]):].strip())
@@ -430,7 +430,7 @@ def on_regex(pattern: str,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[dict]``: 默认的 state
+      * ``state: Optional[State]``: 默认的 state
 
     :返回:
 
@@ -521,7 +521,7 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[dict]``: 默认的 state
+          * ``state: Optional[State]``: 默认的 state
 
         :返回:
 
@@ -547,7 +547,7 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[dict]``: 默认的 state
+          * ``state: Optional[State]``: 默认的 state
 
         :返回:
 
@@ -575,7 +575,7 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[dict]``: 默认的 state
+          * ``state: Optional[State]``: 默认的 state
 
         :返回:
 
@@ -602,7 +602,7 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[dict]``: 默认的 state
+          * ``state: Optional[State]``: 默认的 state
 
         :返回:
 
@@ -629,7 +629,7 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[dict]``: 默认的 state
+          * ``state: Optional[State]``: 默认的 state
 
         :返回:
 
@@ -661,7 +661,7 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[dict]``: 默认的 state
+          * ``state: Optional[State]``: 默认的 state
 
         :返回:
 
@@ -687,7 +687,7 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[dict]``: 默认的 state
+          * ``state: Optional[State]``: 默认的 state
 
         :返回:
 
@@ -713,7 +713,7 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[dict]``: 默认的 state
+          * ``state: Optional[State]``: 默认的 state
 
         :返回:
 
@@ -743,14 +743,14 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[dict]``: 默认的 state
+          * ``state: Optional[State]``: 默认的 state
 
         :返回:
 
           - ``Type[Matcher]``
         """
 
-        async def _strip_cmd(bot, event, state: dict):
+        async def _strip_cmd(bot, event, state: State):
             message = event.message
             event.message = message.__class__(
                 str(message)[len(state["_prefix"]["raw_command"]):].strip())
@@ -785,7 +785,7 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[dict]``: 默认的 state
+          * ``state: Optional[State]``: 默认的 state
 
         :返回:
 

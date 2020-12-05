@@ -1,4 +1,5 @@
-from nonebot.typing import Optional
+from typing import Optional
+
 from nonebot.exception import (AdapterException, ActionFailed as
                                BaseActionFailed, NetworkError as
                                BaseNetworkError, ApiNotAvailable as

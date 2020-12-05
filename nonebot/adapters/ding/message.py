@@ -1,5 +1,7 @@
-from nonebot.typing import Any, Dict, Union, Iterable
+from typing import Any, Dict, Union, Iterable
+
 from nonebot.adapters import BaseMessage, BaseMessageSegment
+
 from .utils import log
 from .model import TextMessage
 

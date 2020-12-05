@@ -1,8 +1,9 @@
 import asyncio
+from typing import Any, Dict, List, Union, Optional
 
 from nonebot.config import Config
 from nonebot.adapters import BaseBot
-from nonebot.typing import Any, Dict, List, Union, Driver, Optional, WebSocket
+from nonebot.drivers import BaseDriver as Driver, BaseWebSocket as WebSocket
 
 from .event import Event
 from .message import Message, MessageSegment

@@ -1,15 +1,16 @@
 from functools import reduce
 
 from nonebot.rule import to_me
+from nonebot.typing import State
 from nonebot.plugin import on_command
 from nonebot.permission import SUPERUSER
-from nonebot.typing import Bot, Event, MessageSegment
+from nonebot.adapters import BaseBot as Bot, BaseEvent as Event, BaseMessageSegment as MessageSegment
 
 say = on_command("say", to_me(), permission=SUPERUSER)
 
 
 @say.handle()
-async def say_unescape(bot: Bot, event: Event, state: dict):
+async def say_unescape(bot: Bot, event: Event, state: State):
     Message = event.message.__class__
 
     def _unescape(message: Message, segment: MessageSegment):
@@ -25,7 +26,7 @@ echo = on_command("echo", to_me())
 
 
 @echo.handle()
-async def echo_escape(bot: Bot, event: Event, state: dict):
+async def echo_escape(bot: Bot, event: Event, state: State):
     # Message = event.message.__class__
     # MessageSegment = event.message[0].__class__
 
