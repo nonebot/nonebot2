@@ -35,7 +35,7 @@ VERSION = _dist.parsed_version
 _driver: Optional[Driver] = None
 
 
-def get_driver() -> Union[NoReturn, Driver]:
+def get_driver() -> Driver:
     """
     :说明:
 
@@ -111,7 +111,7 @@ def get_asgi():
     return driver.asgi
 
 
-def get_bots() -> Union[NoReturn, Dict[str, Bot]]:
+def get_bots() -> Dict[str, Bot]:
     """
     :说明:
 
