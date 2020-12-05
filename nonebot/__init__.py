@@ -26,7 +26,7 @@
 
 import importlib
 import pkg_resources
-from nonebot.typing import Bot, Dict, Type, Union, Driver, Optional, NoReturn
+from nonebot.typing import Bot, Dict, Type, Union, Driver, Optional
 
 _dist: pkg_resources.Distribution = pkg_resources.get_distribution("nonebot2")
 __version__ = _dist.version

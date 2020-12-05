@@ -12,7 +12,7 @@ from nonebot.adapters import BaseBot
 from nonebot.message import handle_event
 from nonebot.exception import RequestDenied
 from nonebot.typing import Any, Dict, Union, Optional
-from nonebot.typing import overrides, Driver, WebSocket, NoReturn
+from nonebot.typing import overrides, Driver, WebSocket
 
 from .event import Event
 from .message import Message, MessageSegment
@@ -20,8 +20,7 @@ from .exception import NetworkError, ApiNotAvailable, ActionFailed
 from .utils import log
 
 
-def get_auth_bearer(
-        access_token: Optional[str] = None) -> Union[Optional[str], NoReturn]:
+def get_auth_bearer(access_token: Optional[str] = None) -> Optional[str]:
     if not access_token:
         return None
     scheme, _, param = access_token.partition(" ")
@@ -153,8 +152,7 @@ def _check_nickname(bot: "Bot", event: "Event"):
             first_msg_seg.data["text"] = first_text[m.end():]
 
 
-def _handle_api_result(
-        result: Optional[Dict[str, Any]]) -> Union[Any, NoReturn]:
+def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
     """
     :说明:
 
@@ -238,8 +236,7 @@ class Bot(BaseBot):
     @classmethod
     @overrides(BaseBot)
     async def check_permission(cls, driver: Driver, connection_type: str,
-                               headers: dict,
-                               body: Optional[dict]) -> Union[str, NoReturn]:
+                               headers: dict, body: Optional[dict]) -> str:
         """
         :说明:
 
@@ -310,7 +307,7 @@ class Bot(BaseBot):
             )
 
     @overrides(BaseBot)
-    async def call_api(self, api: str, **data) -> Union[Any, NoReturn]:
+    async def call_api(self, api: str, **data) -> Any:
         """
         :说明:
 
@@ -382,7 +379,7 @@ class Bot(BaseBot):
                    event: Event,
                    message: Union[str, Message, MessageSegment],
                    at_sender: bool = False,
-                   **kwargs) -> Union[Any, NoReturn]:
+                   **kwargs) -> Any:
         """
         :说明:
 

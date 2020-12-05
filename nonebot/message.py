@@ -12,7 +12,7 @@ from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.utils import escape_tag
 from nonebot.matcher import matchers, Matcher
-from nonebot.typing import Set, Type, Union, Optional, Iterable, NoReturn, Bot, Event
+from nonebot.typing import Set, Type, Optional, Iterable, Bot, Event
 from nonebot.exception import IgnoredException, StopPropagation
 from nonebot.typing import EventPreProcessor, RunPreProcessor, EventPostProcessor, RunPostProcessor
 
@@ -137,7 +137,7 @@ async def _check_matcher(priority: int, bot: Bot, event: Event,
 
 
 async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
-                       state: dict) -> Union[None, NoReturn]:
+                       state: dict) -> None:
     logger.info(f"Event will be handled by {Matcher}")
 
     matcher = Matcher()
@@ -183,6 +183,7 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
 
     if matcher.block or isinstance(exception, StopPropagation):
         raise StopPropagation
+    return
 
 
 async def handle_event(bot: Bot, event: Event):
