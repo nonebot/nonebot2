@@ -17,7 +17,7 @@ pip uninstall nonebot
 
 ### 通过脚手架安装(推荐安装方式)
 
-1. (可选)使用你喜欢的 Python 环境管理工具创建新的虚拟环境。
+1. (推荐)使用你喜欢的 Python 环境管理工具(如`poetry`)创建新的虚拟环境。
 2. 使用 `pip` (或其他) 安装 NoneBot 脚手架。
 
    ```bash
@@ -33,22 +33,27 @@ pip uninstall nonebot
 ### 不使用脚手架(纯净安装)
 
 ```bash
-# poetry
+# 在使用poetry的情况下
 poetry add nonebot2
-# pip
+# 在使用pip的情况下
 pip install nonebot2
 ```
 
 如果你需要使用最新的（可能**尚未发布**的）特性，可以直接从 GitHub 仓库安装：
 
+:::warning 注意
+直接从Github仓库中安装意味着你将使用最新提交的代码,它们并没有进行充分的稳定性测试
+在任何情况下请不要将其应用于生产环境!
+:::
+
 ```bash
-# master
+# master分支
 poetry add git+https://github.com/nonebot/nonebot2.git#master
-# dev
+# dev分支
 poetry add git+https://github.com/nonebot/nonebot2.git#dev
 ```
 
-或者克隆 Git 仓库后手动安装：
+或者在克隆 Git 仓库后手动安装：
 
 ```bash
 git clone https://github.com/nonebot/nonebot2.git
