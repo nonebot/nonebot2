@@ -176,7 +176,7 @@ sidebarDepth: 0
 
 ## _class_ `Bot`
 
-基类：[`nonebot.adapters.BaseBot`](README.md#nonebot.adapters.BaseBot)
+基类：[`nonebot.adapters.Bot`](README.md#nonebot.adapters.Bot)
 
 CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 
@@ -288,7 +288,7 @@ CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 
 ## _class_ `Event`
 
-基类：[`nonebot.adapters.BaseEvent`](README.md#nonebot.adapters.BaseEvent)
+基类：[`nonebot.adapters.Event`](README.md#nonebot.adapters.Event)
 
 CQHTTP 协议 Event 适配。继承属性参考 [BaseEvent](./#class-baseevent) 。
 
@@ -430,13 +430,13 @@ CQHTTP 协议 Event 适配。继承属性参考 [BaseEvent](./#class-baseevent) 
 
 ## _class_ `MessageSegment`
 
-基类：[`nonebot.adapters.BaseMessageSegment`](README.md#nonebot.adapters.BaseMessageSegment)
+基类：[`nonebot.adapters.MessageSegment`](README.md#nonebot.adapters.MessageSegment)
 
 CQHTTP 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
 
 
 ## _class_ `Message`
 
-基类：[`nonebot.adapters.BaseMessage`](README.md#nonebot.adapters.BaseMessage)
+基类：[`nonebot.adapters.Message`](README.md#nonebot.adapters.Message)
 
 CQHTTP 协议 Message 适配。

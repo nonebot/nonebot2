@@ -10,7 +10,7 @@ sidebarDepth: 0
 各协议请继承以下基类，并使用 `driver.register_adapter` 注册适配器
 
 
-## _class_ `BaseBot`
+## _class_ `Bot`
 
 基类：`abc.ABC`
 
@@ -174,7 +174,7 @@ await bot.send_msg(message="hello world")
 
 
 
-## _class_ `BaseEvent`
+## _class_ `Event`
 
 基类：`abc.ABC`, `typing.Generic`
 
@@ -271,7 +271,7 @@ Event 基类。提供上报信息的关键信息，其余信息可从原始上�
 消息发送者信息
 
 
-## _class_ `BaseMessageSegment`
+## _class_ `MessageSegment`
 
 基类：`abc.ABC`
 
@@ -296,7 +296,7 @@ Event 基类。提供上报信息的关键信息，其余信息可从原始上�
 * 说明: 消息段数据
 
 
-## _class_ `BaseMessage`
+## _class_ `Message`
 
 基类：`list`, `abc.ABC`
 

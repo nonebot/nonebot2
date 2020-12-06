@@ -157,7 +157,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `dict`
+    `State`
 
 
 
@@ -238,7 +238,7 @@ sidebarDepth: 0
     * `module: Optional[str]`: 事件响应器所在模块名称
 
 
-    * `default_state: Optional[dict]`: 默认状态 `state`
+    * `default_state: Optional[State]`: 默认状态 `state`
 
 
     * `expire_time: Optional[datetime]`: 事件响应器最终有效时间点，过时即被删除
@@ -296,7 +296,7 @@ sidebarDepth: 0
     * `event: Event`: 上报事件
 
 
-    * `state: dict`: 当前状态
+    * `state: State`: 当前状态
 
 
 

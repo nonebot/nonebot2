@@ -133,7 +133,7 @@ async def _check_matcher(priority: int, bot: "Bot", event: "Event",
     expired = await asyncio.gather(*checking_expire_tasks)
     for expired_matcher in filter(lambda x: x and x in results, expired):
         try:
-            matchers[priority].remove(expired_matcher)
+            matchers[priority].remove(expired_matcher)  # type: ignore
         except Exception:
             pass
     return filter(lambda x: x, results)

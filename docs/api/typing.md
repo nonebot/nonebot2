@@ -14,98 +14,18 @@ sidebarDepth: 0
 以下类型均可从 nonebot.typing 模块导入。
 
 
-## `Driver`
+## `State`
 
 
 * **类型**
 
-    `BaseDriver`
+    `Dict[Any, Any]`
 
 
 
 * **说明**
 
-    所有 Driver 的基类。
-
-
-
-
-## `WebSocket`
-
-
-* **类型**
-
-    `BaseWebSocket`
-
-
-
-* **说明**
-
-    所有 WebSocket 的基类。
-
-
-
-
-## `Bot`
-
-
-* **类型**
-
-    `BaseBot`
-
-
-
-* **说明**
-
-    所有 Bot 的基类。
-
-
-
-
-## `Event`
-
-
-* **类型**
-
-    `BaseEvent`
-
-
-
-* **说明**
-
-    所有 Event 的基类。
-
-
-
-
-## `Message`
-
-
-* **类型**
-
-    `BaseMessage`
-
-
-
-* **说明**
-
-    所有 Message 的基类。
-
-
-
-
-## `MessageSegment`
-
-
-* **类型**
-
-    `BaseMessageSegment`
-
-
-
-* **说明**
-
-    所有 MessageSegment 的基类。
+    事件处理状态 State 类型
 
 
 
@@ -115,7 +35,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[[Bot, Event, State], Awaitable[None]]`
 
 
 
@@ -131,7 +51,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[[Bot, Event, State], Awaitable[None]]`
 
 
 
@@ -147,7 +67,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Matcher, Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[[Matcher, Bot, Event, State], Awaitable[None]]`
 
 
 
@@ -163,7 +83,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Matcher, Optional[Exception], Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[[Matcher, Optional[Exception], Bot, Event, State], Awaitable[None]]`
 
 
 
@@ -174,82 +94,18 @@ sidebarDepth: 0
 
 
 
-## `Matcher`
-
-
-* **类型**
-
-    `Matcher`
-
-
-
-* **说明**
-
-    Matcher 即响应事件的处理类。通过 Rule 判断是否响应事件，运行 Handler。
-
-
-
-
-## `MatcherGroup`
-
-
-* **类型**
-
-    `MatcherGroup`
-
-
-
-* **说明**
-
-    MatcherGroup 为 Matcher 的集合。可以共享 Handler。
-
-
-
-
-## `Rule`
-
-
-* **类型**
-
-    `Rule`
-
-
-
-* **说明**
-
-    Rule 即判断是否响应事件的处理类。内部存储 RuleChecker ，返回全为 True 则响应事件。
-
-
-
-
 ## `RuleChecker`
 
 
 * **类型**
 
-    `Callable[[Bot, Event, dict], Union[bool, Awaitable[bool]]]`
+    `Callable[[Bot, Event, State], Union[bool, Awaitable[bool]]]`
 
 
 
 * **说明**
 
     RuleChecker 即判断是否响应事件的处理函数。
-
-
-
-
-## `Permission`
-
-
-* **类型**
-
-    `Permission`
-
-
-
-* **说明**
-
-    Permission 即判断是否响应消息的处理类。内部存储 PermissionChecker ，返回只要有一个 True 则响应消息。
 
 
 
@@ -275,7 +131,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[[Bot, Event, State], Union[Awaitable[None], Awaitable[NoReturn]]]`
 
 
 
@@ -291,7 +147,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[[Bot, Event, State], Awaitable[None]]`
 
 
 

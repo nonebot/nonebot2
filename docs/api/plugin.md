@@ -133,7 +133,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -171,7 +171,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -212,7 +212,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -250,7 +250,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -288,7 +288,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -332,7 +332,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -376,7 +376,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -420,7 +420,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -469,7 +469,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -518,7 +518,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -666,7 +666,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -704,7 +704,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -745,7 +745,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -783,7 +783,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -821,7 +821,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -865,7 +865,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -909,7 +909,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -953,7 +953,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -1002,7 +1002,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 
@@ -1051,7 +1051,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[dict]`: 默认的 state
+    * `state: Optional[State]`: 默认的 state
 
 
 

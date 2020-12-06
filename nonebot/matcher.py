@@ -5,7 +5,6 @@
 该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行 对话 。
 """
 
-import typing
 import inspect
 from functools import wraps
 from datetime import datetime
@@ -416,10 +415,9 @@ class Matcher(metaclass=MatcherMeta):
 
             for _ in range(len(self.handlers)):
                 handler = self.handlers.pop(0)
-                # annotation = typing.get_type_hints(handler)
-                # BotType = annotation.get("bot")
                 signature = inspect.signature(handler)
                 BotType = signature.parameters.get("bot").annotation
+                print(BotType)
                 if BotType is not inspect.Parameter.empty and inspect.isclass(
                         BotType) and not isinstance(bot, BotType):
                     continue

@@ -10,7 +10,7 @@ sidebarDepth: 0
 各驱动请继承以下基类
 
 
-## _class_ `BaseDriver`
+## _class_ `Driver`
 
 基类：`abc.ABC`
 
@@ -189,7 +189,7 @@ Driver 基类。将后端框架封装，以满足适配器使用。
 用于处理 WebSocket 类型请求的函数
 
 
-## _class_ `BaseWebSocket`
+## _class_ `WebSocket`
 
 基类：`object`
 
