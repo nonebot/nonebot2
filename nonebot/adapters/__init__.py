@@ -121,9 +121,8 @@ class Bot(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def send(self, event: "BaseEvent",
-                   message: Union[str, "BaseMessage",
-                                  "BaseMessageSegment"], **kwargs):
+    async def send(self, event: "Event",
+                   message: Union[str, "Message", "MessageSegment"], **kwargs):
         """
         :说明:
 
@@ -254,7 +253,7 @@ class Event(abc.ABC, Generic[T]):
 
     @property
     @abc.abstractmethod
-    def message(self) -> Optional["BaseMessage"]:
+    def message(self) -> Optional["Message"]:
         """消息内容"""
         raise NotImplementedError
 
@@ -345,7 +344,7 @@ class MessageSegment(abc.ABC):
 
     @classmethod
     @abc.abstractmethod
-    def text(cls, text: str) -> "BaseMessageSegment":
+    def text(cls, text: str) -> "MessageSegment":
         return cls("text", {"text": text})
 
 
@@ -353,8 +352,8 @@ class Message(list, abc.ABC):
     """消息数组"""
 
     def __init__(self,
-                 message: Union[str, dict, list, BaseModel, BaseMessageSegment,
-                                "BaseMessage"] = None,
+                 message: Union[str, dict, list, BaseModel, MessageSegment,
+                                "Message"] = None,
                  *args,
                  **kwargs):
         """
@@ -365,9 +364,9 @@ class Message(list, abc.ABC):
         super().__init__(*args, **kwargs)
         if isinstance(message, (str, dict, list, BaseModel)):
             self.extend(self._construct(message))
-        elif isinstance(message, BaseMessage):
+        elif isinstance(message, Message):
             self.extend(message)
-        elif isinstance(message, BaseMessageSegment):
+        elif isinstance(message, MessageSegment):
             self.append(message)
 
     def __str__(self):
@@ -376,27 +375,25 @@ class Message(list, abc.ABC):
     @staticmethod
     @abc.abstractmethod
     def _construct(
-            msg: Union[str, dict, list,
-                       BaseModel]) -> Iterable[BaseMessageSegment]:
+            msg: Union[str, dict, list, BaseModel]) -> Iterable[MessageSegment]:
         raise NotImplementedError
 
-    def __add__(
-            self, other: Union[str, BaseMessageSegment,
-                               "BaseMessage"]) -> "BaseMessage":
+    def __add__(self, other: Union[str, MessageSegment,
+                                   "Message"]) -> "Message":
         result = self.__class__(self)
         if isinstance(other, str):
             result.extend(self._construct(other))
-        elif isinstance(other, BaseMessageSegment):
+        elif isinstance(other, MessageSegment):
             result.append(other)
-        elif isinstance(other, BaseMessage):
+        elif isinstance(other, Message):
             result.extend(other)
         return result
 
-    def __radd__(self, other: Union[str, BaseMessageSegment, "BaseMessage"]):
+    def __radd__(self, other: Union[str, MessageSegment, "Message"]):
         result = self.__class__(other)
         return result.__add__(self)
 
-    def append(self, obj: Union[str, BaseMessageSegment]) -> "BaseMessage":
+    def append(self, obj: Union[str, MessageSegment]) -> "Message":
         """
         :说明:
 
@@ -406,7 +403,7 @@ class Message(list, abc.ABC):
 
           * ``obj: Union[str, MessageSegment]``: 要添加的消息段
         """
-        if isinstance(obj, BaseMessageSegment):
+        if isinstance(obj, MessageSegment):
             super().append(obj)
         elif isinstance(obj, str):
             self.extend(self._construct(obj))
@@ -414,9 +411,8 @@ class Message(list, abc.ABC):
             raise ValueError(f"Unexpected type: {type(obj)} {obj}")
         return self
 
-    def extend(
-        self, obj: Union["BaseMessage",
-                         Iterable[BaseMessageSegment]]) -> "BaseMessage":
+    def extend(self, obj: Union["Message",
+                                Iterable[MessageSegment]]) -> "Message":
         """
         :说明:
 
@@ -452,7 +448,7 @@ class Message(list, abc.ABC):
           提取消息内纯文本消息
         """
 
-        def _concat(x: str, y: BaseMessageSegment) -> str:
+        def _concat(x: str, y: MessageSegment) -> str:
             return f"{x} {y}" if y.type == "text" else x
 
         plain_text = reduce(_concat, self, "")

@@ -416,10 +416,12 @@ class Matcher(metaclass=MatcherMeta):
 
             for _ in range(len(self.handlers)):
                 handler = self.handlers.pop(0)
-                annotation = typing.get_type_hints(handler)
-                BotType = annotation.get("bot")
-                if BotType and inspect.isclass(BotType) and not isinstance(
-                        bot, BotType):
+                # annotation = typing.get_type_hints(handler)
+                # BotType = annotation.get("bot")
+                signature = inspect.signature(handler)
+                BotType = signature.parameters.get("bot").annotation
+                if BotType is not inspect.Parameter.empty and inspect.isclass(
+                        BotType) and not isinstance(bot, BotType):
                     continue
                 await handler(bot, event, self.state)
 

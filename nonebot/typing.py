@@ -18,10 +18,11 @@
     https://docs.python.org/3/library/typing.html
 """
 
-from typing import Any, Dict, Union, Optional, Callable, Awaitable, TYPE_CHECKING
+from typing import Any, Dict, Union, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from nonebot.rule import Rule
+    from nonebot.adapters import Bot, Event
+    from nonebot.matcher import Matcher
 
 
 def overrides(InterfaceClass: object):
@@ -42,7 +43,7 @@ State = Dict[Any, Any]
 
   事件处理状态 State 类型
 """
-EventPreProcessor = Callable[[Bot, Event, State], Awaitable[None]]
+EventPreProcessor = Callable[["Bot", "Event", State], Awaitable[None]]
 """
 :类型: ``Callable[[Bot, Event, State], Awaitable[None]]``
 
@@ -50,7 +51,7 @@ EventPreProcessor = Callable[[Bot, Event, State], Awaitable[None]]
 
   事件预处理函数 EventPreProcessor 类型
 """
-EventPostProcessor = Callable[[Bot, Event, State], Awaitable[None]]
+EventPostProcessor = Callable[["Bot", "Event", State], Awaitable[None]]
 """
 :类型: ``Callable[[Bot, Event, State], Awaitable[None]]``
 
@@ -58,7 +59,7 @@ EventPostProcessor = Callable[[Bot, Event, State], Awaitable[None]]
 
   事件预处理函数 EventPostProcessor 类型
 """
-RunPreProcessor = Callable[["Matcher", Bot, Event, State], Awaitable[None]]
+RunPreProcessor = Callable[["Matcher", "Bot", "Event", State], Awaitable[None]]
 """
 :类型: ``Callable[[Matcher, Bot, Event, State], Awaitable[None]]``
 
@@ -66,8 +67,8 @@ RunPreProcessor = Callable[["Matcher", Bot, Event, State], Awaitable[None]]
 
   事件响应器运行前预处理函数 RunPreProcessor 类型
 """
-RunPostProcessor = Callable[["Matcher", Optional[Exception], Bot, Event, State],
-                            Awaitable[None]]
+RunPostProcessor = Callable[
+    ["Matcher", Optional[Exception], "Bot", "Event", State], Awaitable[None]]
 """
 :类型: ``Callable[[Matcher, Optional[Exception], Bot, Event, State], Awaitable[None]]``
 
@@ -76,7 +77,7 @@ RunPostProcessor = Callable[["Matcher", Optional[Exception], Bot, Event, State],
   事件响应器运行前预处理函数 RunPostProcessor 类型，第二个参数为运行时产生的错误（如果存在）
 """
 
-RuleChecker = Callable[[Bot, Event, State], Union[bool, Awaitable[bool]]]
+RuleChecker = Callable[["Bot", "Event", State], Union[bool, Awaitable[bool]]]
 """
 :类型: ``Callable[[Bot, Event, State], Union[bool, Awaitable[bool]]]``
 
@@ -84,7 +85,7 @@ RuleChecker = Callable[[Bot, Event, State], Union[bool, Awaitable[bool]]]
 
   RuleChecker 即判断是否响应事件的处理函数。
 """
-PermissionChecker = Callable[[Bot, Event], Union[bool, Awaitable[bool]]]
+PermissionChecker = Callable[["Bot", "Event"], Union[bool, Awaitable[bool]]]
 """
 :类型: ``Callable[[Bot, Event], Union[bool, Awaitable[bool]]]``
 
@@ -92,15 +93,16 @@ PermissionChecker = Callable[[Bot, Event], Union[bool, Awaitable[bool]]]
 
   RuleChecker 即判断是否响应消息的处理函数。
 """
-Handler = Callable[[Bot, Event, State], Awaitable[None]]
+Handler = Callable[["Bot", "Event", State], Union[Awaitable[None],
+                                                  Awaitable[NoReturn]]]
 """
-:类型: ``Callable[[Bot, Event, State], Awaitable[None]]``
+:类型: ``Callable[[Bot, Event, State], Union[Awaitable[None], Awaitable[NoReturn]]]``
 
 :说明:
 
   Handler 即事件的处理函数。
 """
-ArgsParser = Callable[[Bot, Event, State], Awaitable[None]]
+ArgsParser = Callable[["Bot", "Event", State], Awaitable[None]]
 """
 :类型: ``Callable[[Bot, Event, State], Awaitable[None]]``
 
