@@ -27,8 +27,8 @@ plugins: Dict[str, "Plugin"] = {}
 :说明: 已加载的插件
 """
 
-_tmp_matchers: ContextVar[Set[Type[Matcher]]] = ContextVar("_tmp_matchers")
 _export: ContextVar["Export"] = ContextVar("_export")
+_tmp_matchers: ContextVar[Set[Type[Matcher]]] = ContextVar("_tmp_matchers")
 
 
 class Export(dict):

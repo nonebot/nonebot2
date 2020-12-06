@@ -17,7 +17,7 @@ from nonebot.exception import IgnoredException, StopPropagation
 from nonebot.typing import State, EventPreProcessor, RunPreProcessor, EventPostProcessor, RunPostProcessor
 
 if TYPE_CHECKING:
-    from nonebot.adapters import BaseBot as Bot, BaseEvent as Event
+    from nonebot.adapters import Bot, Event
 
 _event_preprocessors: Set[EventPreProcessor] = set()
 _event_postprocessors: Set[EventPostProcessor] = set()

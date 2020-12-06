@@ -20,9 +20,7 @@ from nonebot.typing import State, Handler, ArgsParser
 from nonebot.exception import PausedException, RejectedException, FinishedException
 
 if TYPE_CHECKING:
-    from nonebot.adapters import (BaseBot as Bot, BaseEvent as Event,
-                                  BaseMessage as Message, BaseMessageSegment as
-                                  MessageSegment)
+    from nonebot.adapters import Bot, Event, Message, MessageSegment
 
 matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
 """

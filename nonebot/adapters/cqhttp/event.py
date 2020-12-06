@@ -1,7 +1,7 @@
 from typing import Optional
 
 from nonebot.typing import overrides
-from nonebot.adapters import BaseEvent
+from nonebot.adapters import Event as BaseEvent
 
 from .message import Message
 

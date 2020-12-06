@@ -6,8 +6,8 @@ from typing import Any, Union, Optional, TYPE_CHECKING
 import httpx
 from nonebot.log import logger
 from nonebot.config import Config
-from nonebot.adapters import BaseBot
 from nonebot.message import handle_event
+from nonebot.adapters import Bot as BaseBot
 from nonebot.exception import RequestDenied
 
 from .utils import log

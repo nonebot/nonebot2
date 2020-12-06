@@ -18,18 +18,10 @@
     https://docs.python.org/3/library/typing.html
 """
 
-from types import ModuleType
-from typing import NoReturn, TYPE_CHECKING
-from typing import Any, Set, List, Dict, Type, Tuple, Mapping
-from typing import Union, TypeVar, Optional, Iterable, Callable, Awaitable, Generic
+from typing import Any, Dict, Union, Optional, Callable, Awaitable, TYPE_CHECKING
 
-# import some modules needed when checking types
 if TYPE_CHECKING:
-    from nonebot.rule import Rule as RuleClass
-    from nonebot.drivers import BaseDriver, BaseWebSocket
-    from nonebot.permission import Permission as PermissionClass
-    from nonebot.adapters import BaseBot, BaseEvent, BaseMessage, BaseMessageSegment
-    from nonebot.matcher import Matcher as MatcherClass
+    from nonebot.rule import Rule
 
 
 def overrides(InterfaceClass: object):
@@ -41,56 +33,6 @@ def overrides(InterfaceClass: object):
 
     return overrider
 
-
-Driver = TypeVar("Driver", bound="BaseDriver")
-"""
-:类型: ``BaseDriver``
-
-:说明:
-
-  所有 Driver 的基类。
-"""
-WebSocket = TypeVar("WebSocket", bound="BaseWebSocket")
-"""
-:类型: ``BaseWebSocket``
-
-:说明:
-
-  所有 WebSocket 的基类。
-"""
-
-Bot = TypeVar("Bot", bound="BaseBot")
-"""
-:类型: ``BaseBot``
-
-:说明:
-
-  所有 Bot 的基类。
-"""
-Event = TypeVar("Event", bound="BaseEvent")
-"""
-:类型: ``BaseEvent``
-
-:说明:
-
-  所有 Event 的基类。
-"""
-Message = TypeVar("Message", bound="BaseMessage")
-"""
-:类型: ``BaseMessage``
-
-:说明:
-
-  所有 Message 的基类。
-"""
-MessageSegment = TypeVar("MessageSegment", bound="BaseMessageSegment")
-"""
-:类型: ``BaseMessageSegment``
-
-:说明:
-
-  所有 MessageSegment 的基类。
-"""
 
 State = Dict[Any, Any]
 """
@@ -134,22 +76,6 @@ RunPostProcessor = Callable[["Matcher", Optional[Exception], Bot, Event, State],
   事件响应器运行前预处理函数 RunPostProcessor 类型，第二个参数为运行时产生的错误（如果存在）
 """
 
-Matcher = TypeVar("Matcher", bound="MatcherClass")
-"""
-:类型: ``Matcher``
-
-:说明:
-
-  Matcher 即响应事件的处理类。通过 Rule 判断是否响应事件，运行 Handler。
-"""
-Rule = TypeVar("Rule", bound="RuleClass")
-"""
-:类型: ``Rule``
-
-:说明:
-
-  Rule 即判断是否响应事件的处理类。内部存储 RuleChecker ，返回全为 True 则响应事件。
-"""
 RuleChecker = Callable[[Bot, Event, State], Union[bool, Awaitable[bool]]]
 """
 :类型: ``Callable[[Bot, Event, State], Union[bool, Awaitable[bool]]]``
@@ -157,14 +83,6 @@ RuleChecker = Callable[[Bot, Event, State], Union[bool, Awaitable[bool]]]
 :说明:
 
   RuleChecker 即判断是否响应事件的处理函数。
-"""
-Permission = TypeVar("Permission", bound="PermissionClass")
-"""
-:类型: ``Permission``
-
-:说明:
-
-  Permission 即判断是否响应消息的处理类。内部存储 PermissionChecker ，返回只要有一个 True 则响应消息。
 """
 PermissionChecker = Callable[[Bot, Event], Union[bool, Awaitable[bool]]]
 """

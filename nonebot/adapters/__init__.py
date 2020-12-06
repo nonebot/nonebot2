@@ -15,10 +15,10 @@ from pydantic import BaseModel
 from nonebot.config import Config
 
 if TYPE_CHECKING:
-    from nonebot.drivers import BaseDriver as Driver, BaseWebSocket as WebSocket
+    from nonebot.drivers import Driver, WebSocket
 
 
-class BaseBot(abc.ABC):
+class Bot(abc.ABC):
     """
     Bot 基类。用于处理上报消息，并提供 API 调用接口。
     """
@@ -141,7 +141,7 @@ class BaseBot(abc.ABC):
 T = TypeVar("T", bound=BaseModel)
 
 
-class BaseEvent(abc.ABC, Generic[T]):
+class Event(abc.ABC, Generic[T]):
     """
     Event 基类。提供上报信息的关键信息，其余信息可从原始上报消息获取。
     """
@@ -304,7 +304,7 @@ class BaseEvent(abc.ABC, Generic[T]):
 
 
 @dataclass
-class BaseMessageSegment(abc.ABC):
+class MessageSegment(abc.ABC):
     """消息段基类"""
     type: str
     """
@@ -349,7 +349,7 @@ class BaseMessageSegment(abc.ABC):
         return cls("text", {"text": text})
 
 
-class BaseMessage(list, abc.ABC):
+class Message(list, abc.ABC):
     """消息数组"""
 
     def __init__(self,

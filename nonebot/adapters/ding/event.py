@@ -1,6 +1,6 @@
 from typing import Union, Optional
 
-from nonebot.adapters import BaseEvent
+from nonebot.adapters import Event as BaseEvent
 
 from .message import Message
 from .model import MessageModel, ConversationType, TextMessage

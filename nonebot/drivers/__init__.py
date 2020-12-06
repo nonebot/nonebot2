@@ -12,10 +12,10 @@ from nonebot.log import logger
 from nonebot.config import Env, Config
 
 if TYPE_CHECKING:
-    from nonebot.adapters import BaseBot as Bot
+    from nonebot.adapters import Bot
 
 
-class BaseDriver(abc.ABC):
+class Driver(abc.ABC):
     """
     Driver 基类。将后端框架封装，以满足适配器使用。
     """
@@ -140,7 +140,7 @@ class BaseDriver(abc.ABC):
         raise NotImplementedError
 
 
-class BaseWebSocket(object):
+class WebSocket(object):
     """WebSocket 连接封装，统一接口方便外部调用。"""
 
     @abc.abstractmethod

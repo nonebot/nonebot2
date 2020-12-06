@@ -28,11 +28,11 @@ import importlib
 import pkg_resources
 from typing import Dict, Type, Optional
 
+from nonebot.adapters import Bot
+from nonebot.drivers import Driver
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
-from nonebot.adapters import BaseBot as Bot
 from nonebot.log import logger, default_filter
-from nonebot.drivers import BaseDriver as Driver
 
 _dist: pkg_resources.Distribution = pkg_resources.get_distribution("nonebot2")
 __version__ = _dist.version

@@ -23,7 +23,7 @@ from nonebot.typing import overrides
 from nonebot.config import Env, Config
 from nonebot.utils import DataclassEncoder
 from nonebot.exception import RequestDenied
-from nonebot.drivers import BaseDriver, BaseWebSocket
+from nonebot.drivers import Driver as BaseDriver, WebSocket as BaseWebSocket
 
 
 class Driver(BaseDriver):

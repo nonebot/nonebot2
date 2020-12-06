@@ -4,7 +4,7 @@ from nonebot.rule import to_me
 from nonebot.typing import State
 from nonebot.plugin import on_command
 from nonebot.permission import SUPERUSER
-from nonebot.adapters import BaseBot as Bot, BaseEvent as Event, BaseMessageSegment as MessageSegment
+from nonebot.adapters import Bot, Event, MessageSegment
 
 say = on_command("say", to_me(), permission=SUPERUSER)
 

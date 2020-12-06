@@ -16,7 +16,7 @@ from nonebot.utils import run_sync
 from nonebot.typing import PermissionChecker
 
 if TYPE_CHECKING:
-    from nonebot.adapters import BaseBot as Bot, BaseEvent as Event
+    from nonebot.adapters import Bot, Event
 
 
 class Permission:
