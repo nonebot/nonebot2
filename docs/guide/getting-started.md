@@ -32,7 +32,8 @@ if __name__ == "__main__":
 在上方 `bot.py` 中，这几行高亮代码将依次：
 
 1. 使用默认配置初始化 NoneBot
-2. 加载 NoneBot 内置的 CQHTTP 协议适配组件
+2. 加载 NoneBot 内置的 CQHTTP 协议适配组件  
+   `register_adapter` 的第一个参数我们传入了一个字符串，该字符串将会在后文 [配置 QQ 协议端](#配置-qq-协议端) 时使用。
 3. 加载 NoneBot 内置的插件
 4. 在地址 `127.0.0.1:8080` 运行 NoneBot
 
@@ -80,7 +81,7 @@ QQ 协议端举例:
 
 ```json{2,3,35-36,42}
 {
-  "uin": 你的QQ号,
+  "uin": "你的QQ号",
   "password": "你的密码",
   "encrypt_password": false,
   "password_encrypted": "",
@@ -133,7 +134,9 @@ QQ 协议端举例:
 }
 ```
 
-其中 `ws://127.0.0.1:8080/cqhttp/ws` 中的 `127.0.0.1` 和 `8080` 应分别对应 nonebot 配置的 HOST 和 PORT
+其中 `ws://127.0.0.1:8080/cqhttp/ws` 中的 `127.0.0.1` 和 `8080` 应分别对应 nonebot 配置的 HOST 和 PORT。
+
+`cqhttp` 是前述 `register_adapter` 时传入的第一个参数，代表设置的 `CQHTTPBot` 适配器的路径，你可以对不同的适配器设置不同路径以作区别。
 
 ## 历史性的第一次对话
 

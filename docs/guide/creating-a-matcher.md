@@ -43,7 +43,7 @@ async def get_weather(city: str):
 
 ## [事件响应器](../api/matcher.md)
 
-```python{4}
+```python{5}
 from nonebot import on_command
 from nonebot.rule import to_me
 from nonebot.permission import Permission
@@ -87,12 +87,11 @@ weather = on_command("天气", rule=to_me(), permission=Permission(), priority=5
 事件响应器的优先级代表事件响应器的执行顺序，同一优先级的事件响应器会 **同时执行！**，优先级数字**越小**越先响应！优先级请从 `1` 开始排序！
 
 :::tip 提示
-使用 `nonebot-test` 可以看到当前所有事件响应器的执行流程，有助理解事件响应流程！
+使用 `nonebot-plugin-test` 可以在网页端查看当前所有事件响应器的执行流程，有助理解事件响应流程！
 
 ```bash
-pip install nonebot2[test]
+nb plugin install nonebot_plugin_test
 ```
-
 :::
 
 ### 阻断 block

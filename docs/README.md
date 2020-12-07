@@ -1,7 +1,7 @@
 ---
 home: true
 heroImage: /logo.png
-tagline: An asynchronous QQ bot framework.
+tagline: An asynchronous bot framework.
 actionText: 开始使用
 actionLink: guide/
 features:
