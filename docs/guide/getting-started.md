@@ -14,7 +14,7 @@ nb create
 
 如果未安装 `nb-cli`，使用你最熟悉的编辑器或 IDE，创建一个名为 `bot.py` 的文件，内容如下：
 
-```python{3,4,7}
+```python{4,6,7,10}
 import nonebot
 from nonebot.adapters.cqhttp import Bot as CQHTTPBot
 
@@ -32,8 +32,9 @@ if __name__ == "__main__":
 在上方 `bot.py` 中，这几行高亮代码将依次：
 
 1. 使用默认配置初始化 NoneBot
-2. 加载 NoneBot 内置的插件
-3. 在地址 `127.0.0.1:8080` 运行 NoneBot
+2. 加载 NoneBot 内置的 CQHTTP 协议适配组件
+3. 加载 NoneBot 内置的插件
+4. 在地址 `127.0.0.1:8080` 运行 NoneBot
 
 在命令行使用如下命令即可运行这个 NoneBot 实例：
 

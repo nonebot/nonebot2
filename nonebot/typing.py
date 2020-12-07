@@ -102,9 +102,10 @@ Handler = Callable[["Bot", "Event", State], Union[Awaitable[None],
 
   Handler 即事件的处理函数。
 """
-ArgsParser = Callable[["Bot", "Event", State], Awaitable[None]]
+ArgsParser = Callable[["Bot", "Event", State], Union[Awaitable[None],
+                                                     Awaitable[NoReturn]]]
 """
-:类型: ``Callable[[Bot, Event, State], Awaitable[None]]``
+:类型: ``Callable[[Bot, Event, State], Union[Awaitable[None], Awaitable[NoReturn]]]``
 
 :说明:
 

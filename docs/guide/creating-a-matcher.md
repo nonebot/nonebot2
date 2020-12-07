@@ -7,20 +7,21 @@
 ```python
 from nonebot import on_command
 from nonebot.rule import to_me
+from nonebot.typing import State
 from nonebot.adapters.cqhttp import Bot, Event
 
 weather = on_command("天气", rule=to_me(), priority=5)
 
 
 @weather.handle()
-async def handle_first_receive(bot: Bot, event: Event, state: dict):
+async def handle_first_receive(bot: Bot, event: Event, state: State):
     args = str(event.message).strip()  # 首次发送命令时跟随的参数，例：/天气 上海，则args为上海
     if args:
         state["city"] = args  # 如果用户发送了参数则直接赋值
 
 
 @weather.got("city", prompt="你想查询哪个城市的天气呢？")
-async def handle_city(bot: Bot, event: Event, state: dict):
+async def handle_city(bot: Bot, event: Event, state: State):
     city = state["city"]
     if city not in ["上海", "北京"]:
         await weather.reject("你想查询的城市暂不支持，请重新输入！")
@@ -115,15 +116,15 @@ rule 的出现使得 nonebot 对事件的响应可以非常自由，nonebot 内�
 ```python
 from nonebot.rule import Rule
 
-async def async_checker(bot: Bot, event: Event, state: dict) -> bool:
+async def async_checker(bot: Bot, event: Event, state: State) -> bool:
     return True
 
-def sync_checker(bot: Bot, event: Event, state: dict) -> bool:
+def sync_checker(bot: Bot, event: Event, state: State) -> bool:
     return True
 
 def check(arg1, args2):
 
-    async def _checker(bot: Bot, event: Event, state: dict) -> bool:
+    async def _checker(bot: Bot, event: Event, state: State) -> bool:
         return bool(arg1 + arg2)
 
     return Rule(_check)
