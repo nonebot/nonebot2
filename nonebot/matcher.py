@@ -417,7 +417,6 @@ class Matcher(metaclass=MatcherMeta):
                 handler = self.handlers.pop(0)
                 signature = inspect.signature(handler)
                 BotType = signature.parameters.get("bot").annotation
-                print(BotType)
                 if BotType is not inspect.Parameter.empty and inspect.isclass(
                         BotType) and not isinstance(bot, BotType):
                     continue

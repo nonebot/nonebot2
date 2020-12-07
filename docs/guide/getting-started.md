@@ -79,57 +79,57 @@ QQ 协议端举例:
 2. 运行 exe 文件或者使用 `./go-cqhttp` 启动
 3. 生成默认配置文件并修改默认配置
 
-```json{2,3,35-36,42}
+```hjson{2,3,35-36,42}
 {
-  "uin": "你的QQ号",
-  "password": "你的密码",
-  "encrypt_password": false,
-  "password_encrypted": "",
-  "enable_db": true,
-  "access_token": "",
-  "relogin": {
-    "enabled": true,
-    "relogin_delay": 3,
-    "max_relogin_times": 0
-  },
-  "_rate_limit": {
-    "enabled": false,
-    "frequency": 0,
-    "bucket_size": 0
-  },
-  "ignore_invalid_cqcode": false,
-  "force_fragmented": true,
-  "heartbeat_interval": 0,
-  "http_config": {
-    "enabled": false,
-    "host": "0.0.0.0",
-    "port": 5700,
-    "timeout": 0,
-    "post_urls": {}
-  },
-  "ws_config": {
-    "enabled": false,
-    "host": "0.0.0.0",
-    "port": 6700
-  },
-  "ws_reverse_servers": [
+  uin: 机器人QQ号
+  password: 机器人密码
+  encrypt_password: false
+  password_encrypted: ""
+  enable_db: true
+  access_token: ""
+  relogin: {
+    enabled: true
+    relogin_delay: 3
+    max_relogin_times: 0
+  }
+  _rate_limit: {
+    enabled: false
+    frequency: 1
+    bucket_size: 1
+  }
+  ignore_invalid_cqcode: false
+  force_fragmented: false
+  heartbeat_interval: 0
+  http_config: {
+    enabled: false
+    host: "0.0.0.0"
+    port: 5700
+    timeout: 0
+    post_urls: {}
+  }
+  ws_config: {
+    enabled: false
+    host: "0.0.0.0"
+    port: 6700
+  }
+  ws_reverse_servers: [
     {
-      "enabled": true,
-      "reverse_url": "ws://127.0.0.1:8080/cqhttp/ws",
-      "reverse_api_url": "",
-      "reverse_event_url": "",
-      "reverse_reconnect_interval": 3000
+      enabled: true
+      reverse_url: ws://127.0.0.1:8080/cqhttp/ws
+      reverse_api_url: ws://you_websocket_api.server
+      reverse_event_url: ws://you_websocket_event.server
+      reverse_reconnect_interval: 3000
     }
-  ],
-  "post_message_format": "array",
-  "use_sso_address": false,
-  "debug": false,
-  "log_level": "",
-  "web_ui": {
-    "enabled": true,
-    "host": "0.0.0.0",
-    "web_ui_port": 9999,
-    "web_input": false
+  ]
+  post_message_format: array
+  use_sso_address: false
+  debug: false
+  log_level: ""
+  web_ui: {
+    enabled: false
+    host: 127.0.0.1
+    web_ui_port: 9999
+    web_input: false
   }
 }
 ```
