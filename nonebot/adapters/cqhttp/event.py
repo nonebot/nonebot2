@@ -237,6 +237,10 @@ class CQHTTPEvent(Event):
     def get_plaintext(self) -> str:
         raise ValueError("Event has no message!")
 
+    @overrides(Event)
+    def get_session_id(self) -> str:
+        raise ValueError("Event has no message!")
+
 
 # Models
 class Sender(BaseModel):
@@ -321,6 +325,10 @@ class MessageEvent(CQHTTPEvent):
     @overrides(CQHTTPEvent)
     def get_plaintext(self) -> str:
         return self.message.extract_plain_text()
+
+    @overrides(CQHTTPEvent)
+    def get_session_id(self) -> str:
+        return str(self.user_id)
 
 
 class PrivateMessageEvent(MessageEvent):

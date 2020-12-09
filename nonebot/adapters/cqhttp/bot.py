@@ -302,7 +302,7 @@ class Bot(BaseBot):
             detail_type = f".{detail_type}" if detail_type else ""
             sub_type = message.get("sub_type")
             sub_type = f".{sub_type}" if sub_type else ""
-            models = get_event_model(f".{post_type}{detail_type}{sub_type}")
+            models = get_event_model(post_type + detail_type + sub_type)
             for model in models:
                 try:
                     event = model.parse_obj(message)
