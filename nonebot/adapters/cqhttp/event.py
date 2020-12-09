@@ -210,14 +210,13 @@ from .message import Message
 
 
 class CQHTTPEvent(Event):
-    type: Literal["message", "notice", "request", "meta_event"]
     time: int
     self_id: int
-    post_type: str
+    post_type: Literal["message", "notice", "request", "meta_event"]
 
     @overrides(Event)
     def get_type(self) -> Literal["message", "notice", "request", "meta_event"]:
-        return self.type
+        return self.post_type
 
     @overrides(Event)
     def get_event_name(self) -> str:
@@ -239,6 +238,18 @@ class Sender(BaseModel):
     level: Optional[str] = None
     role: Optional[str] = None
     title: Optional[str] = None
+
+    class Config:
+        extra = "allow"
+
+
+class Reply(BaseModel):
+    time: int
+    message_type: str
+    message_id: int
+    real_id: int
+    sender: Sender
+    message: Message
 
     class Config:
         extra = "allow"
@@ -274,7 +285,16 @@ class Status(BaseModel):
 # Message Events
 class MessageEvent(CQHTTPEvent):
     post_type: Literal["message"]
+    sub_type: str
+    user_id: int
     message_type: str
+    message_id: int
+    message: Message
+    raw_message: str
+    font: int
+    sender: Sender
+    to_me: bool = False
+    reply: Optional[Reply] = None
 
     @overrides(CQHTTPEvent)
     def get_event_name(self) -> str:
@@ -285,13 +305,6 @@ class MessageEvent(CQHTTPEvent):
 
 class PrivateMessageEvent(MessageEvent):
     message_type: Literal["private"]
-    sub_type: str
-    user_id: int
-    message_id: int
-    message: Message
-    raw_message: str
-    font: int
-    sender: Sender
 
     @overrides(CQHTTPEvent)
     def get_event_description(self) -> str:
@@ -304,14 +317,7 @@ class PrivateMessageEvent(MessageEvent):
 
 class GroupMessageEvent(MessageEvent):
     message_type: Literal["group"]
-    sub_type: str
-    user_id: int
     group_id: int
-    message_id: int
-    message: Message
-    raw_message: str
-    font: int
-    sender: Sender
     anonymous: Anonymous
 
     @overrides(CQHTTPEvent)

@@ -3,7 +3,7 @@ from typing import Any, Dict, List, Union, Optional
 
 from nonebot.config import Config
 from nonebot.adapters import Bot as BaseBot
-from nonebot.drivers import BaseDriver as Driver, BaseWebSocket as WebSocket
+from nonebot.drivers import Driver, WebSocket
 
 from .event import Event
 from .message import Message, MessageSegment

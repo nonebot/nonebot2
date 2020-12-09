@@ -14,13 +14,13 @@ from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
 from nonebot.exception import RequestDenied
 
-from .event import Event
+from .utils import log
+from .event import Reply, CQHTTPEvent, MessageEvent
 from .message import Message, MessageSegment
 from .exception import NetworkError, ApiNotAvailable, ActionFailed
-from .utils import log
 
 if TYPE_CHECKING:
-    from nonebot.drivers import BaseDriver as Driver, BaseWebSocket as WebSocket
+    from nonebot.drivers import Driver, WebSocket
 
 
 def get_auth_bearer(access_token: Optional[str] = None) -> Optional[str]:
@@ -32,7 +32,7 @@ def get_auth_bearer(access_token: Optional[str] = None) -> Optional[str]:
     return param
 
 
-async def _check_reply(bot: "Bot", event: "Event"):
+async def _check_reply(bot: "Bot", event: "CQHTTPEvent"):
     """
     :说明:
 
@@ -41,9 +41,9 @@ async def _check_reply(bot: "Bot", event: "Event"):
     :参数:
 
       * ``bot: Bot``: Bot 对象
-      * ``event: Event``: Event 对象
+      * ``event: CQHTTPEvent``: CQHTTPEvent 对象
     """
-    if event.type != "message":
+    if not isinstance(event, MessageEvent):
         return
 
     try:
@@ -52,9 +52,10 @@ async def _check_reply(bot: "Bot", event: "Event"):
     except ValueError:
         return
     msg_seg = event.message[index]
-    event.reply = await bot.get_msg(message_id=msg_seg.data["id"])
+    event.reply = Reply.parse_obj(await
+                                  bot.get_msg(message_id=msg_seg.data["id"]))
     # ensure string comparation
-    if str(event.reply["sender"]["user_id"]) == str(event.self_id):
+    if str(event.reply.sender.user_id) == str(event.self_id):
         event.to_me = True
     del event.message[index]
     if len(event.message) > index and event.message[index].type == "at":
@@ -68,7 +69,7 @@ async def _check_reply(bot: "Bot", event: "Event"):
         event.message.append(MessageSegment.text(""))
 
 
-def _check_at_me(bot: "Bot", event: "Event"):
+def _check_at_me(bot: "Bot", event: "CQHTTPEvent"):
     """
     :说明:
 
@@ -77,12 +78,12 @@ def _check_at_me(bot: "Bot", event: "Event"):
     :参数:
 
       * ``bot: Bot``: Bot 对象
-      * ``event: Event``: Event 对象
+      * ``event: CQHTTPEvent``: CQHTTPEvent 对象
     """
-    if event.type != "message":
+    if not isinstance(event, MessageEvent):
         return
 
-    if event.detail_type == "private":
+    if event.message_type == "private":
         event.to_me = True
     else:
         at_me_seg = MessageSegment.at(event.self_id)
@@ -122,7 +123,7 @@ def _check_at_me(bot: "Bot", event: "Event"):
             event.message.append(MessageSegment.text(""))
 
 
-def _check_nickname(bot: "Bot", event: "Event"):
+def _check_nickname(bot: "Bot", event: "CQHTTPEvent"):
     """
     :说明:
 
@@ -131,9 +132,9 @@ def _check_nickname(bot: "Bot", event: "Event"):
     :参数:
 
       * ``bot: Bot``: Bot 对象
-      * ``event: Event``: Event 对象
+      * ``event: CQHTTPEvent``: CQHTTPEvent 对象
     """
-    if event.type != "message":
+    if not isinstance(event, MessageEvent):
         return
 
     first_msg_seg = event.message[0]
@@ -286,7 +287,7 @@ class Bot(BaseBot):
         """
         :说明:
 
-          调用 `_check_reply <#async-check-reply-bot-event>`_, `_check_at_me <#check-at-me-bot-event>`_, `_check_nickname <#check-nickname-bot-event>`_ 处理事件并转换为 `Event <#class-event>`_
+          调用 `_check_reply <#async-check-reply-bot-event>`_, `_check_at_me <#check-at-me-bot-event>`_, `_check_nickname <#check-nickname-bot-event>`_ 处理事件并转换为 `CQHTTPEvent <#class-event>`_
         """
         if not message:
             return
@@ -296,7 +297,7 @@ class Bot(BaseBot):
             return
 
         try:
-            event = Event(message)
+            event = CQHTTPEvent.parse_obj(message)
 
             # Check whether user is calling me
             await _check_reply(self, event)
@@ -379,7 +380,7 @@ class Bot(BaseBot):
 
     @overrides(BaseBot)
     async def send(self,
-                   event: Event,
+                   event: CQHTTPEvent,
                    message: Union[str, Message, MessageSegment],
                    at_sender: bool = False,
                    **kwargs) -> Any:
@@ -390,7 +391,7 @@ class Bot(BaseBot):
 
         :参数:
 
-          * ``event: Event``: Event 对象
+          * ``event: CQHTTPEvent``: CQHTTPEvent 对象
           * ``message: Union[str, Message, MessageSegment]``: 要发送的消息
           * ``at_sender: bool``: 是否 @ 事件主体
           * ``**kwargs``: 覆盖默认参数

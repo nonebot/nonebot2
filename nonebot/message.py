@@ -13,7 +13,7 @@ from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.utils import escape_tag
 from nonebot.matcher import matchers, Matcher
-from nonebot.exception import IgnoredException, StopPropagation
+from nonebot.exception import IgnoredException, StopPropagation, NoLogException
 from nonebot.typing import State, EventPreProcessor, RunPreProcessor, EventPostProcessor, RunPostProcessor
 
 if TYPE_CHECKING:
@@ -208,24 +208,10 @@ async def handle_event(bot: "Bot", event: "Event"):
         asyncio.create_task(handle_event(bot, event))
     """
     show_log = True
-    log_msg = f"<m>{bot.type.upper()} </m>| {event.self_id} [{event.name}]: "
-    if event.type == "message":
-        log_msg += f"Message {event.id} from "
-        log_msg += str(event.user_id)
-        if event.detail_type == "group":
-            log_msg += f"@[群:{event.group_id}]:"
-
-        log_msg += ' "' + "".join(
-            map(
-                lambda x: escape_tag(str(x))
-                if x.type == "text" else f"<le>{escape_tag(str(x))}</le>",
-                event.message)) + '"'  # type: ignore
-    elif event.type == "notice":
-        log_msg += f"Notice {event.raw_event}"
-    elif event.type == "request":
-        log_msg += f"Request {event.raw_event}"
-    elif event.type == "meta_event":
-        # log_msg += f"MetaEvent {event.detail_type}"
+    log_msg = f"<m>{bot.type.upper()} {bot.self_id}</m> | "
+    try:
+        log_msg += event.get_log_string()
+    except NoLogException:
         show_log = False
     if show_log:
         logger.opt(colors=True).info(log_msg)
@@ -237,8 +223,8 @@ async def handle_event(bot: "Bot", event: "Event"):
             logger.debug("Running PreProcessors...")
             await asyncio.gather(*coros)
         except IgnoredException:
-            logger.opt(
-                colors=True).info(f"Event {event.name} is <b>ignored</b>")
+            logger.opt(colors=True).info(
+                f"Event {event.get_event_name()} is <b>ignored</b>")
             return
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
