@@ -54,5 +54,13 @@
     "desc": "APScheduler 定时任务插件",
     "name": "定时任务",
     "repo": "nonebot/plugin-apscheduler"
+  },
+  {
+    "id": "nonebot_plugin_picsearcher",
+    "link": "nonebot-plugin-picsearcher",
+    "author": "synodriver",
+    "desc": "从基本上所有你想的出名字的搜图平台找图片",
+    "name": "图片搜索",
+    "repo": "synodriver/nonebot_plugin_picsearcher"
   }
 ]
