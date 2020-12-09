@@ -1,5 +1,7 @@
 from typing import Optional
+from typing_extension import Literal
 
+from pydantic import BaseModel
 from nonebot.typing import overrides
 from nonebot.adapters import Event as BaseEvent
 
@@ -204,3 +206,157 @@ class Event(BaseEvent):
     @overrides(BaseEvent)
     def sender(self, value) -> None:
         self._raw_event["sender"] = value
+
+
+class CQHTTPEvent(BaseModel):
+    type: str
+    time: int
+    self_id: int
+    post_type: str
+
+    class Config:
+        extra = "allow"
+
+
+class Sender(BaseModel):
+    user_id: Optional[int] = None
+    nickname: Optional[str] = None
+    sex: Optional[str] = None
+    age: Optional[int] = None
+    card: Optional[str] = None
+    area: Optional[str] = None
+    level: Optional[str] = None
+    role: Optional[str] = None
+    title: Optional[str] = None
+
+    class Config:
+        extra = "allow"
+
+
+class Anonymous(BaseModel):
+    id: int
+    name: str
+    flag: str
+
+    class Config:
+        extra = "allow"
+
+
+class File(BaseModel):
+    id: str
+    name: str
+    size: int
+    busid: int
+
+    class Config:
+        extra = "allow"
+
+
+class MessageEvent(CQHTTPEvent):
+    post_type: Literal["message"]
+    message_type: str
+
+
+class PrivateMessageEvent(MessageEvent):
+    message_type: Literal["private"]
+    sub_type: str
+    user_id: int
+    message_id: int
+    message: Message
+    raw_message: str
+    font: int
+    sender: Sender
+
+
+class GroupMessageEvent(MessageEvent):
+    message_type: Literal["group"]
+    sub_type: str
+    user_id: int
+    message_id: int
+    message: Message
+    raw_message: str
+    font: int
+    sender: Sender
+    anonymous: Anonymous
+
+
+class NoticeEvent(CQHTTPEvent):
+    post_type: Literal["notice"]
+    notice_type: str
+
+
+class GroupUploadEvent(NoticeEvent):
+    notice_type: Literal["group_upload"]
+    user_id: int
+    group_id: int
+    file: File
+
+
+class GroupAdminEvent(NoticeEvent):
+    notice_type: Literal["group_admin"]
+    sub_type: str
+    user_id: int
+    group_id: int
+
+
+class GroupDecreaseEvent(NoticeEvent):
+    notice_type: Literal["group_decrease"]
+    sub_type: str
+    user_id: int
+    group_id: int
+    operator_id: int
+
+
+class GroupIncreaseEvent(NoticeEvent):
+    notice_type: Literal["group_increase"]
+    sub_type: str
+    user_id: int
+    group_id: int
+    operator_id: int
+
+
+class GroupBanEvent(NoticeEvent):
+    notice_type: Literal["group_ban"]
+    sub_type: str
+    user_id: int
+    group_id: int
+    operator_id: int
+    duration: int
+
+
+class FriendAddEvent(NoticeEvent):
+    notice_type: Literal["friend_add"]
+    user_id: int
+
+
+class GroupRecallEvent(NoticeEvent):
+    notice_type: Literal["group_recall"]
+    user_id: int
+    group_id: int
+    operator_id: int
+    message_id: int
+
+
+class FriendRecallEvent(NoticeEvent):
+    notice_type: Literal["friend_recall"]
+    user_id: int
+    message_id: int
+
+
+class NotifyEvent(NoticeEvent):
+    notice_type: Literal["notify"]
+    sub_type: str
+    user_id: int
+    group_id: int
+
+
+class PokeNotifyEvent(NotifyEvent):
+    target_id: int
+
+
+class LuckyKingNotifyEvent(NotifyEvent):
+    target_id: int
+
+
+class HonorNotifyEvent(NotifyEvent):
+    honor_type: str
