@@ -9,6 +9,7 @@ import abc
 from functools import reduce, partial
 from dataclasses import dataclass, field
 from typing import Any, Dict, Union, TypeVar, Optional, Callable, Iterable, Awaitable, Generic, TYPE_CHECKING
+from typing_extensions import Literal
 
 from pydantic import BaseModel
 
@@ -137,169 +138,193 @@ class Bot(abc.ABC):
         raise NotImplementedError
 
 
-T = TypeVar("T", bound=BaseModel)
+class Event(abc.ABC, BaseModel):
 
+    class Config:
+        extra = "allow"
 
-class Event(abc.ABC, Generic[T]):
-    """
-    Event 基类。提供上报信息的关键信息，其余信息可从原始上报消息获取。
-    """
-
-    def __init__(self, raw_event: Union[dict, T]):
-        """
-        :参数:
-
-          * ``raw_event: Union[dict, T]``: 原始上报消息
-        """
-        self._raw_event = raw_event
-
-    def __repr__(self) -> str:
-        return f"<Event {self.self_id}: {self.name} {self.time}>"
-
-    @property
-    def raw_event(self) -> Union[dict, T]:
-        """原始上报消息"""
-        return self._raw_event
-
-    @property
     @abc.abstractmethod
-    def id(self) -> int:
-        """事件 ID"""
+    def get_type(self) -> Literal["message", "notice", "request", "meta_event"]:
         raise NotImplementedError
 
-    @property
     @abc.abstractmethod
-    def name(self) -> str:
-        """事件名称"""
+    def get_event_name(self) -> str:
         raise NotImplementedError
 
-    @property
     @abc.abstractmethod
-    def self_id(self) -> str:
-        """机器人 ID"""
+    def get_event_description(self) -> str:
         raise NotImplementedError
 
-    @property
+    def get_log_string(self) -> str:
+        return f"[{self.get_event_name()}]: {self.get_event_description()}"
+
     @abc.abstractmethod
-    def time(self) -> int:
-        """事件发生时间"""
+    def get_session_id(self) -> str:
         raise NotImplementedError
 
-    @property
-    @abc.abstractmethod
-    def type(self) -> str:
-        """事件主类型"""
-        raise NotImplementedError
 
-    @type.setter
-    @abc.abstractmethod
-    def type(self, value) -> None:
-        raise NotImplementedError
+# T = TypeVar("T", bound=BaseModel)
 
-    @property
-    @abc.abstractmethod
-    def detail_type(self) -> str:
-        """事件详细类型"""
-        raise NotImplementedError
+# class Event(abc.ABC, Generic[T]):
+#     """
+#     Event 基类。提供上报信息的关键信息，其余信息可从原始上报消息获取。
+#     """
 
-    @detail_type.setter
-    @abc.abstractmethod
-    def detail_type(self, value) -> None:
-        raise NotImplementedError
+#     def __init__(self, raw_event: Union[dict, T]):
+#         """
+#         :参数:
 
-    @property
-    @abc.abstractmethod
-    def sub_type(self) -> Optional[str]:
-        """事件子类型"""
-        raise NotImplementedError
+#           * ``raw_event: Union[dict, T]``: 原始上报消息
+#         """
+#         self._raw_event = raw_event
 
-    @sub_type.setter
-    @abc.abstractmethod
-    def sub_type(self, value) -> None:
-        raise NotImplementedError
+#     def __repr__(self) -> str:
+#         return f"<Event {self.self_id}: {self.name} {self.time}>"
 
-    @property
-    @abc.abstractmethod
-    def user_id(self) -> Optional[int]:
-        """触发事件的主体 ID"""
-        raise NotImplementedError
+#     @property
+#     def raw_event(self) -> Union[dict, T]:
+#         """原始上报消息"""
+#         return self._raw_event
 
-    @user_id.setter
-    @abc.abstractmethod
-    def user_id(self, value) -> None:
-        raise NotImplementedError
+#     @property
+#     @abc.abstractmethod
+#     def id(self) -> int:
+#         """事件 ID"""
+#         raise NotImplementedError
 
-    @property
-    @abc.abstractmethod
-    def group_id(self) -> Optional[int]:
-        """触发事件的主体群 ID"""
-        raise NotImplementedError
+#     @property
+#     @abc.abstractmethod
+#     def name(self) -> str:
+#         """事件名称"""
+#         raise NotImplementedError
 
-    @group_id.setter
-    @abc.abstractmethod
-    def group_id(self, value) -> None:
-        raise NotImplementedError
+#     @property
+#     @abc.abstractmethod
+#     def self_id(self) -> str:
+#         """机器人 ID"""
+#         raise NotImplementedError
 
-    @property
-    @abc.abstractmethod
-    def to_me(self) -> Optional[bool]:
-        """事件是否为发送给机器人的消息"""
-        raise NotImplementedError
+#     @property
+#     @abc.abstractmethod
+#     def time(self) -> int:
+#         """事件发生时间"""
+#         raise NotImplementedError
 
-    @to_me.setter
-    @abc.abstractmethod
-    def to_me(self, value) -> None:
-        raise NotImplementedError
+#     @property
+#     @abc.abstractmethod
+#     def type(self) -> str:
+#         """事件主类型"""
+#         raise NotImplementedError
 
-    @property
-    @abc.abstractmethod
-    def message(self) -> Optional["Message"]:
-        """消息内容"""
-        raise NotImplementedError
+#     @type.setter
+#     @abc.abstractmethod
+#     def type(self, value) -> None:
+#         raise NotImplementedError
 
-    @message.setter
-    @abc.abstractmethod
-    def message(self, value) -> None:
-        raise NotImplementedError
+#     @property
+#     @abc.abstractmethod
+#     def detail_type(self) -> str:
+#         """事件详细类型"""
+#         raise NotImplementedError
 
-    @property
-    @abc.abstractmethod
-    def reply(self) -> Optional[dict]:
-        """回复的消息"""
-        raise NotImplementedError
+#     @detail_type.setter
+#     @abc.abstractmethod
+#     def detail_type(self, value) -> None:
+#         raise NotImplementedError
 
-    @reply.setter
-    @abc.abstractmethod
-    def reply(self, value) -> None:
-        raise NotImplementedError
+#     @property
+#     @abc.abstractmethod
+#     def sub_type(self) -> Optional[str]:
+#         """事件子类型"""
+#         raise NotImplementedError
 
-    @property
-    @abc.abstractmethod
-    def raw_message(self) -> Optional[str]:
-        """原始消息"""
-        raise NotImplementedError
+#     @sub_type.setter
+#     @abc.abstractmethod
+#     def sub_type(self, value) -> None:
+#         raise NotImplementedError
 
-    @raw_message.setter
-    @abc.abstractmethod
-    def raw_message(self, value) -> None:
-        raise NotImplementedError
+#     @property
+#     @abc.abstractmethod
+#     def user_id(self) -> Optional[int]:
+#         """触发事件的主体 ID"""
+#         raise NotImplementedError
 
-    @property
-    @abc.abstractmethod
-    def plain_text(self) -> Optional[str]:
-        """纯文本消息"""
-        raise NotImplementedError
+#     @user_id.setter
+#     @abc.abstractmethod
+#     def user_id(self, value) -> None:
+#         raise NotImplementedError
 
-    @property
-    @abc.abstractmethod
-    def sender(self) -> Optional[dict]:
-        """消息发送者信息"""
-        raise NotImplementedError
+#     @property
+#     @abc.abstractmethod
+#     def group_id(self) -> Optional[int]:
+#         """触发事件的主体群 ID"""
+#         raise NotImplementedError
 
-    @sender.setter
-    @abc.abstractmethod
-    def sender(self, value) -> None:
-        raise NotImplementedError
+#     @group_id.setter
+#     @abc.abstractmethod
+#     def group_id(self, value) -> None:
+#         raise NotImplementedError
+
+#     @property
+#     @abc.abstractmethod
+#     def to_me(self) -> Optional[bool]:
+#         """事件是否为发送给机器人的消息"""
+#         raise NotImplementedError
+
+#     @to_me.setter
+#     @abc.abstractmethod
+#     def to_me(self, value) -> None:
+#         raise NotImplementedError
+
+#     @property
+#     @abc.abstractmethod
+#     def message(self) -> Optional["Message"]:
+#         """消息内容"""
+#         raise NotImplementedError
+
+#     @message.setter
+#     @abc.abstractmethod
+#     def message(self, value) -> None:
+#         raise NotImplementedError
+
+#     @property
+#     @abc.abstractmethod
+#     def reply(self) -> Optional[dict]:
+#         """回复的消息"""
+#         raise NotImplementedError
+
+#     @reply.setter
+#     @abc.abstractmethod
+#     def reply(self, value) -> None:
+#         raise NotImplementedError
+
+#     @property
+#     @abc.abstractmethod
+#     def raw_message(self) -> Optional[str]:
+#         """原始消息"""
+#         raise NotImplementedError
+
+#     @raw_message.setter
+#     @abc.abstractmethod
+#     def raw_message(self, value) -> None:
+#         raise NotImplementedError
+
+#     @property
+#     @abc.abstractmethod
+#     def plain_text(self) -> Optional[str]:
+#         """纯文本消息"""
+#         raise NotImplementedError
+
+#     @property
+#     @abc.abstractmethod
+#     def sender(self) -> Optional[dict]:
+#         """消息发送者信息"""
+#         raise NotImplementedError
+
+#     @sender.setter
+#     @abc.abstractmethod
+#     def sender(self, value) -> None:
+#         raise NotImplementedError
 
 
 @dataclass
