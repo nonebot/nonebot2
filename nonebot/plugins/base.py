@@ -11,14 +11,14 @@ say = on_command("say", to_me(), permission=SUPERUSER)
 
 @say.handle()
 async def say_unescape(bot: Bot, event: Event, state: State):
-    Message = event.message.__class__
+    Message = event.get_message().__class__
 
     def _unescape(message: Message, segment: MessageSegment):
-        if segment.type == "text":
+        if segment.is_text():
             return message.append(str(segment))
         return message.append(segment)
 
-    message = reduce(_unescape, event.message, Message())  # type: ignore
+    message = reduce(_unescape, event.get_message(), Message())  # type: ignore
     await bot.send(message=message, event=event)
 
 
@@ -27,9 +27,4 @@ echo = on_command("echo", to_me())
 
 @echo.handle()
 async def echo_escape(bot: Bot, event: Event, state: State):
-    # Message = event.message.__class__
-    # MessageSegment = event.message[0].__class__
-
-    # message = Message().append(  # type: ignore
-    #     MessageSegment.text(str(event.message)))
-    await bot.send(message=event.message, event=event)
+    await bot.send(message=event.get_message(), event=event)

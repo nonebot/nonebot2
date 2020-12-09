@@ -134,10 +134,10 @@ class TrieRule:
         suffix = None
         message = event.get_message()
         message_seg = message[0]
-        if message_seg.type == "text":
+        if message_seg.is_text():
             prefix = cls.prefix.longest_prefix(str(message_seg).lstrip())
         message_seg_r = message[-1]
-        if message_seg_r.type == "text":
+        if message_seg_r.is_text():
             suffix = cls.suffix.longest_prefix(
                 str(message_seg_r).rstrip()[::-1])
 
@@ -309,20 +309,18 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     return Rule(_regex)
 
 
-# def to_me() -> Rule:
-#     """
-#     :说明:
+def to_me() -> Rule:
+    """
+    :说明:
 
-#       通过 ``event.to_me`` 判断消息是否是发送给机器人
+      通过 ``event.to_me`` 判断事件是否与机器人有关
 
-#     :参数:
+    :参数:
 
-#       * 无
-#     """
+      * 无
+    """
 
-#     async def _to_me(bot: "Bot", event: "Event", state: State) -> bool:
-#         if event.get_type() != "message":
-#             return False
-#         return bool(event.to_me)
+    async def _to_me(bot: "Bot", event: "Event", state: State) -> bool:
+        return event.is_tome()
 
-#     return Rule(_to_me)
+    return Rule(_to_me)

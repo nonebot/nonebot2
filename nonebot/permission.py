@@ -201,14 +201,16 @@ def USER(*user: str, perm: Permission = Permission()):
 # - **说明**: 匹配任意群主群聊消息类型事件
 # """
 
-# async def _superuser(bot: "Bot", event: "Event") -> bool:
-#     return event.get_type(
-#     ) == "message" and event.user_id in bot.config.superusers
 
-# SUPERUSER = Permission(_superuser)
-# """
-# - **说明**: 匹配任意超级用户消息类型事件
-# """
+async def _superuser(bot: "Bot", event: "Event") -> bool:
+    return event.get_type() == "message" and event.get_user_id(
+    ) in bot.config.superusers
+
+
+SUPERUSER = Permission(_superuser)
+"""
+- **说明**: 匹配任意超级用户消息类型事件
+"""
 # EVERYBODY = MESSAGE
 # """
 # - **说明**: 匹配任意消息类型事件

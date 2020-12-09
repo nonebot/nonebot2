@@ -159,6 +159,10 @@ class Event(abc.ABC, BaseModel):
         return f"[{self.get_event_name()}]: {self.get_event_description()}"
 
     @abc.abstractmethod
+    def get_user_id(self) -> str:
+        raise NotImplementedError
+
+    @abc.abstractmethod
     def get_session_id(self) -> str:
         raise NotImplementedError
 
@@ -170,169 +174,9 @@ class Event(abc.ABC, BaseModel):
     def get_plaintext(self) -> str:
         raise NotImplementedError
 
-
-# T = TypeVar("T", bound=BaseModel)
-
-# class Event(abc.ABC, Generic[T]):
-#     """
-#     Event 基类。提供上报信息的关键信息，其余信息可从原始上报消息获取。
-#     """
-
-#     def __init__(self, raw_event: Union[dict, T]):
-#         """
-#         :参数:
-
-#           * ``raw_event: Union[dict, T]``: 原始上报消息
-#         """
-#         self._raw_event = raw_event
-
-#     def __repr__(self) -> str:
-#         return f"<Event {self.self_id}: {self.name} {self.time}>"
-
-#     @property
-#     def raw_event(self) -> Union[dict, T]:
-#         """原始上报消息"""
-#         return self._raw_event
-
-#     @property
-#     @abc.abstractmethod
-#     def id(self) -> int:
-#         """事件 ID"""
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def name(self) -> str:
-#         """事件名称"""
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def self_id(self) -> str:
-#         """机器人 ID"""
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def time(self) -> int:
-#         """事件发生时间"""
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def type(self) -> str:
-#         """事件主类型"""
-#         raise NotImplementedError
-
-#     @type.setter
-#     @abc.abstractmethod
-#     def type(self, value) -> None:
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def detail_type(self) -> str:
-#         """事件详细类型"""
-#         raise NotImplementedError
-
-#     @detail_type.setter
-#     @abc.abstractmethod
-#     def detail_type(self, value) -> None:
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def sub_type(self) -> Optional[str]:
-#         """事件子类型"""
-#         raise NotImplementedError
-
-#     @sub_type.setter
-#     @abc.abstractmethod
-#     def sub_type(self, value) -> None:
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def user_id(self) -> Optional[int]:
-#         """触发事件的主体 ID"""
-#         raise NotImplementedError
-
-#     @user_id.setter
-#     @abc.abstractmethod
-#     def user_id(self, value) -> None:
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def group_id(self) -> Optional[int]:
-#         """触发事件的主体群 ID"""
-#         raise NotImplementedError
-
-#     @group_id.setter
-#     @abc.abstractmethod
-#     def group_id(self, value) -> None:
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def to_me(self) -> Optional[bool]:
-#         """事件是否为发送给机器人的消息"""
-#         raise NotImplementedError
-
-#     @to_me.setter
-#     @abc.abstractmethod
-#     def to_me(self, value) -> None:
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def message(self) -> Optional["Message"]:
-#         """消息内容"""
-#         raise NotImplementedError
-
-#     @message.setter
-#     @abc.abstractmethod
-#     def message(self, value) -> None:
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def reply(self) -> Optional[dict]:
-#         """回复的消息"""
-#         raise NotImplementedError
-
-#     @reply.setter
-#     @abc.abstractmethod
-#     def reply(self, value) -> None:
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def raw_message(self) -> Optional[str]:
-#         """原始消息"""
-#         raise NotImplementedError
-
-#     @raw_message.setter
-#     @abc.abstractmethod
-#     def raw_message(self, value) -> None:
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def plain_text(self) -> Optional[str]:
-#         """纯文本消息"""
-#         raise NotImplementedError
-
-#     @property
-#     @abc.abstractmethod
-#     def sender(self) -> Optional[dict]:
-#         """消息发送者信息"""
-#         raise NotImplementedError
-
-#     @sender.setter
-#     @abc.abstractmethod
-#     def sender(self, value) -> None:
-#         raise NotImplementedError
+    @abc.abstractmethod
+    def is_tome(self) -> bool:
+        raise NotImplementedError
 
 
 @dataclass
@@ -350,12 +194,12 @@ class MessageSegment(abc.ABC):
     """
 
     @abc.abstractmethod
-    def __str__(self):
+    def __str__(self) -> str:
         """该消息段所代表的 str，在命令匹配部分使用"""
         raise NotImplementedError
 
     @abc.abstractmethod
-    def __add__(self, other):
+    def __add__(self, other) -> "Message":
         """你需要在这里实现不同消息段的合并：
         比如：
             if isinstance(other, str):
@@ -375,10 +219,9 @@ class MessageSegment(abc.ABC):
     def get(self, key, default=None):
         return getattr(self, key, default)
 
-    @classmethod
     @abc.abstractmethod
-    def text(cls, text: str) -> "MessageSegment":
-        return cls("text", {"text": text})
+    def is_text(self) -> bool:
+        raise NotImplementedError
 
 
 class Message(list, abc.ABC):
@@ -404,6 +247,24 @@ class Message(list, abc.ABC):
 
     def __str__(self):
         return ''.join((str(seg) for seg in self))
+
+    @classmethod
+    def __get_validator__(cls):
+        yield cls._validate
+
+    @classmethod
+    def __modify_schema__(cls, field_schema):
+        field_schema.update(
+            examples=["foo", {
+                "type": "text",
+                "data": {
+                    "text": "bar"
+                }
+            }])
+
+    @classmethod
+    def _validate(cls, value):
+        return cls(value)
 
     @staticmethod
     @abc.abstractmethod
@@ -467,8 +328,8 @@ class Message(list, abc.ABC):
         """
         index = 0
         while index < len(self):
-            if index > 0 and self[
-                    index - 1].type == "text" and self[index].type == "text":
+            if index > 0 and self[index -
+                                  1].is_text() and self[index].is_text():
                 self[index - 1] += self[index]
                 del self[index]
             else:
@@ -482,7 +343,7 @@ class Message(list, abc.ABC):
         """
 
         def _concat(x: str, y: MessageSegment) -> str:
-            return f"{x} {y}" if y.type == "text" else x
+            return f"{x} {y}" if y.is_text() else x
 
         plain_text = reduce(_concat, self, "")
         return plain_text[1:] if plain_text else plain_text

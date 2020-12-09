@@ -19,7 +19,7 @@ class MessageSegment(BaseMessageSegment):
         super().__init__(type=type, data=data)
 
     @overrides(BaseMessageSegment)
-    def __str__(self):
+    def __str__(self) -> str:
         type_ = self.type
         data = self.data.copy()
 
@@ -36,6 +36,10 @@ class MessageSegment(BaseMessageSegment):
     @overrides(BaseMessageSegment)
     def __add__(self, other) -> "Message":
         return Message(self) + other
+
+    @overrides(BaseMessageSegment)
+    def is_text(self) -> bool:
+        return self.type == "text"
 
     @staticmethod
     def anonymous(ignore_failure: Optional[bool] = None) -> "MessageSegment":

@@ -238,8 +238,16 @@ class CQHTTPEvent(Event):
         raise ValueError("Event has no message!")
 
     @overrides(Event)
+    def get_user_id(self) -> str:
+        raise ValueError("Event has no message!")
+
+    @overrides(Event)
     def get_session_id(self) -> str:
         raise ValueError("Event has no message!")
+
+    @overrides(Event)
+    def is_tome(self) -> bool:
+        return False
 
 
 # Models
@@ -327,8 +335,16 @@ class MessageEvent(CQHTTPEvent):
         return self.message.extract_plain_text()
 
     @overrides(CQHTTPEvent)
+    def get_user_id(self) -> str:
+        return str(self.user_id)
+
+    @overrides(CQHTTPEvent)
     def get_session_id(self) -> str:
         return str(self.user_id)
+
+    @overrides(CQHTTPEvent)
+    def is_tome(self) -> bool:
+        return self.to_me
 
 
 class PrivateMessageEvent(MessageEvent):
@@ -340,7 +356,7 @@ class PrivateMessageEvent(MessageEvent):
         return (f'Message {self.message_id} from {self.user_id} "' + "".join(
             map(
                 lambda x: escape_tag(str(x))
-                if x.type == "text" else f"<le>{escape_tag(str(x))}</le>",
+                if x.is_text() else f"<le>{escape_tag(str(x))}</le>",
                 self.message)) + '"')
 
 
@@ -357,7 +373,7 @@ class GroupMessageEvent(MessageEvent):
             + "".join(
                 map(
                     lambda x: escape_tag(str(x))
-                    if x.type == "text" else f"<le>{escape_tag(str(x))}</le>",
+                    if x.is_text() else f"<le>{escape_tag(str(x))}</le>",
                     self.message)) + '"')
 
 
@@ -389,6 +405,10 @@ class GroupAdminNoticeEvent(NoticeEvent):
     user_id: int
     group_id: int
 
+    @overrides(CQHTTPEvent)
+    def is_tome(self) -> bool:
+        return self.user_id == self.self_id
+
 
 class GroupDecreaseNoticeEvent(NoticeEvent):
     __event__ = "notice.group_decrease"
@@ -397,6 +417,10 @@ class GroupDecreaseNoticeEvent(NoticeEvent):
     user_id: int
     group_id: int
     operator_id: int
+
+    @overrides(CQHTTPEvent)
+    def is_tome(self) -> bool:
+        return self.user_id == self.self_id
 
 
 class GroupIncreaseNoticeEvent(NoticeEvent):
@@ -407,6 +431,10 @@ class GroupIncreaseNoticeEvent(NoticeEvent):
     group_id: int
     operator_id: int
 
+    @overrides(CQHTTPEvent)
+    def is_tome(self) -> bool:
+        return self.user_id == self.self_id
+
 
 class GroupBanNoticeEvent(NoticeEvent):
     __event__ = "notice.group_ban"
@@ -416,6 +444,10 @@ class GroupBanNoticeEvent(NoticeEvent):
     group_id: int
     operator_id: int
     duration: int
+
+    @overrides(CQHTTPEvent)
+    def is_tome(self) -> bool:
+        return self.user_id == self.self_id
 
 
 class FriendAddNoticeEvent(NoticeEvent):
@@ -431,6 +463,10 @@ class GroupRecallNoticeEvent(NoticeEvent):
     group_id: int
     operator_id: int
     message_id: int
+
+    @overrides(CQHTTPEvent)
+    def is_tome(self) -> bool:
+        return self.user_id == self.self_id
 
 
 class FriendRecallNoticeEvent(NoticeEvent):
@@ -453,17 +489,29 @@ class PokeNotifyEvent(NotifyEvent):
     sub_type: Literal["poke"]
     target_id: int
 
+    @overrides(CQHTTPEvent)
+    def is_tome(self) -> bool:
+        return self.target_id == self.self_id
+
 
 class LuckyKingNotifyEvent(NotifyEvent):
     __event__ = "notice.notify.lucky_king"
     sub_type: Literal["lucky_king"]
     target_id: int
 
+    @overrides(CQHTTPEvent)
+    def is_tome(self) -> bool:
+        return self.target_id == self.self_id
+
 
 class HonorNotifyEvent(NotifyEvent):
     __event__ = "notice.notify.honor"
     sub_type: Literal["honor"]
     honor_type: str
+
+    @overrides(CQHTTPEvent)
+    def is_tome(self) -> bool:
+        return self.user_id == self.self_id
 
 
 # Request Events
