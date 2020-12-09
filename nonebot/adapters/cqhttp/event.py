@@ -1,5 +1,5 @@
 from typing import Optional
-from typing_extension import Literal
+from typing_extensions import Literal
 
 from pydantic import BaseModel
 from nonebot.typing import overrides
@@ -218,6 +218,7 @@ class CQHTTPEvent(BaseModel):
         extra = "allow"
 
 
+# Models
 class Sender(BaseModel):
     user_id: Optional[int] = None
     nickname: Optional[str] = None
@@ -252,6 +253,15 @@ class File(BaseModel):
         extra = "allow"
 
 
+class Status(BaseModel):
+    online: bool
+    good: bool
+
+    class Config:
+        extra = "allow"
+
+
+# Message Events
 class MessageEvent(CQHTTPEvent):
     post_type: Literal["message"]
     message_type: str
@@ -280,26 +290,27 @@ class GroupMessageEvent(MessageEvent):
     anonymous: Anonymous
 
 
+# Notice Events
 class NoticeEvent(CQHTTPEvent):
     post_type: Literal["notice"]
     notice_type: str
 
 
-class GroupUploadEvent(NoticeEvent):
+class GroupUploadNoticeEvent(NoticeEvent):
     notice_type: Literal["group_upload"]
     user_id: int
     group_id: int
     file: File
 
 
-class GroupAdminEvent(NoticeEvent):
+class GroupAdminNoticeEvent(NoticeEvent):
     notice_type: Literal["group_admin"]
     sub_type: str
     user_id: int
     group_id: int
 
 
-class GroupDecreaseEvent(NoticeEvent):
+class GroupDecreaseNoticeEvent(NoticeEvent):
     notice_type: Literal["group_decrease"]
     sub_type: str
     user_id: int
@@ -307,7 +318,7 @@ class GroupDecreaseEvent(NoticeEvent):
     operator_id: int
 
 
-class GroupIncreaseEvent(NoticeEvent):
+class GroupIncreaseNoticeEvent(NoticeEvent):
     notice_type: Literal["group_increase"]
     sub_type: str
     user_id: int
@@ -315,7 +326,7 @@ class GroupIncreaseEvent(NoticeEvent):
     operator_id: int
 
 
-class GroupBanEvent(NoticeEvent):
+class GroupBanNoticeEvent(NoticeEvent):
     notice_type: Literal["group_ban"]
     sub_type: str
     user_id: int
@@ -324,12 +335,12 @@ class GroupBanEvent(NoticeEvent):
     duration: int
 
 
-class FriendAddEvent(NoticeEvent):
+class FriendAddNoticeEvent(NoticeEvent):
     notice_type: Literal["friend_add"]
     user_id: int
 
 
-class GroupRecallEvent(NoticeEvent):
+class GroupRecallNoticeEvent(NoticeEvent):
     notice_type: Literal["group_recall"]
     user_id: int
     group_id: int
@@ -337,7 +348,7 @@ class GroupRecallEvent(NoticeEvent):
     message_id: int
 
 
-class FriendRecallEvent(NoticeEvent):
+class FriendRecallNoticeEvent(NoticeEvent):
     notice_type: Literal["friend_recall"]
     user_id: int
     message_id: int
@@ -360,3 +371,41 @@ class LuckyKingNotifyEvent(NotifyEvent):
 
 class HonorNotifyEvent(NotifyEvent):
     honor_type: str
+
+
+# Request Events
+class RequestEvent(CQHTTPEvent):
+    post_type: Literal["request"]
+    request_type: str
+
+
+class FriendRequestEvent(RequestEvent):
+    request_type: Literal["friend"]
+    user_id: int
+    comment: str
+    flag: str
+
+
+class GroupRequestEvent(RequestEvent):
+    request_type: Literal["group"]
+    sub_type: str
+    group_id: int
+    user_id: int
+    comment: str
+    flag: str
+
+
+class MetaEvent(CQHTTPEvent):
+    post_type: Literal["meta_event"]
+    meta_event_type: str
+
+
+class LifecycleMetaEvent(MetaEvent):
+    meta_event_type: Literal["lifecycle"]
+    sub_type: str
+
+
+class HeartbeatMetaEvent(MetaEvent):
+    meta_event_type: Literal["heartbeat"]
+    status: Status
+    interval: int
