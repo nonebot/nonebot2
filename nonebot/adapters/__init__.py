@@ -6,10 +6,10 @@
 """
 
 import abc
+from typing_extensions import Literal
 from functools import reduce, partial
 from dataclasses import dataclass, field
-from typing import Any, Dict, Union, TypeVar, Optional, Callable, Iterable, Awaitable, Generic, TYPE_CHECKING
-from typing_extensions import Literal
+from typing import Any, Dict, Union, Optional, Callable, Iterable, Awaitable, TYPE_CHECKING
 
 from pydantic import BaseModel
 
@@ -160,6 +160,14 @@ class Event(abc.ABC, BaseModel):
 
     @abc.abstractmethod
     def get_session_id(self) -> str:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_message(self) -> "Message":
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_plaintext(self) -> str:
         raise NotImplementedError
 
 

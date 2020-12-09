@@ -81,19 +81,19 @@ class Permission:
 
 
 async def _message(bot: "Bot", event: "Event") -> bool:
-    return event.type == "message"
+    return event.get_type() == "message"
 
 
 async def _notice(bot: "Bot", event: "Event") -> bool:
-    return event.type == "notice"
+    return event.get_type() == "notice"
 
 
 async def _request(bot: "Bot", event: "Event") -> bool:
-    return event.type == "request"
+    return event.get_type() == "request"
 
 
 async def _metaevent(bot: "Bot", event: "Event") -> bool:
-    return event.type == "meta_event"
+    return event.get_type() == "meta_event"
 
 
 MESSAGE = Permission(_message)
@@ -114,7 +114,7 @@ METAEVENT = Permission(_metaevent)
 """
 
 
-def USER(*user: int, perm: Permission = Permission()):
+def USER(*user: str, perm: Permission = Permission()):
     """
     :说明:
 
@@ -122,104 +122,94 @@ def USER(*user: int, perm: Permission = Permission()):
 
     :参数:
 
-      * ``*user: int``: 白名单
+      * ``*user: str``: 白名单
       * ``perm: Permission``: 需要同时满足的权限
     """
 
     async def _user(bot: "Bot", event: "Event") -> bool:
-        return event.type == "message" and event.user_id in user and await perm(
-            bot, event)
+        return event.get_type() == "message" and event.get_session_id(
+        ) in user and await perm(bot, event)
 
     return Permission(_user)
 
 
-async def _private(bot: "Bot", event: "Event") -> bool:
-    return event.type == "message" and event.detail_type == "private"
+# async def _private(bot: "Bot", event: "Event") -> bool:
+#     return event.get_type() == "message" and event.detail_type == "private"
 
+# async def _private_friend(bot: "Bot", event: "Event") -> bool:
+#     return (event.get_type() == "message" and event.detail_type == "private" and
+#             event.sub_type == "friend")
 
-async def _private_friend(bot: "Bot", event: "Event") -> bool:
-    return (event.type == "message" and event.detail_type == "private" and
-            event.sub_type == "friend")
+# async def _private_group(bot: "Bot", event: "Event") -> bool:
+#     return (event.get_type() == "message" and event.detail_type == "private" and
+#             event.sub_type == "group")
 
+# async def _private_other(bot: "Bot", event: "Event") -> bool:
+#     return (event.get_type() == "message" and event.detail_type == "private" and
+#             event.sub_type == "other")
 
-async def _private_group(bot: "Bot", event: "Event") -> bool:
-    return (event.type == "message" and event.detail_type == "private" and
-            event.sub_type == "group")
+# PRIVATE = Permission(_private)
+# """
+# - **说明**: 匹配任意私聊消息类型事件
+# """
+# PRIVATE_FRIEND = Permission(_private_friend)
+# """
+# - **说明**: 匹配任意好友私聊消息类型事件
+# """
+# PRIVATE_GROUP = Permission(_private_group)
+# """
+# - **说明**: 匹配任意群临时私聊消息类型事件
+# """
+# PRIVATE_OTHER = Permission(_private_other)
+# """
+# - **说明**: 匹配任意其他私聊消息类型事件
+# """
 
+# async def _group(bot: "Bot", event: "Event") -> bool:
+#     return event.get_type() == "message" and event.detail_type == "group"
 
-async def _private_other(bot: "Bot", event: "Event") -> bool:
-    return (event.type == "message" and event.detail_type == "private" and
-            event.sub_type == "other")
+# async def _group_member(bot: "Bot", event: "Event") -> bool:
+#     return (event.get_type() == "message" and event.detail_type == "group" and
+#             event.sender.get("role") == "member")
 
+# async def _group_admin(bot: "Bot", event: "Event") -> bool:
+#     return (event.get_type() == "message" and event.detail_type == "group" and
+#             event.sender.get("role") == "admin")
 
-PRIVATE = Permission(_private)
-"""
-- **说明**: 匹配任意私聊消息类型事件
-"""
-PRIVATE_FRIEND = Permission(_private_friend)
-"""
-- **说明**: 匹配任意好友私聊消息类型事件
-"""
-PRIVATE_GROUP = Permission(_private_group)
-"""
-- **说明**: 匹配任意群临时私聊消息类型事件
-"""
-PRIVATE_OTHER = Permission(_private_other)
-"""
-- **说明**: 匹配任意其他私聊消息类型事件
-"""
+# async def _group_owner(bot: "Bot", event: "Event") -> bool:
+#     return (event.get_type() == "message" and event.detail_type == "group" and
+#             event.sender.get("role") == "owner")
 
+# GROUP = Permission(_group)
+# """
+# - **说明**: 匹配任意群聊消息类型事件
+# """
+# GROUP_MEMBER = Permission(_group_member)
+# """
+# - **说明**: 匹配任意群员群聊消息类型事件
 
-async def _group(bot: "Bot", event: "Event") -> bool:
-    return event.type == "message" and event.detail_type == "group"
+# \:\:\:warning 警告
+# 该权限通过 event.sender 进行判断且不包含管理员以及群主！
+# \:\:\:
+# """
+# GROUP_ADMIN = Permission(_group_admin)
+# """
+# - **说明**: 匹配任意群管理员群聊消息类型事件
+# """
+# GROUP_OWNER = Permission(_group_owner)
+# """
+# - **说明**: 匹配任意群主群聊消息类型事件
+# """
 
+# async def _superuser(bot: "Bot", event: "Event") -> bool:
+#     return event.get_type(
+#     ) == "message" and event.user_id in bot.config.superusers
 
-async def _group_member(bot: "Bot", event: "Event") -> bool:
-    return (event.type == "message" and event.detail_type == "group" and
-            event.sender.get("role") == "member")
-
-
-async def _group_admin(bot: "Bot", event: "Event") -> bool:
-    return (event.type == "message" and event.detail_type == "group" and
-            event.sender.get("role") == "admin")
-
-
-async def _group_owner(bot: "Bot", event: "Event") -> bool:
-    return (event.type == "message" and event.detail_type == "group" and
-            event.sender.get("role") == "owner")
-
-
-GROUP = Permission(_group)
-"""
-- **说明**: 匹配任意群聊消息类型事件
-"""
-GROUP_MEMBER = Permission(_group_member)
-"""
-- **说明**: 匹配任意群员群聊消息类型事件
-
-\:\:\:warning 警告
-该权限通过 event.sender 进行判断且不包含管理员以及群主！
-\:\:\:
-"""
-GROUP_ADMIN = Permission(_group_admin)
-"""
-- **说明**: 匹配任意群管理员群聊消息类型事件
-"""
-GROUP_OWNER = Permission(_group_owner)
-"""
-- **说明**: 匹配任意群主群聊消息类型事件
-"""
-
-
-async def _superuser(bot: "Bot", event: "Event") -> bool:
-    return event.type == "message" and event.user_id in bot.config.superusers
-
-
-SUPERUSER = Permission(_superuser)
-"""
-- **说明**: 匹配任意超级用户消息类型事件
-"""
-EVERYBODY = MESSAGE
-"""
-- **说明**: 匹配任意消息类型事件
-"""
+# SUPERUSER = Permission(_superuser)
+# """
+# - **说明**: 匹配任意超级用户消息类型事件
+# """
+# EVERYBODY = MESSAGE
+# """
+# - **说明**: 匹配任意消息类型事件
+# """

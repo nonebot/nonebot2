@@ -15,9 +15,9 @@ from nonebot.adapters import Bot as BaseBot
 from nonebot.exception import RequestDenied
 
 from .utils import log
-from .event import Reply, CQHTTPEvent, MessageEvent
 from .message import Message, MessageSegment
 from .exception import NetworkError, ApiNotAvailable, ActionFailed
+from .event import Reply, CQHTTPEvent, MessageEvent, get_event_model
 
 if TYPE_CHECKING:
     from nonebot.drivers import Driver, WebSocket
@@ -297,7 +297,20 @@ class Bot(BaseBot):
             return
 
         try:
-            event = CQHTTPEvent.parse_obj(message)
+            post_type = message['post_type']
+            detail_type = message.get(f"{post_type}_type")
+            detail_type = f".{detail_type}" if detail_type else ""
+            sub_type = message.get("sub_type")
+            sub_type = f".{sub_type}" if sub_type else ""
+            models = get_event_model(f".{post_type}{detail_type}{sub_type}")
+            for model in models:
+                try:
+                    event = model.parse_obj(message)
+                    break
+                except Exception as e:
+                    log("DEBUG", "Event Parser Error", e)
+            else:
+                event = CQHTTPEvent.parse_obj(message)
 
             # Check whether user is calling me
             await _check_reply(self, event)

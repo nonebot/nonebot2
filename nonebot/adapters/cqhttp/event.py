@@ -1,7 +1,9 @@
-from typing import Optional
+import inspect
 from typing_extensions import Literal
+from typing import Type, List, Optional
 
 from pydantic import BaseModel
+from pygtrie import StringTrie
 from nonebot.adapters import Event
 from nonebot.utils import escape_tag
 from nonebot.typing import overrides
@@ -210,6 +212,7 @@ from .message import Message
 
 
 class CQHTTPEvent(Event):
+    __event__ = ""
     time: int
     self_id: int
     post_type: Literal["message", "notice", "request", "meta_event"]
@@ -225,6 +228,14 @@ class CQHTTPEvent(Event):
     @overrides(Event)
     def get_event_description(self) -> str:
         return str(self.dict())
+
+    @overrides(Event)
+    def get_message(self) -> Message:
+        raise ValueError("Event has no message!")
+
+    @overrides(Event)
+    def get_plaintext(self) -> str:
+        raise ValueError("Event has no message!")
 
 
 # Models
@@ -284,6 +295,7 @@ class Status(BaseModel):
 
 # Message Events
 class MessageEvent(CQHTTPEvent):
+    __event__ = "message"
     post_type: Literal["message"]
     sub_type: str
     user_id: int
@@ -302,8 +314,17 @@ class MessageEvent(CQHTTPEvent):
         return f"{self.post_type}.{self.message_type}" + (f".{sub_type}"
                                                           if sub_type else "")
 
+    @overrides(CQHTTPEvent)
+    def get_message(self) -> Message:
+        return self.message
+
+    @overrides(CQHTTPEvent)
+    def get_plaintext(self) -> str:
+        return self.message.extract_plain_text()
+
 
 class PrivateMessageEvent(MessageEvent):
+    __event__ = "message.private"
     message_type: Literal["private"]
 
     @overrides(CQHTTPEvent)
@@ -316,6 +337,7 @@ class PrivateMessageEvent(MessageEvent):
 
 
 class GroupMessageEvent(MessageEvent):
+    __event__ = "message.group"
     message_type: Literal["group"]
     group_id: int
     anonymous: Anonymous
@@ -333,6 +355,7 @@ class GroupMessageEvent(MessageEvent):
 
 # Notice Events
 class NoticeEvent(CQHTTPEvent):
+    __event__ = "notice"
     post_type: Literal["notice"]
     notice_type: str
 
@@ -344,6 +367,7 @@ class NoticeEvent(CQHTTPEvent):
 
 
 class GroupUploadNoticeEvent(NoticeEvent):
+    __event__ = "notice.group_upload"
     notice_type: Literal["group_upload"]
     user_id: int
     group_id: int
@@ -351,6 +375,7 @@ class GroupUploadNoticeEvent(NoticeEvent):
 
 
 class GroupAdminNoticeEvent(NoticeEvent):
+    __event__ = "notice.group_admin"
     notice_type: Literal["group_admin"]
     sub_type: str
     user_id: int
@@ -358,6 +383,7 @@ class GroupAdminNoticeEvent(NoticeEvent):
 
 
 class GroupDecreaseNoticeEvent(NoticeEvent):
+    __event__ = "notice.group_decrease"
     notice_type: Literal["group_decrease"]
     sub_type: str
     user_id: int
@@ -366,6 +392,7 @@ class GroupDecreaseNoticeEvent(NoticeEvent):
 
 
 class GroupIncreaseNoticeEvent(NoticeEvent):
+    __event__ = "notice.group_increase"
     notice_type: Literal["group_increase"]
     sub_type: str
     user_id: int
@@ -374,6 +401,7 @@ class GroupIncreaseNoticeEvent(NoticeEvent):
 
 
 class GroupBanNoticeEvent(NoticeEvent):
+    __event__ = "notice.group_ban"
     notice_type: Literal["group_ban"]
     sub_type: str
     user_id: int
@@ -383,11 +411,13 @@ class GroupBanNoticeEvent(NoticeEvent):
 
 
 class FriendAddNoticeEvent(NoticeEvent):
+    __event__ = "notice.friend_add"
     notice_type: Literal["friend_add"]
     user_id: int
 
 
 class GroupRecallNoticeEvent(NoticeEvent):
+    __event__ = "notice.group_recall"
     notice_type: Literal["group_recall"]
     user_id: int
     group_id: int
@@ -396,12 +426,14 @@ class GroupRecallNoticeEvent(NoticeEvent):
 
 
 class FriendRecallNoticeEvent(NoticeEvent):
+    __event__ = "notice.friend_recall"
     notice_type: Literal["friend_recall"]
     user_id: int
     message_id: int
 
 
 class NotifyEvent(NoticeEvent):
+    __event__ = "notice.notify"
     notice_type: Literal["notify"]
     sub_type: str
     user_id: int
@@ -409,19 +441,26 @@ class NotifyEvent(NoticeEvent):
 
 
 class PokeNotifyEvent(NotifyEvent):
+    __event__ = "notice.notify.poke"
+    sub_type: Literal["poke"]
     target_id: int
 
 
 class LuckyKingNotifyEvent(NotifyEvent):
+    __event__ = "notice.notify.lucky_king"
+    sub_type: Literal["lucky_king"]
     target_id: int
 
 
 class HonorNotifyEvent(NotifyEvent):
+    __event__ = "notice.notify.honor"
+    sub_type: Literal["honor"]
     honor_type: str
 
 
 # Request Events
 class RequestEvent(CQHTTPEvent):
+    __event__ = "request"
     post_type: Literal["request"]
     request_type: str
 
@@ -433,6 +472,7 @@ class RequestEvent(CQHTTPEvent):
 
 
 class FriendRequestEvent(RequestEvent):
+    __event__ = "request.friend"
     request_type: Literal["friend"]
     user_id: int
     comment: str
@@ -440,6 +480,7 @@ class FriendRequestEvent(RequestEvent):
 
 
 class GroupRequestEvent(RequestEvent):
+    __event__ = "request.group"
     request_type: Literal["group"]
     sub_type: str
     group_id: int
@@ -450,6 +491,7 @@ class GroupRequestEvent(RequestEvent):
 
 # Meta Events
 class MetaEvent(CQHTTPEvent):
+    __event__ = "meta_event"
     post_type: Literal["meta_event"]
     meta_event_type: str
 
@@ -465,11 +507,26 @@ class MetaEvent(CQHTTPEvent):
 
 
 class LifecycleMetaEvent(MetaEvent):
+    __event__ = "meta_event.lifecycle"
     meta_event_type: Literal["lifecycle"]
     sub_type: str
 
 
 class HeartbeatMetaEvent(MetaEvent):
+    __event__ = "meta_event.heartbeat"
     meta_event_type: Literal["heartbeat"]
     status: Status
     interval: int
+
+
+_t = StringTrie(separator=".")
+
+model = None
+for model in globals().values():
+    if not inspect.isclass(model) or not issubclass(model, CQHTTPEvent):
+        continue
+    _t["." + model.__event__] = model
+
+
+def get_event_model(event_name) -> List[Type[CQHTTPEvent]]:
+    return [model.value for model in _t.prefixes("." + event_name)][::-1]

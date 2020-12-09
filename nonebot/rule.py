@@ -119,7 +119,7 @@ class TrieRule:
     @classmethod
     def get_value(cls, bot: "Bot", event: "Event",
                   state: State) -> Tuple[Dict[str, Any], Dict[str, Any]]:
-        if event.type != "message":
+        if event.get_type() != "message":
             state["_prefix"] = {"raw_command": None, "command": None}
             state["_suffix"] = {"raw_command": None, "command": None}
             return {
@@ -132,12 +132,14 @@ class TrieRule:
 
         prefix = None
         suffix = None
-        message = event.message[0]
-        if message.type == "text":
-            prefix = cls.prefix.longest_prefix(str(message).lstrip())
-        message_r = event.message[-1]
-        if message_r.type == "text":
-            suffix = cls.suffix.longest_prefix(str(message_r).rstrip()[::-1])
+        message = event.get_message()
+        message_seg = message[0]
+        if message_seg.type == "text":
+            prefix = cls.prefix.longest_prefix(str(message_seg).lstrip())
+        message_seg_r = message[-1]
+        if message_seg_r.type == "text":
+            suffix = cls.suffix.longest_prefix(
+                str(message_seg_r).rstrip()[::-1])
 
         state["_prefix"] = {
             "raw_command": prefix.key,
@@ -181,7 +183,10 @@ def startswith(msg: str) -> Rule:
     """
 
     async def _startswith(bot: "Bot", event: "Event", state: State) -> bool:
-        return event.plain_text.startswith(msg)
+        if event.get_type() != "message":
+            return False
+        text = event.get_plaintext()
+        return text.startswith(msg)
 
     return Rule(_startswith)
 
@@ -198,7 +203,9 @@ def endswith(msg: str) -> Rule:
     """
 
     async def _endswith(bot: "Bot", event: "Event", state: State) -> bool:
-        return event.plain_text.endswith(msg)
+        if event.get_type() != "message":
+            return False
+        return event.get_plaintext().endswith(msg)
 
     return Rule(_endswith)
 
@@ -215,8 +222,10 @@ def keyword(*keywords: str) -> Rule:
     """
 
     async def _keyword(bot: "Bot", event: "Event", state: State) -> bool:
-        return bool(event.plain_text and
-                    any(keyword in event.plain_text for keyword in keywords))
+        if event.get_type() != "message":
+            return False
+        text = event.get_plaintext()
+        return bool(text and any(keyword in text for keyword in keywords))
 
     return Rule(_keyword)
 
@@ -287,7 +296,9 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     pattern = re.compile(regex, flags)
 
     async def _regex(bot: "Bot", event: "Event", state: State) -> bool:
-        matched = pattern.search(str(event.message))
+        if event.get_type() != "message":
+            return False
+        matched = pattern.search(str(event.get_message()))
         if matched:
             state["_matched"] = matched.group()
             return True
@@ -298,18 +309,20 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     return Rule(_regex)
 
 
-def to_me() -> Rule:
-    """
-    :说明:
+# def to_me() -> Rule:
+#     """
+#     :说明:
 
-      通过 ``event.to_me`` 判断消息是否是发送给机器人
+#       通过 ``event.to_me`` 判断消息是否是发送给机器人
 
-    :参数:
+#     :参数:
 
-      * 无
-    """
+#       * 无
+#     """
 
-    async def _to_me(bot: "Bot", event: "Event", state: State) -> bool:
-        return bool(event.to_me)
+#     async def _to_me(bot: "Bot", event: "Event", state: State) -> bool:
+#         if event.get_type() != "message":
+#             return False
+#         return bool(event.to_me)
 
-    return Rule(_to_me)
+#     return Rule(_to_me)

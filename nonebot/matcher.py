@@ -203,7 +203,8 @@ class Matcher(metaclass=MatcherMeta):
 
           - ``bool``: 是否满足匹配规则
         """
-        return (event.type == (cls.type or event.type) and
+        event_type = event.get_type()
+        return (event_type == (cls.type or event_type) and
                 await cls.rule(bot, event, state))
 
     @classmethod
@@ -303,7 +304,7 @@ class Matcher(metaclass=MatcherMeta):
             if parser:
                 await parser(bot, event, state)
             else:
-                state[state["_current_key"]] = str(event.message)
+                state[state["_current_key"]] = str(event.get_message())
 
         cls.handlers.append(_key_getter)
         cls.handlers.append(_key_parser)
@@ -427,7 +428,8 @@ class Matcher(metaclass=MatcherMeta):
             Matcher.new(
                 self.type,
                 Rule(),
-                USER(event.user_id, perm=self.permission),  # type:ignore
+                USER(event.get_session_id(),
+                     perm=self.permission),  # type:ignore
                 self.handlers,
                 temp=True,
                 priority=0,
@@ -439,7 +441,8 @@ class Matcher(metaclass=MatcherMeta):
             Matcher.new(
                 self.type,
                 Rule(),
-                USER(event.user_id, perm=self.permission),  # type:ignore
+                USER(event.get_session_id(),
+                     perm=self.permission),  # type:ignore
                 self.handlers,
                 temp=True,
                 priority=0,
