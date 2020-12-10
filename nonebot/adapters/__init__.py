@@ -249,18 +249,8 @@ class Message(list, abc.ABC):
         return ''.join((str(seg) for seg in self))
 
     @classmethod
-    def __get_validator__(cls):
+    def __get_validators__(cls):
         yield cls._validate
-
-    @classmethod
-    def __modify_schema__(cls, field_schema):
-        field_schema.update(
-            examples=["foo", {
-                "type": "text",
-                "data": {
-                    "text": "bar"
-                }
-            }])
 
     @classmethod
     def _validate(cls, value):
