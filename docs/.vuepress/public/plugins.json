@@ -62,5 +62,13 @@
     "desc": "从基本上所有你想的出名字的搜图平台找图片",
     "name": "图片搜索",
     "repo": "synodriver/nonebot_plugin_picsearcher"
+  },
+  {
+    "id": "nonebot_plugin_navicat",
+    "link": "nonebot-plugin-navicat",
+    "author": "synodriver",
+    "desc": "连接至各种数据库,为其他插件导出连接对象",
+    "name": "通用数据库连接",
+    "repo": "synodriver/nonebot_plugin_navicat"
   }
 ]
