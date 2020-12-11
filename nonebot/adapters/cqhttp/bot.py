@@ -421,13 +421,13 @@ class Bot(BaseBot):
         """
         msg = message if isinstance(message, Message) else Message(message)
 
-        at_sender = at_sender and bool(event.user_id)
+        at_sender = at_sender and hasattr(event, "user_id")
 
         params = {}
-        if event.user_id:
-            params["user_id"] = event.user_id
-        if event.group_id:
-            params["group_id"] = event.group_id
+        if hasattr(event, "user_id"):
+            params["user_id"] = getattr(event, "user_id")
+        if hasattr(event, "group_id"):
+            params["group_id"] = getattr(event, "group_id")
         params.update(kwargs)
 
         if "message_type" not in params:

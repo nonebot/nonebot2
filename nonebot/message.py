@@ -11,7 +11,6 @@ from typing import Set, Type, Optional, Iterable, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
-from nonebot.utils import escape_tag
 from nonebot.matcher import matchers, Matcher
 from nonebot.exception import IgnoredException, StopPropagation, NoLogException
 from nonebot.typing import State, EventPreProcessor, RunPreProcessor, EventPostProcessor, RunPostProcessor
@@ -131,7 +130,7 @@ async def _check_matcher(priority: int, bot: "Bot", event: "Event",
     ]
     results = await asyncio.gather(*checking_tasks, return_exceptions=True)
     expired = await asyncio.gather(*checking_expire_tasks)
-    for expired_matcher in filter(lambda x: x and x in results, expired):
+    for expired_matcher in filter(lambda x: x, expired):
         try:
             matchers[priority].remove(expired_matcher)  # type: ignore
         except Exception:
