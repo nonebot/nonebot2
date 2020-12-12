@@ -14,10 +14,14 @@
 - ``on_command`` => ``nonebot.plugin.on_command``
 - ``on_regex`` => ``nonebot.plugin.on_regex``
 - ``CommandGroup`` => ``nonebot.plugin.CommandGroup``
+- ``Matchergroup`` => ``nonebot.plugin.MatcherGroup``
 - ``load_plugin`` => ``nonebot.plugin.load_plugin``
 - ``load_plugins`` => ``nonebot.plugin.load_plugins``
 - ``load_builtin_plugins`` => ``nonebot.plugin.load_builtin_plugins``
+- ``get_plugin`` => ``nonebot.plugin.get_plugin``
 - ``get_loaded_plugins`` => ``nonebot.plugin.get_loaded_plugins``
+- ``export`` => ``nonebot.plugin.export``
+- ``require`` => ``nonebot.plugin.require``
 """
 
 import importlib
@@ -132,16 +136,9 @@ def get_bots() -> Union[NoReturn, Dict[str, Bot]]:
     return driver.bots
 
 
-from nonebot.sched import scheduler
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.log import logger, default_filter
-from nonebot.adapters.cqhttp import Bot as CQBot
-
-try:
-    import nonebot_test
-except ImportError:
-    nonebot_test = None
 
 
 def init(*, _env_file: Optional[str] = None, **kwargs):
@@ -187,17 +184,6 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
             importlib.import_module(config.driver), "Driver")
         _driver = DriverClass(env, config)
 
-        # register build-in adapters
-        _driver.register_adapter("cqhttp", CQBot)
-
-        # load nonebot test frontend if debug
-        if config.debug and nonebot_test:
-            logger.debug("Loading nonebot test frontend...")
-            nonebot_test.init()
-
-    if scheduler:
-        _driver.on_startup(_start_scheduler)
-
 
 def run(host: Optional[str] = None,
         port: Optional[int] = None,
@@ -230,13 +216,7 @@ def run(host: Optional[str] = None,
     get_driver().run(host, port, *args, **kwargs)
 
 
-async def _start_scheduler():
-    if scheduler and not scheduler.running:
-        scheduler.configure(_driver.config.apscheduler_config)
-        scheduler.start()
-        logger.opt(colors=True).info("<y>Scheduler Started</y>")
-
-
-from nonebot.plugin import on_message, on_notice, on_request, on_metaevent, CommandGroup
+from nonebot.plugin import on_message, on_notice, on_request, on_metaevent, CommandGroup, MatcherGroup
 from nonebot.plugin import on_startswith, on_endswith, on_keyword, on_command, on_regex
-from nonebot.plugin import load_plugin, load_plugins, load_builtin_plugins, get_loaded_plugins
+from nonebot.plugin import load_plugin, load_plugins, load_builtin_plugins
+from nonebot.plugin import export, require, get_plugin, get_loaded_plugins

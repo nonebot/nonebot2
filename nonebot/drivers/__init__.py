@@ -51,8 +51,11 @@ class BaseDriver(abc.ABC):
     def register_adapter(cls, name: str, adapter: Type[Bot]):
         """
         :说明:
+
           注册一个协议适配器
+
         :参数:
+
           * ``name: str``: 适配器名称，用于在连接时进行识别
           * ``adapter: Type[Bot]``: 适配器 Class
         """
@@ -110,14 +113,18 @@ class BaseDriver(abc.ABC):
             **kwargs):
         """
         :说明:
+
           启动驱动框架
+
         :参数:
+
           * ``host: Optional[str]``: 驱动绑定 IP
           * ``post: Optional[int]``: 驱动绑定端口
           * ``*args``
           * ``**kwargs``
         """
-        raise NotImplementedError
+        logger.opt(colors=True).debug(
+            f"<g>Loaded adapters: {', '.join(self._adapters)}</g>")
 
     @abc.abstractmethod
     async def _handle_http(self):

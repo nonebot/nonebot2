@@ -40,6 +40,9 @@ sidebarDepth: 0
 * `CommandGroup` => `nonebot.plugin.CommandGroup`
 
 
+* `Matchergroup` => `nonebot.plugin.MatcherGroup`
+
+
 * `load_plugin` => `nonebot.plugin.load_plugin`
 
 
@@ -49,7 +52,16 @@ sidebarDepth: 0
 * `load_builtin_plugins` => `nonebot.plugin.load_builtin_plugins`
 
 
+* `get_plugin` => `nonebot.plugin.get_plugin`
+
+
 * `get_loaded_plugins` => `nonebot.plugin.get_loaded_plugins`
+
+
+* `export` => `nonebot.plugin.export`
+
+
+* `require` => `nonebot.plugin.require`
 
 
 ## `get_driver()`

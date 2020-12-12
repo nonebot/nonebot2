@@ -9,9 +9,11 @@ import abc
 from functools import reduce, partial
 from dataclasses import dataclass, field
 
+from pydantic import BaseModel
+
 from nonebot.config import Config
 from nonebot.typing import Driver, Message, WebSocket
-from nonebot.typing import Any, Dict, Union, Optional, NoReturn, Callable, Iterable, Awaitable
+from nonebot.typing import Any, Dict, Union, Optional, NoReturn, Callable, Iterable, Awaitable, TypeVar, Generic
 
 
 class BaseBot(abc.ABC):
@@ -29,6 +31,7 @@ class BaseBot(abc.ABC):
                  websocket: Optional[WebSocket] = None):
         """
         :参数:
+
           * ``driver: Driver``: Driver 对象
           * ``connection_type: str``: http 或者 websocket
           * ``config: Config``: Config 对象
@@ -62,15 +65,22 @@ class BaseBot(abc.ABC):
                                body: Optional[dict]) -> Union[str, NoReturn]:
         """
         :说明:
+
           检查连接请求是否合法的函数，如果合法则返回当前连接 ``唯一标识符``，通常为机器人 ID；如果不合法则抛出 ``RequestDenied`` 异常。
+
         :参数:
+
           * ``driver: Driver``: Driver 对象
           * ``connection_type: str``: 连接类型
           * ``headers: dict``: 请求头
           * ``body: Optional[dict]``: 请求数据，WebSocket 连接该部分为空
+
         :返回:
+
           - ``str``: 连接唯一标识符
+
         :异常:
+
           - ``RequestDenied``: 请求非法
         """
         raise NotImplementedError
@@ -79,8 +89,11 @@ class BaseBot(abc.ABC):
     async def handle_message(self, message: dict):
         """
         :说明:
+
           处理上报消息的函数，转换为 ``Event`` 事件后调用 ``nonebot.message.handle_event`` 进一步处理事件。
+
         :参数:
+
           * ``message: dict``: 收到的上报消息
         """
         raise NotImplementedError
@@ -89,10 +102,14 @@ class BaseBot(abc.ABC):
     async def call_api(self, api: str, **data):
         """
         :说明:
+
           调用机器人 API 接口，可以通过该函数或直接通过 bot 属性进行调用
+
         :参数:
+
           * ``api: str``: API 名称
           * ``**data``: API 数据
+
         :示例:
 
         .. code-block:: python
@@ -108,8 +125,11 @@ class BaseBot(abc.ABC):
                                   "BaseMessageSegment"], **kwargs):
         """
         :说明:
+
           调用机器人基础发送消息接口
+
         :参数:
+
           * ``event: Event``: 上报事件
           * ``message: Union[str, Message, MessageSegment]``: 要发送的消息
           * ``**kwargs``
@@ -117,15 +137,19 @@ class BaseBot(abc.ABC):
         raise NotImplementedError
 
 
-class BaseEvent(abc.ABC):
+T = TypeVar("T", bound=BaseModel)
+
+
+class BaseEvent(abc.ABC, Generic[T]):
     """
     Event 基类。提供上报信息的关键信息，其余信息可从原始上报消息获取。
     """
 
-    def __init__(self, raw_event: dict):
+    def __init__(self, raw_event: Union[dict, T]):
         """
         :参数:
-          * ``raw_event: dict``: 原始上报消息
+
+          * ``raw_event: Union[dict, T]``: 原始上报消息
         """
         self._raw_event = raw_event
 
@@ -133,7 +157,7 @@ class BaseEvent(abc.ABC):
         return f"<Event {self.self_id}: {self.name} {self.time}>"
 
     @property
-    def raw_event(self) -> dict:
+    def raw_event(self) -> Union[dict, T]:
         """原始上报消息"""
         return self._raw_event
 
@@ -294,10 +318,19 @@ class BaseMessageSegment(abc.ABC):
 
     @abc.abstractmethod
     def __str__(self):
+        """该消息段所代表的 str，在命令匹配部分使用"""
         raise NotImplementedError
 
     @abc.abstractmethod
     def __add__(self, other):
+        """你需要在这里实现不同消息段的合并：
+        比如：
+            if isinstance(other, str):
+                ...
+            elif isinstance(other, MessageSegment):
+                ...
+        注意：不能返回 self，需要返回一个新生成的对象
+        """
         raise NotImplementedError
 
     def __getitem__(self, key):
@@ -319,16 +352,17 @@ class BaseMessage(list, abc.ABC):
     """消息数组"""
 
     def __init__(self,
-                 message: Union[str, dict, list, BaseMessageSegment,
+                 message: Union[str, dict, list, BaseModel, BaseMessageSegment,
                                 "BaseMessage"] = None,
                  *args,
                  **kwargs):
         """
         :参数:
-          * ``message: Union[str, dict, list, MessageSegment, Message]``: 消息内容
+
+          * ``message: Union[str, dict, list, BaseModel, MessageSegment, Message]``: 消息内容
         """
         super().__init__(*args, **kwargs)
-        if isinstance(message, (str, dict, list)):
+        if isinstance(message, (str, dict, list, BaseModel)):
             self.extend(self._construct(message))
         elif isinstance(message, BaseMessage):
             self.extend(message)
@@ -362,15 +396,15 @@ class BaseMessage(list, abc.ABC):
     def append(self, obj: Union[str, BaseMessageSegment]) -> "BaseMessage":
         """
         :说明:
+
           添加一个消息段到消息数组末尾
+
         :参数:
+
           * ``obj: Union[str, MessageSegment]``: 要添加的消息段
         """
         if isinstance(obj, BaseMessageSegment):
-            if obj.type == "text" and self and self[-1].type == "text":
-                self[-1].data["text"] += obj.data["text"]
-            else:
-                super().append(obj)
+            super().append(obj)
         elif isinstance(obj, str):
             self.extend(self._construct(obj))
         else:
@@ -382,8 +416,11 @@ class BaseMessage(list, abc.ABC):
                          Iterable[BaseMessageSegment]]) -> "BaseMessage":
         """
         :说明:
+
           拼接一个消息数组或多个消息段到消息数组末尾
+
         :参数:
+
           * ``obj: Union[Message, Iterable[MessageSegment]]``: 要添加的消息数组
         """
         for segment in obj:
@@ -393,13 +430,14 @@ class BaseMessage(list, abc.ABC):
     def reduce(self) -> None:
         """
         :说明:
-          缩减消息数组，即拼接相邻纯文本消息段
+
+          缩减消息数组，即按 MessageSegment 的实现拼接相邻消息段
         """
         index = 0
         while index < len(self):
             if index > 0 and self[
                     index - 1].type == "text" and self[index].type == "text":
-                self[index - 1].data["text"] += self[index].data["text"]
+                self[index - 1] += self[index]
                 del self[index]
             else:
                 index += 1
@@ -407,11 +445,12 @@ class BaseMessage(list, abc.ABC):
     def extract_plain_text(self) -> str:
         """
         :说明:
+
           提取消息内纯文本消息
         """
 
         def _concat(x: str, y: BaseMessageSegment) -> str:
-            return f"{x} {y.data['text']}" if y.type == "text" else x
+            return f"{x} {y}" if y.type == "text" else x
 
         plain_text = reduce(_concat, self, "")
         return plain_text[1:] if plain_text else plain_text

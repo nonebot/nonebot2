@@ -1,6 +1,7 @@
 const path = require("path");
 
 module.exports = context => ({
+  base: process.env.VUEPRESS_BASE || "/",
   title: "NoneBot",
   description: "基于 酷Q 的 Python 异步 QQ 机器人框架",
   markdown: {
@@ -121,8 +122,15 @@ module.exports = context => ({
                 "",
                 "scheduler",
                 "permission",
-                "runtime-hook"
+                "runtime-hook",
+                "export-and-require"
               ]
+            },
+            {
+              title: "发布",
+              collapsable: false,
+              sidebar: "auto",
+              children: ["publish-plugin"]
             }
           ],
           "/api/": [
@@ -160,10 +168,6 @@ module.exports = context => ({
                   path: "permission"
                 },
                 {
-                  title: "nonebot.sched 模块",
-                  path: "sched"
-                },
-                {
                   title: "nonebot.log 模块",
                   path: "log"
                 },
@@ -194,6 +198,10 @@ module.exports = context => ({
                 {
                   title: "nonebot.adapters.cqhttp 模块",
                   path: "adapters/cqhttp"
+                },
+                {
+                  title: "nonebot.adapters.ding 模块",
+                  path: "adapters/ding"
                 }
               ]
             }

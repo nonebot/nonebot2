@@ -25,8 +25,11 @@ _run_postprocessors: Set[RunPostProcessor] = set()
 def event_preprocessor(func: EventPreProcessor) -> EventPreProcessor:
     """
     :说明:
+
       事件预处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之前执行。
+
     :参数:
+
       事件预处理函数接收三个参数。
 
       * ``bot: Bot``: Bot 对象
@@ -40,8 +43,11 @@ def event_preprocessor(func: EventPreProcessor) -> EventPreProcessor:
 def event_postprocessor(func: EventPostProcessor) -> EventPostProcessor:
     """
     :说明:
+
       事件后处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之后执行。
+
     :参数:
+
       事件后处理函数接收三个参数。
 
       * ``bot: Bot``: Bot 对象
@@ -55,8 +61,11 @@ def event_postprocessor(func: EventPostProcessor) -> EventPostProcessor:
 def run_preprocessor(func: RunPreProcessor) -> RunPreProcessor:
     """
     :说明:
+
       运行预处理。装饰一个函数，使它在每次事件响应器运行前执行。
+
     :参数:
+
       运行预处理函数接收四个参数。
 
       * ``matcher: Matcher``: 当前要运行的事件响应器
@@ -71,8 +80,11 @@ def run_preprocessor(func: RunPreProcessor) -> RunPreProcessor:
 def run_postprocessor(func: RunPostProcessor) -> RunPostProcessor:
     """
     :说明:
+
       运行后处理。装饰一个函数，使它在每次事件响应器运行后执行。
+
     :参数:
+
       运行后处理函数接收五个参数。
 
       * ``matcher: Matcher``: 运行完毕的事件响应器
@@ -92,8 +104,9 @@ async def _check_matcher(priority: int, bot: Bot, event: Event,
     async def _check(Matcher: Type[Matcher], bot: Bot, event: Event,
                      state: dict) -> Optional[Type[Matcher]]:
         try:
-            if await Matcher.check_perm(
-                    bot, event) and await Matcher.check_rule(bot, event, state):
+            if (not Matcher.expire_time or datetime.now() <= Matcher.expire_time
+               ) and await Matcher.check_perm(
+                   bot, event) and await Matcher.check_rule(bot, event, state):
                 return Matcher
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
@@ -149,6 +162,8 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
     try:
         logger.debug(f"Running matcher {matcher}")
         await matcher.run(bot, event, state)
+    except StopPropagation as e:
+        exception = e
     except Exception as e:
         logger.opt(colors=True, exception=e).error(
             f"<r><bg #f8bbd0>Running matcher {matcher} failed.</bg #f8bbd0></r>"
@@ -166,17 +181,21 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
                 "<r><bg #f8bbd0>Error when running RunPostProcessors</bg #f8bbd0></r>"
             )
 
-    if matcher.block:
+    if matcher.block or isinstance(exception, StopPropagation):
         raise StopPropagation
 
 
 async def handle_event(bot: Bot, event: Event):
     """
     :说明:
+
        处理一个事件。调用该函数以实现分发事件。
+
     :参数:
+
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
+
     :示例:
 
     .. code-block:: python

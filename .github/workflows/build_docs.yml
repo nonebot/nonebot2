@@ -1,0 +1,37 @@
+name: Build API Doc
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+          architecture: "x64"
+
+      - name: Install Dependences
+        run: |
+          python -m pip install --upgrade pip
+          pip install poetry
+          poetry install
+
+      - name: Build Doc
+        run: poetry run sphinx-build -M markdown ./docs_build ./build
+
+      - name: Copy Files
+        run: cp -r ./build/markdown/* ./docs/api/
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: docs
+          path: docs/

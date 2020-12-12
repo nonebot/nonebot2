@@ -14,7 +14,7 @@ async def say_unescape(bot: Bot, event: Event, state: dict):
 
     def _unescape(message: Message, segment: MessageSegment):
         if segment.type == "text":
-            return message.append(segment.data["text"])
+            return message.append(str(segment))
         return message.append(segment)
 
     message = reduce(_unescape, event.message, Message())  # type: ignore
