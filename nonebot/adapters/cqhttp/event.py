@@ -4,49 +4,55 @@ from typing import Type, List, Optional
 
 from pydantic import BaseModel
 from pygtrie import StringTrie
-from nonebot.adapters import Event
 from nonebot.utils import escape_tag
 from nonebot.typing import overrides
 from nonebot.exception import NoLogException
+from nonebot.adapters import Event as BaseEvent
 
 from .message import Message
 
 
-class CQHTTPEvent(Event):
+class Event(BaseEvent):
+    """
+    CQHTTP 协议事件。各事件字段未列出部分参考 `CQHTTP 文档`_
+
+    .. _CQHTTP 文档:
+        https://github.com/howmanybots/onebot/blob/master/README.md
+    """
     __event__ = ""
     time: int
     self_id: int
     post_type: Literal["message", "notice", "request", "meta_event"]
 
-    @overrides(Event)
+    @overrides(BaseEvent)
     def get_type(self) -> Literal["message", "notice", "request", "meta_event"]:
         return self.post_type
 
-    @overrides(Event)
+    @overrides(BaseEvent)
     def get_event_name(self) -> str:
         return self.post_type
 
-    @overrides(Event)
+    @overrides(BaseEvent)
     def get_event_description(self) -> str:
         return str(self.dict())
 
-    @overrides(Event)
+    @overrides(BaseEvent)
     def get_message(self) -> Message:
         raise ValueError("Event has no message!")
 
-    @overrides(Event)
+    @overrides(BaseEvent)
     def get_plaintext(self) -> str:
         raise ValueError("Event has no message!")
 
-    @overrides(Event)
+    @overrides(BaseEvent)
     def get_user_id(self) -> str:
         raise ValueError("Event has no message!")
 
-    @overrides(Event)
+    @overrides(BaseEvent)
     def get_session_id(self) -> str:
         raise ValueError("Event has no message!")
 
-    @overrides(Event)
+    @overrides(BaseEvent)
     def is_tome(self) -> bool:
         return False
 
@@ -107,7 +113,8 @@ class Status(BaseModel):
 
 
 # Message Events
-class MessageEvent(CQHTTPEvent):
+class MessageEvent(Event):
+    """消息事件"""
     __event__ = "message"
     post_type: Literal["message"]
     sub_type: str
@@ -119,40 +126,51 @@ class MessageEvent(CQHTTPEvent):
     font: int
     sender: Sender
     to_me: bool = False
-    reply: Optional[Reply] = None
+    """
+    :说明: 消息是否与机器人有关
 
-    @overrides(CQHTTPEvent)
+    :类型: ``bool``
+    """
+    reply: Optional[Reply] = None
+    """
+    :说明: 消息中提取的回复消息，内容为 ``get_msg`` API 返回结果
+
+    :类型: ``Optional[Reply]``
+    """
+
+    @overrides(Event)
     def get_event_name(self) -> str:
         sub_type = getattr(self, "sub_type", None)
         return f"{self.post_type}.{self.message_type}" + (f".{sub_type}"
                                                           if sub_type else "")
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def get_message(self) -> Message:
         return self.message
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def get_plaintext(self) -> str:
         return self.message.extract_plain_text()
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def get_user_id(self) -> str:
         return str(self.user_id)
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def get_session_id(self) -> str:
         return str(self.user_id)
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def is_tome(self) -> bool:
         return self.to_me
 
 
 class PrivateMessageEvent(MessageEvent):
+    """私聊消息"""
     __event__ = "message.private"
     message_type: Literal["private"]
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def get_event_description(self) -> str:
         return (f'Message {self.message_id} from {self.user_id} "' + "".join(
             map(
@@ -162,12 +180,13 @@ class PrivateMessageEvent(MessageEvent):
 
 
 class GroupMessageEvent(MessageEvent):
+    """群消息"""
     __event__ = "message.group"
     message_type: Literal["group"]
     group_id: int
     anonymous: Anonymous
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def get_event_description(self) -> str:
         return (
             f'Message {self.message_id} from {self.user_id}@[群:{self.group_id}] "'
@@ -179,12 +198,13 @@ class GroupMessageEvent(MessageEvent):
 
 
 # Notice Events
-class NoticeEvent(CQHTTPEvent):
+class NoticeEvent(Event):
+    """通知事件"""
     __event__ = "notice"
     post_type: Literal["notice"]
     notice_type: str
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def get_event_name(self) -> str:
         sub_type = getattr(self, "sub_type", None)
         return f"{self.post_type}.{self.notice_type}" + (f".{sub_type}"
@@ -192,6 +212,7 @@ class NoticeEvent(CQHTTPEvent):
 
 
 class GroupUploadNoticeEvent(NoticeEvent):
+    """群文件上传事件"""
     __event__ = "notice.group_upload"
     notice_type: Literal["group_upload"]
     user_id: int
@@ -200,18 +221,20 @@ class GroupUploadNoticeEvent(NoticeEvent):
 
 
 class GroupAdminNoticeEvent(NoticeEvent):
+    """群管理员变动"""
     __event__ = "notice.group_admin"
     notice_type: Literal["group_admin"]
     sub_type: str
     user_id: int
     group_id: int
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def is_tome(self) -> bool:
         return self.user_id == self.self_id
 
 
 class GroupDecreaseNoticeEvent(NoticeEvent):
+    """群成员减少事件"""
     __event__ = "notice.group_decrease"
     notice_type: Literal["group_decrease"]
     sub_type: str
@@ -219,12 +242,13 @@ class GroupDecreaseNoticeEvent(NoticeEvent):
     group_id: int
     operator_id: int
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def is_tome(self) -> bool:
         return self.user_id == self.self_id
 
 
 class GroupIncreaseNoticeEvent(NoticeEvent):
+    """群成员增加事件"""
     __event__ = "notice.group_increase"
     notice_type: Literal["group_increase"]
     sub_type: str
@@ -232,12 +256,13 @@ class GroupIncreaseNoticeEvent(NoticeEvent):
     group_id: int
     operator_id: int
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def is_tome(self) -> bool:
         return self.user_id == self.self_id
 
 
 class GroupBanNoticeEvent(NoticeEvent):
+    """群禁言事件"""
     __event__ = "notice.group_ban"
     notice_type: Literal["group_ban"]
     sub_type: str
@@ -246,18 +271,20 @@ class GroupBanNoticeEvent(NoticeEvent):
     operator_id: int
     duration: int
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def is_tome(self) -> bool:
         return self.user_id == self.self_id
 
 
 class FriendAddNoticeEvent(NoticeEvent):
+    """好友添加事件"""
     __event__ = "notice.friend_add"
     notice_type: Literal["friend_add"]
     user_id: int
 
 
 class GroupRecallNoticeEvent(NoticeEvent):
+    """群消息撤回事件"""
     __event__ = "notice.group_recall"
     notice_type: Literal["group_recall"]
     user_id: int
@@ -265,12 +292,13 @@ class GroupRecallNoticeEvent(NoticeEvent):
     operator_id: int
     message_id: int
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def is_tome(self) -> bool:
         return self.user_id == self.self_id
 
 
 class FriendRecallNoticeEvent(NoticeEvent):
+    """好友消息撤回事件"""
     __event__ = "notice.friend_recall"
     notice_type: Literal["friend_recall"]
     user_id: int
@@ -278,6 +306,7 @@ class FriendRecallNoticeEvent(NoticeEvent):
 
 
 class NotifyEvent(NoticeEvent):
+    """提醒事件"""
     __event__ = "notice.notify"
     notice_type: Literal["notify"]
     sub_type: str
@@ -286,42 +315,46 @@ class NotifyEvent(NoticeEvent):
 
 
 class PokeNotifyEvent(NotifyEvent):
+    """戳一戳提醒事件"""
     __event__ = "notice.notify.poke"
     sub_type: Literal["poke"]
     target_id: int
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def is_tome(self) -> bool:
         return self.target_id == self.self_id
 
 
 class LuckyKingNotifyEvent(NotifyEvent):
+    """群红包运气王提醒事件"""
     __event__ = "notice.notify.lucky_king"
     sub_type: Literal["lucky_king"]
     target_id: int
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def is_tome(self) -> bool:
         return self.target_id == self.self_id
 
 
 class HonorNotifyEvent(NotifyEvent):
+    """群荣誉变更提醒事件"""
     __event__ = "notice.notify.honor"
     sub_type: Literal["honor"]
     honor_type: str
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def is_tome(self) -> bool:
         return self.user_id == self.self_id
 
 
 # Request Events
-class RequestEvent(CQHTTPEvent):
+class RequestEvent(Event):
+    """请求事件"""
     __event__ = "request"
     post_type: Literal["request"]
     request_type: str
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def get_event_name(self) -> str:
         sub_type = getattr(self, "sub_type", None)
         return f"{self.post_type}.{self.request_type}" + (f".{sub_type}"
@@ -329,6 +362,7 @@ class RequestEvent(CQHTTPEvent):
 
 
 class FriendRequestEvent(RequestEvent):
+    """加好友请求事件"""
     __event__ = "request.friend"
     request_type: Literal["friend"]
     user_id: int
@@ -337,6 +371,7 @@ class FriendRequestEvent(RequestEvent):
 
 
 class GroupRequestEvent(RequestEvent):
+    """加群请求/邀请事件"""
     __event__ = "request.group"
     request_type: Literal["group"]
     sub_type: str
@@ -347,29 +382,32 @@ class GroupRequestEvent(RequestEvent):
 
 
 # Meta Events
-class MetaEvent(CQHTTPEvent):
+class MetaEvent(Event):
+    """元事件"""
     __event__ = "meta_event"
     post_type: Literal["meta_event"]
     meta_event_type: str
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def get_event_name(self) -> str:
         sub_type = getattr(self, "sub_type", None)
         return f"{self.post_type}.{self.meta_event_type}" + (f".{sub_type}" if
                                                              sub_type else "")
 
-    @overrides(CQHTTPEvent)
+    @overrides(Event)
     def get_log_string(self) -> str:
         raise NoLogException
 
 
 class LifecycleMetaEvent(MetaEvent):
+    """生命周期元事件"""
     __event__ = "meta_event.lifecycle"
     meta_event_type: Literal["lifecycle"]
     sub_type: str
 
 
 class HeartbeatMetaEvent(MetaEvent):
+    """心跳元事件"""
     __event__ = "meta_event.heartbeat"
     meta_event_type: Literal["heartbeat"]
     status: Status
@@ -378,12 +416,34 @@ class HeartbeatMetaEvent(MetaEvent):
 
 _t = StringTrie(separator=".")
 
+# define `model` first to avoid globals changing while `for`
 model = None
 for model in globals().values():
-    if not inspect.isclass(model) or not issubclass(model, CQHTTPEvent):
+    if not inspect.isclass(model) or not issubclass(model, Event):
         continue
     _t["." + model.__event__] = model
 
 
-def get_event_model(event_name) -> List[Type[CQHTTPEvent]]:
+def get_event_model(event_name) -> List[Type[Event]]:
+    """
+    :说明:
+
+      根据事件名获取对应 ``Event Model`` 及 ``FallBack Event Model`` 列表
+
+    :返回:
+
+      - ``List[Type[Event]]``
+    """
     return [model.value for model in _t.prefixes("." + event_name)][::-1]
+
+
+__all__ = [
+    "Event", "MessageEvent", "PrivateMessageEvent", "GroupMessageEvent",
+    "NoticeEvent", "GroupUploadNoticeEvent", "GroupAdminNoticeEvent",
+    "GroupDecreaseNoticeEvent", "GroupIncreaseNoticeEvent",
+    "GroupBanNoticeEvent", "FriendAddNoticeEvent", "GroupRecallNoticeEvent",
+    "FriendRecallNoticeEvent", "NotifyEvent", "PokeNotifyEvent",
+    "LuckyKingNotifyEvent", "HonorNotifyEvent", "RequestEvent",
+    "FriendRequestEvent", "GroupRequestEvent", "MetaEvent",
+    "LifecycleMetaEvent", "HeartbeatMetaEvent", "get_event_model"
+]

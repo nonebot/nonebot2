@@ -16,8 +16,8 @@ from nonebot.exception import RequestDenied
 
 from .utils import log
 from .message import Message, MessageSegment
+from .event import Reply, Event, MessageEvent, get_event_model
 from .exception import NetworkError, ApiNotAvailable, ActionFailed
-from .event import Reply, CQHTTPEvent, MessageEvent, get_event_model
 
 if TYPE_CHECKING:
     from nonebot.drivers import Driver, WebSocket
@@ -32,7 +32,7 @@ def get_auth_bearer(access_token: Optional[str] = None) -> Optional[str]:
     return param
 
 
-async def _check_reply(bot: "Bot", event: "CQHTTPEvent"):
+async def _check_reply(bot: "Bot", event: "Event"):
     """
     :说明:
 
@@ -41,7 +41,7 @@ async def _check_reply(bot: "Bot", event: "CQHTTPEvent"):
     :参数:
 
       * ``bot: Bot``: Bot 对象
-      * ``event: CQHTTPEvent``: CQHTTPEvent 对象
+      * ``event: Event``: Event 对象
     """
     if not isinstance(event, MessageEvent):
         return
@@ -69,7 +69,7 @@ async def _check_reply(bot: "Bot", event: "CQHTTPEvent"):
         event.message.append(MessageSegment.text(""))
 
 
-def _check_at_me(bot: "Bot", event: "CQHTTPEvent"):
+def _check_at_me(bot: "Bot", event: "Event"):
     """
     :说明:
 
@@ -78,7 +78,7 @@ def _check_at_me(bot: "Bot", event: "CQHTTPEvent"):
     :参数:
 
       * ``bot: Bot``: Bot 对象
-      * ``event: CQHTTPEvent``: CQHTTPEvent 对象
+      * ``event: Event``: Event 对象
     """
     if not isinstance(event, MessageEvent):
         return
@@ -123,7 +123,7 @@ def _check_at_me(bot: "Bot", event: "CQHTTPEvent"):
             event.message.append(MessageSegment.text(""))
 
 
-def _check_nickname(bot: "Bot", event: "CQHTTPEvent"):
+def _check_nickname(bot: "Bot", event: "Event"):
     """
     :说明:
 
@@ -132,7 +132,7 @@ def _check_nickname(bot: "Bot", event: "CQHTTPEvent"):
     :参数:
 
       * ``bot: Bot``: Bot 对象
-      * ``event: CQHTTPEvent``: CQHTTPEvent 对象
+      * ``event: Event``: Event 对象
     """
     if not isinstance(event, MessageEvent):
         return
@@ -287,7 +287,7 @@ class Bot(BaseBot):
         """
         :说明:
 
-          调用 `_check_reply <#async-check-reply-bot-event>`_, `_check_at_me <#check-at-me-bot-event>`_, `_check_nickname <#check-nickname-bot-event>`_ 处理事件并转换为 `CQHTTPEvent <#class-event>`_
+          调用 `_check_reply <#async-check-reply-bot-event>`_, `_check_at_me <#check-at-me-bot-event>`_, `_check_nickname <#check-nickname-bot-event>`_ 处理事件并转换为 `Event <#class-event>`_
         """
         if not message:
             return
@@ -310,7 +310,7 @@ class Bot(BaseBot):
                 except Exception as e:
                     log("DEBUG", "Event Parser Error", e)
             else:
-                event = CQHTTPEvent.parse_obj(message)
+                event = Event.parse_obj(message)
 
             # Check whether user is calling me
             await _check_reply(self, event)
@@ -393,7 +393,7 @@ class Bot(BaseBot):
 
     @overrides(BaseBot)
     async def send(self,
-                   event: CQHTTPEvent,
+                   event: Event,
                    message: Union[str, Message, MessageSegment],
                    at_sender: bool = False,
                    **kwargs) -> Any:
@@ -404,7 +404,7 @@ class Bot(BaseBot):
 
         :参数:
 
-          * ``event: CQHTTPEvent``: CQHTTPEvent 对象
+          * ``event: Event``: Event 对象
           * ``message: Union[str, Message, MessageSegment]``: 要发送的消息
           * ``at_sender: bool``: 是否 @ 事件主体
           * ``**kwargs``: 覆盖默认参数
