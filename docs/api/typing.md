@@ -147,7 +147,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Bot, Event, State], Awaitable[None]]`
+    `Callable[[Bot, Event, State], Union[Awaitable[None], Awaitable[NoReturn]]]`
 
 
 

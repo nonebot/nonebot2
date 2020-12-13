@@ -200,7 +200,7 @@ Rule(async_function, run_sync(sync_function))
 
 * **说明**
 
-    通过 `event.to_me` 判断消息是否是发送给机器人
+    通过 `event.to_me` 判断事件是否与机器人有关
 
 
 

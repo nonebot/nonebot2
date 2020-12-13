@@ -21,13 +21,13 @@ NoneBot.adapters.cqhttp 模块
    :show-inheritance:
 
 
-.. automodule:: nonebot.adapters.cqhttp.event
+.. automodule:: nonebot.adapters.cqhttp.message
    :members:
    :private-members:
    :show-inheritance:
 
 
-.. automodule:: nonebot.adapters.cqhttp.message
+.. automodule:: nonebot.adapters.cqhttp.event
    :members:
    :private-members:
    :show-inheritance:

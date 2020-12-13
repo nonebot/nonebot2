@@ -290,142 +290,207 @@ CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 
 基类：[`nonebot.adapters.Event`](README.md#nonebot.adapters.Event)
 
-CQHTTP 协议 Event 适配。继承属性参考 [BaseEvent](./#class-baseevent) 。
+CQHTTP 协议事件。各事件字段未列出部分参考 [CQHTTP 文档](https://github.com/howmanybots/onebot/blob/master/README.md)
 
 
-### _property_ `id`
+## _class_ `MessageEvent`
 
+基类：`nonebot.adapters.cqhttp.event.Event`
 
-* 类型: `Optional[int]`
+消息事件
 
 
-* 说明: 事件/消息 ID
+### `to_me`
 
 
-### _property_ `name`
+* **说明**
 
+    消息是否与机器人有关
 
-* 类型: `str`
 
 
-* 说明: 事件名称，由类型与 `.` 组合而成
+* **类型**
 
+    `bool`
 
-### _property_ `self_id`
 
 
-* 类型: `str`
+### `reply`
 
 
-* 说明: 机器人自身 ID
+* **说明**
 
+    消息中提取的回复消息，内容为 `get_msg` API 返回结果
 
-### _property_ `time`
 
 
-* 类型: `int`
+* **类型**
 
+    `Optional[Reply]`
 
-* 说明: 事件发生时间
 
 
-### _property_ `type`
+## _class_ `PrivateMessageEvent`
 
+基类：`nonebot.adapters.cqhttp.event.MessageEvent`
 
-* 类型: `str`
+私聊消息
 
 
-* 说明: 事件类型
+## _class_ `GroupMessageEvent`
 
+基类：`nonebot.adapters.cqhttp.event.MessageEvent`
 
-### _property_ `detail_type`
+群消息
 
 
-* 类型: `str`
+## _class_ `NoticeEvent`
 
+基类：`nonebot.adapters.cqhttp.event.Event`
 
-* 说明: 事件详细类型
+通知事件
 
 
-### _property_ `sub_type`
+## _class_ `GroupUploadNoticeEvent`
 
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
 
-* 类型: `Optional[str]`
+群文件上传事件
 
 
-* 说明: 事件子类型
+## _class_ `GroupAdminNoticeEvent`
 
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
 
-### _property_ `user_id`
+群管理员变动
 
 
-* 类型: `Optional[int]`
+## _class_ `GroupDecreaseNoticeEvent`
 
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
 
-* 说明: 事件主体 ID
+群成员减少事件
 
 
-### _property_ `group_id`
+## _class_ `GroupIncreaseNoticeEvent`
 
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
 
-* 类型: `Optional[int]`
+群成员增加事件
 
 
-* 说明: 事件主体群 ID
+## _class_ `GroupBanNoticeEvent`
 
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
 
-### _property_ `to_me`
+群禁言事件
 
 
-* 类型: `Optional[bool]`
+## _class_ `FriendAddNoticeEvent`
 
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
 
-* 说明: 消息是否与机器人相关
+好友添加事件
 
 
-### _property_ `message`
+## _class_ `GroupRecallNoticeEvent`
 
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
 
-* 类型: `Optional[Message]`
+群消息撤回事件
 
 
-* 说明: 消息内容
+## _class_ `FriendRecallNoticeEvent`
 
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
 
-### _property_ `reply`
+好友消息撤回事件
 
 
-* 类型: `Optional[dict]`
+## _class_ `NotifyEvent`
 
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
 
-* 说明: 回复消息详情
+提醒事件
 
 
-### _property_ `raw_message`
+## _class_ `PokeNotifyEvent`
 
+基类：`nonebot.adapters.cqhttp.event.NotifyEvent`
 
-* 类型: `Optional[str]`
+戳一戳提醒事件
 
 
-* 说明: 原始消息
+## _class_ `LuckyKingNotifyEvent`
 
+基类：`nonebot.adapters.cqhttp.event.NotifyEvent`
 
-### _property_ `plain_text`
+群红包运气王提醒事件
 
 
-* 类型: `Optional[str]`
+## _class_ `HonorNotifyEvent`
 
+基类：`nonebot.adapters.cqhttp.event.NotifyEvent`
 
-* 说明: 纯文本消息内容
+群荣誉变更提醒事件
 
 
-### _property_ `sender`
+## _class_ `RequestEvent`
 
+基类：`nonebot.adapters.cqhttp.event.Event`
 
-* 类型: `Optional[dict]`
+请求事件
 
 
-* 说明: 消息发送者信息
+## _class_ `FriendRequestEvent`
+
+基类：`nonebot.adapters.cqhttp.event.RequestEvent`
+
+加好友请求事件
+
+
+## _class_ `GroupRequestEvent`
+
+基类：`nonebot.adapters.cqhttp.event.RequestEvent`
+
+加群请求/邀请事件
+
+
+## _class_ `MetaEvent`
+
+基类：`nonebot.adapters.cqhttp.event.Event`
+
+元事件
+
+
+## _class_ `LifecycleMetaEvent`
+
+基类：`nonebot.adapters.cqhttp.event.MetaEvent`
+
+生命周期元事件
+
+
+## _class_ `HeartbeatMetaEvent`
+
+基类：`nonebot.adapters.cqhttp.event.MetaEvent`
+
+心跳元事件
+
+
+## `get_event_model(event_name)`
+
+
+* **说明**
+
+    根据事件名获取对应 `Event Model` 及 `FallBack Event Model` 列表
+
+
+
+* **返回**
+
+    
+    * `List[Type[Event]]`
+
 
 
 ## _class_ `MessageSegment`

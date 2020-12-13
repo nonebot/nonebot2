@@ -52,7 +52,31 @@ sidebarDepth: 0
 
 
 
+## `logger_wrapper`
+
+
+* **说明**
+
+
+用于打印 adapter 的日志。
+
+
+* **Log 参数**
+
+
+
+* `level: Literal['WARNING', 'DEBUG', 'INFO']`: 日志等级
+
+
+* `message: str`: 日志信息
+
+
+* `exception: Optional[Exception]`: 异常信息
+
+
 ## _class_ `DataclassEncoder`
+
+基类：`json.encoder.JSONEncoder`
 
 
 * **说明**

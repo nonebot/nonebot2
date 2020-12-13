@@ -103,6 +103,7 @@ class Env(BaseSettings):
     """
     - **类型**: ``str``
     - **默认值**: ``"prod"``
+
     :说明:
       当前环境名。 NoneBot 将从 ``.env.{environment}`` 文件中加载配置。
     """
@@ -123,6 +124,7 @@ class Config(BaseConfig):
     """
     - **类型**: ``str``
     - **默认值**: ``"nonebot.drivers.fastapi"``
+
     :说明:
 
       NoneBot 运行所使用的 ``Driver`` 。继承自 ``nonebot.driver.BaseDriver`` 。
@@ -131,6 +133,7 @@ class Config(BaseConfig):
     """
     - **类型**: ``IPvAnyAddress``
     - **默认值**: ``127.0.0.1``
+
     :说明:
 
       NoneBot 的 HTTP 和 WebSocket 服务端监听的 IP/主机名。
@@ -139,6 +142,7 @@ class Config(BaseConfig):
     """
     - **类型**: ``int``
     - **默认值**: ``8080``
+
     :说明:
 
       NoneBot 的 HTTP 和 WebSocket 服务端监听的端口。
@@ -147,6 +151,7 @@ class Config(BaseConfig):
     """
     - **类型**: ``bool``
     - **默认值**: ``False``
+
     :说明:
 
       是否以调试模式运行 NoneBot。
@@ -157,6 +162,7 @@ class Config(BaseConfig):
     """
     - **类型**: ``Dict[str, str]``
     - **默认值**: ``{}``
+
     :说明:
 
       以机器人 ID 为键，上报地址为值的字典，环境变量或文件中应使用 json 序列化。
@@ -171,6 +177,7 @@ class Config(BaseConfig):
     """
     - **类型**: ``Optional[float]``
     - **默认值**: ``30.``
+
     :说明:
 
       API 请求超时时间，单位: 秒。
@@ -179,6 +186,7 @@ class Config(BaseConfig):
     """
     - **类型**: ``Optional[str]``
     - **默认值**: ``None``
+
     :说明:
 
       API 请求以及上报所需密钥，在请求头中携带。
@@ -194,6 +202,7 @@ class Config(BaseConfig):
     """
     - **类型**: ``Optional[str]``
     - **默认值**: ``None``
+
     :说明:
 
       HTTP POST 形式上报所需签名，在请求头中携带。
@@ -211,6 +220,7 @@ class Config(BaseConfig):
     """
     - **类型**: ``Set[int]``
     - **默认值**: ``set()``
+
     :说明:
 
       机器人超级用户。
@@ -225,6 +235,7 @@ class Config(BaseConfig):
     """
     - **类型**: ``Set[str]``
     - **默认值**: ``set()``
+
     :说明:
 
       机器人昵称。
@@ -233,6 +244,7 @@ class Config(BaseConfig):
     """
     - **类型**: ``Set[str]``
     - **默认值**: ``{"/"}``
+
     :说明:
 
       命令的起始标记，用于判断一条消息是不是命令。
@@ -241,6 +253,7 @@ class Config(BaseConfig):
     """
     - **类型**: ``Set[str]``
     - **默认值**: ``{"."}``
+
     :说明:
 
       命令的分隔标记，用于将文本形式的命令切分为元组（实际的命令名）。
@@ -249,6 +262,7 @@ class Config(BaseConfig):
     """
     - **类型**: ``timedelta``
     - **默认值**: ``timedelta(minutes=2)``
+
     :说明:
 
       等待用户回复的超时时间。
