@@ -962,5 +962,5 @@ def require(name: str) -> Optional[Export]:
 
       - ``Optional[Export]``
     """
-    plugin = get_plugin(name)
+    plugin = get_plugin(name) or load_plugin(name)
     return plugin.export if plugin else None
