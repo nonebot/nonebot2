@@ -70,5 +70,13 @@
     "desc": "连接至各种数据库,为其他插件导出连接对象",
     "name": "通用数据库连接",
     "repo": "synodriver/nonebot_plugin_navicat"
+  },
+  {
+    "id": "nonebot_plugin_translator",
+    "link": "nonebot-plugin-translator",
+    "author": "Lancercmd",
+    "desc": "多语种翻译插件",
+    "name": "translator",
+    "repo": "Lancercmd/nonebot_plugin_translator"
   }
 ]
