@@ -7,7 +7,7 @@ from nonebot.message import event_preprocessor, run_preprocessor
 @event_preprocessor
 async def handle(bot: Bot, event: Event, state: State):
     state["preprocessed"] = True
-    print(event)
+    print(type(event), event)
 
 
 @run_preprocessor

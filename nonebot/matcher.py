@@ -221,6 +221,26 @@ class Matcher(metaclass=MatcherMeta):
         cls._default_parser = func
         return func
 
+    @staticmethod
+    def process_handler(handler: Handler) -> Handler:
+        signature = inspect.signature(handler, follow_wrapped=False)
+        bot = signature.parameters.get("bot")
+        event = signature.parameters.get("event")
+        state = signature.parameters.get("state")
+        if not bot:
+            raise ValueError("Handler missing parameter 'bot'")
+        handler.__params__ = {
+            "bot": bot.annotation,
+            "event": event.annotation if event else None,
+            "state": State if state else None
+        }
+        return handler
+
+    @classmethod
+    def append_handler(cls, handler: Handler) -> None:
+        # Process handler first
+        cls.handlers.append(cls.process_handler(handler))
+
     @classmethod
     def handle(cls) -> Callable[[Handler], Handler]:
         """
@@ -234,7 +254,7 @@ class Matcher(metaclass=MatcherMeta):
         """
 
         def _decorator(func: Handler) -> Handler:
-            cls.handlers.append(func)
+            cls.append_handler(func)
             return func
 
         return _decorator
@@ -257,11 +277,11 @@ class Matcher(metaclass=MatcherMeta):
 
         if cls.handlers:
             # 已有前置handlers则接受一条新的消息，否则视为接收初始消息
-            cls.handlers.append(_receive)
+            cls.append_handler(_receive)
 
         def _decorator(func: Handler) -> Handler:
             if not cls.handlers or cls.handlers[-1] is not func:
-                cls.handlers.append(func)
+                cls.append_handler(func)
 
             return func
 
@@ -306,21 +326,22 @@ class Matcher(metaclass=MatcherMeta):
             else:
                 state[state["_current_key"]] = str(event.get_message())
 
-        cls.handlers.append(_key_getter)
-        cls.handlers.append(_key_parser)
+        cls.append_handler(_key_getter)
+        cls.append_handler(_key_parser)
 
         def _decorator(func: Handler) -> Handler:
             if not hasattr(cls.handlers[-1], "__wrapped__"):
+                cls.process_handler(func)
                 parser = cls.handlers.pop()
 
                 @wraps(func)
                 async def wrapper(bot: "Bot", event: "Event", state: State):
                     await parser(bot, event, state)
-                    await func(bot, event, state)
+                    await cls.run_handler(func, bot, event, state)
                     if "_current_key" in state:
                         del state["_current_key"]
 
-                cls.handlers.append(wrapper)
+                cls.append_handler(wrapper)
 
             return func
 
@@ -406,6 +427,23 @@ class Matcher(metaclass=MatcherMeta):
             await bot.send(event=event, message=prompt, **kwargs)
         raise RejectedException
 
+    @classmethod
+    async def run_handler(cls, handler: Handler, bot: "Bot", event: "Event",
+                          state: State):
+        if not hasattr(handler, "__params__"):
+            cls.process_handler(handler)
+        params = getattr(handler, "__params__")
+        BotType = ((params["bot"] is not inspect.Parameter.empty) and
+                   inspect.isclass(params["bot"]) and params["bot"])
+        EventType = ((params["event"] is not inspect.Parameter.empty) and
+                     inspect.isclass(params["event"]) and params["event"])
+        if (BotType and not isinstance(bot, BotType)) or (
+                EventType and not isinstance(event, EventType)):
+            return
+        args = {"bot": bot, "event": event, "state": state}
+        await handler(
+            **{k: v for k, v in args.items() if params[k] is not None})
+
     # 运行handlers
     async def run(self, bot: "Bot", event: "Event", state: State):
         b_t = current_bot.set(bot)
@@ -416,12 +454,7 @@ class Matcher(metaclass=MatcherMeta):
 
             for _ in range(len(self.handlers)):
                 handler = self.handlers.pop(0)
-                signature = inspect.signature(handler)
-                BotType = signature.parameters.get("bot").annotation
-                if BotType is not inspect.Parameter.empty and inspect.isclass(
-                        BotType) and not isinstance(bot, BotType):
-                    continue
-                await handler(bot, event, self.state)
+                await self.run_handler(handler, bot, event, self.state)
 
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
