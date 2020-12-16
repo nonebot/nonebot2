@@ -4,6 +4,10 @@ sidebar: auto
 
 # 更新日志
 
+## v2.0.0a8
+
+- 修复部分非法 CQ 码被识别导致报错
+
 ## v2.0.0a7
 
 - 修复 cqhttp 检查 to me 时出现 IndexError
