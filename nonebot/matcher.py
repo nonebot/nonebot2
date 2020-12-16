@@ -336,7 +336,7 @@ class Matcher(metaclass=MatcherMeta):
 
                 @wraps(func)
                 async def wrapper(bot: "Bot", event: "Event", state: State):
-                    await parser(bot, event, state)
+                    await cls.run_handler(parser, bot, event, state)
                     await cls.run_handler(func, bot, event, state)
                     if "_current_key" in state:
                         del state["_current_key"]

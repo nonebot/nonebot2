@@ -18,7 +18,8 @@
     https://docs.python.org/3/library/typing.html
 """
 
-from typing import Any, Dict, Union, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
+from functools import singledispatch
+from typing import Any, Dict, Union, overload, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
@@ -93,8 +94,30 @@ PermissionChecker = Callable[["Bot", "Event"], Union[bool, Awaitable[bool]]]
 
   RuleChecker 即判断是否响应消息的处理函数。
 """
-Handler = Callable[["Bot", "Event", State], Union[Awaitable[None],
-                                                  Awaitable[NoReturn]]]
+
+# @overload
+# async def Handler(bot: "Bot") -> None:
+#     ...
+
+# @overload
+# async def Handler(bot: "Bot", event: "Event") -> None:
+#     ...
+
+# @overload
+# async def Handler(bot: "Bot", state: State) -> None:
+#     ...
+
+# @overload
+# async def Handler(bot: Any, event: Any, state: State) -> None:
+#     ...
+
+Handler = Union[Callable[["Bot", "Event", State], Union[Awaitable[None],
+                                                        Awaitable[NoReturn]]],
+                Callable[["Bot", State], Union[Awaitable[None],
+                                               Awaitable[NoReturn]]],
+                Callable[["Bot", "Event"], Union[Awaitable[None],
+                                                 Awaitable[NoReturn]]],
+                Callable[["Bot"], Union[Awaitable[None], Awaitable[NoReturn]]]]
 """
 :类型: ``Callable[[Bot, Event, State], Union[Awaitable[None], Awaitable[NoReturn]]]``
 
