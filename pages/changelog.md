@@ -7,6 +7,8 @@ sidebar: auto
 ## v2.0.0a8
 
 - 修复部分非法 CQ 码被识别导致报错
+- 修改 typing 类型注释
+- 修改 event 基类接口
 
 ## v2.0.0a7
 
