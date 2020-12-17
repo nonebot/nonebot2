@@ -13,7 +13,7 @@ import asyncio
 from typing import Union, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
 
 from nonebot.utils import run_sync
-from nonebot.typing import PermissionChecker
+from nonebot.typing import T_PermissionChecker
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
@@ -67,7 +67,7 @@ class Permission:
 
     def __or__(
         self, other: Optional[Union["Permission",
-                                    PermissionChecker]]) -> "Permission":
+                                    T_PermissionChecker]]) -> "Permission":
         checkers = self.checkers.copy()
         if other is None:
             return self

@@ -18,7 +18,7 @@ from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional
 from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
-from nonebot.typing import State, Handler, RuleChecker
+from nonebot.typing import T_State, T_Handler, T_RuleChecker
 from nonebot.rule import Rule, startswith, endswith, keyword, command, regex
 
 plugins: Dict[str, "Plugin"] = {}
@@ -101,14 +101,14 @@ class Plugin(object):
 
 
 def on(type: str = "",
-       rule: Optional[Union[Rule, RuleChecker]] = None,
+       rule: Optional[Union[Rule, T_RuleChecker]] = None,
        permission: Optional[Permission] = None,
        *,
-       handlers: Optional[List[Handler]] = None,
+       handlers: Optional[List[T_Handler]] = None,
        temp: bool = False,
        priority: int = 1,
        block: bool = False,
-       state: Optional[State] = None) -> Type[Matcher]:
+       state: Optional[T_State] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -117,13 +117,13 @@ def on(type: str = "",
     :参数:
 
       * ``type: str``: 事件响应器类型
-      * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
       * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+      * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认的 state
 
     :返回:
 
@@ -141,13 +141,13 @@ def on(type: str = "",
     return matcher
 
 
-def on_metaevent(rule: Optional[Union[Rule, RuleChecker]] = None,
+def on_metaevent(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                  *,
-                 handlers: Optional[List[Handler]] = None,
+                 handlers: Optional[List[T_Handler]] = None,
                  temp: bool = False,
                  priority: int = 1,
                  block: bool = False,
-                 state: Optional[State] = None) -> Type[Matcher]:
+                 state: Optional[T_State] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -155,12 +155,12 @@ def on_metaevent(rule: Optional[Union[Rule, RuleChecker]] = None,
 
     :参数:
 
-      * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
-      * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
+      * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认的 state
 
     :返回:
 
@@ -178,14 +178,14 @@ def on_metaevent(rule: Optional[Union[Rule, RuleChecker]] = None,
     return matcher
 
 
-def on_message(rule: Optional[Union[Rule, RuleChecker]] = None,
+def on_message(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                permission: Optional[Permission] = None,
                *,
-               handlers: Optional[List[Handler]] = None,
+               handlers: Optional[List[T_Handler]] = None,
                temp: bool = False,
                priority: int = 1,
                block: bool = True,
-               state: Optional[State] = None) -> Type[Matcher]:
+               state: Optional[T_State] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -193,13 +193,13 @@ def on_message(rule: Optional[Union[Rule, RuleChecker]] = None,
 
     :参数:
 
-      * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
       * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+      * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认的 state
 
     :返回:
 
@@ -217,13 +217,13 @@ def on_message(rule: Optional[Union[Rule, RuleChecker]] = None,
     return matcher
 
 
-def on_notice(rule: Optional[Union[Rule, RuleChecker]] = None,
+def on_notice(rule: Optional[Union[Rule, T_RuleChecker]] = None,
               *,
-              handlers: Optional[List[Handler]] = None,
+              handlers: Optional[List[T_Handler]] = None,
               temp: bool = False,
               priority: int = 1,
               block: bool = False,
-              state: Optional[State] = None) -> Type[Matcher]:
+              state: Optional[T_State] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -231,12 +231,12 @@ def on_notice(rule: Optional[Union[Rule, RuleChecker]] = None,
 
     :参数:
 
-      * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
-      * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
+      * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认的 state
 
     :返回:
 
@@ -254,13 +254,13 @@ def on_notice(rule: Optional[Union[Rule, RuleChecker]] = None,
     return matcher
 
 
-def on_request(rule: Optional[Union[Rule, RuleChecker]] = None,
+def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                *,
-               handlers: Optional[List[Handler]] = None,
+               handlers: Optional[List[T_Handler]] = None,
                temp: bool = False,
                priority: int = 1,
                block: bool = False,
-               state: Optional[State] = None) -> Type[Matcher]:
+               state: Optional[T_State] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -268,12 +268,12 @@ def on_request(rule: Optional[Union[Rule, RuleChecker]] = None,
 
     :参数:
 
-      * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
-      * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
+      * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认的 state
 
     :返回:
 
@@ -292,7 +292,7 @@ def on_request(rule: Optional[Union[Rule, RuleChecker]] = None,
 
 
 def on_startswith(msg: str,
-                  rule: Optional[Optional[Union[Rule, RuleChecker]]] = None,
+                  rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
                   **kwargs) -> Type[Matcher]:
     """
     :说明:
@@ -302,13 +302,13 @@ def on_startswith(msg: str,
     :参数:
 
       * ``msg: str``: 指定消息开头内容
-      * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
       * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+      * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认的 state
 
     :返回:
 
@@ -318,7 +318,7 @@ def on_startswith(msg: str,
 
 
 def on_endswith(msg: str,
-                rule: Optional[Optional[Union[Rule, RuleChecker]]] = None,
+                rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
                 **kwargs) -> Type[Matcher]:
     """
     :说明:
@@ -328,13 +328,13 @@ def on_endswith(msg: str,
     :参数:
 
       * ``msg: str``: 指定消息结尾内容
-      * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
       * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+      * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认的 state
 
     :返回:
 
@@ -344,7 +344,7 @@ def on_endswith(msg: str,
 
 
 def on_keyword(keywords: Set[str],
-               rule: Optional[Union[Rule, RuleChecker]] = None,
+               rule: Optional[Union[Rule, T_RuleChecker]] = None,
                **kwargs) -> Type[Matcher]:
     """
     :说明:
@@ -354,13 +354,13 @@ def on_keyword(keywords: Set[str],
     :参数:
 
       * ``keywords: Set[str]``: 关键词列表
-      * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
       * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+      * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认的 state
 
     :返回:
 
@@ -370,7 +370,7 @@ def on_keyword(keywords: Set[str],
 
 
 def on_command(cmd: Union[str, Tuple[str, ...]],
-               rule: Optional[Union[Rule, RuleChecker]] = None,
+               rule: Optional[Union[Rule, T_RuleChecker]] = None,
                aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
                **kwargs) -> Type[Matcher]:
     """
@@ -383,21 +383,21 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
     :参数:
 
       * ``cmd: Union[str, Tuple[str, ...]]``: 指定命令内容
-      * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
       * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
       * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+      * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认的 state
 
     :返回:
 
       - ``Type[Matcher]``
     """
 
-    async def _strip_cmd(bot, event, state: State):
+    async def _strip_cmd(bot, event, state: T_State):
         message = event.message
         event.message = message.__class__(
             str(message)[len(state["_prefix"]["raw_command"]):].strip())
@@ -424,13 +424,13 @@ def on_regex(pattern: str,
 
       * ``pattern: str``: 正则表达式
       * ``flags: Union[int, re.RegexFlag]``: 正则匹配标志
-      * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
       * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+      * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认的 state
 
     :返回:
 
@@ -515,13 +515,13 @@ class MatcherGroup:
         :参数:
 
           * ``type: str``: 事件响应器类型
-          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
           * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认的 state
 
         :返回:
 
@@ -542,12 +542,12 @@ class MatcherGroup:
 
         :参数:
 
-          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
-          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
+          * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认的 state
 
         :返回:
 
@@ -569,13 +569,13 @@ class MatcherGroup:
 
         :参数:
 
-          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
           * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认的 state
 
         :返回:
 
@@ -597,12 +597,12 @@ class MatcherGroup:
 
         :参数:
 
-          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
-          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
+          * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认的 state
 
         :返回:
 
@@ -624,12 +624,12 @@ class MatcherGroup:
 
         :参数:
 
-          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
-          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
+          * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认的 state
 
         :返回:
 
@@ -645,7 +645,8 @@ class MatcherGroup:
 
     def on_startswith(self,
                       msg: str,
-                      rule: Optional[Optional[Union[Rule, RuleChecker]]] = None,
+                      rule: Optional[Optional[Union[Rule,
+                                                    T_RuleChecker]]] = None,
                       **kwargs) -> Type[Matcher]:
         """
         :说明:
@@ -655,13 +656,13 @@ class MatcherGroup:
         :参数:
 
           * ``msg: str``: 指定消息开头内容
-          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
           * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认的 state
 
         :返回:
 
@@ -671,7 +672,7 @@ class MatcherGroup:
 
     def on_endswith(self,
                     msg: str,
-                    rule: Optional[Optional[Union[Rule, RuleChecker]]] = None,
+                    rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
                     **kwargs) -> Type[Matcher]:
         """
         :说明:
@@ -681,13 +682,13 @@ class MatcherGroup:
         :参数:
 
           * ``msg: str``: 指定消息结尾内容
-          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
           * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认的 state
 
         :返回:
 
@@ -697,7 +698,7 @@ class MatcherGroup:
 
     def on_keyword(self,
                    keywords: Set[str],
-                   rule: Optional[Union[Rule, RuleChecker]] = None,
+                   rule: Optional[Union[Rule, T_RuleChecker]] = None,
                    **kwargs) -> Type[Matcher]:
         """
         :说明:
@@ -707,13 +708,13 @@ class MatcherGroup:
         :参数:
 
           * ``keywords: Set[str]``: 关键词列表
-          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
           * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认的 state
 
         :返回:
 
@@ -723,7 +724,7 @@ class MatcherGroup:
 
     def on_command(self,
                    cmd: Union[str, Tuple[str, ...]],
-                   rule: Optional[Union[Rule, RuleChecker]] = None,
+                   rule: Optional[Union[Rule, T_RuleChecker]] = None,
                    aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
                    **kwargs) -> Type[Matcher]:
         """
@@ -736,21 +737,21 @@ class MatcherGroup:
         :参数:
 
           * ``cmd: Union[str, Tuple[str, ...]]``: 指定命令内容
-          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
           * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
           * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认的 state
 
         :返回:
 
           - ``Type[Matcher]``
         """
 
-        async def _strip_cmd(bot, event, state: State):
+        async def _strip_cmd(bot, event, state: T_State):
             message = event.message
             event.message = message.__class__(
                 str(message)[len(state["_prefix"]["raw_command"]):].strip())
@@ -779,13 +780,13 @@ class MatcherGroup:
 
           * ``pattern: str``: 正则表达式
           * ``flags: Union[int, re.RegexFlag]``: 正则匹配标志
-          * ``rule: Optional[Union[Rule, RuleChecker]]``: 事件响应规则
+          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
           * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认的 state
 
         :返回:
 
@@ -819,7 +820,7 @@ def load_plugin(module_path: str) -> Optional[Plugin]:
                 logger.warning(
                     f"Module {module_path} has been loaded by other plugins! Ignored"
                 )
-                return
+                return None
             module = importlib.import_module(module_path)
             for m in _tmp_matchers.get():
                 m.module = module_path
@@ -859,15 +860,15 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
         _export.set(Export())
         name = module_info.name
         if name.startswith("_"):
-            return
+            return None
 
         spec = module_info.module_finder.find_spec(name, None)
         if spec.name in plugins:
-            return
+            return None
         elif spec.name in sys.modules:
             logger.warning(
                 f"Module {spec.name} has been loaded by other plugin! Ignored")
-            return
+            return None
 
         try:
             module = _load(spec)

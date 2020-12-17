@@ -216,9 +216,9 @@ class Config(BaseConfig):
     """
 
     # bot runtime configs
-    superusers: Set[int] = set()
+    superusers: Set[str] = set()
     """
-    - **类型**: ``Set[int]``
+    - **类型**: ``Set[str]``
     - **默认值**: ``set()``
 
     :说明:
@@ -229,7 +229,7 @@ class Config(BaseConfig):
 
     .. code-block:: default
 
-        SUPER_USERS=[12345789]
+        SUPER_USERS=["12345789"]
     """
     nickname: Set[str] = set()
     """

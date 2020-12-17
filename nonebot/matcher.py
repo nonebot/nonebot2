@@ -15,7 +15,7 @@ from typing import Type, List, Dict, Union, Callable, Optional, NoReturn, TYPE_C
 from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.permission import Permission, USER
-from nonebot.typing import State, Handler, ArgsParser
+from nonebot.typing import T_State, T_Handler, T_ArgsParser
 from nonebot.exception import PausedException, RejectedException, FinishedException
 
 if TYPE_CHECKING:
@@ -64,9 +64,9 @@ class Matcher(metaclass=MatcherMeta):
     :类型: ``Permission``
     :说明: 事件响应器触发权限
     """
-    handlers: List[Handler] = []
+    handlers: List[T_Handler] = []
     """
-    :类型: ``List[Handler]``
+    :类型: ``List[T_Handler]``
     :说明: 事件响应器拥有的事件处理函数列表
     """
     priority: int = 1
@@ -90,15 +90,15 @@ class Matcher(metaclass=MatcherMeta):
     :说明: 事件响应器过期时间点
     """
 
-    _default_state: State = {}
+    _default_state: T_State = {}
     """
-    :类型: ``State``
+    :类型: ``T_State``
     :说明: 事件响应器默认状态
     """
 
-    _default_parser: Optional[ArgsParser] = None
+    _default_parser: Optional[T_ArgsParser] = None
     """
-    :类型: ``Optional[ArgsParser]``
+    :类型: ``Optional[T_ArgsParser]``
     :说明: 事件响应器默认参数解析函数
     """
 
@@ -119,13 +119,13 @@ class Matcher(metaclass=MatcherMeta):
             type_: str = "",
             rule: Optional[Rule] = None,
             permission: Optional[Permission] = None,
-            handlers: Optional[List[Handler]] = None,
+            handlers: Optional[List[T_Handler]] = None,
             temp: bool = False,
             priority: int = 1,
             block: bool = False,
             *,
             module: Optional[str] = None,
-            default_state: Optional[State] = None,
+            default_state: Optional[T_State] = None,
             expire_time: Optional[datetime] = None) -> Type["Matcher"]:
         """
         :说明:
@@ -137,12 +137,12 @@ class Matcher(metaclass=MatcherMeta):
           * ``type_: str``: 事件响应器类型，与 ``event.type`` 一致时触发，空字符串表示任意
           * ``rule: Optional[Rule]``: 匹配规则
           * ``permission: Optional[Permission]``: 权限
-          * ``handlers: Optional[List[Handler]]``: 事件处理函数列表
+          * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器，即触发一次后删除
           * ``priority: int``: 响应优先级
           * ``block: bool``: 是否阻止事件向更低优先级的响应器传播
           * ``module: Optional[str]``: 事件响应器所在模块名称
-          * ``default_state: Optional[State]``: 默认状态 ``state``
+          * ``default_state: Optional[T_State]``: 默认状态 ``state``
           * ``expire_time: Optional[datetime]``: 事件响应器最终有效时间点，过时即被删除
 
         :返回:
@@ -187,7 +187,8 @@ class Matcher(metaclass=MatcherMeta):
         return await cls.permission(bot, event)
 
     @classmethod
-    async def check_rule(cls, bot: "Bot", event: "Event", state: State) -> bool:
+    async def check_rule(cls, bot: "Bot", event: "Event",
+                         state: T_State) -> bool:
         """
         :说明:
 
@@ -197,7 +198,7 @@ class Matcher(metaclass=MatcherMeta):
 
           * ``bot: Bot``: Bot 对象
           * ``event: Event``: 上报事件
-          * ``state: State``: 当前状态
+          * ``state: T_State``: 当前状态
 
         :返回:
 
@@ -208,7 +209,7 @@ class Matcher(metaclass=MatcherMeta):
                 await cls.rule(bot, event, state))
 
     @classmethod
-    def args_parser(cls, func: ArgsParser) -> ArgsParser:
+    def args_parser(cls, func: T_ArgsParser) -> T_ArgsParser:
         """
         :说明:
 
@@ -216,13 +217,13 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``func: ArgsParser``: 参数解析函数
+          * ``func: T_ArgsParser``: 参数解析函数
         """
         cls._default_parser = func
         return func
 
     @staticmethod
-    def process_handler(handler: Handler) -> Handler:
+    def process_handler(handler: T_Handler) -> T_Handler:
         signature = inspect.signature(handler, follow_wrapped=False)
         bot = signature.parameters.get("bot")
         event = signature.parameters.get("event")
@@ -232,17 +233,17 @@ class Matcher(metaclass=MatcherMeta):
         handler.__params__ = {
             "bot": bot.annotation,
             "event": event.annotation if event else None,
-            "state": State if state else None
+            "state": T_State if state else None
         }
         return handler
 
     @classmethod
-    def append_handler(cls, handler: Handler) -> None:
+    def append_handler(cls, handler: T_Handler) -> None:
         # Process handler first
         cls.handlers.append(cls.process_handler(handler))
 
     @classmethod
-    def handle(cls) -> Callable[[Handler], Handler]:
+    def handle(cls) -> Callable[[T_Handler], T_Handler]:
         """
         :说明:
 
@@ -253,14 +254,14 @@ class Matcher(metaclass=MatcherMeta):
           * 无
         """
 
-        def _decorator(func: Handler) -> Handler:
+        def _decorator(func: T_Handler) -> T_Handler:
             cls.append_handler(func)
             return func
 
         return _decorator
 
     @classmethod
-    def receive(cls) -> Callable[[Handler], Handler]:
+    def receive(cls) -> Callable[[T_Handler], T_Handler]:
         """
         :说明:
 
@@ -272,14 +273,14 @@ class Matcher(metaclass=MatcherMeta):
         """
 
         async def _receive(bot: "Bot", event: "Event",
-                           state: State) -> NoReturn:
+                           state: T_State) -> NoReturn:
             raise PausedException
 
         if cls.handlers:
             # 已有前置handlers则接受一条新的消息，否则视为接收初始消息
             cls.append_handler(_receive)
 
-        def _decorator(func: Handler) -> Handler:
+        def _decorator(func: T_Handler) -> T_Handler:
             if not cls.handlers or cls.handlers[-1] is not func:
                 cls.append_handler(func)
 
@@ -292,8 +293,8 @@ class Matcher(metaclass=MatcherMeta):
         cls,
         key: str,
         prompt: Optional[Union[str, "Message", "MessageSegment"]] = None,
-        args_parser: Optional[ArgsParser] = None
-    ) -> Callable[[Handler], Handler]:
+        args_parser: Optional[T_ArgsParser] = None
+    ) -> Callable[[T_Handler], T_Handler]:
         """
         :说明:
 
@@ -303,10 +304,10 @@ class Matcher(metaclass=MatcherMeta):
 
           * ``key: str``: 参数名
           * ``prompt: Optional[Union[str, Message, MessageSegment]]``: 在参数不存在时向用户发送的消息
-          * ``args_parser: Optional[ArgsParser]``: 可选参数解析函数，空则使用默认解析函数
+          * ``args_parser: Optional[T_ArgsParser]``: 可选参数解析函数，空则使用默认解析函数
         """
 
-        async def _key_getter(bot: "Bot", event: "Event", state: State):
+        async def _key_getter(bot: "Bot", event: "Event", state: T_State):
             state["_current_key"] = key
             if key not in state:
                 if prompt:
@@ -316,12 +317,13 @@ class Matcher(metaclass=MatcherMeta):
             else:
                 state["_skip_key"] = True
 
-        async def _key_parser(bot: "Bot", event: "Event", state: State):
+        async def _key_parser(bot: "Bot", event: "Event", state: T_State):
             if key in state and state.get("_skip_key"):
                 del state["_skip_key"]
                 return
             parser = args_parser or cls._default_parser
             if parser:
+                # parser = cast(T_ArgsParser["Bot", "Event"], parser)
                 await parser(bot, event, state)
             else:
                 state[state["_current_key"]] = str(event.get_message())
@@ -329,13 +331,13 @@ class Matcher(metaclass=MatcherMeta):
         cls.append_handler(_key_getter)
         cls.append_handler(_key_parser)
 
-        def _decorator(func: Handler) -> Handler:
+        def _decorator(func: T_Handler) -> T_Handler:
             if not hasattr(cls.handlers[-1], "__wrapped__"):
                 cls.process_handler(func)
                 parser = cls.handlers.pop()
 
                 @wraps(func)
-                async def wrapper(bot: "Bot", event: "Event", state: State):
+                async def wrapper(bot: "Bot", event: "Event", state: T_State):
                     await cls.run_handler(parser, bot, event, state)
                     await cls.run_handler(func, bot, event, state)
                     if "_current_key" in state:
@@ -428,8 +430,8 @@ class Matcher(metaclass=MatcherMeta):
         raise RejectedException
 
     @classmethod
-    async def run_handler(cls, handler: Handler, bot: "Bot", event: "Event",
-                          state: State):
+    async def run_handler(cls, handler: T_Handler, bot: "Bot", event: "Event",
+                          state: T_State):
         if not hasattr(handler, "__params__"):
             cls.process_handler(handler)
         params = getattr(handler, "__params__")
@@ -445,7 +447,7 @@ class Matcher(metaclass=MatcherMeta):
             **{k: v for k, v in args.items() if params[k] is not None})
 
     # 运行handlers
-    async def run(self, bot: "Bot", event: "Event", state: State):
+    async def run(self, bot: "Bot", event: "Event", state: T_State):
         b_t = current_bot.set(bot)
         e_t = current_event.set(event)
         try:

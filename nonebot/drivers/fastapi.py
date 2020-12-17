@@ -205,7 +205,7 @@ class WebSocket(BaseWebSocket):
 
     def __init__(self, websocket: FastAPIWebSocket):
         super().__init__(websocket)
-        self._closed = None
+        self._closed = False
 
     @property
     @overrides(BaseWebSocket)
