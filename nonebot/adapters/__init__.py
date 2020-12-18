@@ -155,7 +155,7 @@ class Event(abc.ABC, BaseModel):
     def get_event_description(self) -> str:
         raise NotImplementedError
 
-    def get_log_string(self) -> str:
+    def __str__(self) -> str:
         return f"[{self.get_event_name()}]: {self.get_event_description()}"
 
     @abc.abstractmethod

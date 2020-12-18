@@ -209,7 +209,7 @@ async def handle_event(bot: "Bot", event: "Event"):
     show_log = True
     log_msg = f"<m>{bot.type.upper()} {bot.self_id}</m> | "
     try:
-        log_msg += event.get_log_string()
+        log_msg += str(event)
     except NoLogException:
         show_log = False
     if show_log:
