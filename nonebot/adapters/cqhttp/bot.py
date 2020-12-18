@@ -176,7 +176,7 @@ def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
     """
     if isinstance(result, dict):
         if result.get("status") == "failed":
-            raise ActionFailed(retcode=result.get("retcode"))
+            raise ActionFailed(**result)
         return result.get("data")
 
 
