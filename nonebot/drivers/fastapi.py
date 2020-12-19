@@ -133,7 +133,9 @@ class Driver(BaseDriver):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
         if adapter not in self._adapters:
-            logger.warning("Unknown adapter")
+            logger.warning(
+                f"Unknown adapter {adapter}. Please register the adapter before use."
+            )
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail="adapter not found")
 
@@ -162,7 +164,9 @@ class Driver(BaseDriver):
         ws = WebSocket(websocket)
 
         if adapter not in self._adapters:
-            logger.warning("Unknown adapter")
+            logger.warning(
+                f"Unknown adapter {adapter}. Please register the adapter before use."
+            )
             await ws.close(code=status.WS_1008_POLICY_VIOLATION)
             return
 
