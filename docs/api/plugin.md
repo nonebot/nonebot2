@@ -115,13 +115,13 @@ def something_else():
     * `type: str`: 事件响应器类型
 
 
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -133,7 +133,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -156,10 +156,10 @@ def something_else():
 * **参数**
 
     
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -171,7 +171,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -194,13 +194,13 @@ def something_else():
 * **参数**
 
     
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -212,7 +212,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -235,10 +235,10 @@ def something_else():
 * **参数**
 
     
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -250,7 +250,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -273,10 +273,10 @@ def something_else():
 * **参数**
 
     
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -288,7 +288,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -314,13 +314,13 @@ def something_else():
     * `msg: str`: 指定消息开头内容
 
 
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -332,7 +332,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -358,13 +358,13 @@ def something_else():
     * `msg: str`: 指定消息结尾内容
 
 
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -376,7 +376,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -402,13 +402,13 @@ def something_else():
     * `keywords: Set[str]`: 关键词列表
 
 
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -420,7 +420,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -448,7 +448,7 @@ def something_else():
     * `cmd: Union[str, Tuple[str, ...]]`: 指定命令内容
 
 
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `aliases: Optional[Set[Union[str, Tuple[str, ...]]]]`: 命令别名
@@ -457,7 +457,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -469,7 +469,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -500,13 +500,13 @@ def something_else():
     * `flags: Union[int, re.RegexFlag]`: 正则匹配标志
 
 
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -518,7 +518,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -648,13 +648,13 @@ def something_else():
     * `type: str`: 事件响应器类型
 
 
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -666,7 +666,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -689,10 +689,10 @@ def something_else():
 * **参数**
 
     
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -704,7 +704,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -727,13 +727,13 @@ def something_else():
 * **参数**
 
     
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -745,7 +745,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -768,10 +768,10 @@ def something_else():
 * **参数**
 
     
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -783,7 +783,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -806,10 +806,10 @@ def something_else():
 * **参数**
 
     
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -821,7 +821,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -847,13 +847,13 @@ def something_else():
     * `msg: str`: 指定消息开头内容
 
 
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -865,7 +865,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -891,13 +891,13 @@ def something_else():
     * `msg: str`: 指定消息结尾内容
 
 
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -909,7 +909,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -935,13 +935,13 @@ def something_else():
     * `keywords: Set[str]`: 关键词列表
 
 
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -953,7 +953,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -981,7 +981,7 @@ def something_else():
     * `cmd: Union[str, Tuple[str, ...]]`: 指定命令内容
 
 
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `aliases: Optional[Set[Union[str, Tuple[str, ...]]]]`: 命令别名
@@ -990,7 +990,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -1002,7 +1002,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 
@@ -1033,13 +1033,13 @@ def something_else():
     * `flags: Union[int, re.RegexFlag]`: 正则匹配标志
 
 
-    * `rule: Optional[Union[Rule, RuleChecker]]`: 事件响应规则
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -1051,7 +1051,7 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认的 state
 
 
 

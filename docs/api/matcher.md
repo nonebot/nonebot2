@@ -157,7 +157,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `State`
+    `T_State`
 
 
 
@@ -172,7 +172,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Optional[ArgsParser]`
+    `Optional[T_ArgsParser]`
 
 
 
@@ -192,7 +192,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `List[Handler]`
+    `List[T_Handler]`
 
 
 
@@ -223,7 +223,7 @@ sidebarDepth: 0
     * `permission: Optional[Permission]`: 权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器，即触发一次后删除
@@ -238,7 +238,7 @@ sidebarDepth: 0
     * `module: Optional[str]`: 事件响应器所在模块名称
 
 
-    * `default_state: Optional[State]`: 默认状态 `state`
+    * `default_state: Optional[T_State]`: 默认状态 `state`
 
 
     * `expire_time: Optional[datetime]`: 事件响应器最终有效时间点，过时即被删除
@@ -296,7 +296,7 @@ sidebarDepth: 0
     * `event: Event`: 上报事件
 
 
-    * `state: State`: 当前状态
+    * `state: T_State`: 当前状态
 
 
 
@@ -319,7 +319,7 @@ sidebarDepth: 0
 * **参数**
 
     
-    * `func: ArgsParser`: 参数解析函数
+    * `func: T_ArgsParser`: 参数解析函数
 
 
 
@@ -373,7 +373,7 @@ sidebarDepth: 0
     * `prompt: Optional[Union[str, Message, MessageSegment]]`: 在参数不存在时向用户发送的消息
 
 
-    * `args_parser: Optional[ArgsParser]`: 可选参数解析函数，空则使用默认解析函数
+    * `args_parser: Optional[T_ArgsParser]`: 可选参数解析函数，空则使用默认解析函数
 
 
 

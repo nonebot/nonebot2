@@ -286,11 +286,153 @@ CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 
 
 
+## _class_ `MessageSegment`
+
+基类：[`nonebot.adapters.MessageSegment`](README.md#nonebot.adapters.MessageSegment)
+
+CQHTTP 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
+
+
+## _class_ `Message`
+
+基类：[`nonebot.adapters.Message`](README.md#nonebot.adapters.Message)
+
+CQHTTP 协议 Message 适配。
+
+
 ## _class_ `Event`
 
 基类：[`nonebot.adapters.Event`](README.md#nonebot.adapters.Event)
 
 CQHTTP 协议事件。各事件字段未列出部分参考 [CQHTTP 文档](https://github.com/howmanybots/onebot/blob/master/README.md)
+
+
+### `get_type()`
+
+
+* **说明**
+
+    获取事件类型的方法，类型通常为 NoneBot 内置的四种类型。
+
+
+
+* **返回**
+
+    
+    * `Literal["message", "notice", "request", "meta_event"]`
+
+
+
+### `get_event_name()`
+
+
+* **说明**
+
+    获取事件名称的方法。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_event_description()`
+
+
+* **说明**
+
+    获取事件描述的方法，通常为事件具体内容。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_message()`
+
+
+* **说明**
+
+    获取事件消息内容的方法。
+
+
+
+* **返回**
+
+    
+    * `Message`
+
+
+
+### `get_plaintext()`
+
+
+* **说明**
+
+    获取消息纯文本的方法，通常不需要修改，默认通过 `get_message().extract_plain_text` 获取。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_user_id()`
+
+
+* **说明**
+
+    获取事件主体 id 的方法，通常是用户 id 。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_session_id()`
+
+
+* **说明**
+
+    获取会话 id 的方法，用于判断当前事件属于哪一个会话，通常是用户 id、群组 id 组合。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`
+
 
 
 ## _class_ `MessageEvent`
@@ -330,11 +472,123 @@ CQHTTP 协议事件。各事件字段未列出部分参考 [CQHTTP 文档](https
 
 
 
+### `get_event_name()`
+
+
+* **说明**
+
+    获取事件名称的方法。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_message()`
+
+
+* **说明**
+
+    获取事件消息内容的方法。
+
+
+
+* **返回**
+
+    
+    * `Message`
+
+
+
+### `get_plaintext()`
+
+
+* **说明**
+
+    获取消息纯文本的方法，通常不需要修改，默认通过 `get_message().extract_plain_text` 获取。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_user_id()`
+
+
+* **说明**
+
+    获取事件主体 id 的方法，通常是用户 id 。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_session_id()`
+
+
+* **说明**
+
+    获取会话 id 的方法，用于判断当前事件属于哪一个会话，通常是用户 id、群组 id 组合。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`
+
+
+
 ## _class_ `PrivateMessageEvent`
 
 基类：`nonebot.adapters.cqhttp.event.MessageEvent`
 
 私聊消息
+
+
+### `get_event_description()`
+
+
+* **说明**
+
+    获取事件描述的方法，通常为事件具体内容。
+
+
+
+* **返回**
+
+    
+    * `str`
+
 
 
 ## _class_ `GroupMessageEvent`
@@ -344,11 +598,43 @@ CQHTTP 协议事件。各事件字段未列出部分参考 [CQHTTP 文档](https
 群消息
 
 
+### `get_event_description()`
+
+
+* **说明**
+
+    获取事件描述的方法，通常为事件具体内容。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
 ## _class_ `NoticeEvent`
 
 基类：`nonebot.adapters.cqhttp.event.Event`
 
 通知事件
+
+
+### `get_event_name()`
+
+
+* **说明**
+
+    获取事件名称的方法。
+
+
+
+* **返回**
+
+    
+    * `str`
+
 
 
 ## _class_ `GroupUploadNoticeEvent`
@@ -365,11 +651,43 @@ CQHTTP 协议事件。各事件字段未列出部分参考 [CQHTTP 文档](https
 群管理员变动
 
 
+### `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`
+
+
+
 ## _class_ `GroupDecreaseNoticeEvent`
 
 基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
 
 群成员减少事件
+
+
+### `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`
+
 
 
 ## _class_ `GroupIncreaseNoticeEvent`
@@ -379,11 +697,43 @@ CQHTTP 协议事件。各事件字段未列出部分参考 [CQHTTP 文档](https
 群成员增加事件
 
 
+### `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`
+
+
+
 ## _class_ `GroupBanNoticeEvent`
 
 基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
 
 群禁言事件
+
+
+### `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`
+
 
 
 ## _class_ `FriendAddNoticeEvent`
@@ -398,6 +748,22 @@ CQHTTP 协议事件。各事件字段未列出部分参考 [CQHTTP 文档](https
 基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
 
 群消息撤回事件
+
+
+### `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`
+
 
 
 ## _class_ `FriendRecallNoticeEvent`
@@ -421,11 +787,43 @@ CQHTTP 协议事件。各事件字段未列出部分参考 [CQHTTP 文档](https
 戳一戳提醒事件
 
 
+### `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`
+
+
+
 ## _class_ `LuckyKingNotifyEvent`
 
 基类：`nonebot.adapters.cqhttp.event.NotifyEvent`
 
 群红包运气王提醒事件
+
+
+### `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`
+
 
 
 ## _class_ `HonorNotifyEvent`
@@ -435,11 +833,43 @@ CQHTTP 协议事件。各事件字段未列出部分参考 [CQHTTP 文档](https
 群荣誉变更提醒事件
 
 
+### `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`
+
+
+
 ## _class_ `RequestEvent`
 
 基类：`nonebot.adapters.cqhttp.event.Event`
 
 请求事件
+
+
+### `get_event_name()`
+
+
+* **说明**
+
+    获取事件名称的方法。
+
+
+
+* **返回**
+
+    
+    * `str`
+
 
 
 ## _class_ `FriendRequestEvent`
@@ -461,6 +891,45 @@ CQHTTP 协议事件。各事件字段未列出部分参考 [CQHTTP 文档](https
 基类：`nonebot.adapters.cqhttp.event.Event`
 
 元事件
+
+
+### `get_event_name()`
+
+
+* **说明**
+
+    获取事件名称的方法。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_log_string()`
+
+
+* **说明**
+
+    获取事件日志信息的方法，通常你不需要修改这个方法，只有当希望 NoneBot 隐藏该事件日志时，可以抛出 `NoLogException` 异常。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+* **异常**
+
+    
+    * `NoLogException`
+
 
 
 ## _class_ `LifecycleMetaEvent`
@@ -490,18 +959,3 @@ CQHTTP 协议事件。各事件字段未列出部分参考 [CQHTTP 文档](https
 
     
     * `List[Type[Event]]`
-
-
-
-## _class_ `MessageSegment`
-
-基类：[`nonebot.adapters.MessageSegment`](README.md#nonebot.adapters.MessageSegment)
-
-CQHTTP 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
-
-
-## _class_ `Message`
-
-基类：[`nonebot.adapters.Message`](README.md#nonebot.adapters.Message)
-
-CQHTTP 协议 Message 适配。

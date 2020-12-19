@@ -30,7 +30,7 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
     * `event: Event`: Event 对象
 
 
-    * `state: State`: 当前 State
+    * `state: T_State`: 当前 State
 
 
 
@@ -54,7 +54,7 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
     * `event: Event`: Event 对象
 
 
-    * `state: State`: 当前事件运行前 State
+    * `state: T_State`: 当前事件运行前 State
 
 
 
@@ -81,7 +81,7 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
     * `event: Event`: Event 对象
 
 
-    * `state: State`: 当前 State
+    * `state: T_State`: 当前 State
 
 
 
@@ -111,7 +111,7 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
     * `event: Event`: Event 对象
 
 
-    * `state: State`: 当前 State
+    * `state: T_State`: 当前 State
 
 
 

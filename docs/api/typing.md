@@ -14,7 +14,7 @@ sidebarDepth: 0
 以下类型均可从 nonebot.typing 模块导入。
 
 
-## `State`
+## `T_State`
 
 
 * **类型**
@@ -30,12 +30,12 @@ sidebarDepth: 0
 
 
 
-## `EventPreProcessor`
+## `T_EventPreProcessor`
 
 
 * **类型**
 
-    `Callable[[Bot, Event, State], Awaitable[None]]`
+    `Callable[[Bot, Event, T_State], Awaitable[None]]`
 
 
 
@@ -46,12 +46,12 @@ sidebarDepth: 0
 
 
 
-## `EventPostProcessor`
+## `T_EventPostProcessor`
 
 
 * **类型**
 
-    `Callable[[Bot, Event, State], Awaitable[None]]`
+    `Callable[[Bot, Event, T_State], Awaitable[None]]`
 
 
 
@@ -62,12 +62,12 @@ sidebarDepth: 0
 
 
 
-## `RunPreProcessor`
+## `T_RunPreProcessor`
 
 
 * **类型**
 
-    `Callable[[Matcher, Bot, Event, State], Awaitable[None]]`
+    `Callable[[Matcher, Bot, Event, T_State], Awaitable[None]]`
 
 
 
@@ -78,12 +78,12 @@ sidebarDepth: 0
 
 
 
-## `RunPostProcessor`
+## `T_RunPostProcessor`
 
 
 * **类型**
 
-    `Callable[[Matcher, Optional[Exception], Bot, Event, State], Awaitable[None]]`
+    `Callable[[Matcher, Optional[Exception], Bot, Event, T_State], Awaitable[None]]`
 
 
 
@@ -94,12 +94,12 @@ sidebarDepth: 0
 
 
 
-## `RuleChecker`
+## `T_RuleChecker`
 
 
 * **类型**
 
-    `Callable[[Bot, Event, State], Union[bool, Awaitable[bool]]]`
+    `Callable[[Bot, Event, T_State], Union[bool, Awaitable[bool]]]`
 
 
 
@@ -110,7 +110,7 @@ sidebarDepth: 0
 
 
 
-## `PermissionChecker`
+## `T_PermissionChecker`
 
 
 * **类型**
@@ -126,12 +126,22 @@ sidebarDepth: 0
 
 
 
-## `Handler`
+## `T_Handler`
 
 
 * **类型**
 
-    `Callable[[Bot, Event, State], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    
+    * `Callable[[Bot, Event, T_State], Union[Awaitable[None], Awaitable[NoReturn]]]`
+
+
+    * `Callable[[Bot, Event], Union[Awaitable[None], Awaitable[NoReturn]]]`
+
+
+    * `Callable[[Bot, T_State], Union[Awaitable[None], Awaitable[NoReturn]]]`
+
+
+    * `Callable[[Bot], Union[Awaitable[None], Awaitable[NoReturn]]]`
 
 
 
@@ -142,12 +152,12 @@ sidebarDepth: 0
 
 
 
-## `ArgsParser`
+## `T_ArgsParser`
 
 
 * **类型**
 
-    `Callable[[Bot, Event, State], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[[Bot, Event, T_State], Union[Awaitable[None], Awaitable[NoReturn]]]`
 
 
 

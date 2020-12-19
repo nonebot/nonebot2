@@ -195,7 +195,7 @@ X-Signature: sha1=f9ddd4863ace61e64f462d41ca311e3d2c1176e2
 ### `superusers`
 
 
-* **类型**: `Set[int]`
+* **类型**: `Set[str]`
 
 
 * **默认值**: `set()`
@@ -211,7 +211,7 @@ X-Signature: sha1=f9ddd4863ace61e64f462d41ca311e3d2c1176e2
 
 
 ```default
-SUPER_USERS=[12345789]
+SUPER_USERS=["12345789"]
 ```
 
 
