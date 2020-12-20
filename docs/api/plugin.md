@@ -100,7 +100,7 @@ def something_else():
 * **说明**: 插件内定义的导出内容
 
 
-## `on(type='', rule=None, permission=None, *, handlers=None, temp=False, priority=1, block=False, state=None)`
+## `on(type='', rule=None, permission=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None)`
 
 
 * **说明**
@@ -133,7 +133,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -144,7 +147,7 @@ def something_else():
 
 
 
-## `on_metaevent(rule=None, *, handlers=None, temp=False, priority=1, block=False, state=None)`
+## `on_metaevent(rule=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None)`
 
 
 * **说明**
@@ -171,7 +174,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -182,7 +188,7 @@ def something_else():
 
 
 
-## `on_message(rule=None, permission=None, *, handlers=None, temp=False, priority=1, block=True, state=None)`
+## `on_message(rule=None, permission=None, *, handlers=None, temp=False, priority=1, block=True, state=None, state_factory=None)`
 
 
 * **说明**
@@ -212,7 +218,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -223,7 +232,7 @@ def something_else():
 
 
 
-## `on_notice(rule=None, *, handlers=None, temp=False, priority=1, block=False, state=None)`
+## `on_notice(rule=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None)`
 
 
 * **说明**
@@ -250,7 +259,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -261,7 +273,7 @@ def something_else():
 
 
 
-## `on_request(rule=None, *, handlers=None, temp=False, priority=1, block=False, state=None)`
+## `on_request(rule=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None)`
 
 
 * **说明**
@@ -288,7 +300,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -332,7 +347,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -376,7 +394,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -420,7 +441,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -469,7 +493,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -518,7 +545,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -666,7 +696,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -704,7 +737,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -745,7 +781,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -783,7 +822,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -821,7 +863,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -865,7 +910,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -909,7 +957,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -953,7 +1004,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -1002,7 +1056,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
@@ -1051,7 +1108,10 @@ def something_else():
     * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-    * `state: Optional[T_State]`: 默认的 state
+    * `state: Optional[T_State]`: 默认 state
+
+
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 
