@@ -159,17 +159,29 @@ class Matcher(metaclass=MatcherMeta):
 
         NewMatcher = type(
             "Matcher", (Matcher,), {
-                "module": module,
-                "type": type_,
-                "rule": rule or Rule(),
-                "permission": permission or Permission(),
-                "handlers": handlers or [],
-                "temp": temp,
-                "expire_time": expire_time,
-                "priority": priority,
-                "block": block,
-                "_default_state": default_state or {},
-                "_default_state_factory": default_state_factory
+                "module":
+                    module,
+                "type":
+                    type_,
+                "rule":
+                    rule or Rule(),
+                "permission":
+                    permission or Permission(),
+                "handlers":
+                    handlers or [],
+                "temp":
+                    temp,
+                "expire_time":
+                    expire_time,
+                "priority":
+                    priority,
+                "block":
+                    block,
+                "_default_state":
+                    default_state or {},
+                "_default_state_factory":
+                    staticmethod(default_state_factory)
+                    if default_state_factory else None
             })
 
         matchers[priority].append(NewMatcher)
