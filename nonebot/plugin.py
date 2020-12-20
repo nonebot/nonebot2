@@ -18,7 +18,7 @@ from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional
 from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
-from nonebot.typing import T_State, T_Handler, T_RuleChecker
+from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
 from nonebot.rule import Rule, startswith, endswith, keyword, command, regex
 
 plugins: Dict[str, "Plugin"] = {}
@@ -108,7 +108,8 @@ def on(type: str = "",
        temp: bool = False,
        priority: int = 1,
        block: bool = False,
-       state: Optional[T_State] = None) -> Type[Matcher]:
+       state: Optional[T_State] = None,
+       state_factory: Optional[T_StateFactory] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -123,7 +124,8 @@ def on(type: str = "",
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认 state
+      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -136,18 +138,21 @@ def on(type: str = "",
                           priority=priority,
                           block=block,
                           handlers=handlers,
-                          default_state=state)
+                          default_state=state,
+                          default_state_factory=state_factory)
     _tmp_matchers.get().add(matcher)
     return matcher
 
 
-def on_metaevent(rule: Optional[Union[Rule, T_RuleChecker]] = None,
-                 *,
-                 handlers: Optional[List[T_Handler]] = None,
-                 temp: bool = False,
-                 priority: int = 1,
-                 block: bool = False,
-                 state: Optional[T_State] = None) -> Type[Matcher]:
+def on_metaevent(
+        rule: Optional[Union[Rule, T_RuleChecker]] = None,
+        *,
+        handlers: Optional[List[T_Handler]] = None,
+        temp: bool = False,
+        priority: int = 1,
+        block: bool = False,
+        state: Optional[T_State] = None,
+        state_factory: Optional[T_StateFactory] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -160,7 +165,8 @@ def on_metaevent(rule: Optional[Union[Rule, T_RuleChecker]] = None,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认 state
+      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -173,7 +179,8 @@ def on_metaevent(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                           priority=priority,
                           block=block,
                           handlers=handlers,
-                          default_state=state)
+                          default_state=state,
+                          default_state_factory=state_factory)
     _tmp_matchers.get().add(matcher)
     return matcher
 
@@ -185,7 +192,8 @@ def on_message(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                temp: bool = False,
                priority: int = 1,
                block: bool = True,
-               state: Optional[T_State] = None) -> Type[Matcher]:
+               state: Optional[T_State] = None,
+               state_factory: Optional[T_StateFactory] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -199,7 +207,8 @@ def on_message(rule: Optional[Union[Rule, T_RuleChecker]] = None,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认 state
+      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -212,7 +221,8 @@ def on_message(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                           priority=priority,
                           block=block,
                           handlers=handlers,
-                          default_state=state)
+                          default_state=state,
+                          default_state_factory=state_factory)
     _tmp_matchers.get().add(matcher)
     return matcher
 
@@ -223,7 +233,8 @@ def on_notice(rule: Optional[Union[Rule, T_RuleChecker]] = None,
               temp: bool = False,
               priority: int = 1,
               block: bool = False,
-              state: Optional[T_State] = None) -> Type[Matcher]:
+              state: Optional[T_State] = None,
+              state_factory: Optional[T_StateFactory] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -236,7 +247,8 @@ def on_notice(rule: Optional[Union[Rule, T_RuleChecker]] = None,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认 state
+      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -249,7 +261,8 @@ def on_notice(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                           priority=priority,
                           block=block,
                           handlers=handlers,
-                          default_state=state)
+                          default_state=state,
+                          default_state_factory=state_factory)
     _tmp_matchers.get().add(matcher)
     return matcher
 
@@ -260,7 +273,8 @@ def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                temp: bool = False,
                priority: int = 1,
                block: bool = False,
-               state: Optional[T_State] = None) -> Type[Matcher]:
+               state: Optional[T_State] = None,
+               state_factory: Optional[T_StateFactory] = None) -> Type[Matcher]:
     """
     :说明:
 
@@ -273,7 +287,8 @@ def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = None,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认 state
+      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -286,7 +301,8 @@ def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                           priority=priority,
                           block=block,
                           handlers=handlers,
-                          default_state=state)
+                          default_state=state,
+                          default_state_factory=state_factory)
     _tmp_matchers.get().add(matcher)
     return matcher
 
@@ -308,7 +324,8 @@ def on_startswith(msg: str,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认 state
+      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -334,7 +351,8 @@ def on_endswith(msg: str,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认 state
+      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -360,7 +378,8 @@ def on_keyword(keywords: Set[str],
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认 state
+      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -390,7 +409,8 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认 state
+      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -430,7 +450,8 @@ def on_regex(pattern: str,
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认的 state
+      * ``state: Optional[T_State]``: 默认 state
+      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -521,7 +542,8 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认 state
+          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -529,9 +551,8 @@ class MatcherGroup:
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
-        matcher = Matcher.new(**final_kwargs)
+        matcher = on(**final_kwargs)
         self.matchers.append(matcher)
-        _tmp_matchers.get().add(matcher)
         return matcher
 
     def on_metaevent(self, **kwargs) -> Type[Matcher]:
@@ -547,7 +568,8 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认 state
+          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -556,9 +578,8 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
-        matcher = Matcher.new("meta_event", **final_kwargs)
+        matcher = on_metaevent(**final_kwargs)
         self.matchers.append(matcher)
-        _tmp_matchers.get().add(matcher)
         return matcher
 
     def on_message(self, **kwargs) -> Type[Matcher]:
@@ -575,7 +596,8 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认 state
+          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -584,9 +606,8 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
-        matcher = Matcher.new("message", **final_kwargs)
+        matcher = on_message(**final_kwargs)
         self.matchers.append(matcher)
-        _tmp_matchers.get().add(matcher)
         return matcher
 
     def on_notice(self, **kwargs) -> Type[Matcher]:
@@ -602,7 +623,8 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认 state
+          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -611,9 +633,8 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
-        matcher = Matcher.new("notice", **final_kwargs)
+        matcher = on_notice(**final_kwargs)
         self.matchers.append(matcher)
-        _tmp_matchers.get().add(matcher)
         return matcher
 
     def on_request(self, **kwargs) -> Type[Matcher]:
@@ -629,7 +650,8 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认 state
+          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -638,9 +660,8 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
-        matcher = Matcher.new("request", **final_kwargs)
+        matcher = on_request(**final_kwargs)
         self.matchers.append(matcher)
-        _tmp_matchers.get().add(matcher)
         return matcher
 
     def on_startswith(self,
@@ -662,7 +683,8 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认 state
+          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -688,7 +710,8 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认 state
+          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -714,7 +737,8 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认 state
+          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -744,7 +768,8 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认 state
+          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -786,7 +811,8 @@ class MatcherGroup:
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认的 state
+          * ``state: Optional[T_State]``: 默认 state
+          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 

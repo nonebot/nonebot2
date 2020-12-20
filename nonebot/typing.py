@@ -43,6 +43,14 @@ T_State = Dict[Any, Any]
 
   事件处理状态 State 类型
 """
+T_StateFactory = Callable[["Bot", "Event"], Awaitable[T_State]]
+"""
+:类型: ``Callable[[Bot, Event], Awaitable[T_State]]``
+
+:说明:
+
+  事件处理状态 State 类工厂函数
+"""
 
 T_EventPreProcessor = Callable[["Bot", "Event", T_State], Awaitable[None]]
 """

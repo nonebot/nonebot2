@@ -30,6 +30,22 @@ sidebarDepth: 0
 
 
 
+## `T_StateFactory`
+
+
+* **类型**
+
+    `Callable[[Bot, Event], Awaitable[T_State]]`
+
+
+
+* **说明**
+
+    事件处理状态 State 类工厂函数
+
+
+
+
 ## `T_EventPreProcessor`
 
 

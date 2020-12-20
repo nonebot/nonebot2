@@ -167,6 +167,21 @@ sidebarDepth: 0
 
 
 
+### `_default_state_factory`
+
+
+* **类型**
+
+    `Optional[T_State]`
+
+
+
+* **说明**
+
+    事件响应器默认工厂函数
+
+
+
 ### `_default_parser`
 
 
@@ -202,7 +217,7 @@ sidebarDepth: 0
 
 
 
-### _classmethod_ `new(type_='', rule=None, permission=None, handlers=None, temp=False, priority=1, block=False, *, module=None, default_state=None, expire_time=None)`
+### _classmethod_ `new(type_='', rule=None, permission=None, handlers=None, temp=False, priority=1, block=False, *, module=None, default_state=None, default_state_factory=None, expire_time=None)`
 
 
 * **说明**
@@ -239,6 +254,9 @@ sidebarDepth: 0
 
 
     * `default_state: Optional[T_State]`: 默认状态 `state`
+
+
+    * `default_state_factory: Optional[T_StateFactory]`: 默认状态 `state` 的工厂函数
 
 
     * `expire_time: Optional[datetime]`: 事件响应器最终有效时间点，过时即被删除
