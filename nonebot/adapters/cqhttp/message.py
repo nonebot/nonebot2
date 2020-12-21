@@ -228,7 +228,7 @@ class Message(BaseMessage):
                     yield MessageSegment(type_, {"text": data})
             else:
                 data = {
-                    k: v for k, v in map(
+                    k: unescape(v) for k, v in map(
                         lambda x: x.split("=", maxsplit=1),
                         filter(lambda x: x, (
                             x.lstrip() for x in data.split(","))))
