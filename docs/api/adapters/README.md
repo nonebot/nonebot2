@@ -147,7 +147,7 @@ Adapter 类型
 
 
 ```python
-await bot.call_api("send_msg", message="hello world"})
+await bot.call_api("send_msg", message="hello world")
 await bot.send_msg(message="hello world")
 ```
 

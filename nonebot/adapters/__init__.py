@@ -116,7 +116,7 @@ class Bot(abc.ABC):
 
         .. code-block:: python
 
-            await bot.call_api("send_msg", message="hello world"})
+            await bot.call_api("send_msg", message="hello world")
             await bot.send_msg(message="hello world")
         """
         raise NotImplementedError
