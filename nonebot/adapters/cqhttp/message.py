@@ -14,8 +14,6 @@ class MessageSegment(BaseMessageSegment):
 
     @overrides(BaseMessageSegment)
     def __init__(self, type: str, data: Dict[str, Any]) -> None:
-        if type == "text":
-            data["text"] = unescape(data["text"])
         super().__init__(type=type, data=data)
 
     @overrides(BaseMessageSegment)
@@ -215,17 +213,16 @@ class Message(BaseMessage):
                     r"(?P<params>"
                     r"(?:,[a-zA-Z0-9-_.]+=[^,\]]+)*"
                     r"),?\]", msg):
-                yield "text", unescape(msg[text_begin:cqcode.pos +
-                                           cqcode.start()])
+                yield "text", msg[text_begin:cqcode.pos + cqcode.start()]
                 text_begin = cqcode.pos + cqcode.end()
                 yield cqcode.group("type"), cqcode.group("params").lstrip(",")
-            yield "text", unescape(msg[text_begin:])
+            yield "text", msg[text_begin:]
 
         for type_, data in _iter_message(msg):
             if type_ == "text":
                 if data:
                     # only yield non-empty text segment
-                    yield MessageSegment(type_, {"text": data})
+                    yield MessageSegment(type_, {"text": unescape(data)})
             else:
                 data = {
                     k: unescape(v) for k, v in map(

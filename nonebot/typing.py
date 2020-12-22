@@ -17,17 +17,19 @@
 .. _typing:
     https://docs.python.org/3/library/typing.html
 """
-
-from typing import Any, Dict, Union, TypeVar, Protocol, overload, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
+from collections.abc import Callable as BaseCallable
+from typing import Any, Dict, Union, TypeVar, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
     from nonebot.matcher import Matcher
 
+T_Wrapped = TypeVar("T_Wrapped", bound=BaseCallable)
+
 
 def overrides(InterfaceClass: object):
 
-    def overrider(func: Callable) -> Callable:
+    def overrider(func: T_Wrapped) -> T_Wrapped:
         assert func.__name__ in dir(
             InterfaceClass), f"Error method: {func.__name__}"
         return func
