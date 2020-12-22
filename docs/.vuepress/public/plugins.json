@@ -78,5 +78,13 @@
     "desc": "多语种翻译插件",
     "name": "translator",
     "repo": "Lancercmd/nonebot_plugin_translator"
+  },
+  {
+    "id": "例：nonebot_plugin_example",
+    "link": "例 1：nonebot-plugin-example",
+    "author": "971364942",
+    "desc": "例：复读群友的消息",
+    "name": "例：复读机",
+    "repo": "例：nonebot/nonebot2（默认 github ）或其他链接"
   }
 ]
