@@ -123,7 +123,8 @@ module.exports = context => ({
                 "scheduler",
                 "permission",
                 "runtime-hook",
-                "export-and-require"
+                "export-and-require",
+                "overloaded-handlers"
               ]
             },
             {

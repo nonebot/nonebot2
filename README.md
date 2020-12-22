@@ -70,7 +70,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 
 目前 NoneBot2 内置的协议适配：
 
-- [CQHTTP(OneBot) 协议](https://github.com/howmanybots/onebot/blob/master/README.md)
+- [OneBot(CQHTTP) 协议](https://github.com/howmanybots/onebot/blob/master/README.md) (QQ 等)
 - [钉钉](https://ding-doc.dingtalk.com/doc#/serverapi2/krgddi) _开发中_
 - [Telegram](https://core.telegram.org/bots/api) _计划中_
 

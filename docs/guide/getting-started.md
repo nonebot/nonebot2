@@ -12,7 +12,7 @@ nb create
 
 根据脚手架引导，将在当前目录下创建一个项目目录，项目目录内包含 `bot.py`。
 
-如果未安装 `nb-cli`，使用你最熟悉的编辑器或 IDE，创建一个名为 `bot.py` 的文件，内容如下：
+如果未安装 `nb-cli`，使用你最熟悉的编辑器或 IDE，创建一个名为 `bot.py` 的文件，内容如下（这里以 CQHTTP 为例）：
 
 ```python{4,6,7,10}
 import nonebot
@@ -33,7 +33,7 @@ if __name__ == "__main__":
 
 1. 使用默认配置初始化 NoneBot
 2. 加载 NoneBot 内置的 CQHTTP 协议适配组件  
-   `register_adapter` 的第一个参数我们传入了一个字符串，该字符串将会在后文 [配置 QQ 协议端](#配置-qq-协议端) 时使用。
+   `register_adapter` 的第一个参数我们传入了一个字符串，该字符串将会在后文 [配置 CQHTTP 协议端](#配置-cqhttp-协议端-以-qq-为例) 时使用。
 3. 加载 NoneBot 内置的插件
 4. 在地址 `127.0.0.1:8080` 运行 NoneBot
 
@@ -57,13 +57,9 @@ python bot.py
 09-14 21:02:00 [INFO] uvicorn | Uvicorn running on http://127.0.0.1:8080 (Press CTRL+C to quit)
 ```
 
-## 配置 QQ 协议端
+## 配置 CQHTTP 协议端（以 QQ 为例）
 
 单纯运行 NoneBot 实例并不会产生任何效果，因为此刻 QQ 这边还不知道 NoneBot 的存在，也就无法把消息发送给它，因此现在需要使用一个无头 QQ 来把消息等事件上报给 NoneBot。
-
-目前支持的协议有:
-
-- [OneBot(CQHTTP)](https://github.com/howmanybots/onebot/blob/master/README.md)
 
 QQ 协议端举例:
 
@@ -138,6 +134,10 @@ QQ 协议端举例:
 
 `cqhttp` 是前述 `register_adapter` 时传入的第一个参数，代表设置的 `CQHTTPBot` 适配器的路径，你可以对不同的适配器设置不同路径以作区别。
 
+## 配置钉钉
+
+~~TODO~~
+
 ## 历史性的第一次对话
 
 一旦新的配置文件正确生效之后，NoneBot 所在的控制台（如果正在运行的话）应该会输出类似下面的内容（两条访问日志）：
@@ -147,7 +147,7 @@ QQ 协议端举例:
 09-14 21:31:16 [INFO] nonebot | WebSocket Connection from CQHTTP Bot 你的QQ号 Accepted!
 ```
 
-这表示 QQ 协议端已经成功地使用 CQHTTP 协议连接上了 NoneBot。
+这表示 CQHTTP 协议端已经成功地使用 CQHTTP 协议连接上了 NoneBot。
 
 :::warning 注意
 如果到这一步你没有看到上面这样的成功日志，CQHTTP 的日志中在不断地重连或无反应，请注意检查配置中的 IP 和端口是否确实可以访问。比较常见的出错点包括：
@@ -164,7 +164,7 @@ QQ 协议端举例:
 请尝试重启 CQHTTP、重启 NoneBot、更换端口、修改防火墙、重启系统、仔细阅读前面的文档及提示、更新 CQHTTP 和 NoneBot 到最新版本等方式来解决。
 :::
 
-现在，尝试向你的 QQ 机器人账号发送如下内容：
+现在，尝试向你的机器人账号发送如下内容：
 
 ```default
 /echo 你好，世界
