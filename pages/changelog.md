@@ -6,10 +6,11 @@ sidebar: auto
 
 ## v2.0.0a8
 
-- 修复部分非法 CQ 码被识别导致报错
-- 修复非 text 类型 CQ 码 data 未进行去转义
 - 修改 typing 类型注释
 - 修改 event 基类接口
+- 修复部分非法 CQ 码被识别导致报错
+- 修复非 text 类型 CQ 码 data 未进行去转义
+- 修复内置插件为进行去转义，修改内置插件为 cqhttp 定制
 
 ## v2.0.0a7
 
