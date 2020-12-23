@@ -48,6 +48,10 @@ class MessageSegment(BaseMessageSegment):
         return MessageSegment("at", {"qq": str(user_id)})
 
     @staticmethod
+    def contact(type_: str, id: int) -> "MessageSegment":
+        return MessageSegment("contact", {"type": type_, "id": str(id)})
+
+    @staticmethod
     def contact_group(group_id: int) -> "MessageSegment":
         return MessageSegment("contact", {"type": "group", "id": str(group_id)})
 
@@ -143,7 +147,14 @@ class MessageSegment(BaseMessageSegment):
                cache: Optional[bool] = None,
                proxy: Optional[bool] = None,
                timeout: Optional[int] = None) -> "MessageSegment":
-        return MessageSegment("record", {"file": file, "magic": _b2s(magic)})
+        return MessageSegment(
+            "record", {
+                "file": file,
+                "magic": _b2s(magic),
+                "cache": cache,
+                "proxy": proxy,
+                "timeout": timeout
+            })
 
     @staticmethod
     def reply(id_: int) -> "MessageSegment":
