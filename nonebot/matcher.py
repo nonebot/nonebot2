@@ -16,7 +16,7 @@ from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.permission import Permission, USER
 from nonebot.typing import T_State, T_StateFactory, T_Handler, T_ArgsParser
-from nonebot.exception import PausedException, RejectedException, FinishedException
+from nonebot.exception import PausedException, RejectedException, FinishedException, StopPropagation
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event, Message, MessageSegment
@@ -248,12 +248,14 @@ class Matcher(metaclass=MatcherMeta):
         bot = signature.parameters.get("bot")
         event = signature.parameters.get("event")
         state = signature.parameters.get("state")
+        matcher = signature.parameters.get("matcher")
         if not bot:
             raise ValueError("Handler missing parameter 'bot'")
         handler.__params__ = {
             "bot": bot.annotation,
             "event": event.annotation if event else None,
-            "state": T_State if state else None
+            "state": T_State if state else None,
+            "matcher": matcher.annotation if matcher else None
         }
         return handler
 
@@ -357,9 +359,10 @@ class Matcher(metaclass=MatcherMeta):
                 parser = cls.handlers.pop()
 
                 @wraps(func)
-                async def wrapper(bot: "Bot", event: "Event", state: T_State):
-                    await cls.run_handler(parser, bot, event, state)
-                    await cls.run_handler(func, bot, event, state)
+                async def wrapper(bot: "Bot", event: "Event", state: T_State,
+                                  matcher: Matcher):
+                    await matcher.run_handler(parser, bot, event, state)
+                    await matcher.run_handler(func, bot, event, state)
                     if "_current_key" in state:
                         del state["_current_key"]
 
@@ -449,11 +452,13 @@ class Matcher(metaclass=MatcherMeta):
             await bot.send(event=event, message=prompt, **kwargs)
         raise RejectedException
 
-    @classmethod
-    async def run_handler(cls, handler: T_Handler, bot: "Bot", event: "Event",
+    def stop_propagation(self):
+        self.block = True
+
+    async def run_handler(self, handler: T_Handler, bot: "Bot", event: "Event",
                           state: T_State):
         if not hasattr(handler, "__params__"):
-            cls.process_handler(handler)
+            self.process_handler(handler)
         params = getattr(handler, "__params__")
         BotType = ((params["bot"] is not inspect.Parameter.empty) and
                    inspect.isclass(params["bot"]) and params["bot"])
@@ -462,7 +467,7 @@ class Matcher(metaclass=MatcherMeta):
         if (BotType and not isinstance(bot, BotType)) or (
                 EventType and not isinstance(event, EventType)):
             return
-        args = {"bot": bot, "event": event, "state": state}
+        args = {"bot": bot, "event": event, "state": state, "matcher": self}
         await handler(
             **{k: v for k, v in args.items() if params[k] is not None})
 
@@ -509,6 +514,8 @@ class Matcher(metaclass=MatcherMeta):
                 expire_time=datetime.now() + bot.config.session_expire_timeout)
         except FinishedException:
             pass
+        except StopPropagation:
+            self.block = True
         finally:
             logger.info(f"Matcher {self} running complete")
             current_bot.reset(b_t)

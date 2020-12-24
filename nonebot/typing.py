@@ -107,7 +107,9 @@ T_PermissionChecker = Callable[["Bot", "Event"], Union[bool, Awaitable[bool]]]
   RuleChecker 即判断是否响应消息的处理函数。
 """
 
-T_Handler = Union[Callable[[Any, Any, Any], Union[Awaitable[None],
+T_Handler = Union[Callable[[Any, Any, Any, Any], Union[Awaitable[None],
+                                                       Awaitable[NoReturn]]],
+                  Callable[[Any, Any, Any], Union[Awaitable[None],
                                                   Awaitable[NoReturn]]],
                   Callable[[Any, Any], Union[Awaitable[None],
                                              Awaitable[NoReturn]]],
