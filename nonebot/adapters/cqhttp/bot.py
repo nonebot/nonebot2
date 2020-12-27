@@ -14,7 +14,7 @@ from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
 from nonebot.exception import RequestDenied
 
-from .utils import log
+from .utils import log, escape
 from .message import Message, MessageSegment
 from .event import Reply, Event, MessageEvent, get_event_model
 from .exception import NetworkError, ApiNotAvailable, ActionFailed
@@ -419,6 +419,7 @@ class Bot(BaseBot):
           - ``NetworkError``: 网络错误
           - ``ActionFailed``: API 调用失败
         """
+        message = escape(message) if isinstance(message, str) else message
         msg = message if isinstance(message, Message) else Message(message)
 
         at_sender = at_sender and hasattr(event, "user_id")

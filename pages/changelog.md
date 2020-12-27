@@ -11,6 +11,7 @@ sidebar: auto
 - 修复部分非法 CQ 码被识别导致报错
 - 修复非 text 类型 CQ 码 data 未进行去转义
 - 修复内置插件为进行去转义，修改内置插件为 cqhttp 定制
+- 出于**CQ 码安全性考虑**，使用 cqhttp 的 `bot.send` 或者 `matcher.send` 时默认对字符串进行转义
 
 ## v2.0.0a7
 
