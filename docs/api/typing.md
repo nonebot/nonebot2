@@ -46,6 +46,38 @@ sidebarDepth: 0
 
 
 
+## `T_WebSocketConnectionHook`
+
+
+* **类型**
+
+    `Callable[[Bot], Awaitable[None]]`
+
+
+
+* **说明**
+
+    WebSocket 连接建立时执行的函数
+
+
+
+
+## `T_WebSocketDisconnectionHook`
+
+
+* **类型**
+
+    `Callable[[Bot], Awaitable[None]]`
+
+
+
+* **说明**
+
+    WebSocket 连接断开时执行的函数
+
+
+
+
 ## `T_EventPreProcessor`
 
 

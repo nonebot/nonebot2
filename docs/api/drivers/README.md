@@ -32,6 +32,36 @@ Driver 基类。将后端框架封装，以满足适配器使用。
 
 
 
+### `_ws_connection_hook`
+
+
+* **类型**
+
+    `Set[T_WebSocketConnectionHook]`
+
+
+
+* **说明**
+
+    WebSocket 连接建立时执行的函数
+
+
+
+### `_ws_disconnection_hook`
+
+
+* **类型**
+
+    `Set[T_WebSocketDisconnectionHook]`
+
+
+
+* **说明**
+
+    WebSocket 连接断开时执行的函数
+
+
+
 ### _abstract_ `__init__(env, config)`
 
 
@@ -152,6 +182,48 @@ Driver 基类。将后端框架封装，以满足适配器使用。
 ### _abstract_ `on_shutdown(func)`
 
 注册一个在驱动停止时运行的函数
+
+
+### `on_bot_connect(func)`
+
+
+* **说明**
+
+    装饰一个函数使他在 bot 通过 WebSocket 连接成功时执行。
+
+
+
+* **函数参数**
+
+    
+    * `bot: Bot`: 当前连接上的 Bot 对象
+
+
+
+### `on_bot_disconnect(func)`
+
+
+* **说明**
+
+    装饰一个函数使他在 bot 通过 WebSocket 连接断开时执行。
+
+
+
+* **函数参数**
+
+    
+    * `bot: Bot`: 当前连接上的 Bot 对象
+
+
+
+### `bot_connect(bot)`
+
+在 WebSocket 连接成功后，调用该函数来注册 bot 对象
+
+
+### `bot_disconnect(bot)`
+
+在 WebSocket 连接断开后，调用该函数来注销 bot 对象
 
 
 ### _abstract_ `run(host=None, port=None, *args, **kwargs)`
