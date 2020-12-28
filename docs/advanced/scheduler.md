@@ -68,7 +68,7 @@ scheduler = require('nonebot_plugin_apscheduler').scheduler
 
 :::warning 注意 .env.* 文件的编写应遵循 nonebot2 对 .env.* 文件的编写要求 :::
 
-根据项目的 `.env` 文件设置，向 `.env.*` 文件添加 'nonebot_plugin_apscheduler' 的可选配置项
+根据项目的 `.env` 文件设置，向 `.env.*` 文件添加 `nonebot_plugin_apscheduler` 的可选配置项
 
 * `apscheduler_autostart` `bool` 是否自动启动 `APScheduler`
 
