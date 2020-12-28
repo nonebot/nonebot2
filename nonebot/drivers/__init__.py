@@ -153,7 +153,7 @@ class Driver(abc.ABC):
         self._ws_disconnection_hook.add(func)
         return func
 
-    def bot_connect(self, bot: "Bot") -> None:
+    def _bot_connect(self, bot: "Bot") -> None:
         """在 WebSocket 连接成功后，调用该函数来注册 bot 对象"""
         self._clients[bot.self_id] = bot
 
@@ -169,7 +169,7 @@ class Driver(abc.ABC):
 
         asyncio.create_task(_run_hook(bot))
 
-    def bot_disconnect(self, bot: "Bot") -> None:
+    def _bot_disconnect(self, bot: "Bot") -> None:
         """在 WebSocket 连接断开后，调用该函数来注销 bot 对象"""
         if bot.self_id in self._clients:
             del self._clients[bot.self_id]

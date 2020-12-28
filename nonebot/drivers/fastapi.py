@@ -192,7 +192,7 @@ class Driver(BaseDriver):
             f"WebSocket Connection from <y>{adapter.upper()} "
             f"Bot {x_self_id}</y> Accepted!")
 
-        self.bot_connect(bot)
+        self._bot_connect(bot)
 
         try:
             while not ws.closed:
@@ -203,7 +203,7 @@ class Driver(BaseDriver):
 
                 asyncio.create_task(bot.handle_message(data))
         finally:
-            self.bot_disconnect(bot)
+            self._bot_disconnect(bot)
 
 
 class WebSocket(BaseWebSocket):
