@@ -216,12 +216,12 @@ Driver 基类。将后端框架封装，以满足适配器使用。
 
 
 
-### `bot_connect(bot)`
+### `_bot_connect(bot)`
 
 在 WebSocket 连接成功后，调用该函数来注册 bot 对象
 
 
-### `bot_disconnect(bot)`
+### `_bot_disconnect(bot)`
 
 在 WebSocket 连接断开后，调用该函数来注销 bot 对象
 
