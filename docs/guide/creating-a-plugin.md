@@ -82,10 +82,10 @@ foo
 示例：
 
 ```python
-from pydantic import BaseSetting
+from pydantic import BaseSettings
 
 
-class Config(BaseSetting):
+class Config(BaseSettings):
 
     # plugin custom config
     plugin_setting: str = "default"
