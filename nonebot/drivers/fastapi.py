@@ -188,10 +188,11 @@ class Driver(BaseDriver):
         bot = BotClass(self, "websocket", self.config, x_self_id, websocket=ws)
 
         await ws.accept()
-        await self.bot_connect(bot)
         logger.opt(colors=True).info(
             f"WebSocket Connection from <y>{adapter.upper()} "
             f"Bot {x_self_id}</y> Accepted!")
+
+        self.bot_connect(bot)
 
         try:
             while not ws.closed:
@@ -202,7 +203,7 @@ class Driver(BaseDriver):
 
                 asyncio.create_task(bot.handle_message(data))
         finally:
-            await self.bot_disconnect(bot)
+            self.bot_disconnect(bot)
 
 
 class WebSocket(BaseWebSocket):

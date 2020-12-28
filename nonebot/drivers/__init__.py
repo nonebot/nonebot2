@@ -140,7 +140,7 @@ class Driver(abc.ABC):
 
     def on_bot_disconnect(
             self,
-            func: T_WebSocketDisConnectionHook) -> T_WebSocketDisConnectionHook:
+            func: T_WebSocketDisconnectionHook) -> T_WebSocketDisconnectionHook:
         """
         :说明:
 
@@ -153,30 +153,38 @@ class Driver(abc.ABC):
         self._ws_disconnection_hook.add(func)
         return func
 
-    async def bot_connect(self, bot: "Bot") -> None:
+    def bot_connect(self, bot: "Bot") -> None:
         """在 WebSocket 连接成功后，调用该函数来注册 bot 对象"""
         self._clients[bot.self_id] = bot
-        coros = list(map(lambda x: x(bot), self._ws_connection_hook))
-        if coros:
-            try:
-                await asyncio.gather(*coros)
-            except Exception as e:
-                logger.opt(colors=True, exception=e).error(
-                    "<r><bg #f8bbd0>Error when running WebSocketConnection hook. "
-                    "Running cancelled!</bg #f8bbd0></r>")
 
-    async def bot_disconnect(self, bot: "Bot") -> None:
+        async def _run_hook(bot: "Bot") -> None:
+            coros = list(map(lambda x: x(bot), self._ws_connection_hook))
+            if coros:
+                try:
+                    await asyncio.gather(*coros)
+                except Exception as e:
+                    logger.opt(colors=True, exception=e).error(
+                        "<r><bg #f8bbd0>Error when running WebSocketConnection hook. "
+                        "Running cancelled!</bg #f8bbd0></r>")
+
+        asyncio.create_task(_run_hook(bot))
+
+    def bot_disconnect(self, bot: "Bot") -> None:
         """在 WebSocket 连接断开后，调用该函数来注销 bot 对象"""
         if bot.self_id in self._clients:
             del self._clients[bot.self_id]
-        coros = list(map(lambda x: x(bot), self._ws_disconnection_hook))
-        if coros:
-            try:
-                await asyncio.gather(*coros)
-            except Exception as e:
-                logger.opt(colors=True, exception=e).error(
-                    "<r><bg #f8bbd0>Error when running WebSocketDisConnection hook. "
-                    "Running cancelled!</bg #f8bbd0></r>")
+
+        async def _run_hook(bot: "Bot") -> None:
+            coros = list(map(lambda x: x(bot), self._ws_disconnection_hook))
+            if coros:
+                try:
+                    await asyncio.gather(*coros)
+                except Exception as e:
+                    logger.opt(colors=True, exception=e).error(
+                        "<r><bg #f8bbd0>Error when running WebSocketDisConnection hook. "
+                        "Running cancelled!</bg #f8bbd0></r>")
+
+        asyncio.create_task(_run_hook(bot))
 
     @abc.abstractmethod
     def run(self,
