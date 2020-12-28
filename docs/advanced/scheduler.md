@@ -1,8 +1,6 @@
 # 定时任务
 
-本文撰写完成之时，`nonebot2` 已将 `APScheduler` 独立为 `nonebot_plugin_apscheduler` 插件。
-
-您可以在 [插件广场](https://v2.nonebot.dev/plugin-store.html) 中找到 `nonebot_plugin_apscheduler` 插件。
+本文撰写完成之时，`nonebot2` 已将 `APScheduler` 独立为 `nonebot_plugin_apscheduler` 插件，您可以在 [插件广场](https://v2.nonebot.dev/plugin-store.html) 中找到 `nonebot_plugin_apscheduler` 插件。
 
 本文将以 `nonebot_plugin_apscheduler` 的 `README.md` 为基础，对 `nonebot2` 的定时任务实现提供指南。
 
@@ -32,9 +30,7 @@ async def run_every_2_hour(arg1, arg2):
 
 ### 添加依赖 - 通过 poetry
 
-我们推荐使用 `poetry` 实现虚拟环境和依赖管理。
-
-在 `nonebot2` 项目目录中执行以下命令以添加 `nonebot_plugin_apscheduler`
+我们推荐使用 `poetry` 实现虚拟环境和依赖管理，在 `nonebot2` 项目目录中执行以下命令以添加 `nonebot_plugin_apscheduler`
 
 ```bash
 poetry add nonebot_plugin_apscheduler
@@ -52,11 +48,9 @@ nb plugin install nonebot_plugin_apscheduler
 
 ### 传入 scheduler 对象
 
-为了使插件能够实现定时任务，需要先将 `scheduler` 对象传入插件
+为了使插件能够实现定时任务，需要先将 `scheduler` 对象传入插件。
 
-`nonebot2` 提供了 `nonebot.require()` 方法来实现 `nonebot2` 插件内容的传入。
-
-此处我们使用这个方法来传入 `scheduler` 对象
+`nonebot2` 提供了 `nonebot.require()` 方法来实现 `nonebot2` 插件内容的传入，此处我们使用这个方法来传入 `scheduler` 对象。
 
 > 使用该方法传入的插件本身也需要有对应实现，关于该方法的更多介绍可以参阅 [这里](https://v2.nonebot.dev/api/plugin.html#require-name)
 
@@ -72,9 +66,7 @@ scheduler = require('nonebot_plugin_apscheduler').scheduler
 
 ### 向 .env.* 文件添加可选配置项
 
-:::warning 注意
-
-.env.* 文件的编写应遵循 nonebot2 对 .env.* 文件的编写要求 :::
+:::warning 注意 .env.* 文件的编写应遵循 nonebot2 对 .env.* 文件的编写要求 :::
 
 根据项目的 `.env` 文件设置，向 `.env.*` 文件添加 `nonebot_plugin_apscheduler` 的可选配置项
 
@@ -96,6 +88,4 @@ apscheduler_autostart = true
 apscheduler_config = {"apscheduler.timezone": "Asia/Shanghai"}
 ```
 
-`nonebot_plugin_apscheduler` 提供了时区的默认值 `Asia/Shanghai`
-
-增加其中配置项需要确保 `prefix: apscheduler.`
+`nonebot_plugin_apscheduler` 提供了时区的默认值 `Asia/Shanghai`，增加其中配置项需要确保 `prefix: apscheduler.`
