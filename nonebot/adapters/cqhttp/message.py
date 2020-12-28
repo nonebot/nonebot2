@@ -36,6 +36,10 @@ class MessageSegment(BaseMessageSegment):
         return Message(self) + other
 
     @overrides(BaseMessageSegment)
+    def __radd__(self, other) -> "Message":
+        return Message(other) + self
+
+    @overrides(BaseMessageSegment)
     def is_text(self) -> bool:
         return self.type == "text"
 
