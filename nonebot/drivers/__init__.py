@@ -6,10 +6,12 @@
 """
 
 import abc
-from typing import Dict, Type, Optional, Callable, TYPE_CHECKING
+import asyncio
+from typing import Set, Dict, Type, Optional, Callable, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
+from nonebot.typing import T_WebSocketConnectionHook, T_WebSocketDisconnectionHook
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot
@@ -24,6 +26,16 @@ class Driver(abc.ABC):
     """
     :类型: ``Dict[str, Type[Bot]]``
     :说明: 已注册的适配器列表
+    """
+    _ws_connection_hook: Set[T_WebSocketConnectionHook] = set()
+    """
+    :类型: ``Set[T_WebSocketConnectionHook]``
+    :说明: WebSocket 连接建立时执行的函数
+    """
+    _ws_disconnection_hook: Set[T_WebSocketDisconnectionHook] = set()
+    """
+    :类型: ``Set[T_WebSocketDisconnectionHook]``
+    :说明: WebSocket 连接断开时执行的函数
     """
 
     @abc.abstractmethod
@@ -93,8 +105,12 @@ class Driver(abc.ABC):
     @property
     def bots(self) -> Dict[str, "Bot"]:
         """
-        :类型: ``Dict[str, Bot]``
-        :说明: 获取当前所有已连接的 Bot
+        :类型:
+
+          ``Dict[str, Bot]``
+        :说明:
+
+          获取当前所有已连接的 Bot
         """
         return self._clients
 
@@ -107,6 +123,68 @@ class Driver(abc.ABC):
     def on_shutdown(self, func: Callable) -> Callable:
         """注册一个在驱动停止时运行的函数"""
         raise NotImplementedError
+
+    def on_bot_connect(
+            self, func: T_WebSocketConnectionHook) -> T_WebSocketConnectionHook:
+        """
+        :说明:
+
+          装饰一个函数使他在 bot 通过 WebSocket 连接成功时执行。
+
+        :函数参数:
+
+          * ``bot: Bot``: 当前连接上的 Bot 对象
+        """
+        self._ws_connection_hook.add(func)
+        return func
+
+    def on_bot_disconnect(
+            self,
+            func: T_WebSocketDisconnectionHook) -> T_WebSocketDisconnectionHook:
+        """
+        :说明:
+
+          装饰一个函数使他在 bot 通过 WebSocket 连接断开时执行。
+
+        :函数参数:
+
+          * ``bot: Bot``: 当前连接上的 Bot 对象
+        """
+        self._ws_disconnection_hook.add(func)
+        return func
+
+    def _bot_connect(self, bot: "Bot") -> None:
+        """在 WebSocket 连接成功后，调用该函数来注册 bot 对象"""
+        self._clients[bot.self_id] = bot
+
+        async def _run_hook(bot: "Bot") -> None:
+            coros = list(map(lambda x: x(bot), self._ws_connection_hook))
+            if coros:
+                try:
+                    await asyncio.gather(*coros)
+                except Exception as e:
+                    logger.opt(colors=True, exception=e).error(
+                        "<r><bg #f8bbd0>Error when running WebSocketConnection hook. "
+                        "Running cancelled!</bg #f8bbd0></r>")
+
+        asyncio.create_task(_run_hook(bot))
+
+    def _bot_disconnect(self, bot: "Bot") -> None:
+        """在 WebSocket 连接断开后，调用该函数来注销 bot 对象"""
+        if bot.self_id in self._clients:
+            del self._clients[bot.self_id]
+
+        async def _run_hook(bot: "Bot") -> None:
+            coros = list(map(lambda x: x(bot), self._ws_disconnection_hook))
+            if coros:
+                try:
+                    await asyncio.gather(*coros)
+                except Exception as e:
+                    logger.opt(colors=True, exception=e).error(
+                        "<r><bg #f8bbd0>Error when running WebSocketDisConnection hook. "
+                        "Running cancelled!</bg #f8bbd0></r>")
+
+        asyncio.create_task(_run_hook(bot))
 
     @abc.abstractmethod
     def run(self,
