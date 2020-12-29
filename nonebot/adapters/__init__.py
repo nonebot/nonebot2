@@ -335,7 +335,7 @@ class Message(list, abc.ABC):
     """消息数组"""
 
     def __init__(self,
-                 message: Union[T_MessageSegment, T_Message, Any] = None,
+                 message: Union[str, list, dict, T_MessageSegment, T_Message, Any] = None,
                  *args,
                  **kwargs):
         """
