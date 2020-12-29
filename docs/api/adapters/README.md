@@ -370,7 +370,7 @@ Event 基类。提供获取关键信息的方法，其余信息可直接获取�
 * **参数**
 
     
-    * `message: Union[str, dict, list, BaseModel, MessageSegment, Message]`: 消息内容
+    * `message: Union[MessageSegment, Message, Any]`: 消息内容
 
 
 

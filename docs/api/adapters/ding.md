@@ -198,48 +198,7 @@ sidebarDepth: 0
 钉钉 协议 Event 适配。继承属性参考 [BaseEvent](./#class-baseevent) 。
 
 
-### _property_ `raw_event`
-
-原始上报消息
-
-
-### _property_ `id`
-
-
-* 类型: `Optional[str]`
-
-
-* 说明: 消息 ID
-
-
-### _property_ `name`
-
-
-* 类型: `str`
-
-
-* 说明: 事件名称，由 type.\`detail_type\` 组合而成
-
-
-### _property_ `self_id`
-
-
-* 类型: `str`
-
-
-* 说明: 机器人自身 ID
-
-
-### _property_ `time`
-
-
-* 类型: `int`
-
-
-* 说明: 消息的时间戳，单位 s
-
-
-### _property_ `type`
+### `get_type()`
 
 
 * 类型: `str`
@@ -248,94 +207,126 @@ sidebarDepth: 0
 * 说明: 事件类型
 
 
-### _property_ `detail_type`
+### `get_event_name()`
+
+
+* **说明**
+
+    获取事件名称的方法。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_event_description()`
+
+
+* **说明**
+
+    获取事件描述的方法，通常为事件具体内容。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_user_id()`
+
+
+* **说明**
+
+    获取事件主体 id 的方法，通常是用户 id 。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_session_id()`
 
 
 * 类型: `str`
 
 
-* 说明: 事件详细类型
+* 说明: 消息 ID
 
 
-### _property_ `sub_type`
+### `get_message()`
 
 
-* 类型: `None`
-
-
-* 说明: 钉钉适配器无事件子类型
-
-
-### _property_ `user_id`
-
-
-* 类型: `Optional[str]`
-
-
-* 说明: 发送者 ID
-
-
-### _property_ `group_id`
-
-
-* 类型: `Optional[str]`
-
-
-* 说明: 事件主体群 ID
-
-
-### _property_ `to_me`
-
-
-* 类型: `Optional[bool]`
-
-
-* 说明: 消息是否与机器人相关
-
-
-### _property_ `message`
-
-
-* 类型: `Optional[Message]`
+* 类型: `Message`
 
 
 * 说明: 消息内容
 
 
-### _property_ `reply`
+### `get_plaintext()`
 
 
-* 类型: `None`
-
-
-* 说明: 回复消息详情
-
-
-### _property_ `raw_message`
-
-
-* 类型: `Optional[str]`
-
-
-* 说明: 原始消息
-
-
-### _property_ `plain_text`
-
-
-* 类型: `Optional[str]`
+* 类型: `str`
 
 
 * 说明: 纯文本消息内容
 
 
-### _property_ `sender`
+## _class_ `MessageEvent`
+
+基类：`nonebot.adapters.ding.model.MessageModel`, `nonebot.adapters.ding.event.Event`
 
 
-* 类型: `Optional[dict]`
+## _class_ `PrivateMessageEvent`
+
+基类：`nonebot.adapters.ding.model.PrivateMessageModel`, `nonebot.adapters.ding.event.Event`
 
 
-* 说明: 消息发送者信息
+### `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`
+
+
+
+## _class_ `GroupMessageEvent`
+
+基类：`nonebot.adapters.ding.model.GroupMessageModel`, `nonebot.adapters.ding.event.Event`
+
+
+### `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`
+
 
 
 ## _class_ `MessageSegment`
