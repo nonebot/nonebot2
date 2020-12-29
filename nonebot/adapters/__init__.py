@@ -364,7 +364,7 @@ class Message(list, abc.ABC):
 
     @staticmethod
     @abc.abstractmethod
-    def _construct(msg: Union[Any]) -> Iterable[T_MessageSegment]:
+    def _construct(msg: Union[str, list, dict, Any]) -> Iterable[T_MessageSegment]:
         raise NotImplementedError
 
     def __add__(self: T_Message, other: Union[str, T_MessageSegment,
