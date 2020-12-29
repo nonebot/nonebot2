@@ -26,23 +26,31 @@ class ConversationType(str, Enum):
 
 
 class MessageModel(BaseModel):
-    msgtype: str = None
-    text: Optional[TextMessage] = None
-    msgId: str
+    chatbotUserId: str = None
+    conversationId: str = None
+    conversationType: ConversationType = None
     # ms
     createAt: int = None
-    conversationType: ConversationType = None
-    conversationId: str = None
-    conversationTitle: str = None
+    isAdmin: bool = None
+    msgId: str = None
+    msgtype: str = None
+    senderCorpId: str = None
     senderId: str = None
     senderNick: str = None
-    senderCorpId: str = None
-    senderStaffId: str = None
-    chatbotUserId: str = None
-    chatbotCorpId: str = None
-    atUsers: List[AtUsersItem] = None
     sessionWebhook: str = None
     # ms
     sessionWebhookExpiredTime: int = None
-    isAdmin: bool = None
+    text: Optional[TextMessage] = None
+
+
+class PrivateMessageModel(MessageModel):
+    chatbotCorpId: str = None
+    conversationType: ConversationType = ConversationType.private
+    senderStaffId: str = None
+
+
+class GroupMessageModel(MessageModel):
+    atUsers: List[AtUsersItem] = None
+    conversationType: ConversationType = ConversationType.group
+    conversationTitle: str = None
     isInAtList: bool = None

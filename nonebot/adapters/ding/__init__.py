@@ -5,7 +5,7 @@
 协议详情请看: `钉钉文档`_
 
 .. _钉钉文档:
-    https://ding-doc.dingtalk.com/doc#/serverapi2/krgddi
+    https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p/
 
 """
 

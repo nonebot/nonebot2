@@ -11,8 +11,8 @@ from nonebot.adapters import Bot as BaseBot
 from nonebot.exception import RequestDenied
 
 from .utils import log
-from .event import Event
-from .model import MessageModel
+from .event import Event, MessageEvent, PrivateMessageEvent, GroupMessageEvent
+from .model import ConversationType
 from .message import Message, MessageSegment
 from .exception import NetworkError, ApiNotAvailable, ActionFailed, SessionExpired
 
@@ -50,7 +50,8 @@ class Bot(BaseBot):
 
         # 检查连接方式
         if connection_type not in ["http"]:
-            raise RequestDenied(405, "Unsupported connection type")
+            raise RequestDenied(
+                405, "Unsupported connection type, available type: `http`")
 
         # 检查 timestamp
         if not timestamp:
@@ -73,22 +74,30 @@ class Bot(BaseBot):
         return body["chatbotUserId"]
 
     async def handle_message(self, body: dict):
-        message = MessageModel.parse_obj(body)
-        if not message:
+        if not body:
+            return
+
+        # 判断消息类型，生成不同的 Event
+        conversation_type = body["conversationType"]
+        if conversation_type == ConversationType.private:
+            event = PrivateMessageEvent.parse_obj(body)
+        else:
+            event = GroupMessageEvent.parse_obj(body)
+
+        if not event:
             return
 
         try:
-            event = Event(message)
             await handle_event(self, event)
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
-                f"<r><bg #f8bbd0>Failed to handle event. Raw: {message}</bg #f8bbd0></r>"
+                f"<r><bg #f8bbd0>Failed to handle event. Raw: {event}</bg #f8bbd0></r>"
             )
         return
 
     async def call_api(self,
                        api: str,
-                       event: Optional[Event] = None,
+                       event: Optional[MessageEvent] = None,
                        **data) -> Any:
         """
         :说明:
@@ -124,10 +133,10 @@ class Bot(BaseBot):
             if event:
                 # 确保 sessionWebhook 没有过期
                 if int(datetime.now().timestamp()) > int(
-                        event.raw_event.sessionWebhookExpiredTime / 1000):
+                        event.sessionWebhookExpiredTime / 1000):
                     raise SessionExpired
 
-                target = event.raw_event.sessionWebhook
+                target = event.sessionWebhook
             else:
                 target = None
 

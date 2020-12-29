@@ -335,22 +335,21 @@ class Message(list, abc.ABC):
     """消息数组"""
 
     def __init__(self,
-                 message: Union[str, dict, list, T_MessageSegment,
-                                T_Message] = None,
+                 message: Union[T_MessageSegment, T_Message, Any] = None,
                  *args,
                  **kwargs):
         """
         :参数:
 
-          * ``message: Union[str, dict, list, MessageSegment, Message]``: 消息内容
+          * ``message: Union[MessageSegment, Message, Any]``: 消息内容
         """
         super().__init__(*args, **kwargs)
-        if isinstance(message, (str, dict, list)):
-            self.extend(self._construct(message))
-        elif isinstance(message, Message):
+        if isinstance(message, Message):
             self.extend(message)
         elif isinstance(message, MessageSegment):
             self.append(message)
+        else:
+            self.extend(self._construct(message))
 
     def __str__(self):
         return ''.join((str(seg) for seg in self))
@@ -365,9 +364,7 @@ class Message(list, abc.ABC):
 
     @staticmethod
     @abc.abstractmethod
-    def _construct(
-            msg: Union[str, dict, list,
-                       BaseModel]) -> Iterable[T_MessageSegment]:
+    def _construct(msg: Union[Any]) -> Iterable[T_MessageSegment]:
         raise NotImplementedError
 
     def __add__(self: T_Message, other: Union[str, T_MessageSegment,

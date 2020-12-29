@@ -37,6 +37,12 @@ class MessageSegment(BaseMessageSegment):
                 return MessageSegment.from_segment(self)
         return Message(self) + other
 
+    def __radd__(self, other) -> "Message":
+        return Message(other) + self
+
+    def is_text(self) -> bool:
+        return self.type == "text"
+
     def atMobile(self, mobileNumber):
         self.data.setdefault("at", {})
         self.data["at"].setdefault("atMobiles", [])
@@ -117,6 +123,10 @@ class Message(BaseMessage):
     """
     钉钉 协议 Message 适配。
     """
+
+    @classmethod
+    def _validate(cls, value):
+        return cls(value)
 
     @staticmethod
     def _construct(
