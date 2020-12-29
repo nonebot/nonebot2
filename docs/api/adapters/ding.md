@@ -63,7 +63,7 @@ sidebarDepth: 0
 
 ## _exception_ `SessionExpired`
 
-基类：[`nonebot.exception.ApiNotAvailable`](../exception.md#nonebot.exception.ApiNotAvailable), `nonebot.adapters.ding.exception.DingAdapterException`
+基类：`nonebot.adapters.ding.exception.ApiNotAvailable`, `nonebot.adapters.ding.exception.DingAdapterException`
 
 
 * **说明**
@@ -94,7 +94,7 @@ sidebarDepth: 0
 
 
 
-### _async_ `handle_message(body)`
+### _async_ `handle_message(message)`
 
 
 * **说明**
@@ -195,16 +195,23 @@ sidebarDepth: 0
 
 基类：[`nonebot.adapters.Event`](README.md#nonebot.adapters.Event)
 
-钉钉 协议 Event 适配。继承属性参考 [BaseEvent](./#class-baseevent) 。
+钉钉 协议 Event 适配。各事件字段参考 [钉钉文档](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p)
 
 
 ### `get_type()`
 
 
-* 类型: `str`
+* **说明**
+
+    获取事件类型的方法，类型通常为 NoneBot 内置的四种类型。
 
 
-* 说明: 事件类型
+
+* **返回**
+
+    
+    * `Literal["message", "notice", "request", "meta_event"]`
+
 
 
 ### `get_event_name()`
@@ -239,6 +246,38 @@ sidebarDepth: 0
 
 
 
+### `get_message()`
+
+
+* **说明**
+
+    获取事件消息内容的方法。
+
+
+
+* **返回**
+
+    
+    * `Message`
+
+
+
+### `get_plaintext()`
+
+
+* **说明**
+
+    获取消息纯文本的方法，通常不需要修改，默认通过 `get_message().extract_plain_text` 获取。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
 ### `get_user_id()`
 
 
@@ -258,38 +297,17 @@ sidebarDepth: 0
 ### `get_session_id()`
 
 
-* 类型: `str`
+* **说明**
+
+    获取会话 id 的方法，用于判断当前事件属于哪一个会话，通常是用户 id、群组 id 组合。
 
 
-* 说明: 消息 ID
 
+* **返回**
 
-### `get_message()`
+    
+    * `str`
 
-
-* 类型: `Message`
-
-
-* 说明: 消息内容
-
-
-### `get_plaintext()`
-
-
-* 类型: `str`
-
-
-* 说明: 纯文本消息内容
-
-
-## _class_ `MessageEvent`
-
-基类：`nonebot.adapters.ding.model.MessageModel`, `nonebot.adapters.ding.event.Event`
-
-
-## _class_ `PrivateMessageEvent`
-
-基类：`nonebot.adapters.ding.model.PrivateMessageModel`, `nonebot.adapters.ding.event.Event`
 
 
 ### `is_tome()`
@@ -308,9 +326,127 @@ sidebarDepth: 0
 
 
 
+## _class_ `ConversationType`
+
+基类：`str`, `enum.Enum`
+
+An enumeration.
+
+
+### `_member_type_`
+
+`builtins.str` 的别名
+
+
+## _class_ `MessageEvent`
+
+基类：`nonebot.adapters.ding.event.Event`
+
+
+### `get_type()`
+
+
+* **说明**
+
+    获取事件类型的方法，类型通常为 NoneBot 内置的四种类型。
+
+
+
+* **返回**
+
+    
+    * `Literal["message", "notice", "request", "meta_event"]`
+
+
+
+### `get_event_name()`
+
+
+* **说明**
+
+    获取事件名称的方法。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_event_description()`
+
+
+* **说明**
+
+    获取事件描述的方法，通常为事件具体内容。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_plaintext()`
+
+
+* **说明**
+
+    获取消息纯文本的方法，通常不需要修改，默认通过 `get_message().extract_plain_text` 获取。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_user_id()`
+
+
+* **说明**
+
+    获取事件主体 id 的方法，通常是用户 id 。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_session_id()`
+
+
+* **说明**
+
+    获取会话 id 的方法，用于判断当前事件属于哪一个会话，通常是用户 id、群组 id 组合。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+## _class_ `PrivateMessageEvent`
+
+基类：`nonebot.adapters.ding.event.MessageEvent`
+
+
 ## _class_ `GroupMessageEvent`
 
-基类：`nonebot.adapters.ding.model.GroupMessageModel`, `nonebot.adapters.ding.event.Event`
+基类：`nonebot.adapters.ding.event.MessageEvent`
 
 
 ### `is_tome()`
@@ -336,7 +472,7 @@ sidebarDepth: 0
 钉钉 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
 
 
-### _static_ `actionCardSingleMultiBtns(title, text, btns=[], hideAvatar=False, btnOrientation='1')`
+### _static_ `actionCardMultiBtns(title, text, btns=[], hideAvatar=False, btnOrientation='1')`
 
 
 * **参数**
