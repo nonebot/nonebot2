@@ -341,7 +341,7 @@ class Message(list, abc.ABC):
         """
         :参数:
 
-          * ``message: Union[MessageSegment, Message, Any]``: 消息内容
+          * ``message: Union[str, list, dict, MessageSegment, Message, Any]``: 消息内容
         """
         super().__init__(*args, **kwargs)
         if isinstance(message, Message):
