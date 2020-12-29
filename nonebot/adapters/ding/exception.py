@@ -39,6 +39,9 @@ class ActionFailed(BaseActionFailed, DingAdapterException):
     def __repr__(self):
         return f"<ApiError errcode={self.errcode} errmsg={self.errmsg}>"
 
+    def __str__(self):
+        return self.__repr__()
+
 
 class ApiNotAvailable(BaseApiNotAvailable, DingAdapterException):
     pass
@@ -66,7 +69,7 @@ class NetworkError(BaseNetworkError, DingAdapterException):
         return self.__repr__()
 
 
-class SessionExpired(BaseApiNotAvailable, DingAdapterException):
+class SessionExpired(ApiNotAvailable, DingAdapterException):
     """
     :说明:
 
@@ -75,3 +78,6 @@ class SessionExpired(BaseApiNotAvailable, DingAdapterException):
 
     def __repr__(self) -> str:
         return f"<Session Webhook is Expired>"
+
+    def __str__(self):
+        return self.__repr__()

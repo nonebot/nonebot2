@@ -6,6 +6,7 @@
 """
 
 import abc
+from copy import copy
 from typing_extensions import Literal
 from functools import reduce, partial
 from dataclasses import dataclass, field
@@ -292,7 +293,7 @@ class MessageSegment(abc.ABC):
 
     @abc.abstractmethod
     def __add__(self: T_MessageSegment, other: Union[str, T_MessageSegment,
-                                                     T_Message]) -> "T_Message":
+                                                     T_Message]) -> T_Message:
         """你需要在这里实现不同消息段的合并：
         比如：
             if isinstance(other, str):
@@ -326,6 +327,9 @@ class MessageSegment(abc.ABC):
     def get(self, key, default=None):
         return getattr(self, key, default)
 
+    def copy(self: T_MessageSegment) -> T_MessageSegment:
+        return copy(self)
+
     @abc.abstractmethod
     def is_text(self) -> bool:
         raise NotImplementedError
@@ -335,7 +339,8 @@ class Message(list, abc.ABC):
     """消息数组"""
 
     def __init__(self,
-                 message: Union[str, list, dict, T_MessageSegment, T_Message, Any] = None,
+                 message: Union[str, list, dict, T_MessageSegment, T_Message,
+                                Any] = None,
                  *args,
                  **kwargs):
         """
@@ -364,7 +369,8 @@ class Message(list, abc.ABC):
 
     @staticmethod
     @abc.abstractmethod
-    def _construct(msg: Union[str, list, dict, Any]) -> Iterable[T_MessageSegment]:
+    def _construct(
+            msg: Union[str, list, dict, Any]) -> Iterable[T_MessageSegment]:
         raise NotImplementedError
 
     def __add__(self: T_Message, other: Union[str, T_MessageSegment,

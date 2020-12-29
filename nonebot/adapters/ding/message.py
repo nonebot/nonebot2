@@ -2,39 +2,23 @@ from typing import Any, Dict, Union, Iterable
 
 from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
 
-from .utils import log
-from .model import TextMessage
-
 
 class MessageSegment(BaseMessageSegment):
     """
     钉钉 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
     """
 
-    def __init__(self, type_: str, msg: Dict[str, Any]) -> None:
-        data = {
-            "msgtype": type_,
-        }
-        if msg:
-            data.update(msg)
-        log("DEBUG", f"data {data}")
+    def __init__(self, type_: str, data: Dict[str, Any]) -> None:
         super().__init__(type=type_, data=data)
 
-    @classmethod
-    def from_segment(cls, segment: "MessageSegment"):
-        return MessageSegment(segment.type, segment.data)
-
     def __str__(self):
-        log("DEBUG", f"__str__: self.type {self.type} data {self.data}")
         if self.type == "text":
-            return str(self.data["text"]["content"].strip())
+            return str(self.data["content"])
+        elif self.type == "markdown":
+            return str(self.data["text"])
         return ""
 
     def __add__(self, other) -> "Message":
-        if isinstance(other, str):
-            if self.type == 'text':
-                self.data['text']['content'] += other
-                return MessageSegment.from_segment(self)
         return Message(self) + other
 
     def __radd__(self, other) -> "Message":
@@ -43,43 +27,41 @@ class MessageSegment(BaseMessageSegment):
     def is_text(self) -> bool:
         return self.type == "text"
 
-    def atMobile(self, mobileNumber):
-        self.data.setdefault("at", {})
-        self.data["at"].setdefault("atMobiles", [])
-        self.data["at"]["atMobiles"].append(mobileNumber)
-
-    def atAll(self, value):
-        self.data.setdefault("at", {})
-        self.data["at"]["isAtAll"] = value
+    @staticmethod
+    def atAll() -> "MessageSegment":
+        return MessageSegment("at", {"isAtAll": True})
 
     @staticmethod
-    def text(text_: str) -> "MessageSegment":
-        return MessageSegment("text", {"text": {"content": text_.strip()}})
+    def atMobiles(*mobileNumber: str) -> "MessageSegment":
+        return MessageSegment("at", {"atMobiles": list(mobileNumber)})
+
+    @staticmethod
+    def text(text: str) -> "MessageSegment":
+        return MessageSegment("text", {"content": text})
 
     @staticmethod
     def markdown(title: str, text: str) -> "MessageSegment":
-        return MessageSegment("markdown", {
-            "markdown": {
+        return MessageSegment(
+            "markdown",
+            {
                 "title": title,
                 "text": text,
             },
-        })
+        )
 
     @staticmethod
     def actionCardSingleBtn(title: str, text: str, btnTitle: str,
                             btnUrl) -> "MessageSegment":
         return MessageSegment(
             "actionCard", {
-                "actionCard": {
-                    "title": title,
-                    "text": text,
-                    "singleTitle": btnTitle,
-                    "singleURL": btnUrl
-                }
+                "title": title,
+                "text": text,
+                "singleTitle": btnTitle,
+                "singleURL": btnUrl
             })
 
     @staticmethod
-    def actionCardSingleMultiBtns(
+    def actionCardMultiBtns(
         title: str,
         text: str,
         btns: list = [],
@@ -95,28 +77,26 @@ class MessageSegment(BaseMessageSegment):
         """
         return MessageSegment(
             "actionCard", {
-                "actionCard": {
-                    "title": title,
-                    "text": text,
-                    "hideAvatar": "1" if hideAvatar else "0",
-                    "btnOrientation": btnOrientation,
-                    "btns": btns
-                }
+                "title": title,
+                "text": text,
+                "hideAvatar": "1" if hideAvatar else "0",
+                "btnOrientation": btnOrientation,
+                "btns": btns
             })
 
     @staticmethod
-    def feedCard(links: list = [],) -> "MessageSegment":
+    def feedCard(links: list = []) -> "MessageSegment":
         """
         :参数:
 
             * ``links``: [{ "title": xxx, "messageURL": xxx, "picURL": xxx }, ...]
         """
-        return MessageSegment("feedCard", {"feedCard": {"links": links}})
+        return MessageSegment("feedCard", {"links": links})
 
     @staticmethod
     def empty() -> "MessageSegment":
         """不想回复消息到群里"""
-        return MessageSegment("empty")
+        return MessageSegment("empty", {})
 
 
 class Message(BaseMessage):
@@ -129,17 +109,35 @@ class Message(BaseMessage):
         return cls(value)
 
     @staticmethod
-    def _construct(
-            msg: Union[str, dict, list,
-                       TextMessage]) -> Iterable[MessageSegment]:
+    def _construct(msg: Union[str, dict, list]) -> Iterable[MessageSegment]:
         if isinstance(msg, dict):
             yield MessageSegment(msg["type"], msg.get("data") or {})
-            return
         elif isinstance(msg, list):
             for seg in msg:
                 yield MessageSegment(seg["type"], seg.get("data") or {})
-            return
-        elif isinstance(msg, TextMessage):
-            yield MessageSegment("text", {"text": msg.dict()})
         elif isinstance(msg, str):
             yield MessageSegment.text(msg)
+
+    def _produce(self) -> dict:
+        data = {}
+        for segment in self:
+            if segment.type == "text":
+                data["msgtype"] = "text"
+                data.setdefault("text", {})
+                data["text"]["content"] = data["text"].setdefault(
+                    "content", "") + segment.data["content"]
+            elif segment.type == "markdown":
+                data["msgtype"] = "markdown"
+                data.setdefault("markdown", {})
+                data["markdown"]["text"] = data["markdown"].setdefault(
+                    "content", "") + segment.data["content"]
+            elif segment.type == "empty":
+                data["msgtype"] = "empty"
+            elif segment.type == "at" and "atMobiles" in segment.data:
+                data.setdefault("at", {})
+                data["at"]["atMobiles"] = data["at"].setdefault(
+                    "atMobiles", []) + segment.data["atMobiles"]
+            elif segment.data:
+                data.setdefault(segment.type, {})
+                data[segment.type].update(segment.data)
+        return data

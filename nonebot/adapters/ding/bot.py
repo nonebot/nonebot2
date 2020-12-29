@@ -6,18 +6,18 @@ from typing import Any, Union, Optional, TYPE_CHECKING
 import httpx
 from nonebot.log import logger
 from nonebot.config import Config
+from nonebot.typing import overrides
 from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
 from nonebot.exception import RequestDenied
 
 from .utils import log
-from .event import Event, MessageEvent, PrivateMessageEvent, GroupMessageEvent
-from .model import ConversationType
 from .message import Message, MessageSegment
 from .exception import NetworkError, ApiNotAvailable, ActionFailed, SessionExpired
+from .event import Event, MessageEvent, PrivateMessageEvent, GroupMessageEvent, ConversationType
 
 if TYPE_CHECKING:
-    from nonebot.drivers import BaseDriver as Driver
+    from nonebot.drivers import Driver
 
 
 class Bot(BaseBot):
@@ -38,6 +38,7 @@ class Bot(BaseBot):
         return "ding"
 
     @classmethod
+    @overrides(BaseBot)
     async def check_permission(cls, driver: "Driver", connection_type: str,
                                headers: dict, body: Optional[dict]) -> str:
         """
@@ -73,18 +74,22 @@ class Bot(BaseBot):
             log("WARNING", "Ding signature check ignored!")
         return body["chatbotUserId"]
 
-    async def handle_message(self, body: dict):
-        if not body:
+    @overrides(BaseBot)
+    async def handle_message(self, message: dict):
+        if not message:
             return
 
         # 判断消息类型，生成不同的 Event
-        conversation_type = body["conversationType"]
-        if conversation_type == ConversationType.private:
-            event = PrivateMessageEvent.parse_obj(body)
-        else:
-            event = GroupMessageEvent.parse_obj(body)
-
-        if not event:
+        try:
+            conversation_type = message["conversationType"]
+            if conversation_type == ConversationType.private:
+                event = PrivateMessageEvent.parse_obj(message)
+            elif conversation_type == ConversationType.group:
+                event = GroupMessageEvent.parse_obj(message)
+            else:
+                raise ValueError("Unsupported conversation type")
+        except Exception as e:
+            log("Error", "Event Parser Error", e)
             return
 
         try:
@@ -95,6 +100,7 @@ class Bot(BaseBot):
             )
         return
 
+    @overrides(BaseBot)
     async def call_api(self,
                        api: str,
                        event: Optional[MessageEvent] = None,
@@ -138,19 +144,18 @@ class Bot(BaseBot):
 
                 target = event.sessionWebhook
             else:
-                target = None
-
-            if not target:
                 raise ApiNotAvailable
 
             headers = {}
-            segment: MessageSegment = data["message"][0]
+            message: Message = data.get("message", None)
+            if not message:
+                raise ValueError("Message not found")
             try:
                 async with httpx.AsyncClient(headers=headers) as client:
                     response = await client.post(
                         target,
                         params={"access_token": self.config.access_token},
-                        json=segment.data,
+                        json=message._produce(),
                         timeout=self.config.api_timeout)
 
                 if 200 <= response.status_code < 300:
@@ -167,8 +172,9 @@ class Bot(BaseBot):
             except httpx.HTTPError:
                 raise NetworkError("HTTP request failed")
 
+    @overrides(BaseBot)
     async def send(self,
-                   event: Event,
+                   event: MessageEvent,
                    message: Union[str, "Message", "MessageSegment"],
                    at_sender: bool = False,
                    **kwargs) -> Any:
@@ -196,13 +202,15 @@ class Bot(BaseBot):
         """
         msg = message if isinstance(message, Message) else Message(message)
 
-        at_sender = at_sender and bool(event.user_id)
+        at_sender = at_sender and bool(event.senderId)
         params = {}
         params["event"] = event
         params.update(kwargs)
 
-        if at_sender and event.detail_type != "private":
-            params["message"] = f"@{event.user_id} " + msg
+        if at_sender and event.conversationType != ConversationType.private:
+            params[
+                "message"] = f"@{event.senderId} " + msg + MessageSegment.atMobiles(
+                    event.senderId)
         else:
             params["message"] = msg
 

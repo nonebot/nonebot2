@@ -1,84 +1,124 @@
-from typing import Union, Optional
+from enum import Enum
+from typing import List, Optional
 from typing_extensions import Literal
 
-from pydantic import BaseModel, validator, parse_obj_as
-from pydantic.fields import ModelField
+from pydantic import BaseModel
 
-from nonebot.adapters import Event as BaseEvent
 from nonebot.utils import escape_tag
+from nonebot.typing import overrides
+from nonebot.adapters import Event as BaseEvent
 
 from .message import Message
-from .model import MessageModel, PrivateMessageModel, GroupMessageModel, ConversationType, TextMessage
 
 
 class Event(BaseEvent):
     """
-    钉钉 协议 Event 适配。继承属性参考 `BaseEvent <./#class-baseevent>`_ 。
+    钉钉 协议 Event 适配。各事件字段参考 `钉钉文档`_
+
+    .. _钉钉文档:
+        https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p
     """
-    message: Message = None
 
-    def __init__(self, **data):
-        super().__init__(**data)
-        # 其实目前钉钉机器人只能接收到 text 类型的消息
-        message: Union[TextMessage] = getattr(self, self.msgtype, None)
-        self.message = parse_obj_as(Message, message)
+    chatbotUserId: str
 
-    def get_type(self) -> Literal["message"]:
-        """
-        - 类型: ``str``
-        - 说明: 事件类型
-        """
-        return "message"
+    @overrides(BaseEvent)
+    def get_type(self) -> Literal["message", "notice", "request", "meta_event"]:
+        raise ValueError("Event has no type!")
 
+    @overrides(BaseEvent)
     def get_event_name(self) -> str:
-        detail_type = self.conversationType.name
-        return self.get_type() + "." + detail_type
+        raise ValueError("Event has no type!")
 
+    @overrides(BaseEvent)
     def get_event_description(self) -> str:
-        return (f'Message[{self.msgtype}] {self.msgId} from {self.senderId} "' +
-                "".join(
-                    map(
-                        lambda x: escape_tag(str(x))
-                        if x.is_text() else f"<le>{escape_tag(str(x))}</le>",
-                        self.message,
-                    )) + '"')
+        raise ValueError("Event has no type!")
 
-    def get_user_id(self) -> str:
-        return self.senderId
-
-    def get_session_id(self) -> str:
-        """
-        - 类型: ``str``
-        - 说明: 消息 ID
-        """
-        return self.msgId
-
+    @overrides(BaseEvent)
     def get_message(self) -> "Message":
-        """
-        - 类型: ``Message``
-        - 说明: 消息内容
-        """
-        return self.message
+        raise ValueError("Event has no type!")
 
+    @overrides(BaseEvent)
     def get_plaintext(self) -> str:
-        """
-        - 类型: ``str``
-        - 说明: 纯文本消息内容
-        """
-        return self.message.extract_plain_text().strip() if self.message else ""
+        raise ValueError("Event has no type!")
 
+    @overrides(BaseEvent)
+    def get_user_id(self) -> str:
+        raise ValueError("Event has no type!")
 
-class MessageEvent(MessageModel, Event):
-    pass
+    @overrides(BaseEvent)
+    def get_session_id(self) -> str:
+        raise ValueError("Event has no type!")
 
-
-class PrivateMessageEvent(PrivateMessageModel, Event):
-
+    @overrides(BaseEvent)
     def is_tome(self) -> bool:
         return True
 
 
-class GroupMessageEvent(GroupMessageModel, Event):
+class TextMessage(BaseModel):
+    content: str
 
+
+class AtUsersItem(BaseModel):
+    dingtalkId: str
+    staffId: Optional[str]
+
+
+class ConversationType(str, Enum):
+    private = "1"
+    group = "2"
+
+
+class MessageEvent(Event):
+    msgtype: str
+    text: TextMessage
+    msgId: str
+    createAt: int  # ms
+    conversationType: ConversationType
+    conversationId: str
+    senderId: str
+    senderNick: str
+    senderCorpId: str
+    sessionWebhook: str
+    sessionWebhookExpiredTime: int
+    isAdmin: bool
+
+    @overrides(Event)
+    def get_type(self) -> Literal["message", "notice", "request", "meta_event"]:
+        return "message"
+
+    @overrides(BaseEvent)
+    def get_event_name(self) -> str:
+        return f"{self.get_type()}.{self.conversationType.name}"
+
+    @overrides(BaseEvent)
+    def get_event_description(self) -> str:
+        return f'Message[{self.msgtype}] {self.msgId} from {self.senderId} "{self.text.content}"'
+
+    @overrides(BaseEvent)
+    def get_plaintext(self) -> str:
+        return self.text.content
+
+    @overrides(BaseEvent)
+    def get_user_id(self) -> str:
+        return self.senderId
+
+    @overrides(BaseEvent)
+    def get_session_id(self) -> str:
+        return self.senderId
+
+
+class PrivateMessageEvent(MessageEvent):
+    chatbotCorpId: str
+    senderStaffId: Optional[str]
+    conversationType: ConversationType = ConversationType.private
+
+
+class GroupMessageEvent(MessageEvent):
+    atUsers: List[AtUsersItem]
+    conversationType: ConversationType = ConversationType.group
+    conversationTitle: str
+    isInAtList: bool
+
+    @overrides(MessageEvent)
     def is_tome(self) -> bool:
         return self.isInAtList

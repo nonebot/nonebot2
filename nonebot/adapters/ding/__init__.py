@@ -11,7 +11,7 @@
 
 from .utils import log
 from .bot import Bot
-from .event import Event
 from .message import Message, MessageSegment
+from .event import Event, MessageEvent, PrivateMessageEvent, GroupMessageEvent
 from .exception import (DingAdapterException, ApiNotAvailable, NetworkError,
                         ActionFailed, SessionExpired)
