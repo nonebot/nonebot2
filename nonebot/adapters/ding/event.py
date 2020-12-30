@@ -100,27 +100,27 @@ class MessageEvent(Event):
     def get_type(self) -> Literal["message", "notice", "request", "meta_event"]:
         return "message"
 
-    @overrides(BaseEvent)
+    @overrides(Event)
     def get_event_name(self) -> str:
         return f"{self.get_type()}.{self.conversationType.name}"
 
-    @overrides(BaseEvent)
+    @overrides(Event)
     def get_event_description(self) -> str:
         return f'Message[{self.msgtype}] {self.msgId} from {self.senderId} "{self.text.content}"'
 
-    @overrides(BaseEvent)
+    @overrides(Event)
     def get_message(self) -> Message:
         return self.message
 
-    @overrides(BaseEvent)
+    @overrides(Event)
     def get_plaintext(self) -> str:
         return self.text.content
 
-    @overrides(BaseEvent)
+    @overrides(Event)
     def get_user_id(self) -> str:
         return self.senderId
 
-    @overrides(BaseEvent)
+    @overrides(Event)
     def get_session_id(self) -> str:
         return self.senderId
 

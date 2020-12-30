@@ -1,7 +1,8 @@
-from typing import Any, Dict, Union, Iterable
-from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
-
 from copy import copy
+from typing import Any, Dict, Union, Iterable
+
+from nonebot.typing import overrides
+from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
 
 
 class MessageSegment(BaseMessageSegment):
@@ -9,9 +10,11 @@ class MessageSegment(BaseMessageSegment):
     钉钉 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
     """
 
+    @overrides(BaseMessageSegment)
     def __init__(self, type_: str, data: Dict[str, Any]) -> None:
         super().__init__(type=type_, data=data)
 
+    @overrides(BaseMessageSegment)
     def __str__(self):
         if self.type == "text":
             return str(self.data["content"])
@@ -19,12 +22,15 @@ class MessageSegment(BaseMessageSegment):
             return str(self.data["text"])
         return ""
 
+    @overrides(BaseMessageSegment)
     def __add__(self, other) -> "Message":
         return Message(self) + other
 
+    @overrides(BaseMessageSegment)
     def __radd__(self, other) -> "Message":
         return Message(other) + self
 
+    @overrides(BaseMessageSegment)
     def is_text(self) -> bool:
         return self.type == "text"
 
@@ -126,6 +132,7 @@ class Message(BaseMessage):
     """
 
     @staticmethod
+    @overrides(BaseMessage)
     def _construct(msg: Union[str, dict, list]) -> Iterable[MessageSegment]:
         if isinstance(msg, dict):
             yield MessageSegment(msg["type"], msg.get("data") or {})

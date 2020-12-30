@@ -464,7 +464,7 @@ class Matcher(metaclass=MatcherMeta):
         BotType = ((params["bot"] is not inspect.Parameter.empty) and
                    inspect.isclass(params["bot"]) and params["bot"])
         if BotType and not isinstance(bot, BotType):
-            logger.info(
+            logger.debug(
                 f"Matcher {self} bot type {type(bot)} not match annotation {BotType}, ignored"
             )
             return
@@ -472,7 +472,7 @@ class Matcher(metaclass=MatcherMeta):
         EventType = ((params["event"] is not inspect.Parameter.empty) and
                      inspect.isclass(params["event"]) and params["event"])
         if EventType and not isinstance(event, EventType):
-            logger.info(
+            logger.debug(
                 f"Matcher {self} event type {type(event)} not match annotation {EventType}, ignored"
             )
             return

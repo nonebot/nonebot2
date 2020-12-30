@@ -98,7 +98,7 @@ class Bot(BaseBot):
             await handle_event(self, event)
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
-                f"<r><bg #f8bbd0>Failed to handle event. Raw: {event}</bg #f8bbd0></r>"
+                f"<r><bg #f8bbd0>Failed to handle event. Raw: {message}</bg #f8bbd0></r>"
             )
         return
 
