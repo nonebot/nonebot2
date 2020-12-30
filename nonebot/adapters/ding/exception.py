@@ -37,7 +37,7 @@ class ActionFailed(BaseActionFailed, DingAdapterException):
         self.errmsg = errmsg
 
     def __repr__(self):
-        return f"<ApiError errcode={self.errcode} errmsg={self.errmsg}>"
+        return f"<ApiError errcode={self.errcode} errmsg=\"{self.errmsg}\">"
 
     def __str__(self):
         return self.__repr__()

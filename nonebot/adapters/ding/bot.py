@@ -19,6 +19,8 @@ from .event import Event, MessageEvent, PrivateMessageEvent, GroupMessageEvent, 
 if TYPE_CHECKING:
     from nonebot.drivers import Driver
 
+SEND_BY_SESSION_WEBHOOK = "send_by_sessionWebhook"
+
 
 class Bot(BaseBot):
     """
@@ -89,7 +91,7 @@ class Bot(BaseBot):
             else:
                 raise ValueError("Unsupported conversation type")
         except Exception as e:
-            log("Error", "Event Parser Error", e)
+            log("ERROR", "Event Parser Error", e)
             return
 
         try:
@@ -135,7 +137,7 @@ class Bot(BaseBot):
 
         log("DEBUG", f"Calling API <y>{api}</y>")
 
-        if api == "send_message":
+        if api == SEND_BY_SESSION_WEBHOOK:
             if event:
                 # 确保 sessionWebhook 没有过期
                 if int(datetime.now().timestamp()) > int(
@@ -208,10 +210,8 @@ class Bot(BaseBot):
         params.update(kwargs)
 
         if at_sender and event.conversationType != ConversationType.private:
-            params[
-                "message"] = f"@{event.senderId} " + msg + MessageSegment.atMobiles(
-                    event.senderId)
+            params["message"] = f"@{event.senderNick} " + msg
         else:
             params["message"] = msg
 
-        return await self.call_api("send_message", **params)
+        return await self.call_api(SEND_BY_SESSION_WEBHOOK, **params)

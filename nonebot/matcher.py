@@ -113,7 +113,7 @@ class Matcher(metaclass=MatcherMeta):
         self.state = self._default_state.copy()
 
     def __repr__(self) -> str:
-        return (f"<Matcher from {self.module or 'unknow'}, type={self.type}, "
+        return (f"<Matcher from {self.module or 'unknown'}, type={self.type}, "
                 f"priority={self.priority}, temp={self.temp}>")
 
     def __str__(self) -> str:
@@ -460,13 +460,23 @@ class Matcher(metaclass=MatcherMeta):
         if not hasattr(handler, "__params__"):
             self.process_handler(handler)
         params = getattr(handler, "__params__")
+
         BotType = ((params["bot"] is not inspect.Parameter.empty) and
                    inspect.isclass(params["bot"]) and params["bot"])
+        if BotType and not isinstance(bot, BotType):
+            logger.info(
+                f"Matcher {self} bot type {type(bot)} not match annotation {BotType}, ignored"
+            )
+            return
+
         EventType = ((params["event"] is not inspect.Parameter.empty) and
                      inspect.isclass(params["event"]) and params["event"])
-        if (BotType and not isinstance(bot, BotType)) or (
-                EventType and not isinstance(event, EventType)):
+        if EventType and not isinstance(event, EventType):
+            logger.info(
+                f"Matcher {self} event type {type(event)} not match annotation {EventType}, ignored"
+            )
             return
+
         args = {"bot": bot, "event": event, "state": state, "matcher": self}
         await handler(
             **{k: v for k, v in args.items() if params[k] is not None})

@@ -1,6 +1,7 @@
 from typing import Any, Dict, Union, Iterable
-
 from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
+
+from copy import copy
 
 
 class MessageSegment(BaseMessageSegment):
@@ -40,6 +41,16 @@ class MessageSegment(BaseMessageSegment):
         return MessageSegment("text", {"content": text})
 
     @staticmethod
+    def image(picURL: str) -> "MessageSegment":
+        return MessageSegment("image", {"picURL": picURL})
+
+    @staticmethod
+    def extension(dict_: dict) -> "MessageSegment":
+        """"标记 text 文本的 extension 属性，需要与 text 消息段相加。
+        """
+        return MessageSegment("extension", dict_)
+
+    @staticmethod
     def markdown(title: str, text: str) -> "MessageSegment":
         return MessageSegment(
             "markdown",
@@ -50,21 +61,21 @@ class MessageSegment(BaseMessageSegment):
         )
 
     @staticmethod
-    def actionCardSingleBtn(title: str, text: str, btnTitle: str,
-                            btnUrl) -> "MessageSegment":
+    def actionCardSingleBtn(title: str, text: str, singleTitle: str,
+                            singleURL) -> "MessageSegment":
         return MessageSegment(
             "actionCard", {
                 "title": title,
                 "text": text,
-                "singleTitle": btnTitle,
-                "singleURL": btnUrl
+                "singleTitle": singleTitle,
+                "singleURL": singleURL
             })
 
     @staticmethod
     def actionCardMultiBtns(
         title: str,
         text: str,
-        btns: list = [],
+        btns: list,
         hideAvatar: bool = False,
         btnOrientation: str = '1',
     ) -> "MessageSegment":
@@ -85,7 +96,7 @@ class MessageSegment(BaseMessageSegment):
             })
 
     @staticmethod
-    def feedCard(links: list = []) -> "MessageSegment":
+    def feedCard(links: list) -> "MessageSegment":
         """
         :参数:
 
@@ -94,19 +105,25 @@ class MessageSegment(BaseMessageSegment):
         return MessageSegment("feedCard", {"links": links})
 
     @staticmethod
-    def empty() -> "MessageSegment":
-        """不想回复消息到群里"""
-        return MessageSegment("empty", {})
+    def raw(data) -> "MessageSegment":
+        return MessageSegment('raw', data)
+
+    def to_dict(self) -> dict:
+        # 让用户可以直接发送原始的消息格式
+        if self.type == "raw":
+            return copy(self.data)
+
+        # 不属于消息内容，只是作为消息段的辅助
+        if self.type in ["at", "extension"]:
+            return {self.type: copy(self.data)}
+
+        return {"msgtype": self.type, self.type: copy(self.data)}
 
 
 class Message(BaseMessage):
     """
     钉钉 协议 Message 适配。
     """
-
-    @classmethod
-    def _validate(cls, value):
-        return cls(value)
 
     @staticmethod
     def _construct(msg: Union[str, dict, list]) -> Iterable[MessageSegment]:
@@ -121,23 +138,11 @@ class Message(BaseMessage):
     def _produce(self) -> dict:
         data = {}
         for segment in self:
-            if segment.type == "text":
-                data["msgtype"] = "text"
+            # text 可以和 text 合并
+            if segment.type == "text" and data.get("msgtype") == 'text':
                 data.setdefault("text", {})
                 data["text"]["content"] = data["text"].setdefault(
                     "content", "") + segment.data["content"]
-            elif segment.type == "markdown":
-                data["msgtype"] = "markdown"
-                data.setdefault("markdown", {})
-                data["markdown"]["text"] = data["markdown"].setdefault(
-                    "content", "") + segment.data["content"]
-            elif segment.type == "empty":
-                data["msgtype"] = "empty"
-            elif segment.type == "at" and "atMobiles" in segment.data:
-                data.setdefault("at", {})
-                data["at"]["atMobiles"] = data["at"].setdefault(
-                    "atMobiles", []) + segment.data["atMobiles"]
-            elif segment.data:
-                data.setdefault(segment.type, {})
-                data[segment.type].update(segment.data)
+            else:
+                data.update(segment.to_dict())
         return data
