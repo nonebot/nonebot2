@@ -13,13 +13,16 @@ from types import ModuleType
 from dataclasses import dataclass
 from importlib._bootstrap import _load
 from contextvars import Context, ContextVar, copy_context
-from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional
+from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
 from nonebot.rule import Rule, startswith, endswith, keyword, command, regex
+
+if TYPE_CHECKING:
+    from nonebot.adapters import Bot, Event
 
 plugins: Dict[str, "Plugin"] = {}
 """
@@ -417,10 +420,15 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
       - ``Type[Matcher]``
     """
 
-    async def _strip_cmd(bot, event, state: T_State):
-        message = event.message
-        event.message = message.__class__(
-            str(message)[len(state["_prefix"]["raw_command"]):].strip())
+    async def _strip_cmd(bot: "Bot", event: "Event", state: T_State):
+        print(event.dict())
+        message = event.get_message()
+        segment = message.pop(0)
+        new_message = message.__class__(
+            str(segment)
+            [len(state["_prefix"]["raw_command"]):].strip())  # type: ignore
+        for new_segment in reversed(new_message):
+            message.insert(0, new_segment)
 
     handlers = kwargs.pop("handlers", [])
     handlers.insert(0, _strip_cmd)
