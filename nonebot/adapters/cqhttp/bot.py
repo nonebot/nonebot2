@@ -6,7 +6,6 @@ import asyncio
 from typing import Any, Dict, Union, Optional, TYPE_CHECKING
 
 import httpx
-
 from nonebot.log import logger
 from nonebot.config import Config
 from nonebot.typing import overrides

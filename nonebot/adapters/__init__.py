@@ -6,6 +6,7 @@
 """
 
 import abc
+from copy import copy
 from typing_extensions import Literal
 from functools import reduce, partial
 from dataclasses import dataclass, field
@@ -164,7 +165,7 @@ class MessageSegment(abc.ABC):
 
     @abc.abstractmethod
     def __add__(self: T_MessageSegment, other: Union[str, T_MessageSegment,
-                                                     T_Message]) -> "T_Message":
+                                                     T_Message]) -> T_Message:
         """你需要在这里实现不同消息段的合并：
         比如：
             if isinstance(other, str):
@@ -198,6 +199,9 @@ class MessageSegment(abc.ABC):
     def get(self, key, default=None):
         return getattr(self, key, default)
 
+    def copy(self: T_MessageSegment) -> T_MessageSegment:
+        return copy(self)
+
     @abc.abstractmethod
     def is_text(self) -> bool:
         raise NotImplementedError
@@ -207,22 +211,22 @@ class Message(list, abc.ABC):
     """消息数组"""
 
     def __init__(self,
-                 message: Union[str, dict, list, T_MessageSegment,
-                                T_Message] = None,
+                 message: Union[str, list, dict, T_MessageSegment, T_Message,
+                                Any] = None,
                  *args,
                  **kwargs):
         """
         :参数:
 
-          * ``message: Union[str, dict, list, MessageSegment, Message]``: 消息内容
+          * ``message: Union[str, list, dict, MessageSegment, Message, Any]``: 消息内容
         """
         super().__init__(*args, **kwargs)
-        if isinstance(message, (str, dict, list)):
-            self.extend(self._construct(message))
-        elif isinstance(message, Message):
+        if isinstance(message, Message):
             self.extend(message)
         elif isinstance(message, MessageSegment):
             self.append(message)
+        else:
+            self.extend(self._construct(message))
 
     def __str__(self):
         return ''.join((str(seg) for seg in self))
@@ -238,8 +242,7 @@ class Message(list, abc.ABC):
     @staticmethod
     @abc.abstractmethod
     def _construct(
-            msg: Union[str, dict, list,
-                       BaseModel]) -> Iterable[T_MessageSegment]:
+            msg: Union[str, list, dict, Any]) -> Iterable[T_MessageSegment]:
         raise NotImplementedError
 
     def __add__(self: T_Message, other: Union[str, T_MessageSegment,

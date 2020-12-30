@@ -63,7 +63,7 @@ sidebarDepth: 0
 
 ## _exception_ `SessionExpired`
 
-基类：[`nonebot.exception.ApiNotAvailable`](../exception.md#nonebot.exception.ApiNotAvailable), `nonebot.adapters.ding.exception.DingAdapterException`
+基类：`nonebot.adapters.ding.exception.ApiNotAvailable`, `nonebot.adapters.ding.exception.DingAdapterException`
 
 
 * **说明**
@@ -94,7 +94,7 @@ sidebarDepth: 0
 
 
 
-### _async_ `handle_message(body)`
+### _async_ `handle_message(message)`
 
 
 * **说明**
@@ -195,147 +195,290 @@ sidebarDepth: 0
 
 基类：[`nonebot.adapters.Event`](README.md#nonebot.adapters.Event)
 
-钉钉 协议 Event 适配。继承属性参考 [BaseEvent](./#class-baseevent) 。
+钉钉 协议 Event 适配。各事件字段参考 [钉钉文档](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p)
 
 
-### _property_ `raw_event`
+### `get_type()`
 
-原始上报消息
 
+* **说明**
 
-### _property_ `id`
+    获取事件类型的方法，类型通常为 NoneBot 内置的四种类型。
 
 
-* 类型: `Optional[str]`
 
+* **返回**
 
-* 说明: 消息 ID
+    
+    * `Literal["message", "notice", "request", "meta_event"]`
 
 
-### _property_ `name`
 
+### `get_event_name()`
 
-* 类型: `str`
 
+* **说明**
 
-* 说明: 事件名称，由 type.\`detail_type\` 组合而成
+    获取事件名称的方法。
 
 
-### _property_ `self_id`
 
+* **返回**
 
-* 类型: `str`
+    
+    * `str`
 
 
-* 说明: 机器人自身 ID
 
+### `get_event_description()`
 
-### _property_ `time`
 
+* **说明**
 
-* 类型: `int`
+    获取事件描述的方法，通常为事件具体内容。
 
 
-* 说明: 消息的时间戳，单位 s
 
+* **返回**
 
-### _property_ `type`
+    
+    * `str`
 
 
-* 类型: `str`
 
+### `get_message()`
 
-* 说明: 事件类型
 
+* **说明**
 
-### _property_ `detail_type`
+    获取事件消息内容的方法。
 
 
-* 类型: `str`
 
+* **返回**
 
-* 说明: 事件详细类型
+    
+    * `Message`
 
 
-### _property_ `sub_type`
 
+### `get_plaintext()`
 
-* 类型: `None`
 
+* **说明**
 
-* 说明: 钉钉适配器无事件子类型
+    获取消息纯文本的方法，通常不需要修改，默认通过 `get_message().extract_plain_text` 获取。
 
 
-### _property_ `user_id`
 
+* **返回**
 
-* 类型: `Optional[str]`
+    
+    * `str`
 
 
-* 说明: 发送者 ID
 
+### `get_user_id()`
 
-### _property_ `group_id`
 
+* **说明**
 
-* 类型: `Optional[str]`
+    获取事件主体 id 的方法，通常是用户 id 。
 
 
-* 说明: 事件主体群 ID
 
+* **返回**
 
-### _property_ `to_me`
+    
+    * `str`
 
 
-* 类型: `Optional[bool]`
 
+### `get_session_id()`
 
-* 说明: 消息是否与机器人相关
 
+* **说明**
 
-### _property_ `message`
+    获取会话 id 的方法，用于判断当前事件属于哪一个会话，通常是用户 id、群组 id 组合。
 
 
-* 类型: `Optional[Message]`
 
+* **返回**
 
-* 说明: 消息内容
+    
+    * `str`
 
 
-### _property_ `reply`
 
+### `is_tome()`
 
-* 类型: `None`
 
+* **说明**
 
-* 说明: 回复消息详情
+    获取事件是否与机器人有关的方法。
 
 
-### _property_ `raw_message`
 
+* **返回**
 
-* 类型: `Optional[str]`
+    
+    * `bool`
 
 
-* 说明: 原始消息
 
+## _class_ `ConversationType`
 
-### _property_ `plain_text`
+基类：`str`, `enum.Enum`
 
+An enumeration.
 
-* 类型: `Optional[str]`
 
+### `_member_type_`
 
-* 说明: 纯文本消息内容
+`builtins.str` 的别名
 
 
-### _property_ `sender`
+## _class_ `MessageEvent`
 
+基类：`nonebot.adapters.ding.event.Event`
 
-* 类型: `Optional[dict]`
 
+### `get_type()`
 
-* 说明: 消息发送者信息
+
+* **说明**
+
+    获取事件类型的方法，类型通常为 NoneBot 内置的四种类型。
+
+
+
+* **返回**
+
+    
+    * `Literal["message", "notice", "request", "meta_event"]`
+
+
+
+### `get_event_name()`
+
+
+* **说明**
+
+    获取事件名称的方法。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_event_description()`
+
+
+* **说明**
+
+    获取事件描述的方法，通常为事件具体内容。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_message()`
+
+
+* **说明**
+
+    获取事件消息内容的方法。
+
+
+
+* **返回**
+
+    
+    * `Message`
+
+
+
+### `get_plaintext()`
+
+
+* **说明**
+
+    获取消息纯文本的方法，通常不需要修改，默认通过 `get_message().extract_plain_text` 获取。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_user_id()`
+
+
+* **说明**
+
+    获取事件主体 id 的方法，通常是用户 id 。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_session_id()`
+
+
+* **说明**
+
+    获取会话 id 的方法，用于判断当前事件属于哪一个会话，通常是用户 id、群组 id 组合。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+## _class_ `PrivateMessageEvent`
+
+基类：`nonebot.adapters.ding.event.MessageEvent`
+
+
+## _class_ `GroupMessageEvent`
+
+基类：`nonebot.adapters.ding.event.MessageEvent`
+
+
+### `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`
+
 
 
 ## _class_ `MessageSegment`
@@ -345,7 +488,12 @@ sidebarDepth: 0
 钉钉 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
 
 
-### _static_ `actionCardSingleMultiBtns(title, text, btns=[], hideAvatar=False, btnOrientation='1')`
+### _static_ `extension(dict_)`
+
+"标记 text 文本的 extension 属性，需要与 text 消息段相加。
+
+
+### _static_ `actionCardMultiBtns(title, text, btns, hideAvatar=False, btnOrientation='1')`
 
 
 * **参数**
@@ -358,7 +506,7 @@ sidebarDepth: 0
 
 
 
-### _static_ `feedCard(links=[])`
+### _static_ `feedCard(links)`
 
 
 * **参数**
@@ -366,11 +514,6 @@ sidebarDepth: 0
     
     * `links`: [{ "title": xxx, "messageURL": xxx, "picURL": xxx }, ...]
 
-
-
-### _static_ `empty()`
-
-不想回复消息到群里
 
 
 ## _class_ `Message`
