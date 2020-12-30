@@ -391,6 +391,22 @@ An enumeration.
 
 
 
+### `get_message()`
+
+
+* **说明**
+
+    获取事件消息内容的方法。
+
+
+
+* **返回**
+
+    
+    * `Message`
+
+
+
 ### `get_plaintext()`
 
 
@@ -472,7 +488,12 @@ An enumeration.
 钉钉 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
 
 
-### _static_ `actionCardMultiBtns(title, text, btns=[], hideAvatar=False, btnOrientation='1')`
+### _static_ `extension(dict_)`
+
+"标记 text 文本的 extension 属性，需要与 text 消息段相加。
+
+
+### _static_ `actionCardMultiBtns(title, text, btns, hideAvatar=False, btnOrientation='1')`
 
 
 * **参数**
@@ -485,7 +506,7 @@ An enumeration.
 
 
 
-### _static_ `feedCard(links=[])`
+### _static_ `feedCard(links)`
 
 
 * **参数**
@@ -493,11 +514,6 @@ An enumeration.
     
     * `links`: [{ "title": xxx, "messageURL": xxx, "picURL": xxx }, ...]
 
-
-
-### _static_ `empty()`
-
-不想回复消息到群里
 
 
 ## _class_ `Message`
