@@ -130,6 +130,15 @@ class AdapterException(NoneBotException):
         self.adapter_name = adapter_name
 
 
+class NoLogException(Exception):
+    """
+    :说明:
+
+      指示 NoneBot 对当前 ``Event`` 进行处理但不显示 Log 信息，可在 ``get_log_string`` 时抛出
+    """
+    pass
+
+
 class ApiNotAvailable(AdapterException):
     """
     :说明:

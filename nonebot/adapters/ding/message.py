@@ -1,7 +1,8 @@
-from nonebot.typing import Any, Dict, Union, Iterable
-from nonebot.adapters import BaseMessage, BaseMessageSegment
-from .utils import log
-from .model import TextMessage
+from copy import copy
+from typing import Any, Dict, Union, Mapping, Iterable
+
+from nonebot.typing import overrides
+from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
 
 
 class MessageSegment(BaseMessageSegment):
@@ -9,106 +10,128 @@ class MessageSegment(BaseMessageSegment):
     钉钉 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
     """
 
-    def __init__(self, type_: str, msg: Dict[str, Any]) -> None:
-        data = {
-            "msgtype": type_,
-        }
-        if msg:
-            data.update(msg)
-        log("DEBUG", f"data {data}")
+    @overrides(BaseMessageSegment)
+    def __init__(self, type_: str, data: Dict[str, Any]) -> None:
         super().__init__(type=type_, data=data)
 
-    @classmethod
-    def from_segment(cls, segment: "MessageSegment"):
-        return MessageSegment(segment.type, segment.data)
-
+    @overrides(BaseMessageSegment)
     def __str__(self):
-        log("DEBUG", f"__str__: self.type {self.type} data {self.data}")
         if self.type == "text":
-            return str(self.data["text"]["content"].strip())
+            return str(self.data["content"])
+        elif self.type == "markdown":
+            return str(self.data["text"])
         return ""
 
+    @overrides(BaseMessageSegment)
     def __add__(self, other) -> "Message":
-        if isinstance(other, str):
-            if self.type == 'text':
-                self.data['text']['content'] += other
-                return MessageSegment.from_segment(self)
         return Message(self) + other
 
-    def atMobile(self, mobileNumber):
-        self.data.setdefault("at", {})
-        self.data["at"].setdefault("atMobiles", [])
-        self.data["at"]["atMobiles"].append(mobileNumber)
+    @overrides(BaseMessageSegment)
+    def __radd__(self, other) -> "Message":
+        return Message(other) + self
 
-    def atAll(self, value):
-        self.data.setdefault("at", {})
-        self.data["at"]["isAtAll"] = value
+    @overrides(BaseMessageSegment)
+    def is_text(self) -> bool:
+        return self.type == "text"
 
     @staticmethod
-    def text(text_: str) -> "MessageSegment":
-        return MessageSegment("text", {"text": {"content": text_.strip()}})
+    def atAll() -> "MessageSegment":
+        """@全体"""
+        return MessageSegment("at", {"isAtAll": True})
+
+    @staticmethod
+    def atMobiles(*mobileNumber: str) -> "MessageSegment":
+        """@指定手机号人员"""
+        return MessageSegment("at", {"atMobiles": list(mobileNumber)})
+
+    @staticmethod
+    def text(text: str) -> "MessageSegment":
+        """发送 ``text`` 类型消息"""
+        return MessageSegment("text", {"content": text})
+
+    @staticmethod
+    def image(picURL: str) -> "MessageSegment":
+        """发送 ``image`` 类型消息"""
+        return MessageSegment("image", {"picURL": picURL})
+
+    @staticmethod
+    def extension(dict_: dict) -> "MessageSegment":
+        """"标记 text 文本的 extension 属性，需要与 text 消息段相加。"""
+        return MessageSegment("extension", dict_)
 
     @staticmethod
     def markdown(title: str, text: str) -> "MessageSegment":
-        return MessageSegment("markdown", {
-            "markdown": {
+        """发送 ``markdown`` 类型消息"""
+        return MessageSegment(
+            "markdown",
+            {
                 "title": title,
                 "text": text,
             },
-        })
+        )
 
     @staticmethod
-    def actionCardSingleBtn(title: str, text: str, btnTitle: str,
-                            btnUrl) -> "MessageSegment":
+    def actionCardSingleBtn(title: str, text: str, singleTitle: str,
+                            singleURL) -> "MessageSegment":
+        """发送 ``actionCardSingleBtn`` 类型消息"""
         return MessageSegment(
             "actionCard", {
-                "actionCard": {
-                    "title": title,
-                    "text": text,
-                    "singleTitle": btnTitle,
-                    "singleURL": btnUrl
-                }
+                "title": title,
+                "text": text,
+                "singleTitle": singleTitle,
+                "singleURL": singleURL
             })
 
     @staticmethod
-    def actionCardSingleMultiBtns(
+    def actionCardMultiBtns(
         title: str,
         text: str,
-        btns: list = [],
+        btns: list,
         hideAvatar: bool = False,
         btnOrientation: str = '1',
     ) -> "MessageSegment":
         """
+        发送 ``actionCardMultiBtn`` 类型消息
+
         :参数:
 
             * ``btnOrientation``: 0：按钮竖直排列 1：按钮横向排列
-
             * ``btns``: [{ "title": title, "actionURL": actionURL }, ...]
         """
         return MessageSegment(
             "actionCard", {
-                "actionCard": {
-                    "title": title,
-                    "text": text,
-                    "hideAvatar": "1" if hideAvatar else "0",
-                    "btnOrientation": btnOrientation,
-                    "btns": btns
-                }
+                "title": title,
+                "text": text,
+                "hideAvatar": "1" if hideAvatar else "0",
+                "btnOrientation": btnOrientation,
+                "btns": btns
             })
 
     @staticmethod
-    def feedCard(links: list = [],) -> "MessageSegment":
+    def feedCard(links: list) -> "MessageSegment":
         """
+        发送 ``feedCard`` 类型消息
+
         :参数:
 
             * ``links``: [{ "title": xxx, "messageURL": xxx, "picURL": xxx }, ...]
         """
-        return MessageSegment("feedCard", {"feedCard": {"links": links}})
+        return MessageSegment("feedCard", {"links": links})
 
     @staticmethod
-    def empty() -> "MessageSegment":
-        """不想回复消息到群里"""
-        return MessageSegment("empty")
+    def raw(data) -> "MessageSegment":
+        return MessageSegment('raw', data)
+
+    def to_dict(self) -> dict:
+        # 让用户可以直接发送原始的消息格式
+        if self.type == "raw":
+            return copy(self.data)
+
+        # 不属于消息内容，只是作为消息段的辅助
+        if self.type in ["at", "extension"]:
+            return {self.type: copy(self.data)}
+
+        return {"msgtype": self.type, self.type: copy(self.data)}
 
 
 class Message(BaseMessage):
@@ -117,17 +140,27 @@ class Message(BaseMessage):
     """
 
     @staticmethod
+    @overrides(BaseMessage)
     def _construct(
-            msg: Union[str, dict, list,
-                       TextMessage]) -> Iterable[MessageSegment]:
-        if isinstance(msg, dict):
+        msg: Union[str, Mapping,
+                   Iterable[Mapping]]) -> Iterable[MessageSegment]:
+        if isinstance(msg, Mapping):
             yield MessageSegment(msg["type"], msg.get("data") or {})
-            return
-        elif isinstance(msg, list):
-            for seg in msg:
-                yield MessageSegment(seg["type"], seg.get("data") or {})
-            return
-        elif isinstance(msg, TextMessage):
-            yield MessageSegment("text", {"text": msg.dict()})
         elif isinstance(msg, str):
             yield MessageSegment.text(msg)
+        elif isinstance(msg, Iterable):
+            for seg in msg:
+                yield MessageSegment(seg["type"], seg.get("data") or {})
+
+    def _produce(self) -> dict:
+        data = {}
+        segment: MessageSegment
+        for segment in self:
+            # text 可以和 text 合并
+            if segment.type == "text" and data.get("msgtype") == 'text':
+                data.setdefault("text", {})
+                data["text"]["content"] = data["text"].setdefault(
+                    "content", "") + segment.data["content"]
+            else:
+                data.update(segment.to_dict())
+        return data

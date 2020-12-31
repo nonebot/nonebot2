@@ -111,6 +111,12 @@ module.exports = context => ({
                 "creating-a-handler",
                 "end-or-start"
               ]
+            },
+            {
+              title: "协议适配",
+              collapsable: false,
+              sidebar: "auto",
+              children: ["cqhttp-guide", "ding-guide"]
             }
           ],
           "/advanced/": [
@@ -123,7 +129,8 @@ module.exports = context => ({
                 "scheduler",
                 "permission",
                 "runtime-hook",
-                "export-and-require"
+                "export-and-require",
+                "overloaded-handlers"
               ]
             },
             {

@@ -1,13 +1,17 @@
 import re
+from types import ModuleType
 from contextvars import ContextVar
+from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional
 
-from nonebot.typing import Rule, Matcher, Handler, Permission, RuleChecker
-from nonebot.typing import Set, List, Dict, Type, Tuple, Union, Optional, ModuleType
+from nonebot.rule import Rule
+from nonebot.matcher import Matcher
+from nonebot.permission import Permission
+from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
 
 plugins: Dict[str, "Plugin"] = ...
 
-_tmp_matchers: ContextVar[Set[Type[Matcher]]] = ...
 _export: ContextVar["Export"] = ...
+_tmp_matchers: ContextVar[Set[Type[Matcher]]] = ...
 
 
 class Export(dict):
@@ -30,104 +34,115 @@ class Plugin(object):
 
 
 def on(type: str = ...,
-       rule: Optional[Union[Rule, RuleChecker]] = ...,
+       rule: Optional[Union[Rule, T_RuleChecker]] = ...,
        permission: Optional[Permission] = ...,
        *,
-       handlers: Optional[List[Handler]] = ...,
+       handlers: Optional[List[T_Handler]] = ...,
        temp: bool = ...,
        priority: int = ...,
        block: bool = ...,
-       state: Optional[dict] = ...) -> Type[Matcher]:
+       state: Optional[T_State] = ...,
+       state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
     ...
 
 
-def on_metaevent(rule: Optional[Union[Rule, RuleChecker]] = ...,
-                 *,
-                 handlers: Optional[List[Handler]] = ...,
-                 temp: bool = ...,
-                 priority: int = ...,
-                 block: bool = ...,
-                 state: Optional[dict] = ...) -> Type[Matcher]:
+def on_metaevent(
+        rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+        *,
+        handlers: Optional[List[T_Handler]] = ...,
+        temp: bool = ...,
+        priority: int = ...,
+        block: bool = ...,
+        state: Optional[T_State] = ...,
+        state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
     ...
 
 
-def on_message(rule: Optional[Union[Rule, RuleChecker]] = ...,
+def on_message(rule: Optional[Union[Rule, T_RuleChecker]] = ...,
                permission: Optional[Permission] = ...,
                *,
-               handlers: Optional[List[Handler]] = ...,
+               handlers: Optional[List[T_Handler]] = ...,
                temp: bool = ...,
                priority: int = ...,
                block: bool = ...,
-               state: Optional[dict] = ...) -> Type[Matcher]:
+               state: Optional[T_State] = ...,
+               state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
     ...
 
 
-def on_notice(rule: Optional[Union[Rule, RuleChecker]] = ...,
+def on_notice(rule: Optional[Union[Rule, T_RuleChecker]] = ...,
               *,
-              handlers: Optional[List[Handler]] = ...,
+              handlers: Optional[List[T_Handler]] = ...,
               temp: bool = ...,
               priority: int = ...,
               block: bool = ...,
-              state: Optional[dict] = ...) -> Type[Matcher]:
+              state: Optional[T_State] = ...,
+              state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
     ...
 
 
-def on_request(rule: Optional[Union[Rule, RuleChecker]] = ...,
+def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = ...,
                *,
-               handlers: Optional[List[Handler]] = ...,
+               handlers: Optional[List[T_Handler]] = ...,
                temp: bool = ...,
                priority: int = ...,
                block: bool = ...,
-               state: Optional[dict] = ...) -> Type[Matcher]:
+               state: Optional[T_State] = ...,
+               state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
     ...
 
 
-def on_startswith(msg: str,
-                  rule: Optional[Optional[Union[Rule, RuleChecker]]] = ...,
-                  *,
-                  permission: Optional[Permission] = ...,
-                  handlers: Optional[List[Handler]] = ...,
-                  temp: bool = ...,
-                  priority: int = ...,
-                  block: bool = ...,
-                  state: Optional[dict] = ...) -> Type[Matcher]:
+def on_startswith(
+        msg: str,
+        rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
+        *,
+        permission: Optional[Permission] = ...,
+        handlers: Optional[List[T_Handler]] = ...,
+        temp: bool = ...,
+        priority: int = ...,
+        block: bool = ...,
+        state: Optional[T_State] = ...,
+        state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
     ...
 
 
 def on_endswith(msg: str,
-                rule: Optional[Optional[Union[Rule, RuleChecker]]] = ...,
+                rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
                 *,
                 permission: Optional[Permission] = ...,
-                handlers: Optional[List[Handler]] = ...,
+                handlers: Optional[List[T_Handler]] = ...,
                 temp: bool = ...,
                 priority: int = ...,
                 block: bool = ...,
-                state: Optional[dict] = ...) -> Type[Matcher]:
+                state: Optional[T_State] = ...,
+                state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
     ...
 
 
 def on_keyword(keywords: Set[str],
-               rule: Optional[Optional[Union[Rule, RuleChecker]]] = ...,
+               rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
                *,
                permission: Optional[Permission] = ...,
-               handlers: Optional[List[Handler]] = ...,
+               handlers: Optional[List[T_Handler]] = ...,
                temp: bool = ...,
                priority: int = ...,
                block: bool = ...,
-               state: Optional[dict] = ...) -> Type[Matcher]:
+               state: Optional[T_State] = ...,
+               state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
     ...
 
 
 def on_command(cmd: Union[str, Tuple[str, ...]],
-               rule: Optional[Union[Rule, RuleChecker]] = ...,
+               rule: Optional[Union[Rule, T_RuleChecker]] = ...,
                aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
                *,
                permission: Optional[Permission] = ...,
-               handlers: Optional[List[Handler]] = ...,
+               handlers: Optional[List[T_Handler]] = ...,
                temp: bool = ...,
                priority: int = ...,
                block: bool = ...,
-               state: Optional[dict] = ...) -> Type[Matcher]:
+               state: Optional[T_State] = ...,
+               state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
     ...
 
 
@@ -136,11 +151,12 @@ def on_regex(pattern: str,
              rule: Optional[Rule] = ...,
              *,
              permission: Optional[Permission] = ...,
-             handlers: Optional[List[Handler]] = ...,
+             handlers: Optional[List[T_Handler]] = ...,
              temp: bool = ...,
              priority: int = ...,
              block: bool = ...,
-             state: Optional[dict] = ...) -> Type[Matcher]:
+             state: Optional[T_State] = ...,
+             state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
     ...
 
 
@@ -176,27 +192,29 @@ class CommandGroup:
 
     def __init__(self,
                  cmd: Union[str, Tuple[str, ...]],
-                 rule: Optional[Union[Rule, RuleChecker]] = ...,
+                 rule: Optional[Union[Rule, T_RuleChecker]] = ...,
                  permission: Optional[Permission] = ...,
                  *,
-                 handlers: Optional[List[Handler]] = ...,
+                 handlers: Optional[List[T_Handler]] = ...,
                  temp: bool = ...,
                  priority: int = ...,
                  block: bool = ...,
-                 state: Optional[dict] = ...):
-        ...
+                 state: Optional[T_State] = ...):
+        self.basecmd: Tuple[str, ...] = ...
+        self.base_kwargs: Dict[str, Any] = ...
 
     def command(self,
                 cmd: Union[str, Tuple[str, ...]],
                 *,
-                rule: Optional[Union[Rule, RuleChecker]] = ...,
+                rule: Optional[Union[Rule, T_RuleChecker]] = ...,
                 aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
                 permission: Optional[Permission] = ...,
-                handlers: Optional[List[Handler]] = ...,
+                handlers: Optional[List[T_Handler]] = ...,
                 temp: bool = ...,
                 priority: int = ...,
                 block: bool = ...,
-                state: Optional[dict] = ...) -> Type[Matcher]:
+                state: Optional[T_State] = ...,
+                state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
         ...
 
 
@@ -205,126 +223,145 @@ class MatcherGroup:
     def __init__(self,
                  *,
                  type: str = ...,
-                 rule: Optional[Union[Rule, RuleChecker]] = ...,
+                 rule: Optional[Union[Rule, T_RuleChecker]] = ...,
                  permission: Optional[Permission] = ...,
-                 handlers: Optional[List[Handler]] = ...,
+                 handlers: Optional[List[T_Handler]] = ...,
                  temp: bool = ...,
                  priority: int = ...,
                  block: bool = ...,
-                 state: Optional[dict] = ...):
+                 state: Optional[T_State] = ...):
         ...
 
     def on(self,
            *,
            type: str = ...,
-           rule: Optional[Union[Rule, RuleChecker]] = ...,
+           rule: Optional[Union[Rule, T_RuleChecker]] = ...,
            permission: Optional[Permission] = ...,
-           handlers: Optional[List[Handler]] = ...,
+           handlers: Optional[List[T_Handler]] = ...,
            temp: bool = ...,
            priority: int = ...,
            block: bool = ...,
-           state: Optional[dict] = ...) -> Type[Matcher]:
+           state: Optional[T_State] = ...,
+           state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
         ...
 
-    def on_metaevent(self,
-                     *,
-                     rule: Optional[Union[Rule, RuleChecker]] = None,
-                     handlers: Optional[List[Handler]] = None,
-                     temp: bool = False,
-                     priority: int = 1,
-                     block: bool = False,
-                     state: Optional[dict] = None) -> Type[Matcher]:
+    def on_metaevent(
+            self,
+            *,
+            rule: Optional[Union[Rule, T_RuleChecker]] = None,
+            handlers: Optional[List[T_Handler]] = None,
+            temp: bool = False,
+            priority: int = 1,
+            block: bool = False,
+            state: Optional[T_State] = None,
+            state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
         ...
 
-    def on_message(self,
-                   *,
-                   rule: Optional[Union[Rule, RuleChecker]] = None,
-                   permission: Optional[Permission] = None,
-                   handlers: Optional[List[Handler]] = None,
-                   temp: bool = False,
-                   priority: int = 1,
-                   block: bool = True,
-                   state: Optional[dict] = None) -> Type[Matcher]:
+    def on_message(
+            self,
+            *,
+            rule: Optional[Union[Rule, T_RuleChecker]] = None,
+            permission: Optional[Permission] = None,
+            handlers: Optional[List[T_Handler]] = None,
+            temp: bool = False,
+            priority: int = 1,
+            block: bool = True,
+            state: Optional[T_State] = None,
+            state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
         ...
 
-    def on_notice(self,
-                  *,
-                  rule: Optional[Union[Rule, RuleChecker]] = None,
-                  handlers: Optional[List[Handler]] = None,
-                  temp: bool = False,
-                  priority: int = 1,
-                  block: bool = False,
-                  state: Optional[dict] = None) -> Type[Matcher]:
+    def on_notice(
+            self,
+            *,
+            rule: Optional[Union[Rule, T_RuleChecker]] = None,
+            handlers: Optional[List[T_Handler]] = None,
+            temp: bool = False,
+            priority: int = 1,
+            block: bool = False,
+            state: Optional[T_State] = None,
+            state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
         ...
 
-    def on_request(self,
-                   *,
-                   rule: Optional[Union[Rule, RuleChecker]] = None,
-                   handlers: Optional[List[Handler]] = None,
-                   temp: bool = False,
-                   priority: int = 1,
-                   block: bool = False,
-                   state: Optional[dict] = None) -> Type[Matcher]:
+    def on_request(
+            self,
+            *,
+            rule: Optional[Union[Rule, T_RuleChecker]] = None,
+            handlers: Optional[List[T_Handler]] = None,
+            temp: bool = False,
+            priority: int = 1,
+            block: bool = False,
+            state: Optional[T_State] = None,
+            state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
         ...
 
-    def on_startswith(self,
-                      *,
-                      msg: str,
-                      rule: Optional[Optional[Union[Rule, RuleChecker]]] = ...,
-                      permission: Optional[Permission] = ...,
-                      handlers: Optional[List[Handler]] = ...,
-                      temp: bool = ...,
-                      priority: int = ...,
-                      block: bool = ...,
-                      state: Optional[dict] = ...) -> Type[Matcher]:
+    def on_startswith(
+            self,
+            *,
+            msg: str,
+            rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
+            permission: Optional[Permission] = ...,
+            handlers: Optional[List[T_Handler]] = ...,
+            temp: bool = ...,
+            priority: int = ...,
+            block: bool = ...,
+            state: Optional[T_State] = ...,
+            state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
         ...
 
-    def on_endswith(self,
-                    *,
-                    msg: str,
-                    rule: Optional[Optional[Union[Rule, RuleChecker]]] = ...,
-                    permission: Optional[Permission] = ...,
-                    handlers: Optional[List[Handler]] = ...,
-                    temp: bool = ...,
-                    priority: int = ...,
-                    block: bool = ...,
-                    state: Optional[dict] = ...) -> Type[Matcher]:
+    def on_endswith(
+            self,
+            *,
+            msg: str,
+            rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
+            permission: Optional[Permission] = ...,
+            handlers: Optional[List[T_Handler]] = ...,
+            temp: bool = ...,
+            priority: int = ...,
+            block: bool = ...,
+            state: Optional[T_State] = ...,
+            state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
         ...
 
-    def on_keyword(self,
-                   *,
-                   keywords: Set[str],
-                   rule: Optional[Optional[Union[Rule, RuleChecker]]] = ...,
-                   permission: Optional[Permission] = ...,
-                   handlers: Optional[List[Handler]] = ...,
-                   temp: bool = ...,
-                   priority: int = ...,
-                   block: bool = ...,
-                   state: Optional[dict] = ...) -> Type[Matcher]:
+    def on_keyword(
+            self,
+            *,
+            keywords: Set[str],
+            rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
+            permission: Optional[Permission] = ...,
+            handlers: Optional[List[T_Handler]] = ...,
+            temp: bool = ...,
+            priority: int = ...,
+            block: bool = ...,
+            state: Optional[T_State] = ...,
+            state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
         ...
 
-    def on_command(self,
-                   *,
-                   cmd: Union[str, Tuple[str, ...]],
-                   rule: Optional[Union[Rule, RuleChecker]] = ...,
-                   aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
-                   permission: Optional[Permission] = ...,
-                   handlers: Optional[List[Handler]] = ...,
-                   temp: bool = ...,
-                   priority: int = ...,
-                   block: bool = ...,
-                   state: Optional[dict] = ...) -> Type[Matcher]:
+    def on_command(
+            self,
+            *,
+            cmd: Union[str, Tuple[str, ...]],
+            rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+            aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
+            permission: Optional[Permission] = ...,
+            handlers: Optional[List[T_Handler]] = ...,
+            temp: bool = ...,
+            priority: int = ...,
+            block: bool = ...,
+            state: Optional[T_State] = ...,
+            state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
         ...
 
-    def on_regex(self,
-                 *,
-                 pattern: str,
-                 flags: Union[int, re.RegexFlag] = 0,
-                 rule: Optional[Rule] = ...,
-                 permission: Optional[Permission] = ...,
-                 handlers: Optional[List[Handler]] = ...,
-                 temp: bool = ...,
-                 priority: int = ...,
-                 block: bool = ...,
-                 state: Optional[dict] = ...) -> Type[Matcher]:
+    def on_regex(
+            self,
+            *,
+            pattern: str,
+            flags: Union[int, re.RegexFlag] = 0,
+            rule: Optional[Rule] = ...,
+            permission: Optional[Permission] = ...,
+            handlers: Optional[List[T_Handler]] = ...,
+            temp: bool = ...,
+            priority: int = ...,
+            block: bool = ...,
+            state: Optional[T_State] = ...,
+            state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
         ...

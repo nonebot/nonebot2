@@ -1,14 +1,21 @@
-from nonebot.typing import Bot, Event
+from nonebot.typing import T_State
 from nonebot.plugin import on_metaevent
+from nonebot.adapters import Bot, Event
+from nonebot.adapters.cqhttp import HeartbeatMetaEvent
 
 
-async def heartbeat(bot: Bot, event: Event, state: dict) -> bool:
-    return event.detail_type == "heartbeat"
+async def heartbeat(bot: Bot, event: Event, state: T_State) -> bool:
+    return isinstance(event, HeartbeatMetaEvent)
 
 
-test_matcher = on_metaevent(heartbeat)
+async def factory(bot: Bot, event: Event) -> T_State:
+    return {"factory": True}
+
+
+test_matcher = on_metaevent(heartbeat, state_factory=factory)
 
 
 @test_matcher.receive()
-async def handle_heartbeat(bot: Bot, event: Event, state: dict):
+async def handle_heartbeat(bot: Bot, event: Event, state: T_State):
+    print(state)
     print("[i] Heartbeat")

@@ -72,6 +72,7 @@ html_static_path = ['_static']
 
 # -- Options for autodoc extension ----------------------------------------------
 autodoc_default_options = {'member-order': 'bysource'}
+autodoc_inherit_docstrings = False
 
 # -- Options for todo extension ----------------------------------------------
 

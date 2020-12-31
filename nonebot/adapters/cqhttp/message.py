@@ -1,7 +1,8 @@
 import re
+from typing import Any, Dict, Union, Tuple, Mapping, Iterable, Optional
 
-from nonebot.typing import Any, Dict, Union, Tuple, Iterable, Optional, overrides
-from nonebot.adapters import BaseMessage, BaseMessageSegment
+from nonebot.typing import overrides
+from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
 
 from .utils import log, escape, unescape, _b2s
 
@@ -13,12 +14,10 @@ class MessageSegment(BaseMessageSegment):
 
     @overrides(BaseMessageSegment)
     def __init__(self, type: str, data: Dict[str, Any]) -> None:
-        if type == "text":
-            data["text"] = unescape(data["text"])
         super().__init__(type=type, data=data)
 
     @overrides(BaseMessageSegment)
-    def __str__(self):
+    def __str__(self) -> str:
         type_ = self.type
         data = self.data.copy()
 
@@ -36,6 +35,14 @@ class MessageSegment(BaseMessageSegment):
     def __add__(self, other) -> "Message":
         return Message(self) + other
 
+    @overrides(BaseMessageSegment)
+    def __radd__(self, other) -> "Message":
+        return Message(other) + self
+
+    @overrides(BaseMessageSegment)
+    def is_text(self) -> bool:
+        return self.type == "text"
+
     @staticmethod
     def anonymous(ignore_failure: Optional[bool] = None) -> "MessageSegment":
         return MessageSegment("anonymous", {"ignore": _b2s(ignore_failure)})
@@ -43,6 +50,10 @@ class MessageSegment(BaseMessageSegment):
     @staticmethod
     def at(user_id: Union[int, str]) -> "MessageSegment":
         return MessageSegment("at", {"qq": str(user_id)})
+
+    @staticmethod
+    def contact(type_: str, id: int) -> "MessageSegment":
+        return MessageSegment("contact", {"type": type_, "id": str(id)})
 
     @staticmethod
     def contact_group(group_id: int) -> "MessageSegment":
@@ -140,7 +151,14 @@ class MessageSegment(BaseMessageSegment):
                cache: Optional[bool] = None,
                proxy: Optional[bool] = None,
                timeout: Optional[int] = None) -> "MessageSegment":
-        return MessageSegment("record", {"file": file, "magic": _b2s(magic)})
+        return MessageSegment(
+            "record", {
+                "file": file,
+                "magic": _b2s(magic),
+                "cache": cache,
+                "proxy": proxy,
+                "timeout": timeout
+            })
 
     @staticmethod
     def reply(id_: int) -> "MessageSegment":
@@ -194,11 +212,13 @@ class Message(BaseMessage):
 
     @staticmethod
     @overrides(BaseMessage)
-    def _construct(msg: Union[str, dict, list]) -> Iterable[MessageSegment]:
-        if isinstance(msg, dict):
+    def _construct(
+        msg: Union[str, Mapping,
+                   Iterable[Mapping]]) -> Iterable[MessageSegment]:
+        if isinstance(msg, Mapping):
             yield MessageSegment(msg["type"], msg.get("data") or {})
             return
-        elif isinstance(msg, list):
+        elif isinstance(msg, Iterable) and not isinstance(msg, str):
             for seg in msg:
                 yield MessageSegment(seg["type"], seg.get("data") or {})
             return
@@ -208,22 +228,21 @@ class Message(BaseMessage):
             for cqcode in re.finditer(
                     r"\[CQ:(?P<type>[a-zA-Z0-9-_.]+)"
                     r"(?P<params>"
-                    r"(?:,[a-zA-Z0-9-_.]+=?[^,\]]*)*"
+                    r"(?:,[a-zA-Z0-9-_.]+=[^,\]]+)*"
                     r"),?\]", msg):
-                yield "text", unescape(msg[text_begin:cqcode.pos +
-                                           cqcode.start()])
+                yield "text", msg[text_begin:cqcode.pos + cqcode.start()]
                 text_begin = cqcode.pos + cqcode.end()
                 yield cqcode.group("type"), cqcode.group("params").lstrip(",")
-            yield "text", unescape(msg[text_begin:])
+            yield "text", msg[text_begin:]
 
         for type_, data in _iter_message(msg):
             if type_ == "text":
                 if data:
                     # only yield non-empty text segment
-                    yield MessageSegment(type_, {"text": data})
+                    yield MessageSegment(type_, {"text": unescape(data)})
             else:
                 data = {
-                    k: v for k, v in map(
+                    k: unescape(v) for k, v in map(
                         lambda x: x.split("=", maxsplit=1),
                         filter(lambda x: x, (
                             x.lstrip() for x in data.split(","))))

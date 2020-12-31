@@ -7,22 +7,24 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
 
 import asyncio
 from datetime import datetime
+from typing import Set, Type, Optional, Iterable, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
-from nonebot.utils import escape_tag
 from nonebot.matcher import matchers, Matcher
-from nonebot.typing import Set, Type, Union, Optional, Iterable, NoReturn, Bot, Event
-from nonebot.exception import IgnoredException, StopPropagation
-from nonebot.typing import EventPreProcessor, RunPreProcessor, EventPostProcessor, RunPostProcessor
+from nonebot.exception import IgnoredException, StopPropagation, NoLogException
+from nonebot.typing import T_State, T_EventPreProcessor, T_RunPreProcessor, T_EventPostProcessor, T_RunPostProcessor
 
-_event_preprocessors: Set[EventPreProcessor] = set()
-_event_postprocessors: Set[EventPostProcessor] = set()
-_run_preprocessors: Set[RunPreProcessor] = set()
-_run_postprocessors: Set[RunPostProcessor] = set()
+if TYPE_CHECKING:
+    from nonebot.adapters import Bot, Event
+
+_event_preprocessors: Set[T_EventPreProcessor] = set()
+_event_postprocessors: Set[T_EventPostProcessor] = set()
+_run_preprocessors: Set[T_RunPreProcessor] = set()
+_run_postprocessors: Set[T_RunPostProcessor] = set()
 
 
-def event_preprocessor(func: EventPreProcessor) -> EventPreProcessor:
+def event_preprocessor(func: T_EventPreProcessor) -> T_EventPreProcessor:
     """
     :说明:
 
@@ -34,13 +36,13 @@ def event_preprocessor(func: EventPreProcessor) -> EventPreProcessor:
 
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
-      * ``state: dict``: 当前 State
+      * ``state: T_State``: 当前 State
     """
     _event_preprocessors.add(func)
     return func
 
 
-def event_postprocessor(func: EventPostProcessor) -> EventPostProcessor:
+def event_postprocessor(func: T_EventPostProcessor) -> T_EventPostProcessor:
     """
     :说明:
 
@@ -52,13 +54,13 @@ def event_postprocessor(func: EventPostProcessor) -> EventPostProcessor:
 
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
-      * ``state: dict``: 当前事件运行前 State
+      * ``state: T_State``: 当前事件运行前 State
     """
     _event_postprocessors.add(func)
     return func
 
 
-def run_preprocessor(func: RunPreProcessor) -> RunPreProcessor:
+def run_preprocessor(func: T_RunPreProcessor) -> T_RunPreProcessor:
     """
     :说明:
 
@@ -71,13 +73,13 @@ def run_preprocessor(func: RunPreProcessor) -> RunPreProcessor:
       * ``matcher: Matcher``: 当前要运行的事件响应器
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
-      * ``state: dict``: 当前 State
+      * ``state: T_State``: 当前 State
     """
     _run_preprocessors.add(func)
     return func
 
 
-def run_postprocessor(func: RunPostProcessor) -> RunPostProcessor:
+def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
     """
     :说明:
 
@@ -91,18 +93,18 @@ def run_postprocessor(func: RunPostProcessor) -> RunPostProcessor:
       * ``exception: Optional[Exception]``: 事件响应器运行错误（如果存在）
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
-      * ``state: dict``: 当前 State
+      * ``state: T_State``: 当前 State
     """
     _run_postprocessors.add(func)
     return func
 
 
-async def _check_matcher(priority: int, bot: Bot, event: Event,
-                         state: dict) -> Iterable[Type[Matcher]]:
+async def _check_matcher(priority: int, bot: "Bot", event: "Event",
+                         state: T_State) -> Iterable[Type[Matcher]]:
     current_matchers = matchers[priority].copy()
 
-    async def _check(Matcher: Type[Matcher], bot: Bot, event: Event,
-                     state: dict) -> Optional[Type[Matcher]]:
+    async def _check(Matcher: Type[Matcher], bot: "Bot", event: "Event",
+                     state: T_State) -> Optional[Type[Matcher]]:
         try:
             if (not Matcher.expire_time or datetime.now() <= Matcher.expire_time
                ) and await Matcher.check_perm(
@@ -128,16 +130,16 @@ async def _check_matcher(priority: int, bot: Bot, event: Event,
     ]
     results = await asyncio.gather(*checking_tasks, return_exceptions=True)
     expired = await asyncio.gather(*checking_expire_tasks)
-    for expired_matcher in filter(lambda x: x and x in results, expired):
+    for expired_matcher in filter(lambda x: x, expired):
         try:
-            matchers[priority].remove(expired_matcher)
+            matchers[priority].remove(expired_matcher)  # type: ignore
         except Exception:
             pass
     return filter(lambda x: x, results)
 
 
-async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
-                       state: dict) -> Union[None, NoReturn]:
+async def _run_matcher(Matcher: Type[Matcher], bot: "Bot", event: "Event",
+                       state: T_State) -> None:
     logger.info(f"Event will be handled by {Matcher}")
 
     matcher = Matcher()
@@ -162,8 +164,6 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
     try:
         logger.debug(f"Running matcher {matcher}")
         await matcher.run(bot, event, state)
-    except StopPropagation as e:
-        exception = e
     except Exception as e:
         logger.opt(colors=True, exception=e).error(
             f"<r><bg #f8bbd0>Running matcher {matcher} failed.</bg #f8bbd0></r>"
@@ -181,11 +181,12 @@ async def _run_matcher(Matcher: Type[Matcher], bot: Bot, event: Event,
                 "<r><bg #f8bbd0>Error when running RunPostProcessors</bg #f8bbd0></r>"
             )
 
-    if matcher.block or isinstance(exception, StopPropagation):
+    if matcher.block:
         raise StopPropagation
+    return
 
 
-async def handle_event(bot: Bot, event: Event):
+async def handle_event(bot: "Bot", event: "Event"):
     """
     :说明:
 
@@ -204,24 +205,10 @@ async def handle_event(bot: Bot, event: Event):
         asyncio.create_task(handle_event(bot, event))
     """
     show_log = True
-    log_msg = f"<m>{bot.type.upper()} </m>| {event.self_id} [{event.name}]: "
-    if event.type == "message":
-        log_msg += f"Message {event.id} from "
-        log_msg += str(event.user_id)
-        if event.detail_type == "group":
-            log_msg += f"@[群:{event.group_id}]:"
-
-        log_msg += ' "' + "".join(
-            map(
-                lambda x: escape_tag(str(x))
-                if x.type == "text" else f"<le>{escape_tag(str(x))}</le>",
-                event.message)) + '"'  # type: ignore
-    elif event.type == "notice":
-        log_msg += f"Notice {event.raw_event}"
-    elif event.type == "request":
-        log_msg += f"Request {event.raw_event}"
-    elif event.type == "meta_event":
-        # log_msg += f"MetaEvent {event.detail_type}"
+    log_msg = f"<m>{bot.type.upper()} {bot.self_id}</m> | "
+    try:
+        log_msg += event.get_log_string()
+    except NoLogException:
         show_log = False
     if show_log:
         logger.opt(colors=True).info(log_msg)
@@ -233,8 +220,8 @@ async def handle_event(bot: Bot, event: Event):
             logger.debug("Running PreProcessors...")
             await asyncio.gather(*coros)
         except IgnoredException:
-            logger.opt(
-                colors=True).info(f"Event {event.name} is <b>ignored</b>")
+            logger.opt(colors=True).info(
+                f"Event {event.get_event_name()} is <b>ignored</b>")
             return
         except Exception as e:
             logger.opt(colors=True, exception=e).error(

@@ -4,12 +4,20 @@ sidebarDepth: 0
 ---
 
 NoneBot.adapters.ding 模块
-============================
+===========================
+
+.. automodule:: nonebot.adapters.ding
+
+NoneBot.adapters.ding.exception 模块
+=====================================
 
 .. automodule:: nonebot.adapters.ding.exception
    :members:
    :show-inheritance:
 
+
+NoneBot.adapters.ding.bot 模块
+===============================
 
 .. automodule:: nonebot.adapters.ding.bot
    :members:
@@ -17,13 +25,18 @@ NoneBot.adapters.ding 模块
    :show-inheritance:
 
 
-.. automodule:: nonebot.adapters.ding.event
+NoneBot.adapters.ding.message 模块
+===================================
+
+.. automodule:: nonebot.adapters.ding.message
    :members:
    :private-members:
    :show-inheritance:
 
 
-.. automodule:: nonebot.adapters.ding.message
+NoneBot.adapters.ding.event 模块
+=================================
+
+.. automodule:: nonebot.adapters.ding.event
    :members:
-   :private-members:
    :show-inheritance:

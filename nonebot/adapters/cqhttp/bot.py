@@ -3,25 +3,26 @@ import sys
 import hmac
 import json
 import asyncio
+from typing import Any, Dict, Union, Optional, TYPE_CHECKING
 
 import httpx
-
 from nonebot.log import logger
 from nonebot.config import Config
-from nonebot.adapters import BaseBot
+from nonebot.typing import overrides
 from nonebot.message import handle_event
+from nonebot.adapters import Bot as BaseBot
 from nonebot.exception import RequestDenied
-from nonebot.typing import Any, Dict, Union, Optional
-from nonebot.typing import overrides, Driver, WebSocket, NoReturn
 
-from .event import Event
+from .utils import log, escape
 from .message import Message, MessageSegment
+from .event import Reply, Event, MessageEvent, get_event_model
 from .exception import NetworkError, ApiNotAvailable, ActionFailed
-from .utils import log
+
+if TYPE_CHECKING:
+    from nonebot.drivers import Driver, WebSocket
 
 
-def get_auth_bearer(
-        access_token: Optional[str] = None) -> Union[Optional[str], NoReturn]:
+def get_auth_bearer(access_token: Optional[str] = None) -> Optional[str]:
     if not access_token:
         return None
     scheme, _, param = access_token.partition(" ")
@@ -41,7 +42,7 @@ async def _check_reply(bot: "Bot", event: "Event"):
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
     """
-    if event.type != "message":
+    if not isinstance(event, MessageEvent):
         return
 
     try:
@@ -50,9 +51,10 @@ async def _check_reply(bot: "Bot", event: "Event"):
     except ValueError:
         return
     msg_seg = event.message[index]
-    event.reply = await bot.get_msg(message_id=msg_seg.data["id"])
+    event.reply = Reply.parse_obj(await
+                                  bot.get_msg(message_id=msg_seg.data["id"]))
     # ensure string comparation
-    if str(event.reply["sender"]["user_id"]) == str(event.self_id):
+    if str(event.reply.sender.user_id) == str(event.self_id):
         event.to_me = True
     del event.message[index]
     if len(event.message) > index and event.message[index].type == "at":
@@ -77,10 +79,10 @@ def _check_at_me(bot: "Bot", event: "Event"):
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
     """
-    if event.type != "message":
+    if not isinstance(event, MessageEvent):
         return
 
-    if event.detail_type == "private":
+    if event.message_type == "private":
         event.to_me = True
     else:
         at_me_seg = MessageSegment.at(event.self_id)
@@ -131,7 +133,7 @@ def _check_nickname(bot: "Bot", event: "Event"):
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
     """
-    if event.type != "message":
+    if not isinstance(event, MessageEvent):
         return
 
     first_msg_seg = event.message[0]
@@ -153,8 +155,7 @@ def _check_nickname(bot: "Bot", event: "Event"):
             first_msg_seg.data["text"] = first_text[m.end():]
 
 
-def _handle_api_result(
-        result: Optional[Dict[str, Any]]) -> Union[Any, NoReturn]:
+def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
     """
     :说明:
 
@@ -174,7 +175,7 @@ def _handle_api_result(
     """
     if isinstance(result, dict):
         if result.get("status") == "failed":
-            raise ActionFailed(retcode=result.get("retcode"))
+            raise ActionFailed(**result)
         return result.get("data")
 
 
@@ -214,12 +215,12 @@ class Bot(BaseBot):
     """
 
     def __init__(self,
-                 driver: Driver,
+                 driver: "Driver",
                  connection_type: str,
                  config: Config,
                  self_id: str,
                  *,
-                 websocket: Optional[WebSocket] = None):
+                 websocket: Optional["WebSocket"] = None):
 
         super().__init__(driver,
                          connection_type,
@@ -237,9 +238,8 @@ class Bot(BaseBot):
 
     @classmethod
     @overrides(BaseBot)
-    async def check_permission(cls, driver: Driver, connection_type: str,
-                               headers: dict,
-                               body: Optional[dict]) -> Union[str, NoReturn]:
+    async def check_permission(cls, driver: "Driver", connection_type: str,
+                               headers: dict, body: Optional[dict]) -> str:
         """
         :说明:
 
@@ -296,7 +296,20 @@ class Bot(BaseBot):
             return
 
         try:
-            event = Event(message)
+            post_type = message['post_type']
+            detail_type = message.get(f"{post_type}_type")
+            detail_type = f".{detail_type}" if detail_type else ""
+            sub_type = message.get("sub_type")
+            sub_type = f".{sub_type}" if sub_type else ""
+            models = get_event_model(post_type + detail_type + sub_type)
+            for model in models:
+                try:
+                    event = model.parse_obj(message)
+                    break
+                except Exception as e:
+                    log("DEBUG", "Event Parser Error", e)
+            else:
+                event = Event.parse_obj(message)
 
             # Check whether user is calling me
             await _check_reply(self, event)
@@ -310,7 +323,7 @@ class Bot(BaseBot):
             )
 
     @overrides(BaseBot)
-    async def call_api(self, api: str, **data) -> Union[Any, NoReturn]:
+    async def call_api(self, api: str, **data) -> Any:
         """
         :说明:
 
@@ -382,7 +395,7 @@ class Bot(BaseBot):
                    event: Event,
                    message: Union[str, Message, MessageSegment],
                    at_sender: bool = False,
-                   **kwargs) -> Union[Any, NoReturn]:
+                   **kwargs) -> Any:
         """
         :说明:
 
@@ -405,15 +418,16 @@ class Bot(BaseBot):
           - ``NetworkError``: 网络错误
           - ``ActionFailed``: API 调用失败
         """
+        message = escape(message) if isinstance(message, str) else message
         msg = message if isinstance(message, Message) else Message(message)
 
-        at_sender = at_sender and bool(event.user_id)
+        at_sender = at_sender and hasattr(event, "user_id")
 
         params = {}
-        if event.user_id:
-            params["user_id"] = event.user_id
-        if event.group_id:
-            params["group_id"] = event.group_id
+        if hasattr(event, "user_id"):
+            params["user_id"] = getattr(event, "user_id")
+        if hasattr(event, "group_id"):
+            params["group_id"] = getattr(event, "group_id")
         params.update(kwargs)
 
         if "message_type" not in params:

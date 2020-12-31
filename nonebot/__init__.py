@@ -26,7 +26,13 @@
 
 import importlib
 import pkg_resources
-from nonebot.typing import Bot, Dict, Type, Union, Driver, Optional, NoReturn
+from typing import Dict, Type, Optional
+
+from nonebot.adapters import Bot
+from nonebot.drivers import Driver
+from nonebot.utils import escape_tag
+from nonebot.config import Env, Config
+from nonebot.log import logger, default_filter
 
 _dist: pkg_resources.Distribution = pkg_resources.get_distribution("nonebot2")
 __version__ = _dist.version
@@ -35,7 +41,7 @@ VERSION = _dist.parsed_version
 _driver: Optional[Driver] = None
 
 
-def get_driver() -> Union[NoReturn, Driver]:
+def get_driver() -> Driver:
     """
     :说明:
 
@@ -111,7 +117,7 @@ def get_asgi():
     return driver.asgi
 
 
-def get_bots() -> Union[NoReturn, Dict[str, Bot]]:
+def get_bots() -> Dict[str, Bot]:
     """
     :说明:
 
@@ -134,11 +140,6 @@ def get_bots() -> Union[NoReturn, Dict[str, Bot]]:
     """
     driver = get_driver()
     return driver.bots
-
-
-from nonebot.utils import escape_tag
-from nonebot.config import Env, Config
-from nonebot.log import logger, default_filter
 
 
 def init(*, _env_file: Optional[str] = None, **kwargs):
