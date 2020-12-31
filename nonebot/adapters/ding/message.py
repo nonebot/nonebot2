@@ -1,5 +1,5 @@
 from copy import copy
-from typing import Any, Dict, Union, Iterable
+from typing import Any, Dict, Union, Mapping, Iterable
 
 from nonebot.typing import overrides
 from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
@@ -133,17 +133,20 @@ class Message(BaseMessage):
 
     @staticmethod
     @overrides(BaseMessage)
-    def _construct(msg: Union[str, dict, list]) -> Iterable[MessageSegment]:
-        if isinstance(msg, dict):
+    def _construct(
+        msg: Union[str, Mapping,
+                   Iterable[Mapping]]) -> Iterable[MessageSegment]:
+        if isinstance(msg, Mapping):
             yield MessageSegment(msg["type"], msg.get("data") or {})
-        elif isinstance(msg, list):
-            for seg in msg:
-                yield MessageSegment(seg["type"], seg.get("data") or {})
         elif isinstance(msg, str):
             yield MessageSegment.text(msg)
+        elif isinstance(msg, Iterable):
+            for seg in msg:
+                yield MessageSegment(seg["type"], seg.get("data") or {})
 
     def _produce(self) -> dict:
         data = {}
+        segment: MessageSegment
         for segment in self:
             # text 可以和 text 合并
             if segment.type == "text" and data.get("msgtype") == 'text':

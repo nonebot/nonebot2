@@ -1,5 +1,5 @@
 import re
-from typing import Any, Dict, Union, Tuple, Iterable, Optional
+from typing import Any, Dict, Union, Tuple, Mapping, Iterable, Optional
 
 from nonebot.typing import overrides
 from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
@@ -212,11 +212,13 @@ class Message(BaseMessage):
 
     @staticmethod
     @overrides(BaseMessage)
-    def _construct(msg: Union[str, dict, list]) -> Iterable[MessageSegment]:
-        if isinstance(msg, dict):
+    def _construct(
+        msg: Union[str, Mapping,
+                   Iterable[Mapping]]) -> Iterable[MessageSegment]:
+        if isinstance(msg, Mapping):
             yield MessageSegment(msg["type"], msg.get("data") or {})
             return
-        elif isinstance(msg, list):
+        elif isinstance(msg, Iterable) and not isinstance(msg, str):
             for seg in msg:
                 yield MessageSegment(seg["type"], seg.get("data") or {})
             return

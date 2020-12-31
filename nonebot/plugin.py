@@ -897,7 +897,10 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
             return None
 
         spec = module_info.module_finder.find_spec(name, None)
-        if spec.name in plugins:
+        if not spec:
+            logger.warning(
+                f"Module {name} cannot be loaded! Check module name first.")
+        elif spec.name in plugins:
             return None
         elif spec.name in sys.modules:
             logger.warning(

@@ -10,7 +10,7 @@ from copy import copy
 from typing_extensions import Literal
 from functools import reduce, partial
 from dataclasses import dataclass, field
-from typing import Any, Dict, Union, TypeVar, Optional, Callable, Iterable, Awaitable, TYPE_CHECKING
+from typing import Any, Dict, Union, TypeVar, Mapping, Optional, Callable, Iterable, Iterator, Awaitable, TYPE_CHECKING
 
 from pydantic import BaseModel
 
@@ -211,8 +211,8 @@ class Message(list, abc.ABC):
     """消息数组"""
 
     def __init__(self,
-                 message: Union[str, list, dict, T_MessageSegment, T_Message,
-                                Any] = None,
+                 message: Union[str, Mapping, Iterable[Mapping],
+                                T_MessageSegment, T_Message, Any] = None,
                  *args,
                  **kwargs):
         """
@@ -242,7 +242,8 @@ class Message(list, abc.ABC):
     @staticmethod
     @abc.abstractmethod
     def _construct(
-            msg: Union[str, list, dict, Any]) -> Iterable[T_MessageSegment]:
+        msg: Union[str, Mapping, Iterable[Mapping], Any]
+    ) -> Iterable[T_MessageSegment]:
         raise NotImplementedError
 
     def __add__(self: T_Message, other: Union[str, T_MessageSegment,
@@ -257,9 +258,19 @@ class Message(list, abc.ABC):
         return result
 
     def __radd__(self: T_Message, other: Union[str, T_MessageSegment,
-                                               T_Message]):
+                                               T_Message]) -> T_Message:
         result = self.__class__(other)
         return result.__add__(self)
+
+    def __iadd__(self: T_Message, other: Union[str, T_MessageSegment,
+                                               T_Message]) -> T_Message:
+        if isinstance(other, str):
+            self.extend(self._construct(other))
+        elif isinstance(other, MessageSegment):
+            self.append(other)
+        elif isinstance(other, Message):
+            self.extend(other)
+        return self
 
     def append(self: T_Message, obj: Union[str, T_MessageSegment]) -> T_Message:
         """
