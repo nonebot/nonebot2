@@ -12,7 +12,7 @@ from .message import Message
 
 class Event(BaseEvent):
     """
-    钉钉 协议 Event 适配。各事件字段参考 `钉钉文档`_
+    钉钉协议事件。各事件字段参考 `钉钉文档`_
 
     .. _钉钉文档:
         https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p
@@ -68,6 +68,7 @@ class ConversationType(str, Enum):
 
 
 class MessageEvent(Event):
+    """消息事件"""
     msgtype: str
     text: TextMessage
     msgId: str
@@ -126,12 +127,14 @@ class MessageEvent(Event):
 
 
 class PrivateMessageEvent(MessageEvent):
+    """私聊消息事件"""
     chatbotCorpId: str
     senderStaffId: Optional[str]
     conversationType: ConversationType = ConversationType.private
 
 
 class GroupMessageEvent(MessageEvent):
+    """群消息事件"""
     atUsers: List[AtUsersItem]
     conversationType: ConversationType = ConversationType.group
     conversationTitle: str

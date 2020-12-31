@@ -11,6 +11,7 @@ CQHTTP (OneBot) v11 协议适配
 """
 
 from .event import *
+from .permission import *
 from .message import Message, MessageSegment
 from .utils import log, escape, unescape, _b2s
 from .bot import Bot, _check_at_me, _check_nickname, _check_reply, _handle_api_result

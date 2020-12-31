@@ -12,6 +12,7 @@ sidebar: auto
 - 修复非 text 类型 CQ 码 data 未进行去转义
 - 修复内置插件为进行去转义，修改内置插件为 cqhttp 定制
 - 出于**CQ 码安全性考虑**，使用 cqhttp 的 `bot.send` 或者 `matcher.send` 时默认对字符串进行转义
+- 移动 cqhttp 相关 `Permission` 至 `nonebot.adapters.cqhttp` 包内
 
 ## v2.0.0a7
 

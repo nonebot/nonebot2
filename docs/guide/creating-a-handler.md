@@ -6,14 +6,14 @@
 
 ```python{1,2,8,9}
 @weather.handle()
-async def handle_first_receive(bot: Bot, event: Event, state: State):
-    args = str(event.message).strip()  # 首次发送命令时跟随的参数，例：/天气 上海，则args为上海
+async def handle_first_receive(bot: Bot, event: Event, state: T_State):
+    args = str(event.get_message()).strip()  # 首次发送命令时跟随的参数，例：/天气 上海，则args为上海
     if args:
         state["city"] = args  # 如果用户发送了参数则直接赋值
 
 
 @weather.got("city", prompt="你想查询哪个城市的天气呢？")
-async def handle_city(bot: Bot, event: Event, state: State):
+async def handle_city(bot: Bot, event: Event, state: T_State):
     city = state["city"]
     if city not in ["上海", "北京"]:
         await weather.reject("你想查询的城市暂不支持，请重新输入！")
@@ -53,12 +53,12 @@ async def handle_city(bot: Bot, event: Event, state: State):
 
 ```python
 @matcher.receive()
-async def handle(bot: Bot, event: Event, state: State):
+async def handle(bot: Bot, event: Event, state: T_State):
     state["key"] = "hello"
 
 
 @matcher.got("key2", prompt="{key}!")
-async def handle2(bot: Bot, event: Event, state: State):
+async def handle2(bot: Bot, event: Event, state: T_State):
     pass
 ```
 
@@ -75,16 +75,54 @@ async def handle(bot: Bot, event: Event, state: State):
 
 ### 事件处理函数参数
 
-事件处理函数类型为 `Callable[[Bot, Event, State], Union[Awaitable[None], Awaitable[NoReturn]]]` 。
+事件处理函数类型为：
+
+- `Callable[[Bot, Event, T_State, Matcher], Union[Awaitable[None], Awaitable[NoReturn]]]`
+- `Callable[[Bot, Event, T_State], Union[Awaitable[None], Awaitable[NoReturn]]]`
+- `Callable[[Bot, Event, Matcher], Union[Awaitable[None], Awaitable[NoReturn]]]`
+- `Callable[[Bot, T_State, Matcher], Union[Awaitable[None], Awaitable[NoReturn]]]`
+- `Callable[[Bot, Event], Union[Awaitable[None], Awaitable[NoReturn]]]`
+- `Callable[[Bot, T_State], Union[Awaitable[None], Awaitable[NoReturn]]]`
+- `Callable[[Bot, Matcher], Union[Awaitable[None], Awaitable[NoReturn]]]`
+- `Callable[[Bot], Union[Awaitable[None], Awaitable[NoReturn]]]`
+
+简单说就是：除了 `bot` 参数，其他都是可选的。
+
+以下函数都是合法的事件处理函数（仅列举常用的）：
+
+```python
+async def handle(bot: Bot, event: Event, state: T_State):
+    pass
+
+async def handle(bot: Bot, event: Event, state: T_State, matcher: Matcher):
+    pass
+
+async def handle(bot: Bot, event: Event):
+    pass
+
+async def handle(bot: Bot, state: T_State):
+    pass
+
+async def handle(bot: Bot):
+    pass
+```
+
+:::danger 警告
+函数的参数名固定不能修改！
+:::
 
 参数分别为：
 
 1. [nonebot.adapters.Bot](../api/adapters/#class-bot): 即事件上报连接对应的 Bot 对象，为 BaseBot 的子类。特别注意，此处的类型注释可以替换为指定的 Bot 类型，例如：`nonebot.adapters.cqhttp.Bot`，只有在上报事件的 Bot 类型与类型注释相符时才会执行该处理函数！可用于多平台进行不同的处理。
 2. [nonebot.adapters.Event](../api/adapters/#class-event): 即上报事件对象，可以获取到上报的所有信息。
-3. [state](../api/typing.md#state): 状态字典，可以存储任意的信息，其中还包含一些特殊的值以获取 NoneBot 内部处理时的一些信息，如：
+3. [state](../api/typing.md#t-state): 状态字典，可以存储任意的信息，其中还包含一些特殊的值以获取 NoneBot 内部处理时的一些信息，如：
 
 - `state["_current_key"]`: 存储当前 `got` 获取的参数名
 - `state["_prefix"]`, `state["_suffix"]`: 存储当前 TRIE 匹配的前缀/后缀，可以通过该值获取用户命令的原始命令
+
+:::tip 提示
+NoneBot 会对不同类型的参数进行不同的操作，详情查看 [事件处理函数重载](../advanced/overloaded-handlers.md)
+:::
 
 ### 参数处理函数 args_parser
 
@@ -93,11 +131,11 @@ async def handle(bot: Bot, event: Event, state: State):
 - `@matcher.args_parser` 装饰器：直接装饰一个函数作为参数处理器
 - `got(key, prompt, args_parser)`：直接把函数作为参数传入
 
-参数处理函数类型为：`Callable[[Bot, Event, State], Union[Awaitable[None], Awaitable[NoReturn]]]`，即：
+参数处理函数类型为：`Callable[[Bot, Event, T_State], Union[Awaitable[None], Awaitable[NoReturn]]]`，即：
 
 ```python
-async def parser(bot: Bot, event: Event, state: State):
-    state[state["_current_key"]] = str(event.message)
+async def parser(bot: Bot, event: Event, state: T_State):
+    state[state["_current_key"]] = str(event.get_message())
 ```
 
 特别的，`state["_current_key"]` 中存储了当前获取的参数名
@@ -132,15 +170,15 @@ matcher = on_command("test")
 # 修改默认参数处理
 @matcher.args_parser
 async def parse(bot: Bot, event: Event, state: State):
-    print(state["_current_key"], ":", str(event.message))
-    state[state["_current_key"]] = str(event.message)
+    print(state["_current_key"], ":", str(event.get_message()))
+    state[state["_current_key"]] = str(event.get_message())
 
 @matcher.handle()
 async def first_receive(bot: Bot, event: Event, state: State):
     # 获取用户原始命令，如：/test
     print(state["_prefix"]["raw_command"])
     # 处理用户输入参数，如：/test arg1 arg2
-    raw_args = str(event.message).strip()
+    raw_args = str(event.get_message()).strip()
     if raw_args:
         arg_list = raw_args.split()
         # 将参数存入state以阻止后续再向用户询问参数

@@ -14,7 +14,7 @@ from .message import Message
 
 class Event(BaseEvent):
     """
-    CQHTTP 协议事件。各事件字段未列出部分参考 `CQHTTP 文档`_
+    CQHTTP 协议事件，字段与 CQHTTP 一致。各事件字段参考 `CQHTTP 文档`_
 
     .. _CQHTTP 文档:
         https://github.com/howmanybots/onebot/blob/master/README.md

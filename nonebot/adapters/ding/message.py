@@ -36,28 +36,32 @@ class MessageSegment(BaseMessageSegment):
 
     @staticmethod
     def atAll() -> "MessageSegment":
+        """@全体"""
         return MessageSegment("at", {"isAtAll": True})
 
     @staticmethod
     def atMobiles(*mobileNumber: str) -> "MessageSegment":
+        """@指定手机号人员"""
         return MessageSegment("at", {"atMobiles": list(mobileNumber)})
 
     @staticmethod
     def text(text: str) -> "MessageSegment":
+        """发送 ``text`` 类型消息"""
         return MessageSegment("text", {"content": text})
 
     @staticmethod
     def image(picURL: str) -> "MessageSegment":
+        """发送 ``image`` 类型消息"""
         return MessageSegment("image", {"picURL": picURL})
 
     @staticmethod
     def extension(dict_: dict) -> "MessageSegment":
-        """"标记 text 文本的 extension 属性，需要与 text 消息段相加。
-        """
+        """"标记 text 文本的 extension 属性，需要与 text 消息段相加。"""
         return MessageSegment("extension", dict_)
 
     @staticmethod
     def markdown(title: str, text: str) -> "MessageSegment":
+        """发送 ``markdown`` 类型消息"""
         return MessageSegment(
             "markdown",
             {
@@ -69,6 +73,7 @@ class MessageSegment(BaseMessageSegment):
     @staticmethod
     def actionCardSingleBtn(title: str, text: str, singleTitle: str,
                             singleURL) -> "MessageSegment":
+        """发送 ``actionCardSingleBtn`` 类型消息"""
         return MessageSegment(
             "actionCard", {
                 "title": title,
@@ -86,10 +91,11 @@ class MessageSegment(BaseMessageSegment):
         btnOrientation: str = '1',
     ) -> "MessageSegment":
         """
+        发送 ``actionCardMultiBtn`` 类型消息
+
         :参数:
 
             * ``btnOrientation``: 0：按钮竖直排列 1：按钮横向排列
-
             * ``btns``: [{ "title": title, "actionURL": actionURL }, ...]
         """
         return MessageSegment(
@@ -104,6 +110,8 @@ class MessageSegment(BaseMessageSegment):
     @staticmethod
     def feedCard(links: list) -> "MessageSegment":
         """
+        发送 ``feedCard`` 类型消息
+
         :参数:
 
             * ``links``: [{ "title": xxx, "messageURL": xxx, "picURL": xxx }, ...]

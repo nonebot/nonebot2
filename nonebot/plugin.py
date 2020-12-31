@@ -421,7 +421,6 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
     """
 
     async def _strip_cmd(bot: "Bot", event: "Event", state: T_State):
-        print(event.dict())
         message = event.get_message()
         segment = message.pop(0)
         new_message = message.__class__(
@@ -784,10 +783,14 @@ class MatcherGroup:
           - ``Type[Matcher]``
         """
 
-        async def _strip_cmd(bot, event, state: T_State):
-            message = event.message
-            event.message = message.__class__(
-                str(message)[len(state["_prefix"]["raw_command"]):].strip())
+        async def _strip_cmd(bot: "Bot", event: "Event", state: T_State):
+            message = event.get_message()
+            segment = message.pop(0)
+            new_message = message.__class__(
+                str(segment)
+                [len(state["_prefix"]["raw_command"]):].strip())  # type: ignore
+            for new_segment in reversed(new_message):
+                message.insert(0, new_segment)
 
         handlers = kwargs.pop("handlers", [])
         handlers.insert(0, _strip_cmd)

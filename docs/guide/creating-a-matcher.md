@@ -7,15 +7,15 @@
 ```python
 from nonebot import on_command
 from nonebot.rule import to_me
-from nonebot.typing import State
-from nonebot.adapters.cqhttp import Bot, Event
+from nonebot.typing import T_State
+from nonebot.adapters import Bot, Event
 
 weather = on_command("天气", rule=to_me(), priority=5)
 
 
 @weather.handle()
-async def handle_first_receive(bot: Bot, event: Event, state: State):
-    args = str(event.message).strip()  # 首次发送命令时跟随的参数，例：/天气 上海，则args为上海
+async def handle_first_receive(bot: Bot, event: Event, state: T_State):
+    args = str(event.get_message()).strip()  # 首次发送命令时跟随的参数，例：/天气 上海，则args为上海
     if args:
         state["city"] = args  # 如果用户发送了参数则直接赋值
 
@@ -63,7 +63,7 @@ weather = on_command("天气", rule=to_me(), permission=Permission(), priority=5
 
 ### 事件响应器类型 type
 
-事件响应器类型其实就是对应事件的类型 `Event.type` ，NoneBot 提供了一个基础类型事件响应器 `on()` 以及一些其他内置的事件响应器。
+事件响应器类型其实就是对应事件的类型 `Event.get_type()` ，NoneBot 提供了一个基础类型事件响应器 `on()` 以及一些其他内置的事件响应器。
 
 以下所有类型的事件响应器都是由 `on(type, rule)` 的形式进行了简化封装。
 
@@ -92,6 +92,7 @@ weather = on_command("天气", rule=to_me(), permission=Permission(), priority=5
 ```bash
 nb plugin install nonebot_plugin_test
 ```
+
 :::
 
 ### 阻断 block

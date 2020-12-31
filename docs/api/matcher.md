@@ -229,7 +229,7 @@ sidebarDepth: 0
 * **参数**
 
     
-    * `type_: str`: 事件响应器类型，与 `event.type` 一致时触发，空字符串表示任意
+    * `type_: str`: 事件响应器类型，与 `event.get_type()` 一致时触发，空字符串表示任意
 
 
     * `rule: Optional[Rule]`: 匹配规则

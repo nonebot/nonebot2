@@ -174,6 +174,98 @@ await bot.send_msg(message="hello world")
 
 
 
+## _class_ `MessageSegment`
+
+基类：`abc.ABC`
+
+消息段基类
+
+
+### `type`
+
+
+* 类型: `str`
+
+
+* 说明: 消息段类型
+
+
+### `data`
+
+
+* 类型: `Dict[str, Union[str, list]]`
+
+
+* 说明: 消息段数据
+
+
+## _class_ `Message`
+
+基类：`list`, `abc.ABC`
+
+消息数组
+
+
+### `__init__(message=None, *args, **kwargs)`
+
+
+* **参数**
+
+    
+    * `message: Union[str, list, dict, MessageSegment, Message, Any]`: 消息内容
+
+
+
+### `append(obj)`
+
+
+* **说明**
+
+    添加一个消息段到消息数组末尾
+
+
+
+* **参数**
+
+    
+    * `obj: Union[str, MessageSegment]`: 要添加的消息段
+
+
+
+### `extend(obj)`
+
+
+* **说明**
+
+    拼接一个消息数组或多个消息段到消息数组末尾
+
+
+
+* **参数**
+
+    
+    * `obj: Union[Message, Iterable[MessageSegment]]`: 要添加的消息数组
+
+
+
+### `reduce()`
+
+
+* **说明**
+
+    缩减消息数组，即按 MessageSegment 的实现拼接相邻消息段
+
+
+
+### `extract_plain_text()`
+
+
+* **说明**
+
+    提取消息内纯文本消息
+
+
+
 ## _class_ `Event`
 
 基类：`abc.ABC`, `pydantic.main.BaseModel`
@@ -329,95 +421,3 @@ Event 基类。提供获取关键信息的方法，其余信息可直接获取�
 
     
     * `bool`
-
-
-
-## _class_ `MessageSegment`
-
-基类：`abc.ABC`
-
-消息段基类
-
-
-### `type`
-
-
-* 类型: `str`
-
-
-* 说明: 消息段类型
-
-
-### `data`
-
-
-* 类型: `Dict[str, Union[str, list]]`
-
-
-* 说明: 消息段数据
-
-
-## _class_ `Message`
-
-基类：`list`, `abc.ABC`
-
-消息数组
-
-
-### `__init__(message=None, *args, **kwargs)`
-
-
-* **参数**
-
-    
-    * `message: Union[str, list, dict, MessageSegment, Message, Any]`: 消息内容
-
-
-
-### `append(obj)`
-
-
-* **说明**
-
-    添加一个消息段到消息数组末尾
-
-
-
-* **参数**
-
-    
-    * `obj: Union[str, MessageSegment]`: 要添加的消息段
-
-
-
-### `extend(obj)`
-
-
-* **说明**
-
-    拼接一个消息数组或多个消息段到消息数组末尾
-
-
-
-* **参数**
-
-    
-    * `obj: Union[Message, Iterable[MessageSegment]]`: 要添加的消息数组
-
-
-
-### `reduce()`
-
-
-* **说明**
-
-    缩减消息数组，即按 MessageSegment 的实现拼接相邻消息段
-
-
-
-### `extract_plain_text()`
-
-
-* **说明**
-
-    提取消息内纯文本消息

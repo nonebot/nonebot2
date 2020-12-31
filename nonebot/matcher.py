@@ -140,7 +140,7 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``type_: str``: 事件响应器类型，与 ``event.type`` 一致时触发，空字符串表示任意
+          * ``type_: str``: 事件响应器类型，与 ``event.get_type()`` 一致时触发，空字符串表示任意
           * ``rule: Optional[Rule]``: 匹配规则
           * ``permission: Optional[Permission]``: 权限
           * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
