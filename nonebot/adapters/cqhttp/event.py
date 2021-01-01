@@ -184,7 +184,7 @@ class GroupMessageEvent(MessageEvent):
     __event__ = "message.group"
     message_type: Literal["group"]
     group_id: int
-    anonymous: Anonymous
+    anonymous: Optional[Anonymous] = None
 
     @overrides(Event)
     def get_event_description(self) -> str:
