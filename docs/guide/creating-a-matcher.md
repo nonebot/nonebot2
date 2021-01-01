@@ -21,7 +21,7 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
 
 
 @weather.got("city", prompt="你想查询哪个城市的天气呢？")
-async def handle_city(bot: Bot, event: Event, state: State):
+async def handle_city(bot: Bot, event: Event, state: T_State):
     city = state["city"]
     if city not in ["上海", "北京"]:
         await weather.reject("你想查询的城市暂不支持，请重新输入！")
