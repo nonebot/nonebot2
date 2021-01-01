@@ -69,7 +69,7 @@ async def handle2(bot: Bot, event: Event, state: T_State):
 ```python
 @matcher.got("key1")
 @matcher.got("key2")
-async def handle(bot: Bot, event: Event, state: State):
+async def handle(bot: Bot, event: Event, state: T_State):
     pass
 ```
 
@@ -169,12 +169,12 @@ matcher = on_command("test")
 
 # 修改默认参数处理
 @matcher.args_parser
-async def parse(bot: Bot, event: Event, state: State):
+async def parse(bot: Bot, event: Event, state: T_State):
     print(state["_current_key"], ":", str(event.get_message()))
     state[state["_current_key"]] = str(event.get_message())
 
 @matcher.handle()
-async def first_receive(bot: Bot, event: Event, state: State):
+async def first_receive(bot: Bot, event: Event, state: T_State):
     # 获取用户原始命令，如：/test
     print(state["_prefix"]["raw_command"])
     # 处理用户输入参数，如：/test arg1 arg2
@@ -186,7 +186,7 @@ async def first_receive(bot: Bot, event: Event, state: State):
 
 
 @matcher.got("arg1", prompt="参数？")
-async def arg_handle(bot: Bot, event: Event, state: State):
+async def arg_handle(bot: Bot, event: Event, state: T_State):
     # 在这里对参数进行验证
     if state["arg1"] not in ["allow", "list"]:
         await matcher.reject("参数不正确！请重新输入")

@@ -21,7 +21,7 @@ async def handle_first_receive(bot: Bot, event: Event, state: T_State):
 
 
 @weather.got("city", prompt="你想查询哪个城市的天气呢？")
-async def handle_city(bot: Bot, event: Event, state: State):
+async def handle_city(bot: Bot, event: Event, state: T_State):
     city = state["city"]
     if city not in ["上海", "北京"]:
         await weather.reject("你想查询的城市暂不支持，请重新输入！")
@@ -115,16 +115,17 @@ rule 的出现使得 nonebot 对事件的响应可以非常自由，nonebot 内�
 
 ```python
 from nonebot.rule import Rule
+from nonebot.typing import T_State
 
-async def async_checker(bot: Bot, event: Event, state: State) -> bool:
+async def async_checker(bot: Bot, event: Event, state: T_State) -> bool:
     return True
 
-def sync_checker(bot: Bot, event: Event, state: State) -> bool:
+def sync_checker(bot: Bot, event: Event, state: T_State) -> bool:
     return True
 
 def check(arg1, args2):
 
-    async def _checker(bot: Bot, event: Event, state: State) -> bool:
+    async def _checker(bot: Bot, event: Event, state: T_State) -> bool:
         return bool(arg1 + arg2)
 
     return Rule(_check)
