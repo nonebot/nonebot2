@@ -319,6 +319,7 @@ class PokeNotifyEvent(NotifyEvent):
     __event__ = "notice.notify.poke"
     sub_type: Literal["poke"]
     target_id: int
+    group_id: Optional[int] = None
 
     @overrides(Event)
     def is_tome(self) -> bool:
