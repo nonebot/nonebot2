@@ -184,7 +184,7 @@ class GroupMessageEvent(MessageEvent):
     __event__ = "message.group"
     message_type: Literal["group"]
     group_id: int
-    anonymous: Anonymous
+    anonymous: Optional[Anonymous] = None
 
     @overrides(Event)
     def get_event_description(self) -> str:
@@ -319,6 +319,7 @@ class PokeNotifyEvent(NotifyEvent):
     __event__ = "notice.notify.poke"
     sub_type: Literal["poke"]
     target_id: int
+    group_id: Optional[int] = None
 
     @overrides(Event)
     def is_tome(self) -> bool:
