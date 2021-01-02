@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot2"
-version = "2.0.0-alpha.8.post1"
+version = "2.0.0-alpha.8.post2"
 description = "An asynchronous python bot framework."
 authors = ["yanyongyu <yanyongyu_1@126.com>"]
 license = "MIT"
