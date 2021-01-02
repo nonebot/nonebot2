@@ -421,19 +421,19 @@ class Bot(BaseBot):
         message = escape(message) if isinstance(message, str) else message
         msg = message if isinstance(message, Message) else Message(message)
 
-        at_sender = at_sender and hasattr(event, "user_id")
+        at_sender = at_sender and getattr(event, "user_id", None)
 
         params = {}
-        if hasattr(event, "user_id"):
+        if getattr(event, "user_id", None):
             params["user_id"] = getattr(event, "user_id")
-        if hasattr(event, "group_id"):
+        if getattr(event, "group_id", None):
             params["group_id"] = getattr(event, "group_id")
         params.update(kwargs)
 
         if "message_type" not in params:
-            if "group_id" in params:
+            if params.get("group_id", None):
                 params["message_type"] = "group"
-            elif "user_id" in params:
+            elif params.get("user_id", None):
                 params["message_type"] = "private"
             else:
                 raise ValueError("Cannot guess message type to reply!")
