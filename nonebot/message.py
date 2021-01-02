@@ -117,8 +117,7 @@ async def _check_matcher(priority: int, bot: "Bot", event: "Event",
         return None
 
     async def _check_expire(Matcher: Type[Matcher]) -> Optional[Type[Matcher]]:
-        if Matcher.temp or (Matcher.expire_time and
-                            datetime.now() > Matcher.expire_time):
+        if Matcher.expire_time and datetime.now() > Matcher.expire_time:
             return Matcher
         return None
 
@@ -128,14 +127,19 @@ async def _check_matcher(priority: int, bot: "Bot", event: "Event",
     checking_expire_tasks = [
         _check_expire(Matcher) for Matcher in current_matchers
     ]
-    results = await asyncio.gather(*checking_tasks, return_exceptions=True)
+    results = await asyncio.gather(*checking_tasks)
     expired = await asyncio.gather(*checking_expire_tasks)
     for expired_matcher in filter(lambda x: x, expired):
         try:
             matchers[priority].remove(expired_matcher)  # type: ignore
         except Exception:
             pass
-    return filter(lambda x: x, results)
+    for temp_matcher in filter(lambda x: x and x.temp, results):
+        try:
+            matchers[priority].remove(temp_matcher)  # type: ignore
+        except Exception:
+            pass
+    return filter(lambda x: x, results)  # type: ignore
 
 
 async def _run_matcher(Matcher: Type[Matcher], bot: "Bot", event: "Event",
