@@ -82,6 +82,10 @@ def _check_at_me(bot: "Bot", event: "Event"):
     if not isinstance(event, MessageEvent):
         return
 
+    # ensure message not empty
+    if not event.message:
+        event.message.append(MessageSegment.text(""))
+
     if event.message_type == "private":
         event.to_me = True
     else:
