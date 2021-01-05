@@ -211,7 +211,7 @@ class Message(list, abc.ABC):
     """消息数组"""
 
     def __init__(self,
-                 message: Union[str, Mapping, Iterable[Mapping],
+                 message: Union[str, None, Mapping, Iterable[Mapping],
                                 T_MessageSegment, T_Message, Any] = None,
                  *args,
                  **kwargs):
@@ -221,7 +221,9 @@ class Message(list, abc.ABC):
           * ``message: Union[str, list, dict, MessageSegment, Message, Any]``: 消息内容
         """
         super().__init__(*args, **kwargs)
-        if isinstance(message, Message):
+        if message is None:
+            return
+        elif isinstance(message, Message):
             self.extend(message)
         elif isinstance(message, MessageSegment):
             self.append(message)
