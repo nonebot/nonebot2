@@ -229,7 +229,7 @@ class Config(BaseConfig):
 
     .. code-block:: default
 
-        SUPER_USERS=["12345789"]
+        SUPERUSERS=["12345789"]
     """
     nickname: Set[str] = set()
     """
