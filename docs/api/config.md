@@ -211,7 +211,7 @@ X-Signature: sha1=f9ddd4863ace61e64f462d41ca311e3d2c1176e2
 
 
 ```default
-SUPER_USERS=["12345789"]
+SUPERUSERS=["12345789"]
 ```
 
 
