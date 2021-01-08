@@ -1,4 +1,5 @@
-from nonebot.typing import Optional
+from typing import Optional
+
 from nonebot.exception import (AdapterException, ActionFailed as
                                BaseActionFailed, NetworkError as
                                BaseNetworkError, ApiNotAvailable as
@@ -22,12 +23,13 @@ class ActionFailed(BaseActionFailed, CQHTTPAdapterException):
       * ``retcode: Optional[int]``: 错误码
     """
 
-    def __init__(self, retcode: Optional[int] = None):
+    def __init__(self, **kwargs):
         super().__init__()
-        self.retcode = retcode
+        self.info = kwargs
 
     def __repr__(self):
-        return f"<ActionFailed retcode={self.retcode}>"
+        return f"<ActionFailed " + ", ".join(
+            f"{k}={v}" for k, v in self.info.items()) + ">"
 
     def __str__(self):
         return self.__repr__()

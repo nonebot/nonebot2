@@ -1,20 +1,25 @@
 import hmac
 import base64
 from datetime import datetime
+from typing import Any, Union, Optional, TYPE_CHECKING
 
 import httpx
 from nonebot.log import logger
 from nonebot.config import Config
-from nonebot.adapters import BaseBot
+from nonebot.typing import overrides
 from nonebot.message import handle_event
+from nonebot.adapters import Bot as BaseBot
 from nonebot.exception import RequestDenied
-from nonebot.typing import Any, Union, Driver, Optional, NoReturn
 
 from .utils import log
-from .event import Event
-from .model import MessageModel
 from .message import Message, MessageSegment
 from .exception import NetworkError, ApiNotAvailable, ActionFailed, SessionExpired
+from .event import Event, MessageEvent, PrivateMessageEvent, GroupMessageEvent, ConversationType
+
+if TYPE_CHECKING:
+    from nonebot.drivers import Driver
+
+SEND_BY_SESSION_WEBHOOK = "send_by_sessionWebhook"
 
 
 class Bot(BaseBot):
@@ -22,7 +27,7 @@ class Bot(BaseBot):
     钉钉 协议 Bot 适配。继承属性参考 `BaseBot <./#class-basebot>`_ 。
     """
 
-    def __init__(self, driver: Driver, connection_type: str, config: Config,
+    def __init__(self, driver: "Driver", connection_type: str, config: Config,
                  self_id: str, **kwargs):
 
         super().__init__(driver, connection_type, config, self_id, **kwargs)
@@ -35,7 +40,8 @@ class Bot(BaseBot):
         return "ding"
 
     @classmethod
-    async def check_permission(cls, driver: Driver, connection_type: str,
+    @overrides(BaseBot)
+    async def check_permission(cls, driver: "Driver", connection_type: str,
                                headers: dict, body: Optional[dict]) -> str:
         """
         :说明:
@@ -47,7 +53,8 @@ class Bot(BaseBot):
 
         # 检查连接方式
         if connection_type not in ["http"]:
-            raise RequestDenied(405, "Unsupported connection type")
+            raise RequestDenied(
+                405, "Unsupported connection type, available type: `http`")
 
         # 检查 timestamp
         if not timestamp:
@@ -69,13 +76,25 @@ class Bot(BaseBot):
             log("WARNING", "Ding signature check ignored!")
         return body["chatbotUserId"]
 
-    async def handle_message(self, body: dict):
-        message = MessageModel.parse_obj(body)
+    @overrides(BaseBot)
+    async def handle_message(self, message: dict):
         if not message:
             return
 
+        # 判断消息类型，生成不同的 Event
         try:
-            event = Event(message)
+            conversation_type = message["conversationType"]
+            if conversation_type == ConversationType.private:
+                event = PrivateMessageEvent.parse_obj(message)
+            elif conversation_type == ConversationType.group:
+                event = GroupMessageEvent.parse_obj(message)
+            else:
+                raise ValueError("Unsupported conversation type")
+        except Exception as e:
+            log("ERROR", "Event Parser Error", e)
+            return
+
+        try:
             await handle_event(self, event)
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
@@ -83,10 +102,11 @@ class Bot(BaseBot):
             )
         return
 
+    @overrides(BaseBot)
     async def call_api(self,
                        api: str,
-                       event: Optional[Event] = None,
-                       **data) -> Union[Any, NoReturn]:
+                       event: Optional[MessageEvent] = None,
+                       **data) -> Any:
         """
         :说明:
 
@@ -117,28 +137,27 @@ class Bot(BaseBot):
 
         log("DEBUG", f"Calling API <y>{api}</y>")
 
-        if api == "send_message":
+        if api == SEND_BY_SESSION_WEBHOOK:
             if event:
                 # 确保 sessionWebhook 没有过期
                 if int(datetime.now().timestamp()) > int(
-                        event.raw_event.sessionWebhookExpiredTime / 1000):
+                        event.sessionWebhookExpiredTime / 1000):
                     raise SessionExpired
 
-                target = event.raw_event.sessionWebhook
+                target = event.sessionWebhook
             else:
-                target = None
-
-            if not target:
                 raise ApiNotAvailable
 
             headers = {}
-            segment: MessageSegment = data["message"][0]
+            message: Message = data.get("message", None)
+            if not message:
+                raise ValueError("Message not found")
             try:
                 async with httpx.AsyncClient(headers=headers) as client:
                     response = await client.post(
                         target,
                         params={"access_token": self.config.access_token},
-                        json=segment.data,
+                        json=message._produce(),
                         timeout=self.config.api_timeout)
 
                 if 200 <= response.status_code < 300:
@@ -155,11 +174,12 @@ class Bot(BaseBot):
             except httpx.HTTPError:
                 raise NetworkError("HTTP request failed")
 
+    @overrides(BaseBot)
     async def send(self,
-                   event: Event,
+                   event: MessageEvent,
                    message: Union[str, "Message", "MessageSegment"],
                    at_sender: bool = False,
-                   **kwargs) -> Union[Any, NoReturn]:
+                   **kwargs) -> Any:
         """
         :说明:
 
@@ -184,14 +204,14 @@ class Bot(BaseBot):
         """
         msg = message if isinstance(message, Message) else Message(message)
 
-        at_sender = at_sender and bool(event.user_id)
+        at_sender = at_sender and bool(event.senderId)
         params = {}
         params["event"] = event
         params.update(kwargs)
 
-        if at_sender and event.detail_type != "private":
-            params["message"] = f"@{event.user_id} " + msg
+        if at_sender and event.conversationType != ConversationType.private:
+            params["message"] = f"@{event.senderNick} " + msg
         else:
             params["message"] = msg
 
-        return await self.call_api("send_message", **params)
+        return await self.call_api(SEND_BY_SESSION_WEBHOOK, **params)

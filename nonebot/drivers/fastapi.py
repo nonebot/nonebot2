@@ -8,34 +8,22 @@ FastAPI 驱动适配
     https://fastapi.tiangolo.com/
 """
 
-import hmac
 import json
 import asyncio
 import logging
+from typing import Optional, Callable
 
 import uvicorn
 from fastapi.responses import Response
-from fastapi import Body, status, Header, Request, FastAPI, Depends, HTTPException
+from fastapi import Body, status, Request, FastAPI, HTTPException
 from starlette.websockets import WebSocketDisconnect, WebSocket as FastAPIWebSocket
 
 from nonebot.log import logger
+from nonebot.typing import overrides
 from nonebot.config import Env, Config
 from nonebot.utils import DataclassEncoder
 from nonebot.exception import RequestDenied
-from nonebot.drivers import BaseDriver, BaseWebSocket
-from nonebot.typing import Optional, Callable, overrides
-
-
-def get_auth_bearer(access_token: Optional[str] = Header(
-    None, alias="Authorization")):
-    if not access_token:
-        return None
-    scheme, _, param = access_token.partition(" ")
-    if scheme.lower() not in ["bearer", "token"]:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED,
-                            detail="Not authenticated",
-                            headers={"WWW-Authenticate": "Bearer"})
-    return param
+from nonebot.drivers import Driver as BaseDriver, WebSocket as BaseWebSocket
 
 
 class Driver(BaseDriver):
@@ -145,7 +133,9 @@ class Driver(BaseDriver):
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
         if adapter not in self._adapters:
-            logger.warning("Unknown adapter")
+            logger.warning(
+                f"Unknown adapter {adapter}. Please register the adapter before use."
+            )
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
                                 detail="adapter not found")
 
@@ -174,7 +164,9 @@ class Driver(BaseDriver):
         ws = WebSocket(websocket)
 
         if adapter not in self._adapters:
-            logger.warning("Unknown adapter")
+            logger.warning(
+                f"Unknown adapter {adapter}. Please register the adapter before use."
+            )
             await ws.close(code=status.WS_1008_POLICY_VIOLATION)
             return
 
@@ -196,10 +188,11 @@ class Driver(BaseDriver):
         bot = BotClass(self, "websocket", self.config, x_self_id, websocket=ws)
 
         await ws.accept()
-        self._clients[x_self_id] = bot
         logger.opt(colors=True).info(
             f"WebSocket Connection from <y>{adapter.upper()} "
             f"Bot {x_self_id}</y> Accepted!")
+
+        self._bot_connect(bot)
 
         try:
             while not ws.closed:
@@ -210,14 +203,14 @@ class Driver(BaseDriver):
 
                 asyncio.create_task(bot.handle_message(data))
         finally:
-            del self._clients[x_self_id]
+            self._bot_disconnect(bot)
 
 
 class WebSocket(BaseWebSocket):
 
     def __init__(self, websocket: FastAPIWebSocket):
         super().__init__(websocket)
-        self._closed = None
+        self._closed = False
 
     @property
     @overrides(BaseWebSocket)

@@ -1,15 +1,15 @@
 import asyncio
+from typing import Any, Dict, List, Union, Optional
 
 from nonebot.config import Config
-from nonebot.adapters import BaseBot
-from nonebot.typing import Any, Dict, List, Union, Driver, Optional, NoReturn, WebSocket
+from nonebot.adapters import Bot as BaseBot
+from nonebot.drivers import Driver, WebSocket
 
 from .event import Event
 from .message import Message, MessageSegment
 
 
-def get_auth_bearer(
-        access_token: Optional[str] = ...) -> Union[Optional[str], NoReturn]:
+def get_auth_bearer(access_token: Optional[str] = ...) -> Optional[str]:
     ...
 
 
@@ -25,8 +25,7 @@ def _check_nickname(bot: "Bot", event: Event):
     ...
 
 
-def _handle_api_result(
-        result: Optional[Dict[str, Any]]) -> Union[Any, NoReturn]:
+def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
     ...
 
 
@@ -63,19 +62,18 @@ class Bot(BaseBot):
 
     @classmethod
     async def check_permission(cls, driver: Driver, connection_type: str,
-                               headers: dict,
-                               body: Optional[dict]) -> Union[str, NoReturn]:
+                               headers: dict, body: Optional[dict]) -> str:
         ...
 
     async def handle_message(self, message: dict):
         ...
 
-    async def call_api(self, api: str, **data) -> Union[Any, NoReturn]:
+    async def call_api(self, api: str, **data) -> Any:
         ...
 
     async def send(self, event: Event, message: Union[str, Message,
                                                       MessageSegment],
-                   **kwargs) -> Union[Any, NoReturn]:
+                   **kwargs) -> Any:
         ...
 
     async def send_private_msg(self,

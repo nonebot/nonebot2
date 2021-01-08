@@ -1,4 +1,5 @@
-from nonebot.typing import Optional
+from typing import Optional
+
 from nonebot.exception import (AdapterException, ActionFailed as
                                BaseActionFailed, ApiNotAvailable as
                                BaseApiNotAvailable, NetworkError as
@@ -36,7 +37,10 @@ class ActionFailed(BaseActionFailed, DingAdapterException):
         self.errmsg = errmsg
 
     def __repr__(self):
-        return f"<ApiError errcode={self.errcode} errmsg={self.errmsg}>"
+        return f"<ApiError errcode={self.errcode} errmsg=\"{self.errmsg}\">"
+
+    def __str__(self):
+        return self.__repr__()
 
 
 class ApiNotAvailable(BaseApiNotAvailable, DingAdapterException):
@@ -65,7 +69,7 @@ class NetworkError(BaseNetworkError, DingAdapterException):
         return self.__repr__()
 
 
-class SessionExpired(BaseApiNotAvailable, DingAdapterException):
+class SessionExpired(ApiNotAvailable, DingAdapterException):
     """
     :说明:
 
@@ -74,3 +78,6 @@ class SessionExpired(BaseApiNotAvailable, DingAdapterException):
 
     def __repr__(self) -> str:
         return f"<Session Webhook is Expired>"
+
+    def __str__(self):
+        return self.__repr__()

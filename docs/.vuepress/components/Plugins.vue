@@ -26,7 +26,7 @@
               color="primary"
               target="_blank"
               rel="noopener noreferrer"
-              href="https://github.com/nonebot/nonebot2/issues/new?template=plugin-publish.md"
+              href="https://github.com/nonebot/nonebot2/issues/new?labels=Plugin&template=plugin-publish.md&title=Plugin%3A+blabla+的插件"
               >Publish Your Plugin
             </v-btn>
           </v-col>

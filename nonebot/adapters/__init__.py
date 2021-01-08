@@ -6,29 +6,34 @@
 """
 
 import abc
+from copy import copy
+from typing_extensions import Literal
 from functools import reduce, partial
 from dataclasses import dataclass, field
+from typing import Any, Dict, Union, TypeVar, Mapping, Optional, Callable, Iterable, Iterator, Awaitable, TYPE_CHECKING
 
 from pydantic import BaseModel
 
 from nonebot.config import Config
-from nonebot.typing import Driver, Message, WebSocket
-from nonebot.typing import Any, Dict, Union, Optional, NoReturn, Callable, Iterable, Awaitable, TypeVar, Generic
+from nonebot.utils import DataclassEncoder
+
+if TYPE_CHECKING:
+    from nonebot.drivers import Driver, WebSocket
 
 
-class BaseBot(abc.ABC):
+class Bot(abc.ABC):
     """
     Bot 基类。用于处理上报消息，并提供 API 调用接口。
     """
 
     @abc.abstractmethod
     def __init__(self,
-                 driver: Driver,
+                 driver: "Driver",
                  connection_type: str,
                  config: Config,
                  self_id: str,
                  *,
-                 websocket: Optional[WebSocket] = None):
+                 websocket: Optional["WebSocket"] = None):
         """
         :参数:
 
@@ -60,9 +65,8 @@ class BaseBot(abc.ABC):
 
     @classmethod
     @abc.abstractmethod
-    async def check_permission(cls, driver: Driver, connection_type: str,
-                               headers: dict,
-                               body: Optional[dict]) -> Union[str, NoReturn]:
+    async def check_permission(cls, driver: "Driver", connection_type: str,
+                               headers: dict, body: Optional[dict]) -> str:
         """
         :说明:
 
@@ -114,15 +118,14 @@ class BaseBot(abc.ABC):
 
         .. code-block:: python
 
-            await bot.call_api("send_msg", message="hello world"})
+            await bot.call_api("send_msg", message="hello world")
             await bot.send_msg(message="hello world")
         """
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def send(self, event: "BaseEvent",
-                   message: Union[str, "BaseMessage",
-                                  "BaseMessageSegment"], **kwargs):
+    async def send(self, event: "Event",
+                   message: Union[str, "Message", "MessageSegment"], **kwargs):
         """
         :说明:
 
@@ -137,173 +140,12 @@ class BaseBot(abc.ABC):
         raise NotImplementedError
 
 
-T = TypeVar("T", bound=BaseModel)
-
-
-class BaseEvent(abc.ABC, Generic[T]):
-    """
-    Event 基类。提供上报信息的关键信息，其余信息可从原始上报消息获取。
-    """
-
-    def __init__(self, raw_event: Union[dict, T]):
-        """
-        :参数:
-
-          * ``raw_event: Union[dict, T]``: 原始上报消息
-        """
-        self._raw_event = raw_event
-
-    def __repr__(self) -> str:
-        return f"<Event {self.self_id}: {self.name} {self.time}>"
-
-    @property
-    def raw_event(self) -> Union[dict, T]:
-        """原始上报消息"""
-        return self._raw_event
-
-    @property
-    @abc.abstractmethod
-    def id(self) -> int:
-        """事件 ID"""
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def name(self) -> str:
-        """事件名称"""
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def self_id(self) -> str:
-        """机器人 ID"""
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def time(self) -> int:
-        """事件发生时间"""
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def type(self) -> str:
-        """事件主类型"""
-        raise NotImplementedError
-
-    @type.setter
-    @abc.abstractmethod
-    def type(self, value) -> None:
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def detail_type(self) -> str:
-        """事件详细类型"""
-        raise NotImplementedError
-
-    @detail_type.setter
-    @abc.abstractmethod
-    def detail_type(self, value) -> None:
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def sub_type(self) -> Optional[str]:
-        """事件子类型"""
-        raise NotImplementedError
-
-    @sub_type.setter
-    @abc.abstractmethod
-    def sub_type(self, value) -> None:
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def user_id(self) -> Optional[int]:
-        """触发事件的主体 ID"""
-        raise NotImplementedError
-
-    @user_id.setter
-    @abc.abstractmethod
-    def user_id(self, value) -> None:
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def group_id(self) -> Optional[int]:
-        """触发事件的主体群 ID"""
-        raise NotImplementedError
-
-    @group_id.setter
-    @abc.abstractmethod
-    def group_id(self, value) -> None:
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def to_me(self) -> Optional[bool]:
-        """事件是否为发送给机器人的消息"""
-        raise NotImplementedError
-
-    @to_me.setter
-    @abc.abstractmethod
-    def to_me(self, value) -> None:
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def message(self) -> Optional[Message]:
-        """消息内容"""
-        raise NotImplementedError
-
-    @message.setter
-    @abc.abstractmethod
-    def message(self, value) -> None:
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def reply(self) -> Optional[dict]:
-        """回复的消息"""
-        raise NotImplementedError
-
-    @reply.setter
-    @abc.abstractmethod
-    def reply(self, value) -> None:
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def raw_message(self) -> Optional[str]:
-        """原始消息"""
-        raise NotImplementedError
-
-    @raw_message.setter
-    @abc.abstractmethod
-    def raw_message(self, value) -> None:
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def plain_text(self) -> Optional[str]:
-        """纯文本消息"""
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def sender(self) -> Optional[dict]:
-        """消息发送者信息"""
-        raise NotImplementedError
-
-    @sender.setter
-    @abc.abstractmethod
-    def sender(self, value) -> None:
-        raise NotImplementedError
+T_Message = TypeVar("T_Message", bound="Message")
+T_MessageSegment = TypeVar("T_MessageSegment", bound="MessageSegment")
 
 
 @dataclass
-class BaseMessageSegment(abc.ABC):
+class MessageSegment(abc.ABC):
     """消息段基类"""
     type: str
     """
@@ -317,19 +159,34 @@ class BaseMessageSegment(abc.ABC):
     """
 
     @abc.abstractmethod
-    def __str__(self):
+    def __str__(self: T_MessageSegment) -> str:
         """该消息段所代表的 str，在命令匹配部分使用"""
         raise NotImplementedError
 
     @abc.abstractmethod
-    def __add__(self, other):
+    def __add__(self: T_MessageSegment, other: Union[str, T_MessageSegment,
+                                                     T_Message]) -> T_Message:
         """你需要在这里实现不同消息段的合并：
         比如：
             if isinstance(other, str):
                 ...
             elif isinstance(other, MessageSegment):
                 ...
-        注意：不能返回 self，需要返回一个新生成的对象
+        注意：需要返回一个新生成的对象
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def __radd__(
+        self: T_MessageSegment, other: Union[str, dict, list, T_MessageSegment,
+                                             T_Message]) -> "T_Message":
+        """你需要在这里实现不同消息段的合并：
+        比如：
+            if isinstance(other, str):
+                ...
+            elif isinstance(other, MessageSegment):
+                ...
+        注意：需要返回一个新生成的对象
         """
         raise NotImplementedError
 
@@ -342,58 +199,80 @@ class BaseMessageSegment(abc.ABC):
     def get(self, key, default=None):
         return getattr(self, key, default)
 
-    @classmethod
+    def copy(self: T_MessageSegment) -> T_MessageSegment:
+        return copy(self)
+
     @abc.abstractmethod
-    def text(cls, text: str) -> "BaseMessageSegment":
-        return cls("text", {"text": text})
+    def is_text(self) -> bool:
+        raise NotImplementedError
 
 
-class BaseMessage(list, abc.ABC):
+class Message(list, abc.ABC):
     """消息数组"""
 
     def __init__(self,
-                 message: Union[str, dict, list, BaseModel, BaseMessageSegment,
-                                "BaseMessage"] = None,
+                 message: Union[str, Mapping, Iterable[Mapping],
+                                T_MessageSegment, T_Message, Any] = None,
                  *args,
                  **kwargs):
         """
         :参数:
 
-          * ``message: Union[str, dict, list, BaseModel, MessageSegment, Message]``: 消息内容
+          * ``message: Union[str, list, dict, MessageSegment, Message, Any]``: 消息内容
         """
         super().__init__(*args, **kwargs)
-        if isinstance(message, (str, dict, list, BaseModel)):
-            self.extend(self._construct(message))
-        elif isinstance(message, BaseMessage):
+        if isinstance(message, Message):
             self.extend(message)
-        elif isinstance(message, BaseMessageSegment):
+        elif isinstance(message, MessageSegment):
             self.append(message)
+        else:
+            self.extend(self._construct(message))
 
     def __str__(self):
         return ''.join((str(seg) for seg in self))
 
+    @classmethod
+    def __get_validators__(cls):
+        yield cls._validate
+
+    @classmethod
+    def _validate(cls, value):
+        return cls(value)
+
     @staticmethod
     @abc.abstractmethod
-    def _construct(msg: Union[str, dict, list]) -> Iterable[BaseMessageSegment]:
+    def _construct(
+        msg: Union[str, Mapping, Iterable[Mapping], Any]
+    ) -> Iterable[T_MessageSegment]:
         raise NotImplementedError
 
-    def __add__(
-            self, other: Union[str, BaseMessageSegment,
-                               "BaseMessage"]) -> "BaseMessage":
+    def __add__(self: T_Message, other: Union[str, T_MessageSegment,
+                                              T_Message]) -> T_Message:
         result = self.__class__(self)
         if isinstance(other, str):
             result.extend(self._construct(other))
-        elif isinstance(other, BaseMessageSegment):
+        elif isinstance(other, MessageSegment):
             result.append(other)
-        elif isinstance(other, BaseMessage):
+        elif isinstance(other, Message):
             result.extend(other)
         return result
 
-    def __radd__(self, other: Union[str, BaseMessageSegment, "BaseMessage"]):
+    def __radd__(self: T_Message, other: Union[str, T_MessageSegment,
+                                               T_Message]) -> T_Message:
         result = self.__class__(other)
         return result.__add__(self)
 
-    def append(self, obj: Union[str, BaseMessageSegment]) -> "BaseMessage":
+    def __iadd__(self: T_Message, other: Union[str, T_MessageSegment,
+                                               T_Message]) -> T_Message:
+        if isinstance(other, str):
+            self.extend(self._construct(other))
+        elif isinstance(other, MessageSegment):
+            self.append(other)
+        elif isinstance(other, Message):
+            self.extend(other)
+        return self
+
+    def append(self: T_Message, obj: Union[str, T_MessageSegment]) -> T_Message:
         """
         :说明:
 
@@ -403,7 +282,7 @@ class BaseMessage(list, abc.ABC):
 
           * ``obj: Union[str, MessageSegment]``: 要添加的消息段
         """
-        if isinstance(obj, BaseMessageSegment):
+        if isinstance(obj, MessageSegment):
             super().append(obj)
         elif isinstance(obj, str):
             self.extend(self._construct(obj))
@@ -411,9 +290,8 @@ class BaseMessage(list, abc.ABC):
             raise ValueError(f"Unexpected type: {type(obj)} {obj}")
         return self
 
-    def extend(
-        self, obj: Union["BaseMessage",
-                         Iterable[BaseMessageSegment]]) -> "BaseMessage":
+    def extend(self: T_Message,
+               obj: Union[T_Message, Iterable[T_MessageSegment]]) -> T_Message:
         """
         :说明:
 
@@ -427,7 +305,7 @@ class BaseMessage(list, abc.ABC):
             self.append(segment)
         return self
 
-    def reduce(self) -> None:
+    def reduce(self: T_Message) -> None:
         """
         :说明:
 
@@ -435,22 +313,152 @@ class BaseMessage(list, abc.ABC):
         """
         index = 0
         while index < len(self):
-            if index > 0 and self[
-                    index - 1].type == "text" and self[index].type == "text":
+            if index > 0 and self[index -
+                                  1].is_text() and self[index].is_text():
                 self[index - 1] += self[index]
                 del self[index]
             else:
                 index += 1
 
-    def extract_plain_text(self) -> str:
+    def extract_plain_text(self: T_Message) -> str:
         """
         :说明:
 
           提取消息内纯文本消息
         """
 
-        def _concat(x: str, y: BaseMessageSegment) -> str:
-            return f"{x} {y}" if y.type == "text" else x
+        def _concat(x: str, y: T_MessageSegment) -> str:
+            return f"{x} {y}" if y.is_text() else x
 
         plain_text = reduce(_concat, self, "")
         return plain_text[1:] if plain_text else plain_text
+
+
+class Event(abc.ABC, BaseModel):
+    """Event 基类。提供获取关键信息的方法，其余信息可直接获取。"""
+
+    class Config:
+        extra = "allow"
+        json_encoders = {Message: DataclassEncoder}
+
+    @abc.abstractmethod
+    def get_type(self) -> Literal["message", "notice", "request", "meta_event"]:
+        """
+        :说明:
+
+          获取事件类型的方法，类型通常为 NoneBot 内置的四种类型。
+
+        :返回:
+
+          * ``Literal["message", "notice", "request", "meta_event"]``
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_event_name(self) -> str:
+        """
+        :说明:
+
+          获取事件名称的方法。
+
+        :返回:
+
+          * ``str``
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_event_description(self) -> str:
+        """
+        :说明:
+
+          获取事件描述的方法，通常为事件具体内容。
+
+        :返回:
+
+          * ``str``
+        """
+        raise NotImplementedError
+
+    def __str__(self) -> str:
+        return f"[{self.get_event_name()}]: {self.get_event_description()}"
+
+    def get_log_string(self) -> str:
+        """
+        :说明:
+
+          获取事件日志信息的方法，通常你不需要修改这个方法，只有当希望 NoneBot 隐藏该事件日志时，可以抛出 ``NoLogException`` 异常。
+
+        :返回:
+
+          * ``str``
+
+        :异常:
+
+          - ``NoLogException``
+        """
+        return f"[{self.get_event_name()}]: {self.get_event_description()}"
+
+    @abc.abstractmethod
+    def get_user_id(self) -> str:
+        """
+        :说明:
+
+          获取事件主体 id 的方法，通常是用户 id 。
+
+        :返回:
+
+          * ``str``
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_session_id(self) -> str:
+        """
+        :说明:
+
+          获取会话 id 的方法，用于判断当前事件属于哪一个会话，通常是用户 id、群组 id 组合。
+
+        :返回:
+
+          * ``str``
+        """
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_message(self) -> "Message":
+        """
+        :说明:
+
+          获取事件消息内容的方法。
+
+        :返回:
+
+          * ``Message``
+        """
+        raise NotImplementedError
+
+    def get_plaintext(self) -> str:
+        """
+        :说明:
+
+          获取消息纯文本的方法，通常不需要修改，默认通过 ``get_message().extract_plain_text`` 获取。
+
+        :返回:
+
+          * ``str``
+        """
+        return self.get_message().extract_plain_text()
+
+    @abc.abstractmethod
+    def is_tome(self) -> bool:
+        """
+        :说明:
+
+          获取事件是否与机器人有关的方法。
+
+        :返回:
+
+          * ``bool``
+        """
+        raise NotImplementedError

@@ -1,196 +1,145 @@
-from nonebot.adapters import BaseEvent
-from nonebot.typing import Union, Optional
+from enum import Enum
+from typing import List, Optional
+from typing_extensions import Literal
+
+from pydantic import BaseModel, root_validator
+
+from nonebot.typing import overrides
+from nonebot.adapters import Event as BaseEvent
 
 from .message import Message
-from .model import MessageModel, ConversationType, TextMessage
 
 
 class Event(BaseEvent):
     """
-    钉钉 协议 Event 适配。继承属性参考 `BaseEvent <./#class-baseevent>`_ 。
+    钉钉协议事件。各事件字段参考 `钉钉文档`_
+
+    .. _钉钉文档:
+        https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p
     """
 
-    def __init__(self, message: MessageModel):
-        super().__init__(message)
+    chatbotUserId: str
+
+    @overrides(BaseEvent)
+    def get_type(self) -> Literal["message", "notice", "request", "meta_event"]:
+        raise ValueError("Event has no type!")
+
+    @overrides(BaseEvent)
+    def get_event_name(self) -> str:
+        raise ValueError("Event has no name!")
+
+    @overrides(BaseEvent)
+    def get_event_description(self) -> str:
+        raise ValueError("Event has no description!")
+
+    @overrides(BaseEvent)
+    def get_message(self) -> "Message":
+        raise ValueError("Event has no message!")
+
+    @overrides(BaseEvent)
+    def get_plaintext(self) -> str:
+        raise ValueError("Event has no plaintext!")
+
+    @overrides(BaseEvent)
+    def get_user_id(self) -> str:
+        raise ValueError("Event has no user_id!")
+
+    @overrides(BaseEvent)
+    def get_session_id(self) -> str:
+        raise ValueError("Event has no session_id!")
+
+    @overrides(BaseEvent)
+    def is_tome(self) -> bool:
+        return True
+
+
+class TextMessage(BaseModel):
+    content: str
+
+
+class AtUsersItem(BaseModel):
+    dingtalkId: str
+    staffId: Optional[str]
+
+
+class ConversationType(str, Enum):
+    private = "1"
+    group = "2"
+
+
+class MessageEvent(Event):
+    """消息事件"""
+    msgtype: str
+    text: TextMessage
+    msgId: str
+    createAt: int  # ms
+    conversationType: ConversationType
+    conversationId: str
+    senderId: str
+    senderNick: str
+    senderCorpId: str
+    sessionWebhook: str
+    sessionWebhookExpiredTime: int
+    isAdmin: bool
+
+    message: Message
+
+    @root_validator(pre=True)
+    def gen_message(cls, values: dict):
+        assert "msgtype" in values, "msgtype must be specified"
         # 其实目前钉钉机器人只能接收到 text 类型的消息
-        self._message = Message(getattr(message, message.msgtype or "text"))
+        assert values[
+            "msgtype"] in values, f"{values['msgtype']} must be specified"
+        content = values[values['msgtype']]['content']
+        # 如果是被 @，第一个字符将会为空格，移除特殊情况
+        if content[0] == ' ':
+            content = content[1:]
+        values["message"] = content
+        return values
 
-    @property
-    def raw_event(self) -> MessageModel:
-        """原始上报消息"""
-        return self._raw_event
-
-    @property
-    def id(self) -> Optional[str]:
-        """
-        - 类型: ``Optional[str]``
-        - 说明: 消息 ID
-        """
-        return self.raw_event.msgId
-
-    @property
-    def name(self) -> str:
-        """
-        - 类型: ``str``
-        - 说明: 事件名称，由 `type`.`detail_type` 组合而成
-        """
-        return self.type + "." + self.detail_type
-
-    @property
-    def self_id(self) -> str:
-        """
-        - 类型: ``str``
-        - 说明: 机器人自身 ID
-        """
-        return str(self.raw_event.chatbotUserId)
-
-    @property
-    def time(self) -> int:
-        """
-        - 类型: ``int``
-        - 说明: 消息的时间戳，单位 s
-        """
-        # 单位 ms -> s
-        return int(self.raw_event.createAt / 1000)
-
-    @property
-    def type(self) -> str:
-        """
-        - 类型: ``str``
-        - 说明: 事件类型
-        """
+    @overrides(Event)
+    def get_type(self) -> Literal["message", "notice", "request", "meta_event"]:
         return "message"
 
-    @type.setter
-    def type(self, value) -> None:
-        pass
+    @overrides(Event)
+    def get_event_name(self) -> str:
+        return f"{self.get_type()}.{self.conversationType.name}"
 
-    @property
-    def detail_type(self) -> str:
-        """
-        - 类型: ``str``
-        - 说明: 事件详细类型
-        """
-        return self.raw_event.conversationType.name
+    @overrides(Event)
+    def get_event_description(self) -> str:
+        return f'Message[{self.msgtype}] {self.msgId} from {self.senderId} "{self.text.content}"'
 
-    @detail_type.setter
-    def detail_type(self, value) -> None:
-        if value == "private":
-            self.raw_event.conversationType = ConversationType.private
-        if value == "group":
-            self.raw_event.conversationType = ConversationType.group
+    @overrides(Event)
+    def get_message(self) -> Message:
+        return self.message
 
-    @property
-    def sub_type(self) -> None:
-        """
-        - 类型: ``None``
-        - 说明: 钉钉适配器无事件子类型
-        """
-        return None
+    @overrides(Event)
+    def get_plaintext(self) -> str:
+        return self.text.content
 
-    @sub_type.setter
-    def sub_type(self, value) -> None:
-        pass
+    @overrides(Event)
+    def get_user_id(self) -> str:
+        return self.senderId
 
-    @property
-    def user_id(self) -> Optional[str]:
-        """
-        - 类型: ``Optional[str]``
-        - 说明: 发送者 ID
-        """
-        return self.raw_event.senderId
+    @overrides(Event)
+    def get_session_id(self) -> str:
+        return self.senderId
 
-    @user_id.setter
-    def user_id(self, value) -> None:
-        self.raw_event.senderId = value
 
-    @property
-    def group_id(self) -> Optional[str]:
-        """
-        - 类型: ``Optional[str]``
-        - 说明: 事件主体群 ID
-        """
-        return self.raw_event.conversationId
+class PrivateMessageEvent(MessageEvent):
+    """私聊消息事件"""
+    chatbotCorpId: str
+    senderStaffId: Optional[str]
+    conversationType: ConversationType = ConversationType.private
 
-    @group_id.setter
-    def group_id(self, value) -> None:
-        self.raw_event.conversationId = value
 
-    @property
-    def to_me(self) -> Optional[bool]:
-        """
-        - 类型: ``Optional[bool]``
-        - 说明: 消息是否与机器人相关
-        """
-        return self.detail_type == "private" or self.raw_event.isInAtList
+class GroupMessageEvent(MessageEvent):
+    """群消息事件"""
+    atUsers: List[AtUsersItem]
+    conversationType: ConversationType = ConversationType.group
+    conversationTitle: str
+    isInAtList: bool
 
-    @property
-    def message(self) -> Optional["Message"]:
-        """
-        - 类型: ``Optional[Message]``
-        - 说明: 消息内容
-        """
-        return self._message
-
-    @message.setter
-    def message(self, value) -> None:
-        self._message = value
-
-    @property
-    def reply(self) -> None:
-        """
-        - 类型: ``None``
-        - 说明: 回复消息详情
-        """
-        raise ValueError("暂不支持 reply")
-
-    @property
-    def raw_message(self) -> Optional[Union[TextMessage]]:
-        """
-        - 类型: ``Optional[str]``
-        - 说明: 原始消息
-        """
-        return getattr(self.raw_event, self.raw_event.msgtype)
-
-    @raw_message.setter
-    def raw_message(self, value) -> None:
-        setattr(self.raw_event, self.raw_event.msgtype, value)
-
-    @property
-    def plain_text(self) -> Optional[str]:
-        """
-        - 类型: ``Optional[str]``
-        - 说明: 纯文本消息内容
-        """
-        return self.message and self.message.extract_plain_text().strip()
-
-    @property
-    def sender(self) -> Optional[dict]:
-        """
-        - 类型: ``Optional[dict]``
-        - 说明: 消息发送者信息
-        """
-        result = {
-            # 加密的发送者ID。
-            "senderId": self.raw_event.senderId,
-            # 发送者昵称。
-            "senderNick": self.raw_event.senderNick,
-            # 企业内部群有的发送者当前群的企业 corpId。
-            "senderCorpId": self.raw_event.senderCorpId,
-            # 企业内部群有的发送者在企业内的 userId。
-            "senderStaffId": self.raw_event.senderStaffId,
-            "role": "admin" if self.raw_event.isAdmin else "member"
-        }
-        return result
-
-    @sender.setter
-    def sender(self, value) -> None:
-
-        def set_wrapper(name):
-            if value.get(name):
-                setattr(self.raw_event, name, value.get(name))
-
-        set_wrapper("senderId")
-        set_wrapper("senderNick")
-        set_wrapper("senderCorpId")
-        set_wrapper("senderStaffId")
+    @overrides(MessageEvent)
+    def is_tome(self) -> bool:
+        return self.isInAtList

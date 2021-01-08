@@ -12,13 +12,17 @@
 import re
 import asyncio
 from itertools import product
+from typing import Any, Dict, Union, Tuple, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
 
 from pygtrie import CharTrie
 
 from nonebot import get_driver
 from nonebot.log import logger
 from nonebot.utils import run_sync
-from nonebot.typing import Bot, Any, Dict, Event, Union, Tuple, NoReturn, Optional, Callable, Awaitable, RuleChecker
+from nonebot.typing import T_State, T_RuleChecker
+
+if TYPE_CHECKING:
+    from nonebot.adapters import Bot, Event
 
 
 class Rule:
@@ -39,12 +43,12 @@ class Rule:
     __slots__ = ("checkers",)
 
     def __init__(
-            self, *checkers: Callable[[Bot, Event, dict],
-                                      Awaitable[bool]]) -> None:
+        self, *checkers: Callable[["Bot", "Event", T_State],
+                                  Awaitable[bool]]) -> None:
         """
         :参数:
 
-          * ``*checkers: Callable[[Bot, Event, dict], Awaitable[bool]]``: **异步** RuleChecker
+          * ``*checkers: Callable[[Bot, Event, T_State], Awaitable[bool]]``: **异步** RuleChecker
 
         """
         self.checkers = set(checkers)
@@ -55,10 +59,11 @@ class Rule:
 
         :类型:
 
-          * ``Set[Callable[[Bot, Event, dict], Awaitable[bool]]]``
+          * ``Set[Callable[[Bot, Event, T_State], Awaitable[bool]]]``
         """
 
-    async def __call__(self, bot: Bot, event: Event, state: dict) -> bool:
+    async def __call__(self, bot: "Bot", event: "Event",
+                       state: T_State) -> bool:
         """
         :说明:
 
@@ -68,7 +73,7 @@ class Rule:
 
           * ``bot: Bot``: Bot 对象
           * ``event: Event``: Event 对象
-          * ``state: dict``: 当前 State
+          * ``state: T_State``: 当前 State
 
         :返回:
 
@@ -78,7 +83,7 @@ class Rule:
             *map(lambda c: c(bot, event, state), self.checkers))
         return all(results)
 
-    def __and__(self, other: Optional[Union["Rule", RuleChecker]]) -> "Rule":
+    def __and__(self, other: Optional[Union["Rule", T_RuleChecker]]) -> "Rule":
         checkers = self.checkers.copy()
         if other is None:
             return self
@@ -113,9 +118,9 @@ class TrieRule:
         cls.suffix[suffix[::-1]] = value
 
     @classmethod
-    def get_value(cls, bot: Bot, event: Event,
-                  state: dict) -> Tuple[Dict[str, Any], Dict[str, Any]]:
-        if event.type != "message":
+    def get_value(cls, bot: "Bot", event: "Event",
+                  state: T_State) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+        if event.get_type() != "message":
             state["_prefix"] = {"raw_command": None, "command": None}
             state["_suffix"] = {"raw_command": None, "command": None}
             return {
@@ -128,12 +133,14 @@ class TrieRule:
 
         prefix = None
         suffix = None
-        message = event.message[0]
-        if message.type == "text":
-            prefix = cls.prefix.longest_prefix(str(message).lstrip())
-        message_r = event.message[-1]
-        if message_r.type == "text":
-            suffix = cls.suffix.longest_prefix(str(message_r).rstrip()[::-1])
+        message = event.get_message()
+        message_seg = message[0]
+        if message_seg.is_text():
+            prefix = cls.prefix.longest_prefix(str(message_seg).lstrip())
+        message_seg_r = message[-1]
+        if message_seg_r.is_text():
+            suffix = cls.suffix.longest_prefix(
+                str(message_seg_r).rstrip()[::-1])
 
         state["_prefix"] = {
             "raw_command": prefix.key,
@@ -176,8 +183,11 @@ def startswith(msg: str) -> Rule:
       * ``msg: str``: 消息开头字符串
     """
 
-    async def _startswith(bot: Bot, event: Event, state: dict) -> bool:
-        return event.plain_text.startswith(msg)
+    async def _startswith(bot: "Bot", event: "Event", state: T_State) -> bool:
+        if event.get_type() != "message":
+            return False
+        text = event.get_plaintext()
+        return text.startswith(msg)
 
     return Rule(_startswith)
 
@@ -193,8 +203,10 @@ def endswith(msg: str) -> Rule:
       * ``msg: str``: 消息结尾字符串
     """
 
-    async def _endswith(bot: Bot, event: Event, state: dict) -> bool:
-        return event.plain_text.endswith(msg)
+    async def _endswith(bot: "Bot", event: "Event", state: T_State) -> bool:
+        if event.get_type() != "message":
+            return False
+        return event.get_plaintext().endswith(msg)
 
     return Rule(_endswith)
 
@@ -210,9 +222,11 @@ def keyword(*keywords: str) -> Rule:
       * ``*keywords: str``: 关键词
     """
 
-    async def _keyword(bot: Bot, event: Event, state: dict) -> bool:
-        return bool(event.plain_text and
-                    any(keyword in event.plain_text for keyword in keywords))
+    async def _keyword(bot: "Bot", event: "Event", state: T_State) -> bool:
+        if event.get_type() != "message":
+            return False
+        text = event.get_plaintext()
+        return bool(text and any(keyword in text for keyword in keywords))
 
     return Rule(_keyword)
 
@@ -256,7 +270,7 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
             for start, sep in product(command_start, command_sep):
                 TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
 
-    async def _command(bot: Bot, event: Event, state: dict) -> bool:
+    async def _command(bot: "Bot", event: "Event", state: T_State) -> bool:
         return state["_prefix"]["command"] in commands
 
     return Rule(_command)
@@ -282,8 +296,10 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
 
     pattern = re.compile(regex, flags)
 
-    async def _regex(bot: Bot, event: Event, state: dict) -> bool:
-        matched = pattern.search(str(event.message))
+    async def _regex(bot: "Bot", event: "Event", state: T_State) -> bool:
+        if event.get_type() != "message":
+            return False
+        matched = pattern.search(str(event.get_message()))
         if matched:
             state["_matched"] = matched.group()
             return True
@@ -298,14 +314,14 @@ def to_me() -> Rule:
     """
     :说明:
 
-      通过 ``event.to_me`` 判断消息是否是发送给机器人
+      通过 ``event.is_tome()`` 判断事件是否与机器人有关
 
     :参数:
 
       * 无
     """
 
-    async def _to_me(bot: Bot, event: Event, state: dict) -> bool:
-        return bool(event.to_me)
+    async def _to_me(bot: "Bot", event: "Event", state: T_State) -> bool:
+        return event.is_tome()
 
     return Rule(_to_me)

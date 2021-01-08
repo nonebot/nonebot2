@@ -10,16 +10,21 @@
 """
 
 import asyncio
+from typing import Union, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
 
 from nonebot.utils import run_sync
-from nonebot.typing import Bot, Event, Union, NoReturn, Optional, Callable, Awaitable, PermissionChecker
+from nonebot.typing import T_PermissionChecker
+
+if TYPE_CHECKING:
+    from nonebot.adapters import Bot, Event
 
 
 class Permission:
     __slots__ = ("checkers",)
 
-    def __init__(self, *checkers: Callable[[Bot, Event],
-                                           Awaitable[bool]]) -> None:
+    def __init__(
+            self, *checkers: Callable[["Bot", "Event"],
+                                      Awaitable[bool]]) -> None:
         """
         :参数:
 
@@ -36,7 +41,7 @@ class Permission:
           * ``Set[Callable[[Bot, Event], Awaitable[bool]]]``
         """
 
-    async def __call__(self, bot: Bot, event: Event) -> bool:
+    async def __call__(self, bot: "Bot", event: "Event") -> bool:
         """
         :说明:
 
@@ -62,7 +67,7 @@ class Permission:
 
     def __or__(
         self, other: Optional[Union["Permission",
-                                    PermissionChecker]]) -> "Permission":
+                                    T_PermissionChecker]]) -> "Permission":
         checkers = self.checkers.copy()
         if other is None:
             return self
@@ -75,20 +80,20 @@ class Permission:
         return Permission(*checkers)
 
 
-async def _message(bot: Bot, event: Event) -> bool:
-    return event.type == "message"
+async def _message(bot: "Bot", event: "Event") -> bool:
+    return event.get_type() == "message"
 
 
-async def _notice(bot: Bot, event: Event) -> bool:
-    return event.type == "notice"
+async def _notice(bot: "Bot", event: "Event") -> bool:
+    return event.get_type() == "notice"
 
 
-async def _request(bot: Bot, event: Event) -> bool:
-    return event.type == "request"
+async def _request(bot: "Bot", event: "Event") -> bool:
+    return event.get_type() == "request"
 
 
-async def _metaevent(bot: Bot, event: Event) -> bool:
-    return event.type == "meta_event"
+async def _metaevent(bot: "Bot", event: "Event") -> bool:
+    return event.get_type() == "meta_event"
 
 
 MESSAGE = Permission(_message)
@@ -109,7 +114,7 @@ METAEVENT = Permission(_metaevent)
 """
 
 
-def USER(*user: int, perm: Permission = Permission()):
+def USER(*user: str, perm: Permission = Permission()):
     """
     :说明:
 
@@ -117,104 +122,27 @@ def USER(*user: int, perm: Permission = Permission()):
 
     :参数:
 
-      * ``*user: int``: 白名单
+      * ``*user: str``: 白名单
       * ``perm: Permission``: 需要同时满足的权限
     """
 
-    async def _user(bot: Bot, event: Event) -> bool:
-        return event.type == "message" and event.user_id in user and await perm(
-            bot, event)
+    async def _user(bot: "Bot", event: "Event") -> bool:
+        return event.get_type() == "message" and event.get_session_id(
+        ) in user and await perm(bot, event)
 
     return Permission(_user)
 
 
-async def _private(bot: Bot, event: Event) -> bool:
-    return event.type == "message" and event.detail_type == "private"
-
-
-async def _private_friend(bot: Bot, event: Event) -> bool:
-    return (event.type == "message" and event.detail_type == "private" and
-            event.sub_type == "friend")
-
-
-async def _private_group(bot: Bot, event: Event) -> bool:
-    return (event.type == "message" and event.detail_type == "private" and
-            event.sub_type == "group")
-
-
-async def _private_other(bot: Bot, event: Event) -> bool:
-    return (event.type == "message" and event.detail_type == "private" and
-            event.sub_type == "other")
-
-
-PRIVATE = Permission(_private)
-"""
-- **说明**: 匹配任意私聊消息类型事件
-"""
-PRIVATE_FRIEND = Permission(_private_friend)
-"""
-- **说明**: 匹配任意好友私聊消息类型事件
-"""
-PRIVATE_GROUP = Permission(_private_group)
-"""
-- **说明**: 匹配任意群临时私聊消息类型事件
-"""
-PRIVATE_OTHER = Permission(_private_other)
-"""
-- **说明**: 匹配任意其他私聊消息类型事件
-"""
-
-
-async def _group(bot: Bot, event: Event) -> bool:
-    return event.type == "message" and event.detail_type == "group"
-
-
-async def _group_member(bot: Bot, event: Event) -> bool:
-    return (event.type == "message" and event.detail_type == "group" and
-            event.sender.get("role") == "member")
-
-
-async def _group_admin(bot: Bot, event: Event) -> bool:
-    return (event.type == "message" and event.detail_type == "group" and
-            event.sender.get("role") == "admin")
-
-
-async def _group_owner(bot: Bot, event: Event) -> bool:
-    return (event.type == "message" and event.detail_type == "group" and
-            event.sender.get("role") == "owner")
-
-
-GROUP = Permission(_group)
-"""
-- **说明**: 匹配任意群聊消息类型事件
-"""
-GROUP_MEMBER = Permission(_group_member)
-"""
-- **说明**: 匹配任意群员群聊消息类型事件
-
-\:\:\:warning 警告
-该权限通过 event.sender 进行判断且不包含管理员以及群主！
-\:\:\:
-"""
-GROUP_ADMIN = Permission(_group_admin)
-"""
-- **说明**: 匹配任意群管理员群聊消息类型事件
-"""
-GROUP_OWNER = Permission(_group_owner)
-"""
-- **说明**: 匹配任意群主群聊消息类型事件
-"""
-
-
-async def _superuser(bot: Bot, event: Event) -> bool:
-    return event.type == "message" and event.user_id in bot.config.superusers
+async def _superuser(bot: "Bot", event: "Event") -> bool:
+    return event.get_type() == "message" and event.get_user_id(
+    ) in bot.config.superusers
 
 
 SUPERUSER = Permission(_superuser)
 """
 - **说明**: 匹配任意超级用户消息类型事件
 """
-EVERYBODY = MESSAGE
-"""
-- **说明**: 匹配任意消息类型事件
-"""
+# EVERYBODY = MESSAGE
+# """
+# - **说明**: 匹配任意消息类型事件
+# """

@@ -12,24 +12,33 @@ _✨ Python 异步机器人框架 ✨_
 
 <p align="center">
   <a href="https://raw.githubusercontent.com/nonebot/nonebot2/master/LICENSE">
-    <img src="https://img.shields.io/github/license/nonebot/nonebot2.svg" alt="license">
+    <img src="https://img.shields.io/github/license/nonebot/nonebot2" alt="license">
   </a>
   <a href="https://pypi.python.org/pypi/nonebot2">
-    <img src="https://img.shields.io/pypi/v/nonebot2.svg" alt="pypi">
+    <img src="https://img.shields.io/pypi/v/nonebot2" alt="pypi">
   </a>
-  <img src="https://img.shields.io/badge/python-3.7+-blue.svg" alt="python">
-  <img src="https://img.shields.io/badge/cqhttp-11+-black.svg" alt="cqhttp"><br />
+  <img src="https://img.shields.io/badge/python-3.7+-blue" alt="python"><br />
+  <a href="https://github.com/howmanybots/onebot/blob/master/README.md">
+    <img src="https://img.shields.io/badge/OneBot-v11-black?style=social&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABABAMAAABYR2ztAAAAIVBMVEUAAAAAAAADAwMHBwceHh4UFBQNDQ0ZGRkoKCgvLy8iIiLWSdWYAAAAAXRSTlMAQObYZgAAAQVJREFUSMftlM0RgjAQhV+0ATYK6i1Xb+iMd0qgBEqgBEuwBOxU2QDKsjvojQPvkJ/ZL5sXkgWrFirK4MibYUdE3OR2nEpuKz1/q8CdNxNQgthZCXYVLjyoDQftaKuniHHWRnPh2GCUetR2/9HsMAXyUT4/3UHwtQT2AggSCGKeSAsFnxBIOuAggdh3AKTL7pDuCyABcMb0aQP7aM4AnAbc/wHwA5D2wDHTTe56gIIOUA/4YYV2e1sg713PXdZJAuncdZMAGkAukU9OAn40O849+0ornPwT93rphWF0mgAbauUrEOthlX8Zu7P5A6kZyKCJy75hhw1Mgr9RAUvX7A3csGqZegEdniCx30c3agAAAABJRU5ErkJggg==" alt="cqhttp">
+  </a>
+  <a href="https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p">
+    <img src="https://img.shields.io/badge/%E9%92%89%E9%92%89-Bot-lightgrey?style=social&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAnFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4jUzeAAAAM3RSTlMAQKSRaA+/f0YyFevh29R3cyklIfrlyrGsn41tVUs48c/HqJm9uZdhX1otGwkF9IN8V1CX0Q+IAAABY0lEQVRYw+3V2W7CMBAF0JuNQAhhX9OEfYdu9///rUVWpagE27Ef2gfO+0zGozsKnv6bMGzAhkNytIe5gDdzrwtTCwrbI8x4/NF668NAxgI3Q3UtFi3TyPwNQtPLUUmDd8YfqGLNe4v22XwEYb5zoOuF5baHq2UHtsKe5ivWfGAwrWu2mC34QM0PoCAuqZdOmiwV+5BLyMRtZ7dTSEcs48rzWfzwptMLyzpApka1SJ5FtR4kfCqNIBPEVDmqoqgwUYY5plQOlf6UEjNoOPnuKB6wzDyCrks///TDza8+PnR109WQdxLo8RKWq0PPnuXG0OXKQ6wWLFnCg75uYYbhmMIVVdQ709q33aHbGIj6Duz+2k1HQFX9VwqmY8xYsEJll2ahvhWgsjYLHFRXvIi2Qb0jzMQCzC3FAoydxCma88UCzE3JCWwkjCNYyMUCzHX4DiuTMawEwwhW6hnshPhjZzzJfAH0YacpbmRd7QAAAABJRU5ErkJggg==" alt="ding">
+  </a>
+  <a href="https://core.telegram.org/bots/api">
+    <img src="https://img.shields.io/badge/telegram-Bot-lightgrey?style=social&logo=telegram">
+  </a>
+  <br />
   <a href="https://jq.qq.com/?_wv=1027&k=5OFifDh">
-    <img src="https://img.shields.io/badge/qq%E7%BE%A4-768887710-orange.svg" alt="QQ Chat">
+    <img src="https://img.shields.io/badge/qq%E7%BE%A4-768887710-orange?style=flat-square" alt="QQ Chat">
   </a>
   <a href="https://t.me/cqhttp">
-    <img src="https://img.shields.io/badge/telegram-chat-blue.svg" alt="Telegram Chat">
+    <img src="https://img.shields.io/badge/telegram-chat-blue?style=flat-square" alt="Telegram Chat">
   </a>
   <a href="https://jq.qq.com/?_wv=1027&k=5Nl0zhE">
-    <img src="https://img.shields.io/badge/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E7%BE%A4-218529254-green.svg" alt="QQ Release">
+    <img src="https://img.shields.io/badge/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E7%BE%A4-218529254-green?style=flat-square" alt="QQ Release">
   </a>
   <a href="https://t.me/cqhttp_release">
-    <img src="https://img.shields.io/badge/版本发布频道-join-green.svg" alt="Telegram Release">
+    <img src="https://img.shields.io/badge/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E9%A2%91%E9%81%93-join-green?style=flat-square" alt="Telegram Release">
   </a>
 </p>
 
@@ -61,8 +70,8 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 
 目前 NoneBot2 内置的协议适配：
 
-- [CQHTTP(OneBot) 协议](https://github.com/howmanybots/onebot/blob/master/README.md)
-- [钉钉](https://ding-doc.dingtalk.com/doc#/serverapi2/krgddi) _开发中_
+- [OneBot(CQHTTP) 协议](https://github.com/howmanybots/onebot/blob/master/README.md) (QQ 等)
+- [钉钉](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p) _开发中_
 - [Telegram](https://core.telegram.org/bots/api) _计划中_
 
 ## 即刻开始
