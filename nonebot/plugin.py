@@ -425,7 +425,7 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
         segment = message.pop(0)
         new_message = message.__class__(
             str(segment)
-            [len(state["_prefix"]["raw_command"]):].strip())  # type: ignore
+            [len(state["_prefix"]["raw_command"]):].lstrip())  # type: ignore
         for new_segment in reversed(new_message):
             message.insert(0, new_segment)
 
