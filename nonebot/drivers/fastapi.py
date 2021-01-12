@@ -14,16 +14,26 @@ import logging
 from typing import Optional, Callable
 
 import uvicorn
+from pydantic import BaseSettings
 from fastapi.responses import Response
 from fastapi import Body, status, Request, FastAPI, HTTPException
 from starlette.websockets import WebSocketDisconnect, WebSocket as FastAPIWebSocket
 
 from nonebot.log import logger
 from nonebot.typing import overrides
-from nonebot.config import Env, Config
 from nonebot.utils import DataclassEncoder
 from nonebot.exception import RequestDenied
+from nonebot.config import Env, Config as NoneBotConfig
 from nonebot.drivers import Driver as BaseDriver, WebSocket as BaseWebSocket
+
+
+class Config(BaseSettings):
+    fastapi_openapi_url: Optional[str] = None
+    fastapi_docs_url: Optional[str] = None
+    fastapi_redoc_url: Optional[str] = None
+
+    class Config:
+        extra = "ignore"
 
 
 class Driver(BaseDriver):
@@ -38,14 +48,16 @@ class Driver(BaseDriver):
       * ``/{adapter name}/ws/``: WebSocket 上报
     """
 
-    def __init__(self, env: Env, config: Config):
+    def __init__(self, env: Env, config: NoneBotConfig):
         super().__init__(env, config)
+
+        self.fastapi_config = Config(**config.dict())
 
         self._server_app = FastAPI(
             debug=config.debug,
-            openapi_url=None,
-            docs_url=None,
-            redoc_url=None,
+            openapi_url=self.fastapi_config.fastapi_openapi_url,
+            docs_url=self.fastapi_config.fastapi_docs_url,
+            redoc_url=self.fastapi_config.fastapi_redoc_url,
         )
 
         self._server_app.post("/{adapter}/")(self._handle_http)
