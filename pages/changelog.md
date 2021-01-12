@@ -4,6 +4,12 @@ sidebar: auto
 
 # 更新日志
 
+## v2.0.0a9
+
+- 修复 `Message` 消息为 `None` 时的处理错误
+- 修复 `Message.extract_plain_text` 返回为转义字符串的问题
+- 修复命令处理错误地删除了后续空格
+
 ## v2.0.0a8
 
 - 修改 typing 类型注释
