@@ -276,6 +276,9 @@ class Config(BaseConfig):
         SESSION_EXPIRE_TIMEOUT=P[DD]DT[HH]H[MM]M[SS]S  # ISO 8601
     """
 
+    # adapter configs
+    # adapter configs are defined in adapter/config.py
+
     # custom configs
     # custom configs can be assigned during nonebot.init
     # or from env file using json loads

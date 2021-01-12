@@ -14,6 +14,7 @@ from nonebot.adapters import Bot as BaseBot
 from nonebot.exception import RequestDenied
 
 from .utils import log, escape
+from .config import Config as CQHTTPConfig
 from .message import Message, MessageSegment
 from .event import Reply, Event, MessageEvent, get_event_model
 from .exception import NetworkError, ApiNotAvailable, ActionFailed
@@ -226,6 +227,8 @@ class Bot(BaseBot):
                  *,
                  websocket: Optional["WebSocket"] = None):
 
+        self.cqhttp_config = CQHTTPConfig(**config.dict())
+
         super().__init__(driver,
                          connection_type,
                          config,
@@ -252,6 +255,7 @@ class Bot(BaseBot):
         x_self_id = headers.get("x-self-id")
         x_signature = headers.get("x-signature")
         token = get_auth_bearer(headers.get("authorization"))
+        cqhttp_config = CQHTTPConfig(**driver.config.dict())
 
         # 检查连接方式
         if connection_type not in ["http", "websocket"]:
@@ -264,7 +268,7 @@ class Bot(BaseBot):
             raise RequestDenied(400, "Missing X-Self-ID Header")
 
         # 检查签名
-        secret = driver.config.secret
+        secret = cqhttp_config.cqhttp_secret
         if secret and connection_type == "http":
             if not x_signature:
                 log("WARNING", "Missing Signature Header")
@@ -275,7 +279,7 @@ class Bot(BaseBot):
                 log("WARNING", "Signature Header is invalid")
                 raise RequestDenied(403, "Signature is invalid")
 
-        access_token = driver.config.access_token
+        access_token = cqhttp_config.cqhttp_access_token
         if access_token and access_token != token:
             log(
                 "WARNING", "Authorization Header is invalid"
@@ -374,8 +378,9 @@ class Bot(BaseBot):
                 api_root += "/"
 
             headers = {}
-            if self.config.access_token is not None:
-                headers["Authorization"] = "Bearer " + self.config.access_token
+            if self.cqhttp_config.cqhttp_access_token is not None:
+                headers[
+                    "Authorization"] = "Bearer " + self.cqhttp_config.cqhttp_access_token
 
             try:
                 async with httpx.AsyncClient(headers=headers) as client:
