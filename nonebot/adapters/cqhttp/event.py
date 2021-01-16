@@ -219,6 +219,14 @@ class GroupUploadNoticeEvent(NoticeEvent):
     group_id: int
     file: File
 
+    @overrides(NoticeEvent)
+    def get_user_id(self) -> str:
+        return str(self.user_id)
+
+    @overrides(NoticeEvent)
+    def get_session_id(self) -> str:
+        return str(self.user_id)
+
 
 class GroupAdminNoticeEvent(NoticeEvent):
     """群管理员变动"""
@@ -228,9 +236,17 @@ class GroupAdminNoticeEvent(NoticeEvent):
     user_id: int
     group_id: int
 
-    @overrides(Event)
+    @overrides(NoticeEvent)
     def is_tome(self) -> bool:
         return self.user_id == self.self_id
+
+    @overrides(NoticeEvent)
+    def get_user_id(self) -> str:
+        return str(self.user_id)
+
+    @overrides(NoticeEvent)
+    def get_session_id(self) -> str:
+        return str(self.user_id)
 
 
 class GroupDecreaseNoticeEvent(NoticeEvent):
@@ -242,9 +258,17 @@ class GroupDecreaseNoticeEvent(NoticeEvent):
     group_id: int
     operator_id: int
 
-    @overrides(Event)
+    @overrides(NoticeEvent)
     def is_tome(self) -> bool:
         return self.user_id == self.self_id
+
+    @overrides(NoticeEvent)
+    def get_user_id(self) -> str:
+        return str(self.user_id)
+
+    @overrides(NoticeEvent)
+    def get_session_id(self) -> str:
+        return str(self.user_id)
 
 
 class GroupIncreaseNoticeEvent(NoticeEvent):
@@ -256,9 +280,17 @@ class GroupIncreaseNoticeEvent(NoticeEvent):
     group_id: int
     operator_id: int
 
-    @overrides(Event)
+    @overrides(NoticeEvent)
     def is_tome(self) -> bool:
         return self.user_id == self.self_id
+
+    @overrides(NoticeEvent)
+    def get_user_id(self) -> str:
+        return str(self.user_id)
+
+    @overrides(NoticeEvent)
+    def get_session_id(self) -> str:
+        return str(self.user_id)
 
 
 class GroupBanNoticeEvent(NoticeEvent):
@@ -271,9 +303,17 @@ class GroupBanNoticeEvent(NoticeEvent):
     operator_id: int
     duration: int
 
-    @overrides(Event)
+    @overrides(NoticeEvent)
     def is_tome(self) -> bool:
         return self.user_id == self.self_id
+
+    @overrides(NoticeEvent)
+    def get_user_id(self) -> str:
+        return str(self.user_id)
+
+    @overrides(NoticeEvent)
+    def get_session_id(self) -> str:
+        return str(self.user_id)
 
 
 class FriendAddNoticeEvent(NoticeEvent):
@@ -281,6 +321,14 @@ class FriendAddNoticeEvent(NoticeEvent):
     __event__ = "notice.friend_add"
     notice_type: Literal["friend_add"]
     user_id: int
+
+    @overrides(NoticeEvent)
+    def get_user_id(self) -> str:
+        return str(self.user_id)
+
+    @overrides(NoticeEvent)
+    def get_session_id(self) -> str:
+        return str(self.user_id)
 
 
 class GroupRecallNoticeEvent(NoticeEvent):
@@ -296,6 +344,14 @@ class GroupRecallNoticeEvent(NoticeEvent):
     def is_tome(self) -> bool:
         return self.user_id == self.self_id
 
+    @overrides(NoticeEvent)
+    def get_user_id(self) -> str:
+        return str(self.user_id)
+
+    @overrides(NoticeEvent)
+    def get_session_id(self) -> str:
+        return str(self.user_id)
+
 
 class FriendRecallNoticeEvent(NoticeEvent):
     """好友消息撤回事件"""
@@ -303,6 +359,14 @@ class FriendRecallNoticeEvent(NoticeEvent):
     notice_type: Literal["friend_recall"]
     user_id: int
     message_id: int
+
+    @overrides(NoticeEvent)
+    def get_user_id(self) -> str:
+        return str(self.user_id)
+
+    @overrides(NoticeEvent)
+    def get_session_id(self) -> str:
+        return str(self.user_id)
 
 
 class NotifyEvent(NoticeEvent):
@@ -312,6 +376,14 @@ class NotifyEvent(NoticeEvent):
     sub_type: str
     user_id: int
     group_id: int
+
+    @overrides(NoticeEvent)
+    def get_user_id(self) -> str:
+        return str(self.user_id)
+
+    @overrides(NoticeEvent)
+    def get_session_id(self) -> str:
+        return str(self.user_id)
 
 
 class PokeNotifyEvent(NotifyEvent):
@@ -335,6 +407,14 @@ class LuckyKingNotifyEvent(NotifyEvent):
     @overrides(Event)
     def is_tome(self) -> bool:
         return self.target_id == self.self_id
+
+    @overrides(NotifyEvent)
+    def get_user_id(self) -> str:
+        return str(self.target_id)
+
+    @overrides(NotifyEvent)
+    def get_session_id(self) -> str:
+        return str(self.target_id)
 
 
 class HonorNotifyEvent(NotifyEvent):
@@ -370,6 +450,14 @@ class FriendRequestEvent(RequestEvent):
     comment: str
     flag: str
 
+    @overrides(RequestEvent)
+    def get_user_id(self) -> str:
+        return str(self.user_id)
+
+    @overrides(RequestEvent)
+    def get_session_id(self) -> str:
+        return str(self.user_id)
+
 
 class GroupRequestEvent(RequestEvent):
     """加群请求/邀请事件"""
@@ -380,6 +468,14 @@ class GroupRequestEvent(RequestEvent):
     user_id: int
     comment: str
     flag: str
+
+    @overrides(RequestEvent)
+    def get_user_id(self) -> str:
+        return str(self.user_id)
+
+    @overrides(RequestEvent)
+    def get_session_id(self) -> str:
+        return str(self.user_id)
 
 
 # Meta Events
