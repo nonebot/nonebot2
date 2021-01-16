@@ -9,6 +9,7 @@ sidebar: auto
 - 修复 `Message` 消息为 `None` 时的处理错误
 - 修复 `Message.extract_plain_text` 返回为转义字符串的问题
 - 修复命令处理错误地删除了后续空格
+- 增加好友添加和加群请求事件 `approve`, `reject` 方法
 
 ## v2.0.0a8
 

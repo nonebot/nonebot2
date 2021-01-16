@@ -1,6 +1,6 @@
 import inspect
 from typing_extensions import Literal
-from typing import Type, List, Optional
+from typing import Type, List, Optional, TYPE_CHECKING
 
 from pydantic import BaseModel
 from pygtrie import StringTrie
@@ -10,6 +10,9 @@ from nonebot.exception import NoLogException
 from nonebot.adapters import Event as BaseEvent
 
 from .message import Message
+
+if TYPE_CHECKING:
+    from .bot import Bot
 
 
 class Event(BaseEvent):
@@ -458,6 +461,14 @@ class FriendRequestEvent(RequestEvent):
     def get_session_id(self) -> str:
         return str(self.user_id)
 
+    async def approve(self, bot: "Bot", remark: str = ""):
+        return await bot.set_friend_add_request(flag=self.flag,
+                                                approve=True,
+                                                remark=remark)
+
+    async def reject(self, bot: "Bot"):
+        return await bot.set_friend_add_request(flag=self.flag, approve=False)
+
 
 class GroupRequestEvent(RequestEvent):
     """加群请求/邀请事件"""
@@ -476,6 +487,17 @@ class GroupRequestEvent(RequestEvent):
     @overrides(RequestEvent)
     def get_session_id(self) -> str:
         return str(self.user_id)
+
+    async def approve(self, bot: "Bot"):
+        return await bot.set_group_add_request(flag=self.flag,
+                                               sub_type=self.sub_type,
+                                               approve=True)
+
+    async def reject(self, bot: "Bot", reason: str = ""):
+        return await bot.set_group_add_request(flag=self.flag,
+                                               sub_type=self.sub_type,
+                                               approve=False,
+                                               reason=reason)
 
 
 # Meta Events
