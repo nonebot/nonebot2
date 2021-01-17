@@ -1,12 +1,13 @@
 from typing import Optional
 
-from pydantic import Field, BaseSettings
+from pydantic import Field, BaseModel
 
 
-class Config(BaseSettings):
-    cqhttp_access_token: Optional[str] = Field(default=None,
-                                               alias="access_token")
-    cqhttp_secret: Optional[str] = Field(default=None, alias="secret")
+# priority: alias > origin
+class Config(BaseModel):
+    access_token: Optional[str] = Field(default=None,
+                                        alias="cqhttp_access_token")
+    secret: Optional[str] = Field(default=None, alias="cqhttp_secret")
 
     class Config:
         extra = "ignore"

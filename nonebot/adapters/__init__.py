@@ -14,10 +14,10 @@ from typing import Any, Dict, Union, TypeVar, Mapping, Optional, Callable, Itera
 
 from pydantic import BaseModel
 
-from nonebot.config import Config
 from nonebot.utils import DataclassEncoder
 
 if TYPE_CHECKING:
+    from nonebot.config import Config
     from nonebot.drivers import Driver, WebSocket
 
 
@@ -26,29 +26,26 @@ class Bot(abc.ABC):
     Bot 基类。用于处理上报消息，并提供 API 调用接口。
     """
 
+    driver: "Driver"
+    """Driver 对象"""
+    config: "Config"
+    """Config 配置对象"""
+
     @abc.abstractmethod
     def __init__(self,
-                 driver: "Driver",
                  connection_type: str,
-                 config: Config,
                  self_id: str,
                  *,
                  websocket: Optional["WebSocket"] = None):
         """
         :参数:
 
-          * ``driver: Driver``: Driver 对象
           * ``connection_type: str``: http 或者 websocket
-          * ``config: Config``: Config 对象
           * ``self_id: str``: 机器人 ID
           * ``websocket: Optional[WebSocket]``: Websocket 连接对象
         """
-        self.driver = driver
-        """Driver 对象"""
         self.connection_type = connection_type
         """连接类型"""
-        self.config = config
-        """Config 配置对象"""
         self.self_id = self_id
         """机器人 ID"""
         self.websocket = websocket
@@ -62,6 +59,16 @@ class Bot(abc.ABC):
     def type(self) -> str:
         """Adapter 类型"""
         raise NotImplementedError
+
+    @classmethod
+    def register(cls, driver: "Driver", config: "Config"):
+        """
+        :说明:
+
+          `register` 方法会在 `driver.register_adapter` 时被调用，用于初始化相关配置
+        """
+        cls.driver = driver
+        cls.config = config
 
     @classmethod
     @abc.abstractmethod

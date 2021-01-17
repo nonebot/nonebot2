@@ -5,18 +5,19 @@ from typing import Any, Union, Optional, TYPE_CHECKING
 
 import httpx
 from nonebot.log import logger
-from nonebot.config import Config
 from nonebot.typing import overrides
 from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
 from nonebot.exception import RequestDenied
 
 from .utils import log
+from .config import Config as DingConfig
 from .message import Message, MessageSegment
 from .exception import NetworkError, ApiNotAvailable, ActionFailed, SessionExpired
-from .event import Event, MessageEvent, PrivateMessageEvent, GroupMessageEvent, ConversationType
+from .event import MessageEvent, PrivateMessageEvent, GroupMessageEvent, ConversationType
 
 if TYPE_CHECKING:
+    from nonebot.config import Config
     from nonebot.drivers import Driver
 
 SEND_BY_SESSION_WEBHOOK = "send_by_sessionWebhook"
@@ -26,11 +27,11 @@ class Bot(BaseBot):
     """
     钉钉 协议 Bot 适配。继承属性参考 `BaseBot <./#class-basebot>`_ 。
     """
+    ding_config: DingConfig
 
-    def __init__(self, driver: "Driver", connection_type: str, config: Config,
-                 self_id: str, **kwargs):
+    def __init__(self, connection_type: str, self_id: str, **kwargs):
 
-        super().__init__(driver, connection_type, config, self_id, **kwargs)
+        super().__init__(connection_type, self_id, **kwargs)
 
     @property
     def type(self) -> str:
@@ -38,6 +39,11 @@ class Bot(BaseBot):
         - 返回: ``"ding"``
         """
         return "ding"
+
+    @classmethod
+    def register(cls, driver: "Driver", config: "Config"):
+        super().register(driver, config)
+        cls.ding_config = DingConfig(**config.dict())
 
     @classmethod
     @overrides(BaseBot)
@@ -61,7 +67,7 @@ class Bot(BaseBot):
             raise RequestDenied(400, "Missing `timestamp` Header")
 
         # 检查 sign
-        secret = driver.config.secret
+        secret = cls.ding_config.secret
         if secret:
             if not sign:
                 log("WARNING", "Missing Signature Header")
@@ -156,7 +162,7 @@ class Bot(BaseBot):
                 async with httpx.AsyncClient(headers=headers) as client:
                     response = await client.post(
                         target,
-                        params={"access_token": self.config.access_token},
+                        params={"access_token": self.ding_config.access_token},
                         json=message._produce(),
                         timeout=self.config.api_timeout)
 
