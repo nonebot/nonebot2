@@ -17,19 +17,23 @@ sidebarDepth: 0
 Bot 基类。用于处理上报消息，并提供 API 调用接口。
 
 
-### _abstract_ `__init__(driver, connection_type, config, self_id, *, websocket=None)`
+### `driver`
+
+Driver 对象
+
+
+### `config`
+
+Config 配置对象
+
+
+### _abstract_ `__init__(connection_type, self_id, *, websocket=None)`
 
 
 * **参数**
 
     
-    * `driver: Driver`: Driver 对象
-
-
     * `connection_type: str`: http 或者 websocket
-
-
-    * `config: Config`: Config 对象
 
 
     * `self_id: str`: 机器人 ID
@@ -39,19 +43,9 @@ Bot 基类。用于处理上报消息，并提供 API 调用接口。
 
 
 
-### `driver`
-
-Driver 对象
-
-
 ### `connection_type`
 
 连接类型
-
-
-### `config`
-
-Config 配置对象
 
 
 ### `self_id`
@@ -67,6 +61,15 @@ Websocket 连接对象
 ### _abstract property_ `type`
 
 Adapter 类型
+
+
+### _classmethod_ `register(driver, config)`
+
+
+* **说明**
+
+    register 方法会在 driver.register_adapter 时被调用，用于初始化相关配置
+
 
 
 ### _abstract async classmethod_ `check_permission(driver, connection_type, headers, body)`
