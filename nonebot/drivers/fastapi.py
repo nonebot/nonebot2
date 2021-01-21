@@ -165,7 +165,7 @@ class Driver(BaseDriver):
             logger.warning("There's already a reverse websocket connection,"
                            "so the event may be handled twice.")
 
-        bot = BotClass(self, "http", self.config, x_self_id)
+        bot = BotClass("http", x_self_id)
 
         asyncio.create_task(bot.handle_message(data))
         return Response("", 204)
@@ -198,7 +198,7 @@ class Driver(BaseDriver):
             await ws.close(code=status.WS_1008_POLICY_VIOLATION)
             return
 
-        bot = BotClass(self, "websocket", self.config, x_self_id, websocket=ws)
+        bot = BotClass("websocket", x_self_id, websocket=ws)
 
         await ws.accept()
         logger.opt(colors=True).info(
