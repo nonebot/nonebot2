@@ -78,5 +78,13 @@
     "desc": "多语种翻译插件",
     "name": "translator",
     "repo": "Lancercmd/nonebot_plugin_translator"
+  },
+  {
+    "id": "nonebot_plugin_simdraw",
+    "link": "nonebot-plugin-simdraw",
+    "author": "abrahum",
+    "desc": "根据配置的手游卡池信息模拟抽卡",
+    "name": "模拟抽卡",
+    "repo": "abrahum/nonebot_plugin_simdraw"
   }
 ]
