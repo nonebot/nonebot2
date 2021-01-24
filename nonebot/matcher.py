@@ -526,7 +526,7 @@ class Matcher(metaclass=MatcherMeta):
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
             Matcher.new(
-                self.type,
+                "message",
                 Rule(),
                 USER(event.get_session_id(),
                      perm=self.permission),  # type:ignore
@@ -539,7 +539,7 @@ class Matcher(metaclass=MatcherMeta):
                 expire_time=datetime.now() + bot.config.session_expire_timeout)
         except PausedException:
             Matcher.new(
-                self.type,
+                "message",
                 Rule(),
                 USER(event.get_session_id(),
                      perm=self.permission),  # type:ignore
