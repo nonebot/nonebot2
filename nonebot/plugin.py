@@ -933,7 +933,7 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
     return loaded_plugins
 
 
-def load_builtin_plugins() -> Optional[Plugin]:
+def load_builtin_plugins(name: str = "echo") -> Optional[Plugin]:
     """
     :说明:
 
@@ -943,7 +943,7 @@ def load_builtin_plugins() -> Optional[Plugin]:
 
       - ``Plugin``
     """
-    return load_plugin("nonebot.plugins.base")
+    return load_plugin(f"nonebot.plugins.{name}")
 
 
 def get_plugin(name: str) -> Optional[Plugin]:
