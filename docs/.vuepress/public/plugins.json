@@ -86,5 +86,13 @@
     "desc": "根据配置的手游卡池信息模拟抽卡",
     "name": "模拟抽卡",
     "repo": "abrahum/nonebot_plugin_simdraw"
+  },
+  {
+    "id": "nonebot-plugin-wordbank",
+    "link": "nonebot-plugin-wordbank",
+    "author": "Joenothing-lst",
+    "desc": "无数据库的轻量问答插件，支持模糊问答",
+    "name": "nonebot-plugin-wordbank",
+    "repo": "Joenothing-lst/word-bank"
   }
 ]
