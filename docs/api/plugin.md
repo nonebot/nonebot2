@@ -1168,7 +1168,7 @@ def something_else():
 
 
 
-## `load_builtin_plugins()`
+## `load_builtin_plugins(name='echo')`
 
 
 * **说明**

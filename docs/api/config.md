@@ -14,7 +14,7 @@ NoneBot 使用 [pydantic](https://pydantic-docs.helpmanual.io/) 以及 [python-d
 
 ## _class_ `Env`
 
-基类：`pydantic.env_settings.BaseSettings`
+基类：`nonebot.config.BaseConfig`
 
 运行环境配置。大小写不敏感。
 
