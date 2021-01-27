@@ -13,11 +13,14 @@
 NoneBot 在启动时将会从系统环境变量或者 `.env` 文件中寻找变量 `ENVIRONMENT` (大小写不敏感)，默认值为 `prod`。  
 这将引导 NoneBot 从系统环境变量或者 `.env.{ENVIRONMENT}` 文件中进一步加载具体配置。
 
+`.env` 文件是基础环境配置文件，该文件中的配置项在不同环境下都会被加载，但会被 `.env.{ENVIRONMENT}` 文件中的配置所覆盖。
+
 现在，我们在 `.env` 文件中写入当前环境信息：
 
 ```bash
 # .env
 ENVIRONMENT=dev
+CUSTOM_CONFIG=common config  # 这个配置项在任何环境中都会被加载
 ```
 
 如你所想，之后 NoneBot 就会从 `.env.dev` 文件中加载环境变量。
@@ -26,7 +29,7 @@ ENVIRONMENT=dev
 
 NoneBot 使用 [pydantic](https://pydantic-docs.helpmanual.io/) 进行配置管理，会从 `.env.{ENVIRONMENT}` 文件中获悉环境配置。
 
-可以在 NoneBot 初始化时指定加载某个环境配置文件: `nonebot.init(_env_file=".env.dev")`，这将忽略你在 `.env` 中设置的环境信息。
+可以在 NoneBot 初始化时指定加载某个环境配置文件: `nonebot.init(_env_file=".env.dev")`，这将忽略你在 `.env` 中设置的 `ENVIRONMENT` 。
 
 :::warning 提示
 由于 `pydantic` 使用 JSON 解析配置项，请确保配置项值为 JSON 格式的数据。如：
