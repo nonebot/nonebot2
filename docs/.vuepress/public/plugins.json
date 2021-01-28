@@ -94,5 +94,13 @@
     "desc": "无数据库的轻量问答插件，支持模糊问答",
     "name": "nonebot-plugin-wordbank",
     "repo": "Joenothing-lst/word-bank"
+  },
+  {
+    "id": "nonebot_plugin_cooldown",
+    "link": "nonebot-plugin-cooldown",
+    "author": "jks15satoshi",
+    "desc": "为用户调用功能添加冷却时间（调用频率限制）功能",
+    "name": "冷却事件",
+    "repo": "jks15satoshi/nonebot-plugin-cooldown"
   }
 ]
