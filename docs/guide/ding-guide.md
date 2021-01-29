@@ -54,6 +54,8 @@ async def test_handler2(bot: DingBot, event: GroupMessageEvent):
 
 这样 Nonebot 就会根据不同的类型注解使用不同的 handler 来处理消息。
 
+可以查看 Nonebot 官方的这个例子：<https://github.com/nonebot/nonebot2/tree/dev/tests>，更详细的了解一个 Bot 的结构。
+
 ## 多种消息格式
 
 发送 markdown 消息：
@@ -83,11 +85,11 @@ async def raw_handler(bot: DingBot, event: MessageEvent):
     await raw.send(message)
 ```
 
-其他消息格式请查看 [钉钉适配器的 MessageSegment](https://github.com/nonebot/nonebot2/blob/master/nonebot/adapters/ding/message.py#L8)，里面封装了很多有关消息的方法，比如 `code`、`image`、`feedCard` 等。
+其他消息格式请查看 [钉钉适配器的 MessageSegment](https://github.com/nonebot/nonebot2/blob/dev/nonebot/adapters/ding/message.py#L8)，里面封装了很多有关消息的方法，比如 `code`、`image`、`feedCard` 等。
 
 ## 创建机器人并连接
 
-在钉钉官方文档 「开发企业内部机器人 -> 步骤一：创建机器人应用] 中有详细介绍，这里就省去创建的步骤，介绍一下如何连接上程序。
+在钉钉官方文档 [「开发企业内部机器人 -> 步骤一：创建机器人应用」](https://developers.dingtalk.com/document/app/develop-enterprise-internal-robots/title-ufs-4gh-poh) 中有详细介绍，这里就省去创建的步骤，介绍一下如何连接上程序。
 
 ### 本地开发机器人
 
@@ -103,7 +105,7 @@ async def raw_handler(bot: DingBot, event: MessageEvent):
 
 1. 将仓库 clone 到本地，打开 `windows_64` 文件夹。
 2. 执行 `.\ding.exe -config="./ding.cfg" -subdomain=rcnb 8080` 就可以将 8080 端口暴露到公网中。  
-   你访问 http://rcnb.vaiwan.com/xxxxx 都会映射到 http://127.0.0.1:8080/xxxxx。
+   你访问 <http://rcnb.vaiwan.com/xxxxx> 都会映射到 <http://127.0.0.1:8080/xxxxx>。
 
 假设我们的机器人监听的端口是 `2333`，并且已经注册了钉钉适配器。那我们就执行 `.\ding.exe -config="./ding.cfg" -subdomain=rcnb 2333`，然后在机器人的后台设置 POST 的地址：`http://rcnb.vaiwan.com/ding`。  
 这样钉钉接收到消息之后就会 POST 消息到 `http://rcnb.vaiwan.com/ding` 上，然后这个服务会把消息再转发到我们本地的开发服务器上。
@@ -114,4 +116,4 @@ async def raw_handler(bot: DingBot, event: MessageEvent):
 
 ## 示例
 
-关于钉钉机器人能做啥，你可以查看 `https://github.com/nonebot/nonebot2/blob/master/tests/test_plugins/test_ding.py`，里面有一些例子。
+关于钉钉机器人能做啥，你可以查看 `https://github.com/nonebot/nonebot2/blob/dev/tests/test_plugins/test_ding.py`，里面有一些例子。
