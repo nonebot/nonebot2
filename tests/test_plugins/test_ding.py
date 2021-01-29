@@ -1,3 +1,4 @@
+from nonebot.adapters.ding.event import GroupMessageEvent, PrivateMessageEvent
 from nonebot.rule import to_me
 from nonebot.plugin import on_command
 from nonebot.adapters.ding import Bot as DingBot, MessageSegment, MessageEvent
@@ -6,7 +7,7 @@ markdown = on_command("markdown", to_me())
 
 
 @markdown.handle()
-async def test_handler(bot: DingBot):
+async def markdown_handler(bot: DingBot):
     message = MessageSegment.markdown(
         "Hello, This is NoneBot",
         "#### NoneBot  \n> Nonebot 是一款高性能的 Python 机器人框架\n> ![screenshot](https://v2.nonebot.dev/logo.png)\n> [GitHub 仓库地址](https://github.com/nonebot/nonebot2) \n"
@@ -18,7 +19,7 @@ actionCardSingleBtn = on_command("actionCardSingleBtn", to_me())
 
 
 @actionCardSingleBtn.handle()
-async def test_handler(bot: DingBot):
+async def actionCardSingleBtn_handler(bot: DingBot):
     message = MessageSegment.actionCardSingleBtn(
         title="打造一间咖啡厅",
         text=
@@ -32,7 +33,7 @@ actionCard = on_command("actionCard", to_me())
 
 
 @actionCard.handle()
-async def test_handler(bot: DingBot):
+async def actionCard_handler(bot: DingBot):
     message = MessageSegment.raw({
         "msgtype": "actionCard",
         "actionCard": {
@@ -53,14 +54,14 @@ async def test_handler(bot: DingBot):
             }]
         }
     })
-    await actionCard.finish(message)
+    await actionCard.finish(message, at_sender=True)
 
 
 feedCard = on_command("feedCard", to_me())
 
 
 @feedCard.handle()
-async def test_handler(bot: DingBot):
+async def feedCard_handler(bot: DingBot):
     message = MessageSegment.raw({
         "msgtype": "feedCard",
         "feedCard": {
@@ -88,9 +89,11 @@ atme = on_command("atme", to_me())
 
 
 @atme.handle()
-async def test_handler(bot: DingBot, event: MessageEvent):
-    message = f"@{event.senderNick} at you" + MessageSegment.atMobiles(
-        "13800000001")
+async def atme_handler(bot: DingBot, event: MessageEvent):
+    message = f"@{event.senderId} manually at you" + MessageSegment.atDingtalkIds(
+        event.senderId)
+    await atme.send("matcher send auto at you", at_sender=True)
+    await bot.send(event, "bot send auto at you", at_sender=True)
     await atme.finish(message)
 
 
@@ -98,7 +101,7 @@ image = on_command("image", to_me())
 
 
 @image.handle()
-async def test_handler(bot: DingBot, event: MessageEvent):
+async def image_handler(bot: DingBot, event: MessageEvent):
     message = MessageSegment.image(
         "https://static-aliyun-doc.oss-accelerate.aliyuncs.com/assets/img/zh-CN/0634199951/p158167.png"
     )
@@ -109,7 +112,7 @@ textAdd = on_command("t", to_me())
 
 
 @textAdd.handle()
-async def test_handler(bot: DingBot, event: MessageEvent):
+async def textAdd_handler(bot: DingBot, event: MessageEvent):
     message = "第一段消息\n" + MessageSegment.text("asdawefaefa\n")
     await textAdd.send(message)
 
@@ -129,17 +132,8 @@ code = on_command("code", to_me())
 
 
 @code.handle()
-async def test_handler(bot: DingBot, event: MessageEvent):
-    raw = MessageSegment.raw({
-        "msgtype": "text",
-        "text": {
-            "content": 'print("hello world")'
-        },
-        "extension": {
-            "text_type": "code_snippet",
-            "code_language": "Python",
-        }
-    })
+async def code_handler(bot: DingBot, event: MessageEvent):
+    raw = MessageSegment.code("Python", 'print("hello world")')
     await code.send(raw)
     message = MessageSegment.text("""using System;
 
@@ -158,3 +152,35 @@ namespace HelloWorld
         "code_language": "C#"
     })
     await code.finish(message)
+
+
+test_message = on_command("test_message", to_me())
+
+
+@test_message.handle()
+async def test_message_handler1(bot: DingBot, event: PrivateMessageEvent):
+    await test_message.finish("PrivateMessageEvent")
+
+
+@test_message.handle()
+async def test_message_handler2(bot: DingBot, event: GroupMessageEvent):
+    await test_message.finish("GroupMessageEvent")
+
+
+hello = on_command("hello", to_me())
+
+
+@hello.handle()
+async def hello_handler(bot: DingBot, event: MessageEvent):
+    message = MessageSegment.raw({
+        "msgtype": "text",
+        "text": {
+            "content": 'hello '
+        },
+    })
+    message += MessageSegment.atDingtalkIds(event.senderId)
+    await hello.send(message)
+
+    message = MessageSegment.text(f"@{event.senderId}，你好")
+    message += MessageSegment.atDingtalkIds(event.senderId)
+    await hello.finish(message)

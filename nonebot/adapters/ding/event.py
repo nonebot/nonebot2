@@ -77,7 +77,7 @@ class MessageEvent(Event):
     conversationId: str
     senderId: str
     senderNick: str
-    senderCorpId: str
+    senderCorpId: Optional[str]
     sessionWebhook: str
     sessionWebhookExpiredTime: int
     isAdmin: bool

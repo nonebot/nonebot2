@@ -45,6 +45,17 @@ class MessageSegment(BaseMessageSegment):
         return MessageSegment("at", {"atMobiles": list(mobileNumber)})
 
     @staticmethod
+    def atDingtalkIds(*dingtalkIds: str) -> "MessageSegment":
+        """@指定 id，@ 默认会在消息段末尾。
+        所以你可以在消息中使用 @{senderId} 占位，发送出去之后 @ 就会出现在占位的位置：
+        ```python
+        message = MessageSegment.text(f"@{event.senderId}，你好")
+        message += MessageSegment.atDingtalkIds(event.senderId)
+        ```
+        """
+        return MessageSegment("at", {"atDingtalkIds": list(dingtalkIds)})
+
+    @staticmethod
     def text(text: str) -> "MessageSegment":
         """发送 ``text`` 类型消息"""
         return MessageSegment("text", {"content": text})
@@ -58,6 +69,16 @@ class MessageSegment(BaseMessageSegment):
     def extension(dict_: dict) -> "MessageSegment":
         """"标记 text 文本的 extension 属性，需要与 text 消息段相加。"""
         return MessageSegment("extension", dict_)
+
+    @staticmethod
+    def code(code_language: str, code: str) -> "Message":
+        """"发送 code 消息段"""
+        message = MessageSegment.text(code)
+        message += MessageSegment.extension({
+            "text_type": "code_snippet",
+            "code_language": code_language
+        })
+        return message
 
     @staticmethod
     def markdown(title: str, text: str) -> "MessageSegment":

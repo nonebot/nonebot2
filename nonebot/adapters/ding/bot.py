@@ -216,7 +216,9 @@ class Bot(BaseBot):
         params.update(kwargs)
 
         if at_sender and event.conversationType != ConversationType.private:
-            params["message"] = f"@{event.senderNick} " + msg
+            params[
+                "message"] = f"@{event.senderId} " + msg + MessageSegment.atDingtalkIds(
+                    event.senderId)
         else:
             params["message"] = msg
 
