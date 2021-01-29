@@ -2,8 +2,12 @@ from pprint import pprint
 from typing import Optional
 
 from nonebot.adapters import Bot as BaseBot
+from nonebot.adapters import Event as BaseEvent
 from nonebot.drivers import Driver, WebSocket
+from nonebot.message import handle_event
 from nonebot.typing import overrides
+
+from .event import Event
 
 
 class MiraiBot(BaseBot):
@@ -28,12 +32,13 @@ class MiraiBot(BaseBot):
 
     @overrides(BaseBot)
     async def handle_message(self, message: dict):
-        pprint(message)
+        event = Event.new(message)
+        await handle_event(self, event)
 
     @overrides(BaseBot)
     async def call_api(self, api: str, **data):
         return super().call_api(api, **data)
 
     @overrides(BaseBot)
-    async def send(self, event: "Event", message: str, **kwargs):
+    async def send(self, event: "BaseEvent", message: str, **kwargs):
         return super().send(event, message, **kwargs)

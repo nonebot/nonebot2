@@ -5,34 +5,34 @@ from pydantic import Field
 from .base import Event, SenderGroup, SenderInfo, SenderPermission
 
 
-class BaseNoticeEvent(Event):
+class NoticeEvent(Event):
     pass
 
 
-class BaseMuteEvent(BaseNoticeEvent):
+class MuteEvent(NoticeEvent):
     operator: SenderInfo
 
 
-class BotMuteEvent(BaseMuteEvent):
+class BotMuteEvent(MuteEvent):
     pass
 
 
-class BotUnmuteEvent(BaseMuteEvent):
+class BotUnmuteEvent(MuteEvent):
     pass
 
 
-class MemberMuteEvent(BaseMuteEvent):
+class MemberMuteEvent(MuteEvent):
     duration_seconds: int = Field(alias='durationSeconds')
     member: SenderInfo
     operator: Optional[SenderInfo] = None
 
 
-class MemberUnmuteEvent(BaseMuteEvent):
+class MemberUnmuteEvent(MuteEvent):
     member: SenderInfo
     operator: Optional[SenderInfo] = None
 
 
-class BotJoinGroupEvent(BaseNoticeEvent):
+class BotJoinGroupEvent(NoticeEvent):
     group: SenderGroup
 
 
@@ -44,7 +44,7 @@ class BotLeaveEventKick(BotJoinGroupEvent):
     pass
 
 
-class MemberJoinEvent(BaseNoticeEvent):
+class MemberJoinEvent(NoticeEvent):
     member: SenderInfo
 
 
@@ -56,7 +56,7 @@ class MemberLeaveEventKick(MemberJoinEvent):
     operator: Optional[SenderInfo] = None
 
 
-class FriendRecallEvent(BaseNoticeEvent):
+class FriendRecallEvent(NoticeEvent):
     author_id: int = Field(alias='authorId')
     message_id: int = Field(alias='messageId')
     time: int
@@ -68,7 +68,7 @@ class GroupRecallEvent(FriendRecallEvent):
     operator: Optional[SenderInfo] = None
 
 
-class GroupStateChangeEvent(BaseNoticeEvent):
+class GroupStateChangeEvent(NoticeEvent):
     origin: Any
     current: Any
     group: SenderGroup
@@ -105,7 +105,7 @@ class GroupAllowMemberInviteEvent(GroupStateChangeEvent):
     current: bool
 
 
-class MemberStateChangeEvent(BaseNoticeEvent):
+class MemberStateChangeEvent(NoticeEvent):
     member: SenderInfo
     operator: Optional[SenderInfo] = None
 
