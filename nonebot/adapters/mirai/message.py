@@ -1,0 +1,1 @@
+from nonebot.adapters import Message
