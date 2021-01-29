@@ -1,12 +1,14 @@
+import json
 from enum import Enum
-from typing import Dict, Any, Optional, Type
+from typing import Any, Dict, Optional, Type
+
 from pydantic import BaseModel, Field, ValidationError
 from typing_extensions import Literal
 
 from nonebot.adapters import Event as BaseEvent
 from nonebot.adapters import Message as BaseMessage
-from nonebot.typing import overrides
 from nonebot.log import logger
+from nonebot.typing import overrides
 
 
 class SenderPermission(str, Enum):
@@ -104,3 +106,6 @@ class Event(BaseEvent):
     @overrides(BaseEvent)
     def is_tome(self) -> bool:
         return False
+
+    def normalize_dict(self, **kwargs) -> Dict[str, Any]:
+        return json.loads(self.json(**kwargs))

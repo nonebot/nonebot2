@@ -58,6 +58,7 @@ class WebSocket(BaseWebSocket):
             try:
                 data = await self.receive()
             except websockets.ConnectionClosedOK:
+                logger.debug(f'Websocket connection {self.websocket} closed')
                 break
             except Exception as e:
                 logger.exception(f'Websocket client listened {self.websocket} '

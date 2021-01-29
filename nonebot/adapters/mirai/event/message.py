@@ -1,10 +1,11 @@
 from typing import TYPE_CHECKING
 
 from pydantic import Field
-from .base import Event, SenderInfo, PrivateSenderInfo
+
+from nonebot.typing import overrides
 
 from ..message import MessageChain
-from nonebot.typing import overrides
+from .base import Event, PrivateSenderInfo, SenderInfo
 
 
 class MessageEvent(Event):
