@@ -37,6 +37,7 @@ class PrivateSenderInfo(BaseModel):
 
 
 class Event(BaseEvent):
+    self_id: int
     type: str
 
     @classmethod
