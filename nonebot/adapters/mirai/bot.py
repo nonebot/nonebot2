@@ -121,6 +121,8 @@ class MiraiBot(BaseBot):
     def __init__(self, connection_type: str, self_id: str, *,
                  websocket: WebSocket):
         super().__init__(connection_type, self_id, websocket=websocket)
+        websocket.handle(self.handle_message)
+        self.driver._bot_connect(self)
 
     @property
     @overrides(BaseBot)
@@ -213,3 +215,6 @@ class MiraiBot(BaseBot):
     @overrides(BaseBot)
     async def send(self, event: "BaseEvent", message: str, **kwargs):
         return super().send(event, message, **kwargs)
+
+    def __del__(self):
+        self.driver._bot_disconnect(self)
