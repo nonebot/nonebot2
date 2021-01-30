@@ -102,5 +102,13 @@
     "desc": "为用户调用功能添加冷却时间（调用频率限制）功能",
     "name": "冷却事件",
     "repo": "jks15satoshi/nonebot-plugin-cooldown"
+  },
+  {
+    "id": "nonebot_plugin_mqtt",
+    "link": "nonebot-plugin-mqtt",
+    "author": "synodriver",
+    "desc": "接入mqtt网络,订阅和发布消息",
+    "name": "mqtt接入",
+    "repo": "synodriver/nonebot_plugin_mqtt"
   }
 ]
