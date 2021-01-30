@@ -18,7 +18,7 @@ class MessageEvent(Event):
 
     @overrides(Event)
     def get_plaintext(self) -> str:
-        return self.message_chain.__str__()
+        return self.message_chain.extract_plain_text()
 
     @overrides(Event)
     def get_user_id(self) -> str:

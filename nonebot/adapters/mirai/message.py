@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, Dict, Iterable, List, Union
+from typing import Any, Dict, Iterable, List, Optional, Union
 
 from pydantic import validate_arguments
 
@@ -31,7 +31,8 @@ class MessageSegment(BaseMessageSegment):
     @overrides(BaseMessageSegment)
     @validate_arguments
     def __init__(self, type: MessageType, **data):
-        super().__init__(type=type, data=data)
+        super().__init__(type=type,
+                         data={k: v for k, v in data.items() if v is not None})
 
     @overrides(BaseMessageSegment)
     def __str__(self) -> str:
@@ -59,6 +60,79 @@ class MessageSegment(BaseMessageSegment):
 
     def as_dict(self) -> Dict[str, Any]:
         return {'type': self.type.value, **self.data}
+
+    @classmethod
+    def source(cls, id: int, time: int):
+        return cls(type=MessageType.SOURCE, id=id, time=time)
+
+    @classmethod
+    def quote(cls, id: int, group_id: int, sender_id: int, target_id: int,
+              origin: "MessageChain"):
+        return cls(type=MessageType.QUOTE,
+                   id=id,
+                   groupId=group_id,
+                   senderId=sender_id,
+                   targetId=target_id,
+                   origin=origin.export())
+
+    @classmethod
+    def at(cls, target: int):
+        return cls(type=MessageType.AT, target=target)
+
+    @classmethod
+    def at_all(cls):
+        return cls(type=MessageType.AT_ALL)
+
+    @classmethod
+    def face(cls, face_id: Optional[int] = None, name: Optional[str] = None):
+        return cls(type=MessageType.FACE, faceId=face_id, name=name)
+
+    @classmethod
+    def plain(cls, text: str):
+        return cls(type=MessageType.PLAIN, text=text)
+
+    @classmethod
+    def image(cls,
+              image_id: Optional[str] = None,
+              url: Optional[str] = None,
+              path: Optional[str] = None):
+        return cls(type=MessageType.IMAGE, imageId=image_id, url=url, path=path)
+
+    @classmethod
+    def flash_image(cls,
+                    image_id: Optional[str] = None,
+                    url: Optional[str] = None,
+                    path: Optional[str] = None):
+        return cls(type=MessageType.FLASH_IMAGE,
+                   imageId=image_id,
+                   url=url,
+                   path=path)
+
+    @classmethod
+    def voice(cls,
+              voice_id: Optional[str] = None,
+              url: Optional[str] = None,
+              path: Optional[str] = None):
+        return cls(type=MessageType.FLASH_IMAGE,
+                   imageId=voice_id,
+                   url=url,
+                   path=path)
+
+    @classmethod
+    def xml(cls, xml: str):
+        return cls(type=MessageType.XML, xml=xml)
+
+    @classmethod
+    def json(cls, json: str):
+        return cls(type=MessageType.JSON, json=json)
+
+    @classmethod
+    def app(cls, content: str):
+        return cls(type=MessageType.APP, content=content)
+
+    @classmethod
+    def poke(cls, name: str):
+        return cls(type=MessageType.POKE, name=name)
 
 
 class MessageChain(BaseMessage):
@@ -90,11 +164,9 @@ class MessageChain(BaseMessage):
         ]
 
     def export(self) -> List[Dict[str, Any]]:
-        chain: List[Dict[str, Any]] = []
-        for segment in self.copy():
-            segment: MessageSegment
-            chain.append({'type': segment.type.value, **segment.data})
-        return chain
+        return [
+            *map(lambda segment: segment.as_dict(), self.copy())  # type: ignore
+        ]
 
     def __repr__(self) -> str:
         return f'<{self.__class__.__name__} {[*self.copy()]}>'
