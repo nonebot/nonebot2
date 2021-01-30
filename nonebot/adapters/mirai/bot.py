@@ -1,6 +1,7 @@
-from typing import Any, Dict, Optional, Tuple
 from datetime import datetime, timedelta
+from io import BytesIO
 from ipaddress import IPv4Address
+from typing import Any, Dict, List, NoReturn, Optional, Tuple
 
 import httpx
 
@@ -14,7 +15,8 @@ from nonebot.message import handle_event
 from nonebot.typing import overrides
 
 from .config import Config as MiraiConfig
-from .event import Event, FriendMessage, TempMessage, GroupMessage
+from .event import Event, FriendMessage, GroupMessage, TempMessage
+from .message import MessageChain, MessageSegment
 
 
 class SessionManager:
@@ -24,9 +26,38 @@ class SessionManager:
     def __init__(self, session_key: str, client: httpx.AsyncClient):
         self.session_key, self.client = session_key, client
 
-    async def post(self, path: str, *, params: Optional[Dict[str, Any]] = None):
+    async def post(self,
+                   path: str,
+                   *,
+                   params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         params = {**(params or {}), 'sessionKey': self.session_key}
         response = await self.client.post(path, json=params)
+        response.raise_for_status()
+        return response.json()
+
+    async def request(self,
+                      path: str,
+                      *,
+                      params: Optional[Dict[str,
+                                            Any]] = None) -> Dict[str, Any]:
+        response = await self.client.get(path,
+                                         params={
+                                             **(params or {}), 'sessionKey':
+                                                 self.session_key
+                                         })
+        response.raise_for_status()
+        return response.json()
+
+    async def upload(self, path: str, *, type: str,
+                     file: Tuple[str, BytesIO]) -> Dict[str, Any]:
+        file_type, file_io = file
+        response = await self.client.post(path,
+                                          data={
+                                              'sessionKey': self.session_key,
+                                              'type': type
+                                          },
+                                          files={file_type: file_io},
+                                          timeout=6)
         response.raise_for_status()
         return response.json()
 
@@ -117,9 +148,163 @@ class MiraiBot(BaseBot):
                            }))
 
     @overrides(BaseBot)
-    async def call_api(self, api: str, **data):
-        return await self.api.post('/' + api, params=data)
+    async def call_api(self, api: str, **data) -> NoReturn:
+        raise NotImplementedError
 
     @overrides(BaseBot)
-    async def send(self, event: "BaseEvent", message: str, **kwargs):
-        pass
+    async def __getattr__(self, key: str) -> NoReturn:
+        raise NotImplementedError
+
+    @overrides(BaseBot)
+    async def send(self,
+                   event: Event,
+                   message: MessageChain,
+                   at_sender: bool = False,
+                   **kwargs):
+        if isinstance(event, FriendMessage):
+            return await self.send_friend_message(target=event.sender.id,
+                                                  message_chain=message)
+        elif isinstance(event, GroupMessage):
+            return await self.send_group_message(target=event.sender.group.id,
+                                                 message_chain=message)
+        elif isinstance(event, TempMessage):
+            return await self.send_temp_message(qq=event.sender.id,
+                                                group=event.sender.group.id,
+                                                message_chain=message)
+        else:
+            raise ValueError(f'Unsupported event type {event!r}.')
+
+    async def send_friend_message(self, target: int,
+                                  message_chain: MessageChain):
+        return await self.api.post('sendFriendMessage',
+                                   params={
+                                       'target': target,
+                                       'messageChain': message_chain.export()
+                                   })
+
+    async def send_temp_message(self, qq: int, group: int,
+                                message_chain: MessageChain):
+        return await self.api.post('sendTempMessage',
+                                   params={
+                                       'qq': qq,
+                                       'group': group,
+                                       'messageChain': message_chain.export()
+                                   })
+
+    async def send_group_message(self, target: int,
+                                 message_chain: MessageChain):
+        return await self.api.post('sendGroupMessage',
+                                   params={
+                                       'target': target,
+                                       'messageChain': message_chain.export()
+                                   })
+
+    async def recall(self, target: int):
+        return await self.api.post('recall', params={'target': target})
+
+    async def send_image_message(self, target: int, qq: int, group: int,
+                                 urls: List[str]):
+        return await self.api.post('sendImageMessage',
+                                   params={
+                                       'target': target,
+                                       'qq': qq,
+                                       'group': group,
+                                       'urls': urls
+                                   })
+
+    async def upload_image(self, type: str, img: BytesIO):
+        return await self.api.upload('uploadImage',
+                                     type=type,
+                                     file=('img', img))
+
+    async def upload_voice(self, type: str, voice: BytesIO):
+        return await self.api.upload('uploadVoice',
+                                     type=type,
+                                     file=('voice', voice))
+
+    async def fetch_message(self):
+        return await self.api.request('fetchMessage')
+
+    async def fetch_latest_message(self):
+        return await self.api.request('fetchLatestMessage')
+
+    async def peek_message(self, count: int):
+        return await self.api.request('peekMessage', params={'count': count})
+
+    async def peek_latest_message(self, count: int):
+        return await self.api.request('peekLatestMessage',
+                                      params={'count': count})
+
+    async def messsage_from_id(self, id: int):
+        return await self.api.request('messageFromId', params={'id': id})
+
+    async def count_message(self):
+        return await self.api.request('countMessage')
+
+    async def friend_list(self) -> List[Dict[str, Any]]:
+        return await self.api.request('friendList')  # type: ignore
+
+    async def group_list(self) -> List[Dict[str, Any]]:
+        return await self.api.request('groupList')  # type: ignore
+
+    async def member_list(self, target: int) -> List[Dict[str, Any]]:
+        return await self.api.request('memberList',
+                                      params={'target': target})  # type: ignore
+
+    async def mute(self, target: int, member_id: int, time: int):
+        return await self.api.post('mute',
+                                   params={
+                                       'target': target,
+                                       'memberId': member_id,
+                                       'time': time
+                                   })
+
+    async def unmute(self, target: int, member_id: int):
+        return await self.api.post('unmute',
+                                   params={
+                                       'target': target,
+                                       'memberId': member_id
+                                   })
+
+    async def kick(self, target: int, member_id: int, msg: str):
+        return await self.api.post('kick',
+                                   params={
+                                       'target': target,
+                                       'memberId': member_id,
+                                       'msg': msg
+                                   })
+
+    async def quit(self, target: int):
+        return await self.api.post('quit', params={'target': target})
+
+    async def mute_all(self, target: int):
+        return await self.api.post('muteAll', params={'target': target})
+
+    async def unmute_all(self, target: int):
+        return await self.api.post('unmuteAll', params={'target': target})
+
+    async def group_config(self, target: int):
+        return await self.api.request('groupConfig', params={'target': target})
+
+    async def modify_group_config(self, target: int, config: Dict[str, Any]):
+        return await self.api.post('groupConfig',
+                                   params={
+                                       'target': target,
+                                       'config': config
+                                   })
+
+    async def member_info(self, target: int, member_id: int):
+        return await self.api.request('memberInfo',
+                                      params={
+                                          'target': target,
+                                          'memberId': member_id
+                                      })
+
+    async def modify_member_info(self, target: int, member_id: int,
+                                 info: Dict[str, Any]):
+        return await self.api.post('memberInfo',
+                                   params={
+                                       'target': target,
+                                       'memberId': member_id,
+                                       'info': info
+                                   })
