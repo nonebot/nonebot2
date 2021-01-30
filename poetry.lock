@@ -784,7 +784,7 @@ reference = "aliyun"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "55439e671ff8c89285f2cf645189c1bf3e3bd53638bbb31ed505727a041d1012"
+content-hash = "0038c5b3aa4a382184c1ef5b37a668ce37d8246c8fdf18deb71dccc8bf97be62"
 
 [metadata.files]
 alabaster = [

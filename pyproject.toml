@@ -30,6 +30,7 @@ pygtrie = "^2.4.1"
 fastapi = "^0.63.0"
 uvicorn = "^0.11.5"
 pydantic = {extras = ["dotenv", "typing_extensions"], version = "^1.7.3"}
+websockets = "^8.1"
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.30.0"
