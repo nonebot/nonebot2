@@ -177,12 +177,12 @@ class MessageSegment(BaseMessageSegment):
     def share(url: str = "",
               title: str = "",
               content: Optional[str] = None,
-              img_url: Optional[str] = None) -> "MessageSegment":
+              image: Optional[str] = None) -> "MessageSegment":
         return MessageSegment("share", {
             "url": url,
             "title": title,
             "content": content,
-            "img_url": img_url
+            "image": image
         })
 
     @staticmethod
