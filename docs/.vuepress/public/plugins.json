@@ -110,5 +110,13 @@
     "desc": "接入mqtt网络,订阅和发布消息",
     "name": "mqtt接入",
     "repo": "synodriver/nonebot_plugin_mqtt"
+  },
+  {
+    "id": "nonebot-plugin-ipypreter",
+    "link": "nonebot-plugin-ipypreter",
+    "author": "iyume",
+    "desc": "消息交互式 python 解释器",
+    "name": "消息交互式 python 解释器",
+    "repo": "iyume/nonebot-plugin-ipypreter"
   }
 ]
