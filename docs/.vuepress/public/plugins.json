@@ -118,5 +118,13 @@
     "desc": "消息交互式 python 解释器",
     "name": "消息交互式 python 解释器",
     "repo": "iyume/nonebot-plugin-ipypreter"
+  },
+  {
+    "id": "nonebot_plugin_songpicker2",
+    "link": "nonebot-plugin-songpicker2",
+    "author": "maxesisn",
+    "desc": "点播歌曲，支持候选菜单、热评显示，数据源为网易云",
+    "name": "songpicker2",
+    "repo": "maxesisn/nonebot_plugin_songpicker2"
   }
 ]
