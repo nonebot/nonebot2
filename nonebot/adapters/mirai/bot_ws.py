@@ -107,6 +107,12 @@ class MiraiWebsocketBot(MiraiBot):
     def alive(self) -> bool:
         return not self.websocket.closed
 
+    @property
+    def api(self) -> SessionManager:
+        api = SessionManager.get(self_id=int(self.self_id), check_expire=False)
+        assert api is not None, 'SessionManager has not been initialized'
+        return api
+
     @classmethod
     @overrides(MiraiBot)
     async def check_permission(cls, driver: "Driver", connection_type: str,
@@ -118,12 +124,23 @@ class MiraiWebsocketBot(MiraiBot):
     @classmethod
     @overrides(MiraiBot)
     def register(cls, driver: "Driver", config: "Config", qq: int):
-        cls.mirai_config = MiraiConfig(**config.dict())
-        cls.active = True
-        assert cls.mirai_config.auth_key is not None
-        assert cls.mirai_config.host is not None
-        assert cls.mirai_config.port is not None
+        """
+        :说明:
+
+          注册该Adapter 
+
+        :参数:
+
+          * ``driver: Driver``: 程序所使用的``Driver``
+          * ``config: Config``: 程序配置对象
+          * ``qq: int``: 要使用的Bot的QQ号 **注意: 在使用正向Websocket时必须指定该值!**
+
+        :返回:
+
+          - ``[type]``: [description]
+        """
         super().register(driver, config)
+        cls.active = True
 
         async def _bot_connection():
             session: SessionManager = await SessionManager.new(

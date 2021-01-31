@@ -32,6 +32,7 @@ class ActionFailed(BaseActionFailed):
 
 
 class SessionManager:
+    """Bot会话管理器, 提供API主动调用接口"""
     sessions: Dict[int, Tuple[str, datetime, httpx.AsyncClient]] = {}
     session_expiry: timedelta = timedelta(minutes=15)
 
@@ -40,19 +41,39 @@ class SessionManager:
 
     @staticmethod
     def _raise_code(data: Dict[str, Any]) -> Dict[str, Any]:
-        code = data.get('code', 0)
-        logger.opt(colors=True).debug('Mirai API returned data: '
-                                      f'<y>{escape_tag(str(data))}</y>')
-        if code != 0:
-            raise ActionFailed(**data)
+        logger.opt(colors=True).debug(
+            f'Mirai API returned data: <y>{escape_tag(str(data))}</y>')
+        if isinstance(data, dict) and ('code' in data):
+            if data['code'] != 0:
+                raise ActionFailed(**data)
         return data
 
     async def post(self,
                    path: str,
                    *,
                    params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        params = {**(params or {}), 'sessionKey': self.session_key}
-        response = await self.client.post(path, json=params, timeout=3)
+        """
+        :说明:
+
+          以POST方式主动提交API请求
+
+        :参数:
+
+          * ``path: str``: 对应API路径
+          * ``params: Optional[Dict[str, Any]]``: 请求参数 (无需sessionKey)
+
+        :返回:
+
+          - ``Dict[str, Any]``: API 返回值
+        """
+        response = await self.client.post(
+            path,
+            json={
+                **(params or {}),
+                'sessionKey': self.session_key,
+            },
+            timeout=3,
+        )
         response.raise_for_status()
         return self._raise_code(response.json())
 
@@ -61,12 +82,28 @@ class SessionManager:
                       *,
                       params: Optional[Dict[str,
                                             Any]] = None) -> Dict[str, Any]:
-        response = await self.client.get(path,
-                                         params={
-                                             **(params or {}), 'sessionKey':
-                                                 self.session_key
-                                         },
-                                         timeout=3)
+        """
+        :说明:
+
+          以GET方式主动提交API请求
+
+        :参数:
+
+          * ``path: str``: 对应API路径
+          * ``params: Optional[Dict[str, Any]]``: 请求参数 (无需sessionKey)
+
+        :返回:
+
+          - ``Dict[str, Any]``: API 返回值
+        """
+        response = await self.client.get(
+            path,
+            params={
+                **(params or {}),
+                'sessionKey': self.session_key,
+            },
+            timeout=3,
+        )
         response.raise_for_status()
         return self._raise_code(response.json())
 
@@ -108,11 +145,11 @@ class SessionManager:
         return cls(session_key, client)
 
     @classmethod
-    def get(cls, self_id: int):
+    def get(cls, self_id: int, check_expire: bool = True):
         if self_id not in cls.sessions:
             return None
         key, time, client = cls.sessions[self_id]
-        if datetime.now() - time > cls.session_expiry:
+        if check_expire and (datetime.now() - time > cls.session_expiry):
             return None
         return cls(key, client)
 
@@ -129,7 +166,6 @@ class MiraiBot(BaseBot):
                  *,
                  websocket: Optional[WebSocket] = None):
         super().__init__(connection_type, self_id, websocket=websocket)
-        self.api = SessionManager.get(int(self_id))
 
     @property
     @overrides(BaseBot)
@@ -139,6 +175,13 @@ class MiraiBot(BaseBot):
     @property
     def alive(self) -> bool:
         return not self.websocket.closed
+
+    @property
+    def api(self) -> SessionManager:
+        """返回该Bot对象的会话管理实例以提供API主动调用"""
+        api = SessionManager.get(self_id=int(self.self_id))
+        assert api is not None, 'SessionManager has not been initialized'
+        return api
 
     @classmethod
     @overrides(BaseBot)
@@ -179,10 +222,12 @@ class MiraiBot(BaseBot):
 
     @overrides(BaseBot)
     async def call_api(self, api: str, **data) -> NoReturn:
+        """由于Mirai的HTTP API特殊性, 该API暂时无法实现"""
         raise NotImplementedError
 
     @overrides(BaseBot)
     def __getattr__(self, key: str) -> NoReturn:
+        """由于Mirai的HTTP API特殊性, 该API暂时无法实现"""
         raise NotImplementedError
 
     @overrides(BaseBot)

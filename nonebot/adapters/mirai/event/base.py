@@ -45,9 +45,9 @@ class PrivateChatInfo(BaseModel):
 
 class Event(BaseEvent):
     """
-    mirai-api-http 协议事件，字段与 mirai-api-http 一致。各事件字段参考 `mirai-api-http 文档`_
+    mirai-api-http 协议事件，字段与 mirai-api-http 一致。各事件字段参考 `mirai-api-http 事件类型`_
 
-    .. _mirai-api-http 文档:
+    .. _mirai-api-http 事件类型:
         https://github.com/project-mirai/mirai-api-http/blob/master/docs/EventType.md
     """
     self_id: int

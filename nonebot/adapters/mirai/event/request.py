@@ -55,10 +55,6 @@ class NewFriendRequestEvent(RequestEvent):
             - ``1``: 拒绝添加好友
             - ``2``: 拒绝添加好友并添加黑名单，不再接收该用户的好友申请
           * ``message: str``: 回复的信息
-
-        :返回:
-
-          - ``[type]``: [description]
         """
         assert operate > 0
         return await bot.api.post('/resp/newFriendRequestEvent',
