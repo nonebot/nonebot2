@@ -72,6 +72,7 @@ class SessionManager:
 
     async def upload(self, path: str, *, type: str,
                      file: Tuple[str, BytesIO]) -> Dict[str, Any]:
+
         file_type, file_io = file
         response = await self.client.post(path,
                                           data={
@@ -186,6 +187,21 @@ class MiraiBot(BaseBot):
                    event: Event,
                    message: Union[MessageChain, MessageSegment, str],
                    at_sender: bool = False):
+        """
+        :说明:
+
+          根据 ``event`` 向触发事件的主题发送信息
+
+        :参数:
+
+          * ``event: Event``: Event对象
+          * ``message: Union[MessageChain, MessageSegment, str]``: 要发送的消息
+          * ``at_sender: bool``: 是否 @ 事件主题
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+        """
         if isinstance(message, MessageSegment):
             message = MessageChain(message)
         elif isinstance(message, str):
@@ -207,6 +223,20 @@ class MiraiBot(BaseBot):
 
     async def send_friend_message(self, target: int,
                                   message_chain: MessageChain):
+        """
+        :说明:
+
+          使用此方法向指定好友发送消息
+
+        :参数:
+
+          * ``target: int``: 发送消息目标好友的 QQ 号
+          * ``message_chain: MessageChain``: 消息链，是一个消息对象构成的数组
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+        """
         return await self.api.post('sendFriendMessage',
                                    params={
                                        'target': target,
@@ -215,6 +245,21 @@ class MiraiBot(BaseBot):
 
     async def send_temp_message(self, qq: int, group: int,
                                 message_chain: MessageChain):
+        """
+        :说明:
+
+          使用此方法向临时会话对象发送消息
+
+        :参数:
+
+          * ``qq: int``: 临时会话对象 QQ 号
+          * ``group: int``: 临时会话群号
+          * ``message_chain: MessageChain``: 消息链，是一个消息对象构成的数组
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+        """
         return await self.api.post('sendTempMessage',
                                    params={
                                        'qq': qq,
@@ -226,6 +271,21 @@ class MiraiBot(BaseBot):
                                  group: int,
                                  message_chain: MessageChain,
                                  quote: Optional[int] = None):
+        """
+        :说明:
+
+          使用此方法向指定群发送消息
+
+        :参数:
+
+          * ``group: int``: 发送消息目标群的群号
+          * ``message_chain: MessageChain``: 消息链，是一个消息对象构成的数组
+          * ``quote: Optional[int]``: 引用一条消息的 message_id 进行回复
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+        """
         return await self.api.post('sendGroupMessage',
                                    params={
                                        'group': group,
@@ -234,10 +294,42 @@ class MiraiBot(BaseBot):
                                    })
 
     async def recall(self, target: int):
+        """
+        :说明:
+
+          使用此方法撤回指定消息。对于bot发送的消息，有2分钟时间限制。对于撤回群聊中群员的消息，需要有相应权限
+
+        :参数:
+
+          * ``target: int``: 需要撤回的消息的message_id
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+        """
         return await self.api.post('recall', params={'target': target})
 
     async def send_image_message(self, target: int, qq: int, group: int,
                                  urls: List[str]):
+        """
+        :说明:
+
+          使用此方法向指定对象（群或好友）发送图片消息
+          除非需要通过此手段获取image_id，否则不推荐使用该接口
+
+          > 当qq和group同时存在时，表示发送临时会话图片，qq为临时会话对象QQ号，group为临时会话发起的群号
+
+        :参数:
+
+          * ``target: int``: [description]
+          * ``qq: int``: [description]
+          * ``group: int``: [description]
+          * ``urls: List[str]``: [description]
+
+        :返回:
+
+          - ``[type]``: [description]
+        """
         return await self.api.post('sendImageMessage',
                                    params={
                                        'target': target,
