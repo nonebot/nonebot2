@@ -5,7 +5,77 @@ sidebarDepth: 0
 
 # NoneBot.adapters.mirai 模块
 
+## Mirai-API-HTTP 协议适配
+
+协议详情请看: 
+
+```
+`mirai-api-http 文档`_
+```
+
+
+<!-- mirai-api-http 文档:
+https://github.com/project-mirai/mirai-api-http/tree/master/docs -->
 # NoneBot.adapters.mirai.bot 模块
+
+
+## _class_ `SessionManager`
+
+基类：`object`
+
+Bot会话管理器, 提供API主动调用接口
+
+
+### _async_ `post(path, *, params=None)`
+
+
+* **说明**
+
+    以POST方式主动提交API请求
+
+
+
+* **参数**
+
+    
+    * `path: str`: 对应API路径
+
+
+    * `params: Optional[Dict[str, Any]]`: 请求参数 (无需sessionKey)
+
+
+
+* **返回**
+
+    
+    * `Dict[str, Any]`: API 返回值
+
+
+
+### _async_ `request(path, *, params=None)`
+
+
+* **说明**
+
+    以GET方式主动提交API请求
+
+
+
+* **参数**
+
+    
+    * `path: str`: 对应API路径
+
+
+    * `params: Optional[Dict[str, Any]]`: 请求参数 (无需sessionKey)
+
+
+
+* **返回**
+
+    
+    * `Dict[str, Any]`: API 返回值
+
 
 
 ## _class_ `MiraiBot`
@@ -13,6 +83,16 @@ sidebarDepth: 0
 基类：[`nonebot.adapters.Bot`](README.md#nonebot.adapters.Bot)
 
 mirai-api-http 协议 Bot 适配。
+
+
+### _property_ `api`
+
+返回该Bot对象的会话管理实例以提供API主动调用
+
+
+### _async_ `call_api(api, **data)`
+
+由于Mirai的HTTP API特殊性, 该API暂时无法实现
 
 
 ### _async_ `send(event, message, at_sender=False)`
@@ -608,7 +688,56 @@ mirai-api-http 协议 Bot 适配。
 
 mirai-api-http 正向 Websocket 协议 Bot 适配。
 
+
+### _classmethod_ `register(driver, config, qq)`
+
+
+* **说明**
+
+    注册该Adapter
+
+
+
+* **参数**
+
+    
+    * `driver: Driver`: 程序所使用的\`\`Driver\`\`
+
+
+    * `config: Config`: 程序配置对象
+
+
+    * `qq: int`: 要使用的Bot的QQ号 **注意: 在使用正向Websocket时必须指定该值!**
+
+
+
+* **返回**
+
+    
+    * `[type]`: [description]
+
+
 # NoneBot.adapters.mirai.config 模块
+
+
+## _class_ `Config`
+
+基类：`pydantic.main.BaseModel`
+
+Mirai 配置类
+
+
+* **必填**
+
+    
+    * `mirai_auth_key`: mirai-api-http的auth_key
+
+
+    * `mirai_host`: mirai-api-http的地址
+
+
+    * `mirai_port`: mirai-api-http的端口
+
 
 # NoneBot.adapters.mirai.message 模块
 
@@ -617,9 +746,265 @@ mirai-api-http 正向 Websocket 协议 Bot 适配。
 
 基类：`str`, `enum.Enum`
 
-An enumeration.
+消息类型枚举类
+
+
+## _class_ `MessageSegment`
+
+基类：[`nonebot.adapters.MessageSegment`](README.md#nonebot.adapters.MessageSegment)
+
+CQHTTP 协议 MessageSegment 适配。具体方法参考 [mirai-api-http 消息类型](https://github.com/project-mirai/mirai-api-http/blob/master/docs/MessageType.md)
+
+
+### `as_dict()`
+
+导出可以被正常json序列化的结构体
+
+
+### _classmethod_ `quote(id, group_id, sender_id, target_id, origin)`
+
+
+* **说明**
+
+    生成回复引用消息段
+
+
+
+* **参数**
+
+    
+    * `id: int`: 被引用回复的原消息的message_id
+
+
+    * `group_id: int`: 被引用回复的原消息所接收的群号，当为好友消息时为0
+
+
+    * `sender_id: int`: 被引用回复的原消息的发送者的QQ号
+
+
+    * `target_id: int`: 被引用回复的原消息的接收者者的QQ号（或群号）
+
+
+    * `origin: MessageChain`: 被引用回复的原消息的消息链对象
+
+
+
+### _classmethod_ `at(target)`
+
+
+* **说明**
+
+    @某个人
+
+
+
+* **参数**
+
+    
+    * `target: int`: 群员QQ号
+
+
+
+### _classmethod_ `at_all()`
+
+
+* **说明**
+
+    @全体成员
+
+
+
+### _classmethod_ `face(face_id=None, name=None)`
+
+
+* **说明**
+
+    发送QQ表情
+
+
+
+* **参数**
+
+    
+    * `face_id: Optional[int]`: QQ表情编号，可选，优先高于name
+
+
+    * `name: Optional[str]`: QQ表情拼音，可选
+
+
+
+### _classmethod_ `plain(text)`
+
+
+* **说明**
+
+    纯文本消息
+
+
+
+* **参数**
+
+    
+    * `text: str`: 文字消息
+
+
+
+### _classmethod_ `image(image_id=None, url=None, path=None)`
+
+
+* **说明**
+
+    图片消息
+
+
+
+* **参数**
+
+    
+    * `image_id: Optional[str]`: 图片的image_id，群图片与好友图片格式不同。不为空时将忽略url属性
+
+
+    * `url: Optional[str]`: 图片的URL，发送时可作网络图片的链接
+
+
+    * `path: Optional[str]`: 图片的路径，发送本地图片
+
+
+
+* **返回**
+
+    
+    * `[type]`: [description]
+
+
+
+### _classmethod_ `flash_image(image_id=None, url=None, path=None)`
+
+
+* **说明**
+
+    闪照消息
+
+
+
+* **参数**
+
+    同 `image`
+
+
+
+### _classmethod_ `voice(voice_id=None, url=None, path=None)`
+
+
+* **说明**
+
+    语音消息
+
+
+
+* **参数**
+
+    
+    * `voice_id: Optional[str]`: 语音的voice_id，不为空时将忽略url属性
+
+
+    * `url: Optional[str]`: 语音的URL，发送时可作网络语音的链接
+
+
+    * `path: Optional[str]`: 语音的路径，发送本地语音
+
+
+
+### _classmethod_ `xml(xml)`
+
+
+* **说明**
+
+    XML消息
+
+
+
+* **参数**
+
+    
+    * `xml: str`: XML文本
+
+
+
+### _classmethod_ `json(json)`
+
+
+* **说明**
+
+    Json消息
+
+
+
+* **参数**
+
+    
+    * `json: str`: Json文本
+
+
+
+### _classmethod_ `app(content)`
+
+
+* **说明**
+
+    应用程序消息
+
+
+
+* **参数**
+
+    
+    * `content: str`: 内容
+
+
+
+### _classmethod_ `poke(name)`
+
+
+* **说明**
+
+    戳一戳消息
+
+
+
+* **参数**
+
+    
+    * `name: str`: 戳一戳的类型
+    - "Poke": 戳一戳
+    - "ShowLove": 比心
+    - "Like": 点赞
+    - "Heartbroken": 心碎
+    - "SixSixSix": 666
+    - "FangDaZhao": 放大招
+
+
+
+## _class_ `MessageChain`
+
+基类：[`nonebot.adapters.Message`](README.md#nonebot.adapters.Message)
+
+Mirai 协议 Messaqge 适配
+
+由于Mirai协议的Message实现较为特殊, 故使用MessageChain命名
+
+
+### `export()`
+
+导出为可以被正常json序列化的数组
 
 # NoneBot.adapters.mirai.event 模块
+
+:::warning 警告
+事件中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则取代Mirai原有的驼峰命名
+
+部分字段可能与文档在符号上不一致
+:::
 
 # NoneBot.adapters.mirai.event.base 模块
 
@@ -644,7 +1029,7 @@ An enumeration.
 
 基类：[`nonebot.adapters.Event`](README.md#nonebot.adapters.Event)
 
-mirai-api-http 协议事件，字段与 mirai-api-http 一致。各事件字段参考 [mirai-api-http 文档](https://github.com/project-mirai/mirai-api-http/blob/master/docs/EventType.md)
+mirai-api-http 协议事件，字段与 mirai-api-http 一致。各事件字段参考 [mirai-api-http 事件类型](https://github.com/project-mirai/mirai-api-http/blob/master/docs/EventType.md)
 
 
 ### _classmethod_ `new(data)`
@@ -968,13 +1353,6 @@ Bot在群里的权限被改变
 
 
     * `message: str`: 回复的信息
-
-
-
-* **返回**
-
-    
-    * `[type]`: [description]
 
 
 
