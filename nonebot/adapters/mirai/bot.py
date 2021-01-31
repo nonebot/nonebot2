@@ -22,13 +22,13 @@ from .message import MessageChain, MessageSegment
 
 class ActionFailed(BaseActionFailed):
 
-    def __init__(self, code: int, message: str = ''):
+    def __init__(self, **kwargs):
         super().__init__('mirai')
-        self.code = code
-        self.message = message
+        self.data = kwargs.copy()
 
     def __repr__(self):
-        return f"{self.__class__.__name__}(code={self.code}, message={self.message!r})"
+        return self.__class__.__name__ + '(%s)' % ', '.join(
+            map(lambda m: '%s=%r' % m, self.data.items()))
 
 
 class SessionManager:
@@ -44,7 +44,7 @@ class SessionManager:
         logger.opt(colors=True).debug('Mirai API returned data: '
                                       f'<y>{escape_tag(str(data))}</y>')
         if code != 0:
-            raise ActionFailed(code, message=data['msg'])
+            raise ActionFailed(**data)
         return data
 
     async def post(self,
@@ -310,7 +310,7 @@ class MiraiBot(BaseBot):
         return await self.api.post('recall', params={'target': target})
 
     async def send_image_message(self, target: int, qq: int, group: int,
-                                 urls: List[str]):
+                                 urls: List[str]) -> List[str]:
         """
         :说明:
 
@@ -321,14 +321,14 @@ class MiraiBot(BaseBot):
 
         :参数:
 
-          * ``target: int``: [description]
-          * ``qq: int``: [description]
-          * ``group: int``: [description]
-          * ``urls: List[str]``: [description]
+          * ``target: int``: 发送对象的QQ号或群号，可能存在歧义
+          * ``qq: int``: 发送对象的QQ号
+          * ``group: int``: 发送对象的群号
+          * ``urls: List[str]``: 是一个url字符串构成的数组
 
         :返回:
 
-          - ``[type]``: [description]
+          - ``List[str]``: 一个包含图片imageId的数组
         """
         return await self.api.post('sendImageMessage',
                                    params={
@@ -336,48 +336,174 @@ class MiraiBot(BaseBot):
                                        'qq': qq,
                                        'group': group,
                                        'urls': urls
-                                   })
+                                   })  # type: ignore
 
     async def upload_image(self, type: str, img: BytesIO):
+        """
+        :说明:
+
+           使用此方法上传图片文件至服务器并返回Image_id
+
+        :参数:
+
+          * ``type: str``: "friend" 或 "group" 或 "temp"
+          * ``img: BytesIO``: 图片的BytesIO对象
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+        """
         return await self.api.upload('uploadImage',
                                      type=type,
                                      file=('img', img))
 
     async def upload_voice(self, type: str, voice: BytesIO):
+        """
+        :说明:
+
+          使用此方法上传语音文件至服务器并返回voice_id
+
+        :参数:
+
+          * ``type: str``: 当前仅支持 "group"
+          * ``voice: BytesIO``: 语音的BytesIO对象
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+        """
         return await self.api.upload('uploadVoice',
                                      type=type,
                                      file=('voice', voice))
 
-    async def fetch_message(self):
-        return await self.api.request('fetchMessage')
+    async def fetch_message(self, count: int = 10):
+        """
+        :说明:
 
-    async def fetch_latest_message(self):
-        return await self.api.request('fetchLatestMessage')
+          使用此方法获取bot接收到的最老消息和最老各类事件
+          (会从MiraiApiHttp消息记录中删除)
 
-    async def peek_message(self, count: int):
+        :参数:
+
+          * ``count: int``: 获取消息和事件的数量
+        """
+        return await self.api.request('fetchMessage', params={'count': count})
+
+    async def fetch_latest_message(self, count: int = 10):
+        """
+        :说明:
+
+          使用此方法获取bot接收到的最新消息和最新各类事件
+          (会从MiraiApiHttp消息记录中删除)
+
+        :参数:
+
+          * ``count: int``: 获取消息和事件的数量
+        """
+        return await self.api.request('fetchLatestMessage',
+                                      params={'count': count})
+
+    async def peek_message(self, count: int = 10):
+        """
+        :说明:
+
+          使用此方法获取bot接收到的最老消息和最老各类事件
+          (不会从MiraiApiHttp消息记录中删除) 
+
+        :参数:
+
+          * ``count: int``: 获取消息和事件的数量
+        """
         return await self.api.request('peekMessage', params={'count': count})
 
-    async def peek_latest_message(self, count: int):
+    async def peek_latest_message(self, count: int = 10):
+        """
+        :说明:
+
+          使用此方法获取bot接收到的最新消息和最新各类事件
+          (不会从MiraiApiHttp消息记录中删除)
+        
+        :参数:
+
+          * ``count: int``: 获取消息和事件的数量
+        """
         return await self.api.request('peekLatestMessage',
                                       params={'count': count})
 
     async def messsage_from_id(self, id: int):
+        """
+        :说明:
+
+          通过messageId获取一条被缓存的消息
+          使用此方法获取bot接收到的消息和各类事件
+
+        :参数:
+
+          * ``id: int``: 获取消息的message_id
+        """
         return await self.api.request('messageFromId', params={'id': id})
 
     async def count_message(self):
+        """
+        :说明:
+
+          使用此方法获取bot接收并缓存的消息总数，注意不包含被删除的
+        """
         return await self.api.request('countMessage')
 
     async def friend_list(self) -> List[Dict[str, Any]]:
+        """
+        :说明:
+
+          使用此方法获取bot的好友列表
+
+        :返回:
+
+          - ``List[Dict[str, Any]]``: 返回的好友列表数据
+        """
         return await self.api.request('friendList')  # type: ignore
 
     async def group_list(self) -> List[Dict[str, Any]]:
+        """
+        :说明:
+
+          使用此方法获取bot的群列表
+
+        :返回:
+
+          - ``List[Dict[str, Any]]``: 返回的群列表数据
+        """
         return await self.api.request('groupList')  # type: ignore
 
     async def member_list(self, target: int) -> List[Dict[str, Any]]:
+        """
+        :说明:
+
+          使用此方法获取bot指定群种的成员列表
+
+        :参数:
+
+          * ``target: int``: 指定群的群号
+
+        :返回:
+
+          - ``List[Dict[str, Any]]``: 返回的群成员列表数据
+        """
         return await self.api.request('memberList',
                                       params={'target': target})  # type: ignore
 
     async def mute(self, target: int, member_id: int, time: int):
+        """
+        :说明:
+
+          使用此方法指定群禁言指定群员（需要有相关权限）
+
+        :参数:
+
+          * ``target: int``: 指定群的群号
+          * ``member_id: int``: 指定群员QQ号
+          * ``time: int``: 禁言时长，单位为秒，最多30天
+        """
         return await self.api.post('mute',
                                    params={
                                        'target': target,
@@ -386,6 +512,16 @@ class MiraiBot(BaseBot):
                                    })
 
     async def unmute(self, target: int, member_id: int):
+        """
+        :说明:
+
+          使用此方法指定群解除群成员禁言（需要有相关权限）
+
+        :参数:
+
+          * ``target: int``: 指定群的群号
+          * ``member_id: int``: 指定群员QQ号
+        """
         return await self.api.post('unmute',
                                    params={
                                        'target': target,
@@ -393,6 +529,17 @@ class MiraiBot(BaseBot):
                                    })
 
     async def kick(self, target: int, member_id: int, msg: str):
+        """
+        :说明:
+
+          使用此方法移除指定群成员（需要有相关权限）
+
+        :参数:
+
+          * ``target: int``: 指定群的群号
+          * ``member_id: int``: 指定群员QQ号
+          * ``msg: str``: 信息
+        """
         return await self.api.post('kick',
                                    params={
                                        'target': target,
@@ -401,18 +548,77 @@ class MiraiBot(BaseBot):
                                    })
 
     async def quit(self, target: int):
+        """
+        :说明:
+
+          使用此方法使Bot退出群聊 
+
+        :参数:
+
+          * ``target: int``: 退出的群号
+        """
         return await self.api.post('quit', params={'target': target})
 
     async def mute_all(self, target: int):
+        """
+        :说明:
+
+          使用此方法令指定群进行全体禁言（需要有相关权限）
+
+        :参数:
+
+          * ``target: int``: 指定群的群号
+        """
         return await self.api.post('muteAll', params={'target': target})
 
     async def unmute_all(self, target: int):
+        """
+        :说明:
+
+          使用此方法令指定群解除全体禁言（需要有相关权限）
+
+        :参数:
+
+          * ``target: int``: 指定群的群号
+        """
         return await self.api.post('unmuteAll', params={'target': target})
 
     async def group_config(self, target: int):
+        """
+        :说明:
+
+          使用此方法获取群设置
+
+        :参数:
+
+          * ``target: int``: 指定群的群号
+
+        :返回:
+
+        .. code-block:: json
+
+            {
+                "name": "群名称",
+                "announcement": "群公告",
+                "confessTalk": true,
+                "allowMemberInvite": true,
+                "autoApprove": true,
+                "anonymousChat": true
+            }
+        """
         return await self.api.request('groupConfig', params={'target': target})
 
     async def modify_group_config(self, target: int, config: Dict[str, Any]):
+        """
+        :说明:
+
+          使用此方法修改群设置（需要有相关权限）
+
+        :参数:
+
+          * ``target: int``: 指定群的群号
+          * ``config: Dict[str, Any]``: 群设置, 格式见 ``group_config`` 的返回值
+        """
         return await self.api.post('groupConfig',
                                    params={
                                        'target': target,
@@ -420,6 +626,25 @@ class MiraiBot(BaseBot):
                                    })
 
     async def member_info(self, target: int, member_id: int):
+        """
+        :说明:
+
+          使用此方法获取群员资料
+
+        :参数:
+
+          * ``target: int``: 指定群的群号
+          * ``member_id: int``: 群员QQ号
+
+        :返回:
+
+        .. code-block:: json
+
+            {
+                "name": "群名片",
+                "specialTitle": "群头衔"
+            }
+        """
         return await self.api.request('memberInfo',
                                       params={
                                           'target': target,
@@ -428,6 +653,21 @@ class MiraiBot(BaseBot):
 
     async def modify_member_info(self, target: int, member_id: int,
                                  info: Dict[str, Any]):
+        """
+        :说明:
+
+          使用此方法修改群员资料（需要有相关权限）
+
+        :参数:
+
+          * ``target: int``: 指定群的群号
+          * ``member_id: int``: 群员QQ号
+          * ``info: Dict[str, Any]``: 群员资料, 格式见 ``member_info`` 的返回值
+
+        :返回:
+
+          - ``[type]``: [description]
+        """
         return await self.api.post('memberInfo',
                                    params={
                                        'target': target,

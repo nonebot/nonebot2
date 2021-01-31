@@ -20,6 +20,15 @@ class NewFriendRequestEvent(RequestEvent):
     group_id: int = Field(0, alias='groupId')
 
     async def approve(self, bot: "Bot"):
+        """
+        :说明:
+
+          通过此人的好友申请
+
+        :参数:
+
+          * ``bot: Bot``: 当前的 ``Bot`` 对象
+        """
         return await bot.api.post('/resp/newFriendRequestEvent',
                                   params={
                                       'eventId': self.event_id,
@@ -32,6 +41,23 @@ class NewFriendRequestEvent(RequestEvent):
                      bot: "Bot",
                      operate: Literal[1, 2] = 1,
                      message: str = ''):
+        """
+        :说明:
+
+          拒绝此人的好友申请 
+
+        :参数:
+
+          * ``bot: Bot``: 当前的 ``Bot`` 对象
+          * ``operate: Literal[1, 2]``: 响应的操作类型
+            - ``1``: 拒绝添加好友
+            - ``2``: 拒绝添加好友并添加黑名单，不再接收该用户的好友申请
+          * ``message: str``: 回复的信息
+
+        :返回:
+
+          - ``[type]``: [description]
+        """
         assert operate > 0
         return await bot.api.post('/resp/newFriendRequestEvent',
                                   params={
@@ -49,6 +75,15 @@ class MemberJoinRequestEvent(RequestEvent):
     group_name: str = Field(alias='groupName')
 
     async def approve(self, bot: "Bot"):
+        """
+        :说明:
+
+          通过此人的加群申请
+
+        :参数:
+
+          * ``bot: Bot``: 当前的 ``Bot`` 对象
+        """
         return await bot.api.post('/resp/memberJoinRequestEvent',
                                   params={
                                       'eventId': self.event_id,
@@ -61,6 +96,21 @@ class MemberJoinRequestEvent(RequestEvent):
                      bot: "Bot",
                      operate: Literal[1, 2, 3, 4] = 1,
                      message: str = ''):
+        """
+        :说明:
+
+          拒绝(忽略)此人的加群申请
+
+        :参数:
+
+          * ``bot: Bot``: 当前的 ``Bot`` 对象
+          * ``operate: Literal[1, 2, 3, 4]``: 响应的操作类型
+            - ``1``: 拒绝入群
+            - ``2``: 忽略请求
+            - ``3``: 拒绝入群并添加黑名单，不再接收该用户的入群申请
+            - ``4``: 忽略入群并添加黑名单，不再接收该用户的入群申请
+          * ``message: str``: 回复的信息
+        """
         assert operate > 0
         return await bot.api.post('/resp/memberJoinRequestEvent',
                                   params={
@@ -78,6 +128,15 @@ class BotInvitedJoinGroupRequestEvent(RequestEvent):
     group_name: str = Field(alias='groupName')
 
     async def approve(self, bot: "Bot"):
+        """
+        :说明:
+
+          通过这份被邀请入群申请 
+
+        :参数:
+
+          * ``bot: Bot``: 当前的 ``Bot`` 对象
+        """
         return await bot.api.post('/resp/botInvitedJoinGroupRequestEvent',
                                   params={
                                       'eventId': self.event_id,
@@ -87,6 +146,16 @@ class BotInvitedJoinGroupRequestEvent(RequestEvent):
                                   })
 
     async def reject(self, bot: "Bot", message: str = ""):
+        """
+        :说明:
+
+          拒绝这份被邀请入群申请 
+
+        :参数:
+
+          * ``bot: Bot``: 当前的 ``Bot`` 对象
+          * ``message: str``: 邀请消息
+        """
         return await bot.api.post('/resp/botInvitedJoinGroupRequestEvent',
                                   params={
                                       'eventId': self.event_id,
