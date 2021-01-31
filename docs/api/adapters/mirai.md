@@ -7,7 +7,606 @@ sidebarDepth: 0
 
 # NoneBot.adapters.mirai.bot 模块
 
+
+## _class_ `MiraiBot`
+
+基类：[`nonebot.adapters.Bot`](README.md#nonebot.adapters.Bot)
+
+mirai-api-http 协议 Bot 适配。
+
+
+### _async_ `send(event, message, at_sender=False)`
+
+
+* **说明**
+
+    根据 `event` 向触发事件的主题发送信息
+
+
+
+* **参数**
+
+    
+    * `event: Event`: Event对象
+
+
+    * `message: Union[MessageChain, MessageSegment, str]`: 要发送的消息
+
+
+    * `at_sender: bool`: 是否 @ 事件主题
+
+
+
+* **返回**
+
+    
+    * `Any`: API 调用返回数据
+
+
+
+### _async_ `send_friend_message(target, message_chain)`
+
+
+* **说明**
+
+    使用此方法向指定好友发送消息
+
+
+
+* **参数**
+
+    
+    * `target: int`: 发送消息目标好友的 QQ 号
+
+
+    * `message_chain: MessageChain`: 消息链，是一个消息对象构成的数组
+
+
+
+* **返回**
+
+    
+    * `Any`: API 调用返回数据
+
+
+
+### _async_ `send_temp_message(qq, group, message_chain)`
+
+
+* **说明**
+
+    使用此方法向临时会话对象发送消息
+
+
+
+* **参数**
+
+    
+    * `qq: int`: 临时会话对象 QQ 号
+
+
+    * `group: int`: 临时会话群号
+
+
+    * `message_chain: MessageChain`: 消息链，是一个消息对象构成的数组
+
+
+
+* **返回**
+
+    
+    * `Any`: API 调用返回数据
+
+
+
+### _async_ `send_group_message(group, message_chain, quote=None)`
+
+
+* **说明**
+
+    使用此方法向指定群发送消息
+
+
+
+* **参数**
+
+    
+    * `group: int`: 发送消息目标群的群号
+
+
+    * `message_chain: MessageChain`: 消息链，是一个消息对象构成的数组
+
+
+    * `quote: Optional[int]`: 引用一条消息的 message_id 进行回复
+
+
+
+* **返回**
+
+    
+    * `Any`: API 调用返回数据
+
+
+
+### _async_ `recall(target)`
+
+
+* **说明**
+
+    使用此方法撤回指定消息。对于bot发送的消息，有2分钟时间限制。对于撤回群聊中群员的消息，需要有相应权限
+
+
+
+* **参数**
+
+    
+    * `target: int`: 需要撤回的消息的message_id
+
+
+
+* **返回**
+
+    
+    * `Any`: API 调用返回数据
+
+
+
+### _async_ `send_image_message(target, qq, group, urls)`
+
+
+* **说明**
+
+    使用此方法向指定对象（群或好友）发送图片消息
+    除非需要通过此手段获取image_id，否则不推荐使用该接口
+
+    > 当qq和group同时存在时，表示发送临时会话图片，qq为临时会话对象QQ号，group为临时会话发起的群号
+
+
+
+* **参数**
+
+    
+    * `target: int`: 发送对象的QQ号或群号，可能存在歧义
+
+
+    * `qq: int`: 发送对象的QQ号
+
+
+    * `group: int`: 发送对象的群号
+
+
+    * `urls: List[str]`: 是一个url字符串构成的数组
+
+
+
+* **返回**
+
+    
+    * `List[str]`: 一个包含图片imageId的数组
+
+
+
+### _async_ `upload_image(type, img)`
+
+
+* **说明**
+
+    使用此方法上传图片文件至服务器并返回Image_id
+
+
+
+* **参数**
+
+    
+    * `type: str`: "friend" 或 "group" 或 "temp"
+
+
+    * `img: BytesIO`: 图片的BytesIO对象
+
+
+
+* **返回**
+
+    
+    * `Any`: API 调用返回数据
+
+
+
+### _async_ `upload_voice(type, voice)`
+
+
+* **说明**
+
+    使用此方法上传语音文件至服务器并返回voice_id
+
+
+
+* **参数**
+
+    
+    * `type: str`: 当前仅支持 "group"
+
+
+    * `voice: BytesIO`: 语音的BytesIO对象
+
+
+
+* **返回**
+
+    
+    * `Any`: API 调用返回数据
+
+
+
+### _async_ `fetch_message(count=10)`
+
+
+* **说明**
+
+    使用此方法获取bot接收到的最老消息和最老各类事件
+    (会从MiraiApiHttp消息记录中删除)
+
+
+
+* **参数**
+
+    
+    * `count: int`: 获取消息和事件的数量
+
+
+
+### _async_ `fetch_latest_message(count=10)`
+
+
+* **说明**
+
+    使用此方法获取bot接收到的最新消息和最新各类事件
+    (会从MiraiApiHttp消息记录中删除)
+
+
+
+* **参数**
+
+    
+    * `count: int`: 获取消息和事件的数量
+
+
+
+### _async_ `peek_message(count=10)`
+
+
+* **说明**
+
+    使用此方法获取bot接收到的最老消息和最老各类事件
+    (不会从MiraiApiHttp消息记录中删除)
+
+
+
+* **参数**
+
+    
+    * `count: int`: 获取消息和事件的数量
+
+
+
+### _async_ `peek_latest_message(count=10)`
+
+
+* **说明**
+
+    使用此方法获取bot接收到的最新消息和最新各类事件
+    (不会从MiraiApiHttp消息记录中删除)
+
+
+
+* **参数**
+
+    
+    * `count: int`: 获取消息和事件的数量
+
+
+
+### _async_ `messsage_from_id(id)`
+
+
+* **说明**
+
+    通过messageId获取一条被缓存的消息
+    使用此方法获取bot接收到的消息和各类事件
+
+
+
+* **参数**
+
+    
+    * `id: int`: 获取消息的message_id
+
+
+
+### _async_ `count_message()`
+
+
+* **说明**
+
+    使用此方法获取bot接收并缓存的消息总数，注意不包含被删除的
+
+
+
+### _async_ `friend_list()`
+
+
+* **说明**
+
+    使用此方法获取bot的好友列表
+
+
+
+* **返回**
+
+    
+    * `List[Dict[str, Any]]`: 返回的好友列表数据
+
+
+
+### _async_ `group_list()`
+
+
+* **说明**
+
+    使用此方法获取bot的群列表
+
+
+
+* **返回**
+
+    
+    * `List[Dict[str, Any]]`: 返回的群列表数据
+
+
+
+### _async_ `member_list(target)`
+
+
+* **说明**
+
+    使用此方法获取bot指定群种的成员列表
+
+
+
+* **参数**
+
+    
+    * `target: int`: 指定群的群号
+
+
+
+* **返回**
+
+    
+    * `List[Dict[str, Any]]`: 返回的群成员列表数据
+
+
+
+### _async_ `mute(target, member_id, time)`
+
+
+* **说明**
+
+    使用此方法指定群禁言指定群员（需要有相关权限）
+
+
+
+* **参数**
+
+    
+    * `target: int`: 指定群的群号
+
+
+    * `member_id: int`: 指定群员QQ号
+
+
+    * `time: int`: 禁言时长，单位为秒，最多30天
+
+
+
+### _async_ `unmute(target, member_id)`
+
+
+* **说明**
+
+    使用此方法指定群解除群成员禁言（需要有相关权限）
+
+
+
+* **参数**
+
+    
+    * `target: int`: 指定群的群号
+
+
+    * `member_id: int`: 指定群员QQ号
+
+
+
+### _async_ `kick(target, member_id, msg)`
+
+
+* **说明**
+
+    使用此方法移除指定群成员（需要有相关权限）
+
+
+
+* **参数**
+
+    
+    * `target: int`: 指定群的群号
+
+
+    * `member_id: int`: 指定群员QQ号
+
+
+    * `msg: str`: 信息
+
+
+
+### _async_ `quit(target)`
+
+
+* **说明**
+
+    使用此方法使Bot退出群聊
+
+
+
+* **参数**
+
+    
+    * `target: int`: 退出的群号
+
+
+
+### _async_ `mute_all(target)`
+
+
+* **说明**
+
+    使用此方法令指定群进行全体禁言（需要有相关权限）
+
+
+
+* **参数**
+
+    
+    * `target: int`: 指定群的群号
+
+
+
+### _async_ `unmute_all(target)`
+
+
+* **说明**
+
+    使用此方法令指定群解除全体禁言（需要有相关权限）
+
+
+
+* **参数**
+
+    
+    * `target: int`: 指定群的群号
+
+
+
+### _async_ `group_config(target)`
+
+
+* **说明**
+
+    使用此方法获取群设置
+
+
+
+* **参数**
+
+    
+    * `target: int`: 指定群的群号
+
+
+
+* **返回**
+
+
+```json
+{
+    "name": "群名称",
+    "announcement": "群公告",
+    "confessTalk": true,
+    "allowMemberInvite": true,
+    "autoApprove": true,
+    "anonymousChat": true
+}
+```
+
+
+### _async_ `modify_group_config(target, config)`
+
+
+* **说明**
+
+    使用此方法修改群设置（需要有相关权限）
+
+
+
+* **参数**
+
+    
+    * `target: int`: 指定群的群号
+
+
+    * `config: Dict[str, Any]`: 群设置, 格式见 `group_config` 的返回值
+
+
+
+### _async_ `member_info(target, member_id)`
+
+
+* **说明**
+
+    使用此方法获取群员资料
+
+
+
+* **参数**
+
+    
+    * `target: int`: 指定群的群号
+
+
+    * `member_id: int`: 群员QQ号
+
+
+
+* **返回**
+
+
+```json
+{
+    "name": "群名片",
+    "specialTitle": "群头衔"
+}
+```
+
+
+### _async_ `modify_member_info(target, member_id, info)`
+
+
+* **说明**
+
+    使用此方法修改群员资料（需要有相关权限）
+
+
+
+* **参数**
+
+    
+    * `target: int`: 指定群的群号
+
+
+    * `member_id: int`: 群员QQ号
+
+
+    * `info: Dict[str, Any]`: 群员资料, 格式见 `member_info` 的返回值
+
+
 # NoneBot.adapters.mirai.bot_ws 模块
+
+
+## _class_ `MiraiWebsocketBot`
+
+基类：`nonebot.adapters.mirai.bot.MiraiBot`
+
+mirai-api-http 正向 Websocket 协议 Bot 适配。
 
 # NoneBot.adapters.mirai.config 模块
 
@@ -25,14 +624,445 @@ An enumeration.
 # NoneBot.adapters.mirai.event.base 模块
 
 
-## _class_ `SenderPermission`
+## _class_ `UserPermission`
 
 基类：`str`, `enum.Enum`
 
-An enumeration.
+用户权限枚举类
+
+> 
+> * `OWNER`: 群主
+
+
+> * `ADMINISTRATOR`: 群管理
+
+
+> * `MEMBER`: 普通群成员
+
+
+## _class_ `Event`
+
+基类：[`nonebot.adapters.Event`](README.md#nonebot.adapters.Event)
+
+mirai-api-http 协议事件，字段与 mirai-api-http 一致。各事件字段参考 [mirai-api-http 文档](https://github.com/project-mirai/mirai-api-http/blob/master/docs/EventType.md)
+
+
+### _classmethod_ `new(data)`
+
+此事件类的工厂函数, 能够通过事件数据选择合适的子类进行序列化
+
+
+### `normalize_dict(**kwargs)`
+
+返回可以被json正常反序列化的结构体
+
+# NoneBot.adapters.mirai.event.meta 模块
+
+
+## _class_ `MetaEvent`
+
+基类：`nonebot.adapters.mirai.event.base.Event`
+
+元事件基类
+
+
+## _class_ `BotOnlineEvent`
+
+基类：`nonebot.adapters.mirai.event.meta.MetaEvent`
+
+Bot登录成功
+
+
+## _class_ `BotOfflineEventActive`
+
+基类：`nonebot.adapters.mirai.event.meta.MetaEvent`
+
+Bot主动离线
+
+
+## _class_ `BotOfflineEventForce`
+
+基类：`nonebot.adapters.mirai.event.meta.MetaEvent`
+
+Bot被挤下线
+
+
+## _class_ `BotOfflineEventDropped`
+
+基类：`nonebot.adapters.mirai.event.meta.MetaEvent`
+
+Bot被服务器断开或因网络问题而掉线
+
+
+## _class_ `BotReloginEvent`
+
+基类：`nonebot.adapters.mirai.event.meta.MetaEvent`
+
+Bot主动重新登录
 
 # NoneBot.adapters.mirai.event.message 模块
 
+
+## _class_ `MessageEvent`
+
+基类：`nonebot.adapters.mirai.event.base.Event`
+
+消息事件基类
+
+
+## _class_ `GroupMessage`
+
+基类：`nonebot.adapters.mirai.event.message.MessageEvent`
+
+群消息事件
+
+
+## _class_ `FriendMessage`
+
+基类：`nonebot.adapters.mirai.event.message.MessageEvent`
+
+好友消息事件
+
+
+## _class_ `TempMessage`
+
+基类：`nonebot.adapters.mirai.event.message.MessageEvent`
+
+临时会话消息事件
+
 # NoneBot.adapters.mirai.event.notice 模块
 
+
+## _class_ `NoticeEvent`
+
+基类：`nonebot.adapters.mirai.event.base.Event`
+
+通知事件基类
+
+
+## _class_ `MuteEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.NoticeEvent`
+
+禁言类事件基类
+
+
+## _class_ `BotMuteEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.MuteEvent`
+
+Bot被禁言
+
+
+## _class_ `BotUnmuteEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.MuteEvent`
+
+Bot被取消禁言
+
+
+## _class_ `MemberMuteEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.MuteEvent`
+
+群成员被禁言事件（该成员不是Bot）
+
+
+## _class_ `MemberUnmuteEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.MuteEvent`
+
+群成员被取消禁言事件（该成员不是Bot）
+
+
+## _class_ `BotJoinGroupEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.NoticeEvent`
+
+Bot加入了一个新群
+
+
+## _class_ `BotLeaveEventActive`
+
+基类：`nonebot.adapters.mirai.event.notice.BotJoinGroupEvent`
+
+Bot主动退出一个群
+
+
+## _class_ `BotLeaveEventKick`
+
+基类：`nonebot.adapters.mirai.event.notice.BotJoinGroupEvent`
+
+Bot被踢出一个群
+
+
+## _class_ `MemberJoinEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.NoticeEvent`
+
+新人入群的事件
+
+
+## _class_ `MemberLeaveEventKick`
+
+基类：`nonebot.adapters.mirai.event.notice.MemberJoinEvent`
+
+成员被踢出群（该成员不是Bot）
+
+
+## _class_ `MemberLeaveEventQuit`
+
+基类：`nonebot.adapters.mirai.event.notice.MemberJoinEvent`
+
+成员主动离群（该成员不是Bot）
+
+
+## _class_ `FriendRecallEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.NoticeEvent`
+
+好友消息撤回
+
+
+## _class_ `GroupRecallEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.FriendRecallEvent`
+
+群消息撤回
+
+
+## _class_ `GroupStateChangeEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.NoticeEvent`
+
+群变化事件基类
+
+
+## _class_ `GroupNameChangeEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.GroupStateChangeEvent`
+
+某个群名改变
+
+
+## _class_ `GroupEntranceAnnouncementChangeEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.GroupStateChangeEvent`
+
+某群入群公告改变
+
+
+## _class_ `GroupMuteAllEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.GroupStateChangeEvent`
+
+全员禁言
+
+
+## _class_ `GroupAllowAnonymousChatEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.GroupStateChangeEvent`
+
+匿名聊天
+
+
+## _class_ `GroupAllowConfessTalkEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.GroupStateChangeEvent`
+
+坦白说
+
+
+## _class_ `GroupAllowMemberInviteEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.GroupStateChangeEvent`
+
+允许群员邀请好友加群
+
+
+## _class_ `MemberStateChangeEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.NoticeEvent`
+
+群成员变化事件基类
+
+
+## _class_ `MemberCardChangeEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.MemberStateChangeEvent`
+
+群名片改动
+
+
+## _class_ `MemberSpecialTitleChangeEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.MemberStateChangeEvent`
+
+群头衔改动（只有群主有操作限权）
+
+
+## _class_ `BotGroupPermissionChangeEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.MemberStateChangeEvent`
+
+Bot在群里的权限被改变
+
+
+## _class_ `MemberPermissionChangeEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.MemberStateChangeEvent`
+
+成员权限改变的事件（该成员不是Bot）
+
 # NoneBot.adapters.mirai.event.request 模块
+
+
+## _class_ `RequestEvent`
+
+基类：`nonebot.adapters.mirai.event.base.Event`
+
+请求事件基类
+
+
+## _class_ `NewFriendRequestEvent`
+
+基类：`nonebot.adapters.mirai.event.request.RequestEvent`
+
+添加好友申请
+
+
+### _async_ `approve(bot)`
+
+
+* **说明**
+
+    通过此人的好友申请
+
+
+
+* **参数**
+
+    
+    * `bot: Bot`: 当前的 `Bot` 对象
+
+
+
+### _async_ `reject(bot, operate=1, message='')`
+
+
+* **说明**
+
+    拒绝此人的好友申请
+
+
+
+* **参数**
+
+    
+    * `bot: Bot`: 当前的 `Bot` 对象
+
+
+    * `operate: Literal[1, 2]`: 响应的操作类型
+    - `1`: 拒绝添加好友
+    - `2`: 拒绝添加好友并添加黑名单，不再接收该用户的好友申请
+
+
+    * `message: str`: 回复的信息
+
+
+
+* **返回**
+
+    
+    * `[type]`: [description]
+
+
+
+## _class_ `MemberJoinRequestEvent`
+
+基类：`nonebot.adapters.mirai.event.request.RequestEvent`
+
+用户入群申请（Bot需要有管理员权限）
+
+
+### _async_ `approve(bot)`
+
+
+* **说明**
+
+    通过此人的加群申请
+
+
+
+* **参数**
+
+    
+    * `bot: Bot`: 当前的 `Bot` 对象
+
+
+
+### _async_ `reject(bot, operate=1, message='')`
+
+
+* **说明**
+
+    拒绝(忽略)此人的加群申请
+
+
+
+* **参数**
+
+    
+    * `bot: Bot`: 当前的 `Bot` 对象
+
+
+    * `operate: Literal[1, 2, 3, 4]`: 响应的操作类型
+    - `1`: 拒绝入群
+    - `2`: 忽略请求
+    - `3`: 拒绝入群并添加黑名单，不再接收该用户的入群申请
+    - `4`: 忽略入群并添加黑名单，不再接收该用户的入群申请
+
+
+    * `message: str`: 回复的信息
+
+
+
+## _class_ `BotInvitedJoinGroupRequestEvent`
+
+基类：`nonebot.adapters.mirai.event.request.RequestEvent`
+
+Bot被邀请入群申请
+
+
+### _async_ `approve(bot)`
+
+
+* **说明**
+
+    通过这份被邀请入群申请
+
+
+
+* **参数**
+
+    
+    * `bot: Bot`: 当前的 `Bot` 对象
+
+
+
+### _async_ `reject(bot, message='')`
+
+
+* **说明**
+
+    拒绝这份被邀请入群申请
+
+
+
+* **参数**
+
+    
+    * `bot: Bot`: 当前的 `Bot` 对象
+
+
+    * `message: str`: 邀请消息
