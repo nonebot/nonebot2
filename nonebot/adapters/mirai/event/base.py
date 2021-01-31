@@ -11,37 +11,53 @@ from nonebot.log import logger
 from nonebot.typing import overrides
 
 
-class SenderPermission(str, Enum):
+class UserPermission(str, Enum):
+    """
+    用户权限枚举类
+    
+      - ``OWNER``: 群主
+      - ``ADMINISTRATOR``: 群管理
+      - ``MEMBER``: 普通群成员
+    """
     OWNER = 'OWNER'
     ADMINISTRATOR = 'ADMINISTRATOR'
     MEMBER = 'MEMBER'
 
 
-class SenderGroup(BaseModel):
+class GroupInfo(BaseModel):
     id: int
     name: str
-    permission: SenderPermission
+    permission: UserPermission
 
 
-class SenderInfo(BaseModel):
+class GroupChatInfo(BaseModel):
     id: int
     name: str = Field(alias='memberName')
-    permission: SenderPermission
-    group: SenderGroup
+    permission: UserPermission
+    group: GroupInfo
 
 
-class PrivateSenderInfo(BaseModel):
+class PrivateChatInfo(BaseModel):
     id: int
     nickname: str
     remark: str
 
 
 class Event(BaseEvent):
+    """
+    mirai-api-http 协议事件，字段与 mirai-api-http 一致。各事件字段参考 `mirai-api-http 文档`_
+
+    .. _mirai-api-http 文档:
+        https://github.com/project-mirai/mirai-api-http/blob/master/docs/EventType.md
+    """
     self_id: int
     type: str
 
     @classmethod
     def new(cls, data: Dict[str, Any]) -> "Event":
+        """
+        此事件类的工厂函数, 能够通过事件数据选择合适的子类进行序列化
+        """
         type = data['type']
 
         def all_subclasses(cls: Type[Event]):
@@ -70,7 +86,7 @@ class Event(BaseEvent):
 
     @overrides(BaseEvent)
     def get_type(self) -> Literal["message", "notice", "request", "meta_event"]:
-        from . import message, notice, request
+        from . import message, notice, request, meta
         if isinstance(self, message.MessageEvent):
             return 'message'
         elif isinstance(self, notice.NoticeEvent):
@@ -109,4 +125,7 @@ class Event(BaseEvent):
         return False
 
     def normalize_dict(self, **kwargs) -> Dict[str, Any]:
+        """
+        返回可以被json正常反序列化的结构体
+        """
         return json.loads(self.json(**kwargs))

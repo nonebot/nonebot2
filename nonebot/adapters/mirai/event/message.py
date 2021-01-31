@@ -5,10 +5,11 @@ from pydantic import Field
 from nonebot.typing import overrides
 
 from ..message import MessageChain
-from .base import Event, PrivateSenderInfo, SenderInfo
+from .base import Event, GroupChatInfo, PrivateChatInfo
 
 
 class MessageEvent(Event):
+    """消息事件基类"""
     message_chain: MessageChain = Field(alias='messageChain')
     sender: Any
 
@@ -30,7 +31,8 @@ class MessageEvent(Event):
 
 
 class GroupMessage(MessageEvent):
-    sender: SenderInfo
+    """群消息事件"""
+    sender: GroupChatInfo
 
     @overrides(MessageEvent)
     def get_session_id(self) -> str:
@@ -38,7 +40,8 @@ class GroupMessage(MessageEvent):
 
 
 class FriendMessage(MessageEvent):
-    sender: PrivateSenderInfo
+    """好友消息事件"""
+    sender: PrivateChatInfo
 
     @overrides(MessageEvent)
     def get_user_id(self) -> str:
@@ -50,7 +53,8 @@ class FriendMessage(MessageEvent):
 
 
 class TempMessage(MessageEvent):
-    sender: SenderInfo
+    """临时会话消息事件"""
+    sender: GroupChatInfo
 
     @overrides
     def get_session_id(self) -> str:

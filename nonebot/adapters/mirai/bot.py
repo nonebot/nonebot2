@@ -118,6 +118,9 @@ class SessionManager:
 
 
 class MiraiBot(BaseBot):
+    """
+    mirai-api-http 协议 Bot 适配。
+    """
 
     @overrides(BaseBot)
     def __init__(self,
@@ -663,10 +666,6 @@ class MiraiBot(BaseBot):
           * ``target: int``: 指定群的群号
           * ``member_id: int``: 群员QQ号
           * ``info: Dict[str, Any]``: 群员资料, 格式见 ``member_info`` 的返回值
-
-        :返回:
-
-          - ``[type]``: [description]
         """
         return await self.api.post('memberInfo',
                                    params={

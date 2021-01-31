@@ -89,6 +89,9 @@ class WebSocket(BaseWebSocket):
 
 
 class MiraiWebsocketBot(MiraiBot):
+    """
+    mirai-api-http 正向 Websocket 协议 Bot 适配。
+    """
 
     @overrides(MiraiBot)
     def __init__(self, connection_type: str, self_id: str, *,

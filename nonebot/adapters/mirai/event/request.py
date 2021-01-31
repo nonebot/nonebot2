@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
-from typing_extensions import Literal
 
 from pydantic import Field
+from typing_extensions import Literal
 
 from .base import Event
 
@@ -10,12 +10,14 @@ if TYPE_CHECKING:
 
 
 class RequestEvent(Event):
+    """请求事件基类"""
     event_id: int = Field(alias='eventId')
     message: str
     nick: str
 
 
 class NewFriendRequestEvent(RequestEvent):
+    """添加好友申请"""
     from_id: int = Field(alias='fromId')
     group_id: int = Field(0, alias='groupId')
 
@@ -70,6 +72,7 @@ class NewFriendRequestEvent(RequestEvent):
 
 
 class MemberJoinRequestEvent(RequestEvent):
+    """用户入群申请（Bot需要有管理员权限）"""
     from_id: int = Field(alias='fromId')
     group_id: int = Field(alias='groupId')
     group_name: str = Field(alias='groupName')
@@ -123,6 +126,7 @@ class MemberJoinRequestEvent(RequestEvent):
 
 
 class BotInvitedJoinGroupRequestEvent(RequestEvent):
+    """Bot被邀请入群申请"""
     from_id: int = Field(alias='fromId')
     group_id: int = Field(alias='groupId')
     group_name: str = Field(alias='groupName')
