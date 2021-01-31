@@ -135,10 +135,11 @@ class MessageSegment(BaseMessageSegment):
         return cls(type=MessageType.POKE, name=name)
 
 
-class MessageChain(BaseMessage):
+class MessageChain(BaseMessage):  #type:List[MessageSegment]
 
     @overrides(BaseMessage)
-    def __init__(self, message: Union[List[Dict[str, Any]], MessageSegment],
+    def __init__(self, message: Union[List[Dict[str, Any]],
+                                      Iterable[MessageSegment], MessageSegment],
                  **kwargs):
         super().__init__(**kwargs)
         if isinstance(message, MessageSegment):
@@ -152,15 +153,16 @@ class MessageChain(BaseMessage):
 
     @overrides(BaseMessage)
     def _construct(
-        self, message: Iterable[Union[Dict[str, Any], MessageSegment]]
+        self, message: Union[List[Dict[str, Any]], Iterable[MessageSegment]]
     ) -> List[MessageSegment]:
         if isinstance(message, str):
             raise ValueError(
                 "String operation is not supported in mirai adapter")
         return [
             *map(
-                lambda segment: segment if isinstance(segment, MessageSegment)
-                else MessageSegment(**segment), message)
+                lambda x: x
+                if isinstance(x, MessageSegment) else MessageSegment(**x),
+                message)
         ]
 
     def export(self) -> List[Dict[str, Any]]:

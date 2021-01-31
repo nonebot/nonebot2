@@ -86,7 +86,7 @@ class Event(BaseEvent):
 
     @overrides(BaseEvent)
     def get_event_description(self) -> str:
-        return str(self.dict())
+        return str(self.normalize_dict())
 
     @overrides(BaseEvent)
     def get_message(self) -> BaseMessage:
