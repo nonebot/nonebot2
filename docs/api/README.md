@@ -50,3 +50,6 @@
 
 
     * [nonebot.adapters.ding](adapters/ding.html)
+
+
+    * [nonebot.adapters.mirai](adapters/mirai.html)
