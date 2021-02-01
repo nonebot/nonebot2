@@ -18,6 +18,14 @@ Mirai-API-HTTP 的适配现在仍然处于早期阶段, 可能没有进行过充
 
 :::
 
+::: danger
+
+Mirai-API-HTTP 的适配器以 [AGPLv3 许可](https://opensource.org/licenses/AGPL-3.0) 单独开源
+
+这意味着在使用该适配器时需要 **以该许可开源您的完整程序代码**
+
+:::
+
 **为了便捷起见, 以下内容均以缩写 `MAH` 代替 `mirai-api-http`**
 
 ## 配置 MAH 客户端

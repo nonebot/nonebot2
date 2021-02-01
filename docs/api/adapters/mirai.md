@@ -15,6 +15,12 @@ sidebarDepth: 0
 如果你在使用过程中遇到了任何问题, 请前往 [Issue页面](https://github.com/nonebot/nonebot2/issues) 为我们提供反馈
 :::
 
+::: danger
+Mirai-API-HTTP 的适配器以 [AGPLv3许可](https://opensource.org/licenses/AGPL-3.0) 单独开源
+
+这意味着在使用该适配器时需要\*\*开源您的完整程序代码\*\*
+:::
+
 # NoneBot.adapters.mirai.bot 模块
 
 
