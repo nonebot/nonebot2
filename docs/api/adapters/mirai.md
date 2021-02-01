@@ -18,7 +18,7 @@ sidebarDepth: 0
 ::: danger
 Mirai-API-HTTP 的适配器以 [AGPLv3许可](https://opensource.org/licenses/AGPL-3.0) 单独开源
 
-这意味着在使用该适配器时需要\*\*开源您的完整程序代码\*\*
+这意味着在使用该适配器时需要 **以该许可开源您的完整程序代码**
 :::
 
 # NoneBot.adapters.mirai.bot 模块
