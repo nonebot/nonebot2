@@ -63,6 +63,7 @@ python bot.py
 
 - [配置 CQHTTP](./cqhttp-guide.md)
 - [配置钉钉](./ding-guide.md)
+- [配置 mirai-api-http](./mirai-guide.md)
 
 NoneBot 接受的上报地址与 `Driver` 有关，默认使用的 `FastAPI Driver` 所接受的上报地址有：
 
