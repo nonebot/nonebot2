@@ -7,15 +7,21 @@ sidebarDepth: 0
 
 ## Mirai-API-HTTP 协议适配
 
-协议详情请看: 
+协议详情请看: [mirai-api-http 文档](https://github.com/project-mirai/mirai-api-http/tree/master/docs)
+
+::: tip
+该Adapter目前仍然处在早期实验性阶段, 并未经过充分测试
+
+如果你在使用过程中遇到了任何问题, 请前往 
 
 ```
-`mirai-api-http 文档`_
+`Issue页面`_
 ```
 
+ 为我们提供反馈
+:::
 
-<!-- mirai-api-http 文档:
-https://github.com/project-mirai/mirai-api-http/tree/master/docs -->
+<!--  https://github.com/nonebot/nonebot2/issues -->
 # NoneBot.adapters.mirai.bot 模块
 
 
@@ -71,10 +77,22 @@ Bot会话管理器, 提供API主动调用接口
 
 
 
-* **返回**
+### _async_ `upload(path, *, params)`
+
+
+* **说明**
+
+    以表单(`multipart/form-data`)形式主动提交API请求
+
+
+
+* **参数**
 
     
-    * `Dict[str, Any]`: API 返回值
+    * `path: str`: 对应API路径
+
+
+    * `params: Dict[str, Any]`: 请求参数 (无需sessionKey)
 
 
 
@@ -83,6 +101,12 @@ Bot会话管理器, 提供API主动调用接口
 基类：[`nonebot.adapters.Bot`](README.md#nonebot.adapters.Bot)
 
 mirai-api-http 协议 Bot 适配。
+
+::: warning
+API中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则取代Mirai原有的驼峰命名
+
+部分字段可能与文档在符号上不一致
+:::
 
 
 ### _property_ `api`
@@ -93,9 +117,12 @@ mirai-api-http 协议 Bot 适配。
 ### _async_ `call_api(api, **data)`
 
 由于Mirai的HTTP API特殊性, 该API暂时无法实现
+::: tip
+你可以使用 `MiraiBot.api` 中提供的调用方法来代替
+:::
 
 
-### _async_ `send(event, message, at_sender=False)`
+### `send(event, message, at_sender=False)`
 
 
 * **说明**
@@ -117,14 +144,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-* **返回**
-
-    
-    * `Any`: API 调用返回数据
-
-
-
-### _async_ `send_friend_message(target, message_chain)`
+### `send_friend_message(target, message_chain)`
 
 
 * **说明**
@@ -143,14 +163,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-* **返回**
-
-    
-    * `Any`: API 调用返回数据
-
-
-
-### _async_ `send_temp_message(qq, group, message_chain)`
+### `send_temp_message(qq, group, message_chain)`
 
 
 * **说明**
@@ -172,14 +185,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-* **返回**
-
-    
-    * `Any`: API 调用返回数据
-
-
-
-### _async_ `send_group_message(group, message_chain, quote=None)`
+### `send_group_message(group, message_chain, quote=None)`
 
 
 * **说明**
@@ -201,14 +207,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-* **返回**
-
-    
-    * `Any`: API 调用返回数据
-
-
-
-### _async_ `recall(target)`
+### `recall(target)`
 
 
 * **说明**
@@ -224,14 +223,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-* **返回**
-
-    
-    * `Any`: API 调用返回数据
-
-
-
-### _async_ `send_image_message(target, qq, group, urls)`
+### `send_image_message(target, qq, group, urls)`
 
 
 * **说明**
@@ -266,7 +258,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `upload_image(type, img)`
+### `upload_image(type, img)`
 
 
 * **说明**
@@ -285,14 +277,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-* **返回**
-
-    
-    * `Any`: API 调用返回数据
-
-
-
-### _async_ `upload_voice(type, voice)`
+### `upload_voice(type, voice)`
 
 
 * **说明**
@@ -311,14 +296,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-* **返回**
-
-    
-    * `Any`: API 调用返回数据
-
-
-
-### _async_ `fetch_message(count=10)`
+### `fetch_message(count=10)`
 
 
 * **说明**
@@ -335,7 +313,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `fetch_latest_message(count=10)`
+### `fetch_latest_message(count=10)`
 
 
 * **说明**
@@ -352,7 +330,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `peek_message(count=10)`
+### `peek_message(count=10)`
 
 
 * **说明**
@@ -369,7 +347,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `peek_latest_message(count=10)`
+### `peek_latest_message(count=10)`
 
 
 * **说明**
@@ -386,7 +364,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `messsage_from_id(id)`
+### `messsage_from_id(id)`
 
 
 * **说明**
@@ -403,7 +381,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `count_message()`
+### `count_message()`
 
 
 * **说明**
@@ -412,7 +390,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `friend_list()`
+### `friend_list()`
 
 
 * **说明**
@@ -428,7 +406,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `group_list()`
+### `group_list()`
 
 
 * **说明**
@@ -444,7 +422,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `member_list(target)`
+### `member_list(target)`
 
 
 * **说明**
@@ -467,7 +445,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `mute(target, member_id, time)`
+### `mute(target, member_id, time)`
 
 
 * **说明**
@@ -489,7 +467,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `unmute(target, member_id)`
+### `unmute(target, member_id)`
 
 
 * **说明**
@@ -508,7 +486,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `kick(target, member_id, msg)`
+### `kick(target, member_id, msg)`
 
 
 * **说明**
@@ -530,7 +508,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `quit(target)`
+### `quit(target)`
 
 
 * **说明**
@@ -546,7 +524,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `mute_all(target)`
+### `mute_all(target)`
 
 
 * **说明**
@@ -562,7 +540,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `unmute_all(target)`
+### `unmute_all(target)`
 
 
 * **说明**
@@ -578,7 +556,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `group_config(target)`
+### `group_config(target)`
 
 
 * **说明**
@@ -609,7 +587,7 @@ mirai-api-http 协议 Bot 适配。
 ```
 
 
-### _async_ `modify_group_config(target, config)`
+### `modify_group_config(target, config)`
 
 
 * **说明**
@@ -628,7 +606,7 @@ mirai-api-http 协议 Bot 适配。
 
 
 
-### _async_ `member_info(target, member_id)`
+### `member_info(target, member_id)`
 
 
 * **说明**
@@ -658,7 +636,7 @@ mirai-api-http 协议 Bot 适配。
 ```
 
 
-### _async_ `modify_member_info(target, member_id, info)`
+### `modify_member_info(target, member_id, info)`
 
 
 * **说明**
@@ -997,6 +975,54 @@ Mirai 协议 Messaqge 适配
 ### `export()`
 
 导出为可以被正常json序列化的数组
+
+# NoneBot.adapters.mirai.utils 模块
+
+
+## _exception_ `ActionFailed`
+
+基类：[`nonebot.exception.ActionFailed`](../exception.md#nonebot.exception.ActionFailed)
+
+
+* **说明**
+
+    API 请求成功返回数据，但 API 操作失败。
+
+
+
+## _exception_ `InvalidArgument`
+
+基类：[`nonebot.exception.AdapterException`](../exception.md#nonebot.exception.AdapterException)
+
+
+* **说明**
+
+    调用API的参数出错
+
+
+
+## `catch_network_error(function)`
+
+
+* **说明**
+
+    捕捉函数抛出的httpx网络异常并释放\`\`NetworkError\`\`异常
+    处理返回数据, 在code不为0时释放\`\`ActionFailed\`\`异常
+
+
+::: warning
+此装饰器只支持使用了httpx的异步函数
+:::
+
+
+## `argument_validation(function)`
+
+
+* **说明**
+
+    通过函数签名中的类型注解来对传入参数进行运行时校验
+    会在参数出错时释放\`\`InvalidArgument\`\`异常
+
 
 # NoneBot.adapters.mirai.event 模块
 
