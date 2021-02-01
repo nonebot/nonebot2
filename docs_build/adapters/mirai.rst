@@ -36,6 +36,13 @@ NoneBot.adapters.mirai.message 模块
    :members:
    :show-inheritance:
 
+NoneBot.adapters.mirai.utils 模块
+===================================
+
+.. automodule:: nonebot.adapters.mirai.utils
+   :members:
+   :show-inheritance:
+
 NoneBot.adapters.mirai.event 模块
 =================================
 
