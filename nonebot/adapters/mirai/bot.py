@@ -218,7 +218,10 @@ class MiraiBot(BaseBot):
     @overrides(BaseBot)
     async def call_api(self, api: str, **data) -> NoReturn:
         """
+        \:\:\: danger
         由于Mirai的HTTP API特殊性, 该API暂时无法实现
+        \:\:\:
+        
         \:\:\: tip
         你可以使用 ``MiraiBot.api`` 中提供的调用方法来代替
         \:\:\:
@@ -239,13 +242,13 @@ class MiraiBot(BaseBot):
         """
         :说明:
 
-          根据 ``event`` 向触发事件的主题发送信息
+          根据 ``event`` 向触发事件的主体发送信息
 
         :参数:
 
           * ``event: Event``: Event对象
           * ``message: Union[MessageChain, MessageSegment, str]``: 要发送的消息
-          * ``at_sender: bool``: 是否 @ 事件主题
+          * ``at_sender: bool``: 是否 @ 事件主体
         """
         if isinstance(message, MessageSegment):
             message = MessageChain(message)

@@ -43,8 +43,9 @@ def catch_network_error(function: _AsyncCallable) -> _AsyncCallable:
     """
     :说明:
 
-      捕捉函数抛出的httpx网络异常并释放``NetworkError``异常
-      处理返回数据, 在code不为0时释放``ActionFailed``异常
+      捕捉函数抛出的httpx网络异常并释放 ``NetworkError`` 异常
+
+      处理返回数据, 在code不为0时释放 ``ActionFailed`` 异常
 
     \:\:\: warning
     此装饰器只支持使用了httpx的异步函数
@@ -72,7 +73,8 @@ def argument_validation(function: _AnyCallable) -> _AnyCallable:
     :说明:
 
       通过函数签名中的类型注解来对传入参数进行运行时校验
-      会在参数出错时释放``InvalidArgument``异常
+      
+      会在参数出错时释放 ``InvalidArgument`` 异常
     """
     function = validate_arguments(config={
         'arbitrary_types_allowed': True,

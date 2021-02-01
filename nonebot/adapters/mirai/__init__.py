@@ -13,7 +13,7 @@ Mirai-API-HTTP 协议适配
 .. _mirai-api-http 文档:
     https://github.com/project-mirai/mirai-api-http/tree/master/docs
 
-.. _Issue页面
+.. _Issue页面:
     https://github.com/nonebot/nonebot2/issues
 
 """

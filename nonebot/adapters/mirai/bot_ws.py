@@ -15,7 +15,6 @@ from nonebot.log import logger
 from nonebot.typing import overrides
 
 from .bot import MiraiBot, SessionManager
-from .config import Config as MiraiConfig
 
 WebsocketHandlerFunction = Callable[[Dict[str, Any]], Coroutine[Any, Any, None]]
 WebsocketHandler_T = TypeVar('WebsocketHandler_T',
