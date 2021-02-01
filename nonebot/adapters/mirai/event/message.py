@@ -33,10 +33,19 @@ class MessageEvent(Event):
 class GroupMessage(MessageEvent):
     """群消息事件"""
     sender: GroupChatInfo
+    to_me: bool = False
 
     @overrides(MessageEvent)
     def get_session_id(self) -> str:
         return f'group_{self.sender.group.id}_' + self.get_user_id()
+
+    @overrides(MessageEvent)
+    def get_user_id(self) -> str:
+        return str(self.sender.id)
+
+    @overrides(MessageEvent)
+    def is_tome(self) -> bool:
+        return self.to_me
 
 
 class FriendMessage(MessageEvent):
@@ -47,15 +56,23 @@ class FriendMessage(MessageEvent):
     def get_user_id(self) -> str:
         return str(self.sender.id)
 
-    @overrides
+    @overrides(MessageEvent)
     def get_session_id(self) -> str:
         return 'friend_' + self.get_user_id()
+
+    @overrides(MessageEvent)
+    def is_tome(self) -> bool:
+        return True
 
 
 class TempMessage(MessageEvent):
     """临时会话消息事件"""
     sender: GroupChatInfo
 
-    @overrides
+    @overrides(MessageEvent)
     def get_session_id(self) -> str:
         return f'temp_{self.sender.group.id}_' + self.get_user_id()
+
+    @overrides(MessageEvent)
+    def is_tome(self) -> bool:
+        return True

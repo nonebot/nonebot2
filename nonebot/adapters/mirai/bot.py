@@ -13,11 +13,12 @@ from nonebot.exception import ApiNotAvailable, RequestDenied
 from nonebot.log import logger
 from nonebot.message import handle_event
 from nonebot.typing import overrides
+from nonebot.utils import escape_tag
 
 from .config import Config as MiraiConfig
 from .event import Event, FriendMessage, GroupMessage, TempMessage
 from .message import MessageChain, MessageSegment
-from .utils import catch_network_error, argument_validation
+from .utils import catch_network_error, argument_validation, check_tome, Log
 
 
 class SessionManager:
@@ -209,11 +210,22 @@ class Bot(BaseBot):
 
     @overrides(BaseBot)
     async def handle_message(self, message: dict):
-        await handle_event(bot=self,
-                           event=Event.new({
-                               **message,
-                               'self_id': self.self_id,
-                           }))
+        Log.debug(f'received message {message}')
+        try:
+            await handle_event(
+                bot=self,
+                event=await check_tome(
+                    bot=self,
+                    event=Event.new({
+                        **message,
+                        'self_id': self.self_id,
+                    }),
+                ),
+            )
+        except Exception as e:
+            logger.opt(colors=True, exception=e).exception(
+                'Failed to handle message '
+                f'<r>{escape_tag(str(message))}</r>: ')
 
     @overrides(BaseBot)
     async def call_api(self, api: str, **data) -> NoReturn:

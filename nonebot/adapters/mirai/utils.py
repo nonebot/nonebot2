@@ -1,15 +1,42 @@
+import re
 from functools import wraps
-from typing import Callable, Coroutine, TypeVar
+from typing import TYPE_CHECKING, Any, Callable, Coroutine, Optional, TypeVar
 
 import httpx
-from pydantic import ValidationError, validate_arguments, Extra
+from pydantic import Extra, ValidationError, validate_arguments
 
 import nonebot.exception as exception
 from nonebot.log import logger
-from nonebot.utils import escape_tag
+from nonebot.utils import escape_tag, logger_wrapper
+
+from .event import Event, GroupMessage
+from .message import MessageSegment, MessageType
+
+if TYPE_CHECKING:
+    from .bot import Bot
 
 _AsyncCallable = TypeVar("_AsyncCallable", bound=Callable[..., Coroutine])
 _AnyCallable = TypeVar("_AnyCallable", bound=Callable)
+
+
+class Log:
+    _log = logger_wrapper('MIRAI')
+
+    @classmethod
+    def info(cls, message: Any):
+        cls._log('INFO', str(message))
+
+    @classmethod
+    def debug(cls, message: Any):
+        cls._log('DEBUG', str(message))
+
+    @classmethod
+    def warn(cls, message: Any):
+        cls._log('WARNING', str(message))
+
+    @classmethod
+    def error(cls, message: Any, exception: Optional[Exception] = None):
+        cls._log('ERROR', str(message), exception=exception)
 
 
 class ActionFailed(exception.ActionFailed):
@@ -89,3 +116,41 @@ def argument_validation(function: _AnyCallable) -> _AnyCallable:
             raise InvalidArgument
 
     return wrapper  # type: ignore
+
+
+async def check_tome(bot: "Bot", event: "Event") -> "Event":
+    if not isinstance(event, GroupMessage):
+        return event
+
+    def _is_at(event: GroupMessage) -> bool:
+        for segment in event.message_chain:
+            segment: MessageSegment
+            if segment.type != MessageType.AT:
+                continue
+            if segment.data['target'] == event.self_id:
+                return True
+        return False
+
+    def _is_nick(event: GroupMessage) -> bool:
+        text = event.get_plaintext()
+        if not text:
+            return False
+        nick_regex = '|'.join(
+            {i.strip() for i in bot.config.nickname if i.strip()})
+        matched = re.search(rf"^({nick_regex})([\s,，]*|$)", text, re.IGNORECASE)
+        if matched is None:
+            return False
+        Log.info(f'User is calling me {matched.group(1)}')
+        return True
+
+    def _is_reply(event: GroupMessage) -> bool:
+        for segment in event.message_chain:
+            segment: MessageSegment
+            if segment.type != MessageType.QUOTE:
+                continue
+            if segment.data['senderId'] == event.self_id:
+                return True
+        return False
+
+    event.to_me = any([_is_at(event), _is_reply(event), _is_nick(event)])
+    return event
