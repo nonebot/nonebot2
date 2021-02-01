@@ -1,4 +1,5 @@
 import re
+from argparse import ArgumentParser
 from types import ModuleType
 from contextvars import ContextVar
 from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional
@@ -143,6 +144,15 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
                block: bool = ...,
                state: Optional[T_State] = ...,
                state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
+    ...
+
+
+def on_shell_like_command(cmd: Union[str, Tuple[str, ...]],
+                          rule: Optional[Union[Rule, T_RuleChecker]] = None,
+                          aliases: Optional[Set[Union[str,
+                                                      Tuple[str, ...]]]] = None,
+                          shell_like_argsparser: Optional[ArgumentParser] = None,
+                          **kwargs) -> Type[Matcher]:
     ...
 
 

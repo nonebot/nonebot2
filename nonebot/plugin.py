@@ -9,6 +9,7 @@ import re
 import sys
 import pkgutil
 import importlib
+from argparse import ArgumentParser
 from types import ModuleType
 from dataclasses import dataclass
 from importlib._bootstrap import _load
@@ -19,7 +20,7 @@ from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
-from nonebot.rule import Rule, startswith, endswith, keyword, command, regex
+from nonebot.rule import Rule, shell_like_command, startswith, endswith, keyword, command, regex
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
@@ -434,6 +435,56 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
 
     commands = set([cmd]) | (aliases or set())
     return on_message(command(*commands) & rule, handlers=handlers, **kwargs)
+
+
+def on_shell_like_command(cmd: Union[str, Tuple[str, ...]],
+                          rule: Optional[Union[Rule, T_RuleChecker]] = None,
+                          aliases: Optional[Set[Union[str,
+                                                      Tuple[str, ...]]]] = None,
+                          shell_like_argsparser: Optional[ArgumentParser] = None,
+                          **kwargs) -> Type[Matcher]:
+    """
+    :说明:
+
+      注册一个支持 ``shell_like`` 解析参数的命令消息事件响应器。
+
+      与普通的 ``on_command`` 不同的是，在添加 ``shell_like_argsparser`` 参数时, 响应器会自动处理消息,
+
+      并将 ``shell_like_argsparser`` 处理的参数保存在 ``state["args"]`` 中
+
+    :参数:
+
+      * ``cmd: Union[str, Tuple[str, ...]]``: 指定命令内容
+      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
+      * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
+      * ``shell_like_argsparser:Optional[ArgumentParser]``:  ``argparse.ArgumentParser`` 对象,是一个类 ``shell`` 的 ``argsparser`` 
+      * ``permission: Optional[Permission]``: 事件响应权限
+      * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
+      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+      * ``priority: int``: 事件响应器优先级
+      * ``block: bool``: 是否阻止事件向更低优先级传递
+      * ``state: Optional[T_State]``: 默认 state
+      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
+
+    :返回:
+
+      - ``Type[Matcher]``
+    """
+
+    async def _strip_cmd(bot: "Bot", event: "Event", state: T_State):
+        message = event.get_message()
+        segment = message.pop(0)
+        new_message = message.__class__(
+            str(segment)
+            [len(state["_prefix"]["raw_command"]):].strip())  # type: ignore
+        for new_segment in reversed(new_message):
+            message.insert(0, new_segment)
+
+    handlers = kwargs.pop("handlers", [])
+    handlers.insert(0, _strip_cmd)
+
+    commands = set([cmd]) | (aliases or set())
+    return on_message(shell_like_command(shell_like_argsparser, *commands) & rule, handlers=handlers, **kwargs)
 
 
 def on_regex(pattern: str,
@@ -917,7 +968,8 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
                 m.module = name
             plugin = Plugin(name, module, _tmp_matchers.get(), _export.get())
             plugins[name] = plugin
-            logger.opt(colors=True).info(f'Succeeded to import "<y>{name}</y>"')
+            logger.opt(colors=True).info(
+                f'Succeeded to import "<y>{name}</y>"')
             return plugin
         except Exception as e:
             logger.opt(colors=True, exception=e).error(

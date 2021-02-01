@@ -9,10 +9,12 @@
 \:\:\:
 """
 
+from argparse import ArgumentParser
 import re
 import asyncio
 from itertools import product
 from typing import Any, Dict, Union, Tuple, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
+from loguru import logger
 
 from pygtrie import CharTrie
 
@@ -274,6 +276,72 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
         return state["_prefix"]["command"] in commands
 
     return Rule(_command)
+
+
+def shell_like_command(shell_like_argsparser: Optional[ArgumentParser] = None, *cmds: Union[str, Tuple[str, ...]]) -> Rule:
+    """
+    :说明:
+
+      支持 ``shell_like`` 解析参数的命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
+
+      可以通过 ``state["_prefix"]["command"]`` 获取匹配成功的命令（例：``("test",)``），通过 ``state["_prefix"]["raw_command"]`` 获取匹配成功的原始命令文本（例：``"/test"``）。
+
+      添加 ``shell_like_argpsarser`` 参数后, 可以自动处理消息并将结果保存在 ``state["args"]`` 中。
+      
+      
+
+
+    :参数:
+      * ``shell_like_argsparser: Optional[ArgumentParser]``: ``argparse.ArgumentParser`` 对象, 是一个类 ``shell`` 的 ``argsparser``
+
+      * ``*cmds: Union[str, Tuple[str, ...]]``: 命令内容
+
+    :示例:
+
+      使用默认 ``command_start``, ``command_sep`` 配置
+
+      命令 ``("test",)`` 可以匹配：``/test`` 开头的消息
+      命令 ``("test", "sub")`` 可以匹配”``/test.sub`` 开头的消息
+      
+      当 ``shell_like_argsparser`` 的 ``argument`` 为 ``-a`` 时且 ``action`` 为 ``store_true`` ， ``state["args"]["a"]`` 将会记录 ``True``
+
+    \:\:\:tip 提示
+    命令内容与后续消息间无需空格！
+    \:\:\:
+    """
+    config = get_driver().config
+    command_start = config.command_start
+    command_sep = config.command_sep
+    commands = list(cmds)
+    for index, command in enumerate(commands):
+        if isinstance(command, str):
+            commands[index] = command = (command,)
+
+        if len(command) == 1:
+            for start in command_start:
+                TrieRule.add_prefix(f"{start}{command[0]}", command)
+        else:
+            for start, sep in product(command_start, command_sep):
+                TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
+
+    async def _shell_like_command(bot: "Bot", event: "Event", state: T_State) -> bool:
+        if state["_prefix"]["command"] in commands:
+            if shell_like_argsparser:
+                message = str(event.get_message())
+                strip_message = message[len(
+                    state["_prefix"]["raw_command"]):].lstrip()
+                try:
+                    args = shell_like_argsparser.parse_args(
+                        strip_message.split())
+                    state["args"]=dict()
+                    state["args"].update(**args.__dict__)
+                except:
+                    pass
+            return True
+        else:
+            return False
+
+    return Rule(_shell_like_command)
 
 
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
