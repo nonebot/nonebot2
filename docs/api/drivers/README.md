@@ -120,7 +120,7 @@ Driver 基类。将后端框架封装，以满足适配器使用。
 
 
 
-### `register_adapter(name, adapter, **kwargs)`
+### `register_adapter(name, adapter)`
 
 
 * **说明**
