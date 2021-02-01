@@ -6,6 +6,7 @@ sys.path.insert(0, os.path.abspath(".."))
 import nonebot
 from nonebot.adapters.cqhttp import Bot
 from nonebot.adapters.ding import Bot as DingBot
+from nonebot.adapters.mirai import Bot as MiraiBot
 from nonebot.log import logger, default_format
 
 # test custom log
@@ -20,6 +21,7 @@ app = nonebot.get_asgi()
 driver = nonebot.get_driver()
 driver.register_adapter("cqhttp", Bot)
 driver.register_adapter("ding", DingBot)
+driver.register_adapter("mirai", MiraiBot)
 
 # load builtin plugin
 nonebot.load_builtin_plugins()
