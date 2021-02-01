@@ -142,7 +142,7 @@ class SessionManager:
         return cls(key, client)
 
 
-class MiraiBot(BaseBot):
+class Bot(BaseBot):
     """
     mirai-api-http 协议 Bot 适配。
 

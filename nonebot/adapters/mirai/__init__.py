@@ -18,7 +18,7 @@ Mirai-API-HTTP 协议适配
 
 """
 
-from .bot import MiraiBot
-from .bot_ws import MiraiWebsocketBot
+from .bot import Bot
+from .bot_ws import WebsocketBot
 from .event import *
 from .message import MessageChain, MessageSegment

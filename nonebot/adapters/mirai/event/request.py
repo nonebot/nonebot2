@@ -6,7 +6,7 @@ from typing_extensions import Literal
 from .base import Event
 
 if TYPE_CHECKING:
-    from ..bot import MiraiBot as Bot
+    from ..bot import Bot
 
 
 class RequestEvent(Event):

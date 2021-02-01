@@ -257,12 +257,14 @@ class MessageSegment(BaseMessageSegment):
         :参数:
 
           * ``name: str``: 戳一戳的类型
-            - "Poke": 戳一戳
-            - "ShowLove": 比心
-            - "Like": 点赞
-            - "Heartbroken": 心碎
-            - "SixSixSix": 666
-            - "FangDaZhao": 放大招
+
+            * ``Poke``: 戳一戳
+            * ``ShowLove``: 比心
+            * ``Like``: 点赞
+            * ``Heartbroken``: 心碎
+            * ``SixSixSix``: 666
+            * ``FangDaZhao``: 放大招
+
         """
         return cls(type=MessageType.POKE, name=name)
 

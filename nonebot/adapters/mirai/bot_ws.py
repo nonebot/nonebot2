@@ -14,7 +14,7 @@ from nonebot.exception import RequestDenied
 from nonebot.log import logger
 from nonebot.typing import overrides
 
-from .bot import MiraiBot, SessionManager
+from .bot import SessionManager, Bot
 
 WebsocketHandlerFunction = Callable[[Dict[str, Any]], Coroutine[Any, Any, None]]
 WebsocketHandler_T = TypeVar('WebsocketHandler_T',
@@ -71,8 +71,9 @@ class WebSocket(BaseWebSocket):
                 logger.exception(f'Websocket client listened {self.websocket} '
                                  f'failed to decode data: {e}')
                 continue
-            asyncio.gather(*map(lambda f: f(data), self.event_handlers),
-                           return_exceptions=True)
+            asyncio.gather(
+                *map(lambda f: f(data), self.event_handlers),  #type: ignore
+                return_exceptions=True)
 
     @overrides(BaseWebSocket)
     async def accept(self):
@@ -87,18 +88,18 @@ class WebSocket(BaseWebSocket):
         return callable
 
 
-class MiraiWebsocketBot(MiraiBot):
+class WebsocketBot(Bot):
     """
     mirai-api-http 正向 Websocket 协议 Bot 适配。
     """
 
-    @overrides(MiraiBot)
+    @overrides(Bot)
     def __init__(self, connection_type: str, self_id: str, *,
                  websocket: WebSocket):
         super().__init__(connection_type, self_id, websocket=websocket)
 
     @property
-    @overrides(MiraiBot)
+    @overrides(Bot)
     def type(self) -> str:
         return "mirai-ws"
 
@@ -113,7 +114,7 @@ class MiraiWebsocketBot(MiraiBot):
         return api
 
     @classmethod
-    @overrides(MiraiBot)
+    @overrides(Bot)
     async def check_permission(cls, driver: "Driver", connection_type: str,
                                headers: dict, body: Optional[dict]) -> NoReturn:
         raise RequestDenied(
@@ -121,7 +122,7 @@ class MiraiWebsocketBot(MiraiBot):
             reason=f'Connection {connection_type} not implented')
 
     @classmethod
-    @overrides(MiraiBot)
+    @overrides(Bot)
     def register(cls, driver: "Driver", config: "Config", qq: int):
         """
         :说明:
