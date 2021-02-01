@@ -161,10 +161,6 @@ class MessageSegment(BaseMessageSegment):
           * ``image_id: Optional[str]``: 图片的image_id，群图片与好友图片格式不同。不为空时将忽略url属性
           * ``url: Optional[str]``: 图片的URL，发送时可作网络图片的链接
           * ``path: Optional[str]``: 图片的路径，发送本地图片
-
-        :返回:
-
-          - ``[type]``: [description]
         """
         return cls(type=MessageType.IMAGE, imageId=image_id, url=url, path=path)
 

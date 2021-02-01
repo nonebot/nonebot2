@@ -134,10 +134,6 @@ class WebsocketBot(Bot):
           * ``driver: Driver``: 程序所使用的``Driver``
           * ``config: Config``: 程序配置对象
           * ``qq: int``: 要使用的Bot的QQ号 **注意: 在使用正向Websocket时必须指定该值!**
-
-        :返回:
-
-          - ``[type]``: [description]
         """
         super().register(driver, config)
         cls.active = True
