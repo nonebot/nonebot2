@@ -62,7 +62,7 @@ class Driver(abc.ABC):
         :说明: 已连接的 Bot
         """
 
-    def register_adapter(self, name: str, adapter: Type["Bot"], **kwargs):
+    def register_adapter(self, name: str, adapter: Type["Bot"]):
         """
         :说明:
 
@@ -74,7 +74,7 @@ class Driver(abc.ABC):
           * ``adapter: Type[Bot]``: 适配器 Class
         """
         self._adapters[name] = adapter
-        adapter.register(self, self.config, **kwargs)
+        adapter.register(self, self.config)
         logger.opt(
             colors=True).debug(f'Succeeded to load adapter "<y>{name}</y>"')
 
