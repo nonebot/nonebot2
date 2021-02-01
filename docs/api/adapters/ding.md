@@ -197,6 +197,16 @@ sidebarDepth: 0
 @指定手机号人员
 
 
+### _static_ `atDingtalkIds(*dingtalkIds)`
+
+@指定 id，@ 默认会在消息段末尾。
+所以你可以在消息中使用 @{senderId} 占位，发送出去之后 @ 就会出现在占位的位置：
+``python
+message = MessageSegment.text(f"@{event.senderId}，你好")
+message += MessageSegment.atDingtalkIds(event.senderId)
+``
+
+
 ### _static_ `text(text)`
 
 发送 `text` 类型消息
@@ -210,6 +220,11 @@ sidebarDepth: 0
 ### _static_ `extension(dict_)`
 
 "标记 text 文本的 extension 属性，需要与 text 消息段相加。
+
+
+### _static_ `code(code_language, code)`
+
+"发送 code 消息段
 
 
 ### _static_ `markdown(title, text)`
