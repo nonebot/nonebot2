@@ -684,13 +684,6 @@ mirai-api-http 正向 Websocket 协议 Bot 适配。
     * `qq: int`: 要使用的Bot的QQ号 **注意: 在使用正向Websocket时必须指定该值!**
 
 
-
-* **返回**
-
-    
-    * `[type]`: [description]
-
-
 # NoneBot.adapters.mirai.config 模块
 
 
@@ -842,13 +835,6 @@ CQHTTP 协议 MessageSegment 适配。具体方法参考 [mirai-api-http 消息�
 
 
     * `path: Optional[str]`: 图片的路径，发送本地图片
-
-
-
-* **返回**
-
-    
-    * `[type]`: [description]
 
 
 
