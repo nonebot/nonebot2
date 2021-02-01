@@ -12,16 +12,9 @@ sidebarDepth: 0
 ::: tip
 该Adapter目前仍然处在早期实验性阶段, 并未经过充分测试
 
-如果你在使用过程中遇到了任何问题, 请前往 
-
-```
-`Issue页面`_
-```
-
- 为我们提供反馈
+如果你在使用过程中遇到了任何问题, 请前往 [Issue页面](https://github.com/nonebot/nonebot2/issues) 为我们提供反馈
 :::
 
-<!--  https://github.com/nonebot/nonebot2/issues -->
 # NoneBot.adapters.mirai.bot 模块
 
 
@@ -116,7 +109,10 @@ API中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则�
 
 ### _async_ `call_api(api, **data)`
 
+::: danger
 由于Mirai的HTTP API特殊性, 该API暂时无法实现
+:::
+
 ::: tip
 你可以使用 `MiraiBot.api` 中提供的调用方法来代替
 :::
@@ -127,7 +123,7 @@ API中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则�
 
 * **说明**
 
-    根据 `event` 向触发事件的主题发送信息
+    根据 `event` 向触发事件的主体发送信息
 
 
 
@@ -140,7 +136,7 @@ API中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则�
     * `message: Union[MessageChain, MessageSegment, str]`: 要发送的消息
 
 
-    * `at_sender: bool`: 是否 @ 事件主题
+    * `at_sender: bool`: 是否 @ 事件主体
 
 
 
@@ -1006,8 +1002,9 @@ Mirai 协议 Messaqge 适配
 
 * **说明**
 
-    捕捉函数抛出的httpx网络异常并释放\`\`NetworkError\`\`异常
-    处理返回数据, 在code不为0时释放\`\`ActionFailed\`\`异常
+    捕捉函数抛出的httpx网络异常并释放 `NetworkError` 异常
+
+    处理返回数据, 在code不为0时释放 `ActionFailed` 异常
 
 
 ::: warning
@@ -1021,12 +1018,13 @@ Mirai 协议 Messaqge 适配
 * **说明**
 
     通过函数签名中的类型注解来对传入参数进行运行时校验
-    会在参数出错时释放\`\`InvalidArgument\`\`异常
+
+    会在参数出错时释放 `InvalidArgument` 异常
 
 
 # NoneBot.adapters.mirai.event 模块
 
-:::warning 警告
+::: warning 
 事件中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则取代Mirai原有的驼峰命名
 
 部分字段可能与文档在符号上不一致
@@ -1038,6 +1036,10 @@ Mirai 协议 Messaqge 适配
 ## _class_ `UserPermission`
 
 基类：`str`, `enum.Enum`
+
+
+* **说明**
+
 
 用户权限枚举类
 
@@ -1374,8 +1376,12 @@ Bot在群里的权限被改变
 
 
     * `operate: Literal[1, 2]`: 响应的操作类型
-    - `1`: 拒绝添加好友
-    - `2`: 拒绝添加好友并添加黑名单，不再接收该用户的好友申请
+
+
+        * `1`: 拒绝添加好友
+
+
+        * `2`: 拒绝添加好友并添加黑名单，不再接收该用户的好友申请
 
 
     * `message: str`: 回复的信息
@@ -1421,10 +1427,18 @@ Bot在群里的权限被改变
 
 
     * `operate: Literal[1, 2, 3, 4]`: 响应的操作类型
-    - `1`: 拒绝入群
-    - `2`: 忽略请求
-    - `3`: 拒绝入群并添加黑名单，不再接收该用户的入群申请
-    - `4`: 忽略入群并添加黑名单，不再接收该用户的入群申请
+
+
+        * `1`: 拒绝入群
+
+
+        * `2`: 忽略请求
+
+
+        * `3`: 拒绝入群并添加黑名单，不再接收该用户的入群申请
+
+
+        * `4`: 忽略入群并添加黑名单，不再接收该用户的入群申请
 
 
     * `message: str`: 回复的信息
