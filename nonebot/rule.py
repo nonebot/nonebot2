@@ -280,6 +280,11 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
 
 
 class ArgumentParser(ArgParser):
+    """
+    :说明:
+
+      ``shell_like`` 命令参数解析器，解析出错时不会退出程序。
+    """
 
     def _print_message(self, message, file=None):
         pass
@@ -287,16 +292,11 @@ class ArgumentParser(ArgParser):
     def exit(self, status=0, message=None):
         raise ParserExit(status=status, message=message)
 
-    def parse_args(
-            self,
-            args: Optional[Sequence[str]] = None,
-            namespace: Optional[Namespace] = None
-    ) -> Union[ParserExit, Namespace]:
-        try:
-            return super().parse_args(args=args,
-                                      namespace=namespace)  # type: ignore
-        except ParserExit as e:
-            return e
+    def parse_args(self,
+                   args: Optional[Sequence[str]] = None,
+                   namespace: Optional[Namespace] = None) -> Namespace:
+        return super().parse_args(args=args,
+                                  namespace=namespace)  # type: ignore
 
 
 def shell_command(*cmds: Union[str, Tuple[str, ...]],
@@ -361,8 +361,11 @@ def shell_command(*cmds: Union[str, Tuple[str, ...]],
                                        ):].lstrip()
             state["argv"] = shlex.split(strip_message)
             if parser:
-                args = parser.parse_args(state["argv"])
-                state["args"] = args
+                try:
+                    args = parser.parse_args(state["argv"])
+                    state["args"] = args
+                except ParserExit as e:
+                    state["args"] = e
             return True
         else:
             return False
