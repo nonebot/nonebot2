@@ -167,8 +167,9 @@ class Matcher(metaclass=MatcherMeta):
                     rule or Rule(),
                 "permission":
                     permission or Permission(),
-                "handlers":
-                    handlers or [],
+                "handlers": [
+                    cls.process_handler(handler) for handler in handlers
+                ] if handlers else [],
                 "temp":
                     temp,
                 "expire_time":
@@ -204,7 +205,9 @@ class Matcher(metaclass=MatcherMeta):
 
           - ``bool``: 是否满足权限
         """
-        return await cls.permission(bot, event)
+        event_type = event.get_type()
+        return (event_type == (cls.type or event_type) and
+                await cls.permission(bot, event))
 
     @classmethod
     async def check_rule(cls, bot: "Bot", event: "Event",
