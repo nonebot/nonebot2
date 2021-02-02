@@ -83,4 +83,4 @@ config.custom_config4 = "new config after init"
 
 ## 优先级
 
-`bot.py`文件(`nonebot.init`) > 系统环境变量 > `.env` `.env.*` 文件
+`bot.py` 文件( `nonebot.init` ) > 系统环境变量 > `.env` `.env.*` 文件

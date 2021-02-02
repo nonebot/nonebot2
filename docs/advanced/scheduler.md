@@ -21,7 +21,7 @@ nb plugin install nonebot_plugin_apscheduler
 ```
 
 :::tip 提示
-`nb-cli` 默认通过 `pypi` 安装，你可以添加命令参数 `-i [mirror]` 或 `--index [mirror]` 使用镜像源安装。
+`nb-cli` 默认通过 `pypi` 安装，你可以添加命令参数 `-i [mirror]` 或 `--index [mirror]` 以使用镜像源安装。
 :::
 
 ### 通过 poetry
@@ -96,13 +96,13 @@ scheduler = require('nonebot_plugin_apscheduler').scheduler
 
 对于大多数情况，我们需要在 `nonebot2` 项目被启动时启动定时任务，则此处设为 `true`
 
-### 在 `.env` 中添加
+##### 在 `.env` 中添加
 
 ```bash
 APSCHEDULER_AUTOSTART=true
 ```
 
-### 在 `bot.py` 中添加
+##### 在 `bot.py` 中添加
 
 ```python
 nonebot.init(apscheduler_autostart=True)
@@ -120,13 +120,13 @@ nonebot.init(apscheduler_autostart=True)
 
 > 官方文档在绝大多数时候能提供最准确和最具时效性的指南
 
-### 在 `.env` 中添加
+##### 在 `.env` 中添加
 
 ```bash
 APSCHEDULER_CONFIG={"apscheduler.timezone": "Asia/Shanghai"}
 ```
 
-### 在 `bot.py` 中添加
+##### 在 `bot.py` 中添加
 
 ```python
 nonebot.init(apscheduler_config={

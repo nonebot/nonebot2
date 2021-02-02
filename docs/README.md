@@ -1,7 +1,7 @@
 ---
 home: true
 heroImage: /logo.png
-tagline: 基于 OneBot 标准的 Python 异步 QQ 机器人框架
+tagline: 跨平台 Python 异步 QQ 机器人框架
 actionText: 开始使用
 actionLink: guide/
 features:
