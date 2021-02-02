@@ -170,6 +170,17 @@ Rule(async_function, run_sync(sync_function))
 :::
 
 
+## _class_ `ArgumentParser`
+
+基类：`argparse.ArgumentParser`
+
+
+* **说明**
+
+    `shell_like` 命令参数解析器，解析出错时不会退出程序。
+
+
+
 ## `shell_command(*cmds, parser=None)`
 
 
