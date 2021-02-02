@@ -12,7 +12,7 @@ nb create
 
 根据脚手架引导，将在当前目录下创建一个项目目录，项目目录内包含 `bot.py`。
 
-如果未安装 `nb-cli`，使用你最熟悉的编辑器或 IDE，创建一个名为 `bot.py` 的文件，内容如下（这里以 CQHTTP 为例）：
+如果未安装 `nb-cli`，使用你最熟悉的编辑器或 IDE，创建一个名为 `bot.py` 的文件，内容如下（这里以 CQHTTP 适配器为例）：
 
 ```python{4,6,7,10}
 import nonebot
@@ -63,6 +63,7 @@ python bot.py
 
 - [配置 CQHTTP](./cqhttp-guide.md)
 - [配置钉钉](./ding-guide.md)
+- [配置 mirai-api-http](./mirai-guide.md)
 
 NoneBot 接受的上报地址与 `Driver` 有关，默认使用的 `FastAPI Driver` 所接受的上报地址有：
 

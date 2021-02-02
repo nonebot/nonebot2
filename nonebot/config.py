@@ -20,11 +20,40 @@ from datetime import timedelta
 from ipaddress import IPv4Address
 from typing import Any, Set, Dict, Union, Mapping, Optional
 
+from pydantic.utils import deep_update
 from pydantic import BaseSettings, IPvAnyAddress
 from pydantic.env_settings import SettingsError, env_file_sentinel, read_env_file
 
 
 class BaseConfig(BaseSettings):
+
+    def __init__(
+            __pydantic_self__,  # type: ignore
+            _common_config: Optional[Dict[Any, Any]] = None,
+            _env_file: Union[Path, str, None] = env_file_sentinel,
+            _env_file_encoding: Optional[str] = None,
+            _secrets_dir: Union[Path, str, None] = None,
+            **values: Any) -> None:
+        super(BaseSettings,
+              __pydantic_self__).__init__(**__pydantic_self__._build_values(
+                  values,
+                  _common_config=_common_config,
+                  _env_file=_env_file,
+                  _env_file_encoding=_env_file_encoding,
+                  _secrets_dir=_secrets_dir))
+
+    def _build_values(
+        self,
+        init_kwargs: Dict[str, Any],
+        _common_config: Optional[Dict[Any, Any]] = None,
+        _env_file: Union[Path, str, None] = None,
+        _env_file_encoding: Optional[str] = None,
+        _secrets_dir: Union[Path, str, None] = None,
+    ) -> Dict[str, Any]:
+        return deep_update(self._build_secrets_files(_secrets_dir),
+                           _common_config or {},
+                           self._build_environ(_env_file,
+                                               _env_file_encoding), init_kwargs)
 
     def _build_environ(
             self,
@@ -92,7 +121,7 @@ class BaseConfig(BaseSettings):
         return self.__dict__.get(name)
 
 
-class Env(BaseSettings):
+class Env(BaseConfig):
     """
     运行环境配置。大小写不敏感。
 
@@ -109,6 +138,7 @@ class Env(BaseSettings):
     """
 
     class Config:
+        extra = "allow"
         env_file = ".env"
 
 
@@ -229,7 +259,7 @@ class Config(BaseConfig):
 
     .. code-block:: default
 
-        SUPER_USERS=["12345789"]
+        SUPERUSERS=["12345789"]
     """
     nickname: Set[str] = set()
     """
@@ -275,6 +305,9 @@ class Config(BaseConfig):
         SESSION_EXPIRE_TIMEOUT=[DD ][HH:MM]SS[.ffffff]
         SESSION_EXPIRE_TIMEOUT=P[DD]DT[HH]H[MM]M[SS]S  # ISO 8601
     """
+
+    # adapter configs
+    # adapter configs are defined in adapter/config.py
 
     # custom configs
     # custom configs can be assigned during nonebot.init

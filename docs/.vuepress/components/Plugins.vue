@@ -44,7 +44,7 @@
           <v-col
             cols="12"
             sm="6"
-            v-for="(plugin, index) in filteredPlugins"
+            v-for="(plugin, index) in displayPlugins"
             :key="index"
           >
             <v-card>
@@ -126,6 +126,9 @@ export default {
           plugin.author.indexOf(this.filterText) != -1
         );
       });
+    },
+    displayPlugins() {
+      return this.filteredPlugins.slice((this.page - 1) * 10, this.page * 10);
     }
   },
   methods: {

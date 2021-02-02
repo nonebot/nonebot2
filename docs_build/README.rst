@@ -18,3 +18,4 @@ NoneBot Api Reference
   - `nonebot.adapters <adapters/>`_
   - `nonebot.adapters.cqhttp <adapters/cqhttp.html>`_
   - `nonebot.adapters.ding <adapters/ding.html>`_
+  - `nonebot.adapters.mirai <adapters/mirai.html>`_

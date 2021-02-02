@@ -30,6 +30,12 @@ pip uninstall nonebot
 
    nb-cli: [![nb-cli](https://img.shields.io/github/stars/nonebot/nb-cli?style=social)](https://github.com/nonebot/nb-cli)
 
+4. 如果有疑问，可以加群交流 (点击链接直达)
+
+   [![QQ Chat](https://img.shields.io/badge/QQ%E7%BE%A4-768887710-orange?style=social)](https://jq.qq.com/?_wv=1027&k=5OFifDh)
+
+   [![Telegram Chat](https://img.shields.io/badge/telegram-cqhttp-blue?style=social)](https://t.me/cqhttp)
+
 ### 不使用脚手架(纯净安装)
 
 ```bash

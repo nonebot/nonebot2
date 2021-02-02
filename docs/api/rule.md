@@ -215,7 +215,8 @@ Rule(async_function, run_sync(sync_function))
 
     根据正则表达式进行匹配。
 
-    可以通过 `state["_matched"]` 获取正则表达式匹配成功的文本。
+    可以通过 `state["_matched"]` `state["_matched_groups"]` `state["_matched_dict"]`
+    获取正则表达式匹配成功的文本。
 
 
 

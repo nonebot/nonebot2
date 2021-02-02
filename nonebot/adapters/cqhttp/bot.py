@@ -7,18 +7,19 @@ from typing import Any, Dict, Union, Optional, TYPE_CHECKING
 
 import httpx
 from nonebot.log import logger
-from nonebot.config import Config
 from nonebot.typing import overrides
 from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
 from nonebot.exception import RequestDenied
 
 from .utils import log, escape
+from .config import Config as CQHTTPConfig
 from .message import Message, MessageSegment
 from .event import Reply, Event, MessageEvent, get_event_model
 from .exception import NetworkError, ApiNotAvailable, ActionFailed
 
 if TYPE_CHECKING:
+    from nonebot.config import Config
     from nonebot.drivers import Driver, WebSocket
 
 
@@ -81,6 +82,10 @@ def _check_at_me(bot: "Bot", event: "Event"):
     """
     if not isinstance(event, MessageEvent):
         return
+
+    # ensure message not empty
+    if not event.message:
+        event.message.append(MessageSegment.text(""))
 
     if event.message_type == "private":
         event.to_me = True
@@ -213,20 +218,15 @@ class Bot(BaseBot):
     """
     CQHTTP 协议 Bot 适配。继承属性参考 `BaseBot <./#class-basebot>`_ 。
     """
+    cqhttp_config: CQHTTPConfig
 
     def __init__(self,
-                 driver: "Driver",
                  connection_type: str,
-                 config: Config,
                  self_id: str,
                  *,
                  websocket: Optional["WebSocket"] = None):
 
-        super().__init__(driver,
-                         connection_type,
-                         config,
-                         self_id,
-                         websocket=websocket)
+        super().__init__(connection_type, self_id, websocket=websocket)
 
     @property
     @overrides(BaseBot)
@@ -235,6 +235,11 @@ class Bot(BaseBot):
         - 返回: ``"cqhttp"``
         """
         return "cqhttp"
+
+    @classmethod
+    def register(cls, driver: "Driver", config: "Config"):
+        super().register(driver, config)
+        cls.cqhttp_config = CQHTTPConfig(**config.dict())
 
     @classmethod
     @overrides(BaseBot)
@@ -248,6 +253,7 @@ class Bot(BaseBot):
         x_self_id = headers.get("x-self-id")
         x_signature = headers.get("x-signature")
         token = get_auth_bearer(headers.get("authorization"))
+        cqhttp_config = CQHTTPConfig(**driver.config.dict())
 
         # 检查连接方式
         if connection_type not in ["http", "websocket"]:
@@ -260,7 +266,7 @@ class Bot(BaseBot):
             raise RequestDenied(400, "Missing X-Self-ID Header")
 
         # 检查签名
-        secret = driver.config.secret
+        secret = cqhttp_config.secret
         if secret and connection_type == "http":
             if not x_signature:
                 log("WARNING", "Missing Signature Header")
@@ -271,7 +277,7 @@ class Bot(BaseBot):
                 log("WARNING", "Signature Header is invalid")
                 raise RequestDenied(403, "Signature is invalid")
 
-        access_token = driver.config.access_token
+        access_token = cqhttp_config.access_token
         if access_token and access_token != token:
             log(
                 "WARNING", "Authorization Header is invalid"
@@ -370,8 +376,9 @@ class Bot(BaseBot):
                 api_root += "/"
 
             headers = {}
-            if self.config.access_token is not None:
-                headers["Authorization"] = "Bearer " + self.config.access_token
+            if self.cqhttp_config.access_token is not None:
+                headers[
+                    "Authorization"] = "Bearer " + self.cqhttp_config.access_token
 
             try:
                 async with httpx.AsyncClient(headers=headers) as client:

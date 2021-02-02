@@ -425,7 +425,7 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
         segment = message.pop(0)
         new_message = message.__class__(
             str(segment)
-            [len(state["_prefix"]["raw_command"]):].strip())  # type: ignore
+            [len(state["_prefix"]["raw_command"]):].lstrip())  # type: ignore
         for new_segment in reversed(new_message):
             message.insert(0, new_segment)
 
@@ -1060,7 +1060,7 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
     return loaded_plugins
 
 
-def load_builtin_plugins() -> Optional[Plugin]:
+def load_builtin_plugins(name: str = "echo") -> Optional[Plugin]:
     """
     :说明:
 
@@ -1070,7 +1070,7 @@ def load_builtin_plugins() -> Optional[Plugin]:
 
       - ``Plugin``
     """
-    return load_plugin("nonebot.plugins.base")
+    return load_plugin(f"nonebot.plugins.{name}")
 
 
 def get_plugin(name: str) -> Optional[Plugin]:

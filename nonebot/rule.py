@@ -376,7 +376,8 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
 
       根据正则表达式进行匹配。
 
-      可以通过 ``state["_matched"]`` 获取正则表达式匹配成功的文本。
+      可以通过 ``state["_matched"]`` ``state["_matched_groups"]`` ``state["_matched_dict"]``
+      获取正则表达式匹配成功的文本。
 
     :参数:
 
@@ -396,6 +397,8 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
         matched = pattern.search(str(event.get_message()))
         if matched:
             state["_matched"] = matched.group()
+            state["_matched_groups"] = matched.groups()
+            state["_matched_dict"] = matched.groupdict()
             return True
         else:
             return False

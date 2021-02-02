@@ -176,7 +176,7 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
     ...
 
 
-def load_builtin_plugins():
+def load_builtin_plugins(name: str = ...):
     ...
 
 

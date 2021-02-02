@@ -175,6 +175,7 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
         logger.opt(
             colors=True).info(f"Current <y><b>Env: {env.environment}</b></y>")
         config = Config(**kwargs,
+                        _common_config=env.dict(),
                         _env_file=_env_file or f".env.{env.environment}")
 
         default_filter.level = "DEBUG" if config.debug else "INFO"

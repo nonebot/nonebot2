@@ -14,7 +14,7 @@ NoneBot 使用 [pydantic](https://pydantic-docs.helpmanual.io/) 以及 [python-d
 
 ## _class_ `Env`
 
-基类：`pydantic.env_settings.BaseSettings`
+基类：`nonebot.config.BaseConfig`
 
 运行环境配置。大小写不敏感。
 
@@ -211,7 +211,7 @@ X-Signature: sha1=f9ddd4863ace61e64f462d41ca311e3d2c1176e2
 
 
 ```default
-SUPER_USERS=["12345789"]
+SUPERUSERS=["12345789"]
 ```
 
 
