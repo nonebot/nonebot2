@@ -170,7 +170,7 @@ Rule(async_function, run_sync(sync_function))
 :::
 
 
-## `shell_like_command(shell_like_argsparser=None, *cmds)`
+## `shell_command(*cmds, parser=None)`
 
 
 * **说明**
@@ -179,29 +179,35 @@ Rule(async_function, run_sync(sync_function))
 
     可以通过 `state["_prefix"]["command"]` 获取匹配成功的命令（例：`("test",)`），通过 `state["_prefix"]["raw_command"]` 获取匹配成功的原始命令文本（例：`"/test"`）。
 
-    添加 `shell_like_argpsarser` 参数后, 可以自动处理消息并将结果保存在 `state["args"]` 中。
+    可以通过 `state["argv"]` 获取用户输入的原始参数列表
+
+    添加 `parser` 参数后, 可以自动处理消息并将结果保存在 `state["args"]` 中。
 
 
 
 * **参数**
 
     
-    * `shell_like_argsparser: Optional[ArgumentParser]`: `argparse.ArgumentParser` 对象, 是一个类 `shell` 的 `argsparser`
-
-
     * `*cmds: Union[str, Tuple[str, ...]]`: 命令内容
+
+
+    * `parser: Optional[ArgumentParser]`: `nonebot.rule.ArgumentParser` 对象
 
 
 
 * **示例**
 
-    使用默认 `command_start`, `command_sep` 配置
+    使用默认 `command_start`, `command_sep` 配置，更多示例参考 `argparse` 标准库文档。
 
-    命令 `("test",)` 可以匹配：`/test` 开头的消息
-    命令 `("test", "sub")` 可以匹配”`/test.sub` 开头的消息
 
-    当 `shell_like_argsparser` 的 `argument` 为 `-a` 时且 `action` 为 `store_true` ， `state["args"]["a"]` 将会记录 `True`
+```python
+from nonebot.rule import ArgumentParser
 
+parser = ArgumentParser()
+parser.add_argument("-a", type=bool)
+
+rule = shell_command("ls", parser=parser)
+```
 
 :::tip 提示
 命令内容与后续消息间无需空格！
