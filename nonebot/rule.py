@@ -9,18 +9,19 @@
 \:\:\:
 """
 
-from argparse import ArgumentParser
 import re
+import shlex
 import asyncio
 from itertools import product
-from typing import Any, Dict, Union, Tuple, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
-from loguru import logger
+from argparse import Namespace, ArgumentParser as ArgParser
+from typing import Any, Dict, Union, Tuple, Optional, Callable, Sequence, NoReturn, Awaitable, TYPE_CHECKING
 
 from pygtrie import CharTrie
 
 from nonebot import get_driver
 from nonebot.log import logger
 from nonebot.utils import run_sync
+from nonebot.exception import ParserExit
 from nonebot.typing import T_State, T_RuleChecker
 
 if TYPE_CHECKING:
@@ -278,7 +279,28 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
     return Rule(_command)
 
 
-def shell_like_command(shell_like_argsparser: Optional[ArgumentParser] = None, *cmds: Union[str, Tuple[str, ...]]) -> Rule:
+class ArgumentParser(ArgParser):
+
+    def _print_message(self, message, file=None):
+        pass
+
+    def exit(self, status=0, message=None):
+        raise ParserExit(status=status, message=message)
+
+    def parse_args(
+            self,
+            args: Optional[Sequence[str]] = None,
+            namespace: Optional[Namespace] = None
+    ) -> Union[ParserExit, Namespace]:
+        try:
+            return super().parse_args(args=args,
+                                      namespace=namespace)  # type: ignore
+        except ParserExit as e:
+            return e
+
+
+def shell_command(*cmds: Union[str, Tuple[str, ...]],
+                  parser: Optional[ArgumentParser] = None) -> Rule:
     """
     :说明:
 
@@ -286,29 +308,36 @@ def shell_like_command(shell_like_argsparser: Optional[ArgumentParser] = None, *
 
       可以通过 ``state["_prefix"]["command"]`` 获取匹配成功的命令（例：``("test",)``），通过 ``state["_prefix"]["raw_command"]`` 获取匹配成功的原始命令文本（例：``"/test"``）。
 
-      添加 ``shell_like_argpsarser`` 参数后, 可以自动处理消息并将结果保存在 ``state["args"]`` 中。
-      
-      
+      可以通过 ``state["argv"]`` 获取用户输入的原始参数列表
 
+      添加 ``parser`` 参数后, 可以自动处理消息并将结果保存在 ``state["args"]`` 中。
 
     :参数:
-      * ``shell_like_argsparser: Optional[ArgumentParser]``: ``argparse.ArgumentParser`` 对象, 是一个类 ``shell`` 的 ``argsparser``
 
       * ``*cmds: Union[str, Tuple[str, ...]]``: 命令内容
+      * ``parser: Optional[ArgumentParser]``: ``nonebot.rule.ArgumentParser`` 对象
 
     :示例:
 
-      使用默认 ``command_start``, ``command_sep`` 配置
+      使用默认 ``command_start``, ``command_sep`` 配置，更多示例参考 ``argparse`` 标准库文档。
 
-      命令 ``("test",)`` 可以匹配：``/test`` 开头的消息
-      命令 ``("test", "sub")`` 可以匹配”``/test.sub`` 开头的消息
-      
-      当 ``shell_like_argsparser`` 的 ``argument`` 为 ``-a`` 时且 ``action`` 为 ``store_true`` ， ``state["args"]["a"]`` 将会记录 ``True``
+    .. code-block:: python
+
+        from nonebot.rule import ArgumentParser
+
+        parser = ArgumentParser()
+        parser.add_argument("-a", type=bool)
+
+        rule = shell_command("ls", parser=parser)
 
     \:\:\:tip 提示
     命令内容与后续消息间无需空格！
     \:\:\:
     """
+    if not isinstance(parser, ArgumentParser):
+        raise TypeError(
+            "`parser` must be an instance of nonebot.rule.ArgumentParser")
+
     config = get_driver().config
     command_start = config.command_start
     command_sep = config.command_sep
@@ -324,24 +353,21 @@ def shell_like_command(shell_like_argsparser: Optional[ArgumentParser] = None, *
             for start, sep in product(command_start, command_sep):
                 TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
 
-    async def _shell_like_command(bot: "Bot", event: "Event", state: T_State) -> bool:
+    async def _shell_command(bot: "Bot", event: "Event",
+                             state: T_State) -> bool:
         if state["_prefix"]["command"] in commands:
-            if shell_like_argsparser:
-                message = str(event.get_message())
-                strip_message = message[len(
-                    state["_prefix"]["raw_command"]):].lstrip()
-                try:
-                    args = shell_like_argsparser.parse_args(
-                        strip_message.split())
-                    state["args"]=dict()
-                    state["args"].update(**args.__dict__)
-                except:
-                    pass
+            message = str(event.get_message())
+            strip_message = message[len(state["_prefix"]["raw_command"]
+                                       ):].lstrip()
+            state["argv"] = shlex.split(strip_message)
+            if parser:
+                args = parser.parse_args(state["argv"])
+                state["args"] = args
             return True
         else:
             return False
 
-    return Rule(_shell_like_command)
+    return Rule(_shell_command)
 
 
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
@@ -372,7 +398,6 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
             state["_matched"] = matched.group()
             return True
         else:
-            state["_matched"] = None
             return False
 
     return Rule(_regex)

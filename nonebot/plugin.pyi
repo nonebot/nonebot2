@@ -1,12 +1,11 @@
 import re
-from argparse import ArgumentParser
 from types import ModuleType
 from contextvars import ContextVar
 from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional
 
-from nonebot.rule import Rule
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
+from nonebot.rule import Rule, ArgumentParser
 from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
 
 plugins: Dict[str, "Plugin"] = ...
@@ -147,12 +146,11 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
     ...
 
 
-def on_shell_like_command(cmd: Union[str, Tuple[str, ...]],
-                          rule: Optional[Union[Rule, T_RuleChecker]] = None,
-                          aliases: Optional[Set[Union[str,
-                                                      Tuple[str, ...]]]] = None,
-                          shell_like_argsparser: Optional[ArgumentParser] = None,
-                          **kwargs) -> Type[Matcher]:
+def on_shell_command(cmd: Union[str, Tuple[str, ...]],
+                     rule: Optional[Union[Rule, T_RuleChecker]] = None,
+                     aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
+                     parser: Optional[ArgumentParser] = None,
+                     **kwargs) -> Type[Matcher]:
     ...
 
 
@@ -225,6 +223,22 @@ class CommandGroup:
                 block: bool = ...,
                 state: Optional[T_State] = ...,
                 state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
+        ...
+
+    def shell_command(
+            self,
+            cmd: Union[str, Tuple[str, ...]],
+            *,
+            rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+            aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
+            parser: Optional[ArgumentParser] = ...,
+            permission: Optional[Permission] = ...,
+            handlers: Optional[List[T_Handler]] = ...,
+            temp: bool = ...,
+            priority: int = ...,
+            block: bool = ...,
+            state: Optional[T_State] = ...,
+            state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
         ...
 
 
@@ -352,6 +366,22 @@ class MatcherGroup:
             cmd: Union[str, Tuple[str, ...]],
             rule: Optional[Union[Rule, T_RuleChecker]] = ...,
             aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
+            permission: Optional[Permission] = ...,
+            handlers: Optional[List[T_Handler]] = ...,
+            temp: bool = ...,
+            priority: int = ...,
+            block: bool = ...,
+            state: Optional[T_State] = ...,
+            state_factory: Optional[T_StateFactory] = ...) -> Type[Matcher]:
+        ...
+
+    def on_shell_command(
+            self,
+            *,
+            cmd: Union[str, Tuple[str, ...]],
+            rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+            aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
+            parser: Optional[ArgumentParser] = ...,
             permission: Optional[Permission] = ...,
             handlers: Optional[List[T_Handler]] = ...,
             temp: bool = ...,
