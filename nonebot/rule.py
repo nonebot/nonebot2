@@ -10,15 +10,18 @@
 """
 
 import re
+import shlex
 import asyncio
 from itertools import product
-from typing import Any, Dict, Union, Tuple, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
+from argparse import Namespace, ArgumentParser as ArgParser
+from typing import Any, Dict, Union, Tuple, Optional, Callable, Sequence, NoReturn, Awaitable, TYPE_CHECKING
 
 from pygtrie import CharTrie
 
 from nonebot import get_driver
 from nonebot.log import logger
 from nonebot.utils import run_sync
+from nonebot.exception import ParserExit
 from nonebot.typing import T_State, T_RuleChecker
 
 if TYPE_CHECKING:
@@ -276,13 +279,108 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
     return Rule(_command)
 
 
+class ArgumentParser(ArgParser):
+    """
+    :说明:
+
+      ``shell_like`` 命令参数解析器，解析出错时不会退出程序。
+    """
+
+    def _print_message(self, message, file=None):
+        pass
+
+    def exit(self, status=0, message=None):
+        raise ParserExit(status=status, message=message)
+
+    def parse_args(self,
+                   args: Optional[Sequence[str]] = None,
+                   namespace: Optional[Namespace] = None) -> Namespace:
+        return super().parse_args(args=args,
+                                  namespace=namespace)  # type: ignore
+
+
+def shell_command(*cmds: Union[str, Tuple[str, ...]],
+                  parser: Optional[ArgumentParser] = None) -> Rule:
+    """
+    :说明:
+
+      支持 ``shell_like`` 解析参数的命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
+
+      可以通过 ``state["_prefix"]["command"]`` 获取匹配成功的命令（例：``("test",)``），通过 ``state["_prefix"]["raw_command"]`` 获取匹配成功的原始命令文本（例：``"/test"``）。
+
+      可以通过 ``state["argv"]`` 获取用户输入的原始参数列表
+
+      添加 ``parser`` 参数后, 可以自动处理消息并将结果保存在 ``state["args"]`` 中。
+
+    :参数:
+
+      * ``*cmds: Union[str, Tuple[str, ...]]``: 命令内容
+      * ``parser: Optional[ArgumentParser]``: ``nonebot.rule.ArgumentParser`` 对象
+
+    :示例:
+
+      使用默认 ``command_start``, ``command_sep`` 配置，更多示例参考 ``argparse`` 标准库文档。
+
+    .. code-block:: python
+
+        from nonebot.rule import ArgumentParser
+
+        parser = ArgumentParser()
+        parser.add_argument("-a", action="store_true")
+
+        rule = shell_command("ls", parser=parser)
+
+    \:\:\:tip 提示
+    命令内容与后续消息间无需空格！
+    \:\:\:
+    """
+    if not isinstance(parser, ArgumentParser):
+        raise TypeError(
+            "`parser` must be an instance of nonebot.rule.ArgumentParser")
+
+    config = get_driver().config
+    command_start = config.command_start
+    command_sep = config.command_sep
+    commands = list(cmds)
+    for index, command in enumerate(commands):
+        if isinstance(command, str):
+            commands[index] = command = (command,)
+
+        if len(command) == 1:
+            for start in command_start:
+                TrieRule.add_prefix(f"{start}{command[0]}", command)
+        else:
+            for start, sep in product(command_start, command_sep):
+                TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
+
+    async def _shell_command(bot: "Bot", event: "Event",
+                             state: T_State) -> bool:
+        if state["_prefix"]["command"] in commands:
+            message = str(event.get_message())
+            strip_message = message[len(state["_prefix"]["raw_command"]
+                                       ):].lstrip()
+            state["argv"] = shlex.split(strip_message)
+            if parser:
+                try:
+                    args = parser.parse_args(state["argv"])
+                    state["args"] = args
+                except ParserExit as e:
+                    state["args"] = e
+            return True
+        else:
+            return False
+
+    return Rule(_shell_command)
+
+
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     """
     :说明:
 
       根据正则表达式进行匹配。
 
-      可以通过 ``state["_matched"]`` 获取正则表达式匹配成功的文本。
+      可以通过 ``state["_matched"]`` ``state["_matched_groups"]`` ``state["_matched_dict"]``
+      获取正则表达式匹配成功的文本。
 
     :参数:
 
@@ -302,9 +400,10 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
         matched = pattern.search(str(event.get_message()))
         if matched:
             state["_matched"] = matched.group()
+            state["_matched_groups"] = matched.groups()
+            state["_matched_dict"] = matched.groupdict()
             return True
         else:
-            state["_matched"] = None
             return False
 
     return Rule(_regex)

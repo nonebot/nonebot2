@@ -116,7 +116,7 @@ module.exports = context => ({
               title: "协议适配",
               collapsable: false,
               sidebar: "auto",
-              children: ["cqhttp-guide", "ding-guide"]
+              children: ["cqhttp-guide", "ding-guide", "mirai-guide"]
             }
           ],
           "/advanced/": [
@@ -209,6 +209,10 @@ module.exports = context => ({
                 {
                   title: "nonebot.adapters.ding 模块",
                   path: "adapters/ding"
+                },
+                {
+                  title: "nonebot.adapters.mirai 模块",
+                  path: "adapters/mirai"
                 }
               ]
             }

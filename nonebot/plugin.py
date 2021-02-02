@@ -19,7 +19,7 @@ from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
-from nonebot.rule import Rule, startswith, endswith, keyword, command, regex
+from nonebot.rule import Rule, startswith, endswith, keyword, command, shell_command, ArgumentParser, regex
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
@@ -425,7 +425,7 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
         segment = message.pop(0)
         new_message = message.__class__(
             str(segment)
-            [len(state["_prefix"]["raw_command"]):].strip())  # type: ignore
+            [len(state["_prefix"]["raw_command"]):].lstrip())  # type: ignore
         for new_segment in reversed(new_message):
             message.insert(0, new_segment)
 
@@ -434,6 +434,57 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
 
     commands = set([cmd]) | (aliases or set())
     return on_message(command(*commands) & rule, handlers=handlers, **kwargs)
+
+
+def on_shell_command(cmd: Union[str, Tuple[str, ...]],
+                     rule: Optional[Union[Rule, T_RuleChecker]] = None,
+                     aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
+                     parser: Optional[ArgumentParser] = None,
+                     **kwargs) -> Type[Matcher]:
+    """
+    :说明:
+
+      注册一个支持 ``shell_like`` 解析参数的命令消息事件响应器。
+
+      与普通的 ``on_command`` 不同的是，在添加 ``parser`` 参数时, 响应器会自动处理消息。
+
+      并将用户输入的原始参数列表保存在 ``state["argv"]``, ``parser`` 处理的参数保存在 ``state["args"]`` 中
+
+    :参数:
+
+      * ``cmd: Union[str, Tuple[str, ...]]``: 指定命令内容
+      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
+      * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
+      * ``parser: Optional[ArgumentParser]``: ``nonebot.rule.ArgumentParser`` 对象
+      * ``permission: Optional[Permission]``: 事件响应权限
+      * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
+      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+      * ``priority: int``: 事件响应器优先级
+      * ``block: bool``: 是否阻止事件向更低优先级传递
+      * ``state: Optional[T_State]``: 默认 state
+      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
+
+    :返回:
+
+      - ``Type[Matcher]``
+    """
+
+    async def _strip_cmd(bot: "Bot", event: "Event", state: T_State):
+        message = event.get_message()
+        segment = message.pop(0)
+        new_message = message.__class__(
+            str(segment)
+            [len(state["_prefix"]["raw_command"]):].strip())  # type: ignore
+        for new_segment in reversed(new_message):
+            message.insert(0, new_segment)
+
+    handlers = kwargs.pop("handlers", [])
+    handlers.insert(0, _strip_cmd)
+
+    commands = set([cmd]) | (aliases or set())
+    return on_message(shell_command(*commands, parser=parser) & rule,
+                      handlers=handlers,
+                      **kwargs)
 
 
 def on_regex(pattern: str,
@@ -512,6 +563,29 @@ class CommandGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         return on_command(cmd, **final_kwargs)
+
+    def shell_command(self, cmd: Union[str, Tuple[str, ...]],
+                      **kwargs) -> Type[Matcher]:
+        """
+        :说明:
+
+          注册一个新的命令。
+
+        :参数:
+
+          * ``cmd: Union[str, Tuple[str, ...]]``: 命令前缀
+          * ``**kwargs``: 其他传递给 ``on_command`` 的参数，将会覆盖命令组默认值
+
+        :返回:
+
+          - ``Type[Matcher]``
+        """
+        sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
+        cmd = self.basecmd + sub_cmd
+
+        final_kwargs = self.base_kwargs.copy()
+        final_kwargs.update(kwargs)
+        return on_shell_command(cmd, **final_kwargs)
 
 
 class MatcherGroup:
@@ -800,6 +874,59 @@ class MatcherGroup:
                                handlers=handlers,
                                **kwargs)
 
+    def on_shell_command(self,
+                         cmd: Union[str, Tuple[str, ...]],
+                         rule: Optional[Union[Rule, T_RuleChecker]] = None,
+                         aliases: Optional[Set[Union[str, Tuple[str,
+                                                                ...]]]] = None,
+                         parser: Optional[ArgumentParser] = None,
+                         **kwargs) -> Type[Matcher]:
+        """
+        :说明:
+
+        注册一个支持 ``shell_like`` 解析参数的命令消息事件响应器。
+
+        与普通的 ``on_command`` 不同的是，在添加 ``parser`` 参数时, 响应器会自动处理消息。
+
+        并将用户输入的原始参数列表保存在 ``state["argv"]``, ``parser`` 处理的参数保存在 ``state["args"]`` 中
+
+        :参数:
+
+        * ``cmd: Union[str, Tuple[str, ...]]``: 指定命令内容
+        * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
+        * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
+        * ``parser: Optional[ArgumentParser]``: ``nonebot.rule.ArgumentParser`` 对象
+        * ``permission: Optional[Permission]``: 事件响应权限
+        * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
+        * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
+        * ``priority: int``: 事件响应器优先级
+        * ``block: bool``: 是否阻止事件向更低优先级传递
+        * ``state: Optional[T_State]``: 默认 state
+        * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
+
+        :返回:
+
+        - ``Type[Matcher]``
+        """
+
+        async def _strip_cmd(bot: "Bot", event: "Event", state: T_State):
+            message = event.get_message()
+            segment = message.pop(0)
+            new_message = message.__class__(
+                str(segment)
+                [len(state["_prefix"]["raw_command"]):].strip())  # type: ignore
+            for new_segment in reversed(new_message):
+                message.insert(0, new_segment)
+
+        handlers = kwargs.pop("handlers", [])
+        handlers.insert(0, _strip_cmd)
+
+        commands = set([cmd]) | (aliases or set())
+        return self.on_message(rule=shell_command(*commands, parser=parser) &
+                               rule,
+                               handlers=handlers,
+                               **kwargs)
+
     def on_regex(self,
                  pattern: str,
                  flags: Union[int, re.RegexFlag] = 0,
@@ -933,7 +1060,7 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
     return loaded_plugins
 
 
-def load_builtin_plugins() -> Optional[Plugin]:
+def load_builtin_plugins(name: str = "echo") -> Optional[Plugin]:
     """
     :说明:
 
@@ -943,7 +1070,7 @@ def load_builtin_plugins() -> Optional[Plugin]:
 
       - ``Plugin``
     """
-    return load_plugin("nonebot.plugins.base")
+    return load_plugin(f"nonebot.plugins.{name}")
 
 
 def get_plugin(name: str) -> Optional[Plugin]:
