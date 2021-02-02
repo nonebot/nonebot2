@@ -145,9 +145,6 @@ build/Release
 node_modules/
 jspm_packages/
 
-# Dependency version lock
-yarn.lock
-
 # TypeScript v1 declaration files
 typings/
 
