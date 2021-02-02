@@ -4,7 +4,7 @@
 
 Mirai-API-HTTP 的适配现在仍然处于早期阶段, 可能没有进行过充分的测试
 
-请在生产环境中谨慎使用
+在生产环境中请谨慎使用
 
 :::
 
@@ -34,7 +34,7 @@ Mirai-API-HTTP 的适配器以 [AGPLv3 许可](https://opensource.org/licenses/A
 
 > 单纯运行 NoneBot 实例并不会产生任何效果，因为此刻 QQ 这边还不知道 NoneBot 的存在，也就无法把消息发送给它，因此现在需要使用一个无头 QQ 来把消息等事件上报给 NoneBot。
 
-这次, 我们将采用在实现上有别于 onebot<sup>即 CQHTTP</sup>协议的另外一种无头 QQ API 协议, 即 MAH
+这次, 我们将采用在实现上有别于 OneBot（CQHTTP）协议的另外一种无头 QQ API 协议, 即 MAH
 
 为了配置 MAH 端, 我们现在需要移步到[MAH 的项目地址](https://github.com/project-mirai/mirai-api-http), 来看看它是如何配置的
 

@@ -3,7 +3,7 @@ const path = require("path");
 module.exports = context => ({
   base: process.env.VUEPRESS_BASE || "/",
   title: "NoneBot",
-  description: "基于 酷Q 的 Python 异步 QQ 机器人框架",
+  description: "基于 OneBot 标准的 Python 异步 QQ 机器人框架",
   markdown: {
     lineNumbers: true
   },
@@ -56,7 +56,7 @@ module.exports = context => ({
     "/": {
       lang: "zh-CN",
       title: "NoneBot",
-      description: "基于 酷Q 的 Python 异步 QQ 机器人框架"
+      description: "基于 OneBot 标准的 Python 异步 QQ 机器人框架"
     }
   },
 

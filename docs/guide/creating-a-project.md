@@ -34,18 +34,18 @@ AweSome-Bot
 
 ## 启动 Bot
 
-如果你使用 `nb-cli`
+通过 `nb-cli`
 
 ```bash
 nb run [--file=bot.py] [--app=app]
 ```
 
-或者使用
+或
 
 ```bash
 python bot.py
 ```
 
 :::tip 提示
-如果在 bot 入口文件内定义了 asgi server， `nb-cli` 将会为你启动**冷重载模式**
+如果在 bot 入口文件内定义了 asgi server， `nb-cli` 将会为你启动**冷重载模式**（当文件发生变动时自动重启 NoneBot 实例）
 :::

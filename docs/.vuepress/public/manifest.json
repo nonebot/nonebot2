@@ -3,7 +3,7 @@
   "short_name": "NoneBot",
   "background-color": "#ffffff",
   "theme-color": "#ea5252",
-  "description": "An asynchronous python bot framework.",
+  "description": "基于 OneBot 标准的 Python 异步 QQ 机器人框架",
   "display": "standalone",
   "icons": [
     {
