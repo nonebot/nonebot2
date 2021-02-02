@@ -34,6 +34,9 @@ sidebarDepth: 0
 * `on_command` => `nonebot.plugin.on_command`
 
 
+* `on_shell_command` => `nonebot.plugin.on_shell_command`
+
+
 * `on_regex` => `nonebot.plugin.on_regex`
 
 

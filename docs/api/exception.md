@@ -40,6 +40,27 @@ sidebarDepth: 0
 
 
 
+## _exception_ `ParserExit`
+
+基类：`nonebot.exception.NoneBotException`
+
+
+* **说明**
+
+    `shell command` 处理消息失败时返回的异常
+
+
+
+* **参数**
+
+    
+    * `status`
+
+
+    * `message`
+
+
+
 ## _exception_ `PausedException`
 
 基类：`nonebot.exception.NoneBotException`

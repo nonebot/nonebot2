@@ -78,5 +78,61 @@
     "desc": "多语种翻译插件",
     "name": "translator",
     "repo": "Lancercmd/nonebot_plugin_translator"
+  },
+  {
+    "id": "nonebot_plugin_simdraw",
+    "link": "nonebot-plugin-simdraw",
+    "author": "abrahum",
+    "desc": "根据配置的手游卡池信息模拟抽卡",
+    "name": "模拟抽卡",
+    "repo": "abrahum/nonebot_plugin_simdraw"
+  },
+  {
+    "id": "nonebot-plugin-wordbank",
+    "link": "nonebot-plugin-wordbank",
+    "author": "Joenothing-lst",
+    "desc": "无数据库的轻量问答插件，支持模糊问答",
+    "name": "nonebot-plugin-wordbank",
+    "repo": "Joenothing-lst/word-bank"
+  },
+  {
+    "id": "nonebot_plugin_cooldown",
+    "link": "nonebot-plugin-cooldown",
+    "author": "jks15satoshi",
+    "desc": "为用户调用功能添加冷却时间（调用频率限制）功能",
+    "name": "冷却事件",
+    "repo": "jks15satoshi/nonebot-plugin-cooldown"
+  },
+  {
+    "id": "nonebot_plugin_mqtt",
+    "link": "nonebot-plugin-mqtt",
+    "author": "synodriver",
+    "desc": "接入mqtt网络,订阅和发布消息",
+    "name": "mqtt接入",
+    "repo": "synodriver/nonebot_plugin_mqtt"
+  },
+  {
+    "id": "nonebot-plugin-ipypreter",
+    "link": "nonebot-plugin-ipypreter",
+    "author": "iyume",
+    "desc": "消息交互式 python 解释器",
+    "name": "消息交互式 python 解释器",
+    "repo": "iyume/nonebot-plugin-ipypreter"
+  },
+  {
+    "id": "nonebot_plugin_songpicker2",
+    "link": "nonebot-plugin-songpicker2",
+    "author": "maxesisn",
+    "desc": "点播歌曲，支持候选菜单、热评显示，数据源为网易云",
+    "name": "songpicker2",
+    "repo": "maxesisn/nonebot_plugin_songpicker2"
+  },
+  {
+    "id": "nonebot_plugin_styledstr",
+    "link": "nonebot-plugin-styledstr",
+    "author": "jks15satoshi",
+    "desc": "通过字符串标签管理字符串资源",
+    "name": "风格化字符串管理",
+    "repo": "jks15satoshi/nonebot_plugin_styledstr"
   }
 ]

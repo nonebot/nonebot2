@@ -170,6 +170,61 @@ Rule(async_function, run_sync(sync_function))
 :::
 
 
+## _class_ `ArgumentParser`
+
+基类：`argparse.ArgumentParser`
+
+
+* **说明**
+
+    `shell_like` 命令参数解析器，解析出错时不会退出程序。
+
+
+
+## `shell_command(*cmds, parser=None)`
+
+
+* **说明**
+
+    支持 `shell_like` 解析参数的命令形式匹配，根据配置里提供的 `command_start`, `command_sep` 判断消息是否为命令。
+
+    可以通过 `state["_prefix"]["command"]` 获取匹配成功的命令（例：`("test",)`），通过 `state["_prefix"]["raw_command"]` 获取匹配成功的原始命令文本（例：`"/test"`）。
+
+    可以通过 `state["argv"]` 获取用户输入的原始参数列表
+
+    添加 `parser` 参数后, 可以自动处理消息并将结果保存在 `state["args"]` 中。
+
+
+
+* **参数**
+
+    
+    * `*cmds: Union[str, Tuple[str, ...]]`: 命令内容
+
+
+    * `parser: Optional[ArgumentParser]`: `nonebot.rule.ArgumentParser` 对象
+
+
+
+* **示例**
+
+    使用默认 `command_start`, `command_sep` 配置，更多示例参考 `argparse` 标准库文档。
+
+
+```python
+from nonebot.rule import ArgumentParser
+
+parser = ArgumentParser()
+parser.add_argument("-a", type=bool)
+
+rule = shell_command("ls", parser=parser)
+```
+
+:::tip 提示
+命令内容与后续消息间无需空格！
+:::
+
+
 ## `regex(regex, flags=0)`
 
 
