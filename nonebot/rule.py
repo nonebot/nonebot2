@@ -326,7 +326,7 @@ def shell_command(*cmds: Union[str, Tuple[str, ...]],
         from nonebot.rule import ArgumentParser
 
         parser = ArgumentParser()
-        parser.add_argument("-a", type=bool)
+        parser.add_argument("-a", action="store_true")
 
         rule = shell_command("ls", parser=parser)
 

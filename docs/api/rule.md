@@ -215,7 +215,7 @@ Rule(async_function, run_sync(sync_function))
 from nonebot.rule import ArgumentParser
 
 parser = ArgumentParser()
-parser.add_argument("-a", type=bool)
+parser.add_argument("-a", action="store_true")
 
 rule = shell_command("ls", parser=parser)
 ```

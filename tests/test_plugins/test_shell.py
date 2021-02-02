@@ -4,7 +4,7 @@ from nonebot import on_shell_command
 from nonebot.rule import to_me, ArgumentParser
 
 parser = ArgumentParser()
-parser.add_argument("-a", type=bool)
+parser.add_argument("-a", action="store_true")
 
 shell = on_shell_command("ls", to_me(), parser=parser)
 

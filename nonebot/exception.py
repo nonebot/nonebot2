@@ -53,6 +53,12 @@ class ParserExit(NoneBotException):
         self.status = status
         self.message = message
 
+    def __repr__(self):
+        return f"<ParserExit status={self.status} message={self.message}>"
+
+    def __str__(self):
+        return self.__repr__()
+
 
 class PausedException(NoneBotException):
     """
