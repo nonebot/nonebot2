@@ -2,7 +2,7 @@
 
 到目前为止我们还在使用 NoneBot 的默认行为，在开始编写自己的插件之前，我们先尝试在配置文件上动动手脚，让 NoneBot 表现出不同的行为。
 
-在上一章节中，我们创建了默认的项目结构，其中 `.env`, `.env.*` 均为项目的配置文件，下面将介绍几种 NoneBot 配置方式。
+在上一章节中，我们创建了默认的项目结构，其中 `.env` 和 `.env.*` 均为项目的配置文件，下面将介绍几种 NoneBot 配置方式。
 
 :::danger 警告
 请勿将敏感信息写入配置文件并提交至开源仓库！
@@ -83,4 +83,4 @@ config.custom_config4 = "new config after init"
 
 ## 优先级
 
-`bot.py init` > `system env` > `env file`
+`bot.py` 文件( `nonebot.init` ) > 系统环境变量 > `.env` `.env.*` 文件

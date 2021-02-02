@@ -1,7 +1,7 @@
 ---
 home: true
 heroImage: /logo.png
-tagline: An asynchronous bot framework.
+tagline: 跨平台 Python 异步 QQ 机器人框架
 actionText: 开始使用
 actionLink: guide/
 features:
