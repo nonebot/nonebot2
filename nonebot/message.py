@@ -115,6 +115,7 @@ async def _check_matcher(priority: int, Matcher: Type[Matcher], bot: "Bot",
     except Exception as e:
         logger.opt(colors=True, exception=e).error(
             f"<r><bg #f8bbd0>Rule check failed for {Matcher}.</bg #f8bbd0></r>")
+        return
 
     if Matcher.temp:
         try:
