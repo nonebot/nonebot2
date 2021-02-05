@@ -320,8 +320,8 @@ class MatcherGroup:
 
     def on_startswith(
             self,
-            *,
             msg: str,
+            *,
             rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
             permission: Optional[Permission] = ...,
             handlers: Optional[List[T_Handler]] = ...,
@@ -334,8 +334,8 @@ class MatcherGroup:
 
     def on_endswith(
             self,
-            *,
             msg: str,
+            *,
             rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
             permission: Optional[Permission] = ...,
             handlers: Optional[List[T_Handler]] = ...,
@@ -348,8 +348,8 @@ class MatcherGroup:
 
     def on_keyword(
             self,
-            *,
             keywords: Set[str],
+            *,
             rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
             permission: Optional[Permission] = ...,
             handlers: Optional[List[T_Handler]] = ...,
@@ -362,10 +362,10 @@ class MatcherGroup:
 
     def on_command(
             self,
-            *,
             cmd: Union[str, Tuple[str, ...]],
-            rule: Optional[Union[Rule, T_RuleChecker]] = ...,
             aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
+            *,
+            rule: Optional[Union[Rule, T_RuleChecker]] = ...,
             permission: Optional[Permission] = ...,
             handlers: Optional[List[T_Handler]] = ...,
             temp: bool = ...,
@@ -377,11 +377,11 @@ class MatcherGroup:
 
     def on_shell_command(
             self,
-            *,
             cmd: Union[str, Tuple[str, ...]],
-            rule: Optional[Union[Rule, T_RuleChecker]] = ...,
             aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
             parser: Optional[ArgumentParser] = ...,
+            *,
+            rule: Optional[Union[Rule, T_RuleChecker]] = ...,
             permission: Optional[Permission] = ...,
             handlers: Optional[List[T_Handler]] = ...,
             temp: bool = ...,
@@ -393,9 +393,9 @@ class MatcherGroup:
 
     def on_regex(
             self,
-            *,
             pattern: str,
             flags: Union[int, re.RegexFlag] = 0,
+            *,
             rule: Optional[Rule] = ...,
             permission: Optional[Permission] = ...,
             handlers: Optional[List[T_Handler]] = ...,
