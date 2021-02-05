@@ -31,6 +31,7 @@ fastapi = "^0.63.0"
 uvicorn = "^0.11.5"
 websockets = "^8.1"
 pydantic = {extras = ["dotenv", "typing_extensions"], version = "^1.7.3"}
+Quart = {version = "^0.14.1", optional = true, extras = ["quart"]}
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.30.0"
