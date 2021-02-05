@@ -4,7 +4,7 @@
 
 > Advanced Python Scheduler (APScheduler) is a Python library that lets you schedule your Python code to be executed later, either just once or periodically. You can add new jobs or remove old ones on the fly as you please. If you store your jobs in a database, they will also survive scheduler restarts and maintain their state. When the scheduler is restarted, it will then run all the jobs it should have run while it was offline.
 
-## 从 v1 迁移
+## 从 NoneBot v1 迁移
 
 `APScheduler` 作为 `nonebot` v1 的可选依赖，为众多 bot 提供了方便的定时任务功能。`nonebot2` 已将 `APScheduler` 独立为 `nonebot_plugin_apscheduler` 插件，你可以在 [插件广场](https://v2.nonebot.dev/plugin-store.html) 中找到它。
 
@@ -21,7 +21,7 @@ nb plugin install nonebot_plugin_apscheduler
 ```
 
 :::tip 提示
-`nb-cli` 默认通过 `pypi` 安装，你可以使用 `-i [mirror]` 或 `--index [mirror]` 来使用镜像源安装。
+`nb-cli` 默认通过 `pypi` 安装，你可以添加命令参数 `-i [mirror]` 或 `--index [mirror]` 以使用镜像源安装。
 :::
 
 ### 通过 poetry
@@ -96,9 +96,13 @@ scheduler = require('nonebot_plugin_apscheduler').scheduler
 
 对于大多数情况，我们需要在 `nonebot2` 项目被启动时启动定时任务，则此处设为 `true`
 
+##### 在 `.env` 中添加
+
 ```bash
 APSCHEDULER_AUTOSTART=true
 ```
+
+##### 在 `bot.py` 中添加
 
 ```python
 nonebot.init(apscheduler_autostart=True)
@@ -116,9 +120,13 @@ nonebot.init(apscheduler_autostart=True)
 
 > 官方文档在绝大多数时候能提供最准确和最具时效性的指南
 
+##### 在 `.env` 中添加
+
 ```bash
 APSCHEDULER_CONFIG={"apscheduler.timezone": "Asia/Shanghai"}
 ```
+
+##### 在 `bot.py` 中添加
 
 ```python
 nonebot.init(apscheduler_config={
