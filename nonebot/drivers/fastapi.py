@@ -28,9 +28,39 @@ from nonebot.drivers import Driver as BaseDriver, WebSocket as BaseWebSocket
 
 
 class Config(BaseSettings):
+    """
+    FastAPI 驱动框架设置，详情参考 FastAPI 文档
+    """
     fastapi_openapi_url: Optional[str] = None
+    """
+    :类型:
+
+      ``Optional[str]``
+
+    :说明:
+
+      `openapi.json` 地址，默认为 `None` 即关闭
+    """
     fastapi_docs_url: Optional[str] = None
+    """
+    :类型:
+
+      ``Optional[str]``
+
+    :说明:
+
+      `swagger` 地址，默认为 `None` 即关闭
+    """
     fastapi_redoc_url: Optional[str] = None
+    """
+    :类型:
+
+      ``Optional[str]``
+
+    :说明:
+
+      `redoc` 地址，默认为 `None` 即关闭
+    """
 
     class Config:
         extra = "ignore"

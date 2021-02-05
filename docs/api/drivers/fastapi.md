@@ -10,6 +10,58 @@ sidebarDepth: 0
 后端使用方法请参考: [FastAPI 文档](https://fastapi.tiangolo.com/)
 
 
+## _class_ `Config`
+
+基类：`pydantic.env_settings.BaseSettings`
+
+FastAPI 驱动框架设置，详情参考 FastAPI 文档
+
+
+### `fastapi_openapi_url`
+
+
+* **类型**
+
+    `Optional[str]`
+
+
+
+* **说明**
+
+    openapi.json 地址，默认为 None 即关闭
+
+
+
+### `fastapi_docs_url`
+
+
+* **类型**
+
+    `Optional[str]`
+
+
+
+* **说明**
+
+    swagger 地址，默认为 None 即关闭
+
+
+
+### `fastapi_redoc_url`
+
+
+* **类型**
+
+    `Optional[str]`
+
+
+
+* **说明**
+
+    redoc 地址，默认为 None 即关闭
+
+
+
 ## _class_ `Driver`
 
 基类：[`nonebot.drivers.Driver`](README.md#nonebot.drivers.Driver)

@@ -8,6 +8,12 @@ NoneBot.adapters.cqhttp 模块
 
 .. automodule:: nonebot.adapters.cqhttp
 
+NoneBot.adapters.cqhttp.config 模块
+===================================
+
+.. automodule:: nonebot.adapters.cqhttp.config
+   :members:
+
 NoneBot.adapters.cqhttp.utils 模块
 ===================================
 

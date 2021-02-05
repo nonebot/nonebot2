@@ -9,6 +9,23 @@ sidebarDepth: 0
 
 协议详情请看: [CQHTTP](https://github.com/howmanybots/onebot/blob/master/README.md) | [OneBot](https://github.com/howmanybots/onebot/blob/master/README.md)
 
+# NoneBot.adapters.cqhttp.config 模块
+
+
+## _class_ `Config`
+
+CQHTTP 配置类
+
+
+* **配置项**
+
+    
+    * `access_token` / `cqhttp_access_token`: CQHTTP 协议授权令牌
+
+
+    * `secret` / `cqhttp_secret`: CQHTTP HTTP 上报数据签名口令
+
+
 # NoneBot.adapters.cqhttp.utils 模块
 
 

@@ -8,6 +8,12 @@ NoneBot.adapters.mirai 模块
 
 .. automodule:: nonebot.adapters.mirai
 
+NoneBot.adapters.mirai.config 模块
+==================================
+
+.. automodule:: nonebot.adapters.mirai.config
+   :members:
+
 NoneBot.adapters.mirai.bot 模块
 ===============================
 
@@ -19,13 +25,6 @@ NoneBot.adapters.mirai.bot_ws 模块
 ==================================
 
 .. automodule:: nonebot.adapters.mirai.bot_ws
-   :members:
-   :show-inheritance:
-
-NoneBot.adapters.mirai.config 模块
-==================================
-
-.. automodule:: nonebot.adapters.mirai.config
    :members:
    :show-inheritance:
 
