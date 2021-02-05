@@ -425,7 +425,8 @@ class Bot(BaseBot):
           - ``NetworkError``: 网络错误
           - ``ActionFailed``: API 调用失败
         """
-        message = escape(message) if isinstance(message, str) else message
+        message = escape(message, escape_comma=False) if isinstance(
+            message, str) else message
         msg = message if isinstance(message, Message) else Message(message)
 
         at_sender = at_sender and getattr(event, "user_id", None)
