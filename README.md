@@ -75,7 +75,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 
 - [OneBot(CQHTTP) 协议](https://github.com/howmanybots/onebot/blob/master/README.md) (QQ 等)
 - [Mirai-API-HTTP 协议](https://github.com/project-mirai/mirai-api-http)
-- [钉钉](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p) _开发中_
+- [钉钉](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p)
 - [Telegram](https://core.telegram.org/bots/api) _计划中_
 
 ## 即刻开始

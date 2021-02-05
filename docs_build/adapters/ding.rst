@@ -8,6 +8,12 @@ NoneBot.adapters.ding 模块
 
 .. automodule:: nonebot.adapters.ding
 
+NoneBot.adapters.ding.config 模块
+===================================
+
+.. automodule:: nonebot.adapters.ding.config
+   :members:
+
 NoneBot.adapters.ding.exception 模块
 =====================================
 

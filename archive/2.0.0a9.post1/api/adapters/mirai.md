@@ -21,6 +21,26 @@ Mirai-API-HTTP 的适配器以 [AGPLv3许可](https://opensource.org/licenses/AG
 这意味着在使用该适配器时需要 **以该许可开源您的完整程序代码**
 :::
 
+# NoneBot.adapters.mirai.config 模块
+
+
+## _class_ `Config`
+
+Mirai 配置类
+
+
+* **必填**
+
+    
+    * `auth_key` / `mirai_auth_key`: mirai-api-http 的 auth_key
+
+
+    * `mirai_host`: mirai-api-http 的地址
+
+
+    * `mirai_port`: mirai-api-http 的端口
+
+
 # NoneBot.adapters.mirai.bot 模块
 
 
@@ -688,28 +708,6 @@ mirai-api-http 正向 Websocket 协议 Bot 适配。
 
 
     * `qq: int`: 要使用的Bot的QQ号 **注意: 在使用正向Websocket时必须指定该值!**
-
-
-# NoneBot.adapters.mirai.config 模块
-
-
-## _class_ `Config`
-
-基类：`pydantic.main.BaseModel`
-
-Mirai 配置类
-
-
-* **必填**
-
-    
-    * `mirai_auth_key`: mirai-api-http的auth_key
-
-
-    * `mirai_host`: mirai-api-http的地址
-
-
-    * `mirai_port`: mirai-api-http的端口
 
 
 # NoneBot.adapters.mirai.message 模块

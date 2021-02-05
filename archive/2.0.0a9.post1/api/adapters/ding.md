@@ -9,6 +9,23 @@ sidebarDepth: 0
 
 协议详情请看: [钉钉文档](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p)
 
+# NoneBot.adapters.ding.config 模块
+
+
+## _class_ `Config`
+
+钉钉配置类
+
+
+* **配置项**
+
+    
+    * `access_token` / `ding_access_token`: 钉钉令牌
+
+
+    * `secret` / `ding_secret`: 钉钉 HTTP 上报数据签名口令
+
+
 # NoneBot.adapters.ding.exception 模块
 
 

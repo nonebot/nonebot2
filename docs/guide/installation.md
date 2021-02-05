@@ -7,7 +7,7 @@
 :::
 
 :::warning 注意
-请在安装 nonebot2 之前卸载 nonebot 1.x
+请在安装 NoneBot v2 之前卸载 NoneBot v1
 
 ```bash
 pip uninstall nonebot
@@ -15,10 +15,10 @@ pip uninstall nonebot
 
 :::
 
-### 通过脚手架安装(推荐安装方式)
+### (推荐安装方式)通过脚手架安装
 
-1. (推荐)使用你喜欢的 Python 环境管理工具(如 `poetry`)创建新的虚拟环境。
-2. 使用 `pip` (或其他包管理工具) 安装 nb-cli，nonebot2 作为其依赖会一起被安装。
+1. (推荐)使用你喜欢的 Python 环境管理工具(如 `poetry`)创建新的虚拟环境
+2. 使用 `pip` 或 其他包管理工具 安装 `nb-cli`，`nonebot2` 会作为其依赖被一起安装
 
    ```bash
    pip install nb-cli
@@ -26,17 +26,17 @@ pip uninstall nonebot
 
 3. 点个 star 吧
 
-   nonebot2: [![nb-cli](https://img.shields.io/github/stars/nonebot/nonebot2?style=social)](https://github.com/nonebot/nonebot2)
+   nonebot2: [![nonebot2](https://img.shields.io/github/stars/nonebot/nonebot2?style=social)](https://github.com/nonebot/nonebot2)
 
    nb-cli: [![nb-cli](https://img.shields.io/github/stars/nonebot/nb-cli?style=social)](https://github.com/nonebot/nb-cli)
 
-4. 如果有疑问，可以加群交流 (点击链接直达)
+4. 如果有疑问，可以加群交流(点击链接直达)
 
    [![QQ Chat](https://img.shields.io/badge/QQ%E7%BE%A4-768887710-orange?style=social)](https://jq.qq.com/?_wv=1027&k=5OFifDh)
 
    [![Telegram Chat](https://img.shields.io/badge/telegram-cqhttp-blue?style=social)](https://t.me/cqhttp)
 
-### 不使用脚手架(纯净安装)
+### (纯净安装)不使用脚手架
 
 ```bash
 pip install nonebot2
@@ -83,8 +83,6 @@ nb plugin install xxx
 如果急于上线 Bot 或想要使用现成的插件，以下插件可作为参考：
 
 ### 官方插件
-
-~~自用插件~~ ~~确信~~
 
 - [NoneBot-Plugin-Docs](https://github.com/nonebot/nonebot2/tree/master/packages/nonebot-plugin-docs) 离线文档插件
 - [NoneBot-Plugin-Test](https://github.com/nonebot/plugin-test) 本地机器人测试前端插件

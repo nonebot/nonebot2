@@ -960,7 +960,7 @@ def something_else():
 
 
 
-### `on_startswith(msg, rule=None, **kwargs)`
+### `on_startswith(msg, **kwargs)`
 
 
 * **说明**
@@ -1007,7 +1007,7 @@ def something_else():
 
 
 
-### `on_endswith(msg, rule=None, **kwargs)`
+### `on_endswith(msg, **kwargs)`
 
 
 * **说明**
@@ -1054,7 +1054,7 @@ def something_else():
 
 
 
-### `on_keyword(keywords, rule=None, **kwargs)`
+### `on_keyword(keywords, **kwargs)`
 
 
 * **说明**
@@ -1101,7 +1101,7 @@ def something_else():
 
 
 
-### `on_command(cmd, rule=None, aliases=None, **kwargs)`
+### `on_command(cmd, aliases=None, **kwargs)`
 
 
 * **说明**
@@ -1118,10 +1118,10 @@ def something_else():
     * `cmd: Union[str, Tuple[str, ...]]`: 指定命令内容
 
 
-    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
-
-
     * `aliases: Optional[Set[Union[str, Tuple[str, ...]]]]`: 命令别名
+
+
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
     * `permission: Optional[Permission]`: 事件响应权限
@@ -1153,64 +1153,64 @@ def something_else():
 
 
 
-### `on_shell_command(cmd, rule=None, aliases=None, parser=None, **kwargs)`
+### `on_shell_command(cmd, aliases=None, parser=None, **kwargs)`
 
 
 * **说明**
 
+    注册一个支持 `shell_like` 解析参数的命令消息事件响应器。
 
-注册一个支持 `shell_like` 解析参数的命令消息事件响应器。
+    与普通的 `on_command` 不同的是，在添加 `parser` 参数时, 响应器会自动处理消息。
 
-与普通的 `on_command` 不同的是，在添加 `parser` 参数时, 响应器会自动处理消息。
+    并将用户输入的原始参数列表保存在 `state["argv"]`, `parser` 处理的参数保存在 `state["args"]` 中
 
-并将用户输入的原始参数列表保存在 `state["argv"]`, `parser` 处理的参数保存在 `state["args"]` 中
 
 
 * **参数**
 
+    
+    * `cmd: Union[str, Tuple[str, ...]]`: 指定命令内容
 
 
-* `cmd: Union[str, Tuple[str, ...]]`: 指定命令内容
+    * `aliases: Optional[Set[Union[str, Tuple[str, ...]]]]`: 命令别名
 
 
-* `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+    * `parser: Optional[ArgumentParser]`: `nonebot.rule.ArgumentParser` 对象
 
 
-* `aliases: Optional[Set[Union[str, Tuple[str, ...]]]]`: 命令别名
+    * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-* `parser: Optional[ArgumentParser]`: `nonebot.rule.ArgumentParser` 对象
+    * `permission: Optional[Permission]`: 事件响应权限
 
 
-* `permission: Optional[Permission]`: 事件响应权限
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
-* `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `temp: bool`: 是否为临时事件响应器（仅执行一次）
 
 
-* `temp: bool`: 是否为临时事件响应器（仅执行一次）
+    * `priority: int`: 事件响应器优先级
 
 
-* `priority: int`: 事件响应器优先级
+    * `block: bool`: 是否阻止事件向更低优先级传递
 
 
-* `block: bool`: 是否阻止事件向更低优先级传递
+    * `state: Optional[T_State]`: 默认 state
 
 
-* `state: Optional[T_State]`: 默认 state
+    * `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
-
-* `state_factory: Optional[T_StateFactory]`: 默认 state 的工厂函数
 
 
 * **返回**
 
+    
+    * `Type[Matcher]`
 
 
-* `Type[Matcher]`
 
-
-### `on_regex(pattern, flags=0, rule=None, **kwargs)`
+### `on_regex(pattern, flags=0, **kwargs)`
 
 
 * **说明**
