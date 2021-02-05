@@ -418,7 +418,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         bot = current_bot.get()
         event = current_event.get()
-        await bot.send(event=event, message=message, **kwargs)
+        return await bot.send(event=event, message=message, **kwargs)
 
     @classmethod
     async def finish(cls,
