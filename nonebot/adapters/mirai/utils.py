@@ -20,23 +20,29 @@ _AnyCallable = TypeVar("_AnyCallable", bound=Callable)
 
 
 class Log:
-    _log = logger_wrapper('MIRAI')
+
+    @staticmethod
+    def _log(level: str, message: Any, exception: Optional[Exception] = None):
+        logger = logger_wrapper('MIRAI')
+        logger(level=level,
+               message=escape_tag(str(message)),
+               exception=exception)
 
     @classmethod
     def info(cls, message: Any):
-        cls._log('INFO', str(message))
+        cls._log('INFO', escape_tag(str(message)))
 
     @classmethod
     def debug(cls, message: Any):
-        cls._log('DEBUG', str(message))
+        cls._log('DEBUG', escape_tag(str(message)))
 
     @classmethod
     def warn(cls, message: Any):
-        cls._log('WARNING', str(message))
+        cls._log('WARNING', escape_tag(str(message)))
 
     @classmethod
     def error(cls, message: Any, exception: Optional[Exception] = None):
-        cls._log('ERROR', str(message), exception=exception)
+        cls._log('ERROR', escape_tag(str(message)), exception=exception)
 
 
 class ActionFailed(exception.ActionFailed):
