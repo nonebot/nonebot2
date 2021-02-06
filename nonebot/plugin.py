@@ -13,7 +13,7 @@ from types import ModuleType
 from dataclasses import dataclass
 from importlib._bootstrap import _load
 from contextvars import Context, ContextVar, copy_context
-from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, TYPE_CHECKING
+from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, TYPE_CHECKING, Iterable
 
 from nonebot.log import logger
 from nonebot.matcher import Matcher
@@ -22,7 +22,7 @@ from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
 from nonebot.rule import Rule, startswith, endswith, keyword, command, shell_command, ArgumentParser, regex
 
 if TYPE_CHECKING:
-    from nonebot.adapters import Bot, Event
+    from nonebot.adapters import Bot, Event, MessageSegment
 
 plugins: Dict[str, "Plugin"] = {}
 """
@@ -421,13 +421,16 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
     """
 
     async def _strip_cmd(bot: "Bot", event: "Event", state: T_State):
-        message = event.get_message()
-        segment = message.pop(0)
-        new_message = message.__class__(
-            str(segment)
-            [len(state["_prefix"]["raw_command"]):].lstrip())  # type: ignore
-        for new_segment in reversed(new_message):
-            message.insert(0, new_segment)
+        message: Iterable[MessageSegment] = event.get_message()
+        text_processed = False
+        for index, segment in enumerate(message):
+            segment: MessageSegment = message.pop(index)
+            if segment.is_text() and not text_processed:
+                segment, *_ = message.__class__(
+                    str(segment)[len(state["_prefix"]["raw_command"]):].lstrip(
+                    ))  # type: ignore
+                text_processed = True
+            message.insert(index, segment)
 
     handlers = kwargs.pop("handlers", [])
     handlers.insert(0, _strip_cmd)
