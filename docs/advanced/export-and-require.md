@@ -15,7 +15,11 @@
 
 在上面的条件中涉及到了两种操作：一种是在`pluginA`的`导出对象`操作；而另一种是在`pluginB`的`导入对象`操作。在`nonebot2`中，`导出对象`的操作用`export`机制来实现，`导入对象`的操作用`require`机制来实现。下面，我们将逐一进行介绍。
 
-:::warning  提示  使用这个方法进行跨插件访问时，**需要先加载`导出对象`的插件，再加载`导入对象`的插件。**
+:::warning  警告  
+
+使用这个方法进行跨插件访问时，**需要先加载`导出对象`的插件，再加载`导入对象`的插件。**
+
+:::
 
 ### 使用export
 
@@ -40,14 +44,14 @@ from nonebot.plugin import export
 export=export()
 ```
 
-这个字典可以用来装载导出的对象，它的key是对象导出后的命名，value是对象本身：
+这个字典可以用来装载导出的对象，它的key是对象导出后的命名，value是对象本身，我们可以直接创建新的`key`-`value`对导出对象：
 
 ```python
 export["vA"] = varA
 export["fA"] = funcA
 ```
 
-除了使用`export[key]=value`方法导出对象外，还支持`export.key=value`导出对象：
+除此之外，也支持`设置属性`的办法来导出对象：
 
 ```python
 export.vA = varA
@@ -61,7 +65,7 @@ def funcA():
 	return "funcA"
 ```
 
-对于`python 3.9`以上版本，还可以这样：
+或者:
 
 ```python
 @export
@@ -82,6 +86,12 @@ export["funcA"] = funcA
 ### 使用require
 
 在`pluginB`中，我们调用`require`机制`导入对象`。
+
+:::warning 警告
+
+ 在导入来自其他插件的对象时, 请确保导出该对象的插件在引用该对象的插件之前加载。
+
+:::
 
 我们可以从`nonebot.plugin`中导入`require()`方法：
 
