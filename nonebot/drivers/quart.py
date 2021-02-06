@@ -32,7 +32,8 @@ try:
     from quart import request as _request
     from quart import websocket as _websocket
 except ImportError:
-    raise ValueError('Quart not fount, please install quart first')
+    raise ValueError(
+        'Please install Quart by using `pip install nonebot2[quart]`')
 
 _AsyncCallable = TypeVar("_AsyncCallable", bound=Callable[..., Coroutine])
 
@@ -43,7 +44,7 @@ class Driver(BaseDriver):
 
     :上报地址:
 
-      * ``/{adapter name}/http/``: HTTP POST 上报
+      * ``/{adapter name}/http``: HTTP POST 上报
       * ``/{adapter name}/ws``: WebSocket 上报
     """
 
@@ -52,22 +53,11 @@ class Driver(BaseDriver):
         super().__init__(env, config)
 
         self._server_app = Quart(self.__class__.__qualname__)
-
-    @overrides(BaseDriver)
-    def register_adapter(self, name: str, adapter: Type["Bot"], **kwargs):
-        """向 Quart 路由添加对应 adapter 响应的 handler"""
-        if name in self._adapters:
-            return
-
-        super().register_adapter(name, adapter, **kwargs)
-
-        @self.server_app.route(f'/{name}/http', endpoint=name + '_http')
-        async def _http_handler():
-            await self._handle_http(name)
-
-        @self.server_app.websocket(f'/{name}/ws', endpoint=name + '_ws')
-        async def _ws_handler():
-            await self._handle_ws_reverse(name)
+        self._server_app.add_url_rule('/<adapter>/http',
+                                      methods=['POST'],
+                                      view_func=self._handle_http)
+        self._server_app.add_websocket('/<adapter>/ws',
+                                       view_func=self._handle_ws_reverse)
 
     @property
     @overrides(BaseDriver)
