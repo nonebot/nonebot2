@@ -421,10 +421,10 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
     """
 
     async def _strip_cmd(bot: "Bot", event: "Event", state: T_State):
-        message: Iterable[MessageSegment] = event.get_message()
+        message = event.get_message()
         text_processed = False
         for index, segment in enumerate(message):
-            segment: MessageSegment = message.pop(index)
+            segment: "MessageSegment" = message.pop(index)
             if segment.is_text() and not text_processed:
                 segment, *_ = message.__class__(
                     str(segment)[len(state["_prefix"]["raw_command"]):].lstrip(

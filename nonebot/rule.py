@@ -137,7 +137,7 @@ class TrieRule:
         prefix = None
         suffix = None
         message = event.get_message()
-        message_seg: Optional[MessageSegment] = next(
+        message_seg: Optional["MessageSegment"] = next(
             filter(lambda x: x.is_text(), message), None)
         if message_seg is not None:
             prefix = cls.prefix.longest_prefix(str(message_seg).lstrip())
