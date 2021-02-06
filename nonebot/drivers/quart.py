@@ -10,8 +10,7 @@ Quart 驱动适配
 
 import asyncio
 from json.decoder import JSONDecodeError
-from typing import (TYPE_CHECKING, Any, Callable, Coroutine, Dict, Optional,
-                    Type, TypeVar)
+from typing import Any, Callable, Coroutine, Dict, Optional, Type, TypeVar
 
 import uvicorn
 
@@ -23,8 +22,6 @@ from nonebot.exception import RequestDenied
 from nonebot.log import logger
 from nonebot.typing import overrides
 
-if TYPE_CHECKING:
-    from nonebot.adapters import Bot
 try:
     from quart import Quart, Request, Response
     from quart import Websocket as QuartWebSocket
