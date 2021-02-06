@@ -1,3 +1,13 @@
+"""
+Quart 驱动适配
+================
+
+后端使用方法请参考: `Quart 文档`_
+
+.. _Quart 文档:
+    https://pgjones.gitlab.io/quart/index.html
+"""
+
 import asyncio
 from json.decoder import JSONDecodeError
 from typing import (TYPE_CHECKING, Any, Callable, Coroutine, Dict, Optional,
@@ -28,6 +38,14 @@ _AsyncCallable = TypeVar("_AsyncCallable", bound=Callable[..., Coroutine])
 
 
 class Driver(BaseDriver):
+    """
+    Quart 驱动框架
+
+    :上报地址:
+
+      * ``/{adapter name}/http/``: HTTP POST 上报
+      * ``/{adapter name}/ws``: WebSocket 上报
+    """
 
     @overrides(BaseDriver)
     def __init__(self, env: Env, config: NoneBotConfig):
@@ -37,6 +55,7 @@ class Driver(BaseDriver):
 
     @overrides(BaseDriver)
     def register_adapter(self, name: str, adapter: Type["Bot"], **kwargs):
+        """向 Quart 路由添加对应 adapter 响应的 handler"""
         if name in self._adapters:
             return
 
@@ -53,32 +72,37 @@ class Driver(BaseDriver):
     @property
     @overrides(BaseDriver)
     def type(self) -> str:
+        """驱动名称: ``quart``"""
         return 'quart'
 
     @property
     @overrides(BaseDriver)
     def server_app(self) -> Quart:
+        """``Quart`` 对象"""
         return self._server_app
 
     @property
     @overrides(BaseDriver)
     def asgi(self):
+        """``Quart`` 对象"""
         return self._server_app
 
     @property
     @overrides(BaseDriver)
     def logger(self):
+        """fastapi 使用的 logger"""
         return self._server_app.logger
 
     @overrides(BaseDriver)
     def on_startup(self, func: _AsyncCallable) -> _AsyncCallable:
+        """参考文档: `Startup and Shutdown <https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html>`_"""
         return self.server_app.before_serving(func)  # type: ignore
 
     @overrides(BaseDriver)
     def on_shutdown(self, func: _AsyncCallable) -> _AsyncCallable:
+        """参考文档: `Startup and Shutdown <https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html>`_"""
         return self.server_app.after_serving(func)  # type: ignore
 
-    @overrides(BaseDriver)
     @overrides(BaseDriver)
     def run(self,
             host: Optional[str] = None,
