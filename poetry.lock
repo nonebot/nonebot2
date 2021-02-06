@@ -655,12 +655,13 @@ optional = false
 python-versions = "*"
 
 [extras]
+all = ["Quart"]
 quart = ["Quart"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "c23c2c3c795a7febb94bbba9ac04ff954a8f65a4389a367b1ce57793126d0f92"
+content-hash = "11273401518ba0c93c5e381c6f0c1be02d60106bcda715c7ee7a06a78a8871d5"
 
 [metadata.files]
 aiofiles = [

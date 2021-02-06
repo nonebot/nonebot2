@@ -40,6 +40,7 @@ sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-bu
 
 [tool.poetry.extras]
 quart = ["quart"]
+all = ["quart"]
 
 # [[tool.poetry.source]]
 # name = "aliyun"
