@@ -47,16 +47,14 @@ export=export()
 这个字典可以用来装载导出的对象，它的key是对象导出后的命名，value是对象本身，我们可以直接创建新的`key`-`value`对导出对象：
 
 ```python
-export["vA"] = varA
-export["fA"] = funcA
-```
-
-除此之外，也支持`设置属性`的办法来导出对象：
-
-```python
 export.vA = varA
 export.fA = funcA
-```
+
+除此之外，也支持 `嵌套` 导出对象：
+
+```python
+export.sub.vA = varA
+export.sub.fA = funcA
 特别地，对于`函数对象`而言，`export`支持用`装饰器`的方法来导出，因此，我们可以这样定义`funcA`：
 
 ```python
@@ -76,7 +74,9 @@ def funcA():
 通过`装饰器`的方法导出函数时，命名固定为函数的命名，也就是说，上面的两个例子等同于：
 
 ```python
-export["funcA"] = funcA
+export.sub.funcA = funcA
+
+export.funcA = funcA
 ```
 
 这样，我们就成功导出`varA`和`funcA`对象了。
@@ -89,7 +89,7 @@ export["funcA"] = funcA
 
 :::warning 警告
 
- 在导入来自其他插件的对象时, 请确保导出该对象的插件在引用该对象的插件之前加载。
+ 在导入来自其他插件的对象时, 请确保导出该对象的插件在引用该对象的插件之前加载。如果该插件并未被加载，则会尝试加载，加载失败则会返回 `None`。
 
 :::
 
@@ -105,19 +105,10 @@ from nonebot.plugin import require
 require_A = require('pluginA')
 ```
 
-在之前，这个字典已经存入了`'vA'`-`varA`, `'fA'`-`funcA`或`'funcA'`-`funcA`这样的`key`-`value`对。因此在这里我们直接按`字典索引`的办法来导入对象:
-
-```python
-varA = require_A["vA"]
-funcA = require_A["fA"] or require_A["funcA"]
-```
-
-也可以用`获取属性`的方法来导入对象: 
+在之前，这个字典已经存入了`'vA'`-`varA`, `'fA'`-`funcA`或`'funcA'`-`funcA`这样的`key`-`value`对。因此在这里我们直接用`属性`的方法来获取导入对象: 
 
 ```python
 varA = require_A.vA
 funcA = require_A.fA or require_A.funcA
-```
 
 这样，我们就在`pluginB`中成功导入了`varA`和`funcA`对象了。
-
