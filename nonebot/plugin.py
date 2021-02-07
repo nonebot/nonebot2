@@ -13,7 +13,7 @@ from types import ModuleType
 from dataclasses import dataclass
 from importlib._bootstrap import _load
 from contextvars import Context, ContextVar, copy_context
-from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, TYPE_CHECKING, Iterable
+from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, Iterable, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.matcher import Matcher
