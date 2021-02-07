@@ -168,10 +168,11 @@ def process_reply(bot: "Bot", event: GroupMessage) -> GroupMessage:
 
 async def process_event(bot: "Bot", event: Event) -> None:
     if isinstance(event, MessageEvent):
+        event.message_chain.reduce()
         Log.debug(event.message_chain)
         event = process_source(bot, event)
         if isinstance(event, GroupMessage):
             event = process_nick(bot, event)
-            event = process_reply(bot, event)
             event = process_at(bot, event)
+            event = process_reply(bot, event)
     await handle_event(bot, event)

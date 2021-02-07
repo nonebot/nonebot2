@@ -290,6 +290,19 @@ class MessageChain(BaseMessage):
             )
 
     @overrides(BaseMessage)
+    def reduce(self):
+        """
+        :说明:
+
+          忽略为空的消息段, 合并相邻的纯文本消息段
+        """
+        for index, segment in enumerate(self):
+            segment: MessageSegment
+            if segment.is_text() and not str(segment).strip():
+                self.pop(index)
+        super().reduce()
+
+    @overrides(BaseMessage)
     def _construct(
         self, message: Union[List[Dict[str, Any]], Iterable[MessageSegment]]
     ) -> List[MessageSegment]:
@@ -310,6 +323,15 @@ class MessageChain(BaseMessage):
         ]
 
     def extract_first(self, *type: MessageType) -> Optional[MessageSegment]:
+        """
+        :说明:
+
+          弹出该消息链的第一个消息
+        
+        :参数:
+
+          * `*type: MessageType`: 指定的消息类型, 当指定后如类型不匹配不弹出
+        """
         if not len(self):
             return None
         first: MessageSegment = self[0]
