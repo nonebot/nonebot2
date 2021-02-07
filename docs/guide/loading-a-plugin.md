@@ -8,16 +8,24 @@
 
 ```python{5}
 import nonebot
+from nonebot.adapters.cqhttp import Bot
 
 nonebot.init()
-# 加载 nonebot 内置插件
-nonebot.load_builtin_plugins()
+
+driver = nonebot.get_driver()
+driver.register_adapter("cqhttp", Bot) # 注册 CQHTTP 的 Adapter
+nonebot.load_builtin_plugins() # 加载 nonebot 内置插件
 
 app = nonebot.get_asgi()
 
 if __name__ == "__main__":
     nonebot.run()
 ```
+
+::: warning
+目前, 内建插件仅支持 CQHTTP 的 Adapter
+如果您使用的是其他 Adapter, 请移步该 Adapter 相应的文档
+:::
 
 这将会加载 nonebot 内置的插件，它包含：
 
