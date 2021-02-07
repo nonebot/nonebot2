@@ -1070,20 +1070,6 @@ mirai-api-http 协议事件，字段与 mirai-api-http 一致。各事件字段�
 > * `MEMBER`: 普通群成员
 
 
-## _class_ `MessageChain`
-
-基类：[`nonebot.adapters.Message`](README.md#nonebot.adapters.Message)
-
-Mirai 协议 Messaqge 适配
-
-由于Mirai协议的Message实现较为特殊, 故使用MessageChain命名
-
-
-### `export()`
-
-导出为可以被正常json序列化的数组
-
-
 ## _class_ `MessageEvent`
 
 基类：`nonebot.adapters.mirai.event.base.Event`
