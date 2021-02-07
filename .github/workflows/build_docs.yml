@@ -2,7 +2,7 @@ name: Build API Doc
 
 on:
   pull_request:
-    types: [ opened, synchronize, reopened ]
+    types: [opened, synchronize, reopened]
 
 jobs:
   build:
@@ -30,7 +30,7 @@ jobs:
 
       - name: Set up dependencies
         run: |
-          poetry install
+          poetry install -E all
 
       - name: Build Doc
         run: poetry run sphinx-build -M markdown ./docs_build ./build
