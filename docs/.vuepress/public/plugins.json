@@ -88,7 +88,7 @@
     "repo": "abrahum/nonebot_plugin_simdraw"
   },
   {
-    "id": "nonebot-plugin-wordbank",
+    "id": "nonebot_plugin_wordbank",
     "link": "nonebot-plugin-wordbank",
     "author": "Joenothing-lst",
     "desc": "无数据库的轻量问答插件，支持模糊问答",
