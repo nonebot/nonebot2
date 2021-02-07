@@ -965,7 +965,7 @@ CQHTTP 协议 MessageSegment 适配。具体方法参考 [mirai-api-http 消息�
 
 基类：[`nonebot.adapters.Message`](README.md#nonebot.adapters.Message)
 
-Mirai 协议 Messaqge 适配
+Mirai 协议 Message 适配
 
 由于Mirai协议的Message实现较为特殊, 故使用MessageChain命名
 
