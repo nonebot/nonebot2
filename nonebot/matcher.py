@@ -167,8 +167,9 @@ class Matcher(metaclass=MatcherMeta):
                     rule or Rule(),
                 "permission":
                     permission or Permission(),
-                "handlers":
-                    handlers or [],
+                "handlers": [
+                    cls.process_handler(handler) for handler in handlers
+                ] if handlers else [],
                 "temp":
                     temp,
                 "expire_time":
@@ -204,7 +205,9 @@ class Matcher(metaclass=MatcherMeta):
 
           - ``bool``: 是否满足权限
         """
-        return await cls.permission(bot, event)
+        event_type = event.get_type()
+        return (event_type == (cls.type or event_type) and
+                await cls.permission(bot, event))
 
     @classmethod
     async def check_rule(cls, bot: "Bot", event: "Event",
@@ -294,17 +297,26 @@ class Matcher(metaclass=MatcherMeta):
           * 无
         """
 
-        async def _receive(bot: "Bot", event: "Event",
-                           state: T_State) -> NoReturn:
+        async def _receive(bot: "Bot", event: "Event") -> NoReturn:
             raise PausedException
+
+        cls.process_handler(_receive)
 
         if cls.handlers:
             # 已有前置handlers则接受一条新的消息，否则视为接收初始消息
             cls.append_handler(_receive)
 
         def _decorator(func: T_Handler) -> T_Handler:
+            cls.process_handler(func)
             if not cls.handlers or cls.handlers[-1] is not func:
                 cls.append_handler(func)
+
+            _receive.__params__.update({
+                "bot":
+                    func.__params__["bot"],
+                "event":
+                    func.__params__["event"] or _receive.__params__["event"]
+            })
 
             return func
 
@@ -367,6 +379,25 @@ class Matcher(metaclass=MatcherMeta):
                         del state["_current_key"]
 
                 cls.append_handler(wrapper)
+
+                wrapper.__params__.update({
+                    "bot":
+                        func.__params__["bot"],
+                    "event":
+                        func.__params__["event"] or wrapper.__params__["event"]
+                })
+                _key_getter.__params__.update({
+                    "bot":
+                        func.__params__["bot"],
+                    "event":
+                        func.__params__["event"] or wrapper.__params__["event"]
+                })
+                _key_parser.__params__.update({
+                    "bot":
+                        func.__params__["bot"],
+                    "event":
+                        func.__params__["event"] or wrapper.__params__["event"]
+                })
 
             return func
 
@@ -498,7 +529,7 @@ class Matcher(metaclass=MatcherMeta):
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
             Matcher.new(
-                self.type,
+                "message",
                 Rule(),
                 USER(event.get_session_id(),
                      perm=self.permission),  # type:ignore
@@ -511,7 +542,7 @@ class Matcher(metaclass=MatcherMeta):
                 expire_time=datetime.now() + bot.config.session_expire_timeout)
         except PausedException:
             Matcher.new(
-                self.type,
+                "message",
                 Rule(),
                 USER(event.get_session_id(),
                      perm=self.permission),  # type:ignore

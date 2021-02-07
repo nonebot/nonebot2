@@ -128,7 +128,7 @@ def check(arg1, args2):
     async def _checker(bot: Bot, event: Event, state: T_State) -> bool:
         return bool(arg1 + arg2)
 
-    return Rule(_check)
+    return Rule(_checker)
 ```
 
 `Rule` 和 `RuleChecker` 之间可以使用 `与 &` 互相组合：

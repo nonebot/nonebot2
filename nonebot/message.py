@@ -99,47 +99,31 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
     return func
 
 
-async def _check_matcher(priority: int, bot: "Bot", event: "Event",
-                         state: T_State) -> Iterable[Type[Matcher]]:
-    current_matchers = matchers[priority].copy()
-
-    async def _check(Matcher: Type[Matcher], bot: "Bot", event: "Event",
-                     state: T_State) -> Optional[Type[Matcher]]:
+async def _check_matcher(priority: int, Matcher: Type[Matcher], bot: "Bot",
+                         event: "Event", state: T_State) -> None:
+    if Matcher.expire_time and datetime.now() > Matcher.expire_time:
         try:
-            if (not Matcher.expire_time or datetime.now() <= Matcher.expire_time
-               ) and await Matcher.check_perm(
-                   bot, event) and await Matcher.check_rule(bot, event, state):
-                return Matcher
-        except Exception as e:
-            logger.opt(colors=True, exception=e).error(
-                f"<r><bg #f8bbd0>Rule check failed for {Matcher}.</bg #f8bbd0></r>"
-            )
-        return None
-
-    async def _check_expire(Matcher: Type[Matcher]) -> Optional[Type[Matcher]]:
-        if Matcher.expire_time and datetime.now() > Matcher.expire_time:
-            return Matcher
-        return None
-
-    checking_tasks = [
-        _check(Matcher, bot, event, state) for Matcher in current_matchers
-    ]
-    checking_expire_tasks = [
-        _check_expire(Matcher) for Matcher in current_matchers
-    ]
-    results = await asyncio.gather(*checking_tasks)
-    expired = await asyncio.gather(*checking_expire_tasks)
-    for expired_matcher in filter(lambda x: x, expired):
-        try:
-            matchers[priority].remove(expired_matcher)  # type: ignore
+            matchers[priority].remove(Matcher)
         except Exception:
             pass
-    for temp_matcher in filter(lambda x: x and x.temp, results):
+        return
+
+    try:
+        if not await Matcher.check_perm(
+                bot, event) or not await Matcher.check_rule(bot, event, state):
+            return
+    except Exception as e:
+        logger.opt(colors=True, exception=e).error(
+            f"<r><bg #f8bbd0>Rule check failed for {Matcher}.</bg #f8bbd0></r>")
+        return
+
+    if Matcher.temp:
         try:
-            matchers[priority].remove(temp_matcher)  # type: ignore
+            matchers[priority].remove(Matcher)
         except Exception:
             pass
-    return filter(lambda x: x, results)  # type: ignore
+
+    await _run_matcher(Matcher, bot, event, state)
 
 
 async def _run_matcher(Matcher: Type[Matcher], bot: "Bot", event: "Event",
@@ -244,11 +228,9 @@ async def handle_event(bot: "Bot", event: "Event"):
         if show_log:
             logger.debug(f"Checking for matchers in priority {priority}...")
 
-        run_matchers = await _check_matcher(priority, bot, event, state)
-
         pending_tasks = [
-            _run_matcher(matcher, bot, event, state.copy())
-            for matcher in run_matchers
+            _check_matcher(priority, matcher, bot, event, state.copy())
+            for matcher in matchers[priority]
         ]
 
         results = await asyncio.gather(*pending_tasks, return_exceptions=True)

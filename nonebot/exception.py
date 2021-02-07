@@ -37,6 +37,29 @@ class IgnoredException(NoneBotException):
         return self.__repr__()
 
 
+class ParserExit(NoneBotException):
+    """
+    :说明:
+
+      ``shell command`` 处理消息失败时返回的异常
+
+    :参数:
+
+      * ``status``
+      * ``message``
+    """
+
+    def __init__(self, status=0, message=None):
+        self.status = status
+        self.message = message
+
+    def __repr__(self):
+        return f"<ParserExit status={self.status} message={self.message}>"
+
+    def __str__(self):
+        return self.__repr__()
+
+
 class PausedException(NoneBotException):
     """
     :说明:

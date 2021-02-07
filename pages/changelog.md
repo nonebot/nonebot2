@@ -4,6 +4,16 @@ sidebar: auto
 
 # 更新日志
 
+## v2.0.0a9
+
+- 修复 `Message` 消息为 `None` 时的处理错误
+- 修复 `Message.extract_plain_text` 返回为转义字符串的问题
+- 修复命令处理错误地删除了后续空格
+- 增加好友添加和加群请求事件 `approve`, `reject` 方法
+- 新增 `mirai-api-http` 协议适配
+- 修复 rule 运行时 state 覆盖问题，隔离 state
+- 新增 `shell like command` 支持
+
 ## v2.0.0a8
 
 - 修改 typing 类型注释

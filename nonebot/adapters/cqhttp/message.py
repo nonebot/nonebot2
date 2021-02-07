@@ -1,4 +1,5 @@
 import re
+from functools import reduce
 from typing import Any, Dict, Union, Tuple, Mapping, Iterable, Optional
 
 from nonebot.typing import overrides
@@ -176,12 +177,12 @@ class MessageSegment(BaseMessageSegment):
     def share(url: str = "",
               title: str = "",
               content: Optional[str] = None,
-              img_url: Optional[str] = None) -> "MessageSegment":
+              image: Optional[str] = None) -> "MessageSegment":
         return MessageSegment("share", {
             "url": url,
             "title": title,
             "content": content,
-            "img_url": img_url
+            "image": image
         })
 
     @staticmethod
@@ -222,29 +223,39 @@ class Message(BaseMessage):
             for seg in msg:
                 yield MessageSegment(seg["type"], seg.get("data") or {})
             return
+        elif isinstance(msg, str):
 
-        def _iter_message(msg: str) -> Iterable[Tuple[str, str]]:
-            text_begin = 0
-            for cqcode in re.finditer(
-                    r"\[CQ:(?P<type>[a-zA-Z0-9-_.]+)"
-                    r"(?P<params>"
-                    r"(?:,[a-zA-Z0-9-_.]+=[^,\]]+)*"
-                    r"),?\]", msg):
-                yield "text", msg[text_begin:cqcode.pos + cqcode.start()]
-                text_begin = cqcode.pos + cqcode.end()
-                yield cqcode.group("type"), cqcode.group("params").lstrip(",")
-            yield "text", msg[text_begin:]
+            def _iter_message(msg: str) -> Iterable[Tuple[str, str]]:
+                text_begin = 0
+                for cqcode in re.finditer(
+                        r"\[CQ:(?P<type>[a-zA-Z0-9-_.]+)"
+                        r"(?P<params>"
+                        r"(?:,[a-zA-Z0-9-_.]+=[^,\]]+)*"
+                        r"),?\]", msg):
+                    yield "text", msg[text_begin:cqcode.pos + cqcode.start()]
+                    text_begin = cqcode.pos + cqcode.end()
+                    yield cqcode.group("type"), cqcode.group("params").lstrip(
+                        ",")
+                yield "text", msg[text_begin:]
 
-        for type_, data in _iter_message(msg):
-            if type_ == "text":
-                if data:
-                    # only yield non-empty text segment
-                    yield MessageSegment(type_, {"text": unescape(data)})
-            else:
-                data = {
-                    k: unescape(v) for k, v in map(
-                        lambda x: x.split("=", maxsplit=1),
-                        filter(lambda x: x, (
-                            x.lstrip() for x in data.split(","))))
-                }
-                yield MessageSegment(type_, data)
+            for type_, data in _iter_message(msg):
+                if type_ == "text":
+                    if data:
+                        # only yield non-empty text segment
+                        yield MessageSegment(type_, {"text": unescape(data)})
+                else:
+                    data = {
+                        k: unescape(v) for k, v in map(
+                            lambda x: x.split("=", maxsplit=1),
+                            filter(lambda x: x, (
+                                x.lstrip() for x in data.split(","))))
+                    }
+                    yield MessageSegment(type_, data)
+
+    def extract_plain_text(self) -> str:
+
+        def _concat(x: str, y: MessageSegment) -> str:
+            return f"{x} {y.data['text']}" if y.is_text() else x
+
+        plain_text = reduce(_concat, self, "")
+        return plain_text[1:] if plain_text else plain_text

@@ -12,6 +12,7 @@
 - ``on_endswith`` => ``nonebot.plugin.on_endswith``
 - ``on_keyword`` => ``nonebot.plugin.on_keyword``
 - ``on_command`` => ``nonebot.plugin.on_command``
+- ``on_shell_command`` => ``nonebot.plugin.on_shell_command``
 - ``on_regex`` => ``nonebot.plugin.on_regex``
 - ``CommandGroup`` => ``nonebot.plugin.CommandGroup``
 - ``Matchergroup`` => ``nonebot.plugin.MatcherGroup``
@@ -175,6 +176,7 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
         logger.opt(
             colors=True).info(f"Current <y><b>Env: {env.environment}</b></y>")
         config = Config(**kwargs,
+                        _common_config=env.dict(),
                         _env_file=_env_file or f".env.{env.environment}")
 
         default_filter.level = "DEBUG" if config.debug else "INFO"
@@ -218,6 +220,6 @@ def run(host: Optional[str] = None,
 
 
 from nonebot.plugin import on_message, on_notice, on_request, on_metaevent, CommandGroup, MatcherGroup
-from nonebot.plugin import on_startswith, on_endswith, on_keyword, on_command, on_regex
+from nonebot.plugin import on_startswith, on_endswith, on_keyword, on_command, on_shell_command, on_regex
 from nonebot.plugin import load_plugin, load_plugins, load_builtin_plugins
 from nonebot.plugin import export, require, get_plugin, get_loaded_plugins

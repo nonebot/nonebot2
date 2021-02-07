@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot2"
-version = "2.0.0-alpha.8.post2"
+version = "2.0.0a9.post1"
 description = "An asynchronous python bot framework."
 authors = ["yanyongyu <yanyongyu_1@126.com>"]
 license = "MIT"
@@ -29,6 +29,7 @@ loguru = "^0.5.1"
 pygtrie = "^2.4.1"
 fastapi = "^0.63.0"
 uvicorn = "^0.11.5"
+websockets = "^8.1"
 pydantic = {extras = ["dotenv", "typing_extensions"], version = "^1.7.3"}
 
 [tool.poetry.dev-dependencies]
@@ -36,11 +37,11 @@ yapf = "^0.30.0"
 sphinx = "^3.4.1"
 sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
 
-[[tool.poetry.source]]
-name = "aliyun"
-url = "https://mirrors.aliyun.com/pypi/simple/"
-default = true
+# [[tool.poetry.source]]
+# name = "aliyun"
+# url = "https://mirrors.aliyun.com/pypi/simple/"
+# default = true
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

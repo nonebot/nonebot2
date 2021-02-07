@@ -14,16 +14,56 @@ import logging
 from typing import Optional, Callable
 
 import uvicorn
+from pydantic import BaseSettings
 from fastapi.responses import Response
 from fastapi import Body, status, Request, FastAPI, HTTPException
 from starlette.websockets import WebSocketDisconnect, WebSocket as FastAPIWebSocket
 
 from nonebot.log import logger
 from nonebot.typing import overrides
-from nonebot.config import Env, Config
 from nonebot.utils import DataclassEncoder
 from nonebot.exception import RequestDenied
+from nonebot.config import Env, Config as NoneBotConfig
 from nonebot.drivers import Driver as BaseDriver, WebSocket as BaseWebSocket
+
+
+class Config(BaseSettings):
+    """
+    FastAPI 驱动框架设置，详情参考 FastAPI 文档
+    """
+    fastapi_openapi_url: Optional[str] = None
+    """
+    :类型:
+
+      ``Optional[str]``
+
+    :说明:
+
+      `openapi.json` 地址，默认为 `None` 即关闭
+    """
+    fastapi_docs_url: Optional[str] = None
+    """
+    :类型:
+
+      ``Optional[str]``
+
+    :说明:
+
+      `swagger` 地址，默认为 `None` 即关闭
+    """
+    fastapi_redoc_url: Optional[str] = None
+    """
+    :类型:
+
+      ``Optional[str]``
+
+    :说明:
+
+      `redoc` 地址，默认为 `None` 即关闭
+    """
+
+    class Config:
+        extra = "ignore"
 
 
 class Driver(BaseDriver):
@@ -38,14 +78,16 @@ class Driver(BaseDriver):
       * ``/{adapter name}/ws/``: WebSocket 上报
     """
 
-    def __init__(self, env: Env, config: Config):
+    def __init__(self, env: Env, config: NoneBotConfig):
         super().__init__(env, config)
+
+        self.fastapi_config = Config(**config.dict())
 
         self._server_app = FastAPI(
             debug=config.debug,
-            openapi_url=None,
-            docs_url=None,
-            redoc_url=None,
+            openapi_url=self.fastapi_config.fastapi_openapi_url,
+            docs_url=self.fastapi_config.fastapi_docs_url,
+            redoc_url=self.fastapi_config.fastapi_redoc_url,
         )
 
         self._server_app.post("/{adapter}/")(self._handle_http)
@@ -153,7 +195,7 @@ class Driver(BaseDriver):
             logger.warning("There's already a reverse websocket connection,"
                            "so the event may be handled twice.")
 
-        bot = BotClass(self, "http", self.config, x_self_id)
+        bot = BotClass("http", x_self_id)
 
         asyncio.create_task(bot.handle_message(data))
         return Response("", 204)
@@ -184,8 +226,9 @@ class Driver(BaseDriver):
             logger.warning("There's already a reverse websocket connection, "
                            f"<y>{adapter.upper()} Bot {x_self_id}</y> ignored.")
             await ws.close(code=status.WS_1008_POLICY_VIOLATION)
+            return
 
-        bot = BotClass(self, "websocket", self.config, x_self_id, websocket=ws)
+        bot = BotClass("websocket", x_self_id, websocket=ws)
 
         await ws.accept()
         logger.opt(colors=True).info(
