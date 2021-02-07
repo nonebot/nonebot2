@@ -273,12 +273,14 @@ class MessageChain(BaseMessage):
     """
 
     @overrides(BaseMessage)
-    def __init__(self, message: Union[List[Dict[str, Any]],
-                                      Iterable[MessageSegment], MessageSegment],
-                 **kwargs):
+    def __init__(self, message: Union[List[Dict[str,
+                                                Any]], Iterable[MessageSegment],
+                                      MessageSegment, str], **kwargs):
         super().__init__(**kwargs)
         if isinstance(message, MessageSegment):
             self.append(message)
+        elif isinstance(message, str):
+            self.append(MessageSegment.plain(text=message))
         elif isinstance(message, Iterable):
             self.extend(self._construct(message))
         else:

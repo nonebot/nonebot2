@@ -149,6 +149,7 @@ def process_nick(bot: "Bot", event: GroupMessage) -> GroupMessage:
         nick_regex = '|'.join(filter(lambda x: x, bot.config.nickname))
         matched = re.search(rf"^({nick_regex})([\s,，]*|$)", text, re.IGNORECASE)
         if matched is not None:
+            event.to_me = True
             nickname = matched.group(1)
             Log.info(f'User is calling me {nickname}')
             plain.data['text'] = text[matched.end():]
@@ -159,7 +160,7 @@ def process_nick(bot: "Bot", event: GroupMessage) -> GroupMessage:
 def process_reply(bot: "Bot", event: GroupMessage) -> GroupMessage:
     reply = event.message_chain.extract_first(MessageType.QUOTE)
     if reply is not None:
-        if reply.data['sender_id'] == event.self_id:
+        if reply.data['senderId'] == event.self_id:
             event.to_me = True
         else:
             event.message_chain.insert(0, reply)

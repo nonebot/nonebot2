@@ -253,10 +253,9 @@ class Bot(BaseBot):
           * ``message: Union[MessageChain, MessageSegment, str]``: 要发送的消息
           * ``at_sender: bool``: 是否 @ 事件主体
         """
-        if isinstance(message, MessageSegment):
+        print(event, message, at_sender)
+        if not isinstance(message, MessageChain):
             message = MessageChain(message)
-        elif isinstance(message, str):
-            message = MessageChain(MessageSegment.plain(message))
         if isinstance(event, FriendMessage):
             return await self.send_friend_message(target=event.sender.id,
                                                   message_chain=message)
