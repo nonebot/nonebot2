@@ -965,14 +965,39 @@ CQHTTP 协议 MessageSegment 适配。具体方法参考 [mirai-api-http 消息�
 
 基类：[`nonebot.adapters.Message`](README.md#nonebot.adapters.Message)
 
-Mirai 协议 Messaqge 适配
+Mirai 协议 Message 适配
 
 由于Mirai协议的Message实现较为特殊, 故使用MessageChain命名
+
+
+### `reduce()`
+
+
+* **说明**
+
+    忽略为空的消息段, 合并相邻的纯文本消息段
+
 
 
 ### `export()`
 
 导出为可以被正常json序列化的数组
+
+
+### `extract_first(*type)`
+
+
+* **说明**
+
+    弹出该消息链的第一个消息
+
+
+
+* **参数**
+
+    
+    * \*type: MessageType: 指定的消息类型, 当指定后如类型不匹配不弹出
+
 
 # NoneBot.adapters.mirai.utils 模块
 
@@ -1068,20 +1093,6 @@ mirai-api-http 协议事件，字段与 mirai-api-http 一致。各事件字段�
 
 
 > * `MEMBER`: 普通群成员
-
-
-## _class_ `MessageChain`
-
-基类：[`nonebot.adapters.Message`](README.md#nonebot.adapters.Message)
-
-Mirai 协议 Messaqge 适配
-
-由于Mirai协议的Message实现较为特殊, 故使用MessageChain命名
-
-
-### `export()`
-
-导出为可以被正常json序列化的数组
 
 
 ## _class_ `MessageEvent`

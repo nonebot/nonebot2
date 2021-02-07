@@ -193,3 +193,36 @@ Mirai-API-HTTP 的适配器以 [AGPLv3 许可](https://opensource.org/licenses/A
 ```
 
 恭喜你, 你的配置已经成功!
+
+现在, 我们可以写一个简单的插件来测试一下
+
+```python
+from nonebot.plugin import on_keyword, on_command
+from nonebot.rule import to_me
+from nonebot.adapters.mirai import Bot, MessageEvent
+
+message_test = on_keyword({'reply'}, rule=to_me())
+
+
+@message_test.handle()
+async def _message(bot: Bot, event: MessageEvent):
+    text = event.get_plaintext()
+    await bot.send(event, text, at_sender=True)
+
+
+command_test = on_command('miecho')
+
+
+@command_test.handle()
+async def _echo(bot: Bot, event: MessageEvent):
+    text = event.get_plaintext()
+    await bot.send(event, text, at_sender=True)
+```
+
+它具有两种行为
+
+- 在指定机器人，即私聊、群聊内@机器人、群聊内称呼机器人昵称的情况下 (即 [Rule: to_me](../api/rule.md#to-me)), 如果消息内包含 `reply` 字段, 则该消息会被机器人重复一次
+
+- 在执行指令`miecho xxx`时, 机器人会发送回参数`xxx`
+
+至此, 你已经初步掌握了如何使用 Mirai Adapter
