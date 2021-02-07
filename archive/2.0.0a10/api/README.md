@@ -43,6 +43,9 @@
     * [nonebot.drivers.fastapi](drivers/fastapi.html)
 
 
+    * [nonebot.drivers.quart](drivers/quart.html)
+
+
     * [nonebot.adapters](adapters/)
 
 
