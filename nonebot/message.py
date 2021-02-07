@@ -7,7 +7,7 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
 
 import asyncio
 from datetime import datetime
-from typing import Set, Type, Optional, Iterable, TYPE_CHECKING
+from typing import Set, Type, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule

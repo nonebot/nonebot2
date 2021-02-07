@@ -199,6 +199,10 @@ module.exports = context => ({
                   path: "drivers/fastapi"
                 },
                 {
+                  title: "nonebot.drivers.quart 模块",
+                  path: "drivers/quart"
+                },
+                {
                   title: "nonebot.adapters 模块",
                   path: "adapters/"
                 },

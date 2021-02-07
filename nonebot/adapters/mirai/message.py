@@ -44,8 +44,9 @@ class MessageSegment(BaseMessageSegment):
 
     @overrides(BaseMessageSegment)
     def __str__(self) -> str:
-        if self.is_text():
-            return self.data.get('text', '')
+        return self.data['text'] if self.is_text() else repr(self)
+
+    def __repr__(self) -> str:
         return '[mirai:%s]' % ','.join([
             self.type.value,
             *map(
@@ -267,24 +268,39 @@ class MessageSegment(BaseMessageSegment):
 
 class MessageChain(BaseMessage):
     """
-    Mirai 协议 Messaqge 适配
+    Mirai 协议 Message 适配
     
     由于Mirai协议的Message实现较为特殊, 故使用MessageChain命名
     """
 
     @overrides(BaseMessage)
-    def __init__(self, message: Union[List[Dict[str, Any]],
-                                      Iterable[MessageSegment], MessageSegment],
-                 **kwargs):
+    def __init__(self, message: Union[List[Dict[str,
+                                                Any]], Iterable[MessageSegment],
+                                      MessageSegment, str], **kwargs):
         super().__init__(**kwargs)
         if isinstance(message, MessageSegment):
             self.append(message)
+        elif isinstance(message, str):
+            self.append(MessageSegment.plain(text=message))
         elif isinstance(message, Iterable):
             self.extend(self._construct(message))
         else:
             raise ValueError(
                 f'Type {type(message).__name__} is not supported in mirai adapter.'
             )
+
+    @overrides(BaseMessage)
+    def reduce(self):
+        """
+        :说明:
+
+          忽略为空的消息段, 合并相邻的纯文本消息段
+        """
+        for index, segment in enumerate(self):
+            segment: MessageSegment
+            if segment.is_text() and not str(segment).strip():
+                self.pop(index)
+        super().reduce()
 
     @overrides(BaseMessage)
     def _construct(
@@ -305,6 +321,23 @@ class MessageChain(BaseMessage):
         return [
             *map(lambda segment: segment.as_dict(), self.copy())  # type: ignore
         ]
+
+    def extract_first(self, *type: MessageType) -> Optional[MessageSegment]:
+        """
+        :说明:
+
+          弹出该消息链的第一个消息
+        
+        :参数:
+
+          * `*type: MessageType`: 指定的消息类型, 当指定后如类型不匹配不弹出
+        """
+        if not len(self):
+            return None
+        first: MessageSegment = self[0]
+        if (not type) or (first.type in type):
+            return self.pop(0)
+        return None
 
     def __repr__(self) -> str:
         return f'<{self.__class__.__name__} {[*self.copy()]}>'

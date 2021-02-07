@@ -123,7 +123,7 @@ async def async_checker(bot: Bot, event: Event, state: T_State) -> bool:
 def sync_checker(bot: Bot, event: Event, state: T_State) -> bool:
     return True
 
-def check(arg1, args2):
+def check(arg1, arg2):
 
     async def _checker(bot: Bot, event: Event, state: T_State) -> bool:
         return bool(arg1 + arg2)

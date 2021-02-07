@@ -25,7 +25,7 @@ from nonebot.exception import ParserExit
 from nonebot.typing import T_State, T_RuleChecker
 
 if TYPE_CHECKING:
-    from nonebot.adapters import Bot, Event
+    from nonebot.adapters import Bot, Event, MessageSegment
 
 
 class Rule:
