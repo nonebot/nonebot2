@@ -13,7 +13,7 @@ from .request import *
 
 __all__ = [
     'Event', 'GroupChatInfo', 'GroupInfo', 'PrivateChatInfo', 'UserPermission',
-    'MessageChain', 'MessageEvent', 'GroupMessage', 'FriendMessage',
+    'MessageSource', 'MessageEvent', 'GroupMessage', 'FriendMessage',
     'TempMessage', 'NoticeEvent', 'MuteEvent', 'BotMuteEvent', 'BotUnmuteEvent',
     'MemberMuteEvent', 'MemberUnmuteEvent', 'BotJoinGroupEvent',
     'BotLeaveEventActive', 'BotLeaveEventKick', 'MemberJoinEvent',

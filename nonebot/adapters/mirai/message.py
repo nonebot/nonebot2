@@ -44,8 +44,9 @@ class MessageSegment(BaseMessageSegment):
 
     @overrides(BaseMessageSegment)
     def __str__(self) -> str:
-        if self.is_text():
-            return self.data.get('text', '')
+        return self.data['text'] if self.is_text() else repr(self)
+
+    def __repr__(self) -> str:
         return '[mirai:%s]' % ','.join([
             self.type.value,
             *map(
@@ -273,12 +274,14 @@ class MessageChain(BaseMessage):
     """
 
     @overrides(BaseMessage)
-    def __init__(self, message: Union[List[Dict[str, Any]],
-                                      Iterable[MessageSegment], MessageSegment],
-                 **kwargs):
+    def __init__(self, message: Union[List[Dict[str,
+                                                Any]], Iterable[MessageSegment],
+                                      MessageSegment, str], **kwargs):
         super().__init__(**kwargs)
         if isinstance(message, MessageSegment):
             self.append(message)
+        elif isinstance(message, str):
+            self.append(MessageSegment.plain(text=message))
         elif isinstance(message, Iterable):
             self.extend(self._construct(message))
         else:
@@ -305,6 +308,14 @@ class MessageChain(BaseMessage):
         return [
             *map(lambda segment: segment.as_dict(), self.copy())  # type: ignore
         ]
+
+    def extract_first(self, *type: MessageType) -> Optional[MessageSegment]:
+        if not len(self):
+            return None
+        first: MessageSegment = self[0]
+        if (not type) or (first.type in type):
+            return self.pop(0)
+        return None
 
     def __repr__(self) -> str:
         return f'<{self.__class__.__name__} {[*self.copy()]}>'

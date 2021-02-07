@@ -1,8 +1,7 @@
 from datetime import datetime, timedelta
-from functools import wraps
 from io import BytesIO
 from ipaddress import IPv4Address
-from typing import (Any, Dict, List, NoReturn, Optional, Tuple, Union)
+from typing import Any, Dict, List, NoReturn, Optional, Tuple, Union
 
 import httpx
 
@@ -10,15 +9,12 @@ from nonebot.adapters import Bot as BaseBot
 from nonebot.config import Config
 from nonebot.drivers import Driver, WebSocket
 from nonebot.exception import ApiNotAvailable, RequestDenied
-from nonebot.log import logger
-from nonebot.message import handle_event
 from nonebot.typing import overrides
-from nonebot.utils import escape_tag
 
 from .config import Config as MiraiConfig
 from .event import Event, FriendMessage, GroupMessage, TempMessage
 from .message import MessageChain, MessageSegment
-from .utils import catch_network_error, argument_validation, check_tome, Log
+from .utils import Log, argument_validation, catch_network_error, process_event
 
 
 class SessionManager:
@@ -212,20 +208,15 @@ class Bot(BaseBot):
     async def handle_message(self, message: dict):
         Log.debug(f'received message {message}')
         try:
-            await handle_event(
+            await process_event(
                 bot=self,
-                event=await check_tome(
-                    bot=self,
-                    event=Event.new({
-                        **message,
-                        'self_id': self.self_id,
-                    }),
-                ),
+                event=Event.new({
+                    **message,
+                    'self_id': self.self_id,
+                }),
             )
         except Exception as e:
-            logger.opt(colors=True, exception=e).exception(
-                'Failed to handle message '
-                f'<r>{escape_tag(str(message))}</r>: ')
+            Log.error(f'Failed to handle message: {message}', e)
 
     @overrides(BaseBot)
     async def call_api(self, api: str, **data) -> NoReturn:
@@ -262,10 +253,8 @@ class Bot(BaseBot):
           * ``message: Union[MessageChain, MessageSegment, str]``: 要发送的消息
           * ``at_sender: bool``: 是否 @ 事件主体
         """
-        if isinstance(message, MessageSegment):
+        if not isinstance(message, MessageChain):
             message = MessageChain(message)
-        elif isinstance(message, str):
-            message = MessageChain(MessageSegment.plain(message))
         if isinstance(event, FriendMessage):
             return await self.send_friend_message(target=event.sender.id,
                                                   message_chain=message)
