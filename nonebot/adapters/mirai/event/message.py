@@ -1,6 +1,7 @@
-from typing import Any
+from datetime import datetime
+from typing import Any, Optional
 
-from pydantic import Field
+from pydantic import BaseModel, Field
 
 from nonebot.typing import overrides
 
@@ -8,9 +9,15 @@ from ..message import MessageChain
 from .base import Event, GroupChatInfo, PrivateChatInfo
 
 
+class MessageSource(BaseModel):
+    id: int
+    time: datetime
+
+
 class MessageEvent(Event):
     """消息事件基类"""
     message_chain: MessageChain = Field(alias='messageChain')
+    source: Optional[MessageSource] = None
     sender: Any
 
     @overrides(Event)

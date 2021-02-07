@@ -306,5 +306,13 @@ class MessageChain(BaseMessage):
             *map(lambda segment: segment.as_dict(), self.copy())  # type: ignore
         ]
 
+    def extract_first(self, *type: MessageType) -> Optional[MessageSegment]:
+        if not len(self):
+            return None
+        first: MessageSegment = self[0]
+        if (not type) or (first.type in type):
+            return self.pop(0)
+        return None
+
     def __repr__(self) -> str:
         return f'<{self.__class__.__name__} {[*self.copy()]}>'

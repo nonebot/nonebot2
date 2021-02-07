@@ -7,10 +7,11 @@ from pydantic import Extra, ValidationError, validate_arguments
 
 import nonebot.exception as exception
 from nonebot.log import logger
+from nonebot.message import handle_event
 from nonebot.utils import escape_tag, logger_wrapper
 
-from .event import Event, GroupMessage
-from .message import MessageSegment, MessageType
+from .event import Event, GroupMessage, MessageEvent, MessageSource
+from .message import MessageType
 
 if TYPE_CHECKING:
     from .bot import Bot
@@ -124,39 +125,52 @@ def argument_validation(function: _AnyCallable) -> _AnyCallable:
     return wrapper  # type: ignore
 
 
-async def check_tome(bot: "Bot", event: "Event") -> "Event":
-    if not isinstance(event, GroupMessage):
-        return event
-
-    def _is_at(event: GroupMessage) -> bool:
-        for segment in event.message_chain:
-            segment: MessageSegment
-            if segment.type != MessageType.AT:
-                continue
-            if segment.data['target'] == event.self_id:
-                return True
-        return False
-
-    def _is_nick(event: GroupMessage) -> bool:
-        text = event.get_plaintext()
-        if not text:
-            return False
-        nick_regex = '|'.join(
-            {i.strip() for i in bot.config.nickname if i.strip()})
-        matched = re.search(rf"^({nick_regex})([\s,，]*|$)", text, re.IGNORECASE)
-        if matched is None:
-            return False
-        Log.info(f'User is calling me {matched.group(1)}')
-        return True
-
-    def _is_reply(event: GroupMessage) -> bool:
-        for segment in event.message_chain:
-            segment: MessageSegment
-            if segment.type != MessageType.QUOTE:
-                continue
-            if segment.data['senderId'] == event.self_id:
-                return True
-        return False
-
-    event.to_me = any([_is_at(event), _is_reply(event), _is_nick(event)])
+def process_source(bot: "Bot", event: MessageEvent) -> MessageEvent:
+    source = event.message_chain.extract_first(MessageType.SOURCE)
+    if source is not None:
+        event.source = MessageSource.parse_obj(source.data)
     return event
+
+
+def process_at(bot: "Bot", event: GroupMessage) -> GroupMessage:
+    at = event.message_chain.extract_first(MessageType.AT)
+    if at is not None:
+        if at.data['target'] == event.self_id:
+            event.to_me = True
+        else:
+            event.message_chain.insert(0, at)
+    return event
+
+
+def process_nick(bot: "Bot", event: GroupMessage) -> GroupMessage:
+    plain = event.message_chain.extract_first(MessageType.PLAIN)
+    if plain is not None:
+        text = str(plain)
+        nick_regex = '|'.join(filter(lambda x: x, bot.config.nickname))
+        matched = re.search(rf"^({nick_regex})([\s,，]*|$)", text, re.IGNORECASE)
+        if matched is not None:
+            nickname = matched.group(1)
+            Log.info(f'User is calling me {nickname}')
+            plain.data['text'] = text[matched.end():]
+        event.message_chain.insert(0, plain)
+    return event
+
+
+def process_reply(bot: "Bot", event: GroupMessage) -> GroupMessage:
+    reply = event.message_chain.extract_first(MessageType.QUOTE)
+    if reply is not None:
+        if reply.data['sender_id'] == event.self_id:
+            event.to_me = True
+        else:
+            event.message_chain.insert(0, reply)
+    return event
+
+
+async def process_event(bot: "Bot", event: Event) -> None:
+    if isinstance(event, MessageEvent):
+        event = process_source(bot, event)
+        if isinstance(event, GroupMessage):
+            event = process_nick(bot, event)
+            event = process_reply(bot, event)
+            event = process_at(bot, event)
+    await handle_event(bot, event)
