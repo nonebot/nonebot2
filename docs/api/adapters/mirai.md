@@ -970,9 +970,34 @@ Mirai 协议 Message 适配
 由于Mirai协议的Message实现较为特殊, 故使用MessageChain命名
 
 
+### `reduce()`
+
+
+* **说明**
+
+    忽略为空的消息段, 合并相邻的纯文本消息段
+
+
+
 ### `export()`
 
 导出为可以被正常json序列化的数组
+
+
+### `extract_first(*type)`
+
+
+* **说明**
+
+    弹出该消息链的第一个消息
+
+
+
+* **参数**
+
+    
+    * \*type: MessageType: 指定的消息类型, 当指定后如类型不匹配不弹出
+
 
 # NoneBot.adapters.mirai.utils 模块
 
