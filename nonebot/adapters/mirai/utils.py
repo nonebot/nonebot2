@@ -23,27 +23,26 @@ _AnyCallable = TypeVar("_AnyCallable", bound=Callable)
 class Log:
 
     @staticmethod
-    def _log(level: str, message: Any, exception: Optional[Exception] = None):
+    def log(level: str, message: str, exception: Optional[Exception] = None):
         logger = logger_wrapper('MIRAI')
-        logger(level=level,
-               message=escape_tag(str(message)),
-               exception=exception)
+        message = '<e>' + escape_tag(message) + '</e>'
+        logger(level=level.upper(), message=message, exception=exception)
 
     @classmethod
     def info(cls, message: Any):
-        cls._log('INFO', escape_tag(str(message)))
+        cls.log('INFO', str(message))
 
     @classmethod
     def debug(cls, message: Any):
-        cls._log('DEBUG', escape_tag(str(message)))
+        cls.log('DEBUG', str(message))
 
     @classmethod
     def warn(cls, message: Any):
-        cls._log('WARNING', escape_tag(str(message)))
+        cls.log('WARNING', str(message))
 
     @classmethod
     def error(cls, message: Any, exception: Optional[Exception] = None):
-        cls._log('ERROR', escape_tag(str(message)), exception=exception)
+        cls.log('ERROR', str(message), exception=exception)
 
 
 class ActionFailed(exception.ActionFailed):
@@ -169,6 +168,7 @@ def process_reply(bot: "Bot", event: GroupMessage) -> GroupMessage:
 
 async def process_event(bot: "Bot", event: Event) -> None:
     if isinstance(event, MessageEvent):
+        Log.debug(event.message_chain)
         event = process_source(bot, event)
         if isinstance(event, GroupMessage):
             event = process_nick(bot, event)

@@ -253,7 +253,6 @@ class Bot(BaseBot):
           * ``message: Union[MessageChain, MessageSegment, str]``: 要发送的消息
           * ``at_sender: bool``: 是否 @ 事件主体
         """
-        print(event, message, at_sender)
         if not isinstance(message, MessageChain):
             message = MessageChain(message)
         if isinstance(event, FriendMessage):

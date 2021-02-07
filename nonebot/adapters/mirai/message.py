@@ -44,8 +44,9 @@ class MessageSegment(BaseMessageSegment):
 
     @overrides(BaseMessageSegment)
     def __str__(self) -> str:
-        if self.is_text():
-            return self.data.get('text', '')
+        return self.data['text'] if self.is_text() else repr(self)
+
+    def __repr__(self) -> str:
         return '[mirai:%s]' % ','.join([
             self.type.value,
             *map(
