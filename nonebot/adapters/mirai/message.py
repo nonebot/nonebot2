@@ -268,7 +268,7 @@ class MessageSegment(BaseMessageSegment):
 
 class MessageChain(BaseMessage):
     """
-    Mirai 协议 Messaqge 适配
+    Mirai 协议 Message 适配
     
     由于Mirai协议的Message实现较为特殊, 故使用MessageChain命名
     """

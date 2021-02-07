@@ -6,7 +6,7 @@
 
 在 `bot.py` 文件中添加以下行：
 
-```python{5}
+```python{8}
 import nonebot
 from nonebot.adapters.cqhttp import Bot
 
@@ -24,6 +24,7 @@ if __name__ == "__main__":
 
 ::: warning
 目前, 内建插件仅支持 CQHTTP 的 Adapter
+
 如果您使用的是其他 Adapter, 请移步该 Adapter 相应的文档
 :::
 
