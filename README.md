@@ -70,6 +70,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 目前 NoneBot2 内置的驱动框架：
 
 - [FastAPI](https://fastapi.tiangolo.com/)
+- [Quart](https://pgjones.gitlab.io/quart/) (异步 flask )
 
 目前 NoneBot2 内置的协议适配：
 

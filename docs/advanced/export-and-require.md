@@ -9,7 +9,7 @@
 
 下面将介绍第二种方法—— `export` 和 `require` 机制：
 
-## 使用 export and require
+## 使用 export 和 require
 
 现在，假定有两个插件 `pluginA` 和 `pluginB`，需要在 `pluginB` 中调用 `pluginA` 中的一个变量 `varA` 和一个函数 `funcA`。
 
