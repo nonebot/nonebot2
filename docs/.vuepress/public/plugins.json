@@ -134,5 +134,13 @@
     "desc": "通过字符串标签管理字符串资源",
     "name": "风格化字符串管理",
     "repo": "jks15satoshi/nonebot_plugin_styledstr"
+  },
+  {
+    "id": "nonebot_plugin_arcaea",
+    "link": "nonebot-plugin-arcaea",
+    "author": "iyume",
+    "desc": "Arcaea 查分器，可以实现 best30 | recent | songinfo 之类的查询功能并支持 DIY",
+    "name": "Arcaea 查分器",
+    "repo": "iyume/nonebot-plugin-arcaea"
   }
 ]
