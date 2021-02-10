@@ -142,5 +142,13 @@
     "desc": "Arcaea 查分器，可以实现 best30 | recent | songinfo 之类的查询功能并支持 DIY",
     "name": "Arcaea 查分器",
     "repo": "iyume/nonebot-plugin-arcaea"
+  },
+  {
+    "id": "nonebot_hk_reporter",
+    "link": "nonebot-hk-reporter",
+    "author": "felinae98",
+    "desc": "订阅如微博，bilibili，rss的更新消息",
+    "name": "hk-reporter",
+    "repo": "felinae98/nonebot-hk-reporter"
   }
 ]
