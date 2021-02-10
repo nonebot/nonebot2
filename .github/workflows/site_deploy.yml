@@ -30,22 +30,22 @@ jobs:
           yarn build
 
       - name: Get Branch Name
-        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
+        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
 
       - name: Get Site ID
         if: env.BRANCH_NAME == 'master'
         run: |
-          echo "::set-env name=SITE_ID::${{ secrets.PROD_SITE_ID }}"
+          echo "SITE_ID=${{ secrets.PROD_SITE_ID }}" >> $GITHUB_ENV
 
       - name: Get Site ID
         if: env.BRANCH_NAME == 'dev'
         run: |
-          echo "::set-env name=SITE_ID::${{ secrets.DEV_SITE_ID }}"
+          echo "SITE_ID=${{ secrets.DEV_SITE_ID }}" >> $GITHUB_ENV
 
       - name: Publish
         uses: netlify/actions/cli@master
         with:
           args: deploy --dir=docs/.vuepress/dist --prod --message="Production ${BRANCH_NAME}@${{ github.event.push.after }}"
         env:
-          NETLIFY_SITE_ID: $SITE_ID
+          NETLIFY_SITE_ID: ${{ env.SITE_ID }}
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
