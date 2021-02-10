@@ -32,6 +32,14 @@ jobs:
       - name: Get Branch Name
         run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
 
+      - name: Get Deploy Name
+        if: github.event_name == 'push'
+        run: echo "DEPLOY_NAME=${{ env.BRANCH_NAME }}" >> $GITHUB_ENV
+
+      - name: Get Deploy Name
+        if: github.event_name != 'push'
+        run: echo "DEPLOY_NAME=deploy-preview-${{ github.event.number }}" >> $GITHUB_ENV
+
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.1
         with:
@@ -39,6 +47,7 @@ jobs:
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy ${{ env.BRANCH_NAME }}@${{ github.sha }}'
+          alias: ${{ env.DEPLOY_NAME }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.SITE_ID }}
