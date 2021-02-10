@@ -2,7 +2,7 @@ name: Build Upload Site
 
 on:
   push:
-    branches: [master, dev]
+  pull_request:
 
 jobs:
   publish:
@@ -32,19 +32,20 @@ jobs:
       - name: Get Branch Name
         run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
 
-      - name: Get Site ID
-        if: env.BRANCH_NAME == 'master'
-        run: |
-          echo "NETLIFY_SITE_ID=${{ secrets.PROD_SITE_ID }}" >> $GITHUB_ENV
-
-      - name: Get Site ID
-        if: env.BRANCH_NAME == 'dev'
-        run: |
-          echo "NETLIFY_SITE_ID=${{ secrets.DEV_SITE_ID }}" >> $GITHUB_ENV
-
-      - name: Publish
-        uses: netlify/actions/cli@master
+      - name: Production Deploy
+        if: github.event_name == 'push' && env.BRANCH_NAME == 'master'
+        uses: nwtgck/actions-netlify@v1.1
         with:
-          args: deploy --dir=docs/.vuepress/dist --prod --message='Production ${{ env.BRANCH_NAME }}@${{ github.sha }}'
-        env:
-          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          publish-dir: './docs/.vuepress/dist'
+          production-branch: ${{ env.BRANCH_NAME }}
+          production-deploy: true
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: 'Production Deploy ${{ env.BRANCH_NAME }}@${{ github.sha }}'
+
+      - name: Deploy to Netlify
+        uses: nwtgck/actions-netlify@v1.1
+        with:
+          publish-dir: './docs/.vuepress/dist'
+          production-branch: ${{ env.BRANCH_NAME }}
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          deploy-message: 'Deploy ${{ env.BRANCH_NAME }}@${{ github.sha }}'
