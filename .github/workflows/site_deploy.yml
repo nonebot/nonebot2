@@ -29,16 +29,17 @@ jobs:
           yarn install
           yarn build
 
+      - name: Get Branch Name
+        run: echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
+
       - name: Get Site ID
-        if: ${{ GITHUB_REF#refs/heads/ }} == "master"
+        if: BRANCH_NAME == "master"
         run: |
-          echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
           echo "::set-env name=SITE_ID::${{ secrets.PROD_SITE_ID }}"
 
       - name: Get Site ID
-        if: ${{ GITHUB_REF#refs/heads/ }} == "dev"
+        if: $BRANCH_NAME == "dev"
         run: |
-          echo "::set-env name=BRANCH_NAME::$(echo ${GITHUB_REF#refs/heads/})"
           echo "::set-env name=SITE_ID::${{ secrets.DEV_SITE_ID }}"
 
       - name: Publish
