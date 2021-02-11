@@ -17,10 +17,15 @@ assignees: ""
 
 **插件 import 使用的名称**
 
-例：nonebot_plugin_example
+nonebot_plugin_example
+
+<!-- 或其他合法包名 -->
 
 **插件 install 使用的名称**
 
+nonebot-plugin-example
+
+<!--
 例 1：nonebot-plugin-example
 
 通过 pypi 安装
@@ -30,7 +35,10 @@ assignees: ""
 例 2：git+https://github.com/nonebot/nonebot-plugin-example
 
 从 github 仓库安装
+-->
 
 **插件项目仓库/主页链接**
 
-例：nonebot/nonebot2（默认 github ）或其他链接
+nonebot/nonebot2
+
+<!-- 默认 github 或其他完整链接，请勿使用 markdown 语法 -->
