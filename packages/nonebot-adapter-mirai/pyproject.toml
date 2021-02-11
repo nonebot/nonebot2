@@ -1,0 +1,39 @@
+[tool.poetry]
+name = "nonebot-adapter-mirai"
+version = "2.0.0a10"
+description = "Mirai Api HTTP adapter for nonebot2"
+authors = ["Mix <admin@yami.im>", "yanyongyu <yanyongyu_1@126.com>"]
+license = "AGPL-3.0-or-later"
+readme = "README.md"
+homepage = "https://v2.nonebot.dev/"
+repository = "https://github.com/nonebot/nonebot2"
+documentation = "https://v2.nonebot.dev/"
+keywords = ["bot", "qq", "qqbot", "mirai"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Framework :: Robot Framework",
+  "Framework :: Robot Framework :: Library",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3"
+]
+packages = [
+  { include = "nonebot" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.7.3"
+websockets = "^8.1"
+nonebot2 = "^2.0.0-alpha.10"
+
+[tool.poetry.dev-dependencies]
+nonebot2 = { path = "../../", develop = true }
+
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+default = true
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
