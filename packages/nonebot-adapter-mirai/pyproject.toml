@@ -2,7 +2,7 @@
 name = "nonebot-adapter-mirai"
 version = "2.0.0a10"
 description = "Mirai Api HTTP adapter for nonebot2"
-authors = ["Mix <admin@yami.im>", "yanyongyu <yanyongyu_1@126.com>"]
+authors = ["Mix <admin@yami.im>", "yanyongyu <yyy@nonebot.dev>"]
 license = "AGPL-3.0-or-later"
 readme = "README.md"
 homepage = "https://v2.nonebot.dev/"

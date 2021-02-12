@@ -2,7 +2,7 @@
 name = "nonebot-adapter-ding"
 version = "2.0.0a10"
 description = "Ding adapter for nonebot2"
-authors = ["Artin <lengthmin@gmail.com>", "yanyongyu <yanyongyu_1@126.com>"]
+authors = ["Artin <lengthmin@gmail.com>", "yanyongyu <yyy@nonebot.dev>"]
 license = "MIT"
 readme = "README.md"
 homepage = "https://v2.nonebot.dev/"

@@ -2,7 +2,7 @@
 name = "nonebot-adapter-cqhttp"
 version = "2.0.0a10"
 description = "OneBot(CQHTTP) adapter for nonebot2"
-authors = ["yanyongyu <yanyongyu_1@126.com>"]
+authors = ["yanyongyu <yyy@nonebot.dev>"]
 license = "MIT"
 readme = "README.md"
 homepage = "https://v2.nonebot.dev/"
