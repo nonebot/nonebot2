@@ -47,6 +47,7 @@ jobs:
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy ${{ env.BRANCH_NAME }}@${{ github.sha }}'
+          enable-commit-comment: false
           alias: ${{ env.DEPLOY_NAME }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
