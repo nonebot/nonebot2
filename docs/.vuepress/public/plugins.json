@@ -150,5 +150,13 @@
     "desc": "订阅如微博，bilibili，rss的更新消息",
     "name": "hk-reporter",
     "repo": "felinae98/nonebot-hk-reporter"
+  },
+  {
+    "id": "nonebot-plugin-ncm",
+    "link": "nonebot-plugin-ncm",
+    "author": "kitUIN",
+    "desc": "网易云无损音乐下载",
+    "name": "网易云无损音乐下载",
+    "repo": "kitUIN/nonebot_tools/tree/master/nonebot_tools/src/nonebot-plugin-ncm"
   }
 ]
