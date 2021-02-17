@@ -34,6 +34,12 @@ AweSome-Bot
 
 ## 启动 Bot
 
+:::warning 提示
+如果您使用如 `VSCode` / `PyCharm` 等 IDE 启动 nonebot，请检查 IDE 当前工作空间目录是否与当前侧边栏打开目录一致。
+
+* 在二者不一致的环境下可能导致 nonebot 读取配置文件和插件等不符合预期
+:::
+
 通过 `nb-cli`
 
 ```bash

@@ -120,4 +120,4 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 
 `NoneBot` 采用 `MIT` 协议开源，协议文件参考 [LICENSE](./LICENSE)。
 
-特别的，由于 `mirai` 使用 `AGPLv3` 协议并要求使用 `mirai` 的软件同样以 `AGPLv3` 协议开源，本项目 `mirai` 适配器部分（即 [`nonebot/adapters/mirai/`](./nonebot/adapters/mirai/) 目录）以 `AGPLv3` 协议开源，协议文件参考 [LICENSE](./nonebot/adapters/mirai/LICENSE)。
+特别的，由于 `mirai` 使用 `AGPLv3` 协议并要求使用 `mirai` 的软件同样以 `AGPLv3` 协议开源，本项目 `mirai` 适配器部分（即 [`packages/nonebot-adapter-mirai`](./packages/nonebot-adapter-mirai/) 目录）以 `AGPLv3` 协议开源，协议文件参考 [LICENSE](./packages/nonebot-adapter-mirai/LICENSE)。

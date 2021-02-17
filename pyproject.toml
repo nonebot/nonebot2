@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "nonebot2"
-version = "2.0.0a10"
+version = "2.0.0a11"
 description = "An asynchronous python bot framework."
-authors = ["yanyongyu <yanyongyu_1@126.com>"]
+authors = ["yanyongyu <yyy@nonebot.dev>"]
 license = "MIT"
 readme = "README.md"
 homepage = "https://v2.nonebot.dev/"
@@ -18,34 +18,35 @@ classifiers = [
   "Programming Language :: Python :: 3"
 ]
 packages = [
-  { include = "nonebot" }
+  { include = "nonebot" },
 ]
 include = ["nonebot/py.typed"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-httpx = "^0.16.1"
+python = "^3.7.3"
 loguru = "^0.5.1"
 pygtrie = "^2.4.1"
 fastapi = "^0.63.0"
 uvicorn = "^0.11.5"
-websockets = "^8.1"
-pydantic = {extras = ["dotenv", "typing_extensions"], version = "^1.7.3"}
-Quart = {version = "^0.14.1", optional = true}
+Quart = { version = "^0.14.1", optional = true }
+pydantic = { extras = ["dotenv", "typing_extensions"], version = "^1.7.3" }
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.30.0"
 sphinx = "^3.4.1"
+nonebot-adapter-cqhttp = { path = "./packages/nonebot-adapter-cqhttp", develop = true }
+nonebot-adapter-ding = { path = "./packages/nonebot-adapter-ding", develop = true }
+nonebot-adapter-mirai = { path = "./packages/nonebot-adapter-mirai", develop = true }
 sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
 
 [tool.poetry.extras]
 quart = ["quart"]
 all = ["quart"]
 
-# [[tool.poetry.source]]
-# name = "aliyun"
-# url = "https://mirrors.aliyun.com/pypi/simple/"
-# default = true
+[[tool.poetry.source]]
+name = "aliyun"
+url = "https://mirrors.aliyun.com/pypi/simple/"
+default = true
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]
