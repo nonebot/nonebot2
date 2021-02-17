@@ -57,7 +57,7 @@ reference = "aliyun"
 name = "certifi"
 version = "2020.12.5"
 description = "Python package for providing Mozilla's CA Bundle."
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -201,7 +201,7 @@ reference = "aliyun"
 name = "httpcore"
 version = "0.12.3"
 description = "A minimal low-level HTTP client."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -237,7 +237,7 @@ reference = "aliyun"
 name = "httpx"
 version = "0.16.1"
 description = "The next generation HTTP client."
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.6"
 
@@ -300,7 +300,7 @@ reference = "aliyun"
 name = "idna"
 version = "2.10"
 description = "Internationalized Domain Names in Applications (IDNA)"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
@@ -397,6 +397,7 @@ python-versions = "^3.7.3"
 develop = true
 
 [package.dependencies]
+httpx = "^0.16.1"
 nonebot2 = "^2.0.0-alpha.10"
 
 [package.source]
@@ -413,6 +414,7 @@ python-versions = "^3.7.3"
 develop = true
 
 [package.dependencies]
+httpx = "^0.16.1"
 nonebot2 = "^2.0.0-alpha.10"
 
 [package.source]
@@ -429,6 +431,7 @@ python-versions = "^3.7.3"
 develop = true
 
 [package.dependencies]
+httpx = "^0.16.1"
 nonebot2 = "^2.0.0-alpha.10"
 websockets = "^8.1"
 
@@ -505,7 +508,7 @@ reference = "aliyun"
 
 [[package]]
 name = "pygments"
-version = "2.7.4"
+version = "2.8.0"
 description = "Pygments is a syntax highlighting package written in Python."
 category = "dev"
 optional = false
@@ -625,7 +628,7 @@ reference = "aliyun"
 name = "rfc3986"
 version = "1.4.0"
 description = "Validating URI References per RFC 3986"
-category = "main"
+category = "dev"
 optional = false
 python-versions = "*"
 
@@ -644,7 +647,7 @@ reference = "aliyun"
 name = "sniffio"
 version = "1.2.0"
 description = "Sniff out which async library your code is running under"
-category = "main"
+category = "dev"
 optional = false
 python-versions = ">=3.5"
 
@@ -668,7 +671,7 @@ reference = "aliyun"
 
 [[package]]
 name = "sphinx"
-version = "3.4.3"
+version = "3.5.1"
 description = "Python documentation generator"
 category = "dev"
 optional = false
@@ -694,7 +697,7 @@ sphinxcontrib-serializinghtml = "*"
 
 [package.extras]
 docs = ["sphinxcontrib-websupport"]
-lint = ["flake8 (>=3.5.0)", "isort", "mypy (>=0.790)", "docutils-stubs"]
+lint = ["flake8 (>=3.5.0)", "isort", "mypy (>=0.800)", "docutils-stubs"]
 test = ["pytest", "pytest-cov", "html5lib", "cython", "typed-ast"]
 
 [package.source]
@@ -939,7 +942,7 @@ reference = "aliyun"
 
 [[package]]
 name = "uvloop"
-version = "0.15.0"
+version = "0.15.1"
 description = "Fast implementation of asyncio event loop on top of libuv"
 category = "main"
 optional = false
@@ -1037,7 +1040,7 @@ quart = ["Quart"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.3"
-content-hash = "81488824b3f463e045be19e08a098b259a47cd11f22f950f5e5abbe8416f91d5"
+content-hash = "5ed7961113ab7fb77bae986bb67280715f852822bb25f51725dcb5382bdfd08c"
 
 [metadata.files]
 aiofiles = [
@@ -1239,8 +1242,8 @@ pydash = [
     {file = "pydash-4.9.2.tar.gz", hash = "sha256:11d8f3c92d92a004e042fdb226b10dba28f4e311546b0de89d983e91539d5e55"},
 ]
 pygments = [
-    {file = "Pygments-2.7.4-py3-none-any.whl", hash = "sha256:bc9591213a8f0e0ca1a5e68a479b4887fdc3e75d0774e5c71c31920c427de435"},
-    {file = "Pygments-2.7.4.tar.gz", hash = "sha256:df49d09b498e83c1a73128295860250b0b7edd4c723a32e9bc0d295c7c2ec337"},
+    {file = "Pygments-2.8.0-py3-none-any.whl", hash = "sha256:b21b072d0ccdf29297a82a2363359d99623597b8a265b8081760e4d0f7153c88"},
+    {file = "Pygments-2.8.0.tar.gz", hash = "sha256:37a13ba168a02ac54cc5891a42b1caec333e59b66addb7fa633ea8a6d73445c0"},
 ]
 pygtrie = [
     {file = "pygtrie-2.4.2.tar.gz", hash = "sha256:43205559d28863358dbbf25045029f58e2ab357317a59b11f11ade278ac64692"},
@@ -1278,8 +1281,8 @@ snowballstemmer = [
     {file = "snowballstemmer-2.1.0.tar.gz", hash = "sha256:e997baa4f2e9139951b6f4c631bad912dfd3c792467e2f03d7239464af90e914"},
 ]
 sphinx = [
-    {file = "Sphinx-3.4.3-py3-none-any.whl", hash = "sha256:c314c857e7cd47c856d2c5adff514ac2e6495f8b8e0f886a8a37e9305dfea0d8"},
-    {file = "Sphinx-3.4.3.tar.gz", hash = "sha256:41cad293f954f7d37f803d97eb184158cfd90f51195131e94875bc07cd08b93c"},
+    {file = "Sphinx-3.5.1-py3-none-any.whl", hash = "sha256:e90161222e4d80ce5fc811ace7c6787a226b4f5951545f7f42acf97277bfc35c"},
+    {file = "Sphinx-3.5.1.tar.gz", hash = "sha256:11d521e787d9372c289472513d807277caafb1684b33eb4f08f7574c405893a9"},
 ]
 sphinx-markdown-builder = []
 sphinxcontrib-applehelp = [
@@ -1334,16 +1337,16 @@ uvicorn = [
     {file = "uvicorn-0.11.8.tar.gz", hash = "sha256:46a83e371f37ea7ff29577d00015f02c942410288fb57def6440f2653fff1d26"},
 ]
 uvloop = [
-    {file = "uvloop-0.15.0-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:e17cc3f32288daf8476368ddb60cad0f00ab13c979f6f4003ee773f1d90cab58"},
-    {file = "uvloop-0.15.0-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:9ae0b0e86ffcfe11c208fdb1552894911aa0915280e904a3757ebd4505792568"},
-    {file = "uvloop-0.15.0-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:9900020313c158cbc7befdd5ad60eb7b5443d7d1e83ad57c310e330fe7b2d858"},
-    {file = "uvloop-0.15.0-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:1c114eafd3c53cab74024d122742ed9001611e8f341421dba84a8ea7d886cc2f"},
-    {file = "uvloop-0.15.0-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:08547ec0d40005da5c5f969f406cc90e6d589b41388958e326d78ea63fb5d2f9"},
-    {file = "uvloop-0.15.0-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:cb121716f4ff5c01dd9b9a12b2193e59383243c21d14c916f588fd626bd3c74b"},
-    {file = "uvloop-0.15.0-cp39-cp39-macosx_10_14_x86_64.whl", hash = "sha256:ad5391ce33ac1c745dec6f8a394387b3247c374e93b12a1f0403791f6be4bb8a"},
-    {file = "uvloop-0.15.0-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:fab95c88d0c3694089c93a8c46fdab30117c4ce0d1afa2ab7d6f4d0607495857"},
-    {file = "uvloop-0.15.0-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:2d76da5529025f9771855505cfde7bf16b9b0001e2fe05b0abf3e4fc01a5dfdb"},
-    {file = "uvloop-0.15.0.tar.gz", hash = "sha256:1a503d5b49da6e3dd5607d6e533a5315b1caedbf629901807c65a23a09cad065"},
+    {file = "uvloop-0.15.1-cp37-cp37m-macosx_10_14_x86_64.whl", hash = "sha256:9541dc3f391941796ae95c9c3bb16b813acf9e3d4beebfd3b623f1acb22d318d"},
+    {file = "uvloop-0.15.1-cp37-cp37m-manylinux2010_x86_64.whl", hash = "sha256:e178c255622d928d464187e3ceba94db88465f6b17909c651483fb73af8d8b85"},
+    {file = "uvloop-0.15.1-cp37-cp37m-manylinux2014_aarch64.whl", hash = "sha256:47ec567151070ed770211d359ad9250b59368548c60212c7ef6dda3f5b1778f6"},
+    {file = "uvloop-0.15.1-cp38-cp38-macosx_10_14_x86_64.whl", hash = "sha256:66881fe8a2187334c4dd5010c56310bdf32fe426613f9ca727f090bc31280624"},
+    {file = "uvloop-0.15.1-cp38-cp38-manylinux2010_x86_64.whl", hash = "sha256:e72779681f839b6a069d7e7a9f7962a1d1927612c5c2e33071415478bdc1b91b"},
+    {file = "uvloop-0.15.1-cp38-cp38-manylinux2014_aarch64.whl", hash = "sha256:ed073d24e0c383c24d17d3a2bb209b999ff0a8130e89b7c3f033db9e0c3bd04f"},
+    {file = "uvloop-0.15.1-cp39-cp39-macosx_10_14_x86_64.whl", hash = "sha256:236a3c31096e0845029856f7bc07a938340c2cdb35d9d39b38c9253b672bf948"},
+    {file = "uvloop-0.15.1-cp39-cp39-manylinux2010_x86_64.whl", hash = "sha256:ca8a9e982f0bfbe331f41902cdd721c6e749e4685a403685e792b86a584f5969"},
+    {file = "uvloop-0.15.1-cp39-cp39-manylinux2014_aarch64.whl", hash = "sha256:1ae1ad731c8c0dcee80e0ecf06274f0f7293244d2cef81fa2747321a370a6aba"},
+    {file = "uvloop-0.15.1.tar.gz", hash = "sha256:7846828112bfb49abc5fdfc47d0e4dfd7402115c9fde3c14c31818cfbeeb63dc"},
 ]
 websockets = [
     {file = "websockets-8.1-cp36-cp36m-macosx_10_6_intel.whl", hash = "sha256:3762791ab8b38948f0c4d281c8b2ddfa99b7e510e46bd8dfa942a5fff621068c"},

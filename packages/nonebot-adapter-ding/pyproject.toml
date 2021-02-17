@@ -23,6 +23,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.7.3"
+httpx = "^0.16.1"
 nonebot2 = "^2.0.0-alpha.10"
 
 [tool.poetry.dev-dependencies]
