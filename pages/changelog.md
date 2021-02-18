@@ -4,6 +4,15 @@ sidebar: auto
 
 # 更新日志
 
+## v2.0.0a11
+
+- 修改 `nonebot` 项目结构，分离所有 `adapter`
+
+## v2.0.0a10
+
+- 新增 `Quart Driver` 支持
+- 修复 `mirai` 协议适配命令处理以及消息转义
+
 ## v2.0.0a9
 
 - 修复 `Message` 消息为 `None` 时的处理错误
