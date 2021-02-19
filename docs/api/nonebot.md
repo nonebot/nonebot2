@@ -52,6 +52,9 @@ sidebarDepth: 0
 * `load_plugins` => `nonebot.plugin.load_plugins`
 
 
+* `load_all_plugins` => `nonebot.plugin.load_all_plugins`
+
+
 * `load_builtin_plugins` => `nonebot.plugin.load_builtin_plugins`
 
 

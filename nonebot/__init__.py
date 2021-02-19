@@ -18,6 +18,7 @@
 - ``Matchergroup`` => ``nonebot.plugin.MatcherGroup``
 - ``load_plugin`` => ``nonebot.plugin.load_plugin``
 - ``load_plugins`` => ``nonebot.plugin.load_plugins``
+- ``load_all_plugins`` => ``nonebot.plugin.load_all_plugins``
 - ``load_builtin_plugins`` => ``nonebot.plugin.load_builtin_plugins``
 - ``get_plugin`` => ``nonebot.plugin.get_plugin``
 - ``get_loaded_plugins`` => ``nonebot.plugin.get_loaded_plugins``
@@ -221,5 +222,5 @@ def run(host: Optional[str] = None,
 
 from nonebot.plugin import on_message, on_notice, on_request, on_metaevent, CommandGroup, MatcherGroup
 from nonebot.plugin import on_startswith, on_endswith, on_keyword, on_command, on_shell_command, on_regex
-from nonebot.plugin import load_plugin, load_plugins, load_builtin_plugins
+from nonebot.plugin import load_plugin, load_plugins, load_all_plugins, load_builtin_plugins
 from nonebot.plugin import export, require, get_plugin, get_loaded_plugins
