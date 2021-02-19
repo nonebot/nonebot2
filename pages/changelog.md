@@ -7,6 +7,7 @@ sidebar: auto
 ## v2.0.0a11
 
 - 修改 `nonebot` 项目结构，分离所有 `adapter`
+- 修改插件加载逻辑，使用 `import hook` (PEP 302)
 
 ## v2.0.0a10
 
