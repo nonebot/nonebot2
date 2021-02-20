@@ -25,7 +25,7 @@ class Event(BaseEvent):
     __event__ = ""
     time: int
     self_id: int
-    post_type: Literal["message", "notice", "message_sent", "request", "meta_event"]
+    post_type: str
 
     @overrides(BaseEvent)
     def get_type(self) -> Literal["message", "notice", "request", "meta_event"]:
