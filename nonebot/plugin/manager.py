@@ -35,9 +35,8 @@ class _NamespaceModule(ModuleType):
 class _InternalModule(ModuleType):
     """Internal module for each plugin manager."""
 
-    def __init__(self, plugin_manager: "PluginManager"):
-        super().__init__(
-            f"{_internal_space.__name__}.{plugin_manager.internal_id}")
+    def __init__(self, prefix: str, plugin_manager: "PluginManager"):
+        super().__init__(f"{prefix}.{plugin_manager.internal_id}")
         self.__plugin_manager__ = plugin_manager
 
     @property
@@ -88,7 +87,12 @@ class PluginManager:
     def _setup_internal_module(self, internal_id: str) -> ModuleType:
         if hasattr(_internal_space, internal_id):
             raise RuntimeError("Plugin manager already exists!")
-        module = _InternalModule(self)
+
+        prefix = sys._getframe(2).f_globals.get(
+            "__name__") or _internal_space.__name__
+        if not prefix.startswith(_internal_space.__name__):
+            prefix = _internal_space.__name__
+        module = _InternalModule(prefix, self)
         sys.modules[module.__name__] = module
         setattr(_internal_space, internal_id, module)
         return module
