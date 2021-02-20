@@ -1,0 +1,26 @@
+[
+  {
+    "id": "nonebot.adapters.cqhttp",
+    "link": "nonebot-adapter-cqhttp",
+    "name": "cqhttp",
+    "desc": "OneBot(CQHTTP) 协议",
+    "author": "yanyongyu",
+    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-cqhttp"
+  },
+  {
+    "id": "nonebot.adapters.ding",
+    "link": "nonebot-adapter-cqhttp",
+    "name": "ding",
+    "desc": "钉钉协议",
+    "author": "Artin",
+    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-ding"
+  },
+  {
+    "id": "nonebot.adapters.mirai",
+    "link": "nonebot-adapter-mirai",
+    "name": "mirai",
+    "desc": "Mirai-Api-HTTP 协议",
+    "author": "Mix",
+    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-mirai"
+  }
+]

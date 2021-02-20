@@ -22,7 +22,7 @@ from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
 from nonebot.rule import Rule, startswith, endswith, keyword, command, shell_command, ArgumentParser, regex
 
 if TYPE_CHECKING:
-    from nonebot.adapters import Bot, Event
+    from nonebot.adapters import Bot, Event, MessageSegment
 
 plugins: Dict[str, "Plugin"] = {}
 """
