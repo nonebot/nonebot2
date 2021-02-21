@@ -4,7 +4,6 @@
 
 为 NoneBot 插件开发提供便携的定义函数。
 """
-
 import re
 import sys
 import pkgutil
@@ -21,14 +20,17 @@ from nonebot.permission import Permission
 from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
 from nonebot.rule import Rule, startswith, endswith, keyword, command, shell_command, ArgumentParser, regex
 
+from .manager import PluginManager
+
 if TYPE_CHECKING:
-    from nonebot.adapters import Bot, Event, MessageSegment
+    from nonebot.adapters import Bot, Event
 
 plugins: Dict[str, "Plugin"] = {}
 """
 :类型: ``Dict[str, Plugin]``
 :说明: 已加载的插件
 """
+PLUGIN_NAMESPACE = "nonebot.loaded_plugins"
 
 _export: ContextVar["Export"] = ContextVar("_export")
 _tmp_matchers: ContextVar[Set[Type[Matcher]]] = ContextVar("_tmp_matchers")
@@ -946,11 +948,37 @@ class MatcherGroup:
         return matcher
 
 
+def _load_plugin(manager: PluginManager, plugin_name: str) -> Optional[Plugin]:
+    if plugin_name.startswith("_"):
+        return None
+
+    _tmp_matchers.set(set())
+    _export.set(Export())
+
+    if plugin_name in plugins:
+        return None
+
+    try:
+        module = manager.load_plugin(plugin_name)
+
+        for m in _tmp_matchers.get():
+            m.module = plugin_name
+        plugin = Plugin(plugin_name, module, _tmp_matchers.get(), _export.get())
+        plugins[plugin_name] = plugin
+        logger.opt(
+            colors=True).info(f'Succeeded to import "<y>{plugin_name}</y>"')
+        return plugin
+    except Exception as e:
+        logger.opt(colors=True, exception=e).error(
+            f'<r><bg #f8bbd0>Failed to import "{plugin_name}"</bg #f8bbd0></r>')
+        return None
+
+
 def load_plugin(module_path: str) -> Optional[Plugin]:
     """
     :说明:
 
-      使用 ``importlib`` 加载单个插件，可以是本地插件或是通过 ``pip`` 安装的插件。
+      使用 ``PluginManager`` 加载单个插件，可以是本地插件或是通过 ``pip`` 安装的插件。
 
     :参数:
 
@@ -961,34 +989,9 @@ def load_plugin(module_path: str) -> Optional[Plugin]:
       - ``Optional[Plugin]``
     """
 
-    def _load_plugin(module_path: str) -> Optional[Plugin]:
-        try:
-            _tmp_matchers.set(set())
-            _export.set(Export())
-            if module_path in plugins:
-                return plugins[module_path]
-            elif module_path in sys.modules:
-                logger.warning(
-                    f"Module {module_path} has been loaded by other plugins! Ignored"
-                )
-                return None
-            module = importlib.import_module(module_path)
-            for m in _tmp_matchers.get():
-                m.module = module_path
-            plugin = Plugin(module_path, module, _tmp_matchers.get(),
-                            _export.get())
-            plugins[module_path] = plugin
-            logger.opt(
-                colors=True).info(f'Succeeded to import "<y>{module_path}</y>"')
-            return plugin
-        except Exception as e:
-            logger.opt(colors=True, exception=e).error(
-                f'<r><bg #f8bbd0>Failed to import "{module_path}"</bg #f8bbd0></r>'
-            )
-            return None
-
     context: Context = copy_context()
-    return context.run(_load_plugin, module_path)
+    manager = PluginManager(PLUGIN_NAMESPACE, plugins=[module_path])
+    return context.run(_load_plugin, manager, module_path)
 
 
 def load_plugins(*plugin_dir: str) -> Set[Plugin]:
@@ -1005,43 +1008,65 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
 
       - ``Set[Plugin]``
     """
+    loaded_plugins = set()
+    manager = PluginManager(PLUGIN_NAMESPACE, search_path=plugin_dir)
+    for plugin_name in manager.list_plugins():
+        context: Context = copy_context()
+        result = context.run(_load_plugin, manager, plugin_name)
+        if result:
+            loaded_plugins.add(result)
+    return loaded_plugins
 
-    def _load_plugin(module_info) -> Optional[Plugin]:
+
+def load_all_plugins(module_path: Set[str],
+                     plugin_dir: Set[str]) -> Set[Plugin]:
+    """
+    :说明:
+
+      导入指定列表中的插件以及指定目录下多个插件，以 ``_`` 开头的插件不会被导入！
+
+    :参数:
+
+      - ``module_path: Set[str]``: 指定插件集合
+      - ``plugin_dir: Set[str]``: 指定插件路径集合
+
+    :返回:
+
+      - ``Set[Plugin]``
+    """
+
+    def _load_plugin(plugin_name: str) -> Optional[Plugin]:
+        if plugin_name.startswith("_"):
+            return None
+
         _tmp_matchers.set(set())
         _export.set(Export())
-        name = module_info.name
-        if name.startswith("_"):
-            return None
 
-        spec = module_info.module_finder.find_spec(name, None)
-        if not spec:
-            logger.warning(
-                f"Module {name} cannot be loaded! Check module name first.")
-        elif spec.name in plugins:
-            return None
-        elif spec.name in sys.modules:
-            logger.warning(
-                f"Module {spec.name} has been loaded by other plugin! Ignored")
+        if plugin_name in plugins:
             return None
 
         try:
-            module = _load(spec)
+            module = manager.load_plugin(plugin_name)
 
             for m in _tmp_matchers.get():
-                m.module = name
-            plugin = Plugin(name, module, _tmp_matchers.get(), _export.get())
-            plugins[name] = plugin
-            logger.opt(colors=True).info(f'Succeeded to import "<y>{name}</y>"')
+                m.module = plugin_name
+            plugin = Plugin(plugin_name, module, _tmp_matchers.get(),
+                            _export.get())
+            plugins[plugin_name] = plugin
+            logger.opt(
+                colors=True).info(f'Succeeded to import "<y>{plugin_name}</y>"')
             return plugin
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
-                f'<r><bg #f8bbd0>Failed to import "{name}"</bg #f8bbd0></r>')
+                f'<r><bg #f8bbd0>Failed to import "{plugin_name}"</bg #f8bbd0></r>'
+            )
             return None
 
     loaded_plugins = set()
-    for module_info in pkgutil.iter_modules(plugin_dir):
+    manager = PluginManager(PLUGIN_NAMESPACE, module_path, plugin_dir)
+    for plugin_name in manager.list_plugins():
         context: Context = copy_context()
-        result = context.run(_load_plugin, module_info)
+        result = context.run(_load_plugin, plugin_name)
         if result:
             loaded_plugins.add(result)
     return loaded_plugins

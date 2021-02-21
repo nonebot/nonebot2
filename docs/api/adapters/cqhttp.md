@@ -193,7 +193,7 @@ CQHTTP 配置类
 
 ## _class_ `Bot`
 
-基类：[`nonebot.adapters.Bot`](README.md#nonebot.adapters.Bot)
+基类：[`nonebot.adapters._base.Bot`](README.md#nonebot.adapters._base.Bot)
 
 CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 
@@ -307,14 +307,14 @@ CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 
 ## _class_ `MessageSegment`
 
-基类：[`nonebot.adapters.MessageSegment`](README.md#nonebot.adapters.MessageSegment)
+基类：[`nonebot.adapters._base.MessageSegment`](README.md#nonebot.adapters._base.MessageSegment)
 
 CQHTTP 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
 
 
 ## _class_ `Message`
 
-基类：[`nonebot.adapters.Message`](README.md#nonebot.adapters.Message)
+基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)
 
 CQHTTP 协议 Message 适配。
 
@@ -377,7 +377,7 @@ CQHTTP 协议 Message 适配。
 
 ## _class_ `Event`
 
-基类：[`nonebot.adapters.Event`](README.md#nonebot.adapters.Event)
+基类：[`nonebot.adapters._base.Event`](README.md#nonebot.adapters._base.Event)
 
 CQHTTP 协议事件，字段与 CQHTTP 一致。各事件字段参考 [CQHTTP 文档](https://github.com/howmanybots/onebot/blob/master/README.md)
 

@@ -25,13 +25,10 @@ driver.register_adapter("mirai", MiraiBot)
 
 # load builtin plugin
 nonebot.load_builtin_plugins()
-nonebot.load_plugin("nonebot_plugin_apscheduler")
-nonebot.load_plugin("nonebot_plugin_test")
 
-# load local plugins
-nonebot.load_plugins("test_plugins")
-
-print(nonebot.require("test_export"))
+# load all plugins
+nonebot.load_all_plugins({"nonebot_plugin_apscheduler", "nonebot_plugin_test"},
+                         {"test_plugins"})
 
 # modify some config / config depends on loaded configs
 config = driver.config

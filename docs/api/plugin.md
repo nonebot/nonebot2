@@ -1267,7 +1267,7 @@ def something_else():
 
 * **说明**
 
-    使用 `importlib` 加载单个插件，可以是本地插件或是通过 `pip` 安装的插件。
+    使用 `PluginManager` 加载单个插件，可以是本地插件或是通过 `pip` 安装的插件。
 
 
 
@@ -1298,6 +1298,32 @@ def something_else():
 
     
     * `*plugin_dir: str`: 插件路径
+
+
+
+* **返回**
+
+    
+    * `Set[Plugin]`
+
+
+
+## `load_all_plugins(module_path, plugin_dir)`
+
+
+* **说明**
+
+    导入指定列表中的插件以及指定目录下多个插件，以 `_` 开头的插件不会被导入！
+
+
+
+* **参数**
+
+    
+    * `module_path: Set[str]`: 指定插件集合
+
+
+    * `plugin_dir: Set[str]`: 指定插件路径集合
 
 
 

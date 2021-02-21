@@ -176,6 +176,11 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
     ...
 
 
+def load_all_plugins(module_path: Set[str],
+                     plugin_dir: Set[str]) -> Set[Plugin]:
+    ...
+
+
 def load_builtin_plugins(name: str = ...):
     ...
 

@@ -17,6 +17,16 @@ sidebarDepth: 0
 Bot 基类。用于处理上报消息，并提供 API 调用接口。
 
 
+### `driver`
+
+Driver 对象
+
+
+### `config`
+
+Config 配置对象
+
+
 ### _abstract_ `__init__(connection_type, self_id, *, websocket=None)`
 
 
@@ -33,32 +43,33 @@ Bot 基类。用于处理上报消息，并提供 API 调用接口。
 
 
 
-### _abstract async_ `call_api(api, **data)`
+### `connection_type`
+
+连接类型
+
+
+### `self_id`
+
+机器人 ID
+
+
+### `websocket`
+
+Websocket 连接对象
+
+
+### _abstract property_ `type`
+
+Adapter 类型
+
+
+### _classmethod_ `register(driver, config)`
 
 
 * **说明**
 
-    调用机器人 API 接口，可以通过该函数或直接通过 bot 属性进行调用
+    register 方法会在 driver.register_adapter 时被调用，用于初始化相关配置
 
-
-
-* **参数**
-
-    
-    * `api: str`: API 名称
-
-
-    * `**data`: API 数据
-
-
-
-* **示例**
-
-
-```python
-await bot.call_api("send_msg", message="hello world")
-await bot.send_msg(message="hello world")
-```
 
 
 ### _abstract async classmethod_ `check_permission(driver, connection_type, headers, body)`
@@ -116,13 +127,32 @@ await bot.send_msg(message="hello world")
 
 
 
-### _classmethod_ `register(driver, config)`
+### _abstract async_ `call_api(api, **data)`
 
 
 * **说明**
 
-    register 方法会在 driver.register_adapter 时被调用，用于初始化相关配置
+    调用机器人 API 接口，可以通过该函数或直接通过 bot 属性进行调用
 
+
+
+* **参数**
+
+    
+    * `api: str`: API 名称
+
+
+    * `**data`: API 数据
+
+
+
+* **示例**
+
+
+```python
+await bot.call_api("send_msg", message="hello world")
+await bot.send_msg(message="hello world")
+```
 
 
 ### _abstract async_ `send(event, message, **kwargs)`
@@ -147,167 +177,29 @@ await bot.send_msg(message="hello world")
 
 
 
-### _abstract property_ `type`
+## _class_ `MessageSegment`
 
-Adapter 类型
+基类：`abc.ABC`
 
+消息段基类
 
-## _class_ `Event`
 
-基类：`abc.ABC`, `pydantic.main.BaseModel`
+### `type`
 
-Event 基类。提供获取关键信息的方法，其余信息可直接获取。
 
+* 类型: `str`
 
-### _abstract_ `get_event_description()`
 
+* 说明: 消息段类型
 
-* **说明**
 
-    获取事件描述的方法，通常为事件具体内容。
+### `data`
 
 
+* 类型: `Dict[str, Union[str, list]]`
 
-* **返回**
 
-    
-    * `str`
-
-
-
-### _abstract_ `get_event_name()`
-
-
-* **说明**
-
-    获取事件名称的方法。
-
-
-
-* **返回**
-
-    
-    * `str`
-
-
-
-### `get_log_string()`
-
-
-* **说明**
-
-    获取事件日志信息的方法，通常你不需要修改这个方法，只有当希望 NoneBot 隐藏该事件日志时，可以抛出 `NoLogException` 异常。
-
-
-
-* **返回**
-
-    
-    * `str`
-
-
-
-* **异常**
-
-    
-    * `NoLogException`
-
-
-
-### _abstract_ `get_message()`
-
-
-* **说明**
-
-    获取事件消息内容的方法。
-
-
-
-* **返回**
-
-    
-    * `Message`
-
-
-
-### `get_plaintext()`
-
-
-* **说明**
-
-    获取消息纯文本的方法，通常不需要修改，默认通过 `get_message().extract_plain_text` 获取。
-
-
-
-* **返回**
-
-    
-    * `str`
-
-
-
-### _abstract_ `get_session_id()`
-
-
-* **说明**
-
-    获取会话 id 的方法，用于判断当前事件属于哪一个会话，通常是用户 id、群组 id 组合。
-
-
-
-* **返回**
-
-    
-    * `str`
-
-
-
-### _abstract_ `get_type()`
-
-
-* **说明**
-
-    获取事件类型的方法，类型通常为 NoneBot 内置的四种类型。
-
-
-
-* **返回**
-
-    
-    * `Literal["message", "notice", "request", "meta_event"]`
-
-
-
-### _abstract_ `get_user_id()`
-
-
-* **说明**
-
-    获取事件主体 id 的方法，通常是用户 id 。
-
-
-
-* **返回**
-
-    
-    * `str`
-
-
-
-### _abstract_ `is_tome()`
-
-
-* **说明**
-
-    获取事件是否与机器人有关的方法。
-
-
-
-* **返回**
-
-    
-    * `bool`
-
+* 说明: 消息段数据
 
 
 ## _class_ `Message`
@@ -359,15 +251,6 @@ Event 基类。提供获取关键信息的方法，其余信息可直接获取�
 
 
 
-### `extract_plain_text()`
-
-
-* **说明**
-
-    提取消息内纯文本消息
-
-
-
 ### `reduce()`
 
 
@@ -377,8 +260,170 @@ Event 基类。提供获取关键信息的方法，其余信息可直接获取�
 
 
 
-## _class_ `MessageSegment`
+### `extract_plain_text()`
 
-基类：`abc.ABC`
 
-消息段基类
+* **说明**
+
+    提取消息内纯文本消息
+
+
+
+## _class_ `Event`
+
+基类：`abc.ABC`, `pydantic.main.BaseModel`
+
+Event 基类。提供获取关键信息的方法，其余信息可直接获取。
+
+
+### _abstract_ `get_type()`
+
+
+* **说明**
+
+    获取事件类型的方法，类型通常为 NoneBot 内置的四种类型。
+
+
+
+* **返回**
+
+    
+    * `Literal["message", "notice", "request", "meta_event"]`
+
+
+    * `str`
+
+
+
+### _abstract_ `get_event_name()`
+
+
+* **说明**
+
+    获取事件名称的方法。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### _abstract_ `get_event_description()`
+
+
+* **说明**
+
+    获取事件描述的方法，通常为事件具体内容。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_log_string()`
+
+
+* **说明**
+
+    获取事件日志信息的方法，通常你不需要修改这个方法，只有当希望 NoneBot 隐藏该事件日志时，可以抛出 `NoLogException` 异常。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+* **异常**
+
+    
+    * `NoLogException`
+
+
+
+### _abstract_ `get_user_id()`
+
+
+* **说明**
+
+    获取事件主体 id 的方法，通常是用户 id 。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### _abstract_ `get_session_id()`
+
+
+* **说明**
+
+    获取会话 id 的方法，用于判断当前事件属于哪一个会话，通常是用户 id、群组 id 组合。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### _abstract_ `get_message()`
+
+
+* **说明**
+
+    获取事件消息内容的方法。
+
+
+
+* **返回**
+
+    
+    * `Message`
+
+
+
+### `get_plaintext()`
+
+
+* **说明**
+
+    获取消息纯文本的方法，通常不需要修改，默认通过 `get_message().extract_plain_text` 获取。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### _abstract_ `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`

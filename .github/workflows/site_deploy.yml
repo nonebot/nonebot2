@@ -10,6 +10,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        if: github.event_name == 'push'
+
+      - uses: actions/checkout@v2
+        if: github.event_name != 'push'
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
@@ -46,7 +52,7 @@ jobs:
           publish-dir: './docs/.vuepress/dist'
           production-branch: master
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: 'Deploy ${{ env.BRANCH_NAME }}@${{ github.sha }}'
+          deploy-message: 'Deploy ${{ env.DEPLOY_NAME }}@${{ github.sha }}'
           enable-commit-comment: false
           alias: ${{ env.DEPLOY_NAME }}
         env:
