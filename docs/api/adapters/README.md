@@ -291,6 +291,9 @@ Event 基类。提供获取关键信息的方法，其余信息可直接获取�
     * `Literal["message", "notice", "request", "meta_event"]`
 
 
+    * `str`
+
+
 
 ### _abstract_ `get_event_name()`
 
