@@ -351,7 +351,7 @@ class Event(abc.ABC, BaseModel):
         json_encoders = {Message: DataclassEncoder}
 
     @abc.abstractmethod
-    def get_type(self) -> Literal["message", "notice", "request", "meta_event"]:
+    def get_type(self) -> str:
         """
         :说明:
 
@@ -360,6 +360,7 @@ class Event(abc.ABC, BaseModel):
         :返回:
 
           * ``Literal["message", "notice", "request", "meta_event"]``
+          * ``str``
         """
         raise NotImplementedError
 
