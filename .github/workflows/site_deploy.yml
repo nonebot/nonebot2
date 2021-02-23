@@ -40,17 +40,22 @@ jobs:
 
       - name: Get Deploy Name
         if: github.event_name == 'push'
-        run: echo "DEPLOY_NAME=${{ env.BRANCH_NAME }}" >> $GITHUB_ENV
+        run: |
+          echo "DEPLOY_NAME=${{ env.BRANCH_NAME }}" >> $GITHUB_ENV
+          echo "PRODUCTION=${{ env.BRANCH_NAME == 'master' }}" >> $GITHUB_ENV
+
 
       - name: Get Deploy Name
         if: github.event_name != 'push'
-        run: echo "DEPLOY_NAME=deploy-preview-${{ github.event.number }}" >> $GITHUB_ENV
+        run: |
+          echo "DEPLOY_NAME=deploy-preview-${{ github.event.number }}" >> $GITHUB_ENV
+          echo "PRODUCTION=false" >> $GITHUB_ENV
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1.1
         with:
           publish-dir: './docs/.vuepress/dist'
-          production-branch: master
+          production-deploy: ${{ env.PRODUCTION }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
           deploy-message: 'Deploy ${{ env.DEPLOY_NAME }}@${{ github.sha }}'
           enable-commit-comment: false

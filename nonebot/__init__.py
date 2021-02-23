@@ -36,9 +36,14 @@ from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.log import logger, default_filter
 
-_dist: pkg_resources.Distribution = pkg_resources.get_distribution("nonebot2")
-__version__ = _dist.version
-VERSION = _dist.parsed_version
+try:
+    _dist: pkg_resources.Distribution = pkg_resources.get_distribution(
+        "nonebot2")
+    __version__ = _dist.version
+    VERSION = _dist.parsed_version
+except pkg_resources.DistributionNotFound:
+    __version__ = None
+    VERSION = None
 
 _driver: Optional[Driver] = None
 
