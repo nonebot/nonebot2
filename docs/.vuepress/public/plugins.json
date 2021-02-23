@@ -166,5 +166,13 @@
     "desc": "COC跑团骰子娘",
     "name": "nonebot-plugin-cocdicer",
     "repo": "abrahum/nonebot_plugin_cocdicer"
+  },
+  {
+    "id": "nonebot_plugin_cocdicer",
+    "link": "nonebot-plugin-cocdicer",
+    "author": "abrahum",
+    "desc": "COC跑团骰子娘",
+    "name": "nonebot-plugin-cocdicer",
+    "repo": "abrahum/nonebot_plugin_cocdicer"
   }
 ]
