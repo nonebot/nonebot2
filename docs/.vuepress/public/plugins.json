@@ -166,5 +166,13 @@
     "desc": "COC跑团骰子娘",
     "name": "nonebot-plugin-cocdicer",
     "repo": "abrahum/nonebot_plugin_cocdicer"
+  },
+  {
+    "id": "nonebot_plugin_trpglogger",
+    "link": "nonebot-plugin-trpglogger",
+    "author": "Jigsaw111",
+    "desc": "记录跑团记录并上传",
+    "name": "跑团记录记录器",
+    "repo": "thereisnodice/TRPGLogger"
   }
 ]
