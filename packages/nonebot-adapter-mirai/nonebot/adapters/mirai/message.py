@@ -27,7 +27,7 @@ class MessageType(str, Enum):
 
 class MessageSegment(BaseMessageSegment):
     """
-    CQHTTP 协议 MessageSegment 适配。具体方法参考 `mirai-api-http 消息类型`_
+    Mirai-API-HTTP 协议 MessageSegment 适配。具体方法参考 `mirai-api-http 消息类型`_
 
     .. _mirai-api-http 消息类型:
         https://github.com/project-mirai/mirai-api-http/blob/master/docs/MessageType.md
@@ -81,7 +81,7 @@ class MessageSegment(BaseMessageSegment):
         """
         :说明:
 
-          生成回复引用消息段 
+          生成回复引用消息段
 
         :参数:
 
@@ -103,7 +103,7 @@ class MessageSegment(BaseMessageSegment):
         """
         :说明:
 
-          @某个人 
+          @某个人
 
         :参数:
 
@@ -125,8 +125,8 @@ class MessageSegment(BaseMessageSegment):
         """
         :说明:
 
-          发送QQ表情 
-        
+          发送QQ表情
+
         :参数:
 
           * ``face_id: Optional[int]``: QQ表情编号，可选，优先高于name
@@ -139,7 +139,7 @@ class MessageSegment(BaseMessageSegment):
         """
         :说明:
 
-          纯文本消息 
+          纯文本消息
 
         :参数:
 
@@ -155,8 +155,8 @@ class MessageSegment(BaseMessageSegment):
         """
         :说明:
 
-          图片消息 
-        
+          图片消息
+
         :参数:
 
           * ``image_id: Optional[str]``: 图片的image_id，群图片与好友图片格式不同。不为空时将忽略url属性
@@ -173,10 +173,10 @@ class MessageSegment(BaseMessageSegment):
         """
         :说明:
 
-          闪照消息 
-        
+          闪照消息
+
         :参数:
-          
+
           同 ``image``
         """
         return cls(type=MessageType.FLASH_IMAGE,
@@ -194,7 +194,7 @@ class MessageSegment(BaseMessageSegment):
 
           语音消息
 
-        :参数: 
+        :参数:
 
           * ``voice_id: Optional[str]``: 语音的voice_id，不为空时将忽略url属性
           * ``url: Optional[str]``: 语音的URL，发送时可作网络语音的链接
@@ -210,7 +210,7 @@ class MessageSegment(BaseMessageSegment):
         """
         :说明:
 
-          XML消息 
+          XML消息
 
         :参数:
 
@@ -223,7 +223,7 @@ class MessageSegment(BaseMessageSegment):
         """
         :说明:
 
-          Json消息 
+          Json消息
 
         :参数:
 
@@ -236,7 +236,7 @@ class MessageSegment(BaseMessageSegment):
         """
         :说明:
 
-          应用程序消息 
+          应用程序消息
 
         :参数:
 
@@ -249,7 +249,7 @@ class MessageSegment(BaseMessageSegment):
         """
         :说明:
 
-          戳一戳消息 
+          戳一戳消息
 
         :参数:
 
@@ -269,7 +269,7 @@ class MessageSegment(BaseMessageSegment):
 class MessageChain(BaseMessage):
     """
     Mirai 协议 Message 适配
-    
+
     由于Mirai协议的Message实现较为特殊, 故使用MessageChain命名
     """
 
@@ -327,7 +327,7 @@ class MessageChain(BaseMessage):
         :说明:
 
           弹出该消息链的第一个消息
-        
+
         :参数:
 
           * `*type: MessageType`: 指定的消息类型, 当指定后如类型不匹配不弹出
