@@ -5,9 +5,6 @@
 为 NoneBot 插件开发提供便携的定义函数。
 """
 import re
-import sys
-import pkgutil
-import importlib
 from types import ModuleType
 from dataclasses import dataclass
 from importlib._bootstrap import _load
@@ -426,7 +423,7 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
         message = event.get_message()
         segment = message.pop(0)
         new_message = message.__class__(
-            str(segment)
+            str(segment).lstrip()
             [len(state["_prefix"]["raw_command"]):].lstrip())  # type: ignore
         for new_segment in reversed(new_message):
             message.insert(0, new_segment)
