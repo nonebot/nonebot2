@@ -158,5 +158,13 @@
     "desc": "网易云无损音乐下载",
     "name": "网易云无损音乐下载",
     "repo": "kitUIN/nonebot_tools/tree/master/nonebot_tools/nonebot-plugin-ncm"
+  },
+  {
+    "id": "nonebot_plugin_cocdicer",
+    "link": "nonebot-plugin-simdraw",
+    "author": "abrahum",
+    "desc": "COC跑团骰子娘",
+    "name": "nonebot-plugin-cocdicer",
+    "repo": "abrahum/nonebot_plugin_cocdicer"
   }
 ]
