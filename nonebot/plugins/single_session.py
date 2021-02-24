@@ -12,7 +12,7 @@ _running_matcher: Dict[str, int] = {}
 async def _(matcher: Matcher, bot: Bot, event: Event, state: T_State):
     try:
         session_id = event.get_session_id()
-    except ValueError:
+    except Exception:
         return
     current_event_id = id(event)
     event_id = _running_matcher.get(session_id, None)
@@ -26,7 +26,7 @@ async def _(matcher: Matcher, bot: Bot, event: Event, state: T_State):
 async def _(matcher: Matcher, exception: Optional[Exception], bot: Bot, event: Event, state: T_State):
     try:
         session_id = event.get_session_id()
-    except ValueError:
+    except Exception:
         return
     if session_id in _running_matcher:
         del _running_matcher[session_id]
