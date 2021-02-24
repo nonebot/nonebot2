@@ -10,17 +10,23 @@ _running_matcher: Dict[str, int] = {}
 
 @run_preprocessor
 async def _(matcher: Matcher, bot: Bot, event: Event, state: T_State):
-    session_id = event.get_session_id()
-    event_id = id(event)
-
-    if _running_matcher.get(session_id, None) != event_id:
+    try:
+        session_id = event.get_session_id()
+    except ValueError:
+        return
+    current_event_id = id(event)
+    event_id = _running_matcher.get(session_id, None)
+    if event_id and event_id != current_event_id:
         raise IgnoredException("Annother matcher running")
 
-    _running_matcher[session_id] = event_id
+    _running_matcher[session_id] = current_event_id
 
 
 @run_postprocessor
 async def _(matcher: Matcher, exception: Optional[Exception], bot: Bot, event: Event, state: T_State):
-    session_id = event.get_session_id()
+    try:
+        session_id = event.get_session_id()
+    except ValueError:
+        return
     if session_id in _running_matcher:
         del _running_matcher[session_id]
