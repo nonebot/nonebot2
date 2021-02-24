@@ -172,7 +172,6 @@ class Driver(BaseDriver):
             self_id = await BotClass.check_permission(self, 'websocket',
                                                       headers, None)
         except RequestDenied as e:
-            print(e.reason)
             raise exceptions.HTTPException(status_code=e.status_code,
                                            description=e.reason,
                                            name='Request Denied')

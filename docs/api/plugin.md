@@ -1334,6 +1334,59 @@ def something_else():
 
 
 
+## `load_from_json(file_path, encoding='utf-8')`
+
+
+* **说明**
+
+    导入指定 json 文件中的 `plugins` 以及 `plugin_dirs` 下多个插件，以 `_` 开头的插件不会被导入！
+
+
+
+* **参数**
+
+    
+    * `file_path: str`: 指定 json 文件路径
+
+
+    * `encoding: str`: 指定 json 文件编码
+
+
+
+* **返回**
+
+    
+    * `Set[Plugin]`
+
+
+
+## `load_from_toml(file_path, encoding='utf-8')`
+
+
+* **说明**
+
+    导入指定 toml 文件 `[nonebot.plugins]` 中的 `plugins` 以及 `plugin_dirs` 下多个插件，
+    以 `_` 开头的插件不会被导入！
+
+
+
+* **参数**
+
+    
+    * `file_path: str`: 指定 toml 文件路径
+
+
+    * `encoding: str`: 指定 toml 文件编码
+
+
+
+* **返回**
+
+    
+    * `Set[Plugin]`
+
+
+
 ## `load_builtin_plugins(name='echo')`
 
 
