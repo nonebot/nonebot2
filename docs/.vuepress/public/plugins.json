@@ -161,7 +161,7 @@
   },
   {
     "id": "nonebot_plugin_cocdicer",
-    "link": "nonebot-plugin-simdraw",
+    "link": "nonebot-plugin-cocdicer",
     "author": "abrahum",
     "desc": "COC跑团骰子娘",
     "name": "nonebot-plugin-cocdicer",
