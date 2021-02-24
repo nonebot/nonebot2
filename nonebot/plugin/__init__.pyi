@@ -181,6 +181,14 @@ def load_all_plugins(module_path: Set[str],
     ...
 
 
+def load_from_json(file_path: str, encoding: str = ...) -> Set[Plugin]:
+    ...
+
+
+def load_from_toml(file_path: str, encoding: str = ...) -> Set[Plugin]:
+    ...
+
+
 def load_builtin_plugins(name: str = ...):
     ...
 

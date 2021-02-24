@@ -5,12 +5,13 @@
 为 NoneBot 插件开发提供便携的定义函数。
 """
 import re
+import json
 from types import ModuleType
 from dataclasses import dataclass
-from importlib._bootstrap import _load
 from contextvars import Context, ContextVar, copy_context
 from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, TYPE_CHECKING
 
+import tomlkit
 from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
@@ -1067,6 +1068,32 @@ def load_all_plugins(module_path: Set[str],
         if result:
             loaded_plugins.add(result)
     return loaded_plugins
+
+
+def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
+    with open(file_path, "r", encoding=encoding) as f:
+        data = json.load(f)
+    plugins = data.get("plugins")
+    plugin_dirs = data.get("plugin_dirs")
+    assert isinstance(plugins, list), "plugins must be a list of plugin name"
+    assert isinstance(plugin_dirs,
+                      list), "plugin_dirs must be a list of directories"
+    return load_all_plugins(set(plugins), set(plugin_dirs))
+
+
+def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
+    with open(file_path, "r", encoding=encoding) as f:
+        data = tomlkit.parse(f.read())
+
+    nonebot_data = data.get("nonebot", {}).get("plugins")
+    if not nonebot_data:
+        raise ValueError("Cannot find '[nonebot.plugins]' in given toml file!")
+    plugins = nonebot_data.get("plugins", [])
+    plugin_dirs = nonebot_data.get("plugin_dirs", [])
+    assert isinstance(plugins, list), "plugins must be a list of plugin name"
+    assert isinstance(plugin_dirs,
+                      list), "plugin_dirs must be a list of directories"
+    return load_all_plugins(set(plugins), set(plugin_dirs))
 
 
 def load_builtin_plugins(name: str = "echo") -> Optional[Plugin]:

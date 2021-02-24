@@ -1,0 +1,3 @@
+[nonebot.plugins]
+plugins = ["nonebot_plugin_test"]
+plugin_dirs = ["test_plugins"]

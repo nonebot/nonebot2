@@ -27,8 +27,7 @@ driver.register_adapter("mirai", MiraiBot)
 nonebot.load_builtin_plugins()
 
 # load all plugins
-nonebot.load_all_plugins({"nonebot_plugin_apscheduler", "nonebot_plugin_test"},
-                         {"test_plugins"})
+nonebot.load_from_toml("plugins.toml")
 
 # modify some config / config depends on loaded configs
 config = driver.config
@@ -36,4 +35,4 @@ config.custom_config3 = config.custom_config1
 config.custom_config4 = "New custom config"
 
 if __name__ == "__main__":
-    nonebot.run(app="bot:app")
+    nonebot.run(app="__mp_main__:app")
