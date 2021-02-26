@@ -484,6 +484,11 @@ class Matcher(metaclass=MatcherMeta):
         raise RejectedException
 
     def stop_propagation(self):
+        """
+        :说明:
+
+          阻止事件传播
+        """
         self.block = True
 
     async def run_handler(self, handler: T_Handler, bot: "Bot", event: "Event",

@@ -468,3 +468,12 @@ sidebarDepth: 0
 
 
     * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+
+
+
+### `stop_propagation()`
+
+
+* **说明**
+
+    阻止事件传播

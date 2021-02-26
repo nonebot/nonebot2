@@ -101,6 +101,8 @@ nb plugin install nonebot_plugin_test
 
 NoneBot 内置的事件响应器中，所有 `message` 类的事件响应器默认会阻断事件传递，其他则不会。
 
+在部分情况中，可以使用 `matcher.stop_propagation()` 方法动态阻止事件传播，该方法需要 `handler` 在参数中获取 `matcher` 实例后调用方法。
+
 ## 自定义 rule
 
 rule 的出现使得 nonebot 对事件的响应可以非常自由，nonebot 内置了一些规则：
