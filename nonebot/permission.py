@@ -141,7 +141,3 @@ SUPERUSER = Permission(_superuser)
 """
 - **说明**: 匹配任意超级用户消息类型事件
 """
-# EVERYBODY = MESSAGE
-# """
-# - **说明**: 匹配任意消息类型事件
-# """
