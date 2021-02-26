@@ -174,5 +174,13 @@
     "desc": "记录跑团记录并上传",
     "name": "跑团记录记录器",
     "repo": "thereisnodice/TRPGLogger"
+  },
+  {
+    "id": "nonebot_plugin_r6s",
+    "link": "nonebot-plugin-r6s",
+    "author": "abrahum",
+    "desc": "查询彩虹六号玩家信息",
+    "name": "nonebot-plugin-r6s",
+    "repo": "abrahum/nonebot_plugin_r6s"
   }
 ]
