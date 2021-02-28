@@ -21,8 +21,8 @@ from ipaddress import IPv4Address
 from typing import Any, Set, Dict, Tuple, Mapping, Optional
 
 from pydantic import BaseSettings, IPvAnyAddress
-from pydantic.env_settings import env_file_sentinel, SettingsSourceCallable
-from pydantic.env_settings import read_env_file, SettingsError, EnvSettingsSource
+from pydantic.env_settings import SettingsError, InitSettingsSource, EnvSettingsSource
+from pydantic.env_settings import read_env_file, env_file_sentinel, SettingsSourceCallable
 
 
 class CustomEnvSettings(EnvSettingsSource):
@@ -97,13 +97,15 @@ class BaseConfig(BaseSettings):
         @classmethod
         def customise_sources(
             cls,
-            init_settings: SettingsSourceCallable,
-            env_settings: SettingsSourceCallable,
+            init_settings: InitSettingsSource,
+            env_settings: EnvSettingsSource,
             file_secret_settings: SettingsSourceCallable,
         ) -> Tuple[SettingsSourceCallable, ...]:
-            return init_settings, CustomEnvSettings(
-                env_settings.env_file,
-                env_settings.env_file_encoding), file_secret_settings
+            common_config = init_settings.init_kwargs.pop("_common_config", {})
+            return (init_settings,
+                    CustomEnvSettings(env_settings.env_file,
+                                      env_settings.env_file_encoding),
+                    InitSettingsSource(common_config), file_secret_settings)
 
 
 class Env(BaseConfig):
