@@ -190,5 +190,13 @@
     "desc": "多次互动猜名字游戏，自带猜城市名，可定制",
     "name": "猜猜看",
     "repo": "ffreemt/nonebot-plugin-guess-game"
+  },
+  {
+    "id": "abbrreply",
+    "link": "nonebot-plugin-abbrreply",
+    "author": "anlen123",
+    "desc": "输入拼音首字母,猜测文字",
+    "name": "缩写查询器",
+    "repo": "anlen123/nonebot-plugin-shortreply"
   }
 ]
