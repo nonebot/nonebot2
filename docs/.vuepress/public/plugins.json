@@ -192,11 +192,11 @@
     "repo": "ffreemt/nonebot-plugin-guess-game"
   },
   {
-    "id": "abbrreply",
-    "link": "nonebot-plugin-abbrreply",
+    "id": "nonebot_plugin_abbrreply",
+    "link": "nonebot_plugin_abbrreply",
     "author": "anlen123",
-    "desc": "输入拼音首字母,猜测文字",
+    "desc": "输入拼音首字母，猜测文字",
     "name": "缩写查询器",
-    "repo": "anlen123/nonebot-plugin-shortreply"
+    "repo": "anlen123/nonebot_plugin_abbrreply"
   }
 ]
