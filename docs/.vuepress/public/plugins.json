@@ -192,11 +192,11 @@
     "repo": "ffreemt/nonebot-plugin-guess-game"
   },
   {
-    "id": "nonebot_plugin_abbrreply",
-    "link": "nonebot_plugin_abbrreply",
+    "id": "nonebot-plugin-abbrreply",
+    "link": "nonebot-plugin-abbrreply",
     "author": "anlen123",
-    "desc": "输入拼音首字母，猜测文字",
-    "name": "缩写查询器",
-    "repo": "anlen123/nonebot_plugin_abbrreply"
+    "desc": "例：\"sx\" 或者 \"缩写\"  开头,如  缩写 lsp    ,回复的是: ",
+    "name": "例：缩写查询器",
+    "repo": "https://github.com/anlen123/nonebot-plugin-shortreply"
   }
 ]
