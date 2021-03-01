@@ -8,6 +8,7 @@ sidebar: auto
 
 - 修改 `nonebot` 项目结构，分离所有 `adapter`
 - 修改插件加载逻辑，使用 `import hook` (PEP 302)
+- 适配 `pydantic` ~1.8
 
 ## v2.0.0a10
 
