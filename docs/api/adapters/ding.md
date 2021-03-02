@@ -199,7 +199,7 @@ sidebarDepth: 0
 
 ## _class_ `MessageSegment`
 
-基类：[`nonebot.adapters._base.MessageSegment`](README.md#nonebot.adapters._base.MessageSegment)
+基类：`abc.ABC`, `Mapping`
 
 钉钉 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
 
