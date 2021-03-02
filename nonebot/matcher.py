@@ -10,7 +10,7 @@ from functools import wraps
 from datetime import datetime
 from contextvars import ContextVar
 from collections import defaultdict
-from typing import Type, List, Dict, Union, Callable, Optional, NoReturn, TYPE_CHECKING
+from typing import Type, List, Dict, Union, Mapping, Iterable, Callable, Optional, NoReturn, TYPE_CHECKING
 
 from nonebot.rule import Rule
 from nonebot.log import logger
@@ -345,8 +345,23 @@ class Matcher(metaclass=MatcherMeta):
             state["_current_key"] = key
             if key not in state:
                 if prompt:
-                    await bot.send(event=event,
-                                   message=str(prompt).format(**state))
+                    if isinstance(prompt, str):
+                        await bot.send(event=event,
+                                       message=prompt.format(**state))
+                    elif isinstance(prompt, Mapping):
+                        if prompt.is_text():
+                            await bot.send(event=event,
+                                           message=str(prompt).format(**state))
+                        else:
+                            await bot.send(event=event, message=prompt)
+                    elif isinstance(prompt, Iterable):
+                        await bot.send(
+                            event=event,
+                            message=prompt.__class__(
+                                str(prompt).format(**state))  # type: ignore
+                        )
+                    else:
+                        logger.warning("Unknown prompt type, ignored.")
                 raise PausedException
             else:
                 state["_skip_key"] = True
