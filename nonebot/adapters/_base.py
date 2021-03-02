@@ -152,7 +152,7 @@ T_MessageSegment = TypeVar("T_MessageSegment", bound="MessageSegment")
 
 
 @dataclass
-class MessageSegment(abc.ABC):
+class MessageSegment(abc.ABC, Mapping):
     """消息段基类"""
     type: str
     """
@@ -166,9 +166,15 @@ class MessageSegment(abc.ABC):
     """
 
     @abc.abstractmethod
-    def __str__(self: T_MessageSegment) -> str:
+    def __str__(self) -> str:
         """该消息段所代表的 str，在命令匹配部分使用"""
         raise NotImplementedError
+
+    def __len__(self) -> int:
+        return len(str(self))
+
+    def __ne__(self: T_MessageSegment, other: T_MessageSegment) -> bool:
+        return not self == other
 
     @abc.abstractmethod
     def __add__(self: T_MessageSegment, other: Union[str, T_MessageSegment,
@@ -203,8 +209,23 @@ class MessageSegment(abc.ABC):
     def __setitem__(self, key, value):
         return setattr(self, key, value)
 
-    def get(self, key, default=None):
+    def __iter__(self):
+        yield from self.data.__iter__()
+
+    def __contains__(self, key: object) -> bool:
+        return key in self.data
+
+    def get(self, key: str, default=None):
         return getattr(self, key, default)
+
+    def keys(self):
+        return self.data.keys()
+
+    def values(self):
+        return self.data.values()
+
+    def items(self):
+        return self.data.items()
 
     def copy(self: T_MessageSegment) -> T_MessageSegment:
         return copy(self)

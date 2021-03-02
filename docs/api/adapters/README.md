@@ -179,7 +179,7 @@ await bot.send_msg(message="hello world")
 
 ## _class_ `MessageSegment`
 
-基类：`abc.ABC`
+基类：`abc.ABC`, `Mapping`
 
 消息段基类
 
