@@ -158,5 +158,45 @@
     "desc": "网易云无损音乐下载",
     "name": "网易云无损音乐下载",
     "repo": "kitUIN/nonebot_tools/tree/master/nonebot_tools/nonebot-plugin-ncm"
+  },
+  {
+    "id": "nonebot_plugin_cocdicer",
+    "link": "nonebot-plugin-cocdicer",
+    "author": "abrahum",
+    "desc": "COC跑团骰子娘",
+    "name": "nonebot-plugin-cocdicer",
+    "repo": "abrahum/nonebot_plugin_cocdicer"
+  },
+  {
+    "id": "nonebot_plugin_trpglogger",
+    "link": "nonebot-plugin-trpglogger",
+    "author": "Jigsaw111",
+    "desc": "记录跑团记录并上传",
+    "name": "跑团记录记录器",
+    "repo": "thereisnodice/TRPGLogger"
+  },
+  {
+    "id": "nonebot_plugin_r6s",
+    "link": "nonebot-plugin-r6s",
+    "author": "abrahum",
+    "desc": "查询彩虹六号玩家信息",
+    "name": "nonebot-plugin-r6s",
+    "repo": "abrahum/nonebot_plugin_r6s"
+  },
+  {
+    "id": "nonebot_plugin_guess",
+    "link": "nonebot-plugin-guess",
+    "author": "ffreemt",
+    "desc": "多次互动猜名字游戏，自带猜城市名，可定制",
+    "name": "猜猜看",
+    "repo": "ffreemt/nonebot-plugin-guess-game"
+  },
+  {
+    "id": "nonebot_plugin_abbrreply",
+    "link": "nonebot_plugin_abbrreply",
+    "author": "anlen123",
+    "desc": "输入拼音首字母，猜测文字",
+    "name": "缩写查询器",
+    "repo": "anlen123/nonebot_plugin_abbrreply"
   }
 ]
