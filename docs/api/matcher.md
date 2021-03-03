@@ -197,6 +197,36 @@ sidebarDepth: 0
 
 
 
+### `_default_type_updater`
+
+
+* **类型**
+
+    `Optional[T_ArgsParser]`
+
+
+
+* **说明**
+
+    事件响应器类型更新函数
+
+
+
+### `_default_permission_updater`
+
+
+* **类型**
+
+    `Optional[T_ArgsParser]`
+
+
+
+* **说明**
+
+    事件响应器权限更新函数
+
+
+
 ### `__init__()`
 
 实例化 Matcher 以便运行
@@ -338,6 +368,38 @@ sidebarDepth: 0
 
     
     * `func: T_ArgsParser`: 参数解析函数
+
+
+
+### _classmethod_ `type_updater(func)`
+
+
+* **说明**
+
+    装饰一个函数来更改当前事件响应器的默认响应事件类型更新函数
+
+
+
+* **参数**
+
+    
+    * `func: T_TypeUpdater`: 响应事件类型更新函数
+
+
+
+### _classmethod_ `permission_updater(func)`
+
+
+* **说明**
+
+    装饰一个函数来更改当前事件响应器的默认会话权限更新函数
+
+
+
+* **参数**
+
+    
+    * `func: T_PermissionUpdater`: 会话权限更新函数
 
 
 

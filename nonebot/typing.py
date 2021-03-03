@@ -21,8 +21,9 @@ from collections.abc import Callable as BaseCallable
 from typing import Any, Dict, Union, TypeVar, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
 
 if TYPE_CHECKING:
-    from nonebot.adapters import Bot, Event
     from nonebot.matcher import Matcher
+    from nonebot.adapters import Bot, Event
+    from nonebot.permission import Permission
 
 T_Wrapped = TypeVar("T_Wrapped", bound=BaseCallable)
 
@@ -151,4 +152,21 @@ T_ArgsParser = Callable[["Bot", "Event", T_State], Union[Awaitable[None],
 :说明:
 
   ArgsParser 即消息参数解析函数，在 Matcher.got 获取参数时被运行。
+"""
+T_TypeUpdater = Callable[["Bot", "Event", T_State, str], Awaitable[str]]
+"""
+:类型: ``Callable[[Bot, Event, T_State, str], Awaitable[str]]``
+
+:说明:
+
+  TypeUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新响应的事件类型。默认会更新为 ``message``。
+"""
+T_PermissionUpdater = Callable[["Bot", "Event", T_State, "Permission"],
+                               Awaitable["Permission"]]
+"""
+:类型: ``Callable[[Bot, Event, T_State, Permission], Awaitable[Permission]]``
+
+:说明:
+
+  PermissionUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新会话对象权限。默认会更新为当前事件的触发对象。
 """

@@ -381,7 +381,7 @@ class Event(abc.ABC, BaseModel):
         :返回:
 
           * ``Literal["message", "notice", "request", "meta_event"]``
-          * ``str``
+          * 其他自定义 ``str``
         """
         raise NotImplementedError
 
@@ -457,7 +457,7 @@ class Event(abc.ABC, BaseModel):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def get_message(self) -> "Message":
+    def get_message(self) -> Message:
         """
         :说明:
 

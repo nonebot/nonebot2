@@ -15,7 +15,7 @@ from typing import Type, List, Dict, Union, Mapping, Iterable, Callable, Optiona
 from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.permission import Permission, USER
-from nonebot.typing import T_State, T_StateFactory, T_Handler, T_ArgsParser
+from nonebot.typing import T_State, T_StateFactory, T_Handler, T_ArgsParser, T_TypeUpdater, T_PermissionUpdater
 from nonebot.exception import PausedException, RejectedException, FinishedException, StopPropagation
 
 if TYPE_CHECKING:
@@ -105,6 +105,16 @@ class Matcher(metaclass=MatcherMeta):
     """
     :类型: ``Optional[T_ArgsParser]``
     :说明: 事件响应器默认参数解析函数
+    """
+    _default_type_updater: Optional[T_TypeUpdater] = None
+    """
+    :类型: ``Optional[T_ArgsParser]``
+    :说明: 事件响应器类型更新函数
+    """
+    _default_permission_updater: Optional[T_PermissionUpdater] = None
+    """
+    :类型: ``Optional[T_ArgsParser]``
+    :说明: 事件响应器权限更新函数
     """
 
     def __init__(self):
@@ -243,6 +253,35 @@ class Matcher(metaclass=MatcherMeta):
           * ``func: T_ArgsParser``: 参数解析函数
         """
         cls._default_parser = func
+        return func
+
+    @classmethod
+    def type_updater(cls, func: T_TypeUpdater) -> T_TypeUpdater:
+        """
+        :说明:
+
+          装饰一个函数来更改当前事件响应器的默认响应事件类型更新函数
+
+        :参数:
+
+          * ``func: T_TypeUpdater``: 响应事件类型更新函数
+        """
+        cls._default_type_updater = func
+        return func
+
+    @classmethod
+    def permission_updater(cls,
+                           func: T_PermissionUpdater) -> T_PermissionUpdater:
+        """
+        :说明:
+
+          装饰一个函数来更改当前事件响应器的默认会话权限更新函数
+
+        :参数:
+
+          * ``func: T_PermissionUpdater``: 会话权限更新函数
+        """
+        cls._default_permission_updater = func
         return func
 
     @staticmethod
@@ -548,31 +587,49 @@ class Matcher(metaclass=MatcherMeta):
 
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
-            Matcher.new(
-                "message",
-                Rule(),
-                USER(event.get_session_id(),
-                     perm=self.permission),  # type:ignore
-                self.handlers,
-                temp=True,
-                priority=0,
-                block=True,
-                module=self.module,
-                default_state=self.state,
-                expire_time=datetime.now() + bot.config.session_expire_timeout)
+            if self._default_type_updater:
+                type_ = await self._default_type_updater(
+                    bot, event, state, self.type)
+            else:
+                type_ = "message"
+            if self._default_permission_updater:
+                permission = await self._default_permission_updater(
+                    bot, event, state, self.permission)
+            else:
+                permission = USER(event.get_session_id(), perm=self.permission)
+            Matcher.new(type_,
+                        Rule(),
+                        permission,
+                        self.handlers,
+                        temp=True,
+                        priority=0,
+                        block=True,
+                        module=self.module,
+                        default_state=self.state,
+                        expire_time=datetime.now() +
+                        bot.config.session_expire_timeout)
         except PausedException:
-            Matcher.new(
-                "message",
-                Rule(),
-                USER(event.get_session_id(),
-                     perm=self.permission),  # type:ignore
-                self.handlers,
-                temp=True,
-                priority=0,
-                block=True,
-                module=self.module,
-                default_state=self.state,
-                expire_time=datetime.now() + bot.config.session_expire_timeout)
+            if self._default_type_updater:
+                type_ = await self._default_type_updater(
+                    bot, event, state, self.type)
+            else:
+                type_ = "message"
+            if self._default_permission_updater:
+                permission = await self._default_permission_updater(
+                    bot, event, state, self.permission)
+            else:
+                permission = USER(event.get_session_id(), perm=self.permission)
+            Matcher.new(type_,
+                        Rule(),
+                        permission,
+                        self.handlers,
+                        temp=True,
+                        priority=0,
+                        block=True,
+                        module=self.module,
+                        default_state=self.state,
+                        expire_time=datetime.now() +
+                        bot.config.session_expire_timeout)
         except FinishedException:
             pass
         except StopPropagation:
