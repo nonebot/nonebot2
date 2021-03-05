@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-adapter-ding"
-version = "2.0.0a11.post1"
+version = "2.0.0a11.post2"
 description = "Ding adapter for nonebot2"
 authors = ["Artin <lengthmin@gmail.com>", "yanyongyu <yyy@nonebot.dev>"]
 license = "MIT"
@@ -20,7 +20,7 @@ classifiers = [
 packages = [
   { include = "nonebot" }
 ]
-exclude = ["nonebot/adapters/__init__.py"]
+exclude = ["nonebot/__init__.py", "nonebot/adapters/__init__.py"]
 
 [tool.poetry.dependencies]
 python = "^3.7.3"
