@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-adapter-mirai"
-version = "2.0.0-alpha.11"
+version = "2.0.0a11.post1"
 description = "Mirai Api HTTP adapter for nonebot2"
 authors = ["Mix <admin@yami.im>", "yanyongyu <yyy@nonebot.dev>"]
 license = "AGPL-3.0-or-later"
@@ -20,6 +20,7 @@ classifiers = [
 packages = [
   { include = "nonebot" }
 ]
+exclude = ["nonebot/adapters/__init__.py"]
 
 [tool.poetry.dependencies]
 python = "^3.7.3"
