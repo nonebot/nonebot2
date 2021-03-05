@@ -5,15 +5,13 @@
 为 NoneBot 插件开发提供便携的定义函数。
 """
 import re
-import sys
-import pkgutil
-import importlib
+import json
 from types import ModuleType
 from dataclasses import dataclass
-from importlib._bootstrap import _load
 from contextvars import Context, ContextVar, copy_context
 from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, TYPE_CHECKING
 
+import tomlkit
 from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
@@ -426,7 +424,7 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
         message = event.get_message()
         segment = message.pop(0)
         new_message = message.__class__(
-            str(segment)
+            str(segment).lstrip()
             [len(state["_prefix"]["raw_command"]):].lstrip())  # type: ignore
         for new_segment in reversed(new_message):
             message.insert(0, new_segment)
@@ -1070,6 +1068,61 @@ def load_all_plugins(module_path: Set[str],
         if result:
             loaded_plugins.add(result)
     return loaded_plugins
+
+
+def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
+    """
+    :说明:
+
+      导入指定 json 文件中的 ``plugins`` 以及 ``plugin_dirs`` 下多个插件，以 ``_`` 开头的插件不会被导入！
+
+    :参数:
+
+      - ``file_path: str``: 指定 json 文件路径
+      - ``encoding: str``: 指定 json 文件编码
+
+    :返回:
+
+      - ``Set[Plugin]``
+    """
+    with open(file_path, "r", encoding=encoding) as f:
+        data = json.load(f)
+    plugins = data.get("plugins")
+    plugin_dirs = data.get("plugin_dirs")
+    assert isinstance(plugins, list), "plugins must be a list of plugin name"
+    assert isinstance(plugin_dirs,
+                      list), "plugin_dirs must be a list of directories"
+    return load_all_plugins(set(plugins), set(plugin_dirs))
+
+
+def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
+    """
+    :说明:
+
+      导入指定 toml 文件 ``[nonebot.plugins]`` 中的 ``plugins`` 以及 ``plugin_dirs`` 下多个插件，
+      以 ``_`` 开头的插件不会被导入！
+
+    :参数:
+
+      - ``file_path: str``: 指定 toml 文件路径
+      - ``encoding: str``: 指定 toml 文件编码
+
+    :返回:
+
+      - ``Set[Plugin]``
+    """
+    with open(file_path, "r", encoding=encoding) as f:
+        data = tomlkit.parse(f.read())
+
+    nonebot_data = data.get("nonebot", {}).get("plugins")
+    if not nonebot_data:
+        raise ValueError("Cannot find '[nonebot.plugins]' in given toml file!")
+    plugins = nonebot_data.get("plugins", [])
+    plugin_dirs = nonebot_data.get("plugin_dirs", [])
+    assert isinstance(plugins, list), "plugins must be a list of plugin name"
+    assert isinstance(plugin_dirs,
+                      list), "plugin_dirs must be a list of directories"
+    return load_all_plugins(set(plugins), set(plugin_dirs))
 
 
 def load_builtin_plugins(name: str = "echo") -> Optional[Plugin]:

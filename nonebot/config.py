@@ -13,76 +13,44 @@ NoneBot 使用 `pydantic`_ 以及 `python-dotenv`_ 来读取配置。
 .. _pydantic Field Type:
     https://pydantic-docs.helpmanual.io/usage/types/
 """
-
 import os
 from pathlib import Path
+
 from datetime import timedelta
 from ipaddress import IPv4Address
-from typing import Any, Set, Dict, Union, Mapping, Optional
+from typing import Any, Set, Dict, Tuple, Mapping, Optional
 
-from pydantic.utils import deep_update
 from pydantic import BaseSettings, IPvAnyAddress
-from pydantic.env_settings import SettingsError, env_file_sentinel, read_env_file
+from pydantic.env_settings import SettingsError, InitSettingsSource, EnvSettingsSource
+from pydantic.env_settings import read_env_file, env_file_sentinel, SettingsSourceCallable
 
 
-class BaseConfig(BaseSettings):
+class CustomEnvSettings(EnvSettingsSource):
 
-    def __init__(
-            __pydantic_self__,  # type: ignore
-            _common_config: Optional[Dict[Any, Any]] = None,
-            _env_file: Union[Path, str, None] = env_file_sentinel,
-            _env_file_encoding: Optional[str] = None,
-            _secrets_dir: Union[Path, str, None] = None,
-            **values: Any) -> None:
-        super(BaseSettings,
-              __pydantic_self__).__init__(**__pydantic_self__._build_values(
-                  values,
-                  _common_config=_common_config,
-                  _env_file=_env_file,
-                  _env_file_encoding=_env_file_encoding,
-                  _secrets_dir=_secrets_dir))
-
-    def _build_values(
-        self,
-        init_kwargs: Dict[str, Any],
-        _common_config: Optional[Dict[Any, Any]] = None,
-        _env_file: Union[Path, str, None] = None,
-        _env_file_encoding: Optional[str] = None,
-        _secrets_dir: Union[Path, str, None] = None,
-    ) -> Dict[str, Any]:
-        return deep_update(self._build_secrets_files(_secrets_dir),
-                           _common_config or {},
-                           self._build_environ(_env_file,
-                                               _env_file_encoding), init_kwargs)
-
-    def _build_environ(
-            self,
-            _env_file: Union[Path, str, None] = None,
-            _env_file_encoding: Optional[str] = None
-    ) -> Dict[str, Optional[str]]:
+    def __call__(self, settings: BaseSettings) -> Dict[str, Any]:
         """
         Build environment variables suitable for passing to the Model.
         """
         d: Dict[str, Optional[str]] = {}
 
-        if self.__config__.case_sensitive:
+        if settings.__config__.case_sensitive:
             env_vars: Mapping[str, Optional[str]] = os.environ
         else:
             env_vars = {k.lower(): v for k, v in os.environ.items()}
 
         env_file_vars: Dict[str, Optional[str]] = {}
-        env_file = _env_file if _env_file != env_file_sentinel else self.__config__.env_file
-        env_file_encoding = _env_file_encoding if _env_file_encoding is not None else self.__config__.env_file_encoding
+        env_file = self.env_file if self.env_file != env_file_sentinel else settings.__config__.env_file
+        env_file_encoding = self.env_file_encoding if self.env_file_encoding is not None else settings.__config__.env_file_encoding
         if env_file is not None:
             env_path = Path(env_file)
             if env_path.is_file():
                 env_file_vars = read_env_file(
                     env_path,
                     encoding=env_file_encoding,
-                    case_sensitive=self.__config__.case_sensitive)
+                    case_sensitive=settings.__config__.case_sensitive)
                 env_vars = {**env_file_vars, **env_vars}
 
-        for field in self.__fields__.values():
+        for field in settings.__fields__.values():
             env_val: Optional[str] = None
             for env_name in field.field_info.extra["env_names"]:
                 env_val = env_vars.get(env_name)
@@ -96,7 +64,7 @@ class BaseConfig(BaseSettings):
 
             if field.is_complex():
                 try:
-                    env_val = self.__config__.json_loads(env_val)
+                    env_val = settings.__config__.json_loads(env_val)
                 except ValueError as e:
                     raise SettingsError(
                         f'error parsing JSON for "{env_name}"'  # type: ignore
@@ -109,7 +77,8 @@ class BaseConfig(BaseSettings):
                         len(env_val) == 0) and env_name in env_vars:
                     env_val = env_vars[env_name]
                 try:
-                    env_val = self.__config__.json_loads(env_val)
+                    if env_val:
+                        env_val = settings.__config__.json_loads(env_val)
                 except ValueError as e:
                     pass
 
@@ -117,8 +86,26 @@ class BaseConfig(BaseSettings):
 
         return d
 
+
+class BaseConfig(BaseSettings):
+
     def __getattr__(self, name: str) -> Any:
         return self.__dict__.get(name)
+
+    class Config:
+
+        @classmethod
+        def customise_sources(
+            cls,
+            init_settings: InitSettingsSource,
+            env_settings: EnvSettingsSource,
+            file_secret_settings: SettingsSourceCallable,
+        ) -> Tuple[SettingsSourceCallable, ...]:
+            common_config = init_settings.init_kwargs.pop("_common_config", {})
+            return (init_settings,
+                    CustomEnvSettings(env_settings.env_file,
+                                      env_settings.env_file_encoding),
+                    InitSettingsSource(common_config), file_secret_settings)
 
 
 class Env(BaseConfig):

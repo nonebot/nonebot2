@@ -73,6 +73,10 @@ class Driver(abc.ABC):
           * ``name: str``: 适配器名称，用于在连接时进行识别
           * ``adapter: Type[Bot]``: 适配器 Class
         """
+        if name in self._adapters:
+            logger.opt(
+                colors=True).debug(f'Adapter "<y>{name}</y>" already exists')
+            return
         self._adapters[name] = adapter
         adapter.register(self, self.config, **kwargs)
         logger.opt(
