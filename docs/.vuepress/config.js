@@ -82,7 +82,7 @@ module.exports = context => ({
           { text: "指南", link: "/guide/" },
           { text: "进阶", link: "/advanced/" },
           { text: "API", link: "/api/" },
-          { text: "插件广场", link: "/plugin-store" },
+          { text: "商店", link: "/store" },
           { text: "更新日志", link: "/changelog" }
         ],
         sidebarDepth: 2,

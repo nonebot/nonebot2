@@ -24,8 +24,8 @@
           "link": "/api/"
         },
         {
-          "text": "插件广场",
-          "link": "/plugin-store"
+          "text": "商店",
+          "link": "/store"
         },
         {
           "text": "更新日志",
@@ -77,9 +77,7 @@
             "title": "发布",
             "collapsable": false,
             "sidebar": "auto",
-            "children": [
-              "publish-plugin"
-            ]
+            "children": ["publish-plugin"]
           }
         ],
         "/api/": [
