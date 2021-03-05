@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-adapter-cqhttp"
-version = "2.0.0a10"
+version = "2.0.0-alpha.11"
 description = "OneBot(CQHTTP) adapter for nonebot2"
 authors = ["yanyongyu <yyy@nonebot.dev>"]
 license = "MIT"
@@ -24,7 +24,7 @@ packages = [
 [tool.poetry.dependencies]
 python = "^3.7.3"
 httpx = "^0.17.0"
-nonebot2 = "^2.0.0-alpha.10"
+nonebot2 = "^2.0.0-alpha.11"
 
 [tool.poetry.dev-dependencies]
 nonebot2 = { path = "../../", develop = true }

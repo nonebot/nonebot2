@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-adapter-mirai"
-version = "2.0.0a10"
+version = "2.0.0-alpha.11"
 description = "Mirai Api HTTP adapter for nonebot2"
 authors = ["Mix <admin@yami.im>", "yanyongyu <yyy@nonebot.dev>"]
 license = "AGPL-3.0-or-later"
@@ -25,7 +25,7 @@ packages = [
 python = "^3.7.3"
 httpx = "^0.17.0"
 websockets = "^8.1"
-nonebot2 = "^2.0.0-alpha.10"
+nonebot2 = "^2.0.0-alpha.11"
 
 [tool.poetry.dev-dependencies]
 nonebot2 = { path = "../../", develop = true }
