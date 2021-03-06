@@ -11,7 +11,7 @@ FastAPI 驱动适配
 import json
 import asyncio
 import logging
-from typing import Optional, Callable
+from typing import List, Optional, Callable
 
 import uvicorn
 from pydantic import BaseSettings
@@ -39,7 +39,7 @@ class Config(BaseSettings):
 
     :说明:
 
-      `openapi.json` 地址，默认为 `None` 即关闭
+      ``openapi.json`` 地址，默认为 ``None`` 即关闭
     """
     fastapi_docs_url: Optional[str] = None
     """
@@ -49,7 +49,7 @@ class Config(BaseSettings):
 
     :说明:
 
-      `swagger` 地址，默认为 `None` 即关闭
+      ``swagger`` 地址，默认为 ``None`` 即关闭
     """
     fastapi_redoc_url: Optional[str] = None
     """
@@ -59,7 +59,17 @@ class Config(BaseSettings):
 
     :说明:
 
-      `redoc` 地址，默认为 `None` 即关闭
+      ``redoc`` 地址，默认为 ``None`` 即关闭
+    """
+    fastapi_reload_dirs: List[str] = []
+    """
+    :类型:
+
+      ``List[str]``
+
+    :说明:
+
+      ``debug`` 模式下重载监控文件夹列表，默认为 uvicorn 默认值
     """
 
     class Config:
@@ -161,6 +171,7 @@ class Driver(BaseDriver):
                     host=host or str(self.config.host),
                     port=port or self.config.port,
                     reload=bool(app) and self.config.debug,
+                    reload_dirs=self.fastapi_config.fastapi_reload_dirs or None,
                     debug=self.config.debug,
                     log_config=LOGGING_CONFIG,
                     **kwargs)
