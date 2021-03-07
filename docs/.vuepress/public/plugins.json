@@ -206,5 +206,13 @@
     "desc": "将用户发的av号或者bv号转成小程序返回",
     "name": "biliav小程序转换器",
     "repo": "knva/nonebot_plugin_biliav"
+  },
+  {
+    "id": "nonebot-plugin-manager",
+    "link": "nonebot_plugin_manager",
+    "name": "插件管理器",
+    "desc": "基于 import hook 的插件管理",
+    "author": "Jigsaw111",
+    "repo": "Jigsaw111/nonebot_plugin_manager"
   }
 ]
