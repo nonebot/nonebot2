@@ -36,7 +36,8 @@ class NewFriendRequestEvent(RequestEvent):
                                       'eventId': self.event_id,
                                       'groupId': self.group_id,
                                       'fromId': self.from_id,
-                                      'operate': 0
+                                      'operate': 0,
+                                      'message': ''
                                   })
 
     async def reject(self,
@@ -46,7 +47,7 @@ class NewFriendRequestEvent(RequestEvent):
         """
         :说明:
 
-          拒绝此人的好友申请 
+          拒绝此人的好友申请
 
         :参数:
 
@@ -135,7 +136,7 @@ class BotInvitedJoinGroupRequestEvent(RequestEvent):
         """
         :说明:
 
-          通过这份被邀请入群申请 
+          通过这份被邀请入群申请
 
         :参数:
 
@@ -153,7 +154,7 @@ class BotInvitedJoinGroupRequestEvent(RequestEvent):
         """
         :说明:
 
-          拒绝这份被邀请入群申请 
+          拒绝这份被邀请入群申请
 
         :参数:
 
