@@ -28,6 +28,13 @@ Mirai-API-HTTP 的适配器以 [AGPLv3 许可](https://opensource.org/licenses/A
 
 **为了便捷起见, 以下内容均以缩写 `MAH` 代替 `mirai-api-http`**
 
+## 配置 NoneBot Mirai 适配器
+
+
+```bash
+pip install nonebot-adapter-mirai
+```
+
 ## 配置 MAH 客户端
 
 正如你可能刚刚在[CQHTTP 协议使用指南](./cqhttp-guide.md)中所读到的:

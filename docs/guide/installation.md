@@ -1,6 +1,6 @@
 # 安装
 
-## NoneBot
+## 安装 NoneBot
 
 :::warning 注意
 请确保你的 Python 版本 >= 3.7。
@@ -65,6 +65,13 @@ git clone https://github.com/nonebot/nonebot2.git
 cd nonebot2
 poetry install --no-dev  # 推荐
 pip install .  # 不推荐
+```
+
+## 安装适配器
+适配器可以通过 `nb-cli` 在创建项目时根据你的选择自动安装，也可以自行使用 `pip` 安装
+
+```bash
+pip install nonebot-adapter-<adapter-name>
 ```
 
 ## 安装插件
