@@ -49,14 +49,14 @@
                     </v-col>
                     <v-col cols="12">
                       <v-text-field
-                        v-model="newPlugin.id"
+                        v-model="newPlugin.link"
                         label="PyPI 项目名"
                         required
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12">
                       <v-text-field
-                        v-model="newPlugin.link"
+                        v-model="newPlugin.id"
                         label="插件 import 包名"
                         required
                       ></v-text-field>
