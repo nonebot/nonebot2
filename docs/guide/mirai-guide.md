@@ -30,7 +30,6 @@ Mirai-API-HTTP 的适配器以 [AGPLv3 许可](https://opensource.org/licenses/A
 
 ## 安装 NoneBot Mirai 适配器
 
-
 ```bash
 pip install nonebot-adapter-mirai
 ```

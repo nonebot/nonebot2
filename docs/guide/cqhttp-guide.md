@@ -2,7 +2,6 @@
 
 ## 安装 NoneBot CQHTTP 适配器
 
-
 ```bash
 pip install nonebot-adapter-cqhttp
 ```
