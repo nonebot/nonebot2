@@ -74,6 +74,11 @@ pip install .  # 不推荐
 pip install nonebot-adapter-<adapter-name>
 ```
 
+```bash
+# 列出所有的适配器
+nb adapter list
+```
+
 ## 安装插件
 
 插件可以通过 `nb-cli` 进行安装，也可以自行安装并加载插件。
