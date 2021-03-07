@@ -1,6 +1,6 @@
 # CQHTTP 协议使用指南
 
-## 配置 NoneBot CQHTTP 适配器
+## 安装 NoneBot CQHTTP 适配器
 
 
 ```bash

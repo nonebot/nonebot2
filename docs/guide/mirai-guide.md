@@ -28,7 +28,7 @@ Mirai-API-HTTP 的适配器以 [AGPLv3 许可](https://opensource.org/licenses/A
 
 **为了便捷起见, 以下内容均以缩写 `MAH` 代替 `mirai-api-http`**
 
-## 配置 NoneBot Mirai 适配器
+## 安装 NoneBot Mirai 适配器
 
 
 ```bash

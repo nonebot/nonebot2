@@ -11,7 +11,7 @@
 - [群机器人概述](https://developers.dingtalk.com/document/app/overview-of-group-robots)
 - [开发企业内部机器人](https://developers.dingtalk.com/document/app/develop-enterprise-internal-robots)
 
-## 配置 NoneBot 钉钉 适配器
+## 安装 NoneBot 钉钉 适配器
 
 
 ```bash
