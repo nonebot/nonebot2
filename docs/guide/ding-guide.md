@@ -11,6 +11,12 @@
 - [群机器人概述](https://developers.dingtalk.com/document/app/overview-of-group-robots)
 - [开发企业内部机器人](https://developers.dingtalk.com/document/app/develop-enterprise-internal-robots)
 
+## 安装 NoneBot 钉钉 适配器
+
+```bash
+pip install nonebot-adapter-ding
+```
+
 ## 关于 DingAdapter 的说明
 
 你需要显式的注册 ding 这个适配器：

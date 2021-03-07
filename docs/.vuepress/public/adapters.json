@@ -9,7 +9,7 @@
   },
   {
     "id": "nonebot.adapters.ding",
-    "link": "nonebot-adapter-cqhttp",
+    "link": "nonebot-adapter-ding",
     "name": "ding",
     "desc": "钉钉协议",
     "author": "Artin",

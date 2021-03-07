@@ -208,8 +208,8 @@
     "repo": "knva/nonebot_plugin_biliav"
   },
   {
-    "id": "nonebot-plugin-manager",
-    "link": "nonebot_plugin_manager",
+    "id": "nonebot_plugin_manager",
+    "link": "nonebot-plugin-manager",
     "name": "插件管理器",
     "desc": "基于 import hook 的插件管理",
     "author": "Jigsaw111",

@@ -88,7 +88,7 @@ class PluginManager:
         if hasattr(_internal_space, internal_id):
             raise RuntimeError("Plugin manager already exists!")
 
-        prefix = sys._getframe(2).f_globals.get(
+        prefix = sys._getframe(3).f_globals.get(
             "__name__") or _internal_space.__name__
         if not prefix.startswith(_internal_space.__name__):
             prefix = _internal_space.__name__
