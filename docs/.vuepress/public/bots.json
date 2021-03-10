@@ -4,5 +4,11 @@
     "desc": "将B站UP主的动态和直播信息推送至QQ",
     "author": "SK-415",
     "repo": "https://haruka-bot.live"
+  },
+  {
+    "name": "Omega Miya",
+    "desc": "B站推送Pixiv搜图识番求签抽卡表情包还有其他杂七杂八的功能",
+    "author": "Ailitonia",
+    "repo": "Ailitonia/nonebot2_miya"
   }
 ]
