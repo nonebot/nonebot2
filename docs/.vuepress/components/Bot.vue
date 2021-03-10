@@ -141,7 +141,6 @@ export default {
     filteredBots() {
       return this.bots.filter(bot => {
         return (
-          bot.id.indexOf(this.filterText || "") != -1 ||
           bot.name.indexOf(this.filterText || "") != -1 ||
           bot.desc.indexOf(this.filterText || "") != -1 ||
           bot.author.indexOf(this.filterText || "") != -1
