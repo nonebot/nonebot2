@@ -72,12 +72,14 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 - [FastAPI](https://fastapi.tiangolo.com/)
 - [Quart](https://pgjones.gitlab.io/quart/) (异步 flask )
 
-目前 NoneBot2 内置的协议适配：
+目前 NoneBot2 官方维护的协议适配：
 
 - [OneBot(CQHTTP) 协议](https://github.com/howmanybots/onebot/blob/master/README.md) (QQ 等)
 - [Mirai-API-HTTP 协议](https://github.com/project-mirai/mirai-api-http)
 - [钉钉](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p)
 - [Telegram](https://core.telegram.org/bots/api) _计划中_
+
+更多：[商店](https://v2.nonebot.dev/store.html)
 
 ## 即刻开始
 
@@ -110,7 +112,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 
   或者尝试 [文档镜像](https://nonebot2-vercel-mirror.vercel.app)
 
-- 其他插件请查看 [插件商店](https://v2.nonebot.dev/plugin-store.html)
+- 其他插件请查看 [商店](https://v2.nonebot.dev/store.html)
 
 ## 贡献
 
