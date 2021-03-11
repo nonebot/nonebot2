@@ -17,7 +17,7 @@ async def _(matcher: Matcher, bot: Bot, event: Event, state: T_State):
     current_event_id = id(event)
     event_id = _running_matcher.get(session_id, None)
     if event_id and event_id != current_event_id:
-        raise IgnoredException("Annother matcher running")
+        raise IgnoredException("Another matcher running")
 
     _running_matcher[session_id] = current_event_id
 
