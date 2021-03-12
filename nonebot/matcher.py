@@ -108,12 +108,12 @@ class Matcher(metaclass=MatcherMeta):
     """
     _default_type_updater: Optional[T_TypeUpdater] = None
     """
-    :类型: ``Optional[T_ArgsParser]``
+    :类型: ``Optional[T_TypeUpdater]``
     :说明: 事件响应器类型更新函数
     """
     _default_permission_updater: Optional[T_PermissionUpdater] = None
     """
-    :类型: ``Optional[T_ArgsParser]``
+    :类型: ``Optional[T_PermissionUpdater]``
     :说明: 事件响应器权限更新函数
     """
 
@@ -587,16 +587,18 @@ class Matcher(metaclass=MatcherMeta):
 
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
-            if self._default_type_updater:
-                type_ = await self._default_type_updater(
-                    bot, event, state, self.type)
+            updater = self.__class__._default_type_updater
+            if updater:
+                type_ = await updater(bot, event, state, self.type)
             else:
                 type_ = "message"
-            if self._default_permission_updater:
-                permission = await self._default_permission_updater(
-                    bot, event, state, self.permission)
+
+            updater = self.__class__._default_permission_updater
+            if updater:
+                permission = await updater(bot, event, state, self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
+
             Matcher.new(type_,
                         Rule(),
                         permission,
@@ -609,16 +611,18 @@ class Matcher(metaclass=MatcherMeta):
                         expire_time=datetime.now() +
                         bot.config.session_expire_timeout)
         except PausedException:
-            if self._default_type_updater:
-                type_ = await self._default_type_updater(
-                    bot, event, state, self.type)
+            updater = self.__class__._default_type_updater
+            if updater:
+                type_ = await updater(bot, event, state, self.type)
             else:
                 type_ = "message"
-            if self._default_permission_updater:
-                permission = await self._default_permission_updater(
-                    bot, event, state, self.permission)
+
+            updater = self.__class__._default_permission_updater
+            if updater:
+                permission = await updater(bot, event, state, self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
+
             Matcher.new(type_,
                         Rule(),
                         permission,
