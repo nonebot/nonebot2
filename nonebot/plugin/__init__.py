@@ -489,7 +489,7 @@ def on_shell_command(cmd: Union[str, Tuple[str, ...]],
 
 def on_regex(pattern: str,
              flags: Union[int, re.RegexFlag] = 0,
-             rule: Optional[Rule] = None,
+             rule: Optional[Union[Rule, T_RuleChecker]] = None,
              **kwargs) -> Type[Matcher]:
     """
     :说明:
