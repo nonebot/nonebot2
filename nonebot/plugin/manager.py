@@ -6,7 +6,7 @@ from hashlib import md5
 from types import ModuleType
 from collections import Counter
 from importlib.abc import MetaPathFinder
-from importlib.machinery import PathFinder
+from importlib.machinery import PathFinder, SourceFileLoader
 from typing import Set, List, Optional, Iterable
 
 _internal_space = ModuleType(__name__ + "._internal")
@@ -142,6 +142,7 @@ class PluginManager:
 
         if "." in name:
             raise ValueError("Plugin name cannot contain '.'")
+
         with self:
             return importlib.import_module(f"{self.namespace}.{name}")
 
@@ -173,9 +174,28 @@ class PluginFinder(MetaPathFinder):
                                                 list(manager.search_path),
                                                 target)
                     if spec:
+                        spec.loader = PluginLoader(newname, spec.origin)
                         return spec
                 index -= 1
         return None
+
+
+class PluginLoader(SourceFileLoader):
+
+    def __init__(self, fullname: str, path) -> None:
+        self.loaded = False
+        super().__init__(fullname, path)
+
+    def create_module(self, spec) -> Optional[ModuleType]:
+        if self.name in sys.modules:
+            self.loaded = True
+            return sys.modules[self.name]
+        return super().create_module(spec)
+
+    def exec_module(self, module: ModuleType) -> None:
+        if self.loaded:
+            return
+        return super().exec_module(module)
 
 
 sys.meta_path.insert(0, PluginFinder())
