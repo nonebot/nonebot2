@@ -1,5 +1,11 @@
 # CQHTTP 协议使用指南
 
+## 安装 NoneBot CQHTTP 适配器
+
+```bash
+pip install nonebot-adapter-cqhttp
+```
+
 ## 配置 CQHTTP 协议端（以 QQ 为例）
 
 单纯运行 NoneBot 实例并不会产生任何效果，因为此刻 QQ 这边还不知道 NoneBot 的存在，也就无法把消息发送给它，因此现在需要使用一个无头 QQ 来把消息等事件上报给 NoneBot。
