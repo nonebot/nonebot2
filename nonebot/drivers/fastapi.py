@@ -234,8 +234,9 @@ class Driver(BaseDriver):
             return
 
         if x_self_id in self._clients:
-            logger.warning("There's already a reverse websocket connection, "
-                           f"<y>{adapter.upper()} Bot {x_self_id}</y> ignored.")
+            logger.opt(colors=True).warning(
+                "There's already a reverse websocket connection, "
+                f"<y>{adapter.upper()} Bot {x_self_id}</y> ignored.")
             await ws.close(code=status.WS_1008_POLICY_VIOLATION)
             return
 
