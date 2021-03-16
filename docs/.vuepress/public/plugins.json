@@ -214,5 +214,13 @@
     "desc": "基于 import hook 的插件管理",
     "author": "Jigsaw111",
     "repo": "Jigsaw111/nonebot_plugin_manager"
+  },
+  {
+    "id": "nonebot_plugin_analysis_bilibili",
+    "link": "nonebot-plugin-analysis-bilibili",
+    "name": "bilibili视频、番剧解析",
+    "desc": "自动解析bilibili视频、番剧解析",
+    "author": "mengshouer",
+    "repo": "mengshouer/nonebot_plugin_analysis_bilibili"
   }
 ]
