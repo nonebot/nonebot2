@@ -19,3 +19,4 @@ class Config(BaseModel):
 
     class Config:
         extra = "ignore"
+        allow_population_by_field_name = True
