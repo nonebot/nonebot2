@@ -7,7 +7,6 @@
 
 import abc
 from copy import copy
-from typing_extensions import Literal
 from functools import reduce, partial
 from dataclasses import dataclass, field
 from typing import Any, Dict, Union, TypeVar, Mapping, Optional, Callable, Iterable, Iterator, Awaitable, TYPE_CHECKING
