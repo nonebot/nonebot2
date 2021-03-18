@@ -319,9 +319,6 @@ class Matcher(metaclass=MatcherMeta):
         """
 
         def _decorator(func: T_Handler) -> T_Handler:
-            print(
-                sys._getframe(1).f_code.co_filename,
-                sys._getframe(1).f_code.co_name)
             cls.append_handler(func)
             return func
 
@@ -351,8 +348,10 @@ class Matcher(metaclass=MatcherMeta):
         def _decorator(func: T_Handler) -> T_Handler:
             if not cls.handlers or cls.handlers[-1] is not func:
                 func_handler = cls.append_handler(func)
-                receive_handler.update_signature(bot=func_handler.bot_type,
-                                                 event=func_handler.event_type)
+                if receive_handler:
+                    receive_handler.update_signature(
+                        bot=func_handler.bot_type,
+                        event=func_handler.event_type)
 
             return func
 

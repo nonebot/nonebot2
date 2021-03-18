@@ -75,19 +75,19 @@ class Handler(metaclass=HandlerMeta):
 
     @property
     def event_type(self) -> Optional[Type["Event"]]:
-        if "event" not in self.signature:
+        if "event" not in self.signature.parameters:
             return None
         return self.signature.parameters["event"].annotation
 
     @property
     def state_type(self) -> Optional[T_State]:
-        if "state" not in self.signature:
+        if "state" not in self.signature.parameters:
             return None
         return self.signature.parameters["state"].annotation
 
     @property
     def matcher_type(self) -> Optional[Type["Matcher"]]:
-        if "matcher" not in self.signature:
+        if "matcher" not in self.signature.parameters:
             return None
         return self.signature.parameters["matcher"].annotation
 
@@ -97,12 +97,11 @@ class Handler(metaclass=HandlerMeta):
         self._check_params(signature)
         self._check_bot_param(signature)
         self._check_bot_param(wrapped_signature)
-        signature.parameters["bot"].annotation = wrapped_signature.parameters[
-            "bot"].annotation
+        signature.parameters["bot"].replace(
+            annotation=wrapped_signature.parameters["bot"].annotation)
         if "event" in wrapped_signature.parameters and "event" in signature.parameters:
-            signature.parameters[
-                "event"].annotation = wrapped_signature.parameters[
-                    "event"].annotation
+            signature.parameters["event"].replace(
+                annotation=wrapped_signature.parameters["event"].annotation)
         return signature
 
     def update_signature(
@@ -124,7 +123,7 @@ class Handler(metaclass=HandlerMeta):
     def _get_typed_signature(self,
                              follow_wrapped: bool = True) -> inspect.Signature:
         signature = inspect.signature(self.func, follow_wrapped=follow_wrapped)
-        globalns = getattr(self, "__globals__", {})
+        globalns = getattr(self.func, "__globals__", {})
         typed_params = [
             inspect.Parameter(
                 name=param.name,
@@ -149,7 +148,7 @@ class Handler(metaclass=HandlerMeta):
             return param.annotation
 
     def _check_params(self, signature: inspect.Signature):
-        if not set(signature.parameters.keys()) < {
+        if not set(signature.parameters.keys()) <= {
                 "bot", "event", "state", "matcher"
         }:
             raise ValueError(
