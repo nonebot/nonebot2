@@ -174,7 +174,8 @@ class PluginFinder(MetaPathFinder):
                                                 list(manager.search_path),
                                                 target)
                     if spec:
-                        spec.loader = PluginLoader(newname, spec.origin)
+                        spec.loader = PluginLoader(manager, newname,
+                                                   spec.origin)
                         return spec
                 index -= 1
         return None
@@ -182,7 +183,8 @@ class PluginFinder(MetaPathFinder):
 
 class PluginLoader(SourceFileLoader):
 
-    def __init__(self, fullname: str, path) -> None:
+    def __init__(self, manager: PluginManager, fullname: str, path) -> None:
+        self.manager = manager
         self.loaded = False
         super().__init__(fullname, path)
 
@@ -190,12 +192,15 @@ class PluginLoader(SourceFileLoader):
         if self.name in sys.modules:
             self.loaded = True
             return sys.modules[self.name]
+        # return None to use default module creation
         return super().create_module(spec)
 
     def exec_module(self, module: ModuleType) -> None:
         if self.loaded:
             return
-        return super().exec_module(module)
+        setattr(module, "__manager__", self.manager)
+        super().exec_module(module)
+        return
 
 
 sys.meta_path.insert(0, PluginFinder())

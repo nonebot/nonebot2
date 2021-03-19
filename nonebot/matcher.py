@@ -146,7 +146,8 @@ class Matcher(metaclass=MatcherMeta):
             type_: str = "",
             rule: Optional[Rule] = None,
             permission: Optional[Permission] = None,
-            handlers: Optional[List[Union[T_Handler, Handler]]] = None,
+            handlers: Optional[Union[List[T_Handler], List[Handler],
+                                     List[Union[T_Handler, Handler]]]] = None,
             temp: bool = False,
             priority: int = 1,
             block: bool = False,
@@ -299,10 +300,8 @@ class Matcher(metaclass=MatcherMeta):
         return func
 
     @classmethod
-    def append_handler(cls,
-                       handler: T_Handler,
-                       module: Optional[str] = None) -> Handler:
-        handler_ = Handler(handler, module)
+    def append_handler(cls, handler: T_Handler) -> Handler:
+        handler_ = Handler(handler)
         cls.handlers.append(handler_)
         return handler_
 

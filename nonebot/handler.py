@@ -25,16 +25,11 @@ class HandlerMeta(type):
 class Handler(metaclass=HandlerMeta):
     """事件处理函数类"""
 
-    def __init__(self, func: T_Handler, module: Optional[str] = None):
+    def __init__(self, func: T_Handler):
         self.func: T_Handler = func
         """
         :类型: ``T_Handler``
         :说明: 事件处理函数
-        """
-        self.module: Optional[str] = module
-        """
-        :类型: ``Optional[str]``
-        :说明: 事件处理函数所在模块名称
         """
         self.signature: inspect.Signature = self.get_signature()
         """
