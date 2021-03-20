@@ -199,6 +199,10 @@ class GroupMessageEvent(MessageEvent):
                     if x.is_text() else f"<le>{escape_tag(str(x))}</le>",
                     self.message)) + '"')
 
+    @overrides(MessageEvent)
+    def get_session_id(self) -> str:
+        return f"group_{self.group_id}_{self.user_id}"
+
 
 # Notice Events
 class NoticeEvent(Event):

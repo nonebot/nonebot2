@@ -143,3 +143,7 @@ class GroupMessageEvent(MessageEvent):
     @overrides(MessageEvent)
     def is_tome(self) -> bool:
         return self.isInAtList
+
+    @overrides(MessageEvent)
+    def get_session_id(self) -> str:
+        return f"group_{self.conversationId}_{self.senderId}"
