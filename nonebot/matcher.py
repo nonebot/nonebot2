@@ -50,7 +50,7 @@ class MatcherMeta(type):
                 f"temp={self.temp}>")
 
     def __str__(self) -> str:
-        return repr(self)
+        return self.__repr__()
 
 
 class Matcher(metaclass=MatcherMeta):

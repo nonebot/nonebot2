@@ -6,7 +6,6 @@
 """
 
 import inspect
-from typing_extensions import Literal
 from typing import Any, List, Dict, Type, Union, Optional, TYPE_CHECKING
 from typing import ForwardRef, _eval_type  # type: ignore
 
@@ -19,13 +18,28 @@ if TYPE_CHECKING:
 
 
 class HandlerMeta(type):
-    ...
+    if TYPE_CHECKING:
+        func: T_Handler
+        signature: inspect.Signature
+        bot_type: Type["Bot"]
+        event_type: Optional[Type["Event"]]
+        state_type: Optional[T_State]
+        matcher_type: Optional[Type["Matcher"]]
+
+    def __repr__(self) -> str:
+        return (f"<Handler {self.func.__name__}(bot: {self.bot_type}, "
+                f"event: {self.event_type}, state: {self.state_type}, "
+                f"matcher: {self.matcher_type})>")
+
+    def __str__(self) -> str:
+        return self.__repr__()
 
 
 class Handler(metaclass=HandlerMeta):
     """事件处理函数类"""
 
     def __init__(self, func: T_Handler):
+        """装饰事件处理函数以便根据动态参数运行"""
         self.func: T_Handler = func
         """
         :类型: ``T_Handler``
@@ -36,6 +50,14 @@ class Handler(metaclass=HandlerMeta):
         :类型: ``inspect.Signature``
         :说明: 事件处理函数签名
         """
+
+    def __repr__(self) -> str:
+        return (f"<Handler {self.func.__name__}(bot: {self.bot_type}, "
+                f"event: {self.event_type}, state: {self.state_type}, "
+                f"matcher: {self.matcher_type})>")
+
+    def __str__(self) -> str:
+        return self.__repr__()
 
     async def __call__(self, matcher: "Matcher", bot: "Bot", event: "Event",
                        state: T_State):
@@ -65,23 +87,40 @@ class Handler(metaclass=HandlerMeta):
             **{k: v for k, v in args.items() if params[k] is not None})
 
     @property
-    def bot_type(self) -> Type["Bot"]:
+    def bot_type(self) -> Union[Type["Bot"], inspect.Parameter.empty]:
+        """
+        :类型: ``Union[Type["Bot"], inspect.Parameter.empty]``
+        :说明: 事件处理函数接受的 Bot 对象类型"""
         return self.signature.parameters["bot"].annotation
 
     @property
-    def event_type(self) -> Optional[Type["Event"]]:
+    def event_type(
+            self) -> Optional[Union[Type["Event"], inspect.Parameter.empty]]:
+        """
+        :类型: ``Optional[Union[Type[Event], inspect.Parameter.empty]]``
+        :说明: 事件处理函数接受的 event 类型 / 不需要 event 参数
+        """
         if "event" not in self.signature.parameters:
             return None
         return self.signature.parameters["event"].annotation
 
     @property
-    def state_type(self) -> Optional[T_State]:
+    def state_type(self) -> Optional[Union[T_State, inspect.Parameter.empty]]:
+        """
+        :类型: ``Optional[Union[T_State, inspect.Parameter.empty]]``
+        :说明: 事件处理函数是否接受 state 参数
+        """
         if "state" not in self.signature.parameters:
             return None
         return self.signature.parameters["state"].annotation
 
     @property
-    def matcher_type(self) -> Optional[Type["Matcher"]]:
+    def matcher_type(
+            self) -> Optional[Union[Type["Matcher"], inspect.Parameter.empty]]:
+        """
+        :类型: ``Optional[Union[Type["Matcher"], inspect.Parameter.empty]]``
+        :说明: 事件处理函数是否接受 matcher 参数
+        """
         if "matcher" not in self.signature.parameters:
             return None
         return self.signature.parameters["matcher"].annotation
@@ -101,7 +140,7 @@ class Handler(metaclass=HandlerMeta):
 
     def update_signature(
         self, **kwargs: Union[None, Type["Bot"], Type["Event"], Type["Matcher"],
-                              T_State]
+                              T_State, inspect.Parameter.empty]
     ) -> None:
         params: List[inspect.Parameter] = []
         for param in ["bot", "event", "state", "matcher"]:
