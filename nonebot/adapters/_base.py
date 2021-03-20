@@ -72,7 +72,7 @@ class Bot(abc.ABC):
     @classmethod
     @abc.abstractmethod
     async def check_permission(cls, driver: "Driver", connection_type: str,
-                               headers: dict, body: Optional[dict]) -> str:
+                               headers: dict, body: Optional[bytes]) -> str:
         """
         :说明:
 
@@ -83,7 +83,7 @@ class Bot(abc.ABC):
           * ``driver: Driver``: Driver 对象
           * ``connection_type: str``: 连接类型
           * ``headers: dict``: 请求头
-          * ``body: Optional[dict]``: 请求数据，WebSocket 连接该部分为空
+          * ``body: Optional[bytes]``: 请求数据，WebSocket 连接该部分为 None
 
         :返回:
 

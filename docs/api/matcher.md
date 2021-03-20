@@ -7,7 +7,7 @@ sidebarDepth: 0
 
 ## 事件响应器
 
-该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行 对话 。
+该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行对话 。
 
 
 ## `matchers`
@@ -202,7 +202,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Optional[T_ArgsParser]`
+    `Optional[T_TypeUpdater]`
 
 
 
@@ -217,7 +217,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Optional[T_ArgsParser]`
+    `Optional[T_PermissionUpdater]`
 
 
 
@@ -237,7 +237,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `List[T_Handler]`
+    `List[Handler]`
 
 
 

@@ -244,7 +244,7 @@ class Bot(BaseBot):
     @classmethod
     @overrides(BaseBot)
     async def check_permission(cls, driver: "Driver", connection_type: str,
-                               headers: dict, body: Optional[dict]) -> str:
+                               headers: dict, body: Optional[bytes]) -> str:
         """
         :说明:
 
@@ -271,14 +271,13 @@ class Bot(BaseBot):
             if not x_signature:
                 log("WARNING", "Missing Signature Header")
                 raise RequestDenied(401, "Missing Signature")
-            sig = hmac.new(secret.encode("utf-8"),
-                           json.dumps(body).encode(), "sha1").hexdigest()
+            sig = hmac.new(secret.encode("utf-8"), body, "sha1").hexdigest()
             if x_signature != "sha1=" + sig:
                 log("WARNING", "Signature Header is invalid")
                 raise RequestDenied(403, "Signature is invalid")
 
         access_token = cqhttp_config.access_token
-        if access_token and access_token != token:
+        if access_token and access_token != token and connection_type == "websocket":
             log(
                 "WARNING", "Authorization Header is invalid"
                 if token else "Missing Authorization Header")

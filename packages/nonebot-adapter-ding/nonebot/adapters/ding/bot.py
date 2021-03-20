@@ -1,5 +1,4 @@
-import hmac
-import base64
+import json
 import urllib.parse
 
 from datetime import datetime
@@ -51,7 +50,7 @@ class Bot(BaseBot):
     @classmethod
     @overrides(BaseBot)
     async def check_permission(cls, driver: "Driver", connection_type: str,
-                               headers: dict, body: Optional[dict]) -> str:
+                               headers: dict, body: Optional[bytes]) -> str:
         """
         :说明:
 
@@ -81,7 +80,7 @@ class Bot(BaseBot):
                 raise RequestDenied(403, "Signature is invalid")
         else:
             log("WARNING", "Ding signature check ignored!")
-        return body["chatbotUserId"]
+        return json.loads(body.decode())["chatbotUserId"]
 
     @overrides(BaseBot)
     async def handle_message(self, message: dict):
