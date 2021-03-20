@@ -4,6 +4,12 @@ sidebar: auto
 
 # 更新日志
 
+## v2.0.0a12
+
+- 分离 `handler` 与 `matcher`
+- 修复 `cqhttp` secret 校验出错
+- 修复 `pydantic 1.8` 导致的 `alias` 问题
+
 ## v2.0.0a11
 
 - 修改 `nonebot` 项目结构，分离所有 `adapter`
