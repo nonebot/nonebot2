@@ -9,6 +9,7 @@ sidebar: auto
 - 分离 `handler` 与 `matcher`
 - 修复 `cqhttp` secret 校验出错
 - 修复 `pydantic 1.8` 导致的 `alias` 问题
+- 修改 `cqhttp` `ding` `session id`，不再允许跨群
 
 ## v2.0.0a11
 
