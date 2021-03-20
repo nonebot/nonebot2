@@ -121,7 +121,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -162,7 +162,7 @@ def something_else():
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -206,7 +206,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -247,7 +247,7 @@ def something_else():
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -288,7 +288,7 @@ def something_else():
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -335,7 +335,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -382,7 +382,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -429,7 +429,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -481,7 +481,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -538,7 +538,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -590,7 +590,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -767,7 +767,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -808,7 +808,7 @@ def something_else():
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -852,7 +852,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -893,7 +893,7 @@ def something_else():
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -934,7 +934,7 @@ def something_else():
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -981,7 +981,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -1028,7 +1028,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -1075,7 +1075,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -1127,7 +1127,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -1184,7 +1184,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -1236,7 +1236,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）

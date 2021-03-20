@@ -178,7 +178,7 @@ class Bot(BaseBot):
     @classmethod
     @overrides(BaseBot)
     async def check_permission(cls, driver: "Driver", connection_type: str,
-                               headers: dict, body: Optional[dict]) -> str:
+                               headers: dict, body: Optional[bytes]) -> str:
         if connection_type == 'ws':
             raise RequestDenied(
                 status_code=501,
@@ -224,7 +224,7 @@ class Bot(BaseBot):
         \:\:\: danger
         由于Mirai的HTTP API特殊性, 该API暂时无法实现
         \:\:\:
-        
+
         \:\:\: tip
         你可以使用 ``MiraiBot.api`` 中提供的调用方法来代替
         \:\:\:
@@ -447,7 +447,7 @@ class Bot(BaseBot):
         :说明:
 
           使用此方法获取bot接收到的最老消息和最老各类事件
-          (不会从MiraiApiHttp消息记录中删除) 
+          (不会从MiraiApiHttp消息记录中删除)
 
         :参数:
 
@@ -462,7 +462,7 @@ class Bot(BaseBot):
 
           使用此方法获取bot接收到的最新消息和最新各类事件
           (不会从MiraiApiHttp消息记录中删除)
-        
+
         :参数:
 
           * ``count: int``: 获取消息和事件的数量
@@ -599,7 +599,7 @@ class Bot(BaseBot):
         """
         :说明:
 
-          使用此方法使Bot退出群聊 
+          使用此方法使Bot退出群聊
 
         :参数:
 

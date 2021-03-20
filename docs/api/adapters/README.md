@@ -93,7 +93,7 @@ Adapter 类型
     * `headers: dict`: 请求头
 
 
-    * `body: Optional[dict]`: 请求数据，WebSocket 连接该部分为空
+    * `body: Optional[bytes]`: 请求数据，WebSocket 连接该部分为 None
 
 
 
