@@ -19,7 +19,7 @@ from nonebot.permission import Permission
 from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
 from nonebot.rule import Rule, startswith, endswith, keyword, command, shell_command, ArgumentParser, regex
 
-from .manager import PluginManager
+from .manager import PluginManager, _current_plugin
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
@@ -32,6 +32,7 @@ plugins: Dict[str, "Plugin"] = {}
 PLUGIN_NAMESPACE = "nonebot.loaded_plugins"
 
 _export: ContextVar["Export"] = ContextVar("_export")
+# FIXME: tmp matchers context var will be removed
 _tmp_matchers: ContextVar[Set[Type[Matcher]]] = ContextVar("_tmp_matchers")
 
 
@@ -142,6 +143,7 @@ def on(type: str = "",
                           priority=priority,
                           block=block,
                           handlers=handlers,
+                          module=_current_plugin.get(),
                           default_state=state,
                           default_state_factory=state_factory)
     _tmp_matchers.get().add(matcher)
@@ -183,6 +185,7 @@ def on_metaevent(
                           priority=priority,
                           block=block,
                           handlers=handlers,
+                          module=_current_plugin.get(),
                           default_state=state,
                           default_state_factory=state_factory)
     _tmp_matchers.get().add(matcher)
@@ -225,6 +228,7 @@ def on_message(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                           priority=priority,
                           block=block,
                           handlers=handlers,
+                          module=_current_plugin.get(),
                           default_state=state,
                           default_state_factory=state_factory)
     _tmp_matchers.get().add(matcher)
@@ -265,6 +269,7 @@ def on_notice(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                           priority=priority,
                           block=block,
                           handlers=handlers,
+                          module=_current_plugin.get(),
                           default_state=state,
                           default_state_factory=state_factory)
     _tmp_matchers.get().add(matcher)
@@ -305,6 +310,7 @@ def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                           priority=priority,
                           block=block,
                           handlers=handlers,
+                          module=_current_plugin.get(),
                           default_state=state,
                           default_state_factory=state_factory)
     _tmp_matchers.get().add(matcher)
@@ -960,8 +966,7 @@ def _load_plugin(manager: PluginManager, plugin_name: str) -> Optional[Plugin]:
     try:
         module = manager.load_plugin(plugin_name)
 
-        # for m in _tmp_matchers.get():
-        #     m.module = plugin_name
+        # FIXME: store matchers using new method
         plugin = Plugin(plugin_name, module, _tmp_matchers.get(), _export.get())
         plugins[plugin_name] = plugin
         logger.opt(
