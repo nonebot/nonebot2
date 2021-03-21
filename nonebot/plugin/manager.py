@@ -208,7 +208,8 @@ class PluginLoader(SourceFileLoader):
     def exec_module(self, module: ModuleType) -> None:
         if self.loaded:
             return
-        setattr(module, "__manager__", self.manager)
+        # really need?
+        # setattr(module, "__manager__", self.manager)
         super().exec_module(module)
         if self._context_token:
             _current_plugin.reset(self._context_token)
