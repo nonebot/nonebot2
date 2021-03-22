@@ -222,5 +222,13 @@
     "desc": "自动解析bilibili视频、番剧解析",
     "author": "mengshouer",
     "repo": "mengshouer/nonebot_plugin_analysis_bilibili"
+  },
+  {
+    "id": "nonebot_plugin_localstore",
+    "link": "nonebot-plugin-localstore",
+    "name": "本地数据存储",
+    "desc": "存储插件数据至本地文件",
+    "author": "yanyongyu",
+    "repo": "nonebot/plugin-localstore"
   }
 ]
