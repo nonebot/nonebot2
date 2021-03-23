@@ -15,7 +15,7 @@ from nonebot.exception import IgnoredException
 
 
 @event_preprocessor
-async def do_something(matcher: Matcher, bot: Bot, event: Event, state: T_State):
+async def do_something(bot: Bot, event: Event, state: T_State):
     raise IgnoredException("reason")
 ```
 :::
@@ -26,7 +26,7 @@ async def do_something(matcher: Matcher, bot: Bot, event: Event, state: T_State)
 from nonebot.message import event_preprocessor
 
 @event_preprocessor
-async def do_something(matcher: Matcher, bot: Bot, event: Event, state: T_State):
+async def do_something(bot: Bot, event: Event, state: T_State):
     pass
 ```
 
@@ -36,7 +36,7 @@ async def do_something(matcher: Matcher, bot: Bot, event: Event, state: T_State)
 from nonebot.message import event_postprocessor
 
 @event_postprocessor
-async def do_something(matcher: Matcher, bot: Bot, event: Event, state: T_State):
+async def do_something(bot: Bot, event: Event, state: T_State):
     pass
 ```
 
@@ -55,6 +55,6 @@ async def do_something(matcher: Matcher, bot: Bot, event: Event, state: T_State)
 from nonebot.message import run_postprocessor
 
 @run_postprocessor
-async def do_something(matcher: Matcher, bot: Bot, event: Event, state: T_State):
+async def do_something(matcher: Matcher, exception: Optional[Exception], bot: Bot, event: Event, state: T_State):
     pass
 ```
