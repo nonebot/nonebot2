@@ -109,7 +109,7 @@ class Bot(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def call_api(self, api: str, **data):
+    async def call_api(self, api: str, **data) -> Any:
         """
         :说明:
 
@@ -130,8 +130,9 @@ class Bot(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def send(self, event: "Event",
-                   message: Union[str, "Message", "MessageSegment"], **kwargs):
+    async def send(self, event: "Event", message: Union[str, "Message",
+                                                        "MessageSegment"],
+                   **kwargs) -> Any:
         """
         :说明:
 

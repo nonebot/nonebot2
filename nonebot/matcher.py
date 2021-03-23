@@ -9,14 +9,17 @@ from functools import wraps
 from datetime import datetime
 from contextvars import ContextVar
 from collections import defaultdict
-from typing import Type, List, Dict, Union, Mapping, Iterable, Callable, Optional, NoReturn, TYPE_CHECKING
+from typing import (Any, Type, List, Dict, Union, Mapping, Iterable, Callable,
+                    Optional, NoReturn, TYPE_CHECKING)
 
 from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.handler import Handler
 from nonebot.permission import Permission, USER
-from nonebot.typing import T_State, T_StateFactory, T_Handler, T_ArgsParser, T_TypeUpdater, T_PermissionUpdater
-from nonebot.exception import PausedException, RejectedException, FinishedException, StopPropagation
+from nonebot.typing import (T_State, T_StateFactory, T_Handler, T_ArgsParser,
+                            T_TypeUpdater, T_PermissionUpdater)
+from nonebot.exception import (PausedException, RejectedException,
+                               FinishedException, StopPropagation)
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event, Message, MessageSegment
@@ -437,7 +440,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def send(cls, message: Union[str, "Message", "MessageSegment"],
-                   **kwargs):
+                   **kwargs) -> Any:
         """
         :说明:
 
@@ -448,9 +451,9 @@ class Matcher(metaclass=MatcherMeta):
           * ``message: Union[str, Message, MessageSegment]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
-        bot = current_bot.get()
+        bot: "Bot" = current_bot.get()
         event = current_event.get()
-        await bot.send(event=event, message=message, **kwargs)
+        return await bot.send(event=event, message=message, **kwargs)
 
     @classmethod
     async def finish(cls,
