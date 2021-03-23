@@ -82,15 +82,6 @@ def something_else():
 * **说明**: 插件模块对象
 
 
-### `matcher`
-
-
-* **类型**: `Set[Type[Matcher]]`
-
-
-* **说明**: 插件内定义的 `Matcher`
-
-
 ### `export`
 
 
@@ -98,6 +89,15 @@ def something_else():
 
 
 * **说明**: 插件内定义的导出内容
+
+
+### _property_ `matcher`
+
+
+* **类型**: `Set[Type[Matcher]]`
+
+
+* **说明**: 插件内定义的 `Matcher`
 
 
 ## `on(type='', rule=None, permission=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None)`
