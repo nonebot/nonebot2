@@ -53,7 +53,7 @@ async def do_something(bot: Bot):
 
 ### bot 断开处理
 
-这个钩子函数会在 `bot` 断开与 `nonebot2` 的`websocket` 连接时运行。
+这个钩子函数会在 `bot` 断开与 `nonebot2` 的 `websocket` 连接时运行。
 
 ```python
 @driver.on_bot_disconnect
@@ -71,7 +71,9 @@ async def do_something(bot: Bot):
 
 :::
 
-:::warning 注意 1.在事件处理钩子函数中，与 `matcher` 运行状态相关的函数将不可用，如 `matcher.finish()`
+:::warning 注意 
+
+1.在事件处理钩子函数中，与 `matcher` 运行状态相关的函数将不可用，如 `matcher.finish()`
 
 2.如果需要在事件处理钩子函数中打断整个对话的执行，请参考以下范例：
 
