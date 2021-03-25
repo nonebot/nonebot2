@@ -51,7 +51,7 @@ class MatcherMeta(type):
                 f"temp={self.temp}>")
 
     def __str__(self) -> str:
-        return self.__repr__()
+        return repr(self)
 
 
 class Matcher(metaclass=MatcherMeta):
@@ -140,7 +140,7 @@ class Matcher(metaclass=MatcherMeta):
                 f"priority={self.priority}, temp={self.temp}>")
 
     def __str__(self) -> str:
-        return self.__repr__()
+        return repr(self)
 
     @classmethod
     def new(cls,

@@ -24,7 +24,7 @@ async def test_b(bot: Bot, event: Event, state: T_State):
     print("======== B Running Completed ========")
 
 
-c = on_message(priority=0, permission=USER(1111111111))
+c = on_message(priority=0, permission=USER("1111111111"))
 
 
 @c.handle()

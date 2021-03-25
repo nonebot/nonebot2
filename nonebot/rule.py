@@ -287,7 +287,11 @@ class ArgumentParser(ArgParser):
     """
 
     def _print_message(self, message, file=None):
-        pass
+        old_message: str = getattr(self, "message", "")
+        if old_message:
+            old_message += "\n"
+        old_message += message
+        setattr(self, "message", old_message)
 
     def exit(self, status=0, message=None):
         raise ParserExit(status=status, message=message)
@@ -365,7 +369,7 @@ def shell_command(*cmds: Union[str, Tuple[str, ...]],
                     args = parser.parse_args(state["argv"])
                     state["args"] = args
                 except ParserExit as e:
-                    state["args"] = e
+                    state["args"] = getattr(parser, "message", None) or e
             return True
         else:
             return False

@@ -32,7 +32,7 @@ class HandlerMeta(type):
                 f"matcher: {self.matcher_type})>")
 
     def __str__(self) -> str:
-        return self.__repr__()
+        return repr(self)
 
 
 class Handler(metaclass=HandlerMeta):
@@ -57,25 +57,20 @@ class Handler(metaclass=HandlerMeta):
                 f"matcher: {self.matcher_type})>")
 
     def __str__(self) -> str:
-        return self.__repr__()
+        return repr(self)
 
     async def __call__(self, matcher: "Matcher", bot: "Bot", event: "Event",
                        state: T_State):
-        params = {
-            param.name: param.annotation
-            for param in self.signature.parameters.values()
-        }
-
-        BotType = ((params["bot"] is not inspect.Parameter.empty) and
-                   inspect.isclass(params["bot"]) and params["bot"])
+        BotType = ((self.bot_type is not inspect.Parameter.empty) and
+                   inspect.isclass(self.bot_type) and self.bot_type)
         if BotType and not isinstance(bot, BotType):
             logger.debug(
                 f"Matcher {matcher} bot type {type(bot)} not match annotation {BotType}, ignored"
             )
             return
 
-        EventType = ((params["event"] is not inspect.Parameter.empty) and
-                     inspect.isclass(params["event"]) and params["event"])
+        EventType = ((self.event_type is not inspect.Parameter.empty) and
+                     inspect.isclass(self.event_type) and self.event_type)
         if EventType and not isinstance(event, EventType):
             logger.debug(
                 f"Matcher {matcher} event type {type(event)} not match annotation {EventType}, ignored"
@@ -84,7 +79,11 @@ class Handler(metaclass=HandlerMeta):
 
         args = {"bot": bot, "event": event, "state": state, "matcher": matcher}
         await self.func(
-            **{k: v for k, v in args.items() if params[k] is not None})
+            **{
+                k: v
+                for k, v in args.items()
+                if self.signature.parameters.get(k, None) is not None
+            })
 
     @property
     def bot_type(self) -> Union[Type["Bot"], inspect.Parameter.empty]:
