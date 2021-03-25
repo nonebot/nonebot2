@@ -10,9 +10,17 @@
 
 **便捷起见，以下内容对 `Nonebot2` 会被称为 `nonebot`，与 `Nonebot2` 交互的机器人实现会被称为 `协议端`**。
 
-在实际应用中，`nonebot` 会充当一个高性能，轻量级的 Python 微服务框架。协议端可以通过 `http`, `websocket` 等方式与之通信，这个通信往往是双向的：一方面，协议端可以上报数据给 `nonebot`，`nonebot` 会处理数据并返回响应给协议端；另一方面，`nonebot` 可以主动推送数据给协议端。而 `nonebot` 便是围绕上述的双向通信进行工作的。
+在实际应用中，`nonebot` 会充当一个高性能，轻量级的 Python 微服务框架。协议端可以通过 `http`, `websocket` 等方式与之通信，这个通信往往是双向的：一方面，协议端可以上报数据给 `nonebot`，`nonebot` 会处理数据并返回响应给协议端；另一方面，`nonebot` 可以主动推送数据给协议端。而 `nonebot` 便是围绕双向通信进行工作的。
 
-在开始工作之前，`nonebot` 会依照**配置文件或初始化配置**启动，并会注册**协议适配器** `adapter`，之后便会加载**插件**， 随后，倘若一个协议端与 `nonebot` 进行了连接，`nonebot` 的后端驱动 `driver` 就会将 `adapter` 实例化为 `bot`，`nonebot` 便会利用 `bot` 开始工作，它的工作内容分为两个方面：
+在开始工作之前，`nonebot` 需要进行准备工作：
+
+1. **运行 `nonebot.init` 初始化函数**，它会读取配置文件，并初始化 `nonebot` 和后端驱动 `driver` 对象。
+2. **注册协议适配器 `adapter`** 。
+3. **加载插件**。
+
+准备工作完成后，`nonebot` 会利用 `uvicorn` 启动，并运行 `on_startup` 钩子函数。
+
+随后，倘若一个协议端与 `nonebot` 进行了连接，`nonebot` 的后端驱动 `driver` 就会将 `adapter` 实例化为 `bot`，`nonebot` 便会利用 `bot` 开始工作，它的工作内容分为两个方面：
 
 1. **事件处理**，`bot` 会将协议端上报的数据转化为 `事件`(`Event`)，之后 `nonebot` 会根据一套既定流程来处理 `事件`。
 
@@ -41,7 +49,7 @@
 1. 协议端会通过 `websocket` 或者 `http` 等方式与 `nonebot` 的后端驱动 `driver` 连接，`driver` 会根据之前注册的 `adapter` 和配置文件的内容来进行鉴权，从而获得这个连接的唯一识别 id `self-id`，随后 `adapter` 就会利用 `self-id` 实例化为 `bot` 对象。
 
    ::: tip
-   需要注意的是，如果协议端通过 `websocket` 与 `nonebot` 连接，这个步骤只会在建立连接时进行；通过 `http` 方式连接时，会在协议端每次上报数据时都进行这个步骤。
+   需要注意的是，如果协议端通过 `websocket` 与 `nonebot` 连接，这个步骤只会在建立连接时进行，并在之后运行 `on_bot_connect` 钩子函数；通过 `http` 方式连接时，会在协议端每次上报数据时都进行这个步骤。
    :::
 
    ::: warning
@@ -142,7 +150,7 @@
 
    这个异常可以在 `handler` 中由 `Matcher.reject` 抛出。
 
-   当 `nonebot` 捕获到它时，会停止运行当前 `handler` 并结束当前 `matcher` 的运行，并将**当前 handler 和后续 `handler`**交给一个临时 `Matcher` 来响应当前交互用户的下一个消息事件，当临时 `Matcher` 响应时，临时 `Matcher` 会运行当前 `handler` 和后续的 `handler`。
+   当 `nonebot` 捕获到它时，会停止运行当前 `handler` 并结束当前 `matcher` 的运行，并将当前 handler 和后续 `handler` 交给一个临时 `Matcher` 来响应当前交互用户的下一个消息事件，当临时 `Matcher` 响应时，临时 `Matcher` 会运行当前 `handler` 和后续的 `handler`。
 
 4. **FinishedException**
 
@@ -158,7 +166,7 @@
 
 ## 调用 API
 
-`nonebot` 可以通过 `bot` 来调用 API，API 可以向协议端发送数据，也可以向协议端请求更多的数据。
+`nonebot` 可以通过 `bot` 来调用 `API` ，`API` 可以向协议端发送数据，也可以向协议端请求更多的数据。
 
 ::: tip
 不同 `adapter` 规定了不同的 API，对应的 API 列表请参照协议规范。
