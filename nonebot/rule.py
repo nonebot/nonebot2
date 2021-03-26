@@ -294,7 +294,8 @@ class ArgumentParser(ArgParser):
         setattr(self, "message", old_message)
 
     def exit(self, status=0, message=None):
-        raise ParserExit(status=status, message=message)
+        raise ParserExit(status=status,
+                         message=message or getattr(self, "message", None))
 
     def parse_args(self,
                    args: Optional[Sequence[str]] = None,
@@ -369,7 +370,7 @@ def shell_command(*cmds: Union[str, Tuple[str, ...]],
                     args = parser.parse_args(state["argv"])
                     state["args"] = args
                 except ParserExit as e:
-                    state["args"] = getattr(parser, "message", None) or e
+                    state["args"] = e
             return True
         else:
             return False
