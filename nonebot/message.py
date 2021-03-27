@@ -205,7 +205,8 @@ async def handle_event(bot: "Bot", event: "Event"):
     coros = list(map(lambda x: x(bot, event, state), _event_preprocessors))
     if coros:
         try:
-            logger.debug("Running PreProcessors...")
+            if show_log:
+                logger.debug("Running PreProcessors...")
             await asyncio.gather(*coros)
         except IgnoredException:
             logger.opt(colors=True).info(
@@ -240,11 +241,16 @@ async def handle_event(bot: "Bot", event: "Event"):
                 if not break_flag:
                     break_flag = True
                     logger.debug("Stop event propagation")
+            elif isinstance(result, Exception):
+                logger.opt(colors=True, exception=result).error(
+                    "<r><bg #f8bbd0>Error when checking Matcher.</bg #f8bbd0></r>"
+                )
 
     coros = list(map(lambda x: x(bot, event, state), _event_postprocessors))
     if coros:
         try:
-            logger.debug("Running PostProcessors...")
+            if show_log:
+                logger.debug("Running PostProcessors...")
             await asyncio.gather(*coros)
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
