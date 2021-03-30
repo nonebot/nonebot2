@@ -7,7 +7,7 @@
 可以使用 `nb-cli` 或者自行创建完整的项目目录：
 
 ```bash
-nb create
+nb init
 ```
 
 <!-- prettier-ignore-start -->

@@ -97,7 +97,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 3. 使用脚手架创建项目
 
    ```bash
-   nb create
+   nb init
    ```
 
 ## 插件
