@@ -132,13 +132,20 @@ def process_source(bot: "Bot", event: MessageEvent) -> MessageEvent:
 
 
 def process_at(bot: "Bot", event: GroupMessage) -> GroupMessage:
-    at = event.message_chain.extract_first(MessageType.AT)
-    if at is not None:
-        if at.data['target'] == event.self_id:
+    no_plain = True
+    msg_chain = []
+    chain = event.message_chain.extract_first()
+    while chain is not None:
+        if chain.type == "At" and chain.data['target'] == event.self_id:
             event.to_me = True
+        elif chain.type == "Plain":
+            no_plain = False
+            msg_chain.append(chain)
         else:
-            event.message_chain.insert(0, at)
-    if not event.message_chain:
+            msg_chain.append(chain)
+        chain = event.message_chain.extract_first()
+    event.message_chain.extend(msg_chain)
+    if no_plain:
         event.message_chain.append(MessageSegment.plain(''))
     return event
 
