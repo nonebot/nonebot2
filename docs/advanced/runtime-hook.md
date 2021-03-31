@@ -19,7 +19,7 @@ from nonebot import get_driver
 driver=get_driver()
 ```
 
-共分为四种函数：
+共分为五种函数：
 
 ### 启动准备
 
@@ -61,6 +61,18 @@ async def do_something(bot: Bot):
     pass
 ```
 
+### bot api 调用钩子
+
+这个钩子函数会在 `Bot` 调用 API 时运行。
+
+```python
+from nonebot.adapters import Bot
+
+@Bot.on_calling_api
+async def handle_api_call(bot: Bot, api: str, data: Dict[str, Any]):
+    pass
+```
+
 ## 事件处理钩子
 
 这些钩子函数指的是影响 `nonebot2` 进行 `事件处理` 的函数。
@@ -71,7 +83,7 @@ async def do_something(bot: Bot):
 
 :::
 
-:::warning 注意 
+:::warning 注意
 
 1.在事件处理钩子函数中，与 `matcher` 运行状态相关的函数将不可用，如 `matcher.finish()`
 

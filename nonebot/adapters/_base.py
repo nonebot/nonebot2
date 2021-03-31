@@ -156,7 +156,7 @@ class Bot(abc.ABC):
             await bot.call_api("send_msg", message="hello world")
             await bot.send_msg(message="hello world")
         """
-        coros = list(map(lambda x: x(api, data), self._call_api_hook))
+        coros = list(map(lambda x: x(self, api, data), self._call_api_hook))
         if coros:
             try:
                 logger.debug("Running CallingAPI hooks...")

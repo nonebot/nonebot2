@@ -11,6 +11,9 @@ sidebar: auto
 - 修复 `pydantic 1.8` 导致的 `alias` 问题
 - 修改 `cqhttp` `ding` `session id`，不再允许跨群
 - 修改 `shell_command` 存储 message
+- 修复 `cqhttp` 检查 reply 失败退出
+- 新增 `call_api` hook 接口
+- 优化 `import hook`
 
 ## v2.0.0a11
 

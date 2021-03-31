@@ -193,7 +193,7 @@ class Bot(BaseBot):
           - ``NetworkError``: 网络错误
           - ``ActionFailed``: API 调用失败
         """
-        return super().call_api(api, event=event, **data)
+        return await super().call_api(api, event=event, **data)
 
     @overrides(BaseBot)
     async def send(self,
