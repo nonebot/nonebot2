@@ -11,7 +11,7 @@ from nonebot.message import handle_event
 from nonebot.utils import escape_tag, logger_wrapper
 
 from .event import Event, GroupMessage, MessageEvent, MessageSource
-from .message import MessageType
+from .message import MessageType, MessageSegment
 
 if TYPE_CHECKING:
     from .bot import Bot
@@ -64,7 +64,7 @@ class ActionFailed(exception.ActionFailed):
 class InvalidArgument(exception.AdapterException):
     """
     :说明:
-    
+
       调用API的参数出错
     """
 
@@ -106,7 +106,7 @@ def argument_validation(function: _AnyCallable) -> _AnyCallable:
     :说明:
 
       通过函数签名中的类型注解来对传入参数进行运行时校验
-      
+
       会在参数出错时释放 ``InvalidArgument`` 异常
     """
     function = validate_arguments(config={
@@ -138,6 +138,8 @@ def process_at(bot: "Bot", event: GroupMessage) -> GroupMessage:
             event.to_me = True
         else:
             event.message_chain.insert(0, at)
+    if not event.message_chain:
+        event.message_chain.append(MessageSegment.plain(''))
     return event
 
 

@@ -3,6 +3,30 @@ from nonebot.rule import to_me
 from nonebot.plugin import on_command
 from nonebot.adapters.ding import Bot as DingBot, MessageSegment, MessageEvent
 
+helper = on_command("ding_helper", to_me())
+
+
+@helper.handle()
+async def ding_helper(bot: DingBot, event: MessageEvent):
+    message = MessageSegment.markdown(
+        "Hello, This is NoneBot",
+        """帮助信息如下：\n
+[ding_helper](dtmd://dingtalkclient/sendMessage?content=ding_helper) 查看帮助\n
+[markdown](dtmd://dingtalkclient/sendMessage?content=markdown) 发送 markdown\n
+[actionCardSingleBtn](dtmd://dingtalkclient/sendMessage?content=actionCardSingleBtn)\n
+[actionCard](dtmd://dingtalkclient/sendMessage?content=actionCard)\n
+[feedCard](dtmd://dingtalkclient/sendMessage?content=feedCard)\n
+[atme](dtmd://dingtalkclient/sendMessage?content=atme)\n
+[image](dtmd://dingtalkclient/sendMessage?content=image)\n
+[t](dtmd://dingtalkclient/sendMessage?content=t)\n
+[code](dtmd://dingtalkclient/sendMessage?content=code) 发送代码\n
+[test_message](dtmd://dingtalkclient/sendMessage?content=test_message)\n
+[hello](dtmd://dingtalkclient/sendMessage?content=hello)\n
+[webhook](dtmd://dingtalkclient/sendMessage?content=webhook)""",
+    )
+    await markdown.finish(message)
+
+
 markdown = on_command("markdown", to_me())
 
 
@@ -184,3 +208,30 @@ async def hello_handler(bot: DingBot, event: MessageEvent):
     message = MessageSegment.text(f"@{event.senderId}，你好")
     message += MessageSegment.atDingtalkIds(event.senderId)
     await hello.finish(message)
+
+
+hello = on_command("webhook", to_me())
+
+
+@hello.handle()
+async def webhook_handler(bot: DingBot, event: MessageEvent):
+    print(event)
+    message = MessageSegment.raw({
+        "msgtype": "text",
+        "text": {
+            "content": 'hello from webhook,一定要注意安全方式的鉴权哦，否则可能发送失败的'
+        },
+    })
+    message += MessageSegment.atDingtalkIds(event.senderId)
+    await hello.send(
+        message,
+        webhook=
+        "https://oapi.dingtalk.com/robot/send?access_token=XXXXXXXXXXXXXX",
+        secret="SECXXXXXXXXXXXXXXXXXXXXXXXXX")
+
+    message = MessageSegment.text("TEST 123123  S")
+    await hello.send(
+        message,
+        webhook=
+        "https://oapi.dingtalk.com/robot/send?access_token=XXXXXXXXXXXXXX",
+    )

@@ -52,8 +52,12 @@ async def _check_reply(bot: "Bot", event: "Event"):
     except ValueError:
         return
     msg_seg = event.message[index]
-    event.reply = Reply.parse_obj(await
-                                  bot.get_msg(message_id=msg_seg.data["id"]))
+    try:
+        event.reply = Reply.parse_obj(await
+                                      bot.get_msg(message_id=msg_seg.data["id"]
+                                                 ))
+    except Exception as e:
+        log("WARNING", f"Error when getting message reply info: {repr(e)}", e)
     # ensure string comparation
     if str(event.reply.sender.user_id) == str(event.self_id):
         event.to_me = True
@@ -244,7 +248,7 @@ class Bot(BaseBot):
     @classmethod
     @overrides(BaseBot)
     async def check_permission(cls, driver: "Driver", connection_type: str,
-                               headers: dict, body: Optional[dict]) -> str:
+                               headers: dict, body: Optional[bytes]) -> str:
         """
         :说明:
 
@@ -271,14 +275,13 @@ class Bot(BaseBot):
             if not x_signature:
                 log("WARNING", "Missing Signature Header")
                 raise RequestDenied(401, "Missing Signature")
-            sig = hmac.new(secret.encode("utf-8"),
-                           json.dumps(body).encode(), "sha1").hexdigest()
+            sig = hmac.new(secret.encode("utf-8"), body, "sha1").hexdigest()
             if x_signature != "sha1=" + sig:
                 log("WARNING", "Signature Header is invalid")
                 raise RequestDenied(403, "Signature is invalid")
 
         access_token = cqhttp_config.access_token
-        if access_token and access_token != token:
+        if access_token and access_token != token and connection_type == "websocket":
             log(
                 "WARNING", "Authorization Header is invalid"
                 if token else "Missing Authorization Header")
@@ -329,32 +332,7 @@ class Bot(BaseBot):
             )
 
     @overrides(BaseBot)
-    async def call_api(self, api: str, **data) -> Any:
-        """
-        :说明:
-
-          调用 CQHTTP 协议 API
-
-        :参数:
-
-          * ``api: str``: API 名称
-          * ``**data: Any``: API 参数
-
-        :返回:
-
-          - ``Any``: API 调用返回数据
-
-        :异常:
-
-          - ``NetworkError``: 网络错误
-          - ``ActionFailed``: API 调用失败
-        """
-        if "self_id" in data:
-            self_id = data.pop("self_id")
-            if self_id:
-                bot = self.driver.bots[str(self_id)]
-                return await bot.call_api(api, **data)
-
+    async def _call_api(self, api: str, **data) -> Any:
         log("DEBUG", f"Calling API <y>{api}</y>")
         if self.connection_type == "websocket":
             seq = ResultStore.get_seq()
@@ -396,6 +374,29 @@ class Bot(BaseBot):
                 raise NetworkError("API root url invalid")
             except httpx.HTTPError:
                 raise NetworkError("HTTP request failed")
+
+    @overrides(BaseBot)
+    async def call_api(self, api: str, **data) -> Any:
+        """
+        :说明:
+
+          调用 CQHTTP 协议 API
+
+        :参数:
+
+          * ``api: str``: API 名称
+          * ``**data: Any``: API 参数
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+
+        :异常:
+
+          - ``NetworkError``: 网络错误
+          - ``ActionFailed``: API 调用失败
+        """
+        return await super().call_api(api, **data)
 
     @overrides(BaseBot)
     async def send(self,

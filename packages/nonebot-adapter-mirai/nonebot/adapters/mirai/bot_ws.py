@@ -116,7 +116,8 @@ class WebsocketBot(Bot):
     @classmethod
     @overrides(Bot)
     async def check_permission(cls, driver: "Driver", connection_type: str,
-                               headers: dict, body: Optional[dict]) -> NoReturn:
+                               headers: dict,
+                               body: Optional[bytes]) -> NoReturn:
         raise RequestDenied(
             status_code=501,
             reason=f'Connection {connection_type} not implented')
@@ -127,7 +128,7 @@ class WebsocketBot(Bot):
         """
         :说明:
 
-          注册该Adapter 
+          注册该Adapter
 
         :参数:
 

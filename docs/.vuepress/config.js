@@ -167,6 +167,10 @@ module.exports = context => ({
                   path: "matcher"
                 },
                 {
+                  title: "nonebot.handler 模块",
+                  path: "handler"
+                },
+                {
                   title: "nonebot.rule 模块",
                   path: "rule"
                 },

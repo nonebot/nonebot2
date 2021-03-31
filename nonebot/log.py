@@ -77,8 +77,8 @@ default_format = (
     "<c><u>{name}</u></c> | "
     # "<c>{function}:{line}</c>| "
     "{message}")
-logger.add(sys.stdout,
-           colorize=True,
-           diagnose=False,
-           filter=default_filter,
-           format=default_format)
+logger_id = logger.add(sys.stdout,
+                       colorize=True,
+                       diagnose=False,
+                       filter=default_filter,
+                       format=default_format)

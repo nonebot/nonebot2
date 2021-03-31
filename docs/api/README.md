@@ -19,6 +19,9 @@
     * [nonebot.matcher](matcher.html)
 
 
+    * [nonebot.handler](handler.html)
+
+
     * [nonebot.rule](rule.html)
 
 

@@ -71,6 +71,7 @@ T_WebSocketDisconnectionHook = Callable[["Bot"], Awaitable[None]]
 
   WebSocket 连接断开时执行的函数
 """
+T_CallingAPIHook = Callable[["Bot", str, Dict[str, Any]], Awaitable[None]]
 
 T_EventPreProcessor = Callable[["Bot", "Event", T_State], Awaitable[None]]
 """

@@ -16,7 +16,7 @@ from typing import List, Optional, Callable
 import uvicorn
 from pydantic import BaseSettings
 from fastapi.responses import Response
-from fastapi import Body, status, Request, FastAPI, HTTPException
+from fastapi import status, Request, FastAPI, HTTPException
 from starlette.websockets import WebSocketDisconnect, WebSocket as FastAPIWebSocket
 
 from nonebot.log import logger
@@ -177,11 +177,11 @@ class Driver(BaseDriver):
                     **kwargs)
 
     @overrides(BaseDriver)
-    async def _handle_http(self,
-                           adapter: str,
-                           request: Request,
-                           data: dict = Body(...)):
-        if not isinstance(data, dict):
+    async def _handle_http(self, adapter: str, request: Request):
+        data = await request.body()
+        data_dict = json.loads(data.decode())
+
+        if not isinstance(data_dict, dict):
             logger.warning("Data received is invalid")
             raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST)
 
@@ -208,7 +208,7 @@ class Driver(BaseDriver):
 
         bot = BotClass("http", x_self_id)
 
-        asyncio.create_task(bot.handle_message(data))
+        asyncio.create_task(bot.handle_message(data_dict))
         return Response("", 204)
 
     @overrides(BaseDriver)
@@ -234,8 +234,9 @@ class Driver(BaseDriver):
             return
 
         if x_self_id in self._clients:
-            logger.warning("There's already a reverse websocket connection, "
-                           f"<y>{adapter.upper()} Bot {x_self_id}</y> ignored.")
+            logger.opt(colors=True).warning(
+                "There's already a reverse websocket connection, "
+                f"<y>{adapter.upper()} Bot {x_self_id}</y> ignored.")
             await ws.close(code=status.WS_1008_POLICY_VIOLATION)
             return
 

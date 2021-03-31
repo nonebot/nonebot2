@@ -2,21 +2,24 @@
 事件响应器
 ==========
 
-该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行 对话 。
+该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行对话 。
 """
 
-import inspect
 from functools import wraps
 from datetime import datetime
 from contextvars import ContextVar
 from collections import defaultdict
-from typing import Type, List, Dict, Union, Mapping, Iterable, Callable, Optional, NoReturn, TYPE_CHECKING
+from typing import (Any, Type, List, Dict, Union, Mapping, Iterable, Callable,
+                    Optional, NoReturn, TYPE_CHECKING)
 
 from nonebot.rule import Rule
 from nonebot.log import logger
+from nonebot.handler import Handler
 from nonebot.permission import Permission, USER
-from nonebot.typing import T_State, T_StateFactory, T_Handler, T_ArgsParser, T_TypeUpdater, T_PermissionUpdater
-from nonebot.exception import PausedException, RejectedException, FinishedException, StopPropagation
+from nonebot.typing import (T_State, T_StateFactory, T_Handler, T_ArgsParser,
+                            T_TypeUpdater, T_PermissionUpdater)
+from nonebot.exception import (PausedException, RejectedException,
+                               FinishedException, StopPropagation)
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event, Message, MessageSegment
@@ -31,11 +34,21 @@ current_event: ContextVar = ContextVar("current_event")
 
 
 class MatcherMeta(type):
+    if TYPE_CHECKING:
+        module: Optional[str]
+        type: str
+        rule: Rule
+        permission: Permission
+        handlers: List[T_Handler]
+        priority: int
+        block: bool
+        temp: bool
+        expire_time: Optional[datetime]
 
     def __repr__(self) -> str:
-        return (f"<Matcher from {self.module or 'unknow'}, "  # type: ignore
-                f"type={self.type}, priority={self.priority}, "  # type: ignore
-                f"temp={self.temp}>")  # type: ignore
+        return (f"<Matcher from {self.module or 'unknow'}, "
+                f"type={self.type}, priority={self.priority}, "
+                f"temp={self.temp}>")
 
     def __str__(self) -> str:
         return repr(self)
@@ -64,9 +77,9 @@ class Matcher(metaclass=MatcherMeta):
     :类型: ``Permission``
     :说明: 事件响应器触发权限
     """
-    handlers: List[T_Handler] = []
+    handlers: List[Handler] = []
     """
-    :类型: ``List[T_Handler]``
+    :类型: ``List[Handler]``
     :说明: 事件响应器拥有的事件处理函数列表
     """
     priority: int = 1
@@ -108,12 +121,12 @@ class Matcher(metaclass=MatcherMeta):
     """
     _default_type_updater: Optional[T_TypeUpdater] = None
     """
-    :类型: ``Optional[T_ArgsParser]``
+    :类型: ``Optional[T_TypeUpdater]``
     :说明: 事件响应器类型更新函数
     """
     _default_permission_updater: Optional[T_PermissionUpdater] = None
     """
-    :类型: ``Optional[T_ArgsParser]``
+    :类型: ``Optional[T_PermissionUpdater]``
     :说明: 事件响应器权限更新函数
     """
 
@@ -127,14 +140,15 @@ class Matcher(metaclass=MatcherMeta):
                 f"priority={self.priority}, temp={self.temp}>")
 
     def __str__(self) -> str:
-        return self.__repr__()
+        return repr(self)
 
     @classmethod
     def new(cls,
             type_: str = "",
             rule: Optional[Rule] = None,
             permission: Optional[Permission] = None,
-            handlers: Optional[List[T_Handler]] = None,
+            handlers: Optional[Union[List[T_Handler], List[Handler],
+                                     List[Union[T_Handler, Handler]]]] = None,
             temp: bool = False,
             priority: int = 1,
             block: bool = False,
@@ -178,7 +192,9 @@ class Matcher(metaclass=MatcherMeta):
                 "permission":
                     permission or Permission(),
                 "handlers": [
-                    cls.process_handler(handler) for handler in handlers
+                    handler
+                    if isinstance(handler, Handler) else Handler(handler)
+                    for handler in handlers
                 ] if handlers else [],
                 "temp":
                     temp,
@@ -284,27 +300,11 @@ class Matcher(metaclass=MatcherMeta):
         cls._default_permission_updater = func
         return func
 
-    @staticmethod
-    def process_handler(handler: T_Handler) -> T_Handler:
-        signature = inspect.signature(handler, follow_wrapped=False)
-        bot = signature.parameters.get("bot")
-        event = signature.parameters.get("event")
-        state = signature.parameters.get("state")
-        matcher = signature.parameters.get("matcher")
-        if not bot:
-            raise ValueError("Handler missing parameter 'bot'")
-        handler.__params__ = {
-            "bot": bot.annotation,
-            "event": event.annotation if event else None,
-            "state": T_State if state else None,
-            "matcher": matcher.annotation if matcher else None
-        }
-        return handler
-
     @classmethod
-    def append_handler(cls, handler: T_Handler) -> None:
-        # Process handler first
-        cls.handlers.append(cls.process_handler(handler))
+    def append_handler(cls, handler: T_Handler) -> Handler:
+        handler_ = Handler(handler)
+        cls.handlers.append(handler_)
+        return handler_
 
     @classmethod
     def handle(cls) -> Callable[[T_Handler], T_Handler]:
@@ -339,23 +339,19 @@ class Matcher(metaclass=MatcherMeta):
         async def _receive(bot: "Bot", event: "Event") -> NoReturn:
             raise PausedException
 
-        cls.process_handler(_receive)
-
         if cls.handlers:
             # 已有前置handlers则接受一条新的消息，否则视为接收初始消息
-            cls.append_handler(_receive)
+            receive_handler = cls.append_handler(_receive)
+        else:
+            receive_handler = None
 
         def _decorator(func: T_Handler) -> T_Handler:
-            cls.process_handler(func)
             if not cls.handlers or cls.handlers[-1] is not func:
-                cls.append_handler(func)
-
-            _receive.__params__.update({
-                "bot":
-                    func.__params__["bot"],
-                "event":
-                    func.__params__["event"] or _receive.__params__["event"]
-            })
+                func_handler = cls.append_handler(func)
+                if receive_handler:
+                    receive_handler.update_signature(
+                        bot=func_handler.bot_type,
+                        event=func_handler.event_type)
 
             return func
 
@@ -416,42 +412,27 @@ class Matcher(metaclass=MatcherMeta):
             else:
                 state[state["_current_key"]] = str(event.get_message())
 
-        cls.append_handler(_key_getter)
-        cls.append_handler(_key_parser)
+        getter_handler = cls.append_handler(_key_getter)
+        parser_handler = cls.append_handler(_key_parser)
 
         def _decorator(func: T_Handler) -> T_Handler:
             if not hasattr(cls.handlers[-1], "__wrapped__"):
-                cls.process_handler(func)
                 parser = cls.handlers.pop()
 
                 @wraps(func)
                 async def wrapper(bot: "Bot", event: "Event", state: T_State,
                                   matcher: Matcher):
-                    await matcher.run_handler(parser, bot, event, state)
-                    await matcher.run_handler(func, bot, event, state)
+                    await parser(matcher, bot, event, state)
+                    await func_handler(matcher, bot, event, state)
                     if "_current_key" in state:
                         del state["_current_key"]
 
-                cls.append_handler(wrapper)
+                func_handler = cls.append_handler(wrapper)
 
-                wrapper.__params__.update({
-                    "bot":
-                        func.__params__["bot"],
-                    "event":
-                        func.__params__["event"] or wrapper.__params__["event"]
-                })
-                _key_getter.__params__.update({
-                    "bot":
-                        func.__params__["bot"],
-                    "event":
-                        func.__params__["event"] or wrapper.__params__["event"]
-                })
-                _key_parser.__params__.update({
-                    "bot":
-                        func.__params__["bot"],
-                    "event":
-                        func.__params__["event"] or wrapper.__params__["event"]
-                })
+                getter_handler.update_signature(bot=func_handler.bot_type,
+                                                event=func_handler.event_type)
+                parser_handler.update_signature(bot=func_handler.bot_type,
+                                                event=func_handler.event_type)
 
             return func
 
@@ -459,7 +440,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def send(cls, message: Union[str, "Message", "MessageSegment"],
-                   **kwargs):
+                   **kwargs) -> Any:
         """
         :说明:
 
@@ -470,9 +451,9 @@ class Matcher(metaclass=MatcherMeta):
           * ``message: Union[str, Message, MessageSegment]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
-        bot = current_bot.get()
+        bot: "Bot" = current_bot.get()
         event = current_event.get()
-        await bot.send(event=event, message=message, **kwargs)
+        return await bot.send(event=event, message=message, **kwargs)
 
     @classmethod
     async def finish(cls,
@@ -545,32 +526,6 @@ class Matcher(metaclass=MatcherMeta):
         """
         self.block = True
 
-    async def run_handler(self, handler: T_Handler, bot: "Bot", event: "Event",
-                          state: T_State):
-        if not hasattr(handler, "__params__"):
-            self.process_handler(handler)
-        params = getattr(handler, "__params__")
-
-        BotType = ((params["bot"] is not inspect.Parameter.empty) and
-                   inspect.isclass(params["bot"]) and params["bot"])
-        if BotType and not isinstance(bot, BotType):
-            logger.debug(
-                f"Matcher {self} bot type {type(bot)} not match annotation {BotType}, ignored"
-            )
-            return
-
-        EventType = ((params["event"] is not inspect.Parameter.empty) and
-                     inspect.isclass(params["event"]) and params["event"])
-        if EventType and not isinstance(event, EventType):
-            logger.debug(
-                f"Matcher {self} event type {type(event)} not match annotation {EventType}, ignored"
-            )
-            return
-
-        args = {"bot": bot, "event": event, "state": state, "matcher": self}
-        await handler(
-            **{k: v for k, v in args.items() if params[k] is not None})
-
     # 运行handlers
     async def run(self, bot: "Bot", event: "Event", state: T_State):
         b_t = current_bot.set(bot)
@@ -583,20 +538,22 @@ class Matcher(metaclass=MatcherMeta):
 
             for _ in range(len(self.handlers)):
                 handler = self.handlers.pop(0)
-                await self.run_handler(handler, bot, event, state_)
+                await handler(self, bot, event, state_)
 
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
-            if self._default_type_updater:
-                type_ = await self._default_type_updater(
-                    bot, event, state, self.type)
+            updater = self.__class__._default_type_updater
+            if updater:
+                type_ = await updater(bot, event, state, self.type)
             else:
                 type_ = "message"
-            if self._default_permission_updater:
-                permission = await self._default_permission_updater(
-                    bot, event, state, self.permission)
+
+            updater = self.__class__._default_permission_updater
+            if updater:
+                permission = await updater(bot, event, state, self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
+
             Matcher.new(type_,
                         Rule(),
                         permission,
@@ -609,16 +566,18 @@ class Matcher(metaclass=MatcherMeta):
                         expire_time=datetime.now() +
                         bot.config.session_expire_timeout)
         except PausedException:
-            if self._default_type_updater:
-                type_ = await self._default_type_updater(
-                    bot, event, state, self.type)
+            updater = self.__class__._default_type_updater
+            if updater:
+                type_ = await updater(bot, event, state, self.type)
             else:
                 type_ = "message"
-            if self._default_permission_updater:
-                permission = await self._default_permission_updater(
-                    bot, event, state, self.permission)
+
+            updater = self.__class__._default_permission_updater
+            if updater:
+                permission = await updater(bot, event, state, self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
+
             Matcher.new(type_,
                         Rule(),
                         permission,

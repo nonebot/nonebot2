@@ -11,6 +11,16 @@
 - [群机器人概述](https://developers.dingtalk.com/document/app/overview-of-group-robots)
 - [开发企业内部机器人](https://developers.dingtalk.com/document/app/develop-enterprise-internal-robots)
 
+钉钉官方机器人教程（Java）：
+
+- [开发一个钉钉机器人](https://developers.dingtalk.com/document/tutorial/create-a-robot)
+
+## 安装 NoneBot 钉钉 适配器
+
+```bash
+pip install nonebot-adapter-ding
+```
+
 ## 关于 DingAdapter 的说明
 
 你需要显式的注册 ding 这个适配器：
@@ -86,6 +96,58 @@ async def raw_handler(bot: DingBot, event: MessageEvent):
 ```
 
 其他消息格式请查看 [钉钉适配器的 MessageSegment](https://github.com/nonebot/nonebot2/blob/dev/nonebot/adapters/ding/message.py#L8)，里面封装了很多有关消息的方法，比如 `code`、`image`、`feedCard` 等。
+
+## 发送到特定群聊
+
+钉钉也支持通过 Webhook 的方式直接将消息推送到某个群聊([参考链接](https://developers.dingtalk.com/document/app/custom-robot-access/title-zob-eyu-qse))，你可以在机器人的设置中看到当前群的 Webhook 地址。
+
+![机器人所在群的 Webhook 地址](./images/ding/webhook.png)
+
+获取到Webhook地址后，用户可以向这个地址发起HTTP POST 请求，即可实现给该钉钉群发送消息。
+
+对于这种通过 Webhook 推送的消息，钉钉需要开发者进行安全方面的设置（目前有3种安全设置方式，请根据需要选择一种），如下：
+
+1. **自定义关键词：** 最多可以设置10个关键词，消息中至少包含其中1个关键词才可以发送成功。
+   例如添加了一个自定义关键词：监控报警，则这个机器人所发送的消息，必须包含监控报警这个词，才能发送成功。
+2. **加签：** 发送请求时带上验签的值，可以在机器人设置里看到密钥。
+   ![加签密钥](./images/ding/jiaqian.png)
+3. **IP地址（段）：** 设定后，只有来自IP地址范围内的请求才会被正常处理。支持两种设置方式：IP地址和IP地址段，暂不支持IPv6地址白名单。
+
+如果你选择 1/3 两种安全设置，你需要自己确认当前网络和发送的消息能被钉钉接受，然后使用 `bot.send` 的时候将 webhook 地址传入 webhook 参数即可。
+
+如我设置了 `打卡` 为关键词：
+
+```python
+message = MessageSegment.text("打卡成功：XXXXXX")
+await hello.send(
+    message,
+    webhook=
+    "https://oapi.dingtalk.com/robot/send?access_token=XXXXXXXXXXXXXX",
+)
+```
+
+对于第二种加签方式，你可以在 `bot.send` 的时候把 `secret` 参数传进去，Nonebot 内部会自动帮你计算发送该消息的签名并发送，如：
+
+这里的 `secret` 参数就是加签选项给出的那个密钥。
+
+```python
+message = MessageSegment.raw({
+    "msgtype": "text",
+    "text": {
+        "content": 'hello from webhook,一定要注意安全方式的鉴权哦，否则可能发送失败的'
+    },
+})
+message += MessageSegment.atDingtalkIds(event.senderId)
+await hello.send(
+    message,
+    webhook="https://oapi.dingtalk.com/robot/send?access_token=XXXXXXXXXXXXXX",
+    secret="SECXXXXXXXXXXXXXXXXXXXXXXXXX",
+)
+```
+
+然后就可以发送成功了。
+
+![测试 Webhook 发送](images/ding/test_webhook.png)
 
 ## 创建机器人并连接
 

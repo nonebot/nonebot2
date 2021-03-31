@@ -7,6 +7,7 @@ NoneBot Api Reference
   - `nonebot.plugin <plugin.html>`_
   - `nonebot.message <message.html>`_
   - `nonebot.matcher <matcher.html>`_
+  - `nonebot.handler <handler.html>`_
   - `nonebot.rule <rule.html>`_
   - `nonebot.permission <permission.html>`_
   - `nonebot.log <log.html>`_

@@ -3,7 +3,7 @@ name = "aiofiles"
 version = "0.6.0"
 description = "File support for asyncio."
 category = "main"
-optional = true
+optional = false
 python-versions = "*"
 
 [package.source]
@@ -235,7 +235,7 @@ reference = "aliyun"
 
 [[package]]
 name = "httpx"
-version = "0.17.0"
+version = "0.17.1"
 description = "The next generation HTTP client."
 category = "dev"
 optional = false
@@ -243,7 +243,7 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 certifi = "*"
-httpcore = ">=0.12.0,<0.13.0"
+httpcore = ">=0.12.1,<0.13"
 rfc3986 = {version = ">=1.3,<2", extras = ["idna2008"]}
 sniffio = "*"
 
@@ -389,7 +389,7 @@ reference = "aliyun"
 
 [[package]]
 name = "nonebot-adapter-cqhttp"
-version = "2.0.0-alpha.11"
+version = "2.0.0-alpha.12"
 description = "OneBot(CQHTTP) adapter for nonebot2"
 category = "dev"
 optional = false
@@ -398,7 +398,7 @@ develop = true
 
 [package.dependencies]
 httpx = "^0.17.0"
-nonebot2 = "^2.0.0-alpha.11"
+nonebot2 = "^2.0.0-alpha.12"
 
 [package.source]
 type = "directory"
@@ -406,7 +406,7 @@ url = "packages/nonebot-adapter-cqhttp"
 
 [[package]]
 name = "nonebot-adapter-ding"
-version = "2.0.0-alpha.11"
+version = "2.0.0-alpha.12"
 description = "Ding adapter for nonebot2"
 category = "dev"
 optional = false
@@ -415,7 +415,7 @@ develop = true
 
 [package.dependencies]
 httpx = "^0.17.0"
-nonebot2 = "^2.0.0-alpha.11"
+nonebot2 = "^2.0.0-alpha.12"
 
 [package.source]
 type = "directory"
@@ -423,7 +423,7 @@ url = "packages/nonebot-adapter-ding"
 
 [[package]]
 name = "nonebot-adapter-mirai"
-version = "2.0.0-alpha.11"
+version = "2.0.0-alpha.12"
 description = "Mirai Api HTTP adapter for nonebot2"
 category = "dev"
 optional = false
@@ -432,12 +432,30 @@ develop = true
 
 [package.dependencies]
 httpx = "^0.17.0"
-nonebot2 = "^2.0.0-alpha.11"
+nonebot2 = "^2.0.0-alpha.12"
 websockets = "^8.1"
 
 [package.source]
 type = "directory"
 url = "packages/nonebot-adapter-mirai"
+
+[[package]]
+name = "nonebot-plugin-test"
+version = "0.2.0"
+description = "Test frontend for nonebot v2+"
+category = "dev"
+optional = false
+python-versions = ">=3.7,<4.0"
+
+[package.dependencies]
+aiofiles = ">=0.6.0,<0.7.0"
+nonebot2 = ">=2.0.0-alpha.9,<3.0.0"
+python-socketio = ">=4.6.1,<5.0.0"
+
+[package.source]
+type = "legacy"
+url = "https://mirrors.aliyun.com/pypi/simple"
+reference = "aliyun"
 
 [[package]]
 name = "packaging"
@@ -491,14 +509,14 @@ reference = "aliyun"
 
 [[package]]
 name = "pydash"
-version = "4.9.3"
+version = "5.0.0"
 description = "The kitchen sink of Python utility libraries for doing \"stuff\" in a functional way. Based on the Lo-Dash Javascript library."
 category = "dev"
 optional = false
-python-versions = "*"
+python-versions = ">=3.6"
 
 [package.extras]
-dev = ["coverage", "docformatter", "flake8", "invoke", "mock", "pylint", "pytest", "pytest-cov", "pytest-flake8", "pytest-pylint", "sphinx", "sphinx-rtd-theme", "tox", "twine", "wheel", "black", "flake8-black", "flake8-bugbear", "flake8-isort", "isort"]
+dev = ["black", "coverage", "docformatter", "flake8", "flake8-black", "flake8-bugbear", "flake8-isort", "invoke", "isort", "pylint", "pytest", "pytest-cov", "pytest-flake8", "pytest-pylint", "sphinx", "sphinx-rtd-theme", "tox", "twine", "wheel"]
 
 [package.source]
 type = "legacy"
@@ -507,7 +525,7 @@ reference = "aliyun"
 
 [[package]]
 name = "pygments"
-version = "2.8.0"
+version = "2.8.1"
 description = "Pygments is a syntax highlighting package written in Python."
 category = "dev"
 optional = false
@@ -546,14 +564,55 @@ reference = "aliyun"
 
 [[package]]
 name = "python-dotenv"
-version = "0.15.0"
-description = "Add .env support to your django/flask apps in development and deployments"
+version = "0.16.0"
+description = "Read key-value pairs from a .env file and set them as environment variables"
 category = "main"
 optional = false
 python-versions = "*"
 
 [package.extras]
 cli = ["click (>=5.0)"]
+
+[package.source]
+type = "legacy"
+url = "https://mirrors.aliyun.com/pypi/simple"
+reference = "aliyun"
+
+[[package]]
+name = "python-engineio"
+version = "3.14.2"
+description = "Engine.IO server"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+six = ">=1.9.0"
+
+[package.extras]
+asyncio_client = ["aiohttp (>=3.4)"]
+client = ["requests (>=2.21.0)", "websocket-client (>=0.54.0)"]
+
+[package.source]
+type = "legacy"
+url = "https://mirrors.aliyun.com/pypi/simple"
+reference = "aliyun"
+
+[[package]]
+name = "python-socketio"
+version = "4.6.1"
+description = "Socket.IO server"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+python-engineio = ">=3.13.0,<4"
+six = ">=1.9.0"
+
+[package.extras]
+asyncio_client = ["aiohttp (>=3.4)", "websockets (>=7.0)"]
+client = ["requests (>=2.21.0)", "websocket-client (>=0.54.0)"]
 
 [package.source]
 type = "legacy"
@@ -656,6 +715,19 @@ url = "https://mirrors.aliyun.com/pypi/simple"
 reference = "aliyun"
 
 [[package]]
+name = "six"
+version = "1.15.0"
+description = "Python 2 and 3 compatibility utilities"
+category = "dev"
+optional = false
+python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*"
+
+[package.source]
+type = "legacy"
+url = "https://mirrors.aliyun.com/pypi/simple"
+reference = "aliyun"
+
+[[package]]
 name = "sniffio"
 version = "1.2.0"
 description = "Sniff out which async library your code is running under"
@@ -683,7 +755,7 @@ reference = "aliyun"
 
 [[package]]
 name = "sphinx"
-version = "3.5.1"
+version = "3.5.3"
 description = "Python documentation generator"
 category = "dev"
 optional = false
@@ -926,16 +998,16 @@ reference = "aliyun"
 
 [[package]]
 name = "urllib3"
-version = "1.26.3"
+version = "1.26.4"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 category = "dev"
 optional = false
 python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, <4"
 
 [package.extras]
-brotli = ["brotlipy (>=0.6.0)"]
 secure = ["pyOpenSSL (>=0.14)", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "certifi", "ipaddress"]
 socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
+brotli = ["brotlipy (>=0.6.0)"]
 
 [package.source]
 type = "legacy"
@@ -1083,7 +1155,7 @@ quart = ["Quart"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.3"
-content-hash = "f4e49d25ac5c37b3c7527935b52acf5d0d6d0261a645f4247120f9e28c5ca282"
+content-hash = "9907ba758206e19d2c36493252f8b026db796ff4dbc67142824d86da31763919"
 
 [metadata.files]
 aiofiles = [
@@ -1160,8 +1232,8 @@ httptools = [
     {file = "httptools-0.1.1.tar.gz", hash = "sha256:41b573cf33f64a8f8f3400d0a7faf48e1888582b6f6e02b82b9bd4f0bf7497ce"},
 ]
 httpx = [
-    {file = "httpx-0.17.0-py3-none-any.whl", hash = "sha256:fe19522f7b0861a1f6ac83306360bb5b7fb1ed64633a1a04a33f04102a1bea60"},
-    {file = "httpx-0.17.0.tar.gz", hash = "sha256:4f7ab2fef7f929c5531abd4f413b41ce2c820e3202f2eeee498f2d92b6849f8d"},
+    {file = "httpx-0.17.1-py3-none-any.whl", hash = "sha256:d379653bd457e8257eb0df99cb94557e4aac441b7ba948e333be969298cac272"},
+    {file = "httpx-0.17.1.tar.gz", hash = "sha256:cc2a55188e4b25272d2bcd46379d300f632045de4377682aa98a8a6069d55967"},
 ]
 hypercorn = [
     {file = "Hypercorn-0.11.2-py3-none-any.whl", hash = "sha256:8007c10f81566920f8ae12c0e26e146f94ca70506da964b5a727ad610aa1d821"},
@@ -1248,6 +1320,10 @@ markupsafe = [
 nonebot-adapter-cqhttp = []
 nonebot-adapter-ding = []
 nonebot-adapter-mirai = []
+nonebot-plugin-test = [
+    {file = "nonebot-plugin-test-0.2.0.tar.gz", hash = "sha256:c9ee997c5c96160de4af02d10a7c6301b3fc4e942df7e70906df0534606ea23b"},
+    {file = "nonebot_plugin_test-0.2.0-py3-none-any.whl", hash = "sha256:75cd18cc282815a03250bb86c7d2a8d6a66a5064ac335bedc9a3e268a1e7dd13"},
+]
 packaging = [
     {file = "packaging-20.9-py2.py3-none-any.whl", hash = "sha256:67714da7f7bc052e064859c05c595155bd1ee9f69f76557e21f051443c20947a"},
     {file = "packaging-20.9.tar.gz", hash = "sha256:5b327ac1320dc863dca72f4514ecc086f31186744b84a230374cc1fd776feae5"},
@@ -1281,12 +1357,12 @@ pydantic = [
     {file = "pydantic-1.8.1.tar.gz", hash = "sha256:26cf3cb2e68ec6c0cfcb6293e69fb3450c5fd1ace87f46b64f678b0d29eac4c3"},
 ]
 pydash = [
-    {file = "pydash-4.9.3-py2.py3-none-any.whl", hash = "sha256:7851a2d749e70c02585ae4803b01c5e0f47b7ec9df9b84ccb16aac38cad2fdd2"},
-    {file = "pydash-4.9.3.tar.gz", hash = "sha256:d709e57b537b1aaf118f188da3ec6242a665090ecd7839b66f857ee3dc2bb006"},
+    {file = "pydash-5.0.0-py3-none-any.whl", hash = "sha256:0d87f879a3df4ad9389ab6d63c69eea078517d41541ddd5744cfcff3396e8543"},
+    {file = "pydash-5.0.0.tar.gz", hash = "sha256:845262df83b5411742e5f7f7dbfa5ed4d0ddac6d7d0a13c4375c6a3c40d4e8f4"},
 ]
 pygments = [
-    {file = "Pygments-2.8.0-py3-none-any.whl", hash = "sha256:b21b072d0ccdf29297a82a2363359d99623597b8a265b8081760e4d0f7153c88"},
-    {file = "Pygments-2.8.0.tar.gz", hash = "sha256:37a13ba168a02ac54cc5891a42b1caec333e59b66addb7fa633ea8a6d73445c0"},
+    {file = "Pygments-2.8.1-py3-none-any.whl", hash = "sha256:534ef71d539ae97d4c3a4cf7d6f110f214b0e687e92f9cb9d2a3b0d3101289c8"},
+    {file = "Pygments-2.8.1.tar.gz", hash = "sha256:2656e1a6edcdabf4275f9a3640db59fd5de107d88e8663c5d4e9a0fa62f77f94"},
 ]
 pygtrie = [
     {file = "pygtrie-2.4.2.tar.gz", hash = "sha256:43205559d28863358dbbf25045029f58e2ab357317a59b11f11ade278ac64692"},
@@ -1296,8 +1372,16 @@ pyparsing = [
     {file = "pyparsing-2.4.7.tar.gz", hash = "sha256:c203ec8783bf771a155b207279b9bccb8dea02d8f0c9e5f8ead507bc3246ecc1"},
 ]
 python-dotenv = [
-    {file = "python-dotenv-0.15.0.tar.gz", hash = "sha256:587825ed60b1711daea4832cf37524dfd404325b7db5e25ebe88c495c9f807a0"},
-    {file = "python_dotenv-0.15.0-py2.py3-none-any.whl", hash = "sha256:0c8d1b80d1a1e91717ea7d526178e3882732420b03f08afea0406db6402e220e"},
+    {file = "python-dotenv-0.16.0.tar.gz", hash = "sha256:9fa413c37d4652d3fa02fea0ff465c384f5db75eab259c4fc5d0c5b8bf20edd4"},
+    {file = "python_dotenv-0.16.0-py2.py3-none-any.whl", hash = "sha256:31d752f5b748f4e292448c9a0cac6a08ed5e6f4cefab85044462dcad56905cec"},
+]
+python-engineio = [
+    {file = "python-engineio-3.14.2.tar.gz", hash = "sha256:eab4553f2804c1ce97054c8b22cf0d5a9ab23128075248b97e1a5b2f29553085"},
+    {file = "python_engineio-3.14.2-py2.py3-none-any.whl", hash = "sha256:5a9e6086d192463b04a1428ff1f85b6ba631bbb19d453b144ffc04f530542b84"},
+]
+python-socketio = [
+    {file = "python-socketio-4.6.1.tar.gz", hash = "sha256:cd1f5aa492c1eb2be77838e837a495f117e17f686029ebc03d62c09e33f4fa10"},
+    {file = "python_socketio-4.6.1-py2.py3-none-any.whl", hash = "sha256:5a21da53fdbdc6bb6c8071f40e13d100e0b279ad997681c2492478e06f370523"},
 ]
 pytz = [
     {file = "pytz-2021.1-py2.py3-none-any.whl", hash = "sha256:eb10ce3e7736052ed3623d49975ce333bcd712c7bb19a58b9e2089d4057d0798"},
@@ -1338,6 +1422,10 @@ rfc3986 = [
     {file = "rfc3986-1.4.0-py2.py3-none-any.whl", hash = "sha256:af9147e9aceda37c91a05f4deb128d4b4b49d6b199775fd2d2927768abdc8f50"},
     {file = "rfc3986-1.4.0.tar.gz", hash = "sha256:112398da31a3344dc25dbf477d8df6cb34f9278a94fee2625d89e4514be8bb9d"},
 ]
+six = [
+    {file = "six-1.15.0-py2.py3-none-any.whl", hash = "sha256:8b74bedcbbbaca38ff6d7491d76f2b06b3592611af620f8426e82dddb04a5ced"},
+    {file = "six-1.15.0.tar.gz", hash = "sha256:30639c035cdb23534cd4aa2dd52c3bf48f06e5f4a941509c8bafd8ce11080259"},
+]
 sniffio = [
     {file = "sniffio-1.2.0-py3-none-any.whl", hash = "sha256:471b71698eac1c2112a40ce2752bb2f4a4814c22a54a3eed3676bc0f5ca9f663"},
     {file = "sniffio-1.2.0.tar.gz", hash = "sha256:c4666eecec1d3f50960c6bdf61ab7bc350648da6c126e3cf6898d8cd4ddcd3de"},
@@ -1347,8 +1435,8 @@ snowballstemmer = [
     {file = "snowballstemmer-2.1.0.tar.gz", hash = "sha256:e997baa4f2e9139951b6f4c631bad912dfd3c792467e2f03d7239464af90e914"},
 ]
 sphinx = [
-    {file = "Sphinx-3.5.1-py3-none-any.whl", hash = "sha256:e90161222e4d80ce5fc811ace7c6787a226b4f5951545f7f42acf97277bfc35c"},
-    {file = "Sphinx-3.5.1.tar.gz", hash = "sha256:11d521e787d9372c289472513d807277caafb1684b33eb4f08f7574c405893a9"},
+    {file = "Sphinx-3.5.3-py3-none-any.whl", hash = "sha256:3f01732296465648da43dec8fb40dc451ba79eb3e2cc5c6d79005fd98197107d"},
+    {file = "Sphinx-3.5.3.tar.gz", hash = "sha256:ce9c228456131bab09a3d7d10ae58474de562a6f79abb3dc811ae401cf8c1abc"},
 ]
 sphinx-markdown-builder = []
 sphinxcontrib-applehelp = [
@@ -1399,8 +1487,8 @@ untokenize = [
     {file = "untokenize-0.1.1.tar.gz", hash = "md5:50d325dff09208c624cc603fad33bb0d"},
 ]
 urllib3 = [
-    {file = "urllib3-1.26.3-py2.py3-none-any.whl", hash = "sha256:1b465e494e3e0d8939b50680403e3aedaa2bc434b7d5af64dfd3c958d7f5ae80"},
-    {file = "urllib3-1.26.3.tar.gz", hash = "sha256:de3eedaad74a2683334e282005cd8d7f22f4d55fa690a2a1020a416cb0a47e73"},
+    {file = "urllib3-1.26.4-py2.py3-none-any.whl", hash = "sha256:2f4da4594db7e1e110a944bb1b551fdf4e6c136ad42e4234131391e21eb5b0df"},
+    {file = "urllib3-1.26.4.tar.gz", hash = "sha256:e7b021f7241115872f92f43c6508082facffbd1c048e3c6e2bb9c2a157e28937"},
 ]
 uvicorn = [
     {file = "uvicorn-0.13.4-py3-none-any.whl", hash = "sha256:7587f7b08bd1efd2b9bad809a3d333e972f1d11af8a5e52a9371ee3a5de71524"},

@@ -38,7 +38,8 @@ class MessageSegment(BaseMessageSegment):
 
     @overrides(BaseMessageSegment)
     def __radd__(self, other) -> "Message":
-        return Message(other) + self
+        return (MessageSegment.text(other)
+                if isinstance(other, str) else Message(other)) + self
 
     @overrides(BaseMessageSegment)
     def is_text(self) -> bool:
@@ -210,6 +211,11 @@ class Message(BaseMessage):
     """
     CQHTTP 协议 Message 适配。
     """
+
+    def __radd__(self, other: Union[str, MessageSegment,
+                                    "Message"]) -> "Message":
+        result = MessageSegment.text(other) if isinstance(other, str) else other
+        return super(Message, self).__radd__(result)
 
     @staticmethod
     @overrides(BaseMessage)

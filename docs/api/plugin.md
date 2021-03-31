@@ -25,38 +25,6 @@ sidebarDepth: 0
 
 
 
-## _class_ `Export`
-
-基类：`dict`
-
-
-* **说明**
-
-    插件导出内容以使得其他插件可以获得。
-
-
-
-* **示例**
-
-
-```python
-nonebot.export().default = "bar"
-
-@nonebot.export()
-def some_function():
-    pass
-
-# this doesn't work before python 3.9
-# use
-# export = nonebot.export(); @export.sub
-# instead
-# See also PEP-614: https://www.python.org/dev/peps/pep-0614/
-@nonebot.export().sub
-def something_else():
-    pass
-```
-
-
 ## _class_ `Plugin`
 
 基类：`object`
@@ -82,15 +50,6 @@ def something_else():
 * **说明**: 插件模块对象
 
 
-### `matcher`
-
-
-* **类型**: `Set[Type[Matcher]]`
-
-
-* **说明**: 插件内定义的 `Matcher`
-
-
 ### `export`
 
 
@@ -98,6 +57,15 @@ def something_else():
 
 
 * **说明**: 插件内定义的导出内容
+
+
+### _property_ `matcher`
+
+
+* **类型**: `Set[Type[Matcher]]`
+
+
+* **说明**: 插件内定义的 `Matcher`
 
 
 ## `on(type='', rule=None, permission=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None)`
@@ -121,7 +89,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -162,7 +130,7 @@ def something_else():
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -206,7 +174,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -247,7 +215,7 @@ def something_else():
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -288,7 +256,7 @@ def something_else():
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -335,7 +303,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -382,7 +350,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -429,7 +397,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -481,7 +449,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -538,7 +506,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -590,7 +558,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -767,7 +735,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -808,7 +776,7 @@ def something_else():
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -852,7 +820,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -893,7 +861,7 @@ def something_else():
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -934,7 +902,7 @@ def something_else():
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -981,7 +949,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -1028,7 +996,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -1075,7 +1043,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -1127,7 +1095,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -1184,7 +1152,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -1236,7 +1204,7 @@ def something_else():
     * `permission: Optional[Permission]`: 事件响应权限
 
 
-    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[Union[T_Handler, Handler]]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器（仅执行一次）
@@ -1442,22 +1410,6 @@ def something_else():
 
 
 
-## `export()`
-
-
-* **说明**
-
-    获取插件的导出内容对象
-
-
-
-* **返回**
-
-    
-    * `Export`
-
-
-
 ## `require(name)`
 
 
@@ -1478,3 +1430,51 @@ def something_else():
 
     
     * `Optional[Export]`
+
+
+
+## _class_ `Export`
+
+基类：`dict`
+
+
+* **说明**
+
+    插件导出内容以使得其他插件可以获得。
+
+
+
+* **示例**
+
+
+```python
+nonebot.export().default = "bar"
+
+@nonebot.export()
+def some_function():
+    pass
+
+# this doesn't work before python 3.9
+# use
+# export = nonebot.export(); @export.sub
+# instead
+# See also PEP-614: https://www.python.org/dev/peps/pep-0614/
+@nonebot.export().sub
+def something_else():
+    pass
+```
+
+
+## `export()`
+
+
+* **说明**
+
+    获取插件的导出内容对象
+
+
+
+* **返回**
+
+    
+    * `Export`

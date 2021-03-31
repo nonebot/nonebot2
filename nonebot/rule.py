@@ -287,10 +287,15 @@ class ArgumentParser(ArgParser):
     """
 
     def _print_message(self, message, file=None):
-        pass
+        old_message: str = getattr(self, "message", "")
+        if old_message:
+            old_message += "\n"
+        old_message += message
+        setattr(self, "message", old_message)
 
     def exit(self, status=0, message=None):
-        raise ParserExit(status=status, message=message)
+        raise ParserExit(status=status,
+                         message=message or getattr(self, "message", None))
 
     def parse_args(self,
                    args: Optional[Sequence[str]] = None,

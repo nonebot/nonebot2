@@ -111,7 +111,7 @@ reference = "aliyun"
 
 [[package]]
 name = "httpx"
-version = "0.17.0"
+version = "0.17.1"
 description = "The next generation HTTP client."
 category = "main"
 optional = false
@@ -119,7 +119,7 @@ python-versions = ">=3.6"
 
 [package.dependencies]
 certifi = "*"
-httpcore = ">=0.12.0,<0.13.0"
+httpcore = ">=0.12.1,<0.13"
 rfc3986 = {version = ">=1.3,<2", extras = ["idna2008"]}
 sniffio = "*"
 
@@ -167,7 +167,7 @@ reference = "aliyun"
 
 [[package]]
 name = "nonebot2"
-version = "2.0.0-alpha.11"
+version = "2.0.0-alpha.12"
 description = "An asynchronous python bot framework."
 category = "main"
 optional = false
@@ -226,8 +226,8 @@ reference = "aliyun"
 
 [[package]]
 name = "python-dotenv"
-version = "0.15.0"
-description = "Add .env support to your django/flask apps in development and deployments"
+version = "0.16.0"
+description = "Read key-value pairs from a .env file and set them as environment variables"
 category = "main"
 optional = false
 python-versions = "*"
@@ -418,7 +418,7 @@ reference = "aliyun"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.3"
-content-hash = "9eb7c46cddf1245508a34c00f5709d21415d02d7f8c356733cc20ad187f431f9"
+content-hash = "5b8b3e27eccd897aa33fea94ba813b7d601c5656d52efed4401b398f6d68a677"
 
 [metadata.files]
 certifi = [
@@ -460,8 +460,8 @@ httptools = [
     {file = "httptools-0.1.1.tar.gz", hash = "sha256:41b573cf33f64a8f8f3400d0a7faf48e1888582b6f6e02b82b9bd4f0bf7497ce"},
 ]
 httpx = [
-    {file = "httpx-0.17.0-py3-none-any.whl", hash = "sha256:fe19522f7b0861a1f6ac83306360bb5b7fb1ed64633a1a04a33f04102a1bea60"},
-    {file = "httpx-0.17.0.tar.gz", hash = "sha256:4f7ab2fef7f929c5531abd4f413b41ce2c820e3202f2eeee498f2d92b6849f8d"},
+    {file = "httpx-0.17.1-py3-none-any.whl", hash = "sha256:d379653bd457e8257eb0df99cb94557e4aac441b7ba948e333be969298cac272"},
+    {file = "httpx-0.17.1.tar.gz", hash = "sha256:cc2a55188e4b25272d2bcd46379d300f632045de4377682aa98a8a6069d55967"},
 ]
 idna = [
     {file = "idna-3.1-py3-none-any.whl", hash = "sha256:5205d03e7bcbb919cc9c19885f9920d622ca52448306f2377daede5cf3faac16"},
@@ -500,8 +500,8 @@ pygtrie = [
     {file = "pygtrie-2.4.2.tar.gz", hash = "sha256:43205559d28863358dbbf25045029f58e2ab357317a59b11f11ade278ac64692"},
 ]
 python-dotenv = [
-    {file = "python-dotenv-0.15.0.tar.gz", hash = "sha256:587825ed60b1711daea4832cf37524dfd404325b7db5e25ebe88c495c9f807a0"},
-    {file = "python_dotenv-0.15.0-py2.py3-none-any.whl", hash = "sha256:0c8d1b80d1a1e91717ea7d526178e3882732420b03f08afea0406db6402e220e"},
+    {file = "python-dotenv-0.16.0.tar.gz", hash = "sha256:9fa413c37d4652d3fa02fea0ff465c384f5db75eab259c4fc5d0c5b8bf20edd4"},
+    {file = "python_dotenv-0.16.0-py2.py3-none-any.whl", hash = "sha256:31d752f5b748f4e292448c9a0cac6a08ed5e6f4cefab85044462dcad56905cec"},
 ]
 pyyaml = [
     {file = "PyYAML-5.4.1-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:3b2b1824fe7112845700f815ff6a489360226a5609b96ec2190a45e62a9fc922"},
