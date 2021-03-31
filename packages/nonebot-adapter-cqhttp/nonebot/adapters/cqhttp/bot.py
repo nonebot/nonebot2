@@ -328,32 +328,7 @@ class Bot(BaseBot):
             )
 
     @overrides(BaseBot)
-    async def call_api(self, api: str, **data) -> Any:
-        """
-        :说明:
-
-          调用 CQHTTP 协议 API
-
-        :参数:
-
-          * ``api: str``: API 名称
-          * ``**data: Any``: API 参数
-
-        :返回:
-
-          - ``Any``: API 调用返回数据
-
-        :异常:
-
-          - ``NetworkError``: 网络错误
-          - ``ActionFailed``: API 调用失败
-        """
-        if "self_id" in data:
-            self_id = data.pop("self_id")
-            if self_id:
-                bot = self.driver.bots[str(self_id)]
-                return await bot.call_api(api, **data)
-
+    async def _call_api(self, api: str, **data) -> Any:
         log("DEBUG", f"Calling API <y>{api}</y>")
         if self.connection_type == "websocket":
             seq = ResultStore.get_seq()
@@ -395,6 +370,29 @@ class Bot(BaseBot):
                 raise NetworkError("API root url invalid")
             except httpx.HTTPError:
                 raise NetworkError("HTTP request failed")
+
+    @overrides(BaseBot)
+    async def call_api(self, api: str, **data) -> Any:
+        """
+        :说明:
+
+          调用 CQHTTP 协议 API
+
+        :参数:
+
+          * ``api: str``: API 名称
+          * ``**data: Any``: API 参数
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+
+        :异常:
+
+          - ``NetworkError``: 网络错误
+          - ``ActionFailed``: API 调用失败
+        """
+        return super().call_api(api, **data)
 
     @overrides(BaseBot)
     async def send(self,

@@ -109,37 +109,13 @@ class Bot(BaseBot):
         return
 
     @overrides(BaseBot)
-    async def call_api(self,
-                       api: str,
-                       event: Optional[MessageEvent] = None,
-                       **data) -> Any:
-        """
-        :说明:
-
-          调用 钉钉 协议 API
-
-        :参数:
-
-          * ``api: str``: API 名称
-          * ``**data: Any``: API 参数
-
-        :返回:
-
-          - ``Any``: API 调用返回数据
-
-        :异常:
-
-          - ``NetworkError``: 网络错误
-          - ``ActionFailed``: API 调用失败
-        """
+    async def _call_api(self,
+                        api: str,
+                        event: Optional[MessageEvent] = None,
+                        **data) -> Any:
         if self.connection_type != "http":
             log("ERROR", "Only support http connection.")
             return
-        if "self_id" in data:
-            self_id = data.pop("self_id")
-            if self_id:
-                bot = self.driver.bots[str(self_id)]
-                return await bot.call_api(api, **data)
 
         log("DEBUG", f"Calling API <y>{api}</y>")
         params = {}
@@ -191,6 +167,33 @@ class Bot(BaseBot):
             raise NetworkError("API root url invalid")
         except httpx.HTTPError:
             raise NetworkError("HTTP request failed")
+
+    @overrides(BaseBot)
+    async def call_api(self,
+                       api: str,
+                       event: Optional[MessageEvent] = None,
+                       **data) -> Any:
+        """
+        :说明:
+
+          调用 钉钉 协议 API
+
+        :参数:
+
+          * ``api: str``: API 名称
+          * ``event: Optional[MessageEvent]``: Event 对象
+          * ``**data: Any``: API 参数
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+
+        :异常:
+
+          - ``NetworkError``: 网络错误
+          - ``ActionFailed``: API 调用失败
+        """
+        return super().call_api(api, event=event, **data)
 
     @overrides(BaseBot)
     async def send(self,
