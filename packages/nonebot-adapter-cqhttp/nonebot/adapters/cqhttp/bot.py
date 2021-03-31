@@ -52,8 +52,12 @@ async def _check_reply(bot: "Bot", event: "Event"):
     except ValueError:
         return
     msg_seg = event.message[index]
-    event.reply = Reply.parse_obj(await
-                                  bot.get_msg(message_id=msg_seg.data["id"]))
+    try:
+        event.reply = Reply.parse_obj(await
+                                      bot.get_msg(message_id=msg_seg.data["id"]
+                                                 ))
+    except Exception as e:
+        log("WARNING", f"Error when getting message reply info: {repr(e)}", e)
     # ensure string comparation
     if str(event.reply.sender.user_id) == str(event.self_id):
         event.to_me = True
