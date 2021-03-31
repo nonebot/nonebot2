@@ -28,7 +28,7 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 * **说明**
 
-    openapi.json 地址，默认为 None 即关闭
+    `openapi.json` 地址，默认为 `None` 即关闭
 
 
 
@@ -43,7 +43,7 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 * **说明**
 
-    swagger 地址，默认为 None 即关闭
+    `swagger` 地址，默认为 `None` 即关闭
 
 
 
@@ -58,7 +58,22 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 * **说明**
 
-    redoc 地址，默认为 None 即关闭
+    `redoc` 地址，默认为 `None` 即关闭
+
+
+
+### `fastapi_reload_dirs`
+
+
+* **类型**
+
+    `List[str]`
+
+
+
+* **说明**
+
+    `debug` 模式下重载监控文件夹列表，默认为 uvicorn 默认值
 
 
 

@@ -129,6 +129,9 @@ sidebarDepth: 0
     * `api: str`: API 名称
 
 
+    * `event: Optional[MessageEvent]`: Event 对象
+
+
     * `**data: Any`: API 参数
 
 
@@ -150,7 +153,7 @@ sidebarDepth: 0
 
 
 
-### _async_ `send(event, message, at_sender=False, **kwargs)`
+### _async_ `send(event, message, at_sender=False, webhook=None, secret=None, **kwargs)`
 
 
 * **说明**
@@ -169,6 +172,12 @@ sidebarDepth: 0
 
 
     * `at_sender: bool`: 是否 @ 事件主体
+
+
+    * `webhook: Optional[str]`: 该条消息将调用的 webhook 地址。不传则将使用 sessionWebhook，若其也不存在，该条消息不发送，使用自定义 webhook 时注意你设置的安全方式，如加关键词，IP地址，加签等等。
+
+
+    * `secret: Optional[str]`: 如果你使用自定义的 webhook 地址，推荐使用加签方式对消息进行验证，将 机器人安全设置页面，加签一栏下面显示的SEC开头的字符串 传入这个参数即可。
 
 
     * `**kwargs`: 覆盖默认参数
