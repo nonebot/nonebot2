@@ -219,6 +219,10 @@ class Bot(BaseBot):
             Log.error(f'Failed to handle message: {message}', e)
 
     @overrides(BaseBot)
+    async def _call_api(self, api: str, **data) -> NoReturn:
+        raise NotImplementedError
+
+    @overrides(BaseBot)
     async def call_api(self, api: str, **data) -> NoReturn:
         """
         \:\:\: danger

@@ -27,6 +27,21 @@ Driver 对象
 Config 配置对象
 
 
+### `_call_api_hook`
+
+
+* **类型**
+
+    `Set[T_CallingAPIHook]`
+
+
+
+* **说明**
+
+    call_api 时执行的函数
+
+
+
 ### _abstract_ `__init__(connection_type, self_id, *, websocket=None)`
 
 
@@ -127,7 +142,26 @@ Adapter 类型
 
 
 
-### _abstract async_ `call_api(api, **data)`
+### _abstract async_ `_call_api(api, **data)`
+
+
+* **说明**
+
+    `adapter` 实际调用 api 的逻辑实现函数，实现该方法以调用 api。
+
+
+
+* **参数**
+
+    
+    * `api: str`: API 名称
+
+
+    * `**data`: API 数据
+
+
+
+### _async_ `call_api(api, **data)`
 
 
 * **说明**
@@ -140,6 +174,9 @@ Adapter 类型
 
     
     * `api: str`: API 名称
+
+
+    * `self_id: Optional[str]`: 指定调用 API 的机器人
 
 
     * `**data`: API 数据

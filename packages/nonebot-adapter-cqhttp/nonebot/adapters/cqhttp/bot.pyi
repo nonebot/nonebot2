@@ -68,7 +68,8 @@ class Bot(BaseBot):
     async def handle_message(self, message: dict):
         ...
 
-    async def call_api(self, api: str, **data) -> Any:
+    async def call_api(self, api: str, *, self_id: Optional[str],
+                       **data) -> Any:
         ...
 
     async def send(self, event: Event, message: Union[str, Message,

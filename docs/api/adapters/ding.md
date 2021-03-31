@@ -129,6 +129,9 @@ sidebarDepth: 0
     * `api: str`: API 名称
 
 
+    * `event: Optional[MessageEvent]`: Event 对象
+
+
     * `**data: Any`: API 参数
 
 
