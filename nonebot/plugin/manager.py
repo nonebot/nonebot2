@@ -7,8 +7,10 @@ from types import ModuleType
 from collections import Counter
 from contextvars import ContextVar
 from importlib.abc import MetaPathFinder
-from importlib.machinery import PathFinder, FrozenImporter, SourceFileLoader
 from typing import Set, List, Optional, Iterable
+from importlib.machinery import PathFinder, SourceFileLoader
+
+from .export import _export, Export
 
 _current_plugin: ContextVar[Optional[str]] = ContextVar("_current_plugin",
                                                         default=None)
@@ -160,10 +162,10 @@ class PluginManager:
             path = module_name.split(".")
             length = self.namespace.count(".") + 1
             return f"{prefix}{'.'.join(path[length:])}"
-        elif module_name in self.search_plugins():
-            return f"{prefix}{module_name}"
         elif module_name in self.plugins or module_name.startswith(prefix):
             return module_name
+        elif module_name in self.search_plugins():
+            return f"{prefix}{module_name}"
         return None
 
 
@@ -191,7 +193,8 @@ class PluginLoader(SourceFileLoader):
     def __init__(self, manager: PluginManager, fullname: str, path) -> None:
         self.manager = manager
         self.loaded = False
-        self._context_token = None
+        self._plugin_token = None
+        self._export_token = None
         super().__init__(fullname, path)
 
     def create_module(self, spec) -> Optional[ModuleType]:
@@ -201,7 +204,8 @@ class PluginLoader(SourceFileLoader):
         prefix = self.manager.internal_module.__name__
         plugin_name = self.name[len(prefix):] if self.name.startswith(
             prefix) else self.name
-        self._context_token = _current_plugin.set(plugin_name.lstrip("."))
+        self._plugin_token = _current_plugin.set(plugin_name.lstrip("."))
+        self._export_token = _export.set(Export())
         # return None to use default module creation
         return super().create_module(spec)
 
@@ -210,9 +214,15 @@ class PluginLoader(SourceFileLoader):
             return
         # really need?
         # setattr(module, "__manager__", self.manager)
+        if self._export_token:
+            setattr(module, "__export__", _export.get())
+
         super().exec_module(module)
-        if self._context_token:
-            _current_plugin.reset(self._context_token)
+
+        if self._plugin_token:
+            _current_plugin.reset(self._plugin_token)
+        if self._export_token:
+            _export.reset(self._export_token)
         return
 
 
