@@ -418,6 +418,7 @@ class Matcher(metaclass=MatcherMeta):
         def _decorator(func: T_Handler) -> T_Handler:
             if not hasattr(cls.handlers[-1], "__wrapped__"):
                 parser = cls.handlers.pop()
+                func_handler = Handler(func)
 
                 @wraps(func)
                 async def wrapper(bot: "Bot", event: "Event", state: T_State,
@@ -427,12 +428,14 @@ class Matcher(metaclass=MatcherMeta):
                     if "_current_key" in state:
                         del state["_current_key"]
 
-                func_handler = cls.append_handler(wrapper)
+                wrapper_handler = cls.append_handler(wrapper)
 
-                getter_handler.update_signature(bot=func_handler.bot_type,
-                                                event=func_handler.event_type)
-                parser_handler.update_signature(bot=func_handler.bot_type,
-                                                event=func_handler.event_type)
+                getter_handler.update_signature(
+                    bot=wrapper_handler.bot_type,
+                    event=wrapper_handler.event_type)
+                parser_handler.update_signature(
+                    bot=wrapper_handler.bot_type,
+                    event=wrapper_handler.event_type)
 
             return func
 
