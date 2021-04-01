@@ -179,7 +179,8 @@ class PluginFinder(MetaPathFinder):
                 newname = manager._rewrite_module_name(fullname)
                 if newname:
                     spec = PathFinder.find_spec(
-                        newname, [*manager.search_path, *(path or [])], target)
+                        newname, [*manager.search_path, *(path or sys.path)],
+                        target)
                     if spec:
                         spec.loader = PluginLoader(manager, newname,
                                                    spec.origin)

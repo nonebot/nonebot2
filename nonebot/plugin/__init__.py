@@ -65,8 +65,9 @@ class Plugin(object):
 
 
 def _store_matcher(matcher: Type[Matcher]):
-    plugin_name = matcher.module.split(".", maxsplit=1)[0]
-    _plugin_matchers[plugin_name].add(matcher)
+    if matcher.module:
+        plugin_name = matcher.module.split(".", maxsplit=1)[0]
+        _plugin_matchers[plugin_name].add(matcher)
 
 
 def on(type: str = "",
