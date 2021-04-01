@@ -17,7 +17,7 @@ from pydantic import BaseModel
 
 from nonebot.log import logger
 from nonebot.utils import DataclassEncoder
-from nonebot.typing import T_CallingAPIHook
+from nonebot.typing import T_CallingAPIHook, T_CalledAPIHook
 
 if TYPE_CHECKING:
     from nonebot.config import Config
@@ -39,10 +39,15 @@ class Bot(abc.ABC):
     """Driver 对象"""
     config: "Config"
     """Config 配置对象"""
-    _call_api_hook: Set[T_CallingAPIHook] = set()
+    _calling_api_hook: Set[T_CallingAPIHook] = set()
     """
     :类型: ``Set[T_CallingAPIHook]``
     :说明: call_api 时执行的函数
+    """
+    _called_api_hook: Set[T_CalledAPIHook] = set()
+    """
+    :类型: ``Set[T_CalledAPIHook]``
+    :说明: call_api 后执行的函数
     """
 
     @abc.abstractmethod
@@ -156,7 +161,7 @@ class Bot(abc.ABC):
             await bot.call_api("send_msg", message="hello world")
             await bot.send_msg(message="hello world")
         """
-        coros = list(map(lambda x: x(self, api, data), self._call_api_hook))
+        coros = list(map(lambda x: x(self, api, data), self._calling_api_hook))
         if coros:
             try:
                 logger.debug("Running CallingAPI hooks...")
@@ -166,13 +171,33 @@ class Bot(abc.ABC):
                     "<r><bg #f8bbd0>Error when running CallingAPI hook. "
                     "Running cancelled!</bg #f8bbd0></r>")
 
-        if "self_id" in data:
-            self_id = data.pop("self_id")
-            if self_id:
-                bot = self.driver.bots[str(self_id)]
-                return await bot._call_api(api, **data)
+        exception = None
+        result = None
 
-        return await self._call_api(api, **data)
+        try:
+            if "self_id" in data and data["self_id"]:
+                bot = self.driver.bots[str(data["self_id"])]
+                result = await bot._call_api(api, **data)
+            else:
+                result = await self._call_api(api, **data)
+        except Exception as e:
+            exception = e
+
+        coros = list(
+            map(lambda x: x(self, exception, api, data, result),
+                self._called_api_hook))
+        if coros:
+            try:
+                logger.debug("Running CalledAPI hooks...")
+                await asyncio.gather(*coros)
+            except Exception as e:
+                logger.opt(colors=True, exception=e).error(
+                    "<r><bg #f8bbd0>Error when running CalledAPI hook. "
+                    "Running cancelled!</bg #f8bbd0></r>")
+
+        if exception:
+            raise exception
+        return result
 
     @abc.abstractmethod
     async def send(self, event: "Event", message: Union[str, "Message",
@@ -193,7 +218,12 @@ class Bot(abc.ABC):
 
     @classmethod
     def on_calling_api(cls, func: T_CallingAPIHook) -> T_CallingAPIHook:
-        cls._call_api_hook.add(func)
+        cls._calling_api_hook.add(func)
+        return func
+
+    @classmethod
+    def on_called_api(cls, func: T_CalledAPIHook) -> T_CalledAPIHook:
+        cls._called_api_hook.add(func)
         return func
 
 
