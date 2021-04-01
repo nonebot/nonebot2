@@ -9,9 +9,10 @@ import abc
 import asyncio
 from copy import copy
 from functools import reduce, partial
+from typing_extensions import Protocol
 from dataclasses import dataclass, field
 from typing import (Any, Set, Dict, Union, TypeVar, Mapping, Optional, Iterable,
-                    Protocol, Awaitable, TYPE_CHECKING)
+                    Awaitable, TYPE_CHECKING)
 
 from pydantic import BaseModel
 
