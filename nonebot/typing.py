@@ -72,6 +72,22 @@ T_WebSocketDisconnectionHook = Callable[["Bot"], Awaitable[None]]
   WebSocket 连接断开时执行的函数
 """
 T_CallingAPIHook = Callable[["Bot", str, Dict[str, Any]], Awaitable[None]]
+"""
+:类型: ``Callable[[Bot, str, Dict[str, Any]], Awaitable[None]]``
+
+:说明:
+
+  ``bot.call_api`` 时执行的函数
+"""
+T_CalledAPIHook = Callable[
+    ["Bot", Optional[Exception], str, Dict[str, Any], Any], Awaitable[None]]
+"""
+:类型: ``Callable[[Bot, Optional[Exception], str, Dict[str, Any], Any], Awaitable[None]]``
+
+:说明:
+
+  ``bot.call_api`` 后执行的函数，参数分别为 bot, exception, api, data, result
+"""
 
 T_EventPreProcessor = Callable[["Bot", "Event", T_State], Awaitable[None]]
 """

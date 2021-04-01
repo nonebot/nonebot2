@@ -78,6 +78,38 @@ sidebarDepth: 0
 
 
 
+## `T_CallingAPIHook`
+
+
+* **类型**
+
+    `Callable[[Bot, str, Dict[str, Any]], Awaitable[None]]`
+
+
+
+* **说明**
+
+    `bot.call_api` 时执行的函数
+
+
+
+
+## `T_CalledAPIHook`
+
+
+* **类型**
+
+    `Callable[[Bot, Optional[Exception], str, Dict[str, Any], Any], Awaitable[None]]`
+
+
+
+* **说明**
+
+    `bot.call_api` 后执行的函数，参数分别为 bot, exception, api, data, result
+
+
+
+
 ## `T_EventPreProcessor`
 
 

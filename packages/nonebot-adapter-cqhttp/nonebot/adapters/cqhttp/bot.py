@@ -58,6 +58,7 @@ async def _check_reply(bot: "Bot", event: "Event"):
                                                  ))
     except Exception as e:
         log("WARNING", f"Error when getting message reply info: {repr(e)}", e)
+        return
     # ensure string comparation
     if str(event.reply.sender.user_id) == str(event.self_id):
         event.to_me = True

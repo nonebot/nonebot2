@@ -27,7 +27,7 @@ Driver 对象
 Config 配置对象
 
 
-### `_call_api_hook`
+### `_calling_api_hook`
 
 
 * **类型**
@@ -39,6 +39,21 @@ Config 配置对象
 * **说明**
 
     call_api 时执行的函数
+
+
+
+### `_called_api_hook`
+
+
+* **类型**
+
+    `Set[T_CalledAPIHook]`
+
+
+
+* **说明**
+
+    call_api 后执行的函数
 
 
 

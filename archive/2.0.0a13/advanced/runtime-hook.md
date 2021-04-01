@@ -19,7 +19,7 @@ from nonebot import get_driver
 driver=get_driver()
 ```
 
-共分为五种函数：
+共分为六种函数：
 
 ### 启动准备
 
@@ -70,6 +70,18 @@ from nonebot.adapters import Bot
 
 @Bot.on_calling_api
 async def handle_api_call(bot: Bot, api: str, data: Dict[str, Any]):
+    pass
+```
+
+### bot api 调用后钩子
+
+这个钩子函数会在 `Bot` 调用 API 后运行。
+
+```python
+from nonebot.adapters import Bot
+
+@Bot.on_called_api
+async def handle_api_result(bot: Bot, exception: Optional[Exception], api: str, data: Dict[str, Any], result: Any):
     pass
 ```
 
