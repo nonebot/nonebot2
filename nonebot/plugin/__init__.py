@@ -7,9 +7,10 @@
 import re
 import json
 from types import ModuleType
+from functools import reduce
 from dataclasses import dataclass
 from collections import defaultdict
-from contextvars import Context, ContextVar, copy_context
+from contextvars import Context, copy_context
 from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, TYPE_CHECKING
 
 import tomlkit
@@ -49,11 +50,14 @@ class Plugin(object):
     - **类型**: ``ModuleType``
     - **说明**: 插件模块对象
     """
-    export: Export
-    """
-    - **类型**: ``Export``
-    - **说明**: 插件内定义的导出内容
-    """
+
+    @property
+    def export(self) -> Export:
+        """
+        - **类型**: ``Export``
+        - **说明**: 插件内定义的导出内容
+        """
+        return getattr(self.module, "__export__", Export())
 
     @property
     def matcher(self) -> Set[Type[Matcher]]:
@@ -61,13 +65,15 @@ class Plugin(object):
         - **类型**: ``Set[Type[Matcher]]``
         - **说明**: 插件内定义的 ``Matcher``
         """
-        return _plugin_matchers[self.name]
+        return reduce(
+            lambda x, y: x | _plugin_matchers[y],
+            filter(lambda x: x.startswith(self.name), _plugin_matchers.keys()),
+            set())
 
 
 def _store_matcher(matcher: Type[Matcher]):
     if matcher.module:
-        plugin_name = matcher.module.split(".", maxsplit=1)[0]
-        _plugin_matchers[plugin_name].add(matcher)
+        _plugin_matchers[matcher.module].add(matcher)
 
 
 def on(type: str = "",
@@ -928,8 +934,7 @@ def _load_plugin(manager: PluginManager, plugin_name: str) -> Optional[Plugin]:
     try:
         module = manager.load_plugin(plugin_name)
 
-        plugin = Plugin(plugin_name, module,
-                        getattr(module, "__export__", Export()))
+        plugin = Plugin(plugin_name, module)
         plugins[plugin_name] = plugin
         logger.opt(
             colors=True).info(f'Succeeded to import "<y>{plugin_name}</y>"')
