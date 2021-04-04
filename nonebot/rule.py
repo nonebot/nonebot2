@@ -175,7 +175,7 @@ class TrieRule:
         })
 
 
-def startswith(msg: str) -> Rule:
+def startswith(msg: str, ignorecase: bool = False) -> Rule:
     """
     :说明:
 
@@ -186,16 +186,19 @@ def startswith(msg: str) -> Rule:
       * ``msg: str``: 消息开头字符串
     """
 
+    pattern = re.compile(f"^{re.escape(msg)}",
+                         re.IGNORECASE if ignorecase else 0)
+
     async def _startswith(bot: "Bot", event: "Event", state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         text = event.get_plaintext()
-        return text.startswith(msg)
+        return bool(pattern.match(text))
 
     return Rule(_startswith)
 
 
-def endswith(msg: str) -> Rule:
+def endswith(msg: str, ignorecase: bool = False) -> Rule:
     """
     :说明:
 
@@ -205,11 +208,14 @@ def endswith(msg: str) -> Rule:
 
       * ``msg: str``: 消息结尾字符串
     """
+    pattern = re.compile(f"{re.escape(msg)}$",
+                         re.IGNORECASE if ignorecase else 0)
 
     async def _endswith(bot: "Bot", event: "Event", state: T_State) -> bool:
         if event.get_type() != "message":
             return False
-        return event.get_plaintext().endswith(msg)
+        text = event.get_plaintext()
+        return bool(pattern.match(text))
 
     return Rule(_endswith)
 

@@ -290,6 +290,7 @@ def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = None,
 
 def on_startswith(msg: str,
                   rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
+                  ignorecase: bool = False,
                   **kwargs) -> Type[Matcher]:
     """
     :说明:
@@ -300,6 +301,7 @@ def on_startswith(msg: str,
 
       * ``msg: str``: 指定消息开头内容
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
+      * ``ignorecase: bool``: 是否忽略大小写
       * ``permission: Optional[Permission]``: 事件响应权限
       * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
@@ -312,11 +314,12 @@ def on_startswith(msg: str,
 
       - ``Type[Matcher]``
     """
-    return on_message(startswith(msg) & rule, **kwargs)
+    return on_message(startswith(msg, ignorecase) & rule, **kwargs)
 
 
 def on_endswith(msg: str,
                 rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
+                ignorecase: bool = False,
                 **kwargs) -> Type[Matcher]:
     """
     :说明:
@@ -327,6 +330,7 @@ def on_endswith(msg: str,
 
       * ``msg: str``: 指定消息结尾内容
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
+      * ``ignorecase: bool``: 是否忽略大小写
       * ``permission: Optional[Permission]``: 事件响应权限
       * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
@@ -339,7 +343,7 @@ def on_endswith(msg: str,
 
       - ``Type[Matcher]``
     """
-    return on_message(endswith(msg) & rule, **kwargs)
+    return on_message(endswith(msg, ignorecase) & rule, **kwargs)
 
 
 def on_keyword(keywords: Set[str],
@@ -552,7 +556,7 @@ class CommandGroup:
         :参数:
 
           * ``cmd: Union[str, Tuple[str, ...]]``: 命令前缀
-          * ``**kwargs``: 其他传递给 ``on_command`` 的参数，将会覆盖命令组默认值
+          * ``**kwargs``: 其他传递给 ``on_shell_command`` 的参数，将会覆盖命令组默认值
 
         :返回:
 
@@ -637,6 +641,7 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
+        final_kwargs.pop("permission", None)
         matcher = on_metaevent(**final_kwargs)
         self.matchers.append(matcher)
         return matcher
@@ -732,6 +737,7 @@ class MatcherGroup:
         :参数:
 
           * ``msg: str``: 指定消息开头内容
+          * ``ignorecase: bool``: 是否忽略大小写
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
           * ``permission: Optional[Permission]``: 事件响应权限
           * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
@@ -761,6 +767,7 @@ class MatcherGroup:
         :参数:
 
           * ``msg: str``: 指定消息结尾内容
+          * ``ignorecase: bool``: 是否忽略大小写
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
           * ``permission: Optional[Permission]``: 事件响应权限
           * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
