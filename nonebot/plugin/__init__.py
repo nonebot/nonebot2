@@ -288,7 +288,7 @@ def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = None,
     return matcher
 
 
-def on_startswith(msg: str,
+def on_startswith(msg: Union[str, Tuple[str, ...]],
                   rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
                   ignorecase: bool = False,
                   **kwargs) -> Type[Matcher]:
@@ -299,7 +299,7 @@ def on_startswith(msg: str,
 
     :参数:
 
-      * ``msg: str``: 指定消息开头内容
+      * ``msg: Union[str, Tuple[str, ...]]``: 指定消息开头内容
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
       * ``ignorecase: bool``: 是否忽略大小写
       * ``permission: Optional[Permission]``: 事件响应权限
@@ -317,7 +317,7 @@ def on_startswith(msg: str,
     return on_message(startswith(msg, ignorecase) & rule, **kwargs)
 
 
-def on_endswith(msg: str,
+def on_endswith(msg: Union[str, Tuple[str, ...]],
                 rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
                 ignorecase: bool = False,
                 **kwargs) -> Type[Matcher]:
@@ -328,7 +328,7 @@ def on_endswith(msg: str,
 
     :参数:
 
-      * ``msg: str``: 指定消息结尾内容
+      * ``msg: Union[str, Tuple[str, ...]]``: 指定消息结尾内容
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
       * ``ignorecase: bool``: 是否忽略大小写
       * ``permission: Optional[Permission]``: 事件响应权限
@@ -728,7 +728,8 @@ class MatcherGroup:
         self.matchers.append(matcher)
         return matcher
 
-    def on_startswith(self, msg: str, **kwargs) -> Type[Matcher]:
+    def on_startswith(self, msg: Union[str, Tuple[str, ...]],
+                      **kwargs) -> Type[Matcher]:
         """
         :说明:
 
@@ -736,7 +737,7 @@ class MatcherGroup:
 
         :参数:
 
-          * ``msg: str``: 指定消息开头内容
+          * ``msg: Union[str, Tuple[str, ...]]``: 指定消息开头内容
           * ``ignorecase: bool``: 是否忽略大小写
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
           * ``permission: Optional[Permission]``: 事件响应权限
@@ -758,7 +759,8 @@ class MatcherGroup:
         self.matchers.append(matcher)
         return matcher
 
-    def on_endswith(self, msg: str, **kwargs) -> Type[Matcher]:
+    def on_endswith(self, msg: Union[str, Tuple[str, ...]],
+                    **kwargs) -> Type[Matcher]:
         """
         :说明:
 
@@ -766,7 +768,7 @@ class MatcherGroup:
 
         :参数:
 
-          * ``msg: str``: 指定消息结尾内容
+          * ``msg: Union[str, Tuple[str, ...]]``: 指定消息结尾内容
           * ``ignorecase: bool``: 是否忽略大小写
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
           * ``permission: Optional[Permission]``: 事件响应权限

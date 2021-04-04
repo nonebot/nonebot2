@@ -90,7 +90,7 @@ def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = ...,
 
 
 def on_startswith(
-        msg: str,
+        msg: Union[str, Tuple[str, ...]],
         rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
         ignorecase: bool = ...,
         *,
@@ -104,7 +104,7 @@ def on_startswith(
     ...
 
 
-def on_endswith(msg: str,
+def on_endswith(msg: Union[str, Tuple[str, ...]],
                 rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
                 ignorecase: bool = ...,
                 *,
@@ -300,7 +300,7 @@ class MatcherGroup:
 
     def on_startswith(
             self,
-            msg: str,
+            msg: Union[str, Tuple[str, ...]],
             *,
             ignorecase: bool = ...,
             rule: Optional[Union[Rule, T_RuleChecker]] = ...,
@@ -315,7 +315,7 @@ class MatcherGroup:
 
     def on_endswith(
             self,
-            msg: str,
+            msg: Union[str, Tuple[str, ...]],
             *,
             ignorecase: bool = ...,
             rule: Optional[Union[Rule, T_RuleChecker]] = ...,

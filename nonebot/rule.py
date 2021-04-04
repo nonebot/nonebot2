@@ -175,7 +175,8 @@ class TrieRule:
         })
 
 
-def startswith(msg: str, ignorecase: bool = False) -> Rule:
+def startswith(msg: Union[str, Tuple[str, ...]],
+               ignorecase: bool = False) -> Rule:
     """
     :说明:
 
@@ -185,9 +186,12 @@ def startswith(msg: str, ignorecase: bool = False) -> Rule:
 
       * ``msg: str``: 消息开头字符串
     """
+    if isinstance(msg, str):
+        msg = (msg,)
 
-    pattern = re.compile(f"^{re.escape(msg)}",
-                         re.IGNORECASE if ignorecase else 0)
+    pattern = re.compile(
+        f"^(?:{'|'.join(re.escape(prefix) for prefix in msg)})",
+        re.IGNORECASE if ignorecase else 0)
 
     async def _startswith(bot: "Bot", event: "Event", state: T_State) -> bool:
         if event.get_type() != "message":
@@ -198,7 +202,8 @@ def startswith(msg: str, ignorecase: bool = False) -> Rule:
     return Rule(_startswith)
 
 
-def endswith(msg: str, ignorecase: bool = False) -> Rule:
+def endswith(msg: Union[str, Tuple[str, ...]],
+             ignorecase: bool = False) -> Rule:
     """
     :说明:
 
@@ -208,8 +213,12 @@ def endswith(msg: str, ignorecase: bool = False) -> Rule:
 
       * ``msg: str``: 消息结尾字符串
     """
-    pattern = re.compile(f"{re.escape(msg)}$",
-                         re.IGNORECASE if ignorecase else 0)
+    if isinstance(msg, str):
+        msg = (msg,)
+
+    pattern = re.compile(
+        f"(?:{'|'.join(re.escape(prefix) for prefix in msg)})$",
+        re.IGNORECASE if ignorecase else 0)
 
     async def _endswith(bot: "Bot", event: "Event", state: T_State) -> bool:
         if event.get_type() != "message":
