@@ -10,7 +10,7 @@
               }}</v-tab>
             </v-tabs>
           </v-toolbar>
-          <v-tabs-items class="sub-item" v-model="tab">
+          <v-tabs-items class="sub-item pt-1" v-model="tab">
             <v-tab-item>
               <Adapter></Adapter>
             </v-tab-item>
@@ -37,7 +37,7 @@ export default {
   components: {
     Adapter,
     Plugin,
-    Bot
+    Bot,
   },
   data() {
     return {
@@ -45,12 +45,12 @@ export default {
       tabs: {
         0: "协议",
         1: "插件",
-        2: "机器人"
-      }
+        2: "机器人",
+      },
     };
   },
   computed: {},
-  methods: {}
+  methods: {},
 };
 </script>
 

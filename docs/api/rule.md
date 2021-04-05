@@ -91,7 +91,7 @@ Rule(async_function, run_sync(sync_function))
 
 
 
-## `startswith(msg)`
+## `startswith(msg, ignorecase=False)`
 
 
 * **说明**
@@ -107,7 +107,7 @@ Rule(async_function, run_sync(sync_function))
 
 
 
-## `endswith(msg)`
+## `endswith(msg, ignorecase=False)`
 
 
 * **说明**

@@ -136,8 +136,8 @@ export default {
   props: {
     messages: {
       type: Array,
-      default: () => []
-    }
+      default: () => [],
+    },
   },
   methods: {
     initWOW: function() {
@@ -146,13 +146,13 @@ export default {
         animateClass: "animate__animated",
         offset: 0,
         mobile: true,
-        live: true
+        live: true,
       }).init();
-    }
+    },
   },
   mounted() {
     this.initWOW();
-  }
+  },
 };
 </script>
 

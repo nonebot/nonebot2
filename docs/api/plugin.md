@@ -50,7 +50,7 @@ sidebarDepth: 0
 * **说明**: 插件模块对象
 
 
-### `export`
+### _property_ `export`
 
 
 * **类型**: `Export`
@@ -282,7 +282,7 @@ sidebarDepth: 0
 
 
 
-## `on_startswith(msg, rule=None, **kwargs)`
+## `on_startswith(msg, rule=None, ignorecase=False, **kwargs)`
 
 
 * **说明**
@@ -294,10 +294,13 @@ sidebarDepth: 0
 * **参数**
 
     
-    * `msg: str`: 指定消息开头内容
+    * `msg: Union[str, Tuple[str, ...]]`: 指定消息开头内容
 
 
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+
+
+    * `ignorecase: bool`: 是否忽略大小写
 
 
     * `permission: Optional[Permission]`: 事件响应权限
@@ -329,7 +332,7 @@ sidebarDepth: 0
 
 
 
-## `on_endswith(msg, rule=None, **kwargs)`
+## `on_endswith(msg, rule=None, ignorecase=False, **kwargs)`
 
 
 * **说明**
@@ -341,10 +344,13 @@ sidebarDepth: 0
 * **参数**
 
     
-    * `msg: str`: 指定消息结尾内容
+    * `msg: Union[str, Tuple[str, ...]]`: 指定消息结尾内容
 
 
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+
+
+    * `ignorecase: bool`: 是否忽略大小写
 
 
     * `permission: Optional[Permission]`: 事件响应权限
@@ -663,7 +669,7 @@ sidebarDepth: 0
     * `cmd: Union[str, Tuple[str, ...]]`: 命令前缀
 
 
-    * `**kwargs`: 其他传递给 `on_command` 的参数，将会覆盖命令组默认值
+    * `**kwargs`: 其他传递给 `on_shell_command` 的参数，将会覆盖命令组默认值
 
 
 
@@ -940,7 +946,10 @@ sidebarDepth: 0
 * **参数**
 
     
-    * `msg: str`: 指定消息开头内容
+    * `msg: Union[str, Tuple[str, ...]]`: 指定消息开头内容
+
+
+    * `ignorecase: bool`: 是否忽略大小写
 
 
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
@@ -987,7 +996,10 @@ sidebarDepth: 0
 * **参数**
 
     
-    * `msg: str`: 指定消息结尾内容
+    * `msg: Union[str, Tuple[str, ...]]`: 指定消息结尾内容
+
+
+    * `ignorecase: bool`: 是否忽略大小写
 
 
     * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
