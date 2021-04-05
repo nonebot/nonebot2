@@ -28,30 +28,30 @@
 </template>
 
 <script>
-import Adapter from "./Adapter.vue";
-import Plugin from "./Plugin.vue";
-import Bot from "./Bot.vue";
+import Adapter from './Adapter.vue'
+import Plugin from './Plugin.vue'
+import Bot from './Bot.vue'
 
 export default {
-  name: "Store",
+  name: 'Store',
   components: {
     Adapter,
     Plugin,
-    Bot
+    Bot,
   },
   data() {
     return {
       tab: 1,
       tabs: {
-        0: "协议",
-        1: "插件",
-        2: "机器人"
-      }
-    };
+        0: '协议',
+        1: '插件',
+        2: '机器人',
+      },
+    }
   },
   computed: {},
-  methods: {}
-};
+  methods: {},
+}
 </script>
 
 <style>

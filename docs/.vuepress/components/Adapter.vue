@@ -82,8 +82,8 @@
                 color="blue darken-1"
                 text
                 @click="
-                  dialog = false;
-                  publishAdapter();
+                  dialog = false
+                  publishAdapter()
                 "
               >
                 发布
@@ -93,13 +93,14 @@
         </v-dialog>
       </v-col>
     </v-row>
-      <v-col cols="12">
-        <v-pagination
-          v-model="page"
-          :length="pageNum"
-          prev-icon="fa-caret-left"
-          next-icon="fa-caret-right"
-        ></v-pagination></v-col>
+    <v-col cols="12">
+      <v-pagination
+        v-model="page"
+        :length="pageNum"
+        prev-icon="fa-caret-left"
+        next-icon="fa-caret-right"
+      ></v-pagination
+    ></v-col>
     <v-row>
       <v-col
         cols="12"
@@ -116,30 +117,30 @@
         ></PublishCard>
       </v-col>
     </v-row>
-      <v-col cols="12">
-        <v-pagination
-          v-model="page"
-          :length="pageNum"
-          prev-icon="fa-caret-left"
-          next-icon="fa-caret-right"
-        ></v-pagination>
-      </v-col>
+    <v-col cols="12">
+      <v-pagination
+        v-model="page"
+        :length="pageNum"
+        prev-icon="fa-caret-left"
+        next-icon="fa-caret-right"
+      ></v-pagination>
+    </v-col>
   </v-card>
 </template>
 
 <script>
-import PublishCard from "./PublishCard.vue";
-import adapters from "../public/adapters.json";
+import PublishCard from './PublishCard.vue'
+import adapters from '../public/adapters.json'
 
 export default {
-  name: "Adapters",
+  name: 'Adapters',
   components: {
-    PublishCard
+    PublishCard,
   },
   data() {
     return {
       adapters: adapters,
-      filterText: "",
+      filterText: '',
       page: 1,
       dialog: false,
       valid: false,
@@ -148,34 +149,34 @@ export default {
         desc: null,
         id: null,
         link: null,
-        repo: null
-      }
-    };
+        repo: null,
+      },
+    }
   },
   computed: {
     pageNum() {
-      return Math.ceil(this.filteredAdapters.length / 10);
+      return Math.ceil(this.filteredAdapters.length / 10)
     },
     filteredAdapters() {
-      return this.adapters.filter(adapter => {
+      return this.adapters.filter((adapter) => {
         return (
-          adapter.id.indexOf(this.filterText || "") != -1 ||
-          adapter.name.indexOf(this.filterText || "") != -1 ||
-          adapter.desc.indexOf(this.filterText || "") != -1 ||
-          adapter.author.indexOf(this.filterText || "") != -1
-        );
-      });
+          adapter.id.indexOf(this.filterText || '') != -1 ||
+          adapter.name.indexOf(this.filterText || '') != -1 ||
+          adapter.desc.indexOf(this.filterText || '') != -1 ||
+          adapter.author.indexOf(this.filterText || '') != -1
+        )
+      })
     },
     displayAdapters() {
-      return this.filteredAdapters.slice((this.page - 1) * 10, this.page * 10);
+      return this.filteredAdapters.slice((this.page - 1) * 10, this.page * 10)
     },
     publishPlugin() {
       if (!this.$refs.newAdapterForm.validate()) {
-        return;
+        return
       }
       const title = encodeURIComponent(
         `Adapter: ${this.newAdapter.name}`
-      ).replace(/%2B/gi, "+");
+      ).replace(/%2B/gi, '+')
       const body = encodeURIComponent(
         `
 **协议名称：**
@@ -207,11 +208,11 @@ ${this.newAdapter.repo}
 - repo: ${this.newAdapter.repo}
 -->
 `.trim()
-      ).replace(/%2B/gi, "+");
+      ).replace(/%2B/gi, '+')
       window.open(
         `https://github.com/nonebot/nonebot2/issues/new?title=${title}&body=${body}&labels=Adapter`
-      );
-    }
-  }
-};
+      )
+    },
+  },
+}
 </script>

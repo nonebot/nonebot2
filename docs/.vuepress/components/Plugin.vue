@@ -82,8 +82,8 @@
                 color="blue darken-1"
                 text
                 @click="
-                  dialog = false;
-                  publishPlugin();
+                  dialog = false
+                  publishPlugin()
                 "
               >
                 发布
@@ -93,14 +93,14 @@
         </v-dialog>
       </v-col>
     </v-row>
-      <v-col cols="12">
-        <v-pagination
-          v-model="page"
-          :length="pageNum"
-          prev-icon="fa-caret-left"
-          next-icon="fa-caret-right"
-        ></v-pagination>
-      </v-col>
+    <v-col cols="12">
+      <v-pagination
+        v-model="page"
+        :length="pageNum"
+        prev-icon="fa-caret-left"
+        next-icon="fa-caret-right"
+      ></v-pagination>
+    </v-col>
     <v-row>
       <v-col
         cols="12"
@@ -119,30 +119,30 @@
         ></PublishCard>
       </v-col>
     </v-row>
-      <v-col cols="12">
-        <v-pagination
-          v-model="page"
-          :length="pageNum"
-          prev-icon="fa-caret-left"
-          next-icon="fa-caret-right"
-        ></v-pagination>
-      </v-col>
+    <v-col cols="12">
+      <v-pagination
+        v-model="page"
+        :length="pageNum"
+        prev-icon="fa-caret-left"
+        next-icon="fa-caret-right"
+      ></v-pagination>
+    </v-col>
   </v-card>
 </template>
 
 <script>
-import PublishCard from "./PublishCard.vue";
-import plugins from "../public/plugins.json";
+import PublishCard from './PublishCard.vue'
+import plugins from '../public/plugins.json'
 
 export default {
-  name: "Plugins",
+  name: 'Plugins',
   components: {
-    PublishCard
+    PublishCard,
   },
   data() {
     return {
       plugins: plugins,
-      filterText: "",
+      filterText: '',
       page: 1,
       dialog: false,
       valid: false,
@@ -151,34 +151,34 @@ export default {
         desc: null,
         id: null,
         link: null,
-        repo: null
-      }
-    };
+        repo: null,
+      },
+    }
   },
   computed: {
     pageNum() {
-      return Math.ceil(this.filteredPlugins.length / 10);
+      return Math.ceil(this.filteredPlugins.length / 10)
     },
     filteredPlugins() {
-      return this.plugins.filter(plugin => {
+      return this.plugins.filter((plugin) => {
         return (
-          plugin.id.indexOf(this.filterText || "") != -1 ||
-          plugin.name.indexOf(this.filterText || "") != -1 ||
-          plugin.desc.indexOf(this.filterText || "") != -1 ||
-          plugin.author.indexOf(this.filterText || "") != -1
-        );
-      });
+          plugin.id.indexOf(this.filterText || '') != -1 ||
+          plugin.name.indexOf(this.filterText || '') != -1 ||
+          plugin.desc.indexOf(this.filterText || '') != -1 ||
+          plugin.author.indexOf(this.filterText || '') != -1
+        )
+      })
     },
     displayPlugins() {
-      return this.filteredPlugins.slice((this.page - 1) * 10, this.page * 10);
+      return this.filteredPlugins.slice((this.page - 1) * 10, this.page * 10)
     },
     publishPlugin() {
       if (!this.$refs.newPluginForm.validate()) {
-        return;
+        return
       }
       const title = encodeURIComponent(
         `Plugin: ${this.newPlugin.name}`
-      ).replace(/%2B/gi, "+");
+      ).replace(/%2B/gi, '+')
       const body = encodeURIComponent(
         `
 **插件名称：**
@@ -210,11 +210,11 @@ ${this.newPlugin.repo}
 - repo: ${this.newPlugin.repo}
 -->
 `.trim()
-      ).replace(/%2B/gi, "+");
+      ).replace(/%2B/gi, '+')
       window.open(
         `https://github.com/nonebot/nonebot2/issues/new?title=${title}&body=${body}&labels=Plugin`
-      );
-    }
-  }
-};
+      )
+    },
+  },
+}
 </script>
