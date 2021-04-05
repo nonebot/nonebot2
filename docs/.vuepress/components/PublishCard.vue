@@ -28,7 +28,7 @@
         {{ text }}
         <v-icon right small>fa-copy</v-icon>
       </v-btn>
-      <v-snackbar v-model="snackbar">Copied!</v-snackbar>
+      <v-snackbar v-model="snackbar">复制成功！</v-snackbar>
     </v-card-actions>
   </v-card>
 </template>

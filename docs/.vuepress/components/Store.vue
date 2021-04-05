@@ -10,7 +10,7 @@
               }}</v-tab>
             </v-tabs>
           </v-toolbar>
-          <v-tabs-items class="sub-item" v-model="tab">
+          <v-tabs-items class="sub-item pt-1" v-model="tab">
             <v-tab-item>
               <Adapter></Adapter>
             </v-tab-item>

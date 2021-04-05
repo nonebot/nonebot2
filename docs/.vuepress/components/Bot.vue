@@ -1,7 +1,7 @@
 <template>
   <v-card flat class="bots">
     <v-row>
-      <v-col cols="12" sm="4">
+      <v-col cols="12" sm="6">
         <v-text-field
           v-model="filterText"
           dense
@@ -9,7 +9,7 @@
           outlined
           clearable
           hide-details
-          label="Filter Bot"
+          label="搜索机器人"
         >
           <template v-slot:prepend-inner>
             <div class="v-input__icon v-input__icon--prepend-inner">
@@ -18,16 +18,16 @@
           </template>
         </v-text-field>
       </v-col>
-      <v-col cols="12" sm="4">
+      <v-col cols="12" sm="6">
         <v-dialog v-model="dialog" max-width="600px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn dark block color="primary" v-bind="attrs" v-on="on"
-              >Publish Your Bot
+              >发布机器人
             </v-btn>
           </template>
           <v-card>
             <v-card-title>
-              <span class="headline">Bot Information</span>
+              <span class="headline">机器人信息</span>
             </v-card-title>
             <v-card-text>
               <v-form ref="newBotForm" v-model="valid" lazy-validation>
@@ -61,7 +61,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="dialog = false">
-                Close
+                关闭
               </v-btn>
               <v-btn
                 :disabled="!valid"
@@ -72,13 +72,14 @@
                   publishBot();
                 "
               >
-                Publish
+                发布
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
       </v-col>
-      <v-col cols="12" sm="4">
+    </v-row>
+      <v-col cols="12">
         <v-pagination
           v-model="page"
           :length="pageNum"
@@ -86,8 +87,6 @@
           next-icon="fa-caret-right"
         ></v-pagination>
       </v-col>
-    </v-row>
-    <hr />
     <v-row>
       <v-col cols="12" sm="6" v-for="(bot, index) in displayBots" :key="index">
         <PublishCard
@@ -98,7 +97,6 @@
         ></PublishCard>
       </v-col>
     </v-row>
-    <v-row>
       <v-col cols="12">
         <v-pagination
           v-model="page"
@@ -107,7 +105,6 @@
           next-icon="fa-caret-right"
         ></v-pagination>
       </v-col>
-    </v-row>
   </v-card>
 </template>
 

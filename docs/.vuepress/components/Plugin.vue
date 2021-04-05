@@ -1,7 +1,7 @@
 <template>
   <v-card flat class="plugins">
     <v-row>
-      <v-col cols="12" sm="4">
+      <v-col cols="12" sm="6">
         <v-text-field
           v-model="filterText"
           dense
@@ -9,7 +9,7 @@
           outlined
           clearable
           hide-details
-          label="Filter Plugin"
+          label="搜索插件"
         >
           <template v-slot:prepend-inner>
             <div class="v-input__icon v-input__icon--prepend-inner">
@@ -18,16 +18,16 @@
           </template>
         </v-text-field>
       </v-col>
-      <v-col cols="12" sm="4">
+      <v-col cols="12" sm="6">
         <v-dialog v-model="dialog" max-width="600px">
           <template v-slot:activator="{ on, attrs }">
             <v-btn dark block color="primary" v-bind="attrs" v-on="on"
-              >Publish Your Plugin
+              >发布插件
             </v-btn>
           </template>
           <v-card>
             <v-card-title>
-              <span class="headline">Plugin Information</span>
+              <span class="headline">插件信息</span>
             </v-card-title>
             <v-card-text>
               <v-form ref="newPluginForm" v-model="valid" lazy-validation>
@@ -75,7 +75,7 @@
             <v-card-actions>
               <v-spacer></v-spacer>
               <v-btn color="blue darken-1" text @click="dialog = false">
-                Close
+                关闭
               </v-btn>
               <v-btn
                 :disabled="!valid"
@@ -86,13 +86,14 @@
                   publishPlugin();
                 "
               >
-                Publish
+                发布
               </v-btn>
             </v-card-actions>
           </v-card>
         </v-dialog>
       </v-col>
-      <v-col cols="12" sm="4">
+    </v-row>
+      <v-col cols="12">
         <v-pagination
           v-model="page"
           :length="pageNum"
@@ -100,8 +101,6 @@
           next-icon="fa-caret-right"
         ></v-pagination>
       </v-col>
-    </v-row>
-    <hr />
     <v-row>
       <v-col
         cols="12"
@@ -115,12 +114,11 @@
           :id="plugin.id"
           :author="plugin.author"
           :link="plugin.repo"
-          text="copy nb install command"
+          text="点此复制安装命令"
           :command="`nb plugin install ${plugin.id}`"
         ></PublishCard>
       </v-col>
     </v-row>
-    <v-row>
       <v-col cols="12">
         <v-pagination
           v-model="page"
@@ -129,7 +127,6 @@
           next-icon="fa-caret-right"
         ></v-pagination>
       </v-col>
-    </v-row>
   </v-card>
 </template>
 
