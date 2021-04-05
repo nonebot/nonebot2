@@ -34,7 +34,7 @@
 </template>
 
 <script>
-import copy from 'copy-to-clipboard'
+import copy from "copy-to-clipboard";
 
 export default {
   props: {
@@ -49,28 +49,28 @@ export default {
   data() {
     return {
       snackbar: false,
-    }
+    };
   },
   computed: {
     showCommand() {
-      return this.text && this.command
+      return this.text && this.command;
     },
   },
   methods: {
     repoLink(repo) {
       if (repo) {
-        return /^https?:/.test(repo) ? repo : `https://github.com/${repo}`
+        return /^https?:/.test(repo) ? repo : `https://github.com/${repo}`;
       }
-      return null
+      return null;
     },
     copyCommand() {
       copy(this.command, {
-        format: 'text/plain',
-      })
-      this.snackbar = true
+        format: "text/plain",
+      });
+      this.snackbar = true;
     },
   },
-}
+};
 </script>
 
 <style scoped>

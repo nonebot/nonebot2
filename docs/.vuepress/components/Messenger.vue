@@ -128,11 +128,11 @@
 </template>
 
 <script>
-import { WOW } from 'wowjs'
-import 'animate.css/animate.min.css'
+import { WOW } from "wowjs";
+import "animate.css/animate.min.css";
 
 export default {
-  name: 'Messenger',
+  name: "Messenger",
   props: {
     messages: {
       type: Array,
@@ -140,20 +140,20 @@ export default {
     },
   },
   methods: {
-    initWOW: function () {
+    initWOW: function() {
       new WOW({
-        noxClass: 'wow',
-        animateClass: 'animate__animated',
+        noxClass: "wow",
+        animateClass: "animate__animated",
         offset: 0,
         mobile: true,
         live: true,
-      }).init()
+      }).init();
     },
   },
   mounted() {
-    this.initWOW()
+    this.initWOW();
   },
-}
+};
 </script>
 
 <style scoped>
@@ -183,7 +183,7 @@ export default {
   background-color: #fff;
 }
 .message .message-box::after {
-  content: '';
+  content: "";
   position: absolute;
   right: 100%;
   top: 0;

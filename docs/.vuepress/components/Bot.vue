@@ -68,8 +68,8 @@
                 color="blue darken-1"
                 text
                 @click="
-                  dialog = false
-                  publishBot()
+                  dialog = false;
+                  publishBot();
                 "
               >
                 发布
@@ -79,14 +79,16 @@
         </v-dialog>
       </v-col>
     </v-row>
-    <v-col cols="12">
-      <v-pagination
-        v-model="page"
-        :length="pageNum"
-        prev-icon="fa-caret-left"
-        next-icon="fa-caret-right"
-      ></v-pagination>
-    </v-col>
+    <v-row>
+      <v-col cols="12">
+        <v-pagination
+          v-model="page"
+          :length="pageNum"
+          prev-icon="fa-caret-left"
+          next-icon="fa-caret-right"
+        ></v-pagination>
+      </v-col>
+    </v-row>
     <v-row>
       <v-col cols="12" sm="6" v-for="(bot, index) in displayBots" :key="index">
         <PublishCard
@@ -109,18 +111,18 @@
 </template>
 
 <script>
-import PublishCard from './PublishCard.vue'
-import bots from '../public/bots.json'
+import PublishCard from "./PublishCard.vue";
+import bots from "../public/bots.json";
 
 export default {
-  name: 'Bots',
+  name: "Bots",
   components: {
     PublishCard,
   },
   data() {
     return {
       bots: bots,
-      filterText: '',
+      filterText: "",
       page: 1,
       dialog: false,
       valid: false,
@@ -129,32 +131,32 @@ export default {
         desc: null,
         repo: null,
       },
-    }
+    };
   },
   computed: {
     pageNum() {
-      return Math.ceil(this.filteredBots.length / 10)
+      return Math.ceil(this.filteredBots.length / 10);
     },
     filteredBots() {
       return this.bots.filter((bot) => {
         return (
-          bot.name.indexOf(this.filterText || '') != -1 ||
-          bot.desc.indexOf(this.filterText || '') != -1 ||
-          bot.author.indexOf(this.filterText || '') != -1
-        )
-      })
+          bot.name.indexOf(this.filterText || "") != -1 ||
+          bot.desc.indexOf(this.filterText || "") != -1 ||
+          bot.author.indexOf(this.filterText || "") != -1
+        );
+      });
     },
     displayBots() {
-      return this.filteredBots.slice((this.page - 1) * 10, this.page * 10)
+      return this.filteredBots.slice((this.page - 1) * 10, this.page * 10);
     },
     publishBot() {
       if (!this.$refs.newBotForm.validate()) {
-        return
+        return;
       }
       const title = encodeURIComponent(`Bot: ${this.newBot.name}`).replace(
         /%2B/gi,
-        '+'
-      )
+        "+"
+      );
       const body = encodeURIComponent(
         `
 **机器人名称：**
@@ -176,11 +178,11 @@ ${this.newBot.repo}
 - repo: ${this.newBot.repo}
 -->
 `.trim()
-      ).replace(/%2B/gi, '+')
+      ).replace(/%2B/gi, "+");
       window.open(
         `https://github.com/nonebot/nonebot2/issues/new?title=${title}&body=${body}&labels=Bot`
-      )
+      );
     },
   },
-}
+};
 </script>

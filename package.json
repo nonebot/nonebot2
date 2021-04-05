@@ -17,8 +17,8 @@
   "scripts": {
     "dev": "vuepress dev docs",
     "build": "vuepress build docs",
-    "lint": "npx prettier -c docs/**/* !docs/api/**/*",
-    "lint:fix": "npx prettier --write docs/**/* !docs/api/**/*"
+    "lint": "npx prettier --config .prettierrc -c docs/**/* !docs/api/**/*",
+    "lint:fix": "npx prettier --config .prettierrc --write docs/**/* !docs/api/**/*"
   },
   "license": "MIT",
   "devDependencies": {
