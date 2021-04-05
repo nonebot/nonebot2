@@ -99,14 +99,16 @@
         ></PublishCard>
       </v-col>
     </v-row>
-    <v-col cols="12">
-      <v-pagination
-        v-model="page"
-        :length="pageNum"
-        prev-icon="fa-caret-left"
-        next-icon="fa-caret-right"
-      ></v-pagination>
-    </v-col>
+    <v-row>
+      <v-col cols="12">
+        <v-pagination
+          v-model="page"
+          :length="pageNum"
+          prev-icon="fa-caret-left"
+          next-icon="fa-caret-right"
+        ></v-pagination>
+      </v-col>
+    </v-row>
   </v-card>
 </template>
 
