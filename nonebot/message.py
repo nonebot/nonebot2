@@ -7,7 +7,7 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
 
 import asyncio
 from datetime import datetime
-from typing import Set, Type, TYPE_CHECKING, Optional
+from typing import Set, Type, Optional, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
@@ -210,14 +210,12 @@ async def handle_event(bot: "Bot", event: "Event") -> Optional[Exception]:
             await asyncio.gather(*coros)
         except IgnoredException as e:
             logger.opt(colors=True).info(
-                f"Event {event.get_event_name()} is <b>ignored</b>"
-            )
+                f"Event {event.get_event_name()} is <b>ignored</b>")
             return e
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
                 "<r><bg #f8bbd0>Error when running EventPreProcessors. "
-                "Event ignored!</bg #f8bbd0></r>"
-            )
+                "Event ignored!</bg #f8bbd0></r>")
             return e
 
     # Trie Match
