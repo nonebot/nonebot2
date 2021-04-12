@@ -72,7 +72,7 @@ pip install .  # 不推荐
 适配器可以通过 `nb-cli` 在创建项目时根据你的选择自动安装，也可以自行使用 `pip` 安装
 
 ```bash
-pip install nonebot-adapter-<adapter-name>
+pip install <adapter-name>
 ```
 
 ```bash
@@ -88,9 +88,9 @@ nb adapter list
 # 列出所有的插件
 nb plugin list
 # 搜索插件
-nb plugin search xxx
+nb plugin search <plugin-name>
 # 安装插件
-nb plugin install xxx
+nb plugin install <plugin-name>
 ```
 
 如果急于上线 Bot 或想要使用现成的插件，以下插件可作为参考：
