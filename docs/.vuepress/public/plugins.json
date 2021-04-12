@@ -184,14 +184,6 @@
     "repo": "abrahum/nonebot_plugin_r6s"
   },
   {
-    "id": "nonebot_plugin_guess",
-    "link": "nonebot-plugin-guess",
-    "author": "ffreemt",
-    "desc": "多次互动猜名字游戏，自带猜城市名，可定制",
-    "name": "猜猜看",
-    "repo": "ffreemt/nonebot-plugin-guess-game"
-  },
-  {
     "id": "nonebot_plugin_abbrreply",
     "link": "nonebot_plugin_abbrreply",
     "author": "anlen123",
