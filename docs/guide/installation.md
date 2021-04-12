@@ -107,3 +107,9 @@ nb plugin install <plugin-name>
 ### 其他插件
 
 还有更多的插件在 [这里](/plugin-store.md) 等着你发现～
+
+## 安装开发环境(可选)
+
+NoneBot v2 全程使用 `VSCode` 搭配 `Pylance` 的开发环境进行开发，在严格的类型检查下，NoneBot v2 具有完善的类型设计与声明。
+
+在使用`VSCode` 搭配 `Pylance` 进行类型检查的开发环境下，开发者能更加迅速定位并解决问题。
