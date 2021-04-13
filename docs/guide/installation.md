@@ -72,7 +72,7 @@ pip install .  # 不推荐
 适配器可以通过 `nb-cli` 在创建项目时根据你的选择自动安装，也可以自行使用 `pip` 安装
 
 ```bash
-pip install nonebot-adapter-<adapter-name>
+pip install <adapter-name>
 ```
 
 ```bash
@@ -88,9 +88,9 @@ nb adapter list
 # 列出所有的插件
 nb plugin list
 # 搜索插件
-nb plugin search xxx
+nb plugin search <plugin-name>
 # 安装插件
-nb plugin install xxx
+nb plugin install <plugin-name>
 ```
 
 如果急于上线 Bot 或想要使用现成的插件，以下插件可作为参考：
@@ -107,3 +107,9 @@ nb plugin install xxx
 ### 其他插件
 
 还有更多的插件在 [这里](/plugin-store.md) 等着你发现～
+
+## 安装开发环境(可选)
+
+NoneBot v2 全程使用 `VSCode` 搭配 `Pylance` 的开发环境进行开发，在严格的类型检查下，NoneBot v2 具有完善的类型设计与声明。
+
+在使用`VSCode` 搭配 `Pylance` 进行类型检查的开发环境下，开发者能更加迅速定位并解决问题。
