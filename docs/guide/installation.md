@@ -112,4 +112,4 @@ nb plugin install <plugin-name>
 
 NoneBot v2 全程使用 `VSCode` 搭配 `Pylance` 的开发环境进行开发，在严格的类型检查下，NoneBot v2 具有完善的类型设计与声明。
 
-在使用`VSCode` 搭配 `Pylance` 进行类型检查的开发环境下，开发者能更加迅速定位并解决问题。
+在围绕 NoneBot v2 进行开发时，使用 `VSCode` 搭配 `Pylance` 进行类型检查是非常推荐的。这有利于统一代码风格及避免低级错误的发生。
