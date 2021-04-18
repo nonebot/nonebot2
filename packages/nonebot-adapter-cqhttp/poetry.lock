@@ -167,7 +167,7 @@ reference = "aliyun"
 
 [[package]]
 name = "nonebot2"
-version = "2.0.0-alpha.12"
+version = "2.0.0a13.post1"
 description = "An asynchronous python bot framework."
 category = "main"
 optional = false
@@ -226,7 +226,7 @@ reference = "aliyun"
 
 [[package]]
 name = "python-dotenv"
-version = "0.16.0"
+version = "0.17.0"
 description = "Read key-value pairs from a .env file and set them as environment variables"
 category = "main"
 optional = false
@@ -418,7 +418,7 @@ reference = "aliyun"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.3"
-content-hash = "b8ec196a78675b4098ab7509cbdbd311ffcbcf1ce8b625c589f1e95596801c71"
+content-hash = "f1908ea0987f3c4a50d18c8d0350b73602fa57e9349e1aa95b3190064ebcc881"
 
 [metadata.files]
 certifi = [
@@ -500,8 +500,8 @@ pygtrie = [
     {file = "pygtrie-2.4.2.tar.gz", hash = "sha256:43205559d28863358dbbf25045029f58e2ab357317a59b11f11ade278ac64692"},
 ]
 python-dotenv = [
-    {file = "python-dotenv-0.16.0.tar.gz", hash = "sha256:9fa413c37d4652d3fa02fea0ff465c384f5db75eab259c4fc5d0c5b8bf20edd4"},
-    {file = "python_dotenv-0.16.0-py2.py3-none-any.whl", hash = "sha256:31d752f5b748f4e292448c9a0cac6a08ed5e6f4cefab85044462dcad56905cec"},
+    {file = "python-dotenv-0.17.0.tar.gz", hash = "sha256:471b782da0af10da1a80341e8438fca5fadeba2881c54360d5fd8d03d03a4f4a"},
+    {file = "python_dotenv-0.17.0-py2.py3-none-any.whl", hash = "sha256:49782a97c9d641e8a09ae1d9af0856cc587c8d2474919342d5104d85be9890b2"},
 ]
 pyyaml = [
     {file = "PyYAML-5.4.1-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:3b2b1824fe7112845700f815ff6a489360226a5609b96ec2190a45e62a9fc922"},
