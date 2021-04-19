@@ -946,7 +946,7 @@ def _load_plugin(manager: PluginManager, plugin_name: str) -> Optional[Plugin]:
         plugin = Plugin(plugin_name, module)
         plugins[plugin_name] = plugin
         logger.opt(
-            colors=True).info(f'Succeeded to import "<y>{plugin_name}</y>"')
+            colors=True).success(f'Succeeded to import "<y>{plugin_name}</y>"')
         return plugin
     except Exception as e:
         logger.opt(colors=True, exception=e).error(

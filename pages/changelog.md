@@ -4,7 +4,11 @@ sidebar: auto
 
 # 更新日志
 
-## v2.0.0a12
+## v2.0.0a14
+
+- 修改日志等级，支持输出等级自定义
+
+## v2.0.0a13.post1
 
 - 分离 `handler` 与 `matcher`
 - 修复 `cqhttp` secret 校验出错

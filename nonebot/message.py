@@ -199,7 +199,7 @@ async def handle_event(bot: "Bot", event: "Event") -> Optional[Exception]:
     except NoLogException:
         show_log = False
     if show_log:
-        logger.opt(colors=True).info(log_msg)
+        logger.opt(colors=True).success(log_msg)
 
     state = {}
     coros = list(map(lambda x: x(bot, event, state), _event_preprocessors))

@@ -179,15 +179,17 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
     """
     global _driver
     if not _driver:
-        logger.info("NoneBot is initializing...")
+        logger.success("NoneBot is initializing...")
         env = Env()
-        logger.opt(
-            colors=True).info(f"Current <y><b>Env: {env.environment}</b></y>")
         config = Config(**kwargs,
                         _common_config=env.dict(),
                         _env_file=_env_file or f".env.{env.environment}")
 
-        default_filter.level = "DEBUG" if config.debug else "INFO"
+        default_filter.level = (
+            "DEBUG" if config.debug else
+            "INFO") if config.log_level is None else config.log_level
+        logger.opt(
+            colors=True).info(f"Current <y><b>Env: {env.environment}</b></y>")
         logger.opt(colors=True).debug(
             f"Loaded <y><b>Config</b></y>: {escape_tag(str(config.dict()))}")
 
@@ -223,7 +225,7 @@ def run(host: Optional[str] = None,
         nonebot.run(host="127.0.0.1", port=8080)
 
     """
-    logger.info("Running NoneBot...")
+    logger.success("Running NoneBot...")
     get_driver().run(host, port, *args, **kwargs)
 
 
