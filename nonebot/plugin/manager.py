@@ -215,6 +215,9 @@ class PluginLoader(SourceFileLoader):
             return
         # really need?
         # setattr(module, "__manager__", self.manager)
+        if self._plugin_token:
+            setattr(module, "__plugin_name__",
+                    _current_plugin.get(self._plugin_token))
         if self._export_token:
             setattr(module, "__export__", _export.get())
 
