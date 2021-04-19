@@ -12,6 +12,7 @@ NoneBot 使用 `loguru`_ 来记录日志信息。
 
 import sys
 import logging
+from typing import Union
 
 from loguru import logger as logger_
 
@@ -44,11 +45,12 @@ logger = logger_
 class Filter:
 
     def __init__(self) -> None:
-        self.level = "DEBUG"
+        self.level: Union[int, str] = "DEBUG"
 
     def __call__(self, record):
         record["name"] = record["name"].split(".")[0]
-        levelno = logger.level(self.level).no
+        levelno = logger.level(self.level).no if isinstance(self.level,
+                                                            str) else self.level
         return record["level"].no >= levelno
 
 
