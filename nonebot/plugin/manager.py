@@ -221,7 +221,11 @@ class PluginLoader(SourceFileLoader):
         if self._export_token:
             setattr(module, "__export__", _export.get())
 
-        super().exec_module(module)
+        try:
+            super().exec_module(module)
+        except Exception as e:
+            raise ImportError(
+                f"Error when executing module {self.name}.") from e
 
         if self._plugin_token:
             _current_plugin.reset(self._plugin_token)
