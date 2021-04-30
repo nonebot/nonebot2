@@ -39,10 +39,11 @@ if __name__ == "__main__":
 
 在 `bot.py` 文件中添加以下行：
 
-```python{5}
+```python{6}
 import nonebot
 
 nonebot.init()
+
 # 加载插件目录，该目录下为各插件，以下划线开头的插件将不会被加载
 nonebot.load_plugins("awesome_bot/plugins")
 
@@ -68,10 +69,11 @@ if __name__ == "__main__":
 
 在 `bot.py` 文件中添加以下行：
 
-```python{5,7}
+```python{6,8}
 import nonebot
 
 nonebot.init()
+
 # 加载一个 pip 安装的插件
 nonebot.load_plugin("nonebot_plugin_status")
 # 加载本地的单独插件
@@ -82,6 +84,61 @@ app = nonebot.get_asgi()
 if __name__ == "__main__":
     nonebot.run()
 ```
+
+## 从 json 文件中加载插件
+
+在 `bot.py` 文件中添加以下行：
+
+```python{6}
+import nonebot
+
+nonebot.init()
+
+# 从 plugin.json 加载插件
+load_from_json("plugin.json")
+
+app = nonebot.get_asgi()
+
+if __name__ == "__main__":
+    nonebot.run()
+```
+
+**json 文件示例**
+
+```json
+{
+    "plugins": ["nonebot_plugin_status", "awesome_bot.plugins.xxx"],
+    "plugin_dirs": ["awesome_bot/plugins"]
+}
+```
+
+## 从 toml 文件中加载插件
+
+在 `bot.py` 文件中添加以下行：
+
+```python{6}
+import nonebot
+
+nonebot.init()
+
+# 从 pyproject.toml 加载插件
+load_from_toml("pyproject.toml")
+
+app = nonebot.get_asgi()
+
+if __name__ == "__main__":
+    nonebot.run()
+```
+
+**toml 文件示例：**
+
+```toml
+[nonebot.plugins]
+plugins = ["nonebot_plugin_status", "awesome_bot.plugins.xxx"]
+plugin_dirs = ["awesome_bot/plugins"]
+```
+
+nb-cli 默认使用 `pyproject.toml` 加载插件。
 
 ## 子插件(嵌套插件)
 
