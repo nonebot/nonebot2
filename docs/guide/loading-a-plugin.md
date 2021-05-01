@@ -95,7 +95,7 @@ import nonebot
 nonebot.init()
 
 # 从 plugin.json 加载插件
-load_from_json("plugin.json")
+nonebot.load_from_json("plugin.json")
 
 app = nonebot.get_asgi()
 
@@ -122,7 +122,7 @@ import nonebot
 nonebot.init()
 
 # 从 pyproject.toml 加载插件
-load_from_toml("pyproject.toml")
+nonebot.load_from_toml("pyproject.toml")
 
 app = nonebot.get_asgi()
 
@@ -138,7 +138,9 @@ plugins = ["nonebot_plugin_status", "awesome_bot.plugins.xxx"]
 plugin_dirs = ["awesome_bot/plugins"]
 ```
 
+::: tip
 nb-cli 默认使用 `pyproject.toml` 加载插件。
+:::
 
 ## 子插件(嵌套插件)
 
