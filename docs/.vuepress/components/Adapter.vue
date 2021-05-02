@@ -174,7 +174,7 @@ export default {
     displayAdapters() {
       return this.filteredAdapters.slice((this.page - 1) * 10, this.page * 10);
     },
-    publishPlugin() {
+    publishAdapter() {
       if (!this.$refs.newAdapterForm.validate()) {
         return;
       }
