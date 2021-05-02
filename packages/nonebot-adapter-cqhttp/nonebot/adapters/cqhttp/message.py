@@ -88,8 +88,8 @@ class MessageSegment(BaseMessageSegment):
             "image", {
                 "file": file,
                 "type": type_,
-                "cache": cache,
-                "proxy": proxy,
+                "cache": _b2s(cache),
+                "proxy": _b2s(proxy),
                 "timeout": timeout
             })
 
@@ -157,8 +157,8 @@ class MessageSegment(BaseMessageSegment):
             "record", {
                 "file": file,
                 "magic": _b2s(magic),
-                "cache": cache,
-                "proxy": proxy,
+                "cache": _b2s(cache),
+                "proxy": _b2s(proxy),
                 "timeout": timeout
             })
 
@@ -195,12 +195,13 @@ class MessageSegment(BaseMessageSegment):
               cache: Optional[bool] = None,
               proxy: Optional[bool] = None,
               timeout: Optional[int] = None) -> "MessageSegment":
-        return MessageSegment("video", {
-            "file": file,
-            "cache": cache,
-            "proxy": proxy,
-            "timeout": timeout
-        })
+        return MessageSegment(
+            "video", {
+                "file": file,
+                "cache": _b2s(cache),
+                "proxy": _b2s(proxy),
+                "timeout": timeout
+            })
 
     @staticmethod
     def xml(data: str) -> "MessageSegment":
