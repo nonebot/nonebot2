@@ -49,14 +49,14 @@
                     </v-col>
                     <v-col cols="12">
                       <v-text-field
-                        v-model="newAdapter.id"
+                        v-model="newAdapter.link"
                         label="PyPI 项目名"
                         required
                       ></v-text-field>
                     </v-col>
                     <v-col cols="12">
                       <v-text-field
-                        v-model="newAdapter.link"
+                        v-model="newAdapter.id"
                         label="协议 import 包名"
                         required
                       ></v-text-field>
