@@ -1,4 +1,7 @@
 import re
+from io import BytesIO
+from pathlib import Path
+from base64 import b64encode
 from functools import reduce
 from typing import Any, Dict, Union, Tuple, Mapping, Iterable, Optional
 
@@ -79,11 +82,17 @@ class MessageSegment(BaseMessageSegment):
         return MessageSegment("forward", {"id": id_})
 
     @staticmethod
-    def image(file: str,
+    def image(file: Union[str, bytes, BytesIO, Path],
               type_: Optional[str] = None,
               cache: bool = True,
               proxy: bool = True,
               timeout: Optional[int] = None) -> "MessageSegment":
+        if isinstance(file, BytesIO):
+            file = file.read()
+        if isinstance(file, bytes):
+            file = f"base64://{b64encode(file).decode()}"
+        elif isinstance(file, Path):
+            file = f"file:///{file.resolve()}"
         return MessageSegment(
             "image", {
                 "file": file,
@@ -148,11 +157,17 @@ class MessageSegment(BaseMessageSegment):
         return MessageSegment("poke", {"type": type_, "id": id_})
 
     @staticmethod
-    def record(file: str,
+    def record(file: Union[str, bytes, BytesIO, Path],
                magic: Optional[bool] = None,
                cache: Optional[bool] = None,
                proxy: Optional[bool] = None,
                timeout: Optional[int] = None) -> "MessageSegment":
+        if isinstance(file, BytesIO):
+            file = file.read()
+        if isinstance(file, bytes):
+            file = f"base64://{b64encode(file).decode()}"
+        elif isinstance(file, Path):
+            file = f"file:///{file.resolve()}"
         return MessageSegment(
             "record", {
                 "file": file,
@@ -191,10 +206,16 @@ class MessageSegment(BaseMessageSegment):
         return MessageSegment("text", {"text": text})
 
     @staticmethod
-    def video(file: str,
+    def video(file: Union[str, bytes, BytesIO, Path],
               cache: Optional[bool] = None,
               proxy: Optional[bool] = None,
               timeout: Optional[int] = None) -> "MessageSegment":
+        if isinstance(file, BytesIO):
+            file = file.read()
+        if isinstance(file, bytes):
+            file = f"base64://{b64encode(file).decode()}"
+        elif isinstance(file, Path):
+            file = f"file:///{file.resolve()}"
         return MessageSegment(
             "video", {
                 "file": file,
