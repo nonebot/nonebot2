@@ -155,7 +155,7 @@ class MessageSegment(BaseMessageSegment):
         return {"msgtype": self.type, self.type: copy(self.data)}
 
 
-class Message(BaseMessage):
+class Message(BaseMessage[MessageSegment]):
     """
     钉钉 协议 Message 适配。
     """

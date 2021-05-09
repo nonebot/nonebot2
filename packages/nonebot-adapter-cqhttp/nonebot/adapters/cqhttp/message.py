@@ -3,7 +3,7 @@ from io import BytesIO
 from pathlib import Path
 from base64 import b64encode
 from functools import reduce
-from typing import Any, Dict, Union, Tuple, Mapping, Iterable, Optional
+from typing import Any, List, Dict, Union, Tuple, Mapping, Iterable, Optional
 
 from nonebot.typing import overrides
 from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
@@ -229,7 +229,7 @@ class MessageSegment(BaseMessageSegment):
         return MessageSegment("xml", {"data": data})
 
 
-class Message(BaseMessage):
+class Message(BaseMessage[MessageSegment]):
     """
     CQHTTP 协议 Message 适配。
     """

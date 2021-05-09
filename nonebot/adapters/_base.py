@@ -11,8 +11,8 @@ from copy import copy
 from functools import reduce, partial
 from typing_extensions import Protocol
 from dataclasses import dataclass, field
-from typing import (Any, Set, Dict, Union, TypeVar, Mapping, Optional, Iterable,
-                    Awaitable, TYPE_CHECKING)
+from typing import (Any, Set, List, Dict, Union, TypeVar, Mapping, Optional,
+                    Iterable, Awaitable, TYPE_CHECKING)
 
 from pydantic import BaseModel
 
@@ -316,7 +316,7 @@ class MessageSegment(abc.ABC, Mapping):
         raise NotImplementedError
 
 
-class Message(list, abc.ABC):
+class Message(List[T_MessageSegment], abc.ABC):
     """消息数组"""
 
     def __init__(self,
