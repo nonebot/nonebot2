@@ -246,5 +246,13 @@
     "desc": "多对多的会话转接",
     "author": "Jigsaw111",
     "repo": "Jigsaw111/nonebot_plugin_puppet"
+  },
+  {
+    "id": "nonebot_plugin_mcstatus",
+    "link": "nonebot-plugin-mcstatus",
+    "name": "Minecraft 服务器状态查询",
+    "desc": "顾名思义",
+    "author": "Jigsaw111",
+    "repo": "Jigsaw111/nonebot-plugin-mcstatus"
   }
 ]
