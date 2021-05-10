@@ -6,6 +6,7 @@
 """
 
 from functools import wraps
+from types import ModuleType
 from datetime import datetime
 from contextvars import ContextVar
 from collections import defaultdict
@@ -36,6 +37,9 @@ current_event: ContextVar = ContextVar("current_event")
 class MatcherMeta(type):
     if TYPE_CHECKING:
         module: Optional[str]
+        plugin_name: Optional[str]
+        module_name: Optional[str]
+        module_prefix: Optional[str]
         type: str
         rule: Rule
         permission: Permission
@@ -46,7 +50,7 @@ class MatcherMeta(type):
         expire_time: Optional[datetime]
 
     def __repr__(self) -> str:
-        return (f"<Matcher from {self.module or 'unknow'}, "
+        return (f"<Matcher from {self.module_name or 'unknow'}, "
                 f"type={self.type}, priority={self.priority}, "
                 f"temp={self.temp}>")
 
@@ -56,11 +60,17 @@ class MatcherMeta(type):
 
 class Matcher(metaclass=MatcherMeta):
     """事件响应器类"""
-    module: Optional[str] = None
+    module: Optional[ModuleType] = None
     """
-    :类型: ``Optional[str]``
-    :说明: 事件响应器所在模块名称
+    :类型: ``Optional[ModuleType]``
+    :说明: 事件响应器所在模块
     """
+    plugin_name: Optional[str] = module and getattr(module, "__plugin_name__",
+                                                    None)
+    module_name: Optional[str] = module and getattr(module, "__module_name__",
+                                                    None)
+    module_prefix: Optional[str] = module and getattr(module,
+                                                      "__module_prefix__", None)
 
     type: str = ""
     """
@@ -136,8 +146,9 @@ class Matcher(metaclass=MatcherMeta):
         self.state = self._default_state.copy()
 
     def __repr__(self) -> str:
-        return (f"<Matcher from {self.module or 'unknown'}, type={self.type}, "
-                f"priority={self.priority}, temp={self.temp}>")
+        return (
+            f"<Matcher from {self.module_name or 'unknown'}, type={self.type}, "
+            f"priority={self.priority}, temp={self.temp}>")
 
     def __str__(self) -> str:
         return repr(self)
@@ -153,7 +164,7 @@ class Matcher(metaclass=MatcherMeta):
             priority: int = 1,
             block: bool = False,
             *,
-            module: Optional[str] = None,
+            module: Optional[ModuleType] = None,
             default_state: Optional[T_State] = None,
             default_state_factory: Optional[T_StateFactory] = None,
             expire_time: Optional[datetime] = None) -> Type["Matcher"]:
@@ -185,6 +196,12 @@ class Matcher(metaclass=MatcherMeta):
             "Matcher", (Matcher,), {
                 "module":
                     module,
+                "plugin_name":
+                    module and getattr(module, "__plugin_name__", None),
+                "module_name":
+                    module and getattr(module, "__module_name__", None),
+                "module_prefix":
+                    module and getattr(module, "__module_prefix__", None),
                 "type":
                     type_,
                 "rule":

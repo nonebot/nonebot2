@@ -65,15 +65,16 @@ class Plugin(object):
         - **类型**: ``Set[Type[Matcher]]``
         - **说明**: 插件内定义的 ``Matcher``
         """
-        return reduce(
-            lambda x, y: x | _plugin_matchers[y],
-            filter(lambda x: x.startswith(self.name), _plugin_matchers.keys()),
-            set())
+        # return reduce(
+        #     lambda x, y: x | _plugin_matchers[y],
+        #     filter(lambda x: x.startswith(self.name), _plugin_matchers.keys()),
+        #     set())
+        return _plugin_matchers.get(self.name, set())
 
 
 def _store_matcher(matcher: Type[Matcher]):
-    if matcher.module:
-        _plugin_matchers[matcher.module].add(matcher)
+    if matcher.plugin_name:
+        _plugin_matchers[matcher.plugin_name].add(matcher)
 
 
 def on(type: str = "",
