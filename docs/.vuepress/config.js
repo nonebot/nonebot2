@@ -116,7 +116,12 @@ module.exports = context => ({
               title: "协议适配",
               collapsable: false,
               sidebar: "auto",
-              children: ["cqhttp-guide", "ding-guide", "mirai-guide"]
+              children: [
+                "cqhttp-guide",
+                "ding-guide",
+                "mirai-guide",
+                "gocq-guide"
+              ]
             }
           ],
           "/advanced/": [
