@@ -314,7 +314,7 @@ CQHTTP 协议 MessageSegment 适配。具体方法参考协议消息段类型或
 
 ## _class_ `Message`
 
-基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)
+基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)[`nonebot.adapters.cqhttp.message.MessageSegment`]
 
 CQHTTP 协议 Message 适配。
 

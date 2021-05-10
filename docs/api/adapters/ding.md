@@ -292,7 +292,7 @@ message += MessageSegment.atDingtalkIds(event.senderId)
 
 ## _class_ `Message`
 
-基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)
+基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)[`nonebot.adapters.ding.message.MessageSegment`]
 
 钉钉 协议 Message 适配。
 

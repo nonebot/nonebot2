@@ -37,13 +37,13 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Optional[str]`
+    `Optional[ModuleType]`
 
 
 
 * **说明**
 
-    事件响应器所在模块名称
+    事件响应器所在模块
 
 
 

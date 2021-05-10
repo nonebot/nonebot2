@@ -67,10 +67,22 @@ class Matcher(metaclass=MatcherMeta):
     """
     plugin_name: Optional[str] = module and getattr(module, "__plugin_name__",
                                                     None)
+    """
+    :类型: ``Optional[str]``
+    :说明: 事件响应器所在插件名
+    """
     module_name: Optional[str] = module and getattr(module, "__module_name__",
                                                     None)
+    """
+    :类型: ``Optional[str]``
+    :说明: 事件响应器所在模块名
+    """
     module_prefix: Optional[str] = module and getattr(module,
                                                       "__module_prefix__", None)
+    """
+    :类型: ``Optional[str]``
+    :说明: 事件响应器所在模块前缀
+    """
 
     type: str = ""
     """

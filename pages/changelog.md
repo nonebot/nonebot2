@@ -8,6 +8,8 @@ sidebar: auto
 
 - 修改日志等级，支持输出等级自定义
 - 修复日志输出模块名错误
+- 修改 `Matcher` 属性 `module` 类型
+- 新增 `Matcher` 属性 `plugin_name` `module_name` `module_prefix`
 
 ## v2.0.0a13.post1
 

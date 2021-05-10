@@ -256,7 +256,7 @@ await bot.send_msg(message="hello world")
 
 ## _class_ `Message`
 
-基类：`list`, `abc.ABC`
+基类：`List`[`nonebot.adapters._base.T_MessageSegment`], `abc.ABC`
 
 消息数组
 
