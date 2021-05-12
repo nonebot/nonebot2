@@ -13,10 +13,10 @@ pip install nonebot-adapter-cqhttp
 QQ 协议端举例:
 
 - [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) (基于 [MiraiGo](https://github.com/Mrs4s/MiraiGo))
-- [cqhttp-mirai-embedded](https://github.com/yyuueexxiinngg/cqhttp-mirai/tree/embedded)
-- [Mirai](https://github.com/mamoe/mirai) + [cqhttp-mirai](https://github.com/yyuueexxiinngg/cqhttp-mirai)
+- [onebot-kotlin](https://github.com/yyuueexxiinngg/onebot-kotlin)
+- [Mirai](https://github.com/mamoe/mirai) + [onebot-mirai](https://github.com/yyuueexxiinngg/onebot-kotlin)
 - [Mirai](https://github.com/mamoe/mirai) + [Mirai Native](https://github.com/iTXTech/mirai-native) + [CQHTTP](https://github.com/richardchien/coolq-http-api)
-- [OICQ-http-api](https://github.com/takayama-lily/onebot) (基于 [OICQ](https://github.com/takayama-lily/oicq))
+- [node-onebot](https://github.com/takayama-lily/node-onebot) (基于 [abot](https://github.com/takayama-lily/abot), [OICQ](https://github.com/takayama-lily/oicq))
 
 这里以 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) 为例
 
