@@ -110,7 +110,9 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
   nb plugin install nonebot_plugin_docs
   ```
 
-  或者尝试 [文档镜像](https://nonebot2-vercel-mirror.vercel.app)
+  或者尝试以下镜像：
+  - [文档镜像(中国境内)](https://nb2.baka.icu)
+  - [文档镜像(vercel)](https://nonebot2-vercel-mirror.vercel.app)
 
 - 其他插件请查看 [商店](https://v2.nonebot.dev/store.html)
 
