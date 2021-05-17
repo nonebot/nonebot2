@@ -254,5 +254,13 @@
     "desc": "顾名思义",
     "author": "Jigsaw111",
     "repo": "Jigsaw111/nonebot-plugin-mcstatus"
+  },
+  {
+    "id": "nonebot_plugin_help",
+    "link": "nonebot-plugin-help",
+    "name": "Nonebot2插件轻量帮助列表",
+    "desc": "读取并提供已加载Nonebot2插件开发者提供的帮助信息（用途）",
+    "author": "XZhouQD",
+    "repo": "https://github.com/XZhouQD/nonebot-plugin-help"
   }
 ]
