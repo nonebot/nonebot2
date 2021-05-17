@@ -262,5 +262,13 @@
     "desc": "读取并提供已加载Nonebot2插件开发者提供的帮助信息（用途）",
     "author": "XZhouQD",
     "repo": "https://github.com/XZhouQD/nonebot-plugin-help"
+  },
+  {
+    "id": "nonebot_plugin_gamedraw",
+    "link": "nonebot-plugin-gamedraw",
+    "name": "nonebot_plugin_gamedraw",
+    "desc": "基于爬取bwiki实现自动更新的抽卡，目前支持赛马娘，原神，明日方舟",
+    "author": "HibiKier",
+    "repo": "https://github.com/HibiKier/nonebot_plugin_gamedraw"
   }
 ]
