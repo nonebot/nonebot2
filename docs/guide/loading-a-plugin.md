@@ -107,8 +107,8 @@ if __name__ == "__main__":
 
 ```json
 {
-    "plugins": ["nonebot_plugin_status", "awesome_bot.plugins.xxx"],
-    "plugin_dirs": ["awesome_bot/plugins"]
+  "plugins": ["nonebot_plugin_status", "awesome_bot.plugins.xxx"],
+  "plugin_dirs": ["awesome_bot/plugins"]
 }
 ```
 
