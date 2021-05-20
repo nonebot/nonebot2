@@ -312,11 +312,107 @@ CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 CQHTTP 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
 
 
+### `is_text()`
+
+
+### _static_ `anonymous(ignore_failure=None)`
+
+
+### _static_ `at(user_id)`
+
+
+### _static_ `contact(type_, id)`
+
+
+### _static_ `contact_group(group_id)`
+
+
+### _static_ `contact_user(user_id)`
+
+
+### _static_ `dice()`
+
+
+### _static_ `face(id_)`
+
+
+### _static_ `forward(id_)`
+
+
+### _static_ `image(file, type_=None, cache=True, proxy=True, timeout=None)`
+
+
+### _static_ `json(data)`
+
+
+### _static_ `location(latitude, longitude, title=None, content=None)`
+
+
+### _static_ `music(type_, id_)`
+
+
+### _static_ `music_custom(url, audio, title, content=None, img_url=None)`
+
+
+### _static_ `node(id_)`
+
+
+### _static_ `node_custom(user_id, nickname, content)`
+
+
+### _static_ `poke(type_, id_)`
+
+
+### _static_ `record(file, magic=None, cache=None, proxy=None, timeout=None)`
+
+
+### _static_ `reply(id_)`
+
+
+### _static_ `rps()`
+
+
+### _static_ `shake()`
+
+
+### _static_ `share(url='', title='', content=None, image=None)`
+
+
+### _static_ `text(text)`
+
+
+### _static_ `video(file, cache=None, proxy=None, timeout=None)`
+
+
+### _static_ `xml(data)`
+
+
+### `type`
+
+
+* 类型: `str`
+
+
+* 说明: 消息段类型
+
+
+### `data`
+
+
+* 类型: `Dict[str, Union[str, list]]`
+
+
+* 说明: 消息段数据
+
+
 ## _class_ `Message`
 
 基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)[`nonebot.adapters.cqhttp.message.MessageSegment`]
 
 CQHTTP 协议 Message 适配。
+
+
+### `extract_plain_text()`
 
 # NoneBot.adapters.cqhttp.permission 模块
 
