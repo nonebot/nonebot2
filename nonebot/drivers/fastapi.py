@@ -24,7 +24,7 @@ from nonebot.typing import overrides
 from nonebot.utils import DataclassEncoder
 from nonebot.exception import RequestDenied
 from nonebot.config import Env, Config as NoneBotConfig
-from nonebot.drivers import Driver as BaseDriver, WebSocket as BaseWebSocket
+from nonebot.drivers import ReverseDriver, WebSocket as BaseWebSocket
 
 
 class Config(BaseSettings):
@@ -76,7 +76,7 @@ class Config(BaseSettings):
         extra = "ignore"
 
 
-class Driver(BaseDriver):
+class Driver(ReverseDriver):
     """
     FastAPI 驱动框架
 
@@ -106,40 +106,40 @@ class Driver(BaseDriver):
         self._server_app.websocket("/{adapter}/ws/")(self._handle_ws_reverse)
 
     @property
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def type(self) -> str:
         """驱动名称: ``fastapi``"""
         return "fastapi"
 
     @property
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def server_app(self) -> FastAPI:
         """``FastAPI APP`` 对象"""
         return self._server_app
 
     @property
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def asgi(self):
         """``FastAPI APP`` 对象"""
         return self._server_app
 
     @property
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def logger(self) -> logging.Logger:
         """fastapi 使用的 logger"""
         return logging.getLogger("fastapi")
 
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def on_startup(self, func: Callable) -> Callable:
         """参考文档: `Events <https://fastapi.tiangolo.com/advanced/events/#startup-event>`_"""
         return self.server_app.on_event("startup")(func)
 
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def on_shutdown(self, func: Callable) -> Callable:
         """参考文档: `Events <https://fastapi.tiangolo.com/advanced/events/#startup-event>`_"""
         return self.server_app.on_event("shutdown")(func)
 
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def run(self,
             host: Optional[str] = None,
             port: Optional[int] = None,
@@ -176,7 +176,7 @@ class Driver(BaseDriver):
                     log_config=LOGGING_CONFIG,
                     **kwargs)
 
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     async def _handle_http(self, adapter: str, request: Request):
         data = await request.body()
         data_dict = json.loads(data.decode())
@@ -211,7 +211,7 @@ class Driver(BaseDriver):
         asyncio.create_task(bot.handle_message(data_dict))
         return Response("", 204)
 
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     async def _handle_ws_reverse(self, adapter: str,
                                  websocket: FastAPIWebSocket):
         ws = WebSocket(websocket)
