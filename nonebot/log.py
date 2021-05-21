@@ -14,10 +14,10 @@ import sys
 import logging
 from typing import Union
 
-from loguru import logger as logger_
+import loguru
 
 # logger = logging.getLogger("nonebot")
-logger = logger_
+logger: "loguru.Logger" = loguru.logger
 """
 :说明:
 
