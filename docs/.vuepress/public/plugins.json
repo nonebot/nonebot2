@@ -232,14 +232,6 @@
     "repo": "nonebot/plugin-localstore"
   },
   {
-    "id": "nonebot_plugin_todo",
-    "link": "nonebot-plugin-todo",
-    "name": "待办事项提醒（闹钟）",
-    "desc": "没十年脑血栓写不出的待办事项提醒",
-    "author": "Jigsaw111",
-    "repo": "https://github.com/Jigsaw111/nonebot_plugin_todo"
-  },
-  {
     "id": "nonebot_plugin_puppet",
     "link": "nonebot-plugin-puppet",
     "name": "nonebot_plugin_puppet",
