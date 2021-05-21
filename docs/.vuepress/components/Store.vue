@@ -28,7 +28,6 @@
 </template>
 
 <script>
-import "vuetify/dist/vuetify.min.css";
 
 import Adapter from "./Adapter.vue";
 import Plugin from "./Plugin.vue";

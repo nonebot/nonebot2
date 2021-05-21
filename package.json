@@ -27,7 +27,8 @@
     "@vuepress/plugin-pwa": "^1.7.1",
     "vuepress": "^1.7.1",
     "vuepress-plugin-versioning": "git+https://github.com/nonebot/vuepress-plugin-versioning.git",
-    "vuepress-theme-nonebot": "git+https://github.com/nonebot/vuepress-theme-nonebot.git"
+    "vuepress-theme-nonebot": "git+https://github.com/nonebot/vuepress-theme-nonebot.git",
+    "vuetify-loader": "^1.7.2"
   },
   "dependencies": {
     "copy-to-clipboard": "^3.3.1",
