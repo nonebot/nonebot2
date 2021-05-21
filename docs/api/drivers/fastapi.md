@@ -79,7 +79,7 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 ## _class_ `Driver`
 
-基类：[`nonebot.drivers.Driver`](README.md#nonebot.drivers.Driver)
+基类：[`nonebot.drivers.ReverseDriver`](README.md#nonebot.drivers.ReverseDriver)
 
 FastAPI 驱动框架
 
