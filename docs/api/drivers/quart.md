@@ -12,7 +12,7 @@ sidebarDepth: 0
 
 ## _class_ `Driver`
 
-基类：[`nonebot.drivers.Driver`](README.md#nonebot.drivers.Driver)
+基类：[`nonebot.drivers.ReverseDriver`](README.md#nonebot.drivers.ReverseDriver)
 
 Quart 驱动框架
 
