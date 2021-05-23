@@ -10,5 +10,11 @@
     "desc": "B站推送Pixiv搜图识番求签抽卡表情包还有其他杂七杂八的功能",
     "author": "Ailitonia",
     "repo": "Ailitonia/omega-miya"
+  },
+  {
+    "name": "Github Bot",
+    "desc": "在QQ获取/处理Github repo/pr/issue",
+    "author": "yanyongyu",
+    "repo": "cscs181/QQ-GitHub-Bot"
   }
 ]
