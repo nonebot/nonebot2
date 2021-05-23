@@ -100,6 +100,10 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
    nb create
    ```
 
+## 第三方提供的教程
+
+- [awesome-nonebot](https://github.com/nonebot/awesome-nonebot)
+
 ## 插件
 
 此外，NoneBot2 还有丰富的官方以及第三方现成的插件供大家使用：
