@@ -109,6 +109,7 @@ pip install nonebot-adapter-mirai
        MIRAI_AUTH_KEY=1234567890
        MIRAI_HOST=127.0.0.1 # 当MAH运行在本机时
        MIRAI_PORT=8080 # MAH的监听端口
+       PORT=2333 #防止与MAH接口冲突
        ```
 
      - `bot.py`文件
@@ -155,7 +156,7 @@ pip install nonebot-adapter-mirai
 
      - ```shell
        HOST=127.0.0.1 # 当MAH运行在本机时
-       PORT=2333
+       PORT=2333 #防止与MAH接口冲突
 
        MIRAI_AUTH_KEY=1234567890
        MIRAI_HOST=127.0.0.1 # 当MAH运行在本机时
