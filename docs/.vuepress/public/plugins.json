@@ -270,5 +270,13 @@
     "desc": "为 nonebot2 的指令创建别名",
     "author": "MeetWq",
     "repo": "https://github.com/MeetWq/nonebot-plugin-alias"
+  },
+  {
+    "id": "nonebot_plugin_withdraw",
+    "link": "nonebot-plugin-withdraw",
+    "name": "Nonebot2 消息撤回插件",
+    "desc": "用于让机器人撤回自己发出的消息",
+    "author": "MeetWq",
+    "repo": "https://github.com/MeetWq/nonebot-plugin-withdraw"
   }
 ]
