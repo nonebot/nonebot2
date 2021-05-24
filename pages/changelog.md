@@ -10,6 +10,7 @@ sidebar: auto
 - 修复日志输出模块名错误
 - 修改 `Matcher` 属性 `module` 类型
 - 新增 `Matcher` 属性 `plugin_name` `module_name` `module_prefix`
+- 移除 `bot.call_api` 参数 `self_id` 切换机器人支持
 
 ## v2.0.0a13.post1
 
