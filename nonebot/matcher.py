@@ -50,7 +50,7 @@ class MatcherMeta(type):
         expire_time: Optional[datetime]
 
     def __repr__(self) -> str:
-        return (f"<Matcher from {self.module_name or 'unknow'}, "
+        return (f"<Matcher from {self.module_name or 'unknown'}, "
                 f"type={self.type}, priority={self.priority}, "
                 f"temp={self.temp}>")
 
