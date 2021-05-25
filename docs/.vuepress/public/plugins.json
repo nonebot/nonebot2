@@ -278,5 +278,13 @@
     "desc": "用于让机器人撤回自己发出的消息",
     "author": "MeetWq",
     "repo": "https://github.com/MeetWq/nonebot-plugin-withdraw"
+  },
+  {
+    "id": "null",
+    "link": "nonebot-plugin-rua",
+    "name": "戳一戳rua头像 & rua一张图片",
+    "desc": "发送 rua 头像/图片 的 gif",
+    "author": "Zeta-qixi",
+    "repo": "https://github.com/Zeta-qixi/nonebot2-plugins/tree/master/rua"
   }
 ]
