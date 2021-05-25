@@ -191,9 +191,6 @@ Adapter 类型
     * `api: str`: API 名称
 
 
-    * `self_id: Optional[str]`: 指定调用 API 的机器人
-
-
     * `**data`: API 数据
 
 
