@@ -7,7 +7,8 @@
 
 import abc
 import asyncio
-from typing import Set, Dict, Type, Optional, Callable, TYPE_CHECKING
+from typing import (Any, Set, List, Dict, Type, Tuple, Optional, Callable,
+                    MutableMapping, TYPE_CHECKING)
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
@@ -220,17 +221,82 @@ class ReverseDriver(Driver):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def _handle_http(self):
+    async def _handle_http(self, *args, **kwargs):
         """用于处理 HTTP 类型请求的函数"""
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def _handle_ws_reverse(self):
+    async def _handle_ws_reverse(self, *args, **kwargs):
         """用于处理 WebSocket 类型请求的函数"""
         raise NotImplementedError
 
 
-class WebSocket(object):
+class HTTPRequest:
+    """HTTP 请求封装。参考 `asgi http scope`_。
+
+    .. _asgi http scope:
+        https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope
+    """
+
+    def __init__(self, scope: MutableMapping[str, Any]):
+        self._scope = scope
+
+    @property
+    def type(self) -> str:
+        return "http"
+
+    @property
+    def scope(self) -> MutableMapping[str, Any]:
+        return self._scope
+
+    @property
+    def http_version(self) -> str:
+        raise self.scope["http_version"]
+
+    @property
+    def method(self) -> str:
+        raise self.scope["method"]
+
+    @property
+    def schema(self) -> str:
+        raise self.scope["schema"]
+
+    @property
+    def path(self) -> str:
+        return self.scope["path"]
+
+    @property
+    def query_string(self) -> bytes:
+        return self.scope["query_string"]
+
+    @property
+    def headers(self) -> List[Tuple[bytes, bytes]]:
+        return list(self.scope["headers"])
+
+    @property
+    def body(self) -> bytes:
+        return self.scope["body"]
+
+
+class HTTPResponse:
+    """HTTP 响应封装。参考 `asgi http scope`_。
+
+    .. _asgi http scope:
+        https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope
+    """
+
+    def __init__(self, status: int, headers: List[Tuple[bytes, bytes]],
+                 body: bytes):
+        self.status: int = status
+        self.headers: List[Tuple[bytes, bytes]] = headers
+        self.body: bytes = body
+
+    @property
+    def type(self) -> str:
+        return "http"
+
+
+class WebSocket:
     """WebSocket 连接封装，统一接口方便外部调用。"""
 
     @abc.abstractmethod
