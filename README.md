@@ -34,6 +34,9 @@ _✨ Python 异步机器人框架 ✨_
   <a href="https://jq.qq.com/?_wv=1027&k=5OFifDh">
     <img src="https://img.shields.io/badge/qq%E7%BE%A4-768887710-orange?style=flat-square" alt="QQ Chat">
   </a>
+  <a href="https://discord.gg/VKtE6Gdc4h">
+    <img src="https://discordapp.com/api/guilds/847819937858584596/widget.png?style=shield" alt="Discord Chat">
+  </a>
   <a href="https://t.me/cqhttp">
     <img src="https://img.shields.io/badge/telegram-chat-blue?style=flat-square" alt="Telegram Chat">
   </a>
