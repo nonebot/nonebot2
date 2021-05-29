@@ -34,14 +34,8 @@ _✨ Python 异步机器人框架 ✨_
   <a href="https://jq.qq.com/?_wv=1027&k=5OFifDh">
     <img src="https://img.shields.io/badge/qq%E7%BE%A4-768887710-orange?style=flat-square" alt="QQ Chat">
   </a>
-  <a href="https://t.me/cqhttp">
-    <img src="https://img.shields.io/badge/telegram-chat-blue?style=flat-square" alt="Telegram Chat">
-  </a>
-  <a href="https://jq.qq.com/?_wv=1027&k=5Nl0zhE">
-    <img src="https://img.shields.io/badge/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E7%BE%A4-218529254-green?style=flat-square" alt="QQ Release">
-  </a>
-  <a href="https://t.me/cqhttp_release">
-    <img src="https://img.shields.io/badge/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E9%A2%91%E9%81%93-join-green?style=flat-square" alt="Telegram Release">
+  <a href="https://t.me/botuniverse">
+    <img src="https://img.shields.io/badge/telegram-botuniverse-blue?style=flat-square" alt="Telegram Channel">
   </a>
 </p>
 
