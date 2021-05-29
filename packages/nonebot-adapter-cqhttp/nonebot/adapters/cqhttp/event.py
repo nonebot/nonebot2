@@ -232,7 +232,7 @@ class GroupUploadNoticeEvent(NoticeEvent):
 
     @overrides(NoticeEvent)
     def get_session_id(self) -> str:
-        return str(self.user_id)
+        return f"group_{self.group_id}_{self.user_id}"
 
 
 class GroupAdminNoticeEvent(NoticeEvent):
@@ -253,7 +253,7 @@ class GroupAdminNoticeEvent(NoticeEvent):
 
     @overrides(NoticeEvent)
     def get_session_id(self) -> str:
-        return str(self.user_id)
+        return f"group_{self.group_id}_{self.user_id}"
 
 
 class GroupDecreaseNoticeEvent(NoticeEvent):
@@ -275,7 +275,7 @@ class GroupDecreaseNoticeEvent(NoticeEvent):
 
     @overrides(NoticeEvent)
     def get_session_id(self) -> str:
-        return str(self.user_id)
+        return f"group_{self.group_id}_{self.user_id}"
 
 
 class GroupIncreaseNoticeEvent(NoticeEvent):
@@ -297,7 +297,7 @@ class GroupIncreaseNoticeEvent(NoticeEvent):
 
     @overrides(NoticeEvent)
     def get_session_id(self) -> str:
-        return str(self.user_id)
+        return f"group_{self.group_id}_{self.user_id}"
 
 
 class GroupBanNoticeEvent(NoticeEvent):
@@ -320,7 +320,7 @@ class GroupBanNoticeEvent(NoticeEvent):
 
     @overrides(NoticeEvent)
     def get_session_id(self) -> str:
-        return str(self.user_id)
+        return f"group_{self.group_id}_{self.user_id}"
 
 
 class FriendAddNoticeEvent(NoticeEvent):
@@ -357,7 +357,7 @@ class GroupRecallNoticeEvent(NoticeEvent):
 
     @overrides(NoticeEvent)
     def get_session_id(self) -> str:
-        return str(self.user_id)
+        return f"group_{self.group_id}_{self.user_id}"
 
 
 class FriendRecallNoticeEvent(NoticeEvent):
@@ -390,7 +390,7 @@ class NotifyEvent(NoticeEvent):
 
     @overrides(NoticeEvent)
     def get_session_id(self) -> str:
-        return str(self.user_id)
+        return f"group_{self.group_id}_{self.user_id}"
 
 
 class PokeNotifyEvent(NotifyEvent):
@@ -403,6 +403,12 @@ class PokeNotifyEvent(NotifyEvent):
     @overrides(Event)
     def is_tome(self) -> bool:
         return self.target_id == self.self_id
+
+    @overrides(NotifyEvent)
+    def get_session_id(self) -> str:
+        if not self.group_id:
+            return str(self.user_id)
+        return super().get_session_id()
 
 
 class LuckyKingNotifyEvent(NotifyEvent):
@@ -421,7 +427,7 @@ class LuckyKingNotifyEvent(NotifyEvent):
 
     @overrides(NotifyEvent)
     def get_session_id(self) -> str:
-        return str(self.target_id)
+        return f"group_{self.group_id}_{self.target_id}"
 
 
 class HonorNotifyEvent(NotifyEvent):
@@ -490,7 +496,7 @@ class GroupRequestEvent(RequestEvent):
 
     @overrides(RequestEvent)
     def get_session_id(self) -> str:
-        return str(self.user_id)
+        return f"group_{self.group_id}_{self.user_id}"
 
     async def approve(self, bot: "Bot"):
         return await bot.set_group_add_request(flag=self.flag,
