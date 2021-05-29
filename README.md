@@ -37,6 +37,9 @@ _✨ Python 异步机器人框架 ✨_
   <a href="https://t.me/botuniverse">
     <img src="https://img.shields.io/badge/telegram-botuniverse-blue?style=flat-square" alt="Telegram Channel">
   </a>
+  <a href="https://discord.gg/VKtE6Gdc4h">
+    <img src="https://discordapp.com/api/guilds/847819937858584596/widget.png?style=shield" alt="Discord Server">
+  </a>
 </p>
 
 <p align="center">
