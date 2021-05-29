@@ -266,7 +266,7 @@ class MessageSegment(BaseMessageSegment):
         return cls(type=MessageType.POKE, name=name)
 
 
-class MessageChain(BaseMessage):
+class MessageChain(BaseMessage[MessageSegment]):
     """
     Mirai 协议 Message 适配
 

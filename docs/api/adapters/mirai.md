@@ -963,7 +963,7 @@ Mirai-API-HTTP 协议 MessageSegment 适配。具体方法参考 [mirai-api-http
 
 ## _class_ `MessageChain`
 
-基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)
+基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)[`nonebot.adapters.mirai.message.MessageSegment`]
 
 Mirai 协议 Message 适配
 

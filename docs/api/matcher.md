@@ -37,13 +37,58 @@ sidebarDepth: 0
 
 * **类型**
 
+    `Optional[ModuleType]`
+
+
+
+* **说明**
+
+    事件响应器所在模块
+
+
+
+### `plugin_name`
+
+
+* **类型**
+
     `Optional[str]`
 
 
 
 * **说明**
 
-    事件响应器所在模块名称
+    事件响应器所在插件名
+
+
+
+### `module_name`
+
+
+* **类型**
+
+    `Optional[str]`
+
+
+
+* **说明**
+
+    事件响应器所在模块名
+
+
+
+### `module_prefix`
+
+
+* **类型**
+
+    `Optional[str]`
+
+
+
+* **说明**
+
+    事件响应器所在模块前缀
 
 
 

@@ -6,9 +6,9 @@
 
 ## 从 NoneBot v1 迁移
 
-`APScheduler` 作为 `nonebot` v1 的可选依赖，为众多 bot 提供了方便的定时任务功能。`nonebot2` 已将 `APScheduler` 独立为 `nonebot_plugin_apscheduler` 插件，你可以在 [插件广场](https://v2.nonebot.dev/plugin-store.html) 中找到它。
+`APScheduler` 作为 `nonebot` v1 的可选依赖，为众多 bot 提供了方便的定时任务功能。`nonebot2` 已将 `APScheduler` 独立为 `nonebot_plugin_apscheduler` 插件，你可以在 [插件广场](https://v2.nonebot.dev/store.html) 中找到它。
 
-相比于 `nonebot` v1，`nonebot` v2只需要安装插件并修改 `scheduler` 的导入方式即可完成迁移。
+相比于 `nonebot` v1，`nonebot` v2 只需要安装插件并修改 `scheduler` 的导入方式即可完成迁移。
 
 ## 安装插件
 

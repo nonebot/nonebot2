@@ -67,6 +67,12 @@ pip install nonebot-adapter-mirai
 
 4. 修改配置文件
 
+   ::: warning
+   
+   由于NoneBot2的架构设计等原因, 部分功能的支持可能需要推迟到MAH 2.0正式发布后再完成
+   
+   :::
+
    ::: tip
 
    在此之前, 你可能需要了解我们为 MAH 设计的两种通信方式
@@ -91,6 +97,13 @@ pip install nonebot-adapter-mirai
    :::
 
    - 这是当使用正向 Websocket 时的配置举例
+     
+     ::: warning
+     
+     在默认情况下, NoneBot和MAH会同时监听8080端口, 这会导致端口冲突的错误
+     请确保二者配置不在同一端口下
+     
+     :::
 
      - MAH 的`setting.yml`文件
 
@@ -106,9 +119,12 @@ pip install nonebot-adapter-mirai
      - `.env`文件
 
      - ```shell
+       PORT=2333
+       
        MIRAI_AUTH_KEY=1234567890
        MIRAI_HOST=127.0.0.1 # 当MAH运行在本机时
        MIRAI_PORT=8080 # MAH的监听端口
+       PORT=2333 # 防止与MAH接口冲突
        ```
 
      - `bot.py`文件
@@ -155,7 +171,7 @@ pip install nonebot-adapter-mirai
 
      - ```shell
        HOST=127.0.0.1 # 当MAH运行在本机时
-       PORT=2333
+       PORT=2333 # 防止与MAH接口冲突
 
        MIRAI_AUTH_KEY=1234567890
        MIRAI_HOST=127.0.0.1 # 当MAH运行在本机时

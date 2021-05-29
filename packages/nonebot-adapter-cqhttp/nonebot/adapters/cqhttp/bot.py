@@ -100,14 +100,14 @@ def _check_at_me(bot: "Bot", event: "Event"):
         # check the first segment
         if event.message[0] == at_me_seg:
             event.to_me = True
-            del event.message[0]
+            event.message.pop(0)
             if event.message and event.message[0].type == "text":
                 event.message[0].data["text"] = event.message[0].data[
                     "text"].lstrip()
                 if not event.message[0].data["text"]:
                     del event.message[0]
             if event.message and event.message[0] == at_me_seg:
-                del event.message[0]
+                event.message.pop(0)
                 if event.message and event.message[0].type == "text":
                     event.message[0].data["text"] = event.message[0].data[
                         "text"].lstrip()

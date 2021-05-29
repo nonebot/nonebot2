@@ -13,10 +13,10 @@ pip install nonebot-adapter-cqhttp
 QQ 协议端举例:
 
 - [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) (基于 [MiraiGo](https://github.com/Mrs4s/MiraiGo))
-- [cqhttp-mirai-embedded](https://github.com/yyuueexxiinngg/cqhttp-mirai/tree/embedded)
-- [Mirai](https://github.com/mamoe/mirai) + [cqhttp-mirai](https://github.com/yyuueexxiinngg/cqhttp-mirai)
+- [onebot-kotlin](https://github.com/yyuueexxiinngg/onebot-kotlin)
+- [Mirai](https://github.com/mamoe/mirai) + [onebot-mirai](https://github.com/yyuueexxiinngg/onebot-kotlin)
 - [Mirai](https://github.com/mamoe/mirai) + [Mirai Native](https://github.com/iTXTech/mirai-native) + [CQHTTP](https://github.com/richardchien/coolq-http-api)
-- [OICQ-http-api](https://github.com/takayama-lily/onebot) (基于 [OICQ](https://github.com/takayama-lily/oicq))
+- [node-onebot](https://github.com/takayama-lily/node-onebot) (基于 [abot](https://github.com/takayama-lily/abot), [OICQ](https://github.com/takayama-lily/oicq))
 
 这里以 [go-cqhttp](https://github.com/Mrs4s/go-cqhttp) 为例
 
@@ -24,59 +24,74 @@ QQ 协议端举例:
 2. 运行 exe 文件或者使用 `./go-cqhttp` 启动
 3. 生成默认配置文件并修改默认配置
 
-```hjson{2,3,35-36,42}
-{
+```yml{2,3,18,57,58}
+account:
   uin: 机器人QQ号
-  password: 机器人密码
-  encrypt_password: false
-  password_encrypted: ""
-  enable_db: true
-  access_token: ""
-  relogin: {
-    enabled: true
-    relogin_delay: 3
-    max_relogin_times: 0
-  }
-  _rate_limit: {
+  password: "机器人密码"
+  encrypt: false
+  relogin:
+    disabled: false
+    delay: 3
+    interval: 0
+    max-times: 0
+
+  use-sso-address: true
+
+heartbeat:
+  disabled: false
+  interval: 5
+
+message:
+  post-format: array
+  ignore-invalid-cqcode: false
+  force-fragment: false
+  fix-url: false
+  proxy-rewrite: ""
+  report-self-message: false
+  remove-reply-at: false
+  extra-reply-data: false
+
+output:
+  log-level: warn
+  debug: false
+
+default-middlewares: &default
+  access-token: ""
+  filter: ""
+  rate-limit:
     enabled: false
     frequency: 1
-    bucket_size: 1
-  }
-  ignore_invalid_cqcode: false
-  force_fragmented: false
-  heartbeat_interval: 0
-  http_config: {
-    enabled: false
-    host: "0.0.0.0"
-    port: 5700
-    timeout: 0
-    post_urls: {}
-  }
-  ws_config: {
-    enabled: false
-    host: "0.0.0.0"
-    port: 6700
-  }
-  ws_reverse_servers: [
-    {
-      enabled: true
-      reverse_url: ws://127.0.0.1:8080/cqhttp/ws
-      reverse_api_url: ws://you_websocket_api.server
-      reverse_event_url: ws://you_websocket_event.server
-      reverse_reconnect_interval: 3000
-    }
-  ]
-  post_message_format: array
-  use_sso_address: false
-  debug: false
-  log_level: ""
-  web_ui: {
-    enabled: false
-    host: 127.0.0.1
-    web_ui_port: 9999
-    web_input: false
-  }
-}
+    bucket: 1
+
+servers:
+  - http:
+      disabled: true
+      host: 127.0.0.1
+      port: 5700
+      timeout: 5
+      middlewares:
+        <<: *default
+      post:
+
+  - ws:
+      disabled: true
+      host: 127.0.0.1
+      port: 6700
+      middlewares:
+        <<: *default
+
+  - ws-reverse:
+      disabled: false
+      universal: ws://127.0.0.1:8080/cqhttp/ws
+      api: ws://your_websocket_api.server
+      event: ws://your_websocket_event.server
+      reconnect-interval: 3000
+      middlewares:
+        <<: *default
+
+database:
+  leveldb:
+    enable: true
 ```
 
 其中 `ws://127.0.0.1:8080/cqhttp/ws` 中的 `127.0.0.1` 和 `8080` 应分别对应 nonebot 配置的 HOST 和 PORT。

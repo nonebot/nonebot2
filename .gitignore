@@ -189,3 +189,5 @@ dev
 docs_build/_build
 !tests/.env
 *.xmind
+yarn.lock
+.DS_Store

@@ -41,7 +41,7 @@ NoneBot.adapters.cqhttp.message 模块
 
 .. automodule:: nonebot.adapters.cqhttp.message
    :members:
-   :private-members:
+   :undoc-members:
    :show-inheritance:
 
 NoneBot.adapters.cqhttp.permission 模块

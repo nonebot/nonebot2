@@ -14,7 +14,7 @@ sidebarDepth: 0
 
 基类：`abc.ABC`
 
-Driver 基类。将后端框架封装，以满足适配器使用。
+Driver 基类。
 
 
 ### `_adapters`
@@ -32,33 +32,33 @@ Driver 基类。将后端框架封装，以满足适配器使用。
 
 
 
-### `_ws_connection_hook`
+### `_bot_connection_hook`
 
 
 * **类型**
 
-    `Set[T_WebSocketConnectionHook]`
+    `Set[T_BotConnectionHook]`
 
 
 
 * **说明**
 
-    WebSocket 连接建立时执行的函数
+    Bot 连接建立时执行的函数
 
 
 
-### `_ws_disconnection_hook`
+### `_bot_disconnection_hook`
 
 
 * **类型**
 
-    `Set[T_WebSocketDisconnectionHook]`
+    `Set[T_BotDisconnectionHook]`
 
 
 
 * **说明**
 
-    WebSocket 连接断开时执行的函数
+    Bot 连接断开时执行的函数
 
 
 
@@ -120,6 +120,21 @@ Driver 基类。将后端框架封装，以满足适配器使用。
 
 
 
+### _property_ `bots`
+
+
+* **类型**
+
+    `Dict[str, Bot]`
+
+
+
+* **说明**
+
+    获取当前所有已连接的 Bot
+
+
+
 ### `register_adapter(name, adapter, **kwargs)`
 
 
@@ -144,33 +159,33 @@ Driver 基类。将后端框架封装，以满足适配器使用。
 驱动类型名称
 
 
-### _abstract property_ `server_app`
-
-驱动 APP 对象
-
-
-### _abstract property_ `asgi`
-
-驱动 ASGI 对象
-
-
 ### _abstract property_ `logger`
 
 驱动专属 logger 日志记录器
 
 
-### _property_ `bots`
-
-
-* **类型**
-
-    `Dict[str, Bot]`
-
+### _abstract_ `run(host=None, port=None, *args, **kwargs)`
 
 
 * **说明**
 
-    获取当前所有已连接的 Bot
+    启动驱动框架
+
+
+
+* **参数**
+
+    
+    * `host: Optional[str]`: 驱动绑定 IP
+
+
+    * `post: Optional[int]`: 驱动绑定端口
+
+
+    * `*args`
+
+
+    * `**kwargs`
 
 
 
@@ -226,39 +241,45 @@ Driver 基类。将后端框架封装，以满足适配器使用。
 在 WebSocket 连接断开后，调用该函数来注销 bot 对象
 
 
-### _abstract_ `run(host=None, port=None, *args, **kwargs)`
+## _class_ `ReverseDriver`
+
+基类：`nonebot.drivers.Driver`
+
+Reverse Driver 基类。将后端框架封装，以满足适配器使用。
 
 
-* **说明**
+### _abstract property_ `server_app`
 
-    启动驱动框架
-
-
-
-* **参数**
-
-    
-    * `host: Optional[str]`: 驱动绑定 IP
+驱动 APP 对象
 
 
-    * `post: Optional[int]`: 驱动绑定端口
+### _abstract property_ `asgi`
+
+驱动 ASGI 对象
 
 
-    * `*args`
-
-
-    * `**kwargs`
-
-
-
-### _abstract async_ `_handle_http()`
+### _abstract async_ `_handle_http(*args, **kwargs)`
 
 用于处理 HTTP 类型请求的函数
 
 
-### _abstract async_ `_handle_ws_reverse()`
+### _abstract async_ `_handle_ws_reverse(*args, **kwargs)`
 
 用于处理 WebSocket 类型请求的函数
+
+
+## _class_ `HTTPRequest`
+
+基类：`object`
+
+HTTP 请求封装。参考 [asgi http scope](https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope)。
+
+
+## _class_ `HTTPResponse`
+
+基类：`object`
+
+HTTP 响应封装。参考 [asgi http scope](https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope)。
 
 
 ## _class_ `WebSocket`

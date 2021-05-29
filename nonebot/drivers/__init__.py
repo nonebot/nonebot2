@@ -7,11 +7,12 @@
 
 import abc
 import asyncio
-from typing import Set, Dict, Type, Optional, Callable, TYPE_CHECKING
+from typing import (Any, Set, List, Dict, Type, Tuple, Optional, Callable,
+                    MutableMapping, TYPE_CHECKING)
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
-from nonebot.typing import T_WebSocketConnectionHook, T_WebSocketDisconnectionHook
+from nonebot.typing import T_BotConnectionHook, T_BotDisconnectionHook
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot
@@ -19,7 +20,7 @@ if TYPE_CHECKING:
 
 class Driver(abc.ABC):
     """
-    Driver 基类。将后端框架封装，以满足适配器使用。
+    Driver 基类。
     """
 
     _adapters: Dict[str, Type["Bot"]] = {}
@@ -27,15 +28,15 @@ class Driver(abc.ABC):
     :类型: ``Dict[str, Type[Bot]]``
     :说明: 已注册的适配器列表
     """
-    _ws_connection_hook: Set[T_WebSocketConnectionHook] = set()
+    _bot_connection_hook: Set[T_BotConnectionHook] = set()
     """
-    :类型: ``Set[T_WebSocketConnectionHook]``
-    :说明: WebSocket 连接建立时执行的函数
+    :类型: ``Set[T_BotConnectionHook]``
+    :说明: Bot 连接建立时执行的函数
     """
-    _ws_disconnection_hook: Set[T_WebSocketDisconnectionHook] = set()
+    _bot_disconnection_hook: Set[T_BotDisconnectionHook] = set()
     """
-    :类型: ``Set[T_WebSocketDisconnectionHook]``
-    :说明: WebSocket 连接断开时执行的函数
+    :类型: ``Set[T_BotDisconnectionHook]``
+    :说明: Bot 连接断开时执行的函数
     """
 
     @abc.abstractmethod
@@ -61,6 +62,18 @@ class Driver(abc.ABC):
         :类型: ``Dict[str, Bot]``
         :说明: 已连接的 Bot
         """
+
+    @property
+    def bots(self) -> Dict[str, "Bot"]:
+        """
+        :类型:
+
+          ``Dict[str, Bot]``
+        :说明:
+
+          获取当前所有已连接的 Bot
+        """
+        return self._clients
 
     def register_adapter(self, name: str, adapter: Type["Bot"], **kwargs):
         """
@@ -90,105 +103,9 @@ class Driver(abc.ABC):
 
     @property
     @abc.abstractmethod
-    def server_app(self):
-        """驱动 APP 对象"""
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def asgi(self):
-        """驱动 ASGI 对象"""
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
     def logger(self):
         """驱动专属 logger 日志记录器"""
         raise NotImplementedError
-
-    @property
-    def bots(self) -> Dict[str, "Bot"]:
-        """
-        :类型:
-
-          ``Dict[str, Bot]``
-        :说明:
-
-          获取当前所有已连接的 Bot
-        """
-        return self._clients
-
-    @abc.abstractmethod
-    def on_startup(self, func: Callable) -> Callable:
-        """注册一个在驱动启动时运行的函数"""
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def on_shutdown(self, func: Callable) -> Callable:
-        """注册一个在驱动停止时运行的函数"""
-        raise NotImplementedError
-
-    def on_bot_connect(
-            self, func: T_WebSocketConnectionHook) -> T_WebSocketConnectionHook:
-        """
-        :说明:
-
-          装饰一个函数使他在 bot 通过 WebSocket 连接成功时执行。
-
-        :函数参数:
-
-          * ``bot: Bot``: 当前连接上的 Bot 对象
-        """
-        self._ws_connection_hook.add(func)
-        return func
-
-    def on_bot_disconnect(
-            self,
-            func: T_WebSocketDisconnectionHook) -> T_WebSocketDisconnectionHook:
-        """
-        :说明:
-
-          装饰一个函数使他在 bot 通过 WebSocket 连接断开时执行。
-
-        :函数参数:
-
-          * ``bot: Bot``: 当前连接上的 Bot 对象
-        """
-        self._ws_disconnection_hook.add(func)
-        return func
-
-    def _bot_connect(self, bot: "Bot") -> None:
-        """在 WebSocket 连接成功后，调用该函数来注册 bot 对象"""
-        self._clients[bot.self_id] = bot
-
-        async def _run_hook(bot: "Bot") -> None:
-            coros = list(map(lambda x: x(bot), self._ws_connection_hook))
-            if coros:
-                try:
-                    await asyncio.gather(*coros)
-                except Exception as e:
-                    logger.opt(colors=True, exception=e).error(
-                        "<r><bg #f8bbd0>Error when running WebSocketConnection hook. "
-                        "Running cancelled!</bg #f8bbd0></r>")
-
-        asyncio.create_task(_run_hook(bot))
-
-    def _bot_disconnect(self, bot: "Bot") -> None:
-        """在 WebSocket 连接断开后，调用该函数来注销 bot 对象"""
-        if bot.self_id in self._clients:
-            del self._clients[bot.self_id]
-
-        async def _run_hook(bot: "Bot") -> None:
-            coros = list(map(lambda x: x(bot), self._ws_disconnection_hook))
-            if coros:
-                try:
-                    await asyncio.gather(*coros)
-                except Exception as e:
-                    logger.opt(colors=True, exception=e).error(
-                        "<r><bg #f8bbd0>Error when running WebSocketDisConnection hook. "
-                        "Running cancelled!</bg #f8bbd0></r>")
-
-        asyncio.create_task(_run_hook(bot))
 
     @abc.abstractmethod
     def run(self,
@@ -212,17 +129,174 @@ class Driver(abc.ABC):
             f"<g>Loaded adapters: {', '.join(self._adapters)}</g>")
 
     @abc.abstractmethod
-    async def _handle_http(self):
+    def on_startup(self, func: Callable) -> Callable:
+        """注册一个在驱动启动时运行的函数"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def on_shutdown(self, func: Callable) -> Callable:
+        """注册一个在驱动停止时运行的函数"""
+        raise NotImplementedError
+
+    def on_bot_connect(self, func: T_BotConnectionHook) -> T_BotConnectionHook:
+        """
+        :说明:
+
+          装饰一个函数使他在 bot 通过 WebSocket 连接成功时执行。
+
+        :函数参数:
+
+          * ``bot: Bot``: 当前连接上的 Bot 对象
+        """
+        self._bot_connection_hook.add(func)
+        return func
+
+    def on_bot_disconnect(
+            self, func: T_BotDisconnectionHook) -> T_BotDisconnectionHook:
+        """
+        :说明:
+
+          装饰一个函数使他在 bot 通过 WebSocket 连接断开时执行。
+
+        :函数参数:
+
+          * ``bot: Bot``: 当前连接上的 Bot 对象
+        """
+        self._bot_disconnection_hook.add(func)
+        return func
+
+    def _bot_connect(self, bot: "Bot") -> None:
+        """在 WebSocket 连接成功后，调用该函数来注册 bot 对象"""
+        self._clients[bot.self_id] = bot
+
+        async def _run_hook(bot: "Bot") -> None:
+            coros = list(map(lambda x: x(bot), self._bot_connection_hook))
+            if coros:
+                try:
+                    await asyncio.gather(*coros)
+                except Exception as e:
+                    logger.opt(colors=True, exception=e).error(
+                        "<r><bg #f8bbd0>Error when running WebSocketConnection hook. "
+                        "Running cancelled!</bg #f8bbd0></r>")
+
+        asyncio.create_task(_run_hook(bot))
+
+    def _bot_disconnect(self, bot: "Bot") -> None:
+        """在 WebSocket 连接断开后，调用该函数来注销 bot 对象"""
+        if bot.self_id in self._clients:
+            del self._clients[bot.self_id]
+
+        async def _run_hook(bot: "Bot") -> None:
+            coros = list(map(lambda x: x(bot), self._bot_disconnection_hook))
+            if coros:
+                try:
+                    await asyncio.gather(*coros)
+                except Exception as e:
+                    logger.opt(colors=True, exception=e).error(
+                        "<r><bg #f8bbd0>Error when running WebSocketDisConnection hook. "
+                        "Running cancelled!</bg #f8bbd0></r>")
+
+        asyncio.create_task(_run_hook(bot))
+
+
+class ForwardDriver(Driver):
+    pass
+
+
+class ReverseDriver(Driver):
+    """
+    Reverse Driver 基类。将后端框架封装，以满足适配器使用。
+    """
+
+    @property
+    @abc.abstractmethod
+    def server_app(self):
+        """驱动 APP 对象"""
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def asgi(self):
+        """驱动 ASGI 对象"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    async def _handle_http(self, *args, **kwargs):
         """用于处理 HTTP 类型请求的函数"""
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def _handle_ws_reverse(self):
+    async def _handle_ws_reverse(self, *args, **kwargs):
         """用于处理 WebSocket 类型请求的函数"""
         raise NotImplementedError
 
 
-class WebSocket(object):
+class HTTPRequest:
+    """HTTP 请求封装。参考 `asgi http scope`_。
+
+    .. _asgi http scope:
+        https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope
+    """
+
+    def __init__(self, scope: MutableMapping[str, Any]):
+        self._scope = scope
+
+    @property
+    def type(self) -> str:
+        return "http"
+
+    @property
+    def scope(self) -> MutableMapping[str, Any]:
+        return self._scope
+
+    @property
+    def http_version(self) -> str:
+        raise self.scope["http_version"]
+
+    @property
+    def method(self) -> str:
+        raise self.scope["method"]
+
+    @property
+    def schema(self) -> str:
+        raise self.scope["schema"]
+
+    @property
+    def path(self) -> str:
+        return self.scope["path"]
+
+    @property
+    def query_string(self) -> bytes:
+        return self.scope["query_string"]
+
+    @property
+    def headers(self) -> List[Tuple[bytes, bytes]]:
+        return list(self.scope["headers"])
+
+    @property
+    def body(self) -> bytes:
+        return self.scope["body"]
+
+
+class HTTPResponse:
+    """HTTP 响应封装。参考 `asgi http scope`_。
+
+    .. _asgi http scope:
+        https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope
+    """
+
+    def __init__(self, status: int, headers: List[Tuple[bytes, bytes]],
+                 body: bytes):
+        self.status: int = status
+        self.headers: List[Tuple[bytes, bytes]] = headers
+        self.body: bytes = body
+
+    @property
+    def type(self) -> str:
+        return "http"
+
+
+class WebSocket:
     """WebSocket 连接封装，统一接口方便外部调用。"""
 
     @abc.abstractmethod

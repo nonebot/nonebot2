@@ -16,8 +16,7 @@ import uvicorn
 
 from nonebot.config import Config as NoneBotConfig
 from nonebot.config import Env
-from nonebot.drivers import Driver as BaseDriver
-from nonebot.drivers import WebSocket as BaseWebSocket
+from nonebot.drivers import ReverseDriver, WebSocket as BaseWebSocket
 from nonebot.exception import RequestDenied
 from nonebot.log import logger
 from nonebot.typing import overrides
@@ -35,7 +34,7 @@ except ImportError:
 _AsyncCallable = TypeVar("_AsyncCallable", bound=Callable[..., Coroutine])
 
 
-class Driver(BaseDriver):
+class Driver(ReverseDriver):
     """
     Quart 驱动框架
 
@@ -45,7 +44,7 @@ class Driver(BaseDriver):
       * ``/{adapter name}/ws``: WebSocket 上报
     """
 
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def __init__(self, env: Env, config: NoneBotConfig):
         super().__init__(env, config)
 
@@ -57,40 +56,40 @@ class Driver(BaseDriver):
                                        view_func=self._handle_ws_reverse)
 
     @property
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def type(self) -> str:
         """驱动名称: ``quart``"""
         return 'quart'
 
     @property
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def server_app(self) -> Quart:
         """``Quart`` 对象"""
         return self._server_app
 
     @property
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def asgi(self):
         """``Quart`` 对象"""
         return self._server_app
 
     @property
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def logger(self):
         """fastapi 使用的 logger"""
         return self._server_app.logger
 
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def on_startup(self, func: _AsyncCallable) -> _AsyncCallable:
         """参考文档: `Startup and Shutdown <https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html>`_"""
         return self.server_app.before_serving(func)  # type: ignore
 
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def on_shutdown(self, func: _AsyncCallable) -> _AsyncCallable:
         """参考文档: `Startup and Shutdown <https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html>`_"""
         return self.server_app.after_serving(func)  # type: ignore
 
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     def run(self,
             host: Optional[str] = None,
             port: Optional[int] = None,
@@ -126,7 +125,7 @@ class Driver(BaseDriver):
                     log_config=LOGGING_CONFIG,
                     **kwargs)
 
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     async def _handle_http(self, adapter: str):
         request: Request = _request
 
@@ -157,7 +156,7 @@ class Driver(BaseDriver):
         asyncio.create_task(bot.handle_message(data))
         return Response('', 204)
 
-    @overrides(BaseDriver)
+    @overrides(ReverseDriver)
     async def _handle_ws_reverse(self, adapter: str):
         websocket: QuartWebSocket = _websocket
         if adapter not in self._adapters:

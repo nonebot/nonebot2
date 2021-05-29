@@ -106,6 +106,30 @@ NoneBot 主要配置。大小写不敏感。
 
 
 
+### `log_level`
+
+
+* **类型**: `Union[int, str]`
+
+
+* **默认值**: `None`
+
+
+* **说明**
+
+    配置 NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称，参考 [loguru 日志等级](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
+
+
+
+* **示例**
+
+
+```default
+LOG_LEVEL=25
+LOG_LEVEL=INFO
+```
+
+
 ### `api_root`
 
 

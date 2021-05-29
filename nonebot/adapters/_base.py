@@ -11,8 +11,8 @@ from copy import copy
 from functools import reduce, partial
 from typing_extensions import Protocol
 from dataclasses import dataclass, field
-from typing import (Any, Set, Dict, Union, TypeVar, Mapping, Optional, Iterable,
-                    Awaitable, TYPE_CHECKING)
+from typing import (Any, Set, List, Dict, Union, TypeVar, Mapping, Optional,
+                    Iterable, Awaitable, TYPE_CHECKING)
 
 from pydantic import BaseModel
 
@@ -152,7 +152,6 @@ class Bot(abc.ABC):
         :参数:
 
           * ``api: str``: API 名称
-          * ``self_id: Optional[str]``: 指定调用 API 的机器人
           * ``**data``: API 数据
 
         :示例:
@@ -176,11 +175,7 @@ class Bot(abc.ABC):
         result = None
 
         try:
-            if "self_id" in data and data["self_id"]:
-                bot = self.driver.bots[str(data["self_id"])]
-                result = await bot._call_api(api, **data)
-            else:
-                result = await self._call_api(api, **data)
+            result = await self._call_api(api, **data)
         except Exception as e:
             exception = e
 
@@ -316,7 +311,7 @@ class MessageSegment(abc.ABC, Mapping):
         raise NotImplementedError
 
 
-class Message(list, abc.ABC):
+class Message(List[T_MessageSegment], abc.ABC):
     """消息数组"""
 
     def __init__(self,

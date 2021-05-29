@@ -46,7 +46,7 @@ sidebarDepth: 0
 
 
 
-## `T_WebSocketConnectionHook`
+## `T_BotConnectionHook`
 
 
 * **类型**
@@ -57,12 +57,12 @@ sidebarDepth: 0
 
 * **说明**
 
-    WebSocket 连接建立时执行的函数
+    Bot 连接建立时执行的函数
 
 
 
 
-## `T_WebSocketDisconnectionHook`
+## `T_BotDisconnectionHook`
 
 
 * **类型**
@@ -73,7 +73,7 @@ sidebarDepth: 0
 
 * **说明**
 
-    WebSocket 连接断开时执行的函数
+    Bot 连接断开时执行的函数
 
 
 

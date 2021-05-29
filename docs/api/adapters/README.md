@@ -191,9 +191,6 @@ Adapter 类型
     * `api: str`: API 名称
 
 
-    * `self_id: Optional[str]`: 指定调用 API 的机器人
-
-
     * `**data`: API 数据
 
 
@@ -256,7 +253,7 @@ await bot.send_msg(message="hello world")
 
 ## _class_ `Message`
 
-基类：`list`, `abc.ABC`
+基类：`List`[`nonebot.adapters._base.T_MessageSegment`], `abc.ABC`
 
 消息数组
 
