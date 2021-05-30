@@ -14,6 +14,80 @@ sidebarDepth: 0
 :::
 
 
+## _class_ `Permission`
+
+基类：`object`
+
+
+* **说明**
+
+    `Matcher` 规则类，当事件传递时，在 `Matcher` 运行前进行检查。
+
+
+
+* **示例**
+
+
+```python
+Permission(async_function) | sync_function
+# 等价于
+from nonebot.utils import run_sync
+Permission(async_function, run_sync(sync_function))
+```
+
+
+### `__init__(*checkers)`
+
+
+* **参数**
+
+    
+    * `*checkers: Callable[[Bot, Event], Awaitable[bool]]`: **异步** PermissionChecker
+
+
+
+### `checkers`
+
+
+* **说明**
+
+    存储 `PermissionChecker`
+
+
+
+* **类型**
+
+    
+    * `Set[Callable[[Bot, Event], Awaitable[bool]]]`
+
+
+
+### _async_ `__call__(bot, event)`
+
+
+* **说明**
+
+    检查是否满足某个权限
+
+
+
+* **参数**
+
+    
+    * `bot: Bot`: Bot 对象
+
+
+    * `event: Event`: Event 对象
+
+
+
+* **返回**
+
+    
+    * `bool`
+
+
+
 ## `MESSAGE`
 
 

@@ -292,7 +292,7 @@ sidebarDepth: 0
 
 
 
-### _classmethod_ `new(type_='', rule=None, permission=None, handlers=None, temp=False, priority=1, block=False, *, module=None, default_state=None, default_state_factory=None, expire_time=None)`
+### _classmethod_ `new(type_='', rule=None, permission=None, handlers=None, temp=False, priority=1, block=False, *, module=None, expire_time=None, default_state=None, default_state_factory=None, default_parser=None, default_type_updater=None, default_permission_updater=None)`
 
 
 * **说明**
