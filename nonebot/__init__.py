@@ -76,6 +76,7 @@ def get_driver() -> Driver:
     return _driver
 
 
+# FIXME: app for reverse driver
 def get_app():
     """
     :说明:
@@ -101,6 +102,7 @@ def get_app():
     return driver.server_app
 
 
+# FIXME: asgi for reverse driver
 def get_asgi():
     """
     :说明:

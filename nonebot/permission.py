@@ -1,4 +1,4 @@
-"""
+r"""
 权限
 ====
 
@@ -128,27 +128,28 @@ METAEVENT = Permission(_metaevent)
 """
 
 
-def USER(*user: str, perm: Permission = Permission()):
+def USER(*user: str, perm: Optional[Permission] = None):
     """
     :说明:
 
-      在白名单内且满足 perm
+      ``event`` 的 ``session_id`` 在白名单内且满足 perm
 
     :参数:
 
       * ``*user: str``: 白名单
-      * ``perm: Permission``: 需要同时满足的权限
+      * ``perm: Optional[Permission]``: 需要同时满足的权限
     """
 
     async def _user(bot: "Bot", event: "Event") -> bool:
-        return event.get_session_id() in user and await perm(bot, event)
+        return event.get_session_id() in user and bool(perm) and await perm(
+            bot, event)
 
     return Permission(_user)
 
 
 async def _superuser(bot: "Bot", event: "Event") -> bool:
-    return event.get_type() == "message" and event.get_user_id(
-    ) in bot.config.superusers
+    return (event.get_type() == "message" and
+            event.get_user_id() in bot.config.superusers)
 
 
 SUPERUSER = Permission(_superuser)

@@ -1,4 +1,4 @@
-"""
+r"""
 规则
 ====
 
@@ -250,7 +250,7 @@ def keyword(*keywords: str) -> Rule:
 
 
 def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
-    """
+    r"""
     :说明:
 
       命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
@@ -321,7 +321,7 @@ class ArgumentParser(ArgParser):
 
 def shell_command(*cmds: Union[str, Tuple[str, ...]],
                   parser: Optional[ArgumentParser] = None) -> Rule:
-    """
+    r"""
     :说明:
 
       支持 ``shell_like`` 解析参数的命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
@@ -394,7 +394,7 @@ def shell_command(*cmds: Union[str, Tuple[str, ...]],
 
 
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
-    """
+    r"""
     :说明:
 
       根据正则表达式进行匹配。

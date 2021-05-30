@@ -112,12 +112,12 @@ Permission(async_function, run_sync(sync_function))
 * **说明**: 匹配任意 `meta_event` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 meta_event type 的 Matcher。
 
 
-## `USER(*user, perm=<nonebot.permission.Permission object>)`
+## `USER(*user, perm=None)`
 
 
 * **说明**
 
-    在白名单内且满足 perm
+    `event` 的 `session_id` 在白名单内且满足 perm
 
 
 
@@ -127,7 +127,7 @@ Permission(async_function, run_sync(sync_function))
     * `*user: str`: 白名单
 
 
-    * `perm: Permission`: 需要同时满足的权限
+    * `perm: Optional[Permission]`: 需要同时满足的权限
 
 
 
