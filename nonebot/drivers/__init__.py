@@ -243,38 +243,72 @@ class HTTPRequest:
 
     @property
     def type(self) -> str:
+        """Always `http`"""
         return "http"
 
     @property
     def scope(self) -> MutableMapping[str, Any]:
+        """Raw scope from asgi.
+
+        The connection scope information, a dictionary that
+        contains at least a `type` key specifying the protocol that is incoming.
+        """
         return self._scope
 
     @property
     def http_version(self) -> str:
+        """One of `"1.0"`, `"1.1"` or `"2"`."""
         raise self.scope["http_version"]
 
     @property
     def method(self) -> str:
+        """The HTTP method name, uppercased."""
         raise self.scope["method"]
 
     @property
     def schema(self) -> str:
+        """
+        URL scheme portion (likely `"http"` or `"https"`).
+        Optional (but must not be empty); default is `"http"`.
+        """
         raise self.scope["schema"]
 
     @property
     def path(self) -> str:
+        """
+        HTTP request target excluding any query string,
+        with percent-encoded sequences and UTF-8 byte sequences
+        decoded into characters.
+        """
         return self.scope["path"]
 
     @property
     def query_string(self) -> bytes:
+        """ URL portion after the `?`, percent-encoded."""
         return self.scope["query_string"]
 
     @property
     def headers(self) -> List[Tuple[bytes, bytes]]:
+        """An iterable of [name, value] two-item iterables,
+        where name is the header name, and value is the header value.
+
+        Order of header values must be preserved from the original HTTP request;
+        order of header names is not important.
+
+        Duplicates are possible and must be preserved in the message as received.
+
+        Header names must be lowercased.
+        """
         return list(self.scope["headers"])
 
     @property
     def body(self) -> bytes:
+        """Body of the request.
+
+        Optional; if missing defaults to b"".
+
+        If more_body is set, treat as start of body and concatenate on further chunks.
+        """
         return self.scope["body"]
 
 
@@ -285,19 +319,41 @@ class HTTPResponse:
         https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope
     """
 
-    def __init__(self, status: int, headers: List[Tuple[bytes, bytes]],
-                 body: bytes):
+    def __init__(self,
+                 status: int,
+                 headers: List[Tuple[bytes, bytes]] = [],
+                 body: Optional[bytes] = None):
         self.status: int = status
+        """HTTP status code."""
         self.headers: List[Tuple[bytes, bytes]] = headers
-        self.body: bytes = body
+        """An iterable of [name, value] two-item iterables,
+        where name is the header name,
+        and value is the header value.
+
+        Order must be preserved in the HTTP response.
+
+        Header names must be lowercased.
+
+        Optional; if missing defaults to an empty list.
+        """
+        self.body: Optional[bytes] = body
+        """HTTP body content.
+
+        Optional; if missing defaults to `None`.
+        """
 
     @property
     def type(self) -> str:
+        """Always `http`"""
         return "http"
 
 
 class WebSocket:
-    """WebSocket 连接封装，统一接口方便外部调用。"""
+    """WebSocket 连接封装。参考 `asgi websocket scope`_。
+
+    .. _asgi websocket scope:
+        https://asgi.readthedocs.io/en/latest/specs/www.html#websocket-connection-scope
+    """
 
     @abc.abstractmethod
     def __init__(self, websocket):

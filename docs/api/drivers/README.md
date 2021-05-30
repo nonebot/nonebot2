@@ -275,6 +275,69 @@ Reverse Driver 基类。将后端框架封装，以满足适配器使用。
 HTTP 请求封装。参考 [asgi http scope](https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope)。
 
 
+### _property_ `type`
+
+Always http
+
+
+### _property_ `scope`
+
+Raw scope from asgi.
+
+The connection scope information, a dictionary that
+contains at least a type key specifying the protocol that is incoming.
+
+
+### _property_ `http_version`
+
+One of "1.0", "1.1" or "2".
+
+
+### _property_ `method`
+
+The HTTP method name, uppercased.
+
+
+### _property_ `schema`
+
+URL scheme portion (likely "http" or "https").
+Optional (but must not be empty); default is "http".
+
+
+### _property_ `path`
+
+HTTP request target excluding any query string,
+with percent-encoded sequences and UTF-8 byte sequences
+decoded into characters.
+
+
+### _property_ `query_string`
+
+URL portion after the ?, percent-encoded.
+
+
+### _property_ `headers`
+
+An iterable of [name, value] two-item iterables,
+where name is the header name, and value is the header value.
+
+Order of header values must be preserved from the original HTTP request;
+order of header names is not important.
+
+Duplicates are possible and must be preserved in the message as received.
+
+Header names must be lowercased.
+
+
+### _property_ `body`
+
+Body of the request.
+
+Optional; if missing defaults to b"".
+
+If more_body is set, treat as start of body and concatenate on further chunks.
+
+
 ## _class_ `HTTPResponse`
 
 基类：`object`
@@ -282,11 +345,41 @@ HTTP 请求封装。参考 [asgi http scope](https://asgi.readthedocs.io/en/late
 HTTP 响应封装。参考 [asgi http scope](https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope)。
 
 
+### `status`
+
+HTTP status code.
+
+
+### `headers`
+
+An iterable of [name, value] two-item iterables,
+where name is the header name,
+and value is the header value.
+
+Order must be preserved in the HTTP response.
+
+Header names must be lowercased.
+
+Optional; if missing defaults to an empty list.
+
+
+### `body`
+
+HTTP body content.
+
+Optional; if missing defaults to None.
+
+
+### _property_ `type`
+
+Always http
+
+
 ## _class_ `WebSocket`
 
 基类：`object`
 
-WebSocket 连接封装，统一接口方便外部调用。
+WebSocket 连接封装。参考 [asgi websocket scope](https://asgi.readthedocs.io/en/latest/specs/www.html#websocket-connection-scope)。
 
 
 ### _abstract_ `__init__(websocket)`
