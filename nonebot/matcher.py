@@ -166,20 +166,25 @@ class Matcher(metaclass=MatcherMeta):
         return repr(self)
 
     @classmethod
-    def new(cls,
-            type_: str = "",
-            rule: Optional[Rule] = None,
-            permission: Optional[Permission] = None,
-            handlers: Optional[Union[List[T_Handler], List[Handler],
-                                     List[Union[T_Handler, Handler]]]] = None,
-            temp: bool = False,
-            priority: int = 1,
-            block: bool = False,
-            *,
-            module: Optional[ModuleType] = None,
-            default_state: Optional[T_State] = None,
-            default_state_factory: Optional[T_StateFactory] = None,
-            expire_time: Optional[datetime] = None) -> Type["Matcher"]:
+    def new(
+        cls,
+        type_: str = "",
+        rule: Optional[Rule] = None,
+        permission: Optional[Permission] = None,
+        handlers: Optional[Union[List[T_Handler], List[Handler],
+                                 List[Union[T_Handler, Handler]]]] = None,
+        temp: bool = False,
+        priority: int = 1,
+        block: bool = False,
+        *,
+        module: Optional[ModuleType] = None,
+        expire_time: Optional[datetime] = None,
+        default_state: Optional[T_State] = None,
+        default_state_factory: Optional[T_StateFactory] = None,
+        default_parser: Optional[T_ArgsParser] = None,
+        default_type_updater: Optional[T_TypeUpdater] = None,
+        default_permission_updater: Optional[T_PermissionUpdater] = None
+    ) -> Type["Matcher"]:
         """
         :说明:
 
@@ -237,7 +242,13 @@ class Matcher(metaclass=MatcherMeta):
                     default_state or {},
                 "_default_state_factory":
                     staticmethod(default_state_factory)
-                    if default_state_factory else None
+                    if default_state_factory else None,
+                "_default_parser":
+                    default_parser,
+                "_default_type_updater":
+                    default_type_updater,
+                "_default_permission_updater":
+                    default_permission_updater
             })
 
         matchers[priority].append(NewMatcher)
@@ -586,17 +597,21 @@ class Matcher(metaclass=MatcherMeta):
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
 
-            Matcher.new(type_,
-                        Rule(),
-                        permission,
-                        self.handlers,
-                        temp=True,
-                        priority=0,
-                        block=True,
-                        module=self.module,
-                        default_state=self.state,
-                        expire_time=datetime.now() +
-                        bot.config.session_expire_timeout)
+            Matcher.new(
+                type_,
+                Rule(),
+                permission,
+                self.handlers,
+                temp=True,
+                priority=0,
+                block=True,
+                module=self.module,
+                expire_time=datetime.now() + bot.config.session_expire_timeout,
+                default_state=self.state,
+                default_parser=self.__class__._default_parser,
+                default_type_updater=self.__class__._default_type_updater,
+                default_permission_updater=self.__class__.
+                _default_permission_updater)
         except PausedException:
             updater = self.__class__._default_type_updater
             if updater:
@@ -610,17 +625,21 @@ class Matcher(metaclass=MatcherMeta):
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
 
-            Matcher.new(type_,
-                        Rule(),
-                        permission,
-                        self.handlers,
-                        temp=True,
-                        priority=0,
-                        block=True,
-                        module=self.module,
-                        default_state=self.state,
-                        expire_time=datetime.now() +
-                        bot.config.session_expire_timeout)
+            Matcher.new(
+                type_,
+                Rule(),
+                permission,
+                self.handlers,
+                temp=True,
+                priority=0,
+                block=True,
+                module=self.module,
+                expire_time=datetime.now() + bot.config.session_expire_timeout,
+                default_state=self.state,
+                default_parser=self.__class__._default_parser,
+                default_type_updater=self.__class__._default_type_updater,
+                default_permission_updater=self.__class__.
+                _default_permission_updater)
         except FinishedException:
             pass
         except StopPropagation:
