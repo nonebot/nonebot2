@@ -575,13 +575,13 @@ class Matcher(metaclass=MatcherMeta):
         e_t = current_event.set(event)
         try:
             # Refresh preprocess state
-            state_ = await self._default_state_factory(
+            self.state = await self._default_state_factory(
                 bot, event) if self._default_state_factory else self.state
-            state_.update(state)
+            self.state.update(state)
 
             for _ in range(len(self.handlers)):
                 handler = self.handlers.pop(0)
-                await handler(self, bot, event, state_)
+                await handler(self, bot, event, self.state)
 
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
@@ -590,7 +590,7 @@ class Matcher(metaclass=MatcherMeta):
                 type_ = await updater(
                     bot,
                     event,
-                    state_,  # type: ignore
+                    self.state,  # type: ignore
                     self.type)
             else:
                 type_ = "message"
@@ -600,7 +600,7 @@ class Matcher(metaclass=MatcherMeta):
                 permission = await updater(
                     bot,
                     event,
-                    state_,  # type: ignore
+                    self.state,  # type: ignore
                     self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
@@ -626,7 +626,7 @@ class Matcher(metaclass=MatcherMeta):
                 type_ = await updater(
                     bot,
                     event,
-                    state_,  # type: ignore
+                    self.state,  # type: ignore
                     self.type)
             else:
                 type_ = "message"
@@ -636,7 +636,7 @@ class Matcher(metaclass=MatcherMeta):
                 permission = await updater(
                     bot,
                     event,
-                    state_,  # type: ignore
+                    self.state,  # type: ignore
                     self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)

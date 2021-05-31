@@ -13,6 +13,7 @@ sidebar: auto
 - 移除 `bot.call_api` 参数 `self_id` 切换机器人支持
 - 修复 `type_updater` `permission_updater` 未传递的错误
 - 修复 `type_updater` `permission_updater` 参数 `state` 错误
+- 修复使用 `state_factory` 后导致无法在 session 内传递 `state`
 
 ## v2.0.0a13.post1
 
