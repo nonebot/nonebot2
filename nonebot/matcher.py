@@ -587,13 +587,21 @@ class Matcher(metaclass=MatcherMeta):
             self.handlers.insert(0, handler)  # type: ignore
             updater = self.__class__._default_type_updater
             if updater:
-                type_ = await updater(bot, event, state, self.type)
+                type_ = await updater(
+                    bot,
+                    event,
+                    state_,  # type: ignore
+                    self.type)
             else:
                 type_ = "message"
 
             updater = self.__class__._default_permission_updater
             if updater:
-                permission = await updater(bot, event, state, self.permission)
+                permission = await updater(
+                    bot,
+                    event,
+                    state_,  # type: ignore
+                    self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
 
@@ -615,13 +623,21 @@ class Matcher(metaclass=MatcherMeta):
         except PausedException:
             updater = self.__class__._default_type_updater
             if updater:
-                type_ = await updater(bot, event, state, self.type)
+                type_ = await updater(
+                    bot,
+                    event,
+                    state_,  # type: ignore
+                    self.type)
             else:
                 type_ = "message"
 
             updater = self.__class__._default_permission_updater
             if updater:
-                permission = await updater(bot, event, state, self.permission)
+                permission = await updater(
+                    bot,
+                    event,
+                    state_,  # type: ignore
+                    self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
 

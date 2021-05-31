@@ -11,6 +11,8 @@ sidebar: auto
 - 修改 `Matcher` 属性 `module` 类型
 - 新增 `Matcher` 属性 `plugin_name` `module_name` `module_prefix`
 - 移除 `bot.call_api` 参数 `self_id` 切换机器人支持
+- 修复 `type_updater` `permission_updater` 未传递的错误
+- 修复 `type_updater` `permission_updater` 参数 `state` 错误
 
 ## v2.0.0a13.post1
 
