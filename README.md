@@ -6,7 +6,7 @@
 
 # NoneBot
 
-_✨ Python 异步机器人框架 ✨_
+_✨ 跨平台 Python 异步机器人框架 ✨_
 
 </div>
 
