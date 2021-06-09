@@ -16,5 +16,11 @@
     "desc": "在QQ获取/处理Github repo/pr/issue",
     "author": "yanyongyu",
     "repo": "cscs181/QQ-GitHub-Bot"
+  },
+  {
+    "name": "YanXiBot",
+    "desc": "动漫资源查找与娱乐机器人",
+    "author": "Melodyknit",
+    "repo": "https://github.com/Melodyknit/YanXiBot"
   }
 ]
