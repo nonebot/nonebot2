@@ -14,7 +14,7 @@ NoneBot2 是一个可扩展的 Python 异步机器人框架，它会对机器人
 
 得益于 Python 的 [asyncio](https://docs.python.org/3/library/asyncio.html) 机制，NoneBot 处理事件的吞吐量有了很大的保障，再配合 WebSocket 通信方式（也是最建议的通信方式），NoneBot 的性能可以达到 HTTP 通信方式的两倍以上，相较于传统同步 I/O 的 HTTP 通信，更是有质的飞跃。
 
-需要注意的是，NoneBot 仅支持 **Python 3.7+**
+需要注意的是，NoneBot 仅支持 **Python 3.7.3 以上版本**
 
 ## 特色
 
