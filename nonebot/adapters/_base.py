@@ -11,13 +11,14 @@ from copy import copy
 from functools import reduce, partial
 from typing_extensions import Protocol
 from dataclasses import dataclass, field
-from typing import (Any, Set, List, Dict, Union, TypeVar, Mapping, Optional,
-                    Iterable, Awaitable, TYPE_CHECKING)
+from typing import (Any, Set, List, Dict, Tuple, Union, TypeVar, Mapping,
+                    Optional, Iterable, Awaitable, TYPE_CHECKING)
 
 from pydantic import BaseModel
 
 from nonebot.log import logger
 from nonebot.utils import DataclassEncoder
+from nonebot.drivers import HTTPConnection, HTTPResponse
 from nonebot.typing import T_CallingAPIHook, T_CalledAPIHook
 
 if TYPE_CHECKING:
@@ -51,12 +52,7 @@ class Bot(abc.ABC):
     :说明: call_api 后执行的函数
     """
 
-    @abc.abstractmethod
-    def __init__(self,
-                 connection_type: str,
-                 self_id: str,
-                 *,
-                 websocket: Optional["WebSocket"] = None):
+    def __init__(self, self_id: str, request: HTTPConnection):
         """
         :参数:
 
@@ -64,12 +60,10 @@ class Bot(abc.ABC):
           * ``self_id: str``: 机器人 ID
           * ``websocket: Optional[WebSocket]``: Websocket 连接对象
         """
-        self.connection_type = connection_type
-        """连接类型"""
-        self.self_id = self_id
+        self.self_id: str = self_id
         """机器人 ID"""
-        self.websocket = websocket
-        """Websocket 连接对象"""
+        self.request: HTTPConnection = request
+        """连接信息"""
 
     def __getattr__(self, name: str) -> _ApiCall:
         return partial(self.call_api, name)
@@ -92,8 +86,9 @@ class Bot(abc.ABC):
 
     @classmethod
     @abc.abstractmethod
-    async def check_permission(cls, driver: "Driver", connection_type: str,
-                               headers: dict, body: Optional[bytes]) -> str:
+    async def check_permission(
+        cls, driver: "Driver", request: HTTPConnection
+    ) -> Tuple[Optional[str], Optional[HTTPResponse]]:
         """
         :说明:
 
@@ -108,7 +103,8 @@ class Bot(abc.ABC):
 
         :返回:
 
-          - ``str``: 连接唯一标识符
+          - ``str``: 连接唯一标识符，``None`` 代表连接不合法
+          - ``HTTPResponse``: HTTP 上报响应
 
         :异常:
 
@@ -117,7 +113,7 @@ class Bot(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def handle_message(self, message: dict):
+    async def handle_message(self, message: bytes):
         """
         :说明:
 
@@ -125,7 +121,7 @@ class Bot(abc.ABC):
 
         :参数:
 
-          * ``message: dict``: 收到的上报消息
+          * ``message: bytes``: 收到的上报消息
         """
         raise NotImplementedError
 

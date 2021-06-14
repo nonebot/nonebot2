@@ -204,7 +204,7 @@ CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 * 返回: `"cqhttp"`
 
 
-### _async classmethod_ `check_permission(driver, connection_type, headers, body)`
+### _async classmethod_ `check_permission(driver, request)`
 
 
 * **说明**

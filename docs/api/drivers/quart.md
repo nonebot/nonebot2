@@ -10,6 +10,28 @@ sidebarDepth: 0
 后端使用方法请参考: [Quart 文档](https://pgjones.gitlab.io/quart/index.html)
 
 
+## _class_ `Config`
+
+基类：`pydantic.env_settings.BaseSettings`
+
+Quart 驱动框架设置
+
+
+### `quart_reload_dirs`
+
+
+* **类型**
+
+    `List[str]`
+
+
+
+* **说明**
+
+    `debug` 模式下重载监控文件夹列表，默认为 uvicorn 默认值
+
+
+
 ## _class_ `Driver`
 
 基类：[`nonebot.drivers.ReverseDriver`](README.md#nonebot.drivers.ReverseDriver)
@@ -44,7 +66,7 @@ Quart 驱动框架
 
 ### _property_ `logger`
 
-fastapi 使用的 logger
+Quart 使用的 logger
 
 
 ### `on_startup(func)`

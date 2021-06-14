@@ -1,18 +1,16 @@
-import asyncio
 import json
+import asyncio
+from dataclasses import dataclass
 from ipaddress import IPv4Address
-from typing import (Any, Callable, Coroutine, Dict, NoReturn, Optional, Set,
-                    TypeVar)
+from typing import Any, Set, Dict, Tuple, TypeVar, Optional, Callable, Coroutine
 
 import httpx
 import websockets
 
-from nonebot.config import Config
-from nonebot.drivers import Driver
-from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.exception import RequestDenied
 from nonebot.log import logger
+from nonebot.config import Config
 from nonebot.typing import overrides
+from nonebot.drivers import Driver, HTTPConnection, HTTPResponse, WebSocket as BaseWebSocket
 
 from .bot import SessionManager, Bot
 
@@ -21,7 +19,9 @@ WebsocketHandler_T = TypeVar('WebsocketHandler_T',
                              bound=WebsocketHandlerFunction)
 
 
+@dataclass
 class WebSocket(BaseWebSocket):
+    websocket: websockets.WebSocketClientProtocol = None  # type: ignore
 
     @classmethod
     async def new(cls, *, host: IPv4Address, port: int,
@@ -39,22 +39,24 @@ class WebSocket(BaseWebSocket):
 
     @property
     @overrides(BaseWebSocket)
-    def websocket(self) -> websockets.WebSocketClientProtocol:
-        return self._websocket
-
-    @property
-    @overrides(BaseWebSocket)
     def closed(self) -> bool:
         return self.websocket.closed
 
     @overrides(BaseWebSocket)
-    async def send(self, data: Dict[str, Any]):
-        return await self.websocket.send(json.dumps(data))
+    async def send(self, data: str):
+        return await self.websocket.send(data)
 
     @overrides(BaseWebSocket)
-    async def receive(self) -> Dict[str, Any]:
-        received = await self.websocket.recv()
-        return json.loads(received)
+    async def send_bytes(self, data: str):
+        return await self.websocket.send(data)
+
+    @overrides(BaseWebSocket)
+    async def receive(self) -> str:
+        return await self.websocket.recv()  # type: ignore
+
+    @overrides(BaseWebSocket)
+    async def receive_bytes(self) -> bytes:
+        return await self.websocket.recv()  # type: ignore
 
     async def _dispatcher(self):
         while not self.closed:
@@ -93,11 +95,6 @@ class WebsocketBot(Bot):
     mirai-api-http 正向 Websocket 协议 Bot 适配。
     """
 
-    @overrides(Bot)
-    def __init__(self, connection_type: str, self_id: str, *,
-                 websocket: WebSocket):
-        super().__init__(connection_type, self_id, websocket=websocket)
-
     @property
     @overrides(Bot)
     def type(self) -> str:
@@ -105,7 +102,8 @@ class WebsocketBot(Bot):
 
     @property
     def alive(self) -> bool:
-        return not self.websocket.closed
+        assert isinstance(self.request, WebSocket)
+        return not self.request.closed
 
     @property
     def api(self) -> SessionManager:
@@ -115,16 +113,14 @@ class WebsocketBot(Bot):
 
     @classmethod
     @overrides(Bot)
-    async def check_permission(cls, driver: "Driver", connection_type: str,
-                               headers: dict,
-                               body: Optional[bytes]) -> NoReturn:
-        raise RequestDenied(
-            status_code=501,
-            reason=f'Connection {connection_type} not implented')
+    async def check_permission(
+            cls, driver: Driver,
+            request: HTTPConnection) -> Tuple[None, HTTPResponse]:
+        return None, HTTPResponse(501, b'Connection not implented')
 
     @classmethod
     @overrides(Bot)
-    def register(cls, driver: "Driver", config: "Config", qq: int):
+    def register(cls, driver: Driver, config: "Config", qq: int):
         """
         :说明:
 

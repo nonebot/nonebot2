@@ -7,8 +7,8 @@
 
 import abc
 import asyncio
-from typing import (Any, Set, List, Dict, Type, Tuple, Optional, Callable,
-                    MutableMapping, TYPE_CHECKING)
+from dataclasses import dataclass, field
+from typing import Set, Dict, Type, Optional, Callable, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
@@ -47,12 +47,12 @@ class Driver(abc.ABC):
           * ``env: Env``: 包含环境信息的 Env 对象
           * ``config: Config``: 包含配置信息的 Config 对象
         """
-        self.env = env.environment
+        self.env: str = env.environment
         """
         :类型: ``str``
         :说明: 环境名称
         """
-        self.config = config
+        self.config: Config = config
         """
         :类型: ``Config``
         :说明: 配置对象
@@ -231,143 +231,101 @@ class ReverseDriver(Driver):
         raise NotImplementedError
 
 
-class HTTPRequest:
+@dataclass
+class HTTPConnection(abc.ABC):
+    http_version: str
+    """One of `"1.0"`, `"1.1"` or `"2"`."""
+    scheme: str
+    """URL scheme portion (likely `"http"` or `"https"`)."""
+    path: str
+    """
+    HTTP request target excluding any query string,
+    with percent-encoded sequences and UTF-8 byte sequences
+    decoded into characters.
+    """
+    query_string: bytes = b""
+    """ URL portion after the `?`, percent-encoded."""
+    headers: Dict[str, str] = field(default_factory=dict)
+    """A dict of name-value pairs,
+    where name is the header name, and value is the header value.
+
+    Order of header values must be preserved from the original HTTP request;
+    order of header names is not important.
+
+    Header names must be lowercased.
+    """
+
+    @property
+    @abc.abstractmethod
+    def type(self) -> str:
+        """Connection type."""
+        raise NotImplementedError
+
+
+@dataclass
+class HTTPRequest(HTTPConnection):
     """HTTP 请求封装。参考 `asgi http scope`_。
 
     .. _asgi http scope:
         https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope
     """
+    method: str = "GET"
+    """The HTTP method name, uppercased."""
+    body: bytes = b""
+    """Body of the request.
 
-    def __init__(self, scope: MutableMapping[str, Any]):
-        self._scope = scope
+    Optional; if missing defaults to b"".
+    """
 
     @property
     def type(self) -> str:
-        """Always `http`"""
+        """Always ``http``"""
         return "http"
 
-    @property
-    def scope(self) -> MutableMapping[str, Any]:
-        """Raw scope from asgi.
 
-        The connection scope information, a dictionary that
-        contains at least a `type` key specifying the protocol that is incoming.
-        """
-        return self._scope
-
-    @property
-    def http_version(self) -> str:
-        """One of `"1.0"`, `"1.1"` or `"2"`."""
-        raise self.scope["http_version"]
-
-    @property
-    def method(self) -> str:
-        """The HTTP method name, uppercased."""
-        raise self.scope["method"]
-
-    @property
-    def schema(self) -> str:
-        """
-        URL scheme portion (likely `"http"` or `"https"`).
-        Optional (but must not be empty); default is `"http"`.
-        """
-        raise self.scope["schema"]
-
-    @property
-    def path(self) -> str:
-        """
-        HTTP request target excluding any query string,
-        with percent-encoded sequences and UTF-8 byte sequences
-        decoded into characters.
-        """
-        return self.scope["path"]
-
-    @property
-    def query_string(self) -> bytes:
-        """ URL portion after the `?`, percent-encoded."""
-        return self.scope["query_string"]
-
-    @property
-    def headers(self) -> List[Tuple[bytes, bytes]]:
-        """An iterable of [name, value] two-item iterables,
-        where name is the header name, and value is the header value.
-
-        Order of header values must be preserved from the original HTTP request;
-        order of header names is not important.
-
-        Duplicates are possible and must be preserved in the message as received.
-
-        Header names must be lowercased.
-        """
-        return list(self.scope["headers"])
-
-    @property
-    def body(self) -> bytes:
-        """Body of the request.
-
-        Optional; if missing defaults to b"".
-
-        If more_body is set, treat as start of body and concatenate on further chunks.
-        """
-        return self.scope["body"]
-
-
+@dataclass
 class HTTPResponse:
     """HTTP 响应封装。参考 `asgi http scope`_。
 
     .. _asgi http scope:
         https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope
     """
+    status: int
+    """HTTP status code."""
+    body: Optional[bytes] = None
+    """HTTP body content.
 
-    def __init__(self,
-                 status: int,
-                 headers: List[Tuple[bytes, bytes]] = [],
-                 body: Optional[bytes] = None):
-        self.status: int = status
-        """HTTP status code."""
-        self.headers: List[Tuple[bytes, bytes]] = headers
-        """An iterable of [name, value] two-item iterables,
-        where name is the header name,
-        and value is the header value.
+    Optional; if missing defaults to ``None``.
+    """
+    headers: Dict[str, str] = field(default_factory=dict)
+    """A dict of name-value pairs,
+    where name is the header name, and value is the header value.
 
-        Order must be preserved in the HTTP response.
+    Order must be preserved in the HTTP response.
 
-        Header names must be lowercased.
+    Header names must be lowercased.
 
-        Optional; if missing defaults to an empty list.
-        """
-        self.body: Optional[bytes] = body
-        """HTTP body content.
-
-        Optional; if missing defaults to `None`.
-        """
+    Optional; if missing defaults to an empty dict.
+    """
 
     @property
     def type(self) -> str:
-        """Always `http`"""
+        """Always ``http``"""
         return "http"
 
 
-class WebSocket:
+@dataclass
+class WebSocket(HTTPConnection, abc.ABC):
     """WebSocket 连接封装。参考 `asgi websocket scope`_。
 
     .. _asgi websocket scope:
         https://asgi.readthedocs.io/en/latest/specs/www.html#websocket-connection-scope
     """
 
-    @abc.abstractmethod
-    def __init__(self, websocket):
-        """
-        :参数:
-
-          * ``websocket: Any``: WebSocket 连接对象
-        """
-        self._websocket = websocket
-
     @property
-    def websocket(self):
-        """WebSocket 连接对象"""
-        return self._websocket
+    def type(self) -> str:
+        """Always ``websocket``"""
+        return "websocket"
 
     @property
     @abc.abstractmethod
@@ -389,11 +347,21 @@ class WebSocket:
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def receive(self) -> dict:
-        """接收一条 WebSocket 信息"""
+    async def receive(self) -> str:
+        """接收一条 WebSocket text 信息"""
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def send(self, data: dict):
-        """发送一条 WebSocket 信息"""
+    async def receive_bytes(self) -> bytes:
+        """接收一条 WebSocket binary 信息"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    async def send(self, data: str):
+        """发送一条 WebSocket text 信息"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    async def send_bytes(self, data: bytes):
+        """发送一条 WebSocket text 信息"""
         raise NotImplementedError

@@ -1,16 +1,17 @@
 import json
 import urllib.parse
 
-from datetime import datetime
 import time
-from typing import Any, Union, Optional, TYPE_CHECKING
+from datetime import datetime
+from typing import Any, Tuple, Union, Optional, TYPE_CHECKING
 
 import httpx
+
 from nonebot.log import logger
 from nonebot.typing import overrides
 from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
-from nonebot.exception import RequestDenied
+from nonebot.drivers import Driver, HTTPConnection, HTTPRequest, HTTPResponse
 
 from .utils import calc_hmac_base64, log
 from .config import Config as DingConfig
@@ -20,7 +21,6 @@ from .event import MessageEvent, PrivateMessageEvent, GroupMessageEvent, Convers
 
 if TYPE_CHECKING:
     from nonebot.config import Config
-    from nonebot.drivers import Driver
 
 SEND = "send"
 
@@ -31,10 +31,6 @@ class Bot(BaseBot):
     """
     ding_config: DingConfig
 
-    def __init__(self, connection_type: str, self_id: str, **kwargs):
-
-        super().__init__(connection_type, self_id, **kwargs)
-
     @property
     def type(self) -> str:
         """
@@ -43,57 +39,61 @@ class Bot(BaseBot):
         return "ding"
 
     @classmethod
-    def register(cls, driver: "Driver", config: "Config"):
+    def register(cls, driver: Driver, config: "Config"):
         super().register(driver, config)
         cls.ding_config = DingConfig(**config.dict())
 
     @classmethod
     @overrides(BaseBot)
-    async def check_permission(cls, driver: "Driver", connection_type: str,
-                               headers: dict, body: Optional[bytes]) -> str:
+    async def check_permission(
+            cls, driver: Driver,
+            request: HTTPConnection) -> Tuple[Optional[str], HTTPResponse]:
         """
         :说明:
 
           钉钉协议鉴权。参考 `鉴权 <https://ding-doc.dingtalk.com/doc#/serverapi2/elzz1p>`_
         """
-        timestamp = headers.get("timestamp")
-        sign = headers.get("sign")
+        timestamp = request.headers.get("timestamp")
+        sign = request.headers.get("sign")
 
         # 检查连接方式
-        if connection_type not in ["http"]:
-            raise RequestDenied(
-                405, "Unsupported connection type, available type: `http`")
+        if not isinstance(request, HTTPRequest):
+            return None, HTTPResponse(
+                405, b"Unsupported connection type, available type: `http`")
 
         # 检查 timestamp
         if not timestamp:
-            raise RequestDenied(400, "Missing `timestamp` Header")
+            return None, HTTPResponse(400, b"Missing `timestamp` Header")
 
         # 检查 sign
         secret = cls.ding_config.secret
         if secret:
             if not sign:
                 log("WARNING", "Missing Signature Header")
-                raise RequestDenied(400, "Missing `sign` Header")
+                return None, HTTPResponse(400, b"Missing `sign` Header")
             sign_base64 = calc_hmac_base64(str(timestamp), secret)
             if sign != sign_base64.decode('utf-8'):
                 log("WARNING", "Signature Header is invalid")
-                raise RequestDenied(403, "Signature is invalid")
+                return None, HTTPResponse(403, b"Signature is invalid")
         else:
             log("WARNING", "Ding signature check ignored!")
-        return json.loads(body.decode())["chatbotUserId"]
+        return (json.loads(request.body.decode())["chatbotUserId"],
+                HTTPResponse(204, b''))
 
     @overrides(BaseBot)
-    async def handle_message(self, message: dict):
-        if not message:
+    async def handle_message(self, message: bytes):
+        data = json.loads(message)
+
+        if not data:
             return
 
         # 判断消息类型，生成不同的 Event
         try:
-            conversation_type = message["conversationType"]
+            conversation_type = data["conversationType"]
             if conversation_type == ConversationType.private:
-                event = PrivateMessageEvent.parse_obj(message)
+                event = PrivateMessageEvent.parse_obj(data)
             elif conversation_type == ConversationType.group:
-                event = GroupMessageEvent.parse_obj(message)
+                event = GroupMessageEvent.parse_obj(data)
             else:
                 raise ValueError("Unsupported conversation type")
         except Exception as e:
@@ -104,7 +104,7 @@ class Bot(BaseBot):
             await handle_event(self, event)
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
-                f"<r><bg #f8bbd0>Failed to handle event. Raw: {message}</bg #f8bbd0></r>"
+                f"<r><bg #f8bbd0>Failed to handle event. Raw: {data}</bg #f8bbd0></r>"
             )
         return
 

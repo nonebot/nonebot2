@@ -268,74 +268,71 @@ Reverse Driver 基类。将后端框架封装，以满足适配器使用。
 用于处理 WebSocket 类型请求的函数
 
 
-## _class_ `HTTPRequest`
+## _class_ `HTTPConnection`
 
-基类：`object`
-
-HTTP 请求封装。参考 [asgi http scope](https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope)。
+基类：`abc.ABC`
 
 
-### _property_ `type`
-
-Always http
-
-
-### _property_ `scope`
-
-Raw scope from asgi.
-
-The connection scope information, a dictionary that
-contains at least a type key specifying the protocol that is incoming.
-
-
-### _property_ `http_version`
+### `http_version`
 
 One of "1.0", "1.1" or "2".
 
 
-### _property_ `method`
-
-The HTTP method name, uppercased.
-
-
-### _property_ `schema`
+### `scheme`
 
 URL scheme portion (likely "http" or "https").
-Optional (but must not be empty); default is "http".
 
 
-### _property_ `path`
+### `path`
 
 HTTP request target excluding any query string,
 with percent-encoded sequences and UTF-8 byte sequences
 decoded into characters.
 
 
-### _property_ `query_string`
+### `query_string`
 
 URL portion after the ?, percent-encoded.
 
 
-### _property_ `headers`
+### `headers`
 
-An iterable of [name, value] two-item iterables,
+A dict of name-value pairs,
 where name is the header name, and value is the header value.
 
 Order of header values must be preserved from the original HTTP request;
 order of header names is not important.
 
-Duplicates are possible and must be preserved in the message as received.
-
 Header names must be lowercased.
 
 
-### _property_ `body`
+### _abstract property_ `type`
+
+Connection type.
+
+
+## _class_ `HTTPRequest`
+
+基类：`nonebot.drivers.HTTPConnection`
+
+HTTP 请求封装。参考 [asgi http scope](https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope)。
+
+
+### `method`
+
+The HTTP method name, uppercased.
+
+
+### `body`
 
 Body of the request.
 
 Optional; if missing defaults to b"".
 
-If more_body is set, treat as start of body and concatenate on further chunks.
+
+### _property_ `type`
+
+Always `http`
 
 
 ## _class_ `HTTPResponse`
@@ -350,51 +347,40 @@ HTTP 响应封装。参考 [asgi http scope](https://asgi.readthedocs.io/en/late
 HTTP status code.
 
 
+### `body`
+
+HTTP body content.
+
+Optional; if missing defaults to `None`.
+
+
 ### `headers`
 
-An iterable of [name, value] two-item iterables,
-where name is the header name,
-and value is the header value.
+A dict of name-value pairs,
+where name is the header name, and value is the header value.
 
 Order must be preserved in the HTTP response.
 
 Header names must be lowercased.
 
-Optional; if missing defaults to an empty list.
-
-
-### `body`
-
-HTTP body content.
-
-Optional; if missing defaults to None.
+Optional; if missing defaults to an empty dict.
 
 
 ### _property_ `type`
 
-Always http
+Always `http`
 
 
 ## _class_ `WebSocket`
 
-基类：`object`
+基类：`nonebot.drivers.HTTPConnection`, `abc.ABC`
 
 WebSocket 连接封装。参考 [asgi websocket scope](https://asgi.readthedocs.io/en/latest/specs/www.html#websocket-connection-scope)。
 
 
-### _abstract_ `__init__(websocket)`
+### _property_ `type`
 
-
-* **参数**
-
-    
-    * `websocket: Any`: WebSocket 连接对象
-
-
-
-### _property_ `websocket`
-
-WebSocket 连接对象
+Always `websocket`
 
 
 ### _abstract property_ `closed`
@@ -424,9 +410,19 @@ WebSocket 连接对象
 
 ### _abstract async_ `receive()`
 
-接收一条 WebSocket 信息
+接收一条 WebSocket text 信息
+
+
+### _abstract async_ `receive_bytes()`
+
+接收一条 WebSocket binary 信息
 
 
 ### _abstract async_ `send(data)`
 
-发送一条 WebSocket 信息
+发送一条 WebSocket text 信息
+
+
+### _abstract async_ `send_bytes(data)`
+
+发送一条 WebSocket text 信息

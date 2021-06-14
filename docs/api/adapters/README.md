@@ -57,7 +57,7 @@ Config 配置对象
 
 
 
-### _abstract_ `__init__(connection_type, self_id, *, websocket=None)`
+### `__init__(self_id, request)`
 
 
 * **参数**
@@ -73,19 +73,14 @@ Config 配置对象
 
 
 
-### `connection_type`
-
-连接类型
-
-
 ### `self_id`
 
 机器人 ID
 
 
-### `websocket`
+### `request`
 
-Websocket 连接对象
+连接信息
 
 
 ### _abstract property_ `type`
@@ -102,7 +97,7 @@ Adapter 类型
 
 
 
-### _abstract async classmethod_ `check_permission(driver, connection_type, headers, body)`
+### _abstract async classmethod_ `check_permission(driver, request)`
 
 
 * **说明**
@@ -130,7 +125,10 @@ Adapter 类型
 * **返回**
 
     
-    * `str`: 连接唯一标识符
+    * `str`: 连接唯一标识符，`None` 代表连接不合法
+
+
+    * `HTTPResponse`: HTTP 上报响应
 
 
 
@@ -153,7 +151,7 @@ Adapter 类型
 * **参数**
 
     
-    * `message: dict`: 收到的上报消息
+    * `message: bytes`: 收到的上报消息
 
 
 

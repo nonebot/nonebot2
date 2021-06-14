@@ -132,27 +132,6 @@ sidebarDepth: 0
 
 
 
-## _exception_ `RequestDenied`
-
-基类：`nonebot.exception.NoneBotException`
-
-
-* **说明**
-
-    Bot 连接请求不合法。
-
-
-
-* **参数**
-
-    
-    * `status_code: int`: HTTP 状态码
-
-
-    * `reason: str`: 拒绝原因
-
-
-
 ## _exception_ `AdapterException`
 
 基类：`nonebot.exception.NoneBotException`

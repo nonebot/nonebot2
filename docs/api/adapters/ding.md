@@ -105,7 +105,7 @@ sidebarDepth: 0
 * 返回: `"ding"`
 
 
-### _async classmethod_ `check_permission(driver, connection_type, headers, body)`
+### _async classmethod_ `check_permission(driver, request)`
 
 
 * **说明**
