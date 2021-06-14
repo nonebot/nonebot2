@@ -290,19 +290,6 @@ class MessageChain(BaseMessage[MessageSegment]):
             )
 
     @overrides(BaseMessage)
-    def reduce(self):
-        """
-        :说明:
-
-          忽略为空的消息段, 合并相邻的纯文本消息段
-        """
-        for index, segment in enumerate(self):
-            segment: MessageSegment
-            if segment.is_text() and not str(segment).strip():
-                self.pop(index)
-        super().reduce()
-
-    @overrides(BaseMessage)
     def _construct(
         self, message: Union[List[Dict[str, Any]], Iterable[MessageSegment]]
     ) -> List[MessageSegment]:

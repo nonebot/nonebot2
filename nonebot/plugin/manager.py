@@ -93,7 +93,7 @@ class PluginManager:
         if not prefix.startswith(_internal_space.__name__):
             prefix = _internal_space.__name__
         module = _InternalModule(prefix, self)
-        sys.modules[module.__name__] = module
+        sys.modules[module.__name__] = module  # type: ignore
         setattr(_internal_space, internal_id, module)
         return module
 
@@ -177,11 +177,11 @@ class PluginFinder(MetaPathFinder):
                 newname = manager._rewrite_module_name(fullname)
                 if newname:
                     spec = PathFinder.find_spec(
-                        newname, [*manager.search_path, *(path or sys.path)],
+                        newname, path or [*manager.search_path, *sys.path],
                         target)
                     if spec:
-                        spec.loader = PluginLoader(manager, newname,
-                                                   spec.origin)
+                        spec.loader = PluginLoader(  # type: ignore
+                            manager, newname, spec.origin)
                         return spec
                 index -= 1
         return None

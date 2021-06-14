@@ -251,8 +251,8 @@ class MessageSegment(Mapping, abc.ABC, Generic[T_Message]):
     - 说明: 消息段数据
     """
 
-    @abc.abstractmethod
     @classmethod
+    @abc.abstractmethod
     def get_message_class(cls) -> Type[T_Message]:
         raise NotImplementedError
 
@@ -330,8 +330,8 @@ class Message(List[T_MessageSegment], abc.ABC):
         else:
             self.extend(self._construct(message))
 
-    @abc.abstractmethod
     @classmethod
+    @abc.abstractmethod
     def get_segment_class(cls) -> Type[T_MessageSegment]:
         raise NotImplementedError
 
