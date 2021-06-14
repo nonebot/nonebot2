@@ -8,7 +8,7 @@
 import abc
 import asyncio
 from dataclasses import dataclass, field
-from typing import Set, Dict, Type, Optional, Callable, TYPE_CHECKING
+from typing import Any, Set, Dict, Type, Optional, Callable, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
@@ -199,6 +199,7 @@ class Driver(abc.ABC):
         asyncio.create_task(_run_hook(bot))
 
 
+# TODO: issue #240
 class ForwardDriver(Driver):
     pass
 
@@ -210,24 +211,14 @@ class ReverseDriver(Driver):
 
     @property
     @abc.abstractmethod
-    def server_app(self):
+    def server_app(self) -> Any:
         """驱动 APP 对象"""
         raise NotImplementedError
 
     @property
     @abc.abstractmethod
-    def asgi(self):
+    def asgi(self) -> Any:
         """驱动 ASGI 对象"""
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    async def _handle_http(self, *args, **kwargs):
-        """用于处理 HTTP 类型请求的函数"""
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    async def _handle_ws_reverse(self, *args, **kwargs):
-        """用于处理 WebSocket 类型请求的函数"""
         raise NotImplementedError
 
 

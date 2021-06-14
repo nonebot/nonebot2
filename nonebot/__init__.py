@@ -30,13 +30,13 @@
 
 import importlib
 import pkg_resources
-from typing import Dict, Type, Optional
+from typing import Any, Dict, Type, Optional
 
 from nonebot.adapters import Bot
-from nonebot.drivers import Driver
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.log import logger, default_filter
+from nonebot.drivers import Driver, ForwardDriver, ReverseDriver
 
 try:
     _dist: pkg_resources.Distribution = pkg_resources.get_distribution(
@@ -76,8 +76,7 @@ def get_driver() -> Driver:
     return _driver
 
 
-# FIXME: app for reverse driver
-def get_app():
+def get_app() -> Any:
     """
     :说明:
 
@@ -99,11 +98,13 @@ def get_app():
 
     """
     driver = get_driver()
+    assert isinstance(
+        driver,
+        ReverseDriver), "app object is only available for reverse driver"
     return driver.server_app
 
 
-# FIXME: asgi for reverse driver
-def get_asgi():
+def get_asgi() -> Any:
     """
     :说明:
 
@@ -125,6 +126,9 @@ def get_asgi():
 
     """
     driver = get_driver()
+    assert isinstance(
+        driver,
+        ReverseDriver), "asgi object is only available for reverse driver"
     return driver.asgi
 
 

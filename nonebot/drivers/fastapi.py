@@ -118,7 +118,7 @@ class Driver(ReverseDriver):
 
     @property
     @overrides(ReverseDriver)
-    def asgi(self):
+    def asgi(self) -> FastAPI:
         """``FastAPI APP`` 对象"""
         return self._server_app
 
@@ -175,7 +175,6 @@ class Driver(ReverseDriver):
                     log_config=LOGGING_CONFIG,
                     **kwargs)
 
-    @overrides(ReverseDriver)
     async def _handle_http(self, adapter: str, request: Request):
         data = await request.body()
 
@@ -209,7 +208,6 @@ class Driver(ReverseDriver):
         return Response(response and response.body,
                         response and response.status or 200)
 
-    @overrides(ReverseDriver)
     async def _handle_ws_reverse(self, adapter: str,
                                  websocket: FastAPIWebSocket):
         ws = WebSocket(websocket.scope.get("http_version",
