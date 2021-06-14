@@ -50,8 +50,8 @@ class Filter:
     def __call__(self, record):
         module = sys.modules.get(record["name"])
         if module:
-            plugin_name = getattr(module, "__plugin_name__", record["name"])
-            record["name"] = plugin_name
+            module_name = getattr(module, "__module_name__", record["name"])
+            record["name"] = module_name
         record["name"] = record["name"].split(".")[0]
         levelno = logger.level(self.level).no if isinstance(self.level,
                                                             str) else self.level
