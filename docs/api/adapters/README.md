@@ -63,13 +63,10 @@ Config 配置对象
 * **参数**
 
     
-    * `connection_type: str`: http 或者 websocket
-
-
     * `self_id: str`: 机器人 ID
 
 
-    * `websocket: Optional[WebSocket]`: Websocket 连接对象
+    * `request: HTTPConnection`: request 连接对象
 
 
 
@@ -112,30 +109,17 @@ Adapter 类型
     * `driver: Driver`: Driver 对象
 
 
-    * `connection_type: str`: 连接类型
-
-
-    * `headers: dict`: 请求头
-
-
-    * `body: Optional[bytes]`: 请求数据，WebSocket 连接该部分为 None
+    * `request: HTTPConnection`: request 请求详情
 
 
 
 * **返回**
 
     
-    * `str`: 连接唯一标识符，`None` 代表连接不合法
+    * `Optional[str]`: 连接唯一标识符，`None` 代表连接不合法
 
 
-    * `HTTPResponse`: HTTP 上报响应
-
-
-
-* **异常**
-
-    
-    * `RequestDenied`: 请求非法
+    * `Optional[HTTPResponse]`: HTTP 上报响应
 
 
 
@@ -224,9 +208,59 @@ await bot.send_msg(message="hello world")
 
 
 
+### _classmethod_ `on_calling_api(func)`
+
+
+* **说明**
+
+    调用 api 预处理。
+
+
+
+* **参数**
+
+    
+    * `bot: Bot`: 当前 bot 对象
+
+
+    * `api: str`: 调用的 api 名称
+
+
+    * `data: Dict[str, Any]`: api 调用的参数字典
+
+
+
+### _classmethod_ `on_called_api(func)`
+
+
+* **说明**
+
+    调用 api 后处理。
+
+
+
+* **参数**
+
+    
+    * `bot: Bot`: 当前 bot 对象
+
+
+    * `exception: Optional[Exception]`: 调用 api 时发生的错误
+
+
+    * `api: str`: 调用的 api 名称
+
+
+    * `data: Dict[str, Any]`: api 调用的参数字典
+
+
+    * `result: Any`: api 调用的返回
+
+
+
 ## _class_ `MessageSegment`
 
-基类：`abc.ABC`, `Mapping`
+基类：`Mapping`, `abc.ABC`, `Generic`[`nonebot.adapters._base.T_Message`]
 
 消息段基类
 
@@ -295,15 +329,6 @@ await bot.send_msg(message="hello world")
 
     
     * `obj: Union[Message, Iterable[MessageSegment]]`: 要添加的消息数组
-
-
-
-### `reduce()`
-
-
-* **说明**
-
-    缩减消息数组，即按 MessageSegment 的实现拼接相邻消息段
 
 
 

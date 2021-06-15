@@ -258,16 +258,6 @@ Reverse Driver 基类。将后端框架封装，以满足适配器使用。
 驱动 ASGI 对象
 
 
-### _abstract async_ `_handle_http(*args, **kwargs)`
-
-用于处理 HTTP 类型请求的函数
-
-
-### _abstract async_ `_handle_ws_reverse(*args, **kwargs)`
-
-用于处理 WebSocket 类型请求的函数
-
-
 ## _class_ `HTTPConnection`
 
 基类：`abc.ABC`
@@ -425,4 +415,4 @@ Always `websocket`
 
 ### _abstract async_ `send_bytes(data)`
 
-发送一条 WebSocket text 信息
+发送一条 WebSocket binary 信息

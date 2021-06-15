@@ -727,7 +727,7 @@ mirai-api-http 正向 Websocket 协议 Bot 适配。
 
 ## _class_ `MessageSegment`
 
-基类：`abc.ABC`, `Mapping`
+基类：`Mapping`, `abc.ABC`, `Generic`[`nonebot.adapters._base.T_Message`]
 
 Mirai-API-HTTP 协议 MessageSegment 适配。具体方法参考 [mirai-api-http 消息类型](https://github.com/project-mirai/mirai-api-http/blob/master/docs/MessageType.md)
 
@@ -973,15 +973,6 @@ Mirai-API-HTTP 协议 MessageSegment 适配。具体方法参考 [mirai-api-http
 Mirai 协议 Message 适配
 
 由于Mirai协议的Message实现较为特殊, 故使用MessageChain命名
-
-
-### `reduce()`
-
-
-* **说明**
-
-    忽略为空的消息段, 合并相邻的纯文本消息段
-
 
 
 ### `export()`
