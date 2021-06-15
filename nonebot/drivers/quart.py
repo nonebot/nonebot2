@@ -149,7 +149,6 @@ class Driver(ReverseDriver):
                     log_config=LOGGING_CONFIG,
                     **kwargs)
 
-    @overrides(ReverseDriver)
     async def _handle_http(self, adapter: str):
         request: Request = _request
         data: bytes = await request.get_data()  # type: ignore
@@ -179,7 +178,6 @@ class Driver(ReverseDriver):
         return Response(response and response.body or "",
                         response and response.status or 200)
 
-    @overrides(ReverseDriver)
     async def _handle_ws_reverse(self, adapter: str):
         websocket: QuartWebSocket = _websocket
         ws = WebSocket(websocket.http_version, websocket.scheme,

@@ -307,9 +307,12 @@ CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 
 ## _class_ `MessageSegment`
 
-基类：`abc.ABC`, `Mapping`
+基类：[`nonebot.adapters._base.MessageSegment`](README.md#nonebot.adapters._base.MessageSegment)[`Message`]
 
 CQHTTP 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
+
+
+### _classmethod_ `get_message_class()`
 
 
 ### `is_text()`
@@ -410,6 +413,9 @@ CQHTTP 协议 MessageSegment 适配。具体方法参考协议消息段类型或
 基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)[`nonebot.adapters.cqhttp.message.MessageSegment`]
 
 CQHTTP 协议 Message 适配。
+
+
+### _classmethod_ `get_segment_class()`
 
 
 ### `extract_plain_text()`

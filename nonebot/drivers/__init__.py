@@ -354,5 +354,5 @@ class WebSocket(HTTPConnection, abc.ABC):
 
     @abc.abstractmethod
     async def send_bytes(self, data: bytes):
-        """发送一条 WebSocket text 信息"""
+        """发送一条 WebSocket binary 信息"""
         raise NotImplementedError
