@@ -9,7 +9,7 @@ _running_matcher: Dict[str, int] = {}
 
 
 @run_preprocessor
-async def _(matcher: Matcher, bot: Bot, event: Event, state: T_State):
+async def preprocess(matcher: Matcher, bot: Bot, event: Event, state: T_State):
     try:
         session_id = event.get_session_id()
     except Exception:
@@ -23,7 +23,8 @@ async def _(matcher: Matcher, bot: Bot, event: Event, state: T_State):
 
 
 @run_postprocessor
-async def _(matcher: Matcher, exception: Optional[Exception], bot: Bot, event: Event, state: T_State):
+async def postprocess(matcher: Matcher, exception: Optional[Exception],
+                      bot: Bot, event: Event, state: T_State):
     try:
         session_id = event.get_session_id()
     except Exception:

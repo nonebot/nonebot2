@@ -7,7 +7,7 @@ test_command = on_command("帮助", to_me())
 
 
 @test_command.handle()
-async def test_handler(bot: Bot, event: Event, state: T_State):
+async def test_handler1(bot: Bot, event: Event, state: T_State):
     args = str(event.get_message()).strip()
     print("[!] Command:", state["_prefix"], "Args:", args)
     if args:
@@ -17,7 +17,7 @@ async def test_handler(bot: Bot, event: Event, state: T_State):
 
 
 @test_command.got("help", prompt="你要帮助的命令是？")
-async def test_handler(bot: Bot, event: Event, state: T_State):
+async def test_handler2(bot: Bot, event: Event, state: T_State):
     print("[!] Command 帮助:", state["help"])
     if state["help"] not in ["test1", "test2"]:
         await test_command.reject(f"{state['help']} 不支持，请重新输入！")

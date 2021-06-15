@@ -9,6 +9,7 @@ Quart 驱动适配
 """
 
 import asyncio
+from dataclasses import dataclass
 from typing import List, TypeVar, Callable, Coroutine, Optional
 
 import uvicorn
@@ -231,6 +232,7 @@ class Driver(ReverseDriver):
             self._bot_disconnect(bot)
 
 
+@dataclass
 class WebSocket(BaseWebSocket):
     websocket: QuartWebSocket = None  # type: ignore
 

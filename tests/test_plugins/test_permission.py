@@ -9,10 +9,10 @@ test_command = on_startswith("hello", to_me(), permission=SUPERUSER)
 
 
 @test_command.handle()
-async def test_handler(bot: CQHTTPBot):
+async def test_handler1(bot: CQHTTPBot):
     await test_command.finish("cqhttp hello")
 
 
 @test_command.handle()
-async def test_handler(bot: DingBot):
+async def test_handler2(bot: DingBot):
     await test_command.finish("ding hello")
