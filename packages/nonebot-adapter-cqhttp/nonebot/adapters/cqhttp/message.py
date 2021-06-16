@@ -2,8 +2,7 @@ import re
 from io import BytesIO
 from pathlib import Path
 from base64 import b64encode
-from functools import reduce
-from typing import Any, List, Dict, Union, Tuple, Mapping, Iterable, Optional
+from typing import Type, Union, Tuple, Mapping, Iterable, Optional
 
 from nonebot.typing import overrides
 from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
@@ -17,7 +16,7 @@ class MessageSegment(BaseMessageSegment["Message"]):
     """
 
     @classmethod
-    def get_message_class(cls):
+    def get_message_class(cls) -> Type["Message"]:
         return Message
 
     @overrides(BaseMessageSegment)
@@ -236,22 +235,18 @@ class Message(BaseMessage[MessageSegment]):
     """
 
     @classmethod
-    def get_segment_class(cls):
+    def get_segment_class(cls) -> Type[MessageSegment]:
         return MessageSegment
 
     @overrides(BaseMessage)
-    def __add__(
-        self, other: Union[str, Mapping, Iterable[Mapping], MessageSegment,
-                           "Message"]
-    ) -> "Message":
+    def __add__(self, other: Union[str, Mapping,
+                                   Iterable[Mapping]]) -> "Message":
         return super(Message, self).__add__(
             MessageSegment.text(other) if isinstance(other, str) else other)
 
     @overrides(BaseMessage)
-    def __radd__(
-        self, other: Union[str, Mapping, Iterable[Mapping], MessageSegment,
-                           "Message"]
-    ) -> "Message":
+    def __radd__(self, other: Union[str, Mapping,
+                                    Iterable[Mapping]]) -> "Message":
         return super(Message, self).__radd__(
             MessageSegment.text(other) if isinstance(other, str) else other)
 
