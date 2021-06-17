@@ -1,34 +1,27 @@
 from copy import copy
-from typing import Any, Dict, Union, Mapping, Iterable
+from typing import Any, Dict, Type, Union, Mapping, Iterable
 
 from nonebot.typing import overrides
 from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
 
 
-class MessageSegment(BaseMessageSegment):
+class MessageSegment(BaseMessageSegment["Message"]):
     """
     钉钉 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
     """
 
+    @classmethod
     @overrides(BaseMessageSegment)
-    def __init__(self, type_: str, data: Dict[str, Any]) -> None:
-        super().__init__(type=type_, data=data)
+    def get_message_class(cls) -> Type["Message"]:
+        return Message
 
     @overrides(BaseMessageSegment)
-    def __str__(self):
+    def __str__(self) -> str:
         if self.type == "text":
             return str(self.data["content"])
         elif self.type == "markdown":
             return str(self.data["text"])
         return ""
-
-    @overrides(BaseMessageSegment)
-    def __add__(self, other) -> "Message":
-        return Message(self) + other
-
-    @overrides(BaseMessageSegment)
-    def __radd__(self, other) -> "Message":
-        return Message(other) + self
 
     @overrides(BaseMessageSegment)
     def is_text(self) -> bool:
@@ -143,7 +136,7 @@ class MessageSegment(BaseMessageSegment):
     def raw(data) -> "MessageSegment":
         return MessageSegment('raw', data)
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> Dict[str, Any]:
         # 让用户可以直接发送原始的消息格式
         if self.type == "raw":
             return copy(self.data)
@@ -159,6 +152,11 @@ class Message(BaseMessage[MessageSegment]):
     """
     钉钉 协议 Message 适配。
     """
+
+    @classmethod
+    @overrides(BaseMessage)
+    def get_segment_class(cls) -> Type[MessageSegment]:
+        return MessageSegment
 
     @staticmethod
     @overrides(BaseMessage)

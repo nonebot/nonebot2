@@ -30,12 +30,27 @@ class WebSocket(BaseWebSocket):
                                    params={'sessionKey': session_key})
         websocket = await websockets.connect(uri=str(listen_address))
         await (await websocket.ping())
-        return cls(websocket)
+        return cls("1.1",
+                   listen_address.scheme,
+                   listen_address.path,
+                   listen_address.query,
+                   websocket=websocket)
 
     @overrides(BaseWebSocket)
-    def __init__(self, websocket: websockets.WebSocketClientProtocol):
+    def __init__(self,
+                 http_version: str,
+                 scheme: str,
+                 path: str,
+                 query_string: bytes = b"",
+                 headers: Dict[str, str] = None,
+                 websocket: websockets.WebSocketClientProtocol = None):
         self.event_handlers: Set[WebsocketHandlerFunction] = set()
-        super().__init__(websocket)
+        self.websocket: websockets.WebSocketClientProtocol = websocket  # type: ignore
+        super(WebSocket, self).__init__(http_version=http_version,
+                                        scheme=scheme,
+                                        path=path,
+                                        query_string=query_string,
+                                        headers=headers or {})
 
     @property
     @overrides(BaseWebSocket)
@@ -146,9 +161,7 @@ class WebsocketBot(Bot):
                 host=cls.mirai_config.host,  # type: ignore
                 port=cls.mirai_config.port,  # type: ignore
                 session_key=session.session_key)
-            bot = cls(connection_type='forward_ws',
-                      self_id=str(qq),
-                      websocket=websocket)
+            bot = cls(self_id=str(qq), request=websocket)
             websocket.handle(bot.handle_message)
             await websocket.accept()
             return bot

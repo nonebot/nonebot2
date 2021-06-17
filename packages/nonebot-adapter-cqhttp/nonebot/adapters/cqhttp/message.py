@@ -16,6 +16,7 @@ class MessageSegment(BaseMessageSegment["Message"]):
     """
 
     @classmethod
+    @overrides(BaseMessageSegment)
     def get_message_class(cls) -> Type["Message"]:
         return Message
 
@@ -235,6 +236,7 @@ class Message(BaseMessage[MessageSegment]):
     """
 
     @classmethod
+    @overrides(BaseMessage)
     def get_segment_class(cls) -> Type[MessageSegment]:
         return MessageSegment
 

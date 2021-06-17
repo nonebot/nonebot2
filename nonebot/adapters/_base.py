@@ -234,9 +234,8 @@ class Bot(abc.ABC):
 
 
 T = TypeVar("T")
-TMS = TypeVar("TMS")
+TMS = TypeVar("TMS", covariant=True)
 TM = TypeVar("TM", bound="Message")
-# TM = TypeVar("TM_co", bound="Message")
 
 
 @dataclass

@@ -1,5 +1,5 @@
 from enum import Enum
-from typing import Any, Dict, Iterable, List, Optional, Union
+from typing import Any, List, Dict, Type, Iterable, Optional, Union
 
 from pydantic import validate_arguments
 
@@ -25,7 +25,7 @@ class MessageType(str, Enum):
     POKE = 'Poke'
 
 
-class MessageSegment(BaseMessageSegment):
+class MessageSegment(BaseMessageSegment["MessageChain"]):
     """
     Mirai-API-HTTP 协议 MessageSegment 适配。具体方法参考 `mirai-api-http 消息类型`_
 
@@ -36,9 +36,13 @@ class MessageSegment(BaseMessageSegment):
     type: MessageType
     data: Dict[str, Any]
 
-    @overrides(BaseMessageSegment)
+    @classmethod
+    def get_message_class(cls) -> Type["MessageChain"]:
+        return MessageChain
+
     @validate_arguments
-    def __init__(self, type: MessageType, **data):
+    @overrides(BaseMessageSegment)
+    def __init__(self, type: MessageType, **data: Any):
         super().__init__(type=type,
                          data={k: v for k, v in data.items() if v is not None})
 
@@ -54,14 +58,6 @@ class MessageSegment(BaseMessageSegment):
                 self.data.items(),
             ),
         ])
-
-    @overrides(BaseMessageSegment)
-    def __add__(self, other) -> "MessageChain":
-        return MessageChain(self) + other
-
-    @overrides(BaseMessageSegment)
-    def __radd__(self, other) -> "MessageChain":
-        return MessageChain(other) + self
 
     @overrides(BaseMessageSegment)
     def is_text(self) -> bool:
@@ -272,6 +268,11 @@ class MessageChain(BaseMessage[MessageSegment]):
 
     由于Mirai协议的Message实现较为特殊, 故使用MessageChain命名
     """
+
+    @classmethod
+    @overrides(BaseMessage)
+    def get_segment_class(cls) -> Type[MessageSegment]:
+        return MessageSegment
 
     @overrides(BaseMessage)
     def __init__(self, message: Union[List[Dict[str,
