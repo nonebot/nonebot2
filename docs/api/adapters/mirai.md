@@ -727,7 +727,7 @@ mirai-api-http 正向 Websocket 协议 Bot 适配。
 
 ## _class_ `MessageSegment`
 
-基类：`Mapping`, `abc.ABC`, `Generic`[`nonebot.adapters._base.T_Message`]
+基类：`Mapping`, `abc.ABC`, `Generic`[`nonebot.adapters._base.TM`]
 
 Mirai-API-HTTP 协议 MessageSegment 适配。具体方法参考 [mirai-api-http 消息类型](https://github.com/project-mirai/mirai-api-http/blob/master/docs/MessageType.md)
 

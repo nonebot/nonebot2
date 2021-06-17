@@ -315,6 +315,7 @@ class ArgumentParser(ArgParser):
     def parse_args(self,
                    args: Optional[Sequence[str]] = None,
                    namespace: Optional[Namespace] = None) -> Namespace:
+        setattr(self, "message", "")
         return super().parse_args(args=args,
                                   namespace=namespace)  # type: ignore
 

@@ -82,3 +82,8 @@ Quart 使用的 logger
 ### `run(host=None, port=None, *, app=None, **kwargs)`
 
 使用 `uvicorn` 启动 Quart
+
+
+## _class_ `WebSocket`
+
+基类：[`nonebot.drivers.WebSocket`](README.md#nonebot.drivers.WebSocket)
