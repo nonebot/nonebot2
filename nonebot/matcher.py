@@ -579,7 +579,7 @@ class Matcher(metaclass=MatcherMeta):
                 bot, event) if self._default_state_factory else self.state
             self.state.update(state)
 
-            for _ in range(len(self.handlers)):
+            while self.handlers:
                 handler = self.handlers.pop(0)
                 await handler(self, bot, event, self.state)
 
