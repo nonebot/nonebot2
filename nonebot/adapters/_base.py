@@ -269,10 +269,10 @@ class MessageSegment(Mapping, abc.ABC, Generic[TM]):
         return not self == other
 
     def __add__(self, other: Union[str, Mapping, Iterable[Mapping]]) -> TM:
-        return self.get_message_class()(self) + other
+        return self.get_message_class()(self) + other  # type: ignore
 
     def __radd__(self, other: Union[str, Mapping, Iterable[Mapping]]) -> TM:
-        return self.get_message_class()(other) + self
+        return self.get_message_class()(other) + self  # type: ignore
 
     def __getitem__(self, key: str):
         return self.data[key]
@@ -357,7 +357,7 @@ class Message(List[TMS], abc.ABC):
         return result
 
     def __radd__(self: TM, other: Union[str, Mapping, Iterable[Mapping]]) -> TM:
-        result = self.__class__(other)
+        result = self.__class__(other)  # type: ignore
         return result + self
 
     def __iadd__(self: TM, other: Union[str, Mapping, Iterable[Mapping]]) -> TM:
