@@ -3,6 +3,7 @@ import uuid
 import pkgutil
 import importlib
 from hashlib import md5
+from pathlib import Path
 from types import ModuleType
 from collections import Counter
 from contextvars import ContextVar
@@ -166,15 +167,38 @@ class PluginManager:
             return f"{prefix}{module_name}"
         return None
 
+    def _check_absolute_import(self, origin_path: str) -> Optional[str]:
+        if not self.search_path:
+            return
+        paths = set([
+            *self.search_path,
+            *(str(Path(path).resolve()) for path in self.search_path)
+        ])
+        for path in paths:
+            try:
+                rel_path = Path(origin_path).relative_to(path)
+                return ".".join(rel_path.parts[:-1] + (rel_path.stem,))
+            except ValueError:
+                continue
+
 
 class PluginFinder(MetaPathFinder):
 
     def find_spec(self, fullname: str, path, target):
         if _manager_stack:
             index = -1
+            origin_spec = PathFinder.find_spec(fullname, path, target)
             while -index <= len(_manager_stack):
                 manager = _manager_stack[index]
-                newname = manager._rewrite_module_name(fullname)
+
+                rel_name = None
+                if origin_spec and origin_spec.origin:
+                    rel_name = manager._check_absolute_import(
+                        origin_spec.origin)
+
+                newname = manager._rewrite_module_name(rel_name or fullname)
+                print("RESULT::::::", newname, rel_name or fullname, rel_name,
+                      fullname, origin_spec and origin_spec.origin)
                 if newname:
                     spec = PathFinder.find_spec(
                         newname, path or [*manager.search_path, *sys.path],
