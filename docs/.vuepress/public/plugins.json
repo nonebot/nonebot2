@@ -286,5 +286,13 @@
     "desc": "基于RSSHUB阅读器的P站排行和P站搜图",
     "author": "HibiKier",
     "repo": "https://github.com/HibiKier/nonebot_plugin_pixivrank_search"
+  },
+  {
+    "id": "nonebot_plugin_russian",
+    "link": "nonebot-plugin-russian",
+    "name": "nonebot_plugin_russian",
+    "desc": "群内小游戏，使用金币赌注的俄罗斯轮盘",
+    "author": "HibiKier",
+    "repo": "https://github.com/HibiKier/nonebot_plugin_russian"
   }
 ]
