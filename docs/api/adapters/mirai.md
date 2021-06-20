@@ -727,7 +727,7 @@ mirai-api-http 正向 Websocket 协议 Bot 适配。
 
 ## _class_ `MessageSegment`
 
-基类：`Mapping`, `abc.ABC`, `Generic`[`nonebot.adapters._base.TM`]
+基类：[`nonebot.adapters._base.MessageSegment`](README.md#nonebot.adapters._base.MessageSegment)[`MessageChain`]
 
 Mirai-API-HTTP 协议 MessageSegment 适配。具体方法参考 [mirai-api-http 消息类型](https://github.com/project-mirai/mirai-api-http/blob/master/docs/MessageType.md)
 
@@ -1047,7 +1047,7 @@ Mirai 协议 Message 适配
 
 # NoneBot.adapters.mirai.event 模块
 
-::: warning 
+::: warning
 事件中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则取代Mirai原有的驼峰命名
 
 部分字段可能与文档在符号上不一致
@@ -1078,17 +1078,17 @@ mirai-api-http 协议事件，字段与 mirai-api-http 一致。各事件字段�
 
 * **说明**
 
+    用户权限枚举类
 
-用户权限枚举类
-
-> 
-> * `OWNER`: 群主
-
-
-> * `ADMINISTRATOR`: 群管理
+    > 
+    > * `OWNER`: 群主
 
 
-> * `MEMBER`: 普通群成员
+    > * `ADMINISTRATOR`: 群管理
+
+
+    > * `MEMBER`: 普通群成员
+
 
 
 ## _class_ `MessageEvent`
@@ -1467,17 +1467,17 @@ Bot被邀请入群申请
 
 * **说明**
 
+    用户权限枚举类
 
-用户权限枚举类
-
-> 
-> * `OWNER`: 群主
-
-
-> * `ADMINISTRATOR`: 群管理
+    > 
+    > * `OWNER`: 群主
 
 
-> * `MEMBER`: 普通群成员
+    > * `ADMINISTRATOR`: 群管理
+
+
+    > * `MEMBER`: 普通群成员
+
 
 
 ## _class_ `Event`
