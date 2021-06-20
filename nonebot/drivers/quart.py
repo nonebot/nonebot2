@@ -62,7 +62,6 @@ class Driver(ReverseDriver):
       * ``/{adapter name}/ws``: WebSocket 上报
     """
 
-    @overrides(ReverseDriver)
     def __init__(self, env: Env, config: NoneBotConfig):
         super().__init__(env, config)
 

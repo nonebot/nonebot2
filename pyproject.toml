@@ -31,6 +31,7 @@ fastapi = "^0.65.2"
 Quart = { version = "^0.14.1", optional = true }
 pydantic = { extras = ["dotenv"], version = "~1.8.0" }
 uvicorn = { version = "^0.13.0", extras = ["standard"] }
+aiohttp = { version = "^3.7.4", optional = true }
 
 [tool.poetry.dev-dependencies]
 yapf = "^0.30.0"
@@ -43,7 +44,8 @@ sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-bu
 
 [tool.poetry.extras]
 quart = ["quart"]
-all = ["quart"]
+aiohttp = ["aiohttp"]
+all = ["quart", "aiohttp"]
 
 [[tool.poetry.source]]
 name = "aliyun"

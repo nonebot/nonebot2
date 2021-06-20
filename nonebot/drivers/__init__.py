@@ -39,7 +39,6 @@ class Driver(abc.ABC):
     :说明: Bot 连接断开时执行的函数
     """
 
-    @abc.abstractmethod
     def __init__(self, env: Env, config: Config):
         """
         :参数:
@@ -108,20 +107,13 @@ class Driver(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    def run(self,
-            host: Optional[str] = None,
-            port: Optional[int] = None,
-            *args,
-            **kwargs):
+    def run(self, *args, **kwargs):
         """
         :说明:
 
           启动驱动框架
 
         :参数:
-
-          * ``host: Optional[str]``: 驱动绑定 IP
-          * ``post: Optional[int]``: 驱动绑定端口
           * ``*args``
           * ``**kwargs``
         """
@@ -201,7 +193,10 @@ class Driver(abc.ABC):
 
 # TODO: issue #240
 class ForwardDriver(Driver):
-    pass
+
+    @abc.abstractmethod
+    def setup(self, request: "HTTPConnection") -> None:
+        raise NotImplementedError
 
 
 class ReverseDriver(Driver):
