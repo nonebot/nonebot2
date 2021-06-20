@@ -144,6 +144,8 @@ class Config(BaseConfig):
     :说明:
 
       NoneBot 运行所使用的 ``Driver`` 。继承自 ``nonebot.driver.BaseDriver`` 。
+
+      配置格式为 ``<module>[:<class>]``，默认类名为 ``Driver``。
     """
     host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
     """

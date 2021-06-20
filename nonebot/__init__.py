@@ -199,8 +199,12 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
         logger.opt(colors=True).debug(
             f"Loaded <y><b>Config</b></y>: {escape_tag(str(config.dict()))}")
 
-        DriverClass: Type[Driver] = getattr(
-            importlib.import_module(config.driver), "Driver")
+        modulename, _, cls = config.driver.partition(":")
+        module = importlib.import_module(modulename)
+        instance = module
+        for attr_str in (cls or "Driver").split("."):
+            instance = getattr(instance, attr_str)
+        DriverClass: Type[Driver] = instance  # type: ignore
         _driver = DriverClass(env, config)
 
 
