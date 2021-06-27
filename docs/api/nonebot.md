@@ -211,7 +211,7 @@ asgi = nonebot.get_asgi()
 ```python
 assert nonebot.get_bot('12345') == nonebot.get_bots()['12345']
 
-another_random_bot = nonebot.get_bot()
+another_unspecified_bot = nonebot.get_bot()
 ```
 
 
