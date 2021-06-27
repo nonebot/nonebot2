@@ -132,15 +132,15 @@ def get_asgi() -> Any:
     return driver.asgi
 
 
-def get_bot(ID: Optional[str] = None) -> Bot:
+def get_bot(self_id: Optional[str] = None) -> Bot:
     """
     :说明:
 
-      当提供 ID 时，此函数是 get_bots()[ID] 的简写；当不提供时，返回一个 Bot。
+      当提供 self_id 时，此函数是 get_bots()[self_id] 的简写；当不提供时，返回一个 Bot。
 
     :参数:
 
-      * ``ID: Optional[str]``: 用来识别 Bot 的 ID
+      * ``self_id: Optional[str]``: 用来识别 Bot 的 ID
 
     :返回:
 
@@ -161,8 +161,8 @@ def get_bot(ID: Optional[str] = None) -> Bot:
         another_unspecified_bot = nonebot.get_bot()
     """
     bots = get_bots()
-    if ID is not None:
-        return bots[ID]
+    if self_id is not None:
+        return bots[self_id]
 
     for _, bot in bots.items():
         return bot
