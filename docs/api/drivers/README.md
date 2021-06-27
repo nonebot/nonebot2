@@ -62,7 +62,7 @@ Driver 基类。
 
 
 
-### _abstract_ `__init__(env, config)`
+### `__init__(env, config)`
 
 
 * **参数**
@@ -164,7 +164,7 @@ Driver 基类。
 驱动专属 logger 日志记录器
 
 
-### _abstract_ `run(host=None, port=None, *args, **kwargs)`
+### _abstract_ `run(*args, **kwargs)`
 
 
 * **说明**
@@ -176,12 +176,6 @@ Driver 基类。
 * **参数**
 
     
-    * `host: Optional[str]`: 驱动绑定 IP
-
-
-    * `post: Optional[int]`: 驱动绑定端口
-
-
     * `*args`
 
 
