@@ -164,7 +164,7 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
     if self_id is not None:
         return bots[self_id]
 
-    for _, bot in bots.items():
+    for bot in bots.values():
         return bot
 
     raise ValueError("There are no bots to get.")
