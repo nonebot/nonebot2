@@ -169,6 +169,52 @@ asgi = nonebot.get_asgi()
 ```
 
 
+## `get_bot(self_id=None)`
+
+
+* **说明**
+
+    当提供 self_id 时，此函数是 get_bots()[self_id] 的简写；当不提供时，返回一个 Bot。
+
+
+
+* **参数**
+
+    
+    * `self_id: Optional[str]`: 用来识别 Bot 的 ID
+
+
+
+* **返回**
+
+    
+    * `Bot`: Bot 对象
+
+
+
+* **异常**
+
+    
+    * `KeyError`: 对应 ID 的 Bot 不存在
+
+
+    * `ValueError`: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+
+
+    * `ValueError`: 没有传入 ID 且没有 Bot 可用
+
+
+
+* **用法**
+
+
+```python
+assert nonebot.get_bot('12345') == nonebot.get_bots()['12345']
+
+another_unspecified_bot = nonebot.get_bot()
+```
+
+
 ## `get_bots()`
 
 
