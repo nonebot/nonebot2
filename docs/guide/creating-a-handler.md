@@ -43,7 +43,7 @@ async def handle_city(bot: Bot, event: Event, state: T_State):
 
 指示 NoneBot 接收一条新的用户消息后继续执行该处理函数。此时函数将会接收到新的消息而非前一条消息，之前相关信息可以存储在 state 中。
 
-特别的，当装饰的函数前没有其他事件处理函数，那么 `receive()` 不会接收一条新的消息而是直接使用第一条接收到的消息。
+特别地，当装饰的函数前没有其他事件处理函数，那么 `receive()` 不会接收一条新的消息而是直接使用第一条接收到的消息。
 
 #### got(key, prompt, args_parser)
 
