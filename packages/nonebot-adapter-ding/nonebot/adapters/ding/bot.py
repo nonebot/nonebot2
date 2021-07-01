@@ -77,8 +77,8 @@ class Bot(BaseBot):
                 return None, HTTPResponse(403, b"Signature is invalid")
         else:
             log("WARNING", "Ding signature check ignored!")
-        return (json.loads(request.body.decode())["chatbotUserId"],
-                HTTPResponse(204, b''))
+        return json.loads(request.body.decode())["chatbotUserId"],
+                HTTPResponse(204, b'')
 
     @overrides(BaseBot)
     async def handle_message(self, message: bytes):
