@@ -48,11 +48,11 @@ class Filter:
         self.level: Union[int, str] = "DEBUG"
 
     def __call__(self, record):
-        module = sys.modules.get(record["name"])
+        module_name: str = record["name"]
+        module = sys.modules.get(module_name)
         if module:
-            module_name = getattr(module, "__module_name__", record["name"])
-            record["name"] = module_name
-        record["name"] = record["name"].split(".")[0]
+            module_name = getattr(module, "__module_name__", module_name)
+        record["name"] = module_name.split(".")[0]
         levelno = logger.level(self.level).no if isinstance(self.level,
                                                             str) else self.level
         return record["level"].no >= levelno
@@ -67,7 +67,7 @@ class LoguruHandler(logging.Handler):
             level = record.levelno
 
         frame, depth = logging.currentframe(), 2
-        while frame.f_code.co_filename == logging.__file__:
+        while frame and frame.f_code.co_filename == logging.__file__:
             frame = frame.f_back
             depth += 1
 

@@ -195,8 +195,9 @@ class Driver(ReverseDriver):
             self, http_request)
 
         if not x_self_id:
-            raise HTTPException(response and response.status or 401,
-                                response.body)
+            raise HTTPException(
+                response and response.status or 401, response and
+                response.body and response.body.decode("utf-8"))
 
         if x_self_id in self._clients:
             logger.warning("There's already a reverse websocket connection,"
