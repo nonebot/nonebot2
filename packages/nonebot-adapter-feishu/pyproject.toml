@@ -26,6 +26,7 @@ exclude = ["nonebot/__init__.py", "nonebot/adapters/__init__.py"]
 python = "^3.7.3"
 httpx = "^0.17.0"
 nonebot2 = "^2.0.0-alpha.13"
+pycryptodome = "^3.10.1"
 
 [tool.poetry.dev-dependencies]
 nonebot2 = { path = "../../", develop = true }
