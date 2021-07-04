@@ -349,7 +349,7 @@ class Bot(BaseBot):
             elif not api_root.endswith("/"):
                 api_root += "/"
 
-            headers = {}
+            headers = {"Content-Type": "application/json"}
             if self.cqhttp_config.access_token is not None:
                 headers[
                     "Authorization"] = "Bearer " + self.cqhttp_config.access_token
@@ -358,7 +358,7 @@ class Bot(BaseBot):
                 async with httpx.AsyncClient(headers=headers) as client:
                     response = await client.post(
                         api_root + api,
-                        json=data,
+                        content=json.dumps(data, cls=DataclassEncoder),
                         timeout=self.config.api_timeout)
 
                 if 200 <= response.status_code < 300:
