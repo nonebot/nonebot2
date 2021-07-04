@@ -9,12 +9,54 @@ from nonebot.adapters import Bot as BaseBot
 from nonebot.drivers import Driver, HTTPRequest, HTTPResponse
 
 from .config import Config as FeishuConfig
-from .event import Event
+from .event import Event, get_event_model
 from .message import Message, MessageSegment
 from .utils import log, AESCipher
 
 if TYPE_CHECKING:
     from nonebot.config import Config
+
+
+async def _check_reply(bot: "Bot", event: "Event"):
+    """
+    :说明:
+
+      检查消息中存在的回复，去除并赋值 ``event.reply``, ``event.to_me``
+
+    :参数:
+
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+    """
+    ...
+
+
+def _check_at_me(bot: "Bot", event: "Event"):
+    """
+    :说明:
+
+      检查消息开头或结尾是否存在 @机器人，去除并赋值 ``event.to_me``
+
+    :参数:
+
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+    """
+    ...
+
+
+def _check_nickname(bot: "Bot", event: "Event"):
+    """
+    :说明:
+
+      检查消息开头是否存在，去除并赋值 ``event.to_me``
+
+    :参数:
+
+      * ``bot: Bot``: Bot 对象
+      * ``event: Event``: Event 对象
+    """
+    ...
 
 
 class Bot(BaseBot):
@@ -52,7 +94,7 @@ class Bot(BaseBot):
 
         challenge = data.get("challenge")
         if challenge:
-            return None, HTTPResponse(
+            return data.get("token"), HTTPResponse(
                 200,
                 json.dumps({
                     "challenge": challenge
@@ -85,8 +127,22 @@ class Bot(BaseBot):
           处理事件并转换为 `Event <#class-event>`_
         """
         data = json.loads(message)
+        print(data)
+        if data.get("type") == "url_verification":
+            return
+
         try:
-            event = Event.parse_obj(message)
+            header = data["header"]
+            event_type = header["event_type"]
+            models = get_event_model(event_type)
+            for model in models:
+                try:
+                    event = model.parse_obj(data)
+                    break
+                except Exception as e:
+                    log("DEBUG", "Event Parser Error", e)
+            else:
+                event = Event.parse_obj(data)
             await handle_event(self, event)
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
