@@ -9,12 +9,16 @@ class Config(BaseModel):
 
     :配置项:
 
+      - ``api_endpoint`` / ``feishu_api_endpoint``: 飞书开放平台 API Endpoint
       - ``app_id`` / ``feishu_app_id``: 飞书开放平台后台“凭证与基础信息”处给出的 App ID
       - ``app_secret`` / ``feishu_app_secret``: 飞书开放平台后台“凭证与基础信息”处给出的 App Secret
       - ``encrypt_key`` / ``feishu_encrypt_key``: 飞书开放平台后台“事件订阅”处设置的 Encrypt Key
       - ``verification_token`` / ``feishu_verification_token``: 飞书开放平台后台“事件订阅”处设置的 Verification Token
       - ``tenant_access_token`` / ``feishu_tenant_access_token``: 请求飞书 API 后返回的租户密钥
     """
+    api_endpoint: Optional[str] = Field(
+        default="https://open.feishu.cn/open-apis/",
+        alias="feishu_api_endpoint")
     app_id: Optional[str] = Field(default=None, alias="feishu_app_id")
     app_secret: Optional[str] = Field(default=None, alias="feishu_app_secret")
     encrypt_key: Optional[str] = Field(default=None, alias="feishu_encrypt_key")
