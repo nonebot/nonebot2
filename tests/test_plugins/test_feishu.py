@@ -7,6 +7,6 @@ helper = on_command("114514")
 
 
 @helper.handle()
-async def ding_helper(bot: FeishuBot, event: MessageEvent):
+async def feishu_helper(bot: FeishuBot, event: MessageEvent):
     message = MessageSegment.text("1919810")
     await helper.finish(message)
