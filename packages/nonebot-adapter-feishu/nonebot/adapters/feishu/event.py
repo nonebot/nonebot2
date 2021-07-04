@@ -1,15 +1,14 @@
 import inspect
 import json
-from nonebot import message
 
-from typing import Any, List, Literal, Optional, Type, Union
+from typing import Any, List, Literal, Optional, Type
 from pygtrie import StringTrie
 from pydantic import BaseModel, root_validator, Field
 
 from nonebot.adapters import Event as BaseEvent
 from nonebot.typing import overrides
 
-from .message import Message, MessageSegment
+from .message import Message
 
 
 class EventHeader(BaseModel):
