@@ -1,6 +1,7 @@
 import json
+import httpx
 
-from typing import Any, Tuple, Union, Optional, TYPE_CHECKING
+from typing import Any, Dict, Tuple, Union, Optional, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.typing import overrides
@@ -9,7 +10,8 @@ from nonebot.adapters import Bot as BaseBot
 from nonebot.drivers import Driver, HTTPRequest, HTTPResponse
 
 from .config import Config as FeishuConfig
-from .event import Event, get_event_model
+from .event import Event, GroupMessageEvent, get_event_model
+from .exception import ActionFailed, ApiNotAvailable, NetworkError
 from .message import Message, MessageSegment
 from .utils import log, AESCipher
 
@@ -59,6 +61,30 @@ def _check_nickname(bot: "Bot", event: "Event"):
     ...
 
 
+def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
+    """
+    :说明:
+
+      处理 API 请求返回值。
+
+    :参数:
+
+      * ``result: Optional[Dict[str, Any]]``: API 返回数据
+
+    :返回:
+
+        - ``Any``: API 调用返回数据
+
+    :异常:
+
+        - ``ActionFailed``: API 调用失败
+    """
+    if isinstance(result, dict):
+        if result.get("code") != 0:
+            raise ActionFailed(**result)
+        return result.get("data")
+
+
 class Bot(BaseBot):
     """
     飞书 协议 Bot 适配。继承属性参考 `BaseBot <./#class-basebot>`_ 。
@@ -67,6 +93,10 @@ class Bot(BaseBot):
     @property
     def type(self) -> str:
         return "feishu"
+
+    @property
+    def api_root(self) -> str:
+        return "https://open.feishu.cn/open-apis/"
 
     @classmethod
     def register(cls, driver: Driver, config: "Config"):
@@ -134,6 +164,10 @@ class Bot(BaseBot):
         try:
             header = data["header"]
             event_type = header["event_type"]
+            if data.get("event"):
+                if data["event"].get("message"):
+                    event_type += f".{data['event']['message']['chat_type']}"
+
             models = get_event_model(event_type)
             for model in models:
                 try:
@@ -149,10 +183,105 @@ class Bot(BaseBot):
                 f"<r><bg #f8bbd0>Failed to handle event. Raw: {message}</bg #f8bbd0></r>"
             )
 
-    async def _call_api(self, api: str, **data) -> Any:
-        raise NotImplementedError
+    def _construct_url(self, path: str) -> str:
+        return self.api_root + path
 
+    async def _fetch_tenant_access_token(self) -> str:
+        try:
+            async with httpx.AsyncClient() as client:
+                response = await client.post(
+                    self._construct_url(
+                        "auth/v3/tenant_access_token/internal/"),
+                    json={
+                        "app_id": self.feishu_config.app_id,
+                        "app_secret": self.feishu_config.app_secret
+                    },
+                    timeout=self.config.api_timeout)
+
+            if 200 <= response.status_code < 300:
+                result = response.json()
+                return result["tenant_access_token"]
+            else:
+                raise NetworkError(f"HTTP request received unexpected "
+                                   f"status code: {response.status_code}")
+        except httpx.InvalidURL:
+            raise NetworkError("API root url invalid")
+        except httpx.HTTPError:
+            raise NetworkError("HTTP request failed")
+
+    @overrides(BaseBot)
+    async def _call_api(self, api: str, **data) -> Any:
+        log("DEBUG", f"Calling API <y>{api}</y>")
+        if isinstance(self.request, HTTPRequest):
+            if not self.api_root:
+                raise ApiNotAvailable
+
+            headers = {}
+            if self.feishu_config.tenant_access_token is None:
+                self.feishu_config.tenant_access_token = await self._fetch_tenant_access_token(
+                )
+            headers[
+                "Authorization"] = "Bearer " + self.feishu_config.tenant_access_token
+
+            try:
+                print(data)
+                async with httpx.AsyncClient(headers=headers) as client:
+                    response = await client.post(
+                        self.api_root + api,
+                        json=data,
+                        timeout=self.config.api_timeout)
+
+                print(response.json())
+                if 200 <= response.status_code < 300:
+                    result = response.json()
+                    return _handle_api_result(result)
+                raise NetworkError(f"HTTP request received unexpected "
+                                   f"status code: {response.status_code}")
+            except httpx.InvalidURL:
+                raise NetworkError("API root url invalid")
+            except httpx.HTTPError:
+                raise NetworkError("HTTP request failed")
+
+    @overrides(BaseBot)
+    async def call_api(self, api: str, **data) -> Any:
+        """
+        :说明:
+
+          调用 飞书 协议 API
+
+        :参数:
+
+          * ``api: str``: API 名称
+          * ``**data: Any``: API 参数
+
+        :返回:
+
+          - ``Any``: API 调用返回数据
+
+        :异常:
+
+          - ``NetworkError``: 网络错误
+          - ``ActionFailed``: API 调用失败
+        """
+        return await super().call_api(api, **data)
+
+    @overrides(BaseBot)
     async def send(self, event: Event, message: Union[str, Message,
                                                       MessageSegment],
                    **kwargs) -> Any:
-        raise NotImplementedError
+        msg = message if isinstance(message, Message) else Message(message)
+        params = {
+            "receive_id":
+                event.event.message.chat_id if isinstance(
+                    event, GroupMessageEvent) else event.get_user_id(),
+            "content":
+                str(message),
+            "msg_type":
+                "text" if len(message) == 1 else "content"
+        }
+
+        receive_id_type = 'chat_id' if isinstance(
+            event, GroupMessageEvent) else 'union_id'
+
+        return await self.call_api(
+            f"im/v1/messages?receive_id_type={receive_id_type}", **params)
