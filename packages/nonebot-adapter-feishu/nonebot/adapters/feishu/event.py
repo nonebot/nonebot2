@@ -1,7 +1,7 @@
 import inspect
 import json
 
-from typing import Any, List, Literal, Optional, Type
+from typing import Any, List, Literal, Optional, Type, Union
 from pygtrie import StringTrie
 from pydantic import BaseModel, root_validator, Field
 
@@ -101,9 +101,25 @@ class EventMessage(BaseModel):
         return values
 
 
+class GroupEventMessage(EventMessage):
+    chat_type: Literal["group"]
+
+
+class PrivateEventMessage(EventMessage):
+    chat_type: Literal["p2p"]
+
+
 class MessageEventDetail(BaseModel):
     sender: Sender
     message: EventMessage
+
+
+class GroupMessageEventDetail(MessageEventDetail):
+    message: GroupEventMessage
+
+
+class PrivateMessageEventDetail(MessageEventDetail):
+    message: PrivateEventMessage
 
 
 class MessageEvent(Event):
@@ -116,13 +132,15 @@ class MessageEvent(Event):
 
     @overrides(Event)
     def get_event_name(self) -> str:
-        return f"{self.get_type()}.{super().get_type()}"
+        return f"{self.get_type()}.{self.event.message.chat_type}"
 
     @overrides(Event)
     def get_event_description(self) -> str:
+        #TODO:换成GroupId
         return (
             f"Message[{super().get_type()}]"
-            f" {self.event.message.message_id} from {self.event.sender.sender_id.user_id}"
+            f" {self.event.message.message_id} from {self.get_user_id()}"
+            f"@[{self.event.message.chat_type}:{self.event.message.chat_id}]"
             f" {self.event.message.content}")
 
     @overrides(Event)
@@ -135,11 +153,21 @@ class MessageEvent(Event):
 
     @overrides(Event)
     def get_user_id(self) -> str:
-        return self.event.sender.sender_id.user_id
+        return self.event.sender.sender_id.union_id
 
     @overrides(Event)
     def get_session_id(self) -> str:
-        return self.event.sender.sender_id.user_id
+        return f"{self.event.message.chat_type}_{self.event.message.chat_id}_{self.get_user_id()}"
+
+
+class GroupMessageEvent(MessageEvent):
+    __event__ = "im.message.receive_v1.group"
+    event: GroupMessageEventDetail
+
+
+class PrivateMessageEvent(MessageEvent):
+    __event__ = "im.message.receive_v1.private"
+    event: PrivateMessageEventDetail
 
 
 class MessageReader(BaseModel):
