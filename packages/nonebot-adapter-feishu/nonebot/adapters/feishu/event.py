@@ -166,7 +166,7 @@ class GroupMessageEvent(MessageEvent):
 
 
 class PrivateMessageEvent(MessageEvent):
-    __event__ = "im.message.receive_v1.private"
+    __event__ = "im.message.receive_v1.p2p"
     event: PrivateMessageEventDetail
 
 
