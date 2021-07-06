@@ -131,6 +131,10 @@ class Bot(BaseBot):
                     "challenge": challenge
                 }).encode())
 
+        schema = data.get("schema")
+        if not schema:
+            return None, HTTPResponse(400, b"Missing `schema` in POST body, only accept event of version 2.0")
+
         headers = data.get("header")
         if headers:
             token = headers.get("token")
@@ -230,7 +234,8 @@ class Bot(BaseBot):
                 async with httpx.AsyncClient(headers=headers) as client:
                     response = await client.post(
                         self.api_root + api,
-                        json=data,
+                        json=data["body"],
+                        params=data["query"],
                         timeout=self.config.api_timeout)
 
                 print(response.json())
