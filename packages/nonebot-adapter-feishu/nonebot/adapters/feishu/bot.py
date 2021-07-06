@@ -10,7 +10,7 @@ from nonebot.adapters import Bot as BaseBot
 from nonebot.drivers import Driver, HTTPRequest, HTTPResponse
 
 from .config import Config as FeishuConfig
-from .event import Event, GroupMessageEvent, get_event_model
+from .event import Event, GroupMessageEvent, PrivateMessageEvent, get_event_model
 from .exception import ActionFailed, ApiNotAvailable, NetworkError
 from .message import Message, MessageSegment
 from .utils import log, AESCipher
@@ -103,6 +103,7 @@ class Bot(BaseBot):
         super().register(driver, config)
         cls.feishu_config = FeishuConfig(**config.dict())
 
+    #TODO:校验schema 要求为2.0
     @classmethod
     @overrides(BaseBot)
     async def check_permission(
@@ -186,6 +187,7 @@ class Bot(BaseBot):
     def _construct_url(self, path: str) -> str:
         return self.api_root + path
 
+    #TODO:实现token缓存与ttl
     async def _fetch_tenant_access_token(self) -> str:
         try:
             async with httpx.AsyncClient() as client:
@@ -270,18 +272,23 @@ class Bot(BaseBot):
                                                       MessageSegment],
                    **kwargs) -> Any:
         msg = message if isinstance(message, Message) else Message(message)
+
+        if isinstance(event, GroupMessageEvent):
+            receive_id, receive_id_type = event.event.message.chat_id, 'chat_id'
+        elif isinstance(event, PrivateMessageEvent):
+            receive_id, receive_id_type = event.get_user_id(), 'union_id'
+        else:
+            raise ValueError(
+                "Cannot guess `receive_id` and `receive_id_type` to reply!")
         params = {
-            "receive_id":
-                event.event.message.chat_id if isinstance(
-                    event, GroupMessageEvent) else event.get_user_id(),
-            "content":
-                str(message),
-            "msg_type":
-                "text" if len(message) == 1 else "content"
+            "query": {
+                "receive_id_type": receive_id_type
+            },
+            "body": {
+                "receive_id": receive_id,
+                "content": str(message),
+                "msg_type": "text" if len(message) == 1 else "content"
+            }
         }
 
-        receive_id_type = 'chat_id' if isinstance(
-            event, GroupMessageEvent) else 'union_id'
-
-        return await self.call_api(
-            f"im/v1/messages?receive_id_type={receive_id_type}", **params)
+        return await self.call_api(f"im/v1/messages", **params)
