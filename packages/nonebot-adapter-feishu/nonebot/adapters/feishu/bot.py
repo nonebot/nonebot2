@@ -290,12 +290,7 @@ class Bot(BaseBot):
             raise ValueError(
                 "Cannot guess `receive_id` and `receive_id_type` to reply!")
 
-        if isinstance(message, MessageSegment):
-            msg_type = message.type
-        elif isinstance(message, Message):
-            msg_type = message[0].type
-        else:
-            msg_type = "text"
+        msg_type, content = MessageSerializer(msg).serialize()
 
         params = {
             "query": {
@@ -303,7 +298,7 @@ class Bot(BaseBot):
             },
             "body": {
                 "receive_id": receive_id,
-                "content": MessageSerializer(Message(message)).serialize(),
+                "content": content,
                 "msg_type": msg_type
             }
         }

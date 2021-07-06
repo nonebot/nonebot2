@@ -1,14 +1,14 @@
 import inspect
 import json
 
-from typing import Any, List, Literal, Optional, Type, Union
+from typing import Any, List, Literal, Optional, Type
 from pygtrie import StringTrie
 from pydantic import BaseModel, root_validator, Field
 
 from nonebot.adapters import Event as BaseEvent
 from nonebot.typing import overrides
 
-from .message import Message, MessageDeserializer
+from .message import Message, MessageDeserializer, MessageSerializer
 
 
 class EventHeader(BaseModel):
@@ -143,7 +143,7 @@ class MessageEvent(Event):
             f"Message[{super().get_type()}]"
             f" {self.event.message.message_id} from {self.get_user_id()}"
             f"@[{self.event.message.chat_type}:{self.event.message.chat_id}]"
-            f" {self.event.message.content}")
+            f" {str(self.get_message()) and MessageSerializer(self.get_message()).serialize()}")
 
     @overrides(Event)
     def get_message(self) -> Message:
@@ -155,7 +155,7 @@ class MessageEvent(Event):
 
     @overrides(Event)
     def get_user_id(self) -> str:
-        return self.event.sender.sender_id.union_id
+        return self.event.sender.sender_id.user_id
 
     @overrides(Event)
     def get_session_id(self) -> str:

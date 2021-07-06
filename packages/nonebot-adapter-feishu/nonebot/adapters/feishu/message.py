@@ -186,12 +186,8 @@ class MessageSerializer:
     """
     message: Message
 
-    def serialize(self):
-        for segment in self.message:
-            if segment.type == "post":
-                raise NotImplementedError
-            else:
-                return json.dumps(segment.data)
+    def serialize(self) -> Tuple[str, str]:
+        return self.message[0].type, json.dumps(self.message[0].data)
 
 
 @dataclass
@@ -199,13 +195,13 @@ class MessageDeserializer:
     """
     飞书 协议 Message 反序列化器。
     """
-    data: Dict[str, Any]
     type: str
+    data: Dict[str, Any]
 
-    def deserialize(self):
+    def deserialize(self) -> Message:
         print(self.type, self.data)
         if self.type == "post":
-            return self._parse_rich_text(self.data)
+            return Message(self._parse_rich_text(self.data))
         else:
             return Message(MessageSegment(self.type, self.data))
 
@@ -221,8 +217,7 @@ class MessageDeserializer:
                     tag = element.get("tag")
                     yield tag, element
 
-        temp = Message()
-        for type_, data in _iter_message(message_data):
-            temp += MessageSegment(type_, data)
-
-        return temp
+        return [
+            MessageSegment(type_, data)
+            for type_, data in _iter_message(message_data)
+        ]
