@@ -138,12 +138,10 @@ class MessageEvent(Event):
 
     @overrides(Event)
     def get_event_description(self) -> str:
-        #TODO:换成GroupId
         return (
-            f"Message[{super().get_type()}]"
-            f" {self.event.message.message_id} from {self.get_user_id()}"
+            f"{self.event.message.message_id} from {self.get_user_id()}"
             f"@[{self.event.message.chat_type}:{self.event.message.chat_id}]"
-            f" {str(self.get_message()) and MessageSerializer(self.get_message()).serialize()}")
+            f" {MessageSerializer(self.get_message()).serialize()[1]}")
 
     @overrides(Event)
     def get_message(self) -> Message:

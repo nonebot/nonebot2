@@ -199,24 +199,4 @@ class MessageDeserializer:
     data: Dict[str, Any]
 
     def deserialize(self) -> Message:
-        if self.type == "post":
-            return Message(self._parse_rich_text(self.data))
-        else:
-            return Message(MessageSegment(self.type, self.data))
-
-    def _parse_rich_text(self, message_data: Dict[str,
-                                                  Any]) -> List[MessageSegment]:
-
-        def _iter_message(
-            message_data: Dict[str,
-                               Any]) -> Iterable[Tuple[str, Dict[str, Any]]]:
-            content: dict = message_data.get("content", {})
-            if content:
-                for element in list(itertools.chain(*content)):
-                    tag = element.get("tag")
-                    yield tag, element
-
-        return [
-            MessageSegment(type_, data)
-            for type_, data in _iter_message(message_data)
-        ]
+        return Message(MessageSegment(self.type, self.data))
