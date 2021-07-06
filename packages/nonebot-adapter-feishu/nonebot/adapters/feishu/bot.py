@@ -241,7 +241,8 @@ class Bot(BaseBot):
                     result = response.json()
                     return _handle_api_result(result)
                 raise NetworkError(f"HTTP request received unexpected "
-                                   f"status code: {response.status_code}")
+                                   f"status code: {response.status_code}"
+                                   f"response body: {response.text}")
             except httpx.InvalidURL:
                 raise NetworkError("API root url invalid")
             except httpx.HTTPError:
