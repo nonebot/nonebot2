@@ -164,8 +164,6 @@ class Bot(BaseBot):
           处理事件并转换为 `Event <#class-event>`_
         """
         data = json.loads(message)
-        print("handle_event start")
-        print(data)
         if data.get("type") == "url_verification":
             return
 
@@ -233,16 +231,12 @@ class Bot(BaseBot):
                 "Authorization"] = "Bearer " + self.feishu_config.tenant_access_token
 
             try:
-                print("call_api request start")
-                print(data)
                 async with httpx.AsyncClient(headers=headers) as client:
                     response = await client.post(
                         self.api_root + api,
                         json=data["body"],
                         params=data["query"],
                         timeout=self.config.api_timeout)
-                print("remote server returned.")
-                print(response.json())
                 if 200 <= response.status_code < 300:
                     result = response.json()
                     return _handle_api_result(result)

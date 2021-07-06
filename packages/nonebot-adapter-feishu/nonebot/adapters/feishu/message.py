@@ -199,7 +199,6 @@ class MessageDeserializer:
     data: Dict[str, Any]
 
     def deserialize(self) -> Message:
-        print(self.type, self.data)
         if self.type == "post":
             return Message(self._parse_rich_text(self.data))
         else:
