@@ -1,8 +1,7 @@
-import itertools
+import json
 
 from dataclasses import dataclass
-import json
-from typing import Any, Dict, List, Tuple, Type, Union, Mapping, Iterable
+from typing import Any, Dict, Tuple, Type, Union, Mapping, Iterable
 
 from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
 from nonebot.typing import overrides
