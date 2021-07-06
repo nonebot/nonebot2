@@ -8,7 +8,7 @@ from pydantic import BaseModel, root_validator, Field
 from nonebot.adapters import Event as BaseEvent
 from nonebot.typing import overrides
 
-from .message import Message
+from .message import Message, MessageDeserializer
 
 
 class EventHeader(BaseModel):
@@ -97,7 +97,9 @@ class EventMessage(BaseModel):
 
     @root_validator(pre=True)
     def parse_message(cls, values: dict):
-        values["content"] = json.loads(values["content"])
+        values["content"] = MessageDeserializer(
+            data=json.loads(values["content"]),
+            type=values["message_type"]).deserialize()
         return values
 
 

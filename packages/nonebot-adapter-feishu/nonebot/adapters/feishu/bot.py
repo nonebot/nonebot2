@@ -12,7 +12,7 @@ from nonebot.drivers import Driver, HTTPRequest, HTTPResponse
 from .config import Config as FeishuConfig
 from .event import Event, GroupMessageEvent, PrivateMessageEvent, get_event_model
 from .exception import ActionFailed, ApiNotAvailable, NetworkError
-from .message import Message, MessageSegment
+from .message import Message, MessageSegment, MessageSerializer
 from .utils import log, AESCipher
 
 if TYPE_CHECKING:
@@ -103,7 +103,6 @@ class Bot(BaseBot):
         super().register(driver, config)
         cls.feishu_config = FeishuConfig(**config.dict())
 
-    #TODO:校验schema 要求为2.0
     @classmethod
     @overrides(BaseBot)
     async def check_permission(
@@ -133,7 +132,10 @@ class Bot(BaseBot):
 
         schema = data.get("schema")
         if not schema:
-            return None, HTTPResponse(400, b"Missing `schema` in POST body, only accept event of version 2.0")
+            return None, HTTPResponse(
+                400,
+                b"Missing `schema` in POST body, only accept event of version 2.0"
+            )
 
         headers = data.get("header")
         if headers:
@@ -162,6 +164,7 @@ class Bot(BaseBot):
           处理事件并转换为 `Event <#class-event>`_
         """
         data = json.loads(message)
+        print("handle_event start")
         print(data)
         if data.get("type") == "url_verification":
             return
@@ -230,6 +233,7 @@ class Bot(BaseBot):
                 "Authorization"] = "Bearer " + self.feishu_config.tenant_access_token
 
             try:
+                print("call_api request start")
                 print(data)
                 async with httpx.AsyncClient(headers=headers) as client:
                     response = await client.post(
@@ -237,7 +241,7 @@ class Bot(BaseBot):
                         json=data["body"],
                         params=data["query"],
                         timeout=self.config.api_timeout)
-
+                print("remote server returned.")
                 print(response.json())
                 if 200 <= response.status_code < 300:
                     result = response.json()
@@ -285,14 +289,22 @@ class Bot(BaseBot):
         else:
             raise ValueError(
                 "Cannot guess `receive_id` and `receive_id_type` to reply!")
+
+        if isinstance(message, MessageSegment):
+            msg_type = message.type
+        elif isinstance(message, Message):
+            msg_type = message[0].type
+        else:
+            msg_type = "text"
+
         params = {
             "query": {
                 "receive_id_type": receive_id_type
             },
             "body": {
                 "receive_id": receive_id,
-                "content": str(message),
-                "msg_type": "text" if len(message) == 1 else "content"
+                "content": MessageSerializer(Message(message)).serialize(),
+                "msg_type": msg_type
             }
         }
 

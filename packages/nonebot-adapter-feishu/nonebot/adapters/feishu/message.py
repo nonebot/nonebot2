@@ -1,6 +1,8 @@
 import itertools
 
-from typing import Tuple, Type, Union, Mapping, Iterable
+from dataclasses import dataclass
+import json
+from typing import Any, Dict, List, Tuple, Type, Union, Mapping, Iterable
 
 from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
 from nonebot.typing import overrides
@@ -158,25 +160,16 @@ class Message(BaseMessage[MessageSegment]):
         msg: Union[str, Mapping,
                    Iterable[Mapping]]) -> Iterable[MessageSegment]:
         if isinstance(msg, Mapping):
-
-            def _iter_message(msg: Mapping) -> Iterable[Tuple[str, dict]]:
-                pure_text: str = msg.get("text", "")
-                content: dict = msg.get("content", {})
-                if pure_text and not content:
-                    yield "text", {"text": pure_text}
-                elif content and not pure_text:
-                    for element in list(itertools.chain(*content)):
-                        tag = element.pop("tag")
-                        yield tag, element
-
-            for type_, data in _iter_message(msg):
-                yield MessageSegment(type_, data)
-
+            yield MessageSegment(msg["type"], msg.get("data") or {})
+            return
         elif isinstance(msg, str):
             yield MessageSegment.text(msg)
         elif isinstance(msg, Iterable):
             for seg in msg:
-                yield MessageSegment(seg["type"], seg.get("data") or {})
+                if isinstance(seg, MessageSegment):
+                    yield seg
+                else:
+                    yield MessageSegment(seg["type"], seg.get("data") or {})
 
     def _produce(self) -> dict:
         raise NotImplementedError
@@ -184,3 +177,52 @@ class Message(BaseMessage[MessageSegment]):
     @overrides(BaseMessage)
     def extract_plain_text(self) -> str:
         return "".join(seg.data["text"] for seg in self if seg.is_text())
+
+
+@dataclass
+class MessageSerializer:
+    """
+    飞书 协议 Message 序列化器。
+    """
+    message: Message
+
+    def serialize(self):
+        for segment in self.message:
+            if segment.type == "post":
+                raise NotImplementedError
+            else:
+                return json.dumps(segment.data)
+
+
+@dataclass
+class MessageDeserializer:
+    """
+    飞书 协议 Message 反序列化器。
+    """
+    data: Dict[str, Any]
+    type: str
+
+    def deserialize(self):
+        print(self.type, self.data)
+        if self.type == "post":
+            return self._parse_rich_text(self.data)
+        else:
+            return Message(MessageSegment(self.type, self.data))
+
+    def _parse_rich_text(self, message_data: Dict[str,
+                                                  Any]) -> List[MessageSegment]:
+
+        def _iter_message(
+            message_data: Dict[str,
+                               Any]) -> Iterable[Tuple[str, Dict[str, Any]]]:
+            content: dict = message_data.get("content", {})
+            if content:
+                for element in list(itertools.chain(*content)):
+                    tag = element.get("tag")
+                    yield tag, element
+
+        temp = Message()
+        for type_, data in _iter_message(message_data):
+            temp += MessageSegment(type_, data)
+
+        return temp
