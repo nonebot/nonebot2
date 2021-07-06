@@ -294,5 +294,13 @@
     "desc": "群内小游戏，使用金币赌注的俄罗斯轮盘",
     "author": "HibiKier",
     "repo": "https://github.com/HibiKier/nonebot_plugin_russian"
+  },
+  {
+    "id": "nonebot_plugin_statistical",
+    "link": "nonebot-plugin-statistical",
+    "name": "nonebot_plugin_statistical",
+    "desc": "一个简单的功能调用统计以及可视化插件",
+    "author": "HibiKier",
+    "repo": "https://github.com/HibiKier/nonebot_plugin_statistical"
   }
 ]
