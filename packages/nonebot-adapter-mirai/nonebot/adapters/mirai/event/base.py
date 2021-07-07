@@ -75,14 +75,14 @@ class Event(BaseEvent):
         if event_class is None:
             return Event.parse_obj(data)
 
-        while issubclass(event_class, Event):
+        while event_class and issubclass(event_class, Event):
             try:
                 return event_class.parse_obj(data)
             except ValidationError as e:
                 logger.info(
                     f'Failed to parse {data} to class {event_class.__name__}: '
                     f'{e.errors()!r}. Fallback to parent class.')
-                event_class = event_class.__base__
+                event_class = event_class.__base__  # type: ignore
 
         raise ValueError(f'Failed to serialize {data}.')
 
