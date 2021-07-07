@@ -149,7 +149,7 @@ class MessageEvent(Event):
 
     @overrides(Event)
     def get_plaintext(self) -> str:
-        return str(self.event.message.content)
+        return str(self.get_message())
 
     @overrides(Event)
     def get_user_id(self) -> str:
