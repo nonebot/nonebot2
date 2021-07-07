@@ -37,7 +37,7 @@ class Event(BaseEvent):
 
     @overrides(BaseEvent)
     def get_event_description(self) -> str:
-        return str(self.dict())
+        return escape_tag(str(self.dict()))
 
     @overrides(BaseEvent)
     def get_message(self) -> Message:

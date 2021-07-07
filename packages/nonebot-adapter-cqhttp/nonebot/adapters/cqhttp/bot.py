@@ -9,8 +9,8 @@ import httpx
 from nonebot.log import logger
 from nonebot.typing import overrides
 from nonebot.message import handle_event
-from nonebot.utils import DataclassEncoder
 from nonebot.adapters import Bot as BaseBot
+from nonebot.utils import escape_tag, DataclassEncoder
 from nonebot.drivers import Driver, HTTPConnection, HTTPRequest, HTTPResponse, WebSocket
 
 from .utils import log, escape
@@ -321,7 +321,7 @@ class Bot(BaseBot):
             await handle_event(self, event)
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
-                f"<r><bg #f8bbd0>Failed to handle event. Raw: {data}</bg #f8bbd0></r>"
+                f"<r><bg #f8bbd0>Failed to handle event. Raw: {escape_tag(data)}</bg #f8bbd0></r>"
             )
 
     @overrides(BaseBot)
