@@ -1,4 +1,5 @@
 import json
+import itertools
 
 from dataclasses import dataclass
 from typing import Any, Dict, Tuple, Type, Union, Mapping, Iterable
@@ -18,8 +19,17 @@ class MessageSegment(BaseMessageSegment["Message"]):
         return Message
 
     def __str__(self) -> str:
-        if self.type == "text" or self.type == "hongbao":
+        if self.type == "post":
+            return "".join(
+                str(MessageSegment(seg["tag"], seg))
+                for seg in itertools.chain(*self.data["content"]))
+
+        elif self.type == "text" or self.type == "hongbao":
             return str(self.data["text"])
+
+        elif self.type == "img" or self.type == "image":
+            return "[图片]"
+
         return ""
 
     @overrides(BaseMessageSegment)
