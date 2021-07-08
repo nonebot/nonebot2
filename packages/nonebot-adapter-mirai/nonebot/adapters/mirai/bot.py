@@ -95,6 +95,7 @@ class SessionManager:
         """
         files = {k: v for k, v in params.items() if isinstance(v, BytesIO)}
         form = {k: v for k, v in params.items() if k not in files}
+        form['sessionKey'] = self.session_key
         response = await self.client.post(
             path,
             data=form,
