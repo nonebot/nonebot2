@@ -18,14 +18,31 @@ class MessageSegment(BaseMessageSegment["Message"]):
     def get_message_class(cls) -> Type["Message"]:
         return Message
 
+    @property
+    def segment_text(self) -> dict:
+        return {
+            "image": "[图片]",
+            "file": "[文件]",
+            "audio": "[音频]",
+            "media": "[视频]",
+            "sticker": "[表情包]",
+            "interactive": "[消息卡片]",
+            "hongbao": "[红包]",
+            "share_calendar_event": "[日程卡片]",
+            "share_chat": "[群名片]",
+            "share_user": "[个人名片]",
+            "system": "[系统消息]",
+            "location": "[位置]",
+            "video_chat": "[视频通话]"
+        }
+
     def __str__(self) -> str:
-        if self.type == "text" or self.type == "hongbao":
+        if self.type in ["text", "hongbao", "a"]:
             return str(self.data["text"])
-
-        elif self.type == "image":
-            return "[图片]"
-
-        return ""
+        elif self.type == "at":
+            return str(f"@{self.data['user_name']}")
+        else:
+            return self.segment_text.get(self.type, "")
 
     @overrides(BaseMessageSegment)
     def __add__(self, other) -> "Message":
