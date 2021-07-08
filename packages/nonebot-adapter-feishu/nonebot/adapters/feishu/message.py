@@ -2,7 +2,7 @@ import json
 import itertools
 
 from dataclasses import dataclass
-from typing import Any, Dict, Tuple, Type, Union, Mapping, Iterable
+from typing import Any, Dict, List, Tuple, Type, Union, Mapping, Iterable
 
 from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
 from nonebot.typing import overrides
@@ -137,6 +137,18 @@ class Message(BaseMessage[MessageSegment]):
                 else:
                     yield MessageSegment(seg["type"], seg.get("data") or {})
 
+    def _merge(self) -> "Message":
+        i: int
+        seg: MessageSegment
+        msg: List[MessageSegment] = []
+        for i, seg in enumerate(self):
+            if seg.type == "text" and i != 0 and msg[-1].type == "text":
+                msg[-1] = MessageSegment(
+                    "text", {"text": msg[-1].data["text"] + seg.data["text"]})
+            else:
+                msg.append(seg)
+        return Message(msg)
+
     @overrides(BaseMessage)
     def extract_plain_text(self) -> str:
         return "".join(seg.data["text"] for seg in self if seg.is_text())
@@ -169,7 +181,7 @@ class MessageDeserializer:
             for seg in itertools.chain(*self.data["content"]):
                 tag = seg.pop("tag")
                 msg += MessageSegment(tag if tag != "img" else "image", seg)
-            return msg
+            return msg._merge()
 
         else:
             return Message(MessageSegment(self.type, self.data))
