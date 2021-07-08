@@ -30,6 +30,7 @@ async def _check_reply(bot: "Bot", event: "Event"):
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
     """
+    #TODO:实现该函数
     ...
 
 
@@ -44,6 +45,7 @@ def _check_at_me(bot: "Bot", event: "Event"):
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
     """
+    #TODO:实现该函数
     ...
 
 
@@ -58,6 +60,7 @@ def _check_nickname(bot: "Bot", event: "Event"):
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
     """
+    #TODO:实现该函数
     ...
 
 
@@ -272,8 +275,10 @@ class Bot(BaseBot):
         return await super().call_api(api, **data)
 
     @overrides(BaseBot)
-    async def send(self, event: Event, message: Union[str, Message,
-                                                      MessageSegment],
+    async def send(self,
+                   event: Event,
+                   message: Union[str, Message, MessageSegment],
+                   at_sender: bool = False,
                    **kwargs) -> Any:
         msg = message if isinstance(message, Message) else Message(message)
 
@@ -284,6 +289,11 @@ class Bot(BaseBot):
         else:
             raise ValueError(
                 "Cannot guess `receive_id` and `receive_id_type` to reply!")
+
+        at_sender = at_sender and bool(event.get_user_id())
+
+        if at_sender and receive_id_type != "union_id":
+            msg += MessageSegment.at(event.get_user_id(), "StarHeart") + " "
 
         msg_type, content = MessageSerializer(msg).serialize()
 

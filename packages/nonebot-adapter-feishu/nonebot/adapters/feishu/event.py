@@ -97,6 +97,7 @@ class EventMessage(BaseModel):
 
     @root_validator(pre=True)
     def parse_message(cls, values: dict):
+        #TODO:解析mentions替换message的user_id，传入deserializer
         values["content"] = MessageDeserializer(
             values["message_type"],
             json.loads(values["content"])).deserialize()
@@ -187,10 +188,12 @@ class MessageReadEvent(Event):
 
 
 class NoticeEvent(Event):
+    #TODO:实现该事件
     ...
 
 
 class MetaEvent(Event):
+    #TODO:实现该事件
     ...
 
 
