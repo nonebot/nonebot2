@@ -293,7 +293,7 @@ class Bot(BaseBot):
         at_sender = at_sender and bool(event.get_user_id())
 
         if at_sender and receive_id_type != "union_id":
-            msg += MessageSegment.at(event.get_user_id(), "StarHeart") + " "
+            msg = MessageSegment.at(event.get_user_id(), "StarHeart") + " " + msg
 
         msg_type, content = MessageSerializer(msg).serialize()
 

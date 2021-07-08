@@ -2,7 +2,7 @@ import json
 import itertools
 
 from dataclasses import dataclass
-from typing import Any, Dict, List, Tuple, Type, Union, Mapping, Iterable
+from typing import Any, Dict, List, Optional, Tuple, Type, Union, Mapping, Iterable
 
 from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
 from nonebot.typing import overrides
@@ -214,15 +214,28 @@ class MessageDeserializer:
     """
     type: str
     data: Dict[str, Any]
+    mentions: Optional[List[dict]]
 
     def deserialize(self) -> Message:
+        dict_mention = {}
         if self.type == "post":
+            if self.mentions:
+                for mention in self.mentions:
+                    dict_mention[mention["key"]] = mention
+
             msg = Message()
             if self.data["title"] != "":
                 msg += MessageSegment("text", {'text': self.data["title"]})
+
             for seg in itertools.chain(*self.data["content"]):
                 tag = seg.pop("tag")
+                if tag == "at":
+                    seg["user_name"] = dict_mention[seg["user_id"]]["name"]
+                    seg["user_id"] = dict_mention[
+                        seg["user_id"]]["id"]["open_id"]
+
                 msg += MessageSegment(tag if tag != "img" else "image", seg)
+
             return msg._merge()
 
         else:

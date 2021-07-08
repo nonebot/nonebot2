@@ -97,10 +97,9 @@ class EventMessage(BaseModel):
 
     @root_validator(pre=True)
     def parse_message(cls, values: dict):
-        #TODO:解析mentions替换message的user_id，传入deserializer
         values["content"] = MessageDeserializer(
-            values["message_type"],
-            json.loads(values["content"])).deserialize()
+            values["message_type"], json.loads(values["content"]),
+            values.get("mentions")).deserialize()
         return values
 
 
@@ -154,7 +153,7 @@ class MessageEvent(Event):
 
     @overrides(Event)
     def get_user_id(self) -> str:
-        return self.event.sender.sender_id.user_id
+        return self.event.sender.sender_id.open_id
 
     @overrides(Event)
     def get_session_id(self) -> str:
