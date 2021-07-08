@@ -8,7 +8,7 @@ from pydantic import BaseModel, root_validator, Field
 from nonebot.adapters import Event as BaseEvent
 from nonebot.typing import overrides
 
-from .message import Message, MessageDeserializer, MessageSerializer
+from .message import Message, MessageDeserializer
 
 
 class EventHeader(BaseModel):
