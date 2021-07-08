@@ -19,15 +19,10 @@ class MessageSegment(BaseMessageSegment["Message"]):
         return Message
 
     def __str__(self) -> str:
-        if self.type == "post":
-            return "".join(
-                str(MessageSegment(seg["tag"], seg))
-                for seg in itertools.chain(*self.data["content"]))
-
-        elif self.type == "text" or self.type == "hongbao":
+        if self.type == "text" or self.type == "hongbao":
             return str(self.data["text"])
 
-        elif self.type == "img" or self.type == "image":
+        elif self.type == "image":
             return "[图片]"
 
         return ""
@@ -59,11 +54,19 @@ class MessageSegment(BaseMessageSegment["Message"]):
         return MessageSegment("image", {"image_key": image_key})
 
     @staticmethod
-    def file(file_key: str, file_name: str) -> "MessageSegment":
-        return MessageSegment("file", {
-            "file_key": file_key,
-            "file_name": file_name
+    def interactive(title: str, elements: list) -> "MessageSegment":
+        return MessageSegment("interactive", {
+            "title": title,
+            "elements": elements
         })
+
+    @staticmethod
+    def share_chat(chat_id: str) -> "MessageSegment":
+        return MessageSegment("share_chat", {"chat_id": chat_id})
+
+    @staticmethod
+    def share_user(user_id: str) -> "MessageSegment":
+        return MessageSegment("share_user", {"user_id": user_id})
 
     @staticmethod
     def audio(file_key: str, duration: int) -> "MessageSegment":
@@ -84,61 +87,15 @@ class MessageSegment(BaseMessageSegment["Message"]):
             })
 
     @staticmethod
+    def file(file_key: str, file_name: str) -> "MessageSegment":
+        return MessageSegment("file", {
+            "file_key": file_key,
+            "file_name": file_name
+        })
+
+    @staticmethod
     def sticker(file_key) -> "MessageSegment":
         return MessageSegment("sticker", {"file_key": file_key})
-
-    @staticmethod
-    def interactive(title: str, elements: list) -> "MessageSegment":
-        return MessageSegment("interactive", {
-            "title": title,
-            "elements": elements
-        })
-
-    @staticmethod
-    def hongbao(text: str) -> "MessageSegment":
-        return MessageSegment("hongbao", {"text": text})
-
-    @staticmethod
-    def share_calendar_event(summary: str, start_time: str,
-                             end_time: str) -> "MessageSegment":
-        return MessageSegment("share_calendar_event", {
-            "summary": summary,
-            "start_time": start_time,
-            "end_time": end_time
-        })
-
-    @staticmethod
-    def share_chat(chat_id: str) -> "MessageSegment":
-        return MessageSegment("share_chat", {"chat_id": chat_id})
-
-    @staticmethod
-    def share_user(user_id: str) -> "MessageSegment":
-        return MessageSegment("share_user", {"user_id": user_id})
-
-    @staticmethod
-    def system(template: str, from_user: list,
-               to_chatters: list) -> "MessageSegment":
-        return MessageSegment(
-            "system", {
-                "template": template,
-                "from_user": from_user,
-                "to_chatters": to_chatters
-            })
-
-    @staticmethod
-    def location(name: str, longitude: str, latitude: str) -> "MessageSegment":
-        return MessageSegment("location", {
-            "name": name,
-            "longitude": longitude,
-            "latitude": latitude
-        })
-
-    @staticmethod
-    def video_chat(topic: str, start_time: str) -> "MessageSegment":
-        return MessageSegment("video_chat", {
-            "topic": topic,
-            "start_time": start_time,
-        })
 
 
 class Message(BaseMessage[MessageSegment]):
@@ -180,9 +137,6 @@ class Message(BaseMessage[MessageSegment]):
                 else:
                     yield MessageSegment(seg["type"], seg.get("data") or {})
 
-    def _produce(self) -> dict:
-        raise NotImplementedError
-
     @overrides(BaseMessage)
     def extract_plain_text(self) -> str:
         return "".join(seg.data["text"] for seg in self if seg.is_text())
@@ -208,4 +162,14 @@ class MessageDeserializer:
     data: Dict[str, Any]
 
     def deserialize(self) -> Message:
-        return Message(MessageSegment(self.type, self.data))
+        if self.type == "post":
+            msg = Message()
+            if self.data["title"] != "":
+                msg += MessageSegment("text", {'text': self.data["title"]})
+            for seg in itertools.chain(*self.data["content"]):
+                tag = seg.pop("tag")
+                msg += MessageSegment(tag if tag != "img" else "image", seg)
+            return msg
+
+        else:
+            return Message(MessageSegment(self.type, self.data))

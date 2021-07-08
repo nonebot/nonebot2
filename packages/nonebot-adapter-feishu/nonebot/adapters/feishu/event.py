@@ -98,8 +98,8 @@ class EventMessage(BaseModel):
     @root_validator(pre=True)
     def parse_message(cls, values: dict):
         values["content"] = MessageDeserializer(
-            data=json.loads(values["content"]),
-            type=values["message_type"]).deserialize()
+            values["message_type"],
+            json.loads(values["content"])).deserialize()
         return values
 
 
@@ -141,7 +141,7 @@ class MessageEvent(Event):
         return (
             f"{self.event.message.message_id} from {self.get_user_id()}"
             f"@[{self.event.message.chat_type}:{self.event.message.chat_id}]"
-            f" {MessageSerializer(self.get_message()).serialize()[1]}")
+            f" {self.get_message()}")
 
     @overrides(Event)
     def get_message(self) -> Message:
