@@ -237,8 +237,8 @@ class Bot(BaseBot):
                 async with httpx.AsyncClient(headers=headers) as client:
                     response = await client.post(
                         self.api_root + api,
-                        json=data["body"],
-                        params=data["query"],
+                        json=data.get("body", {}),
+                        params=data.get("query", {}),
                         timeout=self.config.api_timeout)
                 if 200 <= response.status_code < 300:
                     result = response.json()
@@ -293,7 +293,7 @@ class Bot(BaseBot):
         at_sender = at_sender and bool(event.get_user_id())
 
         if at_sender and receive_id_type != "union_id":
-            msg = MessageSegment.at(event.get_user_id(), "StarHeart") + " " + msg
+            msg = MessageSegment.at(event.get_user_id()) + " " + msg
 
         msg_type, content = MessageSerializer(msg).serialize()
 
