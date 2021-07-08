@@ -58,6 +58,15 @@ class MessageSegment(BaseMessageSegment["Message"]):
     def is_text(self) -> bool:
         return self.type == "text"
 
+    #接收消息
+    @staticmethod
+    def at(user_id: str, user_name: str) -> "MessageSegment":
+        return MessageSegment("at", {
+            "user_id": user_id,
+            "user_name": user_name
+        })
+
+    #发送消息
     @staticmethod
     def text(text: str) -> "MessageSegment":
         return MessageSegment("text", {"text": text})
@@ -179,7 +188,23 @@ class MessageSerializer:
     message: Message
 
     def serialize(self) -> Tuple[str, str]:
-        return self.message[0].type, json.dumps(self.message[0].data)
+        segments = list(self.message)
+        last_segment_type: str = ""
+        if len(segments) > 1:
+            msg = {"title": "", "content": [[]]}
+            for segment in segments:
+                if segment == "image":
+                    if last_segment_type != "image":
+                        msg["content"].append([])
+                else:
+                    if last_segment_type == "image":
+                        msg["content"].append([])
+                msg["content"][-1].append({"tag": segment.type, **segment.data})
+                last_segment_type = segment.type
+            return "post", json.dumps(msg)
+
+        else:
+            return self.message[0].type, json.dumps(self.message[0].data)
 
 
 @dataclass
