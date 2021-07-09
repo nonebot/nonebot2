@@ -237,11 +237,6 @@ class NoticeEvent(Event):
     ...
 
 
-class MetaEvent(Event):
-    #TODO:实现该事件
-    ...
-
-
 _t = StringTrie(separator=".")
 
 # define `model` first to avoid globals changing while `for`
