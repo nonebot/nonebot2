@@ -1,6 +1,8 @@
 import json
 import httpx
 
+from aiocache import cached, Cache
+from aiocache.serializers import PickleSerializer
 from typing import Any, Dict, Tuple, Union, Optional, TYPE_CHECKING
 
 from nonebot.log import logger
@@ -195,7 +197,10 @@ class Bot(BaseBot):
     def _construct_url(self, path: str) -> str:
         return self.api_root + path
 
-    #TODO:实现token缓存与ttl
+    @cached(ttl=60 * 60,
+            cache=Cache.MEMORY,
+            key="_feishu_tenant_access_token",
+            serializer=PickleSerializer())
     async def _fetch_tenant_access_token(self) -> str:
         try:
             async with httpx.AsyncClient() as client:
