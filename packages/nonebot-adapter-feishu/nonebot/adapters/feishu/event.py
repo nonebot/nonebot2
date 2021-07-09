@@ -167,12 +167,12 @@ class MessageEvent(Event):
     event: MessageEventDetail
 
     to_me: bool = False
-    reply: Optional[Reply]
     """
     :说明: 消息是否与机器人有关
 
     :类型: ``bool``
     """
+    reply: Optional[Reply]
 
     @overrides(Event)
     def get_type(self) -> Literal["message", "notice", "meta_event"]:
