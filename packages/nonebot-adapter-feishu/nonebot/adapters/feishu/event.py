@@ -216,6 +216,11 @@ class PrivateMessageEvent(MessageEvent):
     event: PrivateMessageEventDetail
 
 
+class NoticeEvent(Event):
+    #TODO:实现该事件
+    ...
+
+
 class MessageReader(BaseModel):
     reader_id: UserId
     read_time: str
@@ -227,14 +232,9 @@ class MessageReadEventDetail(BaseModel):
     message_id_list: List[str]
 
 
-class MessageReadEvent(Event):
+class MessageReadEvent(NoticeEvent):
     __event__ = "im.message.message_read_v1"
     event: MessageReadEventDetail
-
-
-class NoticeEvent(Event):
-    #TODO:实现该事件
-    ...
 
 
 _t = StringTrie(separator=".")
