@@ -22,28 +22,6 @@ if TYPE_CHECKING:
     from nonebot.config import Config
 
 
-async def _check_reply(bot: "Bot", event: "Event"):
-    """
-    :说明:
-
-      检查是否回复bot消息，赋值 ``event.reply``, ``event.to_me``
-
-    :参数:
-
-      * ``bot: Bot``: Bot 对象
-      * ``event: Event``: Event 对象
-    """
-    if not isinstance(event, MessageEvent):
-        return
-    if event.event.message.parent_id:
-        ret = await bot.call_api(
-            f"im/v1/messages/{event.event.message.parent_id}", method="GET")
-        event.reply = Reply.parse_obj(ret["items"][0])
-        if event.reply.sender.sender_type == "app":
-            event.to_me = True
-            return
-
-
 def _check_at_me(bot: "Bot", event: "Event"):
     """
     :说明:
@@ -245,7 +223,6 @@ class Bot(BaseBot):
                 event = Event.parse_obj(data)
 
             _check_at_me(self, event)
-            await _check_reply(self, event)
             _check_nickname(self, event)
 
             await handle_event(self, event)
