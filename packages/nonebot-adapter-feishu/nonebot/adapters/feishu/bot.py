@@ -1,5 +1,6 @@
-import json
 import httpx
+import json
+import re
 
 from aiocache import cached, Cache
 from aiocache.serializers import PickleSerializer
@@ -12,7 +13,7 @@ from nonebot.adapters import Bot as BaseBot
 from nonebot.drivers import Driver, HTTPRequest, HTTPResponse
 
 from .config import Config as FeishuConfig
-from .event import Event, GroupMessageEvent, PrivateMessageEvent, get_event_model
+from .event import Event, GroupMessageEvent, MessageEvent, PrivateMessageEvent, Reply, get_event_model
 from .exception import ActionFailed, ApiNotAvailable, NetworkError
 from .message import Message, MessageSegment, MessageSerializer
 from .utils import log, AESCipher
@@ -25,45 +26,99 @@ async def _check_reply(bot: "Bot", event: "Event"):
     """
     :说明:
 
-      检查消息中存在的回复，去除并赋值 ``event.reply``, ``event.to_me``
+      检查是否回复bot消息，赋值 ``event.reply``, ``event.to_me``
 
     :参数:
 
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
     """
-    #TODO:实现该函数
-    ...
+    if not isinstance(event, MessageEvent):
+        return
+    if event.event.message.parent_id:
+        ret = await bot.call_api(
+            f"im/v1/messages/{event.event.message.parent_id}", method="GET")
+        event.reply = Reply.parse_obj(ret["items"][0])
+        if event.reply.sender.sender_type == "app":
+            event.to_me = True
+            return
 
 
 def _check_at_me(bot: "Bot", event: "Event"):
     """
     :说明:
 
-      检查消息开头或结尾是否存在 @机器人，去除并赋值 ``event.to_me``
+      检查消息开头或结尾是否存在 @机器人，去除并赋值 ``event.reply``, ``event.to_me``
 
     :参数:
 
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
     """
-    #TODO:实现该函数
-    ...
+    if not isinstance(event, MessageEvent):
+        return
+
+    message = event.get_message()
+    # ensure message not empty
+    if not message:
+        message.append(MessageSegment.text(""))
+
+    if event.event.message.chat_type == "p2p":
+        event.to_me = True
+
+        for index, segment in enumerate(message):
+            if segment.type == "at" and segment.data.get(
+                    "user_name") in bot.config.nickname:
+                event.to_me = True
+                del event.event.message.content[index]
+                return
+            elif segment.type == "text" and segment.data.get("mentions"):
+                for mention in segment.data["mentions"].values():
+                    if mention["name"] in bot.config.nickname:
+                        event.to_me = True
+                        segment.data["text"] = segment.data["text"].replace(
+                            f"@{mention['name']}", "")
+                        segment.data["text"] = segment.data["text"].lstrip()
+                        break
+                else:
+                    continue
+                break
+
+        if not message:
+            message.append(MessageSegment.text(""))
 
 
 def _check_nickname(bot: "Bot", event: "Event"):
     """
     :说明:
 
-      检查消息开头是否存在，去除并赋值 ``event.to_me``
+      检查消息开头是否存在昵称，去除并赋值 ``event.to_me``
 
     :参数:
 
       * ``bot: Bot``: Bot 对象
       * ``event: Event``: Event 对象
     """
-    #TODO:实现该函数
-    ...
+    if not isinstance(event, MessageEvent):
+        return
+
+    first_msg_seg = event.get_message()[0]
+    if first_msg_seg.type != "text":
+        return
+
+    first_text = first_msg_seg.data["text"]
+
+    nicknames = set(filter(lambda n: n, bot.config.nickname))
+    if nicknames:
+        # check if the user is calling me with my nickname
+        nickname_regex = "|".join(nicknames)
+        m = re.search(rf"^({nickname_regex})([\s,，]*|$)", first_text,
+                      re.IGNORECASE)
+        if m:
+            nickname = m.group(1)
+            log("DEBUG", f"User is calling me {nickname}")
+            event.to_me = True
+            first_msg_seg.data["text"] = first_text[m.end():]
 
 
 def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
@@ -188,6 +243,11 @@ class Bot(BaseBot):
                     log("DEBUG", "Event Parser Error", e)
             else:
                 event = Event.parse_obj(data)
+
+            _check_at_me(self, event)
+            await _check_reply(self, event)
+            _check_nickname(self, event)
+
             await handle_event(self, event)
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
@@ -232,19 +292,20 @@ class Bot(BaseBot):
                 raise ApiNotAvailable
 
             headers = {}
-            if self.feishu_config.tenant_access_token is None:
-                self.feishu_config.tenant_access_token = await self._fetch_tenant_access_token(
-                )
+            self.feishu_config.tenant_access_token = await self._fetch_tenant_access_token(
+            )
             headers[
                 "Authorization"] = "Bearer " + self.feishu_config.tenant_access_token
 
             try:
-                async with httpx.AsyncClient(headers=headers) as client:
-                    response = await client.post(
-                        self.api_root + api,
-                        json=data.get("body", {}),
-                        params=data.get("query", {}),
-                        timeout=self.config.api_timeout)
+                async with httpx.AsyncClient(
+                        timeout=self.config.api_timeout) as client:
+                    response = await client.send(
+                        httpx.Request(data["method"],
+                                      self.api_root + api,
+                                      json=data.get("body", {}),
+                                      params=data.get("query", {}),
+                                      headers=headers))
                 if 200 <= response.status_code < 300:
                     result = response.json()
                     return _handle_api_result(result)
@@ -303,6 +364,7 @@ class Bot(BaseBot):
         msg_type, content = MessageSerializer(msg).serialize()
 
         params = {
+            "method": "POST",
             "query": {
                 "receive_id_type": receive_id_type
             },

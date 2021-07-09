@@ -77,11 +77,49 @@ class Sender(BaseModel):
     tenant_key: str
 
 
+class ReplySender(BaseModel):
+    id: str
+    id_type: str
+    sender_type: str
+    tenant_key: str
+
+
 class Mention(BaseModel):
     key: str
     id: UserId
     name: str
     tenant_key: str
+
+
+class ReplyMention(BaseModel):
+    id: str
+    id_type: str
+    key: str
+    name: str
+    tenant_key: str
+
+
+class MessageBody(BaseModel):
+    content: str
+
+
+class Reply(BaseModel):
+    message_id: str
+    root_id: Optional[str]
+    parent_id: Optional[str]
+    msg_type: str
+    create_time: str
+    update_time: str
+    deleted: bool
+    updated: bool
+    chat_id: str
+    sender: ReplySender
+    body: MessageBody
+    mentions: List[ReplyMention]
+    upper_message_id: Optional[str]
+
+    class Config:
+        extra = "allow"
 
 
 class EventMessage(BaseModel):
@@ -127,6 +165,14 @@ class PrivateMessageEventDetail(MessageEventDetail):
 class MessageEvent(Event):
     __event__ = "im.message.receive_v1"
     event: MessageEventDetail
+
+    to_me: bool = False
+    reply: Optional[Reply]
+    """
+    :说明: 消息是否与机器人有关
+
+    :类型: ``bool``
+    """
 
     @overrides(Event)
     def get_type(self) -> Literal["message", "notice", "meta_event"]:
