@@ -8,5 +8,5 @@ helper = on_command("say")
 
 @helper.handle()
 async def feishu_helper(bot: FeishuBot, event: MessageEvent):
-    message = event.get_plaintext()
-    await helper.finish(message)
+    message = event.get_message()
+    await helper.finish(message, at_sender=True)
