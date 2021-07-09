@@ -218,11 +218,11 @@ class MessageDeserializer:
 
     def deserialize(self) -> Message:
         dict_mention = {}
-        if self.type == "post":
-            if self.mentions:
-                for mention in self.mentions:
-                    dict_mention[mention["key"]] = mention
+        if self.mentions:
+            for mention in self.mentions:
+                dict_mention[mention["key"]] = mention
 
+        if self.type == "post":
             msg = Message()
             if self.data["title"] != "":
                 msg += MessageSegment("text", {'text': self.data["title"]})
@@ -237,6 +237,12 @@ class MessageDeserializer:
                 msg += MessageSegment(tag if tag != "img" else "image", seg)
 
             return msg._merge()
+        elif self.type == "text":
+            for key, mention in dict_mention.items():
+                self.data["text"] = self.data["text"].replace(key, f"@{mention['name']}")
+            self.data["mentions"] = dict_mention
+
+            return Message(MessageSegment(self.type, self.data))
 
         else:
             return Message(MessageSegment(self.type, self.data))
