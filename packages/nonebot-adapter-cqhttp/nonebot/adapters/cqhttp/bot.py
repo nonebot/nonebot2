@@ -136,7 +136,7 @@ def _check_nickname(bot: "Bot", event: "Event"):
     """
     :说明:
 
-      检查消息开头是否存在，去除并赋值 ``event.to_me``
+      检查消息开头是否存在昵称，去除并赋值 ``event.to_me``
 
     :参数:
 
