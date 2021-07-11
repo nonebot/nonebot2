@@ -239,7 +239,8 @@ class MessageDeserializer:
             return msg._merge()
         elif self.type == "text":
             for key, mention in dict_mention.items():
-                self.data["text"] = self.data["text"].replace(key, f"@{mention['name']}")
+                self.data["text"] = self.data["text"].replace(
+                    key, f"@{mention['name']}")
             self.data["mentions"] = dict_mention
 
             return Message(MessageSegment(self.type, self.data))
