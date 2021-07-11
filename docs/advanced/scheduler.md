@@ -47,9 +47,9 @@ poetry add nonebot-plugin-apscheduler
 ```python
 from nonebot import require
 
-scheduler = require('nonebot_plugin_apscheduler').scheduler
+scheduler = require("nonebot_plugin_apscheduler").scheduler
 
-@scheduler.scheduled_job('cron', hour='*/2', id='xxx', args=[1], kwargs={arg2: 2})
+@scheduler.scheduled_job("cron", hour="*/2", id="xxx", args=[1], kwargs={"arg2": 2})
 async def run_every_2_hour(arg1, arg2):
     pass
 
@@ -71,7 +71,7 @@ scheduler.add_job(run_every_day_from_program_start, "interval", days=1, id="xxx"
 ```python
 from nonebot import require
 
-scheduler = require('nonebot_plugin_apscheduler').scheduler
+scheduler = require("nonebot_plugin_apscheduler").scheduler
 ```
 
 ### 编写定时任务
