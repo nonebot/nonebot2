@@ -1,7 +1,7 @@
 import inspect
 import json
 
-from typing import Any, List, Literal, Optional, Type
+from typing import Any, Dict, List, Literal, Optional, Type
 from pygtrie import StringTrie
 from pydantic import BaseModel, root_validator, Field
 
@@ -175,7 +175,7 @@ class MessageEvent(Event):
     reply: Optional[Reply]
 
     @overrides(Event)
-    def get_type(self) -> Literal["message", "notice", "meta_event"]:
+    def get_type(self) -> Literal["message", "notice"]:
         return "message"
 
     @overrides(Event)
@@ -217,8 +217,35 @@ class PrivateMessageEvent(MessageEvent):
 
 
 class NoticeEvent(Event):
-    #TODO:实现该事件
-    ...
+    event: Dict[str, Any]
+
+    @overrides(Event)
+    def get_type(self) -> Literal["message", "notice"]:
+        return "notice"
+
+    @overrides(Event)
+    def get_event_name(self) -> str:
+        raise ValueError("Event has no name!")
+
+    @overrides(Event)
+    def get_event_description(self) -> str:
+        raise ValueError("Event has no description!")
+
+    @overrides(Event)
+    def get_message(self) -> Message:
+        raise ValueError("Event has no message!")
+
+    @overrides(Event)
+    def get_plaintext(self) -> str:
+        raise ValueError("Event has no plaintext!")
+
+    @overrides(Event)
+    def get_user_id(self) -> str:
+        raise ValueError("Event has no user_id!")
+
+    @overrides(Event)
+    def get_session_id(self) -> str:
+        raise ValueError("Event has no session_id!")
 
 
 class MessageReader(BaseModel):
@@ -235,6 +262,134 @@ class MessageReadEventDetail(BaseModel):
 class MessageReadEvent(NoticeEvent):
     __event__ = "im.message.message_read_v1"
     event: MessageReadEventDetail
+
+
+class GroupDisbandedEventDetail(BaseModel):
+    chat_id: str
+    operator_id: UserId
+    external: bool
+    operator_tenant_key: str
+
+
+class GroupDisbandedEvent(NoticeEvent):
+    __event__ = "im.chat.disbanded_v1"
+    event: GroupDisbandedEventDetail
+
+
+class I18nNames(BaseModel):
+    zh_cn: str
+    en_us: str
+    ja_jp: str
+
+
+class ChatChange(BaseModel):
+    avatar: str
+    name: str
+    description: str
+    i18n_names: I18nNames
+    add_member_permission: str
+    share_card_permission: str
+    at_all_permission: str
+    edit_permission: str
+    membership_approval: str
+    join_message_visibility: str
+    leave_message_visibility: str
+    moderation_permission: str
+    owner_id: UserId
+
+
+class EventModerator(BaseModel):
+    tenant_key: str
+    user_id: UserId
+
+
+class ModeratorList(BaseModel):
+    added_member_list: EventModerator
+    removed_member_list: EventModerator
+
+
+class GroupConfigUpdatedEventDetail(BaseModel):
+    chat_id: str
+    operator_id: UserId
+    external: bool
+    operator_tenant_key: str
+    after_change: ChatChange
+    before_change: ChatChange
+    moderator_list: ModeratorList
+
+
+class GroupConfigUpdatedEvent(NoticeEvent):
+    __event__ = "im.chat.updated_v1"
+    event: GroupConfigUpdatedEventDetail
+
+
+class GroupMemberBotAddedEventDetail(BaseModel):
+    chat_id: str
+    operator_id: UserId
+    external: bool
+    operator_tenant_key: str
+
+
+class GroupMemberBotAddedEvent(NoticeEvent):
+    __event__ = "im.chat.member.bot.added_v1"
+    event: GroupMemberBotAddedEventDetail
+
+
+class GroupMemberBotDeletedEventDetail(BaseModel):
+    chat_id: str
+    operator_id: UserId
+    external: bool
+    operator_tenant_key: str
+
+
+class GroupMemberBotDeletedEvent(NoticeEvent):
+    __event__ = "im.chat.member.bot.deleted_v1"
+    event: GroupMemberBotDeletedEventDetail
+
+
+class ChatMemberUser(BaseModel):
+    name: str
+    tenant_key: str
+    user_id: UserId
+
+
+class GroupMemberUserAddedEventDetail(BaseModel):
+    chat_id: str
+    operator_id: UserId
+    external: bool
+    operator_tenant_key: str
+    users: List[ChatMemberUser]
+
+
+class GroupMemberUserAddedEvent(NoticeEvent):
+    __event__ = "im.chat.member.user.added_v1"
+    event: GroupMemberUserAddedEventDetail
+
+
+class GroupMemberUserWithdrawnEventDetail(BaseModel):
+    chat_id: str
+    operator_id: UserId
+    external: bool
+    operator_tenant_key: str
+    users: List[ChatMemberUser]
+
+
+class GroupMemberUserWithdrawnEvent(NoticeEvent):
+    __event__ = "im.chat.member.user.withdrawn_v1"
+    event: GroupMemberUserWithdrawnEventDetail
+
+
+class GroupMemberUserDeletedEventDetail(BaseModel):
+    chat_id: str
+    operator_id: UserId
+    external: bool
+    operator_tenant_key: str
+    users: List[ChatMemberUser]
+
+
+class GroupMemberUserDeletedEvent(NoticeEvent):
+    __event__ = "im.chat.member.user.deleted_v1"
+    event: GroupMemberUserDeletedEventDetail
 
 
 _t = StringTrie(separator=".")
