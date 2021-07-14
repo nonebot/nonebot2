@@ -30,5 +30,13 @@
     "desc": "在原 CQHTTP Adapter 的基础上进行修改以便更好地适配 go-cqhttp",
     "author": "Jigsaw111",
     "repo": "Jigsaw111/nonebot-adapter-gocq"
+  },
+  {
+    "id": "nonebot_adapter_feishu",
+    "link": "nonebot-adapter-feishu",
+    "name": "feishu",
+    "desc": "飞书协议",
+    "author": "StarHeartHunt",
+    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-feishu"
   }
 ]
