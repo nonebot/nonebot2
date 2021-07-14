@@ -59,3 +59,6 @@
 
 
     * [nonebot.adapters.mirai](adapters/mirai.html)
+
+
+    * [nonebot.adapters.feishu](adapters/feishu.html)
