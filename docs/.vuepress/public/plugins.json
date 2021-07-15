@@ -302,5 +302,13 @@
     "desc": "一个简单的功能调用统计以及可视化插件",
     "author": "HibiKier",
     "repo": "https://github.com/HibiKier/nonebot_plugin_statistical"
+  },
+  {
+    "id": "nonebot_plugin_setu",
+    "link": "nonebot_plugin_setu",
+    "name": "nonebot_plugin_setu",
+    "desc": "基于loliconImage Api的涩图插件，内置涩图CD",
+    "author": "ayanamiblhx",
+    "repo": "https://github.com/ayanamiblhx/nonebot_plugin_setu"
   }
 ]
