@@ -18,7 +18,7 @@
   {
     "id": "nonebot_plugin_rauthman",
     "link": "nonebot-plugin-rauthman",
-    "name": "rauthman",
+    "name": "RAM 授权管理",
     "desc": "基于规则的授权管理",
     "author": "Lancercmd",
     "repo": "Lancercmd/nonebot_plugin_rauthman"
@@ -75,8 +75,8 @@
     "id": "nonebot_plugin_translator",
     "link": "nonebot-plugin-translator",
     "author": "Lancercmd",
-    "desc": "多语种翻译插件",
-    "name": "translator",
+    "desc": "基于腾讯机器翻译 TMT",
+    "name": "多语种翻译插件",
     "repo": "Lancercmd/nonebot_plugin_translator"
   },
   {
