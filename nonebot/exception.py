@@ -60,6 +60,24 @@ class ParserExit(NoneBotException):
         return self.__repr__()
 
 
+class DriverException(NoneBotException):
+    """
+    :说明:
+
+        代表 ``Driver`` 抛出的异常
+    """
+    pass
+
+
+class SetupFailed(DriverException):
+    """
+    :说明:
+
+        ``ForwardDriver`` 建立连接失败
+    """
+    pass
+
+
 class PausedException(NoneBotException):
     """
     :说明:

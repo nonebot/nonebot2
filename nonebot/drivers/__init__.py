@@ -195,7 +195,7 @@ class Driver(abc.ABC):
 class ForwardDriver(Driver):
 
     @abc.abstractmethod
-    def setup(self, request: "HTTPConnection") -> None:
+    def setup(self, adapter: str, request: "HTTPConnection") -> None:
         raise NotImplementedError
 
 

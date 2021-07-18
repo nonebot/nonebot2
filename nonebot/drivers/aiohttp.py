@@ -3,13 +3,15 @@
 
 import signal
 import asyncio
-from typing import Set, Union, Callable, Awaitable
+from typing import Set, Union, Callable, Awaitable, DefaultDict
 
 import aiohttp
 
 from nonebot.log import logger
+from nonebot.adapters import Bot
 from nonebot.typing import overrides
 from nonebot.config import Env, Config
+from nonebot.exception import SetupFailed
 from nonebot.drivers import ForwardDriver, HTTPConnection, HTTPRequest, WebSocket
 
 STARTUP_FUNC = Callable[[], Awaitable[None]]
@@ -23,7 +25,8 @@ class Driver(ForwardDriver):
         super().__init__(env, config)
         self.startup_funcs: Set[STARTUP_FUNC] = set()
         self.shutdown_funcs: Set[SHUTDOWN_FUNC] = set()
-        self.requests: Set[AVAILABLE_REQUEST] = set()
+        self.requests: DefaultDict[str,
+                                   Set[AVAILABLE_REQUEST]] = DefaultDict(set)
 
     @property
     @overrides(ForwardDriver)
@@ -47,10 +50,10 @@ class Driver(ForwardDriver):
         return func
 
     @overrides(ForwardDriver)
-    def setup(self, request: HTTPConnection) -> None:
+    def setup(self, adapter: str, request: HTTPConnection) -> None:
         if not isinstance(request, (HTTPRequest, WebSocket)):
             raise TypeError(f"Request Type {type(request)!r} is not supported!")
-        self.requests.add(request)
+        self.requests[adapter].add(request)
 
     @overrides(ForwardDriver)
     def run(self, *args, **kwargs):
@@ -68,7 +71,23 @@ class Driver(ForwardDriver):
             loop.close()
 
     async def startup(self):
-        # TODO: build request
+        setups = []
+        loop = asyncio.get_event_loop()
+        for adapter, requests in self.requests.items():
+            for request in requests:
+                if isinstance(request, HTTPRequest):
+                    setups.append(self._http_setup(adapter, request))
+                else:
+                    setups.append(self._ws_setup(adapter, request))
+
+        try:
+            await asyncio.gather(*setups)
+        except Exception as e:
+            logger.opt(
+                colors=True,
+                exception=e).error("Application startup failed. Exiting.")
+            asyncio.create_task(self.shutdown(loop))
+            return
 
         # run startup
         cors = [startup() for startup in self.startup_funcs]
@@ -105,3 +124,26 @@ class Driver(ForwardDriver):
         await asyncio.gather(*tasks, return_exceptions=True)
 
         loop.stop()
+
+    async def _http_setup(self, adapter: str, request: HTTPRequest):
+        BotClass = self._adapters[adapter]
+        self_id, _ = await BotClass.check_permission(self, request)
+
+        if not self_id:
+            raise SetupFailed("Bot self_id get failed")
+
+        bot = BotClass(self_id, request)
+        self._bot_connect(bot)
+        asyncio.create_task(self._http_loop(bot, request))
+
+    async def _ws_setup(self, adapter: str, request: WebSocket):
+        ...
+
+    async def _http_loop(self, bot: Bot, request: HTTPRequest):
+        # TODO: main loop for HTTP long polling
+        try:
+            while True:
+                ...
+        # include asyncio.CancelledError
+        finally:
+            self._bot_disconnect(bot)
