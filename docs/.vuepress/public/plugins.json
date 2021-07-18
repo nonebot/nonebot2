@@ -310,5 +310,13 @@
     "desc": "基于loliconImage Api的涩图插件，内置涩图CD",
     "author": "ayanamiblhx",
     "repo": "https://github.com/ayanamiblhx/nonebot_plugin_setu"
+  },
+  {
+    "id": "nonebot_plugin_fr24",
+    "link": "nonebot-plugin-fr24",
+    "name": "FlightRadar24查询模块",
+    "desc": "通过FlightRadar24查询航班信息",
+    "author": "IronWolf-K",
+    "repo": "https://github.com/IronWolf-K/nonebot_plugin_fr24"
   }
 ]
