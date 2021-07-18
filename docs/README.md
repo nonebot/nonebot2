@@ -11,5 +11,5 @@ features:
     details: 精心设计的消息处理流程使得你可以很方便地将原型扩充为具有大量实用功能的完整聊天机器人，并持续保证扩展性。
   - title: 高性能
     details: 采用异步 I/O，利用 WebSocket 进行通信，以获得极高的性能；同时，支持使用多账号同时接入，减少业务宕机的可能。
-footer: MIT Licensed | Copyright © 2018 - 2020 NoneBot Team
+footer: MIT Licensed | Copyright © 2018 - 2021 NoneBot Team
 ---
