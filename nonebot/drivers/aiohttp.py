@@ -24,6 +24,7 @@ AVAILABLE_REQUEST = Union[HTTPRequest, WebSocket]
 @dataclass
 class RequestSetup:
     adapter: str
+    self_id: str
     request: AVAILABLE_REQUEST
     poll_interval: float
     reconnect_interval: float
@@ -61,13 +62,15 @@ class Driver(ForwardDriver):
     @overrides(ForwardDriver)
     def setup(self,
               adapter: str,
+              self_id: str,
               request: HTTPConnection,
               poll_interval: float = 3.,
               reconnect_interval: float = 3.) -> None:
         if not isinstance(request, (HTTPRequest, WebSocket)):
             raise TypeError(f"Request Type {type(request)!r} is not supported!")
         self.requests.append(
-            RequestSetup(adapter, request, poll_interval, reconnect_interval))
+            RequestSetup(adapter, self_id, request, poll_interval,
+                         reconnect_interval))
 
     @overrides(ForwardDriver)
     def run(self, *args, **kwargs):
@@ -90,11 +93,11 @@ class Driver(ForwardDriver):
         for setup in self.requests:
             if isinstance(setup.request, HTTPRequest):
                 setups.append(
-                    self._http_setup(setup.adapter, setup.request,
-                                     setup.poll_interval))
+                    self._http_setup(setup.adapter, setup.self_id,
+                                     setup.request, setup.poll_interval))
             else:
                 setups.append(
-                    self._ws_setup(setup.adapter, setup.request,
+                    self._ws_setup(setup.adapter, setup.self_id, setup.request,
                                    setup.reconnect_interval))
 
         try:
@@ -142,26 +145,17 @@ class Driver(ForwardDriver):
 
         loop.stop()
 
-    async def _http_setup(self, adapter: str, request: HTTPRequest,
-                          poll_interval: float):
+    async def _http_setup(self, adapter: str, self_id: str,
+                          request: HTTPRequest, poll_interval: float):
         BotClass = self._adapters[adapter]
-        self_id, _ = await BotClass.check_permission(self, request)
-
-        if not self_id:
-            raise SetupFailed("Bot self_id get failed")
 
         bot = BotClass(self_id, request)
         self._bot_connect(bot)
         asyncio.create_task(self._http_loop(bot, request, poll_interval))
 
-    async def _ws_setup(self, adapter: str, request: WebSocket,
+    async def _ws_setup(self, adapter: str, self_id: str, request: WebSocket,
                         reconnect_interval: float):
         BotClass = self._adapters[adapter]
-        self_id, _ = await BotClass.check_permission(self, request)
-
-        if not self_id:
-            raise SetupFailed("Bot self_id get failed")
-
         bot = BotClass(self_id, request)
         self._bot_connect(bot)
         asyncio.create_task(self._ws_loop(bot, request, reconnect_interval))

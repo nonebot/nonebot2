@@ -84,6 +84,7 @@ class Driver(abc.ABC):
 
           * ``name: str``: 适配器名称，用于在连接时进行识别
           * ``adapter: Type[Bot]``: 适配器 Class
+          * ``**kwargs``: 其他传递给适配器的参数
         """
         if name in self._adapters:
             logger.opt(
@@ -195,7 +196,8 @@ class Driver(abc.ABC):
 class ForwardDriver(Driver):
 
     @abc.abstractmethod
-    def setup(self, adapter: str, request: "HTTPConnection") -> None:
+    def setup(self, adapter: str, self_id: str,
+              request: "HTTPConnection") -> None:
         raise NotImplementedError
 
 

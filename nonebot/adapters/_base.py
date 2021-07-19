@@ -71,11 +71,11 @@ class Bot(abc.ABC):
         raise NotImplementedError
 
     @classmethod
-    def register(cls, driver: Driver, config: Config):
+    def register(cls, driver: Driver, config: Config, **kwargs):
         """
         :说明:
 
-          `register` 方法会在 `driver.register_adapter` 时被调用，用于初始化相关配置
+          ``register`` 方法会在 ``driver.register_adapter`` 时被调用，用于初始化相关配置
         """
         cls.driver = driver
         cls.config = config
