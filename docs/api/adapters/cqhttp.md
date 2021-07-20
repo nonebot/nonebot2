@@ -26,6 +26,9 @@ CQHTTP 配置类
     * `secret` / `cqhttp_secret`: CQHTTP HTTP 上报数据签名口令
 
 
+    * `ws_urls` / `cqhttp_ws_urls`: CQHTTP 正向 Websocket 连接 Bot ID、目标 URL 字典
+
+
 # NoneBot.adapters.cqhttp.utils 模块
 
 

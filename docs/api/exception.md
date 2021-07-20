@@ -61,28 +61,6 @@ sidebarDepth: 0
 
 
 
-## _exception_ `DriverException`
-
-基类：`nonebot.exception.NoneBotException`
-
-
-* **说明**
-
-    代表 `Driver` 抛出的异常
-
-
-
-## _exception_ `SetupFailed`
-
-基类：`nonebot.exception.DriverException`
-
-
-* **说明**
-
-    `ForwardDriver` 建立连接失败
-
-
-
 ## _exception_ `PausedException`
 
 基类：`nonebot.exception.NoneBotException`

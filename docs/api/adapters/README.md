@@ -85,12 +85,12 @@ Config 配置对象
 Adapter 类型
 
 
-### _classmethod_ `register(driver, config)`
+### _classmethod_ `register(driver, config, **kwargs)`
 
 
 * **说明**
 
-    register 方法会在 driver.register_adapter 时被调用，用于初始化相关配置
+    `register` 方法会在 `driver.register_adapter` 时被调用，用于初始化相关配置
 
 
 

@@ -18,7 +18,7 @@ logger.add("error.log",
            format=default_format)
 
 nonebot.init(custom_config2="config on init")
-app = nonebot.get_asgi()
+# app = nonebot.get_asgi()
 driver = nonebot.get_driver()
 driver.register_adapter("cqhttp", Bot)
 driver.register_adapter("ding", DingBot)
@@ -37,4 +37,5 @@ config.custom_config3 = config.custom_config1
 config.custom_config4 = "New custom config"
 
 if __name__ == "__main__":
-    nonebot.run(app="__mp_main__:app")
+    # nonebot.run(app="__mp_main__:app")
+    nonebot.run()

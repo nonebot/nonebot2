@@ -196,8 +196,25 @@ class Driver(abc.ABC):
 class ForwardDriver(Driver):
 
     @abc.abstractmethod
-    def setup(self, adapter: str, self_id: str,
-              request: "HTTPConnection") -> None:
+    def setup_http_polling(self,
+                           adapter: str,
+                           self_id: str,
+                           url: str,
+                           polling_interval: float = 3.,
+                           method: str = "GET",
+                           body: bytes = b"",
+                           headers: Dict[str, str] = {},
+                           http_version: str = "1.1") -> None:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def setup_websocket(self,
+                        adapter: str,
+                        self_id: str,
+                        url: str,
+                        reconnect_interval: float = 3.,
+                        headers: Dict[str, str] = {},
+                        http_version: str = "1.1") -> None:
         raise NotImplementedError
 
 

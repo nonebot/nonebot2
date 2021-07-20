@@ -3,7 +3,6 @@ import sys
 import hmac
 import json
 import asyncio
-from urllib.parse import urlsplit
 from typing import Any, Dict, Tuple, Union, Optional, TYPE_CHECKING
 
 import httpx
@@ -246,22 +245,18 @@ class Bot(BaseBot):
         elif isinstance(driver, ForwardDriver) and cls.cqhttp_config.ws_urls:
             for self_id, url in cls.cqhttp_config.ws_urls.items():
                 try:
-                    url_info = urlsplit(url)
                     headers = {
                         "authorization":
-                            f"Bearer {cls.cqhttp_config.access_token}",
-                        "host":
-                            url_info.netloc if not url_info.port else
-                            f"{url_info.netloc}:{url_info.port}",
+                            f"Bearer {cls.cqhttp_config.access_token}"
                     }
-                    driver.setup(
-                        "cqhttp", self_id,
-                        WebSocket("1.1", url_info.scheme, url_info.path,
-                                  url_info.query.encode("latin-1"), headers))
+                    driver.setup_websocket("cqhttp",
+                                           self_id,
+                                           url,
+                                           headers=headers)
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
                         f"<r><bg #f8bbd0>Bad url {url} for bot {self_id} "
-                        "in cqhttp forward websocket</bg></r>")
+                        "in cqhttp forward websocket</bg #f8bbd0></r>")
 
     @classmethod
     @overrides(BaseBot)

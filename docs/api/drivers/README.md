@@ -153,6 +153,9 @@ Driver 基类。
     * `adapter: Type[Bot]`: 适配器 Class
 
 
+    * `**kwargs`: 其他传递给适配器的参数
+
+
 
 ### _abstract property_ `type`
 
