@@ -24,6 +24,8 @@ QQ 协议端举例:
 2. 运行 exe 文件或者使用 `./go-cqhttp` 启动
 3. 生成默认配置文件并修改默认配置
 
+### 选项 1 反向 WebSocket 连接
+
 ```yml{2,3,18,57,58}
 account:
   uin: 机器人QQ号
@@ -97,6 +99,10 @@ database:
 其中 `ws://127.0.0.1:8080/cqhttp/ws` 中的 `127.0.0.1` 和 `8080` 应分别对应 nonebot 配置的 HOST 和 PORT。
 
 `cqhttp` 是前述 `register_adapter` 时传入的第一个参数，代表设置的 `CQHTTPBot` 适配器的路径，你可以对不同的适配器设置不同路径以作区别。
+
+### 选项 2 HTTP POST 上报
+
+### 选项 3 正向 WebSocket 连接
 
 ## 历史性的第一次对话
 

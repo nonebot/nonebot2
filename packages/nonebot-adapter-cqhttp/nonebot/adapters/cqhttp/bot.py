@@ -248,7 +248,7 @@ class Bot(BaseBot):
                     headers = {
                         "authorization":
                             f"Bearer {cls.cqhttp_config.access_token}"
-                    }
+                    } if cls.cqhttp_config.access_token else {}
                     driver.setup_websocket("cqhttp",
                                            self_id,
                                            url,
