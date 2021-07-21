@@ -41,17 +41,17 @@ nonebot-adapter-cqhttp = { path = "./packages/nonebot-adapter-cqhttp", develop =
 nonebot-adapter-ding = { path = "./packages/nonebot-adapter-ding", develop = true }
 nonebot-adapter-mirai = { path = "./packages/nonebot-adapter-mirai", develop = true }
 nonebot-adapter-feishu = { path = "./packages/nonebot-adapter-feishu", develop = true }
-sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
+sphinx-markdown-builder = { git = "git@github.com:nonebot/sphinx-markdown-builder.git" }
 
 [tool.poetry.extras]
 quart = ["quart"]
 aiohttp = ["aiohttp"]
 all = ["quart", "aiohttp"]
 
-[[tool.poetry.source]]
-name = "aliyun"
-url = "https://mirrors.aliyun.com/pypi/simple/"
-default = true
+# [[tool.poetry.source]]
+# name = "aliyun"
+# url = "https://mirrors.aliyun.com/pypi/simple/"
+# default = true
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]
