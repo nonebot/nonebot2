@@ -71,6 +71,14 @@ module.exports = (context) => ({
     editLinks: true,
     smoothScroll: true,
 
+    algolia: {
+      apiKey: "ef449608d0ad6e81b9efd05db6367040",
+      indexName: "nonebot",
+      algoliaOptions: {
+        facetFilters: ["lang:zh-CN"],
+      },
+    },
+
     locales: {
       "/": {
         label: "简体中文",
