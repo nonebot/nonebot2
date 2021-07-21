@@ -34,5 +34,11 @@
     "desc": "高性能文爱萝卜子，糅杂了各类有趣小功能",
     "author": "Kyomotoi",
     "repo": "https://github.com/Kyomotoi/ATRI"
+  },
+  {
+    "name": "dumbot傻瓜机器人",
+    "desc": "猜一猜游戏、新闻一览、英文每日一词一短语等等，含一键启动及docker容器部署就绪",
+    "author": "ffreemt",
+    "repo": "https://github.com/ffreemt/koyeb-nb2"
   }
 ]
