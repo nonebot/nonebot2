@@ -24,8 +24,8 @@ exclude = ["nonebot/__init__.py", "nonebot/adapters/__init__.py"]
 
 [tool.poetry.dependencies]
 python = "^3.7.3"
-httpx = "^0.17.0"
-websockets = "^8.1"
+httpx = "^0.18.0"
+websockets = "^9.1"
 nonebot2 = "^2.0.0-alpha.12"
 
 [tool.poetry.dev-dependencies]
