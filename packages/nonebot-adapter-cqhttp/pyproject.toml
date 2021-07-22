@@ -30,10 +30,10 @@ nonebot2 = "^2.0.0-alpha.13"
 [tool.poetry.dev-dependencies]
 nonebot2 = { path = "../../", develop = true }
 
-[[tool.poetry.source]]
-name = "aliyun"
-url = "https://mirrors.aliyun.com/pypi/simple/"
-default = true
+# [[tool.poetry.source]]
+# name = "aliyun"
+# url = "https://mirrors.aliyun.com/pypi/simple/"
+# default = true
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
