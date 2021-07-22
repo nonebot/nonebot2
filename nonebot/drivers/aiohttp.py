@@ -212,6 +212,9 @@ class Driver(ForwardDriver):
         BotClass = self._adapters[setup.adapter]
         bot = BotClass(setup.self_id, request)
         self._bot_connect(bot)
+        logger.opt(colors=True).info(
+            f"Start http polling for <y>{setup.adapter.upper()} "
+            f"Bot {setup.self_id}</y>")
 
         headers = request.headers
         timeout = aiohttp.ClientTimeout(30)
@@ -289,11 +292,13 @@ class Driver(ForwardDriver):
                     )
                     try:
                         async with session.ws_connect(url) as ws:
+                            logger.opt(colors=True).info(
+                                f"WebSocket Connection to <y>{setup.adapter.upper()} "
+                                f"Bot {setup.self_id}</y> succeeded!")
                             request = WebSocket(
                                 setup.http_version, url.scheme, url.path,
-                                url.raw_query_string.encode("latin-1"), {
-                                    **setup.headers, "host": host
-                                }, ws)
+                                url.raw_query_string.encode("latin-1"), headers,
+                                ws)
 
                             BotClass = self._adapters[setup.adapter]
                             bot = BotClass(setup.self_id, request)

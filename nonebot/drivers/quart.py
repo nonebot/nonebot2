@@ -140,14 +140,15 @@ class Driver(ReverseDriver):
                 },
             },
         }
-        uvicorn.run(app or self.server_app,
-                    host=host or str(self.config.host),
-                    port=port or self.config.port,
-                    reload=bool(app) and self.config.debug,
-                    reload_dirs=self.quart_config.quart_reload_dirs or None,
-                    debug=self.config.debug,
-                    log_config=LOGGING_CONFIG,
-                    **kwargs)
+        uvicorn.run(
+            app or self.server_app,  # type: ignore
+            host=host or str(self.config.host),
+            port=port or self.config.port,
+            reload=bool(app) and self.config.debug,
+            reload_dirs=self.quart_config.quart_reload_dirs or None,
+            debug=self.config.debug,
+            log_config=LOGGING_CONFIG,
+            **kwargs)
 
     async def _handle_http(self, adapter: str):
         request: Request = _request
