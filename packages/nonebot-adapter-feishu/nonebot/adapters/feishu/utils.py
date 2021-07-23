@@ -2,6 +2,7 @@ import base64
 import hashlib
 
 from Crypto.Cipher import AES
+
 from nonebot.utils import logger_wrapper
 
 log = logger_wrapper("FEISHU")

@@ -1,22 +1,23 @@
-import httpx
 import json
 import re
+from typing import TYPE_CHECKING, Any, Dict, Optional, Tuple, Union
 
-from aiocache import cached, Cache
+import httpx
+from aiocache import Cache, cached
 from aiocache.serializers import PickleSerializer
-from typing import Any, Dict, Tuple, Union, Optional, TYPE_CHECKING
 
-from nonebot.log import logger
-from nonebot.typing import overrides
-from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
 from nonebot.drivers import Driver, HTTPRequest, HTTPResponse
+from nonebot.log import logger
+from nonebot.message import handle_event
+from nonebot.typing import overrides
 
 from .config import Config as FeishuConfig
-from .event import Event, GroupMessageEvent, MessageEvent, PrivateMessageEvent, Reply, get_event_model
+from .event import (Event, GroupMessageEvent, MessageEvent,
+                    PrivateMessageEvent, get_event_model)
 from .exception import ActionFailed, ApiNotAvailable, NetworkError
 from .message import Message, MessageSegment, MessageSerializer
-from .utils import log, AESCipher
+from .utils import AESCipher, log
 
 if TYPE_CHECKING:
     from nonebot.config import Config
