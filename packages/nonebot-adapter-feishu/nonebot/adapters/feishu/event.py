@@ -1,9 +1,9 @@
 import inspect
 import json
-
 from typing import Any, Dict, List, Literal, Optional, Type
+
+from pydantic import BaseModel, Field, root_validator
 from pygtrie import StringTrie
-from pydantic import BaseModel, root_validator, Field
 
 from nonebot.adapters import Event as BaseEvent
 from nonebot.typing import overrides

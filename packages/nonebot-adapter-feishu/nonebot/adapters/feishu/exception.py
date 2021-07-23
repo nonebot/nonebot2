@@ -1,9 +1,9 @@
 from typing import Optional
 
-from nonebot.exception import (AdapterException, ActionFailed as
-                               BaseActionFailed, NetworkError as
-                               BaseNetworkError, ApiNotAvailable as
-                               BaseApiNotAvailable)
+from nonebot.exception import ActionFailed as BaseActionFailed
+from nonebot.exception import AdapterException
+from nonebot.exception import ApiNotAvailable as BaseApiNotAvailable
+from nonebot.exception import NetworkError as BaseNetworkError
 
 
 class FeishuAdapterException(AdapterException):
