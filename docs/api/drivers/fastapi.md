@@ -10,6 +10,16 @@ sidebarDepth: 0
 后端使用方法请参考: [FastAPI 文档](https://fastapi.tiangolo.com/)
 
 
+## _class_ `HTTPPollingSetup`
+
+基类：`object`
+
+
+## _class_ `WebSocketSetup`
+
+基类：`object`
+
+
 ## _class_ `Config`
 
 基类：`pydantic.env_settings.BaseSettings`
@@ -79,7 +89,7 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 ## _class_ `Driver`
 
-基类：[`nonebot.drivers.ReverseDriver`](README.md#nonebot.drivers.ReverseDriver)
+基类：[`nonebot.drivers.ReverseDriver`](README.md#nonebot.drivers.ReverseDriver), `nonebot.drivers.ForwardDriver`
 
 FastAPI 驱动框架
 
