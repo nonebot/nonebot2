@@ -34,10 +34,16 @@ sidebarDepth: 0
 * `on_command` => `nonebot.plugin.on_command`
 
 
+* `on_shell_command` => `nonebot.plugin.on_shell_command`
+
+
 * `on_regex` => `nonebot.plugin.on_regex`
 
 
 * `CommandGroup` => `nonebot.plugin.CommandGroup`
+
+
+* `Matchergroup` => `nonebot.plugin.MatcherGroup`
 
 
 * `load_plugin` => `nonebot.plugin.load_plugin`
@@ -46,10 +52,28 @@ sidebarDepth: 0
 * `load_plugins` => `nonebot.plugin.load_plugins`
 
 
+* `load_all_plugins` => `nonebot.plugin.load_all_plugins`
+
+
+* `load_from_json` => `nonebot.plugin.load_from_json`
+
+
+* `load_from_toml` => `nonebot.plugin.load_from_toml`
+
+
 * `load_builtin_plugins` => `nonebot.plugin.load_builtin_plugins`
 
 
+* `get_plugin` => `nonebot.plugin.get_plugin`
+
+
 * `get_loaded_plugins` => `nonebot.plugin.get_loaded_plugins`
+
+
+* `export` => `nonebot.plugin.export`
+
+
+* `require` => `nonebot.plugin.require`
 
 
 ## `get_driver()`
@@ -142,6 +166,52 @@ app = nonebot.get_app()
 
 ```python
 asgi = nonebot.get_asgi()
+```
+
+
+## `get_bot(self_id=None)`
+
+
+* **说明**
+
+    当提供 self_id 时，此函数是 get_bots()[self_id] 的简写；当不提供时，返回一个 Bot。
+
+
+
+* **参数**
+
+    
+    * `self_id: Optional[str]`: 用来识别 Bot 的 ID
+
+
+
+* **返回**
+
+    
+    * `Bot`: Bot 对象
+
+
+
+* **异常**
+
+    
+    * `KeyError`: 对应 ID 的 Bot 不存在
+
+
+    * `ValueError`: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+
+
+    * `ValueError`: 没有传入 ID 且没有 Bot 可用
+
+
+
+* **用法**
+
+
+```python
+assert nonebot.get_bot('12345') == nonebot.get_bots()['12345']
+
+another_unspecified_bot = nonebot.get_bot()
 ```
 
 

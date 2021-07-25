@@ -1,10 +1,11 @@
 const path = require("path");
 
-module.exports = context => ({
+module.exports = (context) => ({
+  base: process.env.VUEPRESS_BASE || "/",
   title: "NoneBot",
-  description: "基于 酷Q 的 Python 异步 QQ 机器人框架",
+  description: "跨平台 Python 异步 QQ 机器人框架",
   markdown: {
-    lineNumbers: true
+    lineNumbers: true,
   },
   /**
    * Extra tags to be injected to the page HTML `<head>`
@@ -20,26 +21,26 @@ module.exports = context => ({
     ["meta", { name: "apple-mobile-web-app-capable", content: "yes" }],
     [
       "meta",
-      { name: "apple-mobile-web-app-status-bar-style", content: "black" }
+      { name: "apple-mobile-web-app-status-bar-style", content: "black" },
     ],
     [
       "link",
-      { rel: "apple-touch-icon", href: "/icons/apple-touch-icon-180x180.png" }
+      { rel: "apple-touch-icon", href: "/icons/apple-touch-icon-180x180.png" },
     ],
     [
       "link",
       {
         rel: "mask-icon",
         href: "/icons/safari-pinned-tab.svg",
-        color: "#ea5252"
-      }
+        color: "#ea5252",
+      },
     ],
     [
       "meta",
       {
         name: "msapplication-TileImage",
-        content: "/icons/mstile-150x150.png"
-      }
+        content: "/icons/mstile-150x150.png",
+      },
     ],
     ["meta", { name: "msapplication-TileColor", content: "#ea5252" }],
     [
@@ -47,16 +48,16 @@ module.exports = context => ({
       {
         rel: "stylesheet",
         href:
-          "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"
-      }
-    ]
+          "https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css",
+      },
+    ],
   ],
   locales: {
     "/": {
       lang: "zh-CN",
       title: "NoneBot",
-      description: "基于 酷Q 的 Python 异步 QQ 机器人框架"
-    }
+      description: "跨平台 Python 异步 QQ 机器人框架",
+    },
   },
 
   theme: "nonebot",
@@ -70,6 +71,14 @@ module.exports = context => ({
     editLinks: true,
     smoothScroll: true,
 
+    algolia: {
+      apiKey: "ef449608d0ad6e81b9efd05db6367040",
+      indexName: "nonebot",
+      algoliaOptions: {
+        facetFilters: ["lang:zh-CN"],
+      },
+    },
+
     locales: {
       "/": {
         label: "简体中文",
@@ -81,8 +90,8 @@ module.exports = context => ({
           { text: "指南", link: "/guide/" },
           { text: "进阶", link: "/advanced/" },
           { text: "API", link: "/api/" },
-          { text: "插件广场", link: "/plugin-store" },
-          { text: "更新日志", link: "/changelog" }
+          { text: "商店", link: "/store" },
+          { text: "更新日志", link: "/changelog" },
         ],
         sidebarDepth: 2,
         sidebar: {
@@ -96,8 +105,8 @@ module.exports = context => ({
                 "installation",
                 "getting-started",
                 "creating-a-project",
-                "basic-configuration"
-              ]
+                "basic-configuration",
+              ],
             },
             {
               title: "编写插件",
@@ -108,9 +117,20 @@ module.exports = context => ({
                 "creating-a-plugin",
                 "creating-a-matcher",
                 "creating-a-handler",
-                "end-or-start"
-              ]
-            }
+                "end-or-start",
+              ],
+            },
+            {
+              title: "协议适配",
+              collapsable: false,
+              sidebar: "auto",
+              children: [
+                "cqhttp-guide",
+                "ding-guide",
+                "mirai-guide",
+                "feishu-guide",
+              ],
+            },
           ],
           "/advanced/": [
             {
@@ -121,9 +141,17 @@ module.exports = context => ({
                 "",
                 "scheduler",
                 "permission",
-                "runtime-hook"
-              ]
-            }
+                "runtime-hook",
+                "export-and-require",
+                "overloaded-handlers",
+              ],
+            },
+            {
+              title: "发布",
+              collapsable: false,
+              sidebar: "auto",
+              children: ["publish-plugin"],
+            },
           ],
           "/api/": [
             {
@@ -133,74 +161,90 @@ module.exports = context => ({
               children: [
                 {
                   title: "nonebot 模块",
-                  path: "nonebot"
+                  path: "nonebot",
                 },
                 {
                   title: "nonebot.config 模块",
-                  path: "config"
+                  path: "config",
                 },
                 {
                   title: "nonebot.plugin 模块",
-                  path: "plugin"
+                  path: "plugin",
                 },
                 {
                   title: "nonebot.message 模块",
-                  path: "message"
+                  path: "message",
                 },
                 {
                   title: "nonebot.matcher 模块",
-                  path: "matcher"
+                  path: "matcher",
+                },
+                {
+                  title: "nonebot.handler 模块",
+                  path: "handler",
                 },
                 {
                   title: "nonebot.rule 模块",
-                  path: "rule"
+                  path: "rule",
                 },
                 {
                   title: "nonebot.permission 模块",
-                  path: "permission"
-                },
-                {
-                  title: "nonebot.sched 模块",
-                  path: "sched"
+                  path: "permission",
                 },
                 {
                   title: "nonebot.log 模块",
-                  path: "log"
+                  path: "log",
                 },
                 {
                   title: "nonebot.utils 模块",
-                  path: "utils"
+                  path: "utils",
                 },
                 {
                   title: "nonebot.typing 模块",
-                  path: "typing"
+                  path: "typing",
                 },
                 {
                   title: "nonebot.exception 模块",
-                  path: "exception"
+                  path: "exception",
                 },
                 {
                   title: "nonebot.drivers 模块",
-                  path: "drivers/"
+                  path: "drivers/",
                 },
                 {
                   title: "nonebot.drivers.fastapi 模块",
-                  path: "drivers/fastapi"
+                  path: "drivers/fastapi",
+                },
+                {
+                  title: "nonebot.drivers.quart 模块",
+                  path: "drivers/quart",
                 },
                 {
                   title: "nonebot.adapters 模块",
-                  path: "adapters/"
+                  path: "adapters/",
                 },
                 {
                   title: "nonebot.adapters.cqhttp 模块",
-                  path: "adapters/cqhttp"
-                }
-              ]
-            }
-          ]
-        }
-      }
-    }
+                  path: "adapters/cqhttp",
+                },
+                {
+                  title: "nonebot.adapters.ding 模块",
+                  path: "adapters/ding",
+                },
+                {
+                  title: "nonebot.adapters.mirai 模块",
+                  path: "adapters/mirai",
+                },
+                {
+                  title: "nonebot.adapters.feishu 模块",
+                  path: "adapters/feishu",
+                },
+              ],
+            },
+          ],
+        },
+      },
+    },
   },
 
   plugins: [
@@ -212,9 +256,9 @@ module.exports = context => ({
         serviceWorker: true,
         updatePopup: {
           message: "发现新内容",
-          buttonText: "刷新"
-        }
-      }
+          buttonText: "刷新",
+        },
+      },
     ],
     [
       "versioning",
@@ -223,16 +267,16 @@ module.exports = context => ({
         pagesSourceDir: path.resolve(context.sourceDir, "..", "pages"),
         onNewVersion(version, versionDestPath) {
           console.log(`Created version ${version} in ${versionDestPath}`);
-        }
-      }
+        },
+      },
     ],
     [
       "container",
       {
         type: "vue",
         before: '<pre class="vue-container"><code>',
-        after: "</code></pre>"
-      }
-    ]
-  ]
+        after: "</code></pre>",
+      },
+    ],
+  ],
 });

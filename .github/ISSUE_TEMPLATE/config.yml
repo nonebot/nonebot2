@@ -1,0 +1,14 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Question
+    url: https://github.com/nonebot/discussions/discussions/new
+    about: Ask questions about nonebot
+  - name: Plugin Publish
+    url: https://v2.nonebot.dev/store.html
+    about: Publish your plugin to nonebot homepage and nb-cli
+  - name: Adapter Publish
+    url: https://v2.nonebot.dev/store.html
+    about: Publish your adapter to nonebot homepage and nb-cli
+  - name: Bot Publish
+    url: https://v2.nonebot.dev/store.html
+    about: Publish your bot to nonebot homepage and nb-cli

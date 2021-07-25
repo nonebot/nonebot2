@@ -10,33 +10,11 @@ sidebarDepth: 0
 各协议请继承以下基类，并使用 `driver.register_adapter` 注册适配器
 
 
-## _class_ `BaseBot`
+## _class_ `Bot`
 
 基类：`abc.ABC`
 
 Bot 基类。用于处理上报消息，并提供 API 调用接口。
-
-
-### _abstract_ `__init__(driver, connection_type, config, self_id, *, websocket=None)`
-
-
-* **参数**
-
-    
-    * `driver: Driver`: Driver 对象
-
-
-    * `connection_type: str`: http 或者 websocket
-
-
-    * `config: Config`: Config 对象
-
-
-    * `self_id: str`: 机器人 ID
-
-
-    * `websocket: Optional[WebSocket]`: Websocket 连接对象
-
 
 
 ### `driver`
@@ -44,14 +22,52 @@ Bot 基类。用于处理上报消息，并提供 API 调用接口。
 Driver 对象
 
 
-### `connection_type`
-
-连接类型
-
-
 ### `config`
 
 Config 配置对象
+
+
+### `_calling_api_hook`
+
+
+* **类型**
+
+    `Set[T_CallingAPIHook]`
+
+
+
+* **说明**
+
+    call_api 时执行的函数
+
+
+
+### `_called_api_hook`
+
+
+* **类型**
+
+    `Set[T_CalledAPIHook]`
+
+
+
+* **说明**
+
+    call_api 后执行的函数
+
+
+
+### `__init__(self_id, request)`
+
+
+* **参数**
+
+    
+    * `self_id: str`: 机器人 ID
+
+
+    * `request: HTTPConnection`: request 连接对象
+
 
 
 ### `self_id`
@@ -59,9 +75,9 @@ Config 配置对象
 机器人 ID
 
 
-### `websocket`
+### `request`
 
-Websocket 连接对象
+连接信息
 
 
 ### _abstract property_ `type`
@@ -69,7 +85,16 @@ Websocket 连接对象
 Adapter 类型
 
 
-### _abstract async classmethod_ `check_permission(driver, connection_type, headers, body)`
+### _classmethod_ `register(driver, config, **kwargs)`
+
+
+* **说明**
+
+    `register` 方法会在 `driver.register_adapter` 时被调用，用于初始化相关配置
+
+
+
+### _abstract async classmethod_ `check_permission(driver, request)`
 
 
 * **说明**
@@ -84,27 +109,17 @@ Adapter 类型
     * `driver: Driver`: Driver 对象
 
 
-    * `connection_type: str`: 连接类型
-
-
-    * `headers: dict`: 请求头
-
-
-    * `body: Optional[dict]`: 请求数据，WebSocket 连接该部分为空
+    * `request: HTTPConnection`: request 请求详情
 
 
 
 * **返回**
 
     
-    * `str`: 连接唯一标识符
+    * `Optional[str]`: 连接唯一标识符，`None` 代表连接不合法
 
 
-
-* **异常**
-
-    
-    * `RequestDenied`: 请求非法
+    * `Optional[HTTPResponse]`: HTTP 上报响应
 
 
 
@@ -120,11 +135,30 @@ Adapter 类型
 * **参数**
 
     
-    * `message: dict`: 收到的上报消息
+    * `message: bytes`: 收到的上报消息
 
 
 
-### _abstract async_ `call_api(api, **data)`
+### _abstract async_ `_call_api(api, **data)`
+
+
+* **说明**
+
+    `adapter` 实际调用 api 的逻辑实现函数，实现该方法以调用 api。
+
+
+
+* **参数**
+
+    
+    * `api: str`: API 名称
+
+
+    * `**data`: API 数据
+
+
+
+### _async_ `call_api(api, **data)`
 
 
 * **说明**
@@ -147,7 +181,7 @@ Adapter 类型
 
 
 ```python
-await bot.call_api("send_msg", message="hello world"})
+await bot.call_api("send_msg", message="hello world")
 await bot.send_msg(message="hello world")
 ```
 
@@ -174,106 +208,59 @@ await bot.send_msg(message="hello world")
 
 
 
-## _class_ `BaseEvent`
-
-基类：`abc.ABC`
-
-Event 基类。提供上报信息的关键信息，其余信息可从原始上报消息获取。
+### _classmethod_ `on_calling_api(func)`
 
 
-### `__init__(raw_event)`
+* **说明**
+
+    调用 api 预处理。
+
 
 
 * **参数**
 
     
-    * `raw_event: dict`: 原始上报消息
+    * `bot: Bot`: 当前 bot 对象
+
+
+    * `api: str`: 调用的 api 名称
+
+
+    * `data: Dict[str, Any]`: api 调用的参数字典
 
 
 
-### _property_ `raw_event`
-
-原始上报消息
+### _classmethod_ `on_called_api(func)`
 
 
-### _abstract property_ `id`
+* **说明**
 
-事件 ID
-
-
-### _abstract property_ `name`
-
-事件名称
+    调用 api 后处理。
 
 
-### _abstract property_ `self_id`
 
-机器人 ID
+* **参数**
 
-
-### _abstract property_ `time`
-
-事件发生时间
+    
+    * `bot: Bot`: 当前 bot 对象
 
 
-### _abstract property_ `type`
-
-事件主类型
+    * `exception: Optional[Exception]`: 调用 api 时发生的错误
 
 
-### _abstract property_ `detail_type`
-
-事件详细类型
+    * `api: str`: 调用的 api 名称
 
 
-### _abstract property_ `sub_type`
-
-事件子类型
+    * `data: Dict[str, Any]`: api 调用的参数字典
 
 
-### _abstract property_ `user_id`
-
-触发事件的主体 ID
+    * `result: Any`: api 调用的返回
 
 
-### _abstract property_ `group_id`
 
-触发事件的主体群 ID
+## _class_ `MessageSegment`
 
-
-### _abstract property_ `to_me`
-
-事件是否为发送给机器人的消息
-
-
-### _abstract property_ `message`
-
-消息内容
-
-
-### _abstract property_ `reply`
-
-回复的消息
-
-
-### _abstract property_ `raw_message`
-
-原始消息
-
-
-### _abstract property_ `plain_text`
-
-纯文本消息
-
-
-### _abstract property_ `sender`
-
-消息发送者信息
-
-
-## _class_ `BaseMessageSegment`
-
-基类：`abc.ABC`
+基类：`Mapping`, `abc.ABC`, `Generic`[`nonebot.adapters._base.TM`]
 
 消息段基类
 
@@ -296,9 +283,9 @@ Event 基类。提供上报信息的关键信息，其余信息可从原始上�
 * 说明: 消息段数据
 
 
-## _class_ `BaseMessage`
+## _class_ `Message`
 
-基类：`list`, `abc.ABC`
+基类：`List`[`nonebot.adapters._base.TMS`], `abc.ABC`
 
 消息数组
 
@@ -309,7 +296,7 @@ Event 基类。提供上报信息的关键信息，其余信息可从原始上�
 * **参数**
 
     
-    * `message: Union[str, dict, list, MessageSegment, Message]`: 消息内容
+    * `message: Union[str, list, dict, MessageSegment, Message, Any]`: 消息内容
 
 
 
@@ -345,18 +332,170 @@ Event 基类。提供上报信息的关键信息，其余信息可从原始上�
 
 
 
-### `reduce()`
-
-
-* **说明**
-
-    缩减消息数组，即拼接相邻纯文本消息段
-
-
-
 ### `extract_plain_text()`
 
 
 * **说明**
 
     提取消息内纯文本消息
+
+
+
+## _class_ `Event`
+
+基类：`abc.ABC`, `pydantic.main.BaseModel`
+
+Event 基类。提供获取关键信息的方法，其余信息可直接获取。
+
+
+### _abstract_ `get_type()`
+
+
+* **说明**
+
+    获取事件类型的方法，类型通常为 NoneBot 内置的四种类型。
+
+
+
+* **返回**
+
+    
+    * `Literal["message", "notice", "request", "meta_event"]`
+
+
+    * 其他自定义 `str`
+
+
+
+### _abstract_ `get_event_name()`
+
+
+* **说明**
+
+    获取事件名称的方法。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### _abstract_ `get_event_description()`
+
+
+* **说明**
+
+    获取事件描述的方法，通常为事件具体内容。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### `get_log_string()`
+
+
+* **说明**
+
+    获取事件日志信息的方法，通常你不需要修改这个方法，只有当希望 NoneBot 隐藏该事件日志时，可以抛出 `NoLogException` 异常。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+* **异常**
+
+    
+    * `NoLogException`
+
+
+
+### _abstract_ `get_user_id()`
+
+
+* **说明**
+
+    获取事件主体 id 的方法，通常是用户 id 。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### _abstract_ `get_session_id()`
+
+
+* **说明**
+
+    获取会话 id 的方法，用于判断当前事件属于哪一个会话，通常是用户 id、群组 id 组合。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### _abstract_ `get_message()`
+
+
+* **说明**
+
+    获取事件消息内容的方法。
+
+
+
+* **返回**
+
+    
+    * `Message`
+
+
+
+### `get_plaintext()`
+
+
+* **说明**
+
+    获取消息纯文本的方法，通常不需要修改，默认通过 `get_message().extract_plain_text` 获取。
+
+
+
+* **返回**
+
+    
+    * `str`
+
+
+
+### _abstract_ `is_tome()`
+
+
+* **说明**
+
+    获取事件是否与机器人有关的方法。
+
+
+
+* **返回**
+
+    
+    * `bool`

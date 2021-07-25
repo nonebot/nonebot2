@@ -14,108 +14,108 @@ sidebarDepth: 0
 以下类型均可从 nonebot.typing 模块导入。
 
 
-## `Driver`
+## `T_State`
 
 
 * **类型**
 
-    `BaseDriver`
+    `Dict[Any, Any]`
 
 
 
 * **说明**
 
-    所有 Driver 的基类。
+    事件处理状态 State 类型
 
 
 
 
-## `WebSocket`
+## `T_StateFactory`
 
 
 * **类型**
 
-    `BaseWebSocket`
+    `Callable[[Bot, Event], Awaitable[T_State]]`
 
 
 
 * **说明**
 
-    所有 WebSocket 的基类。
+    事件处理状态 State 类工厂函数
 
 
 
 
-## `Bot`
+## `T_BotConnectionHook`
 
 
 * **类型**
 
-    `BaseBot`
+    `Callable[[Bot], Awaitable[None]]`
 
 
 
 * **说明**
 
-    所有 Bot 的基类。
+    Bot 连接建立时执行的函数
 
 
 
 
-## `Event`
+## `T_BotDisconnectionHook`
 
 
 * **类型**
 
-    `BaseEvent`
+    `Callable[[Bot], Awaitable[None]]`
 
 
 
 * **说明**
 
-    所有 Event 的基类。
+    Bot 连接断开时执行的函数
 
 
 
 
-## `Message`
+## `T_CallingAPIHook`
 
 
 * **类型**
 
-    `BaseMessage`
+    `Callable[[Bot, str, Dict[str, Any]], Awaitable[None]]`
 
 
 
 * **说明**
 
-    所有 Message 的基类。
+    `bot.call_api` 时执行的函数
 
 
 
 
-## `MessageSegment`
+## `T_CalledAPIHook`
 
 
 * **类型**
 
-    `BaseMessageSegment`
+    `Callable[[Bot, Optional[Exception], str, Dict[str, Any], Any], Awaitable[None]]`
 
 
 
 * **说明**
 
-    所有 MessageSegment 的基类。
+    `bot.call_api` 后执行的函数，参数分别为 bot, exception, api, data, result
 
 
 
 
-## `EventPreProcessor`
+## `T_EventPreProcessor`
 
 
 * **类型**
 
-    `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[[Bot, Event, T_State], Awaitable[None]]`
 
 
 
@@ -126,12 +126,12 @@ sidebarDepth: 0
 
 
 
-## `EventPostProcessor`
+## `T_EventPostProcessor`
 
 
 * **类型**
 
-    `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[[Bot, Event, T_State], Awaitable[None]]`
 
 
 
@@ -142,12 +142,12 @@ sidebarDepth: 0
 
 
 
-## `RunPreProcessor`
+## `T_RunPreProcessor`
 
 
 * **类型**
 
-    `Callable[[Matcher, Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[[Matcher, Bot, Event, T_State], Awaitable[None]]`
 
 
 
@@ -158,12 +158,12 @@ sidebarDepth: 0
 
 
 
-## `RunPostProcessor`
+## `T_RunPostProcessor`
 
 
 * **类型**
 
-    `Callable[[Matcher, Optional[Exception], Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[[Matcher, Optional[Exception], Bot, Event, T_State], Awaitable[None]]`
 
 
 
@@ -174,60 +174,12 @@ sidebarDepth: 0
 
 
 
-## `Matcher`
+## `T_RuleChecker`
 
 
 * **类型**
 
-    `Matcher`
-
-
-
-* **说明**
-
-    Matcher 即响应事件的处理类。通过 Rule 判断是否响应事件，运行 Handler。
-
-
-
-
-## `MatcherGroup`
-
-
-* **类型**
-
-    `MatcherGroup`
-
-
-
-* **说明**
-
-    MatcherGroup 为 Matcher 的集合。可以共享 Handler。
-
-
-
-
-## `Rule`
-
-
-* **类型**
-
-    `Rule`
-
-
-
-* **说明**
-
-    Rule 即判断是否响应事件的处理类。内部存储 RuleChecker ，返回全为 True 则响应事件。
-
-
-
-
-## `RuleChecker`
-
-
-* **类型**
-
-    `Callable[[Bot, Event, dict], Union[bool, Awaitable[bool]]]`
+    `Callable[[Bot, Event, T_State], Union[bool, Awaitable[bool]]]`
 
 
 
@@ -238,23 +190,7 @@ sidebarDepth: 0
 
 
 
-## `Permission`
-
-
-* **类型**
-
-    `Permission`
-
-
-
-* **说明**
-
-    Permission 即判断是否响应消息的处理类。内部存储 PermissionChecker ，返回只要有一个 True 则响应消息。
-
-
-
-
-## `PermissionChecker`
+## `T_PermissionChecker`
 
 
 * **类型**
@@ -270,12 +206,22 @@ sidebarDepth: 0
 
 
 
-## `Handler`
+## `T_Handler`
 
 
 * **类型**
 
-    `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    
+    * `Callable[[Bot, Event, T_State], Union[Awaitable[None], Awaitable[NoReturn]]]`
+
+
+    * `Callable[[Bot, Event], Union[Awaitable[None], Awaitable[NoReturn]]]`
+
+
+    * `Callable[[Bot, T_State], Union[Awaitable[None], Awaitable[NoReturn]]]`
+
+
+    * `Callable[[Bot], Union[Awaitable[None], Awaitable[NoReturn]]]`
 
 
 
@@ -286,15 +232,47 @@ sidebarDepth: 0
 
 
 
-## `ArgsParser`
+## `T_ArgsParser`
 
 
 * **类型**
 
-    `Callable[[Bot, Event, dict], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[[Bot, Event, T_State], Union[Awaitable[None], Awaitable[NoReturn]]]`
 
 
 
 * **说明**
 
     ArgsParser 即消息参数解析函数，在 Matcher.got 获取参数时被运行。
+
+
+
+
+## `T_TypeUpdater`
+
+
+* **类型**
+
+    `Callable[[Bot, Event, T_State, str], Awaitable[str]]`
+
+
+
+* **说明**
+
+    TypeUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新响应的事件类型。默认会更新为 `message`。
+
+
+
+
+## `T_PermissionUpdater`
+
+
+* **类型**
+
+    `Callable[[Bot, Event, T_State, Permission], Awaitable[Permission]]`
+
+
+
+* **说明**
+
+    PermissionUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新会话对象权限。默认会更新为当前事件的触发对象。

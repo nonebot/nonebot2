@@ -12,26 +12,45 @@
 - ``on_endswith`` => ``nonebot.plugin.on_endswith``
 - ``on_keyword`` => ``nonebot.plugin.on_keyword``
 - ``on_command`` => ``nonebot.plugin.on_command``
+- ``on_shell_command`` => ``nonebot.plugin.on_shell_command``
 - ``on_regex`` => ``nonebot.plugin.on_regex``
 - ``CommandGroup`` => ``nonebot.plugin.CommandGroup``
+- ``Matchergroup`` => ``nonebot.plugin.MatcherGroup``
 - ``load_plugin`` => ``nonebot.plugin.load_plugin``
 - ``load_plugins`` => ``nonebot.plugin.load_plugins``
+- ``load_all_plugins`` => ``nonebot.plugin.load_all_plugins``
+- ``load_from_json`` => ``nonebot.plugin.load_from_json``
+- ``load_from_toml`` => ``nonebot.plugin.load_from_toml``
 - ``load_builtin_plugins`` => ``nonebot.plugin.load_builtin_plugins``
+- ``get_plugin`` => ``nonebot.plugin.get_plugin``
 - ``get_loaded_plugins`` => ``nonebot.plugin.get_loaded_plugins``
+- ``export`` => ``nonebot.plugin.export``
+- ``require`` => ``nonebot.plugin.require``
 """
 
 import importlib
 import pkg_resources
-from nonebot.typing import Bot, Dict, Type, Union, Driver, Optional, NoReturn
+from typing import Any, Dict, Type, Optional
 
-_dist: pkg_resources.Distribution = pkg_resources.get_distribution("nonebot2")
-__version__ = _dist.version
-VERSION = _dist.parsed_version
+from nonebot.adapters import Bot
+from nonebot.utils import escape_tag
+from nonebot.config import Env, Config
+from nonebot.log import logger, default_filter
+from nonebot.drivers import Driver, ForwardDriver, ReverseDriver
+
+try:
+    _dist: pkg_resources.Distribution = pkg_resources.get_distribution(
+        "nonebot2")
+    __version__ = _dist.version
+    VERSION = _dist.parsed_version
+except pkg_resources.DistributionNotFound:
+    __version__ = None
+    VERSION = None
 
 _driver: Optional[Driver] = None
 
 
-def get_driver() -> Union[NoReturn, Driver]:
+def get_driver() -> Driver:
     """
     :说明:
 
@@ -57,7 +76,7 @@ def get_driver() -> Union[NoReturn, Driver]:
     return _driver
 
 
-def get_app():
+def get_app() -> Any:
     """
     :说明:
 
@@ -79,10 +98,13 @@ def get_app():
 
     """
     driver = get_driver()
+    assert isinstance(
+        driver,
+        ReverseDriver), "app object is only available for reverse driver"
     return driver.server_app
 
 
-def get_asgi():
+def get_asgi() -> Any:
     """
     :说明:
 
@@ -104,10 +126,51 @@ def get_asgi():
 
     """
     driver = get_driver()
+    assert isinstance(
+        driver,
+        ReverseDriver), "asgi object is only available for reverse driver"
     return driver.asgi
 
 
-def get_bots() -> Union[NoReturn, Dict[str, Bot]]:
+def get_bot(self_id: Optional[str] = None) -> Bot:
+    """
+    :说明:
+
+      当提供 self_id 时，此函数是 get_bots()[self_id] 的简写；当不提供时，返回一个 Bot。
+
+    :参数:
+
+      * ``self_id: Optional[str]``: 用来识别 Bot 的 ID
+
+    :返回:
+
+      * ``Bot``: Bot 对象
+
+    :异常:
+
+      * ``KeyError``: 对应 ID 的 Bot 不存在
+      * ``ValueError``: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+      * ``ValueError``: 没有传入 ID 且没有 Bot 可用
+
+    :用法:
+
+    .. code-block:: python
+
+        assert nonebot.get_bot('12345') == nonebot.get_bots()['12345']
+
+        another_unspecified_bot = nonebot.get_bot()
+    """
+    bots = get_bots()
+    if self_id is not None:
+        return bots[self_id]
+
+    for bot in bots.values():
+        return bot
+
+    raise ValueError("There are no bots to get.")
+
+
+def get_bots() -> Dict[str, Bot]:
     """
     :说明:
 
@@ -130,18 +193,6 @@ def get_bots() -> Union[NoReturn, Dict[str, Bot]]:
     """
     driver = get_driver()
     return driver.bots
-
-
-from nonebot.sched import scheduler
-from nonebot.utils import escape_tag
-from nonebot.config import Env, Config
-from nonebot.log import logger, default_filter
-from nonebot.adapters.cqhttp import Bot as CQBot
-
-try:
-    import nonebot_test
-except ImportError:
-    nonebot_test = None
 
 
 def init(*, _env_file: Optional[str] = None, **kwargs):
@@ -172,31 +223,27 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
     """
     global _driver
     if not _driver:
-        logger.info("NoneBot is initializing...")
+        logger.success("NoneBot is initializing...")
         env = Env()
-        logger.opt(
-            colors=True).info(f"Current <y><b>Env: {env.environment}</b></y>")
         config = Config(**kwargs,
+                        _common_config=env.dict(),
                         _env_file=_env_file or f".env.{env.environment}")
 
-        default_filter.level = "DEBUG" if config.debug else "INFO"
+        default_filter.level = (
+            "DEBUG" if config.debug else
+            "INFO") if config.log_level is None else config.log_level
+        logger.opt(
+            colors=True).info(f"Current <y><b>Env: {env.environment}</b></y>")
         logger.opt(colors=True).debug(
             f"Loaded <y><b>Config</b></y>: {escape_tag(str(config.dict()))}")
 
-        DriverClass: Type[Driver] = getattr(
-            importlib.import_module(config.driver), "Driver")
+        modulename, _, cls = config.driver.partition(":")
+        module = importlib.import_module(modulename)
+        instance = module
+        for attr_str in (cls or "Driver").split("."):
+            instance = getattr(instance, attr_str)
+        DriverClass: Type[Driver] = instance  # type: ignore
         _driver = DriverClass(env, config)
-
-        # register build-in adapters
-        _driver.register_adapter("cqhttp", CQBot)
-
-        # load nonebot test frontend if debug
-        if config.debug and nonebot_test:
-            logger.debug("Loading nonebot test frontend...")
-            nonebot_test.init()
-
-    if scheduler:
-        _driver.on_startup(_start_scheduler)
 
 
 def run(host: Optional[str] = None,
@@ -226,17 +273,12 @@ def run(host: Optional[str] = None,
         nonebot.run(host="127.0.0.1", port=8080)
 
     """
-    logger.info("Running NoneBot...")
+    logger.success("Running NoneBot...")
     get_driver().run(host, port, *args, **kwargs)
 
 
-async def _start_scheduler():
-    if scheduler and not scheduler.running:
-        scheduler.configure(_driver.config.apscheduler_config)
-        scheduler.start()
-        logger.opt(colors=True).info("<y>Scheduler Started</y>")
-
-
-from nonebot.plugin import on_message, on_notice, on_request, on_metaevent, CommandGroup
-from nonebot.plugin import on_startswith, on_endswith, on_keyword, on_command, on_regex
-from nonebot.plugin import load_plugin, load_plugins, load_builtin_plugins, get_loaded_plugins
+from nonebot.plugin import on_message, on_notice, on_request, on_metaevent, CommandGroup, MatcherGroup
+from nonebot.plugin import on_startswith, on_endswith, on_keyword, on_command, on_shell_command, on_regex
+from nonebot.plugin import load_plugin, load_plugins, load_all_plugins, load_builtin_plugins
+from nonebot.plugin import load_from_json, load_from_toml
+from nonebot.plugin import export, require, get_plugin, get_loaded_plugins

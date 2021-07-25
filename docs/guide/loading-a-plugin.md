@@ -6,18 +6,27 @@
 
 在 `bot.py` 文件中添加以下行：
 
-```python{5}
+```python{8}
 import nonebot
+from nonebot.adapters.cqhttp import Bot
 
 nonebot.init()
-# 加载 nonebot 内置插件
-nonebot.load_bulitin_plugins()
+
+driver = nonebot.get_driver()
+driver.register_adapter("cqhttp", Bot) # 注册 CQHTTP 的 Adapter
+nonebot.load_builtin_plugins() # 加载 nonebot 内置插件
 
 app = nonebot.get_asgi()
 
 if __name__ == "__main__":
     nonebot.run()
 ```
+
+::: warning
+目前, 内建插件仅支持 CQHTTP 的 Adapter
+
+如果您使用的是其他 Adapter, 请移步该 Adapter 相应的文档
+:::
 
 这将会加载 nonebot 内置的插件，它包含：
 
@@ -30,10 +39,11 @@ if __name__ == "__main__":
 
 在 `bot.py` 文件中添加以下行：
 
-```python{5}
+```python{6}
 import nonebot
 
 nonebot.init()
+
 # 加载插件目录，该目录下为各插件，以下划线开头的插件将不会被加载
 nonebot.load_plugins("awesome_bot/plugins")
 
@@ -48,26 +58,22 @@ if __name__ == "__main__":
 :::
 
 :::warning 提示
-**插件不能存在相同名称！**
+**不能存在相同名称的插件！**
 :::
 
 :::danger 警告
-插件间不应该存在过多的耦合，如果确实需要导入某个插件内的数据，可以使用如下两种方法：
-
-1. (推荐) `from plugin_name import xxx` 而非 `from awesome_bot.plugins.plugin_name import xxx`
-2. 在需要导入其他插件的文件中添加 `__package__ = "plugins"; from .plugin_name import xxx` (将共同的上层目录设定为父包后使用相对导入)
-
-具体可以参考：[nonebot/nonebot2#32](https://github.com/nonebot/nonebot2/issues/32)
+插件间不应该存在过多的耦合，如果确实需要导入某个插件内的数据，可以参考 [进阶-跨插件访问](../advanced/export-and-require.md)
 :::
 
 ## 加载单个插件
 
 在 `bot.py` 文件中添加以下行：
 
-```python{5,7}
+```python{6,8}
 import nonebot
 
 nonebot.init()
+
 # 加载一个 pip 安装的插件
 nonebot.load_plugin("nonebot_plugin_status")
 # 加载本地的单独插件
@@ -79,9 +85,64 @@ if __name__ == "__main__":
     nonebot.run()
 ```
 
-## 子插件(嵌套插件)
+## 从 json 文件中加载插件
 
-<!-- TODO: 子插件 -->
+在 `bot.py` 文件中添加以下行：
+
+```python{6}
+import nonebot
+
+nonebot.init()
+
+# 从 plugin.json 加载插件
+nonebot.load_from_json("plugin.json")
+
+app = nonebot.get_asgi()
+
+if __name__ == "__main__":
+    nonebot.run()
+```
+
+**json 文件示例**
+
+```json
+{
+  "plugins": ["nonebot_plugin_status", "awesome_bot.plugins.xxx"],
+  "plugin_dirs": ["awesome_bot/plugins"]
+}
+```
+
+## 从 toml 文件中加载插件
+
+在 `bot.py` 文件中添加以下行：
+
+```python{6}
+import nonebot
+
+nonebot.init()
+
+# 从 pyproject.toml 加载插件
+nonebot.load_from_toml("pyproject.toml")
+
+app = nonebot.get_asgi()
+
+if __name__ == "__main__":
+    nonebot.run()
+```
+
+**toml 文件示例：**
+
+```toml
+[nonebot.plugins]
+plugins = ["nonebot_plugin_status", "awesome_bot.plugins.xxx"]
+plugin_dirs = ["awesome_bot/plugins"]
+```
+
+::: tip
+nb-cli 默认使用 `pyproject.toml` 加载插件。
+:::
+
+## 子插件(嵌套插件)
 
 在插件中同样可以加载子插件，例如如下插件目录结构：
 
@@ -112,10 +173,6 @@ _sub_plugins |= nonebot.load_plugins(
 ```
 
 插件将会被加载并存储于 `_sub_plugins` 中。
-
-:::tip 提示
-如果在父插件中需要定义事件响应器，应在**子插件被加载后**进行定义
-:::
 
 ## 运行结果
 

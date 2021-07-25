@@ -28,6 +28,11 @@ A clear and concise description of what you expected to happen.
  - Python Version: [e.g. 3.8]
  - Nonebot Version: [e.g. 2.0.0]
 
-**截图**
+**协议端信息：**
+
+ - 协议端: [e.g. go-cqhttp]
+ - 协议端版本: [e.g. 1.0.0]
+
+**截图或日志**
 
 If applicable, add screenshots to help explain your problem.

@@ -6,24 +6,39 @@
 """
 
 import abc
+import asyncio
+from dataclasses import dataclass, field
+from typing import Any, Set, Dict, Type, Optional, Callable, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
-from nonebot.typing import Bot, Dict, Type, Union, Optional, Callable
+from nonebot.typing import T_BotConnectionHook, T_BotDisconnectionHook
+
+if TYPE_CHECKING:
+    from nonebot.adapters import Bot
 
 
-class BaseDriver(abc.ABC):
+class Driver(abc.ABC):
     """
-    Driver 基类。将后端框架封装，以满足适配器使用。
+    Driver 基类。
     """
 
-    _adapters: Dict[str, Type[Bot]] = {}
+    _adapters: Dict[str, Type["Bot"]] = {}
     """
     :类型: ``Dict[str, Type[Bot]]``
     :说明: 已注册的适配器列表
     """
+    _bot_connection_hook: Set[T_BotConnectionHook] = set()
+    """
+    :类型: ``Set[T_BotConnectionHook]``
+    :说明: Bot 连接建立时执行的函数
+    """
+    _bot_disconnection_hook: Set[T_BotDisconnectionHook] = set()
+    """
+    :类型: ``Set[T_BotDisconnectionHook]``
+    :说明: Bot 连接断开时执行的函数
+    """
 
-    @abc.abstractmethod
     def __init__(self, env: Env, config: Config):
         """
         :参数:
@@ -31,32 +46,52 @@ class BaseDriver(abc.ABC):
           * ``env: Env``: 包含环境信息的 Env 对象
           * ``config: Config``: 包含配置信息的 Config 对象
         """
-        self.env = env.environment
+        self.env: str = env.environment
         """
         :类型: ``str``
         :说明: 环境名称
         """
-        self.config = config
+        self.config: Config = config
         """
         :类型: ``Config``
         :说明: 配置对象
         """
-        self._clients: Dict[str, Bot] = {}
+        self._clients: Dict[str, "Bot"] = {}
         """
         :类型: ``Dict[str, Bot]``
         :说明: 已连接的 Bot
         """
 
-    @classmethod
-    def register_adapter(cls, name: str, adapter: Type[Bot]):
+    @property
+    def bots(self) -> Dict[str, "Bot"]:
+        """
+        :类型:
+
+          ``Dict[str, Bot]``
+        :说明:
+
+          获取当前所有已连接的 Bot
+        """
+        return self._clients
+
+    def register_adapter(self, name: str, adapter: Type["Bot"], **kwargs):
         """
         :说明:
+
           注册一个协议适配器
+
         :参数:
+
           * ``name: str``: 适配器名称，用于在连接时进行识别
           * ``adapter: Type[Bot]``: 适配器 Class
+          * ``**kwargs``: 其他传递给适配器的参数
         """
-        cls._adapters[name] = adapter
+        if name in self._adapters:
+            logger.opt(
+                colors=True).debug(f'Adapter "<y>{name}</y>" already exists')
+            return
+        self._adapters[name] = adapter
+        adapter.register(self, self.config, **kwargs)
         logger.opt(
             colors=True).debug(f'Succeeded to load adapter "<y>{name}</y>"')
 
@@ -68,29 +103,23 @@ class BaseDriver(abc.ABC):
 
     @property
     @abc.abstractmethod
-    def server_app(self):
-        """驱动 APP 对象"""
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
-    def asgi(self):
-        """驱动 ASGI 对象"""
-        raise NotImplementedError
-
-    @property
-    @abc.abstractmethod
     def logger(self):
         """驱动专属 logger 日志记录器"""
         raise NotImplementedError
 
-    @property
-    def bots(self) -> Dict[str, Bot]:
+    @abc.abstractmethod
+    def run(self, *args, **kwargs):
         """
-        :类型: ``Dict[str, Bot]``
-        :说明: 获取当前所有已连接的 Bot
+        :说明:
+
+          启动驱动框架
+
+        :参数:
+          * ``*args``
+          * ``**kwargs``
         """
-        return self._clients
+        logger.opt(colors=True).debug(
+            f"<g>Loaded adapters: {', '.join(self._adapters)}</g>")
 
     @abc.abstractmethod
     def on_startup(self, func: Callable) -> Callable:
@@ -102,50 +131,206 @@ class BaseDriver(abc.ABC):
         """注册一个在驱动停止时运行的函数"""
         raise NotImplementedError
 
-    @abc.abstractmethod
-    def run(self,
-            host: Optional[str] = None,
-            port: Optional[int] = None,
-            *args,
-            **kwargs):
+    def on_bot_connect(self, func: T_BotConnectionHook) -> T_BotConnectionHook:
         """
         :说明:
-          启动驱动框架
-        :参数:
-          * ``host: Optional[str]``: 驱动绑定 IP
-          * ``post: Optional[int]``: 驱动绑定端口
-          * ``*args``
-          * ``**kwargs``
+
+          装饰一个函数使他在 bot 通过 WebSocket 连接成功时执行。
+
+        :函数参数:
+
+          * ``bot: Bot``: 当前连接上的 Bot 对象
         """
+        self._bot_connection_hook.add(func)
+        return func
+
+    def on_bot_disconnect(
+            self, func: T_BotDisconnectionHook) -> T_BotDisconnectionHook:
+        """
+        :说明:
+
+          装饰一个函数使他在 bot 通过 WebSocket 连接断开时执行。
+
+        :函数参数:
+
+          * ``bot: Bot``: 当前连接上的 Bot 对象
+        """
+        self._bot_disconnection_hook.add(func)
+        return func
+
+    def _bot_connect(self, bot: "Bot") -> None:
+        """在 WebSocket 连接成功后，调用该函数来注册 bot 对象"""
+        self._clients[bot.self_id] = bot
+
+        async def _run_hook(bot: "Bot") -> None:
+            coros = list(map(lambda x: x(bot), self._bot_connection_hook))
+            if coros:
+                try:
+                    await asyncio.gather(*coros)
+                except Exception as e:
+                    logger.opt(colors=True, exception=e).error(
+                        "<r><bg #f8bbd0>Error when running WebSocketConnection hook. "
+                        "Running cancelled!</bg #f8bbd0></r>")
+
+        asyncio.create_task(_run_hook(bot))
+
+    def _bot_disconnect(self, bot: "Bot") -> None:
+        """在 WebSocket 连接断开后，调用该函数来注销 bot 对象"""
+        if bot.self_id in self._clients:
+            del self._clients[bot.self_id]
+
+        async def _run_hook(bot: "Bot") -> None:
+            coros = list(map(lambda x: x(bot), self._bot_disconnection_hook))
+            if coros:
+                try:
+                    await asyncio.gather(*coros)
+                except Exception as e:
+                    logger.opt(colors=True, exception=e).error(
+                        "<r><bg #f8bbd0>Error when running WebSocketDisConnection hook. "
+                        "Running cancelled!</bg #f8bbd0></r>")
+
+        asyncio.create_task(_run_hook(bot))
+
+
+# TODO: issue #240
+class ForwardDriver(Driver):
+
+    @abc.abstractmethod
+    def setup_http_polling(self,
+                           adapter: str,
+                           self_id: str,
+                           url: str,
+                           polling_interval: float = 3.,
+                           method: str = "GET",
+                           body: bytes = b"",
+                           headers: Dict[str, str] = {},
+                           http_version: str = "1.1") -> None:
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def _handle_http(self):
-        """用于处理 HTTP 类型请求的函数"""
+    def setup_websocket(self,
+                        adapter: str,
+                        self_id: str,
+                        url: str,
+                        reconnect_interval: float = 3.,
+                        headers: Dict[str, str] = {},
+                        http_version: str = "1.1") -> None:
         raise NotImplementedError
 
-    @abc.abstractmethod
-    async def _handle_ws_reverse(self):
-        """用于处理 WebSocket 类型请求的函数"""
-        raise NotImplementedError
 
-
-class BaseWebSocket(object):
-    """WebSocket 连接封装，统一接口方便外部调用。"""
-
-    @abc.abstractmethod
-    def __init__(self, websocket):
-        """
-        :参数:
-
-          * ``websocket: Any``: WebSocket 连接对象
-        """
-        self._websocket = websocket
+class ReverseDriver(Driver):
+    """
+    Reverse Driver 基类。将后端框架封装，以满足适配器使用。
+    """
 
     @property
-    def websocket(self):
-        """WebSocket 连接对象"""
-        return self._websocket
+    @abc.abstractmethod
+    def server_app(self) -> Any:
+        """驱动 APP 对象"""
+        raise NotImplementedError
+
+    @property
+    @abc.abstractmethod
+    def asgi(self) -> Any:
+        """驱动 ASGI 对象"""
+        raise NotImplementedError
+
+
+@dataclass
+class HTTPConnection(abc.ABC):
+    http_version: str
+    """One of `"1.0"`, `"1.1"` or `"2"`."""
+    scheme: str
+    """URL scheme portion (likely `"http"` or `"https"`)."""
+    path: str
+    """
+    HTTP request target excluding any query string,
+    with percent-encoded sequences and UTF-8 byte sequences
+    decoded into characters.
+    """
+    query_string: bytes = b""
+    """ URL portion after the `?`, percent-encoded."""
+    headers: Dict[str, str] = field(default_factory=dict)
+    """A dict of name-value pairs,
+    where name is the header name, and value is the header value.
+
+    Order of header values must be preserved from the original HTTP request;
+    order of header names is not important.
+
+    Header names must be lowercased.
+    """
+
+    @property
+    @abc.abstractmethod
+    def type(self) -> str:
+        """Connection type."""
+        raise NotImplementedError
+
+
+@dataclass
+class HTTPRequest(HTTPConnection):
+    """HTTP 请求封装。参考 `asgi http scope`_。
+
+    .. _asgi http scope:
+        https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope
+    """
+    method: str = "GET"
+    """The HTTP method name, uppercased."""
+    body: bytes = b""
+    """Body of the request.
+
+    Optional; if missing defaults to b"".
+    """
+
+    @property
+    def type(self) -> str:
+        """Always ``http``"""
+        return "http"
+
+
+@dataclass
+class HTTPResponse:
+    """HTTP 响应封装。参考 `asgi http scope`_。
+
+    .. _asgi http scope:
+        https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope
+    """
+    status: int
+    """HTTP status code."""
+    body: Optional[bytes] = None
+    """HTTP body content.
+
+    Optional; if missing defaults to ``None``.
+    """
+    headers: Dict[str, str] = field(default_factory=dict)
+    """A dict of name-value pairs,
+    where name is the header name, and value is the header value.
+
+    Order must be preserved in the HTTP response.
+
+    Header names must be lowercased.
+
+    Optional; if missing defaults to an empty dict.
+    """
+
+    @property
+    def type(self) -> str:
+        """Always ``http``"""
+        return "http"
+
+
+@dataclass
+class WebSocket(HTTPConnection, abc.ABC):
+    """WebSocket 连接封装。参考 `asgi websocket scope`_。
+
+    .. _asgi websocket scope:
+        https://asgi.readthedocs.io/en/latest/specs/www.html#websocket-connection-scope
+    """
+
+    @property
+    def type(self) -> str:
+        """Always ``websocket``"""
+        return "websocket"
 
     @property
     @abc.abstractmethod
@@ -167,11 +352,21 @@ class BaseWebSocket(object):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def receive(self) -> dict:
-        """接收一条 WebSocket 信息"""
+    async def receive(self) -> str:
+        """接收一条 WebSocket text 信息"""
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def send(self, data: dict):
-        """发送一条 WebSocket 信息"""
+    async def receive_bytes(self) -> bytes:
+        """接收一条 WebSocket binary 信息"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    async def send(self, data: str):
+        """发送一条 WebSocket text 信息"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    async def send_bytes(self, data: bytes):
+        """发送一条 WebSocket binary 信息"""
         raise NotImplementedError

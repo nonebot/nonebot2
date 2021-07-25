@@ -1,0 +1,42 @@
+[
+  {
+    "id": "nonebot.adapters.cqhttp",
+    "link": "nonebot-adapter-cqhttp",
+    "name": "cqhttp",
+    "desc": "OneBot(CQHTTP) 协议",
+    "author": "yanyongyu",
+    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-cqhttp"
+  },
+  {
+    "id": "nonebot.adapters.ding",
+    "link": "nonebot-adapter-ding",
+    "name": "ding",
+    "desc": "钉钉协议",
+    "author": "Artin",
+    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-ding"
+  },
+  {
+    "id": "nonebot.adapters.mirai",
+    "link": "nonebot-adapter-mirai",
+    "name": "mirai",
+    "desc": "Mirai-Api-HTTP 协议",
+    "author": "Mix",
+    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-mirai"
+  },
+  {
+    "id": "nonebot_adapter_gocq",
+    "link": "nonebot-adapter-gocq",
+    "name": "gocq",
+    "desc": "在原 CQHTTP Adapter 的基础上进行修改以便更好地适配 go-cqhttp",
+    "author": "Jigsaw111",
+    "repo": "Jigsaw111/nonebot-adapter-gocq"
+  },
+  {
+    "id": "nonebot_adapter_feishu",
+    "link": "nonebot-adapter-feishu",
+    "name": "feishu",
+    "desc": "飞书协议",
+    "author": "StarHeartHunt",
+    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-feishu"
+  }
+]

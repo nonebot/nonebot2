@@ -19,13 +19,13 @@
     * [nonebot.matcher](matcher.html)
 
 
+    * [nonebot.handler](handler.html)
+
+
     * [nonebot.rule](rule.html)
 
 
     * [nonebot.permission](permission.html)
-
-
-    * [nonebot.sched](sched.html)
 
 
     * [nonebot.log](log.html)
@@ -46,7 +46,19 @@
     * [nonebot.drivers.fastapi](drivers/fastapi.html)
 
 
+    * [nonebot.drivers.quart](drivers/quart.html)
+
+
     * [nonebot.adapters](adapters/)
 
 
     * [nonebot.adapters.cqhttp](adapters/cqhttp.html)
+
+
+    * [nonebot.adapters.ding](adapters/ding.html)
+
+
+    * [nonebot.adapters.mirai](adapters/mirai.html)
+
+
+    * [nonebot.adapters.feishu](adapters/feishu.html)

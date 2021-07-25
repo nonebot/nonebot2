@@ -14,6 +14,80 @@ sidebarDepth: 0
 :::
 
 
+## _class_ `Permission`
+
+基类：`object`
+
+
+* **说明**
+
+    `Matcher` 规则类，当事件传递时，在 `Matcher` 运行前进行检查。
+
+
+
+* **示例**
+
+
+```python
+Permission(async_function) | sync_function
+# 等价于
+from nonebot.utils import run_sync
+Permission(async_function, run_sync(sync_function))
+```
+
+
+### `__init__(*checkers)`
+
+
+* **参数**
+
+    
+    * `*checkers: Callable[[Bot, Event], Awaitable[bool]]`: **异步** PermissionChecker
+
+
+
+### `checkers`
+
+
+* **说明**
+
+    存储 `PermissionChecker`
+
+
+
+* **类型**
+
+    
+    * `Set[Callable[[Bot, Event], Awaitable[bool]]]`
+
+
+
+### _async_ `__call__(bot, event)`
+
+
+* **说明**
+
+    检查是否满足某个权限
+
+
+
+* **参数**
+
+    
+    * `bot: Bot`: Bot 对象
+
+
+    * `event: Event`: Event 对象
+
+
+
+* **返回**
+
+    
+    * `bool`
+
+
+
 ## `MESSAGE`
 
 
@@ -38,84 +112,26 @@ sidebarDepth: 0
 * **说明**: 匹配任意 `meta_event` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 meta_event type 的 Matcher。
 
 
-## `USER(*user, perm=<nonebot.permission.Permission object>)`
+## `USER(*user, perm=None)`
 
 
 * **说明**
 
-    在白名单内且满足 perm
+    `event` 的 `session_id` 在白名单内且满足 perm
 
 
 
 * **参数**
 
     
-    * `*user: int`: 白名单
+    * `*user: str`: 白名单
 
 
-    * `perm: Permission`: 需要同时满足的权限
+    * `perm: Optional[Permission]`: 需要同时满足的权限
 
-
-
-## `PRIVATE`
-
-
-* **说明**: 匹配任意私聊消息类型事件
-
-
-## `PRIVATE_FRIEND`
-
-
-* **说明**: 匹配任意好友私聊消息类型事件
-
-
-## `PRIVATE_GROUP`
-
-
-* **说明**: 匹配任意群临时私聊消息类型事件
-
-
-## `PRIVATE_OTHER`
-
-
-* **说明**: 匹配任意其他私聊消息类型事件
-
-
-## `GROUP`
-
-
-* **说明**: 匹配任意群聊消息类型事件
-
-
-## `GROUP_MEMBER`
-
-
-* **说明**: 匹配任意群员群聊消息类型事件
-
-:::warning 警告
-该权限通过 event.sender 进行判断且不包含管理员以及群主！
-:::
-
-
-## `GROUP_ADMIN`
-
-
-* **说明**: 匹配任意群管理员群聊消息类型事件
-
-
-## `GROUP_OWNER`
-
-
-* **说明**: 匹配任意群主群聊消息类型事件
 
 
 ## `SUPERUSER`
 
 
 * **说明**: 匹配任意超级用户消息类型事件
-
-
-## `EVERYBODY`
-
-
-* **说明**: 匹配任意消息类型事件

@@ -1,0 +1,32 @@
+[
+  {
+    "name": "HarukaBot",
+    "desc": "将B站UP主的动态和直播信息推送至QQ",
+    "author": "SK-415",
+    "repo": "https://haruka-bot.live"
+  },
+  {
+    "name": "Omega Miya",
+    "desc": "B站推送Pixiv搜图识番求签抽卡表情包还有其他杂七杂八的功能",
+    "author": "Ailitonia",
+    "repo": "Ailitonia/omega-miya"
+  },
+  {
+    "name": "Github Bot",
+    "desc": "在QQ获取/处理Github repo/pr/issue",
+    "author": "yanyongyu",
+    "repo": "cscs181/QQ-GitHub-Bot"
+  },
+  {
+    "name": "YanXiBot",
+    "desc": "动漫资源查找与娱乐机器人",
+    "author": "Melodyknit",
+    "repo": "https://github.com/Melodyknit/YanXiBot"
+  },
+  {
+    "name": "绪山真寻bot",
+    "desc": "含有不少的娱乐功能同时稍稍有一些实用的功能 :P",
+    "author": "HibiKier",
+    "repo": "https://github.com/HibiKier/zhenxun_bot"
+  }
+]

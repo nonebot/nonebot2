@@ -7,7 +7,7 @@ sidebarDepth: 0
 
 ## 事件响应器
 
-该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行 对话 。
+该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行对话 。
 
 
 ## `matchers`
@@ -37,13 +37,58 @@ sidebarDepth: 0
 
 * **类型**
 
+    `Optional[ModuleType]`
+
+
+
+* **说明**
+
+    事件响应器所在模块
+
+
+
+### `plugin_name`
+
+
+* **类型**
+
     `Optional[str]`
 
 
 
 * **说明**
 
-    事件响应器所在模块名称
+    事件响应器所在插件名
+
+
+
+### `module_name`
+
+
+* **类型**
+
+    `Optional[str]`
+
+
+
+* **说明**
+
+    事件响应器所在模块名
+
+
+
+### `module_prefix`
+
+
+* **类型**
+
+    `Optional[str]`
+
+
+
+* **说明**
+
+    事件响应器所在模块前缀
 
 
 
@@ -157,7 +202,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `dict`
+    `T_State`
 
 
 
@@ -167,18 +212,63 @@ sidebarDepth: 0
 
 
 
+### `_default_state_factory`
+
+
+* **类型**
+
+    `Optional[T_State]`
+
+
+
+* **说明**
+
+    事件响应器默认工厂函数
+
+
+
 ### `_default_parser`
 
 
 * **类型**
 
-    `Optional[ArgsParser]`
+    `Optional[T_ArgsParser]`
 
 
 
 * **说明**
 
     事件响应器默认参数解析函数
+
+
+
+### `_default_type_updater`
+
+
+* **类型**
+
+    `Optional[T_TypeUpdater]`
+
+
+
+* **说明**
+
+    事件响应器类型更新函数
+
+
+
+### `_default_permission_updater`
+
+
+* **类型**
+
+    `Optional[T_PermissionUpdater]`
+
+
+
+* **说明**
+
+    事件响应器权限更新函数
 
 
 
@@ -202,7 +292,7 @@ sidebarDepth: 0
 
 
 
-### _classmethod_ `new(type_='', rule=None, permission=None, handlers=None, temp=False, priority=1, block=False, *, module=None, default_state=None, expire_time=None)`
+### _classmethod_ `new(type_='', rule=None, permission=None, handlers=None, temp=False, priority=1, block=False, *, module=None, expire_time=None, default_state=None, default_state_factory=None, default_parser=None, default_type_updater=None, default_permission_updater=None)`
 
 
 * **说明**
@@ -214,7 +304,7 @@ sidebarDepth: 0
 * **参数**
 
     
-    * `type_: str`: 事件响应器类型，与 `event.type` 一致时触发，空字符串表示任意
+    * `type_: str`: 事件响应器类型，与 `event.get_type()` 一致时触发，空字符串表示任意
 
 
     * `rule: Optional[Rule]`: 匹配规则
@@ -223,7 +313,7 @@ sidebarDepth: 0
     * `permission: Optional[Permission]`: 权限
 
 
-    * `handlers: Optional[List[Handler]]`: 事件处理函数列表
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
 
 
     * `temp: bool`: 是否为临时事件响应器，即触发一次后删除
@@ -238,7 +328,10 @@ sidebarDepth: 0
     * `module: Optional[str]`: 事件响应器所在模块名称
 
 
-    * `default_state: Optional[dict]`: 默认状态 `state`
+    * `default_state: Optional[T_State]`: 默认状态 `state`
+
+
+    * `default_state_factory: Optional[T_StateFactory]`: 默认状态 `state` 的工厂函数
 
 
     * `expire_time: Optional[datetime]`: 事件响应器最终有效时间点，过时即被删除
@@ -296,7 +389,7 @@ sidebarDepth: 0
     * `event: Event`: 上报事件
 
 
-    * `state: dict`: 当前状态
+    * `state: T_State`: 当前状态
 
 
 
@@ -319,7 +412,39 @@ sidebarDepth: 0
 * **参数**
 
     
-    * `func: ArgsParser`: 参数解析函数
+    * `func: T_ArgsParser`: 参数解析函数
+
+
+
+### _classmethod_ `type_updater(func)`
+
+
+* **说明**
+
+    装饰一个函数来更改当前事件响应器的默认响应事件类型更新函数
+
+
+
+* **参数**
+
+    
+    * `func: T_TypeUpdater`: 响应事件类型更新函数
+
+
+
+### _classmethod_ `permission_updater(func)`
+
+
+* **说明**
+
+    装饰一个函数来更改当前事件响应器的默认会话权限更新函数
+
+
+
+* **参数**
+
+    
+    * `func: T_PermissionUpdater`: 会话权限更新函数
 
 
 
@@ -373,7 +498,7 @@ sidebarDepth: 0
     * `prompt: Optional[Union[str, Message, MessageSegment]]`: 在参数不存在时向用户发送的消息
 
 
-    * `args_parser: Optional[ArgsParser]`: 可选参数解析函数，空则使用默认解析函数
+    * `args_parser: Optional[T_ArgsParser]`: 可选参数解析函数，空则使用默认解析函数
 
 
 
@@ -453,45 +578,9 @@ sidebarDepth: 0
 
 
 
-## _class_ `MatcherGroup`
-
-基类：`object`
-
-事件响应器组合，统一管理。用法同 `Matcher`
-
-
-### `__init__(type_='', rule=None, permission=None, handlers=None, temp=False, priority=1, block=False, *, module=None, default_state=None, expire_time=None)`
+### `stop_propagation()`
 
 
 * **说明**
 
-    创建一个事件响应器组合，参数为默认值，与 `Matcher.new` 一致
-
-
-
-### `matchers`
-
-
-* **类型**
-
-    `List[Type[Matcher]]`
-
-
-
-* **说明**
-
-    组内事件响应器列表
-
-
-
-### `new(type_='', rule=None, permission=None, handlers=None, temp=False, priority=1, block=False, *, module=None, default_state=None, expire_time=None)`
-
-
-* **说明**
-
-    在组中创建一个新的事件响应器，参数留空则使用组合默认值
-
-
-:::danger 警告
-如果使用 handlers 参数覆盖组合默认值则该事件响应器不会随组合一起添加新的事件处理函数
-:::
+    阻止事件传播

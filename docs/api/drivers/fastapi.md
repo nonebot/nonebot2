@@ -10,11 +10,104 @@ sidebarDepth: 0
 后端使用方法请参考: [FastAPI 文档](https://fastapi.tiangolo.com/)
 
 
+## _class_ `HTTPPollingSetup`
+
+基类：`object`
+
+
+## _class_ `WebSocketSetup`
+
+基类：`object`
+
+
+## _class_ `Config`
+
+基类：`pydantic.env_settings.BaseSettings`
+
+FastAPI 驱动框架设置，详情参考 FastAPI 文档
+
+
+### `fastapi_openapi_url`
+
+
+* **类型**
+
+    `Optional[str]`
+
+
+
+* **说明**
+
+    `openapi.json` 地址，默认为 `None` 即关闭
+
+
+
+### `fastapi_docs_url`
+
+
+* **类型**
+
+    `Optional[str]`
+
+
+
+* **说明**
+
+    `swagger` 地址，默认为 `None` 即关闭
+
+
+
+### `fastapi_redoc_url`
+
+
+* **类型**
+
+    `Optional[str]`
+
+
+
+* **说明**
+
+    `redoc` 地址，默认为 `None` 即关闭
+
+
+
+### `fastapi_reload_dirs`
+
+
+* **类型**
+
+    `List[str]`
+
+
+
+* **说明**
+
+    `debug` 模式下重载监控文件夹列表，默认为 uvicorn 默认值
+
+
+
 ## _class_ `Driver`
 
-基类：[`nonebot.drivers.BaseDriver`](README.md#nonebot.drivers.BaseDriver)
+基类：[`nonebot.drivers.ReverseDriver`](README.md#nonebot.drivers.ReverseDriver), `nonebot.drivers.ForwardDriver`
 
 FastAPI 驱动框架
+
+
+* **上报地址**
+
+    
+    * `/{adapter name}/`: HTTP POST 上报
+
+
+    * `/{adapter name}/http/`: HTTP POST 上报
+
+
+    * `/{adapter name}/ws`: WebSocket 上报
+
+
+    * `/{adapter name}/ws/`: WebSocket 上报
+
 
 
 ### _property_ `type`
@@ -52,51 +145,6 @@ fastapi 使用的 logger
 使用 `uvicorn` 启动 FastAPI
 
 
-### _async_ `_handle_http(adapter, request, data=Body(Ellipsis))`
-
-用于处理 HTTP 类型请求的函数
-
-
-### _async_ `_handle_ws_reverse(adapter, websocket)`
-
-用于处理 WebSocket 类型请求的函数
-
-
 ## _class_ `WebSocket`
 
-基类：[`nonebot.drivers.BaseWebSocket`](README.md#nonebot.drivers.BaseWebSocket)
-
-
-### _property_ `closed`
-
-
-* **类型**
-
-    `bool`
-
-
-
-* **说明**
-
-    连接是否已经关闭
-
-
-
-### _async_ `accept()`
-
-接受 WebSocket 连接请求
-
-
-### _async_ `close(code=1000)`
-
-关闭 WebSocket 连接请求
-
-
-### _async_ `receive()`
-
-接收一条 WebSocket 信息
-
-
-### _async_ `send(data)`
-
-发送一条 WebSocket 信息
+基类：[`nonebot.drivers.WebSocket`](README.md#nonebot.drivers.WebSocket)

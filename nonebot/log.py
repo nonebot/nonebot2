@@ -12,11 +12,12 @@ NoneBot 使用 `loguru`_ 来记录日志信息。
 
 import sys
 import logging
+from typing import Union
 
-from loguru import logger as logger_
+import loguru
 
 # logger = logging.getLogger("nonebot")
-logger = logger_
+logger: "loguru.Logger" = loguru.logger
 """
 :说明:
 
@@ -44,11 +45,16 @@ logger = logger_
 class Filter:
 
     def __init__(self) -> None:
-        self.level = "DEBUG"
+        self.level: Union[int, str] = "DEBUG"
 
     def __call__(self, record):
-        record["name"] = record["name"].split(".")[0]
-        levelno = logger.level(self.level).no
+        module_name: str = record["name"]
+        module = sys.modules.get(module_name)
+        if module:
+            module_name = getattr(module, "__module_name__", module_name)
+        record["name"] = module_name.split(".")[0]
+        levelno = logger.level(self.level).no if isinstance(self.level,
+                                                            str) else self.level
         return record["level"].no >= levelno
 
 
@@ -61,7 +67,7 @@ class LoguruHandler(logging.Handler):
             level = record.levelno
 
         frame, depth = logging.currentframe(), 2
-        while frame.f_code.co_filename == logging.__file__:
+        while frame and frame.f_code.co_filename == logging.__file__:
             frame = frame.f_back
             depth += 1
 
@@ -77,8 +83,8 @@ default_format = (
     "<c><u>{name}</u></c> | "
     # "<c>{function}:{line}</c>| "
     "{message}")
-logger.add(sys.stdout,
-           colorize=True,
-           diagnose=False,
-           filter=default_filter,
-           format=default_format)
+logger_id = logger.add(sys.stdout,
+                       colorize=True,
+                       diagnose=False,
+                       filter=default_filter,
+                       format=default_format)

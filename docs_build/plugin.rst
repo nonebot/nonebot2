@@ -10,3 +10,8 @@ NoneBot.plugin 模块
    :members:
    :show-inheritance:
    :special-members: __init__
+
+.. automodule:: nonebot.plugin.export
+   :members:
+   :show-inheritance:
+   :special-members: __init__

@@ -1,0 +1,27 @@
+name: 'Store Publish Issue Bot'
+
+on:
+  push:
+    branches:
+      - master
+  issues:
+    types: [opened, reopened, edited]
+  pull_request:
+    types: [closed]
+
+jobs:
+  issue_bot:
+    runs-on: ubuntu-latest
+    name: store publish issue bot
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: NoneBot2 Plugin Issue Bot
+        uses: he0119/nonebot2-plugin-issue-bot@main
+        with:
+          token: ${{ secrets.GH_TOKEN }}
+          base: master
+          plugin_path: docs/.vuepress/public/plugins.json
+          bot_path: docs/.vuepress/public/bots.json
+          adapter_path: docs/.vuepress/public/adapters.json

@@ -2,7 +2,13 @@
 
 如果之前使用 `nb-cli` 生成了项目结构，那我们已经有了一个空的插件目录 `Awesome-Bot/awesome_bot/plugins`，并且它已在 `bot.py` 中被加载，我们现在可以开始创建插件了！
 
-插件通常有两种形式，下面分别介绍
+使用 `nb-cli` 创建包形式插件，或自行创建文件(夹)
+
+```bash
+nb plugin new
+```
+
+下面分别对两种通常的插件形式做具体介绍
 
 ## 单文件形式
 
@@ -76,10 +82,10 @@ foo
 示例：
 
 ```python
-from pydantic import BaseSetting
+from pydantic import BaseSettings
 
 
-class Config(BaseSetting):
+class Config(BaseSettings):
 
     # plugin custom config
     plugin_setting: str = "default"

@@ -7,26 +7,29 @@ sidebarDepth: 0
 
 ## CQHTTP (OneBot) v11 协议适配
 
-协议详情请看: [CQHTTP](http://cqhttp.cc/) | [OneBot](https://github.com/howmanybots/onebot)
+协议详情请看: [CQHTTP](https://github.com/howmanybots/onebot/blob/master/README.md) | [OneBot](https://github.com/howmanybots/onebot/blob/master/README.md)
+
+# NoneBot.adapters.cqhttp.config 模块
 
 
-## `log(level, message)`
+## _class_ `Config`
+
+CQHTTP 配置类
 
 
-* **说明**
-
-    用于打印 CQHTTP 日志。
-
-
-
-* **参数**
+* **配置项**
 
     
-    * `level: str`: 日志等级
+    * `access_token` / `cqhttp_access_token`: CQHTTP 协议授权令牌
 
 
-    * `message: str`: 日志信息
+    * `secret` / `cqhttp_secret`: CQHTTP HTTP 上报数据签名口令
 
+
+    * `ws_urls` / `cqhttp_ws_urls`: CQHTTP 正向 Websocket 连接 Bot ID、目标 URL 字典
+
+
+# NoneBot.adapters.cqhttp.utils 模块
 
 
 ## `escape(s, *, escape_comma=True)`
@@ -63,10 +66,45 @@ sidebarDepth: 0
     * `s: str`: 需要转义的字符串
 
 
+# NoneBot.adapters.cqhttp.exception 模块
 
-## `_b2s(b)`
 
-转换布尔值为字符串。
+## _exception_ `ActionFailed`
+
+基类：[`nonebot.exception.ActionFailed`](../exception.md#nonebot.exception.ActionFailed), `nonebot.adapters.cqhttp.exception.CQHTTPAdapterException`
+
+
+* **说明**
+
+    API 请求返回错误信息。
+
+
+
+* **参数**
+
+    
+    * `retcode: Optional[int]`: 错误码
+
+
+
+## _exception_ `NetworkError`
+
+基类：[`nonebot.exception.NetworkError`](../exception.md#nonebot.exception.NetworkError), `nonebot.adapters.cqhttp.exception.CQHTTPAdapterException`
+
+
+* **说明**
+
+    网络错误。
+
+
+
+* **参数**
+
+    
+    * `retcode: Optional[int]`: 错误码
+
+
+# NoneBot.adapters.cqhttp.bot 模块
 
 
 ## _async_ `_check_reply(bot, event)`
@@ -112,7 +150,7 @@ sidebarDepth: 0
 
 * **说明**
 
-    检查消息开头是否存在，去除并赋值 `event.to_me`
+    检查消息开头是否存在昵称，去除并赋值 `event.to_me`
 
 
 
@@ -158,7 +196,7 @@ sidebarDepth: 0
 
 ## _class_ `Bot`
 
-基类：[`nonebot.adapters.BaseBot`](README.md#nonebot.adapters.BaseBot)
+基类：[`nonebot.adapters._base.Bot`](README.md#nonebot.adapters._base.Bot)
 
 CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 
@@ -169,7 +207,7 @@ CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 * 返回: `"cqhttp"`
 
 
-### _async classmethod_ `check_permission(driver, connection_type, headers, body)`
+### _async classmethod_ `check_permission(driver, request)`
 
 
 * **说明**
@@ -267,158 +305,382 @@ CQHTTP 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
     * `ActionFailed`: API 调用失败
 
 
-
-## _class_ `Event`
-
-基类：[`nonebot.adapters.BaseEvent`](README.md#nonebot.adapters.BaseEvent)
-
-CQHTTP 协议 Event 适配。继承属性参考 [BaseEvent](./#class-baseevent) 。
-
-
-### _property_ `id`
-
-
-* 类型: `Optional[int]`
-
-
-* 说明: 事件/消息 ID
-
-
-### _property_ `name`
-
-
-* 类型: `str`
-
-
-* 说明: 事件名称，由类型与 `.` 组合而成
-
-
-### _property_ `self_id`
-
-
-* 类型: `str`
-
-
-* 说明: 机器人自身 ID
-
-
-### _property_ `time`
-
-
-* 类型: `int`
-
-
-* 说明: 事件发生时间
-
-
-### _property_ `type`
-
-
-* 类型: `str`
-
-
-* 说明: 事件类型
-
-
-### _property_ `detail_type`
-
-
-* 类型: `str`
-
-
-* 说明: 事件详细类型
-
-
-### _property_ `sub_type`
-
-
-* 类型: `Optional[str]`
-
-
-* 说明: 事件子类型
-
-
-### _property_ `user_id`
-
-
-* 类型: `Optional[int]`
-
-
-* 说明: 事件主体 ID
-
-
-### _property_ `group_id`
-
-
-* 类型: `Optional[int]`
-
-
-* 说明: 事件主体群 ID
-
-
-### _property_ `to_me`
-
-
-* 类型: `Optional[bool]`
-
-
-* 说明: 消息是否与机器人相关
-
-
-### _property_ `message`
-
-
-* 类型: `Optional[Message]`
-
-
-* 说明: 消息内容
-
-
-### _property_ `reply`
-
-
-* 类型: `Optional[dict]`
-
-
-* 说明: 回复消息详情
-
-
-### _property_ `raw_message`
-
-
-* 类型: `Optional[str]`
-
-
-* 说明: 原始消息
-
-
-### _property_ `plain_text`
-
-
-* 类型: `Optional[str]`
-
-
-* 说明: 纯文本消息内容
-
-
-### _property_ `sender`
-
-
-* 类型: `Optional[dict]`
-
-
-* 说明: 消息发送者信息
+# NoneBot.adapters.cqhttp.message 模块
 
 
 ## _class_ `MessageSegment`
 
-基类：[`nonebot.adapters.BaseMessageSegment`](README.md#nonebot.adapters.BaseMessageSegment)
+基类：[`nonebot.adapters._base.MessageSegment`](README.md#nonebot.adapters._base.MessageSegment)[`Message`]
 
 CQHTTP 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
 
 
+### _classmethod_ `get_message_class()`
+
+
+### `is_text()`
+
+
+### _static_ `anonymous(ignore_failure=None)`
+
+
+### _static_ `at(user_id)`
+
+
+### _static_ `contact(type_, id)`
+
+
+### _static_ `contact_group(group_id)`
+
+
+### _static_ `contact_user(user_id)`
+
+
+### _static_ `dice()`
+
+
+### _static_ `face(id_)`
+
+
+### _static_ `forward(id_)`
+
+
+### _static_ `image(file, type_=None, cache=True, proxy=True, timeout=None)`
+
+
+### _static_ `json(data)`
+
+
+### _static_ `location(latitude, longitude, title=None, content=None)`
+
+
+### _static_ `music(type_, id_)`
+
+
+### _static_ `music_custom(url, audio, title, content=None, img_url=None)`
+
+
+### _static_ `node(id_)`
+
+
+### _static_ `node_custom(user_id, nickname, content)`
+
+
+### _static_ `poke(type_, id_)`
+
+
+### _static_ `record(file, magic=None, cache=None, proxy=None, timeout=None)`
+
+
+### _static_ `reply(id_)`
+
+
+### _static_ `rps()`
+
+
+### _static_ `shake()`
+
+
+### _static_ `share(url='', title='', content=None, image=None)`
+
+
+### _static_ `text(text)`
+
+
+### _static_ `video(file, cache=None, proxy=None, timeout=None)`
+
+
+### _static_ `xml(data)`
+
+
+### `type`
+
+
+* 类型: `str`
+
+
+* 说明: 消息段类型
+
+
+### `data`
+
+
+* 类型: `Dict[str, Union[str, list]]`
+
+
+* 说明: 消息段数据
+
+
 ## _class_ `Message`
 
-基类：[`nonebot.adapters.BaseMessage`](README.md#nonebot.adapters.BaseMessage)
+基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)[`nonebot.adapters.cqhttp.message.MessageSegment`]
 
 CQHTTP 协议 Message 适配。
+
+
+### _classmethod_ `get_segment_class()`
+
+
+### `extract_plain_text()`
+
+# NoneBot.adapters.cqhttp.permission 模块
+
+
+## `PRIVATE`
+
+
+* **说明**: 匹配任意私聊消息类型事件
+
+
+## `PRIVATE_FRIEND`
+
+
+* **说明**: 匹配任意好友私聊消息类型事件
+
+
+## `PRIVATE_GROUP`
+
+
+* **说明**: 匹配任意群临时私聊消息类型事件
+
+
+## `PRIVATE_OTHER`
+
+
+* **说明**: 匹配任意其他私聊消息类型事件
+
+
+## `GROUP`
+
+
+* **说明**: 匹配任意群聊消息类型事件
+
+
+## `GROUP_MEMBER`
+
+
+* **说明**: 匹配任意群员群聊消息类型事件
+
+:::warning 警告
+该权限通过 event.sender 进行判断且不包含管理员以及群主！
+:::
+
+
+## `GROUP_ADMIN`
+
+
+* **说明**: 匹配任意群管理员群聊消息类型事件
+
+
+## `GROUP_OWNER`
+
+
+* **说明**: 匹配任意群主群聊消息类型事件
+
+# NoneBot.adapters.cqhttp.event 模块
+
+
+## _class_ `Event`
+
+基类：[`nonebot.adapters._base.Event`](README.md#nonebot.adapters._base.Event)
+
+CQHTTP 协议事件，字段与 CQHTTP 一致。各事件字段参考 [CQHTTP 文档](https://github.com/howmanybots/onebot/blob/master/README.md)
+
+
+## _class_ `MessageEvent`
+
+基类：`nonebot.adapters.cqhttp.event.Event`
+
+消息事件
+
+
+### `to_me`
+
+
+* **说明**
+
+    消息是否与机器人有关
+
+
+
+* **类型**
+
+    `bool`
+
+
+
+### `reply`
+
+
+* **说明**
+
+    消息中提取的回复消息，内容为 `get_msg` API 返回结果
+
+
+
+* **类型**
+
+    `Optional[Reply]`
+
+
+
+## _class_ `PrivateMessageEvent`
+
+基类：`nonebot.adapters.cqhttp.event.MessageEvent`
+
+私聊消息
+
+
+## _class_ `GroupMessageEvent`
+
+基类：`nonebot.adapters.cqhttp.event.MessageEvent`
+
+群消息
+
+
+## _class_ `NoticeEvent`
+
+基类：`nonebot.adapters.cqhttp.event.Event`
+
+通知事件
+
+
+## _class_ `GroupUploadNoticeEvent`
+
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
+
+群文件上传事件
+
+
+## _class_ `GroupAdminNoticeEvent`
+
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
+
+群管理员变动
+
+
+## _class_ `GroupDecreaseNoticeEvent`
+
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
+
+群成员减少事件
+
+
+## _class_ `GroupIncreaseNoticeEvent`
+
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
+
+群成员增加事件
+
+
+## _class_ `GroupBanNoticeEvent`
+
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
+
+群禁言事件
+
+
+## _class_ `FriendAddNoticeEvent`
+
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
+
+好友添加事件
+
+
+## _class_ `GroupRecallNoticeEvent`
+
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
+
+群消息撤回事件
+
+
+## _class_ `FriendRecallNoticeEvent`
+
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
+
+好友消息撤回事件
+
+
+## _class_ `NotifyEvent`
+
+基类：`nonebot.adapters.cqhttp.event.NoticeEvent`
+
+提醒事件
+
+
+## _class_ `PokeNotifyEvent`
+
+基类：`nonebot.adapters.cqhttp.event.NotifyEvent`
+
+戳一戳提醒事件
+
+
+## _class_ `LuckyKingNotifyEvent`
+
+基类：`nonebot.adapters.cqhttp.event.NotifyEvent`
+
+群红包运气王提醒事件
+
+
+## _class_ `HonorNotifyEvent`
+
+基类：`nonebot.adapters.cqhttp.event.NotifyEvent`
+
+群荣誉变更提醒事件
+
+
+## _class_ `RequestEvent`
+
+基类：`nonebot.adapters.cqhttp.event.Event`
+
+请求事件
+
+
+## _class_ `FriendRequestEvent`
+
+基类：`nonebot.adapters.cqhttp.event.RequestEvent`
+
+加好友请求事件
+
+
+## _class_ `GroupRequestEvent`
+
+基类：`nonebot.adapters.cqhttp.event.RequestEvent`
+
+加群请求/邀请事件
+
+
+## _class_ `MetaEvent`
+
+基类：`nonebot.adapters.cqhttp.event.Event`
+
+元事件
+
+
+## _class_ `LifecycleMetaEvent`
+
+基类：`nonebot.adapters.cqhttp.event.MetaEvent`
+
+生命周期元事件
+
+
+## _class_ `HeartbeatMetaEvent`
+
+基类：`nonebot.adapters.cqhttp.event.MetaEvent`
+
+心跳元事件
+
+
+## `get_event_model(event_name)`
+
+
+* **说明**
+
+    根据事件名获取对应 `Event Model` 及 `FallBack Event Model` 列表
+
+
+
+* **返回**
+
+    
+    * `List[Type[Event]]`

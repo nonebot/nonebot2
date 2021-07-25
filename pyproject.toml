@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "nonebot2"
-version = "2.0.0-alpha.6"
+version = "2.0.0a13.post1"
 description = "An asynchronous python bot framework."
-authors = ["yanyongyu <yanyongyu_1@126.com>"]
+authors = ["yanyongyu <yyy@nonebot.dev>"]
 license = "MIT"
 readme = "README.md"
 homepage = "https://v2.nonebot.dev/"
@@ -18,38 +18,43 @@ classifiers = [
   "Programming Language :: Python :: 3"
 ]
 packages = [
-  { include = "nonebot" }
+  { include = "nonebot" },
 ]
 include = ["nonebot/py.typed"]
 
 [tool.poetry.dependencies]
-python = "^3.7"
-httpx = "^0.16.1"
+python = "^3.7.3"
 loguru = "^0.5.1"
-pygtrie = "^2.3.3"
-fastapi = "^0.58.1"
-uvicorn = "^0.11.5"
-pydantic = { extras = ["dotenv"], version = "^1.6.1" }
-apscheduler = { version = "^3.6.3", optional = true }
-nonebot-test = { version = "^0.1.0", optional = true }
-nb-cli = { version="^0.2.0", optional = true }
+pygtrie = "^2.4.1"
+tomlkit = "^0.7.0"
+fastapi = "^0.67.0"
+websockets = "^9.1"
+Quart = { version = "^0.15.0", optional = true }
+httpx = { version = "^0.18.0", extras = ["http2"] }
+pydantic = { extras = ["dotenv"], version = "~1.8.0" }
+uvicorn = { version = "^0.14.0", extras = ["standard"] }
+aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
 
 [tool.poetry.dev-dependencies]
-yapf = "^0.30.0"
-sphinx = "^3.1.1"
+yapf = "^0.31.0"
+sphinx = "^4.1.1"
+nonebot-plugin-test = "^0.2.0"
+nonebot-adapter-cqhttp = { path = "./packages/nonebot-adapter-cqhttp", develop = true }
+nonebot-adapter-ding = { path = "./packages/nonebot-adapter-ding", develop = true }
+nonebot-adapter-mirai = { path = "./packages/nonebot-adapter-mirai", develop = true }
+nonebot-adapter-feishu = { path = "./packages/nonebot-adapter-feishu", develop = true }
 sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
 
 [tool.poetry.extras]
-cli = ["nb-cli"]
-test = ["nonebot-test"]
-scheduler = ["apscheduler"]
-full = ["nb-cli", "nonebot-test", "apscheduler"]
+quart = ["quart"]
+aiohttp = ["aiohttp"]
+all = ["quart", "aiohttp"]
 
-[[tool.poetry.source]]
-name = "aliyun"
-url = "https://mirrors.aliyun.com/pypi/simple/"
-default = true
+# [[tool.poetry.source]]
+# name = "aliyun"
+# url = "https://mirrors.aliyun.com/pypi/simple/"
+# default = true
 
 [build-system]
-requires = ["poetry>=0.12"]
-build-backend = "poetry.masonry.api"
+requires = ["poetry_core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

@@ -11,9 +11,20 @@ sidebarDepth: 0
 这些异常并非所有需要用户处理，在 NoneBot 内部运行时被捕获，并进行对应操作。
 
 
-## _exception_ `IgnoredException`
+## _exception_ `NoneBotException`
 
 基类：`Exception`
+
+
+* **说明**
+
+    所有 NoneBot 发生的异常基类。
+
+
+
+## _exception_ `IgnoredException`
+
+基类：`nonebot.exception.NoneBotException`
 
 
 * **说明**
@@ -29,9 +40,30 @@ sidebarDepth: 0
 
 
 
+## _exception_ `ParserExit`
+
+基类：`nonebot.exception.NoneBotException`
+
+
+* **说明**
+
+    `shell command` 处理消息失败时返回的异常
+
+
+
+* **参数**
+
+    
+    * `status`
+
+
+    * `message`
+
+
+
 ## _exception_ `PausedException`
 
-基类：`Exception`
+基类：`nonebot.exception.NoneBotException`
 
 
 * **说明**
@@ -49,7 +81,7 @@ sidebarDepth: 0
 
 ## _exception_ `RejectedException`
 
-基类：`Exception`
+基类：`nonebot.exception.NoneBotException`
 
 
 * **说明**
@@ -67,7 +99,7 @@ sidebarDepth: 0
 
 ## _exception_ `FinishedException`
 
-基类：`Exception`
+基类：`nonebot.exception.NoneBotException`
 
 
 * **说明**
@@ -85,7 +117,7 @@ sidebarDepth: 0
 
 ## _exception_ `StopPropagation`
 
-基类：`Exception`
+基类：`nonebot.exception.NoneBotException`
 
 
 * **说明**
@@ -100,30 +132,38 @@ sidebarDepth: 0
 
 
 
-## _exception_ `RequestDenied`
+## _exception_ `AdapterException`
 
-基类：`Exception`
+基类：`nonebot.exception.NoneBotException`
 
 
 * **说明**
 
-    Bot 连接请求不合法。
+    代表 `Adapter` 抛出的异常，所有的 `Adapter` 都要在内部继承自这个 `Exception`
 
 
 
 * **参数**
 
     
-    * `status_code: int`: HTTP 状态码
+    * `adapter_name: str`: 标识 adapter
 
 
-    * `reason: str`: 拒绝原因
+
+## _exception_ `NoLogException`
+
+基类：`Exception`
+
+
+* **说明**
+
+    指示 NoneBot 对当前 `Event` 进行处理但不显示 Log 信息，可在 `get_log_string` 时抛出
 
 
 
 ## _exception_ `ApiNotAvailable`
 
-基类：`Exception`
+基类：`nonebot.exception.AdapterException`
 
 
 * **说明**
@@ -134,7 +174,7 @@ sidebarDepth: 0
 
 ## _exception_ `NetworkError`
 
-基类：`Exception`
+基类：`nonebot.exception.AdapterException`
 
 
 * **说明**
@@ -145,16 +185,9 @@ sidebarDepth: 0
 
 ## _exception_ `ActionFailed`
 
-基类：`Exception`
+基类：`nonebot.exception.AdapterException`
 
 
 * **说明**
 
     API 请求成功返回数据，但 API 操作失败。
-
-
-
-* **参数**
-
-    
-    * `retcode: Optional[int]`: 错误代码
