@@ -27,17 +27,17 @@ python = "^3.7.3"
 loguru = "^0.5.1"
 pygtrie = "^2.4.1"
 tomlkit = "^0.7.0"
-fastapi = "^0.65.2"
-Quart = { version = "^0.14.1", optional = true }
+fastapi = "^0.67.0"
+websockets = "^9.1"
+Quart = { version = "^0.15.0", optional = true }
 httpx = { version = "^0.18.0", extras = ["http2"] }
 pydantic = { extras = ["dotenv"], version = "~1.8.0" }
 uvicorn = { version = "^0.14.0", extras = ["standard"] }
 aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
-websockets = "^9.1"
 
 [tool.poetry.dev-dependencies]
-yapf = "^0.30.0"
-sphinx = "^3.4.1"
+yapf = "^0.31.0"
+sphinx = "^4.1.1"
 nonebot-plugin-test = "^0.2.0"
 nonebot-adapter-cqhttp = { path = "./packages/nonebot-adapter-cqhttp", develop = true }
 nonebot-adapter-ding = { path = "./packages/nonebot-adapter-ding", develop = true }
