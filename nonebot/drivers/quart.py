@@ -21,7 +21,7 @@ from nonebot.config import Env, Config as NoneBotConfig
 from nonebot.drivers import ReverseDriver, HTTPRequest, WebSocket as BaseWebSocket
 
 try:
-    from quart import exceptions
+    from werkzeug import exceptions
     from quart import request as _request
     from quart import websocket as _websocket
     from quart import Quart, Request, Response
@@ -167,10 +167,8 @@ class Driver(ReverseDriver):
         self_id, response = await BotClass.check_permission(self, http_request)
 
         if not self_id:
-            raise exceptions.HTTPException(
-                response and response.status or 401,
-                description=(response and response.body or b"").decode(),
-                name="Request Denied")
+            raise exceptions.Unauthorized(
+                description=(response and response.body or b"").decode())
         if self_id in self._clients:
             logger.warning("There's already a reverse websocket connection,"
                            "so the event may be handled twice.")
@@ -195,18 +193,14 @@ class Driver(ReverseDriver):
         self_id, response = await BotClass.check_permission(self, ws)
 
         if not self_id:
-            raise exceptions.HTTPException(
-                response and response.status or 401,
-                description=(response and response.body or b"").decode(),
-                name="Request Denied")
+            raise exceptions.Unauthorized(
+                description=(response and response.body or b"").decode())
 
         if self_id in self._clients:
             logger.opt(colors=True).warning(
                 "There's already a reverse websocket connection, "
                 f"<y>{adapter.upper()} Bot {self_id}</y> ignored.")
-            raise exceptions.HTTPException(403,
-                                           description="Client already exists",
-                                           name="Request Denied")
+            raise exceptions.Forbidden(description='Client already exists.')
 
         bot = BotClass(self_id, ws)
         await ws.accept()
