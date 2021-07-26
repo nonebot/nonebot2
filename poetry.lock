@@ -806,7 +806,7 @@ yapf = "*"
 type = "git"
 url = "https://github.com/nonebot/sphinx-markdown-builder.git"
 reference = "master"
-resolved_reference = "fdbc39e1b50aabf8dbcf129895fbbd02cbf54554"
+resolved_reference = "7a8c8a66dfe42436b4584d1d13f5d0127fc83301"
 
 [[package]]
 name = "sphinxcontrib-applehelp"

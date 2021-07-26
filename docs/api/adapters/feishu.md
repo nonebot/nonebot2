@@ -228,12 +228,7 @@ sidebarDepth: 0
 
 基类：[`nonebot.adapters._base.Event`](README.md#nonebot.adapters._base.Event)
 
-飞书协议事件。各事件字段参考 
-
-```
-`飞书文档`_
-```
-
+飞书协议事件。各事件字段参考 [飞书文档](https://open.feishu.cn/document/ukTMukTMukTM/uYDNxYjL2QTM24iN0EjN/event-list)
 
 
 ## `get_event_model(event_name)`

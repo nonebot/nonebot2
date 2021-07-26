@@ -12,6 +12,7 @@
 #
 import os
 import sys
+
 sys.path.insert(0, os.path.abspath(os.path.dirname(os.path.dirname(__file__))))
 
 # -- Project information -----------------------------------------------------
@@ -73,6 +74,7 @@ html_static_path = ['_static']
 # -- Options for autodoc extension ----------------------------------------------
 autodoc_default_options = {'member-order': 'bysource'}
 autodoc_inherit_docstrings = False
+autodoc_typehints = 'none'
 
 # -- Options for todo extension ----------------------------------------------
 

@@ -52,7 +52,18 @@ sidebarDepth: 0
 
 
 
-## `logger_wrapper`
+## _class_ `DataclassEncoder`
+
+基类：`json.encoder.JSONEncoder`
+
+
+* **说明**
+
+    在JSON序列化 `Message` (List[Dataclass]) 时使用的 `JSONEncoder`
+
+
+
+## `logger_wrapper(logger_name)`
 
 
 * **说明**
@@ -72,13 +83,3 @@ sidebarDepth: 0
 
 
 * `exception: Optional[Exception]`: 异常信息
-
-
-## _class_ `DataclassEncoder`
-
-基类：`json.encoder.JSONEncoder`
-
-
-* **说明**
-
-    在JSON序列化 `Message` (List[Dataclass]) 时使用的 `JSONEncoder`

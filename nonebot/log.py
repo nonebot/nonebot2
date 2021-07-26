@@ -15,9 +15,10 @@ import logging
 from typing import Union
 
 import loguru
+from loguru._logger import Logger
 
 # logger = logging.getLogger("nonebot")
-logger: "loguru.Logger" = loguru.logger
+logger: "Logger" = loguru.logger  # type: ignore
 """
 :说明:
 
