@@ -152,14 +152,6 @@
     "repo": "felinae98/nonebot-hk-reporter"
   },
   {
-    "id": "nonebot-plugin-ncm",
-    "link": "nonebot-plugin-ncm",
-    "author": "kitUIN",
-    "desc": "网易云无损音乐下载",
-    "name": "网易云无损音乐下载",
-    "repo": "kitUIN/nonebot_tools/tree/master/nonebot_tools/nonebot-plugin-ncm"
-  },
-  {
     "id": "nonebot_plugin_cocdicer",
     "link": "nonebot-plugin-cocdicer",
     "author": "abrahum",
