@@ -318,5 +318,13 @@
     "desc": "通过FlightRadar24查询航班信息",
     "author": "IronWolf-K",
     "repo": "https://github.com/IronWolf-K/nonebot_plugin_fr24"
+  },
+  {
+    "id": "nonebot_plugin_flashre-1.0.tar.gz",
+    "link": "nonebot_plugin_flashre",
+    "name": "QQ闪照重现",
+    "desc": "重新把闪照用图片方式发出",
+    "author": "LycanW",
+    "repo": "https://github.com/LycanW/nonebot_plugin_flashre"
   }
 ]
