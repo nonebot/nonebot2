@@ -192,7 +192,6 @@ class Driver(abc.ABC):
         asyncio.create_task(_run_hook(bot))
 
 
-# TODO: issue #240
 class ForwardDriver(Driver):
 
     @abc.abstractmethod
@@ -239,9 +238,9 @@ class ReverseDriver(Driver):
 @dataclass
 class HTTPConnection(abc.ABC):
     http_version: str
-    """One of `"1.0"`, `"1.1"` or `"2"`."""
+    """One of ``"1.0"``, ``"1.1"`` or ``"2"``."""
     scheme: str
-    """URL scheme portion (likely `"http"` or `"https"`)."""
+    """URL scheme portion (likely ``"http"`` or ``"https"``)."""
     path: str
     """
     HTTP request target excluding any query string,
@@ -249,7 +248,7 @@ class HTTPConnection(abc.ABC):
     decoded into characters.
     """
     query_string: bytes = b""
-    """ URL portion after the `?`, percent-encoded."""
+    """ URL portion after the ``?``, percent-encoded."""
     headers: Dict[str, str] = field(default_factory=dict)
     """A dict of name-value pairs,
     where name is the header name, and value is the header value.
@@ -279,7 +278,7 @@ class HTTPRequest(HTTPConnection):
     body: bytes = b""
     """Body of the request.
 
-    Optional; if missing defaults to b"".
+    Optional; if missing defaults to ``b""``.
     """
 
     @property

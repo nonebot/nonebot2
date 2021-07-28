@@ -1,7 +1,7 @@
----
+\-\-\-
 contentSidebar: true
 sidebarDepth: 0
----
+\-\-\-
 
 NoneBot.adapters.mirai 模块
 ===========================

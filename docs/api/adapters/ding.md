@@ -245,12 +245,12 @@ message += MessageSegment.atDingtalkIds(event.senderId)
 
 ### _static_ `extension(dict_)`
 
-"标记 text 文本的 extension 属性，需要与 text 消息段相加。
+标记 text 文本的 extension 属性，需要与 text 消息段相加。
 
 
 ### _static_ `code(code_language, code)`
 
-"发送 code 消息段
+发送 code 消息段
 
 
 ### _static_ `markdown(title, text)`
@@ -274,7 +274,7 @@ message += MessageSegment.atDingtalkIds(event.senderId)
     * `btnOrientation`: 0：按钮竖直排列 1：按钮横向排列
 
 
-    * `btns`: [{ "title": title, "actionURL": actionURL }, ...]
+    * `btns`: `[{ "title": title, "actionURL": actionURL }, ...]`
 
 
 
@@ -286,7 +286,7 @@ message += MessageSegment.atDingtalkIds(event.senderId)
 * **参数**
 
     
-    * `links`: [{ "title": xxx, "messageURL": xxx, "picURL": xxx }, ...]
+    * `links`: `[{ "title": xxx, "messageURL": xxx, "picURL": xxx }, ...]`
 
 
 

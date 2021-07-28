@@ -292,7 +292,7 @@ API中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则�
 * **参数**
 
     
-    * `type: str`: "friend" 或 "group" 或 "temp"
+    * `type: str`: “friend” 或 “group” 或 “temp”
 
 
     * `img: BytesIO`: 图片的BytesIO对象
@@ -311,7 +311,7 @@ API中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则�
 * **参数**
 
     
-    * `type: str`: 当前仅支持 "group"
+    * `type: str`: 当前仅支持 “group”
 
 
     * `voice: BytesIO`: 语音的BytesIO对象

@@ -262,12 +262,12 @@ Reverse Driver 基类。将后端框架封装，以满足适配器使用。
 
 ### `http_version`
 
-One of "1.0", "1.1" or "2".
+One of `"1.0"`, `"1.1"` or `"2"`.
 
 
 ### `scheme`
 
-URL scheme portion (likely "http" or "https").
+URL scheme portion (likely `"http"` or `"https"`).
 
 
 ### `path`
@@ -279,7 +279,7 @@ decoded into characters.
 
 ### `query_string`
 
-URL portion after the ?, percent-encoded.
+URL portion after the `?`, percent-encoded.
 
 
 ### `headers`
@@ -314,7 +314,7 @@ The HTTP method name, uppercased.
 
 Body of the request.
 
-Optional; if missing defaults to b"".
+Optional; if missing defaults to `b""`.
 
 
 ### _property_ `type`
