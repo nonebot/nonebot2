@@ -7,7 +7,6 @@
 import re
 import json
 from types import ModuleType
-from functools import reduce
 from dataclasses import dataclass
 from collections import defaultdict
 from contextvars import Context, copy_context
