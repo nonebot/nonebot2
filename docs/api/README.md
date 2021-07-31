@@ -49,6 +49,9 @@
     * [nonebot.drivers.quart](drivers/quart.html)
 
 
+    * [nonebot.drivers.aiohttp](drivers/aiohttp.html)
+
+
     * [nonebot.adapters](adapters/)
 
 

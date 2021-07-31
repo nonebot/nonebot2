@@ -220,6 +220,10 @@ module.exports = (context) => ({
                   path: "drivers/quart",
                 },
                 {
+                  title: "nonebot.drivers.aiohttp 模块",
+                  path: "drivers/aiohttp",
+                },
+                {
                   title: "nonebot.adapters 模块",
                   path: "adapters/",
                 },

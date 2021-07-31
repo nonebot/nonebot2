@@ -7,17 +7,9 @@ sidebarDepth: 0
 
 ## FastAPI 驱动适配
 
+本驱动同时支持服务端以及客户端连接
+
 后端使用方法请参考: [FastAPI 文档](https://fastapi.tiangolo.com/)
-
-
-## _class_ `HTTPPollingSetup`
-
-基类：`object`
-
-
-## _class_ `WebSocketSetup`
-
-基类：`object`
 
 
 ## _class_ `Config`
@@ -89,7 +81,7 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 ## _class_ `Driver`
 
-基类：[`nonebot.drivers.ReverseDriver`](README.md#nonebot.drivers.ReverseDriver), `nonebot.drivers.ForwardDriver`
+基类：[`nonebot.drivers.ReverseDriver`](README.md#nonebot.drivers.ReverseDriver), [`nonebot.drivers.ForwardDriver`](README.md#nonebot.drivers.ForwardDriver)
 
 FastAPI 驱动框架
 
@@ -138,6 +130,38 @@ fastapi 使用的 logger
 ### `on_shutdown(func)`
 
 参考文档: [Events](https://fastapi.tiangolo.com/advanced/events/#startup-event)
+
+
+### `setup_http_polling(setup)`
+
+
+* **说明**
+
+    注册一个 HTTP 轮询连接，如果传入一个函数，则该函数会在每次连接时被调用
+
+
+
+* **参数**
+
+    
+    * `setup: Union[HTTPPollingSetup, Callable[[], Awaitable[HTTPPollingSetup]]]`
+
+
+
+### `setup_websocket(setup)`
+
+
+* **说明**
+
+    注册一个 WebSocket 连接，如果传入一个函数，则该函数会在每次重连时被调用
+
+
+
+* **参数**
+
+    
+    * `setup: Union[WebSocketSetup, Callable[[], Awaitable[WebSocketSetup]]]`
+
 
 
 ### `run(host=None, port=None, *, app=None, **kwargs)`

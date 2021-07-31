@@ -8,7 +8,7 @@
 import abc
 import asyncio
 from dataclasses import dataclass, field
-from typing import Any, Set, Dict, Type, Optional, Callable, TYPE_CHECKING
+from typing import Any, Set, Dict, Type, Union, Optional, Callable, Awaitable, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
@@ -193,27 +193,40 @@ class Driver(abc.ABC):
 
 
 class ForwardDriver(Driver):
+    """
+    Forward Driver 基类。将客户端框架封装，以满足适配器使用。
+    """
 
     @abc.abstractmethod
-    def setup_http_polling(self,
-                           adapter: str,
-                           self_id: str,
-                           url: str,
-                           polling_interval: float = 3.,
-                           method: str = "GET",
-                           body: bytes = b"",
-                           headers: Dict[str, str] = {},
-                           http_version: str = "1.1") -> None:
+    def setup_http_polling(
+        self, setup: Union["HTTPPollingSetup",
+                           Callable[[], Awaitable["HTTPPollingSetup"]]]
+    ) -> None:
+        """
+        :说明:
+
+          注册一个 HTTP 轮询连接，如果传入一个函数，则该函数会在每次连接时被调用
+
+        :参数:
+
+          * ``setup: Union[HTTPPollingSetup, Callable[[], Awaitable[HTTPPollingSetup]]]``
+        """
         raise NotImplementedError
 
     @abc.abstractmethod
-    def setup_websocket(self,
-                        adapter: str,
-                        self_id: str,
-                        url: str,
-                        reconnect_interval: float = 3.,
-                        headers: Dict[str, str] = {},
-                        http_version: str = "1.1") -> None:
+    def setup_websocket(
+        self, setup: Union["WebSocketSetup",
+                           Callable[[], Awaitable["WebSocketSetup"]]]
+    ) -> None:
+        """
+        :说明:
+
+          注册一个 WebSocket 连接，如果传入一个函数，则该函数会在每次重连时被调用
+
+        :参数:
+
+          * ``setup: Union[WebSocketSetup, Callable[[], Awaitable[WebSocketSetup]]]``
+        """
         raise NotImplementedError
 
 
@@ -369,3 +382,37 @@ class WebSocket(HTTPConnection, abc.ABC):
     async def send_bytes(self, data: bytes):
         """发送一条 WebSocket binary 信息"""
         raise NotImplementedError
+
+
+@dataclass
+class HTTPPollingSetup:
+    adapter: str
+    """协议适配器名称"""
+    self_id: str
+    """机器人 ID"""
+    url: str
+    """URL"""
+    method: str
+    """HTTP method"""
+    body: bytes
+    """HTTP body"""
+    headers: Dict[str, str]
+    """HTTP headers"""
+    http_version: str
+    """HTTP version"""
+    poll_interval: float
+    """HTTP 轮询间隔"""
+
+
+@dataclass
+class WebSocketSetup:
+    adapter: str
+    """协议适配器名称"""
+    self_id: str
+    """机器人 ID"""
+    url: str
+    """URL"""
+    headers: Dict[str, str] = field(default_factory=dict)
+    """HTTP headers"""
+    reconnect_interval: float = 3.
+    """WebSocket 重连间隔"""

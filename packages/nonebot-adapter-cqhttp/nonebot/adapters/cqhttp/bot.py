@@ -11,7 +11,7 @@ from nonebot.typing import overrides
 from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
 from nonebot.utils import escape_tag, DataclassEncoder
-from nonebot.drivers import Driver, ForwardDriver, ReverseDriver
+from nonebot.drivers import Driver, ForwardDriver, WebSocketSetup
 from nonebot.drivers import HTTPConnection, HTTPRequest, HTTPResponse, WebSocket
 
 from .utils import log, escape
@@ -249,10 +249,8 @@ class Bot(BaseBot):
                         "authorization":
                             f"Bearer {cls.cqhttp_config.access_token}"
                     } if cls.cqhttp_config.access_token else {}
-                    driver.setup_websocket("cqhttp",
-                                           self_id,
-                                           url,
-                                           headers=headers)
+                    driver.setup_websocket(
+                        WebSocketSetup("cqhttp", self_id, url, headers=headers))
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
                         f"<r><bg #f8bbd0>Bad url {url} for bot {self_id} "

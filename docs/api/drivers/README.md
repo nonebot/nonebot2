@@ -238,6 +238,45 @@ Driver 基类。
 在 WebSocket 连接断开后，调用该函数来注销 bot 对象
 
 
+## _class_ `ForwardDriver`
+
+基类：`nonebot.drivers.Driver`
+
+Forward Driver 基类。将客户端框架封装，以满足适配器使用。
+
+
+### _abstract_ `setup_http_polling(setup)`
+
+
+* **说明**
+
+    注册一个 HTTP 轮询连接，如果传入一个函数，则该函数会在每次连接时被调用
+
+
+
+* **参数**
+
+    
+    * `setup: Union[HTTPPollingSetup, Callable[[], Awaitable[HTTPPollingSetup]]]`
+
+
+
+### _abstract_ `setup_websocket(setup)`
+
+
+* **说明**
+
+    注册一个 WebSocket 连接，如果传入一个函数，则该函数会在每次重连时被调用
+
+
+
+* **参数**
+
+    
+    * `setup: Union[WebSocketSetup, Callable[[], Awaitable[WebSocketSetup]]]`
+
+
+
 ## _class_ `ReverseDriver`
 
 基类：`nonebot.drivers.Driver`
@@ -413,3 +452,78 @@ Always `websocket`
 ### _abstract async_ `send_bytes(data)`
 
 发送一条 WebSocket binary 信息
+
+
+## _class_ `HTTPPollingSetup`
+
+基类：`object`
+
+
+### `adapter`
+
+协议适配器名称
+
+
+### `self_id`
+
+机器人 ID
+
+
+### `url`
+
+URL
+
+
+### `method`
+
+HTTP method
+
+
+### `body`
+
+HTTP body
+
+
+### `headers`
+
+HTTP headers
+
+
+### `http_version`
+
+HTTP version
+
+
+### `poll_interval`
+
+HTTP 轮询间隔
+
+
+## _class_ `WebSocketSetup`
+
+基类：`object`
+
+
+### `adapter`
+
+协议适配器名称
+
+
+### `self_id`
+
+机器人 ID
+
+
+### `url`
+
+URL
+
+
+### `headers`
+
+HTTP headers
+
+
+### `reconnect_interval`
+
+WebSocket 重连间隔
