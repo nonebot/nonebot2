@@ -1,15 +1,17 @@
+import json
 from datetime import datetime, timedelta
 from io import BytesIO
 from ipaddress import IPv4Address
 from typing import Any, Dict, List, NoReturn, Optional, Tuple, Union
 
 import httpx
+from loguru import logger
 
-from nonebot.config import Config
-from nonebot.typing import overrides
 from nonebot.adapters import Bot as BaseBot
+from nonebot.config import Config
+from nonebot.drivers import Driver, ReverseDriver, HTTPConnection, HTTPResponse, WebSocket, ForwardDriver, WebSocketSetup
 from nonebot.exception import ApiNotAvailable
-from nonebot.drivers import Driver, HTTPConnection, HTTPResponse, WebSocket
+from nonebot.typing import overrides
 
 from .config import Config as MiraiConfig
 from .event import Event, FriendMessage, GroupMessage, TempMessage
@@ -152,15 +154,12 @@ class Bot(BaseBot):
 
     """
 
+    _type = 'mirai'
+
     @property
     @overrides(BaseBot)
     def type(self) -> str:
-        return "mirai"
-
-    @property
-    def alive(self) -> bool:
-        assert isinstance(self.request, WebSocket)
-        return not self.request.closed
+        return self._type
 
     @property
     def api(self) -> SessionManager:
@@ -190,21 +189,50 @@ class Bot(BaseBot):
 
     @classmethod
     @overrides(BaseBot)
-    def register(cls, driver: Driver, config: "Config"):
+    def register(cls,
+                 driver: Driver,
+                 config: "Config",
+                 qq: Optional[int] = None):
         cls.mirai_config = MiraiConfig(**config.dict())
         if (cls.mirai_config.auth_key and cls.mirai_config.host and
                 cls.mirai_config.port) is None:
-            raise ApiNotAvailable('mirai')
+            raise ApiNotAvailable(cls._type)
+
         super().register(driver, config)
 
+        if not isinstance(driver, ForwardDriver) and qq:
+            logger.warning(
+                f"Current driver {cls.config.driver} don't support forward connections"
+            )
+        elif isinstance(driver, ForwardDriver) and qq:
+
+            async def url_factory():
+                assert cls.mirai_config.host and cls.mirai_config.port and cls.mirai_config.auth_key
+                session = await SessionManager.new(
+                    qq,  # type: ignore
+                    host=cls.mirai_config.host,
+                    port=cls.mirai_config.port,
+                    auth_key=cls.mirai_config.auth_key)
+                return WebSocketSetup(
+                    adapter=cls._type,
+                    self_id=str(qq),
+                    url=(f'ws://{cls.mirai_config.host}:{cls.mirai_config.port}'
+                         f'/all?sessionKey={session.session_key}'))
+
+            driver.setup_websocket(url_factory)
+        elif isinstance(driver, ReverseDriver):
+            logger.debug(
+                'Param "qq" does not set for mirai adapter, use http post instead'
+            )
+
     @overrides(BaseBot)
-    async def handle_message(self, message: dict):
+    async def handle_message(self, message: bytes):
         Log.debug(f'received message {message}')
         try:
             await process_event(
                 bot=self,
                 event=Event.new({
-                    **message,
+                    **json.loads(message),
                     'self_id': self.self_id,
                 }),
             )
