@@ -681,40 +681,6 @@ API中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则�
 
 # NoneBot.adapters.mirai.bot_ws 模块
 
-
-## _class_ `WebSocket`
-
-基类：[`nonebot.drivers.WebSocket`](../drivers/README.md#nonebot.drivers.WebSocket)
-
-
-## _class_ `WebsocketBot`
-
-基类：`nonebot.adapters.mirai.bot.Bot`
-
-mirai-api-http 正向 Websocket 协议 Bot 适配。
-
-
-### _classmethod_ `register(driver, config, qq)`
-
-
-* **说明**
-
-    注册该Adapter
-
-
-
-* **参数**
-
-    
-    * `driver: Driver`: 程序所使用的\`\`Driver\`\`
-
-
-    * `config: Config`: 程序配置对象
-
-
-    * `qq: int`: 要使用的Bot的QQ号 **注意: 在使用正向Websocket时必须指定该值!**
-
-
 # NoneBot.adapters.mirai.message 模块
 
 
