@@ -437,7 +437,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "nonebot-adapter-cqhttp"
-version = "2.0.0-alpha.13"
+version = "2.0.0-alpha.14"
 description = "OneBot(CQHTTP) adapter for nonebot2"
 category = "dev"
 optional = false
@@ -446,7 +446,7 @@ develop = true
 
 [package.dependencies]
 httpx = "^0.18.0"
-nonebot2 = "^2.0.0-alpha.13"
+nonebot2 = "^2.0.0-alpha.14"
 
 [package.source]
 type = "directory"
@@ -454,7 +454,7 @@ url = "packages/nonebot-adapter-cqhttp"
 
 [[package]]
 name = "nonebot-adapter-ding"
-version = "2.0.0-alpha.12"
+version = "2.0.0-alpha.14"
 description = "Ding adapter for nonebot2"
 category = "dev"
 optional = false
@@ -463,7 +463,7 @@ develop = true
 
 [package.dependencies]
 httpx = "^0.18.0"
-nonebot2 = "^2.0.0-alpha.12"
+nonebot2 = "^2.0.0-alpha.14"
 
 [package.source]
 type = "directory"
@@ -471,7 +471,7 @@ url = "packages/nonebot-adapter-ding"
 
 [[package]]
 name = "nonebot-adapter-feishu"
-version = "2.0.0-alpha.13"
+version = "2.0.0-alpha.14"
 description = "feishu(larksuite) adapter for nonebot2"
 category = "dev"
 optional = false
@@ -481,7 +481,7 @@ develop = true
 [package.dependencies]
 aiocache = "^0.11.1"
 httpx = "^0.18.0"
-nonebot2 = "^2.0.0-alpha.13"
+nonebot2 = "^2.0.0-alpha.14"
 pycryptodome = "^3.10.1"
 
 [package.source]
@@ -490,7 +490,7 @@ url = "packages/nonebot-adapter-feishu"
 
 [[package]]
 name = "nonebot-adapter-mirai"
-version = "2.0.0-alpha.12"
+version = "2.0.0-alpha.14"
 description = "Mirai Api HTTP adapter for nonebot2"
 category = "dev"
 optional = false
@@ -499,7 +499,7 @@ develop = true
 
 [package.dependencies]
 httpx = "^0.18.0"
-nonebot2 = "^2.0.0-alpha.12"
+nonebot2 = "^2.0.0-alpha.14"
 websockets = "^9.1"
 
 [package.source]

@@ -14,6 +14,7 @@ sidebar: auto
 - 修复 `type_updater` `permission_updater` 未传递的错误
 - 修复 `type_updater` `permission_updater` 参数 `state` 错误
 - 修复使用 `state_factory` 后导致无法在 session 内传递 `state`
+- 重构 `Driver` 及连接信息抽象
 - 新增正向 Driver(Client) 支持
 - 新增 `aiohttp` 正向 Driver
 - `fastapi` Driver 新增正向支持
