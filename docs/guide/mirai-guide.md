@@ -67,12 +67,6 @@ pip install nonebot-adapter-mirai
 
 4. 修改配置文件
 
-   ::: warning
-
-   由于 NoneBot2 的架构设计等原因, 部分功能的支持可能需要推迟到 MAH 2.0 正式发布后再完成
-
-   :::
-
    ::: tip
 
    在此之前, 你可能需要了解我们为 MAH 设计的两种通信方式
