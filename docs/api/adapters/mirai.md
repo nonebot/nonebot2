@@ -679,8 +679,6 @@ API中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则�
     * `info: Dict[str, Any]`: 群员资料, 格式见 `member_info` 的返回值
 
 
-# NoneBot.adapters.mirai.bot_ws 模块
-
 # NoneBot.adapters.mirai.message 模块
 
 
