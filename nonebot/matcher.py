@@ -6,6 +6,7 @@
 """
 
 from functools import wraps
+from types import ModuleType
 from datetime import datetime
 from contextvars import ContextVar
 from collections import defaultdict
@@ -36,6 +37,9 @@ current_event: ContextVar = ContextVar("current_event")
 class MatcherMeta(type):
     if TYPE_CHECKING:
         module: Optional[str]
+        plugin_name: Optional[str]
+        module_name: Optional[str]
+        module_prefix: Optional[str]
         type: str
         rule: Rule
         permission: Permission
@@ -46,7 +50,7 @@ class MatcherMeta(type):
         expire_time: Optional[datetime]
 
     def __repr__(self) -> str:
-        return (f"<Matcher from {self.module or 'unknow'}, "
+        return (f"<Matcher from {self.module_name or 'unknown'}, "
                 f"type={self.type}, priority={self.priority}, "
                 f"temp={self.temp}>")
 
@@ -56,10 +60,28 @@ class MatcherMeta(type):
 
 class Matcher(metaclass=MatcherMeta):
     """事件响应器类"""
-    module: Optional[str] = None
+    module: Optional[ModuleType] = None
+    """
+    :类型: ``Optional[ModuleType]``
+    :说明: 事件响应器所在模块
+    """
+    plugin_name: Optional[str] = module and getattr(module, "__plugin_name__",
+                                                    None)
     """
     :类型: ``Optional[str]``
-    :说明: 事件响应器所在模块名称
+    :说明: 事件响应器所在插件名
+    """
+    module_name: Optional[str] = module and getattr(module, "__module_name__",
+                                                    None)
+    """
+    :类型: ``Optional[str]``
+    :说明: 事件响应器所在模块名
+    """
+    module_prefix: Optional[str] = module and getattr(module,
+                                                      "__module_prefix__", None)
+    """
+    :类型: ``Optional[str]``
+    :说明: 事件响应器所在模块前缀
     """
 
     type: str = ""
@@ -136,27 +158,33 @@ class Matcher(metaclass=MatcherMeta):
         self.state = self._default_state.copy()
 
     def __repr__(self) -> str:
-        return (f"<Matcher from {self.module or 'unknown'}, type={self.type}, "
-                f"priority={self.priority}, temp={self.temp}>")
+        return (
+            f"<Matcher from {self.module_name or 'unknown'}, type={self.type}, "
+            f"priority={self.priority}, temp={self.temp}>")
 
     def __str__(self) -> str:
         return repr(self)
 
     @classmethod
-    def new(cls,
-            type_: str = "",
-            rule: Optional[Rule] = None,
-            permission: Optional[Permission] = None,
-            handlers: Optional[Union[List[T_Handler], List[Handler],
-                                     List[Union[T_Handler, Handler]]]] = None,
-            temp: bool = False,
-            priority: int = 1,
-            block: bool = False,
-            *,
-            module: Optional[str] = None,
-            default_state: Optional[T_State] = None,
-            default_state_factory: Optional[T_StateFactory] = None,
-            expire_time: Optional[datetime] = None) -> Type["Matcher"]:
+    def new(
+        cls,
+        type_: str = "",
+        rule: Optional[Rule] = None,
+        permission: Optional[Permission] = None,
+        handlers: Optional[Union[List[T_Handler], List[Handler],
+                                 List[Union[T_Handler, Handler]]]] = None,
+        temp: bool = False,
+        priority: int = 1,
+        block: bool = False,
+        *,
+        module: Optional[ModuleType] = None,
+        expire_time: Optional[datetime] = None,
+        default_state: Optional[T_State] = None,
+        default_state_factory: Optional[T_StateFactory] = None,
+        default_parser: Optional[T_ArgsParser] = None,
+        default_type_updater: Optional[T_TypeUpdater] = None,
+        default_permission_updater: Optional[T_PermissionUpdater] = None
+    ) -> Type["Matcher"]:
         """
         :说明:
 
@@ -185,6 +213,12 @@ class Matcher(metaclass=MatcherMeta):
             "Matcher", (Matcher,), {
                 "module":
                     module,
+                "plugin_name":
+                    module and getattr(module, "__plugin_name__", None),
+                "module_name":
+                    module and getattr(module, "__module_name__", None),
+                "module_prefix":
+                    module and getattr(module, "__module_prefix__", None),
                 "type":
                     type_,
                 "rule":
@@ -208,7 +242,13 @@ class Matcher(metaclass=MatcherMeta):
                     default_state or {},
                 "_default_state_factory":
                     staticmethod(default_state_factory)
-                    if default_state_factory else None
+                    if default_state_factory else None,
+                "_default_parser":
+                    default_parser,
+                "_default_type_updater":
+                    default_type_updater,
+                "_default_permission_updater":
+                    default_permission_updater
             })
 
         matchers[priority].append(NewMatcher)
@@ -535,63 +575,87 @@ class Matcher(metaclass=MatcherMeta):
         e_t = current_event.set(event)
         try:
             # Refresh preprocess state
-            state_ = await self._default_state_factory(
+            self.state = await self._default_state_factory(
                 bot, event) if self._default_state_factory else self.state
-            state_.update(state)
+            self.state.update(state)
 
-            for _ in range(len(self.handlers)):
+            while self.handlers:
                 handler = self.handlers.pop(0)
-                await handler(self, bot, event, state_)
+                await handler(self, bot, event, self.state)
 
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
             updater = self.__class__._default_type_updater
             if updater:
-                type_ = await updater(bot, event, state, self.type)
+                type_ = await updater(
+                    bot,
+                    event,
+                    self.state,  # type: ignore
+                    self.type)
             else:
                 type_ = "message"
 
             updater = self.__class__._default_permission_updater
             if updater:
-                permission = await updater(bot, event, state, self.permission)
+                permission = await updater(
+                    bot,
+                    event,
+                    self.state,  # type: ignore
+                    self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
 
-            Matcher.new(type_,
-                        Rule(),
-                        permission,
-                        self.handlers,
-                        temp=True,
-                        priority=0,
-                        block=True,
-                        module=self.module,
-                        default_state=self.state,
-                        expire_time=datetime.now() +
-                        bot.config.session_expire_timeout)
+            Matcher.new(
+                type_,
+                Rule(),
+                permission,
+                self.handlers,
+                temp=True,
+                priority=0,
+                block=True,
+                module=self.module,
+                expire_time=datetime.now() + bot.config.session_expire_timeout,
+                default_state=self.state,
+                default_parser=self.__class__._default_parser,
+                default_type_updater=self.__class__._default_type_updater,
+                default_permission_updater=self.__class__.
+                _default_permission_updater)
         except PausedException:
             updater = self.__class__._default_type_updater
             if updater:
-                type_ = await updater(bot, event, state, self.type)
+                type_ = await updater(
+                    bot,
+                    event,
+                    self.state,  # type: ignore
+                    self.type)
             else:
                 type_ = "message"
 
             updater = self.__class__._default_permission_updater
             if updater:
-                permission = await updater(bot, event, state, self.permission)
+                permission = await updater(
+                    bot,
+                    event,
+                    self.state,  # type: ignore
+                    self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
 
-            Matcher.new(type_,
-                        Rule(),
-                        permission,
-                        self.handlers,
-                        temp=True,
-                        priority=0,
-                        block=True,
-                        module=self.module,
-                        default_state=self.state,
-                        expire_time=datetime.now() +
-                        bot.config.session_expire_timeout)
+            Matcher.new(
+                type_,
+                Rule(),
+                permission,
+                self.handlers,
+                temp=True,
+                priority=0,
+                block=True,
+                module=self.module,
+                expire_time=datetime.now() + bot.config.session_expire_timeout,
+                default_state=self.state,
+                default_parser=self.__class__._default_parser,
+                default_type_updater=self.__class__._default_type_updater,
+                default_permission_updater=self.__class__.
+                _default_permission_updater)
         except FinishedException:
             pass
         except StopPropagation:

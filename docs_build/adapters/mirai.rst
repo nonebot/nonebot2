@@ -1,7 +1,7 @@
----
+\-\-\-
 contentSidebar: true
 sidebarDepth: 0
----
+\-\-\-
 
 NoneBot.adapters.mirai 模块
 ===========================
@@ -18,13 +18,6 @@ NoneBot.adapters.mirai.bot 模块
 ===============================
 
 .. automodule:: nonebot.adapters.mirai.bot
-   :members:
-   :show-inheritance:
-
-NoneBot.adapters.mirai.bot_ws 模块
-==================================
-
-.. automodule:: nonebot.adapters.mirai.bot_ws
    :members:
    :show-inheritance:
 

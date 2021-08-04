@@ -1,6 +1,8 @@
 import re
-from functools import reduce
-from typing import Any, Dict, Union, Tuple, Mapping, Iterable, Optional
+from io import BytesIO
+from pathlib import Path
+from base64 import b64encode
+from typing import Type, Union, Tuple, Mapping, Iterable, Optional
 
 from nonebot.typing import overrides
 from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
@@ -8,14 +10,15 @@ from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessa
 from .utils import log, escape, unescape, _b2s
 
 
-class MessageSegment(BaseMessageSegment):
+class MessageSegment(BaseMessageSegment["Message"]):
     """
     CQHTTP 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
     """
 
+    @classmethod
     @overrides(BaseMessageSegment)
-    def __init__(self, type: str, data: Dict[str, Any]) -> None:
-        super().__init__(type=type, data=data)
+    def get_message_class(cls) -> Type["Message"]:
+        return Message
 
     @overrides(BaseMessageSegment)
     def __str__(self) -> str:
@@ -34,7 +37,8 @@ class MessageSegment(BaseMessageSegment):
 
     @overrides(BaseMessageSegment)
     def __add__(self, other) -> "Message":
-        return Message(self) + other
+        return Message(self) + (MessageSegment.text(other) if isinstance(
+            other, str) else other)
 
     @overrides(BaseMessageSegment)
     def __radd__(self, other) -> "Message":
@@ -79,17 +83,23 @@ class MessageSegment(BaseMessageSegment):
         return MessageSegment("forward", {"id": id_})
 
     @staticmethod
-    def image(file: str,
+    def image(file: Union[str, bytes, BytesIO, Path],
               type_: Optional[str] = None,
               cache: bool = True,
               proxy: bool = True,
               timeout: Optional[int] = None) -> "MessageSegment":
+        if isinstance(file, BytesIO):
+            file = file.read()
+        if isinstance(file, bytes):
+            file = f"base64://{b64encode(file).decode()}"
+        elif isinstance(file, Path):
+            file = f"file:///{file.resolve()}"
         return MessageSegment(
             "image", {
                 "file": file,
                 "type": type_,
-                "cache": cache,
-                "proxy": proxy,
+                "cache": _b2s(cache),
+                "proxy": _b2s(proxy),
                 "timeout": timeout
             })
 
@@ -148,17 +158,23 @@ class MessageSegment(BaseMessageSegment):
         return MessageSegment("poke", {"type": type_, "id": id_})
 
     @staticmethod
-    def record(file: str,
+    def record(file: Union[str, bytes, BytesIO, Path],
                magic: Optional[bool] = None,
                cache: Optional[bool] = None,
                proxy: Optional[bool] = None,
                timeout: Optional[int] = None) -> "MessageSegment":
+        if isinstance(file, BytesIO):
+            file = file.read()
+        if isinstance(file, bytes):
+            file = f"base64://{b64encode(file).decode()}"
+        elif isinstance(file, Path):
+            file = f"file:///{file.resolve()}"
         return MessageSegment(
             "record", {
                 "file": file,
                 "magic": _b2s(magic),
-                "cache": cache,
-                "proxy": proxy,
+                "cache": _b2s(cache),
+                "proxy": _b2s(proxy),
                 "timeout": timeout
             })
 
@@ -191,31 +207,50 @@ class MessageSegment(BaseMessageSegment):
         return MessageSegment("text", {"text": text})
 
     @staticmethod
-    def video(file: str,
+    def video(file: Union[str, bytes, BytesIO, Path],
               cache: Optional[bool] = None,
               proxy: Optional[bool] = None,
               timeout: Optional[int] = None) -> "MessageSegment":
-        return MessageSegment("video", {
-            "file": file,
-            "cache": cache,
-            "proxy": proxy,
-            "timeout": timeout
-        })
+        if isinstance(file, BytesIO):
+            file = file.read()
+        if isinstance(file, bytes):
+            file = f"base64://{b64encode(file).decode()}"
+        elif isinstance(file, Path):
+            file = f"file:///{file.resolve()}"
+        return MessageSegment(
+            "video", {
+                "file": file,
+                "cache": _b2s(cache),
+                "proxy": _b2s(proxy),
+                "timeout": timeout
+            })
 
     @staticmethod
     def xml(data: str) -> "MessageSegment":
         return MessageSegment("xml", {"data": data})
 
 
-class Message(BaseMessage):
+class Message(BaseMessage[MessageSegment]):
     """
     CQHTTP 协议 Message 适配。
     """
 
-    def __radd__(self, other: Union[str, MessageSegment,
-                                    "Message"]) -> "Message":
-        result = MessageSegment.text(other) if isinstance(other, str) else other
-        return super(Message, self).__radd__(result)
+    @classmethod
+    @overrides(BaseMessage)
+    def get_segment_class(cls) -> Type[MessageSegment]:
+        return MessageSegment
+
+    @overrides(BaseMessage)
+    def __add__(self, other: Union[str, Mapping,
+                                   Iterable[Mapping]]) -> "Message":
+        return super(Message, self).__add__(
+            MessageSegment.text(other) if isinstance(other, str) else other)
+
+    @overrides(BaseMessage)
+    def __radd__(self, other: Union[str, Mapping,
+                                    Iterable[Mapping]]) -> "Message":
+        return super(Message, self).__radd__(
+            MessageSegment.text(other) if isinstance(other, str) else other)
 
     @staticmethod
     @overrides(BaseMessage)
@@ -258,10 +293,6 @@ class Message(BaseMessage):
                     }
                     yield MessageSegment(type_, data)
 
+    @overrides(BaseMessage)
     def extract_plain_text(self) -> str:
-
-        def _concat(x: str, y: MessageSegment) -> str:
-            return f"{x} {y.data['text']}" if y.is_text() else x
-
-        plain_text = reduce(_concat, self, "")
-        return plain_text[1:] if plain_text else plain_text
+        return "".join(seg.data["text"] for seg in self if seg.is_text())

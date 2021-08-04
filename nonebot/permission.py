@@ -1,4 +1,4 @@
-"""
+r"""
 权限
 ====
 
@@ -20,6 +20,20 @@ if TYPE_CHECKING:
 
 
 class Permission:
+    """
+    :说明:
+
+      ``Matcher`` 规则类，当事件传递时，在 ``Matcher`` 运行前进行检查。
+
+    :示例:
+
+    .. code-block:: python
+
+        Permission(async_function) | sync_function
+        # 等价于
+        from nonebot.utils import run_sync
+        Permission(async_function, run_sync(sync_function))
+    """
     __slots__ = ("checkers",)
 
     def __init__(
@@ -114,27 +128,28 @@ METAEVENT = Permission(_metaevent)
 """
 
 
-def USER(*user: str, perm: Permission = Permission()):
+def USER(*user: str, perm: Optional[Permission] = None):
     """
     :说明:
 
-      在白名单内且满足 perm
+      ``event`` 的 ``session_id`` 在白名单内且满足 perm
 
     :参数:
 
       * ``*user: str``: 白名单
-      * ``perm: Permission``: 需要同时满足的权限
+      * ``perm: Optional[Permission]``: 需要同时满足的权限
     """
 
     async def _user(bot: "Bot", event: "Event") -> bool:
-        return event.get_session_id() in user and await perm(bot, event)
+        return bool(event.get_session_id() in user and perm and
+                    await perm(bot, event))
 
     return Permission(_user)
 
 
 async def _superuser(bot: "Bot", event: "Event") -> bool:
-    return event.get_type() == "message" and event.get_user_id(
-    ) in bot.config.superusers
+    return (event.get_type() == "message" and
+            event.get_user_id() in bot.config.superusers)
 
 
 SUPERUSER = Permission(_superuser)

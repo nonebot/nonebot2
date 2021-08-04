@@ -4,7 +4,22 @@ sidebar: auto
 
 # 更新日志
 
-## v2.0.0a12
+## v2.0.0a14
+
+- 修改日志等级，支持输出等级自定义
+- 修复日志输出模块名错误
+- 修改 `Matcher` 属性 `module` 类型
+- 新增 `Matcher` 属性 `plugin_name` `module_name` `module_prefix`
+- 移除 `bot.call_api` 参数 `self_id` 切换机器人支持
+- 修复 `type_updater` `permission_updater` 未传递的错误
+- 修复 `type_updater` `permission_updater` 参数 `state` 错误
+- 修复使用 `state_factory` 后导致无法在 session 内传递 `state`
+- 重构 `Driver` 及连接信息抽象
+- 新增正向 Driver(Client) 支持
+- 新增 `aiohttp` 正向 Driver
+- `fastapi` Driver 新增正向支持
+
+## v2.0.0a13.post1
 
 - 分离 `handler` 与 `matcher`
 - 修复 `cqhttp` secret 校验出错

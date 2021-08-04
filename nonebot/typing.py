@@ -55,21 +55,21 @@ T_StateFactory = Callable[["Bot", "Event"], Awaitable[T_State]]
   事件处理状态 State 类工厂函数
 """
 
-T_WebSocketConnectionHook = Callable[["Bot"], Awaitable[None]]
+T_BotConnectionHook = Callable[["Bot"], Awaitable[None]]
 """
 :类型: ``Callable[[Bot], Awaitable[None]]``
 
 :说明:
 
-  WebSocket 连接建立时执行的函数
+  Bot 连接建立时执行的函数
 """
-T_WebSocketDisconnectionHook = Callable[["Bot"], Awaitable[None]]
+T_BotDisconnectionHook = Callable[["Bot"], Awaitable[None]]
 """
 :类型: ``Callable[[Bot], Awaitable[None]]``
 
 :说明:
 
-  WebSocket 连接断开时执行的函数
+  Bot 连接断开时执行的函数
 """
 T_CallingAPIHook = Callable[["Bot", str, Dict[str, Any]], Awaitable[None]]
 """

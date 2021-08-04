@@ -64,7 +64,7 @@ GROUP = Permission(_group)
 - **说明**: 匹配任意群聊消息类型事件
 """
 GROUP_MEMBER = Permission(_group_member)
-"""
+r"""
 - **说明**: 匹配任意群员群聊消息类型事件
 
 \:\:\:warning 警告

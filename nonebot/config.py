@@ -15,10 +15,9 @@ NoneBot 使用 `pydantic`_ 以及 `python-dotenv`_ 来读取配置。
 """
 import os
 from pathlib import Path
-
 from datetime import timedelta
 from ipaddress import IPv4Address
-from typing import Any, Set, Dict, Tuple, Mapping, Optional
+from typing import Any, Set, Dict, Union, Tuple, Mapping, Optional
 
 from pydantic import BaseSettings, IPvAnyAddress
 from pydantic.env_settings import SettingsError, InitSettingsSource, EnvSettingsSource
@@ -145,6 +144,8 @@ class Config(BaseConfig):
     :说明:
 
       NoneBot 运行所使用的 ``Driver`` 。继承自 ``nonebot.driver.BaseDriver`` 。
+
+      配置格式为 ``<module>[:<class>]``，默认类名为 ``Driver``。
     """
     host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
     """
@@ -172,6 +173,25 @@ class Config(BaseConfig):
     :说明:
 
       是否以调试模式运行 NoneBot。
+    """
+    log_level: Optional[Union[int, str]] = None
+    """
+    - **类型**: ``Union[int, str]``
+    - **默认值**: ``None``
+
+    :说明:
+
+      配置 NoneBot 日志输出等级，可以为 ``int`` 类型等级或等级名称，参考 `loguru 日志等级`_。
+
+    :示例:
+
+    .. code-block:: default
+
+        LOG_LEVEL=25
+        LOG_LEVEL=INFO
+
+    .. _loguru 日志等级:
+        https://loguru.readthedocs.io/en/stable/api/logger.html#levels
     """
 
     # bot connection configs

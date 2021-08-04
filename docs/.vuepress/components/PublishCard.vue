@@ -28,7 +28,7 @@
         {{ text }}
         <v-icon right small>fa-copy</v-icon>
       </v-btn>
-      <v-snackbar v-model="snackbar">Copied!</v-snackbar>
+      <v-snackbar v-model="snackbar">复制成功！</v-snackbar>
     </v-card-actions>
   </v-card>
 </template>
@@ -44,17 +44,17 @@ export default {
     author: String,
     link: String,
     text: String,
-    command: String
+    command: String,
   },
   data() {
     return {
-      snackbar: false
+      snackbar: false,
     };
   },
   computed: {
     showCommand() {
       return this.text && this.command;
-    }
+    },
   },
   methods: {
     repoLink(repo) {
@@ -65,11 +65,11 @@ export default {
     },
     copyCommand() {
       copy(this.command, {
-        format: "text/plain"
+        format: "text/plain",
       });
       this.snackbar = true;
-    }
-  }
+    },
+  },
 };
 </script>
 

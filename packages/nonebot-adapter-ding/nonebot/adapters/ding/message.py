@@ -1,34 +1,27 @@
 from copy import copy
-from typing import Any, Dict, Union, Mapping, Iterable
+from typing import Any, Dict, Type, Union, Mapping, Iterable
 
 from nonebot.typing import overrides
 from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
 
 
-class MessageSegment(BaseMessageSegment):
+class MessageSegment(BaseMessageSegment["Message"]):
     """
     钉钉 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
     """
 
+    @classmethod
     @overrides(BaseMessageSegment)
-    def __init__(self, type_: str, data: Dict[str, Any]) -> None:
-        super().__init__(type=type_, data=data)
+    def get_message_class(cls) -> Type["Message"]:
+        return Message
 
     @overrides(BaseMessageSegment)
-    def __str__(self):
+    def __str__(self) -> str:
         if self.type == "text":
             return str(self.data["content"])
         elif self.type == "markdown":
             return str(self.data["text"])
         return ""
-
-    @overrides(BaseMessageSegment)
-    def __add__(self, other) -> "Message":
-        return Message(self) + other
-
-    @overrides(BaseMessageSegment)
-    def __radd__(self, other) -> "Message":
-        return Message(other) + self
 
     @overrides(BaseMessageSegment)
     def is_text(self) -> bool:
@@ -67,12 +60,12 @@ class MessageSegment(BaseMessageSegment):
 
     @staticmethod
     def extension(dict_: dict) -> "MessageSegment":
-        """"标记 text 文本的 extension 属性，需要与 text 消息段相加。"""
+        """标记 text 文本的 extension 属性，需要与 text 消息段相加。"""
         return MessageSegment("extension", dict_)
 
     @staticmethod
     def code(code_language: str, code: str) -> "Message":
-        """"发送 code 消息段"""
+        """发送 code 消息段"""
         message = MessageSegment.text(code)
         message += MessageSegment.extension({
             "text_type": "code_snippet",
@@ -117,7 +110,7 @@ class MessageSegment(BaseMessageSegment):
         :参数:
 
             * ``btnOrientation``: 0：按钮竖直排列 1：按钮横向排列
-            * ``btns``: [{ "title": title, "actionURL": actionURL }, ...]
+            * ``btns``: ``[{ "title": title, "actionURL": actionURL }, ...]``
         """
         return MessageSegment(
             "actionCard", {
@@ -135,7 +128,7 @@ class MessageSegment(BaseMessageSegment):
 
         :参数:
 
-            * ``links``: [{ "title": xxx, "messageURL": xxx, "picURL": xxx }, ...]
+            * ``links``: ``[{ "title": xxx, "messageURL": xxx, "picURL": xxx }, ...]``
         """
         return MessageSegment("feedCard", {"links": links})
 
@@ -143,7 +136,7 @@ class MessageSegment(BaseMessageSegment):
     def raw(data) -> "MessageSegment":
         return MessageSegment('raw', data)
 
-    def to_dict(self) -> dict:
+    def to_dict(self) -> Dict[str, Any]:
         # 让用户可以直接发送原始的消息格式
         if self.type == "raw":
             return copy(self.data)
@@ -155,10 +148,15 @@ class MessageSegment(BaseMessageSegment):
         return {"msgtype": self.type, self.type: copy(self.data)}
 
 
-class Message(BaseMessage):
+class Message(BaseMessage[MessageSegment]):
     """
     钉钉 协议 Message 适配。
     """
+
+    @classmethod
+    @overrides(BaseMessage)
+    def get_segment_class(cls) -> Type[MessageSegment]:
+        return MessageSegment
 
     @staticmethod
     @overrides(BaseMessage)

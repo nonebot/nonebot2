@@ -1,4 +1,4 @@
-"""
+r"""
 规则
 ====
 
@@ -175,7 +175,8 @@ class TrieRule:
         })
 
 
-def startswith(msg: str) -> Rule:
+def startswith(msg: Union[str, Tuple[str, ...]],
+               ignorecase: bool = False) -> Rule:
     """
     :说明:
 
@@ -185,17 +186,24 @@ def startswith(msg: str) -> Rule:
 
       * ``msg: str``: 消息开头字符串
     """
+    if isinstance(msg, str):
+        msg = (msg,)
+
+    pattern = re.compile(
+        f"^(?:{'|'.join(re.escape(prefix) for prefix in msg)})",
+        re.IGNORECASE if ignorecase else 0)
 
     async def _startswith(bot: "Bot", event: "Event", state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         text = event.get_plaintext()
-        return text.startswith(msg)
+        return bool(pattern.match(text))
 
     return Rule(_startswith)
 
 
-def endswith(msg: str) -> Rule:
+def endswith(msg: Union[str, Tuple[str, ...]],
+             ignorecase: bool = False) -> Rule:
     """
     :说明:
 
@@ -205,11 +213,18 @@ def endswith(msg: str) -> Rule:
 
       * ``msg: str``: 消息结尾字符串
     """
+    if isinstance(msg, str):
+        msg = (msg,)
+
+    pattern = re.compile(
+        f"(?:{'|'.join(re.escape(prefix) for prefix in msg)})$",
+        re.IGNORECASE if ignorecase else 0)
 
     async def _endswith(bot: "Bot", event: "Event", state: T_State) -> bool:
         if event.get_type() != "message":
             return False
-        return event.get_plaintext().endswith(msg)
+        text = event.get_plaintext()
+        return bool(pattern.match(text))
 
     return Rule(_endswith)
 
@@ -235,7 +250,7 @@ def keyword(*keywords: str) -> Rule:
 
 
 def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
-    """
+    r"""
     :说明:
 
       命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
@@ -300,13 +315,14 @@ class ArgumentParser(ArgParser):
     def parse_args(self,
                    args: Optional[Sequence[str]] = None,
                    namespace: Optional[Namespace] = None) -> Namespace:
+        setattr(self, "message", "")
         return super().parse_args(args=args,
                                   namespace=namespace)  # type: ignore
 
 
 def shell_command(*cmds: Union[str, Tuple[str, ...]],
                   parser: Optional[ArgumentParser] = None) -> Rule:
-    """
+    r"""
     :说明:
 
       支持 ``shell_like`` 解析参数的命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
@@ -379,7 +395,7 @@ def shell_command(*cmds: Union[str, Tuple[str, ...]],
 
 
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
-    """
+    r"""
     :说明:
 
       根据正则表达式进行匹配。

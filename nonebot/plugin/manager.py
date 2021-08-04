@@ -3,6 +3,7 @@ import uuid
 import pkgutil
 import importlib
 from hashlib import md5
+from pathlib import Path
 from types import ModuleType
 from collections import Counter
 from contextvars import ContextVar
@@ -12,8 +13,8 @@ from importlib.machinery import PathFinder, SourceFileLoader
 
 from .export import _export, Export
 
-_current_plugin: ContextVar[Optional[str]] = ContextVar("_current_plugin",
-                                                        default=None)
+_current_plugin: ContextVar[Optional[ModuleType]] = ContextVar(
+    "_current_plugin", default=None)
 
 _internal_space = ModuleType(__name__ + "._internal")
 _internal_space.__path__ = []  # type: ignore
@@ -53,14 +54,13 @@ class _InternalModule(ModuleType):
 class PluginManager:
 
     def __init__(self,
-                 namespace: Optional[str] = None,
+                 namespace: str,
                  plugins: Optional[Iterable[str]] = None,
                  search_path: Optional[Iterable[str]] = None,
                  *,
                  id: Optional[str] = None):
-        self.namespace: Optional[str] = namespace
-        self.namespace_module: Optional[ModuleType] = self._setup_namespace(
-            namespace)
+        self.namespace: str = namespace
+        self.namespace_module: ModuleType = self._setup_namespace(namespace)
 
         self.id: str = id or str(uuid.uuid4())
         self.internal_id: str = md5(
@@ -73,12 +73,7 @@ class PluginManager:
         # ensure can be loaded
         self.list_plugins()
 
-    def _setup_namespace(self,
-                         namespace: Optional[str] = None
-                        ) -> Optional[ModuleType]:
-        if not namespace:
-            return None
-
+    def _setup_namespace(self, namespace: str) -> ModuleType:
         try:
             module = importlib.import_module(namespace)
         except ImportError:
@@ -94,12 +89,24 @@ class PluginManager:
         if hasattr(_internal_space, internal_id):
             raise RuntimeError("Plugin manager already exists!")
 
-        prefix = sys._getframe(3).f_globals.get(
-            "__name__") or _internal_space.__name__
+        index = 2
+        prefix: str = _internal_space.__name__
+        while True:
+            try:
+                frame = sys._getframe(index)
+            except ValueError:
+                break
+            # check if is called in plugin
+            if "__plugin_name__" not in frame.f_globals:
+                index += 1
+                continue
+            prefix = frame.f_globals.get("__name__", _internal_space.__name__)
+            break
+
         if not prefix.startswith(_internal_space.__name__):
             prefix = _internal_space.__name__
         module = _InternalModule(prefix, self)
-        sys.modules[module.__name__] = module
+        sys.modules[module.__name__] = module  # type: ignore
         setattr(_internal_space, internal_id, module)
         return module
 
@@ -156,17 +163,35 @@ class PluginManager:
     def load_all_plugins(self) -> List[ModuleType]:
         return [self.load_plugin(name) for name in self.list_plugins()]
 
-    def _rewrite_module_name(self, module_name) -> Optional[str]:
+    def _rewrite_module_name(self, module_name: str) -> Optional[str]:
         prefix = f"{self.internal_module.__name__}."
-        if module_name.startswith(self.namespace + "."):
-            path = module_name.split(".")
-            length = self.namespace.count(".") + 1
-            return f"{prefix}{'.'.join(path[length:])}"
+        raw_name = module_name[len(self.namespace) +
+                               1:] if module_name.startswith(self.namespace +
+                                                             ".") else None
+        # dir plugins
+        if raw_name and raw_name.split(".")[0] in self.search_plugins():
+            return f"{prefix}{raw_name}"
+        # third party plugin or renamed dir plugins
         elif module_name in self.plugins or module_name.startswith(prefix):
             return module_name
+        # dir plugins
         elif module_name in self.search_plugins():
             return f"{prefix}{module_name}"
         return None
+
+    def _check_absolute_import(self, origin_path: str) -> Optional[str]:
+        if not self.search_path:
+            return
+        paths = set([
+            *self.search_path,
+            *(str(Path(path).resolve()) for path in self.search_path)
+        ])
+        for path in paths:
+            try:
+                rel_path = Path(origin_path).relative_to(path)
+                return ".".join(rel_path.parts[:-1] + (rel_path.stem,))
+            except ValueError:
+                continue
 
 
 class PluginFinder(MetaPathFinder):
@@ -174,16 +199,23 @@ class PluginFinder(MetaPathFinder):
     def find_spec(self, fullname: str, path, target):
         if _manager_stack:
             index = -1
+            origin_spec = PathFinder.find_spec(fullname, path, target)
             while -index <= len(_manager_stack):
                 manager = _manager_stack[index]
-                newname = manager._rewrite_module_name(fullname)
+
+                rel_name = None
+                if origin_spec and origin_spec.origin:
+                    rel_name = manager._check_absolute_import(
+                        origin_spec.origin)
+
+                newname = manager._rewrite_module_name(rel_name or fullname)
                 if newname:
                     spec = PathFinder.find_spec(
-                        newname, [*manager.search_path, *(path or sys.path)],
+                        newname, path or [*manager.search_path, *sys.path],
                         target)
                     if spec:
-                        spec.loader = PluginLoader(manager, newname,
-                                                   spec.origin)
+                        spec.loader = PluginLoader(  # type: ignore
+                            manager, newname, spec.origin)
                         return spec
                 index -= 1
         return None
@@ -194,36 +226,44 @@ class PluginLoader(SourceFileLoader):
     def __init__(self, manager: PluginManager, fullname: str, path) -> None:
         self.manager = manager
         self.loaded = False
-        self._plugin_token = None
-        self._export_token = None
         super().__init__(fullname, path)
 
     def create_module(self, spec) -> Optional[ModuleType]:
         if self.name in sys.modules:
             self.loaded = True
             return sys.modules[self.name]
-        prefix = self.manager.internal_module.__name__
-        plugin_name = self.name[len(prefix):] if self.name.startswith(
-            prefix) else self.name
-        self._plugin_token = _current_plugin.set(plugin_name.lstrip("."))
-        self._export_token = _export.set(Export())
         # return None to use default module creation
         return super().create_module(spec)
 
     def exec_module(self, module: ModuleType) -> None:
         if self.loaded:
             return
-        # really need?
-        # setattr(module, "__manager__", self.manager)
-        if self._export_token:
-            setattr(module, "__export__", _export.get())
 
+        export = Export()
+        _export_token = _export.set(export)
+
+        prefix = self.manager.internal_module.__name__
+        is_dir_plugin = self.name.startswith(prefix + ".")
+        module_name = self.name[len(prefix) +
+                                1:] if is_dir_plugin else self.name
+        _plugin_token = _current_plugin.set(module)
+
+        setattr(module, "__export__", export)
+        setattr(module, "__plugin_name__",
+                module_name.split(".")[0] if is_dir_plugin else module_name)
+        setattr(module, "__module_name__", module_name)
+        setattr(module, "__module_prefix__", prefix if is_dir_plugin else "")
+
+        # try:
+        #     super().exec_module(module)
+        # except Exception as e:
+        #     raise ImportError(
+        #         f"Error when executing module {module_name} from {module.__file__}."
+        #     ) from e
         super().exec_module(module)
 
-        if self._plugin_token:
-            _current_plugin.reset(self._plugin_token)
-        if self._export_token:
-            _export.reset(self._export_token)
+        _current_plugin.reset(_plugin_token)
+        _export.reset(_export_token)
         return
 
 

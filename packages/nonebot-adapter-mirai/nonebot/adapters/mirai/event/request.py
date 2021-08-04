@@ -91,7 +91,8 @@ class MemberJoinRequestEvent(RequestEvent):
                                       'eventId': self.event_id,
                                       'groupId': self.group_id,
                                       'fromId': self.from_id,
-                                      'operate': 0
+                                      'operate': 0,
+                                      'message': ''
                                   })
 
     async def reject(self,
@@ -147,7 +148,8 @@ class BotInvitedJoinGroupRequestEvent(RequestEvent):
                                       'eventId': self.event_id,
                                       'groupId': self.group_id,
                                       'fromId': self.from_id,
-                                      'operate': 0
+                                      'operate': 0,
+                                      'message': ''
                                   })
 
     async def reject(self, bot: "Bot", message: str = ""):

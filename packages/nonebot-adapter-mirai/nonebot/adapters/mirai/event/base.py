@@ -14,12 +14,12 @@ from nonebot.typing import overrides
 class UserPermission(str, Enum):
     """
     :说明:
-    
-    用户权限枚举类
 
-      * ``OWNER``: 群主
-      * ``ADMINISTRATOR``: 群管理
-      * ``MEMBER``: 普通群成员
+      用户权限枚举类
+
+        * ``OWNER``: 群主
+        * ``ADMINISTRATOR``: 群管理
+        * ``MEMBER``: 普通群成员
     """
     OWNER = 'OWNER'
     ADMINISTRATOR = 'ADMINISTRATOR'
@@ -75,14 +75,14 @@ class Event(BaseEvent):
         if event_class is None:
             return Event.parse_obj(data)
 
-        while issubclass(event_class, Event):
+        while event_class and issubclass(event_class, Event):
             try:
                 return event_class.parse_obj(data)
             except ValidationError as e:
                 logger.info(
                     f'Failed to parse {data} to class {event_class.__name__}: '
                     f'{e.errors()!r}. Fallback to parent class.')
-                event_class = event_class.__base__
+                event_class = event_class.__base__  # type: ignore
 
         raise ValueError(f'Failed to serialize {data}.')
 

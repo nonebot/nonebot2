@@ -73,7 +73,7 @@ class InvalidArgument(exception.AdapterException):
 
 
 def catch_network_error(function: _AsyncCallable) -> _AsyncCallable:
-    """
+    r"""
     :说明:
 
       捕捉函数抛出的httpx网络异常并释放 ``NetworkError`` 异常
@@ -170,7 +170,6 @@ def process_reply(bot: "Bot", event: GroupMessage) -> GroupMessage:
 
 async def process_event(bot: "Bot", event: Event) -> None:
     if isinstance(event, MessageEvent):
-        event.message_chain.reduce()
         Log.debug(event.message_chain)
         event = process_source(bot, event)
         if isinstance(event, GroupMessage):

@@ -6,7 +6,7 @@
 
 # NoneBot
 
-_✨ Python 异步机器人框架 ✨_
+_✨ 跨平台 Python 异步机器人框架 ✨_
 
 </div>
 
@@ -17,7 +17,7 @@ _✨ Python 异步机器人框架 ✨_
   <a href="https://pypi.python.org/pypi/nonebot2">
     <img src="https://img.shields.io/pypi/v/nonebot2" alt="pypi">
   </a>
-  <img src="https://img.shields.io/badge/python-3.7+-blue" alt="python"><br />
+  <img src="https://img.shields.io/badge/python-3.7.3+-blue" alt="python"><br />
   <a href="https://github.com/howmanybots/onebot/blob/master/README.md">
     <img src="https://img.shields.io/badge/OneBot-v11-black?style=social&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABABAMAAABYR2ztAAAAIVBMVEUAAAAAAAADAwMHBwceHh4UFBQNDQ0ZGRkoKCgvLy8iIiLWSdWYAAAAAXRSTlMAQObYZgAAAQVJREFUSMftlM0RgjAQhV+0ATYK6i1Xb+iMd0qgBEqgBEuwBOxU2QDKsjvojQPvkJ/ZL5sXkgWrFirK4MibYUdE3OR2nEpuKz1/q8CdNxNQgthZCXYVLjyoDQftaKuniHHWRnPh2GCUetR2/9HsMAXyUT4/3UHwtQT2AggSCGKeSAsFnxBIOuAggdh3AKTL7pDuCyABcMb0aQP7aM4AnAbc/wHwA5D2wDHTTe56gIIOUA/4YYV2e1sg713PXdZJAuncdZMAGkAukU9OAn40O849+0ornPwT93rphWF0mgAbauUrEOthlX8Zu7P5A6kZyKCJy75hhw1Mgr9RAUvX7A3csGqZegEdniCx30c3agAAAABJRU5ErkJggg==" alt="cqhttp">
   </a>
@@ -34,14 +34,11 @@ _✨ Python 异步机器人框架 ✨_
   <a href="https://jq.qq.com/?_wv=1027&k=5OFifDh">
     <img src="https://img.shields.io/badge/qq%E7%BE%A4-768887710-orange?style=flat-square" alt="QQ Chat">
   </a>
-  <a href="https://t.me/cqhttp">
-    <img src="https://img.shields.io/badge/telegram-chat-blue?style=flat-square" alt="Telegram Chat">
+  <a href="https://t.me/botuniverse">
+    <img src="https://img.shields.io/badge/telegram-botuniverse-blue?style=flat-square" alt="Telegram Channel">
   </a>
-  <a href="https://jq.qq.com/?_wv=1027&k=5Nl0zhE">
-    <img src="https://img.shields.io/badge/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E7%BE%A4-218529254-green?style=flat-square" alt="QQ Release">
-  </a>
-  <a href="https://t.me/cqhttp_release">
-    <img src="https://img.shields.io/badge/%E7%89%88%E6%9C%AC%E5%8F%91%E5%B8%83%E9%A2%91%E9%81%93-join-green?style=flat-square" alt="Telegram Release">
+  <a href="https://discord.gg/VKtE6Gdc4h">
+    <img src="https://discordapp.com/api/guilds/847819937858584596/widget.png?style=shield" alt="Discord Server">
   </a>
 </p>
 
@@ -100,7 +97,13 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
    nb create
    ```
 
-## 插件
+## 社区资源
+
+### 教程/实际项目/经验分享
+
+- [awesome-nonebot](https://github.com/nonebot/awesome-nonebot)
+
+### 插件
 
 此外，NoneBot2 还有丰富的官方以及第三方现成的插件供大家使用：
 
@@ -110,7 +113,9 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
   nb plugin install nonebot_plugin_docs
   ```
 
-  或者尝试 [文档镜像](https://nonebot2-vercel-mirror.vercel.app)
+  或者尝试以下镜像：
+  - [文档镜像(中国境内)](https://nb2.baka.icu)
+  - [文档镜像(vercel)](https://nonebot2-vercel-mirror.vercel.app)
 
 - 其他插件请查看 [商店](https://v2.nonebot.dev/store.html)
 

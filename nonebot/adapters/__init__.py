@@ -6,7 +6,9 @@ try:
     del pkg_resources
 except ImportError:
     import pkgutil
-    __path__: Iterable[str] = pkgutil.extend_path(__path__, __name__)
+    __path__: Iterable[str] = pkgutil.extend_path(
+        __path__,  # type: ignore
+        __name__)
     del pkgutil
 except Exception:
     pass

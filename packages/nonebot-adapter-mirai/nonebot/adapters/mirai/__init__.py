@@ -1,8 +1,8 @@
-"""
+r"""
 Mirai-API-HTTP 协议适配
 ============================
 
-协议详情请看: `mirai-api-http 文档`_ 
+协议详情请看: `mirai-api-http 文档`_
 
 \:\:\: tip
 该Adapter目前仍然处在早期实验性阶段, 并未经过充分测试
@@ -28,6 +28,10 @@ Mirai-API-HTTP 的适配器以 `AGPLv3许可`_ 单独开源
 """
 
 from .bot import Bot
-from .bot_ws import WebsocketBot
 from .event import *
 from .message import MessageChain, MessageSegment
+
+WebsocketBot = Bot
+"""
+``WebsocketBot``现在已经和``Bot``合并, 并已经被弃用, 请直接使用``Bot``
+"""

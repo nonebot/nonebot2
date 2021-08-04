@@ -30,13 +30,13 @@
 
 import importlib
 import pkg_resources
-from typing import Dict, Type, Optional
+from typing import Any, Dict, Type, Optional
 
 from nonebot.adapters import Bot
-from nonebot.drivers import Driver
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.log import logger, default_filter
+from nonebot.drivers import Driver, ForwardDriver, ReverseDriver
 
 try:
     _dist: pkg_resources.Distribution = pkg_resources.get_distribution(
@@ -76,7 +76,7 @@ def get_driver() -> Driver:
     return _driver
 
 
-def get_app():
+def get_app() -> Any:
     """
     :说明:
 
@@ -98,10 +98,13 @@ def get_app():
 
     """
     driver = get_driver()
+    assert isinstance(
+        driver,
+        ReverseDriver), "app object is only available for reverse driver"
     return driver.server_app
 
 
-def get_asgi():
+def get_asgi() -> Any:
     """
     :说明:
 
@@ -123,7 +126,48 @@ def get_asgi():
 
     """
     driver = get_driver()
+    assert isinstance(
+        driver,
+        ReverseDriver), "asgi object is only available for reverse driver"
     return driver.asgi
+
+
+def get_bot(self_id: Optional[str] = None) -> Bot:
+    """
+    :说明:
+
+      当提供 self_id 时，此函数是 get_bots()[self_id] 的简写；当不提供时，返回一个 Bot。
+
+    :参数:
+
+      * ``self_id: Optional[str]``: 用来识别 Bot 的 ID
+
+    :返回:
+
+      * ``Bot``: Bot 对象
+
+    :异常:
+
+      * ``KeyError``: 对应 ID 的 Bot 不存在
+      * ``ValueError``: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+      * ``ValueError``: 没有传入 ID 且没有 Bot 可用
+
+    :用法:
+
+    .. code-block:: python
+
+        assert nonebot.get_bot('12345') == nonebot.get_bots()['12345']
+
+        another_unspecified_bot = nonebot.get_bot()
+    """
+    bots = get_bots()
+    if self_id is not None:
+        return bots[self_id]
+
+    for bot in bots.values():
+        return bot
+
+    raise ValueError("There are no bots to get.")
 
 
 def get_bots() -> Dict[str, Bot]:
@@ -179,20 +223,26 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
     """
     global _driver
     if not _driver:
-        logger.info("NoneBot is initializing...")
+        logger.success("NoneBot is initializing...")
         env = Env()
-        logger.opt(
-            colors=True).info(f"Current <y><b>Env: {env.environment}</b></y>")
         config = Config(**kwargs,
                         _common_config=env.dict(),
                         _env_file=_env_file or f".env.{env.environment}")
 
-        default_filter.level = "DEBUG" if config.debug else "INFO"
+        default_filter.level = (
+            "DEBUG" if config.debug else
+            "INFO") if config.log_level is None else config.log_level
+        logger.opt(
+            colors=True).info(f"Current <y><b>Env: {env.environment}</b></y>")
         logger.opt(colors=True).debug(
             f"Loaded <y><b>Config</b></y>: {escape_tag(str(config.dict()))}")
 
-        DriverClass: Type[Driver] = getattr(
-            importlib.import_module(config.driver), "Driver")
+        modulename, _, cls = config.driver.partition(":")
+        module = importlib.import_module(modulename)
+        instance = module
+        for attr_str in (cls or "Driver").split("."):
+            instance = getattr(instance, attr_str)
+        DriverClass: Type[Driver] = instance  # type: ignore
         _driver = DriverClass(env, config)
 
 
@@ -223,7 +273,7 @@ def run(host: Optional[str] = None,
         nonebot.run(host="127.0.0.1", port=8080)
 
     """
-    logger.info("Running NoneBot...")
+    logger.success("Running NoneBot...")
     get_driver().run(host, port, *args, **kwargs)
 
 
