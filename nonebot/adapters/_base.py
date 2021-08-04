@@ -275,10 +275,10 @@ class MessageSegment(Mapping, abc.ABC, Generic[TM]):
         return self.get_message_class()(other) + self  # type: ignore
 
     def __getitem__(self, key: str):
-        return self.data[key]
+        return getattr(self, key)
 
     def __setitem__(self, key: str, value: Any):
-        self.data[key] = value
+        return setattr(self, key, value)
 
     def __iter__(self):
         yield from self.data.__iter__()
