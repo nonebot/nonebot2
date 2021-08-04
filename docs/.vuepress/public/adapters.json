@@ -32,7 +32,7 @@
     "repo": "Jigsaw111/nonebot-adapter-gocq"
   },
   {
-    "id": "nonebot_adapter_feishu",
+    "id": "nonebot.adapters.feishu",
     "link": "nonebot-adapter-feishu",
     "name": "feishu",
     "desc": "飞书协议",

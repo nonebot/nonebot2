@@ -18,7 +18,7 @@
   {
     "id": "nonebot_plugin_rauthman",
     "link": "nonebot-plugin-rauthman",
-    "name": "rauthman",
+    "name": "RAM 授权管理",
     "desc": "基于规则的授权管理",
     "author": "Lancercmd",
     "repo": "Lancercmd/nonebot_plugin_rauthman"
@@ -75,17 +75,17 @@
     "id": "nonebot_plugin_translator",
     "link": "nonebot-plugin-translator",
     "author": "Lancercmd",
-    "desc": "多语种翻译插件",
-    "name": "translator",
+    "desc": "基于腾讯机器翻译 TMT",
+    "name": "多语种翻译插件",
     "repo": "Lancercmd/nonebot_plugin_translator"
   },
   {
-    "id": "nonebot_plugin_simdraw",
-    "link": "nonebot-plugin-simdraw",
+    "id": "nonebot_plugin_web",
+    "link": "nonebot-plugin-web",
     "author": "abrahum",
-    "desc": "根据配置的手游卡池信息模拟抽卡",
-    "name": "模拟抽卡",
-    "repo": "abrahum/nonebot_plugin_simdraw"
+    "desc": "Web Monitor 时刻视奸你的bot",
+    "name": "Web监视器",
+    "repo": "abrahum/nonebot_plugin_web"
   },
   {
     "id": "nonebot_plugin_wordbank",
@@ -302,5 +302,21 @@
     "desc": "一个简单的功能调用统计以及可视化插件",
     "author": "HibiKier",
     "repo": "https://github.com/HibiKier/nonebot_plugin_statistical"
+  },
+  {
+    "id": "nonebot_plugin_setu",
+    "link": "nonebot_plugin_setu",
+    "name": "nonebot_plugin_setu",
+    "desc": "基于loliconImage Api的涩图插件，内置涩图CD",
+    "author": "ayanamiblhx",
+    "repo": "https://github.com/ayanamiblhx/nonebot_plugin_setu"
+  },
+  {
+    "id": "nonebot_plugin_fr24",
+    "link": "nonebot-plugin-fr24",
+    "name": "FlightRadar24查询模块",
+    "desc": "通过FlightRadar24查询航班信息",
+    "author": "IronWolf-K",
+    "repo": "https://github.com/IronWolf-K/nonebot_plugin_fr24"
   }
 ]
