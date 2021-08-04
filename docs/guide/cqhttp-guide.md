@@ -26,74 +26,17 @@ QQ 协议端举例:
 
 ### 选项 1 反向 WebSocket 连接
 
-```yml{2,3,18,57,58}
+```yml{2,3,6,10}
 account:
   uin: 机器人QQ号
   password: "机器人密码"
-  encrypt: false
-  relogin:
-    disabled: false
-    delay: 3
-    interval: 0
-    max-times: 0
-
-  use-sso-address: true
-
-heartbeat:
-  disabled: false
-  interval: 5
 
 message:
   post-format: array
-  ignore-invalid-cqcode: false
-  force-fragment: false
-  fix-url: false
-  proxy-rewrite: ""
-  report-self-message: false
-  remove-reply-at: false
-  extra-reply-data: false
-
-output:
-  log-level: warn
-  debug: false
-
-default-middlewares: &default
-  access-token: ""
-  filter: ""
-  rate-limit:
-    enabled: false
-    frequency: 1
-    bucket: 1
 
 servers:
-  - http:
-      disabled: true
-      host: 127.0.0.1
-      port: 5700
-      timeout: 5
-      middlewares:
-        <<: *default
-      post:
-
-  - ws:
-      disabled: true
-      host: 127.0.0.1
-      port: 6700
-      middlewares:
-        <<: *default
-
   - ws-reverse:
-      disabled: false
       universal: ws://127.0.0.1:8080/cqhttp/ws
-      api: ws://your_websocket_api.server
-      event: ws://your_websocket_event.server
-      reconnect-interval: 3000
-      middlewares:
-        <<: *default
-
-database:
-  leveldb:
-    enable: true
 ```
 
 其中 `ws://127.0.0.1:8080/cqhttp/ws` 中的 `127.0.0.1` 和 `8080` 应分别对应 nonebot 配置的 HOST 和 PORT。
@@ -102,7 +45,53 @@ database:
 
 ### 选项 2 HTTP POST 上报
 
+```yml{2,3,6,11}
+account:
+  uin: 机器人QQ号
+  password: "机器人密码"
+
+message:
+  post-format: array
+
+servers:
+  - http:
+    post:
+      - url: "http://127.0.0.1:8080/cqhttp/http"
+        secret: ""
+```
+
+其中 `ws://127.0.0.1:8080/cqhttp/http` 中的 `127.0.0.1` 和 `8080` 应分别对应 nonebot 配置的 HOST 和 PORT。
+
+`cqhttp` 是前述 `register_adapter` 时传入的第一个参数，代表设置的 `CQHTTPBot` 适配器的路径，你可以对不同的适配器设置不同路径以作区别。
+
 ### 选项 3 正向 WebSocket 连接
+
+```yml{2,3,6,10,11}
+account:
+  uin: 机器人QQ号
+  password: "机器人密码"
+
+message:
+  post-format: array
+
+servers:
+  - ws:
+    host: 127.0.0.1
+    port: 6700
+```
+
+NoneBot 配置
+
+```dotenv
+CQHTTP_WS_URLS={"机器人QQ号": "ws://127.0.0.1:6700/"}
+```
+
+其中 `ws://127.0.0.1:6700/` 中的 `127.0.0.1` 和 `6700` 应分别对应 go-cqhttp 配置的 HOST 和 PORT。
+
+正向连接可以选择支持客户端连接方式的 `Driver` 来进行连接，请根据需求进行选择：
+
+- `nonebot.drivers.fastapi`: 同时支持正向和反向
+- `nonebot.drivers.aiohttp`: 仅支持正向
 
 ## 历史性的第一次对话
 
