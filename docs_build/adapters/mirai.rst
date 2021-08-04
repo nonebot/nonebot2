@@ -21,13 +21,6 @@ NoneBot.adapters.mirai.bot 模块
    :members:
    :show-inheritance:
 
-NoneBot.adapters.mirai.bot_ws 模块
-==================================
-
-.. automodule:: nonebot.adapters.mirai.bot_ws
-   :members:
-   :show-inheritance:
-
 NoneBot.adapters.mirai.message 模块
 ===================================
 
