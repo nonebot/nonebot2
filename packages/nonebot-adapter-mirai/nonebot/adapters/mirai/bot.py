@@ -227,7 +227,6 @@ class Bot(BaseBot):
 
     @overrides(BaseBot)
     async def handle_message(self, message: bytes):
-        Log.debug(f'received message {message}')
         try:
             await process_event(
                 bot=self,
