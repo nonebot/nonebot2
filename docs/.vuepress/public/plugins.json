@@ -318,5 +318,13 @@
     "desc": "通过FlightRadar24查询航班信息",
     "author": "IronWolf-K",
     "repo": "https://github.com/IronWolf-K/nonebot_plugin_fr24"
+  },
+  {
+    "id": "nonebot_plugin_heweather",
+    "link": "nonebot-plugin-heweather",
+    "name": "和风天气",
+    "desc": "获取和风天气信息并转换为图片",
+    "author": "kexue-z",
+    "repo": "https://github.com/kexue-z/nonebot-plugin-heweather"
   }
 ]
