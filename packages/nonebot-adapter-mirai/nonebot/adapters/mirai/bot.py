@@ -109,18 +109,18 @@ class SessionManager:
 
     @classmethod
     async def new(cls, self_id: int, *, host: IPv4Address, port: int,
-                  auth_key: str) -> "SessionManager":
+                  verify_key: str) -> "SessionManager":
         session = cls.get(self_id)
         if session is not None:
             return session
 
         client = httpx.AsyncClient(base_url=f'http://{host}:{port}')
-        response = await client.post('/auth', json={'authKey': auth_key})
+        response = await client.post('/verify', json={'verifyKey': verify_key})
         response.raise_for_status()
         auth = response.json()
         assert auth['code'] == 0
         session_key = auth['session']
-        response = await client.post('/verify',
+        response = await client.post('/bind',
                                      json={
                                          'sessionKey': session_key,
                                          'qq': self_id
@@ -184,7 +184,7 @@ class Bot(BaseBot):
             int(self_id),
             host=cls.mirai_config.host,  # type: ignore
             port=cls.mirai_config.port,  #type: ignore
-            auth_key=cls.mirai_config.auth_key)  # type: ignore
+            verify_key=cls.mirai_config.verify_key)  # type: ignore
         return self_id, HTTPResponse(204, b'')
 
     @classmethod
@@ -194,8 +194,9 @@ class Bot(BaseBot):
                  config: "Config",
                  qq: Optional[int] = None):
         cls.mirai_config = MiraiConfig(**config.dict())
-        if (cls.mirai_config.auth_key and cls.mirai_config.host and
+        if (cls.mirai_config.verify_key and cls.mirai_config.host and
                 cls.mirai_config.port) is None:
+            import pdb;pdb.set_trace()
             raise ApiNotAvailable(cls._type)
 
         super().register(driver, config)
