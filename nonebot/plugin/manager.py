@@ -189,7 +189,11 @@ class PluginManager:
         for path in paths:
             try:
                 rel_path = Path(origin_path).relative_to(path)
-                return ".".join(rel_path.parts[:-1] + (rel_path.stem,))
+                if rel_path.stem == "__init__":
+                    return f"{self.internal_module.__name__}." + ".".join(
+                        rel_path.parts[:-1])
+                return f"{self.internal_module.__name__}." + ".".join(
+                    rel_path.parts[:-1] + (rel_path.stem,))
             except ValueError:
                 continue
 
