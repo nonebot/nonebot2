@@ -342,5 +342,13 @@
     "desc": "让你的孤寡朋友露出阳光的笑容",
     "author": "Sclock",
     "repo": "https://github.com/Sclock/gugua"
+  },
+  {
+    "id": "bugu_bot",
+    "link": "bugu_bot",
+    "name": "布谷机器人",
+    "desc": "增进你和你单身朋友的友谊",
+    "author": "Sclock",
+    "repo": "https://github.com/Sclock/bugu_bot"
   }
 ]
