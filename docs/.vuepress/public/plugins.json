@@ -334,5 +334,13 @@
     "desc": "响应help/菜单/帮助(群消息或私信)并提供已载入插件的帮助信息（如命令名，aliases，模块文档）",
     "author": "ffreemt",
     "repo": "https://github.com/ffreemt/nonebot-plugin-autohelp"
+  },
+  {
+    "id": "asyncio",
+    "link": "null",
+    "name": "全自动孤寡机器人",
+    "desc": "让你的孤寡朋友露出阳光的笑容",
+    "author": "Sclock",
+    "repo": "https://github.com/Sclock/gugua"
   }
 ]
