@@ -350,5 +350,13 @@
     "desc": "增进你和你单身朋友的友谊",
     "author": "Sclock",
     "repo": "https://github.com/Sclock/bugu_bot"
+  },
+  {
+    "id": "nonebot_plugin_flexperm",
+    "link": "nonebot-plugin-flexperm",
+    "name": "nonebot-plugin-flexperm",
+    "desc": "精细化的 NoneBot 权限管理插件",
+    "author": "rmuchan",
+    "repo": "https://github.com/rmuchan/nonebot-plugin-flexperm"
   }
 ]
