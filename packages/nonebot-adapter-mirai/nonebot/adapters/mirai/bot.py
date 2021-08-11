@@ -1,5 +1,5 @@
+import asyncio
 import json
-from datetime import datetime, timedelta
 from io import BytesIO
 from ipaddress import IPv4Address
 from typing import Any, Dict, List, NoReturn, Optional, Tuple, Union
@@ -9,7 +9,9 @@ from loguru import logger
 
 from nonebot.adapters import Bot as BaseBot
 from nonebot.config import Config
-from nonebot.drivers import Driver, ReverseDriver, HTTPConnection, HTTPResponse, WebSocket, ForwardDriver, WebSocketSetup
+from nonebot.drivers import (Driver, ForwardDriver, HTTPConnection,
+                             HTTPResponse, ReverseDriver, WebSocket,
+                             WebSocketSetup)
 from nonebot.exception import ApiNotAvailable
 from nonebot.typing import overrides
 
@@ -21,8 +23,7 @@ from .utils import Log, argument_validation, catch_network_error, process_event
 
 class SessionManager:
     """Bot会话管理器, 提供API主动调用接口"""
-    sessions: Dict[int, Tuple[str, datetime, httpx.AsyncClient]] = {}
-    session_expiry: timedelta = timedelta(minutes=15)
+    sessions: Dict[int, Tuple[str, httpx.AsyncClient]] = {}
 
     def __init__(self, session_key: str, client: httpx.AsyncClient):
         self.session_key, self.client = session_key, client
@@ -126,19 +127,15 @@ class SessionManager:
                                          'qq': self_id
                                      })
         assert response.json()['code'] == 0
-        cls.sessions[self_id] = session_key, datetime.now(), client
+        cls.sessions[self_id] = session_key, client
 
         return cls(session_key, client)
 
     @classmethod
-    def get(cls,
-            self_id: int,
-            check_expire: bool = True) -> Optional["SessionManager"]:
+    def get(cls, self_id: int):
         if self_id not in cls.sessions:
             return None
-        key, time, client = cls.sessions[self_id]
-        if check_expire and (datetime.now() - time > cls.session_expiry):
-            return None
+        key, client = cls.sessions[self_id]
         return cls(key, client)
 
 
@@ -165,6 +162,9 @@ class Bot(BaseBot):
     def api(self) -> SessionManager:
         """返回该Bot对象的会话管理实例以提供API主动调用"""
         api = SessionManager.get(self_id=int(self.self_id))
+        if api is None:
+            if isinstance(self.request, WebSocket):
+                asyncio.create_task(self.request.close(1000))
         assert api is not None, 'SessionManager has not been initialized'
         return api
 
