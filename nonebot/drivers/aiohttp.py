@@ -234,11 +234,20 @@ class Driver(ForwardDriver):
         try:
             async with aiohttp.ClientSession() as session:
                 while not self.should_exit.is_set():
-                    if not bot:
+
+                    try:
                         if callable(setup):
                             setup_ = await setup()
                         else:
                             setup_ = setup
+                    except Exception as e:
+                        logger.opt(colors=True, exception=e).error(
+                            f"<r><bg #f8bbd0>Error while parsing setup {setup!r}.</bg #f8bbd0></r>"
+                        )
+                        await asyncio.sleep(3)
+                        continue
+
+                    if not bot:
                         request = await _build_request(setup_)
                         if not request:
                             return
@@ -247,7 +256,6 @@ class Driver(ForwardDriver):
                         bot = BotClass(setup.self_id, request)
                         self._bot_connect(bot)
                     elif callable(setup):
-                        setup_ = await setup()
                         request = await _build_request(setup_)
                         if not request:
                             await asyncio.sleep(setup_.poll_interval)
@@ -308,10 +316,18 @@ class Driver(ForwardDriver):
         try:
             async with aiohttp.ClientSession() as session:
                 while True:
-                    if callable(setup):
-                        setup_ = await setup()
-                    else:
-                        setup_ = setup
+
+                    try:
+                        if callable(setup):
+                            setup_ = await setup()
+                        else:
+                            setup_ = setup
+                    except Exception as e:
+                        logger.opt(colors=True, exception=e).error(
+                            f"<r><bg #f8bbd0>Error while parsing setup {setup!r}.</bg #f8bbd0></r>"
+                        )
+                        await asyncio.sleep(3)
+                        continue
 
                     url = URL(setup_.url)
                     if not url.is_absolute() or not url.host:
