@@ -347,7 +347,7 @@ class WebSocket(HTTPConnection, abc.ABC):
 
     @property
     @abc.abstractmethod
-    def closed(self):
+    def closed(self) -> bool:
         """
         :类型: ``bool``
         :说明: 连接是否已经关闭
