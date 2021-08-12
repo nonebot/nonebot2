@@ -440,6 +440,7 @@ class Driver(ReverseDriver, ForwardDriver):
                                 logger.opt(colors=True).error(
                                     "<r><bg #f8bbd0>WebSocket connection closed by peer. "
                                     "Try to reconnect...</bg #f8bbd0></r>")
+                                break
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
                         f"<r><bg #f8bbd0>Error while connecting to {url}. "
