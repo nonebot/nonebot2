@@ -11,6 +11,7 @@ from typing import Set, Type, Optional, TYPE_CHECKING
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
+from nonebot.utils import escape_tag
 from nonebot.matcher import matchers, Matcher
 from nonebot.exception import IgnoredException, StopPropagation, NoLogException
 from nonebot.typing import T_State, T_EventPreProcessor, T_RunPreProcessor, T_EventPostProcessor, T_RunPostProcessor
@@ -193,7 +194,7 @@ async def handle_event(bot: "Bot", event: "Event") -> Optional[Exception]:
         asyncio.create_task(handle_event(bot, event))
     """
     show_log = True
-    log_msg = f"<m>{bot.type.upper()} {bot.self_id}</m> | "
+    log_msg = f"<m>{escape_tag(bot.type.upper())} {escape_tag(bot.self_id)}</m> | "
     try:
         log_msg += event.get_log_string()
     except NoLogException:
@@ -210,7 +211,7 @@ async def handle_event(bot: "Bot", event: "Event") -> Optional[Exception]:
             await asyncio.gather(*coros)
         except IgnoredException as e:
             logger.opt(colors=True).info(
-                f"Event {event.get_event_name()} is <b>ignored</b>")
+                f"Event {escape_tag(event.get_event_name())} is <b>ignored</b>")
             return e
         except Exception as e:
             logger.opt(colors=True, exception=e).error(

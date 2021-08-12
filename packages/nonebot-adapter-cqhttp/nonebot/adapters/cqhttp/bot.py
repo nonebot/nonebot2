@@ -256,7 +256,7 @@ class Bot(BaseBot):
                         WebSocketSetup("cqhttp", self_id, url, headers=headers))
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
-                        f"<r><bg #f8bbd0>Bad url {url} for bot {self_id} "
+                        f"<r><bg #f8bbd0>Bad url {escape_tag(url)} for bot {escape_tag(self_id)} "
                         "in cqhttp forward websocket</bg #f8bbd0></r>")
 
     @classmethod
@@ -309,7 +309,7 @@ class Bot(BaseBot):
 
           调用 `_check_reply <#async-check-reply-bot-event>`_, `_check_at_me <#check-at-me-bot-event>`_, `_check_nickname <#check-nickname-bot-event>`_ 处理事件并转换为 `Event <#class-event>`_
         """
-        data = json.loads(message)
+        data: dict = json.loads(message)
 
         if not data:
             return
@@ -342,7 +342,7 @@ class Bot(BaseBot):
             await handle_event(self, event)
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
-                f"<r><bg #f8bbd0>Failed to handle event. Raw: {escape_tag(data)}</bg #f8bbd0></r>"
+                f"<r><bg #f8bbd0>Failed to handle event. Raw: {escape_tag(str(data))}</bg #f8bbd0></r>"
             )
 
     @overrides(BaseBot)

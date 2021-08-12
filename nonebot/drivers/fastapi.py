@@ -27,6 +27,7 @@ from starlette.websockets import (WebSocketState, WebSocketDisconnect, WebSocket
 
 from nonebot.log import logger
 from nonebot.adapters import Bot
+from nonebot.utils import escape_tag
 from nonebot.typing import overrides
 from nonebot.config import Env, Config as NoneBotConfig
 from nonebot.drivers import (ReverseDriver, ForwardDriver, HTTPPollingSetup,
@@ -283,25 +284,26 @@ class Driver(ReverseDriver, ForwardDriver):
 
         # Create Bot Object
         BotClass = self._adapters[adapter]
-        x_self_id, _ = await BotClass.check_permission(self, ws)
+        self_id, _ = await BotClass.check_permission(self, ws)
 
-        if not x_self_id:
+        if not self_id:
             await ws.close(code=status.WS_1008_POLICY_VIOLATION)
             return
 
-        if x_self_id in self._clients:
+        if self_id in self._clients:
             logger.opt(colors=True).warning(
-                "There's already a reverse websocket connection, "
-                f"<y>{adapter.upper()} Bot {x_self_id}</y> ignored.")
+                "There's already a websocket connection, "
+                f"<y>{escape_tag(adapter.upper())} Bot {escape_tag(self_id)}</y> ignored."
+            )
             await ws.close(code=status.WS_1008_POLICY_VIOLATION)
             return
 
-        bot = BotClass(x_self_id, ws)
+        bot = BotClass(self_id, ws)
 
         await ws.accept()
         logger.opt(colors=True).info(
-            f"WebSocket Connection from <y>{adapter.upper()} "
-            f"Bot {x_self_id}</y> Accepted!")
+            f"WebSocket Connection from <y>{escape_tag(adapter.upper())} "
+            f"Bot {escape_tag(self_id)}</y> Accepted!")
 
         self._bot_connect(bot)
 
@@ -328,7 +330,8 @@ class Driver(ReverseDriver, ForwardDriver):
             url = httpx.URL(setup.url)
             if not url.netloc:
                 logger.opt(colors=True).error(
-                    f"<r><bg #f8bbd0>Error parsing url {url}</bg #f8bbd0></r>")
+                    f"<r><bg #f8bbd0>Error parsing url {escape_tag(str(url))}</bg #f8bbd0></r>"
+                )
                 return
             return HTTPRequest(
                 setup.http_version, url.scheme, url.path, url.query, {
@@ -340,8 +343,8 @@ class Driver(ReverseDriver, ForwardDriver):
         setup_: Optional[HTTPPollingSetup] = None
 
         logger.opt(colors=True).info(
-            f"Start http polling for <y>{setup.adapter.upper()} "
-            f"Bot {setup.self_id}</y>")
+            f"Start http polling for <y>{escape_tag(setup.adapter.upper())} "
+            f"Bot {escape_tag(setup.self_id)}</y>")
 
         try:
             async with httpx.AsyncClient(http2=True) as session:
@@ -383,7 +386,7 @@ class Driver(ReverseDriver, ForwardDriver):
                         asyncio.create_task(bot.handle_message(data))
                     except httpx.HTTPError as e:
                         logger.opt(colors=True, exception=e).error(
-                            f"<r><bg #f8bbd0>Error occurred while requesting {setup_.url}. "
+                            f"<r><bg #f8bbd0>Error occurred while requesting {escape_tag(setup_.url)}. "
                             "Try to reconnect...</bg #f8bbd0></r>")
 
                     await asyncio.sleep(setup_.poll_interval)
@@ -411,7 +414,7 @@ class Driver(ReverseDriver, ForwardDriver):
                 url = httpx.URL(setup_.url)
                 if not url.netloc:
                     logger.opt(colors=True).error(
-                        f"<r><bg #f8bbd0>Error parsing url {url}</bg #f8bbd0></r>"
+                        f"<r><bg #f8bbd0>Error parsing url {escape_tag(str(url))}</bg #f8bbd0></r>"
                     )
                     return
 
@@ -423,8 +426,8 @@ class Driver(ReverseDriver, ForwardDriver):
                     connection = Connect(setup_.url)
                     async with connection as ws:
                         logger.opt(colors=True).info(
-                            f"WebSocket Connection to <y>{setup_.adapter.upper()} "
-                            f"Bot {setup_.self_id}</y> succeeded!")
+                            f"WebSocket Connection to <y>{escape_tag(setup_.adapter.upper())} "
+                            f"Bot {escape_tag(setup_.self_id)}</y> succeeded!")
                         request = WebSocket("1.1", url.scheme, url.path,
                                             url.query, headers, ws)
 

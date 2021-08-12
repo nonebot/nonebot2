@@ -16,6 +16,7 @@ import tomlkit
 from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.handler import Handler
+from nonebot.utils import escape_tag
 from nonebot.permission import Permission
 from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
 from nonebot.rule import Rule, startswith, endswith, keyword, command, shell_command, ArgumentParser, regex
@@ -945,12 +946,13 @@ def _load_plugin(manager: PluginManager, plugin_name: str) -> Optional[Plugin]:
 
         plugin = Plugin(plugin_name, module)
         plugins[plugin_name] = plugin
-        logger.opt(
-            colors=True).success(f'Succeeded to import "<y>{plugin_name}</y>"')
+        logger.opt(colors=True).success(
+            f'Succeeded to import "<y>{escape_tag(plugin_name)}</y>"')
         return plugin
     except Exception as e:
         logger.opt(colors=True, exception=e).error(
-            f'<r><bg #f8bbd0>Failed to import "{plugin_name}"</bg #f8bbd0></r>')
+            f'<r><bg #f8bbd0>Failed to import "{escape_tag(plugin_name)}"</bg #f8bbd0></r>'
+        )
         return None
 
 

@@ -16,6 +16,7 @@ from yarl import URL
 
 from nonebot.log import logger
 from nonebot.adapters import Bot
+from nonebot.utils import escape_tag
 from nonebot.typing import overrides
 from nonebot.config import Env, Config
 from nonebot.drivers import (ForwardDriver, HTTPPollingSetup, WebSocketSetup,
@@ -213,7 +214,8 @@ class Driver(ForwardDriver):
             url = URL(setup.url)
             if not url.is_absolute() or not url.host:
                 logger.opt(colors=True).error(
-                    f"<r><bg #f8bbd0>Error parsing url {url}</bg #f8bbd0></r>")
+                    f"<r><bg #f8bbd0>Error parsing url {escape_tag(str(url))}</bg #f8bbd0></r>"
+                )
                 return
             host = f"{url.host}:{url.port}" if url.port else url.host
             return HTTPRequest(setup.http_version, url.scheme, url.path,
@@ -226,8 +228,8 @@ class Driver(ForwardDriver):
         setup_: Optional[HTTPPollingSetup] = None
 
         logger.opt(colors=True).info(
-            f"Start http polling for <y>{setup.adapter.upper()} "
-            f"Bot {setup.self_id}</y>")
+            f"Start http polling for <y>{escape_tag(setup.adapter.upper())} "
+            f"Bot {escape_tag(setup.self_id)}</y>")
 
         try:
             async with aiohttp.ClientSession() as session:
@@ -265,7 +267,8 @@ class Driver(ForwardDriver):
                     else:
                         logger.opt(colors=True).error(
                             "<r><bg #f8bbd0>Unsupported HTTP Version "
-                            f"{request.http_version}</bg #f8bbd0></r>")
+                            f"{escape_tag(request.http_version)}</bg #f8bbd0></r>"
+                        )
                         return
 
                     logger.debug(
@@ -284,7 +287,7 @@ class Driver(ForwardDriver):
                             asyncio.create_task(bot.handle_message(data))
                     except aiohttp.ClientResponseError as e:
                         logger.opt(colors=True, exception=e).error(
-                            f"<r><bg #f8bbd0>Error occurred while requesting {setup_.url}. "
+                            f"<r><bg #f8bbd0>Error occurred while requesting {escape_tag(setup_.url)}. "
                             "Try to reconnect...</bg #f8bbd0></r>")
 
                     await asyncio.sleep(setup_.poll_interval)
@@ -313,7 +316,7 @@ class Driver(ForwardDriver):
                     url = URL(setup_.url)
                     if not url.is_absolute() or not url.host:
                         logger.opt(colors=True).error(
-                            f"<r><bg #f8bbd0>Error parsing url {url}</bg #f8bbd0></r>"
+                            f"<r><bg #f8bbd0>Error parsing url {escape_tag(str(url))}</bg #f8bbd0></r>"
                         )
                         await asyncio.sleep(setup_.reconnect_interval)
                         continue
@@ -329,8 +332,9 @@ class Driver(ForwardDriver):
                                                       headers=headers,
                                                       timeout=30.) as ws:
                             logger.opt(colors=True).info(
-                                f"WebSocket Connection to <y>{setup_.adapter.upper()} "
-                                f"Bot {setup_.self_id}</y> succeeded!")
+                                f"WebSocket Connection to <y>{escape_tag(setup_.adapter.upper())} "
+                                f"Bot {escape_tag(setup_.self_id)}</y> succeeded!"
+                            )
                             request = WebSocket(
                                 "1.1", url.scheme, url.path,
                                 url.raw_query_string.encode("latin-1"), headers,
@@ -360,7 +364,7 @@ class Driver(ForwardDriver):
                     except (aiohttp.ClientResponseError,
                             aiohttp.ClientConnectionError) as e:
                         logger.opt(colors=True, exception=e).error(
-                            f"<r><bg #f8bbd0>Error while connecting to {url}. "
+                            f"<r><bg #f8bbd0>Error while connecting to {escape_tag(str(url))}. "
                             "Try to reconnect...</bg #f8bbd0></r>")
                     finally:
                         if bot:

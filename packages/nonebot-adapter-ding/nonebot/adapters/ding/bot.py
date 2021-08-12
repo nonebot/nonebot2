@@ -8,6 +8,7 @@ from typing import Any, Tuple, Union, Optional, TYPE_CHECKING
 import httpx
 
 from nonebot.log import logger
+from nonebot.utils import escape_tag
 from nonebot.typing import overrides
 from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
@@ -82,7 +83,7 @@ class Bot(BaseBot):
 
     @overrides(BaseBot)
     async def handle_message(self, message: bytes):
-        data = json.loads(message)
+        data: dict = json.loads(message)
 
         if not data:
             return
@@ -104,7 +105,7 @@ class Bot(BaseBot):
             await handle_event(self, event)
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
-                f"<r><bg #f8bbd0>Failed to handle event. Raw: {data}</bg #f8bbd0></r>"
+                f"<r><bg #f8bbd0>Failed to handle event. Raw: {escape_tag(str(data))}</bg #f8bbd0></r>"
             )
         return
 
