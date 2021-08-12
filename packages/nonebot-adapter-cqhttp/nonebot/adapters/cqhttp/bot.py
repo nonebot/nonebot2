@@ -96,10 +96,13 @@ def _check_at_me(bot: "Bot", event: "Event"):
     if event.message_type == "private":
         event.to_me = True
     else:
-        at_me_seg = MessageSegment.at(event.self_id)
+
+        def _is_at_me_seg(segment: MessageSegment):
+            return segment.type == "at" and str(segment.data.get(
+                "qq", "")) == str(event.self_id)
 
         # check the first segment
-        if event.message[0] == at_me_seg:
+        if _is_at_me_seg(event.message[0]):
             event.to_me = True
             event.message.pop(0)
             if event.message and event.message[0].type == "text":
@@ -107,7 +110,7 @@ def _check_at_me(bot: "Bot", event: "Event"):
                     "text"].lstrip()
                 if not event.message[0].data["text"]:
                     del event.message[0]
-            if event.message and event.message[0] == at_me_seg:
+            if event.message and _is_at_me_seg(event.message[0]):
                 event.message.pop(0)
                 if event.message and event.message[0].type == "text":
                     event.message[0].data["text"] = event.message[0].data[
@@ -125,7 +128,7 @@ def _check_at_me(bot: "Bot", event: "Event"):
                 i -= 1
                 last_msg_seg = event.message[i]
 
-            if last_msg_seg == at_me_seg:
+            if _is_at_me_seg(last_msg_seg):
                 event.to_me = True
                 del event.message[i:]
 
