@@ -11,6 +11,7 @@ from dataclasses import dataclass, field
 from typing import Any, Set, Dict, Type, Union, Optional, Callable, Awaitable, TYPE_CHECKING
 
 from nonebot.log import logger
+from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.typing import T_BotConnectionHook, T_BotDisconnectionHook
 
@@ -87,13 +88,13 @@ class Driver(abc.ABC):
           * ``**kwargs``: 其他传递给适配器的参数
         """
         if name in self._adapters:
-            logger.opt(
-                colors=True).debug(f'Adapter "<y>{name}</y>" already exists')
+            logger.opt(colors=True).debug(
+                f'Adapter "<y>{escape_tag(name)}</y>" already exists')
             return
         self._adapters[name] = adapter
         adapter.register(self, self.config, **kwargs)
-        logger.opt(
-            colors=True).debug(f'Succeeded to load adapter "<y>{name}</y>"')
+        logger.opt(colors=True).debug(
+            f'Succeeded to load adapter "<y>{escape_tag(name)}</y>"')
 
     @property
     @abc.abstractmethod
@@ -119,7 +120,7 @@ class Driver(abc.ABC):
           * ``**kwargs``
         """
         logger.opt(colors=True).debug(
-            f"<g>Loaded adapters: {', '.join(self._adapters)}</g>")
+            f"<g>Loaded adapters: {escape_tag(', '.join(self._adapters))}</g>")
 
     @abc.abstractmethod
     def on_startup(self, func: Callable) -> Callable:
@@ -346,7 +347,7 @@ class WebSocket(HTTPConnection, abc.ABC):
 
     @property
     @abc.abstractmethod
-    def closed(self):
+    def closed(self) -> bool:
         """
         :类型: ``bool``
         :说明: 连接是否已经关闭

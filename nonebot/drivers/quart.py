@@ -16,6 +16,7 @@ import uvicorn
 from pydantic import BaseSettings
 
 from nonebot.log import logger
+from nonebot.utils import escape_tag
 from nonebot.typing import overrides
 from nonebot.config import Env, Config as NoneBotConfig
 from nonebot.drivers import ReverseDriver, HTTPRequest, WebSocket as BaseWebSocket
@@ -198,15 +199,16 @@ class Driver(ReverseDriver):
 
         if self_id in self._clients:
             logger.opt(colors=True).warning(
-                "There's already a reverse websocket connection, "
-                f"<y>{adapter.upper()} Bot {self_id}</y> ignored.")
+                "There's already a websocket connection, "
+                f"<y>{escape_tag(adapter.upper())} Bot {escape_tag(self_id)}</y> ignored."
+            )
             raise exceptions.Forbidden(description='Client already exists.')
 
         bot = BotClass(self_id, ws)
         await ws.accept()
         logger.opt(colors=True).info(
-            f"WebSocket Connection from <y>{adapter.upper()} "
-            f"Bot {self_id}</y> Accepted!")
+            f"WebSocket Connection from <y>{escape_tag(adapter.upper())} "
+            f"Bot {escape_tag(self_id)}</y> Accepted!")
         self._bot_connect(bot)
 
         try:

@@ -133,7 +133,11 @@ pip install nonebot-adapter-mirai
        from nonebot.adapters.mirai import Bot
 
        nonebot.init()
-       nonebot.get_driver().register_adapter('mirai', Bot, qq=12345678) # qq参数需要填在mah中登录的qq
+       nonebot.get_driver().register_adapter('mirai', 
+                                              Bot, 
+                                              qq=12345678)
+       # qq参数需要填在mah中登录的qq, 如果需要多个帐号, 可以填写类似于 [123456,789100] 的数组形式
+       
        nonebot.load_builtin_plugins() # 加载 nonebot 内置插件
        nonebot.run()
        ```

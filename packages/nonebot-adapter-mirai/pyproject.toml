@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-adapter-mirai"
-version = "2.0.0-alpha.14"
+version = "2.0.0-alpha.15"
 description = "Mirai Api HTTP adapter for nonebot2"
 authors = ["Mix <admin@yami.im>", "yanyongyu <yyy@nonebot.dev>"]
 license = "AGPL-3.0-or-later"

@@ -10,7 +10,7 @@ import asyncio
 from copy import deepcopy
 from functools import partial
 from typing_extensions import Protocol
-from dataclasses import dataclass, field
+from dataclasses import dataclass, field, asdict
 from typing import (Any, Set, List, Dict, Type, Tuple, Union, TypeVar, Mapping,
                     Generic, Optional, Iterable)
 
@@ -275,28 +275,28 @@ class MessageSegment(Mapping, abc.ABC, Generic[TM]):
         return self.get_message_class()(other) + self  # type: ignore
 
     def __getitem__(self, key: str):
-        return self.data[key]
+        return getattr(self, key)
 
     def __setitem__(self, key: str, value: Any):
-        self.data[key] = value
+        return setattr(self, key, value)
 
     def __iter__(self):
-        yield from self.data.__iter__()
+        yield from asdict(self).keys()
 
     def __contains__(self, key: Any) -> bool:
-        return key in self.data
+        return key in asdict(self).keys()
 
     def get(self, key: str, default: Any = None):
         return getattr(self, key, default)
 
     def keys(self):
-        return self.data.keys()
+        return asdict(self).keys()
 
     def values(self):
-        return self.data.values()
+        return asdict(self).values()
 
     def items(self):
-        return self.data.items()
+        return asdict(self).items()
 
     def copy(self: T) -> T:
         return deepcopy(self)

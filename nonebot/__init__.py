@@ -232,8 +232,8 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
         default_filter.level = (
             "DEBUG" if config.debug else
             "INFO") if config.log_level is None else config.log_level
-        logger.opt(
-            colors=True).info(f"Current <y><b>Env: {env.environment}</b></y>")
+        logger.opt(colors=True).info(
+            f"Current <y><b>Env: {escape_tag(env.environment)}</b></y>")
         logger.opt(colors=True).debug(
             f"Loaded <y><b>Config</b></y>: {escape_tag(str(config.dict()))}")
 
