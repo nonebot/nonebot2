@@ -1,5 +1,6 @@
 import asyncio
 import json
+from functools import partial
 from io import BytesIO
 from ipaddress import IPv4Address
 from typing import Any, Dict, List, NoReturn, Optional, Tuple, Union
@@ -192,7 +193,7 @@ class Bot(BaseBot):
     def register(cls,
                  driver: Driver,
                  config: "Config",
-                 qq: Optional[int] = None):
+                 qq: Optional[Union[int, List[int]]] = None):
         cls.mirai_config = MiraiConfig(**config.dict())
         if (cls.mirai_config.auth_key and cls.mirai_config.host and
                 cls.mirai_config.port) is None:
@@ -205,11 +206,12 @@ class Bot(BaseBot):
                 f"Current driver {cls.config.driver} don't support forward connections"
             )
         elif isinstance(driver, ForwardDriver) and qq:
+            self_ids = [qq] if isinstance(qq, int) else qq
 
-            async def url_factory():
+            async def url_factory(qq: int):
                 assert cls.mirai_config.host and cls.mirai_config.port and cls.mirai_config.auth_key
                 session = await SessionManager.new(
-                    qq,  # type: ignore
+                    qq,
                     host=cls.mirai_config.host,
                     port=cls.mirai_config.port,
                     auth_key=cls.mirai_config.auth_key)
@@ -219,7 +221,9 @@ class Bot(BaseBot):
                     url=(f'ws://{cls.mirai_config.host}:{cls.mirai_config.port}'
                          f'/all?sessionKey={session.session_key}'))
 
-            driver.setup_websocket(url_factory)
+            for self_id in self_ids:
+                driver.setup_websocket(partial(url_factory, qq=self_id))
+
         elif isinstance(driver, ReverseDriver):
             logger.debug(
                 'Param "qq" does not set for mirai adapter, use http post instead'
