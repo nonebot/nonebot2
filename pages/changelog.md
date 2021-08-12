@@ -4,6 +4,11 @@ sidebar: auto
 
 # 更新日志
 
+## v2.0.0a15
+
+- 修复 `fastapi` Driver 未能正确进行 reconnect
+- 修复 `MessageSegment` 错误的 Mapping 映射
+
 ## v2.0.0a14
 
 - 修改日志等级，支持输出等级自定义
