@@ -14,6 +14,8 @@ class Config(BaseModel):
       - ``encrypt_key`` / ``feishu_encrypt_key``: 飞书开放平台后台“事件订阅”处设置的 Encrypt Key
       - ``verification_token`` / ``feishu_verification_token``: 飞书开放平台后台“事件订阅”处设置的 Verification Token
       - ``tenant_access_token`` / ``feishu_tenant_access_token``: 请求飞书 API 后返回的租户密钥
+      - ``region`` / ``feishu_or_lark``: 选择飞书服务器还是Lark服务器,如留空则默认为飞书服务器
+
     """
     app_id: Optional[str] = Field(default=None, alias="feishu_app_id")
     app_secret: Optional[str] = Field(default=None, alias="feishu_app_secret")
@@ -22,6 +24,7 @@ class Config(BaseModel):
                                               alias="feishu_verification_token")
     tenant_access_token: Optional[str] = Field(
         default=None, alias="feishu_tenant_access_token")
+    region: Optional[str] = Field(default=None, alias="feishu_or_lark")
 
     class Config:
         extra = "ignore"

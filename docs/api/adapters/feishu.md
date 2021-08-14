@@ -31,6 +31,9 @@ sidebarDepth: 0
     * `tenant_access_token` / `feishu_tenant_access_token`: 请求飞书 API 后返回的租户密钥
 
 
+    * `reigon` / `feishu_or_lark`:  设置后端使用飞书服务器还是Lark服务器
+
+
 # NoneBot.adapters.feishu.exception 模块
 
 
