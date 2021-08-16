@@ -40,5 +40,11 @@
     "desc": "猜一猜游戏、新闻一览、英文每日一词一短语等等，含一键启动及docker容器部署就绪",
     "author": "ffreemt",
     "repo": "https://github.com/ffreemt/koyeb-nb2"
+  },
+  {
+    "name": "DicePP",
+    "desc": "TRPG骰娘, 带先攻, 查询等功能, 主要面向DND5E. 面对骰主推出的船新版本, 内置Windows/Linux详细部署指南以及方便的自定义骰娘方法, 从回复文本到查询资料库都可轻松配置~",
+    "author": "pear-studio",
+    "repo": "https://github.com/pear-studio/nonebot-dicepp"
   }
 ]

@@ -31,6 +31,9 @@ sidebarDepth: 0
     * `tenant_access_token` / `feishu_tenant_access_token`: 请求飞书 API 后返回的租户密钥
 
 
+    * `is_lark` / `feishu_is_lark`: 是否使用Lark（飞书海外版），默认为 false
+
+
 # NoneBot.adapters.feishu.exception 模块
 
 
