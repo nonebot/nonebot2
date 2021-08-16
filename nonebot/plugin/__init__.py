@@ -405,10 +405,14 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
 
     async def _strip_cmd(bot: "Bot", event: "Event", state: T_State):
         message = event.get_message()
+        if len(message) < 1:
+            return
         segment = message.pop(0)
+        segment_text = str(segment).lstrip()
+        if not segment_text.startswith(state["_prefix"]["raw_command"]):
+            return
         new_message = message.__class__(
-            str(segment).lstrip()
-            [len(state["_prefix"]["raw_command"]):].lstrip())  # type: ignore
+            segment_text[len(state["_prefix"]["raw_command"]):].lstrip())
         for new_segment in reversed(new_message):
             message.insert(0, new_segment)
 

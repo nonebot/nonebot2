@@ -456,7 +456,8 @@ class Matcher(metaclass=MatcherMeta):
         parser_handler = cls.append_handler(_key_parser)
 
         def _decorator(func: T_Handler) -> T_Handler:
-            if not hasattr(cls.handlers[-1], "__wrapped__"):
+            print("deco", key, hasattr(cls.handlers[-1].func, "__wrapped__"))
+            if not hasattr(cls.handlers[-1].func, "__wrapped__"):
                 parser = cls.handlers.pop()
                 func_handler = Handler(func)
 
