@@ -137,9 +137,9 @@ class Bot(BaseBot):
     @property
     def api_root(self) -> str:
         if self.feishu_config.region == "Lark" :
-        return "https://open.larksuite.com/open-apis/"
+            return "https://open.larksuite.com/open-apis/"
         else:
-        return "https://open.feishu.cn/open-apis/"
+            return "https://open.feishu.cn/open-apis/"
 
     @classmethod
     def register(cls, driver: Driver, config: "Config"):
