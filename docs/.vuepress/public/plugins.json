@@ -358,5 +358,13 @@
     "desc": "精细化的 NoneBot 权限管理插件",
     "author": "rmuchan",
     "repo": "https://github.com/rmuchan/nonebot-plugin-flexperm"
+  },
+  {
+    "id": "nonebot_plugin_epicfree",
+    "link": "nonebot_plugin_epicfree",
+    "name": "Epic 限免游戏资讯",
+    "desc": "EpicGameStore 喜加一资讯插件，发送「喜加一」逝世看吧！",
+    "author": "monsterxcn",
+    "repo": "https://github.com/monsterxcn/nonebot_plugin_epicfree"
   }
 ]
