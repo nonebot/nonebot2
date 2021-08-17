@@ -366,5 +366,13 @@
     "desc": "EpicGameStore 喜加一资讯插件，发送「喜加一」逝世看吧！",
     "author": "monsterxcn",
     "repo": "https://github.com/monsterxcn/nonebot_plugin_epicfree"
+  },
+  {
+    "id": "ELF_RSS2",
+    "link": "ELF-RSS",
+    "name": "ELF_RSS",
+    "desc": "QQ机器人 RSS订阅 插件，订阅源建议选择 RSSHub",
+    "author": "Quan666",
+    "repo": "https://github.com/Quan666/ELF_RSS"
   }
 ]
