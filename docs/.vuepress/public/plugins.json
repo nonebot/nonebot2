@@ -358,5 +358,13 @@
     "desc": "精细化的 NoneBot 权限管理插件",
     "author": "rmuchan",
     "repo": "https://github.com/rmuchan/nonebot-plugin-flexperm"
+  },
+  {
+    "id": "ELF_RSS2",
+    "link": "null",
+    "name": "ELF_RSS",
+    "desc": "QQ机器人 RSS订阅 插件，订阅源建议选择 RSSHub",
+    "author": "Quan666",
+    "repo": "https://github.com/Quan666/ELF_RSS"
   }
 ]
