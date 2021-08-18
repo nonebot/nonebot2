@@ -295,8 +295,7 @@ class MessageChain(BaseMessage[MessageSegment]):
         self, message: Union[List[Dict[str, Any]], Iterable[MessageSegment]]
     ) -> List[MessageSegment]:
         if isinstance(message, str):
-            raise ValueError(
-                "String operation is not supported in mirai adapter")
+            return [MessageSegment.plain(text=message)]
         return [
             *map(
                 lambda x: x
