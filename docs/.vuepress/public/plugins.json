@@ -374,5 +374,13 @@
     "desc": "QQ机器人 RSS订阅 插件，订阅源建议选择 RSSHub",
     "author": "Quan666",
     "repo": "https://github.com/Quan666/ELF_RSS"
+  },
+  {
+    "id": "nonebot-plugin-setu",
+    "link": "setu-nonebot2",
+    "name": "色图姬",
+    "desc": "每个群配置文件独立,可以控制频率,R18开关,多tag,可以自动搜索Pixiv热度榜单",
+    "author": "yuban10703",
+    "repo": "https://github.com/yuban10703/setu-nonebot2"
   }
 ]
