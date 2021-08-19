@@ -46,5 +46,11 @@
     "desc": "TRPG骰娘, 带先攻, 查询等功能, 主要面向DND5E. 面对骰主推出的船新版本, 内置Windows/Linux详细部署指南以及方便的自定义骰娘方法, 从回复文本到查询资料库都可轻松配置~",
     "author": "pear-studio",
     "repo": "https://github.com/pear-studio/nonebot-dicepp"
+  },
+  {
+    "name": "SetuBot",
+    "desc": "每个群配置文件独立,可以控制频率,socks http代理,R18开关,支持多tag,自建API lolicon Pixiv热度榜",
+    "author": "yuban10703",
+    "repo": "https://github.com/yuban10703/setu-nonebot2"
   }
 ]
