@@ -24,14 +24,6 @@
     "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-mirai"
   },
   {
-    "id": "nonebot_adapter_gocq",
-    "link": "nonebot-adapter-gocq",
-    "name": "gocq",
-    "desc": "在原 CQHTTP Adapter 的基础上进行修改以便更好地适配 go-cqhttp",
-    "author": "Jigsaw111",
-    "repo": "Jigsaw111/nonebot-adapter-gocq"
-  },
-  {
     "id": "nonebot.adapters.feishu",
     "link": "nonebot-adapter-feishu",
     "name": "feishu",
