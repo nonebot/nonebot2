@@ -439,7 +439,7 @@ class Driver(ReverseDriver, ForwardDriver):
                     f"Bot {setup_.self_id} from adapter {setup_.adapter} connecting to {url}"
                 )
                 try:
-                    connection = Connect(setup_.url)
+                    connection = Connect(setup_.url, extra_headers=headers)
                     async with connection as ws:
                         logger.opt(colors=True).info(
                             f"WebSocket Connection to <y>{escape_tag(setup_.adapter.upper())} "
