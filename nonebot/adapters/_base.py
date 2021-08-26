@@ -8,19 +8,21 @@
 import abc
 import asyncio
 from copy import deepcopy
+from dataclasses import asdict, dataclass, field
 from functools import partial
-from typing_extensions import Protocol
-from dataclasses import dataclass, field, asdict
-from typing import (Any, Set, List, Dict, Type, Tuple, Union, TypeVar, Mapping,
-                    Generic, Optional, Iterable)
+from typing import (Any, Dict, Generic, Iterable, List, Mapping, Optional, Set,
+                    Tuple, Type, TypeVar, Union)
 
 from pydantic import BaseModel
+from typing_extensions import Protocol
 
-from nonebot.log import logger
 from nonebot.config import Config
-from nonebot.utils import DataclassEncoder
 from nonebot.drivers import Driver, HTTPConnection, HTTPResponse
-from nonebot.typing import T_CallingAPIHook, T_CalledAPIHook
+from nonebot.log import logger
+from nonebot.typing import T_CalledAPIHook, T_CallingAPIHook
+from nonebot.utils import DataclassEncoder
+
+from ._formatter import MessageFormatter
 
 
 class _ApiCall(Protocol):
@@ -328,6 +330,10 @@ class Message(List[TMS], abc.ABC):
             self.append(message)
         else:
             self.extend(self._construct(message))
+
+    @classmethod
+    def template(cls: Type[TM], format_string: str) -> MessageFormatter[TM]:
+        return MessageFormatter(cls, format_string)
 
     @classmethod
     @abc.abstractmethod
