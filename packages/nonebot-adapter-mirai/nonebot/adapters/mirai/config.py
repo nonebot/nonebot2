@@ -1,7 +1,7 @@
-from ipaddress import IPv4Address
-from typing import Optional
+from typing import Dict, List, Optional, Union
 
 from pydantic import BaseModel, Extra, Field
+from pydantic.networks import AnyUrl
 
 
 class Config(BaseModel):
@@ -15,8 +15,9 @@ class Config(BaseModel):
       - ``mirai_port``: mirai-api-http 的端口
     """
     verify_key: Optional[str] = Field(None, alias='mirai_verify_key')
-    host: Optional[IPv4Address] = Field(None, alias='mirai_host')
-    port: Optional[int] = Field(None, alias='mirai_port')
+    ws_urls: Optional[Dict[AnyUrl, Union[List[int],
+                                         int]]] = Field(None,
+                                                        alias='mirai_ws_urls')
 
     class Config:
         extra = Extra.ignore
