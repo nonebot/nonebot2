@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD033 MD041-->
 <p align="center">
   <a href="https://v2.nonebot.dev/"><img src="https://raw.githubusercontent.com/nonebot/nonebot2/master/docs/.vuepress/public/logo.png" width="200" height="200" alt="nonebot"></a>
 </p>
@@ -6,6 +7,7 @@
 
 # NoneBot
 
+<!-- markdownlint-disable-next-line MD036 -->
 _✨ 跨平台 Python 异步机器人框架 ✨_
 
 </div>
@@ -51,6 +53,7 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
   ·
   <a href="#插件">文档打不开？</a>
 </p>
+<!-- markdownlint-enable MD033 -->
 
 ## 简介
 
