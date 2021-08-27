@@ -300,6 +300,40 @@ await bot.send_msg(message="hello world")
 
 
 
+### _classmethod_ `template(format_string)`
+
+
+* **说明**
+
+    根据创建消息模板, 用法和 `str.format` 大致相同, 但是可以输出消息对象
+
+
+
+* **示例**
+
+
+```python
+>>> Message.template("{} {}").format("hello", "world")
+Message(MessageSegment(type='text', data={'text': 'hello world'}))
+>>> Message.template("{} {}").format(MessageSegment.image("file///..."), "world")
+Message(MessageSegment(type='image', data={'file': 'file///...'}), MessageSegment(type='text', data={'text': 'world'}))
+```
+
+
+* **参数**
+
+    
+    * `format_string: str`: 格式化字符串
+
+
+
+* **返回**
+
+    
+    * `MessageFormatter[TM]`: 消息格式化器
+
+
+
 ### `append(obj)`
 
 
@@ -499,3 +533,19 @@ Event 基类。提供获取关键信息的方法，其余信息可直接获取�
 
     
     * `bool`
+
+
+
+## _class_ `MessageFormatter`
+
+基类：`string.Formatter`, `Generic`[`nonebot.adapters._formatter.TM`]
+
+消息模板格式化实现类
+
+
+### `format(*args, **kwargs)`
+
+
+* **说明**
+
+    根据模板和参数生成消息对象
