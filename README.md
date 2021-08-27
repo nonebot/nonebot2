@@ -104,7 +104,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 
 ### 常见问题
 
-- [常见问题解答(FAQ)](https://github.com/nonebot/discussions/discussions/13)
+- [常见问题解答(FAQ)](https://faq.nonebot.dev/)
 
 ### 教程/实际项目/经验分享
 
