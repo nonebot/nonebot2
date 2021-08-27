@@ -333,6 +333,28 @@ class Message(List[TMS], abc.ABC):
 
     @classmethod
     def template(cls: Type[TM], format_string: str) -> MessageFormatter[TM]:
+        """
+        :说明:
+
+          根据创建消息模板, 用法和 ``str.format`` 大致相同, 但是可以输出消息对象
+          
+        :示例:
+
+        .. code-block:: python
+
+            >>> Message.template("{} {}").format("hello", "world")
+            Message(MessageSegment(type='text', data={'text': 'hello world'}))
+            >>> Message.template("{} {}").format(MessageSegment.image("file///..."), "world")
+            Message(MessageSegment(type='image', data={'file': 'file///...'}), MessageSegment(type='text', data={'text': 'world'}))
+            
+        :参数:
+
+          * ``format_string: str``: 格式化字符串
+
+        :返回:
+
+          - ``MessageFormatter[TM]``: 消息格式化器
+        """
         return MessageFormatter(cls, format_string)
 
     @classmethod

@@ -11,12 +11,18 @@ TM = TypeVar("TM", bound="Message")
 
 
 class MessageFormatter(Formatter, Generic[TM]):
+    """消息模板格式化实现类"""
 
     def __init__(self, factory: Type[TM], template: str) -> None:
         self.template = template
         self.factory = factory
 
     def format(self, *args: Any, **kwargs: Any) -> TM:
+        """
+        :说明:
+
+          根据模板和参数生成消息对象
+        """
         msg = self.vformat(self.template, args, kwargs)
         return msg if isinstance(msg, self.factory) else self.factory(msg)
 
