@@ -10,7 +10,7 @@ import asyncio
 from copy import deepcopy
 from functools import partial
 from typing_extensions import Protocol
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field, asdict
 from typing import (Any, Set, List, Dict, Type, Tuple, Union, TypeVar, Mapping,
                     Generic, Optional, Iterable)
 
@@ -332,9 +332,7 @@ class Message(List[TMS], abc.ABC):
             self.extend(self._construct(message))
 
     @classmethod
-    def template(
-            cls: Type[TM],
-            format_string: str) -> MessageFormatter[TM, TMS]:  # type: ignore
+    def template(cls: Type[TM], format_string: str) -> MessageFormatter[TM]:
         return MessageFormatter(cls, format_string)
 
     @classmethod
