@@ -52,5 +52,11 @@
     "desc": "每个群配置文件独立,可以控制频率,socks http代理,R18开关,支持多tag,自建API lolicon Pixiv热度榜",
     "author": "yuban10703",
     "repo": "https://github.com/yuban10703/setu-nonebot2"
+  },
+  {
+    "name": "Takker",
+    "desc": "综合了各种娱乐功能的Bot",
+    "author": "FYWinds",
+    "repo": "https://github.com/FYWinds/takker"
   }
 ]
