@@ -197,7 +197,6 @@ class Bot(BaseBot):
         cls.mirai_config = MiraiConfig(**config.dict())
         if (cls.mirai_config.verify_key and cls.mirai_config.host and
                 cls.mirai_config.port) is None:
-            import pdb;pdb.set_trace()
             raise ApiNotAvailable(cls._type)
 
         super().register(driver, config)
@@ -210,12 +209,12 @@ class Bot(BaseBot):
             self_ids = [qq] if isinstance(qq, int) else qq
 
             async def url_factory(qq: int):
-                assert cls.mirai_config.host and cls.mirai_config.port and cls.mirai_config.auth_key
+                assert cls.mirai_config.host and cls.mirai_config.port and cls.mirai_config.verify_key
                 session = await SessionManager.new(
                     qq,
                     host=cls.mirai_config.host,
                     port=cls.mirai_config.port,
-                    auth_key=cls.mirai_config.auth_key)
+                    verify_key=cls.mirai_config.verify_key)
                 return WebSocketSetup(
                     adapter=cls._type,
                     self_id=str(qq),
