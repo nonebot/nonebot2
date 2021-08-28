@@ -11,3 +11,9 @@ NoneBot.adapters 模块
    :private-members:
    :special-members: __init__
    :show-inheritance:
+
+.. automodule:: nonebot.adapters._formatter
+   :members:
+   :private-members:
+   :special-members: __init__
+   :show-inheritance:
