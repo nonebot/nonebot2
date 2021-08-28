@@ -4,6 +4,10 @@ sidebar: auto
 
 # 更新日志
 
+## v2.0.0a16
+
+- 新增 `MessageFormatter` 可用于 `Message` 的模板生成
+
 ## v2.0.0a15
 
 - 修复 `fastapi` Driver 未能正确进行 reconnect
