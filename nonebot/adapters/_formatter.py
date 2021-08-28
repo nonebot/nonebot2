@@ -103,3 +103,6 @@ class MessageFormatter(Formatter, Generic[TM]):
 
         return self.factory(functools.reduce(operator.add, results or
                                              [""])), auto_arg_index
+
+    def format_field(self, value: Any, format_spec: str) -> Any:
+        return super().format_field(value, format_spec) if format_spec else None
