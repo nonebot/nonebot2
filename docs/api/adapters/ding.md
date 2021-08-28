@@ -94,7 +94,7 @@ sidebarDepth: 0
 
 ## _class_ `Bot`
 
-基类：[`nonebot.adapters._base.Bot`](README.md#nonebot.adapters._base.Bot)
+基类：[`nonebot.adapters._bot.Bot`](README.md#nonebot.adapters._bot.Bot)
 
 钉钉 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 
@@ -208,7 +208,7 @@ sidebarDepth: 0
 
 ## _class_ `MessageSegment`
 
-基类：[`nonebot.adapters._base.MessageSegment`](README.md#nonebot.adapters._base.MessageSegment)[`Message`]
+基类：[`nonebot.adapters._message.MessageSegment`](README.md#nonebot.adapters._message.MessageSegment)[`Message`]
 
 钉钉 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
 
@@ -292,7 +292,7 @@ message += MessageSegment.atDingtalkIds(event.senderId)
 
 ## _class_ `Message`
 
-基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)[`nonebot.adapters.ding.message.MessageSegment`]
+基类：[`nonebot.adapters._message.Message`](README.md#nonebot.adapters._message.Message)[`nonebot.adapters.ding.message.MessageSegment`]
 
 钉钉 协议 Message 适配。
 
@@ -301,7 +301,7 @@ message += MessageSegment.atDingtalkIds(event.senderId)
 
 ## _class_ `Event`
 
-基类：[`nonebot.adapters._base.Event`](README.md#nonebot.adapters._base.Event)
+基类：[`nonebot.adapters._event.Event`](README.md#nonebot.adapters._event.Event)
 
 钉钉协议事件。各事件字段参考 [钉钉文档](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p)
 

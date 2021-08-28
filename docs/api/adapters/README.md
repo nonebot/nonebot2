@@ -260,7 +260,7 @@ await bot.send_msg(message="hello world")
 
 ## _class_ `MessageSegment`
 
-基类：`Mapping`, `abc.ABC`, `Generic`[`nonebot.adapters._base.TM`]
+基类：`Mapping`, `abc.ABC`, `Generic`[`nonebot.adapters._message.TM`]
 
 消息段基类
 
@@ -285,7 +285,7 @@ await bot.send_msg(message="hello world")
 
 ## _class_ `Message`
 
-基类：`List`[`nonebot.adapters._base.TMS`], `abc.ABC`
+基类：`List`[`nonebot.adapters._message.TMS`], `abc.ABC`
 
 消息数组
 
