@@ -1,6 +1,6 @@
 # 定时任务
 
-[`APScheduler`](https://apscheduler.readthedocs.io/en/latest/index.html) —— Advanced Python Scheduler
+[`APScheduler`](https://apscheduler.readthedocs.io/en/3.x/) —— Advanced Python Scheduler
 
 > Advanced Python Scheduler (APScheduler) is a Python library that lets you schedule your Python code to be executed later, either just once or periodically. You can add new jobs or remove old ones on the fly as you please. If you store your jobs in a database, they will also survive scheduler restarts and maintain their state. When the scheduler is restarted, it will then run all the jobs it should have run while it was offline.
 
