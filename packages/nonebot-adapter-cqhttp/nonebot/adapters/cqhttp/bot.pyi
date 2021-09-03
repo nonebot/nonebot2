@@ -180,7 +180,7 @@ class Bot(BaseBot):
     async def get_forward_msg(
         self,
         *,
-        id: int,
+        id: str,
     ) -> None:
         """
         :说明:
