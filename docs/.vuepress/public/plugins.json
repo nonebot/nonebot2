@@ -374,5 +374,13 @@
     "desc": "QQ机器人 RSS订阅 插件，订阅源建议选择 RSSHub",
     "author": "Quan666",
     "repo": "https://github.com/Quan666/ELF_RSS"
+  },
+  {
+    "id": "nonebot_plugin_atri",
+    "link": "nonebot-plugin-atri",
+    "name": "ATRI语音包",
+    "desc": "一个ATRI语音包，基于文本相似度匹配回复",
+    "author": "FYWinds",
+    "repo": "https://github.com/FYWinds/nonebot-plugin-atri"
   }
 ]
