@@ -141,8 +141,8 @@ def USER(*user: str, perm: Optional[Permission] = None):
     """
 
     async def _user(bot: "Bot", event: "Event") -> bool:
-        return bool(event.get_session_id() in user and perm and
-                    await perm(bot, event))
+        return bool(event.get_session_id() in user and (perm is None or
+                    await perm(bot, event)))
 
     return Permission(_user)
 
