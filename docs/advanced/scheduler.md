@@ -1,6 +1,6 @@
 # 定时任务
 
-[`APScheduler`](https://apscheduler.readthedocs.io/en/latest/index.html) —— Advanced Python Scheduler
+[`APScheduler`](https://apscheduler.readthedocs.io/en/3.x/) —— Advanced Python Scheduler
 
 > Advanced Python Scheduler (APScheduler) is a Python library that lets you schedule your Python code to be executed later, either just once or periodically. You can add new jobs or remove old ones on the fly as you please. If you store your jobs in a database, they will also survive scheduler restarts and maintain their state. When the scheduler is restarted, it will then run all the jobs it should have run while it was offline.
 
@@ -76,7 +76,7 @@ scheduler = require("nonebot_plugin_apscheduler").scheduler
 
 ### 编写定时任务
 
-由于本部分为标准的通过 `APScheduler` 配置定时任务，有关指南请参阅 [APScheduler 官方文档](https://apscheduler.readthedocs.io/en/latest/userguide.html#adding-jobs)。
+由于本部分为标准的通过 `APScheduler` 配置定时任务，有关指南请参阅 [APScheduler 官方文档](https://apscheduler.readthedocs.io/en/3.x/userguide.html#adding-jobs)。
 
 ### 配置插件选项
 
@@ -116,7 +116,7 @@ nonebot.init(apscheduler_autostart=True)
 
 `APScheduler` 相关配置。修改/增加其中配置项需要确保 `prefix: apscheduler`。
 
-对于 `APScheduler` 的相关配置，请参阅 [scheduler-config](https://apscheduler.readthedocs.io/en/latest/userguide.html#scheduler-config) 和 [BaseScheduler](https://apscheduler.readthedocs.io/en/latest/modules/schedulers/base.html#apscheduler.schedulers.base.BaseScheduler)
+对于 `APScheduler` 的相关配置，请参阅 [scheduler-config](https://apscheduler.readthedocs.io/en/3.x/userguide.html#scheduler-config) 和 [BaseScheduler](https://apscheduler.readthedocs.io/en/3.x/modules/schedulers/base.html#apscheduler.schedulers.base.BaseScheduler)
 
 > 官方文档在绝大多数时候能提供最准确和最具时效性的指南
 

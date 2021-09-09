@@ -60,12 +60,12 @@ class MessageSegment(BaseMessageSegment["Message"]):
 
     @staticmethod
     def extension(dict_: dict) -> "MessageSegment":
-        """"标记 text 文本的 extension 属性，需要与 text 消息段相加。"""
+        """标记 text 文本的 extension 属性，需要与 text 消息段相加。"""
         return MessageSegment("extension", dict_)
 
     @staticmethod
     def code(code_language: str, code: str) -> "Message":
-        """"发送 code 消息段"""
+        """发送 code 消息段"""
         message = MessageSegment.text(code)
         message += MessageSegment.extension({
             "text_type": "code_snippet",
@@ -110,7 +110,7 @@ class MessageSegment(BaseMessageSegment["Message"]):
         :参数:
 
             * ``btnOrientation``: 0：按钮竖直排列 1：按钮横向排列
-            * ``btns``: [{ "title": title, "actionURL": actionURL }, ...]
+            * ``btns``: ``[{ "title": title, "actionURL": actionURL }, ...]``
         """
         return MessageSegment(
             "actionCard", {
@@ -128,7 +128,7 @@ class MessageSegment(BaseMessageSegment["Message"]):
 
         :参数:
 
-            * ``links``: [{ "title": xxx, "messageURL": xxx, "picURL": xxx }, ...]
+            * ``links``: ``[{ "title": xxx, "messageURL": xxx, "picURL": xxx }, ...]``
         """
         return MessageSegment("feedCard", {"links": links})
 

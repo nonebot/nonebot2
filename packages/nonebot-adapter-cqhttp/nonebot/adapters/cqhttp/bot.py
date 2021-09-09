@@ -11,7 +11,7 @@ from nonebot.typing import overrides
 from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
 from nonebot.utils import escape_tag, DataclassEncoder
-from nonebot.drivers import Driver, ForwardDriver, ReverseDriver
+from nonebot.drivers import Driver, ForwardDriver, WebSocketSetup
 from nonebot.drivers import HTTPConnection, HTTPRequest, HTTPResponse, WebSocket
 
 from .utils import log, escape
@@ -96,10 +96,13 @@ def _check_at_me(bot: "Bot", event: "Event"):
     if event.message_type == "private":
         event.to_me = True
     else:
-        at_me_seg = MessageSegment.at(event.self_id)
+
+        def _is_at_me_seg(segment: MessageSegment):
+            return segment.type == "at" and str(segment.data.get(
+                "qq", "")) == str(event.self_id)
 
         # check the first segment
-        if event.message[0] == at_me_seg:
+        if _is_at_me_seg(event.message[0]):
             event.to_me = True
             event.message.pop(0)
             if event.message and event.message[0].type == "text":
@@ -107,7 +110,7 @@ def _check_at_me(bot: "Bot", event: "Event"):
                     "text"].lstrip()
                 if not event.message[0].data["text"]:
                     del event.message[0]
-            if event.message and event.message[0] == at_me_seg:
+            if event.message and _is_at_me_seg(event.message[0]):
                 event.message.pop(0)
                 if event.message and event.message[0].type == "text":
                     event.message[0].data["text"] = event.message[0].data[
@@ -125,7 +128,7 @@ def _check_at_me(bot: "Bot", event: "Event"):
                 i -= 1
                 last_msg_seg = event.message[i]
 
-            if last_msg_seg == at_me_seg:
+            if _is_at_me_seg(last_msg_seg):
                 event.to_me = True
                 del event.message[i:]
 
@@ -249,13 +252,11 @@ class Bot(BaseBot):
                         "authorization":
                             f"Bearer {cls.cqhttp_config.access_token}"
                     } if cls.cqhttp_config.access_token else {}
-                    driver.setup_websocket("cqhttp",
-                                           self_id,
-                                           url,
-                                           headers=headers)
+                    driver.setup_websocket(
+                        WebSocketSetup("cqhttp", self_id, url, headers=headers))
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
-                        f"<r><bg #f8bbd0>Bad url {url} for bot {self_id} "
+                        f"<r><bg #f8bbd0>Bad url {escape_tag(url)} for bot {escape_tag(self_id)} "
                         "in cqhttp forward websocket</bg #f8bbd0></r>")
 
     @classmethod
@@ -308,7 +309,7 @@ class Bot(BaseBot):
 
           调用 `_check_reply <#async-check-reply-bot-event>`_, `_check_at_me <#check-at-me-bot-event>`_, `_check_nickname <#check-nickname-bot-event>`_ 处理事件并转换为 `Event <#class-event>`_
         """
-        data = json.loads(message)
+        data: dict = json.loads(message)
 
         if not data:
             return
@@ -341,7 +342,7 @@ class Bot(BaseBot):
             await handle_event(self, event)
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
-                f"<r><bg #f8bbd0>Failed to handle event. Raw: {escape_tag(data)}</bg #f8bbd0></r>"
+                f"<r><bg #f8bbd0>Failed to handle event. Raw: {escape_tag(str(data))}</bg #f8bbd0></r>"
             )
 
     @overrides(BaseBot)

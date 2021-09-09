@@ -6,15 +6,16 @@ import httpx
 from aiocache import Cache, cached
 from aiocache.serializers import PickleSerializer
 
+from nonebot.log import logger
+from nonebot.utils import escape_tag
+from nonebot.typing import overrides
+from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
 from nonebot.drivers import Driver, HTTPRequest, HTTPResponse
-from nonebot.log import logger
-from nonebot.message import handle_event
-from nonebot.typing import overrides
 
 from .config import Config as FeishuConfig
-from .event import (Event, GroupMessageEvent, MessageEvent,
-                    PrivateMessageEvent, get_event_model)
+from .event import (Event, GroupMessageEvent, MessageEvent, PrivateMessageEvent,
+                    get_event_model)
 from .exception import ActionFailed, ApiNotAvailable, NetworkError
 from .message import Message, MessageSegment, MessageSerializer
 from .utils import AESCipher, log
@@ -135,7 +136,10 @@ class Bot(BaseBot):
 
     @property
     def api_root(self) -> str:
-        return "https://open.feishu.cn/open-apis/"
+        if self.feishu_config.is_lark:
+            return "https://open.larksuite.com/open-apis/"
+        else:
+            return "https://open.feishu.cn/open-apis/"
 
     @classmethod
     def register(cls, driver: Driver, config: "Config"):
@@ -202,7 +206,7 @@ class Bot(BaseBot):
 
           处理事件并转换为 `Event <#class-event>`_
         """
-        data = json.loads(message)
+        data: dict = json.loads(message)
         if data.get("type") == "url_verification":
             return
 
@@ -229,7 +233,7 @@ class Bot(BaseBot):
             await handle_event(self, event)
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
-                f"<r><bg #f8bbd0>Failed to handle event. Raw: {message}</bg #f8bbd0></r>"
+                f"<r><bg #f8bbd0>Failed to handle event. Raw: {escape_tag(str(data))}</bg #f8bbd0></r>"
             )
 
     def _construct_url(self, path: str) -> str:

@@ -31,6 +31,9 @@ sidebarDepth: 0
     * `tenant_access_token` / `feishu_tenant_access_token`: 请求飞书 API 后返回的租户密钥
 
 
+    * `is_lark` / `feishu_is_lark`: 是否使用Lark（飞书海外版），默认为 false
+
+
 # NoneBot.adapters.feishu.exception 模块
 
 
@@ -142,7 +145,7 @@ sidebarDepth: 0
 
 ## _class_ `Bot`
 
-基类：[`nonebot.adapters._base.Bot`](README.md#nonebot.adapters._base.Bot)
+基类：[`nonebot.adapters._bot.Bot`](README.md#nonebot.adapters._bot.Bot)
 
 飞书 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 
@@ -196,14 +199,14 @@ sidebarDepth: 0
 
 ## _class_ `MessageSegment`
 
-基类：[`nonebot.adapters._base.MessageSegment`](README.md#nonebot.adapters._base.MessageSegment)[`Message`]
+基类：[`nonebot.adapters._message.MessageSegment`](README.md#nonebot.adapters._message.MessageSegment)[`Message`]
 
 飞书 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
 
 
 ## _class_ `Message`
 
-基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)[`nonebot.adapters.feishu.message.MessageSegment`]
+基类：[`nonebot.adapters._message.Message`](README.md#nonebot.adapters._message.Message)[`nonebot.adapters.feishu.message.MessageSegment`]
 
 飞书 协议 Message 适配。
 
@@ -226,14 +229,9 @@ sidebarDepth: 0
 
 ## _class_ `Event`
 
-基类：[`nonebot.adapters._base.Event`](README.md#nonebot.adapters._base.Event)
+基类：[`nonebot.adapters._event.Event`](README.md#nonebot.adapters._event.Event)
 
-飞书协议事件。各事件字段参考 
-
-```
-`飞书文档`_
-```
-
+飞书协议事件。各事件字段参考 [飞书文档](https://open.feishu.cn/document/ukTMukTMukTM/uYDNxYjL2QTM24iN0EjN/event-list)
 
 
 ## `get_event_model(event_name)`

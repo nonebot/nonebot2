@@ -4,6 +4,15 @@ sidebar: auto
 
 # 更新日志
 
+## v2.0.0a16
+
+- 新增 `MessageFormatter` 可用于 `Message` 的模板生成
+
+## v2.0.0a15
+
+- 修复 `fastapi` Driver 未能正确进行 reconnect
+- 修复 `MessageSegment` 错误的 Mapping 映射
+
 ## v2.0.0a14
 
 - 修改日志等级，支持输出等级自定义
@@ -14,6 +23,7 @@ sidebar: auto
 - 修复 `type_updater` `permission_updater` 未传递的错误
 - 修复 `type_updater` `permission_updater` 参数 `state` 错误
 - 修复使用 `state_factory` 后导致无法在 session 内传递 `state`
+- 重构 `Driver` 及连接信息抽象
 - 新增正向 Driver(Client) 支持
 - 新增 `aiohttp` 正向 Driver
 - `fastapi` Driver 新增正向支持

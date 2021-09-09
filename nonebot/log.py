@@ -12,12 +12,17 @@ NoneBot 使用 `loguru`_ 来记录日志信息。
 
 import sys
 import logging
-from typing import Union
+from typing import Union, TYPE_CHECKING
 
 import loguru
 
+if TYPE_CHECKING:
+    # avoid sphinx autodoc resolve annotation failed
+    # because loguru module do not have `Logger` class actually
+    from loguru import Logger
+
 # logger = logging.getLogger("nonebot")
-logger: "loguru.Logger" = loguru.logger
+logger: "Logger" = loguru.logger
 """
 :说明:
 

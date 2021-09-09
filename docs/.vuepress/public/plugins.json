@@ -18,7 +18,7 @@
   {
     "id": "nonebot_plugin_rauthman",
     "link": "nonebot-plugin-rauthman",
-    "name": "rauthman",
+    "name": "RAM 授权管理",
     "desc": "基于规则的授权管理",
     "author": "Lancercmd",
     "repo": "Lancercmd/nonebot_plugin_rauthman"
@@ -75,17 +75,17 @@
     "id": "nonebot_plugin_translator",
     "link": "nonebot-plugin-translator",
     "author": "Lancercmd",
-    "desc": "多语种翻译插件",
-    "name": "translator",
+    "desc": "基于腾讯机器翻译 TMT",
+    "name": "多语种翻译插件",
     "repo": "Lancercmd/nonebot_plugin_translator"
   },
   {
-    "id": "nonebot_plugin_simdraw",
-    "link": "nonebot-plugin-simdraw",
+    "id": "nonebot_plugin_web",
+    "link": "nonebot-plugin-web",
     "author": "abrahum",
-    "desc": "根据配置的手游卡池信息模拟抽卡",
-    "name": "模拟抽卡",
-    "repo": "abrahum/nonebot_plugin_simdraw"
+    "desc": "Web Monitor 时刻视奸你的bot",
+    "name": "Web监视器",
+    "repo": "abrahum/nonebot_plugin_web"
   },
   {
     "id": "nonebot_plugin_wordbank",
@@ -302,5 +302,77 @@
     "desc": "一个简单的功能调用统计以及可视化插件",
     "author": "HibiKier",
     "repo": "https://github.com/HibiKier/nonebot_plugin_statistical"
+  },
+  {
+    "id": "nonebot_plugin_setu",
+    "link": "nonebot_plugin_setu",
+    "name": "nonebot_plugin_setu",
+    "desc": "基于loliconImage Api的涩图插件，内置涩图CD",
+    "author": "ayanamiblhx",
+    "repo": "https://github.com/ayanamiblhx/nonebot_plugin_setu"
+  },
+  {
+    "id": "nonebot_plugin_fr24",
+    "link": "nonebot-plugin-fr24",
+    "name": "FlightRadar24查询模块",
+    "desc": "通过FlightRadar24查询航班信息",
+    "author": "IronWolf-K",
+    "repo": "https://github.com/IronWolf-K/nonebot_plugin_fr24"
+  },
+  {
+    "id": "nonebot_plugin_heweather",
+    "link": "nonebot-plugin-heweather",
+    "name": "和风天气",
+    "desc": "获取和风天气信息并转换为图片",
+    "author": "kexue-z",
+    "repo": "https://github.com/kexue-z/nonebot-plugin-heweather"
+  },
+  {
+    "id": "nonebot_plugin_autohelp",
+    "link": "nonebot-plugin-autohelp",
+    "name": "nonebot-plugin-autohelp",
+    "desc": "响应help/菜单/帮助(群消息或私信)并提供已载入插件的帮助信息（如命令名，aliases，模块文档）",
+    "author": "ffreemt",
+    "repo": "https://github.com/ffreemt/nonebot-plugin-autohelp"
+  },
+  {
+    "id": "gugua_bot",
+    "link": "gugua_bot",
+    "name": "孤寡机器人",
+    "desc": "让你的孤寡朋友露出阳光的笑容",
+    "author": "Sclock",
+    "repo": "https://github.com/Sclock/gugua"
+  },
+  {
+    "id": "bugu_bot",
+    "link": "bugu_bot",
+    "name": "布谷机器人",
+    "desc": "增进你和你单身朋友的友谊",
+    "author": "Sclock",
+    "repo": "https://github.com/Sclock/bugu_bot"
+  },
+  {
+    "id": "nonebot_plugin_flexperm",
+    "link": "nonebot-plugin-flexperm",
+    "name": "nonebot-plugin-flexperm",
+    "desc": "精细化的 NoneBot 权限管理插件",
+    "author": "rmuchan",
+    "repo": "https://github.com/rmuchan/nonebot-plugin-flexperm"
+  },
+  {
+    "id": "nonebot_plugin_epicfree",
+    "link": "nonebot_plugin_epicfree",
+    "name": "Epic 限免游戏资讯",
+    "desc": "EpicGameStore 喜加一资讯插件，发送「喜加一」逝世看吧！",
+    "author": "monsterxcn",
+    "repo": "https://github.com/monsterxcn/nonebot_plugin_epicfree"
+  },
+  {
+    "id": "ELF_RSS2",
+    "link": "ELF-RSS",
+    "name": "ELF_RSS",
+    "desc": "QQ机器人 RSS订阅 插件，订阅源建议选择 RSSHub",
+    "author": "Quan666",
+    "repo": "https://github.com/Quan666/ELF_RSS"
   }
 ]

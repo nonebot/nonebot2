@@ -224,7 +224,7 @@ def endswith(msg: Union[str, Tuple[str, ...]],
         if event.get_type() != "message":
             return False
         text = event.get_plaintext()
-        return bool(pattern.match(text))
+        return bool(pattern.search(text))
 
     return Rule(_endswith)
 

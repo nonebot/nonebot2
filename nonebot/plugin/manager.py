@@ -89,8 +89,20 @@ class PluginManager:
         if hasattr(_internal_space, internal_id):
             raise RuntimeError("Plugin manager already exists!")
 
-        prefix = sys._getframe(3).f_globals.get(
-            "__name__") or _internal_space.__name__
+        index = 2
+        prefix: str = _internal_space.__name__
+        while True:
+            try:
+                frame = sys._getframe(index)
+            except ValueError:
+                break
+            # check if is called in plugin
+            if "__plugin_name__" not in frame.f_globals:
+                index += 1
+                continue
+            prefix = frame.f_globals.get("__name__", _internal_space.__name__)
+            break
+
         if not prefix.startswith(_internal_space.__name__):
             prefix = _internal_space.__name__
         module = _InternalModule(prefix, self)
@@ -177,7 +189,11 @@ class PluginManager:
         for path in paths:
             try:
                 rel_path = Path(origin_path).relative_to(path)
-                return ".".join(rel_path.parts[:-1] + (rel_path.stem,))
+                if rel_path.stem == "__init__":
+                    return f"{self.internal_module.__name__}." + ".".join(
+                        rel_path.parts[:-1])
+                return f"{self.internal_module.__name__}." + ".".join(
+                    rel_path.parts[:-1] + (rel_path.stem,))
             except ValueError:
                 continue
 

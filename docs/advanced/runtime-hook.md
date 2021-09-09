@@ -91,7 +91,7 @@ async def handle_api_result(bot: Bot, exception: Optional[Exception], api: str, 
 
 :::tip 提示
 
-关于 `事件处理` 的流程，可以在[这里](./README)查阅。
+关于 `事件处理` 的流程，可以在[这里](./README.md)查阅。
 
 :::
 

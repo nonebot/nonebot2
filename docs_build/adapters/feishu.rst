@@ -1,10 +1,10 @@
----
+\-\-\-
 contentSidebar: true
 sidebarDepth: 0
----
+\-\-\-
 
 NoneBot.adapters.feishu 模块
-===========================
+============================
 
 .. automodule:: nonebot.adapters.feishu
 
@@ -15,7 +15,7 @@ NoneBot.adapters.feishu.config 模块
    :members:
 
 NoneBot.adapters.feishu.exception 模块
-=====================================
+======================================
 
 .. automodule:: nonebot.adapters.feishu.exception
    :members:
@@ -23,7 +23,7 @@ NoneBot.adapters.feishu.exception 模块
 
 
 NoneBot.adapters.feishu.bot 模块
-===============================
+================================
 
 .. automodule:: nonebot.adapters.feishu.bot
    :members:
@@ -32,7 +32,7 @@ NoneBot.adapters.feishu.bot 模块
 
 
 NoneBot.adapters.feishu.message 模块
-===================================
+====================================
 
 .. automodule:: nonebot.adapters.feishu.message
    :members:
@@ -41,7 +41,7 @@ NoneBot.adapters.feishu.message 模块
 
 
 NoneBot.adapters.feishu.event 模块
-=================================
+==================================
 
 .. automodule:: nonebot.adapters.feishu.event
    :members:

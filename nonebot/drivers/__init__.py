@@ -8,9 +8,10 @@
 import abc
 import asyncio
 from dataclasses import dataclass, field
-from typing import Any, Set, Dict, Type, Optional, Callable, TYPE_CHECKING
+from typing import Any, Set, Dict, Type, Union, Optional, Callable, Awaitable, TYPE_CHECKING
 
 from nonebot.log import logger
+from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.typing import T_BotConnectionHook, T_BotDisconnectionHook
 
@@ -87,13 +88,13 @@ class Driver(abc.ABC):
           * ``**kwargs``: 其他传递给适配器的参数
         """
         if name in self._adapters:
-            logger.opt(
-                colors=True).debug(f'Adapter "<y>{name}</y>" already exists')
+            logger.opt(colors=True).debug(
+                f'Adapter "<y>{escape_tag(name)}</y>" already exists')
             return
         self._adapters[name] = adapter
         adapter.register(self, self.config, **kwargs)
-        logger.opt(
-            colors=True).debug(f'Succeeded to load adapter "<y>{name}</y>"')
+        logger.opt(colors=True).debug(
+            f'Succeeded to load adapter "<y>{escape_tag(name)}</y>"')
 
     @property
     @abc.abstractmethod
@@ -119,7 +120,7 @@ class Driver(abc.ABC):
           * ``**kwargs``
         """
         logger.opt(colors=True).debug(
-            f"<g>Loaded adapters: {', '.join(self._adapters)}</g>")
+            f"<g>Loaded adapters: {escape_tag(', '.join(self._adapters))}</g>")
 
     @abc.abstractmethod
     def on_startup(self, func: Callable) -> Callable:
@@ -192,29 +193,41 @@ class Driver(abc.ABC):
         asyncio.create_task(_run_hook(bot))
 
 
-# TODO: issue #240
 class ForwardDriver(Driver):
+    """
+    Forward Driver 基类。将客户端框架封装，以满足适配器使用。
+    """
 
     @abc.abstractmethod
-    def setup_http_polling(self,
-                           adapter: str,
-                           self_id: str,
-                           url: str,
-                           polling_interval: float = 3.,
-                           method: str = "GET",
-                           body: bytes = b"",
-                           headers: Dict[str, str] = {},
-                           http_version: str = "1.1") -> None:
+    def setup_http_polling(
+        self, setup: Union["HTTPPollingSetup",
+                           Callable[[], Awaitable["HTTPPollingSetup"]]]
+    ) -> None:
+        """
+        :说明:
+
+          注册一个 HTTP 轮询连接，如果传入一个函数，则该函数会在每次连接时被调用
+
+        :参数:
+
+          * ``setup: Union[HTTPPollingSetup, Callable[[], Awaitable[HTTPPollingSetup]]]``
+        """
         raise NotImplementedError
 
     @abc.abstractmethod
-    def setup_websocket(self,
-                        adapter: str,
-                        self_id: str,
-                        url: str,
-                        reconnect_interval: float = 3.,
-                        headers: Dict[str, str] = {},
-                        http_version: str = "1.1") -> None:
+    def setup_websocket(
+        self, setup: Union["WebSocketSetup",
+                           Callable[[], Awaitable["WebSocketSetup"]]]
+    ) -> None:
+        """
+        :说明:
+
+          注册一个 WebSocket 连接，如果传入一个函数，则该函数会在每次重连时被调用
+
+        :参数:
+
+          * ``setup: Union[WebSocketSetup, Callable[[], Awaitable[WebSocketSetup]]]``
+        """
         raise NotImplementedError
 
 
@@ -239,9 +252,9 @@ class ReverseDriver(Driver):
 @dataclass
 class HTTPConnection(abc.ABC):
     http_version: str
-    """One of `"1.0"`, `"1.1"` or `"2"`."""
+    """One of ``"1.0"``, ``"1.1"`` or ``"2"``."""
     scheme: str
-    """URL scheme portion (likely `"http"` or `"https"`)."""
+    """URL scheme portion (likely ``"http"`` or ``"https"``)."""
     path: str
     """
     HTTP request target excluding any query string,
@@ -249,7 +262,7 @@ class HTTPConnection(abc.ABC):
     decoded into characters.
     """
     query_string: bytes = b""
-    """ URL portion after the `?`, percent-encoded."""
+    """ URL portion after the ``?``, percent-encoded."""
     headers: Dict[str, str] = field(default_factory=dict)
     """A dict of name-value pairs,
     where name is the header name, and value is the header value.
@@ -279,7 +292,7 @@ class HTTPRequest(HTTPConnection):
     body: bytes = b""
     """Body of the request.
 
-    Optional; if missing defaults to b"".
+    Optional; if missing defaults to ``b""``.
     """
 
     @property
@@ -334,7 +347,7 @@ class WebSocket(HTTPConnection, abc.ABC):
 
     @property
     @abc.abstractmethod
-    def closed(self):
+    def closed(self) -> bool:
         """
         :类型: ``bool``
         :说明: 连接是否已经关闭
@@ -370,3 +383,37 @@ class WebSocket(HTTPConnection, abc.ABC):
     async def send_bytes(self, data: bytes):
         """发送一条 WebSocket binary 信息"""
         raise NotImplementedError
+
+
+@dataclass
+class HTTPPollingSetup:
+    adapter: str
+    """协议适配器名称"""
+    self_id: str
+    """机器人 ID"""
+    url: str
+    """URL"""
+    method: str
+    """HTTP method"""
+    body: bytes
+    """HTTP body"""
+    headers: Dict[str, str]
+    """HTTP headers"""
+    http_version: str
+    """HTTP version"""
+    poll_interval: float
+    """HTTP 轮询间隔"""
+
+
+@dataclass
+class WebSocketSetup:
+    adapter: str
+    """协议适配器名称"""
+    self_id: str
+    """机器人 ID"""
+    url: str
+    """URL"""
+    headers: Dict[str, str] = field(default_factory=dict)
+    """HTTP headers"""
+    reconnect_interval: float = 3.
+    """WebSocket 重连间隔"""

@@ -94,7 +94,7 @@ sidebarDepth: 0
 
 ## _class_ `Bot`
 
-基类：[`nonebot.adapters._base.Bot`](README.md#nonebot.adapters._base.Bot)
+基类：[`nonebot.adapters._bot.Bot`](README.md#nonebot.adapters._bot.Bot)
 
 钉钉 协议 Bot 适配。继承属性参考 [BaseBot](./#class-basebot) 。
 
@@ -208,7 +208,7 @@ sidebarDepth: 0
 
 ## _class_ `MessageSegment`
 
-基类：[`nonebot.adapters._base.MessageSegment`](README.md#nonebot.adapters._base.MessageSegment)[`Message`]
+基类：[`nonebot.adapters._message.MessageSegment`](README.md#nonebot.adapters._message.MessageSegment)[`Message`]
 
 钉钉 协议 MessageSegment 适配。具体方法参考协议消息段类型或源码。
 
@@ -245,12 +245,12 @@ message += MessageSegment.atDingtalkIds(event.senderId)
 
 ### _static_ `extension(dict_)`
 
-"标记 text 文本的 extension 属性，需要与 text 消息段相加。
+标记 text 文本的 extension 属性，需要与 text 消息段相加。
 
 
 ### _static_ `code(code_language, code)`
 
-"发送 code 消息段
+发送 code 消息段
 
 
 ### _static_ `markdown(title, text)`
@@ -274,7 +274,7 @@ message += MessageSegment.atDingtalkIds(event.senderId)
     * `btnOrientation`: 0：按钮竖直排列 1：按钮横向排列
 
 
-    * `btns`: [{ "title": title, "actionURL": actionURL }, ...]
+    * `btns`: `[{ "title": title, "actionURL": actionURL }, ...]`
 
 
 
@@ -286,13 +286,13 @@ message += MessageSegment.atDingtalkIds(event.senderId)
 * **参数**
 
     
-    * `links`: [{ "title": xxx, "messageURL": xxx, "picURL": xxx }, ...]
+    * `links`: `[{ "title": xxx, "messageURL": xxx, "picURL": xxx }, ...]`
 
 
 
 ## _class_ `Message`
 
-基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)[`nonebot.adapters.ding.message.MessageSegment`]
+基类：[`nonebot.adapters._message.Message`](README.md#nonebot.adapters._message.Message)[`nonebot.adapters.ding.message.MessageSegment`]
 
 钉钉 协议 Message 适配。
 
@@ -301,7 +301,7 @@ message += MessageSegment.atDingtalkIds(event.senderId)
 
 ## _class_ `Event`
 
-基类：[`nonebot.adapters._base.Event`](README.md#nonebot.adapters._base.Event)
+基类：[`nonebot.adapters._event.Event`](README.md#nonebot.adapters._event.Event)
 
 钉钉协议事件。各事件字段参考 [钉钉文档](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p)
 

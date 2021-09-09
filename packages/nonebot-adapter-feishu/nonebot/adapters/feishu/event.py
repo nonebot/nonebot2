@@ -24,7 +24,7 @@ class Event(BaseEvent):
     """
     飞书协议事件。各事件字段参考 `飞书文档`_
 
-    .. _飞书事件列表文档:
+    .. _飞书文档:
         https://open.feishu.cn/document/ukTMukTMukTM/uYDNxYjL2QTM24iN0EjN/event-list
     """
     __event__ = ""

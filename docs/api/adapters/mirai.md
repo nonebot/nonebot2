@@ -117,7 +117,7 @@ Bot会话管理器, 提供API主动调用接口
 
 ## _class_ `Bot`
 
-基类：[`nonebot.adapters._base.Bot`](README.md#nonebot.adapters._base.Bot)
+基类：[`nonebot.adapters._bot.Bot`](README.md#nonebot.adapters._bot.Bot)
 
 mirai-api-http 协议 Bot 适配。
 
@@ -292,7 +292,7 @@ API中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则�
 * **参数**
 
     
-    * `type: str`: "friend" 或 "group" 或 "temp"
+    * `type: str`: “friend” 或 “group” 或 “temp”
 
 
     * `img: BytesIO`: 图片的BytesIO对象
@@ -311,7 +311,7 @@ API中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则�
 * **参数**
 
     
-    * `type: str`: 当前仅支持 "group"
+    * `type: str`: 当前仅支持 “group”
 
 
     * `voice: BytesIO`: 语音的BytesIO对象
@@ -679,42 +679,6 @@ API中为了使代码更加整洁, 我们采用了与PEP8相符的命名规则�
     * `info: Dict[str, Any]`: 群员资料, 格式见 `member_info` 的返回值
 
 
-# NoneBot.adapters.mirai.bot_ws 模块
-
-
-## _class_ `WebSocket`
-
-基类：[`nonebot.drivers.WebSocket`](../drivers/README.md#nonebot.drivers.WebSocket)
-
-
-## _class_ `WebsocketBot`
-
-基类：`nonebot.adapters.mirai.bot.Bot`
-
-mirai-api-http 正向 Websocket 协议 Bot 适配。
-
-
-### _classmethod_ `register(driver, config, qq)`
-
-
-* **说明**
-
-    注册该Adapter
-
-
-
-* **参数**
-
-    
-    * `driver: Driver`: 程序所使用的\`\`Driver\`\`
-
-
-    * `config: Config`: 程序配置对象
-
-
-    * `qq: int`: 要使用的Bot的QQ号 **注意: 在使用正向Websocket时必须指定该值!**
-
-
 # NoneBot.adapters.mirai.message 模块
 
 
@@ -727,7 +691,7 @@ mirai-api-http 正向 Websocket 协议 Bot 适配。
 
 ## _class_ `MessageSegment`
 
-基类：[`nonebot.adapters._base.MessageSegment`](README.md#nonebot.adapters._base.MessageSegment)[`MessageChain`]
+基类：[`nonebot.adapters._message.MessageSegment`](README.md#nonebot.adapters._message.MessageSegment)[`MessageChain`]
 
 Mirai-API-HTTP 协议 MessageSegment 适配。具体方法参考 [mirai-api-http 消息类型](https://github.com/project-mirai/mirai-api-http/blob/master/docs/MessageType.md)
 
@@ -968,7 +932,7 @@ Mirai-API-HTTP 协议 MessageSegment 适配。具体方法参考 [mirai-api-http
 
 ## _class_ `MessageChain`
 
-基类：[`nonebot.adapters._base.Message`](README.md#nonebot.adapters._base.Message)[`nonebot.adapters.mirai.message.MessageSegment`]
+基类：[`nonebot.adapters._message.Message`](README.md#nonebot.adapters._message.Message)[`nonebot.adapters.mirai.message.MessageSegment`]
 
 Mirai 协议 Message 适配
 
@@ -1056,7 +1020,7 @@ Mirai 协议 Message 适配
 
 ## _class_ `Event`
 
-基类：[`nonebot.adapters._base.Event`](README.md#nonebot.adapters._base.Event)
+基类：[`nonebot.adapters._event.Event`](README.md#nonebot.adapters._event.Event)
 
 mirai-api-http 协议事件，字段与 mirai-api-http 一致。各事件字段参考 [mirai-api-http 事件类型](https://github.com/project-mirai/mirai-api-http/blob/master/docs/EventType.md)
 
@@ -1482,7 +1446,7 @@ Bot被邀请入群申请
 
 ## _class_ `Event`
 
-基类：[`nonebot.adapters._base.Event`](README.md#nonebot.adapters._base.Event)
+基类：[`nonebot.adapters._event.Event`](README.md#nonebot.adapters._event.Event)
 
 mirai-api-http 协议事件，字段与 mirai-api-http 一致。各事件字段参考 [mirai-api-http 事件类型](https://github.com/project-mirai/mirai-api-http/blob/master/docs/EventType.md)
 

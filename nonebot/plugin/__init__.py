@@ -7,7 +7,6 @@
 import re
 import json
 from types import ModuleType
-from functools import reduce
 from dataclasses import dataclass
 from collections import defaultdict
 from contextvars import Context, copy_context
@@ -17,6 +16,7 @@ import tomlkit
 from nonebot.log import logger
 from nonebot.matcher import Matcher
 from nonebot.handler import Handler
+from nonebot.utils import escape_tag
 from nonebot.permission import Permission
 from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
 from nonebot.rule import Rule, startswith, endswith, keyword, command, shell_command, ArgumentParser, regex
@@ -405,10 +405,14 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
 
     async def _strip_cmd(bot: "Bot", event: "Event", state: T_State):
         message = event.get_message()
+        if len(message) < 1:
+            return
         segment = message.pop(0)
+        segment_text = str(segment).lstrip()
+        if not segment_text.startswith(state["_prefix"]["raw_command"]):
+            return
         new_message = message.__class__(
-            str(segment).lstrip()
-            [len(state["_prefix"]["raw_command"]):].lstrip())  # type: ignore
+            segment_text[len(state["_prefix"]["raw_command"]):].lstrip())
         for new_segment in reversed(new_message):
             message.insert(0, new_segment)
 
@@ -946,12 +950,13 @@ def _load_plugin(manager: PluginManager, plugin_name: str) -> Optional[Plugin]:
 
         plugin = Plugin(plugin_name, module)
         plugins[plugin_name] = plugin
-        logger.opt(
-            colors=True).success(f'Succeeded to import "<y>{plugin_name}</y>"')
+        logger.opt(colors=True).success(
+            f'Succeeded to import "<y>{escape_tag(plugin_name)}</y>"')
         return plugin
     except Exception as e:
         logger.opt(colors=True, exception=e).error(
-            f'<r><bg #f8bbd0>Failed to import "{plugin_name}"</bg #f8bbd0></r>')
+            f'<r><bg #f8bbd0>Failed to import "{escape_tag(plugin_name)}"</bg #f8bbd0></r>'
+        )
         return None
 
 
