@@ -16,6 +16,7 @@ from typing import (Any, Type, List, Dict, Union, Mapping, Iterable, Callable,
 from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.handler import Handler
+from nonebot.adapters import MessageFormatter
 from nonebot.permission import Permission, USER
 from nonebot.typing import (T_State, T_StateFactory, T_Handler, T_ArgsParser,
                             T_TypeUpdater, T_PermissionUpdater)
@@ -401,7 +402,8 @@ class Matcher(metaclass=MatcherMeta):
     def got(
         cls,
         key: str,
-        prompt: Optional[Union[str, "Message", "MessageSegment"]] = None,
+        prompt: Optional[Union[str, "Message", "MessageSegment",
+                               MessageFormatter]] = None,
         args_parser: Optional[T_ArgsParser] = None
     ) -> Callable[[T_Handler], T_Handler]:
         """
@@ -412,7 +414,7 @@ class Matcher(metaclass=MatcherMeta):
         :参数:
 
           * ``key: str``: 参数名
-          * ``prompt: Optional[Union[str, Message, MessageSegment]]``: 在参数不存在时向用户发送的消息
+          * ``prompt: Optional[Union[str, Message, MessageSegment, MessageFormatter]]``: 在参数不存在时向用户发送的消息
           * ``args_parser: Optional[T_ArgsParser]``: 可选参数解析函数，空则使用默认解析函数
         """
 
@@ -420,23 +422,11 @@ class Matcher(metaclass=MatcherMeta):
             state["_current_key"] = key
             if key not in state:
                 if prompt:
-                    if isinstance(prompt, str):
-                        await bot.send(event=event,
-                                       message=prompt.format(**state))
-                    elif isinstance(prompt, Mapping):
-                        if prompt.is_text():
-                            await bot.send(event=event,
-                                           message=str(prompt).format(**state))
-                        else:
-                            await bot.send(event=event, message=prompt)
-                    elif isinstance(prompt, Iterable):
-                        await bot.send(
-                            event=event,
-                            message=prompt.__class__(
-                                str(prompt).format(**state))  # type: ignore
-                        )
+                    if isinstance(prompt, MessageFormatter):
+                        _prompt = prompt.format(**state)
                     else:
-                        logger.warning("Unknown prompt type, ignored.")
+                        _prompt = prompt
+                    await bot.send(event=event, message=_prompt)
                 raise PausedException
             else:
                 state["_skip_key"] = True
@@ -456,7 +446,6 @@ class Matcher(metaclass=MatcherMeta):
         parser_handler = cls.append_handler(_key_parser)
 
         def _decorator(func: T_Handler) -> T_Handler:
-            print("deco", key, hasattr(cls.handlers[-1].func, "__wrapped__"))
             if not hasattr(cls.handlers[-1].func, "__wrapped__"):
                 parser = cls.handlers.pop()
                 func_handler = Handler(func)

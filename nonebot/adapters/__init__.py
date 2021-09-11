@@ -22,4 +22,5 @@ except Exception:
 
 from ._bot import Bot
 from ._event import Event
+from ._formatter import MessageFormatter
 from ._message import Message, MessageSegment
