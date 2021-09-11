@@ -533,19 +533,3 @@ Event 基类。提供获取关键信息的方法，其余信息可直接获取�
 
     
     * `bool`
-
-
-
-## _class_ `MessageFormatter`
-
-基类：`string.Formatter`, `Generic`[`nonebot.adapters._formatter.TM`]
-
-消息模板格式化实现类
-
-
-### `format(*args, **kwargs)`
-
-
-* **说明**
-
-    根据模板和参数生成消息对象

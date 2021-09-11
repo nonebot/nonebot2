@@ -495,7 +495,7 @@ sidebarDepth: 0
     * `key: str`: 参数名
 
 
-    * `prompt: Optional[Union[str, Message, MessageSegment]]`: 在参数不存在时向用户发送的消息
+    * `prompt: Optional[Union[str, Message, MessageSegment, MessageFormatter]]`: 在参数不存在时向用户发送的消息
 
 
     * `args_parser: Optional[T_ArgsParser]`: 可选参数解析函数，空则使用默认解析函数
