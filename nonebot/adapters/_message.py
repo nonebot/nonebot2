@@ -4,7 +4,7 @@ from dataclasses import dataclass, field, asdict
 from typing import (Any, List, Dict, Type, Union, TypeVar, Mapping, Generic,
                     Iterable)
 
-from ._formatter import MessageFormatter
+from ._template import MessageTemplate
 
 T = TypeVar("T")
 TMS = TypeVar("TMS", covariant=True)
@@ -103,7 +103,7 @@ class Message(List[TMS], abc.ABC):
             self.extend(self._construct(message))
 
     @classmethod
-    def template(cls: Type[TM], format_string: str) -> MessageFormatter[TM]:
+    def template(cls: Type[TM], format_string: str) -> MessageTemplate[TM]:
         """
         :说明:
 
@@ -126,7 +126,7 @@ class Message(List[TMS], abc.ABC):
 
           - ``MessageFormatter[TM]``: 消息格式化器
         """
-        return MessageFormatter(cls, format_string)
+        return MessageTemplate(cls, format_string)
 
     @classmethod
     @abc.abstractmethod

@@ -16,7 +16,7 @@ from typing import (Any, Type, List, Dict, Union, Mapping, Iterable, Callable,
 from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.handler import Handler
-from nonebot.adapters import MessageFormatter
+from nonebot.adapters import MessageTemplate
 from nonebot.permission import Permission, USER
 from nonebot.typing import (T_State, T_StateFactory, T_Handler, T_ArgsParser,
                             T_TypeUpdater, T_PermissionUpdater)
@@ -403,7 +403,7 @@ class Matcher(metaclass=MatcherMeta):
         cls,
         key: str,
         prompt: Optional[Union[str, "Message", "MessageSegment",
-                               MessageFormatter]] = None,
+                               MessageTemplate]] = None,
         args_parser: Optional[T_ArgsParser] = None
     ) -> Callable[[T_Handler], T_Handler]:
         """
@@ -422,7 +422,7 @@ class Matcher(metaclass=MatcherMeta):
             state["_current_key"] = key
             if key not in state:
                 if prompt:
-                    if isinstance(prompt, MessageFormatter):
+                    if isinstance(prompt, MessageTemplate):
                         _prompt = prompt.format(**state)
                     else:
                         _prompt = prompt

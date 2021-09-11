@@ -10,7 +10,7 @@ if TYPE_CHECKING:
 TM = TypeVar("TM", bound="Message")
 
 
-class MessageFormatter(Formatter, Generic[TM]):
+class MessageTemplate(Formatter, Generic[TM]):
     """消息模板格式化实现类"""
 
     def __init__(self, factory: Type[TM], template: str) -> None:
@@ -105,4 +105,5 @@ class MessageFormatter(Formatter, Generic[TM]):
                                              [""])), auto_arg_index
 
     def format_field(self, value: Any, format_spec: str) -> Any:
-        return super().format_field(value, format_spec) if format_spec else value
+        return super().format_field(value,
+                                    format_spec) if format_spec else value
