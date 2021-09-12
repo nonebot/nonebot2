@@ -505,7 +505,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         bot = current_bot.get()
         event = current_event.get()
-        if message:
+        if message is not None:
             await bot.send(event=event, message=message, **kwargs)
         raise FinishedException
 
@@ -571,6 +571,7 @@ class Matcher(metaclass=MatcherMeta):
 
             while self.handlers:
                 handler = self.handlers.pop(0)
+                logger.debug(f"Running handler {handler}")
                 await handler(self, bot, event, self.state)
 
         except RejectedException:

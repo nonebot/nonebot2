@@ -17,11 +17,20 @@ class MessageSegment(BaseMessageSegment["Message"]):
 
     @overrides(BaseMessageSegment)
     def __str__(self) -> str:
+        """
+        该消息段所代表的 str，在命令匹配部分使用，
+        钉钉目前只支持匹配 text 命令
+        """
         if self.type == "text":
             return str(self.data["content"])
-        elif self.type == "markdown":
-            return str(self.data["text"])
         return ""
+
+    def __bool__(self) -> bool:
+        """
+        因为暂时还不支持 text 和 markdown 之外的其他复杂消息段的 `__str__`（也不太需要），
+        会导致判断非这两种类型的消息段的布尔值为 true 的时候出错
+        """
+        return self.data is not None
 
     @overrides(BaseMessageSegment)
     def is_text(self) -> bool:
