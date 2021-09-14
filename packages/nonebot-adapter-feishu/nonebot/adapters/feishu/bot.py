@@ -331,16 +331,16 @@ class Bot(BaseBot):
         msg = message if isinstance(message, Message) else Message(message)
 
         if isinstance(event, GroupMessageEvent):
-            receive_id, receive_id_type = event.event.message.chat_id, 'chat_id'
+            receive_id, receive_id_type = event.event.message.chat_id, "chat_id"
         elif isinstance(event, PrivateMessageEvent):
-            receive_id, receive_id_type = event.get_user_id(), 'union_id'
+            receive_id, receive_id_type = event.get_user_id(), "open_id"
         else:
             raise ValueError(
                 "Cannot guess `receive_id` and `receive_id_type` to reply!")
 
         at_sender = at_sender and bool(event.get_user_id())
 
-        if at_sender and receive_id_type != "union_id":
+        if at_sender and receive_id_type == "chat_id":
             msg = MessageSegment.at(event.get_user_id()) + " " + msg
 
         msg_type, content = MessageSerializer(msg).serialize()
