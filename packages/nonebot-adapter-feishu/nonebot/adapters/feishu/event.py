@@ -225,11 +225,11 @@ class NoticeEvent(Event):
 
     @overrides(Event)
     def get_event_name(self) -> str:
-        raise ValueError("Event has no name!")
+        return self.header.event_type
 
     @overrides(Event)
     def get_event_description(self) -> str:
-        raise ValueError("Event has no description!")
+        return str(self.dict())
 
     @overrides(Event)
     def get_message(self) -> Message:
