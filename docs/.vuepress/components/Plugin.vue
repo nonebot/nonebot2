@@ -36,6 +36,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="newPlugin.name"
+                        :rules="rules"
                         label="插件名称"
                         required
                       ></v-text-field>
@@ -43,6 +44,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="newPlugin.desc"
+                        :rules="rules"
                         label="插件介绍"
                         required
                       ></v-text-field>
@@ -50,6 +52,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="newPlugin.link"
+                        :rules="rules"
                         label="PyPI 项目名"
                         required
                       ></v-text-field>
@@ -57,6 +60,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="newPlugin.id"
+                        :rules="rules"
                         label="插件 import 包名"
                         required
                       ></v-text-field>
@@ -64,6 +68,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="newPlugin.repo"
+                        :rules="rules"
                         label="仓库/主页链接"
                         required
                       ></v-text-field>
@@ -81,10 +86,7 @@
                 :disabled="!valid"
                 color="blue darken-1"
                 text
-                @click="
-                  dialog = false;
-                  publishPlugin();
-                "
+                @click="publishPlugin"
               >
                 发布
               </v-btn>
@@ -150,6 +152,7 @@ export default {
       page: 1,
       dialog: false,
       valid: false,
+      rules: [(v) => !!v || "This field is required"],
       newPlugin: {
         name: null,
         desc: null,
@@ -176,10 +179,13 @@ export default {
     displayPlugins() {
       return this.filteredPlugins.slice((this.page - 1) * 10, this.page * 10);
     },
+  },
+  methods: {
     publishPlugin() {
       if (!this.$refs.newPluginForm.validate()) {
         return;
       }
+      this.dialog = false;
       const title = encodeURIComponent(
         `Plugin: ${this.newPlugin.name}`
       ).replace(/%2B/gi, "+");

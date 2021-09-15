@@ -36,6 +36,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="newAdapter.name"
+                        :rules="rules"
                         label="协议名称"
                         required
                       ></v-text-field>
@@ -43,6 +44,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="newAdapter.desc"
+                        :rules="rules"
                         label="协议介绍"
                         required
                       ></v-text-field>
@@ -50,6 +52,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="newAdapter.link"
+                        :rules="rules"
                         label="PyPI 项目名"
                         required
                       ></v-text-field>
@@ -57,6 +60,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="newAdapter.id"
+                        :rules="rules"
                         label="协议 import 包名"
                         required
                       ></v-text-field>
@@ -64,6 +68,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="newAdapter.repo"
+                        :rules="rules"
                         label="仓库/主页链接"
                         required
                       ></v-text-field>
@@ -81,10 +86,7 @@
                 :disabled="!valid"
                 color="blue darken-1"
                 text
-                @click="
-                  dialog = false;
-                  publishAdapter();
-                "
+                @click="publishAdapter"
               >
                 发布
               </v-btn>
@@ -148,6 +150,7 @@ export default {
       page: 1,
       dialog: false,
       valid: false,
+      rules: [(v) => !!v || "This field is required"],
       newAdapter: {
         name: null,
         desc: null,
@@ -174,10 +177,13 @@ export default {
     displayAdapters() {
       return this.filteredAdapters.slice((this.page - 1) * 10, this.page * 10);
     },
+  },
+  methods: {
     publishAdapter() {
       if (!this.$refs.newAdapterForm.validate()) {
         return;
       }
+      this.dialog = false;
       const title = encodeURIComponent(
         `Adapter: ${this.newAdapter.name}`
       ).replace(/%2B/gi, "+");
