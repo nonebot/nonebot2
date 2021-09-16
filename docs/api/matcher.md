@@ -292,6 +292,59 @@ sidebarDepth: 0
 
 
 
+### _classmethod_ `new(type_='', rule=None, permission=None, handlers=None, temp=False, priority=1, block=False, *, module=None, expire_time=None, default_state=None, default_state_factory=None, default_parser=None, default_type_updater=None, default_permission_updater=None)`
+
+
+* **说明**
+
+    创建一个新的事件响应器，并存储至 [matchers](#matchers)
+
+
+
+* **参数**
+
+    
+    * `type_: str`: 事件响应器类型，与 `event.get_type()` 一致时触发，空字符串表示任意
+
+
+    * `rule: Optional[Rule]`: 匹配规则
+
+
+    * `permission: Optional[Permission]`: 权限
+
+
+    * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+
+
+    * `temp: bool`: 是否为临时事件响应器，即触发一次后删除
+
+
+    * `priority: int`: 响应优先级
+
+
+    * `block: bool`: 是否阻止事件向更低优先级的响应器传播
+
+
+    * `module: Optional[str]`: 事件响应器所在模块名称
+
+
+    * `default_state: Optional[T_State]`: 默认状态 `state`
+
+
+    * `default_state_factory: Optional[T_StateFactory]`: 默认状态 `state` 的工厂函数
+
+
+    * `expire_time: Optional[datetime]`: 事件响应器最终有效时间点，过时即被删除
+
+
+
+* **返回**
+
+    
+    * `Type[Matcher]`: 新的事件响应器类
+
+
+
 ### _async classmethod_ `check_perm(bot, event)`
 
 
