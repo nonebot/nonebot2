@@ -1,21 +1,22 @@
 import json
 import re
-from typing import TYPE_CHECKING, Any, Dict, Optional, Tuple, Union
+from typing import (TYPE_CHECKING, Any, AsyncIterable, Dict, Iterable,
+                    Optional, Tuple, Union)
 
 import httpx
 from aiocache import Cache, cached
 from aiocache.serializers import PickleSerializer
 
-from nonebot.log import logger
-from nonebot.utils import escape_tag
-from nonebot.typing import overrides
-from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
 from nonebot.drivers import Driver, HTTPRequest, HTTPResponse
+from nonebot.log import logger
+from nonebot.message import handle_event
+from nonebot.typing import overrides
+from nonebot.utils import escape_tag
 
 from .config import Config as FeishuConfig
-from .event import (Event, GroupMessageEvent, MessageEvent, PrivateMessageEvent,
-                    get_event_model)
+from .event import (Event, GroupMessageEvent, MessageEvent,
+                    PrivateMessageEvent, get_event_model)
 from .exception import ActionFailed, ApiNotAvailable, NetworkError
 from .message import Message, MessageSegment, MessageSerializer
 from .utils import AESCipher, log
@@ -101,7 +102,7 @@ def _check_nickname(bot: "Bot", event: "Event"):
             first_msg_seg.data["text"] = first_text[m.end():]
 
 
-def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
+def _handle_api_result(result: Union[Optional[Dict[str, Any]], str, bytes, Iterable[bytes], AsyncIterable[bytes]]) -> Any:
     """
     :说明:
 
@@ -123,6 +124,8 @@ def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
         if result.get("code") != 0:
             raise ActionFailed(**result)
         return result.get("data")
+    else:
+        return result
 
 
 class Bot(BaseBot):
@@ -289,7 +292,10 @@ class Bot(BaseBot):
                                       params=data.get("query", {}),
                                       headers=headers))
                 if 200 <= response.status_code < 300:
-                    result = response.json()
+                    if response.headers["content-type"].startswith("application/json"):
+                        result = response.json()
+                    else:
+                        result = response.content
                     return _handle_api_result(result)
                 raise NetworkError(f"HTTP request received unexpected "
                                    f"status code: {response.status_code} "
