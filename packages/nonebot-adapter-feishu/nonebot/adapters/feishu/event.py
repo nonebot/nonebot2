@@ -201,6 +201,9 @@ class MessageEvent(Event):
     def get_user_id(self) -> str:
         return self.event.sender.sender_id.open_id
 
+    def get_all_user_id(self) -> UserId:
+        return self.event.sender.sender_id
+
     @overrides(Event)
     def get_session_id(self) -> str:
         return f"{self.event.message.chat_type}_{self.event.message.chat_id}_{self.get_user_id()}"
