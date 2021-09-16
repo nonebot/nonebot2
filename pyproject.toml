@@ -38,12 +38,12 @@ aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
 [tool.poetry.dev-dependencies]
 yapf = "^0.31.0"
 sphinx = "^4.1.1"
-nonebot-plugin-test = "^0.2.0"
 nonebot-adapter-cqhttp = { path = "./packages/nonebot-adapter-cqhttp", develop = true }
 nonebot-adapter-ding = { path = "./packages/nonebot-adapter-ding", develop = true }
 nonebot-adapter-mirai = { path = "./packages/nonebot-adapter-mirai", develop = true }
 nonebot-adapter-feishu = { path = "./packages/nonebot-adapter-feishu", develop = true }
 sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
+nonebot-plugin-test = "^0.3.0"
 
 [tool.poetry.extras]
 quart = ["quart"]
