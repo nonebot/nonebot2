@@ -38,7 +38,7 @@ aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
 [tool.poetry.dev-dependencies]
 yapf = "^0.31.0"
 sphinx = "^4.1.1"
-nonebot-plugin-test = "^0.2.0"
+nonebot-plugin-test = "^0.3.0"
 nonebot-adapter-cqhttp = { path = "./packages/nonebot-adapter-cqhttp", develop = true }
 nonebot-adapter-ding = { path = "./packages/nonebot-adapter-ding", develop = true }
 nonebot-adapter-mirai = { path = "./packages/nonebot-adapter-mirai", develop = true }

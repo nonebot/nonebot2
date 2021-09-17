@@ -30,7 +30,7 @@ NoneBot.adapters 模块
    :special-members: __init__
    :show-inheritance:
 
-.. automodule:: nonebot.adapters._formatter
+.. automodule:: nonebot.adapters._template
    :members:
    :private-members:
    :special-members: __init__
