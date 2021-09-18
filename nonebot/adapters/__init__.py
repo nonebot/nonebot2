@@ -20,7 +20,8 @@ except ImportError:
 except Exception:
     pass
 
-from ._bot import Bot
-from ._event import Event
-from ._template import MessageTemplate
-from ._message import Message, MessageSegment
+from ._bot import Bot as Bot
+from ._event import Event as Event
+from ._template import MessageTemplate as MessageTemplate
+from ._message import Message as Message
+from ._message import MessageSegment as MessageSegment
