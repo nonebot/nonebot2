@@ -6,36 +6,19 @@
 """
 
 import inspect
-from typing import Any, List, Dict, Type, Union, Optional, TYPE_CHECKING
-from typing import ForwardRef, _eval_type  # type: ignore
+from typing import _eval_type  # type: ignore
+from typing import (TYPE_CHECKING, Any, Dict, List, Type, Union, Optional,
+                    ForwardRef)
 
 from nonebot.log import logger
-from nonebot.typing import T_Handler, T_State
+from nonebot.typing import T_State, T_Handler
 
 if TYPE_CHECKING:
     from nonebot.matcher import Matcher
     from nonebot.adapters import Bot, Event
 
 
-class HandlerMeta(type):
-    if TYPE_CHECKING:
-        func: T_Handler
-        signature: inspect.Signature
-        bot_type: Type["Bot"]
-        event_type: Optional[Type["Event"]]
-        state_type: Optional[T_State]
-        matcher_type: Optional[Type["Matcher"]]
-
-    def __repr__(self) -> str:
-        return (f"<Handler {self.func.__name__}(bot: {self.bot_type}, "
-                f"event: {self.event_type}, state: {self.state_type}, "
-                f"matcher: {self.matcher_type})>")
-
-    def __str__(self) -> str:
-        return repr(self)
-
-
-class Handler(metaclass=HandlerMeta):
+class Handler:
     """事件处理函数类"""
 
     def __init__(self, func: T_Handler):
