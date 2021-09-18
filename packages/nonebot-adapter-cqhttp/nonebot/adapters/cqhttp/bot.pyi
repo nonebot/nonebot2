@@ -124,7 +124,7 @@ class Bot(BaseBot):
         message_type: Optional[str] = ...,
         user_id: Optional[int] = ...,
         group_id: Optional[int] = ...,
-        message: Union[str, Message],
+        message: Union[str, Message, MessageSegment],
         auto_escape: bool = ...,
     ) -> Dict[str, Any]:
         """
