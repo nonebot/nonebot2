@@ -382,5 +382,13 @@
     "desc": "一个ATRI语音包，基于文本相似度匹配回复",
     "author": "FYWinds",
     "repo": "https://github.com/FYWinds/nonebot-plugin-atri"
+  },
+  {
+    "id": "nonebot_plugin_hanayori",
+    "link": "nonebot-plugin-hanayori",
+    "name": "HanayoriBot",
+    "desc": "B站动态推送与开播提醒插件",
+    "author": "kanomahoro",
+    "repo": "https://github.com/kanomahoro/nonebot-hanayori"
   }
 ]
