@@ -10,20 +10,22 @@ Quart 驱动适配
 
 import asyncio
 from dataclasses import dataclass
-from typing import List, TypeVar, Callable, Coroutine, Optional
+from typing import List, TypeVar, Callable, Optional, Coroutine
 
 import uvicorn
 from pydantic import BaseSettings
 
+from nonebot.config import Env
 from nonebot.log import logger
-from nonebot.utils import escape_tag
 from nonebot.typing import overrides
-from nonebot.config import Env, Config as NoneBotConfig
-from nonebot.drivers import ReverseDriver, HTTPRequest, WebSocket as BaseWebSocket
+from nonebot.utils import escape_tag
+from nonebot.config import Config as NoneBotConfig
+from nonebot.drivers import HTTPRequest, ReverseDriver
+from nonebot.drivers import WebSocket as BaseWebSocket
 
 try:
-    from werkzeug import exceptions
     from quart import request as _request
+    import werkzeug.exceptions as exceptions
     from quart import websocket as _websocket
     from quart import Quart, Request, Response
     from quart import Websocket as QuartWebSocket

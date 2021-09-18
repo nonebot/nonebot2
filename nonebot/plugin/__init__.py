@@ -10,18 +10,22 @@ from types import ModuleType
 from dataclasses import dataclass
 from collections import defaultdict
 from contextvars import Context, copy_context
-from typing import Any, Set, List, Dict, Type, Tuple, Union, Optional, TYPE_CHECKING
+from typing import (TYPE_CHECKING, Any, Set, Dict, List, Type, Tuple, Union,
+                    Optional)
 
 import tomlkit
+
 from nonebot.log import logger
-from nonebot.matcher import Matcher
 from nonebot.handler import Handler
+from nonebot.matcher import Matcher
 from nonebot.utils import escape_tag
 from nonebot.permission import Permission
-from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
-from nonebot.rule import Rule, startswith, endswith, keyword, command, shell_command, ArgumentParser, regex
+from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_StateFactory
+from nonebot.rule import (Rule, ArgumentParser, regex, command, keyword,
+                          endswith, startswith, shell_command)
 
-from .export import Export, export, _export
+from .export import Export
+from .export import export as export
 from .manager import PluginManager, _current_plugin
 
 if TYPE_CHECKING:
@@ -1072,7 +1076,7 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
       - ``Set[Plugin]``
     """
     with open(file_path, "r", encoding=encoding) as f:
-        data = tomlkit.parse(f.read())
+        data = tomlkit.parse(f.read())  # type: ignore
 
     nonebot_data = data.get("nonebot", {}).get("plugins")
     if not nonebot_data:

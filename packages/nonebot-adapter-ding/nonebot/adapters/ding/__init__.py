@@ -8,9 +8,16 @@
     https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p
 """
 
-from .utils import log
-from .bot import Bot
-from .message import Message, MessageSegment
-from .event import Event, MessageEvent, PrivateMessageEvent, GroupMessageEvent
-from .exception import (DingAdapterException, ApiNotAvailable, NetworkError,
-                        ActionFailed, SessionExpired)
+from .bot import Bot as Bot
+from .utils import log as log
+from .event import Event as Event
+from .message import Message as Message
+from .event import MessageEvent as MessageEvent
+from .exception import ActionFailed as ActionFailed
+from .exception import NetworkError as NetworkError
+from .message import MessageSegment as MessageSegment
+from .exception import SessionExpired as SessionExpired
+from .event import GroupMessageEvent as GroupMessageEvent
+from .exception import ApiNotAvailable as ApiNotAvailable
+from .event import PrivateMessageEvent as PrivateMessageEvent
+from .exception import DingAdapterException as DingAdapterException
