@@ -80,7 +80,7 @@ class Bot(BaseBot):
         self,
         *,
         user_id: int,
-        message: Union[str, Message],
+        message: Union[str, Message, MessageSegment],
         auto_escape: bool = ...,
     ) -> Dict[str, Any]:
         """
@@ -101,7 +101,7 @@ class Bot(BaseBot):
         self,
         *,
         group_id: int,
-        message: Union[str, Message],
+        message: Union[str, Message, MessageSegment],
         auto_escape: bool = ...,
     ) -> Dict[str, Any]:
         """
