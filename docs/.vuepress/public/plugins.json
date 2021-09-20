@@ -390,5 +390,13 @@
     "desc": "B站动态推送与开播提醒插件",
     "author": "kanomahoro",
     "repo": "https://github.com/kanomahoro/nonebot-hanayori"
+  },
+  {
+    "id": "nonebot_plugin_filehost",
+    "link": "nonebot-plugin-filehost",
+    "name": "HTTP静态文件托管",
+    "desc": "一款 HTTP 静态文件托管插件, 为跨机文件传输提供了优雅的解决方案",
+    "author": "mnixry",
+    "repo": "https://github.com/mnixry/nonebot-plugin-filehost"
   }
 ]
