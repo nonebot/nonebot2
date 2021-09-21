@@ -398,5 +398,13 @@
     "desc": "一款 HTTP 静态文件托管插件, 为跨机文件传输提供了优雅的解决方案",
     "author": "mnixry",
     "repo": "https://github.com/mnixry/nonebot-plugin-filehost"
+  },
+  {
+    "id": "nonebot_plugin_simplemusic",
+    "link": "nonebot-plugin-simplemusic",
+    "name": "SimpleMusic",
+    "desc": "最简Q群点歌插件，支持网易云、QQ音乐",
+    "author": "kanomahoro",
+    "repo": "https://github.com/kanomahoro/nonebot-simplemusic"
   }
 ]
