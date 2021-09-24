@@ -18,6 +18,7 @@ class EventHeader(BaseModel):
     token: str
     app_id: str
     tenant_key: str
+    user_list: Optional[List[dict]]
 
 
 class Event(BaseEvent):
@@ -533,6 +534,33 @@ class ContactDepartmentCreatedEventDetail(BaseModel):
 class ContactDepartmentCreatedEvent(NoticeEvent):
     __event__ = "contact.department.created_v3"
     event: ContactDepartmentCreatedEventDetail
+
+
+class CalendarAclScope(BaseModel):
+    type: str
+    user_id: str
+
+
+class CalendarAclCreatedEventDetail(BaseModel):
+    acl_id: str
+    role: str
+    scope: CalendarAclScope
+
+
+class CalendarAclCreatedEvent(NoticeEvent):
+    __event__ = "calendar.calendar.acl.created_v4"
+    event: CalendarAclCreatedEventDetail
+
+
+class CalendarAclDeletedEventDetail(BaseModel):
+    acl_id: str
+    role: str
+    scope: CalendarAclScope
+
+
+class CalendarAclDeletedEvent(NoticeEvent):
+    __event__ = "calendar.calendar.acl.deleted_v4"
+    event: CalendarAclDeletedEventDetail
 
 
 _t = StringTrie(separator=".")
