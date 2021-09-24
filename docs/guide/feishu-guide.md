@@ -54,7 +54,7 @@ VERIFICATION_TOKEN=<yourVerificationToken>
 
 复制所创建应用**“凭证和基础信息”**中的 **App ID** 、 **App Secret** 和 **“事件订阅”** 中的 **Verification Token** ，替换上面相应的配置的值。
 
-此外，对于飞书平台的事件订阅加密机制，飞书适配器也提供 **Encrypt Key** 配置项。
+此外，对于飞书平台的事件订阅加密机制，飞书适配器也提供 `ENCRYPT_KEY` 配置项。
 
 ```
 ENCRYPT_KEY=<yourEncryptKey>
@@ -62,7 +62,7 @@ ENCRYPT_KEY=<yourEncryptKey>
 
 当此项不为空时，飞书适配器会认为用户启用了加密机制，并对事件上报中的密文进行解密。
 
-对于 **Lark（飞书平台海外版）** 的用户，飞书适配器也提供实验性支持，仅需要在配置文件中将 **is_lark** 配置项设置为 **true** 即可。
+对于[Lark(飞书平台海外版)](https://www.larksuite.com) 的用户，飞书适配器也提供**实验性**支持，仅需要在配置文件中添加 `IS_LARK=true` 即可。
 
 ```
 IS_LARK=true
@@ -96,7 +96,7 @@ async def feishu_helper(bot: FeishuBot, event: MessageEvent, state: T_State):
     await helper.finish(message, at_sender=True)
 ```
 
-以上代码注册了一个`say`指令，并会提取`/say`之后的内容发送到事件所对应的群或私聊。
+以上代码注册了一个对飞书平台适用的`say`指令，并会提取`/say`之后的内容发送到事件所对应的群或私聊。
 
 大功告成！现在可以试试向机器人发送类似`/say Hello, Feishu!`的消息进行测试了。
 
