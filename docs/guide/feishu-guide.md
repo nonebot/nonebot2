@@ -11,7 +11,7 @@ pip install nonebot-adapter-feishu
 ## 创建应用与启用应用“机器人”能力
 
 ::: tip
-此部分可参考[飞书开放平台-快速开发机器人-创建应用](https://open.feishu.cn/document/home/develop-a-bot-in-5-minutes/create-an-app)部分文档。
+此部分可参考[飞书开放平台-快速开发机器人-创建应用](https://open.feishu.cn/document/home/develop-a-bot-in-5-minutes/create-an-app)部分的文档。
 
 :::
 
@@ -44,7 +44,7 @@ pip install nonebot-adapter-feishu
 
 ## 在 NoneBot 配置中添加相应配置
 
-在 `.env` 文件中添加以下部分
+在 `.env` 文件中添加以下配置
 
 ```
 APP_ID=<yourAppId>
@@ -52,6 +52,51 @@ APP_SECRET=<yourAppSecret>
 VERIFICATION_TOKEN=<yourVerificationToken>
 ```
 
-复制所创建应用**“凭证和基础信息”**中的**App ID**与**App Secret**及**“事件订阅”**中的**Verification Token**，替换上面相应的配置的值。
+复制所创建应用**“凭证和基础信息”**中的 **App ID** 、 **App Secret** 和 **“事件订阅”** 中的 **Verification Token** ，替换上面相应的配置的值。
 
-大功告成！现在可以试试向机器人发送消息进行测试了。
+此外，对于飞书平台的事件订阅加密机制，飞书适配器也提供 **Encrypt Key** 配置项。
+
+```
+ENCRYPT_KEY=<yourEncryptKey>
+```
+
+当此项不为空时，飞书适配器会认为用户启用了加密机制，并对事件上报中的密文进行解密。
+
+对于**Lark（飞书平台海外版）**的用户，飞书适配器也提供实验性支持，仅需要在配置文件中将 **is_lark** 配置项设置为 **true** 即可。
+
+```
+IS_LARK=true
+```
+
+## 注册飞书适配器
+
+在 `bot.py` 中添加：
+
+```python
+from nonebot.adapters.feishu import Bot as FeishuBot
+
+driver.register_adapter("feishu", FeishuBot)
+```
+
+## 编写一个适用于飞书适配器的插件并加载
+
+插件代码范例：
+
+```python
+from nonebot.plugin import on_command
+from nonebot.typing import T_State
+from nonebot.adapters.feishu import Bot as FeishuBot, MessageEvent
+
+helper = on_command("say")
+
+
+@helper.handle()
+async def feishu_helper(bot: FeishuBot, event: MessageEvent, state: T_State):
+    message = event.get_message()
+    await helper.finish(message, at_sender=True)
+```
+
+以上代码注册了一个`say`指令，并会提取`/say`之后的内容发送到事件所对应的群或私聊。
+
+大功告成！现在可以试试向机器人发送类似`/say Hello, Feishu!`的消息进行测试了。
+
