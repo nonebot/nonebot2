@@ -27,8 +27,9 @@ class Event(BaseEvent):
     .. _飞书文档:
         https://open.feishu.cn/document/ukTMukTMukTM/uYDNxYjL2QTM24iN0EjN/event-list
     """
+
     __event__ = ""
-    schema_: str = Field("", alias='schema')
+    schema_: str = Field("", alias="schema")
     header: EventHeader
     event: Any
 
@@ -136,8 +137,10 @@ class EventMessage(BaseModel):
     @root_validator(pre=True)
     def parse_message(cls, values: dict):
         values["content"] = MessageDeserializer(
-            values["message_type"], json.loads(values["content"]),
-            values.get("mentions")).deserialize()
+            values["message_type"],
+            json.loads(values["content"]),
+            values.get("mentions"),
+        ).deserialize()
         return values
 
 
@@ -187,7 +190,8 @@ class MessageEvent(Event):
         return (
             f"{self.event.message.message_id} from {self.get_user_id()}"
             f"@[{self.event.message.chat_type}:{self.event.message.chat_id}]"
-            f" {self.get_message()}")
+            f" {self.get_message()}"
+        )
 
     @overrides(Event)
     def get_message(self) -> Message:
@@ -393,6 +397,142 @@ class GroupMemberUserDeletedEventDetail(BaseModel):
 class GroupMemberUserDeletedEvent(NoticeEvent):
     __event__ = "im.chat.member.user.deleted_v1"
     event: GroupMemberUserDeletedEventDetail
+
+
+class AvatarInfo(BaseModel):
+    avatar_72: str
+    avatar_240: str
+    avatar_640: str
+    avatar_origin: str
+
+
+class UserStatus(BaseModel):
+    is_frozen: bool
+    is_resigned: bool
+    is_activated: bool
+
+
+class UserOrder(BaseModel):
+    department_id: str
+    user_order: int
+    department_order: int
+
+
+class UserCustomAttrValue(BaseModel):
+    text: str
+    url: str
+    pc_url: str
+
+
+class UserCustomAttr(BaseModel):
+    type: str
+    id: str
+    value: UserCustomAttrValue
+
+
+class ContactUser(BaseModel):
+    open_id: str
+    user_id: str
+    name: str
+    en_name: str
+    email: str
+    mobile: str
+    gender: int
+    avatar: AvatarInfo
+    status: UserStatus
+    department_ids: Optional[List[str]]
+    leader_user_id: str
+    city: str
+    country: str
+    work_station: str
+    join_time: int
+    employee_no: str
+    employee_type: int
+    orders: Optional[List[UserOrder]]
+    custom_attrs: List[UserCustomAttr]
+
+
+class OldContactUser(BaseModel):
+    department_ids: List[str]
+    open_id: str
+
+
+class ContactUserUpdatedEventDetail(BaseModel):
+    object: ContactUser
+    old_object: ContactUser
+
+
+class ContactUserUpdatedEvent(NoticeEvent):
+    __event__ = "contact.user.updated_v3"
+    event: ContactUserUpdatedEventDetail
+
+
+class ContactUserDeletedEventDetail(NoticeEvent):
+    object: ContactUser
+    old_object: OldContactUser
+
+
+class ContactUserDeletedEvent(NoticeEvent):
+    __event__ = "contact.user.deleted_v3"
+    event: ContactUserDeletedEventDetail
+
+
+class ContactUserCreatedEventDetail(BaseModel):
+    object: ContactUser
+
+
+class ContactUserCreatedEvent(NoticeEvent):
+    __event__ = "contact.user.created_v3"
+    event: ContactUserCreatedEventDetail
+
+
+class ContactDepartmentStatus(BaseModel):
+    is_deleted: bool
+
+
+class ContactDepartment(BaseModel):
+    name: str
+    parent_department_id: str
+    department_id: str
+    open_department_id: str
+    leader_user_id: str
+    chat_id: str
+    order: int
+    status: ContactDepartmentStatus
+
+
+class ContactDepartmentUpdatedEventDetail(BaseModel):
+    object: ContactDepartment
+    old_object: ContactDepartment
+
+
+class ContactDepartmentUpdatedEvent(NoticeEvent):
+    __event__ = "contact.department.updated_v3"
+    event: ContactDepartmentUpdatedEventDetail
+
+
+class OldContactDepartment(BaseModel):
+    status: ContactDepartmentStatus
+    open_department_id: str
+
+
+class ContactDepartmentDeletedEventDetail(NoticeEvent):
+    object: ContactDepartment
+    old_object: OldContactDepartment
+
+
+class ContactDepartmentDeletedEvent(NoticeEvent):
+    __event__ = "contact.department.deleted_v3"
+    event: ContactDepartmentDeletedEventDetail
+
+
+class ContactDepartmentCreatedEventDetail(BaseModel):
+    object: ContactDepartment
+
+
+class ContactDepartmentCreatedEvent(NoticeEvent):
+    __event__ = "contact.department.created_v3"
+    event: ContactDepartmentCreatedEventDetail
 
 
 _t = StringTrie(separator=".")
