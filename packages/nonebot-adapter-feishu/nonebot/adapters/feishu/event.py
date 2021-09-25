@@ -676,7 +676,7 @@ class MeetingRoomUpdatedEventDetail(BaseModel):
 
 
 class MeetingRoomUpdatedEvent(NoticeEvent):
-    __event__ = "meeting_room.meeting_room.created_v1"
+    __event__ = "meeting_room.meeting_room.updated_v1"
     event: MeetingRoomUpdatedEventDetail
 
 
@@ -686,7 +686,7 @@ class MeetingRoomDeletedEventDetail(BaseModel):
 
 
 class MeetingRoomDeletedEvent(NoticeEvent):
-    __event__ = "meeting_room.meeting_room.created_v1"
+    __event__ = "meeting_room.meeting_room.deleted_v1"
     event: MeetingRoomDeletedEventDetail
 
 
@@ -696,7 +696,7 @@ class MeetingRoomStatusChangedEventDetail(BaseModel):
 
 
 class MeetingRoomStatusChangedEvent(NoticeEvent):
-    __event__ = "meeting_room.meeting_room.created_v1"
+    __event__ = "meeting_room.meeting_room.status_changed_v1"
     event: MeetingRoomStatusChangedEventDetail
 
 
@@ -773,7 +773,7 @@ class VCMeetingRecordingEndedEventDetail(BaseModel):
 
 
 class VCMeetingRecordingEndedEvent(NoticeEvent):
-    __event__ = "vc.meeting.recording_started_v1"
+    __event__ = "vc.meeting.recording_ended_v1"
     event: VCMeetingRecordingEndedEventDetail
 
 
@@ -794,7 +794,7 @@ class VCMeetingShareStartedEventDetail(BaseModel):
 
 
 class VCMeetingShareStartedEvent(NoticeEvent):
-    __event__ = "vc.meeting.share_ended_v1"
+    __event__ = "vc.meeting.share_started_v1"
     event: VCMeetingShareStartedEventDetail
 
 
