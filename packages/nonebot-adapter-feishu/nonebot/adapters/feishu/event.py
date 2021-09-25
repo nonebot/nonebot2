@@ -700,6 +700,161 @@ class MeetingRoomStatusChangedEvent(NoticeEvent):
     event: MeetingRoomStatusChangedEventDetail
 
 
+class MeetingUser(BaseModel):
+    id: UserId
+    user_role: Optional[int]
+    user_type: Optional[int]
+
+
+class Meeting(BaseModel):
+    id: str
+    topic: str
+    meeting_no: str
+    start_time: Optional[str]
+    end_time: Optional[str]
+    host_user: Optional[MeetingUser]
+    owner: MeetingUser
+
+
+class VCMeetingStartedEventDetail(BaseModel):
+    meeting: Meeting
+    operator: MeetingUser
+
+
+class VCMeetingStartedEvent(NoticeEvent):
+    __event__ = "vc.meeting.meeting_started_v1"
+    event: VCMeetingStartedEventDetail
+
+
+class VCMeetingEndedEventDetail(BaseModel):
+    meeting: Meeting
+    operator: MeetingUser
+
+
+class VCMeetingEndedEvent(NoticeEvent):
+    __event__ = "vc.meeting.meeting_ended_v1"
+    event: VCMeetingEndedEventDetail
+
+
+class VCMeetingJoinedEventDetail(BaseModel):
+    meeting: Meeting
+    operator: MeetingUser
+
+
+class VCMeetingJoinedEvent(NoticeEvent):
+    __event__ = "vc.meeting.join_meeting_v1"
+    event: VCMeetingJoinedEventDetail
+
+
+class VCMeetingLeftEventDetail(BaseModel):
+    meeting: Meeting
+    operator: MeetingUser
+    leave_reason: int
+
+
+class VCMeetingLeftEvent(NoticeEvent):
+    __event__ = "vc.meeting.leave_meeting_v1"
+    event: VCMeetingLeftEventDetail
+
+
+class VCMeetingRecordingStartedEventDetail(BaseModel):
+    meeting: Meeting
+    operator: MeetingUser
+
+
+class VCMeetingRecordingStartedEvent(NoticeEvent):
+    __event__ = "vc.meeting.recording_started_v1"
+    event: VCMeetingRecordingStartedEventDetail
+
+
+class VCMeetingRecordingEndedEventDetail(BaseModel):
+    meeting: Meeting
+    operator: MeetingUser
+
+
+class VCMeetingRecordingEndedEvent(NoticeEvent):
+    __event__ = "vc.meeting.recording_started_v1"
+    event: VCMeetingRecordingEndedEventDetail
+
+
+class VCMeetingRecordingReadyEventDetail(BaseModel):
+    meeting: Meeting
+    url: str
+    duration: str
+
+
+class VCMeetingRecordingReadyEvent(NoticeEvent):
+    __event__ = "vc.meeting.recording_ready_v1"
+    event: VCMeetingRecordingReadyEventDetail
+
+
+class VCMeetingShareStartedEventDetail(BaseModel):
+    meeting: Meeting
+    operator: MeetingUser
+
+
+class VCMeetingShareStartedEvent(NoticeEvent):
+    __event__ = "vc.meeting.share_ended_v1"
+    event: VCMeetingShareStartedEventDetail
+
+
+class VCMeetingShareEndedEventDetail(BaseModel):
+    meeting: Meeting
+    operator: MeetingUser
+
+
+class VCMeetingShareEndedEvent(NoticeEvent):
+    __event__ = "vc.meeting.share_ended_v1"
+    event: VCMeetingShareEndedEventDetail
+
+
+class AttendanceUserFlowCreatedEventDetail(BaseModel):
+    bssid: str
+    check_time: str
+    comment: str
+    employee_id: str
+    employee_no: str
+    is_field: bool
+    is_wifi: bool
+    latitude: float
+    location_name: str
+    longitude: float
+    photo_urls: Optional[List[str]]
+    record_id: str
+    ssid: str
+    type: int
+
+
+class AttendanceUserFlowCreatedEvent(NoticeEvent):
+    __event__ = "attendance.user_flow.created_v1"
+    event: AttendanceUserFlowCreatedEventDetail
+
+
+class AttendanceUserTaskStatusDiff(BaseModel):
+    before_status: str
+    before_supplement: str
+    current_status: str
+    current_supplement: str
+    index: int
+    work_type: str
+
+
+class AttendanceUserTaskUpdatedEventDetail(BaseModel):
+    date: int
+    employee_id: str
+    employee_no: str
+    group_id: str
+    shift_id: str
+    status_changes: List[AttendanceUserTaskStatusDiff]
+    task_id: str
+    time_zone: str
+
+
+class AttendanceUserTaskUpdatedEvent(NoticeEvent):
+    __event__ = "attendance.user_task.updated_v1"
+    event: AttendanceUserTaskUpdatedEventDetail
+
+
 _t = StringTrie(separator=".")
 
 # define `model` first to avoid globals changing while `for`
