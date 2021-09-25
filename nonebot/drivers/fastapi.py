@@ -13,26 +13,27 @@ FastAPI 驱动适配
 import asyncio
 import logging
 from dataclasses import dataclass
-from typing import List, cast, Union, Optional, Callable, Awaitable
+from typing import List, Union, Callable, Optional, Awaitable, cast
 
 import httpx
 import uvicorn
 from pydantic import BaseSettings
 from fastapi.responses import Response
 from websockets.exceptions import ConnectionClosed
-from fastapi import status, Request, FastAPI, HTTPException
+from fastapi import FastAPI, Request, HTTPException, status
+from starlette.websockets import WebSocket as FastAPIWebSocket
+from starlette.websockets import WebSocketState, WebSocketDisconnect
 from websockets.legacy.client import Connect, WebSocketClientProtocol
-from starlette.websockets import (WebSocketState, WebSocketDisconnect, WebSocket
-                                  as FastAPIWebSocket)
 
+from nonebot.config import Env
 from nonebot.log import logger
 from nonebot.adapters import Bot
-from nonebot.utils import escape_tag
 from nonebot.typing import overrides
-from nonebot.config import Env, Config as NoneBotConfig
-from nonebot.drivers import (ReverseDriver, ForwardDriver, HTTPPollingSetup,
-                             WebSocketSetup, HTTPRequest, WebSocket as
-                             BaseWebSocket)
+from nonebot.utils import escape_tag
+from nonebot.config import Config as NoneBotConfig
+from nonebot.drivers import WebSocket as BaseWebSocket
+from nonebot.drivers import (HTTPRequest, ForwardDriver, ReverseDriver,
+                             WebSocketSetup, HTTPPollingSetup)
 
 HTTPPOLLING_SETUP = Union[HTTPPollingSetup,
                           Callable[[], Awaitable[HTTPPollingSetup]]]
@@ -357,8 +358,8 @@ class Driver(ReverseDriver, ForwardDriver):
                             setup_ = setup
                     except Exception as e:
                         logger.opt(colors=True, exception=e).error(
-                            f"<r><bg #f8bbd0>Error while parsing setup {setup!r}.</bg #f8bbd0></r>"
-                        )
+                            "<r><bg #f8bbd0>Error while parsing setup "
+                            f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>")
                         await asyncio.sleep(3)
                         continue
 
@@ -422,8 +423,8 @@ class Driver(ReverseDriver, ForwardDriver):
                         setup_ = setup
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
-                        f"<r><bg #f8bbd0>Error while parsing setup {setup!r}.</bg #f8bbd0></r>"
-                    )
+                        "<r><bg #f8bbd0>Error while parsing setup "
+                        f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>")
                     await asyncio.sleep(3)
                     continue
 
