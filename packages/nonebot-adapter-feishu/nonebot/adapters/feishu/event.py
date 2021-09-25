@@ -18,6 +18,7 @@ class EventHeader(BaseModel):
     token: str
     app_id: str
     tenant_key: str
+    resource_id: Optional[str]
     user_list: Optional[List[dict]]
 
 
@@ -561,6 +562,142 @@ class CalendarAclDeletedEventDetail(BaseModel):
 class CalendarAclDeletedEvent(NoticeEvent):
     __event__ = "calendar.calendar.acl.deleted_v4"
     event: CalendarAclDeletedEventDetail
+
+
+class CalendarChangedEvent(NoticeEvent):
+    __event__ = "calendar.calendar.changed_v4"
+    event: dict
+
+
+class CalendarEventChangedEventDetail(BaseModel):
+    calendar_id: str
+
+
+class CalendarEventChangedEvent(NoticeEvent):
+    __event__ = "calendar.calendar.event.changed_v4"
+    event: CalendarEventChangedEventDetail
+
+
+class DriveFileReadEventDetail(BaseModel):
+    file_token: str
+    file_type: str
+    operator_id_list: List[UserId]
+
+
+class DriveFileReadEvent(NoticeEvent):
+    __event__ = "drive.file.read_v1"
+    event: DriveFileReadEventDetail
+
+
+class DriveFileTitleUpdatedEventDetail(BaseModel):
+    file_token: str
+    file_type: str
+    operator_id: UserId
+
+
+class DriveFileTitleUpdatedEvent(NoticeEvent):
+    __event__ = "drive.file.title_updated_v1"
+    event: DriveFileTitleUpdatedEventDetail
+
+
+class DriveFilePermissionMemberAddedEventDetail(BaseModel):
+    chat_list: List[str]
+    file_token: str
+    file_type: str
+    operator_id: UserId
+    user_list: List[UserId]
+
+
+class DriveFilePermissionMemberAddedEvent(NoticeEvent):
+    __event__ = "drive.file.permission_member_added_v1"
+    event: DriveFilePermissionMemberAddedEventDetail
+
+
+class DriveFilePermissionMemberRemovedEventDetail(BaseModel):
+    chat_list: List[str]
+    file_token: str
+    file_type: str
+    operator_id: UserId
+    user_list: List[UserId]
+
+
+class DriveFilePermissionMemberRemovedEvent(NoticeEvent):
+    __event__ = "drive.file.permission_member_removed_v1"
+    event: DriveFilePermissionMemberRemovedEventDetail
+
+
+class DriveFileTrashedEventDetail(BaseModel):
+    file_token: str
+    file_type: str
+    operator_id: UserId
+
+
+class DriveFileTrashedEvent(NoticeEvent):
+    __event__ = "drive.file.trashed_v1"
+    event: DriveFileTrashedEventDetail
+
+
+class DriveFileDeletedEventDetail(BaseModel):
+    file_token: str
+    file_type: str
+    operator_id: UserId
+
+
+class DriveFileDeletedEvent(NoticeEvent):
+    __event__ = "drive.file.deleted_v1"
+    event: DriveFileDeletedEventDetail
+
+
+class DriveFileEditedEventDetail(BaseModel):
+    file_token: str
+    file_type: str
+    operator_id_list: List[UserId]
+    subscriber_id_list: List[UserId]
+
+
+class DriveFileEditedEvent(NoticeEvent):
+    __event__ = "drive.file.edit_v1"
+    event: DriveFileEditedEventDetail
+
+
+class MeetingRoomCreatedEventDetail(BaseModel):
+    room_id: str
+    room_name: str
+
+
+class MeetingRoomCreatedEvent(NoticeEvent):
+    __event__ = "meeting_room.meeting_room.created_v1"
+    event: MeetingRoomCreatedEventDetail
+
+
+class MeetingRoomUpdatedEventDetail(BaseModel):
+    room_id: str
+    room_name: str
+
+
+class MeetingRoomUpdatedEvent(NoticeEvent):
+    __event__ = "meeting_room.meeting_room.created_v1"
+    event: MeetingRoomUpdatedEventDetail
+
+
+class MeetingRoomDeletedEventDetail(BaseModel):
+    room_id: str
+    room_name: str
+
+
+class MeetingRoomDeletedEvent(NoticeEvent):
+    __event__ = "meeting_room.meeting_room.created_v1"
+    event: MeetingRoomDeletedEventDetail
+
+
+class MeetingRoomStatusChangedEventDetail(BaseModel):
+    room_id: str
+    room_name: str
+
+
+class MeetingRoomStatusChangedEvent(NoticeEvent):
+    __event__ = "meeting_room.meeting_room.created_v1"
+    event: MeetingRoomStatusChangedEventDetail
 
 
 _t = StringTrie(separator=".")
