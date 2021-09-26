@@ -10,8 +10,8 @@ from types import ModuleType
 from datetime import datetime
 from contextvars import ContextVar
 from collections import defaultdict
-from typing import (TYPE_CHECKING, Any, Dict, List, Type, Union, Mapping,
-                    Callable, Iterable, NoReturn, Optional)
+from typing import (TYPE_CHECKING, Any, Dict, List, Type, Union, Callable,
+                    NoReturn, Optional)
 
 from nonebot.rule import Rule
 from nonebot.log import logger

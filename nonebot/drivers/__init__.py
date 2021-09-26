@@ -7,8 +7,9 @@
 
 import abc
 import asyncio
-from dataclasses import dataclass, field
-from typing import Any, Set, Dict, Type, Union, Optional, Callable, Awaitable, TYPE_CHECKING
+from dataclasses import field, dataclass
+from typing import (TYPE_CHECKING, Any, Set, Dict, Type, Union, Callable,
+                    Optional, Awaitable)
 
 from nonebot.log import logger
 from nonebot.utils import escape_tag

@@ -1,7 +1,7 @@
 import abc
 from copy import deepcopy
-from dataclasses import dataclass, field, asdict
-from typing import (Any, List, Dict, Type, Union, TypeVar, Mapping, Generic,
+from dataclasses import field, asdict, dataclass
+from typing import (Any, Dict, List, Type, Union, Generic, Mapping, TypeVar,
                     Iterable)
 
 from ._template import MessageTemplate

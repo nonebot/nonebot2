@@ -1,8 +1,8 @@
-import functools
 import operator
+import functools
 from string import Formatter
-from typing import (Any, Set, List, Type, Tuple, Union, TypeVar, Mapping,
-                    Generic, Sequence, TYPE_CHECKING)
+from typing import (TYPE_CHECKING, Any, Set, List, Type, Tuple, Union, Generic,
+                    Mapping, TypeVar, Sequence)
 
 if TYPE_CHECKING:
     from . import Message

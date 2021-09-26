@@ -13,8 +13,10 @@ import re
 import shlex
 import asyncio
 from itertools import product
-from argparse import Namespace, ArgumentParser as ArgParser
-from typing import Any, Dict, Union, Tuple, Optional, Callable, Sequence, NoReturn, Awaitable, TYPE_CHECKING
+from argparse import Namespace
+from argparse import ArgumentParser as ArgParser
+from typing import (TYPE_CHECKING, Any, Dict, Tuple, Union, Callable, NoReturn,
+                    Optional, Sequence, Awaitable)
 
 from pygtrie import CharTrie
 
@@ -25,7 +27,7 @@ from nonebot.exception import ParserExit
 from nonebot.typing import T_State, T_RuleChecker
 
 if TYPE_CHECKING:
-    from nonebot.adapters import Bot, Event, MessageSegment
+    from nonebot.adapters import Bot, Event
 
 
 class Rule:

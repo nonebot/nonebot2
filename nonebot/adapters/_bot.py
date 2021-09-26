@@ -2,12 +2,12 @@ import abc
 import asyncio
 from functools import partial
 from typing_extensions import Protocol
-from typing import Any, Set, Union, Tuple, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Set, Tuple, Union, Optional
 
 from nonebot.log import logger
 from nonebot.config import Config
-from nonebot.typing import T_CallingAPIHook, T_CalledAPIHook
-from nonebot.drivers import Driver, HTTPConnection, HTTPResponse
+from nonebot.typing import T_CalledAPIHook, T_CallingAPIHook
+from nonebot.drivers import Driver, HTTPResponse, HTTPConnection
 
 if TYPE_CHECKING:
     from ._event import Event

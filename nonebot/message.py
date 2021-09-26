@@ -7,14 +7,15 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
 
 import asyncio
 from datetime import datetime
-from typing import Set, Type, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Set, Type, Optional
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.utils import escape_tag
-from nonebot.matcher import matchers, Matcher
-from nonebot.exception import IgnoredException, StopPropagation, NoLogException
-from nonebot.typing import T_State, T_EventPreProcessor, T_RunPreProcessor, T_EventPostProcessor, T_RunPostProcessor
+from nonebot.matcher import Matcher, matchers
+from nonebot.exception import NoLogException, StopPropagation, IgnoredException
+from nonebot.typing import (T_State, T_RunPreProcessor, T_RunPostProcessor,
+                            T_EventPreProcessor, T_EventPostProcessor)
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
