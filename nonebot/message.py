@@ -176,7 +176,7 @@ async def _run_matcher(Matcher: Type[Matcher], bot: "Bot", event: "Event",
     return
 
 
-async def handle_event(bot: "Bot", event: "Event") -> Optional[Exception]:
+async def handle_event(bot: "Bot", event: "Event") -> None:
     """
     :说明:
 
@@ -213,12 +213,12 @@ async def handle_event(bot: "Bot", event: "Event") -> Optional[Exception]:
         except IgnoredException as e:
             logger.opt(colors=True).info(
                 f"Event {escape_tag(event.get_event_name())} is <b>ignored</b>")
-            return e
+            return
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
                 "<r><bg #f8bbd0>Error when running EventPreProcessors. "
                 "Event ignored!</bg #f8bbd0></r>")
-            return e
+            return
 
     # Trie Match
     _, _ = TrieRule.get_value(bot, event, state)
@@ -248,7 +248,6 @@ async def handle_event(bot: "Bot", event: "Event") -> Optional[Exception]:
                 logger.opt(colors=True, exception=result).error(
                     "<r><bg #f8bbd0>Error when checking Matcher.</bg #f8bbd0></r>"
                 )
-            return result
 
     coros = list(map(lambda x: x(bot, event, state), _event_postprocessors))
     if coros:
@@ -260,4 +259,3 @@ async def handle_event(bot: "Bot", event: "Event") -> Optional[Exception]:
             logger.opt(colors=True, exception=e).error(
                 "<r><bg #f8bbd0>Error when running EventPostProcessors</bg #f8bbd0></r>"
             )
-            return e
