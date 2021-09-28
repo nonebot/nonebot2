@@ -64,6 +64,21 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 
 
+### `fastapi_reload`
+
+
+* **类型**
+
+    `bool`
+
+
+
+* **说明**
+
+    开启冷重载，默认会在配置了 app 的 debug 模式启用
+
+
+
 ### `fastapi_reload_dirs`
 
 
@@ -75,7 +90,22 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 * **说明**
 
-    `debug` 模式下重载监控文件夹列表，默认为 uvicorn 默认值
+    重载监控文件夹列表，默认为 uvicorn 默认值
+
+
+
+### `fastapi_reload_delay`
+
+
+* **类型**
+
+    `Optional[float]`
+
+
+
+* **说明**
+
+    重载延迟，默认为 uvicorn 默认值
 
 
 
