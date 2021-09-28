@@ -406,5 +406,13 @@
     "desc": "最简Q群点歌插件，支持网易云、QQ音乐",
     "author": "kanomahoro",
     "repo": "https://github.com/kanomahoro/nonebot-simplemusic"
+  },
+  {
+    "id": "nonebot_plugin_phlogo",
+    "link": "nonebot-plugin-phlogo",
+    "name": "pornhub风格图标生成",
+    "desc": "生成pornhub风格logo",
+    "author": "kexue-z",
+    "repo": "https://github.com/kexue-z/nonebot-plugin-phlogo"
   }
 ]
