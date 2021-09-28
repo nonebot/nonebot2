@@ -74,6 +74,16 @@ class Config(BaseSettings):
 
       ``redoc`` 地址，默认为 ``None`` 即关闭
     """
+    fastapi_reload: bool = False
+    """
+    :类型:
+
+      ``bool``
+
+    :说明:
+
+      开启冷重载，默认会在配置了 app 的 debug 模式启用
+    """
     fastapi_reload_dirs: List[str] = []
     """
     :类型:
@@ -82,7 +92,17 @@ class Config(BaseSettings):
 
     :说明:
 
-      ``debug`` 模式下重载监控文件夹列表，默认为 uvicorn 默认值
+      重载监控文件夹列表，默认为 uvicorn 默认值
+    """
+    fastapi_reload_delay: Optional[float] = None
+    """
+    :类型:
+
+      ``Optional[float]``
+
+    :说明:
+
+      重载延迟，默认为 uvicorn 默认值
     """
 
     class Config:
@@ -217,8 +237,10 @@ class Driver(ReverseDriver, ForwardDriver):
             app or self.server_app,  # type: ignore
             host=host or str(self.config.host),
             port=port or self.config.port,
-            reload=bool(app) and self.config.debug,
+            reload=self.fastapi_config.fastapi_reload or
+            (bool(app) and self.config.debug),
             reload_dirs=self.fastapi_config.fastapi_reload_dirs or None,
+            reload_delay=self.fastapi_config.fastapi_reload_delay,
             debug=self.config.debug,
             log_config=LOGGING_CONFIG,
             **kwargs)
