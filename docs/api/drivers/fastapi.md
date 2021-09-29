@@ -109,6 +109,36 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 
 
+### `fastapi_reload_includes`
+
+
+* **类型**
+
+    `List[str]`
+
+
+
+* **说明**
+
+    要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+
+
+
+### `fastapi_reload_excludes`
+
+
+* **类型**
+
+    `List[str]`
+
+
+
+* **说明**
+
+    不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+
+
+
 ## _class_ `Driver`
 
 基类：[`nonebot.drivers.ReverseDriver`](README.md#nonebot.drivers.ReverseDriver), [`nonebot.drivers.ForwardDriver`](README.md#nonebot.drivers.ForwardDriver)

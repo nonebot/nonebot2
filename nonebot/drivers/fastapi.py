@@ -104,6 +104,26 @@ class Config(BaseSettings):
 
       重载延迟，默认为 uvicorn 默认值
     """
+    fastapi_reload_includes: List[str] = []
+    """
+    :类型:
+
+      ``List[str]``
+
+    :说明:
+
+      要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+    """
+    fastapi_reload_excludes: List[str] = []
+    """
+    :类型:
+
+      ``List[str]``
+
+    :说明:
+
+      不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+    """
 
     class Config:
         extra = "ignore"
@@ -241,6 +261,8 @@ class Driver(ReverseDriver, ForwardDriver):
             (bool(app) and self.config.debug),
             reload_dirs=self.fastapi_config.fastapi_reload_dirs or None,
             reload_delay=self.fastapi_config.fastapi_reload_delay,
+            reload_includes=self.fastapi_config.fastapi_reload_includes or None,
+            reload_excludes=self.fastapi_config.fastapi_reload_excludes or None,
             debug=self.config.debug,
             log_config=LOGGING_CONFIG,
             **kwargs)
