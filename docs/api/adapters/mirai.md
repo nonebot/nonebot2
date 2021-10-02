@@ -1444,6 +1444,23 @@ Bot被邀请入群申请
 
 
 
+## _class_ `NudgeSubjectKind`
+
+基类：`str`, `enum.Enum`
+
+
+* **说明**
+
+    戳一戳类型枚举类
+
+    > 
+    > * `Group`: 群
+
+
+    > * `Friend`: 好友
+
+
+
 ## _class_ `Event`
 
 基类：[`nonebot.adapters._event.Event`](README.md#nonebot.adapters._event.Event)
@@ -1717,6 +1734,13 @@ Bot在群里的权限被改变
 基类：`nonebot.adapters.mirai.event.notice.MemberStateChangeEvent`
 
 成员权限改变的事件（该成员不是Bot）
+
+
+## _class_ `NudgeEvent`
+
+基类：`nonebot.adapters.mirai.event.notice.NoticeEvent`
+
+戳一戳触发事件
 
 # NoneBot.adapters.mirai.event.request 模块
 
