@@ -275,22 +275,6 @@ class MessageChain(BaseMessage[MessageSegment]):
         return MessageSegment
 
     @overrides(BaseMessage)
-    def __init__(self, message: Union[List[Dict[str,
-                                                Any]], Iterable[MessageSegment],
-                                      MessageSegment, str], **kwargs):
-        super().__init__(**kwargs)
-        if isinstance(message, MessageSegment):
-            self.append(message)
-        elif isinstance(message, str):
-            self.append(MessageSegment.plain(text=message))
-        elif isinstance(message, Iterable):
-            self.extend(self._construct(message))
-        else:
-            raise ValueError(
-                f'Type {type(message).__name__} is not supported in mirai adapter.'
-            )
-
-    @overrides(BaseMessage)
     def _construct(
         self, message: Union[List[Dict[str, Any]], Iterable[MessageSegment]]
     ) -> List[MessageSegment]:
