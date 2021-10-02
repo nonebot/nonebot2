@@ -6,12 +6,13 @@ sidebar: auto
 
 ## v2.0.0a16
 
-- 新增 `MessageFormatter` 可用于 `Message` 的模板生成
-- 新增 `matcher.got` `matcher.send` `matcher.pause` `matcher.reject` `matcher.finish` 支持 `MessageFormatter`
-- 移除 `matcher.got` 原本的 `state format` 支持，由 `MessageFormatter` template 替代
+- 新增 `MessageTemplate` 可用于 `Message` 的模板生成
+- 新增 `matcher.got` `matcher.send` `matcher.pause` `matcher.reject` `matcher.finish` 支持 `MessageTemplate`
+- 移除 `matcher.got` 原本的 `state format` 支持，由 `MessageTemplate` template 替代
 - `adapter` 基类拆分为单独文件
 - 修复 `fastapi` Driver Websocket 未能正确提供请求头部
 - 新增 `fastapi` Driver 更多的 uvicorn 相关配置项
+- 新增 `quart` Driver 更多的 uvicorn 相关配置项
 
 ## v2.0.0a15
 

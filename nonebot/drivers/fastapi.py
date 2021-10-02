@@ -74,21 +74,21 @@ class Config(BaseSettings):
 
       ``redoc`` 地址，默认为 ``None`` 即关闭
     """
-    fastapi_reload: bool = False
+    fastapi_reload: Optional[bool] = None
     """
     :类型:
 
-      ``bool``
+      ``Optional[bool]``
 
     :说明:
 
-      开启冷重载，默认会在配置了 app 的 debug 模式启用
+      开启/关闭冷重载，默认会在配置了 app 的 debug 模式启用
     """
-    fastapi_reload_dirs: List[str] = []
+    fastapi_reload_dirs: Optional[List[str]] = None
     """
     :类型:
 
-      ``List[str]``
+      ``Optional[List[str]]``
 
     :说明:
 
@@ -104,21 +104,21 @@ class Config(BaseSettings):
 
       重载延迟，默认为 uvicorn 默认值
     """
-    fastapi_reload_includes: List[str] = []
+    fastapi_reload_includes: Optional[List[str]] = None
     """
     :类型:
 
-      ``List[str]``
+      ``Optional[List[str]]``
 
     :说明:
 
       要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
     """
-    fastapi_reload_excludes: List[str] = []
+    fastapi_reload_excludes: Optional[List[str]] = None
     """
     :类型:
 
-      ``List[str]``
+      ``Optional[List[str]]``
 
     :说明:
 
@@ -257,12 +257,13 @@ class Driver(ReverseDriver, ForwardDriver):
             app or self.server_app,  # type: ignore
             host=host or str(self.config.host),
             port=port or self.config.port,
-            reload=self.fastapi_config.fastapi_reload or
+            reload=self.fastapi_config.fastapi_reload
+            if self.fastapi_config.fastapi_reload is not None else
             (bool(app) and self.config.debug),
-            reload_dirs=self.fastapi_config.fastapi_reload_dirs or None,
+            reload_dirs=self.fastapi_config.fastapi_reload_dirs,
             reload_delay=self.fastapi_config.fastapi_reload_delay,
-            reload_includes=self.fastapi_config.fastapi_reload_includes or None,
-            reload_excludes=self.fastapi_config.fastapi_reload_excludes or None,
+            reload_includes=self.fastapi_config.fastapi_reload_includes,
+            reload_excludes=self.fastapi_config.fastapi_reload_excludes,
             debug=self.config.debug,
             log_config=LOGGING_CONFIG,
             **kwargs)

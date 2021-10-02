@@ -17,18 +17,78 @@ sidebarDepth: 0
 Quart 驱动框架设置
 
 
-### `quart_reload_dirs`
+### `quart_reload`
 
 
 * **类型**
 
-    `List[str]`
+    `Optional[bool]`
 
 
 
 * **说明**
 
-    `debug` 模式下重载监控文件夹列表，默认为 uvicorn 默认值
+    开启/关闭冷重载，默认会在配置了 app 的 debug 模式启用
+
+
+
+### `quart_reload_dirs`
+
+
+* **类型**
+
+    `Optional[List[str]]`
+
+
+
+* **说明**
+
+    重载监控文件夹列表，默认为 uvicorn 默认值
+
+
+
+### `quart_reload_delay`
+
+
+* **类型**
+
+    `Optional[float]`
+
+
+
+* **说明**
+
+    重载延迟，默认为 uvicorn 默认值
+
+
+
+### `quart_reload_includes`
+
+
+* **类型**
+
+    `Optional[List[str]]`
+
+
+
+* **说明**
+
+    要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+
+
+
+### `quart_reload_excludes`
+
+
+* **类型**
+
+    `Optional[List[str]]`
+
+
+
+* **说明**
+
+    不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
 
 
 

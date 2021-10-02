@@ -69,13 +69,13 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 * **类型**
 
-    `bool`
+    `Optional[bool]`
 
 
 
 * **说明**
 
-    开启冷重载，默认会在配置了 app 的 debug 模式启用
+    开启/关闭冷重载，默认会在配置了 app 的 debug 模式启用
 
 
 
@@ -84,7 +84,7 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 * **类型**
 
-    `List[str]`
+    `Optional[List[str]]`
 
 
 
@@ -114,7 +114,7 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 * **类型**
 
-    `List[str]`
+    `Optional[List[str]]`
 
 
 
@@ -129,7 +129,7 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 * **类型**
 
-    `List[str]`
+    `Optional[List[str]]`
 
 
 
