@@ -1,4 +1,4 @@
-name: 'Store Publish Issue Bot'
+name: 'NoneBot2 Publish Bot'
 
 on:
   push:
@@ -10,15 +10,15 @@ on:
     types: [closed]
 
 jobs:
-  issue_bot:
+  publish_bot:
     runs-on: ubuntu-latest
-    name: store publish issue bot
+    name: nonebot2 publish bot
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: NoneBot2 Plugin Issue Bot
-        uses: he0119/nonebot2-plugin-issue-bot@main
+      - name: NoneBot2 Publish Bot
+        uses: nonebot/nonebot2-publish-bot@main
         with:
           token: ${{ secrets.GH_TOKEN }}
           base: master

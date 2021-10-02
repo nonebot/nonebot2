@@ -7,9 +7,10 @@
 
 # NoneBot
 
+<!-- prettier-ignore-start -->
 <!-- markdownlint-disable-next-line MD036 -->
-
 _✨ 跨平台 Python 异步机器人框架 ✨_
+<!-- prettier-ignore-end -->
 
 </div>
 
