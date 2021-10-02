@@ -438,7 +438,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "nonebot-adapter-cqhttp"
-version = "2.0.0-alpha.15"
+version = "2.0.0-alpha.16"
 description = "OneBot(CQHTTP) adapter for nonebot2"
 category = "dev"
 optional = false
