@@ -24,11 +24,11 @@
 
 完成在 PyPI 的插件发布流程与源代码托管流程后，请您前往 **[NoneBot2商店](https://v2.nonebot.dev/store.html)** 页面，切换到插件页签，点击 **发布插件** 按钮。
 
-![插件发布界面](images/plugin_store_publish.png)
+![插件发布界面](./images/plugin_store_publish.png)
 
 如图所示，在弹出的插件信息提交表单内，填入您所要发布的相应插件信息。
 
-![插件信息填写](images/plugin_store_publish_2.png)
+![插件信息填写](./images/plugin_store_publish_2.png)
 
 完成填写后，请点击 **发布** 按钮，这将自动在 **[NoneBot2](https://github.com/nonebot/nonebot2)** 代码仓内创建发布您的插件的对应Issue。
 
