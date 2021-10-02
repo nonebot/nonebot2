@@ -1,15 +1,15 @@
 import json
 from enum import Enum
-from typing import Any, Dict, Optional, Type
-
-from pydantic import BaseModel, Field, ValidationError
 from typing_extensions import Literal
+from typing import Any, Dict, Type, Optional
 
-from nonebot.adapters import Event as BaseEvent
-from nonebot.adapters import Message as BaseMessage
+from pydantic import Field, BaseModel, ValidationError
+
 from nonebot.log import logger
 from nonebot.typing import overrides
 from nonebot.utils import escape_tag
+from nonebot.adapters import Event as BaseEvent
+from nonebot.adapters import Message as BaseMessage
 
 
 class UserPermission(str, Enum):
@@ -18,9 +18,9 @@ class UserPermission(str, Enum):
 
       用户权限枚举类
 
-        * ``OWNER``: 群主
-        * ``ADMINISTRATOR``: 群管理
-        * ``MEMBER``: 普通群成员
+      * ``OWNER``: 群主
+      * ``ADMINISTRATOR``: 群管理
+      * ``MEMBER``: 普通群成员
     """
     OWNER = 'OWNER'
     ADMINISTRATOR = 'ADMINISTRATOR'
@@ -33,8 +33,8 @@ class NudgeSubjectKind(str, Enum):
 
       戳一戳类型枚举类
 
-        * ``Group``: 群
-        * ``Friend``: 好友
+      * ``Group``: 群
+      * ``Friend``: 好友
     """
     Group = 'Group'
     Friend = 'Friend'
@@ -107,7 +107,7 @@ class Event(BaseEvent):
 
     @overrides(BaseEvent)
     def get_type(self) -> Literal["message", "notice", "request", "meta_event"]:
-        from . import message, meta, notice, request
+        from . import meta, notice, message, request
         if isinstance(self, message.MessageEvent):
             return 'message'
         elif isinstance(self, notice.NoticeEvent):
