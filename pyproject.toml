@@ -13,7 +13,6 @@ classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Framework :: Robot Framework",
   "Framework :: Robot Framework :: Library",
-  "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3"
 ]
@@ -28,10 +27,10 @@ loguru = "^0.5.1"
 pygtrie = "^2.4.1"
 tomlkit = "^0.7.0"
 fastapi = "^0.68.0"
-websockets = "^9.1"
+websockets = ">=9.1"
 Quart = { version = "^0.15.0", optional = true }
-httpx = { version = "^0.19.0", extras = ["http2"] }
-pydantic = { extras = ["dotenv"], version = "~1.8.0" }
+httpx = { version = ">=0.18.0, <1.0.0", extras = ["http2"] }
+pydantic = { version = "~1.8.0", extras = ["dotenv"] }
 uvicorn = { version = "^0.15.0", extras = ["standard"] }
 aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
 
