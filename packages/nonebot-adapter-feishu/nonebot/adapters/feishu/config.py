@@ -1,11 +1,11 @@
 from typing import Optional
 
-from pydantic import BaseModel, Field
+from pydantic import Field, BaseModel
 
 
 class Config(BaseModel):
     """
-    钉钉配置类
+    飞书配置类
 
     :配置项:
 

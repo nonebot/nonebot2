@@ -10,5 +10,5 @@ async def _(bot: Bot, event: GroupMessageEvent, state: T_State):
     state["at"] = MessageSegment.at(event.get_user_id())
     state["test"] = "test"
     # message: /template {at} hello {test}!
-    ft = event.message.template(event.get_plaintext())
+    ft = event.message.template(event.message)
     await template.send(ft)

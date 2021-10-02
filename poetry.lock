@@ -446,7 +446,7 @@ python-versions = "^3.7.3"
 develop = true
 
 [package.dependencies]
-httpx = "^0.19.0"
+httpx = ">=0.18.0, <1.0.0"
 nonebot2 = "^2.0.0-alpha.14"
 
 [package.source]
@@ -463,7 +463,7 @@ python-versions = "^3.7.3"
 develop = true
 
 [package.dependencies]
-httpx = "^0.19.0"
+httpx = ">=0.18.0, <1.0.0"
 nonebot2 = "^2.0.0-alpha.14"
 
 [package.source]
@@ -481,7 +481,7 @@ develop = true
 
 [package.dependencies]
 aiocache = "^0.11.1"
-httpx = "^0.19.0"
+httpx = ">=0.18.0, <1.0.0"
 nonebot2 = "^2.0.0-alpha.14"
 pycryptodome = "^3.10.1"
 
@@ -499,7 +499,7 @@ python-versions = "^3.7.3"
 develop = true
 
 [package.dependencies]
-httpx = "^0.19.0"
+httpx = ">=0.18.0, <1.0.0"
 nonebot2 = "^2.0.0-alpha.14"
 
 [package.source]
@@ -663,7 +663,7 @@ client = ["requests (>=2.21.0)", "websocket-client (>=0.54.0)"]
 
 [[package]]
 name = "pytz"
-version = "2021.1"
+version = "2021.3"
 description = "World timezone definitions, modern and historical"
 category = "dev"
 optional = false
@@ -1073,7 +1073,7 @@ quart = ["Quart"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.3"
-content-hash = "e56f5be6ed2e801b3997fb97f62b6b75a6e015d86c9095cfbf3c08a753b93d80"
+content-hash = "14d2fb767ba6b7ac858ab8e691a9d76130dcf6aa7201e5c7e471f73e79c4dba5"
 
 [metadata.files]
 aiocache = [
@@ -1615,8 +1615,8 @@ python-socketio = [
     {file = "python_socketio-4.6.1-py2.py3-none-any.whl", hash = "sha256:5a21da53fdbdc6bb6c8071f40e13d100e0b279ad997681c2492478e06f370523"},
 ]
 pytz = [
-    {file = "pytz-2021.1-py2.py3-none-any.whl", hash = "sha256:eb10ce3e7736052ed3623d49975ce333bcd712c7bb19a58b9e2089d4057d0798"},
-    {file = "pytz-2021.1.tar.gz", hash = "sha256:83a4a90894bf38e243cf052c8b58f381bfe9a7a483f6a9cab140bc7f702ac4da"},
+    {file = "pytz-2021.3-py2.py3-none-any.whl", hash = "sha256:3672058bc3453457b622aab7a1c3bfd5ab0bdae451512f6cf25f64ed37f5b87c"},
+    {file = "pytz-2021.3.tar.gz", hash = "sha256:acad2d8b20a1af07d4e4c9d2e9285c5ed9104354062f275f3fcd88dcef4f1326"},
 ]
 pyyaml = [
     {file = "PyYAML-5.4.1-cp27-cp27m-macosx_10_9_x86_64.whl", hash = "sha256:3b2b1824fe7112845700f815ff6a489360226a5609b96ec2190a45e62a9fc922"},
