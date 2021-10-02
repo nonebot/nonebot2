@@ -472,7 +472,7 @@ url = "packages/nonebot-adapter-ding"
 
 [[package]]
 name = "nonebot-adapter-feishu"
-version = "2.0.0-alpha.15"
+version = "2.0.0-alpha.16"
 description = "feishu(larksuite) adapter for nonebot2"
 category = "dev"
 optional = false
