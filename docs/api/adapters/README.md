@@ -305,7 +305,7 @@ await bot.send_msg(message="hello world")
 
 * **说明**
 
-    根据创建消息模板, 用法和 `str.format` 大致相同, 但是可以输出消息对象
+    根据创建消息模板, 用法和 `str.format` 大致相同, 但是可以输出消息对象, 并且支持以 `Message` 对象作为消息模板
 
 
 
@@ -317,6 +317,13 @@ await bot.send_msg(message="hello world")
 Message(MessageSegment(type='text', data={'text': 'hello world'}))
 >>> Message.template("{} {}").format(MessageSegment.image("file///..."), "world")
 Message(MessageSegment(type='image', data={'file': 'file///...'}), MessageSegment(type='text', data={'text': 'world'}))
+>>> Message.template(
+...       MessageSegment.text('test {event.user_id}') + MessageSegment.face(233) +
+...       MessageSegment.text('test {event.message}')).format(event={'user_id':123456, 'message':'hello world'}
+... )
+Message(MessageSegment(type='text', data={'text': 'test 123456'}), 
+        MessageSegment(type='face', data={'face': 233}), 
+        MessageSegment(type='text', data={'text': 'test hello world'}))
 ```
 
 
