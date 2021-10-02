@@ -2,7 +2,7 @@ from typing import Any, Optional
 
 from pydantic import Field
 
-from .base import Event, GroupChatInfo, GroupInfo, UserPermission
+from .base import Event, GroupChatInfo, GroupInfo, NudgeSubject, UserPermission
 
 
 class NoticeEvent(Event):
@@ -154,3 +154,12 @@ class MemberPermissionChangeEvent(MemberStateChangeEvent):
     """成员权限改变的事件（该成员不是Bot）"""
     origin: UserPermission
     current: UserPermission
+
+
+class NudgeEvent(NoticeEvent):
+    """戳一戳触发事件"""
+    from_id: int = Field(alias='fromId')
+    target: int
+    subject: NudgeSubject
+    action: str
+    suffix: str

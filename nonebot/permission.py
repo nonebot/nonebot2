@@ -10,7 +10,7 @@ r"""
 """
 
 import asyncio
-from typing import Union, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
+from typing import TYPE_CHECKING, Union, Callable, NoReturn, Optional, Awaitable
 
 from nonebot.utils import run_sync
 from nonebot.typing import T_PermissionChecker
@@ -141,8 +141,8 @@ def USER(*user: str, perm: Optional[Permission] = None):
     """
 
     async def _user(bot: "Bot", event: "Event") -> bool:
-        return bool(event.get_session_id() in user and perm and
-                    await perm(bot, event))
+        return bool(event.get_session_id() in user and
+                    (perm is None or await perm(bot, event)))
 
     return Permission(_user)
 

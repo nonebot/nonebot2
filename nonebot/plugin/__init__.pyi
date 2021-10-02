@@ -1,16 +1,16 @@
 import re
 from types import ModuleType
 from dataclasses import dataclass
-from typing import Set, List, Dict, Type, Tuple, Union, Optional, TYPE_CHECKING
+from typing import Set, Dict, List, Type, Tuple, Union, Optional
 
-from nonebot.matcher import Matcher
 from nonebot.handler import Handler
+from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.rule import Rule, ArgumentParser
-from nonebot.typing import T_State, T_StateFactory, T_Handler, T_RuleChecker
+from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_StateFactory
 
-from .export import Export, export
-from .manager import PluginManager
+from .export import Export
+from .export import export as export
 
 plugins: Dict[str, "Plugin"] = ...
 PLUGIN_NAMESPACE: str = ...

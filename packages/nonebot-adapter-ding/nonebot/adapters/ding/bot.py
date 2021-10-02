@@ -114,7 +114,7 @@ class Bot(BaseBot):
                         api: str,
                         event: Optional[MessageEvent] = None,
                         **data) -> Any:
-        if self.connection_type != "http":
+        if not isinstance(self.request, HTTPRequest):
             log("ERROR", "Only support http connection.")
             return
 

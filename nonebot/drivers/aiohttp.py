@@ -9,18 +9,19 @@ import signal
 import asyncio
 import threading
 from dataclasses import dataclass
-from typing import Set, List, cast, Union, Optional, Callable, Awaitable
+from typing import Set, List, Union, Callable, Optional, Awaitable, cast
 
 import aiohttp
 from yarl import URL
 
 from nonebot.log import logger
 from nonebot.adapters import Bot
-from nonebot.utils import escape_tag
 from nonebot.typing import overrides
+from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
-from nonebot.drivers import (ForwardDriver, HTTPPollingSetup, WebSocketSetup,
-                             HTTPRequest, WebSocket as BaseWebSocket)
+from nonebot.drivers import WebSocket as BaseWebSocket
+from nonebot.drivers import (HTTPRequest, ForwardDriver, WebSocketSetup,
+                             HTTPPollingSetup)
 
 STARTUP_FUNC = Callable[[], Awaitable[None]]
 SHUTDOWN_FUNC = Callable[[], Awaitable[None]]
@@ -242,8 +243,8 @@ class Driver(ForwardDriver):
                             setup_ = setup
                     except Exception as e:
                         logger.opt(colors=True, exception=e).error(
-                            f"<r><bg #f8bbd0>Error while parsing setup {setup!r}.</bg #f8bbd0></r>"
-                        )
+                            "<r><bg #f8bbd0>Error while parsing setup "
+                            f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>")
                         await asyncio.sleep(3)
                         continue
 
@@ -324,8 +325,8 @@ class Driver(ForwardDriver):
                             setup_ = setup
                     except Exception as e:
                         logger.opt(colors=True, exception=e).error(
-                            f"<r><bg #f8bbd0>Error while parsing setup {setup!r}.</bg #f8bbd0></r>"
-                        )
+                            "<r><bg #f8bbd0>Error while parsing setup "
+                            f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>")
                         await asyncio.sleep(3)
                         continue
 

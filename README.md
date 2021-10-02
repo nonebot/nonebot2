@@ -7,8 +7,10 @@
 
 # NoneBot
 
+<!-- prettier-ignore-start -->
 <!-- markdownlint-disable-next-line MD036 -->
 _✨ 跨平台 Python 异步机器人框架 ✨_
+<!-- prettier-ignore-end -->
 
 </div>
 
@@ -31,6 +33,9 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
   </a>
   <a href="https://core.telegram.org/bots/api">
     <img src="https://img.shields.io/badge/telegram-Bot-lightgrey?style=social&logo=telegram">
+  </a>
+  <a href="https://open.feishu.cn/document/home/index">
+    <img src="https://img.shields.io/badge/%E9%A3%9E%E4%B9%A6-Bot-lightgrey?style=social&logo=data:image/png;base64,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" alt="feishu">
   </a>
   <br />
   <a href="https://jq.qq.com/?_wv=1027&k=5OFifDh">
@@ -77,7 +82,8 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 - [OneBot(CQHTTP) 协议](https://github.com/howmanybots/onebot/blob/master/README.md) (QQ 等)
 - [Mirai-API-HTTP 协议](https://github.com/project-mirai/mirai-api-http)
 - [钉钉](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p)
-- [Telegram](https://core.telegram.org/bots/api) _计划中_
+- [Telegram](https://core.telegram.org/bots/api)
+- [飞书](https://open.feishu.cn/document/home/index)
 
 更多：[商店](https://v2.nonebot.dev/store.html)
 
@@ -121,6 +127,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
   ```
 
   或者尝试以下镜像：
+
   - [文档镜像(中国境内)](https://nb2.baka.icu)
   - [文档镜像(vercel)](https://nonebot2-vercel-mirror.vercel.app)
 

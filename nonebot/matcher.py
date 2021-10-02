@@ -10,17 +10,18 @@ from types import ModuleType
 from datetime import datetime
 from contextvars import ContextVar
 from collections import defaultdict
-from typing import (Any, Type, List, Dict, Union, Mapping, Iterable, Callable,
-                    Optional, NoReturn, TYPE_CHECKING)
+from typing import (TYPE_CHECKING, Any, Dict, List, Type, Union, Callable,
+                    NoReturn, Optional)
 
 from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.handler import Handler
-from nonebot.permission import Permission, USER
-from nonebot.typing import (T_State, T_StateFactory, T_Handler, T_ArgsParser,
-                            T_TypeUpdater, T_PermissionUpdater)
-from nonebot.exception import (PausedException, RejectedException,
-                               FinishedException, StopPropagation)
+from nonebot.adapters import MessageTemplate
+from nonebot.permission import USER, Permission
+from nonebot.exception import (PausedException, StopPropagation,
+                               FinishedException, RejectedException)
+from nonebot.typing import (T_State, T_Handler, T_ArgsParser, T_TypeUpdater,
+                            T_StateFactory, T_PermissionUpdater)
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event, Message, MessageSegment
@@ -30,8 +31,9 @@ matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
 :类型: ``Dict[int, List[Type[Matcher]]]``
 :说明: 用于存储当前所有的事件响应器
 """
-current_bot: ContextVar = ContextVar("current_bot")
-current_event: ContextVar = ContextVar("current_event")
+current_bot: ContextVar["Bot"] = ContextVar("current_bot")
+current_event: ContextVar["Event"] = ContextVar("current_event")
+current_state: ContextVar[T_State] = ContextVar("current_state")
 
 
 class MatcherMeta(type):
@@ -401,7 +403,8 @@ class Matcher(metaclass=MatcherMeta):
     def got(
         cls,
         key: str,
-        prompt: Optional[Union[str, "Message", "MessageSegment"]] = None,
+        prompt: Optional[Union[str, "Message", "MessageSegment",
+                               MessageTemplate]] = None,
         args_parser: Optional[T_ArgsParser] = None
     ) -> Callable[[T_Handler], T_Handler]:
         """
@@ -412,31 +415,19 @@ class Matcher(metaclass=MatcherMeta):
         :参数:
 
           * ``key: str``: 参数名
-          * ``prompt: Optional[Union[str, Message, MessageSegment]]``: 在参数不存在时向用户发送的消息
+          * ``prompt: Optional[Union[str, Message, MessageSegment, MessageFormatter]]``: 在参数不存在时向用户发送的消息
           * ``args_parser: Optional[T_ArgsParser]``: 可选参数解析函数，空则使用默认解析函数
         """
 
         async def _key_getter(bot: "Bot", event: "Event", state: T_State):
             state["_current_key"] = key
             if key not in state:
-                if prompt:
-                    if isinstance(prompt, str):
-                        await bot.send(event=event,
-                                       message=prompt.format(**state))
-                    elif isinstance(prompt, Mapping):
-                        if prompt.is_text():
-                            await bot.send(event=event,
-                                           message=str(prompt).format(**state))
-                        else:
-                            await bot.send(event=event, message=prompt)
-                    elif isinstance(prompt, Iterable):
-                        await bot.send(
-                            event=event,
-                            message=prompt.__class__(
-                                str(prompt).format(**state))  # type: ignore
-                        )
+                if prompt is not None:
+                    if isinstance(prompt, MessageTemplate):
+                        _prompt = prompt.format(**state)
                     else:
-                        logger.warning("Unknown prompt type, ignored.")
+                        _prompt = prompt
+                    await bot.send(event=event, message=_prompt)
                 raise PausedException
             else:
                 state["_skip_key"] = True
@@ -456,7 +447,7 @@ class Matcher(metaclass=MatcherMeta):
         parser_handler = cls.append_handler(_key_parser)
 
         def _decorator(func: T_Handler) -> T_Handler:
-            if not hasattr(cls.handlers[-1], "__wrapped__"):
+            if not hasattr(cls.handlers[-1].func, "__wrapped__"):
                 parser = cls.handlers.pop()
                 func_handler = Handler(func)
 
@@ -482,8 +473,8 @@ class Matcher(metaclass=MatcherMeta):
         return _decorator
 
     @classmethod
-    async def send(cls, message: Union[str, "Message", "MessageSegment"],
-                   **kwargs) -> Any:
+    async def send(cls, message: Union[str, "Message", "MessageSegment",
+                                       MessageTemplate], **kwargs) -> Any:
         """
         :说明:
 
@@ -494,14 +485,19 @@ class Matcher(metaclass=MatcherMeta):
           * ``message: Union[str, Message, MessageSegment]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
-        bot: "Bot" = current_bot.get()
+        bot = current_bot.get()
         event = current_event.get()
-        return await bot.send(event=event, message=message, **kwargs)
+        state = current_state.get()
+        if isinstance(message, MessageTemplate):
+            _message = message.format(**state)
+        else:
+            _message = message
+        return await bot.send(event=event, message=_message, **kwargs)
 
     @classmethod
     async def finish(cls,
-                     message: Optional[Union[str, "Message",
-                                             "MessageSegment"]] = None,
+                     message: Optional[Union[str, "Message", "MessageSegment",
+                                             MessageTemplate]] = None,
                      **kwargs) -> NoReturn:
         """
         :说明:
@@ -515,14 +511,19 @@ class Matcher(metaclass=MatcherMeta):
         """
         bot = current_bot.get()
         event = current_event.get()
-        if message:
-            await bot.send(event=event, message=message, **kwargs)
+        state = current_state.get()
+        if isinstance(message, MessageTemplate):
+            _message = message.format(**state)
+        else:
+            _message = message
+        if _message is not None:
+            await bot.send(event=event, message=_message, **kwargs)
         raise FinishedException
 
     @classmethod
     async def pause(cls,
-                    prompt: Optional[Union[str, "Message",
-                                           "MessageSegment"]] = None,
+                    prompt: Optional[Union[str, "Message", "MessageSegment",
+                                           MessageTemplate]] = None,
                     **kwargs) -> NoReturn:
         """
         :说明:
@@ -536,8 +537,13 @@ class Matcher(metaclass=MatcherMeta):
         """
         bot = current_bot.get()
         event = current_event.get()
-        if prompt:
-            await bot.send(event=event, message=prompt, **kwargs)
+        state = current_state.get()
+        if isinstance(prompt, MessageTemplate):
+            _prompt = prompt.format(**state)
+        else:
+            _prompt = prompt
+        if _prompt is not None:
+            await bot.send(event=event, message=_prompt, **kwargs)
         raise PausedException
 
     @classmethod
@@ -557,8 +563,13 @@ class Matcher(metaclass=MatcherMeta):
         """
         bot = current_bot.get()
         event = current_event.get()
-        if prompt:
-            await bot.send(event=event, message=prompt, **kwargs)
+        state = current_state.get()
+        if isinstance(prompt, MessageTemplate):
+            _prompt = prompt.format(**state)
+        else:
+            _prompt = prompt
+        if _prompt is not None:
+            await bot.send(event=event, message=_prompt, **kwargs)
         raise RejectedException
 
     def stop_propagation(self):
@@ -573,6 +584,7 @@ class Matcher(metaclass=MatcherMeta):
     async def run(self, bot: "Bot", event: "Event", state: T_State):
         b_t = current_bot.set(bot)
         e_t = current_event.set(event)
+        s_t = current_state.set(self.state)
         try:
             # Refresh preprocess state
             self.state = await self._default_state_factory(
@@ -581,6 +593,7 @@ class Matcher(metaclass=MatcherMeta):
 
             while self.handlers:
                 handler = self.handlers.pop(0)
+                logger.debug(f"Running handler {handler}")
                 await handler(self, bot, event, self.state)
 
         except RejectedException:
@@ -664,3 +677,4 @@ class Matcher(metaclass=MatcherMeta):
             logger.info(f"Matcher {self} running complete")
             current_bot.reset(b_t)
             current_event.reset(e_t)
+            current_state.reset(s_t)

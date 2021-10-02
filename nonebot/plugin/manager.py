@@ -8,10 +8,10 @@ from types import ModuleType
 from collections import Counter
 from contextvars import ContextVar
 from importlib.abc import MetaPathFinder
-from typing import Set, List, Optional, Iterable
+from typing import Set, List, Iterable, Optional
 from importlib.machinery import PathFinder, SourceFileLoader
 
-from .export import _export, Export
+from .export import Export, _export
 
 _current_plugin: ContextVar[Optional[ModuleType]] = ContextVar(
     "_current_plugin", default=None)

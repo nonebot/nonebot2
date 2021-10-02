@@ -7,14 +7,15 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
 
 import asyncio
 from datetime import datetime
-from typing import Set, Type, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Set, Type, Optional
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.utils import escape_tag
-from nonebot.matcher import matchers, Matcher
-from nonebot.exception import IgnoredException, StopPropagation, NoLogException
-from nonebot.typing import T_State, T_EventPreProcessor, T_RunPreProcessor, T_EventPostProcessor, T_RunPostProcessor
+from nonebot.matcher import Matcher, matchers
+from nonebot.exception import NoLogException, StopPropagation, IgnoredException
+from nonebot.typing import (T_State, T_RunPreProcessor, T_RunPostProcessor,
+                            T_EventPreProcessor, T_EventPostProcessor)
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
@@ -175,7 +176,7 @@ async def _run_matcher(Matcher: Type[Matcher], bot: "Bot", event: "Event",
     return
 
 
-async def handle_event(bot: "Bot", event: "Event") -> Optional[Exception]:
+async def handle_event(bot: "Bot", event: "Event") -> None:
     """
     :说明:
 
@@ -212,12 +213,12 @@ async def handle_event(bot: "Bot", event: "Event") -> Optional[Exception]:
         except IgnoredException as e:
             logger.opt(colors=True).info(
                 f"Event {escape_tag(event.get_event_name())} is <b>ignored</b>")
-            return e
+            return
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
                 "<r><bg #f8bbd0>Error when running EventPreProcessors. "
                 "Event ignored!</bg #f8bbd0></r>")
-            return e
+            return
 
     # Trie Match
     _, _ = TrieRule.get_value(bot, event, state)
@@ -247,7 +248,6 @@ async def handle_event(bot: "Bot", event: "Event") -> Optional[Exception]:
                 logger.opt(colors=True, exception=result).error(
                     "<r><bg #f8bbd0>Error when checking Matcher.</bg #f8bbd0></r>"
                 )
-            return result
 
     coros = list(map(lambda x: x(bot, event, state), _event_postprocessors))
     if coros:
@@ -259,4 +259,3 @@ async def handle_event(bot: "Bot", event: "Event") -> Optional[Exception]:
             logger.opt(colors=True, exception=e).error(
                 "<r><bg #f8bbd0>Error when running EventPostProcessors</bg #f8bbd0></r>"
             )
-            return e

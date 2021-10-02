@@ -3,7 +3,7 @@ import json
 import asyncio
 import dataclasses
 from functools import wraps, partial
-from typing import Any, Optional, Callable, Awaitable
+from typing import Any, Callable, Optional, Awaitable
 
 from nonebot.log import logger
 from nonebot.typing import overrides

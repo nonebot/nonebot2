@@ -13,7 +13,6 @@ classifiers = [
   "Development Status :: 5 - Production/Stable",
   "Framework :: Robot Framework",
   "Framework :: Robot Framework :: Library",
-  "License :: OSI Approved :: MIT License",
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3"
 ]
@@ -24,8 +23,7 @@ exclude = ["nonebot/__init__.py", "nonebot/adapters/__init__.py"]
 
 [tool.poetry.dependencies]
 python = "^3.7.3"
-httpx = "^0.18.0"
-websockets = "^9.1"
+httpx = ">=0.18.0, <1.0.0"
 nonebot2 = "^2.0.0-alpha.14"
 
 [tool.poetry.dev-dependencies]

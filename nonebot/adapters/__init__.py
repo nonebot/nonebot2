@@ -1,3 +1,10 @@
+"""
+协议适配基类
+============
+
+各协议请继承以下基类，并使用 ``driver.register_adapter`` 注册适配器
+"""
+
 from typing import Iterable
 
 try:
@@ -13,4 +20,8 @@ except ImportError:
 except Exception:
     pass
 
-from ._base import Bot, Event, Message, MessageSegment
+from ._bot import Bot as Bot
+from ._event import Event as Event
+from ._message import Message as Message
+from ._message import MessageSegment as MessageSegment
+from ._template import MessageTemplate as MessageTemplate

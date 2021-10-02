@@ -29,8 +29,9 @@
 """
 
 import importlib
-import pkg_resources
 from typing import Any, Dict, Type, Optional
+
+import pkg_resources
 
 from nonebot.adapters import Bot
 from nonebot.utils import escape_tag
@@ -277,8 +278,25 @@ def run(host: Optional[str] = None,
     get_driver().run(host, port, *args, **kwargs)
 
 
-from nonebot.plugin import on_message, on_notice, on_request, on_metaevent, CommandGroup, MatcherGroup
-from nonebot.plugin import on_startswith, on_endswith, on_keyword, on_command, on_shell_command, on_regex
-from nonebot.plugin import load_plugin, load_plugins, load_all_plugins, load_builtin_plugins
-from nonebot.plugin import load_from_json, load_from_toml
-from nonebot.plugin import export, require, get_plugin, get_loaded_plugins
+from nonebot.plugin import export as export
+from nonebot.plugin import require as require
+from nonebot.plugin import on_regex as on_regex
+from nonebot.plugin import on_notice as on_notice
+from nonebot.plugin import get_plugin as get_plugin
+from nonebot.plugin import on_command as on_command
+from nonebot.plugin import on_keyword as on_keyword
+from nonebot.plugin import on_message as on_message
+from nonebot.plugin import on_request as on_request
+from nonebot.plugin import load_plugin as load_plugin
+from nonebot.plugin import on_endswith as on_endswith
+from nonebot.plugin import CommandGroup as CommandGroup
+from nonebot.plugin import MatcherGroup as MatcherGroup
+from nonebot.plugin import load_plugins as load_plugins
+from nonebot.plugin import on_metaevent as on_metaevent
+from nonebot.plugin import on_startswith as on_startswith
+from nonebot.plugin import load_from_json as load_from_json
+from nonebot.plugin import load_from_toml as load_from_toml
+from nonebot.plugin import load_all_plugins as load_all_plugins
+from nonebot.plugin import on_shell_command as on_shell_command
+from nonebot.plugin import get_loaded_plugins as get_loaded_plugins
+from nonebot.plugin import load_builtin_plugins as load_builtin_plugins

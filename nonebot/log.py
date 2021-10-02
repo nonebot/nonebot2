@@ -12,7 +12,7 @@ NoneBot 使用 `loguru`_ 来记录日志信息。
 
 import sys
 import logging
-from typing import Union, TYPE_CHECKING
+from typing import TYPE_CHECKING, Union
 
 import loguru
 

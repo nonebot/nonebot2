@@ -18,7 +18,8 @@
     https://docs.python.org/3/library/typing.html
 """
 from collections.abc import Callable as BaseCallable
-from typing import Any, Dict, Union, TypeVar, Optional, Callable, NoReturn, Awaitable, TYPE_CHECKING
+from typing import (TYPE_CHECKING, Any, Dict, Union, TypeVar, Callable,
+                    NoReturn, Optional, Awaitable)
 
 if TYPE_CHECKING:
     from nonebot.matcher import Matcher

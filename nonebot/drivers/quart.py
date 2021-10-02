@@ -10,20 +10,22 @@ Quart 驱动适配
 
 import asyncio
 from dataclasses import dataclass
-from typing import List, TypeVar, Callable, Coroutine, Optional
+from typing import List, TypeVar, Callable, Optional, Coroutine
 
 import uvicorn
 from pydantic import BaseSettings
 
+from nonebot.config import Env
 from nonebot.log import logger
-from nonebot.utils import escape_tag
 from nonebot.typing import overrides
-from nonebot.config import Env, Config as NoneBotConfig
-from nonebot.drivers import ReverseDriver, HTTPRequest, WebSocket as BaseWebSocket
+from nonebot.utils import escape_tag
+from nonebot.config import Config as NoneBotConfig
+from nonebot.drivers import HTTPRequest, ReverseDriver
+from nonebot.drivers import WebSocket as BaseWebSocket
 
 try:
-    from werkzeug import exceptions
     from quart import request as _request
+    import werkzeug.exceptions as exceptions
     from quart import websocket as _websocket
     from quart import Quart, Request, Response
     from quart import Websocket as QuartWebSocket
@@ -38,15 +40,55 @@ class Config(BaseSettings):
     """
     Quart 驱动框架设置
     """
-    quart_reload_dirs: List[str] = []
+    quart_reload: Optional[bool] = None
     """
     :类型:
 
-      ``List[str]``
+      ``Optional[bool]``
 
     :说明:
 
-      ``debug`` 模式下重载监控文件夹列表，默认为 uvicorn 默认值
+      开启/关闭冷重载，默认会在配置了 app 的 debug 模式启用
+    """
+    quart_reload_dirs: Optional[List[str]] = None
+    """
+    :类型:
+
+      ``Optional[List[str]]``
+
+    :说明:
+
+      重载监控文件夹列表，默认为 uvicorn 默认值
+    """
+    quart_reload_delay: Optional[float] = None
+    """
+    :类型:
+
+      ``Optional[float]``
+
+    :说明:
+
+      重载延迟，默认为 uvicorn 默认值
+    """
+    quart_reload_includes: Optional[List[str]] = None
+    """
+    :类型:
+
+      ``Optional[List[str]]``
+
+    :说明:
+
+      要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+    """
+    quart_reload_excludes: Optional[List[str]] = None
+    """
+    :类型:
+
+      ``Optional[List[str]]``
+
+    :说明:
+
+      不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
     """
 
     class Config:
@@ -145,8 +187,13 @@ class Driver(ReverseDriver):
             app or self.server_app,  # type: ignore
             host=host or str(self.config.host),
             port=port or self.config.port,
-            reload=bool(app) and self.config.debug,
-            reload_dirs=self.quart_config.quart_reload_dirs or None,
+            reload=self.quart_config.quart_reload
+            if self.quart_config.quart_reload is not None else
+            (bool(app) and self.config.debug),
+            reload_dirs=self.quart_config.quart_reload_dirs,
+            reload_delay=self.quart_config.quart_reload_delay,
+            reload_includes=self.quart_config.quart_reload_includes,
+            reload_excludes=self.quart_config.quart_reload_excludes,
             debug=self.config.debug,
             log_config=LOGGING_CONFIG,
             **kwargs)

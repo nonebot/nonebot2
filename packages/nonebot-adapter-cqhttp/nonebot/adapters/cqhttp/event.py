@@ -1,11 +1,12 @@
 import inspect
 from typing_extensions import Literal
-from typing import Type, List, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, List, Type, Optional
 
 from pydantic import BaseModel
 from pygtrie import StringTrie
-from nonebot.utils import escape_tag
+
 from nonebot.typing import overrides
+from nonebot.utils import escape_tag
 from nonebot.exception import NoLogException
 from nonebot.adapters import Event as BaseEvent
 

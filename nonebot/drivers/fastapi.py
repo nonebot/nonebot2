@@ -13,26 +13,27 @@ FastAPI 驱动适配
 import asyncio
 import logging
 from dataclasses import dataclass
-from typing import List, cast, Union, Optional, Callable, Awaitable
+from typing import List, Union, Callable, Optional, Awaitable, cast
 
 import httpx
 import uvicorn
 from pydantic import BaseSettings
 from fastapi.responses import Response
 from websockets.exceptions import ConnectionClosed
-from fastapi import status, Request, FastAPI, HTTPException
+from fastapi import FastAPI, Request, HTTPException, status
+from starlette.websockets import WebSocket as FastAPIWebSocket
+from starlette.websockets import WebSocketState, WebSocketDisconnect
 from websockets.legacy.client import Connect, WebSocketClientProtocol
-from starlette.websockets import (WebSocketState, WebSocketDisconnect, WebSocket
-                                  as FastAPIWebSocket)
 
+from nonebot.config import Env
 from nonebot.log import logger
 from nonebot.adapters import Bot
-from nonebot.utils import escape_tag
 from nonebot.typing import overrides
-from nonebot.config import Env, Config as NoneBotConfig
-from nonebot.drivers import (ReverseDriver, ForwardDriver, HTTPPollingSetup,
-                             WebSocketSetup, HTTPRequest, WebSocket as
-                             BaseWebSocket)
+from nonebot.utils import escape_tag
+from nonebot.config import Config as NoneBotConfig
+from nonebot.drivers import WebSocket as BaseWebSocket
+from nonebot.drivers import (HTTPRequest, ForwardDriver, ReverseDriver,
+                             WebSocketSetup, HTTPPollingSetup)
 
 HTTPPOLLING_SETUP = Union[HTTPPollingSetup,
                           Callable[[], Awaitable[HTTPPollingSetup]]]
@@ -73,15 +74,55 @@ class Config(BaseSettings):
 
       ``redoc`` 地址，默认为 ``None`` 即关闭
     """
-    fastapi_reload_dirs: List[str] = []
+    fastapi_reload: Optional[bool] = None
     """
     :类型:
 
-      ``List[str]``
+      ``Optional[bool]``
 
     :说明:
 
-      ``debug`` 模式下重载监控文件夹列表，默认为 uvicorn 默认值
+      开启/关闭冷重载，默认会在配置了 app 的 debug 模式启用
+    """
+    fastapi_reload_dirs: Optional[List[str]] = None
+    """
+    :类型:
+
+      ``Optional[List[str]]``
+
+    :说明:
+
+      重载监控文件夹列表，默认为 uvicorn 默认值
+    """
+    fastapi_reload_delay: Optional[float] = None
+    """
+    :类型:
+
+      ``Optional[float]``
+
+    :说明:
+
+      重载延迟，默认为 uvicorn 默认值
+    """
+    fastapi_reload_includes: Optional[List[str]] = None
+    """
+    :类型:
+
+      ``Optional[List[str]]``
+
+    :说明:
+
+      要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+    """
+    fastapi_reload_excludes: Optional[List[str]] = None
+    """
+    :类型:
+
+      ``Optional[List[str]]``
+
+    :说明:
+
+      不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
     """
 
     class Config:
@@ -216,8 +257,13 @@ class Driver(ReverseDriver, ForwardDriver):
             app or self.server_app,  # type: ignore
             host=host or str(self.config.host),
             port=port or self.config.port,
-            reload=bool(app) and self.config.debug,
-            reload_dirs=self.fastapi_config.fastapi_reload_dirs or None,
+            reload=self.fastapi_config.fastapi_reload
+            if self.fastapi_config.fastapi_reload is not None else
+            (bool(app) and self.config.debug),
+            reload_dirs=self.fastapi_config.fastapi_reload_dirs,
+            reload_delay=self.fastapi_config.fastapi_reload_delay,
+            reload_includes=self.fastapi_config.fastapi_reload_includes,
+            reload_excludes=self.fastapi_config.fastapi_reload_excludes,
             debug=self.config.debug,
             log_config=LOGGING_CONFIG,
             **kwargs)
@@ -357,8 +403,8 @@ class Driver(ReverseDriver, ForwardDriver):
                             setup_ = setup
                     except Exception as e:
                         logger.opt(colors=True, exception=e).error(
-                            f"<r><bg #f8bbd0>Error while parsing setup {setup!r}.</bg #f8bbd0></r>"
-                        )
+                            "<r><bg #f8bbd0>Error while parsing setup "
+                            f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>")
                         await asyncio.sleep(3)
                         continue
 
@@ -422,8 +468,8 @@ class Driver(ReverseDriver, ForwardDriver):
                         setup_ = setup
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
-                        f"<r><bg #f8bbd0>Error while parsing setup {setup!r}.</bg #f8bbd0></r>"
-                    )
+                        "<r><bg #f8bbd0>Error while parsing setup "
+                        f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>")
                     await asyncio.sleep(3)
                     continue
 
@@ -439,7 +485,7 @@ class Driver(ReverseDriver, ForwardDriver):
                     f"Bot {setup_.self_id} from adapter {setup_.adapter} connecting to {url}"
                 )
                 try:
-                    connection = Connect(setup_.url)
+                    connection = Connect(setup_.url, extra_headers=headers)
                     async with connection as ws:
                         logger.opt(colors=True).info(
                             f"WebSocket Connection to <y>{escape_tag(setup_.adapter.upper())} "

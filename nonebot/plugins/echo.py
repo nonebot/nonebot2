@@ -3,7 +3,8 @@ from functools import reduce
 from nonebot.rule import to_me
 from nonebot.plugin import on_command
 from nonebot.permission import SUPERUSER
-from nonebot.adapters.cqhttp import Bot, unescape, MessageEvent, Message, MessageSegment
+from nonebot.adapters.cqhttp import (Bot, Message, MessageEvent, MessageSegment,
+                                     unescape)
 
 say = on_command("say", to_me(), permission=SUPERUSER)
 

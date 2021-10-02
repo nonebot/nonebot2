@@ -36,6 +36,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="newBot.name"
+                        :rules="rules"
                         label="机器人名称"
                         required
                       ></v-text-field>
@@ -43,6 +44,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="newBot.desc"
+                        :rules="rules"
                         label="机器人介绍"
                         required
                       ></v-text-field>
@@ -50,6 +52,7 @@
                     <v-col cols="12">
                       <v-text-field
                         v-model="newBot.repo"
+                        :rules="rules"
                         label="仓库/主页链接"
                         required
                       ></v-text-field>
@@ -67,10 +70,7 @@
                 :disabled="!valid"
                 color="blue darken-1"
                 text
-                @click="
-                  dialog = false;
-                  publishBot();
-                "
+                @click="publishBot"
               >
                 发布
               </v-btn>
@@ -128,6 +128,7 @@ export default {
       page: 1,
       dialog: false,
       valid: false,
+      rules: [(v) => !!v || "This field is required"],
       newBot: {
         name: null,
         desc: null,
@@ -151,10 +152,13 @@ export default {
     displayBots() {
       return this.filteredBots.slice((this.page - 1) * 10, this.page * 10);
     },
+  },
+  methods: {
     publishBot() {
       if (!this.$refs.newBotForm.validate()) {
         return;
       }
+      this.dialog = false;
       const title = encodeURIComponent(`Bot: ${this.newBot.name}`).replace(
         /%2B/gi,
         "+"
