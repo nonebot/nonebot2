@@ -27,6 +27,19 @@ class UserPermission(str, Enum):
     MEMBER = 'MEMBER'
 
 
+class NudgeSubjectKind(str, Enum):
+    """
+    :说明:
+
+      戳一戳类型枚举类
+
+        * ``Group``: 群
+        * ``Friend``: 好友
+    """
+    Group = 'Group'
+    Friend = 'Friend'
+
+
 class GroupInfo(BaseModel):
     id: int
     name: str
@@ -44,6 +57,11 @@ class PrivateChatInfo(BaseModel):
     id: int
     nickname: str
     remark: str
+
+
+class NudgeSubject(BaseModel):
+    id: int
+    kind: NudgeSubjectKind
 
 
 class Event(BaseEvent):
