@@ -1,3 +1,4 @@
+<!-- markdownlint-disable MD033 MD041-->
 <p align="center">
   <a href="https://v2.nonebot.dev/"><img src="https://raw.githubusercontent.com/nonebot/nonebot2/master/docs/.vuepress/public/logo.png" width="200" height="200" alt="nonebot"></a>
 </p>
@@ -5,6 +6,8 @@
 <div align="center">
 
 # NoneBot
+
+<!-- markdownlint-disable-next-line MD036 -->
 
 _✨ 跨平台 Python 异步机器人框架 ✨_
 
@@ -54,6 +57,7 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
   ·
   <a href="#插件">文档打不开？</a>
 </p>
+<!-- markdownlint-enable MD033 -->
 
 ## 简介
 
@@ -77,7 +81,8 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 - [OneBot(CQHTTP) 协议](https://github.com/howmanybots/onebot/blob/master/README.md) (QQ 等)
 - [Mirai-API-HTTP 协议](https://github.com/project-mirai/mirai-api-http)
 - [钉钉](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p)
-- [Telegram](https://core.telegram.org/bots/api) _计划中_
+- [Telegram](https://core.telegram.org/bots/api)
+- [飞书](https://open.feishu.cn/document/home/index)
 
 更多：[商店](https://v2.nonebot.dev/store.html)
 
@@ -101,6 +106,10 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
    ```
 
 ## 社区资源
+
+### 常见问题
+
+- [常见问题解答(FAQ)](https://faq.nonebot.dev/)
 
 ### 教程/实际项目/经验分享
 
