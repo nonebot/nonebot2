@@ -10,7 +10,7 @@ sidebarDepth: 0
 
 ## _class_ `Config`
 
-钉钉配置类
+飞书配置类
 
 
 * **配置项**
