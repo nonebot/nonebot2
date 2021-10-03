@@ -1,3 +1,4 @@
+import inspect
 import functools
 from string import Formatter
 from typing import (TYPE_CHECKING, Any, Set, List, Type, Tuple, Union, Generic,
@@ -114,8 +115,14 @@ class MessageTemplate(Formatter, Generic[TM]):
                                              [""])), auto_arg_index
 
     def format_field(self, value: Any, format_spec: str) -> Any:
-        return super().format_field(value,
-                                    format_spec) if format_spec else value
+        segment_class: Type[MessageSegment] = self.factory.get_segment_class()
+        method = getattr(segment_class, format_spec, None)
+        method_type = inspect.getattr_static(segment_class, format_spec, None)
+        return (super().format_field(value, format_spec) if
+                ((method is None) or
+                 (not isinstance(method_type, (classmethod, staticmethod))
+                 )  # Only Call staticmethod or classmethod
+                ) else method(value)) if format_spec else value
 
     def _add(self, a: Any, b: Any) -> Any:
         try:
