@@ -164,7 +164,7 @@ class MessageSegment(BaseMessageSegment["Message"]):
                proxy: Optional[bool] = None,
                timeout: Optional[int] = None) -> "MessageSegment":
         if isinstance(file, BytesIO):
-            file = file.read()
+            file = file.getvalue()
         if isinstance(file, bytes):
             file = f"base64://{b64encode(file).decode()}"
         elif isinstance(file, Path):
@@ -212,7 +212,7 @@ class MessageSegment(BaseMessageSegment["Message"]):
               proxy: Optional[bool] = None,
               timeout: Optional[int] = None) -> "MessageSegment":
         if isinstance(file, BytesIO):
-            file = file.read()
+            file = file.getvalue()
         if isinstance(file, bytes):
             file = f"base64://{b64encode(file).decode()}"
         elif isinstance(file, Path):
