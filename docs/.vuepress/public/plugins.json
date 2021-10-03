@@ -414,5 +414,13 @@
     "desc": "生成pornhub风格logo",
     "author": "kexue-z",
     "repo": "https://github.com/kexue-z/nonebot-plugin-phlogo"
+  },
+  {
+    "id": "rs_software_zhixue",
+    "link": "rs-software-zhixue",
+    "name": "ZhixueScore",
+    "desc": "在NoneBot上查询你的智学网成绩",
+    "author": "MasterYuan418",
+    "repo": "https://github.com/RisConn/software-zhixue"
   }
 ]
