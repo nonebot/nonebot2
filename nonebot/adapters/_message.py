@@ -109,22 +109,24 @@ class Message(List[TMS], abc.ABC):
         :说明:
 
           根据创建消息模板, 用法和 ``str.format`` 大致相同, 但是可以输出消息对象, 并且支持以 ``Message`` 对象作为消息模板
+          并且提供了拓展的格式化控制符, 可以用适用于该消息类型的 ``MessageSegment`` 的工厂方法创建消息
 
         :示例:
 
         .. code-block:: python
 
-            >>> Message.template("{} {}").format("hello", "world")
+            >>> Message.template("{} {}").format("hello", "world") # 基础演示
             Message(MessageSegment(type='text', data={'text': 'hello world'}))
-            >>> Message.template("{} {}").format(MessageSegment.image("file///..."), "world")
+            >>> Message.template("{} {}").format(MessageSegment.image("file///..."), "world") # 支持消息段等对象
             Message(MessageSegment(type='image', data={'file': 'file///...'}), MessageSegment(type='text', data={'text': 'world'}))
-            >>> Message.template(
+            >>> Message.template( # 支持以Message对象作为消息模板
             ...       MessageSegment.text('test {event.user_id}') + MessageSegment.face(233) +
-            ...       MessageSegment.text('test {event.message}')).format(event={'user_id':123456, 'message':'hello world'}
-            ... )
+            ...       MessageSegment.text('test {event.message}')).format(event={'user_id':123456, 'message':'hello world'}) 
             Message(MessageSegment(type='text', data={'text': 'test 123456'}), 
                     MessageSegment(type='face', data={'face': 233}), 
                     MessageSegment(type='text', data={'text': 'test hello world'}))
+            >>> Message.template("{link:image}").format(link='https://...') # 支持拓展格式化控制符
+            Message(MessageSegment(type='image', data={'file': 'https://...'}))
 
         :参数:
 
