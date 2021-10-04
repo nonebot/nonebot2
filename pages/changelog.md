@@ -4,6 +4,10 @@ sidebar: auto
 
 # 更新日志
 
+## v2.0.0a17
+
+- 新增 `MessageTemplate` 对于 `str` 普通模板的支持
+
 ## v2.0.0a16
 
 - 新增 `MessageTemplate` 可用于 `Message` 的模板生成
@@ -13,6 +17,8 @@ sidebar: auto
 - 修复 `fastapi` Driver Websocket 未能正确提供请求头部
 - 新增 `fastapi` Driver 更多的 uvicorn 相关配置项
 - 新增 `quart` Driver 更多的 uvicorn 相关配置项
+- 修复 `endswith` Rule 错误的正则匹配
+- 修复 `cqhttp` Adapter `image`, `record`, `video` 对 `BytesIO` 不正常的读取操作
 
 ## v2.0.0a15
 

@@ -121,9 +121,9 @@ class Message(List[TMS], abc.ABC):
             Message(MessageSegment(type='image', data={'file': 'file///...'}), MessageSegment(type='text', data={'text': 'world'}))
             >>> Message.template( # 支持以Message对象作为消息模板
             ...       MessageSegment.text('test {event.user_id}') + MessageSegment.face(233) +
-            ...       MessageSegment.text('test {event.message}')).format(event={'user_id':123456, 'message':'hello world'}) 
-            Message(MessageSegment(type='text', data={'text': 'test 123456'}), 
-                    MessageSegment(type='face', data={'face': 233}), 
+            ...       MessageSegment.text('test {event.message}')).format(event={'user_id':123456, 'message':'hello world'})
+            Message(MessageSegment(type='text', data={'text': 'test 123456'}),
+                    MessageSegment(type='face', data={'face': 233}),
                     MessageSegment(type='text', data={'text': 'test hello world'}))
             >>> Message.template("{link:image}").format(link='https://...') # 支持拓展格式化控制符
             Message(MessageSegment(type='image', data={'file': 'https://...'}))
@@ -136,7 +136,7 @@ class Message(List[TMS], abc.ABC):
 
           - ``MessageFormatter[TM]``: 消息格式化器
         """
-        return MessageTemplate(cls, format_string)
+        return MessageTemplate(format_string, cls)
 
     @classmethod
     @abc.abstractmethod

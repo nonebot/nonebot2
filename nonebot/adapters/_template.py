@@ -2,22 +2,44 @@ import inspect
 import functools
 from string import Formatter
 from typing import (TYPE_CHECKING, Any, Set, List, Type, Tuple, Union, Generic,
-                    Mapping, TypeVar, Sequence)
+                    Mapping, TypeVar, Sequence, cast, overload)
 
 if TYPE_CHECKING:
     from . import Message, MessageSegment
 
 TM = TypeVar("TM", bound="Message")
+TF = TypeVar("TF", str, "Message")
 
 
-class MessageTemplate(Formatter, Generic[TM]):
+class MessageTemplate(Formatter, Generic[TF]):
     """消息模板格式化实现类"""
 
-    def __init__(self, factory: Type[TM], template: Union[str, TM]) -> None:
-        self.template = template
-        self.factory = factory
+    @overload
+    def __init__(self: "MessageTemplate[str]",
+                 template: str,
+                 factory: Type[str] = str) -> None:
+        ...
 
-    def format(self, *args: Any, **kwargs: Any) -> TM:
+    @overload
+    def __init__(self: "MessageTemplate[TM]", template: Union[str, TM],
+                 factory: Type[TM]) -> None:
+        ...
+
+    def __init__(self, template, factory=str) -> None:
+        """
+        :说明:
+
+          创建一个模板
+
+        :参数:
+
+          * ``template: Union[str, Message]``: 模板
+          * ``factory: Union[str, Message]``: 消息构造类型，默认为 `str`
+        """
+        self.template: Union[str, TF] = template
+        self.factory: Type[TF] = factory
+
+    def format(self, *args: Any, **kwargs: Any) -> TF:
         """
         :说明:
 
@@ -27,8 +49,8 @@ class MessageTemplate(Formatter, Generic[TM]):
         if isinstance(self.template, str):
             msg += self.vformat(self.template, args, kwargs)
         elif isinstance(self.template, self.factory):
-            for seg in self.template:
-                seg: "MessageSegment"
+            template = cast("Message[MessageSegment]", self.template)
+            for seg in template:
                 msg += self.vformat(str(seg), args,
                                     kwargs) if seg.is_text() else seg
         else:
@@ -37,7 +59,7 @@ class MessageTemplate(Formatter, Generic[TM]):
         return msg
 
     def vformat(self, format_string: str, args: Sequence[Any],
-                kwargs: Mapping[str, Any]) -> TM:
+                kwargs: Mapping[str, Any]) -> TF:
         used_args = set()
         result, _ = self._vformat(format_string, args, kwargs, used_args, 2)
         self.check_unused_args(list(used_args), args, kwargs)
@@ -51,8 +73,7 @@ class MessageTemplate(Formatter, Generic[TM]):
         used_args: Set[Union[int, str]],
         recursion_depth: int,
         auto_arg_index: int = 0,
-    ) -> Tuple[TM, int]:
-
+    ) -> Tuple[TF, int]:
         if recursion_depth < 0:
             raise ValueError("Max string recursion exceeded")
 
@@ -115,6 +136,9 @@ class MessageTemplate(Formatter, Generic[TM]):
                                              [""])), auto_arg_index
 
     def format_field(self, value: Any, format_spec: str) -> Any:
+        if issubclass(self.factory, str):
+            return super().format_field(value, format_spec)
+
         segment_class: Type[MessageSegment] = self.factory.get_segment_class()
         method = getattr(segment_class, format_spec, None)
         method_type = inspect.getattr_static(segment_class, format_spec, None)
