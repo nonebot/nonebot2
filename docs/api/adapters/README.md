@@ -320,9 +320,9 @@ Message(MessageSegment(type='text', data={'text': 'hello world'}))
 Message(MessageSegment(type='image', data={'file': 'file///...'}), MessageSegment(type='text', data={'text': 'world'}))
 >>> Message.template( # 支持以Message对象作为消息模板
 ...       MessageSegment.text('test {event.user_id}') + MessageSegment.face(233) +
-...       MessageSegment.text('test {event.message}')).format(event={'user_id':123456, 'message':'hello world'}) 
-Message(MessageSegment(type='text', data={'text': 'test 123456'}), 
-        MessageSegment(type='face', data={'face': 233}), 
+...       MessageSegment.text('test {event.message}')).format(event={'user_id':123456, 'message':'hello world'})
+Message(MessageSegment(type='text', data={'text': 'test 123456'}),
+        MessageSegment(type='face', data={'face': 233}),
         MessageSegment(type='text', data={'text': 'test hello world'}))
 >>> Message.template("{link:image}").format(link='https://...') # 支持拓展格式化控制符
 Message(MessageSegment(type='image', data={'file': 'https://...'}))
@@ -547,9 +547,28 @@ Event 基类。提供获取关键信息的方法，其余信息可直接获取�
 
 ## _class_ `MessageTemplate`
 
-基类：`string.Formatter`, `Generic`[`nonebot.adapters._template.TM`]
+基类：`string.Formatter`, `Generic`[`nonebot.adapters._template.TF`]
 
 消息模板格式化实现类
+
+
+### `__init__(template, factory=<class 'str'>)`
+
+
+* **说明**
+
+    创建一个模板
+
+
+
+* **参数**
+
+    
+    * `template: Union[str, Message]`: 模板
+
+
+    * `factory: Union[str, Message]`: 消息构造类型，默认为 str
+
 
 
 ### `format(*args, **kwargs)`
