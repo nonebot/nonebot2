@@ -58,5 +58,11 @@
     "desc": "综合了各种娱乐功能的Bot",
     "author": "FYWinds",
     "repo": "https://github.com/FYWinds/takker"
+  },
+  {
+    "name": "剑网三bot",
+    "desc": "网络游戏《剑网三》的群聊机器人，数据使用：www.jx3api.com",
+    "author": "JustUndertaker",
+    "repo": "https://github.com/JustUndertaker/jx3_bot"
   }
 ]
