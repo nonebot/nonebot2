@@ -480,7 +480,7 @@ class Driver(ReverseDriver, ForwardDriver):
                     )
                     return
 
-                headers = {**setup_.headers, "host": url.netloc.decode("ascii")}
+                headers = setup_.headers.copy()
                 logger.debug(
                     f"Bot {setup_.self_id} from adapter {setup_.adapter} connecting to {url}"
                 )
