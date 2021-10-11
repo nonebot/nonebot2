@@ -414,5 +414,13 @@
     "desc": "生成pornhub风格logo",
     "author": "kexue-z",
     "repo": "https://github.com/kexue-z/nonebot-plugin-phlogo"
+  },
+  {
+    "id": "nonebot_plugin_twitter",
+    "link": "nonebot-plugin-twitter",
+    "name": "Twitter推送",
+    "desc": "Twitter推送插件，自带推文翻译功能",
+    "author": "kanomahoro",
+    "repo": "https://github.com/kanomahoro/nonebot-twitter"
   }
 ]
