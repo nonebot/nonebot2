@@ -422,5 +422,13 @@
     "desc": "Twitter推送插件，自带推文翻译功能",
     "author": "kanomahoro",
     "repo": "https://github.com/kanomahoro/nonebot-twitter"
+  },
+  {
+    "id": "nb2chan",
+    "link": "nb2chan",
+    "name": "nb2chan",
+    "desc": "Nonebot2酱推送",
+    "author": "yucongo",
+    "repo": "https://github.com/ffreemt/nb2chan"
   }
 ]
