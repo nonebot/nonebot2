@@ -8,8 +8,8 @@ from types import ModuleType
 from collections import Counter
 from contextvars import ContextVar
 from importlib.abc import MetaPathFinder
-from typing import Set, List, Iterable, Optional
 from importlib.machinery import PathFinder, SourceFileLoader
+from typing import Set, List, Union, Iterable, Optional, Sequence
 
 from .export import Export, _export
 
@@ -200,7 +200,10 @@ class PluginManager:
 
 class PluginFinder(MetaPathFinder):
 
-    def find_spec(self, fullname: str, path, target):
+    def find_spec(self,
+                  fullname: str,
+                  path: Optional[Sequence[Union[bytes, str]]],
+                  target: Optional[ModuleType] = None):
         if _manager_stack:
             index = -1
             origin_spec = PathFinder.find_spec(fullname, path, target)
