@@ -393,7 +393,8 @@ class Driver(ReverseDriver, ForwardDriver):
             f"Bot {escape_tag(setup.self_id)}</y>")
 
         try:
-            async with httpx.AsyncClient(http2=True) as session:
+            async with httpx.AsyncClient(http2=True,
+                                         follow_redirects=True) as session:
                 while not self.shutdown.is_set():
 
                     try:

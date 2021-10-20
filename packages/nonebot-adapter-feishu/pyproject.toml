@@ -25,7 +25,7 @@ exclude = ["nonebot/__init__.py", "nonebot/adapters/__init__.py"]
 python = "^3.7.3"
 aiocache = "^0.11.1"
 pycryptodome = "^3.10.1"
-httpx = ">=0.18.0, <1.0.0"
+httpx = ">=0.20.0, <1.0.0"
 nonebot2 = "^2.0.0-alpha.14"
 
 [tool.poetry.dev-dependencies]

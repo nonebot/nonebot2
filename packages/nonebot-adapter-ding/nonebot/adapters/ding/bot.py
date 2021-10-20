@@ -1,24 +1,25 @@
 import json
-import urllib.parse
-
 import time
+import urllib.parse
 from datetime import datetime
-from typing import Any, Tuple, Union, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Tuple, Union, Optional
 
 import httpx
 
 from nonebot.log import logger
-from nonebot.utils import escape_tag
 from nonebot.typing import overrides
+from nonebot.utils import escape_tag
 from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
-from nonebot.drivers import Driver, HTTPConnection, HTTPRequest, HTTPResponse
+from nonebot.drivers import Driver, HTTPRequest, HTTPResponse, HTTPConnection
 
-from .utils import calc_hmac_base64, log
 from .config import Config as DingConfig
+from .utils import log, calc_hmac_base64
 from .message import Message, MessageSegment
-from .exception import NetworkError, ApiNotAvailable, ActionFailed, SessionExpired
-from .event import MessageEvent, PrivateMessageEvent, GroupMessageEvent, ConversationType
+from .exception import (ActionFailed, NetworkError, SessionExpired,
+                        ApiNotAvailable)
+from .event import (MessageEvent, ConversationType, GroupMessageEvent,
+                    PrivateMessageEvent)
 
 if TYPE_CHECKING:
     from nonebot.config import Config
@@ -149,7 +150,8 @@ class Bot(BaseBot):
         if not message:
             raise ValueError("Message not found")
         try:
-            async with httpx.AsyncClient(headers=headers) as client:
+            async with httpx.AsyncClient(headers=headers,
+                                         follow_redirects=True) as client:
                 response = await client.post(webhook,
                                              params=params,
                                              json=message._produce(),

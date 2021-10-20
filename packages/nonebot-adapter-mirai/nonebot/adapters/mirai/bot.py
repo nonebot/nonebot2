@@ -1,25 +1,24 @@
-import asyncio
 import json
-from functools import partial
+import asyncio
 from io import BytesIO
+from functools import partial
 from ipaddress import IPv4Address
-from typing import Any, Dict, List, NoReturn, Optional, Tuple, Union
+from typing import Any, Dict, List, Tuple, Union, NoReturn, Optional
 
 import httpx
 from loguru import logger
 
-from nonebot.adapters import Bot as BaseBot
 from nonebot.config import Config
-from nonebot.drivers import (Driver, ForwardDriver, HTTPConnection,
-                             HTTPResponse, ReverseDriver, WebSocket,
-                             WebSocketSetup)
-from nonebot.exception import ApiNotAvailable
 from nonebot.typing import overrides
+from nonebot.adapters import Bot as BaseBot
+from nonebot.exception import ApiNotAvailable
+from nonebot.drivers import (Driver, WebSocket, HTTPResponse, ForwardDriver,
+                             ReverseDriver, HTTPConnection, WebSocketSetup)
 
 from .config import Config as MiraiConfig
-from .event import Event, FriendMessage, GroupMessage, TempMessage
 from .message import MessageChain, MessageSegment
-from .utils import Log, argument_validation, catch_network_error, process_event
+from .event import Event, TempMessage, GroupMessage, FriendMessage
+from .utils import Log, process_event, argument_validation, catch_network_error
 
 
 class SessionManager:
@@ -116,7 +115,8 @@ class SessionManager:
         if session is not None:
             return session
 
-        client = httpx.AsyncClient(base_url=f'http://{host}:{port}')
+        client = httpx.AsyncClient(base_url=f'http://{host}:{port}',
+                                   follow_redirects=True)
         response = await client.post('/auth', json={'authKey': auth_key})
         response.raise_for_status()
         auth = response.json()

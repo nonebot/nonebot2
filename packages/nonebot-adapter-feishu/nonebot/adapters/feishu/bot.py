@@ -1,25 +1,25 @@
-import json
 import re
-from typing import (TYPE_CHECKING, Any, AsyncIterable, Dict, Iterable,
-                    Optional, Tuple, Union)
+import json
+from typing import (TYPE_CHECKING, Any, Dict, Tuple, Union, Iterable, Optional,
+                    AsyncIterable)
 
 import httpx
 from aiocache import Cache, cached
 from aiocache.serializers import PickleSerializer
 
-from nonebot.adapters import Bot as BaseBot
-from nonebot.drivers import Driver, HTTPRequest, HTTPResponse
 from nonebot.log import logger
-from nonebot.message import handle_event
 from nonebot.typing import overrides
 from nonebot.utils import escape_tag
+from nonebot.message import handle_event
+from nonebot.adapters import Bot as BaseBot
+from nonebot.drivers import Driver, HTTPRequest, HTTPResponse
 
-from .config import Config as FeishuConfig
-from .event import (Event, GroupMessageEvent, MessageEvent,
-                    PrivateMessageEvent, get_event_model)
-from .exception import ActionFailed, ApiNotAvailable, NetworkError
-from .message import Message, MessageSegment, MessageSerializer
 from .utils import AESCipher, log
+from .config import Config as FeishuConfig
+from .message import Message, MessageSegment, MessageSerializer
+from .exception import ActionFailed, NetworkError, ApiNotAvailable
+from .event import (Event, MessageEvent, GroupMessageEvent, PrivateMessageEvent,
+                    get_event_model)
 
 if TYPE_CHECKING:
     from nonebot.config import Config
@@ -102,7 +102,10 @@ def _check_nickname(bot: "Bot", event: "Event"):
             first_msg_seg.data["text"] = first_text[m.end():]
 
 
-def _handle_api_result(result: Union[Optional[Dict[str, Any]], str, bytes, Iterable[bytes], AsyncIterable[bytes]]) -> Any:
+def _handle_api_result(
+    result: Union[Optional[Dict[str, Any]], str, bytes, Iterable[bytes],
+                  AsyncIterable[bytes]]
+) -> Any:
     """
     :说明:
 
@@ -248,7 +251,7 @@ class Bot(BaseBot):
             serializer=PickleSerializer())
     async def _fetch_tenant_access_token(self) -> str:
         try:
-            async with httpx.AsyncClient() as client:
+            async with httpx.AsyncClient(follow_redirects=True) as client:
                 response = await client.post(
                     self._construct_url(
                         "auth/v3/tenant_access_token/internal/"),
@@ -283,8 +286,8 @@ class Bot(BaseBot):
                 "Authorization"] = "Bearer " + self.feishu_config.tenant_access_token
 
             try:
-                async with httpx.AsyncClient(
-                        timeout=self.config.api_timeout) as client:
+                async with httpx.AsyncClient(timeout=self.config.api_timeout,
+                                             follow_redirects=True) as client:
                     response = await client.send(
                         httpx.Request(data["method"],
                                       self.api_root + api,
@@ -292,7 +295,8 @@ class Bot(BaseBot):
                                       params=data.get("query", {}),
                                       headers=headers))
                 if 200 <= response.status_code < 300:
-                    if response.headers["content-type"].startswith("application/json"):
+                    if response.headers["content-type"].startswith(
+                            "application/json"):
                         result = response.json()
                     else:
                         result = response.content

@@ -3,22 +3,23 @@ import sys
 import hmac
 import json
 import asyncio
-from typing import Any, Dict, Tuple, Union, Optional, TYPE_CHECKING
+from typing import TYPE_CHECKING, Any, Dict, Tuple, Union, Optional
 
 import httpx
+
 from nonebot.log import logger
 from nonebot.typing import overrides
 from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
-from nonebot.utils import escape_tag, DataclassEncoder
-from nonebot.drivers import Driver, ForwardDriver, WebSocketSetup
-from nonebot.drivers import HTTPConnection, HTTPRequest, HTTPResponse, WebSocket
+from nonebot.utils import DataclassEncoder, escape_tag
+from nonebot.drivers import (Driver, WebSocket, HTTPRequest, HTTPResponse,
+                             ForwardDriver, HTTPConnection, WebSocketSetup)
 
 from .utils import log, escape
 from .config import Config as CQHTTPConfig
 from .message import Message, MessageSegment
-from .event import Reply, Event, MessageEvent, get_event_model
-from .exception import NetworkError, ApiNotAvailable, ActionFailed
+from .event import Event, Reply, MessageEvent, get_event_model
+from .exception import ActionFailed, NetworkError, ApiNotAvailable
 
 if TYPE_CHECKING:
     from nonebot.config import Config
@@ -376,7 +377,8 @@ class Bot(BaseBot):
                     "Authorization"] = "Bearer " + self.cqhttp_config.access_token
 
             try:
-                async with httpx.AsyncClient(headers=headers) as client:
+                async with httpx.AsyncClient(headers=headers,
+                                             follow_redirects=True) as client:
                     response = await client.post(
                         api_root + api,
                         content=json.dumps(data, cls=DataclassEncoder),
