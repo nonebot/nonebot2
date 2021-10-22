@@ -1,9 +1,15 @@
-from typing import List, Optional, Union
-from .message import Message
-from .bot import Bot
-from .event import MessageEvent
-from nonebot.matcher import Matcher
 import re
+from enum import IntEnum, auto
+from collections import defaultdict
+from asyncio import get_running_loop
+from typing import Set, List, Type, Union, Optional, DefaultDict
+
+from nonebot.typing import T_State
+from nonebot.matcher import Matcher
+from nonebot.adapters import Bot, Event
+
+from .message import Message
+from .event import MessageEvent, GroupMessageEvent
 
 
 def extract_image_urls(message: Message) -> List[str]:
@@ -78,3 +84,61 @@ def handle_cancellation(reject_prompt: Optional[str] = None):
         return not cancelled
 
     return cancellation_rule
+
+
+class CommandDebounce:
+    debounced: DefaultDict[Type[Matcher], Set[str]] = defaultdict(set)
+
+    class IsolateLevel(IntEnum):
+        GLOBAL = auto()
+        GROUP = auto()
+        USER = auto()
+        GROUP_USER = auto()
+
+    def __init__(
+        self,
+        matcher: Type[Matcher],
+        isolate_level: IsolateLevel = IsolateLevel.USER,
+        debounce_timeout: float = 5,
+        cancel_message: Optional[str] = None,
+    ):
+        self.isolate_level = isolate_level
+        self.debounce_timeout = debounce_timeout
+        self.matcher = matcher
+        self.cancel_message = cancel_message
+
+    async def __call__(self, bot: Bot, event: Event, state: T_State) -> bool:
+        if not isinstance(event, MessageEvent):
+            return True
+
+        loop = get_running_loop()
+        debounce_set = CommandDebounce.debounced[self.matcher]
+
+        if self.isolate_level is self.IsolateLevel.GROUP:
+            key = str(
+                event.group_id
+                if isinstance(event, GroupMessageEvent) else event.user_id,)
+        elif self.isolate_level is self.IsolateLevel.USER:
+            key = str(event.user_id)
+        elif self.isolate_level is self.IsolateLevel.GROUP_USER:
+            key = f'{event.group_id}_{event.user_id}' if isinstance(
+                event, GroupMessageEvent) else str(event.user_id)
+        elif self.isolate_level is self.IsolateLevel.GLOBAL:
+            key = self.IsolateLevel.GLOBAL.name
+        else:
+            raise ValueError(f'invalid isolate level: {self.isolate_level!r}, '
+                             'isolate level must use provided enumerate value.')
+
+        if key in debounce_set:
+            await self.matcher.finish(message=self.cancel_message,
+                                      at_sender=True)
+            return False
+        else:
+            debounce_set.add(key)
+            loop.call_later(self.debounce_timeout,
+                            lambda: debounce_set.remove(key))
+            return True
+
+    def apply(self) -> Type[Matcher]:
+        self.matcher.rule.checkers.add(self.__call__)
+        return self.matcher
