@@ -64,5 +64,11 @@
     "desc": "网络游戏《剑网三》的群聊机器人，数据使用：www.jx3api.com",
     "author": "JustUndertaker",
     "repo": "https://github.com/JustUndertaker/jx3_bot"
+  },
+  {
+    "name": "PixivBot",
+    "desc": "顾名思义是Pixiv的bot（随机推荐插画、随机指定关键词插画、随机书签、查看排行榜、查看指定id插画）",
+    "author": "ssttkkl",
+    "repo": "https://github.com/ssttkkl/PixivBot"
   }
 ]
