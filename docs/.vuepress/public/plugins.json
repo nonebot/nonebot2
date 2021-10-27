@@ -430,5 +430,13 @@
     "desc": "Nonebot2酱推送",
     "author": "yucongo",
     "repo": "https://github.com/ffreemt/nb2chan"
+  },
+  {
+    "id": "nonebot_plugin_setu_now",
+    "link": "nonebot-plugin-setu-now",
+    "name": "nonebot-plugin-setu-now",
+    "desc": "另一个色图插件，即时下载并保存，可选WebDAV。可选特殊色图",
+    "author": "kexue-z",
+    "repo": "https://github.com/kexue-z/nonebot-plugin-setu-now"
   }
 ]
