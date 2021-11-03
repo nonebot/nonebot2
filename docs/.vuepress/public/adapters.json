@@ -30,5 +30,13 @@
     "desc": "飞书协议",
     "author": "StarHeartHunt",
     "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-feishu"
+  },
+  {
+    "id": "nonebot.adapters.telegram",
+    "link": "nonebot-adapter-telegram",
+    "name": "telegram",
+    "desc": "telegram 协议",
+    "author": "j1g5awi",
+    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-telegram"
   }
 ]

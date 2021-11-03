@@ -129,6 +129,7 @@ module.exports = (context) => ({
                 "ding-guide",
                 "mirai-guide",
                 "feishu-guide",
+                "telegram-guide"
               ],
             },
           ],
