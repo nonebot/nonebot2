@@ -446,5 +446,13 @@
     "desc": " 安装该插件后能往指定qq和指定qq群定时发送leetcode每日一题",
     "author": "zxz0415",
     "repo": "https://github.com/zxz0415/leetcode"
+  },
+  {
+    "id": "nonebot_plugin_imgsearch",
+    "link": "nonebot-plugin-imgsearch",
+    "name": "另一个图片搜索",
+    "desc": "在Ascii2D以及SauceNAO的所有数据库中搜索这张图片",
+    "author": "bakashigure",
+    "repo": "https://github.com/bakashigure/nonebot_plugin_imgsearch"
   }
 ]
