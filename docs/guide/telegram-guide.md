@@ -24,7 +24,7 @@ token = 1234567890:ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHI
 
 ## 配置 Nonebot
 
-## 使用代理
+### 使用代理
 
 如果运行 Nonebot 的服务器位于中国大陆，那么你可能需要使用代理，否则将无法调用 Telegram 提供的任何 API。
 
@@ -32,11 +32,11 @@ token = 1234567890:ABCDEFGHIJKLMNOPQRSTUVWXYZABCDEFGHI
 proxy = "http://127.0.0.1:10809"
 ```
 
-## 使用 Long polling 获取更新（推荐）
+### 使用 Long polling 获取更新（推荐）
 
 只要不在`env`文件中设置`url`，默认使用 long polling 模式。
 
-## 使用 Webhook 获取更新
+### 使用 Webhook 获取更新
 
 Telegram Bot 的 webhook 必须使用 https 协议，所以我推荐使用 nginx 反向代理。
 
