@@ -1,0 +1,33 @@
+[tool.poetry]
+name = "nonebot-adapter-telegram"
+version = "2.0.0a16.post0"
+description = "telegram adapter for nonebot2"
+authors = ["Jigsaw <j1g5aw@foxmail.com>"]
+license = "MIT"
+readme = "README.md"
+homepage = "https://v2.nonebot.dev/"
+repository = "https://github.com/nonebot/nonebot2"
+documentation = "https://v2.nonebot.dev/"
+keywords = ["bot", "telegram"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Framework :: Robot Framework",
+  "Framework :: Robot Framework :: Library",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+]
+packages = [{ include = "nonebot" }]
+exclude = ["nonebot/__init__.py", "nonebot/adapters/__init__.py"]
+
+[tool.poetry.dependencies]
+python = "^3.7.3"
+nonebot2 = "^2.0.0a16"
+
+[tool.poetry.dev-dependencies]
+nb-cli = "^0.5.0"
+black = "^21.7b0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
