@@ -6,51 +6,16 @@ from hashlib import md5
 from pathlib import Path
 from types import ModuleType
 from collections import Counter
-from contextvars import ContextVar
 from importlib.abc import MetaPathFinder
 from importlib.machinery import PathFinder, SourceFileLoader
 from typing import Set, List, Union, Iterable, Optional, Sequence
 
-from .export import Export, _export
-
-_current_plugin: ContextVar[Optional[ModuleType]] = ContextVar(
-    "_current_plugin", default=None)
-
-_internal_space = ModuleType(__name__ + "._internal")
-_internal_space.__path__ = []  # type: ignore
-sys.modules[_internal_space.__name__] = _internal_space
-
-_manager_stack: List["PluginManager"] = []
+from .export import Export
+from . import _current_plugin
+from .plugin import Plugin, _new_plugin
 
 
-class _NamespaceModule(ModuleType):
-    """Simple namespace module to store plugins."""
-
-    @property
-    def __path__(self):
-        return []
-
-    def __getattr__(self, name: str):
-        try:
-            return super().__getattr__(name)  # type: ignore
-        except AttributeError:
-            if name.startswith("__"):
-                raise
-            raise RuntimeError("Plugin manager not activated!")
-
-
-class _InternalModule(ModuleType):
-    """Internal module for each plugin manager."""
-
-    def __init__(self, prefix: str, plugin_manager: "PluginManager"):
-        super().__init__(f"{prefix}.{plugin_manager.internal_id}")
-        self.__plugin_manager__ = plugin_manager
-
-    @property
-    def __path__(self) -> List[str]:
-        return list(self.__plugin_manager__.search_path)
-
-
+# TODO
 class PluginManager:
 
     def __init__(self,

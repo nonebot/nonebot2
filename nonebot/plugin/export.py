@@ -1,6 +1,4 @@
-from contextvars import ContextVar
-
-_export: ContextVar["Export"] = ContextVar("_export")
+from . import _current_plugin
 
 
 class Export(dict):
@@ -57,4 +55,7 @@ def export() -> Export:
 
       - ``Export``
     """
-    return _export.get()
+    plugin = _current_plugin.get()
+    if not plugin:
+        raise RuntimeError("Export outside of the plugin!")
+    return plugin.export
