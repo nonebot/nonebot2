@@ -1,8 +1,6 @@
 import sys
-import uuid
 import pkgutil
 import importlib
-from hashlib import md5
 from pathlib import Path
 from types import ModuleType
 from collections import Counter
@@ -14,78 +12,23 @@ from .export import Export
 from . import _current_plugin
 from .plugin import Plugin, _new_plugin
 
+_manager_stack: List["PluginManager"] = []
+
 
 # TODO
 class PluginManager:
 
-    def __init__(self,
-                 namespace: str,
-                 plugins: Optional[Iterable[str]] = None,
-                 search_path: Optional[Iterable[str]] = None,
-                 *,
-                 id: Optional[str] = None):
-        self.namespace: str = namespace
-        self.namespace_module: ModuleType = self._setup_namespace(namespace)
-
-        self.id: str = id or str(uuid.uuid4())
-        self.internal_id: str = md5(
-            ((self.namespace or "") + self.id).encode()).hexdigest()
-        self.internal_module = self._setup_internal_module(self.internal_id)
+    def __init__(
+        self,
+        plugins: Optional[Iterable[str]] = None,
+        search_path: Optional[Iterable[str]] = None,
+    ):
 
         # simple plugin not in search path
         self.plugins: Set[str] = set(plugins or [])
         self.search_path: Set[str] = set(search_path or [])
         # ensure can be loaded
         self.list_plugins()
-
-    def _setup_namespace(self, namespace: str) -> ModuleType:
-        try:
-            module = importlib.import_module(namespace)
-        except ImportError:
-            module = _NamespaceModule(namespace)
-            if "." in namespace:
-                parent = importlib.import_module(namespace.rsplit(".", 1)[0])
-                setattr(parent, namespace.rsplit(".", 1)[1], module)
-
-        sys.modules[namespace] = module
-        return module
-
-    def _setup_internal_module(self, internal_id: str) -> ModuleType:
-        if hasattr(_internal_space, internal_id):
-            raise RuntimeError("Plugin manager already exists!")
-
-        index = 2
-        prefix: str = _internal_space.__name__
-        while True:
-            try:
-                frame = sys._getframe(index)
-            except ValueError:
-                break
-            # check if is called in plugin
-            if "__plugin_name__" not in frame.f_globals:
-                index += 1
-                continue
-            prefix = frame.f_globals.get("__name__", _internal_space.__name__)
-            break
-
-        if not prefix.startswith(_internal_space.__name__):
-            prefix = _internal_space.__name__
-        module = _InternalModule(prefix, self)
-        sys.modules[module.__name__] = module  # type: ignore
-        setattr(_internal_space, internal_id, module)
-        return module
-
-    def __enter__(self):
-        if self in _manager_stack:
-            raise RuntimeError("Plugin manager already activated!")
-        _manager_stack.append(self)
-        return self
-
-    def __exit__(self, exc_type, exc_value, traceback):
-        try:
-            _manager_stack.pop()
-        except IndexError:
-            pass
 
     def search_plugins(self) -> List[str]:
         return [
@@ -116,14 +59,12 @@ class PluginManager:
 
     def load_plugin(self, name) -> ModuleType:
         if name in self.plugins:
-            with self:
-                return importlib.import_module(name)
+            return importlib.import_module(name)
 
         if "." in name:
             raise ValueError("Plugin name cannot contain '.'")
 
-        with self:
-            return importlib.import_module(f"{self.namespace}.{name}")
+        return importlib.import_module(f"{self.namespace}.{name}")
 
     def load_all_plugins(self) -> List[ModuleType]:
         return [self.load_plugin(name) for name in self.list_plugins()]

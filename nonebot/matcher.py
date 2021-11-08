@@ -178,6 +178,7 @@ class Matcher(metaclass=MatcherMeta):
         block: bool = False,
         *,
         plugin: Optional["Plugin"] = None,
+        module: Optional[ModuleType] = None,
         expire_time: Optional[datetime] = None,
         default_state: Optional[T_State] = None,
         default_state_factory: Optional[T_StateFactory] = None,
@@ -200,6 +201,7 @@ class Matcher(metaclass=MatcherMeta):
           * ``priority: int``: 响应优先级
           * ``block: bool``: 是否阻止事件向更低优先级的响应器传播
           * ``plugin: Optional[Plugin]``: 事件响应器所在插件
+          * ``module: Optional[ModuleType]``: 事件响应器所在模块
           * ``default_state: Optional[T_State]``: 默认状态 ``state``
           * ``default_state_factory: Optional[T_StateFactory]``: 默认状态 ``state`` 的工厂函数
           * ``expire_time: Optional[datetime]``: 事件响应器最终有效时间点，过时即被删除
@@ -210,18 +212,15 @@ class Matcher(metaclass=MatcherMeta):
         """
 
         NewMatcher = type(
-            "Matcher",
-            (Matcher,),
-            {
+            "Matcher", (Matcher,), {
                 "plugin":
                     plugin,
                 "module":
-                    plugin and plugin.
-                    module,  # FIXME: matcher module may different from plugin module
+                    module,
                 "plugin_name":
                     plugin and plugin.name,
                 "module_name":
-                    plugin and plugin.module_name,
+                    module and module.__name__,
                 "type":
                     type_,
                 "rule":

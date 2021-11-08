@@ -1,4 +1,7 @@
 import re
+import sys
+import inspect
+from types import ModuleType
 from typing import (TYPE_CHECKING, Any, Set, Dict, List, Type, Tuple, Union,
                     Optional)
 
@@ -20,6 +23,15 @@ def _store_matcher(matcher: Type[Matcher]) -> None:
     # only store the matcher defined in the plugin
     if plugin:
         plugin.matcher.add(matcher)
+
+
+def _get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
+    current_frame = inspect.currentframe()
+    if current_frame is None:
+        return None
+    frame = inspect.getouterframes(current_frame)[depth + 1].frame
+    module_name = frame.f_globals["__name__"]
+    return sys.modules.get(module_name)
 
 
 def on(type: str = "",
@@ -61,6 +73,7 @@ def on(type: str = "",
                           block=block,
                           handlers=handlers,
                           plugin=_current_plugin.get(),
+                          module=_get_matcher_module(),
                           default_state=state,
                           default_state_factory=state_factory)
     _store_matcher(matcher)
@@ -103,6 +116,7 @@ def on_metaevent(
                           block=block,
                           handlers=handlers,
                           plugin=_current_plugin.get(),
+                          module=_get_matcher_module(),
                           default_state=state,
                           default_state_factory=state_factory)
     _store_matcher(matcher)
@@ -146,6 +160,7 @@ def on_message(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                           block=block,
                           handlers=handlers,
                           plugin=_current_plugin.get(),
+                          module=_get_matcher_module(),
                           default_state=state,
                           default_state_factory=state_factory)
     _store_matcher(matcher)
@@ -187,6 +202,7 @@ def on_notice(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                           block=block,
                           handlers=handlers,
                           plugin=_current_plugin.get(),
+                          module=_get_matcher_module(),
                           default_state=state,
                           default_state_factory=state_factory)
     _store_matcher(matcher)
@@ -228,6 +244,7 @@ def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                           block=block,
                           handlers=handlers,
                           plugin=_current_plugin.get(),
+                          module=_get_matcher_module(),
                           default_state=state,
                           default_state_factory=state_factory)
     _store_matcher(matcher)
