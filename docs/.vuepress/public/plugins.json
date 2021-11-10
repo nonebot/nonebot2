@@ -454,5 +454,13 @@
     "desc": "在Ascii2D以及SauceNAO的所有数据库中搜索这张图片",
     "author": "bakashigure",
     "repo": "https://github.com/bakashigure/nonebot_plugin_imgsearch"
+  },
+  {
+    "id": "nonebot-plugin-itnews",
+    "link": "nonebot-plugin-itnew",
+    "name": "IT咨讯",
+    "desc": "获取IT咨讯并生成图片发送",
+    "author": "yzyyz1387",
+    "repo": "https://github.com/yzyyz1387/nonebot_plugin_itnews"
   }
 ]
