@@ -40,9 +40,16 @@ class Plugin(object):
     - **类型**: ``Set[Type[Matcher]]``
     - **说明**: 插件内定义的 ``Matcher``
     """
-    # TODO
     parent_plugin: Optional["Plugin"] = None
+    """
+    - **类型**: ``Optional[Plugin]``
+    - **说明**: 父插件
+    """
     sub_plugins: Set["Plugin"] = field(default_factory=set)
+    """
+    - **类型**: ``Set[Plugin]``
+    - **说明**: 子插件集合
+    """
 
 
 def get_plugin(name: str) -> Optional[Plugin]:
