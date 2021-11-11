@@ -2,9 +2,8 @@ from types import ModuleType
 from dataclasses import field, dataclass
 from typing import Set, Dict, Type, Optional
 
-from nonebot.matcher import Matcher
-
 from .export import Export
+from nonebot.matcher import Matcher
 
 plugins: Dict[str, "Plugin"] = {}
 """
@@ -77,7 +76,7 @@ def get_loaded_plugins() -> Set[Plugin]:
 
 
 def _new_plugin(fullname: str, module: ModuleType) -> Plugin:
-    _, name = fullname.rsplit(".", 1)
+    name = fullname.rsplit(".", 1)[-1] if "." in fullname else fullname
     if name in plugins:
         raise RuntimeError("Plugin already exists! Check your plugin name.")
     plugin = Plugin(name, module, fullname)

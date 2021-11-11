@@ -7,12 +7,11 @@ from typing import (TYPE_CHECKING, Any, Set, Dict, List, Type, Tuple, Union,
 
 from nonebot.handler import Handler
 from nonebot.matcher import Matcher
+from .manager import _current_plugin
 from nonebot.permission import Permission
 from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_StateFactory
 from nonebot.rule import (Rule, ArgumentParser, regex, command, keyword,
                           endswith, startswith, shell_command)
-
-from .manager import _current_plugin
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
@@ -43,7 +42,8 @@ def on(type: str = "",
        priority: int = 1,
        block: bool = False,
        state: Optional[T_State] = None,
-       state_factory: Optional[T_StateFactory] = None) -> Type[Matcher]:
+       state_factory: Optional[T_StateFactory] = None,
+       _depth: int = 0) -> Type[Matcher]:
     """
     :说明:
 
@@ -73,22 +73,22 @@ def on(type: str = "",
                           block=block,
                           handlers=handlers,
                           plugin=_current_plugin.get(),
-                          module=_get_matcher_module(),
+                          module=_get_matcher_module(_depth + 1),
                           default_state=state,
                           default_state_factory=state_factory)
     _store_matcher(matcher)
     return matcher
 
 
-def on_metaevent(
-        rule: Optional[Union[Rule, T_RuleChecker]] = None,
-        *,
-        handlers: Optional[List[Union[T_Handler, Handler]]] = None,
-        temp: bool = False,
-        priority: int = 1,
-        block: bool = False,
-        state: Optional[T_State] = None,
-        state_factory: Optional[T_StateFactory] = None) -> Type[Matcher]:
+def on_metaevent(rule: Optional[Union[Rule, T_RuleChecker]] = None,
+                 *,
+                 handlers: Optional[List[Union[T_Handler, Handler]]] = None,
+                 temp: bool = False,
+                 priority: int = 1,
+                 block: bool = False,
+                 state: Optional[T_State] = None,
+                 state_factory: Optional[T_StateFactory] = None,
+                 _depth: int = 0) -> Type[Matcher]:
     """
     :说明:
 
@@ -116,7 +116,7 @@ def on_metaevent(
                           block=block,
                           handlers=handlers,
                           plugin=_current_plugin.get(),
-                          module=_get_matcher_module(),
+                          module=_get_matcher_module(_depth + 1),
                           default_state=state,
                           default_state_factory=state_factory)
     _store_matcher(matcher)
@@ -131,7 +131,8 @@ def on_message(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                priority: int = 1,
                block: bool = True,
                state: Optional[T_State] = None,
-               state_factory: Optional[T_StateFactory] = None) -> Type[Matcher]:
+               state_factory: Optional[T_StateFactory] = None,
+               _depth: int = 0) -> Type[Matcher]:
     """
     :说明:
 
@@ -160,7 +161,7 @@ def on_message(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                           block=block,
                           handlers=handlers,
                           plugin=_current_plugin.get(),
-                          module=_get_matcher_module(),
+                          module=_get_matcher_module(_depth + 1),
                           default_state=state,
                           default_state_factory=state_factory)
     _store_matcher(matcher)
@@ -174,7 +175,8 @@ def on_notice(rule: Optional[Union[Rule, T_RuleChecker]] = None,
               priority: int = 1,
               block: bool = False,
               state: Optional[T_State] = None,
-              state_factory: Optional[T_StateFactory] = None) -> Type[Matcher]:
+              state_factory: Optional[T_StateFactory] = None,
+              _depth: int = 0) -> Type[Matcher]:
     """
     :说明:
 
@@ -202,7 +204,7 @@ def on_notice(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                           block=block,
                           handlers=handlers,
                           plugin=_current_plugin.get(),
-                          module=_get_matcher_module(),
+                          module=_get_matcher_module(_depth + 1),
                           default_state=state,
                           default_state_factory=state_factory)
     _store_matcher(matcher)
@@ -216,7 +218,8 @@ def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                priority: int = 1,
                block: bool = False,
                state: Optional[T_State] = None,
-               state_factory: Optional[T_StateFactory] = None) -> Type[Matcher]:
+               state_factory: Optional[T_StateFactory] = None,
+               _depth: int = 0) -> Type[Matcher]:
     """
     :说明:
 
@@ -244,7 +247,7 @@ def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = None,
                           block=block,
                           handlers=handlers,
                           plugin=_current_plugin.get(),
-                          module=_get_matcher_module(),
+                          module=_get_matcher_module(_depth + 1),
                           default_state=state,
                           default_state_factory=state_factory)
     _store_matcher(matcher)
@@ -254,6 +257,7 @@ def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = None,
 def on_startswith(msg: Union[str, Tuple[str, ...]],
                   rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
                   ignorecase: bool = False,
+                  _depth: int = 0,
                   **kwargs) -> Type[Matcher]:
     """
     :说明:
@@ -277,12 +281,15 @@ def on_startswith(msg: Union[str, Tuple[str, ...]],
 
       - ``Type[Matcher]``
     """
-    return on_message(startswith(msg, ignorecase) & rule, **kwargs)
+    return on_message(startswith(msg, ignorecase) & rule,
+                      **kwargs,
+                      _depth=_depth + 1)
 
 
 def on_endswith(msg: Union[str, Tuple[str, ...]],
                 rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
                 ignorecase: bool = False,
+                _depth: int = 0,
                 **kwargs) -> Type[Matcher]:
     """
     :说明:
@@ -306,11 +313,14 @@ def on_endswith(msg: Union[str, Tuple[str, ...]],
 
       - ``Type[Matcher]``
     """
-    return on_message(endswith(msg, ignorecase) & rule, **kwargs)
+    return on_message(endswith(msg, ignorecase) & rule,
+                      **kwargs,
+                      _depth=_depth + 1)
 
 
 def on_keyword(keywords: Set[str],
                rule: Optional[Union[Rule, T_RuleChecker]] = None,
+               _depth: int = 0,
                **kwargs) -> Type[Matcher]:
     """
     :说明:
@@ -333,12 +343,13 @@ def on_keyword(keywords: Set[str],
 
       - ``Type[Matcher]``
     """
-    return on_message(keyword(*keywords) & rule, **kwargs)
+    return on_message(keyword(*keywords) & rule, **kwargs, _depth=_depth + 1)
 
 
 def on_command(cmd: Union[str, Tuple[str, ...]],
                rule: Optional[Union[Rule, T_RuleChecker]] = None,
                aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
+               _depth: int = 0,
                **kwargs) -> Type[Matcher]:
     """
     :说明:
@@ -382,13 +393,17 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
     handlers.insert(0, _strip_cmd)
 
     commands = set([cmd]) | (aliases or set())
-    return on_message(command(*commands) & rule, handlers=handlers, **kwargs)
+    return on_message(command(*commands) & rule,
+                      handlers=handlers,
+                      **kwargs,
+                      _depth=_depth + 1)
 
 
 def on_shell_command(cmd: Union[str, Tuple[str, ...]],
                      rule: Optional[Union[Rule, T_RuleChecker]] = None,
                      aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
                      parser: Optional[ArgumentParser] = None,
+                     _depth: int = 0,
                      **kwargs) -> Type[Matcher]:
     """
     :说明:
@@ -433,12 +448,14 @@ def on_shell_command(cmd: Union[str, Tuple[str, ...]],
     commands = set([cmd]) | (aliases or set())
     return on_message(shell_command(*commands, parser=parser) & rule,
                       handlers=handlers,
-                      **kwargs)
+                      **kwargs,
+                      _depth=_depth + 1)
 
 
 def on_regex(pattern: str,
              flags: Union[int, re.RegexFlag] = 0,
              rule: Optional[Union[Rule, T_RuleChecker]] = None,
+             _depth: int = 0,
              **kwargs) -> Type[Matcher]:
     """
     :说明:
@@ -464,7 +481,7 @@ def on_regex(pattern: str,
 
       - ``Type[Matcher]``
     """
-    return on_message(regex(pattern, flags) & rule, **kwargs)
+    return on_message(regex(pattern, flags) & rule, **kwargs, _depth=_depth + 1)
 
 
 class CommandGroup:
@@ -511,7 +528,7 @@ class CommandGroup:
 
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
-        return on_command(cmd, **final_kwargs)
+        return on_command(cmd, **final_kwargs, _depth=1)
 
     def shell_command(self, cmd: Union[str, Tuple[str, ...]],
                       **kwargs) -> Type[Matcher]:
@@ -534,7 +551,7 @@ class CommandGroup:
 
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
-        return on_shell_command(cmd, **final_kwargs)
+        return on_shell_command(cmd, **final_kwargs, _depth=1)
 
 
 class MatcherGroup:
@@ -581,7 +598,7 @@ class MatcherGroup:
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
-        matcher = on(**final_kwargs)
+        matcher = on(**final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher
 
@@ -609,7 +626,7 @@ class MatcherGroup:
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
         final_kwargs.pop("permission", None)
-        matcher = on_metaevent(**final_kwargs)
+        matcher = on_metaevent(**final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher
 
@@ -637,7 +654,7 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
-        matcher = on_message(**final_kwargs)
+        matcher = on_message(**final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher
 
@@ -664,7 +681,7 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
-        matcher = on_notice(**final_kwargs)
+        matcher = on_notice(**final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher
 
@@ -691,7 +708,7 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
-        matcher = on_request(**final_kwargs)
+        matcher = on_request(**final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher
 
@@ -722,7 +739,7 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
-        matcher = on_startswith(msg, **final_kwargs)
+        matcher = on_startswith(msg, **final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher
 
@@ -753,7 +770,7 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
-        matcher = on_endswith(msg, **final_kwargs)
+        matcher = on_endswith(msg, **final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher
 
@@ -782,7 +799,7 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
-        matcher = on_keyword(keywords, **final_kwargs)
+        matcher = on_keyword(keywords, **final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher
 
@@ -817,7 +834,7 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
-        matcher = on_command(cmd, aliases=aliases, **final_kwargs)
+        matcher = on_command(cmd, aliases=aliases, **final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher
 
@@ -860,7 +877,8 @@ class MatcherGroup:
         matcher = on_shell_command(cmd,
                                    aliases=aliases,
                                    parser=parser,
-                                   **final_kwargs)
+                                   **final_kwargs,
+                                   _depth=1)
         self.matchers.append(matcher)
         return matcher
 
@@ -895,6 +913,6 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
-        matcher = on_regex(pattern, flags=flags, **final_kwargs)
+        matcher = on_regex(pattern, flags=flags, **final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher

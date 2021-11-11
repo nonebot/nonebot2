@@ -1,31 +1,12 @@
-from typing import Set, Optional
+import json
+from typing import Set, Iterable, Optional
 
+import tomlkit
+
+from . import _managers
 from .export import Export
 from .manager import PluginManager
 from .plugin import Plugin, get_plugin
-
-
-# TODO
-def _load_plugin(manager: PluginManager, plugin_name: str) -> Optional[Plugin]:
-    if plugin_name.startswith("_"):
-        return None
-
-    if plugin_name in plugins:
-        return None
-
-    try:
-        module = manager.load_plugin(plugin_name)
-
-        plugin = Plugin(plugin_name, module)
-        plugins[plugin_name] = plugin
-        logger.opt(colors=True).success(
-            f'Succeeded to import "<y>{escape_tag(plugin_name)}</y>"')
-        return plugin
-    except Exception as e:
-        logger.opt(colors=True, exception=e).error(
-            f'<r><bg #f8bbd0>Failed to import "{escape_tag(plugin_name)}"</bg #f8bbd0></r>'
-        )
-        return None
 
 
 def load_plugin(module_path: str) -> Optional[Plugin]:
@@ -43,9 +24,9 @@ def load_plugin(module_path: str) -> Optional[Plugin]:
       - ``Optional[Plugin]``
     """
 
-    context: Context = copy_context()
-    manager = PluginManager(PLUGIN_NAMESPACE, plugins=[module_path])
-    return context.run(_load_plugin, manager, module_path)
+    manager = PluginManager([module_path])
+    _managers.append(manager)
+    return manager.load_plugin(module_path)
 
 
 def load_plugins(*plugin_dir: str) -> Set[Plugin]:
@@ -62,18 +43,13 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
 
       - ``Set[Plugin]``
     """
-    loaded_plugins = set()
-    manager = PluginManager(PLUGIN_NAMESPACE, search_path=plugin_dir)
-    for plugin_name in manager.list_plugins():
-        context: Context = copy_context()
-        result = context.run(_load_plugin, manager, plugin_name)
-        if result:
-            loaded_plugins.add(result)
-    return loaded_plugins
+    manager = PluginManager(search_path=plugin_dir)
+    _managers.append(manager)
+    return manager.load_all_plugins()
 
 
-def load_all_plugins(module_path: Set[str],
-                     plugin_dir: Set[str]) -> Set[Plugin]:
+def load_all_plugins(module_path: Iterable[str],
+                     plugin_dir: Iterable[str]) -> Set[Plugin]:
     """
     :说明:
 
@@ -81,21 +57,16 @@ def load_all_plugins(module_path: Set[str],
 
     :参数:
 
-      - ``module_path: Set[str]``: 指定插件集合
-      - ``plugin_dir: Set[str]``: 指定插件路径集合
+      - ``module_path: Iterable[str]``: 指定插件集合
+      - ``plugin_dir: Iterable[str]``: 指定插件路径集合
 
     :返回:
 
       - ``Set[Plugin]``
     """
-    loaded_plugins = set()
-    manager = PluginManager(PLUGIN_NAMESPACE, module_path, plugin_dir)
-    for plugin_name in manager.list_plugins():
-        context: Context = copy_context()
-        result = context.run(_load_plugin, manager, plugin_name)
-        if result:
-            loaded_plugins.add(result)
-    return loaded_plugins
+    manager = PluginManager(module_path, plugin_dir)
+    _managers.append(manager)
+    return manager.load_all_plugins()
 
 
 def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
@@ -127,7 +98,7 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     """
     :说明:
 
-      导入指定 toml 文件 ``[nonebot.plugins]`` 中的 ``plugins`` 以及 ``plugin_dirs`` 下多个插件，
+      导入指定 toml 文件 ``[tool.nonebot]`` 中的 ``plugins`` 以及 ``plugin_dirs`` 下多个插件，
       以 ``_`` 开头的插件不会被导入！
 
     :参数:
@@ -142,22 +113,23 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     with open(file_path, "r", encoding=encoding) as f:
         data = tomlkit.parse(f.read())  # type: ignore
 
-    nonebot_data = data.get("nonebot", {}).get("plugins")
+    nonebot_data = data.get("tool", {}).get("nonebot") or data.get(
+        "nonebot", {}).get("plugins")
     if not nonebot_data:
-        raise ValueError("Cannot find '[nonebot.plugins]' in given toml file!")
+        raise ValueError("Cannot find '[tool.nonebot]' in given toml file!")
     plugins = nonebot_data.get("plugins", [])
     plugin_dirs = nonebot_data.get("plugin_dirs", [])
     assert isinstance(plugins, list), "plugins must be a list of plugin name"
     assert isinstance(plugin_dirs,
                       list), "plugin_dirs must be a list of directories"
-    return load_all_plugins(set(plugins), set(plugin_dirs))
+    return load_all_plugins(plugins, plugin_dirs)
 
 
 def load_builtin_plugins(name: str = "echo") -> Optional[Plugin]:
     """
     :说明:
 
-      导入 NoneBot 内置插件
+      导入 NoneBot 内置插件, 默认导入 ``echo`` 插件
 
     :返回:
 
@@ -166,7 +138,7 @@ def load_builtin_plugins(name: str = "echo") -> Optional[Plugin]:
     return load_plugin(f"nonebot.plugins.{name}")
 
 
-def require(name: str) -> Optional[Export]:
+def require(name: str) -> Export:
     """
     :说明:
 
@@ -178,7 +150,10 @@ def require(name: str) -> Optional[Export]:
 
     :返回:
 
-      - ``Optional[Export]``
+      - ``Export``
+
+    :异常:
+      - ``RuntimeError``: 插件无法加载
     """
     plugin = get_plugin(name) or load_plugin(name)
     if not plugin:
