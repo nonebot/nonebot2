@@ -77,6 +77,24 @@ sidebarDepth: 0
 * **说明**: 插件内定义的 `Matcher`
 
 
+### `parent_plugin`
+
+
+* **类型**: `Optional[Plugin]`
+
+
+* **说明**: 父插件
+
+
+### `sub_plugins`
+
+
+* **类型**: `Set[Plugin]`
+
+
+* **说明**: 子插件集合
+
+
 ## `get_plugin(name)`
 
 
