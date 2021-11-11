@@ -32,6 +32,21 @@ sidebarDepth: 0
 事件响应器类
 
 
+### `plugin`
+
+
+* **类型**
+
+    `Optional[Plugin]`
+
+
+
+* **说明**
+
+    事件响应器所在插件
+
+
+
 ### `module`
 
 
@@ -43,7 +58,7 @@ sidebarDepth: 0
 
 * **说明**
 
-    事件响应器所在模块
+    事件响应器所在插件模块
 
 
 
@@ -73,22 +88,7 @@ sidebarDepth: 0
 
 * **说明**
 
-    事件响应器所在模块名
-
-
-
-### `module_prefix`
-
-
-* **类型**
-
-    `Optional[str]`
-
-
-
-* **说明**
-
-    事件响应器所在模块前缀
+    事件响应器所在点分割插件模块路径
 
 
 
@@ -292,7 +292,7 @@ sidebarDepth: 0
 
 
 
-### _classmethod_ `new(type_='', rule=None, permission=None, handlers=None, temp=False, priority=1, block=False, *, module=None, expire_time=None, default_state=None, default_state_factory=None, default_parser=None, default_type_updater=None, default_permission_updater=None)`
+### _classmethod_ `new(type_='', rule=None, permission=None, handlers=None, temp=False, priority=1, block=False, *, plugin=None, module=None, expire_time=None, default_state=None, default_state_factory=None, default_parser=None, default_type_updater=None, default_permission_updater=None)`
 
 
 * **说明**
@@ -325,7 +325,10 @@ sidebarDepth: 0
     * `block: bool`: 是否阻止事件向更低优先级的响应器传播
 
 
-    * `module: Optional[str]`: 事件响应器所在模块名称
+    * `plugin: Optional[Plugin]`: 事件响应器所在插件
+
+
+    * `module: Optional[ModuleType]`: 事件响应器所在模块
 
 
     * `default_state: Optional[T_State]`: 默认状态 `state`
