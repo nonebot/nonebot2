@@ -24,6 +24,7 @@ from nonebot.typing import (T_State, T_Handler, T_ArgsParser, T_TypeUpdater,
                             T_StateFactory, T_PermissionUpdater)
 
 if TYPE_CHECKING:
+    from nonebot.plugin import Plugin
     from nonebot.adapters import Bot, Event, Message, MessageSegment
 
 matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
@@ -62,28 +63,25 @@ class MatcherMeta(type):
 
 class Matcher(metaclass=MatcherMeta):
     """事件响应器类"""
+    plugin: Optional["Plugin"] = None
+    """
+    :类型: ``Optional[Plugin]``
+    :说明: 事件响应器所在插件
+    """
     module: Optional[ModuleType] = None
     """
     :类型: ``Optional[ModuleType]``
-    :说明: 事件响应器所在模块
+    :说明: 事件响应器所在插件模块
     """
-    plugin_name: Optional[str] = module and getattr(module, "__plugin_name__",
-                                                    None)
+    plugin_name: Optional[str] = None
     """
     :类型: ``Optional[str]``
     :说明: 事件响应器所在插件名
     """
-    module_name: Optional[str] = module and getattr(module, "__module_name__",
-                                                    None)
+    module_name: Optional[str] = None
     """
     :类型: ``Optional[str]``
-    :说明: 事件响应器所在模块名
-    """
-    module_prefix: Optional[str] = module and getattr(module,
-                                                      "__module_prefix__", None)
-    """
-    :类型: ``Optional[str]``
-    :说明: 事件响应器所在模块前缀
+    :说明: 事件响应器所在点分割插件模块路径
     """
 
     type: str = ""
@@ -179,6 +177,7 @@ class Matcher(metaclass=MatcherMeta):
         priority: int = 1,
         block: bool = False,
         *,
+        plugin: Optional["Plugin"] = None,
         module: Optional[ModuleType] = None,
         expire_time: Optional[datetime] = None,
         default_state: Optional[T_State] = None,
@@ -201,7 +200,8 @@ class Matcher(metaclass=MatcherMeta):
           * ``temp: bool``: 是否为临时事件响应器，即触发一次后删除
           * ``priority: int``: 响应优先级
           * ``block: bool``: 是否阻止事件向更低优先级的响应器传播
-          * ``module: Optional[str]``: 事件响应器所在模块名称
+          * ``plugin: Optional[Plugin]``: 事件响应器所在插件
+          * ``module: Optional[ModuleType]``: 事件响应器所在模块
           * ``default_state: Optional[T_State]``: 默认状态 ``state``
           * ``default_state_factory: Optional[T_StateFactory]``: 默认状态 ``state`` 的工厂函数
           * ``expire_time: Optional[datetime]``: 事件响应器最终有效时间点，过时即被删除
@@ -213,14 +213,14 @@ class Matcher(metaclass=MatcherMeta):
 
         NewMatcher = type(
             "Matcher", (Matcher,), {
+                "plugin":
+                    plugin,
                 "module":
                     module,
                 "plugin_name":
-                    module and getattr(module, "__plugin_name__", None),
+                    plugin and plugin.name,
                 "module_name":
-                    module and getattr(module, "__module_name__", None),
-                "module_prefix":
-                    module and getattr(module, "__module_prefix__", None),
+                    module and module.__name__,
                 "type":
                     type_,
                 "rule":
@@ -626,6 +626,7 @@ class Matcher(metaclass=MatcherMeta):
                 temp=True,
                 priority=0,
                 block=True,
+                plugin=self.plugin,
                 module=self.module,
                 expire_time=datetime.now() + bot.config.session_expire_timeout,
                 default_state=self.state,
@@ -662,6 +663,7 @@ class Matcher(metaclass=MatcherMeta):
                 temp=True,
                 priority=0,
                 block=True,
+                plugin=self.plugin,
                 module=self.module,
                 expire_time=datetime.now() + bot.config.session_expire_timeout,
                 default_state=self.state,

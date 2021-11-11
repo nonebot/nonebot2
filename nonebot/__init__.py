@@ -37,7 +37,7 @@ from nonebot.adapters import Bot
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.log import logger, default_filter
-from nonebot.drivers import Driver, ForwardDriver, ReverseDriver
+from nonebot.drivers import Driver, ReverseDriver
 
 try:
     _dist: pkg_resources.Distribution = pkg_resources.get_distribution(

@@ -50,7 +50,16 @@ sidebarDepth: 0
 * **说明**: 插件模块对象
 
 
-### _property_ `export`
+### `module_name`
+
+
+* **类型**: `str`
+
+
+* **说明**: 点分割模块路径
+
+
+### `export`
 
 
 * **类型**: `Export`
@@ -59,7 +68,7 @@ sidebarDepth: 0
 * **说明**: 插件内定义的导出内容
 
 
-### _property_ `matcher`
+### `matcher`
 
 
 * **类型**: `Set[Type[Matcher]]`
@@ -68,7 +77,64 @@ sidebarDepth: 0
 * **说明**: 插件内定义的 `Matcher`
 
 
-## `on(type='', rule=None, permission=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None)`
+### `parent_plugin`
+
+
+* **类型**: `Optional[Plugin]`
+
+
+* **说明**: 父插件
+
+
+### `sub_plugins`
+
+
+* **类型**: `Set[Plugin]`
+
+
+* **说明**: 子插件集合
+
+
+## `get_plugin(name)`
+
+
+* **说明**
+
+    获取当前导入的某个插件。
+
+
+
+* **参数**
+
+    
+    * `name: str`: 插件名，与 `load_plugin` 参数一致。如果为 `load_plugins` 导入的插件，则为文件(夹)名。
+
+
+
+* **返回**
+
+    
+    * `Optional[Plugin]`
+
+
+
+## `get_loaded_plugins()`
+
+
+* **说明**
+
+    获取当前已导入的所有插件。
+
+
+
+* **返回**
+
+    
+    * `Set[Plugin]`
+
+
+
+## `on(type='', rule=None, permission=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None, _depth=0)`
 
 
 * **说明**
@@ -115,7 +181,7 @@ sidebarDepth: 0
 
 
 
-## `on_metaevent(rule=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None)`
+## `on_metaevent(rule=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None, _depth=0)`
 
 
 * **说明**
@@ -156,7 +222,7 @@ sidebarDepth: 0
 
 
 
-## `on_message(rule=None, permission=None, *, handlers=None, temp=False, priority=1, block=True, state=None, state_factory=None)`
+## `on_message(rule=None, permission=None, *, handlers=None, temp=False, priority=1, block=True, state=None, state_factory=None, _depth=0)`
 
 
 * **说明**
@@ -200,7 +266,7 @@ sidebarDepth: 0
 
 
 
-## `on_notice(rule=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None)`
+## `on_notice(rule=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None, _depth=0)`
 
 
 * **说明**
@@ -241,7 +307,7 @@ sidebarDepth: 0
 
 
 
-## `on_request(rule=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None)`
+## `on_request(rule=None, *, handlers=None, temp=False, priority=1, block=False, state=None, state_factory=None, _depth=0)`
 
 
 * **说明**
@@ -282,7 +348,7 @@ sidebarDepth: 0
 
 
 
-## `on_startswith(msg, rule=None, ignorecase=False, **kwargs)`
+## `on_startswith(msg, rule=None, ignorecase=False, _depth=0, **kwargs)`
 
 
 * **说明**
@@ -332,7 +398,7 @@ sidebarDepth: 0
 
 
 
-## `on_endswith(msg, rule=None, ignorecase=False, **kwargs)`
+## `on_endswith(msg, rule=None, ignorecase=False, _depth=0, **kwargs)`
 
 
 * **说明**
@@ -382,7 +448,7 @@ sidebarDepth: 0
 
 
 
-## `on_keyword(keywords, rule=None, **kwargs)`
+## `on_keyword(keywords, rule=None, _depth=0, **kwargs)`
 
 
 * **说明**
@@ -429,7 +495,7 @@ sidebarDepth: 0
 
 
 
-## `on_command(cmd, rule=None, aliases=None, **kwargs)`
+## `on_command(cmd, rule=None, aliases=None, _depth=0, **kwargs)`
 
 
 * **说明**
@@ -481,7 +547,7 @@ sidebarDepth: 0
 
 
 
-## `on_shell_command(cmd, rule=None, aliases=None, parser=None, **kwargs)`
+## `on_shell_command(cmd, rule=None, aliases=None, parser=None, _depth=0, **kwargs)`
 
 
 * **说明**
@@ -538,7 +604,7 @@ sidebarDepth: 0
 
 
 
-## `on_regex(pattern, flags=0, rule=None, **kwargs)`
+## `on_regex(pattern, flags=0, rule=None, _depth=0, **kwargs)`
 
 
 * **说明**
@@ -1300,10 +1366,10 @@ sidebarDepth: 0
 * **参数**
 
     
-    * `module_path: Set[str]`: 指定插件集合
+    * `module_path: Iterable[str]`: 指定插件集合
 
 
-    * `plugin_dir: Set[str]`: 指定插件路径集合
+    * `plugin_dir: Iterable[str]`: 指定插件路径集合
 
 
 
@@ -1345,7 +1411,7 @@ sidebarDepth: 0
 
 * **说明**
 
-    导入指定 toml 文件 `[nonebot.plugins]` 中的 `plugins` 以及 `plugin_dirs` 下多个插件，
+    导入指定 toml 文件 `[tool.nonebot]` 中的 `plugins` 以及 `plugin_dirs` 下多个插件，
     以 `_` 开头的插件不会被导入！
 
 
@@ -1372,7 +1438,7 @@ sidebarDepth: 0
 
 * **说明**
 
-    导入 NoneBot 内置插件
+    导入 NoneBot 内置插件, 默认导入 `echo` 插件
 
 
 
@@ -1380,45 +1446,6 @@ sidebarDepth: 0
 
     
     * `Plugin`
-
-
-
-## `get_plugin(name)`
-
-
-* **说明**
-
-    获取当前导入的某个插件。
-
-
-
-* **参数**
-
-    
-    * `name: str`: 插件名，与 `load_plugin` 参数一致。如果为 `load_plugins` 导入的插件，则为文件(夹)名。
-
-
-
-* **返回**
-
-    
-    * `Optional[Plugin]`
-
-
-
-## `get_loaded_plugins()`
-
-
-* **说明**
-
-    获取当前已导入的所有插件。
-
-
-
-* **返回**
-
-    
-    * `Set[Plugin]`
 
 
 
@@ -1441,7 +1468,14 @@ sidebarDepth: 0
 * **返回**
 
     
-    * `Optional[Export]`
+    * `Export`
+
+
+
+* **异常**
+
+    
+    * `RuntimeError`: 插件无法加载
 
 
 
