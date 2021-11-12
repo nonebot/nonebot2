@@ -13,9 +13,9 @@ from collections import defaultdict
 from typing import (TYPE_CHECKING, Any, Dict, List, Type, Union, Callable,
                     NoReturn, Optional)
 
+from .handler import Handler
 from nonebot.rule import Rule
 from nonebot.log import logger
-from nonebot.handler import Handler
 from nonebot.adapters import MessageTemplate
 from nonebot.permission import USER, Permission
 from nonebot.exception import (PausedException, StopPropagation,
