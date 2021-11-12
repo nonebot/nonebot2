@@ -1,8 +1,9 @@
 from copy import copy
-from typing import Any, Dict, Type, Union, Mapping, Iterable
+from typing import Any, Dict, Type, Union, Mapping, Iterable, cast
 
 from nonebot.typing import overrides
-from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
+from nonebot.adapters import Message as BaseMessage
+from nonebot.adapters import MessageSegment as BaseMessageSegment
 
 
 class MessageSegment(BaseMessageSegment["Message"]):
@@ -173,6 +174,7 @@ class Message(BaseMessage[MessageSegment]):
         msg: Union[str, Mapping,
                    Iterable[Mapping]]) -> Iterable[MessageSegment]:
         if isinstance(msg, Mapping):
+            msg = cast(Mapping[str, Any], msg)
             yield MessageSegment(msg["type"], msg.get("data") or {})
         elif isinstance(msg, str):
             yield MessageSegment.text(msg)

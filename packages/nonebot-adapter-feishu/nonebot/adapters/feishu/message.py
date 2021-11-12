@@ -1,12 +1,12 @@
-import itertools
 import json
+import itertools
 from dataclasses import dataclass
-from typing import (Any, Dict, Iterable, List, Mapping, Optional, Tuple, Type,
-                    Union)
+from typing import (Any, Dict, List, Type, Tuple, Union, Mapping, Iterable,
+                    Optional, cast)
 
+from nonebot.typing import overrides
 from nonebot.adapters import Message as BaseMessage
 from nonebot.adapters import MessageSegment as BaseMessageSegment
-from nonebot.typing import overrides
 
 
 class MessageSegment(BaseMessageSegment["Message"]):
@@ -150,6 +150,7 @@ class Message(BaseMessage[MessageSegment]):
         msg: Union[str, Mapping,
                    Iterable[Mapping]]) -> Iterable[MessageSegment]:
         if isinstance(msg, Mapping):
+            msg = cast(Mapping[str, Any], msg)
             yield MessageSegment(msg["type"], msg.get("data") or {})
             return
         elif isinstance(msg, str):

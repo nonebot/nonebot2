@@ -2,12 +2,12 @@ import re
 from io import BytesIO
 from pathlib import Path
 from base64 import b64encode
-from typing import Type, Union, Tuple, Mapping, Iterable, Optional
+from typing import Any, Type, Tuple, Union, Mapping, Iterable, Optional, cast
 
 from nonebot.typing import overrides
-from nonebot.adapters import Message as BaseMessage, MessageSegment as BaseMessageSegment
-
-from .utils import log, escape, unescape, _b2s
+from .utils import log, _b2s, escape, unescape
+from nonebot.adapters import Message as BaseMessage
+from nonebot.adapters import MessageSegment as BaseMessageSegment
 
 
 class MessageSegment(BaseMessageSegment["Message"]):
@@ -258,6 +258,7 @@ class Message(BaseMessage[MessageSegment]):
         msg: Union[str, Mapping,
                    Iterable[Mapping]]) -> Iterable[MessageSegment]:
         if isinstance(msg, Mapping):
+            msg = cast(Mapping[str, Any], msg)
             yield MessageSegment(msg["type"], msg.get("data") or {})
             return
         elif isinstance(msg, Iterable) and not isinstance(msg, str):

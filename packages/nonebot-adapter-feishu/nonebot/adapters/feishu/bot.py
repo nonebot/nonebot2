@@ -1,21 +1,20 @@
 import re
 import json
 from typing import (TYPE_CHECKING, Any, Dict, Tuple, Union, Iterable, Optional,
-                    AsyncIterable)
+                    AsyncIterable, cast)
 
 import httpx
 from aiocache import Cache, cached
 from aiocache.serializers import PickleSerializer
 
 from nonebot.log import logger
+from .utils import AESCipher, log
 from nonebot.typing import overrides
 from nonebot.utils import escape_tag
 from nonebot.message import handle_event
+from .config import Config as FeishuConfig
 from nonebot.adapters import Bot as BaseBot
 from nonebot.drivers import Driver, HTTPRequest, HTTPResponse
-
-from .utils import AESCipher, log
-from .config import Config as FeishuConfig
 from .message import Message, MessageSegment, MessageSerializer
 from .exception import ActionFailed, NetworkError, ApiNotAvailable
 from .event import (Event, MessageEvent, GroupMessageEvent, PrivateMessageEvent,
@@ -124,6 +123,7 @@ def _handle_api_result(
         - ``ActionFailed``: API 调用失败
     """
     if isinstance(result, dict):
+        result = cast(Dict[str, Any], result)
         if result.get("code") != 0:
             raise ActionFailed(**result)
         return result.get("data")
