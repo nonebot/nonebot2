@@ -1,6 +1,7 @@
 import re
 import json
 import asyncio
+import inspect
 import dataclasses
 from functools import wraps, partial
 from typing import Any, Callable, Optional, Awaitable
@@ -49,6 +50,12 @@ def run_sync(func: Callable[..., Any]) -> Callable[..., Awaitable[Any]]:
         return result
 
     return _wrapper
+
+
+def get_name(obj: Any) -> str:
+    if inspect.isfunction(obj) or inspect.isclass(obj):
+        return obj.__name__
+    return obj.__class__.__name__
 
 
 class DataclassEncoder(json.JSONEncoder):
