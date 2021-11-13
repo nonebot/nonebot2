@@ -22,7 +22,7 @@ from typing import (TYPE_CHECKING, Any, Dict, Union, TypeVar, Callable,
                     NoReturn, Optional, Awaitable)
 
 if TYPE_CHECKING:
-    from nonebot.matcher import Matcher
+    from nonebot.processor import Matcher
     from nonebot.adapters import Bot, Event
     from nonebot.permission import Permission
 

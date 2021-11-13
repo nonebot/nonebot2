@@ -1,7 +1,7 @@
 import inspect
 from typing import Any, Dict, Type, Tuple, Union, Callable
 
-from pydantic.typing import (ForwardRef, GenericAlias, get_args, get_origin,
+from pydantic.typing import (ForwardRef, get_args, get_origin,
                              evaluate_forwardref)
 
 
@@ -41,3 +41,9 @@ def generic_check_issubclass(
                     return False
             return True
         raise
+
+
+def generic_get_types(cls: Any) -> Tuple[Type[Any], ...]:
+    if get_origin(cls) is Union:
+        return get_args(cls)
+    return (cls,)

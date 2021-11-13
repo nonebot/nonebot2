@@ -3,7 +3,7 @@ from dataclasses import field, dataclass
 from typing import Set, Dict, Type, Optional
 
 from .export import Export
-from nonebot.matcher import Matcher
+from nonebot.processor import Matcher
 
 plugins: Dict[str, "Plugin"] = {}
 """

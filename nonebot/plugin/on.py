@@ -5,10 +5,9 @@ from types import ModuleType
 from typing import (TYPE_CHECKING, Any, Set, Dict, List, Type, Tuple, Union,
                     Optional)
 
-from nonebot.handler import Handler
-from nonebot.matcher import Matcher
 from .manager import _current_plugin
 from nonebot.permission import Permission
+from nonebot.processor import Handler, Matcher
 from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_StateFactory
 from nonebot.rule import (Rule, ArgumentParser, regex, command, keyword,
                           endswith, startswith, shell_command)

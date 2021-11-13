@@ -5,7 +5,6 @@
 该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行对话 。
 """
 
-from functools import wraps
 from types import ModuleType
 from datetime import datetime
 from contextvars import ContextVar
@@ -13,8 +12,10 @@ from collections import defaultdict
 from typing import (TYPE_CHECKING, Any, Dict, List, Type, Union, Callable,
                     NoReturn, Optional)
 
+from .models import Depends
 from .handler import Handler
 from nonebot.rule import Rule
+from nonebot import get_driver
 from nonebot.log import logger
 from nonebot.adapters import MessageTemplate
 from nonebot.permission import USER, Permission
@@ -228,8 +229,8 @@ class Matcher(metaclass=MatcherMeta):
                 "permission":
                     permission or Permission(),
                 "handlers": [
-                    handler
-                    if isinstance(handler, Handler) else Handler(handler)
+                    handler if isinstance(handler, Handler) else Handler(
+                        handler, dependency_overrides_provider=get_driver())
                     for handler in handlers
                 ] if handlers else [],
                 "temp":
@@ -343,8 +344,12 @@ class Matcher(metaclass=MatcherMeta):
         return func
 
     @classmethod
-    def append_handler(cls, handler: T_Handler) -> Handler:
-        handler_ = Handler(handler)
+    def append_handler(cls,
+                       handler: T_Handler,
+                       dependencies: Optional[List[Depends]] = None) -> Handler:
+        handler_ = Handler(handler,
+                           dependencies=dependencies,
+                           dependency_overrides_provider=get_driver())
         cls.handlers.append(handler_)
         return handler_
 
@@ -378,22 +383,19 @@ class Matcher(metaclass=MatcherMeta):
           * 无
         """
 
-        async def _receive(bot: "Bot", event: "Event") -> NoReturn:
-            raise PausedException
-
-        if cls.handlers:
-            # 已有前置handlers则接受一条新的消息，否则视为接收初始消息
-            receive_handler = cls.append_handler(_receive)
-        else:
-            receive_handler = None
-
         def _decorator(func: T_Handler) -> T_Handler:
-            if not cls.handlers or cls.handlers[-1] is not func:
-                func_handler = cls.append_handler(func)
-                if receive_handler:
-                    receive_handler.update_signature(
-                        bot=func_handler.bot_type,
-                        event=func_handler.event_type)
+
+            async def _receive() -> NoReturn:
+                func_handler.remove_dependency(depend)
+                raise PausedException
+
+            depend = Depends(_receive)
+            if cls.handlers and cls.handlers[-1].func is func:
+                func_handler = cls.handlers[-1]
+                func_handler.prepend_dependency(depend)
+            else:
+                func_handler = cls.append_handler(
+                    func, dependencies=[depend] if cls.handlers else [])
 
             return func
 
@@ -419,54 +421,42 @@ class Matcher(metaclass=MatcherMeta):
           * ``args_parser: Optional[T_ArgsParser]``: 可选参数解析函数，空则使用默认解析函数
         """
 
-        async def _key_getter(bot: "Bot", event: "Event", state: T_State):
-            state["_current_key"] = key
-            if key not in state:
-                if prompt is not None:
-                    if isinstance(prompt, MessageTemplate):
-                        _prompt = prompt.format(**state)
-                    else:
-                        _prompt = prompt
-                    await bot.send(event=event, message=_prompt)
-                raise PausedException
-            else:
-                state["_skip_key"] = True
-
-        async def _key_parser(bot: "Bot", event: "Event", state: T_State):
-            if key in state and state.get("_skip_key"):
-                del state["_skip_key"]
-                return
-            parser = args_parser or cls._default_parser
-            if parser:
-                # parser = cast(T_ArgsParser["Bot", "Event"], parser)
-                await parser(bot, event, state)
-            else:
-                state[state["_current_key"]] = str(event.get_message())
-
-        getter_handler = cls.append_handler(_key_getter)
-        parser_handler = cls.append_handler(_key_parser)
-
         def _decorator(func: T_Handler) -> T_Handler:
-            if not hasattr(cls.handlers[-1].func, "__wrapped__"):
-                parser = cls.handlers.pop()
-                func_handler = Handler(func)
 
-                @wraps(func)
-                async def wrapper(bot: "Bot", event: "Event", state: T_State,
-                                  matcher: Matcher):
-                    await parser(matcher, bot, event, state)
-                    await func_handler(matcher, bot, event, state)
-                    if "_current_key" in state:
-                        del state["_current_key"]
+            async def _key_getter(bot: "Bot", event: "Event", state: T_State):
+                func_handler.remove_dependency(get_depend)
+                state["_current_key"] = key
+                if key not in state:
+                    if prompt is not None:
+                        if isinstance(prompt, MessageTemplate):
+                            _prompt = prompt.format(**state)
+                        else:
+                            _prompt = prompt
+                        await bot.send(event=event, message=_prompt)
+                    raise PausedException
+                else:
+                    state["_skip_key"] = True
 
-                wrapper_handler = cls.append_handler(wrapper)
+            async def _key_parser(bot: "Bot", event: "Event", state: T_State):
+                if key in state and state.get("_skip_key"):
+                    del state["_skip_key"]
+                    return
+                parser = args_parser or cls._default_parser
+                if parser:
+                    await parser(bot, event, state)
+                else:
+                    state[state["_current_key"]] = str(event.get_message())
 
-                getter_handler.update_signature(
-                    bot=wrapper_handler.bot_type,
-                    event=wrapper_handler.event_type)
-                parser_handler.update_signature(
-                    bot=wrapper_handler.bot_type,
-                    event=wrapper_handler.event_type)
+            get_depend = Depends(_key_getter)
+            parser_depend = Depends(_key_parser)
+
+            if cls.handlers and cls.handlers[-1].func is func:
+                func_handler = cls.handlers[-1]
+                func_handler.prepend_dependency(parser_depend)
+                func_handler.prepend_dependency(get_depend)
+            else:
+                func_handler = cls.append_handler(
+                    func, dependencies=[get_depend, parser_depend])
 
             return func
 

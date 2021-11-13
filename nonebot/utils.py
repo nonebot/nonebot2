@@ -4,10 +4,14 @@ import asyncio
 import inspect
 import dataclasses
 from functools import wraps, partial
-from typing import Any, Callable, Optional, Awaitable
+from typing_extensions import ParamSpec
+from typing import Any, TypeVar, Callable, Optional, Awaitable
 
 from nonebot.log import logger
 from nonebot.typing import overrides
+
+P = ParamSpec("P")
+R = TypeVar("R")
 
 
 def escape_tag(s: str) -> str:
@@ -27,7 +31,16 @@ def escape_tag(s: str) -> str:
     return re.sub(r"</?((?:[fb]g\s)?[^<>\s]*)>", r"\\\g<0>", s)
 
 
-def run_sync(func: Callable[..., Any]) -> Callable[..., Awaitable[Any]]:
+def is_coroutine_callable(func: Callable[..., Any]) -> bool:
+    if inspect.isroutine(func):
+        return inspect.iscoroutinefunction(func)
+    if inspect.isclass(func):
+        return False
+    func_ = getattr(func, "__call__", None)
+    return inspect.iscoroutinefunction(func_)
+
+
+def run_sync(func: Callable[P, R]) -> Callable[P, Awaitable[R]]:
     """
     :说明:
 
@@ -35,15 +48,15 @@ def run_sync(func: Callable[..., Any]) -> Callable[..., Awaitable[Any]]:
 
     :参数:
 
-      * ``func: Callable[..., Any]``: 被装饰的同步函数
+      * ``func: Callable[P, R]``: 被装饰的同步函数
 
     :返回:
 
-      - ``Callable[..., Awaitable[Any]]``
+      - ``Callable[P, Awaitable[R]]``
     """
 
     @wraps(func)
-    async def _wrapper(*args: Any, **kwargs: Any) -> Any:
+    async def _wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
         loop = asyncio.get_running_loop()
         pfunc = partial(func, *args, **kwargs)
         result = await loop.run_in_executor(None, pfunc)

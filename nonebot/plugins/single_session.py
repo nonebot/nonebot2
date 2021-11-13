@@ -1,7 +1,7 @@
 from typing import Dict, Optional
 
 from nonebot.typing import T_State
-from nonebot.matcher import Matcher
+from nonebot.processor import Matcher
 from nonebot.adapters import Bot, Event
 from nonebot.message import (IgnoredException, run_preprocessor,
                              run_postprocessor)

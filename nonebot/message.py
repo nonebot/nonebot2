@@ -12,7 +12,7 @@ from typing import TYPE_CHECKING, Set, Type, Optional
 from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.utils import escape_tag
-from nonebot.matcher import Matcher, matchers
+from nonebot.processor import Matcher, matchers
 from nonebot.exception import NoLogException, StopPropagation, IgnoredException
 from nonebot.typing import (T_State, T_RunPreProcessor, T_RunPostProcessor,
                             T_EventPreProcessor, T_EventPostProcessor)
