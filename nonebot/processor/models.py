@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Any, List, Tuple, Callable, Optional
+from typing import TYPE_CHECKING, Any, List, Type, Tuple, Callable, Optional
 
 from nonebot.utils import get_name
 
@@ -28,9 +28,9 @@ class Dependent:
                  func: Optional[Callable[..., Any]] = None,
                  name: Optional[str] = None,
                  bot_param_name: Optional[str] = None,
-                 bot_param_type: Optional[Tuple["Bot", ...]] = None,
+                 bot_param_type: Optional[Tuple[Type["Bot"], ...]] = None,
                  event_param_name: Optional[str] = None,
-                 event_param_type: Optional[Tuple["Event", ...]] = None,
+                 event_param_type: Optional[Tuple[Type["Event"], ...]] = None,
                  state_param_name: Optional[str] = None,
                  matcher_param_name: Optional[str] = None,
                  dependencies: Optional[List["Dependent"]] = None,

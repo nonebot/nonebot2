@@ -50,7 +50,7 @@ class Handler:
 
     async def __call__(self, matcher: "Matcher", bot: Bot, event: Event,
                        state: T_State):
-        values, _ = await solve_dependencies(
+        values, _, ignored = await solve_dependencies(
             dependent=self.dependent,
             bot=bot,
             event=event,
@@ -61,6 +61,17 @@ class Handler:
                 for dependency in self.dependencies
             ],
             dependency_overrides_provider=self.dependency_overrides_provider)
+
+        if ignored:
+            return
+
+        # check bot and event type
+        if self.dependent.bot_param_type and not isinstance(
+                bot, self.dependent.bot_param_type):
+            return
+        elif self.dependent.event_param_type and not isinstance(
+                event, self.dependent.event_param_type):
+            return
 
         if asyncio.iscoroutinefunction(self.func):
             await self.func(**values)
