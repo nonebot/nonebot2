@@ -6,6 +6,7 @@
 """
 
 import asyncio
+from contextlib import AsyncExitStack
 from typing import TYPE_CHECKING, Any, Dict, List, Tuple, Callable, Optional
 
 from nonebot.log import logger
@@ -37,15 +38,15 @@ class Handler:
         self.name = get_name(func) if name is None else name
 
         self.dependencies = dependencies or []
-        self.sub_dependents: Dict[Tuple[Callable[..., Any]], Dependent] = {}
+        self.sub_dependents: Dict[Callable[..., Any], Dependent] = {}
         if dependencies:
             for depends in dependencies:
                 if not depends.dependency:
                     raise ValueError(f"{depends} has no dependency")
-                if (depends.dependency,) in self.sub_dependents:
+                if depends.dependency in self.sub_dependents:
                     raise ValueError(f"{depends} is already in dependencies")
                 sub_dependant = get_parameterless_sub_dependant(depends=depends)
-                self.sub_dependents[(depends.dependency,)] = sub_dependant
+                self.sub_dependents[depends.dependency] = sub_dependant
         self.dependency_overrides_provider = dependency_overrides_provider
         self.dependent = get_dependent(func=func)
 
@@ -60,19 +61,29 @@ class Handler:
     def __str__(self) -> str:
         return repr(self)
 
-    async def __call__(self, matcher: "Matcher", bot: "Bot", event: "Event",
-                       state: T_State):
+    async def __call__(
+        self,
+        matcher: "Matcher",
+        bot: "Bot",
+        event: "Event",
+        state: T_State,
+        *,
+        stack: Optional[AsyncExitStack] = None,
+        dependency_cache: Optional[Dict[Callable[..., Any],
+                                        Any]] = None) -> Any:
         values, _, ignored = await solve_dependencies(
             dependent=self.dependent,
             bot=bot,
             event=event,
             state=state,
             matcher=matcher,
+            stack=stack,
             sub_dependents=[
-                self.sub_dependents[(dependency.dependency,)]  # type: ignore
+                self.sub_dependents[dependency.dependency]  # type: ignore
                 for dependency in self.dependencies
             ],
-            dependency_overrides_provider=self.dependency_overrides_provider)
+            dependency_overrides_provider=self.dependency_overrides_provider,
+            dependency_cache=dependency_cache)
 
         if ignored:
             return
@@ -101,7 +112,7 @@ class Handler:
         if (dependency.dependency,) in self.sub_dependents:
             raise ValueError(f"{dependency} is already in dependencies")
         sub_dependant = get_parameterless_sub_dependant(depends=dependency)
-        self.sub_dependents[(dependency.dependency,)] = sub_dependant
+        self.sub_dependents[dependency.dependency] = sub_dependant
 
     def prepend_dependency(self, dependency: Depends):
         self.cache_dependent(dependency)
@@ -114,7 +125,7 @@ class Handler:
     def remove_dependency(self, dependency: Depends):
         if not dependency.dependency:
             raise ValueError(f"{dependency} has no dependency")
-        if (dependency.dependency,) in self.sub_dependents:
-            del self.sub_dependents[(dependency.dependency,)]
+        if dependency.dependency in self.sub_dependents:
+            del self.sub_dependents[dependency.dependency]
         if dependency in self.dependencies:
             self.dependencies.remove(dependency)

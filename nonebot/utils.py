@@ -5,13 +5,16 @@ import inspect
 import dataclasses
 from functools import wraps, partial
 from typing_extensions import ParamSpec
-from typing import Any, TypeVar, Callable, Optional, Awaitable
+from contextlib import asynccontextmanager
+from typing import (Any, TypeVar, Callable, Optional, Awaitable, AsyncGenerator,
+                    ContextManager)
 
 from nonebot.log import logger
 from nonebot.typing import overrides
 
 P = ParamSpec("P")
 R = TypeVar("R")
+T = TypeVar("T")
 
 
 def escape_tag(s: str) -> str:
@@ -40,6 +43,20 @@ def is_coroutine_callable(func: Callable[..., Any]) -> bool:
     return inspect.iscoroutinefunction(func_)
 
 
+def is_gen_callable(func: Callable[..., Any]) -> bool:
+    if inspect.isgeneratorfunction(func):
+        return True
+    func_ = getattr(func, "__call__", None)
+    return inspect.isgeneratorfunction(func_)
+
+
+def is_async_gen_callable(func: Callable[..., Any]) -> bool:
+    if inspect.isasyncgenfunction(func):
+        return True
+    func_ = getattr(func, "__call__", None)
+    return inspect.isasyncgenfunction(func_)
+
+
 def run_sync(func: Callable[P, R]) -> Callable[P, Awaitable[R]]:
     """
     :说明:
@@ -63,6 +80,19 @@ def run_sync(func: Callable[P, R]) -> Callable[P, Awaitable[R]]:
         return result
 
     return _wrapper
+
+
+@asynccontextmanager
+async def run_sync_ctx_manager(
+    cm: ContextManager[T],) -> AsyncGenerator[T, None]:
+    try:
+        yield await run_sync(cm.__enter__)()
+    except Exception as e:
+        ok = await run_sync(cm.__exit__)(type(e), e, None)
+        if not ok:
+            raise e
+    else:
+        await run_sync(cm.__exit__)(None, None, None)
 
 
 def get_name(obj: Any) -> str:

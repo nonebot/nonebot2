@@ -45,4 +45,4 @@ class Dependent:
         self.matcher_param_name = matcher_param_name
         self.dependencies = dependencies or []
         self.use_cache = use_cache
-        self.cache_key = (self.func,)
+        self.cache_key = self.func

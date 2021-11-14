@@ -1,15 +1,17 @@
 import inspect
 from itertools import chain
 from typing import Any, Dict, List, Tuple, Callable, Optional, cast
+from contextlib import AsyncExitStack, contextmanager, asynccontextmanager
 
 from .models import Dependent
 from nonebot.log import logger
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 from .models import Depends as DependsClass
-from nonebot.utils import run_sync, is_coroutine_callable
 from .utils import (generic_get_types, get_typed_signature,
                     generic_check_issubclass)
+from nonebot.utils import (run_sync, is_gen_callable, run_sync_ctx_manager,
+                           is_async_gen_callable, is_coroutine_callable)
 
 
 def get_param_sub_dependent(*, param: inspect.Parameter) -> Dependent:
@@ -95,11 +97,12 @@ async def solve_dependencies(
     bot: Bot,
     event: Event,
     state: T_State,
-    matcher: "Matcher",
+    matcher: Optional["Matcher"],
+    stack: Optional[AsyncExitStack] = None,
     sub_dependents: Optional[List[Dependent]] = None,
     dependency_overrides_provider: Optional[Any] = None,
-    dependency_cache: Optional[Dict[Tuple[Callable[..., Any]], Any]] = None,
-) -> Tuple[Dict[str, Any], Dict[Tuple[Callable[..., Any]], Any], bool]:
+    dependency_cache: Optional[Dict[Callable[..., Any], Any]] = None,
+) -> Tuple[Dict[str, Any], Dict[Callable[..., Any], Any], bool]:
     values: Dict[str, Any] = {}
     dependency_cache = dependency_cache or {}
 
@@ -108,7 +111,7 @@ async def solve_dependencies(
     for sub_dependent in chain(sub_dependents or tuple(),
                                dependent.dependencies):
         sub_dependent.func = cast(Callable[..., Any], sub_dependent.func)
-        sub_dependent.cache_key = cast(Tuple[Callable[..., Any]],
+        sub_dependent.cache_key = cast(Callable[..., Any],
                                        sub_dependent.cache_key)
         func = sub_dependent.func
 
@@ -158,6 +161,15 @@ async def solve_dependencies(
         # run dependency function
         if sub_dependent.use_cache and sub_dependent.cache_key in dependency_cache:
             solved = dependency_cache[sub_dependent.cache_key]
+        elif is_gen_callable(func) or is_async_gen_callable(func):
+            assert isinstance(
+                stack, AsyncExitStack
+            ), "Generator dependency should be called in context"
+            if is_gen_callable(func):
+                cm = run_sync_ctx_manager(contextmanager(func)(**sub_values))
+            else:
+                cm = asynccontextmanager(func)(**sub_values)
+            solved = await stack.enter_async_context(cm)
         elif is_coroutine_callable(func):
             solved = await func(**sub_values)
         else:

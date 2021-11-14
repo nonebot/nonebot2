@@ -40,6 +40,11 @@ class Driver(abc.ABC):
     :类型: ``Set[T_BotDisconnectionHook]``
     :说明: Bot 连接断开时执行的函数
     """
+    dependency_overrides: Dict[Callable[..., Any], Callable[..., Any]] = {}
+    """
+    :类型: ``Dict[Callable[..., Any], Callable[..., Any]]``
+    :说明: Depends 函数的替换表
+    """
 
     def __init__(self, env: Env, config: Config):
         """
