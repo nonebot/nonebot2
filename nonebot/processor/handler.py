@@ -8,6 +8,7 @@
 import asyncio
 from typing import TYPE_CHECKING, Any, Dict, List, Tuple, Callable, Optional
 
+from nonebot.log import logger
 from .models import Depends, Dependent
 from nonebot.utils import get_name, run_sync
 from nonebot.typing import T_State, T_Handler
@@ -48,7 +49,18 @@ class Handler:
         self.dependency_overrides_provider = dependency_overrides_provider
         self.dependent = get_dependent(func=func)
 
-    async def __call__(self, matcher: "Matcher", bot: Bot, event: Event,
+    def __repr__(self) -> str:
+        return (
+            f"<Handler {self.func}("
+            f"[bot {self.dependent.bot_param_name}]: {self.dependent.bot_param_type}, "
+            f"[event {self.dependent.event_param_name}]: {self.dependent.event_param_type}, "
+            f"[state {self.dependent.state_param_name}], "
+            f"[matcher {self.dependent.matcher_param_name}])>")
+
+    def __str__(self) -> str:
+        return repr(self)
+
+    async def __call__(self, matcher: "Matcher", bot: "Bot", event: "Event",
                        state: T_State):
         values, _, ignored = await solve_dependencies(
             dependent=self.dependent,
@@ -68,9 +80,14 @@ class Handler:
         # check bot and event type
         if self.dependent.bot_param_type and not isinstance(
                 bot, self.dependent.bot_param_type):
+            logger.debug(f"Matcher {matcher} bot type {type(bot)} not match "
+                         f"annotation {self.dependent.bot_param_type}, ignored")
             return
         elif self.dependent.event_param_type and not isinstance(
                 event, self.dependent.event_param_type):
+            logger.debug(
+                f"Matcher {matcher} event type {type(event)} not match "
+                f"annotation {self.dependent.event_param_type}, ignored")
             return
 
         if asyncio.iscoroutinefunction(self.func):

@@ -15,19 +15,17 @@ import asyncio
 from itertools import product
 from argparse import Namespace
 from argparse import ArgumentParser as ArgParser
-from typing import (TYPE_CHECKING, Any, Dict, Tuple, Union, Callable, NoReturn,
-                    Optional, Sequence, Awaitable)
+from typing import (Any, Dict, Tuple, Union, Callable, NoReturn, Optional,
+                    Sequence, Awaitable)
 
 from pygtrie import CharTrie
 
 from nonebot import get_driver
 from nonebot.log import logger
 from nonebot.utils import run_sync
+from nonebot.adapters import Bot, Event
 from nonebot.exception import ParserExit
 from nonebot.typing import T_State, T_RuleChecker
-
-if TYPE_CHECKING:
-    from nonebot.adapters import Bot, Event
 
 
 class Rule:
@@ -48,8 +46,8 @@ class Rule:
     __slots__ = ("checkers",)
 
     def __init__(
-        self, *checkers: Callable[["Bot", "Event", T_State],
-                                  Awaitable[bool]]) -> None:
+            self, *checkers: Callable[[Bot, Event, T_State],
+                                      Awaitable[bool]]) -> None:
         """
         :参数:
 
@@ -67,8 +65,7 @@ class Rule:
           * ``Set[Callable[[Bot, Event, T_State], Awaitable[bool]]]``
         """
 
-    async def __call__(self, bot: "Bot", event: "Event",
-                       state: T_State) -> bool:
+    async def __call__(self, bot: Bot, event: Event, state: T_State) -> bool:
         """
         :说明:
 
@@ -123,7 +120,7 @@ class TrieRule:
         cls.suffix[suffix[::-1]] = value
 
     @classmethod
-    def get_value(cls, bot: "Bot", event: "Event",
+    def get_value(cls, bot: Bot, event: Event,
                   state: T_State) -> Tuple[Dict[str, Any], Dict[str, Any]]:
         if event.get_type() != "message":
             state["_prefix"] = {"raw_command": None, "command": None}
@@ -195,7 +192,7 @@ def startswith(msg: Union[str, Tuple[str, ...]],
         f"^(?:{'|'.join(re.escape(prefix) for prefix in msg)})",
         re.IGNORECASE if ignorecase else 0)
 
-    async def _startswith(bot: "Bot", event: "Event", state: T_State) -> bool:
+    async def _startswith(bot: Bot, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         text = event.get_plaintext()
@@ -222,7 +219,7 @@ def endswith(msg: Union[str, Tuple[str, ...]],
         f"(?:{'|'.join(re.escape(prefix) for prefix in msg)})$",
         re.IGNORECASE if ignorecase else 0)
 
-    async def _endswith(bot: "Bot", event: "Event", state: T_State) -> bool:
+    async def _endswith(bot: Bot, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         text = event.get_plaintext()
@@ -242,7 +239,7 @@ def keyword(*keywords: str) -> Rule:
       * ``*keywords: str``: 关键词
     """
 
-    async def _keyword(bot: "Bot", event: "Event", state: T_State) -> bool:
+    async def _keyword(bot: Bot, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         text = event.get_plaintext()
@@ -290,7 +287,7 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
             for start, sep in product(command_start, command_sep):
                 TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
 
-    async def _command(bot: "Bot", event: "Event", state: T_State) -> bool:
+    async def _command(bot: Bot, event: Event, state: T_State) -> bool:
         return state["_prefix"]["command"] in commands
 
     return Rule(_command)
@@ -376,8 +373,7 @@ def shell_command(*cmds: Union[str, Tuple[str, ...]],
             for start, sep in product(command_start, command_sep):
                 TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
 
-    async def _shell_command(bot: "Bot", event: "Event",
-                             state: T_State) -> bool:
+    async def _shell_command(bot: Bot, event: Event, state: T_State) -> bool:
         if state["_prefix"]["command"] in commands:
             message = str(event.get_message())
             strip_message = message[len(state["_prefix"]["raw_command"]
@@ -417,7 +413,7 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
 
     pattern = re.compile(regex, flags)
 
-    async def _regex(bot: "Bot", event: "Event", state: T_State) -> bool:
+    async def _regex(bot: Bot, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         matched = pattern.search(str(event.get_message()))
@@ -443,7 +439,7 @@ def to_me() -> Rule:
       * 无
     """
 
-    async def _to_me(bot: "Bot", event: "Event", state: T_State) -> bool:
+    async def _to_me(bot: Bot, event: Event, state: T_State) -> bool:
         return event.is_tome()
 
     return Rule(_to_me)

@@ -10,13 +10,11 @@ r"""
 """
 
 import asyncio
-from typing import TYPE_CHECKING, Union, Callable, NoReturn, Optional, Awaitable
+from typing import Union, Callable, NoReturn, Optional, Awaitable
 
 from nonebot.utils import run_sync
+from nonebot.adapters import Bot, Event
 from nonebot.typing import T_PermissionChecker
-
-if TYPE_CHECKING:
-    from nonebot.adapters import Bot, Event
 
 
 class Permission:
@@ -36,9 +34,8 @@ class Permission:
     """
     __slots__ = ("checkers",)
 
-    def __init__(
-            self, *checkers: Callable[["Bot", "Event"],
-                                      Awaitable[bool]]) -> None:
+    def __init__(self, *checkers: Callable[[Bot, Event],
+                                           Awaitable[bool]]) -> None:
         """
         :参数:
 
@@ -55,7 +52,7 @@ class Permission:
           * ``Set[Callable[[Bot, Event], Awaitable[bool]]]``
         """
 
-    async def __call__(self, bot: "Bot", event: "Event") -> bool:
+    async def __call__(self, bot: Bot, event: Event) -> bool:
         """
         :说明:
 
@@ -94,19 +91,19 @@ class Permission:
         return Permission(*checkers)
 
 
-async def _message(bot: "Bot", event: "Event") -> bool:
+async def _message(bot: Bot, event: Event) -> bool:
     return event.get_type() == "message"
 
 
-async def _notice(bot: "Bot", event: "Event") -> bool:
+async def _notice(bot: Bot, event: Event) -> bool:
     return event.get_type() == "notice"
 
 
-async def _request(bot: "Bot", event: "Event") -> bool:
+async def _request(bot: Bot, event: Event) -> bool:
     return event.get_type() == "request"
 
 
-async def _metaevent(bot: "Bot", event: "Event") -> bool:
+async def _metaevent(bot: Bot, event: Event) -> bool:
     return event.get_type() == "meta_event"
 
 
@@ -140,14 +137,14 @@ def USER(*user: str, perm: Optional[Permission] = None):
       * ``perm: Optional[Permission]``: 需要同时满足的权限
     """
 
-    async def _user(bot: "Bot", event: "Event") -> bool:
+    async def _user(bot: Bot, event: Event) -> bool:
         return bool(event.get_session_id() in user and
                     (perm is None or await perm(bot, event)))
 
     return Permission(_user)
 
 
-async def _superuser(bot: "Bot", event: "Event") -> bool:
+async def _superuser(bot: Bot, event: Event) -> bool:
     return (event.get_type() == "message" and
             event.get_user_id() in bot.config.superusers)
 

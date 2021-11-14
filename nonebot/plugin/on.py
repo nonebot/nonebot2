@@ -2,18 +2,15 @@ import re
 import sys
 import inspect
 from types import ModuleType
-from typing import (TYPE_CHECKING, Any, Set, Dict, List, Type, Tuple, Union,
-                    Optional)
+from typing import Any, Set, Dict, List, Type, Tuple, Union, Optional
 
 from .manager import _current_plugin
+from nonebot.adapters import Bot, Event
 from nonebot.permission import Permission
 from nonebot.processor import Handler, Matcher
 from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_StateFactory
 from nonebot.rule import (Rule, ArgumentParser, regex, command, keyword,
                           endswith, startswith, shell_command)
-
-if TYPE_CHECKING:
-    from nonebot.adapters import Bot, Event
 
 
 def _store_matcher(matcher: Type[Matcher]) -> None:
@@ -375,7 +372,7 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
       - ``Type[Matcher]``
     """
 
-    async def _strip_cmd(bot: "Bot", event: "Event", state: T_State):
+    async def _strip_cmd(bot: Bot, event: Event, state: T_State):
         message = event.get_message()
         if len(message) < 1:
             return
@@ -432,7 +429,7 @@ def on_shell_command(cmd: Union[str, Tuple[str, ...]],
       - ``Type[Matcher]``
     """
 
-    async def _strip_cmd(bot: "Bot", event: "Event", state: T_State):
+    async def _strip_cmd(bot: Bot, event: Event, state: T_State):
         message = event.get_message()
         segment = message.pop(0)
         new_message = message.__class__(

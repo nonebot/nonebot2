@@ -3,6 +3,7 @@ from itertools import chain
 from typing import Any, Dict, List, Tuple, Callable, Optional, cast
 
 from .models import Dependent
+from nonebot.log import logger
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 from .models import Depends as DependsClass
@@ -70,7 +71,7 @@ def get_dependent(*,
                                  f"{dependent.event_param_name} / {param_name}")
             dependent.event_param_name = param_name
             dependent.event_param_type = generic_get_types(param.annotation)
-        elif generic_check_issubclass(param.annotation, dict):
+        elif generic_check_issubclass(param.annotation, Dict):
             if dependent.state_param_name is not None:
                 raise ValueError(f"{func} has more than one State parameter: "
                                  f"{dependent.state_param_name} / {param_name}")
@@ -114,9 +115,15 @@ async def solve_dependencies(
         # check bot and event type
         if sub_dependent.bot_param_type and not isinstance(
                 bot, sub_dependent.bot_param_type):
+            logger.debug(
+                f"Matcher {matcher} bot type {type(bot)} not match depends {func} "
+                f"annotation {sub_dependent.bot_param_type}, ignored")
             return values, dependency_cache, True
         elif sub_dependent.event_param_type and not isinstance(
                 event, sub_dependent.event_param_type):
+            logger.debug(
+                f"Matcher {matcher} event type {type(event)} not match depends {func} "
+                f"annotation {sub_dependent.event_param_type}, ignored")
             return values, dependency_cache, True
 
         # dependency overrides
