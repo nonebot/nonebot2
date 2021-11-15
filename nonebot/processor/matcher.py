@@ -15,6 +15,7 @@ from typing import (TYPE_CHECKING, Any, Dict, List, Type, Union, Callable,
 from .models import Depends
 from .handler import Handler
 from nonebot.rule import Rule
+from .params import ParamTypes
 from nonebot import get_driver
 from nonebot.log import logger
 from nonebot.permission import USER, Permission
@@ -153,6 +154,10 @@ class Matcher(metaclass=MatcherMeta):
     :说明: 事件响应器权限更新函数
     """
 
+    HANDLER_PARAM_TYPES = [
+        ParamTypes.BOT, ParamTypes.EVENT, ParamTypes.STATE, ParamTypes.MATCHER
+    ]
+
     def __init__(self):
         """实例化 Matcher 以便运行"""
         self.handlers = self.handlers.copy()
@@ -230,7 +235,9 @@ class Matcher(metaclass=MatcherMeta):
                     permission or Permission(),
                 "handlers": [
                     handler if isinstance(handler, Handler) else Handler(
-                        handler, dependency_overrides_provider=get_driver())
+                        handler,
+                        dependency_overrides_provider=get_driver(),
+                        allow_types=cls.HANDLER_PARAM_TYPES)
                     for handler in handlers
                 ] if handlers else [],
                 "temp":
@@ -348,7 +355,8 @@ class Matcher(metaclass=MatcherMeta):
                        dependencies: Optional[List[Depends]] = None) -> Handler:
         handler_ = Handler(handler,
                            dependencies=dependencies,
-                           dependency_overrides_provider=get_driver())
+                           dependency_overrides_provider=get_driver(),
+                           allow_types=cls.HANDLER_PARAM_TYPES)
         cls.handlers.append(handler_)
         return handler_
 

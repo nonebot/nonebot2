@@ -7,7 +7,8 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
 
 import asyncio
 from datetime import datetime
-from typing import TYPE_CHECKING, Set, Type, Optional
+from contextlib import AsyncExitStack
+from typing import TYPE_CHECKING, Set, Type
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
@@ -204,58 +205,63 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
         logger.opt(colors=True).success(log_msg)
 
     state = {}
-    coros = list(map(lambda x: x(bot, event, state), _event_preprocessors))
-    if coros:
-        try:
-            if show_log:
-                logger.debug("Running PreProcessors...")
-            await asyncio.gather(*coros)
-        except IgnoredException as e:
-            logger.opt(colors=True).info(
-                f"Event {escape_tag(event.get_event_name())} is <b>ignored</b>")
-            return
-        except Exception as e:
-            logger.opt(colors=True, exception=e).error(
-                "<r><bg #f8bbd0>Error when running EventPreProcessors. "
-                "Event ignored!</bg #f8bbd0></r>")
-            return
 
-    # Trie Match
-    _, _ = TrieRule.get_value(bot, event, state)
-
-    break_flag = False
-    for priority in sorted(matchers.keys()):
-        if break_flag:
-            break
-
-        if show_log:
-            logger.debug(f"Checking for matchers in priority {priority}...")
-
-        pending_tasks = [
-            _check_matcher(priority, matcher, bot, event, state.copy())
-            for matcher in matchers[priority]
-        ]
-
-        results = await asyncio.gather(*pending_tasks, return_exceptions=True)
-
-        for result in results:
-            if not isinstance(result, Exception):
-                continue
-            if isinstance(result, StopPropagation):
-                break_flag = True
-                logger.debug("Stop event propagation")
-            else:
-                logger.opt(colors=True, exception=result).error(
-                    "<r><bg #f8bbd0>Error when checking Matcher.</bg #f8bbd0></r>"
+    # TODO
+    async with AsyncExitStack() as stack:
+        coros = list(map(lambda x: x(bot, event, state), _event_preprocessors))
+        if coros:
+            try:
+                if show_log:
+                    logger.debug("Running PreProcessors...")
+                await asyncio.gather(*coros)
+            except IgnoredException as e:
+                logger.opt(colors=True).info(
+                    f"Event {escape_tag(event.get_event_name())} is <b>ignored</b>"
                 )
+                return
+            except Exception as e:
+                logger.opt(colors=True, exception=e).error(
+                    "<r><bg #f8bbd0>Error when running EventPreProcessors. "
+                    "Event ignored!</bg #f8bbd0></r>")
+                return
 
-    coros = list(map(lambda x: x(bot, event, state), _event_postprocessors))
-    if coros:
-        try:
+        # Trie Match
+        _, _ = TrieRule.get_value(bot, event, state)
+
+        break_flag = False
+        for priority in sorted(matchers.keys()):
+            if break_flag:
+                break
+
             if show_log:
-                logger.debug("Running PostProcessors...")
-            await asyncio.gather(*coros)
-        except Exception as e:
-            logger.opt(colors=True, exception=e).error(
-                "<r><bg #f8bbd0>Error when running EventPostProcessors</bg #f8bbd0></r>"
-            )
+                logger.debug(f"Checking for matchers in priority {priority}...")
+
+            pending_tasks = [
+                _check_matcher(priority, matcher, bot, event, state.copy())
+                for matcher in matchers[priority]
+            ]
+
+            results = await asyncio.gather(*pending_tasks,
+                                           return_exceptions=True)
+
+            for result in results:
+                if not isinstance(result, Exception):
+                    continue
+                if isinstance(result, StopPropagation):
+                    break_flag = True
+                    logger.debug("Stop event propagation")
+                else:
+                    logger.opt(colors=True, exception=result).error(
+                        "<r><bg #f8bbd0>Error when checking Matcher.</bg #f8bbd0></r>"
+                    )
+
+        coros = list(map(lambda x: x(bot, event, state), _event_postprocessors))
+        if coros:
+            try:
+                if show_log:
+                    logger.debug("Running PostProcessors...")
+                await asyncio.gather(*coros)
+            except Exception as e:
+                logger.opt(colors=True, exception=e).error(
+                    "<r><bg #f8bbd0>Error when running EventPostProcessors</bg #f8bbd0></r>"
+                )

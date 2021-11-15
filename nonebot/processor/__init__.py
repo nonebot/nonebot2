@@ -1,15 +1,18 @@
 import inspect
 from itertools import chain
-from typing import Any, Dict, List, Tuple, Callable, Optional, cast
+from typing import Any, Dict, List, Type, Tuple, Callable, Optional, cast
 from contextlib import AsyncExitStack, contextmanager, asynccontextmanager
+
+from pydantic import BaseConfig
+from pydantic.fields import Required, ModelField
+from pydantic.schema import get_annotation_from_field_info
 
 from .models import Dependent
 from nonebot.log import logger
 from nonebot.typing import T_State
+from .utils import get_typed_signature
 from nonebot.adapters import Bot, Event
 from .models import Depends as DependsClass
-from .utils import (generic_get_types, get_typed_signature,
-                    generic_check_issubclass)
 from nonebot.utils import (run_sync, is_gen_callable, run_sync_ctx_manager,
                            is_async_gen_callable, is_coroutine_callable)
 
@@ -27,33 +30,42 @@ def get_param_sub_dependent(*, param: inspect.Parameter) -> Dependent:
     )
 
 
-def get_parameterless_sub_dependant(*, depends: DependsClass) -> Dependent:
+def get_parameterless_sub_dependant(
+        *,
+        depends: DependsClass,
+        allow_types: Optional[List["ParamTypes"]] = None) -> Dependent:
     assert callable(
         depends.dependency
     ), "A parameter-less dependency must have a callable dependency"
-    return get_sub_dependant(depends=depends, dependency=depends.dependency)
+    return get_sub_dependant(depends=depends,
+                             dependency=depends.dependency,
+                             allow_types=allow_types)
 
 
 def get_sub_dependant(
-    *,
-    depends: DependsClass,
-    dependency: Callable[..., Any],
-    name: Optional[str] = None,
-) -> Dependent:
-    sub_dependant = get_dependent(
-        func=dependency,
-        name=name,
-        use_cache=depends.use_cache,
-    )
+        *,
+        depends: DependsClass,
+        dependency: Callable[..., Any],
+        name: Optional[str] = None,
+        allow_types: Optional[List["ParamTypes"]] = None) -> Dependent:
+    sub_dependant = get_dependent(func=dependency,
+                                  name=name,
+                                  use_cache=depends.use_cache,
+                                  allow_types=allow_types)
     return sub_dependant
 
 
-def get_dependent(*,
-                  func: Callable[..., Any],
-                  name: Optional[str] = None,
-                  use_cache: bool = True) -> Dependent:
+def get_dependent(
+        *,
+        func: Callable[..., Any],
+        name: Optional[str] = None,
+        use_cache: bool = True,
+        allow_types: Optional[List["ParamTypes"]] = None) -> Dependent:
     signature = get_typed_signature(func)
     params = signature.parameters
+    allow_types = allow_types or [
+        ParamTypes.BOT, ParamTypes.EVENT, ParamTypes.STATE
+    ]
     dependent = Dependent(func=func, name=name, use_cache=use_cache)
     for param_name, param in params.items():
         if isinstance(param.default, DependsClass):
@@ -61,32 +73,28 @@ def get_dependent(*,
             dependent.dependencies.append(sub_dependent)
             continue
 
-        if generic_check_issubclass(param.annotation, Bot):
-            if dependent.bot_param_name is not None:
-                raise ValueError(f"{func} has more than one Bot parameter: "
-                                 f"{dependent.bot_param_name} / {param_name}")
-            dependent.bot_param_name = param_name
-            dependent.bot_param_type = generic_get_types(param.annotation)
-        elif generic_check_issubclass(param.annotation, Event):
-            if dependent.event_param_name is not None:
-                raise ValueError(f"{func} has more than one Event parameter: "
-                                 f"{dependent.event_param_name} / {param_name}")
-            dependent.event_param_name = param_name
-            dependent.event_param_type = generic_get_types(param.annotation)
-        elif generic_check_issubclass(param.annotation, Dict):
-            if dependent.state_param_name is not None:
-                raise ValueError(f"{func} has more than one State parameter: "
-                                 f"{dependent.state_param_name} / {param_name}")
-            dependent.state_param_name = param_name
-        elif generic_check_issubclass(param.annotation, Matcher):
-            if dependent.matcher_param_name is not None:
-                raise ValueError(
-                    f"{func} has more than one Matcher parameter: "
-                    f"{dependent.matcher_param_name} / {param_name}")
-            dependent.matcher_param_name = param_name
+        for allow_type in allow_types:
+            field_info_class: Type[Param] = allow_type.value
+            if field_info_class._check(param_name, param):
+                field_info = field_info_class(param.default)
+                break
         else:
             raise ValueError(
                 f"Unknown parameter {param_name} with type {param.annotation}")
+
+        annotation: Any = Any
+        if param.annotation != param.empty:
+            annotation = param.annotation
+        annotation = get_annotation_from_field_info(annotation, field_info,
+                                                    param_name)
+        dependent.params.append(
+            ModelField(name=param_name,
+                       type_=annotation,
+                       class_validators=None,
+                       model_config=BaseConfig,
+                       default=Required,
+                       required=True,
+                       field_info=field_info))
 
     return dependent
 
@@ -97,7 +105,8 @@ async def solve_dependencies(
     bot: Bot,
     event: Event,
     state: T_State,
-    matcher: Optional["Matcher"],
+    matcher: Optional["Matcher"] = None,
+    exception: Optional[Exception] = None,
     stack: Optional[AsyncExitStack] = None,
     sub_dependents: Optional[List[Dependent]] = None,
     dependency_overrides_provider: Optional[Any] = None,
@@ -114,20 +123,6 @@ async def solve_dependencies(
         sub_dependent.cache_key = cast(Callable[..., Any],
                                        sub_dependent.cache_key)
         func = sub_dependent.func
-
-        # check bot and event type
-        if sub_dependent.bot_param_type and not isinstance(
-                bot, sub_dependent.bot_param_type):
-            logger.debug(
-                f"Matcher {matcher} bot type {type(bot)} not match depends {func} "
-                f"annotation {sub_dependent.bot_param_type}, ignored")
-            return values, dependency_cache, True
-        elif sub_dependent.event_param_type and not isinstance(
-                event, sub_dependent.event_param_type):
-            logger.debug(
-                f"Matcher {matcher} event type {type(event)} not match depends {func} "
-                f"annotation {sub_dependent.event_param_type}, ignored")
-            return values, dependency_cache, True
 
         # dependency overrides
         use_sub_dependant = sub_dependent
@@ -183,14 +178,28 @@ async def solve_dependencies(
             dependency_cache[sub_dependent.cache_key] = solved
 
     # usual dependency
-    if dependent.bot_param_name is not None:
-        values[dependent.bot_param_name] = bot
-    if dependent.event_param_name is not None:
-        values[dependent.event_param_name] = event
-    if dependent.state_param_name is not None:
-        values[dependent.state_param_name] = state
-    if dependent.matcher_param_name is not None:
-        values[dependent.matcher_param_name] = matcher
+    for field in dependent.params:
+        field_info = field.field_info
+        assert isinstance(field_info,
+                          Param), "Params must be subclasses of Param"
+        value = field_info._solve(bot=bot,
+                                  event=event,
+                                  state=state,
+                                  matcher=matcher,
+                                  exception=exception)
+        _, errs_ = field.validate(value,
+                                  values,
+                                  loc=(ParamTypes(type(field_info)).name,
+                                       field.alias))
+        if errs_:
+            logger.debug(
+                f"Matcher {matcher} {ParamTypes(type(field_info)).name} "
+                f"type {type(value)} not match depends {dependent.func} "
+                f"annotation {field._type_display()}, ignored")
+            return values, dependency_cache, True
+        else:
+            values[field.name] = value
+
     return values, dependency_cache, False
 
 
@@ -200,6 +209,8 @@ def Depends(dependency: Optional[Callable[..., Any]] = None,
     return DependsClass(dependency=dependency, use_cache=use_cache)
 
 
+from .params import Param
 from .handler import Handler as Handler
 from .matcher import Matcher as Matcher
 from .matcher import matchers as matchers
+from .params import ParamTypes as ParamTypes

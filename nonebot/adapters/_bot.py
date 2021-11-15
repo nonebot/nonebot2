@@ -55,6 +55,16 @@ class Bot(abc.ABC):
     def __getattr__(self, name: str) -> _ApiCall:
         return partial(self.call_api, name)
 
+    @classmethod
+    def __get_validators__(cls):
+        yield cls.validate
+
+    @classmethod
+    def validate(cls, v):
+        if not isinstance(v, cls):
+            raise TypeError(f"{v} is not an instance of {cls}")
+        return v
+
     @property
     @abc.abstractmethod
     def type(self) -> str:

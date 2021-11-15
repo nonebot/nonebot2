@@ -9,7 +9,6 @@ import asyncio
 from contextlib import AsyncExitStack
 from typing import TYPE_CHECKING, Any, Dict, List, Tuple, Callable, Optional
 
-from nonebot.log import logger
 from .models import Depends, Dependent
 from nonebot.utils import get_name, run_sync
 from nonebot.typing import T_State, T_Handler
@@ -17,6 +16,7 @@ from . import get_dependent, solve_dependencies, get_parameterless_sub_dependant
 
 if TYPE_CHECKING:
     from .matcher import Matcher
+    from .params import ParamTypes
     from nonebot.adapters import Bot, Event
 
 
@@ -28,6 +28,7 @@ class Handler:
                  *,
                  name: Optional[str] = None,
                  dependencies: Optional[List[Depends]] = None,
+                 allow_types: Optional[List["ParamTypes"]] = None,
                  dependency_overrides_provider: Optional[Any] = None):
         """装饰事件处理函数以便根据动态参数运行"""
         self.func: T_Handler = func
@@ -36,6 +37,7 @@ class Handler:
         :说明: 事件处理函数
         """
         self.name = get_name(func) if name is None else name
+        self.allow_types = allow_types
 
         self.dependencies = dependencies or []
         self.sub_dependents: Dict[Callable[..., Any], Dependent] = {}
@@ -45,18 +47,16 @@ class Handler:
                     raise ValueError(f"{depends} has no dependency")
                 if depends.dependency in self.sub_dependents:
                     raise ValueError(f"{depends} is already in dependencies")
-                sub_dependant = get_parameterless_sub_dependant(depends=depends)
+                sub_dependant = get_parameterless_sub_dependant(
+                    depends=depends, allow_types=self.allow_types)
                 self.sub_dependents[depends.dependency] = sub_dependant
         self.dependency_overrides_provider = dependency_overrides_provider
-        self.dependent = get_dependent(func=func)
+        self.dependent = get_dependent(func=func, allow_types=self.allow_types)
 
     def __repr__(self) -> str:
         return (
-            f"<Handler {self.func}("
-            f"[bot {self.dependent.bot_param_name}]: {self.dependent.bot_param_type}, "
-            f"[event {self.dependent.event_param_name}]: {self.dependent.event_param_type}, "
-            f"[state {self.dependent.state_param_name}], "
-            f"[matcher {self.dependent.matcher_param_name}])>")
+            f"<Handler {self.func}({', '.join(map(str, self.dependent.params))})>"
+        )
 
     def __str__(self) -> str:
         return repr(self)
@@ -88,19 +88,6 @@ class Handler:
         if ignored:
             return
 
-        # check bot and event type
-        if self.dependent.bot_param_type and not isinstance(
-                bot, self.dependent.bot_param_type):
-            logger.debug(f"Matcher {matcher} bot type {type(bot)} not match "
-                         f"annotation {self.dependent.bot_param_type}, ignored")
-            return
-        elif self.dependent.event_param_type and not isinstance(
-                event, self.dependent.event_param_type):
-            logger.debug(
-                f"Matcher {matcher} event type {type(event)} not match "
-                f"annotation {self.dependent.event_param_type}, ignored")
-            return
-
         if asyncio.iscoroutinefunction(self.func):
             await self.func(**values)
         else:
@@ -111,7 +98,8 @@ class Handler:
             raise ValueError(f"{dependency} has no dependency")
         if (dependency.dependency,) in self.sub_dependents:
             raise ValueError(f"{dependency} is already in dependencies")
-        sub_dependant = get_parameterless_sub_dependant(depends=dependency)
+        sub_dependant = get_parameterless_sub_dependant(
+            depends=dependency, allow_types=self.allow_types)
         self.sub_dependents[dependency.dependency] = sub_dependant
 
     def prepend_dependency(self, dependency: Depends):
