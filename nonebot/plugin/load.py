@@ -1,4 +1,5 @@
 import json
+import warnings
 from typing import Set, Iterable, Optional
 
 import tomlkit
@@ -113,10 +114,15 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     with open(file_path, "r", encoding=encoding) as f:
         data = tomlkit.parse(f.read())  # type: ignore
 
-    nonebot_data = data.get("tool", {}).get("nonebot") or data.get(
-        "nonebot", {}).get("plugins")
+    nonebot_data = data.get("tool", {}).get("nonebot")
     if not nonebot_data:
-        raise ValueError("Cannot find '[tool.nonebot]' in given toml file!")
+        nonebot_data = data.get("nonebot", {}).get("plugins")
+        if nonebot_data:
+            warnings.warn(
+                "[nonebot.plugins] table are now deprecated. Use [tool.nonebot] instead.",
+                DeprecationWarning)
+        else:
+            raise ValueError("Cannot find '[tool.nonebot]' in given toml file!")
     plugins = nonebot_data.get("plugins", [])
     plugin_dirs = nonebot_data.get("plugin_dirs", [])
     assert isinstance(plugins, list), "plugins must be a list of plugin name"
