@@ -4,14 +4,14 @@ import inspect
 from types import ModuleType
 from typing import Any, Set, Dict, List, Type, Tuple, Union, Optional
 
+from nonebot.adapters import Event
 from nonebot.handler import Handler
 from nonebot.matcher import Matcher
 from .manager import _current_plugin
-from nonebot.adapters import Bot, Event
 from nonebot.permission import Permission
 from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_StateFactory
-from nonebot.rule import (Rule, ArgumentParser, regex, command, keyword,
-                          endswith, startswith, shell_command)
+from nonebot.rule import (PREFIX_KEY, RAW_CMD_KEY, Rule, ArgumentParser, regex,
+                          command, keyword, endswith, startswith, shell_command)
 
 
 def _store_matcher(matcher: Type[Matcher]) -> None:
@@ -373,16 +373,16 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
       - ``Type[Matcher]``
     """
 
-    async def _strip_cmd(bot: Bot, event: Event, state: T_State):
+    async def _strip_cmd(event: Event, state: T_State):
         message = event.get_message()
         if len(message) < 1:
             return
         segment = message.pop(0)
         segment_text = str(segment).lstrip()
-        if not segment_text.startswith(state["_prefix"]["raw_command"]):
+        if not segment_text.startswith(state[PREFIX_KEY][RAW_CMD_KEY]):
             return
         new_message = message.__class__(
-            segment_text[len(state["_prefix"]["raw_command"]):].lstrip())
+            segment_text[len(state[PREFIX_KEY][RAW_CMD_KEY]):].lstrip())
         for new_segment in reversed(new_message):
             message.insert(0, new_segment)
 
@@ -430,7 +430,7 @@ def on_shell_command(cmd: Union[str, Tuple[str, ...]],
       - ``Type[Matcher]``
     """
 
-    async def _strip_cmd(bot: Bot, event: Event, state: T_State):
+    async def _strip_cmd(event: Event, state: T_State):
         message = event.get_message()
         segment = message.pop(0)
         new_message = message.__class__(

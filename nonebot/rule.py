@@ -14,18 +14,35 @@ import shlex
 import asyncio
 from itertools import product
 from argparse import Namespace
+from typing_extensions import TypedDict
 from argparse import ArgumentParser as ArgParser
-from typing import (Any, Dict, Tuple, Union, Callable, NoReturn, Optional,
-                    Sequence, Awaitable)
+from typing import (Any, Tuple, Union, Callable, NoReturn, Optional, Sequence,
+                    Awaitable)
 
 from pygtrie import CharTrie
 
 from nonebot import get_driver
 from nonebot.log import logger
 from nonebot.utils import run_sync
-from nonebot.adapters import Bot, Event
 from nonebot.exception import ParserExit
 from nonebot.typing import T_State, T_RuleChecker
+from nonebot.adapters import Bot, Event, MessageSegment
+
+PREFIX_KEY = "_prefix"
+SUFFIX_KEY = "_suffix"
+CMD_KEY = "command"
+RAW_CMD_KEY = "raw_command"
+CMD_RESULT = TypedDict("CMD_RESULT", {
+    "command": Optional[Tuple[str, ...]],
+    "raw_command": Optional[str]
+})
+
+SHELL_ARGS = "_args"
+SHELL_ARGV = "_argv"
+
+REGEX_MATCHED = "_matched"
+REGEX_GROUP = "_matched_groups"
+REGEX_DICT = "_matched_dict"
 
 
 class Rule:
@@ -121,57 +138,27 @@ class TrieRule:
 
     @classmethod
     def get_value(cls, bot: Bot, event: Event,
-                  state: T_State) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+                  state: T_State) -> Tuple[CMD_RESULT, CMD_RESULT]:
+        prefix = CMD_RESULT(command=None, raw_command=None)
+        suffix = CMD_RESULT(command=None, raw_command=None)
+        state[PREFIX_KEY] = prefix
+        state[SUFFIX_KEY] = suffix
         if event.get_type() != "message":
-            state["_prefix"] = {"raw_command": None, "command": None}
-            state["_suffix"] = {"raw_command": None, "command": None}
-            return {
-                "raw_command": None,
-                "command": None
-            }, {
-                "raw_command": None,
-                "command": None
-            }
+            return prefix, suffix
 
-        prefix = None
-        suffix = None
         message = event.get_message()
-        message_seg = message[0]
+        message_seg: MessageSegment = message[0]
         if message_seg.is_text():
-            prefix = cls.prefix.longest_prefix(str(message_seg).lstrip())
-        message_seg_r = message[-1]
+            pf = cls.prefix.longest_prefix(str(message_seg).lstrip())
+            prefix[RAW_CMD_KEY] = pf.key
+            prefix[CMD_KEY] = pf.value
+        message_seg_r: MessageSegment = message[-1]
         if message_seg_r.is_text():
-            suffix = cls.suffix.longest_prefix(
-                str(message_seg_r).rstrip()[::-1])
+            sf = cls.suffix.longest_prefix(str(message_seg_r).rstrip()[::-1])
+            suffix[RAW_CMD_KEY] = sf.key
+            suffix[CMD_KEY] = sf.value
 
-        state["_prefix"] = {
-            "raw_command": prefix.key,
-            "command": prefix.value
-        } if prefix else {
-            "raw_command": None,
-            "command": None
-        }
-        state["_suffix"] = {
-            "raw_command": suffix.key,
-            "command": suffix.value
-        } if suffix else {
-            "raw_command": None,
-            "command": None
-        }
-
-        return ({
-            "raw_command": prefix.key,
-            "command": prefix.value
-        } if prefix else {
-            "raw_command": None,
-            "command": None
-        }, {
-            "raw_command": suffix.key,
-            "command": suffix.value
-        } if suffix else {
-            "raw_command": None,
-            "command": None
-        })
+        return prefix, suffix
 
 
 def startswith(msg: Union[str, Tuple[str, ...]],
@@ -288,7 +275,7 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
                 TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
 
     async def _command(bot: Bot, event: Event, state: T_State) -> bool:
-        return state["_prefix"]["command"] in commands
+        return state[PREFIX_KEY][CMD_KEY] in commands
 
     return Rule(_command)
 
@@ -374,17 +361,17 @@ def shell_command(*cmds: Union[str, Tuple[str, ...]],
                 TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
 
     async def _shell_command(bot: Bot, event: Event, state: T_State) -> bool:
-        if state["_prefix"]["command"] in commands:
+        if state[PREFIX_KEY][CMD_KEY] in commands:
             message = str(event.get_message())
-            strip_message = message[len(state["_prefix"]["raw_command"]
+            strip_message = message[len(state[PREFIX_KEY][RAW_CMD_KEY]
                                        ):].lstrip()
-            state["argv"] = shlex.split(strip_message)
+            state[SHELL_ARGV] = shlex.split(strip_message)
             if parser:
                 try:
-                    args = parser.parse_args(state["argv"])
-                    state["args"] = args
+                    args = parser.parse_args(state[SHELL_ARGV])
+                    state[SHELL_ARGS] = args
                 except ParserExit as e:
-                    state["args"] = e
+                    state[SHELL_ARGS] = e
             return True
         else:
             return False
@@ -418,9 +405,9 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
             return False
         matched = pattern.search(str(event.get_message()))
         if matched:
-            state["_matched"] = matched.group()
-            state["_matched_groups"] = matched.groups()
-            state["_matched_dict"] = matched.groupdict()
+            state[REGEX_MATCHED] = matched.group()
+            state[REGEX_GROUP] = matched.groups()
+            state[REGEX_DICT] = matched.groupdict()
             return True
         else:
             return False
