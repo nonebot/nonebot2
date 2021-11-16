@@ -3,14 +3,14 @@ from functools import reduce
 from nonebot.rule import to_me
 from nonebot.plugin import on_command
 from nonebot.permission import SUPERUSER
-from nonebot.adapters.cqhttp import (Bot, Message, MessageEvent, MessageSegment,
+from nonebot.adapters.cqhttp import (Message, MessageEvent, MessageSegment,
                                      unescape)
 
 say = on_command("say", to_me(), permission=SUPERUSER)
 
 
 @say.handle()
-async def say_unescape(bot: Bot, event: MessageEvent):
+async def say_unescape(event: MessageEvent):
 
     def _unescape(message: Message, segment: MessageSegment):
         if segment.is_text():
@@ -18,12 +18,12 @@ async def say_unescape(bot: Bot, event: MessageEvent):
         return message.append(segment)
 
     message = reduce(_unescape, event.get_message(), Message())  # type: ignore
-    await bot.send(message=message, event=event)
+    await say.send(message=message)
 
 
 echo = on_command("echo", to_me())
 
 
 @echo.handle()
-async def echo_escape(bot: Bot, event: MessageEvent):
-    await bot.send(message=event.get_message(), event=event)
+async def echo_escape(event: MessageEvent):
+    await say.send(message=event.get_message())

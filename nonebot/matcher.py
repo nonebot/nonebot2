@@ -12,12 +12,11 @@ from collections import defaultdict
 from typing import (TYPE_CHECKING, Any, Dict, List, Type, Union, Callable,
                     NoReturn, Optional)
 
-from .models import Depends
-from .handler import Handler
 from nonebot.rule import Rule
-from .params import ParamTypes
-from nonebot import get_driver
 from nonebot.log import logger
+from nonebot.handler import Handler
+from nonebot import params, get_driver
+from nonebot.dependencies import DependsWrapper
 from nonebot.permission import USER, Permission
 from nonebot.adapters import (Bot, Event, Message, MessageSegment,
                               MessageTemplate)
@@ -155,7 +154,8 @@ class Matcher(metaclass=MatcherMeta):
     """
 
     HANDLER_PARAM_TYPES = [
-        ParamTypes.BOT, ParamTypes.EVENT, ParamTypes.STATE, ParamTypes.MATCHER
+        params.BotParam, params.EventParam, params.StateParam,
+        params.MatcherParam
     ]
 
     def __init__(self):
@@ -350,9 +350,10 @@ class Matcher(metaclass=MatcherMeta):
         return func
 
     @classmethod
-    def append_handler(cls,
-                       handler: T_Handler,
-                       dependencies: Optional[List[Depends]] = None) -> Handler:
+    def append_handler(
+            cls,
+            handler: T_Handler,
+            dependencies: Optional[List[DependsWrapper]] = None) -> Handler:
         handler_ = Handler(handler,
                            dependencies=dependencies,
                            dependency_overrides_provider=get_driver(),
@@ -398,7 +399,7 @@ class Matcher(metaclass=MatcherMeta):
 
         def _decorator(func: T_Handler) -> T_Handler:
 
-            depend = Depends(_receive)
+            depend = DependsWrapper(_receive)
 
             if cls.handlers and cls.handlers[-1].func is func:
                 func_handler = cls.handlers[-1]
@@ -461,8 +462,8 @@ class Matcher(metaclass=MatcherMeta):
 
         def _decorator(func: T_Handler) -> T_Handler:
 
-            get_depend = Depends(_key_getter)
-            parser_depend = Depends(_key_parser)
+            get_depend = DependsWrapper(_key_getter)
+            parser_depend = DependsWrapper(_key_parser)
 
             if cls.handlers and cls.handlers[-1].func is func:
                 func_handler = cls.handlers[-1]
@@ -600,7 +601,10 @@ class Matcher(metaclass=MatcherMeta):
             while self.handlers:
                 handler = self.handlers.pop(0)
                 logger.debug(f"Running handler {handler}")
-                await handler(self, bot, event, self.state)
+                await handler(matcher=self,
+                              bot=bot,
+                              event=event,
+                              state=self.state)
 
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore

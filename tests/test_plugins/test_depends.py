@@ -1,6 +1,6 @@
 from nonebot import on_command
 from nonebot.log import logger
-from nonebot.processor import Depends
+from nonebot.dependencies import Depends
 
 test = on_command("123")
 

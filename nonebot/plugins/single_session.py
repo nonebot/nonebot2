@@ -1,7 +1,7 @@
 from typing import Dict, Optional
 
 from nonebot.typing import T_State
-from nonebot.processor import Matcher
+from nonebot.matcher import Matcher
 from nonebot.adapters import Bot, Event
 from nonebot.message import (IgnoredException, run_preprocessor,
                              run_postprocessor)
@@ -10,7 +10,7 @@ _running_matcher: Dict[str, int] = {}
 
 
 @run_preprocessor
-async def preprocess(matcher: Matcher, bot: Bot, event: Event, state: T_State):
+async def preprocess(event: Event):
     try:
         session_id = event.get_session_id()
     except Exception:
@@ -24,8 +24,7 @@ async def preprocess(matcher: Matcher, bot: Bot, event: Event, state: T_State):
 
 
 @run_postprocessor
-async def postprocess(matcher: Matcher, exception: Optional[Exception],
-                      bot: Bot, event: Event, state: T_State):
+async def postprocess(event: Event):
     try:
         session_id = event.get_session_id()
     except Exception:

@@ -22,7 +22,7 @@ from typing import (TYPE_CHECKING, Any, Dict, Union, TypeVar, Callable,
                     NoReturn, Optional, Awaitable)
 
 if TYPE_CHECKING:
-    from nonebot.processor import Matcher
+    from nonebot.matcher import Matcher
     from nonebot.adapters import Bot, Event
     from nonebot.permission import Permission
 
@@ -90,7 +90,7 @@ T_CalledAPIHook = Callable[
   ``bot.call_api`` 后执行的函数，参数分别为 bot, exception, api, data, result
 """
 
-T_EventPreProcessor = Callable[["Bot", "Event", T_State], Awaitable[None]]
+T_EventPreProcessor = Callable[..., Awaitable[None]]
 """
 :类型: ``Callable[[Bot, Event, T_State], Awaitable[None]]``
 
@@ -98,7 +98,7 @@ T_EventPreProcessor = Callable[["Bot", "Event", T_State], Awaitable[None]]
 
   事件预处理函数 EventPreProcessor 类型
 """
-T_EventPostProcessor = Callable[["Bot", "Event", T_State], Awaitable[None]]
+T_EventPostProcessor = Callable[..., Awaitable[None]]
 """
 :类型: ``Callable[[Bot, Event, T_State], Awaitable[None]]``
 
@@ -106,8 +106,7 @@ T_EventPostProcessor = Callable[["Bot", "Event", T_State], Awaitable[None]]
 
   事件预处理函数 EventPostProcessor 类型
 """
-T_RunPreProcessor = Callable[["Matcher", "Bot", "Event", T_State],
-                             Awaitable[None]]
+T_RunPreProcessor = Callable[..., Awaitable[None]]
 """
 :类型: ``Callable[[Matcher, Bot, Event, T_State], Awaitable[None]]``
 
@@ -115,8 +114,7 @@ T_RunPreProcessor = Callable[["Matcher", "Bot", "Event", T_State],
 
   事件响应器运行前预处理函数 RunPreProcessor 类型
 """
-T_RunPostProcessor = Callable[
-    ["Matcher", Optional[Exception], "Bot", "Event", T_State], Awaitable[None]]
+T_RunPostProcessor = Callable[..., Awaitable[None]]
 """
 :类型: ``Callable[[Matcher, Optional[Exception], Bot, Event, T_State], Awaitable[None]]``
 

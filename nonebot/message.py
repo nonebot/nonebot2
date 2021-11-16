@@ -12,8 +12,10 @@ from typing import TYPE_CHECKING, Set, Type
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
+from nonebot.handler import Handler
 from nonebot.utils import escape_tag
-from nonebot.processor import Matcher, matchers
+from nonebot import params, get_driver
+from nonebot.matcher import Matcher, matchers
 from nonebot.exception import NoLogException, StopPropagation, IgnoredException
 from nonebot.typing import (T_State, T_RunPreProcessor, T_RunPostProcessor,
                             T_EventPreProcessor, T_EventPostProcessor)
@@ -21,10 +23,19 @@ from nonebot.typing import (T_State, T_RunPreProcessor, T_RunPostProcessor,
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
 
-_event_preprocessors: Set[T_EventPreProcessor] = set()
-_event_postprocessors: Set[T_EventPostProcessor] = set()
-_run_preprocessors: Set[T_RunPreProcessor] = set()
-_run_postprocessors: Set[T_RunPostProcessor] = set()
+_event_preprocessors: Set[Handler] = set()
+_event_postprocessors: Set[Handler] = set()
+_run_preprocessors: Set[Handler] = set()
+_run_postprocessors: Set[Handler] = set()
+
+EVENT_PCS_PARAMS = [params.BotParam, params.EventParam, params.StateParam]
+RUN_PREPCS_PARAMS = [
+    params.MatcherParam, params.BotParam, params.EventParam, params.StateParam
+]
+RUN_POSTPCS_PARAMS = [
+    params.MatcherParam, params.ExceptionParam, params.BotParam,
+    params.EventParam, params.StateParam
+]
 
 
 def event_preprocessor(func: T_EventPreProcessor) -> T_EventPreProcessor:
@@ -41,7 +52,10 @@ def event_preprocessor(func: T_EventPreProcessor) -> T_EventPreProcessor:
       * ``event: Event``: Event 对象
       * ``state: T_State``: 当前 State
     """
-    _event_preprocessors.add(func)
+    _event_preprocessors.add(
+        Handler(func,
+                allow_types=EVENT_PCS_PARAMS,
+                dependency_overrides_provider=get_driver()))
     return func
 
 
@@ -59,7 +73,10 @@ def event_postprocessor(func: T_EventPostProcessor) -> T_EventPostProcessor:
       * ``event: Event``: Event 对象
       * ``state: T_State``: 当前事件运行前 State
     """
-    _event_postprocessors.add(func)
+    _event_postprocessors.add(
+        Handler(func,
+                allow_types=EVENT_PCS_PARAMS,
+                dependency_overrides_provider=get_driver()))
     return func
 
 
@@ -78,7 +95,10 @@ def run_preprocessor(func: T_RunPreProcessor) -> T_RunPreProcessor:
       * ``event: Event``: Event 对象
       * ``state: T_State``: 当前 State
     """
-    _run_preprocessors.add(func)
+    _run_preprocessors.add(
+        Handler(func,
+                allow_types=RUN_PREPCS_PARAMS,
+                dependency_overrides_provider=get_driver()))
     return func
 
 
@@ -98,7 +118,10 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
       * ``event: Event``: Event 对象
       * ``state: T_State``: 当前 State
     """
-    _run_postprocessors.add(func)
+    _run_postprocessors.add(
+        Handler(func,
+                allow_types=RUN_POSTPCS_PARAMS,
+                dependency_overrides_provider=get_driver()))
     return func
 
 
@@ -136,7 +159,8 @@ async def _run_matcher(Matcher: Type[Matcher], bot: "Bot", event: "Event",
     matcher = Matcher()
 
     coros = list(
-        map(lambda x: x(matcher, bot, event, state), _run_preprocessors))
+        map(lambda x: x(matcher=matcher, bot=bot, event=event, state=state),
+            _run_preprocessors))
     if coros:
         try:
             await asyncio.gather(*coros)
@@ -162,8 +186,12 @@ async def _run_matcher(Matcher: Type[Matcher], bot: "Bot", event: "Event",
         exception = e
 
     coros = list(
-        map(lambda x: x(matcher, exception, bot, event, state),
-            _run_postprocessors))
+        map(
+            lambda x: x(matcher=matcher,
+                        exception=exception,
+                        bot=bot,
+                        event=event,
+                        state=state), _run_postprocessors))
     if coros:
         try:
             await asyncio.gather(*coros)
@@ -208,7 +236,9 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
 
     # TODO
     async with AsyncExitStack() as stack:
-        coros = list(map(lambda x: x(bot, event, state), _event_preprocessors))
+        coros = list(
+            map(lambda x: x(bot=bot, event=event, state=state),
+                _event_preprocessors))
         if coros:
             try:
                 if show_log:
@@ -255,7 +285,9 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
                         "<r><bg #f8bbd0>Error when checking Matcher.</bg #f8bbd0></r>"
                     )
 
-        coros = list(map(lambda x: x(bot, event, state), _event_postprocessors))
+        coros = list(
+            map(lambda x: x(bot=bot, event=event, state=state),
+                _event_postprocessors))
         if coros:
             try:
                 if show_log:

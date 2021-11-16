@@ -278,6 +278,7 @@ def run(host: Optional[str] = None,
     get_driver().run(host, port, *args, **kwargs)
 
 
+import nonebot.params as params
 from nonebot.plugin import export as export
 from nonebot.plugin import require as require
 from nonebot.plugin import on_regex as on_regex

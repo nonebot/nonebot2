@@ -4,10 +4,11 @@ import asyncio
 import inspect
 import dataclasses
 from functools import wraps, partial
-from typing_extensions import ParamSpec
 from contextlib import asynccontextmanager
-from typing import (Any, TypeVar, Callable, Optional, Awaitable, AsyncGenerator,
-                    ContextManager)
+from typing_extensions import GenericAlias  # type: ignore
+from typing_extensions import ParamSpec, get_args, get_origin
+from typing import (Any, Type, Tuple, Union, TypeVar, Callable, Optional,
+                    Awaitable, AsyncGenerator, ContextManager)
 
 from nonebot.log import logger
 from nonebot.typing import overrides
@@ -32,6 +33,24 @@ def escape_tag(s: str) -> str:
       - ``str``
     """
     return re.sub(r"</?((?:[fb]g\s)?[^<>\s]*)>", r"\\\g<0>", s)
+
+
+def generic_check_issubclass(
+        cls: Any, class_or_tuple: Union[Type[Any], Tuple[Type[Any],
+                                                         ...]]) -> bool:
+    try:
+        return issubclass(cls, class_or_tuple)
+    except TypeError:
+        if get_origin(cls) is Union:
+            for type_ in get_args(cls):
+                if type_ is not type(None) and not generic_check_issubclass(
+                        type_, class_or_tuple):
+                    return False
+            return True
+        elif isinstance(cls, GenericAlias):
+            origin = get_origin(cls)
+            return bool(origin and issubclass(origin, class_or_tuple))
+        raise
 
 
 def is_coroutine_callable(func: Callable[..., Any]) -> bool:
