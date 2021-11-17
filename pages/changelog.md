@@ -4,11 +4,13 @@ sidebar: auto
 
 # 更新日志
 
-## v2.0.0a17
+## v2.0.0b1
 
 - 新增 `MessageTemplate` 对于 `str` 普通模板的支持
 - 移除插件加载的 `NameSpace` 模式
 - 修改 toml 加载插件时的键名为 `tool.nonebot` 以符合规范
+- 新增 Handler 依赖注入支持
+- 统一 `Processor`, `Rule`, `Permission` 使用 `Handler`
 
 ## v2.0.0a16
 

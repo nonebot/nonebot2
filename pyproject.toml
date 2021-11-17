@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot2"
-version = "2.0.0-alpha.16"
+version = "2.0.0-beta.1"
 description = "An asynchronous python bot framework."
 authors = ["yanyongyu <yyy@nonebot.dev>"]
 license = "MIT"
@@ -28,7 +28,7 @@ pygtrie = "^2.4.1"
 tomlkit = "^0.7.0"
 fastapi = "^0.70.0"
 websockets = ">=9.1"
-typing-extensions = "^3.10.0"
+typing-extensions = ">=3.10.0,<5.0.0"
 Quart = { version = "^0.15.0", optional = true }
 httpx = { version = ">=0.20.0, <1.0.0", extras = ["http2"] }
 pydantic = { version = "~1.8.0", extras = ["dotenv"] }
