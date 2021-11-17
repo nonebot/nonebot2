@@ -212,16 +212,7 @@ sidebarDepth: 0
 * **类型**
 
     
-    * `Callable[[Bot, Event, T_State], Union[Awaitable[None], Awaitable[NoReturn]]]`
-
-
-    * `Callable[[Bot, Event], Union[Awaitable[None], Awaitable[NoReturn]]]`
-
-
-    * `Callable[[Bot, T_State], Union[Awaitable[None], Awaitable[NoReturn]]]`
-
-
-    * `Callable[[Bot], Union[Awaitable[None], Awaitable[NoReturn]]]`
+    * `Callable[..., Union[Awaitable[None], Awaitable[NoReturn]]]`
 
 
 

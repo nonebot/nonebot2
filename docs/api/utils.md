@@ -41,14 +41,14 @@ sidebarDepth: 0
 * **参数**
 
     
-    * `func: Callable[..., Any]`: 被装饰的同步函数
+    * `func: Callable[P, R]`: 被装饰的同步函数
 
 
 
 * **返回**
 
     
-    * `Callable[..., Awaitable[Any]]`
+    * `Callable[P, Awaitable[R]]`
 
 
 

@@ -62,6 +62,21 @@ Driver 基类。
 
 
 
+### `dependency_overrides`
+
+
+* **类型**
+
+    `Dict[Callable[..., Any], Callable[..., Any]]`
+
+
+
+* **说明**
+
+    Depends 函数的替换表
+
+
+
 ### `__init__(env, config)`
 
 
