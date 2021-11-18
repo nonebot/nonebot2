@@ -462,5 +462,13 @@
     "desc": "获取IT咨讯并生成图片发送",
     "author": "yzyyz1387",
     "repo": "https://github.com/yzyyz1387/nonebot_plugin_itnews"
+  },
+  {
+    "id": "lolheroes",
+    "link": "lolHeroes",
+    "name": "lolheroes",
+    "desc": "获取lol英雄背景的故事",
+    "author": "cjladmin",
+    "repo": "https://github.com/cjladmin/lolheroes"
   }
 ]
