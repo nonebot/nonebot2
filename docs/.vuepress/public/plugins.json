@@ -144,12 +144,12 @@
     "repo": "iyume/nonebot-plugin-arcaea"
   },
   {
-    "id": "nonebot_hk_reporter",
-    "link": "nonebot-hk-reporter",
+    "id": "nonebot_bison",
+    "link": "nonebot-bison",
     "author": "felinae98",
-    "desc": "订阅如微博，bilibili，rss的更新消息",
-    "name": "hk-reporter",
-    "repo": "felinae98/nonebot-hk-reporter"
+    "desc": "订阅来自微博，B站，网易云，RSS以及各种网站的动态，转发到QQ群中",
+    "name": "Bison",
+    "repo": "felinae98/nonebot-bison"
   },
   {
     "id": "nonebot-plugin-ncm",
