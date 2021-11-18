@@ -470,5 +470,13 @@
     "desc": "获取lol英雄背景的故事",
     "author": "cjladmin",
     "repo": "https://github.com/cjladmin/lolheroes"
+  },
+  {
+    "id": "nonebot_plugin_youthstudy",
+    "link": "nonebot-plugin-youthstudy",
+    "name": "nonebot_plugin_youthstudy",
+    "desc": "基于nonebot的青年大学习插件，用来获取最新一期的青年大学习答案",
+    "author": "ayanamiblhx",
+    "repo": "https://github.com/ayanamiblhx/nonebot_plugin_youthstudy"
   }
 ]
