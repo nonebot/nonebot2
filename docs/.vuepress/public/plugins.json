@@ -478,5 +478,13 @@
     "desc": "基于nonebot的青年大学习插件，用来获取最新一期的青年大学习答案",
     "author": "ayanamiblhx",
     "repo": "https://github.com/ayanamiblhx/nonebot_plugin_youthstudy"
+  },
+  {
+    "id": "gocqapi",
+    "link": "gocqapi",
+    "name": "gocqapi",
+    "desc": "对 go-cqhttp 的 API 调用添加了类型注解与滥用OOP的返回值Model支持，远离魔法方法的Dict[Any, Any]",
+    "author": "FYWinds",
+    "repo": "https://github.com/FYWinds/gocqapi"
   }
 ]
