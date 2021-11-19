@@ -409,6 +409,8 @@ class Driver(ReverseDriver, ForwardDriver):
                         await asyncio.sleep(3)
                         continue
 
+                    setup_ = cast(HTTPPollingSetup, setup_)
+
                     if not bot:
                         request = await _build_request(setup_)
                         if not request:
@@ -423,7 +425,6 @@ class Driver(ReverseDriver, ForwardDriver):
                             continue
                         bot.request = request
 
-                    setup_ = cast(HTTPPollingSetup, setup_)
                     request = cast(HTTPRequest, request)
                     headers = request.headers
 

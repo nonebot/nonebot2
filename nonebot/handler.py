@@ -7,24 +7,19 @@
 
 import asyncio
 from contextlib import AsyncExitStack
-from typing import TYPE_CHECKING, Any, Dict, List, Type, Callable, Optional
+from typing import Any, Dict, List, Type, Callable, Optional
 
-from nonebot.typing import T_Handler
 from nonebot.utils import get_name, run_sync
 from nonebot.dependencies import (Param, Dependent, DependsWrapper,
                                   get_dependent, solve_dependencies,
                                   get_parameterless_sub_dependant)
-
-if TYPE_CHECKING:
-    from nonebot.matcher import Matcher
-    from nonebot.adapters import Bot, Event
 
 
 class Handler:
     """事件处理器类。支持依赖注入。"""
 
     def __init__(self,
-                 func: T_Handler,
+                 func: Callable[..., Any],
                  *,
                  name: Optional[str] = None,
                  dependencies: Optional[List[DependsWrapper]] = None,
@@ -37,7 +32,7 @@ class Handler:
 
         :参数:
 
-          * ``func: T_Handler``: 事件处理函数。
+          * ``func: Callable[..., Any]``: 事件处理函数。
           * ``name: Optional[str]``: 事件处理器名称。默认为函数名。
           * ``dependencies: Optional[List[DependsWrapper]]``: 额外的非参数依赖注入。
           * ``allow_types: Optional[List[Type[Param]]]``: 允许的参数类型。
@@ -45,7 +40,7 @@ class Handler:
         """
         self.func = func
         """
-        :类型: ``T_Handler``
+        :类型: ``Callable[..., Any]``
         :说明: 事件处理函数
         """
         self.name = get_name(func) if name is None else name
@@ -85,24 +80,21 @@ class Handler:
                        _dependency_cache: Optional[Dict[Callable[..., Any],
                                                         Any]] = None,
                        **params) -> Any:
-        values, _, ignored = await solve_dependencies(
-            dependent=self.dependent,
-            stack=_stack,
-            sub_dependents=[
+        values, cache = await solve_dependencies(
+            _dependent=self.dependent,
+            _stack=_stack,
+            _sub_dependents=[
                 self.sub_dependents[dependency.dependency]  # type: ignore
                 for dependency in self.dependencies
             ],
-            dependency_overrides_provider=self.dependency_overrides_provider,
-            dependency_cache=_dependency_cache,
+            _dependency_overrides_provider=self.dependency_overrides_provider,
+            _dependency_cache=_dependency_cache,
             **params)
 
-        if ignored:
-            return
-
         if asyncio.iscoroutinefunction(self.func):
-            await self.func(**values)
+            return await self.func(**values)
         else:
-            await run_sync(self.func)(**values)
+            return await run_sync(self.func)(**values)
 
     def cache_dependent(self, dependency: DependsWrapper):
         if not dependency.dependency:

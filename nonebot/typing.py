@@ -123,10 +123,9 @@ T_RunPostProcessor = Callable[..., Awaitable[None]]
   事件响应器运行前预处理函数 RunPostProcessor 类型，第二个参数为运行时产生的错误（如果存在）
 """
 
-T_RuleChecker = Callable[["Bot", "Event", T_State], Union[bool,
-                                                          Awaitable[bool]]]
+T_RuleChecker = Callable[..., Union[bool, Awaitable[bool]]]
 """
-:类型: ``Callable[[Bot, Event, T_State], Union[bool, Awaitable[bool]]]``
+:类型: ``Callable[..., Union[bool, Awaitable[bool]]]``
 
 :说明:
 

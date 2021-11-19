@@ -20,10 +20,11 @@ from nonebot.dependencies import DependsWrapper
 from nonebot.permission import USER, Permission
 from nonebot.adapters import (Bot, Event, Message, MessageSegment,
                               MessageTemplate)
-from nonebot.exception import (PausedException, StopPropagation,
-                               FinishedException, RejectedException)
 from nonebot.typing import (T_State, T_Handler, T_ArgsParser, T_TypeUpdater,
                             T_StateFactory, T_PermissionUpdater)
+from nonebot.exception import (PausedException, StopPropagation,
+                               SkippedException, FinishedException,
+                               RejectedException)
 
 if TYPE_CHECKING:
     from nonebot.plugin import Plugin
@@ -601,10 +602,13 @@ class Matcher(metaclass=MatcherMeta):
             while self.handlers:
                 handler = self.handlers.pop(0)
                 logger.debug(f"Running handler {handler}")
-                await handler(matcher=self,
-                              bot=bot,
-                              event=event,
-                              state=self.state)
+                try:
+                    await handler(matcher=self,
+                                  bot=bot,
+                                  event=event,
+                                  state=self.state)
+                except SkippedException:
+                    pass
 
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
