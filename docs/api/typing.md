@@ -179,7 +179,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Bot, Event, T_State], Union[bool, Awaitable[bool]]]`
+    `Callable[..., Union[bool, Awaitable[bool]]]`
 
 
 

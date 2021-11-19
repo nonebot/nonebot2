@@ -42,7 +42,7 @@ Rule(async_function, run_sync(sync_function))
 * **参数**
 
     
-    * `*checkers: Callable[[Bot, Event, T_State], Awaitable[bool]]`: **异步** RuleChecker
+    * `*checkers: T_RuleChecker`: RuleChecker
 
 
 
@@ -58,11 +58,11 @@ Rule(async_function, run_sync(sync_function))
 * **类型**
 
     
-    * `Set[Callable[[Bot, Event, T_State], Awaitable[bool]]]`
+    * `Set[Handler]`
 
 
 
-### _async_ `__call__(bot, event, state)`
+### _async_ `__call__(bot, event, state, stack=None, dependency_cache=None)`
 
 
 * **说明**

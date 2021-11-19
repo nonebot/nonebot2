@@ -29,7 +29,7 @@ sidebarDepth: 0
 * **参数**
 
     
-    * `func: T_Handler`: 事件处理函数。
+    * `func: Callable[..., Any]`: 事件处理函数。
 
 
     * `name: Optional[str]`: 事件处理器名称。默认为函数名。
@@ -50,7 +50,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `T_Handler`
+    `Callable[..., Any]`
 
 
 
