@@ -9,6 +9,7 @@ from types import ModuleType
 from datetime import datetime
 from contextvars import ContextVar
 from collections import defaultdict
+from contextlib import AsyncExitStack
 from typing import (TYPE_CHECKING, Any, Dict, List, Type, Union, Callable,
                     NoReturn, Optional)
 
@@ -20,11 +21,12 @@ from nonebot.dependencies import DependsWrapper
 from nonebot.permission import USER, Permission
 from nonebot.adapters import (Bot, Event, Message, MessageSegment,
                               MessageTemplate)
-from nonebot.typing import (T_State, T_Handler, T_ArgsParser, T_TypeUpdater,
-                            T_StateFactory, T_PermissionUpdater)
 from nonebot.exception import (PausedException, StopPropagation,
                                SkippedException, FinishedException,
                                RejectedException)
+from nonebot.typing import (T_State, T_Handler, T_ArgsParser, T_TypeUpdater,
+                            T_StateFactory, T_DependencyCache,
+                            T_PermissionUpdater)
 
 if TYPE_CHECKING:
     from nonebot.plugin import Plugin
@@ -267,7 +269,13 @@ class Matcher(metaclass=MatcherMeta):
         return NewMatcher
 
     @classmethod
-    async def check_perm(cls, bot: Bot, event: Event) -> bool:
+    async def check_perm(
+        cls,
+        bot: Bot,
+        event: Event,
+        stack: Optional[AsyncExitStack] = None,
+        dependency_cache: Optional[Dict[Callable[..., Any],
+                                        Any]] = None) -> bool:
         """
         :说明:
 
@@ -284,10 +292,17 @@ class Matcher(metaclass=MatcherMeta):
         """
         event_type = event.get_type()
         return (event_type == (cls.type or event_type) and
-                await cls.permission(bot, event))
+                await cls.permission(bot, event, stack, dependency_cache))
 
     @classmethod
-    async def check_rule(cls, bot: Bot, event: Event, state: T_State) -> bool:
+    async def check_rule(
+        cls,
+        bot: Bot,
+        event: Event,
+        state: T_State,
+        stack: Optional[AsyncExitStack] = None,
+        dependency_cache: Optional[Dict[Callable[..., Any],
+                                        Any]] = None) -> bool:
         """
         :说明:
 
@@ -305,7 +320,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         event_type = event.get_type()
         return (event_type == (cls.type or event_type) and
-                await cls.rule(bot, event, state))
+                await cls.rule(bot, event, state, stack, dependency_cache))
 
     @classmethod
     def args_parser(cls, func: T_ArgsParser) -> T_ArgsParser:
@@ -589,7 +604,12 @@ class Matcher(metaclass=MatcherMeta):
         self.block = True
 
     # 运行handlers
-    async def run(self, bot: Bot, event: Event, state: T_State):
+    async def run(self,
+                  bot: Bot,
+                  event: Event,
+                  state: T_State,
+                  stack: Optional[AsyncExitStack] = None,
+                  dependency_cache: Optional[T_DependencyCache] = None):
         b_t = current_bot.set(bot)
         e_t = current_event.set(event)
         s_t = current_state.set(self.state)
@@ -606,7 +626,9 @@ class Matcher(metaclass=MatcherMeta):
                     await handler(matcher=self,
                                   bot=bot,
                                   event=event,
-                                  state=self.state)
+                                  state=self.state,
+                                  _stack=stack,
+                                  _dependency_cache=dependency_cache)
                 except SkippedException:
                     pass
 
@@ -624,11 +646,8 @@ class Matcher(metaclass=MatcherMeta):
 
             updater = self.__class__._default_permission_updater
             if updater:
-                permission = await updater(
-                    bot,
-                    event,
-                    self.state,  # type: ignore
-                    self.permission)
+                permission = await updater(bot, event, self.state,
+                                           self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
 
@@ -661,11 +680,8 @@ class Matcher(metaclass=MatcherMeta):
 
             updater = self.__class__._default_permission_updater
             if updater:
-                permission = await updater(
-                    bot,
-                    event,
-                    self.state,  # type: ignore
-                    self.permission)
+                permission = await updater(bot, event, self.state,
+                                           self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
 

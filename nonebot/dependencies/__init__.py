@@ -20,6 +20,7 @@ from .utils import get_typed_signature
 from .models import Dependent as Dependent
 from nonebot.exception import SkippedException
 from .models import DependsWrapper as DependsWrapper
+from nonebot.typing import T_Handler, T_DependencyCache
 from nonebot.utils import (run_sync, is_gen_callable, run_sync_ctx_manager,
                            is_async_gen_callable, is_coroutine_callable)
 
@@ -58,7 +59,7 @@ def get_parameterless_sub_dependant(
 def get_sub_dependant(
         *,
         depends: DependsWrapper,
-        dependency: Callable[..., Any],
+        dependency: T_Handler,
         name: Optional[str] = None,
         allow_types: Optional[List[Type[Param]]] = None) -> Dependent:
     sub_dependant = get_dependent(func=dependency,
@@ -69,7 +70,7 @@ def get_sub_dependant(
 
 
 def get_dependent(*,
-                  func: Callable[..., Any],
+                  func: T_Handler,
                   name: Optional[str] = None,
                   use_cache: bool = True,
                   allow_types: Optional[List[Type[Param]]] = None) -> Dependent:
@@ -118,8 +119,8 @@ async def solve_dependencies(
         _stack: Optional[AsyncExitStack] = None,
         _sub_dependents: Optional[List[Dependent]] = None,
         _dependency_overrides_provider: Optional[Any] = None,
-        _dependency_cache: Optional[Dict[Callable[..., Any], Any]] = None,
-        **params: Any) -> Tuple[Dict[str, Any], Dict[Callable[..., Any], Any]]:
+        _dependency_cache: Optional[T_DependencyCache] = None,
+        **params: Any) -> Tuple[Dict[str, Any], T_DependencyCache]:
     values: Dict[str, Any] = {}
     dependency_cache = _dependency_cache or {}
 
@@ -201,7 +202,7 @@ async def solve_dependencies(
     return values, dependency_cache
 
 
-def Depends(dependency: Optional[Callable[..., Any]] = None,
+def Depends(dependency: Optional[T_Handler] = None,
             *,
             use_cache: bool = True) -> Any:
     """

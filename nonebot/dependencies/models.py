@@ -5,9 +5,10 @@ from typing import Any, List, Type, Callable, Optional
 from pydantic.fields import FieldInfo, ModelField
 
 from nonebot.utils import get_name
+from nonebot.typing import T_Handler
 
 
-class Param(FieldInfo, abc.ABC):
+class Param(abc.ABC, FieldInfo):
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}"
@@ -28,7 +29,7 @@ class Param(FieldInfo, abc.ABC):
 class DependsWrapper:
 
     def __init__(self,
-                 dependency: Optional[Callable[..., Any]] = None,
+                 dependency: Optional[T_Handler] = None,
                  *,
                  use_cache: bool = True) -> None:
         self.dependency = dependency
@@ -44,7 +45,7 @@ class Dependent:
 
     def __init__(self,
                  *,
-                 func: Optional[Callable[..., Any]] = None,
+                 func: Optional[T_Handler] = None,
                  name: Optional[str] = None,
                  params: Optional[List[ModelField]] = None,
                  allow_types: Optional[List[Type[Param]]] = None,

@@ -17,15 +17,15 @@ from argparse import Namespace
 from contextlib import AsyncExitStack
 from typing_extensions import TypedDict
 from argparse import ArgumentParser as ArgParser
-from typing import (Any, Dict, Tuple, Union, Callable, NoReturn, Optional,
-                    Sequence, Awaitable)
+from typing import (Any, Dict, List, Type, Tuple, Union, Callable, NoReturn,
+                    Optional, Sequence)
 
 from pygtrie import CharTrie
 
 from nonebot.log import logger
-from nonebot.utils import run_sync
 from nonebot.handler import Handler
 from nonebot import params, get_driver
+from nonebot.dependencies import Param
 from nonebot.exception import ParserExit
 from nonebot.typing import T_State, T_RuleChecker
 from nonebot.adapters import Bot, Event, MessageSegment
@@ -64,11 +64,13 @@ class Rule:
     """
     __slots__ = ("checkers",)
 
-    HANDLER_PARAM_TYPES = [
+    HANDLER_PARAM_TYPES: List[Type[Param]] = [
         params.BotParam, params.EventParam, params.StateParam
     ]
 
-    def __init__(self, *checkers: T_RuleChecker) -> None:
+    def __init__(self,
+                 *checkers: T_RuleChecker,
+                 dependency_overrides_provider: Optional[Any] = None) -> None:
         """
         :参数:
 
@@ -78,7 +80,7 @@ class Rule:
         self.checkers = set(
             Handler(checker,
                     allow_types=self.HANDLER_PARAM_TYPES,
-                    dependency_overrides_provider=get_driver())
+                    dependency_overrides_provider=dependency_overrides_provider)
             for checker in checkers)
         """
         :说明:
@@ -108,11 +110,15 @@ class Rule:
           * ``bot: Bot``: Bot 对象
           * ``event: Event``: Event 对象
           * ``state: T_State``: 当前 State
+          * ``stack: Optional[AsyncExitStack]``: 异步上下文栈
+          * ``dependency_cache: Optional[Dict[Callable[..., Any], Any]]``: 依赖缓存
 
         :返回:
 
           - ``bool``
         """
+        if not self.checkers:
+            return True
         results = await asyncio.gather(
             checker(bot=bot,
                     event=event,
@@ -126,10 +132,9 @@ class Rule:
         if other is None:
             return self
         elif isinstance(other, Rule):
-            checkers = [*self.checkers, *other.checkers]
+            return Rule(*self.checkers, *other.checkers)
         else:
-            checkers = [*self.checkers, other]
-        return Rule(*checkers)
+            return Rule(*self.checkers, other)
 
     def __or__(self, other) -> NoReturn:
         raise RuntimeError("Or operation between rules is not allowed.")

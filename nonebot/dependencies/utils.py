@@ -1,13 +1,15 @@
 import inspect
-from typing import Any, Dict, Callable
+from typing import Any, Dict
 
 from loguru import logger
 from pydantic.typing import ForwardRef, evaluate_forwardref
 
+from nonebot.typing import T_Handler
 
-def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
-    signature = inspect.signature(call)
-    globalns = getattr(call, "__globals__", {})
+
+def get_typed_signature(func: T_Handler) -> inspect.Signature:
+    signature = inspect.signature(func)
+    globalns = getattr(func, "__globals__", {})
     typed_params = [
         inspect.Parameter(
             name=param.name,

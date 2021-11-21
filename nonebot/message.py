@@ -8,7 +8,7 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
 import asyncio
 from datetime import datetime
 from contextlib import AsyncExitStack
-from typing import TYPE_CHECKING, Set, Type
+from typing import TYPE_CHECKING, Any, Set, Dict, Type, Callable, Optional
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
@@ -17,8 +17,9 @@ from nonebot.utils import escape_tag
 from nonebot import params, get_driver
 from nonebot.matcher import Matcher, matchers
 from nonebot.exception import NoLogException, StopPropagation, IgnoredException
-from nonebot.typing import (T_State, T_RunPreProcessor, T_RunPostProcessor,
-                            T_EventPreProcessor, T_EventPostProcessor)
+from nonebot.typing import (T_State, T_DependencyCache, T_RunPreProcessor,
+                            T_RunPostProcessor, T_EventPreProcessor,
+                            T_EventPostProcessor)
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
@@ -43,14 +44,6 @@ def event_preprocessor(func: T_EventPreProcessor) -> T_EventPreProcessor:
     :说明:
 
       事件预处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之前执行。
-
-    :参数:
-
-      事件预处理函数接收三个参数。
-
-      * ``bot: Bot``: Bot 对象
-      * ``event: Event``: Event 对象
-      * ``state: T_State``: 当前 State
     """
     _event_preprocessors.add(
         Handler(func,
@@ -64,14 +57,6 @@ def event_postprocessor(func: T_EventPostProcessor) -> T_EventPostProcessor:
     :说明:
 
       事件后处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之后执行。
-
-    :参数:
-
-      事件后处理函数接收三个参数。
-
-      * ``bot: Bot``: Bot 对象
-      * ``event: Event``: Event 对象
-      * ``state: T_State``: 当前事件运行前 State
     """
     _event_postprocessors.add(
         Handler(func,
@@ -85,15 +70,6 @@ def run_preprocessor(func: T_RunPreProcessor) -> T_RunPreProcessor:
     :说明:
 
       运行预处理。装饰一个函数，使它在每次事件响应器运行前执行。
-
-    :参数:
-
-      运行预处理函数接收四个参数。
-
-      * ``matcher: Matcher``: 当前要运行的事件响应器
-      * ``bot: Bot``: Bot 对象
-      * ``event: Event``: Event 对象
-      * ``state: T_State``: 当前 State
     """
     _run_preprocessors.add(
         Handler(func,
@@ -107,16 +83,6 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
     :说明:
 
       运行后处理。装饰一个函数，使它在每次事件响应器运行后执行。
-
-    :参数:
-
-      运行后处理函数接收五个参数。
-
-      * ``matcher: Matcher``: 运行完毕的事件响应器
-      * ``exception: Optional[Exception]``: 事件响应器运行错误（如果存在）
-      * ``bot: Bot``: Bot 对象
-      * ``event: Event``: Event 对象
-      * ``state: T_State``: 当前 State
     """
     _run_postprocessors.add(
         Handler(func,
@@ -125,8 +91,14 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
     return func
 
 
-async def _check_matcher(priority: int, Matcher: Type[Matcher], bot: "Bot",
-                         event: "Event", state: T_State) -> None:
+async def _check_matcher(
+        priority: int,
+        Matcher: Type[Matcher],
+        bot: "Bot",
+        event: "Event",
+        state: T_State,
+        stack: Optional[AsyncExitStack] = None,
+        dependency_cache: Optional[T_DependencyCache] = None) -> None:
     if Matcher.expire_time and datetime.now() > Matcher.expire_time:
         try:
             matchers[priority].remove(Matcher)
@@ -136,7 +108,9 @@ async def _check_matcher(priority: int, Matcher: Type[Matcher], bot: "Bot",
 
     try:
         if not await Matcher.check_perm(
-                bot, event) or not await Matcher.check_rule(bot, event, state):
+                bot, event, stack,
+                dependency_cache) or not await Matcher.check_rule(
+                    bot, event, state, stack, dependency_cache):
             return
     except Exception as e:
         logger.opt(colors=True, exception=e).error(
@@ -149,17 +123,28 @@ async def _check_matcher(priority: int, Matcher: Type[Matcher], bot: "Bot",
         except Exception:
             pass
 
-    await _run_matcher(Matcher, bot, event, state)
+    await _run_matcher(Matcher, bot, event, state, stack, dependency_cache)
 
 
-async def _run_matcher(Matcher: Type[Matcher], bot: "Bot", event: "Event",
-                       state: T_State) -> None:
+async def _run_matcher(
+        Matcher: Type[Matcher],
+        bot: "Bot",
+        event: "Event",
+        state: T_State,
+        stack: Optional[AsyncExitStack] = None,
+        dependency_cache: Optional[T_DependencyCache] = None) -> None:
     logger.info(f"Event will be handled by {Matcher}")
 
     matcher = Matcher()
 
     coros = list(
-        map(lambda x: x(matcher=matcher, bot=bot, event=event, state=state),
+        map(
+            lambda x: x(matcher=matcher,
+                        bot=bot,
+                        event=event,
+                        state=state,
+                        _stack=stack,
+                        _dependency_cache=dependency_cache),
             _run_preprocessors))
     if coros:
         try:
@@ -191,7 +176,10 @@ async def _run_matcher(Matcher: Type[Matcher], bot: "Bot", event: "Event",
                         exception=exception,
                         bot=bot,
                         event=event,
-                        state=state), _run_postprocessors))
+                        state=state,
+                        _stack=stack,
+                        _dependency_cache=dependency_cache),
+            _run_postprocessors))
     if coros:
         try:
             await asyncio.gather(*coros)
@@ -232,12 +220,17 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
     if show_log:
         logger.opt(colors=True).success(log_msg)
 
-    state = {}
+    state: Dict[Any, Any] = {}
+    dependency_cache: T_DependencyCache = {}
 
-    # TODO
     async with AsyncExitStack() as stack:
         coros = list(
-            map(lambda x: x(bot=bot, event=event, state=state),
+            map(
+                lambda x: x(bot=bot,
+                            event=event,
+                            state=state,
+                            _stack=stack,
+                            _dependency_cache=dependency_cache),
                 _event_preprocessors))
         if coros:
             try:
@@ -286,7 +279,12 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
                     )
 
         coros = list(
-            map(lambda x: x(bot=bot, event=event, state=state),
+            map(
+                lambda x: x(bot=bot,
+                            event=event,
+                            state=state,
+                            _stack=stack,
+                            _dependency_cache=dependency_cache),
                 _event_postprocessors))
         if coros:
             try:

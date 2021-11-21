@@ -22,7 +22,6 @@ from typing import (TYPE_CHECKING, Any, Dict, Union, TypeVar, Callable,
                     NoReturn, Optional, Awaitable)
 
 if TYPE_CHECKING:
-    from nonebot.matcher import Matcher
     from nonebot.adapters import Bot, Event
     from nonebot.permission import Permission
 
@@ -90,33 +89,60 @@ T_CalledAPIHook = Callable[
   ``bot.call_api`` 后执行的函数，参数分别为 bot, exception, api, data, result
 """
 
-T_EventPreProcessor = Callable[..., Awaitable[None]]
+T_EventPreProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
-:类型: ``Callable[[Bot, Event, T_State], Awaitable[None]]``
+:类型: ``Callable[..., Union[None, Awaitable[None]]]``
+
+:依赖参数:
+
+  * ``BotParam``: Bot 对象
+  * ``EventParam``: Event 对象
+  * ``StateParam``: State 对象
 
 :说明:
 
   事件预处理函数 EventPreProcessor 类型
 """
-T_EventPostProcessor = Callable[..., Awaitable[None]]
+T_EventPostProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
-:类型: ``Callable[[Bot, Event, T_State], Awaitable[None]]``
+:类型: ``Callable[..., Union[None, Awaitable[None]]]``
+
+:依赖参数:
+
+  * ``BotParam``: Bot 对象
+  * ``EventParam``: Event 对象
+  * ``StateParam``: State 对象
 
 :说明:
 
   事件预处理函数 EventPostProcessor 类型
 """
-T_RunPreProcessor = Callable[..., Awaitable[None]]
+T_RunPreProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
-:类型: ``Callable[[Matcher, Bot, Event, T_State], Awaitable[None]]``
+:类型: ``Callable[..., Union[None, Awaitable[None]]]``
+
+:依赖参数:
+
+  * ``BotParam``: Bot 对象
+  * ``EventParam``: Event 对象
+  * ``StateParam``: State 对象
+  * ``MatcherParam``: Matcher 对象
 
 :说明:
 
   事件响应器运行前预处理函数 RunPreProcessor 类型
 """
-T_RunPostProcessor = Callable[..., Awaitable[None]]
+T_RunPostProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
-:类型: ``Callable[[Matcher, Optional[Exception], Bot, Event, T_State], Awaitable[None]]``
+:类型: ``Callable[..., Union[None, Awaitable[None]]]``
+
+:依赖参数:
+
+  * ``BotParam``: Bot 对象
+  * ``EventParam``: Event 对象
+  * ``StateParam``: State 对象
+  * ``MatcherParam``: Matcher 对象
+  * ``ExceptionParam``: 异常对象（可能为 None）
 
 :说明:
 
@@ -127,28 +153,45 @@ T_RuleChecker = Callable[..., Union[bool, Awaitable[bool]]]
 """
 :类型: ``Callable[..., Union[bool, Awaitable[bool]]]``
 
+:依赖参数:
+
+  * ``BotParam``: Bot 对象
+  * ``EventParam``: Event 对象
+  * ``StateParam``: State 对象
+
 :说明:
 
   RuleChecker 即判断是否响应事件的处理函数。
 """
-T_PermissionChecker = Callable[["Bot", "Event"], Union[bool, Awaitable[bool]]]
+T_PermissionChecker = Callable[..., Union[bool, Awaitable[bool]]]
 """
-:类型: ``Callable[[Bot, Event], Union[bool, Awaitable[bool]]]``
+:类型: ``Callable[..., Union[bool, Awaitable[bool]]]``
+
+:依赖参数:
+
+  * ``BotParam``: Bot 对象
+  * ``EventParam``: Event 对象
 
 :说明:
 
   RuleChecker 即判断是否响应消息的处理函数。
 """
 
-T_Handler = Callable[..., Union[Awaitable[None], Awaitable[NoReturn]]]
+T_Handler = Callable[..., Any]
 """
-:类型:
-
-  * ``Callable[..., Union[Awaitable[None], Awaitable[NoReturn]]]``
+:类型: ``Callable[..., Any]``
 
 :说明:
 
-  Handler 即事件的处理函数。
+  Handler 处理函数。
+"""
+T_DependencyCache = Dict[T_Handler, Any]
+"""
+:类型: ``Dict[T_Handler, Any]``
+
+:说明:
+
+  依赖缓存, 用于存储依赖函数的返回值
 """
 T_ArgsParser = Callable[["Bot", "Event", T_State], Union[Awaitable[None],
                                                          Awaitable[NoReturn]]]
