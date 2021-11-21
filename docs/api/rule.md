@@ -42,7 +42,7 @@ Rule(async_function, run_sync(sync_function))
 * **参数**
 
     
-    * `*checkers: T_RuleChecker`: RuleChecker
+    * `*checkers: Union[T_RuleChecker, Handler]`: RuleChecker
 
 
 

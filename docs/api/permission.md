@@ -42,7 +42,7 @@ Permission(async_function, run_sync(sync_function))
 * **参数**
 
     
-    * `*checkers: T_PermissionChecker`: PermissionChecker
+    * `*checkers: Union[T_PermissionChecker, Handler]`: PermissionChecker
 
 
 
