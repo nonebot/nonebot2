@@ -42,17 +42,19 @@ class Permission:
     ]
 
     def __init__(self,
-                 *checkers: T_PermissionChecker,
+                 *checkers: Union[T_PermissionChecker, Handler],
                  dependency_overrides_provider: Optional[Any] = None) -> None:
         """
         :参数:
 
-          * ``*checkers: T_PermissionChecker``: PermissionChecker
+          * ``*checkers: Union[T_PermissionChecker, Handler]``: PermissionChecker
         """
+
         self.checkers = set(
-            Handler(checker,
-                    allow_types=self.HANDLER_PARAM_TYPES,
-                    dependency_overrides_provider=dependency_overrides_provider)
+            checker if isinstance(checker, Handler) else Handler(
+                checker,
+                allow_types=self.HANDLER_PARAM_TYPES,
+                dependency_overrides_provider=dependency_overrides_provider)
             for checker in checkers)
         """
         :说明:
@@ -90,11 +92,11 @@ class Permission:
         if not self.checkers:
             return True
         results = await asyncio.gather(
-            checker(bot=bot,
-                    event=event,
-                    _stack=stack,
-                    _dependency_cache=dependency_cache)
-            for checker in self.checkers)
+            *(checker(bot=bot,
+                      event=event,
+                      _stack=stack,
+                      _dependency_cache=dependency_cache)
+              for checker in self.checkers))
         return any(results)
 
     def __and__(self, other) -> NoReturn:
@@ -111,19 +113,19 @@ class Permission:
             return Permission(*self.checkers, other)
 
 
-async def _message(bot: Bot, event: Event) -> bool:
+async def _message(event: Event) -> bool:
     return event.get_type() == "message"
 
 
-async def _notice(bot: Bot, event: Event) -> bool:
+async def _notice(event: Event) -> bool:
     return event.get_type() == "notice"
 
 
-async def _request(bot: Bot, event: Event) -> bool:
+async def _request(event: Event) -> bool:
     return event.get_type() == "request"
 
 
-async def _metaevent(bot: Bot, event: Event) -> bool:
+async def _metaevent(event: Event) -> bool:
     return event.get_type() == "meta_event"
 
 

@@ -163,7 +163,7 @@ async def _run_matcher(
 
     try:
         logger.debug(f"Running matcher {matcher}")
-        await matcher.run(bot, event, state)
+        await matcher.run(bot, event, state, stack, dependency_cache)
     except Exception as e:
         logger.opt(colors=True, exception=e).error(
             f"<r><bg #f8bbd0>Running matcher {matcher} failed.</bg #f8bbd0></r>"
@@ -260,7 +260,8 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
                 logger.debug(f"Checking for matchers in priority {priority}...")
 
             pending_tasks = [
-                _check_matcher(priority, matcher, bot, event, state.copy())
+                _check_matcher(priority, matcher, bot, event, state.copy(),
+                               stack, dependency_cache)
                 for matcher in matchers[priority]
             ]
 

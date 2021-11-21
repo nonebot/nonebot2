@@ -80,7 +80,7 @@ class Handler:
                        _dependency_cache: Optional[Dict[Callable[..., Any],
                                                         Any]] = None,
                        **params) -> Any:
-        values, cache = await solve_dependencies(
+        values, _ = await solve_dependencies(
             _dependent=self.dependent,
             _stack=_stack,
             _sub_dependents=[

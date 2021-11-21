@@ -1,26 +1,21 @@
-from typing import TYPE_CHECKING
-
+from nonebot.adapters import Event
 from nonebot.permission import Permission
-
-from .event import PrivateMessageEvent, GroupMessageEvent
-
-if TYPE_CHECKING:
-    from nonebot.adapters import Bot, Event
+from .event import GroupMessageEvent, PrivateMessageEvent
 
 
-async def _private(bot: "Bot", event: "Event") -> bool:
+async def _private(event: Event) -> bool:
     return isinstance(event, PrivateMessageEvent)
 
 
-async def _private_friend(bot: "Bot", event: "Event") -> bool:
+async def _private_friend(event: Event) -> bool:
     return isinstance(event, PrivateMessageEvent) and event.sub_type == "friend"
 
 
-async def _private_group(bot: "Bot", event: "Event") -> bool:
+async def _private_group(event: Event) -> bool:
     return isinstance(event, PrivateMessageEvent) and event.sub_type == "group"
 
 
-async def _private_other(bot: "Bot", event: "Event") -> bool:
+async def _private_other(event: Event) -> bool:
     return isinstance(event, PrivateMessageEvent) and event.sub_type == "other"
 
 
@@ -42,20 +37,20 @@ PRIVATE_OTHER = Permission(_private_other)
 """
 
 
-async def _group(bot: "Bot", event: "Event") -> bool:
+async def _group(event: Event) -> bool:
     return isinstance(event, GroupMessageEvent)
 
 
-async def _group_member(bot: "Bot", event: "Event") -> bool:
+async def _group_member(event: Event) -> bool:
     return isinstance(event,
                       GroupMessageEvent) and event.sender.role == "member"
 
 
-async def _group_admin(bot: "Bot", event: "Event") -> bool:
+async def _group_admin(event: Event) -> bool:
     return isinstance(event, GroupMessageEvent) and event.sender.role == "admin"
 
 
-async def _group_owner(bot: "Bot", event: "Event") -> bool:
+async def _group_owner(event: Event) -> bool:
     return isinstance(event, GroupMessageEvent) and event.sender.role == "owner"
 
 

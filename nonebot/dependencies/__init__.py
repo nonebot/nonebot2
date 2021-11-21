@@ -21,8 +21,11 @@ from .models import Dependent as Dependent
 from nonebot.exception import SkippedException
 from .models import DependsWrapper as DependsWrapper
 from nonebot.typing import T_Handler, T_DependencyCache
-from nonebot.utils import (run_sync, is_gen_callable, run_sync_ctx_manager,
-                           is_async_gen_callable, is_coroutine_callable)
+from nonebot.utils import (CacheLock, run_sync, is_gen_callable,
+                           run_sync_ctx_manager, is_async_gen_callable,
+                           is_coroutine_callable)
+
+cache_lock = CacheLock()
 
 
 class CustomConfig(BaseConfig):
@@ -93,7 +96,7 @@ def get_dependent(*,
                 break
         else:
             raise ValueError(
-                f"Unknown parameter {param_name} for funcction {func} with type {param.annotation}"
+                f"Unknown parameter {param_name} for function {func} with type {param.annotation}"
             )
 
         annotation: Any = Any
@@ -122,7 +125,7 @@ async def solve_dependencies(
         _dependency_cache: Optional[T_DependencyCache] = None,
         **params: Any) -> Tuple[Dict[str, Any], T_DependencyCache]:
     values: Dict[str, Any] = {}
-    dependency_cache = _dependency_cache or {}
+    dependency_cache = {} if _dependency_cache is None else _dependency_cache
 
     # solve sub dependencies
     sub_dependent: Dependent
@@ -151,35 +154,37 @@ async def solve_dependencies(
         solved_result = await solve_dependencies(
             _dependent=use_sub_dependant,
             _dependency_overrides_provider=_dependency_overrides_provider,
-            dependency_cache=dependency_cache,
+            _dependency_cache=dependency_cache,
             **params)
         sub_values, sub_dependency_cache = solved_result
         # update cache?
-        dependency_cache.update(sub_dependency_cache)
+        # dependency_cache.update(sub_dependency_cache)
 
         # run dependency function
-        if sub_dependent.use_cache and sub_dependent.cache_key in dependency_cache:
-            solved = dependency_cache[sub_dependent.cache_key]
-        elif is_gen_callable(func) or is_async_gen_callable(func):
-            assert isinstance(
-                _stack, AsyncExitStack
-            ), "Generator dependency should be called in context"
-            if is_gen_callable(func):
-                cm = run_sync_ctx_manager(contextmanager(func)(**sub_values))
+        async with cache_lock:
+            if sub_dependent.use_cache and sub_dependent.cache_key in dependency_cache:
+                solved = dependency_cache[sub_dependent.cache_key]
+            elif is_gen_callable(func) or is_async_gen_callable(func):
+                assert isinstance(
+                    _stack, AsyncExitStack
+                ), "Generator dependency should be called in context"
+                if is_gen_callable(func):
+                    cm = run_sync_ctx_manager(
+                        contextmanager(func)(**sub_values))
+                else:
+                    cm = asynccontextmanager(func)(**sub_values)
+                solved = await _stack.enter_async_context(cm)
+            elif is_coroutine_callable(func):
+                solved = await func(**sub_values)
             else:
-                cm = asynccontextmanager(func)(**sub_values)
-            solved = await _stack.enter_async_context(cm)
-        elif is_coroutine_callable(func):
-            solved = await func(**sub_values)
-        else:
-            solved = await run_sync(func)(**sub_values)
+                solved = await run_sync(func)(**sub_values)
 
-        # parameter dependency
-        if sub_dependent.name is not None:
-            values[sub_dependent.name] = solved
-        # save current dependency to cache
-        if sub_dependent.cache_key not in dependency_cache:
-            dependency_cache[sub_dependent.cache_key] = solved
+            # parameter dependency
+            if sub_dependent.name is not None:
+                values[sub_dependent.name] = solved
+            # save current dependency to cache
+            if sub_dependent.cache_key not in dependency_cache:
+                dependency_cache[sub_dependent.cache_key] = solved
 
     # usual dependency
     for field in _dependent.params:

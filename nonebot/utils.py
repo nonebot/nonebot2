@@ -2,12 +2,13 @@ import re
 import json
 import asyncio
 import inspect
+import collections
 import dataclasses
 from functools import wraps, partial
 from contextlib import asynccontextmanager
 from typing_extensions import GenericAlias  # type: ignore
 from typing_extensions import ParamSpec, get_args, get_origin
-from typing import (Any, Type, Tuple, Union, TypeVar, Callable, Optional,
+from typing import (Any, Type, Deque, Tuple, Union, TypeVar, Callable, Optional,
                     Awaitable, AsyncGenerator, ContextManager)
 
 from nonebot.log import logger
@@ -118,6 +119,79 @@ def get_name(obj: Any) -> str:
     if inspect.isfunction(obj) or inspect.isclass(obj):
         return obj.__name__
     return obj.__class__.__name__
+
+
+class CacheLock:
+
+    def __init__(self):
+        self._waiters: Optional[Deque[asyncio.Future]] = None
+        self._locked = False
+
+    def __repr__(self):
+        extra = "locked" if self._locked else "unlocked"
+        if self._waiters:
+            extra = f"{extra}, waiters: {len(self._waiters)}"
+        return f"<{self.__class__.__name__} [{extra}]>"
+
+    async def __aenter__(self):
+        await self.acquire()
+        return None
+
+    async def __aexit__(self, exc_type, exc, tb):
+        self.release()
+
+    def locked(self):
+        return self._locked
+
+    async def acquire(self):
+        if (not self._locked and (self._waiters is None or
+                                  all(w.cancelled() for w in self._waiters))):
+            self._locked = True
+            return True
+
+        if self._waiters is None:
+            self._waiters = collections.deque()
+
+        loop = asyncio.get_running_loop()
+        future = loop.create_future()
+        self._waiters.append(future)
+
+        # Finally block should be called before the CancelledError
+        # handling as we don't want CancelledError to call
+        # _wake_up_first() and attempt to wake up itself.
+        try:
+            try:
+                await future
+            finally:
+                self._waiters.remove(future)
+        except asyncio.CancelledError:
+            if not self._locked:
+                self._wake_up_first()
+            raise
+
+        self._locked = True
+        return True
+
+    def release(self):
+        if self._locked:
+            self._locked = False
+            self._wake_up_first()
+        else:
+            raise RuntimeError("Lock is not acquired.")
+
+    def _wake_up_first(self):
+        if not self._waiters:
+            return
+        try:
+            future = next(iter(self._waiters))
+        except StopIteration:
+            return
+
+        # .done() necessarily means that a waiter will wake up later on and
+        # either take the lock, or, if it was cancelled and lock wasn't
+        # taken already, will hit this again and wake up a new waiter.
+        if not future.done():
+            future.set_result(True)
 
 
 class DataclassEncoder(json.JSONEncoder):

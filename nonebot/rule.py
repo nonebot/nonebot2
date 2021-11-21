@@ -69,18 +69,19 @@ class Rule:
     ]
 
     def __init__(self,
-                 *checkers: T_RuleChecker,
+                 *checkers: Union[T_RuleChecker, Handler],
                  dependency_overrides_provider: Optional[Any] = None) -> None:
         """
         :参数:
 
-          * ``*checkers: T_RuleChecker``: RuleChecker
+          * ``*checkers: Union[T_RuleChecker, Handler]``: RuleChecker
 
         """
         self.checkers = set(
-            Handler(checker,
-                    allow_types=self.HANDLER_PARAM_TYPES,
-                    dependency_overrides_provider=dependency_overrides_provider)
+            checker if isinstance(checker, Handler) else Handler(
+                checker,
+                allow_types=self.HANDLER_PARAM_TYPES,
+                dependency_overrides_provider=dependency_overrides_provider)
             for checker in checkers)
         """
         :说明:
@@ -120,12 +121,12 @@ class Rule:
         if not self.checkers:
             return True
         results = await asyncio.gather(
-            checker(bot=bot,
-                    event=event,
-                    state=state,
-                    _stack=stack,
-                    _dependency_cache=dependency_cache)
-            for checker in self.checkers)
+            *(checker(bot=bot,
+                      event=event,
+                      state=state,
+                      _stack=stack,
+                      _dependency_cache=dependency_cache)
+              for checker in self.checkers))
         return all(results)
 
     def __and__(self, other: Optional[Union["Rule", T_RuleChecker]]) -> "Rule":
