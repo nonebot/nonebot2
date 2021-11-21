@@ -7,10 +7,10 @@ sidebarDepth: 0
 
 ## 规则
 
-每个事件响应器 `Matcher` 拥有一个匹配规则 `Rule` ，其中是 **异步** `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
+每个事件响应器 `Matcher` 拥有一个匹配规则 `Rule` ，其中是 `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
 
 :::tip 提示
-`RuleChecker` 既可以是 async function 也可以是 sync function，但在最终会被 `nonebot.utils.run_sync` 转换为 async function
+`RuleChecker` 既可以是 async function 也可以是 sync function
 :::
 
 
@@ -36,7 +36,7 @@ Rule(async_function, run_sync(sync_function))
 ```
 
 
-### `__init__(*checkers, dependency_overrides_provider=None)`
+### `__init__(*checkers)`
 
 
 * **参数**

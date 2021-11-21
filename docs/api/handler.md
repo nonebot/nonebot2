@@ -17,7 +17,7 @@ sidebarDepth: 0
 事件处理器类。支持依赖注入。
 
 
-### `__init__(func, *, name=None, dependencies=None, allow_types=None, dependency_overrides_provider=None)`
+### `__init__(func, *, name=None, dependencies=None, allow_types=None)`
 
 
 * **说明**
@@ -39,9 +39,6 @@ sidebarDepth: 0
 
 
     * `allow_types: Optional[List[Type[Param]]]`: 允许的参数类型。
-
-
-    * `dependency_overrides_provider: Optional[Any]`: 依赖注入覆盖提供者。
 
 
 
