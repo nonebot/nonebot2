@@ -203,5 +203,19 @@ def Depends(dependency: Optional[T_Handler] = None,
 
       * ``dependency: Optional[Callable[..., Any]] = None``: 依赖函数。默认为参数的类型注释。
       * ``use_cache: bool = True``: 是否使用缓存。默认为 ``True``。
+
+    .. code-block:: python
+
+        def depend_func() -> Any:
+            return ...
+
+        def depend_gen_func():
+            try:
+                yield ...
+            finally:
+                ...
+
+        async def handler(param_name: Any = Depends(depend_func), gen: Any = Depends(depend_gen_func)):
+            ...
     """
     return DependsWrapper(dependency=dependency, use_cache=use_cache)

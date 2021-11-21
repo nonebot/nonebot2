@@ -26,3 +26,18 @@ sidebarDepth: 0
 
 
     * `use_cache: bool = True`: 是否使用缓存。默认为 `True`。
+
+
+```python
+def depend_func() -> Any:
+    return ...
+
+def depend_gen_func():
+    try:
+        yield ...
+    finally:
+        ...
+
+async def handler(param_name: Any = Depends(depend_func), gen: Any = Depends(depend_gen_func)):
+    ...
+```
