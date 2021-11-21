@@ -5,12 +5,11 @@ from typing import TYPE_CHECKING, List, Type, Optional
 from pydantic import BaseModel
 from pygtrie import StringTrie
 
+from .message import Message
 from nonebot.typing import overrides
 from nonebot.utils import escape_tag
-from nonebot.exception import NoLogException
+from .exception import NoLogException
 from nonebot.adapters import Event as BaseEvent
-
-from .message import Message
 
 if TYPE_CHECKING:
     from .bot import Bot

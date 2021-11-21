@@ -17,7 +17,7 @@
 .. _typing:
     https://docs.python.org/3/library/typing.html
 """
-from collections.abc import Callable as BaseCallable
+
 from typing import (TYPE_CHECKING, Any, Dict, Union, TypeVar, Callable,
                     NoReturn, Optional, Awaitable)
 
@@ -25,7 +25,7 @@ if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
     from nonebot.permission import Permission
 
-T_Wrapped = TypeVar("T_Wrapped", bound=BaseCallable)
+T_Wrapped = TypeVar("T_Wrapped", bound=Callable)
 
 
 def overrides(InterfaceClass: object):

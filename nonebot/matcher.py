@@ -13,10 +13,10 @@ from contextlib import AsyncExitStack
 from typing import (TYPE_CHECKING, Any, Dict, List, Type, Union, Callable,
                     NoReturn, Optional)
 
+from nonebot import params
 from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.handler import Handler
-from nonebot import params, get_driver
 from nonebot.dependencies import DependsWrapper
 from nonebot.permission import USER, Permission
 from nonebot.adapters import (Bot, Event, Message, MessageSegment,
@@ -238,9 +238,7 @@ class Matcher(metaclass=MatcherMeta):
                     permission or Permission(),
                 "handlers": [
                     handler if isinstance(handler, Handler) else Handler(
-                        handler,
-                        dependency_overrides_provider=get_driver(),
-                        allow_types=cls.HANDLER_PARAM_TYPES)
+                        handler, allow_types=cls.HANDLER_PARAM_TYPES)
                     for handler in handlers
                 ] if handlers else [],
                 "temp":
@@ -372,7 +370,6 @@ class Matcher(metaclass=MatcherMeta):
             dependencies: Optional[List[DependsWrapper]] = None) -> Handler:
         handler_ = Handler(handler,
                            dependencies=dependencies,
-                           dependency_overrides_provider=get_driver(),
                            allow_types=cls.HANDLER_PARAM_TYPES)
         cls.handlers.append(handler_)
         return handler_

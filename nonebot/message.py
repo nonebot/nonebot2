@@ -8,13 +8,13 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
 import asyncio
 from datetime import datetime
 from contextlib import AsyncExitStack
-from typing import TYPE_CHECKING, Any, Set, Dict, Type, Callable, Optional
+from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional
 
+from nonebot import params
 from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.handler import Handler
 from nonebot.utils import escape_tag
-from nonebot import params, get_driver
 from nonebot.matcher import Matcher, matchers
 from nonebot.exception import NoLogException, StopPropagation, IgnoredException
 from nonebot.typing import (T_State, T_DependencyCache, T_RunPreProcessor,
@@ -45,10 +45,7 @@ def event_preprocessor(func: T_EventPreProcessor) -> T_EventPreProcessor:
 
       事件预处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之前执行。
     """
-    _event_preprocessors.add(
-        Handler(func,
-                allow_types=EVENT_PCS_PARAMS,
-                dependency_overrides_provider=get_driver()))
+    _event_preprocessors.add(Handler(func, allow_types=EVENT_PCS_PARAMS))
     return func
 
 
@@ -58,10 +55,7 @@ def event_postprocessor(func: T_EventPostProcessor) -> T_EventPostProcessor:
 
       事件后处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之后执行。
     """
-    _event_postprocessors.add(
-        Handler(func,
-                allow_types=EVENT_PCS_PARAMS,
-                dependency_overrides_provider=get_driver()))
+    _event_postprocessors.add(Handler(func, allow_types=EVENT_PCS_PARAMS))
     return func
 
 
@@ -71,10 +65,7 @@ def run_preprocessor(func: T_RunPreProcessor) -> T_RunPreProcessor:
 
       运行预处理。装饰一个函数，使它在每次事件响应器运行前执行。
     """
-    _run_preprocessors.add(
-        Handler(func,
-                allow_types=RUN_PREPCS_PARAMS,
-                dependency_overrides_provider=get_driver()))
+    _run_preprocessors.add(Handler(func, allow_types=RUN_PREPCS_PARAMS))
     return func
 
 
@@ -84,10 +75,7 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
 
       运行后处理。装饰一个函数，使它在每次事件响应器运行后执行。
     """
-    _run_postprocessors.add(
-        Handler(func,
-                allow_types=RUN_POSTPCS_PARAMS,
-                dependency_overrides_provider=get_driver()))
+    _run_postprocessors.add(Handler(func, allow_types=RUN_POSTPCS_PARAMS))
     return func
 
 

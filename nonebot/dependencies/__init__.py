@@ -121,7 +121,6 @@ async def solve_dependencies(
         _dependent: Dependent,
         _stack: Optional[AsyncExitStack] = None,
         _sub_dependents: Optional[List[Dependent]] = None,
-        _dependency_overrides_provider: Optional[Any] = None,
         _dependency_cache: Optional[T_DependencyCache] = None,
         **params: Any) -> Tuple[Dict[str, Any], T_DependencyCache]:
     values: Dict[str, Any] = {}
@@ -136,24 +135,9 @@ async def solve_dependencies(
                                        sub_dependent.cache_key)
         func = sub_dependent.func
 
-        # dependency overrides
-        use_sub_dependant = sub_dependent
-        if (_dependency_overrides_provider and hasattr(
-                _dependency_overrides_provider, "dependency_overrides")):
-            original_call = sub_dependent.func
-            func = getattr(_dependency_overrides_provider,
-                           "dependency_overrides",
-                           {}).get(original_call, original_call)
-            use_sub_dependant = get_dependent(
-                func=func,
-                name=sub_dependent.name,
-                allow_types=sub_dependent.allow_types,
-            )
-
         # solve sub dependency with current cache
         solved_result = await solve_dependencies(
-            _dependent=use_sub_dependant,
-            _dependency_overrides_provider=_dependency_overrides_provider,
+            _dependent=sub_dependent,
             _dependency_cache=dependency_cache,
             **params)
         sub_values, sub_dependency_cache = solved_result

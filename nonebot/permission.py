@@ -2,7 +2,7 @@ r"""
 权限
 ====
 
-每个 ``Matcher`` 拥有一个 ``Permission`` ，其中是 **异步** ``PermissionChecker`` 的集合，只要有一个 ``PermissionChecker`` 检查结果为 ``True`` 时就会继续运行。
+每个 ``Matcher`` 拥有一个 ``Permission`` ，其中是 ``PermissionChecker`` 的集合，只要有一个 ``PermissionChecker`` 检查结果为 ``True`` 时就会继续运行。
 
 \:\:\:tip 提示
 ``PermissionChecker`` 既可以是 async function 也可以是 sync function
@@ -41,9 +41,7 @@ class Permission:
         params.BotParam, params.EventParam
     ]
 
-    def __init__(self,
-                 *checkers: Union[T_PermissionChecker, Handler],
-                 dependency_overrides_provider: Optional[Any] = None) -> None:
+    def __init__(self, *checkers: Union[T_PermissionChecker, Handler]) -> None:
         """
         :参数:
 
@@ -52,9 +50,7 @@ class Permission:
 
         self.checkers = set(
             checker if isinstance(checker, Handler) else Handler(
-                checker,
-                allow_types=self.HANDLER_PARAM_TYPES,
-                dependency_overrides_provider=dependency_overrides_provider)
+                checker, allow_types=self.HANDLER_PARAM_TYPES)
             for checker in checkers)
         """
         :说明:

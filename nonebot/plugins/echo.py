@@ -26,4 +26,4 @@ echo = on_command("echo", to_me())
 
 @echo.handle()
 async def echo_escape(event: MessageEvent):
-    await say.send(message=event.get_message())
+    await echo.send(message=event.get_message())

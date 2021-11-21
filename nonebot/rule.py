@@ -2,10 +2,10 @@ r"""
 规则
 ====
 
-每个事件响应器 ``Matcher`` 拥有一个匹配规则 ``Rule`` ，其中是 **异步** ``RuleChecker`` 的集合，只有当所有 ``RuleChecker`` 检查结果为 ``True`` 时继续运行。
+每个事件响应器 ``Matcher`` 拥有一个匹配规则 ``Rule`` ，其中是 ``RuleChecker`` 的集合，只有当所有 ``RuleChecker`` 检查结果为 ``True`` 时继续运行。
 
 \:\:\:tip 提示
-``RuleChecker`` 既可以是 async function 也可以是 sync function，但在最终会被 ``nonebot.utils.run_sync`` 转换为 async function
+``RuleChecker`` 既可以是 async function 也可以是 sync function
 \:\:\:
 """
 
@@ -68,9 +68,7 @@ class Rule:
         params.BotParam, params.EventParam, params.StateParam
     ]
 
-    def __init__(self,
-                 *checkers: Union[T_RuleChecker, Handler],
-                 dependency_overrides_provider: Optional[Any] = None) -> None:
+    def __init__(self, *checkers: Union[T_RuleChecker, Handler]) -> None:
         """
         :参数:
 
@@ -79,9 +77,7 @@ class Rule:
         """
         self.checkers = set(
             checker if isinstance(checker, Handler) else Handler(
-                checker,
-                allow_types=self.HANDLER_PARAM_TYPES,
-                dependency_overrides_provider=dependency_overrides_provider)
+                checker, allow_types=self.HANDLER_PARAM_TYPES)
             for checker in checkers)
         """
         :说明:

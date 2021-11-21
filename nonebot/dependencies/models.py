@@ -1,6 +1,6 @@
 import abc
 import inspect
-from typing import Any, List, Type, Callable, Optional
+from typing import Any, List, Type, Optional
 
 from pydantic.fields import FieldInfo, ModelField
 

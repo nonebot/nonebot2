@@ -67,8 +67,7 @@ class CustomEnvSettings(EnvSettingsSource):
                     env_val = settings.__config__.json_loads(env_val)
                 except ValueError as e:
                     raise SettingsError(
-                        f'error parsing JSON for "{env_name}"'  # type: ignore
-                    ) from e
+                        f'error parsing JSON for "{env_name}"') from e
             d[field.alias] = env_val
 
         if env_file_vars:

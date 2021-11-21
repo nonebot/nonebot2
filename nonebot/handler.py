@@ -23,8 +23,7 @@ class Handler:
                  *,
                  name: Optional[str] = None,
                  dependencies: Optional[List[DependsWrapper]] = None,
-                 allow_types: Optional[List[Type[Param]]] = None,
-                 dependency_overrides_provider: Optional[Any] = None):
+                 allow_types: Optional[List[Type[Param]]] = None):
         """
         :说明:
 
@@ -36,7 +35,6 @@ class Handler:
           * ``name: Optional[str]``: 事件处理器名称。默认为函数名。
           * ``dependencies: Optional[List[DependsWrapper]]``: 额外的非参数依赖注入。
           * ``allow_types: Optional[List[Type[Param]]]``: 允许的参数类型。
-          * ``dependency_overrides_provider: Optional[Any]``: 依赖注入覆盖提供者。
         """
         self.func = func
         """
@@ -63,7 +61,6 @@ class Handler:
         if dependencies:
             for depends in dependencies:
                 self.cache_dependent(depends)
-        self.dependency_overrides_provider = dependency_overrides_provider
         self.dependent = get_dependent(func=func, allow_types=self.allow_types)
 
     def __repr__(self) -> str:
@@ -87,7 +84,6 @@ class Handler:
                 self.sub_dependents[dependency.dependency]  # type: ignore
                 for dependency in self.dependencies
             ],
-            _dependency_overrides_provider=self.dependency_overrides_provider,
             _dependency_cache=_dependency_cache,
             **params)
 
