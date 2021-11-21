@@ -486,5 +486,13 @@
     "desc": "对 go-cqhttp 的 API 调用添加了类型注解与滥用OOP的返回值Model支持，远离魔法方法的Dict[Any, Any]",
     "author": "FYWinds",
     "repo": "https://github.com/FYWinds/gocqapi"
+  },
+  {
+    "id": "nonebot_plugin_workscore",
+    "link": "nonebot-plugin-workscore",
+    "name": "工作性价比计算器",
+    "desc": "一个计算工作性价比的插件",
+    "author": "yzyyz1387",
+    "repo": "https://github.com/yzyyz1387/nonebot_plugin_workscore"
   }
 ]
