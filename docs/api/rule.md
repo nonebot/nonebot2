@@ -36,7 +36,7 @@ Rule(async_function, run_sync(sync_function))
 ```
 
 
-### `__init__(*checkers)`
+### `__init__(*checkers, dependency_overrides_provider=None)`
 
 
 * **参数**
@@ -81,6 +81,12 @@ Rule(async_function, run_sync(sync_function))
 
 
     * `state: T_State`: 当前 State
+
+
+    * `stack: Optional[AsyncExitStack]`: 异步上下文栈
+
+
+    * `dependency_cache: Optional[Dict[Callable[..., Any], Any]]`: 依赖缓存
 
 
 

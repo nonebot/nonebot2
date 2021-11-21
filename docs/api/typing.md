@@ -115,7 +115,20 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Bot, Event, T_State], Awaitable[None]]`
+    `Callable[..., Union[None, Awaitable[None]]]`
+
+
+
+* **依赖参数**
+
+    
+    * `BotParam`: Bot 对象
+
+
+    * `EventParam`: Event 对象
+
+
+    * `StateParam`: State 对象
 
 
 
@@ -131,7 +144,20 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Bot, Event, T_State], Awaitable[None]]`
+    `Callable[..., Union[None, Awaitable[None]]]`
+
+
+
+* **依赖参数**
+
+    
+    * `BotParam`: Bot 对象
+
+
+    * `EventParam`: Event 对象
+
+
+    * `StateParam`: State 对象
 
 
 
@@ -147,7 +173,23 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Matcher, Bot, Event, T_State], Awaitable[None]]`
+    `Callable[..., Union[None, Awaitable[None]]]`
+
+
+
+* **依赖参数**
+
+    
+    * `BotParam`: Bot 对象
+
+
+    * `EventParam`: Event 对象
+
+
+    * `StateParam`: State 对象
+
+
+    * `MatcherParam`: Matcher 对象
 
 
 
@@ -163,7 +205,26 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Matcher, Optional[Exception], Bot, Event, T_State], Awaitable[None]]`
+    `Callable[..., Union[None, Awaitable[None]]]`
+
+
+
+* **依赖参数**
+
+    
+    * `BotParam`: Bot 对象
+
+
+    * `EventParam`: Event 对象
+
+
+    * `StateParam`: State 对象
+
+
+    * `MatcherParam`: Matcher 对象
+
+
+    * `ExceptionParam`: 异常对象（可能为 None）
 
 
 
@@ -183,6 +244,19 @@ sidebarDepth: 0
 
 
 
+* **依赖参数**
+
+    
+    * `BotParam`: Bot 对象
+
+
+    * `EventParam`: Event 对象
+
+
+    * `StateParam`: State 对象
+
+
+
 * **说明**
 
     RuleChecker 即判断是否响应事件的处理函数。
@@ -195,7 +269,17 @@ sidebarDepth: 0
 
 * **类型**
 
-    `Callable[[Bot, Event], Union[bool, Awaitable[bool]]]`
+    `Callable[..., Union[bool, Awaitable[bool]]]`
+
+
+
+* **依赖参数**
+
+    
+    * `BotParam`: Bot 对象
+
+
+    * `EventParam`: Event 对象
 
 
 
@@ -211,14 +295,29 @@ sidebarDepth: 0
 
 * **类型**
 
-    
-    * `Callable[..., Union[Awaitable[None], Awaitable[NoReturn]]]`
+    `Callable[..., Any]`
 
 
 
 * **说明**
 
-    Handler 即事件的处理函数。
+    Handler 处理函数。
+
+
+
+
+## `T_DependencyCache`
+
+
+* **类型**
+
+    `Dict[T_Handler, Any]`
+
+
+
+* **说明**
+
+    依赖缓存, 用于存储依赖函数的返回值
 
 
 

@@ -36,13 +36,13 @@ Permission(async_function, run_sync(sync_function))
 ```
 
 
-### `__init__(*checkers)`
+### `__init__(*checkers, dependency_overrides_provider=None)`
 
 
 * **参数**
 
     
-    * `*checkers: Callable[[Bot, Event], Awaitable[bool]]`: **异步** PermissionChecker
+    * `*checkers: T_PermissionChecker`: PermissionChecker
 
 
 
@@ -58,11 +58,11 @@ Permission(async_function, run_sync(sync_function))
 * **类型**
 
     
-    * `Set[Callable[[Bot, Event], Awaitable[bool]]]`
+    * `Set[Handler]`
 
 
 
-### _async_ `__call__(bot, event)`
+### _async_ `__call__(bot, event, stack=None, dependency_cache=None)`
 
 
 * **说明**
@@ -78,6 +78,12 @@ Permission(async_function, run_sync(sync_function))
 
 
     * `event: Event`: Event 对象
+
+
+    * `stack: Optional[AsyncExitStack]`: 异步上下文栈
+
+
+    * `dependency_cache: Optional[Dict[Callable[..., Any], Any]]`: 依赖缓存
 
 
 

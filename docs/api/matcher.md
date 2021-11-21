@@ -348,7 +348,7 @@ sidebarDepth: 0
 
 
 
-### _async classmethod_ `check_perm(bot, event)`
+### _async classmethod_ `check_perm(bot, event, stack=None, dependency_cache=None)`
 
 
 * **说明**
@@ -374,7 +374,7 @@ sidebarDepth: 0
 
 
 
-### _async classmethod_ `check_rule(bot, event, state)`
+### _async classmethod_ `check_rule(bot, event, state, stack=None, dependency_cache=None)`
 
 
 * **说明**
