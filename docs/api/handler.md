@@ -14,12 +14,32 @@ sidebarDepth: 0
 
 基类：`object`
 
-事件处理函数类
+事件处理器类。支持依赖注入。
 
 
-### `__init__(func)`
+### `__init__(func, *, name=None, dependencies=None, allow_types=None)`
 
-装饰事件处理函数以便根据动态参数运行
+
+* **说明**
+
+    装饰一个函数为事件处理器。
+
+
+
+* **参数**
+
+    
+    * `func: Callable[..., Any]`: 事件处理函数。
+
+
+    * `name: Optional[str]`: 事件处理器名称。默认为函数名。
+
+
+    * `dependencies: Optional[List[DependsWrapper]]`: 额外的非参数依赖注入。
+
+
+    * `allow_types: Optional[List[Type[Param]]]`: 允许的参数类型。
+
 
 
 ### `func`
@@ -27,7 +47,7 @@ sidebarDepth: 0
 
 * **类型**
 
-    `T_Handler`
+    `Callable[..., Any]`
 
 
 
@@ -37,75 +57,45 @@ sidebarDepth: 0
 
 
 
-### `signature`
+### `name`
 
 
 * **类型**
 
-    `inspect.Signature`
+    `str`
 
 
 
 * **说明**
 
-    事件处理函数签名
+    事件处理函数名
 
 
 
-### _property_ `bot_type`
+### `allow_types`
 
 
 * **类型**
 
-    `Union[Type["Bot"], inspect.Parameter.empty]`
+    `List[Type[Param]]`
 
 
 
 * **说明**
 
-    事件处理函数接受的 Bot 对象类型
+    事件处理器允许的参数类型
 
 
 
-### _property_ `event_type`
+### `dependencies`
 
 
 * **类型**
 
-    `Optional[Union[Type[Event], inspect.Parameter.empty]]`
+    `List[DependsWrapper]`
 
 
 
 * **说明**
 
-    事件处理函数接受的 event 类型 / 不需要 event 参数
-
-
-
-### _property_ `state_type`
-
-
-* **类型**
-
-    `Optional[Union[T_State, inspect.Parameter.empty]]`
-
-
-
-* **说明**
-
-    事件处理函数是否接受 state 参数
-
-
-
-### _property_ `matcher_type`
-
-
-* **类型**
-
-    `Optional[Union[Type["Matcher"], inspect.Parameter.empty]]`
-
-
-
-* **说明**
-
-    事件处理函数是否接受 matcher 参数
+    事件处理器的额外依赖

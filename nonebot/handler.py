@@ -5,172 +5,114 @@
 该模块实现事件处理函数的封装，以实现动态参数等功能。
 """
 
-import inspect
-from typing import _eval_type  # type: ignore
-from typing import (TYPE_CHECKING, Any, Dict, List, Type, Union, Optional,
-                    ForwardRef)
+import asyncio
+from contextlib import AsyncExitStack
+from typing import Any, Dict, List, Type, Callable, Optional
 
-from nonebot.log import logger
-from nonebot.typing import T_State, T_Handler
-
-if TYPE_CHECKING:
-    from nonebot.matcher import Matcher
-    from nonebot.adapters import Bot, Event
+from nonebot.utils import get_name, run_sync
+from nonebot.dependencies import (Param, Dependent, DependsWrapper,
+                                  get_dependent, solve_dependencies,
+                                  get_parameterless_sub_dependant)
 
 
 class Handler:
-    """事件处理函数类"""
+    """事件处理器类。支持依赖注入。"""
 
-    def __init__(self, func: T_Handler):
-        """装饰事件处理函数以便根据动态参数运行"""
-        self.func: T_Handler = func
+    def __init__(self,
+                 func: Callable[..., Any],
+                 *,
+                 name: Optional[str] = None,
+                 dependencies: Optional[List[DependsWrapper]] = None,
+                 allow_types: Optional[List[Type[Param]]] = None):
         """
-        :类型: ``T_Handler``
+        :说明:
+
+          装饰一个函数为事件处理器。
+
+        :参数:
+
+          * ``func: Callable[..., Any]``: 事件处理函数。
+          * ``name: Optional[str]``: 事件处理器名称。默认为函数名。
+          * ``dependencies: Optional[List[DependsWrapper]]``: 额外的非参数依赖注入。
+          * ``allow_types: Optional[List[Type[Param]]]``: 允许的参数类型。
+        """
+        self.func = func
+        """
+        :类型: ``Callable[..., Any]``
         :说明: 事件处理函数
         """
-        self.signature: inspect.Signature = self.get_signature()
+        self.name = get_name(func) if name is None else name
         """
-        :类型: ``inspect.Signature``
-        :说明: 事件处理函数签名
+        :类型: ``str``
+        :说明: 事件处理函数名
+        """
+        self.allow_types = allow_types or []
+        """
+        :类型: ``List[Type[Param]]``
+        :说明: 事件处理器允许的参数类型
         """
 
+        self.dependencies = dependencies or []
+        """
+        :类型: ``List[DependsWrapper]``
+        :说明: 事件处理器的额外依赖
+        """
+        self.sub_dependents: Dict[Callable[..., Any], Dependent] = {}
+        if dependencies:
+            for depends in dependencies:
+                self.cache_dependent(depends)
+        self.dependent = get_dependent(func=func, allow_types=self.allow_types)
+
     def __repr__(self) -> str:
-        return (f"<Handler {self.func.__name__}(bot: {self.bot_type}, "
-                f"event: {self.event_type}, state: {self.state_type}, "
-                f"matcher: {self.matcher_type})>")
+        return (
+            f"<Handler {self.name}({', '.join(map(str, self.dependent.params))})>"
+        )
 
     def __str__(self) -> str:
         return repr(self)
 
-    async def __call__(self, matcher: "Matcher", bot: "Bot", event: "Event",
-                       state: T_State):
-        BotType = ((self.bot_type is not inspect.Parameter.empty) and
-                   inspect.isclass(self.bot_type) and self.bot_type)
-        if BotType and not isinstance(bot, BotType):
-            logger.debug(
-                f"Matcher {matcher} bot type {type(bot)} not match annotation {BotType}, ignored"
-            )
-            return
+    async def __call__(self,
+                       *,
+                       _stack: Optional[AsyncExitStack] = None,
+                       _dependency_cache: Optional[Dict[Callable[..., Any],
+                                                        Any]] = None,
+                       **params) -> Any:
+        values, _ = await solve_dependencies(
+            _dependent=self.dependent,
+            _stack=_stack,
+            _sub_dependents=[
+                self.sub_dependents[dependency.dependency]  # type: ignore
+                for dependency in self.dependencies
+            ],
+            _dependency_cache=_dependency_cache,
+            **params)
 
-        EventType = ((self.event_type is not inspect.Parameter.empty) and
-                     inspect.isclass(self.event_type) and self.event_type)
-        if EventType and not isinstance(event, EventType):
-            logger.debug(
-                f"Matcher {matcher} event type {type(event)} not match annotation {EventType}, ignored"
-            )
-            return
+        if asyncio.iscoroutinefunction(self.func):
+            return await self.func(**values)
+        else:
+            return await run_sync(self.func)(**values)
 
-        args = {"bot": bot, "event": event, "state": state, "matcher": matcher}
-        await self.func(
-            **{
-                k: v
-                for k, v in args.items()
-                if self.signature.parameters.get(k, None) is not None
-            })
+    def cache_dependent(self, dependency: DependsWrapper):
+        if not dependency.dependency:
+            raise ValueError(f"{dependency} has no dependency")
+        if dependency.dependency in self.sub_dependents:
+            raise ValueError(f"{dependency} is already in dependencies")
+        sub_dependant = get_parameterless_sub_dependant(
+            depends=dependency, allow_types=self.allow_types)
+        self.sub_dependents[dependency.dependency] = sub_dependant
 
-    @property
-    def bot_type(self) -> Union[Type["Bot"], inspect.Parameter.empty]:
-        """
-        :类型: ``Union[Type["Bot"], inspect.Parameter.empty]``
-        :说明: 事件处理函数接受的 Bot 对象类型"""
-        return self.signature.parameters["bot"].annotation
+    def prepend_dependency(self, dependency: DependsWrapper):
+        self.cache_dependent(dependency)
+        self.dependencies.insert(0, dependency)
 
-    @property
-    def event_type(
-            self) -> Optional[Union[Type["Event"], inspect.Parameter.empty]]:
-        """
-        :类型: ``Optional[Union[Type[Event], inspect.Parameter.empty]]``
-        :说明: 事件处理函数接受的 event 类型 / 不需要 event 参数
-        """
-        if "event" not in self.signature.parameters:
-            return None
-        return self.signature.parameters["event"].annotation
+    def append_dependency(self, dependency: DependsWrapper):
+        self.cache_dependent(dependency)
+        self.dependencies.append(dependency)
 
-    @property
-    def state_type(self) -> Optional[Union[T_State, inspect.Parameter.empty]]:
-        """
-        :类型: ``Optional[Union[T_State, inspect.Parameter.empty]]``
-        :说明: 事件处理函数是否接受 state 参数
-        """
-        if "state" not in self.signature.parameters:
-            return None
-        return self.signature.parameters["state"].annotation
-
-    @property
-    def matcher_type(
-            self) -> Optional[Union[Type["Matcher"], inspect.Parameter.empty]]:
-        """
-        :类型: ``Optional[Union[Type["Matcher"], inspect.Parameter.empty]]``
-        :说明: 事件处理函数是否接受 matcher 参数
-        """
-        if "matcher" not in self.signature.parameters:
-            return None
-        return self.signature.parameters["matcher"].annotation
-
-    def get_signature(self) -> inspect.Signature:
-        wrapped_signature = self._get_typed_signature()
-        signature = self._get_typed_signature(False)
-        self._check_params(signature)
-        self._check_bot_param(signature)
-        self._check_bot_param(wrapped_signature)
-        signature.parameters["bot"].replace(
-            annotation=wrapped_signature.parameters["bot"].annotation)
-        if "event" in wrapped_signature.parameters and "event" in signature.parameters:
-            signature.parameters["event"].replace(
-                annotation=wrapped_signature.parameters["event"].annotation)
-        return signature
-
-    def update_signature(
-        self, **kwargs: Union[None, Type["Bot"], Type["Event"], Type["Matcher"],
-                              T_State, inspect.Parameter.empty]
-    ) -> None:
-        params: List[inspect.Parameter] = []
-        for param in ["bot", "event", "state", "matcher"]:
-            sig = self.signature.parameters.get(param, None)
-            if param in kwargs:
-                sig = inspect.Parameter(param,
-                                        inspect.Parameter.POSITIONAL_OR_KEYWORD,
-                                        annotation=kwargs[param])
-            if sig:
-                params.append(sig)
-
-        self.signature = inspect.Signature(params)
-
-    def _get_typed_signature(self,
-                             follow_wrapped: bool = True) -> inspect.Signature:
-        signature = inspect.signature(self.func, follow_wrapped=follow_wrapped)
-        globalns = getattr(self.func, "__globals__", {})
-        typed_params = [
-            inspect.Parameter(
-                name=param.name,
-                kind=param.kind,
-                default=param.default,
-                annotation=param.annotation if follow_wrapped else
-                self._get_typed_annotation(param, globalns),
-            ) for param in signature.parameters.values()
-        ]
-        typed_signature = inspect.Signature(typed_params)
-        return typed_signature
-
-    def _get_typed_annotation(self, param: inspect.Parameter,
-                              globalns: Dict[str, Any]) -> Any:
-        try:
-            if isinstance(param.annotation, str):
-                return _eval_type(ForwardRef(param.annotation), globalns,
-                                  globalns)
-            else:
-                return param.annotation
-        except Exception:
-            return param.annotation
-
-    def _check_params(self, signature: inspect.Signature):
-        if not set(signature.parameters.keys()) <= {
-                "bot", "event", "state", "matcher"
-        }:
-            raise ValueError(
-                "Handler param names must in `bot`/`event`/`state`/`matcher`")
-
-    def _check_bot_param(self, signature: inspect.Signature):
-        if not any(
-                param.name == "bot" for param in signature.parameters.values()):
-            raise ValueError("Handler missing parameter 'bot'")
+    def remove_dependency(self, dependency: DependsWrapper):
+        if not dependency.dependency:
+            raise ValueError(f"{dependency} has no dependency")
+        if dependency.dependency in self.sub_dependents:
+            del self.sub_dependents[dependency.dependency]
+        if dependency in self.dependencies:
+            self.dependencies.remove(dependency)

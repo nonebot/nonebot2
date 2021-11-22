@@ -7,7 +7,7 @@ sidebarDepth: 0
 
 ## 权限
 
-每个 `Matcher` 拥有一个 `Permission` ，其中是 **异步** `PermissionChecker` 的集合，只要有一个 `PermissionChecker` 检查结果为 `True` 时就会继续运行。
+每个 `Matcher` 拥有一个 `Permission` ，其中是 `PermissionChecker` 的集合，只要有一个 `PermissionChecker` 检查结果为 `True` 时就会继续运行。
 
 :::tip 提示
 `PermissionChecker` 既可以是 async function 也可以是 sync function
@@ -42,7 +42,7 @@ Permission(async_function, run_sync(sync_function))
 * **参数**
 
     
-    * `*checkers: Callable[[Bot, Event], Awaitable[bool]]`: **异步** PermissionChecker
+    * `*checkers: Union[T_PermissionChecker, Handler]`: PermissionChecker
 
 
 
@@ -58,11 +58,11 @@ Permission(async_function, run_sync(sync_function))
 * **类型**
 
     
-    * `Set[Callable[[Bot, Event], Awaitable[bool]]]`
+    * `Set[Handler]`
 
 
 
-### _async_ `__call__(bot, event)`
+### _async_ `__call__(bot, event, stack=None, dependency_cache=None)`
 
 
 * **说明**
@@ -78,6 +78,12 @@ Permission(async_function, run_sync(sync_function))
 
 
     * `event: Event`: Event 对象
+
+
+    * `stack: Optional[AsyncExitStack]`: 异步上下文栈
+
+
+    * `dependency_cache: Optional[Dict[Callable[..., Any], Any]]`: 依赖缓存
 
 
 

@@ -7,10 +7,10 @@ sidebarDepth: 0
 
 ## 规则
 
-每个事件响应器 `Matcher` 拥有一个匹配规则 `Rule` ，其中是 **异步** `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
+每个事件响应器 `Matcher` 拥有一个匹配规则 `Rule` ，其中是 `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
 
 :::tip 提示
-`RuleChecker` 既可以是 async function 也可以是 sync function，但在最终会被 `nonebot.utils.run_sync` 转换为 async function
+`RuleChecker` 既可以是 async function 也可以是 sync function
 :::
 
 
@@ -42,7 +42,7 @@ Rule(async_function, run_sync(sync_function))
 * **参数**
 
     
-    * `*checkers: Callable[[Bot, Event, T_State], Awaitable[bool]]`: **异步** RuleChecker
+    * `*checkers: Union[T_RuleChecker, Handler]`: RuleChecker
 
 
 
@@ -58,11 +58,11 @@ Rule(async_function, run_sync(sync_function))
 * **类型**
 
     
-    * `Set[Callable[[Bot, Event, T_State], Awaitable[bool]]]`
+    * `Set[Handler]`
 
 
 
-### _async_ `__call__(bot, event, state)`
+### _async_ `__call__(bot, event, state, stack=None, dependency_cache=None)`
 
 
 * **说明**
@@ -81,6 +81,12 @@ Rule(async_function, run_sync(sync_function))
 
 
     * `state: T_State`: 当前 State
+
+
+    * `stack: Optional[AsyncExitStack]`: 异步上下文栈
+
+
+    * `dependency_cache: Optional[Dict[Callable[..., Any], Any]]`: 依赖缓存
 
 
 

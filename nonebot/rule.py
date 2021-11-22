@@ -2,10 +2,10 @@ r"""
 规则
 ====
 
-每个事件响应器 ``Matcher`` 拥有一个匹配规则 ``Rule`` ，其中是 **异步** ``RuleChecker`` 的集合，只有当所有 ``RuleChecker`` 检查结果为 ``True`` 时继续运行。
+每个事件响应器 ``Matcher`` 拥有一个匹配规则 ``Rule`` ，其中是 ``RuleChecker`` 的集合，只有当所有 ``RuleChecker`` 检查结果为 ``True`` 时继续运行。
 
 \:\:\:tip 提示
-``RuleChecker`` 既可以是 async function 也可以是 sync function，但在最终会被 ``nonebot.utils.run_sync`` 转换为 async function
+``RuleChecker`` 既可以是 async function 也可以是 sync function
 \:\:\:
 """
 
@@ -14,20 +14,36 @@ import shlex
 import asyncio
 from itertools import product
 from argparse import Namespace
+from contextlib import AsyncExitStack
+from typing_extensions import TypedDict
 from argparse import ArgumentParser as ArgParser
-from typing import (TYPE_CHECKING, Any, Dict, Tuple, Union, Callable, NoReturn,
-                    Optional, Sequence, Awaitable)
+from typing import (Any, Dict, List, Type, Tuple, Union, Callable, NoReturn,
+                    Optional, Sequence)
 
 from pygtrie import CharTrie
 
-from nonebot import get_driver
 from nonebot.log import logger
-from nonebot.utils import run_sync
+from nonebot.handler import Handler
+from nonebot import params, get_driver
 from nonebot.exception import ParserExit
 from nonebot.typing import T_State, T_RuleChecker
+from nonebot.adapters import Bot, Event, MessageSegment
 
-if TYPE_CHECKING:
-    from nonebot.adapters import Bot, Event
+PREFIX_KEY = "_prefix"
+SUFFIX_KEY = "_suffix"
+CMD_KEY = "command"
+RAW_CMD_KEY = "raw_command"
+CMD_RESULT = TypedDict("CMD_RESULT", {
+    "command": Optional[Tuple[str, ...]],
+    "raw_command": Optional[str]
+})
+
+SHELL_ARGS = "_args"
+SHELL_ARGV = "_argv"
+
+REGEX_MATCHED = "_matched"
+REGEX_GROUP = "_matched_groups"
+REGEX_DICT = "_matched_dict"
 
 
 class Rule:
@@ -47,16 +63,22 @@ class Rule:
     """
     __slots__ = ("checkers",)
 
-    def __init__(
-        self, *checkers: Callable[["Bot", "Event", T_State],
-                                  Awaitable[bool]]) -> None:
+    HANDLER_PARAM_TYPES = [
+        params.BotParam, params.EventParam, params.StateParam,
+        params.DefaultParam
+    ]
+
+    def __init__(self, *checkers: Union[T_RuleChecker, Handler]) -> None:
         """
         :参数:
 
-          * ``*checkers: Callable[[Bot, Event, T_State], Awaitable[bool]]``: **异步** RuleChecker
+          * ``*checkers: Union[T_RuleChecker, Handler]``: RuleChecker
 
         """
-        self.checkers = set(checkers)
+        self.checkers = set(
+            checker if isinstance(checker, Handler) else Handler(
+                checker, allow_types=self.HANDLER_PARAM_TYPES)
+            for checker in checkers)
         """
         :说明:
 
@@ -64,11 +86,17 @@ class Rule:
 
         :类型:
 
-          * ``Set[Callable[[Bot, Event, T_State], Awaitable[bool]]]``
+          * ``Set[Handler]``
         """
 
-    async def __call__(self, bot: "Bot", event: "Event",
-                       state: T_State) -> bool:
+    async def __call__(
+        self,
+        bot: Bot,
+        event: Event,
+        state: T_State,
+        stack: Optional[AsyncExitStack] = None,
+        dependency_cache: Optional[Dict[Callable[..., Any],
+                                        Any]] = None) -> bool:
         """
         :说明:
 
@@ -79,26 +107,31 @@ class Rule:
           * ``bot: Bot``: Bot 对象
           * ``event: Event``: Event 对象
           * ``state: T_State``: 当前 State
+          * ``stack: Optional[AsyncExitStack]``: 异步上下文栈
+          * ``dependency_cache: Optional[Dict[Callable[..., Any], Any]]``: 依赖缓存
 
         :返回:
 
           - ``bool``
         """
+        if not self.checkers:
+            return True
         results = await asyncio.gather(
-            *map(lambda c: c(bot, event, state), self.checkers))
+            *(checker(bot=bot,
+                      event=event,
+                      state=state,
+                      _stack=stack,
+                      _dependency_cache=dependency_cache)
+              for checker in self.checkers))
         return all(results)
 
     def __and__(self, other: Optional[Union["Rule", T_RuleChecker]]) -> "Rule":
-        checkers = self.checkers.copy()
         if other is None:
             return self
         elif isinstance(other, Rule):
-            checkers |= other.checkers
-        elif asyncio.iscoroutinefunction(other):
-            checkers.add(other)  # type: ignore
+            return Rule(*self.checkers, *other.checkers)
         else:
-            checkers.add(run_sync(other))
-        return Rule(*checkers)
+            return Rule(*self.checkers, other)
 
     def __or__(self, other) -> NoReturn:
         raise RuntimeError("Or operation between rules is not allowed.")
@@ -123,58 +156,28 @@ class TrieRule:
         cls.suffix[suffix[::-1]] = value
 
     @classmethod
-    def get_value(cls, bot: "Bot", event: "Event",
-                  state: T_State) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    def get_value(cls, bot: Bot, event: Event,
+                  state: T_State) -> Tuple[CMD_RESULT, CMD_RESULT]:
+        prefix = CMD_RESULT(command=None, raw_command=None)
+        suffix = CMD_RESULT(command=None, raw_command=None)
+        state[PREFIX_KEY] = prefix
+        state[SUFFIX_KEY] = suffix
         if event.get_type() != "message":
-            state["_prefix"] = {"raw_command": None, "command": None}
-            state["_suffix"] = {"raw_command": None, "command": None}
-            return {
-                "raw_command": None,
-                "command": None
-            }, {
-                "raw_command": None,
-                "command": None
-            }
+            return prefix, suffix
 
-        prefix = None
-        suffix = None
         message = event.get_message()
-        message_seg = message[0]
+        message_seg: MessageSegment = message[0]
         if message_seg.is_text():
-            prefix = cls.prefix.longest_prefix(str(message_seg).lstrip())
-        message_seg_r = message[-1]
+            pf = cls.prefix.longest_prefix(str(message_seg).lstrip())
+            prefix[RAW_CMD_KEY] = pf.key
+            prefix[CMD_KEY] = pf.value
+        message_seg_r: MessageSegment = message[-1]
         if message_seg_r.is_text():
-            suffix = cls.suffix.longest_prefix(
-                str(message_seg_r).rstrip()[::-1])
+            sf = cls.suffix.longest_prefix(str(message_seg_r).rstrip()[::-1])
+            suffix[RAW_CMD_KEY] = sf.key
+            suffix[CMD_KEY] = sf.value
 
-        state["_prefix"] = {
-            "raw_command": prefix.key,
-            "command": prefix.value
-        } if prefix else {
-            "raw_command": None,
-            "command": None
-        }
-        state["_suffix"] = {
-            "raw_command": suffix.key,
-            "command": suffix.value
-        } if suffix else {
-            "raw_command": None,
-            "command": None
-        }
-
-        return ({
-            "raw_command": prefix.key,
-            "command": prefix.value
-        } if prefix else {
-            "raw_command": None,
-            "command": None
-        }, {
-            "raw_command": suffix.key,
-            "command": suffix.value
-        } if suffix else {
-            "raw_command": None,
-            "command": None
-        })
+        return prefix, suffix
 
 
 def startswith(msg: Union[str, Tuple[str, ...]],
@@ -195,7 +198,7 @@ def startswith(msg: Union[str, Tuple[str, ...]],
         f"^(?:{'|'.join(re.escape(prefix) for prefix in msg)})",
         re.IGNORECASE if ignorecase else 0)
 
-    async def _startswith(bot: "Bot", event: "Event", state: T_State) -> bool:
+    async def _startswith(bot: Bot, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         text = event.get_plaintext()
@@ -222,7 +225,7 @@ def endswith(msg: Union[str, Tuple[str, ...]],
         f"(?:{'|'.join(re.escape(prefix) for prefix in msg)})$",
         re.IGNORECASE if ignorecase else 0)
 
-    async def _endswith(bot: "Bot", event: "Event", state: T_State) -> bool:
+    async def _endswith(bot: Bot, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         text = event.get_plaintext()
@@ -242,7 +245,7 @@ def keyword(*keywords: str) -> Rule:
       * ``*keywords: str``: 关键词
     """
 
-    async def _keyword(bot: "Bot", event: "Event", state: T_State) -> bool:
+    async def _keyword(event: Event) -> bool:
         if event.get_type() != "message":
             return False
         text = event.get_plaintext()
@@ -290,8 +293,8 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
             for start, sep in product(command_start, command_sep):
                 TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
 
-    async def _command(bot: "Bot", event: "Event", state: T_State) -> bool:
-        return state["_prefix"]["command"] in commands
+    async def _command(state: T_State) -> bool:
+        return state[PREFIX_KEY][CMD_KEY] in commands
 
     return Rule(_command)
 
@@ -310,7 +313,7 @@ class ArgumentParser(ArgParser):
         old_message += message
         setattr(self, "message", old_message)
 
-    def exit(self, status=0, message=None):
+    def exit(self, status: int = 0, message: Optional[str] = None):
         raise ParserExit(status=status,
                          message=message or getattr(self, "message", None))
 
@@ -376,19 +379,18 @@ def shell_command(*cmds: Union[str, Tuple[str, ...]],
             for start, sep in product(command_start, command_sep):
                 TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
 
-    async def _shell_command(bot: "Bot", event: "Event",
-                             state: T_State) -> bool:
-        if state["_prefix"]["command"] in commands:
+    async def _shell_command(event: Event, state: T_State) -> bool:
+        if state[PREFIX_KEY][CMD_KEY] in commands:
             message = str(event.get_message())
-            strip_message = message[len(state["_prefix"]["raw_command"]
+            strip_message = message[len(state[PREFIX_KEY][RAW_CMD_KEY]
                                        ):].lstrip()
-            state["argv"] = shlex.split(strip_message)
+            state[SHELL_ARGV] = shlex.split(strip_message)
             if parser:
                 try:
-                    args = parser.parse_args(state["argv"])
-                    state["args"] = args
+                    args = parser.parse_args(state[SHELL_ARGV])
+                    state[SHELL_ARGS] = args
                 except ParserExit as e:
-                    state["args"] = e
+                    state[SHELL_ARGS] = e
             return True
         else:
             return False
@@ -417,19 +419,23 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
 
     pattern = re.compile(regex, flags)
 
-    async def _regex(bot: "Bot", event: "Event", state: T_State) -> bool:
+    async def _regex(event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         matched = pattern.search(str(event.get_message()))
         if matched:
-            state["_matched"] = matched.group()
-            state["_matched_groups"] = matched.groups()
-            state["_matched_dict"] = matched.groupdict()
+            state[REGEX_MATCHED] = matched.group()
+            state[REGEX_GROUP] = matched.groups()
+            state[REGEX_DICT] = matched.groupdict()
             return True
         else:
             return False
 
     return Rule(_regex)
+
+
+async def _to_me(event: Event) -> bool:
+    return event.is_tome()
 
 
 def to_me() -> Rule:
@@ -442,8 +448,5 @@ def to_me() -> Rule:
 
       * 无
     """
-
-    async def _to_me(bot: "Bot", event: "Event", state: T_State) -> bool:
-        return event.is_tome()
 
     return Rule(_to_me)

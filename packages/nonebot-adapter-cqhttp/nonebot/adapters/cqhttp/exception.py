@@ -1,15 +1,20 @@
 from typing import Optional
 
-from nonebot.exception import (AdapterException, ActionFailed as
-                               BaseActionFailed, NetworkError as
-                               BaseNetworkError, ApiNotAvailable as
-                               BaseApiNotAvailable)
+from nonebot.exception import AdapterException
+from nonebot.exception import ActionFailed as BaseActionFailed
+from nonebot.exception import NetworkError as BaseNetworkError
+from nonebot.exception import NoLogException as BaseNoLogException
+from nonebot.exception import ApiNotAvailable as BaseApiNotAvailable
 
 
 class CQHTTPAdapterException(AdapterException):
 
     def __init__(self):
         super().__init__("cqhttp")
+
+
+class NoLogException(BaseNoLogException, CQHTTPAdapterException):
+    pass
 
 
 class ActionFailed(BaseActionFailed, CQHTTPAdapterException):

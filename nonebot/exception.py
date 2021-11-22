@@ -6,6 +6,8 @@
 这些异常并非所有需要用户处理，在 NoneBot 内部运行时被捕获，并进行对应操作。
 """
 
+from typing import Optional
+
 
 class NoneBotException(Exception):
     """
@@ -13,9 +15,33 @@ class NoneBotException(Exception):
 
       所有 NoneBot 发生的异常基类。
     """
-    pass
 
 
+# Rule Exception
+class ParserExit(NoneBotException):
+    """
+    :说明:
+
+      ``shell command`` 处理消息失败时返回的异常
+
+    :参数:
+
+      * ``status``
+      * ``message``
+    """
+
+    def __init__(self, status: int = 0, message: Optional[str] = None):
+        self.status = status
+        self.message = message
+
+    def __repr__(self):
+        return f"<ParserExit status={self.status} message={self.message}>"
+
+    def __str__(self):
+        return self.__repr__()
+
+
+# Processor Exception
 class IgnoredException(NoneBotException):
     """
     :说明:
@@ -37,71 +63,6 @@ class IgnoredException(NoneBotException):
         return self.__repr__()
 
 
-class ParserExit(NoneBotException):
-    """
-    :说明:
-
-      ``shell command`` 处理消息失败时返回的异常
-
-    :参数:
-
-      * ``status``
-      * ``message``
-    """
-
-    def __init__(self, status=0, message=None):
-        self.status = status
-        self.message = message
-
-    def __repr__(self):
-        return f"<ParserExit status={self.status} message={self.message}>"
-
-    def __str__(self):
-        return self.__repr__()
-
-
-class PausedException(NoneBotException):
-    """
-    :说明:
-
-      指示 NoneBot 结束当前 ``Handler`` 并等待下一条消息后继续下一个 ``Handler``。
-      可用于用户输入新信息。
-
-    :用法:
-
-      可以在 ``Handler`` 中通过 ``Matcher.pause()`` 抛出。
-    """
-    pass
-
-
-class RejectedException(NoneBotException):
-    """
-    :说明:
-
-      指示 NoneBot 结束当前 ``Handler`` 并等待下一条消息后重新运行当前 ``Handler``。
-      可用于用户重新输入。
-
-    :用法:
-
-      可以在 ``Handler`` 中通过 ``Matcher.reject()`` 抛出。
-    """
-    pass
-
-
-class FinishedException(NoneBotException):
-    """
-    :说明:
-
-      指示 NoneBot 结束当前 ``Handler`` 且后续 ``Handler`` 不再被运行。
-      可用于结束用户会话。
-
-    :用法:
-
-      可以在 ``Handler`` 中通过 ``Matcher.finish()`` 抛出。
-    """
-    pass
-
-
 class StopPropagation(NoneBotException):
     """
     :说明:
@@ -112,9 +73,69 @@ class StopPropagation(NoneBotException):
 
       在 ``Matcher.block == True`` 时抛出。
     """
-    pass
 
 
+# Matcher Exceptions
+class MatcherException(NoneBotException):
+    """
+    :说明:
+
+      所有 Matcher 发生的异常基类。
+    """
+
+
+class SkippedException(MatcherException):
+    """
+    :说明:
+
+      指示 NoneBot 立即结束当前 ``Handler`` 的处理，继续处理下一个 ``Handler``。
+
+    :用法:
+
+      可以在 ``Handler`` 中通过 ``Matcher.skip()`` 抛出。
+    """
+
+
+class PausedException(MatcherException):
+    """
+    :说明:
+
+      指示 NoneBot 结束当前 ``Handler`` 并等待下一条消息后继续下一个 ``Handler``。
+      可用于用户输入新信息。
+
+    :用法:
+
+      可以在 ``Handler`` 中通过 ``Matcher.pause()`` 抛出。
+    """
+
+
+class RejectedException(MatcherException):
+    """
+    :说明:
+
+      指示 NoneBot 结束当前 ``Handler`` 并等待下一条消息后重新运行当前 ``Handler``。
+      可用于用户重新输入。
+
+    :用法:
+
+      可以在 ``Handler`` 中通过 ``Matcher.reject()`` 抛出。
+    """
+
+
+class FinishedException(MatcherException):
+    """
+    :说明:
+
+      指示 NoneBot 结束当前 ``Handler`` 且后续 ``Handler`` 不再被运行。
+      可用于结束用户会话。
+
+    :用法:
+
+      可以在 ``Handler`` 中通过 ``Matcher.finish()`` 抛出。
+    """
+
+
+# Adapter Exceptions
 class AdapterException(NoneBotException):
     """
     :说明:
@@ -130,7 +151,7 @@ class AdapterException(NoneBotException):
         self.adapter_name = adapter_name
 
 
-class NoLogException(Exception):
+class NoLogException(AdapterException):
     """
     :说明:
 

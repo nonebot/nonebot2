@@ -5,35 +5,39 @@
 该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行对话 。
 """
 
-from functools import wraps
 from types import ModuleType
 from datetime import datetime
 from contextvars import ContextVar
 from collections import defaultdict
+from contextlib import AsyncExitStack
 from typing import (TYPE_CHECKING, Any, Dict, List, Type, Union, Callable,
                     NoReturn, Optional)
 
+from nonebot import params
 from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.handler import Handler
-from nonebot.adapters import MessageTemplate
+from nonebot.dependencies import DependsWrapper
 from nonebot.permission import USER, Permission
+from nonebot.adapters import (Bot, Event, Message, MessageSegment,
+                              MessageTemplate)
 from nonebot.exception import (PausedException, StopPropagation,
-                               FinishedException, RejectedException)
+                               SkippedException, FinishedException,
+                               RejectedException)
 from nonebot.typing import (T_State, T_Handler, T_ArgsParser, T_TypeUpdater,
-                            T_StateFactory, T_PermissionUpdater)
+                            T_StateFactory, T_DependencyCache,
+                            T_PermissionUpdater)
 
 if TYPE_CHECKING:
     from nonebot.plugin import Plugin
-    from nonebot.adapters import Bot, Event, Message, MessageSegment
 
 matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
 """
 :类型: ``Dict[int, List[Type[Matcher]]]``
 :说明: 用于存储当前所有的事件响应器
 """
-current_bot: ContextVar["Bot"] = ContextVar("current_bot")
-current_event: ContextVar["Event"] = ContextVar("current_event")
+current_bot: ContextVar[Bot] = ContextVar("current_bot")
+current_event: ContextVar[Event] = ContextVar("current_event")
 current_state: ContextVar[T_State] = ContextVar("current_state")
 
 
@@ -152,6 +156,11 @@ class Matcher(metaclass=MatcherMeta):
     :说明: 事件响应器权限更新函数
     """
 
+    HANDLER_PARAM_TYPES = [
+        params.BotParam, params.EventParam, params.StateParam,
+        params.MatcherParam, params.DefaultParam
+    ]
+
     def __init__(self):
         """实例化 Matcher 以便运行"""
         self.handlers = self.handlers.copy()
@@ -228,8 +237,8 @@ class Matcher(metaclass=MatcherMeta):
                 "permission":
                     permission or Permission(),
                 "handlers": [
-                    handler
-                    if isinstance(handler, Handler) else Handler(handler)
+                    handler if isinstance(handler, Handler) else Handler(
+                        handler, allow_types=cls.HANDLER_PARAM_TYPES)
                     for handler in handlers
                 ] if handlers else [],
                 "temp":
@@ -258,7 +267,13 @@ class Matcher(metaclass=MatcherMeta):
         return NewMatcher
 
     @classmethod
-    async def check_perm(cls, bot: "Bot", event: "Event") -> bool:
+    async def check_perm(
+        cls,
+        bot: Bot,
+        event: Event,
+        stack: Optional[AsyncExitStack] = None,
+        dependency_cache: Optional[Dict[Callable[..., Any],
+                                        Any]] = None) -> bool:
         """
         :说明:
 
@@ -275,11 +290,17 @@ class Matcher(metaclass=MatcherMeta):
         """
         event_type = event.get_type()
         return (event_type == (cls.type or event_type) and
-                await cls.permission(bot, event))
+                await cls.permission(bot, event, stack, dependency_cache))
 
     @classmethod
-    async def check_rule(cls, bot: "Bot", event: "Event",
-                         state: T_State) -> bool:
+    async def check_rule(
+        cls,
+        bot: Bot,
+        event: Event,
+        state: T_State,
+        stack: Optional[AsyncExitStack] = None,
+        dependency_cache: Optional[Dict[Callable[..., Any],
+                                        Any]] = None) -> bool:
         """
         :说明:
 
@@ -297,7 +318,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         event_type = event.get_type()
         return (event_type == (cls.type or event_type) and
-                await cls.rule(bot, event, state))
+                await cls.rule(bot, event, state, stack, dependency_cache))
 
     @classmethod
     def args_parser(cls, func: T_ArgsParser) -> T_ArgsParser:
@@ -343,8 +364,13 @@ class Matcher(metaclass=MatcherMeta):
         return func
 
     @classmethod
-    def append_handler(cls, handler: T_Handler) -> Handler:
-        handler_ = Handler(handler)
+    def append_handler(
+            cls,
+            handler: T_Handler,
+            dependencies: Optional[List[DependsWrapper]] = None) -> Handler:
+        handler_ = Handler(handler,
+                           dependencies=dependencies,
+                           allow_types=cls.HANDLER_PARAM_TYPES)
         cls.handlers.append(handler_)
         return handler_
 
@@ -378,22 +404,22 @@ class Matcher(metaclass=MatcherMeta):
           * 无
         """
 
-        async def _receive(bot: "Bot", event: "Event") -> NoReturn:
-            raise PausedException
-
-        if cls.handlers:
-            # 已有前置handlers则接受一条新的消息，否则视为接收初始消息
-            receive_handler = cls.append_handler(_receive)
-        else:
-            receive_handler = None
+        async def _receive(state: T_State) -> Union[None, NoReturn]:
+            if state.get(_receive):
+                return
+            state[_receive] = True
+            raise RejectedException
 
         def _decorator(func: T_Handler) -> T_Handler:
-            if not cls.handlers or cls.handlers[-1] is not func:
-                func_handler = cls.append_handler(func)
-                if receive_handler:
-                    receive_handler.update_signature(
-                        bot=func_handler.bot_type,
-                        event=func_handler.event_type)
+
+            depend = DependsWrapper(_receive)
+
+            if cls.handlers and cls.handlers[-1].func is func:
+                func_handler = cls.handlers[-1]
+                func_handler.prepend_dependency(depend)
+            else:
+                cls.append_handler(
+                    func, dependencies=[depend] if cls.handlers else [])
 
             return func
 
@@ -403,7 +429,7 @@ class Matcher(metaclass=MatcherMeta):
     def got(
         cls,
         key: str,
-        prompt: Optional[Union[str, "Message", "MessageSegment",
+        prompt: Optional[Union[str, Message, MessageSegment,
                                MessageTemplate]] = None,
         args_parser: Optional[T_ArgsParser] = None
     ) -> Callable[[T_Handler], T_Handler]:
@@ -419,8 +445,12 @@ class Matcher(metaclass=MatcherMeta):
           * ``args_parser: Optional[T_ArgsParser]``: 可选参数解析函数，空则使用默认解析函数
         """
 
-        async def _key_getter(bot: "Bot", event: "Event", state: T_State):
+        async def _key_getter(bot: Bot, event: Event, state: T_State):
+            if state.get(f"_{key}_prompted"):
+                return
+
             state["_current_key"] = key
+            state[f"_{key}_prompted"] = True
             if key not in state:
                 if prompt is not None:
                     if isinstance(prompt, MessageTemplate):
@@ -428,52 +458,40 @@ class Matcher(metaclass=MatcherMeta):
                     else:
                         _prompt = prompt
                     await bot.send(event=event, message=_prompt)
-                raise PausedException
+                raise RejectedException
             else:
-                state["_skip_key"] = True
+                state[f"_{key}_parsed"] = True
 
-        async def _key_parser(bot: "Bot", event: "Event", state: T_State):
-            if key in state and state.get("_skip_key"):
-                del state["_skip_key"]
+        async def _key_parser(bot: Bot, event: Event, state: T_State):
+            if key in state and state.get(f"_{key}_parsed"):
                 return
+
             parser = args_parser or cls._default_parser
             if parser:
-                # parser = cast(T_ArgsParser["Bot", "Event"], parser)
                 await parser(bot, event, state)
             else:
-                state[state["_current_key"]] = str(event.get_message())
-
-        getter_handler = cls.append_handler(_key_getter)
-        parser_handler = cls.append_handler(_key_parser)
+                state[key] = str(event.get_message())
+            state[f"_{key}_parsed"] = True
 
         def _decorator(func: T_Handler) -> T_Handler:
-            if not hasattr(cls.handlers[-1].func, "__wrapped__"):
-                parser = cls.handlers.pop()
-                func_handler = Handler(func)
 
-                @wraps(func)
-                async def wrapper(bot: "Bot", event: "Event", state: T_State,
-                                  matcher: Matcher):
-                    await parser(matcher, bot, event, state)
-                    await func_handler(matcher, bot, event, state)
-                    if "_current_key" in state:
-                        del state["_current_key"]
+            get_depend = DependsWrapper(_key_getter)
+            parser_depend = DependsWrapper(_key_parser)
 
-                wrapper_handler = cls.append_handler(wrapper)
-
-                getter_handler.update_signature(
-                    bot=wrapper_handler.bot_type,
-                    event=wrapper_handler.event_type)
-                parser_handler.update_signature(
-                    bot=wrapper_handler.bot_type,
-                    event=wrapper_handler.event_type)
+            if cls.handlers and cls.handlers[-1].func is func:
+                func_handler = cls.handlers[-1]
+                func_handler.prepend_dependency(parser_depend)
+                func_handler.prepend_dependency(get_depend)
+            else:
+                cls.append_handler(func,
+                                   dependencies=[get_depend, parser_depend])
 
             return func
 
         return _decorator
 
     @classmethod
-    async def send(cls, message: Union[str, "Message", "MessageSegment",
+    async def send(cls, message: Union[str, Message, MessageSegment,
                                        MessageTemplate], **kwargs) -> Any:
         """
         :说明:
@@ -496,7 +514,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def finish(cls,
-                     message: Optional[Union[str, "Message", "MessageSegment",
+                     message: Optional[Union[str, Message, MessageSegment,
                                              MessageTemplate]] = None,
                      **kwargs) -> NoReturn:
         """
@@ -522,7 +540,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def pause(cls,
-                    prompt: Optional[Union[str, "Message", "MessageSegment",
+                    prompt: Optional[Union[str, Message, MessageSegment,
                                            MessageTemplate]] = None,
                     **kwargs) -> NoReturn:
         """
@@ -548,8 +566,8 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def reject(cls,
-                     prompt: Optional[Union[str, "Message",
-                                            "MessageSegment"]] = None,
+                     prompt: Optional[Union[str, Message,
+                                            MessageSegment]] = None,
                      **kwargs) -> NoReturn:
         """
         :说明:
@@ -564,6 +582,8 @@ class Matcher(metaclass=MatcherMeta):
         bot = current_bot.get()
         event = current_event.get()
         state = current_state.get()
+        if "_current_key" in state and f"_{state['_current_key']}_parsed" in state:
+            del state[f"_{state['_current_key']}_parsed"]
         if isinstance(prompt, MessageTemplate):
             _prompt = prompt.format(**state)
         else:
@@ -581,7 +601,12 @@ class Matcher(metaclass=MatcherMeta):
         self.block = True
 
     # 运行handlers
-    async def run(self, bot: "Bot", event: "Event", state: T_State):
+    async def run(self,
+                  bot: Bot,
+                  event: Event,
+                  state: T_State,
+                  stack: Optional[AsyncExitStack] = None,
+                  dependency_cache: Optional[T_DependencyCache] = None):
         b_t = current_bot.set(bot)
         e_t = current_event.set(event)
         s_t = current_state.set(self.state)
@@ -594,7 +619,15 @@ class Matcher(metaclass=MatcherMeta):
             while self.handlers:
                 handler = self.handlers.pop(0)
                 logger.debug(f"Running handler {handler}")
-                await handler(self, bot, event, self.state)
+                try:
+                    await handler(matcher=self,
+                                  bot=bot,
+                                  event=event,
+                                  state=self.state,
+                                  _stack=stack,
+                                  _dependency_cache=dependency_cache)
+                except SkippedException:
+                    pass
 
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore
@@ -610,11 +643,8 @@ class Matcher(metaclass=MatcherMeta):
 
             updater = self.__class__._default_permission_updater
             if updater:
-                permission = await updater(
-                    bot,
-                    event,
-                    self.state,  # type: ignore
-                    self.permission)
+                permission = await updater(bot, event, self.state,
+                                           self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
 
@@ -647,11 +677,8 @@ class Matcher(metaclass=MatcherMeta):
 
             updater = self.__class__._default_permission_updater
             if updater:
-                permission = await updater(
-                    bot,
-                    event,
-                    self.state,  # type: ignore
-                    self.permission)
+                permission = await updater(bot, event, self.state,
+                                           self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
 

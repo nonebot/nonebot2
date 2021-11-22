@@ -22,24 +22,6 @@ sidebarDepth: 0
 
 
 
-## _exception_ `IgnoredException`
-
-基类：`nonebot.exception.NoneBotException`
-
-
-* **说明**
-
-    指示 NoneBot 应该忽略该事件。可由 PreProcessor 抛出。
-
-
-
-* **参数**
-
-    
-    * `reason`: 忽略事件的原因
-
-
-
 ## _exception_ `ParserExit`
 
 基类：`nonebot.exception.NoneBotException`
@@ -61,57 +43,21 @@ sidebarDepth: 0
 
 
 
-## _exception_ `PausedException`
+## _exception_ `IgnoredException`
 
 基类：`nonebot.exception.NoneBotException`
 
 
 * **说明**
 
-    指示 NoneBot 结束当前 `Handler` 并等待下一条消息后继续下一个 `Handler`。
-    可用于用户输入新信息。
+    指示 NoneBot 应该忽略该事件。可由 PreProcessor 抛出。
 
 
 
-* **用法**
+* **参数**
 
-    可以在 `Handler` 中通过 `Matcher.pause()` 抛出。
-
-
-
-## _exception_ `RejectedException`
-
-基类：`nonebot.exception.NoneBotException`
-
-
-* **说明**
-
-    指示 NoneBot 结束当前 `Handler` 并等待下一条消息后重新运行当前 `Handler`。
-    可用于用户重新输入。
-
-
-
-* **用法**
-
-    可以在 `Handler` 中通过 `Matcher.reject()` 抛出。
-
-
-
-## _exception_ `FinishedException`
-
-基类：`nonebot.exception.NoneBotException`
-
-
-* **说明**
-
-    指示 NoneBot 结束当前 `Handler` 且后续 `Handler` 不再被运行。
-    可用于结束用户会话。
-
-
-
-* **用法**
-
-    可以在 `Handler` 中通过 `Matcher.finish()` 抛出。
+    
+    * `reason`: 忽略事件的原因
 
 
 
@@ -129,6 +75,88 @@ sidebarDepth: 0
 * **用法**
 
     在 `Matcher.block == True` 时抛出。
+
+
+
+## _exception_ `MatcherException`
+
+基类：`nonebot.exception.NoneBotException`
+
+
+* **说明**
+
+    所有 Matcher 发生的异常基类。
+
+
+
+## _exception_ `SkippedException`
+
+基类：`nonebot.exception.MatcherException`
+
+
+* **说明**
+
+    指示 NoneBot 立即结束当前 `Handler` 的处理，继续处理下一个 `Handler`。
+
+
+
+* **用法**
+
+    可以在 `Handler` 中通过 `Matcher.skip()` 抛出。
+
+
+
+## _exception_ `PausedException`
+
+基类：`nonebot.exception.MatcherException`
+
+
+* **说明**
+
+    指示 NoneBot 结束当前 `Handler` 并等待下一条消息后继续下一个 `Handler`。
+    可用于用户输入新信息。
+
+
+
+* **用法**
+
+    可以在 `Handler` 中通过 `Matcher.pause()` 抛出。
+
+
+
+## _exception_ `RejectedException`
+
+基类：`nonebot.exception.MatcherException`
+
+
+* **说明**
+
+    指示 NoneBot 结束当前 `Handler` 并等待下一条消息后重新运行当前 `Handler`。
+    可用于用户重新输入。
+
+
+
+* **用法**
+
+    可以在 `Handler` 中通过 `Matcher.reject()` 抛出。
+
+
+
+## _exception_ `FinishedException`
+
+基类：`nonebot.exception.MatcherException`
+
+
+* **说明**
+
+    指示 NoneBot 结束当前 `Handler` 且后续 `Handler` 不再被运行。
+    可用于结束用户会话。
+
+
+
+* **用法**
+
+    可以在 `Handler` 中通过 `Matcher.finish()` 抛出。
 
 
 
@@ -152,7 +180,7 @@ sidebarDepth: 0
 
 ## _exception_ `NoLogException`
 
-基类：`Exception`
+基类：`nonebot.exception.AdapterException`
 
 
 * **说明**

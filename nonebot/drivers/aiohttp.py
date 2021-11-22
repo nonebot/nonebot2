@@ -248,6 +248,8 @@ class Driver(ForwardDriver):
                         await asyncio.sleep(3)
                         continue
 
+                    setup_ = cast(HTTPPollingSetup, setup_)
+
                     if not bot:
                         request = await _build_request(setup_)
                         if not request:
@@ -264,7 +266,6 @@ class Driver(ForwardDriver):
                         bot.request = request
 
                     request = cast(HTTPRequest, request)
-                    setup_ = cast(HTTPPollingSetup, setup_)
 
                     headers = request.headers
                     timeout = aiohttp.ClientTimeout(30)
