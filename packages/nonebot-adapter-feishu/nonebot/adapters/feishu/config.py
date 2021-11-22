@@ -17,13 +17,16 @@ class Config(BaseModel):
       - ``is_lark`` / ``feishu_is_lark``: 是否使用Lark（飞书海外版），默认为 false
 
     """
+
     app_id: Optional[str] = Field(default=None, alias="feishu_app_id")
     app_secret: Optional[str] = Field(default=None, alias="feishu_app_secret")
     encrypt_key: Optional[str] = Field(default=None, alias="feishu_encrypt_key")
-    verification_token: Optional[str] = Field(default=None,
-                                              alias="feishu_verification_token")
+    verification_token: Optional[str] = Field(
+        default=None, alias="feishu_verification_token"
+    )
     tenant_access_token: Optional[str] = Field(
-        default=None, alias="feishu_tenant_access_token")
+        default=None, alias="feishu_tenant_access_token"
+    )
     is_lark: Optional[str] = Field(default=False, alias="feishu_is_lark")
 
     class Config:

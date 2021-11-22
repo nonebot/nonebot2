@@ -9,8 +9,9 @@ from typing import List, Optional
 from contextvars import ContextVar
 
 _managers: List["PluginManager"] = []
-_current_plugin: ContextVar[Optional["Plugin"]] = ContextVar("_current_plugin",
-                                                             default=None)
+_current_plugin: ContextVar[Optional["Plugin"]] = ContextVar(
+    "_current_plugin", default=None
+)
 
 from .on import on as on
 from .manager import PluginManager

@@ -1,8 +1,17 @@
 import abc
 from copy import deepcopy
 from dataclasses import field, asdict, dataclass
-from typing import (Any, Dict, List, Type, Union, Generic, Mapping, TypeVar,
-                    Iterable)
+from typing import (
+    Any,
+    Dict,
+    List,
+    Type,
+    Union,
+    Generic,
+    Mapping,
+    TypeVar,
+    Iterable,
+)
 
 from ._template import MessageTemplate
 
@@ -14,6 +23,7 @@ TM = TypeVar("TM", bound="Message")
 @dataclass
 class MessageSegment(Mapping, abc.ABC, Generic[TM]):
     """消息段基类"""
+
     type: str
     """
     - 类型: ``str``
@@ -82,11 +92,12 @@ class MessageSegment(Mapping, abc.ABC, Generic[TM]):
 class Message(List[TMS], abc.ABC):
     """消息数组"""
 
-    def __init__(self: TM,
-                 message: Union[str, None, Mapping, Iterable[Mapping], TMS, TM,
-                                Any] = None,
-                 *args,
-                 **kwargs):
+    def __init__(
+        self: TM,
+        message: Union[str, None, Mapping, Iterable[Mapping], TMS, TM, Any] = None,
+        *args,
+        **kwargs,
+    ):
         """
         :参数:
 
@@ -103,8 +114,7 @@ class Message(List[TMS], abc.ABC):
             self.extend(self._construct(message))
 
     @classmethod
-    def template(cls: Type[TM],
-                 format_string: Union[str, TM]) -> MessageTemplate[TM]:
+    def template(cls: Type[TM], format_string: Union[str, TM]) -> MessageTemplate[TM]:
         """
         :说明:
 
@@ -156,8 +166,7 @@ class Message(List[TMS], abc.ABC):
 
     @staticmethod
     @abc.abstractmethod
-    def _construct(
-            msg: Union[str, Mapping, Iterable[Mapping], Any]) -> Iterable[TMS]:
+    def _construct(msg: Union[str, Mapping, Iterable[Mapping], Any]) -> Iterable[TMS]:
         raise NotImplementedError
 
     def __add__(self: TM, other: Union[str, Mapping, Iterable[Mapping]]) -> TM:

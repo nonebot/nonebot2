@@ -2,9 +2,8 @@ import abc
 
 from pydantic import BaseModel
 
-from nonebot.utils import DataclassEncoder
-
 from ._message import Message
+from nonebot.utils import DataclassEncoder
 
 
 class Event(abc.ABC, BaseModel):

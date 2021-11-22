@@ -1,7 +1,7 @@
-from ipaddress import IPv4Address
 from typing import Optional
+from ipaddress import IPv4Address
 
-from pydantic import BaseModel, Extra, Field
+from pydantic import Extra, Field, BaseModel
 
 
 class Config(BaseModel):
@@ -14,9 +14,10 @@ class Config(BaseModel):
       - ``mirai_host``: mirai-api-http 的地址
       - ``mirai_port``: mirai-api-http 的端口
     """
-    auth_key: Optional[str] = Field(None, alias='mirai_auth_key')
-    host: Optional[IPv4Address] = Field(None, alias='mirai_host')
-    port: Optional[int] = Field(None, alias='mirai_port')
+
+    auth_key: Optional[str] = Field(None, alias="mirai_auth_key")
+    host: Optional[IPv4Address] = Field(None, alias="mirai_host")
+    port: Optional[int] = Field(None, alias="mirai_port")
 
     class Config:
         extra = Extra.ignore

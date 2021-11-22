@@ -1,5 +1,5 @@
 from nonebot import on_command
-from nonebot.adapters.cqhttp import Bot, PrivateMessageEvent, GroupMessageEvent
+from nonebot.adapters.cqhttp import Bot, GroupMessageEvent, PrivateMessageEvent
 
 overload = on_command("overload")
 

@@ -5,9 +5,10 @@ from base64 import b64encode
 from typing import Any, Type, Tuple, Union, Mapping, Iterable, Optional, cast
 
 from nonebot.typing import overrides
-from .utils import log, _b2s, escape, unescape
 from nonebot.adapters import Message as BaseMessage
 from nonebot.adapters import MessageSegment as BaseMessageSegment
+
+from .utils import log, _b2s, escape, unescape
 
 
 class MessageSegment(BaseMessageSegment["Message"]):
@@ -27,23 +28,24 @@ class MessageSegment(BaseMessageSegment["Message"]):
 
         # process special types
         if type_ == "text":
-            return escape(
-                data.get("text", ""),  # type: ignore
-                escape_comma=False)
+            return escape(data.get("text", ""), escape_comma=False)  # type: ignore
 
         params = ",".join(
-            [f"{k}={escape(str(v))}" for k, v in data.items() if v is not None])
+            [f"{k}={escape(str(v))}" for k, v in data.items() if v is not None]
+        )
         return f"[CQ:{type_}{',' if params else ''}{params}]"
 
     @overrides(BaseMessageSegment)
     def __add__(self, other) -> "Message":
-        return Message(self) + (MessageSegment.text(other) if isinstance(
-            other, str) else other)
+        return Message(self) + (
+            MessageSegment.text(other) if isinstance(other, str) else other
+        )
 
     @overrides(BaseMessageSegment)
     def __radd__(self, other) -> "Message":
-        return (MessageSegment.text(other)
-                if isinstance(other, str) else Message(other)) + self
+        return (
+            MessageSegment.text(other) if isinstance(other, str) else Message(other)
+        ) + self
 
     @overrides(BaseMessageSegment)
     def is_text(self) -> bool:
@@ -83,11 +85,13 @@ class MessageSegment(BaseMessageSegment["Message"]):
         return MessageSegment("forward", {"id": id_})
 
     @staticmethod
-    def image(file: Union[str, bytes, BytesIO, Path],
-              type_: Optional[str] = None,
-              cache: bool = True,
-              proxy: bool = True,
-              timeout: Optional[int] = None) -> "MessageSegment":
+    def image(
+        file: Union[str, bytes, BytesIO, Path],
+        type_: Optional[str] = None,
+        cache: bool = True,
+        proxy: bool = True,
+        timeout: Optional[int] = None,
+    ) -> "MessageSegment":
         if isinstance(file, BytesIO):
             file = file.getvalue()
         if isinstance(file, bytes):
@@ -95,74 +99,85 @@ class MessageSegment(BaseMessageSegment["Message"]):
         elif isinstance(file, Path):
             file = f"file:///{file.resolve()}"
         return MessageSegment(
-            "image", {
+            "image",
+            {
                 "file": file,
                 "type": type_,
                 "cache": _b2s(cache),
                 "proxy": _b2s(proxy),
-                "timeout": timeout
-            })
+                "timeout": timeout,
+            },
+        )
 
     @staticmethod
     def json(data: str) -> "MessageSegment":
         return MessageSegment("json", {"data": data})
 
     @staticmethod
-    def location(latitude: float,
-                 longitude: float,
-                 title: Optional[str] = None,
-                 content: Optional[str] = None) -> "MessageSegment":
+    def location(
+        latitude: float,
+        longitude: float,
+        title: Optional[str] = None,
+        content: Optional[str] = None,
+    ) -> "MessageSegment":
         return MessageSegment(
-            "location", {
+            "location",
+            {
                 "lat": str(latitude),
                 "lon": str(longitude),
                 "title": title,
-                "content": content
-            })
+                "content": content,
+            },
+        )
 
     @staticmethod
     def music(type_: str, id_: int) -> "MessageSegment":
         return MessageSegment("music", {"type": type_, "id": id_})
 
     @staticmethod
-    def music_custom(url: str,
-                     audio: str,
-                     title: str,
-                     content: Optional[str] = None,
-                     img_url: Optional[str] = None) -> "MessageSegment":
+    def music_custom(
+        url: str,
+        audio: str,
+        title: str,
+        content: Optional[str] = None,
+        img_url: Optional[str] = None,
+    ) -> "MessageSegment":
         return MessageSegment(
-            "music", {
+            "music",
+            {
                 "type": "custom",
                 "url": url,
                 "audio": audio,
                 "title": title,
                 "content": content,
-                "image": img_url
-            })
+                "image": img_url,
+            },
+        )
 
     @staticmethod
     def node(id_: int) -> "MessageSegment":
         return MessageSegment("node", {"id": str(id_)})
 
     @staticmethod
-    def node_custom(user_id: int, nickname: str,
-                    content: Union[str, "Message"]) -> "MessageSegment":
-        return MessageSegment("node", {
-            "user_id": str(user_id),
-            "nickname": nickname,
-            "content": content
-        })
+    def node_custom(
+        user_id: int, nickname: str, content: Union[str, "Message"]
+    ) -> "MessageSegment":
+        return MessageSegment(
+            "node", {"user_id": str(user_id), "nickname": nickname, "content": content}
+        )
 
     @staticmethod
     def poke(type_: str, id_: str) -> "MessageSegment":
         return MessageSegment("poke", {"type": type_, "id": id_})
 
     @staticmethod
-    def record(file: Union[str, bytes, BytesIO, Path],
-               magic: Optional[bool] = None,
-               cache: Optional[bool] = None,
-               proxy: Optional[bool] = None,
-               timeout: Optional[int] = None) -> "MessageSegment":
+    def record(
+        file: Union[str, bytes, BytesIO, Path],
+        magic: Optional[bool] = None,
+        cache: Optional[bool] = None,
+        proxy: Optional[bool] = None,
+        timeout: Optional[int] = None,
+    ) -> "MessageSegment":
         if isinstance(file, BytesIO):
             file = file.getvalue()
         if isinstance(file, bytes):
@@ -170,13 +185,15 @@ class MessageSegment(BaseMessageSegment["Message"]):
         elif isinstance(file, Path):
             file = f"file:///{file.resolve()}"
         return MessageSegment(
-            "record", {
+            "record",
+            {
                 "file": file,
                 "magic": _b2s(magic),
                 "cache": _b2s(cache),
                 "proxy": _b2s(proxy),
-                "timeout": timeout
-            })
+                "timeout": timeout,
+            },
+        )
 
     @staticmethod
     def reply(id_: int) -> "MessageSegment":
@@ -191,26 +208,27 @@ class MessageSegment(BaseMessageSegment["Message"]):
         return MessageSegment("shake", {})
 
     @staticmethod
-    def share(url: str = "",
-              title: str = "",
-              content: Optional[str] = None,
-              image: Optional[str] = None) -> "MessageSegment":
-        return MessageSegment("share", {
-            "url": url,
-            "title": title,
-            "content": content,
-            "image": image
-        })
+    def share(
+        url: str = "",
+        title: str = "",
+        content: Optional[str] = None,
+        image: Optional[str] = None,
+    ) -> "MessageSegment":
+        return MessageSegment(
+            "share", {"url": url, "title": title, "content": content, "image": image}
+        )
 
     @staticmethod
     def text(text: str) -> "MessageSegment":
         return MessageSegment("text", {"text": text})
 
     @staticmethod
-    def video(file: Union[str, bytes, BytesIO, Path],
-              cache: Optional[bool] = None,
-              proxy: Optional[bool] = None,
-              timeout: Optional[int] = None) -> "MessageSegment":
+    def video(
+        file: Union[str, bytes, BytesIO, Path],
+        cache: Optional[bool] = None,
+        proxy: Optional[bool] = None,
+        timeout: Optional[int] = None,
+    ) -> "MessageSegment":
         if isinstance(file, BytesIO):
             file = file.getvalue()
         if isinstance(file, bytes):
@@ -218,12 +236,14 @@ class MessageSegment(BaseMessageSegment["Message"]):
         elif isinstance(file, Path):
             file = f"file:///{file.resolve()}"
         return MessageSegment(
-            "video", {
+            "video",
+            {
                 "file": file,
                 "cache": _b2s(cache),
                 "proxy": _b2s(proxy),
-                "timeout": timeout
-            })
+                "timeout": timeout,
+            },
+        )
 
     @staticmethod
     def xml(data: str) -> "MessageSegment":
@@ -241,22 +261,22 @@ class Message(BaseMessage[MessageSegment]):
         return MessageSegment
 
     @overrides(BaseMessage)
-    def __add__(self, other: Union[str, Mapping,
-                                   Iterable[Mapping]]) -> "Message":
+    def __add__(self, other: Union[str, Mapping, Iterable[Mapping]]) -> "Message":
         return super(Message, self).__add__(
-            MessageSegment.text(other) if isinstance(other, str) else other)
+            MessageSegment.text(other) if isinstance(other, str) else other
+        )
 
     @overrides(BaseMessage)
-    def __radd__(self, other: Union[str, Mapping,
-                                    Iterable[Mapping]]) -> "Message":
+    def __radd__(self, other: Union[str, Mapping, Iterable[Mapping]]) -> "Message":
         return super(Message, self).__radd__(
-            MessageSegment.text(other) if isinstance(other, str) else other)
+            MessageSegment.text(other) if isinstance(other, str) else other
+        )
 
     @staticmethod
     @overrides(BaseMessage)
     def _construct(
-        msg: Union[str, Mapping,
-                   Iterable[Mapping]]) -> Iterable[MessageSegment]:
+        msg: Union[str, Mapping, Iterable[Mapping]]
+    ) -> Iterable[MessageSegment]:
         if isinstance(msg, Mapping):
             msg = cast(Mapping[str, Any], msg)
             yield MessageSegment(msg["type"], msg.get("data") or {})
@@ -270,14 +290,15 @@ class Message(BaseMessage[MessageSegment]):
             def _iter_message(msg: str) -> Iterable[Tuple[str, str]]:
                 text_begin = 0
                 for cqcode in re.finditer(
-                        r"\[CQ:(?P<type>[a-zA-Z0-9-_.]+)"
-                        r"(?P<params>"
-                        r"(?:,[a-zA-Z0-9-_.]+=[^,\]]+)*"
-                        r"),?\]", msg):
-                    yield "text", msg[text_begin:cqcode.pos + cqcode.start()]
+                    r"\[CQ:(?P<type>[a-zA-Z0-9-_.]+)"
+                    r"(?P<params>"
+                    r"(?:,[a-zA-Z0-9-_.]+=[^,\]]+)*"
+                    r"),?\]",
+                    msg,
+                ):
+                    yield "text", msg[text_begin : cqcode.pos + cqcode.start()]
                     text_begin = cqcode.pos + cqcode.end()
-                    yield cqcode.group("type"), cqcode.group("params").lstrip(
-                        ",")
+                    yield cqcode.group("type"), cqcode.group("params").lstrip(",")
                 yield "text", msg[text_begin:]
 
             for type_, data in _iter_message(msg):
@@ -287,10 +308,11 @@ class Message(BaseMessage[MessageSegment]):
                         yield MessageSegment(type_, {"text": unescape(data)})
                 else:
                     data = {
-                        k: unescape(v) for k, v in map(
+                        k: unescape(v)
+                        for k, v in map(
                             lambda x: x.split("=", maxsplit=1),
-                            filter(lambda x: x, (
-                                x.lstrip() for x in data.split(","))))
+                            filter(lambda x: x, (x.lstrip() for x in data.split(","))),
+                        )
                     }
                     yield MessageSegment(type_, data)
 

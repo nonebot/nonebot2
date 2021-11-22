@@ -8,8 +8,17 @@
 import abc
 import asyncio
 from dataclasses import field, dataclass
-from typing import (TYPE_CHECKING, Any, Set, Dict, Type, Union, Callable,
-                    Optional, Awaitable)
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Set,
+    Dict,
+    Type,
+    Union,
+    Callable,
+    Optional,
+    Awaitable,
+)
 
 from nonebot.log import logger
 from nonebot.utils import escape_tag
@@ -90,12 +99,14 @@ class Driver(abc.ABC):
         """
         if name in self._adapters:
             logger.opt(colors=True).debug(
-                f'Adapter "<y>{escape_tag(name)}</y>" already exists')
+                f'Adapter "<y>{escape_tag(name)}</y>" already exists'
+            )
             return
         self._adapters[name] = adapter
         adapter.register(self, self.config, **kwargs)
         logger.opt(colors=True).debug(
-            f'Succeeded to load adapter "<y>{escape_tag(name)}</y>"')
+            f'Succeeded to load adapter "<y>{escape_tag(name)}</y>"'
+        )
 
     @property
     @abc.abstractmethod
@@ -121,7 +132,8 @@ class Driver(abc.ABC):
           * ``**kwargs``
         """
         logger.opt(colors=True).debug(
-            f"<g>Loaded adapters: {escape_tag(', '.join(self._adapters))}</g>")
+            f"<g>Loaded adapters: {escape_tag(', '.join(self._adapters))}</g>"
+        )
 
     @abc.abstractmethod
     def on_startup(self, func: Callable) -> Callable:
@@ -146,8 +158,7 @@ class Driver(abc.ABC):
         self._bot_connection_hook.add(func)
         return func
 
-    def on_bot_disconnect(
-            self, func: T_BotDisconnectionHook) -> T_BotDisconnectionHook:
+    def on_bot_disconnect(self, func: T_BotDisconnectionHook) -> T_BotDisconnectionHook:
         """
         :说明:
 
@@ -172,7 +183,8 @@ class Driver(abc.ABC):
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
                         "<r><bg #f8bbd0>Error when running WebSocketConnection hook. "
-                        "Running cancelled!</bg #f8bbd0></r>")
+                        "Running cancelled!</bg #f8bbd0></r>"
+                    )
 
         asyncio.create_task(_run_hook(bot))
 
@@ -189,7 +201,8 @@ class Driver(abc.ABC):
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
                         "<r><bg #f8bbd0>Error when running WebSocketDisConnection hook. "
-                        "Running cancelled!</bg #f8bbd0></r>")
+                        "Running cancelled!</bg #f8bbd0></r>"
+                    )
 
         asyncio.create_task(_run_hook(bot))
 
@@ -201,8 +214,8 @@ class ForwardDriver(Driver):
 
     @abc.abstractmethod
     def setup_http_polling(
-        self, setup: Union["HTTPPollingSetup",
-                           Callable[[], Awaitable["HTTPPollingSetup"]]]
+        self,
+        setup: Union["HTTPPollingSetup", Callable[[], Awaitable["HTTPPollingSetup"]]],
     ) -> None:
         """
         :说明:
@@ -217,8 +230,7 @@ class ForwardDriver(Driver):
 
     @abc.abstractmethod
     def setup_websocket(
-        self, setup: Union["WebSocketSetup",
-                           Callable[[], Awaitable["WebSocketSetup"]]]
+        self, setup: Union["WebSocketSetup", Callable[[], Awaitable["WebSocketSetup"]]]
     ) -> None:
         """
         :说明:
@@ -288,6 +300,7 @@ class HTTPRequest(HTTPConnection):
     .. _asgi http scope:
         https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope
     """
+
     method: str = "GET"
     """The HTTP method name, uppercased."""
     body: bytes = b""
@@ -309,6 +322,7 @@ class HTTPResponse:
     .. _asgi http scope:
         https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope
     """
+
     status: int
     """HTTP status code."""
     body: Optional[bytes] = None
@@ -416,5 +430,5 @@ class WebSocketSetup:
     """URL"""
     headers: Dict[str, str] = field(default_factory=dict)
     """HTTP headers"""
-    reconnect_interval: float = 3.
+    reconnect_interval: float = 3.0
     """WebSocket 重连间隔"""

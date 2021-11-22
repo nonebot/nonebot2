@@ -8,7 +8,6 @@ from nonebot.drivers import Driver, WebSocket
 from .event import Event
 from .message import Message, MessageSegment
 
-
 def get_auth_bearer(access_token: Optional[str] = ...) -> Optional[str]:
     ...
 

@@ -12,6 +12,7 @@ class Config(BaseModel):
       - ``access_token`` / ``ding_access_token``: 钉钉令牌
       - ``secret`` / ``ding_secret``: 钉钉 HTTP 上报数据签名口令
     """
+
     secret: Optional[str] = Field(default=None, alias="ding_secret")
     access_token: Optional[str] = Field(default=None, alias="ding_access_token")
 

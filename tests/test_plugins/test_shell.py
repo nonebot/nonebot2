@@ -1,7 +1,7 @@
 from nonebot.adapters import Bot
 from nonebot.typing import T_State
 from nonebot import on_shell_command
-from nonebot.rule import to_me, ArgumentParser
+from nonebot.rule import ArgumentParser, to_me
 
 parser = ArgumentParser()
 parser.add_argument("-a", action="store_true")

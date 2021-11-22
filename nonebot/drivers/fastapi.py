@@ -32,11 +32,15 @@ from nonebot.typing import overrides
 from nonebot.utils import escape_tag
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.drivers import (HTTPRequest, ForwardDriver, ReverseDriver,
-                             WebSocketSetup, HTTPPollingSetup)
+from nonebot.drivers import (
+    HTTPRequest,
+    ForwardDriver,
+    ReverseDriver,
+    WebSocketSetup,
+    HTTPPollingSetup,
+)
 
-HTTPPOLLING_SETUP = Union[HTTPPollingSetup,
-                          Callable[[], Awaitable[HTTPPollingSetup]]]
+HTTPPOLLING_SETUP = Union[HTTPPollingSetup, Callable[[], Awaitable[HTTPPollingSetup]]]
 WEBSOCKET_SETUP = Union[WebSocketSetup, Callable[[], Awaitable[WebSocketSetup]]]
 
 
@@ -44,6 +48,7 @@ class Config(BaseSettings):
     """
     FastAPI 驱动框架设置，详情参考 FastAPI 文档
     """
+
     fastapi_openapi_url: Optional[str] = None
     """
     :类型:
@@ -226,12 +231,14 @@ class Driver(ReverseDriver, ForwardDriver):
         self.websockets.append(setup)
 
     @overrides(ReverseDriver)
-    def run(self,
-            host: Optional[str] = None,
-            port: Optional[int] = None,
-            *,
-            app: Optional[str] = None,
-            **kwargs):
+    def run(
+        self,
+        host: Optional[str] = None,
+        port: Optional[int] = None,
+        *,
+        app: Optional[str] = None,
+        **kwargs,
+    ):
         """使用 ``uvicorn`` 启动 FastAPI"""
         super().run(host, port, app, **kwargs)
         LOGGING_CONFIG = {
@@ -243,10 +250,7 @@ class Driver(ReverseDriver, ForwardDriver):
                 },
             },
             "loggers": {
-                "uvicorn.error": {
-                    "handlers": ["default"],
-                    "level": "INFO"
-                },
+                "uvicorn.error": {"handlers": ["default"], "level": "INFO"},
                 "uvicorn.access": {
                     "handlers": ["default"],
                     "level": "INFO",
@@ -258,15 +262,16 @@ class Driver(ReverseDriver, ForwardDriver):
             host=host or str(self.config.host),
             port=port or self.config.port,
             reload=self.fastapi_config.fastapi_reload
-            if self.fastapi_config.fastapi_reload is not None else
-            (bool(app) and self.config.debug),
+            if self.fastapi_config.fastapi_reload is not None
+            else (bool(app) and self.config.debug),
             reload_dirs=self.fastapi_config.fastapi_reload_dirs,
             reload_delay=self.fastapi_config.fastapi_reload_delay,
             reload_includes=self.fastapi_config.fastapi_reload_includes,
             reload_excludes=self.fastapi_config.fastapi_reload_excludes,
             debug=self.config.debug,
             log_config=LOGGING_CONFIG,
-            **kwargs)
+            **kwargs,
+        )
 
     def _run_forward(self):
         for setup in self.http_pollings:
@@ -287,39 +292,49 @@ class Driver(ReverseDriver, ForwardDriver):
             logger.warning(
                 f"Unknown adapter {adapter}. Please register the adapter before use."
             )
-            raise HTTPException(status_code=status.HTTP_404_NOT_FOUND,
-                                detail="adapter not found")
+            raise HTTPException(
+                status_code=status.HTTP_404_NOT_FOUND, detail="adapter not found"
+            )
 
         # 创建 Bot 对象
         BotClass = self._adapters[adapter]
-        http_request = HTTPRequest(request.scope["http_version"],
-                                   request.url.scheme, request.url.path,
-                                   request.scope["query_string"],
-                                   dict(request.headers), request.method, data)
-        x_self_id, response = await BotClass.check_permission(
-            self, http_request)
+        http_request = HTTPRequest(
+            request.scope["http_version"],
+            request.url.scheme,
+            request.url.path,
+            request.scope["query_string"],
+            dict(request.headers),
+            request.method,
+            data,
+        )
+        x_self_id, response = await BotClass.check_permission(self, http_request)
 
         if not x_self_id:
             raise HTTPException(
-                response and response.status or 401, response and
-                response.body and response.body.decode("utf-8"))
+                response and response.status or 401,
+                response and response.body and response.body.decode("utf-8"),
+            )
 
         if x_self_id in self._clients:
-            logger.warning("There's already a reverse websocket connection,"
-                           "so the event may be handled twice.")
+            logger.warning(
+                "There's already a reverse websocket connection,"
+                "so the event may be handled twice."
+            )
 
         bot = BotClass(x_self_id, http_request)
 
         asyncio.create_task(bot.handle_message(data))
-        return Response(response and response.body,
-                        response and response.status or 200)
+        return Response(response and response.body, response and response.status or 200)
 
-    async def _handle_ws_reverse(self, adapter: str,
-                                 websocket: FastAPIWebSocket):
-        ws = WebSocket(websocket.scope.get("http_version",
-                                           "1.1"), websocket.url.scheme,
-                       websocket.url.path, websocket.scope["query_string"],
-                       dict(websocket.headers), websocket)
+    async def _handle_ws_reverse(self, adapter: str, websocket: FastAPIWebSocket):
+        ws = WebSocket(
+            websocket.scope.get("http_version", "1.1"),
+            websocket.url.scheme,
+            websocket.url.path,
+            websocket.scope["query_string"],
+            dict(websocket.headers),
+            websocket,
+        )
 
         if adapter not in self._adapters:
             logger.warning(
@@ -349,7 +364,8 @@ class Driver(ReverseDriver, ForwardDriver):
         await ws.accept()
         logger.opt(colors=True).info(
             f"WebSocket Connection from <y>{escape_tag(adapter.upper())} "
-            f"Bot {escape_tag(self_id)}</y> Accepted!")
+            f"Bot {escape_tag(self_id)}</y> Accepted!"
+        )
 
         self._bot_connect(bot)
 
@@ -362,7 +378,8 @@ class Driver(ReverseDriver, ForwardDriver):
                     break
                 except Exception as e:
                     logger.opt(exception=e).error(
-                        "Error when receiving data from websocket.")
+                        "Error when receiving data from websocket."
+                    )
                     break
 
                 asyncio.create_task(bot.handle_message(data.encode()))
@@ -370,9 +387,7 @@ class Driver(ReverseDriver, ForwardDriver):
             self._bot_disconnect(bot)
 
     async def _http_loop(self, setup: HTTPPOLLING_SETUP):
-
-        async def _build_request(
-                setup: HTTPPollingSetup) -> Optional[HTTPRequest]:
+        async def _build_request(setup: HTTPPollingSetup) -> Optional[HTTPRequest]:
             url = httpx.URL(setup.url)
             if not url.netloc:
                 logger.opt(colors=True).error(
@@ -380,9 +395,14 @@ class Driver(ReverseDriver, ForwardDriver):
                 )
                 return
             return HTTPRequest(
-                setup.http_version, url.scheme, url.path, url.query, {
-                    **setup.headers, "host": url.netloc.decode("ascii")
-                }, setup.method, setup.body)
+                setup.http_version,
+                url.scheme,
+                url.path,
+                url.query,
+                {**setup.headers, "host": url.netloc.decode("ascii")},
+                setup.method,
+                setup.body,
+            )
 
         bot: Optional[Bot] = None
         request: Optional[HTTPRequest] = None
@@ -390,11 +410,11 @@ class Driver(ReverseDriver, ForwardDriver):
 
         logger.opt(colors=True).info(
             f"Start http polling for <y>{escape_tag(setup.adapter.upper())} "
-            f"Bot {escape_tag(setup.self_id)}</y>")
+            f"Bot {escape_tag(setup.self_id)}</y>"
+        )
 
         try:
-            async with httpx.AsyncClient(http2=True,
-                                         follow_redirects=True) as session:
+            async with httpx.AsyncClient(http2=True, follow_redirects=True) as session:
                 while not self.shutdown.is_set():
 
                     try:
@@ -405,7 +425,8 @@ class Driver(ReverseDriver, ForwardDriver):
                     except Exception as e:
                         logger.opt(colors=True, exception=e).error(
                             "<r><bg #f8bbd0>Error while parsing setup "
-                            f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>")
+                            f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>"
+                        )
                         await asyncio.sleep(3)
                         continue
 
@@ -432,18 +453,21 @@ class Driver(ReverseDriver, ForwardDriver):
                         f"Bot {setup_.self_id} from adapter {setup_.adapter} request {setup_.url}"
                     )
                     try:
-                        response = await session.request(request.method,
-                                                         setup_.url,
-                                                         content=request.body,
-                                                         headers=headers,
-                                                         timeout=30.)
+                        response = await session.request(
+                            request.method,
+                            setup_.url,
+                            content=request.body,
+                            headers=headers,
+                            timeout=30.0,
+                        )
                         response.raise_for_status()
                         data = response.read()
                         asyncio.create_task(bot.handle_message(data))
                     except httpx.HTTPError as e:
                         logger.opt(colors=True, exception=e).error(
                             f"<r><bg #f8bbd0>Error occurred while requesting {escape_tag(setup_.url)}. "
-                            "Try to reconnect...</bg #f8bbd0></r>")
+                            "Try to reconnect...</bg #f8bbd0></r>"
+                        )
 
                     await asyncio.sleep(setup_.poll_interval)
 
@@ -452,7 +476,8 @@ class Driver(ReverseDriver, ForwardDriver):
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
                 "<r><bg #f8bbd0>Unexpected exception occurred "
-                "while http polling</bg #f8bbd0></r>")
+                "while http polling</bg #f8bbd0></r>"
+            )
         finally:
             if bot:
                 self._bot_disconnect(bot)
@@ -471,7 +496,8 @@ class Driver(ReverseDriver, ForwardDriver):
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
                         "<r><bg #f8bbd0>Error while parsing setup "
-                        f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>")
+                        f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>"
+                    )
                     await asyncio.sleep(3)
                     continue
 
@@ -491,9 +517,11 @@ class Driver(ReverseDriver, ForwardDriver):
                     async with connection as ws:
                         logger.opt(colors=True).info(
                             f"WebSocket Connection to <y>{escape_tag(setup_.adapter.upper())} "
-                            f"Bot {escape_tag(setup_.self_id)}</y> succeeded!")
-                        request = WebSocket("1.1", url.scheme, url.path,
-                                            url.query, headers, ws)
+                            f"Bot {escape_tag(setup_.self_id)}</y> succeeded!"
+                        )
+                        request = WebSocket(
+                            "1.1", url.scheme, url.path, url.query, headers, ws
+                        )
 
                         BotClass = self._adapters[setup_.adapter]
                         bot = BotClass(setup_.self_id, request)
@@ -506,12 +534,14 @@ class Driver(ReverseDriver, ForwardDriver):
                             except ConnectionClosed:
                                 logger.opt(colors=True).error(
                                     "<r><bg #f8bbd0>WebSocket connection closed by peer. "
-                                    "Try to reconnect...</bg #f8bbd0></r>")
+                                    "Try to reconnect...</bg #f8bbd0></r>"
+                                )
                                 break
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
                         f"<r><bg #f8bbd0>Error while connecting to {url}. "
-                        "Try to reconnect...</bg #f8bbd0></r>")
+                        "Try to reconnect...</bg #f8bbd0></r>"
+                    )
                 finally:
                     if bot:
                         self._bot_disconnect(bot)
@@ -523,21 +553,22 @@ class Driver(ReverseDriver, ForwardDriver):
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
                 "<r><bg #f8bbd0>Unexpected exception occurred "
-                "while websocket loop</bg #f8bbd0></r>")
+                "while websocket loop</bg #f8bbd0></r>"
+            )
 
 
 @dataclass
 class WebSocket(BaseWebSocket):
-    websocket: Union[FastAPIWebSocket,
-                     WebSocketClientProtocol] = None  # type: ignore
+    websocket: Union[FastAPIWebSocket, WebSocketClientProtocol] = None  # type: ignore
 
     @property
     @overrides(BaseWebSocket)
     def closed(self) -> bool:
         if isinstance(self.websocket, FastAPIWebSocket):
             return (
-                self.websocket.client_state == WebSocketState.DISCONNECTED or
-                self.websocket.application_state == WebSocketState.DISCONNECTED)
+                self.websocket.client_state == WebSocketState.DISCONNECTED
+                or self.websocket.application_state == WebSocketState.DISCONNECTED
+            )
         else:
             return self.websocket.closed
 

@@ -7,7 +7,7 @@ aiocache_logger.setLevel(logging.DEBUG)
 aiocache_logger.handlers.clear()
 aiocache_logger.addHandler(LoguruHandler())
 
-from .bot import Bot as Bot
 from .event import *
+from .bot import Bot as Bot
 from .message import Message as Message
 from .message import MessageSegment as MessageSegment

@@ -8,8 +8,19 @@ from functools import wraps, partial
 from contextlib import asynccontextmanager
 from typing_extensions import GenericAlias  # type: ignore
 from typing_extensions import ParamSpec, get_args, get_origin
-from typing import (Any, Type, Deque, Tuple, Union, TypeVar, Callable, Optional,
-                    Awaitable, AsyncGenerator, ContextManager)
+from typing import (
+    Any,
+    Type,
+    Deque,
+    Tuple,
+    Union,
+    TypeVar,
+    Callable,
+    Optional,
+    Awaitable,
+    AsyncGenerator,
+    ContextManager,
+)
 
 from nonebot.log import logger
 from nonebot.typing import overrides
@@ -37,15 +48,16 @@ def escape_tag(s: str) -> str:
 
 
 def generic_check_issubclass(
-        cls: Any, class_or_tuple: Union[Type[Any], Tuple[Type[Any],
-                                                         ...]]) -> bool:
+    cls: Any, class_or_tuple: Union[Type[Any], Tuple[Type[Any], ...]]
+) -> bool:
     try:
         return issubclass(cls, class_or_tuple)
     except TypeError:
         if get_origin(cls) is Union:
             for type_ in get_args(cls):
                 if type_ is not type(None) and not generic_check_issubclass(
-                        type_, class_or_tuple):
+                    type_, class_or_tuple
+                ):
                     return False
             return True
         elif isinstance(cls, GenericAlias):
@@ -104,7 +116,8 @@ def run_sync(func: Callable[P, R]) -> Callable[P, Awaitable[R]]:
 
 @asynccontextmanager
 async def run_sync_ctx_manager(
-    cm: ContextManager[T],) -> AsyncGenerator[T, None]:
+    cm: ContextManager[T],
+) -> AsyncGenerator[T, None]:
     try:
         yield await run_sync(cm.__enter__)()
     except Exception as e:
@@ -122,7 +135,6 @@ def get_name(obj: Any) -> str:
 
 
 class CacheLock:
-
     def __init__(self):
         self._waiters: Optional[Deque[asyncio.Future]] = None
         self._locked = False
@@ -144,8 +156,9 @@ class CacheLock:
         return self._locked
 
     async def acquire(self):
-        if (not self._locked and (self._waiters is None or
-                                  all(w.cancelled() for w in self._waiters))):
+        if not self._locked and (
+            self._waiters is None or all(w.cancelled() for w in self._waiters)
+        ):
             self._locked = True
             return True
 
@@ -223,6 +236,7 @@ def logger_wrapper(logger_name: str):
 
     def log(level: str, message: str, exception: Optional[Exception] = None):
         return logger.opt(colors=True, exception=exception).log(
-            level, f"<m>{escape_tag(logger_name)}</m> | " + message)
+            level, f"<m>{escape_tag(logger_name)}</m> | " + message
+        )
 
     return log

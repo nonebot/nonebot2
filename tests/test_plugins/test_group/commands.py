@@ -1,6 +1,5 @@
-from nonebot.adapters import Bot, Event
-
 from . import cmd
+from nonebot.adapters import Bot, Event
 
 test_1 = cmd.command("1", aliases={"test"})
 

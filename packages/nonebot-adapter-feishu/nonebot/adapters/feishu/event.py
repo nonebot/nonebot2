@@ -1,12 +1,12 @@
-import inspect
 import json
-from typing import Any, Dict, List, Literal, Optional, Type
+import inspect
+from typing import Any, Dict, List, Type, Literal, Optional
 
-from pydantic import BaseModel, Field, root_validator
 from pygtrie import StringTrie
+from pydantic import Field, BaseModel, root_validator
 
-from nonebot.adapters import Event as BaseEvent
 from nonebot.typing import overrides
+from nonebot.adapters import Event as BaseEvent
 
 from .message import Message, MessageDeserializer
 

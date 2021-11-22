@@ -20,13 +20,17 @@ from ipaddress import IPv4Address
 from typing import Any, Set, Dict, Tuple, Union, Mapping, Optional
 
 from pydantic import BaseSettings, IPvAnyAddress
-from pydantic.env_settings import (SettingsError, EnvSettingsSource,
-                                   InitSettingsSource, SettingsSourceCallable,
-                                   read_env_file, env_file_sentinel)
+from pydantic.env_settings import (
+    SettingsError,
+    EnvSettingsSource,
+    InitSettingsSource,
+    SettingsSourceCallable,
+    read_env_file,
+    env_file_sentinel,
+)
 
 
 class CustomEnvSettings(EnvSettingsSource):
-
     def __call__(self, settings: BaseSettings) -> Dict[str, Any]:
         """
         Build environment variables suitable for passing to the Model.
@@ -39,15 +43,24 @@ class CustomEnvSettings(EnvSettingsSource):
             env_vars = {k.lower(): v for k, v in os.environ.items()}
 
         env_file_vars: Dict[str, Optional[str]] = {}
-        env_file = self.env_file if self.env_file != env_file_sentinel else settings.__config__.env_file
-        env_file_encoding = self.env_file_encoding if self.env_file_encoding is not None else settings.__config__.env_file_encoding
+        env_file = (
+            self.env_file
+            if self.env_file != env_file_sentinel
+            else settings.__config__.env_file
+        )
+        env_file_encoding = (
+            self.env_file_encoding
+            if self.env_file_encoding is not None
+            else settings.__config__.env_file_encoding
+        )
         if env_file is not None:
             env_path = Path(env_file)
             if env_path.is_file():
                 env_file_vars = read_env_file(
                     env_path,
                     encoding=env_file_encoding,
-                    case_sensitive=settings.__config__.case_sensitive)
+                    case_sensitive=settings.__config__.case_sensitive,
+                )
                 env_vars = {**env_file_vars, **env_vars}
 
         for field in settings.__fields__.values():
@@ -66,14 +79,12 @@ class CustomEnvSettings(EnvSettingsSource):
                 try:
                     env_val = settings.__config__.json_loads(env_val)
                 except ValueError as e:
-                    raise SettingsError(
-                        f'error parsing JSON for "{env_name}"') from e
+                    raise SettingsError(f'error parsing JSON for "{env_name}"') from e
             d[field.alias] = env_val
 
         if env_file_vars:
             for env_name, env_val in env_file_vars.items():
-                if (env_val is None or
-                        len(env_val) == 0) and env_name in env_vars:
+                if (env_val is None or len(env_val) == 0) and env_name in env_vars:
                     env_val = env_vars[env_name]
                 try:
                     if env_val:
@@ -87,12 +98,10 @@ class CustomEnvSettings(EnvSettingsSource):
 
 
 class BaseConfig(BaseSettings):
-
     def __getattr__(self, name: str) -> Any:
         return self.__dict__.get(name)
 
     class Config:
-
         @classmethod
         def customise_sources(
             cls,
@@ -101,10 +110,14 @@ class BaseConfig(BaseSettings):
             file_secret_settings: SettingsSourceCallable,
         ) -> Tuple[SettingsSourceCallable, ...]:
             common_config = init_settings.init_kwargs.pop("_common_config", {})
-            return (init_settings,
-                    CustomEnvSettings(env_settings.env_file,
-                                      env_settings.env_file_encoding),
-                    InitSettingsSource(common_config), file_secret_settings)
+            return (
+                init_settings,
+                CustomEnvSettings(
+                    env_settings.env_file, env_settings.env_file_encoding
+                ),
+                InitSettingsSource(common_config),
+                file_secret_settings,
+            )
 
 
 class Env(BaseConfig):
@@ -135,6 +148,7 @@ class Config(BaseConfig):
     除了 NoneBot 的配置项外，还可以自行添加配置项到 ``.env.{environment}`` 文件中。
     这些配置将会在 json 反序列化后一起带入 ``Config`` 类中。
     """
+
     # nonebot configs
     driver: str = "nonebot.drivers.fastapi"
     """
@@ -210,7 +224,7 @@ class Config(BaseConfig):
 
         API_ROOT={"123456": "http://127.0.0.1:5700"}
     """
-    api_timeout: Optional[float] = 30.
+    api_timeout: Optional[float] = 30.0
     """
     - **类型**: ``Optional[float]``
     - **默认值**: ``30.``

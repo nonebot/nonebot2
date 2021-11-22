@@ -1,9 +1,9 @@
 from typing import Optional
 
-from nonebot.exception import (AdapterException, ActionFailed as
-                               BaseActionFailed, ApiNotAvailable as
-                               BaseApiNotAvailable, NetworkError as
-                               BaseNetworkError)
+from nonebot.exception import AdapterException
+from nonebot.exception import ActionFailed as BaseActionFailed
+from nonebot.exception import NetworkError as BaseNetworkError
+from nonebot.exception import ApiNotAvailable as BaseApiNotAvailable
 
 
 class DingAdapterException(AdapterException):
@@ -29,15 +29,13 @@ class ActionFailed(BaseActionFailed, DingAdapterException):
       * ``errmsg: Optional[str]``: 错误信息
     """
 
-    def __init__(self,
-                 errcode: Optional[int] = None,
-                 errmsg: Optional[str] = None):
+    def __init__(self, errcode: Optional[int] = None, errmsg: Optional[str] = None):
         super().__init__()
         self.errcode = errcode
         self.errmsg = errmsg
 
     def __repr__(self):
-        return f"<ApiError errcode={self.errcode} errmsg=\"{self.errmsg}\">"
+        return f'<ApiError errcode={self.errcode} errmsg="{self.errmsg}">'
 
     def __str__(self):
         return self.__repr__()

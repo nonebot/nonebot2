@@ -10,8 +10,17 @@ from datetime import datetime
 from contextvars import ContextVar
 from collections import defaultdict
 from contextlib import AsyncExitStack
-from typing import (TYPE_CHECKING, Any, Dict, List, Type, Union, Callable,
-                    NoReturn, Optional)
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Dict,
+    List,
+    Type,
+    Union,
+    Callable,
+    NoReturn,
+    Optional,
+)
 
 from nonebot import params
 from nonebot.rule import Rule
@@ -19,14 +28,29 @@ from nonebot.log import logger
 from nonebot.handler import Handler
 from nonebot.dependencies import DependsWrapper
 from nonebot.permission import USER, Permission
-from nonebot.adapters import (Bot, Event, Message, MessageSegment,
-                              MessageTemplate)
-from nonebot.exception import (PausedException, StopPropagation,
-                               SkippedException, FinishedException,
-                               RejectedException)
-from nonebot.typing import (T_State, T_Handler, T_ArgsParser, T_TypeUpdater,
-                            T_StateFactory, T_DependencyCache,
-                            T_PermissionUpdater)
+from nonebot.adapters import (
+    Bot,
+    Event,
+    Message,
+    MessageSegment,
+    MessageTemplate,
+)
+from nonebot.exception import (
+    PausedException,
+    StopPropagation,
+    SkippedException,
+    FinishedException,
+    RejectedException,
+)
+from nonebot.typing import (
+    T_State,
+    T_Handler,
+    T_ArgsParser,
+    T_TypeUpdater,
+    T_StateFactory,
+    T_DependencyCache,
+    T_PermissionUpdater,
+)
 
 if TYPE_CHECKING:
     from nonebot.plugin import Plugin
@@ -57,9 +81,11 @@ class MatcherMeta(type):
         expire_time: Optional[datetime]
 
     def __repr__(self) -> str:
-        return (f"<Matcher from {self.module_name or 'unknown'}, "
-                f"type={self.type}, priority={self.priority}, "
-                f"temp={self.temp}>")
+        return (
+            f"<Matcher from {self.module_name or 'unknown'}, "
+            f"type={self.type}, priority={self.priority}, "
+            f"temp={self.temp}>"
+        )
 
     def __str__(self) -> str:
         return repr(self)
@@ -67,6 +93,7 @@ class MatcherMeta(type):
 
 class Matcher(metaclass=MatcherMeta):
     """事件响应器类"""
+
     plugin: Optional["Plugin"] = None
     """
     :类型: ``Optional[Plugin]``
@@ -157,8 +184,11 @@ class Matcher(metaclass=MatcherMeta):
     """
 
     HANDLER_PARAM_TYPES = [
-        params.BotParam, params.EventParam, params.StateParam,
-        params.MatcherParam, params.DefaultParam
+        params.BotParam,
+        params.EventParam,
+        params.StateParam,
+        params.MatcherParam,
+        params.DefaultParam,
     ]
 
     def __init__(self):
@@ -169,7 +199,8 @@ class Matcher(metaclass=MatcherMeta):
     def __repr__(self) -> str:
         return (
             f"<Matcher from {self.module_name or 'unknown'}, type={self.type}, "
-            f"priority={self.priority}, temp={self.temp}>")
+            f"priority={self.priority}, temp={self.temp}>"
+        )
 
     def __str__(self) -> str:
         return repr(self)
@@ -180,8 +211,9 @@ class Matcher(metaclass=MatcherMeta):
         type_: str = "",
         rule: Optional[Rule] = None,
         permission: Optional[Permission] = None,
-        handlers: Optional[Union[List[T_Handler], List[Handler],
-                                 List[Union[T_Handler, Handler]]]] = None,
+        handlers: Optional[
+            Union[List[T_Handler], List[Handler], List[Union[T_Handler, Handler]]]
+        ] = None,
         temp: bool = False,
         priority: int = 1,
         block: bool = False,
@@ -193,7 +225,7 @@ class Matcher(metaclass=MatcherMeta):
         default_state_factory: Optional[T_StateFactory] = None,
         default_parser: Optional[T_ArgsParser] = None,
         default_type_updater: Optional[T_TypeUpdater] = None,
-        default_permission_updater: Optional[T_PermissionUpdater] = None
+        default_permission_updater: Optional[T_PermissionUpdater] = None,
     ) -> Type["Matcher"]:
         """
         :说明:
@@ -221,46 +253,37 @@ class Matcher(metaclass=MatcherMeta):
         """
 
         NewMatcher = type(
-            "Matcher", (Matcher,), {
-                "plugin":
-                    plugin,
-                "module":
-                    module,
-                "plugin_name":
-                    plugin and plugin.name,
-                "module_name":
-                    module and module.__name__,
-                "type":
-                    type_,
-                "rule":
-                    rule or Rule(),
-                "permission":
-                    permission or Permission(),
+            "Matcher",
+            (Matcher,),
+            {
+                "plugin": plugin,
+                "module": module,
+                "plugin_name": plugin and plugin.name,
+                "module_name": module and module.__name__,
+                "type": type_,
+                "rule": rule or Rule(),
+                "permission": permission or Permission(),
                 "handlers": [
-                    handler if isinstance(handler, Handler) else Handler(
-                        handler, allow_types=cls.HANDLER_PARAM_TYPES)
+                    handler
+                    if isinstance(handler, Handler)
+                    else Handler(handler, allow_types=cls.HANDLER_PARAM_TYPES)
                     for handler in handlers
-                ] if handlers else [],
-                "temp":
-                    temp,
-                "expire_time":
-                    expire_time,
-                "priority":
-                    priority,
-                "block":
-                    block,
-                "_default_state":
-                    default_state or {},
-                "_default_state_factory":
-                    staticmethod(default_state_factory)
-                    if default_state_factory else None,
-                "_default_parser":
-                    default_parser,
-                "_default_type_updater":
-                    default_type_updater,
-                "_default_permission_updater":
-                    default_permission_updater
-            })
+                ]
+                if handlers
+                else [],
+                "temp": temp,
+                "expire_time": expire_time,
+                "priority": priority,
+                "block": block,
+                "_default_state": default_state or {},
+                "_default_state_factory": staticmethod(default_state_factory)
+                if default_state_factory
+                else None,
+                "_default_parser": default_parser,
+                "_default_type_updater": default_type_updater,
+                "_default_permission_updater": default_permission_updater,
+            },
+        )
 
         matchers[priority].append(NewMatcher)
 
@@ -272,8 +295,8 @@ class Matcher(metaclass=MatcherMeta):
         bot: Bot,
         event: Event,
         stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[Dict[Callable[..., Any],
-                                        Any]] = None) -> bool:
+        dependency_cache: Optional[Dict[Callable[..., Any], Any]] = None,
+    ) -> bool:
         """
         :说明:
 
@@ -289,8 +312,9 @@ class Matcher(metaclass=MatcherMeta):
           - ``bool``: 是否满足权限
         """
         event_type = event.get_type()
-        return (event_type == (cls.type or event_type) and
-                await cls.permission(bot, event, stack, dependency_cache))
+        return event_type == (cls.type or event_type) and await cls.permission(
+            bot, event, stack, dependency_cache
+        )
 
     @classmethod
     async def check_rule(
@@ -299,8 +323,8 @@ class Matcher(metaclass=MatcherMeta):
         event: Event,
         state: T_State,
         stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[Dict[Callable[..., Any],
-                                        Any]] = None) -> bool:
+        dependency_cache: Optional[Dict[Callable[..., Any], Any]] = None,
+    ) -> bool:
         """
         :说明:
 
@@ -317,8 +341,9 @@ class Matcher(metaclass=MatcherMeta):
           - ``bool``: 是否满足匹配规则
         """
         event_type = event.get_type()
-        return (event_type == (cls.type or event_type) and
-                await cls.rule(bot, event, state, stack, dependency_cache))
+        return event_type == (cls.type or event_type) and await cls.rule(
+            bot, event, state, stack, dependency_cache
+        )
 
     @classmethod
     def args_parser(cls, func: T_ArgsParser) -> T_ArgsParser:
@@ -349,8 +374,7 @@ class Matcher(metaclass=MatcherMeta):
         return func
 
     @classmethod
-    def permission_updater(cls,
-                           func: T_PermissionUpdater) -> T_PermissionUpdater:
+    def permission_updater(cls, func: T_PermissionUpdater) -> T_PermissionUpdater:
         """
         :说明:
 
@@ -365,12 +389,11 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def append_handler(
-            cls,
-            handler: T_Handler,
-            dependencies: Optional[List[DependsWrapper]] = None) -> Handler:
-        handler_ = Handler(handler,
-                           dependencies=dependencies,
-                           allow_types=cls.HANDLER_PARAM_TYPES)
+        cls, handler: T_Handler, dependencies: Optional[List[DependsWrapper]] = None
+    ) -> Handler:
+        handler_ = Handler(
+            handler, dependencies=dependencies, allow_types=cls.HANDLER_PARAM_TYPES
+        )
         cls.handlers.append(handler_)
         return handler_
 
@@ -418,8 +441,7 @@ class Matcher(metaclass=MatcherMeta):
                 func_handler = cls.handlers[-1]
                 func_handler.prepend_dependency(depend)
             else:
-                cls.append_handler(
-                    func, dependencies=[depend] if cls.handlers else [])
+                cls.append_handler(func, dependencies=[depend] if cls.handlers else [])
 
             return func
 
@@ -429,9 +451,8 @@ class Matcher(metaclass=MatcherMeta):
     def got(
         cls,
         key: str,
-        prompt: Optional[Union[str, Message, MessageSegment,
-                               MessageTemplate]] = None,
-        args_parser: Optional[T_ArgsParser] = None
+        prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
+        args_parser: Optional[T_ArgsParser] = None,
     ) -> Callable[[T_Handler], T_Handler]:
         """
         :说明:
@@ -483,16 +504,16 @@ class Matcher(metaclass=MatcherMeta):
                 func_handler.prepend_dependency(parser_depend)
                 func_handler.prepend_dependency(get_depend)
             else:
-                cls.append_handler(func,
-                                   dependencies=[get_depend, parser_depend])
+                cls.append_handler(func, dependencies=[get_depend, parser_depend])
 
             return func
 
         return _decorator
 
     @classmethod
-    async def send(cls, message: Union[str, Message, MessageSegment,
-                                       MessageTemplate], **kwargs) -> Any:
+    async def send(
+        cls, message: Union[str, Message, MessageSegment, MessageTemplate], **kwargs
+    ) -> Any:
         """
         :说明:
 
@@ -513,10 +534,11 @@ class Matcher(metaclass=MatcherMeta):
         return await bot.send(event=event, message=_message, **kwargs)
 
     @classmethod
-    async def finish(cls,
-                     message: Optional[Union[str, Message, MessageSegment,
-                                             MessageTemplate]] = None,
-                     **kwargs) -> NoReturn:
+    async def finish(
+        cls,
+        message: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
+        **kwargs,
+    ) -> NoReturn:
         """
         :说明:
 
@@ -539,10 +561,11 @@ class Matcher(metaclass=MatcherMeta):
         raise FinishedException
 
     @classmethod
-    async def pause(cls,
-                    prompt: Optional[Union[str, Message, MessageSegment,
-                                           MessageTemplate]] = None,
-                    **kwargs) -> NoReturn:
+    async def pause(
+        cls,
+        prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
+        **kwargs,
+    ) -> NoReturn:
         """
         :说明:
 
@@ -565,10 +588,9 @@ class Matcher(metaclass=MatcherMeta):
         raise PausedException
 
     @classmethod
-    async def reject(cls,
-                     prompt: Optional[Union[str, Message,
-                                            MessageSegment]] = None,
-                     **kwargs) -> NoReturn:
+    async def reject(
+        cls, prompt: Optional[Union[str, Message, MessageSegment]] = None, **kwargs
+    ) -> NoReturn:
         """
         :说明:
 
@@ -601,31 +623,38 @@ class Matcher(metaclass=MatcherMeta):
         self.block = True
 
     # 运行handlers
-    async def run(self,
-                  bot: Bot,
-                  event: Event,
-                  state: T_State,
-                  stack: Optional[AsyncExitStack] = None,
-                  dependency_cache: Optional[T_DependencyCache] = None):
+    async def run(
+        self,
+        bot: Bot,
+        event: Event,
+        state: T_State,
+        stack: Optional[AsyncExitStack] = None,
+        dependency_cache: Optional[T_DependencyCache] = None,
+    ):
         b_t = current_bot.set(bot)
         e_t = current_event.set(event)
         s_t = current_state.set(self.state)
         try:
             # Refresh preprocess state
-            self.state = await self._default_state_factory(
-                bot, event) if self._default_state_factory else self.state
+            self.state = (
+                await self._default_state_factory(bot, event)
+                if self._default_state_factory
+                else self.state
+            )
             self.state.update(state)
 
             while self.handlers:
                 handler = self.handlers.pop(0)
                 logger.debug(f"Running handler {handler}")
                 try:
-                    await handler(matcher=self,
-                                  bot=bot,
-                                  event=event,
-                                  state=self.state,
-                                  _stack=stack,
-                                  _dependency_cache=dependency_cache)
+                    await handler(
+                        matcher=self,
+                        bot=bot,
+                        event=event,
+                        state=self.state,
+                        _stack=stack,
+                        _dependency_cache=dependency_cache,
+                    )
                 except SkippedException:
                     pass
 
@@ -633,18 +662,13 @@ class Matcher(metaclass=MatcherMeta):
             self.handlers.insert(0, handler)  # type: ignore
             updater = self.__class__._default_type_updater
             if updater:
-                type_ = await updater(
-                    bot,
-                    event,
-                    self.state,  # type: ignore
-                    self.type)
+                type_ = await updater(bot, event, self.state, self.type)  # type: ignore
             else:
                 type_ = "message"
 
             updater = self.__class__._default_permission_updater
             if updater:
-                permission = await updater(bot, event, self.state,
-                                           self.permission)
+                permission = await updater(bot, event, self.state, self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
 
@@ -662,23 +686,18 @@ class Matcher(metaclass=MatcherMeta):
                 default_state=self.state,
                 default_parser=self.__class__._default_parser,
                 default_type_updater=self.__class__._default_type_updater,
-                default_permission_updater=self.__class__.
-                _default_permission_updater)
+                default_permission_updater=self.__class__._default_permission_updater,
+            )
         except PausedException:
             updater = self.__class__._default_type_updater
             if updater:
-                type_ = await updater(
-                    bot,
-                    event,
-                    self.state,  # type: ignore
-                    self.type)
+                type_ = await updater(bot, event, self.state, self.type)  # type: ignore
             else:
                 type_ = "message"
 
             updater = self.__class__._default_permission_updater
             if updater:
-                permission = await updater(bot, event, self.state,
-                                           self.permission)
+                permission = await updater(bot, event, self.state, self.permission)
             else:
                 permission = USER(event.get_session_id(), perm=self.permission)
 
@@ -696,8 +715,8 @@ class Matcher(metaclass=MatcherMeta):
                 default_state=self.state,
                 default_parser=self.__class__._default_parser,
                 default_type_updater=self.__class__._default_type_updater,
-                default_permission_updater=self.__class__.
-                _default_permission_updater)
+                default_permission_updater=self.__class__._default_permission_updater,
+            )
         except FinishedException:
             pass
         except StopPropagation:

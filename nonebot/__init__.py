@@ -40,8 +40,7 @@ from nonebot.log import logger, default_filter
 from nonebot.drivers import Driver, ReverseDriver
 
 try:
-    _dist: pkg_resources.Distribution = pkg_resources.get_distribution(
-        "nonebot2")
+    _dist: pkg_resources.Distribution = pkg_resources.get_distribution("nonebot2")
     __version__ = _dist.version
     VERSION = _dist.parsed_version
 except pkg_resources.DistributionNotFound:
@@ -100,8 +99,8 @@ def get_app() -> Any:
     """
     driver = get_driver()
     assert isinstance(
-        driver,
-        ReverseDriver), "app object is only available for reverse driver"
+        driver, ReverseDriver
+    ), "app object is only available for reverse driver"
     return driver.server_app
 
 
@@ -128,8 +127,8 @@ def get_asgi() -> Any:
     """
     driver = get_driver()
     assert isinstance(
-        driver,
-        ReverseDriver), "asgi object is only available for reverse driver"
+        driver, ReverseDriver
+    ), "asgi object is only available for reverse driver"
     return driver.asgi
 
 
@@ -226,17 +225,23 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
     if not _driver:
         logger.success("NoneBot is initializing...")
         env = Env()
-        config = Config(**kwargs,
-                        _common_config=env.dict(),
-                        _env_file=_env_file or f".env.{env.environment}")
+        config = Config(
+            **kwargs,
+            _common_config=env.dict(),
+            _env_file=_env_file or f".env.{env.environment}",
+        )
 
         default_filter.level = (
-            "DEBUG" if config.debug else
-            "INFO") if config.log_level is None else config.log_level
+            ("DEBUG" if config.debug else "INFO")
+            if config.log_level is None
+            else config.log_level
+        )
         logger.opt(colors=True).info(
-            f"Current <y><b>Env: {escape_tag(env.environment)}</b></y>")
+            f"Current <y><b>Env: {escape_tag(env.environment)}</b></y>"
+        )
         logger.opt(colors=True).debug(
-            f"Loaded <y><b>Config</b></y>: {escape_tag(str(config.dict()))}")
+            f"Loaded <y><b>Config</b></y>: {escape_tag(str(config.dict()))}"
+        )
 
         modulename, _, cls = config.driver.partition(":")
         module = importlib.import_module(modulename)
@@ -247,10 +252,7 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
         _driver = DriverClass(env, config)
 
 
-def run(host: Optional[str] = None,
-        port: Optional[int] = None,
-        *args,
-        **kwargs):
+def run(host: Optional[str] = None, port: Optional[int] = None, *args, **kwargs):
     """
     :说明:
 

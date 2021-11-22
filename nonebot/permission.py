@@ -34,11 +34,10 @@ class Permission:
         from nonebot.utils import run_sync
         Permission(async_function, run_sync(sync_function))
     """
+
     __slots__ = ("checkers",)
 
-    HANDLER_PARAM_TYPES = [
-        params.BotParam, params.EventParam, params.DefaultParam
-    ]
+    HANDLER_PARAM_TYPES = [params.BotParam, params.EventParam, params.DefaultParam]
 
     def __init__(self, *checkers: Union[T_PermissionChecker, Handler]) -> None:
         """
@@ -48,9 +47,11 @@ class Permission:
         """
 
         self.checkers = set(
-            checker if isinstance(checker, Handler) else Handler(
-                checker, allow_types=self.HANDLER_PARAM_TYPES)
-            for checker in checkers)
+            checker
+            if isinstance(checker, Handler)
+            else Handler(checker, allow_types=self.HANDLER_PARAM_TYPES)
+            for checker in checkers
+        )
         """
         :说明:
 
@@ -66,8 +67,8 @@ class Permission:
         bot: Bot,
         event: Event,
         stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[Dict[Callable[..., Any],
-                                        Any]] = None) -> bool:
+        dependency_cache: Optional[Dict[Callable[..., Any], Any]] = None,
+    ) -> bool:
         """
         :说明:
 
@@ -87,19 +88,24 @@ class Permission:
         if not self.checkers:
             return True
         results = await asyncio.gather(
-            *(checker(bot=bot,
-                      event=event,
-                      _stack=stack,
-                      _dependency_cache=dependency_cache)
-              for checker in self.checkers))
+            *(
+                checker(
+                    bot=bot,
+                    event=event,
+                    _stack=stack,
+                    _dependency_cache=dependency_cache,
+                )
+                for checker in self.checkers
+            )
+        )
         return any(results)
 
     def __and__(self, other) -> NoReturn:
         raise RuntimeError("And operation between Permissions is not allowed.")
 
     def __or__(
-        self, other: Optional[Union["Permission",
-                                    T_PermissionChecker]]) -> "Permission":
+        self, other: Optional[Union["Permission", T_PermissionChecker]]
+    ) -> "Permission":
         if other is None:
             return self
         elif isinstance(other, Permission):
@@ -155,15 +161,17 @@ def USER(*user: str, perm: Optional[Permission] = None):
     """
 
     async def _user(bot: Bot, event: Event) -> bool:
-        return bool(event.get_session_id() in user and
-                    (perm is None or await perm(bot, event)))
+        return bool(
+            event.get_session_id() in user and (perm is None or await perm(bot, event))
+        )
 
     return Permission(_user)
 
 
 async def _superuser(bot: Bot, event: Event) -> bool:
-    return (event.get_type() == "message" and
-            event.get_user_id() in bot.config.superusers)
+    return (
+        event.get_type() == "message" and event.get_user_id() in bot.config.superusers
+    )
 
 
 SUPERUSER = Permission(_superuser)

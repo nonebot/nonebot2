@@ -12,8 +12,15 @@ from nonebot.typing import overrides
 from nonebot.message import handle_event
 from nonebot.adapters import Bot as BaseBot
 from nonebot.utils import DataclassEncoder, escape_tag
-from nonebot.drivers import (Driver, WebSocket, HTTPRequest, HTTPResponse,
-                             ForwardDriver, HTTPConnection, WebSocketSetup)
+from nonebot.drivers import (
+    Driver,
+    WebSocket,
+    HTTPRequest,
+    HTTPResponse,
+    ForwardDriver,
+    HTTPConnection,
+    WebSocketSetup,
+)
 
 from .utils import log, escape
 from .config import Config as CQHTTPConfig
@@ -49,15 +56,12 @@ async def _check_reply(bot: "Bot", event: "Event"):
         return
 
     try:
-        index = list(map(lambda x: x.type == "reply",
-                         event.message)).index(True)
+        index = list(map(lambda x: x.type == "reply", event.message)).index(True)
     except ValueError:
         return
     msg_seg = event.message[index]
     try:
-        event.reply = Reply.parse_obj(await
-                                      bot.get_msg(message_id=msg_seg.data["id"]
-                                                 ))
+        event.reply = Reply.parse_obj(await bot.get_msg(message_id=msg_seg.data["id"]))
     except Exception as e:
         log("WARNING", f"Error when getting message reply info: {repr(e)}", e)
         return
@@ -68,8 +72,7 @@ async def _check_reply(bot: "Bot", event: "Event"):
     if len(event.message) > index and event.message[index].type == "at":
         del event.message[index]
     if len(event.message) > index and event.message[index].type == "text":
-        event.message[index].data["text"] = event.message[index].data[
-            "text"].lstrip()
+        event.message[index].data["text"] = event.message[index].data["text"].lstrip()
         if not event.message[index].data["text"]:
             del event.message[index]
     if not event.message:
@@ -99,23 +102,24 @@ def _check_at_me(bot: "Bot", event: "Event"):
     else:
 
         def _is_at_me_seg(segment: MessageSegment):
-            return segment.type == "at" and str(segment.data.get(
-                "qq", "")) == str(event.self_id)
+            return segment.type == "at" and str(segment.data.get("qq", "")) == str(
+                event.self_id
+            )
 
         # check the first segment
         if _is_at_me_seg(event.message[0]):
             event.to_me = True
             event.message.pop(0)
             if event.message and event.message[0].type == "text":
-                event.message[0].data["text"] = event.message[0].data[
-                    "text"].lstrip()
+                event.message[0].data["text"] = event.message[0].data["text"].lstrip()
                 if not event.message[0].data["text"]:
                     del event.message[0]
             if event.message and _is_at_me_seg(event.message[0]):
                 event.message.pop(0)
                 if event.message and event.message[0].type == "text":
-                    event.message[0].data["text"] = event.message[0].data[
-                        "text"].lstrip()
+                    event.message[0].data["text"] = (
+                        event.message[0].data["text"].lstrip()
+                    )
                     if not event.message[0].data["text"]:
                         del event.message[0]
 
@@ -123,9 +127,11 @@ def _check_at_me(bot: "Bot", event: "Event"):
             # check the last segment
             i = -1
             last_msg_seg = event.message[i]
-            if last_msg_seg.type == "text" and \
-                    not last_msg_seg.data["text"].strip() and \
-                    len(event.message) >= 2:
+            if (
+                last_msg_seg.type == "text"
+                and not last_msg_seg.data["text"].strip()
+                and len(event.message) >= 2
+            ):
                 i -= 1
                 last_msg_seg = event.message[i]
 
@@ -161,13 +167,12 @@ def _check_nickname(bot: "Bot", event: "Event"):
     if nicknames:
         # check if the user is calling me with my nickname
         nickname_regex = "|".join(nicknames)
-        m = re.search(rf"^({nickname_regex})([\s,，]*|$)", first_text,
-                      re.IGNORECASE)
+        m = re.search(rf"^({nickname_regex})([\s,，]*|$)", first_text, re.IGNORECASE)
         if m:
             nickname = m.group(1)
             log("DEBUG", f"User is calling me {nickname}")
             event.to_me = True
-            first_msg_seg.data["text"] = first_text[m.end():]
+            first_msg_seg.data["text"] = first_text[m.end() :]
 
 
 def _handle_api_result(result: Optional[Dict[str, Any]]) -> Any:
@@ -206,8 +211,9 @@ class ResultStore:
 
     @classmethod
     def add_result(cls, result: Dict[str, Any]):
-        if isinstance(result.get("echo"), dict) and \
-                isinstance(result["echo"].get("seq"), int):
+        if isinstance(result.get("echo"), dict) and isinstance(
+            result["echo"].get("seq"), int
+        ):
             future = cls._futures.get(result["echo"]["seq"])
             if future:
                 future.set_result(result)
@@ -228,6 +234,7 @@ class Bot(BaseBot):
     """
     CQHTTP 协议 Bot 适配。继承属性参考 `BaseBot <./#class-basebot>`_ 。
     """
+
     cqhttp_config: CQHTTPConfig
 
     @property
@@ -249,22 +256,25 @@ class Bot(BaseBot):
         elif isinstance(driver, ForwardDriver) and cls.cqhttp_config.ws_urls:
             for self_id, url in cls.cqhttp_config.ws_urls.items():
                 try:
-                    headers = {
-                        "authorization":
-                            f"Bearer {cls.cqhttp_config.access_token}"
-                    } if cls.cqhttp_config.access_token else {}
+                    headers = (
+                        {"authorization": f"Bearer {cls.cqhttp_config.access_token}"}
+                        if cls.cqhttp_config.access_token
+                        else {}
+                    )
                     driver.setup_websocket(
-                        WebSocketSetup("cqhttp", self_id, url, headers=headers))
+                        WebSocketSetup("cqhttp", self_id, url, headers=headers)
+                    )
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
                         f"<r><bg #f8bbd0>Bad url {escape_tag(url)} for bot {escape_tag(self_id)} "
-                        "in cqhttp forward websocket</bg #f8bbd0></r>")
+                        "in cqhttp forward websocket</bg #f8bbd0></r>"
+                    )
 
     @classmethod
     @overrides(BaseBot)
     async def check_permission(
-            cls, driver: Driver,
-            request: HTTPConnection) -> Tuple[Optional[str], HTTPResponse]:
+        cls, driver: Driver, request: HTTPConnection
+    ) -> Tuple[Optional[str], HTTPResponse]:
         """
         :说明:
 
@@ -286,22 +296,26 @@ class Bot(BaseBot):
             if not x_signature:
                 log("WARNING", "Missing Signature Header")
                 return None, HTTPResponse(401, b"Missing Signature")
-            sig = hmac.new(secret.encode("utf-8"), request.body,
-                           "sha1").hexdigest()
+            sig = hmac.new(secret.encode("utf-8"), request.body, "sha1").hexdigest()
             if x_signature != "sha1=" + sig:
                 log("WARNING", "Signature Header is invalid")
                 return None, HTTPResponse(403, b"Signature is invalid")
 
         access_token = cqhttp_config.access_token
-        if access_token and access_token != token and isinstance(
-                request, WebSocket):
+        if access_token and access_token != token and isinstance(request, WebSocket):
             log(
-                "WARNING", "Authorization Header is invalid"
-                if token else "Missing Authorization Header")
+                "WARNING",
+                "Authorization Header is invalid"
+                if token
+                else "Missing Authorization Header",
+            )
             return None, HTTPResponse(
-                403, b"Authorization Header is invalid"
-                if token else b"Missing Authorization Header")
-        return str(x_self_id), HTTPResponse(204, b'')
+                403,
+                b"Authorization Header is invalid"
+                if token
+                else b"Missing Authorization Header",
+            )
+        return str(x_self_id), HTTPResponse(204, b"")
 
     @overrides(BaseBot)
     async def handle_message(self, message: bytes):
@@ -320,7 +334,7 @@ class Bot(BaseBot):
             return
 
         try:
-            post_type = data['post_type']
+            post_type = data["post_type"]
             detail_type = data.get(f"{post_type}_type")
             detail_type = f".{detail_type}" if detail_type else ""
             sub_type = data.get("sub_type")
@@ -352,17 +366,13 @@ class Bot(BaseBot):
         if isinstance(self.request, WebSocket):
             seq = ResultStore.get_seq()
             json_data = json.dumps(
-                {
-                    "action": api,
-                    "params": data,
-                    "echo": {
-                        "seq": seq
-                    }
-                },
-                cls=DataclassEncoder)
+                {"action": api, "params": data, "echo": {"seq": seq}},
+                cls=DataclassEncoder,
+            )
             await self.request.send(json_data)
-            return _handle_api_result(await ResultStore.fetch(
-                seq, self.config.api_timeout))
+            return _handle_api_result(
+                await ResultStore.fetch(seq, self.config.api_timeout)
+            )
 
         elif isinstance(self.request, HTTPRequest):
             api_root = self.config.api_root.get(self.self_id)
@@ -373,22 +383,25 @@ class Bot(BaseBot):
 
             headers = {"Content-Type": "application/json"}
             if self.cqhttp_config.access_token is not None:
-                headers[
-                    "Authorization"] = "Bearer " + self.cqhttp_config.access_token
+                headers["Authorization"] = "Bearer " + self.cqhttp_config.access_token
 
             try:
-                async with httpx.AsyncClient(headers=headers,
-                                             follow_redirects=True) as client:
+                async with httpx.AsyncClient(
+                    headers=headers, follow_redirects=True
+                ) as client:
                     response = await client.post(
                         api_root + api,
                         content=json.dumps(data, cls=DataclassEncoder),
-                        timeout=self.config.api_timeout)
+                        timeout=self.config.api_timeout,
+                    )
 
                 if 200 <= response.status_code < 300:
                     result = response.json()
                     return _handle_api_result(result)
-                raise NetworkError(f"HTTP request received unexpected "
-                                   f"status code: {response.status_code}")
+                raise NetworkError(
+                    f"HTTP request received unexpected "
+                    f"status code: {response.status_code}"
+                )
             except httpx.InvalidURL:
                 raise NetworkError("API root url invalid")
             except httpx.HTTPError:
@@ -418,11 +431,13 @@ class Bot(BaseBot):
         return await super().call_api(api, **data)
 
     @overrides(BaseBot)
-    async def send(self,
-                   event: Event,
-                   message: Union[str, Message, MessageSegment],
-                   at_sender: bool = False,
-                   **kwargs) -> Any:
+    async def send(
+        self,
+        event: Event,
+        message: Union[str, Message, MessageSegment],
+        at_sender: bool = False,
+        **kwargs,
+    ) -> Any:
         """
         :说明:
 
@@ -445,8 +460,9 @@ class Bot(BaseBot):
           - ``NetworkError``: 网络错误
           - ``ActionFailed``: API 调用失败
         """
-        message = escape(message, escape_comma=False) if isinstance(
-            message, str) else message
+        message = (
+            escape(message, escape_comma=False) if isinstance(message, str) else message
+        )
         msg = message if isinstance(message, Message) else Message(message)
 
         at_sender = at_sender and bool(getattr(event, "user_id", None))

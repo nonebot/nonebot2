@@ -1,17 +1,17 @@
 import re
 from functools import wraps
-from typing import TYPE_CHECKING, Any, Callable, Coroutine, Optional, TypeVar
+from typing import TYPE_CHECKING, Any, TypeVar, Callable, Optional, Coroutine
 
 import httpx
 from pydantic import Extra, ValidationError, validate_arguments
 
-import nonebot.exception as exception
 from nonebot.log import logger
+import nonebot.exception as exception
 from nonebot.message import handle_event
 from nonebot.utils import escape_tag, logger_wrapper
 
-from .event import Event, GroupMessage, MessageEvent, MessageSource
 from .message import MessageType, MessageSegment
+from .event import Event, GroupMessage, MessageEvent, MessageSource
 
 if TYPE_CHECKING:
     from .bot import Bot
@@ -21,28 +21,27 @@ _AnyCallable = TypeVar("_AnyCallable", bound=Callable)
 
 
 class Log:
-
     @staticmethod
     def log(level: str, message: str, exception: Optional[Exception] = None):
-        logger = logger_wrapper('MIRAI')
-        message = '<e>' + escape_tag(message) + '</e>'
+        logger = logger_wrapper("MIRAI")
+        message = "<e>" + escape_tag(message) + "</e>"
         logger(level=level.upper(), message=message, exception=exception)
 
     @classmethod
     def info(cls, message: Any):
-        cls.log('INFO', str(message))
+        cls.log("INFO", str(message))
 
     @classmethod
     def debug(cls, message: Any):
-        cls.log('DEBUG', str(message))
+        cls.log("DEBUG", str(message))
 
     @classmethod
     def warn(cls, message: Any):
-        cls.log('WARNING', str(message))
+        cls.log("WARNING", str(message))
 
     @classmethod
     def error(cls, message: Any, exception: Optional[Exception] = None):
-        cls.log('ERROR', str(message), exception=exception)
+        cls.log("ERROR", str(message), exception=exception)
 
 
 class ActionFailed(exception.ActionFailed):
@@ -53,12 +52,13 @@ class ActionFailed(exception.ActionFailed):
     """
 
     def __init__(self, **kwargs):
-        super().__init__('mirai')
+        super().__init__("mirai")
         self.data = kwargs.copy()
 
     def __repr__(self):
-        return self.__class__.__name__ + '(%s)' % ', '.join(
-            map(lambda m: '%s=%r' % m, self.data.items()))
+        return self.__class__.__name__ + "(%s)" % ", ".join(
+            map(lambda m: "%s=%r" % m, self.data.items())
+        )
 
 
 class InvalidArgument(exception.AdapterException):
@@ -69,7 +69,7 @@ class InvalidArgument(exception.AdapterException):
     """
 
     def __init__(self, **kwargs):
-        super().__init__('mirai')
+        super().__init__("mirai")
 
 
 def catch_network_error(function: _AsyncCallable) -> _AsyncCallable:
@@ -90,11 +90,12 @@ def catch_network_error(function: _AsyncCallable) -> _AsyncCallable:
         try:
             data = await function(*args, **kwargs)
         except httpx.HTTPError:
-            raise exception.NetworkError('mirai')
-        logger.opt(colors=True).debug('<b>Mirai API returned data:</b> '
-                                      f'<y>{escape_tag(str(data))}</y>')
+            raise exception.NetworkError("mirai")
+        logger.opt(colors=True).debug(
+            "<b>Mirai API returned data:</b> " f"<y>{escape_tag(str(data))}</y>"
+        )
         if isinstance(data, dict):
-            if data.get('code', 0) != 0:
+            if data.get("code", 0) != 0:
                 raise ActionFailed(**data)
         return data
 
@@ -109,10 +110,9 @@ def argument_validation(function: _AnyCallable) -> _AnyCallable:
 
       会在参数出错时释放 ``InvalidArgument`` 异常
     """
-    function = validate_arguments(config={
-        'arbitrary_types_allowed': True,
-        'extra': Extra.forbid
-    })(function)
+    function = validate_arguments(
+        config={"arbitrary_types_allowed": True, "extra": Extra.forbid}
+    )(function)
 
     @wraps(function)
     def wrapper(*args, **kwargs):
@@ -134,12 +134,12 @@ def process_source(bot: "Bot", event: MessageEvent) -> MessageEvent:
 def process_at(bot: "Bot", event: GroupMessage) -> GroupMessage:
     at = event.message_chain.extract_first(MessageType.AT)
     if at is not None:
-        if at.data['target'] == event.self_id:
+        if at.data["target"] == event.self_id:
             event.to_me = True
         else:
             event.message_chain.insert(0, at)
     if not event.message_chain:
-        event.message_chain.append(MessageSegment.plain(''))
+        event.message_chain.append(MessageSegment.plain(""))
     return event
 
 
@@ -147,13 +147,13 @@ def process_nick(bot: "Bot", event: GroupMessage) -> GroupMessage:
     plain = event.message_chain.extract_first(MessageType.PLAIN)
     if plain is not None:
         text = str(plain)
-        nick_regex = '|'.join(filter(lambda x: x, bot.config.nickname))
+        nick_regex = "|".join(filter(lambda x: x, bot.config.nickname))
         matched = re.search(rf"^({nick_regex})([\s,，]*|$)", text, re.IGNORECASE)
         if matched is not None:
             event.to_me = True
             nickname = matched.group(1)
-            Log.info(f'User is calling me {nickname}')
-            plain.data['text'] = text[matched.end():]
+            Log.info(f"User is calling me {nickname}")
+            plain.data["text"] = text[matched.end() :]
         event.message_chain.insert(0, plain)
     return event
 
@@ -161,7 +161,7 @@ def process_nick(bot: "Bot", event: GroupMessage) -> GroupMessage:
 def process_reply(bot: "Bot", event: GroupMessage) -> GroupMessage:
     reply = event.message_chain.extract_first(MessageType.QUOTE)
     if reply is not None:
-        if reply.data['senderId'] == event.self_id:
+        if reply.data["senderId"] == event.self_id:
             event.to_me = True
         else:
             event.message_chain.insert(0, reply)

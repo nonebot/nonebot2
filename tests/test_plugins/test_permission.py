@@ -1,7 +1,7 @@
 from nonebot.rule import to_me
 from nonebot.typing import T_State
-from nonebot.plugin import on_startswith
 from nonebot.permission import SUPERUSER
+from nonebot.plugin import on_startswith
 from nonebot.adapters.ding import Bot as DingBot
 from nonebot.adapters.cqhttp import Bot as CQHTTPBot
 

@@ -8,7 +8,6 @@ from nonebot.exception import ApiNotAvailable as BaseApiNotAvailable
 
 
 class CQHTTPAdapterException(AdapterException):
-
     def __init__(self):
         super().__init__("cqhttp")
 
@@ -33,8 +32,11 @@ class ActionFailed(BaseActionFailed, CQHTTPAdapterException):
         self.info = kwargs
 
     def __repr__(self):
-        return f"<ActionFailed " + ", ".join(
-            f"{k}={v}" for k, v in self.info.items()) + ">"
+        return (
+            f"<ActionFailed "
+            + ", ".join(f"{k}={v}" for k, v in self.info.items())
+            + ">"
+        )
 
     def __str__(self):
         return self.__repr__()

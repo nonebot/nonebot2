@@ -9,6 +9,4 @@ def register_route(driver: Driver):
 
     static_path = str((Path(__file__).parent / ".." / "dist").resolve())
 
-    app.mount("/docs",
-              StaticFiles(directory=static_path, html=True),
-              name="docs")
+    app.mount("/docs", StaticFiles(directory=static_path, html=True), name="docs")

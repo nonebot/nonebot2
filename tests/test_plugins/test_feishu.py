@@ -1,6 +1,7 @@
-from nonebot.plugin import on_command
 from nonebot.typing import T_State
-from nonebot.adapters.feishu import Bot as FeishuBot, MessageEvent
+from nonebot.plugin import on_command
+from nonebot.adapters.feishu import MessageEvent
+from nonebot.adapters.feishu import Bot as FeishuBot
 
 helper = on_command("say")
 

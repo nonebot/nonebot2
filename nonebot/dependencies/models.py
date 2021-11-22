@@ -9,7 +9,6 @@ from nonebot.typing import T_Handler
 
 
 class Param(abc.ABC, FieldInfo):
-
     @classmethod
     @abc.abstractmethod
     def _check(cls, name: str, param: inspect.Parameter) -> bool:
@@ -21,11 +20,9 @@ class Param(abc.ABC, FieldInfo):
 
 
 class DependsWrapper:
-
-    def __init__(self,
-                 dependency: Optional[T_Handler] = None,
-                 *,
-                 use_cache: bool = True) -> None:
+    def __init__(
+        self, dependency: Optional[T_Handler] = None, *, use_cache: bool = True
+    ) -> None:
         self.dependency = dependency
         self.use_cache = use_cache
 
@@ -36,15 +33,16 @@ class DependsWrapper:
 
 
 class Dependent:
-
-    def __init__(self,
-                 *,
-                 func: Optional[T_Handler] = None,
-                 name: Optional[str] = None,
-                 params: Optional[List[ModelField]] = None,
-                 allow_types: Optional[List[Type[Param]]] = None,
-                 dependencies: Optional[List["Dependent"]] = None,
-                 use_cache: bool = True) -> None:
+    def __init__(
+        self,
+        *,
+        func: Optional[T_Handler] = None,
+        name: Optional[str] = None,
+        params: Optional[List[ModelField]] = None,
+        allow_types: Optional[List[Type[Param]]] = None,
+        dependencies: Optional[List["Dependent"]] = None,
+        use_cache: bool = True,
+    ) -> None:
         self.func = func
         self.name = name
         self.params = params or []

@@ -1,8 +1,7 @@
+from . import match
 from nonebot.typing import T_State
 from nonebot.adapters import Bot, Event
 from nonebot.adapters.cqhttp import HeartbeatMetaEvent
-
-from . import match
 
 
 async def heartbeat(bot: Bot, event: Event, state: T_State) -> bool:

@@ -77,10 +77,9 @@ class MessageSegment(BaseMessageSegment["Message"]):
     def code(code_language: str, code: str) -> "Message":
         """发送 code 消息段"""
         message = MessageSegment.text(code)
-        message += MessageSegment.extension({
-            "text_type": "code_snippet",
-            "code_language": code_language
-        })
+        message += MessageSegment.extension(
+            {"text_type": "code_snippet", "code_language": code_language}
+        )
         return message
 
     @staticmethod
@@ -95,16 +94,19 @@ class MessageSegment(BaseMessageSegment["Message"]):
         )
 
     @staticmethod
-    def actionCardSingleBtn(title: str, text: str, singleTitle: str,
-                            singleURL) -> "MessageSegment":
+    def actionCardSingleBtn(
+        title: str, text: str, singleTitle: str, singleURL
+    ) -> "MessageSegment":
         """发送 ``actionCardSingleBtn`` 类型消息"""
         return MessageSegment(
-            "actionCard", {
+            "actionCard",
+            {
                 "title": title,
                 "text": text,
                 "singleTitle": singleTitle,
-                "singleURL": singleURL
-            })
+                "singleURL": singleURL,
+            },
+        )
 
     @staticmethod
     def actionCardMultiBtns(
@@ -112,7 +114,7 @@ class MessageSegment(BaseMessageSegment["Message"]):
         text: str,
         btns: list,
         hideAvatar: bool = False,
-        btnOrientation: str = '1',
+        btnOrientation: str = "1",
     ) -> "MessageSegment":
         """
         发送 ``actionCardMultiBtn`` 类型消息
@@ -123,13 +125,15 @@ class MessageSegment(BaseMessageSegment["Message"]):
             * ``btns``: ``[{ "title": title, "actionURL": actionURL }, ...]``
         """
         return MessageSegment(
-            "actionCard", {
+            "actionCard",
+            {
                 "title": title,
                 "text": text,
                 "hideAvatar": "1" if hideAvatar else "0",
                 "btnOrientation": btnOrientation,
-                "btns": btns
-            })
+                "btns": btns,
+            },
+        )
 
     @staticmethod
     def feedCard(links: list) -> "MessageSegment":
@@ -144,7 +148,7 @@ class MessageSegment(BaseMessageSegment["Message"]):
 
     @staticmethod
     def raw(data) -> "MessageSegment":
-        return MessageSegment('raw', data)
+        return MessageSegment("raw", data)
 
     def to_dict(self) -> Dict[str, Any]:
         # 让用户可以直接发送原始的消息格式
@@ -171,8 +175,8 @@ class Message(BaseMessage[MessageSegment]):
     @staticmethod
     @overrides(BaseMessage)
     def _construct(
-        msg: Union[str, Mapping,
-                   Iterable[Mapping]]) -> Iterable[MessageSegment]:
+        msg: Union[str, Mapping, Iterable[Mapping]]
+    ) -> Iterable[MessageSegment]:
         if isinstance(msg, Mapping):
             msg = cast(Mapping[str, Any], msg)
             yield MessageSegment(msg["type"], msg.get("data") or {})
@@ -187,10 +191,11 @@ class Message(BaseMessage[MessageSegment]):
         segment: MessageSegment
         for segment in self:
             # text 可以和 text 合并
-            if segment.type == "text" and data.get("msgtype") == 'text':
+            if segment.type == "text" and data.get("msgtype") == "text":
                 data.setdefault("text", {})
-                data["text"]["content"] = data["text"].setdefault(
-                    "content", "") + segment.data["content"]
+                data["text"]["content"] = (
+                    data["text"].setdefault("content", "") + segment.data["content"]
+                )
             else:
                 data.update(segment.to_dict())
         return data

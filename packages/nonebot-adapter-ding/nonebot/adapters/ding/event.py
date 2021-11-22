@@ -69,6 +69,7 @@ class ConversationType(str, Enum):
 
 class MessageEvent(Event):
     """消息事件"""
+
     msgtype: str
     text: TextMessage
     msgId: str
@@ -88,11 +89,10 @@ class MessageEvent(Event):
     def gen_message(cls, values: dict):
         assert "msgtype" in values, "msgtype must be specified"
         # 其实目前钉钉机器人只能接收到 text 类型的消息
-        assert values[
-            "msgtype"] in values, f"{values['msgtype']} must be specified"
-        content = values[values['msgtype']]['content']
+        assert values["msgtype"] in values, f"{values['msgtype']} must be specified"
+        content = values[values["msgtype"]]["content"]
         # 如果是被 @，第一个字符将会为空格，移除特殊情况
-        if content[0] == ' ':
+        if content[0] == " ":
             content = content[1:]
         values["message"] = content
         return values
@@ -128,6 +128,7 @@ class MessageEvent(Event):
 
 class PrivateMessageEvent(MessageEvent):
     """私聊消息事件"""
+
     chatbotCorpId: str
     senderStaffId: Optional[str]
     conversationType: ConversationType = ConversationType.private
@@ -135,6 +136,7 @@ class PrivateMessageEvent(MessageEvent):
 
 class GroupMessageEvent(MessageEvent):
     """群消息事件"""
+
     atUsers: List[AtUsersItem]
     conversationType: ConversationType = ConversationType.group
     conversationTitle: str

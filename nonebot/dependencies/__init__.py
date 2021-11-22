@@ -21,9 +21,14 @@ from .models import Dependent as Dependent
 from nonebot.exception import SkippedException
 from .models import DependsWrapper as DependsWrapper
 from nonebot.typing import T_Handler, T_DependencyCache
-from nonebot.utils import (CacheLock, run_sync, is_gen_callable,
-                           run_sync_ctx_manager, is_async_gen_callable,
-                           is_coroutine_callable)
+from nonebot.utils import (
+    CacheLock,
+    run_sync,
+    is_gen_callable,
+    run_sync_ctx_manager,
+    is_async_gen_callable,
+    is_coroutine_callable,
+)
 
 cache_lock = CacheLock()
 
@@ -33,60 +38,59 @@ class CustomConfig(BaseConfig):
 
 
 def get_param_sub_dependent(
-        *,
-        param: inspect.Parameter,
-        allow_types: Optional[List[Type[Param]]] = None) -> Dependent:
+    *, param: inspect.Parameter, allow_types: Optional[List[Type[Param]]] = None
+) -> Dependent:
     depends: DependsWrapper = param.default
     if depends.dependency:
         dependency = depends.dependency
     else:
         dependency = param.annotation
-    return get_sub_dependant(depends=depends,
-                             dependency=dependency,
-                             name=param.name,
-                             allow_types=allow_types)
+    return get_sub_dependant(
+        depends=depends, dependency=dependency, name=param.name, allow_types=allow_types
+    )
 
 
 def get_parameterless_sub_dependant(
-        *,
-        depends: DependsWrapper,
-        allow_types: Optional[List[Type[Param]]] = None) -> Dependent:
+    *, depends: DependsWrapper, allow_types: Optional[List[Type[Param]]] = None
+) -> Dependent:
     assert callable(
         depends.dependency
     ), "A parameter-less dependency must have a callable dependency"
-    return get_sub_dependant(depends=depends,
-                             dependency=depends.dependency,
-                             allow_types=allow_types)
+    return get_sub_dependant(
+        depends=depends, dependency=depends.dependency, allow_types=allow_types
+    )
 
 
 def get_sub_dependant(
-        *,
-        depends: DependsWrapper,
-        dependency: T_Handler,
-        name: Optional[str] = None,
-        allow_types: Optional[List[Type[Param]]] = None) -> Dependent:
-    sub_dependant = get_dependent(func=dependency,
-                                  name=name,
-                                  use_cache=depends.use_cache,
-                                  allow_types=allow_types)
+    *,
+    depends: DependsWrapper,
+    dependency: T_Handler,
+    name: Optional[str] = None,
+    allow_types: Optional[List[Type[Param]]] = None,
+) -> Dependent:
+    sub_dependant = get_dependent(
+        func=dependency, name=name, use_cache=depends.use_cache, allow_types=allow_types
+    )
     return sub_dependant
 
 
-def get_dependent(*,
-                  func: T_Handler,
-                  name: Optional[str] = None,
-                  use_cache: bool = True,
-                  allow_types: Optional[List[Type[Param]]] = None) -> Dependent:
+def get_dependent(
+    *,
+    func: T_Handler,
+    name: Optional[str] = None,
+    use_cache: bool = True,
+    allow_types: Optional[List[Type[Param]]] = None,
+) -> Dependent:
     signature = get_typed_signature(func)
     params = signature.parameters
-    dependent = Dependent(func=func,
-                          name=name,
-                          allow_types=allow_types,
-                          use_cache=use_cache)
+    dependent = Dependent(
+        func=func, name=name, allow_types=allow_types, use_cache=use_cache
+    )
     for param_name, param in params.items():
         if isinstance(param.default, DependsWrapper):
-            sub_dependent = get_param_sub_dependent(param=param,
-                                                    allow_types=allow_types)
+            sub_dependent = get_param_sub_dependent(
+                param=param, allow_types=allow_types
+            )
             dependent.dependencies.append(sub_dependent)
             continue
 
@@ -111,44 +115,44 @@ def get_dependent(*,
         required = default_value == Required
         if param.annotation != param.empty:
             annotation = param.annotation
-        annotation = get_annotation_from_field_info(annotation, field_info,
-                                                    param_name)
+        annotation = get_annotation_from_field_info(annotation, field_info, param_name)
         dependent.params.append(
-            ModelField(name=param_name,
-                       type_=annotation,
-                       class_validators=None,
-                       model_config=CustomConfig,
-                       default=None if required else default_value,
-                       required=required,
-                       field_info=field_info))
+            ModelField(
+                name=param_name,
+                type_=annotation,
+                class_validators=None,
+                model_config=CustomConfig,
+                default=None if required else default_value,
+                required=required,
+                field_info=field_info,
+            )
+        )
 
     return dependent
 
 
 async def solve_dependencies(
-        *,
-        _dependent: Dependent,
-        _stack: Optional[AsyncExitStack] = None,
-        _sub_dependents: Optional[List[Dependent]] = None,
-        _dependency_cache: Optional[T_DependencyCache] = None,
-        **params: Any) -> Tuple[Dict[str, Any], T_DependencyCache]:
+    *,
+    _dependent: Dependent,
+    _stack: Optional[AsyncExitStack] = None,
+    _sub_dependents: Optional[List[Dependent]] = None,
+    _dependency_cache: Optional[T_DependencyCache] = None,
+    **params: Any,
+) -> Tuple[Dict[str, Any], T_DependencyCache]:
     values: Dict[str, Any] = {}
     dependency_cache = {} if _dependency_cache is None else _dependency_cache
 
     # solve sub dependencies
     sub_dependent: Dependent
-    for sub_dependent in chain(_sub_dependents or tuple(),
-                               _dependent.dependencies):
+    for sub_dependent in chain(_sub_dependents or tuple(), _dependent.dependencies):
         sub_dependent.func = cast(Callable[..., Any], sub_dependent.func)
-        sub_dependent.cache_key = cast(Callable[..., Any],
-                                       sub_dependent.cache_key)
+        sub_dependent.cache_key = cast(Callable[..., Any], sub_dependent.cache_key)
         func = sub_dependent.func
 
         # solve sub dependency with current cache
         solved_result = await solve_dependencies(
-            _dependent=sub_dependent,
-            _dependency_cache=dependency_cache,
-            **params)
+            _dependent=sub_dependent, _dependency_cache=dependency_cache, **params
+        )
         sub_values, sub_dependency_cache = solved_result
         # update cache?
         # dependency_cache.update(sub_dependency_cache)
@@ -162,8 +166,7 @@ async def solve_dependencies(
                     _stack, AsyncExitStack
                 ), "Generator dependency should be called in context"
                 if is_gen_callable(func):
-                    cm = run_sync_ctx_manager(
-                        contextmanager(func)(**sub_values))
+                    cm = run_sync_ctx_manager(contextmanager(func)(**sub_values))
                 else:
                     cm = asynccontextmanager(func)(**sub_values)
                 solved = await _stack.enter_async_context(cm)
@@ -182,19 +185,17 @@ async def solve_dependencies(
     # usual dependency
     for field in _dependent.params:
         field_info = field.field_info
-        assert isinstance(field_info,
-                          Param), "Params must be subclasses of Param"
+        assert isinstance(field_info, Param), "Params must be subclasses of Param"
         value = field_info._solve(**params)
         if value == Undefined:
             value = field.get_default()
-        _, errs_ = field.validate(value,
-                                  values,
-                                  loc=(str(field_info), field.alias))
+        _, errs_ = field.validate(value, values, loc=(str(field_info), field.alias))
         if errs_:
             logger.debug(
                 f"{field_info} "
                 f"type {type(value)} not match depends {_dependent.func} "
-                f"annotation {field._type_display()}, ignored")
+                f"annotation {field._type_display()}, ignored"
+            )
             raise SkippedException
         else:
             values[field.name] = value
@@ -202,9 +203,7 @@ async def solve_dependencies(
     return values, dependency_cache
 
 
-def Depends(dependency: Optional[T_Handler] = None,
-            *,
-            use_cache: bool = True) -> Any:
+def Depends(dependency: Optional[T_Handler] = None, *, use_cache: bool = True) -> Any:
     """
     :说明:
 

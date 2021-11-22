@@ -16,10 +16,18 @@ from nonebot.drivers import Driver, HTTPRequest, HTTPResponse, HTTPConnection
 from .config import Config as DingConfig
 from .utils import log, calc_hmac_base64
 from .message import Message, MessageSegment
-from .exception import (ActionFailed, NetworkError, SessionExpired,
-                        ApiNotAvailable)
-from .event import (MessageEvent, ConversationType, GroupMessageEvent,
-                    PrivateMessageEvent)
+from .exception import (
+    ActionFailed,
+    NetworkError,
+    SessionExpired,
+    ApiNotAvailable,
+)
+from .event import (
+    MessageEvent,
+    ConversationType,
+    GroupMessageEvent,
+    PrivateMessageEvent,
+)
 
 if TYPE_CHECKING:
     from nonebot.config import Config
@@ -31,6 +39,7 @@ class Bot(BaseBot):
     """
     钉钉 协议 Bot 适配。继承属性参考 `BaseBot <./#class-basebot>`_ 。
     """
+
     ding_config: DingConfig
 
     @property
@@ -48,8 +57,8 @@ class Bot(BaseBot):
     @classmethod
     @overrides(BaseBot)
     async def check_permission(
-            cls, driver: Driver,
-            request: HTTPConnection) -> Tuple[Optional[str], HTTPResponse]:
+        cls, driver: Driver, request: HTTPConnection
+    ) -> Tuple[Optional[str], HTTPResponse]:
         """
         :说明:
 
@@ -61,7 +70,8 @@ class Bot(BaseBot):
         # 检查连接方式
         if not isinstance(request, HTTPRequest):
             return None, HTTPResponse(
-                405, b"Unsupported connection type, available type: `http`")
+                405, b"Unsupported connection type, available type: `http`"
+            )
 
         # 检查 timestamp
         if not timestamp:
@@ -74,13 +84,15 @@ class Bot(BaseBot):
                 log("WARNING", "Missing Signature Header")
                 return None, HTTPResponse(400, b"Missing `sign` Header")
             sign_base64 = calc_hmac_base64(str(timestamp), secret)
-            if sign != sign_base64.decode('utf-8'):
+            if sign != sign_base64.decode("utf-8"):
                 log("WARNING", "Signature Header is invalid")
                 return None, HTTPResponse(403, b"Signature is invalid")
         else:
             log("WARNING", "Ding signature check ignored!")
-        return (json.loads(request.body.decode())["chatbotUserId"],
-                HTTPResponse(204, b''))
+        return (
+            json.loads(request.body.decode())["chatbotUserId"],
+            HTTPResponse(204, b""),
+        )
 
     @overrides(BaseBot)
     async def handle_message(self, message: bytes):
@@ -111,10 +123,9 @@ class Bot(BaseBot):
         return
 
     @overrides(BaseBot)
-    async def _call_api(self,
-                        api: str,
-                        event: Optional[MessageEvent] = None,
-                        **data) -> Any:
+    async def _call_api(
+        self, api: str, event: Optional[MessageEvent] = None, **data
+    ) -> Any:
         if not isinstance(self.request, HTTPRequest):
             log("ERROR", "Only support http connection.")
             return
@@ -138,7 +149,8 @@ class Bot(BaseBot):
             if event:
                 # 确保 sessionWebhook 没有过期
                 if int(datetime.now().timestamp()) > int(
-                        event.sessionWebhookExpiredTime / 1000):
+                    event.sessionWebhookExpiredTime / 1000
+                ):
                     raise SessionExpired
 
                 webhook = event.sessionWebhook
@@ -150,32 +162,37 @@ class Bot(BaseBot):
         if not message:
             raise ValueError("Message not found")
         try:
-            async with httpx.AsyncClient(headers=headers,
-                                         follow_redirects=True) as client:
-                response = await client.post(webhook,
-                                             params=params,
-                                             json=message._produce(),
-                                             timeout=self.config.api_timeout)
+            async with httpx.AsyncClient(
+                headers=headers, follow_redirects=True
+            ) as client:
+                response = await client.post(
+                    webhook,
+                    params=params,
+                    json=message._produce(),
+                    timeout=self.config.api_timeout,
+                )
 
             if 200 <= response.status_code < 300:
                 result = response.json()
                 if isinstance(result, dict):
                     if result.get("errcode") != 0:
-                        raise ActionFailed(errcode=result.get("errcode"),
-                                           errmsg=result.get("errmsg"))
+                        raise ActionFailed(
+                            errcode=result.get("errcode"), errmsg=result.get("errmsg")
+                        )
                     return result
-            raise NetworkError(f"HTTP request received unexpected "
-                               f"status code: {response.status_code}")
+            raise NetworkError(
+                f"HTTP request received unexpected "
+                f"status code: {response.status_code}"
+            )
         except httpx.InvalidURL:
             raise NetworkError("API root url invalid")
         except httpx.HTTPError:
             raise NetworkError("HTTP request failed")
 
     @overrides(BaseBot)
-    async def call_api(self,
-                       api: str,
-                       event: Optional[MessageEvent] = None,
-                       **data) -> Any:
+    async def call_api(
+        self, api: str, event: Optional[MessageEvent] = None, **data
+    ) -> Any:
         """
         :说明:
 
@@ -199,13 +216,15 @@ class Bot(BaseBot):
         return await super().call_api(api, event=event, **data)
 
     @overrides(BaseBot)
-    async def send(self,
-                   event: MessageEvent,
-                   message: Union[str, "Message", "MessageSegment"],
-                   at_sender: bool = False,
-                   webhook: Optional[str] = None,
-                   secret: Optional[str] = None,
-                   **kwargs) -> Any:
+    async def send(
+        self,
+        event: MessageEvent,
+        message: Union[str, "Message", "MessageSegment"],
+        at_sender: bool = False,
+        webhook: Optional[str] = None,
+        secret: Optional[str] = None,
+        **kwargs,
+    ) -> Any:
         """
         :说明:
 
@@ -241,9 +260,11 @@ class Bot(BaseBot):
         params.update(kwargs)
 
         if at_sender and event.conversationType != ConversationType.private:
-            params[
-                "message"] = f"@{event.senderId} " + msg + MessageSegment.atDingtalkIds(
-                    event.senderId)
+            params["message"] = (
+                f"@{event.senderId} "
+                + msg
+                + MessageSegment.atDingtalkIds(event.senderId)
+            )
         else:
             params["message"] = msg
 

@@ -1,5 +1,6 @@
 from nonebot.adapters import Event
 from nonebot.permission import Permission
+
 from .event import GroupMessageEvent, PrivateMessageEvent
 
 
@@ -42,8 +43,7 @@ async def _group(event: Event) -> bool:
 
 
 async def _group_member(event: Event) -> bool:
-    return isinstance(event,
-                      GroupMessageEvent) and event.sender.role == "member"
+    return isinstance(event, GroupMessageEvent) and event.sender.role == "member"
 
 
 async def _group_admin(event: Event) -> bool:
@@ -76,6 +76,12 @@ GROUP_OWNER = Permission(_group_owner)
 """
 
 __all__ = [
-    "PRIVATE", "PRIVATE_FRIEND", "PRIVATE_GROUP", "PRIVATE_OTHER", "GROUP",
-    "GROUP_MEMBER", "GROUP_ADMIN", "GROUP_OWNER"
+    "PRIVATE",
+    "PRIVATE_FRIEND",
+    "PRIVATE_GROUP",
+    "PRIVATE_OTHER",
+    "GROUP",
+    "GROUP_MEMBER",
+    "GROUP_ADMIN",
+    "GROUP_OWNER",
 ]

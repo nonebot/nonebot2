@@ -48,7 +48,6 @@ logger: "Logger" = loguru.logger
 
 
 class Filter:
-
     def __init__(self) -> None:
         self.level: Union[int, str] = "DEBUG"
 
@@ -58,13 +57,13 @@ class Filter:
         if module:
             module_name = getattr(module, "__module_name__", module_name)
         record["name"] = module_name.split(".")[0]
-        levelno = logger.level(self.level).no if isinstance(self.level,
-                                                            str) else self.level
+        levelno = (
+            logger.level(self.level).no if isinstance(self.level, str) else self.level
+        )
         return record["level"].no >= levelno
 
 
 class LoguruHandler(logging.Handler):
-
     def emit(self, record):
         try:
             level = logger.level(record.levelname).name
@@ -76,8 +75,9 @@ class LoguruHandler(logging.Handler):
             frame = frame.f_back
             depth += 1
 
-        logger.opt(depth=depth,
-                   exception=record.exc_info).log(level, record.getMessage())
+        logger.opt(depth=depth, exception=record.exc_info).log(
+            level, record.getMessage()
+        )
 
 
 logger.remove()
@@ -87,9 +87,12 @@ default_format = (
     "[<lvl>{level}</lvl>] "
     "<c><u>{name}</u></c> | "
     # "<c>{function}:{line}</c>| "
-    "{message}")
-logger_id = logger.add(sys.stdout,
-                       colorize=True,
-                       diagnose=False,
-                       filter=default_filter,
-                       format=default_format)
+    "{message}"
+)
+logger_id = logger.add(
+    sys.stdout,
+    colorize=True,
+    diagnose=False,
+    filter=default_filter,
+    format=default_format,
+)

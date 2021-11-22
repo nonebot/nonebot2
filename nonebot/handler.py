@@ -10,20 +10,27 @@ from contextlib import AsyncExitStack
 from typing import Any, Dict, List, Type, Callable, Optional
 
 from nonebot.utils import get_name, run_sync
-from nonebot.dependencies import (Param, Dependent, DependsWrapper,
-                                  get_dependent, solve_dependencies,
-                                  get_parameterless_sub_dependant)
+from nonebot.dependencies import (
+    Param,
+    Dependent,
+    DependsWrapper,
+    get_dependent,
+    solve_dependencies,
+    get_parameterless_sub_dependant,
+)
 
 
 class Handler:
     """事件处理器类。支持依赖注入。"""
 
-    def __init__(self,
-                 func: Callable[..., Any],
-                 *,
-                 name: Optional[str] = None,
-                 dependencies: Optional[List[DependsWrapper]] = None,
-                 allow_types: Optional[List[Type[Param]]] = None):
+    def __init__(
+        self,
+        func: Callable[..., Any],
+        *,
+        name: Optional[str] = None,
+        dependencies: Optional[List[DependsWrapper]] = None,
+        allow_types: Optional[List[Type[Param]]] = None,
+    ):
         """
         :说明:
 
@@ -64,19 +71,18 @@ class Handler:
         self.dependent = get_dependent(func=func, allow_types=self.allow_types)
 
     def __repr__(self) -> str:
-        return (
-            f"<Handler {self.name}({', '.join(map(str, self.dependent.params))})>"
-        )
+        return f"<Handler {self.name}({', '.join(map(str, self.dependent.params))})>"
 
     def __str__(self) -> str:
         return repr(self)
 
-    async def __call__(self,
-                       *,
-                       _stack: Optional[AsyncExitStack] = None,
-                       _dependency_cache: Optional[Dict[Callable[..., Any],
-                                                        Any]] = None,
-                       **params) -> Any:
+    async def __call__(
+        self,
+        *,
+        _stack: Optional[AsyncExitStack] = None,
+        _dependency_cache: Optional[Dict[Callable[..., Any], Any]] = None,
+        **params,
+    ) -> Any:
         values, _ = await solve_dependencies(
             _dependent=self.dependent,
             _stack=_stack,
@@ -85,7 +91,8 @@ class Handler:
                 for dependency in self.dependencies
             ],
             _dependency_cache=_dependency_cache,
-            **params)
+            **params,
+        )
 
         if asyncio.iscoroutinefunction(self.func):
             return await self.func(**values)
@@ -98,7 +105,8 @@ class Handler:
         if dependency.dependency in self.sub_dependents:
             raise ValueError(f"{dependency} is already in dependencies")
         sub_dependant = get_parameterless_sub_dependant(
-            depends=dependency, allow_types=self.allow_types)
+            depends=dependency, allow_types=self.allow_types
+        )
         self.sub_dependents[dependency.dependency] = sub_dependant
 
     def prepend_dependency(self, dependency: DependsWrapper):

@@ -20,13 +20,16 @@ from nonebot.typing import overrides
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.drivers import (HTTPRequest, ForwardDriver, WebSocketSetup,
-                             HTTPPollingSetup)
+from nonebot.drivers import (
+    HTTPRequest,
+    ForwardDriver,
+    WebSocketSetup,
+    HTTPPollingSetup,
+)
 
 STARTUP_FUNC = Callable[[], Awaitable[None]]
 SHUTDOWN_FUNC = Callable[[], Awaitable[None]]
-HTTPPOLLING_SETUP = Union[HTTPPollingSetup,
-                          Callable[[], Awaitable[HTTPPollingSetup]]]
+HTTPPOLLING_SETUP = Union[HTTPPollingSetup, Callable[[], Awaitable[HTTPPollingSetup]]]
 WEBSOCKET_SETUP = Union[WebSocketSetup, Callable[[], Awaitable[WebSocketSetup]]]
 HANDLED_SIGNALS = (
     signal.SIGINT,  # Unix signal 2. Sent by Ctrl+C.
@@ -146,7 +149,8 @@ class Driver(ForwardDriver):
             except Exception as e:
                 logger.opt(colors=True, exception=e).error(
                     "<r><bg #f8bbd0>Error when running startup function. "
-                    "Ignored!</bg #f8bbd0></r>")
+                    "Ignored!</bg #f8bbd0></r>"
+                )
 
     async def main_loop(self):
         await self.should_exit.wait()
@@ -160,24 +164,20 @@ class Driver(ForwardDriver):
             except Exception as e:
                 logger.opt(colors=True, exception=e).error(
                     "<r><bg #f8bbd0>Error when running shutdown function. "
-                    "Ignored!</bg #f8bbd0></r>")
+                    "Ignored!</bg #f8bbd0></r>"
+                )
 
         for task in self.connections:
             if not task.done():
                 task.cancel()
         await asyncio.sleep(0.1)
 
-        tasks = [
-            t for t in asyncio.all_tasks() if t is not asyncio.current_task()
-        ]
+        tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
         if tasks and not self.force_exit:
             logger.info("Waiting for tasks to finish. (CTRL+C to force quit)")
         while tasks and not self.force_exit:
             await asyncio.sleep(0.1)
-            tasks = [
-                t for t in asyncio.all_tasks()
-                if t is not asyncio.current_task()
-            ]
+            tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
 
         for task in tasks:
             task.cancel()
@@ -209,9 +209,7 @@ class Driver(ForwardDriver):
             self.should_exit.set()
 
     async def _http_loop(self, setup: HTTPPOLLING_SETUP):
-
-        async def _build_request(
-                setup: HTTPPollingSetup) -> Optional[HTTPRequest]:
+        async def _build_request(setup: HTTPPollingSetup) -> Optional[HTTPRequest]:
             url = URL(setup.url)
             if not url.is_absolute() or not url.host:
                 logger.opt(colors=True).error(
@@ -219,10 +217,15 @@ class Driver(ForwardDriver):
                 )
                 return
             host = f"{url.host}:{url.port}" if url.port else url.host
-            return HTTPRequest(setup.http_version, url.scheme, url.path,
-                               url.raw_query_string.encode("latin-1"), {
-                                   **setup.headers, "host": host
-                               }, setup.method, setup.body)
+            return HTTPRequest(
+                setup.http_version,
+                url.scheme,
+                url.path,
+                url.raw_query_string.encode("latin-1"),
+                {**setup.headers, "host": host},
+                setup.method,
+                setup.body,
+            )
 
         bot: Optional[Bot] = None
         request: Optional[HTTPRequest] = None
@@ -230,7 +233,8 @@ class Driver(ForwardDriver):
 
         logger.opt(colors=True).info(
             f"Start http polling for <y>{escape_tag(setup.adapter.upper())} "
-            f"Bot {escape_tag(setup.self_id)}</y>")
+            f"Bot {escape_tag(setup.self_id)}</y>"
+        )
 
         try:
             async with aiohttp.ClientSession() as session:
@@ -244,7 +248,8 @@ class Driver(ForwardDriver):
                     except Exception as e:
                         logger.opt(colors=True, exception=e).error(
                             "<r><bg #f8bbd0>Error while parsing setup "
-                            f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>")
+                            f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>"
+                        )
                         await asyncio.sleep(3)
                         continue
 
@@ -286,19 +291,22 @@ class Driver(ForwardDriver):
                     )
 
                     try:
-                        async with session.request(request.method,
-                                                   setup_.url,
-                                                   data=request.body,
-                                                   headers=headers,
-                                                   timeout=timeout,
-                                                   version=version) as response:
+                        async with session.request(
+                            request.method,
+                            setup_.url,
+                            data=request.body,
+                            headers=headers,
+                            timeout=timeout,
+                            version=version,
+                        ) as response:
                             response.raise_for_status()
                             data = await response.read()
                             asyncio.create_task(bot.handle_message(data))
                     except aiohttp.ClientResponseError as e:
                         logger.opt(colors=True, exception=e).error(
                             f"<r><bg #f8bbd0>Error occurred while requesting {escape_tag(setup_.url)}. "
-                            "Try to reconnect...</bg #f8bbd0></r>")
+                            "Try to reconnect...</bg #f8bbd0></r>"
+                        )
 
                     await asyncio.sleep(setup_.poll_interval)
 
@@ -307,7 +315,8 @@ class Driver(ForwardDriver):
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
                 "<r><bg #f8bbd0>Unexpected exception occurred "
-                "while http polling</bg #f8bbd0></r>")
+                "while http polling</bg #f8bbd0></r>"
+            )
         finally:
             if bot:
                 self._bot_disconnect(bot)
@@ -327,7 +336,8 @@ class Driver(ForwardDriver):
                     except Exception as e:
                         logger.opt(colors=True, exception=e).error(
                             "<r><bg #f8bbd0>Error while parsing setup "
-                            f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>")
+                            f"{escape_tag(repr(setup))}.</bg #f8bbd0></r>"
+                        )
                         await asyncio.sleep(3)
                         continue
 
@@ -346,17 +356,21 @@ class Driver(ForwardDriver):
                         f"Bot {setup_.self_id} from adapter {setup_.adapter} connecting to {url}"
                     )
                     try:
-                        async with session.ws_connect(url,
-                                                      headers=headers,
-                                                      timeout=30.) as ws:
+                        async with session.ws_connect(
+                            url, headers=headers, timeout=30.0
+                        ) as ws:
                             logger.opt(colors=True).info(
                                 f"WebSocket Connection to <y>{escape_tag(setup_.adapter.upper())} "
                                 f"Bot {escape_tag(setup_.self_id)}</y> succeeded!"
                             )
                             request = WebSocket(
-                                "1.1", url.scheme, url.path,
-                                url.raw_query_string.encode("latin-1"), headers,
-                                ws)
+                                "1.1",
+                                url.scheme,
+                                url.path,
+                                url.raw_query_string.encode("latin-1"),
+                                headers,
+                                ws,
+                            )
 
                             BotClass = self._adapters[setup_.adapter]
                             bot = BotClass(setup_.self_id, request)
@@ -365,25 +379,30 @@ class Driver(ForwardDriver):
                                 msg = await ws.receive()
                                 if msg.type == aiohttp.WSMsgType.text:
                                     asyncio.create_task(
-                                        bot.handle_message(msg.data.encode()))
+                                        bot.handle_message(msg.data.encode())
+                                    )
                                 elif msg.type == aiohttp.WSMsgType.binary:
-                                    asyncio.create_task(
-                                        bot.handle_message(msg.data))
+                                    asyncio.create_task(bot.handle_message(msg.data))
                                 elif msg.type == aiohttp.WSMsgType.error:
                                     logger.opt(colors=True).error(
                                         "<r><bg #f8bbd0>Error while handling websocket frame. "
-                                        "Try to reconnect...</bg #f8bbd0></r>")
+                                        "Try to reconnect...</bg #f8bbd0></r>"
+                                    )
                                     break
                                 else:
                                     logger.opt(colors=True).error(
                                         "<r><bg #f8bbd0>WebSocket connection closed by peer. "
-                                        "Try to reconnect...</bg #f8bbd0></r>")
+                                        "Try to reconnect...</bg #f8bbd0></r>"
+                                    )
                                     break
-                    except (aiohttp.ClientResponseError,
-                            aiohttp.ClientConnectionError) as e:
+                    except (
+                        aiohttp.ClientResponseError,
+                        aiohttp.ClientConnectionError,
+                    ) as e:
                         logger.opt(colors=True, exception=e).error(
                             f"<r><bg #f8bbd0>Error while connecting to {escape_tag(str(url))}. "
-                            "Try to reconnect...</bg #f8bbd0></r>")
+                            "Try to reconnect...</bg #f8bbd0></r>"
+                        )
                     finally:
                         if bot:
                             self._bot_disconnect(bot)
@@ -395,7 +414,8 @@ class Driver(ForwardDriver):
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
                 "<r><bg #f8bbd0>Unexpected exception occurred "
-                "while websocket loop</bg #f8bbd0></r>")
+                "while websocket loop</bg #f8bbd0></r>"
+            )
 
 
 @dataclass

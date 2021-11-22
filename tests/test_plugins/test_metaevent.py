@@ -1,6 +1,6 @@
 from nonebot.typing import T_State
-from nonebot.plugin import on_metaevent
 from nonebot.adapters import Bot, Event
+from nonebot.plugin import on_metaevent
 from nonebot.adapters.cqhttp import HeartbeatMetaEvent
 
 

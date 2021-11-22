@@ -1,8 +1,11 @@
 from typing import Dict
 
 from nonebot.adapters import Event
-from nonebot.message import (IgnoredException, run_preprocessor,
-                             run_postprocessor)
+from nonebot.message import (
+    IgnoredException,
+    run_preprocessor,
+    run_postprocessor,
+)
 
 _running_matcher: Dict[str, int] = {}
 

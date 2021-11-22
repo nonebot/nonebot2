@@ -15,7 +15,6 @@ from . import _managers, _current_plugin
 
 
 class PluginManager:
-
     def __init__(
         self,
         plugins: Optional[Iterable[str]] = None,
@@ -39,14 +38,15 @@ class PluginManager:
     def _previous_plugins(self) -> List[str]:
         _pre_managers: List[PluginManager]
         if self in _managers:
-            _pre_managers = _managers[:_managers.index(self)]
+            _pre_managers = _managers[: _managers.index(self)]
         else:
             _pre_managers = _managers[:]
 
         return [
             *chain.from_iterable(
                 [*manager.plugins, *manager.searched_plugins.keys()]
-                for manager in _pre_managers)
+                for manager in _pre_managers
+            )
         ]
 
     def list_plugins(self) -> Set[str]:
@@ -57,13 +57,14 @@ class PluginManager:
         for module_info in pkgutil.iter_modules(self.search_path):
             if module_info.name.startswith("_"):
                 continue
-            if module_info.name in searched_plugins.keys(
-            ) or module_info.name in previous_plugins:
+            if (
+                module_info.name in searched_plugins.keys()
+                or module_info.name in previous_plugins
+            ):
                 raise RuntimeError(
                     f"Plugin already exists: {module_info.name}! Check your plugin name"
                 )
-            module_spec = module_info.module_finder.find_spec(
-                module_info.name, None)
+            module_spec = module_info.module_finder.find_spec(module_info.name, None)
             if not module_spec:
                 continue
             module_path = module_spec.origin
@@ -80,14 +81,15 @@ class PluginManager:
             if name in self.plugins:
                 module = importlib.import_module(name)
             elif name not in self.searched_plugins:
-                raise RuntimeError(
-                    f"Plugin not found: {name}! Check your plugin name")
+                raise RuntimeError(f"Plugin not found: {name}! Check your plugin name")
             else:
                 module = importlib.import_module(
-                    self._path_to_module_name(self.searched_plugins[name]))
+                    self._path_to_module_name(self.searched_plugins[name])
+                )
 
             logger.opt(colors=True).success(
-                f'Succeeded to import "<y>{escape_tag(name)}</y>"')
+                f'Succeeded to import "<y>{escape_tag(name)}</y>"'
+            )
             return getattr(module, "__plugin__", None)
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
@@ -96,16 +98,17 @@ class PluginManager:
 
     def load_all_plugins(self) -> Set[Plugin]:
         return set(
-            filter(None,
-                   (self.load_plugin(name) for name in self.list_plugins())))
+            filter(None, (self.load_plugin(name) for name in self.list_plugins()))
+        )
 
 
 class PluginFinder(MetaPathFinder):
-
-    def find_spec(self,
-                  fullname: str,
-                  path: Optional[Sequence[Union[bytes, str]]],
-                  target: Optional[ModuleType] = None):
+    def find_spec(
+        self,
+        fullname: str,
+        path: Optional[Sequence[Union[bytes, str]]],
+        target: Optional[ModuleType] = None,
+    ):
         if _managers:
             index = -1
             module_spec = PathFinder.find_spec(fullname, path, target)
@@ -119,10 +122,11 @@ class PluginFinder(MetaPathFinder):
             while -index <= len(_managers):
                 manager = _managers[index]
 
-                if fullname in manager.plugins or module_path in manager.searched_plugins.values(
+                if (
+                    fullname in manager.plugins
+                    or module_path in manager.searched_plugins.values()
                 ):
-                    module_spec.loader = PluginLoader(manager, fullname,
-                                                      module_origin)
+                    module_spec.loader = PluginLoader(manager, fullname, module_origin)
                     return module_spec
 
                 index -= 1
@@ -130,7 +134,6 @@ class PluginFinder(MetaPathFinder):
 
 
 class PluginLoader(SourceFileLoader):
-
     def __init__(self, manager: PluginManager, fullname: str, path) -> None:
         self.manager = manager
         self.loaded = False

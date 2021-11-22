@@ -11,11 +11,9 @@ from nonebot.adapters.mirai import Bot as MiraiBot
 from nonebot.adapters.feishu import Bot as FeishuBot
 
 # test custom log
-logger.add("error.log",
-           rotation="00:00",
-           diagnose=False,
-           level="ERROR",
-           format=default_format)
+logger.add(
+    "error.log", rotation="00:00", diagnose=False, level="ERROR", format=default_format
+)
 
 nonebot.init(custom_config2="config on init")
 app = nonebot.get_asgi()

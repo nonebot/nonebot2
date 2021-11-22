@@ -1,8 +1,21 @@
 import inspect
 import functools
 from string import Formatter
-from typing import (TYPE_CHECKING, Any, Set, List, Type, Tuple, Union, Generic,
-                    Mapping, TypeVar, Sequence, cast, overload)
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Set,
+    List,
+    Type,
+    Tuple,
+    Union,
+    Generic,
+    Mapping,
+    TypeVar,
+    Sequence,
+    cast,
+    overload,
+)
 
 if TYPE_CHECKING:
     from . import Message, MessageSegment
@@ -15,14 +28,15 @@ class MessageTemplate(Formatter, Generic[TF]):
     """消息模板格式化实现类"""
 
     @overload
-    def __init__(self: "MessageTemplate[str]",
-                 template: str,
-                 factory: Type[str] = str) -> None:
+    def __init__(
+        self: "MessageTemplate[str]", template: str, factory: Type[str] = str
+    ) -> None:
         ...
 
     @overload
-    def __init__(self: "MessageTemplate[TM]", template: Union[str, TM],
-                 factory: Type[TM]) -> None:
+    def __init__(
+        self: "MessageTemplate[TM]", template: Union[str, TM], factory: Type[TM]
+    ) -> None:
         ...
 
     def __init__(self, template, factory=str) -> None:
@@ -51,15 +65,15 @@ class MessageTemplate(Formatter, Generic[TF]):
         elif isinstance(self.template, self.factory):
             template = cast("Message[MessageSegment]", self.template)
             for seg in template:
-                msg += self.vformat(str(seg), args,
-                                    kwargs) if seg.is_text() else seg
+                msg += self.vformat(str(seg), args, kwargs) if seg.is_text() else seg
         else:
-            raise TypeError('template must be a string or instance of Message!')
+            raise TypeError("template must be a string or instance of Message!")
 
         return msg
 
-    def vformat(self, format_string: str, args: Sequence[Any],
-                kwargs: Mapping[str, Any]) -> TF:
+    def vformat(
+        self, format_string: str, args: Sequence[Any], kwargs: Mapping[str, Any]
+    ) -> TF:
         used_args = set()
         result, _ = self._vformat(format_string, args, kwargs, used_args, 2)
         self.check_unused_args(list(used_args), args, kwargs)
@@ -79,8 +93,9 @@ class MessageTemplate(Formatter, Generic[TF]):
 
         results: List[Any] = []
 
-        for (literal_text, field_name, format_spec,
-             conversion) in self.parse(format_string):
+        for (literal_text, field_name, format_spec, conversion) in self.parse(
+            format_string
+        ):
 
             # output the literal text
             if literal_text:
@@ -96,14 +111,16 @@ class MessageTemplate(Formatter, Generic[TF]):
                     if auto_arg_index is False:
                         raise ValueError(
                             "cannot switch from manual field specification to "
-                            "automatic field numbering")
+                            "automatic field numbering"
+                        )
                     field_name = str(auto_arg_index)
                     auto_arg_index += 1
                 elif field_name.isdigit():
                     if auto_arg_index:
                         raise ValueError(
                             "cannot switch from manual field specification to "
-                            "automatic field numbering")
+                            "automatic field numbering"
+                        )
                     # disable auto arg incrementing, if it gets
                     # used later on, then an exception will be raised
                     auto_arg_index = False
@@ -132,8 +149,10 @@ class MessageTemplate(Formatter, Generic[TF]):
                 formatted_text = self.format_field(obj, str(format_control))
                 results.append(formatted_text)
 
-        return self.factory(functools.reduce(self._add, results or
-                                             [""])), auto_arg_index
+        return (
+            self.factory(functools.reduce(self._add, results or [""])),
+            auto_arg_index,
+        )
 
     def format_field(self, value: Any, format_spec: str) -> Any:
         if issubclass(self.factory, str):
@@ -142,11 +161,20 @@ class MessageTemplate(Formatter, Generic[TF]):
         segment_class: Type[MessageSegment] = self.factory.get_segment_class()
         method = getattr(segment_class, format_spec, None)
         method_type = inspect.getattr_static(segment_class, format_spec, None)
-        return (super().format_field(value, format_spec) if
-                ((method is None) or
-                 (not isinstance(method_type, (classmethod, staticmethod))
-                 )  # Only Call staticmethod or classmethod
-                ) else method(value)) if format_spec else value
+        return (
+            (
+                super().format_field(value, format_spec)
+                if (
+                    (method is None)
+                    or (
+                        not isinstance(method_type, (classmethod, staticmethod))
+                    )  # Only Call staticmethod or classmethod
+                )
+                else method(value)
+            )
+            if format_spec
+            else value
+        )
 
     def _add(self, a: Any, b: Any) -> Any:
         try:

@@ -1,24 +1,39 @@
 import re
 import json
-from typing import (TYPE_CHECKING, Any, Dict, Tuple, Union, Iterable, Optional,
-                    AsyncIterable, cast)
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Dict,
+    Tuple,
+    Union,
+    Iterable,
+    Optional,
+    AsyncIterable,
+    cast,
+)
 
 import httpx
 from aiocache import Cache, cached
 from aiocache.serializers import PickleSerializer
 
 from nonebot.log import logger
-from .utils import AESCipher, log
 from nonebot.typing import overrides
 from nonebot.utils import escape_tag
 from nonebot.message import handle_event
-from .config import Config as FeishuConfig
 from nonebot.adapters import Bot as BaseBot
 from nonebot.drivers import Driver, HTTPRequest, HTTPResponse
+
+from .utils import AESCipher, log
+from .config import Config as FeishuConfig
 from .message import Message, MessageSegment, MessageSerializer
 from .exception import ActionFailed, NetworkError, ApiNotAvailable
-from .event import (Event, MessageEvent, GroupMessageEvent, PrivateMessageEvent,
-                    get_event_model)
+from .event import (
+    Event,
+    MessageEvent,
+    GroupMessageEvent,
+    PrivateMessageEvent,
+    get_event_model,
+)
 
 if TYPE_CHECKING:
     from nonebot.config import Config
@@ -47,8 +62,10 @@ def _check_at_me(bot: "Bot", event: "Event"):
         event.to_me = True
 
         for index, segment in enumerate(message):
-            if segment.type == "at" and segment.data.get(
-                    "user_name") in bot.config.nickname:
+            if (
+                segment.type == "at"
+                and segment.data.get("user_name") in bot.config.nickname
+            ):
                 event.to_me = True
                 del event.event.message.content[index]
                 return
@@ -57,7 +74,8 @@ def _check_at_me(bot: "Bot", event: "Event"):
                     if mention["name"] in bot.config.nickname:
                         event.to_me = True
                         segment.data["text"] = segment.data["text"].replace(
-                            f"@{mention['name']}", "")
+                            f"@{mention['name']}", ""
+                        )
                         segment.data["text"] = segment.data["text"].lstrip()
                         break
                 else:
@@ -92,18 +110,18 @@ def _check_nickname(bot: "Bot", event: "Event"):
     if nicknames:
         # check if the user is calling me with my nickname
         nickname_regex = "|".join(nicknames)
-        m = re.search(rf"^({nickname_regex})([\s,，]*|$)", first_text,
-                      re.IGNORECASE)
+        m = re.search(rf"^({nickname_regex})([\s,，]*|$)", first_text, re.IGNORECASE)
         if m:
             nickname = m.group(1)
             log("DEBUG", f"User is calling me {nickname}")
             event.to_me = True
-            first_msg_seg.data["text"] = first_text[m.end():]
+            first_msg_seg.data["text"] = first_text[m.end() :]
 
 
 def _handle_api_result(
-    result: Union[Optional[Dict[str, Any]], str, bytes, Iterable[bytes],
-                  AsyncIterable[bytes]]
+    result: Union[
+        Optional[Dict[str, Any]], str, bytes, Iterable[bytes], AsyncIterable[bytes]
+    ]
 ) -> Any:
     """
     :说明:
@@ -155,13 +173,13 @@ class Bot(BaseBot):
     @classmethod
     @overrides(BaseBot)
     async def check_permission(
-            cls, driver: Driver, request: HTTPRequest
+        cls, driver: Driver, request: HTTPRequest
     ) -> Tuple[Optional[str], Optional[HTTPResponse]]:
         if not isinstance(request, HTTPRequest):
-            log("WARNING",
-                "Unsupported connection type, available type: `http`")
+            log("WARNING", "Unsupported connection type, available type: `http`")
             return None, HTTPResponse(
-                405, b"Unsupported connection type, available type: `http`")
+                405, b"Unsupported connection type, available type: `http`"
+            )
 
         encrypt_key = cls.feishu_config.encrypt_key
         if encrypt_key:
@@ -174,16 +192,13 @@ class Bot(BaseBot):
         challenge = data.get("challenge")
         if challenge:
             return data.get("token"), HTTPResponse(
-                200,
-                json.dumps({
-                    "challenge": challenge
-                }).encode())
+                200, json.dumps({"challenge": challenge}).encode()
+            )
 
         schema = data.get("schema")
         if not schema:
             return None, HTTPResponse(
-                400,
-                b"Missing `schema` in POST body, only accept event of version 2.0"
+                400, b"Missing `schema` in POST body, only accept event of version 2.0"
             )
 
         headers = data.get("header")
@@ -196,15 +211,13 @@ class Bot(BaseBot):
 
         if not token:
             log("WARNING", "Missing `verification token` in POST body")
-            return None, HTTPResponse(
-                400, b"Missing `verification token` in POST body")
+            return None, HTTPResponse(400, b"Missing `verification token` in POST body")
         else:
             if token != cls.feishu_config.verification_token:
                 log("WARNING", "Verification token check failed")
-                return None, HTTPResponse(403,
-                                          b"Verification token check failed")
+                return None, HTTPResponse(403, b"Verification token check failed")
 
-        return app_id, HTTPResponse(200, b'')
+        return app_id, HTTPResponse(200, b"")
 
     async def handle_message(self, message: bytes):
         """
@@ -245,28 +258,32 @@ class Bot(BaseBot):
     def _construct_url(self, path: str) -> str:
         return self.api_root + path
 
-    @cached(ttl=60 * 60,
-            cache=Cache.MEMORY,
-            key="_feishu_tenant_access_token",
-            serializer=PickleSerializer())
+    @cached(
+        ttl=60 * 60,
+        cache=Cache.MEMORY,
+        key="_feishu_tenant_access_token",
+        serializer=PickleSerializer(),
+    )
     async def _fetch_tenant_access_token(self) -> str:
         try:
             async with httpx.AsyncClient(follow_redirects=True) as client:
                 response = await client.post(
-                    self._construct_url(
-                        "auth/v3/tenant_access_token/internal/"),
+                    self._construct_url("auth/v3/tenant_access_token/internal/"),
                     json={
                         "app_id": self.feishu_config.app_id,
-                        "app_secret": self.feishu_config.app_secret
+                        "app_secret": self.feishu_config.app_secret,
                     },
-                    timeout=self.config.api_timeout)
+                    timeout=self.config.api_timeout,
+                )
 
             if 200 <= response.status_code < 300:
                 result = response.json()
                 return result["tenant_access_token"]
             else:
-                raise NetworkError(f"HTTP request received unexpected "
-                                   f"status code: {response.status_code}")
+                raise NetworkError(
+                    f"HTTP request received unexpected "
+                    f"status code: {response.status_code}"
+                )
         except httpx.InvalidURL:
             raise NetworkError("API root url invalid")
         except httpx.HTTPError:
@@ -280,30 +297,37 @@ class Bot(BaseBot):
                 raise ApiNotAvailable
 
             headers = {}
-            self.feishu_config.tenant_access_token = await self._fetch_tenant_access_token(
+            self.feishu_config.tenant_access_token = (
+                await self._fetch_tenant_access_token()
             )
-            headers[
-                "Authorization"] = "Bearer " + self.feishu_config.tenant_access_token
+            headers["Authorization"] = (
+                "Bearer " + self.feishu_config.tenant_access_token
+            )
 
             try:
-                async with httpx.AsyncClient(timeout=self.config.api_timeout,
-                                             follow_redirects=True) as client:
+                async with httpx.AsyncClient(
+                    timeout=self.config.api_timeout, follow_redirects=True
+                ) as client:
                     response = await client.send(
-                        httpx.Request(data["method"],
-                                      self.api_root + api,
-                                      json=data.get("body", {}),
-                                      params=data.get("query", {}),
-                                      headers=headers))
+                        httpx.Request(
+                            data["method"],
+                            self.api_root + api,
+                            json=data.get("body", {}),
+                            params=data.get("query", {}),
+                            headers=headers,
+                        )
+                    )
                 if 200 <= response.status_code < 300:
-                    if response.headers["content-type"].startswith(
-                            "application/json"):
+                    if response.headers["content-type"].startswith("application/json"):
                         result = response.json()
                     else:
                         result = response.content
                     return _handle_api_result(result)
-                raise NetworkError(f"HTTP request received unexpected "
-                                   f"status code: {response.status_code} "
-                                   f"response body: {response.text}")
+                raise NetworkError(
+                    f"HTTP request received unexpected "
+                    f"status code: {response.status_code} "
+                    f"response body: {response.text}"
+                )
             except httpx.InvalidURL:
                 raise NetworkError("API root url invalid")
             except httpx.HTTPError:
@@ -333,11 +357,13 @@ class Bot(BaseBot):
         return await super().call_api(api, **data)
 
     @overrides(BaseBot)
-    async def send(self,
-                   event: Event,
-                   message: Union[str, Message, MessageSegment],
-                   at_sender: bool = False,
-                   **kwargs) -> Any:
+    async def send(
+        self,
+        event: Event,
+        message: Union[str, Message, MessageSegment],
+        at_sender: bool = False,
+        **kwargs,
+    ) -> Any:
         msg = message if isinstance(message, Message) else Message(message)
 
         if isinstance(event, GroupMessageEvent):
@@ -346,7 +372,8 @@ class Bot(BaseBot):
             receive_id, receive_id_type = event.get_user_id(), "open_id"
         else:
             raise ValueError(
-                "Cannot guess `receive_id` and `receive_id_type` to reply!")
+                "Cannot guess `receive_id` and `receive_id_type` to reply!"
+            )
 
         at_sender = at_sender and bool(event.get_user_id())
 
@@ -357,14 +384,12 @@ class Bot(BaseBot):
 
         params = {
             "method": "POST",
-            "query": {
-                "receive_id_type": receive_id_type
-            },
+            "query": {"receive_id_type": receive_id_type},
             "body": {
                 "receive_id": receive_id,
                 "content": content,
-                "msg_type": msg_type
-            }
+                "msg_type": msg_type,
+            },
         }
 
         return await self.call_api(f"im/v1/messages", **params)

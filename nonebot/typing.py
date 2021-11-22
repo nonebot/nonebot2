@@ -18,8 +18,17 @@
     https://docs.python.org/3/library/typing.html
 """
 
-from typing import (TYPE_CHECKING, Any, Dict, Union, TypeVar, Callable,
-                    NoReturn, Optional, Awaitable)
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Dict,
+    Union,
+    TypeVar,
+    Callable,
+    NoReturn,
+    Optional,
+    Awaitable,
+)
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
@@ -29,10 +38,8 @@ T_Wrapped = TypeVar("T_Wrapped", bound=Callable)
 
 
 def overrides(InterfaceClass: object):
-
     def overrider(func: T_Wrapped) -> T_Wrapped:
-        assert func.__name__ in dir(
-            InterfaceClass), f"Error method: {func.__name__}"
+        assert func.__name__ in dir(InterfaceClass), f"Error method: {func.__name__}"
         return func
 
     return overrider
@@ -80,7 +87,8 @@ T_CallingAPIHook = Callable[["Bot", str, Dict[str, Any]], Awaitable[None]]
   ``bot.call_api`` 时执行的函数
 """
 T_CalledAPIHook = Callable[
-    ["Bot", Optional[Exception], str, Dict[str, Any], Any], Awaitable[None]]
+    ["Bot", Optional[Exception], str, Dict[str, Any], Any], Awaitable[None]
+]
 """
 :类型: ``Callable[[Bot, Optional[Exception], str, Dict[str, Any], Any], Awaitable[None]]``
 
@@ -193,8 +201,9 @@ T_DependencyCache = Dict[T_Handler, Any]
 
   依赖缓存, 用于存储依赖函数的返回值
 """
-T_ArgsParser = Callable[["Bot", "Event", T_State], Union[Awaitable[None],
-                                                         Awaitable[NoReturn]]]
+T_ArgsParser = Callable[
+    ["Bot", "Event", T_State], Union[Awaitable[None], Awaitable[NoReturn]]
+]
 """
 :类型: ``Callable[[Bot, Event, T_State], Union[Awaitable[None], Awaitable[NoReturn]]]``
 
@@ -210,8 +219,9 @@ T_TypeUpdater = Callable[["Bot", "Event", T_State, str], Awaitable[str]]
 
   TypeUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新响应的事件类型。默认会更新为 ``message``。
 """
-T_PermissionUpdater = Callable[["Bot", "Event", T_State, "Permission"],
-                               Awaitable["Permission"]]
+T_PermissionUpdater = Callable[
+    ["Bot", "Event", T_State, "Permission"], Awaitable["Permission"]
+]
 """
 :类型: ``Callable[[Bot, Event, T_State, Permission], Awaitable[Permission]]``
 

@@ -1,8 +1,18 @@
 import json
 import itertools
 from dataclasses import dataclass
-from typing import (Any, Dict, List, Type, Tuple, Union, Mapping, Iterable,
-                    Optional, cast)
+from typing import (
+    Any,
+    Dict,
+    List,
+    Type,
+    Tuple,
+    Union,
+    Mapping,
+    Iterable,
+    Optional,
+    cast,
+)
 
 from nonebot.typing import overrides
 from nonebot.adapters import Message as BaseMessage
@@ -34,7 +44,7 @@ class MessageSegment(BaseMessageSegment["Message"]):
             "share_user": "[个人名片]",
             "system": "[系统消息]",
             "location": "[位置]",
-            "video_chat": "[视频通话]"
+            "video_chat": "[视频通话]",
         }
 
     def __str__(self) -> str:
@@ -47,24 +57,26 @@ class MessageSegment(BaseMessageSegment["Message"]):
 
     @overrides(BaseMessageSegment)
     def __add__(self, other) -> "Message":
-        return Message(self) + (MessageSegment.text(other) if isinstance(
-            other, str) else other)
+        return Message(self) + (
+            MessageSegment.text(other) if isinstance(other, str) else other
+        )
 
     @overrides(BaseMessageSegment)
     def __radd__(self, other) -> "Message":
-        return (MessageSegment.text(other)
-                if isinstance(other, str) else Message(other)) + self
+        return (
+            MessageSegment.text(other) if isinstance(other, str) else Message(other)
+        ) + self
 
     @overrides(BaseMessageSegment)
     def is_text(self) -> bool:
         return self.type == "text"
 
-    #接收消息
+    # 接收消息
     @staticmethod
     def at(user_id: str) -> "MessageSegment":
         return MessageSegment("at", {"user_id": user_id})
 
-    #发送消息
+    # 发送消息
     @staticmethod
     def text(text: str) -> "MessageSegment":
         return MessageSegment("text", {"text": text})
@@ -79,10 +91,7 @@ class MessageSegment(BaseMessageSegment["Message"]):
 
     @staticmethod
     def interactive(title: str, elements: list) -> "MessageSegment":
-        return MessageSegment("interactive", {
-            "title": title,
-            "elements": elements
-        })
+        return MessageSegment("interactive", {"title": title, "elements": elements})
 
     @staticmethod
     def share_chat(chat_id: str) -> "MessageSegment":
@@ -94,28 +103,25 @@ class MessageSegment(BaseMessageSegment["Message"]):
 
     @staticmethod
     def audio(file_key: str, duration: int) -> "MessageSegment":
-        return MessageSegment("audio", {
-            "file_key": file_key,
-            "duration": duration
-        })
+        return MessageSegment("audio", {"file_key": file_key, "duration": duration})
 
     @staticmethod
-    def media(file_key: str, image_key: str, file_name: str,
-              duration: int) -> "MessageSegment":
+    def media(
+        file_key: str, image_key: str, file_name: str, duration: int
+    ) -> "MessageSegment":
         return MessageSegment(
-            "media", {
+            "media",
+            {
                 "file_key": file_key,
                 "image_key": image_key,
                 "file_name": file_name,
-                "duration": duration
-            })
+                "duration": duration,
+            },
+        )
 
     @staticmethod
     def file(file_key: str, file_name: str) -> "MessageSegment":
-        return MessageSegment("file", {
-            "file_key": file_key,
-            "file_name": file_name
-        })
+        return MessageSegment("file", {"file_key": file_key, "file_name": file_name})
 
     @staticmethod
     def sticker(file_key) -> "MessageSegment":
@@ -133,22 +139,22 @@ class Message(BaseMessage[MessageSegment]):
         return MessageSegment
 
     @overrides(BaseMessage)
-    def __add__(self, other: Union[str, Mapping,
-                                   Iterable[Mapping]]) -> "Message":
+    def __add__(self, other: Union[str, Mapping, Iterable[Mapping]]) -> "Message":
         return super(Message, self).__add__(
-            MessageSegment.text(other) if isinstance(other, str) else other)
+            MessageSegment.text(other) if isinstance(other, str) else other
+        )
 
     @overrides(BaseMessage)
-    def __radd__(self, other: Union[str, Mapping,
-                                    Iterable[Mapping]]) -> "Message":
+    def __radd__(self, other: Union[str, Mapping, Iterable[Mapping]]) -> "Message":
         return super(Message, self).__radd__(
-            MessageSegment.text(other) if isinstance(other, str) else other)
+            MessageSegment.text(other) if isinstance(other, str) else other
+        )
 
     @staticmethod
     @overrides(BaseMessage)
     def _construct(
-        msg: Union[str, Mapping,
-                   Iterable[Mapping]]) -> Iterable[MessageSegment]:
+        msg: Union[str, Mapping, Iterable[Mapping]]
+    ) -> Iterable[MessageSegment]:
         if isinstance(msg, Mapping):
             msg = cast(Mapping[str, Any], msg)
             yield MessageSegment(msg["type"], msg.get("data") or {})
@@ -169,7 +175,8 @@ class Message(BaseMessage[MessageSegment]):
         for i, seg in enumerate(self):
             if seg.type == "text" and i != 0 and msg[-1].type == "text":
                 msg[-1] = MessageSegment(
-                    "text", {"text": msg[-1].data["text"] + seg.data["text"]})
+                    "text", {"text": msg[-1].data["text"] + seg.data["text"]}
+                )
             else:
                 msg.append(seg)
         return Message(msg)
@@ -184,6 +191,7 @@ class MessageSerializer:
     """
     飞书 协议 Message 序列化器。
     """
+
     message: Message
 
     def serialize(self) -> Tuple[str, str]:
@@ -198,10 +206,12 @@ class MessageSerializer:
                 else:
                     if last_segment_type == "image":
                         msg["content"].append([])
-                msg["content"][-1].append({
-                    "tag": segment.type if segment.type != "image" else "img",
-                    **segment.data
-                })
+                msg["content"][-1].append(
+                    {
+                        "tag": segment.type if segment.type != "image" else "img",
+                        **segment.data,
+                    }
+                )
                 last_segment_type = segment.type
             return "post", json.dumps({"zh_cn": {**msg}})
 
@@ -214,6 +224,7 @@ class MessageDeserializer:
     """
     飞书 协议 Message 反序列化器。
     """
+
     type: str
     data: Dict[str, Any]
     mentions: Optional[List[dict]]
@@ -227,14 +238,13 @@ class MessageDeserializer:
         if self.type == "post":
             msg = Message()
             if self.data["title"] != "":
-                msg += MessageSegment("text", {'text': self.data["title"]})
+                msg += MessageSegment("text", {"text": self.data["title"]})
 
             for seg in itertools.chain(*self.data["content"]):
                 tag = seg.pop("tag")
                 if tag == "at":
                     seg["user_name"] = dict_mention[seg["user_id"]]["name"]
-                    seg["user_id"] = dict_mention[
-                        seg["user_id"]]["id"]["open_id"]
+                    seg["user_id"] = dict_mention[seg["user_id"]]["id"]["open_id"]
 
                 msg += MessageSegment(tag if tag != "img" else "image", seg)
 
@@ -242,7 +252,8 @@ class MessageDeserializer:
         elif self.type == "text":
             for key, mention in dict_mention.items():
                 self.data["text"] = self.data["text"].replace(
-                    key, f"@{mention['name']}")
+                    key, f"@{mention['name']}"
+                )
             self.data["mentions"] = dict_mention
 
             return Message(MessageSegment(self.type, self.data))

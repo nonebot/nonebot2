@@ -1,28 +1,29 @@
 from enum import Enum
-from typing import Any, List, Dict, Type, Iterable, Optional, Union
+from typing import Any, Dict, List, Type, Union, Iterable, Optional
 
 from pydantic import validate_arguments
 
+from nonebot.typing import overrides
 from nonebot.adapters import Message as BaseMessage
 from nonebot.adapters import MessageSegment as BaseMessageSegment
-from nonebot.typing import overrides
 
 
 class MessageType(str, Enum):
     """消息类型枚举类"""
-    SOURCE = 'Source'
-    QUOTE = 'Quote'
-    AT = 'At'
-    AT_ALL = 'AtAll'
-    FACE = 'Face'
-    PLAIN = 'Plain'
-    IMAGE = 'Image'
-    FLASH_IMAGE = 'FlashImage'
-    VOICE = 'Voice'
-    XML = 'Xml'
-    JSON = 'Json'
-    APP = 'App'
-    POKE = 'Poke'
+
+    SOURCE = "Source"
+    QUOTE = "Quote"
+    AT = "At"
+    AT_ALL = "AtAll"
+    FACE = "Face"
+    PLAIN = "Plain"
+    IMAGE = "Image"
+    FLASH_IMAGE = "FlashImage"
+    VOICE = "Voice"
+    XML = "Xml"
+    JSON = "Json"
+    APP = "App"
+    POKE = "Poke"
 
 
 class MessageSegment(BaseMessageSegment["MessageChain"]):
@@ -43,21 +44,24 @@ class MessageSegment(BaseMessageSegment["MessageChain"]):
     @validate_arguments
     @overrides(BaseMessageSegment)
     def __init__(self, type: MessageType, **data: Any):
-        super().__init__(type=type,
-                         data={k: v for k, v in data.items() if v is not None})
+        super().__init__(
+            type=type, data={k: v for k, v in data.items() if v is not None}
+        )
 
     @overrides(BaseMessageSegment)
     def __str__(self) -> str:
-        return self.data['text'] if self.is_text() else repr(self)
+        return self.data["text"] if self.is_text() else repr(self)
 
     def __repr__(self) -> str:
-        return '[mirai:%s]' % ','.join([
-            self.type.value,
-            *map(
-                lambda s: '%s=%r' % s,
-                self.data.items(),
-            ),
-        ])
+        return "[mirai:%s]" % ",".join(
+            [
+                self.type.value,
+                *map(
+                    lambda s: "%s=%r" % s,
+                    self.data.items(),
+                ),
+            ]
+        )
 
     @overrides(BaseMessageSegment)
     def is_text(self) -> bool:
@@ -65,15 +69,21 @@ class MessageSegment(BaseMessageSegment["MessageChain"]):
 
     def as_dict(self) -> Dict[str, Any]:
         """导出可以被正常json序列化的结构体"""
-        return {'type': self.type.value, **self.data}
+        return {"type": self.type.value, **self.data}
 
     @classmethod
     def source(cls, id: int, time: int):
         return cls(type=MessageType.SOURCE, id=id, time=time)
 
     @classmethod
-    def quote(cls, id: int, group_id: int, sender_id: int, target_id: int,
-              origin: "MessageChain"):
+    def quote(
+        cls,
+        id: int,
+        group_id: int,
+        sender_id: int,
+        target_id: int,
+        origin: "MessageChain",
+    ):
         """
         :说明:
 
@@ -87,12 +97,14 @@ class MessageSegment(BaseMessageSegment["MessageChain"]):
           * ``target_id: int``: 被引用回复的原消息的接收者者的QQ号（或群号）
           * ``origin: MessageChain``: 被引用回复的原消息的消息链对象
         """
-        return cls(type=MessageType.QUOTE,
-                   id=id,
-                   groupId=group_id,
-                   senderId=sender_id,
-                   targetId=target_id,
-                   origin=origin.export())
+        return cls(
+            type=MessageType.QUOTE,
+            id=id,
+            groupId=group_id,
+            senderId=sender_id,
+            targetId=target_id,
+            origin=origin.export(),
+        )
 
     @classmethod
     def at(cls, target: int):
@@ -144,10 +156,12 @@ class MessageSegment(BaseMessageSegment["MessageChain"]):
         return cls(type=MessageType.PLAIN, text=text)
 
     @classmethod
-    def image(cls,
-              image_id: Optional[str] = None,
-              url: Optional[str] = None,
-              path: Optional[str] = None):
+    def image(
+        cls,
+        image_id: Optional[str] = None,
+        url: Optional[str] = None,
+        path: Optional[str] = None,
+    ):
         """
         :说明:
 
@@ -162,10 +176,12 @@ class MessageSegment(BaseMessageSegment["MessageChain"]):
         return cls(type=MessageType.IMAGE, imageId=image_id, url=url, path=path)
 
     @classmethod
-    def flash_image(cls,
-                    image_id: Optional[str] = None,
-                    url: Optional[str] = None,
-                    path: Optional[str] = None):
+    def flash_image(
+        cls,
+        image_id: Optional[str] = None,
+        url: Optional[str] = None,
+        path: Optional[str] = None,
+    ):
         """
         :说明:
 
@@ -175,16 +191,15 @@ class MessageSegment(BaseMessageSegment["MessageChain"]):
 
           同 ``image``
         """
-        return cls(type=MessageType.FLASH_IMAGE,
-                   imageId=image_id,
-                   url=url,
-                   path=path)
+        return cls(type=MessageType.FLASH_IMAGE, imageId=image_id, url=url, path=path)
 
     @classmethod
-    def voice(cls,
-              voice_id: Optional[str] = None,
-              url: Optional[str] = None,
-              path: Optional[str] = None):
+    def voice(
+        cls,
+        voice_id: Optional[str] = None,
+        url: Optional[str] = None,
+        path: Optional[str] = None,
+    ):
         """
         :说明:
 
@@ -196,10 +211,7 @@ class MessageSegment(BaseMessageSegment["MessageChain"]):
           * ``url: Optional[str]``: 语音的URL，发送时可作网络语音的链接
           * ``path: Optional[str]``: 语音的路径，发送本地语音
         """
-        return cls(type=MessageType.FLASH_IMAGE,
-                   imageId=voice_id,
-                   url=url,
-                   path=path)
+        return cls(type=MessageType.FLASH_IMAGE, imageId=voice_id, url=url, path=path)
 
     @classmethod
     def xml(cls, xml: str):
@@ -282,16 +294,14 @@ class MessageChain(BaseMessage[MessageSegment]):
             return [MessageSegment.plain(text=message)]
         return [
             *map(
-                lambda x: x
-                if isinstance(x, MessageSegment) else MessageSegment(**x),
-                message)
+                lambda x: x if isinstance(x, MessageSegment) else MessageSegment(**x),
+                message,
+            )
         ]
 
     def export(self) -> List[Dict[str, Any]]:
         """导出为可以被正常json序列化的数组"""
-        return [
-            *map(lambda segment: segment.as_dict(), self.copy())  # type: ignore
-        ]
+        return [*map(lambda segment: segment.as_dict(), self.copy())]  # type: ignore
 
     def extract_first(self, *type: MessageType) -> Optional[MessageSegment]:
         """
@@ -311,4 +321,4 @@ class MessageChain(BaseMessage[MessageSegment]):
         return None
 
     def __repr__(self) -> str:
-        return f'<{self.__class__.__name__} {[*self.copy()]}>'
+        return f"<{self.__class__.__name__} {[*self.copy()]}>"

@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import Any, Optional
 
-from pydantic import BaseModel, Field
+from pydantic import Field, BaseModel
 
 from nonebot.typing import overrides
 
@@ -16,7 +16,8 @@ class MessageSource(BaseModel):
 
 class MessageEvent(Event):
     """消息事件基类"""
-    message_chain: MessageChain = Field(alias='messageChain')
+
+    message_chain: MessageChain = Field(alias="messageChain")
     source: Optional[MessageSource] = None
     sender: Any
 
@@ -39,12 +40,13 @@ class MessageEvent(Event):
 
 class GroupMessage(MessageEvent):
     """群消息事件"""
+
     sender: GroupChatInfo
     to_me: bool = False
 
     @overrides(MessageEvent)
     def get_session_id(self) -> str:
-        return f'group_{self.sender.group.id}_' + self.get_user_id()
+        return f"group_{self.sender.group.id}_" + self.get_user_id()
 
     @overrides(MessageEvent)
     def get_user_id(self) -> str:
@@ -57,6 +59,7 @@ class GroupMessage(MessageEvent):
 
 class FriendMessage(MessageEvent):
     """好友消息事件"""
+
     sender: PrivateChatInfo
 
     @overrides(MessageEvent)
@@ -65,7 +68,7 @@ class FriendMessage(MessageEvent):
 
     @overrides(MessageEvent)
     def get_session_id(self) -> str:
-        return 'friend_' + self.get_user_id()
+        return "friend_" + self.get_user_id()
 
     @overrides(MessageEvent)
     def is_tome(self) -> bool:
@@ -74,11 +77,12 @@ class FriendMessage(MessageEvent):
 
 class TempMessage(MessageEvent):
     """临时会话消息事件"""
+
     sender: GroupChatInfo
 
     @overrides(MessageEvent)
     def get_session_id(self) -> str:
-        return f'temp_{self.sender.group.id}_' + self.get_user_id()
+        return f"temp_{self.sender.group.id}_" + self.get_user_id()
 
     @overrides(MessageEvent)
     def is_tome(self) -> bool:

@@ -36,8 +36,9 @@ uvicorn = { version = "^0.15.0", extras = ["standard"] }
 aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
 
 [tool.poetry.dev-dependencies]
-yapf = "^0.31.0"
 sphinx = "^4.1.1"
+isort = "^5.10.1"
+black = "^21.11b1"
 nonebot-plugin-test = "^0.3.0"
 nonebot-adapter-cqhttp = { path = "./packages/nonebot-adapter-cqhttp", develop = true }
 nonebot-adapter-ding = { path = "./packages/nonebot-adapter-ding", develop = true }
@@ -55,13 +56,21 @@ all = ["quart", "aiohttp"]
 # url = "https://mirrors.aliyun.com/pypi/simple/"
 # default = true
 
+[tool.black]
+line-length = 88
+target-version = ["py37", "py38", "py39", "py310"]
+include = '\.pyi?$'
+extend-exclude = '''
+'''
+
 [tool.isort]
+profile = "black"
 line_length = 80
 length_sort = true
 skip_gitignore = true
 force_sort_within_sections = true
-known_local_folder = "nonebot"
-extra_standard_library = "typing_extensions"
+known_local_folder = ["nonebot"]
+extra_standard_library = ["typing_extensions"]
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]

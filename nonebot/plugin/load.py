@@ -49,8 +49,9 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
     return manager.load_all_plugins()
 
 
-def load_all_plugins(module_path: Iterable[str],
-                     plugin_dir: Iterable[str]) -> Set[Plugin]:
+def load_all_plugins(
+    module_path: Iterable[str], plugin_dir: Iterable[str]
+) -> Set[Plugin]:
     """
     :说明:
 
@@ -90,8 +91,7 @@ def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     plugins = data.get("plugins")
     plugin_dirs = data.get("plugin_dirs")
     assert isinstance(plugins, list), "plugins must be a list of plugin name"
-    assert isinstance(plugin_dirs,
-                      list), "plugin_dirs must be a list of directories"
+    assert isinstance(plugin_dirs, list), "plugin_dirs must be a list of directories"
     return load_all_plugins(set(plugins), set(plugin_dirs))
 
 
@@ -120,14 +120,14 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
         if nonebot_data:
             warnings.warn(
                 "[nonebot.plugins] table are now deprecated. Use [tool.nonebot] instead.",
-                DeprecationWarning)
+                DeprecationWarning,
+            )
         else:
             raise ValueError("Cannot find '[tool.nonebot]' in given toml file!")
     plugins = nonebot_data.get("plugins", [])
     plugin_dirs = nonebot_data.get("plugin_dirs", [])
     assert isinstance(plugins, list), "plugins must be a list of plugin name"
-    assert isinstance(plugin_dirs,
-                      list), "plugin_dirs must be a list of directories"
+    assert isinstance(plugin_dirs, list), "plugin_dirs must be a list of directories"
     return load_all_plugins(plugins, plugin_dirs)
 
 
@@ -163,5 +163,5 @@ def require(name: str) -> Export:
     """
     plugin = get_plugin(name) or load_plugin(name)
     if not plugin:
-        raise RuntimeError(f"Cannot load plugin \"{name}\"!")
+        raise RuntimeError(f'Cannot load plugin "{name}"!')
     return plugin.export

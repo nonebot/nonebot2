@@ -15,7 +15,6 @@ if TYPE_CHECKING:
 
 
 class _ApiCall(Protocol):
-
     async def __call__(self, **kwargs: Any) -> Any:
         ...
 
@@ -146,7 +145,8 @@ class Bot(abc.ABC):
             except Exception as e:
                 logger.opt(colors=True, exception=e).error(
                     "<r><bg #f8bbd0>Error when running CallingAPI hook. "
-                    "Running cancelled!</bg #f8bbd0></r>")
+                    "Running cancelled!</bg #f8bbd0></r>"
+                )
 
         exception = None
         result = None
@@ -157,8 +157,8 @@ class Bot(abc.ABC):
             exception = e
 
         coros = list(
-            map(lambda x: x(self, exception, api, data, result),
-                self._called_api_hook))
+            map(lambda x: x(self, exception, api, data, result), self._called_api_hook)
+        )
         if coros:
             try:
                 logger.debug("Running CalledAPI hooks...")
@@ -166,16 +166,17 @@ class Bot(abc.ABC):
             except Exception as e:
                 logger.opt(colors=True, exception=e).error(
                     "<r><bg #f8bbd0>Error when running CalledAPI hook. "
-                    "Running cancelled!</bg #f8bbd0></r>")
+                    "Running cancelled!</bg #f8bbd0></r>"
+                )
 
         if exception:
             raise exception
         return result
 
     @abc.abstractmethod
-    async def send(self, event: "Event", message: Union[str, "Message",
-                                                        "MessageSegment"],
-                   **kwargs) -> Any:
+    async def send(
+        self, event: "Event", message: Union[str, "Message", "MessageSegment"], **kwargs
+    ) -> Any:
         """
         :说明:
 

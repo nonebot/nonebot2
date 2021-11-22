@@ -1,7 +1,7 @@
 from typing import TYPE_CHECKING
+from typing_extensions import Literal
 
 from pydantic import Field
-from typing_extensions import Literal
 
 from .base import Event
 
@@ -11,15 +11,17 @@ if TYPE_CHECKING:
 
 class RequestEvent(Event):
     """请求事件基类"""
-    event_id: int = Field(alias='eventId')
+
+    event_id: int = Field(alias="eventId")
     message: str
     nick: str
 
 
 class NewFriendRequestEvent(RequestEvent):
     """添加好友申请"""
-    from_id: int = Field(alias='fromId')
-    group_id: int = Field(0, alias='groupId')
+
+    from_id: int = Field(alias="fromId")
+    group_id: int = Field(0, alias="groupId")
 
     async def approve(self, bot: "Bot"):
         """
@@ -31,19 +33,18 @@ class NewFriendRequestEvent(RequestEvent):
 
           * ``bot: Bot``: 当前的 ``Bot`` 对象
         """
-        return await bot.api.post('/resp/newFriendRequestEvent',
-                                  params={
-                                      'eventId': self.event_id,
-                                      'groupId': self.group_id,
-                                      'fromId': self.from_id,
-                                      'operate': 0,
-                                      'message': ''
-                                  })
+        return await bot.api.post(
+            "/resp/newFriendRequestEvent",
+            params={
+                "eventId": self.event_id,
+                "groupId": self.group_id,
+                "fromId": self.from_id,
+                "operate": 0,
+                "message": "",
+            },
+        )
 
-    async def reject(self,
-                     bot: "Bot",
-                     operate: Literal[1, 2] = 1,
-                     message: str = ''):
+    async def reject(self, bot: "Bot", operate: Literal[1, 2] = 1, message: str = ""):
         """
         :说明:
 
@@ -60,21 +61,24 @@ class NewFriendRequestEvent(RequestEvent):
           * ``message: str``: 回复的信息
         """
         assert operate > 0
-        return await bot.api.post('/resp/newFriendRequestEvent',
-                                  params={
-                                      'eventId': self.event_id,
-                                      'groupId': self.group_id,
-                                      'fromId': self.from_id,
-                                      'operate': operate,
-                                      'message': message
-                                  })
+        return await bot.api.post(
+            "/resp/newFriendRequestEvent",
+            params={
+                "eventId": self.event_id,
+                "groupId": self.group_id,
+                "fromId": self.from_id,
+                "operate": operate,
+                "message": message,
+            },
+        )
 
 
 class MemberJoinRequestEvent(RequestEvent):
     """用户入群申请（Bot需要有管理员权限）"""
-    from_id: int = Field(alias='fromId')
-    group_id: int = Field(alias='groupId')
-    group_name: str = Field(alias='groupName')
+
+    from_id: int = Field(alias="fromId")
+    group_id: int = Field(alias="groupId")
+    group_name: str = Field(alias="groupName")
 
     async def approve(self, bot: "Bot"):
         """
@@ -86,19 +90,20 @@ class MemberJoinRequestEvent(RequestEvent):
 
           * ``bot: Bot``: 当前的 ``Bot`` 对象
         """
-        return await bot.api.post('/resp/memberJoinRequestEvent',
-                                  params={
-                                      'eventId': self.event_id,
-                                      'groupId': self.group_id,
-                                      'fromId': self.from_id,
-                                      'operate': 0,
-                                      'message': ''
-                                  })
+        return await bot.api.post(
+            "/resp/memberJoinRequestEvent",
+            params={
+                "eventId": self.event_id,
+                "groupId": self.group_id,
+                "fromId": self.from_id,
+                "operate": 0,
+                "message": "",
+            },
+        )
 
-    async def reject(self,
-                     bot: "Bot",
-                     operate: Literal[1, 2, 3, 4] = 1,
-                     message: str = ''):
+    async def reject(
+        self, bot: "Bot", operate: Literal[1, 2, 3, 4] = 1, message: str = ""
+    ):
         """
         :说明:
 
@@ -117,21 +122,24 @@ class MemberJoinRequestEvent(RequestEvent):
           * ``message: str``: 回复的信息
         """
         assert operate > 0
-        return await bot.api.post('/resp/memberJoinRequestEvent',
-                                  params={
-                                      'eventId': self.event_id,
-                                      'groupId': self.group_id,
-                                      'fromId': self.from_id,
-                                      'operate': operate,
-                                      'message': message
-                                  })
+        return await bot.api.post(
+            "/resp/memberJoinRequestEvent",
+            params={
+                "eventId": self.event_id,
+                "groupId": self.group_id,
+                "fromId": self.from_id,
+                "operate": operate,
+                "message": message,
+            },
+        )
 
 
 class BotInvitedJoinGroupRequestEvent(RequestEvent):
     """Bot被邀请入群申请"""
-    from_id: int = Field(alias='fromId')
-    group_id: int = Field(alias='groupId')
-    group_name: str = Field(alias='groupName')
+
+    from_id: int = Field(alias="fromId")
+    group_id: int = Field(alias="groupId")
+    group_name: str = Field(alias="groupName")
 
     async def approve(self, bot: "Bot"):
         """
@@ -143,14 +151,16 @@ class BotInvitedJoinGroupRequestEvent(RequestEvent):
 
           * ``bot: Bot``: 当前的 ``Bot`` 对象
         """
-        return await bot.api.post('/resp/botInvitedJoinGroupRequestEvent',
-                                  params={
-                                      'eventId': self.event_id,
-                                      'groupId': self.group_id,
-                                      'fromId': self.from_id,
-                                      'operate': 0,
-                                      'message': ''
-                                  })
+        return await bot.api.post(
+            "/resp/botInvitedJoinGroupRequestEvent",
+            params={
+                "eventId": self.event_id,
+                "groupId": self.group_id,
+                "fromId": self.from_id,
+                "operate": 0,
+                "message": "",
+            },
+        )
 
     async def reject(self, bot: "Bot", message: str = ""):
         """
@@ -163,11 +173,13 @@ class BotInvitedJoinGroupRequestEvent(RequestEvent):
           * ``bot: Bot``: 当前的 ``Bot`` 对象
           * ``message: str``: 邀请消息
         """
-        return await bot.api.post('/resp/botInvitedJoinGroupRequestEvent',
-                                  params={
-                                      'eventId': self.event_id,
-                                      'groupId': self.group_id,
-                                      'fromId': self.from_id,
-                                      'operate': 1,
-                                      'message': message
-                                  })
+        return await bot.api.post(
+            "/resp/botInvitedJoinGroupRequestEvent",
+            params={
+                "eventId": self.event_id,
+                "groupId": self.group_id,
+                "fromId": self.from_id,
+                "operate": 1,
+                "message": message,
+            },
+        )

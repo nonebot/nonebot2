@@ -15,6 +15,7 @@ plugins: Dict[str, "Plugin"] = {}
 @dataclass(eq=False)
 class Plugin(object):
     """存储插件信息"""
+
     name: str
     """
     - **类型**: ``str``

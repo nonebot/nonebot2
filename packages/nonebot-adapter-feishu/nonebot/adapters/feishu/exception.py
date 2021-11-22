@@ -1,13 +1,12 @@
 from typing import Optional
 
-from nonebot.exception import ActionFailed as BaseActionFailed
 from nonebot.exception import AdapterException
-from nonebot.exception import ApiNotAvailable as BaseApiNotAvailable
+from nonebot.exception import ActionFailed as BaseActionFailed
 from nonebot.exception import NetworkError as BaseNetworkError
+from nonebot.exception import ApiNotAvailable as BaseApiNotAvailable
 
 
 class FeishuAdapterException(AdapterException):
-
     def __init__(self):
         super().__init__("feishu")
 
@@ -28,8 +27,11 @@ class ActionFailed(BaseActionFailed, FeishuAdapterException):
         self.info = kwargs
 
     def __repr__(self):
-        return f"<ActionFailed " + ", ".join(
-            f"{k}={v}" for k, v in self.info.items()) + ">"
+        return (
+            f"<ActionFailed "
+            + ", ".join(f"{k}={v}" for k, v in self.info.items())
+            + ">"
+        )
 
     def __str__(self):
         return self.__repr__()

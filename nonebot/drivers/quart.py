@@ -30,8 +30,7 @@ try:
     from quart import Quart, Request, Response
     from quart import Websocket as QuartWebSocket
 except ImportError:
-    raise ValueError(
-        'Please install Quart by using `pip install nonebot2[quart]`')
+    raise ValueError("Please install Quart by using `pip install nonebot2[quart]`")
 
 _AsyncCallable = TypeVar("_AsyncCallable", bound=Callable[..., Coroutine])
 
@@ -40,6 +39,7 @@ class Config(BaseSettings):
     """
     Quart 驱动框架设置
     """
+
     quart_reload: Optional[bool] = None
     """
     :类型:
@@ -111,11 +111,12 @@ class Driver(ReverseDriver):
         self.quart_config = Config(**config.dict())
 
         self._server_app = Quart(self.__class__.__qualname__)
-        self._server_app.add_url_rule("/<adapter>/http",
-                                      methods=["POST"],
-                                      view_func=self._handle_http)
-        self._server_app.add_websocket("/<adapter>/ws",
-                                       view_func=self._handle_ws_reverse)
+        self._server_app.add_url_rule(
+            "/<adapter>/http", methods=["POST"], view_func=self._handle_http
+        )
+        self._server_app.add_websocket(
+            "/<adapter>/ws", view_func=self._handle_ws_reverse
+        )
 
     @property
     @overrides(ReverseDriver)
@@ -156,12 +157,14 @@ class Driver(ReverseDriver):
         return self.server_app.after_serving(func)  # type: ignore
 
     @overrides(ReverseDriver)
-    def run(self,
-            host: Optional[str] = None,
-            port: Optional[int] = None,
-            *,
-            app: Optional[str] = None,
-            **kwargs):
+    def run(
+        self,
+        host: Optional[str] = None,
+        port: Optional[int] = None,
+        *,
+        app: Optional[str] = None,
+        **kwargs,
+    ):
         """使用 ``uvicorn`` 启动 Quart"""
         super().run(host, port, app, **kwargs)
         LOGGING_CONFIG = {
@@ -173,10 +176,7 @@ class Driver(ReverseDriver):
                 },
             },
             "loggers": {
-                "uvicorn.error": {
-                    "handlers": ["default"],
-                    "level": "INFO"
-                },
+                "uvicorn.error": {"handlers": ["default"], "level": "INFO"},
                 "uvicorn.access": {
                     "handlers": ["default"],
                     "level": "INFO",
@@ -188,52 +188,69 @@ class Driver(ReverseDriver):
             host=host or str(self.config.host),
             port=port or self.config.port,
             reload=self.quart_config.quart_reload
-            if self.quart_config.quart_reload is not None else
-            (bool(app) and self.config.debug),
+            if self.quart_config.quart_reload is not None
+            else (bool(app) and self.config.debug),
             reload_dirs=self.quart_config.quart_reload_dirs,
             reload_delay=self.quart_config.quart_reload_delay,
             reload_includes=self.quart_config.quart_reload_includes,
             reload_excludes=self.quart_config.quart_reload_excludes,
             debug=self.config.debug,
             log_config=LOGGING_CONFIG,
-            **kwargs)
+            **kwargs,
+        )
 
     async def _handle_http(self, adapter: str):
         request: Request = _request
         data: bytes = await request.get_data()  # type: ignore
 
         if adapter not in self._adapters:
-            logger.warning(f'Unknown adapter {adapter}. '
-                           'Please register the adapter before use.')
+            logger.warning(
+                f"Unknown adapter {adapter}. " "Please register the adapter before use."
+            )
             raise exceptions.NotFound()
 
         BotClass = self._adapters[adapter]
-        http_request = HTTPRequest(request.http_version, request.scheme,
-                                   request.path, request.query_string,
-                                   dict(request.headers), request.method, data)
+        http_request = HTTPRequest(
+            request.http_version,
+            request.scheme,
+            request.path,
+            request.query_string,
+            dict(request.headers),
+            request.method,
+            data,
+        )
 
         self_id, response = await BotClass.check_permission(self, http_request)
 
         if not self_id:
             raise exceptions.Unauthorized(
-                description=(response and response.body or b"").decode())
+                description=(response and response.body or b"").decode()
+            )
         if self_id in self._clients:
-            logger.warning("There's already a reverse websocket connection,"
-                           "so the event may be handled twice.")
+            logger.warning(
+                "There's already a reverse websocket connection,"
+                "so the event may be handled twice."
+            )
         bot = BotClass(self_id, http_request)
         asyncio.create_task(bot.handle_message(data))
-        return Response(response and response.body or "",
-                        response and response.status or 200)
+        return Response(
+            response and response.body or "", response and response.status or 200
+        )
 
     async def _handle_ws_reverse(self, adapter: str):
         websocket: QuartWebSocket = _websocket
-        ws = WebSocket(websocket.http_version, websocket.scheme,
-                       websocket.path, websocket.query_string,
-                       dict(websocket.headers), websocket)
+        ws = WebSocket(
+            websocket.http_version,
+            websocket.scheme,
+            websocket.path,
+            websocket.query_string,
+            dict(websocket.headers),
+            websocket,
+        )
 
         if adapter not in self._adapters:
             logger.warning(
-                f'Unknown adapter {adapter}. Please register the adapter before use.'
+                f"Unknown adapter {adapter}. Please register the adapter before use."
             )
             raise exceptions.NotFound()
 
@@ -242,20 +259,22 @@ class Driver(ReverseDriver):
 
         if not self_id:
             raise exceptions.Unauthorized(
-                description=(response and response.body or b"").decode())
+                description=(response and response.body or b"").decode()
+            )
 
         if self_id in self._clients:
             logger.opt(colors=True).warning(
                 "There's already a websocket connection, "
                 f"<y>{escape_tag(adapter.upper())} Bot {escape_tag(self_id)}</y> ignored."
             )
-            raise exceptions.Forbidden(description='Client already exists.')
+            raise exceptions.Forbidden(description="Client already exists.")
 
         bot = BotClass(self_id, ws)
         await ws.accept()
         logger.opt(colors=True).info(
             f"WebSocket Connection from <y>{escape_tag(adapter.upper())} "
-            f"Bot {escape_tag(self_id)}</y> Accepted!")
+            f"Bot {escape_tag(self_id)}</y> Accepted!"
+        )
         self._bot_connect(bot)
 
         try:
@@ -267,7 +286,8 @@ class Driver(ReverseDriver):
                     break
                 except Exception as e:
                     logger.opt(exception=e).error(
-                        "Error when receiving data from websocket.")
+                        "Error when receiving data from websocket."
+                    )
                     break
 
                 asyncio.create_task(bot.handle_message(data.encode()))

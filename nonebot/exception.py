@@ -157,6 +157,7 @@ class NoLogException(AdapterException):
 
       指示 NoneBot 对当前 ``Event`` 进行处理但不显示 Log 信息，可在 ``get_log_string`` 时抛出
     """
+
     pass
 
 
@@ -166,6 +167,7 @@ class ApiNotAvailable(AdapterException):
 
       在 API 连接不可用时抛出。
     """
+
     pass
 
 
@@ -175,6 +177,7 @@ class NetworkError(AdapterException):
 
       在网络出现问题时抛出，如: API 请求地址不正确, API 请求无返回或返回状态非正常等。
     """
+
     pass
 
 
@@ -184,4 +187,5 @@ class ActionFailed(AdapterException):
 
       API 请求成功返回数据，但 API 操作失败。
     """
+
     pass

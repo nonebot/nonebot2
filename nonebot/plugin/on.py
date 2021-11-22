@@ -10,8 +10,18 @@ from nonebot.matcher import Matcher
 from .manager import _current_plugin
 from nonebot.permission import Permission
 from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_StateFactory
-from nonebot.rule import (PREFIX_KEY, RAW_CMD_KEY, Rule, ArgumentParser, regex,
-                          command, keyword, endswith, startswith, shell_command)
+from nonebot.rule import (
+    PREFIX_KEY,
+    RAW_CMD_KEY,
+    Rule,
+    ArgumentParser,
+    regex,
+    command,
+    keyword,
+    endswith,
+    startswith,
+    shell_command,
+)
 
 
 def _store_matcher(matcher: Type[Matcher]) -> None:
@@ -30,17 +40,19 @@ def _get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
     return sys.modules.get(module_name)
 
 
-def on(type: str = "",
-       rule: Optional[Union[Rule, T_RuleChecker]] = None,
-       permission: Optional[Permission] = None,
-       *,
-       handlers: Optional[List[Union[T_Handler, Handler]]] = None,
-       temp: bool = False,
-       priority: int = 1,
-       block: bool = False,
-       state: Optional[T_State] = None,
-       state_factory: Optional[T_StateFactory] = None,
-       _depth: int = 0) -> Type[Matcher]:
+def on(
+    type: str = "",
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    permission: Optional[Permission] = None,
+    *,
+    handlers: Optional[List[Union[T_Handler, Handler]]] = None,
+    temp: bool = False,
+    priority: int = 1,
+    block: bool = False,
+    state: Optional[T_State] = None,
+    state_factory: Optional[T_StateFactory] = None,
+    _depth: int = 0,
+) -> Type[Matcher]:
     """
     :说明:
 
@@ -62,30 +74,34 @@ def on(type: str = "",
 
       - ``Type[Matcher]``
     """
-    matcher = Matcher.new(type,
-                          Rule() & rule,
-                          permission or Permission(),
-                          temp=temp,
-                          priority=priority,
-                          block=block,
-                          handlers=handlers,
-                          plugin=_current_plugin.get(),
-                          module=_get_matcher_module(_depth + 1),
-                          default_state=state,
-                          default_state_factory=state_factory)
+    matcher = Matcher.new(
+        type,
+        Rule() & rule,
+        permission or Permission(),
+        temp=temp,
+        priority=priority,
+        block=block,
+        handlers=handlers,
+        plugin=_current_plugin.get(),
+        module=_get_matcher_module(_depth + 1),
+        default_state=state,
+        default_state_factory=state_factory,
+    )
     _store_matcher(matcher)
     return matcher
 
 
-def on_metaevent(rule: Optional[Union[Rule, T_RuleChecker]] = None,
-                 *,
-                 handlers: Optional[List[Union[T_Handler, Handler]]] = None,
-                 temp: bool = False,
-                 priority: int = 1,
-                 block: bool = False,
-                 state: Optional[T_State] = None,
-                 state_factory: Optional[T_StateFactory] = None,
-                 _depth: int = 0) -> Type[Matcher]:
+def on_metaevent(
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    *,
+    handlers: Optional[List[Union[T_Handler, Handler]]] = None,
+    temp: bool = False,
+    priority: int = 1,
+    block: bool = False,
+    state: Optional[T_State] = None,
+    state_factory: Optional[T_StateFactory] = None,
+    _depth: int = 0,
+) -> Type[Matcher]:
     """
     :说明:
 
@@ -105,31 +121,35 @@ def on_metaevent(rule: Optional[Union[Rule, T_RuleChecker]] = None,
 
       - ``Type[Matcher]``
     """
-    matcher = Matcher.new("meta_event",
-                          Rule() & rule,
-                          Permission(),
-                          temp=temp,
-                          priority=priority,
-                          block=block,
-                          handlers=handlers,
-                          plugin=_current_plugin.get(),
-                          module=_get_matcher_module(_depth + 1),
-                          default_state=state,
-                          default_state_factory=state_factory)
+    matcher = Matcher.new(
+        "meta_event",
+        Rule() & rule,
+        Permission(),
+        temp=temp,
+        priority=priority,
+        block=block,
+        handlers=handlers,
+        plugin=_current_plugin.get(),
+        module=_get_matcher_module(_depth + 1),
+        default_state=state,
+        default_state_factory=state_factory,
+    )
     _store_matcher(matcher)
     return matcher
 
 
-def on_message(rule: Optional[Union[Rule, T_RuleChecker]] = None,
-               permission: Optional[Permission] = None,
-               *,
-               handlers: Optional[List[Union[T_Handler, Handler]]] = None,
-               temp: bool = False,
-               priority: int = 1,
-               block: bool = True,
-               state: Optional[T_State] = None,
-               state_factory: Optional[T_StateFactory] = None,
-               _depth: int = 0) -> Type[Matcher]:
+def on_message(
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    permission: Optional[Permission] = None,
+    *,
+    handlers: Optional[List[Union[T_Handler, Handler]]] = None,
+    temp: bool = False,
+    priority: int = 1,
+    block: bool = True,
+    state: Optional[T_State] = None,
+    state_factory: Optional[T_StateFactory] = None,
+    _depth: int = 0,
+) -> Type[Matcher]:
     """
     :说明:
 
@@ -150,30 +170,34 @@ def on_message(rule: Optional[Union[Rule, T_RuleChecker]] = None,
 
       - ``Type[Matcher]``
     """
-    matcher = Matcher.new("message",
-                          Rule() & rule,
-                          permission or Permission(),
-                          temp=temp,
-                          priority=priority,
-                          block=block,
-                          handlers=handlers,
-                          plugin=_current_plugin.get(),
-                          module=_get_matcher_module(_depth + 1),
-                          default_state=state,
-                          default_state_factory=state_factory)
+    matcher = Matcher.new(
+        "message",
+        Rule() & rule,
+        permission or Permission(),
+        temp=temp,
+        priority=priority,
+        block=block,
+        handlers=handlers,
+        plugin=_current_plugin.get(),
+        module=_get_matcher_module(_depth + 1),
+        default_state=state,
+        default_state_factory=state_factory,
+    )
     _store_matcher(matcher)
     return matcher
 
 
-def on_notice(rule: Optional[Union[Rule, T_RuleChecker]] = None,
-              *,
-              handlers: Optional[List[Union[T_Handler, Handler]]] = None,
-              temp: bool = False,
-              priority: int = 1,
-              block: bool = False,
-              state: Optional[T_State] = None,
-              state_factory: Optional[T_StateFactory] = None,
-              _depth: int = 0) -> Type[Matcher]:
+def on_notice(
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    *,
+    handlers: Optional[List[Union[T_Handler, Handler]]] = None,
+    temp: bool = False,
+    priority: int = 1,
+    block: bool = False,
+    state: Optional[T_State] = None,
+    state_factory: Optional[T_StateFactory] = None,
+    _depth: int = 0,
+) -> Type[Matcher]:
     """
     :说明:
 
@@ -193,30 +217,34 @@ def on_notice(rule: Optional[Union[Rule, T_RuleChecker]] = None,
 
       - ``Type[Matcher]``
     """
-    matcher = Matcher.new("notice",
-                          Rule() & rule,
-                          Permission(),
-                          temp=temp,
-                          priority=priority,
-                          block=block,
-                          handlers=handlers,
-                          plugin=_current_plugin.get(),
-                          module=_get_matcher_module(_depth + 1),
-                          default_state=state,
-                          default_state_factory=state_factory)
+    matcher = Matcher.new(
+        "notice",
+        Rule() & rule,
+        Permission(),
+        temp=temp,
+        priority=priority,
+        block=block,
+        handlers=handlers,
+        plugin=_current_plugin.get(),
+        module=_get_matcher_module(_depth + 1),
+        default_state=state,
+        default_state_factory=state_factory,
+    )
     _store_matcher(matcher)
     return matcher
 
 
-def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = None,
-               *,
-               handlers: Optional[List[Union[T_Handler, Handler]]] = None,
-               temp: bool = False,
-               priority: int = 1,
-               block: bool = False,
-               state: Optional[T_State] = None,
-               state_factory: Optional[T_StateFactory] = None,
-               _depth: int = 0) -> Type[Matcher]:
+def on_request(
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    *,
+    handlers: Optional[List[Union[T_Handler, Handler]]] = None,
+    temp: bool = False,
+    priority: int = 1,
+    block: bool = False,
+    state: Optional[T_State] = None,
+    state_factory: Optional[T_StateFactory] = None,
+    _depth: int = 0,
+) -> Type[Matcher]:
     """
     :说明:
 
@@ -236,26 +264,30 @@ def on_request(rule: Optional[Union[Rule, T_RuleChecker]] = None,
 
       - ``Type[Matcher]``
     """
-    matcher = Matcher.new("request",
-                          Rule() & rule,
-                          Permission(),
-                          temp=temp,
-                          priority=priority,
-                          block=block,
-                          handlers=handlers,
-                          plugin=_current_plugin.get(),
-                          module=_get_matcher_module(_depth + 1),
-                          default_state=state,
-                          default_state_factory=state_factory)
+    matcher = Matcher.new(
+        "request",
+        Rule() & rule,
+        Permission(),
+        temp=temp,
+        priority=priority,
+        block=block,
+        handlers=handlers,
+        plugin=_current_plugin.get(),
+        module=_get_matcher_module(_depth + 1),
+        default_state=state,
+        default_state_factory=state_factory,
+    )
     _store_matcher(matcher)
     return matcher
 
 
-def on_startswith(msg: Union[str, Tuple[str, ...]],
-                  rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
-                  ignorecase: bool = False,
-                  _depth: int = 0,
-                  **kwargs) -> Type[Matcher]:
+def on_startswith(
+    msg: Union[str, Tuple[str, ...]],
+    rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
+    ignorecase: bool = False,
+    _depth: int = 0,
+    **kwargs,
+) -> Type[Matcher]:
     """
     :说明:
 
@@ -278,16 +310,16 @@ def on_startswith(msg: Union[str, Tuple[str, ...]],
 
       - ``Type[Matcher]``
     """
-    return on_message(startswith(msg, ignorecase) & rule,
-                      **kwargs,
-                      _depth=_depth + 1)
+    return on_message(startswith(msg, ignorecase) & rule, **kwargs, _depth=_depth + 1)
 
 
-def on_endswith(msg: Union[str, Tuple[str, ...]],
-                rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
-                ignorecase: bool = False,
-                _depth: int = 0,
-                **kwargs) -> Type[Matcher]:
+def on_endswith(
+    msg: Union[str, Tuple[str, ...]],
+    rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
+    ignorecase: bool = False,
+    _depth: int = 0,
+    **kwargs,
+) -> Type[Matcher]:
     """
     :说明:
 
@@ -310,15 +342,15 @@ def on_endswith(msg: Union[str, Tuple[str, ...]],
 
       - ``Type[Matcher]``
     """
-    return on_message(endswith(msg, ignorecase) & rule,
-                      **kwargs,
-                      _depth=_depth + 1)
+    return on_message(endswith(msg, ignorecase) & rule, **kwargs, _depth=_depth + 1)
 
 
-def on_keyword(keywords: Set[str],
-               rule: Optional[Union[Rule, T_RuleChecker]] = None,
-               _depth: int = 0,
-               **kwargs) -> Type[Matcher]:
+def on_keyword(
+    keywords: Set[str],
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    _depth: int = 0,
+    **kwargs,
+) -> Type[Matcher]:
     """
     :说明:
 
@@ -343,11 +375,13 @@ def on_keyword(keywords: Set[str],
     return on_message(keyword(*keywords) & rule, **kwargs, _depth=_depth + 1)
 
 
-def on_command(cmd: Union[str, Tuple[str, ...]],
-               rule: Optional[Union[Rule, T_RuleChecker]] = None,
-               aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
-               _depth: int = 0,
-               **kwargs) -> Type[Matcher]:
+def on_command(
+    cmd: Union[str, Tuple[str, ...]],
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
+    _depth: int = 0,
+    **kwargs,
+) -> Type[Matcher]:
     """
     :说明:
 
@@ -382,7 +416,8 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
         if not segment_text.startswith(state[PREFIX_KEY][RAW_CMD_KEY]):
             return
         new_message = message.__class__(
-            segment_text[len(state[PREFIX_KEY][RAW_CMD_KEY]):].lstrip())
+            segment_text[len(state[PREFIX_KEY][RAW_CMD_KEY]) :].lstrip()
+        )
         for new_segment in reversed(new_message):
             message.insert(0, new_segment)
 
@@ -390,18 +425,19 @@ def on_command(cmd: Union[str, Tuple[str, ...]],
     handlers.insert(0, _strip_cmd)
 
     commands = set([cmd]) | (aliases or set())
-    return on_message(command(*commands) & rule,
-                      handlers=handlers,
-                      **kwargs,
-                      _depth=_depth + 1)
+    return on_message(
+        command(*commands) & rule, handlers=handlers, **kwargs, _depth=_depth + 1
+    )
 
 
-def on_shell_command(cmd: Union[str, Tuple[str, ...]],
-                     rule: Optional[Union[Rule, T_RuleChecker]] = None,
-                     aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
-                     parser: Optional[ArgumentParser] = None,
-                     _depth: int = 0,
-                     **kwargs) -> Type[Matcher]:
+def on_shell_command(
+    cmd: Union[str, Tuple[str, ...]],
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
+    parser: Optional[ArgumentParser] = None,
+    _depth: int = 0,
+    **kwargs,
+) -> Type[Matcher]:
     """
     :说明:
 
@@ -434,7 +470,8 @@ def on_shell_command(cmd: Union[str, Tuple[str, ...]],
         message = event.get_message()
         segment = message.pop(0)
         new_message = message.__class__(
-            str(segment)[len(state[PREFIX_KEY][RAW_CMD_KEY]):].strip())
+            str(segment)[len(state[PREFIX_KEY][RAW_CMD_KEY]) :].strip()
+        )
         for new_segment in reversed(new_message):
             message.insert(0, new_segment)
 
@@ -442,17 +479,21 @@ def on_shell_command(cmd: Union[str, Tuple[str, ...]],
     handlers.insert(0, _strip_cmd)
 
     commands = set([cmd]) | (aliases or set())
-    return on_message(shell_command(*commands, parser=parser) & rule,
-                      handlers=handlers,
-                      **kwargs,
-                      _depth=_depth + 1)
+    return on_message(
+        shell_command(*commands, parser=parser) & rule,
+        handlers=handlers,
+        **kwargs,
+        _depth=_depth + 1,
+    )
 
 
-def on_regex(pattern: str,
-             flags: Union[int, re.RegexFlag] = 0,
-             rule: Optional[Union[Rule, T_RuleChecker]] = None,
-             _depth: int = 0,
-             **kwargs) -> Type[Matcher]:
+def on_regex(
+    pattern: str,
+    flags: Union[int, re.RegexFlag] = 0,
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    _depth: int = 0,
+    **kwargs,
+) -> Type[Matcher]:
     """
     :说明:
 
@@ -503,8 +544,7 @@ class CommandGroup:
         - **说明**: 其他传递给 ``on_command`` 的参数默认值
         """
 
-    def command(self, cmd: Union[str, Tuple[str, ...]],
-                **kwargs) -> Type[Matcher]:
+    def command(self, cmd: Union[str, Tuple[str, ...]], **kwargs) -> Type[Matcher]:
         """
         :说明:
 
@@ -526,8 +566,9 @@ class CommandGroup:
         final_kwargs.update(kwargs)
         return on_command(cmd, **final_kwargs, _depth=1)
 
-    def shell_command(self, cmd: Union[str, Tuple[str, ...]],
-                      **kwargs) -> Type[Matcher]:
+    def shell_command(
+        self, cmd: Union[str, Tuple[str, ...]], **kwargs
+    ) -> Type[Matcher]:
         """
         :说明:
 
@@ -708,8 +749,9 @@ class MatcherGroup:
         self.matchers.append(matcher)
         return matcher
 
-    def on_startswith(self, msg: Union[str, Tuple[str, ...]],
-                      **kwargs) -> Type[Matcher]:
+    def on_startswith(
+        self, msg: Union[str, Tuple[str, ...]], **kwargs
+    ) -> Type[Matcher]:
         """
         :说明:
 
@@ -739,8 +781,7 @@ class MatcherGroup:
         self.matchers.append(matcher)
         return matcher
 
-    def on_endswith(self, msg: Union[str, Tuple[str, ...]],
-                    **kwargs) -> Type[Matcher]:
+    def on_endswith(self, msg: Union[str, Tuple[str, ...]], **kwargs) -> Type[Matcher]:
         """
         :说明:
 
@@ -799,10 +840,12 @@ class MatcherGroup:
         self.matchers.append(matcher)
         return matcher
 
-    def on_command(self,
-                   cmd: Union[str, Tuple[str, ...]],
-                   aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
-                   **kwargs) -> Type[Matcher]:
+    def on_command(
+        self,
+        cmd: Union[str, Tuple[str, ...]],
+        aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
+        **kwargs,
+    ) -> Type[Matcher]:
         """
         :说明:
 
@@ -834,12 +877,13 @@ class MatcherGroup:
         self.matchers.append(matcher)
         return matcher
 
-    def on_shell_command(self,
-                         cmd: Union[str, Tuple[str, ...]],
-                         aliases: Optional[Set[Union[str, Tuple[str,
-                                                                ...]]]] = None,
-                         parser: Optional[ArgumentParser] = None,
-                         **kwargs) -> Type[Matcher]:
+    def on_shell_command(
+        self,
+        cmd: Union[str, Tuple[str, ...]],
+        aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
+        parser: Optional[ArgumentParser] = None,
+        **kwargs,
+    ) -> Type[Matcher]:
         """
         :说明:
 
@@ -870,18 +914,15 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
-        matcher = on_shell_command(cmd,
-                                   aliases=aliases,
-                                   parser=parser,
-                                   **final_kwargs,
-                                   _depth=1)
+        matcher = on_shell_command(
+            cmd, aliases=aliases, parser=parser, **final_kwargs, _depth=1
+        )
         self.matchers.append(matcher)
         return matcher
 
-    def on_regex(self,
-                 pattern: str,
-                 flags: Union[int, re.RegexFlag] = 0,
-                 **kwargs) -> Type[Matcher]:
+    def on_regex(
+        self, pattern: str, flags: Union[int, re.RegexFlag] = 0, **kwargs
+    ) -> Type[Matcher]:
         """
         :说明:
 

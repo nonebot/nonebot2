@@ -33,8 +33,7 @@ class Export(dict):
         return func
 
     def __setitem__(self, key, value):
-        super().__setitem__(key,
-                            Export(value) if isinstance(value, dict) else value)
+        super().__setitem__(key, Export(value) if isinstance(value, dict) else value)
 
     def __setattr__(self, name, value):
         self[name] = Export(value) if isinstance(value, dict) else value
