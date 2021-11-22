@@ -10,12 +10,6 @@ from nonebot.typing import T_Handler
 
 class Param(abc.ABC, FieldInfo):
 
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}"
-
-    def __str__(self) -> str:
-        return repr(self)
-
     @classmethod
     @abc.abstractmethod
     def _check(cls, name: str, param: inspect.Parameter) -> bool:

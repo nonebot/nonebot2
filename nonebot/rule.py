@@ -25,7 +25,6 @@ from pygtrie import CharTrie
 from nonebot.log import logger
 from nonebot.handler import Handler
 from nonebot import params, get_driver
-from nonebot.dependencies import Param
 from nonebot.exception import ParserExit
 from nonebot.typing import T_State, T_RuleChecker
 from nonebot.adapters import Bot, Event, MessageSegment
@@ -64,8 +63,9 @@ class Rule:
     """
     __slots__ = ("checkers",)
 
-    HANDLER_PARAM_TYPES: List[Type[Param]] = [
-        params.BotParam, params.EventParam, params.StateParam
+    HANDLER_PARAM_TYPES = [
+        params.BotParam, params.EventParam, params.StateParam,
+        params.DefaultParam
     ]
 
     def __init__(self, *checkers: Union[T_RuleChecker, Handler]) -> None:

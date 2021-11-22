@@ -1,6 +1,8 @@
 import inspect
 from typing import Any, Dict, Optional
 
+from pydantic.fields import Undefined
+
 from nonebot.typing import T_State
 from nonebot.dependencies import Param
 from nonebot.adapters import Bot, Event
@@ -67,6 +69,16 @@ class ExceptionParam(Param):
                exception: Optional[Exception] = None,
                **kwargs: Any) -> Any:
         return exception
+
+
+class DefaultParam(Param):
+
+    @classmethod
+    def _check(cls, name: str, param: inspect.Parameter) -> bool:
+        return param.default != param.empty
+
+    def _solve(self, **kwargs: Any) -> Any:
+        return Undefined
 
 
 from nonebot.matcher import Matcher

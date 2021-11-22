@@ -15,7 +15,6 @@ from typing import Any, Dict, List, Type, Union, Callable, NoReturn, Optional
 
 from nonebot import params
 from nonebot.handler import Handler
-from nonebot.dependencies import Param
 from nonebot.adapters import Bot, Event
 from nonebot.typing import T_PermissionChecker
 
@@ -37,8 +36,8 @@ class Permission:
     """
     __slots__ = ("checkers",)
 
-    HANDLER_PARAM_TYPES: List[Type[Param]] = [
-        params.BotParam, params.EventParam
+    HANDLER_PARAM_TYPES = [
+        params.BotParam, params.EventParam, params.DefaultParam
     ]
 
     def __init__(self, *checkers: Union[T_PermissionChecker, Handler]) -> None:

@@ -29,13 +29,16 @@ _event_postprocessors: Set[Handler] = set()
 _run_preprocessors: Set[Handler] = set()
 _run_postprocessors: Set[Handler] = set()
 
-EVENT_PCS_PARAMS = [params.BotParam, params.EventParam, params.StateParam]
+EVENT_PCS_PARAMS = [
+    params.BotParam, params.EventParam, params.StateParam, params.DefaultParam
+]
 RUN_PREPCS_PARAMS = [
-    params.MatcherParam, params.BotParam, params.EventParam, params.StateParam
+    params.MatcherParam, params.BotParam, params.EventParam, params.StateParam,
+    params.DefaultParam
 ]
 RUN_POSTPCS_PARAMS = [
     params.MatcherParam, params.ExceptionParam, params.BotParam,
-    params.EventParam, params.StateParam
+    params.EventParam, params.StateParam, params.DefaultParam
 ]
 
 

@@ -158,7 +158,7 @@ class Matcher(metaclass=MatcherMeta):
 
     HANDLER_PARAM_TYPES = [
         params.BotParam, params.EventParam, params.StateParam,
-        params.MatcherParam
+        params.MatcherParam, params.DefaultParam
     ]
 
     def __init__(self):
