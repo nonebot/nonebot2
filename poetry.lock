@@ -77,7 +77,7 @@ python-versions = "*"
 
 [[package]]
 name = "anyio"
-version = "3.3.4"
+version = "3.4.0"
 description = "High level compatibility layer for multiple asynchronous event loop implementations"
 category = "main"
 optional = false
@@ -90,7 +90,7 @@ typing-extensions = {version = "*", markers = "python_version < \"3.8\""}
 
 [package.extras]
 doc = ["sphinx-rtd-theme", "sphinx-autodoc-typehints (>=1.2.0)"]
-test = ["coverage[toml] (>=4.5)", "hypothesis (>=4.0)", "pytest (>=6.0)", "pytest-mock (>=3.6.1)", "trustme", "uvloop (<0.15)", "mock (>=4)", "uvloop (>=0.15)"]
+test = ["coverage[toml] (>=4.5)", "hypothesis (>=4.0)", "pytest (>=6.0)", "pytest-mock (>=3.6.1)", "trustme", "contextlib2", "uvloop (<0.15)", "mock (>=4)", "uvloop (>=0.15)"]
 trio = ["trio (>=0.16)"]
 
 [[package]]
@@ -508,23 +508,6 @@ description = "Experimental type system extensions for programs checked with the
 category = "dev"
 optional = false
 python-versions = "*"
-
-[[package]]
-name = "nonebot-adapter-cqhttp"
-version = "2.0.0-alpha.16"
-description = "OneBot(CQHTTP) adapter for nonebot2"
-category = "dev"
-optional = false
-python-versions = "^3.7.3"
-develop = true
-
-[package.dependencies]
-httpx = ">=0.20.0, <1.0.0"
-nonebot2 = "^2.0.0-alpha.14"
-
-[package.source]
-type = "directory"
-url = "packages/nonebot-adapter-cqhttp"
 
 [[package]]
 name = "nonebot-adapter-ding"
@@ -1197,7 +1180,7 @@ quart = ["Quart"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.3"
-content-hash = "9a64b2ba25ea3367e1636545241122d5b4d454ab3042865416193f84bf358fc3"
+content-hash = "9c7bf3b0936f4084baf0184046f4443a37c60dadb289c2baaa4360c8d85e3ae8"
 
 [metadata.files]
 aiocache = [
@@ -1295,8 +1278,8 @@ alabaster = [
     {file = "alabaster-0.7.12.tar.gz", hash = "sha256:a661d72d58e6ea8a57f7a86e37d86716863ee5e92788398526d58b26a4e4dc02"},
 ]
 anyio = [
-    {file = "anyio-3.3.4-py3-none-any.whl", hash = "sha256:4fd09a25ab7fa01d34512b7249e366cd10358cdafc95022c7ff8c8f8a5026d66"},
-    {file = "anyio-3.3.4.tar.gz", hash = "sha256:67da67b5b21f96b9d3d65daa6ea99f5d5282cb09f50eb4456f8fb51dffefc3ff"},
+    {file = "anyio-3.4.0-py3-none-any.whl", hash = "sha256:2855a9423524abcdd652d942f8932fda1735210f77a6b392eafd9ff34d3fe020"},
+    {file = "anyio-3.4.0.tar.gz", hash = "sha256:24adc69309fb5779bc1e06158e143e0b6d2c56b302a3ac3de3083c705a6ed39d"},
 ]
 asgiref = [
     {file = "asgiref-3.4.1-py3-none-any.whl", hash = "sha256:ffc141aa908e6f175673e7b1b3b7af4fdb0ecb738fc5c8b88f69f055c2415214"},
@@ -1781,7 +1764,6 @@ mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
 ]
-nonebot-adapter-cqhttp = []
 nonebot-adapter-ding = []
 nonebot-adapter-feishu = []
 nonebot-adapter-mirai = []

@@ -4,7 +4,6 @@ import sys
 sys.path.insert(0, os.path.abspath(".."))
 
 import nonebot
-from nonebot.adapters.cqhttp import Bot
 from nonebot.log import logger, default_format
 from nonebot.adapters.ding import Bot as DingBot
 from nonebot.adapters.mirai import Bot as MiraiBot
@@ -18,7 +17,6 @@ logger.add(
 nonebot.init(custom_config2="config on init")
 app = nonebot.get_asgi()
 driver = nonebot.get_driver()
-driver.register_adapter("cqhttp", Bot)
 driver.register_adapter("ding", DingBot)
 driver.register_adapter("mirai", MiraiBot)
 driver.register_adapter("feishu", FeishuBot)
