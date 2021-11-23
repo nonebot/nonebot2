@@ -22,7 +22,7 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
     <img src="https://img.shields.io/pypi/v/nonebot2" alt="pypi">
   </a>
   <img src="https://img.shields.io/badge/python-3.7.3+-blue" alt="python"><br />
-  <a href="https://github.com/howmanybots/onebot/blob/master/README.md">
+  <a href="https://onebot.dev/">
     <img src="https://img.shields.io/badge/OneBot-v11-black?style=social&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABABAMAAABYR2ztAAAAIVBMVEUAAAAAAAADAwMHBwceHh4UFBQNDQ0ZGRkoKCgvLy8iIiLWSdWYAAAAAXRSTlMAQObYZgAAAQVJREFUSMftlM0RgjAQhV+0ATYK6i1Xb+iMd0qgBEqgBEuwBOxU2QDKsjvojQPvkJ/ZL5sXkgWrFirK4MibYUdE3OR2nEpuKz1/q8CdNxNQgthZCXYVLjyoDQftaKuniHHWRnPh2GCUetR2/9HsMAXyUT4/3UHwtQT2AggSCGKeSAsFnxBIOuAggdh3AKTL7pDuCyABcMb0aQP7aM4AnAbc/wHwA5D2wDHTTe56gIIOUA/4YYV2e1sg713PXdZJAuncdZMAGkAukU9OAn40O849+0ornPwT93rphWF0mgAbauUrEOthlX8Zu7P5A6kZyKCJy75hhw1Mgr9RAUvX7A3csGqZegEdniCx30c3agAAAABJRU5ErkJggg==" alt="cqhttp">
   </a>
   <a href="http://github.com/mamoe/mirai">
@@ -79,7 +79,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 
 目前 NoneBot2 官方维护的协议适配：
 
-- [OneBot(CQHTTP) 协议](https://github.com/howmanybots/onebot/blob/master/README.md) (QQ 等)
+- [OneBot 协议](https://onebot.dev/) (QQ 等)
 - [Mirai-API-HTTP 协议](https://github.com/project-mirai/mirai-api-http)
 - [钉钉](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p)
 - [Telegram](https://core.telegram.org/bots/api)
@@ -91,7 +91,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 
 ~~完整~~文档可以在 [这里](https://v2.nonebot.dev/) 查看。
 
-懒得看文档？下面是快速安装指南：~~这是坏文明~~
+懒得看文档？下面是快速安装指南：
 
 1. (可选)使用你喜欢的 Python 环境管理工具创建新的虚拟环境。
 2. 使用 `pip` (或其他) 安装 NoneBot 脚手架。
@@ -137,7 +137,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 
 如果你在使用过程中发现任何问题，可以 [提交 issue](https://github.com/nonebot/nonebot2/issues/new) 或自行 fork 修改后提交 pull request。
 
-如果你要提交 pull request，请确保你的代码风格和项目已有的代码保持一致，遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/)，变量命名清晰，有适当的注释。
+如果你要提交 pull request，请确保你的代码风格和项目已有的代码保持一致，遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/) [PEP 484](https://www.python.org/dev/peps/pep-0484/)，变量命名清晰，有适当的注释。
 
 ## 许可证
 
