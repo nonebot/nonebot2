@@ -494,5 +494,13 @@
     "desc": "一个计算工作性价比的插件",
     "author": "yzyyz1387",
     "repo": "https://github.com/yzyyz1387/nonebot_plugin_workscore"
+  },
+  {
+    "id": "nonebot_plugin_nokia",
+    "link": "nonebot-plugin-nokia",
+    "name": "诺基亚手机图生成",
+    "desc": "生成一张诺基亚（无内鬼）图片",
+    "author": "kexue-z",
+    "repo": "https://github.com/kexue-z/nonebot-plugin-nokia"
   }
 ]
