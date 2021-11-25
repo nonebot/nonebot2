@@ -502,5 +502,13 @@
     "desc": "生成一张诺基亚（无内鬼）图片",
     "author": "kexue-z",
     "repo": "https://github.com/kexue-z/nonebot-plugin-nokia"
+  },
+  {
+    "id": "nonebot_plugin_asoulcnki",
+    "link": "nonebot-plugin-asoulcnki",
+    "name": "nonebot-plugin-asoulcnki",
+    "desc": "枝网查重插件，查询发病小作文复制比",
+    "author": "MeetWq",
+    "repo": "https://github.com/MeetWq/nonebot-plugin-asoulcnki"
   }
 ]
