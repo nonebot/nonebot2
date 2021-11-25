@@ -431,6 +431,7 @@ class Matcher(metaclass=MatcherMeta):
             if state.get(_receive):
                 return
             state[_receive] = True
+            del state["_current_key"]
             raise RejectedException
 
         def _decorator(func: T_Handler) -> T_Handler:
