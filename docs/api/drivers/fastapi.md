@@ -141,9 +141,9 @@ FastAPI 驱动框架设置，详情参考 FastAPI 文档
 
 ## _class_ `Driver`
 
-基类：[`nonebot.drivers.ReverseDriver`](README.md#nonebot.drivers.ReverseDriver), [`nonebot.drivers.ForwardDriver`](README.md#nonebot.drivers.ForwardDriver)
+基类：[`nonebot.drivers.ReverseDriver`](README.md#nonebot.drivers.ReverseDriver)
 
-FastAPI 驱动框架
+FastAPI 驱动框架。包含反向 Server 功能。
 
 
 * **上报地址**
@@ -192,6 +192,31 @@ fastapi 使用的 logger
 参考文档: [Events](https://fastapi.tiangolo.com/advanced/events/#startup-event)
 
 
+### `run(host=None, port=None, *, app=None, **kwargs)`
+
+使用 `uvicorn` 启动 FastAPI
+
+
+## _class_ `FullDriver`
+
+基类：[`nonebot.drivers.ForwardDriver`](README.md#nonebot.drivers.ForwardDriver), `nonebot.drivers.fastapi.Driver`
+
+完整的 FastAPI 驱动框架，包含正向 Client 支持和反向 Server 支持。
+
+
+* **使用方法**
+
+
+```dotenv
+DRIVER=nonebot.drivers.fastapi:FullDriver
+```
+
+
+### _property_ `type`
+
+驱动名称: `fastapi_full`
+
+
 ### `setup_http_polling(setup)`
 
 
@@ -222,11 +247,6 @@ fastapi 使用的 logger
     
     * `setup: Union[WebSocketSetup, Callable[[], Awaitable[WebSocketSetup]]]`
 
-
-
-### `run(host=None, port=None, *, app=None, **kwargs)`
-
-使用 `uvicorn` 启动 FastAPI
 
 
 ## _class_ `WebSocket`
