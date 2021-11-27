@@ -43,9 +43,20 @@ sidebarDepth: 0
 
 
 
-## _exception_ `IgnoredException`
+## _exception_ `ProcessException`
 
 基类：`nonebot.exception.NoneBotException`
+
+
+* **说明**
+
+    事件处理过程中发生的异常基类。
+
+
+
+## _exception_ `IgnoredException`
+
+基类：`nonebot.exception.ProcessException`
 
 
 * **说明**
@@ -61,9 +72,27 @@ sidebarDepth: 0
 
 
 
+## _exception_ `MockApiException`
+
+基类：`nonebot.exception.ProcessException`
+
+
+* **说明**
+
+    指示 NoneBot 阻止本次 API 调用或修改本次调用返回值，并返回自定义内容。可由 api hook 抛出。
+
+
+
+* **参数**
+
+    
+    * `result`: 返回的内容
+
+
+
 ## _exception_ `StopPropagation`
 
-基类：`nonebot.exception.NoneBotException`
+基类：`nonebot.exception.ProcessException`
 
 
 * **说明**

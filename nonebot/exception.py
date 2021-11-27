@@ -6,7 +6,7 @@
 这些异常并非所有需要用户处理，在 NoneBot 内部运行时被捕获，并进行对应操作。
 """
 
-from typing import Optional
+from typing import Any, Optional
 
 
 class NoneBotException(Exception):
@@ -42,7 +42,15 @@ class ParserExit(NoneBotException):
 
 
 # Processor Exception
-class IgnoredException(NoneBotException):
+class ProcessException(NoneBotException):
+    """
+    :说明:
+
+      事件处理过程中发生的异常基类。
+    """
+
+
+class IgnoredException(ProcessException):
     """
     :说明:
 
@@ -63,7 +71,28 @@ class IgnoredException(NoneBotException):
         return self.__repr__()
 
 
-class StopPropagation(NoneBotException):
+class MockApiException(ProcessException):
+    """
+    :说明:
+
+      指示 NoneBot 阻止本次 API 调用或修改本次调用返回值，并返回自定义内容。可由 api hook 抛出。
+
+    :参数:
+
+      * ``result``: 返回的内容
+    """
+
+    def __init__(self, result: Any):
+        self.result = result
+
+    def __repr__(self):
+        return f"<ApiCancelledException, result={self.result}>"
+
+    def __str__(self):
+        return self.__repr__()
+
+
+class StopPropagation(ProcessException):
     """
     :说明:
 

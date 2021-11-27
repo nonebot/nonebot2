@@ -6,6 +6,7 @@ from typing import TYPE_CHECKING, Any, Set, Tuple, Union, Optional
 
 from nonebot.log import logger
 from nonebot.config import Config
+from nonebot.exception import MockApiException
 from nonebot.typing import T_CalledAPIHook, T_CallingAPIHook
 from nonebot.drivers import Driver, HTTPResponse, HTTPConnection
 
@@ -137,24 +138,33 @@ class Bot(abc.ABC):
             await bot.call_api("send_msg", message="hello world")
             await bot.send_msg(message="hello world")
         """
+
+        result: Any = None
+        skip_calling_api: bool = False
+        exception: Optional[Exception] = None
+
         coros = list(map(lambda x: x(self, api, data), self._calling_api_hook))
         if coros:
             try:
                 logger.debug("Running CallingAPI hooks...")
                 await asyncio.gather(*coros)
+            except MockApiException as e:
+                skip_calling_api = True
+                result = e.result
+                logger.debug(
+                    f"Calling API {api} is cancelled. Return {result} instead."
+                )
             except Exception as e:
                 logger.opt(colors=True, exception=e).error(
                     "<r><bg #f8bbd0>Error when running CallingAPI hook. "
                     "Running cancelled!</bg #f8bbd0></r>"
                 )
 
-        exception = None
-        result = None
-
-        try:
-            result = await self._call_api(api, **data)
-        except Exception as e:
-            exception = e
+        if not skip_calling_api:
+            try:
+                result = await self._call_api(api, **data)
+            except Exception as e:
+                exception = e
 
         coros = list(
             map(lambda x: x(self, exception, api, data, result), self._called_api_hook)
@@ -163,6 +173,11 @@ class Bot(abc.ABC):
             try:
                 logger.debug("Running CalledAPI hooks...")
                 await asyncio.gather(*coros)
+            except MockApiException as e:
+                result = e.result
+                logger.debug(
+                    f"Calling API {api} result is mocked. Return {result} instead."
+                )
             except Exception as e:
                 logger.opt(colors=True, exception=e).error(
                     "<r><bg #f8bbd0>Error when running CalledAPI hook. "
