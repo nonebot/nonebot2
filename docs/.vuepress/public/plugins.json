@@ -510,5 +510,13 @@
     "desc": "枝网查重插件，查询发病小作文复制比",
     "author": "MeetWq",
     "repo": "https://github.com/MeetWq/nonebot-plugin-asoulcnki"
+  },
+  {
+    "id": "nonebot_plugin_petpet",
+    "link": "nonebot-plugin-petpet",
+    "name": "nonebot-plugin-petpet",
+    "desc": "制作头像相关的沙雕表情包",
+    "author": "MeetWq",
+    "repo": "https://github.com/MeetWq/nonebot-plugin-petpet"
   }
 ]
