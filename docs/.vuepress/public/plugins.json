@@ -518,5 +518,13 @@
     "desc": "制作头像相关的沙雕表情包",
     "author": "MeetWq",
     "repo": "https://github.com/MeetWq/nonebot-plugin-petpet"
+  },
+  {
+    "id": "nonebot_plugin_shindan",
+    "link": "nonebot-plugin-shindan",
+    "name": "ShindanMaker",
+    "desc": "使用 ShindanMaker 网站的趣味占卜",
+    "author": "MeetWq",
+    "repo": "https://github.com/MeetWq/nonebot-plugin-shindan"
   }
 ]
