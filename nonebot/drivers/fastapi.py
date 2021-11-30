@@ -555,7 +555,7 @@ class FullDriver(ForwardDriver, Driver):
                                 asyncio.create_task(bot.handle_message(msg))
                             except ConnectionClosed:
                                 logger.opt(colors=True).error(
-                                    "<r><bg #f8bbd0>WebSocket connection closed by peer. "
+                                    "<r><bg #f8bbd0>WebSocket connection closed. "
                                     "Try to reconnect...</bg #f8bbd0></r>"
                                 )
                                 break
@@ -568,6 +568,12 @@ class FullDriver(ForwardDriver, Driver):
                     if bot:
                         self._bot_disconnect(bot)
                     bot = None
+
+                if not setup_.reconnect:
+                    logger.info(
+                        f"WebSocket reconnect disabled for bot {setup_.self_id}"
+                    )
+                    break
                 await asyncio.sleep(setup_.reconnect_interval)
 
         except asyncio.CancelledError:

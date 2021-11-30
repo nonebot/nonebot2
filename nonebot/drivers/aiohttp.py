@@ -407,6 +407,12 @@ class Driver(ForwardDriver):
                         if bot:
                             self._bot_disconnect(bot)
                         bot = None
+
+                    if not setup_.reconnect:
+                        logger.info(
+                            f"WebSocket reconnect disabled for bot {setup_.self_id}"
+                        )
+                        break
                     await asyncio.sleep(setup_.reconnect_interval)
 
         except asyncio.CancelledError:

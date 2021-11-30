@@ -430,5 +430,7 @@ class WebSocketSetup:
     """URL"""
     headers: Dict[str, str] = field(default_factory=dict)
     """HTTP headers"""
+    reconnect: bool = True
+    """WebSocket 是否重连"""
     reconnect_interval: float = 3.0
     """WebSocket 重连间隔"""
