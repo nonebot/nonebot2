@@ -35,9 +35,9 @@ from pygtrie import CharTrie
 from nonebot.log import logger
 from nonebot.handler import Handler
 from nonebot import params, get_driver
-from nonebot.exception import ParserExit
 from nonebot.typing import T_State, T_RuleChecker
 from nonebot.adapters import Bot, Event, MessageSegment
+from nonebot.exception import ParserExit, SkippedException
 
 PREFIX_KEY = "_prefix"
 SUFFIX_KEY = "_suffix"
@@ -130,18 +130,21 @@ class Rule:
         """
         if not self.checkers:
             return True
-        results = await asyncio.gather(
-            *(
-                checker(
-                    bot=bot,
-                    event=event,
-                    state=state,
-                    _stack=stack,
-                    _dependency_cache=dependency_cache,
+        try:
+            results = await asyncio.gather(
+                *(
+                    checker(
+                        bot=bot,
+                        event=event,
+                        state=state,
+                        _stack=stack,
+                        _dependency_cache=dependency_cache,
+                    )
+                    for checker in self.checkers
                 )
-                for checker in self.checkers
             )
-        )
+        except SkippedException:
+            return False
         return all(results)
 
     def __and__(self, other: Optional[Union["Rule", T_RuleChecker]]) -> "Rule":

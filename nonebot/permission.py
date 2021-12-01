@@ -16,6 +16,7 @@ from typing import Any, Dict, List, Type, Union, Callable, NoReturn, Optional
 from nonebot import params
 from nonebot.handler import Handler
 from nonebot.adapters import Bot, Event
+from nonebot.exception import SkippedException
 from nonebot.typing import T_PermissionChecker
 
 
@@ -96,9 +97,13 @@ class Permission:
                     _dependency_cache=dependency_cache,
                 )
                 for checker in self.checkers
-            )
+            ),
+            return_exceptions=True,
         )
-        return any(results)
+        return next(
+            filter(lambda x: bool(x) and not isinstance(x, SkippedException), results),
+            False,
+        )
 
     def __and__(self, other) -> NoReturn:
         raise RuntimeError("And operation between Permissions is not allowed.")
