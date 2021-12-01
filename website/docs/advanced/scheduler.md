@@ -4,7 +4,7 @@ sidebar_position: 2
 options:
   menu:
     weight: 20
-    catogory: advanced
+    category: advanced
 ---
 
 # 定时任务

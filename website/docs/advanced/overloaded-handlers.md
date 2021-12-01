@@ -4,7 +4,7 @@ sidebar_position: 6
 options:
   menu:
     weight: 60
-    catogory: advanced
+    category: advanced
 ---
 
 # 事件处理函数重载

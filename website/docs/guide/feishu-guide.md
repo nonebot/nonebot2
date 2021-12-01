@@ -99,4 +99,3 @@ async def feishu_helper(bot: FeishuBot, event: MessageEvent, state: T_State):
 以上代码注册了一个对飞书平台适用的`say`指令，并会提取`/say`之后的内容发送到事件所对应的群或私聊。
 
 大功告成！现在可以试试向机器人发送类似`/say Hello, Feishu!`的消息进行测试了。
-

@@ -151,7 +151,7 @@ def _handle_api_result(
 
 class Bot(BaseBot):
     """
-    飞书 协议 Bot 适配。继承属性参考 `BaseBot <./#class-basebot>`_ 。
+    飞书 协议 Bot 适配。继承属性参考 `BaseBot <README.md#class-bot>`_ 。
     """
 
     @property

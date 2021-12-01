@@ -1,0 +1,20 @@
+{
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "website"
+  ],
+  "scripts": {
+    "archive": "yarn workspace nonebot docusaurus docs:version",
+    "build": "yarn workspace nonebot build",
+    "build:plugin": "cross-env BASE_URL='/docs/' yarn workspace nonebot build",
+    "start": "yarn workspace nonebot start",
+    "prettier": "prettier --config ./.prettierrc --write \"./website/**/*.md\""
+  },
+  "devDependencies": {
+    "prettier": "^2.5.0"
+  },
+  "dependencies": {
+    "docusaurus-preset-nonepress": "0.0.0-108"
+  }
+}

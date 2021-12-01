@@ -1,10 +1,10 @@
 ---
-sidebar_position: 1
+sidebar_position: 6
 
 options:
   menu:
-    weight: 110
-    catogory: guide
+    weight: 60
+    category: guide
 ---
 
 # 加载插件
@@ -42,7 +42,7 @@ if __name__ == "__main__":
 - 命令 `say`：可由**superuser**使用，可以将消息内容由特殊纯文本转为富文本
 - 命令 `echo`：可由任何人使用，将消息原样返回
 
-以上命令均需要指定机器人，即私聊、群聊内@机器人、群聊内称呼机器人昵称。参考 [Rule: to_me](../../api/rule.md#to-me)
+以上命令均需要指定机器人，即私聊、群聊内@机器人、群聊内称呼机器人昵称。参考 [Rule: to_me](../api/rule.md#to-me)
 
 ## 加载插件目录
 
@@ -71,7 +71,7 @@ if __name__ == "__main__":
 :::
 
 :::danger 警告
-插件间不应该存在过多的耦合，如果确实需要导入某个插件内的数据，可以参考 [进阶-跨插件访问](../../advanced/export-and-require.md)
+插件间不应该存在过多的耦合，如果确实需要导入某个插件内的数据，可以参考 [进阶-跨插件访问](../advanced/export-and-require.md)
 :::
 
 ## 加载单个插件

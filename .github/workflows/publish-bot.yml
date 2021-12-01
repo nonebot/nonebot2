@@ -1,4 +1,4 @@
-name: 'NoneBot2 Publish Bot'
+name: NoneBot2 Publish Bot
 
 on:
   push:
@@ -22,6 +22,6 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
           base: master
-          plugin_path: docs/.vuepress/public/plugins.json
-          bot_path: docs/.vuepress/public/bots.json
-          adapter_path: docs/.vuepress/public/adapters.json
+          plugin_path: website/static/plugins.json
+          bot_path: website/static/bots.json
+          adapter_path: website/static/adapters.json

@@ -1,19 +1,15 @@
 ---
 sidebar_position: 1
-id: guide
+id: index
 slug: /guide
 
 options:
   menu:
     weight: 10
-    catogory: guide
+    category: guide
 ---
 
 # 概览
-
-<!-- :::tip 提示
-如果在阅读本文档时遇到难以理解的词汇，请随时查阅 [术语表](../glossary.md) 或使用 [Google 搜索](https://www.google.com/)。
-::: -->
 
 :::tip 提示
 初次使用时可能会觉得这里的概览过于枯燥，可以先简单略读之后直接前往 [安装](./installation.md) 查看安装方法，并进行后续的基础使用教程。

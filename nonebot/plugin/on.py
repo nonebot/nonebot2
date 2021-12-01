@@ -387,7 +387,7 @@ def on_command(
 
       注册一个消息事件响应器，并且当消息以指定命令开头时响应。
 
-      命令匹配规则参考: `命令形式匹配 <rule.html#command-command>`_
+      命令匹配规则参考: `命令形式匹配 <rule.md#command-command>`_
 
     :参数:
 
@@ -499,7 +499,7 @@ def on_regex(
 
       注册一个消息事件响应器，并且当消息匹配正则表达式时响应。
 
-      命令匹配规则参考: `正则匹配 <rule.html#regex-regex-flags-0>`_
+      命令匹配规则参考: `正则匹配 <rule.md#regex-regex-flags-0>`_
 
     :参数:
 
@@ -851,7 +851,7 @@ class MatcherGroup:
 
           注册一个消息事件响应器，并且当消息以指定命令开头时响应。
 
-          命令匹配规则参考: `命令形式匹配 <rule.html#command-command>`_
+          命令匹配规则参考: `命令形式匹配 <rule.md#command-command>`_
 
         :参数:
 
@@ -928,7 +928,7 @@ class MatcherGroup:
 
           注册一个消息事件响应器，并且当消息匹配正则表达式时响应。
 
-          命令匹配规则参考: `正则匹配 <rule.html#regex-regex-flags-0>`_
+          命令匹配规则参考: `正则匹配 <rule.md#regex-regex-flags-0>`_
 
         :参数:
 

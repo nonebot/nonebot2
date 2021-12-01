@@ -133,11 +133,11 @@ pip install nonebot-adapter-mirai
        from nonebot.adapters.mirai import Bot
 
        nonebot.init()
-       nonebot.get_driver().register_adapter('mirai', 
-                                              Bot, 
+       nonebot.get_driver().register_adapter('mirai',
+                                              Bot,
                                               qq=12345678)
        # qq参数需要填在mah中登录的qq, 如果需要多个帐号, 可以填写类似于 [123456,789100] 的数组形式
-       
+
        nonebot.load_builtin_plugins() # 加载 nonebot 内置插件
        nonebot.run()
        ```
@@ -246,7 +246,7 @@ async def _echo(bot: Bot, event: MessageEvent):
 
 它具有两种行为
 
-- 在指定机器人，即私聊、群聊内@机器人、群聊内称呼机器人昵称的情况下 (即 [Rule: to_me](../api/rule.md#to-me)), 如果消息内包含 `reply` 字段, 则该消息会被机器人重复一次
+- 在指定机器人，即私聊、群聊内@机器人、群聊内称呼机器人昵称的情况下 (即 [Rule: to_me](../api/rule.md#to_me)), 如果消息内包含 `reply` 字段, 则该消息会被机器人重复一次
 
 - 在执行指令`miecho xxx`时, 机器人会发送回参数`xxx`
 

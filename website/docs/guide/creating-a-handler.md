@@ -1,10 +1,10 @@
 ---
-sidebar_position: 4
+sidebar_position: 9
 
 options:
   menu:
-    weight: 140
-    catogory: guide
+    weight: 90
+    category: guide
 ---
 
 # 事件处理
@@ -122,8 +122,8 @@ async def handle(bot: Bot):
 
 参数分别为：
 
-1. [nonebot.adapters.Bot](../api/adapters/#class-bot): 即事件上报连接对应的 Bot 对象，为 BaseBot 的子类。特别注意，此处的类型注释可以替换为指定的 Bot 类型，例如：`nonebot.adapters.cqhttp.Bot`，只有在上报事件的 Bot 类型与类型注释相符时才会执行该处理函数！可用于多平台进行不同的处理。
-2. [nonebot.adapters.Event](../api/adapters/#class-event): 即上报事件对象，可以获取到上报的所有信息。
+1. [nonebot.adapters.Bot](../api/adapters/README.md#class-bot): 即事件上报连接对应的 Bot 对象，为 BaseBot 的子类。特别注意，此处的类型注释可以替换为指定的 Bot 类型，例如：`nonebot.adapters.cqhttp.Bot`，只有在上报事件的 Bot 类型与类型注释相符时才会执行该处理函数！可用于多平台进行不同的处理。
+2. [nonebot.adapters.Event](../api/adapters/README.md#class-event): 即上报事件对象，可以获取到上报的所有信息。
 3. [state](../api/typing.md#t-state): 状态字典，可以存储任意的信息，其中还包含一些特殊的值以获取 NoneBot 内部处理时的一些信息，如：
 
 - `state["_current_key"]`: 存储当前 `got` 获取的参数名

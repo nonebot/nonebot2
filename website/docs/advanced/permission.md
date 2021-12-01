@@ -4,7 +4,7 @@ sidebar_position: 3
 options:
   menu:
     weight: 30
-    catogory: advanced
+    category: advanced
 ---
 
 # 权限控制

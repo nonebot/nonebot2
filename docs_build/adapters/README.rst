@@ -1,4 +1,7 @@
-
+\-\-\-
+id: index
+slug: /api/adapters/
+\-\-\-
 
 NoneBot.adapters 模块
 =====================

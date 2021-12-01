@@ -1,10 +1,10 @@
 ---
-sidebar_position: 3
+sidebar_position: 8
 
 options:
   menu:
-    weight: 130
-    catogory: guide
+    weight: 80
+    category: guide
 ---
 
 # 注册事件响应器
@@ -50,7 +50,7 @@ async def get_weather(city: str):
 从这里开始，你需要对 Python 的 asyncio 编程有所了解，因为 NoneBot 是完全基于 asyncio 的，具体可以参考 [廖雪峰的 Python 教程](https://www.liaoxuefeng.com/wiki/1016959663602400/1017959540289152)
 :::
 
-## [事件响应器](../../api/matcher.md)
+## [事件响应器](../api/matcher.md)
 
 ```python{5}
 from nonebot import on_command
@@ -81,11 +81,11 @@ weather = on_command("天气", rule=to_me(), permission=Permission(), priority=5
 - `on_message()` ~ `on("message")`: 消息事件响应器
 - `on_request()` ~ `on("request")`: 请求事件响应器
 - `on_notice()` ~ `on("notice")`: 通知事件响应器
-- `on_startswith(str)` ~ `on("message", startswith(str))`: 消息开头匹配响应器，参考 [startswith](../../api/rule.md#startswith-msg)
-- `on_endswith(str)` ~ `on("message", endswith(str))`: 消息结尾匹配响应器，参考 [endswith](../../api/rule.md#endswith-msg)
-- `on_keyword(set)` ~ `on("message", keyword(str))`: 消息关键词匹配响应器，参考 [keyword](../../api/rule.md#keyword-keywords)
-- `on_command(str|tuple)` ~ `on("message", command(str|tuple))`: 命令响应器，参考 [command](../../api/rule.md#command-cmds)
-- `on_regex(pattern_str)` ~ `on("message", regex(pattern_str))`: 正则匹配处理器，参考 [regex](../../api/rule.md#regex-regex-flags-0)
+- `on_startswith(str)` ~ `on("message", startswith(str))`: 消息开头匹配响应器，参考 [startswith](../api/rule.md#startswith-msg)
+- `on_endswith(str)` ~ `on("message", endswith(str))`: 消息结尾匹配响应器，参考 [endswith](../api/rule.md#endswith-msg)
+- `on_keyword(set)` ~ `on("message", keyword(str))`: 消息关键词匹配响应器，参考 [keyword](../api/rule.md#keyword-keywords)
+- `on_command(str|tuple)` ~ `on("message", command(str|tuple))`: 命令响应器，参考 [command](../api/rule.md#command-cmds)
+- `on_regex(pattern_str)` ~ `on("message", regex(pattern_str))`: 正则匹配处理器，参考 [regex](../api/rule.md#regex-regex-flags-0)
 
 ### 匹配规则 rule
 
@@ -116,11 +116,11 @@ NoneBot 内置的事件响应器中，所有 `message` 类的事件响应器默�
 
 rule 的出现使得 nonebot 对事件的响应可以非常自由，nonebot 内置了一些规则：
 
-- [startswith(msg)](../../api/rule.md#startswith-msg)
-- [endswith(msg)](../../api/rule.md#endswith-msg)
-- [keyword(\*keywords)](../../api/rule.md#keyword-keywords)
-- [command(\*cmds)](../../api/rule.md#command-cmds)
-- [regex(regex, flag)](../../api/rule.md#regex-regex-flags-0)
+- [startswith(msg)](../api/rule.md#startswith-msg)
+- [endswith(msg)](../api/rule.md#endswith-msg)
+- [keyword(\*keywords)](../api/rule.md#keyword-keywords)
+- [command(\*cmds)](../api/rule.md#command-cmds)
+- [regex(regex, flag)](../api/rule.md#regex-regex-flags-0)
 
 以上规则都是返回类型为 `Rule` 的函数，`Rule` 由非负个 `RuleChecker` 组成，当所有 `RuleChecker` 返回 `True` 时匹配成功。这些 `Rule`, `RuleChecker` 的形式如下：
 

@@ -4,7 +4,7 @@ sidebar_position: 4
 options:
   menu:
     weight: 40
-    catogory: advanced
+    category: advanced
 ---
 
 # 钩子函数

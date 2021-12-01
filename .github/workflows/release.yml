@@ -1,8 +1,7 @@
-name: Build API Doc
+name: Release
 
 on:
-  pull_request:
-    types: [opened, synchronize, reopened]
+  workflow_dispatch:
 
 jobs:
   build:
@@ -11,7 +10,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          ref: ${{ github.event.pull_request.head.sha }}
+          ref: master
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -34,9 +33,18 @@ jobs:
         run: poetry run sphinx-build -M markdown ./docs_build ./build
 
       - name: Copy Files
-        run: cp -r ./build/markdown/* ./docs/api/
+        run: cp -r ./build/markdown/* ./website/docs/api/
 
-      - uses: actions/upload-artifact@v2
-        with:
-          name: docs
-          path: docs/
+      - name: Archive Files
+        run: yarn archive $(poetry version -s)
+
+      - name: Push Tag and Release to PyPI
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m ":bookmark: Release $(poetry version -s)"
+          git tag v$(poetry version -s)
+          git push --tags
+          poetry build
+          poetry publish -u ${{secrets.PYPI_USERNAME}} -p ${{secrets.PYPI_PASSWORD}}

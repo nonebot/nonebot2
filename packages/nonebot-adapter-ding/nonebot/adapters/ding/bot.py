@@ -37,7 +37,7 @@ SEND = "send"
 
 class Bot(BaseBot):
     """
-    钉钉 协议 Bot 适配。继承属性参考 `BaseBot <./#class-basebot>`_ 。
+    钉钉 协议 Bot 适配。继承属性参考 `BaseBot <README.md#class-bot>`_ 。
     """
 
     ding_config: DingConfig

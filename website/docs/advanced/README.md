@@ -1,12 +1,12 @@
 ---
 sidebar_position: 1
-id: advanced
+id: index
 slug: /advanced
 
 options:
   menu:
     weight: 10
-    catogory: advanced
+    category: advanced
 ---
 
 # 深入
@@ -95,14 +95,14 @@ options:
    关于`hook`的更多信息，可以查阅[这里](./runtime-hook.md)
    :::
 
-2. **Matcher**与**matcher**，在**指南**中，我们讲述了[如何注册事件响应器](../guide/creating-a-matcher)，这里的事件响应器或者说 `Matcher` 并不是一个具体的实例 `instance`，而是一个具有特定属性的类 `class`。只有当 `Matcher` **响应事件**时，才会实例化为具体的 `instance`，也就是 `matcher`。`matcher` 可以认为是 `nonebot` 处理 `Event` 的基本单位，运行 `matcher` 是`nonebot`工作的主要内容。
+2. **Matcher**与**matcher**，在**指南**中，我们讲述了[如何注册事件响应器](../guide/creating-a-matcher.md)，这里的事件响应器或者说 `Matcher` 并不是一个具体的实例 `instance`，而是一个具有特定属性的类 `class`。只有当 `Matcher` **响应事件**时，才会实例化为具体的 `instance`，也就是 `matcher`。`matcher` 可以认为是 `nonebot` 处理 `Event` 的基本单位，运行 `matcher` 是`nonebot`工作的主要内容。
 
 3. **handler**，或者说**事件处理函数**, 它们可以认为是 `nonebot` 处理 `Event` 的最小单位。在不考虑 `hook` 的情况下，**运行 matcher 就是顺序运行 matcher.handlers**，这句话换种表达方式就是，`handler` 只有添加到 `matcher.handlers` 时，才可以参与到 `nonebot` 的工作中来。
 
    ::: tip
    如何让 `handler` 添加到 `matcher.handlers`？
 
-   一方面，我们可以参照[这里](../guide/creating-a-handler)利用装饰器来添加；另一方面，我们在用 `on()` 或者 `on_*()` 注册事件响应器时，可以添加 `handlers=[handler1, handler2, ...]` 这样的关键词参数来添加。
+   一方面，我们可以参照[这里](../guide/creating-a-handler.md)利用装饰器来添加；另一方面，我们在用 `on()` 或者 `on_*()` 注册事件响应器时，可以添加 `handlers=[handler1, handler2, ...]` 这样的关键词参数来添加。
    :::
 
 #### 处理 Event

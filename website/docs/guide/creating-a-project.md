@@ -4,7 +4,7 @@ sidebar_position: 4
 options:
   menu:
     weight: 40
-    catogory: guide
+    category: guide
 ---
 
 # 创建一个完整的项目

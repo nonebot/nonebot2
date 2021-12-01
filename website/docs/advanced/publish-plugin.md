@@ -1,10 +1,10 @@
 ---
-sidebar_position: 5
+sidebar_position: 7
 
 options:
   menu:
-    weight: 110
-    catogory: advanced
+    weight: 70
+    category: advanced
 ---
 
 # 发布插件

@@ -4,7 +4,7 @@ sidebar_position: 5
 options:
   menu:
     weight: 50
-    catogory: guide
+    category: guide
 ---
 
 # 基本配置

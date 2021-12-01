@@ -1553,10 +1553,10 @@
   resolved "https://registry.nlark.com/@seznam/compose-react-refs/download/@seznam/compose-react-refs-1.0.6.tgz#6ec4e70bdd6e32f8e70b4100f27267cf306bd8df"
   integrity sha1-bsTnC91uMvjnC0EA8nJnzzBr2N8=
 
-"@sideway/address@^4.1.0":
-  version "4.1.2"
-  resolved "https://registry.nlark.com/@sideway/address/download/@sideway/address-4.1.2.tgz?cache=0&sync_timestamp=1620367945721&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40sideway%2Faddress%2Fdownload%2F%40sideway%2Faddress-4.1.2.tgz#811b84333a335739d3969cfc434736268170cad1"
-  integrity sha1-gRuEMzozVznTlpz8Q0c2JoFwytE=
+"@sideway/address@^4.1.3":
+  version "4.1.3"
+  resolved "https://registry.npmmirror.com/@sideway/address/download/@sideway/address-4.1.3.tgz#d93cce5d45c5daec92ad76db492cc2ee3c64ab27"
+  integrity sha512-8ncEUtmnTsMmL7z1YPB47kPUq7LpKWJNFPsRzHiIajGC5uXlWGn+AmkYPcHNl8S4tcEGx+cnORnNYaw2wvL+LQ==
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
@@ -3230,20 +3230,20 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-docusaurus-preset-nonepress@canary:
-  version "0.0.0-107"
-  resolved "https://registry.npmmirror.com/docusaurus-preset-nonepress/download/docusaurus-preset-nonepress-0.0.0-107.tgz#b9a1727f5452fc7d15d706aa9e07daf0079b665f"
-  integrity sha512-26xugwSdg3iIlzoNKOaw5aGAFVnyzAX23q7xTixzbYVtDXJc628trbm3kJ+YzatXaOz+LkItBrB3kqIQMK5UJw==
+docusaurus-preset-nonepress@0.0.0-108, docusaurus-preset-nonepress@canary:
+  version "0.0.0-108"
+  resolved "https://registry.npmmirror.com/docusaurus-preset-nonepress/download/docusaurus-preset-nonepress-0.0.0-108.tgz#37a4068c71fe335d2486d9effcadcb18503b50cb"
+  integrity sha512-GuH22RrrI5FWiUPIKEWWisWJ/laymWMY+aFbfXY5fNLzarLFkAmshUpGHuuAMAnL/U1W812RYyJNoNHnUA/XgQ==
   dependencies:
     "@docusaurus/core" "2.0.0-beta.9"
     "@docusaurus/plugin-content-docs" "2.0.0-beta.9"
     "@docusaurus/plugin-content-pages" "2.0.0-beta.9"
-    docusaurus-theme-nonepress "0.0.0-107"
+    docusaurus-theme-nonepress "0.0.0-108"
 
-docusaurus-theme-nonepress@0.0.0-107:
-  version "0.0.0-107"
-  resolved "https://registry.npmmirror.com/docusaurus-theme-nonepress/download/docusaurus-theme-nonepress-0.0.0-107.tgz#bc9a4ee894f7162848e71abebca9ce2aad61378f"
-  integrity sha512-ShYfDCHLP/g+RIMB+ET89u9/43EwUvuSeuHwsr1dvxSn/yebiw4K5ZBFZOaJLw0ftcFolgqt2tJL5i5DagQLNg==
+docusaurus-theme-nonepress@0.0.0-108:
+  version "0.0.0-108"
+  resolved "https://registry.npmmirror.com/docusaurus-theme-nonepress/download/docusaurus-theme-nonepress-0.0.0-108.tgz#d1e381a446d1179841ae4fe5f51cd6314df9b0a1"
+  integrity sha512-PSawVRZFvn6kBKBsiET7Ihs98jRxnq+Mg9J6KRTTGdJBOyUCBd/9E1oE2YF9VaQGil0NbhuM7Avysri4YP3meA==
   dependencies:
     "@docsearch/react" "^3.0.0-alpha.39"
     "@docusaurus/core" "2.0.0-beta.9"
@@ -3392,9 +3392,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.896:
-  version "1.4.6"
-  resolved "https://registry.npmmirror.com/electron-to-chromium/download/electron-to-chromium-1.4.6.tgz#7bf0c03001bcdbd0fc57a45c6b23bc6432246ade"
-  integrity sha512-YDZAXP0P8USm0YoyIXWijxFT3tJHbt3WwY7CTQiK3+Ad6Ai/b9N4GqfDR107jfGilAfxl7Gkhb+h0KPoKXAgqw==
+  version "1.4.7"
+  resolved "https://registry.npmmirror.com/electron-to-chromium/download/electron-to-chromium-1.4.7.tgz#58e0b4ec9096ee1422e4d9e83ceeb05b0cf076eb"
+  integrity sha512-UPy2MsQw1OdcbxR7fvwWZH/rXcv+V26+uvQVHx0fGa1kqRfydtfOw+NMGAvZJ63hyaH4aEBxbhSEtqbpliSNWA==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -4721,13 +4721,13 @@ jest-worker@^27.0.2, jest-worker@^27.0.6:
     supports-color "^8.0.0"
 
 joi@^17.4.0, joi@^17.4.2:
-  version "17.4.2"
-  resolved "https://registry.nlark.com/joi/download/joi-17.4.2.tgz#02f4eb5cf88e515e614830239379dcbbe28ce7f7"
-  integrity sha1-AvTrXPiOUV5hSDAjk3ncu+KM5/c=
+  version "17.4.3"
+  resolved "https://registry.npmmirror.com/joi/download/joi-17.4.3.tgz#462941fd994f11fcb92f59ba9f004706b9a45d17"
+  integrity sha512-8W3oOogFRuy2aLAdlhMpzS4fNBIMiyIa3xBaBYMFgA272/d5sob1DAth6jjo+5VrOlzbEgmbBGbU4cLrffPKog==
   dependencies:
     "@hapi/hoek" "^9.0.0"
     "@hapi/topo" "^5.0.0"
-    "@sideway/address" "^4.1.0"
+    "@sideway/address" "^4.1.3"
     "@sideway/formula" "^3.0.0"
     "@sideway/pinpoint" "^2.0.0"
 
@@ -5148,11 +5148,6 @@ mime@1.6.0:
   resolved "https://registry.npmmirror.com/mime/download/mime-1.6.0.tgz#32cd9e5c64553bd58d19a568af452acff04981b1"
   integrity sha1-Ms2eXGRVO9WNGaVor0Uqz/BJgbE=
 
-mime@^2.3.1:
-  version "2.6.0"
-  resolved "https://registry.npmmirror.com/mime/download/mime-2.6.0.tgz#a2a682a95cd4d0cb1d6257e28f83da7e35800367"
-  integrity sha1-oqaCqVzU0MsdYlfij4PafjWAA2c=
-
 mimic-fn@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npm.taobao.org/mimic-fn/download/mimic-fn-2.1.0.tgz#7ed2c2ccccaf84d3ffcb7a69b57711fc2083401b"
@@ -5203,6 +5198,11 @@ mkdirp@^0.5.5, mkdirp@~0.5.1:
   integrity sha1-2Rzv1i0UNsoPQWIOJRKI1CAJne8=
   dependencies:
     minimist "^1.2.5"
+
+mrmime@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.npmmirror.com/mrmime/download/mrmime-1.0.0.tgz#14d387f0585a5233d291baba339b063752a2398b"
+  integrity sha1-FNOH8FhaUjPSkbq6M5sGN1KiOYs=
 
 ms@2.0.0:
   version "2.0.0"
@@ -5995,6 +5995,11 @@ prepend-http@^2.0.0:
   version "2.0.0"
   resolved "https://registry.nlark.com/prepend-http/download/prepend-http-2.0.0.tgz#e92434bfa5ea8c19f41cdfd401d741a3c819d897"
   integrity sha1-6SQ0v6XqjBn0HN/UAddBo8gZ2Jc=
+
+prettier@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.npmmirror.com/prettier/download/prettier-2.5.0.tgz#a6370e2d4594e093270419d9cc47f7670488f893"
+  integrity sha512-FM/zAKgWTxj40rH03VxzIPdXmj39SwSjwG0heUcNFwI+EMZJnY93yAiKXM3dObIKAM5TA88werc8T/EwhB45eg==
 
 pretty-error@^4.0.0:
   version "4.0.0"
@@ -6829,12 +6834,12 @@ signal-exit@^3.0.2, signal-exit@^3.0.3:
   integrity sha512-sDl4qMFpijcGw22U5w63KmD3cZJfBuFlVNbVMKje2keoKML7X2UzWbc4XrmEbDwg0NXJc3yv4/ox7b+JWb57kQ==
 
 sirv@^1.0.7:
-  version "1.0.18"
-  resolved "https://registry.npmmirror.com/sirv/download/sirv-1.0.18.tgz#105fab52fb656ce8a2bebbf36b11052005952899"
-  integrity sha1-EF+rUvtlbOiivrvzaxEFIAWVKJk=
+  version "1.0.19"
+  resolved "https://registry.npmmirror.com/sirv/download/sirv-1.0.19.tgz#1d73979b38c7fe91fcba49c85280daa9c2363b49"
+  integrity sha512-JuLThK3TnZG1TAKDwNIqNq6QA2afLOCcm+iE8D1Kj3GA40pSPsxQjjJl0J8X3tsR7T+CP1GavpzLwYkgVLWrZQ==
   dependencies:
     "@polka/url" "^1.0.0-next.20"
-    mime "^2.3.1"
+    mrmime "^1.0.0"
     totalist "^1.0.0"
 
 sisteransi@^1.0.5:

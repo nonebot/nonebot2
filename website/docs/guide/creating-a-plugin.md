@@ -1,10 +1,10 @@
 ---
-sidebar_position: 2
+sidebar_position: 7
 
 options:
   menu:
-    weight: 120
-    catogory: guide
+    weight: 70
+    category: guide
 ---
 
 # 创建插件

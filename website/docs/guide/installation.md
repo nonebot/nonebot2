@@ -4,7 +4,7 @@ sidebar_position: 2
 options:
   menu:
     weight: 20
-    catogory: guide
+    category: guide
 ---
 
 # 安装
@@ -115,7 +115,7 @@ nb plugin install <plugin-name>
 
 ### 其他插件
 
-还有更多的插件在 [这里](/store.html) 等着你发现～
+还有更多的插件在 [这里](/store) 等着你发现～
 
 ## 安装开发环境(可选)
 

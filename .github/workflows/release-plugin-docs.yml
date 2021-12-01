@@ -14,12 +14,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: '12'
-      - run: npm ci
-      - name: Build Docs
-        env:
-          VUEPRESS_BASE: '/docs/'
-        run: npx vuepress build docs --dest packages/nonebot-plugin-docs/nonebot_plugin_docs/dist
+          node-version: '16'
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -29,10 +24,14 @@ jobs:
 
       - uses: Gr1N/setup-poetry@v4
 
+      - name: Build Docs
+        run: |
+          yarn install
+          yarn build:plugin --out-dir ./packages/nonebot-plugin-docs/nonebot_plugin_docs/dist
+
       - name: Publish Package
         run: |
-          export NONEBOT_VERSION=`poetry version -s`
           cd packages/nonebot-plugin-docs/
-          poetry version $NONEBOT_VERSION
+          poetry version $(poetry version -s)
           poetry build
           poetry publish -u ${{secrets.PYPI_USERNAME}} -p ${{secrets.PYPI_PASSWORD}}
