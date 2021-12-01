@@ -1,3 +1,8 @@
+\-\-\-
+id: index
+slug: /api/
+\-\-\-
+
 NoneBot Api Reference
 =====================
 

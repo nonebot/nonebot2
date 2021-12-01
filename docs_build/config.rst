@@ -1,7 +1,4 @@
-\-\-\-
-contentSidebar: true
-sidebarDepth: 0
-\-\-\-
+
 
 NoneBot.config 模块
 ===================

@@ -1,0 +1,538 @@
+[
+  {
+    "id": "nonebot_plugin_status",
+    "link": "nonebot-plugin-status",
+    "name": "服务器状态查看",
+    "desc": "通过戳一戳获取服务器状态",
+    "author": "yanyongyu",
+    "repo": "cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_status"
+  },
+  {
+    "id": "haruka_bot",
+    "link": "haruka-bot",
+    "name": "HarukaBot",
+    "desc": "将B站UP主的动态和直播信息推送至QQ",
+    "author": "SK-415",
+    "repo": "SK-415/HarukaBot"
+  },
+  {
+    "id": "nonebot_plugin_rauthman",
+    "link": "nonebot-plugin-rauthman",
+    "name": "RAM 授权管理",
+    "desc": "基于规则的授权管理",
+    "author": "Lancercmd",
+    "repo": "Lancercmd/nonebot_plugin_rauthman"
+  },
+  {
+    "id": "nonebot_plugin_docs",
+    "link": "nonebot-plugin-docs",
+    "author": "nonebot",
+    "desc": "在本地浏览NoneBot文档",
+    "name": "NoneBot离线文档",
+    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-plugin-docs"
+  },
+  {
+    "id": "nonebot_plugin_sentry",
+    "link": "nonebot-plugin-sentry",
+    "author": "yanyongyu",
+    "desc": "使用Sentry监控机器人日志并处理报错",
+    "name": "Sentry日志监控",
+    "repo": "cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_sentry"
+  },
+  {
+    "id": "nonebot_plugin_test",
+    "link": "nonebot-plugin-test",
+    "author": "yanyongyu",
+    "desc": "在浏览器中测试你的 NoneBot 机器人",
+    "name": "前端测试机器人插件",
+    "repo": "nonebot/plugin-test"
+  },
+  {
+    "id": "nonebot_plugin_apscheduler",
+    "link": "nonebot-plugin-apscheduler",
+    "author": "yanyongyu",
+    "desc": "APScheduler 定时任务插件",
+    "name": "定时任务",
+    "repo": "nonebot/plugin-apscheduler"
+  },
+  {
+    "id": "nonebot_plugin_picsearcher",
+    "link": "nonebot-plugin-picsearcher",
+    "author": "synodriver",
+    "desc": "从基本上所有你想的出名字的搜图平台找图片",
+    "name": "图片搜索",
+    "repo": "synodriver/nonebot_plugin_picsearcher"
+  },
+  {
+    "id": "nonebot_plugin_navicat",
+    "link": "nonebot-plugin-navicat",
+    "author": "synodriver",
+    "desc": "连接至各种数据库,为其他插件导出连接对象",
+    "name": "通用数据库连接",
+    "repo": "synodriver/nonebot_plugin_navicat"
+  },
+  {
+    "id": "nonebot_plugin_translator",
+    "link": "nonebot-plugin-translator",
+    "author": "Lancercmd",
+    "desc": "基于腾讯机器翻译 TMT",
+    "name": "多语种翻译插件",
+    "repo": "Lancercmd/nonebot_plugin_translator"
+  },
+  {
+    "id": "nonebot_plugin_web",
+    "link": "nonebot-plugin-web",
+    "author": "abrahum",
+    "desc": "Web Monitor 时刻视奸你的bot",
+    "name": "Web监视器",
+    "repo": "abrahum/nonebot_plugin_web"
+  },
+  {
+    "id": "nonebot_plugin_wordbank",
+    "link": "nonebot-plugin-wordbank",
+    "author": "Joenothing-lst",
+    "desc": "无数据库的轻量问答插件，支持模糊问答",
+    "name": "nonebot-plugin-wordbank",
+    "repo": "Joenothing-lst/word-bank"
+  },
+  {
+    "id": "nonebot_plugin_cooldown",
+    "link": "nonebot-plugin-cooldown",
+    "author": "jks15satoshi",
+    "desc": "为用户调用功能添加冷却时间（调用频率限制）功能",
+    "name": "冷却事件",
+    "repo": "jks15satoshi/nonebot-plugin-cooldown"
+  },
+  {
+    "id": "nonebot_plugin_mqtt",
+    "link": "nonebot-plugin-mqtt",
+    "author": "synodriver",
+    "desc": "接入mqtt网络,订阅和发布消息",
+    "name": "mqtt接入",
+    "repo": "synodriver/nonebot_plugin_mqtt"
+  },
+  {
+    "id": "nonebot-plugin-ipypreter",
+    "link": "nonebot-plugin-ipypreter",
+    "author": "iyume",
+    "desc": "消息交互式 python 解释器",
+    "name": "消息交互式 python 解释器",
+    "repo": "iyume/nonebot-plugin-ipypreter"
+  },
+  {
+    "id": "nonebot_plugin_songpicker2",
+    "link": "nonebot-plugin-songpicker2",
+    "author": "maxesisn",
+    "desc": "点播歌曲，支持候选菜单、热评显示，数据源为网易云",
+    "name": "songpicker2",
+    "repo": "maxesisn/nonebot_plugin_songpicker2"
+  },
+  {
+    "id": "nonebot_plugin_styledstr",
+    "link": "nonebot-plugin-styledstr",
+    "author": "jks15satoshi",
+    "desc": "通过字符串标签管理字符串资源",
+    "name": "风格化字符串管理",
+    "repo": "jks15satoshi/nonebot_plugin_styledstr"
+  },
+  {
+    "id": "nonebot_plugin_arcaea",
+    "link": "nonebot-plugin-arcaea",
+    "author": "iyume",
+    "desc": "Arcaea 查分器，可以实现 best30 | recent | songinfo 之类的查询功能并支持 DIY",
+    "name": "Arcaea 查分器",
+    "repo": "iyume/nonebot-plugin-arcaea"
+  },
+  {
+    "id": "nonebot_bison",
+    "link": "nonebot-bison",
+    "author": "felinae98",
+    "desc": "订阅来自微博，B站，网易云，RSS以及各种网站的动态，转发到QQ群中",
+    "name": "Bison",
+    "repo": "felinae98/nonebot-bison"
+  },
+  {
+    "id": "nonebot-plugin-ncm",
+    "link": "nonebot-plugin-ncm",
+    "author": "kitUIN",
+    "desc": "网易云无损音乐下载",
+    "name": "网易云无损音乐下载",
+    "repo": "kitUIN/nonebot_tools/tree/master/nonebot_tools/nonebot-plugin-ncm"
+  },
+  {
+    "id": "nonebot_plugin_cocdicer",
+    "link": "nonebot-plugin-cocdicer",
+    "author": "abrahum",
+    "desc": "COC跑团骰子娘",
+    "name": "nonebot-plugin-cocdicer",
+    "repo": "abrahum/nonebot_plugin_cocdicer"
+  },
+  {
+    "id": "nonebot_plugin_trpglogger",
+    "link": "nonebot-plugin-trpglogger",
+    "author": "Jigsaw111",
+    "desc": "记录跑团记录并上传",
+    "name": "跑团记录记录器",
+    "repo": "thereisnodice/TRPGLogger"
+  },
+  {
+    "id": "nonebot_plugin_r6s",
+    "link": "nonebot-plugin-r6s",
+    "author": "abrahum",
+    "desc": "查询彩虹六号玩家信息",
+    "name": "nonebot-plugin-r6s",
+    "repo": "abrahum/nonebot_plugin_r6s"
+  },
+  {
+    "id": "nonebot_plugin_guess",
+    "link": "nonebot-plugin-guess",
+    "author": "ffreemt",
+    "desc": "多次互动猜名字游戏，自带猜城市名，可定制",
+    "name": "猜猜看",
+    "repo": "ffreemt/nonebot-plugin-guess-game"
+  },
+  {
+    "id": "nonebot_plugin_abbrreply",
+    "link": "nonebot_plugin_abbrreply",
+    "author": "anlen123",
+    "desc": "输入拼音首字母，猜测文字",
+    "name": "缩写查询器",
+    "repo": "anlen123/nonebot_plugin_abbrreply"
+  },
+  {
+    "id": "nonebot_plugin_biliav",
+    "link": "nonebot_plugin_biliav",
+    "author": "knva",
+    "desc": "将用户发的av号或者bv号转成小程序返回",
+    "name": "biliav小程序转换器",
+    "repo": "knva/nonebot_plugin_biliav"
+  },
+  {
+    "id": "nonebot_plugin_manager",
+    "link": "nonebot-plugin-manager",
+    "name": "插件管理器",
+    "desc": "基于 import hook 的插件管理",
+    "author": "Jigsaw111",
+    "repo": "Jigsaw111/nonebot_plugin_manager"
+  },
+  {
+    "id": "nonebot_plugin_analysis_bilibili",
+    "link": "nonebot-plugin-analysis-bilibili",
+    "name": "bilibili视频、番剧解析",
+    "desc": "自动解析bilibili视频、番剧解析",
+    "author": "mengshouer",
+    "repo": "mengshouer/nonebot_plugin_analysis_bilibili"
+  },
+  {
+    "id": "nonebot_plugin_localstore",
+    "link": "nonebot-plugin-localstore",
+    "name": "本地数据存储",
+    "desc": "存储插件数据至本地文件",
+    "author": "yanyongyu",
+    "repo": "nonebot/plugin-localstore"
+  },
+  {
+    "id": "nonebot_plugin_puppet",
+    "link": "nonebot-plugin-puppet",
+    "name": "nonebot_plugin_puppet",
+    "desc": "多对多的会话转接",
+    "author": "Jigsaw111",
+    "repo": "Jigsaw111/nonebot_plugin_puppet"
+  },
+  {
+    "id": "nonebot_plugin_mcstatus",
+    "link": "nonebot-plugin-mcstatus",
+    "name": "Minecraft 服务器状态查询",
+    "desc": "顾名思义",
+    "author": "Jigsaw111",
+    "repo": "Jigsaw111/nonebot-plugin-mcstatus"
+  },
+  {
+    "id": "nonebot_plugin_help",
+    "link": "nonebot-plugin-help",
+    "name": "Nonebot2插件轻量帮助列表",
+    "desc": "读取并提供已加载Nonebot2插件开发者提供的帮助信息（用途）",
+    "author": "XZhouQD",
+    "repo": "https://github.com/XZhouQD/nonebot-plugin-help"
+  },
+  {
+    "id": "nonebot_plugin_gamedraw",
+    "link": "nonebot-plugin-gamedraw",
+    "name": "nonebot_plugin_gamedraw",
+    "desc": "基于爬取wiki实现自动更新的抽卡，目前支持赛马娘，原神，明日方舟，坎公骑冠剑，公主连结(国/台)，碧蓝航线，FGO，阴阳师",
+    "author": "HibiKier",
+    "repo": "https://github.com/HibiKier/nonebot_plugin_gamedraw"
+  },
+  {
+    "id": "nonebot_plugin_alias",
+    "link": "nonebot-plugin-alias",
+    "name": "nonebot-plugin-alias",
+    "desc": "为 nonebot2 的指令创建别名",
+    "author": "MeetWq",
+    "repo": "https://github.com/MeetWq/nonebot-plugin-alias"
+  },
+  {
+    "id": "nonebot_plugin_withdraw",
+    "link": "nonebot-plugin-withdraw",
+    "name": "Nonebot2 消息撤回插件",
+    "desc": "用于让机器人撤回自己发出的消息",
+    "author": "MeetWq",
+    "repo": "https://github.com/MeetWq/nonebot-plugin-withdraw"
+  },
+  {
+    "id": "nonebot_plugin_pixivrank_search",
+    "link": "nonebot-plugin-pixivrank-search",
+    "name": "nonebot_plugin_pixivrank_search",
+    "desc": "基于RSSHUB阅读器的P站排行和P站搜图",
+    "author": "HibiKier",
+    "repo": "https://github.com/HibiKier/nonebot_plugin_pixivrank_search"
+  },
+  {
+    "id": "nonebot_plugin_russian",
+    "link": "nonebot-plugin-russian",
+    "name": "nonebot_plugin_russian",
+    "desc": "群内小游戏，使用金币赌注的俄罗斯轮盘",
+    "author": "HibiKier",
+    "repo": "https://github.com/HibiKier/nonebot_plugin_russian"
+  },
+  {
+    "id": "nonebot_plugin_statistical",
+    "link": "nonebot-plugin-statistical",
+    "name": "nonebot_plugin_statistical",
+    "desc": "一个简单的功能调用统计以及可视化插件",
+    "author": "HibiKier",
+    "repo": "https://github.com/HibiKier/nonebot_plugin_statistical"
+  },
+  {
+    "id": "nonebot_plugin_setu",
+    "link": "nonebot_plugin_setu",
+    "name": "nonebot_plugin_setu",
+    "desc": "基于loliconImage Api的涩图插件，内置涩图CD",
+    "author": "ayanamiblhx",
+    "repo": "https://github.com/ayanamiblhx/nonebot_plugin_setu"
+  },
+  {
+    "id": "nonebot_plugin_fr24",
+    "link": "nonebot-plugin-fr24",
+    "name": "FlightRadar24查询模块",
+    "desc": "通过FlightRadar24查询航班信息",
+    "author": "IronWolf-K",
+    "repo": "https://github.com/IronWolf-K/nonebot_plugin_fr24"
+  },
+  {
+    "id": "nonebot_plugin_heweather",
+    "link": "nonebot-plugin-heweather",
+    "name": "和风天气",
+    "desc": "获取和风天气信息并转换为图片",
+    "author": "kexue-z",
+    "repo": "https://github.com/kexue-z/nonebot-plugin-heweather"
+  },
+  {
+    "id": "nonebot_plugin_autohelp",
+    "link": "nonebot-plugin-autohelp",
+    "name": "nonebot-plugin-autohelp",
+    "desc": "响应help/菜单/帮助(群消息或私信)并提供已载入插件的帮助信息（如命令名，aliases，模块文档）",
+    "author": "ffreemt",
+    "repo": "https://github.com/ffreemt/nonebot-plugin-autohelp"
+  },
+  {
+    "id": "gugua_bot",
+    "link": "gugua_bot",
+    "name": "孤寡机器人",
+    "desc": "让你的孤寡朋友露出阳光的笑容",
+    "author": "Sclock",
+    "repo": "https://github.com/Sclock/gugua"
+  },
+  {
+    "id": "bugu_bot",
+    "link": "bugu_bot",
+    "name": "布谷机器人",
+    "desc": "增进你和你单身朋友的友谊",
+    "author": "Sclock",
+    "repo": "https://github.com/Sclock/bugu_bot"
+  },
+  {
+    "id": "nonebot_plugin_flexperm",
+    "link": "nonebot-plugin-flexperm",
+    "name": "nonebot-plugin-flexperm",
+    "desc": "精细化的 NoneBot 权限管理插件",
+    "author": "rmuchan",
+    "repo": "https://github.com/rmuchan/nonebot-plugin-flexperm"
+  },
+  {
+    "id": "nonebot_plugin_epicfree",
+    "link": "nonebot_plugin_epicfree",
+    "name": "Epic 限免游戏资讯",
+    "desc": "EpicGameStore 喜加一资讯插件，发送「喜加一」逝世看吧！",
+    "author": "monsterxcn",
+    "repo": "https://github.com/monsterxcn/nonebot_plugin_epicfree"
+  },
+  {
+    "id": "ELF_RSS2",
+    "link": "ELF-RSS",
+    "name": "ELF_RSS",
+    "desc": "QQ机器人 RSS订阅 插件，订阅源建议选择 RSSHub",
+    "author": "Quan666",
+    "repo": "https://github.com/Quan666/ELF_RSS"
+  },
+  {
+    "id": "nonebot_plugin_atri",
+    "link": "nonebot-plugin-atri",
+    "name": "ATRI语音包",
+    "desc": "一个ATRI语音包，基于文本相似度匹配回复",
+    "author": "FYWinds",
+    "repo": "https://github.com/FYWinds/nonebot-plugin-atri"
+  },
+  {
+    "id": "nonebot_plugin_hanayori",
+    "link": "nonebot-plugin-hanayori",
+    "name": "HanayoriBot",
+    "desc": "B站动态推送与开播提醒插件",
+    "author": "kanomahoro",
+    "repo": "https://github.com/kanomahoro/nonebot-hanayori"
+  },
+  {
+    "id": "nonebot_plugin_filehost",
+    "link": "nonebot-plugin-filehost",
+    "name": "HTTP静态文件托管",
+    "desc": "一款 HTTP 静态文件托管插件, 为跨机文件传输提供了优雅的解决方案",
+    "author": "mnixry",
+    "repo": "https://github.com/mnixry/nonebot-plugin-filehost"
+  },
+  {
+    "id": "nonebot_plugin_simplemusic",
+    "link": "nonebot-plugin-simplemusic",
+    "name": "SimpleMusic",
+    "desc": "最简Q群点歌插件，支持网易云、QQ音乐",
+    "author": "kanomahoro",
+    "repo": "https://github.com/kanomahoro/nonebot-simplemusic"
+  },
+  {
+    "id": "nonebot_plugin_phlogo",
+    "link": "nonebot-plugin-phlogo",
+    "name": "pornhub风格图标生成",
+    "desc": "生成pornhub风格logo",
+    "author": "kexue-z",
+    "repo": "https://github.com/kexue-z/nonebot-plugin-phlogo"
+  },
+  {
+    "id": "nonebot_plugin_twitter",
+    "link": "nonebot-plugin-twitter",
+    "name": "Twitter推送",
+    "desc": "Twitter推送插件，自带推文翻译功能",
+    "author": "kanomahoro",
+    "repo": "https://github.com/kanomahoro/nonebot-twitter"
+  },
+  {
+    "id": "nb2chan",
+    "link": "nb2chan",
+    "name": "nb2chan",
+    "desc": "Nonebot2酱推送",
+    "author": "yucongo",
+    "repo": "https://github.com/ffreemt/nb2chan"
+  },
+  {
+    "id": "nonebot_plugin_setu_now",
+    "link": "nonebot-plugin-setu-now",
+    "name": "nonebot-plugin-setu-now",
+    "desc": "另一个色图插件，即时下载并保存，可选WebDAV。可选特殊色图",
+    "author": "kexue-z",
+    "repo": "https://github.com/kexue-z/nonebot-plugin-setu-now"
+  },
+  {
+    "id": "leetcode",
+    "link": "nonebot-plugin-leetcode",
+    "name": "leetcode提醒机器人",
+    "desc": " 安装该插件后能往指定qq和指定qq群定时发送leetcode每日一题",
+    "author": "zxz0415",
+    "repo": "https://github.com/zxz0415/leetcode"
+  },
+  {
+    "id": "nonebot_plugin_imgsearch",
+    "link": "nonebot-plugin-imgsearch",
+    "name": "另一个图片搜索",
+    "desc": "在Ascii2D以及SauceNAO的所有数据库中搜索这张图片",
+    "author": "bakashigure",
+    "repo": "https://github.com/bakashigure/nonebot_plugin_imgsearch"
+  },
+  {
+    "id": "nonebot-plugin-itnews",
+    "link": "nonebot-plugin-itnew",
+    "name": "IT咨讯",
+    "desc": "获取IT咨讯并生成图片发送",
+    "author": "yzyyz1387",
+    "repo": "https://github.com/yzyyz1387/nonebot_plugin_itnews"
+  },
+  {
+    "id": "lolheroes",
+    "link": "lolHeroes",
+    "name": "lolheroes",
+    "desc": "获取lol英雄背景的故事",
+    "author": "cjladmin",
+    "repo": "https://github.com/cjladmin/lolheroes"
+  },
+  {
+    "id": "nonebot_plugin_youthstudy",
+    "link": "nonebot-plugin-youthstudy",
+    "name": "nonebot_plugin_youthstudy",
+    "desc": "基于nonebot的青年大学习插件，用来获取最新一期的青年大学习答案",
+    "author": "ayanamiblhx",
+    "repo": "https://github.com/ayanamiblhx/nonebot_plugin_youthstudy"
+  },
+  {
+    "id": "gocqapi",
+    "link": "gocqapi",
+    "name": "gocqapi",
+    "desc": "对 go-cqhttp 的 API 调用添加了类型注解与滥用OOP的返回值Model支持，远离魔法方法的Dict[Any, Any]",
+    "author": "FYWinds",
+    "repo": "https://github.com/FYWinds/gocqapi"
+  },
+  {
+    "id": "nonebot_plugin_workscore",
+    "link": "nonebot-plugin-workscore",
+    "name": "工作性价比计算器",
+    "desc": "一个计算工作性价比的插件",
+    "author": "yzyyz1387",
+    "repo": "https://github.com/yzyyz1387/nonebot_plugin_workscore"
+  },
+  {
+    "id": "nonebot_plugin_nokia",
+    "link": "nonebot-plugin-nokia",
+    "name": "诺基亚手机图生成",
+    "desc": "生成一张诺基亚（无内鬼）图片",
+    "author": "kexue-z",
+    "repo": "https://github.com/kexue-z/nonebot-plugin-nokia"
+  },
+  {
+    "id": "nonebot_plugin_asoulcnki",
+    "link": "nonebot-plugin-asoulcnki",
+    "name": "nonebot-plugin-asoulcnki",
+    "desc": "枝网查重插件，查询发病小作文复制比",
+    "author": "MeetWq",
+    "repo": "https://github.com/MeetWq/nonebot-plugin-asoulcnki"
+  },
+  {
+    "id": "nonebot_plugin_petpet",
+    "link": "nonebot-plugin-petpet",
+    "name": "nonebot-plugin-petpet",
+    "desc": "制作头像相关的沙雕表情包",
+    "author": "MeetWq",
+    "repo": "https://github.com/MeetWq/nonebot-plugin-petpet"
+  },
+  {
+    "id": "nonebot_plugin_shindan",
+    "link": "nonebot-plugin-shindan",
+    "name": "ShindanMaker",
+    "desc": "使用 ShindanMaker 网站的趣味占卜",
+    "author": "MeetWq",
+    "repo": "https://github.com/MeetWq/nonebot-plugin-shindan"
+  },
+  {
+    "id": "nonebot_plugin_vf",
+    "link": "nonebot-plugin-vf",
+    "name": "虚拟朋友",
+    "desc": "基于小冰框架的人工智能聊天机器人",
+    "author": "snowyfirefly",
+    "repo": "https://github.com/snowyfirefly/VirtualFriends"
+  }
+]
