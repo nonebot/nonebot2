@@ -534,5 +534,13 @@
     "desc": "基于小冰框架的人工智能聊天机器人",
     "author": "snowyfirefly",
     "repo": "https://github.com/snowyfirefly/VirtualFriends"
+  },
+  {
+    "id": "nonebot-plugin-code",
+    "link": "nonebot-plugin-code",
+    "name": "在线运行代码",
+    "desc": "在线运行代码插件，支持输入",
+    "author": "yzyyz1387",
+    "repo": "https://github.com/yzyyz1387/nonebot_plugin_code"
   }
 ]
