@@ -526,5 +526,13 @@
     "desc": "使用 ShindanMaker 网站的趣味占卜",
     "author": "MeetWq",
     "repo": "https://github.com/MeetWq/nonebot-plugin-shindan"
+  },
+  {
+    "id": "nonebot_plugin_vf",
+    "link": "nonebot-plugin-vf",
+    "name": "虚拟朋友",
+    "desc": "基于小冰框架的人工智能聊天机器人",
+    "author": "snowyfirefly",
+    "repo": "https://github.com/snowyfirefly/VirtualFriends"
   }
 ]
