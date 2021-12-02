@@ -44,7 +44,6 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-        run: cp -r ./build/markdown/* ./website/docs/api/
 
       - name: Install and build
         run: |
