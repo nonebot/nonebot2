@@ -51,6 +51,7 @@ jobs:
           poetry run sphinx-build -M markdown ./docs_build ./build
           cp -r ./build/markdown/* ./website/docs/api/
           yarn install
+          yarn prettier
           yarn build
 
       - name: Get Branch Name

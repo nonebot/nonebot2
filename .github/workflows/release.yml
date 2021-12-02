@@ -53,6 +53,7 @@ jobs:
       - name: Archive Files
         run: |
           yarn install
+          yarn prettier
           yarn archive $(poetry version -s)
 
       - name: Push Tag and Release to PyPI

@@ -34,9 +34,13 @@ jobs:
 
       - uses: Gr1N/setup-poetry@v4
 
-      - name: Build Docs
+      - name: Install and build
         run: |
+          poetry install -E all
+          poetry run sphinx-build -M markdown ./docs_build ./build
+          cp -r ./build/markdown/* ./website/docs/api/
           yarn install
+          yarn prettier
           yarn build:plugin --out-dir ../packages/nonebot-plugin-docs/nonebot_plugin_docs/dist
 
       - name: Publish Package
