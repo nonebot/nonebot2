@@ -14,7 +14,17 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
-          node-version: '16'
+          node-version: "16"
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache Packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
 
       - name: Set up Python
         uses: actions/setup-python@v2
@@ -27,7 +37,7 @@ jobs:
       - name: Build Docs
         run: |
           yarn install
-          yarn build:plugin --out-dir ./packages/nonebot-plugin-docs/nonebot_plugin_docs/dist
+          yarn build:plugin --out-dir ../packages/nonebot-plugin-docs/nonebot_plugin_docs/dist
 
       - name: Publish Package
         run: |

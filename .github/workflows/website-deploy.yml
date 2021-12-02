@@ -17,6 +17,24 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.sha }}
 
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+          architecture: "x64"
+
+      - uses: Gr1N/setup-poetry@v4
+
+      - uses: actions/cache@v1
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16"
+
       - name: Get yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -26,11 +44,13 @@ jobs:
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-yarn-
+        run: cp -r ./build/markdown/* ./website/docs/api/
 
       - name: Install and build
         run: |
+          poetry install -E all
+          poetry run sphinx-build -M markdown ./docs_build ./build
+          cp -r ./build/markdown/* ./website/docs/api/
           yarn install
           yarn build
 

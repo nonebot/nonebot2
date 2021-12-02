@@ -25,6 +25,21 @@ jobs:
           path: ~/.cache/pypoetry/virtualenvs
           key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
 
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: "16"
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache Packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
       - name: Set up dependencies
         run: |
           poetry install -E all
@@ -36,7 +51,9 @@ jobs:
         run: cp -r ./build/markdown/* ./website/docs/api/
 
       - name: Archive Files
-        run: yarn archive $(poetry version -s)
+        run: |
+          yarn install
+          yarn archive $(poetry version -s)
 
       - name: Push Tag and Release to PyPI
         run: |

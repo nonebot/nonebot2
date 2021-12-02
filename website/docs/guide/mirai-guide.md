@@ -1,6 +1,6 @@
 # Mirai-API-HTTP 协议使用指南
 
-::: warning
+:::warning
 
 Mirai-API-HTTP 的适配现在仍然处于早期阶段, 可能没有进行过充分的测试
 
@@ -8,7 +8,7 @@ Mirai-API-HTTP 的适配现在仍然处于早期阶段, 可能没有进行过充
 
 :::
 
-::: tip
+:::tip
 
 为了你的使用之旅更加顺畅, 我们建议您在配置之前具有以下的前置知识
 
@@ -18,7 +18,7 @@ Mirai-API-HTTP 的适配现在仍然处于早期阶段, 可能没有进行过充
 
 :::
 
-::: danger
+:::danger
 
 Mirai-API-HTTP 的适配器以 [AGPLv3 许可](https://opensource.org/licenses/AGPL-3.0) 单独开源
 
@@ -59,7 +59,7 @@ pip install nonebot-adapter-mirai
 
    - 在 Mirai Console Loader 目录下执行该指令
 
-   - ```shell
+     ```bash
      ./mcl --update-package net.mamoe:mirai-api-http --channel stable --type plugin
      ```
 
@@ -67,7 +67,7 @@ pip install nonebot-adapter-mirai
 
 4. 修改配置文件
 
-   ::: tip
+   :::tip
 
    在此之前, 你可能需要了解我们为 MAH 设计的两种通信方式
 
@@ -97,7 +97,7 @@ pip install nonebot-adapter-mirai
      - `nonebot.drivers.fastapi`: 同时支持正向和反向
      - `nonebot.drivers.aiohttp`: 仅支持正向
 
-     ::: warning
+     :::warning
 
      在默认情况下, NoneBot 和 MAH 会同时监听 8080 端口, 这会导致端口冲突的错误
      请确保二者配置不在同一端口下
@@ -149,7 +149,7 @@ pip install nonebot-adapter-mirai
      - ```yaml
        # 省略了部分无需修改的部分
 
-       host: '0.0.0.0' # 监听地址
+       host: "0.0.0.0" # 监听地址
        port: 8080 # 监听端口
        authKey: 1234567890 # 访问密钥, 最少八位
 
@@ -157,7 +157,7 @@ pip install nonebot-adapter-mirai
        report:
          enable: true # 必须为true
          groupMessage:
-           report: true  # 群消息上报
+           report: true # 群消息上报
          friendMessage:
            report: true # 好友消息上报
          tempMessage:
@@ -165,7 +165,7 @@ pip install nonebot-adapter-mirai
          eventMessage:
            report: true # 事件上报
          destinations:
-         	- 'http://127.0.0.1:2333/mirai/http' #上报地址, 请按照实际情况修改
+           - "http://127.0.0.1:2333/mirai/http" #上报地址, 请按照实际情况修改
          # 上报时的额外Header
          extraHeaders: {}
        ```

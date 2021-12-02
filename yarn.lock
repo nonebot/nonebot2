@@ -2857,7 +2857,14 @@ cosmiconfig@^7.0.0, cosmiconfig@^7.0.1:
     path-type "^4.0.0"
     yaml "^1.10.0"
 
-cross-spawn@^7.0.3:
+cross-env@^7.0.3:
+  version "7.0.3"
+  resolved "https://registry.npm.taobao.org/cross-env/download/cross-env-7.0.3.tgz#865264b29677dc015ba8418918965dd232fc54cf"
+  integrity sha1-hlJkspZ33AFbqEGJGJZd0jL8VM8=
+  dependencies:
+    cross-spawn "^7.0.1"
+
+cross-spawn@^7.0.1, cross-spawn@^7.0.3:
   version "7.0.3"
   resolved "https://registry.nlark.com/cross-spawn/download/cross-spawn-7.0.3.tgz#f73a85b9d5d41d045551c177e2882d4ac85728a6"
   integrity sha1-9zqFudXUHQRVUcF34ogtSshXKKY=
@@ -3230,7 +3237,7 @@ dns-txt@^2.0.2:
   dependencies:
     buffer-indexof "^1.0.0"
 
-docusaurus-preset-nonepress@0.0.0-108, docusaurus-preset-nonepress@canary:
+docusaurus-preset-nonepress@0.0.0-108:
   version "0.0.0-108"
   resolved "https://registry.npmmirror.com/docusaurus-preset-nonepress/download/docusaurus-preset-nonepress-0.0.0-108.tgz#37a4068c71fe335d2486d9effcadcb18503b50cb"
   integrity sha512-GuH22RrrI5FWiUPIKEWWisWJ/laymWMY+aFbfXY5fNLzarLFkAmshUpGHuuAMAnL/U1W812RYyJNoNHnUA/XgQ==
@@ -3240,10 +3247,60 @@ docusaurus-preset-nonepress@0.0.0-108, docusaurus-preset-nonepress@canary:
     "@docusaurus/plugin-content-pages" "2.0.0-beta.9"
     docusaurus-theme-nonepress "0.0.0-108"
 
+docusaurus-preset-nonepress@canary:
+  version "0.0.0-109"
+  resolved "https://registry.npmmirror.com/docusaurus-preset-nonepress/download/docusaurus-preset-nonepress-0.0.0-109.tgz#bb3d373beb908ae981a1e0f41e3d2d3619672c0c"
+  integrity sha512-bZRyInMVPdJ9jn/lo/24yT67WwuO0yPVOItRe3f7w2ziDUMIQ1/UM2RAc8My+RyRbByyFu6kWc9SBIeJlmupVQ==
+  dependencies:
+    "@docusaurus/core" "2.0.0-beta.9"
+    "@docusaurus/plugin-content-docs" "2.0.0-beta.9"
+    "@docusaurus/plugin-content-pages" "2.0.0-beta.9"
+    docusaurus-theme-nonepress "0.0.0-109"
+
 docusaurus-theme-nonepress@0.0.0-108:
   version "0.0.0-108"
   resolved "https://registry.npmmirror.com/docusaurus-theme-nonepress/download/docusaurus-theme-nonepress-0.0.0-108.tgz#d1e381a446d1179841ae4fe5f51cd6314df9b0a1"
   integrity sha512-PSawVRZFvn6kBKBsiET7Ihs98jRxnq+Mg9J6KRTTGdJBOyUCBd/9E1oE2YF9VaQGil0NbhuM7Avysri4YP3meA==
+  dependencies:
+    "@docsearch/react" "^3.0.0-alpha.39"
+    "@docusaurus/core" "2.0.0-beta.9"
+    "@docusaurus/plugin-content-docs" "2.0.0-beta.9"
+    "@docusaurus/plugin-content-pages" "2.0.0-beta.9"
+    "@docusaurus/theme-common" "2.0.0-beta.9"
+    "@docusaurus/utils" "2.0.0-beta.9"
+    "@docusaurus/utils-common" "2.0.0-beta.9"
+    "@docusaurus/utils-validation" "2.0.0-beta.9"
+    "@fortawesome/fontawesome-svg-core" "^1.2.36"
+    "@fortawesome/free-brands-svg-icons" "^5.15.4"
+    "@fortawesome/free-regular-svg-icons" "^5.15.4"
+    "@fortawesome/free-solid-svg-icons" "^5.15.4"
+    "@fortawesome/react-fontawesome" "^0.1.16"
+    "@mdx-js/mdx" "^1.6.21"
+    "@mdx-js/react" "^1.6.21"
+    "@seznam/compose-react-refs" "^1.0.6"
+    "@tailwindcss/typography" "^0.5.0-alpha.3"
+    algoliasearch "^4.11.0"
+    algoliasearch-helper "^3.5.5"
+    autoprefixer "^10.3.1"
+    chalk "^4.1.2"
+    clsx "^1.1.1"
+    copy-text-to-clipboard "^3.0.1"
+    eta "^1.12.3"
+    globby "^11.0.2"
+    lodash "^4.17.20"
+    parse-numeric-range "^1.2.0"
+    postcss "^8.3.7"
+    postcss-import "^14.0.2"
+    prism-react-renderer "^1.2.1"
+    prismjs "^1.23.0"
+    react-cool-onclickoutside "^1.6.2"
+    react-router-dom "^5.2.0"
+    tailwindcss ">=3.0.0 || >=3.0.0-alpha.1"
+
+docusaurus-theme-nonepress@0.0.0-109:
+  version "0.0.0-109"
+  resolved "https://registry.npmmirror.com/docusaurus-theme-nonepress/download/docusaurus-theme-nonepress-0.0.0-109.tgz#955b8ca07b9c4d971ec9eb7d86d98f5b5640c4a2"
+  integrity sha512-qkck6fAYQPmajFeaWKzh61wIrOuxVVJDH+NhqyWHuSkbCqBxHo5qjHV3LZyZh+480PtAmHornkXVDluSJSRM7w==
   dependencies:
     "@docsearch/react" "^3.0.0-alpha.39"
     "@docusaurus/core" "2.0.0-beta.9"
@@ -3392,9 +3449,9 @@ ee-first@1.1.1:
   integrity sha1-WQxhFWsK4vTwJVcyoViyZrxWsh0=
 
 electron-to-chromium@^1.3.896:
-  version "1.4.7"
-  resolved "https://registry.npmmirror.com/electron-to-chromium/download/electron-to-chromium-1.4.7.tgz#58e0b4ec9096ee1422e4d9e83ceeb05b0cf076eb"
-  integrity sha512-UPy2MsQw1OdcbxR7fvwWZH/rXcv+V26+uvQVHx0fGa1kqRfydtfOw+NMGAvZJ63hyaH4aEBxbhSEtqbpliSNWA==
+  version "1.4.8"
+  resolved "https://registry.npmmirror.com/electron-to-chromium/download/electron-to-chromium-1.4.8.tgz#e1b7752ac1a75e39b5dd90cc7e29ea08b351c484"
+  integrity sha512-Cu5+dbg55+1E3ohlsa8HT0s4b8D0gBewXEGG8s5wBl8ynWv60VuvYW25GpsOeTVXpulhyU/U8JYZH+yxASSJBQ==
 
 emoji-regex@^8.0.0:
   version "8.0.0"

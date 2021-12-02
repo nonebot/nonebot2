@@ -9,12 +9,19 @@ const config = {
   title: "NoneBot",
   tagline: "跨平台 Python 异步机器人框架",
   url: "https://v2.nonebot.dev",
-  baseUrl: "/",
+  baseUrl: process.env.BASE_URL || "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "icons/favicon.ico",
   organizationName: "nonebot", // Usually your GitHub org/user name.
   projectName: "nonebot2", // Usually your repo name.
+  i18n: {
+    defaultLocale: "zh-Hans",
+    locales: ["zh-Hans"],
+    localeConfigs: {
+      "zh-Hans": { label: "简体中文" },
+    },
+  },
 
   presets: [
     [
@@ -33,7 +40,7 @@ const config = {
   ],
 
   themeConfig:
-    /** @type {import('docusaurus-theme-nonepress/types').ThemeConfig} */
+    /** @type {import('docusaurus-preset-nonepress').ThemeConfig} */
     ({
       colorMode: {
         defaultMode: "light",
