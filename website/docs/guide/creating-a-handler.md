@@ -130,7 +130,7 @@ async def handle(bot: Bot):
 - `state["_prefix"]`, `state["_suffix"]`: 存储当前 TRIE 匹配的前缀/后缀，可以通过该值获取用户命令的原始命令
 
 :::tip 提示
-NoneBot 会对不同类型的参数进行不同的操作，详情查看 [事件处理函数重载](../advanced/overloaded-handlers.md)
+NoneBot 会对不同类型的参数进行不同的操作，详情查看 [事件处理函数重载](../advanced/handler/overload.md)
 :::
 
 ### 参数处理函数 args_parser
