@@ -2,24 +2,24 @@
 # yarn lockfile v1
 
 
-"@algolia/autocomplete-core@1.2.2":
-  version "1.2.2"
-  resolved "https://registry.npmmirror.com/@algolia/autocomplete-core/download/@algolia/autocomplete-core-1.2.2.tgz?cache=0&sync_timestamp=1635931001143&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40algolia%2Fautocomplete-core%2Fdownload%2F%40algolia%2Fautocomplete-core-1.2.2.tgz#c121e70c78fd0175c989a219918124ad7758e48b"
-  integrity sha1-wSHnDHj9AXXJiaIZkYEkrXdY5Is=
+"@algolia/autocomplete-core@1.5.0":
+  version "1.5.0"
+  resolved "https://registry.npmmirror.com/@algolia/autocomplete-core/download/@algolia/autocomplete-core-1.5.0.tgz?cache=0&sync_timestamp=1635931001143&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2F%40algolia%2Fautocomplete-core%2Fdownload%2F%40algolia%2Fautocomplete-core-1.5.0.tgz#6c91c9de7748e9c103846828a58dfe92bd4d6689"
+  integrity sha1-bJHJ3ndI6cEDhGgopY3+kr1NZok=
   dependencies:
-    "@algolia/autocomplete-shared" "1.2.2"
+    "@algolia/autocomplete-shared" "1.5.0"
 
-"@algolia/autocomplete-preset-algolia@1.2.2":
-  version "1.2.2"
-  resolved "https://registry.npmmirror.com/@algolia/autocomplete-preset-algolia/download/@algolia/autocomplete-preset-algolia-1.2.2.tgz#da734ef9e42a5f64cdad2dfc81c4e9fbf805d976"
-  integrity sha1-2nNO+eQqX2TNrS38gcTp+/gF2XY=
+"@algolia/autocomplete-preset-algolia@1.5.0":
+  version "1.5.0"
+  resolved "https://registry.npmmirror.com/@algolia/autocomplete-preset-algolia/download/@algolia/autocomplete-preset-algolia-1.5.0.tgz#61671f09c0c77133d9baf1356719f8378c48437a"
+  integrity sha1-YWcfCcDHcTPZuvE1Zxn4N4xIQ3o=
   dependencies:
-    "@algolia/autocomplete-shared" "1.2.2"
+    "@algolia/autocomplete-shared" "1.5.0"
 
-"@algolia/autocomplete-shared@1.2.2":
-  version "1.2.2"
-  resolved "https://registry.npmmirror.com/@algolia/autocomplete-shared/download/@algolia/autocomplete-shared-1.2.2.tgz#ff25dc308f2a296b2b9b325f1e3b57498eea3e0c"
-  integrity sha1-/yXcMI8qKWsrmzJfHjtXSY7qPgw=
+"@algolia/autocomplete-shared@1.5.0":
+  version "1.5.0"
+  resolved "https://registry.npmmirror.com/@algolia/autocomplete-shared/download/@algolia/autocomplete-shared-1.5.0.tgz#09580bc89408a2ab5f29e312120dad68f58019bd"
+  integrity sha1-CVgLyJQIoqtfKeMSEg2taPWAGb0=
 
 "@algolia/cache-browser-local-storage@4.11.0":
   version "4.11.0"
@@ -1146,19 +1146,19 @@
     "@babel/helper-validator-identifier" "^7.15.7"
     to-fast-properties "^2.0.0"
 
-"@docsearch/css@3.0.0-alpha.41":
-  version "3.0.0-alpha.41"
-  resolved "https://registry.npmmirror.com/@docsearch/css/download/@docsearch/css-3.0.0-alpha.41.tgz#c5c8e803541bd157ad86e764c2c1e9f1b5a68592"
-  integrity sha1-xcjoA1Qb0VethudkwsHp8bWmhZI=
+"@docsearch/css@3.0.0-alpha.42":
+  version "3.0.0-alpha.42"
+  resolved "https://registry.npmmirror.com/@docsearch/css/download/@docsearch/css-3.0.0-alpha.42.tgz#deb6049e999d6ca9451eba4793cb5b6da28c8773"
+  integrity sha512-AGwI2AXUacYhVOHmYnsXoYDJKO6Ued2W+QO80GERbMLhC7GH5tfvtW5REs/s7jSdcU3vzFoxT8iPDBCh/PkrlQ==
 
 "@docsearch/react@^3.0.0-alpha.39":
-  version "3.0.0-alpha.41"
-  resolved "https://registry.npmmirror.com/@docsearch/react/download/@docsearch/react-3.0.0-alpha.41.tgz#07e85a664e85f251ce3d13153abce65a4d5997ab"
-  integrity sha1-B+haZk6F8lHOPRMVOrzmWk1Zl6s=
+  version "3.0.0-alpha.42"
+  resolved "https://registry.npmmirror.com/@docsearch/react/download/@docsearch/react-3.0.0-alpha.42.tgz#1d22a2b05779f24d090ff8d7ff2699e4d50dff5c"
+  integrity sha512-1aOslZJDxwUUcm2QRNmlEePUgL8P5fOAeFdOLDMctHQkV2iTja9/rKVbkP8FZbIUnZxuuCCn8ErLrjD/oXWOag==
   dependencies:
-    "@algolia/autocomplete-core" "1.2.2"
-    "@algolia/autocomplete-preset-algolia" "1.2.2"
-    "@docsearch/css" "3.0.0-alpha.41"
+    "@algolia/autocomplete-core" "1.5.0"
+    "@algolia/autocomplete-preset-algolia" "1.5.0"
+    "@docsearch/css" "3.0.0-alpha.42"
     algoliasearch "^4.0.0"
 
 "@docusaurus/core@2.0.0-beta.9":
@@ -3238,19 +3238,19 @@ dns-txt@^2.0.2:
     buffer-indexof "^1.0.0"
 
 docusaurus-preset-nonepress@canary:
-  version "0.0.0-113"
-  resolved "https://registry.npmmirror.com/docusaurus-preset-nonepress/download/docusaurus-preset-nonepress-0.0.0-113.tgz#8ed150a551c02f52cc9dba4c97a7d97c37e20a92"
-  integrity sha512-2TGTjzGAwuK0WzSokf7M2792yrMIY64pAX6IJfZcuFAe2u+GOTms4b4aaJecXo9Q6DTyvhSaRqppLEo0BSILZw==
+  version "0.0.0-116"
+  resolved "https://registry.npmmirror.com/docusaurus-preset-nonepress/download/docusaurus-preset-nonepress-0.0.0-116.tgz#afa053d218666f6a532d76e44bba6e650657e3f0"
+  integrity sha512-5UmZVhR50qjahlwKl7kLy7PATKjOIxfiXvL16p9kQ0Xd57DkkoOHnueeVdVHRxDSH5Dpgje/ouX+8D/LqsugdA==
   dependencies:
     "@docusaurus/core" "2.0.0-beta.9"
     "@docusaurus/plugin-content-docs" "2.0.0-beta.9"
     "@docusaurus/plugin-content-pages" "2.0.0-beta.9"
-    docusaurus-theme-nonepress "0.0.0-113"
+    docusaurus-theme-nonepress "0.0.0-116"
 
-docusaurus-theme-nonepress@0.0.0-113:
-  version "0.0.0-113"
-  resolved "https://registry.npmmirror.com/docusaurus-theme-nonepress/download/docusaurus-theme-nonepress-0.0.0-113.tgz#1f59c962da80e4fae395342273be01391a8c5382"
-  integrity sha512-qtcchxgpAvi61VklufkaqrpFdd+3xpCbsn256PRhDmbsa9+NINybmuU+OV3u6nlx0VhSpWdBN4uwPozC9Ptsgw==
+docusaurus-theme-nonepress@0.0.0-116:
+  version "0.0.0-116"
+  resolved "https://registry.npmmirror.com/docusaurus-theme-nonepress/download/docusaurus-theme-nonepress-0.0.0-116.tgz#4e7b8463738c0557118c33ecadc761e9c1ef485f"
+  integrity sha512-9kv6LoQKe2pfKToKPLYHuT2nwF2cMAFQgRhijQg2lu4YNvXDQ/rHzSbuuBIJp/NRYZfPH3LPwEGEREOe2VXJLQ==
   dependencies:
     "@docsearch/react" "^3.0.0-alpha.39"
     "@docusaurus/core" "2.0.0-beta.9"

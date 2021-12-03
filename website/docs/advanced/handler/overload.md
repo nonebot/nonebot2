@@ -1,9 +1,9 @@
 ---
-sidebar_position: 6
+sidebar_position: 2
 
 options:
   menu:
-    weight: 60
+    weight: 61
     category: advanced
 ---
 
@@ -15,7 +15,7 @@ options:
 
 必须要注意的是，该机制利用了 `inspect` 标准库获取到了事件处理函数的 `singnature` (签名) ，进一步获取到参数名称和类型标注。故而，我们在编写 `handler` 时，参数的名称和类型标注必须要符合 `T_Handler` 规定，详情可以参看 **指南** 中的[事件处理](../guide/creating-a-handler)。
 
-::: tip 提示
+:::tip 提示
 
 如果想了解更多关于 `inspect` 标准库的信息，可以查看[官方文档](https://docs.python.org/zh-cn/3.9/library/inspect.html)。
 

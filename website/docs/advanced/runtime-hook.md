@@ -1,6 +1,4 @@
 ---
-sidebar_position: 4
-
 options:
   menu:
     weight: 40

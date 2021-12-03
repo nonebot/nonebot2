@@ -398,7 +398,9 @@ class Matcher(metaclass=MatcherMeta):
         return handler_
 
     @classmethod
-    def handle(cls) -> Callable[[T_Handler], T_Handler]:
+    def handle(
+        cls, dependencies: Optional[List[DependsWrapper]] = None
+    ) -> Callable[[T_Handler], T_Handler]:
         """
         :说明:
 
@@ -406,17 +408,19 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * 无
+          * ``dependencies: Optional[List[DependsWrapper]]``: 非参数类型依赖列表
         """
 
         def _decorator(func: T_Handler) -> T_Handler:
-            cls.append_handler(func)
+            cls.append_handler(func, dependencies=dependencies)
             return func
 
         return _decorator
 
     @classmethod
-    def receive(cls) -> Callable[[T_Handler], T_Handler]:
+    def receive(
+        cls, dependencies: Optional[List[DependsWrapper]] = None
+    ) -> Callable[[T_Handler], T_Handler]:
         """
         :说明:
 
@@ -424,7 +428,7 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * 无
+          * ``dependencies: Optional[List[DependsWrapper]]``: 非参数类型依赖列表
         """
 
         async def _receive(state: T_State) -> Union[None, NoReturn]:
@@ -434,15 +438,19 @@ class Matcher(metaclass=MatcherMeta):
             del state["_current_key"]
             raise RejectedException
 
-        def _decorator(func: T_Handler) -> T_Handler:
+        _dependencies = [DependsWrapper(_receive), *(dependencies or [])]
 
-            depend = DependsWrapper(_receive)
+        def _decorator(func: T_Handler) -> T_Handler:
 
             if cls.handlers and cls.handlers[-1].func is func:
                 func_handler = cls.handlers[-1]
-                func_handler.prepend_dependency(depend)
+                for depend in reversed(_dependencies):
+                    func_handler.prepend_dependency(depend)
             else:
-                cls.append_handler(func, dependencies=[depend] if cls.handlers else [])
+                cls.append_handler(
+                    func,
+                    dependencies=_dependencies if cls.handlers else dependencies,
+                )
 
             return func
 
@@ -454,6 +462,7 @@ class Matcher(metaclass=MatcherMeta):
         key: str,
         prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
         args_parser: Optional[T_ArgsParser] = None,
+        dependencies: Optional[List[DependsWrapper]] = None,
     ) -> Callable[[T_Handler], T_Handler]:
         """
         :说明:
@@ -465,6 +474,7 @@ class Matcher(metaclass=MatcherMeta):
           * ``key: str``: 参数名
           * ``prompt: Optional[Union[str, Message, MessageSegment, MessageFormatter]]``: 在参数不存在时向用户发送的消息
           * ``args_parser: Optional[T_ArgsParser]``: 可选参数解析函数，空则使用默认解析函数
+          * ``dependencies: Optional[List[DependsWrapper]]``: 非参数类型依赖列表
         """
 
         async def _key_getter(bot: Bot, event: Event, state: T_State):
@@ -495,17 +505,20 @@ class Matcher(metaclass=MatcherMeta):
                 state[key] = str(event.get_message())
             state[f"_{key}_parsed"] = True
 
-        def _decorator(func: T_Handler) -> T_Handler:
+        _dependencies = [
+            DependsWrapper(_key_getter),
+            DependsWrapper(_key_parser),
+            *(dependencies or []),
+        ]
 
-            get_depend = DependsWrapper(_key_getter)
-            parser_depend = DependsWrapper(_key_parser)
+        def _decorator(func: T_Handler) -> T_Handler:
 
             if cls.handlers and cls.handlers[-1].func is func:
                 func_handler = cls.handlers[-1]
-                func_handler.prepend_dependency(parser_depend)
-                func_handler.prepend_dependency(get_depend)
+                for depend in reversed(_dependencies):
+                    func_handler.prepend_dependency(depend)
             else:
-                cls.append_handler(func, dependencies=[get_depend, parser_depend])
+                cls.append_handler(func, dependencies=_dependencies)
 
             return func
 
