@@ -142,9 +142,9 @@ const config = {
         apiKey: "ef449608d0ad6e81b9efd05db6367040",
         indexName: "nonebot",
         contextualSearch: true,
-        searchParameters: {
-          facetFilters: ["lang:zh-CN"],
-        },
+        // searchParameters: {
+        //   facetFilters: ["lang:zh-CN"],
+        // },
       },
       tailwindConfig: require("./tailwind.config"),
       customCss: [require.resolve("./src/css/custom.css")],
