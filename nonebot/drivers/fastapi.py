@@ -467,10 +467,10 @@ class FullDriver(ForwardDriver, Driver):
                     continue
 
                 if not client:
-                    client = httpx.AsyncClient(http2=http2, follow_redirects=True)
+                    client = httpx.AsyncClient(http2=setup.http_version == "2", follow_redirects=True)
                 elif http2 != (setup.http_version == "2"):
                     await client.aclose()
-                    client = httpx.AsyncClient(http2=http2, follow_redirects=True)
+                    client = httpx.AsyncClient(http2=setup.http_version == "2", follow_redirects=True)
                 http2 = setup.http_version == "2"
 
                 if not bot:
