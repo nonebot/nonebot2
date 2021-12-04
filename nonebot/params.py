@@ -31,6 +31,7 @@ class EventParam(Param):
         return event
 
 
+# FIXME: may detect error param
 class StateParam(Param):
     @classmethod
     def _check(cls, name: str, param: inspect.Parameter) -> bool:

@@ -97,6 +97,9 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
     return func
 
 
+# FIXME: run handler with try/except skipped exception
+
+
 async def _check_matcher(
     priority: int,
     Matcher: Type[Matcher],
