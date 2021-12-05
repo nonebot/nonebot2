@@ -131,7 +131,6 @@ def get_dependent(
     return dependent
 
 
-# FIXME: check param types first then run dependencies
 async def solve_dependencies(
     *,
     _dependent: Dependent,
@@ -142,6 +141,24 @@ async def solve_dependencies(
 ) -> Tuple[Dict[str, Any], T_DependencyCache]:
     values: Dict[str, Any] = {}
     dependency_cache = {} if _dependency_cache is None else _dependency_cache
+
+    # usual dependency
+    for field in _dependent.params:
+        field_info = field.field_info
+        assert isinstance(field_info, Param), "Params must be subclasses of Param"
+        value = field_info._solve(**params)
+        if value == Undefined:
+            value = field.get_default()
+        _, errs_ = field.validate(value, values, loc=(str(field_info), field.alias))
+        if errs_:
+            logger.debug(
+                f"{field_info} "
+                f"type {type(value)} not match depends {_dependent.func} "
+                f"annotation {field._type_display()}, ignored"
+            )
+            raise SkippedException
+        else:
+            values[field.name] = value
 
     # solve sub dependencies
     sub_dependent: Dependent
@@ -182,24 +199,6 @@ async def solve_dependencies(
             # save current dependency to cache
             if sub_dependent.cache_key not in dependency_cache:
                 dependency_cache[sub_dependent.cache_key] = solved
-
-    # usual dependency
-    for field in _dependent.params:
-        field_info = field.field_info
-        assert isinstance(field_info, Param), "Params must be subclasses of Param"
-        value = field_info._solve(**params)
-        if value == Undefined:
-            value = field.get_default()
-        _, errs_ = field.validate(value, values, loc=(str(field_info), field.alias))
-        if errs_:
-            logger.debug(
-                f"{field_info} "
-                f"type {type(value)} not match depends {_dependent.func} "
-                f"annotation {field._type_display()}, ignored"
-            )
-            raise SkippedException
-        else:
-            values[field.name] = value
 
     return values, dependency_cache
 
