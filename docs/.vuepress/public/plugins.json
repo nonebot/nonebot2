@@ -542,5 +542,13 @@
     "desc": "在线运行代码插件，支持输入",
     "author": "yzyyz1387",
     "repo": "https://github.com/yzyyz1387/nonebot_plugin_code"
+  },
+  {
+    "id": "nonebot_plugin_heisi",
+    "link": "nonebot-plugin-heisi",
+    "name": "随机黑丝",
+    "desc": "发送一张黑丝涩图，内置CD",
+    "author": "yzyyz1387",
+    "repo": "https://github.com/yzyyz1387/nonebot_plugin_heisi"
   }
 ]
