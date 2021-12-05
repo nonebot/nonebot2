@@ -669,8 +669,11 @@ class Matcher(metaclass=MatcherMeta):
                         _stack=stack,
                         _dependency_cache=dependency_cache,
                     )
-                except SkippedException:
-                    pass
+                except SkippedException as e:
+                    logger.debug(
+                        f"Handler {handler} param {e.param.name} value {e.value} "
+                        f"mismatch type {e.param._type_display()}, skipped"
+                    )
 
         except RejectedException:
             self.handlers.insert(0, handler)  # type: ignore

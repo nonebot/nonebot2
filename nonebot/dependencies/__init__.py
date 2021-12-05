@@ -156,7 +156,7 @@ async def solve_dependencies(
                 f"type {type(value)} not match depends {_dependent.func} "
                 f"annotation {field._type_display()}, ignored"
             )
-            raise SkippedException
+            raise SkippedException(field, value)
         else:
             values[field.name] = value
 

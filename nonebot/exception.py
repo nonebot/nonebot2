@@ -8,6 +8,8 @@
 
 from typing import Any, Optional
 
+from pydantic.fields import ModelField
+
 
 class NoneBotException(Exception):
     """
@@ -123,6 +125,16 @@ class SkippedException(MatcherException):
 
       可以在 ``Handler`` 中通过 ``Matcher.skip()`` 抛出。
     """
+
+    def __init__(self, param: ModelField, value: Any):
+        self.param = param
+        self.value = value
+
+    def __repr__(self):
+        return f"<SkippedException, param={self.param}, value={self.value}>"
+
+    def __str__(self):
+        self.__repr__()
 
 
 class PausedException(MatcherException):

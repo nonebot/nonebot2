@@ -8,7 +8,16 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
 import asyncio
 from datetime import datetime
 from contextlib import AsyncExitStack
-from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Set,
+    Dict,
+    List,
+    Type,
+    Optional,
+    Coroutine,
+)
 
 from nonebot import params
 from nonebot.log import logger
@@ -16,7 +25,12 @@ from nonebot.rule import TrieRule
 from nonebot.handler import Handler
 from nonebot.utils import escape_tag
 from nonebot.matcher import Matcher, matchers
-from nonebot.exception import NoLogException, StopPropagation, IgnoredException
+from nonebot.exception import (
+    NoLogException,
+    StopPropagation,
+    IgnoredException,
+    SkippedException,
+)
 from nonebot.typing import (
     T_State,
     T_DependencyCache,
@@ -100,6 +114,13 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
 # FIXME: run handler with try/except skipped exception
 
 
+async def _run_coro_with_catch(coro: Coroutine[Any, Any, Any]) -> Any:
+    try:
+        return await coro
+    except SkippedException:
+        pass
+
+
 async def _check_matcher(
     priority: int,
     Matcher: Type[Matcher],
@@ -150,13 +171,15 @@ async def _run_matcher(
 
     coros = list(
         map(
-            lambda x: x(
-                matcher=matcher,
-                bot=bot,
-                event=event,
-                state=state,
-                _stack=stack,
-                _dependency_cache=dependency_cache,
+            lambda x: _run_coro_with_catch(
+                x(
+                    matcher=matcher,
+                    bot=bot,
+                    event=event,
+                    state=state,
+                    _stack=stack,
+                    _dependency_cache=dependency_cache,
+                )
             ),
             _run_preprocessors,
         )
@@ -189,14 +212,16 @@ async def _run_matcher(
 
     coros = list(
         map(
-            lambda x: x(
-                matcher=matcher,
-                exception=exception,
-                bot=bot,
-                event=event,
-                state=state,
-                _stack=stack,
-                _dependency_cache=dependency_cache,
+            lambda x: _run_coro_with_catch(
+                x(
+                    matcher=matcher,
+                    exception=exception,
+                    bot=bot,
+                    event=event,
+                    state=state,
+                    _stack=stack,
+                    _dependency_cache=dependency_cache,
+                )
             ),
             _run_postprocessors,
         )
@@ -247,12 +272,14 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
     async with AsyncExitStack() as stack:
         coros = list(
             map(
-                lambda x: x(
-                    bot=bot,
-                    event=event,
-                    state=state,
-                    _stack=stack,
-                    _dependency_cache=dependency_cache,
+                lambda x: _run_coro_with_catch(
+                    x(
+                        bot=bot,
+                        event=event,
+                        state=state,
+                        _stack=stack,
+                        _dependency_cache=dependency_cache,
+                    )
                 ),
                 _event_preprocessors,
             )
@@ -307,12 +334,14 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
 
         coros = list(
             map(
-                lambda x: x(
-                    bot=bot,
-                    event=event,
-                    state=state,
-                    _stack=stack,
-                    _dependency_cache=dependency_cache,
+                lambda x: _run_coro_with_catch(
+                    x(
+                        bot=bot,
+                        event=event,
+                        state=state,
+                        _stack=stack,
+                        _dependency_cache=dependency_cache,
+                    )
                 ),
                 _event_postprocessors,
             )
