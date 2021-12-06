@@ -11,7 +11,17 @@ r"""
 
 import asyncio
 from contextlib import AsyncExitStack
-from typing import Any, Dict, List, Type, Union, Callable, NoReturn, Optional
+from typing import (
+    Any,
+    Dict,
+    List,
+    Type,
+    Tuple,
+    Union,
+    Callable,
+    NoReturn,
+    Optional,
+)
 
 from nonebot import params
 from nonebot.handler import Handler
@@ -119,41 +129,59 @@ class Permission:
             return Permission(*self.checkers, other)
 
 
-async def _message(event: Event) -> bool:
-    return event.get_type() == "message"
+class Message:
+    async def __call__(self, event: Event) -> bool:
+        return event.get_type() == "message"
 
 
-async def _notice(event: Event) -> bool:
-    return event.get_type() == "notice"
+class Notice:
+    async def __call__(self, event: Event) -> bool:
+        return event.get_type() == "notice"
 
 
-async def _request(event: Event) -> bool:
-    return event.get_type() == "request"
+class Request:
+    async def __call__(self, event: Event) -> bool:
+        return event.get_type() == "request"
 
 
-async def _metaevent(event: Event) -> bool:
-    return event.get_type() == "meta_event"
+class MetaEvent:
+    async def __call__(self, event: Event) -> bool:
+        return event.get_type() == "meta_event"
 
 
-MESSAGE = Permission(_message)
+MESSAGE = Permission(Message())
 """
 - **说明**: 匹配任意 ``message`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 message type 的 Matcher。
 """
-NOTICE = Permission(_notice)
+NOTICE = Permission(Notice())
 """
 - **说明**: 匹配任意 ``notice`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 notice type 的 Matcher。
 """
-REQUEST = Permission(_request)
+REQUEST = Permission(Request())
 """
 - **说明**: 匹配任意 ``request`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 request type 的 Matcher。
 """
-METAEVENT = Permission(_metaevent)
+METAEVENT = Permission(MetaEvent())
 """
 - **说明**: 匹配任意 ``meta_event`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 meta_event type 的 Matcher。
 """
 
 
-def USER(*user: str, perm: Optional[Permission] = None):
+class User:
+    def __init__(
+        self, users: Tuple[str, ...], perm: Optional[Permission] = None
+    ) -> None:
+        self.users = users
+        self.perm = perm
+
+    async def __call__(self, bot: Bot, event: Event) -> bool:
+        return bool(
+            event.get_session_id() in self.users
+            and (self.perm is None or await self.perm(bot, event))
+        )
+
+
+def USER(*users: str, perm: Optional[Permission] = None):
     """
     :说明:
 
@@ -165,21 +193,18 @@ def USER(*user: str, perm: Optional[Permission] = None):
       * ``perm: Optional[Permission]``: 需要同时满足的权限
     """
 
-    async def _user(bot: Bot, event: Event) -> bool:
-        return bool(
-            event.get_session_id() in user and (perm is None or await perm(bot, event))
+    return Permission(User(users, perm))
+
+
+class SuperUser:
+    async def __call__(self, bot: Bot, event: Event) -> bool:
+        return (
+            event.get_type() == "message"
+            and event.get_user_id() in bot.config.superusers
         )
 
-    return Permission(_user)
 
-
-async def _superuser(bot: Bot, event: Event) -> bool:
-    return (
-        event.get_type() == "message" and event.get_user_id() in bot.config.superusers
-    )
-
-
-SUPERUSER = Permission(_superuser)
+SUPERUSER = Permission(SuperUser())
 """
 - **说明**: 匹配任意超级用户消息类型事件
 """

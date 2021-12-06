@@ -442,7 +442,7 @@ class Matcher(metaclass=MatcherMeta):
 
         def _decorator(func: T_Handler) -> T_Handler:
 
-            if cls.handlers and cls.handlers[-1].func is func:
+            if cls.handlers and cls.handlers[-1].call is func:
                 func_handler = cls.handlers[-1]
                 for depend in reversed(_dependencies):
                     func_handler.prepend_dependency(depend)
@@ -513,7 +513,7 @@ class Matcher(metaclass=MatcherMeta):
 
         def _decorator(func: T_Handler) -> T_Handler:
 
-            if cls.handlers and cls.handlers[-1].func is func:
+            if cls.handlers and cls.handlers[-1].call is func:
                 func_handler = cls.handlers[-1]
                 for depend in reversed(_dependencies):
                     func_handler.prepend_dependency(depend)

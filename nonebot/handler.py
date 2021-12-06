@@ -25,7 +25,7 @@ class Handler:
 
     def __init__(
         self,
-        func: Callable[..., Any],
+        call: Callable[..., Any],
         *,
         name: Optional[str] = None,
         dependencies: Optional[List[DependsWrapper]] = None,
@@ -38,17 +38,17 @@ class Handler:
 
         :参数:
 
-          * ``func: Callable[..., Any]``: 事件处理函数。
+          * ``call: Callable[..., Any]``: 事件处理函数。
           * ``name: Optional[str]``: 事件处理器名称。默认为函数名。
           * ``dependencies: Optional[List[DependsWrapper]]``: 额外的非参数依赖注入。
           * ``allow_types: Optional[List[Type[Param]]]``: 允许的参数类型。
         """
-        self.func = func
+        self.call = call
         """
         :类型: ``Callable[..., Any]``
         :说明: 事件处理函数
         """
-        self.name = get_name(func) if name is None else name
+        self.name = get_name(call) if name is None else name
         """
         :类型: ``str``
         :说明: 事件处理函数名
@@ -68,7 +68,7 @@ class Handler:
         if dependencies:
             for depends in dependencies:
                 self.cache_dependent(depends)
-        self.dependent = get_dependent(func=func, allow_types=self.allow_types)
+        self.dependent = get_dependent(call=call, allow_types=self.allow_types)
 
     def __repr__(self) -> str:
         return f"<Handler {self.name}({', '.join(map(str, self.dependent.params))})>"
@@ -94,10 +94,10 @@ class Handler:
             **params,
         )
 
-        if asyncio.iscoroutinefunction(self.func):
-            return await self.func(**values)
+        if asyncio.iscoroutinefunction(self.call):
+            return await self.call(**values)
         else:
-            return await run_sync(self.func)(**values)
+            return await run_sync(self.call)(**values)
 
     def cache_dependent(self, dependency: DependsWrapper):
         if not dependency.dependency:

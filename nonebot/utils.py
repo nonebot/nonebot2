@@ -66,30 +66,30 @@ def generic_check_issubclass(
         raise
 
 
-def is_coroutine_callable(func: Callable[..., Any]) -> bool:
-    if inspect.isroutine(func):
-        return inspect.iscoroutinefunction(func)
-    if inspect.isclass(func):
+def is_coroutine_callable(call: Callable[..., Any]) -> bool:
+    if inspect.isroutine(call):
+        return inspect.iscoroutinefunction(call)
+    if inspect.isclass(call):
         return False
-    func_ = getattr(func, "__call__", None)
+    func_ = getattr(call, "__call__", None)
     return inspect.iscoroutinefunction(func_)
 
 
-def is_gen_callable(func: Callable[..., Any]) -> bool:
-    if inspect.isgeneratorfunction(func):
+def is_gen_callable(call: Callable[..., Any]) -> bool:
+    if inspect.isgeneratorfunction(call):
         return True
-    func_ = getattr(func, "__call__", None)
+    func_ = getattr(call, "__call__", None)
     return inspect.isgeneratorfunction(func_)
 
 
-def is_async_gen_callable(func: Callable[..., Any]) -> bool:
-    if inspect.isasyncgenfunction(func):
+def is_async_gen_callable(call: Callable[..., Any]) -> bool:
+    if inspect.isasyncgenfunction(call):
         return True
-    func_ = getattr(func, "__call__", None)
+    func_ = getattr(call, "__call__", None)
     return inspect.isasyncgenfunction(func_)
 
 
-def run_sync(func: Callable[P, R]) -> Callable[P, Awaitable[R]]:
+def run_sync(call: Callable[P, R]) -> Callable[P, Awaitable[R]]:
     """
     :说明:
 
@@ -97,17 +97,17 @@ def run_sync(func: Callable[P, R]) -> Callable[P, Awaitable[R]]:
 
     :参数:
 
-      * ``func: Callable[P, R]``: 被装饰的同步函数
+      * ``call: Callable[P, R]``: 被装饰的同步函数
 
     :返回:
 
       - ``Callable[P, Awaitable[R]]``
     """
 
-    @wraps(func)
+    @wraps(call)
     async def _wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
         loop = asyncio.get_running_loop()
-        pfunc = partial(func, *args, **kwargs)
+        pfunc = partial(call, *args, **kwargs)
         result = await loop.run_in_executor(None, pfunc)
         return result
 

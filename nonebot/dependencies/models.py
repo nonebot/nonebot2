@@ -36,17 +36,17 @@ class Dependent:
     def __init__(
         self,
         *,
-        func: Optional[T_Handler] = None,
+        call: Optional[T_Handler] = None,
         name: Optional[str] = None,
         params: Optional[List[ModelField]] = None,
         allow_types: Optional[List[Type[Param]]] = None,
         dependencies: Optional[List["Dependent"]] = None,
         use_cache: bool = True,
     ) -> None:
-        self.func = func
+        self.call = call
         self.name = name
         self.params = params or []
         self.allow_types = allow_types or []
         self.dependencies = dependencies or []
         self.use_cache = use_cache
-        self.cache_key = self.func
+        self.cache_key = self.call
