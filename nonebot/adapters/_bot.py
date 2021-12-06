@@ -12,6 +12,7 @@ from nonebot.drivers import Driver, HTTPResponse, HTTPConnection
 
 if TYPE_CHECKING:
     from ._event import Event
+    from ._adapter import Adapter
     from ._message import Message, MessageSegment
 
 
@@ -25,10 +26,6 @@ class Bot(abc.ABC):
     Bot 基类。用于处理上报消息，并提供 API 调用接口。
     """
 
-    driver: Driver
-    """Driver 对象"""
-    config: Config
-    """Config 配置对象"""
     _calling_api_hook: Set[T_CallingAPIHook] = set()
     """
     :类型: ``Set[T_CallingAPIHook]``
@@ -40,36 +37,27 @@ class Bot(abc.ABC):
     :说明: call_api 后执行的函数
     """
 
-    def __init__(self, self_id: str, request: HTTPConnection):
+    def __init__(self, adapter: "Adapter", self_id: str):
         """
         :参数:
 
           * ``self_id: str``: 机器人 ID
           * ``request: HTTPConnection``: request 连接对象
         """
+        self.adapter = adapter
         self.self_id: str = self_id
         """机器人 ID"""
-        self.request: HTTPConnection = request
-        """连接信息"""
 
     def __getattr__(self, name: str) -> _ApiCall:
         return partial(self.call_api, name)
 
     @property
-    @abc.abstractmethod
     def type(self) -> str:
-        """Adapter 类型"""
-        raise NotImplementedError
+        return self.adapter.get_name()
 
-    @classmethod
-    def register(cls, driver: Driver, config: Config, **kwargs):
-        """
-        :说明:
-
-          ``register`` 方法会在 ``driver.register_adapter`` 时被调用，用于初始化相关配置
-        """
-        cls.driver = driver
-        cls.config = config
+    @property
+    def config(self) -> Config:
+        return self.adapter.config
 
     @classmethod
     @abc.abstractmethod
@@ -103,20 +91,6 @@ class Bot(abc.ABC):
         :参数:
 
           * ``message: bytes``: 收到的上报消息
-        """
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    async def _call_api(self, api: str, **data) -> Any:
-        """
-        :说明:
-
-          ``adapter`` 实际调用 api 的逻辑实现函数，实现该方法以调用 api。
-
-        :参数:
-
-          * ``api: str``: API 名称
-          * ``**data``: API 数据
         """
         raise NotImplementedError
 
@@ -162,7 +136,7 @@ class Bot(abc.ABC):
 
         if not skip_calling_api:
             try:
-                result = await self._call_api(api, **data)
+                result = await self.adapter._call_api(api, **data)
             except Exception as e:
                 exception = e
 

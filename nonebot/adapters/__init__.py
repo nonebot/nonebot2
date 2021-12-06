@@ -22,6 +22,7 @@ except Exception:
 
 from ._bot import Bot as Bot
 from ._event import Event as Event
+from ._adapter import Adapter as Adapter
 from ._message import Message as Message
 from ._message import MessageSegment as MessageSegment
 from ._template import MessageTemplate as MessageTemplate

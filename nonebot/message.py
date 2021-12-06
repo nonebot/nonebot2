@@ -111,9 +111,6 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
     return func
 
 
-# FIXME: run handler with try/except skipped exception
-
-
 async def _run_coro_with_catch(coro: Coroutine[Any, Any, Any]) -> Any:
     try:
         return await coro

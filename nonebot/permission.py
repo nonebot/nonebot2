@@ -14,13 +14,12 @@ from contextlib import AsyncExitStack
 from typing import (
     Any,
     Dict,
-    List,
-    Type,
     Tuple,
     Union,
     Callable,
     NoReturn,
     Optional,
+    Coroutine,
 )
 
 from nonebot import params
@@ -28,6 +27,13 @@ from nonebot.handler import Handler
 from nonebot.adapters import Bot, Event
 from nonebot.exception import SkippedException
 from nonebot.typing import T_PermissionChecker
+
+
+async def _run_coro_with_catch(coro: Coroutine[Any, Any, Any]):
+    try:
+        return await coro
+    except SkippedException:
+        return False
 
 
 class Permission:
@@ -100,20 +106,18 @@ class Permission:
             return True
         results = await asyncio.gather(
             *(
-                checker(
-                    bot=bot,
-                    event=event,
-                    _stack=stack,
-                    _dependency_cache=dependency_cache,
+                _run_coro_with_catch(
+                    checker(
+                        bot=bot,
+                        event=event,
+                        _stack=stack,
+                        _dependency_cache=dependency_cache,
+                    )
                 )
                 for checker in self.checkers
             ),
-            return_exceptions=True,
         )
-        return next(
-            filter(lambda x: bool(x) and not isinstance(x, SkippedException), results),
-            False,
-        )
+        return any(results)
 
     def __and__(self, other) -> NoReturn:
         raise RuntimeError("And operation between Permissions is not allowed.")
