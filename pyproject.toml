@@ -39,10 +39,6 @@ aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
 sphinx = "^4.1.1"
 isort = "^5.10.1"
 black = "^21.11b1"
-nonebot-plugin-test = "^0.3.0"
-nonebot-adapter-ding = { path = "./packages/nonebot-adapter-ding", develop = true }
-nonebot-adapter-mirai = { path = "./packages/nonebot-adapter-mirai", develop = true }
-nonebot-adapter-feishu = { path = "./packages/nonebot-adapter-feishu", develop = true }
 sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
 
 [tool.poetry.extras]
