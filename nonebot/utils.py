@@ -6,7 +6,6 @@ import collections
 import dataclasses
 from functools import wraps, partial
 from contextlib import asynccontextmanager
-from typing_extensions import GenericAlias  # type: ignore
 from typing_extensions import ParamSpec, get_args, get_origin
 from typing import (
     Any,
@@ -53,16 +52,16 @@ def generic_check_issubclass(
     try:
         return issubclass(cls, class_or_tuple)
     except TypeError:
-        if get_origin(cls) is Union:
+        origin = get_origin(cls)
+        if origin is Union:
             for type_ in get_args(cls):
                 if type_ is not type(None) and not generic_check_issubclass(
                     type_, class_or_tuple
                 ):
                     return False
             return True
-        elif isinstance(cls, GenericAlias):
-            origin = get_origin(cls)
-            return bool(origin and issubclass(origin, class_or_tuple))
+        elif origin:
+            return issubclass(origin, class_or_tuple)
         raise
 
 
