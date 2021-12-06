@@ -5,11 +5,10 @@
 该模块实现事件处理函数的封装，以实现动态参数等功能。
 """
 
-import asyncio
 from contextlib import AsyncExitStack
 from typing import Any, Dict, List, Type, Callable, Optional
 
-from nonebot.utils import get_name, run_sync
+from nonebot.utils import get_name, run_sync, is_coroutine_callable
 from nonebot.dependencies import (
     Param,
     Dependent,
@@ -94,7 +93,7 @@ class Handler:
             **params,
         )
 
-        if asyncio.iscoroutinefunction(self.call):
+        if is_coroutine_callable(self.call):
             return await self.call(**values)
         else:
             return await run_sync(self.call)(**values)
