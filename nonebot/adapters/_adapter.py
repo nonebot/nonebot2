@@ -14,7 +14,7 @@ from nonebot.drivers import (
 
 class Adapter(abc.ABC):
     def __init__(self, driver: Driver, **kwargs: Any):
-        self.driver = driver
+        self.driver: Driver = driver
         self.bots: Dict[str, Bot] = {}
 
     @classmethod

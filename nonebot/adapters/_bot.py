@@ -44,7 +44,7 @@ class Bot(abc.ABC):
           * ``self_id: str``: 机器人 ID
           * ``request: HTTPConnection``: request 连接对象
         """
-        self.adapter = adapter
+        self.adapter: "Adapter" = adapter
         self.self_id: str = self_id
         """机器人 ID"""
 
@@ -58,41 +58,6 @@ class Bot(abc.ABC):
     @property
     def config(self) -> Config:
         return self.adapter.config
-
-    @classmethod
-    @abc.abstractmethod
-    async def check_permission(
-        cls, driver: Driver, request: HTTPConnection
-    ) -> Tuple[Optional[str], Optional[HTTPResponse]]:
-        """
-        :说明:
-
-          检查连接请求是否合法的函数，如果合法则返回当前连接 ``唯一标识符``，通常为机器人 ID；如果不合法则抛出 ``RequestDenied`` 异常。
-
-        :参数:
-
-          * ``driver: Driver``: Driver 对象
-          * ``request: HTTPConnection``: request 请求详情
-
-        :返回:
-
-          - ``Optional[str]``: 连接唯一标识符，``None`` 代表连接不合法
-          - ``Optional[HTTPResponse]``: HTTP 上报响应
-        """
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    async def handle_message(self, message: bytes):
-        """
-        :说明:
-
-          处理上报消息的函数，转换为 ``Event`` 事件后调用 ``nonebot.message.handle_event`` 进一步处理事件。
-
-        :参数:
-
-          * ``message: bytes``: 收到的上报消息
-        """
-        raise NotImplementedError
 
     async def call_api(self, api: str, **data: Any) -> Any:
         """
