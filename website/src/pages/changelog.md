@@ -6,7 +6,9 @@
 - 移除插件加载的 `NameSpace` 模式
 - 修改 toml 加载插件时的键名为 `tool.nonebot` 以符合规范
 - 新增 Handler 依赖注入支持，同步/异步支持
-- 统一 `Processor`, `Rule`, `Permission` 使用 `Handler`
+- 统一 `Processor`, `Rule`, `Permission`, `Processor` 使用 `Handler`
+- 修改内置 `Rule`, `Permission` 如 `startswith`, `command` 等使用 class 实现
+- 更换文档框架 (docusaurus) 以及主题 (docusaurus-theme-nonepress)
 
 ## v2.0.0a16
 
