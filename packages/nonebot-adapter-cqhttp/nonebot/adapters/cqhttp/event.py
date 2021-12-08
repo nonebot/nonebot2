@@ -204,6 +204,31 @@ class GroupMessageEvent(MessageEvent):
     def get_session_id(self) -> str:
         return f"group_{self.group_id}_{self.user_id}"
 
+class GuildMessageEvent(MessageEvent):
+    """频道消息"""
+    __event__ = "message.guild"
+    message_type: Literal["guild"]
+    guild_id: int
+    channel_id: int
+    message_id: str
+    raw_message: Optional[str] = None
+    font: Optional[int] = None
+    anonymous: Optional[Anonymous] = None
+
+    @overrides(Event)
+    def get_event_description(self) -> str:
+        return (
+                f'Message {self.message_id} from {self.user_id}@[频道:{self.guild_id}][子频道:{self.channel_id}] "'
+                + "".join(
+            map(
+                lambda x: escape_tag(str(x))
+                if x.is_text() else f"<le>{escape_tag(str(x))}</le>",
+                self.message)) + '"')
+
+    @overrides(MessageEvent)
+    def get_session_id(self) -> str:
+        return f"guild_{self.guild_id}_channel_{self.channel_id}_{self.user_id}"
+
 
 # Notice Events
 class NoticeEvent(Event):
@@ -568,7 +593,7 @@ def get_event_model(event_name) -> List[Type[Event]]:
 
 
 __all__ = [
-    "Event", "MessageEvent", "PrivateMessageEvent", "GroupMessageEvent",
+    "Event", "MessageEvent", "PrivateMessageEvent", "GroupMessageEvent", "GuildMessageEvent",
     "NoticeEvent", "GroupUploadNoticeEvent", "GroupAdminNoticeEvent",
     "GroupDecreaseNoticeEvent", "GroupIncreaseNoticeEvent",
     "GroupBanNoticeEvent", "FriendAddNoticeEvent", "GroupRecallNoticeEvent",
