@@ -1,34 +1,42 @@
 [
   {
-    "id": "nonebot.adapters.cqhttp",
-    "link": "nonebot-adapter-cqhttp",
+    "module_name": "nonebot.adapters.cqhttp",
+    "project_link": "nonebot-adapter-cqhttp",
     "name": "cqhttp",
     "desc": "OneBot(CQHTTP) 协议",
     "author": "yanyongyu",
-    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-cqhttp"
+    "homepage": "https://github.com/nonebot/nonebot2/tree/master/packages/nonebot-adapter-cqhttp",
+    "tags": [],
+    "is_official": false
   },
   {
-    "id": "nonebot.adapters.ding",
-    "link": "nonebot-adapter-ding",
+    "module_name": "nonebot.adapters.ding",
+    "project_link": "nonebot-adapter-ding",
     "name": "ding",
     "desc": "钉钉协议",
     "author": "Artin",
-    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-ding"
+    "homepage": "https://github.com/nonebot/nonebot2/tree/master/packages/nonebot-adapter-ding",
+    "tags": [],
+    "is_official": false
   },
   {
-    "id": "nonebot.adapters.mirai",
-    "link": "nonebot-adapter-mirai",
+    "module_name": "nonebot.adapters.mirai",
+    "project_link": "nonebot-adapter-mirai",
     "name": "mirai",
     "desc": "Mirai-Api-HTTP 协议",
     "author": "Mix",
-    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-mirai"
+    "homepage": "https://github.com/nonebot/nonebot2/tree/master/packages/nonebot-adapter-mirai",
+    "tags": [],
+    "is_official": false
   },
   {
-    "id": "nonebot.adapters.feishu",
-    "link": "nonebot-adapter-feishu",
+    "module_name": "nonebot.adapters.feishu",
+    "project_link": "nonebot-adapter-feishu",
     "name": "feishu",
     "desc": "飞书协议",
     "author": "StarHeartHunt",
-    "repo": "nonebot/nonebot2/tree/master/packages/nonebot-adapter-feishu"
+    "homepage": "https://github.com/nonebot/nonebot2/tree/master/packages/nonebot-adapter-feishu",
+    "tags": [],
+    "is_official": false
   }
 ]
