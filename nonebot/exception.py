@@ -127,8 +127,8 @@ class SkippedException(MatcherException):
     """
 
     def __init__(self, param: ModelField, value: Any):
-        self.param = param
-        self.value = value
+        self.param: ModelField = param
+        self.value: Any = value
 
     def __repr__(self):
         return f"<SkippedException, param={self.param}, value={self.value}>"
