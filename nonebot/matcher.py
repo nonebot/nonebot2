@@ -63,6 +63,7 @@ matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
 current_bot: ContextVar[Bot] = ContextVar("current_bot")
 current_event: ContextVar[Event] = ContextVar("current_event")
 current_state: ContextVar[T_State] = ContextVar("current_state")
+current_handler: ContextVar[Handler] = ContextVar("current_handler")
 
 
 class MatcherMeta(type):
@@ -636,8 +637,19 @@ class Matcher(metaclass=MatcherMeta):
         """
         self.block = True
 
-    # 运行handlers
-    async def run(
+    async def update_type(self, bot: Bot, event: Event) -> str:
+        updater = self.__class__._default_type_updater
+        if not updater:
+            return "message"
+        return await updater(bot, event, self.state, self.type)
+
+    async def update_permission(self, bot: Bot, event: Event) -> Permission:
+        updater = self.__class__._default_permission_updater
+        if not updater:
+            return USER(event.get_session_id(), perm=self.permission)
+        return await updater(bot, event, self.state, self.permission)
+
+    async def simple_run(
         self,
         bot: Bot,
         event: Event,
@@ -659,6 +671,7 @@ class Matcher(metaclass=MatcherMeta):
 
             while self.handlers:
                 handler = self.handlers.pop(0)
+                current_handler.set(handler)
                 logger.debug(f"Running handler {handler}")
                 try:
                     await handler(
@@ -674,20 +687,32 @@ class Matcher(metaclass=MatcherMeta):
                         f"Handler {handler} param {e.param.name} value {e.value} "
                         f"mismatch type {e.param._type_display()}, skipped"
                     )
+        except StopPropagation:
+            self.block = True
+        finally:
+            logger.info(f"Matcher {self} running complete")
+            current_bot.reset(b_t)
+            current_event.reset(e_t)
+            current_state.reset(s_t)
+
+    # 运行handlers
+    async def run(
+        self,
+        bot: Bot,
+        event: Event,
+        state: T_State,
+        stack: Optional[AsyncExitStack] = None,
+        dependency_cache: Optional[T_DependencyCache] = None,
+    ):
+        try:
+            await self.simple_run(bot, event, state, stack, dependency_cache)
 
         except RejectedException:
-            self.handlers.insert(0, handler)  # type: ignore
-            updater = self.__class__._default_type_updater
-            if updater:
-                type_ = await updater(bot, event, self.state, self.type)  # type: ignore
-            else:
-                type_ = "message"
+            handler = current_handler.get()
+            self.handlers.insert(0, handler)
 
-            updater = self.__class__._default_permission_updater
-            if updater:
-                permission = await updater(bot, event, self.state, self.permission)
-            else:
-                permission = USER(event.get_session_id(), perm=self.permission)
+            type_ = await self.update_type(bot, event)
+            permission = await self.update_permission(bot, event)
 
             Matcher.new(
                 type_,
@@ -706,17 +731,8 @@ class Matcher(metaclass=MatcherMeta):
                 default_permission_updater=self.__class__._default_permission_updater,
             )
         except PausedException:
-            updater = self.__class__._default_type_updater
-            if updater:
-                type_ = await updater(bot, event, self.state, self.type)  # type: ignore
-            else:
-                type_ = "message"
-
-            updater = self.__class__._default_permission_updater
-            if updater:
-                permission = await updater(bot, event, self.state, self.permission)
-            else:
-                permission = USER(event.get_session_id(), perm=self.permission)
+            type_ = await self.update_type(bot, event)
+            permission = await self.update_permission(bot, event)
 
             Matcher.new(
                 type_,
@@ -736,10 +752,3 @@ class Matcher(metaclass=MatcherMeta):
             )
         except FinishedException:
             pass
-        except StopPropagation:
-            self.block = True
-        finally:
-            logger.info(f"Matcher {self} running complete")
-            current_bot.reset(b_t)
-            current_event.reset(e_t)
-            current_state.reset(s_t)
