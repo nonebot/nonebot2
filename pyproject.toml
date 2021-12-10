@@ -39,6 +39,7 @@ aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
 sphinx = "^4.1.1"
 isort = "^5.10.1"
 black = "^21.11b1"
+pytest-cov = "^3.0.0"
 sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
 
 [tool.poetry.extras]
@@ -50,6 +51,9 @@ all = ["quart", "aiohttp"]
 # name = "aliyun"
 # url = "https://mirrors.aliyun.com/pypi/simple/"
 # default = true
+
+[tool.pytest.ini_options]
+addopts = "--cov=nonebot --cov-report=term-missing"
 
 [tool.black]
 line-length = 88
