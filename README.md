@@ -1,6 +1,6 @@
-<!-- markdownlint-disable MD033 MD041-->
+<!-- markdownlint-disable MD033 MD041 -->
 <p align="center">
-  <a href="https://v2.nonebot.dev/"><img src="https://raw.githubusercontent.com/nonebot/nonebot2/master/docs/.vuepress/public/logo.png" width="200" height="200" alt="nonebot"></a>
+  <a href="https://v2.nonebot.dev/"><img src="https://v2.nonebot.dev/logo.png" width="200" height="200" alt="nonebot"></a>
 </p>
 
 <div align="center">
@@ -58,7 +58,6 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
   ·
   <a href="#插件">文档打不开？</a>
 </p>
-<!-- markdownlint-enable MD033 -->
 
 ## 简介
 
@@ -133,14 +132,20 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 
 - 其他插件请查看 [商店](https://v2.nonebot.dev/store.html)
 
+## 许可证
+
+`NoneBot` 采用 `MIT` 协议开源，协议文件参考 [LICENSE](./LICENSE)。
+
 ## 贡献
 
 如果你在使用过程中发现任何问题，可以 [提交 issue](https://github.com/nonebot/nonebot2/issues/new) 或自行 fork 修改后提交 pull request。
 
 如果你要提交 pull request，请确保你的代码风格和项目已有的代码保持一致，遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/) [PEP 484](https://www.python.org/dev/peps/pep-0484/)，变量命名清晰，有适当的注释。
 
-## 许可证
+**Pull Request 请以 `dev` 分支作为目标分支**
 
-`NoneBot` 采用 `MIT` 协议开源，协议文件参考 [LICENSE](./LICENSE)。
+感谢以下开发者对 NoneBot2 的贡献：
 
-特别的，由于 `mirai` 使用 `AGPLv3` 协议并要求使用 `mirai` 的软件同样以 `AGPLv3` 协议开源，本项目 `mirai` 适配器部分（即 [`packages/nonebot-adapter-mirai`](./packages/nonebot-adapter-mirai/) 目录）以 `AGPLv3` 协议开源，协议文件参考 [LICENSE](./packages/nonebot-adapter-mirai/LICENSE)。
+<a href="https://github.com/nonebot/nonebot2/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=nonebot/nonebot2" />
+</a>
