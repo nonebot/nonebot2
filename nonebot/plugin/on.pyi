@@ -17,7 +17,6 @@ def on(
     priority: int = ...,
     block: bool = ...,
     state: Optional[T_State] = ...,
-    state_factory: Optional[T_StateFactory] = ...,
 ) -> Type[Matcher]: ...
 def on_metaevent(
     rule: Optional[Union[Rule, T_RuleChecker]] = ...,
@@ -27,7 +26,6 @@ def on_metaevent(
     priority: int = ...,
     block: bool = ...,
     state: Optional[T_State] = ...,
-    state_factory: Optional[T_StateFactory] = ...,
 ) -> Type[Matcher]: ...
 def on_message(
     rule: Optional[Union[Rule, T_RuleChecker]] = ...,
@@ -38,7 +36,6 @@ def on_message(
     priority: int = ...,
     block: bool = ...,
     state: Optional[T_State] = ...,
-    state_factory: Optional[T_StateFactory] = ...,
 ) -> Type[Matcher]: ...
 def on_notice(
     rule: Optional[Union[Rule, T_RuleChecker]] = ...,
@@ -48,7 +45,6 @@ def on_notice(
     priority: int = ...,
     block: bool = ...,
     state: Optional[T_State] = ...,
-    state_factory: Optional[T_StateFactory] = ...,
 ) -> Type[Matcher]: ...
 def on_request(
     rule: Optional[Union[Rule, T_RuleChecker]] = ...,
@@ -58,7 +54,6 @@ def on_request(
     priority: int = ...,
     block: bool = ...,
     state: Optional[T_State] = ...,
-    state_factory: Optional[T_StateFactory] = ...,
 ) -> Type[Matcher]: ...
 def on_startswith(
     msg: Union[str, Tuple[str, ...]],
@@ -71,7 +66,6 @@ def on_startswith(
     priority: int = ...,
     block: bool = ...,
     state: Optional[T_State] = ...,
-    state_factory: Optional[T_StateFactory] = ...,
 ) -> Type[Matcher]: ...
 def on_endswith(
     msg: Union[str, Tuple[str, ...]],
@@ -84,7 +78,6 @@ def on_endswith(
     priority: int = ...,
     block: bool = ...,
     state: Optional[T_State] = ...,
-    state_factory: Optional[T_StateFactory] = ...,
 ) -> Type[Matcher]: ...
 def on_keyword(
     keywords: Set[str],
@@ -96,7 +89,6 @@ def on_keyword(
     priority: int = ...,
     block: bool = ...,
     state: Optional[T_State] = ...,
-    state_factory: Optional[T_StateFactory] = ...,
 ) -> Type[Matcher]: ...
 def on_command(
     cmd: Union[str, Tuple[str, ...]],
@@ -109,7 +101,6 @@ def on_command(
     priority: int = ...,
     block: bool = ...,
     state: Optional[T_State] = ...,
-    state_factory: Optional[T_StateFactory] = ...,
 ) -> Type[Matcher]: ...
 def on_shell_command(
     cmd: Union[str, Tuple[str, ...]],
@@ -123,7 +114,6 @@ def on_shell_command(
     priority: int = ...,
     block: bool = ...,
     state: Optional[T_State] = ...,
-    state_factory: Optional[T_StateFactory] = ...,
 ) -> Type[Matcher]: ...
 def on_regex(
     pattern: str,
@@ -136,7 +126,6 @@ def on_regex(
     priority: int = ...,
     block: bool = ...,
     state: Optional[T_State] = ...,
-    state_factory: Optional[T_StateFactory] = ...,
 ) -> Type[Matcher]: ...
 
 class CommandGroup:
@@ -151,7 +140,6 @@ class CommandGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ): ...
     def command(
         self,
@@ -165,7 +153,6 @@ class CommandGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ) -> Type[Matcher]: ...
     def shell_command(
         self,
@@ -180,7 +167,6 @@ class CommandGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ) -> Type[Matcher]: ...
 
 class MatcherGroup:
@@ -195,7 +181,6 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ): ...
     def on(
         self,
@@ -208,7 +193,6 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ) -> Type[Matcher]: ...
     def on_metaevent(
         self,
@@ -219,7 +203,6 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ) -> Type[Matcher]: ...
     def on_message(
         self,
@@ -231,7 +214,6 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ) -> Type[Matcher]: ...
     def on_notice(
         self,
@@ -242,7 +224,6 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ) -> Type[Matcher]: ...
     def on_request(
         self,
@@ -253,7 +234,6 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ) -> Type[Matcher]: ...
     def on_startswith(
         self,
@@ -267,7 +247,6 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ) -> Type[Matcher]: ...
     def on_endswith(
         self,
@@ -281,7 +260,6 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ) -> Type[Matcher]: ...
     def on_keyword(
         self,
@@ -294,7 +272,6 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ) -> Type[Matcher]: ...
     def on_command(
         self,
@@ -308,7 +285,6 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ) -> Type[Matcher]: ...
     def on_shell_command(
         self,
@@ -323,7 +299,6 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ) -> Type[Matcher]: ...
     def on_regex(
         self,
@@ -337,5 +312,4 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: Optional[T_State] = ...,
-        state_factory: Optional[T_StateFactory] = ...,
     ) -> Type[Matcher]: ...

@@ -50,7 +50,6 @@ def on(
     priority: int = 1,
     block: bool = False,
     state: Optional[T_State] = None,
-    state_factory: Optional[T_StateFactory] = None,
     _depth: int = 0,
 ) -> Type[Matcher]:
     """
@@ -68,7 +67,6 @@ def on(
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[T_State]``: 默认 state
-      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -85,7 +83,6 @@ def on(
         plugin=_current_plugin.get(),
         module=_get_matcher_module(_depth + 1),
         default_state=state,
-        default_state_factory=state_factory,
     )
     _store_matcher(matcher)
     return matcher
@@ -99,7 +96,6 @@ def on_metaevent(
     priority: int = 1,
     block: bool = False,
     state: Optional[T_State] = None,
-    state_factory: Optional[T_StateFactory] = None,
     _depth: int = 0,
 ) -> Type[Matcher]:
     """
@@ -115,7 +111,6 @@ def on_metaevent(
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[T_State]``: 默认 state
-      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -132,7 +127,6 @@ def on_metaevent(
         plugin=_current_plugin.get(),
         module=_get_matcher_module(_depth + 1),
         default_state=state,
-        default_state_factory=state_factory,
     )
     _store_matcher(matcher)
     return matcher
@@ -147,7 +141,6 @@ def on_message(
     priority: int = 1,
     block: bool = True,
     state: Optional[T_State] = None,
-    state_factory: Optional[T_StateFactory] = None,
     _depth: int = 0,
 ) -> Type[Matcher]:
     """
@@ -164,7 +157,6 @@ def on_message(
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[T_State]``: 默认 state
-      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -181,7 +173,6 @@ def on_message(
         plugin=_current_plugin.get(),
         module=_get_matcher_module(_depth + 1),
         default_state=state,
-        default_state_factory=state_factory,
     )
     _store_matcher(matcher)
     return matcher
@@ -195,7 +186,6 @@ def on_notice(
     priority: int = 1,
     block: bool = False,
     state: Optional[T_State] = None,
-    state_factory: Optional[T_StateFactory] = None,
     _depth: int = 0,
 ) -> Type[Matcher]:
     """
@@ -211,7 +201,6 @@ def on_notice(
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[T_State]``: 默认 state
-      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -228,7 +217,6 @@ def on_notice(
         plugin=_current_plugin.get(),
         module=_get_matcher_module(_depth + 1),
         default_state=state,
-        default_state_factory=state_factory,
     )
     _store_matcher(matcher)
     return matcher
@@ -242,7 +230,6 @@ def on_request(
     priority: int = 1,
     block: bool = False,
     state: Optional[T_State] = None,
-    state_factory: Optional[T_StateFactory] = None,
     _depth: int = 0,
 ) -> Type[Matcher]:
     """
@@ -258,7 +245,6 @@ def on_request(
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[T_State]``: 默认 state
-      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -275,7 +261,6 @@ def on_request(
         plugin=_current_plugin.get(),
         module=_get_matcher_module(_depth + 1),
         default_state=state,
-        default_state_factory=state_factory,
     )
     _store_matcher(matcher)
     return matcher
@@ -304,7 +289,6 @@ def on_startswith(
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[T_State]``: 默认 state
-      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -336,7 +320,6 @@ def on_endswith(
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[T_State]``: 默认 state
-      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -366,7 +349,6 @@ def on_keyword(
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[T_State]``: 默认 state
-      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -400,7 +382,6 @@ def on_command(
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[T_State]``: 默认 state
-      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -459,7 +440,6 @@ def on_shell_command(
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[T_State]``: 默认 state
-      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -512,7 +492,6 @@ def on_regex(
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
       * ``state: Optional[T_State]``: 默认 state
-      * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
     :返回:
 
@@ -627,7 +606,6 @@ class MatcherGroup:
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
           * ``state: Optional[T_State]``: 默认 state
-          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -653,7 +631,6 @@ class MatcherGroup:
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
           * ``state: Optional[T_State]``: 默认 state
-          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -682,7 +659,6 @@ class MatcherGroup:
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
           * ``state: Optional[T_State]``: 默认 state
-          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -709,7 +685,6 @@ class MatcherGroup:
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
           * ``state: Optional[T_State]``: 默认 state
-          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -736,7 +711,6 @@ class MatcherGroup:
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
           * ``state: Optional[T_State]``: 默认 state
-          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -768,7 +742,6 @@ class MatcherGroup:
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
           * ``state: Optional[T_State]``: 默认 state
-          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -798,7 +771,6 @@ class MatcherGroup:
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
           * ``state: Optional[T_State]``: 默认 state
-          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -827,7 +799,6 @@ class MatcherGroup:
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
           * ``state: Optional[T_State]``: 默认 state
-          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -864,7 +835,6 @@ class MatcherGroup:
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
           * ``state: Optional[T_State]``: 默认 state
-          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -905,7 +875,6 @@ class MatcherGroup:
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
           * ``state: Optional[T_State]``: 默认 state
-          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 
@@ -941,7 +910,6 @@ class MatcherGroup:
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
           * ``state: Optional[T_State]``: 默认 state
-          * ``state_factory: Optional[T_StateFactory]``: 默认 state 的工厂函数
 
         :返回:
 

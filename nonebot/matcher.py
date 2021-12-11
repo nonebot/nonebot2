@@ -162,11 +162,6 @@ class Matcher(metaclass=MatcherMeta):
     :类型: ``T_State``
     :说明: 事件响应器默认状态
     """
-    _default_state_factory: Optional[T_StateFactory] = None
-    """
-    :类型: ``Optional[T_State]``
-    :说明: 事件响应器默认工厂函数
-    """
 
     _default_parser: Optional[T_ArgsParser] = None
     """
@@ -223,7 +218,6 @@ class Matcher(metaclass=MatcherMeta):
         module: Optional[ModuleType] = None,
         expire_time: Optional[datetime] = None,
         default_state: Optional[T_State] = None,
-        default_state_factory: Optional[T_StateFactory] = None,
         default_parser: Optional[T_ArgsParser] = None,
         default_type_updater: Optional[T_TypeUpdater] = None,
         default_permission_updater: Optional[T_PermissionUpdater] = None,
@@ -245,7 +239,6 @@ class Matcher(metaclass=MatcherMeta):
           * ``plugin: Optional[Plugin]``: 事件响应器所在插件
           * ``module: Optional[ModuleType]``: 事件响应器所在模块
           * ``default_state: Optional[T_State]``: 默认状态 ``state``
-          * ``default_state_factory: Optional[T_StateFactory]``: 默认状态 ``state`` 的工厂函数
           * ``expire_time: Optional[datetime]``: 事件响应器最终有效时间点，过时即被删除
 
         :返回:
@@ -277,9 +270,6 @@ class Matcher(metaclass=MatcherMeta):
                 "priority": priority,
                 "block": block,
                 "_default_state": default_state or {},
-                "_default_state_factory": staticmethod(default_state_factory)
-                if default_state_factory
-                else None,
                 "_default_parser": default_parser,
                 "_default_type_updater": default_type_updater,
                 "_default_permission_updater": default_permission_updater,
@@ -662,11 +652,6 @@ class Matcher(metaclass=MatcherMeta):
         s_t = current_state.set(self.state)
         try:
             # Refresh preprocess state
-            self.state = (
-                await self._default_state_factory(bot, event)
-                if self._default_state_factory
-                else self.state
-            )
             self.state.update(state)
 
             while self.handlers:

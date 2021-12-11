@@ -9,6 +9,7 @@
 - 统一 `Processor`, `Rule`, `Permission`, `Processor` 使用 `Handler`
 - 修改内置 `Rule`, `Permission` 如 `startswith`, `command` 等使用 class 实现
 - 更换文档框架 (docusaurus) 以及主题 (docusaurus-theme-nonepress)
+- 移除 Matcher `state_factory` 支持
 
 ## v2.0.0a16
 
