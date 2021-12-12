@@ -28,9 +28,11 @@ from typing import (
     NoReturn,
     Optional,
     Awaitable,
+    ForwardRef,
 )
 
 if TYPE_CHECKING:
+    from nonebot.utils import CacheDict
     from nonebot.adapters import Bot, Event
     from nonebot.permission import Permission
 
@@ -52,14 +54,6 @@ T_State = Dict[Any, Any]
 :说明:
 
   事件处理状态 State 类型
-"""
-T_StateFactory = Callable[["Bot", "Event"], Awaitable[T_State]]
-"""
-:类型: ``Callable[[Bot, Event], Awaitable[T_State]]``
-
-:说明:
-
-  事件处理状态 State 类工厂函数
 """
 
 T_BotConnectionHook = Callable[["Bot"], Awaitable[None]]
@@ -103,9 +97,11 @@ T_EventPreProcessor = Callable[..., Union[None, Awaitable[None]]]
 
 :依赖参数:
 
+  * ``DependParam``: 子依赖参数
   * ``BotParam``: Bot 对象
   * ``EventParam``: Event 对象
   * ``StateParam``: State 对象
+  * ``DefaultParam``: 带有默认值的参数
 
 :说明:
 
@@ -117,9 +113,11 @@ T_EventPostProcessor = Callable[..., Union[None, Awaitable[None]]]
 
 :依赖参数:
 
+  * ``DependParam``: 子依赖参数
   * ``BotParam``: Bot 对象
   * ``EventParam``: Event 对象
   * ``StateParam``: State 对象
+  * ``DefaultParam``: 带有默认值的参数
 
 :说明:
 
@@ -131,10 +129,12 @@ T_RunPreProcessor = Callable[..., Union[None, Awaitable[None]]]
 
 :依赖参数:
 
+  * ``DependParam``: 子依赖参数
   * ``BotParam``: Bot 对象
   * ``EventParam``: Event 对象
   * ``StateParam``: State 对象
   * ``MatcherParam``: Matcher 对象
+  * ``DefaultParam``: 带有默认值的参数
 
 :说明:
 
@@ -146,11 +146,13 @@ T_RunPostProcessor = Callable[..., Union[None, Awaitable[None]]]
 
 :依赖参数:
 
+  * ``DependParam``: 子依赖参数
   * ``BotParam``: Bot 对象
   * ``EventParam``: Event 对象
   * ``StateParam``: State 对象
   * ``MatcherParam``: Matcher 对象
   * ``ExceptionParam``: 异常对象（可能为 None）
+  * ``DefaultParam``: 带有默认值的参数
 
 :说明:
 
@@ -163,9 +165,11 @@ T_RuleChecker = Callable[..., Union[bool, Awaitable[bool]]]
 
 :依赖参数:
 
+  * ``DependParam``: 子依赖参数
   * ``BotParam``: Bot 对象
   * ``EventParam``: Event 对象
   * ``StateParam``: State 对象
+  * ``DefaultParam``: 带有默认值的参数
 
 :说明:
 
@@ -177,8 +181,10 @@ T_PermissionChecker = Callable[..., Union[bool, Awaitable[bool]]]
 
 :依赖参数:
 
+  * ``DependParam``: 子依赖参数
   * ``BotParam``: Bot 对象
   * ``EventParam``: Event 对象
+  * ``DefaultParam``: 带有默认值的参数
 
 :说明:
 
@@ -193,37 +199,52 @@ T_Handler = Callable[..., Any]
 
   Handler 处理函数。
 """
-T_DependencyCache = Dict[T_Handler, Any]
+T_ArgsParser = Callable[..., Union[None, Awaitable[None]]]
 """
-:类型: ``Dict[T_Handler, Any]``
+:类型: ``Callable[..., Union[None, Awaitable[None]]]``
 
-:说明:
+:依赖参数:
 
-  依赖缓存, 用于存储依赖函数的返回值
-"""
-T_ArgsParser = Callable[
-    ["Bot", "Event", T_State], Union[Awaitable[None], Awaitable[NoReturn]]
-]
-"""
-:类型: ``Callable[[Bot, Event, T_State], Union[Awaitable[None], Awaitable[NoReturn]]]``
+  * ``DependParam``: 子依赖参数
+  * ``BotParam``: Bot 对象
+  * ``EventParam``: Event 对象
+  * ``StateParam``: State 对象
+  * ``MatcherParam``: Matcher 对象
+  * ``DefaultParam``: 带有默认值的参数
 
 :说明:
 
   ArgsParser 即消息参数解析函数，在 Matcher.got 获取参数时被运行。
 """
-T_TypeUpdater = Callable[["Bot", "Event", T_State, str], Awaitable[str]]
+T_TypeUpdater = Callable[..., Union[str, Awaitable[str]]]
 """
-:类型: ``Callable[[Bot, Event, T_State, str], Awaitable[str]]``
+:类型: ``Callable[..., Union[None, Awaitable[None]]]``
+
+:依赖参数:
+
+  * ``DependParam``: 子依赖参数
+  * ``BotParam``: Bot 对象
+  * ``EventParam``: Event 对象
+  * ``StateParam``: State 对象
+  * ``MatcherParam``: Matcher 对象
+  * ``DefaultParam``: 带有默认值的参数
 
 :说明:
 
   TypeUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新响应的事件类型。默认会更新为 ``message``。
 """
-T_PermissionUpdater = Callable[
-    ["Bot", "Event", T_State, "Permission"], Awaitable["Permission"]
-]
+T_PermissionUpdater = Callable[..., Union["Permission", Awaitable["Permission"]]]
 """
-:类型: ``Callable[[Bot, Event, T_State, Permission], Awaitable[Permission]]``
+:类型: ``Callable[..., Union[Permission, Awaitable[Permission]]]``
+
+:依赖参数:
+
+  * ``DependParam``: 子依赖参数
+  * ``BotParam``: Bot 对象
+  * ``EventParam``: Event 对象
+  * ``StateParam``: State 对象
+  * ``MatcherParam``: Matcher 对象
+  * ``DefaultParam``: 带有默认值的参数
 
 :说明:
 

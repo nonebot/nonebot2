@@ -13,6 +13,7 @@ import asyncio
 from contextlib import AsyncExitStack
 from typing import (
     Any,
+    Set,
     Dict,
     Tuple,
     Union,
@@ -23,10 +24,11 @@ from typing import (
 )
 
 from nonebot import params
-from nonebot.handler import Handler
+from nonebot.utils import CacheDict
 from nonebot.adapters import Bot, Event
+from nonebot.dependencies import Dependent
 from nonebot.exception import SkippedException
-from nonebot.typing import T_PermissionChecker
+from nonebot.typing import T_Handler, T_PermissionChecker
 
 
 async def _run_coro_with_catch(coro: Coroutine[Any, Any, Any]):
@@ -54,19 +56,26 @@ class Permission:
 
     __slots__ = ("checkers",)
 
-    HANDLER_PARAM_TYPES = [params.BotParam, params.EventParam, params.DefaultParam]
+    HANDLER_PARAM_TYPES = [
+        params.DependParam,
+        params.BotParam,
+        params.EventParam,
+        params.DefaultParam,
+    ]
 
-    def __init__(self, *checkers: Union[T_PermissionChecker, Handler]) -> None:
+    def __init__(self, *checkers: Union[T_PermissionChecker, Dependent[bool]]) -> None:
         """
         :参数:
 
-          * ``*checkers: Union[T_PermissionChecker, Handler]``: PermissionChecker
+          * ``*checkers: Union[T_PermissionChecker, Dependent[bool]``: PermissionChecker
         """
 
-        self.checkers = set(
+        self.checkers: Set[Dependent[bool]] = set(
             checker
-            if isinstance(checker, Handler)
-            else Handler(checker, allow_types=self.HANDLER_PARAM_TYPES)
+            if isinstance(checker, Dependent)
+            else Dependent[bool].parse(
+                call=checker, allow_types=self.HANDLER_PARAM_TYPES
+            )
             for checker in checkers
         )
         """
@@ -76,7 +85,7 @@ class Permission:
 
         :类型:
 
-          * ``Set[Handler]``
+          * ``Set[Dependent[bool]]``
         """
 
     async def __call__(
@@ -84,7 +93,7 @@ class Permission:
         bot: Bot,
         event: Event,
         stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[Dict[Callable[..., Any], Any]] = None,
+        dependency_cache: Optional[CacheDict[T_Handler, Any]] = None,
     ) -> bool:
         """
         :说明:
@@ -96,7 +105,7 @@ class Permission:
           * ``bot: Bot``: Bot 对象
           * ``event: Event``: Event 对象
           * ``stack: Optional[AsyncExitStack]``: 异步上下文栈
-          * ``dependency_cache: Optional[Dict[Callable[..., Any], Any]]``: 依赖缓存
+          * ``dependency_cache: Optional[CacheDict[T_Handler, Any]]``: 依赖缓存
 
         :返回:
 
@@ -110,8 +119,8 @@ class Permission:
                     checker(
                         bot=bot,
                         event=event,
-                        _stack=stack,
-                        _dependency_cache=dependency_cache,
+                        stack=stack,
+                        dependency_cache=dependency_cache,
                     )
                 )
                 for checker in self.checkers

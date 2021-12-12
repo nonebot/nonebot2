@@ -22,9 +22,9 @@ from typing import (
 from nonebot import params
 from nonebot.log import logger
 from nonebot.rule import TrieRule
-from nonebot.handler import Handler
-from nonebot.utils import escape_tag
+from nonebot.dependencies import Dependent
 from nonebot.matcher import Matcher, matchers
+from nonebot.utils import CacheDict, escape_tag
 from nonebot.exception import (
     NoLogException,
     StopPropagation,
@@ -33,7 +33,7 @@ from nonebot.exception import (
 )
 from nonebot.typing import (
     T_State,
-    T_DependencyCache,
+    T_Handler,
     T_RunPreProcessor,
     T_RunPostProcessor,
     T_EventPreProcessor,
@@ -43,18 +43,20 @@ from nonebot.typing import (
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
 
-_event_preprocessors: Set[Handler] = set()
-_event_postprocessors: Set[Handler] = set()
-_run_preprocessors: Set[Handler] = set()
-_run_postprocessors: Set[Handler] = set()
+_event_preprocessors: Set[Dependent[None]] = set()
+_event_postprocessors: Set[Dependent[None]] = set()
+_run_preprocessors: Set[Dependent[None]] = set()
+_run_postprocessors: Set[Dependent[None]] = set()
 
 EVENT_PCS_PARAMS = [
+    params.DependParam,
     params.BotParam,
     params.EventParam,
     params.StateParam,
     params.DefaultParam,
 ]
 RUN_PREPCS_PARAMS = [
+    params.DependParam,
     params.MatcherParam,
     params.BotParam,
     params.EventParam,
@@ -62,6 +64,7 @@ RUN_PREPCS_PARAMS = [
     params.DefaultParam,
 ]
 RUN_POSTPCS_PARAMS = [
+    params.DependParam,
     params.MatcherParam,
     params.ExceptionParam,
     params.BotParam,
@@ -77,7 +80,9 @@ def event_preprocessor(func: T_EventPreProcessor) -> T_EventPreProcessor:
 
       事件预处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之前执行。
     """
-    _event_preprocessors.add(Handler(func, allow_types=EVENT_PCS_PARAMS))
+    _event_preprocessors.add(
+        Dependent[None].parse(call=func, allow_types=EVENT_PCS_PARAMS)
+    )
     return func
 
 
@@ -87,7 +92,9 @@ def event_postprocessor(func: T_EventPostProcessor) -> T_EventPostProcessor:
 
       事件后处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之后执行。
     """
-    _event_postprocessors.add(Handler(func, allow_types=EVENT_PCS_PARAMS))
+    _event_postprocessors.add(
+        Dependent[None].parse(call=func, allow_types=EVENT_PCS_PARAMS)
+    )
     return func
 
 
@@ -97,7 +104,9 @@ def run_preprocessor(func: T_RunPreProcessor) -> T_RunPreProcessor:
 
       运行预处理。装饰一个函数，使它在每次事件响应器运行前执行。
     """
-    _run_preprocessors.add(Handler(func, allow_types=RUN_PREPCS_PARAMS))
+    _run_preprocessors.add(
+        Dependent[None].parse(call=func, allow_types=RUN_PREPCS_PARAMS)
+    )
     return func
 
 
@@ -107,7 +116,9 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
 
       运行后处理。装饰一个函数，使它在每次事件响应器运行后执行。
     """
-    _run_postprocessors.add(Handler(func, allow_types=RUN_POSTPCS_PARAMS))
+    _run_postprocessors.add(
+        Dependent[None].parse(call=func, allow_types=RUN_POSTPCS_PARAMS)
+    )
     return func
 
 
@@ -125,7 +136,7 @@ async def _check_matcher(
     event: "Event",
     state: T_State,
     stack: Optional[AsyncExitStack] = None,
-    dependency_cache: Optional[T_DependencyCache] = None,
+    dependency_cache: Optional[CacheDict[T_Handler, Any]] = None,
 ) -> None:
     if Matcher.expire_time and datetime.now() > Matcher.expire_time:
         try:
@@ -160,7 +171,7 @@ async def _run_matcher(
     event: "Event",
     state: T_State,
     stack: Optional[AsyncExitStack] = None,
-    dependency_cache: Optional[T_DependencyCache] = None,
+    dependency_cache: Optional[CacheDict[T_Handler, Any]] = None,
 ) -> None:
     logger.info(f"Event will be handled by {Matcher}")
 
@@ -174,8 +185,8 @@ async def _run_matcher(
                     bot=bot,
                     event=event,
                     state=state,
-                    _stack=stack,
-                    _dependency_cache=dependency_cache,
+                    stack=stack,
+                    dependency_cache=dependency_cache,
                 )
             ),
             _run_preprocessors,
@@ -216,8 +227,8 @@ async def _run_matcher(
                     bot=bot,
                     event=event,
                     state=state,
-                    _stack=stack,
-                    _dependency_cache=dependency_cache,
+                    stack=stack,
+                    dependency_cache=dependency_cache,
                 )
             ),
             _run_postprocessors,
@@ -264,7 +275,7 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
         logger.opt(colors=True).success(log_msg)
 
     state: Dict[Any, Any] = {}
-    dependency_cache: T_DependencyCache = {}
+    dependency_cache: CacheDict[T_Handler, Any] = CacheDict()
 
     async with AsyncExitStack() as stack:
         coros = list(
@@ -274,8 +285,8 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
                         bot=bot,
                         event=event,
                         state=state,
-                        _stack=stack,
-                        _dependency_cache=dependency_cache,
+                        stack=stack,
+                        dependency_cache=dependency_cache,
                     )
                 ),
                 _event_preprocessors,
@@ -336,8 +347,8 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
                         bot=bot,
                         event=event,
                         state=state,
-                        _stack=stack,
-                        _dependency_cache=dependency_cache,
+                        stack=stack,
+                        dependency_cache=dependency_cache,
                     )
                 ),
                 _event_postprocessors,

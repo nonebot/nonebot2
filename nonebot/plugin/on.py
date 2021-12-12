@@ -5,11 +5,16 @@ from types import ModuleType
 from typing import Any, Set, Dict, List, Type, Tuple, Union, Optional
 
 from nonebot.adapters import Event
-from nonebot.handler import Handler
 from nonebot.matcher import Matcher
 from .manager import _current_plugin
 from nonebot.permission import Permission
-from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_StateFactory
+from nonebot.dependencies import Dependent
+from nonebot.typing import (
+    T_State,
+    T_Handler,
+    T_RuleChecker,
+    T_PermissionChecker,
+)
 from nonebot.rule import (
     PREFIX_KEY,
     RAW_CMD_KEY,
@@ -43,9 +48,9 @@ def _get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
 def on(
     type: str = "",
     rule: Optional[Union[Rule, T_RuleChecker]] = None,
-    permission: Optional[Permission] = None,
+    permission: Optional[Union[Permission, T_PermissionChecker]] = None,
     *,
-    handlers: Optional[List[Union[T_Handler, Handler]]] = None,
+    handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
     temp: bool = False,
     priority: int = 1,
     block: bool = False,
@@ -61,8 +66,8 @@ def on(
 
       * ``type: str``: 事件响应器类型
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -75,7 +80,7 @@ def on(
     matcher = Matcher.new(
         type,
         Rule() & rule,
-        permission or Permission(),
+        Permission() | permission,
         temp=temp,
         priority=priority,
         block=block,
@@ -91,7 +96,7 @@ def on(
 def on_metaevent(
     rule: Optional[Union[Rule, T_RuleChecker]] = None,
     *,
-    handlers: Optional[List[Union[T_Handler, Handler]]] = None,
+    handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
     temp: bool = False,
     priority: int = 1,
     block: bool = False,
@@ -106,7 +111,7 @@ def on_metaevent(
     :参数:
 
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -134,9 +139,9 @@ def on_metaevent(
 
 def on_message(
     rule: Optional[Union[Rule, T_RuleChecker]] = None,
-    permission: Optional[Permission] = None,
+    permission: Optional[Union[Permission, T_PermissionChecker]] = None,
     *,
-    handlers: Optional[List[Union[T_Handler, Handler]]] = None,
+    handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
     temp: bool = False,
     priority: int = 1,
     block: bool = True,
@@ -151,8 +156,8 @@ def on_message(
     :参数:
 
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -165,7 +170,7 @@ def on_message(
     matcher = Matcher.new(
         "message",
         Rule() & rule,
-        permission or Permission(),
+        Permission() | permission,
         temp=temp,
         priority=priority,
         block=block,
@@ -181,7 +186,7 @@ def on_message(
 def on_notice(
     rule: Optional[Union[Rule, T_RuleChecker]] = None,
     *,
-    handlers: Optional[List[Union[T_Handler, Handler]]] = None,
+    handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
     temp: bool = False,
     priority: int = 1,
     block: bool = False,
@@ -196,7 +201,7 @@ def on_notice(
     :参数:
 
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -225,7 +230,7 @@ def on_notice(
 def on_request(
     rule: Optional[Union[Rule, T_RuleChecker]] = None,
     *,
-    handlers: Optional[List[Union[T_Handler, Handler]]] = None,
+    handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
     temp: bool = False,
     priority: int = 1,
     block: bool = False,
@@ -240,7 +245,7 @@ def on_request(
     :参数:
 
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -283,8 +288,8 @@ def on_startswith(
       * ``msg: Union[str, Tuple[str, ...]]``: 指定消息开头内容
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
       * ``ignorecase: bool``: 是否忽略大小写
-      * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -314,8 +319,8 @@ def on_endswith(
       * ``msg: Union[str, Tuple[str, ...]]``: 指定消息结尾内容
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
       * ``ignorecase: bool``: 是否忽略大小写
-      * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -343,8 +348,8 @@ def on_keyword(
 
       * ``keywords: Set[str]``: 关键词列表
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -376,8 +381,8 @@ def on_command(
       * ``cmd: Union[str, Tuple[str, ...]]``: 指定命令内容
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
       * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
-      * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -434,8 +439,8 @@ def on_shell_command(
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
       * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
       * ``parser: Optional[ArgumentParser]``: ``nonebot.rule.ArgumentParser`` 对象
-      * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -486,8 +491,8 @@ def on_regex(
       * ``pattern: str``: 正则表达式
       * ``flags: Union[int, re.RegexFlag]``: 正则匹配标志
       * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``permission: Optional[Permission]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
       * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
       * ``priority: int``: 事件响应器优先级
       * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -600,8 +605,8 @@ class MatcherGroup:
 
           * ``type: str``: 事件响应器类型
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -626,7 +631,7 @@ class MatcherGroup:
         :参数:
 
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -653,8 +658,8 @@ class MatcherGroup:
         :参数:
 
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -680,7 +685,7 @@ class MatcherGroup:
         :参数:
 
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -706,7 +711,7 @@ class MatcherGroup:
         :参数:
 
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -736,8 +741,8 @@ class MatcherGroup:
           * ``msg: Union[str, Tuple[str, ...]]``: 指定消息开头内容
           * ``ignorecase: bool``: 是否忽略大小写
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -765,8 +770,8 @@ class MatcherGroup:
           * ``msg: Union[str, Tuple[str, ...]]``: 指定消息结尾内容
           * ``ignorecase: bool``: 是否忽略大小写
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -793,8 +798,8 @@ class MatcherGroup:
 
           * ``keywords: Set[str]``: 关键词列表
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -829,8 +834,8 @@ class MatcherGroup:
           * ``cmd: Union[str, Tuple[str, ...]]``: 指定命令内容
           * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -869,8 +874,8 @@ class MatcherGroup:
           * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
           * ``parser: Optional[ArgumentParser]``: ``nonebot.rule.ArgumentParser`` 对象
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递
@@ -904,8 +909,8 @@ class MatcherGroup:
           * ``pattern: str``: 正则表达式
           * ``flags: Union[int, re.RegexFlag]``: 正则匹配标志
           * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Permission]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Handler]]]``: 事件处理函数列表
+          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
+          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
           * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
           * ``priority: int``: 事件响应器优先级
           * ``block: bool``: 是否阻止事件向更低优先级传递

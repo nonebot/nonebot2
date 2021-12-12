@@ -17,27 +17,17 @@ from argparse import Namespace
 from contextlib import AsyncExitStack
 from typing_extensions import TypedDict
 from argparse import ArgumentParser as ArgParser
-from typing import (
-    Any,
-    Dict,
-    List,
-    Type,
-    Tuple,
-    Union,
-    Callable,
-    NoReturn,
-    Optional,
-    Sequence,
-)
+from typing import Any, Set, List, Tuple, Union, NoReturn, Optional, Sequence
 
 from pygtrie import CharTrie
 
 from nonebot.log import logger
-from nonebot.handler import Handler
+from nonebot.utils import CacheDict
 from nonebot import params, get_driver
-from nonebot.typing import T_State, T_RuleChecker
+from nonebot.dependencies import Dependent
 from nonebot.adapters import Bot, Event, MessageSegment
 from nonebot.exception import ParserExit, SkippedException
+from nonebot.typing import T_State, T_Handler, T_RuleChecker
 
 PREFIX_KEY = "_prefix"
 SUFFIX_KEY = "_suffix"
@@ -74,23 +64,24 @@ class Rule:
     __slots__ = ("checkers",)
 
     HANDLER_PARAM_TYPES = [
+        params.DependParam,
         params.BotParam,
         params.EventParam,
         params.StateParam,
         params.DefaultParam,
     ]
 
-    def __init__(self, *checkers: Union[T_RuleChecker, Handler]) -> None:
+    def __init__(self, *checkers: Union[T_RuleChecker, Dependent[bool]]) -> None:
         """
         :参数:
 
-          * ``*checkers: Union[T_RuleChecker, Handler]``: RuleChecker
+          * ``*checkers: Union[T_RuleChecker, Dependent[bool]]``: RuleChecker
 
         """
-        self.checkers = set(
+        self.checkers: Set[Dependent[bool]] = set(
             checker
-            if isinstance(checker, Handler)
-            else Handler(checker, allow_types=self.HANDLER_PARAM_TYPES)
+            if isinstance(checker, Dependent)
+            else Dependent[bool](call=checker, allow_types=self.HANDLER_PARAM_TYPES)
             for checker in checkers
         )
         """
@@ -100,7 +91,7 @@ class Rule:
 
         :类型:
 
-          * ``Set[Handler]``
+          * ``Set[Dependent[bool]]``
         """
 
     async def __call__(
@@ -109,7 +100,7 @@ class Rule:
         event: Event,
         state: T_State,
         stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[Dict[Callable[..., Any], Any]] = None,
+        dependency_cache: Optional[CacheDict[T_Handler, Any]] = None,
     ) -> bool:
         """
         :说明:
@@ -122,7 +113,7 @@ class Rule:
           * ``event: Event``: Event 对象
           * ``state: T_State``: 当前 State
           * ``stack: Optional[AsyncExitStack]``: 异步上下文栈
-          * ``dependency_cache: Optional[Dict[Callable[..., Any], Any]]``: 依赖缓存
+          * ``dependency_cache: Optional[CacheDict[T_Handler, Any]]``: 依赖缓存
 
         :返回:
 
@@ -137,8 +128,8 @@ class Rule:
                         bot=bot,
                         event=event,
                         state=state,
-                        _stack=stack,
-                        _dependency_cache=dependency_cache,
+                        stack=stack,
+                        dependency_cache=dependency_cache,
                     )
                     for checker in self.checkers
                 )
