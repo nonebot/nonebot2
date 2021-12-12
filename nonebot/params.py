@@ -156,7 +156,7 @@ class BotParam(Param):
         ):
             return cls(Required)
 
-    def _solve(self, bot: Bot, **kwargs: Any) -> Any:
+    async def _solve(self, bot: Bot, **kwargs: Any) -> Any:
         return bot
 
 
@@ -171,7 +171,7 @@ class EventParam(Param):
         ):
             return cls(Required)
 
-    def _solve(self, event: Event, **kwargs: Any) -> Any:
+    async def _solve(self, event: Event, **kwargs: Any) -> Any:
         return event
 
 
@@ -191,7 +191,7 @@ class StateParam(Param):
         if isinstance(param.default, StateInner):
             return cls(Required)
 
-    def _solve(self, state: T_State, **kwargs: Any) -> Any:
+    async def _solve(self, state: T_State, **kwargs: Any) -> Any:
         return state
 
 
@@ -205,7 +205,7 @@ class MatcherParam(Param):
         ):
             return cls(Required)
 
-    def _solve(self, matcher: "Matcher", **kwargs: Any) -> Any:
+    async def _solve(self, matcher: "Matcher", **kwargs: Any) -> Any:
         return matcher
 
 
@@ -219,7 +219,7 @@ class ExceptionParam(Param):
         ):
             return cls(Required)
 
-    def _solve(self, exception: Optional[Exception] = None, **kwargs: Any) -> Any:
+    async def _solve(self, exception: Optional[Exception] = None, **kwargs: Any) -> Any:
         return exception
 
 
@@ -231,7 +231,7 @@ class DefaultParam(Param):
         if param.default != param.empty:
             return cls(param.default)
 
-    def _solve(self, **kwargs: Any) -> Any:
+    async def _solve(self, **kwargs: Any) -> Any:
         return Undefined
 
 

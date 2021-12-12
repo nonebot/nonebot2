@@ -4,6 +4,7 @@ import inspect
 from types import ModuleType
 from typing import Any, Set, Dict, List, Type, Tuple, Union, Optional
 
+from nonebot.params import State
 from nonebot.adapters import Event
 from nonebot.matcher import Matcher
 from .manager import _current_plugin
@@ -393,7 +394,7 @@ def on_command(
       - ``Type[Matcher]``
     """
 
-    async def _strip_cmd(event: Event, state: T_State):
+    async def _strip_cmd(event: Event, state: T_State = State()):
         message = event.get_message()
         if len(message) < 1:
             return
@@ -451,7 +452,7 @@ def on_shell_command(
       - ``Type[Matcher]``
     """
 
-    async def _strip_cmd(event: Event, state: T_State):
+    async def _strip_cmd(event: Event, state: T_State = State()):
         message = event.get_message()
         segment = message.pop(0)
         new_message = message.__class__(
