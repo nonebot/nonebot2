@@ -1,4 +1,6 @@
-
+\-\-\-
+sidebar_position: 6
+\-\-\-
 
 NoneBot.rule 模块
 ====================

@@ -1,4 +1,6 @@
-
+\-\-\-
+sidebar_position: 3
+\-\-\-
 
 NoneBot.plugin 模块
 ====================

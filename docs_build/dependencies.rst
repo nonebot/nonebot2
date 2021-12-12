@@ -1,6 +1,8 @@
+\-\-\-
+sidebar_position: 8
+\-\-\-
 
-
-NoneBot.handler 模块
+NoneBot.dependencies 模块
 ====================
 
 .. automodule:: nonebot.dependencies

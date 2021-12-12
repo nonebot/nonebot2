@@ -1,4 +1,6 @@
-
+\-\-\-
+sidebar_position: 7
+\-\-\-
 
 NoneBot.permission 模块
 =======================

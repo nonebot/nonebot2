@@ -1,4 +1,6 @@
-
+\-\-\-
+sidebar_position: 2
+\-\-\-
 
 NoneBot.config 模块
 ===================
