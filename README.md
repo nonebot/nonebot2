@@ -74,7 +74,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 目前 NoneBot2 内置的驱动框架：
 
 - [FastAPI](https://fastapi.tiangolo.com/)
-- [Quart](https://pgjones.gitlab.io/quart/) (异步 flask )
+- [Quart](https://pgjones.gitlab.io/quart/) (异步 Flask)
 
 目前 NoneBot2 官方维护的协议适配：
 
@@ -128,7 +128,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
   或者尝试以下镜像：
 
   - [文档镜像(中国境内)](https://nb2.baka.icu)
-  - [文档镜像(vercel)](https://nonebot2-vercel-mirror.vercel.app)
+  - [文档镜像(Vercel)](https://nonebot2-vercel-mirror.vercel.app)
 
 - 其他插件请查看 [商店](https://v2.nonebot.dev/store.html)
 
@@ -138,11 +138,9 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 
 ## 贡献
 
-如果你在使用过程中发现任何问题，可以 [提交 issue](https://github.com/nonebot/nonebot2/issues/new) 或自行 fork 修改后提交 pull request。
+如果你在使用过程中发现任何问题，可以 [提交 Issue](https://github.com/nonebot/nonebot2/issues/new) 或自行 Fork 修改后提交 Pull Request。
 
-如果你要提交 pull request，请确保你的代码风格和项目已有的代码保持一致，遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/) [PEP 484](https://www.python.org/dev/peps/pep-0484/)，变量命名清晰，有适当的注释。
-
-**Pull Request 请以 `dev` 分支作为目标分支**
+如果你要提交 Pull Request，请确保你的代码风格和项目已有的代码保持一致，遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/) 与 [PEP 484](https://www.python.org/dev/peps/pep-0484/)，变量命名清晰，有适当的注释，**并且请以 `dev` 分支作为 Pull Request 目标分支**。
 
 感谢以下开发者对 NoneBot2 的贡献：
 
