@@ -550,5 +550,13 @@
     "desc": "发送一张黑丝涩图，内置CD",
     "author": "yzyyz1387",
     "repo": "https://github.com/yzyyz1387/nonebot_plugin_heisi"
+  },
+  {
+    "id": "nonebot_plugin_picsbank",
+    "link": "nonebot-plugin-picsbank",
+    "name": "picsbank",
+    "desc": "匹配图片进行回答",
+    "author": "Diaosi1111",
+    "repo": "https://github.com/Diaosi1111/nonebot_plugin_picsbank"
   }
 ]
