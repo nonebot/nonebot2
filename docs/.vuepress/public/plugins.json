@@ -558,5 +558,13 @@
     "desc": "匹配图片进行回答",
     "author": "Diaosi1111",
     "repo": "https://github.com/Diaosi1111/nonebot_plugin_picsbank"
+  },
+  {
+    "id": "nonebot_plugin_tvseries",
+    "link": "nonebot-plugin-tvseries",
+    "name": "剧集更新列表",
+    "desc": "获取聚集更新",
+    "author": "kexue-z",
+    "repo": "https://github.com/kexue-z/nonebot-plugin-tvseries"
   }
 ]
