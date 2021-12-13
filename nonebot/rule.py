@@ -25,24 +25,29 @@ from nonebot.log import logger
 from nonebot.utils import CacheDict
 from nonebot import params, get_driver
 from nonebot.dependencies import Dependent
-from nonebot.adapters import Bot, Event, MessageSegment
 from nonebot.exception import ParserExit, SkippedException
 from nonebot.typing import T_State, T_Handler, T_RuleChecker
-
-PREFIX_KEY = "_prefix"
-SUFFIX_KEY = "_suffix"
-CMD_KEY = "command"
-RAW_CMD_KEY = "raw_command"
-CMD_RESULT = TypedDict(
-    "CMD_RESULT", {"command": Optional[Tuple[str, ...]], "raw_command": Optional[str]}
+from nonebot.adapters import Bot, Event, Message, MessageSegment
+from nonebot.consts import (
+    CMD_KEY,
+    PREFIX_KEY,
+    REGEX_DICT,
+    SHELL_ARGS,
+    SHELL_ARGV,
+    CMD_ARG_KEY,
+    RAW_CMD_KEY,
+    REGEX_GROUP,
+    REGEX_MATCHED,
 )
 
-SHELL_ARGS = "_args"
-SHELL_ARGV = "_argv"
-
-REGEX_MATCHED = "_matched"
-REGEX_GROUP = "_matched_groups"
-REGEX_DICT = "_matched_dict"
+CMD_RESULT = TypedDict(
+    "CMD_RESULT",
+    {
+        "command": Optional[Tuple[str, ...]],
+        "raw_command": Optional[str],
+        "command_arg": Optional[Message[MessageSegment]],
+    },
+)
 
 
 class Rule:
@@ -152,7 +157,6 @@ class Rule:
 
 class TrieRule:
     prefix: CharTrie = CharTrie()
-    suffix: CharTrie = CharTrie()
 
     @classmethod
     def add_prefix(cls, prefix: str, value: Any):
@@ -162,36 +166,28 @@ class TrieRule:
         cls.prefix[prefix] = value
 
     @classmethod
-    def add_suffix(cls, suffix: str, value: Any):
-        if suffix[::-1] in cls.suffix:
-            logger.warning(f'Duplicated suffix rule "{suffix}"')
-            return
-        cls.suffix[suffix[::-1]] = value
-
-    @classmethod
-    def get_value(
-        cls, bot: Bot, event: Event, state: T_State
-    ) -> Tuple[CMD_RESULT, CMD_RESULT]:
-        prefix = CMD_RESULT(command=None, raw_command=None)
-        suffix = CMD_RESULT(command=None, raw_command=None)
+    def get_value(cls, bot: Bot, event: Event, state: T_State) -> CMD_RESULT:
+        prefix = CMD_RESULT(command=None, raw_command=None, command_arg=None)
         state[PREFIX_KEY] = prefix
-        state[SUFFIX_KEY] = suffix
         if event.get_type() != "message":
-            return prefix, suffix
+            return prefix
 
         message = event.get_message()
         message_seg: MessageSegment = message[0]
         if message_seg.is_text():
-            pf = cls.prefix.longest_prefix(str(message_seg).lstrip())
+            segment_text = str(message_seg).lstrip()
+            pf = cls.prefix.longest_prefix(segment_text)
             prefix[RAW_CMD_KEY] = pf.key
             prefix[CMD_KEY] = pf.value
-        message_seg_r: MessageSegment = message[-1]
-        if message_seg_r.is_text():
-            sf = cls.suffix.longest_prefix(str(message_seg_r).rstrip()[::-1])
-            suffix[RAW_CMD_KEY] = sf.key
-            suffix[CMD_KEY] = sf.value
+            if pf.key:
+                msg = message.copy()
+                msg.pop(0)
+                new_message = msg.__class__(segment_text[len(pf.key) :].lstrip())
+                for new_segment in reversed(new_message):
+                    msg.insert(0, new_segment)
+                prefix[CMD_ARG_KEY] = msg
 
-        return prefix, suffix
+        return prefix
 
 
 class Startswith:

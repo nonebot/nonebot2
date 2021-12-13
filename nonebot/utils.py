@@ -64,7 +64,7 @@ def generic_check_issubclass(
             return True
         elif origin:
             return issubclass(origin, class_or_tuple)
-        raise
+        return False
 
 
 def is_coroutine_callable(call: Callable[..., Any]) -> bool:

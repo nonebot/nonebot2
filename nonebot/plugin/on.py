@@ -394,27 +394,8 @@ def on_command(
       - ``Type[Matcher]``
     """
 
-    async def _strip_cmd(event: Event, state: T_State = State()):
-        message = event.get_message()
-        if len(message) < 1:
-            return
-        segment = message.pop(0)
-        segment_text = str(segment).lstrip()
-        if not segment_text.startswith(state[PREFIX_KEY][RAW_CMD_KEY]):
-            return
-        new_message = message.__class__(
-            segment_text[len(state[PREFIX_KEY][RAW_CMD_KEY]) :].lstrip()
-        )
-        for new_segment in reversed(new_message):
-            message.insert(0, new_segment)
-
-    handlers = kwargs.pop("handlers", [])
-    handlers.insert(0, _strip_cmd)
-
     commands = set([cmd]) | (aliases or set())
-    return on_message(
-        command(*commands) & rule, handlers=handlers, **kwargs, _depth=_depth + 1
-    )
+    return on_message(command(*commands) & rule, **kwargs, _depth=_depth + 1)
 
 
 def on_shell_command(
@@ -452,22 +433,9 @@ def on_shell_command(
       - ``Type[Matcher]``
     """
 
-    async def _strip_cmd(event: Event, state: T_State = State()):
-        message = event.get_message()
-        segment = message.pop(0)
-        new_message = message.__class__(
-            str(segment)[len(state[PREFIX_KEY][RAW_CMD_KEY]) :].strip()
-        )
-        for new_segment in reversed(new_message):
-            message.insert(0, new_segment)
-
-    handlers = kwargs.pop("handlers", [])
-    handlers.insert(0, _strip_cmd)
-
     commands = set([cmd]) | (aliases or set())
     return on_message(
         shell_command(*commands, parser=parser) & rule,
-        handlers=handlers,
         **kwargs,
         _depth=_depth + 1,
     )
