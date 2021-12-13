@@ -566,5 +566,13 @@
     "desc": "获取聚集更新",
     "author": "kexue-z",
     "repo": "https://github.com/kexue-z/nonebot-plugin-tvseries"
+  },
+  {
+    "id": "nonebot_plugin_lolmatch",
+    "link": "nonebot-plugin-lolmatch",
+    "name": "lol比赛信息",
+    "desc": "简单的lol比赛信息插件，订阅后会定时推送当日比赛结果",
+    "author": "Diaosi1111",
+    "repo": "https://github.com/Diaosi1111/nonebot_plugin_lolmatch"
   }
 ]
