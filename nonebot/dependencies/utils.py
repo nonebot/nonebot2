@@ -8,7 +8,6 @@ from pydantic.typing import ForwardRef, evaluate_forwardref
 def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
     signature = inspect.signature(call)
     globalns = getattr(call, "__globals__", {})
-    print(signature.parameters)
     typed_params = [
         inspect.Parameter(
             name=param.name,

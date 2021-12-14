@@ -29,13 +29,19 @@ from nonebot.log import logger
 from nonebot.utils import CacheDict
 from nonebot.dependencies import Dependent
 from nonebot.permission import USER, Permission
-from nonebot.consts import ARG_KEY, ARG_STR_KEY, RECEIVE_KEY, REJECT_TARGET
 from nonebot.adapters import (
     Bot,
     Event,
     Message,
     MessageSegment,
     MessageTemplate,
+)
+from nonebot.consts import (
+    ARG_KEY,
+    ARG_STR_KEY,
+    RECEIVE_KEY,
+    REJECT_TARGET,
+    LAST_RECEIVE_KEY,
 )
 from nonebot.typing import (
     Any,
@@ -422,7 +428,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def receive(
-        cls, id: str = "", parameterless: Optional[List[Any]] = None
+        cls, id: Optional[str] = None, parameterless: Optional[List[Any]] = None
     ) -> Callable[[T_Handler], T_Handler]:
         """
         :说明:
@@ -611,11 +617,15 @@ class Matcher(metaclass=MatcherMeta):
             await bot.send(event=event, message=_prompt, **kwargs)
         raise RejectedException
 
-    def get_receive(self, id: str, default: T = None) -> Union[Event, T]:
+    def get_receive(self, id: Optional[str], default: T = None) -> Union[Event, T]:
+        if id is None:
+            return self.state.get(LAST_RECEIVE_KEY, default)
         return self.state.get(RECEIVE_KEY.format(id=id), default)
 
-    def set_receive(self, id: str, event: Event) -> None:
-        self.state[RECEIVE_KEY.format(id=id)] = event
+    def set_receive(self, id: Optional[str], event: Event) -> None:
+        if id is not None:
+            self.state[RECEIVE_KEY.format(id=id)] = event
+        self.state[LAST_RECEIVE_KEY] = event
 
     def get_arg(self, key: str, default: T = None) -> Union[Event, T]:
         return self.state.get(ARG_KEY.format(key=key), default)

@@ -1,6 +1,5 @@
 import inspect
-from functools import wraps, partial
-from typing import Any, Tuple, Union, TypeVar, Callable, Optional, cast
+from typing import Any, Dict, List, Tuple, Callable, Optional, cast
 from contextlib import AsyncExitStack, contextmanager, asynccontextmanager
 
 from pydantic.fields import Required, Undefined
@@ -18,7 +17,6 @@ from nonebot.consts import (
     RAW_CMD_KEY,
     REGEX_GROUP,
     REGEX_MATCHED,
-    WRAPPER_ASSIGNMENTS,
 )
 from nonebot.utils import (
     CacheDict,
@@ -30,8 +28,6 @@ from nonebot.utils import (
     is_coroutine_callable,
     generic_check_issubclass,
 )
-
-T = TypeVar("T")
 
 
 class DependsInner:
@@ -53,7 +49,7 @@ class DependsInner:
 def Depends(
     dependency: Optional[T_Handler] = None,
     *,
-    use_cache: bool = True,
+    use_cache: bool = False,
 ) -> Any:
     """
     :说明:
@@ -266,6 +262,46 @@ def CommandArg() -> Message:
     return Depends(_command_arg)
 
 
+def _shell_command_args(state=State()) -> Any:
+    return state[SHELL_ARGS]
+
+
+def ShellCommandArgs():
+    return Depends(_shell_command_args)
+
+
+def _shell_command_argv(state=State()) -> List[str]:
+    return state[SHELL_ARGV]
+
+
+def ShellCommandArgv() -> Any:
+    return Depends(_shell_command_argv)
+
+
+def _regex_matched(state=State()) -> str:
+    return state[REGEX_MATCHED]
+
+
+def RegexMatched() -> str:
+    return Depends(_regex_matched)
+
+
+def _regex_group(state=State()):
+    return state[REGEX_GROUP]
+
+
+def RegexGroup() -> Tuple[Any, ...]:
+    return Depends(_regex_group)
+
+
+def _regex_dict(state=State()):
+    return state[REGEX_DICT]
+
+
+def RegexDict() -> Dict[str, Any]:
+    return Depends(_regex_dict)
+
+
 class MatcherParam(Param):
     @classmethod
     def _check_param(
@@ -280,16 +316,18 @@ class MatcherParam(Param):
         return matcher
 
 
-def _received(matcher: "Matcher", id: str = "", default: T = None) -> Union[Event, T]:
-    return matcher.get_receive(id, default)
+def Received(id: str, default: Any = None) -> Any:
+    def _received(matcher: "Matcher"):
+        return matcher.get_receive(id, default)
+
+    return Depends(_received)
 
 
-def Received(id: str = "", default: Any = None) -> Any:
-    return Depends(
-        wraps(_received, assigned=WRAPPER_ASSIGNMENTS)(
-            partial(_received, id=id, default=default)
-        )
-    )
+def LastReceived(default: Any = None) -> Any:
+    def _last_received(matcher: "Matcher") -> Any:
+        return matcher.get_receive(None, default)
+
+    return Depends(_last_received)
 
 
 class ExceptionParam(Param):

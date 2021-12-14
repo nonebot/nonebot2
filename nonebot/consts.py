@@ -1,15 +1,6 @@
-# used by Params
-WRAPPER_ASSIGNMENTS = (
-    "__module__",
-    "__name__",
-    "__qualname__",
-    "__doc__",
-    "__annotations__",
-    "__globals__",
-)
-
 # used by Matcher
 RECEIVE_KEY = "_receive_{id}"
+LAST_RECEIVE_KEY = "_last_receive"
 ARG_KEY = "_arg_{key}"
 ARG_STR_KEY = "{key}"
 REJECT_TARGET = "_current_target"
