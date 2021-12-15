@@ -70,5 +70,11 @@
     "desc": "顾名思义是Pixiv的bot（随机推荐插画、随机指定关键词插画、随机书签、查看排行榜、查看指定id插画）",
     "author": "ssttkkl",
     "repo": "https://github.com/ssttkkl/PixivBot"
+  },
+  {
+    "name": "SeaBot_QQ",
+    "desc": "一个能够获取新闻资讯并推送至QQ的群聊机器人。",
+    "author": "B1ue1nWh1te",
+    "repo": "https://github.com/B1ue1nWh1te/SeaBot_QQ"
   }
 ]
