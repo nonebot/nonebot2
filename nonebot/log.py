@@ -63,7 +63,7 @@ class Filter:
         return record["level"].no >= levelno
 
 
-class LoguruHandler(logging.Handler):
+class LoguruHandler(logging.Handler):  # pragma: no cover
     def emit(self, record):
         try:
             level = logger.level(record.levelname).name

@@ -38,7 +38,7 @@ class CustomEnvSettings(EnvSettingsSource):
         d: Dict[str, Optional[str]] = {}
 
         if settings.__config__.case_sensitive:
-            env_vars: Mapping[str, Optional[str]] = os.environ
+            env_vars: Mapping[str, Optional[str]] = os.environ  # pragma: no cover
         else:
             env_vars = {k.lower(): v for k, v in os.environ.items()}
 
@@ -78,7 +78,7 @@ class CustomEnvSettings(EnvSettingsSource):
             if field.is_complex():
                 try:
                     env_val = settings.__config__.json_loads(env_val)
-                except ValueError as e:
+                except ValueError as e:  # pragma: no cover
                     raise SettingsError(
                         f'error parsing JSON for "{env_name}"'  # type: ignore
                     ) from e
@@ -100,7 +100,8 @@ class CustomEnvSettings(EnvSettingsSource):
 
 
 class BaseConfig(BaseSettings):
-    def __getattr__(self, name: str) -> Any:
+    # dummy getattr for pylance checking, actually not used
+    def __getattr__(self, name: str) -> Any:  # pragma: no cover
         return self.__dict__.get(name)
 
     class Config:

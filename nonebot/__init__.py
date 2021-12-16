@@ -43,7 +43,7 @@ try:
     _dist: pkg_resources.Distribution = pkg_resources.get_distribution("nonebot2")
     __version__ = _dist.version
     VERSION = _dist.parsed_version
-except pkg_resources.DistributionNotFound:
+except pkg_resources.DistributionNotFound:  # pragma: no cover
     __version__ = None
     VERSION = None
 
@@ -252,7 +252,7 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
         _driver = DriverClass(env, config)
 
 
-def run(host: Optional[str] = None, port: Optional[int] = None, *args, **kwargs):
+def run(*args: Any, **kwargs: Any) -> None:
     """
     :说明:
 
@@ -260,8 +260,6 @@ def run(host: Optional[str] = None, port: Optional[int] = None, *args, **kwargs)
 
     :参数:
 
-      * ``host: Optional[str]``: 主机名／IP，若不传入则使用配置文件中指定的值
-      * ``port: Optional[int]``: 端口，若不传入则使用配置文件中指定的值
       * ``*args``: 传入 Driver.run 的位置参数
       * ``**kwargs``: 传入 Driver.run 的命名参数
 
@@ -277,7 +275,7 @@ def run(host: Optional[str] = None, port: Optional[int] = None, *args, **kwargs)
 
     """
     logger.success("Running NoneBot...")
-    get_driver().run(host, port, *args, **kwargs)
+    get_driver().run(*args, **kwargs)
 
 
 import nonebot.params as params
