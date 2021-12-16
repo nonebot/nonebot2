@@ -135,33 +135,6 @@ def get_name(obj: Any) -> str:
     return obj.__class__.__name__
 
 
-class CacheDict(Dict[K, V], Generic[K, V]):
-    def __init__(self, *args, **kwargs):
-        super(CacheDict, self).__init__(*args, **kwargs)
-        self._lock = asyncio.Lock()
-
-    @property
-    def locked(self):
-        return self._lock.locked()
-
-    def __repr__(self):
-        extra = "locked" if self.locked else "unlocked"
-        return f"<{self.__class__.__name__} [{extra}]>"
-
-    async def __aenter__(self) -> None:
-        await self.acquire()
-        return None
-
-    async def __aexit__(self, exc_type, exc, tb):
-        self.release()
-
-    async def acquire(self):
-        return await self._lock.acquire()
-
-    def release(self):
-        self._lock.release()
-
-
 class DataclassEncoder(json.JSONEncoder):
     """
     :说明:

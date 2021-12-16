@@ -2,22 +2,23 @@ from nonebot import on_message
 from nonebot.adapters import Event
 from nonebot.params import Depends
 
-test = on_message()
-test2 = on_message()
+test_depends = on_message()
 
-runned = False
+runned = []
 
 
 def dependency(event: Event):
     # test cache
-    global runned
-    assert not runned
-    runned = True
+    runned.append(event)
     return event
 
 
-@test.handle()
-@test2.handle()
-async def handle(x: Event = Depends(dependency, use_cache=True)):
+@test_depends.handle()
+async def depends(x: Event = Depends(dependency)):
     # test dependency
     return x
+
+
+@test_depends.handle()
+async def depends_cache(y: Event = Depends(dependency, use_cache=True)):
+    return y

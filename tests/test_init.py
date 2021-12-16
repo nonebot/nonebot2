@@ -1,6 +1,5 @@
 import os
 import sys
-from re import A
 from typing import TYPE_CHECKING, Set
 
 import pytest

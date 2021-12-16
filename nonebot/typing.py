@@ -17,7 +17,7 @@
 .. _typing:
     https://docs.python.org/3/library/typing.html
 """
-
+from asyncio import Task
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -32,7 +32,6 @@ from typing import (
 )
 
 if TYPE_CHECKING:
-    from nonebot.utils import CacheDict
     from nonebot.adapters import Bot, Event
     from nonebot.permission import Permission
 
@@ -249,4 +248,10 @@ T_PermissionUpdater = Callable[..., Union["Permission", Awaitable["Permission"]]
 :说明:
 
   PermissionUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新会话对象权限。默认会更新为当前事件的触发对象。
+"""
+T_DependencyCache = Dict[Callable[..., Any], Task[Any]]
+"""
+:类型: ``Dict[Callable[..., Any], Task[Any]]``
+:说明:
+  依赖缓存, 用于存储依赖函数的返回值
 """

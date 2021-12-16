@@ -1,2 +1,0 @@
-[tool.isort]
-known_local_folder = ["plugins"]

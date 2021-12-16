@@ -22,12 +22,11 @@ from typing import Any, Set, List, Tuple, Union, NoReturn, Optional, Sequence
 from pygtrie import CharTrie
 
 from nonebot.log import logger
-from nonebot.utils import CacheDict
 from nonebot import params, get_driver
 from nonebot.dependencies import Dependent
 from nonebot.exception import ParserExit, SkippedException
-from nonebot.typing import T_State, T_Handler, T_RuleChecker
 from nonebot.adapters import Bot, Event, Message, MessageSegment
+from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_DependencyCache
 from nonebot.consts import (
     CMD_KEY,
     PREFIX_KEY,
@@ -105,7 +104,7 @@ class Rule:
         event: Event,
         state: T_State,
         stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[CacheDict[T_Handler, Any]] = None,
+        dependency_cache: Optional[T_DependencyCache] = None,
     ) -> bool:
         """
         :说明:

@@ -22,9 +22,9 @@ from typing import (
 from nonebot import params
 from nonebot.log import logger
 from nonebot.rule import TrieRule
+from nonebot.utils import escape_tag
 from nonebot.dependencies import Dependent
 from nonebot.matcher import Matcher, matchers
-from nonebot.utils import CacheDict, escape_tag
 from nonebot.exception import (
     NoLogException,
     StopPropagation,
@@ -34,6 +34,7 @@ from nonebot.exception import (
 from nonebot.typing import (
     T_State,
     T_Handler,
+    T_DependencyCache,
     T_RunPreProcessor,
     T_RunPostProcessor,
     T_EventPreProcessor,
@@ -136,7 +137,7 @@ async def _check_matcher(
     event: "Event",
     state: T_State,
     stack: Optional[AsyncExitStack] = None,
-    dependency_cache: Optional[CacheDict[T_Handler, Any]] = None,
+    dependency_cache: Optional[T_DependencyCache] = None,
 ) -> None:
     if Matcher.expire_time and datetime.now() > Matcher.expire_time:
         try:
@@ -171,7 +172,7 @@ async def _run_matcher(
     event: "Event",
     state: T_State,
     stack: Optional[AsyncExitStack] = None,
-    dependency_cache: Optional[CacheDict[T_Handler, Any]] = None,
+    dependency_cache: Optional[T_DependencyCache] = None,
 ) -> None:
     logger.info(f"Event will be handled by {Matcher}")
 
@@ -275,7 +276,7 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
         logger.opt(colors=True).success(log_msg)
 
     state: Dict[Any, Any] = {}
-    dependency_cache: CacheDict[T_Handler, Any] = CacheDict()
+    dependency_cache: T_DependencyCache = {}
 
     async with AsyncExitStack() as stack:
         coros = list(

@@ -24,11 +24,10 @@ from typing import (
 )
 
 from nonebot import params
-from nonebot.utils import CacheDict
 from nonebot.adapters import Bot, Event
 from nonebot.dependencies import Dependent
 from nonebot.exception import SkippedException
-from nonebot.typing import T_Handler, T_PermissionChecker
+from nonebot.typing import T_Handler, T_DependencyCache, T_PermissionChecker
 
 
 async def _run_coro_with_catch(coro: Coroutine[Any, Any, Any]):
@@ -93,7 +92,7 @@ class Permission:
         bot: Bot,
         event: Event,
         stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[CacheDict[T_Handler, Any]] = None,
+        dependency_cache: Optional[T_DependencyCache] = None,
     ) -> bool:
         """
         :说明:

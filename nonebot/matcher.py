@@ -26,7 +26,6 @@ from typing import (
 from nonebot import params
 from nonebot.rule import Rule
 from nonebot.log import logger
-from nonebot.utils import CacheDict
 from nonebot.dependencies import Dependent
 from nonebot.permission import USER, Permission
 from nonebot.adapters import (
@@ -43,20 +42,21 @@ from nonebot.consts import (
     REJECT_TARGET,
     LAST_RECEIVE_KEY,
 )
-from nonebot.typing import (
-    Any,
-    T_State,
-    T_Handler,
-    T_ArgsParser,
-    T_TypeUpdater,
-    T_PermissionUpdater,
-)
 from nonebot.exception import (
     PausedException,
     StopPropagation,
     SkippedException,
     FinishedException,
     RejectedException,
+)
+from nonebot.typing import (
+    Any,
+    T_State,
+    T_Handler,
+    T_ArgsParser,
+    T_TypeUpdater,
+    T_DependencyCache,
+    T_PermissionUpdater,
 )
 
 if TYPE_CHECKING:
@@ -296,7 +296,7 @@ class Matcher(metaclass=MatcherMeta):
         bot: Bot,
         event: Event,
         stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[CacheDict[T_Handler, Any]] = None,
+        dependency_cache: Optional[T_DependencyCache] = None,
     ) -> bool:
         """
         :说明:
@@ -324,7 +324,7 @@ class Matcher(metaclass=MatcherMeta):
         event: Event,
         state: T_State,
         stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[CacheDict[T_Handler, Any]] = None,
+        dependency_cache: Optional[T_DependencyCache] = None,
     ) -> bool:
         """
         :说明:
@@ -669,7 +669,7 @@ class Matcher(metaclass=MatcherMeta):
         event: Event,
         state: T_State,
         stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[CacheDict[T_Handler, Any]] = None,
+        dependency_cache: Optional[T_DependencyCache] = None,
     ):
         b_t = current_bot.set(bot)
         e_t = current_event.set(event)
@@ -711,7 +711,7 @@ class Matcher(metaclass=MatcherMeta):
         event: Event,
         state: T_State,
         stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[CacheDict[T_Handler, Any]] = None,
+        dependency_cache: Optional[T_DependencyCache] = None,
     ):
         try:
             await self.simple_run(bot, event, state, stack, dependency_cache)
