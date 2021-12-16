@@ -18,6 +18,6 @@ def dependency(event: Event):
 
 @test.handle()
 @test2.handle()
-async def handle(x: Event = Depends(dependency)):
+async def handle(x: Event = Depends(dependency, use_cache=True)):
     # test dependency
     return x

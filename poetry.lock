@@ -270,7 +270,7 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*"
 
 [[package]]
 name = "fastapi"
-version = "0.70.0"
+version = "0.70.1"
 description = "FastAPI framework, high performance, easy to learn, fast to code, ready for production"
 category = "main"
 optional = false
@@ -381,7 +381,7 @@ http2 = ["h2 (>=3,<5)"]
 
 [[package]]
 name = "hypercorn"
-version = "0.12.0"
+version = "0.13.0"
 description = "A ASGI Server based on Hyper libraries and inspired by Gunicorn"
 category = "main"
 optional = true
@@ -534,7 +534,7 @@ python-versions = "^3.7.3"
 develop = false
 
 [package.dependencies]
-nonebot2 = "^2.0.0-alpha.14"
+nonebot2 = "^2.0.0-beta.1"
 pytest = "^6.2.5"
 pytest-asyncio = "^0.16.0"
 pytest-order = "^1.0.0"
@@ -543,7 +543,7 @@ pytest-order = "^1.0.0"
 type = "git"
 url = "https://github.com/nonebot/nonebug.git"
 reference = "master"
-resolved_reference = "e276dfcfadd242f14158f125fa1ed5915973a30a"
+resolved_reference = "4584d5a4bc95cd1bafcec08599ab7d72815e268e"
 
 [[package]]
 name = "packaging"
@@ -991,7 +991,7 @@ python-versions = ">=2.6, !=3.0.*, !=3.1.*, !=3.2.*"
 
 [[package]]
 name = "tomli"
-version = "1.2.2"
+version = "1.2.3"
 description = "A lil' TOML parser"
 category = "dev"
 optional = false
@@ -1510,8 +1510,8 @@ docutils = [
     {file = "docutils-0.17.1.tar.gz", hash = "sha256:686577d2e4c32380bb50cbb22f575ed742d58168cee37e99117a854bcd88f125"},
 ]
 fastapi = [
-    {file = "fastapi-0.70.0-py3-none-any.whl", hash = "sha256:a36d5f2fad931aa3575c07a3472c784e81f3e664e3bb5c8b9c88d0ec1104f59c"},
-    {file = "fastapi-0.70.0.tar.gz", hash = "sha256:66da43cfe5185ea1df99552acffd201f1832c6b364e0f4136c0a99f933466ced"},
+    {file = "fastapi-0.70.1-py3-none-any.whl", hash = "sha256:5367226c7bcd7bfb2e17edaf225fd9a983095b1372281e9a3eb661336fb93748"},
+    {file = "fastapi-0.70.1.tar.gz", hash = "sha256:21d03979b5336375c66fa5d1f3126c6beca650d5d2166fbb78345a30d33c8d06"},
 ]
 frozenlist = [
     {file = "frozenlist-1.2.0-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:977a1438d0e0d96573fd679d291a1542097ea9f4918a8b6494b06610dfeefbf9"},
@@ -1629,8 +1629,8 @@ httpx = [
     {file = "httpx-0.21.1.tar.gz", hash = "sha256:02af20df486b78892a614a7ccd4e4e86a5409ec4981ab0e422c579a887acad83"},
 ]
 hypercorn = [
-    {file = "Hypercorn-0.12.0-py3-none-any.whl", hash = "sha256:485a03dc171549dd802c5a2d4cce2d46daf077fbc06c7db90e0862ebc1bd07c9"},
-    {file = "Hypercorn-0.12.0.tar.gz", hash = "sha256:0504720bfc3fad83b4520b37fa5032b75ee3f2e71d26d6f7fea41fa2995b0138"},
+    {file = "Hypercorn-0.13.0-py3-none-any.whl", hash = "sha256:eafbed8b1cb9827552c0066386d3e693c16d3977dd60896bfa07dca4c9d92a20"},
+    {file = "Hypercorn-0.13.0.tar.gz", hash = "sha256:229d1e8684919c455281526d7c19e3568d51e4e5657a0051a4625d00902a1122"},
 ]
 hyperframe = [
     {file = "hyperframe-6.0.1-py3-none-any.whl", hash = "sha256:0ec6bafd80d8ad2195c4f03aacba3a8265e57bc4cff261e802bf39970ed02a15"},
@@ -2035,8 +2035,8 @@ toml = [
     {file = "toml-0.10.2.tar.gz", hash = "sha256:b3bda1d108d5dd99f4a20d24d9c348e91c4db7ab1b749200bded2f839ccbe68f"},
 ]
 tomli = [
-    {file = "tomli-1.2.2-py3-none-any.whl", hash = "sha256:f04066f68f5554911363063a30b108d2b5a5b1a010aa8b6132af78489fe3aade"},
-    {file = "tomli-1.2.2.tar.gz", hash = "sha256:c6ce0015eb38820eaf32b5db832dbc26deb3dd427bd5f6556cf0acac2c214fee"},
+    {file = "tomli-1.2.3-py3-none-any.whl", hash = "sha256:e3069e4be3ead9668e21cb9b074cd948f7b3113fd9c8bba083f48247aab8b11c"},
+    {file = "tomli-1.2.3.tar.gz", hash = "sha256:05b6166bff487dc068d322585c7ea4ef78deed501cc124060e0f238e89a9231f"},
 ]
 tomlkit = [
     {file = "tomlkit-0.7.2-py2.py3-none-any.whl", hash = "sha256:173ad840fa5d2aac140528ca1933c29791b79a374a0861a80347f42ec9328117"},
