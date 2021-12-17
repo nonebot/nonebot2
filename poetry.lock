@@ -513,7 +513,7 @@ name = "multidict"
 version = "5.2.0"
 description = "multidict implementation"
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6"
 
 [[package]]
@@ -1152,7 +1152,7 @@ name = "yarl"
 version = "1.7.2"
 description = "Yet another URL library"
 category = "main"
-optional = true
+optional = false
 python-versions = ">=3.6"
 
 [package.dependencies]
@@ -1180,7 +1180,7 @@ quart = ["Quart"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.3"
-content-hash = "32ef230c4c02d1eb68754ad0bb938d1d960d7c6362ea2250cc23bbed910fbe34"
+content-hash = "3cef667f39a760749d4c1d35883be4cec9c224e8079ee28752f6aa7f58688442"
 
 [metadata.files]
 aiodns = [

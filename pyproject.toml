@@ -34,6 +34,7 @@ httpx = { version = ">=0.20.0, <1.0.0", extras = ["http2"] }
 pydantic = { version = "~1.8.0", extras = ["dotenv"] }
 uvicorn = { version = "^0.15.0", extras = ["standard"] }
 aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
+yarl = "^1.7.2"
 
 [tool.poetry.dev-dependencies]
 sphinx = "^4.1.1"
