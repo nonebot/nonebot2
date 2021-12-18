@@ -82,6 +82,7 @@ class Request:
         self.url = url
 
         # headers
+        self.headers: CIMultiDict[str]
         if headers is not None:
             self.headers = CIMultiDict(headers)
         else:
@@ -112,6 +113,7 @@ class Response:
         self.status_code = status_code
 
         # headers
+        self.headers: CIMultiDict[str]
         if headers is not None:
             self.headers = CIMultiDict(headers)
         else:
@@ -144,7 +146,7 @@ class WebSocket(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def close(self, code: int):
+    async def close(self, code: int = 1000):
         """关闭 WebSocket 连接请求"""
         raise NotImplementedError
 

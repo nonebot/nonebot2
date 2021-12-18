@@ -13,7 +13,7 @@ from typing import TYPE_CHECKING, Any, Set, Dict, Type, Callable, Awaitable
 from nonebot.log import logger
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
-from ._model import URL, Request, Response, WebSocket
+from ._model import URL, Request, Response, WebSocket, HTTPVersion
 from nonebot.typing import T_BotConnectionHook, T_BotDisconnectionHook
 
 if TYPE_CHECKING:
