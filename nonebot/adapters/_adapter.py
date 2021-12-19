@@ -5,6 +5,9 @@ from ._bot import Bot
 from nonebot.config import Config
 from nonebot.drivers import (
     Driver,
+    Request,
+    Response,
+    WebSocket,
     ForwardDriver,
     ReverseDriver,
     HTTPServerSetup,
@@ -43,6 +46,16 @@ class Adapter(abc.ABC):
         if not isinstance(self.driver, ReverseDriver):
             raise TypeError("Current driver does not support websocket server")
         self.driver.setup_websocket_server(setup)
+
+    async def request(self, setup: Request) -> Response:
+        if not isinstance(self.driver, ForwardDriver):
+            raise TypeError("Current driver does not support http client")
+        return await self.driver.request(setup)
+
+    async def websocket(self, setup: Request) -> WebSocket:
+        if not isinstance(self.driver, ForwardDriver):
+            raise TypeError("Current driver does not support websocket client")
+        return await self.driver.websocket(setup)
 
     @abc.abstractmethod
     async def _call_api(self, api: str, **data) -> Any:

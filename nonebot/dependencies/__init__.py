@@ -151,6 +151,9 @@ class Dependent(Generic[R]):
     ) -> Dict[str, Any]:
         values: Dict[str, Any] = {}
 
+        for param in self.parameterless:
+            await param._solve(**params)
+
         for field in self.params:
             field_info = field.field_info
             assert isinstance(field_info, Param), "Params must be subclasses of Param"
@@ -167,8 +170,5 @@ class Dependent(Generic[R]):
                 raise SkippedException(field, value)
             else:
                 values[field.name] = value
-
-        for param in self.parameterless:
-            await param._solve(**params)
 
         return values

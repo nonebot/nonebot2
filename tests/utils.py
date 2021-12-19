@@ -9,6 +9,36 @@ if TYPE_CHECKING:
     from nonebot.adapters import Event, Message
 
 
+def make_fake_message() -> Type["Message"]:
+    from nonebot.adapters import Message, MessageSegment
+
+    class FakeMessageSegment(MessageSegment):
+        @classmethod
+        def get_message_class(cls):
+            return FakeMessage
+
+        def __str__(self) -> str:
+            return self.data["text"]
+
+        @classmethod
+        def text(cls, text: str):
+            return cls("text", {"text": text})
+
+        def is_text(self) -> bool:
+            return True
+
+    class FakeMessage(Message):
+        @classmethod
+        def get_segment_class(cls):
+            return FakeMessageSegment
+
+        @staticmethod
+        def _construct(msg: str):
+            yield FakeMessageSegment.text(msg)
+
+    return FakeMessage
+
+
 def make_fake_event(
     _type: str = "message",
     _name: str = "test",

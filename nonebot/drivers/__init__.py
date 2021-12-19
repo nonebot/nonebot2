@@ -10,10 +10,14 @@ import asyncio
 from dataclasses import dataclass
 from typing import TYPE_CHECKING, Any, Set, Dict, Type, Callable, Awaitable
 
+from ._model import URL as URL
 from nonebot.log import logger
 from nonebot.utils import escape_tag
+from ._model import Request as Request
 from nonebot.config import Env, Config
-from ._model import URL, Request, Response, WebSocket, HTTPVersion
+from ._model import Response as Response
+from ._model import WebSocket as WebSocket
+from ._model import HTTPVersion as HTTPVersion
 from nonebot.typing import T_BotConnectionHook, T_BotDisconnectionHook
 
 if TYPE_CHECKING:
@@ -204,11 +208,11 @@ class ForwardDriver(Driver):
     """
 
     @abc.abstractmethod
-    async def request(self, setup: "Request") -> Any:
+    async def request(self, setup: Request) -> Response:
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def websocket(self, setup: "Request") -> Any:
+    async def websocket(self, setup: Request) -> WebSocket:
         raise NotImplementedError
 
 

@@ -8,7 +8,6 @@ from nonebot.log import logger
 from nonebot.config import Config
 from nonebot.exception import MockApiException
 from nonebot.typing import T_CalledAPIHook, T_CallingAPIHook
-from nonebot.drivers import Driver, HTTPResponse, HTTPConnection
 
 if TYPE_CHECKING:
     from ._event import Event

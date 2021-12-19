@@ -58,19 +58,21 @@ EVENT_PCS_PARAMS = [
 ]
 RUN_PREPCS_PARAMS = [
     params.DependParam,
-    params.MatcherParam,
     params.BotParam,
     params.EventParam,
     params.StateParam,
+    params.ArgParam,
+    params.MatcherParam,
     params.DefaultParam,
 ]
 RUN_POSTPCS_PARAMS = [
     params.DependParam,
-    params.MatcherParam,
     params.ExceptionParam,
     params.BotParam,
     params.EventParam,
     params.StateParam,
+    params.ArgParam,
+    params.MatcherParam,
     params.DefaultParam,
 ]
 

@@ -193,6 +193,7 @@ class Matcher(metaclass=MatcherMeta):
         params.BotParam,
         params.EventParam,
         params.StateParam,
+        params.ArgParam,
         params.MatcherParam,
         params.DefaultParam,
     ]
@@ -443,10 +444,10 @@ class Matcher(metaclass=MatcherMeta):
         async def _receive(event: Event, matcher: "Matcher") -> Union[None, NoReturn]:
             if matcher.get_receive(id):
                 return
-            if matcher.get_target() == RECEIVE_KEY.format(id=id):
+            if matcher.get_target() == RECEIVE_KEY.format(id=id or ""):
                 matcher.set_receive(id, event)
                 return
-            matcher.set_target(RECEIVE_KEY.format(id=id))
+            matcher.set_target(RECEIVE_KEY.format(id=id or ""))
             raise RejectedException
 
         parameterless = [params.Depends(_receive), *(parameterless or [])]
@@ -472,7 +473,6 @@ class Matcher(metaclass=MatcherMeta):
         cls,
         key: str,
         prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
-        args_parser: Optional[T_ArgsParser] = None,
         parameterless: Optional[List[Any]] = None,
     ) -> Callable[[T_Handler], T_Handler]:
         """
@@ -495,6 +495,8 @@ class Matcher(metaclass=MatcherMeta):
                 matcher.set_arg(key, event)
                 return
             matcher.set_target(ARG_KEY.format(key=key))
+            if prompt is not None:
+                await matcher.send(prompt)
             raise RejectedException
 
         _parameterless = [
@@ -517,7 +519,9 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def send(
-        cls, message: Union[str, Message, MessageSegment, MessageTemplate], **kwargs
+        cls,
+        message: Union[str, Message, MessageSegment, MessageTemplate],
+        **kwargs: Any,
     ) -> Any:
         """
         :说明:

@@ -79,8 +79,11 @@ async def test_get(monkeypatch: pytest.MonkeyPatch, nonebug_clear):
 async def test_load_plugin(load_plugin: Set["Plugin"]):
     import nonebot
 
-    assert nonebot.get_loaded_plugins() == load_plugin
-    plugin = nonebot.get_plugin("depends")
+    loaded_plugins = set(
+        plugin for plugin in nonebot.get_loaded_plugins() if not plugin.parent_plugin
+    )
+    assert loaded_plugins == load_plugin
+    plugin = nonebot.get_plugin("param_depend")
     assert plugin
-    assert plugin.module_name == "plugins.depends"
-    assert "plugins.depends" in sys.modules
+    assert plugin.module_name == "plugins.param.param_depend"
+    assert "plugins.param.param_depend" in sys.modules
