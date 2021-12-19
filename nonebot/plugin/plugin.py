@@ -1,9 +1,12 @@
 from types import ModuleType
 from dataclasses import field, dataclass
-from typing import Set, Dict, Type, Optional
+from typing import TYPE_CHECKING, Set, Dict, Type, Optional
 
 from .export import Export
 from nonebot.matcher import Matcher
+
+if TYPE_CHECKING:
+    from .manager import PluginManager
 
 plugins: Dict[str, "Plugin"] = {}
 """
@@ -30,6 +33,11 @@ class Plugin(object):
     """
     - **类型**: ``str``
     - **说明**: 点分割模块路径
+    """
+    manager: "PluginManager"
+    """
+    - **类型**: ``PluginManager``
+    - **说明**: 导入该插件的插件管理器
     """
     export: Export = field(default_factory=Export)
     """
@@ -83,10 +91,10 @@ def get_loaded_plugins() -> Set[Plugin]:
     return set(plugins.values())
 
 
-def _new_plugin(fullname: str, module: ModuleType) -> Plugin:
+def _new_plugin(fullname: str, module: ModuleType, manager: "PluginManager") -> Plugin:
     name = fullname.rsplit(".", 1)[-1] if "." in fullname else fullname
     if name in plugins:
         raise RuntimeError("Plugin already exists! Check your plugin name.")
-    plugin = Plugin(name, module, fullname)
+    plugin = Plugin(name, module, fullname, manager)
     plugins[name] = plugin
     return plugin

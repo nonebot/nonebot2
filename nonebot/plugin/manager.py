@@ -150,9 +150,11 @@ class PluginLoader(SourceFileLoader):
         if self.loaded:
             return
 
-        plugin = _new_plugin(self.name, module)
+        plugin = _new_plugin(self.name, module, self.manager)
         parent_plugin = _current_plugin.get()
-        if parent_plugin:
+        if parent_plugin and _managers.index(parent_plugin.manager) < _managers.index(
+            self.manager
+        ):
             plugin.parent_plugin = parent_plugin
             parent_plugin.sub_plugins.add(plugin)
 
