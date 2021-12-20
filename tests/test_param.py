@@ -8,7 +8,13 @@ from utils import load_plugin, make_fake_event, make_fake_message
 async def test_depend(app: App, load_plugin):
     from nonebot.params import DependParam
 
-    from plugins.param.param_depend import runned, depends, test_depends
+    from plugins.param.param_depend import (
+        ClassDependency,
+        runned,
+        depends,
+        class_depend,
+        test_depends,
+    )
 
     async with app.test_dependent(depends, allow_types=[DependParam]) as ctx:
         ctx.should_return(1)
@@ -23,6 +29,9 @@ async def test_depend(app: App, load_plugin):
         ctx.receive_event(bot, event_next)
 
     assert len(runned) == 2 and runned[0] == runned[1] == 1
+
+    async with app.test_dependent(class_depend, allow_types=[DependParam]) as ctx:
+        ctx.should_return(ClassDependency(x=1, y=2))
 
 
 @pytest.mark.asyncio
