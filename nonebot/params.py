@@ -61,7 +61,6 @@ def Depends(
 
       * ``dependency: Optional[Callable[..., Any]] = None``: 依赖函数。默认为参数的类型注释。
       * ``use_cache: bool = True``: 是否使用缓存。默认为 ``True``。
-      * ``allow_types: Optional[List[Type[Param]]] = None``: 允许的参数类型。默认为 ``None``。
 
     .. code-block:: python
 
