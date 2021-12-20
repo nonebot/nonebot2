@@ -20,8 +20,10 @@ jobs:
       - uses: Gr1N/setup-poetry@v4
 
       - name: Install dependencies
+        run: poetry install -E all
+
+      - name: Run Pytest
         run: |
-          poetry install -E all
           cd tests/
           poetry run pytest --cov-report xml
 
