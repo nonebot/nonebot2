@@ -70,7 +70,7 @@ jobs:
           echo "PRODUCTION=false" >> $GITHUB_ENV
 
       - name: Deploy to Netlify
-        uses: nwtgck/actions-netlify@v1.1
+        uses: nwtgck/actions-netlify@v1
         with:
           publish-dir: './website/build'
           production-deploy: ${{ env.PRODUCTION }}
