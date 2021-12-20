@@ -200,3 +200,50 @@ async def test_matcher(app: App, load_plugin):
     ) as ctx:
         ctx.pass_params(matcher=fake_matcher)
         ctx.should_return(event_next)
+
+
+@pytest.mark.asyncio
+async def test_arg(app: App, load_plugin):
+    from nonebot.matcher import Matcher
+    from nonebot.params import ArgParam
+
+    from plugins.param.param_arg import arg, arg_str, arg_event
+
+    matcher = Matcher()
+    message = make_fake_message()("text")
+    event = make_fake_event(_message=message)()
+    matcher.set_arg("key", event)
+
+    async with app.test_dependent(arg, allow_types=[ArgParam]) as ctx:
+        ctx.pass_params(matcher=matcher)
+        ctx.should_return(message)
+
+    async with app.test_dependent(arg_str, allow_types=[ArgParam]) as ctx:
+        ctx.pass_params(matcher=matcher)
+        ctx.should_return(str(message))
+
+    async with app.test_dependent(arg_event, allow_types=[ArgParam]) as ctx:
+        ctx.pass_params(matcher=matcher)
+        ctx.should_return(event)
+
+
+@pytest.mark.asyncio
+async def test_exception(app: App, load_plugin):
+    from nonebot.params import ExceptionParam
+
+    from plugins.param.param_exception import exc
+
+    exception = ValueError("test")
+    async with app.test_dependent(exc, allow_types=[ExceptionParam]) as ctx:
+        ctx.pass_params(exception=exception)
+        ctx.should_return(exception)
+
+
+@pytest.mark.asyncio
+async def test_default(app: App, load_plugin):
+    from nonebot.params import DefaultParam
+
+    from plugins.param.param_default import default
+
+    async with app.test_dependent(default, allow_types=[DefaultParam]) as ctx:
+        ctx.should_return(1)
