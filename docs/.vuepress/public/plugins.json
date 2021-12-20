@@ -574,5 +574,13 @@
     "desc": "简单的lol比赛信息插件，订阅后会定时推送当日比赛结果",
     "author": "Diaosi1111",
     "repo": "https://github.com/Diaosi1111/nonebot_plugin_lolmatch"
+  },
+  {
+    "id": "OlivOS",
+    "link": "olivos.nb2",
+    "name": "OlivOS.nb2",
+    "desc": "在 NoneBot2 中加载 OlivOS 插件",
+    "author": "j1g5awi",
+    "repo": "https://github.com/nonepkg/OlivOS.nb2"
   }
 ]
