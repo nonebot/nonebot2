@@ -318,16 +318,16 @@ class MatcherParam(Param):
         return matcher
 
 
-def Received(id: str, default: Any = None) -> Any:
+def Received(id: Optional[str] = None, default: Any = None) -> Any:
     def _received(matcher: "Matcher"):
-        return matcher.get_receive(id, default)
+        return matcher.get_receive(id or "", default)
 
     return Depends(_received, use_cache=False)
 
 
 def LastReceived(default: Any = None) -> Any:
     def _last_received(matcher: "Matcher") -> Any:
-        return matcher.get_receive(None, default)
+        return matcher.get_last_receive(default)
 
     return Depends(_last_received, use_cache=False)
 

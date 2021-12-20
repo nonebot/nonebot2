@@ -172,11 +172,6 @@ class Matcher(metaclass=MatcherMeta):
     :说明: 事件响应器默认状态
     """
 
-    _default_parser: Optional[Dependent[None]] = None
-    """
-    :类型: ``Optional[Dependent]``
-    :说明: 事件响应器默认参数解析函数
-    """
     _default_type_updater: Optional[Dependent[str]] = None
     """
     :类型: ``Optional[Dependent]``
@@ -441,28 +436,27 @@ class Matcher(metaclass=MatcherMeta):
           * ``parameterless: Optional[List[Any]]``: 非参数类型依赖列表
         """
 
+        _id = id or ""
+
         async def _receive(event: Event, matcher: "Matcher") -> Union[None, NoReturn]:
-            if matcher.get_receive(id):
+            if matcher.get_receive(_id):
                 return
-            if matcher.get_target() == RECEIVE_KEY.format(id=id or ""):
-                matcher.set_receive(id, event)
+            if matcher.get_target() == RECEIVE_KEY.format(id=_id):
+                matcher.set_receive(_id, event)
                 return
-            matcher.set_target(RECEIVE_KEY.format(id=id or ""))
+            matcher.set_target(RECEIVE_KEY.format(id=_id))
             raise RejectedException
 
-        parameterless = [params.Depends(_receive), *(parameterless or [])]
+        _parameterless = [params.Depends(_receive), *(parameterless or [])]
 
         def _decorator(func: T_Handler) -> T_Handler:
 
             if cls.handlers and cls.handlers[-1].call is func:
                 func_handler = cls.handlers[-1]
-                for depend in reversed(parameterless):
+                for depend in reversed(_parameterless):
                     func_handler.prepend_parameterless(depend)
             else:
-                cls.append_handler(
-                    func,
-                    parameterless=parameterless if cls.handlers else parameterless,
-                )
+                cls.append_handler(func, parameterless=_parameterless)
 
             return func
 
@@ -558,15 +552,8 @@ class Matcher(metaclass=MatcherMeta):
           * ``message: Union[str, Message, MessageSegment]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
-        bot = current_bot.get()
-        event = current_event.get()
-        state = current_state.get()
-        if isinstance(message, MessageTemplate):
-            _message = message.format(**state)
-        else:
-            _message = message
-        if _message is not None:
-            await bot.send(event=event, message=_message, **kwargs)
+        if message is not None:
+            await cls.send(message, **kwargs)
         raise FinishedException
 
     @classmethod
@@ -585,15 +572,8 @@ class Matcher(metaclass=MatcherMeta):
           * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
-        bot = current_bot.get()
-        event = current_event.get()
-        state = current_state.get()
-        if isinstance(prompt, MessageTemplate):
-            _prompt = prompt.format(**state)
-        else:
-            _prompt = prompt
-        if _prompt is not None:
-            await bot.send(event=event, message=_prompt, **kwargs)
+        if prompt is not None:
+            await cls.send(prompt, **kwargs)
         raise PausedException
 
     @classmethod
@@ -610,26 +590,19 @@ class Matcher(metaclass=MatcherMeta):
           * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
-        bot = current_bot.get()
-        event = current_event.get()
-        state = current_state.get()
-        if isinstance(prompt, MessageTemplate):
-            _prompt = prompt.format(**state)
-        else:
-            _prompt = prompt
-        if _prompt is not None:
-            await bot.send(event=event, message=_prompt, **kwargs)
+        if prompt is not None:
+            await cls.send(prompt, **kwargs)
         raise RejectedException
 
-    def get_receive(self, id: Optional[str], default: T = None) -> Union[Event, T]:
-        if id is None:
-            return self.state.get(LAST_RECEIVE_KEY, default)
+    def get_receive(self, id: str, default: T = None) -> Union[Event, T]:
         return self.state.get(RECEIVE_KEY.format(id=id), default)
 
-    def set_receive(self, id: Optional[str], event: Event) -> None:
-        if id is not None:
-            self.state[RECEIVE_KEY.format(id=id)] = event
+    def set_receive(self, id: str, event: Event) -> None:
+        self.state[RECEIVE_KEY.format(id=id)] = event
         self.state[LAST_RECEIVE_KEY] = event
+
+    def get_last_receive(self, default: T = None) -> Union[Event, T]:
+        return self.state.get(LAST_RECEIVE_KEY, default)
 
     def get_arg(self, key: str, default: T = None) -> Union[Event, T]:
         return self.state.get(ARG_KEY.format(key=key), default)

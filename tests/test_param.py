@@ -196,7 +196,7 @@ async def test_matcher(app: App, load_plugin):
     event = make_fake_event()()
     fake_matcher.set_receive("test", event)
     event_next = make_fake_event()()
-    fake_matcher.set_receive(None, event_next)
+    fake_matcher.set_receive("", event_next)
 
     async with app.test_dependent(
         receive, allow_types=[MatcherParam, DependParam]

@@ -58,6 +58,15 @@ class Dependent(Generic[R]):
         self.parameterless = parameterless or []
         self.allow_types = allow_types or []
 
+    def __repr__(self) -> str:
+        return (
+            f"<Dependent call={self.call}, params={self.params},"
+            f" parameterless={self.parameterless}>"
+        )
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
     async def __call__(self, **kwargs: Any) -> R:
         values = await self.solve(**kwargs)
 
