@@ -83,7 +83,13 @@ async def test_load_plugin(load_plugin: Set["Plugin"]):
         plugin for plugin in nonebot.get_loaded_plugins() if not plugin.parent_plugin
     )
     assert loaded_plugins == load_plugin
-    plugin = nonebot.get_plugin("param_depend")
+    plugin = nonebot.get_plugin("export")
     assert plugin
-    assert plugin.module_name == "plugins.param.param_depend"
-    assert "plugins.param.param_depend" in sys.modules
+    assert plugin.module_name == "plugins.export"
+    assert "plugins.export" in sys.modules
+
+    try:
+        nonebot.load_plugin("plugins.export")
+        assert False
+    except RuntimeError:
+        assert True

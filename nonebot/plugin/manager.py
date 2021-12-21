@@ -53,6 +53,15 @@ class PluginManager:
         # get all previous ready to load plugins
         previous_plugins = self._previous_plugins()
         searched_plugins: Dict[str, Path] = {}
+        third_party_plugins: Set[str] = set()
+
+        for plugin in self.plugins:
+            name = plugin.rsplit(".", 1)[-1] if "." in plugin else plugin
+            if name in third_party_plugins or name in previous_plugins:
+                raise RuntimeError(
+                    f"Plugin already exists: {name}! Check your plugin name"
+                )
+            third_party_plugins.add(plugin)
 
         for module_info in pkgutil.iter_modules(self.search_path):
             if module_info.name.startswith("_"):
@@ -60,6 +69,7 @@ class PluginManager:
             if (
                 module_info.name in searched_plugins.keys()
                 or module_info.name in previous_plugins
+                or module_info.name in third_party_plugins
             ):
                 raise RuntimeError(
                     f"Plugin already exists: {module_info.name}! Check your plugin name"
@@ -74,7 +84,7 @@ class PluginManager:
 
         self.searched_plugins = searched_plugins
 
-        return self.plugins | set(self.searched_plugins.keys())
+        return third_party_plugins | set(self.searched_plugins.keys())
 
     def load_plugin(self, name) -> Optional[Plugin]:
         try:
