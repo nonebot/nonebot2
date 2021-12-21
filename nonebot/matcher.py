@@ -71,7 +71,7 @@ matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
 """
 current_bot: ContextVar[Bot] = ContextVar("current_bot")
 current_event: ContextVar[Event] = ContextVar("current_event")
-current_state: ContextVar[T_State] = ContextVar("current_state")
+current_matcher: ContextVar["Matcher"] = ContextVar("current_matcher")
 current_handler: ContextVar[Dependent] = ContextVar("current_handler")
 
 
@@ -424,7 +424,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def receive(
-        cls, id: Optional[str] = None, parameterless: Optional[List[Any]] = None
+        cls, id: str = "", parameterless: Optional[List[Any]] = None
     ) -> Callable[[T_Handler], T_Handler]:
         """
         :说明:
@@ -433,18 +433,17 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
+          * ``id: str``: 消息 ID
           * ``parameterless: Optional[List[Any]]``: 非参数类型依赖列表
         """
 
-        _id = id or ""
-
         async def _receive(event: Event, matcher: "Matcher") -> Union[None, NoReturn]:
-            if matcher.get_receive(_id):
+            if matcher.get_target() == RECEIVE_KEY.format(id=id):
+                matcher.set_receive(id, event)
                 return
-            if matcher.get_target() == RECEIVE_KEY.format(id=_id):
-                matcher.set_receive(_id, event)
+            if matcher.get_receive(id):
                 return
-            matcher.set_target(RECEIVE_KEY.format(id=_id))
+            matcher.set_target(RECEIVE_KEY.format(id=id))
             raise RejectedException
 
         _parameterless = [params.Depends(_receive), *(parameterless or [])]
@@ -483,10 +482,10 @@ class Matcher(metaclass=MatcherMeta):
         """
 
         async def _key_getter(event: Event, matcher: "Matcher"):
-            if matcher.get_arg(key):
-                return
             if matcher.get_target() == ARG_KEY.format(key=key):
                 matcher.set_arg(key, event)
+                return
+            if matcher.get_arg(key):
                 return
             matcher.set_target(ARG_KEY.format(key=key))
             if prompt is not None:
@@ -529,7 +528,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         bot = current_bot.get()
         event = current_event.get()
-        state = current_state.get()
+        state = current_matcher.get().state
         if isinstance(message, MessageTemplate):
             _message = message.format(**state)
         else:
@@ -583,13 +582,64 @@ class Matcher(metaclass=MatcherMeta):
         """
         :说明:
 
-          发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后重新运行当前处理函数
+          最近使用 ``got`` / ``receive`` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，
+          在接收用户新的一条消息后继续当前处理函数
 
         :参数:
 
           * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
+        if prompt is not None:
+            await cls.send(prompt, **kwargs)
+        raise RejectedException
+
+    @classmethod
+    async def reject_arg(
+        cls,
+        key: str,
+        prompt: Optional[Union[str, Message, MessageSegment]] = None,
+        **kwargs,
+    ) -> NoReturn:
+        """
+        :说明:
+
+          最近使用 ``got`` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，
+          在接收用户新的一条消息后继续当前处理函数
+
+        :参数:
+
+          * ``key: str``: 参数名
+          * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
+          * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
+        """
+        matcher = current_matcher.get()
+        matcher.set_target(ARG_KEY.format(key=key))
+        if prompt is not None:
+            await cls.send(prompt, **kwargs)
+        raise RejectedException
+
+    @classmethod
+    async def reject_receive(
+        cls,
+        id: str = "",
+        prompt: Optional[Union[str, Message, MessageSegment]] = None,
+        **kwargs,
+    ) -> NoReturn:
+        """
+        :说明:
+
+          最近使用 ``got`` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，
+          在接收用户新的一条消息后继续当前处理函数
+
+        :参数:
+
+          * ``id: str``: 消息 id
+          * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
+          * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
+        """
+        matcher = current_matcher.get()
+        matcher.set_target(RECEIVE_KEY.format(id=id))
         if prompt is not None:
             await cls.send(prompt, **kwargs)
         raise RejectedException
@@ -650,7 +700,7 @@ class Matcher(metaclass=MatcherMeta):
     ):
         b_t = current_bot.set(bot)
         e_t = current_event.set(event)
-        s_t = current_state.set(self.state)
+        m_t = current_matcher.set(self)
         try:
             # Refresh preprocess state
             self.state.update(state)
@@ -679,7 +729,7 @@ class Matcher(metaclass=MatcherMeta):
             logger.info(f"Matcher {self} running complete")
             current_bot.reset(b_t)
             current_event.reset(e_t)
-            current_state.reset(s_t)
+            current_matcher.reset(m_t)
 
     # 运行handlers
     async def run(
