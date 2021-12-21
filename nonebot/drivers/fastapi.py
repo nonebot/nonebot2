@@ -333,8 +333,8 @@ class WebSocketsWS(BaseWebSocket):
         raise NotImplementedError
 
     @overrides(BaseWebSocket)
-    async def close(self, code: int = 1000):
-        await self.websocket.close(code)
+    async def close(self, code: int = 1000, reason: str = ""):
+        await self.websocket.close(code, reason)
 
     @overrides(BaseWebSocket)
     async def receive(self) -> str:
@@ -374,11 +374,13 @@ class FastAPIWebSocket(BaseWebSocket):
         )
 
     @overrides(BaseWebSocket)
-    async def accept(self):
+    async def accept(self) -> None:
         await self.websocket.accept()
 
     @overrides(BaseWebSocket)
-    async def close(self, code: int = status.WS_1000_NORMAL_CLOSURE):
+    async def close(
+        self, code: int = status.WS_1000_NORMAL_CLOSURE, reason: str = ""
+    ) -> None:
         await self.websocket.close(code)
 
     @overrides(BaseWebSocket)

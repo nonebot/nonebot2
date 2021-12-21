@@ -168,6 +168,8 @@ class Driver(abc.ABC):
 
     def _bot_connect(self, bot: "Bot") -> None:
         """在 WebSocket 连接成功后，调用该函数来注册 bot 对象"""
+        if bot.self_id in self._clients:
+            raise RuntimeError(f"Duplicate bot connection with id {bot.self_id}")
         self._clients[bot.self_id] = bot
 
         async def _run_hook(bot: "Bot") -> None:

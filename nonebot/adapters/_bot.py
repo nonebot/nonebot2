@@ -100,7 +100,7 @@ class Bot(abc.ABC):
 
         if not skip_calling_api:
             try:
-                result = await self.adapter._call_api(api, **data)
+                result = await self.adapter._call_api(self, api, **data)
             except Exception as e:
                 exception = e
 

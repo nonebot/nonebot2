@@ -249,15 +249,16 @@ class WebSocket(BaseWebSocket):
     @property
     @overrides(BaseWebSocket)
     def closed(self):
-        raise NotImplementedError
+        # FIXME
+        return True
 
     @overrides(BaseWebSocket)
     async def accept(self):
         await self.websocket.accept()
 
     @overrides(BaseWebSocket)
-    async def close(self, code: int = 1000):
-        await self.websocket.close(code)
+    async def close(self, code: int = 1000, reason: str = ""):
+        await self.websocket.close(code, reason)
 
     @overrides(BaseWebSocket)
     async def receive(self) -> str:

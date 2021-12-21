@@ -31,7 +31,7 @@ HeaderTypes = Union[
     Sequence[Tuple[str, str]],
 ]
 
-ContentTypes = Union[str, bytes]
+ContentTypes = Union[str, bytes, None]
 CookieTypes = Union[None, "Cookies", CookieJar, Dict[str, str], List[Tuple[str, str]]]
 
 
@@ -55,15 +55,15 @@ class Request:
         timeout: Optional[float] = None,
     ):
         # method
-        self.method = (
+        self.method: str = (
             method.decode("ascii").upper()
             if isinstance(method, bytes)
             else method.upper()
         )
         # http version
-        self.version = HTTPVersion(version)
+        self.version: HTTPVersion = HTTPVersion(version)
         # timeout
-        self.timeout = timeout
+        self.timeout: Optional[float] = timeout
 
         # url
         if isinstance(url, tuple):
@@ -79,7 +79,7 @@ class Request:
 
         if params is not None:
             url = url.update_query(params)
-        self.url = url
+        self.url: URL = url
 
         # headers
         self.headers: CIMultiDict[str]
@@ -92,7 +92,7 @@ class Request:
         self.cookies = Cookies(cookies)
 
         # body
-        self.content = content
+        self.content: ContentTypes = content
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__
@@ -110,7 +110,7 @@ class Response:
         request: Optional[Request] = None,
     ):
         # status code
-        self.status_code = status_code
+        self.status_code: int = status_code
 
         # headers
         self.headers: CIMultiDict[str]
@@ -120,16 +120,16 @@ class Response:
             self.headers = CIMultiDict()
 
         # body
-        self.content = content
+        self.content: ContentTypes = content
 
         # request
-        self.request = request
+        self.request: Optional[Request] = request
 
 
 class WebSocket(abc.ABC):
     def __init__(self, *, request: Request):
         # request
-        self.request = request
+        self.request: Request = request
 
     @property
     @abc.abstractmethod
@@ -141,12 +141,12 @@ class WebSocket(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def accept(self):
+    async def accept(self) -> None:
         """接受 WebSocket 连接请求"""
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def close(self, code: int = 1000):
+    async def close(self, code: int = 1000, reason: str = "") -> None:
         """关闭 WebSocket 连接请求"""
         raise NotImplementedError
 
@@ -161,19 +161,19 @@ class WebSocket(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def send(self, data: str):
+    async def send(self, data: str) -> None:
         """发送一条 WebSocket text 信息"""
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def send_bytes(self, data: bytes):
+    async def send_bytes(self, data: bytes) -> None:
         """发送一条 WebSocket binary 信息"""
         raise NotImplementedError
 
 
 class Cookies(MutableMapping):
     def __init__(self, cookies: CookieTypes = None) -> None:
-        self.jar = cookies if isinstance(cookies, CookieJar) else CookieJar()
+        self.jar: CookieJar = cookies if isinstance(cookies, CookieJar) else CookieJar()
         if cookies is not None and not isinstance(cookies, CookieJar):
             if isinstance(cookies, dict):
                 for key, value in cookies.items():

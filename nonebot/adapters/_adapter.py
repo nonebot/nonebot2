@@ -29,11 +29,11 @@ class Adapter(abc.ABC):
     def config(self) -> Config:
         return self.driver.config
 
-    def bot_connect(self, bot: Bot):
+    def bot_connect(self, bot: Bot) -> None:
         self.driver._bot_connect(bot)
         self.bots[bot.self_id] = bot
 
-    def bot_disconnect(self, bot: Bot):
+    def bot_disconnect(self, bot: Bot) -> None:
         self.driver._bot_disconnect(bot)
         self.bots.pop(bot.self_id, None)
 
@@ -58,7 +58,7 @@ class Adapter(abc.ABC):
         return await self.driver.websocket(setup)
 
     @abc.abstractmethod
-    async def _call_api(self, api: str, **data) -> Any:
+    async def _call_api(self, bot: Bot, api: str, **data) -> Any:
         """
         :说明:
 
