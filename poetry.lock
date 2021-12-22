@@ -95,7 +95,7 @@ tests = ["pytest", "pytest-asyncio", "mypy (>=0.800)"]
 
 [[package]]
 name = "async-asgi-testclient"
-version = "1.4.8"
+version = "1.4.9"
 description = "Async client for testing ASGI web applications"
 category = "dev"
 optional = false
@@ -550,13 +550,12 @@ async-asgi-testclient = "^1.4.8"
 nonebot2 = "^2.0.0-beta.1"
 pytest = "^6.2.5"
 pytest-asyncio = "^0.16.0"
-pytest-order = "^1.0.0"
 
 [package.source]
 type = "git"
 url = "https://github.com/nonebot/nonebug.git"
 reference = "master"
-resolved_reference = "4af5bd99c3eb0f63f4619620461b16de6c96b227"
+resolved_reference = "6e2292f06b0b06dc2e1353ed1ef248a6c91fa2e4"
 
 [[package]]
 name = "packaging"
@@ -746,17 +745,6 @@ pytest = ">=4.6"
 
 [package.extras]
 testing = ["fields", "hunter", "process-tests", "six", "pytest-xdist", "virtualenv"]
-
-[[package]]
-name = "pytest-order"
-version = "1.0.0"
-description = "pytest plugin to run your tests in a specific order"
-category = "dev"
-optional = false
-python-versions = "*"
-
-[package.dependencies]
-pytest = ">=5.0"
 
 [[package]]
 name = "python-dotenv"
@@ -1296,7 +1284,7 @@ asgiref = [
     {file = "asgiref-3.4.1.tar.gz", hash = "sha256:4ef1ab46b484e3c706329cedeff284a5d40824200638503f5768edb6de7d58e9"},
 ]
 async-asgi-testclient = [
-    {file = "async-asgi-testclient-1.4.8.tar.gz", hash = "sha256:52d666ea75971c8a825befd34a5684414578f3c5bfa5a90e7eb7de924f447aae"},
+    {file = "async-asgi-testclient-1.4.9.tar.gz", hash = "sha256:ae507f44a53699611cff81ad548090dad24055fba02cce398e1ca9b84d1e1288"},
 ]
 async-timeout = [
     {file = "async-timeout-4.0.2.tar.gz", hash = "sha256:2163e1640ddb52b7a8c80d0a67a08587e5d245cc9c553a74a847056bc2976b15"},
@@ -1946,10 +1934,6 @@ pytest-asyncio = [
 pytest-cov = [
     {file = "pytest-cov-3.0.0.tar.gz", hash = "sha256:e7f0f5b1617d2210a2cabc266dfe2f4c75a8d32fb89eafb7ad9d06f6d076d470"},
     {file = "pytest_cov-3.0.0-py3-none-any.whl", hash = "sha256:578d5d15ac4a25e5f961c938b85a05b09fdaae9deef3bb6de9a6e766622ca7a6"},
-]
-pytest-order = [
-    {file = "pytest-order-1.0.0.tar.gz", hash = "sha256:5997a262b31234eebb461f9a9ef24687bf732029b499845a4398b69edb5ac321"},
-    {file = "pytest_order-1.0.0-py3-none-any.whl", hash = "sha256:a4cdf12f4c83c76bdfd6e6088e2e157df7fdf91a9c3e3ca7d8809e8dabce0f4b"},
 ]
 python-dotenv = [
     {file = "python-dotenv-0.19.2.tar.gz", hash = "sha256:a5de49a31e953b45ff2d2fd434bbc2670e8db5273606c1e737cc6b93eff3655f"},

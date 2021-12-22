@@ -50,7 +50,6 @@ async def test_reverse_driver(app: App):
         assert response.status_code == 200
         assert response.text == "test"
 
-        # FIXME: https://github.com/vinissimus/async-asgi-testclient/issues/43
-        # async with client.websocket_connect("/ws_test") as ws:
-        #     await ws.send_text("ping")
-        #     assert await ws.receive_text() == "pong"
+        async with client.websocket_connect("/ws_test") as ws:
+            await ws.send_text("ping")
+            assert await ws.receive_text() == "pong"
