@@ -173,17 +173,19 @@ class Driver(ReverseDriver):
         self._server_app.add_api_route(
             setup.path.path,
             _handle,
+            name=setup.name,
             methods=[setup.method],
         )
 
     @overrides(ReverseDriver)
     def setup_websocket_server(self, setup: WebSocketServerSetup) -> None:
-        async def _handle(websocket: WebSocket):
+        async def _handle(websocket: WebSocket) -> None:
             await self._handle_ws(websocket, setup)
 
         self._server_app.add_api_websocket_route(
             setup.path.path,
             _handle,
+            name=setup.name,
         )
 
     @overrides(ReverseDriver)

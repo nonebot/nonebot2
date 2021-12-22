@@ -8,7 +8,6 @@ Quart 驱动适配
     https://pgjones.gitlab.io/quart/index.html
 """
 
-from functools import partial
 from typing import List, TypeVar, Callable, Optional, Coroutine
 
 import uvicorn
@@ -140,17 +139,25 @@ class Driver(ReverseDriver):
 
     @overrides(ReverseDriver)
     def setup_http_server(self, setup: HTTPServerSetup):
+        async def _handle() -> Response:
+            return await self._handle_http(setup)
+
         self._server_app.add_url_rule(
             setup.path.path,
+            endpoint=setup.name,
             methods=[setup.method],
-            view_func=partial(self._handle_http, setup=setup),
+            view_func=_handle,
         )
 
     @overrides(ReverseDriver)
     def setup_websocket_server(self, setup: WebSocketServerSetup) -> None:
+        async def _handle() -> None:
+            return await self._handle_ws(setup)
+
         self._server_app.add_websocket(
             setup.path.path,
-            view_func=partial(self._handle_ws, setup=setup),
+            endpoint=setup.name,
+            view_func=_handle,
         )
 
     @overrides(ReverseDriver)
