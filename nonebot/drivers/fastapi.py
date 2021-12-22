@@ -11,31 +11,28 @@ FastAPI 驱动适配
 """
 
 import logging
-from functools import partial
-from dataclasses import dataclass
-from typing import Any, List, Union, Callable, Optional, Awaitable
+from typing import List, Callable, Optional
 
-import httpx
 import uvicorn
 from pydantic import BaseSettings
 from fastapi.responses import Response
 from fastapi import FastAPI, Request, status
 from starlette.websockets import WebSocket, WebSocketState
-from websockets.legacy.client import Connect, WebSocketClientProtocol
 
 from nonebot.config import Env
 from nonebot.typing import overrides
 from nonebot.utils import escape_tag
+from nonebot.drivers.httpx import HttpxMixin
+from nonebot.drivers.aiohttp import AiohttpMixin
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
-from nonebot.drivers import Response as BaseResponse
 from nonebot.drivers import WebSocket as BaseWebSocket
+from nonebot.drivers.websockets import WebSocketsMixin
 from nonebot.drivers import (
-    HTTPVersion,
-    ForwardDriver,
     ReverseDriver,
     HTTPServerSetup,
     WebSocketServerSetup,
+    combine_driver,
 )
 
 
@@ -246,7 +243,7 @@ class Driver(ReverseDriver):
         self,
         request: Request,
         setup: HTTPServerSetup,
-    ):
+    ) -> Response:
         http_request = BaseRequest(
             request.method,
             str(request.url),
@@ -265,7 +262,7 @@ class Driver(ReverseDriver):
             str(websocket.url),
             headers=websocket.headers.items(),
             cookies=websocket.cookies,
-            version=websocket.scope["http_version"],
+            version=websocket.scope.get("http_version", "1.1"),
         )
         ws = FastAPIWebSocket(
             request=request,
@@ -273,90 +270,6 @@ class Driver(ReverseDriver):
         )
 
         await setup.handle_func(ws)
-
-
-class FullDriver(ForwardDriver, Driver):
-    """
-    完整的 FastAPI 驱动框架，包含正向 Client 支持和反向 Server 支持。
-
-    :使用方法:
-
-    .. code-block:: dotenv
-
-        DRIVER=nonebot.drivers.fastapi:FullDriver
-    """
-
-    @property
-    @overrides(Driver)
-    def type(self) -> str:
-        """驱动名称: ``fastapi_full``"""
-        return "fastapi_full"
-
-    @overrides(ForwardDriver)
-    async def request(self, setup: "BaseRequest") -> Any:
-        async with httpx.AsyncClient(
-            http2=setup.version == HTTPVersion.H2, follow_redirects=True
-        ) as client:
-            response = await client.request(
-                setup.method,
-                str(setup.url),
-                content=setup.content,
-                headers=tuple(setup.headers.items()),
-                timeout=30.0,
-            )
-            return BaseResponse(
-                response.status_code,
-                headers=response.headers,
-                content=response.content,
-                request=setup,
-            )
-
-    @overrides(ForwardDriver)
-    async def websocket(self, setup: "BaseRequest") -> Any:
-        ws = await Connect(str(setup.url), extra_headers=setup.headers.items())
-        return WebSocketsWS(request=setup, websocket=ws)
-
-
-class WebSocketsWS(BaseWebSocket):
-    @overrides(BaseWebSocket)
-    def __init__(self, *, request: BaseRequest, websocket: WebSocketClientProtocol):
-        super().__init__(request=request)
-        self.websocket = websocket
-
-    @property
-    @overrides(BaseWebSocket)
-    def closed(self) -> bool:
-        return self.websocket.closed
-
-    @overrides(BaseWebSocket)
-    async def accept(self):
-        raise NotImplementedError
-
-    @overrides(BaseWebSocket)
-    async def close(self, code: int = 1000, reason: str = ""):
-        await self.websocket.close(code, reason)
-
-    @overrides(BaseWebSocket)
-    async def receive(self) -> str:
-        msg = await self.websocket.recv()
-        if isinstance(msg, bytes):
-            raise TypeError("WebSocket received unexpected frame type: bytes")
-        return msg
-
-    @overrides(BaseWebSocket)
-    async def receive_bytes(self) -> bytes:
-        msg = await self.websocket.recv()
-        if isinstance(msg, str):
-            raise TypeError("WebSocket received unexpected frame type: str")
-        return msg
-
-    @overrides(BaseWebSocket)
-    async def send(self, data: str) -> None:
-        await self.websocket.send(data)
-
-    @overrides(BaseWebSocket)
-    async def send_bytes(self, data: bytes) -> None:
-        await self.websocket.send(data)
 
 
 class FastAPIWebSocket(BaseWebSocket):
@@ -398,3 +311,7 @@ class FastAPIWebSocket(BaseWebSocket):
     @overrides(BaseWebSocket)
     async def send_bytes(self, data: bytes) -> None:
         await self.websocket.send({"type": "websocket.send", "bytes": data})
+
+
+FullDriver = combine_driver(Driver, HttpxMixin, WebSocketsMixin)
+AiohttpDriver = combine_driver(Driver, AiohttpMixin)

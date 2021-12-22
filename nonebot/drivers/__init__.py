@@ -80,7 +80,7 @@ class Driver(abc.ABC):
         """
         return self._clients
 
-    def register_adapter(self, adapter: Type["Adapter"], **kwargs):
+    def register_adapter(self, adapter: Type["Adapter"], **kwargs) -> None:
         """
         :说明:
 
@@ -105,7 +105,7 @@ class Driver(abc.ABC):
 
     @property
     @abc.abstractmethod
-    def type(self):
+    def type(self) -> str:
         """驱动类型名称"""
         raise NotImplementedError
 
@@ -204,10 +204,11 @@ class Driver(abc.ABC):
         asyncio.create_task(_run_hook(bot))
 
 
-class ForwardDriver(Driver):
-    """
-    Forward Driver 基类。将客户端框架封装，以满足适配器使用。
-    """
+class ForwardMixin(abc.ABC):
+    @property
+    @abc.abstractmethod
+    def type(self) -> str:
+        raise NotImplementedError
 
     @abc.abstractmethod
     async def request(self, setup: Request) -> Response:
@@ -216,6 +217,12 @@ class ForwardDriver(Driver):
     @abc.abstractmethod
     async def websocket(self, setup: Request) -> WebSocket:
         raise NotImplementedError
+
+
+class ForwardDriver(Driver, ForwardMixin):
+    """
+    Forward Driver 基类。将客户端框架封装，以满足适配器使用。
+    """
 
 
 class ReverseDriver(Driver):
@@ -242,6 +249,19 @@ class ReverseDriver(Driver):
     @abc.abstractmethod
     def setup_websocket_server(self, setup: "WebSocketServerSetup") -> None:
         raise NotImplementedError
+
+
+def combine_driver(driver: Type[Driver], *mixins: Type[ForwardMixin]) -> Type[Driver]:
+    class CombinedDriver(driver, *mixins):  # type: ignore
+        @property
+        def type(self) -> str:
+            return (
+                driver.type.__get__(self)
+                + "+"
+                + "+".join(map(lambda x: x.type.__get__(self), mixins))
+            )
+
+    return CombinedDriver
 
 
 @dataclass

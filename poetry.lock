@@ -94,6 +94,18 @@ typing-extensions = {version = "*", markers = "python_version < \"3.8\""}
 tests = ["pytest", "pytest-asyncio", "mypy (>=0.800)"]
 
 [[package]]
+name = "async-asgi-testclient"
+version = "1.4.8"
+description = "Async client for testing ASGI web applications"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[package.dependencies]
+multidict = ">=4.0,<6.0"
+requests = ">=2.21,<3.0"
+
+[[package]]
 name = "async-timeout"
 version = "4.0.2"
 description = "Timeout context manager for asyncio programs"
@@ -534,6 +546,7 @@ python-versions = "^3.7.3"
 develop = false
 
 [package.dependencies]
+async-asgi-testclient = "^1.4.8"
 nonebot2 = "^2.0.0-beta.1"
 pytest = "^6.2.5"
 pytest-asyncio = "^0.16.0"
@@ -543,7 +556,7 @@ pytest-order = "^1.0.0"
 type = "git"
 url = "https://github.com/nonebot/nonebug.git"
 reference = "master"
-resolved_reference = "0a1132e9dc1803517ded0d485bfbe8c47a1d8585"
+resolved_reference = "4af5bd99c3eb0f63f4619620461b16de6c96b227"
 
 [[package]]
 name = "packaging"
@@ -1280,6 +1293,9 @@ anyio = [
 asgiref = [
     {file = "asgiref-3.4.1-py3-none-any.whl", hash = "sha256:ffc141aa908e6f175673e7b1b3b7af4fdb0ecb738fc5c8b88f69f055c2415214"},
     {file = "asgiref-3.4.1.tar.gz", hash = "sha256:4ef1ab46b484e3c706329cedeff284a5d40824200638503f5768edb6de7d58e9"},
+]
+async-asgi-testclient = [
+    {file = "async-asgi-testclient-1.4.8.tar.gz", hash = "sha256:52d666ea75971c8a825befd34a5684414578f3c5bfa5a90e7eb7de924f447aae"},
 ]
 async-timeout = [
     {file = "async-timeout-4.0.2.tar.gz", hash = "sha256:2163e1640ddb52b7a8c80d0a67a08587e5d245cc9c553a74a847056bc2976b15"},

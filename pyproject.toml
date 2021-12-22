@@ -23,6 +23,7 @@ include = ["nonebot/py.typed"]
 
 [tool.poetry.dependencies]
 python = "^3.7.3"
+yarl = "^1.7.2"
 loguru = "^0.5.1"
 pygtrie = "^2.4.1"
 tomlkit = "^0.7.0"
@@ -34,7 +35,6 @@ httpx = { version = ">=0.20.0, <1.0.0", extras = ["http2"] }
 pydantic = { version = "~1.8.0", extras = ["dotenv"] }
 uvicorn = { version = "^0.15.0", extras = ["standard"] }
 aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
-yarl = "^1.7.2"
 
 [tool.poetry.dev-dependencies]
 sphinx = "^4.1.1"
