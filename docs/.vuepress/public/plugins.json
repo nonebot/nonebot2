@@ -582,5 +582,13 @@
     "desc": "在 NoneBot2 中加载 OlivOS 插件",
     "author": "j1g5awi",
     "repo": "https://github.com/nonepkg/OlivOS.nb2"
+  },
+  {
+    "id": "nonebot_plugin_htmlrender",
+    "link": "nonebot-plugin-htmlrender",
+    "name": "通过浏览器来生成图片",
+    "desc": "通过playwright加一点点前端知识来简单的生成图片",
+    "author": "kexue-z",
+    "repo": "https://github.com/kexue-z/nonebot-plugin-htmlrender"
   }
 ]
