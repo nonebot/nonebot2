@@ -319,7 +319,7 @@ name = "h2"
 version = "4.1.0"
 description = "HTTP/2 State-Machine based protocol implementation"
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.6.1"
 
 [package.dependencies]
@@ -331,7 +331,7 @@ name = "hpack"
 version = "4.0.0"
 description = "Pure-Python HPACK header compression"
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.6.1"
 
 [[package]]
@@ -347,7 +347,7 @@ name = "httpcore"
 version = "0.14.3"
 description = "A minimal low-level HTTP client."
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.6"
 
 [package.dependencies]
@@ -375,7 +375,7 @@ name = "httpx"
 version = "0.21.1"
 description = "The next generation HTTP client."
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.6"
 
 [package.dependencies]
@@ -417,7 +417,7 @@ name = "hyperframe"
 version = "6.0.1"
 description = "HTTP/2 framing layer for Python"
 category = "main"
-optional = false
+optional = true
 python-versions = ">=3.6.1"
 
 [[package]]
@@ -819,7 +819,7 @@ name = "rfc3986"
 version = "1.5.0"
 description = "Validating URI References per RFC 3986"
 category = "main"
-optional = false
+optional = true
 python-versions = "*"
 
 [package.dependencies]
@@ -1176,13 +1176,15 @@ testing = ["pytest (>=4.6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytes
 
 [extras]
 aiohttp = ["aiohttp"]
-all = ["Quart", "aiohttp"]
+all = ["Quart", "aiohttp", "httpx", "websockets"]
+httpx = ["httpx"]
 quart = ["Quart"]
+websockets = ["websockets"]
 
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.3"
-content-hash = "e32c99ae82181567b69bc70580e3c0d816a522d0174fce2ce04c773219f1bb50"
+content-hash = "f917cb99a90280fb78a3d5e51410d89c364a05d917951a90c1c5af0bda1f08c3"
 
 [metadata.files]
 aiodns = [

@@ -98,7 +98,9 @@ class Rule:
         self.checkers: Set[Dependent[bool]] = set(
             checker
             if isinstance(checker, Dependent)
-            else Dependent[bool](call=checker, allow_types=self.HANDLER_PARAM_TYPES)
+            else Dependent[bool].parse(
+                call=checker, allow_types=self.HANDLER_PARAM_TYPES
+            )
             for checker in checkers
         )
         """
