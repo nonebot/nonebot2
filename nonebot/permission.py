@@ -11,23 +11,19 @@ r"""
 
 import asyncio
 from contextlib import AsyncExitStack
-from typing import (
-    Any,
-    Set,
-    Dict,
-    Tuple,
-    Union,
-    Callable,
-    NoReturn,
-    Optional,
-    Coroutine,
-)
+from typing import Any, Set, Tuple, Union, NoReturn, Optional, Coroutine
 
-from nonebot import params
 from nonebot.adapters import Bot, Event
 from nonebot.dependencies import Dependent
 from nonebot.exception import SkippedException
 from nonebot.typing import T_Handler, T_DependencyCache, T_PermissionChecker
+from nonebot.params import (
+    BotParam,
+    EventType,
+    EventParam,
+    DependParam,
+    DefaultParam,
+)
 
 
 async def _run_coro_with_catch(coro: Coroutine[Any, Any, Any]):
@@ -56,10 +52,10 @@ class Permission:
     __slots__ = ("checkers",)
 
     HANDLER_PARAM_TYPES = [
-        params.DependParam,
-        params.BotParam,
-        params.EventParam,
-        params.DefaultParam,
+        DependParam,
+        BotParam,
+        EventParam,
+        DefaultParam,
     ]
 
     def __init__(self, *checkers: Union[T_PermissionChecker, Dependent[bool]]) -> None:
@@ -142,23 +138,23 @@ class Permission:
 
 
 class Message:
-    async def __call__(self, event: Event) -> bool:
-        return event.get_type() == "message"
+    async def __call__(self, type: str = EventType()) -> bool:
+        return type == "message"
 
 
 class Notice:
-    async def __call__(self, event: Event) -> bool:
-        return event.get_type() == "notice"
+    async def __call__(self, type: str = EventType()) -> bool:
+        return type == "notice"
 
 
 class Request:
-    async def __call__(self, event: Event) -> bool:
-        return event.get_type() == "request"
+    async def __call__(self, type: str = EventType()) -> bool:
+        return type == "request"
 
 
 class MetaEvent:
-    async def __call__(self, event: Event) -> bool:
-        return event.get_type() == "meta_event"
+    async def __call__(self, type: str = EventType()) -> bool:
+        return type == "meta_event"
 
 
 MESSAGE = Permission(Message())
