@@ -23,7 +23,6 @@ from nonebot.config import Env
 from nonebot.typing import overrides
 from nonebot.utils import escape_tag
 from nonebot.drivers.httpx import HttpxMixin
-from nonebot.drivers.aiohttp import AiohttpMixin
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
@@ -34,6 +33,11 @@ from nonebot.drivers import (
     WebSocketServerSetup,
     combine_driver,
 )
+
+try:
+    from nonebot.drivers.aiohttp import AiohttpMixin
+except ImportError:
+    AiohttpMixin = None
 
 
 class Config(BaseSettings):
@@ -316,4 +320,5 @@ class FastAPIWebSocket(BaseWebSocket):
 
 
 FullDriver = combine_driver(Driver, HttpxMixin, WebSocketsMixin)
-AiohttpDriver = combine_driver(Driver, AiohttpMixin)
+if AiohttpMixin:
+    AiohttpDriver = combine_driver(Driver, AiohttpMixin)

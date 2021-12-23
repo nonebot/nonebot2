@@ -252,7 +252,7 @@ class ReverseDriver(Driver):
 
 
 def combine_driver(driver: Type[Driver], *mixins: Type[ForwardMixin]) -> Type[Driver]:
-    class CombinedDriver(driver, *mixins):  # type: ignore
+    class CombinedDriver(driver, *mixins, ForwardDriver):  # type: ignore
         @property
         def type(self) -> str:
             return (

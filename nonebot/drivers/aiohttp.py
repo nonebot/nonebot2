@@ -5,14 +5,18 @@ AIOHTTP 驱动适配
 本驱动仅支持客户端连接
 """
 
-
-import aiohttp
-
 from nonebot.typing import overrides
 from nonebot.drivers import Request, Response
 from nonebot.drivers._block_driver import BlockDriver
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers import HTTPVersion, ForwardMixin, combine_driver
+
+try:
+    import aiohttp
+except ImportError:
+    raise ImportError(
+        "Please install aiohttp first to use this driver. `pip install nonebot2[aiohttp]`"
+    ) from None
 
 
 class AiohttpMixin(ForwardMixin):
