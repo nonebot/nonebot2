@@ -598,5 +598,13 @@
     "desc": "简易群管 踢 禁 改",
     "author": "yzyyz1387",
     "repo": "https://github.com/yzyyz1387/nonebot_plugin_admin"
+  },
+  {
+    "id": "nonebot_plugin_logo",
+    "link": "nonebot-plugin-logo",
+    "name": "nonebot-plugin-logo",
+    "desc": "PornHub、Youtube 等风格logo生成",
+    "author": "MeetWq",
+    "repo": "https://github.com/MeetWq/nonebot-plugin-logo"
   }
 ]
