@@ -1,8 +1,7 @@
 # used by Matcher
 RECEIVE_KEY = "_receive_{id}"
 LAST_RECEIVE_KEY = "_last_receive"
-ARG_KEY = "_arg_{key}"
-ARG_STR_KEY = "{key}"
+ARG_KEY = "{key}"
 REJECT_TARGET = "_current_target"
 
 # used by Rule

@@ -334,7 +334,7 @@ def LastReceived(default: Any = None) -> Any:
 
 class ArgInner:
     def __init__(
-        self, key: Optional[str], type: Literal["event", "message", "str"]
+        self, key: Optional[str], type: Literal["message", "str", "plaintext"]
     ) -> None:
         self.key = key
         self.type = type
@@ -344,12 +344,12 @@ def Arg(key: Optional[str] = None) -> Any:
     return ArgInner(key, "message")
 
 
-def ArgEvent(key: Optional[str] = None) -> Any:
-    return ArgInner(key, "event")
+def ArgStr(key: Optional[str] = None) -> str:
+    return ArgInner(key, "str")  # type: ignore
 
 
-def ArgStr(key: Optional[str] = None) -> Any:
-    return ArgInner(key, "str")
+def ArgPlainText(key: Optional[str] = None) -> str:
+    return ArgInner(key, "plaintext")  # type: ignore
 
 
 class ArgParam(Param):
@@ -361,13 +361,15 @@ class ArgParam(Param):
             return cls(Required, key=param.default.key or name, type=param.default.type)
 
     async def _solve(self, matcher: "Matcher", **kwargs: Any) -> Any:
-        event = matcher.get_arg(self.extra["key"])
-        if self.extra["type"] == "event":
-            return event
-        elif self.extra["type"] == "message":
-            return event.get_message()
+        message = matcher.get_arg(self.extra["key"])
+        if message is None:
+            return message
+        if self.extra["type"] == "message":
+            return message
+        elif self.extra["type"] == "str":
+            return str(message)
         else:
-            return matcher.get_arg_str(self.extra["key"])
+            return message.extract_plain_text()
 
 
 class ExceptionParam(Param):

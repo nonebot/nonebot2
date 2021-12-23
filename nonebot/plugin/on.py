@@ -17,8 +17,6 @@ from nonebot.typing import (
     T_PermissionChecker,
 )
 from nonebot.rule import (
-    PREFIX_KEY,
-    RAW_CMD_KEY,
     Rule,
     ArgumentParser,
     regex,
@@ -395,7 +393,9 @@ def on_command(
     """
 
     commands = set([cmd]) | (aliases or set())
-    return on_message(command(*commands) & rule, **kwargs, _depth=_depth + 1)
+    return on_message(
+        command(*commands) & rule, block=False, **kwargs, _depth=_depth + 1
+    )
 
 
 def on_shell_command(

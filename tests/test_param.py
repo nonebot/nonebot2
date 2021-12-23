@@ -216,12 +216,11 @@ async def test_arg(app: App, load_plugin):
     from nonebot.matcher import Matcher
     from nonebot.params import ArgParam
 
-    from plugins.param.param_arg import arg, arg_str, arg_event
+    from plugins.param.param_arg import arg, arg_str, arg_plain_text
 
     matcher = Matcher()
     message = make_fake_message()("text")
-    event = make_fake_event(_message=message)()
-    matcher.set_arg("key", event)
+    matcher.set_arg("key", message)
 
     async with app.test_dependent(arg, allow_types=[ArgParam]) as ctx:
         ctx.pass_params(matcher=matcher)
@@ -231,9 +230,9 @@ async def test_arg(app: App, load_plugin):
         ctx.pass_params(matcher=matcher)
         ctx.should_return(str(message))
 
-    async with app.test_dependent(arg_event, allow_types=[ArgParam]) as ctx:
+    async with app.test_dependent(arg_plain_text, allow_types=[ArgParam]) as ctx:
         ctx.pass_params(matcher=matcher)
-        ctx.should_return(event)
+        ctx.should_return(message.extract_plain_text())
 
 
 @pytest.mark.asyncio

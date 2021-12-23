@@ -28,19 +28,13 @@ from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.dependencies import Dependent
 from nonebot.permission import USER, Permission
+from nonebot.consts import ARG_KEY, RECEIVE_KEY, REJECT_TARGET, LAST_RECEIVE_KEY
 from nonebot.adapters import (
     Bot,
     Event,
     Message,
     MessageSegment,
     MessageTemplate,
-)
-from nonebot.consts import (
-    ARG_KEY,
-    ARG_STR_KEY,
-    RECEIVE_KEY,
-    REJECT_TARGET,
-    LAST_RECEIVE_KEY,
 )
 from nonebot.exception import (
     PausedException,
@@ -483,7 +477,7 @@ class Matcher(metaclass=MatcherMeta):
 
         async def _key_getter(event: Event, matcher: "Matcher"):
             if matcher.get_target() == ARG_KEY.format(key=key):
-                matcher.set_arg(key, event)
+                matcher.set_arg(key, event.get_message())
                 return
             if matcher.get_arg(key):
                 return
@@ -654,15 +648,11 @@ class Matcher(metaclass=MatcherMeta):
     def get_last_receive(self, default: T = None) -> Union[Event, T]:
         return self.state.get(LAST_RECEIVE_KEY, default)
 
-    def get_arg(self, key: str, default: T = None) -> Union[Event, T]:
+    def get_arg(self, key: str, default: T = None) -> Union[Message, T]:
         return self.state.get(ARG_KEY.format(key=key), default)
 
-    def get_arg_str(self, key: str, default: T = None) -> Union[str, T]:
-        return self.state.get(ARG_STR_KEY.format(key=key), default)
-
-    def set_arg(self, key: str, event: Event) -> None:
-        self.state[ARG_KEY.format(key=key)] = event
-        self.state[ARG_STR_KEY.format(key=key)] = str(event.get_message())
+    def set_arg(self, key: str, message: Message) -> None:
+        self.state[ARG_KEY.format(key=key)] = message
 
     def set_target(self, target: str) -> None:
         self.state[REJECT_TARGET] = target
