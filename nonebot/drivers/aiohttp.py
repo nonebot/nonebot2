@@ -19,7 +19,7 @@ except ImportError:
     ) from None
 
 
-class AiohttpMixin(ForwardMixin):
+class Mixin(ForwardMixin):
     @property
     @overrides(ForwardMixin)
     def type(self) -> str:
@@ -114,4 +114,4 @@ class WebSocket(BaseWebSocket):
         await self.websocket.send_bytes(data)
 
 
-Driver = combine_driver(BlockDriver, AiohttpMixin)
+Driver = combine_driver(BlockDriver, Mixin)

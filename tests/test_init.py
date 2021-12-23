@@ -15,17 +15,23 @@ os.environ["CONFIG_FROM_ENV"] = '{"test": "test"}'
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
     "nonebug_init",
-    [{"config_from_init": "init", "driver": "nonebot.drivers.fastapi:FullDriver"}],
+    [
+        {
+            "config_from_init": "init",
+            "driver": "nonebot.drivers.fastapi+nonebot.drivers.httpx+nonebot.drivers.websockets",
+        },
+        {
+            "config_from_init": "init",
+            "driver": "~fastapi+~httpx+~websockets",
+        },
+    ],
     indirect=True,
 )
 async def test_init(nonebug_init):
     from nonebot import get_driver
-    from nonebot.drivers.fastapi import FullDriver
 
     env = get_driver().env
     assert env == "test"
-
-    assert isinstance(get_driver(), FullDriver)
 
     config = get_driver().config
     assert config.config_from_env == {"test": "test"}

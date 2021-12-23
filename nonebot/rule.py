@@ -422,7 +422,7 @@ def shell_command(
     命令内容与后续消息间无需空格！
     \:\:\:
     """
-    if not isinstance(parser, ArgumentParser):
+    if parser is not None and not isinstance(parser, ArgumentParser):
         raise TypeError("`parser` must be an instance of nonebot.rule.ArgumentParser")
 
     config = get_driver().config

@@ -17,17 +17,10 @@ from nonebot.config import Env
 from nonebot.log import logger
 from nonebot.typing import overrides
 from nonebot.utils import escape_tag
-from nonebot.drivers.httpx import HttpxMixin
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.drivers.websockets import WebSocketsMixin
-from nonebot.drivers import (
-    ReverseDriver,
-    HTTPServerSetup,
-    WebSocketServerSetup,
-    combine_driver,
-)
+from nonebot.drivers import ReverseDriver, HTTPServerSetup, WebSocketServerSetup
 
 try:
     from quart import request as _request
@@ -295,6 +288,3 @@ class WebSocket(BaseWebSocket):
     @overrides(BaseWebSocket)
     async def send_bytes(self, data: bytes):
         await self.websocket.send(data)
-
-
-FullDriver = combine_driver(Driver, HttpxMixin, WebSocketsMixin)

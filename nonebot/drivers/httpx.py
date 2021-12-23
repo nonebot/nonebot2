@@ -1,5 +1,3 @@
-import httpx
-
 from nonebot.typing import overrides
 from nonebot.drivers._block_driver import BlockDriver
 from nonebot.drivers import (
@@ -11,8 +9,13 @@ from nonebot.drivers import (
     combine_driver,
 )
 
+try:
+    import httpx
+except ImportError:
+    raise ImportError("Please install httpx by using `pip install nonebot2[httpx]`")
 
-class HttpxMixin(ForwardMixin):
+
+class Mixin(ForwardMixin):
     @property
     @overrides(ForwardMixin)
     def type(self) -> str:
@@ -39,7 +42,7 @@ class HttpxMixin(ForwardMixin):
 
     @overrides(ForwardMixin)
     async def websocket(self, setup: Request) -> WebSocket:
-        return await super(HttpxMixin, self).websocket(setup)
+        return await super(Mixin, self).websocket(setup)
 
 
-Driver = combine_driver(BlockDriver, HttpxMixin)
+Driver = combine_driver(BlockDriver, Mixin)

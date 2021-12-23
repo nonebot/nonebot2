@@ -4,9 +4,9 @@ import threading
 from typing import Set, Callable, Awaitable
 
 from nonebot.log import logger
+from nonebot.drivers import Driver
 from nonebot.typing import overrides
 from nonebot.config import Env, Config
-from nonebot.drivers import ForwardDriver
 
 STARTUP_FUNC = Callable[[], Awaitable[None]]
 SHUTDOWN_FUNC = Callable[[], Awaitable[None]]
@@ -16,11 +16,7 @@ HANDLED_SIGNALS = (
 )
 
 
-class BlockDriver(ForwardDriver):
-    """
-    AIOHTTP 驱动框架
-    """
-
+class BlockDriver(Driver):
     def __init__(self, env: Env, config: Config):
         super().__init__(env, config)
         self.startup_funcs: Set[STARTUP_FUNC] = set()
@@ -29,18 +25,18 @@ class BlockDriver(ForwardDriver):
         self.force_exit: bool = False
 
     @property
-    @overrides(ForwardDriver)
+    @overrides(Driver)
     def type(self) -> str:
         """驱动名称: ``block_driver``"""
         return "block_driver"
 
     @property
-    @overrides(ForwardDriver)
+    @overrides(Driver)
     def logger(self):
         """block driver 使用的 logger"""
         return logger
 
-    @overrides(ForwardDriver)
+    @overrides(Driver)
     def on_startup(self, func: STARTUP_FUNC) -> STARTUP_FUNC:
         """
         :说明:
@@ -54,7 +50,7 @@ class BlockDriver(ForwardDriver):
         self.startup_funcs.add(func)
         return func
 
-    @overrides(ForwardDriver)
+    @overrides(Driver)
     def on_shutdown(self, func: SHUTDOWN_FUNC) -> SHUTDOWN_FUNC:
         """
         :说明:
@@ -68,7 +64,7 @@ class BlockDriver(ForwardDriver):
         self.shutdown_funcs.add(func)
         return func
 
-    @overrides(ForwardDriver)
+    @overrides(Driver)
     def run(self, *args, **kwargs):
         """启动 block driver"""
         super().run(*args, **kwargs)

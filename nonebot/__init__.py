@@ -37,7 +37,7 @@ from nonebot.adapters import Bot
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.log import logger, default_filter
-from nonebot.drivers import Driver, ReverseDriver
+from nonebot.drivers import Driver, ReverseDriver, combine_driver
 
 try:
     _dist: pkg_resources.Distribution = pkg_resources.get_distribution("nonebot2")
@@ -195,6 +195,35 @@ def get_bots() -> Dict[str, Bot]:
     return driver.bots
 
 
+def _resolve_dot_notation(
+    obj_str: str, default_attr: str, default_prefix: Optional[str] = None
+) -> Any:
+    modulename, _, cls = obj_str.partition(":")
+    if default_prefix is not None and modulename.startswith("~"):
+        modulename = default_prefix + modulename[1:]
+    module = importlib.import_module(modulename)
+    if not cls:
+        return getattr(module, default_attr)
+    instance = module
+    for attr_str in cls.split("."):
+        instance = getattr(instance, attr_str)
+    return instance
+
+
+def _resolve_combine_expr(obj_str: str) -> Type[Driver]:
+    drivers = obj_str.split("+")
+    DriverClass = _resolve_dot_notation(
+        drivers[0], "Driver", default_prefix="nonebot.drivers."
+    )
+    if len(drivers) == 1:
+        return DriverClass
+    mixins = [
+        _resolve_dot_notation(mixin, "Mixin", default_prefix="nonebot.drivers.")
+        for mixin in drivers[1:]
+    ]
+    return combine_driver(DriverClass, *mixins)
+
+
 def init(*, _env_file: Optional[str] = None, **kwargs):
     """
     :说明:
@@ -243,12 +272,7 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
             f"Loaded <y><b>Config</b></y>: {escape_tag(str(config.dict()))}"
         )
 
-        modulename, _, cls = config.driver.partition(":")
-        module = importlib.import_module(modulename)
-        instance = module
-        for attr_str in (cls or "Driver").split("."):
-            instance = getattr(instance, attr_str)
-        DriverClass: Type[Driver] = instance  # type: ignore
+        DriverClass: Type[Driver] = _resolve_combine_expr(config.driver)
         _driver = DriverClass(env, config)
 
 

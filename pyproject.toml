@@ -28,13 +28,13 @@ loguru = "^0.5.1"
 pygtrie = "^2.4.1"
 tomlkit = "^0.7.0"
 fastapi = "^0.70.0"
-websockets = ">=9.1"
 typing-extensions = ">=3.10.0,<5.0.0"
 Quart = { version = "^0.16.0", optional = true }
-httpx = { version = ">=0.20.0, <1.0.0", extras = ["http2"] }
+websockets = { version=">=9.1", optional = true }
 pydantic = { version = "~1.8.0", extras = ["dotenv"] }
 uvicorn = { version = "^0.15.0", extras = ["standard"] }
 aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
+httpx = { version = ">=0.20.0, <1.0.0", extras = ["http2"], optional = true }
 
 [tool.poetry.dev-dependencies]
 sphinx = "^4.1.1"
@@ -46,8 +46,10 @@ sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-bu
 
 [tool.poetry.extras]
 quart = ["quart"]
+httpx = ["httpx"]
 aiohttp = ["aiohttp"]
-all = ["quart", "aiohttp"]
+websockets = ["websockets"]
+all = ["quart", "aiohttp", "httpx", "websockets"]
 
 # [[tool.poetry.source]]
 # name = "aliyun"

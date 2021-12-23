@@ -1,7 +1,5 @@
 import logging
 
-from websockets.legacy.client import Connect, WebSocketClientProtocol
-
 from nonebot.typing import overrides
 from nonebot.log import LoguruHandler
 from nonebot.drivers import Request, Response
@@ -9,11 +7,18 @@ from nonebot.drivers._block_driver import BlockDriver
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers import ForwardMixin, combine_driver
 
+try:
+    from websockets.legacy.client import Connect, WebSocketClientProtocol
+except ImportError:
+    raise ImportError(
+        "Please install websockets by using `pip install nonebot2[websockets]`"
+    )
+
 logger = logging.Logger("websockets.client", "INFO")
 logger.addHandler(LoguruHandler())
 
 
-class WebSocketsMixin(ForwardMixin):
+class Mixin(ForwardMixin):
     @property
     @overrides(ForwardMixin)
     def type(self) -> str:
@@ -21,7 +26,7 @@ class WebSocketsMixin(ForwardMixin):
 
     @overrides(ForwardMixin)
     async def request(self, setup: Request) -> Response:
-        return await super(WebSocketsMixin, self).request(setup)
+        return await super(Mixin, self).request(setup)
 
     @overrides(ForwardMixin)
     async def websocket(self, setup: Request) -> "WebSocket":
@@ -75,4 +80,4 @@ class WebSocket(BaseWebSocket):
         await self.websocket.send(data)
 
 
-Driver = combine_driver(BlockDriver, WebSocketsMixin)
+Driver = combine_driver(BlockDriver, Mixin)

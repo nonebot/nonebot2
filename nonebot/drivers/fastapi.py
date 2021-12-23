@@ -22,22 +22,10 @@ from starlette.websockets import WebSocket, WebSocketState
 from nonebot.config import Env
 from nonebot.typing import overrides
 from nonebot.utils import escape_tag
-from nonebot.drivers.httpx import HttpxMixin
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.drivers.websockets import WebSocketsMixin
-from nonebot.drivers import (
-    ReverseDriver,
-    HTTPServerSetup,
-    WebSocketServerSetup,
-    combine_driver,
-)
-
-try:
-    from nonebot.drivers.aiohttp import AiohttpMixin
-except ImportError:
-    AiohttpMixin = None
+from nonebot.drivers import ReverseDriver, HTTPServerSetup, WebSocketServerSetup
 
 
 class Config(BaseSettings):
@@ -317,8 +305,3 @@ class FastAPIWebSocket(BaseWebSocket):
     @overrides(BaseWebSocket)
     async def send_bytes(self, data: bytes) -> None:
         await self.websocket.send({"type": "websocket.send", "bytes": data})
-
-
-FullDriver = combine_driver(Driver, HttpxMixin, WebSocketsMixin)
-if AiohttpMixin:
-    AiohttpDriver = combine_driver(Driver, AiohttpMixin)

@@ -252,7 +252,13 @@ class ReverseDriver(Driver):
 
 
 def combine_driver(driver: Type[Driver], *mixins: Type[ForwardMixin]) -> Type[Driver]:
-    class CombinedDriver(driver, *mixins, ForwardDriver):  # type: ignore
+    # check first
+    assert issubclass(driver, Driver), "`driver` must be subclass of Driver"
+    assert all(
+        map(lambda m: issubclass(m, ForwardMixin), mixins)
+    ), "`mixins` must be subclass of ForwardMixin"
+
+    class CombinedDriver(*mixins, driver, ForwardDriver):  # type: ignore
         @property
         def type(self) -> str:
             return (
