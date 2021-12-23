@@ -590,5 +590,13 @@
     "desc": "通过playwright加一点点前端知识来简单的生成图片",
     "author": "kexue-z",
     "repo": "https://github.com/kexue-z/nonebot-plugin-htmlrender"
+  },
+  {
+    "id": "nonebot_plugin_admin",
+    "link": "nonebot-plugin-admin",
+    "name": "简易群管",
+    "desc": "简易群管 踢 禁 改",
+    "author": "yzyyz1387",
+    "repo": "https://github.com/yzyyz1387/nonebot_plugin_admin"
   }
 ]
