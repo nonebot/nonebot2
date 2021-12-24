@@ -152,6 +152,12 @@ class Dependent(Generic[R]):
                 )
             )
 
+        logger.trace(
+            f"Parsed dependent with call={call}, "
+            f"params={[param.field_info for param in dependent.params]}, "
+            f"parameterless={dependent.parameterless}"
+        )
+
         return dependent
 
     async def solve(

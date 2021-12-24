@@ -249,7 +249,6 @@ class Matcher(metaclass=MatcherMeta):
 
           - ``Type[Matcher]``: 新的事件响应器类
         """
-
         NewMatcher = type(
             "Matcher",
             (Matcher,),
@@ -281,6 +280,8 @@ class Matcher(metaclass=MatcherMeta):
                 "_default_permission_updater": default_permission_updater,
             },
         )
+
+        logger.trace(f"Define new matcher {NewMatcher}")
 
         matchers[priority].append(NewMatcher)
 
@@ -703,6 +704,10 @@ class Matcher(metaclass=MatcherMeta):
         stack: Optional[AsyncExitStack] = None,
         dependency_cache: Optional[T_DependencyCache] = None,
     ):
+        logger.trace(
+            f"Matcher {self} run with incoming args: "
+            f"bot={bot}, event={event}, state={state}"
+        )
         b_t = current_bot.set(bot)
         e_t = current_event.set(event)
         m_t = current_matcher.set(self)

@@ -216,11 +216,13 @@ def _resolve_combine_expr(obj_str: str) -> Type[Driver]:
         drivers[0], "Driver", default_prefix="nonebot.drivers."
     )
     if len(drivers) == 1:
+        logger.trace(f"Detected driver {DriverClass} with no mixins.")
         return DriverClass
     mixins = [
         _resolve_dot_notation(mixin, "Mixin", default_prefix="nonebot.drivers.")
         for mixin in drivers[1:]
     ]
+    logger.trace(f"Detected driver {DriverClass} with mixins {mixins}.")
     return combine_driver(DriverClass, *mixins)
 
 
