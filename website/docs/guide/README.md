@@ -1,12 +1,7 @@
 ---
-sidebar_position: 1
+sidebar_position: 0
 id: index
 slug: /guide
-
-options:
-  menu:
-    weight: 10
-    category: guide
 ---
 
 # 概览

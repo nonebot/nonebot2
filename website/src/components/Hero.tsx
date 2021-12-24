@@ -24,7 +24,7 @@ export function Hero(): JSX.Element {
             to="/docs/guide"
             className="inline-block bg-hero text-white font-bold rounded-lg px-6 py-3"
           >
-            开始使用
+            开始使用 <FontAwesomeIcon icon={["fas", "chevron-right"]} />
           </Link>
         </div>
       </div>
@@ -55,7 +55,7 @@ export function HeroFeature(props: PropsWithChildren<Feature>): JSX.Element {
       <p className="mt-3 mb-3 max-w-md mx-auto text-sm font-medium tracking-wide uppercase opacity-70 md:mt-5 md:max-w-3xl">
         {tagline}
       </p>
-      <h1 className="text-4xl tracking-tight font-light sm:text-5xl md:text-5xl text-hero">
+      <h1 className="font-mono font-light text-4xl tracking-tight sm:text-5xl md:text-5xl text-hero">
         {title}
       </h1>
       <p className="mt-10 mb-6">{description}</p>
