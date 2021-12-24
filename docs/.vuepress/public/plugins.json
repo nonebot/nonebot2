@@ -606,5 +606,13 @@
     "desc": "PornHub、Youtube 等风格logo生成",
     "author": "MeetWq",
     "repo": "https://github.com/MeetWq/nonebot-plugin-logo"
+  },
+  {
+    "id": "nonebot_plugin_memes",
+    "link": "nonebot-plugin-memes",
+    "name": "Memes generator",
+    "desc": "表情包制作",
+    "author": "MeetWq",
+    "repo": "https://github.com/MeetWq/nonebot-plugin-memes"
   }
 ]
