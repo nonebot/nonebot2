@@ -2,6 +2,8 @@ import abc
 from enum import Enum
 from http.cookiejar import Cookie, CookieJar
 from typing import (
+    IO,
+    Any,
     Dict,
     List,
     Tuple,
@@ -9,7 +11,6 @@ from typing import (
     Mapping,
     Iterator,
     Optional,
-    Sequence,
     MutableMapping,
 )
 
@@ -19,20 +20,33 @@ from multidict import CIMultiDict
 RawURL = Tuple[bytes, bytes, Optional[int], bytes]
 
 SimpleQuery = Union[str, int, float]
-QueryVariable = Union[SimpleQuery, Sequence[SimpleQuery]]
+QueryVariable = Union[SimpleQuery, List[SimpleQuery]]
 QueryTypes = Union[
-    None, str, Mapping[str, QueryVariable], Sequence[Tuple[str, QueryVariable]]
+    None, str, Mapping[str, QueryVariable], List[Tuple[str, QueryVariable]]
 ]
 
 HeaderTypes = Union[
     None,
     CIMultiDict[str],
     Dict[str, str],
-    Sequence[Tuple[str, str]],
+    List[Tuple[str, str]],
 ]
 
-ContentTypes = Union[str, bytes, None]
 CookieTypes = Union[None, "Cookies", CookieJar, Dict[str, str], List[Tuple[str, str]]]
+
+ContentTypes = Union[str, bytes, None]
+DataTypes = Union[dict, None]
+FileContent = Union[IO[bytes], bytes]
+FileType = Tuple[Optional[str], FileContent, Optional[str]]
+FileTypes = Union[
+    # file (or bytes)
+    FileContent,
+    # (filename, file (or bytes))
+    Tuple[Optional[str], FileContent],
+    # (filename, file (or bytes), content_type)
+    FileType,
+]
+FilesTypes = Union[Dict[str, FileTypes], List[Tuple[str, FileTypes]], None]
 
 
 class HTTPVersion(Enum):
@@ -51,6 +65,9 @@ class Request:
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
         content: ContentTypes = None,
+        data: DataTypes = None,
+        json: Any = None,
+        files: FilesTypes = None,
         version: Union[str, HTTPVersion] = HTTPVersion.H11,
         timeout: Optional[float] = None,
     ):
@@ -93,6 +110,19 @@ class Request:
 
         # body
         self.content: ContentTypes = content
+        self.data: DataTypes = data
+        self.json: Any = json
+        self.files: Optional[List[Tuple[str, FileType]]] = None
+        if files:
+            self.files = []
+            files_ = files.items() if isinstance(files, dict) else files
+            for name, file_info in files_:
+                if not isinstance(file_info, tuple):
+                    self.files.append((name, (None, file_info, None)))
+                elif len(file_info) == 2:
+                    self.files.append((name, (file_info[0], file_info[1], None)))
+                else:
+                    self.files.append((name, file_info))  # type: ignore
 
     def __repr__(self) -> str:
         class_name = self.__class__.__name__

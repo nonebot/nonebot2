@@ -35,11 +35,17 @@ class Mixin(ForwardMixin):
             raise RuntimeError(f"Unsupported HTTP version: {setup.version}")
 
         timeout = aiohttp.ClientTimeout(setup.timeout)
+        files = None
+        if setup.files:
+            files = aiohttp.FormData()
+            for name, file in setup.files:
+                files.add_field(name, file[1], content_type=file[2], filename=file[0])
         async with aiohttp.ClientSession(version=version) as session:
             async with session.request(
                 setup.method,
                 setup.url,
-                data=setup.content,
+                data=setup.content or setup.data or files,
+                json=setup.json,
                 headers=setup.headers,
                 timeout=timeout,
             ) as response:

@@ -30,6 +30,9 @@ class Mixin(ForwardMixin):
                 setup.method,
                 str(setup.url),
                 content=setup.content,
+                data=setup.data,
+                json=setup.json,
+                files=setup.files,
                 headers=tuple(setup.headers.items()),
                 timeout=setup.timeout,
             )

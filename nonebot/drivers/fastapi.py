@@ -11,17 +11,17 @@ FastAPI 驱动适配
 """
 
 import logging
-from typing import List, Callable, Optional
+from typing import Any, List, Tuple, Callable, Optional
 
 import uvicorn
 from pydantic import BaseSettings
 from fastapi.responses import Response
-from fastapi import FastAPI, Request, status
+from fastapi import FastAPI, Request, UploadFile, status
 from starlette.websockets import WebSocket, WebSocketState
 
+from ._model import FileTypes
 from nonebot.config import Env
 from nonebot.typing import overrides
-from nonebot.utils import escape_tag
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
@@ -238,12 +238,36 @@ class Driver(ReverseDriver):
         request: Request,
         setup: HTTPServerSetup,
     ) -> Response:
+        json: Any = None
+        try:
+            json = await request.json()
+        except Exception:
+            pass
+
+        data: Optional[dict] = None
+        files: Optional[List[Tuple[str, FileTypes]]] = None
+        try:
+            form = await request.form()
+            data = {}
+            files = []
+            for key, value in form.multi_items():
+                if isinstance(value, UploadFile):
+                    files.append(
+                        (key, (value.filename, value.file, value.content_type))
+                    )
+                else:
+                    data[key] = value
+        except Exception:
+            pass
         http_request = BaseRequest(
             request.method,
             str(request.url),
             headers=request.headers.items(),
             cookies=request.cookies,
             content=await request.body(),
+            data=data,
+            json=json,
+            files=files,
             version=request.scope["http_version"],
         )
 

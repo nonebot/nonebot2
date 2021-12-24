@@ -8,15 +8,14 @@ Quart 驱动适配
     https://pgjones.gitlab.io/quart/index.html
 """
 
-from typing import List, TypeVar, Callable, Optional, Coroutine
+from typing import List, Tuple, TypeVar, Callable, Optional, Coroutine
 
 import uvicorn
 from pydantic import BaseSettings
 
+from ._model import FileTypes
 from nonebot.config import Env
-from nonebot.log import logger
 from nonebot.typing import overrides
-from nonebot.utils import escape_tag
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
@@ -24,9 +23,9 @@ from nonebot.drivers import ReverseDriver, HTTPServerSetup, WebSocketServerSetup
 
 try:
     from quart import request as _request
-    import werkzeug.exceptions as exceptions
     from quart import websocket as _websocket
     from quart import Quart, Request, Response
+    from quart.datastructures import FileStorage
     from quart import Websocket as QuartWebSocket
 except ImportError:
     raise ValueError("Please install Quart by using `pip install nonebot2[quart]`")
@@ -213,6 +212,18 @@ class Driver(ReverseDriver):
     async def _handle_http(self, setup: HTTPServerSetup) -> Response:
         request: Request = _request
 
+        json = None
+        if request.is_json:
+            json = await request.get_json()
+
+        data = await request.form
+        files_dict = await request.files
+        files: List[Tuple[str, FileTypes]] = []
+        key: str
+        value: FileStorage
+        for key, value in files_dict.items():
+            files.append((key, (value.filename, value.stream, value.content_type)))
+
         http_request = BaseRequest(
             request.method,
             request.url,
@@ -221,6 +232,9 @@ class Driver(ReverseDriver):
             content=await request.get_data(
                 cache=False, as_text=False, parse_form_data=False
             ),
+            data=data or None,
+            json=json,
+            files=files or None,
             version=request.http_version,
         )
 
