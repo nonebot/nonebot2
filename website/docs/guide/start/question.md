@@ -1,4 +1,6 @@
 ---
+sidebar-position: 100
+description: 如何获取帮助
 ---
 
 # 遇到问题

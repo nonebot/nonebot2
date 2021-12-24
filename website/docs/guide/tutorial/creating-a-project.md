@@ -1,23 +1,21 @@
 ---
-sidebar_position: 4
+sidebar_position: 0
 
 options:
   menu:
-    weight: 40
+    weight: 20
     category: guide
 ---
 
-# 创建一个完整的项目
-
-上一章中我们已经运行了一个简单的 NoneBot 实例，在这一章，我们将从零开始一个完整的项目。
-
-## 目录结构
+# 创建项目
 
 可以使用 `nb-cli` 或者自行创建完整的项目目录：
 
 ```bash
 nb create
 ```
+
+## 目录结构
 
 <!-- prettier-ignore-start -->
 :::vue
@@ -46,7 +44,7 @@ AweSome-Bot
 :::warning 提示
 如果您使用如 `VSCode` / `PyCharm` 等 IDE 启动 nonebot，请检查 IDE 当前工作空间目录是否与当前侧边栏打开目录一致。
 
-- 注意：在二者不一致的环境下可能导致 nonebot 读取配置文件和插件等不符合预期
+> 注意：在二者不一致的环境下可能导致 nonebot 读取配置文件和插件等不符合预期
 
 :::
 

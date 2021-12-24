@@ -34,6 +34,10 @@ pip uninstall nonebot
 
 <!-- asciinema for installation -->
 
+:::important 提示
+`nb-cli` 的使用方法详见 [使用脚手架](./nb-cli.md)
+:::
+
 ## 不使用脚手架 (纯净安装)
 
 如果你不想使用脚手架，可以直接安装 `nonebot2`，并自行完成开发配置。
