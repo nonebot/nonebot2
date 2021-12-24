@@ -9,6 +9,7 @@ async def test_matcher(app: App, load_plugin):
     from plugins.matcher import (
         test_got,
         test_handle,
+        test_preset,
         test_combine,
         test_receive,
     )
@@ -56,5 +57,12 @@ async def test_matcher(app: App, load_plugin):
         ctx.receive_event(bot, event_next)
         ctx.should_rejected()
         ctx.receive_event(bot, event_next)
+        ctx.should_rejected()
+        ctx.receive_event(bot, event_next)
+
+    assert len(test_preset.handlers) == 2
+    async with app.test_matcher(test_preset) as ctx:
+        bot = ctx.create_bot()
+        ctx.receive_event(bot, event)
         ctx.should_rejected()
         ctx.receive_event(bot, event_next)

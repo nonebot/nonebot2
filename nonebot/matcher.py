@@ -28,13 +28,19 @@ from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.dependencies import Dependent
 from nonebot.permission import USER, Permission
-from nonebot.consts import ARG_KEY, RECEIVE_KEY, REJECT_TARGET, LAST_RECEIVE_KEY
 from nonebot.adapters import (
     Bot,
     Event,
     Message,
     MessageSegment,
     MessageTemplate,
+)
+from nonebot.consts import (
+    ARG_KEY,
+    RECEIVE_KEY,
+    REJECT_TARGET,
+    LAST_RECEIVE_KEY,
+    REJECT_CACHE_TARGET,
 )
 from nonebot.exception import (
     PausedException,
@@ -432,12 +438,12 @@ class Matcher(metaclass=MatcherMeta):
         """
 
         async def _receive(event: Event, matcher: "Matcher") -> Union[None, NoReturn]:
+            matcher.set_target(RECEIVE_KEY.format(id=id))
             if matcher.get_target() == RECEIVE_KEY.format(id=id):
                 matcher.set_receive(id, event)
                 return
             if matcher.get_receive(id):
                 return
-            matcher.set_target(RECEIVE_KEY.format(id=id))
             raise RejectedException
 
         _parameterless = [params.Depends(_receive), *(parameterless or [])]
@@ -476,12 +482,13 @@ class Matcher(metaclass=MatcherMeta):
         """
 
         async def _key_getter(event: Event, matcher: "Matcher"):
+            print(key, matcher.state)
+            matcher.set_target(ARG_KEY.format(key=key))
             if matcher.get_target() == ARG_KEY.format(key=key):
                 matcher.set_arg(key, event.get_message())
                 return
             if matcher.get_arg(key):
                 return
-            matcher.set_target(ARG_KEY.format(key=key))
             if prompt is not None:
                 await matcher.send(prompt)
             raise RejectedException
@@ -654,8 +661,11 @@ class Matcher(metaclass=MatcherMeta):
     def set_arg(self, key: str, message: Message) -> None:
         self.state[ARG_KEY.format(key=key)] = message
 
-    def set_target(self, target: str) -> None:
-        self.state[REJECT_TARGET] = target
+    def set_target(self, target: str, cache: bool = True) -> None:
+        if cache:
+            self.state[REJECT_CACHE_TARGET] = target
+        else:
+            self.state[REJECT_TARGET] = target
 
     def get_target(self, default: T = None) -> Union[str, T]:
         return self.state.get(REJECT_TARGET, default)
@@ -679,6 +689,11 @@ class Matcher(metaclass=MatcherMeta):
         if not updater:
             return USER(event.get_session_id(), perm=self.permission)
         return await updater(bot=bot, event=event, state=self.state, matcher=self)
+
+    async def resolve_reject(self):
+        handler = current_handler.get()
+        self.handlers.insert(0, handler)
+        self.state[REJECT_TARGET] = self.state[REJECT_CACHE_TARGET]
 
     async def simple_run(
         self,
@@ -734,9 +749,7 @@ class Matcher(metaclass=MatcherMeta):
             await self.simple_run(bot, event, state, stack, dependency_cache)
 
         except RejectedException:
-            handler = current_handler.get()
-            self.handlers.insert(0, handler)
-
+            await self.resolve_reject()
             type_ = await self.update_type(bot, event)
             permission = await self.update_permission(bot, event)
 

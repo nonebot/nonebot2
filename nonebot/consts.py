@@ -3,6 +3,7 @@ RECEIVE_KEY = "_receive_{id}"
 LAST_RECEIVE_KEY = "_last_receive"
 ARG_KEY = "{key}"
 REJECT_TARGET = "_current_target"
+REJECT_CACHE_TARGET = "_next_target"
 
 # used by Rule
 PREFIX_KEY = "_prefix"

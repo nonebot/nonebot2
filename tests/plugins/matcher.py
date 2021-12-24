@@ -1,6 +1,7 @@
 from nonebot import on_message
-from nonebot.adapters import Event
-from nonebot.params import ArgStr, Received, LastReceived
+from nonebot.matcher import Matcher
+from nonebot.adapters import Event, Message
+from nonebot.params import ArgStr, Received, EventMessage, LastReceived
 
 test_handle = on_message()
 
@@ -54,3 +55,19 @@ async def combine(a: str = ArgStr(), b: str = ArgStr(), r: Event = Received()):
     assert a == "text_next"
     assert b == "text_next"
     assert str(r.get_message()) == "text_next"
+
+
+test_preset = on_message()
+
+
+@test_preset.handle()
+async def preset(matcher: Matcher, message: Message = EventMessage()):
+    matcher.set_arg("a", message)
+
+
+@test_preset.got("a")
+async def reject_preset(a: str = ArgStr()):
+    if a == "text":
+        await test_preset.reject_arg("a")
+
+    assert a == "text_next"
