@@ -37,4 +37,4 @@ nb plugin install
 pip install <plugin-name>
 ```
 
-<!-- asciinema for install plugin -->
+<!-- TODO: asciinema for install plugin -->

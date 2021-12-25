@@ -153,16 +153,18 @@ class Config(BaseConfig):
     """
 
     # nonebot configs
-    driver: str = "nonebot.drivers.fastapi"
+    driver: str = "~fastapi"
     """
     - **类型**: ``str``
-    - **默认值**: ``"nonebot.drivers.fastapi"``
+    - **默认值**: ``"~fastapi"``
 
     :说明:
 
-      NoneBot 运行所使用的 ``Driver`` 。继承自 ``nonebot.driver.BaseDriver`` 。
+      NoneBot 运行所使用的 ``Driver`` 。继承自 ``nonebot.drivers.Driver`` 。
 
-      配置格式为 ``<module>[:<class>]``，默认类名为 ``Driver``。
+      配置格式为 ``<module>[:<Driver>][+<module>[:<Mixin>]]*``。
+
+      ``~`` 为 ``nonebot.drivers.`` 的缩写。
     """
     host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
     """
@@ -212,21 +214,6 @@ class Config(BaseConfig):
     """
 
     # bot connection configs
-    api_root: Dict[str, str] = {}
-    """
-    - **类型**: ``Dict[str, str]``
-    - **默认值**: ``{}``
-
-    :说明:
-
-      以机器人 ID 为键，上报地址为值的字典，环境变量或文件中应使用 json 序列化。
-
-    :示例:
-
-    .. code-block:: default
-
-        API_ROOT={"123456": "http://127.0.0.1:5700"}
-    """
     api_timeout: Optional[float] = 30.0
     """
     - **类型**: ``Optional[float]``
@@ -235,38 +222,6 @@ class Config(BaseConfig):
     :说明:
 
       API 请求超时时间，单位: 秒。
-    """
-    access_token: Optional[str] = None
-    """
-    - **类型**: ``Optional[str]``
-    - **默认值**: ``None``
-
-    :说明:
-
-      API 请求以及上报所需密钥，在请求头中携带。
-
-    :示例:
-
-    .. code-block:: http
-
-        POST /cqhttp/ HTTP/1.1
-        Authorization: Bearer kSLuTF2GC2Q4q4ugm3
-    """
-    secret: Optional[str] = None
-    """
-    - **类型**: ``Optional[str]``
-    - **默认值**: ``None``
-
-    :说明:
-
-      HTTP POST 形式上报所需签名，在请求头中携带。
-
-    :示例:
-
-    .. code-block:: http
-
-        POST /cqhttp/ HTTP/1.1
-        X-Signature: sha1=f9ddd4863ace61e64f462d41ca311e3d2c1176e2
     """
 
     # bot runtime configs

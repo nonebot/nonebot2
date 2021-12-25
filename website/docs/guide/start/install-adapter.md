@@ -37,4 +37,4 @@ nb adapter install
 pip install <adapter-name>
 ```
 
-<!-- asciinema for install adapter -->
+<!-- TODO: asciinema for install adapter -->

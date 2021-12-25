@@ -32,7 +32,7 @@ pip uninstall nonebot
    pip install nb-cli
    ```
 
-<!-- asciinema for installation -->
+<!-- TODO: asciinema for installation -->
 
 :::important 提示
 `nb-cli` 的使用方法详见 [使用脚手架](./nb-cli.md)
