@@ -1,5 +1,6 @@
 ---
 sidebar_position: 0
+description: 创建并运行项目
 
 options:
   menu:
@@ -37,7 +38,8 @@ AweSome-Bot
 - `awesome_bot/plugins` 或 `src/plugins`: 用于存放编写的 bot 插件
 - `.env`, `.env.dev`, `.env.prod`: 各环境配置文件
 - `bot.py`: bot 入口文件
-- `pyproject.toml`: 项目依赖管理文件，默认使用 [poetry](https://python-poetry.org/)
+- `pyproject.toml`: 项目插件配置文件
+- `Dockerfile`, `docker-compose.yml`: Docker 镜像配置文件
 
 ## 启动 Bot
 
@@ -48,17 +50,19 @@ AweSome-Bot
 
 :::
 
-通过 `nb-cli`
+1. 通过 `nb-cli`
 
-```bash
-nb run [--file=bot.py] [--app=app]
-```
+   ```bash
+   nb run [--file=bot.py] [--app=app]
+   ```
 
-或
+   其中 `--file` 参数可以指定 bot 入口文件，默认为 `bot.py`，`--app` 参数可以指定 asgi server，默认为 `app`。
 
-```bash
-python bot.py
-```
+2. 直接通过 `python` 启动
+
+   ```bash
+   python bot.py
+   ```
 
 :::tip 提示
 如果在 bot 入口文件内定义了 asgi server， `nb-cli` 将会为你启动**冷重载模式**（当文件发生变动时自动重启 NoneBot 实例）
