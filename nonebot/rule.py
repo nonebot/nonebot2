@@ -304,7 +304,7 @@ class CommandRule:
     def __init__(self, cmds: List[Tuple[str, ...]]):
         self.cmds = cmds
 
-    async def __call__(self, cmd: Tuple[str, ...] = Command()) -> bool:
+    async def __call__(self, cmd: Optional[Tuple[str, ...]] = Command()) -> bool:
         return cmd in self.cmds
 
     def __repr__(self):
@@ -390,7 +390,7 @@ class ShellCommandRule:
 
     async def __call__(
         self,
-        cmd: Tuple[str, ...] = Command(),
+        cmd: Optional[Tuple[str, ...]] = Command(),
         msg: Message = EventMessage(),
         state: T_State = State(),
     ) -> bool:
