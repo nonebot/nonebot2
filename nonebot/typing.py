@@ -24,10 +24,8 @@ from typing import (
     Union,
     TypeVar,
     Callable,
-    NoReturn,
     Optional,
     Awaitable,
-    ForwardRef,
 )
 
 if TYPE_CHECKING:

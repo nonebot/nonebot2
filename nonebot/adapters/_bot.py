@@ -2,7 +2,7 @@ import abc
 import asyncio
 from functools import partial
 from typing_extensions import Protocol
-from typing import TYPE_CHECKING, Any, Set, Tuple, Union, Optional
+from typing import TYPE_CHECKING, Any, Set, Union, Optional
 
 from nonebot.log import logger
 from nonebot.config import Config

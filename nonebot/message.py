@@ -8,16 +8,7 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
 import asyncio
 from datetime import datetime
 from contextlib import AsyncExitStack
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Set,
-    Dict,
-    List,
-    Type,
-    Optional,
-    Coroutine,
-)
+from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional, Coroutine
 
 from nonebot import params
 from nonebot.log import logger
@@ -33,7 +24,6 @@ from nonebot.exception import (
 )
 from nonebot.typing import (
     T_State,
-    T_Handler,
     T_DependencyCache,
     T_RunPreProcessor,
     T_RunPostProcessor,
