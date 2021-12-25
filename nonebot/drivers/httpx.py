@@ -12,7 +12,9 @@ from nonebot.drivers import (
 try:
     import httpx
 except ImportError:
-    raise ImportError("Please install httpx by using `pip install nonebot2[httpx]`")
+    raise ImportError(
+        "Please install httpx by using `pip install nonebot2[httpx]`"
+    ) from None
 
 
 class Mixin(ForwardMixin):
@@ -24,7 +26,9 @@ class Mixin(ForwardMixin):
     @overrides(ForwardMixin)
     async def request(self, setup: Request) -> Response:
         async with httpx.AsyncClient(
-            http2=setup.version == HTTPVersion.H2, follow_redirects=True
+            http2=setup.version == HTTPVersion.H2,
+            proxies=setup.proxy,
+            follow_redirects=True,
         ) as client:
             response = await client.request(
                 setup.method,

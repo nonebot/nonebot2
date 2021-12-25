@@ -70,6 +70,7 @@ class Request:
         files: FilesTypes = None,
         version: Union[str, HTTPVersion] = HTTPVersion.H11,
         timeout: Optional[float] = None,
+        proxy: Optional[str] = None,
     ):
         # method
         self.method: str = (
@@ -81,6 +82,8 @@ class Request:
         self.version: HTTPVersion = HTTPVersion(version)
         # timeout
         self.timeout: Optional[float] = timeout
+        # proxy
+        self.proxy: Optional[str] = proxy
 
         # url
         if isinstance(url, tuple):

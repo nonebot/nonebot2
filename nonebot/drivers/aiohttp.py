@@ -40,7 +40,7 @@ class Mixin(ForwardMixin):
             files = aiohttp.FormData()
             for name, file in setup.files:
                 files.add_field(name, file[1], content_type=file[2], filename=file[0])
-        async with aiohttp.ClientSession(version=version) as session:
+        async with aiohttp.ClientSession(version=version, trust_env=True) as session:
             async with session.request(
                 setup.method,
                 setup.url,
@@ -48,6 +48,7 @@ class Mixin(ForwardMixin):
                 json=setup.json,
                 headers=setup.headers,
                 timeout=timeout,
+                proxy=setup.proxy,
             ) as response:
                 res = Response(
                     response.status,
@@ -66,12 +67,13 @@ class Mixin(ForwardMixin):
         else:
             raise RuntimeError(f"Unsupported HTTP version: {setup.version}")
 
-        session = aiohttp.ClientSession(version=version)
+        session = aiohttp.ClientSession(version=version, trust_env=True)
         ws = await session.ws_connect(
             setup.url,
             method=setup.method,
             timeout=setup.timeout or 10,
             headers=setup.headers,
+            proxy=setup.proxy,
         )
         websocket = WebSocket(request=setup, session=session, websocket=ws)
         return websocket

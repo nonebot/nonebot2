@@ -28,7 +28,9 @@ try:
     from quart.datastructures import FileStorage
     from quart import Websocket as QuartWebSocket
 except ImportError:
-    raise ValueError("Please install Quart by using `pip install nonebot2[quart]`")
+    raise ValueError(
+        "Please install Quart by using `pip install nonebot2[quart]`"
+    ) from None
 
 _AsyncCallable = TypeVar("_AsyncCallable", bound=Callable[..., Coroutine])
 
