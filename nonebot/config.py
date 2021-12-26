@@ -29,6 +29,9 @@ from pydantic.env_settings import (
     env_file_sentinel,
 )
 
+from nonebot.log import logger
+from nonebot.utils import escape_tag
+
 
 class CustomEnvSettings(EnvSettingsSource):
     def __call__(self, settings: BaseSettings) -> Dict[str, Any]:
@@ -90,9 +93,11 @@ class CustomEnvSettings(EnvSettingsSource):
                     env_val = env_vars[env_name]
                 try:
                     if env_val:
-                        env_val = settings.__config__.json_loads(env_val)
+                        env_val = settings.__config__.json_loads(env_val.strip())
                 except ValueError as e:
-                    pass
+                    logger.opt(colors=True, exception=e).trace(
+                        f"Error while parsing JSON for {escape_tag(env_name)}. Assumed as string."
+                    )
 
                 d[env_name] = env_val
 

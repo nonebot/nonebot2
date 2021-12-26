@@ -303,7 +303,12 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
                 return
 
         # Trie Match
-        TrieRule.get_value(bot, event, state)
+        try:
+            TrieRule.get_value(bot, event, state)
+        except Exception as e:
+            logger.opt(colors=True, exception=e).warning(
+                "Error while parsing command for event"
+            )
 
         break_flag = False
         for priority in sorted(matchers.keys()):

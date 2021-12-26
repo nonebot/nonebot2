@@ -72,16 +72,16 @@ class Mixin(ForwardMixin):
         else:
             raise RuntimeError(f"Unsupported HTTP version: {setup.version}")
 
-        session = aiohttp.ClientSession(version=version, trust_env=True)
-        async with session.ws_connect(
-            setup.url,
-            method=setup.method,
-            timeout=setup.timeout or 10,
-            headers=setup.headers,
-            proxy=setup.proxy,
-        ) as ws:
-            websocket = WebSocket(request=setup, session=session, websocket=ws)
-            yield websocket
+        async with aiohttp.ClientSession(version=version, trust_env=True) as session:
+            async with session.ws_connect(
+                setup.url,
+                method=setup.method,
+                timeout=setup.timeout or 10,
+                headers=setup.headers,
+                proxy=setup.proxy,
+            ) as ws:
+                websocket = WebSocket(request=setup, session=session, websocket=ws)
+                yield websocket
 
 
 class WebSocket(BaseWebSocket):
