@@ -230,3 +230,27 @@ class ActionFailed(AdapterException):
     """
 
     pass
+
+
+# Driver Exceptions
+class DriverException(NoneBotException):
+    """
+    :说明:
+
+      ``Driver`` 抛出的异常基类
+    """
+
+
+class WebSocketClosed(DriverException):
+    """
+    :说明:
+
+      WebSocket 连接已关闭
+    """
+
+    def __init__(self, code: int, reason: Optional[str] = None):
+        self.code = code
+        self.reason = reason
+
+    def __repr__(self) -> str:
+        return f"<WebSocketClosed code={self.code} reason={self.reason}>"

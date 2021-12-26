@@ -10,6 +10,7 @@ from contextlib import asynccontextmanager
 
 from nonebot.typing import overrides
 from nonebot.drivers import Request, Response
+from nonebot.exception import WebSocketClosed
 from nonebot.drivers._block_driver import BlockDriver
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers import HTTPVersion, ForwardMixin, combine_driver
@@ -109,13 +110,25 @@ class WebSocket(BaseWebSocket):
         await self.websocket.close(code=code)
         await self.session.close()
 
+    async def _receive(self) -> aiohttp.WSMessage:
+        msg = await self.websocket.receive()
+        if msg.type in (aiohttp.WSMsgType.CLOSE, aiohttp.WSMsgType.CLOSING):
+            raise WebSocketClosed(self.websocket.close_code or 1006)
+        return msg
+
     @overrides(BaseWebSocket)
     async def receive(self) -> str:
-        return await self.websocket.receive_str()
+        msg = await self._receive()
+        if msg.type != aiohttp.WSMsgType.TEXT:
+            raise TypeError(f"WebSocket received unexpected frame type: {msg.type}")
+        return msg.data
 
     @overrides(BaseWebSocket)
     async def receive_bytes(self) -> bytes:
-        return await self.websocket.receive_bytes()
+        msg = await self._receive()
+        if msg.type != aiohttp.WSMsgType.TEXT:
+            raise TypeError(f"WebSocket received unexpected frame type: {msg.type}")
+        return msg.data
 
     @overrides(BaseWebSocket)
     async def send(self, data: str) -> None:
