@@ -1,3 +1,6 @@
+from typing import AsyncGenerator
+from contextlib import asynccontextmanager
+
 from nonebot.typing import overrides
 from nonebot.drivers._block_driver import BlockDriver
 from nonebot.drivers import (
@@ -48,8 +51,10 @@ class Mixin(ForwardMixin):
             )
 
     @overrides(ForwardMixin)
-    async def websocket(self, setup: Request) -> WebSocket:
-        return await super(Mixin, self).websocket(setup)
+    @asynccontextmanager
+    async def websocket(self, setup: Request) -> AsyncGenerator[WebSocket, None]:
+        async with super(Mixin, self).websocket(setup) as ws:
+            yield ws
 
 
 Driver = combine_driver(BlockDriver, Mixin)

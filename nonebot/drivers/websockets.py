@@ -1,4 +1,6 @@
 import logging
+from typing import AsyncGenerator
+from contextlib import asynccontextmanager
 
 from nonebot.typing import overrides
 from nonebot.log import LoguruHandler
@@ -29,13 +31,15 @@ class Mixin(ForwardMixin):
         return await super(Mixin, self).request(setup)
 
     @overrides(ForwardMixin)
-    async def websocket(self, setup: Request) -> "WebSocket":
-        ws = await Connect(
+    @asynccontextmanager
+    async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
+        connection = Connect(
             str(setup.url),
             extra_headers=setup.headers.items(),
             open_timeout=setup.timeout,
         )
-        return WebSocket(request=setup, websocket=ws)
+        async with connection as ws:
+            yield WebSocket(request=setup, websocket=ws)
 
 
 class WebSocket(BaseWebSocket):

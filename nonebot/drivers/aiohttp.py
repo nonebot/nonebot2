@@ -5,6 +5,9 @@ AIOHTTP 驱动适配
 本驱动仅支持客户端连接
 """
 
+from typing import AsyncGenerator
+from contextlib import asynccontextmanager
+
 from nonebot.typing import overrides
 from nonebot.drivers import Request, Response
 from nonebot.drivers._block_driver import BlockDriver
@@ -59,7 +62,8 @@ class Mixin(ForwardMixin):
                 return res
 
     @overrides(ForwardMixin)
-    async def websocket(self, setup: Request) -> "WebSocket":
+    @asynccontextmanager
+    async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
         if setup.version == HTTPVersion.H10:
             version = aiohttp.HttpVersion10
         elif setup.version == HTTPVersion.H11:
@@ -68,15 +72,15 @@ class Mixin(ForwardMixin):
             raise RuntimeError(f"Unsupported HTTP version: {setup.version}")
 
         session = aiohttp.ClientSession(version=version, trust_env=True)
-        ws = await session.ws_connect(
+        async with session.ws_connect(
             setup.url,
             method=setup.method,
             timeout=setup.timeout or 10,
             headers=setup.headers,
             proxy=setup.proxy,
-        )
-        websocket = WebSocket(request=setup, session=session, websocket=ws)
-        return websocket
+        ) as ws:
+            websocket = WebSocket(request=setup, session=session, websocket=ws)
+            yield websocket
 
 
 class WebSocket(BaseWebSocket):

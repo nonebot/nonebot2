@@ -8,7 +8,17 @@
 import abc
 import asyncio
 from dataclasses import dataclass
-from typing import TYPE_CHECKING, Any, Set, Dict, Type, Callable, Awaitable
+from contextlib import asynccontextmanager
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Set,
+    Dict,
+    Type,
+    Callable,
+    Awaitable,
+    AsyncGenerator,
+)
 
 from ._model import URL as URL
 from nonebot.log import logger
@@ -215,8 +225,10 @@ class ForwardMixin(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def websocket(self, setup: Request) -> WebSocket:
+    @asynccontextmanager
+    async def websocket(self, setup: Request) -> AsyncGenerator[WebSocket, None]:
         raise NotImplementedError
+        yield  # used for static type checking's generator detection
 
 
 class ForwardDriver(Driver, ForwardMixin):
