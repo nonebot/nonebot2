@@ -206,9 +206,10 @@ def USER(*users: str, perm: Optional[Permission] = None):
 
 class SuperUser:
     async def __call__(self, bot: Bot, event: Event) -> bool:
-        return (
-            event.get_type() == "message"
-            and event.get_user_id() in bot.config.superusers
+        return event.get_type() == "message" and (
+            f"{bot.adapter.get_name().split(maxsplit=1)[0].lower()}:{event.get_user_id()}"
+            in bot.config.superusers
+            or event.get_user_id() in bot.config.superusers  # 兼容旧配置
         )
 
 
