@@ -1,5 +1,6 @@
 import abc
-from typing import Any, Dict
+from contextlib import asynccontextmanager
+from typing import Any, Dict, AsyncGenerator
 
 from ._bot import Bot
 from nonebot.config import Config
@@ -52,10 +53,12 @@ class Adapter(abc.ABC):
             raise TypeError("Current driver does not support http client")
         return await self.driver.request(setup)
 
-    async def websocket(self, setup: Request) -> WebSocket:
+    @asynccontextmanager
+    async def websocket(self, setup: Request) -> AsyncGenerator[WebSocket, None]:
         if not isinstance(self.driver, ForwardDriver):
             raise TypeError("Current driver does not support websocket client")
-        return await self.driver.websocket(setup)
+        async with self.driver.websocket(setup) as ws:
+            yield ws
 
     @abc.abstractmethod
     async def _call_api(self, bot: Bot, api: str, **data) -> Any:
