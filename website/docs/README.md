@@ -1,7 +1,7 @@
 ---
 sidebar_position: 0
 id: index
-slug: /guide
+slug: /
 ---
 
 # 概览

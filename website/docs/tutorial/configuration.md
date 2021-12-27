@@ -119,7 +119,7 @@ nonebot.get_driver()._adapters["adapter_name"].config.custom_config
 
 ## 详细配置项
 
-配置项的 API 文档可以前往 [Class Config](../../api/config.md#class-config) 查看。
+配置项的 API 文档可以前往 [Class Config](../api/config.md#class-config) 查看。
 
 ### Driver
 

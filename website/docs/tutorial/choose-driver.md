@@ -4,7 +4,7 @@ description: 各驱动器的功能与区别
 
 options:
   menu:
-    weight: 25
+    weight: 22
     category: guide
 ---
 
@@ -56,7 +56,7 @@ FastAPI 是一个易上手、高性能的异步 Web 框架，具有极佳的编�
 
 FastAPI: [文档](https://fastapi.tiangolo.com/), [仓库](https://github.com/tiangolo/fastapi)
 
-驱动器: [API](../../api/drivers/fastapi.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/fastapi.py)
+驱动器: [API](../api/drivers/fastapi.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/fastapi.py)
 
 ```env
 DRIVER=~fastapi
@@ -72,7 +72,7 @@ Quart 是一个类 Flask 的异步版本，拥有与 Flask 非常相似的接口
 
 Quart: [文档](https://pgjones.gitlab.io/quart/), [仓库](https://gitlab.com/pgjones/quart)
 
-驱动器: [API](../../api/drivers/quart.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/quart.py)
+驱动器: [API](../api/drivers/quart.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/quart.py)
 
 ```env
 DRIVER=~quart
@@ -90,7 +90,7 @@ DRIVER=~quart
 
 HTTPX: [文档](https://www.python-httpx.org/), [仓库](https://github.com/encode/httpx/)
 
-驱动器: [API](../../api/drivers/httpx.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/httpx.py)
+驱动器: [API](../api/drivers/httpx.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/httpx.py)
 
 ```env
 DRIVER=~httpx
@@ -112,7 +112,7 @@ DRIVER=~httpx
 
 websockets: [文档](https://websockets.readthedocs.io/en/stable/), [仓库](https://github.com/aaugustin/websockets)
 
-驱动器: [API](../../api/drivers/websockets.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/websockets.py)
+驱动器: [API](../api/drivers/websockets.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/websockets.py)
 
 ```env
 DRIVER=~websockets
@@ -130,7 +130,7 @@ DRIVER=~websockets
 
 AIOHTTP: [文档](https://docs.aiohttp.org/en/stable/), [仓库](https://github.com/aio-libs/aiohttp)
 
-驱动器: [API](../../api/drivers/aiohttp.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/aiohttp.py)
+驱动器: [API](../api/drivers/aiohttp.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/aiohttp.py)
 
 ```env
 DRIVER=~httpx

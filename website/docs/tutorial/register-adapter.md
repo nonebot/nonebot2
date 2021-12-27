@@ -4,7 +4,7 @@ description: 协议适配器的功能与使用
 
 options:
   menu:
-    weight: 26
+    weight: 23
     category: guide
 ---
 

@@ -18,8 +18,7 @@ nb create
 
 ## 目录结构
 
-<!-- prettier-ignore-start -->
-```bash
+```bash title=Project
 AweSome-Bot
 ├── "awesome_bot" # 或是 src
 │   └── "plugins"
@@ -33,7 +32,6 @@ AweSome-Bot
 ├── "pyproject.toml"
 └── README.md
 ```
-<!-- prettier-ignore-end -->
 
 - `awesome_bot/plugins` 或 `src/plugins`: 用于存放编写的 bot 插件
 - `.env`, `.env.dev`, `.env.prod`: 各环境配置文件

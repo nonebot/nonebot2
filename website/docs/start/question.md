@@ -9,7 +9,7 @@ description: 如何获取帮助
 
 1. 点击下方链接前往 GitHub ~~点击 star~~ ，前往 Issues 页面，在 `New Issue` Template 中选择 `Question`
 
-   [![nonebot2](https://img.shields.io/github/stars/nonebot/nonebot2?style=social)](https://github.com/nonebot/nonebot2)
+   NoneBot2: [![nonebot2](https://img.shields.io/github/stars/nonebot/nonebot2?style=social)](https://github.com/nonebot/nonebot2)
 
 2. 通过 QQ 群 (点击下方链接直达)
 
