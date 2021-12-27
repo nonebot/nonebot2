@@ -134,10 +134,12 @@ NoneBot 运行所使用的驱动器。主要分为 `ForwardDriver`, `ReverseDriv
 
 NoneBot 内置了几个常用驱动器，包括了各类常用功能，常见驱动器配置如下：
 
-- `~fastapi`
-- `~httpx+~websockets`
-- `~fastapi+~httpx+~websockets`
-- `~fastapi+~aiohttp`
+```env
+DRIVER=~fastapi
+DRIVER=~httpx+~websockets
+DRIVER=~fastapi+~httpx+~websockets
+DRIVER=~fastapi+~aiohttp
+```
 
 各驱动器的功能与区别请参考 [选择驱动器](./choose-driver.md) 。
 
