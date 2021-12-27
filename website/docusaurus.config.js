@@ -105,7 +105,7 @@ const config = {
             icon: ["fas", "book"],
             items: [
               { label: "Introduction", to: "/docs/guide" },
-              { label: "Installation", to: "/docs/guide/installation" },
+              { label: "Installation", to: "/docs/guide/start/installation" },
             ],
           },
           {

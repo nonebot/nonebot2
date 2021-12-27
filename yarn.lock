@@ -1849,9 +1849,9 @@
   integrity sha1-k+Jb+e51/g/YC1lLxP6w6GIRG1o=
 
 "@types/node@*":
-  version "17.0.4"
-  resolved "https://registry.npmmirror.com/@types/node/download/@types/node-17.0.4.tgz#fec0ce0526abb6062fd206d72a642811b887a111"
-  integrity sha512-6xwbrW4JJiJLgF+zNypN5wr2ykM9/jHcL7rQ8fZe2vuftggjzZeRSM4OwRc6Xk8qWjwJ99qVHo/JgOGmomWRog==
+  version "17.0.5"
+  resolved "https://registry.npmmirror.com/@types/node/download/@types/node-17.0.5.tgz#57ca67ec4e57ad9e4ef5a6bab48a15387a1c83e0"
+  integrity sha512-w3mrvNXLeDYV1GKTZorGJQivK6XLCoGwpnyJFbJVK/aTBQUxOCaa/GlFAAN3OTDFcb7h5tiFG+YXCO2By+riZw==
 
 "@types/parse-json@^4.0.0":
   version "4.0.0"
@@ -3031,9 +3031,9 @@ css-select@^2.0.0:
     nth-check "^1.0.2"
 
 css-select@^4.1.3:
-  version "4.2.0"
-  resolved "https://registry.npmmirror.com/css-select/download/css-select-4.2.0.tgz#ab28276d3afb00cc05e818bd33eb030f14f57895"
-  integrity sha512-6YVG6hsH9yIb/si3Th/is8Pex7qnVHO6t7q7U6TIUnkQASGbS8tnUDBftnPynLNnuUl/r2+PTd0ekiiq7R0zJw==
+  version "4.2.1"
+  resolved "https://registry.npmmirror.com/css-select/download/css-select-4.2.1.tgz#9e665d6ae4c7f9d65dbe69d0316e3221fb274cdd"
+  integrity sha512-/aUslKhzkTNCQUB2qTX84lVmfia9NyjP3WpDGtj/WxhwBzWBYUV3DgUpurHTme8UTPcPlAD1DJ+b0nN/t50zDQ==
   dependencies:
     boolbase "^1.0.0"
     css-what "^5.1.0"
@@ -3338,19 +3338,19 @@ dns-txt@^2.0.2:
     buffer-indexof "^1.0.0"
 
 docusaurus-preset-nonepress@canary:
-  version "0.0.0-122"
-  resolved "https://registry.npmmirror.com/docusaurus-preset-nonepress/download/docusaurus-preset-nonepress-0.0.0-122.tgz#7daaef39d45984852b30d30ac69751c0f4eba586"
-  integrity sha512-EOFVl1xV/vbTTOdMLyXnXEAKg4jEmm9CR8HbUQlEX2/+y5mLpGMAafGEXEyxzZT1KlfQcpGKhCMkMDhcWY8gRg==
+  version "0.0.0-123"
+  resolved "https://registry.npmmirror.com/docusaurus-preset-nonepress/download/docusaurus-preset-nonepress-0.0.0-123.tgz#2cafef58c6264ac6da0e6ed9c70720084df39024"
+  integrity sha512-PuSOUwWYI2aDyFQfLKhyn0w94a22leL8cB6LfivDvn9qlDmglxa6Le3VNsmgxiGieeoEQ3IA5907RoZQwzuQjg==
   dependencies:
     "@docusaurus/core" "2.0.0-beta.9"
     "@docusaurus/plugin-content-docs" "2.0.0-beta.9"
     "@docusaurus/plugin-content-pages" "2.0.0-beta.9"
-    docusaurus-theme-nonepress "0.0.0-122"
+    docusaurus-theme-nonepress "0.0.0-123"
 
-docusaurus-theme-nonepress@0.0.0-122:
-  version "0.0.0-122"
-  resolved "https://registry.npmmirror.com/docusaurus-theme-nonepress/download/docusaurus-theme-nonepress-0.0.0-122.tgz#0ca3649b3f7c56ca421eab05ab41e889d8c5bc5a"
-  integrity sha512-fk+miOhRYYpM4hzPTFsYYXnDq0nV66uhASVbV2L1RxxrJOebcdvHJxuFPelh42NsQNQBDq/ypOS2mjO9yfTcoQ==
+docusaurus-theme-nonepress@0.0.0-123:
+  version "0.0.0-123"
+  resolved "https://registry.npmmirror.com/docusaurus-theme-nonepress/download/docusaurus-theme-nonepress-0.0.0-123.tgz#0bbba71820930bcbfec5b1ea7191dbbb698dc0bc"
+  integrity sha512-eOh+sM0pp0tjB5g4lTwUkWERwmWjv9M//bhoNZ5NwJ9sAVLB7AI+YiQP2BthAk8HlVqvQyR5EJz0hFCr6THZ1Q==
   dependencies:
     "@docsearch/react" "^3.0.0-alpha.39"
     "@docusaurus/core" "2.0.0-beta.9"
