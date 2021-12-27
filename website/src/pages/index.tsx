@@ -2,7 +2,6 @@ import clsx from "clsx";
 import React from "react";
 
 import CodeBlock from "@theme/CodeBlock";
-import { HeroFeatureDouble, HeroFeatureSingle } from "@theme/Hero";
 import Layout from "@theme/Layout";
 
 import { Hero, HeroFeature } from "../components/Hero";

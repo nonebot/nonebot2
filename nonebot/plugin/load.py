@@ -131,11 +131,11 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     return load_all_plugins(plugins, plugin_dirs)
 
 
-def load_builtin_plugins(name: str = "echo") -> Optional[Plugin]:
+def load_builtin_plugins(name: str) -> Optional[Plugin]:
     """
     :说明:
 
-      导入 NoneBot 内置插件, 默认导入 ``echo`` 插件
+      导入 NoneBot 内置插件
 
     :返回:
 

@@ -104,8 +104,8 @@ const config = {
             title: "Learn",
             icon: ["fas", "book"],
             items: [
-              { label: "Introduction", to: "/docs/guide" },
-              { label: "Installation", to: "/docs/guide/start/installation" },
+              { label: "Introduction", to: "/docs/" },
+              { label: "Installation", to: "/docs/start/installation" },
             ],
           },
           {

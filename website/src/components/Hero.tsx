@@ -21,7 +21,7 @@ export function Hero(): JSX.Element {
         </p>
         <div className="mt-8">
           <Link
-            to="/docs/guide"
+            to="/docs/"
             className="inline-block bg-hero text-white font-bold rounded-lg px-6 py-3"
           >
             开始使用 <FontAwesomeIcon icon={["fas", "chevron-right"]} />
