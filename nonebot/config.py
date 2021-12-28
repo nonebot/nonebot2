@@ -189,19 +189,10 @@ class Config(BaseConfig):
 
       NoneBot 的 HTTP 和 WebSocket 服务端监听的端口。
     """
-    debug: bool = False
-    """
-    - **类型**: ``bool``
-    - **默认值**: ``False``
-
-    :说明:
-
-      是否以调试模式运行 NoneBot。
-    """
-    log_level: Optional[Union[int, str]] = None
+    log_level: Union[int, str] = "INFO"
     """
     - **类型**: ``Union[int, str]``
-    - **默认值**: ``None``
+    - **默认值**: ``INFO``
 
     :说明:
 

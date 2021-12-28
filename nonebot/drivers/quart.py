@@ -40,15 +40,15 @@ class Config(BaseSettings):
     Quart 驱动框架设置
     """
 
-    quart_reload: Optional[bool] = None
+    quart_reload: bool = False
     """
     :类型:
 
-      ``Optional[bool]``
+      ``bool``
 
     :说明:
 
-      开启/关闭冷重载，默认会在配置了 app 的 debug 模式启用
+      开启/关闭冷重载
     """
     quart_reload_dirs: Optional[List[str]] = None
     """
@@ -199,14 +199,11 @@ class Driver(ReverseDriver):
             app or self.server_app,  # type: ignore
             host=host or str(self.config.host),
             port=port or self.config.port,
-            reload=self.quart_config.quart_reload
-            if self.quart_config.quart_reload is not None
-            else (bool(app) and self.config.debug),
+            reload=self.quart_config.quart_reload,
             reload_dirs=self.quart_config.quart_reload_dirs,
             reload_delay=self.quart_config.quart_reload_delay,
             reload_includes=self.quart_config.quart_reload_includes,
             reload_excludes=self.quart_config.quart_reload_excludes,
-            debug=self.config.debug,
             log_config=LOGGING_CONFIG,
             **kwargs,
         )

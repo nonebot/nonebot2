@@ -262,11 +262,7 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
             _env_file=_env_file or f".env.{env.environment}",
         )
 
-        default_filter.level = (
-            ("DEBUG" if config.debug else "INFO")
-            if config.log_level is None
-            else config.log_level
-        )
+        default_filter.level = config.log_level
         logger.opt(colors=True).info(
             f"Current <y><b>Env: {escape_tag(env.environment)}</b></y>"
         )

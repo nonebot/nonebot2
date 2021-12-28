@@ -31,7 +31,7 @@ logger: "Logger" = loguru.logger
 :默认信息:
 
   * 格式: ``[%(asctime)s %(name)s] %(levelname)s: %(message)s``
-  * 等级: ``DEBUG`` / ``INFO`` ，根据 config 配置改变
+  * 等级: ``INFO`` ，根据 ``config,log_level`` 配置改变
   * 输出: 输出至 stdout
 
 :用法:
@@ -49,7 +49,7 @@ logger: "Logger" = loguru.logger
 
 class Filter:
     def __init__(self) -> None:
-        self.level: Union[int, str] = "DEBUG"
+        self.level: Union[int, str] = "INFO"
 
     def __call__(self, record):
         module_name: str = record["name"]

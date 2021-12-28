@@ -63,15 +63,15 @@ class Config(BaseSettings):
 
       ``redoc`` 地址，默认为 ``None`` 即关闭
     """
-    fastapi_reload: Optional[bool] = None
+    fastapi_reload: bool = False
     """
     :类型:
 
-      ``Optional[bool]``
+      ``bool``
 
     :说明:
 
-      开启/关闭冷重载，默认会在配置了 app 的 debug 模式启用
+      开启/关闭冷重载
     """
     fastapi_reload_dirs: Optional[List[str]] = None
     """
@@ -127,7 +127,6 @@ class Driver(ReverseDriver):
         self.fastapi_config: Config = Config(**config.dict())
 
         self._server_app = FastAPI(
-            debug=config.debug,
             openapi_url=self.fastapi_config.fastapi_openapi_url,
             docs_url=self.fastapi_config.fastapi_docs_url,
             redoc_url=self.fastapi_config.fastapi_redoc_url,
@@ -221,14 +220,11 @@ class Driver(ReverseDriver):
             app or self.server_app,  # type: ignore
             host=host or str(self.config.host),
             port=port or self.config.port,
-            reload=self.fastapi_config.fastapi_reload
-            if self.fastapi_config.fastapi_reload is not None
-            else (bool(app) and self.config.debug),
+            reload=self.fastapi_config.fastapi_reload,
             reload_dirs=self.fastapi_config.fastapi_reload_dirs,
             reload_delay=self.fastapi_config.fastapi_reload_delay,
             reload_includes=self.fastapi_config.fastapi_reload_includes,
             reload_excludes=self.fastapi_config.fastapi_reload_excludes,
-            debug=self.config.debug,
             log_config=LOGGING_CONFIG,
             **kwargs,
         )

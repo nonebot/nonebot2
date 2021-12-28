@@ -65,7 +65,6 @@ NoneBot 默认会从 `.env.{ENVIRONMENT}` 文件加载配置，但是可以在 N
 ```bash
 HOST=0.0.0.0  # 配置 NoneBot 监听的 IP/主机名
 PORT=8080  # 配置 NoneBot 监听的端口
-DEBUG=true  # 开启 debug 模式 **请勿在生产环境开启**
 SUPERUSERS=["123456789", "987654321"]  # 配置 NoneBot 超级用户
 NICKNAME=["awesome", "bot"]  # 配置机器人的昵称
 COMMAND_START=["/", ""]  # 配置命令起始字符
