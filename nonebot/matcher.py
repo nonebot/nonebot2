@@ -694,7 +694,8 @@ class Matcher(metaclass=MatcherMeta):
     async def resolve_reject(self):
         handler = current_handler.get()
         self.handlers.insert(0, handler)
-        self.state[REJECT_TARGET] = self.state[REJECT_CACHE_TARGET]
+        if REJECT_CACHE_TARGET in self.state:
+            self.state[REJECT_TARGET] = self.state[REJECT_CACHE_TARGET]
 
     async def simple_run(
         self,
