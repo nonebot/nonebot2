@@ -1,3 +1,7 @@
+---
+description: Changelog
+---
+
 # 更新日志
 
 ## v2.0.0b1

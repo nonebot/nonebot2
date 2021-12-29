@@ -100,3 +100,7 @@ nonebot.load_from_toml("plugin_config.toml", encoding="utf-8")
 ```python
 nonebot.load_builtin_plugin("echo")
 ```
+
+## 嵌套插件
+
+<!-- TODO -->
