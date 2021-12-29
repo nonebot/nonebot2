@@ -391,8 +391,9 @@ def on_command(
     """
 
     commands = set([cmd]) | (aliases or set())
+    block = kwargs.pop("block", False)
     return on_message(
-        command(*commands) & rule, block=False, **kwargs, _depth=_depth + 1
+        command(*commands) & rule, block=block, **kwargs, _depth=_depth + 1
     )
 
 
