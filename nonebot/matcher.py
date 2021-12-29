@@ -42,13 +42,6 @@ from nonebot.consts import (
     LAST_RECEIVE_KEY,
     REJECT_CACHE_TARGET,
 )
-from nonebot.exception import (
-    PausedException,
-    StopPropagation,
-    SkippedException,
-    FinishedException,
-    RejectedException,
-)
 from nonebot.typing import (
     Any,
     T_State,
@@ -57,6 +50,14 @@ from nonebot.typing import (
     T_TypeUpdater,
     T_DependencyCache,
     T_PermissionUpdater,
+)
+from nonebot.exception import (
+    TypeMisMatch,
+    PausedException,
+    StopPropagation,
+    SkippedException,
+    FinishedException,
+    RejectedException,
 )
 
 if TYPE_CHECKING:
@@ -646,6 +647,10 @@ class Matcher(metaclass=MatcherMeta):
             await cls.send(prompt, **kwargs)
         raise RejectedException
 
+    @classmethod
+    def skip(cls) -> NoReturn:
+        raise SkippedException
+
     def get_receive(self, id: str, default: T = None) -> Union[Event, T]:
         return self.state.get(RECEIVE_KEY.format(id=id), default)
 
@@ -729,11 +734,13 @@ class Matcher(metaclass=MatcherMeta):
                         stack=stack,
                         dependency_cache=dependency_cache,
                     )
-                except SkippedException as e:
+                except TypeMisMatch as e:
                     logger.debug(
                         f"Handler {handler} param {e.param.name} value {e.value} "
                         f"mismatch type {e.param._type_display()}, skipped"
                     )
+                except SkippedException as e:
+                    logger.debug(f"Handler {handler} skipped")
         except StopPropagation:
             self.block = True
         finally:

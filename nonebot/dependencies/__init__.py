@@ -15,7 +15,7 @@ from pydantic.fields import Required, FieldInfo, Undefined, ModelField
 
 from nonebot.log import logger
 from .utils import get_typed_signature
-from nonebot.exception import SkippedException
+from nonebot.exception import TypeMisMatch
 from nonebot.utils import run_sync, is_coroutine_callable
 
 T = TypeVar("T", bound="Dependent")
@@ -182,7 +182,7 @@ class Dependent(Generic[R]):
                     f"type {type(value)} not match depends {self.call} "
                     f"annotation {field._type_display()}, ignored"
                 )
-                raise SkippedException(field, value)
+                raise TypeMisMatch(field, value)
             else:
                 values[field.name] = value
 

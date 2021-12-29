@@ -126,12 +126,20 @@ class SkippedException(MatcherException):
       可以在 ``Handler`` 中通过 ``Matcher.skip()`` 抛出。
     """
 
+
+class TypeMisMatch(SkippedException):
+    """
+    :说明:
+
+      当前 ``Handler`` 的参数类型不匹配。
+    """
+
     def __init__(self, param: ModelField, value: Any):
         self.param: ModelField = param
         self.value: Any = value
 
     def __repr__(self):
-        return f"<SkippedException, param={self.param}, value={self.value}>"
+        return f"<TypeMisMatch, param={self.param}, value={self.value}>"
 
     def __str__(self):
         self.__repr__()
