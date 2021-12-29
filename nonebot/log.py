@@ -31,7 +31,7 @@ logger: "Logger" = loguru.logger
 :默认信息:
 
   * 格式: ``[%(asctime)s %(name)s] %(levelname)s: %(message)s``
-  * 等级: ``INFO`` ，根据 ``config,log_level`` 配置改变
+  * 等级: ``INFO`` ，根据 ``config.log_level`` 配置改变
   * 输出: 输出至 stdout
 
 :用法:
