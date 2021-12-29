@@ -10,30 +10,30 @@ import styles from "../css/index.module.css";
 
 export default function Home() {
   const firstFeature: Feature = {
-    title: "Develop",
+    title: "开发",
     tagline: "fast to code",
     description: "仅需两步，即可开始编写你的机器人",
   } as const;
   const secondFeatures = [
     {
-      title: "Plugin",
+      title: "插件",
       tagline: "build bot with plugins",
       description: "插件化开发，模块化管理",
     },
     {
-      title: "Multi-Platform",
+      title: "跨平台",
       tagline: "write once run everywhere",
       description: "支持多种平台，以及多样的事件响应方式",
     },
   ] as const;
   const thirdFeatures = [
     {
-      title: "Async",
+      title: "异步",
       tagline: "asynchronous first",
       description: "异步优先式开发，提高运行效率",
     },
     {
-      title: "DI",
+      title: "依赖注入",
       tagline: "bultin dependency injection system",
       description: "简单清晰的依赖注入系统，内置依赖函数减少用户代码",
     },

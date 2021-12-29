@@ -1494,6 +1494,11 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@icons/material@^0.2.4":
+  version "0.2.4"
+  resolved "https://registry.npm.taobao.org/@icons/material/download/@icons/material-0.2.4.tgz#e90c9f71768b3736e76d7dd6783fc6c2afa88bc8"
+  integrity sha1-6QyfcXaLNzbnbX3WeD/Gwq+oi8g=
+
 "@mdx-js/mdx@1.6.22", "@mdx-js/mdx@^1.6.21":
   version "1.6.22"
   resolved "https://registry.npmmirror.com/@mdx-js/mdx/download/@mdx-js/mdx-1.6.22.tgz#8a723157bf90e78f17dc0f27995398e6c731f1ba"
@@ -4972,6 +4977,11 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
+lodash-es@^4.17.15:
+  version "4.17.21"
+  resolved "https://registry.nlark.com/lodash-es/download/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
+  integrity sha1-Q+YmxG5lkbd1C+srUBFzkMYJ4+4=
+
 lodash.assignin@^4.0.9:
   version "4.2.0"
   resolved "https://registry.npm.taobao.org/lodash.assignin/download/lodash.assignin-4.2.0.tgz#ba8df5fb841eb0a3e8044232b0e263a8dc6a28a2"
@@ -5057,7 +5067,7 @@ lodash.uniq@4.5.0, lodash.uniq@^4.5.0:
   resolved "https://registry.npm.taobao.org/lodash.uniq/download/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^4.17.14, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21:
+lodash@^4.0.1, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.19, lodash@^4.17.20, lodash@^4.17.21:
   version "4.17.21"
   resolved "https://registry.npmmirror.com/lodash/download/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
   integrity sha512-v2kDEe57lecTulaDIuNTPy3Ry4gLGJ6Z1O3vE1krgXZNrsQ+LFTGHVxVjcXPs17LhbZVGedAJv8XZ1tvj5FvSg==
@@ -5111,6 +5121,11 @@ markdown-escapes@^1.0.0:
   version "1.0.4"
   resolved "https://registry.npmmirror.com/markdown-escapes/download/markdown-escapes-1.0.4.tgz#c95415ef451499d7602b91095f3c8e8975f78535"
   integrity sha1-yVQV70UUmddgK5EJXzyOiXX3hTU=
+
+material-colors@^1.2.1:
+  version "1.2.6"
+  resolved "https://registry.nlark.com/material-colors/download/material-colors-1.2.6.tgz#6d1958871126992ceecc72f4bcc4d8f010865f46"
+  integrity sha1-bRlYhxEmmSzuzHL0vMTY8BCGX0Y=
 
 mdast-squeeze-paragraphs@^4.0.0:
   version "4.0.0"
@@ -6099,7 +6114,7 @@ prompts@^2.4.0, prompts@^2.4.1:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@^15.5.10, prop-types@^15.6.1, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.8.0"
   resolved "https://registry.npmmirror.com/prop-types/download/prop-types-15.8.0.tgz#d237e624c45a9846e469f5f31117f970017ff588"
   integrity sha512-fDGekdaHh65eI3lMi5OnErU6a8Ighg2KjcjQxO7m8VHyWjcPyj5kiOgV1LQDOOOgVy3+5FgjXvdSSX7B8/5/4g==
@@ -6215,6 +6230,19 @@ rc@^1.2.8:
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
 
+react-color@^2.19.3:
+  version "2.19.3"
+  resolved "https://registry.npmmirror.com/react-color/download/react-color-2.19.3.tgz#ec6c6b4568312a3c6a18420ab0472e146aa5683d"
+  integrity sha1-7GxrRWgxKjxqGEIKsEcuFGqlaD0=
+  dependencies:
+    "@icons/material" "^0.2.4"
+    lodash "^4.17.15"
+    lodash-es "^4.17.15"
+    material-colors "^1.2.1"
+    prop-types "^15.5.10"
+    reactcss "^1.2.0"
+    tinycolor2 "^1.4.1"
+
 react-cool-onclickoutside@^1.6.2:
   version "1.7.0"
   resolved "https://registry.npmmirror.com/react-cool-onclickoutside/download/react-cool-onclickoutside-1.7.0.tgz#abc844e14852220fe15f81d7ef44976d15cd9980"
@@ -6296,6 +6324,13 @@ react-loadable-ssr-addon-v5-slorber@^1.0.1:
   dependencies:
     "@babel/runtime" "^7.10.3"
 
+react-paginate@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.npmmirror.com/react-paginate/download/react-paginate-8.1.0.tgz#8c4c6c5b7d90e8a4f33653262204fd32c5dfd207"
+  integrity sha512-XK8cgcX8Zk4De6F4Iozd91a2xm/U+mdD4SB5k4xcBabqZj86U20N7kMiMzOFk1AEGCj6Kg1374xXK03dz7BTRA==
+  dependencies:
+    prop-types "^15.6.1"
+
 react-router-config@^5.1.1:
   version "5.1.1"
   resolved "https://registry.nlark.com/react-router-config/download/react-router-config-5.1.1.tgz#0f4263d1a80c6b2dc7b9c1902c9526478194a988"
@@ -6344,6 +6379,13 @@ react@^17.0.1:
   dependencies:
     loose-envify "^1.1.0"
     object-assign "^4.1.1"
+
+reactcss@^1.2.0:
+  version "1.2.3"
+  resolved "https://registry.npm.taobao.org/reactcss/download/reactcss-1.2.3.tgz#c00013875e557b1cf0dfd9a368a1c3dab3b548dd"
+  integrity sha1-wAATh15Vexzw39mjaKHD2rO1SN0=
+  dependencies:
+    lodash "^4.0.1"
 
 read-cache@^1.0.0:
   version "1.0.0"
@@ -7257,6 +7299,11 @@ tiny-warning@^1.0.0, tiny-warning@^1.0.3:
   version "1.0.3"
   resolved "https://registry.npm.taobao.org/tiny-warning/download/tiny-warning-1.0.3.tgz#94a30db453df4c643d0fd566060d60a875d84754"
   integrity sha1-lKMNtFPfTGQ9D9VmBg1gqHXYR1Q=
+
+tinycolor2@^1.4.1:
+  version "1.4.2"
+  resolved "https://registry.npm.taobao.org/tinycolor2/download/tinycolor2-1.4.2.tgz#3f6a4d1071ad07676d7fa472e1fac40a719d8803"
+  integrity sha1-P2pNEHGtB2dtf6Ry4frECnGdiAM=
 
 tmp@^0.2.1:
   version "0.2.1"

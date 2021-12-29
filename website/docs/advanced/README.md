@@ -10,6 +10,10 @@ options:
 
 # 深入
 
+:::danger 警告
+进阶部分尚未更新完成
+:::
+
 ## 它如何工作？
 
 如同[概览](../README.md)所言:
@@ -36,7 +40,7 @@ options:
 
 2. **调用 `API`**, 在**事件处理**的过程中，`nonebot` 可以通过 `bot` 调用协议端指定的 `API` 来获取更多数据，或者反馈响应给协议端; `nonebot` 也可以通过调用 `API` 向协议端主动请求数据或者主动推送数据。
 
-<!-- 在**指南**模块， 我们已经叙述了[如何配置 nonebot](../guide/tutorial/configuration.md), [如何注册协议适配器](../guide/getting-started.md)，[如何加载插件](../guide/loading-a-plugin.md), 在这里便不再赘述。 -->
+在**指南**模块， 我们已经叙述了[如何配置 nonebot](../tutorial/configuration.md), [如何注册协议适配器](../tutorial/register-adapter.md)，[如何加载插件](../tutorial/plugin/load-plugin.md), 在这里便不再赘述。
 
 下面，我们将对**事件处理**， **调用 API**进行说明。
 
@@ -44,7 +48,7 @@ options:
 
 我们可以先看事件处理的流程图：
 
-<!-- ![handle-event](../guide/images/Handle-Event.png) -->
+![handle-event](./images/Handle-Event.png)
 
 在流程图里，我们可以看到，`nonebot` 会有三个阶段来处理事件：
 
@@ -94,14 +98,14 @@ options:
    关于`hook`的更多信息，可以查阅[这里](./runtime-hook.md)
    :::
 
-<!-- 2. **Matcher**与**matcher**，在**指南**中，我们讲述了[如何注册事件响应器](../guide/creating-a-matcher.md)，这里的事件响应器或者说 `Matcher` 并不是一个具体的实例 `instance`，而是一个具有特定属性的类 `class`。只有当 `Matcher` **响应事件**时，才会实例化为具体的 `instance`，也就是 `matcher`。`matcher` 可以认为是 `nonebot` 处理 `Event` 的基本单位，运行 `matcher` 是`nonebot`工作的主要内容。 -->
+2. **Matcher**与**matcher**，在**指南**中，我们讲述了[如何注册事件响应器](../tutorial/plugin/create-matcher.md)，这里的事件响应器或者说 `Matcher` 并不是一个具体的实例 `instance`，而是一个具有特定属性的类 `class`。只有当 `Matcher` **响应事件**时，才会实例化为具体的 `instance`，也就是 `matcher`。`matcher` 可以认为是 `nonebot` 处理 `Event` 的基本单位，运行 `matcher` 是`nonebot`工作的主要内容。
 
 3. **handler**，或者说**事件处理函数**, 它们可以认为是 `nonebot` 处理 `Event` 的最小单位。在不考虑 `hook` 的情况下，**运行 matcher 就是顺序运行 matcher.handlers**，这句话换种表达方式就是，`handler` 只有添加到 `matcher.handlers` 时，才可以参与到 `nonebot` 的工作中来。
 
    ::: tip
    如何让 `handler` 添加到 `matcher.handlers`？
 
-   <!-- 一方面，我们可以参照[这里](../guide/creating-a-handler.md)利用装饰器来添加；另一方面，我们在用 `on()` 或者 `on_*()` 注册事件响应器时，可以添加 `handlers=[handler1, handler2, ...]` 这样的关键词参数来添加。 -->
+   一方面，我们可以参照[这里](../tutorial/plugin/create-handler.md)利用装饰器来添加；另一方面，我们在用 `on()` 或者 `on_*()` 注册事件响应器时，可以添加 `handlers=[handler1, handler2, ...]` 这样的关键词参数来添加。
 
    :::
 

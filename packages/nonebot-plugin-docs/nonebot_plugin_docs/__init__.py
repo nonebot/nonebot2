@@ -7,7 +7,9 @@ from nonebot.log import logger
 def init():
     driver = nonebot.get_driver()
     try:
-        _module = importlib.import_module(f"nonebot_plugin_docs.drivers.{driver.type}")
+        _module = importlib.import_module(
+            f"nonebot_plugin_docs.drivers.{driver.type.split('+')[0]}"
+        )
     except ImportError:
         logger.warning(f"Driver {driver.type} not supported")
         return

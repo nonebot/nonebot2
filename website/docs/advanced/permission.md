@@ -11,7 +11,7 @@ options:
 
 ## 应用
 
-<!-- 如同 `Rule` 一样, `Permission` 可以在[注册事件响应器](../guide/creating-a-matcher)时添加 `permission` 参数来加以应用，这样 `Nonebot` 会在事件响应时检测事件主体的权限。下面我们以 `SUPERUSER` 为例，对该机制的应用做一下介绍。 -->
+如同 `Rule` 一样, `Permission` 可以在[注册事件响应器](../tutorial/plugin/create-matcher.md)时添加 `permission` 参数来加以应用，这样 `Nonebot` 会在事件响应时检测事件主体的权限。下面我们以 `SUPERUSER` 为例，对该机制的应用做一下介绍。
 
 ```python
 from nonebot.permission import SUPERUSER
