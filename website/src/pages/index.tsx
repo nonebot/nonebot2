@@ -10,31 +10,31 @@ import styles from "../css/index.module.css";
 
 export default function Home() {
   const firstFeature: Feature = {
-    title: "开发",
-    tagline: "fast to code",
-    description: "仅需两步，即可开始编写你的机器人",
+    title: "开箱即用",
+    tagline: "out of box",
+    description: "使用 NB-CLI 快速构建属于你的机器人",
   } as const;
   const secondFeatures = [
     {
-      title: "插件",
-      tagline: "build bot with plugins",
+      title: "插件系统",
+      tagline: "plugin system",
       description: "插件化开发，模块化管理",
     },
     {
-      title: "跨平台",
-      tagline: "write once run everywhere",
+      title: "跨平台支持",
+      tagline: "cross-platform support",
       description: "支持多种平台，以及多样的事件响应方式",
     },
   ] as const;
   const thirdFeatures = [
     {
-      title: "异步",
+      title: "异步开发",
       tagline: "asynchronous first",
       description: "异步优先式开发，提高运行效率",
     },
     {
       title: "依赖注入",
-      tagline: "bultin dependency injection system",
+      tagline: "builtin dependency injection system",
       description: "简单清晰的依赖注入系统，内置依赖函数减少用户代码",
     },
   ];
@@ -60,8 +60,9 @@ export default function Home() {
               "[?] What do you want to do?",
               "❯ Create a New Project",
               "  Run the Bot in Current Folder",
-              "  Create a New NoneBot Plugin",
-              "  List All Published Plugins",
+              "  Driver ->",
+              "  Adapter ->",
+              "  Plugin ->",
               "  ...",
             ].join("\n")}
           </CodeBlock>
@@ -153,7 +154,7 @@ export default function Home() {
                 "# 通过依赖注入获得命令名以及参数",
                 "@matcher.handle()",
                 "async def handler(cmd = Command(), arg = CommandArg()) -> None:",
-                "    await matcher.send()",
+                "    await matcher.finish()",
               ].join("\n")}
             </CodeBlock>
           </HeroFeature>

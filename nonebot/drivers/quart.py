@@ -43,7 +43,7 @@ def catch_closed(func):
     async def decorator(*args, **kwargs):
         try:
             return await func(*args, **kwargs)
-        except asyncio.CancelledError as e:
+        except asyncio.CancelledError:
             raise WebSocketClosed(1000)
 
     return decorator
