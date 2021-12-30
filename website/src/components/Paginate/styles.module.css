@@ -1,0 +1,29 @@
+.container {
+  @apply w-full max-w-full inline-flex justify-center items-center m-0 pl-0 list-none;
+}
+
+.li {
+  @apply flex items-center;
+}
+
+.a {
+  height: 34px;
+  width: auto;
+  min-width: 34px;
+  @apply m-1 px-1 border-2 rounded shadow-lg text-center;
+  @apply text-black;
+  @apply bg-light-nonepress-100;
+}
+
+:global(.dark) .a {
+  @apply text-white bg-dark-nonepress-100;
+}
+
+.active {
+  @apply bg-hero text-white border-hero;
+}
+
+
+.disabled {
+  @apply opacity-60 pointer-events-none;
+}

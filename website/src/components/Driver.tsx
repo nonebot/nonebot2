@@ -17,7 +17,7 @@ export default function Driver(): JSX.Element {
     initialPageSize: 10,
   });
   const { startIndex, endIndex } = props;
-  const currentDrivers = filteredDrivers.slice(startIndex, endIndex);
+  const currentDrivers = filteredDrivers.slice(startIndex, endIndex + 1);
 
   return (
     <>
@@ -28,7 +28,7 @@ export default function Driver(): JSX.Element {
           placeholder="搜索驱动器"
           onChange={(event) => setFilter(event.target.value)}
         />
-        <button className="w-full rounded bg-hero text-white" disabled>
+        <button className="w-full rounded-lg bg-hero text-white opacity-60">
           发布驱动器
         </button>
       </div>

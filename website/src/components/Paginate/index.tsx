@@ -4,6 +4,8 @@ import { usePagination } from "react-use-pagination";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import styles from "./styles.module.css";
+
 export default function Paginate({
   totalPages,
   setPage,
@@ -20,7 +22,15 @@ export default function Paginate({
       <ReactPaginate
         pageCount={totalPages}
         onPageChange={onPageChange}
-        containerClassName="w-full m-w-full inline-flex justify-center align-center m-0 pl-0 list-none"
+        containerClassName={styles.container}
+        pageClassName={styles.li}
+        pageLinkClassName={styles.a}
+        previousClassName={styles.li}
+        previousLinkClassName={styles.a}
+        nextClassName={styles.li}
+        nextLinkClassName={styles.a}
+        activeLinkClassName={styles.active}
+        disabledLinkClassName={styles.disabled}
         breakLabel={<FontAwesomeIcon icon="ellipsis-h" />}
         previousLabel={<FontAwesomeIcon icon="chevron-left" />}
         nextLabel={<FontAwesomeIcon icon="chevron-right" />}

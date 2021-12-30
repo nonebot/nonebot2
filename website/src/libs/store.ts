@@ -1,11 +1,11 @@
 import { useState } from "react";
 
-type Tag = {
+export type Tag = {
   label: string;
   color: string;
 };
 
-type Obj = {
+export type Obj = {
   module_name?: string;
   project_link?: string;
   name: string;

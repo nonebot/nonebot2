@@ -7,7 +7,7 @@
     "author": "yanyongyu",
     "homepage": "https://github.com/cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_status",
     "tags": [],
-    "is_official": false
+    "is_official": true
   },
   {
     "module_name": "haruka_bot",
@@ -37,7 +37,7 @@
     "name": "NoneBot离线文档",
     "homepage": "https://github.com/nonebot/nonebot2/tree/master/packages/nonebot-plugin-docs",
     "tags": [],
-    "is_official": false
+    "is_official": true
   },
   {
     "module_name": "nonebot_plugin_sentry",
@@ -47,17 +47,7 @@
     "name": "Sentry日志监控",
     "homepage": "https://github.com/cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_sentry",
     "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_test",
-    "project_link": "nonebot-plugin-test",
-    "author": "yanyongyu",
-    "desc": "在浏览器中测试你的 NoneBot 机器人",
-    "name": "前端测试机器人插件",
-    "homepage": "https://github.com/nonebot/plugin-test",
-    "tags": [],
-    "is_official": false
+    "is_official": true
   },
   {
     "module_name": "nonebot_plugin_apscheduler",
@@ -67,7 +57,7 @@
     "name": "定时任务",
     "homepage": "https://github.com/nonebot/plugin-apscheduler",
     "tags": [],
-    "is_official": false
+    "is_official": true
   },
   {
     "module_name": "nonebot_plugin_picsearcher",
@@ -287,7 +277,7 @@
     "author": "yanyongyu",
     "homepage": "https://github.com/nonebot/plugin-localstore",
     "tags": [],
-    "is_official": false
+    "is_official": true
   },
   {
     "module_name": "nonebot_plugin_puppet",
@@ -497,7 +487,7 @@
     "author": "mnixry",
     "homepage": "https://github.com/mnixry/nonebot-plugin-filehost",
     "tags": [],
-    "is_official": false
+    "is_official": true
   },
   {
     "module_name": "nonebot_plugin_simplemusic",
