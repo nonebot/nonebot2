@@ -23,7 +23,8 @@ export function filterObjs(filter: string, objs: Obj[]): Obj[] {
       o.project_link?.indexOf(filter) != -1 ||
       o.name.indexOf(filter) != -1 ||
       o.desc.indexOf(filter) != -1 ||
-      o.author.indexOf(filter) != -1
+      o.author.indexOf(filter) != -1 ||
+      o.tags.filter((t) => t.label.indexOf(filter) != -1).length > 0
     );
   });
 }

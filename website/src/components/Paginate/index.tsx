@@ -1,9 +1,10 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useRef } from "react";
 import ReactPaginate from "react-paginate";
 import { usePagination } from "react-use-pagination";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import { useContentWidth } from "../../libs/width";
 import styles from "./styles.module.css";
 
 export default function Paginate({
@@ -11,6 +12,9 @@ export default function Paginate({
   setPage,
   currentPage,
 }: ReturnType<typeof usePagination>): JSX.Element {
+  const ref = useRef<HTMLElement>();
+  const maxWidth = useContentWidth(ref.current?.parentElement ?? undefined);
+
   const onPageChange = useCallback(
     (selectedItem: { selected: number }) => {
       setPage(selectedItem.selected);
@@ -18,8 +22,9 @@ export default function Paginate({
     [setPage]
   );
 
+  // FIXME: responsive width
   return (
-    <nav role="navigation" aria-label="Pagination Navigation">
+    <nav role="navigation" aria-label="Pagination Navigation" ref={ref}>
       <ReactPaginate
         pageCount={totalPages}
         forcePage={currentPage}
