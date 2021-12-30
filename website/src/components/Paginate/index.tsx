@@ -9,6 +9,7 @@ import styles from "./styles.module.css";
 export default function Paginate({
   totalPages,
   setPage,
+  currentPage,
 }: ReturnType<typeof usePagination>): JSX.Element {
   const onPageChange = useCallback(
     (selectedItem: { selected: number }) => {
@@ -21,6 +22,7 @@ export default function Paginate({
     <nav role="navigation" aria-label="Pagination Navigation">
       <ReactPaginate
         pageCount={totalPages}
+        forcePage={currentPage}
         onPageChange={onPageChange}
         containerClassName={styles.container}
         pageClassName={styles.li}

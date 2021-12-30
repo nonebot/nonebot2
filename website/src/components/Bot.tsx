@@ -3,6 +3,7 @@ import { usePagination } from "react-use-pagination";
 
 import bots from "../../static/bots.json";
 import { useFilteredObjs } from "../libs/store";
+import Card from "./Card";
 import Paginate from "./Paginate";
 
 export default function Adapter(): JSX.Element {
@@ -28,16 +29,16 @@ export default function Adapter(): JSX.Element {
           placeholder="搜索机器人"
           onChange={(event) => setFilter(event.target.value)}
         />
-        <button className="w-full rounded-lg bg-hero text-white" disabled>
+        <button className="w-full rounded-lg bg-hero text-white">
           发布机器人
         </button>
       </div>
       <div className="grid grid-cols-1 p-4">
         <Paginate {...props} />
       </div>
-      <div>
-        {currentBots.map((driver, index) => (
-          <p key={index}>{driver.name}</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4">
+        {currentBots.map((bot, index) => (
+          <Card key={index} {...bot} />
         ))}
       </div>
       <div className="grid grid-cols-1 p-4">

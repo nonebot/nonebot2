@@ -29,7 +29,7 @@ export default function Adapter(): JSX.Element {
           placeholder="搜索插件"
           onChange={(event) => setFilter(event.target.value)}
         />
-        <button className="w-full rounded-lg bg-hero text-white" disabled>
+        <button className="w-full rounded-lg bg-hero text-white">
           发布插件
         </button>
       </div>
@@ -37,8 +37,8 @@ export default function Adapter(): JSX.Element {
         <Paginate {...props} />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4">
-        {currentPlugins.map((driver, index) => (
-          <Card key={index} {...driver} />
+        {currentPlugins.map((plugin, index) => (
+          <Card key={index} {...plugin} />
         ))}
       </div>
       <div className="grid grid-cols-1 p-4">

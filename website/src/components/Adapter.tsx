@@ -3,6 +3,7 @@ import { usePagination } from "react-use-pagination";
 
 import adapters from "../../static/adapters.json";
 import { useFilteredObjs } from "../libs/store";
+import Card from "./Card";
 import Paginate from "./Paginate";
 
 export default function Adapter(): JSX.Element {
@@ -28,16 +29,16 @@ export default function Adapter(): JSX.Element {
           placeholder="搜索适配器"
           onChange={(event) => setFilter(event.target.value)}
         />
-        <button className="w-full rounded-lg bg-hero text-white" disabled>
+        <button className="w-full rounded-lg bg-hero text-white">
           发布适配器
         </button>
       </div>
       <div className="grid grid-cols-1 p-4">
         <Paginate {...props} />
       </div>
-      <div>
-        {currentAdapters.map((driver, index) => (
-          <p key={index}>{driver.name}</p>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4">
+        {currentAdapters.map((adapter, index) => (
+          <Card key={index} {...adapter} />
         ))}
       </div>
       <div className="grid grid-cols-1 p-4">

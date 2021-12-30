@@ -6,7 +6,12 @@
     "desc": "通过戳一戳获取服务器状态",
     "author": "yanyongyu",
     "homepage": "https://github.com/cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_status",
-    "tags": [],
+    "tags": [
+      {
+        "label": "server",
+        "color": "#ff0000"
+      }
+    ],
     "is_official": true
   },
   {
@@ -16,7 +21,12 @@
     "desc": "将B站UP主的动态和直播信息推送至QQ",
     "author": "SK-415",
     "homepage": "https://github.com/SK-415/HarukaBot",
-    "tags": [],
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#e55d80"
+      }
+    ],
     "is_official": false
   },
   {

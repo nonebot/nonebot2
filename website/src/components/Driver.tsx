@@ -3,6 +3,7 @@ import { usePagination } from "react-use-pagination";
 
 import drivers from "../../static/drivers.json";
 import { useFilteredObjs } from "../libs/store";
+import Card from "./Card";
 import Paginate from "./Paginate";
 
 export default function Driver(): JSX.Element {
@@ -35,9 +36,9 @@ export default function Driver(): JSX.Element {
       <div className="grid grid-cols-1 p-4">
         <Paginate {...props} />
       </div>
-      <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4">
         {currentDrivers.map((driver, index) => (
-          <p key={index}>{driver.name}</p>
+          <Card key={index} {...driver} />
         ))}
       </div>
       <div className="grid grid-cols-1 p-4">
