@@ -8,6 +8,8 @@ Quart 驱动适配
     https://pgjones.gitlab.io/quart/index.html
 """
 
+import asyncio
+from functools import wraps
 from typing import List, Tuple, TypeVar, Callable, Optional, Coroutine
 
 import uvicorn
@@ -16,6 +18,7 @@ from pydantic import BaseSettings
 from ._model import FileTypes
 from nonebot.config import Env
 from nonebot.typing import overrides
+from nonebot.exception import WebSocketClosed
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
@@ -33,6 +36,17 @@ except ImportError:
     ) from None
 
 _AsyncCallable = TypeVar("_AsyncCallable", bound=Callable[..., Coroutine])
+
+
+def catch_closed(func):
+    @wraps(func)
+    async def decorator(*args, **kwargs):
+        try:
+            return await func(*args, **kwargs)
+        except asyncio.CancelledError as e:
+            raise WebSocketClosed(1000)
+
+    return decorator
 
 
 class Config(BaseSettings):
@@ -281,6 +295,7 @@ class WebSocket(BaseWebSocket):
         await self.websocket.close(code, reason)
 
     @overrides(BaseWebSocket)
+    @catch_closed
     async def receive(self) -> str:
         msg = await self.websocket.receive()
         if isinstance(msg, bytes):
@@ -288,6 +303,7 @@ class WebSocket(BaseWebSocket):
         return msg
 
     @overrides(BaseWebSocket)
+    @catch_closed
     async def receive_bytes(self) -> bytes:
         msg = await self.websocket.receive()
         if isinstance(msg, str):

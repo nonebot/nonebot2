@@ -11,21 +11,34 @@ FastAPI 驱动适配
 """
 
 import logging
+from functools import wraps
 from typing import Any, List, Tuple, Callable, Optional
 
 import uvicorn
 from pydantic import BaseSettings
 from fastapi.responses import Response
 from fastapi import FastAPI, Request, UploadFile, status
-from starlette.websockets import WebSocket, WebSocketState
+from starlette.websockets import WebSocket, WebSocketState, WebSocketDisconnect
 
 from ._model import FileTypes
 from nonebot.config import Env
 from nonebot.typing import overrides
+from nonebot.exception import WebSocketClosed
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers import ReverseDriver, HTTPServerSetup, WebSocketServerSetup
+
+
+def catch_closed(func):
+    @wraps(func)
+    async def decorator(*args, **kwargs):
+        try:
+            return await func(*args, **kwargs)
+        except WebSocketDisconnect as e:
+            raise WebSocketClosed(e.code)
+
+    return decorator
 
 
 class Config(BaseSettings):
@@ -311,10 +324,12 @@ class FastAPIWebSocket(BaseWebSocket):
         await self.websocket.close(code)
 
     @overrides(BaseWebSocket)
+    @catch_closed
     async def receive(self) -> str:
         return await self.websocket.receive_text()
 
     @overrides(BaseWebSocket)
+    @catch_closed
     async def receive_bytes(self) -> bytes:
         return await self.websocket.receive_bytes()
 
