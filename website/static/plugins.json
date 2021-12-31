@@ -688,5 +688,85 @@
     "homepage": "https://github.com/yzyyz1387/nonebot_plugin_heisi",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_picsbank",
+    "project_link": "nonebot-plugin-picsbank",
+    "name": "picsbank",
+    "desc": "匹配图片进行回答",
+    "author": "Diaosi1111",
+    "homepage": "https://github.com/Diaosi1111/nonebot_plugin_picsbank",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_tvseries",
+    "project_link": "nonebot-plugin-tvseries",
+    "name": "剧集更新列表",
+    "desc": "获取聚集更新",
+    "author": "kexue-z",
+    "homepage": "https://github.com/kexue-z/nonebot-plugin-tvseries",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_lolmatch",
+    "project_link": "nonebot-plugin-lolmatch",
+    "name": "lol比赛信息",
+    "desc": "简单的lol比赛信息插件，订阅后会定时推送当日比赛结果",
+    "author": "Diaosi1111",
+    "homepage": "https://github.com/Diaosi1111/nonebot_plugin_lolmatch",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "OlivOS",
+    "project_link": "olivos.nb2",
+    "name": "OlivOS.nb2",
+    "desc": "在 NoneBot2 中加载 OlivOS 插件",
+    "author": "j1g5awi",
+    "homepage": "https://github.com/nonepkg/OlivOS.nb2",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_htmlrender",
+    "project_link": "nonebot-plugin-htmlrender",
+    "name": "通过浏览器来生成图片",
+    "desc": "通过playwright加一点点前端知识来简单的生成图片",
+    "author": "kexue-z",
+    "homepage": "https://github.com/kexue-z/nonebot-plugin-htmlrender",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_admin",
+    "project_link": "nonebot-plugin-admin",
+    "name": "简易群管",
+    "desc": "简易群管 踢 禁 改",
+    "author": "yzyyz1387",
+    "homepage": "https://github.com/yzyyz1387/nonebot_plugin_admin",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_logo",
+    "project_link": "nonebot-plugin-logo",
+    "name": "nonebot-plugin-logo",
+    "desc": "PornHub、Youtube 等风格logo生成",
+    "author": "MeetWq",
+    "homepage": "https://github.com/MeetWq/nonebot-plugin-logo",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_memes",
+    "project_link": "nonebot-plugin-memes",
+    "name": "Memes generator",
+    "desc": "表情包制作",
+    "author": "MeetWq",
+    "homepage": "https://github.com/MeetWq/nonebot-plugin-memes",
+    "tags": [],
+    "is_official": false
   }
 ]

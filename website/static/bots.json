@@ -94,5 +94,13 @@
     "homepage": "https://github.com/ssttkkl/PixivBot",
     "tags": [],
     "is_official": false
+  },
+  {
+    "name": "SeaBot_QQ",
+    "desc": "一个能够获取新闻资讯并推送至QQ的群聊机器人。",
+    "author": "B1ue1nWh1te",
+    "homepage": "https://github.com/B1ue1nWh1te/SeaBot_QQ",
+    "tags": [],
+    "is_official": false
   }
 ]

@@ -183,19 +183,20 @@ class BotParam(Param):
     ) -> Optional["BotParam"]:
         if param.default == param.empty:
             if generic_check_issubclass(param.annotation, Bot):
-                dependent.pre_checkers.append(
-                    _BotChecker(
-                        Required,
-                        field=ModelField(
-                            name="",
-                            type_=param.annotation,
-                            class_validators=None,
-                            model_config=CustomConfig,
-                            default=None,
-                            required=True,
-                        ),
+                if param.annotation is not Bot:
+                    dependent.pre_checkers.append(
+                        _BotChecker(
+                            Required,
+                            field=ModelField(
+                                name="",
+                                type_=param.annotation,
+                                class_validators=None,
+                                model_config=CustomConfig,
+                                default=None,
+                                required=True,
+                            ),
+                        )
                     )
-                )
                 return cls(Required)
             elif param.annotation == param.empty and name == "bot":
                 return cls(Required)
@@ -223,19 +224,20 @@ class EventParam(Param):
     ) -> Optional["EventParam"]:
         if param.default == param.empty:
             if generic_check_issubclass(param.annotation, Event):
-                dependent.pre_checkers.append(
-                    _EventChecker(
-                        Required,
-                        field=ModelField(
-                            name="",
-                            type_=param.annotation,
-                            class_validators=None,
-                            model_config=CustomConfig,
-                            default=None,
-                            required=True,
-                        ),
+                if param.annotation is not Event:
+                    dependent.pre_checkers.append(
+                        _EventChecker(
+                            Required,
+                            field=ModelField(
+                                name="",
+                                type_=param.annotation,
+                                class_validators=None,
+                                model_config=CustomConfig,
+                                default=None,
+                                required=True,
+                            ),
+                        )
                     )
-                )
                 return cls(Required)
             elif param.annotation == param.empty and name == "event":
                 return cls(Required)
