@@ -1,9 +1,11 @@
-import React, { useCallback, useState } from "react";
+import clsx from "clsx";
+import React, { useState } from "react";
+import { ChromePicker } from "react-color";
 import { usePagination } from "react-use-pagination";
 
 import plugins from "../../static/plugins.json";
-import { useFilteredObjs } from "../libs/store";
-import Card from "./Card";
+import { Tag, useFilteredObjs } from "../libs/store";
+import Card, { Tag as TagComponent } from "./Card";
 import Modal from "./Modal";
 import Paginate from "./Paginate";
 
@@ -29,8 +31,45 @@ export default function Adapter(): JSX.Element {
     moduleName: string;
     homepage: string;
   }>({ name: "", desc: "", projectLink: "", moduleName: "", homepage: "" });
+  const [tags, setTags] = useState<Tag[]>([]);
+  const [label, setLabel] = useState<string>("");
+  const [color, setColor] = useState<string>("#ea5252");
   const onSubmit = () => {
-    console.log(form);
+    setModalOpen(false);
+    const title = encodeURIComponent(`Plugin: ${form.name}`).replace(
+      /%2B/gi,
+      "+"
+    );
+    const body = encodeURIComponent(
+      `
+**插件名称：**
+
+${form.name}
+
+**插件功能：**
+
+${form.desc}
+
+**PyPI 项目名：**
+
+${form.projectLink}
+
+**插件 import 包名：**
+
+${form.moduleName}
+
+**插件项目仓库/主页链接：**
+
+${form.homepage}
+
+**标签：**
+
+${JSON.stringify(tags)}
+`.trim()
+    ).replace(/%2B/gi, "+");
+    window.open(
+      `https://github.com/nonebot/nonebot2/issues/new?title=${title}&body=${body}&labels=Plugin`
+    );
   };
   const onChange = (event) => {
     const target = event.target;
@@ -42,6 +81,27 @@ export default function Adapter(): JSX.Element {
       [name]: value,
     });
     event.preventDefault();
+  };
+  const onChangeLabel = (event) => {
+    setLabel(event.target.value);
+  };
+  const onChangeColor = (color) => {
+    setColor(color.hex);
+  };
+  const validateTag = () => {
+    return label.length >= 1 && label.length <= 10;
+  };
+  const newTag = () => {
+    if (tags.length >= 3) {
+      return;
+    }
+    if (validateTag()) {
+      const tag = { label, color };
+      setTags([...tags, tag]);
+    }
+  };
+  const delTag = (index: number) => {
+    setTags(tags.filter((_, i) => i !== index));
   };
 
   return (
@@ -128,9 +188,47 @@ export default function Adapter(): JSX.Element {
                   </label>
                 </div>
               </form>
+              <div className="px-4">
+                <label className="flex flex-wrap">
+                  <span className="mr-2">标签:</span>
+                  {tags.map((tag, index) => (
+                    <TagComponent
+                      key={index}
+                      {...tag}
+                      className="cursor-pointer"
+                      onClick={() => delTag(index)}
+                    />
+                  ))}
+                </label>
+              </div>
+              <div className="px-4 pt-4">
+                <input
+                  type="text"
+                  className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
+                  onChange={onChangeLabel}
+                />
+                <ChromePicker
+                  className="mt-2"
+                  color={color}
+                  disableAlpha={true}
+                  onChangeComplete={onChangeColor}
+                />
+                <div className="flex mt-2">
+                  <TagComponent label={label} color={color} />
+                  <button
+                    className={clsx(
+                      "px-2 h-9 min-w-[64px] rounded text-hero hover:bg-hero hover:bg-opacity-[.08]",
+                      { "pointer-events-none opacity-60": !validateTag() }
+                    )}
+                    onClick={newTag}
+                  >
+                    添加标签
+                  </button>
+                </div>
+              </div>
             </div>
             <div className="px-4 py-2 flex justify-end">
-              <button className="px-2 h-9 min-w-[64px] rounded text-hero hover:bg-hero hover:bg-opacity-[.08]">
+              <button className="px-2 h-9 min-w-[64px] rounded text-hero hover:bg-hero hover:bg-opacity-[.08]" onClick={() => setModalOpen(false)}>
                 关闭
               </button>
               <button
