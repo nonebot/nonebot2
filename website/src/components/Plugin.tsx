@@ -1,13 +1,17 @@
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { ChromePicker } from "react-color";
 import { usePagination } from "react-use-pagination";
 
 import plugins from "../../static/plugins.json";
 import { Tag, useFilteredObjs } from "../libs/store";
-import Card, { Tag as TagComponent } from "./Card";
+import Card from "./Card";
 import Modal from "./Modal";
+import ModalAction from "./ModalAction";
+import ModalContent from "./ModalContent";
+import ModalTitle from "./ModalTitle";
 import Paginate from "./Paginate";
+import TagComponent from "./Tag";
 
 export default function Adapter(): JSX.Element {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
@@ -31,9 +35,12 @@ export default function Adapter(): JSX.Element {
     moduleName: string;
     homepage: string;
   }>({ name: "", desc: "", projectLink: "", moduleName: "", homepage: "" });
+
+  const ref = useRef<HTMLInputElement>(null);
   const [tags, setTags] = useState<Tag[]>([]);
   const [label, setLabel] = useState<string>("");
   const [color, setColor] = useState<string>("#ea5252");
+
   const onSubmit = () => {
     setModalOpen(false);
     const title = encodeURIComponent(`Plugin: ${form.name}`).replace(
@@ -103,6 +110,10 @@ ${JSON.stringify(tags)}
   const delTag = (index: number) => {
     setTags(tags.filter((_, i) => i !== index));
   };
+  const insertTagType = (text: string) => {
+    setLabel(text + label);
+    ref.current.value = text + label;
+  };
 
   return (
     <>
@@ -132,114 +143,127 @@ ${JSON.stringify(tags)}
         <Paginate {...props} />
       </div>
       <Modal active={modalOpen} setActive={setModalOpen}>
-        <div className="w-full max-w-[600px] max-h-[90%] overflow-y-auto rounded shadow-lg m-6 origin-center transition z-[inherit] pointer-events-auto thin-scrollbar">
-          <div className="bg-light-nonepress-100 dark:bg-dark-nonepress-100">
-            <div className="px-6 pt-4 pb-2 font-medium text-xl">
-              <span>插件信息</span>
-            </div>
-            <div className="px-6 pb-5 w-full">
-              <form onSubmit={onSubmit}>
-                <div className="grid grid-cols-1 gap-4 p-4">
-                  <label className="flex flex-wrap">
-                    <span className="mr-2">插件名称:</span>
-                    <input
-                      type="text"
-                      name="name"
-                      maxLength={20}
-                      className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
-                      onChange={onChange}
-                    />
-                  </label>
-                  <label className="flex flex-wrap">
-                    <span className="mr-2">插件介绍:</span>
-                    <input
-                      type="text"
-                      name="desc"
-                      className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
-                      onChange={onChange}
-                    />
-                  </label>
-                  <label className="flex flex-wrap">
-                    <span className="mr-2">PyPI 项目名:</span>
-                    <input
-                      type="text"
-                      name="projectLink"
-                      className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
-                      onChange={onChange}
-                    />
-                  </label>
-                  <label className="flex flex-wrap">
-                    <span className="mr-2">import 包名:</span>
-                    <input
-                      type="text"
-                      name="moduleName"
-                      className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
-                      onChange={onChange}
-                    />
-                  </label>
-                  <label className="flex flex-wrap">
-                    <span className="mr-2">仓库/主页:</span>
-                    <input
-                      type="text"
-                      name="homepage"
-                      className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
-                      onChange={onChange}
-                    />
-                  </label>
-                </div>
-              </form>
-              <div className="px-4">
-                <label className="flex flex-wrap">
-                  <span className="mr-2">标签:</span>
-                  {tags.map((tag, index) => (
-                    <TagComponent
-                      key={index}
-                      {...tag}
-                      className="cursor-pointer"
-                      onClick={() => delTag(index)}
-                    />
-                  ))}
-                </label>
-              </div>
-              <div className="px-4 pt-4">
+        <ModalTitle title={"插件信息"} />
+        <ModalContent>
+          <form onSubmit={onSubmit}>
+            <div className="grid grid-cols-1 gap-4 p-4">
+              <label className="flex flex-wrap">
+                <span className="mr-2">插件名称:</span>
                 <input
                   type="text"
+                  name="name"
+                  maxLength={20}
                   className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
-                  onChange={onChangeLabel}
+                  onChange={onChange}
                 />
-                <ChromePicker
-                  className="mt-2"
-                  color={color}
-                  disableAlpha={true}
-                  onChangeComplete={onChangeColor}
+              </label>
+              <label className="flex flex-wrap">
+                <span className="mr-2">插件介绍:</span>
+                <input
+                  type="text"
+                  name="desc"
+                  className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
+                  onChange={onChange}
                 />
-                <div className="flex mt-2">
-                  <TagComponent label={label} color={color} />
-                  <button
-                    className={clsx(
-                      "px-2 h-9 min-w-[64px] rounded text-hero hover:bg-hero hover:bg-opacity-[.08]",
-                      { "pointer-events-none opacity-60": !validateTag() }
-                    )}
-                    onClick={newTag}
-                  >
-                    添加标签
-                  </button>
-                </div>
-              </div>
+              </label>
+              <label className="flex flex-wrap">
+                <span className="mr-2">PyPI 项目名:</span>
+                <input
+                  type="text"
+                  name="projectLink"
+                  className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
+                  onChange={onChange}
+                />
+              </label>
+              <label className="flex flex-wrap">
+                <span className="mr-2">import 包名:</span>
+                <input
+                  type="text"
+                  name="moduleName"
+                  className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
+                  onChange={onChange}
+                />
+              </label>
+              <label className="flex flex-wrap">
+                <span className="mr-2">仓库/主页:</span>
+                <input
+                  type="text"
+                  name="homepage"
+                  className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
+                  onChange={onChange}
+                />
+              </label>
             </div>
-            <div className="px-4 py-2 flex justify-end">
-              <button className="px-2 h-9 min-w-[64px] rounded text-hero hover:bg-hero hover:bg-opacity-[.08]" onClick={() => setModalOpen(false)}>
-                关闭
+          </form>
+          <div className="px-4">
+            <label className="flex flex-wrap">
+              <span className="mr-2">标签:</span>
+              {tags.map((tag, index) => (
+                <TagComponent
+                  key={index}
+                  {...tag}
+                  className="cursor-pointer"
+                  onClick={() => delTag(index)}
+                />
+              ))}
+            </label>
+          </div>
+          <div className="px-4 pt-4">
+            <input
+              ref={ref}
+              type="text"
+              className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
+              onChange={onChangeLabel}
+            />
+            <ChromePicker
+              className="mt-2"
+              color={color}
+              disableAlpha={true}
+              onChangeComplete={onChangeColor}
+            />
+            <div className="flex flex-wrap mt-2 items-center">
+              <span className="mr-2">Type:</span>
+              <button
+                className="px-2 h-9 min-w-[64px] rounded text-hero hover:bg-hero hover:bg-opacity-[.08]"
+                onClick={() => insertTagType("a:")}
+              >
+                Adapter
               </button>
               <button
-                className="ml-2 px-2 h-9 min-w-[64px] rounded text-hero hover:bg-hero hover:bg-opacity-[.08]"
-                onClick={onSubmit}
+                className="px-2 h-9 min-w-[64px] rounded text-hero hover:bg-hero hover:bg-opacity-[.08]"
+                onClick={() => insertTagType("t:")}
               >
-                发布
+                Topic
+              </button>
+            </div>
+            <div className="flex mt-2">
+              <TagComponent label={label} color={color} />
+              <button
+                className={clsx(
+                  "px-2 h-9 min-w-[64px] rounded text-hero hover:bg-hero hover:bg-opacity-[.08]",
+                  { "pointer-events-none opacity-60": !validateTag() }
+                )}
+                onClick={newTag}
+              >
+                添加标签
               </button>
             </div>
           </div>
-        </div>
+        </ModalContent>
+        <ModalAction>
+          <button
+            className="px-2 h-9 min-w-[64px] rounded text-hero hover:bg-hero hover:bg-opacity-[.08]"
+            onClick={() => setModalOpen(false)}
+          >
+            关闭
+          </button>
+          <button
+            className="ml-2 px-2 h-9 min-w-[64px] rounded text-hero hover:bg-hero hover:bg-opacity-[.08]"
+            onClick={onSubmit}
+          >
+            发布
+          </button>
+        </ModalAction>
       </Modal>
     </>
   );

@@ -32,7 +32,11 @@ export default function Modal({
           { hidden: !active }
         )}
       >
-        {children}
+        <div className="w-full max-w-[600px] max-h-[90%] overflow-y-auto rounded shadow-lg m-6 origin-center transition z-[inherit] pointer-events-auto thin-scrollbar">
+          <div className="bg-light-nonepress-100 dark:bg-dark-nonepress-100">
+            {children}
+          </div>
+        </div>
       </div>
     </>
   );
