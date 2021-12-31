@@ -484,7 +484,6 @@ class Matcher(metaclass=MatcherMeta):
         """
 
         async def _key_getter(event: Event, matcher: "Matcher"):
-            print(key, matcher.state)
             matcher.set_target(ARG_KEY.format(key=key))
             if matcher.get_target() == ARG_KEY.format(key=key):
                 matcher.set_arg(key, event.get_message())

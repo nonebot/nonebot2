@@ -4,10 +4,12 @@ from typing_extensions import Literal
 from typing import Any, Dict, List, Tuple, Callable, Optional, cast
 from contextlib import AsyncExitStack, contextmanager, asynccontextmanager
 
-from pydantic.fields import Required, Undefined
+from pydantic.fields import Required, Undefined, ModelField
 
+from nonebot.log import logger
+from nonebot.exception import TypeMisMatch
 from nonebot.adapters import Bot, Event, Message
-from nonebot.dependencies import Param, Dependent
+from nonebot.dependencies import Param, Dependent, CustomConfig
 from nonebot.typing import T_State, T_Handler, T_DependencyCache
 from nonebot.consts import (
     CMD_KEY,
@@ -94,11 +96,15 @@ class DependParam(Param):
                 dependency = param.annotation
             else:
                 dependency = param.default.dependency
-            dependent = Dependent[Any].parse(
+            sub_dependent = Dependent[Any].parse(
                 call=dependency,
                 allow_types=dependent.allow_types,
             )
-            return cls(Required, use_cache=param.default.use_cache, dependent=dependent)
+            dependent.pre_checkers.extend(sub_dependent.pre_checkers)
+            sub_dependent.pre_checkers.clear()
+            return cls(
+                Required, use_cache=param.default.use_cache, dependent=sub_dependent
+            )
 
     @classmethod
     def _check_parameterless(
@@ -158,19 +164,56 @@ class DependParam(Param):
         return solved
 
 
+class _BotChecker(Param):
+    async def _solve(self, bot: Bot, **kwargs: Any) -> Any:
+        field: ModelField = self.extra["field"]
+        _, errs_ = field.validate(bot, {}, loc=("bot",))
+        if errs_:
+            logger.debug(
+                f"Bot type {type(bot)} not match "
+                f"annotation {field._type_display()}, ignored"
+            )
+            raise TypeMisMatch(field, bot)
+
+
 class BotParam(Param):
     @classmethod
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
     ) -> Optional["BotParam"]:
-        if param.default == param.empty and (
-            generic_check_issubclass(param.annotation, Bot)
-            or (param.annotation == param.empty and name == "bot")
-        ):
-            return cls(Required)
+        if param.default == param.empty:
+            if generic_check_issubclass(param.annotation, Bot):
+                dependent.pre_checkers.append(
+                    _BotChecker(
+                        Required,
+                        field=ModelField(
+                            name="",
+                            type_=param.annotation,
+                            class_validators=None,
+                            model_config=CustomConfig,
+                            default=None,
+                            required=True,
+                        ),
+                    )
+                )
+                return cls(Required)
+            elif param.annotation == param.empty and name == "bot":
+                return cls(Required)
 
     async def _solve(self, bot: Bot, **kwargs: Any) -> Any:
         return bot
+
+
+class _EventChecker(Param):
+    async def _solve(self, event: Event, **kwargs: Any) -> Any:
+        field: ModelField = self.extra["field"]
+        _, errs_ = field.validate(event, {}, loc=("event",))
+        if errs_:
+            logger.debug(
+                f"Event type {type(event)} not match "
+                f"annotation {field._type_display()}, ignored"
+            )
+            raise TypeMisMatch(field, event)
 
 
 class EventParam(Param):
@@ -178,11 +221,24 @@ class EventParam(Param):
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
     ) -> Optional["EventParam"]:
-        if param.default == param.empty and (
-            generic_check_issubclass(param.annotation, Event)
-            or (param.annotation == param.empty and name == "event")
-        ):
-            return cls(Required)
+        if param.default == param.empty:
+            if generic_check_issubclass(param.annotation, Event):
+                dependent.pre_checkers.append(
+                    _EventChecker(
+                        Required,
+                        field=ModelField(
+                            name="",
+                            type_=param.annotation,
+                            class_validators=None,
+                            model_config=CustomConfig,
+                            default=None,
+                            required=True,
+                        ),
+                    )
+                )
+                return cls(Required)
+            elif param.annotation == param.empty and name == "event":
+                return cls(Required)
 
     async def _solve(self, event: Event, **kwargs: Any) -> Any:
         return event

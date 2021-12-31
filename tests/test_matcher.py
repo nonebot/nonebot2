@@ -12,6 +12,7 @@ async def test_matcher(app: App, load_plugin):
         test_preset,
         test_combine,
         test_receive,
+        test_overload,
     )
 
     message = make_fake_message()("text")
@@ -64,5 +65,12 @@ async def test_matcher(app: App, load_plugin):
     async with app.test_matcher(test_preset) as ctx:
         bot = ctx.create_bot()
         ctx.receive_event(bot, event)
+        ctx.receive_event(bot, event)
         ctx.should_rejected()
         ctx.receive_event(bot, event_next)
+
+    assert len(test_overload.handlers) == 2
+    async with app.test_matcher(test_overload) as ctx:
+        bot = ctx.create_bot()
+        ctx.receive_event(bot, event)
+        ctx.should_finished()

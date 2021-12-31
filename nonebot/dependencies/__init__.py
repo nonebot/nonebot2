@@ -49,11 +49,13 @@ class Dependent(Generic[R]):
         self,
         *,
         call: Callable[..., Any],
+        pre_checkers: Optional[List[Param]] = None,
         params: Optional[List[ModelField]] = None,
         parameterless: Optional[List[Param]] = None,
         allow_types: Optional[List[Type[Param]]] = None,
     ) -> None:
         self.call = call
+        self.pre_checkers = pre_checkers or []
         self.params = params or []
         self.parameterless = parameterless or []
         self.allow_types = allow_types or []
@@ -116,11 +118,6 @@ class Dependent(Generic[R]):
             allow_types=allow_types,
         )
 
-        parameterless_params = [
-            dependent.parse_parameterless(param) for param in (parameterless or [])
-        ]
-        dependent.parameterless.extend(parameterless_params)
-
         for param_name, param in params.items():
             default_value = Required
             if param.default != param.empty:
@@ -152,6 +149,11 @@ class Dependent(Generic[R]):
                 )
             )
 
+        parameterless_params = [
+            dependent.parse_parameterless(param) for param in (parameterless or [])
+        ]
+        dependent.parameterless.extend(parameterless_params)
+
         logger.trace(
             f"Parsed dependent with call={call}, "
             f"params={[param.field_info for param in dependent.params]}, "
@@ -165,6 +167,9 @@ class Dependent(Generic[R]):
         **params: Any,
     ) -> Dict[str, Any]:
         values: Dict[str, Any] = {}
+
+        for checker in self.pre_checkers:
+            await checker._solve(**params)
 
         for param in self.parameterless:
             await param._solve(**params)

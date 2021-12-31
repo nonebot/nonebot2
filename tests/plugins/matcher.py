@@ -66,8 +66,27 @@ async def preset(matcher: Matcher, message: Message = EventMessage()):
 
 
 @test_preset.got("a")
-async def reject_preset(a: str = ArgStr()):
+@test_preset.got("b")
+async def reject_preset(a: str = ArgStr(), b: str = ArgStr()):
     if a == "text":
         await test_preset.reject_arg("a")
 
     assert a == "text_next"
+    assert b == "text"
+
+
+test_overload = on_message()
+
+
+class FakeEvent(Event):
+    ...
+
+
+@test_overload.got("a")
+async def overload(event: FakeEvent):
+    await test_overload.reject_arg("a")
+
+
+@test_overload.handle()
+async def finish():
+    await test_overload.finish()
