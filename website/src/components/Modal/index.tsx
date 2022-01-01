@@ -15,11 +15,8 @@ export default function Modal({
       {/* overlay */}
       <div
         className={clsx(
-          "fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center transition z-[200]",
-          {
-            hidden: !active,
-            "pointer-events-auto": active,
-          }
+          "fixed top-0 bottom-0 left-0 right-0 flex items-center justify-center transition z-[200] pointer-events-auto",
+          { "!hidden": !active }
         )}
         onClick={() => setActive(false)}
       >
@@ -28,11 +25,12 @@ export default function Modal({
       {/* modal */}
       <div
         className={clsx(
-          "fixed top-0 left-0 flex items-center justify-center h-full w-full transition z-[201] pointer-events-none",
-          { hidden: !active }
+          "fixed top-0 left-0 flex items-center justify-center h-full w-full z-[201] pointer-events-none",
+          { "!hidden": !active }
         )}
+        tabIndex={0}
       >
-        <div className="w-full max-w-[600px] max-h-[90%] overflow-y-auto rounded shadow-lg m-6 origin-center transition z-[inherit] pointer-events-auto thin-scrollbar">
+        <div className="w-full max-w-[600px] max-h-[90%] overflow-y-auto rounded shadow-lg m-6 z-[inherit] pointer-events-auto thin-scrollbar">
           <div className="bg-light-nonepress-100 dark:bg-dark-nonepress-100">
             {children}
           </div>
