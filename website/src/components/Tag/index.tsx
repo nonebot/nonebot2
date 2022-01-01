@@ -23,7 +23,7 @@ export default function Tag({
   return (
     <span
       className={clsx(
-        "inline-flex px-3 rounded-full items-center align-middle mr-2",
+        "font-mono inline-flex px-3 rounded-full items-center align-middle mr-2",
         className
       )}
       style={{

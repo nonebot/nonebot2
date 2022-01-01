@@ -8,8 +8,8 @@
     "homepage": "https://github.com/cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_status",
     "tags": [
       {
-        "label": "server",
-        "color": "#ff0000"
+        "label": "t:server",
+        "color": "#aeeaa8"
       }
     ],
     "is_official": true
@@ -23,7 +23,7 @@
     "homepage": "https://github.com/SK-415/HarukaBot",
     "tags": [
       {
-        "label": "bilibili",
+        "label": "t:bilibili",
         "color": "#e55d80"
       }
     ],
@@ -56,7 +56,31 @@
     "desc": "使用Sentry监控机器人日志并处理报错",
     "name": "Sentry日志监控",
     "homepage": "https://github.com/cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_sentry",
-    "tags": [],
+    "tags": [
+      {
+        "label": "t:log",
+        "color": "#6be3ea"
+      }
+    ],
+    "is_official": true
+  },
+  {
+    "module_name": "nonebot_plugin_test",
+    "projectLink": "nonebot-plugin-test",
+    "author": "yanyongyu",
+    "desc": "在浏览器中测试你的 NoneBot 机器人",
+    "name": "前端测试机器人插件",
+    "homepage": "https://github.com/nonebot/plugin-test",
+    "tags": [
+      {
+        "label": "alpha only",
+        "color": "#f56c6c"
+      },
+      {
+        "label": "a:cqhttp",
+        "color": "#000000"
+      }
+    ],
     "is_official": true
   },
   {
