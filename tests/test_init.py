@@ -18,12 +18,9 @@ os.environ["CONFIG_FROM_ENV"] = '{"test": "test"}'
     [
         {
             "config_from_init": "init",
-            "driver": "nonebot.drivers.fastapi+nonebot.drivers.httpx+nonebot.drivers.websockets",
-        },
-        {
-            "config_from_init": "init",
             "driver": "~fastapi+~httpx+~websockets",
         },
+        {"config_from_init": "init", "driver": "~fastapi+~aiohttp"},
     ],
     indirect=True,
 )

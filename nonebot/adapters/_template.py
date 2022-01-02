@@ -4,10 +4,8 @@ from string import Formatter
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
-    Dict,
-    Optional,
     Set,
+    Dict,
     List,
     Type,
     Tuple,
@@ -15,6 +13,8 @@ from typing import (
     Generic,
     Mapping,
     TypeVar,
+    Callable,
+    Optional,
     Sequence,
     cast,
     overload,
@@ -172,7 +172,7 @@ class MessageTemplate(Formatter, Generic[TF]):
 
     def format_field(self, value: Any, format_spec: str) -> Any:
         formatter: Optional[FormatSpecFunc] = self.format_specs.get(format_spec)
-        if (formatter is None) and (not issubclass(self.factory, str)):
+        if formatter is None and not issubclass(self.factory, str):
             segment_class: Type["MessageSegment"] = self.factory.get_segment_class()
             method = getattr(segment_class, format_spec, None)
             if inspect.ismethod(method):
