@@ -4,6 +4,9 @@ from string import Formatter
 from typing import (
     TYPE_CHECKING,
     Any,
+    Callable,
+    Dict,
+    Optional,
     Set,
     List,
     Type,
@@ -22,6 +25,9 @@ if TYPE_CHECKING:
 
 TM = TypeVar("TM", bound="Message")
 TF = TypeVar("TF", str, "Message")
+
+FormatSpecFunc = Callable[[Any], str]
+FormatSpecFunc_T = TypeVar("FormatSpecFunc_T", bound=FormatSpecFunc)
 
 
 class MessageTemplate(Formatter, Generic[TF]):
@@ -50,8 +56,18 @@ class MessageTemplate(Formatter, Generic[TF]):
           * ``template: Union[str, Message]``: 模板
           * ``factory: Union[str, Message]``: 消息构造类型，默认为 `str`
         """
-        self.template: Union[str, TF] = template
+        self.template: TF = template
         self.factory: Type[TF] = factory
+        self.format_specs: Dict[str, FormatSpecFunc] = {}
+
+    def add_format_spec(
+        self, spec: FormatSpecFunc_T, name: Optional[str] = None
+    ) -> FormatSpecFunc_T:
+        name = name or spec.__name__
+        if name in self.format_specs:
+            raise ValueError(f"Format spec {name} already exists!")
+        self.format_specs[name] = spec
+        return spec
 
     def format(self, *args: Any, **kwargs: Any) -> TF:
         """
@@ -69,7 +85,7 @@ class MessageTemplate(Formatter, Generic[TF]):
         else:
             raise TypeError("template must be a string or instance of Message!")
 
-        return msg
+        return msg  # type:ignore
 
     def vformat(
         self, format_string: str, args: Sequence[Any], kwargs: Mapping[str, Any]
@@ -155,25 +171,16 @@ class MessageTemplate(Formatter, Generic[TF]):
         )
 
     def format_field(self, value: Any, format_spec: str) -> Any:
-        if issubclass(self.factory, str):
-            return super().format_field(value, format_spec)
-
-        segment_class: Type[MessageSegment] = self.factory.get_segment_class()
-        method = getattr(segment_class, format_spec, None)
-        method_type = inspect.getattr_static(segment_class, format_spec, None)
+        formatter: Optional[FormatSpecFunc] = self.format_specs.get(format_spec)
+        if (formatter is None) and (not issubclass(self.factory, str)):
+            segment_class: Type["MessageSegment"] = self.factory.get_segment_class()
+            method = getattr(segment_class, format_spec, None)
+            if inspect.ismethod(method):
+                formatter = getattr(segment_class, format_spec)
         return (
-            (
-                super().format_field(value, format_spec)
-                if (
-                    (method is None)
-                    or (
-                        not isinstance(method_type, (classmethod, staticmethod))
-                    )  # Only Call staticmethod or classmethod
-                )
-                else method(value)
-            )
-            if format_spec
-            else value
+            super().format_field(value, format_spec)
+            if formatter is None
+            else formatter(value)
         )
 
     def _add(self, a: Any, b: Any) -> Any:
