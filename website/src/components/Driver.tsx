@@ -38,7 +38,12 @@ export default function Driver(): JSX.Element {
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4">
         {currentDrivers.map((driver, index) => (
-          <Card key={index} {...driver} />
+          <Card
+            key={index}
+            {...driver}
+            action={`nb driver install ${driver.project_link}`}
+            actionDisabled={!driver.project_link}
+          />
         ))}
       </div>
       <div className="grid grid-cols-1 p-4">

@@ -136,7 +136,12 @@ ${JSON.stringify(tags)}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4">
         {currentPlugins.map((plugin, index) => (
-          <Card key={index} {...plugin} />
+          <Card
+            key={index}
+            {...plugin}
+            action={`nb plugin install ${plugin.project_link}`}
+            actionDisabled={!plugin.project_link}
+          />
         ))}
       </div>
       <div className="grid grid-cols-1 p-4">

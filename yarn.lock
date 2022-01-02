@@ -2908,6 +2908,13 @@ copy-text-to-clipboard@^3.0.1:
   resolved "https://registry.nlark.com/copy-text-to-clipboard/download/copy-text-to-clipboard-3.0.1.tgz#8cbf8f90e0a47f12e4a24743736265d157bce69c"
   integrity sha1-jL+PkOCkfxLkokdDc2Jl0Ve85pw=
 
+copy-to-clipboard@^3.3.1:
+  version "3.3.1"
+  resolved "https://registry.nlark.com/copy-to-clipboard/download/copy-to-clipboard-3.3.1.tgz#115aa1a9998ffab6196f93076ad6da3b913662ae"
+  integrity sha1-EVqhqZmP+rYZb5MHatbaO5E2Yq4=
+  dependencies:
+    toggle-selection "^1.0.6"
+
 copy-webpack-plugin@^9.0.1:
   version "9.1.0"
   resolved "https://registry.npmmirror.com/copy-webpack-plugin/download/copy-webpack-plugin-9.1.0.tgz#2d2c460c4c4695ec0a58afb2801a1205256c4e6b"
@@ -3344,19 +3351,19 @@ dns-txt@^2.0.2:
     buffer-indexof "^1.0.0"
 
 docusaurus-preset-nonepress@canary:
-  version "0.0.0-130"
-  resolved "https://registry.npmmirror.com/docusaurus-preset-nonepress/download/docusaurus-preset-nonepress-0.0.0-130.tgz#f2cebf94c4ea4bac4e63fb2e1439700b9a126a97"
-  integrity sha512-zJwEWkl1VCuXAP0YJcCCLkFpIXFl4YWoXAvm0smMsFPV9oYe6tV5Q1CXZAZNuUOFgMT4KAOYOis1fUNikV3c9Q==
+  version "0.0.0-131"
+  resolved "https://registry.npmmirror.com/docusaurus-preset-nonepress/download/docusaurus-preset-nonepress-0.0.0-131.tgz#acdb2921ad7130e26124c4291ec200b70987f1c6"
+  integrity sha512-ooqLPSPBDQVe3HzWQ+C4RVHRb1xlyePDD6rGKPsgRwczubbJzDEJ/nci7MpTTaXMvfg7UjpW7sF0fcZr6k/LEg==
   dependencies:
     "@docusaurus/core" "2.0.0-beta.9"
     "@docusaurus/plugin-content-docs" "2.0.0-beta.9"
     "@docusaurus/plugin-content-pages" "2.0.0-beta.9"
-    docusaurus-theme-nonepress "0.0.0-130"
+    docusaurus-theme-nonepress "0.0.0-131"
 
-docusaurus-theme-nonepress@0.0.0-130:
-  version "0.0.0-130"
-  resolved "https://registry.npmmirror.com/docusaurus-theme-nonepress/download/docusaurus-theme-nonepress-0.0.0-130.tgz#26aaea857eb6c0c3061a632882e64a9b97269182"
-  integrity sha512-JlYLggAD/NB3FnoekiQuRHIdrznKSWcFKS/PJPGNtRNXgF603RLcsEwUlCuRwvHEMA6aqKGhvurlfDhqi/u6Ng==
+docusaurus-theme-nonepress@0.0.0-131:
+  version "0.0.0-131"
+  resolved "https://registry.npmmirror.com/docusaurus-theme-nonepress/download/docusaurus-theme-nonepress-0.0.0-131.tgz#615da60a6849cfa85a303f2b28de5bcd3b69dfe5"
+  integrity sha512-Od4fOTIEhe/VvdyxczPNDHiPhbyz3Zxn+DHcaOo8NWsJ5gcNTZhgXg1bXrhc4cVTXCEcdpM/HVEYm7JiAnKFgQ==
   dependencies:
     "@docsearch/react" "^3.0.0-alpha.39"
     "@docusaurus/core" "2.0.0-beta.9"
@@ -7312,6 +7319,11 @@ to-regex-range@^5.0.1:
   integrity sha1-FkjESq58jZiKMmAY7XL1tN0DkuQ=
   dependencies:
     is-number "^7.0.0"
+
+toggle-selection@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.nlark.com/toggle-selection/download/toggle-selection-1.0.6.tgz#6e45b1263f2017fa0acc7d89d78b15b8bf77da32"
+  integrity sha1-bkWxJj8gF/oKzH2J14sVuL932jI=
 
 toidentifier@1.0.1:
   version "1.0.1"

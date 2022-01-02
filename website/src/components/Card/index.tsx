@@ -1,6 +1,9 @@
-import React from "react";
+import clsx from "clsx";
+import copy from "copy-to-clipboard";
+import React, { useState } from "react";
 
 import Link from "@docusaurus/Link";
+import type { IconName } from "@fortawesome/fontawesome-common-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { Obj } from "../../libs/store";
@@ -14,8 +17,22 @@ export default function Card({
   homepage,
   tags,
   is_official,
-}: Obj): JSX.Element {
+  action,
+  actionDisabled = false,
+  actionLabel = "点击复制安装命令",
+}: Obj & {
+  action?: string;
+  actionLabel?: string;
+  actionDisabled?: boolean;
+}): JSX.Element {
   const isGithub = /^https:\/\/github.com\/[^/]+\/[^/]+/.test(homepage);
+  const [copied, setCopied] = useState<boolean>(false);
+
+  const copyAction = () => {
+    copy(action);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
   return (
     <div className="block max-w-full px-4 border-2 rounded-lg outline-none no-underline bg-light-nonepress-100 dark:bg-dark-nonepress-100 border-light-nonepress-200 dark:border-dark-nonepress-200 shadow-md shadow-light-nonepress-300 dark:shadow-dark-nonepress-300">
@@ -32,7 +49,7 @@ export default function Card({
         {homepage && (
           <Link
             href={homepage}
-            className="text-black dark:text-white opacity-60 hover:text-hero hover:opacity-100"
+            className="text-black dark:text-white opacity-60 hover:text-hero dark:hover:text-white hover:opacity-100"
           >
             {isGithub ? (
               <FontAwesomeIcon icon={["fab", "github"]} />
@@ -63,6 +80,23 @@ export default function Card({
           <FontAwesomeIcon icon={["fas", "user"]} className="mr-2" />
           {author}
         </div>
+      )}
+      {action && actionLabel && (
+        <button
+          className={clsx(
+            "my-2 text-sm py-2 w-full rounded select-none bg-light-nonepress-200 dark:bg-dark-nonepress-200 active:bg-light-nonepress-300 active:dark:bg-dark-nonepress-300",
+            { "opacity-60 pointer-events-none": actionDisabled }
+          )}
+          onClick={copyAction}
+        >
+          <span className="flex grow items-center justify-center">
+            {copied ? "复制成功" : actionLabel}
+            <FontAwesomeIcon
+              icon={["fas", copied ? "check-circle" : "copy"]}
+              className="ml-2"
+            />
+          </span>
+        </button>
       )}
     </div>
   );

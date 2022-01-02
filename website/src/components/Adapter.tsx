@@ -136,7 +136,12 @@ ${JSON.stringify(tags)}
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4">
         {currentAdapters.map((adapter, index) => (
-          <Card key={index} {...adapter} />
+          <Card
+            key={index}
+            {...adapter}
+            action={`nb adapter install ${adapter.project_link}`}
+            actionDisabled={!adapter.project_link}
+          />
         ))}
       </div>
       <div className="grid grid-cols-1 p-4">
