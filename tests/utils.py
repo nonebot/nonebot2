@@ -18,14 +18,18 @@ def make_fake_message() -> Type["Message"]:
             return FakeMessage
 
         def __str__(self) -> str:
-            return self.data["text"]
+            return self.data["text"] if self.type == "text" else f"[fake:{self.type}]"
 
         @classmethod
         def text(cls, text: str):
             return cls("text", {"text": text})
 
+        @classmethod
+        def image(cls, url: str):
+            return cls("image", {"url": url})
+
         def is_text(self) -> bool:
-            return True
+            return self.type == "text"
 
     class FakeMessage(Message):
         @classmethod
