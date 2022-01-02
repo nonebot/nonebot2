@@ -171,27 +171,16 @@ class MessageTemplate(Formatter, Generic[TF]):
         )
 
     def format_field(self, value: Any, format_spec: str) -> Any:
-        if issubclass(self.factory, str):
-            return super().format_field(value, format_spec)
-
-        segment_class: Type[MessageSegment] = self.factory.get_segment_class()
-        method = getattr(segment_class, format_spec, None)
-        method_type = inspect.getattr_static(segment_class, format_spec, None)
+        formatter: Optional[FormatSpecFunc] = self.format_specs.get(format_spec)
+        if (formatter is None) and (not issubclass(self.factory, str)):
+            segment_class: Type["MessageSegment"] = self.factory.get_segment_class()
+            method = getattr(segment_class, format_spec, None)
+            if inspect.ismethod(method):
+                formatter = getattr(segment_class, format_spec)
         return (
-            (
-                super().format_field(value, format_spec)
-                if (
-                    method is None
-                    or not isinstance(method_type, (classmethod, staticmethod))
-                )
-                else (
-                    self.format_specs[format_spec](value)
-                    if format_spec in self.format_specs
-                    else method(value)
-                )
-            )
-            if format_spec
-            else value
+            super().format_field(value, format_spec)
+            if formatter is None
+            else formatter(value)
         )
 
     def _add(self, a: Any, b: Any) -> Any:
