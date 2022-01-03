@@ -62,7 +62,60 @@ FastAPI: [文档](https://fastapi.tiangolo.com/), [仓库](https://github.com/ti
 DRIVER=~fastapi
 ```
 
-<!-- TODO: 配置项 -->
+#### FastAPI 配置项
+
+##### `fastapi_openapi_url`
+
+类型: `Optional[str]`  
+默认值: `None`  
+说明: `FastAPI` 提供的 `OpenAPI` JSON 定义地址，如果为 `None`，则不提供 `OpenAPI` JSON 定义。
+
+##### `fastapi_docs_url`
+
+类型: `Optional[str]`  
+默认值: `None`  
+说明: `FastAPI` 提供的 `Swagger` 文档地址，如果为 `None`，则不提供 `Swagger` 文档。
+
+##### `fastapi_redoc_url`
+
+类型: `Optional[str]`  
+默认值: `None`  
+说明: `FastAPI` 提供的 `ReDoc` 文档地址，如果为 `None`，则不提供 `ReDoc` 文档。
+
+##### `fastapi_reload`
+
+类型: `bool`  
+默认值: `False`  
+说明: 是否开启 `uvicorn` 的 `reload` 功能，需要提供 asgi 应用路径。
+
+```python title=bot.py
+app = nonebot.get_asgi()
+nonebot.run(app="bot:app")
+```
+
+##### `fastapi_reload_dirs`
+
+类型: `Optional[List[str]]`  
+默认值: `None`  
+说明: 重载监控文件夹列表，默认为 uvicorn 默认值
+
+##### `fastapi_reload_delay`
+
+类型: `Optional[float]`  
+默认值: `None`  
+说明: 重载延迟，默认为 uvicorn 默认值
+
+##### `fastapi_reload_includes`
+
+类型: `Optional[List[str]]`  
+默认值: `None`  
+说明: 要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+
+##### `fastapi_reload_excludes`
+
+类型: `Optional[List[str]]`  
+默认值: `None`  
+说明: 不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
 
 ### Quart
 
@@ -79,6 +132,43 @@ Quart: [文档](https://pgjones.gitlab.io/quart/), [仓库](https://gitlab.com/p
 ```env
 DRIVER=~quart
 ```
+
+#### Quart 配置项
+
+##### `quart_reload`
+
+类型: `bool`  
+默认值: `False`  
+说明: 是否开启 `uvicorn` 的 `reload` 功能，需要提供 asgi 应用路径。
+
+```python title=bot.py
+app = nonebot.get_asgi()
+nonebot.run(app="bot:app")
+```
+
+##### `quart_reload_dirs`
+
+类型: `Optional[List[str]]`  
+默认值: `None`  
+说明: 重载监控文件夹列表，默认为 uvicorn 默认值
+
+##### `quart_reload_delay`
+
+类型: `Optional[float]`  
+默认值: `None`  
+说明: 重载延迟，默认为 uvicorn 默认值
+
+##### `quart_reload_includes`
+
+类型: `Optional[List[str]]`  
+默认值: `None`  
+说明: 要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+
+##### `quart_reload_excludes`
+
+类型: `Optional[List[str]]`  
+默认值: `None`  
+说明: 不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
 
 ### HTTPX
 
@@ -135,7 +225,7 @@ AIOHTTP: [文档](https://docs.aiohttp.org/en/stable/), [仓库](https://github.
 驱动器: [API](../api/drivers/aiohttp.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/aiohttp.py)
 
 ```env
-DRIVER=~httpx
+DRIVER=~aiohttp
 ```
 
 :::important 注意
