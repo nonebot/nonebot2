@@ -6,7 +6,7 @@ from utils import load_plugin, make_fake_event, make_fake_message
 
 @pytest.mark.asyncio
 async def test_matcher(app: App, load_plugin):
-    from plugins.matcher import (
+    from plugins.matcher.matcher_process import (
         test_got,
         test_handle,
         test_preset,
@@ -74,3 +74,58 @@ async def test_matcher(app: App, load_plugin):
         bot = ctx.create_bot()
         ctx.receive_event(bot, event)
         ctx.should_finished()
+
+
+@pytest.mark.asyncio
+async def test_type_updater(app: App, load_plugin):
+    from plugins.matcher.matcher_type import (
+        test_type_updater,
+        test_custom_updater,
+    )
+
+    event = make_fake_event()()
+
+    assert test_type_updater.type == "test"
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        matcher = test_type_updater()
+        new_type = await matcher.update_type(bot, event)
+        assert new_type == "message"
+
+    assert test_custom_updater.type == "test"
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        matcher = test_custom_updater()
+        new_type = await matcher.update_type(bot, event)
+        assert new_type == "custom"
+
+
+@pytest.mark.asyncio
+async def test_permission_updater(app: App, load_plugin):
+    from nonebot.permission import User
+
+    from plugins.matcher.matcher_permission import (
+        default_permission,
+        test_custom_updater,
+        test_permission_updater,
+    )
+
+    event = make_fake_event(_session_id="test")()
+
+    assert test_permission_updater.permission is default_permission
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        matcher = test_permission_updater()
+        new_perm = await matcher.update_permission(bot, event)
+        assert len(new_perm.checkers) == 1
+        checker = list(new_perm.checkers)[0].call
+        assert isinstance(checker, User)
+        assert checker.users == ("test",)
+        assert checker.perm is default_permission
+
+    assert test_custom_updater.permission is default_permission
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        matcher = test_custom_updater()
+        new_perm = await matcher.update_permission(bot, event)
+        assert new_perm is default_permission
