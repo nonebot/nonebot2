@@ -155,7 +155,7 @@ def logger_wrapper(logger_name: str):
 
     :log 参数:
 
-    * ``level: Literal["CRETICAL", "WARNING", "INFO", "DEBUG", "TRACE"]``: 日志等级
+    * ``level: Literal["CRITICAL", "WARNING", "INFO", "DEBUG", "TRACE"]``: 日志等级
     * ``message: str``: 日志信息
     * ``exception: Optional[Exception]``: 异常信息
     """
