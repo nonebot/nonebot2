@@ -792,5 +792,15 @@
     "homepage": "https://github.com/MeetWq/nonebot-plugin-memes",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_repeater",
+    "project_link": "nonebot-plugin-repeater",
+    "name": "群聊复读机",
+    "desc": "谁不喜欢+1呢？",
+    "author": "ninthseason",
+    "homepage": "https://github.com/ninthseason/nonebot-plugin-repeater",
+    "tags": [],
+    "is_official": false
   }
 ]
