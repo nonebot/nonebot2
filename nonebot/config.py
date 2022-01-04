@@ -157,6 +157,9 @@ class Config(BaseConfig):
     这些配置将会在 json 反序列化后一起带入 ``Config`` 类中。
     """
 
+    _common_config: dict
+    _env_file: str
+
     # nonebot configs
     driver: str = "~fastapi"
     """
