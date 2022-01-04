@@ -76,6 +76,12 @@ const config = {
             href: "https://github.com/nonebot/nonebot2",
           },
         ],
+        docsVersionItemAfter: [
+          {
+            label: "2.0.0a16",
+            href: "https://61d3d9dbcadf413fd3238e89--nonebot2.netlify.app/",
+          },
+        ],
       },
       hideableSidebar: true,
       footer: {
