@@ -1,0 +1,62 @@
+[
+  {
+    "module_name": "nonebot.adapters.onebot.v11",
+    "project_link": "nonebot-adapter-onebot",
+    "name": "OneBot V11",
+    "desc": "OneBot V11 协议",
+    "author": "yanyongyu",
+    "homepage": "https://github.com/nonebot/adapter-onebot",
+    "tags": [],
+    "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.ding",
+    "project_link": "nonebot-adapter-ding",
+    "name": "ding",
+    "desc": "钉钉协议",
+    "author": "Artin",
+    "homepage": "https://github.com/nonebot/adapter-ding",
+    "tags": [],
+    "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.mirai",
+    "project_link": "nonebot-adapter-mirai",
+    "name": "mirai",
+    "desc": "Mirai-Api-HTTP 协议",
+    "author": "Mix",
+    "homepage": "https://github.com/nonebot/adapter-mirai",
+    "tags": [],
+    "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.feishu",
+    "project_link": "nonebot-adapter-feishu",
+    "name": "feishu",
+    "desc": "飞书协议",
+    "author": "StarHeartHunt",
+    "homepage": "https://github.com/nonebot/adapter-feishu",
+    "tags": [],
+    "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.telegram",
+    "project_link": "nonebot-adapter-telegram",
+    "name": "telegram",
+    "desc": "Telegram 协议",
+    "author": "StarHeartHunt",
+    "homepage": "https://github.com/nonebot/adapter-telegram",
+    "tags": [],
+    "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.qqguild",
+    "project_link": "nonebot-adapter-qqguild",
+    "name": "QQ 频道",
+    "desc": "QQ 频道官方机器人",
+    "author": "yanyongyu",
+    "homepage": "https://github.com/nonebot/adapter-qqguild",
+    "tags": [],
+    "is_official": true
+  }
+]

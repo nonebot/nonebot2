@@ -7,17 +7,31 @@
 
 import abc
 import asyncio
-from dataclasses import field, dataclass
-from typing import (TYPE_CHECKING, Any, Set, Dict, Type, Union, Callable,
-                    Optional, Awaitable)
+from dataclasses import dataclass
+from contextlib import asynccontextmanager
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Set,
+    Dict,
+    Type,
+    Callable,
+    Awaitable,
+    AsyncGenerator,
+)
 
+from ._model import URL as URL
 from nonebot.log import logger
 from nonebot.utils import escape_tag
+from ._model import Request as Request
 from nonebot.config import Env, Config
+from ._model import Response as Response
+from ._model import WebSocket as WebSocket
+from ._model import HTTPVersion as HTTPVersion
 from nonebot.typing import T_BotConnectionHook, T_BotDisconnectionHook
 
 if TYPE_CHECKING:
-    from nonebot.adapters import Bot
+    from nonebot.adapters import Bot, Adapter
 
 
 class Driver(abc.ABC):
@@ -25,9 +39,9 @@ class Driver(abc.ABC):
     Driver 基类。
     """
 
-    _adapters: Dict[str, Type["Bot"]] = {}
+    _adapters: Dict[str, "Adapter"] = {}
     """
-    :类型: ``Dict[str, Type[Bot]]``
+    :类型: ``Dict[str, Adapter]``
     :说明: 已注册的适配器列表
     """
     _bot_connection_hook: Set[T_BotConnectionHook] = set()
@@ -76,7 +90,7 @@ class Driver(abc.ABC):
         """
         return self._clients
 
-    def register_adapter(self, name: str, adapter: Type["Bot"], **kwargs):
+    def register_adapter(self, adapter: Type["Adapter"], **kwargs) -> None:
         """
         :说明:
 
@@ -88,18 +102,20 @@ class Driver(abc.ABC):
           * ``adapter: Type[Bot]``: 适配器 Class
           * ``**kwargs``: 其他传递给适配器的参数
         """
+        name = adapter.get_name()
         if name in self._adapters:
             logger.opt(colors=True).debug(
-                f'Adapter "<y>{escape_tag(name)}</y>" already exists')
+                f'Adapter "<y>{escape_tag(name)}</y>" already exists'
+            )
             return
-        self._adapters[name] = adapter
-        adapter.register(self, self.config, **kwargs)
+        self._adapters[name] = adapter(self, **kwargs)
         logger.opt(colors=True).debug(
-            f'Succeeded to load adapter "<y>{escape_tag(name)}</y>"')
+            f'Succeeded to load adapter "<y>{escape_tag(name)}</y>"'
+        )
 
     @property
     @abc.abstractmethod
-    def type(self):
+    def type(self) -> str:
         """驱动类型名称"""
         raise NotImplementedError
 
@@ -121,7 +137,8 @@ class Driver(abc.ABC):
           * ``**kwargs``
         """
         logger.opt(colors=True).debug(
-            f"<g>Loaded adapters: {escape_tag(', '.join(self._adapters))}</g>")
+            f"<g>Loaded adapters: {escape_tag(', '.join(self._adapters))}</g>"
+        )
 
     @abc.abstractmethod
     def on_startup(self, func: Callable) -> Callable:
@@ -146,8 +163,7 @@ class Driver(abc.ABC):
         self._bot_connection_hook.add(func)
         return func
 
-    def on_bot_disconnect(
-            self, func: T_BotDisconnectionHook) -> T_BotDisconnectionHook:
+    def on_bot_disconnect(self, func: T_BotDisconnectionHook) -> T_BotDisconnectionHook:
         """
         :说明:
 
@@ -162,6 +178,8 @@ class Driver(abc.ABC):
 
     def _bot_connect(self, bot: "Bot") -> None:
         """在 WebSocket 连接成功后，调用该函数来注册 bot 对象"""
+        if bot.self_id in self._clients:
+            raise RuntimeError(f"Duplicate bot connection with id {bot.self_id}")
         self._clients[bot.self_id] = bot
 
         async def _run_hook(bot: "Bot") -> None:
@@ -172,7 +190,8 @@ class Driver(abc.ABC):
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
                         "<r><bg #f8bbd0>Error when running WebSocketConnection hook. "
-                        "Running cancelled!</bg #f8bbd0></r>")
+                        "Running cancelled!</bg #f8bbd0></r>"
+                    )
 
         asyncio.create_task(_run_hook(bot))
 
@@ -189,47 +208,33 @@ class Driver(abc.ABC):
                 except Exception as e:
                     logger.opt(colors=True, exception=e).error(
                         "<r><bg #f8bbd0>Error when running WebSocketDisConnection hook. "
-                        "Running cancelled!</bg #f8bbd0></r>")
+                        "Running cancelled!</bg #f8bbd0></r>"
+                    )
 
         asyncio.create_task(_run_hook(bot))
 
 
-class ForwardDriver(Driver):
+class ForwardMixin(abc.ABC):
+    @property
+    @abc.abstractmethod
+    def type(self) -> str:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    async def request(self, setup: Request) -> Response:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    @asynccontextmanager
+    async def websocket(self, setup: Request) -> AsyncGenerator[WebSocket, None]:
+        raise NotImplementedError
+        yield  # used for static type checking's generator detection
+
+
+class ForwardDriver(Driver, ForwardMixin):
     """
     Forward Driver 基类。将客户端框架封装，以满足适配器使用。
     """
-
-    @abc.abstractmethod
-    def setup_http_polling(
-        self, setup: Union["HTTPPollingSetup",
-                           Callable[[], Awaitable["HTTPPollingSetup"]]]
-    ) -> None:
-        """
-        :说明:
-
-          注册一个 HTTP 轮询连接，如果传入一个函数，则该函数会在每次连接时被调用
-
-        :参数:
-
-          * ``setup: Union[HTTPPollingSetup, Callable[[], Awaitable[HTTPPollingSetup]]]``
-        """
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    def setup_websocket(
-        self, setup: Union["WebSocketSetup",
-                           Callable[[], Awaitable["WebSocketSetup"]]]
-    ) -> None:
-        """
-        :说明:
-
-          注册一个 WebSocket 连接，如果传入一个函数，则该函数会在每次重连时被调用
-
-        :参数:
-
-          * ``setup: Union[WebSocketSetup, Callable[[], Awaitable[WebSocketSetup]]]``
-        """
-        raise NotImplementedError
 
 
 class ReverseDriver(Driver):
@@ -249,172 +254,44 @@ class ReverseDriver(Driver):
         """驱动 ASGI 对象"""
         raise NotImplementedError
 
-
-@dataclass
-class HTTPConnection(abc.ABC):
-    http_version: str
-    """One of ``"1.0"``, ``"1.1"`` or ``"2"``."""
-    scheme: str
-    """URL scheme portion (likely ``"http"`` or ``"https"``)."""
-    path: str
-    """
-    HTTP request target excluding any query string,
-    with percent-encoded sequences and UTF-8 byte sequences
-    decoded into characters.
-    """
-    query_string: bytes = b""
-    """ URL portion after the ``?``, percent-encoded."""
-    headers: Dict[str, str] = field(default_factory=dict)
-    """A dict of name-value pairs,
-    where name is the header name, and value is the header value.
-
-    Order of header values must be preserved from the original HTTP request;
-    order of header names is not important.
-
-    Header names must be lowercased.
-    """
-
-    @property
     @abc.abstractmethod
-    def type(self) -> str:
-        """Connection type."""
+    def setup_http_server(self, setup: "HTTPServerSetup") -> None:
         raise NotImplementedError
+
+    @abc.abstractmethod
+    def setup_websocket_server(self, setup: "WebSocketServerSetup") -> None:
+        raise NotImplementedError
+
+
+def combine_driver(driver: Type[Driver], *mixins: Type[ForwardMixin]) -> Type[Driver]:
+    # check first
+    assert issubclass(driver, Driver), "`driver` must be subclass of Driver"
+    assert all(
+        map(lambda m: issubclass(m, ForwardMixin), mixins)
+    ), "`mixins` must be subclass of ForwardMixin"
+
+    class CombinedDriver(*mixins, driver, ForwardDriver):  # type: ignore
+        @property
+        def type(self) -> str:
+            return (
+                driver.type.__get__(self)
+                + "+"
+                + "+".join(map(lambda x: x.type.__get__(self), mixins))
+            )
+
+    return CombinedDriver
 
 
 @dataclass
-class HTTPRequest(HTTPConnection):
-    """HTTP 请求封装。参考 `asgi http scope`_。
-
-    .. _asgi http scope:
-        https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope
-    """
-    method: str = "GET"
-    """The HTTP method name, uppercased."""
-    body: bytes = b""
-    """Body of the request.
-
-    Optional; if missing defaults to ``b""``.
-    """
-
-    @property
-    def type(self) -> str:
-        """Always ``http``"""
-        return "http"
-
-
-@dataclass
-class HTTPResponse:
-    """HTTP 响应封装。参考 `asgi http scope`_。
-
-    .. _asgi http scope:
-        https://asgi.readthedocs.io/en/latest/specs/www.html#http-connection-scope
-    """
-    status: int
-    """HTTP status code."""
-    body: Optional[bytes] = None
-    """HTTP body content.
-
-    Optional; if missing defaults to ``None``.
-    """
-    headers: Dict[str, str] = field(default_factory=dict)
-    """A dict of name-value pairs,
-    where name is the header name, and value is the header value.
-
-    Order must be preserved in the HTTP response.
-
-    Header names must be lowercased.
-
-    Optional; if missing defaults to an empty dict.
-    """
-
-    @property
-    def type(self) -> str:
-        """Always ``http``"""
-        return "http"
-
-
-@dataclass
-class WebSocket(HTTPConnection, abc.ABC):
-    """WebSocket 连接封装。参考 `asgi websocket scope`_。
-
-    .. _asgi websocket scope:
-        https://asgi.readthedocs.io/en/latest/specs/www.html#websocket-connection-scope
-    """
-
-    @property
-    def type(self) -> str:
-        """Always ``websocket``"""
-        return "websocket"
-
-    @property
-    @abc.abstractmethod
-    def closed(self) -> bool:
-        """
-        :类型: ``bool``
-        :说明: 连接是否已经关闭
-        """
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    async def accept(self):
-        """接受 WebSocket 连接请求"""
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    async def close(self, code: int):
-        """关闭 WebSocket 连接请求"""
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    async def receive(self) -> str:
-        """接收一条 WebSocket text 信息"""
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    async def receive_bytes(self) -> bytes:
-        """接收一条 WebSocket binary 信息"""
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    async def send(self, data: str):
-        """发送一条 WebSocket text 信息"""
-        raise NotImplementedError
-
-    @abc.abstractmethod
-    async def send_bytes(self, data: bytes):
-        """发送一条 WebSocket binary 信息"""
-        raise NotImplementedError
-
-
-@dataclass
-class HTTPPollingSetup:
-    adapter: str
-    """协议适配器名称"""
-    self_id: str
-    """机器人 ID"""
-    url: str
-    """URL"""
+class HTTPServerSetup:
+    path: URL  # path should not be absolute, check it by URL.is_absolute() == False
     method: str
-    """HTTP method"""
-    body: bytes
-    """HTTP body"""
-    headers: Dict[str, str]
-    """HTTP headers"""
-    http_version: str
-    """HTTP version"""
-    poll_interval: float
-    """HTTP 轮询间隔"""
+    name: str
+    handle_func: Callable[[Request], Awaitable[Response]]
 
 
 @dataclass
-class WebSocketSetup:
-    adapter: str
-    """协议适配器名称"""
-    self_id: str
-    """机器人 ID"""
-    url: str
-    """URL"""
-    headers: Dict[str, str] = field(default_factory=dict)
-    """HTTP headers"""
-    reconnect_interval: float = 3.
-    """WebSocket 重连间隔"""
+class WebSocketServerSetup:
+    path: URL  # path should not be absolute, check it by URL.is_absolute() == False
+    name: str
+    handle_func: Callable[[WebSocket], Awaitable[Any]]

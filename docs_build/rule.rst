@@ -1,6 +1,5 @@
 \-\-\-
-contentSidebar: true
-sidebarDepth: 0
+sidebar_position: 6
 \-\-\-
 
 NoneBot.rule 模块

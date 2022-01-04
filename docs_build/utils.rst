@@ -1,6 +1,5 @@
 \-\-\-
-contentSidebar: true
-sidebarDepth: 0
+sidebar_position: 10
 \-\-\-
 
 NoneBot.utils 模块

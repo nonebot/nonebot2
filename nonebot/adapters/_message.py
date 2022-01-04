@@ -1,8 +1,17 @@
 import abc
 from copy import deepcopy
 from dataclasses import field, asdict, dataclass
-from typing import (Any, Dict, List, Type, Union, Generic, Mapping, TypeVar,
-                    Iterable)
+from typing import (
+    Any,
+    Dict,
+    List,
+    Type,
+    Union,
+    Generic,
+    Mapping,
+    TypeVar,
+    Iterable,
+)
 
 from ._template import MessageTemplate
 
@@ -14,6 +23,7 @@ TM = TypeVar("TM", bound="Message")
 @dataclass
 class MessageSegment(Mapping, abc.ABC, Generic[TM]):
     """消息段基类"""
+
     type: str
     """
     - 类型: ``str``
@@ -82,11 +92,12 @@ class MessageSegment(Mapping, abc.ABC, Generic[TM]):
 class Message(List[TMS], abc.ABC):
     """消息数组"""
 
-    def __init__(self: TM,
-                 message: Union[str, None, Mapping, Iterable[Mapping], TMS, TM,
-                                Any] = None,
-                 *args,
-                 **kwargs):
+    def __init__(
+        self: TM,
+        message: Union[str, None, Mapping, Iterable[Mapping], TMS, TM, Any] = None,
+        *args,
+        **kwargs,
+    ):
         """
         :参数:
 
@@ -103,28 +114,29 @@ class Message(List[TMS], abc.ABC):
             self.extend(self._construct(message))
 
     @classmethod
-    def template(cls: Type[TM],
-                 format_string: Union[str, TM]) -> MessageTemplate[TM]:
+    def template(cls: Type[TM], format_string: Union[str, TM]) -> MessageTemplate[TM]:
         """
         :说明:
 
           根据创建消息模板, 用法和 ``str.format`` 大致相同, 但是可以输出消息对象, 并且支持以 ``Message`` 对象作为消息模板
+          并且提供了拓展的格式化控制符, 可以用适用于该消息类型的 ``MessageSegment`` 的工厂方法创建消息
 
         :示例:
 
         .. code-block:: python
 
-            >>> Message.template("{} {}").format("hello", "world")
+            >>> Message.template("{} {}").format("hello", "world") # 基础演示
             Message(MessageSegment(type='text', data={'text': 'hello world'}))
-            >>> Message.template("{} {}").format(MessageSegment.image("file///..."), "world")
+            >>> Message.template("{} {}").format(MessageSegment.image("file///..."), "world") # 支持消息段等对象
             Message(MessageSegment(type='image', data={'file': 'file///...'}), MessageSegment(type='text', data={'text': 'world'}))
-            >>> Message.template(
+            >>> Message.template( # 支持以Message对象作为消息模板
             ...       MessageSegment.text('test {event.user_id}') + MessageSegment.face(233) +
-            ...       MessageSegment.text('test {event.message}')).format(event={'user_id':123456, 'message':'hello world'}
-            ... )
-            Message(MessageSegment(type='text', data={'text': 'test 123456'}), 
-                    MessageSegment(type='face', data={'face': 233}), 
+            ...       MessageSegment.text('test {event.message}')).format(event={'user_id':123456, 'message':'hello world'})
+            Message(MessageSegment(type='text', data={'text': 'test 123456'}),
+                    MessageSegment(type='face', data={'face': 233}),
                     MessageSegment(type='text', data={'text': 'test hello world'}))
+            >>> Message.template("{link:image}").format(link='https://...') # 支持拓展格式化控制符
+            Message(MessageSegment(type='image', data={'file': 'https://...'}))
 
         :参数:
 
@@ -134,7 +146,7 @@ class Message(List[TMS], abc.ABC):
 
           - ``MessageFormatter[TM]``: 消息格式化器
         """
-        return MessageTemplate(cls, format_string)
+        return MessageTemplate(format_string, cls)
 
     @classmethod
     @abc.abstractmethod
@@ -154,8 +166,7 @@ class Message(List[TMS], abc.ABC):
 
     @staticmethod
     @abc.abstractmethod
-    def _construct(
-            msg: Union[str, Mapping, Iterable[Mapping], Any]) -> Iterable[TMS]:
+    def _construct(msg: Union[str, Mapping, Iterable[Mapping], Any]) -> Iterable[TMS]:
         raise NotImplementedError
 
     def __add__(self: TM, other: Union[str, Mapping, Iterable[Mapping]]) -> TM:

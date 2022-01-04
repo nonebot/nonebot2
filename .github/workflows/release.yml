@@ -1,0 +1,68 @@
+name: Release
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: master
+
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8
+          architecture: "x64"
+
+      - uses: Gr1N/setup-poetry@v7
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: "16"
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+
+      - name: Cache Packages
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+      - name: Set up dependencies
+        run: |
+          poetry install -E all
+
+      - name: Build Doc
+        run: poetry run sphinx-build -M markdown ./docs_build ./build
+
+      - name: Copy Files
+        run: cp -r ./build/markdown/* ./website/docs/api/
+
+      - name: Archive Files
+        run: |
+          yarn install
+          yarn prettier
+          yarn archive $(poetry version -s)
+
+      - name: Push Tag and Release to PyPI
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m ":bookmark: Release $(poetry version -s)"
+          git tag v$(poetry version -s)
+          git push --tags
+          poetry build
+          poetry publish -u ${{secrets.PYPI_USERNAME}} -p ${{secrets.PYPI_PASSWORD}}

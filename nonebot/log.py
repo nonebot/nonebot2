@@ -31,7 +31,7 @@ logger: "Logger" = loguru.logger
 :默认信息:
 
   * 格式: ``[%(asctime)s %(name)s] %(levelname)s: %(message)s``
-  * 等级: ``DEBUG`` / ``INFO`` ，根据 config 配置改变
+  * 等级: ``INFO`` ，根据 ``config.log_level`` 配置改变
   * 输出: 输出至 stdout
 
 :用法:
@@ -48,9 +48,8 @@ logger: "Logger" = loguru.logger
 
 
 class Filter:
-
     def __init__(self) -> None:
-        self.level: Union[int, str] = "DEBUG"
+        self.level: Union[int, str] = "INFO"
 
     def __call__(self, record):
         module_name: str = record["name"]
@@ -58,13 +57,13 @@ class Filter:
         if module:
             module_name = getattr(module, "__module_name__", module_name)
         record["name"] = module_name.split(".")[0]
-        levelno = logger.level(self.level).no if isinstance(self.level,
-                                                            str) else self.level
+        levelno = (
+            logger.level(self.level).no if isinstance(self.level, str) else self.level
+        )
         return record["level"].no >= levelno
 
 
-class LoguruHandler(logging.Handler):
-
+class LoguruHandler(logging.Handler):  # pragma: no cover
     def emit(self, record):
         try:
             level = logger.level(record.levelname).name
@@ -76,8 +75,9 @@ class LoguruHandler(logging.Handler):
             frame = frame.f_back
             depth += 1
 
-        logger.opt(depth=depth,
-                   exception=record.exc_info).log(level, record.getMessage())
+        logger.opt(depth=depth, exception=record.exc_info).log(
+            level, record.getMessage()
+        )
 
 
 logger.remove()
@@ -87,9 +87,13 @@ default_format = (
     "[<lvl>{level}</lvl>] "
     "<c><u>{name}</u></c> | "
     # "<c>{function}:{line}</c>| "
-    "{message}")
-logger_id = logger.add(sys.stdout,
-                       colorize=True,
-                       diagnose=False,
-                       filter=default_filter,
-                       format=default_format)
+    "{message}"
+)
+logger_id = logger.add(
+    sys.stdout,
+    level=0,
+    colorize=True,
+    diagnose=False,
+    filter=default_filter,
+    format=default_format,
+)

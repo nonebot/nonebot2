@@ -1,0 +1,39 @@
+name: Code Coverage
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Run Pytest and Upload Coverage
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Set up Python environment
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.9"
+          architecture: "x64"
+
+      - uses: Gr1N/setup-poetry@v7
+
+      - uses: actions/cache@v2
+        with:
+          path: ~/.cache/pypoetry/virtualenvs
+          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
+
+      - name: Install dependencies
+        run: poetry install -E all
+
+      - name: Run Pytest
+        run: |
+          cd tests/
+          poetry run pytest --cov-report xml
+
+      - name: Upload coverage report
+        uses: codecov/codecov-action@v2
+        with:
+          files: ./tests/coverage.xml
+          flags: unittests

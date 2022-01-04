@@ -1,0 +1,28 @@
+name: Release Drafter
+
+on:
+  push:
+    branches:
+      - master
+    tags:
+      - v*
+
+jobs:
+  update-release-draft:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: release-drafter/release-drafter@v5
+        if: github.ref == 'refs/heads/master'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - uses: release-drafter/release-drafter@v5
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          name: Release v${GITHUB_REF#refs/tags/} 🌈
+          tag: ${GITHUB_REF#refs/tags/}
+          publish: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

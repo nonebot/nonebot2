@@ -1,7 +1,7 @@
 blank_issues_enabled: false
 contact_links:
   - name: Question
-    url: https://github.com/nonebot/discussions/discussions/new
+    url: https://discussions.nonebot.dev/
     about: Ask questions about nonebot
   - name: Plugin Publish
     url: https://v2.nonebot.dev/store.html

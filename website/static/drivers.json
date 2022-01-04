@@ -1,0 +1,52 @@
+[
+  {
+    "module_name": "nonebot.drivers.fastapi",
+    "project_link": "",
+    "name": "FastAPI",
+    "desc": "FastAPI 驱动器",
+    "author": "yanyongyu",
+    "homepage": "/docs/tutorial/choose-driver",
+    "tags": [],
+    "is_official": true
+  },
+  {
+    "module_name": "nonebot.drivers.quart",
+    "project_link": "quart",
+    "name": "Quart",
+    "desc": "Quart 驱动器",
+    "author": "yanyongyu",
+    "homepage": "/docs/tutorial/choose-driver",
+    "tags": [],
+    "is_official": true
+  },
+  {
+    "module_name": "nonebot.drivers.httpx",
+    "project_link": "httpx",
+    "name": "HTTPX",
+    "desc": "HTTPX 驱动器",
+    "author": "yanyongyu",
+    "homepage": "/docs/tutorial/choose-driver",
+    "tags": [],
+    "is_official": true
+  },
+  {
+    "module_name": "nonebot.drivers.websockets",
+    "project_link": "websockets",
+    "name": "websockets",
+    "desc": "websockets 驱动器",
+    "author": "yanyongyu",
+    "homepage": "/docs/tutorial/choose-driver",
+    "tags": [],
+    "is_official": true
+  },
+  {
+    "module_name": "nonebot.drivers.aiohttp",
+    "project_link": "aiohttp",
+    "name": "AIOHTTP",
+    "desc": "AIOHTTP 驱动器",
+    "author": "yanyongyu",
+    "homepage": "/docs/tutorial/choose-driver",
+    "tags": [],
+    "is_official": true
+  }
+]

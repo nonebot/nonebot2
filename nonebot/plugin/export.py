@@ -1,6 +1,4 @@
-from contextvars import ContextVar
-
-_export: ContextVar["Export"] = ContextVar("_export")
+from . import _current_plugin
 
 
 class Export(dict):
@@ -35,8 +33,7 @@ class Export(dict):
         return func
 
     def __setitem__(self, key, value):
-        super().__setitem__(key,
-                            Export(value) if isinstance(value, dict) else value)
+        super().__setitem__(key, Export(value) if isinstance(value, dict) else value)
 
     def __setattr__(self, name, value):
         self[name] = Export(value) if isinstance(value, dict) else value
@@ -57,4 +54,7 @@ def export() -> Export:
 
       - ``Export``
     """
-    return _export.get()
+    plugin = _current_plugin.get()
+    if not plugin:
+        raise RuntimeError("Export outside of the plugin!")
+    return plugin.export

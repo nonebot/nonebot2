@@ -2,7 +2,7 @@ r"""
 权限
 ====
 
-每个 ``Matcher`` 拥有一个 ``Permission`` ，其中是 **异步** ``PermissionChecker`` 的集合，只要有一个 ``PermissionChecker`` 检查结果为 ``True`` 时就会继续运行。
+每个 ``Matcher`` 拥有一个 ``Permission`` ，其中是 ``PermissionChecker`` 的集合，只要有一个 ``PermissionChecker`` 检查结果为 ``True`` 时就会继续运行。
 
 \:\:\:tip 提示
 ``PermissionChecker`` 既可以是 async function 也可以是 sync function
@@ -10,13 +10,27 @@ r"""
 """
 
 import asyncio
-from typing import TYPE_CHECKING, Union, Callable, NoReturn, Optional, Awaitable
+from contextlib import AsyncExitStack
+from typing import Any, Set, Tuple, Union, NoReturn, Optional, Coroutine
 
-from nonebot.utils import run_sync
-from nonebot.typing import T_PermissionChecker
+from nonebot.adapters import Bot, Event
+from nonebot.dependencies import Dependent
+from nonebot.exception import SkippedException
+from nonebot.typing import T_Handler, T_DependencyCache, T_PermissionChecker
+from nonebot.params import (
+    BotParam,
+    EventType,
+    EventParam,
+    DependParam,
+    DefaultParam,
+)
 
-if TYPE_CHECKING:
-    from nonebot.adapters import Bot, Event
+
+async def _run_coro_with_catch(coro: Coroutine[Any, Any, Any]):
+    try:
+        return await coro
+    except SkippedException:
+        return False
 
 
 class Permission:
@@ -34,17 +48,31 @@ class Permission:
         from nonebot.utils import run_sync
         Permission(async_function, run_sync(sync_function))
     """
+
     __slots__ = ("checkers",)
 
-    def __init__(
-            self, *checkers: Callable[["Bot", "Event"],
-                                      Awaitable[bool]]) -> None:
+    HANDLER_PARAM_TYPES = [
+        DependParam,
+        BotParam,
+        EventParam,
+        DefaultParam,
+    ]
+
+    def __init__(self, *checkers: Union[T_PermissionChecker, Dependent[bool]]) -> None:
         """
         :参数:
 
-          * ``*checkers: Callable[[Bot, Event], Awaitable[bool]]``: **异步** PermissionChecker
+          * ``*checkers: Union[T_PermissionChecker, Dependent[bool]``: PermissionChecker
         """
-        self.checkers = set(checkers)
+
+        self.checkers: Set[Dependent[bool]] = set(
+            checker
+            if isinstance(checker, Dependent)
+            else Dependent[bool].parse(
+                call=checker, allow_types=self.HANDLER_PARAM_TYPES
+            )
+            for checker in checkers
+        )
         """
         :说明:
 
@@ -52,10 +80,16 @@ class Permission:
 
         :类型:
 
-          * ``Set[Callable[[Bot, Event], Awaitable[bool]]]``
+          * ``Set[Dependent[bool]]``
         """
 
-    async def __call__(self, bot: "Bot", event: "Event") -> bool:
+    async def __call__(
+        self,
+        bot: Bot,
+        event: Event,
+        stack: Optional[AsyncExitStack] = None,
+        dependency_cache: Optional[T_DependencyCache] = None,
+    ) -> bool:
         """
         :说明:
 
@@ -65,6 +99,8 @@ class Permission:
 
           * ``bot: Bot``: Bot 对象
           * ``event: Event``: Event 对象
+          * ``stack: Optional[AsyncExitStack]``: 异步上下文栈
+          * ``dependency_cache: Optional[CacheDict[T_Handler, Any]]``: 依赖缓存
 
         :返回:
 
@@ -73,62 +109,87 @@ class Permission:
         if not self.checkers:
             return True
         results = await asyncio.gather(
-            *map(lambda c: c(bot, event), self.checkers))
+            *(
+                _run_coro_with_catch(
+                    checker(
+                        bot=bot,
+                        event=event,
+                        stack=stack,
+                        dependency_cache=dependency_cache,
+                    )
+                )
+                for checker in self.checkers
+            ),
+        )
         return any(results)
 
     def __and__(self, other) -> NoReturn:
         raise RuntimeError("And operation between Permissions is not allowed.")
 
     def __or__(
-        self, other: Optional[Union["Permission",
-                                    T_PermissionChecker]]) -> "Permission":
-        checkers = self.checkers.copy()
+        self, other: Optional[Union["Permission", T_PermissionChecker]]
+    ) -> "Permission":
         if other is None:
             return self
         elif isinstance(other, Permission):
-            checkers |= other.checkers
-        elif asyncio.iscoroutinefunction(other):
-            checkers.add(other)  # type: ignore
+            return Permission(*self.checkers, *other.checkers)
         else:
-            checkers.add(run_sync(other))
-        return Permission(*checkers)
+            return Permission(*self.checkers, other)
 
 
-async def _message(bot: "Bot", event: "Event") -> bool:
-    return event.get_type() == "message"
+class Message:
+    async def __call__(self, type: str = EventType()) -> bool:
+        return type == "message"
 
 
-async def _notice(bot: "Bot", event: "Event") -> bool:
-    return event.get_type() == "notice"
+class Notice:
+    async def __call__(self, type: str = EventType()) -> bool:
+        return type == "notice"
 
 
-async def _request(bot: "Bot", event: "Event") -> bool:
-    return event.get_type() == "request"
+class Request:
+    async def __call__(self, type: str = EventType()) -> bool:
+        return type == "request"
 
 
-async def _metaevent(bot: "Bot", event: "Event") -> bool:
-    return event.get_type() == "meta_event"
+class MetaEvent:
+    async def __call__(self, type: str = EventType()) -> bool:
+        return type == "meta_event"
 
 
-MESSAGE = Permission(_message)
+MESSAGE = Permission(Message())
 """
 - **说明**: 匹配任意 ``message`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 message type 的 Matcher。
 """
-NOTICE = Permission(_notice)
+NOTICE = Permission(Notice())
 """
 - **说明**: 匹配任意 ``notice`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 notice type 的 Matcher。
 """
-REQUEST = Permission(_request)
+REQUEST = Permission(Request())
 """
 - **说明**: 匹配任意 ``request`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 request type 的 Matcher。
 """
-METAEVENT = Permission(_metaevent)
+METAEVENT = Permission(MetaEvent())
 """
 - **说明**: 匹配任意 ``meta_event`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 meta_event type 的 Matcher。
 """
 
 
-def USER(*user: str, perm: Optional[Permission] = None):
+class User:
+    def __init__(
+        self, users: Tuple[str, ...], perm: Optional[Permission] = None
+    ) -> None:
+        self.users = users
+        self.perm = perm
+
+    async def __call__(self, bot: Bot, event: Event) -> bool:
+        return bool(
+            event.get_session_id() in self.users
+            and (self.perm is None or await self.perm(bot, event))
+        )
+
+
+def USER(*users: str, perm: Optional[Permission] = None):
     """
     :说明:
 
@@ -140,19 +201,19 @@ def USER(*user: str, perm: Optional[Permission] = None):
       * ``perm: Optional[Permission]``: 需要同时满足的权限
     """
 
-    async def _user(bot: "Bot", event: "Event") -> bool:
-        return bool(event.get_session_id() in user and
-                    (perm is None or await perm(bot, event)))
-
-    return Permission(_user)
+    return Permission(User(users, perm))
 
 
-async def _superuser(bot: "Bot", event: "Event") -> bool:
-    return (event.get_type() == "message" and
-            event.get_user_id() in bot.config.superusers)
+class SuperUser:
+    async def __call__(self, bot: Bot, event: Event) -> bool:
+        return event.get_type() == "message" and (
+            f"{bot.adapter.get_name().split(maxsplit=1)[0].lower()}:{event.get_user_id()}"
+            in bot.config.superusers
+            or event.get_user_id() in bot.config.superusers  # 兼容旧配置
+        )
 
 
-SUPERUSER = Permission(_superuser)
+SUPERUSER = Permission(SuperUser())
 """
 - **说明**: 匹配任意超级用户消息类型事件
 """

@@ -1,37 +1,20 @@
 {
-  "name": "nonebot",
-  "version": "2.0.0",
-  "description": "An asynchronous python bot framework.",
-  "homepage": "https://docs.nonebot.dev/",
-  "main": "index.js",
-  "contributors": [
-    {
-      "name": "yanyongyu",
-      "email": "yanyongyu_1@126.com"
-    }
+  "name": "root",
+  "private": true,
+  "workspaces": [
+    "website"
   ],
-  "repository": "https://github.com/nonebot/nonebot/",
-  "bugs": {
-    "url": "https://github.com/nonebot/nonebot/issues"
-  },
   "scripts": {
-    "dev": "vuepress dev docs",
-    "build": "vuepress build docs",
-    "lint": "npx prettier --config .prettierrc -c docs/**/* !docs/api/**/*",
-    "lint:fix": "npx prettier --config .prettierrc --write docs/**/* !docs/api/**/*"
+    "archive": "yarn workspace nonebot docusaurus docs:version",
+    "build": "yarn workspace nonebot build",
+    "build:plugin": "cross-env BASE_URL='/docs/' yarn workspace nonebot build",
+    "start": "yarn workspace nonebot start",
+    "serve": "yarn workspace nonebot serve",
+    "clear": "yarn workspace nonebot clear",
+    "prettier": "prettier --config ./.prettierrc --write \"./website/**/*.md\""
   },
-  "license": "MIT",
   "devDependencies": {
-    "@vuepress/plugin-back-to-top": "^1.7.1",
-    "@vuepress/plugin-medium-zoom": "^1.7.1",
-    "@vuepress/plugin-pwa": "^1.7.1",
-    "vuepress": "^1.7.1",
-    "vuepress-plugin-versioning": "git+https://github.com/nonebot/vuepress-plugin-versioning.git",
-    "vuepress-theme-nonebot": "git+https://github.com/nonebot/vuepress-theme-nonebot.git"
-  },
-  "dependencies": {
-    "copy-to-clipboard": "^3.3.1",
-    "vuetify": "^2.3.16",
-    "wowjs": "^1.1.3"
+    "cross-env": "^7.0.3",
+    "prettier": "^2.5.0"
   }
 }

@@ -1,7 +1,4 @@
-\-\-\-
-contentSidebar: true
-sidebarDepth: 0
-\-\-\-
+
 
 NoneBot.drivers.aiohttp 模块
 =============================

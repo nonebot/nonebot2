@@ -1,6 +1,5 @@
 \-\-\-
-contentSidebar: true
-sidebarDepth: 0
+sidebar_position: 2
 \-\-\-
 
 NoneBot.config 模块

@@ -1,6 +1,5 @@
 \-\-\-
-contentSidebar: true
-sidebarDepth: 0
+sidebar_position: 5
 \-\-\-
 
 NoneBot.matcher 模块

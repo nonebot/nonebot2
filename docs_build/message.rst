@@ -1,6 +1,5 @@
 \-\-\-
-contentSidebar: true
-sidebarDepth: 0
+sidebar_position: 4
 \-\-\-
 
 NoneBot.message 模块

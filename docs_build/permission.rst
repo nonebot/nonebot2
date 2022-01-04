@@ -1,6 +1,5 @@
 \-\-\-
-contentSidebar: true
-sidebarDepth: 0
+sidebar_position: 7
 \-\-\-
 
 NoneBot.permission 模块

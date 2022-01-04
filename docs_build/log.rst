@@ -1,6 +1,5 @@
 \-\-\-
-contentSidebar: true
-sidebarDepth: 0
+sidebar_position: 9
 \-\-\-
 
 NoneBot.log 模块
