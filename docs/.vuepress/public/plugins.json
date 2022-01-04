@@ -614,5 +614,13 @@
     "desc": "表情包制作",
     "author": "MeetWq",
     "repo": "https://github.com/MeetWq/nonebot-plugin-memes"
+  },
+  {
+    "id": "nonebot_plugin_repeater",
+    "link": "nonebot-plugin-repeater",
+    "name": "群聊复读机",
+    "desc": "当触发 1条件时，自动 1",
+    "author": "ninthseason",
+    "repo": "https://github.com/ninthseason/nonebot-plugin-repeater"
   }
 ]
