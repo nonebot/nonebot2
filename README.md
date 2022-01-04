@@ -70,34 +70,37 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
 
 ## 简介
 
-NoneBot2 是一个可扩展的 Python 异步机器人框架，它会对机器人收到的事件进行解析和处理，并以插件化的形式，按优先级分发给事件所对应的事件响应器，来完成具体的功能。
-
-除了起到解析事件的作用，NoneBot 还为插件提供了大量实用的预设操作和权限控制机制。对于命令处理，它更是提供了完善且易用的会话机制和内部调用机制，以分别适应命令的连续交互和插件内部功能复用等需求。
-
-得益于 Python 的 [asyncio](https://docs.python.org/3/library/asyncio.html) 机制，NoneBot 处理事件的吞吐量有了很大的保障，再配合 WebSocket 通信方式（也是最建议的通信方式），NoneBot 的性能可以达到 HTTP 通信方式的两倍以上，相较于传统同步 I/O 的 HTTP 通信，更是有质的飞跃。
+NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架，它基于 Python 的类型注解和异步特性，能够为你的需求实现提供便捷灵活的支持。
 
 ## 特色
 
-NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义**，并且可以作为插件进行**替换/添加**！
+- 异步优先：基于 Python 的异步特性，即使是~~非常~~大量的消息，也能吞吐自如
+- 易于开发：配合 NB-CLI 脚手架，代码编写上手简单，没有过多的冗余代码，可以让开发者专注于业务逻辑
+- 生而可靠：100% 类型注解覆盖，配合编辑器的类型推导功能，能将绝大多数的 Bug 杜绝在编辑器中 ([编辑器支持](https://v2.nonebot.dev/docs/start/editor-support))
+- 社区丰富：社区用户众多，直接和间接用户超过十万人，每天都有大量的活跃用户 ([社区资源](#社区资源))
+- 海纳百川：一个框架，支持多个聊天软件平台，可自定义通信协议
+  - [OneBot 协议](https://onebot.dev/) (QQ 等)
+  - [Mirai-API-HTTP 协议](https://github.com/project-mirai/mirai-api-http)
+  - [钉钉](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p)
+  - [Telegram](https://core.telegram.org/bots/api)
+  - [飞书](https://open.feishu.cn/document/home/index)
+  - [QQ 频道](https://bot.q.qq.com/wiki/)
+- 坚实后盾：支持多种 web 框架，可自定义替换
+  - [FastAPI](https://fastapi.tiangolo.com/)
+  - [Quart](https://pgjones.gitlab.io/quart/) (异步 Flask)
+  - [aiohttp](https://docs.aiohttp.org/en/stable/)
+  - [httpx](https://www.python-httpx.org/)
+  - [websockets](https://websockets.readthedocs.io/en/stable/)
 
-目前 NoneBot2 内置的驱动框架：
+更多：[概览](https://v2.nonebot.dev/docs/)
 
-- [FastAPI](https://fastapi.tiangolo.com/)
-- [Quart](https://pgjones.gitlab.io/quart/) (异步 Flask)
-- [aiohttp](https://docs.aiohttp.org/en/stable/)
-- [httpx](https://www.python-httpx.org/)
-- [websockets](https://websockets.readthedocs.io/en/stable/)
+## 什么不是 NoneBot2
 
-目前 NoneBot2 官方维护的协议适配：
+NoneBot2 不是某个平台或者协议的具体实现，它只负责和已有协议适配器通信，并处理接收到的事件。所以，“NoneBot 有 blabla 平台的 blabla 功能吗？”这种问题是与 NoneBot2 无关的。请在相应平台的功能文档中确认，或与相应平台的协议适配开发者联系。
 
-- [OneBot 协议](https://onebot.dev/) (QQ 等)
-- [Mirai-API-HTTP 协议](https://github.com/project-mirai/mirai-api-http)
-- [钉钉](https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p)
-- [Telegram](https://core.telegram.org/bots/api)
-- [飞书](https://open.feishu.cn/document/home/index)
-- [QQ 频道](https://bot.q.qq.com/wiki/)
+NoneBot2 不是 NoneBot1 的替代品。事实上，它们都在被积极的维护着。但是，如果你想尝试一些新功能，或者想要支持更多的平台，可以考虑使用 NoneBot2。
 
-更多：[商店](https://v2.nonebot.dev/store.html)
+> ~~NoneBot2 和 NoneBot1 的区别，就像是 VisualStudio Code 和 VisualStudio 一样~~
 
 ## 即刻开始
 
@@ -123,6 +126,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 ### 常见问题
 
 - [常见问题解答(FAQ)](https://faq.nonebot.dev/)
+- [论坛(Discussion)](https://discussions.nonebot.dev/)
 
 ### 教程/实际项目/经验分享
 
@@ -132,7 +136,9 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 
 此外，NoneBot2 还有丰富的官方以及第三方现成的插件供大家使用：
 
-- [NoneBot-Plugin-Docs](https://github.com/nonebot/nonebot2/tree/master/packages/nonebot-plugin-docs)：离线文档至本地使用(别再说文档打不开了！)
+- [NoneBot-Plugin-Docs](https://github.com/nonebot/nonebot2/tree/master/packages/nonebot-plugin-docs)：离线文档至本地项目使用 (别再说文档打不开了！)
+
+  在项目目录下执行：
 
   ```bash
   nb plugin install nonebot_plugin_docs
@@ -153,7 +159,7 @@ NoneBot2 的驱动框架 `Driver` 以及通信协议 `Adapter` 均可**自定义
 
 如果你在使用过程中发现任何问题，可以 [提交 Issue](https://github.com/nonebot/nonebot2/issues/new) 或自行 Fork 修改后提交 Pull Request。
 
-如果你要提交 Pull Request，请确保你的代码风格和项目已有的代码保持一致，遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/) 与 [PEP 484](https://www.python.org/dev/peps/pep-0484/)，变量命名清晰，有适当的注释，**并且请以 `dev` 分支作为 Pull Request 目标分支**。
+如果你要提交 Pull Request，请确保你的代码风格和项目已有的代码保持一致，遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/) 与 [PEP 484](https://www.python.org/dev/peps/pep-0484/)，变量命名清晰，有适当的注释与测试代码，**并且请以 `dev` 分支作为 Pull Request 目标分支**。
 
 感谢以下开发者对 NoneBot2 的贡献：
 
