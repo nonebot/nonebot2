@@ -145,7 +145,7 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       algolia: {
-        appId: 'X0X5UACHZQ',
+        appId: "X0X5UACHZQ",
         apiKey: "ac03e1ac2bd0812e2ea38c0cc1ea38c5",
         indexName: "nonebot",
         contextualSearch: true,
