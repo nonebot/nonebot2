@@ -21,7 +21,10 @@ jobs:
         uses: nonebot/nonebot2-publish-bot@main
         with:
           token: ${{ secrets.GH_TOKEN }}
-          base: master
-          plugin_path: website/static/plugins.json
-          bot_path: website/static/bots.json
-          adapter_path: website/static/adapters.json
+          config: >
+            {
+              "base": "master",
+              "plugin_path": "website/static/plugins.json",
+              "bot_path": "website/static/bots.json",
+              "adapter_path": "website/static/adapters.json"
+            }
