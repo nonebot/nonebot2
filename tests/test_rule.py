@@ -7,6 +7,31 @@ from utils import make_fake_event, make_fake_message
 
 
 @pytest.mark.asyncio
+async def test_rule(app: App):
+    from nonebot.rule import Rule
+    from nonebot.exception import SkippedException
+
+    async def falsy():
+        return False
+
+    async def truthy():
+        return True
+
+    async def skipped() -> bool:
+        raise SkippedException
+
+    event = make_fake_event()()
+
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        assert await Rule(falsy)(bot, event, {}) == False
+        assert await Rule(truthy)(bot, event, {}) == True
+        assert await Rule(skipped)(bot, event, {}) == False
+        assert await Rule(truthy, falsy)(bot, event, {}) == False
+        assert await Rule(truthy, skipped)(bot, event, {}) == False
+
+
+@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "msg,ignorecase,type,text,expected",
     [
@@ -14,6 +39,10 @@ from utils import make_fake_event, make_fake_message
         ("prefix", False, "message", "Prefix_", False),
         ("prefix", True, "message", "prefix_", True),
         ("prefix", True, "message", "Prefix_", True),
+        ("prefix", False, "message", "prefoo", False),
+        ("prefix", False, "message", "fooprefix", False),
+        (("prefix", "foo"), False, "message", "fooprefix", True),
+        ("prefix", False, "notice", "foo", False),
     ],
 )
 async def test_startswith(
@@ -47,6 +76,10 @@ async def test_startswith(
         ("suffix", False, "message", "_Suffix", False),
         ("suffix", True, "message", "_suffix", True),
         ("suffix", True, "message", "_Suffix", True),
+        ("suffix", False, "message", "suffoo", False),
+        ("suffix", False, "message", "suffixfoo", False),
+        (("suffix", "foo"), False, "message", "suffixfoo", True),
+        ("suffix", False, "notice", "foo", False),
     ],
 )
 async def test_endswith(
@@ -73,16 +106,70 @@ async def test_endswith(
 
 
 @pytest.mark.asyncio
-async def test_command(app: App):
+@pytest.mark.parametrize(
+    "kws,type,text,expected",
+    [
+        (("key",), "message", "_key_", True),
+        (("key", "foo"), "message", "_foo_", True),
+        (("key",), "notice", "foo", False),
+    ],
+)
+async def test_keyword(
+    app: App,
+    kws: Tuple[str, ...],
+    type: str,
+    text: str,
+    expected: bool,
+):
+    from nonebot.rule import KeywordsRule, keyword
+
+    test_keyword = keyword(*kws)
+    dependent = list(test_keyword.checkers)[0]
+    checker = dependent.call
+
+    assert isinstance(checker, KeywordsRule)
+    assert checker.keywords == kws
+
+    message = make_fake_message()(text)
+    event = make_fake_event(_type=type, _message=message)()
+    assert await dependent(event=event) == expected
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "cmds", [(("help",),), (("help", "foo"),), (("help",), ("foo",))]
+)
+async def test_command(app: App, cmds: Tuple[Tuple[str, ...]]):
     from nonebot.rule import CommandRule, command
     from nonebot.consts import CMD_KEY, PREFIX_KEY
 
-    test_command = command("help")
+    test_command = command(*cmds)
     dependent = list(test_command.checkers)[0]
     checker = dependent.call
 
     assert isinstance(checker, CommandRule)
-    assert checker.cmds == [("help",)]
+    assert checker.cmds == list(cmds)
 
-    state = {PREFIX_KEY: {CMD_KEY: ("help",)}}
-    assert await dependent(state=state)
+    for cmd in cmds:
+        state = {PREFIX_KEY: {CMD_KEY: cmd}}
+        assert await dependent(state=state)
+
+
+# TODO: shell command
+
+# TODO: regex
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize("expected", [True, False])
+async def test_to_me(app: App, expected: bool):
+    from nonebot.rule import ToMeRule, to_me
+
+    test_keyword = to_me()
+    dependent = list(test_keyword.checkers)[0]
+    checker = dependent.call
+
+    assert isinstance(checker, ToMeRule)
+
+    event = make_fake_event(_to_me=expected)()
+    assert await dependent(event=event) == expected
