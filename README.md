@@ -108,7 +108,8 @@ NoneBot2 不是 NoneBot1 的替代品。事实上，它们都在被积极的维�
 
 懒得看文档？下面是快速安装指南：
 
-1. (可选)使用你喜欢的 Python 环境管理工具创建新的虚拟环境。
+1. (**强烈建议**)使用你喜欢的 Python 环境管理工具创建新的虚拟环境。
+
 2. 使用 `pip` (或其他) 安装 NoneBot 脚手架。
 
    ```bash
@@ -153,7 +154,14 @@ NoneBot2 不是 NoneBot1 的替代品。事实上，它们都在被积极的维�
 
 ## 许可证
 
-`NoneBot` 采用 `MIT` 协议开源，协议文件参考 [LICENSE](./LICENSE)。
+`NoneBot` 采用 `MIT` 许可证进行开源
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+    FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+    COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## 贡献
 
@@ -161,7 +169,11 @@ NoneBot2 不是 NoneBot1 的替代品。事实上，它们都在被积极的维�
 
 如果你要提交 Pull Request，请确保你的代码风格和项目已有的代码保持一致，遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/) 与 [PEP 484](https://www.python.org/dev/peps/pep-0484/)，变量命名清晰，有适当的注释与测试代码，**并且请以 `dev` 分支作为 Pull Request 目标分支**。
 
-感谢以下开发者对 NoneBot2 的贡献：
+<!--TODO: Add a CONTRIBUTING.md-->
+
+### 鸣谢
+
+感谢以下开发者对 NoneBot2 作出的贡献：
 
 <a href="https://github.com/nonebot/nonebot2/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=nonebot/nonebot2" />
