@@ -35,6 +35,10 @@ const config = {
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
         },
+        sitemap: {
+          changefreq: "daily",
+          priority: 0.5,
+        },
       }),
     ],
   ],
