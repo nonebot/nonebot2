@@ -23,7 +23,7 @@ const config = {
     },
   },
   
-  scripts: ["https://v2.nonebot.dev/unregister-sw.js"],
+  scripts: ["/unregister-sw.js"],
 
   presets: [
     [
