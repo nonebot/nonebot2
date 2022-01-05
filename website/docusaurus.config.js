@@ -22,6 +22,8 @@ const config = {
       "zh-Hans": { label: "简体中文" },
     },
   },
+  
+  scripts: ["/unregister-sw.js"],
 
   presets: [
     [
