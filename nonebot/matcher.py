@@ -446,7 +446,7 @@ class Matcher(metaclass=MatcherMeta):
                 return
             if matcher.get_receive(id):
                 return
-            raise RejectedException
+            await matcher.reject()
 
         _parameterless = [params.Depends(_receive), *(parameterless or [])]
 
@@ -490,9 +490,7 @@ class Matcher(metaclass=MatcherMeta):
                 return
             if matcher.get_arg(key):
                 return
-            if prompt is not None:
-                await matcher.send(prompt)
-            raise RejectedException
+            await matcher.reject(prompt)
 
         _parameterless = [
             params.Depends(_key_getter),
@@ -579,7 +577,9 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     async def reject(
-        cls, prompt: Optional[Union[str, Message, MessageSegment]] = None, **kwargs
+        cls,
+        prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
+        **kwargs,
     ) -> NoReturn:
         """
         :说明:
@@ -600,7 +600,7 @@ class Matcher(metaclass=MatcherMeta):
     async def reject_arg(
         cls,
         key: str,
-        prompt: Optional[Union[str, Message, MessageSegment]] = None,
+        prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
         **kwargs,
     ) -> NoReturn:
         """
@@ -625,7 +625,7 @@ class Matcher(metaclass=MatcherMeta):
     async def reject_receive(
         cls,
         id: str = "",
-        prompt: Optional[Union[str, Message, MessageSegment]] = None,
+        prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
         **kwargs,
     ) -> NoReturn:
         """

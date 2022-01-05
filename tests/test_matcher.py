@@ -129,3 +129,35 @@ async def test_permission_updater(app: App, load_plugin):
         matcher = test_custom_updater()
         new_perm = await matcher.update_permission(bot, event)
         assert new_perm is default_permission
+
+
+@pytest.mark.asyncio
+async def test_run(app: App):
+    from nonebot.matcher import Matcher, matchers
+
+    assert not matchers
+    event = make_fake_event()()
+
+    async def reject():
+        await Matcher.reject()
+
+    test_reject = Matcher.new(handlers=[reject])
+
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        await test_reject().run(bot, event, {})
+        assert len(matchers[0]) == 1
+        assert len(matchers[0][0].handlers) == 1
+
+    del matchers[0]
+
+    async def pause():
+        await Matcher.pause()
+
+    test_pause = Matcher.new(handlers=[pause])
+
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        await test_pause().run(bot, event, {})
+        assert len(matchers[0]) == 1
+        assert len(matchers[0][0].handlers) == 0
