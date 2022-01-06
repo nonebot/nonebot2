@@ -29,11 +29,20 @@ options:
 
 ### 申请发布到 Nonebot2 插件商店
 
-完成在 PyPI 的插件发布流程与源代码托管流程后，请您前往 **[NoneBot2 商店](https://v2.nonebot.dev/store.html)** 页面，切换到插件页签，点击 **发布插件** 按钮。
+完成在 PyPI 的插件发布流程与源代码托管流程后，请您前往 **[NoneBot2 商店](https://v2.nonebot.dev/store.html)** 页面，切换到 **插件** 页签，点击 **发布插件** 按钮。
 
 ![插件发布界面](./images/plugin_store_publish.png)
 
-如图所示，在弹出的插件信息提交表单内，填入您所要发布的相应插件信息。
+如图所示，在弹出的插件信息提交表单内，填入您所要发布的相应插件信息：
+
+```text
+插件名称： 您的Nonebot2插件名称
+插件介绍： 为您的插件提供的简短介绍信息
+PyPI项目名： 您的插件所在的PyPI Project名，如 nonebot-plugin-xxxx
+import包名： 您的插件通过Python导入时使用的包名，如 nonebot_plugin_xxxx
+仓库/主页： 您的插件托管地址，如 https://github.com/<您的Github用户名>/nonebot-plugin-xxxx
+标签： 一个或多个可选颜色的TAG，每填写一个点击添加标签，若要删除，点击标签即可
+```
 
 ![插件信息填写](./images/plugin_store_publish_2.png)
 
