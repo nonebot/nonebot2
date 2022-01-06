@@ -197,23 +197,6 @@ T_Handler = Callable[..., Any]
 
   Handler 处理函数。
 """
-T_ArgsParser = Callable[..., Union[None, Awaitable[None]]]
-"""
-:类型: ``Callable[..., Union[None, Awaitable[None]]]``
-
-:依赖参数:
-
-  * ``DependParam``: 子依赖参数
-  * ``BotParam``: Bot 对象
-  * ``EventParam``: Event 对象
-  * ``StateParam``: State 对象
-  * ``MatcherParam``: Matcher 对象
-  * ``DefaultParam``: 带有默认值的参数
-
-:说明:
-
-  ArgsParser 即消息参数解析函数，在 Matcher.got 获取参数时被运行。
-"""
 T_TypeUpdater = Callable[..., Union[str, Awaitable[str]]]
 """
 :类型: ``Callable[..., Union[None, Awaitable[None]]]``

@@ -20,6 +20,8 @@ options:
 
 NoneBot 内置了四种主要类型：`meta_event`, `message`, `notice`, `request`。通常情况下，协议适配器会将事件合理的分类至这四种类型中。如果有其他类型的事件需要响应，可以自行定义新的类型。
 
+<!-- TODO: move session updater to advanced -->
+
 :::warning 注意
 当会话状态更新时，会执行 `type_updater` 以更新 `type` 属性，以便会话收到新事件时能够正确匹配。
 
