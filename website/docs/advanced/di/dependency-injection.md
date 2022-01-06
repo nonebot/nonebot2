@@ -1,13 +1,14 @@
 ---
-sidebar_position: 3
+sidebar_position: 1
+description: 依赖注入简介
 
 options:
   menu:
-    weight: 62
+    weight: 60
     category: advanced
 ---
 
-# 依赖注入
+# 简介
 
 受 [`FastApi`](https://fastapi.tiangolo.com/tutorial/dependencies/) 启发，NoneBot 同样编写了一个简易的依赖注入模块，使得开发者可以通过事件处理函数参数的类型标注来自动注入依赖。
 

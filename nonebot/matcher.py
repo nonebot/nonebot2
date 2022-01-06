@@ -46,7 +46,6 @@ from nonebot.typing import (
     Any,
     T_State,
     T_Handler,
-    T_ArgsParser,
     T_TypeUpdater,
     T_DependencyCache,
     T_PermissionUpdater,
@@ -223,7 +222,6 @@ class Matcher(metaclass=MatcherMeta):
         module: Optional[ModuleType] = None,
         expire_time: Optional[datetime] = None,
         default_state: Optional[T_State] = None,
-        default_parser: Optional[T_ArgsParser] = None,
         default_type_updater: Optional[T_TypeUpdater] = None,
         default_permission_updater: Optional[T_PermissionUpdater] = None,
     ) -> Type["Matcher"]:
@@ -276,7 +274,6 @@ class Matcher(metaclass=MatcherMeta):
                 "priority": priority,
                 "block": block,
                 "_default_state": default_state or {},
-                "_default_parser": default_parser,
                 "_default_type_updater": default_type_updater,
                 "_default_permission_updater": default_permission_updater,
             },
@@ -343,22 +340,6 @@ class Matcher(metaclass=MatcherMeta):
         return event_type == (cls.type or event_type) and await cls.rule(
             bot, event, state, stack, dependency_cache
         )
-
-    @classmethod
-    def args_parser(cls, func: T_ArgsParser) -> T_ArgsParser:
-        """
-        :说明:
-
-          装饰一个函数来更改当前事件响应器的默认参数解析函数
-
-        :参数:
-
-          * ``func: T_ArgsParser``: 参数解析函数
-        """
-        cls._default_parser = Dependent[None].parse(
-            call=func, allow_types=cls.HANDLER_PARAM_TYPES
-        )
-        return func
 
     @classmethod
     def type_updater(cls, func: T_TypeUpdater) -> T_TypeUpdater:
@@ -777,7 +758,6 @@ class Matcher(metaclass=MatcherMeta):
                 module=self.module,
                 expire_time=datetime.now() + bot.config.session_expire_timeout,
                 default_state=self.state,
-                default_parser=self.__class__._default_parser,
                 default_type_updater=self.__class__._default_type_updater,
                 default_permission_updater=self.__class__._default_permission_updater,
             )
@@ -797,7 +777,6 @@ class Matcher(metaclass=MatcherMeta):
                 module=self.module,
                 expire_time=datetime.now() + bot.config.session_expire_timeout,
                 default_state=self.state,
-                default_parser=self.__class__._default_parser,
                 default_type_updater=self.__class__._default_type_updater,
                 default_permission_updater=self.__class__._default_permission_updater,
             )
