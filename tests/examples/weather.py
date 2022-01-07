@@ -16,8 +16,8 @@ async def handle_first_receive(matcher: Matcher, args: Message = CommandArg()):
 
 @weather.got("city", prompt="你想查询哪个城市的天气呢？")
 async def handle_city(city: Message = Arg(), city_name: str = ArgPlainText("city")):
-    print(city_name)
     if city_name not in ["北京", "上海"]:  # 如果参数不符合要求，则提示用户重新输入
+        # 可以使用平台的 Message 类直接构造模板消息
         await weather.reject(city.template("你想查询的城市 {city} 暂不支持，请重新输入！"))
 
     city_weather = await get_weather(city_name)
