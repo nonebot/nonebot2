@@ -1,0 +1,20 @@
+---
+sidebar_position: 6
+description: 简单插件示例
+---
+
+import CodeBlock from "@theme/CodeBlock";
+
+# 插件示例
+
+## 命令式问答示例
+
+import WeatherSource from "!!raw-loader!../../../../tests/examples/weather.py";
+
+<CodeBlock className="language-python">{WeatherSource}</CodeBlock>
+
+### 测试示例
+
+import WeatherTest from "!!raw-loader!../../../../tests/test_examples/test_weather.py";
+
+<CodeBlock className="language-python">{WeatherTest}</CodeBlock>

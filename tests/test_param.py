@@ -1,7 +1,7 @@
 import pytest
 from nonebug import App
 
-from utils import load_plugin, make_fake_event, make_fake_message
+from utils import make_fake_event, make_fake_message
 
 
 @pytest.mark.asyncio

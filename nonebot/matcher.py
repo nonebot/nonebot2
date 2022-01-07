@@ -529,7 +529,7 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``message: Union[str, Message, MessageSegment]``: 消息内容
+          * ``message: Union[str, Message, MessageSegment, MessageTemplate]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         if message is not None:
@@ -549,7 +549,7 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
+          * ``prompt: Union[str, Message, MessageSegment, MessageTemplate]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         if prompt is not None:
@@ -570,7 +570,7 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
+          * ``prompt: Union[str, Message, MessageSegment, MessageTemplate]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         if prompt is not None:
@@ -593,7 +593,7 @@ class Matcher(metaclass=MatcherMeta):
         :参数:
 
           * ``key: str``: 参数名
-          * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
+          * ``prompt: Union[str, Message, MessageSegment, MessageTemplate]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()
@@ -618,7 +618,7 @@ class Matcher(metaclass=MatcherMeta):
         :参数:
 
           * ``id: str``: 消息 id
-          * ``prompt: Union[str, Message, MessageSegment]``: 消息内容
+          * ``prompt: Union[str, Message, MessageSegment, MessageTemplate]``: 消息内容
           * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()

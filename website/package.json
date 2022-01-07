@@ -30,6 +30,7 @@
     "docusaurus-preset-nonepress": "canary",
     "file-loader": "^6.2.0",
     "prism-react-renderer": "^1.2.1",
+    "raw-loader": "^4.0.2",
     "react": "^17.0.1",
     "react-color": "^2.19.3",
     "react-dom": "^17.0.1",
