@@ -15,7 +15,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: "3.9"
           architecture: "x64"
 
       - uses: Gr1N/setup-poetry@v7
@@ -63,6 +63,6 @@ jobs:
           git add .
           git commit -m ":bookmark: Release $(poetry version -s)"
           git tag v$(poetry version -s)
-          git push --tags
+          git push --follow-tags
           poetry build
           poetry publish -u ${{secrets.PYPI_USERNAME}} -p ${{secrets.PYPI_PASSWORD}}

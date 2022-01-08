@@ -14,7 +14,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: 3.8
+          python-version: "3.9"
           architecture: "x64"
 
       - uses: Gr1N/setup-poetry@v7
@@ -50,7 +50,8 @@ jobs:
 
       - name: Publish Package
         run: |
+          export NONEBOT_VERSION=`poetry version -s`
           cd packages/nonebot-plugin-docs/
-          poetry version $(poetry version -s)
+          poetry version $NONEBOT_VERSION
           poetry build
           poetry publish -u ${{secrets.PYPI_USERNAME}} -p ${{secrets.PYPI_PASSWORD}}
