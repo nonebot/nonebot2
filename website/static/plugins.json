@@ -827,5 +827,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_forwarder",
+    "project_link": "nonebot-plugin-forwarder",
+    "name": "转发姬",
+    "desc": "群聊消息实时转发",
+    "author": "ninthseason",
+    "homepage": "https://github.com/ninthseason/nonebot_plugin_forwarder",
+    "tags": [],
+    "is_official": false
   }
 ]
