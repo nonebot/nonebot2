@@ -11,13 +11,22 @@ import Messenger from "@site/src/components/Messenger";
 ## 命令式问答示例
 
 import WeatherSource from "!!raw-loader!../../../../tests/examples/weather.py";
+import WeatherTest from "!!raw-loader!../../../../tests/test_examples/test_weather.py";
 
 <CodeBlock className="language-python">{WeatherSource}</CodeBlock>
 
-<Messenger />
+<Messenger
+  msgs={[
+    { position: "right", msg: "/天气" },
+    { position: "left", msg: "你想查询哪个城市的天气呢？" },
+    { position: "right", msg: "上海" },
+    { position: "left", msg: "上海的天气是..." },
+  ]}
+/>
 
-### 测试示例
-
-import WeatherTest from "!!raw-loader!../../../../tests/test_examples/test_weather.py";
+<details>
+  <summary>测试示例</summary>
 
 <CodeBlock className="language-python">{WeatherTest}</CodeBlock>
+
+</details>
