@@ -7,7 +7,7 @@
   "scripts": {
     "archive": "yarn workspace nonebot docusaurus docs:version",
     "build": "yarn workspace nonebot build",
-    "build:plugin": "cross-env BASE_URL='/docs/' yarn workspace nonebot build",
+    "build:plugin": "cross-env BASE_URL='/website/' yarn workspace nonebot build",
     "start": "yarn workspace nonebot start",
     "serve": "yarn workspace nonebot serve",
     "clear": "yarn workspace nonebot clear",
