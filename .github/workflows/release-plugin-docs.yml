@@ -1,8 +1,9 @@
 name: Release Nonebot Plugin Docs
 
 on:
-  release:
-    types: [ published ]
+  push:
+    tags:
+      - v*
 
 jobs:
   build:
