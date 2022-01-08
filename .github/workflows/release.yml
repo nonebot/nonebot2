@@ -64,6 +64,6 @@ jobs:
           git add .
           git commit -m ":bookmark: Release $(poetry version -s)"
           git tag v$(poetry version -s)
-          git push --follow-tags
+          git push && git push --tags
           poetry build
           poetry publish -u ${{secrets.PYPI_USERNAME}} -p ${{secrets.PYPI_PASSWORD}}
