@@ -792,5 +792,50 @@
     "homepage": "https://github.com/MeetWq/nonebot-plugin-memes",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_repeater",
+    "project_link": "nonebot-plugin-repeater",
+    "name": "群聊复读机",
+    "desc": "谁不喜欢+1呢？",
+    "author": "ninthseason",
+    "homepage": "https://github.com/ninthseason/nonebot-plugin-repeater",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_PCtrl",
+    "project_link": "nonebot-plugin-pctrl",
+    "name": "插件管理器",
+    "desc": "基于HOOK的插件管理器,提供常用功能",
+    "author": "CherryGS",
+    "homepage": "https://github.com/CherryGS/nonebot_plugin_PCtrl",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_directlinker",
+    "project_link": "nonebot-plugin-directlinker",
+    "name": "群文件直链提取器",
+    "desc": "提取群文件的下载直链。",
+    "author": "ninthseason",
+    "homepage": "https://github.com/ninthseason/nonebot-plugin-directlinker",
+    "tags": [
+      {
+        "label": "a:cqhttp",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_forwarder",
+    "project_link": "nonebot-plugin-forwarder",
+    "name": "转发姬",
+    "desc": "群聊消息实时转发",
+    "author": "ninthseason",
+    "homepage": "https://github.com/ninthseason/nonebot_plugin_forwarder",
+    "tags": [],
+    "is_official": false
   }
 ]

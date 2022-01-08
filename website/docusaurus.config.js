@@ -22,6 +22,8 @@ const config = {
       "zh-Hans": { label: "简体中文" },
     },
   },
+  
+  scripts: ["/unregister-sw.js"],
 
   presets: [
     [
@@ -149,7 +151,8 @@ const config = {
         darkTheme: darkCodeTheme,
       },
       algolia: {
-        apiKey: "ef449608d0ad6e81b9efd05db6367040",
+        appId: "X0X5UACHZQ",
+        apiKey: "ac03e1ac2bd0812e2ea38c0cc1ea38c5",
         indexName: "nonebot",
         contextualSearch: true,
         // searchParameters: {
