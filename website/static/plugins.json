@@ -773,7 +773,7 @@
     "tags": [
         {
           "label": "t:OlivOS",
-          "color": "##00a0ea"
+          "color": "#00a0ea"
         }
       ],
     "is_official": false
