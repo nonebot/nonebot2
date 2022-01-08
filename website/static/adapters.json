@@ -58,5 +58,15 @@
     "homepage": "https://github.com/nonebot/adapter-qqguild",
     "tags": [],
     "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.kaiheila",
+    "project_link": "nonebot-adapter-kaiheila",
+    "name": "开黑啦",
+    "desc": "开黑啦协议适配",
+    "author": "Tian-que",
+    "homepage": "https://github.com/Tian-que/nonebot-adapter-kaiheila",
+    "tags": [],
+    "is_official": false
   }
 ]
