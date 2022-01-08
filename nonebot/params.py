@@ -188,7 +188,7 @@ class BotParam(Param):
                         _BotChecker(
                             Required,
                             field=ModelField(
-                                name="",
+                                name=name,
                                 type_=param.annotation,
                                 class_validators=None,
                                 model_config=CustomConfig,
@@ -229,7 +229,7 @@ class EventParam(Param):
                         _EventChecker(
                             Required,
                             field=ModelField(
-                                name="",
+                                name=name,
                                 type_=param.annotation,
                                 class_validators=None,
                                 model_config=CustomConfig,

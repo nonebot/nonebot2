@@ -4,8 +4,6 @@ from typing import TYPE_CHECKING, Set
 
 import pytest
 
-from utils import load_plugin
-
 if TYPE_CHECKING:
     from nonebot.plugin import Plugin
 

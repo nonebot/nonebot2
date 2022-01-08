@@ -1,11 +1,8 @@
-from pathlib import Path
-from typing import TYPE_CHECKING, Set, Type, Optional
+from typing import TYPE_CHECKING, Type, Optional
 
-import pytest
 from pydantic import create_model
 
 if TYPE_CHECKING:
-    from nonebot.plugin import Plugin
     from nonebot.adapters import Event, Message
 
 
@@ -85,10 +82,3 @@ def make_fake_event(
             extra = "forbid"
 
     return FakeEvent
-
-
-@pytest.fixture
-def load_plugin(nonebug_init: None) -> Set["Plugin"]:
-    import nonebot
-
-    return nonebot.load_plugins(str(Path(__file__).parent / "plugins"))
