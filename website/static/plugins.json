@@ -236,11 +236,16 @@
   {
     "module_name": "nonebot_plugin_trpglogger",
     "project_link": "nonebot-plugin-trpglogger",
-    "author": "Jigsaw111",
+    "author": "j1g5awi",
     "desc": "记录跑团记录并上传",
     "name": "跑团记录记录器",
     "homepage": "https://github.com/thereisnodice/TRPGLogger",
-    "tags": [],
+    "tags": [
+        {
+          "label": "t:TRPG",
+          "color": "#80070B"
+        }
+      ],
     "is_official": false
   },
   {
@@ -288,9 +293,14 @@
     "project_link": "nonebot-plugin-manager",
     "name": "插件管理器",
     "desc": "基于 import hook 的插件管理",
-    "author": "Jigsaw111",
-    "homepage": "https://github.com/Jigsaw111/nonebot_plugin_manager",
-    "tags": [],
+    "author": "j1g5awi",
+    "homepage": "https://github.com/nonepkg/nonebot_plugin_manager",
+    "tags": [
+        {
+          "label": "t:PluginManager",
+          "color": "#80070B"
+        }
+      ],
     "is_official": false
   },
   {
@@ -317,10 +327,15 @@
     "module_name": "nonebot_plugin_puppet",
     "project_link": "nonebot-plugin-puppet",
     "name": "nonebot_plugin_puppet",
-    "desc": "多对多的会话转接",
-    "author": "Jigsaw111",
-    "homepage": "https://github.com/Jigsaw111/nonebot_plugin_puppet",
-    "tags": [],
+    "desc": "高度自定义的会话转接",
+    "author": "j1g5awi",
+    "homepage": "https://github.com/nonepkg/nonebot_plugin_puppet",
+    "tags": [
+        {
+          "label": "a:cqhttp",
+          "color": "#000000"
+        }
+      ],
     "is_official": false
   },
   {
@@ -328,9 +343,14 @@
     "project_link": "nonebot-plugin-mcstatus",
     "name": "Minecraft 服务器状态查询",
     "desc": "顾名思义",
-    "author": "Jigsaw111",
-    "homepage": "https://github.com/Jigsaw111/nonebot-plugin-mcstatus",
-    "tags": [],
+    "author": "j1g5awi",
+    "homepage": "https://github.com/nonepkg/nonebot-plugin-mcstatus",
+    "tags": [
+        {
+          "label": "t:Minecraft",
+          "color": "#80070B"
+        }
+      ],
     "is_official": false
   },
   {
@@ -750,7 +770,12 @@
     "desc": "在 NoneBot2 中加载 OlivOS 插件",
     "author": "j1g5awi",
     "homepage": "https://github.com/nonepkg/OlivOS.nb2",
-    "tags": [],
+    "tags": [
+        {
+          "label": "t:OlivOS",
+          "color": "##00a0ea"
+        }
+      ],
     "is_official": false
   },
   {
