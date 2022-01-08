@@ -3,7 +3,7 @@
 }
 
 .messageRight {
-  @apply justify-end;
+  @apply !justify-end;
 }
 
 .message .messageAvatar {
@@ -14,7 +14,7 @@
   @apply relative w-fit max-w-[55%] px-2 py-[0.375rem] mx-3 my-2 rounded-lg bg-light;
 }
 :global(.dark) .message .messageBox {
-  @apply bg-dark;
+  @apply !bg-dark;
 }
 
 .message .messageBox::after {
@@ -23,7 +23,7 @@
   @apply absolute top-0 right-full w-2 h-3 text-light rounded-bl-lg;
 }
 :global(.dark) .message .messageBox::after {
-  @apply text-dark;
+  @apply !text-dark;
 }
 .message.messageRight .messageBox::after {
   @apply !left-full !right-auto !rounded-bl-[0] !rounded-br-lg;
