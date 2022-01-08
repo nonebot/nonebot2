@@ -179,6 +179,7 @@ class Driver(ReverseDriver):
             _handle,
             name=setup.name,
             methods=[setup.method],
+            include_in_schema=False,
         )
 
     @overrides(ReverseDriver)
