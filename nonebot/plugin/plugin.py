@@ -96,5 +96,10 @@ def _new_plugin(fullname: str, module: ModuleType, manager: "PluginManager") -> 
     if name in plugins:
         raise RuntimeError("Plugin already exists! Check your plugin name.")
     plugin = Plugin(name, module, fullname, manager)
-    plugins[name] = plugin
     return plugin
+
+
+def _confirm_plugin(plugin: Plugin) -> None:
+    if plugin.name in plugins:
+        raise RuntimeError("Plugin already exists! Check your plugin name.")
+    plugins[plugin.name] = plugin

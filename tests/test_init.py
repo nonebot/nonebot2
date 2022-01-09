@@ -94,3 +94,9 @@ async def test_load_plugin(load_plugin: Set["Plugin"]):
         assert False
     except RuntimeError:
         assert True
+
+    try:
+        nonebot.load_plugin("some_plugin_no_exist")
+        assert False
+    except Exception:
+        assert nonebot.get_plugin("some_plugin_no_exist") is None

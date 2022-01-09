@@ -10,8 +10,8 @@ from typing import Set, Dict, List, Union, Iterable, Optional, Sequence
 
 from nonebot.log import logger
 from nonebot.utils import escape_tag
-from .plugin import Plugin, _new_plugin
 from . import _managers, _current_plugin
+from .plugin import Plugin, _new_plugin, _confirm_plugin
 
 
 class PluginManager:
@@ -179,6 +179,8 @@ class PluginLoader(SourceFileLoader):
         #         f"Error when executing module {module_name} from {module.__file__}."
         #     ) from e
         super().exec_module(module)
+
+        _confirm_plugin(plugin)
 
         _current_plugin.reset(_plugin_token)
         return
