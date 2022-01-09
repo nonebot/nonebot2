@@ -92,7 +92,7 @@ async def test_event(app: App, load_plugin):
 
 @pytest.mark.asyncio
 async def test_state(app: App, load_plugin):
-    from nonebot.params import StateParam, DependParam
+    from nonebot.params import StateParam, DependParam, StateInner
     from nonebot.consts import (
         CMD_KEY,
         PREFIX_KEY,
@@ -107,6 +107,8 @@ async def test_state(app: App, load_plugin):
 
     from plugins.param.param_state import (
         state,
+        state_type_var,
+        state_default,
         command,
         regex_dict,
         command_arg,
@@ -126,8 +128,17 @@ async def test_state(app: App, load_plugin):
         REGEX_GROUP: ("test", "arg=value"),
         REGEX_DICT: {"type": "test", "arg": "value"},
     }
+    fake_state = StateInner(fake_state)
 
     async with app.test_dependent(state, allow_types=[StateParam]) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state)
+    
+    async with app.test_dependent(state_type_var, allow_types=[StateParam]) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state) 
+    
+    async with app.test_dependent(state_default, allow_types=[StateParam]) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state)
 

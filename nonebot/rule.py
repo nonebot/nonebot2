@@ -26,7 +26,8 @@ from nonebot.log import logger
 from nonebot.dependencies import Dependent
 from nonebot.exception import ParserExit, SkippedException
 from nonebot.adapters import Bot, Event, Message, MessageSegment
-from nonebot.typing import T_State, T_RuleChecker, T_DependencyCache
+from nonebot.params import T_State
+from nonebot.typing import  T_RuleChecker, T_DependencyCache
 from nonebot.consts import (
     CMD_KEY,
     PREFIX_KEY,

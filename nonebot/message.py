@@ -8,9 +8,10 @@ NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供
 import asyncio
 from datetime import datetime
 from contextlib import AsyncExitStack
-from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional, Coroutine
+from typing import TYPE_CHECKING, Any, Set, Type, Optional, Coroutine
 
 from nonebot import params
+from nonebot.params import StateInner, T_State
 from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.utils import escape_tag
@@ -23,7 +24,6 @@ from nonebot.exception import (
     SkippedException,
 )
 from nonebot.typing import (
-    T_State,
     T_DependencyCache,
     T_RunPreProcessor,
     T_RunPostProcessor,
@@ -267,7 +267,7 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
     if show_log:
         logger.opt(colors=True).success(log_msg)
 
-    state: Dict[Any, Any] = {}
+    state = StateInner()
     dependency_cache: T_DependencyCache = {}
 
     async with AsyncExitStack() as stack:

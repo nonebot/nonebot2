@@ -24,6 +24,7 @@ from typing import (
 )
 
 from nonebot import params
+from nonebot.params import T_State
 from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.dependencies import Dependent
@@ -44,7 +45,6 @@ from nonebot.consts import (
 )
 from nonebot.typing import (
     Any,
-    T_State,
     T_Handler,
     T_TypeUpdater,
     T_DependencyCache,

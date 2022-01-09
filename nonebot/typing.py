@@ -45,15 +45,6 @@ def overrides(InterfaceClass: object):
     return overrider
 
 
-T_State = Dict[Any, Any]
-"""
-:类型: ``Dict[Any, Any]``
-
-:说明:
-
-  事件处理状态 State 类型
-"""
-
 T_BotConnectionHook = Callable[["Bot"], Awaitable[None]]
 """
 :类型: ``Callable[[Bot], Awaitable[None]]``

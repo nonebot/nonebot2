@@ -1,7 +1,7 @@
 import asyncio
 import inspect
 from typing_extensions import Literal
-from typing import Any, Dict, List, Tuple, Callable, Optional, cast
+from typing import Any, Dict, List, Tuple, Callable, Optional, TypeVar, cast
 from contextlib import AsyncExitStack, contextmanager, asynccontextmanager
 
 from pydantic.fields import Required, Undefined, ModelField
@@ -10,7 +10,7 @@ from nonebot.log import logger
 from nonebot.exception import TypeMisMatch
 from nonebot.adapters import Bot, Event, Message
 from nonebot.dependencies import Param, Dependent, CustomConfig
-from nonebot.typing import T_State, T_Handler, T_DependencyCache
+from nonebot.typing import  T_Handler, T_DependencyCache
 from nonebot.consts import (
     CMD_KEY,
     PREFIX_KEY,
@@ -278,8 +278,11 @@ def EventToMe() -> bool:
     return Depends(_event_to_me)
 
 
-class StateInner:
+class StateInner(dict):
     ...
+
+
+T_State = TypeVar("T_State",bound=StateInner)
 
 
 def State() -> T_State:
@@ -293,6 +296,11 @@ class StateParam(Param):
     ) -> Optional["StateParam"]:
         if isinstance(param.default, StateInner):
             return cls(Required)
+        elif param.default==param.empty:
+            if param.annotation is StateInner:
+                return  cls(Required)
+            elif isinstance(param.annotation,TypeVar) and getattr(param.annotation,'__bound__') is StateInner:
+                return  cls(Required)
 
     async def _solve(self, state: T_State, **kwargs: Any) -> Any:
         return state

@@ -1,6 +1,6 @@
 from typing import List, Tuple
 
-from nonebot.typing import T_State
+from nonebot.params import StateInner, T_State
 from nonebot.adapters import Message
 from nonebot.params import (
     State,
@@ -14,8 +14,13 @@ from nonebot.params import (
     ShellCommandArgv,
 )
 
+async def state(x: StateInner) -> T_State:
+    return x
 
-async def state(x: T_State = State()) -> T_State:
+async def state_type_var(x: T_State) -> T_State:
+    return x
+
+async def state_default(x = State()) -> T_State:
     return x
 
 
