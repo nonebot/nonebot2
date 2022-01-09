@@ -425,7 +425,7 @@ class Matcher(metaclass=MatcherMeta):
             if matcher.get_target() == RECEIVE_KEY.format(id=id):
                 matcher.set_receive(id, event)
                 return
-            if matcher.get_receive(id):
+            if matcher.get_receive(id, ...) is not ...:
                 return
             await matcher.reject()
 
@@ -469,7 +469,7 @@ class Matcher(metaclass=MatcherMeta):
             if matcher.get_target() == ARG_KEY.format(key=key):
                 matcher.set_arg(key, event.get_message())
                 return
-            if matcher.get_arg(key):
+            if matcher.get_arg(key, ...) is not ...:
                 return
             await matcher.reject(prompt)
 
