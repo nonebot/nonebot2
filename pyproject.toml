@@ -41,6 +41,7 @@ sphinx = "^4.1.1"
 isort = "^5.10.1"
 black = "^21.11b1"
 pytest-cov = "^3.0.0"
+pytest-xdist = "^2.5.0"
 nonebug = { git = "https://github.com/nonebot/nonebug.git" }
 sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
 
