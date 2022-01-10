@@ -4,6 +4,13 @@ description: Changelog
 
 # 更新日志
 
+## v2.0.0b2
+
+- 修复 `receive`, `got` 在参数为空消息时依旧会反复询问
+- 修复文档商店分页显示错误
+- 修复插件导入失败时，依然存在于已导入插件列表中
+- 移除 `state` 依赖注入所需的默认值 `State()`
+
 ## v2.0.0b1
 
 - 新增 `MessageTemplate` 对于 `str` 普通模板的支持
