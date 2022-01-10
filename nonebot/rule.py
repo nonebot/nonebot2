@@ -39,7 +39,6 @@ from nonebot.consts import (
     REGEX_MATCHED,
 )
 from nonebot.params import (
-    State,
     Command,
     BotParam,
     EventToMe,
@@ -390,9 +389,9 @@ class ShellCommandRule:
 
     async def __call__(
         self,
+        state: T_State,
         cmd: Optional[Tuple[str, ...]] = Command(),
         msg: Message = EventMessage(),
-        state: T_State = State(),
     ) -> bool:
         if cmd in self.cmds:
             message = str(msg)
@@ -475,9 +474,9 @@ class RegexRule:
 
     async def __call__(
         self,
+        state: T_State,
         type: str = EventType(),
         msg: Message = EventMessage(),
-        state: T_State = State(),
     ) -> bool:
         if type != "message":
             return False

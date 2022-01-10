@@ -3,7 +3,6 @@ from typing import List, Tuple
 from nonebot.typing import T_State
 from nonebot.adapters import Message
 from nonebot.params import (
-    State,
     Command,
     RegexDict,
     CommandArg,
@@ -15,7 +14,7 @@ from nonebot.params import (
 )
 
 
-async def state(x: T_State = State()) -> T_State:
+async def state(x: T_State) -> T_State:
     return x
 
 

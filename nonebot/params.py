@@ -278,27 +278,22 @@ def EventToMe() -> bool:
     return Depends(_event_to_me)
 
 
-class StateInner:
-    ...
-
-
-def State() -> T_State:
-    return StateInner()  # type: ignore
-
-
 class StateParam(Param):
     @classmethod
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
     ) -> Optional["StateParam"]:
-        if isinstance(param.default, StateInner):
-            return cls(Required)
+        if param.default == param.empty:
+            if param.annotation is T_State:
+                return cls(Required)
+            elif param.annotation == param.empty and name == "state":
+                return cls(Required)
 
     async def _solve(self, state: T_State, **kwargs: Any) -> Any:
         return state
 
 
-def _command(state=State()) -> Message:
+def _command(state: T_State) -> Message:
     return state[PREFIX_KEY][CMD_KEY]
 
 
@@ -306,7 +301,7 @@ def Command() -> Tuple[str, ...]:
     return Depends(_command, use_cache=False)
 
 
-def _raw_command(state=State()) -> Message:
+def _raw_command(state: T_State) -> Message:
     return state[PREFIX_KEY][RAW_CMD_KEY]
 
 
@@ -314,7 +309,7 @@ def RawCommand() -> str:
     return Depends(_raw_command, use_cache=False)
 
 
-def _command_arg(state=State()) -> Message:
+def _command_arg(state: T_State) -> Message:
     return state[PREFIX_KEY][CMD_ARG_KEY]
 
 
@@ -322,7 +317,7 @@ def CommandArg() -> Any:
     return Depends(_command_arg, use_cache=False)
 
 
-def _shell_command_args(state=State()) -> Any:
+def _shell_command_args(state: T_State) -> Any:
     return state[SHELL_ARGS]
 
 
@@ -330,7 +325,7 @@ def ShellCommandArgs():
     return Depends(_shell_command_args, use_cache=False)
 
 
-def _shell_command_argv(state=State()) -> List[str]:
+def _shell_command_argv(state: T_State) -> List[str]:
     return state[SHELL_ARGV]
 
 
@@ -338,7 +333,7 @@ def ShellCommandArgv() -> Any:
     return Depends(_shell_command_argv, use_cache=False)
 
 
-def _regex_matched(state=State()) -> str:
+def _regex_matched(state: T_State) -> str:
     return state[REGEX_MATCHED]
 
 
@@ -346,7 +341,7 @@ def RegexMatched() -> str:
     return Depends(_regex_matched, use_cache=False)
 
 
-def _regex_group(state=State()):
+def _regex_group(state: T_State):
     return state[REGEX_GROUP]
 
 
@@ -354,7 +349,7 @@ def RegexGroup() -> Tuple[Any, ...]:
     return Depends(_regex_group, use_cache=False)
 
 
-def _regex_dict(state=State()):
+def _regex_dict(state: T_State):
     return state[REGEX_DICT]
 
 
