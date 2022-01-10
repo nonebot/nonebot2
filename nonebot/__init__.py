@@ -21,6 +21,7 @@
 - ``load_all_plugins`` => ``nonebot.plugin.load_all_plugins``
 - ``load_from_json`` => ``nonebot.plugin.load_from_json``
 - ``load_from_toml`` => ``nonebot.plugin.load_from_toml``
+- ``load_builtin_plugin`` => ``nonebot.plugin.load_builtin_plugin``
 - ``load_builtin_plugins`` => ``nonebot.plugin.load_builtin_plugins``
 - ``get_plugin`` => ``nonebot.plugin.get_plugin``
 - ``get_loaded_plugins`` => ``nonebot.plugin.get_loaded_plugins``
@@ -322,4 +323,5 @@ from nonebot.plugin import load_from_toml as load_from_toml
 from nonebot.plugin import load_all_plugins as load_all_plugins
 from nonebot.plugin import on_shell_command as on_shell_command
 from nonebot.plugin import get_loaded_plugins as get_loaded_plugins
+from nonebot.plugin import load_builtin_plugin as load_builtin_plugin
 from nonebot.plugin import load_builtin_plugins as load_builtin_plugins

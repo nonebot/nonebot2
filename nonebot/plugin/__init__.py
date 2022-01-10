@@ -37,5 +37,6 @@ from .load import load_from_json as load_from_json
 from .load import load_from_toml as load_from_toml
 from .on import on_shell_command as on_shell_command
 from .load import load_all_plugins as load_all_plugins
+from .load import load_builtin_plugin as load_builtin_plugin
 from .plugin import get_loaded_plugins as get_loaded_plugins
 from .load import load_builtin_plugins as load_builtin_plugins

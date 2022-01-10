@@ -131,7 +131,7 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     return load_all_plugins(plugins, plugin_dirs)
 
 
-def load_builtin_plugins(name: str) -> Optional[Plugin]:
+def load_builtin_plugin(name: str) -> Optional[Plugin]:
     """
     :说明:
 
@@ -142,6 +142,19 @@ def load_builtin_plugins(name: str) -> Optional[Plugin]:
       - ``Plugin``
     """
     return load_plugin(f"nonebot.plugins.{name}")
+
+
+def load_builtin_plugins(*plugins) -> Set[Plugin]:
+    """
+    :说明:
+
+      导入多个 NoneBot 内置插件
+
+    :返回:
+
+      - ``Set[Plugin]``
+    """
+    return load_all_plugins([f"nonebot.plugins.{p}" for p in plugins], [])
 
 
 def require(name: str) -> Export:
