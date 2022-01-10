@@ -1,5 +1,6 @@
 import asyncio
 import inspect
+import warnings
 from typing_extensions import Literal
 from typing import Any, Dict, List, Tuple, Callable, Optional, cast
 from contextlib import AsyncExitStack, contextmanager, asynccontextmanager
@@ -278,12 +279,23 @@ def EventToMe() -> bool:
     return Depends(_event_to_me)
 
 
+class StateInner(T_State):
+    ...
+
+
+def State() -> T_State:
+    warnings.warn("State() is deprecated, use T_State instead", DeprecationWarning)
+    return StateInner()
+
+
 class StateParam(Param):
     @classmethod
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
     ) -> Optional["StateParam"]:
-        if param.default == param.empty:
+        if isinstance(param.default, StateInner):
+            return cls(Required)
+        elif param.default == param.empty:
             if param.annotation is T_State:
                 return cls(Required)
             elif param.annotation == param.empty and name == "state":
