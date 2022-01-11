@@ -82,6 +82,12 @@ DRIVER=~fastapi
 默认值: `None`  
 说明: `FastAPI` 提供的 `ReDoc` 文档地址，如果为 `None`，则不提供 `ReDoc` 文档。
 
+##### `fastapi_include_adapter_schema`
+
+类型: `bool`  
+默认值: `True`  
+说明: `FastAPI` 提供的 `OpenAPI` JSON 定义中是否包含适配器路由的 `Schema`。
+
 ##### `fastapi_reload`
 
 类型: `bool`  
