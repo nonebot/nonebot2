@@ -214,7 +214,7 @@ async def _(foo: Message = CommandArg()): ...
 ### ShellCommandArgs
 
 ```python {7}
-from nonebot import on_command
+from nonebot import on_shell_command
 from nonebot.params import ShellCommandArgs
 
 matcher = on_shell_command("cmd", parser)
@@ -226,7 +226,7 @@ async def _(foo: Dict[str, Any] = ShellCommandArgs()): ...
 ### ShellCommandArgv
 
 ```python {7}
-from nonebot import on_command
+from nonebot import on_shell_command
 from nonebot.params import ShellCommandArgs
 
 matcher = on_shell_command("cmd")
