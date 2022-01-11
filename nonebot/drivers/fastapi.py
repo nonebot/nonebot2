@@ -76,6 +76,16 @@ class Config(BaseSettings):
 
       ``redoc`` 地址，默认为 ``None`` 即关闭
     """
+    fastapi_include_adapter_schema: bool = True
+    """
+    :类型:
+
+      ``bool``
+
+    :说明:
+
+      是否包含适配器路由的 schema，默认为 ``True``
+    """
     fastapi_reload: bool = False
     """
     :类型:
@@ -179,7 +189,7 @@ class Driver(ReverseDriver):
             _handle,
             name=setup.name,
             methods=[setup.method],
-            include_in_schema=False,
+            include_in_schema=self.fastapi_config.fastapi_include_adapter_schema,
         )
 
     @overrides(ReverseDriver)
