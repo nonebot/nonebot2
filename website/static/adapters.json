@@ -20,16 +20,6 @@
     "is_official": true
   },
   {
-    "module_name": "nonebot.adapters.mirai",
-    "project_link": "nonebot-adapter-mirai",
-    "name": "mirai",
-    "desc": "Mirai-Api-HTTP 协议",
-    "author": "Mix",
-    "homepage": "https://github.com/nonebot/adapter-mirai",
-    "tags": [],
-    "is_official": true
-  },
-  {
     "module_name": "nonebot.adapters.feishu",
     "project_link": "nonebot-adapter-feishu",
     "name": "feishu",
