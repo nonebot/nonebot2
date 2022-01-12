@@ -115,8 +115,8 @@ def require(name: str) -> Export:
     参数:
       name: 插件名，与 `load_plugin` 参数一致。如果为 `load_plugins` 导入的插件，则为文件(夹)名。
 
-    :异常:
-      - `RuntimeError`: 插件无法加载
+    异常:
+      RuntimeError: 插件无法加载
     """
     plugin = get_plugin(name) or load_plugin(name)
     if not plugin:

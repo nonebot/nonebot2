@@ -58,8 +58,7 @@ def get_driver() -> Driver:
     返回:
       Driver: 全局 Driver 对象
 
-    :异常:
-
+    异常:
       ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
     :用法:
@@ -81,8 +80,7 @@ def get_app() -> Any:
     返回:
       Any: Server App 对象
 
-    :异常:
-
+    异常:
       ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
     :用法:
@@ -106,8 +104,7 @@ def get_asgi() -> Any:
     返回:
       Any: Asgi 对象
 
-    :异常:
-
+    异常:
       ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
     :用法:
@@ -134,8 +131,7 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
     返回:
       Bot: Bot 对象
 
-    :异常:
-
+    异常:
       KeyError: 对应 ID 的 Bot 不存在
       ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
       ValueError: 没有传入 ID 且没有 Bot 可用
@@ -165,8 +161,7 @@ def get_bots() -> Dict[str, Bot]:
     返回:
       Dict[str, Bot]: 一个以字符串 ID 为键，Bot 对象为值的字典
 
-    :异常:
-
+    异常:
       ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
     :用法:
