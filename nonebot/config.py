@@ -137,9 +137,7 @@ class Env(BaseConfig):
 
     environment: str = "prod"
     """
-        - **默认值**: ``"prod"``
-
-    :说明:
+            :说明:
       当前环境名。 NoneBot 将从 ``.env.{environment}`` 文件中加载配置。
     """
 
@@ -162,9 +160,7 @@ class Config(BaseConfig):
     # nonebot configs
     driver: str = "~fastapi"
     """
-        - **默认值**: ``"~fastapi"``
-
-    :说明:
+            :说明:
 
       NoneBot 运行所使用的 ``Driver`` 。继承自 ``nonebot.drivers.Driver`` 。
 
@@ -174,25 +170,19 @@ class Config(BaseConfig):
     """
     host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
     """
-        - **默认值**: ``127.0.0.1``
-
-    :说明:
+            :说明:
 
       NoneBot 的 HTTP 和 WebSocket 服务端监听的 IP/主机名。
     """
     port: int = 8080
     """
-        - **默认值**: ``8080``
-
-    :说明:
+            :说明:
 
       NoneBot 的 HTTP 和 WebSocket 服务端监听的端口。
     """
     log_level: Union[int, str] = "INFO"
     """
-        - **默认值**: ``INFO``
-
-    :说明:
+            :说明:
 
       配置 NoneBot 日志输出等级，可以为 ``int`` 类型等级或等级名称，参考 `loguru 日志等级`_。
 
@@ -210,9 +200,7 @@ class Config(BaseConfig):
     # bot connection configs
     api_timeout: Optional[float] = 30.0
     """
-        - **默认值**: ``30.``
-
-    :说明:
+            :说明:
 
       API 请求超时时间，单位: 秒。
     """
@@ -220,9 +208,7 @@ class Config(BaseConfig):
     # bot runtime configs
     superusers: Set[str] = set()
     """
-        - **默认值**: ``set()``
-
-    :说明:
+            :说明:
 
       机器人超级用户。
 
@@ -234,33 +220,25 @@ class Config(BaseConfig):
     """
     nickname: Set[str] = set()
     """
-        - **默认值**: ``set()``
-
-    :说明:
+            :说明:
 
       机器人昵称。
     """
     command_start: Set[str] = {"/"}
     """
-        - **默认值**: ``{"/"}``
-
-    :说明:
+            :说明:
 
       命令的起始标记，用于判断一条消息是不是命令。
     """
     command_sep: Set[str] = {"."}
     """
-        - **默认值**: ``{"."}``
-
-    :说明:
+            :说明:
 
       命令的分隔标记，用于将文本形式的命令切分为元组（实际的命令名）。
     """
     session_expire_timeout: timedelta = timedelta(minutes=2)
     """
-        - **默认值**: ``timedelta(minutes=2)``
-
-    :说明:
+            :说明:
 
       等待用户回复的超时时间。
 
