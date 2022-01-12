@@ -1,12 +1,12 @@
-r"""
+"""
 规则
 ====
 
 每个事件响应器 `Matcher` 拥有一个匹配规则 `Rule` ，其中是 `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
 
-\:\:\:tip 提示
+::: tip 提示
 `RuleChecker` 既可以是 async function 也可以是 sync function
-\:\:\:
+:::
 """
 
 import re
@@ -267,7 +267,7 @@ def keyword(*keywords: str) -> Rule:
     匹配消息关键词
 
     参数:
-      *keywords: 关键词
+        *keywords: 关键词
     """
 
     return Rule(KeywordsRule(*keywords))
@@ -285,23 +285,23 @@ class CommandRule:
 
 
 def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
-    r"""
+    """
     命令形式匹配，根据配置里提供的 `command_start`, `command_sep` 判断消息是否为命令。
 
-      可以通过 `state["_prefix"]["command"]` 获取匹配成功的命令（例：`("test",)`），通过 `state["_prefix"]["raw_command"]` 获取匹配成功的原始命令文本（例：`"/test"`）。
+    可以通过 `state["_prefix"]["command"]` 获取匹配成功的命令（例：`("test",)`），通过 `state["_prefix"]["raw_command"]` 获取匹配成功的原始命令文本（例：`"/test"`）。
 
     参数:
-      *cmds: 命令内容
+        *cmds: 命令内容
 
     用法:
-      使用默认 `command_start`, `command_sep` 配置
+        使用默认 `command_start`, `command_sep` 配置
 
-      命令 `("test",)` 可以匹配：`/test` 开头的消息
-      命令 `("test", "sub")` 可以匹配”`/test.sub` 开头的消息
+        命令 `("test",)` 可以匹配：`/test` 开头的消息
+        命令 `("test", "sub")` 可以匹配”`/test.sub` 开头的消息
 
-    \:\:\:tip 提示
+    ::: tip 提示
     命令内容与后续消息间无需空格！
-    \:\:\:
+    :::
     """
 
     config = get_driver().config
@@ -379,7 +379,7 @@ class ShellCommandRule:
 def shell_command(
     *cmds: Union[str, Tuple[str, ...]], parser: Optional[ArgumentParser] = None
 ) -> Rule:
-    r"""
+    """
     支持 `shell_like` 解析参数的命令形式匹配，根据配置里提供的 `command_start`, `command_sep` 判断消息是否为命令。
 
     可以通过 `state["_prefix"]["command"]` 获取匹配成功的命令（例：`("test",)`），通过 `state["_prefix"]["raw_command"]` 获取匹配成功的原始命令文本（例：`"/test"`）。
@@ -389,8 +389,8 @@ def shell_command(
     添加 `parser` 参数后, 可以自动处理消息并将结果保存在 `state["args"]` 中。
 
     参数:
-      *cmds: 命令内容
-      parser: `nonebot.rule.ArgumentParser` 对象
+        *cmds: 命令内容
+        parser: `nonebot.rule.ArgumentParser` 对象
 
     用法:
         使用默认 `command_start`, `command_sep` 配置，更多示例参考 `argparse` 标准库文档。
@@ -404,9 +404,9 @@ def shell_command(
         rule = shell_command("ls", parser=parser)
         ```
 
-    \:\:\:tip 提示
+    ::: tip 提示
     命令内容与后续消息间无需空格！
-    \:\:\:
+    :::
     """
     if parser is not None and not isinstance(parser, ArgumentParser):
         raise TypeError("`parser` must be an instance of nonebot.rule.ArgumentParser")
@@ -455,7 +455,7 @@ class RegexRule:
 
 
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
-    r"""
+    """
     根据正则表达式进行匹配。
 
     可以通过 `state["_matched"]` `state["_matched_groups"]` `state["_matched_dict"]`
@@ -465,9 +465,9 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
         regex: 正则表达式
         flags: 正则标志
 
-    \:\:\:tip 提示
+    ::: tip 提示
     正则表达式匹配使用 search 而非 match，如需从头匹配请使用 `r"^xxx"` 来确保匹配开头
-    \:\:\:
+    :::
     """
 
     return Rule(RegexRule(regex, flags))
