@@ -12,7 +12,7 @@
   {
     "module_name": "nonebot.adapters.ding",
     "project_link": "nonebot-adapter-ding",
-    "name": "ding",
+    "name": "钉钉",
     "desc": "钉钉协议",
     "author": "Artin",
     "homepage": "https://github.com/nonebot/adapter-ding",
@@ -22,7 +22,7 @@
   {
     "module_name": "nonebot.adapters.feishu",
     "project_link": "nonebot-adapter-feishu",
-    "name": "feishu",
+    "name": "飞书",
     "desc": "飞书协议",
     "author": "StarHeartHunt",
     "homepage": "https://github.com/nonebot/adapter-feishu",
@@ -32,7 +32,7 @@
   {
     "module_name": "nonebot.adapters.telegram",
     "project_link": "nonebot-adapter-telegram",
-    "name": "telegram",
+    "name": "Telegram",
     "desc": "Telegram 协议",
     "author": "j1g5awi",
     "homepage": "https://github.com/nonebot/adapter-telegram",
