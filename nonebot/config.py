@@ -1,6 +1,5 @@
 """
-配置
-====
+## 配置
 
 NoneBot 使用 `pydantic`_ 以及 `python-dotenv`_ 来读取配置。
 

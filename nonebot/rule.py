@@ -1,6 +1,5 @@
 """
-规则
-====
+## 规则
 
 每个事件响应器 `Matcher` 拥有一个匹配规则 `Rule` ，其中是 `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
 

@@ -1,6 +1,5 @@
 """
-权限
-====
+## 权限
 
 每个 `Matcher` 拥有一个 `Permission` ，其中是 `PermissionChecker` 的集合，只要有一个 `PermissionChecker` 检查结果为 `True` 时就会继续运行。
 
