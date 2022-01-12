@@ -480,9 +480,6 @@ class ToMeRule:
 def to_me() -> Rule:
     """
     通过 `event.is_tome()` 判断事件是否与机器人有关
-
-    参数:
-      * 无
     """
 
     return Rule(ToMeRule())

@@ -1,16 +1,9 @@
 """
 ## 配置
 
-NoneBot 使用 `pydantic`_ 以及 `python-dotenv`_ 来读取配置。
+NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及 [`python-dotenv`](https://saurabh-kumar.com/python-dotenv/) 来读取配置。
 
-配置项需符合特殊格式或 json 序列化格式。详情见 `pydantic Field Type`_ 文档。
-
-.. _pydantic:
-    https://pydantic-docs.helpmanual.io/
-.. _python-dotenv:
-    https://saurabh-kumar.com/python-dotenv/
-.. _pydantic Field Type:
-    https://pydantic-docs.helpmanual.io/usage/types/
+配置项需符合特殊格式或 json 序列化格式。详情见 [`pydantic Field Type`](https://pydantic-docs.helpmanual.io/usage/types/) 文档。
 """
 import os
 from pathlib import Path
@@ -160,9 +153,9 @@ class Config(BaseConfig):
     """
     NoneBot 运行所使用的 `Driver` 。继承自 `nonebot.drivers.Driver` 。
 
-      配置格式为 `<module>[:<Driver>][+<module>[:<Mixin>]]*`。
+    配置格式为 `<module>[:<Driver>][+<module>[:<Mixin>]]*`。
 
-      `~` 为 `nonebot.drivers.` 的缩写。
+    `~` 为 `nonebot.drivers.` 的缩写。
     """
     host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
     """
@@ -174,16 +167,13 @@ class Config(BaseConfig):
     """
     log_level: Union[int, str] = "INFO"
     """
-    配置 NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称，参考 `loguru 日志等级`_。
+    配置 NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称，参考 [`loguru 日志等级`](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
 
     用法:
         ```conf
         LOG_LEVEL=25
         LOG_LEVEL=INFO
         ```
-
-    .. _loguru 日志等级:
-        https://loguru.readthedocs.io/en/stable/api/logger.html#levels
     """
 
     # bot connection configs

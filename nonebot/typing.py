@@ -1,20 +1,11 @@
 """
 ## 类型
 
-下面的文档中，「类型」部分使用 Python 的 Type Hint 语法，见 `PEP 484`_、`PEP 526`_ 和 `typing`_。
+下面的文档中，「类型」部分使用 Python 的 Type Hint 语法，见 [`PEP 484`](https://www.python.org/dev/peps/pep-0484/)、[`PEP 526`](https://www.python.org/dev/peps/pep-0526/) 和 [`typing`](https://docs.python.org/3/library/typing.html)。
 
 除了 Python 内置的类型，下面还出现了如下 NoneBot 自定类型，实际上它们是 Python 内置类型的别名。
 
 以下类型均可从 nonebot.typing 模块导入。
-
-.. _PEP 484:
-    https://www.python.org/dev/peps/pep-0484/
-
-.. _PEP 526:
-    https://www.python.org/dev/peps/pep-0526/
-
-.. _typing:
-    https://docs.python.org/3/library/typing.html
 """
 from typing import (
     TYPE_CHECKING,

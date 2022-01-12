@@ -97,7 +97,7 @@ class SkippedException(MatcherException):
     指示 NoneBot 立即结束当前 `Handler` 的处理，继续处理下一个 `Handler`。
 
     用法:
-      可以在 `Handler` 中通过 `Matcher.skip()` 抛出。
+        可以在 `Handler` 中通过 `Matcher.skip()` 抛出。
     """
 
 
@@ -123,7 +123,7 @@ class PausedException(MatcherException):
       可用于用户输入新信息。
 
     用法:
-      可以在 `Handler` 中通过 `Matcher.pause()` 抛出。
+        可以在 `Handler` 中通过 `Matcher.pause()` 抛出。
     """
 
 
@@ -133,7 +133,7 @@ class RejectedException(MatcherException):
       可用于用户重新输入。
 
     用法:
-      可以在 `Handler` 中通过 `Matcher.reject()` 抛出。
+        可以在 `Handler` 中通过 `Matcher.reject()` 抛出。
     """
 
 
@@ -143,7 +143,7 @@ class FinishedException(MatcherException):
       可用于结束用户会话。
 
     用法:
-      可以在 `Handler` 中通过 `Matcher.finish()` 抛出。
+        可以在 `Handler` 中通过 `Matcher.finish()` 抛出。
     """
 
 

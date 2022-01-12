@@ -113,9 +113,6 @@ class Driver(abc.ABC):
     def run(self, *args, **kwargs):
         """
         启动驱动框架
-
-        参数:          *args
-          **kwargs
         """
         logger.opt(colors=True).debug(
             f"<g>Loaded adapters: {escape_tag(', '.join(self._adapters))}</g>"
@@ -135,9 +132,8 @@ class Driver(abc.ABC):
         """
         装饰一个函数使他在 bot 通过 WebSocket 连接成功时执行。
 
-        :函数参数:
-
-          bot: 当前连接上的 Bot 对象
+        参数:
+            bot: 当前连接上的 Bot 对象
         """
         self._bot_connection_hook.add(func)
         return func
@@ -146,9 +142,8 @@ class Driver(abc.ABC):
         """
         装饰一个函数使他在 bot 通过 WebSocket 连接断开时执行。
 
-        :函数参数:
-
-          bot: 当前连接上的 Bot 对象
+        参数:
+            bot: 当前连接上的 Bot 对象
         """
         self._bot_disconnection_hook.add(func)
         return func

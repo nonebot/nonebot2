@@ -1,10 +1,7 @@
 """
 ## Quart 驱动适配
 
-后端使用方法请参考: `Quart 文档`_
-
-.. _Quart 文档:
-    https://pgjones.gitlab.io/quart/index.html
+后端使用方法请参考: [`Quart 文档`](https://pgjones.gitlab.io/quart/index.html)
 """
 
 import asyncio
@@ -139,16 +136,12 @@ class Driver(ReverseDriver):
 
     @overrides(ReverseDriver)
     def on_startup(self, func: _AsyncCallable) -> _AsyncCallable:
-        """参考文档: `Startup and Shutdown`_
-
-        .. _Startup and Shutdown:
-            https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html
-        """
+        """参考文档: [`Startup and Shutdown`](https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html)"""
         return self.server_app.before_serving(func)  # type: ignore
 
     @overrides(ReverseDriver)
     def on_shutdown(self, func: _AsyncCallable) -> _AsyncCallable:
-        """参考文档: `Startup and Shutdown`_"""
+        """参考文档: [`Startup and Shutdown`](https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html)"""
         return self.server_app.after_serving(func)  # type: ignore
 
     @overrides(ReverseDriver)

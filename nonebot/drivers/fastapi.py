@@ -3,10 +3,7 @@
 
 本驱动同时支持服务端以及客户端连接
 
-后端使用方法请参考: `FastAPI 文档`_
-
-.. _FastAPI 文档:
-    https://fastapi.tiangolo.com/
+后端使用方法请参考: [`FastAPI 文档`](https://fastapi.tiangolo.com/)
 """
 
 import logging
