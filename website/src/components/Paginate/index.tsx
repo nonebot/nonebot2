@@ -20,9 +20,12 @@ export default function Paginate({
     null
   );
 
-  const ref = useCallback((element: HTMLElement | null) => {
-    setContainerElement(element);
-  }, []);
+  const ref = useCallback(
+    (element: HTMLElement | null) => {
+      setContainerElement(element);
+    },
+    [setContainerElement]
+  );
 
   const maxWidth = useContentWidth(
     containerElement?.parentElement ?? undefined

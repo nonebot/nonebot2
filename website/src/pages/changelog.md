@@ -10,6 +10,9 @@ description: Changelog
 - 修复文档商店分页显示错误
 - 修复插件导入失败时，依然存在于已导入插件列表中
 - 移除 `state` 依赖注入所需的默认值 `State()`
+- 增加 `fastapi` 配置项：是否将适配器路由包含在 schema 中
+- 修改 `load_builtin_plugins` 函数，使其能够支持加载多个内置插件
+- 新增 `load_builtin_plugin` 函数，用于加载单个内置插件
 
 ## v2.0.0b1
 
