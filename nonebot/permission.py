@@ -37,14 +37,13 @@ class Permission:
     """
     `Matcher` 规则类，当事件传递时，在 `Matcher` 运行前进行检查。
 
-    :示例:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         Permission(async_function) | sync_function
         # 等价于
         from nonebot.utils import run_sync
         Permission(async_function, run_sync(sync_function))
+        ```
     """
 
     __slots__ = ("checkers",)

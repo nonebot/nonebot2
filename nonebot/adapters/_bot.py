@@ -63,12 +63,11 @@ class Bot(abc.ABC):
           api: API 名称
           **data: API 数据
 
-        :示例:
-
-        .. code-block:: python
-
+        用法:
+            ```python
             await bot.call_api("send_msg", message="hello world")
             await bot.send_msg(message="hello world")
+            ```
         """
 
         result: Any = None

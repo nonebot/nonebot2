@@ -65,14 +65,13 @@ class Rule:
     """
     `Matcher` 规则类，当事件传递时，在 `Matcher` 运行前进行检查。
 
-    :示例:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         Rule(async_function) & sync_function
         # 等价于
         from nonebot.utils import run_sync
         Rule(async_function, run_sync(sync_function))
+        ```
     """
 
     __slots__ = ("checkers",)
@@ -294,8 +293,7 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
     参数:
       *cmds: 命令内容
 
-    :示例:
-
+    用法:
       使用默认 `command_start`, `command_sep` 配置
 
       命令 `("test",)` 可以匹配：`/test` 开头的消息
@@ -394,18 +392,17 @@ def shell_command(
       *cmds: 命令内容
       parser: `nonebot.rule.ArgumentParser` 对象
 
-    :示例:
+    用法:
+        使用默认 `command_start`, `command_sep` 配置，更多示例参考 `argparse` 标准库文档。
 
-      使用默认 `command_start`, `command_sep` 配置，更多示例参考 `argparse` 标准库文档。
-
-    .. code-block:: python
-
+        ```python
         from nonebot.rule import ArgumentParser
 
         parser = ArgumentParser()
         parser.add_argument("-a", action="store_true")
 
         rule = shell_command("ls", parser=parser)
+        ```
 
     \:\:\:tip 提示
     命令内容与后续消息间无需空格！

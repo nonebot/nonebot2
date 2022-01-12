@@ -177,12 +177,11 @@ class Config(BaseConfig):
     """
     配置 NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称，参考 `loguru 日志等级`_。
 
-    :示例:
-
-    .. code-block:: default
-
+    用法:
+        ```conf
         LOG_LEVEL=25
         LOG_LEVEL=INFO
+        ```
 
     .. _loguru 日志等级:
         https://loguru.readthedocs.io/en/stable/api/logger.html#levels
@@ -199,11 +198,10 @@ class Config(BaseConfig):
     """
     机器人超级用户。
 
-    :示例:
-
-    .. code-block:: default
-
+    用法:
+        ```conf
         SUPERUSERS=["12345789"]
+        ```
     """
     nickname: Set[str] = set()
     """
@@ -221,13 +219,12 @@ class Config(BaseConfig):
     """
     等待用户回复的超时时间。
 
-    :示例:
-
-    .. code-block:: default
-
+    用法:
+        ```conf
         SESSION_EXPIRE_TIMEOUT=120  # 单位: 秒
         SESSION_EXPIRE_TIMEOUT=[DD ][HH:MM]SS[.ffffff]
         SESSION_EXPIRE_TIMEOUT=P[DD]DT[HH]H[MM]M[SS]S  # ISO 8601
+        ```
     """
 
     # adapter configs

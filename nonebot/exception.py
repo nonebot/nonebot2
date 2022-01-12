@@ -85,8 +85,7 @@ class StopPropagation(ProcessException):
     """
     指示 NoneBot 终止事件向下层传播。
 
-    :用法:
-
+    用法:
       在 `Matcher.block == True` 时抛出。
     """
 
@@ -102,8 +101,7 @@ class SkippedException(MatcherException):
     """
     指示 NoneBot 立即结束当前 `Handler` 的处理，继续处理下一个 `Handler`。
 
-    :用法:
-
+    用法:
       可以在 `Handler` 中通过 `Matcher.skip()` 抛出。
     """
 
@@ -129,8 +127,7 @@ class PausedException(MatcherException):
     指示 NoneBot 结束当前 `Handler` 并等待下一条消息后继续下一个 `Handler`。
       可用于用户输入新信息。
 
-    :用法:
-
+    用法:
       可以在 `Handler` 中通过 `Matcher.pause()` 抛出。
     """
 
@@ -140,8 +137,7 @@ class RejectedException(MatcherException):
     指示 NoneBot 结束当前 `Handler` 并等待下一条消息后重新运行当前 `Handler`。
       可用于用户重新输入。
 
-    :用法:
-
+    用法:
       可以在 `Handler` 中通过 `Matcher.reject()` 抛出。
     """
 
@@ -151,8 +147,7 @@ class FinishedException(MatcherException):
     指示 NoneBot 结束当前 `Handler` 且后续 `Handler` 不再被运行。
       可用于结束用户会话。
 
-    :用法:
-
+    用法:
       可以在 `Handler` 中通过 `Matcher.finish()` 抛出。
     """
 

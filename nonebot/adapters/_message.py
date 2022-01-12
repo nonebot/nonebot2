@@ -117,10 +117,8 @@ class Message(List[TMS], abc.ABC):
 
         并且提供了拓展的格式化控制符, 可以用适用于该消息类型的 `MessageSegment` 的工厂方法创建消息
 
-        :示例:
-
-        .. code-block:: python
-
+        用法:
+            ```python
             >>> Message.template("{} {}").format("hello", "world") # 基础演示
             Message(MessageSegment(type='text', data={'text': 'hello world'}))
             >>> Message.template("{} {}").format(MessageSegment.image("file///..."), "world") # 支持消息段等对象
@@ -133,6 +131,7 @@ class Message(List[TMS], abc.ABC):
                     MessageSegment(type='text', data={'text': 'test hello world'}))
             >>> Message.template("{link:image}").format(link='https://...') # 支持拓展格式化控制符
             Message(MessageSegment(type='image', data={'file': 'https://...'}))
+            ```
 
         参数:
           format_string: 格式化字符串

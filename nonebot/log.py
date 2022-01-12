@@ -32,11 +32,10 @@ NoneBot 日志记录器对象。
   * 等级: `INFO` ，根据 `config.log_level` 配置改变
   * 输出: 输出至 stdout
 
-:用法:
-
-.. code-block:: python
-
+用法:
+    ```python
     from nonebot.log import logger
+    ```
 """
 
 # default_handler = logging.StreamHandler(sys.stdout)

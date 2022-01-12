@@ -240,12 +240,11 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
       bot: Bot 对象
       event: Event 对象
 
-    :示例:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         import asyncio
         asyncio.create_task(handle_event(bot, event))
+        ```
     """
     show_log = True
     log_msg = f"<m>{escape_tag(bot.type.upper())} {escape_tag(bot.self_id)}</m> | "

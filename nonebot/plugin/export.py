@@ -5,10 +5,8 @@ class Export(dict):
     """
     插件导出内容以使得其他插件可以获得。
 
-    :示例:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         nonebot.export().default = "bar"
 
         @nonebot.export()
@@ -23,6 +21,7 @@ class Export(dict):
         @nonebot.export().sub
         def something_else():
             pass
+        ```
     """
 
     def __call__(self, func, **kwargs):

@@ -61,12 +61,10 @@ def get_driver() -> Driver:
     异常:
       ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
-    :用法:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         driver = nonebot.get_driver()
-
+        ```
     """
     if _driver is None:
         raise ValueError("NoneBot has not been initialized.")
@@ -83,12 +81,10 @@ def get_app() -> Any:
     异常:
       ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
-    :用法:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         app = nonebot.get_app()
-
+        ```
     """
     driver = get_driver()
     assert isinstance(
@@ -107,12 +103,10 @@ def get_asgi() -> Any:
     异常:
       ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
-    :用法:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         asgi = nonebot.get_asgi()
-
+        ```
     """
     driver = get_driver()
     assert isinstance(
@@ -136,13 +130,12 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
       ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
       ValueError: 没有传入 ID 且没有 Bot 可用
 
-    :用法:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         assert nonebot.get_bot('12345') == nonebot.get_bots()['12345']
 
         another_unspecified_bot = nonebot.get_bot()
+        ```
     """
     bots = get_bots()
     if self_id is not None:
@@ -164,12 +157,10 @@ def get_bots() -> Dict[str, Bot]:
     异常:
       ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
-    :用法:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         bots = nonebot.get_bots()
-
+        ```
     """
     driver = get_driver()
     return driver.bots
@@ -218,12 +209,10 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
       _env_file: 配置文件名，默认从 .env.{env_name} 中读取配置
       **kwargs: 任意变量，将会存储到 Config 对象里
 
-    :用法:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         nonebot.init(database=Database(...))
-
+        ```
     """
     global _driver
     if not _driver:
@@ -255,12 +244,10 @@ def run(*args: Any, **kwargs: Any) -> None:
       *args: 传入 Driver.run 的位置参数
       **kwargs: 传入 Driver.run 的命名参数
 
-    :用法:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         nonebot.run(host="127.0.0.1", port=8080)
-
+        ```
     """
     logger.success("Running NoneBot...")
     get_driver().run(*args, **kwargs)
