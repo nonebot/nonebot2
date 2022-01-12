@@ -56,33 +56,23 @@ class Config(BaseSettings):
 
     quart_reload: bool = False
     """
-    :说明:
-
-      开启/关闭冷重载
+    开启/关闭冷重载
     """
     quart_reload_dirs: Optional[List[str]] = None
     """
-    :说明:
-
-      重载监控文件夹列表，默认为 uvicorn 默认值
+    重载监控文件夹列表，默认为 uvicorn 默认值
     """
     quart_reload_delay: Optional[float] = None
     """
-    :说明:
-
-      重载延迟，默认为 uvicorn 默认值
+    重载延迟，默认为 uvicorn 默认值
     """
     quart_reload_includes: Optional[List[str]] = None
     """
-    :说明:
-
-      要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+    要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
     """
     quart_reload_excludes: Optional[List[str]] = None
     """
-    :说明:
-
-      不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+    不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
     """
 
     class Config:

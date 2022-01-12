@@ -12,9 +12,7 @@ from .plugin import Plugin, get_plugin
 
 def load_plugin(module_path: str) -> Optional[Plugin]:
     """
-    :说明:
-
-      使用 ``PluginManager`` 加载单个插件，可以是本地插件或是通过 ``pip`` 安装的插件。
+    使用 ``PluginManager`` 加载单个插件，可以是本地插件或是通过 ``pip`` 安装的插件。
 
     :参数:
 
@@ -32,9 +30,7 @@ def load_plugin(module_path: str) -> Optional[Plugin]:
 
 def load_plugins(*plugin_dir: str) -> Set[Plugin]:
     """
-    :说明:
-
-      导入目录下多个插件，以 ``_`` 开头的插件不会被导入！
+    导入目录下多个插件，以 ``_`` 开头的插件不会被导入！
 
     :参数:
 
@@ -53,9 +49,7 @@ def load_all_plugins(
     module_path: Iterable[str], plugin_dir: Iterable[str]
 ) -> Set[Plugin]:
     """
-    :说明:
-
-      导入指定列表中的插件以及指定目录下多个插件，以 ``_`` 开头的插件不会被导入！
+    导入指定列表中的插件以及指定目录下多个插件，以 ``_`` 开头的插件不会被导入！
 
     :参数:
 
@@ -73,9 +67,7 @@ def load_all_plugins(
 
 def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     """
-    :说明:
-
-      导入指定 json 文件中的 ``plugins`` 以及 ``plugin_dirs`` 下多个插件，以 ``_`` 开头的插件不会被导入！
+    导入指定 json 文件中的 ``plugins`` 以及 ``plugin_dirs`` 下多个插件，以 ``_`` 开头的插件不会被导入！
 
     :参数:
 
@@ -97,9 +89,7 @@ def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
 
 def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     """
-    :说明:
-
-      导入指定 toml 文件 ``[tool.nonebot]`` 中的 ``plugins`` 以及 ``plugin_dirs`` 下多个插件，
+    导入指定 toml 文件 ``[tool.nonebot]`` 中的 ``plugins`` 以及 ``plugin_dirs`` 下多个插件，
       以 ``_`` 开头的插件不会被导入！
 
     :参数:
@@ -133,9 +123,7 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
 
 def load_builtin_plugin(name: str) -> Optional[Plugin]:
     """
-    :说明:
-
-      导入 NoneBot 内置插件
+    导入 NoneBot 内置插件
 
     :返回:
 
@@ -146,9 +134,7 @@ def load_builtin_plugin(name: str) -> Optional[Plugin]:
 
 def load_builtin_plugins(*plugins) -> Set[Plugin]:
     """
-    :说明:
-
-      导入多个 NoneBot 内置插件
+    导入多个 NoneBot 内置插件
 
     :返回:
 
@@ -159,9 +145,7 @@ def load_builtin_plugins(*plugins) -> Set[Plugin]:
 
 def require(name: str) -> Export:
     """
-    :说明:
-
-      获取一个插件的导出内容
+    获取一个插件的导出内容
 
     :参数:
 

@@ -24,9 +24,7 @@ if TYPE_CHECKING:
 # logger = logging.getLogger("nonebot")
 logger: "Logger" = loguru.logger
 """
-:说明:
-
-  NoneBot 日志记录器对象。
+NoneBot 日志记录器对象。
 
 :默认信息:
 

@@ -56,9 +56,7 @@ def Depends(
     use_cache: bool = True,
 ) -> Any:
     """
-    :说明:
-
-      参数依赖注入装饰器
+    参数依赖注入装饰器
 
     :参数:
 

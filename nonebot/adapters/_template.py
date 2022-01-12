@@ -47,9 +47,7 @@ class MessageTemplate(Formatter, Generic[TF]):
 
     def __init__(self, template, factory=str) -> None:
         """
-        :说明:
-
-          创建一个模板
+        创建一个模板
 
         :参数:
 
@@ -71,9 +69,7 @@ class MessageTemplate(Formatter, Generic[TF]):
 
     def format(self, *args: Any, **kwargs: Any) -> TF:
         """
-        :说明:
-
-          根据模板和参数生成消息对象
+        根据模板和参数生成消息对象
         """
         msg = self.factory()
         if isinstance(self.template, str):

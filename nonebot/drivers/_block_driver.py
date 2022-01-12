@@ -39,9 +39,7 @@ class BlockDriver(Driver):
     @overrides(Driver)
     def on_startup(self, func: STARTUP_FUNC) -> STARTUP_FUNC:
         """
-        :说明:
-
-          注册一个启动时执行的函数
+        注册一个启动时执行的函数
 
         :参数:
 
@@ -53,9 +51,7 @@ class BlockDriver(Driver):
     @overrides(Driver)
     def on_shutdown(self, func: SHUTDOWN_FUNC) -> SHUTDOWN_FUNC:
         """
-        :说明:
-
-          注册一个停止时执行的函数
+        注册一个停止时执行的函数
 
         :参数:
 

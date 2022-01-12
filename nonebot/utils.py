@@ -31,9 +31,7 @@ V = TypeVar("V")
 
 def escape_tag(s: str) -> str:
     """
-    :说明:
-
-      用于记录带颜色日志时转义 ``<tag>`` 类型特殊标签
+    用于记录带颜色日志时转义 ``<tag>`` 类型特殊标签
 
     :参数:
 
@@ -90,9 +88,7 @@ def is_async_gen_callable(call: Callable[..., Any]) -> bool:
 
 def run_sync(call: Callable[P, R]) -> Callable[P, Awaitable[R]]:
     """
-    :说明:
-
-      一个用于包装 sync function 为 async function 的装饰器
+    一个用于包装 sync function 为 async function 的装饰器
 
     :参数:
 
@@ -135,9 +131,7 @@ def get_name(obj: Any) -> str:
 
 class DataclassEncoder(json.JSONEncoder):
     """
-    :说明:
-
-      在JSON序列化 ``Message`` (List[Dataclass]) 时使用的 ``JSONEncoder``
+    在JSON序列化 ``Message`` (List[Dataclass]) 时使用的 ``JSONEncoder``
     """
 
     @overrides(json.JSONEncoder)
@@ -149,9 +143,7 @@ class DataclassEncoder(json.JSONEncoder):
 
 def logger_wrapper(logger_name: str):
     """
-    :说明:
-
-    用于打印 adapter 的日志。
+      用于打印 adapter 的日志。
 
     :log 参数:
 

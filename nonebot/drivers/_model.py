@@ -168,7 +168,7 @@ class WebSocket(abc.ABC):
     @abc.abstractmethod
     def closed(self) -> bool:
         """
-        :说明: 连接是否已经关闭
+        连接是否已经关闭
         """
         raise NotImplementedError
 

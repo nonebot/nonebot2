@@ -55,9 +55,7 @@ def on(
     _depth: int = 0,
 ) -> Type[Matcher]:
     """
-    :说明:
-
-      注册一个基础事件响应器，可自定义类型。
+    注册一个基础事件响应器，可自定义类型。
 
     :参数:
 
@@ -101,9 +99,7 @@ def on_metaevent(
     _depth: int = 0,
 ) -> Type[Matcher]:
     """
-    :说明:
-
-      注册一个元事件响应器。
+    注册一个元事件响应器。
 
     :参数:
 
@@ -146,9 +142,7 @@ def on_message(
     _depth: int = 0,
 ) -> Type[Matcher]:
     """
-    :说明:
-
-      注册一个消息事件响应器。
+    注册一个消息事件响应器。
 
     :参数:
 
@@ -191,9 +185,7 @@ def on_notice(
     _depth: int = 0,
 ) -> Type[Matcher]:
     """
-    :说明:
-
-      注册一个通知事件响应器。
+    注册一个通知事件响应器。
 
     :参数:
 
@@ -235,9 +227,7 @@ def on_request(
     _depth: int = 0,
 ) -> Type[Matcher]:
     """
-    :说明:
-
-      注册一个请求事件响应器。
+    注册一个请求事件响应器。
 
     :参数:
 
@@ -276,9 +266,7 @@ def on_startswith(
     **kwargs,
 ) -> Type[Matcher]:
     """
-    :说明:
-
-      注册一个消息事件响应器，并且当消息的**文本部分**以指定内容开头时响应。
+    注册一个消息事件响应器，并且当消息的**文本部分**以指定内容开头时响应。
 
     :参数:
 
@@ -307,9 +295,7 @@ def on_endswith(
     **kwargs,
 ) -> Type[Matcher]:
     """
-    :说明:
-
-      注册一个消息事件响应器，并且当消息的**文本部分**以指定内容结尾时响应。
+    注册一个消息事件响应器，并且当消息的**文本部分**以指定内容结尾时响应。
 
     :参数:
 
@@ -337,9 +323,7 @@ def on_keyword(
     **kwargs,
 ) -> Type[Matcher]:
     """
-    :说明:
-
-      注册一个消息事件响应器，并且当消息纯文本部分包含关键词时响应。
+    注册一个消息事件响应器，并且当消息纯文本部分包含关键词时响应。
 
     :参数:
 
@@ -367,9 +351,7 @@ def on_command(
     **kwargs,
 ) -> Type[Matcher]:
     """
-    :说明:
-
-      注册一个消息事件响应器，并且当消息以指定命令开头时响应。
+    注册一个消息事件响应器，并且当消息以指定命令开头时响应。
 
       命令匹配规则参考: `命令形式匹配 <rule.md#command-command>`_
 
@@ -406,9 +388,7 @@ def on_shell_command(
     **kwargs,
 ) -> Type[Matcher]:
     """
-    :说明:
-
-      注册一个支持 ``shell_like`` 解析参数的命令消息事件响应器。
+    注册一个支持 ``shell_like`` 解析参数的命令消息事件响应器。
 
       与普通的 ``on_command`` 不同的是，在添加 ``parser`` 参数时, 响应器会自动处理消息。
 
@@ -448,9 +428,7 @@ def on_regex(
     **kwargs,
 ) -> Type[Matcher]:
     """
-    :说明:
-
-      注册一个消息事件响应器，并且当消息匹配正则表达式时响应。
+    注册一个消息事件响应器，并且当消息匹配正则表达式时响应。
 
       命令匹配规则参考: `正则匹配 <rule.md#regex-regex-flags-0>`_
 
@@ -485,20 +463,18 @@ class CommandGroup:
         """
         self.basecmd: Tuple[str, ...] = (cmd,) if isinstance(cmd, str) else cmd
         """
-                - **说明**: 命令前缀
+        命令前缀
         """
         if "aliases" in kwargs:
             del kwargs["aliases"]
         self.base_kwargs: Dict[str, Any] = kwargs
         """
-                - **说明**: 其他传递给 ``on_command`` 的参数默认值
+        其他传递给 ``on_command`` 的参数默认值
         """
 
     def command(self, cmd: Union[str, Tuple[str, ...]], **kwargs) -> Type[Matcher]:
         """
-        :说明:
-
-          注册一个新的命令。
+        注册一个新的命令。
 
         :参数:
 
@@ -520,9 +496,7 @@ class CommandGroup:
         self, cmd: Union[str, Tuple[str, ...]], **kwargs
     ) -> Type[Matcher]:
         """
-        :说明:
-
-          注册一个新的命令。
+        注册一个新的命令。
 
         :参数:
 
@@ -546,24 +520,20 @@ class MatcherGroup:
 
     def __init__(self, **kwargs):
         """
-        :说明:
-
-          创建一个事件响应器组合，参数为默认值，与 ``on`` 一致
+        创建一个事件响应器组合，参数为默认值，与 ``on`` 一致
         """
         self.matchers: List[Type[Matcher]] = []
         """
-                :说明: 组内事件响应器列表
+        组内事件响应器列表
         """
         self.base_kwargs: Dict[str, Any] = kwargs
         """
-                - **说明**: 其他传递给 ``on`` 的参数默认值
+        其他传递给 ``on`` 的参数默认值
         """
 
     def on(self, **kwargs) -> Type[Matcher]:
         """
-        :说明:
-
-          注册一个基础事件响应器，可自定义类型。
+        注册一个基础事件响应器，可自定义类型。
 
         :参数:
 
@@ -588,9 +558,7 @@ class MatcherGroup:
 
     def on_metaevent(self, **kwargs) -> Type[Matcher]:
         """
-        :说明:
-
-          注册一个元事件响应器。
+        注册一个元事件响应器。
 
         :参数:
 
@@ -615,9 +583,7 @@ class MatcherGroup:
 
     def on_message(self, **kwargs) -> Type[Matcher]:
         """
-        :说明:
-
-          注册一个消息事件响应器。
+        注册一个消息事件响应器。
 
         :参数:
 
@@ -642,9 +608,7 @@ class MatcherGroup:
 
     def on_notice(self, **kwargs) -> Type[Matcher]:
         """
-        :说明:
-
-          注册一个通知事件响应器。
+        注册一个通知事件响应器。
 
         :参数:
 
@@ -668,9 +632,7 @@ class MatcherGroup:
 
     def on_request(self, **kwargs) -> Type[Matcher]:
         """
-        :说明:
-
-          注册一个请求事件响应器。
+        注册一个请求事件响应器。
 
         :参数:
 
@@ -696,9 +658,7 @@ class MatcherGroup:
         self, msg: Union[str, Tuple[str, ...]], **kwargs
     ) -> Type[Matcher]:
         """
-        :说明:
-
-          注册一个消息事件响应器，并且当消息的**文本部分**以指定内容开头时响应。
+        注册一个消息事件响应器，并且当消息的**文本部分**以指定内容开头时响应。
 
         :参数:
 
@@ -725,9 +685,7 @@ class MatcherGroup:
 
     def on_endswith(self, msg: Union[str, Tuple[str, ...]], **kwargs) -> Type[Matcher]:
         """
-        :说明:
-
-          注册一个消息事件响应器，并且当消息的**文本部分**以指定内容结尾时响应。
+        注册一个消息事件响应器，并且当消息的**文本部分**以指定内容结尾时响应。
 
         :参数:
 
@@ -754,9 +712,7 @@ class MatcherGroup:
 
     def on_keyword(self, keywords: Set[str], **kwargs) -> Type[Matcher]:
         """
-        :说明:
-
-          注册一个消息事件响应器，并且当消息纯文本部分包含关键词时响应。
+        注册一个消息事件响应器，并且当消息纯文本部分包含关键词时响应。
 
         :参数:
 
@@ -787,11 +743,9 @@ class MatcherGroup:
         **kwargs,
     ) -> Type[Matcher]:
         """
-        :说明:
+        注册一个消息事件响应器，并且当消息以指定命令开头时响应。
 
-          注册一个消息事件响应器，并且当消息以指定命令开头时响应。
-
-          命令匹配规则参考: `命令形式匹配 <rule.md#command-command>`_
+        命令匹配规则参考: `命令形式匹配 <rule.md#command-command>`_
 
         :参数:
 
@@ -824,13 +778,11 @@ class MatcherGroup:
         **kwargs,
     ) -> Type[Matcher]:
         """
-        :说明:
+        注册一个支持 ``shell_like`` 解析参数的命令消息事件响应器。
 
-          注册一个支持 ``shell_like`` 解析参数的命令消息事件响应器。
+        与普通的 ``on_command`` 不同的是，在添加 ``parser`` 参数时, 响应器会自动处理消息。
 
-          与普通的 ``on_command`` 不同的是，在添加 ``parser`` 参数时, 响应器会自动处理消息。
-
-          并将用户输入的原始参数列表保存在 ``state["argv"]``, ``parser`` 处理的参数保存在 ``state["args"]`` 中
+        并将用户输入的原始参数列表保存在 ``state["argv"]``, ``parser`` 处理的参数保存在 ``state["args"]`` 中
 
         :参数:
 
@@ -862,11 +814,9 @@ class MatcherGroup:
         self, pattern: str, flags: Union[int, re.RegexFlag] = 0, **kwargs
     ) -> Type[Matcher]:
         """
-        :说明:
+        注册一个消息事件响应器，并且当消息匹配正则表达式时响应。
 
-          注册一个消息事件响应器，并且当消息匹配正则表达式时响应。
-
-          命令匹配规则参考: `正则匹配 <rule.md#regex-regex-flags-0>`_
+        命令匹配规则参考: `正则匹配 <rule.md#regex-regex-flags-0>`_
 
         :参数:
 

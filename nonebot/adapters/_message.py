@@ -26,11 +26,11 @@ class MessageSegment(Mapping, abc.ABC, Generic[TM]):
 
     type: str
     """
-        - 说明: 消息段类型
+    消息段类型
     """
     data: Dict[str, Any] = field(default_factory=lambda: {})
     """
-        - 说明: 消息段数据
+    消息段数据
     """
 
     @classmethod
@@ -114,10 +114,9 @@ class Message(List[TMS], abc.ABC):
     @classmethod
     def template(cls: Type[TM], format_string: Union[str, TM]) -> MessageTemplate[TM]:
         """
-        :说明:
+        根据创建消息模板, 用法和 ``str.format`` 大致相同, 但是可以输出消息对象, 并且支持以 ``Message`` 对象作为消息模板
 
-          根据创建消息模板, 用法和 ``str.format`` 大致相同, 但是可以输出消息对象, 并且支持以 ``Message`` 对象作为消息模板
-          并且提供了拓展的格式化控制符, 可以用适用于该消息类型的 ``MessageSegment`` 的工厂方法创建消息
+        并且提供了拓展的格式化控制符, 可以用适用于该消息类型的 ``MessageSegment`` 的工厂方法创建消息
 
         :示例:
 
@@ -187,9 +186,7 @@ class Message(List[TMS], abc.ABC):
 
     def append(self: TM, obj: Union[str, TMS]) -> TM:
         """
-        :说明:
-
-          添加一个消息段到消息数组末尾
+        添加一个消息段到消息数组末尾
 
         :参数:
 
@@ -205,9 +202,7 @@ class Message(List[TMS], abc.ABC):
 
     def extend(self: TM, obj: Union[TM, Iterable[TMS]]) -> TM:
         """
-        :说明:
-
-          拼接一个消息数组或多个消息段到消息数组末尾
+        拼接一个消息数组或多个消息段到消息数组末尾
 
         :参数:
 
@@ -222,9 +217,7 @@ class Message(List[TMS], abc.ABC):
 
     def extract_plain_text(self: "Message[MessageSegment]") -> str:
         """
-        :说明:
-
-          提取消息内纯文本消息
+        提取消息内纯文本消息
         """
 
         return "".join(str(seg) for seg in self if seg.is_text())

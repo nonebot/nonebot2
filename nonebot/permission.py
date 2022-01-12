@@ -35,9 +35,7 @@ async def _run_coro_with_catch(coro: Coroutine[Any, Any, Any]):
 
 class Permission:
     """
-    :说明:
-
-      ``Matcher`` 规则类，当事件传递时，在 ``Matcher`` 运行前进行检查。
+    ``Matcher`` 规则类，当事件传递时，在 ``Matcher`` 运行前进行检查。
 
     :示例:
 
@@ -74,9 +72,7 @@ class Permission:
             for checker in checkers
         )
         """
-        :说明:
-
-          存储 ``PermissionChecker``
+        存储 ``PermissionChecker``
         """
 
     async def __call__(
@@ -87,9 +83,7 @@ class Permission:
         dependency_cache: Optional[T_DependencyCache] = None,
     ) -> bool:
         """
-        :说明:
-
-          检查是否满足某个权限
+        检查是否满足某个权限
 
         :参数:
 
@@ -155,19 +149,19 @@ class MetaEvent:
 
 MESSAGE = Permission(Message())
 """
-- **说明**: 匹配任意 ``message`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 message type 的 Matcher。
+匹配任意 ``message`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 message type 的 Matcher。
 """
 NOTICE = Permission(Notice())
 """
-- **说明**: 匹配任意 ``notice`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 notice type 的 Matcher。
+匹配任意 ``notice`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 notice type 的 Matcher。
 """
 REQUEST = Permission(Request())
 """
-- **说明**: 匹配任意 ``request`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 request type 的 Matcher。
+匹配任意 ``request`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 request type 的 Matcher。
 """
 METAEVENT = Permission(MetaEvent())
 """
-- **说明**: 匹配任意 ``meta_event`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 meta_event type 的 Matcher。
+匹配任意 ``meta_event`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 meta_event type 的 Matcher。
 """
 
 
@@ -187,9 +181,7 @@ class User:
 
 def USER(*users: str, perm: Optional[Permission] = None):
     """
-    :说明:
-
-      ``event`` 的 ``session_id`` 在白名单内且满足 perm
+    ``event`` 的 ``session_id`` 在白名单内且满足 perm
 
     :参数:
 
@@ -211,5 +203,5 @@ class SuperUser:
 
 SUPERUSER = Permission(SuperUser())
 """
-- **说明**: 匹配任意超级用户消息类型事件
+匹配任意超级用户消息类型事件
 """

@@ -53,9 +53,7 @@ _driver: Optional[Driver] = None
 
 def get_driver() -> Driver:
     """
-    :说明:
-
-      获取全局 Driver 对象。可用于在计划任务的回调中获取当前 Driver 对象。
+    获取全局 Driver 对象。可用于在计划任务的回调中获取当前 Driver 对象。
 
     :返回:
 
@@ -79,9 +77,7 @@ def get_driver() -> Driver:
 
 def get_app() -> Any:
     """
-    :说明:
-
-      获取全局 Driver 对应 Server App 对象。
+    获取全局 Driver 对应 Server App 对象。
 
     :返回:
 
@@ -107,9 +103,7 @@ def get_app() -> Any:
 
 def get_asgi() -> Any:
     """
-    :说明:
-
-      获取全局 Driver 对应 Asgi 对象。
+    获取全局 Driver 对应 Asgi 对象。
 
     :返回:
 
@@ -135,9 +129,7 @@ def get_asgi() -> Any:
 
 def get_bot(self_id: Optional[str] = None) -> Bot:
     """
-    :说明:
-
-      当提供 self_id 时，此函数是 get_bots()[self_id] 的简写；当不提供时，返回一个 Bot。
+    当提供 self_id 时，此函数是 get_bots()[self_id] 的简写；当不提供时，返回一个 Bot。
 
     :参数:
 
@@ -173,9 +165,7 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
 
 def get_bots() -> Dict[str, Bot]:
     """
-    :说明:
-
-      获取所有通过 ws 连接 NoneBot 的 Bot 对象。
+    获取所有通过 ws 连接 NoneBot 的 Bot 对象。
 
     :返回:
 
@@ -229,13 +219,11 @@ def _resolve_combine_expr(obj_str: str) -> Type[Driver]:
 
 def init(*, _env_file: Optional[str] = None, **kwargs):
     """
-    :说明:
+    初始化 NoneBot 以及 全局 Driver 对象。
 
-      初始化 NoneBot 以及 全局 Driver 对象。
+    NoneBot 将会从 .env 文件中读取环境信息，并使用相应的 env 文件配置。
 
-      NoneBot 将会从 .env 文件中读取环境信息，并使用相应的 env 文件配置。
-
-      你也可以传入自定义的 _env_file 来指定 NoneBot 从该文件读取配置。
+    你也可以传入自定义的 _env_file 来指定 NoneBot 从该文件读取配置。
 
     :参数:
 
@@ -277,9 +265,7 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
 
 def run(*args: Any, **kwargs: Any) -> None:
     """
-    :说明:
-
-      启动 NoneBot，即运行全局 Driver 对象。
+    启动 NoneBot，即运行全局 Driver 对象。
 
     :参数:
 

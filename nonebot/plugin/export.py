@@ -3,9 +3,7 @@ from . import _current_plugin
 
 class Export(dict):
     """
-    :说明:
-
-      插件导出内容以使得其他插件可以获得。
+    插件导出内容以使得其他插件可以获得。
 
     :示例:
 
@@ -46,9 +44,7 @@ class Export(dict):
 
 def export() -> Export:
     """
-    :说明:
-
-      获取插件的导出内容对象
+    获取插件的导出内容对象
 
     :返回:
 

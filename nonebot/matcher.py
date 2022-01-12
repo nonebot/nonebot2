@@ -66,7 +66,7 @@ T = TypeVar("T")
 
 matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
 """
-:说明: 用于存储当前所有的事件响应器
+用于存储当前所有的事件响应器
 """
 current_bot: ContextVar[Bot] = ContextVar("current_bot")
 current_event: ContextVar[Event] = ContextVar("current_event")
@@ -105,66 +105,66 @@ class Matcher(metaclass=MatcherMeta):
 
     plugin: Optional["Plugin"] = None
     """
-        :说明: 事件响应器所在插件
+    事件响应器所在插件
     """
     module: Optional[ModuleType] = None
     """
-        :说明: 事件响应器所在插件模块
+    事件响应器所在插件模块
     """
     plugin_name: Optional[str] = None
     """
-        :说明: 事件响应器所在插件名
+    事件响应器所在插件名
     """
     module_name: Optional[str] = None
     """
-        :说明: 事件响应器所在点分割插件模块路径
+    事件响应器所在点分割插件模块路径
     """
 
     type: str = ""
     """
-        :说明: 事件响应器类型
+    事件响应器类型
     """
     rule: Rule = Rule()
     """
-        :说明: 事件响应器匹配规则
+    事件响应器匹配规则
     """
     permission: Permission = Permission()
     """
-        :说明: 事件响应器触发权限
+    事件响应器触发权限
     """
     handlers: List[Dependent[Any]] = []
     """
-        :说明: 事件响应器拥有的事件处理函数列表
+    事件响应器拥有的事件处理函数列表
     """
     priority: int = 1
     """
-        :说明: 事件响应器优先级
+    事件响应器优先级
     """
     block: bool = False
     """
-        :说明: 事件响应器是否阻止事件传播
+    事件响应器是否阻止事件传播
     """
     temp: bool = False
     """
-        :说明: 事件响应器是否为临时
+    事件响应器是否为临时
     """
     expire_time: Optional[datetime] = None
     """
-        :说明: 事件响应器过期时间点
+    事件响应器过期时间点
     """
 
     _default_state: T_State = {}
     """
-        :说明: 事件响应器默认状态
+    事件响应器默认状态
     """
 
     _default_type_updater: Optional[Dependent[str]] = None
     """
-        :说明: 事件响应器类型更新函数
+    事件响应器类型更新函数
     """
     _default_permission_updater: Optional[Dependent[Permission]] = None
     """
-        :说明: 事件响应器权限更新函数
+    事件响应器权限更新函数
     """
 
     HANDLER_PARAM_TYPES = [
@@ -210,9 +210,7 @@ class Matcher(metaclass=MatcherMeta):
         default_permission_updater: Optional[T_PermissionUpdater] = None,
     ) -> Type["Matcher"]:
         """
-        :说明:
-
-          创建一个新的事件响应器，并存储至 `matchers <#matchers>`_
+        创建一个新的事件响应器，并存储至 `matchers <#matchers>`_
 
         :参数:
 
@@ -278,9 +276,7 @@ class Matcher(metaclass=MatcherMeta):
         dependency_cache: Optional[T_DependencyCache] = None,
     ) -> bool:
         """
-        :说明:
-
-          检查是否满足触发权限
+        检查是否满足触发权限
 
         :参数:
 
@@ -306,9 +302,7 @@ class Matcher(metaclass=MatcherMeta):
         dependency_cache: Optional[T_DependencyCache] = None,
     ) -> bool:
         """
-        :说明:
-
-          检查是否满足匹配规则
+        检查是否满足匹配规则
 
         :参数:
 
@@ -328,9 +322,7 @@ class Matcher(metaclass=MatcherMeta):
     @classmethod
     def type_updater(cls, func: T_TypeUpdater) -> T_TypeUpdater:
         """
-        :说明:
-
-          装饰一个函数来更改当前事件响应器的默认响应事件类型更新函数
+        装饰一个函数来更改当前事件响应器的默认响应事件类型更新函数
 
         :参数:
 
@@ -344,9 +336,7 @@ class Matcher(metaclass=MatcherMeta):
     @classmethod
     def permission_updater(cls, func: T_PermissionUpdater) -> T_PermissionUpdater:
         """
-        :说明:
-
-          装饰一个函数来更改当前事件响应器的默认会话权限更新函数
+        装饰一个函数来更改当前事件响应器的默认会话权限更新函数
 
         :参数:
 
@@ -374,9 +364,7 @@ class Matcher(metaclass=MatcherMeta):
         cls, parameterless: Optional[List[Any]] = None
     ) -> Callable[[T_Handler], T_Handler]:
         """
-        :说明:
-
-          装饰一个函数来向事件响应器直接添加一个处理函数
+        装饰一个函数来向事件响应器直接添加一个处理函数
 
         :参数:
 
@@ -394,9 +382,7 @@ class Matcher(metaclass=MatcherMeta):
         cls, id: str = "", parameterless: Optional[List[Any]] = None
     ) -> Callable[[T_Handler], T_Handler]:
         """
-        :说明:
-
-          装饰一个函数来指示 NoneBot 在接收用户新的一条消息后继续运行该函数
+        装饰一个函数来指示 NoneBot 在接收用户新的一条消息后继续运行该函数
 
         :参数:
 
@@ -436,9 +422,7 @@ class Matcher(metaclass=MatcherMeta):
         parameterless: Optional[List[Any]] = None,
     ) -> Callable[[T_Handler], T_Handler]:
         """
-        :说明:
-
-          装饰一个函数来指示 NoneBot 当要获取的 ``key`` 不存在时接收用户新的一条消息并经过 ``ArgsParser`` 处理后再运行该函数，如果 ``key`` 已存在则直接继续运行
+        装饰一个函数来指示 NoneBot 当要获取的 ``key`` 不存在时接收用户新的一条消息并经过 ``ArgsParser`` 处理后再运行该函数，如果 ``key`` 已存在则直接继续运行
 
         :参数:
 
@@ -482,9 +466,7 @@ class Matcher(metaclass=MatcherMeta):
         **kwargs: Any,
     ) -> Any:
         """
-        :说明:
-
-          发送一条消息给当前交互用户
+        发送一条消息给当前交互用户
 
         :参数:
 
@@ -507,9 +489,7 @@ class Matcher(metaclass=MatcherMeta):
         **kwargs,
     ) -> NoReturn:
         """
-        :说明:
-
-          发送一条消息给当前交互用户并结束当前事件响应器
+        发送一条消息给当前交互用户并结束当前事件响应器
 
         :参数:
 
@@ -527,9 +507,7 @@ class Matcher(metaclass=MatcherMeta):
         **kwargs,
     ) -> NoReturn:
         """
-        :说明:
-
-          发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续下一个处理函数
+        发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续下一个处理函数
 
         :参数:
 
@@ -547,10 +525,7 @@ class Matcher(metaclass=MatcherMeta):
         **kwargs,
     ) -> NoReturn:
         """
-        :说明:
-
-          最近使用 ``got`` / ``receive`` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，
-          在接收用户新的一条消息后继续当前处理函数
+        最近使用 ``got`` / ``receive`` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
 
         :参数:
 
@@ -569,10 +544,7 @@ class Matcher(metaclass=MatcherMeta):
         **kwargs,
     ) -> NoReturn:
         """
-        :说明:
-
-          最近使用 ``got`` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，
-          在接收用户新的一条消息后继续当前处理函数
+        最近使用 ``got`` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
 
         :参数:
 
@@ -594,10 +566,7 @@ class Matcher(metaclass=MatcherMeta):
         **kwargs,
     ) -> NoReturn:
         """
-        :说明:
-
-          最近使用 ``got`` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，
-          在接收用户新的一条消息后继续当前处理函数
+        最近使用 ``got`` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
 
         :参数:
 
@@ -642,9 +611,7 @@ class Matcher(metaclass=MatcherMeta):
 
     def stop_propagation(self):
         """
-        :说明:
-
-          阻止事件传播
+        阻止事件传播
         """
         self.block = True
 

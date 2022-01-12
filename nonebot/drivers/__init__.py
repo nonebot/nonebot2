@@ -41,15 +41,15 @@ class Driver(abc.ABC):
 
     _adapters: Dict[str, "Adapter"] = {}
     """
-        :说明: 已注册的适配器列表
+    已注册的适配器列表
     """
     _bot_connection_hook: Set[T_BotConnectionHook] = set()
     """
-        :说明: Bot 连接建立时执行的函数
+    Bot 连接建立时执行的函数
     """
     _bot_disconnection_hook: Set[T_BotDisconnectionHook] = set()
     """
-        :说明: Bot 连接断开时执行的函数
+    Bot 连接断开时执行的函数
     """
 
     def __init__(self, env: Env, config: Config):
@@ -61,31 +61,27 @@ class Driver(abc.ABC):
         """
         self.env: str = env.environment
         """
-                :说明: 环境名称
+        环境名称
         """
         self.config: Config = config
         """
-                :说明: 配置对象
+        配置对象
         """
         self._clients: Dict[str, "Bot"] = {}
         """
-                :说明: 已连接的 Bot
+        已连接的 Bot
         """
 
     @property
     def bots(self) -> Dict[str, "Bot"]:
         """
-        :说明:
-
-          获取当前所有已连接的 Bot
+        获取当前所有已连接的 Bot
         """
         return self._clients
 
     def register_adapter(self, adapter: Type["Adapter"], **kwargs) -> None:
         """
-        :说明:
-
-          注册一个协议适配器
+        注册一个协议适配器
 
         :参数:
 
@@ -119,9 +115,7 @@ class Driver(abc.ABC):
     @abc.abstractmethod
     def run(self, *args, **kwargs):
         """
-        :说明:
-
-          启动驱动框架
+        启动驱动框架
 
         :参数:
           * ``*args``
@@ -143,9 +137,7 @@ class Driver(abc.ABC):
 
     def on_bot_connect(self, func: T_BotConnectionHook) -> T_BotConnectionHook:
         """
-        :说明:
-
-          装饰一个函数使他在 bot 通过 WebSocket 连接成功时执行。
+        装饰一个函数使他在 bot 通过 WebSocket 连接成功时执行。
 
         :函数参数:
 
@@ -156,9 +148,7 @@ class Driver(abc.ABC):
 
     def on_bot_disconnect(self, func: T_BotDisconnectionHook) -> T_BotDisconnectionHook:
         """
-        :说明:
-
-          装饰一个函数使他在 bot 通过 WebSocket 连接断开时执行。
+        装饰一个函数使他在 bot 通过 WebSocket 连接断开时执行。
 
         :函数参数:
 

@@ -63,9 +63,7 @@ CMD_RESULT = TypedDict(
 
 class Rule:
     """
-    :说明:
-
-      ``Matcher`` 规则类，当事件传递时，在 ``Matcher`` 运行前进行检查。
+    ``Matcher`` 规则类，当事件传递时，在 ``Matcher`` 运行前进行检查。
 
     :示例:
 
@@ -103,9 +101,7 @@ class Rule:
             for checker in checkers
         )
         """
-        :说明:
-
-          存储 ``RuleChecker``
+        存储 ``RuleChecker``
         """
 
     async def __call__(
@@ -117,9 +113,7 @@ class Rule:
         dependency_cache: Optional[T_DependencyCache] = None,
     ) -> bool:
         """
-        :说明:
-
-          检查是否符合所有规则
+        检查是否符合所有规则
 
         :参数:
 
@@ -220,9 +214,7 @@ class StartswithRule:
 
 def startswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
     """
-    :说明:
-
-      匹配消息开头
+    匹配消息开头
 
     :参数:
 
@@ -255,9 +247,7 @@ class EndswithRule:
 
 def endswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
     """
-    :说明:
-
-      匹配消息结尾
+    匹配消息结尾
 
     :参数:
 
@@ -283,9 +273,7 @@ class KeywordsRule:
 
 def keyword(*keywords: str) -> Rule:
     """
-    :说明:
-
-      匹配消息关键词
+    匹配消息关键词
 
     :参数:
 
@@ -308,9 +296,7 @@ class CommandRule:
 
 def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
     r"""
-    :说明:
-
-      命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
+    命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
 
       可以通过 ``state["_prefix"]["command"]`` 获取匹配成功的命令（例：``("test",)``），通过 ``state["_prefix"]["raw_command"]`` 获取匹配成功的原始命令文本（例：``"/test"``）。
 
@@ -352,9 +338,7 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
 
 class ArgumentParser(ArgParser):
     """
-    :说明:
-
-      ``shell_like`` 命令参数解析器，解析出错时不会退出程序。
+    ``shell_like`` 命令参数解析器，解析出错时不会退出程序。
     """
 
     def _print_message(self, message, file=None):
@@ -408,15 +392,13 @@ def shell_command(
     *cmds: Union[str, Tuple[str, ...]], parser: Optional[ArgumentParser] = None
 ) -> Rule:
     r"""
-    :说明:
+    支持 ``shell_like`` 解析参数的命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
 
-      支持 ``shell_like`` 解析参数的命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
+    可以通过 ``state["_prefix"]["command"]`` 获取匹配成功的命令（例：``("test",)``），通过 ``state["_prefix"]["raw_command"]`` 获取匹配成功的原始命令文本（例：``"/test"``）。
 
-      可以通过 ``state["_prefix"]["command"]`` 获取匹配成功的命令（例：``("test",)``），通过 ``state["_prefix"]["raw_command"]`` 获取匹配成功的原始命令文本（例：``"/test"``）。
+    可以通过 ``state["argv"]`` 获取用户输入的原始参数列表
 
-      可以通过 ``state["argv"]`` 获取用户输入的原始参数列表
-
-      添加 ``parser`` 参数后, 可以自动处理消息并将结果保存在 ``state["args"]`` 中。
+    添加 ``parser`` 参数后, 可以自动处理消息并将结果保存在 ``state["args"]`` 中。
 
     :参数:
 
@@ -488,9 +470,7 @@ class RegexRule:
 
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     r"""
-    :说明:
-
-      根据正则表达式进行匹配。
+    根据正则表达式进行匹配。
 
       可以通过 ``state["_matched"]`` ``state["_matched_groups"]`` ``state["_matched_dict"]``
       获取正则表达式匹配成功的文本。
@@ -515,9 +495,7 @@ class ToMeRule:
 
 def to_me() -> Rule:
     """
-    :说明:
-
-      通过 ``event.is_tome()`` 判断事件是否与机器人有关
+    通过 ``event.is_tome()`` 判断事件是否与机器人有关
 
     :参数:
 

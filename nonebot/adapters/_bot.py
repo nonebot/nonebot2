@@ -27,11 +27,11 @@ class Bot(abc.ABC):
 
     _calling_api_hook: Set[T_CallingAPIHook] = set()
     """
-        :说明: call_api 时执行的函数
+    call_api 时执行的函数
     """
     _called_api_hook: Set[T_CalledAPIHook] = set()
     """
-        :说明: call_api 后执行的函数
+    call_api 后执行的函数
     """
 
     def __init__(self, adapter: "Adapter", self_id: str):
@@ -58,9 +58,7 @@ class Bot(abc.ABC):
 
     async def call_api(self, api: str, **data: Any) -> Any:
         """
-        :说明:
-
-          调用机器人 API 接口，可以通过该函数或直接通过 bot 属性进行调用
+        调用机器人 API 接口，可以通过该函数或直接通过 bot 属性进行调用
 
         :参数:
 
@@ -129,9 +127,7 @@ class Bot(abc.ABC):
         self, event: "Event", message: Union[str, "Message", "MessageSegment"], **kwargs
     ) -> Any:
         """
-        :说明:
-
-          调用机器人基础发送消息接口
+        调用机器人基础发送消息接口
 
         :参数:
 
@@ -144,9 +140,7 @@ class Bot(abc.ABC):
     @classmethod
     def on_calling_api(cls, func: T_CallingAPIHook) -> T_CallingAPIHook:
         """
-        :说明:
-
-          调用 api 预处理。
+        调用 api 预处理。
 
         :参数:
 
@@ -160,9 +154,7 @@ class Bot(abc.ABC):
     @classmethod
     def on_called_api(cls, func: T_CalledAPIHook) -> T_CalledAPIHook:
         """
-        :说明:
-
-          调用 api 后处理。
+        调用 api 后处理。
 
         :参数:
 
