@@ -106,10 +106,6 @@ class Rule:
         :说明:
 
           存储 ``RuleChecker``
-
-        :类型:
-
-          * ``Set[Dependent[bool]]``
         """
 
     async def __call__(

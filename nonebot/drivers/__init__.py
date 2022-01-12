@@ -41,18 +41,15 @@ class Driver(abc.ABC):
 
     _adapters: Dict[str, "Adapter"] = {}
     """
-    :类型: ``Dict[str, Adapter]``
-    :说明: 已注册的适配器列表
+        :说明: 已注册的适配器列表
     """
     _bot_connection_hook: Set[T_BotConnectionHook] = set()
     """
-    :类型: ``Set[T_BotConnectionHook]``
-    :说明: Bot 连接建立时执行的函数
+        :说明: Bot 连接建立时执行的函数
     """
     _bot_disconnection_hook: Set[T_BotDisconnectionHook] = set()
     """
-    :类型: ``Set[T_BotDisconnectionHook]``
-    :说明: Bot 连接断开时执行的函数
+        :说明: Bot 连接断开时执行的函数
     """
 
     def __init__(self, env: Env, config: Config):
@@ -64,26 +61,20 @@ class Driver(abc.ABC):
         """
         self.env: str = env.environment
         """
-        :类型: ``str``
-        :说明: 环境名称
+                :说明: 环境名称
         """
         self.config: Config = config
         """
-        :类型: ``Config``
-        :说明: 配置对象
+                :说明: 配置对象
         """
         self._clients: Dict[str, "Bot"] = {}
         """
-        :类型: ``Dict[str, Bot]``
-        :说明: 已连接的 Bot
+                :说明: 已连接的 Bot
         """
 
     @property
     def bots(self) -> Dict[str, "Bot"]:
         """
-        :类型:
-
-          ``Dict[str, Bot]``
         :说明:
 
           获取当前所有已连接的 Bot

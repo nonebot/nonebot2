@@ -137,8 +137,7 @@ class Env(BaseConfig):
 
     environment: str = "prod"
     """
-    - **类型**: ``str``
-    - **默认值**: ``"prod"``
+        - **默认值**: ``"prod"``
 
     :说明:
       当前环境名。 NoneBot 将从 ``.env.{environment}`` 文件中加载配置。
@@ -163,8 +162,7 @@ class Config(BaseConfig):
     # nonebot configs
     driver: str = "~fastapi"
     """
-    - **类型**: ``str``
-    - **默认值**: ``"~fastapi"``
+        - **默认值**: ``"~fastapi"``
 
     :说明:
 
@@ -176,8 +174,7 @@ class Config(BaseConfig):
     """
     host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
     """
-    - **类型**: ``IPvAnyAddress``
-    - **默认值**: ``127.0.0.1``
+        - **默认值**: ``127.0.0.1``
 
     :说明:
 
@@ -185,8 +182,7 @@ class Config(BaseConfig):
     """
     port: int = 8080
     """
-    - **类型**: ``int``
-    - **默认值**: ``8080``
+        - **默认值**: ``8080``
 
     :说明:
 
@@ -194,8 +190,7 @@ class Config(BaseConfig):
     """
     log_level: Union[int, str] = "INFO"
     """
-    - **类型**: ``Union[int, str]``
-    - **默认值**: ``INFO``
+        - **默认值**: ``INFO``
 
     :说明:
 
@@ -215,8 +210,7 @@ class Config(BaseConfig):
     # bot connection configs
     api_timeout: Optional[float] = 30.0
     """
-    - **类型**: ``Optional[float]``
-    - **默认值**: ``30.``
+        - **默认值**: ``30.``
 
     :说明:
 
@@ -226,8 +220,7 @@ class Config(BaseConfig):
     # bot runtime configs
     superusers: Set[str] = set()
     """
-    - **类型**: ``Set[str]``
-    - **默认值**: ``set()``
+        - **默认值**: ``set()``
 
     :说明:
 
@@ -241,8 +234,7 @@ class Config(BaseConfig):
     """
     nickname: Set[str] = set()
     """
-    - **类型**: ``Set[str]``
-    - **默认值**: ``set()``
+        - **默认值**: ``set()``
 
     :说明:
 
@@ -250,8 +242,7 @@ class Config(BaseConfig):
     """
     command_start: Set[str] = {"/"}
     """
-    - **类型**: ``Set[str]``
-    - **默认值**: ``{"/"}``
+        - **默认值**: ``{"/"}``
 
     :说明:
 
@@ -259,8 +250,7 @@ class Config(BaseConfig):
     """
     command_sep: Set[str] = {"."}
     """
-    - **类型**: ``Set[str]``
-    - **默认值**: ``{"."}``
+        - **默认值**: ``{"."}``
 
     :说明:
 
@@ -268,8 +258,7 @@ class Config(BaseConfig):
     """
     session_expire_timeout: timedelta = timedelta(minutes=2)
     """
-    - **类型**: ``timedelta``
-    - **默认值**: ``timedelta(minutes=2)``
+        - **默认值**: ``timedelta(minutes=2)``
 
     :说明:
 

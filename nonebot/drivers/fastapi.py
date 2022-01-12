@@ -48,90 +48,54 @@ class Config(BaseSettings):
 
     fastapi_openapi_url: Optional[str] = None
     """
-    :类型:
-
-      ``Optional[str]``
-
     :说明:
 
       ``openapi.json`` 地址，默认为 ``None`` 即关闭
     """
     fastapi_docs_url: Optional[str] = None
     """
-    :类型:
-
-      ``Optional[str]``
-
     :说明:
 
       ``swagger`` 地址，默认为 ``None`` 即关闭
     """
     fastapi_redoc_url: Optional[str] = None
     """
-    :类型:
-
-      ``Optional[str]``
-
     :说明:
 
       ``redoc`` 地址，默认为 ``None`` 即关闭
     """
     fastapi_include_adapter_schema: bool = True
     """
-    :类型:
-
-      ``bool``
-
     :说明:
 
       是否包含适配器路由的 schema，默认为 ``True``
     """
     fastapi_reload: bool = False
     """
-    :类型:
-
-      ``bool``
-
     :说明:
 
       开启/关闭冷重载
     """
     fastapi_reload_dirs: Optional[List[str]] = None
     """
-    :类型:
-
-      ``Optional[List[str]]``
-
     :说明:
 
       重载监控文件夹列表，默认为 uvicorn 默认值
     """
     fastapi_reload_delay: Optional[float] = None
     """
-    :类型:
-
-      ``Optional[float]``
-
     :说明:
 
       重载延迟，默认为 uvicorn 默认值
     """
     fastapi_reload_includes: Optional[List[str]] = None
     """
-    :类型:
-
-      ``Optional[List[str]]``
-
     :说明:
 
       要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
     """
     fastapi_reload_excludes: Optional[List[str]] = None
     """
-    :类型:
-
-      ``Optional[List[str]]``
-
     :说明:
 
       不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值

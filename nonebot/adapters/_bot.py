@@ -27,13 +27,11 @@ class Bot(abc.ABC):
 
     _calling_api_hook: Set[T_CallingAPIHook] = set()
     """
-    :类型: ``Set[T_CallingAPIHook]``
-    :说明: call_api 时执行的函数
+        :说明: call_api 时执行的函数
     """
     _called_api_hook: Set[T_CalledAPIHook] = set()
     """
-    :类型: ``Set[T_CalledAPIHook]``
-    :说明: call_api 后执行的函数
+        :说明: call_api 后执行的函数
     """
 
     def __init__(self, adapter: "Adapter", self_id: str):

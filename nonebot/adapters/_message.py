@@ -26,13 +26,11 @@ class MessageSegment(Mapping, abc.ABC, Generic[TM]):
 
     type: str
     """
-    - 类型: ``str``
-    - 说明: 消息段类型
+        - 说明: 消息段类型
     """
     data: Dict[str, Any] = field(default_factory=lambda: {})
     """
-    - 类型: ``Dict[str, Union[str, list]]``
-    - 说明: 消息段数据
+        - 说明: 消息段数据
     """
 
     @classmethod

@@ -77,10 +77,6 @@ class Permission:
         :说明:
 
           存储 ``PermissionChecker``
-
-        :类型:
-
-          * ``Set[Dependent[bool]]``
         """
 
     async def __call__(

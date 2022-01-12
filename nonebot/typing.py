@@ -47,8 +47,6 @@ def overrides(InterfaceClass: object):
 
 T_State = Dict[Any, Any]
 """
-:类型: ``Dict[Any, Any]``
-
 :说明:
 
   事件处理状态 State 类型
@@ -56,24 +54,18 @@ T_State = Dict[Any, Any]
 
 T_BotConnectionHook = Callable[["Bot"], Awaitable[None]]
 """
-:类型: ``Callable[[Bot], Awaitable[None]]``
-
 :说明:
 
   Bot 连接建立时执行的函数
 """
 T_BotDisconnectionHook = Callable[["Bot"], Awaitable[None]]
 """
-:类型: ``Callable[[Bot], Awaitable[None]]``
-
 :说明:
 
   Bot 连接断开时执行的函数
 """
 T_CallingAPIHook = Callable[["Bot", str, Dict[str, Any]], Awaitable[None]]
 """
-:类型: ``Callable[[Bot, str, Dict[str, Any]], Awaitable[None]]``
-
 :说明:
 
   ``bot.call_api`` 时执行的函数
@@ -82,8 +74,6 @@ T_CalledAPIHook = Callable[
     ["Bot", Optional[Exception], str, Dict[str, Any], Any], Awaitable[None]
 ]
 """
-:类型: ``Callable[[Bot, Optional[Exception], str, Dict[str, Any], Any], Awaitable[None]]``
-
 :说明:
 
   ``bot.call_api`` 后执行的函数，参数分别为 bot, exception, api, data, result
@@ -91,8 +81,6 @@ T_CalledAPIHook = Callable[
 
 T_EventPreProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
-:类型: ``Callable[..., Union[None, Awaitable[None]]]``
-
 :依赖参数:
 
   * ``DependParam``: 子依赖参数
@@ -107,8 +95,6 @@ T_EventPreProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
 T_EventPostProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
-:类型: ``Callable[..., Union[None, Awaitable[None]]]``
-
 :依赖参数:
 
   * ``DependParam``: 子依赖参数
@@ -123,8 +109,6 @@ T_EventPostProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
 T_RunPreProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
-:类型: ``Callable[..., Union[None, Awaitable[None]]]``
-
 :依赖参数:
 
   * ``DependParam``: 子依赖参数
@@ -140,8 +124,6 @@ T_RunPreProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
 T_RunPostProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
-:类型: ``Callable[..., Union[None, Awaitable[None]]]``
-
 :依赖参数:
 
   * ``DependParam``: 子依赖参数
@@ -159,8 +141,6 @@ T_RunPostProcessor = Callable[..., Union[None, Awaitable[None]]]
 
 T_RuleChecker = Callable[..., Union[bool, Awaitable[bool]]]
 """
-:类型: ``Callable[..., Union[bool, Awaitable[bool]]]``
-
 :依赖参数:
 
   * ``DependParam``: 子依赖参数
@@ -175,8 +155,6 @@ T_RuleChecker = Callable[..., Union[bool, Awaitable[bool]]]
 """
 T_PermissionChecker = Callable[..., Union[bool, Awaitable[bool]]]
 """
-:类型: ``Callable[..., Union[bool, Awaitable[bool]]]``
-
 :依赖参数:
 
   * ``DependParam``: 子依赖参数
@@ -191,16 +169,12 @@ T_PermissionChecker = Callable[..., Union[bool, Awaitable[bool]]]
 
 T_Handler = Callable[..., Any]
 """
-:类型: ``Callable[..., Any]``
-
 :说明:
 
   Handler 处理函数。
 """
 T_TypeUpdater = Callable[..., Union[str, Awaitable[str]]]
 """
-:类型: ``Callable[..., Union[None, Awaitable[None]]]``
-
 :依赖参数:
 
   * ``DependParam``: 子依赖参数
@@ -216,8 +190,6 @@ T_TypeUpdater = Callable[..., Union[str, Awaitable[str]]]
 """
 T_PermissionUpdater = Callable[..., Union["Permission", Awaitable["Permission"]]]
 """
-:类型: ``Callable[..., Union[Permission, Awaitable[Permission]]]``
-
 :依赖参数:
 
   * ``DependParam``: 子依赖参数
@@ -233,7 +205,6 @@ T_PermissionUpdater = Callable[..., Union["Permission", Awaitable["Permission"]]
 """
 T_DependencyCache = Dict[Callable[..., Any], "Task[Any]"]
 """
-:类型: ``Dict[Callable[..., Any], Task[Any]]``
 :说明:
   依赖缓存, 用于存储依赖函数的返回值
 """

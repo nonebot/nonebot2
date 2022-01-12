@@ -66,7 +66,6 @@ T = TypeVar("T")
 
 matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
 """
-:类型: ``Dict[int, List[Type[Matcher]]]``
 :说明: 用于存储当前所有的事件响应器
 """
 current_bot: ContextVar[Bot] = ContextVar("current_bot")
@@ -106,81 +105,66 @@ class Matcher(metaclass=MatcherMeta):
 
     plugin: Optional["Plugin"] = None
     """
-    :类型: ``Optional[Plugin]``
-    :说明: 事件响应器所在插件
+        :说明: 事件响应器所在插件
     """
     module: Optional[ModuleType] = None
     """
-    :类型: ``Optional[ModuleType]``
-    :说明: 事件响应器所在插件模块
+        :说明: 事件响应器所在插件模块
     """
     plugin_name: Optional[str] = None
     """
-    :类型: ``Optional[str]``
-    :说明: 事件响应器所在插件名
+        :说明: 事件响应器所在插件名
     """
     module_name: Optional[str] = None
     """
-    :类型: ``Optional[str]``
-    :说明: 事件响应器所在点分割插件模块路径
+        :说明: 事件响应器所在点分割插件模块路径
     """
 
     type: str = ""
     """
-    :类型: ``str``
-    :说明: 事件响应器类型
+        :说明: 事件响应器类型
     """
     rule: Rule = Rule()
     """
-    :类型: ``Rule``
-    :说明: 事件响应器匹配规则
+        :说明: 事件响应器匹配规则
     """
     permission: Permission = Permission()
     """
-    :类型: ``Permission``
-    :说明: 事件响应器触发权限
+        :说明: 事件响应器触发权限
     """
     handlers: List[Dependent[Any]] = []
     """
-    :类型: ``List[Handler]``
-    :说明: 事件响应器拥有的事件处理函数列表
+        :说明: 事件响应器拥有的事件处理函数列表
     """
     priority: int = 1
     """
-    :类型: ``int``
-    :说明: 事件响应器优先级
+        :说明: 事件响应器优先级
     """
     block: bool = False
     """
-    :类型: ``bool``
-    :说明: 事件响应器是否阻止事件传播
+        :说明: 事件响应器是否阻止事件传播
     """
     temp: bool = False
     """
-    :类型: ``bool``
-    :说明: 事件响应器是否为临时
+        :说明: 事件响应器是否为临时
     """
     expire_time: Optional[datetime] = None
     """
-    :类型: ``Optional[datetime]``
-    :说明: 事件响应器过期时间点
+        :说明: 事件响应器过期时间点
     """
 
     _default_state: T_State = {}
     """
-    :类型: ``T_State``
-    :说明: 事件响应器默认状态
+        :说明: 事件响应器默认状态
     """
 
     _default_type_updater: Optional[Dependent[str]] = None
     """
-    :类型: ``Optional[Dependent]``
-    :说明: 事件响应器类型更新函数
+        :说明: 事件响应器类型更新函数
     """
     _default_permission_updater: Optional[Dependent[Permission]] = None
     """
-    :类型: ``Optional[Dependent]``
-    :说明: 事件响应器权限更新函数
+        :说明: 事件响应器权限更新函数
     """
 
     HANDLER_PARAM_TYPES = [

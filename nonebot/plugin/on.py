@@ -485,15 +485,13 @@ class CommandGroup:
         """
         self.basecmd: Tuple[str, ...] = (cmd,) if isinstance(cmd, str) else cmd
         """
-        - **类型**: ``Tuple[str, ...]``
-        - **说明**: 命令前缀
+                - **说明**: 命令前缀
         """
         if "aliases" in kwargs:
             del kwargs["aliases"]
         self.base_kwargs: Dict[str, Any] = kwargs
         """
-        - **类型**: ``Dict[str, Any]``
-        - **说明**: 其他传递给 ``on_command`` 的参数默认值
+                - **说明**: 其他传递给 ``on_command`` 的参数默认值
         """
 
     def command(self, cmd: Union[str, Tuple[str, ...]], **kwargs) -> Type[Matcher]:
@@ -554,13 +552,11 @@ class MatcherGroup:
         """
         self.matchers: List[Type[Matcher]] = []
         """
-        :类型: ``List[Type[Matcher]]``
-        :说明: 组内事件响应器列表
+                :说明: 组内事件响应器列表
         """
         self.base_kwargs: Dict[str, Any] = kwargs
         """
-        - **类型**: ``Dict[str, Any]``
-        - **说明**: 其他传递给 ``on`` 的参数默认值
+                - **说明**: 其他传递给 ``on`` 的参数默认值
         """
 
     def on(self, **kwargs) -> Type[Matcher]:
