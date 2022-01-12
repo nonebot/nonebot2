@@ -35,7 +35,7 @@ def escape_tag(s: str) -> str:
 
     :参数:
 
-      * `s: str`: 需要转义的字符串
+      s: 需要转义的字符串
 
     :返回:
 
@@ -92,7 +92,7 @@ def run_sync(call: Callable[P, R]) -> Callable[P, Awaitable[R]]:
 
     :参数:
 
-      * `call: Callable[P, R]`: 被装饰的同步函数
+      call: 被装饰的同步函数
 
     :返回:
 
@@ -147,9 +147,9 @@ def logger_wrapper(logger_name: str):
 
     :log 参数:
 
-    * `level: Literal["CRITICAL", "WARNING", "INFO", "DEBUG", "TRACE"]`: 日志等级
-    * `message: str`: 日志信息
-    * `exception: Optional[Exception]`: 异常信息
+    level: 日志等级
+    message: 日志信息
+    exception: 异常信息
     """
 
     def log(level: str, message: str, exception: Optional[Exception] = None):

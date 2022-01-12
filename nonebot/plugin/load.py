@@ -16,7 +16,7 @@ def load_plugin(module_path: str) -> Optional[Plugin]:
 
     :参数:
 
-      * `module_path: str`: 插件名称 `path.to.your.plugin`
+      module_path: 插件名称 `path.to.your.plugin`
 
     :返回:
 
@@ -149,7 +149,7 @@ def require(name: str) -> Export:
 
     :参数:
 
-      * `name: str`: 插件名，与 `load_plugin` 参数一致。如果为 `load_plugins` 导入的插件，则为文件(夹)名。
+      name: 插件名，与 `load_plugin` 参数一致。如果为 `load_plugins` 导入的插件，则为文件(夹)名。
 
     :返回:
 

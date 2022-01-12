@@ -43,7 +43,7 @@ class BlockDriver(Driver):
 
         :参数:
 
-          * `func: Callable[[], Awaitable[None]]`
+          func
         """
         self.startup_funcs.add(func)
         return func
@@ -55,7 +55,7 @@ class BlockDriver(Driver):
 
         :参数:
 
-          * `func: Callable[[], Awaitable[None]]`
+          func
         """
         self.shutdown_funcs.add(func)
         return func

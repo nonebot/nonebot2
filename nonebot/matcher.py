@@ -214,17 +214,17 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `type_: str`: 事件响应器类型，与 `event.get_type()` 一致时触发，空字符串表示任意
-          * `rule: Optional[Rule]`: 匹配规则
-          * `permission: Optional[Permission]`: 权限
-          * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
-          * `temp: bool`: 是否为临时事件响应器，即触发一次后删除
-          * `priority: int`: 响应优先级
-          * `block: bool`: 是否阻止事件向更低优先级的响应器传播
-          * `plugin: Optional[Plugin]`: 事件响应器所在插件
-          * `module: Optional[ModuleType]`: 事件响应器所在模块
-          * `default_state: Optional[T_State]`: 默认状态 `state`
-          * `expire_time: Optional[datetime]`: 事件响应器最终有效时间点，过时即被删除
+          type_: 事件响应器类型，与 `event.get_type()` 一致时触发，空字符串表示任意
+          rule: 匹配规则
+          permission: 权限
+          handlers: 事件处理函数列表
+          temp: 是否为临时事件响应器，即触发一次后删除
+          priority: 响应优先级
+          block: 是否阻止事件向更低优先级的响应器传播
+          plugin: 事件响应器所在插件
+          module: 事件响应器所在模块
+          default_state: 默认状态 `state`
+          expire_time: 事件响应器最终有效时间点，过时即被删除
 
         :返回:
 
@@ -280,8 +280,8 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `bot: Bot`: Bot 对象
-          * `event: Event`: 上报事件
+          bot: Bot 对象
+          event: 上报事件
 
         :返回:
 
@@ -306,9 +306,9 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `bot: Bot`: Bot 对象
-          * `event: Event`: 上报事件
-          * `state: T_State`: 当前状态
+          bot: Bot 对象
+          event: 上报事件
+          state: 当前状态
 
         :返回:
 
@@ -326,7 +326,7 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `func: T_TypeUpdater`: 响应事件类型更新函数
+          func: 响应事件类型更新函数
         """
         cls._default_type_updater = Dependent[str].parse(
             call=func, allow_types=cls.HANDLER_PARAM_TYPES
@@ -340,7 +340,7 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `func: T_PermissionUpdater`: 会话权限更新函数
+          func: 会话权限更新函数
         """
         cls._default_permission_updater = Dependent[Permission].parse(
             call=func, allow_types=cls.HANDLER_PARAM_TYPES
@@ -368,7 +368,7 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `parameterless: Optional[List[Any]]`: 非参数类型依赖列表
+          parameterless: 非参数类型依赖列表
         """
 
         def _decorator(func: T_Handler) -> T_Handler:
@@ -386,8 +386,8 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `id: str`: 消息 ID
-          * `parameterless: Optional[List[Any]]`: 非参数类型依赖列表
+          id: 消息 ID
+          parameterless: 非参数类型依赖列表
         """
 
         async def _receive(event: Event, matcher: "Matcher") -> Union[None, NoReturn]:
@@ -426,10 +426,10 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `key: str`: 参数名
-          * `prompt: Optional[Union[str, Message, MessageSegment, MessageFormatter]]`: 在参数不存在时向用户发送的消息
-          * `args_parser: Optional[T_ArgsParser]`: 可选参数解析函数，空则使用默认解析函数
-          * `parameterless: Optional[List[Any]]`: 非参数类型依赖列表
+          key: 参数名
+          prompt: 在参数不存在时向用户发送的消息
+          args_parser: 可选参数解析函数，空则使用默认解析函数
+          parameterless: 非参数类型依赖列表
         """
 
         async def _key_getter(event: Event, matcher: "Matcher"):
@@ -470,8 +470,8 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `message: Union[str, Message, MessageSegment]`: 消息内容
-          * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+          message: 消息内容
+          **kwargs`bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         bot = current_bot.get()
         event = current_event.get()
@@ -493,8 +493,8 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `message: Union[str, Message, MessageSegment, MessageTemplate]`: 消息内容
-          * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+          message: 消息内容
+          **kwargs`bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         if message is not None:
             await cls.send(message, **kwargs)
@@ -511,8 +511,8 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `prompt: Union[str, Message, MessageSegment, MessageTemplate]`: 消息内容
-          * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+          prompt: 消息内容
+          **kwargs`bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         if prompt is not None:
             await cls.send(prompt, **kwargs)
@@ -529,8 +529,8 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `prompt: Union[str, Message, MessageSegment, MessageTemplate]`: 消息内容
-          * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+          prompt: 消息内容
+          **kwargs`bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         if prompt is not None:
             await cls.send(prompt, **kwargs)
@@ -548,9 +548,9 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `key: str`: 参数名
-          * `prompt: Union[str, Message, MessageSegment, MessageTemplate]`: 消息内容
-          * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+          key: 参数名
+          prompt: 消息内容
+          **kwargs`bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()
         matcher.set_target(ARG_KEY.format(key=key))
@@ -570,9 +570,9 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * `id: str`: 消息 id
-          * `prompt: Union[str, Message, MessageSegment, MessageTemplate]`: 消息内容
-          * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+          id: 消息 id
+          prompt: 消息内容
+          **kwargs`bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()
         matcher.set_target(RECEIVE_KEY.format(id=id))

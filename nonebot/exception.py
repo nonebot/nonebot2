@@ -24,8 +24,8 @@ class ParserExit(NoneBotException):
 
     :参数:
 
-      * `status`
-      * `message`
+      status
+      message
     """
 
     def __init__(self, status: int = 0, message: Optional[str] = None):
@@ -52,7 +52,7 @@ class IgnoredException(ProcessException):
 
     :参数:
 
-      * `reason`: 忽略事件的原因
+      reason: 忽略事件的原因
     """
 
     def __init__(self, reason):
@@ -71,7 +71,7 @@ class MockApiException(ProcessException):
 
     :参数:
 
-      * `result`: 返回的内容
+      result: 返回的内容
     """
 
     def __init__(self, result: Any):
@@ -167,7 +167,7 @@ class AdapterException(NoneBotException):
 
     :参数:
 
-      * `adapter_name: str`: 标识 adapter
+      adapter_name: 标识 adapter
     """
 
     def __init__(self, adapter_name: str) -> None:

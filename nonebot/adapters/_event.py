@@ -20,7 +20,7 @@ class Event(abc.ABC, BaseModel):
 
         :返回:
 
-          * `Literal["message", "notice", "request", "meta_event"]`
+          Literal["message", "notice", "request", "meta_event"]
           * 其他自定义 `str`
         """
         raise NotImplementedError
@@ -32,7 +32,7 @@ class Event(abc.ABC, BaseModel):
 
         :返回:
 
-          * `str`
+          str
         """
         raise NotImplementedError
 
@@ -43,7 +43,7 @@ class Event(abc.ABC, BaseModel):
 
         :返回:
 
-          * `str`
+          str
         """
         raise NotImplementedError
 
@@ -56,7 +56,7 @@ class Event(abc.ABC, BaseModel):
 
         :返回:
 
-          * `str`
+          str
 
         :异常:
 
@@ -71,7 +71,7 @@ class Event(abc.ABC, BaseModel):
 
         :返回:
 
-          * `str`
+          str
         """
         raise NotImplementedError
 
@@ -82,7 +82,7 @@ class Event(abc.ABC, BaseModel):
 
         :返回:
 
-          * `str`
+          str
         """
         raise NotImplementedError
 
@@ -93,7 +93,7 @@ class Event(abc.ABC, BaseModel):
 
         :返回:
 
-          * `Message`
+          Message
         """
         raise NotImplementedError
 
@@ -103,7 +103,7 @@ class Event(abc.ABC, BaseModel):
 
         :返回:
 
-          * `str`
+          str
         """
         return self.get_message().extract_plain_text()
 
@@ -114,6 +114,6 @@ class Event(abc.ABC, BaseModel):
 
         :返回:
 
-          * `bool`
+          bool
         """
         raise NotImplementedError

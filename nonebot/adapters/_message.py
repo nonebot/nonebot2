@@ -99,7 +99,7 @@ class Message(List[TMS], abc.ABC):
         """
         :参数:
 
-          * `message: Union[str, list, dict, MessageSegment, Message, Any]`: 消息内容
+          message: 消息内容
         """
         super().__init__(*args, **kwargs)
         if message is None:
@@ -137,7 +137,7 @@ class Message(List[TMS], abc.ABC):
 
         :参数:
 
-          * `format_string: str`: 格式化字符串
+          format_string: 格式化字符串
 
         :返回:
 
@@ -190,7 +190,7 @@ class Message(List[TMS], abc.ABC):
 
         :参数:
 
-          * `obj: Union[str, MessageSegment]`: 要添加的消息段
+          obj: 要添加的消息段
         """
         if isinstance(obj, MessageSegment):
             super(Message, self).append(obj)
@@ -206,7 +206,7 @@ class Message(List[TMS], abc.ABC):
 
         :参数:
 
-          * `obj: Union[Message, Iterable[MessageSegment]]`: 要添加的消息数组
+          obj: 要添加的消息数组
         """
         for segment in obj:
             self.append(segment)

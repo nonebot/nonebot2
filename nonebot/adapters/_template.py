@@ -51,8 +51,8 @@ class MessageTemplate(Formatter, Generic[TF]):
 
         :参数:
 
-          * `template: Union[str, Message]`: 模板
-          * `factory: Union[str, Message]`: 消息构造类型，默认为 `str`
+          template: 模板
+          factory: 消息构造类型，默认为 `str`
         """
         self.template: TF = template
         self.factory: Type[TF] = factory

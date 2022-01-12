@@ -38,8 +38,8 @@ class Bot(abc.ABC):
         """
         :参数:
 
-          * `self_id: str`: 机器人 ID
-          * `request: HTTPConnection`: request 连接对象
+          self_id: 机器人 ID
+          request: request 连接对象
         """
         self.adapter: "Adapter" = adapter
         self.self_id: str = self_id
@@ -62,8 +62,8 @@ class Bot(abc.ABC):
 
         :参数:
 
-          * `api: str`: API 名称
-          * `**data`: API 数据
+          api: API 名称
+          **data: API 数据
 
         :示例:
 
@@ -131,9 +131,9 @@ class Bot(abc.ABC):
 
         :参数:
 
-          * `event: Event`: 上报事件
-          * `message: Union[str, Message, MessageSegment]`: 要发送的消息
-          * `**kwargs`
+          event: 上报事件
+          message: 要发送的消息
+          **kwargs
         """
         raise NotImplementedError
 
@@ -144,9 +144,9 @@ class Bot(abc.ABC):
 
         :参数:
 
-          * `bot: Bot`: 当前 bot 对象
-          * `api: str`: 调用的 api 名称
-          * `data: Dict[str, Any]`: api 调用的参数字典
+          bot: 当前 bot 对象
+          api: 调用的 api 名称
+          data: api 调用的参数字典
         """
         cls._calling_api_hook.add(func)
         return func
@@ -158,11 +158,11 @@ class Bot(abc.ABC):
 
         :参数:
 
-          * `bot: Bot`: 当前 bot 对象
-          * `exception: Optional[Exception]`: 调用 api 时发生的错误
-          * `api: str`: 调用的 api 名称
-          * `data: Dict[str, Any]`: api 调用的参数字典
-          * `result: Any`: api 调用的返回
+          bot: 当前 bot 对象
+          exception: 调用 api 时发生的错误
+          api: 调用的 api 名称
+          data: api 调用的参数字典
+          result: api 调用的返回
         """
         cls._called_api_hook.add(func)
         return func

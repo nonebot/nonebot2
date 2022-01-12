@@ -60,7 +60,7 @@ class Permission:
         """
         :参数:
 
-          * `*checkers: Union[T_PermissionChecker, Dependent[bool]`: PermissionChecker
+          *checkers: PermissionChecker
         """
 
         self.checkers: Set[Dependent[bool]] = set(
@@ -87,10 +87,10 @@ class Permission:
 
         :参数:
 
-          * `bot: Bot`: Bot 对象
-          * `event: Event`: Event 对象
-          * `stack: Optional[AsyncExitStack]`: 异步上下文栈
-          * `dependency_cache: Optional[CacheDict[T_Handler, Any]]`: 依赖缓存
+          bot: Bot 对象
+          event: Event 对象
+          stack: 异步上下文栈
+          dependency_cache: 依赖缓存
 
         :返回:
 
@@ -185,8 +185,8 @@ def USER(*users: str, perm: Optional[Permission] = None):
 
     :参数:
 
-      * `*user: str`: 白名单
-      * `perm: Optional[Permission]`: 需要同时满足的权限
+      *user: 白名单
+      perm: 需要同时满足的权限
     """
 
     return Permission(User(users, perm))

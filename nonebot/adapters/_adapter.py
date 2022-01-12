@@ -67,7 +67,7 @@ class Adapter(abc.ABC):
 
         :参数:
 
-          * `api: str`: API 名称
-          * `**data`: API 数据
+          api: API 名称
+          **data: API 数据
         """
         raise NotImplementedError

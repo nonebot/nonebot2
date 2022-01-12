@@ -89,7 +89,7 @@ class Rule:
         """
         :参数:
 
-          * `*checkers: Union[T_RuleChecker, Dependent[bool]]`: RuleChecker
+          *checkers: RuleChecker
 
         """
         self.checkers: Set[Dependent[bool]] = set(
@@ -117,11 +117,11 @@ class Rule:
 
         :参数:
 
-          * `bot: Bot`: Bot 对象
-          * `event: Event`: Event 对象
-          * `state: T_State`: 当前 State
-          * `stack: Optional[AsyncExitStack]`: 异步上下文栈
-          * `dependency_cache: Optional[CacheDict[T_Handler, Any]]`: 依赖缓存
+          bot: Bot 对象
+          event: Event 对象
+          state: 当前 State
+          stack: 异步上下文栈
+          dependency_cache: 依赖缓存
 
         :返回:
 
@@ -218,7 +218,7 @@ def startswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Ru
 
     :参数:
 
-      * `msg: str`: 消息开头字符串
+      msg: 消息开头字符串
     """
     if isinstance(msg, str):
         msg = (msg,)
@@ -251,7 +251,7 @@ def endswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule
 
     :参数:
 
-      * `msg: str`: 消息结尾字符串
+      msg: 消息结尾字符串
     """
     if isinstance(msg, str):
         msg = (msg,)
@@ -277,7 +277,7 @@ def keyword(*keywords: str) -> Rule:
 
     :参数:
 
-      * `*keywords: str`: 关键词
+      *keywords: 关键词
     """
 
     return Rule(KeywordsRule(*keywords))
@@ -302,7 +302,7 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
 
     :参数:
 
-      * `*cmds: Union[str, Tuple[str, ...]]`: 命令内容
+      *cmds: 命令内容
 
     :示例:
 
@@ -402,8 +402,8 @@ def shell_command(
 
     :参数:
 
-      * `*cmds: Union[str, Tuple[str, ...]]`: 命令内容
-      * `parser: Optional[ArgumentParser]`: `nonebot.rule.ArgumentParser` 对象
+      *cmds: 命令内容
+      parser: `nonebot.rule.ArgumentParser` 对象
 
     :示例:
 
@@ -477,8 +477,8 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
 
     :参数:
 
-      * `regex: str`: 正则表达式
-      * `flags: Union[int, re.RegexFlag]`: 正则标志
+      regex: 正则表达式
+      flags: 正则标志
 
     \:\:\:tip 提示
     正则表达式匹配使用 search 而非 match，如需从头匹配请使用 `r"^xxx"` 来确保匹配开头
