@@ -236,8 +236,7 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
     """
      处理一个事件。调用该函数以实现分发事件。
 
-    :参数:
-
+    参数:
       bot: Bot 对象
       event: Event 对象
 

@@ -87,8 +87,7 @@ class Rule:
 
     def __init__(self, *checkers: Union[T_RuleChecker, Dependent[bool]]) -> None:
         """
-        :参数:
-
+        参数:
           *checkers: RuleChecker
 
         """
@@ -115,8 +114,7 @@ class Rule:
         """
         检查是否符合所有规则
 
-        :参数:
-
+        参数:
           bot: Bot 对象
           event: Event 对象
           state: 当前 State
@@ -216,8 +214,7 @@ def startswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Ru
     """
     匹配消息开头
 
-    :参数:
-
+    参数:
       msg: 消息开头字符串
     """
     if isinstance(msg, str):
@@ -249,8 +246,7 @@ def endswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule
     """
     匹配消息结尾
 
-    :参数:
-
+    参数:
       msg: 消息结尾字符串
     """
     if isinstance(msg, str):
@@ -275,8 +271,7 @@ def keyword(*keywords: str) -> Rule:
     """
     匹配消息关键词
 
-    :参数:
-
+    参数:
       *keywords: 关键词
     """
 
@@ -300,8 +295,7 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
 
       可以通过 `state["_prefix"]["command"]` 获取匹配成功的命令（例：`("test",)`），通过 `state["_prefix"]["raw_command"]` 获取匹配成功的原始命令文本（例：`"/test"`）。
 
-    :参数:
-
+    参数:
       *cmds: 命令内容
 
     :示例:
@@ -400,8 +394,7 @@ def shell_command(
 
     添加 `parser` 参数后, 可以自动处理消息并将结果保存在 `state["args"]` 中。
 
-    :参数:
-
+    参数:
       *cmds: 命令内容
       parser: `nonebot.rule.ArgumentParser` 对象
 
@@ -475,8 +468,7 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
       可以通过 `state["_matched"]` `state["_matched_groups"]` `state["_matched_dict"]`
       获取正则表达式匹配成功的文本。
 
-    :参数:
-
+    参数:
       regex: 正则表达式
       flags: 正则标志
 
@@ -497,8 +489,7 @@ def to_me() -> Rule:
     """
     通过 `event.is_tome()` 判断事件是否与机器人有关
 
-    :参数:
-
+    参数:
       * 无
     """
 

@@ -57,8 +57,7 @@ def on(
     """
     注册一个基础事件响应器，可自定义类型。
 
-    :参数:
-
+    参数:
       type: 事件响应器类型
       rule: 事件响应规则
       permission: 事件响应权限
@@ -101,8 +100,7 @@ def on_metaevent(
     """
     注册一个元事件响应器。
 
-    :参数:
-
+    参数:
       rule: 事件响应规则
       handlers: 事件处理函数列表
       temp: 是否为临时事件响应器（仅执行一次）
@@ -144,8 +142,7 @@ def on_message(
     """
     注册一个消息事件响应器。
 
-    :参数:
-
+    参数:
       rule: 事件响应规则
       permission: 事件响应权限
       handlers: 事件处理函数列表
@@ -187,8 +184,7 @@ def on_notice(
     """
     注册一个通知事件响应器。
 
-    :参数:
-
+    参数:
       rule: 事件响应规则
       handlers: 事件处理函数列表
       temp: 是否为临时事件响应器（仅执行一次）
@@ -229,8 +225,7 @@ def on_request(
     """
     注册一个请求事件响应器。
 
-    :参数:
-
+    参数:
       rule: 事件响应规则
       handlers: 事件处理函数列表
       temp: 是否为临时事件响应器（仅执行一次）
@@ -268,8 +263,7 @@ def on_startswith(
     """
     注册一个消息事件响应器，并且当消息的**文本部分**以指定内容开头时响应。
 
-    :参数:
-
+    参数:
       msg: 指定消息开头内容
       rule: 事件响应规则
       ignorecase: 是否忽略大小写
@@ -297,8 +291,7 @@ def on_endswith(
     """
     注册一个消息事件响应器，并且当消息的**文本部分**以指定内容结尾时响应。
 
-    :参数:
-
+    参数:
       msg: 指定消息结尾内容
       rule: 事件响应规则
       ignorecase: 是否忽略大小写
@@ -325,8 +318,7 @@ def on_keyword(
     """
     注册一个消息事件响应器，并且当消息纯文本部分包含关键词时响应。
 
-    :参数:
-
+    参数:
       keywords: 关键词列表
       rule: 事件响应规则
       permission: 事件响应权限
@@ -355,8 +347,7 @@ def on_command(
 
       命令匹配规则参考: `命令形式匹配 <rule.md#command-command>`_
 
-    :参数:
-
+    参数:
       cmd: 指定命令内容
       rule: 事件响应规则
       aliases: 命令别名
@@ -394,8 +385,7 @@ def on_shell_command(
 
       并将用户输入的原始参数列表保存在 `state["argv"]`, `parser` 处理的参数保存在 `state["args"]` 中
 
-    :参数:
-
+    参数:
       cmd: 指定命令内容
       rule: 事件响应规则
       aliases: 命令别名
@@ -432,8 +422,7 @@ def on_regex(
 
       命令匹配规则参考: `正则匹配 <rule.md#regex-regex-flags-0>`_
 
-    :参数:
-
+    参数:
       pattern: 正则表达式
       flags: 正则匹配标志
       rule: 事件响应规则
@@ -456,8 +445,7 @@ class CommandGroup:
 
     def __init__(self, cmd: Union[str, Tuple[str, ...]], **kwargs):
         """
-        :参数:
-
+        参数:
           cmd: 命令前缀
           **kwargs`on_command` 的参数默认值，参考 `on_command <#on-command-cmd-rule-none-aliases-none-kwargs>`_
         """
@@ -476,8 +464,7 @@ class CommandGroup:
         """
         注册一个新的命令。
 
-        :参数:
-
+        参数:
           cmd: 命令前缀
           **kwargs`on_command` 的参数，将会覆盖命令组默认值
 
@@ -498,8 +485,7 @@ class CommandGroup:
         """
         注册一个新的命令。
 
-        :参数:
-
+        参数:
           cmd: 命令前缀
           **kwargs`on_shell_command` 的参数，将会覆盖命令组默认值
 
@@ -535,8 +521,7 @@ class MatcherGroup:
         """
         注册一个基础事件响应器，可自定义类型。
 
-        :参数:
-
+        参数:
           type: 事件响应器类型
           rule: 事件响应规则
           permission: 事件响应权限
@@ -560,8 +545,7 @@ class MatcherGroup:
         """
         注册一个元事件响应器。
 
-        :参数:
-
+        参数:
           rule: 事件响应规则
           handlers: 事件处理函数列表
           temp: 是否为临时事件响应器（仅执行一次）
@@ -585,8 +569,7 @@ class MatcherGroup:
         """
         注册一个消息事件响应器。
 
-        :参数:
-
+        参数:
           rule: 事件响应规则
           permission: 事件响应权限
           handlers: 事件处理函数列表
@@ -610,8 +593,7 @@ class MatcherGroup:
         """
         注册一个通知事件响应器。
 
-        :参数:
-
+        参数:
           rule: 事件响应规则
           handlers: 事件处理函数列表
           temp: 是否为临时事件响应器（仅执行一次）
@@ -634,8 +616,7 @@ class MatcherGroup:
         """
         注册一个请求事件响应器。
 
-        :参数:
-
+        参数:
           rule: 事件响应规则
           handlers: 事件处理函数列表
           temp: 是否为临时事件响应器（仅执行一次）
@@ -660,8 +641,7 @@ class MatcherGroup:
         """
         注册一个消息事件响应器，并且当消息的**文本部分**以指定内容开头时响应。
 
-        :参数:
-
+        参数:
           msg: 指定消息开头内容
           ignorecase: 是否忽略大小写
           rule: 事件响应规则
@@ -687,8 +667,7 @@ class MatcherGroup:
         """
         注册一个消息事件响应器，并且当消息的**文本部分**以指定内容结尾时响应。
 
-        :参数:
-
+        参数:
           msg: 指定消息结尾内容
           ignorecase: 是否忽略大小写
           rule: 事件响应规则
@@ -714,8 +693,7 @@ class MatcherGroup:
         """
         注册一个消息事件响应器，并且当消息纯文本部分包含关键词时响应。
 
-        :参数:
-
+        参数:
           keywords: 关键词列表
           rule: 事件响应规则
           permission: 事件响应权限
@@ -747,8 +725,7 @@ class MatcherGroup:
 
         命令匹配规则参考: `命令形式匹配 <rule.md#command-command>`_
 
-        :参数:
-
+        参数:
           cmd: 指定命令内容
           aliases: 命令别名
           rule: 事件响应规则
@@ -784,8 +761,7 @@ class MatcherGroup:
 
         并将用户输入的原始参数列表保存在 `state["argv"]`, `parser` 处理的参数保存在 `state["args"]` 中
 
-        :参数:
-
+        参数:
           cmd: 指定命令内容
           aliases: 命令别名
           parser: `nonebot.rule.ArgumentParser` 对象
@@ -818,8 +794,7 @@ class MatcherGroup:
 
         命令匹配规则参考: `正则匹配 <rule.md#regex-regex-flags-0>`_
 
-        :参数:
-
+        参数:
           pattern: 正则表达式
           flags: 正则匹配标志
           rule: 事件响应规则

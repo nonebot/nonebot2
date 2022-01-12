@@ -58,8 +58,7 @@ class Permission:
 
     def __init__(self, *checkers: Union[T_PermissionChecker, Dependent[bool]]) -> None:
         """
-        :参数:
-
+        参数:
           *checkers: PermissionChecker
         """
 
@@ -85,8 +84,7 @@ class Permission:
         """
         检查是否满足某个权限
 
-        :参数:
-
+        参数:
           bot: Bot 对象
           event: Event 对象
           stack: 异步上下文栈
@@ -183,8 +181,7 @@ def USER(*users: str, perm: Optional[Permission] = None):
     """
     `event` 的 `session_id` 在白名单内且满足 perm
 
-    :参数:
-
+    参数:
       *user: 白名单
       perm: 需要同时满足的权限
     """

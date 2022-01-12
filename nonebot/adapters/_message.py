@@ -97,8 +97,7 @@ class Message(List[TMS], abc.ABC):
         **kwargs,
     ):
         """
-        :参数:
-
+        参数:
           message: 消息内容
         """
         super().__init__(*args, **kwargs)
@@ -135,8 +134,7 @@ class Message(List[TMS], abc.ABC):
             >>> Message.template("{link:image}").format(link='https://...') # 支持拓展格式化控制符
             Message(MessageSegment(type='image', data={'file': 'https://...'}))
 
-        :参数:
-
+        参数:
           format_string: 格式化字符串
 
         :返回:
@@ -188,8 +186,7 @@ class Message(List[TMS], abc.ABC):
         """
         添加一个消息段到消息数组末尾
 
-        :参数:
-
+        参数:
           obj: 要添加的消息段
         """
         if isinstance(obj, MessageSegment):
@@ -204,8 +201,7 @@ class Message(List[TMS], abc.ABC):
         """
         拼接一个消息数组或多个消息段到消息数组末尾
 
-        :参数:
-
+        参数:
           obj: 要添加的消息数组
         """
         for segment in obj:

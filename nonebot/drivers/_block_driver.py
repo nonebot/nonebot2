@@ -41,8 +41,7 @@ class BlockDriver(Driver):
         """
         注册一个启动时执行的函数
 
-        :参数:
-
+        参数:
           func
         """
         self.startup_funcs.add(func)
@@ -53,8 +52,7 @@ class BlockDriver(Driver):
         """
         注册一个停止时执行的函数
 
-        :参数:
-
+        参数:
           func
         """
         self.shutdown_funcs.add(func)

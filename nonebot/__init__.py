@@ -131,8 +131,7 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
     """
     当提供 self_id 时，此函数是 get_bots()[self_id] 的简写；当不提供时，返回一个 Bot。
 
-    :参数:
-
+    参数:
       self_id: 用来识别 Bot 的 ID
 
     :返回:
@@ -225,8 +224,7 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
 
     你也可以传入自定义的 _env_file 来指定 NoneBot 从该文件读取配置。
 
-    :参数:
-
+    参数:
       _env_file: 配置文件名，默认从 .env.{env_name} 中读取配置
       **kwargs: 任意变量，将会存储到 Config 对象里
 
@@ -267,8 +265,7 @@ def run(*args: Any, **kwargs: Any) -> None:
     """
     启动 NoneBot，即运行全局 Driver 对象。
 
-    :参数:
-
+    参数:
       *args: 传入 Driver.run 的位置参数
       **kwargs: 传入 Driver.run 的命名参数
 

@@ -49,8 +49,7 @@ class MessageTemplate(Formatter, Generic[TF]):
         """
         创建一个模板
 
-        :参数:
-
+        参数:
           template: 模板
           factory: 消息构造类型，默认为 `str`
         """

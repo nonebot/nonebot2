@@ -212,8 +212,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         创建一个新的事件响应器，并存储至 `matchers <#matchers>`_
 
-        :参数:
-
+        参数:
           type_: 事件响应器类型，与 `event.get_type()` 一致时触发，空字符串表示任意
           rule: 匹配规则
           permission: 权限
@@ -278,8 +277,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         检查是否满足触发权限
 
-        :参数:
-
+        参数:
           bot: Bot 对象
           event: 上报事件
 
@@ -304,8 +302,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         检查是否满足匹配规则
 
-        :参数:
-
+        参数:
           bot: Bot 对象
           event: 上报事件
           state: 当前状态
@@ -324,8 +321,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         装饰一个函数来更改当前事件响应器的默认响应事件类型更新函数
 
-        :参数:
-
+        参数:
           func: 响应事件类型更新函数
         """
         cls._default_type_updater = Dependent[str].parse(
@@ -338,8 +334,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         装饰一个函数来更改当前事件响应器的默认会话权限更新函数
 
-        :参数:
-
+        参数:
           func: 会话权限更新函数
         """
         cls._default_permission_updater = Dependent[Permission].parse(
@@ -366,8 +361,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         装饰一个函数来向事件响应器直接添加一个处理函数
 
-        :参数:
-
+        参数:
           parameterless: 非参数类型依赖列表
         """
 
@@ -384,8 +378,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         装饰一个函数来指示 NoneBot 在接收用户新的一条消息后继续运行该函数
 
-        :参数:
-
+        参数:
           id: 消息 ID
           parameterless: 非参数类型依赖列表
         """
@@ -424,8 +417,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         装饰一个函数来指示 NoneBot 当要获取的 `key` 不存在时接收用户新的一条消息并经过 `ArgsParser` 处理后再运行该函数，如果 `key` 已存在则直接继续运行
 
-        :参数:
-
+        参数:
           key: 参数名
           prompt: 在参数不存在时向用户发送的消息
           args_parser: 可选参数解析函数，空则使用默认解析函数
@@ -468,8 +460,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         发送一条消息给当前交互用户
 
-        :参数:
-
+        参数:
           message: 消息内容
           **kwargs`bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
@@ -491,8 +482,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         发送一条消息给当前交互用户并结束当前事件响应器
 
-        :参数:
-
+        参数:
           message: 消息内容
           **kwargs`bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
@@ -509,8 +499,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续下一个处理函数
 
-        :参数:
-
+        参数:
           prompt: 消息内容
           **kwargs`bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
@@ -527,8 +516,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         最近使用 `got` / `receive` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
 
-        :参数:
-
+        参数:
           prompt: 消息内容
           **kwargs`bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
@@ -546,8 +534,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         最近使用 `got` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
 
-        :参数:
-
+        参数:
           key: 参数名
           prompt: 消息内容
           **kwargs`bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
@@ -568,8 +555,7 @@ class Matcher(metaclass=MatcherMeta):
         """
         最近使用 `got` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
 
-        :参数:
-
+        参数:
           id: 消息 id
           prompt: 消息内容
           **kwargs`bot.send` 的参数，请参考对应 adapter 的 bot 对象 api

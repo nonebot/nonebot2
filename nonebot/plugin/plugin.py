@@ -56,8 +56,7 @@ def get_plugin(name: str) -> Optional[Plugin]:
     """
     获取当前导入的某个插件。
 
-    :参数:
-
+    参数:
       name: 插件名，与 `load_plugin` 参数一致。如果为 `load_plugins` 导入的插件，则为文件(夹)名。
 
     :返回:

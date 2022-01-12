@@ -36,8 +36,7 @@ class Bot(abc.ABC):
 
     def __init__(self, adapter: "Adapter", self_id: str):
         """
-        :参数:
-
+        参数:
           self_id: 机器人 ID
           request: request 连接对象
         """
@@ -60,8 +59,7 @@ class Bot(abc.ABC):
         """
         调用机器人 API 接口，可以通过该函数或直接通过 bot 属性进行调用
 
-        :参数:
-
+        参数:
           api: API 名称
           **data: API 数据
 
@@ -129,8 +127,7 @@ class Bot(abc.ABC):
         """
         调用机器人基础发送消息接口
 
-        :参数:
-
+        参数:
           event: 上报事件
           message: 要发送的消息
           **kwargs
@@ -142,8 +139,7 @@ class Bot(abc.ABC):
         """
         调用 api 预处理。
 
-        :参数:
-
+        参数:
           bot: 当前 bot 对象
           api: 调用的 api 名称
           data: api 调用的参数字典
@@ -156,8 +152,7 @@ class Bot(abc.ABC):
         """
         调用 api 后处理。
 
-        :参数:
-
+        参数:
           bot: 当前 bot 对象
           exception: 调用 api 时发生的错误
           api: 调用的 api 名称
