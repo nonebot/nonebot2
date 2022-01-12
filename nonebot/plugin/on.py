@@ -58,14 +58,14 @@ def on(
     注册一个基础事件响应器，可自定义类型。
 
     参数:
-      type: 事件响应器类型
-      rule: 事件响应规则
-      permission: 事件响应权限
-      handlers: 事件处理函数列表
-      temp: 是否为临时事件响应器（仅执行一次）
-      priority: 事件响应器优先级
-      block: 是否阻止事件向更低优先级传递
-      state: 默认 state
+        type: 事件响应器类型
+        rule: 事件响应规则
+        permission: 事件响应权限
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
     """
     matcher = Matcher.new(
         type,
@@ -97,12 +97,12 @@ def on_metaevent(
     注册一个元事件响应器。
 
     参数:
-      rule: 事件响应规则
-      handlers: 事件处理函数列表
-      temp: 是否为临时事件响应器（仅执行一次）
-      priority: 事件响应器优先级
-      block: 是否阻止事件向更低优先级传递
-      state: 默认 state
+        rule: 事件响应规则
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
     """
     matcher = Matcher.new(
         "meta_event",
@@ -135,13 +135,13 @@ def on_message(
     注册一个消息事件响应器。
 
     参数:
-      rule: 事件响应规则
-      permission: 事件响应权限
-      handlers: 事件处理函数列表
-      temp: 是否为临时事件响应器（仅执行一次）
-      priority: 事件响应器优先级
-      block: 是否阻止事件向更低优先级传递
-      state: 默认 state
+        rule: 事件响应规则
+        permission: 事件响应权限
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
     """
     matcher = Matcher.new(
         "message",
@@ -173,12 +173,12 @@ def on_notice(
     注册一个通知事件响应器。
 
     参数:
-      rule: 事件响应规则
-      handlers: 事件处理函数列表
-      temp: 是否为临时事件响应器（仅执行一次）
-      priority: 事件响应器优先级
-      block: 是否阻止事件向更低优先级传递
-      state: 默认 state
+        rule: 事件响应规则
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
     """
     matcher = Matcher.new(
         "notice",
@@ -210,12 +210,12 @@ def on_request(
     注册一个请求事件响应器。
 
     参数:
-      rule: 事件响应规则
-      handlers: 事件处理函数列表
-      temp: 是否为临时事件响应器（仅执行一次）
-      priority: 事件响应器优先级
-      block: 是否阻止事件向更低优先级传递
-      state: 默认 state
+        rule: 事件响应规则
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
     """
     matcher = Matcher.new(
         "request",
@@ -244,15 +244,15 @@ def on_startswith(
     注册一个消息事件响应器，并且当消息的**文本部分**以指定内容开头时响应。
 
     参数:
-      msg: 指定消息开头内容
-      rule: 事件响应规则
-      ignorecase: 是否忽略大小写
-      permission: 事件响应权限
-      handlers: 事件处理函数列表
-      temp: 是否为临时事件响应器（仅执行一次）
-      priority: 事件响应器优先级
-      block: 是否阻止事件向更低优先级传递
-      state: 默认 state
+        msg: 指定消息开头内容
+        rule: 事件响应规则
+        ignorecase: 是否忽略大小写
+        permission: 事件响应权限
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
     """
     return on_message(startswith(msg, ignorecase) & rule, **kwargs, _depth=_depth + 1)
 
@@ -268,15 +268,15 @@ def on_endswith(
     注册一个消息事件响应器，并且当消息的**文本部分**以指定内容结尾时响应。
 
     参数:
-      msg: 指定消息结尾内容
-      rule: 事件响应规则
-      ignorecase: 是否忽略大小写
-      permission: 事件响应权限
-      handlers: 事件处理函数列表
-      temp: 是否为临时事件响应器（仅执行一次）
-      priority: 事件响应器优先级
-      block: 是否阻止事件向更低优先级传递
-      state: 默认 state
+        msg: 指定消息结尾内容
+        rule: 事件响应规则
+        ignorecase: 是否忽略大小写
+        permission: 事件响应权限
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
     """
     return on_message(endswith(msg, ignorecase) & rule, **kwargs, _depth=_depth + 1)
 
@@ -291,14 +291,14 @@ def on_keyword(
     注册一个消息事件响应器，并且当消息纯文本部分包含关键词时响应。
 
     参数:
-      keywords: 关键词列表
-      rule: 事件响应规则
-      permission: 事件响应权限
-      handlers: 事件处理函数列表
-      temp: 是否为临时事件响应器（仅执行一次）
-      priority: 事件响应器优先级
-      block: 是否阻止事件向更低优先级传递
-      state: 默认 state
+        keywords: 关键词列表
+        rule: 事件响应规则
+        permission: 事件响应权限
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
     """
     return on_message(keyword(*keywords) & rule, **kwargs, _depth=_depth + 1)
 
@@ -313,18 +313,18 @@ def on_command(
     """
     注册一个消息事件响应器，并且当消息以指定命令开头时响应。
 
-      命令匹配规则参考: `命令形式匹配 <rule.md#command-command>`_
+    命令匹配规则参考: `命令形式匹配 <rule.md#command-command>`_
 
     参数:
-      cmd: 指定命令内容
-      rule: 事件响应规则
-      aliases: 命令别名
-      permission: 事件响应权限
-      handlers: 事件处理函数列表
-      temp: 是否为临时事件响应器（仅执行一次）
-      priority: 事件响应器优先级
-      block: 是否阻止事件向更低优先级传递
-      state: 默认 state
+        cmd: 指定命令内容
+        rule: 事件响应规则
+        aliases: 命令别名
+        permission: 事件响应权限
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
     """
 
     commands = set([cmd]) | (aliases or set())
@@ -345,21 +345,21 @@ def on_shell_command(
     """
     注册一个支持 `shell_like` 解析参数的命令消息事件响应器。
 
-      与普通的 `on_command` 不同的是，在添加 `parser` 参数时, 响应器会自动处理消息。
+    与普通的 `on_command` 不同的是，在添加 `parser` 参数时, 响应器会自动处理消息。
 
-      并将用户输入的原始参数列表保存在 `state["argv"]`, `parser` 处理的参数保存在 `state["args"]` 中
+    并将用户输入的原始参数列表保存在 `state["argv"]`, `parser` 处理的参数保存在 `state["args"]` 中
 
     参数:
-      cmd: 指定命令内容
-      rule: 事件响应规则
-      aliases: 命令别名
-      parser: `nonebot.rule.ArgumentParser` 对象
-      permission: 事件响应权限
-      handlers: 事件处理函数列表
-      temp: 是否为临时事件响应器（仅执行一次）
-      priority: 事件响应器优先级
-      block: 是否阻止事件向更低优先级传递
-      state: 默认 state
+        cmd: 指定命令内容
+        rule: 事件响应规则
+        aliases: 命令别名
+        parser: `nonebot.rule.ArgumentParser` 对象
+        permission: 事件响应权限
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
     """
 
     commands = set([cmd]) | (aliases or set())
@@ -380,18 +380,18 @@ def on_regex(
     """
     注册一个消息事件响应器，并且当消息匹配正则表达式时响应。
 
-      命令匹配规则参考: `正则匹配 <rule.md#regex-regex-flags-0>`_
+    命令匹配规则参考: `正则匹配 <rule.md#regex-regex-flags-0>`_
 
     参数:
-      pattern: 正则表达式
-      flags: 正则匹配标志
-      rule: 事件响应规则
-      permission: 事件响应权限
-      handlers: 事件处理函数列表
-      temp: 是否为临时事件响应器（仅执行一次）
-      priority: 事件响应器优先级
-      block: 是否阻止事件向更低优先级传递
-      state: 默认 state
+        pattern: 正则表达式
+        flags: 正则匹配标志
+        rule: 事件响应规则
+        permission: 事件响应权限
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
     """
     return on_message(regex(pattern, flags) & rule, **kwargs, _depth=_depth + 1)
 
@@ -402,8 +402,8 @@ class CommandGroup:
     def __init__(self, cmd: Union[str, Tuple[str, ...]], **kwargs):
         """
         参数:
-          cmd: 命令前缀
-          **kwargs`on_command` 的参数默认值，参考 `on_command <#on-command-cmd-rule-none-aliases-none-kwargs>`_
+            cmd: 命令前缀
+            **kwargs: `on_command` 的参数默认值，参考 `on_command <#on-command-cmd-rule-none-aliases-none-kwargs>`_
         """
         self.basecmd: Tuple[str, ...] = (cmd,) if isinstance(cmd, str) else cmd
         """
@@ -421,8 +421,8 @@ class CommandGroup:
         注册一个新的命令。
 
         参数:
-          cmd: 命令前缀
-          **kwargs`on_command` 的参数，将会覆盖命令组默认值
+            cmd: 命令前缀
+            **kwargs: `on_command` 的参数，将会覆盖命令组默认值
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
@@ -438,8 +438,8 @@ class CommandGroup:
         注册一个新的命令。
 
         参数:
-          cmd: 命令前缀
-          **kwargs`on_shell_command` 的参数，将会覆盖命令组默认值
+            cmd: 命令前缀
+            **kwargs: `on_shell_command` 的参数，将会覆盖命令组默认值
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
@@ -470,14 +470,14 @@ class MatcherGroup:
         注册一个基础事件响应器，可自定义类型。
 
         参数:
-          type: 事件响应器类型
-          rule: 事件响应规则
-          permission: 事件响应权限
-          handlers: 事件处理函数列表
-          temp: 是否为临时事件响应器（仅执行一次）
-          priority: 事件响应器优先级
-          block: 是否阻止事件向更低优先级传递
-          state: 默认 state
+            type: 事件响应器类型
+            rule: 事件响应规则
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -490,12 +490,12 @@ class MatcherGroup:
         注册一个元事件响应器。
 
         参数:
-          rule: 事件响应规则
-          handlers: 事件处理函数列表
-          temp: 是否为临时事件响应器（仅执行一次）
-          priority: 事件响应器优先级
-          block: 是否阻止事件向更低优先级传递
-          state: 默认 state
+            rule: 事件响应规则
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -510,13 +510,13 @@ class MatcherGroup:
         注册一个消息事件响应器。
 
         参数:
-          rule: 事件响应规则
-          permission: 事件响应权限
-          handlers: 事件处理函数列表
-          temp: 是否为临时事件响应器（仅执行一次）
-          priority: 事件响应器优先级
-          block: 是否阻止事件向更低优先级传递
-          state: 默认 state
+            rule: 事件响应规则
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -530,12 +530,12 @@ class MatcherGroup:
         注册一个通知事件响应器。
 
         参数:
-          rule: 事件响应规则
-          handlers: 事件处理函数列表
-          temp: 是否为临时事件响应器（仅执行一次）
-          priority: 事件响应器优先级
-          block: 是否阻止事件向更低优先级传递
-          state: 默认 state
+            rule: 事件响应规则
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -549,12 +549,12 @@ class MatcherGroup:
         注册一个请求事件响应器。
 
         参数:
-          rule: 事件响应规则
-          handlers: 事件处理函数列表
-          temp: 是否为临时事件响应器（仅执行一次）
-          priority: 事件响应器优先级
-          block: 是否阻止事件向更低优先级传递
-          state: 默认 state
+            rule: 事件响应规则
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -570,15 +570,15 @@ class MatcherGroup:
         注册一个消息事件响应器，并且当消息的**文本部分**以指定内容开头时响应。
 
         参数:
-          msg: 指定消息开头内容
-          ignorecase: 是否忽略大小写
-          rule: 事件响应规则
-          permission: 事件响应权限
-          handlers: 事件处理函数列表
-          temp: 是否为临时事件响应器（仅执行一次）
-          priority: 事件响应器优先级
-          block: 是否阻止事件向更低优先级传递
-          state: 默认 state
+            msg: 指定消息开头内容
+            ignorecase: 是否忽略大小写
+            rule: 事件响应规则
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -592,15 +592,15 @@ class MatcherGroup:
         注册一个消息事件响应器，并且当消息的**文本部分**以指定内容结尾时响应。
 
         参数:
-          msg: 指定消息结尾内容
-          ignorecase: 是否忽略大小写
-          rule: 事件响应规则
-          permission: 事件响应权限
-          handlers: 事件处理函数列表
-          temp: 是否为临时事件响应器（仅执行一次）
-          priority: 事件响应器优先级
-          block: 是否阻止事件向更低优先级传递
-          state: 默认 state
+            msg: 指定消息结尾内容
+            ignorecase: 是否忽略大小写
+            rule: 事件响应规则
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -614,14 +614,14 @@ class MatcherGroup:
         注册一个消息事件响应器，并且当消息纯文本部分包含关键词时响应。
 
         参数:
-          keywords: 关键词列表
-          rule: 事件响应规则
-          permission: 事件响应权限
-          handlers: 事件处理函数列表
-          temp: 是否为临时事件响应器（仅执行一次）
-          priority: 事件响应器优先级
-          block: 是否阻止事件向更低优先级传递
-          state: 默认 state
+            keywords: 关键词列表
+            rule: 事件响应规则
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -642,15 +642,15 @@ class MatcherGroup:
         命令匹配规则参考: `命令形式匹配 <rule.md#command-command>`_
 
         参数:
-          cmd: 指定命令内容
-          aliases: 命令别名
-          rule: 事件响应规则
-          permission: 事件响应权限
-          handlers: 事件处理函数列表
-          temp: 是否为临时事件响应器（仅执行一次）
-          priority: 事件响应器优先级
-          block: 是否阻止事件向更低优先级传递
-          state: 默认 state
+            cmd: 指定命令内容
+            aliases: 命令别名
+            rule: 事件响应规则
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -674,16 +674,16 @@ class MatcherGroup:
         并将用户输入的原始参数列表保存在 `state["argv"]`, `parser` 处理的参数保存在 `state["args"]` 中
 
         参数:
-          cmd: 指定命令内容
-          aliases: 命令别名
-          parser: `nonebot.rule.ArgumentParser` 对象
-          rule: 事件响应规则
-          permission: 事件响应权限
-          handlers: 事件处理函数列表
-          temp: 是否为临时事件响应器（仅执行一次）
-          priority: 事件响应器优先级
-          block: 是否阻止事件向更低优先级传递
-          state: 默认 state
+            cmd: 指定命令内容
+            aliases: 命令别名
+            parser: `nonebot.rule.ArgumentParser` 对象
+            rule: 事件响应规则
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -703,15 +703,15 @@ class MatcherGroup:
         命令匹配规则参考: `正则匹配 <rule.md#regex-regex-flags-0>`_
 
         参数:
-          pattern: 正则表达式
-          flags: 正则匹配标志
-          rule: 事件响应规则
-          permission: 事件响应权限
-          handlers: 事件处理函数列表
-          temp: 是否为临时事件响应器（仅执行一次）
-          priority: 事件响应器优先级
-          block: 是否阻止事件向更低优先级传递
-          state: 默认 state
+            pattern: 正则表达式
+            flags: 正则匹配标志
+            rule: 事件响应规则
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)

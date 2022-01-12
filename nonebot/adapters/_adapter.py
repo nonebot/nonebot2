@@ -66,7 +66,7 @@ class Adapter(abc.ABC):
         `adapter` 实际调用 api 的逻辑实现函数，实现该方法以调用 api。
 
         参数:
-          api: API 名称
-          **data: API 数据
+            api: API 名称
+            **data: API 数据
         """
         raise NotImplementedError

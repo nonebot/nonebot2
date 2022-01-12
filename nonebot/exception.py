@@ -21,10 +21,6 @@ class NoneBotException(Exception):
 class ParserExit(NoneBotException):
     """
     `shell command` 处理消息失败时返回的异常
-
-    参数:
-      status
-      message
     """
 
     def __init__(self, status: int = 0, message: Optional[str] = None):
@@ -50,7 +46,7 @@ class IgnoredException(ProcessException):
     指示 NoneBot 应该忽略该事件。可由 PreProcessor 抛出。
 
     参数:
-      reason: 忽略事件的原因
+        reason: 忽略事件的原因
     """
 
     def __init__(self, reason):
@@ -68,7 +64,7 @@ class MockApiException(ProcessException):
     指示 NoneBot 阻止本次 API 调用或修改本次调用返回值，并返回自定义内容。可由 api hook 抛出。
 
     参数:
-      result: 返回的内容
+        result: 返回的内容
     """
 
     def __init__(self, result: Any):
@@ -158,7 +154,7 @@ class AdapterException(NoneBotException):
     代表 `Adapter` 抛出的异常，所有的 `Adapter` 都要在内部继承自这个 `Exception`
 
     参数:
-      adapter_name: 标识 adapter
+        adapter_name: 标识 adapter
     """
 
     def __init__(self, adapter_name: str) -> None:

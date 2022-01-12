@@ -84,10 +84,10 @@ class Permission:
         检查是否满足某个权限
 
         参数:
-          bot: Bot 对象
-          event: Event 对象
-          stack: 异步上下文栈
-          dependency_cache: 依赖缓存
+            bot: Bot 对象
+            event: Event 对象
+            stack: 异步上下文栈
+            dependency_cache: 依赖缓存
         """
         if not self.checkers:
             return True

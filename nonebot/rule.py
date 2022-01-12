@@ -114,11 +114,11 @@ class Rule:
         检查是否符合所有规则
 
         参数:
-          bot: Bot 对象
-          event: Event 对象
-          state: 当前 State
-          stack: 异步上下文栈
-          dependency_cache: 依赖缓存
+            bot: Bot 对象
+            event: Event 对象
+            state: 当前 State
+            stack: 异步上下文栈
+            dependency_cache: 依赖缓存
         """
         if not self.checkers:
             return True
@@ -210,7 +210,7 @@ def startswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Ru
     匹配消息开头
 
     参数:
-      msg: 消息开头字符串
+        msg: 消息开头字符串
     """
     if isinstance(msg, str):
         msg = (msg,)
@@ -242,7 +242,7 @@ def endswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule
     匹配消息结尾
 
     参数:
-      msg: 消息结尾字符串
+        msg: 消息结尾字符串
     """
     if isinstance(msg, str):
         msg = (msg,)
@@ -458,12 +458,12 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     r"""
     根据正则表达式进行匹配。
 
-      可以通过 `state["_matched"]` `state["_matched_groups"]` `state["_matched_dict"]`
-      获取正则表达式匹配成功的文本。
+    可以通过 `state["_matched"]` `state["_matched_groups"]` `state["_matched_dict"]`
+    获取正则表达式匹配成功的文本。
 
     参数:
-      regex: 正则表达式
-      flags: 正则标志
+        regex: 正则表达式
+        flags: 正则标志
 
     \:\:\:tip 提示
     正则表达式匹配使用 search 而非 match，如需从头匹配请使用 `r"^xxx"` 来确保匹配开头

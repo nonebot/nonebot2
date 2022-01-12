@@ -55,8 +55,8 @@ class Driver(abc.ABC):
     def __init__(self, env: Env, config: Config):
         """
         参数:
-          env: 包含环境信息的 Env 对象
-          config: 包含配置信息的 Config 对象
+            env: 包含环境信息的 Env 对象
+            config: 包含配置信息的 Config 对象
         """
         self.env: str = env.environment
         """
@@ -83,9 +83,9 @@ class Driver(abc.ABC):
         注册一个协议适配器
 
         参数:
-          name: 适配器名称，用于在连接时进行识别
-          adapter: 适配器 Class
-          **kwargs: 其他传递给适配器的参数
+            name: 适配器名称，用于在连接时进行识别
+            adapter: 适配器 Class
+            **kwargs: 其他传递给适配器的参数
         """
         name = adapter.get_name()
         if name in self._adapters:

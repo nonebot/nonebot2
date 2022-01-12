@@ -98,7 +98,7 @@ class Message(List[TMS], abc.ABC):
     ):
         """
         参数:
-          message: 消息内容
+            message: 消息内容
         """
         super().__init__(*args, **kwargs)
         if message is None:
@@ -134,10 +134,10 @@ class Message(List[TMS], abc.ABC):
             ```
 
         参数:
-          format_string: 格式化字符串
+            format_string: 格式化字符串
 
         返回:
-          MessageFormatter[TM]: 消息格式化器
+            MessageFormatter[TM]: 消息格式化器
         """
         return MessageTemplate(format_string, cls)
 
@@ -185,7 +185,7 @@ class Message(List[TMS], abc.ABC):
         添加一个消息段到消息数组末尾
 
         参数:
-          obj: 要添加的消息段
+            obj: 要添加的消息段
         """
         if isinstance(obj, MessageSegment):
             super(Message, self).append(obj)
@@ -200,7 +200,7 @@ class Message(List[TMS], abc.ABC):
         拼接一个消息数组或多个消息段到消息数组末尾
 
         参数:
-          obj: 要添加的消息数组
+            obj: 要添加的消息数组
         """
         for segment in obj:
             self.append(segment)

@@ -59,8 +59,8 @@ def Depends(
     参数依赖注入装饰器
 
     参数:
-      dependency: 依赖函数。默认为参数的类型注释。
-      use_cache: 是否使用缓存。默认为 `True`。
+        dependency: 依赖函数。默认为参数的类型注释。
+        use_cache: 是否使用缓存。默认为 `True`。
 
     用法:
         ```python

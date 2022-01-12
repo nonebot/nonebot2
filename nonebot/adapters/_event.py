@@ -42,7 +42,7 @@ class Event(abc.ABC, BaseModel):
         获取事件日志信息的方法，通常你不需要修改这个方法，只有当希望 NoneBot 隐藏该事件日志时，可以抛出 `NoLogException` 异常。
 
         异常:
-          NoLogException
+            NoLogException
         """
         return f"[{self.get_event_name()}]: {self.get_event_description()}"
 

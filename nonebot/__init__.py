@@ -56,10 +56,10 @@ def get_driver() -> Driver:
     获取全局 Driver 对象。可用于在计划任务的回调中获取当前 Driver 对象。
 
     返回:
-      Driver: 全局 Driver 对象
+        Driver: 全局 Driver 对象
 
     异常:
-      ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+        ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
     用法:
         ```python
@@ -76,10 +76,10 @@ def get_app() -> Any:
     获取全局 Driver 对应 Server App 对象。
 
     返回:
-      Any: Server App 对象
+        Any: Server App 对象
 
     异常:
-      ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+        ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
     用法:
         ```python
@@ -98,10 +98,10 @@ def get_asgi() -> Any:
     获取全局 Driver 对应 Asgi 对象。
 
     返回:
-      Any: Asgi 对象
+        Any: Asgi 对象
 
     异常:
-      ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+        ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
     用法:
         ```python
@@ -120,15 +120,15 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
     当提供 self_id 时，此函数是 get_bots()[self_id] 的简写；当不提供时，返回一个 Bot。
 
     参数:
-      self_id: 用来识别 Bot 的 ID
+        self_id: 用来识别 Bot 的 ID
 
     返回:
-      Bot: Bot 对象
+        Bot: Bot 对象
 
     异常:
-      KeyError: 对应 ID 的 Bot 不存在
-      ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
-      ValueError: 没有传入 ID 且没有 Bot 可用
+        KeyError: 对应 ID 的 Bot 不存在
+        ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+        ValueError: 没有传入 ID 且没有 Bot 可用
 
     用法:
         ```python
@@ -152,10 +152,10 @@ def get_bots() -> Dict[str, Bot]:
     获取所有通过 ws 连接 NoneBot 的 Bot 对象。
 
     返回:
-      Dict[str, Bot]: 一个以字符串 ID 为键，Bot 对象为值的字典
+        Dict[str, Bot]: 一个以字符串 ID 为键，Bot 对象为值的字典
 
     异常:
-      ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+        ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
     用法:
         ```python
@@ -206,8 +206,8 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
     你也可以传入自定义的 _env_file 来指定 NoneBot 从该文件读取配置。
 
     参数:
-      _env_file: 配置文件名，默认从 .env.{env_name} 中读取配置
-      **kwargs: 任意变量，将会存储到 Config 对象里
+        _env_file: 配置文件名，默认从 .env.{env_name} 中读取配置
+        **kwargs: 任意变量，将会存储到 Config 对象里
 
     用法:
         ```python
@@ -241,8 +241,8 @@ def run(*args: Any, **kwargs: Any) -> None:
     启动 NoneBot，即运行全局 Driver 对象。
 
     参数:
-      *args: 传入 Driver.run 的位置参数
-      **kwargs: 传入 Driver.run 的命名参数
+        *args: 传入 Driver.run 的位置参数
+        **kwargs: 传入 Driver.run 的命名参数
 
     用法:
         ```python
