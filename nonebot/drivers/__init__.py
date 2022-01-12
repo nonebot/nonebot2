@@ -56,8 +56,8 @@ class Driver(abc.ABC):
         """
         :参数:
 
-          * ``env: Env``: 包含环境信息的 Env 对象
-          * ``config: Config``: 包含配置信息的 Config 对象
+          * `env: Env`: 包含环境信息的 Env 对象
+          * `config: Config`: 包含配置信息的 Config 对象
         """
         self.env: str = env.environment
         """
@@ -85,9 +85,9 @@ class Driver(abc.ABC):
 
         :参数:
 
-          * ``name: str``: 适配器名称，用于在连接时进行识别
-          * ``adapter: Type[Bot]``: 适配器 Class
-          * ``**kwargs``: 其他传递给适配器的参数
+          * `name: str`: 适配器名称，用于在连接时进行识别
+          * `adapter: Type[Bot]`: 适配器 Class
+          * `**kwargs`: 其他传递给适配器的参数
         """
         name = adapter.get_name()
         if name in self._adapters:
@@ -118,8 +118,8 @@ class Driver(abc.ABC):
         启动驱动框架
 
         :参数:
-          * ``*args``
-          * ``**kwargs``
+          * `*args`
+          * `**kwargs`
         """
         logger.opt(colors=True).debug(
             f"<g>Loaded adapters: {escape_tag(', '.join(self._adapters))}</g>"
@@ -141,7 +141,7 @@ class Driver(abc.ABC):
 
         :函数参数:
 
-          * ``bot: Bot``: 当前连接上的 Bot 对象
+          * `bot: Bot`: 当前连接上的 Bot 对象
         """
         self._bot_connection_hook.add(func)
         return func
@@ -152,7 +152,7 @@ class Driver(abc.ABC):
 
         :函数参数:
 
-          * ``bot: Bot``: 当前连接上的 Bot 对象
+          * `bot: Bot`: 当前连接上的 Bot 对象
         """
         self._bot_disconnection_hook.add(func)
         return func

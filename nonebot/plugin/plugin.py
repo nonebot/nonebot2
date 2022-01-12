@@ -40,7 +40,7 @@ class Plugin(object):
     """
     matcher: Set[Type[Matcher]] = field(default_factory=set)
     """
-    插件内定义的 ``Matcher``
+    插件内定义的 `Matcher`
     """
     parent_plugin: Optional["Plugin"] = None
     """
@@ -58,11 +58,11 @@ def get_plugin(name: str) -> Optional[Plugin]:
 
     :参数:
 
-      * ``name: str``: 插件名，与 ``load_plugin`` 参数一致。如果为 ``load_plugins`` 导入的插件，则为文件(夹)名。
+      * `name: str`: 插件名，与 `load_plugin` 参数一致。如果为 `load_plugins` 导入的插件，则为文件(夹)名。
 
     :返回:
 
-      - ``Optional[Plugin]``
+      - `Optional[Plugin]`
     """
     return plugins.get(name)
 
@@ -73,7 +73,7 @@ def get_loaded_plugins() -> Set[Plugin]:
 
     :返回:
 
-      - ``Set[Plugin]``
+      - `Set[Plugin]`
     """
     return set(plugins.values())
 

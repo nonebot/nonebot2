@@ -2,10 +2,10 @@ r"""
 规则
 ====
 
-每个事件响应器 ``Matcher`` 拥有一个匹配规则 ``Rule`` ，其中是 ``RuleChecker`` 的集合，只有当所有 ``RuleChecker`` 检查结果为 ``True`` 时继续运行。
+每个事件响应器 `Matcher` 拥有一个匹配规则 `Rule` ，其中是 `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
 
 \:\:\:tip 提示
-``RuleChecker`` 既可以是 async function 也可以是 sync function
+`RuleChecker` 既可以是 async function 也可以是 sync function
 \:\:\:
 """
 
@@ -63,7 +63,7 @@ CMD_RESULT = TypedDict(
 
 class Rule:
     """
-    ``Matcher`` 规则类，当事件传递时，在 ``Matcher`` 运行前进行检查。
+    `Matcher` 规则类，当事件传递时，在 `Matcher` 运行前进行检查。
 
     :示例:
 
@@ -89,7 +89,7 @@ class Rule:
         """
         :参数:
 
-          * ``*checkers: Union[T_RuleChecker, Dependent[bool]]``: RuleChecker
+          * `*checkers: Union[T_RuleChecker, Dependent[bool]]`: RuleChecker
 
         """
         self.checkers: Set[Dependent[bool]] = set(
@@ -101,7 +101,7 @@ class Rule:
             for checker in checkers
         )
         """
-        存储 ``RuleChecker``
+        存储 `RuleChecker`
         """
 
     async def __call__(
@@ -117,15 +117,15 @@ class Rule:
 
         :参数:
 
-          * ``bot: Bot``: Bot 对象
-          * ``event: Event``: Event 对象
-          * ``state: T_State``: 当前 State
-          * ``stack: Optional[AsyncExitStack]``: 异步上下文栈
-          * ``dependency_cache: Optional[CacheDict[T_Handler, Any]]``: 依赖缓存
+          * `bot: Bot`: Bot 对象
+          * `event: Event`: Event 对象
+          * `state: T_State`: 当前 State
+          * `stack: Optional[AsyncExitStack]`: 异步上下文栈
+          * `dependency_cache: Optional[CacheDict[T_Handler, Any]]`: 依赖缓存
 
         :返回:
 
-          - ``bool``
+          - `bool`
         """
         if not self.checkers:
             return True
@@ -218,7 +218,7 @@ def startswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Ru
 
     :参数:
 
-      * ``msg: str``: 消息开头字符串
+      * `msg: str`: 消息开头字符串
     """
     if isinstance(msg, str):
         msg = (msg,)
@@ -251,7 +251,7 @@ def endswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule
 
     :参数:
 
-      * ``msg: str``: 消息结尾字符串
+      * `msg: str`: 消息结尾字符串
     """
     if isinstance(msg, str):
         msg = (msg,)
@@ -277,7 +277,7 @@ def keyword(*keywords: str) -> Rule:
 
     :参数:
 
-      * ``*keywords: str``: 关键词
+      * `*keywords: str`: 关键词
     """
 
     return Rule(KeywordsRule(*keywords))
@@ -296,20 +296,20 @@ class CommandRule:
 
 def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
     r"""
-    命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
+    命令形式匹配，根据配置里提供的 `command_start`, `command_sep` 判断消息是否为命令。
 
-      可以通过 ``state["_prefix"]["command"]`` 获取匹配成功的命令（例：``("test",)``），通过 ``state["_prefix"]["raw_command"]`` 获取匹配成功的原始命令文本（例：``"/test"``）。
+      可以通过 `state["_prefix"]["command"]` 获取匹配成功的命令（例：`("test",)`），通过 `state["_prefix"]["raw_command"]` 获取匹配成功的原始命令文本（例：`"/test"`）。
 
     :参数:
 
-      * ``*cmds: Union[str, Tuple[str, ...]]``: 命令内容
+      * `*cmds: Union[str, Tuple[str, ...]]`: 命令内容
 
     :示例:
 
-      使用默认 ``command_start``, ``command_sep`` 配置
+      使用默认 `command_start`, `command_sep` 配置
 
-      命令 ``("test",)`` 可以匹配：``/test`` 开头的消息
-      命令 ``("test", "sub")`` 可以匹配”``/test.sub`` 开头的消息
+      命令 `("test",)` 可以匹配：`/test` 开头的消息
+      命令 `("test", "sub")` 可以匹配”`/test.sub` 开头的消息
 
     \:\:\:tip 提示
     命令内容与后续消息间无需空格！
@@ -338,7 +338,7 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
 
 class ArgumentParser(ArgParser):
     """
-    ``shell_like`` 命令参数解析器，解析出错时不会退出程序。
+    `shell_like` 命令参数解析器，解析出错时不会退出程序。
     """
 
     def _print_message(self, message, file=None):
@@ -392,22 +392,22 @@ def shell_command(
     *cmds: Union[str, Tuple[str, ...]], parser: Optional[ArgumentParser] = None
 ) -> Rule:
     r"""
-    支持 ``shell_like`` 解析参数的命令形式匹配，根据配置里提供的 ``command_start``, ``command_sep`` 判断消息是否为命令。
+    支持 `shell_like` 解析参数的命令形式匹配，根据配置里提供的 `command_start`, `command_sep` 判断消息是否为命令。
 
-    可以通过 ``state["_prefix"]["command"]`` 获取匹配成功的命令（例：``("test",)``），通过 ``state["_prefix"]["raw_command"]`` 获取匹配成功的原始命令文本（例：``"/test"``）。
+    可以通过 `state["_prefix"]["command"]` 获取匹配成功的命令（例：`("test",)`），通过 `state["_prefix"]["raw_command"]` 获取匹配成功的原始命令文本（例：`"/test"`）。
 
-    可以通过 ``state["argv"]`` 获取用户输入的原始参数列表
+    可以通过 `state["argv"]` 获取用户输入的原始参数列表
 
-    添加 ``parser`` 参数后, 可以自动处理消息并将结果保存在 ``state["args"]`` 中。
+    添加 `parser` 参数后, 可以自动处理消息并将结果保存在 `state["args"]` 中。
 
     :参数:
 
-      * ``*cmds: Union[str, Tuple[str, ...]]``: 命令内容
-      * ``parser: Optional[ArgumentParser]``: ``nonebot.rule.ArgumentParser`` 对象
+      * `*cmds: Union[str, Tuple[str, ...]]`: 命令内容
+      * `parser: Optional[ArgumentParser]`: `nonebot.rule.ArgumentParser` 对象
 
     :示例:
 
-      使用默认 ``command_start``, ``command_sep`` 配置，更多示例参考 ``argparse`` 标准库文档。
+      使用默认 `command_start`, `command_sep` 配置，更多示例参考 `argparse` 标准库文档。
 
     .. code-block:: python
 
@@ -472,16 +472,16 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     r"""
     根据正则表达式进行匹配。
 
-      可以通过 ``state["_matched"]`` ``state["_matched_groups"]`` ``state["_matched_dict"]``
+      可以通过 `state["_matched"]` `state["_matched_groups"]` `state["_matched_dict"]`
       获取正则表达式匹配成功的文本。
 
     :参数:
 
-      * ``regex: str``: 正则表达式
-      * ``flags: Union[int, re.RegexFlag]``: 正则标志
+      * `regex: str`: 正则表达式
+      * `flags: Union[int, re.RegexFlag]`: 正则标志
 
     \:\:\:tip 提示
-    正则表达式匹配使用 search 而非 match，如需从头匹配请使用 ``r"^xxx"`` 来确保匹配开头
+    正则表达式匹配使用 search 而非 match，如需从头匹配请使用 `r"^xxx"` 来确保匹配开头
     \:\:\:
     """
 
@@ -495,7 +495,7 @@ class ToMeRule:
 
 def to_me() -> Rule:
     """
-    通过 ``event.is_tome()`` 判断事件是否与机器人有关
+    通过 `event.is_tome()` 判断事件是否与机器人有关
 
     :参数:
 

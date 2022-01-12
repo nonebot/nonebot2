@@ -2,31 +2,31 @@
 快捷导入
 ========
 
-为方便使用，``nonebot`` 模块从子模块导入了部分内容
+为方便使用，`nonebot` 模块从子模块导入了部分内容
 
-- ``on_message`` => ``nonebot.plugin.on_message``
-- ``on_notice`` => ``nonebot.plugin.on_notice``
-- ``on_request`` => ``nonebot.plugin.on_request``
-- ``on_metaevent`` => ``nonebot.plugin.on_metaevent``
-- ``on_startswith`` => ``nonebot.plugin.on_startswith``
-- ``on_endswith`` => ``nonebot.plugin.on_endswith``
-- ``on_keyword`` => ``nonebot.plugin.on_keyword``
-- ``on_command`` => ``nonebot.plugin.on_command``
-- ``on_shell_command`` => ``nonebot.plugin.on_shell_command``
-- ``on_regex`` => ``nonebot.plugin.on_regex``
-- ``CommandGroup`` => ``nonebot.plugin.CommandGroup``
-- ``Matchergroup`` => ``nonebot.plugin.MatcherGroup``
-- ``load_plugin`` => ``nonebot.plugin.load_plugin``
-- ``load_plugins`` => ``nonebot.plugin.load_plugins``
-- ``load_all_plugins`` => ``nonebot.plugin.load_all_plugins``
-- ``load_from_json`` => ``nonebot.plugin.load_from_json``
-- ``load_from_toml`` => ``nonebot.plugin.load_from_toml``
-- ``load_builtin_plugin`` => ``nonebot.plugin.load_builtin_plugin``
-- ``load_builtin_plugins`` => ``nonebot.plugin.load_builtin_plugins``
-- ``get_plugin`` => ``nonebot.plugin.get_plugin``
-- ``get_loaded_plugins`` => ``nonebot.plugin.get_loaded_plugins``
-- ``export`` => ``nonebot.plugin.export``
-- ``require`` => ``nonebot.plugin.require``
+- `on_message` => `nonebot.plugin.on_message`
+- `on_notice` => `nonebot.plugin.on_notice`
+- `on_request` => `nonebot.plugin.on_request`
+- `on_metaevent` => `nonebot.plugin.on_metaevent`
+- `on_startswith` => `nonebot.plugin.on_startswith`
+- `on_endswith` => `nonebot.plugin.on_endswith`
+- `on_keyword` => `nonebot.plugin.on_keyword`
+- `on_command` => `nonebot.plugin.on_command`
+- `on_shell_command` => `nonebot.plugin.on_shell_command`
+- `on_regex` => `nonebot.plugin.on_regex`
+- `CommandGroup` => `nonebot.plugin.CommandGroup`
+- `Matchergroup` => `nonebot.plugin.MatcherGroup`
+- `load_plugin` => `nonebot.plugin.load_plugin`
+- `load_plugins` => `nonebot.plugin.load_plugins`
+- `load_all_plugins` => `nonebot.plugin.load_all_plugins`
+- `load_from_json` => `nonebot.plugin.load_from_json`
+- `load_from_toml` => `nonebot.plugin.load_from_toml`
+- `load_builtin_plugin` => `nonebot.plugin.load_builtin_plugin`
+- `load_builtin_plugins` => `nonebot.plugin.load_builtin_plugins`
+- `get_plugin` => `nonebot.plugin.get_plugin`
+- `get_loaded_plugins` => `nonebot.plugin.get_loaded_plugins`
+- `export` => `nonebot.plugin.export`
+- `require` => `nonebot.plugin.require`
 """
 
 import importlib
@@ -57,11 +57,11 @@ def get_driver() -> Driver:
 
     :返回:
 
-      * ``Driver``: 全局 Driver 对象
+      * `Driver`: 全局 Driver 对象
 
     :异常:
 
-      * ``ValueError``: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+      * `ValueError`: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
     :用法:
 
@@ -81,11 +81,11 @@ def get_app() -> Any:
 
     :返回:
 
-      * ``Any``: Server App 对象
+      * `Any`: Server App 对象
 
     :异常:
 
-      * ``ValueError``: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+      * `ValueError`: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
     :用法:
 
@@ -107,11 +107,11 @@ def get_asgi() -> Any:
 
     :返回:
 
-      * ``Any``: Asgi 对象
+      * `Any`: Asgi 对象
 
     :异常:
 
-      * ``ValueError``: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+      * `ValueError`: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
     :用法:
 
@@ -133,17 +133,17 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
 
     :参数:
 
-      * ``self_id: Optional[str]``: 用来识别 Bot 的 ID
+      * `self_id: Optional[str]`: 用来识别 Bot 的 ID
 
     :返回:
 
-      * ``Bot``: Bot 对象
+      * `Bot`: Bot 对象
 
     :异常:
 
-      * ``KeyError``: 对应 ID 的 Bot 不存在
-      * ``ValueError``: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
-      * ``ValueError``: 没有传入 ID 且没有 Bot 可用
+      * `KeyError`: 对应 ID 的 Bot 不存在
+      * `ValueError`: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+      * `ValueError`: 没有传入 ID 且没有 Bot 可用
 
     :用法:
 
@@ -169,11 +169,11 @@ def get_bots() -> Dict[str, Bot]:
 
     :返回:
 
-      * ``Dict[str, Bot]``: 一个以字符串 ID 为键，Bot 对象为值的字典
+      * `Dict[str, Bot]`: 一个以字符串 ID 为键，Bot 对象为值的字典
 
     :异常:
 
-      * ``ValueError``: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+      * `ValueError`: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
 
     :用法:
 
@@ -227,12 +227,12 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
 
     :参数:
 
-      * ``_env_file: Optional[str]``: 配置文件名，默认从 .env.{env_name} 中读取配置
-      * ``**kwargs``: 任意变量，将会存储到 Config 对象里
+      * `_env_file: Optional[str]`: 配置文件名，默认从 .env.{env_name} 中读取配置
+      * `**kwargs`: 任意变量，将会存储到 Config 对象里
 
     :返回:
 
-      - ``None``
+      - `None`
 
     :用法:
 
@@ -269,12 +269,12 @@ def run(*args: Any, **kwargs: Any) -> None:
 
     :参数:
 
-      * ``*args``: 传入 Driver.run 的位置参数
-      * ``**kwargs``: 传入 Driver.run 的命名参数
+      * `*args`: 传入 Driver.run 的位置参数
+      * `**kwargs`: 传入 Driver.run 的命名参数
 
     :返回:
 
-      - ``None``
+      - `None`
 
     :用法:
 

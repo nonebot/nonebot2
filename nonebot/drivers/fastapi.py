@@ -48,19 +48,19 @@ class Config(BaseSettings):
 
     fastapi_openapi_url: Optional[str] = None
     """
-    ``openapi.json`` 地址，默认为 ``None`` 即关闭
+    `openapi.json` 地址，默认为 `None` 即关闭
     """
     fastapi_docs_url: Optional[str] = None
     """
-    ``swagger`` 地址，默认为 ``None`` 即关闭
+    `swagger` 地址，默认为 `None` 即关闭
     """
     fastapi_redoc_url: Optional[str] = None
     """
-    ``redoc`` 地址，默认为 ``None`` 即关闭
+    `redoc` 地址，默认为 `None` 即关闭
     """
     fastapi_include_adapter_schema: bool = True
     """
-    是否包含适配器路由的 schema，默认为 ``True``
+    是否包含适配器路由的 schema，默认为 `True`
     """
     fastapi_reload: bool = False
     """
@@ -104,19 +104,19 @@ class Driver(ReverseDriver):
     @property
     @overrides(ReverseDriver)
     def type(self) -> str:
-        """驱动名称: ``fastapi``"""
+        """驱动名称: `fastapi`"""
         return "fastapi"
 
     @property
     @overrides(ReverseDriver)
     def server_app(self) -> FastAPI:
-        """``FastAPI APP`` 对象"""
+        """`FastAPI APP` 对象"""
         return self._server_app
 
     @property
     @overrides(ReverseDriver)
     def asgi(self) -> FastAPI:
-        """``FastAPI APP`` 对象"""
+        """`FastAPI APP` 对象"""
         return self._server_app
 
     @property
@@ -168,7 +168,7 @@ class Driver(ReverseDriver):
         app: Optional[str] = None,
         **kwargs,
     ):
-        """使用 ``uvicorn`` 启动 FastAPI"""
+        """使用 `uvicorn` 启动 FastAPI"""
         super().run(host, port, app, **kwargs)
         LOGGING_CONFIG = {
             "version": 1,

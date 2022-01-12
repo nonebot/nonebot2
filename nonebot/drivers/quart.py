@@ -94,19 +94,19 @@ class Driver(ReverseDriver):
     @property
     @overrides(ReverseDriver)
     def type(self) -> str:
-        """驱动名称: ``quart``"""
+        """驱动名称: `quart`"""
         return "quart"
 
     @property
     @overrides(ReverseDriver)
     def server_app(self) -> Quart:
-        """``Quart`` 对象"""
+        """`Quart` 对象"""
         return self._server_app
 
     @property
     @overrides(ReverseDriver)
     def asgi(self):
-        """``Quart`` 对象"""
+        """`Quart` 对象"""
         return self._server_app
 
     @property
@@ -161,7 +161,7 @@ class Driver(ReverseDriver):
         app: Optional[str] = None,
         **kwargs,
     ):
-        """使用 ``uvicorn`` 启动 Quart"""
+        """使用 `uvicorn` 启动 Quart"""
         super().run(host, port, app, **kwargs)
         LOGGING_CONFIG = {
             "version": 1,

@@ -59,18 +59,18 @@ def on(
 
     :参数:
 
-      * ``type: str``: 事件响应器类型
-      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-      * ``priority: int``: 事件响应器优先级
-      * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认 state
+      * `type: str`: 事件响应器类型
+      * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+      * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+      * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+      * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+      * `priority: int`: 事件响应器优先级
+      * `block: bool`: 是否阻止事件向更低优先级传递
+      * `state: Optional[T_State]`: 默认 state
 
     :返回:
 
-      - ``Type[Matcher]``
+      - `Type[Matcher]`
     """
     matcher = Matcher.new(
         type,
@@ -103,16 +103,16 @@ def on_metaevent(
 
     :参数:
 
-      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-      * ``priority: int``: 事件响应器优先级
-      * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认 state
+      * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+      * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+      * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+      * `priority: int`: 事件响应器优先级
+      * `block: bool`: 是否阻止事件向更低优先级传递
+      * `state: Optional[T_State]`: 默认 state
 
     :返回:
 
-      - ``Type[Matcher]``
+      - `Type[Matcher]`
     """
     matcher = Matcher.new(
         "meta_event",
@@ -146,17 +146,17 @@ def on_message(
 
     :参数:
 
-      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-      * ``priority: int``: 事件响应器优先级
-      * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认 state
+      * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+      * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+      * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+      * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+      * `priority: int`: 事件响应器优先级
+      * `block: bool`: 是否阻止事件向更低优先级传递
+      * `state: Optional[T_State]`: 默认 state
 
     :返回:
 
-      - ``Type[Matcher]``
+      - `Type[Matcher]`
     """
     matcher = Matcher.new(
         "message",
@@ -189,16 +189,16 @@ def on_notice(
 
     :参数:
 
-      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-      * ``priority: int``: 事件响应器优先级
-      * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认 state
+      * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+      * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+      * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+      * `priority: int`: 事件响应器优先级
+      * `block: bool`: 是否阻止事件向更低优先级传递
+      * `state: Optional[T_State]`: 默认 state
 
     :返回:
 
-      - ``Type[Matcher]``
+      - `Type[Matcher]`
     """
     matcher = Matcher.new(
         "notice",
@@ -231,16 +231,16 @@ def on_request(
 
     :参数:
 
-      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-      * ``priority: int``: 事件响应器优先级
-      * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认 state
+      * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+      * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+      * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+      * `priority: int`: 事件响应器优先级
+      * `block: bool`: 是否阻止事件向更低优先级传递
+      * `state: Optional[T_State]`: 默认 state
 
     :返回:
 
-      - ``Type[Matcher]``
+      - `Type[Matcher]`
     """
     matcher = Matcher.new(
         "request",
@@ -270,19 +270,19 @@ def on_startswith(
 
     :参数:
 
-      * ``msg: Union[str, Tuple[str, ...]]``: 指定消息开头内容
-      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``ignorecase: bool``: 是否忽略大小写
-      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-      * ``priority: int``: 事件响应器优先级
-      * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认 state
+      * `msg: Union[str, Tuple[str, ...]]`: 指定消息开头内容
+      * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+      * `ignorecase: bool`: 是否忽略大小写
+      * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+      * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+      * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+      * `priority: int`: 事件响应器优先级
+      * `block: bool`: 是否阻止事件向更低优先级传递
+      * `state: Optional[T_State]`: 默认 state
 
     :返回:
 
-      - ``Type[Matcher]``
+      - `Type[Matcher]`
     """
     return on_message(startswith(msg, ignorecase) & rule, **kwargs, _depth=_depth + 1)
 
@@ -299,19 +299,19 @@ def on_endswith(
 
     :参数:
 
-      * ``msg: Union[str, Tuple[str, ...]]``: 指定消息结尾内容
-      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``ignorecase: bool``: 是否忽略大小写
-      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-      * ``priority: int``: 事件响应器优先级
-      * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认 state
+      * `msg: Union[str, Tuple[str, ...]]`: 指定消息结尾内容
+      * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+      * `ignorecase: bool`: 是否忽略大小写
+      * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+      * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+      * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+      * `priority: int`: 事件响应器优先级
+      * `block: bool`: 是否阻止事件向更低优先级传递
+      * `state: Optional[T_State]`: 默认 state
 
     :返回:
 
-      - ``Type[Matcher]``
+      - `Type[Matcher]`
     """
     return on_message(endswith(msg, ignorecase) & rule, **kwargs, _depth=_depth + 1)
 
@@ -327,18 +327,18 @@ def on_keyword(
 
     :参数:
 
-      * ``keywords: Set[str]``: 关键词列表
-      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-      * ``priority: int``: 事件响应器优先级
-      * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认 state
+      * `keywords: Set[str]`: 关键词列表
+      * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+      * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+      * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+      * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+      * `priority: int`: 事件响应器优先级
+      * `block: bool`: 是否阻止事件向更低优先级传递
+      * `state: Optional[T_State]`: 默认 state
 
     :返回:
 
-      - ``Type[Matcher]``
+      - `Type[Matcher]`
     """
     return on_message(keyword(*keywords) & rule, **kwargs, _depth=_depth + 1)
 
@@ -357,19 +357,19 @@ def on_command(
 
     :参数:
 
-      * ``cmd: Union[str, Tuple[str, ...]]``: 指定命令内容
-      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
-      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-      * ``priority: int``: 事件响应器优先级
-      * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认 state
+      * `cmd: Union[str, Tuple[str, ...]]`: 指定命令内容
+      * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+      * `aliases: Optional[Set[Union[str, Tuple[str, ...]]]]`: 命令别名
+      * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+      * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+      * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+      * `priority: int`: 事件响应器优先级
+      * `block: bool`: 是否阻止事件向更低优先级传递
+      * `state: Optional[T_State]`: 默认 state
 
     :返回:
 
-      - ``Type[Matcher]``
+      - `Type[Matcher]`
     """
 
     commands = set([cmd]) | (aliases or set())
@@ -388,28 +388,28 @@ def on_shell_command(
     **kwargs,
 ) -> Type[Matcher]:
     """
-    注册一个支持 ``shell_like`` 解析参数的命令消息事件响应器。
+    注册一个支持 `shell_like` 解析参数的命令消息事件响应器。
 
-      与普通的 ``on_command`` 不同的是，在添加 ``parser`` 参数时, 响应器会自动处理消息。
+      与普通的 `on_command` 不同的是，在添加 `parser` 参数时, 响应器会自动处理消息。
 
-      并将用户输入的原始参数列表保存在 ``state["argv"]``, ``parser`` 处理的参数保存在 ``state["args"]`` 中
+      并将用户输入的原始参数列表保存在 `state["argv"]`, `parser` 处理的参数保存在 `state["args"]` 中
 
     :参数:
 
-      * ``cmd: Union[str, Tuple[str, ...]]``: 指定命令内容
-      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
-      * ``parser: Optional[ArgumentParser]``: ``nonebot.rule.ArgumentParser`` 对象
-      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-      * ``priority: int``: 事件响应器优先级
-      * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认 state
+      * `cmd: Union[str, Tuple[str, ...]]`: 指定命令内容
+      * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+      * `aliases: Optional[Set[Union[str, Tuple[str, ...]]]]`: 命令别名
+      * `parser: Optional[ArgumentParser]`: `nonebot.rule.ArgumentParser` 对象
+      * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+      * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+      * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+      * `priority: int`: 事件响应器优先级
+      * `block: bool`: 是否阻止事件向更低优先级传递
+      * `state: Optional[T_State]`: 默认 state
 
     :返回:
 
-      - ``Type[Matcher]``
+      - `Type[Matcher]`
     """
 
     commands = set([cmd]) | (aliases or set())
@@ -434,19 +434,19 @@ def on_regex(
 
     :参数:
 
-      * ``pattern: str``: 正则表达式
-      * ``flags: Union[int, re.RegexFlag]``: 正则匹配标志
-      * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-      * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-      * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-      * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-      * ``priority: int``: 事件响应器优先级
-      * ``block: bool``: 是否阻止事件向更低优先级传递
-      * ``state: Optional[T_State]``: 默认 state
+      * `pattern: str`: 正则表达式
+      * `flags: Union[int, re.RegexFlag]`: 正则匹配标志
+      * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+      * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+      * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+      * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+      * `priority: int`: 事件响应器优先级
+      * `block: bool`: 是否阻止事件向更低优先级传递
+      * `state: Optional[T_State]`: 默认 state
 
     :返回:
 
-      - ``Type[Matcher]``
+      - `Type[Matcher]`
     """
     return on_message(regex(pattern, flags) & rule, **kwargs, _depth=_depth + 1)
 
@@ -458,8 +458,8 @@ class CommandGroup:
         """
         :参数:
 
-          * ``cmd: Union[str, Tuple[str, ...]]``: 命令前缀
-          * ``**kwargs``: 其他传递给 ``on_command`` 的参数默认值，参考 `on_command <#on-command-cmd-rule-none-aliases-none-kwargs>`_
+          * `cmd: Union[str, Tuple[str, ...]]`: 命令前缀
+          * `**kwargs`: 其他传递给 `on_command` 的参数默认值，参考 `on_command <#on-command-cmd-rule-none-aliases-none-kwargs>`_
         """
         self.basecmd: Tuple[str, ...] = (cmd,) if isinstance(cmd, str) else cmd
         """
@@ -469,7 +469,7 @@ class CommandGroup:
             del kwargs["aliases"]
         self.base_kwargs: Dict[str, Any] = kwargs
         """
-        其他传递给 ``on_command`` 的参数默认值
+        其他传递给 `on_command` 的参数默认值
         """
 
     def command(self, cmd: Union[str, Tuple[str, ...]], **kwargs) -> Type[Matcher]:
@@ -478,12 +478,12 @@ class CommandGroup:
 
         :参数:
 
-          * ``cmd: Union[str, Tuple[str, ...]]``: 命令前缀
-          * ``**kwargs``: 其他传递给 ``on_command`` 的参数，将会覆盖命令组默认值
+          * `cmd: Union[str, Tuple[str, ...]]`: 命令前缀
+          * `**kwargs`: 其他传递给 `on_command` 的参数，将会覆盖命令组默认值
 
         :返回:
 
-          - ``Type[Matcher]``
+          - `Type[Matcher]`
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
@@ -500,12 +500,12 @@ class CommandGroup:
 
         :参数:
 
-          * ``cmd: Union[str, Tuple[str, ...]]``: 命令前缀
-          * ``**kwargs``: 其他传递给 ``on_shell_command`` 的参数，将会覆盖命令组默认值
+          * `cmd: Union[str, Tuple[str, ...]]`: 命令前缀
+          * `**kwargs`: 其他传递给 `on_shell_command` 的参数，将会覆盖命令组默认值
 
         :返回:
 
-          - ``Type[Matcher]``
+          - `Type[Matcher]`
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
@@ -516,11 +516,11 @@ class CommandGroup:
 
 
 class MatcherGroup:
-    """事件响应器组合，统一管理。为 ``Matcher`` 创建提供默认属性。"""
+    """事件响应器组合，统一管理。为 `Matcher` 创建提供默认属性。"""
 
     def __init__(self, **kwargs):
         """
-        创建一个事件响应器组合，参数为默认值，与 ``on`` 一致
+        创建一个事件响应器组合，参数为默认值，与 `on` 一致
         """
         self.matchers: List[Type[Matcher]] = []
         """
@@ -528,7 +528,7 @@ class MatcherGroup:
         """
         self.base_kwargs: Dict[str, Any] = kwargs
         """
-        其他传递给 ``on`` 的参数默认值
+        其他传递给 `on` 的参数默认值
         """
 
     def on(self, **kwargs) -> Type[Matcher]:
@@ -537,18 +537,18 @@ class MatcherGroup:
 
         :参数:
 
-          * ``type: str``: 事件响应器类型
-          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-          * ``priority: int``: 事件响应器优先级
-          * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认 state
+          * `type: str`: 事件响应器类型
+          * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+          * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+          * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+          * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+          * `priority: int`: 事件响应器优先级
+          * `block: bool`: 是否阻止事件向更低优先级传递
+          * `state: Optional[T_State]`: 默认 state
 
         :返回:
 
-          - ``Type[Matcher]``
+          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -562,16 +562,16 @@ class MatcherGroup:
 
         :参数:
 
-          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-          * ``priority: int``: 事件响应器优先级
-          * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认 state
+          * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+          * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+          * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+          * `priority: int`: 事件响应器优先级
+          * `block: bool`: 是否阻止事件向更低优先级传递
+          * `state: Optional[T_State]`: 默认 state
 
         :返回:
 
-          - ``Type[Matcher]``
+          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -587,17 +587,17 @@ class MatcherGroup:
 
         :参数:
 
-          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-          * ``priority: int``: 事件响应器优先级
-          * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认 state
+          * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+          * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+          * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+          * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+          * `priority: int`: 事件响应器优先级
+          * `block: bool`: 是否阻止事件向更低优先级传递
+          * `state: Optional[T_State]`: 默认 state
 
         :返回:
 
-          - ``Type[Matcher]``
+          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -612,16 +612,16 @@ class MatcherGroup:
 
         :参数:
 
-          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-          * ``priority: int``: 事件响应器优先级
-          * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认 state
+          * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+          * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+          * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+          * `priority: int`: 事件响应器优先级
+          * `block: bool`: 是否阻止事件向更低优先级传递
+          * `state: Optional[T_State]`: 默认 state
 
         :返回:
 
-          - ``Type[Matcher]``
+          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -636,16 +636,16 @@ class MatcherGroup:
 
         :参数:
 
-          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-          * ``priority: int``: 事件响应器优先级
-          * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认 state
+          * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+          * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+          * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+          * `priority: int`: 事件响应器优先级
+          * `block: bool`: 是否阻止事件向更低优先级传递
+          * `state: Optional[T_State]`: 默认 state
 
         :返回:
 
-          - ``Type[Matcher]``
+          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -662,19 +662,19 @@ class MatcherGroup:
 
         :参数:
 
-          * ``msg: Union[str, Tuple[str, ...]]``: 指定消息开头内容
-          * ``ignorecase: bool``: 是否忽略大小写
-          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-          * ``priority: int``: 事件响应器优先级
-          * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认 state
+          * `msg: Union[str, Tuple[str, ...]]`: 指定消息开头内容
+          * `ignorecase: bool`: 是否忽略大小写
+          * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+          * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+          * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+          * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+          * `priority: int`: 事件响应器优先级
+          * `block: bool`: 是否阻止事件向更低优先级传递
+          * `state: Optional[T_State]`: 默认 state
 
         :返回:
 
-          - ``Type[Matcher]``
+          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -689,19 +689,19 @@ class MatcherGroup:
 
         :参数:
 
-          * ``msg: Union[str, Tuple[str, ...]]``: 指定消息结尾内容
-          * ``ignorecase: bool``: 是否忽略大小写
-          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-          * ``priority: int``: 事件响应器优先级
-          * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认 state
+          * `msg: Union[str, Tuple[str, ...]]`: 指定消息结尾内容
+          * `ignorecase: bool`: 是否忽略大小写
+          * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+          * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+          * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+          * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+          * `priority: int`: 事件响应器优先级
+          * `block: bool`: 是否阻止事件向更低优先级传递
+          * `state: Optional[T_State]`: 默认 state
 
         :返回:
 
-          - ``Type[Matcher]``
+          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -716,18 +716,18 @@ class MatcherGroup:
 
         :参数:
 
-          * ``keywords: Set[str]``: 关键词列表
-          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-          * ``priority: int``: 事件响应器优先级
-          * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认 state
+          * `keywords: Set[str]`: 关键词列表
+          * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+          * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+          * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+          * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+          * `priority: int`: 事件响应器优先级
+          * `block: bool`: 是否阻止事件向更低优先级传递
+          * `state: Optional[T_State]`: 默认 state
 
         :返回:
 
-          - ``Type[Matcher]``
+          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -749,19 +749,19 @@ class MatcherGroup:
 
         :参数:
 
-          * ``cmd: Union[str, Tuple[str, ...]]``: 指定命令内容
-          * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
-          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-          * ``priority: int``: 事件响应器优先级
-          * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认 state
+          * `cmd: Union[str, Tuple[str, ...]]`: 指定命令内容
+          * `aliases: Optional[Set[Union[str, Tuple[str, ...]]]]`: 命令别名
+          * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+          * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+          * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+          * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+          * `priority: int`: 事件响应器优先级
+          * `block: bool`: 是否阻止事件向更低优先级传递
+          * `state: Optional[T_State]`: 默认 state
 
         :返回:
 
-          - ``Type[Matcher]``
+          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -778,28 +778,28 @@ class MatcherGroup:
         **kwargs,
     ) -> Type[Matcher]:
         """
-        注册一个支持 ``shell_like`` 解析参数的命令消息事件响应器。
+        注册一个支持 `shell_like` 解析参数的命令消息事件响应器。
 
-        与普通的 ``on_command`` 不同的是，在添加 ``parser`` 参数时, 响应器会自动处理消息。
+        与普通的 `on_command` 不同的是，在添加 `parser` 参数时, 响应器会自动处理消息。
 
-        并将用户输入的原始参数列表保存在 ``state["argv"]``, ``parser`` 处理的参数保存在 ``state["args"]`` 中
+        并将用户输入的原始参数列表保存在 `state["argv"]`, `parser` 处理的参数保存在 `state["args"]` 中
 
         :参数:
 
-          * ``cmd: Union[str, Tuple[str, ...]]``: 指定命令内容
-          * ``aliases: Optional[Set[Union[str, Tuple[str, ...]]]]``: 命令别名
-          * ``parser: Optional[ArgumentParser]``: ``nonebot.rule.ArgumentParser`` 对象
-          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-          * ``priority: int``: 事件响应器优先级
-          * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认 state
+          * `cmd: Union[str, Tuple[str, ...]]`: 指定命令内容
+          * `aliases: Optional[Set[Union[str, Tuple[str, ...]]]]`: 命令别名
+          * `parser: Optional[ArgumentParser]`: `nonebot.rule.ArgumentParser` 对象
+          * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+          * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+          * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+          * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+          * `priority: int`: 事件响应器优先级
+          * `block: bool`: 是否阻止事件向更低优先级传递
+          * `state: Optional[T_State]`: 默认 state
 
         :返回:
 
-          - ``Type[Matcher]``
+          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -820,19 +820,19 @@ class MatcherGroup:
 
         :参数:
 
-          * ``pattern: str``: 正则表达式
-          * ``flags: Union[int, re.RegexFlag]``: 正则匹配标志
-          * ``rule: Optional[Union[Rule, T_RuleChecker]]``: 事件响应规则
-          * ``permission: Optional[Union[Permission, T_PermissionChecker]] =]]``: 事件响应权限
-          * ``handlers: Optional[List[Union[T_Handler, Dependent]]]``: 事件处理函数列表
-          * ``temp: bool``: 是否为临时事件响应器（仅执行一次）
-          * ``priority: int``: 事件响应器优先级
-          * ``block: bool``: 是否阻止事件向更低优先级传递
-          * ``state: Optional[T_State]``: 默认 state
+          * `pattern: str`: 正则表达式
+          * `flags: Union[int, re.RegexFlag]`: 正则匹配标志
+          * `rule: Optional[Union[Rule, T_RuleChecker]]`: 事件响应规则
+          * `permission: Optional[Union[Permission, T_PermissionChecker]] =]]`: 事件响应权限
+          * `handlers: Optional[List[Union[T_Handler, Dependent]]]`: 事件处理函数列表
+          * `temp: bool`: 是否为临时事件响应器（仅执行一次）
+          * `priority: int`: 事件响应器优先级
+          * `block: bool`: 是否阻止事件向更低优先级传递
+          * `state: Optional[T_State]`: 默认 state
 
         :返回:
 
-          - ``Type[Matcher]``
+          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)

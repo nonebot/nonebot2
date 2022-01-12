@@ -63,11 +63,11 @@ class Adapter(abc.ABC):
     @abc.abstractmethod
     async def _call_api(self, bot: Bot, api: str, **data) -> Any:
         """
-        ``adapter`` 实际调用 api 的逻辑实现函数，实现该方法以调用 api。
+        `adapter` 实际调用 api 的逻辑实现函数，实现该方法以调用 api。
 
         :参数:
 
-          * ``api: str``: API 名称
-          * ``**data``: API 数据
+          * `api: str`: API 名称
+          * `**data`: API 数据
         """
         raise NotImplementedError

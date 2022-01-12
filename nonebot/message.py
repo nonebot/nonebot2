@@ -238,8 +238,8 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
 
     :参数:
 
-      * ``bot: Bot``: Bot 对象
-      * ``event: Event``: Event 对象
+      * `bot: Bot`: Bot 对象
+      * `event: Event`: Event 对象
 
     :示例:
 

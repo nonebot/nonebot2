@@ -214,21 +214,21 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``type_: str``: 事件响应器类型，与 ``event.get_type()`` 一致时触发，空字符串表示任意
-          * ``rule: Optional[Rule]``: 匹配规则
-          * ``permission: Optional[Permission]``: 权限
-          * ``handlers: Optional[List[T_Handler]]``: 事件处理函数列表
-          * ``temp: bool``: 是否为临时事件响应器，即触发一次后删除
-          * ``priority: int``: 响应优先级
-          * ``block: bool``: 是否阻止事件向更低优先级的响应器传播
-          * ``plugin: Optional[Plugin]``: 事件响应器所在插件
-          * ``module: Optional[ModuleType]``: 事件响应器所在模块
-          * ``default_state: Optional[T_State]``: 默认状态 ``state``
-          * ``expire_time: Optional[datetime]``: 事件响应器最终有效时间点，过时即被删除
+          * `type_: str`: 事件响应器类型，与 `event.get_type()` 一致时触发，空字符串表示任意
+          * `rule: Optional[Rule]`: 匹配规则
+          * `permission: Optional[Permission]`: 权限
+          * `handlers: Optional[List[T_Handler]]`: 事件处理函数列表
+          * `temp: bool`: 是否为临时事件响应器，即触发一次后删除
+          * `priority: int`: 响应优先级
+          * `block: bool`: 是否阻止事件向更低优先级的响应器传播
+          * `plugin: Optional[Plugin]`: 事件响应器所在插件
+          * `module: Optional[ModuleType]`: 事件响应器所在模块
+          * `default_state: Optional[T_State]`: 默认状态 `state`
+          * `expire_time: Optional[datetime]`: 事件响应器最终有效时间点，过时即被删除
 
         :返回:
 
-          - ``Type[Matcher]``: 新的事件响应器类
+          - `Type[Matcher]`: 新的事件响应器类
         """
         NewMatcher = type(
             "Matcher",
@@ -280,12 +280,12 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``bot: Bot``: Bot 对象
-          * ``event: Event``: 上报事件
+          * `bot: Bot`: Bot 对象
+          * `event: Event`: 上报事件
 
         :返回:
 
-          - ``bool``: 是否满足权限
+          - `bool`: 是否满足权限
         """
         event_type = event.get_type()
         return event_type == (cls.type or event_type) and await cls.permission(
@@ -306,13 +306,13 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``bot: Bot``: Bot 对象
-          * ``event: Event``: 上报事件
-          * ``state: T_State``: 当前状态
+          * `bot: Bot`: Bot 对象
+          * `event: Event`: 上报事件
+          * `state: T_State`: 当前状态
 
         :返回:
 
-          - ``bool``: 是否满足匹配规则
+          - `bool`: 是否满足匹配规则
         """
         event_type = event.get_type()
         return event_type == (cls.type or event_type) and await cls.rule(
@@ -326,7 +326,7 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``func: T_TypeUpdater``: 响应事件类型更新函数
+          * `func: T_TypeUpdater`: 响应事件类型更新函数
         """
         cls._default_type_updater = Dependent[str].parse(
             call=func, allow_types=cls.HANDLER_PARAM_TYPES
@@ -340,7 +340,7 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``func: T_PermissionUpdater``: 会话权限更新函数
+          * `func: T_PermissionUpdater`: 会话权限更新函数
         """
         cls._default_permission_updater = Dependent[Permission].parse(
             call=func, allow_types=cls.HANDLER_PARAM_TYPES
@@ -368,7 +368,7 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``parameterless: Optional[List[Any]]``: 非参数类型依赖列表
+          * `parameterless: Optional[List[Any]]`: 非参数类型依赖列表
         """
 
         def _decorator(func: T_Handler) -> T_Handler:
@@ -386,8 +386,8 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``id: str``: 消息 ID
-          * ``parameterless: Optional[List[Any]]``: 非参数类型依赖列表
+          * `id: str`: 消息 ID
+          * `parameterless: Optional[List[Any]]`: 非参数类型依赖列表
         """
 
         async def _receive(event: Event, matcher: "Matcher") -> Union[None, NoReturn]:
@@ -422,14 +422,14 @@ class Matcher(metaclass=MatcherMeta):
         parameterless: Optional[List[Any]] = None,
     ) -> Callable[[T_Handler], T_Handler]:
         """
-        装饰一个函数来指示 NoneBot 当要获取的 ``key`` 不存在时接收用户新的一条消息并经过 ``ArgsParser`` 处理后再运行该函数，如果 ``key`` 已存在则直接继续运行
+        装饰一个函数来指示 NoneBot 当要获取的 `key` 不存在时接收用户新的一条消息并经过 `ArgsParser` 处理后再运行该函数，如果 `key` 已存在则直接继续运行
 
         :参数:
 
-          * ``key: str``: 参数名
-          * ``prompt: Optional[Union[str, Message, MessageSegment, MessageFormatter]]``: 在参数不存在时向用户发送的消息
-          * ``args_parser: Optional[T_ArgsParser]``: 可选参数解析函数，空则使用默认解析函数
-          * ``parameterless: Optional[List[Any]]``: 非参数类型依赖列表
+          * `key: str`: 参数名
+          * `prompt: Optional[Union[str, Message, MessageSegment, MessageFormatter]]`: 在参数不存在时向用户发送的消息
+          * `args_parser: Optional[T_ArgsParser]`: 可选参数解析函数，空则使用默认解析函数
+          * `parameterless: Optional[List[Any]]`: 非参数类型依赖列表
         """
 
         async def _key_getter(event: Event, matcher: "Matcher"):
@@ -470,8 +470,8 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``message: Union[str, Message, MessageSegment]``: 消息内容
-          * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
+          * `message: Union[str, Message, MessageSegment]`: 消息内容
+          * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         bot = current_bot.get()
         event = current_event.get()
@@ -493,8 +493,8 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``message: Union[str, Message, MessageSegment, MessageTemplate]``: 消息内容
-          * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
+          * `message: Union[str, Message, MessageSegment, MessageTemplate]`: 消息内容
+          * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         if message is not None:
             await cls.send(message, **kwargs)
@@ -511,8 +511,8 @@ class Matcher(metaclass=MatcherMeta):
 
         :参数:
 
-          * ``prompt: Union[str, Message, MessageSegment, MessageTemplate]``: 消息内容
-          * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
+          * `prompt: Union[str, Message, MessageSegment, MessageTemplate]`: 消息内容
+          * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         if prompt is not None:
             await cls.send(prompt, **kwargs)
@@ -525,12 +525,12 @@ class Matcher(metaclass=MatcherMeta):
         **kwargs,
     ) -> NoReturn:
         """
-        最近使用 ``got`` / ``receive`` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
+        最近使用 `got` / `receive` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
 
         :参数:
 
-          * ``prompt: Union[str, Message, MessageSegment, MessageTemplate]``: 消息内容
-          * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
+          * `prompt: Union[str, Message, MessageSegment, MessageTemplate]`: 消息内容
+          * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         if prompt is not None:
             await cls.send(prompt, **kwargs)
@@ -544,13 +544,13 @@ class Matcher(metaclass=MatcherMeta):
         **kwargs,
     ) -> NoReturn:
         """
-        最近使用 ``got`` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
+        最近使用 `got` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
 
         :参数:
 
-          * ``key: str``: 参数名
-          * ``prompt: Union[str, Message, MessageSegment, MessageTemplate]``: 消息内容
-          * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
+          * `key: str`: 参数名
+          * `prompt: Union[str, Message, MessageSegment, MessageTemplate]`: 消息内容
+          * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()
         matcher.set_target(ARG_KEY.format(key=key))
@@ -566,13 +566,13 @@ class Matcher(metaclass=MatcherMeta):
         **kwargs,
     ) -> NoReturn:
         """
-        最近使用 ``got`` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
+        最近使用 `got` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
 
         :参数:
 
-          * ``id: str``: 消息 id
-          * ``prompt: Union[str, Message, MessageSegment, MessageTemplate]``: 消息内容
-          * ``**kwargs``: 其他传递给 ``bot.send`` 的参数，请参考对应 adapter 的 bot 对象 api
+          * `id: str`: 消息 id
+          * `prompt: Union[str, Message, MessageSegment, MessageTemplate]`: 消息内容
+          * `**kwargs`: 其他传递给 `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()
         matcher.set_target(RECEIVE_KEY.format(id=id))

@@ -31,15 +31,15 @@ V = TypeVar("V")
 
 def escape_tag(s: str) -> str:
     """
-    用于记录带颜色日志时转义 ``<tag>`` 类型特殊标签
+    用于记录带颜色日志时转义 `<tag>` 类型特殊标签
 
     :参数:
 
-      * ``s: str``: 需要转义的字符串
+      * `s: str`: 需要转义的字符串
 
     :返回:
 
-      - ``str``
+      - `str`
     """
     return re.sub(r"</?((?:[fb]g\s)?[^<>\s]*)>", r"\\\g<0>", s)
 
@@ -92,11 +92,11 @@ def run_sync(call: Callable[P, R]) -> Callable[P, Awaitable[R]]:
 
     :参数:
 
-      * ``call: Callable[P, R]``: 被装饰的同步函数
+      * `call: Callable[P, R]`: 被装饰的同步函数
 
     :返回:
 
-      - ``Callable[P, Awaitable[R]]``
+      - `Callable[P, Awaitable[R]]`
     """
 
     @wraps(call)
@@ -131,7 +131,7 @@ def get_name(obj: Any) -> str:
 
 class DataclassEncoder(json.JSONEncoder):
     """
-    在JSON序列化 ``Message`` (List[Dataclass]) 时使用的 ``JSONEncoder``
+    在JSON序列化 `Message` (List[Dataclass]) 时使用的 `JSONEncoder`
     """
 
     @overrides(json.JSONEncoder)
@@ -147,9 +147,9 @@ def logger_wrapper(logger_name: str):
 
     :log 参数:
 
-    * ``level: Literal["CRITICAL", "WARNING", "INFO", "DEBUG", "TRACE"]``: 日志等级
-    * ``message: str``: 日志信息
-    * ``exception: Optional[Exception]``: 异常信息
+    * `level: Literal["CRITICAL", "WARNING", "INFO", "DEBUG", "TRACE"]`: 日志等级
+    * `message: str`: 日志信息
+    * `exception: Optional[Exception]`: 异常信息
     """
 
     def log(level: str, message: str, exception: Optional[Exception] = None):

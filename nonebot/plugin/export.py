@@ -48,7 +48,7 @@ def export() -> Export:
 
     :返回:
 
-      - ``Export``
+      - `Export`
     """
     plugin = _current_plugin.get()
     if not plugin:

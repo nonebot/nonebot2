@@ -20,12 +20,12 @@ class NoneBotException(Exception):
 # Rule Exception
 class ParserExit(NoneBotException):
     """
-    ``shell command`` 处理消息失败时返回的异常
+    `shell command` 处理消息失败时返回的异常
 
     :参数:
 
-      * ``status``
-      * ``message``
+      * `status`
+      * `message`
     """
 
     def __init__(self, status: int = 0, message: Optional[str] = None):
@@ -52,7 +52,7 @@ class IgnoredException(ProcessException):
 
     :参数:
 
-      * ``reason``: 忽略事件的原因
+      * `reason`: 忽略事件的原因
     """
 
     def __init__(self, reason):
@@ -71,7 +71,7 @@ class MockApiException(ProcessException):
 
     :参数:
 
-      * ``result``: 返回的内容
+      * `result`: 返回的内容
     """
 
     def __init__(self, result: Any):
@@ -90,7 +90,7 @@ class StopPropagation(ProcessException):
 
     :用法:
 
-      在 ``Matcher.block == True`` 时抛出。
+      在 `Matcher.block == True` 时抛出。
     """
 
 
@@ -103,17 +103,17 @@ class MatcherException(NoneBotException):
 
 class SkippedException(MatcherException):
     """
-    指示 NoneBot 立即结束当前 ``Handler`` 的处理，继续处理下一个 ``Handler``。
+    指示 NoneBot 立即结束当前 `Handler` 的处理，继续处理下一个 `Handler`。
 
     :用法:
 
-      可以在 ``Handler`` 中通过 ``Matcher.skip()`` 抛出。
+      可以在 `Handler` 中通过 `Matcher.skip()` 抛出。
     """
 
 
 class TypeMisMatch(SkippedException):
     """
-    当前 ``Handler`` 的参数类型不匹配。
+    当前 `Handler` 的参数类型不匹配。
     """
 
     def __init__(self, param: ModelField, value: Any):
@@ -129,45 +129,45 @@ class TypeMisMatch(SkippedException):
 
 class PausedException(MatcherException):
     """
-    指示 NoneBot 结束当前 ``Handler`` 并等待下一条消息后继续下一个 ``Handler``。
+    指示 NoneBot 结束当前 `Handler` 并等待下一条消息后继续下一个 `Handler`。
       可用于用户输入新信息。
 
     :用法:
 
-      可以在 ``Handler`` 中通过 ``Matcher.pause()`` 抛出。
+      可以在 `Handler` 中通过 `Matcher.pause()` 抛出。
     """
 
 
 class RejectedException(MatcherException):
     """
-    指示 NoneBot 结束当前 ``Handler`` 并等待下一条消息后重新运行当前 ``Handler``。
+    指示 NoneBot 结束当前 `Handler` 并等待下一条消息后重新运行当前 `Handler`。
       可用于用户重新输入。
 
     :用法:
 
-      可以在 ``Handler`` 中通过 ``Matcher.reject()`` 抛出。
+      可以在 `Handler` 中通过 `Matcher.reject()` 抛出。
     """
 
 
 class FinishedException(MatcherException):
     """
-    指示 NoneBot 结束当前 ``Handler`` 且后续 ``Handler`` 不再被运行。
+    指示 NoneBot 结束当前 `Handler` 且后续 `Handler` 不再被运行。
       可用于结束用户会话。
 
     :用法:
 
-      可以在 ``Handler`` 中通过 ``Matcher.finish()`` 抛出。
+      可以在 `Handler` 中通过 `Matcher.finish()` 抛出。
     """
 
 
 # Adapter Exceptions
 class AdapterException(NoneBotException):
     """
-    代表 ``Adapter`` 抛出的异常，所有的 ``Adapter`` 都要在内部继承自这个 ``Exception``
+    代表 `Adapter` 抛出的异常，所有的 `Adapter` 都要在内部继承自这个 `Exception`
 
     :参数:
 
-      * ``adapter_name: str``: 标识 adapter
+      * `adapter_name: str`: 标识 adapter
     """
 
     def __init__(self, adapter_name: str) -> None:
@@ -176,7 +176,7 @@ class AdapterException(NoneBotException):
 
 class NoLogException(AdapterException):
     """
-    指示 NoneBot 对当前 ``Event`` 进行处理但不显示 Log 信息，可在 ``get_log_string`` 时抛出
+    指示 NoneBot 对当前 `Event` 进行处理但不显示 Log 信息，可在 `get_log_string` 时抛出
     """
 
     pass
@@ -209,7 +209,7 @@ class ActionFailed(AdapterException):
 # Driver Exceptions
 class DriverException(NoneBotException):
     """
-    ``Driver`` 抛出的异常基类
+    `Driver` 抛出的异常基类
     """
 
 

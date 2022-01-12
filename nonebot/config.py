@@ -132,12 +132,12 @@ class Env(BaseConfig):
     """
     运行环境配置。大小写不敏感。
 
-    将会从 ``nonebot.init 参数`` > ``环境变量`` > ``.env 环境配置文件`` 的优先级读取配置。
+    将会从 `nonebot.init 参数` > `环境变量` > `.env 环境配置文件` 的优先级读取配置。
     """
 
     environment: str = "prod"
     """
-    当前环境名。 NoneBot 将从 ``.env.{environment}`` 文件中加载配置。
+    当前环境名。 NoneBot 将从 `.env.{environment}` 文件中加载配置。
     """
 
     class Config:
@@ -149,8 +149,8 @@ class Config(BaseConfig):
     """
     NoneBot 主要配置。大小写不敏感。
 
-    除了 NoneBot 的配置项外，还可以自行添加配置项到 ``.env.{environment}`` 文件中。
-    这些配置将会在 json 反序列化后一起带入 ``Config`` 类中。
+    除了 NoneBot 的配置项外，还可以自行添加配置项到 `.env.{environment}` 文件中。
+    这些配置将会在 json 反序列化后一起带入 `Config` 类中。
     """
 
     _common_config: dict
@@ -159,11 +159,11 @@ class Config(BaseConfig):
     # nonebot configs
     driver: str = "~fastapi"
     """
-    NoneBot 运行所使用的 ``Driver`` 。继承自 ``nonebot.drivers.Driver`` 。
+    NoneBot 运行所使用的 `Driver` 。继承自 `nonebot.drivers.Driver` 。
 
-      配置格式为 ``<module>[:<Driver>][+<module>[:<Mixin>]]*``。
+      配置格式为 `<module>[:<Driver>][+<module>[:<Mixin>]]*`。
 
-      ``~`` 为 ``nonebot.drivers.`` 的缩写。
+      `~` 为 `nonebot.drivers.` 的缩写。
     """
     host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
     """
@@ -175,7 +175,7 @@ class Config(BaseConfig):
     """
     log_level: Union[int, str] = "INFO"
     """
-    配置 NoneBot 日志输出等级，可以为 ``int`` 类型等级或等级名称，参考 `loguru 日志等级`_。
+    配置 NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称，参考 `loguru 日志等级`_。
 
     :示例:
 

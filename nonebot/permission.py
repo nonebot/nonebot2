@@ -2,10 +2,10 @@ r"""
 权限
 ====
 
-每个 ``Matcher`` 拥有一个 ``Permission`` ，其中是 ``PermissionChecker`` 的集合，只要有一个 ``PermissionChecker`` 检查结果为 ``True`` 时就会继续运行。
+每个 `Matcher` 拥有一个 `Permission` ，其中是 `PermissionChecker` 的集合，只要有一个 `PermissionChecker` 检查结果为 `True` 时就会继续运行。
 
 \:\:\:tip 提示
-``PermissionChecker`` 既可以是 async function 也可以是 sync function
+`PermissionChecker` 既可以是 async function 也可以是 sync function
 \:\:\:
 """
 
@@ -35,7 +35,7 @@ async def _run_coro_with_catch(coro: Coroutine[Any, Any, Any]):
 
 class Permission:
     """
-    ``Matcher`` 规则类，当事件传递时，在 ``Matcher`` 运行前进行检查。
+    `Matcher` 规则类，当事件传递时，在 `Matcher` 运行前进行检查。
 
     :示例:
 
@@ -60,7 +60,7 @@ class Permission:
         """
         :参数:
 
-          * ``*checkers: Union[T_PermissionChecker, Dependent[bool]``: PermissionChecker
+          * `*checkers: Union[T_PermissionChecker, Dependent[bool]`: PermissionChecker
         """
 
         self.checkers: Set[Dependent[bool]] = set(
@@ -72,7 +72,7 @@ class Permission:
             for checker in checkers
         )
         """
-        存储 ``PermissionChecker``
+        存储 `PermissionChecker`
         """
 
     async def __call__(
@@ -87,14 +87,14 @@ class Permission:
 
         :参数:
 
-          * ``bot: Bot``: Bot 对象
-          * ``event: Event``: Event 对象
-          * ``stack: Optional[AsyncExitStack]``: 异步上下文栈
-          * ``dependency_cache: Optional[CacheDict[T_Handler, Any]]``: 依赖缓存
+          * `bot: Bot`: Bot 对象
+          * `event: Event`: Event 对象
+          * `stack: Optional[AsyncExitStack]`: 异步上下文栈
+          * `dependency_cache: Optional[CacheDict[T_Handler, Any]]`: 依赖缓存
 
         :返回:
 
-          - ``bool``
+          - `bool`
         """
         if not self.checkers:
             return True
@@ -149,19 +149,19 @@ class MetaEvent:
 
 MESSAGE = Permission(Message())
 """
-匹配任意 ``message`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 message type 的 Matcher。
+匹配任意 `message` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 message type 的 Matcher。
 """
 NOTICE = Permission(Notice())
 """
-匹配任意 ``notice`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 notice type 的 Matcher。
+匹配任意 `notice` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 notice type 的 Matcher。
 """
 REQUEST = Permission(Request())
 """
-匹配任意 ``request`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 request type 的 Matcher。
+匹配任意 `request` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 request type 的 Matcher。
 """
 METAEVENT = Permission(MetaEvent())
 """
-匹配任意 ``meta_event`` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 meta_event type 的 Matcher。
+匹配任意 `meta_event` 类型事件，仅在需要同时捕获不同类型事件时使用。优先使用 meta_event type 的 Matcher。
 """
 
 
@@ -181,12 +181,12 @@ class User:
 
 def USER(*users: str, perm: Optional[Permission] = None):
     """
-    ``event`` 的 ``session_id`` 在白名单内且满足 perm
+    `event` 的 `session_id` 在白名单内且满足 perm
 
     :参数:
 
-      * ``*user: str``: 白名单
-      * ``perm: Optional[Permission]``: 需要同时满足的权限
+      * `*user: str`: 白名单
+      * `perm: Optional[Permission]`: 需要同时满足的权限
     """
 
     return Permission(User(users, perm))

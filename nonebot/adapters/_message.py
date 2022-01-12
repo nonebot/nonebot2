@@ -99,7 +99,7 @@ class Message(List[TMS], abc.ABC):
         """
         :参数:
 
-          * ``message: Union[str, list, dict, MessageSegment, Message, Any]``: 消息内容
+          * `message: Union[str, list, dict, MessageSegment, Message, Any]`: 消息内容
         """
         super().__init__(*args, **kwargs)
         if message is None:
@@ -114,9 +114,9 @@ class Message(List[TMS], abc.ABC):
     @classmethod
     def template(cls: Type[TM], format_string: Union[str, TM]) -> MessageTemplate[TM]:
         """
-        根据创建消息模板, 用法和 ``str.format`` 大致相同, 但是可以输出消息对象, 并且支持以 ``Message`` 对象作为消息模板
+        根据创建消息模板, 用法和 `str.format` 大致相同, 但是可以输出消息对象, 并且支持以 `Message` 对象作为消息模板
 
-        并且提供了拓展的格式化控制符, 可以用适用于该消息类型的 ``MessageSegment`` 的工厂方法创建消息
+        并且提供了拓展的格式化控制符, 可以用适用于该消息类型的 `MessageSegment` 的工厂方法创建消息
 
         :示例:
 
@@ -137,11 +137,11 @@ class Message(List[TMS], abc.ABC):
 
         :参数:
 
-          * ``format_string: str``: 格式化字符串
+          * `format_string: str`: 格式化字符串
 
         :返回:
 
-          - ``MessageFormatter[TM]``: 消息格式化器
+          - `MessageFormatter[TM]`: 消息格式化器
         """
         return MessageTemplate(format_string, cls)
 
@@ -190,7 +190,7 @@ class Message(List[TMS], abc.ABC):
 
         :参数:
 
-          * ``obj: Union[str, MessageSegment]``: 要添加的消息段
+          * `obj: Union[str, MessageSegment]`: 要添加的消息段
         """
         if isinstance(obj, MessageSegment):
             super(Message, self).append(obj)
@@ -206,7 +206,7 @@ class Message(List[TMS], abc.ABC):
 
         :参数:
 
-          * ``obj: Union[Message, Iterable[MessageSegment]]``: 要添加的消息数组
+          * `obj: Union[Message, Iterable[MessageSegment]]`: 要添加的消息数组
         """
         for segment in obj:
             self.append(segment)
