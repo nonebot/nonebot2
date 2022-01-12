@@ -137,9 +137,8 @@ class Message(List[TMS], abc.ABC):
         参数:
           format_string: 格式化字符串
 
-        :返回:
-
-          - `MessageFormatter[TM]`: 消息格式化器
+        返回:
+          MessageFormatter[TM]: 消息格式化器
         """
         return MessageTemplate(format_string, cls)
 

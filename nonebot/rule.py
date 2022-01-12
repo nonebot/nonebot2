@@ -120,10 +120,6 @@ class Rule:
           state: 当前 State
           stack: 异步上下文栈
           dependency_cache: 依赖缓存
-
-        :返回:
-
-          - `bool`
         """
         if not self.checkers:
             return True

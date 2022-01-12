@@ -66,10 +66,6 @@ def on(
       priority: 事件响应器优先级
       block: 是否阻止事件向更低优先级传递
       state: 默认 state
-
-    :返回:
-
-      - `Type[Matcher]`
     """
     matcher = Matcher.new(
         type,
@@ -107,10 +103,6 @@ def on_metaevent(
       priority: 事件响应器优先级
       block: 是否阻止事件向更低优先级传递
       state: 默认 state
-
-    :返回:
-
-      - `Type[Matcher]`
     """
     matcher = Matcher.new(
         "meta_event",
@@ -150,10 +142,6 @@ def on_message(
       priority: 事件响应器优先级
       block: 是否阻止事件向更低优先级传递
       state: 默认 state
-
-    :返回:
-
-      - `Type[Matcher]`
     """
     matcher = Matcher.new(
         "message",
@@ -191,10 +179,6 @@ def on_notice(
       priority: 事件响应器优先级
       block: 是否阻止事件向更低优先级传递
       state: 默认 state
-
-    :返回:
-
-      - `Type[Matcher]`
     """
     matcher = Matcher.new(
         "notice",
@@ -232,10 +216,6 @@ def on_request(
       priority: 事件响应器优先级
       block: 是否阻止事件向更低优先级传递
       state: 默认 state
-
-    :返回:
-
-      - `Type[Matcher]`
     """
     matcher = Matcher.new(
         "request",
@@ -273,10 +253,6 @@ def on_startswith(
       priority: 事件响应器优先级
       block: 是否阻止事件向更低优先级传递
       state: 默认 state
-
-    :返回:
-
-      - `Type[Matcher]`
     """
     return on_message(startswith(msg, ignorecase) & rule, **kwargs, _depth=_depth + 1)
 
@@ -301,10 +277,6 @@ def on_endswith(
       priority: 事件响应器优先级
       block: 是否阻止事件向更低优先级传递
       state: 默认 state
-
-    :返回:
-
-      - `Type[Matcher]`
     """
     return on_message(endswith(msg, ignorecase) & rule, **kwargs, _depth=_depth + 1)
 
@@ -327,10 +299,6 @@ def on_keyword(
       priority: 事件响应器优先级
       block: 是否阻止事件向更低优先级传递
       state: 默认 state
-
-    :返回:
-
-      - `Type[Matcher]`
     """
     return on_message(keyword(*keywords) & rule, **kwargs, _depth=_depth + 1)
 
@@ -357,10 +325,6 @@ def on_command(
       priority: 事件响应器优先级
       block: 是否阻止事件向更低优先级传递
       state: 默认 state
-
-    :返回:
-
-      - `Type[Matcher]`
     """
 
     commands = set([cmd]) | (aliases or set())
@@ -396,10 +360,6 @@ def on_shell_command(
       priority: 事件响应器优先级
       block: 是否阻止事件向更低优先级传递
       state: 默认 state
-
-    :返回:
-
-      - `Type[Matcher]`
     """
 
     commands = set([cmd]) | (aliases or set())
@@ -432,10 +392,6 @@ def on_regex(
       priority: 事件响应器优先级
       block: 是否阻止事件向更低优先级传递
       state: 默认 state
-
-    :返回:
-
-      - `Type[Matcher]`
     """
     return on_message(regex(pattern, flags) & rule, **kwargs, _depth=_depth + 1)
 
@@ -467,10 +423,6 @@ class CommandGroup:
         参数:
           cmd: 命令前缀
           **kwargs`on_command` 的参数，将会覆盖命令组默认值
-
-        :返回:
-
-          - `Type[Matcher]`
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
@@ -488,10 +440,6 @@ class CommandGroup:
         参数:
           cmd: 命令前缀
           **kwargs`on_shell_command` 的参数，将会覆盖命令组默认值
-
-        :返回:
-
-          - `Type[Matcher]`
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
@@ -530,10 +478,6 @@ class MatcherGroup:
           priority: 事件响应器优先级
           block: 是否阻止事件向更低优先级传递
           state: 默认 state
-
-        :返回:
-
-          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -552,10 +496,6 @@ class MatcherGroup:
           priority: 事件响应器优先级
           block: 是否阻止事件向更低优先级传递
           state: 默认 state
-
-        :返回:
-
-          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -577,10 +517,6 @@ class MatcherGroup:
           priority: 事件响应器优先级
           block: 是否阻止事件向更低优先级传递
           state: 默认 state
-
-        :返回:
-
-          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -600,10 +536,6 @@ class MatcherGroup:
           priority: 事件响应器优先级
           block: 是否阻止事件向更低优先级传递
           state: 默认 state
-
-        :返回:
-
-          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -623,10 +555,6 @@ class MatcherGroup:
           priority: 事件响应器优先级
           block: 是否阻止事件向更低优先级传递
           state: 默认 state
-
-        :返回:
-
-          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -651,10 +579,6 @@ class MatcherGroup:
           priority: 事件响应器优先级
           block: 是否阻止事件向更低优先级传递
           state: 默认 state
-
-        :返回:
-
-          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -677,10 +601,6 @@ class MatcherGroup:
           priority: 事件响应器优先级
           block: 是否阻止事件向更低优先级传递
           state: 默认 state
-
-        :返回:
-
-          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -702,10 +622,6 @@ class MatcherGroup:
           priority: 事件响应器优先级
           block: 是否阻止事件向更低优先级传递
           state: 默认 state
-
-        :返回:
-
-          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -735,10 +651,6 @@ class MatcherGroup:
           priority: 事件响应器优先级
           block: 是否阻止事件向更低优先级传递
           state: 默认 state
-
-        :返回:
-
-          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -772,10 +684,6 @@ class MatcherGroup:
           priority: 事件响应器优先级
           block: 是否阻止事件向更低优先级传递
           state: 默认 state
-
-        :返回:
-
-          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
@@ -804,10 +712,6 @@ class MatcherGroup:
           priority: 事件响应器优先级
           block: 是否阻止事件向更低优先级传递
           state: 默认 state
-
-        :返回:
-
-          - `Type[Matcher]`
         """
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)

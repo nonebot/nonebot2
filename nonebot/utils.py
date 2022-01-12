@@ -35,10 +35,6 @@ def escape_tag(s: str) -> str:
 
     参数:
       s: 需要转义的字符串
-
-    :返回:
-
-      - `str`
     """
     return re.sub(r"</?((?:[fb]g\s)?[^<>\s]*)>", r"\\\g<0>", s)
 
@@ -91,10 +87,6 @@ def run_sync(call: Callable[P, R]) -> Callable[P, Awaitable[R]]:
 
     参数:
       call: 被装饰的同步函数
-
-    :返回:
-
-      - `Callable[P, Awaitable[R]]`
     """
 
     @wraps(call)

@@ -55,8 +55,7 @@ def get_driver() -> Driver:
     """
     获取全局 Driver 对象。可用于在计划任务的回调中获取当前 Driver 对象。
 
-    :返回:
-
+    返回:
       Driver: 全局 Driver 对象
 
     :异常:
@@ -79,8 +78,7 @@ def get_app() -> Any:
     """
     获取全局 Driver 对应 Server App 对象。
 
-    :返回:
-
+    返回:
       Any: Server App 对象
 
     :异常:
@@ -105,8 +103,7 @@ def get_asgi() -> Any:
     """
     获取全局 Driver 对应 Asgi 对象。
 
-    :返回:
-
+    返回:
       Any: Asgi 对象
 
     :异常:
@@ -134,8 +131,7 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
     参数:
       self_id: 用来识别 Bot 的 ID
 
-    :返回:
-
+    返回:
       Bot: Bot 对象
 
     :异常:
@@ -166,8 +162,7 @@ def get_bots() -> Dict[str, Bot]:
     """
     获取所有通过 ws 连接 NoneBot 的 Bot 对象。
 
-    :返回:
-
+    返回:
       Dict[str, Bot]: 一个以字符串 ID 为键，Bot 对象为值的字典
 
     :异常:
@@ -228,10 +223,6 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
       _env_file: 配置文件名，默认从 .env.{env_name} 中读取配置
       **kwargs: 任意变量，将会存储到 Config 对象里
 
-    :返回:
-
-      - `None`
-
     :用法:
 
     .. code-block:: python
@@ -268,10 +259,6 @@ def run(*args: Any, **kwargs: Any) -> None:
     参数:
       *args: 传入 Driver.run 的位置参数
       **kwargs: 传入 Driver.run 的命名参数
-
-    :返回:
-
-      - `None`
 
     :用法:
 

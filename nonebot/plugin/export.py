@@ -45,10 +45,6 @@ class Export(dict):
 def export() -> Export:
     """
     获取插件的导出内容对象
-
-    :返回:
-
-      - `Export`
     """
     plugin = _current_plugin.get()
     if not plugin:

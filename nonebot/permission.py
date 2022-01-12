@@ -89,10 +89,6 @@ class Permission:
           event: Event 对象
           stack: 异步上下文栈
           dependency_cache: 依赖缓存
-
-        :返回:
-
-          - `bool`
         """
         if not self.checkers:
             return True

@@ -225,9 +225,8 @@ class Matcher(metaclass=MatcherMeta):
           default_state: 默认状态 `state`
           expire_time: 事件响应器最终有效时间点，过时即被删除
 
-        :返回:
-
-          - `Type[Matcher]`: 新的事件响应器类
+        返回:
+          Type[Matcher]: 新的事件响应器类
         """
         NewMatcher = type(
             "Matcher",
@@ -281,9 +280,8 @@ class Matcher(metaclass=MatcherMeta):
           bot: Bot 对象
           event: 上报事件
 
-        :返回:
-
-          - `bool`: 是否满足权限
+        返回:
+          bool: 是否满足权限
         """
         event_type = event.get_type()
         return event_type == (cls.type or event_type) and await cls.permission(
@@ -307,9 +305,8 @@ class Matcher(metaclass=MatcherMeta):
           event: 上报事件
           state: 当前状态
 
-        :返回:
-
-          - `bool`: 是否满足匹配规则
+        返回:
+          bool: 是否满足匹配规则
         """
         event_type = event.get_type()
         return event_type == (cls.type or event_type) and await cls.rule(
