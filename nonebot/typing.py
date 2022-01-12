@@ -71,78 +71,78 @@ T_CalledAPIHook = Callable[
 
 T_EventPreProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
-:依赖参数:
-
-  DependParam: 子依赖参数
-  BotParam: Bot 对象
-  EventParam: Event 对象
-  StateParam: State 对象
-  DefaultParam: 带有默认值的参数
-
 事件预处理函数 EventPreProcessor 类型
+
+依赖参数:
+
+    - DependParam: 子依赖参数
+    - BotParam: Bot 对象
+    - EventParam: Event 对象
+    - StateParam: State 对象
+    - DefaultParam: 带有默认值的参数
 """
 T_EventPostProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
-:依赖参数:
-
-  DependParam: 子依赖参数
-  BotParam: Bot 对象
-  EventParam: Event 对象
-  StateParam: State 对象
-  DefaultParam: 带有默认值的参数
-
 事件预处理函数 EventPostProcessor 类型
+
+依赖参数:
+
+    - DependParam: 子依赖参数
+    - BotParam: Bot 对象
+    - EventParam: Event 对象
+    - StateParam: State 对象
+    - DefaultParam: 带有默认值的参数
 """
 T_RunPreProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
-:依赖参数:
-
-  DependParam: 子依赖参数
-  BotParam: Bot 对象
-  EventParam: Event 对象
-  StateParam: State 对象
-  MatcherParam: Matcher 对象
-  DefaultParam: 带有默认值的参数
-
 事件响应器运行前预处理函数 RunPreProcessor 类型
+
+依赖参数:
+
+    - DependParam: 子依赖参数
+    - BotParam: Bot 对象
+    - EventParam: Event 对象
+    - StateParam: State 对象
+    - MatcherParam: Matcher 对象
+    - DefaultParam: 带有默认值的参数
 """
 T_RunPostProcessor = Callable[..., Union[None, Awaitable[None]]]
 """
-:依赖参数:
-
-  DependParam: 子依赖参数
-  BotParam: Bot 对象
-  EventParam: Event 对象
-  StateParam: State 对象
-  MatcherParam: Matcher 对象
-  ExceptionParam: 异常对象（可能为 None）
-  DefaultParam: 带有默认值的参数
-
 事件响应器运行前预处理函数 RunPostProcessor 类型，第二个参数为运行时产生的错误（如果存在）
+
+依赖参数:
+
+    - DependParam: 子依赖参数
+    - BotParam: Bot 对象
+    - EventParam: Event 对象
+    - StateParam: State 对象
+    - MatcherParam: Matcher 对象
+    - ExceptionParam: 异常对象（可能为 None）
+    - DefaultParam: 带有默认值的参数
 """
 
 T_RuleChecker = Callable[..., Union[bool, Awaitable[bool]]]
 """
-:依赖参数:
-
-  DependParam: 子依赖参数
-  BotParam: Bot 对象
-  EventParam: Event 对象
-  StateParam: State 对象
-  DefaultParam: 带有默认值的参数
-
 RuleChecker 即判断是否响应事件的处理函数。
+
+依赖参数:
+
+    - DependParam: 子依赖参数
+    - BotParam: Bot 对象
+    - EventParam: Event 对象
+    - StateParam: State 对象
+    - DefaultParam: 带有默认值的参数
 """
 T_PermissionChecker = Callable[..., Union[bool, Awaitable[bool]]]
 """
-:依赖参数:
-
-  DependParam: 子依赖参数
-  BotParam: Bot 对象
-  EventParam: Event 对象
-  DefaultParam: 带有默认值的参数
-
 RuleChecker 即判断是否响应消息的处理函数。
+
+依赖参数:
+
+    - DependParam: 子依赖参数
+    - BotParam: Bot 对象
+    - EventParam: Event 对象
+    - DefaultParam: 带有默认值的参数
 """
 
 T_Handler = Callable[..., Any]
@@ -151,29 +151,29 @@ Handler 处理函数。
 """
 T_TypeUpdater = Callable[..., Union[str, Awaitable[str]]]
 """
-:依赖参数:
-
-  DependParam: 子依赖参数
-  BotParam: Bot 对象
-  EventParam: Event 对象
-  StateParam: State 对象
-  MatcherParam: Matcher 对象
-  DefaultParam: 带有默认值的参数
-
 TypeUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新响应的事件类型。默认会更新为 `message`。
+
+依赖参数:
+
+    - DependParam: 子依赖参数
+    - BotParam: Bot 对象
+    - EventParam: Event 对象
+    - StateParam: State 对象
+    - MatcherParam: Matcher 对象
+    - DefaultParam: 带有默认值的参数
 """
 T_PermissionUpdater = Callable[..., Union["Permission", Awaitable["Permission"]]]
 """
-:依赖参数:
-
-  DependParam: 子依赖参数
-  BotParam: Bot 对象
-  EventParam: Event 对象
-  StateParam: State 对象
-  MatcherParam: Matcher 对象
-  DefaultParam: 带有默认值的参数
-
 PermissionUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新会话对象权限。默认会更新为当前事件的触发对象。
+
+依赖参数:
+
+    - DependParam: 子依赖参数
+    - BotParam: Bot 对象
+    - EventParam: Event 对象
+    - StateParam: State 对象
+    - MatcherParam: Matcher 对象
+    - DefaultParam: 带有默认值的参数
 """
 T_DependencyCache = Dict[Callable[..., Any], "Task[Any]"]
 """
