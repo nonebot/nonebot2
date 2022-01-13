@@ -11,21 +11,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Set up Python environment
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.9"
-          architecture: "x64"
-
-      - uses: Gr1N/setup-poetry@v7
-
-      - uses: actions/cache@v2
-        with:
-          path: ~/.cache/pypoetry/virtualenvs
-          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-
-      - name: Install dependencies
-        run: poetry install -E all
+      - name: Setup Python environment
+        uses: ./.github/actions/setup-python
 
       - name: Run Pytest
         run: |
