@@ -6,13 +6,24 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    name: Run Pytest and Upload Coverage
+    name: Test Coverage
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python-version: ["3.7", "3.8", "3.9", "3.10"]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+      fail-fast: false
+    env:
+      OS: ${{ matrix.os }}
+      PYTHON_VERSION: ${{ matrix.python-version }}
+
     steps:
       - uses: actions/checkout@v2
 
       - name: Setup Python environment
         uses: ./.github/actions/setup-python
+        with:
+          python-version: ${{ matrix.python-version }}
 
       - name: Run Pytest
         run: |
@@ -22,5 +33,6 @@ jobs:
       - name: Upload coverage report
         uses: codecov/codecov-action@v2
         with:
+          env_vars: OS,PYTHON_VERSION
           files: ./tests/coverage.xml
           flags: unittests
