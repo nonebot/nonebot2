@@ -6,13 +6,21 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
     name: Run Pytest and Upload Coverage
+    strategy:
+      matrix:
+        python: ["pypy-3.7", "3.7", "pypy-3.8", "3.8", "3.9", "3.10"]
+        os: [ubuntu-latest, windows-latest, macos-latest]
+      fail-fast: false
+
+    runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
 
       - name: Setup Python environment
         uses: ./.github/actions/setup-python
+        with:
+          python-version: ${{ matrix.python }}
 
       - name: Run Pytest
         run: |
