@@ -56,17 +56,14 @@ def Depends(
     use_cache: bool = True,
 ) -> Any:
     """
-    :说明:
+    参数依赖注入装饰器
 
-      参数依赖注入装饰器
+    参数:
+        dependency: 依赖函数。默认为参数的类型注释。
+        use_cache: 是否使用缓存。默认为 `True`。
 
-    :参数:
-
-      * ``dependency: Optional[Callable[..., Any]] = None``: 依赖函数。默认为参数的类型注释。
-      * ``use_cache: bool = True``: 是否使用缓存。默认为 ``True``。
-
-    .. code-block:: python
-
+    用法:
+        ```python
         def depend_func() -> Any:
             return ...
 
@@ -78,6 +75,7 @@ def Depends(
 
         async def handler(param_name: Any = Depends(depend_func), gen: Any = Depends(depend_gen_func)):
             ...
+        ```
     """
     return DependsInner(dependency, use_cache=use_cache)
 

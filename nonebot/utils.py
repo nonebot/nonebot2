@@ -31,17 +31,10 @@ V = TypeVar("V")
 
 def escape_tag(s: str) -> str:
     """
-    :说明:
+    用于记录带颜色日志时转义 `<tag>` 类型特殊标签
 
-      用于记录带颜色日志时转义 ``<tag>`` 类型特殊标签
-
-    :参数:
-
-      * ``s: str``: 需要转义的字符串
-
-    :返回:
-
-      - ``str``
+    参数:
+        s: 需要转义的字符串
     """
     return re.sub(r"</?((?:[fb]g\s)?[^<>\s]*)>", r"\\\g<0>", s)
 
@@ -90,17 +83,10 @@ def is_async_gen_callable(call: Callable[..., Any]) -> bool:
 
 def run_sync(call: Callable[P, R]) -> Callable[P, Awaitable[R]]:
     """
-    :说明:
+    一个用于包装 sync function 为 async function 的装饰器
 
-      一个用于包装 sync function 为 async function 的装饰器
-
-    :参数:
-
-      * ``call: Callable[P, R]``: 被装饰的同步函数
-
-    :返回:
-
-      - ``Callable[P, Awaitable[R]]``
+    参数:
+        call: 被装饰的同步函数
     """
 
     @wraps(call)
@@ -135,9 +121,7 @@ def get_name(obj: Any) -> str:
 
 class DataclassEncoder(json.JSONEncoder):
     """
-    :说明:
-
-      在JSON序列化 ``Message`` (List[Dataclass]) 时使用的 ``JSONEncoder``
+    在JSON序列化 `Message` (List[Dataclass]) 时使用的 `JSONEncoder`
     """
 
     @overrides(json.JSONEncoder)
@@ -149,15 +133,12 @@ class DataclassEncoder(json.JSONEncoder):
 
 def logger_wrapper(logger_name: str):
     """
-    :说明:
-
     用于打印 adapter 的日志。
 
-    :log 参数:
-
-    * ``level: Literal["CRITICAL", "WARNING", "INFO", "DEBUG", "TRACE"]``: 日志等级
-    * ``message: str``: 日志信息
-    * ``exception: Optional[Exception]``: 异常信息
+    参数:
+        level: 日志等级
+        message: 日志信息
+        exception: 异常信息
     """
 
     def log(level: str, message: str, exception: Optional[Exception] = None):

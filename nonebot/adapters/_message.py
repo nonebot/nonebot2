@@ -26,13 +26,11 @@ class MessageSegment(Mapping, abc.ABC, Generic[TM]):
 
     type: str
     """
-    - 类型: ``str``
-    - 说明: 消息段类型
+    消息段类型
     """
     data: Dict[str, Any] = field(default_factory=lambda: {})
     """
-    - 类型: ``Dict[str, Union[str, list]]``
-    - 说明: 消息段数据
+    消息段数据
     """
 
     @classmethod
@@ -99,9 +97,8 @@ class Message(List[TMS], abc.ABC):
         **kwargs,
     ):
         """
-        :参数:
-
-          * ``message: Union[str, list, dict, MessageSegment, Message, Any]``: 消息内容
+        参数:
+            message: 消息内容
         """
         super().__init__(*args, **kwargs)
         if message is None:
@@ -116,15 +113,12 @@ class Message(List[TMS], abc.ABC):
     @classmethod
     def template(cls: Type[TM], format_string: Union[str, TM]) -> MessageTemplate[TM]:
         """
-        :说明:
+        根据创建消息模板, 用法和 `str.format` 大致相同, 但是可以输出消息对象, 并且支持以 `Message` 对象作为消息模板
 
-          根据创建消息模板, 用法和 ``str.format`` 大致相同, 但是可以输出消息对象, 并且支持以 ``Message`` 对象作为消息模板
-          并且提供了拓展的格式化控制符, 可以用适用于该消息类型的 ``MessageSegment`` 的工厂方法创建消息
+        并且提供了拓展的格式化控制符, 可以用适用于该消息类型的 `MessageSegment` 的工厂方法创建消息
 
-        :示例:
-
-        .. code-block:: python
-
+        用法:
+            ```python
             >>> Message.template("{} {}").format("hello", "world") # 基础演示
             Message(MessageSegment(type='text', data={'text': 'hello world'}))
             >>> Message.template("{} {}").format(MessageSegment.image("file///..."), "world") # 支持消息段等对象
@@ -137,14 +131,13 @@ class Message(List[TMS], abc.ABC):
                     MessageSegment(type='text', data={'text': 'test hello world'}))
             >>> Message.template("{link:image}").format(link='https://...') # 支持拓展格式化控制符
             Message(MessageSegment(type='image', data={'file': 'https://...'}))
+            ```
 
-        :参数:
+        参数:
+            format_string: 格式化字符串
 
-          * ``format_string: str``: 格式化字符串
-
-        :返回:
-
-          - ``MessageFormatter[TM]``: 消息格式化器
+        返回:
+            MessageFormatter[TM]: 消息格式化器
         """
         return MessageTemplate(format_string, cls)
 
@@ -189,13 +182,10 @@ class Message(List[TMS], abc.ABC):
 
     def append(self: TM, obj: Union[str, TMS]) -> TM:
         """
-        :说明:
+        添加一个消息段到消息数组末尾
 
-          添加一个消息段到消息数组末尾
-
-        :参数:
-
-          * ``obj: Union[str, MessageSegment]``: 要添加的消息段
+        参数:
+            obj: 要添加的消息段
         """
         if isinstance(obj, MessageSegment):
             super(Message, self).append(obj)
@@ -207,13 +197,10 @@ class Message(List[TMS], abc.ABC):
 
     def extend(self: TM, obj: Union[TM, Iterable[TMS]]) -> TM:
         """
-        :说明:
+        拼接一个消息数组或多个消息段到消息数组末尾
 
-          拼接一个消息数组或多个消息段到消息数组末尾
-
-        :参数:
-
-          * ``obj: Union[Message, Iterable[MessageSegment]]``: 要添加的消息数组
+        参数:
+            obj: 要添加的消息数组
         """
         for segment in obj:
             self.append(segment)
@@ -224,9 +211,7 @@ class Message(List[TMS], abc.ABC):
 
     def extract_plain_text(self: "Message[MessageSegment]") -> str:
         """
-        :说明:
-
-          提取消息内纯文本消息
+        提取消息内纯文本消息
         """
 
         return "".join(str(seg) for seg in self if seg.is_text())

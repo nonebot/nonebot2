@@ -3,14 +3,10 @@ from . import _current_plugin
 
 class Export(dict):
     """
-    :说明:
+    插件导出内容以使得其他插件可以获得。
 
-      插件导出内容以使得其他插件可以获得。
-
-    :示例:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         nonebot.export().default = "bar"
 
         @nonebot.export()
@@ -25,6 +21,7 @@ class Export(dict):
         @nonebot.export().sub
         def something_else():
             pass
+        ```
     """
 
     def __call__(self, func, **kwargs):
@@ -46,13 +43,7 @@ class Export(dict):
 
 def export() -> Export:
     """
-    :说明:
-
-      获取插件的导出内容对象
-
-    :返回:
-
-      - ``Export``
+    获取插件的导出内容对象
     """
     plugin = _current_plugin.get()
     if not plugin:

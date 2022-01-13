@@ -1,6 +1,5 @@
 """
-后端驱动适配基类
-=================
+## 后端驱动适配基类
 
 各驱动请继承以下基类
 """
@@ -41,66 +40,51 @@ class Driver(abc.ABC):
 
     _adapters: Dict[str, "Adapter"] = {}
     """
-    :类型: ``Dict[str, Adapter]``
-    :说明: 已注册的适配器列表
+    已注册的适配器列表
     """
     _bot_connection_hook: Set[T_BotConnectionHook] = set()
     """
-    :类型: ``Set[T_BotConnectionHook]``
-    :说明: Bot 连接建立时执行的函数
+    Bot 连接建立时执行的函数
     """
     _bot_disconnection_hook: Set[T_BotDisconnectionHook] = set()
     """
-    :类型: ``Set[T_BotDisconnectionHook]``
-    :说明: Bot 连接断开时执行的函数
+    Bot 连接断开时执行的函数
     """
 
     def __init__(self, env: Env, config: Config):
         """
-        :参数:
-
-          * ``env: Env``: 包含环境信息的 Env 对象
-          * ``config: Config``: 包含配置信息的 Config 对象
+        参数:
+            env: 包含环境信息的 Env 对象
+            config: 包含配置信息的 Config 对象
         """
         self.env: str = env.environment
         """
-        :类型: ``str``
-        :说明: 环境名称
+        环境名称
         """
         self.config: Config = config
         """
-        :类型: ``Config``
-        :说明: 配置对象
+        配置对象
         """
         self._clients: Dict[str, "Bot"] = {}
         """
-        :类型: ``Dict[str, Bot]``
-        :说明: 已连接的 Bot
+        已连接的 Bot
         """
 
     @property
     def bots(self) -> Dict[str, "Bot"]:
         """
-        :类型:
-
-          ``Dict[str, Bot]``
-        :说明:
-
-          获取当前所有已连接的 Bot
+        获取当前所有已连接的 Bot
         """
         return self._clients
 
     def register_adapter(self, adapter: Type["Adapter"], **kwargs) -> None:
         """
-        :说明:
+        注册一个协议适配器
 
-          注册一个协议适配器
-
-        :参数:
-
-          * ``name: str``: 适配器名称，用于在连接时进行识别
-          * ``adapter: Type[Bot]``: 适配器 Class
-          * ``**kwargs``: 其他传递给适配器的参数
+        参数:
+            name: 适配器名称，用于在连接时进行识别
+            adapter: 适配器 Class
+            **kwargs: 其他传递给适配器的参数
         """
         name = adapter.get_name()
         if name in self._adapters:
@@ -128,13 +112,7 @@ class Driver(abc.ABC):
     @abc.abstractmethod
     def run(self, *args, **kwargs):
         """
-        :说明:
-
-          启动驱动框架
-
-        :参数:
-          * ``*args``
-          * ``**kwargs``
+        启动驱动框架
         """
         logger.opt(colors=True).debug(
             f"<g>Loaded adapters: {escape_tag(', '.join(self._adapters))}</g>"
@@ -152,26 +130,20 @@ class Driver(abc.ABC):
 
     def on_bot_connect(self, func: T_BotConnectionHook) -> T_BotConnectionHook:
         """
-        :说明:
+        装饰一个函数使他在 bot 通过 WebSocket 连接成功时执行。
 
-          装饰一个函数使他在 bot 通过 WebSocket 连接成功时执行。
-
-        :函数参数:
-
-          * ``bot: Bot``: 当前连接上的 Bot 对象
+        参数:
+            bot: 当前连接上的 Bot 对象
         """
         self._bot_connection_hook.add(func)
         return func
 
     def on_bot_disconnect(self, func: T_BotDisconnectionHook) -> T_BotDisconnectionHook:
         """
-        :说明:
+        装饰一个函数使他在 bot 通过 WebSocket 连接断开时执行。
 
-          装饰一个函数使他在 bot 通过 WebSocket 连接断开时执行。
-
-        :函数参数:
-
-          * ``bot: Bot``: 当前连接上的 Bot 对象
+        参数:
+            bot: 当前连接上的 Bot 对象
         """
         self._bot_disconnection_hook.add(func)
         return func

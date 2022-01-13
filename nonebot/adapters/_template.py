@@ -47,14 +47,11 @@ class MessageTemplate(Formatter, Generic[TF]):
 
     def __init__(self, template, factory=str) -> None:
         """
-        :说明:
+        创建一个模板
 
-          创建一个模板
-
-        :参数:
-
-          * ``template: Union[str, Message]``: 模板
-          * ``factory: Union[str, Message]``: 消息构造类型，默认为 `str`
+        参数:
+            template: 模板
+            factory: 消息构造类型，默认为 `str`
         """
         self.template: TF = template
         self.factory: Type[TF] = factory
@@ -71,9 +68,7 @@ class MessageTemplate(Formatter, Generic[TF]):
 
     def format(self, *args: Any, **kwargs: Any) -> TF:
         """
-        :说明:
-
-          根据模板和参数生成消息对象
+        根据模板和参数生成消息对象
         """
         msg = self.factory()
         if isinstance(self.template, str):

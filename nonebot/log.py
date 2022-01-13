@@ -1,13 +1,11 @@
 """
-日志
-====
+## 日志
 
-NoneBot 使用 `loguru`_ 来记录日志信息。
+NoneBot 使用 [`loguru`][loguru] 来记录日志信息。
 
-自定义 logger 请参考 `loguru`_ 文档。
+自定义 logger 请参考 [`loguru`][loguru] 文档。
 
-.. _loguru:
-    https://github.com/Delgan/loguru
+[loguru]: https://github.com/Delgan/loguru
 """
 
 import sys
@@ -24,21 +22,18 @@ if TYPE_CHECKING:
 # logger = logging.getLogger("nonebot")
 logger: "Logger" = loguru.logger
 """
-:说明:
+NoneBot 日志记录器对象。
 
-  NoneBot 日志记录器对象。
+默认信息:
 
-:默认信息:
+    - 格式: `[%(asctime)s %(name)s] %(levelname)s: %(message)s`
+    - 等级: `INFO` ，根据 `config.log_level` 配置改变
+    - 输出: 输出至 stdout
 
-  * 格式: ``[%(asctime)s %(name)s] %(levelname)s: %(message)s``
-  * 等级: ``INFO`` ，根据 ``config.log_level`` 配置改变
-  * 输出: 输出至 stdout
-
-:用法:
-
-.. code-block:: python
-
+用法:
+    ```python
     from nonebot.log import logger
+    ```
 """
 
 # default_handler = logging.StreamHandler(sys.stdout)

@@ -12,17 +12,10 @@ from .plugin import Plugin, get_plugin
 
 def load_plugin(module_path: str) -> Optional[Plugin]:
     """
-    :说明:
+    使用 `PluginManager` 加载单个插件，可以是本地插件或是通过 `pip` 安装的插件。
 
-      使用 ``PluginManager`` 加载单个插件，可以是本地插件或是通过 ``pip`` 安装的插件。
-
-    :参数:
-
-      * ``module_path: str``: 插件名称 ``path.to.your.plugin``
-
-    :返回:
-
-      - ``Optional[Plugin]``
+    参数:
+        module_path: 插件名称 `path.to.your.plugin`
     """
 
     manager = PluginManager([module_path])
@@ -32,17 +25,10 @@ def load_plugin(module_path: str) -> Optional[Plugin]:
 
 def load_plugins(*plugin_dir: str) -> Set[Plugin]:
     """
-    :说明:
+    导入目录下多个插件，以 `_` 开头的插件不会被导入！
 
-      导入目录下多个插件，以 ``_`` 开头的插件不会被导入！
-
-    :参数:
-
-      - ``*plugin_dir: str``: 插件路径
-
-    :返回:
-
-      - ``Set[Plugin]``
+    参数:
+        plugin_dir: 插件路径
     """
     manager = PluginManager(search_path=plugin_dir)
     _managers.append(manager)
@@ -53,18 +39,11 @@ def load_all_plugins(
     module_path: Iterable[str], plugin_dir: Iterable[str]
 ) -> Set[Plugin]:
     """
-    :说明:
+    导入指定列表中的插件以及指定目录下多个插件，以 `_` 开头的插件不会被导入！
 
-      导入指定列表中的插件以及指定目录下多个插件，以 ``_`` 开头的插件不会被导入！
-
-    :参数:
-
-      - ``module_path: Iterable[str]``: 指定插件集合
-      - ``plugin_dir: Iterable[str]``: 指定插件路径集合
-
-    :返回:
-
-      - ``Set[Plugin]``
+    参数:
+        module_path: 指定插件集合
+        plugin_dir: 指定插件路径集合
     """
     manager = PluginManager(module_path, plugin_dir)
     _managers.append(manager)
@@ -73,18 +52,11 @@ def load_all_plugins(
 
 def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     """
-    :说明:
+    导入指定 json 文件中的 `plugins` 以及 `plugin_dirs` 下多个插件，以 `_` 开头的插件不会被导入！
 
-      导入指定 json 文件中的 ``plugins`` 以及 ``plugin_dirs`` 下多个插件，以 ``_`` 开头的插件不会被导入！
-
-    :参数:
-
-      - ``file_path: str``: 指定 json 文件路径
-      - ``encoding: str``: 指定 json 文件编码
-
-    :返回:
-
-      - ``Set[Plugin]``
+    参数:
+        file_path: 指定 json 文件路径
+        encoding: 指定 json 文件编码
     """
     with open(file_path, "r", encoding=encoding) as f:
         data = json.load(f)
@@ -97,19 +69,12 @@ def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
 
 def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     """
-    :说明:
+    导入指定 toml 文件 `[tool.nonebot]` 中的 `plugins` 以及 `plugin_dirs` 下多个插件，
+      以 `_` 开头的插件不会被导入！
 
-      导入指定 toml 文件 ``[tool.nonebot]`` 中的 ``plugins`` 以及 ``plugin_dirs`` 下多个插件，
-      以 ``_`` 开头的插件不会被导入！
-
-    :参数:
-
-      - ``file_path: str``: 指定 toml 文件路径
-      - ``encoding: str``: 指定 toml 文件编码
-
-    :返回:
-
-      - ``Set[Plugin]``
+    参数:
+        file_path: 指定 toml 文件路径
+        encoding: 指定 toml 文件编码
     """
     with open(file_path, "r", encoding=encoding) as f:
         data = tomlkit.parse(f.read())  # type: ignore
@@ -133,46 +98,27 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
 
 def load_builtin_plugin(name: str) -> Optional[Plugin]:
     """
-    :说明:
-
-      导入 NoneBot 内置插件
-
-    :返回:
-
-      - ``Plugin``
+    导入 NoneBot 内置插件
     """
     return load_plugin(f"nonebot.plugins.{name}")
 
 
 def load_builtin_plugins(*plugins) -> Set[Plugin]:
     """
-    :说明:
-
-      导入多个 NoneBot 内置插件
-
-    :返回:
-
-      - ``Set[Plugin]``
+    导入多个 NoneBot 内置插件
     """
     return load_all_plugins([f"nonebot.plugins.{p}" for p in plugins], [])
 
 
 def require(name: str) -> Export:
     """
-    :说明:
+    获取一个插件的导出内容
 
-      获取一个插件的导出内容
+    参数:
+        name: 插件名，与 `load_plugin` 参数一致。如果为 `load_plugins` 导入的插件，则为文件(夹)名。
 
-    :参数:
-
-      * ``name: str``: 插件名，与 ``load_plugin`` 参数一致。如果为 ``load_plugins`` 导入的插件，则为文件(夹)名。
-
-    :返回:
-
-      - ``Export``
-
-    :异常:
-      - ``RuntimeError``: 插件无法加载
+    异常:
+        RuntimeError: 插件无法加载
     """
     plugin = get_plugin(name) or load_plugin(name)
     if not plugin:

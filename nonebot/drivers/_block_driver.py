@@ -27,7 +27,7 @@ class BlockDriver(Driver):
     @property
     @overrides(Driver)
     def type(self) -> str:
-        """驱动名称: ``block_driver``"""
+        """驱动名称: `block_driver`"""
         return "block_driver"
 
     @property
@@ -39,13 +39,7 @@ class BlockDriver(Driver):
     @overrides(Driver)
     def on_startup(self, func: STARTUP_FUNC) -> STARTUP_FUNC:
         """
-        :说明:
-
-          注册一个启动时执行的函数
-
-        :参数:
-
-          * ``func: Callable[[], Awaitable[None]]``
+        注册一个启动时执行的函数
         """
         self.startup_funcs.add(func)
         return func
@@ -53,13 +47,7 @@ class BlockDriver(Driver):
     @overrides(Driver)
     def on_shutdown(self, func: SHUTDOWN_FUNC) -> SHUTDOWN_FUNC:
         """
-        :说明:
-
-          注册一个停止时执行的函数
-
-        :参数:
-
-          * ``func: Callable[[], Awaitable[None]]``
+        注册一个停止时执行的函数
         """
         self.shutdown_funcs.add(func)
         return func

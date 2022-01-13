@@ -1,13 +1,9 @@
 """
-FastAPI 驱动适配
-================
+## FastAPI 驱动适配
 
 本驱动同时支持服务端以及客户端连接
 
-后端使用方法请参考: `FastAPI 文档`_
-
-.. _FastAPI 文档:
-    https://fastapi.tiangolo.com/
+后端使用方法请参考: [`FastAPI 文档`](https://fastapi.tiangolo.com/)
 """
 
 import logging
@@ -48,93 +44,39 @@ class Config(BaseSettings):
 
     fastapi_openapi_url: Optional[str] = None
     """
-    :类型:
-
-      ``Optional[str]``
-
-    :说明:
-
-      ``openapi.json`` 地址，默认为 ``None`` 即关闭
+    `openapi.json` 地址，默认为 `None` 即关闭
     """
     fastapi_docs_url: Optional[str] = None
     """
-    :类型:
-
-      ``Optional[str]``
-
-    :说明:
-
-      ``swagger`` 地址，默认为 ``None`` 即关闭
+    `swagger` 地址，默认为 `None` 即关闭
     """
     fastapi_redoc_url: Optional[str] = None
     """
-    :类型:
-
-      ``Optional[str]``
-
-    :说明:
-
-      ``redoc`` 地址，默认为 ``None`` 即关闭
+    `redoc` 地址，默认为 `None` 即关闭
     """
     fastapi_include_adapter_schema: bool = True
     """
-    :类型:
-
-      ``bool``
-
-    :说明:
-
-      是否包含适配器路由的 schema，默认为 ``True``
+    是否包含适配器路由的 schema，默认为 `True`
     """
     fastapi_reload: bool = False
     """
-    :类型:
-
-      ``bool``
-
-    :说明:
-
-      开启/关闭冷重载
+    开启/关闭冷重载
     """
     fastapi_reload_dirs: Optional[List[str]] = None
     """
-    :类型:
-
-      ``Optional[List[str]]``
-
-    :说明:
-
-      重载监控文件夹列表，默认为 uvicorn 默认值
+    重载监控文件夹列表，默认为 uvicorn 默认值
     """
     fastapi_reload_delay: Optional[float] = None
     """
-    :类型:
-
-      ``Optional[float]``
-
-    :说明:
-
-      重载延迟，默认为 uvicorn 默认值
+    重载延迟，默认为 uvicorn 默认值
     """
     fastapi_reload_includes: Optional[List[str]] = None
     """
-    :类型:
-
-      ``Optional[List[str]]``
-
-    :说明:
-
-      要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+    要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
     """
     fastapi_reload_excludes: Optional[List[str]] = None
     """
-    :类型:
-
-      ``Optional[List[str]]``
-
-    :说明:
-
-      不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+    不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
     """
 
     class Config:
@@ -158,19 +100,19 @@ class Driver(ReverseDriver):
     @property
     @overrides(ReverseDriver)
     def type(self) -> str:
-        """驱动名称: ``fastapi``"""
+        """驱动名称: `fastapi`"""
         return "fastapi"
 
     @property
     @overrides(ReverseDriver)
     def server_app(self) -> FastAPI:
-        """``FastAPI APP`` 对象"""
+        """`FastAPI APP` 对象"""
         return self._server_app
 
     @property
     @overrides(ReverseDriver)
     def asgi(self) -> FastAPI:
-        """``FastAPI APP`` 对象"""
+        """`FastAPI APP` 对象"""
         return self._server_app
 
     @property
@@ -222,7 +164,7 @@ class Driver(ReverseDriver):
         app: Optional[str] = None,
         **kwargs,
     ):
-        """使用 ``uvicorn`` 启动 FastAPI"""
+        """使用 `uvicorn` 启动 FastAPI"""
         super().run(host, port, app, **kwargs)
         LOGGING_CONFIG = {
             "version": 1,
