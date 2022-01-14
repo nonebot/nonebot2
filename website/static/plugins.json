@@ -241,11 +241,11 @@
     "name": "跑团记录记录器",
     "homepage": "https://github.com/thereisnodice/TRPGLogger",
     "tags": [
-        {
-          "label": "t:TRPG",
-          "color": "#80070B"
-        }
-      ],
+      {
+        "label": "t:TRPG",
+        "color": "#80070B"
+      }
+    ],
     "is_official": false
   },
   {
@@ -296,11 +296,11 @@
     "author": "j1g5awi",
     "homepage": "https://github.com/nonepkg/nonebot_plugin_manager",
     "tags": [
-        {
-          "label": "t:PluginManager",
-          "color": "#80070B"
-        }
-      ],
+      {
+        "label": "t:PluginManager",
+        "color": "#80070B"
+      }
+    ],
     "is_official": false
   },
   {
@@ -331,11 +331,11 @@
     "author": "j1g5awi",
     "homepage": "https://github.com/nonepkg/nonebot_plugin_puppet",
     "tags": [
-        {
-          "label": "a:cqhttp",
-          "color": "#000000"
-        }
-      ],
+      {
+        "label": "a:cqhttp",
+        "color": "#000000"
+      }
+    ],
     "is_official": false
   },
   {
@@ -346,11 +346,11 @@
     "author": "j1g5awi",
     "homepage": "https://github.com/nonepkg/nonebot-plugin-mcstatus",
     "tags": [
-        {
-          "label": "t:Minecraft",
-          "color": "#80070B"
-        }
-      ],
+      {
+        "label": "t:Minecraft",
+        "color": "#80070B"
+      }
+    ],
     "is_official": false
   },
   {
@@ -771,11 +771,11 @@
     "author": "j1g5awi",
     "homepage": "https://github.com/nonepkg/OlivOS.nb2",
     "tags": [
-        {
-          "label": "t:OlivOS",
-          "color": "#00a0ea"
-        }
-      ],
+      {
+        "label": "t:OlivOS",
+        "color": "#00a0ea"
+      }
+    ],
     "is_official": false
   },
   {
@@ -861,6 +861,21 @@
     "author": "ninthseason",
     "homepage": "https://github.com/ninthseason/nonebot_plugin_forwarder",
     "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_roll",
+    "project_link": "nonebot-plugin-roll",
+    "name": "扔骰子",
+    "desc": "掷骰！扔出指定个数的多面骰子。",
+    "author": "KafCoppelia",
+    "homepage": "https://github.com/KafCoppelia/nonebot_plugin_roll",
+    "tags": [
+      {
+        "label": "t:roll",
+        "color": "#ea5252"
+      }
+    ],
     "is_official": false
   }
 ]
