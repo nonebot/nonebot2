@@ -44,6 +44,7 @@ pytest-cov = "^3.0.0"
 pytest-xdist = "^2.5.0"
 nonebug = { git = "https://github.com/nonebot/nonebug.git" }
 sphinx-markdown-builder = { git = "https://github.com/nonebot/sphinx-markdown-builder.git" }
+nb-autodoc = {git = "https://github.com/nonebot/nb-autodoc.git"}
 
 [tool.poetry.extras]
 quart = ["quart"]
