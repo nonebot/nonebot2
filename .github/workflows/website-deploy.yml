@@ -25,7 +25,7 @@ jobs:
 
       - name: Install and build
         run: |
-          poetry run python ./docs_build/autodoc.py
+          poetry run nb-autodoc nonebot
           cp -r ./build/nonebot/* ./website/docs/api/
           yarn prettier
           yarn build

@@ -9,7 +9,7 @@ options:
 
 ## 前注
 
-本章节仅包含插件发布流程指导，插件开发请查阅 **[创建插件](../tutorial/plugin/config-plugin.md)** 章节与 **[Plugin API 文档](../api/plugin.md)** 。
+本章节仅包含插件发布流程指导，插件开发请查阅 **[创建插件](../tutorial/plugin/config-plugin.md)** 章节与 **[Plugin API 文档](../api/plugin/plugin.md)** 。
 
 ## 插件发布流程
 
