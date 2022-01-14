@@ -19,6 +19,8 @@ if TYPE_CHECKING:
     # because loguru module do not have `Logger` class actually
     from loguru import Logger
 
+    from nonebot.plugin import Plugin
+
 # logger = logging.getLogger("nonebot")
 logger: "Logger" = loguru.logger
 """
@@ -48,9 +50,11 @@ class Filter:
 
     def __call__(self, record):
         module_name: str = record["name"]
-        module = sys.modules.get(module_name)
-        if module:
-            module_name = getattr(module, "__module_name__", module_name)
+        # TODO: get plugin name instead of module name
+        # module = sys.modules.get(module_name)
+        # if module and hasattr(module, "__plugin__"):
+        #     plugin: "Plugin" = getattr(module, "__plugin__")
+        #     module_name = plugin.module_name
         record["name"] = module_name.split(".")[0]
         levelno = (
             logger.level(self.level).no if isinstance(self.level, str) else self.level
