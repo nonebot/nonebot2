@@ -877,5 +877,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_crazy_thursday",
+    "project_link": "nonebot-plugin-crazy-thursday",
+    "name": "疯狂星期四",
+    "desc": "天天疯狂！随机输出KFC疯狂星期四文案",
+    "author": "KafCoppelia",
+    "homepage": "https://github.com/KafCoppelia/nonebot_plugin_crazy_thursday",
+    "tags": [
+      {
+        "label": "t:Thursday",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
