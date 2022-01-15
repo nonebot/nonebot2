@@ -24,7 +24,6 @@
   @apply bg-hero text-white border-hero;
 }
 
-
 .disabled {
   @apply opacity-60 pointer-events-none;
 }

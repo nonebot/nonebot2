@@ -5,7 +5,6 @@ from types import ModuleType
 from typing import Any, Set, Dict, List, Type, Tuple, Union, Optional
 
 from nonebot.matcher import Matcher
-from .manager import _current_plugin
 from nonebot.permission import Permission
 from nonebot.dependencies import Dependent
 from nonebot.typing import (
@@ -24,6 +23,8 @@ from nonebot.rule import (
     startswith,
     shell_command,
 )
+
+from .manager import _current_plugin
 
 
 def _store_matcher(matcher: Type[Matcher]) -> None:

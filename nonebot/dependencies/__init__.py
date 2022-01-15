@@ -13,9 +13,10 @@ from pydantic.schema import get_annotation_from_field_info
 from pydantic.fields import Required, FieldInfo, Undefined, ModelField
 
 from nonebot.log import logger
-from .utils import get_typed_signature
 from nonebot.exception import TypeMisMatch
 from nonebot.utils import run_sync, is_coroutine_callable
+
+from .utils import get_typed_signature
 
 T = TypeVar("T", bound="Dependent")
 R = TypeVar("R")

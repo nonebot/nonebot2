@@ -48,10 +48,10 @@ jobs:
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1
         with:
-          publish-dir: './website/build'
+          publish-dir: "./website/build"
           production-deploy: ${{ env.PRODUCTION }}
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: 'Deploy ${{ env.DEPLOY_NAME }}@${{ github.sha }}'
+          deploy-message: "Deploy ${{ env.DEPLOY_NAME }}@${{ github.sha }}"
           enable-commit-comment: false
           alias: ${{ env.DEPLOY_NAME }}
         env:

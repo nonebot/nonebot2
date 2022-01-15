@@ -2,8 +2,9 @@ from types import ModuleType
 from dataclasses import field, dataclass
 from typing import TYPE_CHECKING, Set, Dict, Type, Optional
 
-from .export import Export
 from nonebot.matcher import Matcher
+
+from .export import Export
 
 if TYPE_CHECKING:
     from .manager import PluginManager

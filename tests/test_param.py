@@ -7,7 +7,6 @@ from utils import make_fake_event, make_fake_message
 @pytest.mark.asyncio
 async def test_depend(app: App, load_plugin):
     from nonebot.params import DependParam
-
     from plugins.param.param_depend import (
         ClassDependency,
         runned,
@@ -37,7 +36,6 @@ async def test_depend(app: App, load_plugin):
 @pytest.mark.asyncio
 async def test_bot(app: App, load_plugin):
     from nonebot.params import BotParam
-
     from plugins.param.param_bot import get_bot
 
     async with app.test_dependent(get_bot, allow_types=[BotParam]) as ctx:
@@ -49,7 +47,6 @@ async def test_bot(app: App, load_plugin):
 @pytest.mark.asyncio
 async def test_event(app: App, load_plugin):
     from nonebot.params import EventParam, DependParam
-
     from plugins.param.param_event import (
         event,
         event_type,
@@ -104,7 +101,6 @@ async def test_state(app: App, load_plugin):
         REGEX_GROUP,
         REGEX_MATCHED,
     )
-
     from plugins.param.param_state import (
         state,
         command,
@@ -184,7 +180,6 @@ async def test_state(app: App, load_plugin):
 async def test_matcher(app: App, load_plugin):
     from nonebot.matcher import Matcher
     from nonebot.params import DependParam, MatcherParam
-
     from plugins.param.param_matcher import matcher, receive, last_receive
 
     fake_matcher = Matcher()
@@ -215,7 +210,6 @@ async def test_matcher(app: App, load_plugin):
 async def test_arg(app: App, load_plugin):
     from nonebot.matcher import Matcher
     from nonebot.params import ArgParam
-
     from plugins.param.param_arg import arg, arg_str, arg_plain_text
 
     matcher = Matcher()
@@ -238,7 +232,6 @@ async def test_arg(app: App, load_plugin):
 @pytest.mark.asyncio
 async def test_exception(app: App, load_plugin):
     from nonebot.params import ExceptionParam
-
     from plugins.param.param_exception import exc
 
     exception = ValueError("test")
@@ -250,7 +243,6 @@ async def test_exception(app: App, load_plugin):
 @pytest.mark.asyncio
 async def test_default(app: App, load_plugin):
     from nonebot.params import DefaultParam
-
     from plugins.param.param_default import default
 
     async with app.test_dependent(default, allow_types=[DefaultParam]) as ctx:
