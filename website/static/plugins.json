@@ -896,7 +896,7 @@
   {
     "module_name": "nonebot_plugin_covid19_news",
     "project_link": "nonebot-plugin-covid19-news",
-    "name": "新冠疫情查询😷",
+    "name": "新冠疫情查询",
     "desc": "查询国内城市新冠疫情信息与政策",
     "author": "Zeta-qixi",
     "homepage": "https://github.com/Zeta-qixi/nonebot-plugin-covid19-news",
