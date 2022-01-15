@@ -3,7 +3,7 @@
 
 为方便使用，`nonebot` 模块从子模块导入了部分内容
 
-- `on_message` => `nonebot.plugin.on_message`
+- `on_message` => {ref}`nonebot.plugin.on.on_message`
 - `on_notice` => `nonebot.plugin.on_notice`
 - `on_request` => `nonebot.plugin.on_request`
 - `on_metaevent` => `nonebot.plugin.on_metaevent`
@@ -26,6 +26,10 @@
 - `get_loaded_plugins` => `nonebot.plugin.get_loaded_plugins`
 - `export` => `nonebot.plugin.export`
 - `require` => `nonebot.plugin.require`
+
+FrontMatter:
+    sidebar_position: 0
+    description: nonebot 模块
 """
 
 import importlib
