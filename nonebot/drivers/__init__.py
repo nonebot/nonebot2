@@ -19,15 +19,16 @@ from typing import (
     AsyncGenerator,
 )
 
-from ._model import URL as URL
 from nonebot.log import logger
 from nonebot.utils import escape_tag
-from ._model import Request as Request
 from nonebot.config import Env, Config
+from nonebot.typing import T_BotConnectionHook, T_BotDisconnectionHook
+
+from ._model import URL as URL
+from ._model import Request as Request
 from ._model import Response as Response
 from ._model import WebSocket as WebSocket
 from ._model import HTTPVersion as HTTPVersion
-from nonebot.typing import T_BotConnectionHook, T_BotDisconnectionHook
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Adapter

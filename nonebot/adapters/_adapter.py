@@ -2,7 +2,6 @@ import abc
 from contextlib import asynccontextmanager
 from typing import Any, Dict, AsyncGenerator
 
-from ._bot import Bot
 from nonebot.config import Config
 from nonebot.drivers import (
     Driver,
@@ -14,6 +13,8 @@ from nonebot.drivers import (
     HTTPServerSetup,
     WebSocketServerSetup,
 )
+
+from ._bot import Bot
 
 
 class Adapter(abc.ABC):

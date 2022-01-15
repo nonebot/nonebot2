@@ -1,6 +1,6 @@
 from nonebot import require
-
 from plugins.export import test
+
 from .export import test as test_related
 
 test_require = require("export").test

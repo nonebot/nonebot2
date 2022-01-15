@@ -1,0 +1,20 @@
+ci:
+  autofix_commit_msg: ":rotating_light: auto fix by pre-commit hooks"
+  autofix_prs: true
+  autoupdate_branch: dev
+  autoupdate_schedule: weekly
+repos:
+  - repo: https://github.com/pycqa/isort
+    rev: 5.10.1
+    hooks:
+      - id: isort
+
+  - repo: https://github.com/psf/black
+    rev: 21.12b0
+    hooks:
+      - id: black
+
+  - repo: https://github.com/pre-commit/mirrors-prettier
+    rev: v2.5.1
+    hooks:
+      - id: prettier
