@@ -921,5 +921,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_caiyunai",
+    "project_link": "nonebot-plugin-caiyunai",
+    "name": "彩云小梦AI续写",
+    "desc": "基于彩云小梦的小说AI续写插件",
+    "author": "MeetWq",
+    "homepage": "https://github.com/MeetWq/nonebot-plugin-caiyunai",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "a:cqhttp",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
