@@ -3,7 +3,7 @@
 
 每个事件响应器 `Matcher` 拥有一个匹配规则 `Rule` ，其中是 `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
 
-::: tip 提示
+:::tip 提示
 `RuleChecker` 既可以是 async function 也可以是 sync function
 :::
 """
@@ -298,7 +298,7 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
         命令 `("test",)` 可以匹配：`/test` 开头的消息
         命令 `("test", "sub")` 可以匹配”`/test.sub` 开头的消息
 
-    ::: tip 提示
+    :::tip 提示
     命令内容与后续消息间无需空格！
     :::
     """
@@ -403,7 +403,7 @@ def shell_command(
         rule = shell_command("ls", parser=parser)
         ```
 
-    ::: tip 提示
+    :::tip 提示
     命令内容与后续消息间无需空格！
     :::
     """
@@ -464,7 +464,7 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
         regex: 正则表达式
         flags: 正则标志
 
-    ::: tip 提示
+    :::tip 提示
     正则表达式匹配使用 search 而非 match，如需从头匹配请使用 `r"^xxx"` 来确保匹配开头
     :::
     """

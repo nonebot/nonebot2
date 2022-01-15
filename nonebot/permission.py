@@ -3,7 +3,7 @@
 
 每个 `Matcher` 拥有一个 `Permission` ，其中是 `PermissionChecker` 的集合，只要有一个 `PermissionChecker` 检查结果为 `True` 时就会继续运行。
 
-::: tip 提示
+:::tip 提示
 `PermissionChecker` 既可以是 async function 也可以是 sync function
 :::
 """
