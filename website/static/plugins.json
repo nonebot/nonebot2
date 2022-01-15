@@ -902,5 +902,24 @@
     "homepage": "https://github.com/Zeta-qixi/nonebot-plugin-covid19-news",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_remake",
+    "project_link": "nonebot-plugin-remake",
+    "name": "人生重开模拟器",
+    "desc": "这垃圾人生一秒也不想待了？立即重开！",
+    "author": "MeetWq",
+    "homepage": "https://github.com/MeetWq/nonebot-plugin-remake",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "a:cqhttp",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
