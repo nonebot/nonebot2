@@ -544,6 +544,26 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "nb-autodoc"
+version = "0.1.0"
+description = "API doc generator for NoneBot."
+category = "dev"
+optional = false
+python-versions = ">=3.7"
+develop = false
+
+[package.dependencies]
+attrs = ">=21.4,<22.0"
+click = ">=8.0.3"
+six = ">=1.6.1"
+
+[package.source]
+type = "git"
+url = "https://github.com/nonebot/nb-autodoc.git"
+reference = "master"
+resolved_reference = "58508bce0cb4a49929aefe1070f7433b459d9ce8"
+
+[[package]]
 name = "nodeenv"
 version = "1.6.0"
 description = "Node.js virtual environment builder"
@@ -1088,7 +1108,7 @@ websockets = ["websockets"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.3"
-content-hash = "9e9f256a3c469733ebc2196be86616327872dec3ef6238045a129f8bd9491fde"
+content-hash = "0e101f22381597b968f6c51419c1aa284243183f7298ac7837f125510e5a7a53"
 
 [metadata.files]
 aiodns = [
@@ -1728,6 +1748,7 @@ mypy-extensions = [
     {file = "mypy_extensions-0.4.3-py2.py3-none-any.whl", hash = "sha256:090fedd75945a69ae91ce1303b5824f428daf5a028d2f6ab8a299250a846f15d"},
     {file = "mypy_extensions-0.4.3.tar.gz", hash = "sha256:2d82818f5bb3e369420cb3c4060a7970edba416647068eb4c5343488a6c604a8"},
 ]
+nb-autodoc = []
 nodeenv = [
     {file = "nodeenv-1.6.0-py2.py3-none-any.whl", hash = "sha256:621e6b7076565ddcacd2db0294c0381e01fd28945ab36bcf00f41c5daf63bef7"},
     {file = "nodeenv-1.6.0.tar.gz", hash = "sha256:3ef13ff90291ba2a4a7a4ff9a979b63ffdd00a464dbe04acf0ea6471517a4c2b"},
