@@ -12,6 +12,7 @@ from typing import (
     Mapping,
     TypeVar,
     Iterable,
+    Optional,
     overload,
 )
 
@@ -232,14 +233,20 @@ class Message(List[TMS], abc.ABC):
             return super().index(first_segment, *args)  # type: ignore
         return super().index(value, *args)
 
-    def get(self: TM, type_: str, count: int) -> TM:
-        iterator = (seg for seg in self if seg.type == type_)
-        return self.__class__(
-            filter(
-                lambda seg: seg is not None,
-                (next(iterator) for _ in range(count)),
-            )
-        )
+    def get(self: TM, type_: str, count: Optional[int] = None) -> TM:
+        if count is None:
+            return self[type_]
+
+        iterator, filtered = (seg for seg in self if seg.type == type_), []
+        for _ in range(count):
+            seg = next(iterator, None)
+            if seg is None:
+                break
+            filtered.append(seg)
+        return self.__class__(filtered)
+
+    def count(self, value: Union[TMS, str]) -> int:
+        return len(self[value]) if isinstance(value, str) else super().count(value)
 
     def append(self: TM, obj: Union[str, TMS]) -> TM:
         """
