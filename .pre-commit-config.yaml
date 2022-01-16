@@ -3,6 +3,7 @@ ci:
   autofix_prs: true
   autoupdate_branch: dev
   autoupdate_schedule: weekly
+  autoupdate_commit_msg: ":arrow_up: auto update by pre-commit hooks"
 repos:
   - repo: https://github.com/pycqa/isort
     rev: 5.10.1
@@ -18,3 +19,4 @@ repos:
     rev: v2.5.1
     hooks:
       - id: prettier
+        types_or: [javascript, jsx, ts, tsx, markdown]
