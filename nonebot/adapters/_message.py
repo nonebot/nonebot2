@@ -5,12 +5,14 @@ from typing import (
     Any,
     Dict,
     List,
+    Tuple,
     Type,
     Union,
     Generic,
     Mapping,
     TypeVar,
     Iterable,
+    overload,
 )
 
 from ._template import MessageTemplate
@@ -87,7 +89,7 @@ class MessageSegment(Mapping, abc.ABC, Generic[TM]):
         raise NotImplementedError
 
 
-class Message(List[TMS], abc.ABC):
+class Message(List[TMS], Generic[TMS], abc.ABC):
     """消息数组"""
 
     def __init__(
@@ -179,6 +181,50 @@ class Message(List[TMS], abc.ABC):
         else:
             self.extend(self._construct(other))
         return self
+
+    @overload
+    def __getitem__(self: TM, __args: str) -> TM:
+        ...
+
+    @overload
+    def __getitem__(self, __args: Tuple[str, int]) -> TMS:
+        ...
+
+    @overload
+    def __getitem__(self: TM, __args: Tuple[str, slice]) -> TM:
+        ...
+
+    @overload
+    def __getitem__(self, __args: int) -> TMS:
+        ...
+
+    @overload
+    def __getitem__(self: TM, __args: slice) -> TM:
+        ...
+
+    def __getitem__(
+        self: TM,
+        __args: Union[
+            str,
+            Tuple[str, int],
+            Tuple[str, slice],
+            int,
+            slice,
+        ],
+    ) -> Union[TMS, TM]:
+        arg1, arg2 = __args if isinstance(__args, tuple) else (__args, None)
+        if isinstance(arg1, int) and arg2 is None:
+            return super().__getitem__(arg1)
+        elif isinstance(arg1, slice) and arg2 is None:
+            return self.__class__(super().__getitem__(arg1))
+        elif isinstance(arg1, str) and arg2 is None:
+            return self.__class__(seg for seg in self if seg.type == arg1)
+        elif isinstance(arg1, str) and isinstance(arg2, int):
+            return [seg for seg in self if seg.type == arg1][arg2]
+        elif isinstance(arg1, str) and isinstance(arg2, slice):
+            return self.__class__([seg for seg in self if seg.type == arg1][arg2])
+        else:
+            raise ValueError("Invalid arguments to __getitem__")
 
     def append(self: TM, obj: Union[str, TMS]) -> TM:
         """
