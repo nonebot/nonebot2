@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Type, Optional
+from typing import TYPE_CHECKING, Type, Union, Mapping, Iterable, Optional
 
 from pydantic import create_model
 
@@ -34,8 +34,13 @@ def make_fake_message() -> Type["Message"]:
             return FakeMessageSegment
 
         @staticmethod
-        def _construct(msg: str):
-            yield FakeMessageSegment.text(msg)
+        def _construct(msg: Union[str, Iterable[Mapping]]):
+            if isinstance(msg, str):
+                yield FakeMessageSegment.text(msg)
+            else:
+                for seg in msg:
+                    yield FakeMessageSegment(**seg)
+            return
 
     return FakeMessage
 
