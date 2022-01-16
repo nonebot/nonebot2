@@ -6,6 +6,10 @@
 除了 Python 内置的类型，下面还出现了如下 NoneBot 自定类型，实际上它们是 Python 内置类型的别名。
 
 以下类型均可从 nonebot.typing 模块导入。
+
+FrontMatter:
+    sidebar_position: 11
+    description: nonebot.typing 模块
 """
 from typing import (
     TYPE_CHECKING,

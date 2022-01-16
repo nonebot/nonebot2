@@ -6,6 +6,10 @@ NoneBot 使用 [`loguru`][loguru] 来记录日志信息。
 自定义 logger 请参考 [`loguru`][loguru] 文档。
 
 [loguru]: https://github.com/Delgan/loguru
+
+FrontMatter:
+    sidebar_position: 7
+    description: nonebot.log 模块
 """
 
 import sys
@@ -28,9 +32,9 @@ NoneBot 日志记录器对象。
 
 默认信息:
 
-    - 格式: `[%(asctime)s %(name)s] %(levelname)s: %(message)s`
-    - 等级: `INFO` ，根据 `config.log_level` 配置改变
-    - 输出: 输出至 stdout
+- 格式: `[%(asctime)s %(name)s] %(levelname)s: %(message)s`
+- 等级: `INFO` ，根据 `config.log_level` 配置改变
+- 输出: 输出至 stdout
 
 用法:
     ```python

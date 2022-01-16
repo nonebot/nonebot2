@@ -3,9 +3,9 @@
 
 每个事件响应器 `Matcher` 拥有一个匹配规则 `Rule` ，其中是 `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
 
-:::tip 提示
-`RuleChecker` 既可以是 async function 也可以是 sync function
-:::
+FrontMatter:
+    sidebar_position: 5
+    description: nonebot.rule 模块
 """
 
 import re

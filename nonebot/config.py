@@ -4,6 +4,10 @@
 NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及 [`python-dotenv`](https://saurabh-kumar.com/python-dotenv/) 来读取配置。
 
 配置项需符合特殊格式或 json 序列化格式。详情见 [`pydantic Field Type`](https://pydantic-docs.helpmanual.io/usage/types/) 文档。
+
+FrontMatter:
+    sidebar_position: 1
+    description: nonebot.config 模块
 """
 import os
 from pathlib import Path

@@ -1,7 +1,11 @@
 """
 ## 事件响应器
 
-该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行对话 。
+该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行对话。
+
+FrontMatter:
+    sidebar_position: 3
+    description: nonebot.matcher 模块
 """
 
 from types import ModuleType

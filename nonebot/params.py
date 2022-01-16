@@ -1,3 +1,9 @@
+"""
+FrontMatter:
+    sidebar_position: 4
+    description: nonebot.params 模块
+"""
+
 import asyncio
 import inspect
 import warnings

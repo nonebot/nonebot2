@@ -3,6 +3,10 @@
 
 下列文档中的异常是所有 NoneBot 运行时可能会抛出的。
 这些异常并非所有需要用户处理，在 NoneBot 内部运行时被捕获，并进行对应操作。
+
+FrontMatter:
+    sidebar_position: 10
+    description: nonebot.exception 模块
 """
 
 from typing import Any, Optional

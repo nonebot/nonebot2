@@ -2,6 +2,10 @@
 ## 事件处理
 
 NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供了多个插槽以进行事件的预处理等。
+
+FrontMatter:
+    sidebar_position: 2
+    description: nonebot.message 模块
 """
 
 import asyncio
