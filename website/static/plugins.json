@@ -210,7 +210,16 @@
     "desc": "订阅来自微博，B站，网易云，RSS以及各种网站的动态，转发到QQ群中",
     "name": "Bison",
     "homepage": "https://github.com/felinae98/nonebot-bison",
-    "tags": [],
+    "tags": [
+      {
+        "label": "alpha only",
+        "color": "#f56c6c"
+      },
+      {
+        "label": "a:cqhttp",
+        "color": "#000000"
+      }
+    ],
     "is_official": false
   },
   {
