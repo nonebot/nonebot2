@@ -6,11 +6,14 @@ from typing import (
     Dict,
     List,
     Type,
+    Tuple,
     Union,
     Generic,
     Mapping,
     TypeVar,
     Iterable,
+    Optional,
+    overload,
 )
 
 from ._template import MessageTemplate
@@ -179,6 +182,71 @@ class Message(List[TMS], abc.ABC):
         else:
             self.extend(self._construct(other))
         return self
+
+    @overload
+    def __getitem__(self: TM, __args: str) -> TM:
+        ...
+
+    @overload
+    def __getitem__(self, __args: Tuple[str, int]) -> TMS:
+        ...
+
+    @overload
+    def __getitem__(self: TM, __args: Tuple[str, slice]) -> TM:
+        ...
+
+    @overload
+    def __getitem__(self, __args: int) -> TMS:
+        ...
+
+    @overload
+    def __getitem__(self: TM, __args: slice) -> TM:
+        ...
+
+    def __getitem__(
+        self: TM,
+        args: Union[
+            str,
+            Tuple[str, int],
+            Tuple[str, slice],
+            int,
+            slice,
+        ],
+    ) -> Union[TMS, TM]:
+        arg1, arg2 = args if isinstance(args, tuple) else (args, None)
+        if isinstance(arg1, int) and arg2 is None:
+            return super().__getitem__(arg1)
+        elif isinstance(arg1, slice) and arg2 is None:
+            return self.__class__(super().__getitem__(arg1))
+        elif isinstance(arg1, str) and arg2 is None:
+            return self.__class__(seg for seg in self if seg.type == arg1)
+        elif isinstance(arg1, str) and isinstance(arg2, int):
+            return [seg for seg in self if seg.type == arg1][arg2]
+        elif isinstance(arg1, str) and isinstance(arg2, slice):
+            return self.__class__([seg for seg in self if seg.type == arg1][arg2])
+        else:
+            raise ValueError("Incorrect arguments to slice")
+
+    def index(self, value: Union[TMS, str], *args) -> int:
+        if isinstance(value, str):
+            first_segment = next((seg for seg in self if seg.type == value), None)  # type: ignore
+            return super().index(first_segment, *args)  # type: ignore
+        return super().index(value, *args)
+
+    def get(self: TM, type_: str, count: Optional[int] = None) -> TM:
+        if count is None:
+            return self[type_]
+
+        iterator, filtered = (seg for seg in self if seg.type == type_), []
+        for _ in range(count):
+            seg = next(iterator, None)
+            if seg is None:
+                break
+            filtered.append(seg)
+        return self.__class__(filtered)
+
+    def count(self, value: Union[TMS, str]) -> int:
+        return len(self[value]) if isinstance(value, str) else super().count(value)
 
     def append(self: TM, obj: Union[str, TMS]) -> TM:
         """
