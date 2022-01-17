@@ -1,31 +1,32 @@
 """
 ## 快捷导入
 
-为方便使用，`nonebot` 模块从子模块导入了部分内容
+为方便使用，`nonebot` 模块从子模块导入了部分内容，以下内容可以直接通过 `nonebot` 模块导入:
 
+- `on` => {ref}`nonebot.plugin.on.on`
+- `on_metaevent` => {ref}`nonebot.plugin.on.on_metaevent`
 - `on_message` => {ref}`nonebot.plugin.on.on_message`
-- `on_notice` => `nonebot.plugin.on_notice`
-- `on_request` => `nonebot.plugin.on_request`
-- `on_metaevent` => `nonebot.plugin.on_metaevent`
-- `on_startswith` => `nonebot.plugin.on_startswith`
-- `on_endswith` => `nonebot.plugin.on_endswith`
-- `on_keyword` => `nonebot.plugin.on_keyword`
-- `on_command` => `nonebot.plugin.on_command`
-- `on_shell_command` => `nonebot.plugin.on_shell_command`
-- `on_regex` => `nonebot.plugin.on_regex`
-- `CommandGroup` => `nonebot.plugin.CommandGroup`
-- `Matchergroup` => `nonebot.plugin.MatcherGroup`
-- `load_plugin` => `nonebot.plugin.load_plugin`
-- `load_plugins` => `nonebot.plugin.load_plugins`
-- `load_all_plugins` => `nonebot.plugin.load_all_plugins`
-- `load_from_json` => `nonebot.plugin.load_from_json`
-- `load_from_toml` => `nonebot.plugin.load_from_toml`
-- `load_builtin_plugin` => `nonebot.plugin.load_builtin_plugin`
-- `load_builtin_plugins` => `nonebot.plugin.load_builtin_plugins`
-- `get_plugin` => `nonebot.plugin.get_plugin`
-- `get_loaded_plugins` => `nonebot.plugin.get_loaded_plugins`
-- `export` => `nonebot.plugin.export`
-- `require` => `nonebot.plugin.require`
+- `on_notice` => {ref}`nonebot.plugin.on.on_notice`
+- `on_request` => {ref}`nonebot.plugin.on.on_request`
+- `on_startswith` => {ref}`nonebot.plugin.on.on_startswith`
+- `on_endswith` => {ref}`nonebot.plugin.on.on_endswith`
+- `on_keyword` => {ref}`nonebot.plugin.on.on_keyword`
+- `on_command` => {ref}`nonebot.plugin.on.on_command`
+- `on_shell_command` => {ref}`nonebot.plugin.on.on_shell_command`
+- `on_regex` => {ref}`nonebot.plugin.on.on_regex`
+- `CommandGroup` => {ref}`nonebot.plugin.on.CommandGroup`
+- `Matchergroup` => {ref}`nonebot.plugin.on.MatcherGroup`
+- `load_plugin` => {ref}`nonebot.plugin.load.load_plugin`
+- `load_plugins` => {ref}`nonebot.plugin.load.load_plugins`
+- `load_all_plugins` => {ref}`nonebot.plugin.load.load_all_plugins`
+- `load_from_json` => {ref}`nonebot.plugin.load.load_from_json`
+- `load_from_toml` => {ref}`nonebot.plugin.load.load_from_toml`
+- `load_builtin_plugin` => {ref}`nonebot.plugin.load.load_builtin_plugin`
+- `load_builtin_plugins` => {ref}`nonebot.plugin.load.load_builtin_plugins`
+- `get_plugin` => {ref}`nonebot.plugin.plugin.get_plugin`
+- `get_loaded_plugins` => {ref}`nonebot.plugin.plugin.get_loaded_plugins`
+- `export` => {ref}`nonebot.plugin.export.export`
+- `require` => {ref}`nonebot.plugin.load.require`
 
 FrontMatter:
     sidebar_position: 0
@@ -55,14 +56,15 @@ _driver: Optional[Driver] = None
 
 
 def get_driver() -> Driver:
-    """
-    获取全局 Driver 对象。可用于在计划任务的回调中获取当前 Driver 对象。
+    """获取全局 {ref}`nonebot.drivers.Driver` 实例。
+
+    可用于在计划任务的回调等情形中获取当前 {ref}`nonebot.drivers.Driver` 实例。
 
     返回:
-        Driver: 全局 Driver 对象
+        全局 {ref}`nonebot.drivers.Driver` 对象
 
     异常:
-        ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init` 尚未调用)
 
     用法:
         ```python
@@ -75,14 +77,14 @@ def get_driver() -> Driver:
 
 
 def get_app() -> Any:
-    """
-    获取全局 Driver 对应 Server App 对象。
+    """获取全局 {ref}`nonebot.drivers.ReverseDriver` 对应的 Server App 对象。
 
     返回:
-        Any: Server App 对象
+        Server App 对象
 
     异常:
-        ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+        AssertionError: 全局 Driver 对象不是 {ref}`nonebot.drivers.ReverseDriver` 类型
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init` 尚未调用)
 
     用法:
         ```python
@@ -97,14 +99,14 @@ def get_app() -> Any:
 
 
 def get_asgi() -> Any:
-    """
-    获取全局 Driver 对应 Asgi 对象。
+    """获取全局 {ref}`nonebot.drivers.ReverseDriver` 对应 [ASGI](https://asgi.readthedocs.io/) 对象。
 
     返回:
-        Any: Asgi 对象
+        ASGI 对象
 
     异常:
-        ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+        AssertionError: 全局 Driver 对象不是 {ref}`nonebot.drivers.ReverseDriver` 类型
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init` 尚未调用)
 
     用法:
         ```python
@@ -119,23 +121,25 @@ def get_asgi() -> Any:
 
 
 def get_bot(self_id: Optional[str] = None) -> Bot:
-    """
-    当提供 self_id 时，此函数是 get_bots()[self_id] 的简写；当不提供时，返回一个 Bot。
+    """获取一个连接到 NoneBot 的 {ref}`nonebot.adapters._bot.Bot` 对象。
+
+    当提供 `self_id` 时，此函数是 `get_bots()[self_id]` 的简写；
+    当不提供时，返回一个 {ref}`nonebot.adapters._bot.Bot`。
 
     参数:
-        self_id: 用来识别 Bot 的 ID
+        self_id: 用来识别 {ref}`nonebot.adapters._bot.Bot` 的 {ref}`nonebot.adapters._bot.Bot.self_id` 属性
 
     返回:
-        Bot: Bot 对象
+        {ref}`nonebot.adapters._bot.Bot` 对象
 
     异常:
-        KeyError: 对应 ID 的 Bot 不存在
-        ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
-        ValueError: 没有传入 ID 且没有 Bot 可用
+        KeyError: 对应 self_id 的 Bot 不存在
+        ValueError: 没有传入 self_id 且没有 Bot 可用
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init` 尚未调用)
 
     用法:
         ```python
-        assert nonebot.get_bot('12345') == nonebot.get_bots()['12345']
+        assert nonebot.get_bot("12345") == nonebot.get_bots()["12345"]
 
         another_unspecified_bot = nonebot.get_bot()
         ```
@@ -151,14 +155,13 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
 
 
 def get_bots() -> Dict[str, Bot]:
-    """
-    获取所有通过 ws 连接 NoneBot 的 Bot 对象。
+    """获取所有连接到 NoneBot 的 {ref}`nonebot.adapters._bot.Bot` 对象。
 
     返回:
-        Dict[str, Bot]: 一个以字符串 ID 为键，Bot 对象为值的字典
+        一个以 {ref}`nonebot.adapters._bot.Bot.self_id` 为键，{ref}`nonebot.adapters._bot.Bot` 对象为值的字典
 
     异常:
-        ValueError: 全局 Driver 对象尚未初始化 (nonebot.init 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init` 尚未调用)
 
     用法:
         ```python
@@ -200,17 +203,16 @@ def _resolve_combine_expr(obj_str: str) -> Type[Driver]:
     return combine_driver(DriverClass, *mixins)
 
 
-def init(*, _env_file: Optional[str] = None, **kwargs):
-    """
-    初始化 NoneBot 以及 全局 Driver 对象。
+def init(*, _env_file: Optional[str] = None, **kwargs: Any) -> None:
+    """初始化 NoneBot 以及 全局 {ref}`nonebot.drivers.Driver` 对象。
 
     NoneBot 将会从 .env 文件中读取环境信息，并使用相应的 env 文件配置。
 
-    你也可以传入自定义的 _env_file 来指定 NoneBot 从该文件读取配置。
+    也可以传入自定义的 `_env_file` 来指定 NoneBot 从该文件读取配置。
 
     参数:
-        _env_file: 配置文件名，默认从 .env.{env_name} 中读取配置
-        **kwargs: 任意变量，将会存储到 Config 对象里
+        _env_file: 配置文件名，默认从 `.env.{env_name}` 中读取配置
+        kwargs: 任意变量，将会存储到 {ref}`nonebot.drivers.Driver.config` 对象里
 
     用法:
         ```python
@@ -240,12 +242,11 @@ def init(*, _env_file: Optional[str] = None, **kwargs):
 
 
 def run(*args: Any, **kwargs: Any) -> None:
-    """
-    启动 NoneBot，即运行全局 Driver 对象。
+    """启动 NoneBot，即运行全局 {ref}`nonebot.drivers.Driver` 对象。
 
     参数:
-        *args: 传入 Driver.run 的位置参数
-        **kwargs: 传入 Driver.run 的命名参数
+        args: 传入 {ref}`nonebot.drivers.Driver.run` 的位置参数
+        kwargs: 传入 {ref}`nonebot.drivers.Driver.run` 的命名参数
 
     用法:
         ```python
@@ -257,6 +258,7 @@ def run(*args: Any, **kwargs: Any) -> None:
 
 
 import nonebot.params as params
+from nonebot.plugin import on as on
 from nonebot.plugin import export as export
 from nonebot.plugin import require as require
 from nonebot.plugin import on_regex as on_regex

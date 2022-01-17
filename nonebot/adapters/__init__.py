@@ -25,3 +25,11 @@ from ._adapter import Adapter as Adapter
 from ._message import Message as Message
 from ._message import MessageSegment as MessageSegment
 from ._template import MessageTemplate as MessageTemplate
+
+__autodoc__ = {
+    "_bot": True,
+    "_event": True,
+    "_adapter": True,
+    "_message": True,
+    "_template": True,
+}
