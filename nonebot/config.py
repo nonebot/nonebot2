@@ -1,5 +1,4 @@
-"""
-## 配置
+"""本模块定义了 NoneBot 本身运行所需的配置项。
 
 NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及 [`python-dotenv`](https://saurabh-kumar.com/python-dotenv/) 来读取配置。
 

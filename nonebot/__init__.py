@@ -1,7 +1,8 @@
-"""
+"""本模块主要定义了 NoneBot 启动所需函数，供 bot 入口文件调用。
+
 ## 快捷导入
 
-为方便使用，`nonebot` 模块从子模块导入了部分内容，以下内容可以直接通过 `nonebot` 模块导入:
+为方便使用，本模块从子模块导入了部分内容，以下内容可以直接通过本模块导入:
 
 - `on` => {ref}``on` <nonebot.plugin.on.on>`
 - `on_metaevent` => {ref}``on_metaevent` <nonebot.plugin.on.on_metaevent>`

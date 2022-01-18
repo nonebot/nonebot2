@@ -1,5 +1,4 @@
-"""
-## 日志
+"""本模块定义了 NoneBot 的日志记录 Logger。
 
 NoneBot 使用 [`loguru`][loguru] 来记录日志信息。
 
