@@ -144,16 +144,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_cooldown",
-    "project_link": "nonebot-plugin-cooldown",
-    "author": "jks15satoshi",
-    "desc": "为用户调用功能添加冷却时间（调用频率限制）功能",
-    "name": "冷却事件",
-    "homepage": "https://github.com/jks15satoshi/nonebot-plugin-cooldown",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_mqtt",
     "project_link": "nonebot-plugin-mqtt",
     "author": "synodriver",
