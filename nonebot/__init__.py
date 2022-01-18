@@ -3,30 +3,30 @@
 
 为方便使用，`nonebot` 模块从子模块导入了部分内容，以下内容可以直接通过 `nonebot` 模块导入:
 
-- `on` => {ref}`nonebot.plugin.on.on`
-- `on_metaevent` => {ref}`nonebot.plugin.on.on_metaevent`
-- `on_message` => {ref}`nonebot.plugin.on.on_message`
-- `on_notice` => {ref}`nonebot.plugin.on.on_notice`
-- `on_request` => {ref}`nonebot.plugin.on.on_request`
-- `on_startswith` => {ref}`nonebot.plugin.on.on_startswith`
-- `on_endswith` => {ref}`nonebot.plugin.on.on_endswith`
-- `on_keyword` => {ref}`nonebot.plugin.on.on_keyword`
-- `on_command` => {ref}`nonebot.plugin.on.on_command`
-- `on_shell_command` => {ref}`nonebot.plugin.on.on_shell_command`
-- `on_regex` => {ref}`nonebot.plugin.on.on_regex`
-- `CommandGroup` => {ref}`nonebot.plugin.on.CommandGroup`
-- `Matchergroup` => {ref}`nonebot.plugin.on.MatcherGroup`
-- `load_plugin` => {ref}`nonebot.plugin.load.load_plugin`
-- `load_plugins` => {ref}`nonebot.plugin.load.load_plugins`
-- `load_all_plugins` => {ref}`nonebot.plugin.load.load_all_plugins`
-- `load_from_json` => {ref}`nonebot.plugin.load.load_from_json`
-- `load_from_toml` => {ref}`nonebot.plugin.load.load_from_toml`
-- `load_builtin_plugin` => {ref}`nonebot.plugin.load.load_builtin_plugin`
-- `load_builtin_plugins` => {ref}`nonebot.plugin.load.load_builtin_plugins`
-- `get_plugin` => {ref}`nonebot.plugin.plugin.get_plugin`
-- `get_loaded_plugins` => {ref}`nonebot.plugin.plugin.get_loaded_plugins`
-- `export` => {ref}`nonebot.plugin.export.export`
-- `require` => {ref}`nonebot.plugin.load.require`
+- `on` => {ref}``on` <nonebot.plugin.on.on>`
+- `on_metaevent` => {ref}``on_metaevent` <nonebot.plugin.on.on_metaevent>`
+- `on_message` => {ref}``on_message` <nonebot.plugin.on.on_message>`
+- `on_notice` => {ref}``on_notice` <nonebot.plugin.on.on_notice>`
+- `on_request` => {ref}``on_request` <nonebot.plugin.on.on_request>`
+- `on_startswith` => {ref}``on_startswith` <nonebot.plugin.on.on_startswith>`
+- `on_endswith` => {ref}``on_endswith` <nonebot.plugin.on.on_endswith>`
+- `on_keyword` => {ref}``on_keyword` <nonebot.plugin.on.on_keyword>`
+- `on_command` => {ref}``on_command` <nonebot.plugin.on.on_command>`
+- `on_shell_command` => {ref}``on_shell_command` <nonebot.plugin.on.on_shell_command>`
+- `on_regex` => {ref}``on_regex` <nonebot.plugin.on.on_regex>`
+- `CommandGroup` => {ref}``CommandGroup` <nonebot.plugin.on.CommandGroup>`
+- `Matchergroup` => {ref}``MatcherGroup` <nonebot.plugin.on.MatcherGroup>`
+- `load_plugin` => {ref}``load_plugin` <nonebot.plugin.load.load_plugin>`
+- `load_plugins` => {ref}``load_plugins` <nonebot.plugin.load.load_plugins>`
+- `load_all_plugins` => {ref}``load_all_plugins` <nonebot.plugin.load.load_all_plugins>`
+- `load_from_json` => {ref}``load_from_json` <nonebot.plugin.load.load_from_json>`
+- `load_from_toml` => {ref}``load_from_toml` <nonebot.plugin.load.load_from_toml>`
+- `load_builtin_plugin` => {ref}``load_builtin_plugin` <nonebot.plugin.load.load_builtin_plugin>`
+- `load_builtin_plugins` => {ref}``load_builtin_plugins` <nonebot.plugin.load.load_builtin_plugins>`
+- `get_plugin` => {ref}``get_plugin` <nonebot.plugin.plugin.get_plugin>`
+- `get_loaded_plugins` => {ref}``get_loaded_plugins` <nonebot.plugin.plugin.get_loaded_plugins>`
+- `export` => {ref}``export` <nonebot.plugin.export.export>`
+- `require` => {ref}``require` <nonebot.plugin.load.require>`
 
 FrontMatter:
     sidebar_position: 0
@@ -64,7 +64,7 @@ def get_driver() -> Driver:
         全局 {ref}`nonebot.drivers.Driver` 对象
 
     异常:
-        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init` 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
     用法:
         ```python
@@ -84,7 +84,7 @@ def get_app() -> Any:
 
     异常:
         AssertionError: 全局 Driver 对象不是 {ref}`nonebot.drivers.ReverseDriver` 类型
-        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init` 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
     用法:
         ```python
@@ -106,7 +106,7 @@ def get_asgi() -> Any:
 
     异常:
         AssertionError: 全局 Driver 对象不是 {ref}`nonebot.drivers.ReverseDriver` 类型
-        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init` 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
     用法:
         ```python
@@ -135,7 +135,7 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
     异常:
         KeyError: 对应 self_id 的 Bot 不存在
         ValueError: 没有传入 self_id 且没有 Bot 可用
-        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init` 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
     用法:
         ```python
@@ -161,7 +161,7 @@ def get_bots() -> Dict[str, Bot]:
         一个以 {ref}`nonebot.adapters._bot.Bot.self_id` 为键，{ref}`nonebot.adapters._bot.Bot` 对象为值的字典
 
     异常:
-        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init` 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
     用法:
         ```python

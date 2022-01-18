@@ -15,7 +15,7 @@ from datetime import timedelta
 from ipaddress import IPv4Address
 from typing import Any, Set, Dict, Tuple, Union, Mapping, Optional
 
-from pydantic import BaseSettings, IPvAnyAddress
+from pydantic import BaseSettings, IPvAnyAddress, validator
 from pydantic.env_settings import (
     SettingsError,
     EnvSettingsSource,
@@ -125,15 +125,15 @@ class BaseConfig(BaseSettings):
 
 
 class Env(BaseConfig):
-    """
-    运行环境配置。大小写不敏感。
+    """运行环境配置。大小写不敏感。
 
-    将会从 `nonebot.init 参数` > `环境变量` > `.env 环境配置文件` 的优先级读取配置。
+    将会从 `环境变量` > `.env 环境配置文件` 的优先级读取环境信息。
     """
 
     environment: str = "prod"
-    """
-    当前环境名。 NoneBot 将从 `.env.{environment}` 文件中加载配置。
+    """当前环境名。
+
+    NoneBot 将从 `.env.{environment}` 文件中加载配置。
     """
 
     class Config:
@@ -142,36 +142,37 @@ class Env(BaseConfig):
 
 
 class Config(BaseConfig):
-    """
-    NoneBot 主要配置。大小写不敏感。
+    """NoneBot 主要配置。大小写不敏感。
 
     除了 NoneBot 的配置项外，还可以自行添加配置项到 `.env.{environment}` 文件中。
     这些配置将会在 json 反序列化后一起带入 `Config` 类中。
+
+    配置方法参考: [配置](https://v2.nonebot.dev/docs/tutorial/configuration)
     """
 
-    _common_config: dict
     _env_file: str
+    _common_config: Dict[str, Any]
 
     # nonebot configs
     driver: str = "~fastapi"
-    """
-    NoneBot 运行所使用的 `Driver` 。继承自 `nonebot.drivers.Driver` 。
+    """NoneBot 运行所使用的 `Driver` 。继承自 {ref}`nonebot.drivers.Driver` 。
 
     配置格式为 `<module>[:<Driver>][+<module>[:<Mixin>]]*`。
 
     `~` 为 `nonebot.drivers.` 的缩写。
     """
     host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
-    """
-    NoneBot 的 HTTP 和 WebSocket 服务端监听的 IP/主机名。
-    """
+    """NoneBot {ref}`nonebot.drivers.ReverseDriver` 服务端监听的 IP/主机名。"""
     port: int = 8080
-    """
-    NoneBot 的 HTTP 和 WebSocket 服务端监听的端口。
-    """
+    """NoneBot {ref}`nonebot.drivers.ReverseDriver` 服务端监听的端口。"""
     log_level: Union[int, str] = "INFO"
-    """
-    配置 NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称，参考 [`loguru 日志等级`](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
+    """NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称
+
+    参考 [`loguru 日志等级`](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
+
+    :::tip 提示
+    日志等级名称应为大写，如 `INFO`。
+    :::
 
     用法:
         ```conf
@@ -182,14 +183,11 @@ class Config(BaseConfig):
 
     # bot connection configs
     api_timeout: Optional[float] = 30.0
-    """
-    API 请求超时时间，单位: 秒。
-    """
+    """API 请求超时时间，单位: 秒。"""
 
     # bot runtime configs
     superusers: Set[str] = set()
-    """
-    机器人超级用户。
+    """机器人超级用户。
 
     用法:
         ```conf
@@ -197,20 +195,25 @@ class Config(BaseConfig):
         ```
     """
     nickname: Set[str] = set()
-    """
-    机器人昵称。
-    """
+    """机器人昵称。"""
     command_start: Set[str] = {"/"}
-    """
-    命令的起始标记，用于判断一条消息是不是命令。
+    """命令的起始标记，用于判断一条消息是不是命令。
+
+    用法:
+        ```conf
+        COMMAND_START=["/", ""]
+        ```
     """
     command_sep: Set[str] = {"."}
-    """
-    命令的分隔标记，用于将文本形式的命令切分为元组（实际的命令名）。
+    """命令的分隔标记，用于将文本形式的命令切分为元组（实际的命令名）。
+
+    用法:
+        ```conf
+        COMMAND_SEP=["."]
+        ```
     """
     session_expire_timeout: timedelta = timedelta(minutes=2)
-    """
-    等待用户回复的超时时间。
+    """等待用户回复的超时时间。
 
     用法:
         ```conf
@@ -230,3 +233,9 @@ class Config(BaseConfig):
     class Config:
         extra = "allow"
         env_file = ".env.prod"
+
+
+__autodoc__ = {
+    "CustomEnvSettings": False,
+    "BaseConfig": False,
+}
