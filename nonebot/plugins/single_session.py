@@ -21,7 +21,7 @@ async def matcher_mutex(event: Event) -> Generator[bool, None, None]:
         else:
             _running_matcher[session_id] = current_event_id
         yield result
-        if result:
+        if not result:
             del _running_matcher[session_id]
 
 
