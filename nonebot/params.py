@@ -1,4 +1,5 @@
-"""
+"""本模块定义了依赖注入的各类参数。
+
 FrontMatter:
     sidebar_position: 4
     description: nonebot.params 模块
@@ -61,8 +62,7 @@ def Depends(
     *,
     use_cache: bool = True,
 ) -> Any:
-    """
-    参数依赖注入装饰器
+    """子依赖装饰器
 
     参数:
         dependency: 依赖函数。默认为参数的类型注释。
@@ -87,6 +87,8 @@ def Depends(
 
 
 class DependParam(Param):
+    """子依赖参数"""
+
     @classmethod
     def _check_param(
         cls,
@@ -182,6 +184,8 @@ class _BotChecker(Param):
 
 
 class BotParam(Param):
+    """{ref}`nonebot.adapters._bot.Bot` 参数"""
+
     @classmethod
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
@@ -223,6 +227,8 @@ class _EventChecker(Param):
 
 
 class EventParam(Param):
+    """{ref}`nonebot.adapters._event.Event` 参数"""
+
     @classmethod
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
@@ -256,6 +262,7 @@ async def _event_type(event: Event) -> str:
 
 
 def EventType() -> str:
+    """{ref}`nonebot.adapters._event.Event` 类型参数"""
     return Depends(_event_type)
 
 
@@ -264,6 +271,7 @@ async def _event_message(event: Event) -> Message:
 
 
 def EventMessage() -> Any:
+    """{ref}`nonebot.adapters._event.Event` 消息参数"""
     return Depends(_event_message)
 
 
@@ -272,6 +280,7 @@ async def _event_plain_text(event: Event) -> str:
 
 
 def EventPlainText() -> str:
+    """{ref}`nonebot.adapters._event.Event` 纯文本消息参数"""
     return Depends(_event_plain_text)
 
 
@@ -280,6 +289,7 @@ async def _event_to_me(event: Event) -> bool:
 
 
 def EventToMe() -> bool:
+    """{ref}`nonebot.adapters._event.Event` `to_me` 参数"""
     return Depends(_event_to_me)
 
 
@@ -288,11 +298,14 @@ class StateInner(T_State):
 
 
 def State() -> T_State:
-    warnings.warn("State() is deprecated, use T_State instead", DeprecationWarning)
+    """**Deprecated**: 事件处理状态参数，请直接使用 {ref}`nonebot.typing.T_State`"""
+    warnings.warn("State() is deprecated, use `T_State` instead", DeprecationWarning)
     return StateInner()
 
 
 class StateParam(Param):
+    """事件处理状态参数"""
+
     @classmethod
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
@@ -314,7 +327,8 @@ def _command(state: T_State) -> Message:
 
 
 def Command() -> Tuple[str, ...]:
-    return Depends(_command, use_cache=False)
+    """消息命令元组"""
+    return Depends(_command)
 
 
 def _raw_command(state: T_State) -> Message:
@@ -322,7 +336,8 @@ def _raw_command(state: T_State) -> Message:
 
 
 def RawCommand() -> str:
-    return Depends(_raw_command, use_cache=False)
+    """消息命令文本"""
+    return Depends(_raw_command)
 
 
 def _command_arg(state: T_State) -> Message:
@@ -330,7 +345,8 @@ def _command_arg(state: T_State) -> Message:
 
 
 def CommandArg() -> Any:
-    return Depends(_command_arg, use_cache=False)
+    """消息命令参数"""
+    return Depends(_command_arg)
 
 
 def _shell_command_args(state: T_State) -> Any:
@@ -338,6 +354,7 @@ def _shell_command_args(state: T_State) -> Any:
 
 
 def ShellCommandArgs():
+    """shell 命令解析后的参数字典"""
     return Depends(_shell_command_args, use_cache=False)
 
 
@@ -346,6 +363,7 @@ def _shell_command_argv(state: T_State) -> List[str]:
 
 
 def ShellCommandArgv() -> Any:
+    """shell 命令原始参数列表"""
     return Depends(_shell_command_argv, use_cache=False)
 
 
@@ -354,6 +372,7 @@ def _regex_matched(state: T_State) -> str:
 
 
 def RegexMatched() -> str:
+    """正则匹配结果"""
     return Depends(_regex_matched, use_cache=False)
 
 
@@ -362,6 +381,7 @@ def _regex_group(state: T_State):
 
 
 def RegexGroup() -> Tuple[Any, ...]:
+    """正则匹配结果 group 元组"""
     return Depends(_regex_group, use_cache=False)
 
 
@@ -370,10 +390,13 @@ def _regex_dict(state: T_State):
 
 
 def RegexDict() -> Dict[str, Any]:
+    """正则匹配结果 group 字典"""
     return Depends(_regex_dict, use_cache=False)
 
 
 class MatcherParam(Param):
+    """事件响应器实例参数"""
+
     @classmethod
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
@@ -388,6 +411,8 @@ class MatcherParam(Param):
 
 
 def Received(id: Optional[str] = None, default: Any = None) -> Any:
+    """`receive` 事件参数"""
+
     def _received(matcher: "Matcher"):
         return matcher.get_receive(id or "", default)
 
@@ -395,6 +420,8 @@ def Received(id: Optional[str] = None, default: Any = None) -> Any:
 
 
 def LastReceived(default: Any = None) -> Any:
+    """`last_receive` 事件参数"""
+
     def _last_received(matcher: "Matcher") -> Any:
         return matcher.get_last_receive(default)
 
@@ -410,18 +437,23 @@ class ArgInner:
 
 
 def Arg(key: Optional[str] = None) -> Any:
+    """`got` 的 Arg 参数消息"""
     return ArgInner(key, "message")
 
 
 def ArgStr(key: Optional[str] = None) -> str:
+    """`got` 的 Arg 参数消息文本"""
     return ArgInner(key, "str")  # type: ignore
 
 
 def ArgPlainText(key: Optional[str] = None) -> str:
+    """`got` 的 Arg 参数消息纯文本"""
     return ArgInner(key, "plaintext")  # type: ignore
 
 
 class ArgParam(Param):
+    """`got` 的 Arg 参数"""
+
     @classmethod
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
@@ -442,6 +474,8 @@ class ArgParam(Param):
 
 
 class ExceptionParam(Param):
+    """`run_postprocessor` 的异常参数"""
+
     @classmethod
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
@@ -456,6 +490,8 @@ class ExceptionParam(Param):
 
 
 class DefaultParam(Param):
+    """默认值参数"""
+
     @classmethod
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
@@ -468,3 +504,9 @@ class DefaultParam(Param):
 
 
 from nonebot.matcher import Matcher
+
+__autodoc__ = {
+    "DependsInner": False,
+    "StateInner": False,
+    "ArgInner": False,
+}

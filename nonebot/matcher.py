@@ -245,6 +245,8 @@ class Matcher(metaclass=MatcherMeta):
         参数:
             bot: Bot 对象
             event: 上报事件
+            stack: 异步上下文栈
+            dependency_cache: 依赖缓存
 
         返回:
             是否满足权限
@@ -269,6 +271,8 @@ class Matcher(metaclass=MatcherMeta):
             bot: Bot 对象
             event: 上报事件
             state: 当前状态
+            stack: 异步上下文栈
+            dependency_cache: 依赖缓存
 
         返回:
             是否满足匹配规则
