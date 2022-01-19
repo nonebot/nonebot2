@@ -375,8 +375,8 @@
   {
     "module_name": "nonebot_plugin_alias",
     "project_link": "nonebot-plugin-alias",
-    "name": "nonebot-plugin-alias",
-    "desc": "为 nonebot2 的指令创建别名",
+    "name": "alias命令别名",
+    "desc": "为复杂的命令创建别名",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-alias",
     "tags": [],
@@ -675,8 +675,8 @@
   {
     "module_name": "nonebot_plugin_asoulcnki",
     "project_link": "nonebot-plugin-asoulcnki",
-    "name": "nonebot-plugin-asoulcnki",
-    "desc": "枝网查重插件，查询发病小作文复制比",
+    "name": "枝网查重",
+    "desc": "随机小作文；查询发病小作文复制比",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-asoulcnki",
     "tags": [],
@@ -685,8 +685,8 @@
   {
     "module_name": "nonebot_plugin_petpet",
     "project_link": "nonebot-plugin-petpet",
-    "name": "nonebot-plugin-petpet",
-    "desc": "制作头像相关的沙雕表情包",
+    "name": "头像表情包",
+    "desc": "制作摸头等头像相关沙雕表情包",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-petpet",
     "tags": [],
@@ -800,7 +800,7 @@
   {
     "module_name": "nonebot_plugin_logo",
     "project_link": "nonebot-plugin-logo",
-    "name": "nonebot-plugin-logo",
+    "name": "多种风格logo生成",
     "desc": "PornHub、Youtube 等风格logo生成",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-logo",
@@ -810,8 +810,8 @@
   {
     "module_name": "nonebot_plugin_memes",
     "project_link": "nonebot-plugin-memes",
-    "name": "Memes generator",
-    "desc": "表情包制作",
+    "name": "表情包制作",
+    "desc": "鲁迅说、喜报 等表情包制作",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-memes",
     "tags": [],
