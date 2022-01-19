@@ -146,7 +146,7 @@ NoneBot2 不是 NoneBot1 的替代品。事实上，它们都在被积极的维�
   - [文档镜像(中国境内)](https://nb2.baka.icu)
   - [文档镜像(Vercel)](https://nonebot2-vercel-mirror.vercel.app)
 
-- 其他插件请查看 [商店](https://v2.nonebot.dev/store.html)
+- 其他插件请查看 [商店](https://v2.nonebot.dev/store)
 
 ## 许可证
 
