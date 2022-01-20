@@ -939,5 +939,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_weather_lite",
+    "project_link": "nonebot-plugin-weather-lite",
+    "name": "天气查询",
+    "desc": "使用wttr.in的在线天气查询。",
+    "author": "zjkwdy",
+    "homepage": "https://github.com/zjkwdy/nonebot_plugin_weather_lite",
+    "tags": [
+      {
+        "label": "t:天气",
+        "color": "#6ec3d9"
+      }
+    ],
+    "is_official": false
   }
 ]
