@@ -16,6 +16,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.GH_TOKEN }}
 
       - name: NoneBot2 Publish Bot
         uses: nonebot/nonebot2-publish-bot@main
