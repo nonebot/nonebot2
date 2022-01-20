@@ -25,17 +25,14 @@ class MessageSegment(Mapping, abc.ABC, Generic[TM]):
     """消息段基类"""
 
     type: str
-    """
-    消息段类型
-    """
+    """消息段类型"""
     data: Dict[str, Any] = field(default_factory=lambda: {})
-    """
-    消息段数据
-    """
+    """消息段数据"""
 
     @classmethod
     @abc.abstractmethod
     def get_message_class(cls) -> Type[TM]:
+        """获取消息数组类型"""
         raise NotImplementedError
 
     @abc.abstractmethod
@@ -84,11 +81,16 @@ class MessageSegment(Mapping, abc.ABC, Generic[TM]):
 
     @abc.abstractmethod
     def is_text(self) -> bool:
+        """当前消息段是否为纯文本"""
         raise NotImplementedError
 
 
 class Message(List[TMS], abc.ABC):
-    """消息数组"""
+    """消息数组
+
+    参数:
+        message: 消息内容
+    """
 
     def __init__(
         self: TM,
@@ -96,10 +98,6 @@ class Message(List[TMS], abc.ABC):
         *args,
         **kwargs,
     ):
-        """
-        参数:
-            message: 消息内容
-        """
         super().__init__(*args, **kwargs)
         if message is None:
             return
@@ -112,8 +110,9 @@ class Message(List[TMS], abc.ABC):
 
     @classmethod
     def template(cls: Type[TM], format_string: Union[str, TM]) -> MessageTemplate[TM]:
-        """
-        根据创建消息模板, 用法和 `str.format` 大致相同, 但是可以输出消息对象, 并且支持以 `Message` 对象作为消息模板
+        """创建消息模板。
+
+        用法和 `str.format` 大致相同, 但是可以输出消息对象, 并且支持以 `Message` 对象作为消息模板
 
         并且提供了拓展的格式化控制符, 可以用适用于该消息类型的 `MessageSegment` 的工厂方法创建消息
 
@@ -137,13 +136,14 @@ class Message(List[TMS], abc.ABC):
             format_string: 格式化字符串
 
         返回:
-            MessageFormatter[TM]: 消息格式化器
+            消息格式化器
         """
         return MessageTemplate(format_string, cls)
 
     @classmethod
     @abc.abstractmethod
     def get_segment_class(cls) -> Type[TMS]:
+        """获取消息段类型"""
         raise NotImplementedError
 
     def __str__(self):
@@ -160,6 +160,7 @@ class Message(List[TMS], abc.ABC):
     @staticmethod
     @abc.abstractmethod
     def _construct(msg: Union[str, Mapping, Iterable[Mapping], Any]) -> Iterable[TMS]:
+        """构造消息数组"""
         raise NotImplementedError
 
     def __add__(self: TM, other: Union[str, Mapping, Iterable[Mapping]]) -> TM:
@@ -181,8 +182,7 @@ class Message(List[TMS], abc.ABC):
         return self
 
     def append(self: TM, obj: Union[str, TMS]) -> TM:
-        """
-        添加一个消息段到消息数组末尾
+        """添加一个消息段到消息数组末尾。
 
         参数:
             obj: 要添加的消息段
@@ -196,8 +196,7 @@ class Message(List[TMS], abc.ABC):
         return self
 
     def extend(self: TM, obj: Union[TM, Iterable[TMS]]) -> TM:
-        """
-        拼接一个消息数组或多个消息段到消息数组末尾
+        """拼接一个消息数组或多个消息段到消息数组末尾。
 
         参数:
             obj: 要添加的消息数组
@@ -210,8 +209,9 @@ class Message(List[TMS], abc.ABC):
         return deepcopy(self)
 
     def extract_plain_text(self: "Message[MessageSegment]") -> str:
-        """
-        提取消息内纯文本消息
-        """
+        """提取消息内纯文本消息"""
 
         return "".join(str(seg) for seg in self if seg.is_text())
+
+
+__autodoc__ = {"MessageSegment.__str__": True}

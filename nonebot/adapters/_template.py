@@ -31,7 +31,12 @@ FormatSpecFunc_T = TypeVar("FormatSpecFunc_T", bound=FormatSpecFunc)
 
 
 class MessageTemplate(Formatter, Generic[TF]):
-    """消息模板格式化实现类"""
+    """消息模板格式化实现类。
+
+    参数:
+        template: 模板
+        factory: 消息构造类型，默认为 `str`
+    """
 
     @overload
     def __init__(
@@ -46,13 +51,6 @@ class MessageTemplate(Formatter, Generic[TF]):
         ...
 
     def __init__(self, template, factory=str) -> None:
-        """
-        创建一个模板
-
-        参数:
-            template: 模板
-            factory: 消息构造类型，默认为 `str`
-        """
         self.template: TF = template
         self.factory: Type[TF] = factory
         self.format_specs: Dict[str, FormatSpecFunc] = {}
@@ -67,9 +65,7 @@ class MessageTemplate(Formatter, Generic[TF]):
         return spec
 
     def format(self, *args: Any, **kwargs: Any) -> TF:
-        """
-        根据模板和参数生成消息对象
-        """
+        """根据模板和参数生成消息对象"""
         msg = self.factory()
         if isinstance(self.template, str):
             msg += self.vformat(self.template, args, kwargs)

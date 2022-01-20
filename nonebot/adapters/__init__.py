@@ -1,7 +1,6 @@
-"""
-## 协议适配基类
+"""本模块定义了协议适配基类，各协议请继承以下基类。
 
-各协议请继承以下基类，并使用 `driver.register_adapter` 注册适配器
+使用 {ref}`nonebot.drivers.Driver.register_adapter` 注册适配器
 """
 
 from typing import Iterable

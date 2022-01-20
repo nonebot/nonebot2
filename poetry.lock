@@ -562,7 +562,7 @@ six = ">=1.6.1"
 type = "git"
 url = "https://github.com/nonebot/nb-autodoc.git"
 reference = "master"
-resolved_reference = "35bcf0e5c41aa59aa923e201b3935ea96afc6273"
+resolved_reference = "9371179f1ae4a1659ae789187b1dd323b7751a02"
 
 [[package]]
 name = "nodeenv"
