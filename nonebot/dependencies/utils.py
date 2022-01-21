@@ -6,6 +6,7 @@ from pydantic.typing import ForwardRef, evaluate_forwardref
 
 
 def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
+    """获取可调用对象签名"""
     signature = inspect.signature(call)
     globalns = getattr(call, "__globals__", {})
     typed_params = [
@@ -22,6 +23,7 @@ def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
 
 
 def get_typed_annotation(param: inspect.Parameter, globalns: Dict[str, Any]) -> Any:
+    """获取参数的类型注解"""
     annotation = param.annotation
     if isinstance(annotation, str):
         annotation = ForwardRef(annotation)
