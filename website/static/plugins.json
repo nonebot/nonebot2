@@ -954,5 +954,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_fortune",
+    "project_link": "nonebot-plugin-fortune",
+    "name": "nonebot_plugin_fortune",
+    "desc": "抽签！占卜一下你的今日运势",
+    "author": "KafCoppelia",
+    "homepage": "https://github.com/KafCoppelia/nonebot_plugin_fortune",
+    "tags": [
+      {
+        "label": "a:cqhttp",
+        "color": "#6952ea"
+      },
+      {
+        "label": "t:fortune",
+        "color": "#ea6f52"
+      },
+      {
+        "label": "alpha only",
+        "color": "#181717"
+      }
+    ],
+    "is_official": false
   }
 ]
