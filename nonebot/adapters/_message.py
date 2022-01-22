@@ -1,3 +1,8 @@
+"""
+FrontMatter:
+    sidebar_position: 4
+    description: nonebot.adapters._message 模块
+"""
 import abc
 from copy import deepcopy
 from dataclasses import field, asdict, dataclass

@@ -1,3 +1,8 @@
+"""
+FrontMatter:
+    sidebar_position: 1
+    description: nonebot.adapters._adapter 模块
+"""
 import abc
 from contextlib import asynccontextmanager
 from typing import Any, Dict, AsyncGenerator

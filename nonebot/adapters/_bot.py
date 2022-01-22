@@ -1,3 +1,8 @@
+"""
+FrontMatter:
+    sidebar_position: 2
+    description: nonebot.adapters._bot 模块
+"""
 import abc
 import asyncio
 from functools import partial

@@ -1,4 +1,20 @@
-from typing import AsyncGenerator
+"""[HTTPX](https://www.python-httpx.org/) 驱动适配
+
+```bash
+nb driver install httpx
+# 或者
+pip install nonebot2[httpx]
+```
+
+:::tip 提示
+本驱动仅支持客户端 HTTP 连接
+:::
+
+FrontMatter:
+    sidebar_position: 3
+    description: nonebot.drivers.httpx 模块
+"""
+from typing import Type, AsyncGenerator
 from contextlib import asynccontextmanager
 
 from nonebot.typing import overrides
@@ -9,6 +25,7 @@ from nonebot.drivers import (
     WebSocket,
     HTTPVersion,
     ForwardMixin,
+    ForwardDriver,
     combine_driver,
 )
 
@@ -21,6 +38,8 @@ except ImportError:
 
 
 class Mixin(ForwardMixin):
+    """HTTPX Mixin"""
+
     @property
     @overrides(ForwardMixin)
     def type(self) -> str:
@@ -57,4 +76,5 @@ class Mixin(ForwardMixin):
             yield ws
 
 
-Driver = combine_driver(BlockDriver, Mixin)
+Driver: Type[ForwardDriver] = combine_driver(BlockDriver, Mixin)  # type: ignore
+"""HTTPX Driver"""

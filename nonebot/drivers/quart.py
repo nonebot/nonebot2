@@ -1,7 +1,18 @@
-"""
-## Quart 驱动适配
+"""[Quart](https://pgjones.gitlab.io/quart/index.html) 驱动适配
 
-后端使用方法请参考: [`Quart 文档`](https://pgjones.gitlab.io/quart/index.html)
+```bash
+nb driver install quart
+# 或者
+pip install nonebot2[quart]
+```
+
+:::tip 提示
+本驱动仅支持服务端连接
+:::
+
+FrontMatter:
+    sidebar_position: 5
+    description: nonebot.drivers.quart 模块
 """
 
 import asyncio
@@ -47,39 +58,25 @@ def catch_closed(func):
 
 
 class Config(BaseSettings):
-    """
-    Quart 驱动框架设置
-    """
+    """Quart 驱动框架设置"""
 
     quart_reload: bool = False
-    """
-    开启/关闭冷重载
-    """
+    """开启/关闭冷重载"""
     quart_reload_dirs: Optional[List[str]] = None
-    """
-    重载监控文件夹列表，默认为 uvicorn 默认值
-    """
+    """重载监控文件夹列表，默认为 uvicorn 默认值"""
     quart_reload_delay: Optional[float] = None
-    """
-    重载延迟，默认为 uvicorn 默认值
-    """
+    """重载延迟，默认为 uvicorn 默认值"""
     quart_reload_includes: Optional[List[str]] = None
-    """
-    要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
-    """
+    """要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
     quart_reload_excludes: Optional[List[str]] = None
-    """
-    不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
-    """
+    """不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
 
     class Config:
         extra = "ignore"
 
 
 class Driver(ReverseDriver):
-    """
-    Quart 驱动框架
-    """
+    """Quart 驱动框架"""
 
     def __init__(self, env: Env, config: NoneBotConfig):
         super().__init__(env, config)
@@ -239,6 +236,8 @@ class Driver(ReverseDriver):
 
 
 class WebSocket(BaseWebSocket):
+    """Quart WebSocket Wrapper"""
+
     def __init__(self, *, request: BaseRequest, websocket: QuartWebSocket):
         super().__init__(request=request)
         self.websocket = websocket
@@ -280,3 +279,6 @@ class WebSocket(BaseWebSocket):
     @overrides(BaseWebSocket)
     async def send_bytes(self, data: bytes):
         await self.websocket.send(data)
+
+
+__autodoc__ = {"catch_closed": False}

@@ -1,6 +1,10 @@
 """本模块定义了协议适配基类，各协议请继承以下基类。
 
-使用 {ref}`nonebot.drivers.Driver.register_adapter` 注册适配器
+使用 {ref}`nonebot.drivers.Driver.register_adapter` 注册适配器。
+
+FrontMatter:
+    sidebar_position: 0
+    description: nonebot.adapters 模块
 """
 
 from typing import Iterable

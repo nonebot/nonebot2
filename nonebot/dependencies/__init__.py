@@ -1,4 +1,9 @@
-"""本模块模块实现了依赖注入的定义与处理。"""
+"""本模块模块实现了依赖注入的定义与处理。
+
+FrontMatter:
+    sidebar_position: 0
+    description: nonebot.dependencies 模块
+"""
 
 import abc
 import inspect

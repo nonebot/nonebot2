@@ -1,3 +1,11 @@
+"""本模块实现插件加载流程。
+
+参考: [import hooks](https://docs.python.org/3/reference/import.html#import-hooks), [PEP302](https://www.python.org/dev/peps/pep-0302/)
+
+FrontMatter:
+    sidebar_position: 5
+    description: nonebot.plugin.manager 模块
+"""
 import sys
 import pkgutil
 import importlib

@@ -1,3 +1,8 @@
+"""
+FrontMatter:
+    sidebar_position: 1
+    description: nonebot.dependencies.utils 模块
+"""
 import inspect
 from typing import Any, Dict, Callable
 

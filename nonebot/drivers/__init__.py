@@ -1,7 +1,10 @@
-"""
-## 后端驱动适配基类
+"""本模块定义了驱动适配器基类。
 
-各驱动请继承以下基类
+各驱动请继承以下基类。
+
+FrontMatter:
+    sidebar_position: 0
+    description: nonebot.drivers 模块
 """
 
 import abc
@@ -35,57 +38,38 @@ if TYPE_CHECKING:
 
 
 class Driver(abc.ABC):
-    """
-    Driver 基类。
+    """Driver 基类。
+
+    参数:
+        env: 包含环境信息的 Env 对象
+        config: 包含配置信息的 Config 对象
     """
 
     _adapters: Dict[str, "Adapter"] = {}
-    """
-    已注册的适配器列表
-    """
+    """已注册的适配器列表"""
     _bot_connection_hook: Set[T_BotConnectionHook] = set()
-    """
-    Bot 连接建立时执行的函数
-    """
+    """Bot 连接建立时执行的函数"""
     _bot_disconnection_hook: Set[T_BotDisconnectionHook] = set()
-    """
-    Bot 连接断开时执行的函数
-    """
+    """Bot 连接断开时执行的函数"""
 
     def __init__(self, env: Env, config: Config):
-        """
-        参数:
-            env: 包含环境信息的 Env 对象
-            config: 包含配置信息的 Config 对象
-        """
         self.env: str = env.environment
-        """
-        环境名称
-        """
+        """环境名称"""
         self.config: Config = config
-        """
-        配置对象
-        """
+        """全局配置对象"""
         self._clients: Dict[str, "Bot"] = {}
-        """
-        已连接的 Bot
-        """
 
     @property
     def bots(self) -> Dict[str, "Bot"]:
-        """
-        获取当前所有已连接的 Bot
-        """
+        """获取当前所有已连接的 Bot"""
         return self._clients
 
     def register_adapter(self, adapter: Type["Adapter"], **kwargs) -> None:
-        """
-        注册一个协议适配器
+        """注册一个协议适配器
 
         参数:
-            name: 适配器名称，用于在连接时进行识别
-            adapter: 适配器 Class
-            **kwargs: 其他传递给适配器的参数
+            adapter: 适配器类
+            kwargs: 其他传递给适配器的参数
         """
         name = adapter.get_name()
         if name in self._adapters:
@@ -121,36 +105,36 @@ class Driver(abc.ABC):
 
     @abc.abstractmethod
     def on_startup(self, func: Callable) -> Callable:
-        """注册一个在驱动启动时运行的函数"""
+        """注册一个在驱动器启动时执行的函数"""
         raise NotImplementedError
 
     @abc.abstractmethod
     def on_shutdown(self, func: Callable) -> Callable:
-        """注册一个在驱动停止时运行的函数"""
+        """注册一个在驱动器停止时执行的函数"""
         raise NotImplementedError
 
     def on_bot_connect(self, func: T_BotConnectionHook) -> T_BotConnectionHook:
-        """
-        装饰一个函数使他在 bot 通过 WebSocket 连接成功时执行。
+        """装饰一个函数使他在 bot 连接成功时执行。
 
-        参数:
-            bot: 当前连接上的 Bot 对象
+        插槽函数参数:
+
+        - bot: 当前连接上的 Bot 对象
         """
         self._bot_connection_hook.add(func)
         return func
 
     def on_bot_disconnect(self, func: T_BotDisconnectionHook) -> T_BotDisconnectionHook:
-        """
-        装饰一个函数使他在 bot 通过 WebSocket 连接断开时执行。
+        """装饰一个函数使他在 bot 连接断开时执行。
 
-        参数:
-            bot: 当前连接上的 Bot 对象
+        插槽函数参数:
+
+        - bot: 当前连接上的 Bot 对象
         """
         self._bot_disconnection_hook.add(func)
         return func
 
     def _bot_connect(self, bot: "Bot") -> None:
-        """在 WebSocket 连接成功后，调用该函数来注册 bot 对象"""
+        """在连接成功后，调用该函数来注册 bot 对象"""
         if bot.self_id in self._clients:
             raise RuntimeError(f"Duplicate bot connection with id {bot.self_id}")
         self._clients[bot.self_id] = bot
@@ -169,7 +153,7 @@ class Driver(abc.ABC):
         asyncio.create_task(_run_hook(bot))
 
     def _bot_disconnect(self, bot: "Bot") -> None:
-        """在 WebSocket 连接断开后，调用该函数来注销 bot 对象"""
+        """在连接断开后，调用该函数来注销 bot 对象"""
         if bot.self_id in self._clients:
             del self._clients[bot.self_id]
 
@@ -188,32 +172,33 @@ class Driver(abc.ABC):
 
 
 class ForwardMixin(abc.ABC):
+    """客户端混入基类。"""
+
     @property
     @abc.abstractmethod
     def type(self) -> str:
+        """客户端驱动类型名称"""
         raise NotImplementedError
 
     @abc.abstractmethod
     async def request(self, setup: Request) -> Response:
+        """发送一个 HTTP 请求"""
         raise NotImplementedError
 
     @abc.abstractmethod
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator[WebSocket, None]:
+        """发起一个 WebSocket 连接"""
         raise NotImplementedError
         yield  # used for static type checking's generator detection
 
 
 class ForwardDriver(Driver, ForwardMixin):
-    """
-    Forward Driver 基类。将客户端框架封装，以满足适配器使用。
-    """
+    """客户端基类。将客户端框架封装，以满足适配器使用。"""
 
 
 class ReverseDriver(Driver):
-    """
-    Reverse Driver 基类。将后端框架封装，以满足适配器使用。
-    """
+    """服务端基类。将后端框架封装，以满足适配器使用。"""
 
     @property
     @abc.abstractmethod
@@ -229,19 +214,25 @@ class ReverseDriver(Driver):
 
     @abc.abstractmethod
     def setup_http_server(self, setup: "HTTPServerSetup") -> None:
+        """设置一个 HTTP 服务器路由配置"""
         raise NotImplementedError
 
     @abc.abstractmethod
     def setup_websocket_server(self, setup: "WebSocketServerSetup") -> None:
+        """设置一个 WebSocket 服务器路由配置"""
         raise NotImplementedError
 
 
 def combine_driver(driver: Type[Driver], *mixins: Type[ForwardMixin]) -> Type[Driver]:
+    """将一个驱动器和多个混入类合并。"""
     # check first
     assert issubclass(driver, Driver), "`driver` must be subclass of Driver"
     assert all(
         map(lambda m: issubclass(m, ForwardMixin), mixins)
     ), "`mixins` must be subclass of ForwardMixin"
+
+    if not mixins:
+        return driver
 
     class CombinedDriver(*mixins, driver, ForwardDriver):  # type: ignore
         @property
@@ -257,6 +248,8 @@ def combine_driver(driver: Type[Driver], *mixins: Type[ForwardMixin]) -> Type[Dr
 
 @dataclass
 class HTTPServerSetup:
+    """HTTP 服务器路由配置。"""
+
     path: URL  # path should not be absolute, check it by URL.is_absolute() == False
     method: str
     name: str
@@ -265,6 +258,8 @@ class HTTPServerSetup:
 
 @dataclass
 class WebSocketServerSetup:
+    """WebSocket 服务器路由配置。"""
+
     path: URL  # path should not be absolute, check it by URL.is_absolute() == False
     name: str
     handle_func: Callable[[WebSocket], Awaitable[Any]]

@@ -1,3 +1,8 @@
+"""
+FrontMatter:
+    sidebar_position: 3
+    description: nonebot.adapters._event 模块
+"""
 import abc
 
 from pydantic import BaseModel

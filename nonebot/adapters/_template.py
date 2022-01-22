@@ -1,3 +1,8 @@
+"""
+FrontMatter:
+    sidebar_position: 5
+    description: nonebot.adapters._template 模块
+"""
 import inspect
 import functools
 from string import Formatter
