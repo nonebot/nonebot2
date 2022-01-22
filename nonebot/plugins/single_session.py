@@ -1,4 +1,4 @@
-from typing import Dict, Generator
+from typing import Dict, AsyncGenerator
 
 from nonebot.adapters import Event
 from nonebot.params import Depends
@@ -7,7 +7,7 @@ from nonebot.message import IgnoredException, event_preprocessor
 _running_matcher: Dict[str, int] = {}
 
 
-async def matcher_mutex(event: Event) -> Generator[bool, None, None]:
+async def matcher_mutex(event: Event) -> AsyncGenerator[bool, None]:
     result = False
     try:
         session_id = event.get_session_id()
