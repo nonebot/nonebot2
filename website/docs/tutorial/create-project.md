@@ -18,19 +18,19 @@ nb create
 
 ## 目录结构
 
-```bash title=Project
-AweSome-Bot
-├── "awesome_bot" # 或是 src
-│   └── "plugins"
-├── ".env" # 可选的
-├── ".env.dev" # 可选的
-├── ".env.prod" # 可选的
-├── .gitignore
-├── "bot.py"
-├── docker-compose.yml
-├── Dockerfile
-├── "pyproject.toml"
-└── README.md
+```tree title=Project
+📦 AweSome-Bot
+├── 📂 awesome_bot         # 或是 src
+│   └── 📜 plugins
+├── 📜 .env                # 可选的
+├── 📜 .env.dev            # 可选的
+├── 📜 .env.prod           # 可选的
+├── 📜 .gitignore
+├── 📜 bot.py
+├── 📜 docker-compose.yml
+├── 📜 Dockerfile
+├── 📜 pyproject.toml
+└── 📜 README.md
 ```
 
 - `awesome_bot/plugins` 或 `src/plugins`: 用于存放编写的 bot 插件

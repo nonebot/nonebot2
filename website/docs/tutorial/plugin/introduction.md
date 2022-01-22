@@ -17,20 +17,20 @@ description: 插件入门
 
 在合适的路径创建一个 `.py` 文件即可。例如在 [创建项目](../create-project.md) 中创建的项目中，我们可以在 `awesome_bot/plugins/` 目录中创建一个文件 `foo.py`。
 
-```bash title=Project {4}
-AweSome-Bot
-├── awesome_bot
-│   └── plugins
-|      └── foo.py
-├── .env
-├── .env.dev
-├── .env.prod
-├── .gitignore
-├── bot.py
-├── docker-compose.yml
-├── Dockerfile
-├── pyproject.toml
-└── README.md
+```tree title=Project {4}
+📦 AweSome-Bot
+├── 📂 awesome_bot
+│   └── 📂 plugins
+|       └── 📜 foo.py
+├── 📜 .env
+├── 📜 .env.dev
+├── 📜 .env.prod
+├── 📜 .gitignore
+├── 📜 bot.py
+├── 📜 docker-compose.yml
+├── 📜 Dockerfile
+├── 📜 pyproject.toml
+└── 📜 README.md
 ```
 
 这个时候它已经可以被称为一个插件了，尽管它还什么都没做。
@@ -39,21 +39,21 @@ AweSome-Bot
 
 在合适的路径创建一个文件夹，并在文件夹内创建文件 `__init__.py` 即可。例如在 [创建项目](../create-project.md) 中创建的项目中，我们可以在 `awesome_bot/plugins/` 目录中创建一个文件夹 `foo`，并在这个文件夹内创建一个文件 `__init__.py`。
 
-```bash title=Project {4,5}
-AweSome-Bot
-├── awesome_bot
-│   └── plugins
-|      └── foo.py
-|         └── __init__.py
-├── .env
-├── .env.dev
-├── .env.prod
-├── .gitignore
-├── bot.py
-├── docker-compose.yml
-├── Dockerfile
-├── pyproject.toml
-└── README.md
+```tree title=Project {4,5}
+📦 AweSome-Bot
+├── 📂 awesome_bot
+│   └── 📂 plugins
+|       └── 📂 foo.py
+|           └── 📜 __init__.py
+├── 📜 .env
+├── 📜 .env.dev
+├── 📜 .env.prod
+├── 📜 .gitignore
+├── 📜 bot.py
+├── 📜 docker-compose.yml
+├── 📜 Dockerfile
+├── 📜 pyproject.toml
+└── 📜 README.md
 ```
 
 这个时候 `foo` 就是一个合法的 Python 包了，同时也是合法的 NoneBot 插件，插件内容可以在 `__init__.py` 中编写。
