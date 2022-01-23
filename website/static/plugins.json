@@ -977,5 +977,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_tarot",
+    "project_link": "nonebot-plugin-tarot",
+    "name": "塔罗牌",
+    "desc": "塔罗牌！占卜今日运势",
+    "author": "KafCoppelia",
+    "homepage": "https://github.com/KafCoppelia/nonebot_plugin_tarot",
+    "tags": [
+      {
+        "label": "a:cqhttp",
+        "color": "#eaa452"
+      },
+      {
+        "label": "t:tarot",
+        "color": "#461264"
+      },
+      {
+        "label": "alpha only",
+        "color": "#b41f14"
+      }
+    ],
+    "is_official": false
   }
 ]
