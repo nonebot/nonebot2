@@ -293,7 +293,7 @@
     "name": "插件管理器",
     "desc": "基于 import hook 的插件管理",
     "author": "j1g5awi",
-    "homepage": "https://github.com/nonepkg/nonebot_plugin_manager",
+    "homepage": "https://github.com/nonepkg/nonebot-plugin-manager",
     "tags": [
       {
         "label": "t:PluginManager",
@@ -328,7 +328,7 @@
     "name": "nonebot_plugin_puppet",
     "desc": "高度自定义的会话转接",
     "author": "j1g5awi",
-    "homepage": "https://github.com/nonepkg/nonebot_plugin_puppet",
+    "homepage": "https://github.com/nonepkg/nonebot-plugin-puppet",
     "tags": [
       {
         "label": "a:cqhttp",
