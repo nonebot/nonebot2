@@ -956,7 +956,7 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_fortune",
+    "module_name": "今日运势",
     "project_link": "nonebot-plugin-fortune",
     "name": "nonebot_plugin_fortune",
     "desc": "抽签！占卜一下你的今日运势",
@@ -995,7 +995,7 @@
         "color": "#461264"
       },
       {
-        "label": "alpha only",
+        "label": "beta first",
         "color": "#b41f14"
       }
     ],
