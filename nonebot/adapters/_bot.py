@@ -142,7 +142,7 @@ class Bot(abc.ABC):
     def on_calling_api(cls, func: T_CallingAPIHook) -> T_CallingAPIHook:
         """调用 api 预处理。
 
-        插槽函数参数:
+        钩子函数参数:
 
         - bot: 当前 bot 对象
         - api: 调用的 api 名称
@@ -155,7 +155,7 @@ class Bot(abc.ABC):
     def on_called_api(cls, func: T_CalledAPIHook) -> T_CalledAPIHook:
         """调用 api 后处理。
 
-        插槽函数参数:
+        钩子函数参数:
 
         - bot: 当前 bot 对象
         - exception: 调用 api 时发生的错误

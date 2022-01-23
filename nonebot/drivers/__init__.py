@@ -116,7 +116,7 @@ class Driver(abc.ABC):
     def on_bot_connect(self, func: T_BotConnectionHook) -> T_BotConnectionHook:
         """装饰一个函数使他在 bot 连接成功时执行。
 
-        插槽函数参数:
+        钩子函数参数:
 
         - bot: 当前连接上的 Bot 对象
         """
@@ -126,7 +126,7 @@ class Driver(abc.ABC):
     def on_bot_disconnect(self, func: T_BotDisconnectionHook) -> T_BotDisconnectionHook:
         """装饰一个函数使他在 bot 连接断开时执行。
 
-        插槽函数参数:
+        钩子函数参数:
 
         - bot: 当前连接上的 Bot 对象
         """

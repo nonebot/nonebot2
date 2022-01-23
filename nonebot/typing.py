@@ -45,11 +45,11 @@ T_State = Dict[Any, Any]
 """事件处理状态 State 类型"""
 
 T_BotConnectionHook = Callable[["Bot"], Awaitable[None]]
-"""Bot 连接建立时插槽函数"""
+"""Bot 连接建立时钩子函数"""
 T_BotDisconnectionHook = Callable[["Bot"], Awaitable[None]]
-"""Bot 连接断开时插槽函数"""
+"""Bot 连接断开时钩子函数"""
 T_CallingAPIHook = Callable[["Bot", str, Dict[str, Any]], Awaitable[None]]
-"""`bot.call_api` 插槽函数"""
+"""`bot.call_api` 钩子函数"""
 T_CalledAPIHook = Callable[
     ["Bot", Optional[Exception], str, Dict[str, Any], Any], Awaitable[None]
 ]
