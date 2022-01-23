@@ -36,6 +36,12 @@ const config = {
           editUrl: "https://github.com/nonebot/nonebot2/edit/master/website/",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
+          exclude: [
+            // "**/_*.{js,jsx,ts,tsx,md,mdx}",
+            // "**/_*/**",
+            "**/*.test.{js,jsx,ts,tsx}",
+            "**/__tests__/**",
+          ],
         },
         sitemap: {
           changefreq: "daily",
