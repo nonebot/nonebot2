@@ -1015,5 +1015,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_what2eat",
+    "project_link": "nonebot-plugin-what2eat",
+    "name": "今天吃什么",
+    "desc": "选择恐惧症？让Bot给你今天吃什么建议！",
+    "author": "KafCoppelia",
+    "homepage": "https://github.com/KafCoppelia/nonebot_plugin_what2eat",
+    "tags": [
+      {
+        "label": "a:cqhttp",
+        "color": "#cd3d3d"
+      },
+      {
+        "label": "t:what2eat",
+        "color": "#f09526"
+      },
+      {
+        "label": "alpha only",
+        "color": "#181717"
+      }
+    ],
+    "is_official": false
   }
 ]
