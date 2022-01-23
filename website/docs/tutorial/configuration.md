@@ -142,4 +142,43 @@ DRIVER=~fastapi+~aiohttp
 
 各驱动器的功能与区别请参考 [选择驱动器](./choose-driver.md) 。
 
+### Host
+
+- **类型**: `IPvAnyAddress`
+- **默认值**: `127.0.0.1`
+
+使用 `ReversedDriver` 时，NoneBot 监听的 IP/主机名。
+
+```env
+HOST=127.0.0.1
+```
+
+### Port
+
+- **类型**: `int`
+- **默认值**: `8080`
+
+使用 `ReversedDriver` 时，NoneBot 监听的端口。
+
+```env
+PORT=8080
+```
+
+### Log Level
+
+- **类型**: `int | str`
+- **默认值**: `INFO`
+
+NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称
+
+参考 [`loguru 日志等级`](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
+
+```env
+LOG_LEVEL=INFO
+```
+
+:::tip 提示
+日志等级名称应为大写，如 `INFO`。
+:::
+
 <!-- TODO -->
