@@ -1,11 +1,15 @@
-"""
-## 日志
+"""本模块定义了 NoneBot 的日志记录 Logger。
 
 NoneBot 使用 [`loguru`][loguru] 来记录日志信息。
 
-自定义 logger 请参考 [`loguru`][loguru] 文档。
+自定义 logger 请参考 [自定义日志](https://v2.nonebot.dev/docs/tutorial/custom-logger)
+以及 [`loguru`][loguru] 文档。
 
 [loguru]: https://github.com/Delgan/loguru
+
+FrontMatter:
+    sidebar_position: 7
+    description: nonebot.log 模块
 """
 
 import sys
@@ -23,14 +27,13 @@ if TYPE_CHECKING:
 
 # logger = logging.getLogger("nonebot")
 logger: "Logger" = loguru.logger
-"""
-NoneBot 日志记录器对象。
+"""NoneBot 日志记录器对象。
 
 默认信息:
 
-    - 格式: `[%(asctime)s %(name)s] %(levelname)s: %(message)s`
-    - 等级: `INFO` ，根据 `config.log_level` 配置改变
-    - 输出: 输出至 stdout
+- 格式: `[%(asctime)s %(name)s] %(levelname)s: %(message)s`
+- 等级: `INFO` ，根据 `config.log_level` 配置改变
+- 输出: 输出至 stdout
 
 用法:
     ```python
@@ -80,14 +83,16 @@ class LoguruHandler(logging.Handler):  # pragma: no cover
 
 
 logger.remove()
-default_filter = Filter()
-default_format = (
+default_filter: Filter = Filter()
+"""默认日志等级过滤器"""
+default_format: str = (
     "<g>{time:MM-DD HH:mm:ss}</g> "
     "[<lvl>{level}</lvl>] "
     "<c><u>{name}</u></c> | "
     # "<c>{function}:{line}</c>| "
     "{message}"
 )
+"""默认日志格式"""
 logger_id = logger.add(
     sys.stdout,
     level=0,
@@ -96,3 +101,5 @@ logger_id = logger.add(
     filter=default_filter,
     format=default_format,
 )
+
+__autodoc__ = {"Filter": False, "LoguruHandler": False}

@@ -1,7 +1,10 @@
-"""
-## 协议适配基类
+"""本模块定义了协议适配基类，各协议请继承以下基类。
 
-各协议请继承以下基类，并使用 `driver.register_adapter` 注册适配器
+使用 {ref}`nonebot.drivers.Driver.register_adapter` 注册适配器。
+
+FrontMatter:
+    sidebar_position: 0
+    description: nonebot.adapters 模块
 """
 
 from typing import Iterable
@@ -25,3 +28,11 @@ from ._adapter import Adapter as Adapter
 from ._message import Message as Message
 from ._message import MessageSegment as MessageSegment
 from ._template import MessageTemplate as MessageTemplate
+
+__autodoc__ = {
+    "_bot": True,
+    "_event": True,
+    "_adapter": True,
+    "_message": True,
+    "_template": True,
+}

@@ -1,7 +1,8 @@
-"""
-## 依赖注入处理模块
+"""本模块模块实现了依赖注入的定义与处理。
 
-该模块实现了依赖注入的定义与处理。
+FrontMatter:
+    sidebar_position: 0
+    description: nonebot.dependencies 模块
 """
 
 import abc
@@ -23,6 +24,11 @@ R = TypeVar("R")
 
 
 class Param(abc.ABC, FieldInfo):
+    """依赖注入的基本单元 —— 参数。
+
+    继承自 `pydantic.fields.FieldInfo`，用于描述参数信息（不包括参数名）。
+    """
+
     @classmethod
     def _check_param(
         cls, dependent: "Dependent", name: str, param: inspect.Parameter
@@ -45,6 +51,16 @@ class CustomConfig(BaseConfig):
 
 
 class Dependent(Generic[R]):
+    """依赖注入容器
+
+    参数:
+        call: 依赖注入的可调用对象，可以是任何 Callable 对象
+        pre_checkers: 依赖注入解析前的参数检查
+        params: 具名参数列表
+        parameterless: 匿名参数列表
+        allow_types: 允许的参数类型
+    """
+
     def __init__(
         self,
         *,
@@ -192,3 +208,6 @@ class Dependent(Generic[R]):
                 values[field.name] = value
 
         return values
+
+
+__autodoc__ = {"CustomConfig": False}

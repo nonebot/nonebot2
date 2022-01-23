@@ -1,11 +1,11 @@
-"""
-## 规则
+"""本模块是 {ref}`nonebot.matcher.Matcher.rule` 的类型定义。
 
-每个事件响应器 `Matcher` 拥有一个匹配规则 `Rule` ，其中是 `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
+每个事件响应器 {ref}`nonebot.matcher.Matcher` 拥有一个匹配规则 {ref}`nonebot.rule.Rule`
+其中是 `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
 
-::: tip 提示
-`RuleChecker` 既可以是 async function 也可以是 sync function
-:::
+FrontMatter:
+    sidebar_position: 5
+    description: nonebot.rule 模块
 """
 
 import re
@@ -42,6 +42,7 @@ from nonebot.params import (
     BotParam,
     EventToMe,
     EventType,
+    CommandArg,
     EventParam,
     StateParam,
     DependParam,
@@ -61,15 +62,18 @@ CMD_RESULT = TypedDict(
 
 
 class Rule:
-    """
-    `Matcher` 规则类，当事件传递时，在 `Matcher` 运行前进行检查。
+    """{ref}`nonebot.matcher.Matcher` 规则类。
+
+    当事件传递时，在 {ref}`nonebot.matcher.Matcher` 运行前进行检查。
+
+    参数:
+        *checkers: RuleChecker
 
     用法:
         ```python
         Rule(async_function) & sync_function
         # 等价于
-        from nonebot.utils import run_sync
-        Rule(async_function, run_sync(sync_function))
+        Rule(async_function, sync_function)
         ```
     """
 
@@ -84,11 +88,6 @@ class Rule:
     ]
 
     def __init__(self, *checkers: Union[T_RuleChecker, Dependent[bool]]) -> None:
-        """
-        参数:
-          *checkers: RuleChecker
-
-        """
         self.checkers: Set[Dependent[bool]] = set(
             checker
             if isinstance(checker, Dependent)
@@ -97,9 +96,7 @@ class Rule:
             )
             for checker in checkers
         )
-        """
-        存储 `RuleChecker`
-        """
+        """存储 `RuleChecker`"""
 
     async def __call__(
         self,
@@ -109,8 +106,7 @@ class Rule:
         stack: Optional[AsyncExitStack] = None,
         dependency_cache: Optional[T_DependencyCache] = None,
     ) -> bool:
-        """
-        检查是否符合所有规则
+        """检查是否符合所有规则
 
         参数:
             bot: Bot 对象
@@ -186,6 +182,15 @@ class TrieRule:
 
 
 class StartswithRule:
+    """检查消息纯文本是否以指定字符串开头。
+
+    参数:
+        msg: 指定消息开头字符串元组
+        ignorecase: 是否忽略大小写
+    """
+
+    __slots__ = ("msg", "ignorecase")
+
     def __init__(self, msg: Tuple[str, ...], ignorecase: bool = False):
         self.msg = msg
         self.ignorecase = ignorecase
@@ -205,11 +210,11 @@ class StartswithRule:
 
 
 def startswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
-    """
-    匹配消息开头
+    """匹配消息纯文本开头。
 
     参数:
-        msg: 消息开头字符串
+        msg: 指定消息开头字符串元组
+        ignorecase: 是否忽略大小写
     """
     if isinstance(msg, str):
         msg = (msg,)
@@ -218,6 +223,15 @@ def startswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Ru
 
 
 class EndswithRule:
+    """检查消息纯文本是否以指定字符串结尾。
+
+    参数:
+        msg: 指定消息结尾字符串元组
+        ignorecase: 是否忽略大小写
+    """
+
+    __slots__ = ("msg", "ignorecase")
+
     def __init__(self, msg: Tuple[str, ...], ignorecase: bool = False):
         self.msg = msg
         self.ignorecase = ignorecase
@@ -237,11 +251,11 @@ class EndswithRule:
 
 
 def endswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
-    """
-    匹配消息结尾
+    """匹配消息纯文本结尾。
 
     参数:
-        msg: 消息结尾字符串
+        msg: 指定消息开头字符串元组
+        ignorecase: 是否忽略大小写
     """
     if isinstance(msg, str):
         msg = (msg,)
@@ -250,6 +264,14 @@ def endswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule
 
 
 class KeywordsRule:
+    """检查消息纯文本是否包含指定关键字。
+
+    参数:
+        keywords: 指定关键字元组
+    """
+
+    __slots__ = ("keywords",)
+
     def __init__(self, *keywords: str):
         self.keywords = keywords
 
@@ -262,17 +284,24 @@ class KeywordsRule:
 
 
 def keyword(*keywords: str) -> Rule:
-    """
-    匹配消息关键词
+    """匹配消息纯文本关键词。
 
     参数:
-        *keywords: 关键词
+        keywords: 指定关键字元组
     """
 
     return Rule(KeywordsRule(*keywords))
 
 
 class CommandRule:
+    """检查消息是否为指定命令。
+
+    参数:
+        cmds: 指定命令元组列表
+    """
+
+    __slots__ = ("cmds",)
+
     def __init__(self, cmds: List[Tuple[str, ...]]):
         self.cmds = cmds
 
@@ -284,22 +313,26 @@ class CommandRule:
 
 
 def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
-    """
-    命令形式匹配，根据配置里提供的 `command_start`, `command_sep` 判断消息是否为命令。
+    """匹配消息命令。
 
-    可以通过 `state["_prefix"]["command"]` 获取匹配成功的命令（例：`("test",)`），通过 `state["_prefix"]["raw_command"]` 获取匹配成功的原始命令文本（例：`"/test"`）。
+    根据配置里提供的 {ref}``command_start` <nonebot.config.Config.command_start>`,
+    {ref}``command_sep` <nonebot.config.Config.command_sep>` 判断消息是否为命令。
+
+    可以通过 {ref}`nonebot.params.Command` 获取匹配成功的命令（例: `("test",)`），
+    通过 {ref}`nonebot.params.RawCommand` 获取匹配成功的原始命令文本（例: `"/test"`），
+    通过 {ref}`nonebot.params.CommandArg` 获取匹配成功的命令参数。
 
     参数:
-        *cmds: 命令内容
+        cmds: 命令文本或命令元组
 
     用法:
         使用默认 `command_start`, `command_sep` 配置
 
-        命令 `("test",)` 可以匹配：`/test` 开头的消息
-        命令 `("test", "sub")` 可以匹配”`/test.sub` 开头的消息
+        命令 `("test",)` 可以匹配: `/test` 开头的消息
+        命令 `("test", "sub")` 可以匹配: `/test.sub` 开头的消息
 
-    ::: tip 提示
-    命令内容与后续消息间无需空格！
+    :::tip 提示
+    命令内容与后续消息间无需空格!
     :::
     """
 
@@ -324,8 +357,11 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
 
 
 class ArgumentParser(ArgParser):
-    """
-    `shell_like` 命令参数解析器，解析出错时不会退出程序。
+    """`shell_like` 命令参数解析器，解析出错时不会退出程序。
+
+    用法:
+        用法与 `argparse.ArgumentParser` 相同，
+        参考文档: [argparse](https://docs.python.org/3/library/argparse.html)
     """
 
     def _print_message(self, message, file=None):
@@ -350,6 +386,15 @@ class ArgumentParser(ArgParser):
 
 
 class ShellCommandRule:
+    """检查消息是否为指定 shell 命令。
+
+    参数:
+        cmds: 指定命令元组列表
+        parser: 可选参数解析器
+    """
+
+    __slots__ = ("cmds", "parser")
+
     def __init__(self, cmds: List[Tuple[str, ...]], parser: Optional[ArgumentParser]):
         self.cmds = cmds
         self.parser = parser
@@ -358,12 +403,11 @@ class ShellCommandRule:
         self,
         state: T_State,
         cmd: Optional[Tuple[str, ...]] = Command(),
-        msg: Message = EventMessage(),
+        msg: Optional[Message] = CommandArg(),
     ) -> bool:
-        if cmd in self.cmds:
+        if cmd in self.cmds and msg is not None:
             message = str(msg)
-            strip_message = message[len(state[PREFIX_KEY][RAW_CMD_KEY]) :].lstrip()
-            state[SHELL_ARGV] = shlex.split(strip_message)
+            state[SHELL_ARGV] = shlex.split(message)
             if self.parser:
                 try:
                     args = self.parser.parse_args(state[SHELL_ARGV])
@@ -378,18 +422,24 @@ class ShellCommandRule:
 def shell_command(
     *cmds: Union[str, Tuple[str, ...]], parser: Optional[ArgumentParser] = None
 ) -> Rule:
-    """
-    支持 `shell_like` 解析参数的命令形式匹配，根据配置里提供的 `command_start`, `command_sep` 判断消息是否为命令。
+    """匹配 `shell_like` 形式的消息命令。
 
-    可以通过 `state["_prefix"]["command"]` 获取匹配成功的命令（例：`("test",)`），通过 `state["_prefix"]["raw_command"]` 获取匹配成功的原始命令文本（例：`"/test"`）。
+    根据配置里提供的 {ref}``command_start` <nonebot.config.Config.command_start>`,
+    {ref}``command_sep` <nonebot.config.Config.command_sep>` 判断消息是否为命令。
 
-    可以通过 `state["argv"]` 获取用户输入的原始参数列表
+    可以通过 {ref}`nonebot.params.Command` 获取匹配成功的命令（例: `("test",)`），
+    通过 {ref}`nonebot.params.RawCommand` 获取匹配成功的原始命令文本（例: `"/test"`），
+    通过 {ref}`nonebot.params.ShellCommandArgv` 获取解析前的参数列表（例: `["arg", "-h"]`），
+    通过 {ref}`nonebot.params.ShellCommandArgs` 获取解析后的参数字典（例: `{"arg": "arg", "h": True}`）。
 
-    添加 `parser` 参数后, 可以自动处理消息并将结果保存在 `state["args"]` 中。
+    :::warning 警告
+    如果参数解析失败，则通过 {ref}`nonebot.params.ShellCommandArgs`
+    获取的将是 {ref}`nonebot.exception.ParserExit` 异常。
+    :::
 
     参数:
-        *cmds: 命令内容
-        parser: `nonebot.rule.ArgumentParser` 对象
+        cmds: 命令文本或命令元组
+        parser: {ref}`nonebot.rule.ArgumentParser` 对象
 
     用法:
         使用默认 `command_start`, `command_sep` 配置，更多示例参考 `argparse` 标准库文档。
@@ -403,8 +453,8 @@ def shell_command(
         rule = shell_command("ls", parser=parser)
         ```
 
-    ::: tip 提示
-    命令内容与后续消息间无需空格！
+    :::tip 提示
+    命令内容与后续消息间无需空格!
     :::
     """
     if parser is not None and not isinstance(parser, ArgumentParser):
@@ -431,6 +481,15 @@ def shell_command(
 
 
 class RegexRule:
+    """检查消息字符串是否符合指定正则表达式。
+
+    参数:
+        regex: 正则表达式
+        flags: 正则表达式标记
+    """
+
+    __slots__ = ("regex", "flags")
+
     def __init__(self, regex: str, flags: int = 0):
         self.regex = regex
         self.flags = flags
@@ -454,18 +513,22 @@ class RegexRule:
 
 
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
-    """
-    根据正则表达式进行匹配。
+    """匹配符合正则表达式的消息字符串。
 
-    可以通过 `state["_matched"]` `state["_matched_groups"]` `state["_matched_dict"]`
-    获取正则表达式匹配成功的文本。
+    可以通过 {ref}`nonebot.params.RegexMatched` 获取匹配成功的字符串，
+    通过 {ref}`nonebot.params.RegexGroup` 获取匹配成功的 group 元组，
+    通过 {ref}`nonebot.params.RegexDict` 获取匹配成功的 group 字典。
 
     参数:
         regex: 正则表达式
-        flags: 正则标志
+        flags: 正则表达式标记
 
-    ::: tip 提示
+    :::tip 提示
     正则表达式匹配使用 search 而非 match，如需从头匹配请使用 `r"^xxx"` 来确保匹配开头
+    :::
+
+    :::tip 提示
+    正则表达式匹配使用 `EventMessage` 的 `str` 字符串，而非 `EventMessage` 的 `PlainText` 纯文本字符串
     :::
     """
 
@@ -473,13 +536,23 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
 
 
 class ToMeRule:
+    """检查事件是否与机器人有关。"""
+
+    __slots__ = ()
+
     async def __call__(self, to_me: bool = EventToMe()) -> bool:
         return to_me
 
 
 def to_me() -> Rule:
-    """
-    通过 `event.is_tome()` 判断事件是否与机器人有关
-    """
+    """匹配与机器人有关的事件。"""
 
     return Rule(ToMeRule())
+
+
+__autodoc__ = {
+    "Rule.__call__": True,
+    "TrieRule": False,
+    "ArgumentParser.exit": False,
+    "ArgumentParser.parse_args": False,
+}

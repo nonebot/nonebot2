@@ -1,9 +1,12 @@
-"""
-## FastAPI 驱动适配
+"""[FastAPI](https://fastapi.tiangolo.com/) 驱动适配
 
-本驱动同时支持服务端以及客户端连接
+:::tip 提示
+本驱动仅支持服务端连接
+:::
 
-后端使用方法请参考: [`FastAPI 文档`](https://fastapi.tiangolo.com/)
+FrontMatter:
+    sidebar_position: 1
+    description: nonebot.drivers.fastapi 模块
 """
 
 import logging
@@ -39,53 +42,33 @@ def catch_closed(func):
 
 
 class Config(BaseSettings):
-    """
-    FastAPI 驱动框架设置，详情参考 FastAPI 文档
-    """
+    """FastAPI 驱动框架设置，详情参考 FastAPI 文档"""
 
     fastapi_openapi_url: Optional[str] = None
-    """
-    `openapi.json` 地址，默认为 `None` 即关闭
-    """
+    """`openapi.json` 地址，默认为 `None` 即关闭"""
     fastapi_docs_url: Optional[str] = None
-    """
-    `swagger` 地址，默认为 `None` 即关闭
-    """
+    """`swagger` 地址，默认为 `None` 即关闭"""
     fastapi_redoc_url: Optional[str] = None
-    """
-    `redoc` 地址，默认为 `None` 即关闭
-    """
+    """`redoc` 地址，默认为 `None` 即关闭"""
     fastapi_include_adapter_schema: bool = True
-    """
-    是否包含适配器路由的 schema，默认为 `True`
-    """
+    """是否包含适配器路由的 schema，默认为 `True`"""
     fastapi_reload: bool = False
-    """
-    开启/关闭冷重载
-    """
+    """开启/关闭冷重载"""
     fastapi_reload_dirs: Optional[List[str]] = None
-    """
-    重载监控文件夹列表，默认为 uvicorn 默认值
-    """
+    """重载监控文件夹列表，默认为 uvicorn 默认值"""
     fastapi_reload_delay: Optional[float] = None
-    """
-    重载延迟，默认为 uvicorn 默认值
-    """
+    """重载延迟，默认为 uvicorn 默认值"""
     fastapi_reload_includes: Optional[List[str]] = None
-    """
-    要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
-    """
+    """要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
     fastapi_reload_excludes: Optional[List[str]] = None
-    """
-    不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
-    """
+    """不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
 
     class Config:
         extra = "ignore"
 
 
 class Driver(ReverseDriver):
-    """FastAPI 驱动框架。包含反向 Server 功能。"""
+    """FastAPI 驱动框架。"""
 
     def __init__(self, env: Env, config: NoneBotConfig):
         super(Driver, self).__init__(env, config)
@@ -254,6 +237,8 @@ class Driver(ReverseDriver):
 
 
 class FastAPIWebSocket(BaseWebSocket):
+    """FastAPI WebSocket Wrapper"""
+
     @overrides(BaseWebSocket)
     def __init__(self, *, request: BaseRequest, websocket: WebSocket):
         super().__init__(request=request)
@@ -294,3 +279,6 @@ class FastAPIWebSocket(BaseWebSocket):
     @overrides(BaseWebSocket)
     async def send_bytes(self, data: bytes) -> None:
         await self.websocket.send({"type": "websocket.send", "bytes": data})
+
+
+__autodoc__ = {"catch_closed": False}

@@ -1,6 +1,22 @@
+"""[websockets](https://websockets.readthedocs.io/) 驱动适配
+
+```bash
+nb driver install websockets
+# 或者
+pip install nonebot2[websockets]
+```
+
+:::tip 提示
+本驱动仅支持客户端 WebSocket 连接
+:::
+
+FrontMatter:
+    sidebar_position: 4
+    description: nonebot.drivers.websockets 模块
+"""
 import logging
 from functools import wraps
-from typing import AsyncGenerator
+from typing import Type, AsyncGenerator
 from contextlib import asynccontextmanager
 
 from nonebot.typing import overrides
@@ -9,7 +25,7 @@ from nonebot.drivers import Request, Response
 from nonebot.exception import WebSocketClosed
 from nonebot.drivers._block_driver import BlockDriver
 from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.drivers import ForwardMixin, combine_driver
+from nonebot.drivers import ForwardMixin, ForwardDriver, combine_driver
 
 try:
     from websockets.exceptions import ConnectionClosed
@@ -38,6 +54,8 @@ def catch_closed(func):
 
 
 class Mixin(ForwardMixin):
+    """Websockets Mixin"""
+
     @property
     @overrides(ForwardMixin)
     def type(self) -> str:
@@ -60,6 +78,8 @@ class Mixin(ForwardMixin):
 
 
 class WebSocket(BaseWebSocket):
+    """Websockets WebSocket Wrapper"""
+
     @overrides(BaseWebSocket)
     def __init__(self, *, request: Request, websocket: WebSocketClientProtocol):
         super().__init__(request=request)
@@ -103,4 +123,5 @@ class WebSocket(BaseWebSocket):
         await self.websocket.send(data)
 
 
-Driver = combine_driver(BlockDriver, Mixin)
+Driver: Type[ForwardDriver] = combine_driver(BlockDriver, Mixin)  # type: ignore
+"""Websockets Driver"""

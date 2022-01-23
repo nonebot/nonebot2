@@ -25,8 +25,8 @@ jobs:
 
       - name: Install and build
         run: |
-          poetry run sphinx-build -M markdown ./docs_build ./build
-          cp -r ./build/markdown/* ./website/docs/api/
+          poetry run nb-autodoc nonebot
+          cp -r ./build/nonebot/* ./website/docs/api/
           yarn prettier
           yarn build
 

@@ -1,7 +1,8 @@
-"""
-## 事件响应器
+"""本模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行对话。
 
-该模块实现事件响应器的创建与运行，并提供一些快捷方法来帮助用户更好的与机器人进行对话 。
+FrontMatter:
+    sidebar_position: 3
+    description: nonebot.matcher 模块
 """
 
 from types import ModuleType
@@ -64,9 +65,7 @@ if TYPE_CHECKING:
 T = TypeVar("T")
 
 matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
-"""
-用于存储当前所有的事件响应器
-"""
+"""用于存储当前所有的事件响应器"""
 current_bot: ContextVar[Bot] = ContextVar("current_bot")
 current_event: ContextVar[Event] = ContextVar("current_event")
 current_matcher: ContextVar["Matcher"] = ContextVar("current_matcher")
@@ -103,68 +102,38 @@ class Matcher(metaclass=MatcherMeta):
     """事件响应器类"""
 
     plugin: Optional["Plugin"] = None
-    """
-    事件响应器所在插件
-    """
+    """事件响应器所在插件"""
     module: Optional[ModuleType] = None
-    """
-    事件响应器所在插件模块
-    """
+    """事件响应器所在插件模块"""
     plugin_name: Optional[str] = None
-    """
-    事件响应器所在插件名
-    """
+    """事件响应器所在插件名"""
     module_name: Optional[str] = None
-    """
-    事件响应器所在点分割插件模块路径
-    """
+    """事件响应器所在点分割插件模块路径"""
 
     type: str = ""
-    """
-    事件响应器类型
-    """
+    """事件响应器类型"""
     rule: Rule = Rule()
-    """
-    事件响应器匹配规则
-    """
+    """事件响应器匹配规则"""
     permission: Permission = Permission()
-    """
-    事件响应器触发权限
-    """
+    """事件响应器触发权限"""
     handlers: List[Dependent[Any]] = []
-    """
-    事件响应器拥有的事件处理函数列表
-    """
+    """事件响应器拥有的事件处理函数列表"""
     priority: int = 1
-    """
-    事件响应器优先级
-    """
+    """事件响应器优先级"""
     block: bool = False
-    """
-    事件响应器是否阻止事件传播
-    """
+    """事件响应器是否阻止事件传播"""
     temp: bool = False
-    """
-    事件响应器是否为临时
-    """
+    """事件响应器是否为临时"""
     expire_time: Optional[datetime] = None
-    """
-    事件响应器过期时间点
-    """
+    """事件响应器过期时间点"""
 
     _default_state: T_State = {}
-    """
-    事件响应器默认状态
-    """
+    """事件响应器默认状态"""
 
     _default_type_updater: Optional[Dependent[str]] = None
-    """
-    事件响应器类型更新函数
-    """
+    """事件响应器类型更新函数"""
     _default_permission_updater: Optional[Dependent[Permission]] = None
-    """
-    事件响应器权限更新函数
-    """
+    """事件响应器权限更新函数"""
 
     HANDLER_PARAM_TYPES = [
         params.DependParam,
@@ -177,7 +146,6 @@ class Matcher(metaclass=MatcherMeta):
     ]
 
     def __init__(self):
-        """实例化 Matcher 以便运行"""
         self.handlers = self.handlers.copy()
         self.state = self._default_state.copy()
 
@@ -272,15 +240,16 @@ class Matcher(metaclass=MatcherMeta):
         stack: Optional[AsyncExitStack] = None,
         dependency_cache: Optional[T_DependencyCache] = None,
     ) -> bool:
-        """
-        检查是否满足触发权限
+        """检查是否满足触发权限
 
         参数:
             bot: Bot 对象
             event: 上报事件
+            stack: 异步上下文栈
+            dependency_cache: 依赖缓存
 
         返回:
-            bool: 是否满足权限
+            是否满足权限
         """
         event_type = event.get_type()
         return event_type == (cls.type or event_type) and await cls.permission(
@@ -296,16 +265,17 @@ class Matcher(metaclass=MatcherMeta):
         stack: Optional[AsyncExitStack] = None,
         dependency_cache: Optional[T_DependencyCache] = None,
     ) -> bool:
-        """
-        检查是否满足匹配规则
+        """检查是否满足匹配规则
 
         参数:
             bot: Bot 对象
             event: 上报事件
             state: 当前状态
+            stack: 异步上下文栈
+            dependency_cache: 依赖缓存
 
         返回:
-            bool: 是否满足匹配规则
+            是否满足匹配规则
         """
         event_type = event.get_type()
         return event_type == (cls.type or event_type) and await cls.rule(
@@ -314,8 +284,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def type_updater(cls, func: T_TypeUpdater) -> T_TypeUpdater:
-        """
-        装饰一个函数来更改当前事件响应器的默认响应事件类型更新函数
+        """装饰一个函数来更改当前事件响应器的默认响应事件类型更新函数
 
         参数:
             func: 响应事件类型更新函数
@@ -327,8 +296,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def permission_updater(cls, func: T_PermissionUpdater) -> T_PermissionUpdater:
-        """
-        装饰一个函数来更改当前事件响应器的默认会话权限更新函数
+        """装饰一个函数来更改当前事件响应器的默认会话权限更新函数
 
         参数:
             func: 会话权限更新函数
@@ -354,8 +322,7 @@ class Matcher(metaclass=MatcherMeta):
     def handle(
         cls, parameterless: Optional[List[Any]] = None
     ) -> Callable[[T_Handler], T_Handler]:
-        """
-        装饰一个函数来向事件响应器直接添加一个处理函数
+        """装饰一个函数来向事件响应器直接添加一个处理函数
 
         参数:
             parameterless: 非参数类型依赖列表
@@ -371,8 +338,7 @@ class Matcher(metaclass=MatcherMeta):
     def receive(
         cls, id: str = "", parameterless: Optional[List[Any]] = None
     ) -> Callable[[T_Handler], T_Handler]:
-        """
-        装饰一个函数来指示 NoneBot 在接收用户新的一条消息后继续运行该函数
+        """装饰一个函数来指示 NoneBot 在接收用户新的一条消息后继续运行该函数
 
         参数:
             id: 消息 ID
@@ -410,8 +376,9 @@ class Matcher(metaclass=MatcherMeta):
         prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
         parameterless: Optional[List[Any]] = None,
     ) -> Callable[[T_Handler], T_Handler]:
-        """
-        装饰一个函数来指示 NoneBot 当要获取的 `key` 不存在时接收用户新的一条消息再运行该函数，如果 `key` 已存在则直接继续运行
+        """装饰一个函数来指示 NoneBot 获取一个参数 `key`
+
+        当要获取的 `key` 不存在时接收用户新的一条消息再运行该函数，如果 `key` 已存在则直接继续运行
 
         参数:
             key: 参数名
@@ -452,12 +419,11 @@ class Matcher(metaclass=MatcherMeta):
         message: Union[str, Message, MessageSegment, MessageTemplate],
         **kwargs: Any,
     ) -> Any:
-        """
-        发送一条消息给当前交互用户
+        """发送一条消息给当前交互用户
 
         参数:
             message: 消息内容
-            **kwargs: `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+            kwargs: {ref}`nonebot.adapters._bot.Bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         bot = current_bot.get()
         event = current_event.get()
@@ -474,12 +440,11 @@ class Matcher(metaclass=MatcherMeta):
         message: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
         **kwargs,
     ) -> NoReturn:
-        """
-        发送一条消息给当前交互用户并结束当前事件响应器
+        """发送一条消息给当前交互用户并结束当前事件响应器
 
         参数:
             message: 消息内容
-            **kwargs: `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+            kwargs: {ref}`nonebot.adapters._bot.Bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         if message is not None:
             await cls.send(message, **kwargs)
@@ -491,12 +456,11 @@ class Matcher(metaclass=MatcherMeta):
         prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
         **kwargs,
     ) -> NoReturn:
-        """
-        发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续下一个处理函数
+        """发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续下一个处理函数
 
         参数:
             prompt: 消息内容
-            **kwargs`: bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+            kwargs: {ref}`nonebot.adapters._bot.Bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         if prompt is not None:
             await cls.send(prompt, **kwargs)
@@ -508,12 +472,12 @@ class Matcher(metaclass=MatcherMeta):
         prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
         **kwargs,
     ) -> NoReturn:
-        """
-        最近使用 `got` / `receive` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
+        """最近使用 `got` / `receive` 接收的消息不符合预期，
+        发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
 
         参数:
             prompt: 消息内容
-            **kwargs: `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+            kwargs: {ref}`nonebot.adapters._bot.Bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         if prompt is not None:
             await cls.send(prompt, **kwargs)
@@ -526,13 +490,13 @@ class Matcher(metaclass=MatcherMeta):
         prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
         **kwargs,
     ) -> NoReturn:
-        """
-        最近使用 `got` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
+        """最近使用 `got` 接收的消息不符合预期，
+        发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
 
         参数:
             key: 参数名
             prompt: 消息内容
-            **kwargs: `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+            kwargs: {ref}`nonebot.adapters._bot.Bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()
         matcher.set_target(ARG_KEY.format(key=key))
@@ -547,13 +511,13 @@ class Matcher(metaclass=MatcherMeta):
         prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
         **kwargs,
     ) -> NoReturn:
-        """
-        最近使用 `got` 接收的消息不符合预期，发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
+        """最近使用 `got` 接收的消息不符合预期，
+        发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
 
         参数:
             id: 消息 id
             prompt: 消息内容
-            **kwargs: `bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+            kwargs: {ref}`nonebot.adapters._bot.Bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()
         matcher.set_target(RECEIVE_KEY.format(id=id))
@@ -563,22 +527,40 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def skip(cls) -> NoReturn:
+        """跳过当前事件处理函数，继续下一个处理函数
+
+        通常在事件处理函数的依赖中使用。
+        """
         raise SkippedException
 
     def get_receive(self, id: str, default: T = None) -> Union[Event, T]:
+        """获取一个 `receive` 事件
+
+        如果没有找到对应的事件，返回 `default` 值
+        """
         return self.state.get(RECEIVE_KEY.format(id=id), default)
 
     def set_receive(self, id: str, event: Event) -> None:
+        """设置一个 `receive` 事件"""
         self.state[RECEIVE_KEY.format(id=id)] = event
         self.state[LAST_RECEIVE_KEY] = event
 
     def get_last_receive(self, default: T = None) -> Union[Event, T]:
+        """获取最近一次 `receive` 事件
+
+        如果没有事件，返回 `default` 值
+        """
         return self.state.get(LAST_RECEIVE_KEY, default)
 
     def get_arg(self, key: str, default: T = None) -> Union[Message, T]:
+        """获取一个 `got` 消息
+
+        如果没有找到对应的消息，返回 `default` 值
+        """
         return self.state.get(ARG_KEY.format(key=key), default)
 
     def set_arg(self, key: str, message: Message) -> None:
+        """设置一个 `got` 消息"""
         self.state[ARG_KEY.format(key=key)] = message
 
     def set_target(self, target: str, cache: bool = True) -> None:
@@ -591,9 +573,7 @@ class Matcher(metaclass=MatcherMeta):
         return self.state.get(REJECT_TARGET, default)
 
     def stop_propagation(self):
-        """
-        阻止事件传播
-        """
+        """阻止事件传播"""
         self.block = True
 
     async def update_type(self, bot: Bot, event: Event) -> str:
@@ -714,3 +694,14 @@ class Matcher(metaclass=MatcherMeta):
             )
         except FinishedException:
             pass
+
+
+__autodoc__ = {
+    "MatcherMeta": False,
+    "Matcher.get_target": False,
+    "Matcher.set_target": False,
+    "Matcher.update_type": False,
+    "Matcher.update_permission": False,
+    "Matcher.resolve_reject": False,
+    "Matcher.simple_run": False,
+}
