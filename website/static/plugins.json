@@ -1000,5 +1000,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_emojimix",
+    "project_link": "nonebot-plugin-emojimix",
+    "name": "emoji 合成器",
+    "desc": "😎+😁=？",
+    "author": "MeetWq",
+    "homepage": "https://github.com/MeetWq/nonebot-plugin-emojimix",
+    "tags": [
+      {
+        "label": "t:emoji",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
