@@ -613,7 +613,7 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot-plugin-itnews",
+    "module_name": "nonebot_plugin_itnews",
     "project_link": "nonebot-plugin-itnew",
     "name": "IT咨讯",
     "desc": "获取IT咨讯并生成图片发送",
@@ -713,7 +713,7 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot-plugin-code",
+    "module_name": "nonebot_plugin_code",
     "project_link": "nonebot-plugin-code",
     "name": "在线运行代码",
     "desc": "在线运行代码插件，支持输入",
