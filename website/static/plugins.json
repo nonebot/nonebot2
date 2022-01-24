@@ -1066,5 +1066,24 @@
     "homepage": "https://github.com/he0119/nonebot-plugin-datastore",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_gocqhttp",
+    "project_link": "nonebot-plugin-gocqhttp",
+    "name": "NoneBot的go-cqhttp启动器",
+    "desc": "一款在NoneBot2中直接运行go-cqhttp的插件, 无需额外下载安装",
+    "author": "mnixry",
+    "homepage": "https://github.com/mnixry/nonebot-plugin-gocqhttp",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:gocqhttp",
+        "color": "#eabd52"
+      }
+    ],
+    "is_official": false
   }
 ]
