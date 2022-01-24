@@ -519,7 +519,16 @@
     "desc": "一个ATRI语音包，基于文本相似度匹配回复",
     "author": "FYWinds",
     "homepage": "https://github.com/FYWinds/nonebot-plugin-atri",
-    "tags": [],
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "a:cqhttp",
+        "color": "#000000"
+      }
+    ],
     "is_official": false
   },
   {
@@ -649,7 +658,16 @@
     "desc": "对 go-cqhttp 的 API 调用添加了类型注解与滥用OOP的返回值Model支持，远离魔法方法的Dict[Any, Any]",
     "author": "FYWinds",
     "homepage": "https://github.com/FYWinds/gocqapi",
-    "tags": [],
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "a:cqhttp",
+        "color": "#000000"
+      }
+    ],
     "is_official": false
   },
   {
