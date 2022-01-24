@@ -527,10 +527,6 @@
       {
         "label": "a:cqhttp",
         "color": "#000000"
-      },
-      {
-        "label": "v:voice",
-        "color": "#f5f5dc"
       }
     ],
     "is_official": false
