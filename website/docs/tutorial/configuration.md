@@ -181,4 +181,60 @@ LOG_LEVEL=INFO
 日志等级名称应为大写，如 `INFO`。
 :::
 
-<!-- TODO -->
+### API Timeout
+
+- **类型**: `Optional[float]`
+- **默认值**: `30.0`
+
+API 请求超时时间，单位为秒。
+
+```env
+API_TIMEOUT=30.0
+```
+
+### SuperUsers
+
+- **类型**: `Set[str]`
+- **默认值**: `set()`
+
+机器人超级用户，可以使用权限 {ref}`nonebot.permission.SUPERUSER`。
+
+```env
+SUPERUSERS=["1234567890"]
+```
+
+### Nickname
+
+- **类型**: `Set[str]`
+- **默认值**: `set()`
+
+机器人昵称，通常协议适配器会根据用户是否 @user 或者是否以机器人昵称开头来判断是否是向机器人发送的消息。
+
+```env
+NICKNAME=["bot"]
+```
+
+### Command Start 和 Command Separator
+
+- **类型**: `Set[str]`
+- **默认值**:
+  - Command Start: `{"/"}`
+  - Command Separator: `{"."}`
+
+命令消息的起始符和分隔符。用于 {ref}`nonebot.rule.command` 规则。
+
+```env
+COMMAND_START={"/", "!"}
+COMMAND_SEP={".", "/"}
+```
+
+### Session Expire Timeout
+
+- **类型**: `timedelta`
+- **默认值**: `timedelta(minutes=2)`
+
+用户会话超时时间，配置格式参考 [`Pydantic Field`](https://pydantic-docs.helpmanual.io/usage/types/#datetime-types) 。
+
+```env
+SESSION_EXPIRE_TIMEOUT=120
+```
