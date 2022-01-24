@@ -1038,5 +1038,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_datastore",
+    "project_link": "nonebot-plugin-datastore",
+    "name": "NoneBot 数据存储",
+    "desc": "提供简单的插件数据封装与数据库访问",
+    "author": "he0119",
+    "homepage": "https://github.com/he0119/nonebot-plugin-datastore",
+    "tags": [],
+    "is_official": false
   }
 ]
