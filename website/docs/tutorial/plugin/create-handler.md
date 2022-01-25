@@ -259,17 +259,22 @@ async def _(foo: Message = CommandArg()): ...
 获取 shell 命令解析后的参数。
 
 :::tip 提示
-如果参数解析失败，则为 {ref}`nonebot.exception.ParserExit` 异常，并携带错误码与错误信息。
+如果参数解析失败，则为 [`ParserExit`](../../api/exception.md#ParserExit) 异常，并携带错误码与错误信息。
 
 由于 `ArgumentParser` 在解析到 `--help` 参数时也会抛出异常，这种情况下错误码为 `0` 且错误信息即为帮助信息。
 :::
 
-```python {7}
+```python {8,12}
 from nonebot import on_shell_command
 from nonebot.params import ShellCommandArgs
 
 matcher = on_shell_command("cmd", parser)
 
+# 解析失败
+@matcher.handle()
+async def _(foo: ParserExit = ShellCommandArgs()): ...
+
+# 解析成功
 @matcher.handle()
 async def _(foo: Dict[str, Any] = ShellCommandArgs()): ...
 ```

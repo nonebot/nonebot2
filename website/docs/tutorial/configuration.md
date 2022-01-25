@@ -197,7 +197,7 @@ API_TIMEOUT=30.0
 - **类型**: `Set[str]`
 - **默认值**: `set()`
 
-机器人超级用户，可以使用权限 {ref}`nonebot.permission.SUPERUSER`。
+机器人超级用户，可以使用权限 [`SUPERUSER`](../api/permission.md#SUPERUSER)。
 
 ```env
 SUPERUSERS=["1234567890"]
@@ -221,7 +221,7 @@ NICKNAME=["bot"]
   - Command Start: `{"/"}`
   - Command Separator: `{"."}`
 
-命令消息的起始符和分隔符。用于 {ref}`nonebot.rule.command` 规则。
+命令消息的起始符和分隔符。用于 [`command`](../api/rule.md#command) 规则。
 
 ```env
 COMMAND_START={"/", "!"}
