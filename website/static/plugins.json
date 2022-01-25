@@ -473,26 +473,6 @@
     "is_official": false
   },
   {
-    "module_name": "gugua_bot",
-    "project_link": "gugua_bot",
-    "name": "孤寡机器人",
-    "desc": "让你的孤寡朋友露出阳光的笑容",
-    "author": "Sclock",
-    "homepage": "https://github.com/Sclock/gugua",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "bugu_bot",
-    "project_link": "bugu_bot",
-    "name": "布谷机器人",
-    "desc": "增进你和你单身朋友的友谊",
-    "author": "Sclock",
-    "homepage": "https://github.com/Sclock/bugu_bot",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_flexperm",
     "project_link": "nonebot-plugin-flexperm",
     "name": "nonebot-plugin-flexperm",
