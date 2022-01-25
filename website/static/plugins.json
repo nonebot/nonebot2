@@ -36,7 +36,12 @@
     "desc": "基于规则的授权管理",
     "author": "Lancercmd",
     "homepage": "https://github.com/Lancercmd/nonebot_plugin_rauthman",
-    "tags": [],
+    "tags": [
+      {
+        "label": "t:rule",
+        "color": "#4ec9b0"
+      }
+    ],
     "is_official": false
   },
   {
@@ -120,7 +125,12 @@
     "desc": "基于腾讯机器翻译 TMT",
     "name": "多语种翻译插件",
     "homepage": "https://github.com/Lancercmd/nonebot_plugin_translator",
-    "tags": [],
+    "tags": [
+      {
+        "label": "t:func",
+        "color": "#dcdcaa"
+      }
+    ],
     "is_official": false
   },
   {
@@ -737,7 +747,12 @@
     "desc": "在线运行代码插件，支持输入",
     "author": "yzyyz1387",
     "homepage": "https://github.com/yzyyz1387/nonebot_plugin_code",
-    "tags": [],
+    "tags": [
+      {
+        "label": "t:func",
+        "color": "#dcdcaa"
+      }
+    ],
     "is_official": false
   },
   {
@@ -974,9 +989,9 @@
     "is_official": false
   },
   {
-    "module_name": "今日运势",
+    "module_name": "nonebot_plugin_fortune",
     "project_link": "nonebot-plugin-fortune",
-    "name": "nonebot_plugin_fortune",
+    "name": "今日运势",
     "desc": "抽签！占卜一下你的今日运势",
     "author": "KafCoppelia",
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_fortune",
