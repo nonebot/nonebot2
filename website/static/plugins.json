@@ -974,9 +974,9 @@
     "is_official": false
   },
   {
-    "module_name": "今日运势",
+    "module_name": "nonebot_plugin_fortune",
     "project_link": "nonebot-plugin-fortune",
-    "name": "nonebot_plugin_fortune",
+    "name": "今日运势",
     "desc": "抽签！占卜一下你的今日运势",
     "author": "KafCoppelia",
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_fortune",
