@@ -1087,5 +1087,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_guild_patch",
+    "project_link": "nonebot-plugin-guild-patch",
+    "name": "go-cqhttp 频道支持适配补丁",
+    "desc": "NoneBot2的QQ频道(go-cqhttp协议)支持适配补丁插件",
+    "author": "mnixry",
+    "homepage": "https://github.com/mnixry/nonebot-plugin-guild-patch",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:gocqhttp",
+        "color": "#a2ea52"
+      }
+    ],
+    "is_official": false
   }
 ]
