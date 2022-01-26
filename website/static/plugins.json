@@ -1080,5 +1080,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-general-rss",
+    "project_link": "nonebot-general-rss",
+    "name": "nonebot-general-rss",
+    "desc": "支持频道的通用RSS订阅插件",
+    "author": "mobyw",
+    "homepage": "https://github.com/mobyw/nonebot-general-rss",
+    "tags": [
+      {
+        "label": "t:RSS",
+        "color": "#80070b"
+      },
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
