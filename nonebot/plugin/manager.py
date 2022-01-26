@@ -53,7 +53,10 @@ class PluginManager:
 
         return [
             *chain.from_iterable(
-                [*manager.plugins, *manager.searched_plugins.keys()]
+                [
+                    *map(lambda x: x.rsplit(".", 1)[-1], manager.plugins),
+                    *manager.searched_plugins.keys(),
+                ]
                 for manager in _pre_managers
             )
         ]
@@ -65,7 +68,7 @@ class PluginManager:
         third_party_plugins: Set[str] = set()
 
         for plugin in self.plugins:
-            name = plugin.rsplit(".", 1)[-1] if "." in plugin else plugin
+            name = plugin.rsplit(".", 1)[-1]
             if name in third_party_plugins or name in previous_plugins:
                 raise RuntimeError(
                     f"Plugin already exists: {name}! Check your plugin name"
@@ -99,17 +102,23 @@ class PluginManager:
         try:
             if name in self.plugins:
                 module = importlib.import_module(name)
-            elif name not in self.searched_plugins:
-                raise RuntimeError(f"Plugin not found: {name}! Check your plugin name")
-            else:
+            elif name in self.searched_plugins:
                 module = importlib.import_module(
                     self._path_to_module_name(self.searched_plugins[name])
                 )
+            else:
+                raise RuntimeError(f"Plugin not found: {name}! Check your plugin name")
 
             logger.opt(colors=True).success(
                 f'Succeeded to import "<y>{escape_tag(name)}</y>"'
             )
-            return getattr(module, "__plugin__", None)
+            plugin = getattr(module, "__plugin__", None)
+            if plugin is None:
+                raise RuntimeError(
+                    f"Module {module.__name__} is not loaded as a plugin! "
+                    "Make sure not to import it before loading."
+                )
+            return plugin
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
                 f'<r><bg #f8bbd0>Failed to import "{escape_tag(name)}"</bg #f8bbd0></r>'
