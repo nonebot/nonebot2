@@ -879,7 +879,7 @@
     "module_name": "nonebot_plugin_roll",
     "project_link": "nonebot-plugin-roll",
     "name": "扔骰子",
-    "desc": "掷骰！扔出指定个数的多面骰子。",
+    "desc": "掷骰！扔出指定个数的多面骰子🎲",
     "author": "KafCoppelia",
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_roll",
     "tags": [
@@ -894,7 +894,7 @@
     "module_name": "nonebot_plugin_crazy_thursday",
     "project_link": "nonebot-plugin-crazy-thursday",
     "name": "疯狂星期四",
-    "desc": "天天疯狂！随机输出KFC疯狂星期四文案",
+    "desc": "天天疯狂！随机输出KFC疯狂星期四文案🍗",
     "author": "KafCoppelia",
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_crazy_thursday",
     "tags": [
@@ -972,21 +972,17 @@
     "module_name": "nonebot_plugin_fortune",
     "project_link": "nonebot-plugin-fortune",
     "name": "今日运势",
-    "desc": "抽签！占卜一下你的今日运势",
+    "desc": "抽签！抽取你的今日运势🙏",
     "author": "KafCoppelia",
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_fortune",
     "tags": [
       {
-        "label": "a:cqhttp",
+        "label": "a:onebot",
         "color": "#6952ea"
       },
       {
         "label": "t:fortune",
         "color": "#ea6f52"
-      },
-      {
-        "label": "alpha only",
-        "color": "#181717"
       }
     ],
     "is_official": false
@@ -995,21 +991,17 @@
     "module_name": "nonebot_plugin_tarot",
     "project_link": "nonebot-plugin-tarot",
     "name": "塔罗牌",
-    "desc": "塔罗牌！占卜今日运势",
+    "desc": "塔罗牌！魔法占卜🔮",
     "author": "KafCoppelia",
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_tarot",
     "tags": [
       {
-        "label": "a:cqhttp",
+        "label": "a:onebot",
         "color": "#eaa452"
       },
       {
         "label": "t:tarot",
         "color": "#461264"
-      },
-      {
-        "label": "beta first",
-        "color": "#b41f14"
       }
     ],
     "is_official": false
@@ -1033,21 +1025,17 @@
     "module_name": "nonebot_plugin_what2eat",
     "project_link": "nonebot-plugin-what2eat",
     "name": "今天吃什么",
-    "desc": "选择恐惧症？让Bot给你今天吃什么建议！",
+    "desc": "选择恐惧症？让Bot决定你今天吃什么🍕",
     "author": "KafCoppelia",
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_what2eat",
     "tags": [
       {
-        "label": "a:cqhttp",
+        "label": "a:onebot",
         "color": "#cd3d3d"
       },
       {
         "label": "t:what2eat",
         "color": "#f09526"
-      },
-      {
-        "label": "alpha only",
-        "color": "#181717"
       }
     ],
     "is_official": false
