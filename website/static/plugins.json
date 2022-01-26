@@ -977,7 +977,7 @@
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_fortune",
     "tags": [
       {
-        "label": "a:cqhttp",
+        "label": "a:onebot",
         "color": "#6952ea"
       },
       {
@@ -996,7 +996,7 @@
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_tarot",
     "tags": [
       {
-        "label": "a:cqhttp",
+        "label": "a:onebot",
         "color": "#eaa452"
       },
       {
@@ -1030,7 +1030,7 @@
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_what2eat",
     "tags": [
       {
-        "label": "a:cqhttp",
+        "label": "a:onebot",
         "color": "#cd3d3d"
       },
       {
