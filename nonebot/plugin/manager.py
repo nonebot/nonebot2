@@ -138,7 +138,6 @@ class PluginFinder(MetaPathFinder):
         target: Optional[ModuleType] = None,
     ):
         if _managers:
-            index = -1
             module_spec = PathFinder.find_spec(fullname, path, target)
             if not module_spec:
                 return
@@ -147,17 +146,13 @@ class PluginFinder(MetaPathFinder):
                 return
             module_path = Path(module_origin).resolve()
 
-            while -index <= len(_managers):
-                manager = _managers[index]
-
+            for manager in reversed(_managers):
                 if (
                     fullname in manager.plugins
                     or module_path in manager.searched_plugins.values()
                 ):
                     module_spec.loader = PluginLoader(manager, fullname, module_origin)
                     return module_spec
-
-                index -= 1
         return
 
 
