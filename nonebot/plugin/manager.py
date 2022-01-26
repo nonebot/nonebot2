@@ -98,7 +98,7 @@ class PluginManager:
 
         return third_party_plugins | set(self.searched_plugins.keys())
 
-    def load_plugin(self, name) -> Optional[Plugin]:
+    def load_plugin(self, name: str) -> Optional[Plugin]:
         try:
             if name in self.plugins:
                 module = importlib.import_module(name)
