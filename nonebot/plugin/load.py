@@ -137,6 +137,12 @@ def load_builtin_plugins(*plugins) -> Set[Plugin]:
     return load_all_plugins([f"nonebot.plugins.{p}" for p in plugins], [])
 
 
+def _find_manager_by_name(name: str) -> Optional[PluginManager]:
+    for manager in reversed(_managers):
+        if name in manager.plugins or name in manager.searched_plugins:
+            return manager
+
+
 def require(name: str) -> Export:
     """获取一个插件的导出内容。
 
@@ -148,7 +154,13 @@ def require(name: str) -> Export:
     异常:
         RuntimeError: 插件无法加载
     """
-    plugin = get_plugin(name) or load_plugin(name)
+    plugin = get_plugin(name.rsplit(".", 1)[-1])
     if not plugin:
-        raise RuntimeError(f'Cannot load plugin "{name}"!')
+        manager = _find_manager_by_name(name)
+        if manager:
+            plugin = manager.load_plugin(name)
+        else:
+            plugin = load_plugin(name)
+        if not plugin:
+            raise RuntimeError(f'Cannot load plugin "{name}"!')
     return plugin.export
