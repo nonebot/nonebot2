@@ -12,9 +12,18 @@ import os
 from pathlib import Path
 from datetime import timedelta
 from ipaddress import IPv4Address
-from typing import Any, Set, Dict, Tuple, Union, Mapping, Optional
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Set,
+    Dict,
+    Tuple,
+    Union,
+    Mapping,
+    Optional,
+)
 
-from pydantic import BaseSettings, IPvAnyAddress, validator
+from pydantic import BaseSettings, IPvAnyAddress
 from pydantic.env_settings import (
     SettingsError,
     EnvSettingsSource,
@@ -100,9 +109,10 @@ class CustomEnvSettings(EnvSettingsSource):
 
 
 class BaseConfig(BaseSettings):
-    # dummy getattr for pylance checking, actually not used
-    def __getattr__(self, name: str) -> Any:  # pragma: no cover
-        return self.__dict__.get(name)
+    if TYPE_CHECKING:
+        # dummy getattr for pylance checking, actually not used
+        def __getattr__(self, name: str) -> Any:  # pragma: no cover
+            return self.__dict__.get(name)
 
     class Config:
         @classmethod
@@ -149,8 +159,8 @@ class Config(BaseConfig):
     配置方法参考: [配置](https://v2.nonebot.dev/docs/tutorial/configuration)
     """
 
-    _env_file: str
-    _common_config: Dict[str, Any]
+    _env_file: str = ".env"
+    _common_config: Dict[str, Any] = {}
 
     # nonebot configs
     driver: str = "~fastapi"
