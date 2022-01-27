@@ -8,6 +8,8 @@ options:
     category: guide
 ---
 
+import Asciinema from "@site/src/components/Asciinema";
+
 # 安装 NoneBot
 
 :::warning 注意
@@ -32,7 +34,10 @@ pip uninstall nonebot
    pip install nb-cli
    ```
 
-<!-- TODO: asciinema for installation -->
+<Asciinema
+  url="https://asciinema.org/a/464654.cast"
+  options={{ theme: "monokai", poster: "npt:2.8" }}
+/>
 
 :::important 提示
 `nb-cli` 的使用方法详见 [使用脚手架](./nb-cli.md)
@@ -50,7 +55,7 @@ poetry add nonebot2
 
 ## 从 GitHub 安装
 
-如果你需要使用最新的（可能**尚未发布**的）特性，可以直接从 GitHub 仓库安装：
+如果你需要使用最新的（可能**尚未发布**的）特性，可以直接从 GitHub 仓库安装:
 
 :::warning 注意
 直接从 Github 仓库中安装意味着你将使用最新提交的代码，它们并没有进行充分的稳定性测试
@@ -65,7 +70,7 @@ poetry add git+https://github.com/nonebot/nonebot2.git#master
 poetry add git+https://github.com/nonebot/nonebot2.git#dev
 ```
 
-或者在克隆 Git 仓库后手动安装：
+或者在克隆 Git 仓库后手动安装:
 
 ```bash
 git clone https://github.com/nonebot/nonebot2.git

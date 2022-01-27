@@ -3,6 +3,8 @@ sidebar_position: 1
 description: 通过脚手架, pip 安装驱动器
 ---
 
+import Asciinema from "@site/src/components/Asciinema";
+
 # 安装驱动器
 
 NoneBot 在默认安装情况下内置了 `fastapi` 服务端驱动器，其他驱动器如 `httpx`, `aiohttp` 则需要额外安装。
@@ -11,7 +13,7 @@ NoneBot 在默认安装情况下内置了 `fastapi` 服务端驱动器，其他�
 
 前往 [商店](/store) 即可查看所有驱动器。
 
-或者使用 `nb-cli` 命令行查看：
+或者使用 `nb-cli` 命令行查看:
 
 ```bash
 nb driver list
@@ -21,13 +23,13 @@ nb driver list
 
 前往 [商店](/store) 点击复制 `nb-cli` 安装命令至命令行执行即可安装。
 
-或者自行输入命令安装：
+或者自行输入命令安装:
 
 ```bash
 nb driver install <driver-name>
 ```
 
-或者使用交互模式安装：
+或者使用交互模式安装:
 
 ```bash
 nb driver install
@@ -39,4 +41,7 @@ nb driver install
 pip install <driver-name>
 ```
 
-<!-- TODO: asciinema for install driver -->
+<Asciinema
+  url="https://asciinema.org/a/464686.cast"
+  options={{ theme: "monokai", poster: "npt:2.8" }}
+/>

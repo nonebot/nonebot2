@@ -8,13 +8,20 @@ options:
     category: guide
 ---
 
+import Asciinema from "@site/src/components/Asciinema";
+
 # 创建项目
 
-可以使用 `nb-cli` 或者自行创建完整的项目目录：
+可以使用 `nb-cli` 或者自行创建完整的项目目录:
 
 ```bash
 nb create
 ```
+
+<Asciinema
+  url="https://asciinema.org/a/464654.cast"
+  options={{ theme: "monokai", startAt: 4.5, poster: "npt:6.5" }}
+/>
 
 ## 目录结构
 
@@ -44,7 +51,7 @@ nb create
 :::warning 提示
 如果您使用如 `VSCode` / `PyCharm` 等 IDE 启动 nonebot，请检查 IDE 当前工作空间目录是否与当前侧边栏打开目录一致。
 
-> 注意：在二者不一致的环境下可能导致 nonebot 读取配置文件和插件等不符合预期
+> 注意: 在二者不一致的环境下可能导致 nonebot 读取配置文件和插件等不符合预期
 
 :::
 
@@ -55,6 +62,11 @@ nb create
    ```
 
    其中 `--file` 参数可以指定 bot 入口文件，默认为 `bot.py`，`--app` 参数可以指定 asgi server，默认为 `app`。
+
+   <Asciinema
+     url="https://asciinema.org/a/464654.cast"
+     options={{ theme: "monokai", startAt: 15.3, poster: "npt:20.3" }}
+   />
 
 2. 直接通过 `python` 启动
 
