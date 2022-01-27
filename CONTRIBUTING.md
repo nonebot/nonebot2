@@ -26,7 +26,7 @@ NoneBot 使用 [poetry](https://python-poetry.org/) 管理项目依赖，由于 
 
 ```sh
 poetry install
-precommit install
+pre-commit install
 npm -g i gitmoji-cli
 gitmoji -i
 ```
