@@ -171,11 +171,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ## 贡献
 
-如果你在使用过程中发现任何问题，可以 [提交 Issue](https://github.com/nonebot/nonebot2/issues/new) 或自行 Fork 修改后提交 Pull Request。
-
-如果你要提交 Pull Request，请确保你的代码风格和项目已有的代码保持一致，遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/) 与 [PEP 484](https://www.python.org/dev/peps/pep-0484/)，变量命名清晰，有适当的注释与测试代码，**并且请以 `dev` 分支作为 Pull Request 目标分支**。
-
-<!--TODO: Add a CONTRIBUTING.md-->
+请参考 [贡献指南](./CONTRIBUTING.md)
 
 ### 鸣谢
 
