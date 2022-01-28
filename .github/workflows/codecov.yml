@@ -2,6 +2,9 @@ name: Code Coverage
 
 on:
   push:
+    branches:
+      - master
+      - dev
   pull_request:
 
 jobs:
