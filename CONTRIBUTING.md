@@ -43,7 +43,16 @@ NoneBot2 的文档使用 docusaurus，它有一些 [Markdown 特性](https://doc
 
 NoneBot2 文档并没有具体的行文风格规范，但我们建议你尽量写得简单易懂。
 
-如果你需要在本地预览修改后的文档，可以使用 yarn 或 npm 等 Nodejs 的依赖管理工具安装文档依赖后自行部署。
+NoneBot2 的文档使用 [docusaurus](https://docusaurus.io/)，它有一些 [Markdown 特性](https://docusaurus.io/zh-CN/docs/markdown-features) 可能会帮助到你。
+
+NoneBot2 文档并没有具体的行文风格规范，但我们建议你尽量写得简单易懂。
+
+如果你需要在本地预览修改后的文档，可以使用 yarn 安装文档依赖后启动 dev server，如下所示：
+
+```sh
+yarn install
+yarn start
+```
 
 ### 参与开发
 
@@ -51,7 +60,7 @@ NoneBot2 的代码风格遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/
 
 ## 为社区做贡献
 
-你可以在 NoneBot 商店上架自己的适配器、插件、机器人，具体步骤可参考 [发布插件](https://v2.nonebot.dev/docs/next/advanced/publish-plugin) 一节。
+你可以在 NoneBot 商店上架自己的适配器、插件、机器人，具体步骤可参考 [发布插件](https://v2.nonebot.dev/docs/advanced/publish-plugin) 一节。
 
 我们仅对插件的兼容性进行简单测试，并会在下一个版本发布前对与该版本不兼容的插件作出处理。
 
