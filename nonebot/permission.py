@@ -16,13 +16,7 @@ from nonebot.adapters import Bot, Event
 from nonebot.dependencies import Dependent
 from nonebot.exception import SkippedException
 from nonebot.typing import T_DependencyCache, T_PermissionChecker
-from nonebot.params import (
-    BotParam,
-    EventType,
-    EventParam,
-    DependParam,
-    DefaultParam,
-)
+from nonebot.params import BotParam, EventType, EventParam, DependParam, DefaultParam
 
 
 async def _run_coro_with_catch(coro: Coroutine[Any, Any, Any]):

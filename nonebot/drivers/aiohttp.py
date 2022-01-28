@@ -23,12 +23,7 @@ from nonebot.drivers import Request, Response
 from nonebot.exception import WebSocketClosed
 from nonebot.drivers._block_driver import BlockDriver
 from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.drivers import (
-    HTTPVersion,
-    ForwardMixin,
-    ForwardDriver,
-    combine_driver,
-)
+from nonebot.drivers import HTTPVersion, ForwardMixin, ForwardDriver, combine_driver
 
 try:
     import aiohttp

@@ -13,12 +13,7 @@ from typing import Any, Set, Dict, List, Type, Tuple, Union, Optional
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.dependencies import Dependent
-from nonebot.typing import (
-    T_State,
-    T_Handler,
-    T_RuleChecker,
-    T_PermissionChecker,
-)
+from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_PermissionChecker
 from nonebot.rule import (
     Rule,
     ArgumentParser,
