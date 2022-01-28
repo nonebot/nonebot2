@@ -17,10 +17,10 @@ from nonebot.log import logger
 from nonebot.exception import TypeMisMatch
 from nonebot.utils import run_sync, is_coroutine_callable
 
-from .utils import get_typed_signature
+from .utils import check_field_type, get_typed_signature
 
-T = TypeVar("T", bound="Dependent")
 R = TypeVar("R")
+T = TypeVar("T", bound="Dependent")
 
 
 class Param(abc.ABC, FieldInfo):
@@ -196,16 +196,16 @@ class Dependent(Generic[R]):
             value = await field_info._solve(**params)
             if value == Undefined:
                 value = field.get_default()
-            _, errs_ = field.validate(value, values, loc=(str(field_info), field.alias))
-            if errs_:
+
+            try:
+                values[field.name] = check_field_type(field, value)
+            except TypeMisMatch:
                 logger.debug(
                     f"{field_info} "
                     f"type {type(value)} not match depends {self.call} "
                     f"annotation {field._type_display()}, ignored"
                 )
-                raise TypeMisMatch(field, value)
-            else:
-                values[field.name] = value
+                raise
 
         return values
 

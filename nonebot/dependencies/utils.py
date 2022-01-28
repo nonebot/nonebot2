@@ -4,10 +4,15 @@ FrontMatter:
     description: nonebot.dependencies.utils 模块
 """
 import inspect
-from typing import Any, Dict, Callable
+from typing import Any, Dict, TypeVar, Callable
 
 from loguru import logger
+from pydantic.fields import ModelField
 from pydantic.typing import ForwardRef, evaluate_forwardref
+
+from nonebot.exception import TypeMisMatch
+
+V = TypeVar("V")
 
 
 def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
@@ -40,3 +45,10 @@ def get_typed_annotation(param: inspect.Parameter, globalns: Dict[str, Any]) -> 
             )
             return inspect.Parameter.empty
     return annotation
+
+
+def check_field_type(field: ModelField, value: V) -> V:
+    _, errs_ = field.validate(value, {}, loc=())
+    if errs_:
+        raise TypeMisMatch(field, value)
+    return value
