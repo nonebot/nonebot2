@@ -39,10 +39,6 @@ NoneBot 的 commit message 格式遵循 [gitmoji](https://gitmoji.dev/) 规范�
 
 ### 撰写文档
 
-NoneBot2 的文档使用 docusaurus，它有一些 [Markdown 特性](https://docusaurus.io/zh-CN/docs/markdown-features) 可能会帮助到你。
-
-NoneBot2 文档并没有具体的行文风格规范，但我们建议你尽量写得简单易懂。
-
 NoneBot2 的文档使用 [docusaurus](https://docusaurus.io/)，它有一些 [Markdown 特性](https://docusaurus.io/zh-CN/docs/markdown-features) 可能会帮助到你。
 
 NoneBot2 文档并没有具体的行文风格规范，但我们建议你尽量写得简单易懂。
