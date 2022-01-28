@@ -28,13 +28,7 @@ from nonebot.rule import Rule
 from nonebot.log import logger
 from nonebot.dependencies import Dependent
 from nonebot.permission import USER, Permission
-from nonebot.adapters import (
-    Bot,
-    Event,
-    Message,
-    MessageSegment,
-    MessageTemplate,
-)
+from nonebot.adapters import Bot, Event, Message, MessageSegment, MessageTemplate
 from nonebot.consts import (
     ARG_KEY,
     RECEIVE_KEY,

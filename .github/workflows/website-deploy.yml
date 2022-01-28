@@ -2,6 +2,9 @@ name: Build Upload Site
 
 on:
   push:
+    branches:
+      - master
+      - dev
   pull_request_target:
 
 jobs:

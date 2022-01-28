@@ -78,10 +78,7 @@ async def test_matcher(app: App, load_plugin):
 
 @pytest.mark.asyncio
 async def test_type_updater(app: App, load_plugin):
-    from plugins.matcher.matcher_type import (
-        test_type_updater,
-        test_custom_updater,
-    )
+    from plugins.matcher.matcher_type import test_type_updater, test_custom_updater
 
     event = make_fake_event()()
 
