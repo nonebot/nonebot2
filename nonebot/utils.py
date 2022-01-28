@@ -26,6 +26,8 @@ from typing import (
     ContextManager,
 )
 
+from pydantic.typing import is_union, is_none_type
+
 from nonebot.log import logger
 from nonebot.typing import overrides
 
@@ -50,14 +52,18 @@ def escape_tag(s: str) -> str:
 def generic_check_issubclass(
     cls: Any, class_or_tuple: Union[Type[Any], Tuple[Type[Any], ...]]
 ) -> bool:
-    """检查 cls 是否是 class_or_tuple 中的一个类型子类或"""
+    """检查 cls 是否是 class_or_tuple 中的一个类型子类。
+
+    特别的，如果 cls 是 `typing.Union` 或 `types.UnionType` 类型，
+    则会检查其中的类型是否是 class_or_tuple 中的一个类型子类。（None 会被忽略）
+    """
     try:
         return issubclass(cls, class_or_tuple)
     except TypeError:
         origin = get_origin(cls)
-        if origin is Union:
+        if is_union(origin):
             for type_ in get_args(cls):
-                if type_ is not type(None) and not generic_check_issubclass(
+                if not is_none_type(type_) and not generic_check_issubclass(
                     type_, class_or_tuple
                 ):
                     return False
