@@ -164,7 +164,9 @@ class Message(List[TMS], abc.ABC):
 
     @classmethod
     def _validate(cls, value):
-        if isinstance(value, str):
+        if isinstance(value, cls):
+            return value
+        elif isinstance(value, str):
             pass
         elif isinstance(value, dict):
             value = parse_obj_as(cls.get_segment_class(), value)
