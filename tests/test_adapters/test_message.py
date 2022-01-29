@@ -1,3 +1,5 @@
+from pydantic import ValidationError, parse_obj_as
+
 from utils import make_fake_message
 
 
@@ -20,6 +22,21 @@ def test_segment_add():
     assert "text" + MessageSegment.text("text") == Message(
         [MessageSegment.text("text"), MessageSegment.text("text")]
     )
+
+
+def test_segment_validate():
+    Message = make_fake_message()
+    MessageSegment = Message.get_segment_class()
+
+    assert parse_obj_as(
+        MessageSegment, {"type": "text", "data": {"text": "text"}}
+    ) == MessageSegment.text("text")
+
+    try:
+        parse_obj_as(MessageSegment, "some str")
+        assert False
+    except ValidationError:
+        assert True
 
 
 def test_message_add():
@@ -78,3 +95,24 @@ def test_message_getitem():
     assert message.get("image", 1) == Message([message["image", 0]])
 
     assert message.count("image") == 2
+
+
+def test_message_validate():
+    Message = make_fake_message()
+    MessageSegment = Message.get_segment_class()
+
+    assert parse_obj_as(Message, "text") == Message([MessageSegment.text("text")])
+
+    assert parse_obj_as(Message, {"type": "text", "data": {"text": "text"}}) == Message(
+        [MessageSegment.text("text")]
+    )
+
+    assert parse_obj_as(
+        Message, [{"type": "text", "data": {"text": "text"}}]
+    ) == Message([MessageSegment.text("text")])
+
+    try:
+        parse_obj_as(Message, object())
+        assert False
+    except ValidationError:
+        assert True
