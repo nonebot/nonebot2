@@ -1125,5 +1125,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_wordcloud",
+    "project_link": "nonebot-plugin-wordcloud",
+    "name": "词云",
+    "desc": "根据群内聊天记录生成词云",
+    "author": "he0119",
+    "homepage": "https://github.com/he0119/nonebot-plugin-wordcloud",
+    "tags": [],
+    "is_official": false
   }
 ]
