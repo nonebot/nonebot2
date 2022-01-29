@@ -1135,5 +1135,15 @@
     "homepage": "https://github.com/he0119/nonebot-plugin-wordcloud",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_fg",
+    "project_link": "nonebot-plugin-fg",
+    "name": "FG(Fifth Generation)",
+    "desc": "基于Nonebot2的QQ群机器人🤖️插件，特色功能是利用机器学习算法，基于每日聊天记录生成每日总结",
+    "author": "mgsky1",
+    "homepage": "https://github.com/mgsky1/FG-plugin",
+    "tags": [],
+    "is_official": false
   }
 ]
