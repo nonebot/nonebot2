@@ -1,23 +1,49 @@
 from utils import make_fake_message
 
 
-def test_message_template():
-    from nonebot.adapters import MessageTemplate
-
+def test_segment_add():
     Message = make_fake_message()
+    MessageSegment = Message.get_segment_class()
 
-    template = MessageTemplate("{a:custom}{b:text}{c:image}", Message)
+    assert MessageSegment.text("text") + MessageSegment.text("text") == Message(
+        [MessageSegment.text("text"), MessageSegment.text("text")]
+    )
 
-    @template.add_format_spec
-    def custom(input: str) -> str:
-        return input + "-custom!"
+    assert MessageSegment.text("text") + "text" == Message(
+        [MessageSegment.text("text"), MessageSegment.text("text")]
+    )
 
-    formatted = template.format(a="test", b="test", c="https://example.com/test")
-    assert formatted.extract_plain_text() == "test-custom!test"
-    assert str(formatted) == "test-custom!test[fake:image]"
+    assert MessageSegment.text("text") + Message(
+        [MessageSegment.text("text")]
+    ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
+
+    assert "text" + MessageSegment.text("text") == Message(
+        [MessageSegment.text("text"), MessageSegment.text("text")]
+    )
 
 
-def test_message_slice():
+def test_message_add():
+    Message = make_fake_message()
+    MessageSegment = Message.get_segment_class()
+
+    assert Message([MessageSegment.text("text")]) + MessageSegment.text(
+        "text"
+    ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
+
+    assert Message([MessageSegment.text("text")]) + "text" == Message(
+        [MessageSegment.text("text"), MessageSegment.text("text")]
+    )
+
+    assert Message([MessageSegment.text("text")]) + Message(
+        [MessageSegment.text("text")]
+    ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
+
+    msg = Message([MessageSegment.text("text")])
+    msg += MessageSegment.text("text")
+    assert msg == Message([MessageSegment.text("text"), MessageSegment.text("text")])
+
+
+def test_message_getitem():
 
     Message = make_fake_message()
     MessageSegment = Message.get_segment_class()
