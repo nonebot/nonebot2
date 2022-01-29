@@ -14,7 +14,6 @@ from typing import (
     Tuple,
     Union,
     Generic,
-    Mapping,
     TypeVar,
     Iterable,
     Optional,
