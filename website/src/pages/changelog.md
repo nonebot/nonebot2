@@ -13,6 +13,7 @@ description: Changelog
 - 增加 `fastapi` 配置项：是否将适配器路由包含在 schema 中
 - 修改 `load_builtin_plugins` 函数，使其能够支持加载多个内置插件
 - 新增 `load_builtin_plugin` 函数，用于加载单个内置插件
+- 修改 `Message` 和 `MessageSegment` 类，完善 typing，转移 Mapping 构建支持至 pydantic validate
 
 ## v2.0.0b1
 
