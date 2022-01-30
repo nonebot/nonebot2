@@ -148,7 +148,7 @@ class DataclassEncoder(json.JSONEncoder):
         return super().default(o)
 
 
-def logger_wrapper(logger_name: str) -> Callable[[str, str, Optional[Exception]], None]:
+def logger_wrapper(logger_name: str):
     """用于打印 adapter 的日志。
 
     参数:
