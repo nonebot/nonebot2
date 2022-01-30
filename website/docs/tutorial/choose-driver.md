@@ -15,7 +15,7 @@ options:
 :::
 
 :::tip 提示
-如何**安装**驱动器请参考 [安装驱动器](../start/install-driver.md)
+如何**安装**驱动器请参考 [安装驱动器](../start/install-driver.mdx)
 
 如何**使用**驱动器请参考 [配置](./configuration.md#driver)
 :::

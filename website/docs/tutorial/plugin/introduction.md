@@ -15,7 +15,7 @@ description: 插件入门
 
 ### 模块插件（单文件形式）
 
-在合适的路径创建一个 `.py` 文件即可。例如在 [创建项目](../create-project.md) 中创建的项目中，我们可以在 `awesome_bot/plugins/` 目录中创建一个文件 `foo.py`。
+在合适的路径创建一个 `.py` 文件即可。例如在 [创建项目](../create-project.mdx) 中创建的项目中，我们可以在 `awesome_bot/plugins/` 目录中创建一个文件 `foo.py`。
 
 ```tree title=Project {4}
 📦 AweSome-Bot
@@ -37,7 +37,7 @@ description: 插件入门
 
 ### 包插件（文件夹形式）
 
-在合适的路径创建一个文件夹，并在文件夹内创建文件 `__init__.py` 即可。例如在 [创建项目](../create-project.md) 中创建的项目中，我们可以在 `awesome_bot/plugins/` 目录中创建一个文件夹 `foo`，并在这个文件夹内创建一个文件 `__init__.py`。
+在合适的路径创建一个文件夹，并在文件夹内创建文件 `__init__.py` 即可。例如在 [创建项目](../create-project.mdx) 中创建的项目中，我们可以在 `awesome_bot/plugins/` 目录中创建一个文件夹 `foo`，并在这个文件夹内创建一个文件 `__init__.py`。
 
 ```tree title=Project {4,5}
 📦 AweSome-Bot

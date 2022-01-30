@@ -14,7 +14,7 @@ options:
 请勿在插件被加载前 `import` 插件模块，这会导致 NoneBot 无法将其转换为插件而损失部分功能。
 :::
 
-加载插件通常在机器人的入口文件进行，例如在 [创建项目](../create-project.md) 中创建的项目中的 `bot.py` 文件。在 NoneBot 初始化完成后即可加载插件。
+加载插件通常在机器人的入口文件进行，例如在 [创建项目](../create-project.mdx) 中创建的项目中的 `bot.py` 文件。在 NoneBot 初始化完成后即可加载插件。
 
 ```python title=bot.py {5}
 import nonebot

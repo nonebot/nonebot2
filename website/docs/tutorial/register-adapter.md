@@ -11,7 +11,7 @@ options:
 # 使用适配器
 
 :::tip 提示
-如何**安装**协议适配器请参考 [安装协议适配器](../start/install-adapter.md)
+如何**安装**协议适配器请参考 [安装协议适配器](../start/install-adapter.mdx)
 :::
 
 ## 协议适配器的功能
