@@ -39,6 +39,26 @@ def test_segment_validate():
         assert True
 
 
+def test_segment():
+    Message = make_fake_message()
+    MessageSegment = Message.get_segment_class()
+
+    assert len(MessageSegment.text("text")) == 4
+    assert MessageSegment.text("text") != MessageSegment.text("other")
+    assert MessageSegment.text("text").get("data") == {"text": "text"}
+    assert list(MessageSegment.text("text").keys()) == ["type", "data"]
+    assert list(MessageSegment.text("text").values()) == ["text", {"text": "text"}]
+    assert list(MessageSegment.text("text").items()) == [
+        ("type", "text"),
+        ("data", {"text": "text"}),
+    ]
+
+    origin = MessageSegment.text("text")
+    copy = origin.copy()
+    assert origin is not copy
+    assert origin == copy
+
+
 def test_message_add():
     Message = make_fake_message()
     MessageSegment = Message.get_segment_class()
@@ -54,6 +74,10 @@ def test_message_add():
     assert Message([MessageSegment.text("text")]) + Message(
         [MessageSegment.text("text")]
     ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
+
+    assert "text" + Message([MessageSegment.text("text")]) == Message(
+        [MessageSegment.text("text"), MessageSegment.text("text")]
+    )
 
     msg = Message([MessageSegment.text("text")])
     msg += MessageSegment.text("text")
@@ -101,15 +125,29 @@ def test_message_validate():
     Message = make_fake_message()
     MessageSegment = Message.get_segment_class()
 
+    Message_ = make_fake_message()
+
+    assert parse_obj_as(Message, Message([])) == Message([])
+
+    try:
+        parse_obj_as(Message, Message_([]))
+        assert False
+    except ValidationError:
+        assert True
+
     assert parse_obj_as(Message, "text") == Message([MessageSegment.text("text")])
 
     assert parse_obj_as(Message, {"type": "text", "data": {"text": "text"}}) == Message(
         [MessageSegment.text("text")]
     )
 
-    assert parse_obj_as(
-        Message, [{"type": "text", "data": {"text": "text"}}]
-    ) == Message([MessageSegment.text("text")])
+    assert (
+        parse_obj_as(
+            Message,
+            [MessageSegment.text("text"), {"type": "text", "data": {"text": "text"}}],
+        )
+        == Message([MessageSegment.text("text"), MessageSegment.text("text")])
+    )
 
     try:
         parse_obj_as(Message, object())

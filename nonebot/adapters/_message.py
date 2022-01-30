@@ -115,7 +115,7 @@ class Message(List[TMS], abc.ABC):
         elif isinstance(message, Iterable):
             self.extend(message)
         else:
-            self.extend(self._construct(message))
+            self.extend(self._construct(message))  # pragma: no cover
 
     @classmethod
     def template(cls: Type[TM], format_string: Union[str, TM]) -> MessageTemplate[TM]:
@@ -166,6 +166,8 @@ class Message(List[TMS], abc.ABC):
     def _validate(cls, value):
         if isinstance(value, cls):
             return value
+        elif isinstance(value, Message):
+            raise ValueError(f"Type {type(value)} can not be converted to {cls}")
         elif isinstance(value, str):
             pass
         elif isinstance(value, dict):
@@ -201,7 +203,7 @@ class Message(List[TMS], abc.ABC):
         elif isinstance(other, Iterable):
             self.extend(other)
         else:
-            raise ValueError(f"Unsupported type: {type(other)}")
+            raise ValueError(f"Unsupported type: {type(other)}")  # pragma: no cover
         return self
 
     @overload
@@ -276,7 +278,7 @@ class Message(List[TMS], abc.ABC):
         elif isinstance(arg1, str) and isinstance(arg2, slice):
             return self.__class__([seg for seg in self if seg.type == arg1][arg2])
         else:
-            raise ValueError("Incorrect arguments to slice")
+            raise ValueError("Incorrect arguments to slice")  # pragma: no cover
 
     def index(self, value: Union[TMS, str], *args) -> int:
         if isinstance(value, str):
@@ -314,7 +316,7 @@ class Message(List[TMS], abc.ABC):
         elif isinstance(obj, str):
             self.extend(self._construct(obj))
         else:
-            raise ValueError(f"Unexpected type: {type(obj)} {obj}")
+            raise ValueError(f"Unexpected type: {type(obj)} {obj}")  # pragma: no cover
         return self
 
     def extend(self: TM, obj: Union[TM, Iterable[TMS]]) -> TM:
