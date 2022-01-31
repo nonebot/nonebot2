@@ -1,6 +1,6 @@
 ---
 id: index
-slug: /advanced
+slug: /advanced/
 
 options:
   menu:
