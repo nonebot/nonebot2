@@ -1145,5 +1145,20 @@
     "homepage": "https://github.com/mgsky1/FG-plugin",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chatrecorder",
+    "project_link": "nonebot-plugin-chatrecorder",
+    "name": "聊天记录插件",
+    "desc": "记录机器人收到和发出的消息",
+    "author": "MeetWq",
+    "homepage": "https://github.com/MeetWq/nonebot-plugin-chatrecorder",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
