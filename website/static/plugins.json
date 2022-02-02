@@ -1160,5 +1160,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_setu2",
+    "project_link": "nonebot-plugin-setu2",
+    "name": "nonebot-plugin-setu2",
+    "desc": "另一个色图插件，精简至上游，不在本地缓存，可选群启用",
+    "author": "alphaAE",
+    "homepage": "https://github.com/NoneBot2-Ae/nonebot-plugin-setu2",
+    "tags": [],
+    "is_official": false
   }
 ]
