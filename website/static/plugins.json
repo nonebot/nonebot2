@@ -1170,5 +1170,15 @@
     "homepage": "https://github.com/NoneBot2-Ae/nonebot-plugin-setu2",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_random_cat",
+    "project_link": "nonebot-plugin-random-cat",
+    "name": "random-cat",
+    "desc": "使用外网API随机发送猫猫狗狗图片，不在本地缓存，可选群启用",
+    "author": "alphaAE",
+    "homepage": "https://github.com/NoneBot2-Ae/nonebot-plugin-random-cat",
+    "tags": [],
+    "is_official": false
   }
 ]
