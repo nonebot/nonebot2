@@ -459,7 +459,12 @@
     "desc": "获取和风天气信息并转换为图片",
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-heweather",
-    "tags": [],
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
     "is_official": false
   },
   {
@@ -588,7 +593,12 @@
     "desc": "另一个色图插件，即时下载并保存，可选WebDAV。可选特殊色图",
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-setu-now",
-    "tags": [],
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
     "is_official": false
   },
   {
@@ -677,7 +687,12 @@
     "desc": "生成一张诺基亚（无内鬼）图片",
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-nokia",
-    "tags": [],
+    "tags": [
+      {
+        "label": "alpha only",
+        "color": "#f56c6c"
+      }
+    ],
     "is_official": false
   },
   {
@@ -762,7 +777,12 @@
     "desc": "获取聚集更新",
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-tvseries",
-    "tags": [],
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
     "is_official": false
   },
   {
@@ -797,7 +817,12 @@
     "desc": "通过playwright加一点点前端知识来简单的生成图片",
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-htmlrender",
-    "tags": [],
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
     "is_official": false
   },
   {
