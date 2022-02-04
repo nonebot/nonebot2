@@ -9,14 +9,13 @@ import asyncio
 import inspect
 import warnings
 from typing_extensions import Literal
-from typing import Any, Dict, List, Tuple, Callable, Optional, cast
 from contextlib import AsyncExitStack, contextmanager, asynccontextmanager
+from typing import TYPE_CHECKING, Any, Dict, List, Tuple, Callable, Optional, cast
 
 from pydantic.fields import Required, Undefined, ModelField
 
 from nonebot.log import logger
 from nonebot.exception import TypeMisMatch
-from nonebot.adapters import Bot, Event, Message
 from nonebot.dependencies.utils import check_field_type
 from nonebot.dependencies import Param, Dependent, CustomConfig
 from nonebot.typing import T_State, T_Handler, T_DependencyCache
@@ -40,6 +39,10 @@ from nonebot.utils import (
     is_coroutine_callable,
     generic_check_issubclass,
 )
+
+if TYPE_CHECKING:
+    from nonebot.matcher import Matcher
+    from nonebot.adapters import Bot, Event, Message
 
 
 class DependsInner:
@@ -173,7 +176,7 @@ class DependParam(Param):
 
 
 class _BotChecker(Param):
-    async def _solve(self, bot: Bot, **kwargs: Any) -> Any:
+    async def _solve(self, bot: "Bot", **kwargs: Any) -> Any:
         field: ModelField = self.extra["field"]
         try:
             return check_field_type(field, bot)
@@ -192,6 +195,8 @@ class BotParam(Param):
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
     ) -> Optional["BotParam"]:
+        from nonebot.adapters import Bot
+
         if param.default == param.empty:
             if generic_check_issubclass(param.annotation, Bot):
                 if param.annotation is not Bot:
@@ -212,12 +217,12 @@ class BotParam(Param):
             elif param.annotation == param.empty and name == "bot":
                 return cls(Required)
 
-    async def _solve(self, bot: Bot, **kwargs: Any) -> Any:
+    async def _solve(self, bot: "Bot", **kwargs: Any) -> Any:
         return bot
 
 
 class _EventChecker(Param):
-    async def _solve(self, event: Event, **kwargs: Any) -> Any:
+    async def _solve(self, event: "Event", **kwargs: Any) -> Any:
         field: ModelField = self.extra["field"]
         try:
             return check_field_type(field, event)
@@ -236,6 +241,8 @@ class EventParam(Param):
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
     ) -> Optional["EventParam"]:
+        from nonebot.adapters import Event
+
         if param.default == param.empty:
             if generic_check_issubclass(param.annotation, Event):
                 if param.annotation is not Event:
@@ -256,11 +263,11 @@ class EventParam(Param):
             elif param.annotation == param.empty and name == "event":
                 return cls(Required)
 
-    async def _solve(self, event: Event, **kwargs: Any) -> Any:
+    async def _solve(self, event: "Event", **kwargs: Any) -> Any:
         return event
 
 
-async def _event_type(event: Event) -> str:
+async def _event_type(event: "Event") -> str:
     return event.get_type()
 
 
@@ -269,7 +276,7 @@ def EventType() -> str:
     return Depends(_event_type)
 
 
-async def _event_message(event: Event) -> Message:
+async def _event_message(event: "Event") -> "Message":
     return event.get_message()
 
 
@@ -278,7 +285,7 @@ def EventMessage() -> Any:
     return Depends(_event_message)
 
 
-async def _event_plain_text(event: Event) -> str:
+async def _event_plain_text(event: "Event") -> str:
     return event.get_plaintext()
 
 
@@ -287,7 +294,7 @@ def EventPlainText() -> str:
     return Depends(_event_plain_text)
 
 
-async def _event_to_me(event: Event) -> bool:
+async def _event_to_me(event: "Event") -> bool:
     return event.is_tome()
 
 
@@ -325,7 +332,7 @@ class StateParam(Param):
         return state
 
 
-def _command(state: T_State) -> Message:
+def _command(state: T_State) -> "Message":
     return state[PREFIX_KEY][CMD_KEY]
 
 
@@ -334,7 +341,7 @@ def Command() -> Tuple[str, ...]:
     return Depends(_command)
 
 
-def _raw_command(state: T_State) -> Message:
+def _raw_command(state: T_State) -> "Message":
     return state[PREFIX_KEY][RAW_CMD_KEY]
 
 
@@ -343,7 +350,7 @@ def RawCommand() -> str:
     return Depends(_raw_command)
 
 
-def _command_arg(state: T_State) -> Message:
+def _command_arg(state: T_State) -> "Message":
     return state[PREFIX_KEY][CMD_ARG_KEY]
 
 
@@ -404,6 +411,8 @@ class MatcherParam(Param):
     def _check_param(
         cls, dependent: Dependent, name: str, param: inspect.Parameter
     ) -> Optional["MatcherParam"]:
+        from nonebot.matcher import Matcher
+
         if generic_check_issubclass(param.annotation, Matcher) or (
             param.annotation == param.empty and name == "matcher"
         ):
@@ -505,8 +514,6 @@ class DefaultParam(Param):
     async def _solve(self, **kwargs: Any) -> Any:
         return Undefined
 
-
-from nonebot.matcher import Matcher
 
 __autodoc__ = {
     "DependsInner": False,

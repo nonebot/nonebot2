@@ -258,7 +258,6 @@ def run(*args: Any, **kwargs: Any) -> None:
     get_driver().run(*args, **kwargs)
 
 
-import nonebot.params as params
 from nonebot.plugin import on as on
 from nonebot.plugin import export as export
 from nonebot.plugin import require as require
