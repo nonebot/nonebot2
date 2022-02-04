@@ -34,15 +34,15 @@ options:
 
 准备工作完成后，`nonebot` 会利用 `uvicorn` 启动，并运行 `on_startup` 钩子函数。
 
-随后，倘若一个协议端与 `nonebot` 进行了连接，`nonebot` 的后端驱动 `driver` 就会将 `adapter` 实例化为 `bot`，`nonebot` 便会利用 `bot` 开始工作，它的工作内容分为两个方面：
+随后，倘若一个协议端与 `nonebot` 进行了连接，`nonebot` 的后端驱动 `driver` 就会将数据交给 `adapter` , 然后会实例化 `bot`，`nonebot` 便会利用 `bot` 开始工作，它的工作内容分为两个方面：
 
-1. **事件处理**，`bot` 会将协议端上报的数据转化为 `事件`(`Event`)，之后 `nonebot` 会根据一套既定流程来处理 `事件`。
+1. **事件处理**，`bot` 会将协议端上报的数据转化为 `事件 `( `Event ` )，之后 `nonebot` 会根据一套既定流程来处理 `事件`。
 
-2. **调用 `API`**, 在**事件处理**的过程中，`nonebot` 可以通过 `bot` 调用协议端指定的 `API` 来获取更多数据，或者反馈响应给协议端; `nonebot` 也可以通过调用 `API` 向协议端主动请求数据或者主动推送数据。
+2. **调用 `API`**, 在**事件处理**的过程中，`nonebot` 可以通过 `bot` 调用协议端指定的 `API` 来获取更多数据，或者反馈响应给协议端;  `nonebot` 也可以通过调用 `API` 向协议端主动请求数据或者主动推送数据。
 
-在**指南**模块， 我们已经叙述了[如何配置 nonebot](../tutorial/configuration.md), [如何注册协议适配器](../tutorial/register-adapter.md)，[如何加载插件](../tutorial/plugin/load-plugin.md), 在这里便不再赘述。
+在**指南**模块， 我们已经叙述了[如何配置 nonebot](../tutorial/configuration.md),  [如何注册协议适配器](../tutorial/register-adapter.md)， [如何加载插件](../tutorial/plugin/load-plugin.md),  在这里便不再赘述。
 
-下面，我们将对**事件处理**， **调用 API**进行说明。
+下面，我们将对 **事件处理**， **调用 API** 进行说明。
 
 ## 事件处理
 
@@ -52,39 +52,42 @@ options:
 
 在流程图里，我们可以看到，`nonebot` 会有三个阶段来处理事件：
 
-1. **driver 处理上报数据**
+1. **driver 接收上报数据**
 2. **adapter 处理原始数据**
 3. **nonebot 处理 Event**
 
 我们将顺序说明这三个阶段。其中，会将第三个阶段拆分成**概念解释**，**处理 Event**，**特殊异常处理**三个部分来说明。
 
-### driver 处理上报数据
+### driver 接收上报数据
 
-1. 协议端会通过 `websocket` 或者 `http` 等方式与 `nonebot` 的后端驱动 `driver` 连接，`driver` 会根据之前注册的 `adapter` 和配置文件的内容来进行鉴权，从而获得这个连接的唯一识别 id `self-id`，随后 `adapter` 就会利用 `self-id` 实例化为 `bot` 对象。
-
-   ::: tip
-   需要注意的是，如果协议端通过 `websocket` 与 `nonebot` 连接，这个步骤只会在建立连接时进行，并在之后运行 `on_bot_connect` 钩子函数；通过 `http` 方式连接时，会在协议端每次上报数据时都进行这个步骤。
-   :::
+1. 协议端会通过 `websocket` 或者 `http` 等方式与 `nonebot` 的后端驱动 `driver` 连接，协议端上报数据后，`driver` 会将原始数据交给 `adapter` 处理。
 
    ::: warning
    连接之前必须要注册 `adapter`
+   :::
+
+
+### adapter 处理原始数据
+
+1.  `adapter` 检查授权许可，并获取 `self-id` 作为唯一识别 id 。
+
+   ::: tip
+   如果协议端通过 `websocket` 上报数据，这个步骤只会在建立连接时进行，并在之后运行 `on_bot_connect` 钩子函数；通过 `http` 方式连接时，会在协议端每次上报数据时都进行这个步骤。
    :::
 
    ::: warning
    `self-id` 是帐号的唯一识别 ID，这意味着不能出现相同的 `self-id`。
    :::
 
-2. `driver` 会将接收到的数据转交给 `bot` 对象进一步处理。
+2. 根据 `self-id` 实例化 `adapter` 相应的 `bot` 。
 
-### adapter 处理原始数据
-
-1. `bot` 会利用事先定义好的 `Event Model` 对上报的数据进行分析处理，将数据转化为 `nonebot` 可以处理的 `Event` 对象。
+3. 根据 `Event Model` 将原始数据转化为 `nonebot` 可以处理的 `Event` 对象。
 
    ::: tip
-   `adapter` 在转换数据格式的同时可以进行一系列的特殊操作，例如 `CQHTTP` 会对 `reply` 信息进行提取。
+   `adapter` 在转换数据格式的同时可以进行一系列的特殊操作，例如 `onebot` 会对 `reply` 信息进行提取。
    :::
 
-2. `Event` 会传入 `nonebot` 做进一步处理。
+4. `bot` 和 `Event` 交由 `nonebot` 进一步处理。
 
 ### nonebot 处理 Event
 
@@ -92,13 +95,13 @@ options:
 
 #### 概念解释
 
-1. **hook**，或者说**钩子函数**，它们可以在 `nonebot` 处理 `Event` 的不同时刻进行拦截，修改或者扩展，在 `nonebot` 中，钩子函数分为 `事件预处理hook`，`运行预处理hook`，`运行后处理hook` 和 `事件后处理hook`。
+1. **hook**，或者说**钩子函数**，它们可以在 `nonebot` 处理 `Event` 的不同时刻进行拦截，修改或者扩展，在 `nonebot` 中，事件钩子函数分为 `事件预处理hook`，`运行预处理hook`，`运行后处理hook` 和 `事件后处理hook`。
 
    ::: tip
-   关于`hook`的更多信息，可以查阅[这里](./runtime-hook.md)
+   关于 `hook` 的更多信息，可以查阅[这里](./runtime-hook.md)
    :::
 
-2. **Matcher**与**matcher**，在**指南**中，我们讲述了[如何注册事件响应器](../tutorial/plugin/create-matcher.md)，这里的事件响应器或者说 `Matcher` 并不是一个具体的实例 `instance`，而是一个具有特定属性的类 `class`。只有当 `Matcher` **响应事件**时，才会实例化为具体的 `instance`，也就是 `matcher`。`matcher` 可以认为是 `nonebot` 处理 `Event` 的基本单位，运行 `matcher` 是`nonebot`工作的主要内容。
+2. **Matcher** 与 **matcher**，在**指南**中，我们讲述了[如何注册事件响应器](../tutorial/plugin/create-matcher.md)，这里的事件响应器或者说 `Matcher` 并不是一个具体的实例 `instance`，而是一个具有特定属性的类 `class`。只有当 `Matcher` **响应事件**时，才会实例化为具体的 `instance`，也就是 `matcher` 。`matcher` 可以认为是 `nonebot` 处理 `Event` 的基本单位，运行 `matcher` 是`nonebot`工作的主要内容。
 
 3. **handler**，或者说**事件处理函数**, 它们可以认为是 `nonebot` 处理 `Event` 的最小单位。在不考虑 `hook` 的情况下，**运行 matcher 就是顺序运行 matcher.handlers**，这句话换种表达方式就是，`handler` 只有添加到 `matcher.handlers` 时，才可以参与到 `nonebot` 的工作中来。
 
@@ -121,7 +124,7 @@ options:
 
    在执行 `事件预处理hook` 后，`nonebot` 会对 `matchers` 的 `key` 升序排序并选择出当前最小优先级的 `Matcher`。
 
-3. **根据 Matcher 定义的 Rule, Permission 判断是否运行**，在选出 `Matcher` 后，`nonebot` 会将 `bot`，`Event` 传入到 `Matcher.check_rule` 和 `Matcher.check_perm` 两个函数中，两个函数分别对 Matcher 定义的 Rule, Permission 进行 check，当 check 通过后，这个 `Matcher` 就会响应事件。但是当同一个优先级的所有 `Matcher` 均没有响应时，`nonebot` 会返回到上一个步骤，选择出下一优先级的 `Matcher`。
+3. **根据 Matcher 定义的  Rule,  Permission  判断是否运行**，在选出 `Matcher` 后，`nonebot` 会将 `bot`，`Event` 传入到 `Matcher.check_rule` 和 `Matcher.check_perm` 两个函数中，两个函数分别对 Matcher 定义的 `Rule`,  `Permission` 进行 check，当 check 通过后，这个 `Matcher` 就会响应事件。当同一个优先级的所有 `Matcher` 均没有响应时，`nonebot` 会返回到上一个步骤，选择出下一优先级的 `Matcher`。
 
 4. **实例化 matcher 并执行运行预处理 hook**，当 `Matcher` 响应事件后，它便会实例化为 `matcher`，并执行 `运行预处理hook`。
 
@@ -137,7 +140,7 @@ options:
 
 8. **执行事件后处理 hook**，在 `Event` 停止传播或执行完所有响应的 `Matcher` 后，`nonebot` 会执行 `事件后处理hook`。
 
-   当 `事件后处理hook` 执行完毕后，当前`Event`的处理周期就顺利结束了。
+   当 `事件后处理hook` 执行完毕后，当前 `Event` 的处理周期就顺利结束了。
 
 #### 特殊异常处理
 
@@ -159,13 +162,13 @@ options:
 
    这个异常可以在 `handler` 中由 `Matcher.pause` 抛出。
 
-   当 `nonebot` 捕获到它时，会停止运行当前 `handler` 并结束当前 `matcher` 的运行，并将后续的 `handler` 交给一个临时 `Matcher` 来响应当前交互用户的下一个消息事件，当临时 `Matcher` 响应时，临时 `Matcher` 会运行后续的 handlers。
+   当 `nonebot` 捕获到它时，会停止运行当前 `handler` 并结束当前 `matcher` 的运行，并将后续的 `handler` 交给一个临时 `Matcher` 来响应当前交互用户的下一个消息事件，当临时 `Matcher` 响应时，临时 `Matcher` 会运行后续的 `handler `。
 
 3. **RejectedException**
 
    这个异常可以在 `handler` 中由 `Matcher.reject` 抛出。
 
-   当 `nonebot` 捕获到它时，会停止运行当前 `handler` 并结束当前 `matcher` 的运行，并将当前 handler 和后续 `handler` 交给一个临时 `Matcher` 来响应当前交互用户的下一个消息事件，当临时 `Matcher` 响应时，临时 `Matcher` 会运行当前 `handler` 和后续的 `handler`。
+   当 `nonebot` 捕获到它时，会停止运行当前 `handler` 并结束当前 `matcher` 的运行，并将当前 handler 和后续 `handler` 交给一个临时 `Matcher` 来响应当前交互用户的下一个消息事件，当临时 `Matcher` 响应时，临时 `Matcher` 会运行当前 `handler` 和后续的 `handler` 。
 
 4. **FinishedException**
 
@@ -183,10 +186,24 @@ options:
 
 `nonebot` 可以通过 `bot` 来调用 `API` ，`API` 可以向协议端发送数据，也可以向协议端请求更多的数据。
 
+`nonebot` 调用 `API` 会有如下过程:
+
+1. 调用 `calling_api_hook` 预处理钩子。
+
+2. `adapter` 将信息处理为原始数据，并转交 `driver` ,  `driver` 交给协议端处理。
+
+3. `driver` 接收协议端的结果，交给`adapter` 处理之后将结果反馈给 `nonebot` 。
+
+4. 调用 `called_api_hook` 后处理钩子。
+
+在调用 `API` 时同样规定了特殊的异常，叫做 `MockApiException` 。该异常会由预处理钩子和后处理钩子触发，当预处理钩子触发时，`nonebot` 会跳过之后的调用过程，直接执行后处理钩子。
+
 ::: tip
 不同 `adapter` 规定了不同的 API，对应的 API 列表请参照协议规范。
 :::
 
-一般来说，我们可以用 `bot.*` 来调用 `API`(\*是 `API` 的 `action` 或者 `endpoint`)。
+一般来说，我们可以用 `bot.*` 来调用 `API` (\*是 `API` 的 `action` 或者 `endpoint`)。
 
-对于发送消息而言，一方面可以调用既有的 API；另一方面 `nonebot` 实现了两个便捷方法，`bot.send(event, message, **kwargs)` 方法和可以在 `handler` 中使用的 `Matcher.send(message, **kwargs)` 方法，来向事件主体发送消息。
+
+对于发送消息而言，一方面可以调用既有的  `API` ；另一方面 `nonebot` 实现了两个便捷方法，`bot.send(event, message, **kwargs)` 方法和可以在 `handler` 中使用的 `Matcher.send(message, **kwargs)` 方法，来向事件主体发送消息。
+

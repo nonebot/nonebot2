@@ -92,7 +92,7 @@ async def handle_api_result(bot: Bot, exception: Optional[Exception], api: str, 
     pass
 ```
 
-## 事件处理钩子
+## 事件钩子函数
 
 这些钩子函数指的是影响 `nonebot2` 进行 `事件处理` 的函数。
 
