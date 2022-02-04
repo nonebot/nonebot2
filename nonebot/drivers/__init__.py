@@ -22,9 +22,11 @@ from typing import (
     AsyncGenerator,
 )
 
+from nonebot import params
 from nonebot.log import logger
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
+from nonebot.dependencies import Dependent
 from nonebot.typing import T_BotConnectionHook, T_BotDisconnectionHook
 
 from ._model import URL as URL
@@ -37,6 +39,13 @@ if TYPE_CHECKING:
     from nonebot.adapters import Bot, Adapter
 
 
+BOT_HOOK_PARAMS = [
+    params.DependParam,
+    params.BotParam,
+    params.DefaultParam,
+]
+
+
 class Driver(abc.ABC):
     """Driver 基类。
 
@@ -47,9 +56,9 @@ class Driver(abc.ABC):
 
     _adapters: Dict[str, "Adapter"] = {}
     """已注册的适配器列表"""
-    _bot_connection_hook: Set[T_BotConnectionHook] = set()
+    _bot_connection_hook: Set[Dependent[Any]] = set()
     """Bot 连接建立时执行的函数"""
-    _bot_disconnection_hook: Set[T_BotDisconnectionHook] = set()
+    _bot_disconnection_hook: Set[Dependent[Any]] = set()
     """Bot 连接断开时执行的函数"""
 
     def __init__(self, env: Env, config: Config):
@@ -120,7 +129,9 @@ class Driver(abc.ABC):
 
         - bot: 当前连接上的 Bot 对象
         """
-        self._bot_connection_hook.add(func)
+        self._bot_connection_hook.add(
+            Dependent[Any].parse(call=func, allow_types=BOT_HOOK_PARAMS)
+        )
         return func
 
     def on_bot_disconnect(self, func: T_BotDisconnectionHook) -> T_BotDisconnectionHook:
@@ -130,7 +141,9 @@ class Driver(abc.ABC):
 
         - bot: 当前连接上的 Bot 对象
         """
-        self._bot_disconnection_hook.add(func)
+        self._bot_disconnection_hook.add(
+            Dependent[Any].parse(call=func, allow_types=BOT_HOOK_PARAMS)
+        )
         return func
 
     def _bot_connect(self, bot: "Bot") -> None:
@@ -140,7 +153,7 @@ class Driver(abc.ABC):
         self._clients[bot.self_id] = bot
 
         async def _run_hook(bot: "Bot") -> None:
-            coros = list(map(lambda x: x(bot), self._bot_connection_hook))
+            coros = list(map(lambda x: x(bot=bot), self._bot_connection_hook))
             if coros:
                 try:
                     await asyncio.gather(*coros)
@@ -158,7 +171,7 @@ class Driver(abc.ABC):
             del self._clients[bot.self_id]
 
         async def _run_hook(bot: "Bot") -> None:
-            coros = list(map(lambda x: x(bot), self._bot_disconnection_hook))
+            coros = list(map(lambda x: x(bot=bot), self._bot_disconnection_hook))
             if coros:
                 try:
                     await asyncio.gather(*coros)
