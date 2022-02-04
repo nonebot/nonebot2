@@ -36,10 +36,10 @@ from nonebot.typing import (
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
 
-_event_preprocessors: Set[Dependent[None]] = set()
-_event_postprocessors: Set[Dependent[None]] = set()
-_run_preprocessors: Set[Dependent[None]] = set()
-_run_postprocessors: Set[Dependent[None]] = set()
+_event_preprocessors: Set[Dependent[Any]] = set()
+_event_postprocessors: Set[Dependent[Any]] = set()
+_run_preprocessors: Set[Dependent[Any]] = set()
+_run_postprocessors: Set[Dependent[Any]] = set()
 
 EVENT_PCS_PARAMS = [
     params.DependParam,

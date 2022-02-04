@@ -44,18 +44,18 @@ def overrides(InterfaceClass: object) -> Callable[[T_Wrapped], T_Wrapped]:
 T_State = Dict[Any, Any]
 """事件处理状态 State 类型"""
 
-T_BotConnectionHook = Callable[["Bot"], Awaitable[None]]
+T_BotConnectionHook = Callable[["Bot"], Awaitable[Any]]
 """Bot 连接建立时钩子函数"""
-T_BotDisconnectionHook = Callable[["Bot"], Awaitable[None]]
+T_BotDisconnectionHook = Callable[["Bot"], Awaitable[Any]]
 """Bot 连接断开时钩子函数"""
-T_CallingAPIHook = Callable[["Bot", str, Dict[str, Any]], Awaitable[None]]
+T_CallingAPIHook = Callable[["Bot", str, Dict[str, Any]], Awaitable[Any]]
 """`bot.call_api` 钩子函数"""
 T_CalledAPIHook = Callable[
-    ["Bot", Optional[Exception], str, Dict[str, Any], Any], Awaitable[None]
+    ["Bot", Optional[Exception], str, Dict[str, Any], Any], Awaitable[Any]
 ]
 """`bot.call_api` 后执行的函数，参数分别为 bot, exception, api, data, result"""
 
-T_EventPreProcessor = Callable[..., Union[None, Awaitable[None]]]
+T_EventPreProcessor = Callable[..., Union[Any, Awaitable[Any]]]
 """事件预处理函数 EventPreProcessor 类型
 
 依赖参数:
@@ -66,7 +66,7 @@ T_EventPreProcessor = Callable[..., Union[None, Awaitable[None]]]
 - StateParam: State 对象
 - DefaultParam: 带有默认值的参数
 """
-T_EventPostProcessor = Callable[..., Union[None, Awaitable[None]]]
+T_EventPostProcessor = Callable[..., Union[Any, Awaitable[Any]]]
 """事件预处理函数 EventPostProcessor 类型
 
 依赖参数:
@@ -77,7 +77,7 @@ T_EventPostProcessor = Callable[..., Union[None, Awaitable[None]]]
 - StateParam: State 对象
 - DefaultParam: 带有默认值的参数
 """
-T_RunPreProcessor = Callable[..., Union[None, Awaitable[None]]]
+T_RunPreProcessor = Callable[..., Union[Any, Awaitable[Any]]]
 """事件响应器运行前预处理函数 RunPreProcessor 类型
 
 依赖参数:
@@ -89,7 +89,7 @@ T_RunPreProcessor = Callable[..., Union[None, Awaitable[None]]]
 - MatcherParam: Matcher 对象
 - DefaultParam: 带有默认值的参数
 """
-T_RunPostProcessor = Callable[..., Union[None, Awaitable[None]]]
+T_RunPostProcessor = Callable[..., Union[Any, Awaitable[Any]]]
 """事件响应器运行前预处理函数 RunPostProcessor 类型
 
 依赖参数:
