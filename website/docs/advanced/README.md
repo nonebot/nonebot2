@@ -62,19 +62,19 @@ options:
 
 1. 协议端会通过 `websocket` 或者 `http` 等方式与 `nonebot` 的后端驱动 `driver` 连接，协议端上报数据后，`driver` 会将原始数据交给 `adapter` 处理。
 
-   ::: warning
-   连接之前必须要注册 `adapter`
-   :::
+:::warning
+连接之前必须要注册 `adapter`
+:::
 
 ### adapter 处理原始数据
 
 1.  `adapter` 检查授权许可，并获取 `self-id` 作为唯一识别 id 。
 
-::: tip
+:::tip
 如果协议端通过 `websocket` 上报数据，这个步骤只会在建立连接时进行，并在之后运行 `on_bot_connect` 钩子函数；通过 `http` 方式连接时，会在协议端每次上报数据时都进行这个步骤。
 :::
 
-::: warning
+:::warning
 `self-id` 是帐号的唯一识别 ID，这意味着不能出现相同的 `self-id`。
 :::
 
@@ -82,9 +82,9 @@ options:
 
 3. 根据 `Event Model` 将原始数据转化为 `nonebot` 可以处理的 `Event` 对象。
 
-   ::: tip
-   `adapter` 在转换数据格式的同时可以进行一系列的特殊操作，例如 `onebot` 会对 `reply` 信息进行提取。
-   :::
+:::tip
+`adapter` 在转换数据格式的同时可以进行一系列的特殊操作，例如 `onebot` 会对 `reply` 信息进行提取。
+:::
 
 4. `bot` 和 `Event` 交由 `nonebot` 进一步处理。
 
@@ -96,28 +96,27 @@ options:
 
 1. **hook**，或者说**钩子函数**，它们可以在 `nonebot` 处理 `Event` 的不同时刻进行拦截，修改或者扩展，在 `nonebot` 中，事件钩子函数分为 `事件预处理hook`，`运行预处理hook`，`运行后处理hook` 和 `事件后处理hook`。
 
-   ::: tip
-   关于 `hook` 的更多信息，可以查阅[这里](./runtime-hook.md)
-   :::
+:::tip
+关于 `hook` 的更多信息，可以查阅[这里](./runtime-hook.md)
+:::
 
 2. **Matcher** 与 **matcher**，在**指南**中，我们讲述了[如何注册事件响应器](../tutorial/plugin/create-matcher.md)，这里的事件响应器或者说 `Matcher` 并不是一个具体的实例 `instance`，而是一个具有特定属性的类 `class`。只有当 `Matcher` **响应事件**时，才会实例化为具体的 `instance`，也就是 `matcher` 。`matcher` 可以认为是 `nonebot` 处理 `Event` 的基本单位，运行 `matcher` 是`nonebot`工作的主要内容。
 
 3. **handler**，或者说**事件处理函数**, 它们可以认为是 `nonebot` 处理 `Event` 的最小单位。在不考虑 `hook` 的情况下，**运行 matcher 就是顺序运行 matcher.handlers**，这句话换种表达方式就是，`handler` 只有添加到 `matcher.handlers` 时，才可以参与到 `nonebot` 的工作中来。
 
-   ::: tip
-   如何让 `handler` 添加到 `matcher.handlers`？
+:::tip
+如何让 `handler` 添加到 `matcher.handlers`？
 
-   一方面，我们可以参照[这里](../tutorial/plugin/create-handler.md)利用装饰器来添加；另一方面，我们在用 `on()` 或者 `on_*()` 注册事件响应器时，可以添加 `handlers=[handler1, handler2, ...]` 这样的关键词参数来添加。
-
-   :::
+一方面，我们可以参照[这里](../tutorial/plugin/create-handler.md)利用装饰器来添加；另一方面，我们在用 `on()` 或者 `on_*()` 注册事件响应器时，可以添加 `handlers=[handler1, handler2, ...]` 这样的关键词参数来添加。
+:::
 
 #### 处理 Event
 
 1. **执行事件预处理 hook**， `nonebot` 接收到 `Event` 后，会传入到 `事件预处理hook` 中进行处理。
 
-   ::: warning
-   需要注意的是，执行多个 `事件预处理hook` 时并无顺序可言，它们是**并行运行**的。这个原则同样适用于其他的 `hook`。
-   :::
+:::warning
+需要注意的是，执行多个 `事件预处理hook` 时并无顺序可言，它们是**并行运行**的。这个原则同样适用于其他的 `hook`。
+:::
 
 2. **按优先级升序选出同一优先级的 Matcher**，`nonebot` 提供了一个全局字典 `matchers`，这个字典的 `key` 是优先级 `priority`，`value` 是一个 `list`，里面存放着同一优先级的 `Matcher`。在注册 `Matcher` 时，它和优先级 `priority` 会添加到里面。
 
@@ -129,9 +128,9 @@ options:
 
 5. **顺序运行 matcher 的所有 handlers**，`运行预处理hook` 执行完毕后，便会运行 `matcher`，也就是**顺序运行**它的 `handlers`。
 
-   ::: tip
-   `matcher` 运行 `handlers` 的顺序是: 先运行该 `matcher` 的类 `Matcher` 注册时添加的 `handlers`(如果有的话)，再按照装饰器装饰顺序运行装饰的 `handlers`。
-   :::
+:::tip
+`matcher` 运行 `handlers` 的顺序是: 先运行该 `matcher` 的类 `Matcher` 注册时添加的 `handlers`(如果有的话)，再按照装饰器装饰顺序运行装饰的 `handlers`。
+:::
 
 6. **执行运行后处理 hook**，`matcher` 的 `handlers` 运行完毕后，会执行 `运行后处理hook`。
 
@@ -153,9 +152,9 @@ options:
 
    当 `运行预处理hook` 抛出它时，`nonebot` 会忽略当前的 `matcher`，结束当前 `matcher` 的运行。
 
-   ::: warning
-   当 `hook` 需要抛出这个异常时，要写明原因。
-   :::
+:::warning
+当 `hook` 需要抛出这个异常时，要写明原因。
+:::
 
 2. **PausedException**
 
@@ -197,7 +196,7 @@ options:
 
 在调用 `API` 时同样规定了特殊的异常，叫做 `MockApiException` 。该异常会由预处理钩子和后处理钩子触发，当预处理钩子触发时，`nonebot` 会跳过之后的调用过程，直接执行后处理钩子。
 
-::: tip
+:::tip
 不同 `adapter` 规定了不同的 API，对应的 API 列表请参照协议规范。
 :::
 
