@@ -56,7 +56,7 @@ test={"hello": "world"}
 
 ### .env.\* 文件
 
-NoneBot 默认会从 `.env.{ENVIRONMENT}` 文件加载配置，但是可以在 NoneBot 初始化时指定加载某个环境配置文件: `nonebot.init(_env_file=".env.dev")`，这将忽略你在 `.env` 中设置的 `ENVIRONMENT` 。
+NoneBot 默认会从 `.env.{ENVIRONMENT}` 文件加载配置，但是可以在 NoneBot 初始化时指定加载某个环境配置文件：`nonebot.init(_env_file=".env.dev")`，这将忽略你在 `.env` 中设置的 `ENVIRONMENT` 。
 
 配置语法与 `.env` 文件相同。
 
@@ -100,7 +100,7 @@ config.custom_config4 = "new config after init"
 
 ## 配置优先级
 
-`bot.py` 文件( `nonebot.init` ) > 系统环境变量 > `.env`, `.env.*` 文件
+`bot.py` 文件（`nonebot.init`）> 系统环境变量 > `.env`, `.env.*` 文件
 
 ## 读取配置项
 

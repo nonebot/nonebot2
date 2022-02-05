@@ -7,13 +7,13 @@ options:
 
 # 跨插件访问
 
-由于 `nonebot2` 独特的插件加载机制，直接使用 python 原有的 import 机制来进行插件之间的访问时，很可能会有奇怪的或者意料以外的情况发生。为了避免这种情况的发生，您可以有如下方法来实现跨插件访问:
+由于 NoneBot2 独特的插件加载机制，直接使用 python 原有的 import 机制来进行插件之间的访问时，很可能会有奇怪的或者意料以外的情况发生。为了避免这种情况的发生，您可以有如下方法来实现跨插件访问：
 
 1. 将插件间的要使用的公共代码剥离出来，作为公共文件或者文件夹，提供给插件加以调用。
-2. 使用 `nonebot2` 提供的 `export` 和 `require` 机制，来实现插件间的互相调用。
+2. 使用 NoneBot2 提供的 `export` 和 `require` 机制，来实现插件间的互相调用。
 3. 在保证插件被加载的情况下，可以采用 `import` 来访问。
 
-第一种方法比较容易理解和实现，这里不再赘述，但需要注意的是，请不要将公共文件或者公共文件夹作为**插件**被 `nonebot2` 加载。
+第一种方法比较容易理解和实现，这里不再赘述，但需要注意的是，请不要将公共文件或者公共文件夹作为**插件**被 NoneBot2 加载。
 第三种方法需要保证插件被加载，插件加载的方式可以参阅 [加载插件](../tutorial/plugin/load-plugin) 。
 
 下面将介绍第二种方法—— `export` 和 `require` 机制：
@@ -22,7 +22,7 @@ options:
 
 现在，假定有两个插件 `pluginA` 和 `pluginB`，需要在 `pluginB` 中调用 `pluginA` 中的一个变量 `varA` 和一个函数 `funcA`。
 
-在上面的条件中涉及到了两种操作：一种是在 `pluginA` 的 `导出对象` 操作；而另一种是在 `pluginB` 的 `导入对象` 操作。在 `nonebot2` 中，`导出对象` 的操作用 `export` 机制来实现，`导入对象` 的操作用 `require` 机制来实现。下面，我们将逐一进行介绍。
+在上面的条件中涉及到了两种操作：一种是在 `pluginA` 的 `导出对象` 操作；而另一种是在 `pluginB` 的 `导入对象` 操作。在 NoneBot2 中，`导出对象` 的操作用 `export` 机制来实现，`导入对象` 的操作用 `require` 机制来实现。下面，我们将逐一进行介绍。
 
 :::warning 警告
 
@@ -44,7 +44,7 @@ def funcA():
     return "funcA"
 ```
 
-在确保定义之后，我们可以从 `nonebot.plugin` 导入 `export()` 方法, `export()` 方法会返回一个特殊的字典 `export`：
+在确保定义之后，我们可以从 `nonebot.plugin` 导入 `export()` 方法，`export()` 方法会返回一个特殊的字典 `export`：
 
 ```python
 from nonebot.plugin import export
@@ -74,7 +74,7 @@ def funcA():
     return "funcA"
 ```
 
-或者:
+或者：
 
 ```python
 @export
@@ -100,7 +100,7 @@ export.funcA = funcA
 
 :::warning 警告
 
-在导入来自其他插件的对象时, 请确保导出该对象的插件在引用该对象的插件之前加载。如果该插件并未被加载，则会尝试加载，加载失败则会返回 `None`。
+在导入来自其他插件的对象时，请确保导出该对象的插件在引用该对象的插件之前加载。如果该插件并未被加载，则会尝试加载，加载失败则会返回 `None`。
 
 :::
 
@@ -110,13 +110,13 @@ export.funcA = funcA
 from nonebot.plugin import require
 ```
 
-`require()` 方法的参数是插件名, 它会返回在指定插件中，用 `export()` 方法创建的字典。
+`require()` 方法的参数是插件名，它会返回在指定插件中，用 `export()` 方法创建的字典。
 
 ```python
 require_A = require('pluginA')
 ```
 
-在之前，这个字典已经存入了 `'vA'` - `varA`, `'fA'` - `funcA` 或 `'funcA'` - `funcA` 这样的 `key` - `value` 对。因此在这里我们直接用 `属性` 的方法来获取导入对象:
+在之前，这个字典已经存入了 `'vA'` - `varA`, `'fA'` - `funcA` 或 `'funcA'` - `funcA` 这样的 `key` - `value` 对。因此在这里我们直接用 `属性` 的方法来获取导入对象：
 
 ```python
 varA = require_A.vA

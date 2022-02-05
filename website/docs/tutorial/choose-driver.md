@@ -46,9 +46,9 @@ options:
 
 ## 内置驱动器
 
-### FastAPI （默认）
+### FastAPI（默认）
 
-类型: `ReverseDriver`
+类型：`ReverseDriver`
 
 > FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.6+ based on standard Python type hints.
 
@@ -56,7 +56,7 @@ FastAPI 是一个易上手、高性能的异步 Web 框架，具有极佳的编�
 
 FastAPI: [文档](https://fastapi.tiangolo.com/), [仓库](https://github.com/tiangolo/fastapi)
 
-驱动器: [API](../api/drivers/fastapi.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/fastapi.py)
+驱动器：[API](../api/drivers/fastapi.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/fastapi.py)
 
 ```env
 DRIVER=~fastapi
@@ -66,33 +66,33 @@ DRIVER=~fastapi
 
 ##### `fastapi_openapi_url`
 
-类型: `Optional[str]`  
-默认值: `None`  
-说明: `FastAPI` 提供的 `OpenAPI` JSON 定义地址，如果为 `None`，则不提供 `OpenAPI` JSON 定义。
+类型：`Optional[str]`  
+默认值：`None`  
+说明：`FastAPI` 提供的 `OpenAPI` JSON 定义地址，如果为 `None`，则不提供 `OpenAPI` JSON 定义。
 
 ##### `fastapi_docs_url`
 
-类型: `Optional[str]`  
-默认值: `None`  
-说明: `FastAPI` 提供的 `Swagger` 文档地址，如果为 `None`，则不提供 `Swagger` 文档。
+类型：`Optional[str]`  
+默认值：`None`  
+说明：`FastAPI` 提供的 `Swagger` 文档地址，如果为 `None`，则不提供 `Swagger` 文档。
 
 ##### `fastapi_redoc_url`
 
-类型: `Optional[str]`  
-默认值: `None`  
-说明: `FastAPI` 提供的 `ReDoc` 文档地址，如果为 `None`，则不提供 `ReDoc` 文档。
+类型：`Optional[str]`  
+默认值：`None`  
+说明：`FastAPI` 提供的 `ReDoc` 文档地址，如果为 `None`，则不提供 `ReDoc` 文档。
 
 ##### `fastapi_include_adapter_schema`
 
-类型: `bool`  
-默认值: `True`  
-说明: `FastAPI` 提供的 `OpenAPI` JSON 定义中是否包含适配器路由的 `Schema`。
+类型：`bool`  
+默认值：`True`  
+说明：`FastAPI` 提供的 `OpenAPI` JSON 定义中是否包含适配器路由的 `Schema`。
 
 ##### `fastapi_reload`
 
-类型: `bool`  
-默认值: `False`  
-说明: 是否开启 `uvicorn` 的 `reload` 功能，需要提供 asgi 应用路径。
+类型：`bool`  
+默认值：`False`  
+说明：是否开启 `uvicorn` 的 `reload` 功能，需要提供 asgi 应用路径。
 
 ```python title=bot.py
 app = nonebot.get_asgi()
@@ -101,31 +101,31 @@ nonebot.run(app="bot:app")
 
 ##### `fastapi_reload_dirs`
 
-类型: `Optional[List[str]]`  
-默认值: `None`  
-说明: 重载监控文件夹列表，默认为 uvicorn 默认值
+类型：`Optional[List[str]]`  
+默认值：`None`  
+说明：重载监控文件夹列表，默认为 uvicorn 默认值
 
 ##### `fastapi_reload_delay`
 
-类型: `Optional[float]`  
-默认值: `None`  
-说明: 重载延迟，默认为 uvicorn 默认值
+类型：`Optional[float]`  
+默认值：`None`  
+说明：重载延迟，默认为 uvicorn 默认值
 
 ##### `fastapi_reload_includes`
 
-类型: `Optional[List[str]]`  
-默认值: `None`  
-说明: 要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+类型：`Optional[List[str]]`  
+默认值：`None`  
+说明：要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
 
 ##### `fastapi_reload_excludes`
 
-类型: `Optional[List[str]]`  
-默认值: `None`  
-说明: 不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+类型：`Optional[List[str]]`  
+默认值：`None`  
+说明：不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
 
 ### Quart
 
-类型: `ReverseDriver`
+类型：`ReverseDriver`
 
 > Quart is an asyncio reimplementation of the popular Flask microframework API.
 
@@ -133,7 +133,7 @@ Quart 是一个类 Flask 的异步版本，拥有与 Flask 非常相似的接口
 
 Quart: [文档](https://pgjones.gitlab.io/quart/), [仓库](https://gitlab.com/pgjones/quart)
 
-驱动器: [API](../api/drivers/quart.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/quart.py)
+驱动器：[API](../api/drivers/quart.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/quart.py)
 
 ```env
 DRIVER=~quart
@@ -143,9 +143,9 @@ DRIVER=~quart
 
 ##### `quart_reload`
 
-类型: `bool`  
-默认值: `False`  
-说明: 是否开启 `uvicorn` 的 `reload` 功能，需要提供 asgi 应用路径。
+类型：`bool`  
+默认值：`False`  
+说明：是否开启 `uvicorn` 的 `reload` 功能，需要提供 asgi 应用路径。
 
 ```python title=bot.py
 app = nonebot.get_asgi()
@@ -154,31 +154,31 @@ nonebot.run(app="bot:app")
 
 ##### `quart_reload_dirs`
 
-类型: `Optional[List[str]]`  
-默认值: `None`  
-说明: 重载监控文件夹列表，默认为 uvicorn 默认值
+类型：`Optional[List[str]]`  
+默认值：`None`  
+说明：重载监控文件夹列表，默认为 uvicorn 默认值
 
 ##### `quart_reload_delay`
 
-类型: `Optional[float]`  
-默认值: `None`  
-说明: 重载延迟，默认为 uvicorn 默认值
+类型：`Optional[float]`  
+默认值：`None`  
+说明：重载延迟，默认为 uvicorn 默认值
 
 ##### `quart_reload_includes`
 
-类型: `Optional[List[str]]`  
-默认值: `None`  
-说明: 要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+类型：`Optional[List[str]]`  
+默认值：`None`  
+说明：要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
 
 ##### `quart_reload_excludes`
 
-类型: `Optional[List[str]]`  
-默认值: `None`  
-说明: 不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
+类型：`Optional[List[str]]`  
+默认值：`None`  
+说明：不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
 
 ### HTTPX
 
-类型: `ForwardDriver`
+类型：`ForwardDriver`
 
 :::warning 注意
 本驱动器仅支持 HTTP 请求，不支持 WebSocket 请求。
@@ -188,7 +188,7 @@ nonebot.run(app="bot:app")
 
 HTTPX: [文档](https://www.python-httpx.org/), [仓库](https://github.com/encode/httpx/)
 
-驱动器: [API](../api/drivers/httpx.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/httpx.py)
+驱动器：[API](../api/drivers/httpx.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/httpx.py)
 
 ```env
 DRIVER=~httpx
@@ -200,7 +200,7 @@ DRIVER=~httpx
 
 ### websockets
 
-类型: `ForwardDriver`
+类型：`ForwardDriver`
 
 :::warning 注意
 本驱动器仅支持 WebSocket 请求，不支持 HTTP 请求。
@@ -210,7 +210,7 @@ DRIVER=~httpx
 
 websockets: [文档](https://websockets.readthedocs.io/en/stable/), [仓库](https://github.com/aaugustin/websockets)
 
-驱动器: [API](../api/drivers/websockets.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/websockets.py)
+驱动器：[API](../api/drivers/websockets.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/websockets.py)
 
 ```env
 DRIVER=~websockets
@@ -222,13 +222,13 @@ DRIVER=~websockets
 
 ### AIOHTTP
 
-类型: `ForwardDriver`
+类型：`ForwardDriver`
 
 > Asynchronous HTTP Client/Server for asyncio and Python.
 
 AIOHTTP: [文档](https://docs.aiohttp.org/en/stable/), [仓库](https://github.com/aio-libs/aiohttp)
 
-驱动器: [API](../api/drivers/aiohttp.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/aiohttp.py)
+驱动器：[API](../api/drivers/aiohttp.md), [源码](https://github.com/nonebot/nonebot2/blob/master/nonebot/drivers/aiohttp.py)
 
 ```env
 DRIVER=~aiohttp

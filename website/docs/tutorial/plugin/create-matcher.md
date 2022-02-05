@@ -56,7 +56,7 @@ async def update_type():
 :::warning 注意
 与 `rule` 不同的是，`permission` 不会在会话状态更新时丢失，因此 `permission` 通常用于会话的响应控制。
 
-并且, 当会话状态更新时，会执行 `permission_updater` 以更新 `permission`。默认情况下，`permission_updater` 会在原有的 `permission` 基础上添加一个 `USER` 条件，以检查事件的 `session_id` 是否与当前会话一致。
+并且，当会话状态更新时，会执行 `permission_updater` 以更新 `permission`。默认情况下，`permission_updater` 会在原有的 `permission` 基础上添加一个 `USER` 条件，以检查事件的 `session_id` 是否与当前会话一致。
 
 你可以自行定义 `permission_updater` 来控制会话的响应权限更新。`permission_updater` 是一个返回 `Permission` 的函数，可选依赖注入参数参考类型 `T_PermissionUpdater`。
 

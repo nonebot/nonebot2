@@ -13,9 +13,9 @@ options:
 
 ## 从 NoneBot v1 迁移
 
-`APScheduler` 作为 `nonebot` v1 的可选依赖，为众多 bot 提供了方便的定时任务功能。`nonebot2` 已将 `APScheduler` 独立为 `nonebot_plugin_apscheduler` 插件，你可以在 [商店](https://v2.nonebot.dev/store.html) 中找到它。
+`APScheduler` 作为 NoneBot v1 的可选依赖，为众多 bot 提供了方便的定时任务功能。NoneBot2 已将 `APScheduler` 独立为 `nonebot_plugin_apscheduler` 插件，你可以在 [商店](https://v2.nonebot.dev/store.html) 中找到它。
 
-相比于 `nonebot` v1，`nonebot` v2 只需要安装插件并修改 `scheduler` 的导入方式即可完成迁移。
+相比于 NoneBot V1，NoneBot v2 只需要安装插件并修改 `scheduler` 的导入方式即可完成迁移。
 
 ## 安装插件
 
@@ -69,9 +69,9 @@ scheduler.add_job(run_every_day_from_program_start, "interval", days=1, id="xxx"
 
 为了使插件能够实现定时任务，需要先将 `scheduler` 对象导入插件。
 
-`nonebot2` 提供了 `nonebot.require` 方法来实现导入其他插件的内容，此处我们使用这个方法来导入 `scheduler` 对象。
+NoneBot2 提供了 `nonebot.require` 方法来实现导入其他插件的内容，此处我们使用这个方法来导入 `scheduler` 对象。
 
-`nonebot` 使用的 `scheduler` 对象为 `AsyncScheduler` 。
+NoneBot2 使用的 `scheduler` 对象为 `AsyncScheduler` 。
 
 > 使用该方法传入的插件本身也需要有对应实现，关于该方法的更多介绍可以参阅 [这里](./export-and-require.md)
 
@@ -90,7 +90,7 @@ scheduler = require("nonebot_plugin_apscheduler").scheduler
 根据项目的 `.env` 文件设置，向 `.env.*` 或 `bot.py` 文件添加 `nonebot_plugin_apscheduler` 的可选配置项
 
 :::warning 注意
-`.env.*` 文件的编写应遵循 nonebot2 对 `.env.*` 文件的编写要求
+`.env.*` 文件的编写应遵循 NoneBot2 对 `.env.*` 文件的编写要求
 :::
 
 #### `apscheduler_autostart`
@@ -101,7 +101,7 @@ scheduler = require("nonebot_plugin_apscheduler").scheduler
 
 是否自动启动 `APScheduler`。
 
-对于大多数情况，我们需要在 `nonebot2` 项目被启动时启动定时任务，则此处设为 `true`
+对于大多数情况，我们需要在 NoneBot2 项目被启动时启动定时任务，则此处设为 `true`
 
 ##### 在 `.env` 中添加
 
