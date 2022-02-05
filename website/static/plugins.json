@@ -1205,5 +1205,20 @@
     "homepage": "https://github.com/NoneBot2-Ae/nonebot-plugin-random-cat",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_antiflash",
+    "project_link": "nonebot-plugin-antiflash",
+    "name": "群聊反闪照",
+    "desc": "顾名思义🎇",
+    "author": "KafCoppelia",
+    "homepage": "https://github.com/KafCoppelia/nonebot_plugin_antiflash",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#6f64d4"
+      }
+    ],
+    "is_official": false
   }
 ]
