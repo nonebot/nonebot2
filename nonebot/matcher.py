@@ -467,7 +467,7 @@ class Matcher(metaclass=MatcherMeta):
         **kwargs,
     ) -> NoReturn:
         """最近使用 `got` / `receive` 接收的消息不符合预期，
-        发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
+        发送一条消息给当前交互用户并将当前事件处理流程中断在当前位置，在接收用户新的一个事件后从头开始执行当前处理函数
 
         参数:
             prompt: 消息内容
@@ -485,7 +485,7 @@ class Matcher(metaclass=MatcherMeta):
         **kwargs,
     ) -> NoReturn:
         """最近使用 `got` 接收的消息不符合预期，
-        发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
+        发送一条消息给当前交互用户并将当前事件处理流程中断在当前位置，在接收用户新的一条消息后从头开始执行当前处理函数
 
         参数:
             key: 参数名
@@ -505,8 +505,8 @@ class Matcher(metaclass=MatcherMeta):
         prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
         **kwargs,
     ) -> NoReturn:
-        """最近使用 `got` 接收的消息不符合预期，
-        发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续当前处理函数
+        """最近使用 `receive` 接收的消息不符合预期，
+        发送一条消息给当前交互用户并将当前事件处理流程中断在当前位置，在接收用户新的一个事件后从头开始执行当前处理函数
 
         参数:
             id: 消息 id
