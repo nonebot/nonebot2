@@ -10,7 +10,7 @@ options:
 
 # 简介
 
-受 [`FastApi`](https://fastapi.tiangolo.com/tutorial/dependencies/) 启发，NoneBot 同样编写了一个简易的依赖注入模块，使得开发者可以通过事件处理函数参数的类型标注来自动注入依赖。
+受 [FastAPI](https://fastapi.tiangolo.com/tutorial/dependencies/) 启发，NoneBot 同样编写了一个简易的依赖注入模块，使得开发者可以通过事件处理函数参数的类型标注来自动注入依赖。
 
 ## 什么是依赖注入？
 
@@ -40,7 +40,7 @@ async def _(x: dict = Depends(depend)):
     print(x)
 ```
 
-它和普通的事件处理函数并无区别，同样可以接受 `bot`, `event` 等参数，你可以把它当作一个普通的事件处理函数但是去除了装饰器（并没有使用 `matcher.handle()` 等来进行装饰），并且它可以返回任何类型的值。
+它和普通的事件处理函数并无区别，同样可以接收 `bot`, `event` 等参数，你可以把它当作一个普通的事件处理函数，但是去除了装饰器（没有使用 `matcher.handle()` 等来装饰），并且可以返回任何类型的值。
 
 在这个例子中，依赖函数接受一个参数：
 
@@ -48,7 +48,7 @@ async def _(x: dict = Depends(depend)):
 
 并且返回了一个 `state` 的复制以及一个附加的键值 `depend` 。
 
-### Import `Depends`
+### 导入 `Depends`
 
 ```python {2}
 from nonebot.log import logger

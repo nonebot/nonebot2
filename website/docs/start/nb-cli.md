@@ -18,12 +18,12 @@ pip install nb-cli
 
 ## 初次使用
 
-在安装完成之后，即可在命令行使用 `nb-cli` 的命令 `nb` 进行开发：
+在安装完成之后，即可在命令行使用 nb-cli 的命令 `nb` 进行开发：
 
 ```bash
 # 直接使用 nb 命令
 nb
-# 或使用 python 执行 module
+# 或使用 Python 执行 module
 python -m nb_cli
 ```
 
@@ -33,7 +33,7 @@ python -m nb_cli
 
 ## 使用方式
 
-`nb-cli` 具有两种使用方式：
+nb-cli 具有两种使用方式：
 
 1. 命令行指令
 

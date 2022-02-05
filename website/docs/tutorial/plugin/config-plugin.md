@@ -9,7 +9,7 @@ description: 规范定义插件配置项
 
 ## 定义配置模型
 
-在 NoneBot 中，我们使用强大高效的 [Pydantic](https://pydantic-docs.helpmanual.io/) 来定义配置模型，这个模型可以被用于配置的读取和类型检查等。例如，我们可以定义一个配置模型包含一个 string 类型的配置项：
+在 NoneBot2 中，我们使用强大高效的 [Pydantic](https://pydantic-docs.helpmanual.io/) 来定义配置模型，这个模型可以被用于配置的读取和类型检查等。例如，我们可以定义一个配置模型包含一个 string 类型的配置项：
 
 ```python title=config.py {3,4}
 from pydantic import BaseModel, Extra
@@ -19,7 +19,7 @@ class Config(BaseModel, extra=Extra.ignore):
 ```
 
 :::important 参考
-更多丰富的模型定义方法（默认值，自定义 validator 等），请参考 [Pydantic](https://pydantic-docs.helpmanual.io/) 文档。
+更多丰富的模型定义方法（默认值、自定义 validator 等），请参考 [Pydantic](https://pydantic-docs.helpmanual.io/) 文档。
 :::
 
 ## 读取配置

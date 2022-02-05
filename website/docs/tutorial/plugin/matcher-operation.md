@@ -16,7 +16,7 @@ options:
 
 向用户回复一条消息。回复的方式或途径由协议适配器自行实现。
 
-可以是 `str`, [`Message`](../../api/adapters/_message.md#Message), [`MessageSegment`](../../api/adapters/_message.md#MessageSegment) 或 [`MessageTemplate`](../../api/adapters/_template.md#MessageTemplate)。
+可以是 `str`、[`Message`](../../api/adapters/_message.md#Message)、[`MessageSegment`](../../api/adapters/_message.md#MessageSegment) 或 [`MessageTemplate`](../../api/adapters/_template.md#MessageTemplate)。
 
 这个操作等同于使用 `bot.send(event, message, **kwargs)` 但不需要自行传入 `event`。
 
