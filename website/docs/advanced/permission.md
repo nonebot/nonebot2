@@ -41,13 +41,13 @@ async def _(bot: Bot, event: Event):
 
 ## 进阶
 
-`Permission` 除了可以在注册事件响应器时加以应用，还可以在编写事件处理函数 `handler` 时主动调用，我们可以利用这个特性在一个 `handler` 里对不同权限的事件主体进行区别响应，下面我们以 `CQHTTP` 中的 `GROUP_ADMIN` (普通管理员非群主)和 `GROUP_OWNER` 为例，说明下怎么进行主动调用。
+`Permission` 除了可以在注册事件响应器时加以应用，还可以在编写事件处理函数 `handler` 时主动调用，我们可以利用这个特性在一个 `handler` 里对不同权限的事件主体进行区别响应，下面我们以 `onebot` 中的 `GROUP_ADMIN` (普通管理员非群主)和 `GROUP_OWNER` 为例，说明下怎么进行主动调用。
 
 ```python
 from nonebot import on_command
-from nonebot.adapters.cqhttp import Bot
-from nonebot.adapters.cqhttp import GroupMessageEvent
-from nonebot.adapters.cqhttp import GROUP_ADMIN, GROUP_OWNER
+from nonebot.adapters.onebot.v11 import Bot
+from nonebot.adapters.onebot.v11 import GroupMessageEvent
+from nonebot.adapters.onebot.v11 import GROUP_ADMIN, GROUP_OWNER
 
 matcher = on_command("测试权限")
 

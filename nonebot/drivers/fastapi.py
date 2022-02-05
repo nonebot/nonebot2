@@ -136,7 +136,7 @@ class Driver(ReverseDriver):
 
     @overrides(ReverseDriver)
     def on_shutdown(self, func: Callable) -> Callable:
-        """参考文档: `Events <https://fastapi.tiangolo.com/advanced/events/#startup-event>`_"""
+        """参考文档: `Events <https://fastapi.tiangolo.com/advanced/events/#shutdown-event>`_"""
         return self.server_app.on_event("shutdown")(func)
 
     @overrides(ReverseDriver)
