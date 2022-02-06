@@ -27,7 +27,7 @@ from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers import ReverseDriver, HTTPServerSetup, WebSocketServerSetup
 
-from ._model import FileTypes
+from ..internal.model import FileTypes
 
 
 def catch_closed(func):

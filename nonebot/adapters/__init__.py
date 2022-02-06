@@ -22,17 +22,18 @@ except ImportError:
 except Exception:
     pass
 
-from ._bot import Bot as Bot
-from ._event import Event as Event
-from ._adapter import Adapter as Adapter
-from ._message import Message as Message
-from ._message import MessageSegment as MessageSegment
-from ._template import MessageTemplate as MessageTemplate
+from nonebot.internal.bot import Bot as Bot
+from nonebot.internal.event import Event as Event
+from nonebot.internal.adapter import Adapter as Adapter
+from nonebot.internal.message import Message as Message
+from nonebot.internal.message import MessageSegment as MessageSegment
+from nonebot.internal.template import MessageTemplate as MessageTemplate
 
 __autodoc__ = {
-    "_bot": True,
-    "_event": True,
-    "_adapter": True,
-    "_message": True,
-    "_template": True,
+    "Bot": True,
+    "Event": True,
+    "Adapter": True,
+    "Message": True,
+    "MessageSegment": True,
+    "MessageTemplate": True,
 }

@@ -202,7 +202,7 @@ class AdapterException(NoneBotException):
 class NoLogException(AdapterException):
     """指示 NoneBot 对当前 `Event` 进行处理但不显示 Log 信息。
 
-    可在 {ref}`nonebot.adapters._event.Event.get_log_string` 时抛出
+    可在 {ref}`nonebot.adapters.Event.get_log_string` 时抛出
     """
 
 

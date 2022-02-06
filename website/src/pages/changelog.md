@@ -14,6 +14,8 @@ description: Changelog
 - 修改 `load_builtin_plugins` 函数，使其能够支持加载多个内置插件
 - 新增 `load_builtin_plugin` 函数，用于加载单个内置插件
 - 修改 `Message` 和 `MessageSegment` 类，完善 typing，转移 Mapping 构建支持至 pydantic validate
+- 调整项目结构，分离内部定义与用户接口
+- 修改 `Bot Connection Hook` 支持依赖注入
 
 ## v2.0.0b1
 
