@@ -1,8 +1,3 @@
-"""
-FrontMatter:
-    sidebar_position: 2
-    description: nonebot.adapters._bot 模块
-"""
 import abc
 import asyncio
 from functools import partial
@@ -15,9 +10,9 @@ from nonebot.exception import MockApiException
 from nonebot.typing import T_CalledAPIHook, T_CallingAPIHook
 
 if TYPE_CHECKING:
-    from ._event import Event
-    from ._adapter import Adapter
-    from ._message import Message, MessageSegment
+    from .event import Event
+    from .adapter import Adapter
+    from .message import Message, MessageSegment
 
 
 class _ApiCall(Protocol):

@@ -10,22 +10,28 @@ FrontMatter:
 
 import re
 import shlex
-import asyncio
 from itertools import product
 from argparse import Namespace
-from contextlib import AsyncExitStack
 from typing_extensions import TypedDict
 from argparse import ArgumentParser as ArgParser
-from typing import Any, Set, List, Tuple, Union, NoReturn, Optional, Sequence
+from typing import Any, List, Tuple, Union, Optional, Sequence
 
 from pygtrie import CharTrie
 
 from nonebot import get_driver
 from nonebot.log import logger
-from nonebot.dependencies import Dependent
-from nonebot.exception import ParserExit, SkippedException
+from nonebot.typing import T_State
+from nonebot.exception import ParserExit
+from nonebot.internal.rule import Rule as Rule
 from nonebot.adapters import Bot, Event, Message, MessageSegment
-from nonebot.typing import T_State, T_RuleChecker, T_DependencyCache
+from nonebot.params import (
+    Command,
+    EventToMe,
+    EventType,
+    CommandArg,
+    EventMessage,
+    EventPlainText,
+)
 from nonebot.consts import (
     CMD_KEY,
     PREFIX_KEY,
@@ -37,19 +43,6 @@ from nonebot.consts import (
     REGEX_GROUP,
     REGEX_MATCHED,
 )
-from nonebot.params import (
-    Command,
-    BotParam,
-    EventToMe,
-    EventType,
-    CommandArg,
-    EventParam,
-    StateParam,
-    DependParam,
-    DefaultParam,
-    EventMessage,
-    EventPlainText,
-)
 
 CMD_RESULT = TypedDict(
     "CMD_RESULT",
@@ -59,91 +52,6 @@ CMD_RESULT = TypedDict(
         "command_arg": Optional[Message[MessageSegment]],
     },
 )
-
-
-class Rule:
-    """{ref}`nonebot.matcher.Matcher` 规则类。
-
-    当事件传递时，在 {ref}`nonebot.matcher.Matcher` 运行前进行检查。
-
-    参数:
-        *checkers: RuleChecker
-
-    用法:
-        ```python
-        Rule(async_function) & sync_function
-        # 等价于
-        Rule(async_function, sync_function)
-        ```
-    """
-
-    __slots__ = ("checkers",)
-
-    HANDLER_PARAM_TYPES = [
-        DependParam,
-        BotParam,
-        EventParam,
-        StateParam,
-        DefaultParam,
-    ]
-
-    def __init__(self, *checkers: Union[T_RuleChecker, Dependent[bool]]) -> None:
-        self.checkers: Set[Dependent[bool]] = set(
-            checker
-            if isinstance(checker, Dependent)
-            else Dependent[bool].parse(
-                call=checker, allow_types=self.HANDLER_PARAM_TYPES
-            )
-            for checker in checkers
-        )
-        """存储 `RuleChecker`"""
-
-    async def __call__(
-        self,
-        bot: Bot,
-        event: Event,
-        state: T_State,
-        stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[T_DependencyCache] = None,
-    ) -> bool:
-        """检查是否符合所有规则
-
-        参数:
-            bot: Bot 对象
-            event: Event 对象
-            state: 当前 State
-            stack: 异步上下文栈
-            dependency_cache: 依赖缓存
-        """
-        if not self.checkers:
-            return True
-        try:
-            results = await asyncio.gather(
-                *(
-                    checker(
-                        bot=bot,
-                        event=event,
-                        state=state,
-                        stack=stack,
-                        dependency_cache=dependency_cache,
-                    )
-                    for checker in self.checkers
-                )
-            )
-        except SkippedException:
-            return False
-        return all(results)
-
-    def __and__(self, other: Optional[Union["Rule", T_RuleChecker]]) -> "Rule":
-        if other is None:
-            return self
-        elif isinstance(other, Rule):
-            return Rule(*self.checkers, *other.checkers)
-        else:
-            return Rule(*self.checkers, other)
-
-    def __or__(self, other) -> NoReturn:
-        raise RuntimeError("Or operation between rules is not allowed.")
 
 
 class TrieRule:
@@ -551,6 +459,7 @@ def to_me() -> Rule:
 
 
 __autodoc__ = {
+    "Rule": True,
     "Rule.__call__": True,
     "TrieRule": False,
     "ArgumentParser.exit": False,

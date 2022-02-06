@@ -44,9 +44,9 @@ def overrides(InterfaceClass: object) -> Callable[[T_Wrapped], T_Wrapped]:
 T_State = Dict[Any, Any]
 """事件处理状态 State 类型"""
 
-T_BotConnectionHook = Callable[["Bot"], Awaitable[Any]]
+T_BotConnectionHook = Callable[..., Awaitable[Any]]
 """Bot 连接建立时钩子函数"""
-T_BotDisconnectionHook = Callable[["Bot"], Awaitable[Any]]
+T_BotDisconnectionHook = Callable[..., Awaitable[Any]]
 """Bot 连接断开时钩子函数"""
 T_CallingAPIHook = Callable[["Bot", str, Dict[str, Any]], Awaitable[Any]]
 """`bot.call_api` 钩子函数"""

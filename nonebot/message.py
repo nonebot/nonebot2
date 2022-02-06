@@ -12,7 +12,6 @@ from datetime import datetime
 from contextlib import AsyncExitStack
 from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional, Coroutine
 
-from nonebot import params
 from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.utils import escape_tag
@@ -32,6 +31,16 @@ from nonebot.typing import (
     T_EventPreProcessor,
     T_EventPostProcessor,
 )
+from nonebot.internal.params import (
+    ArgParam,
+    BotParam,
+    EventParam,
+    StateParam,
+    DependParam,
+    DefaultParam,
+    MatcherParam,
+    ExceptionParam,
+)
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
@@ -42,30 +51,30 @@ _run_preprocessors: Set[Dependent[Any]] = set()
 _run_postprocessors: Set[Dependent[Any]] = set()
 
 EVENT_PCS_PARAMS = [
-    params.DependParam,
-    params.BotParam,
-    params.EventParam,
-    params.StateParam,
-    params.DefaultParam,
+    DependParam,
+    BotParam,
+    EventParam,
+    StateParam,
+    DefaultParam,
 ]
 RUN_PREPCS_PARAMS = [
-    params.DependParam,
-    params.BotParam,
-    params.EventParam,
-    params.StateParam,
-    params.ArgParam,
-    params.MatcherParam,
-    params.DefaultParam,
+    DependParam,
+    BotParam,
+    EventParam,
+    StateParam,
+    ArgParam,
+    MatcherParam,
+    DefaultParam,
 ]
 RUN_POSTPCS_PARAMS = [
-    params.DependParam,
-    params.ExceptionParam,
-    params.BotParam,
-    params.EventParam,
-    params.StateParam,
-    params.ArgParam,
-    params.MatcherParam,
-    params.DefaultParam,
+    DependParam,
+    ExceptionParam,
+    BotParam,
+    EventParam,
+    StateParam,
+    ArgParam,
+    MatcherParam,
+    DefaultParam,
 ]
 
 
