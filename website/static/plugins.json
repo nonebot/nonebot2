@@ -186,7 +186,7 @@
   {
     "module_name": "nonebot-plugin-strman",
     "project_link": "nonebot-plugin-strman",
-    "author": "jks15satoshi",
+    "author": "echobot-dev",
     "desc": "通过字符串标签在文件中集中管理字符串",
     "name": "字符串管理工具",
     "homepage": "https://github.com/echobot-dev/nonebot-plugin-strman",
