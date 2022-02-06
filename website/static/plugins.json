@@ -1220,5 +1220,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "random_cat_gif",
+    "project_link": "random_cat_gif",
+    "name": "random_cat_gif",
+    "desc": "无需魔法上网，无需图库的随机猫猫gif插件",
+    "author": "applenana",
+    "homepage": "https://github.com/applenana/random_cat_gif",
+    "tags": [],
+    "is_official": false
   }
 ]
