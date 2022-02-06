@@ -42,12 +42,9 @@ from nonebot.exception import (
     RejectedException,
 )
 
-from .bot import Bot
 from .rule import Rule
-from .event import Event
-from .template import MessageTemplate
 from .permission import USER, Permission
-from .message import Message, MessageSegment
+from .adapter import Bot, Event, Message, MessageSegment, MessageTemplate
 from .params import (
     Depends,
     ArgParam,

@@ -3,7 +3,7 @@ from contextlib import asynccontextmanager
 from typing import Any, Dict, AsyncGenerator
 
 from nonebot.config import Config
-from nonebot.drivers import (
+from nonebot.internal.driver import (
     Driver,
     Request,
     Response,

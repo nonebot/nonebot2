@@ -8,13 +8,12 @@ from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.dependencies import Dependent
 from nonebot.typing import T_BotConnectionHook, T_BotDisconnectionHook
+from nonebot.internal.params import BotParam, DependParam, DefaultParam
 
-from .params import BotParam, DependParam, DefaultParam
 from .model import Request, Response, WebSocket, HTTPServerSetup, WebSocketServerSetup
 
 if TYPE_CHECKING:
-    from .bot import Bot
-    from .adapter import Adapter
+    from nonebot.internal.adapter import Bot, Adapter
 
 
 BOT_HOOK_PARAMS = [DependParam, BotParam, DefaultParam]

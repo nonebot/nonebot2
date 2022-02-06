@@ -2,11 +2,11 @@ import asyncio
 from contextlib import AsyncExitStack
 from typing import Any, Set, Tuple, Union, NoReturn, Optional, Coroutine
 
-from nonebot.adapters import Bot, Event
 from nonebot.dependencies import Dependent
 from nonebot.exception import SkippedException
 from nonebot.typing import T_DependencyCache, T_PermissionChecker
 
+from .adapter import Bot, Event
 from .params import BotParam, EventParam, DependParam, DefaultParam
 
 

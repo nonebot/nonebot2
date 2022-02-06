@@ -2,11 +2,11 @@ import asyncio
 from contextlib import AsyncExitStack
 from typing import Set, Union, NoReturn, Optional
 
-from nonebot.adapters import Bot, Event
 from nonebot.dependencies import Dependent
 from nonebot.exception import SkippedException
 from nonebot.typing import T_State, T_RuleChecker, T_DependencyCache
 
+from .adapter import Bot, Event
 from .params import BotParam, EventParam, StateParam, DependParam, DefaultParam
 
 
