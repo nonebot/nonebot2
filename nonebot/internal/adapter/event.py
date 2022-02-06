@@ -1,15 +1,10 @@
-"""
-FrontMatter:
-    sidebar_position: 3
-    description: nonebot.adapters._event 模块
-"""
 import abc
 
 from pydantic import BaseModel
 
 from nonebot.utils import DataclassEncoder
 
-from ._message import Message
+from .message import Message
 
 
 class Event(abc.ABC, BaseModel):

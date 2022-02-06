@@ -1,5 +1,6 @@
 import abc
 from enum import Enum
+from dataclasses import dataclass
 from http.cookiejar import Cookie, CookieJar
 from typing import (
     IO,
@@ -9,8 +10,10 @@ from typing import (
     Tuple,
     Union,
     Mapping,
+    Callable,
     Iterator,
     Optional,
+    Awaitable,
     MutableMapping,
 )
 
@@ -314,3 +317,22 @@ class Cookies(MutableMapping):
         )
 
         return f"<Cookies [{cookies_repr}]>"
+
+
+@dataclass
+class HTTPServerSetup:
+    """HTTP 服务器路由配置。"""
+
+    path: URL  # path should not be absolute, check it by URL.is_absolute() == False
+    method: str
+    name: str
+    handle_func: Callable[[Request], Awaitable[Response]]
+
+
+@dataclass
+class WebSocketServerSetup:
+    """WebSocket 服务器路由配置。"""
+
+    path: URL  # path should not be absolute, check it by URL.is_absolute() == False
+    name: str
+    handle_func: Callable[[WebSocket], Awaitable[Any]]

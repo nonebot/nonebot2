@@ -122,16 +122,16 @@ def get_asgi() -> Any:
 
 
 def get_bot(self_id: Optional[str] = None) -> Bot:
-    """获取一个连接到 NoneBot 的 {ref}`nonebot.adapters._bot.Bot` 对象。
+    """获取一个连接到 NoneBot 的 {ref}`nonebot.adapters.Bot` 对象。
 
     当提供 `self_id` 时，此函数是 `get_bots()[self_id]` 的简写；
-    当不提供时，返回一个 {ref}`nonebot.adapters._bot.Bot`。
+    当不提供时，返回一个 {ref}`nonebot.adapters.Bot`。
 
     参数:
-        self_id: 用来识别 {ref}`nonebot.adapters._bot.Bot` 的 {ref}`nonebot.adapters._bot.Bot.self_id` 属性
+        self_id: 用来识别 {ref}`nonebot.adapters.Bot` 的 {ref}`nonebot.adapters.Bot.self_id` 属性
 
     返回:
-        {ref}`nonebot.adapters._bot.Bot` 对象
+        {ref}`nonebot.adapters.Bot` 对象
 
     异常:
         KeyError: 对应 self_id 的 Bot 不存在
@@ -156,10 +156,10 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
 
 
 def get_bots() -> Dict[str, Bot]:
-    """获取所有连接到 NoneBot 的 {ref}`nonebot.adapters._bot.Bot` 对象。
+    """获取所有连接到 NoneBot 的 {ref}`nonebot.adapters.Bot` 对象。
 
     返回:
-        一个以 {ref}`nonebot.adapters._bot.Bot.self_id` 为键，{ref}`nonebot.adapters._bot.Bot` 对象为值的字典
+        一个以 {ref}`nonebot.adapters.Bot.self_id` 为键，{ref}`nonebot.adapters.Bot` 对象为值的字典
 
     异常:
         ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
@@ -258,7 +258,6 @@ def run(*args: Any, **kwargs: Any) -> None:
     get_driver().run(*args, **kwargs)
 
 
-import nonebot.params as params
 from nonebot.plugin import on as on
 from nonebot.plugin import export as export
 from nonebot.plugin import require as require
@@ -283,3 +282,5 @@ from nonebot.plugin import on_shell_command as on_shell_command
 from nonebot.plugin import get_loaded_plugins as get_loaded_plugins
 from nonebot.plugin import load_builtin_plugin as load_builtin_plugin
 from nonebot.plugin import load_builtin_plugins as load_builtin_plugins
+
+__autodoc__ = {"internal": False}

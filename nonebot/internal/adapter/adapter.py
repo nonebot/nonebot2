@@ -1,14 +1,9 @@
-"""
-FrontMatter:
-    sidebar_position: 1
-    description: nonebot.adapters._adapter 模块
-"""
 import abc
 from contextlib import asynccontextmanager
 from typing import Any, Dict, AsyncGenerator
 
 from nonebot.config import Config
-from nonebot.drivers import (
+from nonebot.internal.driver import (
     Driver,
     Request,
     Response,
@@ -19,7 +14,7 @@ from nonebot.drivers import (
     WebSocketServerSetup,
 )
 
-from ._bot import Bot
+from .bot import Bot
 
 
 class Adapter(abc.ABC):
@@ -36,7 +31,7 @@ class Adapter(abc.ABC):
         self.driver: Driver = driver
         """{ref}`nonebot.drivers.Driver` 实例"""
         self.bots: Dict[str, Bot] = {}
-        """本协议适配器已建立连接的 {ref}`nonebot.adapters._bot.Bot` 实例"""
+        """本协议适配器已建立连接的 {ref}`nonebot.adapters.Bot` 实例"""
 
     @classmethod
     @abc.abstractmethod
@@ -50,23 +45,23 @@ class Adapter(abc.ABC):
         return self.driver.config
 
     def bot_connect(self, bot: Bot) -> None:
-        """告知 NoneBot 建立了一个新的 {ref}`nonebot.adapters._bot.Bot` 连接。
+        """告知 NoneBot 建立了一个新的 {ref}`nonebot.adapters.Bot` 连接。
 
-        当有新的 {ref}`nonebot.adapters._bot.Bot` 实例连接建立成功时调用。
+        当有新的 {ref}`nonebot.adapters.Bot` 实例连接建立成功时调用。
 
         参数:
-            bot: {ref}`nonebot.adapters._bot.Bot` 实例
+            bot: {ref}`nonebot.adapters.Bot` 实例
         """
         self.driver._bot_connect(bot)
         self.bots[bot.self_id] = bot
 
     def bot_disconnect(self, bot: Bot) -> None:
-        """告知 NoneBot {ref}`nonebot.adapters._bot.Bot` 连接已断开。
+        """告知 NoneBot {ref}`nonebot.adapters.Bot` 连接已断开。
 
-        当有 {ref}`nonebot.adapters._bot.Bot` 实例连接断开时调用。
+        当有 {ref}`nonebot.adapters.Bot` 实例连接断开时调用。
 
         参数:
-            bot: {ref}`nonebot.adapters._bot.Bot` 实例
+            bot: {ref}`nonebot.adapters.Bot` 实例
         """
         self.driver._bot_disconnect(bot)
         self.bots.pop(bot.self_id, None)

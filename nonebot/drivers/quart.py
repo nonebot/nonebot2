@@ -25,12 +25,11 @@ from pydantic import BaseSettings
 from nonebot.config import Env
 from nonebot.typing import overrides
 from nonebot.exception import WebSocketClosed
+from nonebot.internal.driver import FileTypes
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers import ReverseDriver, HTTPServerSetup, WebSocketServerSetup
-
-from ._model import FileTypes
 
 try:
     from quart import request as _request

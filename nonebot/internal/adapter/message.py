@@ -1,8 +1,3 @@
-"""
-FrontMatter:
-    sidebar_position: 4
-    description: nonebot.adapters._message 模块
-"""
 import abc
 from copy import deepcopy
 from dataclasses import field, asdict, dataclass
@@ -22,7 +17,7 @@ from typing import (
 
 from pydantic import parse_obj_as
 
-from ._template import MessageTemplate
+from .template import MessageTemplate
 
 T = TypeVar("T")
 TMS = TypeVar("TMS", bound="MessageSegment")
