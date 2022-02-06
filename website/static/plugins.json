@@ -184,12 +184,12 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_styledstr",
-    "project_link": "nonebot-plugin-styledstr",
-    "author": "jks15satoshi",
-    "desc": "通过字符串标签管理字符串资源",
-    "name": "风格化字符串管理",
-    "homepage": "https://github.com/jks15satoshi/nonebot_plugin_styledstr",
+    "module_name": "nonebot-plugin-strman",
+    "project_link": "nonebot-plugin-strman",
+    "author": "echobot-dev",
+    "desc": "通过字符串标签在文件中集中管理字符串",
+    "name": "字符串管理工具",
+    "homepage": "https://github.com/echobot-dev/nonebot-plugin-strman",
     "tags": [],
     "is_official": false
   },
