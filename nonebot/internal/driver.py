@@ -96,26 +96,28 @@ class Driver(abc.ABC):
         """注册一个在驱动器停止时执行的函数"""
         raise NotImplementedError
 
-    def on_bot_connect(self, func: T_BotConnectionHook) -> T_BotConnectionHook:
+    @classmethod
+    def on_bot_connect(cls, func: T_BotConnectionHook) -> T_BotConnectionHook:
         """装饰一个函数使他在 bot 连接成功时执行。
 
         钩子函数参数:
 
         - bot: 当前连接上的 Bot 对象
         """
-        self._bot_connection_hook.add(
+        cls._bot_connection_hook.add(
             Dependent[Any].parse(call=func, allow_types=BOT_HOOK_PARAMS)
         )
         return func
 
-    def on_bot_disconnect(self, func: T_BotDisconnectionHook) -> T_BotDisconnectionHook:
+    @classmethod
+    def on_bot_disconnect(cls, func: T_BotDisconnectionHook) -> T_BotDisconnectionHook:
         """装饰一个函数使他在 bot 连接断开时执行。
 
         钩子函数参数:
 
         - bot: 当前连接上的 Bot 对象
         """
-        self._bot_disconnection_hook.add(
+        cls._bot_disconnection_hook.add(
             Dependent[Any].parse(call=func, allow_types=BOT_HOOK_PARAMS)
         )
         return func
