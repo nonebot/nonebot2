@@ -26,7 +26,7 @@ options:
 
 ```python {7-9}
 from nonebot.log import logger
-from nonebot.dependencies import Depends
+from nonebot.params import Depends
 from nonebot import on_command, on_message
 
 test = on_command("123")
@@ -52,7 +52,7 @@ async def _(x: dict = Depends(depend)):
 
 ```python {2}
 from nonebot.log import logger
-from nonebot.dependencies import Depends
+from nonebot.params import Depends
 from nonebot import on_command, on_message
 
 test = on_command("123")
@@ -72,7 +72,7 @@ async def _(x: dict = Depends(depend)):
 
 ```python {12}
 from nonebot.log import logger
-from nonebot.dependencies import Depends
+from nonebot.params import Depends
 from nonebot import on_command, on_message
 
 test = on_command("123")

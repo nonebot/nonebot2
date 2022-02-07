@@ -12,7 +12,7 @@
   {
     "module_name": "nonebot.adapters.ding",
     "project_link": "nonebot-adapter-ding",
-    "name": "ding",
+    "name": "钉钉",
     "desc": "钉钉协议",
     "author": "Artin",
     "homepage": "https://github.com/nonebot/adapter-ding",
@@ -20,19 +20,9 @@
     "is_official": true
   },
   {
-    "module_name": "nonebot.adapters.mirai",
-    "project_link": "nonebot-adapter-mirai",
-    "name": "mirai",
-    "desc": "Mirai-Api-HTTP 协议",
-    "author": "Mix",
-    "homepage": "https://github.com/nonebot/adapter-mirai",
-    "tags": [],
-    "is_official": true
-  },
-  {
     "module_name": "nonebot.adapters.feishu",
     "project_link": "nonebot-adapter-feishu",
-    "name": "feishu",
+    "name": "飞书",
     "desc": "飞书协议",
     "author": "StarHeartHunt",
     "homepage": "https://github.com/nonebot/adapter-feishu",
@@ -42,9 +32,9 @@
   {
     "module_name": "nonebot.adapters.telegram",
     "project_link": "nonebot-adapter-telegram",
-    "name": "telegram",
+    "name": "Telegram",
     "desc": "Telegram 协议",
-    "author": "StarHeartHunt",
+    "author": "j1g5awi",
     "homepage": "https://github.com/nonebot/adapter-telegram",
     "tags": [],
     "is_official": true
@@ -58,5 +48,25 @@
     "homepage": "https://github.com/nonebot/adapter-qqguild",
     "tags": [],
     "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.kaiheila",
+    "project_link": "nonebot-adapter-kaiheila",
+    "name": "开黑啦",
+    "desc": "开黑啦协议适配",
+    "author": "Tian-que",
+    "homepage": "https://github.com/Tian-que/nonebot-adapter-kaiheila",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot.adapters.mirai2",
+    "project_link": "nonebot_adapter_mirai2",
+    "name": "mirai2",
+    "desc": "为 nonebot2 添加 mirai_api_http2.x的兼容适配器",
+    "author": "ieew",
+    "homepage": "https://github.com/ieew/nonebot_adapter_mirai2",
+    "tags": [],
+    "is_official": false
   }
 ]
