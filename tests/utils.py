@@ -21,9 +21,9 @@ def make_fake_message() -> Type["Message"]:
         def text(cls, text: str):
             return cls("text", {"text": text})
 
-        @classmethod
-        def image(cls, url: str):
-            return cls("image", {"url": url})
+        @staticmethod
+        def image(url: str):
+            return FakeMessageSegment("image", {"url": url})
 
         def is_text(self) -> bool:
             return self.type == "text"

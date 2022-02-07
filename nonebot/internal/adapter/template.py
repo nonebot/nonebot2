@@ -1,4 +1,3 @@
-import inspect
 import functools
 from string import Formatter
 from typing import (
@@ -35,7 +34,7 @@ class MessageTemplate(Formatter, Generic[TF]):
 
     参数:
         template: 模板
-        factory: 消息构造类型，默认为 `str`
+        factory: 消息类型工厂，默认为 `str`
     """
 
     @overload
@@ -64,8 +63,15 @@ class MessageTemplate(Formatter, Generic[TF]):
         self.format_specs[name] = spec
         return spec
 
-    def format(self, *args: Any, **kwargs: Any) -> TF:
-        """根据模板和参数生成消息对象"""
+    def format(self, *args, **kwargs):
+        """根据传入参数和模板生成消息对象"""
+        return self._format(args, kwargs)
+
+    def format_map(self, mapping: Mapping[str, Any]) -> TF:
+        """根据传入字典和模板生成消息对象, 在传入字段名不是有效标识符时有用"""
+        return self._format([], mapping)
+
+    def _format(self, args: Sequence[Any], kwargs: Mapping[str, Any]) -> TF:
         msg = self.factory()
         if isinstance(self.template, str):
             msg += self.vformat(self.template, args, kwargs)
@@ -166,7 +172,7 @@ class MessageTemplate(Formatter, Generic[TF]):
         if formatter is None and not issubclass(self.factory, str):
             segment_class: Type["MessageSegment"] = self.factory.get_segment_class()
             method = getattr(segment_class, format_spec, None)
-            if inspect.ismethod(method):
+            if callable(method) and not cast(str, method.__name__).startswith("_"):
                 formatter = getattr(segment_class, format_spec)
         return (
             super().format_field(value, format_spec)
