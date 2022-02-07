@@ -15,8 +15,8 @@ def test_segment_add():
         [MessageSegment.text("text"), MessageSegment.text("text")]
     )
 
-    assert MessageSegment.text("text") + Message(
-        [MessageSegment.text("text")]
+    assert (
+        MessageSegment.text("text") + Message([MessageSegment.text("text")])
     ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
 
     assert "text" + MessageSegment.text("text") == Message(
@@ -63,16 +63,16 @@ def test_message_add():
     Message = make_fake_message()
     MessageSegment = Message.get_segment_class()
 
-    assert Message([MessageSegment.text("text")]) + MessageSegment.text(
-        "text"
+    assert (
+        Message([MessageSegment.text("text")]) + MessageSegment.text("text")
     ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
 
     assert Message([MessageSegment.text("text")]) + "text" == Message(
         [MessageSegment.text("text"), MessageSegment.text("text")]
     )
 
-    assert Message([MessageSegment.text("text")]) + Message(
-        [MessageSegment.text("text")]
+    assert (
+        Message([MessageSegment.text("text")]) + Message([MessageSegment.text("text")])
     ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
 
     assert "text" + Message([MessageSegment.text("text")]) == Message(
