@@ -1249,5 +1249,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ServantReasoning",
+    "project_link": "ServantReasoning",
+    "name": "Fgo从者推理",
+    "desc": "通过bot描述的从者特征，玩家对从者进行猜测的游戏",
+    "author": "suhexia",
+    "homepage": "https://github.com/suhexia/ServantReasoningGame",
+    "tags": [
+      {
+        "label": "t:game",
+        "color": "#ed9a41"
+      },
+      {
+        "label": "a:gocqhttp",
+        "color": "#ed9a41"
+      }
+    ],
+    "is_official": false
   }
 ]
