@@ -1220,5 +1220,53 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "random_cat_gif",
+    "project_link": "random_cat_gif",
+    "name": "random_cat_gif",
+    "desc": "无需魔法上网，无需图库的随机猫猫gif插件",
+    "author": "applenana",
+    "homepage": "https://github.com/applenana/random_cat_gif",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_word_bank2",
+    "project_link": "nonebot-plugin-word-bank2",
+    "name": "无数据库的问答插件",
+    "desc": "wordbank,但是重写了",
+    "author": "kexue-z",
+    "homepage": "https://github.com/kexue-z/nonebot-plugin-word-bank2",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ff0000"
+      },
+      {
+        "label": "wordbank",
+        "color": "#0b00ff"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ServantReasoning",
+    "project_link": "ServantReasoning",
+    "name": "Fgo从者推理",
+    "desc": "通过bot描述的从者特征，玩家对从者进行猜测的游戏",
+    "author": "suhexia",
+    "homepage": "https://github.com/suhexia/ServantReasoningGame",
+    "tags": [
+      {
+        "label": "t:game",
+        "color": "#ed9a41"
+      },
+      {
+        "label": "a:gocqhttp",
+        "color": "#ed9a41"
+      }
+    ],
+    "is_official": false
   }
 ]
