@@ -23,7 +23,13 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
   </a>
   <img src="https://img.shields.io/badge/python-3.7.3+-blue" alt="python">
   <a href="https://codecov.io/gh/nonebot/nonebot2">
-    <img src="https://codecov.io/gh/nonebot/nonebot2/branch/master/graph/badge.svg?token=2P0G0VS7N4"/>
+    <img src="https://codecov.io/gh/nonebot/nonebot2/branch/master/graph/badge.svg?token=2P0G0VS7N4" alt="codecov"/>
+  </a>
+  <a href="https://github.com/nonebot/nonebot2/actions/workflows/website-deploy.yml">
+    <img src="https://github.com/nonebot/nonebot2/actions/workflows/website-deploy.yml/badge.svg?branch=master&event=push" alt="site"/>
+  </a>
+  <a href="https://results.pre-commit.ci/latest/github/nonebot/nonebot2/master">
+    <img src="https://results.pre-commit.ci/badge/github/nonebot/nonebot2/master.svg" />
   </a>
   <br />
   <a href="https://onebot.dev/">
