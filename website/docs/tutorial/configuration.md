@@ -20,12 +20,12 @@ options:
 
 ### .env 文件
 
-NoneBot 在启动时将会从系统环境变量或者 `.env` 文件中寻找变量 `ENVIRONMENT` (大小写不敏感)，默认值为 `prod`。  
+NoneBot 在启动时将会从系统环境变量或者 `.env` 文件中寻找变量 `ENVIRONMENT`（大小写不敏感），默认值为 `prod`。  
 这将引导 NoneBot 从系统环境变量或者 `.env.{ENVIRONMENT}` 文件中进一步加载具体配置。
 
 `.env` 文件是基础环境配置文件，该文件中的配置项在不同环境下都会被加载，但会被 `.env.{ENVIRONMENT}` 文件中的配置所覆盖。
 
-NoneBot 使用 [pydantic](https://pydantic-docs.helpmanual.io/) 进行配置处理，并对 `pydantic` 的行为做出了更改，详见下方说明。
+NoneBot 使用 [Pydantic](https://pydantic-docs.helpmanual.io/) 进行配置处理，并对 Pydantic 的行为做出了更改，详见下方说明。
 
 现在，我们在 `.env` 文件中写入当前环境信息：
 
@@ -42,29 +42,29 @@ CUSTOM_CONFIG=common config  # 这个配置项在任何环境中都会被加载
 :::
 
 :::warning 提示
-由于 `pydantic` 使用 JSON 解析配置项，请确保配置项值为 JSON 格式的数据。如：
+由于 Pydantic 使用 JSON 解析配置项，请确保配置项值为 JSON 格式的数据。如：
 
 ```bash
 list=["123456789", "987654321", 1]
 test={"hello": "world"}
 ```
 
-如果配置项值解析失败将作为 **字符串** 处理。
+如果配置项值解析失败将作为**字符串**处理。
 
-特别的，如果配置项 **为空** ，则会从 **系统环境变量** 中获取值，如果不存在则为空字符串。
+特别的，如果配置项**为空**，则会从**系统环境变量**中获取值，如果不存在则为空字符串。
 :::
 
 ### .env.\* 文件
 
-NoneBot 默认会从 `.env.{ENVIRONMENT}` 文件加载配置，但是可以在 NoneBot 初始化时指定加载某个环境配置文件: `nonebot.init(_env_file=".env.dev")`，这将忽略你在 `.env` 中设置的 `ENVIRONMENT` 。
+NoneBot 默认会从 `.env.{ENVIRONMENT}` 文件加载配置，但是可以在 NoneBot 初始化时指定加载某个环境配置文件：`nonebot.init(_env_file=".env.dev")`，这将忽略你在 `.env` 中设置的 `ENVIRONMENT` 。
 
 配置语法与 `.env` 文件相同。
 
 示例及说明：
 
 ```bash
-HOST=0.0.0.0  # 配置 NoneBot 监听的 IP/主机名
-PORT=8080  # 配置 NoneBot 监听的端口
+HOST=0.0.0.0  # 配置 NoneBot2 监听的 IP/主机名
+PORT=8080  # 配置 NoneBot2 监听的端口
 SUPERUSERS=["123456789", "987654321"]  # 配置 NoneBot 超级用户
 NICKNAME=["awesome", "bot"]  # 配置机器人的昵称
 COMMAND_START=["/", ""]  # 配置命令起始字符
@@ -75,7 +75,7 @@ CUSTOM_CONFIG1="config in env file"
 CUSTOM_CONFIG2=  # 留空则从系统环境变量读取，如不存在则为空字符串
 ```
 
-详细的配置项可以参考 [配置项](#详细配置项) 。
+详细的配置项可以参考[配置项](#详细配置项)。
 
 ### 系统环境变量
 
@@ -100,11 +100,11 @@ config.custom_config4 = "new config after init"
 
 ## 配置优先级
 
-`bot.py` 文件( `nonebot.init` ) > 系统环境变量 > `.env`, `.env.*` 文件
+`bot.py` 文件（`nonebot.init`）> 系统环境变量 > `.env`、`.env.*` 文件
 
 ## 读取配置项
 
-配置项可以通过三种类型的对象获取：`driver`, `adapter`, `bot`。
+配置项可以通过三种类型的对象获取：`driver`、`adapter`、`bot`。
 
 ```python
 import nonebot
@@ -125,13 +125,13 @@ nonebot.get_driver()._adapters["adapter_name"].config.custom_config
 - **类型**: `str`
 - **默认值**: `"~fastapi"`
 
-NoneBot 运行所使用的驱动器。主要分为 `ForwardDriver`, `ReverseDriver` 即客户端和服务端两类。
+NoneBot2 运行所使用的驱动器。主要分为 `ForwardDriver`、`ReverseDriver` 即客户端和服务端两类。
 
 配置格式采用特殊语法：`<module>[:<Driver>][+<module>[:<Mixin>]]*`
 
 其中 `<module>` 为驱动器模块名，可以使用 `~` 作为 `nonebot.drivers.` 的简写；`<Driver>` 为驱动器类名，默认为 `Driver`；`<Mixin>` 为驱动器混入的类名，默认为 `Mixin`。
 
-NoneBot 内置了几个常用驱动器，包括了各类常用功能，常见驱动器配置如下：
+NoneBot2 内置了几个常用驱动器，包括了各类常用功能，常见驱动器配置如下：
 
 ```env
 DRIVER=~fastapi
@@ -140,14 +140,14 @@ DRIVER=~fastapi+~httpx+~websockets
 DRIVER=~fastapi+~aiohttp
 ```
 
-各驱动器的功能与区别请参考 [选择驱动器](./choose-driver.md) 。
+各驱动器的功能与区别请参考[选择驱动器](./choose-driver.md)。
 
 ### Host
 
 - **类型**: `IPvAnyAddress`
 - **默认值**: `127.0.0.1`
 
-使用 `ReversedDriver` 时，NoneBot 监听的 IP/主机名。
+使用 `ReversedDriver` 时，NoneBot2 监听的 IP/主机名。
 
 ```env
 HOST=127.0.0.1
@@ -158,7 +158,7 @@ HOST=127.0.0.1
 - **类型**: `int`
 - **默认值**: `8080`
 
-使用 `ReversedDriver` 时，NoneBot 监听的端口。
+使用 `ReversedDriver` 时，NoneBot2 监听的端口。
 
 ```env
 PORT=8080
@@ -169,7 +169,7 @@ PORT=8080
 - **类型**: `int | str`
 - **默认值**: `INFO`
 
-NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称
+NoneBot2 日志输出等级，可以为 `int` 类型等级或等级名称
 
 参考 [`loguru 日志等级`](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
 
@@ -233,7 +233,7 @@ COMMAND_SEP={".", "/"}
 - **类型**: `timedelta`
 - **默认值**: `timedelta(minutes=2)`
 
-用户会话超时时间，配置格式参考 [`Pydantic Field`](https://pydantic-docs.helpmanual.io/usage/types/#datetime-types) 。
+用户会话超时时间，配置格式参考 [Datetime Types](https://pydantic-docs.helpmanual.io/usage/types/#datetime-types)。
 
 ```env
 SESSION_EXPIRE_TIMEOUT=120
