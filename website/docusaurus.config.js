@@ -36,12 +36,12 @@ const config = {
           editUrl: "https://github.com/nonebot/nonebot2/edit/master/website/",
           showLastUpdateAuthor: true,
           showLastUpdateTime: true,
-          exclude: [
-            // "**/_*.{js,jsx,ts,tsx,md,mdx}",
-            // "**/_*/**",
-            "**/*.test.{js,jsx,ts,tsx}",
-            "**/__tests__/**",
-          ],
+          // exclude: [
+          //   "**/_*.{js,jsx,ts,tsx,md,mdx}",
+          //   "**/_*/**",
+          //   "**/*.test.{js,jsx,ts,tsx}",
+          //   "**/__tests__/**",
+          // ],
         },
         sitemap: {
           changefreq: "daily",
@@ -155,15 +155,13 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+        additionalLanguages: ["docker", "ini"],
       },
       algolia: {
         appId: "X0X5UACHZQ",
         apiKey: "ac03e1ac2bd0812e2ea38c0cc1ea38c5",
         indexName: "nonebot",
         contextualSearch: true,
-        // searchParameters: {
-        //   facetFilters: ["lang:zh-CN"],
-        // },
       },
       tailwindConfig: require("./tailwind.config"),
       customCss: [require.resolve("./src/css/custom.css")],

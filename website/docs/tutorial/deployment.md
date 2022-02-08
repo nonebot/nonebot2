@@ -14,12 +14,19 @@ description: 部署你的机器人
 在生产环境中，为确保机器人能够正常运行，你需要固定你的依赖库版本。下面提供了几种常见的文件格式与生成方式：
 
 - `poetry.lock`
+
   [poetry](https://python-poetry.org/) 依赖管理工具使用的 lock 文件，通常会在安装依赖时自动生成，或者使用 `poetry lock` 来生成。
+
 - `pdm.lock`
+
   [pdm](https://pdm.fming.dev/) 依赖管理工具使用的 lock 文件，通常会在安装依赖时自动生成，或者使用 `pdm lock` 来生成。
+
 - `Pipfile.lock`
+
   [Pipenv](https://pipenv.pypa.io/en/latest/) 依赖管理工具使用的 lock 文件，通常会在安装依赖时自动生成，或者使用 `pipenv lock` 来生成。
+
 - `requirements.txt`
+
   如果你未使用任何依赖管理工具，你可以使用 `pip freeze` 来生成这个文件。
 
 ## 使用 Docker 部署（推荐）
@@ -95,7 +102,7 @@ services:
 
 将以下文件添加至项目下的 `.github/workflows/` 目录下：
 
-```yaml title=.github/workflows/build.yml {31}
+```yaml title=.github/workflows/build.yml {30}
 name: Docker Hub Release
 
 on:
@@ -198,7 +205,7 @@ jobs:
 
 参考：[Uvicorn - Supervisor](https://www.uvicorn.org/deployment/#supervisor)
 
-```conf
+```ini
 [supervisord]
 
 [fcgi-program:nonebot]
