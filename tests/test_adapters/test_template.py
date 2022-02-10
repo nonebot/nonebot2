@@ -1,4 +1,4 @@
-from utils import make_fake_message, escape_text
+from utils import escape_text, make_fake_message
 
 
 def test_template_basis():
