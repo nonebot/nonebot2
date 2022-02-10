@@ -102,5 +102,18 @@
     "homepage": "https://github.com/B1ue1nWh1te/SeaBot_QQ",
     "tags": [],
     "is_official": false
+  },
+  {
+    "name": "琪露诺Bot",
+    "desc": "用QQ机器人控制Minecraft服务器！服务器状态查询/服务器白名单/插件列表/玩家查询/转发服务器消息/执行指令...   其他实用娱乐功能，三步即可成功部署的QQ bot",
+    "author": "summerkirakira",
+    "homepage": "https://github.com/summerkirakira/CirnoBot",
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#5393ec"
+      }
+    ],
+    "is_official": false
   }
 ]
