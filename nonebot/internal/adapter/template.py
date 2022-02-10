@@ -104,7 +104,7 @@ class MessageTemplate(Formatter, Generic[TF]):
         if recursion_depth < 0:
             raise ValueError("Max string recursion exceeded")
 
-        results: List[Any] = []
+        results: List[Any] = [self.factory()]
 
         for (literal_text, field_name, format_spec, conversion) in self.parse(
             format_string
@@ -162,10 +162,7 @@ class MessageTemplate(Formatter, Generic[TF]):
                 formatted_text = self.format_field(obj, str(format_control))
                 results.append(formatted_text)
 
-        return (
-            self.factory(functools.reduce(self._add, results or [""])),
-            auto_arg_index,
-        )
+        return functools.reduce(self._add, results), auto_arg_index
 
     def format_field(self, value: Any, format_spec: str) -> Any:
         formatter: Optional[FormatSpecFunc] = self.format_specs.get(format_spec)
