@@ -1,4 +1,4 @@
-from utils import make_fake_message
+from utils import make_fake_message, escape_text
 
 
 def test_template_basis():
@@ -10,11 +10,8 @@ def test_template_basis():
 
 
 def test_template_message():
-    from nonebot.adapters import MessageTemplate
-
     Message = make_fake_message()
-
-    template = MessageTemplate("{a:custom}{b:text}{c:image}", Message)
+    template = Message.template("{a:custom}{b:text}{c:image}")
 
     @template.add_format_spec
     def custom(input: str) -> str:
@@ -33,3 +30,12 @@ def test_template_message():
     assert template.format_map(format_args) == formatted
     assert formatted.extract_plain_text() == "custom-custom!text"
     assert str(formatted) == "custom-custom!text[fake:image]"
+
+
+def test_message_injection():
+    Message = make_fake_message()
+
+    template = Message.template("{name}Is Bad")
+    message = template.format(name="[fake:image]")
+
+    assert message.extract_plain_text() == escape_text("[fake:image]Is Bad")
