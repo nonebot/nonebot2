@@ -6,7 +6,14 @@ if TYPE_CHECKING:
     from nonebot.adapters import Event, Message
 
 
-def make_fake_message() -> Type["Message"]:
+def escape_text(s: str, *, escape_comma: bool = True) -> str:
+    s = s.replace("&", "&amp;").replace("[", "&#91;").replace("]", "&#93;")
+    if escape_comma:
+        s = s.replace(",", "&#44;")
+    return s
+
+
+def make_fake_message():
     from nonebot.adapters import Message, MessageSegment
 
     class FakeMessageSegment(MessageSegment):
@@ -41,6 +48,10 @@ def make_fake_message() -> Type["Message"]:
                 for seg in msg:
                     yield FakeMessageSegment(**seg)
             return
+
+        def __add__(self, other):
+            other = escape_text(other) if isinstance(other, str) else other
+            return super().__add__(other)
 
     return FakeMessage
 

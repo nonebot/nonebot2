@@ -29,7 +29,11 @@ async def test_weather(app: App):
         event = make_fake_event(_message=msg, _to_me=True)()
 
         ctx.receive_event(bot, event)
-        ctx.should_call_send(event, Message("你想查询的城市 南京 暂不支持，请重新输入！"), True)
+        ctx.should_call_send(
+            event,
+            Message.template("你想查询的城市 {} 暂不支持，请重新输入！").format("南京"),
+            True,
+        )
         ctx.should_rejected()
 
         msg = Message("北京")
@@ -53,7 +57,11 @@ async def test_weather(app: App):
         event = make_fake_event(_message=msg)()
 
         ctx.receive_event(bot, event)
-        ctx.should_call_send(event, Message("你想查询的城市 杭州 暂不支持，请重新输入！"), True)
+        ctx.should_call_send(
+            event,
+            Message.template("你想查询的城市 {} 暂不支持，请重新输入！").format("杭州"),
+            True,
+        )
         ctx.should_rejected()
 
         msg = Message("北京")
