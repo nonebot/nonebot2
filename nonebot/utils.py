@@ -22,6 +22,7 @@ from typing import (
     Callable,
     Optional,
     Awaitable,
+    Coroutine,
     AsyncGenerator,
     ContextManager,
 )
@@ -99,7 +100,7 @@ def is_async_gen_callable(call: Callable[..., Any]) -> bool:
     return inspect.isasyncgenfunction(func_)
 
 
-def run_sync(call: Callable[P, R]) -> Callable[P, Awaitable[R]]:
+def run_sync(call: Callable[P, R]) -> Callable[P, Coroutine[None, None, R]]:
     """一个用于包装 sync function 为 async function 的装饰器
 
     参数:
