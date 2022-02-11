@@ -1283,5 +1283,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_morning",
+    "project_link": "nonebot-plugin-morning",
+    "name": "おはよう！",
+    "desc": "早晚安记录作息，培养优质睡眠😴",
+    "author": "KafCoppelia",
+    "homepage": "https://github.com/KafCoppelia/nonebot_plugin_morning",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#da421c"
+      },
+      {
+        "label": "t:morning",
+        "color": "#ebc025"
+      }
+    ],
+    "is_official": false
   }
 ]
