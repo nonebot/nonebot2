@@ -26,7 +26,7 @@ options:
 
 通常情况下，适配器在接收到消息时，会将消息转换为消息序列，可以通过 [`EventMessage`](./plugin/create-handler.md#EventMessage) 作为依赖注入, 或者使用 `event.get_message()` 获取。
 
-由于它是`List[MessageSegment]`的子类, 所以你总是可以用和操作List类似的方式来处理消息序列
+由于它是`List[MessageSegment]`的子类, 所以你总是可以用和操作 List 类似的方式来处理消息序列
 
 ```python
 >>> message = Message([
@@ -207,33 +207,43 @@ msg.extend([MessageSegment.text("text")])
 
 - 多行富文本编排(包含图片,文字以及表情等)
 
-- 客制化(由Bot最终用户提供消息模板时)
+- 客制化(由 Bot 最终用户提供消息模板时)
 
-在事实上, 它的用法和`str.format`极为相近, 所以你在使用的时候, 总是可以参考[Python文档](https://docs.python.org/zh-cn/3/library/stdtypes.html#str.format)来达到你想要的效果
+在事实上, 它的用法和`str.format`极为相近, 所以你在使用的时候, 总是可以参考[Python 文档](https://docs.python.org/zh-cn/3/library/stdtypes.html#str.format)来达到你想要的效果
 
 这里给出几个简单的例子:
 
 :::tip
-这里面所有的`Message`均是用对应Adapter的实现导入的, 而不是抽象基类
+这里面所有的`Message`均是用对应 Adapter 的实现导入的, 而不是抽象基类
 :::
 
 ```python title="基础格式化用法"
 >>> Message.template("{} {}").format("hello", "world")
-Message(MessageSegment(type='text', data={'text': 'hello world'}))
+Message(
+    MessageSegment.text("hello"),
+    MessageSegment.text(" "),
+    MessageSegment.text("world")
+)
 ```
 
 ```python title="对消息段进行安全的拼接"
 >>> Message.template("{} {}").format(MessageSegment.image("file:///..."), "world")
-Message(MessageSegment(type='image', data={'file': 'file:///...'}), MessageSegment(type='text', data={'text': 'world'}))
+Message(
+    MessageSegment(type='image', data={'file': 'file:///...'}), 
+    MessageSegment(type='text', data={'text': 'world'})
+)
 ```
 
 ```python title="以消息对象作为模板"
->>> Message.template( 
-...       MessageSegment.text('test {user_id}') + MessageSegment.face(233) +
-...       MessageSegment.text('test {message}')).format_map({'user_id':123456, 'message':'hello world'})
-Message(MessageSegment(type='text', data={'text': 'test 123456'}),
-        MessageSegment(type='face', data={'face': 233}),
-        MessageSegment(type='text', data={'text': 'test hello world'}))
+>>> Message.template(
+...     MessageSegment.text('test {user_id}') + MessageSegment.face(233) +
+...     MessageSegment.text('test {message}')).format_map({'user_id':123456, 'message':'hello world'}
+... )
+Message(
+    MessageSegment(type='text', data={'text': 'test 123456'}),
+    MessageSegment(type='face', data={'face': 233}),
+    MessageSegment(type='text', data={'text': 'test hello world'})
+)
 ```
 
 ```python title="使用消息段的拓展格式规格"
