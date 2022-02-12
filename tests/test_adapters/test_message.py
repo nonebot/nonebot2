@@ -141,13 +141,10 @@ def test_message_validate():
         [MessageSegment.text("text")]
     )
 
-    assert (
-        parse_obj_as(
-            Message,
-            [MessageSegment.text("text"), {"type": "text", "data": {"text": "text"}}],
-        )
-        == Message([MessageSegment.text("text"), MessageSegment.text("text")])
-    )
+    assert parse_obj_as(
+        Message,
+        [MessageSegment.text("text"), {"type": "text", "data": {"text": "text"}}],
+    ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
 
     try:
         parse_obj_as(Message, object())

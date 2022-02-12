@@ -12,17 +12,37 @@ options:
 
 ## NoneBot2 中的消息
 
-在不同平台中，消息会有各种不同的表现形式，可能是一段纯文本、一张图片、一段语音、一篇富文本文章，也有可能是多种类型的组合等等。而在 NoneBot2 中，为确保消息的正常处理与跨平台兼容性，采用了扁平化的消息序列形式，即 `Message` 对象。
+在不同平台中，一条消息可能会有承载有各种不同的表现形式，它可能是一段纯文本、一张图片、一段语音、一篇富文本文章，也有可能是多种类型的组合等等。
 
-`Message` 序列由多个消息段 `MessageSegment` 组成，继承自 `List[MessageSegment]`，并在此基础上添加或强化了一些特性。
+在 NoneBot2 中，为确保消息的正常处理与跨平台兼容性，采用了扁平化的消息序列形式，即 `Message` 对象。
 
-`MessageSegment` 是一个 dataclass ，它具有一个类型标识 `type`，以及一些对应的数据信息 `data`。
+`Message` 是多个消息段 `MessageSegment` 的集合，它继承自 `List[MessageSegment]`，并在此基础上添加或强化了一些特性。
+
+`MessageSegment` 是一个 [`dataclass`](https://docs.python.org/zh-cn/3/library/dataclasses.html#dataclasses.dataclass) ，它具有一个类型标识 `type`，以及一些对应的数据信息 `data`。
 
 此外，NoneBot2 还提供了 `MessageTemplate` ，用于构建支持消息序列以及消息段的特殊消息模板。
 
 ## 使用消息序列
 
-通常情况下，适配器在接收到消息时，会将消息转换为消息序列，可以通过 [`EventMessage`](./plugin/create-handler.md#EventMessage) 或者 `event.get_message()` 获取。
+通常情况下，适配器在接收到消息时，会将消息转换为消息序列，可以通过 [`EventMessage`](./plugin/create-handler.md#EventMessage) 作为依赖注入, 或者使用 `event.get_message()` 获取。
+
+由于它是`List[MessageSegment]`的子类, 所以你总是可以用和操作 List 类似的方式来处理消息序列
+
+```python
+>>> message = Message([
+    MessageSegment(type='text', data={'text':'hello'}),
+    MessageSegment(type='image', data={'url':'http://example.com/image.png'}),
+    MessageSegment(type='text', data={'text':'world'}),
+])
+>>> for segment in message:
+...     print(segment.type, segment.data)
+...
+text {'text': 'hello'}
+image {'url': 'http://example.com/image.png'}
+text {'text': 'world'}
+>>> len(message)
+3
+```
 
 ### 构造消息序列
 
@@ -181,4 +201,52 @@ msg.extend([MessageSegment.text("text")])
 
 ## 使用消息模板
 
-<!-- TODO -->
+为了提供安全可靠的跨平台模板字符, 我们提供了一个消息模板功能来构建消息序列
+
+它在以下常见场景中尤其有用:
+
+- 多行富文本编排(包含图片,文字以及表情等)
+
+- 客制化(由 Bot 最终用户提供消息模板时)
+
+在事实上, 它的用法和`str.format`极为相近, 所以你在使用的时候, 总是可以参考[Python 文档](https://docs.python.org/zh-cn/3/library/stdtypes.html#str.format)来达到你想要的效果
+
+这里给出几个简单的例子:
+
+:::tip
+这里面所有的`Message`均是用对应 Adapter 的实现导入的, 而不是抽象基类
+:::
+
+```python title="基础格式化用法"
+>>> Message.template("{} {}").format("hello", "world")
+Message(
+    MessageSegment.text("hello"),
+    MessageSegment.text(" "),
+    MessageSegment.text("world")
+)
+```
+
+```python title="对消息段进行安全的拼接"
+>>> Message.template("{} {}").format(MessageSegment.image("file:///..."), "world")
+Message(
+    MessageSegment(type='image', data={'file': 'file:///...'}),
+    MessageSegment(type='text', data={'text': 'world'})
+)
+```
+
+```python title="以消息对象作为模板"
+>>> Message.template(
+...     MessageSegment.text('test {user_id}') + MessageSegment.face(233) +
+...     MessageSegment.text('test {message}')).format_map({'user_id':123456, 'message':'hello world'}
+... )
+Message(
+    MessageSegment(type='text', data={'text': 'test 123456'}),
+    MessageSegment(type='face', data={'face': 233}),
+    MessageSegment(type='text', data={'text': 'test hello world'})
+)
+```
+
+```python title="使用消息段的拓展格式规格"
+>>> Message.template("{link:image}").format(link='https://...')
+Message(MessageSegment(type='image', data={'file': 'https://...'}))
+```
