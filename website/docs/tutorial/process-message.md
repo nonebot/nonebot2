@@ -229,7 +229,7 @@ Message(
 ```python title="对消息段进行安全的拼接"
 >>> Message.template("{} {}").format(MessageSegment.image("file:///..."), "world")
 Message(
-    MessageSegment(type='image', data={'file': 'file:///...'}), 
+    MessageSegment(type='image', data={'file': 'file:///...'}),
     MessageSegment(type='text', data={'text': 'world'})
 )
 ```
