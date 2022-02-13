@@ -51,9 +51,9 @@ matcher = on_command("测试权限")
 
 @matcher.handle()
 async def _(bot: Bot, event: GroupMessageEvent):
-    if await GROUP_ADMIN(bot, event):
+    if await GROUP_ADMIN(event):
         await matcher.send("管理员测试成功")
-    elif await GROUP_OWNER(bot, event):
+    elif await GROUP_OWNER(event):
         await matcher.send("群主测试成功")
     else:
         await matcher.send("群员测试成功")
