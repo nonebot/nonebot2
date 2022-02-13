@@ -175,16 +175,17 @@ async def _(x: httpx.AsyncClient = Depends(get_client)): # 3.在事件处理函�
 
 我们用 `yield` 代码段作为生成器函数的“返回”，在事件处理函数里用返回出来的 `client` 做自己需要的工作。在 `NoneBot2` 结束事件处理时，会执行 `yield` 之后的代码。
 
-:::warning 
+:::warning
 `yield` 语句只能写一次，否则会引发异常。
 如果对此有疑问并想探究原因，可以看 [contextmanager](https://docs.python.org/zh-cn/3/library/contextlib.html#contextlib.contextmanager) 和 [asynccontextmanager](https://docs.python.org/zh-cn/3/library/contextlib.html#contextlib.asynccontextmanager) 文档，实际上，`Nonebot2` 的内部就使用了这两个装饰器。
 :::
 
-:::tips 
+:::tips
 生成器是 `Python` 高级特性，如果你对此处文档感到疑惑那说明暂时你还用不上这个功能。
 :::
 
 ## 高阶用法：创造可调用对象作为依赖
+
 在 `Python` 的里，类的 `__call__` 方法会让类的实例变成**可调用对象**，我们可以利用这个魔法方法做一个简单的尝试：
 
 ```python
@@ -199,7 +200,7 @@ test = on_command("123")
 class EventChecker: # 2.编写需要的类
     def __init__(self, EventClass: Type[MessageEvent]):
     	self.event_class = EventClass
-    	
+
     def __call__(self, event: MessageEvent) -> bool:
     	return isinstance(event, self.event_class)
 
@@ -223,6 +224,6 @@ async def _(x: bool  = Depends(checker)): # 4.在事件处理函数里声明依�
 
 4. 在事件处理函数里声明依赖项。`NoneBot2` 将会调用 `checker` 的 `__call__` 方法，返回给参数 `x` 相应的判断结果。
 
-:::tips 
+:::tips
 魔法方法 `__call__` 是 `Python` 高级特性，如果你对此处文档感到疑惑那说明暂时你还用不上这个功能。
 :::
