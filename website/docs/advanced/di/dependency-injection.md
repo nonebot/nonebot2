@@ -24,7 +24,7 @@ options:
 
 以下通过一个简单的例子来说明依赖注入的使用方法：
 
-```python {7-9}
+```python
 from nonebot.log import logger
 from nonebot.params import Depends # 1.引用 Depends
 from nonebot import on_command, on_message
@@ -46,7 +46,7 @@ async def _(x: dict = Depends(depend)): # 3.在事件处理函数里声明依赖
 
 2. 编写依赖函数。依赖函数和普通的事件处理函数并无区别，同样可以接收 `bot`, `event`, `state` 等参数，你可以把它当作一个普通的事件处理函数，但是去除了装饰器（没有使用 `matcher.handle()` 等来装饰），并且可以返回任何类型的值。
 
-   在这里我们接受了`event`，并以 `onebot` 的`MessageEvent` 作为类型标注，返回一个新的字典，包括 `uid` 和`nickname` 两个键值。
+   在这里我们接受了`event`，并以 `onebot` 的 `MessageEvent` 作为类型标注，返回一个新的字典，包括 `uid` 和 `nickname` 两个键值。
 
 3. 在事件处理函数中声明依赖项。依赖项必须要 `Depends` 包裹依赖函数作为默认值。
 
@@ -78,18 +78,18 @@ async def _(x: dict = Depends(depend)): # 3.在事件处理函数里声明依赖
 
 我们可以看下面的代码段：
 
-```python {7-9}
+```python
 class A():
     def __init__(self):
         pass
 a = A()
 ```
 
-在我们实例化类 `A` 的时候，其实我们就在**调用**它，所以类本身也是一个**可调用对象**。类可以被 `Depends` 包裹成为依赖项。
+在我们实例化类 `A` 的时候，其实我们就在**调用**它，类本身也是一个**可调用对象**，所以类可以被 `Depends` 包裹成为依赖项。
 
 因此我们对第一节的代码段做一下改造：
 
-```python {7-9}
+```python
 from nonebot.log import logger
 from nonebot.params import Depends # 1.引用 Depends
 from nonebot import on_command
@@ -111,7 +111,7 @@ async def _(x: DependClass = Depends(DependClass)): # 3.在事件处理函数里
 
 1. 引用 `Depends` 。
 
-2. 编写依赖类。类的 `__init__` 函数可以接收 `bot`, `event`, `state` 等参数，在这里我们接受了`event`，并以 `onebot` 的`MessageEvent` 作为类型标注。
+2. 编写依赖类。类的 `__init__` 函数可以接收 `bot`, `event`, `state` 等参数，在这里我们接受了`event`，并以 `onebot` 的 `MessageEvent` 作为类型标注。
 
 3. 在事件处理函数中声明依赖项。当用类作为依赖项时，它会是一个对应的实例，在这里 `x` 就是 `DependClass` 实例。
 
@@ -119,7 +119,7 @@ async def _(x: DependClass = Depends(DependClass)): # 3.在事件处理函数里
 
 当使用类作为依赖项时，`Depends` 的参数可以为空，`NoneBot2` 会根据参数的类型标注进行推断并进行依赖注入。
 
-```python {7-9}
+```python
 @test.handle()
 async def _(x: DependClass = Depends()): # 在事件处理函数里声明依赖项
     print(x.uid, x.nickname)
@@ -133,7 +133,7 @@ async def _(x: DependClass = Depends()): # 在事件处理函数里声明依赖�
 
 我们可以看下述代码段, 使用 `httpx.AsyncClient` 异步网络 IO：
 
-```python {7-9}
+```python
 import httpx
 from nonebot.log import logger
 from nonebot.params import Depends # 1.引用 Depends
@@ -157,7 +157,7 @@ async def _(x: httpx.AsyncClient = Depends(get_client)): # 3.在事件处理函�
 
 :::warning
 
-`yield` 代码段只能调用一次，否则会引发异常
+`yield` 代码段只能写一次，否则会引发异常。
 
 :::
 
@@ -165,7 +165,7 @@ async def _(x: httpx.AsyncClient = Depends(get_client)): # 3.在事件处理函�
 
 我们在编写依赖函数时，可以简单地用同步函数，`NoneBot2` 的内部流程会进行处理：
 
-```python {7-9}
+```python
 from nonebot.log import logger
 from nonebot.params import Depends # 1.引用 Depends
 from nonebot import on_command, on_message
