@@ -94,7 +94,7 @@ async def handle_api_result(bot: Bot, exception: Optional[Exception], api: str, 
 
 ## 事件钩子函数
 
-这些钩子函数指的是影响 NoneBot2 进行**事件处理**的函数。
+这些钩子函数指的是影响 NoneBot2 进行**事件处理**的函数, 这些函数可以认为跟普通的事件处理函数一样，接受相应的参数。
 
 :::tip 提示
 关于**事件处理**的流程，可以在[这里](./README.md)查阅。
@@ -111,7 +111,7 @@ from nonebot.exception import IgnoredException
 
 
 @event_preprocessor
-async def do_something(bot: Bot, event: Event, state: T_State):
+async def do_something():
     raise IgnoredException("reason")
 ```
 
@@ -127,7 +127,7 @@ async def do_something(bot: Bot, event: Event, state: T_State):
 from nonebot.message import event_preprocessor
 
 @event_preprocessor
-async def do_something(bot: Bot, event: Event, state: T_State):
+async def do_something():
     pass
 ```
 
@@ -139,7 +139,7 @@ async def do_something(bot: Bot, event: Event, state: T_State):
 from nonebot.message import event_postprocessor
 
 @event_postprocessor
-async def do_something(bot: Bot, event: Event, state: T_State):
+async def do_something():
     pass
 ```
 
@@ -151,7 +151,7 @@ async def do_something(bot: Bot, event: Event, state: T_State):
 from nonebot.message import run_preprocessor
 
 @run_preprocessor
-async def do_something(matcher: Matcher, bot: Bot, event: Event, state: T_State):
+async def do_something():
     pass
 ```
 
@@ -163,6 +163,6 @@ async def do_something(matcher: Matcher, bot: Bot, event: Event, state: T_State)
 from nonebot.message import run_postprocessor
 
 @run_postprocessor
-async def do_something(matcher: Matcher, exception: Optional[Exception], bot: Bot, event: Event, state: T_State):
+async def do_something():
     pass
 ```
