@@ -24,7 +24,7 @@ options:
 
 以下通过一个简单的例子来说明依赖注入的使用方法：
 
-```python
+```python {2,8-9,12}
 from nonebot.log import logger
 from nonebot.params import Depends # 1.引用 Depends
 from nonebot import on_command, on_message
@@ -54,6 +54,10 @@ async def _(x: dict = Depends(depend)): # 3.在事件处理函数里声明依赖
 一般来说，参数 `x` 的类型标注并不会影响事件处理函数的运行，类型检查并不会对依赖函数的返回值以及类型标注进行检查。
 :::
 
+:::tip
+在事实上，bot，event，state它们本身只是依赖注入的一个特例，它们无需声明这是依赖即可注入。
+:::
+
 虽然声明依赖项的方式和其他参数如 `bot`, `event` 并无二样，但他的参数有一些限制，必须是**可调用对象**，函数自然是可调用对象，类和生成器也是，我们会在接下来的小节说明。
 
 一般来说，当接收到事件时，`NoneBot2` 会进行以下处理：
@@ -65,6 +69,10 @@ async def _(x: dict = Depends(depend)): # 3.在事件处理函数里声明依赖
 ## 依赖缓存
 
 在使用 `Depends` 包裹依赖函数时，有一个参数 `use_cache` ，它默认为 `True` ，这个参数会决定 `Nonebot2` 在依赖注入的处理中是否使用缓存。
+
+:::tip
+缓存是针对单次事件处理来说的，在事件处理中 `Depends` 第一次被调用时，结果存入缓存，在之后都会直接返回缓存中的值，在事件处理结束后缓存就会被清除。
+:::
 
 当使用缓存时，依赖注入会这样处理：
 
@@ -78,7 +86,7 @@ async def _(x: dict = Depends(depend)): # 3.在事件处理函数里声明依赖
 
 我们在编写依赖函数时，可以简单地用同步函数，`NoneBot2` 的内部流程会进行处理：
 
-```python
+```python {2,8-9,12}
 from nonebot.log import logger
 from nonebot.params import Depends # 1.引用 Depends
 from nonebot import on_command, on_message
@@ -99,7 +107,7 @@ async def _(x: dict = Depends(depend)): # 3.在事件处理函数里声明依赖
 我们可以看下面的代码段：
 
 ```python
-class A():
+class A:
     def __init__(self):
         pass
 a = A()
@@ -109,7 +117,7 @@ a = A()
 
 因此我们对第一节的代码段做一下改造：
 
-```python
+```python {2,8-11,14}
 from nonebot.log import logger
 from nonebot.params import Depends # 1.引用 Depends
 from nonebot import on_command
@@ -145,7 +153,16 @@ async def _(x: DependClass = Depends()): # 在事件处理函数里声明依赖�
     print(x.uid, x.nickname)
 ```
 
-## Generator Function 作为依赖
+## 生成器作为依赖
+
+:::warning 
+`yield` 语句只能写一次，否则会引发异常。
+如果对此有疑问并想探究原因，可以看 [contextmanager](https://docs.python.org/zh-cn/3/library/contextlib.html#contextlib.contextmanager) 和 [asynccontextmanager](https://docs.python.org/zh-cn/3/library/contextlib.html#contextlib.asynccontextmanager) 文档，实际上，`Nonebot2` 的内部就使用了这两个装饰器。
+:::
+
+:::tips 
+生成器是 `Python` 高级特性，如果你对此处文档感到疑惑那说明暂时你还用不上这个功能。
+:::
 
 与 `FastAPI` 一样，`NoneBot2` 的依赖注入支持依赖项在事件处理结束后进行一些额外的工作，比如数据库 session 或者网络 IO 的关闭，互斥锁的解锁等等。
 
@@ -153,7 +170,7 @@ async def _(x: DependClass = Depends()): # 在事件处理函数里声明依赖�
 
 我们可以看下述代码段, 使用 `httpx.AsyncClient` 异步网络 IO：
 
-```python
+```python {3,8-11,14}
 import httpx
 from nonebot.log import logger
 from nonebot.params import Depends # 1.引用 Depends
@@ -166,7 +183,6 @@ async def get_client(): # 2.编写异步生成器函数
         yield client
     print("调用结束")
 
-
 @test.handle()
 async def _(x: httpx.AsyncClient = Depends(get_client)): # 3.在事件处理函数里声明依赖项
     resp = await x.get("https://v2.nonebot.dev")
@@ -175,20 +191,16 @@ async def _(x: httpx.AsyncClient = Depends(get_client)): # 3.在事件处理函�
 
 我们用 `yield` 代码段作为生成器函数的“返回”，在事件处理函数里用返回出来的 `client` 做自己需要的工作。在 `NoneBot2` 结束事件处理时，会执行 `yield` 之后的代码。
 
-:::warning
-`yield` 语句只能写一次，否则会引发异常。
-如果对此有疑问并想探究原因，可以看 [contextmanager](https://docs.python.org/zh-cn/3/library/contextlib.html#contextlib.contextmanager) 和 [asynccontextmanager](https://docs.python.org/zh-cn/3/library/contextlib.html#contextlib.asynccontextmanager) 文档，实际上，`Nonebot2` 的内部就使用了这两个装饰器。
-:::
 
-:::tips
-生成器是 `Python` 高级特性，如果你对此处文档感到疑惑那说明暂时你还用不上这个功能。
-:::
+## 创造可调用对象作为依赖
 
-## 高阶用法：创造可调用对象作为依赖
+:::tips 
+魔法方法 `__call__` 是 `Python` 高级特性，如果你对此处文档感到疑惑那说明暂时你还用不上这个功能。
+:::
 
 在 `Python` 的里，类的 `__call__` 方法会让类的实例变成**可调用对象**，我们可以利用这个魔法方法做一个简单的尝试：
 
-```python
+```python{3,9-14,16,19}
 from typing import Type
 from nonebot.log import logger
 from nonebot.params import Depends # 1.引用 Depends
@@ -200,7 +212,7 @@ test = on_command("123")
 class EventChecker: # 2.编写需要的类
     def __init__(self, EventClass: Type[MessageEvent]):
     	self.event_class = EventClass
-
+    	
     def __call__(self, event: MessageEvent) -> bool:
     	return isinstance(event, self.event_class)
 
@@ -218,12 +230,8 @@ async def _(x: bool  = Depends(checker)): # 4.在事件处理函数里声明依�
 
 1. 引用 `Depends` 。
 
-2. 编写依赖类。类的 `__init__` 函数接收参数 `EventClass`，它将接收事件类本身。类的 `__call__` 函数将接受消息事件对象，并返回一个 `bool` 类型的判定结果。
+2. 编写需要的类。类的 `__init__` 函数接收参数 `EventClass`，它将接收事件类本身。类的 `__call__` 函数将接受消息事件对象，并返回一个 `bool` 类型的判定结果。
 
 3. 将类实例化。我们传入群聊消息事件作为参数实例化 `checker` 。
 
 4. 在事件处理函数里声明依赖项。`NoneBot2` 将会调用 `checker` 的 `__call__` 方法，返回给参数 `x` 相应的判断结果。
-
-:::tips
-魔法方法 `__call__` 是 `Python` 高级特性，如果你对此处文档感到疑惑那说明暂时你还用不上这个功能。
-:::
