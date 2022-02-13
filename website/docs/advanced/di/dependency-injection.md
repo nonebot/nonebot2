@@ -46,7 +46,7 @@ async def _(x: dict = Depends(depend)): # 3.在事件处理函数里声明依赖
 
 2. 编写依赖函数。依赖函数和普通的事件处理函数并无区别，同样可以接收 `bot`, `event`, `state` 等参数，你可以把它当作一个普通的事件处理函数，但是去除了装饰器（没有使用 `matcher.handle()` 等来装饰），并且可以返回任何类型的值。
 
-   在这里我们接受了`event`，并以 `onebot` 的 `MessageEvent` 作为类型标注，返回一个新的字典，包括 `uid` 和 `nickname` 两个键值。
+   在这里我们接受了 `event`，并以 `onebot` 的 `MessageEvent` 作为类型标注，返回一个新的字典，包括 `uid` 和 `nickname` 两个键值。
 
 3. 在事件处理函数中声明依赖项。依赖项必须要 `Depends` 包裹依赖函数作为默认值。
 
@@ -58,9 +58,9 @@ async def _(x: dict = Depends(depend)): # 3.在事件处理函数里声明依赖
 
 一般来说，当接收到事件时，`NoneBot2` 会进行以下处理：
 
-2. 准备依赖函数所需要的参数。
-3. 调用依赖函数并获得返回值。
-4. 将返回值作为事件处理函数中的参数值传入。
+1. 准备依赖函数所需要的参数。
+2. 调用依赖函数并获得返回值。
+3. 将返回值作为事件处理函数中的参数值传入。
 
 ## 依赖缓存
 
@@ -125,11 +125,11 @@ async def _(x: DependClass = Depends()): # 在事件处理函数里声明依赖�
     print(x.uid, x.nickname)
 ```
 
-## Generator 作为依赖
+## Generator Function 作为依赖
 
 与 `FastAPI` 一样，`NoneBot2` 的依赖注入支持依赖项在事件处理结束后进行一些额外的工作，比如数据库 session 或者网络 IO 的关闭，互斥锁的解锁等等。
 
-要做的工作其实不难，我们用 `yield` 语句取代 `return` 语句，并在 `yield` 之后进行额外的工作。
+要实现上述功能，我们可以用生成器函数作为依赖项，我们用 `yield` 语句取代 `return` 语句，并在 `yield` 之后进行额外的工作。
 
 我们可以看下述代码段, 使用 `httpx.AsyncClient` 异步网络 IO：
 
