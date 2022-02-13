@@ -42,6 +42,7 @@ black = "^22.1.0"
 pytest-cov = "^3.0.0"
 pre-commit = "^2.16.0"
 pytest-xdist = "^2.5.0"
+pytest-asyncio = "^0.18.1"
 nonebug = { git = "https://github.com/nonebot/nonebug.git" }
 nb-autodoc = { git = "https://github.com/nonebot/nb-autodoc.git" }
 
@@ -58,6 +59,7 @@ all = ["quart", "aiohttp", "httpx", "websockets"]
 # default = true
 
 [tool.pytest.ini_options]
+asyncio_mode = "auto"
 addopts = "--cov=nonebot --cov-report=term-missing"
 
 [tool.black]
