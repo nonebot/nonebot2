@@ -43,7 +43,7 @@ description: 插件入门
 📦 AweSome-Bot
 ├── 📂 awesome_bot
 │   └── 📂 plugins
-|       └── 📂 foo.py
+|       └── 📂 foo
 |           └── 📜 __init__.py
 ├── 📜 .env
 ├── 📜 .env.dev
