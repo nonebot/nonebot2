@@ -2,21 +2,30 @@ name: Release Drafter
 
 on:
   push:
-    branches:
-      - master
     tags:
       - v*
+  pull_request_target:
+    branches:
+      - master
+    types:
+      - closed
 
 jobs:
   update-release-draft:
-    if: github.ref == 'refs/heads/master'
+    if: github.event_name == 'pull_request_target'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
 
       - uses: release-drafter/release-drafter@v5
+        id: release-drafter
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      # TODO
+      - name: Update Changelog
+        run: |
+          echo ${{ steps.release-drafter.outputs.body }}
 
   release:
     if: startsWith(github.ref, 'refs/tags/')
@@ -37,7 +46,6 @@ jobs:
           echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
 
       - uses: release-drafter/release-drafter@v5
-        id: release-drafter
         with:
           name: Release ${{ env.TAG_NAME }} 🌈
           tag: ${{ env.TAG_NAME }}

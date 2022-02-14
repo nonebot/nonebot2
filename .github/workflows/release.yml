@@ -25,6 +25,10 @@ jobs:
       - name: Archive Files
         run: yarn archive $(poetry version -s)
 
+      # TODO
+      - name: Archive Changelog
+        run: cat CHANGELOG.md
+
       - name: Push Tag
         run: |
           git config user.name github-actions

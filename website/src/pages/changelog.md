@@ -4,7 +4,7 @@ description: Changelog
 
 # 更新日志
 
-## v2.0.0b2
+## Latest Changes
 
 - 修复 `receive`, `got` 在参数为空消息时依旧会反复询问
 - 修复文档商店分页显示错误
