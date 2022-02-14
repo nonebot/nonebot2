@@ -19,18 +19,13 @@ jobs:
       - name: Setup Node Environment
         uses: ./.github/actions/setup-node
 
-      - name: Build Doc
-        run: poetry run sphinx-build -M markdown ./docs_build ./build
-
-      - name: Copy Files
-        run: cp -r ./build/markdown/* ./website/docs/api/
+      - name: Build API Doc
+        uses: ./.github/actions/build-api-doc
 
       - name: Archive Files
-        run: |
-          yarn prettier
-          yarn archive $(poetry version -s)
+        run: yarn archive $(poetry version -s)
 
-      - name: Push Tag and Release to PyPI
+      - name: Push Tag
         run: |
           git config user.name github-actions
           git config user.email github-actions@github.com
@@ -38,5 +33,3 @@ jobs:
           git commit -m ":bookmark: Release $(poetry version -s)"
           git tag v$(poetry version -s)
           git push && git push --tags
-          poetry build
-          poetry publish -u ${{secrets.PYPI_USERNAME}} -p ${{secrets.PYPI_PASSWORD}}

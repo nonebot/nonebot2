@@ -1,5 +1,16 @@
+header: |
+  ### Documentation
+
+  See: https://v2.nonebot.dev
+template: |
+  ### 💫 Changes
+
+  $CHANGES
+category-template: "### $TITLE"
 name-template: "Release v$RESOLVED_VERSION 🌈"
 tag-template: "v$RESOLVED_VERSION"
+change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
+change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
 categories:
   - title: "💥 Breaking Changes"
     labels:
@@ -13,14 +24,15 @@ categories:
       - "fix"
       - "bugfix"
       - "bug"
+  - title: "📝 Documentation"
+    labels:
+      - "documentation"
   - title: "🍻 Plugin Publish"
     label: "Plugin"
   - title: "🍻 Bot Publish"
     label: "Bot"
   - title: "🍻 Adapter Publish"
     label: "Adapter"
-change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
-change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
 version-resolver:
   major:
     labels:
@@ -32,11 +44,3 @@ version-resolver:
     labels:
       - "patch"
   default: patch
-template: |
-  ## Documentation
-
-  See: https://v2.nonebot.dev
-
-  ## 💫 Changes
-
-  $CHANGES

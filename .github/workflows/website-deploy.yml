@@ -26,12 +26,11 @@ jobs:
       - name: Setup Node Environment
         uses: ./.github/actions/setup-node
 
-      - name: Install and build
-        run: |
-          poetry run nb-autodoc nonebot
-          cp -r ./build/nonebot/* ./website/docs/api/
-          yarn prettier
-          yarn build
+      - name: Build API Doc
+        uses: ./.github/actions/build-api-doc
+
+      - name: Build Doc
+        run: yarn build
 
       - name: Get Branch Name
         run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
