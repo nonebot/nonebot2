@@ -56,7 +56,7 @@ async def _(bot: Bot, event: PrivateMessageEvent):
 
 ## 进阶
 
-事件处理函数重载机制同样支持被 `matcher.got` 等装饰器装饰的函数。 例如：
+事件处理函数重载机制同样支持被 `matcher.got` 等装饰器装饰的函数。例如：
 
 ```python
 @matcher.got("key1", prompt="群事件提问")
@@ -70,3 +70,7 @@ async def _(bot: Bot, event: PrivateMessageEvent):
 ```
 
 只有触发事件符合的函数才会触发装饰器。
+
+:::warning 注意
+bot 和 event 参数具有最高的检查优先级，因此，如果参数类型不符合，所有的依赖项 `Depends` 等都不会被执行。
+:::

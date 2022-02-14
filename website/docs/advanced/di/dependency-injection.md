@@ -24,10 +24,9 @@ options:
 
 以下通过一个简单的例子来说明依赖注入的使用方法：
 
-```python {2,8-9,12}
-from nonebot.log import logger
+```python {2,7-8,11}
+from nonebot import on_command
 from nonebot.params import Depends # 1.引用 Depends
-from nonebot import on_command, on_message
 from nonebot.adapters.onebot.v11 import MessageEvent
 
 test = on_command("123")
@@ -51,11 +50,11 @@ async def _(x: dict = Depends(depend)): # 3.在事件处理函数里声明依赖
 3. 在事件处理函数中声明依赖项。依赖项必须要 `Depends` 包裹依赖函数作为默认值。
 
 :::tip
-一般来说，参数 `x` 的类型标注并不会影响事件处理函数的运行，类型检查并不会对依赖函数的返回值以及类型标注进行检查。
+请注意，参数 `x` 的类型标注将会影响到事件处理函数的运行，与类型标注不符的值将会导致事件处理函数被跳过。
 :::
 
 :::tip
-在事实上，bot，event，state 它们本身只是依赖注入的一个特例，它们无需声明这是依赖即可注入。
+事实上，bot、event、state 它们本身只是依赖注入的一个特例，它们无需声明这是依赖即可注入。
 :::
 
 虽然声明依赖项的方式和其他参数如 `bot`, `event` 并无二样，但他的参数有一些限制，必须是**可调用对象**，函数自然是可调用对象，类和生成器也是，我们会在接下来的小节说明。
@@ -69,6 +68,21 @@ async def _(x: dict = Depends(depend)): # 3.在事件处理函数里声明依赖
 ## 依赖缓存
 
 在使用 `Depends` 包裹依赖函数时，有一个参数 `use_cache` ，它默认为 `True` ，这个参数会决定 `Nonebot2` 在依赖注入的处理中是否使用缓存。
+
+```python {11}
+import random
+from nonebot import on_command
+from nonebot.params import Depends
+
+test = on_command("123")
+
+async def always_run():
+    return random.randint(1, 100)
+
+@test.handle()
+async def _(x: int = Depends(always_run, use_cache=False)):
+    print(x)
+```
 
 :::tip
 缓存是针对单次事件处理来说的，在事件处理中 `Depends` 第一次被调用时，结果存入缓存，在之后都会直接返回缓存中的值，在事件处理结束后缓存就会被清除。
@@ -117,18 +131,17 @@ a = A()
 
 因此我们对第一节的代码段做一下改造：
 
-```python {2,8-11,14}
-from nonebot.log import logger
-from nonebot.params import Depends # 1.引用 Depends
+```python {2,7-10,13}
 from nonebot import on_command
+from nonebot.params import Depends # 1.引用 Depends
 from nonebot.adapters.onebot.v11 import MessageEvent
 
 test = on_command("123")
 
 class DependClass: # 2.编写依赖类
     def __init__(self, event: MessageEvent):
-    	self.uid = event.get_user_id()
-    	self.nickname = event.sender.nickname
+        self.uid = event.get_user_id()
+        self.nickname = event.sender.nickname
 
 @test.handle()
 async def _(x: DependClass = Depends(DependClass)): # 3.在事件处理函数里声明依赖项
@@ -138,9 +151,7 @@ async def _(x: DependClass = Depends(DependClass)): # 3.在事件处理函数里
 依然可以用三步说明如何用类作为依赖项：
 
 1. 引用 `Depends` 。
-
-2. 编写依赖类。类的 `__init__` 函数可以接收 `bot`, `event`, `state` 等参数，在这里我们接受了`event`，并以 `onebot` 的 `MessageEvent` 作为类型标注。
-
+2. 编写依赖类。类的 `__init__` 函数可以接收 `bot`, `event`, `state` 等参数，在这里我们接受了 `event`，并以 `onebot` 的 `MessageEvent` 作为类型标注。
 3. 在事件处理函数中声明依赖项。当用类作为依赖项时，它会是一个对应的实例，在这里 `x` 就是 `DependClass` 实例。
 
 ### 另一种依赖项声明方式
@@ -166,15 +177,14 @@ async def _(x: DependClass = Depends()): # 在事件处理函数里声明依赖�
 
 与 `FastAPI` 一样，`NoneBot2` 的依赖注入支持依赖项在事件处理结束后进行一些额外的工作，比如数据库 session 或者网络 IO 的关闭，互斥锁的解锁等等。
 
-要实现上述功能，我们可以用生成器函数作为依赖项，我们用 `yield` 语句取代 `return` 语句，并在 `yield` 之后进行额外的工作。
+要实现上述功能，我们可以用生成器函数作为依赖项，我们用 `yield` 关键字取代 `return` 关键字，并在 `yield` 之后进行额外的工作。
 
 我们可以看下述代码段, 使用 `httpx.AsyncClient` 异步网络 IO：
 
-```python {3,8-11,14}
+```python {3,7-10,13}
 import httpx
-from nonebot.log import logger
-from nonebot.params import Depends # 1.引用 Depends
 from nonebot import on_command
+from nonebot.params import Depends # 1.引用 Depends
 
 test = on_command("123")
 
@@ -210,15 +220,15 @@ test = on_command("123")
 
 class EventChecker: # 2.编写需要的类
     def __init__(self, EventClass: Type[MessageEvent]):
-    	self.event_class = EventClass
+        self.event_class = EventClass
 
     def __call__(self, event: MessageEvent) -> bool:
-    	return isinstance(event, self.event_class)
+        return isinstance(event, self.event_class)
 
 checker = EventChecker(GroupMessageEvent) # 3.将类实例化
 
 @test.handle()
-async def _(x: bool  = Depends(checker)): # 4.在事件处理函数里声明依赖项
+async def _(x: bool = Depends(checker)): # 4.在事件处理函数里声明依赖项
     if x:
         print("这是群聊消息")
     else:
@@ -228,9 +238,6 @@ async def _(x: bool  = Depends(checker)): # 4.在事件处理函数里声明依�
 这是判断 `onebot` 的消息事件是不是群聊消息事件的一个例子，我们可以用四步来说明这个例子：
 
 1. 引用 `Depends` 。
-
 2. 编写需要的类。类的 `__init__` 函数接收参数 `EventClass`，它将接收事件类本身。类的 `__call__` 函数将接受消息事件对象，并返回一个 `bool` 类型的判定结果。
-
 3. 将类实例化。我们传入群聊消息事件作为参数实例化 `checker` 。
-
 4. 在事件处理函数里声明依赖项。`NoneBot2` 将会调用 `checker` 的 `__call__` 方法，返回给参数 `x` 相应的判断结果。
