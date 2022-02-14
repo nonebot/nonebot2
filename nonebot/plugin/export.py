@@ -1,16 +1,20 @@
+"""本模块定义了插件导出的内容对象。
+
+在新版插件系统中，推荐优先使用直接 import 所需要的插件内容。
+
+FrontMatter:
+    sidebar_position: 4
+    description: nonebot.plugin.export 模块
+"""
+
 from . import _current_plugin
 
 
 class Export(dict):
-    """
-    :说明:
+    """插件导出内容以使得其他插件可以获得。
 
-      插件导出内容以使得其他插件可以获得。
-
-    :示例:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         nonebot.export().default = "bar"
 
         @nonebot.export()
@@ -25,6 +29,7 @@ class Export(dict):
         @nonebot.export().sub
         def something_else():
             pass
+        ```
     """
 
     def __call__(self, func, **kwargs):
@@ -45,15 +50,7 @@ class Export(dict):
 
 
 def export() -> Export:
-    """
-    :说明:
-
-      获取插件的导出内容对象
-
-    :返回:
-
-      - ``Export``
-    """
+    """获取当前插件的导出内容对象"""
     plugin = _current_plugin.get()
     if not plugin:
         raise RuntimeError("Export outside of the plugin!")

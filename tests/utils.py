@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Type, Optional
+from typing import TYPE_CHECKING, Type, Union, Mapping, Iterable, Optional
 
 from pydantic import create_model
 
@@ -6,7 +6,14 @@ if TYPE_CHECKING:
     from nonebot.adapters import Event, Message
 
 
-def make_fake_message() -> Type["Message"]:
+def escape_text(s: str, *, escape_comma: bool = True) -> str:
+    s = s.replace("&", "&amp;").replace("[", "&#91;").replace("]", "&#93;")
+    if escape_comma:
+        s = s.replace(",", "&#44;")
+    return s
+
+
+def make_fake_message():
     from nonebot.adapters import Message, MessageSegment
 
     class FakeMessageSegment(MessageSegment):
@@ -21,9 +28,9 @@ def make_fake_message() -> Type["Message"]:
         def text(cls, text: str):
             return cls("text", {"text": text})
 
-        @classmethod
-        def image(cls, url: str):
-            return cls("image", {"url": url})
+        @staticmethod
+        def image(url: str):
+            return FakeMessageSegment("image", {"url": url})
 
         def is_text(self) -> bool:
             return self.type == "text"
@@ -34,8 +41,17 @@ def make_fake_message() -> Type["Message"]:
             return FakeMessageSegment
 
         @staticmethod
-        def _construct(msg: str):
-            yield FakeMessageSegment.text(msg)
+        def _construct(msg: Union[str, Iterable[Mapping]]):
+            if isinstance(msg, str):
+                yield FakeMessageSegment.text(msg)
+            else:
+                for seg in msg:
+                    yield FakeMessageSegment(**seg)
+            return
+
+        def __add__(self, other):
+            other = escape_text(other) if isinstance(other, str) else other
+            return super().__add__(other)
 
     return FakeMessage
 
@@ -45,7 +61,7 @@ def make_fake_event(
     _name: str = "test",
     _description: str = "test",
     _user_id: str = "test",
-    _session_id: str = "test",
+    _session_id: Optional[str] = "test",
     _message: Optional["Message"] = None,
     _to_me: bool = True,
     **fields,
@@ -68,7 +84,9 @@ def make_fake_event(
             return _user_id
 
         def get_session_id(self) -> str:
-            return _session_id
+            if _session_id is not None:
+                return _session_id
+            raise NotImplementedError
 
         def get_message(self) -> "Message":
             if _message is not None:

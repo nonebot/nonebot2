@@ -1,11 +1,18 @@
-"""
-Quart 驱动适配
-================
+"""[Quart](https://pgjones.gitlab.io/quart/index.html) 驱动适配
 
-后端使用方法请参考: `Quart 文档`_
+```bash
+nb driver install quart
+# 或者
+pip install nonebot2[quart]
+```
 
-.. _Quart 文档:
-    https://pgjones.gitlab.io/quart/index.html
+:::tip 提示
+本驱动仅支持服务端连接
+:::
+
+FrontMatter:
+    sidebar_position: 5
+    description: nonebot.drivers.quart 模块
 """
 
 import asyncio
@@ -15,10 +22,10 @@ from typing import List, Tuple, TypeVar, Callable, Optional, Coroutine
 import uvicorn
 from pydantic import BaseSettings
 
-from ._model import FileTypes
 from nonebot.config import Env
 from nonebot.typing import overrides
 from nonebot.exception import WebSocketClosed
+from nonebot.internal.driver import FileTypes
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
@@ -50,69 +57,25 @@ def catch_closed(func):
 
 
 class Config(BaseSettings):
-    """
-    Quart 驱动框架设置
-    """
+    """Quart 驱动框架设置"""
 
     quart_reload: bool = False
-    """
-    :类型:
-
-      ``bool``
-
-    :说明:
-
-      开启/关闭冷重载
-    """
+    """开启/关闭冷重载"""
     quart_reload_dirs: Optional[List[str]] = None
-    """
-    :类型:
-
-      ``Optional[List[str]]``
-
-    :说明:
-
-      重载监控文件夹列表，默认为 uvicorn 默认值
-    """
+    """重载监控文件夹列表，默认为 uvicorn 默认值"""
     quart_reload_delay: Optional[float] = None
-    """
-    :类型:
-
-      ``Optional[float]``
-
-    :说明:
-
-      重载延迟，默认为 uvicorn 默认值
-    """
+    """重载延迟，默认为 uvicorn 默认值"""
     quart_reload_includes: Optional[List[str]] = None
-    """
-    :类型:
-
-      ``Optional[List[str]]``
-
-    :说明:
-
-      要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
-    """
+    """要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
     quart_reload_excludes: Optional[List[str]] = None
-    """
-    :类型:
-
-      ``Optional[List[str]]``
-
-    :说明:
-
-      不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
-    """
+    """不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
 
     class Config:
         extra = "ignore"
 
 
 class Driver(ReverseDriver):
-    """
-    Quart 驱动框架
-    """
+    """Quart 驱动框架"""
 
     def __init__(self, env: Env, config: NoneBotConfig):
         super().__init__(env, config)
@@ -124,19 +87,19 @@ class Driver(ReverseDriver):
     @property
     @overrides(ReverseDriver)
     def type(self) -> str:
-        """驱动名称: ``quart``"""
+        """驱动名称: `quart`"""
         return "quart"
 
     @property
     @overrides(ReverseDriver)
     def server_app(self) -> Quart:
-        """``Quart`` 对象"""
+        """`Quart` 对象"""
         return self._server_app
 
     @property
     @overrides(ReverseDriver)
     def asgi(self):
-        """``Quart`` 对象"""
+        """`Quart` 对象"""
         return self._server_app
 
     @property
@@ -170,16 +133,12 @@ class Driver(ReverseDriver):
 
     @overrides(ReverseDriver)
     def on_startup(self, func: _AsyncCallable) -> _AsyncCallable:
-        """参考文档: `Startup and Shutdown`_
-
-        .. _Startup and Shutdown:
-            https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html
-        """
+        """参考文档: [`Startup and Shutdown`](https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html)"""
         return self.server_app.before_serving(func)  # type: ignore
 
     @overrides(ReverseDriver)
     def on_shutdown(self, func: _AsyncCallable) -> _AsyncCallable:
-        """参考文档: `Startup and Shutdown`_"""
+        """参考文档: [`Startup and Shutdown`](https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html)"""
         return self.server_app.after_serving(func)  # type: ignore
 
     @overrides(ReverseDriver)
@@ -191,7 +150,7 @@ class Driver(ReverseDriver):
         app: Optional[str] = None,
         **kwargs,
     ):
-        """使用 ``uvicorn`` 启动 Quart"""
+        """使用 `uvicorn` 启动 Quart"""
         super().run(host, port, app, **kwargs)
         LOGGING_CONFIG = {
             "version": 1,
@@ -276,6 +235,8 @@ class Driver(ReverseDriver):
 
 
 class WebSocket(BaseWebSocket):
+    """Quart WebSocket Wrapper"""
+
     def __init__(self, *, request: BaseRequest, websocket: QuartWebSocket):
         super().__init__(request=request)
         self.websocket = websocket
@@ -317,3 +278,6 @@ class WebSocket(BaseWebSocket):
     @overrides(BaseWebSocket)
     async def send_bytes(self, data: bytes):
         await self.websocket.send(data)
+
+
+__autodoc__ = {"catch_closed": False}

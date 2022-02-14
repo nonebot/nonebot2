@@ -1,0 +1,21 @@
+name: Setup Node
+description: Setup Node
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-node@v2
+      with:
+        node-version: "16"
+
+    - id: yarn-cache-dir-path
+      run: echo "::set-output name=dir::$(yarn cache dir)"
+      shell: bash
+
+    - uses: actions/cache@v2
+      with:
+        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+
+    - run: yarn install
+      shell: bash

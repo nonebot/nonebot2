@@ -1,13 +1,15 @@
-"""
-日志
-====
+"""本模块定义了 NoneBot 的日志记录 Logger。
 
-NoneBot 使用 `loguru`_ 来记录日志信息。
+NoneBot 使用 [`loguru`][loguru] 来记录日志信息。
 
-自定义 logger 请参考 `loguru`_ 文档。
+自定义 logger 请参考 [自定义日志](https://v2.nonebot.dev/docs/tutorial/custom-logger)
+以及 [`loguru`][loguru] 文档。
 
-.. _loguru:
-    https://github.com/Delgan/loguru
+[loguru]: https://github.com/Delgan/loguru
+
+FrontMatter:
+    sidebar_position: 7
+    description: nonebot.log 模块
 """
 
 import sys
@@ -21,24 +23,22 @@ if TYPE_CHECKING:
     # because loguru module do not have `Logger` class actually
     from loguru import Logger
 
+    from nonebot.plugin import Plugin
+
 # logger = logging.getLogger("nonebot")
 logger: "Logger" = loguru.logger
-"""
-:说明:
+"""NoneBot 日志记录器对象。
 
-  NoneBot 日志记录器对象。
+默认信息:
 
-:默认信息:
+- 格式: `[%(asctime)s %(name)s] %(levelname)s: %(message)s`
+- 等级: `INFO` ，根据 `config.log_level` 配置改变
+- 输出: 输出至 stdout
 
-  * 格式: ``[%(asctime)s %(name)s] %(levelname)s: %(message)s``
-  * 等级: ``INFO`` ，根据 ``config.log_level`` 配置改变
-  * 输出: 输出至 stdout
-
-:用法:
-
-.. code-block:: python
-
+用法:
+    ```python
     from nonebot.log import logger
+    ```
 """
 
 # default_handler = logging.StreamHandler(sys.stdout)
@@ -53,9 +53,11 @@ class Filter:
 
     def __call__(self, record):
         module_name: str = record["name"]
-        module = sys.modules.get(module_name)
-        if module:
-            module_name = getattr(module, "__module_name__", module_name)
+        # TODO: get plugin name instead of module name
+        # module = sys.modules.get(module_name)
+        # if module and hasattr(module, "__plugin__"):
+        #     plugin: "Plugin" = getattr(module, "__plugin__")
+        #     module_name = plugin.module_name
         record["name"] = module_name.split(".")[0]
         levelno = (
             logger.level(self.level).no if isinstance(self.level, str) else self.level
@@ -81,14 +83,16 @@ class LoguruHandler(logging.Handler):  # pragma: no cover
 
 
 logger.remove()
-default_filter = Filter()
-default_format = (
+default_filter: Filter = Filter()
+"""默认日志等级过滤器"""
+default_format: str = (
     "<g>{time:MM-DD HH:mm:ss}</g> "
     "[<lvl>{level}</lvl>] "
     "<c><u>{name}</u></c> | "
     # "<c>{function}:{line}</c>| "
     "{message}"
 )
+"""默认日志格式"""
 logger_id = logger.add(
     sys.stdout,
     level=0,
@@ -97,3 +101,5 @@ logger_id = logger.add(
     filter=default_filter,
     format=default_format,
 )
+
+__autodoc__ = {"Filter": False, "LoguruHandler": False}

@@ -1,23 +1,18 @@
-"""
-配置
-====
+"""本模块定义了 NoneBot 本身运行所需的配置项。
 
-NoneBot 使用 `pydantic`_ 以及 `python-dotenv`_ 来读取配置。
+NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及 [`python-dotenv`](https://saurabh-kumar.com/python-dotenv/) 来读取配置。
 
-配置项需符合特殊格式或 json 序列化格式。详情见 `pydantic Field Type`_ 文档。
+配置项需符合特殊格式或 json 序列化格式。详情见 [`pydantic Field Type`](https://pydantic-docs.helpmanual.io/usage/types/) 文档。
 
-.. _pydantic:
-    https://pydantic-docs.helpmanual.io/
-.. _python-dotenv:
-    https://saurabh-kumar.com/python-dotenv/
-.. _pydantic Field Type:
-    https://pydantic-docs.helpmanual.io/usage/types/
+FrontMatter:
+    sidebar_position: 1
+    description: nonebot.config 模块
 """
 import os
 from pathlib import Path
 from datetime import timedelta
 from ipaddress import IPv4Address
-from typing import Any, Set, Dict, Tuple, Union, Mapping, Optional
+from typing import TYPE_CHECKING, Any, Set, Dict, Tuple, Union, Mapping, Optional
 
 from pydantic import BaseSettings, IPvAnyAddress
 from pydantic.env_settings import (
@@ -105,9 +100,10 @@ class CustomEnvSettings(EnvSettingsSource):
 
 
 class BaseConfig(BaseSettings):
-    # dummy getattr for pylance checking, actually not used
-    def __getattr__(self, name: str) -> Any:  # pragma: no cover
-        return self.__dict__.get(name)
+    if TYPE_CHECKING:
+        # dummy getattr for pylance checking, actually not used
+        def __getattr__(self, name: str) -> Any:  # pragma: no cover
+            return self.__dict__.get(name)
 
     class Config:
         @classmethod
@@ -129,19 +125,15 @@ class BaseConfig(BaseSettings):
 
 
 class Env(BaseConfig):
-    """
-    运行环境配置。大小写不敏感。
+    """运行环境配置。大小写不敏感。
 
-    将会从 ``nonebot.init 参数`` > ``环境变量`` > ``.env 环境配置文件`` 的优先级读取配置。
+    将会从 `环境变量` > `.env 环境配置文件` 的优先级读取环境信息。
     """
 
     environment: str = "prod"
-    """
-    - **类型**: ``str``
-    - **默认值**: ``"prod"``
+    """当前环境名。
 
-    :说明:
-      当前环境名。 NoneBot 将从 ``.env.{environment}`` 文件中加载配置。
+    NoneBot 将从 `.env.{environment}` 文件中加载配置。
     """
 
     class Config:
@@ -150,138 +142,85 @@ class Env(BaseConfig):
 
 
 class Config(BaseConfig):
-    """
-    NoneBot 主要配置。大小写不敏感。
+    """NoneBot 主要配置。大小写不敏感。
 
-    除了 NoneBot 的配置项外，还可以自行添加配置项到 ``.env.{environment}`` 文件中。
-    这些配置将会在 json 反序列化后一起带入 ``Config`` 类中。
+    除了 NoneBot 的配置项外，还可以自行添加配置项到 `.env.{environment}` 文件中。
+    这些配置将会在 json 反序列化后一起带入 `Config` 类中。
+
+    配置方法参考: [配置](https://v2.nonebot.dev/docs/tutorial/configuration)
     """
 
-    _common_config: dict
-    _env_file: str
+    _env_file: str = ".env"
+    _common_config: Dict[str, Any] = {}
 
     # nonebot configs
     driver: str = "~fastapi"
-    """
-    - **类型**: ``str``
-    - **默认值**: ``"~fastapi"``
+    """NoneBot 运行所使用的 `Driver` 。继承自 {ref}`nonebot.drivers.Driver` 。
 
-    :说明:
+    配置格式为 `<module>[:<Driver>][+<module>[:<Mixin>]]*`。
 
-      NoneBot 运行所使用的 ``Driver`` 。继承自 ``nonebot.drivers.Driver`` 。
-
-      配置格式为 ``<module>[:<Driver>][+<module>[:<Mixin>]]*``。
-
-      ``~`` 为 ``nonebot.drivers.`` 的缩写。
+    `~` 为 `nonebot.drivers.` 的缩写。
     """
     host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
-    """
-    - **类型**: ``IPvAnyAddress``
-    - **默认值**: ``127.0.0.1``
-
-    :说明:
-
-      NoneBot 的 HTTP 和 WebSocket 服务端监听的 IP/主机名。
-    """
+    """NoneBot {ref}`nonebot.drivers.ReverseDriver` 服务端监听的 IP/主机名。"""
     port: int = 8080
-    """
-    - **类型**: ``int``
-    - **默认值**: ``8080``
-
-    :说明:
-
-      NoneBot 的 HTTP 和 WebSocket 服务端监听的端口。
-    """
+    """NoneBot {ref}`nonebot.drivers.ReverseDriver` 服务端监听的端口。"""
     log_level: Union[int, str] = "INFO"
-    """
-    - **类型**: ``Union[int, str]``
-    - **默认值**: ``INFO``
+    """NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称
 
-    :说明:
+    参考 [`loguru 日志等级`](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
 
-      配置 NoneBot 日志输出等级，可以为 ``int`` 类型等级或等级名称，参考 `loguru 日志等级`_。
+    :::tip 提示
+    日志等级名称应为大写，如 `INFO`。
+    :::
 
-    :示例:
-
-    .. code-block:: default
-
+    用法:
+        ```conf
         LOG_LEVEL=25
         LOG_LEVEL=INFO
-
-    .. _loguru 日志等级:
-        https://loguru.readthedocs.io/en/stable/api/logger.html#levels
+        ```
     """
 
     # bot connection configs
     api_timeout: Optional[float] = 30.0
-    """
-    - **类型**: ``Optional[float]``
-    - **默认值**: ``30.``
-
-    :说明:
-
-      API 请求超时时间，单位: 秒。
-    """
+    """API 请求超时时间，单位: 秒。"""
 
     # bot runtime configs
     superusers: Set[str] = set()
-    """
-    - **类型**: ``Set[str]``
-    - **默认值**: ``set()``
+    """机器人超级用户。
 
-    :说明:
-
-      机器人超级用户。
-
-    :示例:
-
-    .. code-block:: default
-
+    用法:
+        ```conf
         SUPERUSERS=["12345789"]
+        ```
     """
     nickname: Set[str] = set()
-    """
-    - **类型**: ``Set[str]``
-    - **默认值**: ``set()``
-
-    :说明:
-
-      机器人昵称。
-    """
+    """机器人昵称。"""
     command_start: Set[str] = {"/"}
-    """
-    - **类型**: ``Set[str]``
-    - **默认值**: ``{"/"}``
+    """命令的起始标记，用于判断一条消息是不是命令。
 
-    :说明:
-
-      命令的起始标记，用于判断一条消息是不是命令。
+    用法:
+        ```conf
+        COMMAND_START=["/", ""]
+        ```
     """
     command_sep: Set[str] = {"."}
-    """
-    - **类型**: ``Set[str]``
-    - **默认值**: ``{"."}``
+    """命令的分隔标记，用于将文本形式的命令切分为元组（实际的命令名）。
 
-    :说明:
-
-      命令的分隔标记，用于将文本形式的命令切分为元组（实际的命令名）。
+    用法:
+        ```conf
+        COMMAND_SEP=["."]
+        ```
     """
     session_expire_timeout: timedelta = timedelta(minutes=2)
-    """
-    - **类型**: ``timedelta``
-    - **默认值**: ``timedelta(minutes=2)``
+    """等待用户回复的超时时间。
 
-    :说明:
-
-      等待用户回复的超时时间。
-
-    :示例:
-
-    .. code-block:: default
-
+    用法:
+        ```conf
         SESSION_EXPIRE_TIMEOUT=120  # 单位: 秒
         SESSION_EXPIRE_TIMEOUT=[DD ][HH:MM]SS[.ffffff]
         SESSION_EXPIRE_TIMEOUT=P[DD]DT[HH]H[MM]M[SS]S  # ISO 8601
+        ```
     """
 
     # adapter configs
@@ -294,3 +233,9 @@ class Config(BaseConfig):
     class Config:
         extra = "allow"
         env_file = ".env.prod"
+
+
+__autodoc__ = {
+    "CustomEnvSettings": False,
+    "BaseConfig": False,
+}

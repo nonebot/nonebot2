@@ -23,7 +23,13 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
   </a>
   <img src="https://img.shields.io/badge/python-3.7.3+-blue" alt="python">
   <a href="https://codecov.io/gh/nonebot/nonebot2">
-    <img src="https://codecov.io/gh/nonebot/nonebot2/branch/master/graph/badge.svg?token=2P0G0VS7N4"/>
+    <img src="https://codecov.io/gh/nonebot/nonebot2/branch/master/graph/badge.svg?token=2P0G0VS7N4" alt="codecov"/>
+  </a>
+  <a href="https://github.com/nonebot/nonebot2/actions/workflows/website-deploy.yml">
+    <img src="https://github.com/nonebot/nonebot2/actions/workflows/website-deploy.yml/badge.svg?branch=master&event=push" alt="site"/>
+  </a>
+  <a href="https://results.pre-commit.ci/latest/github/nonebot/nonebot2/master">
+    <img src="https://results.pre-commit.ci/badge/github/nonebot/nonebot2/master.svg" />
   </a>
   <br />
   <a href="https://onebot.dev/">
@@ -56,14 +62,18 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
 <p align="center">
   <a href="https://v2.nonebot.dev/">文档</a>
   ·
-  <a href="https://v2.nonebot.dev/guide/installation.html">安装</a>
+  <a href="https://v2.nonebot.dev/docs/start/installation">安装</a>
   ·
-  <a href="https://v2.nonebot.dev/guide/getting-started.html">开始使用</a>
+  <a href="https://v2.nonebot.dev/docs/tutorial/create-project">开始使用</a>
   ·
   <a href="#插件">文档打不开？</a>
 </p>
 
-<!-- TODO: asciinema for install -->
+<p align="center">
+  <a href="https://asciinema.org/a/464654">
+    <img src="https://v2.nonebot.dev/img/setup.svg">
+  </a>
+</p>
 
 ## 简介
 
@@ -152,20 +162,18 @@ NoneBot2 不是 NoneBot1 的替代品。事实上，它们都在被积极的维�
 
 `NoneBot` 采用 `MIT` 许可证进行开源
 
-    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
-    FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
-    COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
-    IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
-    CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```text
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS
+FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR
+COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER
+IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN
+CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+```
 
 ## 贡献
 
-如果你在使用过程中发现任何问题，可以 [提交 Issue](https://github.com/nonebot/nonebot2/issues/new) 或自行 Fork 修改后提交 Pull Request。
-
-如果你要提交 Pull Request，请确保你的代码风格和项目已有的代码保持一致，遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/) 与 [PEP 484](https://www.python.org/dev/peps/pep-0484/)，变量命名清晰，有适当的注释与测试代码，**并且请以 `dev` 分支作为 Pull Request 目标分支**。
-
-<!--TODO: Add a CONTRIBUTING.md-->
+请参考 [贡献指南](./CONTRIBUTING.md)
 
 ### 鸣谢
 

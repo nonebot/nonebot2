@@ -1,0 +1,26 @@
+name: Setup Python
+description: Setup Python
+
+inputs:
+  python-version:
+    description: Python version
+    required: false
+    default: "3.9"
+
+runs:
+  using: "composite"
+  steps:
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ inputs.python-version }}
+        architecture: "x64"
+
+    - uses: Gr1N/setup-poetry@v7
+
+    - uses: actions/cache@v2
+      with:
+        path: ~/.cache/pypoetry/virtualenvs
+        key: ${{ runner.os }}-poetry-${{ inputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+
+    - run: poetry install -E all
+      shell: bash

@@ -1,8 +1,8 @@
-"""
-依赖注入处理模块
-================
+"""本模块模块实现了依赖注入的定义与处理。
 
-该模块实现了依赖注入的定义与处理。
+FrontMatter:
+    sidebar_position: 0
+    description: nonebot.dependencies 模块
 """
 
 import abc
@@ -14,15 +14,21 @@ from pydantic.schema import get_annotation_from_field_info
 from pydantic.fields import Required, FieldInfo, Undefined, ModelField
 
 from nonebot.log import logger
-from .utils import get_typed_signature
 from nonebot.exception import TypeMisMatch
 from nonebot.utils import run_sync, is_coroutine_callable
 
-T = TypeVar("T", bound="Dependent")
+from .utils import check_field_type, get_typed_signature
+
 R = TypeVar("R")
+T = TypeVar("T", bound="Dependent")
 
 
 class Param(abc.ABC, FieldInfo):
+    """依赖注入的基本单元 —— 参数。
+
+    继承自 `pydantic.fields.FieldInfo`，用于描述参数信息（不包括参数名）。
+    """
+
     @classmethod
     def _check_param(
         cls, dependent: "Dependent", name: str, param: inspect.Parameter
@@ -45,6 +51,16 @@ class CustomConfig(BaseConfig):
 
 
 class Dependent(Generic[R]):
+    """依赖注入容器
+
+    参数:
+        call: 依赖注入的可调用对象，可以是任何 Callable 对象
+        pre_checkers: 依赖注入解析前的参数检查
+        params: 具名参数列表
+        parameterless: 匿名参数列表
+        allow_types: 允许的参数类型
+    """
+
     def __init__(
         self,
         *,
@@ -180,15 +196,18 @@ class Dependent(Generic[R]):
             value = await field_info._solve(**params)
             if value == Undefined:
                 value = field.get_default()
-            _, errs_ = field.validate(value, values, loc=(str(field_info), field.alias))
-            if errs_:
+
+            try:
+                values[field.name] = check_field_type(field, value)
+            except TypeMisMatch:
                 logger.debug(
                     f"{field_info} "
                     f"type {type(value)} not match depends {self.call} "
                     f"annotation {field._type_display()}, ignored"
                 )
-                raise TypeMisMatch(field, value)
-            else:
-                values[field.name] = value
+                raise
 
         return values
+
+
+__autodoc__ = {"CustomConfig": False}

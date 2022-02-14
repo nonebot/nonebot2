@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useCallback, useRef } from "react";
+import React, { useCallback, useState } from "react";
 import { usePagination } from "react-use-pagination";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -16,19 +16,25 @@ export default function Paginate({
   previousEnabled,
   nextEnabled,
 }: ReturnType<typeof usePagination>): JSX.Element {
-  const ref = useRef<HTMLElement>();
-  const maxWidth = useContentWidth(ref.current?.parentElement ?? undefined);
+  const [containerElement, setContainerElement] = useState<HTMLElement | null>(
+    null
+  );
+
+  const ref = useCallback(
+    (element: HTMLElement | null) => {
+      setContainerElement(element);
+    },
+    [setContainerElement]
+  );
+
+  const maxWidth = useContentWidth(
+    containerElement?.parentElement ?? undefined
+  );
   const maxLength = Math.min(
     (maxWidth && Math.floor(maxWidth / 50) - 2) || totalPages,
     totalPages
   );
 
-  const onPageChange = useCallback(
-    (selectedItem: { selected: number }) => {
-      setPage(selectedItem.selected);
-    },
-    [setPage]
-  );
   const range = useCallback((start: number, end: number) => {
     const result = [];
     start = start > 0 ? start : 1;
@@ -38,7 +44,6 @@ export default function Paginate({
     return result;
   }, []);
 
-  // FIXME: responsive width
   const pages: (React.ReactNode | number)[] = [];
   const ellipsis = <FontAwesomeIcon icon="ellipsis-h" />;
 

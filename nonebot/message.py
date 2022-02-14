@@ -1,8 +1,10 @@
-"""
-事件处理
-========
+"""本模块定义了事件处理主要流程。
 
 NoneBot 内部处理并按优先级分发事件给所有事件响应器，提供了多个插槽以进行事件的预处理等。
+
+FrontMatter:
+    sidebar_position: 2
+    description: nonebot.message 模块
 """
 
 import asyncio
@@ -10,7 +12,6 @@ from datetime import datetime
 from contextlib import AsyncExitStack
 from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional, Coroutine
 
-from nonebot import params
 from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.utils import escape_tag
@@ -30,87 +31,81 @@ from nonebot.typing import (
     T_EventPreProcessor,
     T_EventPostProcessor,
 )
+from nonebot.internal.params import (
+    ArgParam,
+    BotParam,
+    EventParam,
+    StateParam,
+    DependParam,
+    DefaultParam,
+    MatcherParam,
+    ExceptionParam,
+)
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
 
-_event_preprocessors: Set[Dependent[None]] = set()
-_event_postprocessors: Set[Dependent[None]] = set()
-_run_preprocessors: Set[Dependent[None]] = set()
-_run_postprocessors: Set[Dependent[None]] = set()
+_event_preprocessors: Set[Dependent[Any]] = set()
+_event_postprocessors: Set[Dependent[Any]] = set()
+_run_preprocessors: Set[Dependent[Any]] = set()
+_run_postprocessors: Set[Dependent[Any]] = set()
 
 EVENT_PCS_PARAMS = [
-    params.DependParam,
-    params.BotParam,
-    params.EventParam,
-    params.StateParam,
-    params.DefaultParam,
+    DependParam,
+    BotParam,
+    EventParam,
+    StateParam,
+    DefaultParam,
 ]
 RUN_PREPCS_PARAMS = [
-    params.DependParam,
-    params.BotParam,
-    params.EventParam,
-    params.StateParam,
-    params.ArgParam,
-    params.MatcherParam,
-    params.DefaultParam,
+    DependParam,
+    BotParam,
+    EventParam,
+    StateParam,
+    ArgParam,
+    MatcherParam,
+    DefaultParam,
 ]
 RUN_POSTPCS_PARAMS = [
-    params.DependParam,
-    params.ExceptionParam,
-    params.BotParam,
-    params.EventParam,
-    params.StateParam,
-    params.ArgParam,
-    params.MatcherParam,
-    params.DefaultParam,
+    DependParam,
+    ExceptionParam,
+    BotParam,
+    EventParam,
+    StateParam,
+    ArgParam,
+    MatcherParam,
+    DefaultParam,
 ]
 
 
 def event_preprocessor(func: T_EventPreProcessor) -> T_EventPreProcessor:
-    """
-    :说明:
-
-      事件预处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之前执行。
-    """
+    """事件预处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之前执行。"""
     _event_preprocessors.add(
-        Dependent[None].parse(call=func, allow_types=EVENT_PCS_PARAMS)
+        Dependent[Any].parse(call=func, allow_types=EVENT_PCS_PARAMS)
     )
     return func
 
 
 def event_postprocessor(func: T_EventPostProcessor) -> T_EventPostProcessor:
-    """
-    :说明:
-
-      事件后处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之后执行。
-    """
+    """事件后处理。装饰一个函数，使它在每次接收到事件并分发给各响应器之后执行。"""
     _event_postprocessors.add(
-        Dependent[None].parse(call=func, allow_types=EVENT_PCS_PARAMS)
+        Dependent[Any].parse(call=func, allow_types=EVENT_PCS_PARAMS)
     )
     return func
 
 
 def run_preprocessor(func: T_RunPreProcessor) -> T_RunPreProcessor:
-    """
-    :说明:
-
-      运行预处理。装饰一个函数，使它在每次事件响应器运行前执行。
-    """
+    """运行预处理。装饰一个函数，使它在每次事件响应器运行前执行。"""
     _run_preprocessors.add(
-        Dependent[None].parse(call=func, allow_types=RUN_PREPCS_PARAMS)
+        Dependent[Any].parse(call=func, allow_types=RUN_PREPCS_PARAMS)
     )
     return func
 
 
 def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
-    """
-    :说明:
-
-      运行后处理。装饰一个函数，使它在每次事件响应器运行后执行。
-    """
+    """运行后处理。装饰一个函数，使它在每次事件响应器运行后执行。"""
     _run_postprocessors.add(
-        Dependent[None].parse(call=func, allow_types=RUN_POSTPCS_PARAMS)
+        Dependent[Any].parse(call=func, allow_types=RUN_POSTPCS_PARAMS)
     )
     return func
 
@@ -241,22 +236,17 @@ async def _run_matcher(
 
 
 async def handle_event(bot: "Bot", event: "Event") -> None:
-    """
-    :说明:
+    """处理一个事件。调用该函数以实现分发事件。
 
-       处理一个事件。调用该函数以实现分发事件。
+    参数:
+        bot: Bot 对象
+        event: Event 对象
 
-    :参数:
-
-      * ``bot: Bot``: Bot 对象
-      * ``event: Event``: Event 对象
-
-    :示例:
-
-    .. code-block:: python
-
+    用法:
+        ```python
         import asyncio
         asyncio.create_task(handle_event(bot, event))
+        ```
     """
     show_log = True
     log_msg = f"<m>{escape_tag(bot.type.upper())} {escape_tag(bot.self_id)}</m> | "

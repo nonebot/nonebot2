@@ -1,11 +1,6 @@
 import os
-import sys
-from typing import TYPE_CHECKING, Set
 
 import pytest
-
-if TYPE_CHECKING:
-    from nonebot.plugin import Plugin
 
 os.environ["CONFIG_FROM_ENV"] = '{"test": "test"}'
 
@@ -74,23 +69,3 @@ async def test_get(monkeypatch: pytest.MonkeyPatch, nonebug_clear):
     assert get_bot() == "test"
     assert get_bot("test") == "test"
     assert get_bots() == {"test": "test"}
-
-
-@pytest.mark.asyncio
-async def test_load_plugin(load_plugin: Set["Plugin"]):
-    import nonebot
-
-    loaded_plugins = set(
-        plugin for plugin in nonebot.get_loaded_plugins() if not plugin.parent_plugin
-    )
-    assert loaded_plugins == load_plugin
-    plugin = nonebot.get_plugin("export")
-    assert plugin
-    assert plugin.module_name == "plugins.export"
-    assert "plugins.export" in sys.modules
-
-    try:
-        nonebot.load_plugin("plugins.export")
-        assert False
-    except RuntimeError:
-        assert True

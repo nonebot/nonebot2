@@ -3,7 +3,6 @@ import copy from "copy-to-clipboard";
 import React, { useState } from "react";
 
 import Link from "@docusaurus/Link";
-import type { IconName } from "@fortawesome/fontawesome-common-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import type { Obj } from "../../libs/store";

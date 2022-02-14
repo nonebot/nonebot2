@@ -1,11 +1,21 @@
-"""
-AIOHTTP 驱动适配
-================
+"""[AIOHTTP](https://aiohttp.readthedocs.io/en/stable/) 驱动适配器。
 
+```bash
+nb driver install aiohttp
+# 或者
+pip install nonebot2[aiohttp]
+```
+
+:::tip 提示
 本驱动仅支持客户端连接
+:::
+
+FrontMatter:
+    sidebar_position: 2
+    description: nonebot.drivers.aiohttp 模块
 """
 
-from typing import AsyncGenerator
+from typing import Type, AsyncGenerator
 from contextlib import asynccontextmanager
 
 from nonebot.typing import overrides
@@ -13,7 +23,7 @@ from nonebot.drivers import Request, Response
 from nonebot.exception import WebSocketClosed
 from nonebot.drivers._block_driver import BlockDriver
 from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.drivers import HTTPVersion, ForwardMixin, combine_driver
+from nonebot.drivers import HTTPVersion, ForwardMixin, ForwardDriver, combine_driver
 
 try:
     import aiohttp
@@ -24,6 +34,8 @@ except ImportError:
 
 
 class Mixin(ForwardMixin):
+    """AIOHTTP Mixin"""
+
     @property
     @overrides(ForwardMixin)
     def type(self) -> str:
@@ -85,6 +97,8 @@ class Mixin(ForwardMixin):
 
 
 class WebSocket(BaseWebSocket):
+    """AIOHTTP Websocket Wrapper"""
+
     def __init__(
         self,
         *,
@@ -139,4 +153,5 @@ class WebSocket(BaseWebSocket):
         await self.websocket.send_bytes(data)
 
 
-Driver = combine_driver(BlockDriver, Mixin)
+Driver: Type[ForwardDriver] = combine_driver(BlockDriver, Mixin)  # type: ignore
+"""AIOHTTP Driver"""

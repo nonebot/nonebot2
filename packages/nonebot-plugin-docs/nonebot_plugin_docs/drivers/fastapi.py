@@ -1,7 +1,8 @@
 from pathlib import Path
 
-from nonebot.drivers.fastapi import Driver
 from fastapi.staticfiles import StaticFiles
+
+from nonebot.drivers.fastapi import Driver
 
 
 def register_route(driver: Driver):

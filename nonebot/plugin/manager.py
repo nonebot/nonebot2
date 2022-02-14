@@ -1,3 +1,11 @@
+"""本模块实现插件加载流程。
+
+参考: [import hooks](https://docs.python.org/3/reference/import.html#import-hooks), [PEP302](https://www.python.org/dev/peps/pep-0302/)
+
+FrontMatter:
+    sidebar_position: 5
+    description: nonebot.plugin.manager 模块
+"""
 import sys
 import pkgutil
 import importlib
@@ -10,8 +18,9 @@ from typing import Set, Dict, List, Union, Iterable, Optional, Sequence
 
 from nonebot.log import logger
 from nonebot.utils import escape_tag
-from .plugin import Plugin, _new_plugin
+
 from . import _managers, _current_plugin
+from .plugin import Plugin, _new_plugin, _confirm_plugin
 
 
 class PluginManager:
@@ -44,7 +53,10 @@ class PluginManager:
 
         return [
             *chain.from_iterable(
-                [*manager.plugins, *manager.searched_plugins.keys()]
+                [
+                    *map(lambda x: x.rsplit(".", 1)[-1], manager.plugins),
+                    *manager.searched_plugins.keys(),
+                ]
                 for manager in _pre_managers
             )
         ]
@@ -56,7 +68,7 @@ class PluginManager:
         third_party_plugins: Set[str] = set()
 
         for plugin in self.plugins:
-            name = plugin.rsplit(".", 1)[-1] if "." in plugin else plugin
+            name = plugin.rsplit(".", 1)[-1]
             if name in third_party_plugins or name in previous_plugins:
                 raise RuntimeError(
                     f"Plugin already exists: {name}! Check your plugin name"
@@ -86,21 +98,27 @@ class PluginManager:
 
         return third_party_plugins | set(self.searched_plugins.keys())
 
-    def load_plugin(self, name) -> Optional[Plugin]:
+    def load_plugin(self, name: str) -> Optional[Plugin]:
         try:
             if name in self.plugins:
                 module = importlib.import_module(name)
-            elif name not in self.searched_plugins:
-                raise RuntimeError(f"Plugin not found: {name}! Check your plugin name")
-            else:
+            elif name in self.searched_plugins:
                 module = importlib.import_module(
                     self._path_to_module_name(self.searched_plugins[name])
                 )
+            else:
+                raise RuntimeError(f"Plugin not found: {name}! Check your plugin name")
 
             logger.opt(colors=True).success(
                 f'Succeeded to import "<y>{escape_tag(name)}</y>"'
             )
-            return getattr(module, "__plugin__", None)
+            plugin = getattr(module, "__plugin__", None)
+            if plugin is None:
+                raise RuntimeError(
+                    f"Module {module.__name__} is not loaded as a plugin! "
+                    "Make sure not to import it before loading."
+                )
+            return plugin
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
                 f'<r><bg #f8bbd0>Failed to import "{escape_tag(name)}"</bg #f8bbd0></r>'
@@ -120,7 +138,6 @@ class PluginFinder(MetaPathFinder):
         target: Optional[ModuleType] = None,
     ):
         if _managers:
-            index = -1
             module_spec = PathFinder.find_spec(fullname, path, target)
             if not module_spec:
                 return
@@ -129,17 +146,13 @@ class PluginFinder(MetaPathFinder):
                 return
             module_path = Path(module_origin).resolve()
 
-            while -index <= len(_managers):
-                manager = _managers[index]
-
+            for manager in reversed(_managers):
                 if (
                     fullname in manager.plugins
                     or module_path in manager.searched_plugins.values()
                 ):
                     module_spec.loader = PluginLoader(manager, fullname, module_origin)
                     return module_spec
-
-                index -= 1
         return
 
 
@@ -179,6 +192,8 @@ class PluginLoader(SourceFileLoader):
         #         f"Error when executing module {module_name} from {module.__file__}."
         #     ) from e
         super().exec_module(module)
+
+        _confirm_plugin(plugin)
 
         _current_plugin.reset(_plugin_token)
         return

@@ -4,6 +4,19 @@ description: Changelog
 
 # 更新日志
 
+## Latest Changes
+
+- 修复 `receive`, `got` 在参数为空消息时依旧会反复询问
+- 修复文档商店分页显示错误
+- 修复插件导入失败时，依然存在于已导入插件列表中
+- 移除 `state` 依赖注入所需的默认值 `State()`
+- 增加 `fastapi` 配置项：是否将适配器路由包含在 schema 中
+- 修改 `load_builtin_plugins` 函数，使其能够支持加载多个内置插件
+- 新增 `load_builtin_plugin` 函数，用于加载单个内置插件
+- 修改 `Message` 和 `MessageSegment` 类，完善 typing，转移 Mapping 构建支持至 pydantic validate
+- 调整项目结构，分离内部定义与用户接口
+- 新增 Bot 连接事件钩子 (如 `driver.on_bot_connect` ) 的依赖注入
+
 ## v2.0.0b1
 
 - 新增 `MessageTemplate` 对于 `str` 普通模板的支持
