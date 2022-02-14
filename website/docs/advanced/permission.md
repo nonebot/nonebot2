@@ -15,19 +15,18 @@ options:
 
 ```python
 from nonebot.permission import SUPERUSER
-from nonebot.adapters import Bot
 from nonebot import on_command
 
 matcher = on_command("测试超管", permission=SUPERUSER)
 
 
 @matcher.handle()
-async def _(bot: Bot):
+async def _():
     await matcher.send("超管命令测试成功")
 
 
 @matcher.got("key1", "超管提问")
-async def _(bot: Bot, event: Event):
+async def _():
     await matcher.send("超管命令 got 成功")
 ```
 
@@ -43,17 +42,16 @@ async def _(bot: Bot, event: Event):
 
 ```python
 from nonebot import on_command
-from nonebot.adapters.onebot.v11 import Bot
 from nonebot.adapters.onebot.v11 import GroupMessageEvent
 from nonebot.adapters.onebot.v11 import GROUP_ADMIN, GROUP_OWNER
 
 matcher = on_command("测试权限")
 
 @matcher.handle()
-async def _(bot: Bot, event: GroupMessageEvent):
-    if await GROUP_ADMIN(bot, event):
+async def _(event: GroupMessageEvent):
+    if await GROUP_ADMIN(event):
         await matcher.send("管理员测试成功")
-    elif await GROUP_OWNER(bot, event):
+    elif await GROUP_OWNER(event):
         await matcher.send("群主测试成功")
     else:
         await matcher.send("群员测试成功")

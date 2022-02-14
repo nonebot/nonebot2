@@ -75,7 +75,7 @@ NoneBot2 是一个可以对机器人上报的事件进行处理并完成具体�
 :::
 
 :::warning
-`self-id` 是帐号的唯一识别 ID，这意味着不能出现相同的 `self-id`。
+`self-id` 是帐号的唯一识别 ID ，这意味着不能出现相同的 `self-id`。
 :::
 
 2. 根据 `self-id` 实例化 `Adapter` 相应的 `Bot` 。
@@ -94,13 +94,13 @@ NoneBot2 是一个可以对机器人上报的事件进行处理并完成具体�
 
 #### 概念解释
 
-1. **hook**，或者说**钩子函数**，它们可以在 NoneBot 处理 `Event` 的不同时刻进行拦截，修改或者扩展，在 NoneBot 中，事件钩子函数分为`事件预处理 hook`、`运行预处理 hook`、`运行后处理 hook` 和`事件后处理 hook`。
+1. **hook** ，或者说**钩子函数**，它们可以在 NoneBot 处理 `Event` 的不同时刻进行拦截，修改或者扩展，在 NoneBot 中，事件钩子函数分为`事件预处理 hook`、`运行预处理 hook`、`运行后处理 hook` 和`事件后处理 hook`。
 
 :::tip
-关于 `hook` 的更多信息，可以查阅[这里](./runtime-hook.md)
+关于 `hook` 的更多信息，可以查阅[这里](./runtime-hook.md)。
 :::
 
-2. **Matcher** 与 **matcher**，在**指南**中，我们讲述了[如何注册事件响应器](../tutorial/plugin/create-matcher.md)，这里的事件响应器或者说 `Matcher` 并不是一个具体的实例 `instance`，而是一个具有特定属性的类 `class`。只有当 `Matcher` **响应事件**时，才会实例化为具体的 `instance`，也就是 `matcher`。`matcher` 可以认为是 NoneBot 处理 `Event` 的基本单位，运行 `matcher` 是 NoneBot 工作的主要内容。
+2. **Matcher** 与 **matcher**，在**指南**中，我们讲述了[如何注册事件响应器](../tutorial/plugin/create-matcher.md)，这里的事件响应器或者说 `Matcher` 并不是一个具体的实例 `instance`，而是一个具有特定属性的类 `class`。只有当 `Matcher` **响应事件**时，才会实例化为具体的 `instance`，也就是 `matcher` 。`matcher` 可以认为是 NoneBot 处理 `Event` 的基本单位，运行 `matcher` 是 NoneBot 工作的主要内容。
 
 3. **handler**，或者说**事件处理函数**，它们可以认为是 NoneBot 处理 `Event` 的最小单位。在不考虑 `hook` 的情况下，**运行 matcher 就是顺序运行 matcher.handlers**，这句话换种表达方式就是，`handler` 只有添加到 `matcher.handlers` 时，才可以参与到 NoneBot 的工作中来。
 
@@ -115,7 +115,7 @@ NoneBot2 是一个可以对机器人上报的事件进行处理并完成具体�
 1. **执行事件预处理 hook**， NoneBot 接收到 `Event` 后，会传入到 `事件预处理 hook` 中进行处理。
 
 :::warning
-需要注意的是，执行多个 `事件预处理 hook` 时并无顺序可言，它们是**并行运行**的。这个原则同样适用于其他的 `hook`。
+需要注意的是，执行多个 `事件预处理 hook` 时并无顺序可言，它们是**并发运行**的。这个原则同样适用于其他的 `hook`。
 :::
 
 2. **按优先级升序选出同一优先级的 Matcher**，NoneBot 提供了一个全局字典 `matchers`，这个字典的 `key` 是优先级 `priority`，`value` 是一个 `list`，里面存放着同一优先级的 `Matcher`。在注册 `Matcher` 时，它和优先级 `priority` 会添加到里面。
@@ -160,7 +160,7 @@ NoneBot2 是一个可以对机器人上报的事件进行处理并完成具体�
 
    这个异常可以在 `handler` 中由 `Matcher.pause` 抛出。
 
-   当 NoneBot 捕获到它时，会停止运行当前 `handler` 并结束当前 `matcher` 的运行，并将后续的 `handler` 交给一个临时 `Matcher` 来响应当前交互用户的下一个消息事件，当临时 `Matcher` 响应时，临时 `Matcher` 会运行后续的 `handler `。
+   当 NoneBot 捕获到它时，会停止运行当前 `handler` 并结束当前 `matcher` 的运行，并将后续的 `handler` 交给一个临时 `Matcher` 来响应当前交互用户的下一个消息事件，当临时 `Matcher` 响应时，临时 `Matcher` 会运行后续的 `handler`。
 
 3. **RejectedException**
 
@@ -178,7 +178,7 @@ NoneBot2 是一个可以对机器人上报的事件进行处理并完成具体�
 
    这个异常一般会在执行 `运行后处理 hook` 后抛出。
 
-   当 NoneBot 捕获到它时， 会停止传播当前 `Event`，不再寻找下一优先级的 `Matcher`，直接执行 `事件后处理 hook`。
+   当 NoneBot 捕获到它时， 会停止传播当前 `Event` ，不再寻找下一优先级的 `Matcher` ，直接执行 `事件后处理 hook` 。
 
 ## 调用 API
 
