@@ -25,9 +25,13 @@ jobs:
       - name: Archive Files
         run: yarn archive $(poetry version -s)
 
-      # TODO
+      - run: echo "TAG_NAME=v$(poetry version -s)" >> $GITHUB_ENV
+
       - name: Archive Changelog
-        run: cat CHANGELOG.md
+        uses: docker://nonebot/auto-changelog:master
+        with:
+          changelog_file: website/src/pages/changelog.md
+          archive_title: ${{ env.TAG_NAME }}
 
       - name: Push Tag
         run: |
@@ -35,5 +39,5 @@ jobs:
           git config user.email github-actions@github.com
           git add .
           git commit -m ":bookmark: Release $(poetry version -s)"
-          git tag v$(poetry version -s)
+          git tag ${{ env.TAG_NAME }}
           git push && git push --tags

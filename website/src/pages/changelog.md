@@ -4,7 +4,7 @@ description: Changelog
 
 # 更新日志
 
-## Latest Changes
+## v2.0.0-beta.2
 
 - 修复 `receive`, `got` 在参数为空消息时依旧会反复询问
 - 修复文档商店分页显示错误
@@ -17,7 +17,7 @@ description: Changelog
 - 调整项目结构，分离内部定义与用户接口
 - 新增 Bot 连接事件钩子 (如 `driver.on_bot_connect` ) 的依赖注入
 
-## v2.0.0b1
+## v2.0.0-beta.1
 
 - 新增 `MessageTemplate` 对于 `str` 普通模板的支持
 - 移除插件加载的 `NameSpace` 模式
