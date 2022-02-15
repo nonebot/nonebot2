@@ -11,6 +11,7 @@
 - `on_request` => {ref}``on_request` <nonebot.plugin.on.on_request>`
 - `on_startswith` => {ref}``on_startswith` <nonebot.plugin.on.on_startswith>`
 - `on_endswith` => {ref}``on_endswith` <nonebot.plugin.on.on_endswith>`
+- `on_fullmatch` => {ref}``on_fullmatch` <nonebot.plugin.on.on_fullmatch>`
 - `on_keyword` => {ref}``on_keyword` <nonebot.plugin.on.on_keyword>`
 - `on_command` => {ref}``on_command` <nonebot.plugin.on.on_command>`
 - `on_shell_command` => {ref}``on_shell_command` <nonebot.plugin.on.on_shell_command>`
@@ -61,6 +62,7 @@ from .on import MatcherGroup as MatcherGroup
 from .on import on_metaevent as on_metaevent
 from .plugin import get_plugin as get_plugin
 from .load import load_plugins as load_plugins
+from .on import on_fullmatch as on_fullmatch
 from .on import on_startswith as on_startswith
 from .load import load_from_json as load_from_json
 from .load import load_from_toml as load_from_toml

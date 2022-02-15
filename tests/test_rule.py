@@ -107,6 +107,43 @@ async def test_endswith(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
+    "msg,ignorecase,type,text,expected",
+    [
+        ("fullmatch", False, "message", "fullmatch", True),
+        ("fullmatch", False, "message", "Fullmatch", False),
+        ("fullmatch", True, "message", "fullmatch", True),
+        ("fullmatch", True, "message", "Fullmatch", True),
+        ("fullmatch", False, "message", "fullfoo", False),
+        ("fullmatch", False, "message", "_fullmatch_", False),
+        (("fullmatch", "foo"), False, "message", "fullmatchfoo", False),
+        ("fullmatch", False, "notice", "foo", False),
+    ],
+)
+async def test_fullmatch(
+    app: App,
+    msg: Union[str, Tuple[str, ...]],
+    ignorecase: bool,
+    type: str,
+    text: str,
+    expected: bool,
+):
+    from nonebot.rule import FullmatchRule, fullmatch
+
+    test_fullmatch = fullmatch(msg, ignorecase)
+    dependent = list(test_fullmatch.checkers)[0]
+    checker = dependent.call
+
+    assert isinstance(checker, FullmatchRule)
+    assert checker.msg == (msg,) if isinstance(msg, str) else msg
+    assert checker.ignorecase == ignorecase
+
+    message = make_fake_message()(text)
+    event = make_fake_event(_type=type, _message=message)()
+    assert await dependent(event=event) == expected
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
     "kws,type,text,expected",
     [
         (("key",), "message", "_key_", True),

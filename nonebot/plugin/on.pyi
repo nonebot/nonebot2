@@ -79,6 +79,18 @@ def on_endswith(
     block: bool = ...,
     state: Optional[T_State] = ...,
 ) -> Type[Matcher]: ...
+def on_fullmatch(
+    msg: Union[str, Tuple[str, ...]],
+    rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
+    ignorecase: bool = ...,
+    *,
+    permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
+    handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
+    temp: bool = ...,
+    priority: int = ...,
+    block: bool = ...,
+    state: Optional[T_State] = ...,
+) -> Type[Matcher]: ...
 def on_keyword(
     keywords: Set[str],
     rule: Optional[Union[Rule, T_RuleChecker]] = ...,
@@ -249,6 +261,19 @@ class MatcherGroup:
         state: Optional[T_State] = ...,
     ) -> Type[Matcher]: ...
     def on_endswith(
+        self,
+        msg: Union[str, Tuple[str, ...]],
+        *,
+        ignorecase: bool = ...,
+        rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+        permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
+        handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
+        temp: bool = ...,
+        priority: int = ...,
+        block: bool = ...,
+        state: Optional[T_State] = ...,
+    ) -> Type[Matcher]: ...
+    def on_fullmatch(
         self,
         msg: Union[str, Tuple[str, ...]],
         *,

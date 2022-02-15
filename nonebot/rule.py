@@ -171,6 +171,47 @@ def endswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule
     return Rule(EndswithRule(msg, ignorecase))
 
 
+class FullmatchRule:
+    """检查消息纯文本是否与指定字符串全匹配。
+
+    参数:
+        msg: 指定消息全匹配字符串元组
+        ignorecase: 是否忽略大小写
+    """
+
+    __slots__ = ("msg", "ignorecase")
+
+    def __init__(self, msg: Tuple[str, ...], ignorecase: bool = False):
+        self.msg = msg
+        self.ignorecase = ignorecase
+
+    async def __call__(
+        self, type: str = EventType(), text: str = EventPlainText()
+    ) -> bool:
+        if type != "message":
+            return False
+        return bool(
+            text
+            and any(
+                full.lower() == text.lower() if self.ignorecase else full == text
+                for full in self.msg
+            )
+        )
+
+
+def fullmatch(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
+    """完全匹配消息。
+
+    参数:
+        msg: 指定消息全匹配字符串元组
+        ignorecase: 是否忽略大小写
+    """
+    if isinstance(msg, str):
+        msg = (msg,)
+
+    return Rule(FullmatchRule(msg, ignorecase))
+
+
 class KeywordsRule:
     """检查消息纯文本是否包含指定关键字。
 

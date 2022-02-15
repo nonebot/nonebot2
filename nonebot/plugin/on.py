@@ -21,6 +21,7 @@ from nonebot.rule import (
     command,
     keyword,
     endswith,
+    fullmatch,
     startswith,
     shell_command,
 )
@@ -281,6 +282,30 @@ def on_endswith(
         state: 默认 state
     """
     return on_message(endswith(msg, ignorecase) & rule, **kwargs, _depth=_depth + 1)
+
+
+def on_fullmatch(
+    msg: Union[str, Tuple[str, ...]],
+    rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
+    ignorecase: bool = False,
+    _depth: int = 0,
+    **kwargs,
+) -> Matcher:
+    """
+    注册一个消息事件响应器，并且当消息的**文本部分**与指定内容完全一致时响应。
+
+    参数:
+        msg: 指定消息全匹配内容
+        rule: 事件响应规则
+        ignorecase: 是否忽略大小写
+        permission: 事件响应权限
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
+    """
+    return on_message(fullmatch(msg, ignorecase) & rule, **kwargs, _depth=_depth + 1)
 
 
 def on_keyword(
@@ -608,6 +633,28 @@ class MatcherGroup:
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
         matcher = on_endswith(msg, **final_kwargs, _depth=1)
+        self.matchers.append(matcher)
+        return matcher
+
+    def on_fullmatch(self, msg: Union[str, Tuple[str, ...]], **kwargs) -> Type[Matcher]:
+        """
+        注册一个消息事件响应器，并且当消息的**文本部分**与指定内容完全一致时响应。
+
+        参数:
+            msg: 指定消息全匹配内容
+            rule: 事件响应规则
+            ignorecase: 是否忽略大小写
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
+        """
+        final_kwargs = self.base_kwargs.copy()
+        final_kwargs.update(kwargs)
+        final_kwargs.pop("type", None)
+        matcher = on_fullmatch(msg, **final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher
 

@@ -122,14 +122,15 @@ matcher = on_message()
 5. `on_notice`: 创建通知事件响应器。
 6. `on_startswith`: 创建消息开头匹配事件响应器。
 7. `on_endswith`: 创建消息结尾匹配事件响应器。
-8. `on_keyword`: 创建消息关键词匹配事件响应器。
-9. `on_command`: 创建命令消息事件响应器。
-10. `on_shell_command`: 创建 shell 命令消息事件响应器。
-11. `on_regex`: 创建正则表达式匹配事件响应器。
-12. `CommandGroup`: 创建具有共同命令名称前缀的命令组。
-13. `MatcherGroup`: 创建具有共同参数的响应器组。
+8. `on_fullmatch`: 创建消息完全匹配事件响应器。
+9. `on_keyword`: 创建消息关键词匹配事件响应器。
+10. `on_command`: 创建命令消息事件响应器。
+11. `on_shell_command`: 创建 shell 命令消息事件响应器。
+12. `on_regex`: 创建正则表达式匹配事件响应器。
+13. `CommandGroup`: 创建具有共同命令名称前缀的命令组。
+14. `MatcherGroup`: 创建具有共同参数的响应器组。
 
-其中，`on_metaevent` `on_message` `on_request` `on_notice` 函数都是在 `on` 的基础上添加了对应的事件类型 `type`；`on_startswith` `on_endswith` `on_keyword` `on_command` `on_shell_command` `on_regex` 函数都是在 `on_message` 的基础上添加了对应的匹配规则 `rule`。
+其中，`on_metaevent` `on_message` `on_request` `on_notice` 函数都是在 `on` 的基础上添加了对应的事件类型 `type`；`on_startswith` `on_endswith` `on_fullmatch` `on_keyword` `on_command` `on_shell_command` `on_regex` 函数都是在 `on_message` 的基础上添加了对应的匹配规则 `rule`。
 
 ## 自定义规则
 
