@@ -69,6 +69,6 @@ NoneBot2 的代码风格遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/
 
 ## Git 工作流
 
-`master` 分支为 NoneBot 的开发分支，如无特殊情况请将更改提交到该分支。
+`master` 分支为 NoneBot 的开发分支，请在任何情况下都不要直接修改 `master` 分支, 而是创建一个目标分支为 `nonebot:master` 的 Pull Request 来提交修改
 
-如果你不是 NoneBot 团队的成员，可在 fork 本仓库后，向本仓库的 `master` 分支发起 Pull Request，注意遵循先前提到的 commit message 规范创建 commit。
+如果你不是 NoneBot 团队的成员，可在 fork 本仓库后，向本仓库的 `master` 分支发起 Pull Request，注意遵循先前提到的 commit message 规范创建 commit。我们将在 code review 通过后通过 squash merge 方式将您的贡献合并到主分支。
