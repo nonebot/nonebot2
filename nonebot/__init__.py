@@ -274,8 +274,8 @@ from nonebot.plugin import on_endswith as on_endswith
 from nonebot.plugin import CommandGroup as CommandGroup
 from nonebot.plugin import MatcherGroup as MatcherGroup
 from nonebot.plugin import load_plugins as load_plugins
-from nonebot.plugin import on_metaevent as on_metaevent
 from nonebot.plugin import on_fullmatch as on_fullmatch
+from nonebot.plugin import on_metaevent as on_metaevent
 from nonebot.plugin import on_startswith as on_startswith
 from nonebot.plugin import load_from_json as load_from_json
 from nonebot.plugin import load_from_toml as load_from_toml

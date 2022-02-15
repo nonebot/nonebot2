@@ -59,10 +59,10 @@ from .on import on_endswith as on_endswith
 from .load import load_plugin as load_plugin
 from .on import CommandGroup as CommandGroup
 from .on import MatcherGroup as MatcherGroup
+from .on import on_fullmatch as on_fullmatch
 from .on import on_metaevent as on_metaevent
 from .plugin import get_plugin as get_plugin
 from .load import load_plugins as load_plugins
-from .on import on_fullmatch as on_fullmatch
 from .on import on_startswith as on_startswith
 from .load import load_from_json as load_from_json
 from .load import load_from_toml as load_from_toml
