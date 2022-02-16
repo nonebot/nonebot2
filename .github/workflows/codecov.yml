@@ -11,7 +11,7 @@ jobs:
     name: Test Coverage
     runs-on: ${{ matrix.os }}
     concurrency:
-      group: test-coverage-${{ github.ref }}
+      group: test-coverage-${{ github.ref }}-${{ matrix.os }}-${{ matrix.python-version }}
       cancel-in-progress: true
     strategy:
       matrix:
