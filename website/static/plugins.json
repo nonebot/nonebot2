@@ -1321,5 +1321,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_read_60s",
+    "project_link": "nonebot-plugin-read-60s",
+    "name": "60s读世界小插件",
+    "desc": "定时向指定群或列表好友发送每日60s读世界",
+    "author": "bingganhe123",
+    "homepage": "https://github.com/bingganhe123/60s-",
+    "tags": [],
+    "is_official": false
   }
 ]
