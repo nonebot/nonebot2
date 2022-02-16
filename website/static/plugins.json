@@ -1302,5 +1302,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_pixiv",
+    "project_link": "nonebot-plugin-pixiv",
+    "name": "pixiv.net p站查询图片",
+    "desc": "pixiv.net p站查询图片(支持动图和多图)",
+    "author": "anlen123",
+    "homepage": "https://github.com/anlen123/nonebot_plugin_pixiv",
+    "tags": [
+      {
+        "label": "t: pixiv",
+        "color": "#0096fa"
+      },
+      {
+        "label": "R18",
+        "color": "#ffff00"
+      }
+    ],
+    "is_official": false
   }
 ]
