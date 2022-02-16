@@ -13,6 +13,7 @@ description: Changelog
 
 ### 💫 杂项
 
+- Docs: 修改议题模板中的错误链接 [@he0119](https://github.com/he0119) ([#807](https://github.com/nonebot/nonebot2/pull/807))
 - Fix: 修改错误的插件 PyPI 项目名称 [@Lancercmd](https://github.com/Lancercmd) ([#804](https://github.com/nonebot/nonebot2/pull/804))
 - CI: 减少 action 冗余运行 [@yanyongyu](https://github.com/yanyongyu) ([#805](https://github.com/nonebot/nonebot2/pull/805))
 - CI: fix ci permission error [@yanyongyu](https://github.com/yanyongyu) ([#802](https://github.com/nonebot/nonebot2/pull/802))
