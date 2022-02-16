@@ -4,11 +4,11 @@ contact_links:
     url: https://discussions.nonebot.dev/
     about: Ask questions about nonebot
   - name: Plugin Publish
-    url: https://v2.nonebot.dev/store.html
+    url: https://v2.nonebot.dev/store
     about: Publish your plugin to nonebot homepage and nb-cli
   - name: Adapter Publish
-    url: https://v2.nonebot.dev/store.html
+    url: https://v2.nonebot.dev/store
     about: Publish your adapter to nonebot homepage and nb-cli
   - name: Bot Publish
-    url: https://v2.nonebot.dev/store.html
+    url: https://v2.nonebot.dev/store
     about: Publish your bot to nonebot homepage and nb-cli
