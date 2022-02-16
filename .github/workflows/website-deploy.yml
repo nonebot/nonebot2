@@ -16,7 +16,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        if: github.event_name == 'push'
 
       - name: Setup Python Environment
         uses: ./.github/actions/setup-python
@@ -71,7 +70,6 @@ jobs:
         run: yarn build
 
       - name: Get Deploy Name
-        if: github.event_name != 'push'
         run: |
           echo "DEPLOY_NAME=deploy-preview-${{ github.event.number }}" >> $GITHUB_ENV
 
