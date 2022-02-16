@@ -22,12 +22,15 @@ NoneBot2 还未进入正式版，欢迎在 Issue 中提议要加入哪些新功�
 
 NoneBot 使用 [poetry](https://python-poetry.org/) 管理项目依赖，由于 pre-commit 也经其管理，所以在此一并说明。
 
-下面的命令能在已安装 poetry 和 npm 的情况下帮你快速配置开发环境。
+下面的命令能在已安装 poetry 和 yarn 的情况下帮你快速配置开发环境。
 
-```sh
+```bash
+# 安装 python 依赖
 poetry install
+# 安装 pre-commit git hook
 pre-commit install
-npm -g i gitmoji-cli
+# 安装 gitmoji git hook
+yarn global add gitmoji-cli
 gitmoji -i
 ```
 
@@ -45,7 +48,7 @@ NoneBot2 文档并没有具体的行文风格规范，但我们建议你尽量�
 
 如果你需要在本地预览修改后的文档，可以使用 yarn 安装文档依赖后启动 dev server，如下所示：
 
-```sh
+```bash
 yarn install
 yarn start
 ```
@@ -66,6 +69,6 @@ NoneBot2 的代码风格遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/
 
 ## Git 工作流
 
-`dev` 分支为 NoneBot 的开发分支，如无特殊情况请将更改提交到该分支。
+`master` 分支为 NoneBot 的开发分支，请在任何情况下都不要直接修改 `master` 分支，而是创建一个目标分支为 `nonebot:master` 的 Pull Request 来提交修改。
 
-如果你不是 NoneBot 团队的成员，可在 fork 本仓库后，向本仓库的 `dev` 分支发起 Pull Request，注意遵循先前提到的 commit message 规范创建 commit。
+如果你不是 NoneBot 团队的成员，可在 fork 本仓库后，向本仓库的 `master` 分支发起 Pull Request，注意遵循先前提到的 commit message 规范创建 commit。我们将在 code review 通过后通过 squash merge 方式将您的贡献合并到主分支。
