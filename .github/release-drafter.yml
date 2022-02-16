@@ -1,37 +1,31 @@
-header: |
-  ### Documentation
-
-  See: https://v2.nonebot.dev
-template: |
-  ### 💫 Changes
-
-  $CHANGES
+template: $CHANGES
 category-template: "### $TITLE"
 name-template: "Release v$RESOLVED_VERSION 🌈"
 tag-template: "v$RESOLVED_VERSION"
-change-template: "- $TITLE @$AUTHOR (#$NUMBER)"
-change-title-escapes: '\<*_&' # You can add # and @ to disable mentions, and add ` to disable code blocks.
+change-template: "- $TITLE [@$AUTHOR](https://github.com/$AUTHOR) ([#$NUMBER]($URL))"
+change-title-escapes: '\<&'
 categories:
-  - title: "💥 Breaking Changes"
+  - title: "💥 破坏性变更"
     labels:
       - "Breaking"
-  - title: "🚀 Features"
+  - title: "🚀 新功能"
     labels:
       - "feature"
       - "enhancement"
-  - title: "🐛 Bug Fixes"
+  - title: "🐛 Bug 修复"
     labels:
       - "fix"
       - "bugfix"
       - "bug"
-  - title: "📝 Documentation"
+  - title: "📝 文档"
     labels:
       - "documentation"
-  - title: "🍻 Plugin Publish"
+  - title: "💫 杂项"
+  - title: "🍻 插件发布"
     label: "Plugin"
-  - title: "🍻 Bot Publish"
+  - title: "🍻 机器人发布"
     label: "Bot"
-  - title: "🍻 Adapter Publish"
+  - title: "🍻 适配器发布"
     label: "Adapter"
 version-resolver:
   major:
