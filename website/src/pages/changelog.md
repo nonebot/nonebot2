@@ -4,7 +4,7 @@ description: Changelog
 
 # 更新日志
 
-## Latest Changes
+## 最近更新
 
 ### 💫 杂项
 

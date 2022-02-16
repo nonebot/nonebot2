@@ -35,6 +35,8 @@ jobs:
         with:
           changelog_file: website/src/pages/changelog.md
           latest_changes_position: '# 更新日志\n\n'
+          latest_changes_title: '## 最近更新'
+          replace_regex: '(?<=## 最近更新\n)[\s\S]*?(?=\n## )'
           changelog_body: ${{ steps.release-drafter.outputs.body }}
           commit_and_push: false
 
