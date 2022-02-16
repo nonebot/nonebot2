@@ -8,6 +8,7 @@ description: Changelog
 
 ### 📝 文档
 
+- Docs: 修改消息模板文档中错误的样例 [@mnixry](https://github.com/mnixry) ([#806](https://github.com/nonebot/nonebot2/pull/806))
 - Docs: 更新贡献指南 [@yanyongyu](https://github.com/yanyongyu) ([#798](https://github.com/nonebot/nonebot2/pull/798))
 
 ### 💫 杂项
