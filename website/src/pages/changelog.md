@@ -13,7 +13,7 @@ description: Changelog
 
 ### 🍻 插件发布
 
-- Plugin: pixiv.net p站查询图片 [@yanyongyu](https://github.com/yanyongyu) ([#803](https://github.com/nonebot/nonebot2/pull/803))
+- Plugin: pixiv.net p 站查询图片 [@yanyongyu](https://github.com/yanyongyu) ([#803](https://github.com/nonebot/nonebot2/pull/803))
 
 ## Latest changes
 
