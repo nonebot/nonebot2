@@ -14,10 +14,16 @@ jobs:
   update-release-draft:
     if: github.event_name == 'pull_request_target'
     runs-on: ubuntu-latest
+    concurrency:
+      group: pull-request-changelog
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v2
         with:
           token: ${{ secrets.GH_TOKEN }}
+
+      - name: Setup Node Environment
+        uses: ./.github/actions/setup-node
 
       - uses: release-drafter/release-drafter@v5
         id: release-drafter
@@ -29,7 +35,20 @@ jobs:
         with:
           changelog_file: website/src/pages/changelog.md
           latest_changes_position: '# 更新日志\n\n'
+          latest_changes_title: '## 最近更新'
+          replace_regex: '(?<=## 最近更新\n)[\s\S]*?(?=\n## )'
           changelog_body: ${{ steps.release-drafter.outputs.body }}
+          commit_and_push: false
+
+      - name: Commit and Push
+        run: |
+          yarn prettier
+          git config user.name github-actions[bot]
+          git config user.email github-actions[bot]@users.noreply.github.com
+          git add .
+          git commit -m ":memo: Update changelog"
+          git push
+
 
   release:
     if: startsWith(github.ref, 'refs/tags/')

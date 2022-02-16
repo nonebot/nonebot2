@@ -28,10 +28,14 @@ jobs:
         uses: docker://ghcr.io/nonebot/auto-changelog:master
         with:
           changelog_file: website/src/pages/changelog.md
+          archive_regex: '(?<=## )最近更新(?=\n)'
           archive_title: ${{ env.TAG_NAME }}
+          commit_and_push: false
 
       - name: Archive Files
-        run: yarn archive $(poetry version -s)
+        run: |
+          yarn archive $(poetry version -s)
+          yarn prettier
 
       - name: Push Tag
         run: |
