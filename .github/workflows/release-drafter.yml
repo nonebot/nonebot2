@@ -14,6 +14,9 @@ jobs:
   update-release-draft:
     if: github.event_name == 'pull_request_target'
     runs-on: ubuntu-latest
+    concurrency:
+      group: pull-request-changelog
+      cancel-in-progress: true
     steps:
       - uses: actions/checkout@v2
         with:

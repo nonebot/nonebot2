@@ -4,13 +4,15 @@ on:
   push:
     branches:
       - master
-      - dev
   pull_request:
 
 jobs:
   test:
     name: Test Coverage
     runs-on: ${{ matrix.os }}
+    concurrency:
+      group: test-coverage-${{ github.ref }}
+      cancel-in-progress: true
     strategy:
       matrix:
         python-version: ["3.7", "3.8", "3.9", "3.10"]
