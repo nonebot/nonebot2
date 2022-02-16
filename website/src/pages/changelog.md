@@ -6,6 +6,10 @@ description: Changelog
 
 ## 最近更新
 
+### 📝 文档
+
+- Docs: 更新贡献指南 [@yanyongyu](https://github.com/yanyongyu) ([#798](https://github.com/nonebot/nonebot2/pull/798))
+
 ### 💫 杂项
 
 - CI: 减少 action 冗余运行 [@yanyongyu](https://github.com/yanyongyu) ([#805](https://github.com/nonebot/nonebot2/pull/805))
