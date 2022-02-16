@@ -227,7 +227,7 @@ Message(
 ```
 
 ```python title="对消息段进行安全的拼接"
->>> Message.template("{} {}").format(MessageSegment.image("file:///..."), "world")
+>>> Message.template("{}{}").format(MessageSegment.image("file:///..."), "world")
 Message(
     MessageSegment(type='image', data={'file': 'file:///...'}),
     MessageSegment(type='text', data={'text': 'world'})
@@ -236,17 +236,18 @@ Message(
 
 ```python title="以消息对象作为模板"
 >>> Message.template(
-...     MessageSegment.text('test {user_id}') + MessageSegment.face(233) +
-...     MessageSegment.text('test {message}')).format_map({'user_id':123456, 'message':'hello world'}
-... )
+...     MessageSegment.text('{user_id}') + MessageSegment.face(233) +
+...     MessageSegment.text('{message}')
+... ).format_map({'user_id':123456, 'message':'hello world'}
+...
 Message(
-    MessageSegment(type='text', data={'text': 'test 123456'}),
+    MessageSegment(type='text', data={'text': '123456'}),
     MessageSegment(type='face', data={'face': 233}),
-    MessageSegment(type='text', data={'text': 'test hello world'})
+    MessageSegment(type='text', data={'text': 'hello world'})
 )
 ```
 
-```python title="使用消息段的拓展格式规格"
+```python title="使用消息段的拓展控制符"
 >>> Message.template("{link:image}").format(link='https://...')
 Message(MessageSegment(type='image', data={'file': 'https://...'}))
 ```
