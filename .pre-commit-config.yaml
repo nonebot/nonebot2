@@ -1,8 +1,8 @@
 ci:
   autofix_commit_msg: ":rotating_light: auto fix by pre-commit hooks"
   autofix_prs: true
-  autoupdate_branch: dev
-  autoupdate_schedule: weekly
+  autoupdate_branch: master
+  autoupdate_schedule: monthly
   autoupdate_commit_msg: ":arrow_up: auto update by pre-commit hooks"
 repos:
   - repo: https://github.com/pycqa/isort

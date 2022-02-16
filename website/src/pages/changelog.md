@@ -4,23 +4,22 @@ description: Changelog
 
 # 更新日志
 
-## Latest changes
+## 最近更新
+
+### 📝 文档
+
+- Docs: 更新贡献指南 [@yanyongyu](https://github.com/yanyongyu) ([#798](https://github.com/nonebot/nonebot2/pull/798))
 
 ### 💫 杂项
 
+- Fix: 修改错误的插件 PyPI 项目名称 [@Lancercmd](https://github.com/Lancercmd) ([#804](https://github.com/nonebot/nonebot2/pull/804))
+- CI: 减少 action 冗余运行 [@yanyongyu](https://github.com/yanyongyu) ([#805](https://github.com/nonebot/nonebot2/pull/805))
 - CI: fix ci permission error [@yanyongyu](https://github.com/yanyongyu) ([#802](https://github.com/nonebot/nonebot2/pull/802))
 - CI: 添加更新日志自动更新 action [@yanyongyu](https://github.com/yanyongyu) ([#799](https://github.com/nonebot/nonebot2/pull/799))
 
 ### 🍻 插件发布
 
 - Plugin: pixiv.net p 站查询图片 [@yanyongyu](https://github.com/yanyongyu) ([#803](https://github.com/nonebot/nonebot2/pull/803))
-
-## Latest changes
-
-### 💫 杂项
-
-- CI: fix ci permission error [@yanyongyu](https://github.com/yanyongyu) ([#802](https://github.com/nonebot/nonebot2/pull/802))
-- CI: 添加更新日志自动更新 action [@yanyongyu](https://github.com/yanyongyu) ([#799](https://github.com/nonebot/nonebot2/pull/799))
 
 ## v2.0.0-beta.2
 
