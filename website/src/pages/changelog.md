@@ -8,12 +8,12 @@ description: Changelog
 
 ### 📝 文档
 
+- Docs: 修改议题模板中的错误链接 [@he0119](https://github.com/he0119) ([#807](https://github.com/nonebot/nonebot2/pull/807))
 - Docs: 修改消息模板文档中错误的样例 [@mnixry](https://github.com/mnixry) ([#806](https://github.com/nonebot/nonebot2/pull/806))
 - Docs: 更新贡献指南 [@yanyongyu](https://github.com/yanyongyu) ([#798](https://github.com/nonebot/nonebot2/pull/798))
 
 ### 💫 杂项
 
-- Docs: 修改议题模板中的错误链接 [@he0119](https://github.com/he0119) ([#807](https://github.com/nonebot/nonebot2/pull/807))
 - Fix: 修改错误的插件 PyPI 项目名称 [@Lancercmd](https://github.com/Lancercmd) ([#804](https://github.com/nonebot/nonebot2/pull/804))
 - CI: 减少 action 冗余运行 [@yanyongyu](https://github.com/yanyongyu) ([#805](https://github.com/nonebot/nonebot2/pull/805))
 - CI: fix ci permission error [@yanyongyu](https://github.com/yanyongyu) ([#802](https://github.com/nonebot/nonebot2/pull/802))
@@ -21,6 +21,7 @@ description: Changelog
 
 ### 🍻 插件发布
 
+- Plugin: 60s 读世界小插件 [@yanyongyu](https://github.com/yanyongyu) ([#810](https://github.com/nonebot/nonebot2/pull/810))
 - Plugin: pixiv.net p 站查询图片 [@yanyongyu](https://github.com/yanyongyu) ([#803](https://github.com/nonebot/nonebot2/pull/803))
 
 ## v2.0.0-beta.2
