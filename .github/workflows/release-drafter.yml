@@ -23,7 +23,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Update Changelog
-        uses: docker://nonebot/auto-changelog:master
+        uses: docker://ghcr.io/nonebot/auto-changelog:master
         with:
           changelog_file: website/src/pages/changelog.md
           latest_changes_position: '# 更新日志\n\n'

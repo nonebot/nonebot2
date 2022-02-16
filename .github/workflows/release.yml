@@ -28,7 +28,7 @@ jobs:
       - run: echo "TAG_NAME=v$(poetry version -s)" >> $GITHUB_ENV
 
       - name: Archive Changelog
-        uses: docker://nonebot/auto-changelog:master
+        uses: docker://ghcr.io/nonebot/auto-changelog:master
         with:
           changelog_file: website/src/pages/changelog.md
           archive_title: ${{ env.TAG_NAME }}
