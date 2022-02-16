@@ -11,6 +11,17 @@ description: Changelog
 - CI: fix ci permission error [@yanyongyu](https://github.com/yanyongyu) ([#802](https://github.com/nonebot/nonebot2/pull/802))
 - CI: 添加更新日志自动更新 action [@yanyongyu](https://github.com/yanyongyu) ([#799](https://github.com/nonebot/nonebot2/pull/799))
 
+### 🍻 插件发布
+
+- Plugin: pixiv.net p站查询图片 [@yanyongyu](https://github.com/yanyongyu) ([#803](https://github.com/nonebot/nonebot2/pull/803))
+
+## Latest changes
+
+### 💫 杂项
+
+- CI: fix ci permission error [@yanyongyu](https://github.com/yanyongyu) ([#802](https://github.com/nonebot/nonebot2/pull/802))
+- CI: 添加更新日志自动更新 action [@yanyongyu](https://github.com/yanyongyu) ([#799](https://github.com/nonebot/nonebot2/pull/799))
+
 ## v2.0.0-beta.2
 
 - 修复 `receive`, `got` 在参数为空消息时依旧会反复询问
