@@ -134,7 +134,7 @@ async def test_fullmatch(
     checker = dependent.call
 
     assert isinstance(checker, FullmatchRule)
-    assert checker.msg == (msg,) if isinstance(msg, str) else msg
+    assert checker.msg == {msg} if isinstance(msg, str) else {*msg}
     assert checker.ignorecase == ignorecase
 
     message = make_fake_message()(text)
