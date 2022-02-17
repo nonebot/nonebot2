@@ -145,7 +145,7 @@ class DataclassEncoder(json.JSONEncoder):
     @overrides(json.JSONEncoder)
     def default(self, o):
         if dataclasses.is_dataclass(o):
-            return dataclasses.asdict(o)
+            return {f.name: getattr(o, f.name) for f in dataclasses.fields(o)}
         return super().default(o)
 
 
