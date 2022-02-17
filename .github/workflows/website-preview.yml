@@ -1,19 +1,19 @@
-name: Site Deploy
+name: Site Deploy(Preview)
 
 on:
-  push:
-    branches:
-      - master
+  pull_request_target:
 
 jobs:
-  publish:
+  preview:
     runs-on: ubuntu-latest
     concurrency:
-      group: website-deploy-${{ github.ref }}
+      group: pull-request-preview-${{ github.event.number }}
       cancel-in-progress: true
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
 
       - name: Setup Python Environment
         uses: ./.github/actions/setup-python
@@ -27,18 +27,19 @@ jobs:
       - name: Build Doc
         run: yarn build
 
-      - name: Get Branch Name
-        run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
+      - name: Get Deploy Name
+        run: |
+          echo "DEPLOY_NAME=deploy-preview-${{ github.event.number }}" >> $GITHUB_ENV
 
       - name: Deploy to Netlify
         uses: nwtgck/actions-netlify@v1
         with:
           publish-dir: "./website/build"
-          production-deploy: true
+          production-deploy: false
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          deploy-message: "Deploy ${{ env.BRANCH_NAME }}@${{ github.sha }}"
+          deploy-message: "Deploy ${{ env.DEPLOY_NAME }}@${{ github.sha }}"
           enable-commit-comment: false
-          alias: ${{ env.BRANCH_NAME }}
+          alias: ${{ env.DEPLOY_NAME }}
         env:
           NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
           NETLIFY_SITE_ID: ${{ secrets.SITE_ID }}
