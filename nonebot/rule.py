@@ -182,20 +182,15 @@ class FullmatchRule:
     __slots__ = ("msg", "ignorecase")
 
     def __init__(self, msg: Tuple[str, ...], ignorecase: bool = False):
-        self.msg = msg
+        self.msg = frozenset(map(str.casefold, msg) if ignorecase else msg)
         self.ignorecase = ignorecase
 
     async def __call__(
-        self, type: str = EventType(), text: str = EventPlainText()
+        self, type_: str = EventType(), text: str = EventPlainText()
     ) -> bool:
-        if type != "message":
-            return False
-        return bool(
-            text
-            and any(
-                full.lower() == text.lower() if self.ignorecase else full == text
-                for full in self.msg
-            )
+        return (
+            type_ == "message"
+            and (text.casefold() if self.ignorecase else text) in self.msg
         )
 
 
