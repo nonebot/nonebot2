@@ -6,6 +6,10 @@ description: Changelog
 
 ## 最近更新
 
+### 🐛 Bug 修复
+
+- Fix: 修复 DataclassEncoder 嵌套 encode 的问题 [@AkiraXie](https://github.com/AkiraXie) ([#812](https://github.com/nonebot/nonebot2/pull/812))
+
 ### 📝 文档
 
 - Docs: 修改议题模板中的错误链接 [@he0119](https://github.com/he0119) ([#807](https://github.com/nonebot/nonebot2/pull/807))
