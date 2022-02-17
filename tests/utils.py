@@ -32,6 +32,10 @@ def make_fake_message():
         def image(url: str):
             return FakeMessageSegment("image", {"url": url})
 
+        @staticmethod
+        def nested(content: "FakeMessage"):
+            return FakeMessageSegment("node", {"content": content})
+
         def is_text(self) -> bool:
             return self.type == "text"
 
