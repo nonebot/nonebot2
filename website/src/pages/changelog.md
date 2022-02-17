@@ -1,5 +1,6 @@
 ---
 description: Changelog
+toc_max_heading_level: 2
 ---
 
 # 更新日志
