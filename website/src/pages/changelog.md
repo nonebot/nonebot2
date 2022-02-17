@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 减小更新日志 toc 最大显示等级 [@yanyongyu](https://github.com/yanyongyu) ([#813](https://github.com/nonebot/nonebot2/pull/813))
 - Docs: 修改议题模板中的错误链接 [@he0119](https://github.com/he0119) ([#807](https://github.com/nonebot/nonebot2/pull/807))
 - Docs: 修改消息模板文档中错误的样例 [@mnixry](https://github.com/mnixry) ([#806](https://github.com/nonebot/nonebot2/pull/806))
 - Docs: 更新贡献指南 [@yanyongyu](https://github.com/yanyongyu) ([#798](https://github.com/nonebot/nonebot2/pull/798))
