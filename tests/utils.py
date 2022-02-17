@@ -33,14 +33,8 @@ def make_fake_message():
             return FakeMessageSegment("image", {"url": url})
 
         @staticmethod
-        def node_custom(
-            user_id: str,
-            nickname: str,
-            content: Union["FakeMessage", "FakeMessageSegment", str],
-        ):
-            return FakeMessageSegment(
-                "node", {"user_id": user_id, "nickname": nickname, "content": content}
-            )
+        def nested(content: "FakeMessage"):
+            return FakeMessageSegment("node", {"content": content})
 
         def is_text(self) -> bool:
             return self.type == "text"
