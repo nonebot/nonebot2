@@ -290,7 +290,7 @@ def on_fullmatch(
     ignorecase: bool = False,
     _depth: int = 0,
     **kwargs,
-) -> Matcher:
+) -> Type[Matcher]:
     """
     注册一个消息事件响应器，并且当消息的**文本部分**与指定内容完全一致时响应。
 
