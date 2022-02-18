@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 新增文本完整匹配规则 [@A-kirami](https://github.com/A-kirami) ([#797](https://github.com/nonebot/nonebot2/pull/797))
+
 ### 🐛 Bug 修复
 
 - Fix: 修复 DataclassEncoder 嵌套 encode 的问题 [@AkiraXie](https://github.com/AkiraXie) ([#812](https://github.com/nonebot/nonebot2/pull/812))
