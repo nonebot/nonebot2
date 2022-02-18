@@ -162,7 +162,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: start deployment
-        uses: bobheadxi/deployments@v0.6
+        uses: bobheadxi/deployments@v0.6.2
         id: deployment
         with:
           step: start
@@ -185,7 +185,7 @@ jobs:
             docker-compose up -d
 
       - name: update deployment status
-        uses: bobheadxi/deployments@v0.6
+        uses: bobheadxi/deployments@v0.6.2
         if: always()
         with:
           step: finish
