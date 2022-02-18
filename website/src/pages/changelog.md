@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修复 `on_fullmatch` 返回类型错误 [@yanyongyu](https://github.com/yanyongyu) ([#815](https://github.com/nonebot/nonebot2/pull/815))
 - Fix: 修复 DataclassEncoder 嵌套 encode 的问题 [@AkiraXie](https://github.com/AkiraXie) ([#812](https://github.com/nonebot/nonebot2/pull/812))
 
 ### 📝 文档
