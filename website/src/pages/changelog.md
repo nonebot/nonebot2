@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- CI: 添加 dependabot 配置文件 [@mnixry](https://github.com/mnixry) ([#820](https://github.com/nonebot/nonebot2/pull/820))
 - Docs: 添加 netlify 标签 [@yanyongyu](https://github.com/yanyongyu) ([#816](https://github.com/nonebot/nonebot2/pull/816))
 - CI: 分离 pr 预览 action [@yanyongyu](https://github.com/yanyongyu) ([#814](https://github.com/nonebot/nonebot2/pull/814))
 - Fix: 修改错误的插件 PyPI 项目名称 [@Lancercmd](https://github.com/Lancercmd) ([#804](https://github.com/nonebot/nonebot2/pull/804))
