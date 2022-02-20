@@ -92,7 +92,7 @@ DRIVER=~fastapi
 
 类型：`bool`  
 默认值：`False`  
-说明：是否开启 `uvicorn` 的 `reload` 功能，需要提供 asgi 应用路径 (在win平台开启后会使事件循环强制绑定到`selectoreventloop`上)。
+说明：是否开启 `uvicorn` 的 `reload` 功能，需要提供 asgi 应用路径 (在 win 平台开启后会使事件循环强制绑定到`selectoreventloop`上)。
 
 ```python title=bot.py
 app = nonebot.get_asgi()
