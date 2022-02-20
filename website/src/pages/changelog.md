@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 原神抽卡记录分析 [@yanyongyu](https://github.com/yanyongyu) ([#829](https://github.com/nonebot/nonebot2/pull/829))
 - Plugin: YetAnotherPicSearch [@yanyongyu](https://github.com/yanyongyu) ([#825](https://github.com/nonebot/nonebot2/pull/825))
 - Plugin: 60s 读世界小插件 [@yanyongyu](https://github.com/yanyongyu) ([#810](https://github.com/nonebot/nonebot2/pull/810))
 - Plugin: pixiv.net p 站查询图片 [@yanyongyu](https://github.com/yanyongyu) ([#803](https://github.com/nonebot/nonebot2/pull/803))
