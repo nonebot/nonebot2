@@ -1331,5 +1331,20 @@
     "homepage": "https://github.com/bingganhe123/60s-",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "YetAnotherPicSearch",
+    "project_link": "yetanotherpicsearch",
+    "name": "YetAnotherPicSearch",
+    "desc": "基于 kitUIN/PicImageSearch 的另一个 Nonebot 搜图插件。",
+    "author": "NekoAria",
+    "homepage": "https://github.com/NekoAria/YetAnotherPicSearch",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
