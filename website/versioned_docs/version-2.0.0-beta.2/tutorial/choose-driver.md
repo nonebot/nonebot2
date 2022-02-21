@@ -101,7 +101,7 @@ DRIVER=~fastapi
 
 > 相关信息见 ([uvicorn#529](https://github.com/encode/uvicorn/issues/529) , [uvicorn#1070](https://github.com/encode/uvicorn/pull/1070) , [uvicorn#1257](https://github.com/encode/uvicorn/pull/1257))
 
-后者(`ProactorEventLoop`)在 windows 平台的可使用性不如前者(`SelectorEventLoop`) , 包括但不限于
+后者(`SelectorEventLoop`)在 windows 平台的可使用性不如前者(`ProactorEventLoop`) , 包括但不限于
 
 1. 不支持创建子进程
 2. 最多只支持 512 个套接字
