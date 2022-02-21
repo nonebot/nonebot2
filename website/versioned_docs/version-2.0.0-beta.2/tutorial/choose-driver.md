@@ -95,7 +95,7 @@ DRIVER=~fastapi
 说明：是否开启 `uvicorn` 的 `reload` 功能，需要提供 asgi 应用路径。
 :::warning 警告
 
-在 windows 平台上开启该功能会有额外的影响
+在 Windows 平台上开启该功能有可能会造成预料之外的影响!
 
 windows 平台上 , 在 python 版本大于等于 3.8 下 , 开启该功能后 , 在 uvicorn 运行时 (fastapi 底层 , reload 功能的实际来源) , asyncio 使用的事件循环会被 uvicorn 从默认的 `ProactorEventLoop` 强制切换到 `SelectorEventLoop`
 
