@@ -107,7 +107,7 @@ windows 平台上 , 在 python 版本大于等于 3.8 下 , 开启该功能后 ,
 2. 最多只支持 512 个套接字
 3. ...
 
-> 具体信息见 [python doc](https://docs.python.org/zh-cn/3.10/library/asyncio-platforms.html#windows)
+> 具体信息见 [Python 文档](https://docs.python.org/zh-cn/3.10/library/asyncio-platforms.html#windows)
 
 所以 , 一些使用了 asyncio 的库因此可能无法正常工作 , 如 :
 
