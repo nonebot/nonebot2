@@ -97,7 +97,7 @@ DRIVER=~fastapi
 
 在 windows 平台上开启该功能会可能会有额外的影响
 
-在 python 版本大于等于 3.8 下 , 开启该功能后 , 在 uvicorn 运行时 (fastapi 底层 , reload 功能的实际来源) , asyncio 使用的事件循环会被 uvicorn 从默认的 `ProactorEventLoop` 强制切换到 `SelectorEventLoop` 
+在 python 版本大于等于 3.8 下 , 开启该功能后 , 在 uvicorn 运行时 (fastapi 底层 , reload 功能的实际来源) , asyncio 使用的事件循环会被 uvicorn 从默认的 `ProactorEventLoop` 强制切换到 `SelectorEventLoop`
 
 相关信息见 ([uvicorn#529](https://github.com/encode/uvicorn/issues/529) , [uvicorn#1070](https://github.com/encode/uvicorn/pull/1070) , [uvicorn#1257](https://github.com/encode/uvicorn/pull/1257))
 
@@ -115,14 +115,11 @@ DRIVER=~fastapi
 
 如 :
 
-1. [playwright](https://playwright.dev/python/docs/intro#incompatible-with-selectoreventloop-of-asyncio-on-windows) 
+1. [playwright](https://playwright.dev/python/docs/intro#incompatible-with-selectoreventloop-of-asyncio-on-windows)
 
 如果在开启该功能后 , 原本**正常运行**的代码报错 , 且打印的异常堆栈信息和 asyncio 有关 (异常一般为 `NotImplementedError`)
 
 你可能就需要考虑相关库对事件循环的支持程度 , 以及是否启用该功能
-
-
-
 
 :::
 
