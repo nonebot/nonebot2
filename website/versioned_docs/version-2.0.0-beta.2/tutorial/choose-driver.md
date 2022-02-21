@@ -99,7 +99,6 @@ DRIVER=~fastapi
 
 windows 平台上 , 在 python 版本大于等于 3.8 下 , 开启该功能后 , 在 uvicorn 运行时 (fastapi 底层 , reload 功能的实际来源) , asyncio 使用的事件循环会被 uvicorn 从默认的 `ProactorEventLoop` 强制切换到 `SelectorEventLoop`
 
-> windows 平台上 , 在 python 版本小于 3.8 时 , 默认的事件循环是 `SelectorEventLoop`  
 > 相关信息见 ([uvicorn#529](https://github.com/encode/uvicorn/issues/529) , [uvicorn#1070](https://github.com/encode/uvicorn/pull/1070) , [uvicorn#1257](https://github.com/encode/uvicorn/pull/1257))
 
 后者在 windows 平台的可使用性不如前者 , 包括但不限于
