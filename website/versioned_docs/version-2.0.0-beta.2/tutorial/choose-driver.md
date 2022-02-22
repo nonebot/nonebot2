@@ -93,35 +93,34 @@ DRIVER=~fastapi
 类型：`bool`  
 默认值：`False`  
 说明：是否开启 `uvicorn` 的 `reload` 功能，需要提供 asgi 应用路径。
-:::warning 警告
-
-在 Windows 平台上开启该功能有可能会造成预料之外的影响!
-
-在 Windows 平台上 , `Python>=3.8` 的情况下 , 开启该功能后 , 在 uvicorn 运行时 (FastAPI 等基于 ASGI 的服务底层 , reload 能力的实际提供者) , asyncio 使用的事件循环会被 uvicorn 从默认的 `ProactorEventLoop` 强制切换到 `SelectorEventLoop`
-
-> 相关信息见 ([uvicorn#529](https://github.com/encode/uvicorn/issues/529) , [uvicorn#1070](https://github.com/encode/uvicorn/pull/1070) , [uvicorn#1257](https://github.com/encode/uvicorn/pull/1257))
-
-后者(`SelectorEventLoop`)在 windows 平台的可使用性不如前者(`ProactorEventLoop`) , 包括但不限于
-
-1. 不支持创建子进程
-2. 最多只支持 512 个套接字
-3. ...
-
-> 具体信息见 [Python 文档](https://docs.python.org/zh-cn/3.10/library/asyncio-platforms.html#windows)
-
-所以 , 一些使用了 asyncio 的库因此可能无法正常工作 , 如 :
-
-1. [playwright](https://playwright.dev/python/docs/intro#incompatible-with-selectoreventloop-of-asyncio-on-windows)
-
-如果在开启该功能后 , 原本**正常运行**的代码报错 , 且打印的异常堆栈信息和 asyncio 有关 (异常一般为 `NotImplementedError`)  
-你可能就需要考虑相关库对事件循环的支持程度 , 以及是否启用该功能
-
-:::
 
 ```python title=bot.py
 app = nonebot.get_asgi()
 nonebot.run(app="bot:app")
 ```
+
+:::warning 警告
+在 Windows 平台上开启该功能有可能会造成预料之外的影响！
+
+在 `Python>=3.8` 环境下开启该功能后，在 uvicorn 运行时（FastAPI 提供的 ASGI 底层，即 reload 功能的实际来源），asyncio 使用的事件循环会被 uvicorn 从默认的 `ProactorEventLoop` 强制切换到 `SelectorEventLoop`
+
+> 相关信息参考 [uvicorn#529](https://github.com/encode/uvicorn/issues/529)，[uvicorn#1070](https://github.com/encode/uvicorn/pull/1070)，[uvicorn#1257](https://github.com/encode/uvicorn/pull/1257)
+
+后者（`SelectorEventLoop`）在 Windows 平台的可使用性不如前者（`ProactorEventLoop`），包括但不限于
+
+1. 不支持创建子进程
+2. 最多只支持 512 个套接字
+3. ...
+
+> 具体信息参考 [Python 文档](https://docs.python.org/zh-cn/3/library/asyncio-platforms.html#windows)
+
+所以，一些使用了 asyncio 的库因此可能无法正常工作，如：
+
+1. [playwright](https://playwright.dev/python/docs/intro#incompatible-with-selectoreventloop-of-asyncio-on-windows)
+
+如果在开启该功能后，原本**正常运行**的代码报错，且打印的异常堆栈信息和 asyncio 有关（异常一般为 `NotImplementedError`），
+你可能就需要考虑相关库对事件循环的支持，以及是否启用该功能
+:::
 
 ##### `fastapi_reload_dirs`
 
