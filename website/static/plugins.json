@@ -1361,5 +1361,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_everyday_en",
+    "project_link": "nonebot-plugin-everyday-en",
+    "name": "每日一句",
+    "desc": "每日一句英文句子，可选定时发送",
+    "author": "MelodyYuuka",
+    "homepage": "https://github.com/MelodyYuuka/nonebot_plugin_everyday_en",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "EveryDay",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
