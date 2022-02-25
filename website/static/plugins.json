@@ -212,11 +212,7 @@
     "homepage": "https://github.com/felinae98/nonebot-bison",
     "tags": [
       {
-        "label": "alpha only",
-        "color": "#f56c6c"
-      },
-      {
-        "label": "a:cqhttp",
+        "label": "a:onebot",
         "color": "#000000"
       }
     ],
