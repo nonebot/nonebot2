@@ -1357,5 +1357,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_fire",
+    "project_link": "nonebot-plugin-fire",
+    "name": "QQ自动续火花",
+    "desc": "通过每天定时发送“/echo 花花”实现续火花",
+    "author": "25252www",
+    "homepage": "https://github.com/25252www/nonebot_plugin_fire",
+    "tags": [],
+    "is_official": false
   }
 ]
