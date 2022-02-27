@@ -26,8 +26,8 @@ python = "^3.7.3"
 yarl = "^1.7.2"
 loguru = "^0.6.0"
 pygtrie = "^2.4.1"
-tomlkit = "^0.9.0"
-fastapi = "^0.73.0"
+tomlkit = "^0.10.0"
+fastapi = "^0.74.0"
 typing-extensions = ">=3.10.0,<5.0.0"
 Quart = { version = "^0.16.0", optional = true }
 websockets = { version="^10.0", optional = true }
