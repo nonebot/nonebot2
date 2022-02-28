@@ -33,6 +33,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: mockingbird [@yanyongyu](https://github.com/yanyongyu) ([#841](https://github.com/nonebot/nonebot2/pull/841))
 - Plugin: QQ 自动续火花 [@yanyongyu](https://github.com/yanyongyu) ([#839](https://github.com/nonebot/nonebot2/pull/839))
 - Plugin: 每日一句 [@yanyongyu](https://github.com/yanyongyu) ([#832](https://github.com/nonebot/nonebot2/pull/832))
 - Plugin: 原神抽卡记录分析 [@yanyongyu](https://github.com/yanyongyu) ([#829](https://github.com/nonebot/nonebot2/pull/829))
