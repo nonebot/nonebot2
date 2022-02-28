@@ -1367,5 +1367,15 @@
     "homepage": "https://github.com/25252www/nonebot_plugin_fire",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_mockingbird_plugin",
+    "project_link": "nonebot-mockingbird-plugin",
+    "name": "mockingbird",
+    "desc": "简单使用mockingbird让机器人讲话",
+    "author": "Diaosi1111",
+    "homepage": "https://github.com/Diaosi1111/nonebot_mockingbird_plugin",
+    "tags": [],
+    "is_official": false
   }
 ]
