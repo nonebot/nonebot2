@@ -1377,5 +1377,24 @@
     "homepage": "https://github.com/Diaosi1111/nonebot_mockingbird_plugin",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_qrcode",
+    "project_link": "nonebot-plugin-qrcode",
+    "name": "二维码识别与发送",
+    "desc": "qq聊天二维码插件",
+    "author": "kexue-z",
+    "homepage": "https://github.com/kexue-z/nonebot-plugin-qrcode",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "QRcode",
+        "color": "#0020ff"
+      }
+    ],
+    "is_official": false
   }
 ]
