@@ -33,6 +33,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 游戏王卡查 [@yanyongyu](https://github.com/yanyongyu) ([#846](https://github.com/nonebot/nonebot2/pull/846))
 - Plugin: 二维码识别与发送 [@yanyongyu](https://github.com/yanyongyu) ([#843](https://github.com/nonebot/nonebot2/pull/843))
 - Plugin: mockingbird [@yanyongyu](https://github.com/yanyongyu) ([#841](https://github.com/nonebot/nonebot2/pull/841))
 - Plugin: QQ 自动续火花 [@yanyongyu](https://github.com/yanyongyu) ([#839](https://github.com/nonebot/nonebot2/pull/839))
