@@ -272,7 +272,8 @@ stdout_logfile_maxbytes=2MB
 
 ```bash
 # 启动 bot
-pm2 start -n '{bot_name}' -x 'cd {bot_dir} && nb run {bot_run.py}'
+cd {bot_dir}
+pm2 start -n '{bot_name}' -x 'python -m nb_cli run'
 ```
 
 #### 日志
