@@ -227,4 +227,93 @@ stdout_logfile_maxbytes=2MB
 
 ## 使用 PM2 部署
 
-<!-- TODO -->
+> Todo PM2 安装教程
+>
+> 暂缺 pm2 安装配置教程，请自行查询有关安装说明。
+>
+> [pm2 安装相关搜索_bing_](https://cn.bing.com/search?q=pm2+%E5%AE%89%E8%A3%85+-csdn)
+
+### 变量说明
+
+以下文档将会使用：
+
+ {bot_dir} 指代 none_bot 的根目录。
+
+ {bot_run.py} 指代 none_bot 的根目录下启动文件。
+
+ {bot_name} 指代 none_bot 的命名，用于指定 pm2 别名标示。
+
+请根据自己的情况替换变量以使用本文提供的脚本。
+
+### 无虚拟环境部署
+
+#### 说明
+
+编者在实践中发现使用虚拟环境后再通过 pm2 部署  bot 可能会导致不能启动 chromium 导致一些插件无法使用。
+
+推测是由于使用了非 root 启动 pm2 导致的问题，有提供解决方案。
+
+#### 请先确保成功安装了 pm2
+
+指令 pm2 -V 如返回正确的版本号，则为成功。
+截止撰稿时间 2022-03-02，最新版本号为 5.2.0
+
+#### 启动
+
+```bash
+# 启动 bot
+pm2 start -n '{bot_name}' -x 'cd {bot_dir} && python3 {bot_run.py}'
+```
+
+#### 日志
+
+- 默认日志
+  查看最近 150 行日志
+    - pm2 log {bot_name} --lines 150
+- Minot 监控
+    - pm2 monit
+    
+    
+
+#### 其他常用 pm2 指令
+
+- 展示当前 pm2 管理的所有 APP
+    - pm2 ls
+- 删除
+    - pm2 del [id][app_name]
+- 停止
+    - pm2 stop [id][app_name]
+- 重启
+    - pm2 restart [id][app_name]
+- 保存当前 APP 列表 & 恢复 APP 列表
+    - pm2 save
+    - pm2 resurrect
+- 开启 pm2 开机自动恢复 APP 列表
+    - 说明：
+    需要执行过 save
+    非root需要手动添加指令返回的环境变量
+    - pm2 startup
+    
+
+### 由虚拟环境部署
+
+>除了 pm2 start以外理论上使用没有区别
+>
+>仅尝试 poetry，其他 python 虚拟环境管理器请自测
+
+#### 启动
+
+```bash
+# 启动 bot
+pm2 start -n '{bot_name}' -x 'cd {bot_dir} && poetry run python3 {bot_run.py}'
+```
+
+#### 非 root 如果遇到 bug 请尝试
+
+特别变量说明 {user} 指 poetry 的安装用户
+
+如果直接是 root 安装的...请运行上一条指令
+
+```bash
+sudo pm2 start -n '{bot_name}' -x su - {user} -c 'cd {bot_dir} && poetry run python3 {bot_run.py}'
+```
