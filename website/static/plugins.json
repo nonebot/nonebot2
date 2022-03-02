@@ -1396,5 +1396,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ygo",
+    "project_link": "nonebot-plugin-ygo",
+    "name": "游戏王卡查",
+    "desc": "nonebot的游戏王卡查插件",
+    "author": "anlen123",
+    "homepage": "https://github.com/anlen123/nonebot_plugin_ygo",
+    "tags": [
+      {
+        "label": "t:游戏王",
+        "color": "#ea5252"
+      },
+      {
+        "label": "口胡王",
+        "color": "#ea5252"
+      },
+      {
+        "label": "ygo",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
