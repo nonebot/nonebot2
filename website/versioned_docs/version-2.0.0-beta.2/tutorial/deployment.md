@@ -314,7 +314,7 @@ pm2 start -n '{bot_name}' -x 'cd {bot_dir} && nb run {bot_run.py}'
 
 > 除了 pm2 start 以外理论上使用没有区别
 >
-> 由于虚拟环境中，大概率不会自带 nb-cli，且为了避免未知 Bug，建议使用对应的原始启动方式。
+> 如果您使用虚拟环境管理依赖，请确保已安装 nb-cli，并且已激活到当前Bot所在的虚拟环境。
 >
 > 仅尝试 poetry，其他 python 虚拟环境管理器请自测
 
