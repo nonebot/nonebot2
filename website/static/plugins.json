@@ -1419,5 +1419,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_anime_news",
+    "project_link": "nonebot-plugin-anime-news",
+    "name": "动漫新闻",
+    "desc": "一个简易的获取来自 bangumi.moe 番剧时间表的插件",
+    "author": "5656565566",
+    "homepage": "https://github.com/5656565566/anime_news",
+    "tags": [
+      {
+        "label": "bangumi",
+        "color": "#aa52ea"
+      }
+    ],
+    "is_official": false
   }
 ]
