@@ -1419,5 +1419,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_anime_news",
+    "project_link": "nonebot-plugin-anime-news",
+    "name": "番剧新闻",
+    "desc": "从bangumi.moe定时获取番剧信息",
+    "author": "5656565566",
+    "homepage": "https://github.com/5656565566/anime_news",
+    "tags": [
+      {
+        "label": "bangumi",
+        "color": "#761aab"
+      }
+    ],
+    "is_official": false
   }
 ]
