@@ -1434,5 +1434,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_broker",
+    "project_link": "nonebot-plugin-broker",
+    "name": "订阅推送管理",
+    "desc": "一个简化编写订阅和推送功能的插件，也支持插件间信息交互",
+    "author": "mwbimh",
+    "homepage": "https://github.com/mwbimh/nonebot_plugin_broker",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#a11313"
+      },
+      {
+        "label": "t:发布/订阅",
+        "color": "#1373a1"
+      }
+    ],
+    "is_official": false
   }
 ]
