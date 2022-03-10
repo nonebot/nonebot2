@@ -1453,5 +1453,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bilibilibot",
+    "project_link": "nonebot-plugin-bilibilibot",
+    "name": "bilibili通知插件",
+    "desc": "将up主更新、番剧更新、主播开播等信息推送到QQ",
+    "author": "TDK1969",
+    "homepage": "https://github.com/TDK1969/nonebot_plugin_bilibilibot",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#f605dd"
+      },
+      {
+        "label": "a:onebot11",
+        "color": "#05f6e4"
+      }
+    ],
+    "is_official": false
   }
 ]
