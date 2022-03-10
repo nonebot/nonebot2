@@ -33,6 +33,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: bilibili 通知插件 [@yanyongyu](https://github.com/yanyongyu) ([#859](https://github.com/nonebot/nonebot2/pull/859))
 - Plugin: 订阅推送管理 [@yanyongyu](https://github.com/yanyongyu) ([#855](https://github.com/nonebot/nonebot2/pull/855))
 - Plugin: 动漫新闻 [@yanyongyu](https://github.com/yanyongyu) ([#852](https://github.com/nonebot/nonebot2/pull/852))
 - Plugin: 游戏王卡查 [@yanyongyu](https://github.com/yanyongyu) ([#846](https://github.com/nonebot/nonebot2/pull/846))
