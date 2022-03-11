@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: tips for finding adapters' document link [@StarHeartHunt](https://github.com/StarHeartHunt) ([#860](https://github.com/nonebot/nonebot2/pull/860))
 - Docs: 添加对 `fastapi_reload` 在 Windows 平台额外影响的说明 [@CherryGS](https://github.com/CherryGS) ([#830](https://github.com/nonebot/nonebot2/pull/830))
 - Docs: 修复 ci/cd action 中错误的版本号 [@Bubbleioa](https://github.com/Bubbleioa) ([#819](https://github.com/nonebot/nonebot2/pull/819))
 - Docs: 减小更新日志 toc 最大显示等级 [@yanyongyu](https://github.com/yanyongyu) ([#813](https://github.com/nonebot/nonebot2/pull/813))
