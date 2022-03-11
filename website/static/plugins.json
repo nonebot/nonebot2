@@ -1487,5 +1487,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_blackjack",
+    "project_link": "nonebot-plugin-blackjack",
+    "name": "21点游戏插件",
+    "desc": "一个基于签到积分的21点游戏与积分对战插件",
+    "author": "yaowan233",
+    "homepage": "https://github.com/yaowan233/nonebot-plugin-blackjack",
+    "tags": [],
+    "is_official": false
   }
 ]
