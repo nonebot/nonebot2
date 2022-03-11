@@ -91,3 +91,6 @@ nonebot.run()
 :::danger 警告
 协议适配器需要在 NoneBot 启动前进行注册，即 `nonebot.run()` 之前，否则会出现未知的错误。
 :::
+
+各适配器的具体配置与说明请跳转至 [商店页“适配器”一栏](https://v2.nonebot.dev/store
+) 中各适配器的主页或文档进行查看。
