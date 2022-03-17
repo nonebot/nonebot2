@@ -20,6 +20,16 @@ async def test_rule(app: App):
     async def skipped() -> bool:
         raise SkippedException
 
+    def _is_eq(a: Rule, b: Rule) -> bool:
+        return {d.call for d in a.checkers} == {d.call for d in b.checkers}
+
+    assert _is_eq(Rule(truthy) & None, Rule(truthy))
+    assert _is_eq(Rule(truthy) & falsy, Rule(truthy, falsy))
+    assert _is_eq(Rule(truthy) & Rule(falsy), Rule(truthy, falsy))
+
+    assert _is_eq(None & Rule(truthy), Rule(truthy))
+    assert _is_eq(truthy & Rule(falsy), Rule(truthy, falsy))
+
     event = make_fake_event()()
 
     async with app.test_api() as ctx:

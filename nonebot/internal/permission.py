@@ -85,7 +85,7 @@ class Permission:
         )
         return any(results)
 
-    def __and__(self, other) -> NoReturn:
+    def __and__(self, other: object) -> NoReturn:
         raise RuntimeError("And operation between Permissions is not allowed.")
 
     def __or__(
@@ -97,6 +97,16 @@ class Permission:
             return Permission(*self.checkers, *other.checkers)
         else:
             return Permission(*self.checkers, other)
+
+    def __ror__(
+        self, other: Optional[Union["Permission", T_PermissionChecker]]
+    ) -> "Permission":
+        if other is None:
+            return self
+        elif isinstance(other, Permission):
+            return Permission(*other.checkers, *self.checkers)
+        else:
+            return Permission(other, *self.checkers)
 
 
 class User:

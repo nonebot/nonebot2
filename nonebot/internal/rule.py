@@ -91,5 +91,13 @@ class Rule:
         else:
             return Rule(*self.checkers, other)
 
-    def __or__(self, other) -> NoReturn:
+    def __rand__(self, other: Optional[Union["Rule", T_RuleChecker]]) -> "Rule":
+        if other is None:
+            return self
+        elif isinstance(other, Rule):
+            return Rule(*other.checkers, *self.checkers)
+        else:
+            return Rule(other, *self.checkers)
+
+    def __or__(self, other: object) -> NoReturn:
         raise RuntimeError("Or operation between rules is not allowed.")
