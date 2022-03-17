@@ -1497,5 +1497,15 @@
     "homepage": "https://github.com/yaowan233/nonebot-plugin-blackjack",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_pulgin_autoagree",
+    "project_link": "nonebot-pulgin-autoagree",
+    "name": "QQ自动同意好友申请",
+    "desc": "QQ自动同意好友申请",
+    "author": "ZakiuC",
+    "homepage": "https://github.com/ZakiuC/NoneBot_Pulgin_AutoAgree",
+    "tags": [],
+    "is_official": false
   }
 ]
