@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 添加 Rule, Permission 反向位运算支持 [@yanyongyu](https://github.com/yanyongyu) ([#872](https://github.com/nonebot/nonebot2/pull/872))
 - Feature: 新增文本完整匹配规则 [@A-kirami](https://github.com/A-kirami) ([#797](https://github.com/nonebot/nonebot2/pull/797))
 
 ### 🐛 Bug 修复
