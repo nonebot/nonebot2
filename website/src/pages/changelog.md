@@ -36,6 +36,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Arcaea 查分插件 [@yanyongyu](https://github.com/yanyongyu) ([#875](https://github.com/nonebot/nonebot2/pull/875))
 - Plugin: QQ 自动同意好友申请 [@yanyongyu](https://github.com/yanyongyu) ([#871](https://github.com/nonebot/nonebot2/pull/871))
 - Plugin: 21 点游戏插件 [@yanyongyu](https://github.com/yanyongyu) ([#865](https://github.com/nonebot/nonebot2/pull/865))
 - Plugin: 色图生成 [@yanyongyu](https://github.com/yanyongyu) ([#863](https://github.com/nonebot/nonebot2/pull/863))
