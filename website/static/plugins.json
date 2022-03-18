@@ -1507,5 +1507,24 @@
     "homepage": "https://github.com/ZakiuC/NoneBot_Pulgin_AutoAgree",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_arcaeabot",
+    "project_link": "nonebot-plugin-arcaeabot",
+    "name": "Arcaea查分插件",
+    "desc": "Arcaea查分插件(recent, best30)",
+    "author": "SEAFHMC",
+    "homepage": "https://github.com/SEAFHMC/nonebot-plugin-arcaeabot",
+    "tags": [
+      {
+        "label": "Arcaea",
+        "color": "#db52ea"
+      },
+      {
+        "label": "a:onebot",
+        "color": "#ff2e00"
+      }
+    ],
+    "is_official": false
   }
 ]
