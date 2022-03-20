@@ -61,6 +61,7 @@ def make_fake_message():
 
 
 def make_fake_event(
+    _base: Optional[Type["Event"]] = None,
     _type: str = "message",
     _name: str = "test",
     _description: str = "test",
@@ -72,7 +73,7 @@ def make_fake_event(
 ) -> Type["Event"]:
     from nonebot.adapters import Event
 
-    _Fake = create_model("_Fake", __base__=Event, **fields)
+    _Fake = create_model("_Fake", __base__=_base or Event, **fields)
 
     class FakeEvent(_Fake):
         def get_type(self) -> str:
