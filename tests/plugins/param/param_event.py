@@ -6,6 +6,14 @@ async def event(e: Event) -> Event:
     return e
 
 
+class SubEvent(Event):
+    ...
+
+
+async def sub_event(e: SubEvent) -> SubEvent:
+    return e
+
+
 async def event_type(t: str = EventType()) -> str:
     return t
 

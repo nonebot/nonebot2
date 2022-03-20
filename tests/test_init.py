@@ -35,11 +35,8 @@ async def test_get(monkeypatch: pytest.MonkeyPatch, nonebug_clear):
     from nonebot.drivers import ForwardDriver, ReverseDriver
     from nonebot import get_app, get_bot, get_asgi, get_bots, get_driver
 
-    try:
+    with pytest.raises(ValueError):
         get_driver()
-        assert False, "Driver can only be got after initialization"
-    except ValueError:
-        assert True
 
     nonebot.init(driver="nonebot.drivers.fastapi")
 
@@ -59,11 +56,8 @@ async def test_get(monkeypatch: pytest.MonkeyPatch, nonebug_clear):
     nonebot.run("arg", kwarg="kwarg")
     assert runned
 
-    try:
+    with pytest.raises(ValueError):
         get_bot()
-        assert False
-    except ValueError:
-        assert True
 
     monkeypatch.setattr(driver, "_clients", {"test": "test"})
     assert get_bot() == "test"
