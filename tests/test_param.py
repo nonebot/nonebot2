@@ -36,19 +36,27 @@ async def test_depend(app: App, load_plugin):
 @pytest.mark.asyncio
 async def test_bot(app: App, load_plugin):
     from nonebot.params import BotParam
-    from plugins.param.param_bot import get_bot
+    from nonebot.exception import TypeMisMatch
+    from plugins.param.param_bot import get_bot, sub_bot
 
     async with app.test_dependent(get_bot, allow_types=[BotParam]) as ctx:
         bot = ctx.create_bot()
         ctx.pass_params(bot=bot)
         ctx.should_return(bot)
 
+    with pytest.raises(TypeMisMatch):
+        async with app.test_dependent(sub_bot, allow_types=[BotParam]) as ctx:
+            bot = ctx.create_bot()
+            ctx.pass_params(bot=bot)
+
 
 @pytest.mark.asyncio
 async def test_event(app: App, load_plugin):
+    from nonebot.exception import TypeMisMatch
     from nonebot.params import EventParam, DependParam
     from plugins.param.param_event import (
         event,
+        sub_event,
         event_type,
         event_to_me,
         event_message,
@@ -61,6 +69,10 @@ async def test_event(app: App, load_plugin):
     async with app.test_dependent(event, allow_types=[EventParam]) as ctx:
         ctx.pass_params(event=fake_event)
         ctx.should_return(fake_event)
+
+    with pytest.raises(TypeMisMatch):
+        async with app.test_dependent(sub_event, allow_types=[EventParam]) as ctx:
+            ctx.pass_params(event=fake_event)
 
     async with app.test_dependent(
         event_type, allow_types=[EventParam, DependParam]
