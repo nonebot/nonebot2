@@ -1526,5 +1526,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ddcheck",
+    "project_link": "nonebot-plugin-ddcheck",
+    "name": "成分姬",
+    "desc": "查询B站关注列表的VTuber成分",
+    "author": "MeetWq",
+    "homepage": "https://github.com/MeetWq/nonebot-plugin-ddcheck",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
