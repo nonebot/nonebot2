@@ -523,16 +523,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_hanayori",
-    "project_link": "nonebot-plugin-hanayori",
-    "name": "HanayoriBot",
-    "desc": "B站动态推送与开播提醒插件",
-    "author": "kanomahoro",
-    "homepage": "https://github.com/kanomahoro/nonebot-hanayori",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_filehost",
     "project_link": "nonebot-plugin-filehost",
     "name": "HTTP静态文件托管",
@@ -546,10 +536,15 @@
     "module_name": "nonebot_plugin_simplemusic",
     "project_link": "nonebot-plugin-simplemusic",
     "name": "SimpleMusic",
-    "desc": "最简Q群点歌插件，支持网易云、QQ音乐",
-    "author": "kanomahoro",
-    "homepage": "https://github.com/kanomahoro/nonebot-simplemusic",
-    "tags": [],
+    "desc": "最简Q群点歌插件，支持QQ音乐、网易云、酷我、酷狗、咪咕、B站音频区",
+    "author": "MeetWq",
+    "homepage": "https://github.com/MeetWq/nonebot-plugin-simplemusic",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
     "is_official": false
   },
   {
@@ -559,16 +554,6 @@
     "desc": "生成pornhub风格logo",
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-phlogo",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_twitter",
-    "project_link": "nonebot-plugin-twitter",
-    "name": "Twitter推送",
-    "desc": "Twitter推送插件，自带推文翻译功能",
-    "author": "kanomahoro",
-    "homepage": "https://github.com/kanomahoro/nonebot-twitter",
     "tags": [],
     "is_official": false
   },
