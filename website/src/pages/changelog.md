@@ -31,6 +31,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Docs: 替换和移除部分已经失效的插件 [@MeetWq](https://github.com/MeetWq) ([#879](https://github.com/nonebot/nonebot2/pull/879))
 - Docs: 添加 netlify 标签 [@yanyongyu](https://github.com/yanyongyu) ([#816](https://github.com/nonebot/nonebot2/pull/816))
 - Fix: 修改错误的插件 PyPI 项目名称 [@Lancercmd](https://github.com/Lancercmd) ([#804](https://github.com/nonebot/nonebot2/pull/804))
 - CI: 添加更新日志自动更新 action [@yanyongyu](https://github.com/yanyongyu) ([#799](https://github.com/nonebot/nonebot2/pull/799))
