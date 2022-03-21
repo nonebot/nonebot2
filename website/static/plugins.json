@@ -523,16 +523,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_hanayori",
-    "project_link": "nonebot-plugin-hanayori",
-    "name": "HanayoriBot",
-    "desc": "B站动态推送与开播提醒插件",
-    "author": "kanomahoro",
-    "homepage": "https://github.com/kanomahoro/nonebot-hanayori",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_filehost",
     "project_link": "nonebot-plugin-filehost",
     "name": "HTTP静态文件托管",
@@ -564,16 +554,6 @@
     "desc": "生成pornhub风格logo",
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-phlogo",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_twitter",
-    "project_link": "nonebot-plugin-twitter",
-    "name": "Twitter推送",
-    "desc": "Twitter推送插件，自带推文翻译功能",
-    "author": "kanomahoro",
-    "homepage": "https://github.com/kanomahoro/nonebot-twitter",
     "tags": [],
     "is_official": false
   },
