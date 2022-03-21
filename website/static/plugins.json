@@ -546,10 +546,15 @@
     "module_name": "nonebot_plugin_simplemusic",
     "project_link": "nonebot-plugin-simplemusic",
     "name": "SimpleMusic",
-    "desc": "最简Q群点歌插件，支持网易云、QQ音乐",
-    "author": "kanomahoro",
-    "homepage": "https://github.com/kanomahoro/nonebot-simplemusic",
-    "tags": [],
+    "desc": "最简Q群点歌插件，支持QQ音乐、网易云、酷我、酷狗、咪咕、B站音频区",
+    "author": "MeetWq",
+    "homepage": "https://github.com/MeetWq/nonebot-plugin-simplemusic",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
     "is_official": false
   },
   {
