@@ -1536,5 +1536,20 @@
     "homepage": "https://github.com/Nranphy/nonebot_plugin_leetcode2",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_hikarisearch",
+    "project_link": "nonebot-plugin-hikarisearch",
+    "name": "HikariSearch",
+    "desc": "使用 HikariSearch 的又一个搜图插件",
+    "author": "MeetWq",
+    "homepage": "https://github.com/MeetWq/nonebot-plugin-hikarisearch",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
