@@ -38,6 +38,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: HikariSearch [@yanyongyu](https://github.com/yanyongyu) ([#884](https://github.com/nonebot/nonebot2/pull/884))
 - Plugin: 第二个 leetcode 查询插件 [@yanyongyu](https://github.com/yanyongyu) ([#882](https://github.com/nonebot/nonebot2/pull/882))
 - Plugin: 成分姬 [@yanyongyu](https://github.com/yanyongyu) ([#878](https://github.com/nonebot/nonebot2/pull/878))
 - Plugin: Arcaea 查分插件 [@yanyongyu](https://github.com/yanyongyu) ([#875](https://github.com/nonebot/nonebot2/pull/875))
