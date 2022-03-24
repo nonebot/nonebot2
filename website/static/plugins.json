@@ -1551,5 +1551,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mediawiki",
+    "project_link": "nonebot-plugin-mediawiki",
+    "name": "MediaWiki查询",
+    "desc": "为群聊提供简单的wiki查询功能（仅支持onebot）",
+    "author": "KoishiStudio",
+    "homepage": "https://github.com/KoishiStudio/nonebot-plugin-mediawiki",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "t:wiki",
+        "color": "#679ff9"
+      }
+    ],
+    "is_official": false
   }
 ]
