@@ -38,6 +38,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 快速搜索 [@yanyongyu](https://github.com/yanyongyu) ([#889](https://github.com/nonebot/nonebot2/pull/889))
 - Plugin: wordle 猜单词 [@yanyongyu](https://github.com/yanyongyu) ([#891](https://github.com/nonebot/nonebot2/pull/891))
 - Plugin: MediaWiki 查询 [@yanyongyu](https://github.com/yanyongyu) ([#886](https://github.com/nonebot/nonebot2/pull/886))
 - Plugin: HikariSearch [@yanyongyu](https://github.com/yanyongyu) ([#884](https://github.com/nonebot/nonebot2/pull/884))
