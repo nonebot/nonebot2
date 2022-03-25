@@ -1585,5 +1585,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_giyf",
+    "project_link": "nonebot-plugin-giyf",
+    "name": "快速搜索",
+    "desc": "指引群友快速 访 ~~(tui)~~ 问 ~~(dao)~~ 谷歌娘（在中国大陆大概就是度娘了～）",
+    "author": "KoishiStudio",
+    "homepage": "https://github.com/KoishiStudio/nonebot-plugin-giyf",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
