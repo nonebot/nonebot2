@@ -1,12 +1,9 @@
 name: NoneBot2 Publish Bot
 
 on:
-  push:
-    branches:
-      - master
   issues:
     types: [opened, reopened, edited]
-  pull_request:
+  pull_request_target:
     types: [closed]
 
 jobs:
