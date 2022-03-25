@@ -1600,5 +1600,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_abstract",
+    "project_link": "nonebot-plugin-abstract",
+    "name": "语句抽象化",
+    "desc": "能够将你的语句变得抽象起来~",
+    "author": "CherryCherries",
+    "homepage": "https://github.com/CherryCherries/nonebot-plugin-abstract",
+    "tags": [],
+    "is_official": false
   }
 ]
