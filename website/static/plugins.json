@@ -1570,5 +1570,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_wordle",
+    "project_link": "nonebot-plugin-wordle",
+    "name": "wordle猜单词",
+    "desc": "wordle猜单词游戏",
+    "author": "MeetWq",
+    "homepage": "https://github.com/MeetWq/nonebot-plugin-wordle",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
