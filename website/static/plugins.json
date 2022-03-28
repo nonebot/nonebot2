@@ -1625,5 +1625,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_handle",
+    "project_link": "nonebot-plugin-handle",
+    "name": "汉兜 Handle",
+    "desc": "汉字版Wordle 猜成语插件",
+    "author": "MeetWq",
+    "homepage": "https://github.com/MeetWq/nonebot-plugin-handle",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
