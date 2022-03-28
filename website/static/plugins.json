@@ -1610,5 +1610,20 @@
     "homepage": "https://github.com/CherryCherries/nonebot-plugin-abstract",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_params",
+    "project_link": "nonebot-plugin-params",
+    "name": "多适配器帮助函数",
+    "desc": "提供编写多适配器插件的帮助函数",
+    "author": "iyume",
+    "homepage": "https://github.com/iyume/nonebot-plugin-params",
+    "tags": [
+      {
+        "label": "t:helper",
+        "color": "#ffe873"
+      }
+    ],
+    "is_official": false
   }
 ]
