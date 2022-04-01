@@ -57,7 +57,7 @@ def on_request(
 ) -> Type[Matcher]: ...
 def on_startswith(
     msg: Union[str, Tuple[str, ...]],
-    rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
+    rule: Optional[Union[Rule, T_RuleChecker]] = ...,
     ignorecase: bool = ...,
     *,
     permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
@@ -69,7 +69,7 @@ def on_startswith(
 ) -> Type[Matcher]: ...
 def on_endswith(
     msg: Union[str, Tuple[str, ...]],
-    rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
+    rule: Optional[Union[Rule, T_RuleChecker]] = ...,
     ignorecase: bool = ...,
     *,
     permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
@@ -81,7 +81,7 @@ def on_endswith(
 ) -> Type[Matcher]: ...
 def on_fullmatch(
     msg: Union[str, Tuple[str, ...]],
-    rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = ...,
+    rule: Optional[Union[Rule, T_RuleChecker]] = ...,
     ignorecase: bool = ...,
     *,
     permission: Optional[Union[Permission, T_PermissionChecker]] = ...,

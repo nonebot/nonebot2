@@ -238,7 +238,7 @@ def on_request(
 
 def on_startswith(
     msg: Union[str, Tuple[str, ...]],
-    rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
     ignorecase: bool = False,
     _depth: int = 0,
     **kwargs,
@@ -262,7 +262,7 @@ def on_startswith(
 
 def on_endswith(
     msg: Union[str, Tuple[str, ...]],
-    rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
     ignorecase: bool = False,
     _depth: int = 0,
     **kwargs,
@@ -286,7 +286,7 @@ def on_endswith(
 
 def on_fullmatch(
     msg: Union[str, Tuple[str, ...]],
-    rule: Optional[Optional[Union[Rule, T_RuleChecker]]] = None,
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
     ignorecase: bool = False,
     _depth: int = 0,
     **kwargs,
