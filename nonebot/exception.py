@@ -7,11 +7,11 @@ NoneBotException
 ├── ParserExit
 ├── ProcessException
 |   ├── IgnoredException
+|   ├── SkippedException
+|   |   └── TypeMisMatch
 |   ├── MockApiException
 |   └── StopPropagation
 ├── MatcherException
-|   ├── SkippedException
-|   |   └── TypeMisMatch
 |   ├── PausedException
 |   ├── RejectedException
 |   └── FinishedException
@@ -75,6 +75,37 @@ class IgnoredException(ProcessException):
         return self.__repr__()
 
 
+class SkippedException(ProcessException):
+    """指示 NoneBot 立即结束当前 `Dependent` 的运行。
+
+    例如，可以在 `Handler` 中通过 {ref}`nonebot.matcher.Matcher.skip` 抛出。
+
+    用法:
+        ```python
+        def always_skip():
+            Matcher.skip()
+
+        @matcher.handle()
+        async def handler(dependency = Depends(always_skip)):
+            # never run
+        ```
+    """
+
+
+class TypeMisMatch(SkippedException):
+    """当前 `Handler` 的参数类型不匹配。"""
+
+    def __init__(self, param: ModelField, value: Any):
+        self.param: ModelField = param
+        self.value: Any = value
+
+    def __repr__(self):
+        return f"<TypeMisMatch, param={self.param}, value={self.value}>"
+
+    def __str__(self):
+        self.__repr__()
+
+
 class MockApiException(ProcessException):
     """指示 NoneBot 阻止本次 API 调用或修改本次调用返回值，并返回自定义内容。可由 api hook 抛出。
 
@@ -112,37 +143,6 @@ class StopPropagation(ProcessException):
 # Matcher Exceptions
 class MatcherException(NoneBotException):
     """所有 Matcher 发生的异常基类。"""
-
-
-class SkippedException(MatcherException):
-    """指示 NoneBot 立即结束当前 `Handler` 的处理，继续处理下一个 `Handler`。
-
-    可以在 `Handler` 中通过 {ref}`nonebot.matcher.Matcher.skip` 抛出。
-
-    用法:
-        ```python
-        def always_skip():
-            Matcher.skip()
-
-        @matcher.handle()
-        async def handler(dependency = Depends(always_skip)):
-            ...
-        ```
-    """
-
-
-class TypeMisMatch(SkippedException):
-    """当前 `Handler` 的参数类型不匹配。"""
-
-    def __init__(self, param: ModelField, value: Any):
-        self.param: ModelField = param
-        self.value: Any = value
-
-    def __repr__(self):
-        return f"<TypeMisMatch, param={self.param}, value={self.value}>"
-
-    def __str__(self):
-        self.__repr__()
 
 
 class PausedException(MatcherException):

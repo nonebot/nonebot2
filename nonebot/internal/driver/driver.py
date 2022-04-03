@@ -4,9 +4,10 @@ from contextlib import asynccontextmanager
 from typing import TYPE_CHECKING, Any, Set, Dict, Type, Callable, AsyncGenerator
 
 from nonebot.log import logger
-from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.dependencies import Dependent
+from nonebot.exception import SkippedException
+from nonebot.utils import escape_tag, run_coro_with_catch
 from nonebot.typing import T_BotConnectionHook, T_BotDisconnectionHook
 from nonebot.internal.params import BotParam, DependParam, DefaultParam
 
@@ -128,7 +129,12 @@ class Driver(abc.ABC):
         self._clients[bot.self_id] = bot
 
         async def _run_hook(bot: "Bot") -> None:
-            coros = list(map(lambda x: x(bot=bot), self._bot_connection_hook))
+            coros = list(
+                map(
+                    lambda x: run_coro_with_catch(x(bot=bot), (SkippedException,)),
+                    self._bot_connection_hook,
+                )
+            )
             if coros:
                 try:
                     await asyncio.gather(*coros)
@@ -146,7 +152,12 @@ class Driver(abc.ABC):
             del self._clients[bot.self_id]
 
         async def _run_hook(bot: "Bot") -> None:
-            coros = list(map(lambda x: x(bot=bot), self._bot_disconnection_hook))
+            coros = list(
+                map(
+                    lambda x: run_coro_with_catch(x(bot=bot), (SkippedException,)),
+                    self._bot_disconnection_hook,
+                )
+            )
             if coros:
                 try:
                     await asyncio.gather(*coros)

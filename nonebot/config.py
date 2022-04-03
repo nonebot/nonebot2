@@ -56,7 +56,7 @@ class CustomEnvSettings(EnvSettingsSource):
             if env_path.is_file():
                 env_file_vars = read_env_file(
                     env_path,
-                    encoding=env_file_encoding,
+                    encoding=env_file_encoding,  # type: ignore
                     case_sensitive=settings.__config__.case_sensitive,
                 )
                 env_vars = {**env_file_vars, **env_vars}

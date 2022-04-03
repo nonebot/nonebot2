@@ -45,9 +45,23 @@ T_State = Dict[Any, Any]
 """事件处理状态 State 类型"""
 
 T_BotConnectionHook = Callable[..., Awaitable[Any]]
-"""Bot 连接建立时钩子函数"""
+"""Bot 连接建立时钩子函数
+
+依赖参数:
+
+- DependParam: 子依赖参数
+- BotParam: Bot 对象
+- DefaultParam: 带有默认值的参数
+"""
 T_BotDisconnectionHook = Callable[..., Awaitable[Any]]
-"""Bot 连接断开时钩子函数"""
+"""Bot 连接断开时钩子函数
+
+依赖参数:
+
+- DependParam: 子依赖参数
+- BotParam: Bot 对象
+- DefaultParam: 带有默认值的参数
+"""
 T_CallingAPIHook = Callable[["Bot", str, Dict[str, Any]], Awaitable[Any]]
 """`bot.call_api` 钩子函数"""
 T_CalledAPIHook = Callable[
