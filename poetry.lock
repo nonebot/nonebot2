@@ -830,7 +830,7 @@ python-versions = ">=3.6"
 
 [[package]]
 name = "quart"
-version = "0.16.3"
+version = "0.17.0"
 description = "A Python ASGI web microframework with the same API as Flask"
 category = "main"
 optional = true
@@ -844,6 +844,7 @@ hypercorn = ">=0.11.2"
 importlib_metadata = {version = "*", markers = "python_version < \"3.8\""}
 itsdangerous = "*"
 jinja2 = "*"
+markupsafe = "*"
 toml = "*"
 typing_extensions = {version = "*", markers = "python_version < \"3.8\""}
 werkzeug = ">=2.0.0"
@@ -1110,7 +1111,7 @@ websockets = ["websockets"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.3"
-content-hash = "afca30d5793d2b62cdb31b2559bf7df60b64c4755c95c6168e206d282c0a3c1d"
+content-hash = "a04d13b3242e0c7f32746dc5e7ea28908579041183bc5811f57e4e26d603aee0"
 
 [metadata.files]
 aiodns = [
@@ -1920,8 +1921,8 @@ pyyaml = [
     {file = "PyYAML-6.0.tar.gz", hash = "sha256:68fb519c14306fec9720a2a5b45bc9f0c8d1b9c72adf45c37baedfcd949c35a2"},
 ]
 quart = [
-    {file = "Quart-0.16.3-py3-none-any.whl", hash = "sha256:556d07f24a8789db3b2dca78e0fe764c5a97a75ca800b1b7e5c4cfb7c3da2ea1"},
-    {file = "Quart-0.16.3.tar.gz", hash = "sha256:16521d8cf062461b158433d820fff509f98fb997ae6c28740eda061d9cba7d5e"},
+    {file = "Quart-0.17.0-py3-none-any.whl", hash = "sha256:69480e7384935feff1f50293a8cb70c5d31f568af94ed792d043bb368b50bd50"},
+    {file = "Quart-0.17.0.tar.gz", hash = "sha256:2cf213d8b83fa701a83e3b3125e9102a937cefd1e97e9583f22ee2fa79139640"},
 ]
 requests = [
     {file = "requests-2.27.1-py2.py3-none-any.whl", hash = "sha256:f22fa1e554c9ddfd16e6e41ac79759e17be9e492b3587efa038054674760e72d"},
