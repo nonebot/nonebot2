@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: Bot Hook 没有捕获跳过异常 [@yanyongyu](https://github.com/yanyongyu) ([#905](https://github.com/nonebot/nonebot2/pull/905))
 - Fix: 修复部分事件响应器参数类型中冗余的 Optional [@A-kirami](https://github.com/A-kirami) ([#904](https://github.com/nonebot/nonebot2/pull/904))
 - Fix: 修复 event 类型检查会对类型进行自动转换 [@yanyongyu](https://github.com/yanyongyu) ([#876](https://github.com/nonebot/nonebot2/pull/876))
 - Fix: 修复 `on_fullmatch` 返回类型错误 [@yanyongyu](https://github.com/yanyongyu) ([#815](https://github.com/nonebot/nonebot2/pull/815))
