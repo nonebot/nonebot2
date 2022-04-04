@@ -3,18 +3,12 @@ from contextlib import AsyncExitStack
 from typing import Any, Set, Tuple, Union, NoReturn, Optional, Coroutine
 
 from nonebot.dependencies import Dependent
+from nonebot.utils import run_coro_with_catch
 from nonebot.exception import SkippedException
 from nonebot.typing import T_DependencyCache, T_PermissionChecker
 
 from .adapter import Bot, Event
 from .params import BotParam, EventParam, DependParam, DefaultParam
-
-
-async def _run_coro_with_catch(coro: Coroutine[Any, Any, Any]):
-    try:
-        return await coro
-    except SkippedException:
-        return False
 
 
 class Permission:
@@ -72,13 +66,15 @@ class Permission:
             return True
         results = await asyncio.gather(
             *(
-                _run_coro_with_catch(
+                run_coro_with_catch(
                     checker(
                         bot=bot,
                         event=event,
                         stack=stack,
                         dependency_cache=dependency_cache,
-                    )
+                    ),
+                    (SkippedException,),
+                    False,
                 )
                 for checker in self.checkers
             ),

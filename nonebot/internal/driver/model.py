@@ -248,8 +248,8 @@ class Cookies(MutableMapping):
         self,
         name: str,
         default: Optional[str] = None,
-        domain: str = None,
-        path: str = None,
+        domain: Optional[str] = None,
+        path: Optional[str] = None,
     ) -> Optional[str]:
         value: Optional[str] = None
         for cookie in self.jar:

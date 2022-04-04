@@ -14,9 +14,9 @@ from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional, Coroutine
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
-from nonebot.utils import escape_tag
 from nonebot.dependencies import Dependent
 from nonebot.matcher import Matcher, matchers
+from nonebot.utils import escape_tag, run_coro_with_catch
 from nonebot.exception import (
     NoLogException,
     StopPropagation,
@@ -110,13 +110,6 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
     return func
 
 
-async def _run_coro_with_catch(coro: Coroutine[Any, Any, Any]) -> Any:
-    try:
-        return await coro
-    except SkippedException:
-        pass
-
-
 async def _check_matcher(
     priority: int,
     Matcher: Type[Matcher],
@@ -167,7 +160,7 @@ async def _run_matcher(
 
     coros = list(
         map(
-            lambda x: _run_coro_with_catch(
+            lambda x: run_coro_with_catch(
                 x(
                     matcher=matcher,
                     bot=bot,
@@ -175,7 +168,8 @@ async def _run_matcher(
                     state=state,
                     stack=stack,
                     dependency_cache=dependency_cache,
-                )
+                ),
+                (SkippedException,),
             ),
             _run_preprocessors,
         )
@@ -208,7 +202,7 @@ async def _run_matcher(
 
     coros = list(
         map(
-            lambda x: _run_coro_with_catch(
+            lambda x: run_coro_with_catch(
                 x(
                     matcher=matcher,
                     exception=exception,
@@ -217,7 +211,8 @@ async def _run_matcher(
                     state=state,
                     stack=stack,
                     dependency_cache=dependency_cache,
-                )
+                ),
+                (SkippedException,),
             ),
             _run_postprocessors,
         )
@@ -263,14 +258,15 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
     async with AsyncExitStack() as stack:
         coros = list(
             map(
-                lambda x: _run_coro_with_catch(
+                lambda x: run_coro_with_catch(
                     x(
                         bot=bot,
                         event=event,
                         state=state,
                         stack=stack,
                         dependency_cache=dependency_cache,
-                    )
+                    ),
+                    (SkippedException,),
                 ),
                 _event_preprocessors,
             )
@@ -330,14 +326,15 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
 
         coros = list(
             map(
-                lambda x: _run_coro_with_catch(
+                lambda x: run_coro_with_catch(
                     x(
                         bot=bot,
                         event=event,
                         state=state,
                         stack=stack,
                         dependency_cache=dependency_cache,
-                    )
+                    ),
+                    (SkippedException,),
                 ),
                 _event_postprocessors,
             )

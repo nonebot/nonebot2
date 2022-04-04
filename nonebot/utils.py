@@ -21,7 +21,6 @@ from typing import (
     TypeVar,
     Callable,
     Optional,
-    Awaitable,
     Coroutine,
     AsyncGenerator,
     ContextManager,
@@ -130,6 +129,17 @@ async def run_sync_ctx_manager(
             raise e
     else:
         await run_sync(cm.__exit__)(None, None, None)
+
+
+async def run_coro_with_catch(
+    coro: Coroutine[Any, Any, T],
+    exc: Tuple[Type[Exception], ...],
+    return_on_err: R = None,
+) -> Union[T, R]:
+    try:
+        return await coro
+    except exc:
+        return return_on_err
 
 
 def get_name(obj: Any) -> str:
