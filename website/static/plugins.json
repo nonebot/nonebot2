@@ -1640,5 +1640,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_minesweeper",
+    "project_link": "nonebot-plugin-minesweeper",
+    "name": "扫雷游戏",
+    "desc": "在qq中玩扫雷",
+    "author": "MeetWq",
+    "homepage": "https://github.com/MeetWq/nonebot-plugin-minesweeper",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
