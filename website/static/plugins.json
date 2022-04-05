@@ -1655,5 +1655,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_draw",
+    "project_link": "nonebot_plugin_draw",
+    "name": "nonebot_plugin_draw",
+    "desc": "模拟抽签的一个本地化插件",
+    "author": "bingganhe123",
+    "homepage": "https://github.com/bingganhe123/nonebot_plugin_draw",
+    "tags": [],
+    "is_official": false
   }
 ]
