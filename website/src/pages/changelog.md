@@ -41,6 +41,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 扫雷游戏 [@yanyongyu](https://github.com/yanyongyu) ([#907](https://github.com/nonebot/nonebot2/pull/907))
 - Plugin: 汉兜 Handle [@yanyongyu](https://github.com/yanyongyu) ([#899](https://github.com/nonebot/nonebot2/pull/899))
 - Plugin: 多适配器帮助函数 [@yanyongyu](https://github.com/yanyongyu) ([#897](https://github.com/nonebot/nonebot2/pull/897))
 - Plugin: 语句抽象化 [@yanyongyu](https://github.com/yanyongyu) ([#894](https://github.com/nonebot/nonebot2/pull/894))
