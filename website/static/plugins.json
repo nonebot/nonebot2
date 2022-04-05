@@ -70,25 +70,6 @@
     "is_official": true
   },
   {
-    "module_name": "nonebot_plugin_test",
-    "project_link": "nonebot-plugin-test",
-    "author": "yanyongyu",
-    "desc": "在浏览器中测试你的 NoneBot 机器人",
-    "name": "前端测试机器人插件",
-    "homepage": "https://github.com/nonebot/plugin-test",
-    "tags": [
-      {
-        "label": "alpha only",
-        "color": "#f56c6c"
-      },
-      {
-        "label": "a:cqhttp",
-        "color": "#000000"
-      }
-    ],
-    "is_official": true
-  },
-  {
     "module_name": "nonebot_plugin_apscheduler",
     "project_link": "nonebot-plugin-apscheduler",
     "author": "yanyongyu",
@@ -134,42 +115,12 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_web",
-    "project_link": "nonebot-plugin-web",
-    "author": "abrahum",
-    "desc": "Web Monitor 时刻视奸你的bot",
-    "name": "Web监视器",
-    "homepage": "https://github.com/abrahum/nonebot_plugin_web",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_wordbank",
-    "project_link": "nonebot-plugin-wordbank",
-    "author": "Joenothing-lst",
-    "desc": "无数据库的轻量问答插件，支持模糊问答",
-    "name": "nonebot-plugin-wordbank",
-    "homepage": "https://github.com/Joenothing-lst/word-bank",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_mqtt",
     "project_link": "nonebot-plugin-mqtt",
     "author": "synodriver",
     "desc": "接入mqtt网络,订阅和发布消息",
     "name": "mqtt接入",
     "homepage": "https://github.com/synodriver/nonebot_plugin_mqtt",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot-plugin-ipypreter",
-    "project_link": "nonebot-plugin-ipypreter",
-    "author": "iyume",
-    "desc": "消息交互式 python 解释器",
-    "name": "消息交互式 python 解释器",
-    "homepage": "https://github.com/iyume/nonebot-plugin-ipypreter",
     "tags": [],
     "is_official": false
   },
@@ -190,16 +141,6 @@
     "desc": "通过字符串标签在文件中集中管理字符串",
     "name": "字符串管理工具",
     "homepage": "https://github.com/echobot-dev/nonebot-plugin-strman",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_arcaea",
-    "project_link": "nonebot-plugin-arcaea",
-    "author": "iyume",
-    "desc": "Arcaea 查分器，可以实现 best30 | recent | songinfo 之类的查询功能并支持 DIY",
-    "name": "Arcaea 查分器",
-    "homepage": "https://github.com/iyume/nonebot-plugin-arcaea",
     "tags": [],
     "is_official": false
   },
@@ -419,32 +360,12 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_statistical",
-    "project_link": "nonebot-plugin-statistical",
-    "name": "nonebot_plugin_statistical",
-    "desc": "一个简单的功能调用统计以及可视化插件",
-    "author": "HibiKier",
-    "homepage": "https://github.com/HibiKier/nonebot_plugin_statistical",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_setu",
     "project_link": "nonebot-plugin-setu",
     "name": "nonebot_plugin_setu",
     "desc": "基于loliconImage Api的涩图插件，内置涩图CD",
     "author": "ayanamiblhx",
     "homepage": "https://github.com/ayanamiblhx/nonebot_plugin_setu",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_fr24",
-    "project_link": "nonebot-plugin-fr24",
-    "name": "FlightRadar24查询模块",
-    "desc": "通过FlightRadar24查询航班信息",
-    "author": "IronWolf-K",
-    "homepage": "https://github.com/IronWolf-K/nonebot_plugin_fr24",
     "tags": [],
     "is_official": false
   },
@@ -593,36 +514,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_imgsearch",
-    "project_link": "nonebot-plugin-imgsearch",
-    "name": "另一个图片搜索",
-    "desc": "在Ascii2D以及SauceNAO的所有数据库中搜索这张图片",
-    "author": "bakashigure",
-    "homepage": "https://github.com/bakashigure/nonebot_plugin_imgsearch",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_itnews",
-    "project_link": "nonebot-plugin-itnew",
-    "name": "IT咨讯",
-    "desc": "获取IT咨讯并生成图片发送",
-    "author": "yzyyz1387",
-    "homepage": "https://github.com/yzyyz1387/nonebot_plugin_itnews",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "lolheroes",
-    "project_link": "lolHeroes",
-    "name": "lolheroes",
-    "desc": "获取lol英雄背景的故事",
-    "author": "cjladmin",
-    "homepage": "https://github.com/cjladmin/lolheroes",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_youthstudy",
     "project_link": "nonebot-plugin-youthstudy",
     "name": "nonebot_plugin_youthstudy",
@@ -647,31 +538,6 @@
       {
         "label": "a:cqhttp",
         "color": "#000000"
-      }
-    ],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_workscore",
-    "project_link": "nonebot-plugin-workscore",
-    "name": "工作性价比计算器",
-    "desc": "一个计算工作性价比的插件",
-    "author": "yzyyz1387",
-    "homepage": "https://github.com/yzyyz1387/nonebot_plugin_workscore",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_nokia",
-    "project_link": "nonebot-plugin-nokia",
-    "name": "诺基亚手机图生成",
-    "desc": "生成一张诺基亚（无内鬼）图片",
-    "author": "kexue-z",
-    "homepage": "https://github.com/kexue-z/nonebot-plugin-nokia",
-    "tags": [
-      {
-        "label": "alpha only",
-        "color": "#f56c6c"
       }
     ],
     "is_official": false
@@ -843,16 +709,6 @@
     "desc": "谁不喜欢+1呢？",
     "author": "ninthseason",
     "homepage": "https://github.com/ninthseason/nonebot-plugin-repeater",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_PCtrl",
-    "project_link": "nonebot-plugin-pctrl",
-    "name": "插件管理器",
-    "desc": "基于HOOK的插件管理器,提供常用功能",
-    "author": "CherryGS",
-    "homepage": "https://github.com/CherryGS/nonebot_plugin_PCtrl",
     "tags": [],
     "is_official": false
   },
@@ -1124,16 +980,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_fg",
-    "project_link": "nonebot-plugin-fg",
-    "name": "FG(Fifth Generation)",
-    "desc": "基于Nonebot2的QQ群机器人🤖️插件，特色功能是利用机器学习算法，基于每日聊天记录生成每日总结",
-    "author": "mgsky1",
-    "homepage": "https://github.com/mgsky1/FG-plugin",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_chatrecorder",
     "project_link": "nonebot-plugin-chatrecorder",
     "name": "聊天记录插件",
@@ -1159,16 +1005,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_random_cat",
-    "project_link": "nonebot-plugin-random-cat",
-    "name": "random-cat",
-    "desc": "使用外网API随机发送猫猫狗狗图片，不在本地缓存，可选群启用",
-    "author": "alphaAE",
-    "homepage": "https://github.com/NoneBot2-Ae/nonebot-plugin-random-cat",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_antiflash",
     "project_link": "nonebot-plugin-antiflash",
     "name": "群聊反闪照",
@@ -1181,16 +1017,6 @@
         "color": "#6f64d4"
       }
     ],
-    "is_official": false
-  },
-  {
-    "module_name": "random_cat_gif",
-    "project_link": "random_cat_gif",
-    "name": "random_cat_gif",
-    "desc": "无需魔法上网，无需图库的随机猫猫gif插件",
-    "author": "applenana",
-    "homepage": "https://github.com/applenana/random_cat_gif",
-    "tags": [],
     "is_official": false
   },
   {
@@ -1208,25 +1034,6 @@
       {
         "label": "wordbank",
         "color": "#0b00ff"
-      }
-    ],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_ServantReasoning",
-    "project_link": "ServantReasoning",
-    "name": "Fgo从者推理",
-    "desc": "通过bot描述的从者特征，玩家对从者进行猜测的游戏",
-    "author": "suhexia",
-    "homepage": "https://github.com/suhexia/ServantReasoningGame",
-    "tags": [
-      {
-        "label": "t:game",
-        "color": "#ed9a41"
-      },
-      {
-        "label": "a:gocqhttp",
-        "color": "#ed9a41"
       }
     ],
     "is_official": false
@@ -1354,16 +1161,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_mockingbird_plugin",
-    "project_link": "nonebot-mockingbird-plugin",
-    "name": "mockingbird",
-    "desc": "简单使用mockingbird让机器人讲话",
-    "author": "Diaosi1111",
-    "homepage": "https://github.com/Diaosi1111/nonebot_mockingbird_plugin",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_qrcode",
     "project_link": "nonebot-plugin-qrcode",
     "name": "二维码识别与发送",
@@ -1401,21 +1198,6 @@
       {
         "label": "ygo",
         "color": "#ea5252"
-      }
-    ],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_anime_news",
-    "project_link": "nonebot-plugin-anime-news",
-    "name": "动漫新闻",
-    "desc": "一个简易的获取来自 bangumi.moe 番剧时间表的插件",
-    "author": "5656565566",
-    "homepage": "https://github.com/5656565566/anime_news",
-    "tags": [
-      {
-        "label": "bangumi",
-        "color": "#aa52ea"
       }
     ],
     "is_official": false
@@ -1480,16 +1262,6 @@
     "desc": "一个基于签到积分的21点游戏与积分对战插件",
     "author": "yaowan233",
     "homepage": "https://github.com/yaowan233/nonebot-plugin-blackjack",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_pulgin_autoagree",
-    "project_link": "nonebot-pulgin-autoagree",
-    "name": "QQ自动同意好友申请",
-    "desc": "QQ自动同意好友申请",
-    "author": "ZakiuC",
-    "homepage": "https://github.com/ZakiuC/NoneBot_Pulgin_AutoAgree",
     "tags": [],
     "is_official": false
   },
