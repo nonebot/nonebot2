@@ -33,6 +33,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Docs: 移除商店中的过期插件 [@j1g5awi](https://github.com/j1g5awi) ([#902](https://github.com/nonebot/nonebot2/pull/902))
 - CI: 修复发布机器人的意外错误 [@he0119](https://github.com/he0119) ([#892](https://github.com/nonebot/nonebot2/pull/892))
 - Docs: 替换和移除部分已经失效的插件 [@MeetWq](https://github.com/MeetWq) ([#879](https://github.com/nonebot/nonebot2/pull/879))
 - Docs: 添加 netlify 标签 [@yanyongyu](https://github.com/yanyongyu) ([#816](https://github.com/nonebot/nonebot2/pull/816))
