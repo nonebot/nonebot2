@@ -36,7 +36,7 @@ jobs:
           poetry run pytest -n auto --cov-report xml
 
       - name: Upload coverage report
-        uses: codecov/codecov-action@v2
+        uses: codecov/codecov-action@v3
         with:
           env_vars: OS,PYTHON_VERSION
           files: ./tests/coverage.xml
