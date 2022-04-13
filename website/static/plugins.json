@@ -1437,5 +1437,15 @@
     "homepage": "https://github.com/bingganhe123/nonebot_plugin_draw",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_addFriend",
+    "project_link": "nonebot_plugin_addFriend",
+    "name": "好友请求和群请求处理",
+    "desc": "处理被请求加QQ好友和QQ群的请求",
+    "author": "ziru-w",
+    "homepage": "https://github.com/ziru-w/nonebot_plugin_addFriend",
+    "tags": [],
+    "is_official": false
   }
 ]
