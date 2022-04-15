@@ -41,7 +41,7 @@ async def update_type():
 
 事件响应器的匹配规则是一个 `Rule` 对象，它是一系列 `checker` 的集合，当所有的 `checker` 都返回 `True` 时，才会触发该响应器。
 
-规则编写方法参考[自定义规则](#自定义规则)。
+规则编写方法参考[进阶 - 自定义规则](../../advanced/rule.md)。
 
 :::warning 注意
 当会话状态更新时，`rule` 会被清空，以便会话收到新事件时能够正确匹配。
@@ -51,7 +51,7 @@ async def update_type():
 
 事件响应器的触发权限是一个 `Permission` 对象，它也是一系列 `checker` 的集合，当其中一个 `checker` 返回 `True` 时，就会触发该响应器。
 
-权限编写方法参考[自定义权限](#自定义权限)。
+权限编写方法参考[进阶 - 自定义权限](../../advanced/permission.md)。
 
 :::warning 注意
 与 `rule` 不同的是，`permission` 不会在会话状态更新时丢失，因此 `permission` 通常用于会话的响应控制。
@@ -131,9 +131,3 @@ matcher = on_message()
 14. `MatcherGroup`: 创建具有共同参数的响应器组。
 
 其中，`on_metaevent` `on_message` `on_request` `on_notice` 函数都是在 `on` 的基础上添加了对应的事件类型 `type`；`on_startswith` `on_endswith` `on_fullmatch` `on_keyword` `on_command` `on_shell_command` `on_regex` 函数都是在 `on_message` 的基础上添加了对应的匹配规则 `rule`。
-
-## 自定义规则
-
-<!-- TODO -->
-
-## 自定义权限
