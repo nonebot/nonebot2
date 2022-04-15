@@ -122,8 +122,8 @@ async def test_state(app: App, load_plugin):
         CMD_ARG_KEY,
         RAW_CMD_KEY,
         REGEX_GROUP,
-        REGEX_MATCHED,
         CMD_START_KEY,
+        REGEX_MATCHED,
     )
     from plugins.param.param_state import (
         state,
@@ -132,8 +132,8 @@ async def test_state(app: App, load_plugin):
         command_arg,
         raw_command,
         regex_group,
-        regex_matched,
         command_start,
+        regex_matched,
         shell_command_args,
         shell_command_argv,
     )

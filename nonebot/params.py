@@ -32,8 +32,8 @@ from nonebot.consts import (
     CMD_ARG_KEY,
     RAW_CMD_KEY,
     REGEX_GROUP,
-    REGEX_MATCHED,
     CMD_START_KEY,
+    REGEX_MATCHED,
 )
 
 
