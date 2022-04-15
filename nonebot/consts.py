@@ -28,6 +28,8 @@ RAW_CMD_KEY: Literal["raw_command"] = "raw_command"
 """命令文本存储 key"""
 CMD_ARG_KEY: Literal["command_arg"] = "command_arg"
 """命令参数存储 key"""
+CMD_START_KEY: Literal["command_start"] = "command_start"
+"""命令开头存储 key"""
 
 SHELL_ARGS: Literal["_args"] = "_args"
 """shell 命令 parse 后参数字典存储 key"""

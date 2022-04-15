@@ -29,6 +29,7 @@ from nonebot.params import (
     EventToMe,
     EventType,
     CommandArg,
+    CommandToMe,
     EventMessage,
     EventPlainText,
 )
@@ -42,6 +43,7 @@ from nonebot.consts import (
     RAW_CMD_KEY,
     REGEX_GROUP,
     REGEX_MATCHED,
+    CMD_START_KEY,
 )
 
 CMD_RESULT = TypedDict(
@@ -50,6 +52,7 @@ CMD_RESULT = TypedDict(
         "command": Optional[Tuple[str, ...]],
         "raw_command": Optional[str],
         "command_arg": Optional[Message[MessageSegment]],
+        "command_start": Optional[str],
     },
 )
 
@@ -66,7 +69,9 @@ class TrieRule:
 
     @classmethod
     def get_value(cls, bot: Bot, event: Event, state: T_State) -> CMD_RESULT:
-        prefix = CMD_RESULT(command=None, raw_command=None, command_arg=None)
+        prefix = CMD_RESULT(
+            command=None, raw_command=None, command_arg=None, command_start=None
+        )
         state[PREFIX_KEY] = prefix
         if event.get_type() != "message":
             return prefix
@@ -77,7 +82,8 @@ class TrieRule:
             segment_text = str(message_seg).lstrip()
             pf = cls.prefix.longest_prefix(segment_text)
             prefix[RAW_CMD_KEY] = pf.key
-            prefix[CMD_KEY] = pf.value
+            prefix[CMD_START_KEY] = pf.value[0]
+            prefix[CMD_KEY] = pf.value[1]
             if pf.key:
                 msg = message.copy()
                 msg.pop(0)
@@ -292,10 +298,10 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
 
         if len(command) == 1:
             for start in command_start:
-                TrieRule.add_prefix(f"{start}{command[0]}", command)
+                TrieRule.add_prefix(f"{start}{command[0]}", (start, command))
         else:
             for start, sep in product(command_start, command_sep):
-                TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
+                TrieRule.add_prefix(f"{start}{sep.join(command)}", (start, command))
 
     return Rule(CommandRule(commands))
 
@@ -416,10 +422,10 @@ def shell_command(
 
         if len(command) == 1:
             for start in command_start:
-                TrieRule.add_prefix(f"{start}{command[0]}", command)
+                TrieRule.add_prefix(f"{start}{command[0]}", (start, command))
         else:
             for start, sep in product(command_start, command_sep):
-                TrieRule.add_prefix(f"{start}{sep.join(command)}", command)
+                TrieRule.add_prefix(f"{start}{sep.join(command)}", (start, command))
 
     return Rule(ShellCommandRule(commands, parser))
 
@@ -492,6 +498,21 @@ def to_me() -> Rule:
     """匹配与机器人有关的事件。"""
 
     return Rule(ToMeRule())
+
+
+class CommandToMeRule:
+    """检查命令是否与机器人有关。或者 `to_me`，或者当前匹配的 `command_start` 不为空"""
+
+    __slots__ = ()
+
+    async def __call__(self, to_me: bool = CommandToMe()) -> bool:
+        return to_me
+
+
+def command_to_me() -> Rule:
+    """匹配与机器人有关的命令。即 `to_me` 或 存在命令开头"""
+
+    return Rule(CommandToMeRule())
 
 
 __autodoc__ = {
