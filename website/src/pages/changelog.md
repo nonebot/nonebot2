@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 添加自定义匹配规则文档 [@yanyongyu](https://github.com/yanyongyu) ([#914](https://github.com/nonebot/nonebot2/pull/914))
 - Docs: 修复适配器文档内商店链接 [@yanyongyu](https://github.com/yanyongyu) ([#861](https://github.com/nonebot/nonebot2/pull/861))
 - Docs: tips for finding adapters' document link [@StarHeartHunt](https://github.com/StarHeartHunt) ([#860](https://github.com/nonebot/nonebot2/pull/860))
 - Docs: 添加对 `fastapi_reload` 在 Windows 平台额外影响的说明 [@CherryGS](https://github.com/CherryGS) ([#830](https://github.com/nonebot/nonebot2/pull/830))
@@ -42,6 +43,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: splatoon2 新闻 [@yanyongyu](https://github.com/yanyongyu) ([#917](https://github.com/nonebot/nonebot2/pull/917))
 - Plugin: nonebot_plugin_draw [@yanyongyu](https://github.com/yanyongyu) ([#910](https://github.com/nonebot/nonebot2/pull/910))
 - Plugin: 扫雷游戏 [@yanyongyu](https://github.com/yanyongyu) ([#907](https://github.com/nonebot/nonebot2/pull/907))
 - Plugin: 汉兜 Handle [@yanyongyu](https://github.com/yanyongyu) ([#899](https://github.com/nonebot/nonebot2/pull/899))
