@@ -1437,5 +1437,15 @@
     "homepage": "https://github.com/bingganhe123/nonebot_plugin_draw",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "splatoon2_tools",
+    "project_link": "nanobot-plugin-splatoon2tools",
+    "name": "splatoon2新闻",
+    "desc": "获取工凃地真格信息",
+    "author": "DrinkOolongTea",
+    "homepage": "https://github.com/DrinkOolongTea/splatoon2-bot",
+    "tags": [],
+    "is_official": false
   }
 ]
