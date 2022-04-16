@@ -163,10 +163,23 @@
     "module_name": "nonebot-plugin-ncm",
     "project_link": "nonebot-plugin-ncm",
     "author": "kitUIN",
-    "desc": "网易云无损音乐下载",
+    "desc": "网易云 无损音乐 点歌/下载",
     "name": "网易云无损音乐下载",
-    "homepage": "https://github.com/kitUIN/nonebot_tools/tree/master/nonebot_tools/nonebot-plugin-ncm",
-    "tags": [],
+    "homepage": "https://github.com/kitUIN/nonebot-plugin-ncm",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "a:cqhttp",
+        "color": "#000000"
+      },
+      {
+        "label": "t:Netease",
+        "color": "#ec4141"
+      }
+    ],
     "is_official": false
   },
   {
