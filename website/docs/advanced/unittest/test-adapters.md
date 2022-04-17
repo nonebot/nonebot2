@@ -16,7 +16,7 @@ category: advanced
 2. 测试事件转化
 3. 测试 API 调用
 
-接下来，我们将假设适配器名称为 `hello_world`，HTTP POST地址为 `/hello_world/http`，反向 WebSocket 地址为 `/hello_world/ws`，上报机器人 ID
+接下来，我们将假设适配器名称为 `hello_world`，HTTP POST 地址为 `/hello_world/http`，反向 WebSocket 地址为 `/hello_world/ws`，上报机器人 ID
 使用请求头 `Bot-ID` 来演示如何通过 NoneBug 测试框架测试适配器。
 
 ## 注册适配器
@@ -35,7 +35,7 @@ from nonebug import App
 @pytest.fixture
 def import_hook():
     import nonebot.adapters
-    
+
     # 由于这时包 `nonebot.adapters` 并不存在包 `hello_world`，这里通过 `__path__.append` 将包路径添加到包内
     nonebot.adapters.__path__.append(  # type: ignore
         str((Path(__file__).parent.parent / "nonebot" / "hello_world").resolve())
@@ -59,11 +59,11 @@ async def init_adapter(app: App, import_hook):
 2. 正向 WebSocket
 3. 反向 WebSocket
 
-NoneBug 的 `test_server` 方法可以供我们测试这3种连接方式。
+NoneBug 的 `test_server` 方法可以供我们测试这 3 种连接方式。
 
 `test_server` 的 `get_client` 方法可以获取 HTTP POST 客户端和 WebSocket 客户端。
 
-下面是一个HTTP POST和反向 WebSocket的测试的示例。
+下面是一个 HTTP POST 和反向 WebSocket 的测试的示例。
 
 ```python title=test_connection.py {14-23} {33-38}
 from pathlib import Path
@@ -86,7 +86,7 @@ async def test_http(app: App, init_adapter, endpoints: str):
         }
         headers = {"Bot-ID": "test"}
         resp = await client.post(endpoints, json=event, headers=headers)  # 上报事件，请求头包含 `self-id`
-        assert resp.status_code == 204  # 检测状态码是否正确 
+        assert resp.status_code == 204  # 检测状态码是否正确
         bots = nonebot.get_bots()
         assert "test" in bots  # 检测是否连接成功
 
@@ -124,7 +124,7 @@ from nonebug import App
 @pytest.mark.asyncio
 async def test_event(app: App, init_adapter):
     from nonebot.adapters.hello_world import Adapter
-  
+
     model_name = "TestEvent"
     event = Adapter.json_to_event({
       "post_type": "test"
@@ -151,7 +151,7 @@ from nonebug import App
 @pytest.mark.asyncio
 async def test_api_reply(app: App, init_adapter):
     from nonebot.adapters.hello_world import ResultStore
-    
+
     seq = ResultStore()
     self_id = "test"
     response_data = {"test": True}

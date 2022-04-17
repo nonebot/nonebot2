@@ -67,7 +67,7 @@ ctx.should_finished()
 
 通过时引发 `AssertionError`。
 
-```python {3}  
+```python {3}
 msg = Message("/权限测试")
 event = make_fake_event(_message=msg, _to_me=True)()  # 这里的event替换为对应平台的事件类型
 ctx.should_not_pass_permission()  # 通过

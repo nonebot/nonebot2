@@ -105,7 +105,7 @@ async def test_depend(app: App):
 
     async with app.test_dependent(depend, allow_types=[DependParam]) as ctx:
         ctx.should_return(1)
-    
+
     # runned = [1]
     assert len(runned) == 1 and runned[0] == 1
     runned.clear()
@@ -114,23 +114,23 @@ async def test_depend(app: App):
         bot = ctx.create_bot()
         event_next = make_fake_event()()  # 这里的event替换为对应平台的事件类型
         ctx.receive_event(bot, event_next)
-  
+
     # runned = [1, 1]
     assert len(runned) == 2 and runned[0] == runned[1] == 1
     runned.clear()
 
     async with app.test_dependent(depend, allow_types=[DependParam]) as ctx:
         ctx.should_return(1)
-    
+
     # runned = [1]
     assert len(runned) == 1 and runned[0] == 1
     runned.clear()
-  
+
     async with app.test_matcher(test_no_cache) as ctx:
         bot = ctx.create_bot()
         event_next = make_fake_event()()  # 这里的event替换为对应平台的事件类型
         ctx.receive_event(bot, event_next)
-    
+
     # runned = [1, 1, 1]
     assert len(runned) == 3 and runned[0] == runned[1] == runned[2] == 1
 ```
@@ -217,16 +217,16 @@ class DependClass:
 
 下面是参数类型对应的 `Param` 类型表格。
 
-| 类型             | `Param` 类型                                                                                                                                            |
-|----------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|
-| DependParam    | 在有其他类型参数或无参数时使用                                                                                                                                       |
-| EventParam     | 参数包含 `Event` 类型或者为 `EventMessage`，`EventPlainText`，`EventToMe` 或 `EventType`                                                                          |
-| MatcherParam   | 参数包含 `Matcher` 类型                                                                                                                                     |
-| ArgParam       | 参数为 `Arg`，`ArgStr` 或 `ArgPlainText`                                                                                                                   |
-| ExceptionParam | 参数包含异常类                                                                                                                                               |
-| DefaultParam   | 参数含有默认值                                                                                                                                               |
-| BotParam       | 参数包含 `Bot` 类型                                                                                                                                         |
-| StateParam     | 参数包含 `T_State` 类型或者为 `Command`，`RawCommand`，`CommandArg`，`ShellCommandArgs`，`ShellCommandArgv`，`RegexDict`，`RegexGroup`，`RegexGroup` 和 `RegexMatched` |                                                   |
+| 类型           | `Param` 类型                                                                                                                                                           |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --- |
+| DependParam    | 在有其他类型参数或无参数时使用                                                                                                                                         |
+| EventParam     | 参数包含 `Event` 类型或者为 `EventMessage`，`EventPlainText`，`EventToMe` 或 `EventType`                                                                               |
+| MatcherParam   | 参数包含 `Matcher` 类型                                                                                                                                                |
+| ArgParam       | 参数为 `Arg`，`ArgStr` 或 `ArgPlainText`                                                                                                                               |
+| ExceptionParam | 参数包含异常类                                                                                                                                                         |
+| DefaultParam   | 参数含有默认值                                                                                                                                                         |
+| BotParam       | 参数包含 `Bot` 类型                                                                                                                                                    |
+| StateParam     | 参数包含 `T_State` 类型或者为 `Command`，`RawCommand`，`CommandArg`，`ShellCommandArgs`，`ShellCommandArgv`，`RegexDict`，`RegexGroup`，`RegexGroup` 和 `RegexMatched` |     |
 
 下面是一个简单的测试用例。
 
