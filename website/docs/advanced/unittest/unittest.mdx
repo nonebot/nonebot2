@@ -1,0 +1,81 @@
+---
+sidebar_position: 1
+description: 单元测试概览
+
+options:
+menu:
+weight: 50
+category: advanced
+---
+
+
+
+
+import CodeBlock from "@theme/CodeBlock";
+import WeatherSource from "!!raw-loader!@site/../tests/examples/weather.py";
+import WeatherTest from "!!raw-loader!@site/../tests/test_examples/test_weather.py";
+
+# 单元测试
+
+[单元测试](https://zh.wikipedia.org/wiki/%E5%8D%95%E5%85%83%E6%B5%8B%E8%AF%95)
+
+> 在计算机编程中，单元测试（Unit Testing）又称为模块测试，是针对程序模块（软件设计的最小单位）来进行正确性检验的测试工作。
+
+NoneBot2 使用基于 [Pytest](http://pytest.org/) 的 **NoneBug** 单元测试框架，可以方便地针对 NoneBot2 编写单元测试。
+
+## 编码建议
+
+:::tip 提示
+建议查看 Pytest 的[官方文档](https://docs.pytest.org/)，以便理解一些 **术语**
+:::
+
+通常，测试用例会放到 `tests` 文件夹，其中以 `test` 为前缀的模块会被当作被测试文件。
+
+[`conftest.py`](https://docs.pytest.org/en/7.1.x/reference/fixtures.html#conftest-py-sharing-fixtures-across-multiple-files) 文件用来存储夹具。
+
+## 安装NoneBug
+
+```bash
+pip install nonebug
+# 也可以通过 Poetry 安装
+poetry add nonebug
+```
+
+## 编写测试用例
+
+:::warning 警告
+这里的 `app` 形参必须存在，不可省略或者修改为其他名称。
+:::
+:::tip 提示
+将从 `utils` 导入的 `make_fake_message`，`make_fake_event` 替换为对应平台的类型。
+:::
+
+使用 NoneBug 的 `test_matcher` 可以模拟出一个事件流程。
+
+如下是一个简单的示例
+
+<CodeBlock className="language-python" title="test_weather.py">{WeatherTest}</CodeBlock>
+
+<details>
+  <summary>示例插件</summary>
+
+  <CodeBlock className="language-python" title="examples/weather.py">{WeatherSource}</CodeBlock>
+
+</details>
+
+
+## 测试流程
+
+:::tip 提示
+需要了解实现细节可查看源码。
+:::
+
+`Pytest` 会在函数开始前通过夹具 [`nonebug_app`](https://github.com/nonebot/nonebug/blob/master/nonebug/fixture.py) **初始化** `Nonebot`。
+
+随后使用 `test_matcher` 获取到一个 [`MatcherContext`](https://github.com/nonebot/nonebug/blob/master/nonebug/mixin/process/__init__.py) 对象，通过其提供的方法（如 `should_call_send`）将事件响应器操作添加到队列。
+
+在异步上下文管理器关闭时，[`MatcherContext`](https://github.com/nonebot/nonebug/blob/master/nonebug/mixin/process/__init__.py) 会调用父类的 `run_test` 方法对事件响应器操作进行断言（包括但不限于断言规则/权限，断言预期输出）。
+
+在当前函数完成上述步骤后，`Pytest` 的夹具机制会自动关闭 `NoneBot` 实例，结束测试。
+
+其他的测试方法的流程与此相同，只是对象的差别。
