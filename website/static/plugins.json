@@ -1483,5 +1483,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_lolheroes",
+    "project_link": "nonebot-plugin-lol-Heroes",
+    "name": "lol-Heroes",
+    "desc": "获取LOL英雄背景故事",
+    "author": "cjladmin",
+    "homepage": "https://github.com/cjladmin/nonebot_plugin_lolheroes",
+    "tags": [],
+    "is_official": false
   }
 ]
