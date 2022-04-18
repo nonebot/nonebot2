@@ -44,6 +44,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 随机唐可可 [@yanyongyu](https://github.com/yanyongyu) ([#931](https://github.com/nonebot/nonebot2/pull/931))
 - Plugin: splatoon2 新闻 [@yanyongyu](https://github.com/yanyongyu) ([#917](https://github.com/nonebot/nonebot2/pull/917))
 - Plugin: nonebot_plugin_draw [@yanyongyu](https://github.com/yanyongyu) ([#910](https://github.com/nonebot/nonebot2/pull/910))
 - Plugin: 扫雷游戏 [@yanyongyu](https://github.com/yanyongyu) ([#907](https://github.com/nonebot/nonebot2/pull/907))
