@@ -109,15 +109,6 @@ def CommandStart() -> str:
     return Depends(_command_start)
 
 
-def _command_to_me(event: Event, state: T_State) -> bool:
-    return event.is_tome() or bool(state[PREFIX_KEY][CMD_START_KEY])
-
-
-def CommandToMe() -> bool:
-    """`to_me` 或 存在 `command_start`"""
-    return Depends(_command_to_me)
-
-
 def _shell_command_args(state: T_State) -> Any:
     return state[SHELL_ARGS]
 

@@ -29,7 +29,6 @@ from nonebot.params import (
     EventToMe,
     EventType,
     CommandArg,
-    CommandToMe,
     EventMessage,
     EventPlainText,
 )
@@ -498,21 +497,6 @@ def to_me() -> Rule:
     """匹配与机器人有关的事件。"""
 
     return Rule(ToMeRule())
-
-
-class CommandToMeRule:
-    """检查命令是否与机器人有关。或者 `to_me`，或者当前匹配的 `command_start` 不为空"""
-
-    __slots__ = ()
-
-    async def __call__(self, to_me: bool = CommandToMe()) -> bool:
-        return to_me
-
-
-def command_to_me() -> Rule:
-    """匹配与机器人有关的命令。即 `to_me` 或 存在命令开头"""
-
-    return Rule(CommandToMeRule())
 
 
 __autodoc__ = {
