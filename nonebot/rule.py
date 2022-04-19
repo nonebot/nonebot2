@@ -14,7 +14,7 @@ from itertools import product
 from argparse import Namespace
 from typing_extensions import TypedDict
 from argparse import ArgumentParser as ArgParser
-from typing import Any, List, Tuple, Union, Optional, Sequence
+from typing import Any, List, Tuple, Union, Optional, Sequence, NamedTuple
 
 from pygtrie import CharTrie
 
@@ -55,12 +55,16 @@ CMD_RESULT = TypedDict(
     },
 )
 
+TRIE_VALUE = NamedTuple(
+    "TRIE_VALUE", [("command_start", str), ("command", Tuple[str, ...])]
+)
+
 
 class TrieRule:
     prefix: CharTrie = CharTrie()
 
     @classmethod
-    def add_prefix(cls, prefix: str, value: Any):
+    def add_prefix(cls, prefix: str, value: TRIE_VALUE) -> None:
         if prefix in cls.prefix:
             logger.warning(f'Duplicated prefix rule "{prefix}"')
             return
@@ -80,10 +84,11 @@ class TrieRule:
         if message_seg.is_text():
             segment_text = str(message_seg).lstrip()
             pf = cls.prefix.longest_prefix(segment_text)
-            prefix[RAW_CMD_KEY] = pf.key
-            prefix[CMD_START_KEY] = pf.value[0]
-            prefix[CMD_KEY] = pf.value[1]
-            if pf.key:
+            if pf:
+                value: TRIE_VALUE = pf.value
+                prefix[RAW_CMD_KEY] = pf.key
+                prefix[CMD_START_KEY] = value.command_start
+                prefix[CMD_KEY] = value.command
                 msg = message.copy()
                 msg.pop(0)
                 new_message = msg.__class__(segment_text[len(pf.key) :].lstrip())
@@ -297,10 +302,12 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
 
         if len(command) == 1:
             for start in command_start:
-                TrieRule.add_prefix(f"{start}{command[0]}", (start, command))
+                TrieRule.add_prefix(f"{start}{command[0]}", TRIE_VALUE(start, command))
         else:
             for start, sep in product(command_start, command_sep):
-                TrieRule.add_prefix(f"{start}{sep.join(command)}", (start, command))
+                TrieRule.add_prefix(
+                    f"{start}{sep.join(command)}", TRIE_VALUE(start, command)
+                )
 
     return Rule(CommandRule(commands))
 
@@ -421,10 +428,12 @@ def shell_command(
 
         if len(command) == 1:
             for start in command_start:
-                TrieRule.add_prefix(f"{start}{command[0]}", (start, command))
+                TrieRule.add_prefix(f"{start}{command[0]}", TRIE_VALUE(start, command))
         else:
             for start, sep in product(command_start, command_sep):
-                TrieRule.add_prefix(f"{start}{sep.join(command)}", (start, command))
+                TrieRule.add_prefix(
+                    f"{start}{sep.join(command)}", TRIE_VALUE(start, command)
+                )
 
     return Rule(ShellCommandRule(commands, parser))
 
