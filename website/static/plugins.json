@@ -1483,5 +1483,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_dida",
+    "project_link": "nonebot-plugin-dida",
+    "name": "nonebot-plugin-dida",
+    "desc": "基于Nonebot的滴答清单插件,可创建普通任务/子任务,按照条件查询任务",
+    "author": "TDK1969",
+    "homepage": "https://github.com/TDK1969/nonebot_plugin_dida",
+    "tags": [
+      {
+        "label": "t:滴答清单",
+        "color": "#007ffd"
+      }
+    ],
+    "is_official": false
   }
 ]
