@@ -32,6 +32,7 @@ from nonebot.consts import (
     CMD_ARG_KEY,
     RAW_CMD_KEY,
     REGEX_GROUP,
+    CMD_START_KEY,
     REGEX_MATCHED,
 )
 
@@ -97,6 +98,15 @@ def _command_arg(state: T_State) -> Message:
 def CommandArg() -> Any:
     """消息命令参数"""
     return Depends(_command_arg)
+
+
+def _command_start(state: T_State) -> str:
+    return state[PREFIX_KEY][CMD_START_KEY]
+
+
+def CommandStart() -> str:
+    """消息命令开头"""
+    return Depends(_command_start)
 
 
 def _shell_command_args(state: T_State) -> Any:

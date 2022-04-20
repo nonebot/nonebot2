@@ -8,6 +8,7 @@ from nonebot.params import (
     CommandArg,
     RawCommand,
     RegexGroup,
+    CommandStart,
     RegexMatched,
     ShellCommandArgs,
     ShellCommandArgv,
@@ -28,6 +29,10 @@ async def raw_command(raw_cmd: str = RawCommand()) -> str:
 
 async def command_arg(cmd_arg: Message = CommandArg()) -> Message:
     return cmd_arg
+
+
+async def command_start(start: str = CommandStart()) -> str:
+    return start
 
 
 async def shell_command_args(

@@ -122,6 +122,7 @@ async def test_state(app: App, load_plugin):
         CMD_ARG_KEY,
         RAW_CMD_KEY,
         REGEX_GROUP,
+        CMD_START_KEY,
         REGEX_MATCHED,
     )
     from plugins.param.param_state import (
@@ -131,6 +132,7 @@ async def test_state(app: App, load_plugin):
         command_arg,
         raw_command,
         regex_group,
+        command_start,
         regex_matched,
         shell_command_args,
         shell_command_argv,
@@ -138,7 +140,12 @@ async def test_state(app: App, load_plugin):
 
     fake_message = make_fake_message()("text")
     fake_state = {
-        PREFIX_KEY: {CMD_KEY: ("cmd",), RAW_CMD_KEY: "/cmd", CMD_ARG_KEY: fake_message},
+        PREFIX_KEY: {
+            CMD_KEY: ("cmd",),
+            RAW_CMD_KEY: "/cmd",
+            CMD_START_KEY: "/",
+            CMD_ARG_KEY: fake_message,
+        },
         SHELL_ARGV: ["-h"],
         SHELL_ARGS: {"help": True},
         REGEX_MATCHED: "[cq:test,arg=value]",
@@ -167,6 +174,12 @@ async def test_state(app: App, load_plugin):
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[PREFIX_KEY][CMD_ARG_KEY])
+
+    async with app.test_dependent(
+        command_start, allow_types=[StateParam, DependParam]
+    ) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state[PREFIX_KEY][CMD_START_KEY])
 
     async with app.test_dependent(
         shell_command_argv, allow_types=[StateParam, DependParam]

@@ -256,6 +256,25 @@ async def _(foo: Message = CommandArg()): ...
 命令详情只能在首次接收到命令型消息时获取，如果在事件处理后续流程中获取，则会获取到不同的值。
 :::
 
+### CommandStart
+
+获取命令型消息命令前缀。
+
+```python {8}
+from nonebot import on_command
+from nonebot.adapters import Message
+from nonebot.params import CommandStart
+
+matcher = on_command("cmd")
+
+@matcher.handle()
+async def _(foo: str = CommandStart()): ...
+```
+
+:::tip 提示
+命令详情只能在首次接收到命令型消息时获取，如果在事件处理后续流程中获取，则会获取到不同的值。
+:::
+
 ### ShellCommandArgs
 
 获取 shell 命令解析后的参数。
