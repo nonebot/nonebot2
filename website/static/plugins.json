@@ -1460,5 +1460,43 @@
     "homepage": "https://github.com/DrinkOolongTea/splatoon2-bot",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_randomtkk",
+    "project_link": "nonebot-plugin-randomtkk",
+    "name": "随机唐可可",
+    "desc": "找到唐可可，和她一起做学园偶像！🎶",
+    "author": "KafCoppelia",
+    "homepage": "https://github.com/MinatoAquaCrews/nonebot_plugin_randomtkk",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#d62222"
+      },
+      {
+        "label": "t:Tan Kuku",
+        "color": "#fdaf75"
+      },
+      {
+        "label": "t:Liyuu",
+        "color": "#465dfd"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_dida",
+    "project_link": "nonebot-plugin-dida",
+    "name": "nonebot-plugin-dida",
+    "desc": "基于Nonebot的滴答清单插件,可创建普通任务/子任务,按照条件查询任务",
+    "author": "TDK1969",
+    "homepage": "https://github.com/TDK1969/nonebot_plugin_dida",
+    "tags": [
+      {
+        "label": "t:滴答清单",
+        "color": "#007ffd"
+      }
+    ],
+    "is_official": false
   }
 ]
