@@ -97,7 +97,7 @@ services:
 - `DOCKERHUB_PASSWORD`: 你的 Docker Hub PAT（[创建方法](https://docs.docker.com/docker-hub/access-tokens/)）
 - `DEPLOY_HOST`: 部署服务器的 SSH 地址
 - `DEPLOY_USER`: 部署服务器用户名
-- `DEPLOY_KEY`: 部署服务器私钥 ([创建方法](https://github.com/marketplace/actions/ssh-remote-commands#setting-up-a-ssh-key))
+- `DEPLOY_KEY`: 部署服务器私钥 ([创建方法](https://github.com/appleboy/ssh-action#setting-up-a-ssh-key))
 - `DEPLOY_PATH`: 部署服务器上的项目路径
 
 将以下文件添加至项目下的 `.github/workflows/` 目录下：
