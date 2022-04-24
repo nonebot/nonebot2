@@ -9,7 +9,6 @@ weight: 80
 category: advanced
 ---
 
-
 import CodeBlock from "@theme/CodeBlock";
 import WeatherSource from "!!raw-loader!@site/../tests/examples/weather.py";
 import WeatherTest from "!!raw-loader!@site/../tests/test_examples/test_weather.py";
@@ -24,13 +23,15 @@ NoneBot2 使用 [Pytest](https://docs.pytest.org) 单元测试框架搭配 [None
 
 ## 安装NoneBug
 
-安装 NoneBug 时，Pytest 及其异步插件 `pytest-asyncio` 会作为依赖被一起安装。
+安装 NoneBug 时，Pytest 会作为依赖被一起安装。
+
+要运行 NoneBug，还需要额外安装 Pytest 异步插件 `pytest-asyncio` 或 `anyio`，文档将以 `pytest-asyncio` 为例。
 
 ```bash
-pip install nonebug
+pip install nonebug pytest-asyncio
 # 也可以通过 Poetry 安装
 # --dev 参数是可选的，表示为开发依赖项
-poetry add nonebug --dev
+poetry add nonebug pytest-asyncio --dev
 ```
 ## 加载插件
 
@@ -41,6 +42,10 @@ poetry add nonebug --dev
 建议阅读 [Pytest 文档](https://docs.pytest.org) 理解相关术语。
 
 此 Fixture 的 [`nonebug_init`](https://github.com/nonebot/nonebug/blob/master/nonebug/fixture.py) 形参也是一个 Fixture，用于初始化 NoneBot。
+
+将目录 `str(Path(__file__).parent / "examples")` 替换为待测试插件所在目录。
+
+Fixture 名称 `load_example` 可以修改为其他名称，文档以 `load_example` 为例。
 
 :::
 
@@ -58,6 +63,7 @@ if TYPE_CHECKING:
 def load_example(nonebug_init: None) -> Set["Plugin"]:
     import nonebot  # 这里的导入必须在函数内
 
+    # 加载插件
     return nonebot.load_plugins(str(Path(__file__).parent / "examples"))
 ```
 
