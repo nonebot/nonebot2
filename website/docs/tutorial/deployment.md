@@ -95,9 +95,9 @@ services:
 
 - `DOCKERHUB_USERNAME`: 你的 Docker Hub 用户名
 - `DOCKERHUB_PASSWORD`: 你的 Docker Hub PAT（[创建方法](https://docs.docker.com/docker-hub/access-tokens/)）
-- `DEPLOY_HOST`: 部署服务器 IP 地址
+- `DEPLOY_HOST`: 部署服务器的 SSH 地址
 - `DEPLOY_USER`: 部署服务器用户名
-- `DEPLOY_KEY`: 部署服务器私钥
+- `DEPLOY_KEY`: 部署服务器私钥 ([创建方法](https://github.com/appleboy/ssh-action#setting-up-a-ssh-key))
 - `DEPLOY_PATH`: 部署服务器上的项目路径
 
 将以下文件添加至项目下的 `.github/workflows/` 目录下：
@@ -162,7 +162,7 @@ jobs:
     if: ${{ github.event.workflow_run.conclusion == 'success' }}
     steps:
       - name: start deployment
-        uses: bobheadxi/deployments@v0.6.2
+        uses: bobheadxi/deployments@v1
         id: deployment
         with:
           step: start
