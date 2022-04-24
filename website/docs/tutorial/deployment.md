@@ -95,10 +95,9 @@ services:
 
 - `DOCKERHUB_USERNAME`: 你的 Docker Hub 用户名
 - `DOCKERHUB_PASSWORD`: 你的 Docker Hub PAT（[创建方法](https://docs.docker.com/docker-hub/access-tokens/)）
-- `DEPLOY_HOST`: 部署服务器 IP 地址
+- `DEPLOY_HOST`: 部署服务器的 SSH 地址
 - `DEPLOY_USER`: 部署服务器用户名
-- `DEPLOY_PORT`: 部署服务器端口
-- `DEPLOY_KEY`: 部署服务器私钥 `.ssh/id_rsa` 中的内容
+- `DEPLOY_KEY`: 部署服务器私钥 ([创建方法](https://github.com/marketplace/actions/ssh-remote-commands#setting-up-a-ssh-key))
 - `DEPLOY_PATH`: 部署服务器上的项目路径
 
 将以下文件添加至项目下的 `.github/workflows/` 目录下：
@@ -146,7 +145,7 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
 ```
-
+  
 ```yaml title=.github/workflows/deploy.yml
 name: Deploy
 
@@ -168,7 +167,6 @@ jobs:
         with:
           step: start
           token: ${{ secrets.GITHUB_TOKEN }}
-          # 这里改成你需要的环境 生产环境为 prod
           env: official-bot
 
       - name: remote ssh command
@@ -177,7 +175,6 @@ jobs:
           DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
         with:
           host: ${{ secrets.DEPLOY_HOST }}
-          port: ${{ secrets.PORT }}
           username: ${{ secrets.DEPLOY_USER }}
           key: ${{ secrets.DEPLOY_KEY }}
           envs: DEPLOY_PATH
