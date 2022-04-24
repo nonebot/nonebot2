@@ -145,7 +145,7 @@ jobs:
           tags: ${{ steps.metadata.outputs.tags }}
           labels: ${{ steps.metadata.outputs.labels }}
 ```
-  
+
 ```yaml title=.github/workflows/deploy.yml
 name: Deploy
 
