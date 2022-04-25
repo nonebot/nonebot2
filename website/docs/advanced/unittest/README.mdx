@@ -79,6 +79,8 @@ Pytest 会在函数开始前通过 Fixture `app`(nonebug_app) **初始化 NoneBu
 
 :::tip 提示
 将从 `utils` 导入的 `make_fake_message`，`make_fake_event` 替换为对应平台的消息/事件类型。
+
+将 `load_example` 替换为加载插件的 Fixture 名称。
 :::
 
 使用 NoneBug 的 `test_matcher` 可以模拟出一个事件流程。如下是一个简单的示例：
