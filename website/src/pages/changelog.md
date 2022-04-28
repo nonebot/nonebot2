@@ -46,6 +46,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 答案之书 [@yanyongyu](https://github.com/yanyongyu) ([#942](https://github.com/nonebot/nonebot2/pull/942))
 - Plugin: 支付宝到账语音 [@yanyongyu](https://github.com/yanyongyu) ([#940](https://github.com/nonebot/nonebot2/pull/940))
 - Plugin: nonebot-plugin-dida [@yanyongyu](https://github.com/yanyongyu) ([#934](https://github.com/nonebot/nonebot2/pull/934))
 - Plugin: 随机唐可可 [@yanyongyu](https://github.com/yanyongyu) ([#931](https://github.com/nonebot/nonebot2/pull/931))
