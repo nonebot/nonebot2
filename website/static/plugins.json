@@ -1528,5 +1528,15 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-hitokoto",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bilicover",
+    "project_link": "nonebot-plugin-bilicover",
+    "name": "B站视频封面提取",
+    "desc": "提取B站视频的封面，支持链接、av号、bv号",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-bilicover",
+    "tags": [],
+    "is_official": false
   }
 ]
