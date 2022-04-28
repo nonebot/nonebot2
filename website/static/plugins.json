@@ -1508,5 +1508,15 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-alipayvoice",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_answersbook",
+    "project_link": "nonebot-plugin-answersbook",
+    "name": "答案之书",
+    "desc": "愿一切无解都有解！解除你的迷惑，终结你的纠结！",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-answersbook",
+    "tags": [],
+    "is_official": false
   }
 ]
