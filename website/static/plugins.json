@@ -1518,5 +1518,15 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-answersbook",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_hitokoto",
+    "project_link": "nonebot-plugin-hitokoto",
+    "name": "一言",
+    "desc": "总有一句话能打动你的心",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-hitokoto",
+    "tags": [],
+    "is_official": false
   }
 ]
