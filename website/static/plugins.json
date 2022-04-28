@@ -1498,5 +1498,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_alipayvoice",
+    "project_link": "nonebot-plugin-alipayvoice",
+    "name": "支付宝到账语音",
+    "desc": "发送支付宝到账语音, 支持金额范围为0.01~999999999999.99",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-alipayvoice",
+    "tags": [],
+    "is_official": false
   }
 ]
