@@ -122,7 +122,7 @@ async def test_event(app: App, init_adapter):
 
 ## 测试 API 调用
 
-将消息序列化为原始文本并由适配器发送到协议端叫做 API 调用。
+将消息序列化为原始数据并由适配器发送到协议端叫做 API 调用。
 
 测试 API 调用就是调用 API 并验证返回与预期返回是否一致。
 
