@@ -9,7 +9,7 @@ description: 测试事件响应处理
 
 ## should_finished
 
-定义事件响应器预取结束当前事件的整个处理流程。
+定义事件响应器预期结束当前事件的整个处理流程。
 
 适用事件响应器操作：[`finish`](../../tutorial/plugin/matcher-operation.md#finish)。
 
