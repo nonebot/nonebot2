@@ -1538,5 +1538,20 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-bilicover",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cchess",
+    "project_link": "nonebot-plugin-cchess",
+    "name": "中国象棋",
+    "desc": "象棋，支持人机和对战",
+    "author": "MeetWq",
+    "homepage": "https://github.com/noneplugin/nonebot-plugin-cchess",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
