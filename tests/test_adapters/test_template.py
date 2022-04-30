@@ -32,6 +32,26 @@ def test_template_message():
     assert str(formatted) == "custom-custom!text[fake:image]"
 
 
+def test_rich_template_message():
+    Message = make_fake_message()
+    MS = Message.get_segment_class()
+
+    pic1, pic2, pic3 = (
+        MS.image("file:///pic1.jpg"),
+        MS.image("file:///pic2.jpg"),
+        MS.image("file:///pic3.jpg"),
+    )
+
+    template = Message.template("{}{}" + pic2 + "{}")
+
+    result = template.format(pic1, "[fake:image]", pic3)
+
+    assert result["image"] == Message([pic1, pic2, pic3])
+    assert str(result) == (
+        "[fake:image]" + escape_text("[fake:image]") + "[fake:image]" + "[fake:image]"
+    )
+
+
 def test_message_injection():
     Message = make_fake_message()
 
