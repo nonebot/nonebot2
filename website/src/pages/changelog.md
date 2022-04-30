@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 添加 pm2 部署文档 [@evlic](https://github.com/evlic) ([#853](https://github.com/nonebot/nonebot2/pull/853))
 - Docs: 更新 GitHub Action 部署文档 [@kexue-z](https://github.com/kexue-z) ([#937](https://github.com/nonebot/nonebot2/pull/937))
 - Docs: 添加自定义匹配规则文档 [@yanyongyu](https://github.com/yanyongyu) ([#914](https://github.com/nonebot/nonebot2/pull/914))
 - Docs: 修复适配器文档内商店链接 [@yanyongyu](https://github.com/yanyongyu) ([#861](https://github.com/nonebot/nonebot2/pull/861))
