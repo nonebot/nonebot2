@@ -3,7 +3,7 @@ sidebar_position: 2
 description: 测试事件响应和 API 调用
 ---
 
-# 测试事件响应器
+# 测试事件响应和 API 调用
 
 事件响应器通过 `Rule` 和 `Permission` 来判断当前事件是否触发事件响应器，通过 `send` 发送消息或使用 `call_api` 调用平台 API，这里我们将对上述行为进行测试。
 
@@ -70,7 +70,7 @@ async def test_matcher(app: App, load_plugins):
         ctx.should_ignore_permission()
 ```
 
-## 定义预期处理行为
+## 定义预期 API 调用行为
 
 在[事件响应器操作](../../tutorial/plugin/matcher-operation.md)和[调用平台 API](../../tutorial/call-api.md) 中，我们已经了解如何向发送消息或调用平台 `API`。接下来对 [`send`](../../tutorial/plugin/matcher-operation.md#send) 和 [`call_api`](../../api/adapters/index.md#Bot-call_api) 进行测试。
 

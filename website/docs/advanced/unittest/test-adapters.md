@@ -11,40 +11,33 @@ description: 测试适配器
 2. 测试事件转化
 3. 测试 API 调用
 
-接下来，我们将假设适配器名称为 `hello_world`，HTTP POST 地址为 `/hello_world/http`，反向 WebSocket 地址为 `/hello_world/ws`，上报机器人 ID
-使用请求头 `Bot-ID` 来演示如何通过 NoneBug 测试适配器。
-
 ## 注册适配器
 
 任何的适配器都需要注册才能起作用。
 
 我们可以使用 Pytest 的 Fixtures，在测试开始前初始化 NoneBot 并**注册适配器**。
 
-```python title=conftest.py {24,27}
+我们假设适配器为 `nonebot.adapters.test`。
+
+```python {20,21} title=conftest.py
 from pathlib import Path
 
 import pytest
 from nonebug import App
 
-
+# 如果适配器采用 nonebot.adapters monospace 则需要使用此hook方法正确添加路径
 @pytest.fixture
 def import_hook():
     import nonebot.adapters
 
-    # 由于这时包 `nonebot.adapters` 并不存在包 `hello_world`
-    # 这里通过 `__path__.append` 将包路径添加到包内
     nonebot.adapters.__path__.append(  # type: ignore
-        str(
-            (Path(__file__).parent.parent / "nonebot" /
-             "adapters" / "hello_world").resolve()
-        )
+        str((Path(__file__).parent.parent / "nonebot" / "adapters").resolve())
     )
-
 
 @pytest.fixture
 async def init_adapter(app: App, import_hook):
     import nonebot
-    from nonebot.adapters.hello_world import Adapter
+    from nonebot.adapters.test import Adapter
 
     driver = nonebot.get_driver()
     driver.register_adapter(Adapter)
@@ -52,57 +45,56 @@ async def init_adapter(app: App, import_hook):
 
 ## 测试连接
 
-任何的适配器的连接方式均为以下 3 种：
+任何的适配器的连接方式主要有以下 4 种：
 
-1. HTTP POST
-2. 正向 WebSocket
-3. 反向 WebSocket
+1. 反向 HTTP（WebHook）
+2. 反向 WebSocket
+3. ~~正向 HTTP（尚未实现）~~
+4. ~~正向 WebSocket（尚未实现）~~
 
-NoneBug 的 `test_server` 方法可以供我们测试这 3 种连接方式。
+NoneBug 的 `test_server` 方法可以供我们测试反向连接方式。
 
-`test_server` 的 `get_client` 方法可以获取 HTTP POST 客户端和 WebSocket 客户端。
+`test_server` 的 `get_client` 方法可以获取 HTTP/WebSocket 客户端。
 
-下面是一个 HTTP POST 和反向 WebSocket 的测试的示例。
+我们假设适配器 HTTP 上报地址为 `/test/http`，反向 WebSocket 地址为 `/test/ws`，上报机器人 ID
+使用请求头 `Bot-ID` 来演示如何通过 NoneBug 测试适配器。
 
-```python title=test_connection.py {14,22,25,39,41}
+```python {8,16,17,19-22,26,34,36-39} title=test_connection.py
 from pathlib import Path
 
 import pytest
 from nonebug import App
 
-
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "endpoints", ["/hello_world/http"]
+    "endpoints", ["/test/http"]
 )
 async def test_http(app: App, init_adapter, endpoints: str):
     import nonebot
 
     async with app.test_server() as ctx:
         client = ctx.get_client()
-        event = {
-          "post_type": "test"
-        }
+
+        body = {"post_type": "test"}
         headers = {"Bot-ID": "test"}
 
-        # 上报事件，请求头包含 `self-id`
-        resp = await client.post(endpoints, json=event, headers=headers)
+        resp = await client.post(endpoints, json=body, headers=headers)
         assert resp.status_code == 204  # 检测状态码是否正确
         bots = nonebot.get_bots()
         assert "test" in bots  # 检测是否连接成功
 
-
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "endpoints", ["/hello_world/ws"]
+    "endpoints", ["/test/ws"]
 )
 async def test_ws(app: App, init_adapter, endpoints: str):
     import nonebot
 
     async with app.test_server() as ctx:
         client = ctx.get_client()
+
         headers = {"Bot-ID": "test"}
-        # 连接 WebSocket 服务器，请求头包含 `self-id`
+
         async with client.websocket_connect(endpoints, headers=headers) as ws:
             bots = nonebot.get_bots()
             assert "test" in bots  # 检测是否连接成功
@@ -110,29 +102,22 @@ async def test_ws(app: App, init_adapter, endpoints: str):
 
 ## 测试事件转化
 
-事件转化就是将原始数据反序列化为 `Event` 的过程。
+事件转化就是将原始数据反序列化为 `Event` 对象的过程。
 
 测试事件转化就是测试反序列化是否按照预期转化为对应 `Event` 类型。
 
-需要调用适配器的相关实现。
+下面将以 `dict_to_event` 作为反序列化方法，`type` 为 `test` 的事件类型为 `TestEvent` 来演示如何测试事件转化。
 
-下面将以 `json_to_event` 作为反序列化方法，`type` 为 `test` 的事件类型为 `TestEvent` 来演示如何测试事件转化。
-
-```python title=test_event.py {13-14}
+```python {8,9} title=test_event.py
 import pytest
 from nonebug import App
 
-
 @pytest.mark.asyncio
 async def test_event(app: App, init_adapter):
-    from nonebot.adapters.hello_world import Adapter
+    from nonebot.adapters.test import Adapter, TestEvent
 
-    model_name = "TestEvent"
-    event = Adapter.json_to_event({
-      "post_type": "test"
-    })  # 反序列化原始数据
-    assert model_name == event.__class__.__name__  # 断言类型是否与预期一致
-    assert event.post_type == "test"  # 断言属性是否一致
+    event = Adapter.dict_to_event({"post_type": "test"})  # 反序列化原始数据
+    assert isinstance(event, TestEvent)  # 断言类型是否与预期一致
 ```
 
 ## 测试 API 调用
@@ -141,23 +126,37 @@ async def test_event(app: App, init_adapter):
 
 测试 API 调用就是调用 API 并验证返回与预期返回是否一致。
 
-需要调用适配器的相关实现。
+```python {16-18,23-32} title=test_call_api.py
+import asyncio
+from pathlib import Path
 
-下面我们将以 `ResultStore` 类为序列化类，通过其中的 `fetch` 方法发送请求，并预期返回 `{"test": True}` 的字典来演示如何测试 API 调用。
-
-```python title=test_call_api.py {13-14}
 import pytest
 from nonebug import App
 
-
 @pytest.mark.asyncio
-async def test_api_reply(app: App, init_adapter):
-    from nonebot.adapters.hello_world import ResultStore
+async def test_ws(app: App, init_adapter):
+    import nonebot
 
-    seq = ResultStore()
-    self_id = "test"
-    response_data = {"test": True}
+    async with app.test_server() as ctx:
+        client = ctx.get_client()
 
-    resp = await seq.fetch(self_id, seq, response_data, 10.0)  # 序列化消息并发送
-    assert resp == response_data  # 测试预期返回内容
+        headers = {"Bot-ID": "test"}
+
+        async def call_api():
+            bot = nonebot.get_bot("test")
+            return await bot.test_api()
+
+        async with client.websocket_connect("/test/ws", headers=headers) as ws:
+            task = asyncio.create_task(call_api())
+
+            # received = await ws.receive_text()
+            # received = await ws.receive_bytes()
+            received = await ws.receive_json()
+            assert received == {"action": "test_api"}  # 检测调用是否与预期一致
+            response = {"result": "test"}
+            # await ws.send_text(...)
+            # await ws.send_bytes(...)
+            await ws.send_json(response, mode="bytes")
+            result = await task
+            assert result == response  # 检测返回是否与预期一致
 ```
