@@ -3,7 +3,7 @@ from nonebug import App
 
 
 @pytest.mark.asyncio
-async def test_weather(app: App):
+async def test_weather(app: App, load_example):
     from examples.weather import weather
     from utils import make_fake_event, make_fake_message
 

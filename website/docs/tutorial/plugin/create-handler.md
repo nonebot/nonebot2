@@ -84,7 +84,7 @@ async def handle_func():
 ```python {3-5}
 matcher = on_message()
 
-@matcher.got("key")
+@matcher.got("key", prompt="Key?")
 async def handle_func(key: Message = Arg()):
     # do something here
 ```
