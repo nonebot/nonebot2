@@ -48,6 +48,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 中国象棋 [@yanyongyu](https://github.com/yanyongyu) ([#949](https://github.com/nonebot/nonebot2/pull/949))
 - Plugin: B 站视频封面提取 [@yanyongyu](https://github.com/yanyongyu) ([#946](https://github.com/nonebot/nonebot2/pull/946))
 - Plugin: 一言 [@yanyongyu](https://github.com/yanyongyu) ([#944](https://github.com/nonebot/nonebot2/pull/944))
 - Plugin: 答案之书 [@yanyongyu](https://github.com/yanyongyu) ([#942](https://github.com/nonebot/nonebot2/pull/942))
