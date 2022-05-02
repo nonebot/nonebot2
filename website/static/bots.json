@@ -115,5 +115,26 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "Inkar Suki",
+    "desc": "一个十分方便的Bot，支持包括Webhook、群管、互动等一系列功能",
+    "author": "HornCopper",
+    "homepage": "https://github.com/HornCopper/Inkar-Suki",
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#d03790"
+      },
+      {
+        "label": "GitHub",
+        "color": "#374fd0"
+      },
+      {
+        "label": "群管",
+        "color": "#4ede39"
+      }
+    ],
+    "is_official": false
   }
 ]
