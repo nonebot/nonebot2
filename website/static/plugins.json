@@ -1564,5 +1564,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chess",
+    "project_link": "nonebot-plugin-chess",
+    "name": "国际象棋",
+    "desc": "国际象棋，支持人机和对战",
+    "author": "MeetWq",
+    "homepage": "https://github.com/noneplugin/nonebot-plugin-chess",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#020202"
+      }
+    ],
+    "is_official": false
   }
 ]
