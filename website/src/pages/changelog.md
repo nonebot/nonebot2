@@ -87,6 +87,10 @@ toc_max_heading_level: 2
 - Plugin: 60s 读世界小插件 [@yanyongyu](https://github.com/yanyongyu) ([#810](https://github.com/nonebot/nonebot2/pull/810))
 - Plugin: pixiv.net p 站查询图片 [@yanyongyu](https://github.com/yanyongyu) ([#803](https://github.com/nonebot/nonebot2/pull/803))
 
+### 🍻 机器人发布
+
+- Bot: Inkar Suki [@yanyongyu](https://github.com/yanyongyu) ([#955](https://github.com/nonebot/nonebot2/pull/955))
+
 ## v2.0.0-beta.2
 
 - 修复 `receive`, `got` 在参数为空消息时依旧会反复询问
