@@ -39,6 +39,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: nonebot-plugin-chess 改名为 nonebot-plugin-boardgame [@MeetWq](https://github.com/MeetWq) ([#953](https://github.com/nonebot/nonebot2/pull/953))
 - Plugin: 网易云无损音乐下载 [@kitUIN](https://github.com/kitUIN) ([#924](https://github.com/nonebot/nonebot2/pull/924))
 - Docs: 移除商店中的过期插件 [@j1g5awi](https://github.com/j1g5awi) ([#902](https://github.com/nonebot/nonebot2/pull/902))
 - CI: 修复发布机器人的意外错误 [@he0119](https://github.com/he0119) ([#892](https://github.com/nonebot/nonebot2/pull/892))
