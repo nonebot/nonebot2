@@ -90,6 +90,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: ShigureBot [@yanyongyu](https://github.com/yanyongyu) ([#959](https://github.com/nonebot/nonebot2/pull/959))
 - Bot: Inkar Suki [@yanyongyu](https://github.com/yanyongyu) ([#955](https://github.com/nonebot/nonebot2/pull/955))
 
 ## v2.0.0-beta.2
