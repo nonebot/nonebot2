@@ -136,5 +136,13 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "ShigureBot",
+    "desc": "给自己的综合性娱乐Bot写的插件集",
+    "author": "lgc2333",
+    "homepage": "https://github.com/lgc2333/ShigureBot",
+    "tags": [],
+    "is_official": false
   }
 ]
