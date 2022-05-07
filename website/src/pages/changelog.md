@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 添加 QQ 频道链接 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#961](https://github.com/nonebot/nonebot2/pull/961))
 - Docs: 添加 nonebug 单元测试文档 [@MingxuanGame](https://github.com/MingxuanGame) ([#929](https://github.com/nonebot/nonebot2/pull/929))
 - Docs: 添加 pm2 部署文档 [@evlic](https://github.com/evlic) ([#853](https://github.com/nonebot/nonebot2/pull/853))
 - Docs: 更新 GitHub Action 部署文档 [@kexue-z](https://github.com/kexue-z) ([#937](https://github.com/nonebot/nonebot2/pull/937))
