@@ -13,11 +13,11 @@ description: 如何获取帮助
 
 2. 通过 QQ 群（点击下方链接直达）
 
-   [![QQ Chat](https://img.shields.io/badge/QQ%E7%BE%A4-768887710-orange?style=social)](https://jq.qq.com/?_wv=1027&k=5OFifDh)
+   [![QQ Chat Group](https://img.shields.io/badge/QQ%E7%BE%A4-768887710-orange?style=social)](https://jq.qq.com/?_wv=1027&k=5OFifDh)
 
 3. 通过 QQ 频道
 
-   前往 QQ 频道搜索 NoneBot 点击加入
+   [![QQ Channel](https://img.shields.io/badge/QQ%E9%A2%91%E9%81%93-NoneBot-orange?style=social)](https://qun.qq.com/qqweb/qunpro/share?_wv=3&_wwv=128&appChannel=share&inviteCode=7b4a3&appChannel=share&businessType=9&from=246610&biz=ka)
 
 4. 通过 Telegram 群（点击下方链接直达）
 
