@@ -121,7 +121,7 @@ class WebSocket(BaseWebSocket):
         return msg
 
     @overrides(BaseWebSocket)
-    async def send(self, data: str) -> None:
+    async def send_text(self, data: str) -> None:
         await self.websocket.send(data)
 
     @overrides(BaseWebSocket)

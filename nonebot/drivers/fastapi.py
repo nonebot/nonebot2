@@ -267,7 +267,7 @@ class FastAPIWebSocket(BaseWebSocket):
         msg = await self.websocket.receive()
         if msg["type"] == "websocket.disconnect":
             raise WebSocketClosed(msg["code"])
-        return msg.get("text", msg["bytes"])
+        return msg["text"] if "text" in msg else msg["bytes"]
 
     @overrides(BaseWebSocket)
     @catch_closed
@@ -280,7 +280,7 @@ class FastAPIWebSocket(BaseWebSocket):
         return await self.websocket.receive_bytes()
 
     @overrides(BaseWebSocket)
-    async def send(self, data: str) -> None:
+    async def send_text(self, data: str) -> None:
         await self.websocket.send({"type": "websocket.send", "text": data})
 
     @overrides(BaseWebSocket)
