@@ -11,7 +11,7 @@ FrontMatter:
 
 import logging
 from functools import wraps
-from typing import Any, List, Tuple, Callable, Optional
+from typing import Any, List, Tuple, Union, Callable, Optional
 
 import uvicorn
 from pydantic import BaseSettings
@@ -262,8 +262,16 @@ class FastAPIWebSocket(BaseWebSocket):
         await self.websocket.close(code)
 
     @overrides(BaseWebSocket)
+    async def receive(self) -> Union[str, bytes]:
+        # assert self.websocket.application_state == WebSocketState.CONNECTED
+        msg = await self.websocket.receive()
+        if msg["type"] == "websocket.disconnect":
+            raise WebSocketClosed(msg["code"])
+        return msg.get("text", msg["bytes"])
+
+    @overrides(BaseWebSocket)
     @catch_closed
-    async def receive(self) -> str:
+    async def receive_text(self) -> str:
         return await self.websocket.receive_text()
 
     @overrides(BaseWebSocket)

@@ -133,15 +133,28 @@ class WebSocket(BaseWebSocket):
     @overrides(BaseWebSocket)
     async def receive(self) -> str:
         msg = await self._receive()
+        if msg.type not in (aiohttp.WSMsgType.TEXT, aiohttp.WSMsgType.BINARY):
+            raise TypeError(
+                f"WebSocket received unexpected frame type: {msg.type}, {msg.data!r}"
+            )
+        return msg.data
+
+    @overrides(BaseWebSocket)
+    async def receive_text(self) -> str:
+        msg = await self._receive()
         if msg.type != aiohttp.WSMsgType.TEXT:
-            raise TypeError(f"WebSocket received unexpected frame type: {msg.type}")
+            raise TypeError(
+                f"WebSocket received unexpected frame type: {msg.type}, {msg.data!r}"
+            )
         return msg.data
 
     @overrides(BaseWebSocket)
     async def receive_bytes(self) -> bytes:
         msg = await self._receive()
-        if msg.type != aiohttp.WSMsgType.TEXT:
-            raise TypeError(f"WebSocket received unexpected frame type: {msg.type}")
+        if msg.type != aiohttp.WSMsgType.BINARY:
+            raise TypeError(
+                f"WebSocket received unexpected frame type: {msg.type}, {msg.data!r}"
+            )
         return msg.data
 
     @overrides(BaseWebSocket)

@@ -16,8 +16,8 @@ FrontMatter:
 """
 import logging
 from functools import wraps
-from typing import Type, AsyncGenerator
 from contextlib import asynccontextmanager
+from typing import Type, Union, AsyncGenerator
 
 from nonebot.typing import overrides
 from nonebot.log import LoguruHandler
@@ -46,9 +46,9 @@ def catch_closed(func):
             return await func(*args, **kwargs)
         except ConnectionClosed as e:
             if e.rcvd_then_sent:
-                raise WebSocketClosed(e.rcvd.code, e.rcvd.reason)
+                raise WebSocketClosed(e.rcvd.code, e.rcvd.reason)  # type: ignore
             else:
-                raise WebSocketClosed(e.sent.code, e.sent.reason)
+                raise WebSocketClosed(e.sent.code, e.sent.reason)  # type: ignore
 
     return decorator
 
@@ -100,7 +100,13 @@ class WebSocket(BaseWebSocket):
 
     @overrides(BaseWebSocket)
     @catch_closed
-    async def receive(self) -> str:
+    async def receive(self) -> Union[str, bytes]:
+        msg = await self.websocket.recv()
+        return msg
+
+    @overrides(BaseWebSocket)
+    @catch_closed
+    async def receive_text(self) -> str:
         msg = await self.websocket.recv()
         if isinstance(msg, bytes):
             raise TypeError("WebSocket received unexpected frame type: bytes")

@@ -186,7 +186,12 @@ class WebSocket(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def receive(self) -> str:
+    async def receive(self) -> Union[str, bytes]:
+        """接收一条 WebSocket text/bytes 信息"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    async def receive_text(self) -> str:
         """接收一条 WebSocket text 信息"""
         raise NotImplementedError
 

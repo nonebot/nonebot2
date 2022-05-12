@@ -17,7 +17,7 @@ FrontMatter:
 
 import asyncio
 from functools import wraps
-from typing import List, Tuple, TypeVar, Callable, Optional, Coroutine
+from typing import List, Tuple, Union, TypeVar, Callable, Optional, Coroutine
 
 import uvicorn
 from pydantic import BaseSettings
@@ -199,7 +199,7 @@ class Driver(ReverseDriver):
         http_request = BaseRequest(
             request.method,
             request.url,
-            headers=request.headers.items(),
+            headers=list(request.headers.items()),
             cookies=list(request.cookies.items()),
             content=await request.get_data(
                 cache=False, as_text=False, parse_form_data=False
@@ -224,7 +224,7 @@ class Driver(ReverseDriver):
         http_request = BaseRequest(
             websocket.method,
             websocket.url,
-            headers=websocket.headers.items(),
+            headers=list(websocket.headers.items()),
             cookies=list(websocket.cookies.items()),
             version=websocket.http_version,
         )
@@ -257,7 +257,12 @@ class WebSocket(BaseWebSocket):
 
     @overrides(BaseWebSocket)
     @catch_closed
-    async def receive(self) -> str:
+    async def receive(self) -> Union[str, bytes]:
+        return await self.websocket.receive()
+
+    @overrides(BaseWebSocket)
+    @catch_closed
+    async def receive_text(self) -> str:
         msg = await self.websocket.receive()
         if isinstance(msg, bytes):
             raise TypeError("WebSocket received unexpected frame type: bytes")
