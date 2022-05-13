@@ -1579,5 +1579,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_charpic",
+    "project_link": "nonebot-plugin-charpic",
+    "name": "合成字符画(GIF)",
+    "desc": "顾名思义",
+    "author": "RafuiiChan",
+    "homepage": "https://github.com/RafuiiChan/nonebot_plugin_charpic",
+    "tags": [],
+    "is_official": false
   }
 ]
