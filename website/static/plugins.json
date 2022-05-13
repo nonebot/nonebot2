@@ -1589,5 +1589,15 @@
     "homepage": "https://github.com/RafuiiChan/nonebot_plugin_charpic",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_miragetank",
+    "project_link": "nonebot-plugin-miragetank",
+    "name": "幻影坦克图片合成",
+    "desc": "合成幻影坦克图片，黑白背景下显示不同图片",
+    "author": "RafuiiChan",
+    "homepage": "https://github.com/RafuiiChan/nonebot_plugin_miragetank",
+    "tags": [],
+    "is_official": false
   }
 ]
