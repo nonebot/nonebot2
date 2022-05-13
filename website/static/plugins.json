@@ -1599,5 +1599,24 @@
     "homepage": "https://github.com/RafuiiChan/nonebot_plugin_miragetank",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_eventdone",
+    "project_link": "nonebot_plugin_eventdone",
+    "name": "nonebot_plugin_eventdone",
+    "desc": "远程好友申请事件的处理~",
+    "author": "PadorFelice",
+    "homepage": "https://github.com/PadorFelice/nonebot_plugin_eventdone",
+    "tags": [
+      {
+        "label": "nonebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "事件处理",
+        "color": "#be52ea"
+      }
+    ],
+    "is_official": false
   }
 ]
