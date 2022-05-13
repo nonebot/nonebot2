@@ -51,6 +51,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot_plugin_eventdone [@yanyongyu](https://github.com/yanyongyu) ([#966](https://github.com/nonebot/nonebot2/pull/966))
 - Plugin: 幻影坦克图片合成 [@yanyongyu](https://github.com/yanyongyu) ([#968](https://github.com/nonebot/nonebot2/pull/968))
 - Plugin: 合成字符画(GIF) [@yanyongyu](https://github.com/yanyongyu) ([#964](https://github.com/nonebot/nonebot2/pull/964))
 - Plugin: 国际象棋 [@yanyongyu](https://github.com/yanyongyu) ([#957](https://github.com/nonebot/nonebot2/pull/957))
