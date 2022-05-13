@@ -51,6 +51,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 合成字符画(GIF) [@yanyongyu](https://github.com/yanyongyu) ([#964](https://github.com/nonebot/nonebot2/pull/964))
 - Plugin: 国际象棋 [@yanyongyu](https://github.com/yanyongyu) ([#957](https://github.com/nonebot/nonebot2/pull/957))
 - Plugin: NoneBot2 文档搜索 [@yanyongyu](https://github.com/yanyongyu) ([#952](https://github.com/nonebot/nonebot2/pull/952))
 - Plugin: 中国象棋 [@yanyongyu](https://github.com/yanyongyu) ([#949](https://github.com/nonebot/nonebot2/pull/949))
