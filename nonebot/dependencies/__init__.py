@@ -194,7 +194,7 @@ class Dependent(Generic[R]):
             field_info = field.field_info
             assert isinstance(field_info, Param), "Params must be subclasses of Param"
             value = await field_info._solve(**params)
-            if value == Undefined:
+            if value is Undefined:
                 value = field.get_default()
 
             try:
