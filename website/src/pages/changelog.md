@@ -15,6 +15,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修复依赖注入默认值参数在 `__eq__` 被重写时报错的问题 [@yanyongyu](https://github.com/yanyongyu) ([#971](https://github.com/nonebot/nonebot2/pull/971))
 - Fix: 修复`MessageTemplate`在没有格式化说明符时行为不正确的问题 [@mnixry](https://github.com/mnixry) ([#947](https://github.com/nonebot/nonebot2/pull/947))
 - Fix: Bot Hook 没有捕获跳过异常 [@yanyongyu](https://github.com/yanyongyu) ([#905](https://github.com/nonebot/nonebot2/pull/905))
 - Fix: 修复部分事件响应器参数类型中冗余的 Optional [@A-kirami](https://github.com/A-kirami) ([#904](https://github.com/nonebot/nonebot2/pull/904))
