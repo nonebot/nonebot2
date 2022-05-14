@@ -1614,5 +1614,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_covid",
+    "project_link": "nonebot-plugin-covid",
+    "name": "国内新冠疫情数据查询",
+    "desc": "查询国内各省份及下属地级市的疫情数据",
+    "author": "nicklly",
+    "homepage": "https://github.com/nicklly/nonebot2_covid_plugin",
+    "tags": [],
+    "is_official": false
   }
 ]
