@@ -7,8 +7,13 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💥 破坏性变更
+
+- Feat: 支持 WebSocket 连接同时获取 str 或 bytes [@yanyongyu](https://github.com/yanyongyu) ([#962](https://github.com/nonebot/nonebot2/pull/962))
+
 ### 🚀 新功能
 
+- Feat: 支持 WebSocket 连接同时获取 str 或 bytes [@yanyongyu](https://github.com/yanyongyu) ([#962](https://github.com/nonebot/nonebot2/pull/962))
 - Feat: 添加 `CommandStart` 依赖注入参数 [@MeetWq](https://github.com/MeetWq) ([#915](https://github.com/nonebot/nonebot2/pull/915))
 - Feature: 添加 Rule, Permission 反向位运算支持 [@yanyongyu](https://github.com/yanyongyu) ([#872](https://github.com/nonebot/nonebot2/pull/872))
 - Feature: 新增文本完整匹配规则 [@A-kirami](https://github.com/A-kirami) ([#797](https://github.com/nonebot/nonebot2/pull/797))
