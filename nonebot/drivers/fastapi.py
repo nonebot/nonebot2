@@ -36,6 +36,8 @@ def catch_closed(func):
             return await func(*args, **kwargs)
         except WebSocketDisconnect as e:
             raise WebSocketClosed(e.code)
+        except KeyError:
+            raise TypeError("WebSocket received unexpected frame type")
 
     return decorator
 
