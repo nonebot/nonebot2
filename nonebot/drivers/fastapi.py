@@ -11,7 +11,7 @@ FrontMatter:
 
 import logging
 from functools import wraps
-from typing import Any, List, Tuple, Callable, Optional
+from typing import Any, List, Tuple, Union, Callable, Optional
 
 import uvicorn
 from pydantic import BaseSettings
@@ -36,6 +36,8 @@ def catch_closed(func):
             return await func(*args, **kwargs)
         except WebSocketDisconnect as e:
             raise WebSocketClosed(e.code)
+        except KeyError:
+            raise TypeError("WebSocket received unexpected frame type")
 
     return decorator
 
@@ -262,8 +264,16 @@ class FastAPIWebSocket(BaseWebSocket):
         await self.websocket.close(code)
 
     @overrides(BaseWebSocket)
+    async def receive(self) -> Union[str, bytes]:
+        # assert self.websocket.application_state == WebSocketState.CONNECTED
+        msg = await self.websocket.receive()
+        if msg["type"] == "websocket.disconnect":
+            raise WebSocketClosed(msg["code"])
+        return msg["text"] if "text" in msg else msg["bytes"]
+
+    @overrides(BaseWebSocket)
     @catch_closed
-    async def receive(self) -> str:
+    async def receive_text(self) -> str:
         return await self.websocket.receive_text()
 
     @overrides(BaseWebSocket)
@@ -272,7 +282,7 @@ class FastAPIWebSocket(BaseWebSocket):
         return await self.websocket.receive_bytes()
 
     @overrides(BaseWebSocket)
-    async def send(self, data: str) -> None:
+    async def send_text(self, data: str) -> None:
         await self.websocket.send({"type": "websocket.send", "text": data})
 
     @overrides(BaseWebSocket)

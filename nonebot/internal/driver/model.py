@@ -186,7 +186,12 @@ class WebSocket(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def receive(self) -> str:
+    async def receive(self) -> Union[str, bytes]:
+        """接收一条 WebSocket text/bytes 信息"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    async def receive_text(self) -> str:
         """接收一条 WebSocket text 信息"""
         raise NotImplementedError
 
@@ -195,8 +200,17 @@ class WebSocket(abc.ABC):
         """接收一条 WebSocket binary 信息"""
         raise NotImplementedError
 
+    async def send(self, data: Union[str, bytes]) -> None:
+        """发送一条 WebSocket text/bytes 信息"""
+        if isinstance(data, str):
+            await self.send_text(data)
+        elif isinstance(data, bytes):
+            await self.send_bytes(data)
+        else:
+            raise TypeError("WebSocker send method expects str or bytes!")
+
     @abc.abstractmethod
-    async def send(self, data: str) -> None:
+    async def send_text(self, data: str) -> None:
         """发送一条 WebSocket text 信息"""
         raise NotImplementedError
 

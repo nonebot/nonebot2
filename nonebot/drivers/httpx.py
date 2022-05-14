@@ -49,22 +49,22 @@ class Mixin(ForwardMixin):
     async def request(self, setup: Request) -> Response:
         async with httpx.AsyncClient(
             http2=setup.version == HTTPVersion.H2,
-            proxies=setup.proxy,
+            proxies=setup.proxy,  # type: ignore
             follow_redirects=True,
         ) as client:
             response = await client.request(
                 setup.method,
                 str(setup.url),
-                content=setup.content,
-                data=setup.data,
+                content=setup.content,  # type: ignore
+                data=setup.data,  # type: ignore
                 json=setup.json,
-                files=setup.files,
+                files=setup.files,  # type: ignore
                 headers=tuple(setup.headers.items()),
                 timeout=setup.timeout,
             )
             return Response(
                 response.status_code,
-                headers=response.headers,
+                headers=response.headers.multi_items(),
                 content=response.content,
                 request=setup,
             )

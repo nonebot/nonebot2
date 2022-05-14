@@ -15,6 +15,7 @@ from nonebug import App
 )
 async def test_reverse_driver(app: App):
     import nonebot
+    from nonebot.exception import WebSocketClosed
     from nonebot.drivers import (
         URL,
         Request,
@@ -36,7 +37,21 @@ async def test_reverse_driver(app: App):
         data = await ws.receive()
         assert data == "ping"
         await ws.send("pong")
-        await ws.close()
+
+        data = await ws.receive()
+        assert data == b"ping"
+        await ws.send(b"pong")
+
+        data = await ws.receive_text()
+        assert data == "ping"
+        await ws.send("pong")
+
+        data = await ws.receive_bytes()
+        assert data == b"ping"
+        await ws.send(b"pong")
+
+        with pytest.raises(WebSocketClosed):
+            await ws.receive()
 
     http_setup = HTTPServerSetup(URL("/http_test"), "POST", "http_test", _handle_http)
     driver.setup_http_server(http_setup)
@@ -53,3 +68,13 @@ async def test_reverse_driver(app: App):
         async with client.websocket_connect("/ws_test") as ws:
             await ws.send_text("ping")
             assert await ws.receive_text() == "pong"
+            await ws.send_bytes(b"ping")
+            assert await ws.receive_bytes() == b"pong"
+
+            await ws.send_text("ping")
+            assert await ws.receive_text() == "pong"
+
+            await ws.send_bytes(b"ping")
+            assert await ws.receive_bytes() == b"pong"
+
+            await ws.close()
