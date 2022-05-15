@@ -1634,5 +1634,20 @@
     "homepage": "https://github.com/bingqiu456/nonebot-plugin-yulu",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_maze",
+    "project_link": "nonebot-plugin-maze",
+    "name": "走迷宫",
+    "desc": "与机器人交互解迷宫",
+    "author": "EtherLeaF",
+    "homepage": "https://github.com/EtherLeaF/nonebot_plugin_maze",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
