@@ -13,7 +13,7 @@ import ModalTitle from "./ModalTitle";
 import Paginate from "./Paginate";
 import TagComponent from "./Tag";
 
-export default function Adapter(): JSX.Element {
+export default function Plugin(): JSX.Element {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const {
     filter,
