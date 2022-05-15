@@ -1624,5 +1624,15 @@
     "homepage": "https://github.com/nicklly/nonebot2_covid_plugin",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_yulu",
+    "project_link": "nonebot-plugin-yulu",
+    "name": "语录娱乐",
+    "desc": "语录娱乐小插件",
+    "author": "bingqiu456",
+    "homepage": "https://github.com/bingqiu456/nonebot-plugin-yulu",
+    "tags": [],
+    "is_official": false
   }
 ]
