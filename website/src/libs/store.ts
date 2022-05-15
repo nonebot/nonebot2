@@ -17,14 +17,19 @@ export type Obj = {
 };
 
 export function filterObjs(filter: string, objs: Obj[]): Obj[] {
+  console.log(
+    objs.forEach((o) => {
+      console.log(o.module_name?.indexOf(filter));
+    })
+  );
   return objs.filter((o) => {
     return (
-      o.module_name?.indexOf(filter) != -1 ||
-      o.project_link?.indexOf(filter) != -1 ||
-      o.name.indexOf(filter) != -1 ||
-      o.desc.indexOf(filter) != -1 ||
-      o.author.indexOf(filter) != -1 ||
-      o.tags.filter((t) => t.label.indexOf(filter) != -1).length > 0
+      o.module_name?.includes(filter) ||
+      o.project_link?.includes(filter) ||
+      o.name.includes(filter) ||
+      o.desc.includes(filter) ||
+      o.author.includes(filter) ||
+      o.tags.filter((t) => t.label.includes(filter)).length > 0
     );
   });
 }
