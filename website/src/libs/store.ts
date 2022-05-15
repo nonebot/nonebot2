@@ -17,11 +17,6 @@ export type Obj = {
 };
 
 export function filterObjs(filter: string, objs: Obj[]): Obj[] {
-  console.log(
-    objs.forEach((o) => {
-      console.log(o.module_name?.indexOf(filter));
-    })
-  );
   return objs.filter((o) => {
     return (
       o.module_name?.includes(filter) ||
