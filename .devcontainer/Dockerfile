@@ -9,4 +9,6 @@ FROM mcr.microsoft.com/vscode/devcontainers/universal:1-focal
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
 #
 # USER codespace
-RUN su 
+RUN su codespace -c "curl -sSL https://install.python-poetry.org | python3 - -y"
+
+RUN su codespace -c "yarn global add gitmoji-cli" 2>&1
