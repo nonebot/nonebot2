@@ -1,17 +1,16 @@
 // For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
-// https://github.com/microsoft/vscode-dev-containers/tree/v0.233.0/containers/python-3
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.233.0/containers/codespaces-linux
 {
   "name": "NoneBot",
   "build": {
     "dockerfile": "Dockerfile",
-    "context": "..",
-    "args": {}
+    "context": ".."
   },
-
-  // Set *default* container specific settings.json values on container create.
   "settings": {
-    "editor.formatOnSave": true,
-    "python.defaultInterpreterPath": "/usr/local/bin/python",
+    "go.toolsManagement.checkForUpdates": "local",
+    "go.useLanguageServer": true,
+    "go.gopath": "/go",
+    "python.defaultInterpreterPath": "/opt/python/latest/bin/python",
     "python.linting.enabled": false,
     "python.linting.pylintEnabled": false,
     "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
@@ -33,9 +32,6 @@
     },
     "[javascript]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode",
-      "editor.codeActionsOnSave": {
-        "source.fixAll.eslint": true
-      }
     },
     "[html]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -48,11 +44,26 @@
     },
     "[typescriptreact]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "lldb.executable": "/usr/bin/lldb",
+    "files.watcherExclude": {
+      "**/target/**": true
     }
   },
-
+  "remoteUser": "codespace",
+  "overrideCommand": false,
+  "mounts": ["source=codespaces-linux-var-lib-docker,target=/var/lib/docker,type=volume"],
+  "runArgs": [
+    "--cap-add=SYS_PTRACE",
+    "--security-opt",
+    "seccomp=unconfined",
+    "--privileged",
+    "--init"
+  ],
+  
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
+    "GitHub.vscode-pull-request-github",
     "ms-python.python",
     "ms-python.vscode-pylance",
     "ms-python.isort",
@@ -61,24 +72,14 @@
     "esbenp.prettier-vscode",
     "bradlc.vscode-tailwindcss"
   ],
-
+  
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
 
-  // Use 'postCreateCommand' to run commands after the container is created.
+  // "oryx build" will automatically install your dependencies and attempt to build your project
   "postCreateCommand": [
     "poetry install",
     "pre-commit install",
     "yarn install"
-  ],
-
-  // Comment out to connect as root instead. More info: https://aka.ms/vscode-remote/containers/non-root.
-  "remoteUser": "vscode",
-  "features": {
-    "docker-in-docker": "latest",
-    "git": "latest",
-    "github-cli": "latest",
-    "sshd": "latest",
-    "fish": "latest"
-  }
+  ]
 }
