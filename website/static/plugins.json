@@ -1649,5 +1649,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_moyu",
+    "project_link": "nonebot-plugin-moyu",
+    "name": "摸鱼日历",
+    "desc": "摸鱼一时爽, 一直摸鱼一直爽",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-moyu",
+    "tags": [],
+    "is_official": false
   }
 ]
