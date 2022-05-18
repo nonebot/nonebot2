@@ -71,7 +71,7 @@ scheduler.add_job(run_every_day_from_program_start, "interval", days=1, id="xxx"
 
 NoneBot2 提供了 `nonebot.require` 方法来实现导入其他插件的内容，此处我们使用这个方法来导入 `scheduler` 对象。
 
-NoneBot2 使用的 `scheduler` 对象为 `AsyncScheduler` 。
+NoneBot2 使用的 `scheduler` 对象为 `AsyncIOScheduler` 。
 
 > 使用该方法传入的插件本身也需要有对应实现，关于该方法的更多介绍可以参阅[这里](./export-and-require.md)
 
