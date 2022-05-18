@@ -58,6 +58,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 摸鱼日历 [@yanyongyu](https://github.com/yanyongyu) ([#980](https://github.com/nonebot/nonebot2/pull/980))
 - Plugin: 走迷宫 [@yanyongyu](https://github.com/yanyongyu) ([#977](https://github.com/nonebot/nonebot2/pull/977))
 - Plugin: 语录娱乐 [@yanyongyu](https://github.com/yanyongyu) ([#973](https://github.com/nonebot/nonebot2/pull/973))
 - Plugin: 国内新冠疫情数据查询 [@yanyongyu](https://github.com/yanyongyu) ([#975](https://github.com/nonebot/nonebot2/pull/975))
