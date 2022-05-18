@@ -7,8 +7,12 @@ FROM mcr.microsoft.com/vscode/devcontainers/universal:1-focal
 #
 # RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 #     && apt-get -y install --no-install-recommends <your-package-list-here>
-#
-# USER codespace
-RUN su codespace -c "curl -sSL https://install.python-poetry.org | python3 - -y"
 
-RUN su codespace -c "yarn global add gitmoji-cli" 2>&1
+USER codespace
+
+# [Required] Poetry
+RUN curl -sSL https://install.python-poetry.org | python3 - -y
+
+# [Required] Gitmoji CLI
+# Deprecated: Maybe removed once nonemoji is done
+RUN yarn global add gitmoji-cli
