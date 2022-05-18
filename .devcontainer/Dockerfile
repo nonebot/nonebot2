@@ -1,6 +1,6 @@
 # See here for image contents: https://github.com/microsoft/vscode-dev-containers/tree/v0.233.0/containers/codespaces-linux/.devcontainer/base.Dockerfile
 
-FROM mcr.microsoft.com/vscode/devcontainers/universal:1-focal
+FROM mcr.microsoft.com/vscode/devcontainers/universal:1-linux
 
 # ** [Optional] Uncomment this section to install additional packages. **
 # USER root
@@ -11,7 +11,7 @@ FROM mcr.microsoft.com/vscode/devcontainers/universal:1-focal
 USER codespace
 
 # [Required] Poetry
-RUN curl -sSL https://install.python-poetry.org | python3 - -y
+RUN curl -sSL https://install.python-poetry.org | /opt/python/latest/bin/python - -y
 
 # [Required] Gitmoji CLI
 # Deprecated: Maybe removed once nonemoji is done
