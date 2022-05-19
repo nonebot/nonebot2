@@ -7,6 +7,8 @@ FrontMatter:
     description: nonebot.plugin.export 模块
 """
 
+import warnings
+
 from . import _current_plugin
 
 
@@ -51,6 +53,11 @@ class Export(dict):
 
 def export() -> Export:
     """获取当前插件的导出内容对象"""
+    warnings.warn(
+        "nonebot.export() is deprecated. "
+        "See https://github.com/nonebot/nonebot2/issues/935.",
+        DeprecationWarning,
+    )
     plugin = _current_plugin.get()
     if not plugin:
         raise RuntimeError("Export outside of the plugin!")
