@@ -77,5 +77,5 @@
   // "forwardPorts": [],
 
   // "oryx build" will automatically install your dependencies and attempt to build your project
-  "postCreateCommand": "poetry install && poetry run pre-commit install && yarn install"
+  "postCreateCommand": "poetry install -E all && poetry run pre-commit install && yarn install"
 }

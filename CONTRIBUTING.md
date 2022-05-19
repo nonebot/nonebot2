@@ -34,6 +34,10 @@ yarn global add gitmoji-cli
 gitmoji -i
 ```
 
+### 使用 GitHub Codespaces (Dev Container)
+
+使用 GitHub Codespaces 选择 `NoneBot2` 项目，然后选择 `.devcontainer/devcontainer.json` 配置即可。
+
 ### Commit 规范
 
 请确保你的每一个 commit 都能清晰地描述其意图，一个 commit 尽量只有一个意图。
