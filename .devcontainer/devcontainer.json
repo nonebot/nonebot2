@@ -1,0 +1,83 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the README at:
+// https://github.com/microsoft/vscode-dev-containers/tree/v0.233.0/containers/codespaces-linux
+{
+  "name": "NoneBot",
+  "build": {
+    "dockerfile": "Dockerfile",
+    "context": ".."
+  },
+  "settings": {
+    "go.toolsManagement.checkForUpdates": "local",
+    "go.useLanguageServer": true,
+    "go.gopath": "/go",
+    "python.defaultInterpreterPath": "/opt/python/latest/bin/python",
+    "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
+    "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
+    "python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
+    "python.linting.banditPath": "/usr/local/py-utils/bin/bandit",
+    "python.linting.flake8Path": "/usr/local/py-utils/bin/flake8",
+    "python.linting.mypyPath": "/usr/local/py-utils/bin/mypy",
+    "python.linting.pycodestylePath": "/usr/local/py-utils/bin/pycodestyle",
+    "python.linting.pydocstylePath": "/usr/local/py-utils/bin/pydocstyle",
+    "python.linting.pylintPath": "/usr/local/py-utils/bin/pylint",
+    "python.analysis.diagnosticMode": "workspace",
+    "python.analysis.typeCheckingMode": "basic",
+    "[python]":{
+      "editor.defaultFormatter": "ms-python.black-formatter",
+      "editor.codeActionsOnSave": {
+        "source.organizeImports": true
+      }
+    },
+    "[javascript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[html]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescript]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[javascriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "[typescriptreact]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+    "lldb.executable": "/usr/bin/lldb",
+    "files.exclude": {
+      "**/__pycache__": true
+    },
+    "files.watcherExclude": {
+      "**/target/**": true,
+      "**/__pycache__": true
+    }
+  },
+  "remoteUser": "codespace",
+  "overrideCommand": false,
+  "mounts": ["source=codespaces-linux-var-lib-docker,target=/var/lib/docker,type=volume"],
+  "runArgs": [
+    "--cap-add=SYS_PTRACE",
+    "--security-opt",
+    "seccomp=unconfined",
+    "--privileged",
+    "--init"
+  ],
+
+  // Add the IDs of extensions you want installed when the container is created.
+  "extensions": [
+    "GitHub.vscode-pull-request-github",
+    "ms-python.python",
+    "ms-python.vscode-pylance",
+    "ms-python.isort",
+    "ms-python.black-formatter",
+    "EditorConfig.EditorConfig",
+    "esbenp.prettier-vscode",
+    "bradlc.vscode-tailwindcss"
+  ],
+
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+  // "forwardPorts": [],
+
+  // "oryx build" will automatically install your dependencies and attempt to build your project
+  "postCreateCommand": "poetry install -E all && poetry run pre-commit install && yarn install"
+}
