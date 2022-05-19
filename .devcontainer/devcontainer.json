@@ -31,7 +31,7 @@
       }
     },
     "[javascript]": {
-      "editor.defaultFormatter": "esbenp.prettier-vscode",
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "[html]": {
       "editor.defaultFormatter": "esbenp.prettier-vscode"
@@ -60,7 +60,7 @@
     "--privileged",
     "--init"
   ],
-  
+
   // Add the IDs of extensions you want installed when the container is created.
   "extensions": [
     "GitHub.vscode-pull-request-github",
@@ -72,14 +72,10 @@
     "esbenp.prettier-vscode",
     "bradlc.vscode-tailwindcss"
   ],
-  
+
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],
 
   // "oryx build" will automatically install your dependencies and attempt to build your project
-  "postCreateCommand": [
-    "poetry install",
-    "pre-commit install",
-    "yarn install"
-  ]
+  "postCreateCommand": "poetry install && poetry run pre-commit install && yarn install"
 }

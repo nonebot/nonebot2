@@ -12,7 +12,9 @@ USER codespace
 
 # [Required] Poetry
 RUN curl -sSL https://install.python-poetry.org | python - -y
+RUN poetry config virtualenvs.in-project true
 
 # [Required] Gitmoji CLI
 # Deprecated: Maybe removed once nonemoji is done
 RUN yarn global add gitmoji-cli
+ENV PATH="$PATH:/home/codespace/.yarn/bin"
