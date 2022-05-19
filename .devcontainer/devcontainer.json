@@ -11,8 +11,6 @@
     "go.useLanguageServer": true,
     "go.gopath": "/go",
     "python.defaultInterpreterPath": "/opt/python/latest/bin/python",
-    "python.linting.enabled": false,
-    "python.linting.pylintEnabled": false,
     "python.formatting.autopep8Path": "/usr/local/py-utils/bin/autopep8",
     "python.formatting.blackPath": "/usr/local/py-utils/bin/black",
     "python.formatting.yapfPath": "/usr/local/py-utils/bin/yapf",
@@ -46,8 +44,12 @@
       "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
     "lldb.executable": "/usr/bin/lldb",
+    "files.exclude": {
+      "**/__pycache__": true
+    },
     "files.watcherExclude": {
-      "**/target/**": true
+      "**/target/**": true,
+      "**/__pycache__": true
     }
   },
   "remoteUser": "codespace",
