@@ -1669,5 +1669,20 @@
     "homepage": "https://github.com/noneplugin/nonebot-plugin-imageutils",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mockingbird",
+    "project_link": "nonebot-plugin-mockingbird",
+    "name": "MockingBird语音",
+    "desc": "利用MockingBird来生成语音，并支持多种语音切换",
+    "author": "AkashiCoin",
+    "homepage": "https://github.com/AkashiCoin/nonebot_plugin_mockingbird",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
