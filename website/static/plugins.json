@@ -1659,5 +1659,15 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-moyu",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_imageutils",
+    "project_link": "nonebot-plugin-imageutils",
+    "name": "imageutils",
+    "desc": "PIL工具插件，方便图片操作，支持文字转图片",
+    "author": "MeetWq",
+    "homepage": "https://github.com/noneplugin/nonebot-plugin-imageutils",
+    "tags": [],
+    "is_official": false
   }
 ]
