@@ -101,6 +101,20 @@ nonebot.load_from_toml("plugin_config.toml", encoding="utf-8")
 nonebot.load_builtin_plugin("echo")
 ```
 
+## 确保插件加载和跨插件访问
+
+倘若 `plugin_a`, `plugin_b` 均需被加载, 且 `plugin_b` 插件需要导入 `plugin_a` 才可运行, 可以在 `plugin-b` 利用 `require` 方法来确保插件加载, 同时可以直接 `import` 导入 `plugin-a` ,进行跨插件访问。
+
+```python
+from nonebot.plugin import require
+require('plugin_a')
+import plugin_a
+```
+
+:::danger 警告
+不用 `require` 方法也可以进行跨插件访问，但需要保证插件已加载。
+:::
+
 ## 嵌套插件
 
 <!-- TODO -->
