@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 💥 破坏性变更
 
+- Fix: 添加 export 方法 Deprecation 警告 [@yanyongyu](https://github.com/yanyongyu) ([#983](https://github.com/nonebot/nonebot2/pull/983))
 - Feature: 支持 WebSocket 连接同时获取 str 或 bytes [@yanyongyu](https://github.com/yanyongyu) ([#962](https://github.com/nonebot/nonebot2/pull/962))
 
 ### 🚀 新功能
