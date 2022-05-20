@@ -107,7 +107,7 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
         nonebot_data = data.get("nonebot", {}).get("plugins")
         if nonebot_data:
             warnings.warn(
-                "[nonebot.plugins] table are now deprecated. Use [tool.nonebot] instead.",
+                "[nonebot.plugins] table is deprecated. Use [tool.nonebot] instead.",
                 DeprecationWarning,
             )
         else:
