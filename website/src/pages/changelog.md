@@ -9,12 +9,12 @@ toc_max_heading_level: 2
 
 ### 💥 破坏性变更
 
-- Feat: 支持 WebSocket 连接同时获取 str 或 bytes [@yanyongyu](https://github.com/yanyongyu) ([#962](https://github.com/nonebot/nonebot2/pull/962))
+- Feature: 支持 WebSocket 连接同时获取 str 或 bytes [@yanyongyu](https://github.com/yanyongyu) ([#962](https://github.com/nonebot/nonebot2/pull/962))
 
 ### 🚀 新功能
 
-- Feat: 支持 WebSocket 连接同时获取 str 或 bytes [@yanyongyu](https://github.com/yanyongyu) ([#962](https://github.com/nonebot/nonebot2/pull/962))
-- Feat: 添加 `CommandStart` 依赖注入参数 [@MeetWq](https://github.com/MeetWq) ([#915](https://github.com/nonebot/nonebot2/pull/915))
+- Feature: 支持 WebSocket 连接同时获取 str 或 bytes [@yanyongyu](https://github.com/yanyongyu) ([#962](https://github.com/nonebot/nonebot2/pull/962))
+- Feature: 添加 `CommandStart` 依赖注入参数 [@MeetWq](https://github.com/MeetWq) ([#915](https://github.com/nonebot/nonebot2/pull/915))
 - Feature: 添加 Rule, Permission 反向位运算支持 [@yanyongyu](https://github.com/yanyongyu) ([#872](https://github.com/nonebot/nonebot2/pull/872))
 - Feature: 新增文本完整匹配规则 [@A-kirami](https://github.com/A-kirami) ([#797](https://github.com/nonebot/nonebot2/pull/797))
 
@@ -49,7 +49,7 @@ toc_max_heading_level: 2
 ### 💫 杂项
 
 - Plugin: nonebot-plugin-chess 改名为 nonebot-plugin-boardgame [@MeetWq](https://github.com/MeetWq) ([#953](https://github.com/nonebot/nonebot2/pull/953))
-- Plugin: 网易云无损音乐下载 [@kitUIN](https://github.com/kitUIN) ([#924](https://github.com/nonebot/nonebot2/pull/924))
+- Plugin: 网易云无损音乐下载更改 [@kitUIN](https://github.com/kitUIN) ([#924](https://github.com/nonebot/nonebot2/pull/924))
 - Docs: 移除商店中的过期插件 [@j1g5awi](https://github.com/j1g5awi) ([#902](https://github.com/nonebot/nonebot2/pull/902))
 - CI: 修复发布机器人的意外错误 [@he0119](https://github.com/he0119) ([#892](https://github.com/nonebot/nonebot2/pull/892))
 - Docs: 替换和移除部分已经失效的插件 [@MeetWq](https://github.com/MeetWq) ([#879](https://github.com/nonebot/nonebot2/pull/879))
@@ -59,6 +59,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: imageutils [@yanyongyu](https://github.com/yanyongyu) ([#985](https://github.com/nonebot/nonebot2/pull/985))
 - Plugin: 摸鱼日历 [@yanyongyu](https://github.com/yanyongyu) ([#980](https://github.com/nonebot/nonebot2/pull/980))
 - Plugin: 走迷宫 [@yanyongyu](https://github.com/yanyongyu) ([#977](https://github.com/nonebot/nonebot2/pull/977))
 - Plugin: 语录娱乐 [@yanyongyu](https://github.com/yanyongyu) ([#973](https://github.com/nonebot/nonebot2/pull/973))
@@ -106,6 +107,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: 屑岛风 Bot [@yanyongyu](https://github.com/yanyongyu) ([#987](https://github.com/nonebot/nonebot2/pull/987))
 - Bot: ShigureBot [@yanyongyu](https://github.com/yanyongyu) ([#959](https://github.com/nonebot/nonebot2/pull/959))
 - Bot: Inkar Suki [@yanyongyu](https://github.com/yanyongyu) ([#955](https://github.com/nonebot/nonebot2/pull/955))
 
