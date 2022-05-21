@@ -1,4 +1,7 @@
 ---
+sidebar_position: 1
+description: 在 NoneBot2 中使用定时任务
+
 options:
   menu:
     weight: 20

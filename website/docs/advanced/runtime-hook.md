@@ -1,4 +1,7 @@
 ---
+sidebar_position: 4
+description: 在 NoneBot2 框架中添加 Hook 函数
+
 options:
   menu:
     weight: 50

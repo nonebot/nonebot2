@@ -1,4 +1,7 @@
 ---
+sidebar_position: 2
+description: 自定义事件响应器的响应规则
+
 options:
   menu:
     weight: 30
