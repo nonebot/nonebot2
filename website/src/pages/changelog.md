@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 🍻 插件发布
+
+- Plugin: MockingBird 语音 [@yanyongyu](https://github.com/yanyongyu) ([#989](https://github.com/nonebot/nonebot2/pull/989))
+
 ## v2.0.0-beta.3
 
 ### 💥 破坏性变更
