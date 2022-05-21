@@ -1684,5 +1684,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_baidutranslate",
+    "project_link": "nonebot-plugin-baidutranslate",
+    "name": "百度翻译",
+    "desc": "可以调用百度翻译 API 实现常用语种之间的互译",
+    "author": "NumberSir",
+    "homepage": "https://github.com/NumberSir/nonebot_plugin_baidutranslate",
+    "tags": [],
+    "is_official": false
   }
 ]
