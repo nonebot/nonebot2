@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💫 杂项
+
+- Docs: 调整跨插件访问文档 [@AkiraXie](https://github.com/AkiraXie) ([#993](https://github.com/nonebot/nonebot2/pull/993))
+
 ### 🍻 插件发布
 
 - Plugin: 数据库连接插件 [@yanyongyu](https://github.com/yanyongyu) ([#995](https://github.com/nonebot/nonebot2/pull/995))
