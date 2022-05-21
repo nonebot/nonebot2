@@ -13,7 +13,7 @@ options:
 
 ## 从 NoneBot v1 迁移
 
-`APScheduler` 作为 NoneBot v1 的可选依赖，为众多 bot 提供了方便的定时任务功能。NoneBot2 已将 `APScheduler` 独立为 nonebot_plugin_apscheduler 插件，你可以在[商店](/store.html)中找到它。
+`APScheduler` 作为 NoneBot v1 的可选依赖，为众多 bot 提供了方便的定时任务功能。NoneBot2 已将 `APScheduler` 独立为 nonebot_plugin_apscheduler 插件，你可以在[商店](/store)中找到它。
 
 相比于 NoneBot v1，NoneBot v2 只需要安装插件并修改 `scheduler` 的导入方式即可完成迁移。
 
@@ -74,8 +74,6 @@ scheduler.add_job(run_every_day_from_program_start, "interval", days=1, id="xxx"
 NoneBot2 提供了 `nonebot.require` 方法来实现声明插件依赖，确保 `nonebot_plugin_apscheduler` 插件可以在使用之前被导入。声明完成即可直接通过 import 导入 `scheduler` 对象。
 
 NoneBot2 使用的 `scheduler` 对象为 `AsyncIOScheduler` 。
-
-> 使用该方法传入的插件本身也需要有对应实现，关于该方法的更多介绍可以参阅[这里](./export-and-require.md)
 
 ```python {3,5}
 from nonebot import require

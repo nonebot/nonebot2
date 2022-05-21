@@ -1,7 +1,7 @@
 ---
 options:
   menu:
-    weight: 70
+    weight: 80
     category: advanced
 ---
 
