@@ -1,7 +1,10 @@
 ---
+sidebar_position: 7
+description: 发布插件到 NoneBot2 商店
+
 options:
   menu:
-    weight: 70
+    weight: 80
     category: advanced
 ---
 

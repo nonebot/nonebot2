@@ -1,10 +1,10 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 description: 重载事件处理函数
 
 options:
   menu:
-    weight: 62
+    weight: 61
     category: advanced
 ---
 

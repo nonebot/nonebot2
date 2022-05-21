@@ -1,7 +1,10 @@
 ---
+sidebar_position: 3
+description: 自定义事件响应器的响应权限
+
 options:
   menu:
-    weight: 30
+    weight: 40
     category: advanced
 ---
 

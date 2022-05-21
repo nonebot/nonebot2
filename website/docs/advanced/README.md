@@ -1,5 +1,7 @@
 ---
 id: index
+sidebar_position: 0
+description: 深入了解 NoneBot2 运行机制
 slug: /advanced/
 
 options:
