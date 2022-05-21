@@ -105,14 +105,32 @@ nonebot.load_builtin_plugin("echo")
 
 倘若 `plugin_a`, `plugin_b` 均需被加载, 且 `plugin_b` 插件需要导入 `plugin_a` 才可运行, 可以在 `plugin-b` 利用 `require` 方法来确保插件加载, 同时可以直接 `import` 导入 `plugin-a` ,进行跨插件访问。
 
-```python
-from nonebot.plugin import require
+```python title=plugin_b.py
+from nonebot import require
+
 require('plugin_a')
+
 import plugin_a
 ```
 
 :::danger 警告
-不用 `require` 方法也可以进行跨插件访问，但需要保证插件已加载。
+不用 `require` 方法也可以进行跨插件访问，但需要保证插件已加载。例如，以下两种方式均可保证插件正确加载：
+
+```python title=bot.py
+import nonebot
+
+# 顺序加载
+nonebot.load_plugin("plugin_a")
+nonebot.load_plugin("plugin_b")
+```
+
+```python
+import nonebot
+
+# 同时加载
+nonebot.load_all_plugins(["plugin_a", "plugin_b"], [])
+```
+
 :::
 
 ## 嵌套插件
