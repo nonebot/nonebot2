@@ -1694,5 +1694,15 @@
     "homepage": "https://github.com/NumberSir/nonebot_plugin_baidutranslate",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_tortoise_orm",
+    "project_link": "nonebot-plugin-tortoise-orm",
+    "name": "数据库连接插件",
+    "desc": "使用 tortoise-orm 连接数据库 小白也能轻松优雅的上手！",
+    "author": "kexue-z",
+    "homepage": "https://github.com/kexue-z/nonebot-plugin-tortoise-orm",
+    "tags": [],
+    "is_official": false
   }
 ]
