@@ -23,6 +23,10 @@ toc_max_heading_level: 2
 - Plugin: 百度翻译 [@yanyongyu](https://github.com/yanyongyu) ([#992](https://github.com/nonebot/nonebot2/pull/992))
 - Plugin: MockingBird 语音 [@yanyongyu](https://github.com/yanyongyu) ([#989](https://github.com/nonebot/nonebot2/pull/989))
 
+### 🍻 机器人发布
+
+- Bot: LiteyukiBot-轻雪机器人 [@yanyongyu](https://github.com/yanyongyu) ([#1003](https://github.com/nonebot/nonebot2/pull/1003))
+
 ## v2.0.0-beta.3
 
 ### 💥 破坏性变更
