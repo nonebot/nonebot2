@@ -9,6 +9,7 @@ from pydantic.fields import Required, Undefined, ModelField
 
 from nonebot.log import logger
 from nonebot.exception import TypeMisMatch
+from nonebot.dependencies.utils import check_field_type
 from nonebot.dependencies import Param, Dependent, CustomConfig
 from nonebot.typing import T_State, T_Handler, T_DependencyCache
 from nonebot.utils import (
@@ -159,14 +160,14 @@ class DependParam(Param):
 class _BotChecker(Param):
     async def _solve(self, bot: "Bot", **kwargs: Any) -> Any:
         field: ModelField = self.extra["field"]
-        if isinstance(bot, field.type_):
-            return bot
-        else:
+        try:
+            return check_field_type(field, bot)
+        except TypeMisMatch:
             logger.debug(
                 f"Bot type {type(bot)} not match "
                 f"annotation {field._type_display()}, ignored"
             )
-            raise TypeMisMatch(field, bot)
+            raise
 
 
 class BotParam(Param):
@@ -205,14 +206,14 @@ class BotParam(Param):
 class _EventChecker(Param):
     async def _solve(self, event: "Event", **kwargs: Any) -> Any:
         field: ModelField = self.extra["field"]
-        if isinstance(event, field.type_):
-            return event
-        else:
+        try:
+            return check_field_type(field, event)
+        except TypeMisMatch:
             logger.debug(
                 f"Event type {type(event)} not match "
                 f"annotation {field._type_display()}, ignored"
             )
-            raise TypeMisMatch(field, event)
+            raise
 
 
 class EventParam(Param):

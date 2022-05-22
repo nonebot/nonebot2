@@ -62,12 +62,10 @@ def generic_check_issubclass(
     except TypeError:
         origin = get_origin(cls)
         if is_union(origin):
-            for type_ in get_args(cls):
-                if not is_none_type(type_) and not generic_check_issubclass(
-                    type_, class_or_tuple
-                ):
-                    return False
-            return True
+            return all(
+                is_none_type(type_) or generic_check_issubclass(type_, class_or_tuple)
+                for type_ in get_args(cls)
+            )
         elif origin:
             return issubclass(origin, class_or_tuple)
         return False

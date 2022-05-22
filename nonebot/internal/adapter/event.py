@@ -1,10 +1,13 @@
 import abc
+from typing import Any, Type, TypeVar
 
 from pydantic import BaseModel
 
 from nonebot.utils import DataclassEncoder
 
 from .message import Message
+
+E = TypeVar("E", bound="Event")
 
 
 class Event(abc.ABC, BaseModel):
@@ -13,6 +16,12 @@ class Event(abc.ABC, BaseModel):
     class Config:
         extra = "allow"
         json_encoders = {Message: DataclassEncoder}
+
+    @classmethod
+    def validate(cls: Type["E"], value: Any) -> "E":
+        if isinstance(value, Event) and not isinstance(value, cls):
+            raise TypeError(f"{value} is incompatible with Event type {cls}")
+        return super().validate(value)
 
     @abc.abstractmethod
     def get_type(self) -> str:
