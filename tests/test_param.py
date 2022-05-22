@@ -37,15 +37,32 @@ async def test_depend(app: App, load_plugin):
 async def test_bot(app: App, load_plugin):
     from nonebot.params import BotParam
     from nonebot.exception import TypeMisMatch
-    from plugins.param.param_bot import SubBot, get_bot, sub_bot
+    from plugins.param.param_bot import (
+        FooBot,
+        get_bot,
+        not_bot,
+        sub_bot,
+        union_bot,
+        legacy_bot,
+        not_legacy_bot,
+    )
 
     async with app.test_dependent(get_bot, allow_types=[BotParam]) as ctx:
         bot = ctx.create_bot()
         ctx.pass_params(bot=bot)
         ctx.should_return(bot)
 
+    async with app.test_dependent(legacy_bot, allow_types=[BotParam]) as ctx:
+        bot = ctx.create_bot()
+        ctx.pass_params(bot=bot)
+        ctx.should_return(bot)
+
+    with pytest.raises(ValueError):
+        async with app.test_dependent(not_legacy_bot, allow_types=[BotParam]) as ctx:
+            ...
+
     async with app.test_dependent(sub_bot, allow_types=[BotParam]) as ctx:
-        bot = ctx.create_bot(base=SubBot)
+        bot = ctx.create_bot(base=FooBot)
         ctx.pass_params(bot=bot)
         ctx.should_return(bot)
 
@@ -54,36 +71,67 @@ async def test_bot(app: App, load_plugin):
             bot = ctx.create_bot()
             ctx.pass_params(bot=bot)
 
+    async with app.test_dependent(union_bot, allow_types=[BotParam]) as ctx:
+        bot = ctx.create_bot(base=FooBot)
+        ctx.pass_params(bot=bot)
+        ctx.should_return(bot)
+
+    with pytest.raises(ValueError):
+        async with app.test_dependent(not_bot, allow_types=[BotParam]) as ctx:
+            ...
+
 
 @pytest.mark.asyncio
 async def test_event(app: App, load_plugin):
     from nonebot.exception import TypeMisMatch
     from nonebot.params import EventParam, DependParam
     from plugins.param.param_event import (
-        SubEvent,
+        FooEvent,
         event,
+        not_event,
         sub_event,
         event_type,
         event_to_me,
+        union_event,
+        legacy_event,
         event_message,
         event_plain_text,
+        not_legacy_event,
     )
 
     fake_message = make_fake_message()("text")
     fake_event = make_fake_event(_message=fake_message)()
-    fake_subevent = make_fake_event(_base=SubEvent)()
+    fake_fooevent = make_fake_event(_base=FooEvent)()
 
     async with app.test_dependent(event, allow_types=[EventParam]) as ctx:
         ctx.pass_params(event=fake_event)
         ctx.should_return(fake_event)
 
+    async with app.test_dependent(legacy_event, allow_types=[EventParam]) as ctx:
+        ctx.pass_params(event=fake_event)
+        ctx.should_return(fake_event)
+
+    with pytest.raises(ValueError):
+        async with app.test_dependent(
+            not_legacy_event, allow_types=[EventParam]
+        ) as ctx:
+            ...
+
     async with app.test_dependent(sub_event, allow_types=[EventParam]) as ctx:
-        ctx.pass_params(event=fake_subevent)
-        ctx.should_return(fake_subevent)
+        ctx.pass_params(event=fake_fooevent)
+        ctx.should_return(fake_fooevent)
 
     with pytest.raises(TypeMisMatch):
         async with app.test_dependent(sub_event, allow_types=[EventParam]) as ctx:
             ctx.pass_params(event=fake_event)
+
+    async with app.test_dependent(union_event, allow_types=[EventParam]) as ctx:
+        ctx.pass_params(event=fake_fooevent)
+        ctx.should_return(fake_event)
+
+    with pytest.raises(ValueError):
+        async with app.test_dependent(not_event, allow_types=[EventParam]) as ctx:
+            ...
 
     async with app.test_dependent(
         event_type, allow_types=[EventParam, DependParam]
@@ -132,8 +180,10 @@ async def test_state(app: App, load_plugin):
         command_arg,
         raw_command,
         regex_group,
+        legacy_state,
         command_start,
         regex_matched,
+        not_legacy_state,
         shell_command_args,
         shell_command_argv,
     )
@@ -156,6 +206,16 @@ async def test_state(app: App, load_plugin):
     async with app.test_dependent(state, allow_types=[StateParam]) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state)
+
+    async with app.test_dependent(legacy_state, allow_types=[StateParam]) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state)
+
+    with pytest.raises(ValueError):
+        async with app.test_dependent(
+            not_legacy_state, allow_types=[StateParam]
+        ) as ctx:
+            ...
 
     async with app.test_dependent(
         command, allow_types=[StateParam, DependParam]
