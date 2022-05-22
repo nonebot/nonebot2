@@ -152,5 +152,26 @@
     "homepage": "https://github.com/kexue-z/Dao-bot",
     "tags": [],
     "is_official": false
+  },
+  {
+    "name": "LiteyukiBot-轻雪机器人",
+    "desc": "一个有各种琐事功能的bot，有AI接口，能陪聊",
+    "author": "snowyfirefly",
+    "homepage": "https://github.com/snowyfirefly/Liteyuki",
+    "tags": [
+      {
+        "label": "可爱",
+        "color": "#ffc0cb"
+      },
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      },
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
