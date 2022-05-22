@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🐛 Bug 修复
+
+- Fix: 修复依赖注入 bot event 参数 union 校验失败 [@yanyongyu](https://github.com/yanyongyu) ([#1001](https://github.com/nonebot/nonebot2/pull/1001))
+
 ### 📝 文档
 
 - Docs: 更新 require 样例 [@yanyongyu](https://github.com/yanyongyu) ([#996](https://github.com/nonebot/nonebot2/pull/996))
