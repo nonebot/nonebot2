@@ -1704,5 +1704,20 @@
     "homepage": "https://github.com/kexue-z/nonebot-plugin-tortoise-orm",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_dailysign",
+    "project_link": "nonebot-plugin-dailysign",
+    "name": "签到插件",
+    "desc": "签到获取金币 别的插件也能用金币balabala",
+    "author": "kexue-z",
+    "homepage": "https://github.com/kexue-z/nonebot-plugin-dailysign",
+    "tags": [
+      {
+        "label": "a: onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
