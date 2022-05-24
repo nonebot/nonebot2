@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs：添加文档排版规范 [@j1g5awi](https://github.com/j1g5awi) ([#1005](https://github.com/nonebot/nonebot2/pull/1005))
 - Docs: 更新 require 样例 [@yanyongyu](https://github.com/yanyongyu) ([#996](https://github.com/nonebot/nonebot2/pull/996))
 - Docs: 更新 README 中的 QQ 频道图标 [@mnixry](https://github.com/mnixry) ([#997](https://github.com/nonebot/nonebot2/pull/997))
 - Docs: 调整跨插件访问文档 [@AkiraXie](https://github.com/AkiraXie) ([#993](https://github.com/nonebot/nonebot2/pull/993))
