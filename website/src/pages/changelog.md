@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 签到插件 [@yanyongyu](https://github.com/yanyongyu) ([#1007](https://github.com/nonebot/nonebot2/pull/1007))
 - Plugin: 数据库连接插件 [@yanyongyu](https://github.com/yanyongyu) ([#995](https://github.com/nonebot/nonebot2/pull/995))
 - Plugin: 百度翻译 [@yanyongyu](https://github.com/yanyongyu) ([#992](https://github.com/nonebot/nonebot2/pull/992))
 - Plugin: MockingBird 语音 [@yanyongyu](https://github.com/yanyongyu) ([#989](https://github.com/nonebot/nonebot2/pull/989))
