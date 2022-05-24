@@ -1719,5 +1719,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_tetris_stats",
+    "project_link": "nonebot-plugin-tetris-stats",
+    "name": "TETRIS Stats",
+    "desc": "一个基于nonebot2的用于查询TETRIS相关游戏玩家数据的插件",
+    "author": "shoucandanghehe",
+    "homepage": "https://github.com/shoucandanghehe/nonebot-plugin-tetris-stats",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#da2b2b"
+      }
+    ],
+    "is_official": false
   }
 ]
