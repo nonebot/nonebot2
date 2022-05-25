@@ -10,15 +10,17 @@ inputs:
 runs:
   using: "composite"
   steps:
+    - name: Install poetry
+      shell: bash
+      run: pipx install poetry
+
     - uses: actions/setup-python@v3
       with:
         python-version: ${{ inputs.python-version }}
         architecture: "x64"
         cache: 'poetry'
 
-    - name: Install poetry
-      shell: bash
-      run: pipx install poetry
-
-    - run: poetry install -E all
+    - run: |
+        poetry env use ${{ inputs.python-version }}
+        poetry install -E all
       shell: bash
