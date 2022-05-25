@@ -10,17 +10,14 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-python@v2
+    - name: Install poetry
+      shell: bash
+      run: pipx install poetry
+
+    - uses: actions/setup-python@v3
       with:
         python-version: ${{ inputs.python-version }}
-        architecture: "x64"
-
-    - uses: Gr1N/setup-poetry@v7
-
-    - uses: actions/cache@v2
-      with:
-        path: ~/.cache/pypoetry/virtualenvs
-        key: ${{ runner.os }}-poetry-${{ inputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+        cache: 'poetry'
 
     - run: poetry install -E all
       shell: bash
