@@ -35,6 +35,15 @@ async def test_load_plugin(app: App, load_plugin: Set["Plugin"]):
 
 
 @pytest.mark.asyncio
+async def test_bad_plugin(app: App):
+    import nonebot
+
+    nonebot.load_plugins("bad_plugins")
+
+    assert nonebot.get_plugin("bad_plugins") is None
+
+
+@pytest.mark.asyncio
 async def test_require_loaded(app: App, monkeypatch: pytest.MonkeyPatch):
     import nonebot
 
