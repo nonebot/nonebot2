@@ -9,8 +9,9 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.asyncio
-async def test_load_plugin(load_plugin: Set["Plugin"]):
+async def test_load_plugin(app: App, load_plugin: Set["Plugin"]):
     import nonebot
+    from nonebot.plugin import PluginManager
 
     loaded_plugins = {
         plugin for plugin in nonebot.get_loaded_plugins() if not plugin.parent_plugin
@@ -18,20 +19,16 @@ async def test_load_plugin(load_plugin: Set["Plugin"]):
     assert loaded_plugins == load_plugin
 
     # check simple plugin
-    plugin = nonebot.get_plugin("export")
-    assert plugin
-    assert plugin.module_name == "plugins.export"
     assert "plugins.export" in sys.modules
+
+    # check sub plugin
+    assert "plugins.nested.plugins.nested_subplugin" in sys.modules
 
     # check load again
     with pytest.raises(RuntimeError):
-        nonebot.load_plugin("plugins.export")
-
-    # check sub plugin
-    plugin = nonebot.get_plugin("nested_subplugin")
-    assert plugin
-    assert plugin.module_name == "plugins.nested.plugins.nested_subplugin"
-    assert "plugins.nested.plugins.nested_subplugin" in sys.modules
+        PluginManager(plugins=["plugins.export"]).load_all_plugins()
+    with pytest.raises(RuntimeError):
+        PluginManager(search_path=["plugins"]).load_all_plugins()
 
     # check not found
     assert nonebot.load_plugin("some_plugin_not_exist") is None
@@ -54,8 +51,7 @@ async def test_require_loaded(app: App, monkeypatch: pytest.MonkeyPatch):
 @pytest.mark.asyncio
 async def test_require_not_loaded(app: App, monkeypatch: pytest.MonkeyPatch):
     import nonebot
-    from nonebot.plugin import _managers
-    from nonebot.plugin.manager import PluginManager
+    from nonebot.plugin import PluginManager, _managers
 
     m = PluginManager(["plugins.export"])
     _managers.append(m)
@@ -87,7 +83,6 @@ async def test_require_not_declared(app: App):
 @pytest.mark.asyncio
 async def test_require_not_found(app: App):
     import nonebot
-    from nonebot.plugin import _managers
 
     with pytest.raises(RuntimeError):
         nonebot.require("some_plugin_not_exist")

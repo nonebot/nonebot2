@@ -26,7 +26,9 @@
 - `load_builtin_plugin` => {ref}``load_builtin_plugin` <nonebot.plugin.load.load_builtin_plugin>`
 - `load_builtin_plugins` => {ref}``load_builtin_plugins` <nonebot.plugin.load.load_builtin_plugins>`
 - `get_plugin` => {ref}``get_plugin` <nonebot.plugin.plugin.get_plugin>`
+- `get_plugin_by_module_name` => {ref}``get_plugin_by_module_name` <nonebot.plugin.plugin.get_plugin_by_module_name>`
 - `get_loaded_plugins` => {ref}``get_loaded_plugins` <nonebot.plugin.plugin.get_loaded_plugins>`
+- `get_available_plugin_names` => {ref}``get_available_plugin_names` <nonebot.plugin.plugin.get_available_plugin_names>`
 - `export` => {ref}``export` <nonebot.plugin.export.export>`
 - `require` => {ref}``require` <nonebot.plugin.load.require>`
 
@@ -284,5 +286,7 @@ from nonebot.plugin import on_shell_command as on_shell_command
 from nonebot.plugin import get_loaded_plugins as get_loaded_plugins
 from nonebot.plugin import load_builtin_plugin as load_builtin_plugin
 from nonebot.plugin import load_builtin_plugins as load_builtin_plugins
+from nonebot.plugin import get_plugin_by_module_name as get_plugin_by_module_name
+from nonebot.plugin import get_available_plugin_names as get_available_plugin_names
 
 __autodoc__ = {"internal": False}
