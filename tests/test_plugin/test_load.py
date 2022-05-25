@@ -12,21 +12,28 @@ if TYPE_CHECKING:
 async def test_load_plugin(load_plugin: Set["Plugin"]):
     import nonebot
 
-    loaded_plugins = set(
+    loaded_plugins = {
         plugin for plugin in nonebot.get_loaded_plugins() if not plugin.parent_plugin
-    )
+    }
     assert loaded_plugins == load_plugin
+
+    # check simple plugin
     plugin = nonebot.get_plugin("export")
     assert plugin
     assert plugin.module_name == "plugins.export"
     assert "plugins.export" in sys.modules
 
-    try:
+    # check load again
+    with pytest.raises(RuntimeError):
         nonebot.load_plugin("plugins.export")
-        assert False
-    except RuntimeError:
-        assert True
 
+    # check sub plugin
+    plugin = nonebot.get_plugin("nested_subplugin")
+    assert plugin
+    assert plugin.module_name == "plugins.nested.plugins.nested_subplugin"
+    assert "plugins.nested.plugins.nested_subplugin" in sys.modules
+
+    # check not found
     assert nonebot.load_plugin("some_plugin_not_exist") is None
 
 
@@ -82,8 +89,5 @@ async def test_require_not_found(app: App):
     import nonebot
     from nonebot.plugin import _managers
 
-    try:
+    with pytest.raises(RuntimeError):
         nonebot.require("some_plugin_not_exist")
-        assert False
-    except RuntimeError:
-        assert True
