@@ -12,7 +12,11 @@ runs:
   steps:
     - name: Install poetry
       shell: bash
-      run: pipx install poetry
+      run: pipx install poetry --pip-args=--pre
+
+    - name: Config poetry
+      shell: bash
+      run: poetry config virtualenvs.prefer-active-python true
 
     - uses: actions/setup-python@v3
       with:
@@ -20,7 +24,5 @@ runs:
         architecture: "x64"
         cache: 'poetry'
 
-    - run: |
-        poetry env use ${{ inputs.python-version }}
-        poetry install -E all
+    - run: poetry install -E all
       shell: bash
