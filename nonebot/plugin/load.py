@@ -10,10 +10,10 @@ from typing import Set, Iterable, Optional
 
 import tomlkit
 
-from . import _managers
 from .export import Export
+from .plugin import Plugin
 from .manager import PluginManager
-from .plugin import Plugin, get_plugin
+from . import _managers, get_plugin, _module_name_to_plugin_name
 
 
 def load_plugin(module_path: str) -> Optional[Plugin]:
@@ -128,7 +128,7 @@ def load_builtin_plugin(name: str) -> Optional[Plugin]:
     return load_plugin(f"nonebot.plugins.{name}")
 
 
-def load_builtin_plugins(*plugins) -> Set[Plugin]:
+def load_builtin_plugins(*plugins: str) -> Set[Plugin]:
     """导入多个 NoneBot 内置插件。
 
     参数:
@@ -154,7 +154,7 @@ def require(name: str) -> Export:
     异常:
         RuntimeError: 插件无法加载
     """
-    plugin = get_plugin(name.rsplit(".", 1)[-1])
+    plugin = get_plugin(_module_name_to_plugin_name(name))
     if not plugin:
         manager = _find_manager_by_name(name)
         if manager:

@@ -9,25 +9,38 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.asyncio
-async def test_load_plugin(load_plugin: Set["Plugin"]):
+async def test_load_plugin(app: App, load_plugin: Set["Plugin"]):
     import nonebot
+    from nonebot.plugin import PluginManager
 
-    loaded_plugins = set(
+    loaded_plugins = {
         plugin for plugin in nonebot.get_loaded_plugins() if not plugin.parent_plugin
-    )
+    }
     assert loaded_plugins == load_plugin
-    plugin = nonebot.get_plugin("export")
-    assert plugin
-    assert plugin.module_name == "plugins.export"
+
+    # check simple plugin
     assert "plugins.export" in sys.modules
 
-    try:
-        nonebot.load_plugin("plugins.export")
-        assert False
-    except RuntimeError:
-        assert True
+    # check sub plugin
+    assert "plugins.nested.plugins.nested_subplugin" in sys.modules
 
+    # check load again
+    with pytest.raises(RuntimeError):
+        PluginManager(plugins=["plugins.export"]).load_all_plugins()
+    with pytest.raises(RuntimeError):
+        PluginManager(search_path=["plugins"]).load_all_plugins()
+
+    # check not found
     assert nonebot.load_plugin("some_plugin_not_exist") is None
+
+
+@pytest.mark.asyncio
+async def test_bad_plugin(app: App):
+    import nonebot
+
+    nonebot.load_plugins("bad_plugins")
+
+    assert nonebot.get_plugin("bad_plugins") is None
 
 
 @pytest.mark.asyncio
@@ -47,8 +60,7 @@ async def test_require_loaded(app: App, monkeypatch: pytest.MonkeyPatch):
 @pytest.mark.asyncio
 async def test_require_not_loaded(app: App, monkeypatch: pytest.MonkeyPatch):
     import nonebot
-    from nonebot.plugin import _managers
-    from nonebot.plugin.manager import PluginManager
+    from nonebot.plugin import PluginManager, _managers
 
     m = PluginManager(["plugins.export"])
     _managers.append(m)
@@ -80,10 +92,6 @@ async def test_require_not_declared(app: App):
 @pytest.mark.asyncio
 async def test_require_not_found(app: App):
     import nonebot
-    from nonebot.plugin import _managers
 
-    try:
+    with pytest.raises(RuntimeError):
         nonebot.require("some_plugin_not_exist")
-        assert False
-    except RuntimeError:
-        assert True

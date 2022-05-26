@@ -5,7 +5,6 @@ FrontMatter:
     description: nonebot.plugin.on 模块
 """
 import re
-import sys
 import inspect
 from types import ModuleType
 from typing import Any, Set, Dict, List, Type, Tuple, Union, Optional
@@ -41,8 +40,7 @@ def _get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
     if current_frame is None:
         return None
     frame = inspect.getouterframes(current_frame)[depth + 1].frame
-    module_name = frame.f_globals["__name__"]
-    return sys.modules.get(module_name)
+    return inspect.getmodule(frame)
 
 
 def on(
