@@ -19,12 +19,12 @@ runs:
     - uses: Gr1N/setup-poetry@v7
 
     - id: peotry-cache
-      run: echo "::set-output name=cache-dir::$(poetry config cache-dir)"
+      run: echo "::set-output name=dir::$(poetry config virtualenvs.path)"
       shell: bash
 
     - uses: actions/cache@v2
       with:
-        path: ${{ steps.poetry-cache.outputs.cache-dir }}
+        path: ${{ steps.poetry-cache.outputs.dir }}
         key: ${{ runner.os }}-poetry-${{ steps.python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
     - run: poetry install -E all
