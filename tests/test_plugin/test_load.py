@@ -22,7 +22,10 @@ async def test_load_plugin(app: App, load_plugin: Set["Plugin"]):
     assert "plugins.export" in sys.modules
 
     # check sub plugin
+    plugin = nonebot.get_plugin("nested_subplugin")
+    assert plugin
     assert "plugins.nested.plugins.nested_subplugin" in sys.modules
+    assert plugin.parent_plugin == nonebot.get_plugin("nested")
 
     # check load again
     with pytest.raises(RuntimeError):
