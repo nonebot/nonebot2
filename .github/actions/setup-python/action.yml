@@ -18,7 +18,7 @@ runs:
 
     - uses: Gr1N/setup-poetry@v7
 
-    - id: peotry-cache
+    - id: poetry-cache
       run: echo "::set-output name=dir::$(poetry config virtualenvs.path)"
       shell: bash
 
