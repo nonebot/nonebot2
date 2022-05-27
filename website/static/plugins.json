@@ -1734,5 +1734,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bilibili_viode",
+    "project_link": "nonebot_plugin_bilibili_viode",
+    "name": "B站视频伪分享卡片",
+    "desc": "将用户发送的B站视频ID转为(伪)分享卡片的形式",
+    "author": "ASTWY",
+    "homepage": "https://github.com/ASTWY/nonebot_plugin_bilibili_viode",
+    "tags": [],
+    "is_official": false
   }
 ]
