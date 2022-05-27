@@ -10,17 +10,22 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - uses: actions/setup-python@v2
+    - id: python
+      uses: actions/setup-python@v2
       with:
         python-version: ${{ inputs.python-version }}
         architecture: "x64"
 
     - uses: Gr1N/setup-poetry@v7
 
+    - id: peotry-cache
+      run: echo "::set-output name=cache-dir::$(poetry config cache-dir)"
+      shell: bash
+
     - uses: actions/cache@v2
       with:
-        path: ~/.cache/pypoetry/virtualenvs
-        key: ${{ runner.os }}-poetry-${{ inputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+        path: ${{ steps.poetry-cache.outputs.cache-dir }}
+        key: ${{ runner.os }}-poetry-${{ steps.python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
 
     - run: poetry install -E all
       shell: bash
