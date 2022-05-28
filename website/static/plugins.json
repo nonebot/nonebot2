@@ -1744,5 +1744,15 @@
     "homepage": "https://github.com/ASTWY/nonebot_plugin_bilibili_viode",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_botteenstudy",
+    "project_link": "nonebot_plugin_botteenstudy",
+    "name": "青年大学习提交（有后台记录）",
+    "desc": "利用requests库往相应平台提交个人大学习信息（暂时只适配了部分地区）",
+    "author": "ZMXC01",
+    "homepage": "https://github.com/ZMXC01/nonebot_plugin_botteenstudy",
+    "tags": [],
+    "is_official": false
   }
 ]
