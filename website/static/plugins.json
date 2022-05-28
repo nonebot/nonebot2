@@ -1744,5 +1744,15 @@
     "homepage": "https://github.com/ASTWY/nonebot_plugin_bilibili_viode",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_arktools",
+    "project_link": "nonebot-plugin-arktools",
+    "name": "明日方舟工具箱",
+    "desc": "简单实现一些有需求的资源查询功能和计算功能",
+    "author": "NumberSir",
+    "homepage": "https://github.com/NumberSir/nonebot_plugin_arktools",
+    "tags": [],
+    "is_official": false
   }
 ]
