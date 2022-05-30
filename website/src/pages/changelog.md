@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: imagetools [@yanyongyu](https://github.com/yanyongyu) ([#1021](https://github.com/nonebot/nonebot2/pull/1021))
 - Plugin: 明日方舟工具箱 [@yanyongyu](https://github.com/yanyongyu) ([#1019](https://github.com/nonebot/nonebot2/pull/1019))
 - Plugin: B 站视频伪分享卡片 [@yanyongyu](https://github.com/yanyongyu) ([#1014](https://github.com/nonebot/nonebot2/pull/1014))
 - Plugin: TETRIS Stats [@yanyongyu](https://github.com/yanyongyu) ([#1009](https://github.com/nonebot/nonebot2/pull/1009))
