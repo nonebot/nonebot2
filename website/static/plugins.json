@@ -1754,5 +1754,20 @@
     "homepage": "https://github.com/NumberSir/nonebot_plugin_arktools",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_imagetools",
+    "project_link": "nonebot-plugin-imagetools",
+    "name": "imagetools",
+    "desc": "一些简单的图片操作",
+    "author": "MeetWq",
+    "homepage": "https://github.com/noneplugin/nonebot-plugin-imagetools",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
