@@ -1769,5 +1769,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_warframe_clock",
+    "project_link": "nonebot-plugin-warframe-clock",
+    "name": "Warframe时间查询",
+    "desc": "查询Warframe的平原与地球时间状态",
+    "author": "axStar",
+    "homepage": "https://github.com/axStar/nonebot_plugin_warframe_clock",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "Warframe",
+        "color": "#149090"
+      }
+    ],
+    "is_official": false
   }
 ]
