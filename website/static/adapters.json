@@ -68,5 +68,15 @@
     "homepage": "https://github.com/ieew/nonebot_adapter_mirai2",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot.adapters.onebot.v12",
+    "project_link": "nonebot-adapter-onebot",
+    "name": "OneBot V12",
+    "desc": "OneBot V12 协议",
+    "author": "yanyongyu",
+    "homepage": "https://onebot.adapters.nonebot.dev/",
+    "tags": [],
+    "is_official": false
   }
 ]
