@@ -38,6 +38,10 @@ toc_max_heading_level: 2
 
 - Bot: LiteyukiBot-轻雪机器人 [@yanyongyu](https://github.com/yanyongyu) ([#1003](https://github.com/nonebot/nonebot2/pull/1003))
 
+### 🍻 适配器发布
+
+- Adapter: OneBot V12 [@yanyongyu](https://github.com/yanyongyu) ([#1027](https://github.com/nonebot/nonebot2/pull/1027))
+
 ## v2.0.0-beta.3
 
 ### 💥 破坏性变更
