@@ -1798,5 +1798,24 @@
     "homepage": "https://github.com/benx1n/HikariBot",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_who_at_me",
+    "project_link": "nonebot-plugin-who-at-me",
+    "name": "谁艾特我了",
+    "desc": "看看是谁又在艾特我",
+    "author": "SEAFHMC",
+    "homepage": "https://github.com/SEAFHMC/nonebot-plugin-who-at-me",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:群聊",
+        "color": "#52afea"
+      }
+    ],
+    "is_official": false
   }
 ]
