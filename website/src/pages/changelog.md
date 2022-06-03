@@ -24,6 +24,8 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 疫情小助手 [@yanyongyu](https://github.com/yanyongyu) ([#1033](https://github.com/nonebot/nonebot2/pull/1033))
+- Plugin: 谁艾特我了 [@yanyongyu](https://github.com/yanyongyu) ([#1031](https://github.com/nonebot/nonebot2/pull/1031))
 - Plugin: Hikari-战舰世界水表查询 [@yanyongyu](https://github.com/yanyongyu) ([#1025](https://github.com/nonebot/nonebot2/pull/1025))
 - Plugin: Warframe 时间查询 [@yanyongyu](https://github.com/yanyongyu) ([#1023](https://github.com/nonebot/nonebot2/pull/1023))
 - Plugin: imagetools [@yanyongyu](https://github.com/yanyongyu) ([#1021](https://github.com/nonebot/nonebot2/pull/1021))
