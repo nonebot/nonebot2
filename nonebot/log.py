@@ -96,7 +96,7 @@ default_format: str = (
 logger_id = logger.add(
     sys.stdout,
     level=0,
-    colorize=True,
+    colorize=None, # determine colorization automatically
     diagnose=False,
     filter=default_filter,
     format=default_format,
