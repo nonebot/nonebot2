@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 日志记录自动检测终端是否支持彩色 [@BlueGlassBlock](https://github.com/BlueGlassBlock) ([#1034](https://github.com/nonebot/nonebot2/pull/1034))
 - Feature: 优化插件加载内部逻辑 [@yanyongyu](https://github.com/yanyongyu) ([#1011](https://github.com/nonebot/nonebot2/pull/1011))
 
 ### 🐛 Bug 修复
