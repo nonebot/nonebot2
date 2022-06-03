@@ -1817,5 +1817,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_covid_19_by",
+    "project_link": "nonebot-plugin-covid-19-by",
+    "name": "疫情小助手",
+    "desc": "疫情小助手 支持查地区 风险地区 境外输入等",
+    "author": "bingqiu456",
+    "homepage": "https://github.com/bingqiu456/nonebot-plugin-covid-19-by",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#52ea8a"
+      }
+    ],
+    "is_official": false
   }
 ]
