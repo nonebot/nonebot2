@@ -25,6 +25,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 青年大学习自动提交 [@yanyongyu](https://github.com/yanyongyu) ([#1036](https://github.com/nonebot/nonebot2/pull/1036))
 - Plugin: 疫情小助手 [@yanyongyu](https://github.com/yanyongyu) ([#1033](https://github.com/nonebot/nonebot2/pull/1033))
 - Plugin: 谁艾特我了 [@yanyongyu](https://github.com/yanyongyu) ([#1031](https://github.com/nonebot/nonebot2/pull/1031))
 - Plugin: Hikari-战舰世界水表查询 [@yanyongyu](https://github.com/yanyongyu) ([#1025](https://github.com/nonebot/nonebot2/pull/1025))
