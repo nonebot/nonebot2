@@ -1832,5 +1832,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_auto_teenstudy",
+    "project_link": "nonebot-plugin-auto-teenstudy",
+    "name": "青年大学习自动提交",
+    "desc": "使用httpx库向各地区大学习平台发送post请求完成大学习",
+    "author": "ZMXC01",
+    "homepage": "https://github.com/ZMXC01/nonebot_plugin_auto_teenstudy",
+    "tags": [
+      {
+        "label": "httpx",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
