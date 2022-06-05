@@ -1847,5 +1847,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_reboot",
+    "project_link": "nonebot-plugin-reboot",
+    "name": "命令重启机器人",
+    "desc": "用命令重启你的机器人 /reboot",
+    "author": "18870",
+    "homepage": "https://github.com/18870/nonebot-plugin-reboot",
+    "tags": [],
+    "is_official": false
   }
 ]
