@@ -170,6 +170,7 @@ async def test_state(app: App, load_plugin):
         CMD_ARG_KEY,
         RAW_CMD_KEY,
         REGEX_GROUP,
+        REJECT_TIMES,
         CMD_START_KEY,
         REGEX_MATCHED,
     )
@@ -181,6 +182,7 @@ async def test_state(app: App, load_plugin):
         raw_command,
         regex_group,
         legacy_state,
+        reject_times,
         command_start,
         regex_matched,
         not_legacy_state,
@@ -201,6 +203,7 @@ async def test_state(app: App, load_plugin):
         REGEX_MATCHED: "[cq:test,arg=value]",
         REGEX_GROUP: ("test", "arg=value"),
         REGEX_DICT: {"type": "test", "arg": "value"},
+        REJECT_TIMES: 1,
     }
 
     async with app.test_dependent(state, allow_types=[StateParam]) as ctx:
@@ -270,6 +273,12 @@ async def test_state(app: App, load_plugin):
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[REGEX_DICT])
+
+    async with app.test_dependent(
+        reject_times, allow_types=[StateParam, DependParam]
+    ) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state[REJECT_TIMES])
 
 
 @pytest.mark.asyncio

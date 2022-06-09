@@ -42,3 +42,6 @@ REGEX_GROUP: Literal["_matched_groups"] = "_matched_groups"
 """正则匹配 group 元组存储 key"""
 REGEX_DICT: Literal["_matched_dict"] = "_matched_dict"
 """正则匹配 group 字典存储 key"""
+
+REJECT_TIMES: Literal["_reject_times"] = "_reject_times"
+"""当前 `reject` 的次数"""

@@ -18,13 +18,6 @@ from typing import (
 
 from nonebot.log import logger
 from nonebot.dependencies import Dependent
-from nonebot.consts import (
-    ARG_KEY,
-    RECEIVE_KEY,
-    REJECT_TARGET,
-    LAST_RECEIVE_KEY,
-    REJECT_CACHE_TARGET,
-)
 from nonebot.typing import (
     Any,
     T_State,
@@ -32,6 +25,14 @@ from nonebot.typing import (
     T_TypeUpdater,
     T_DependencyCache,
     T_PermissionUpdater,
+)
+from nonebot.consts import (
+    ARG_KEY,
+    RECEIVE_KEY,
+    REJECT_TIMES,
+    REJECT_TARGET,
+    LAST_RECEIVE_KEY,
+    REJECT_CACHE_TARGET,
 )
 from nonebot.exception import (
     TypeMisMatch,
@@ -671,6 +672,10 @@ class Matcher(metaclass=MatcherMeta):
             await self.resolve_reject()
             type_ = await self.update_type(bot, event)
             permission = await self.update_permission(bot, event)
+            if REJECT_TIMES in self.state:
+                self.state[REJECT_TIMES] += 1
+            else:
+                self.state[REJECT_TIMES] = 1
 
             Matcher.new(
                 type_,

@@ -8,6 +8,7 @@ from nonebot.params import (
     CommandArg,
     RawCommand,
     RegexGroup,
+    RejectTimes,
     CommandStart,
     RegexMatched,
     ShellCommandArgs,
@@ -65,3 +66,7 @@ async def regex_group(regex_group: Tuple = RegexGroup()) -> Tuple:
 
 async def regex_matched(regex_matched: str = RegexMatched()) -> str:
     return regex_matched
+
+
+async def reject_times(reject_times: int = RejectTimes()) -> int:
+    return reject_times

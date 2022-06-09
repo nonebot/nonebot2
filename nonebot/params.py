@@ -32,6 +32,7 @@ from nonebot.consts import (
     CMD_ARG_KEY,
     RAW_CMD_KEY,
     REGEX_GROUP,
+    REJECT_TIMES,
     CMD_START_KEY,
     REGEX_MATCHED,
 )
@@ -170,6 +171,14 @@ def LastReceived(default: Any = None) -> Any:
         return matcher.get_last_receive(default)
 
     return Depends(_last_received, use_cache=False)
+
+
+def _reject_times(state: T_State):
+    return state[REJECT_TIMES]
+
+
+def RejectTimes() -> int:
+    return Depends(_reject_times, use_cache=False)
 
 
 __autodoc__ = {
