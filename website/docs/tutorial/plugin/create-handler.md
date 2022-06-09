@@ -370,6 +370,20 @@ foo = on_message()
 async def _(matcher: Matcher): ...
 ```
 
+### RejectTimes
+
+获取当前 `reject` 的次数。
+
+```python {7}
+from nonebot import on_message
+from nonebot.params import RejectTimes
+
+matcher = on_message()
+
+@matcher.got("key")
+async def _(times: int = RejectTimes()): ...
+```
+
 ### Received
 
 获取某次 `receive` 接收的事件。
