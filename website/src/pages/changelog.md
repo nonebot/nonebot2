@@ -42,6 +42,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: nya_bot [@yanyongyu](https://github.com/yanyongyu) ([#1045](https://github.com/nonebot/nonebot2/pull/1045))
 - Bot: LiteyukiBot-轻雪机器人 [@yanyongyu](https://github.com/yanyongyu) ([#1003](https://github.com/nonebot/nonebot2/pull/1003))
 
 ### 🍻 适配器发布
