@@ -173,5 +173,18 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "nya_bot",
+    "desc": "喵服——战魂铭人联机服务器兼机器人",
+    "author": "nikissXI",
+    "homepage": "https://github.com/nikissXI/nya_bot",
+    "tags": [
+      {
+        "label": "战魂铭人",
+        "color": "#25aaf4"
+      }
+    ],
+    "is_official": false
   }
 ]
