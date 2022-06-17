@@ -6,7 +6,9 @@ FrontMatter:
 """
 from types import ModuleType
 from dataclasses import field, dataclass
-from typing import TYPE_CHECKING, Set, Type, Optional
+from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional
+
+from pydantic import BaseModel
 
 from nonebot.matcher import Matcher
 
@@ -18,11 +20,26 @@ if TYPE_CHECKING:
 
 
 @dataclass(eq=False)
-class Plugin(object):
+class PluginMetadata:
+    """插件元信息，由插件编写者提供"""
+
+    name: str
+    """插件可阅读名称"""
+    description: str
+    """插件功能介绍"""
+    usage: str
+    """插件使用方法"""
+    config: Optional[Type[BaseModel]] = None
+    """插件配置项"""
+    extra: Dict[Any, Any] = field(default_factory=dict)
+
+
+@dataclass(eq=False)
+class Plugin:
     """存储插件信息"""
 
     name: str
-    """插件名称，使用 文件/文件夹 名称作为插件名"""
+    """插件索引标识，NoneBot 使用 文件/文件夹 名称作为标识符"""
     module: ModuleType
     """插件模块对象"""
     module_name: str
@@ -37,3 +54,4 @@ class Plugin(object):
     """父插件"""
     sub_plugins: Set["Plugin"] = field(default_factory=set)
     """子插件集合"""
+    metadata: Optional[PluginMetadata] = None
