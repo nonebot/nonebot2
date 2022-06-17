@@ -1857,5 +1857,15 @@
     "homepage": "https://github.com/18870/nonebot-plugin-reboot",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_setu4",
+    "project_link": "nonebot-plugin-setu4",
+    "name": "nonebot_plugin_setu4",
+    "desc": "内置数据库的色图插件, 尝试减小发不出图片的概率",
+    "author": "Special-Week",
+    "homepage": "https://github.com/Special-Week/nonebot_plugin_setu4",
+    "tags": [],
+    "is_official": false
   }
 ]
