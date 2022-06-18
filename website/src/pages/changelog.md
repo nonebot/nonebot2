@@ -25,6 +25,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot_plugin_setu4 [@yanyongyu](https://github.com/yanyongyu) ([#1051](https://github.com/nonebot/nonebot2/pull/1051))
 - Plugin: 命令重启机器人 [@yanyongyu](https://github.com/yanyongyu) ([#1038](https://github.com/nonebot/nonebot2/pull/1038))
 - Plugin: 青年大学习自动提交 [@yanyongyu](https://github.com/yanyongyu) ([#1036](https://github.com/nonebot/nonebot2/pull/1036))
 - Plugin: 疫情小助手 [@yanyongyu](https://github.com/yanyongyu) ([#1033](https://github.com/nonebot/nonebot2/pull/1033))
