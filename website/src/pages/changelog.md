@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: smart_reply [@yanyongyu](https://github.com/yanyongyu) ([#1054](https://github.com/nonebot/nonebot2/pull/1054))
 - Plugin: nonebot_plugin_setu4 [@yanyongyu](https://github.com/yanyongyu) ([#1051](https://github.com/nonebot/nonebot2/pull/1051))
 - Plugin: 命令重启机器人 [@yanyongyu](https://github.com/yanyongyu) ([#1038](https://github.com/nonebot/nonebot2/pull/1038))
 - Plugin: 青年大学习自动提交 [@yanyongyu](https://github.com/yanyongyu) ([#1036](https://github.com/nonebot/nonebot2/pull/1036))
