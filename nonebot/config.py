@@ -83,9 +83,8 @@ class CustomEnvSettings(EnvSettingsSource):
             d[field.alias] = env_val
 
         if env_file_vars:
-            for env_name, env_val in env_file_vars.items():
-                if (env_val is None or len(env_val) == 0) and env_name in env_vars:
-                    env_val = env_vars[env_name]
+            for env_name in env_file_vars.keys():
+                env_val = env_vars[env_name]
                 try:
                     if env_val:
                         env_val = settings.__config__.json_loads(env_val.strip())

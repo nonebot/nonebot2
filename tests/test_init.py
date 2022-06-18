@@ -3,6 +3,7 @@ import os
 import pytest
 
 os.environ["CONFIG_FROM_ENV"] = '{"test": "test"}'
+os.environ["CONFIG_OVERRIDE"] = "new"
 
 
 @pytest.mark.asyncio
@@ -25,6 +26,7 @@ async def test_init(nonebug_init):
 
     config = get_driver().config
     assert config.config_from_env == {"test": "test"}
+    assert config.config_override == "new"
     assert config.config_from_init == "init"
     assert config.common_config == "common"
 
