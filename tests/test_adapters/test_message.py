@@ -131,11 +131,8 @@ def test_message_validate():
 
     assert parse_obj_as(Message, Message([])) == Message([])
 
-    try:
+    with pytest.raises(ValidationError):
         parse_obj_as(Message, Message_([]))
-        assert False
-    except ValidationError:
-        assert True
 
     assert parse_obj_as(Message, "text") == Message([MessageSegment.text("text")])
 
@@ -148,8 +145,5 @@ def test_message_validate():
         [MessageSegment.text("text"), {"type": "text", "data": {"text": "text"}}],
     ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
 
-    try:
+    with pytest.raises(ValidationError):
         parse_obj_as(Message, object())
-        assert False
-    except ValidationError:
-        assert True
