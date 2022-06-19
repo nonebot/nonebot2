@@ -1,3 +1,4 @@
+import pytest
 from pydantic import ValidationError, parse_obj_as
 
 from utils import make_fake_message
@@ -29,14 +30,15 @@ def test_segment_validate():
     MessageSegment = Message.get_segment_class()
 
     assert parse_obj_as(
-        MessageSegment, {"type": "text", "data": {"text": "text"}}
+        MessageSegment,
+        {"type": "text", "data": {"text": "text"}, "extra": "should be ignored"},
     ) == MessageSegment.text("text")
 
-    try:
+    with pytest.raises(ValidationError):
         parse_obj_as(MessageSegment, "some str")
-        assert False
-    except ValidationError:
-        assert True
+
+    with pytest.raises(ValidationError):
+        parse_obj_as(MessageSegment, {"data": {}})
 
 
 def test_segment():
