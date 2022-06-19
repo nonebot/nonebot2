@@ -129,6 +129,7 @@ from .on import on_startswith as on_startswith
 from .load import load_from_json as load_from_json
 from .load import load_from_toml as load_from_toml
 from .on import on_shell_command as on_shell_command
+from .plugin import PluginMetadata as PluginMetadata
 from .load import load_all_plugins as load_all_plugins
 from .load import load_builtin_plugin as load_builtin_plugin
 from .load import load_builtin_plugins as load_builtin_plugins
