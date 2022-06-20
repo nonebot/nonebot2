@@ -15,6 +15,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修复 MessageSegment 在有额外数据时报错 [@yanyongyu](https://github.com/yanyongyu) ([#1055](https://github.com/nonebot/nonebot2/pull/1055))
 - Fix: 修复环境变量无法覆盖 dotenv 内配置项值 [@yanyongyu](https://github.com/yanyongyu) ([#1052](https://github.com/nonebot/nonebot2/pull/1052))
 - Fix: 修复依赖注入 bot event 参数 union 校验失败 [@yanyongyu](https://github.com/yanyongyu) ([#1001](https://github.com/nonebot/nonebot2/pull/1001))
 
