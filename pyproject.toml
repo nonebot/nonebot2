@@ -61,6 +61,10 @@ all = ["quart", "aiohttp", "httpx", "websockets"]
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
 addopts = "--cov=nonebot --cov-report=term-missing"
+filterwarnings = [
+    "error",
+    "ignore::DeprecationWarning",
+]
 
 [tool.black]
 line-length = 88

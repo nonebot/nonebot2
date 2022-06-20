@@ -66,7 +66,11 @@ class MessageSegment(abc.ABC, Generic[TM]):
             return value
         if not isinstance(value, dict):
             raise ValueError(f"Expected dict for MessageSegment, got {type(value)}")
-        return cls(**value)
+        if "type" not in value:
+            raise ValueError(
+                f"Expected dict with 'type' for MessageSegment, got {value}"
+            )
+        return cls(type=value["type"], data=value.get("data", {}))
 
     def get(self, key: str, default: Any = None):
         return asdict(self).get(key, default)
