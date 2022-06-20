@@ -19,7 +19,7 @@ from typing import Set, Dict, List, Union, Iterable, Optional, Sequence
 from nonebot.log import logger
 from nonebot.utils import escape_tag
 
-from .plugin import Plugin
+from .plugin import Plugin, PluginMetadata
 from . import (
     _managers,
     _new_plugin,
@@ -241,6 +241,10 @@ class PluginLoader(SourceFileLoader):
         finally:
             # leave plugin context
             _current_plugin.reset(_plugin_token)
+
+        # get plugin metadata
+        metadata: Optional[PluginMetadata] = getattr(module, "__plugin_meta__", None)
+        plugin.metadata = metadata
 
         return
 

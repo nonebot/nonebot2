@@ -1,4 +1,5 @@
 import sys
+from dataclasses import asdict
 from typing import TYPE_CHECKING, Set
 
 import pytest
@@ -98,3 +99,20 @@ async def test_require_not_found(app: App):
 
     with pytest.raises(RuntimeError):
         nonebot.require("some_plugin_not_exist")
+
+
+@pytest.mark.asyncio
+async def test_plugin_metadata(app: App, load_plugin: Set["Plugin"]):
+    import nonebot
+    from plugins.metadata import Config
+
+    plugin = nonebot.get_plugin("metadata")
+    assert plugin
+    assert plugin.metadata
+    assert asdict(plugin.metadata) == {
+        "name": "测试插件",
+        "description": "测试插件元信息",
+        "usage": "无法使用",
+        "config": Config,
+        "extra": {"author": "NoneBot"},
+    }
