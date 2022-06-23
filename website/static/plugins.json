@@ -1887,5 +1887,15 @@
     "homepage": "https://github.com/AquamarineCyan/nonebot-plugin-today-in-history",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_BitTorrent",
+    "project_link": "nonebot_plugin_BitTorrent",
+    "name": "BitTorrent",
+    "desc": "nonebot2磁力搜索插件",
+    "author": "Special-Week",
+    "homepage": "https://github.com/Special-Week/nonebot_plugin_BitTorrent",
+    "tags": [],
+    "is_official": false
   }
 ]
