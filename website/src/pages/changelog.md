@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🐛 Bug 修复
+
+- Bug: 修复 typing 中 T_RunPostProcessor 类型的注释描述不正确 [@A-kirami](https://github.com/A-kirami) ([#1057](https://github.com/nonebot/nonebot2/pull/1057))
+
 ### 🍻 插件发布
 
 - Plugin: BitTorrent [@yanyongyu](https://github.com/yanyongyu) ([#1059](https://github.com/nonebot/nonebot2/pull/1059))
