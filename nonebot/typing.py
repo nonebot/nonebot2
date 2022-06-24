@@ -104,7 +104,7 @@ T_RunPreProcessor = Callable[..., Union[Any, Awaitable[Any]]]
 - DefaultParam: 带有默认值的参数
 """
 T_RunPostProcessor = Callable[..., Union[Any, Awaitable[Any]]]
-"""事件响应器运行前预处理函数 RunPostProcessor 类型
+"""事件响应器运行后后处理函数 RunPostProcessor 类型
 
 依赖参数:
 
