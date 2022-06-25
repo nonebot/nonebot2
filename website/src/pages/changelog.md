@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 黑白名单 [@yanyongyu](https://github.com/yanyongyu) ([#1061](https://github.com/nonebot/nonebot2/pull/1061))
 - Plugin: BitTorrent [@yanyongyu](https://github.com/yanyongyu) ([#1059](https://github.com/nonebot/nonebot2/pull/1059))
 
 ## v2.0.0-beta.4
