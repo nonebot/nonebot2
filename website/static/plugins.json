@@ -1907,5 +1907,15 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-namelist",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bread_shop",
+    "project_link": "nonebot-plugin-bread-shop",
+    "name": "面包店小游戏",
+    "desc": "面包店休闲小游戏",
+    "author": "Mai-icy",
+    "homepage": "https://github.com/Mai-icy/nonebot-plugin-bread-shop",
+    "tags": [],
+    "is_official": false
   }
 ]
