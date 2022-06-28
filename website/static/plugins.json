@@ -1917,5 +1917,24 @@
     "homepage": "https://github.com/Mai-icy/nonebot-plugin-bread-shop",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_PicMenu",
+    "project_link": "nonebot_plugin_PicMenu",
+    "name": "PicMenu",
+    "desc": "根据插件元数据生成图片化功能菜单",
+    "author": "hamo-reid",
+    "homepage": "https://github.com/hamo-reid/nonenot_plugin_PicMenu",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#030303"
+      },
+      {
+        "label": "t:menu",
+        "color": "#753dc6"
+      }
+    ],
+    "is_official": false
   }
 ]
