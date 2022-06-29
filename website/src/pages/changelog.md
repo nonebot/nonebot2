@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: PicMenu [@yanyongyu](https://github.com/yanyongyu) ([#1071](https://github.com/nonebot/nonebot2/pull/1071))
 - Plugin: nonebot-plugin-bread [@yanyongyu](https://github.com/yanyongyu) ([#1064](https://github.com/nonebot/nonebot2/pull/1064))
 - Plugin: 黑白名单 [@yanyongyu](https://github.com/yanyongyu) ([#1061](https://github.com/nonebot/nonebot2/pull/1061))
 - Plugin: BitTorrent [@yanyongyu](https://github.com/yanyongyu) ([#1059](https://github.com/nonebot/nonebot2/pull/1059))
