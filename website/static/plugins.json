@@ -1936,5 +1936,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_horserace",
+    "project_link": "nonebot_plugin_horserace",
+    "name": "赛马",
+    "desc": "群内青春版赛马小游戏",
+    "author": "shinianj",
+    "homepage": "https://github.com/shinianj/nonebot_plugin_horserace",
+    "tags": [],
+    "is_official": false
   }
 ]
