@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 赛马 [@yanyongyu](https://github.com/yanyongyu) ([#1069](https://github.com/nonebot/nonebot2/pull/1069))
 - Plugin: PicMenu [@yanyongyu](https://github.com/yanyongyu) ([#1071](https://github.com/nonebot/nonebot2/pull/1071))
 - Plugin: nonebot-plugin-bread [@yanyongyu](https://github.com/yanyongyu) ([#1064](https://github.com/nonebot/nonebot2/pull/1064))
 - Plugin: 黑白名单 [@yanyongyu](https://github.com/yanyongyu) ([#1061](https://github.com/nonebot/nonebot2/pull/1061))
