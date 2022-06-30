@@ -1946,5 +1946,28 @@
     "homepage": "https://github.com/shinianj/nonebot_plugin_horserace",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_myb_exchange",
+    "project_link": "nonebot-plugin-myb-exchange",
+    "name": "米游币商品自动兑换",
+    "desc": "让Bot帮你抢米游币商品",
+    "author": "CMHopeSunshine",
+    "homepage": "https://github.com/CMHopeSunshine/LittlePaimon/tree/Bot/src/plugins/nonebot_plugin_myb_exchange",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "t:Genshin",
+        "color": "#ffca0a"
+      },
+      {
+        "label": "小派蒙",
+        "color": "#7c0dc3"
+      }
+    ],
+    "is_official": false
   }
 ]
