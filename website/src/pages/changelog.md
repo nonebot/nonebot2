@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Fix: 修复 typing 中 T_RunPostProcessor 类型的注释描述不正确 [@A-kirami](https://github.com/A-kirami) ([#1057](https://github.com/nonebot/nonebot2/pull/1057))
 
+### 📝 文档
+
+- Docs: 修改 `权限控制` 一节中主动调用的错误 [@MingxuanGame](https://github.com/MingxuanGame) ([#1072](https://github.com/nonebot/nonebot2/pull/1072))
+
 ### 🍻 插件发布
 
 - Plugin: PicMenu [@yanyongyu](https://github.com/yanyongyu) ([#1071](https://github.com/nonebot/nonebot2/pull/1071))
