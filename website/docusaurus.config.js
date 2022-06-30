@@ -23,8 +23,6 @@ const config = {
     },
   },
 
-  scripts: ["/unregister-sw.js"],
-
   presets: [
     [
       "docusaurus-preset-nonepress",
