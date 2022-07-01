@@ -1,16 +1,13 @@
-navigator.serviceWorker.getRegistrations().then(function (e) {
-  for (
-    var r, i = e, t = Array.isArray(i), a = 0, i = t ? i : i[Symbol.iterator]();
-    ;
+self.addEventListener('install', function(e) {
+  self.skipWaiting();
+});
 
-  ) {
-    if (t) {
-      if (a >= i.length) break;
-      r = i[a++];
-    } else {
-      if ((a = i.next()).done) break;
-      r = a.value;
-    }
-    r.unregister();
-  }
+self.addEventListener('activate', function(e) {
+  self.registration.unregister()
+    .then(function() {
+      return self.clients.matchAll();
+    })
+    .then(function(clients) {
+      clients.forEach(client => client.navigate(client.url))
+    });
 });
