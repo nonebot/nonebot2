@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: fix event message type error [@yanyongyu](https://github.com/yanyongyu) ([#1079](https://github.com/nonebot/nonebot2/pull/1079))
 - Docs: 修复旧 Vuepress 文档缓存问题 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1077](https://github.com/nonebot/nonebot2/pull/1077))
 - Docs: 更新 Readme 贡献图片 [@yanyongyu](https://github.com/yanyongyu) ([#1074](https://github.com/nonebot/nonebot2/pull/1074))
 - Docs: 注销旧 Vuepress 文档的 Service Worker [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1073](https://github.com/nonebot/nonebot2/pull/1073))
