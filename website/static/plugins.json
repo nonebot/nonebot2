@@ -1969,5 +1969,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_firexN",
+    "project_link": "nonebot-plugin-firexN",
+    "name": "一起燚xN吧",
+    "desc": "QQ续火花，可以自定义多个联系人、消息内容、发送时间",
+    "author": "GC-ZF",
+    "homepage": "https://github.com/GC-ZF/nonebot_plugin_firexN",
+    "tags": [],
+    "is_official": false
   }
 ]
