@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 一起燚 xN 吧 [@yanyongyu](https://github.com/yanyongyu) ([#1085](https://github.com/nonebot/nonebot2/pull/1085))
 - Plugin: 米游币商品自动兑换 [@yanyongyu](https://github.com/yanyongyu) ([#1076](https://github.com/nonebot/nonebot2/pull/1076))
 - Plugin: 赛马 [@yanyongyu](https://github.com/yanyongyu) ([#1069](https://github.com/nonebot/nonebot2/pull/1069))
 - Plugin: PicMenu [@yanyongyu](https://github.com/yanyongyu) ([#1071](https://github.com/nonebot/nonebot2/pull/1071))
