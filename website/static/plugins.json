@@ -1979,5 +1979,15 @@
     "homepage": "https://github.com/GC-ZF/nonebot_plugin_firexN",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bfinfo",
+    "project_link": "nonebot-plugin-bfinfo",
+    "name": "战地1、5战绩查询工具",
+    "desc": "QQ私聊或群聊发送战地游戏ID，返回基础信息以及最佳兵种、最佳枪械、最佳载具、最佳模式信息",
+    "author": "GC-ZF",
+    "homepage": "https://github.com/GC-ZF/nonebot_plugin_bfinfo",
+    "tags": [],
+    "is_official": false
   }
 ]
