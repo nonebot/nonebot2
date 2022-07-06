@@ -1989,5 +1989,24 @@
     "homepage": "https://github.com/GC-ZF/nonebot_plugin_bfinfo",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_osubot",
+    "project_link": "nonebot-plugin-osubot",
+    "name": "OSU查分插件",
+    "desc": "OSU查分插件",
+    "author": "yaowan233",
+    "homepage": "https://github.com/yaowan233/nonebot-plugin-osubot",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "OSU",
+        "color": "#eb5d9b"
+      }
+    ],
+    "is_official": false
   }
 ]
