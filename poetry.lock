@@ -599,6 +599,28 @@ reference = "master"
 resolved_reference = "3cb2474a22bd1a633805dfa6edbe741e44ddc851"
 
 [[package]]
+name = "nonemoji"
+version = "0.1.0"
+description = "Simple gitmoji cli written in python"
+category = "dev"
+optional = false
+python-versions = ">=3.7.3,<4.0.0"
+
+[package.dependencies]
+noneprompt = ">=0.1.0,<0.2.0"
+
+[[package]]
+name = "noneprompt"
+version = "0.1.2"
+description = "Prompt toolkit for console interaction"
+category = "dev"
+optional = false
+python-versions = ">=3.7.3,<4.0.0"
+
+[package.dependencies]
+prompt-toolkit = ">=3.0.19,<4.0.0"
+
+[[package]]
 name = "packaging"
 version = "21.3"
 description = "Core utilities for Python packages"
@@ -668,6 +690,17 @@ description = "A pure-Python implementation of the HTTP/2 priority tree"
 category = "main"
 optional = true
 python-versions = ">=3.6.1"
+
+[[package]]
+name = "prompt-toolkit"
+version = "3.0.30"
+description = "Library for building powerful interactive command lines in Python"
+category = "dev"
+optional = false
+python-versions = ">=3.6.2"
+
+[package.dependencies]
+wcwidth = "*"
 
 [[package]]
 name = "py"
@@ -1043,6 +1076,14 @@ python-versions = ">=3.7"
 anyio = ">=3.0.0,<4"
 
 [[package]]
+name = "wcwidth"
+version = "0.2.5"
+description = "Measures the displayed width of unicode strings in a terminal"
+category = "dev"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "websockets"
 version = "10.3"
 description = "An implementation of the WebSocket Protocol (RFC 6455 & 7692)"
@@ -1118,7 +1159,7 @@ websockets = ["websockets"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7.3"
-content-hash = "0c5ea766427dbdd64c07baff07bdd8fde3a068cfccf56f98d1d792153854bc0d"
+content-hash = "efff1bb008d777840247540e73369c590120b91f112effec8701fd8e5128f7fe"
 
 [metadata.files]
 aiodns = [
@@ -1762,6 +1803,14 @@ nodeenv = [
     {file = "nodeenv-1.6.0.tar.gz", hash = "sha256:3ef13ff90291ba2a4a7a4ff9a979b63ffdd00a464dbe04acf0ea6471517a4c2b"},
 ]
 nonebug = []
+nonemoji = [
+    {file = "nonemoji-0.1.0-py3-none-any.whl", hash = "sha256:965eebd09f715bd8a4a647e49e379349aaa04887f60b7659bc06b76744a8b792"},
+    {file = "nonemoji-0.1.0.tar.gz", hash = "sha256:7659980edff2534b54acac92aff2ab8d87215f15a74d686efdbed9a1e09cca8e"},
+]
+noneprompt = [
+    {file = "noneprompt-0.1.2-py3-none-any.whl", hash = "sha256:5c0da7ca7c69953f65e134d3067bc255ddd487097656b80e39cb1f61db17d3e0"},
+    {file = "noneprompt-0.1.2.tar.gz", hash = "sha256:06dd79eebe4a6e44aa854a33912af641abef0014efd5966f021277f0f686e6e8"},
+]
 packaging = [
     {file = "packaging-21.3-py3-none-any.whl", hash = "sha256:ef103e05f519cdc783ae24ea4e2e0f508a9c99b2d4969652eed6a2e1ea5bd522"},
     {file = "packaging-21.3.tar.gz", hash = "sha256:dd47c42927d89ab911e606518907cc2d3a1f38bbd026385970643f9c5b8ecfeb"},
@@ -1785,6 +1834,10 @@ pre-commit = [
 priority = [
     {file = "priority-2.0.0-py3-none-any.whl", hash = "sha256:6f8eefce5f3ad59baf2c080a664037bb4725cd0a790d53d59ab4059288faf6aa"},
     {file = "priority-2.0.0.tar.gz", hash = "sha256:c965d54f1b8d0d0b19479db3924c7c36cf672dbf2aec92d43fbdaf4492ba18c0"},
+]
+prompt-toolkit = [
+    {file = "prompt_toolkit-3.0.30-py3-none-any.whl", hash = "sha256:d8916d3f62a7b67ab353a952ce4ced6a1d2587dfe9ef8ebc30dd7c386751f289"},
+    {file = "prompt_toolkit-3.0.30.tar.gz", hash = "sha256:859b283c50bde45f5f97829f77a4674d1c1fcd88539364f1b28a37805cfd89c0"},
 ]
 py = [
     {file = "py-1.11.0-py2.py3-none-any.whl", hash = "sha256:607c53218732647dff4acdfcd50cb62615cedf612e72d1724fb1a0cc6405b378"},
@@ -2030,6 +2083,10 @@ virtualenv = [
 watchgod = [
     {file = "watchgod-0.8.2-py3-none-any.whl", hash = "sha256:2f3e8137d98f493ff58af54ea00f4d1433a6afe2ed08ab331a657df468c6bfce"},
     {file = "watchgod-0.8.2.tar.gz", hash = "sha256:cb11ff66657befba94d828e3b622d5fb76f22fbda1376f355f3e6e51e97d9450"},
+]
+wcwidth = [
+    {file = "wcwidth-0.2.5-py2.py3-none-any.whl", hash = "sha256:beb4802a9cebb9144e99086eff703a642a13d6a0052920003a230f3294bbe784"},
+    {file = "wcwidth-0.2.5.tar.gz", hash = "sha256:c4d647b99872929fdb7bdcaa4fbe7f01413ed3d98077df798530e5b04f116c83"},
 ]
 websockets = [
     {file = "websockets-10.3-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:661f641b44ed315556a2fa630239adfd77bd1b11cb0b9d96ed8ad90b0b1e4978"},
