@@ -39,6 +39,7 @@ httpx = { version = ">=0.20.0, <1.0.0", extras = ["http2"], optional = true }
 [tool.poetry.dev-dependencies]
 isort = "^5.10.1"
 black = "^22.1.0"
+nonemoji = "^0.1.2"
 pytest-cov = "^3.0.0"
 pre-commit = "^2.16.0"
 pytest-xdist = "^2.5.0"

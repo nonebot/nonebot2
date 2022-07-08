@@ -29,9 +29,6 @@ NoneBot 使用 [poetry](https://python-poetry.org/) 管理项目依赖，由于 
 poetry install
 # 安装 pre-commit git hook
 pre-commit install
-# 安装 gitmoji git hook
-yarn global add gitmoji-cli
-gitmoji -i
 ```
 
 ### 使用 GitHub Codespaces（Dev Container）
@@ -43,6 +40,12 @@ gitmoji -i
 请确保你的每一个 commit 都能清晰地描述其意图，一个 commit 尽量只有一个意图。
 
 NoneBot 的 commit message 格式遵循 [gitmoji](https://gitmoji.dev/) 规范，在创建 commit 时请牢记这一点。
+
+或者使用 [nonemoji](https://github.com/nonebot/nonemoji) 代替 git 进行 commit，nonemoji 已默认作为项目开发依赖安装。
+
+```bash
+nonemoji commit [-e EMOJI] [-m MESSAGE] [-- ...]
+```
 
 ### 工作流概述
 
