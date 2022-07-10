@@ -2008,5 +2008,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_acc_calculate",
+    "project_link": "nonebot-plugin-acc-calculate",
+    "name": "ACC计算工具",
+    "desc": "能够计算段位的单曲acc，支持malodyv3段位regular、ex",
+    "author": "10-24",
+    "homepage": "https://github.com/10-24/nonebot-plugin-acc-calculate",
+    "tags": [],
+    "is_official": false
   }
 ]
