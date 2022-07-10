@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: ACC 计算工具 [@yanyongyu](https://github.com/yanyongyu) ([#1093](https://github.com/nonebot/nonebot2/pull/1093))
 - Plugin: OSU 查分插件 [@yanyongyu](https://github.com/yanyongyu) ([#1082](https://github.com/nonebot/nonebot2/pull/1082))
 - Plugin: 战地 1、5 战绩查询工具 [@yanyongyu](https://github.com/yanyongyu) ([#1087](https://github.com/nonebot/nonebot2/pull/1087))
 - Plugin: 一起燚 xN 吧 [@yanyongyu](https://github.com/yanyongyu) ([#1085](https://github.com/nonebot/nonebot2/pull/1085))
