@@ -2018,5 +2018,15 @@
     "homepage": "https://github.com/10-24/nonebot-plugin-acc-calculate",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_kawaii_robot",
+    "project_link": "nonebot_plugin_kawaii_robot",
+    "name": "自动回复（文i）插件",
+    "desc": "使用 Kyomotoi/AnimeThesaurus 的nonebot2的回复（文i）插件",
+    "author": "KarisAya",
+    "homepage": "https://github.com/KarisAya/nonebot_plugin_kawaii_robot",
+    "tags": [],
+    "is_official": false
   }
 ]
