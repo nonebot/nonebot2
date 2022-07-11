@@ -2038,5 +2038,15 @@
     "homepage": "https://github.com/ziru-w/nonebot_plugin_bVideo",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_arkrecord",
+    "project_link": "nonebot_plugin_arkrecord",
+    "name": "明日方舟寻访记录分析",
+    "desc": "从官网获取明日方舟寻访记录并出图的插件",
+    "author": "zheuziihau",
+    "homepage": "https://github.com/zheuziihau/nonebot_plugin_arkrecord",
+    "tags": [],
+    "is_official": false
   }
 ]
