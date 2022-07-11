@@ -2028,5 +2028,15 @@
     "homepage": "https://github.com/KarisAya/nonebot_plugin_kawaii_robot",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-bVideo",
+    "project_link": "nonebot-plugin-bVideo",
+    "name": "b站视频每日推送",
+    "desc": "用于处理推送B站up主最新视频的插件",
+    "author": "ziru-w",
+    "homepage": "https://github.com/ziru-w/nonebot_plugin_bVideo",
+    "tags": [],
+    "is_official": false
   }
 ]
