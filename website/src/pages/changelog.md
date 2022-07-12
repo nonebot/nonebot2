@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 处理好友添加和群邀请 [@yanyongyu](https://github.com/yanyongyu) ([#1099](https://github.com/nonebot/nonebot2/pull/1099))
 - Plugin: 明日方舟寻访记录分析 [@yanyongyu](https://github.com/yanyongyu) ([#1097](https://github.com/nonebot/nonebot2/pull/1097))
 - Plugin: b 站视频每日推送 [@yanyongyu](https://github.com/yanyongyu) ([#1095](https://github.com/nonebot/nonebot2/pull/1095))
 - Plugin: 自动回复（文 i）插件 [@yanyongyu](https://github.com/yanyongyu) ([#1090](https://github.com/nonebot/nonebot2/pull/1090))
