@@ -2048,5 +2048,15 @@
     "homepage": "https://github.com/zheuziihau/nonebot_plugin_arkrecord",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_addFriend",
+    "project_link": "nonebot_plugin_addFriend",
+    "name": "处理好友添加和群邀请",
+    "desc": "一个基于NoneBot2的插件，用于处理被请求加QQ好友和QQ群的请求",
+    "author": "ziru-w",
+    "homepage": "https://github.com/ziru-w/nonebot_plugin_addFriend",
+    "tags": [],
+    "is_official": false
   }
 ]
