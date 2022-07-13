@@ -186,5 +186,26 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "真宵Bot",
+    "desc": "专注群聊的QQ机器人",
+    "author": "Shine-Light",
+    "homepage": "https://github.com/Shine-Light/Nonebot_Bot_MayaFey",
+    "tags": [
+      {
+        "label": "QQ",
+        "color": "#ea5252"
+      },
+      {
+        "label": "娱乐",
+        "color": "#a46e49"
+      },
+      {
+        "label": "群管",
+        "color": "#41aecb"
+      }
+    ],
+    "is_official": false
   }
 ]
