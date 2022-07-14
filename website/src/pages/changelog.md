@@ -37,6 +37,10 @@ toc_max_heading_level: 2
 - Plugin: 黑白名单 [@yanyongyu](https://github.com/yanyongyu) ([#1061](https://github.com/nonebot/nonebot2/pull/1061))
 - Plugin: BitTorrent [@yanyongyu](https://github.com/yanyongyu) ([#1059](https://github.com/nonebot/nonebot2/pull/1059))
 
+### 🍻 机器人发布
+
+- Bot: 真宵 Bot [@yanyongyu](https://github.com/yanyongyu) ([#1103](https://github.com/nonebot/nonebot2/pull/1103))
+
 ## v2.0.0-beta.4
 
 ### 🚀 新功能
