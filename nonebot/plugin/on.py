@@ -4,10 +4,10 @@ FrontMatter:
     sidebar_position: 2
     description: nonebot.plugin.on 模块
 """
-from datetime import datetime, timedelta
 import re
 import inspect
 from types import ModuleType
+from datetime import datetime, timedelta
 from typing import Any, Set, Dict, List, Type, Tuple, Union, Optional
 
 from nonebot.matcher import Matcher
