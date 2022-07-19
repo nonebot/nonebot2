@@ -4,6 +4,7 @@ FrontMatter:
     sidebar_position: 2
     description: nonebot.plugin.on 模块
 """
+from datetime import datetime, timedelta
 import re
 import inspect
 from types import ModuleType
@@ -50,6 +51,7 @@ def on(
     *,
     handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
     temp: bool = False,
+    expire_time: Optional[Union[datetime, timedelta]] = None,
     priority: int = 1,
     block: bool = False,
     state: Optional[T_State] = None,
@@ -64,6 +66,7 @@ def on(
         permission: 事件响应权限
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
@@ -73,6 +76,7 @@ def on(
         Rule() & rule,
         Permission() | permission,
         temp=temp,
+        expire_time=expire_time,
         priority=priority,
         block=block,
         handlers=handlers,
@@ -89,6 +93,7 @@ def on_metaevent(
     *,
     handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
     temp: bool = False,
+    expire_time: Optional[Union[datetime, timedelta]] = None,
     priority: int = 1,
     block: bool = False,
     state: Optional[T_State] = None,
@@ -101,6 +106,7 @@ def on_metaevent(
         rule: 事件响应规则
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
@@ -110,6 +116,7 @@ def on_metaevent(
         Rule() & rule,
         Permission(),
         temp=temp,
+        expire_time=expire_time,
         priority=priority,
         block=block,
         handlers=handlers,
@@ -127,6 +134,7 @@ def on_message(
     *,
     handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
     temp: bool = False,
+    expire_time: Optional[Union[datetime, timedelta]] = None,
     priority: int = 1,
     block: bool = True,
     state: Optional[T_State] = None,
@@ -140,6 +148,7 @@ def on_message(
         permission: 事件响应权限
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
@@ -149,6 +158,7 @@ def on_message(
         Rule() & rule,
         Permission() | permission,
         temp=temp,
+        expire_time=expire_time,
         priority=priority,
         block=block,
         handlers=handlers,
@@ -165,6 +175,7 @@ def on_notice(
     *,
     handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
     temp: bool = False,
+    expire_time: Optional[Union[datetime, timedelta]] = None,
     priority: int = 1,
     block: bool = False,
     state: Optional[T_State] = None,
@@ -177,6 +188,7 @@ def on_notice(
         rule: 事件响应规则
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
@@ -186,6 +198,7 @@ def on_notice(
         Rule() & rule,
         Permission(),
         temp=temp,
+        expire_time=expire_time,
         priority=priority,
         block=block,
         handlers=handlers,
@@ -202,6 +215,7 @@ def on_request(
     *,
     handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
     temp: bool = False,
+    expire_time: Optional[Union[datetime, timedelta]] = None,
     priority: int = 1,
     block: bool = False,
     state: Optional[T_State] = None,
@@ -214,6 +228,7 @@ def on_request(
         rule: 事件响应规则
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
@@ -223,6 +238,7 @@ def on_request(
         Rule() & rule,
         Permission(),
         temp=temp,
+        expire_time=expire_time,
         priority=priority,
         block=block,
         handlers=handlers,
@@ -251,6 +267,7 @@ def on_startswith(
         permission: 事件响应权限
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
@@ -275,6 +292,7 @@ def on_endswith(
         permission: 事件响应权限
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
@@ -299,6 +317,7 @@ def on_fullmatch(
         permission: 事件响应权限
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
@@ -321,6 +340,7 @@ def on_keyword(
         permission: 事件响应权限
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
@@ -347,6 +367,7 @@ def on_command(
         permission: 事件响应权限
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
@@ -382,6 +403,7 @@ def on_shell_command(
         permission: 事件响应权限
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
@@ -414,6 +436,7 @@ def on_regex(
         permission: 事件响应权限
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
@@ -500,6 +523,7 @@ class MatcherGroup:
             permission: 事件响应权限
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
             priority: 事件响应器优先级
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
@@ -518,6 +542,7 @@ class MatcherGroup:
             rule: 事件响应规则
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
             priority: 事件响应器优先级
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
@@ -539,6 +564,7 @@ class MatcherGroup:
             permission: 事件响应权限
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
             priority: 事件响应器优先级
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
@@ -558,6 +584,7 @@ class MatcherGroup:
             rule: 事件响应规则
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
             priority: 事件响应器优先级
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
@@ -577,6 +604,7 @@ class MatcherGroup:
             rule: 事件响应规则
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
             priority: 事件响应器优先级
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
@@ -601,6 +629,7 @@ class MatcherGroup:
             permission: 事件响应权限
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
             priority: 事件响应器优先级
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
@@ -623,6 +652,7 @@ class MatcherGroup:
             permission: 事件响应权限
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
             priority: 事件响应器优先级
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
@@ -645,6 +675,7 @@ class MatcherGroup:
             permission: 事件响应权限
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
             priority: 事件响应器优先级
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
@@ -666,6 +697,7 @@ class MatcherGroup:
             permission: 事件响应权限
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
             priority: 事件响应器优先级
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
@@ -695,6 +727,7 @@ class MatcherGroup:
             permission: 事件响应权限
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
             priority: 事件响应器优先级
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
@@ -728,6 +761,7 @@ class MatcherGroup:
             permission: 事件响应权限
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
             priority: 事件响应器优先级
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
@@ -756,6 +790,7 @@ class MatcherGroup:
             permission: 事件响应权限
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
             priority: 事件响应器优先级
             block: 是否阻止事件向更低优先级传递
             state: 默认 state

@@ -1,5 +1,5 @@
 from types import ModuleType
-from datetime import datetime
+from datetime import datetime, timedelta
 from contextvars import ContextVar
 from collections import defaultdict
 from contextlib import AsyncExitStack
@@ -168,7 +168,7 @@ class Matcher(metaclass=MatcherMeta):
         *,
         plugin: Optional["Plugin"] = None,
         module: Optional[ModuleType] = None,
-        expire_time: Optional[datetime] = None,
+        expire_time: Optional[Union[datetime, timedelta]] = None,
         default_state: Optional[T_State] = None,
         default_type_updater: Optional[Union[T_TypeUpdater, Dependent[str]]] = None,
         default_permission_updater: Optional[
@@ -216,7 +216,11 @@ class Matcher(metaclass=MatcherMeta):
                 if handlers
                 else [],
                 "temp": temp,
-                "expire_time": expire_time,
+                "expire_time": (
+                    expire_time
+                    if isinstance(expire_time, datetime)
+                    else expire_time and datetime.now() + expire_time
+                ),
                 "priority": priority,
                 "block": block,
                 "_default_state": default_state or {},
