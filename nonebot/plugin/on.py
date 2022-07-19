@@ -450,8 +450,15 @@ class CommandGroup:
     def __init__(self, cmd: Union[str, Tuple[str, ...]], **kwargs):
         """
         参数:
-            cmd: 命令前缀
-            **kwargs: `on_command` 的参数默认值，参考 `on_command <#on-command-cmd-rule-none-aliases-none-kwargs>`_
+            cmd: 指定命令内容
+            rule: 事件响应规则
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         self.basecmd: Tuple[str, ...] = (cmd,) if isinstance(cmd, str) else cmd
         """
@@ -466,11 +473,19 @@ class CommandGroup:
 
     def command(self, cmd: Union[str, Tuple[str, ...]], **kwargs) -> Type[Matcher]:
         """
-        注册一个新的命令。
+        注册一个新的命令。新参数将会覆盖命令组默认值
 
         参数:
-            cmd: 命令前缀
-            **kwargs: `on_command` 的参数，将会覆盖命令组默认值
+            cmd: 指定命令内容
+            aliases: 命令别名
+            rule: 事件响应规则
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
@@ -483,11 +498,20 @@ class CommandGroup:
         self, cmd: Union[str, Tuple[str, ...]], **kwargs
     ) -> Type[Matcher]:
         """
-        注册一个新的命令。
+        注册一个新的命令。新参数将会覆盖命令组默认值
 
         参数:
-            cmd: 命令前缀
-            **kwargs: `on_shell_command` 的参数，将会覆盖命令组默认值
+            cmd: 指定命令内容
+            rule: 事件响应规则
+            aliases: 命令别名
+            parser: `nonebot.rule.ArgumentParser` 对象
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
