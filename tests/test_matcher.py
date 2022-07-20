@@ -172,20 +172,20 @@ async def test_expire(app: App, load_plugin):
     event = make_fake_event()()
     async with app.test_api() as ctx:
         bot = ctx.create_bot()
-        assert test_temp_matcher in matchers[0]
+        assert test_temp_matcher in matchers[1]
         await _check_matcher(
             test_temp_matcher.priority, test_temp_matcher, bot, event, {}
         )
-        assert test_temp_matcher not in matchers[0]
+        assert test_temp_matcher not in matchers[1]
 
     event = make_fake_event()()
     async with app.test_api() as ctx:
         bot = ctx.create_bot()
-        assert test_datetime_matcher in matchers[0]
+        assert test_datetime_matcher in matchers[1]
         await _check_matcher(
             test_datetime_matcher.priority, test_datetime_matcher, bot, event, {}
         )
-        assert test_datetime_matcher not in matchers[0]
+        assert test_datetime_matcher not in matchers[1]
 
     event = make_fake_event()()
     async with app.test_api() as ctx:
