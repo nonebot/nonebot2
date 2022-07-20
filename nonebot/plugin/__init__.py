@@ -25,8 +25,6 @@
 - `load_from_toml` => {ref}``load_from_toml` <nonebot.plugin.load.load_from_toml>`
 - `load_builtin_plugin` => {ref}``load_builtin_plugin` <nonebot.plugin.load.load_builtin_plugin>`
 - `load_builtin_plugins` => {ref}``load_builtin_plugins` <nonebot.plugin.load.load_builtin_plugins>`
-- `get_plugin` => {ref}``get_plugin` <nonebot.plugin.plugin.get_plugin>`
-- `get_loaded_plugins` => {ref}``get_loaded_plugins` <nonebot.plugin.plugin.get_loaded_plugins>`
 - `export` => {ref}``export` <nonebot.plugin.export.export>`
 - `require` => {ref}``require` <nonebot.plugin.load.require>`
 
