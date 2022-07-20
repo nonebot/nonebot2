@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: on_x 支持 expire_time 参数 [@Dobiichi-Origami](https://github.com/Dobiichi-Origami) ([#1106](https://github.com/nonebot/nonebot2/pull/1106))
 - Feature: 正向驱动器 startup/shutdown hook 支持同步函数 [@synodriver](https://github.com/synodriver) ([#1104](https://github.com/nonebot/nonebot2/pull/1104))
 
 ### 🐛 Bug 修复
