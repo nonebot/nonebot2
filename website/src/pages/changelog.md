@@ -25,6 +25,10 @@ toc_max_heading_level: 2
 - Docs: 注销旧 Vuepress 文档的 Service Worker [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1073](https://github.com/nonebot/nonebot2/pull/1073))
 - Docs: 修改 `权限控制` 一节中主动调用的错误 [@MingxuanGame](https://github.com/MingxuanGame) ([#1072](https://github.com/nonebot/nonebot2/pull/1072))
 
+### 💫 杂项
+
+- Bot: 修改剑网三 bot 信息 [@JustUndertaker](https://github.com/JustUndertaker) ([#1107](https://github.com/nonebot/nonebot2/pull/1107))
+
 ### 🍻 插件发布
 
 - Plugin: 处理好友添加和群邀请 [@yanyongyu](https://github.com/yanyongyu) ([#1099](https://github.com/nonebot/nonebot2/pull/1099))
