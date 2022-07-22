@@ -81,10 +81,15 @@
   },
   {
     "name": "剑网三bot",
-    "desc": "网络游戏《剑网三》的群聊机器人，数据使用：www.jx3api.com",
+    "desc": "网络游戏《剑侠情缘三》的群聊机器人，数据使用：www.jx3api.com",
     "author": "JustUndertaker",
-    "homepage": "https://github.com/JustUndertaker/jx3_bot",
-    "tags": [],
+    "homepage": "https://github.com/JustUndertaker/mini_jx3_bot",
+    "tags": [
+      {
+        "label": "剑网三",
+        "color": "#5393ec"
+      }
+    ],
     "is_official": false
   },
   {
