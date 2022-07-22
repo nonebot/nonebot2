@@ -2058,5 +2058,24 @@
     "homepage": "https://github.com/ziru-w/nonebot_plugin_addFriend",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_date_name",
+    "project_link": "nonebot-plugin-date-name",
+    "name": "群昵称时间",
+    "desc": "一个可以群昵称显示现在时间的插件",
+    "author": "bingqiu456",
+    "homepage": "https://github.com/bingqiu456/nonebot-plugin-date-name",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#a552ea"
+      },
+      {
+        "label": "t:qun_card",
+        "color": "#e552ea"
+      }
+    ],
+    "is_official": false
   }
 ]
