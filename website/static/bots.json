@@ -212,5 +212,26 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "SkadiBot",
+    "desc": "明日方舟主题机器人—斯卡蒂",
+    "author": "yuyuziYYZ",
+    "homepage": "https://github.com/yuyuziYYZ/skadi_bot",
+    "tags": [
+      {
+        "label": "明日方舟",
+        "color": "#a48888"
+      },
+      {
+        "label": "斯卡蒂",
+        "color": "#a48888"
+      },
+      {
+        "label": "arknights",
+        "color": "#a48888"
+      }
+    ],
+    "is_official": false
   }
 ]
