@@ -50,6 +50,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: SkadiBot [@yanyongyu](https://github.com/yanyongyu) ([#1113](https://github.com/nonebot/nonebot2/pull/1113))
 - Bot: 真宵 Bot [@yanyongyu](https://github.com/yanyongyu) ([#1103](https://github.com/nonebot/nonebot2/pull/1103))
 
 ## v2.0.0-beta.4
