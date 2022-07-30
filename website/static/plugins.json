@@ -2087,5 +2087,24 @@
     "homepage": "https://github.com/ziru-w/nonebot_plugin_easyCommand",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_report",
+    "project_link": "nonebot-plugin-report",
+    "name": "推送钩子",
+    "desc": "使用 webhook 向用户推送消息",
+    "author": "syrinka",
+    "homepage": "https://github.com/syrinka/nonebot-plugin-report",
+    "tags": [
+      {
+        "label": "t:webhook",
+        "color": "#51b3a8"
+      },
+      {
+        "label": "t:notify",
+        "color": "#3985f7"
+      }
+    ],
+    "is_official": false
   }
 ]
