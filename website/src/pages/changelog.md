@@ -31,6 +31,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 推送钩子 [@yanyongyu](https://github.com/yanyongyu) ([#1115](https://github.com/nonebot/nonebot2/pull/1115))
 - Plugin: 易命令 [@yanyongyu](https://github.com/yanyongyu) ([#1111](https://github.com/nonebot/nonebot2/pull/1111))
 - Plugin: 群昵称时间 [@yanyongyu](https://github.com/yanyongyu) ([#1109](https://github.com/nonebot/nonebot2/pull/1109))
 - Plugin: 处理好友添加和群邀请 [@yanyongyu](https://github.com/yanyongyu) ([#1099](https://github.com/nonebot/nonebot2/pull/1099))
