@@ -40,8 +40,6 @@ FrontMatter:
 import importlib
 from typing import Any, Dict, Type, Optional
 
-import pkg_resources
-
 from nonebot.adapters import Bot
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
@@ -49,10 +47,12 @@ from nonebot.log import logger, default_filter
 from nonebot.drivers import Driver, ReverseDriver, combine_driver
 
 try:
+    import pkg_resources
+
     _dist: pkg_resources.Distribution = pkg_resources.get_distribution("nonebot2")
     __version__ = _dist.version
     VERSION = _dist.parsed_version
-except pkg_resources.DistributionNotFound:  # pragma: no cover
+except Exception:  # pragma: no cover
     __version__ = None
     VERSION = None
 
