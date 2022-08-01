@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修复 setuptools 未安装导致 ImportError [@yanyongyu](https://github.com/yanyongyu) ([#1116](https://github.com/nonebot/nonebot2/pull/1116))
 - Fix: 修复 typing 中 T_RunPostProcessor 类型的注释描述不正确 [@A-kirami](https://github.com/A-kirami) ([#1057](https://github.com/nonebot/nonebot2/pull/1057))
 
 ### 📝 文档
