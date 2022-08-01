@@ -2106,5 +2106,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_hammer_nbnhhsh",
+    "project_link": "nonebot-plugin-hammer-nbnhhsh",
+    "name": "「能不能好好说话？」缩写翻译",
+    "desc": "拼音首字母及阿拉伯数字缩写翻译",
+    "author": "ArgonarioD",
+    "homepage": "https://github.com/ArgonarioD/nonebot-plugin-hammer-nbnhhsh",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "a:cqhttp",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
