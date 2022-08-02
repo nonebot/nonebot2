@@ -208,7 +208,7 @@ async def _run_matcher(
                     exception=exception,
                     bot=bot,
                     event=event,
-                    state=state,
+                    state=matcher.state,
                     stack=stack,
                     dependency_cache=dependency_cache,
                 ),
