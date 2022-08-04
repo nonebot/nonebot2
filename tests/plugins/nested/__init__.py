@@ -1,6 +1,13 @@
 from pathlib import Path
 
 import nonebot
+from nonebot.plugin import PluginManager, _managers
 
-_sub_plugins = set()
-_sub_plugins |= nonebot.load_plugins(str((Path(__file__).parent / "plugins").resolve()))
+manager = PluginManager(
+    search_path=[str((Path(__file__).parent / "plugins").resolve())]
+)
+_managers.append(manager)
+
+# test load nested plugin with require
+manager.load_plugin("nested_subplugin")
+manager.load_plugin("nested_subplugin2")

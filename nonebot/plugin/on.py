@@ -26,14 +26,14 @@ from nonebot.rule import (
     shell_command,
 )
 
-from .manager import _current_plugin
+from .manager import _current_plugin_chain
 
 
 def _store_matcher(matcher: Type[Matcher]) -> None:
-    plugin = _current_plugin.get()
+    plugins = _current_plugin_chain.get()
     # only store the matcher defined in the plugin
-    if plugin:
-        plugin.matcher.add(matcher)
+    if plugins:
+        plugins[-1].matcher.add(matcher)
 
 
 def _get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
@@ -70,6 +70,7 @@ def on(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
+    plugin_chain = _current_plugin_chain.get()
     matcher = Matcher.new(
         type,
         Rule() & rule,
@@ -79,7 +80,7 @@ def on(
         priority=priority,
         block=block,
         handlers=handlers,
-        plugin=_current_plugin.get(),
+        plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
         default_state=state,
     )
@@ -109,6 +110,7 @@ def on_metaevent(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
+    plugin_chain = _current_plugin_chain.get()
     matcher = Matcher.new(
         "meta_event",
         Rule() & rule,
@@ -118,7 +120,7 @@ def on_metaevent(
         priority=priority,
         block=block,
         handlers=handlers,
-        plugin=_current_plugin.get(),
+        plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
         default_state=state,
     )
@@ -150,6 +152,7 @@ def on_message(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
+    plugin_chain = _current_plugin_chain.get()
     matcher = Matcher.new(
         "message",
         Rule() & rule,
@@ -159,7 +162,7 @@ def on_message(
         priority=priority,
         block=block,
         handlers=handlers,
-        plugin=_current_plugin.get(),
+        plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
         default_state=state,
     )
@@ -189,6 +192,7 @@ def on_notice(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
+    plugin_chain = _current_plugin_chain.get()
     matcher = Matcher.new(
         "notice",
         Rule() & rule,
@@ -198,7 +202,7 @@ def on_notice(
         priority=priority,
         block=block,
         handlers=handlers,
-        plugin=_current_plugin.get(),
+        plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
         default_state=state,
     )
@@ -228,6 +232,7 @@ def on_request(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
+    plugin_chain = _current_plugin_chain.get()
     matcher = Matcher.new(
         "request",
         Rule() & rule,
@@ -237,7 +242,7 @@ def on_request(
         priority=priority,
         block=block,
         handlers=handlers,
-        plugin=_current_plugin.get(),
+        plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
         default_state=state,
     )

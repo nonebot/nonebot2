@@ -39,6 +39,19 @@ async def test_load_plugin(app: App, load_plugin: Set["Plugin"]):
 
 
 @pytest.mark.asyncio
+async def test_load_nested_plugin(app: App, load_plugin: Set["Plugin"]):
+    import nonebot
+
+    parent_plugin = nonebot.get_plugin("nested")
+    sub_plugin = nonebot.get_plugin("nested_subplugin")
+    sub_plugin2 = nonebot.get_plugin("nested_subplugin2")
+    assert parent_plugin and sub_plugin and sub_plugin2
+    assert sub_plugin.parent_plugin is parent_plugin
+    assert sub_plugin2.parent_plugin is parent_plugin
+    assert parent_plugin.sub_plugins == {sub_plugin, sub_plugin2}
+
+
+@pytest.mark.asyncio
 async def test_bad_plugin(app: App):
     import nonebot
 
