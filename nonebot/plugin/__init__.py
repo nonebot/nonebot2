@@ -36,12 +36,12 @@ FrontMatter:
 from itertools import chain
 from types import ModuleType
 from contextvars import ContextVar
-from typing import Set, Dict, List, Optional
+from typing import Set, Dict, List, Tuple, Optional
 
 _plugins: Dict[str, "Plugin"] = {}
 _managers: List["PluginManager"] = []
-_current_plugin: ContextVar[Optional["Plugin"]] = ContextVar(
-    "_current_plugin", default=None
+_current_plugin_chain: ContextVar[Tuple["Plugin", ...]] = ContextVar(
+    "_current_plugin_chain", default=tuple()
 )
 
 

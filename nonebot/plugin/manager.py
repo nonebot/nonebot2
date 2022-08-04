@@ -24,7 +24,7 @@ from . import (
     _managers,
     _new_plugin,
     _revert_plugin,
-    _current_plugin,
+    _current_plugin_chain,
     _module_name_to_plugin_name,
 )
 
@@ -223,15 +223,15 @@ class PluginLoader(SourceFileLoader):
         setattr(module, "__plugin__", plugin)
 
         # detect parent plugin before entering current plugin context
-        parent_plugin = _current_plugin.get()
-        if parent_plugin and _managers.index(parent_plugin.manager) < _managers.index(
-            self.manager
-        ):
-            plugin.parent_plugin = parent_plugin
-            parent_plugin.sub_plugins.add(plugin)
+        parent_plugins = _current_plugin_chain.get()
+        for pre_plugin in reversed(parent_plugins):
+            if _managers.index(pre_plugin.manager) < _managers.index(self.manager):
+                plugin.parent_plugin = pre_plugin
+                pre_plugin.sub_plugins.add(plugin)
+                break
 
         # enter plugin context
-        _plugin_token = _current_plugin.set(plugin)
+        _plugin_token = _current_plugin_chain.set(parent_plugins + (plugin,))
 
         try:
             super().exec_module(module)
@@ -240,7 +240,7 @@ class PluginLoader(SourceFileLoader):
             raise
         finally:
             # leave plugin context
-            _current_plugin.reset(_plugin_token)
+            _current_plugin_chain.reset(_plugin_token)
 
         # get plugin metadata
         metadata: Optional[PluginMetadata] = getattr(module, "__plugin_meta__", None)

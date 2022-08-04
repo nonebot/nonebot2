@@ -9,7 +9,7 @@ FrontMatter:
 
 import warnings
 
-from . import _current_plugin
+from . import _current_plugin_chain
 
 
 class Export(dict):
@@ -58,7 +58,7 @@ def export() -> Export:
         "See https://github.com/nonebot/nonebot2/issues/935.",
         DeprecationWarning,
     )
-    plugin = _current_plugin.get()
-    if not plugin:
+    plugins = _current_plugin_chain.get()
+    if not plugins:
         raise RuntimeError("Export outside of the plugin!")
-    return plugin.export
+    return plugins[-1].export
