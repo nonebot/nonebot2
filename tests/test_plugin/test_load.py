@@ -48,6 +48,7 @@ async def test_load_nested_plugin(app: App, load_plugin: Set["Plugin"]):
     assert parent_plugin and sub_plugin and sub_plugin2
     assert sub_plugin.parent_plugin is parent_plugin
     assert sub_plugin2.parent_plugin is parent_plugin
+    assert parent_plugin.sub_plugins == {sub_plugin, sub_plugin2}
 
 
 @pytest.mark.asyncio
