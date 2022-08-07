@@ -2125,5 +2125,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bawiki",
+    "project_link": "nonebot-plugin-bawiki",
+    "name": "BAWiki",
+    "desc": "基于 NoneBot2 的碧蓝档案 Wiki 插件",
+    "author": "lgc2333",
+    "homepage": "https://github.com/lgc2333/nonebot-plugin-bawiki/",
+    "tags": [
+      {
+        "label": "t:碧蓝档案",
+        "color": "#00d7fb"
+      },
+      {
+        "label": "t:蔚藍檔案",
+        "color": "#00d7fb"
+      }
+    ],
+    "is_official": false
   }
 ]
