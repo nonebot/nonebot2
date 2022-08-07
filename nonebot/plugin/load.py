@@ -6,11 +6,11 @@ FrontMatter:
 """
 import json
 import warnings
+from types import ModuleType
 from typing import Set, Iterable, Optional
 
 import tomlkit
 
-from .export import Export
 from .plugin import Plugin
 from .manager import PluginManager
 from . import _managers, get_plugin, _module_name_to_plugin_name
@@ -143,7 +143,7 @@ def _find_manager_by_name(name: str) -> Optional[PluginManager]:
             return manager
 
 
-def require(name: str) -> Export:
+def require(name: str) -> ModuleType:
     """获取一个插件的导出内容。
 
     如果为 `load_plugins` 文件夹导入的插件，则为文件(夹)名。
@@ -163,4 +163,4 @@ def require(name: str) -> Export:
             plugin = load_plugin(name)
         if not plugin:
             raise RuntimeError(f'Cannot load plugin "{name}"!')
-    return plugin.export
+    return plugin.module

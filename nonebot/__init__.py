@@ -262,7 +262,6 @@ def run(*args: Any, **kwargs: Any) -> None:
 
 
 from nonebot.plugin import on as on
-from nonebot.plugin import export as export
 from nonebot.plugin import require as require
 from nonebot.plugin import on_regex as on_regex
 from nonebot.plugin import on_notice as on_notice
