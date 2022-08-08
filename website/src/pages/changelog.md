@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: MC_QQ 通信 [@yanyongyu](https://github.com/yanyongyu) ([#1127](https://github.com/nonebot/nonebot2/pull/1127))
 - Plugin: BAWiki [@yanyongyu](https://github.com/yanyongyu) ([#1129](https://github.com/nonebot/nonebot2/pull/1129))
 
 ## v2.0.0-beta.5
