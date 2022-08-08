@@ -12,7 +12,6 @@ from pydantic import BaseModel
 
 from nonebot.matcher import Matcher
 
-from .export import Export
 from . import _plugins as plugins  # FIXME: backport for nonebug
 
 if TYPE_CHECKING:
@@ -46,8 +45,6 @@ class Plugin:
     """点分割模块路径"""
     manager: "PluginManager"
     """导入该插件的插件管理器"""
-    export: Export = field(default_factory=Export)
-    """**Deprecated:** 插件内定义的导出内容"""
     matcher: Set[Type[Matcher]] = field(default_factory=set)
     """插件内定义的 `Matcher`"""
     parent_plugin: Optional["Plugin"] = None

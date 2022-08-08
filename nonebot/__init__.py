@@ -29,7 +29,6 @@
 - `get_plugin_by_module_name` => {ref}``get_plugin_by_module_name` <nonebot.plugin.get_plugin_by_module_name>`
 - `get_loaded_plugins` => {ref}``get_loaded_plugins` <nonebot.plugin.get_loaded_plugins>`
 - `get_available_plugin_names` => {ref}``get_available_plugin_names` <nonebot.plugin.get_available_plugin_names>`
-- `export` => {ref}``export` <nonebot.plugin.export.export>`
 - `require` => {ref}``require` <nonebot.plugin.load.require>`
 
 FrontMatter:
@@ -262,7 +261,6 @@ def run(*args: Any, **kwargs: Any) -> None:
 
 
 from nonebot.plugin import on as on
-from nonebot.plugin import export as export
 from nonebot.plugin import require as require
 from nonebot.plugin import on_regex as on_regex
 from nonebot.plugin import on_notice as on_notice

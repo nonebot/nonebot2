@@ -25,7 +25,6 @@
 - `load_from_toml` => {ref}``load_from_toml` <nonebot.plugin.load.load_from_toml>`
 - `load_builtin_plugin` => {ref}``load_builtin_plugin` <nonebot.plugin.load.load_builtin_plugin>`
 - `load_builtin_plugins` => {ref}``load_builtin_plugins` <nonebot.plugin.load.load_builtin_plugins>`
-- `export` => {ref}``export` <nonebot.plugin.export.export>`
 - `require` => {ref}``require` <nonebot.plugin.load.require>`
 
 FrontMatter:
@@ -106,8 +105,6 @@ def get_available_plugin_names() -> Set[str]:
 
 from .on import on as on
 from .manager import PluginManager
-from .export import Export as Export
-from .export import export as export
 from .load import require as require
 from .on import on_regex as on_regex
 from .plugin import Plugin as Plugin
