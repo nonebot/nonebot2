@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💥 破坏性变更
+
+- Remove: 删除过时的 Export 功能 [@yanyongyu](https://github.com/yanyongyu) ([#1125](https://github.com/nonebot/nonebot2/pull/1125))
+
 ### 🍻 插件发布
 
 - Plugin: MC_QQ 通信 [@yanyongyu](https://github.com/yanyongyu) ([#1127](https://github.com/nonebot/nonebot2/pull/1127))
