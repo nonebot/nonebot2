@@ -2163,5 +2163,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_covid_19_by_guild",
+    "project_link": "nonebot-plugin-covid-19-by-guild",
+    "name": "疫情小助手-频道版",
+    "desc": "👉 疫情小助手 频道版👈",
+    "author": "bingqiu456",
+    "homepage": "https://github.com/bingqiu456/nonebot-plugin-covid-19-by-guild",
+    "tags": [
+      {
+        "label": "a:QQ频道",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:疫情小助手",
+        "color": "#526fea"
+      }
+    ],
+    "is_official": false
   }
 ]
