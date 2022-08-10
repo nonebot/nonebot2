@@ -72,8 +72,7 @@ class Bot(abc.ABC):
         skip_calling_api: bool = False
         exception: Optional[Exception] = None
 
-        coros = list(map(lambda x: x(self, api, data), self._calling_api_hook))
-        if coros:
+        if coros := list(map(lambda x: x(self, api, data), self._calling_api_hook)):
             try:
                 logger.debug("Running CallingAPI hooks...")
                 await asyncio.gather(*coros)
@@ -95,10 +94,9 @@ class Bot(abc.ABC):
             except Exception as e:
                 exception = e
 
-        coros = list(
+        if coros := list(
             map(lambda x: x(self, exception, api, data, result), self._called_api_hook)
-        )
-        if coros:
+        ):
             try:
                 logger.debug("Running CalledAPI hooks...")
                 await asyncio.gather(*coros)

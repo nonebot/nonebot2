@@ -1,8 +1,7 @@
 import asyncio
 import inspect
 import warnings
-from typing_extensions import Literal
-from typing import TYPE_CHECKING, Any, Callable, Optional, cast
+from typing import TYPE_CHECKING, Any, Literal, Callable, Optional, cast
 from contextlib import AsyncExitStack, contextmanager, asynccontextmanager
 
 from pydantic.fields import Required, Undefined, ModelField

@@ -1,16 +1,16 @@
 import signal
 import asyncio
 import threading
-from typing import Set, Union, Callable, Awaitable
+from typing import Set, Callable, Awaitable, cast
 
 from nonebot.log import logger
 from nonebot.drivers import Driver
-from nonebot.typing import overrides
 from nonebot.config import Env, Config
 from nonebot.utils import run_sync, is_coroutine_callable
+from nonebot.typing import overrides, _CallableSyncOrAsync
 
-STARTUP_FUNC = Callable[[], Union[None, Awaitable[None]]]
-SHUTDOWN_FUNC = Callable[[], Union[None, Awaitable[None]]]
+STARTUP_FUNC = _CallableSyncOrAsync[[], None]
+SHUTDOWN_FUNC = _CallableSyncOrAsync[[], None]
 HANDLED_SIGNALS = (
     signal.SIGINT,  # Unix signal 2. Sent by Ctrl+C.
     signal.SIGTERM,  # Unix signal 15. Sent by `kill <pid>`.
@@ -71,7 +71,9 @@ class BlockDriver(Driver):
     async def startup(self):
         # run startup
         cors = [
-            startup() if is_coroutine_callable(startup) else run_sync(startup)()
+            cast(Callable[..., Awaitable[None]], startup)()
+            if is_coroutine_callable(startup)
+            else run_sync(startup)()
             for startup in self.startup_funcs
         ]
         if cors:
@@ -94,7 +96,9 @@ class BlockDriver(Driver):
         logger.info("Waiting for application shutdown.")
         # run shutdown
         cors = [
-            shutdown() if is_coroutine_callable(shutdown) else run_sync(shutdown)()
+            cast(Callable[..., Awaitable[None]], shutdown)()
+            if is_coroutine_callable(shutdown)
+            else run_sync(shutdown)()
             for shutdown in self.shutdown_funcs
         ]
         if cors:

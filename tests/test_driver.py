@@ -78,3 +78,27 @@ async def test_reverse_driver(app: App):
             assert await ws.receive_bytes() == b"pong"
 
             await ws.close()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "nonebug_init, driver_type",
+    [
+        pytest.param(
+            {"driver": "nonebot.drivers.fastapi:Driver+nonebot.drivers.aiohttp:Mixin"},
+            "fastapi+aiohttp",
+            id="fastapi+aiohttp",
+        ),
+        pytest.param(
+            {"driver": "~httpx:Driver+~websockets"},
+            "block_driver+httpx+websockets",
+            id="httpx+websockets",
+        ),
+    ],
+    indirect=["nonebug_init"],
+)
+async def test_combine_driver(app: App, driver_type: str):
+    import nonebot
+
+    driver = nonebot.get_driver()
+    assert driver.type == driver_type

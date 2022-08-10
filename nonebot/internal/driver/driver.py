@@ -233,13 +233,11 @@ def combine_driver(driver: Type[Driver], *mixins: Type[ForwardMixin]) -> Type[Dr
     if not mixins:
         return driver
 
-    class CombinedDriver(*mixins, driver, ForwardDriver):  # type: ignore
-        @property
-        def type(self) -> str:
-            return (
-                driver.type.__get__(self)
-                + "+"
-                + "+".join(map(lambda x: x.type.__get__(self), mixins))
-            )
+    def type_(self: ForwardDriver) -> str:
+        return (
+            driver.type.__get__(self)
+            + "+"
+            + "+".join(map(lambda x: x.type.__get__(self), mixins))
+        )
 
-    return CombinedDriver
+    return type("CombinedDriver", (*mixins, driver, ForwardDriver), {"type": property(type_)})  # type: ignore

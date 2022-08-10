@@ -173,7 +173,7 @@ def logger_wrapper(logger_name: str):
 
     def log(level: str, message: str, exception: Optional[Exception] = None):
         logger.opt(colors=True, exception=exception).log(
-            level, f"<m>{escape_tag(logger_name)}</m> | " + message
+            level, f"<m>{escape_tag(logger_name)}</m> | {message}"
         )
 
     return log

@@ -11,6 +11,7 @@ FrontMatter:
     sidebar_position: 11
     description: nonebot.typing 模块
 """
+from typing_extensions import ParamSpec
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -28,6 +29,14 @@ if TYPE_CHECKING:
     from nonebot.adapters import Bot
     from nonebot.permission import Permission
 
+
+P = ParamSpec("P")
+T = TypeVar("T")
+
+_CallableNoArg = Callable[[], T]
+_CallableSyncOrAsync = Union[Callable[P, T], Callable[P, Awaitable[T]]]
+_DependentCallable = _CallableSyncOrAsync[..., T]
+
 T_Wrapped = TypeVar("T_Wrapped", bound=Callable)
 
 
@@ -41,10 +50,12 @@ def overrides(InterfaceClass: object) -> Callable[[T_Wrapped], T_Wrapped]:
     return overrider
 
 
+# state
 T_State = Dict[Any, Any]
 """事件处理状态 State 类型"""
 
-T_BotConnectionHook = Callable[..., Awaitable[Any]]
+# driver hooks
+T_BotConnectionHook = _DependentCallable[Any]
 """Bot 连接建立时钩子函数
 
 依赖参数:
@@ -53,7 +64,7 @@ T_BotConnectionHook = Callable[..., Awaitable[Any]]
 - BotParam: Bot 对象
 - DefaultParam: 带有默认值的参数
 """
-T_BotDisconnectionHook = Callable[..., Awaitable[Any]]
+T_BotDisconnectionHook = _DependentCallable[Any]
 """Bot 连接断开时钩子函数
 
 依赖参数:
@@ -62,6 +73,8 @@ T_BotDisconnectionHook = Callable[..., Awaitable[Any]]
 - BotParam: Bot 对象
 - DefaultParam: 带有默认值的参数
 """
+
+# api hooks
 T_CallingAPIHook = Callable[["Bot", str, Dict[str, Any]], Awaitable[Any]]
 """`bot.call_api` 钩子函数"""
 T_CalledAPIHook = Callable[
@@ -69,7 +82,8 @@ T_CalledAPIHook = Callable[
 ]
 """`bot.call_api` 后执行的函数，参数分别为 bot, exception, api, data, result"""
 
-T_EventPreProcessor = Callable[..., Union[Any, Awaitable[Any]]]
+# event hooks
+T_EventPreProcessor = _DependentCallable[Any]
 """事件预处理函数 EventPreProcessor 类型
 
 依赖参数:
@@ -80,7 +94,7 @@ T_EventPreProcessor = Callable[..., Union[Any, Awaitable[Any]]]
 - StateParam: State 对象
 - DefaultParam: 带有默认值的参数
 """
-T_EventPostProcessor = Callable[..., Union[Any, Awaitable[Any]]]
+T_EventPostProcessor = _DependentCallable[Any]
 """事件预处理函数 EventPostProcessor 类型
 
 依赖参数:
@@ -91,7 +105,9 @@ T_EventPostProcessor = Callable[..., Union[Any, Awaitable[Any]]]
 - StateParam: State 对象
 - DefaultParam: 带有默认值的参数
 """
-T_RunPreProcessor = Callable[..., Union[Any, Awaitable[Any]]]
+
+# matcher run hooks
+T_RunPreProcessor = _DependentCallable[Any]
 """事件响应器运行前预处理函数 RunPreProcessor 类型
 
 依赖参数:
@@ -103,7 +119,7 @@ T_RunPreProcessor = Callable[..., Union[Any, Awaitable[Any]]]
 - MatcherParam: Matcher 对象
 - DefaultParam: 带有默认值的参数
 """
-T_RunPostProcessor = Callable[..., Union[Any, Awaitable[Any]]]
+T_RunPostProcessor = _DependentCallable[Any]
 """事件响应器运行后后处理函数 RunPostProcessor 类型
 
 依赖参数:
@@ -117,7 +133,8 @@ T_RunPostProcessor = Callable[..., Union[Any, Awaitable[Any]]]
 - DefaultParam: 带有默认值的参数
 """
 
-T_RuleChecker = Callable[..., Union[bool, Awaitable[bool]]]
+# rule, permission
+T_RuleChecker = _DependentCallable[bool]
 """RuleChecker 即判断是否响应事件的处理函数。
 
 依赖参数:
@@ -128,7 +145,7 @@ T_RuleChecker = Callable[..., Union[bool, Awaitable[bool]]]
 - StateParam: State 对象
 - DefaultParam: 带有默认值的参数
 """
-T_PermissionChecker = Callable[..., Union[bool, Awaitable[bool]]]
+T_PermissionChecker = _DependentCallable[bool]
 """PermissionChecker 即判断事件是否满足权限的处理函数。
 
 依赖参数:
@@ -139,9 +156,9 @@ T_PermissionChecker = Callable[..., Union[bool, Awaitable[bool]]]
 - DefaultParam: 带有默认值的参数
 """
 
-T_Handler = Callable[..., Any]
+T_Handler = _DependentCallable[Any]
 """Handler 处理函数。"""
-T_TypeUpdater = Callable[..., Union[str, Awaitable[str]]]
+T_TypeUpdater = _DependentCallable[str]
 """TypeUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新响应的事件类型。默认会更新为 `message`。
 
 依赖参数:
@@ -153,7 +170,7 @@ T_TypeUpdater = Callable[..., Union[str, Awaitable[str]]]
 - MatcherParam: Matcher 对象
 - DefaultParam: 带有默认值的参数
 """
-T_PermissionUpdater = Callable[..., Union["Permission", Awaitable["Permission"]]]
+T_PermissionUpdater = _DependentCallable["Permission"]
 """PermissionUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新会话对象权限。默认会更新为当前事件的触发对象。
 
 依赖参数:
@@ -165,5 +182,5 @@ T_PermissionUpdater = Callable[..., Union["Permission", Awaitable["Permission"]]
 - MatcherParam: Matcher 对象
 - DefaultParam: 带有默认值的参数
 """
-T_DependencyCache = Dict[Callable[..., Any], "Task[Any]"]
+T_DependencyCache = Dict[_DependentCallable[Any], "Task[Any]"]
 """依赖缓存, 用于存储依赖函数的返回值"""

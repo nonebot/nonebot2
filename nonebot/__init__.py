@@ -171,8 +171,7 @@ def get_bots() -> Dict[str, Bot]:
         bots = nonebot.get_bots()
         ```
     """
-    driver = get_driver()
-    return driver.bots
+    return get_driver().bots
 
 
 def _resolve_dot_notation(
@@ -240,7 +239,7 @@ def init(*, _env_file: Optional[str] = None, **kwargs: Any) -> None:
             f"Loaded <y><b>Config</b></y>: {escape_tag(str(config.dict()))}"
         )
 
-        DriverClass: Type[Driver] = _resolve_combine_expr(config.driver)
+        DriverClass = _resolve_combine_expr(config.driver)
         _driver = DriverClass(env, config)
 
 
