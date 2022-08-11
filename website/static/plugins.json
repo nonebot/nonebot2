@@ -2205,5 +2205,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_wiki",
+    "project_link": "nonebot-plugin-wiki",
+    "name": "wiki条目搜索、获取简介",
+    "desc": "通过mediawiki api进行条目搜索、生成简介（biliwiki部分通过网页解析实现）",
+    "author": "ZombieFly",
+    "homepage": "https://github.com/ZombieFly/nb2-wiki",
+    "tags": [],
+    "is_official": false
   }
 ]
