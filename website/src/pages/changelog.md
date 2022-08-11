@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: bangumi 搜索 [@yanyongyu](https://github.com/yanyongyu) ([#1137](https://github.com/nonebot/nonebot2/pull/1137))
 - Plugin: 疫情小助手-频道版 [@yanyongyu](https://github.com/yanyongyu) ([#1131](https://github.com/nonebot/nonebot2/pull/1131))
 - Plugin: MC_QQ 通信 [@yanyongyu](https://github.com/yanyongyu) ([#1127](https://github.com/nonebot/nonebot2/pull/1127))
 - Plugin: BAWiki [@yanyongyu](https://github.com/yanyongyu) ([#1129](https://github.com/nonebot/nonebot2/pull/1129))
