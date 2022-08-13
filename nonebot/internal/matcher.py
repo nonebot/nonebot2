@@ -14,6 +14,7 @@ from typing import (
     Callable,
     NoReturn,
     Optional,
+    overload,
 )
 
 from nonebot.log import logger
@@ -551,7 +552,17 @@ class Matcher(metaclass=MatcherMeta):
         """
         raise SkippedException
 
-    def get_receive(self, id: str, default: T = None) -> Union[Event, T]:
+    @overload
+    def get_receive(self, id: str) -> Union[Event, None]:
+        ...
+
+    @overload
+    def get_receive(self, id: str, default: T) -> Union[Event, T]:
+        ...
+
+    def get_receive(
+        self, id: str, default: Optional[T] = None
+    ) -> Optional[Union[Event, T]]:
         """获取一个 `receive` 事件
 
         如果没有找到对应的事件，返回 `default` 值
@@ -563,14 +574,34 @@ class Matcher(metaclass=MatcherMeta):
         self.state[RECEIVE_KEY.format(id=id)] = event
         self.state[LAST_RECEIVE_KEY] = event
 
-    def get_last_receive(self, default: T = None) -> Union[Event, T]:
+    @overload
+    def get_last_receive(self) -> Union[Event, None]:
+        ...
+
+    @overload
+    def get_last_receive(self, default: T) -> Union[Event, T]:
+        ...
+
+    def get_last_receive(
+        self, default: Optional[T] = None
+    ) -> Optional[Union[Event, T]]:
         """获取最近一次 `receive` 事件
 
         如果没有事件，返回 `default` 值
         """
         return self.state.get(LAST_RECEIVE_KEY, default)
 
-    def get_arg(self, key: str, default: T = None) -> Union[Message, T]:
+    @overload
+    def get_arg(self, key: str) -> Union[Message, None]:
+        ...
+
+    @overload
+    def get_arg(self, key: str, default: T) -> Union[Message, T]:
+        ...
+
+    def get_arg(
+        self, key: str, default: Optional[T] = None
+    ) -> Optional[Union[Message, T]]:
         """获取一个 `got` 消息
 
         如果没有找到对应的消息，返回 `default` 值
@@ -587,7 +618,15 @@ class Matcher(metaclass=MatcherMeta):
         else:
             self.state[REJECT_TARGET] = target
 
-    def get_target(self, default: T = None) -> Union[str, T]:
+    @overload
+    def get_target(self) -> Union[str, None]:
+        ...
+
+    @overload
+    def get_target(self, default: T) -> Union[str, T]:
+        ...
+
+    def get_target(self, default: Optional[T] = None) -> Optional[Union[str, T]]:
         return self.state.get(REJECT_TARGET, default)
 
     def stop_propagation(self):

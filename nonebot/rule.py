@@ -12,9 +12,8 @@ import re
 import shlex
 from itertools import product
 from argparse import Namespace
-from typing_extensions import TypedDict
 from argparse import ArgumentParser as ArgParser
-from typing import Any, List, Tuple, Union, Optional, Sequence, NamedTuple
+from typing import Any, List, Tuple, Union, Optional, Sequence, TypedDict, NamedTuple
 
 from pygtrie import CharTrie
 

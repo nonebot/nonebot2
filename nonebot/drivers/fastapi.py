@@ -9,7 +9,9 @@ FrontMatter:
     description: nonebot.drivers.fastapi 模块
 """
 
+
 import logging
+import contextlib
 from functools import wraps
 from typing import Any, List, Tuple, Union, Callable, Optional
 
@@ -186,14 +188,12 @@ class Driver(ReverseDriver):
         setup: HTTPServerSetup,
     ) -> Response:
         json: Any = None
-        try:
+        with contextlib.suppress(Exception):
             json = await request.json()
-        except Exception:
-            pass
 
         data: Optional[dict] = None
         files: Optional[List[Tuple[str, FileTypes]]] = None
-        try:
+        with contextlib.suppress(Exception):
             form = await request.form()
             data = {}
             files = []
@@ -204,8 +204,7 @@ class Driver(ReverseDriver):
                     )
                 else:
                     data[key] = value
-        except Exception:
-            pass
+
         http_request = BaseRequest(
             request.method,
             str(request.url),
@@ -219,7 +218,9 @@ class Driver(ReverseDriver):
         )
 
         response = await setup.handle_func(http_request)
-        return Response(response.content, response.status_code, dict(response.headers))
+        return Response(
+            response.content, response.status_code, dict(response.headers.items())
+        )
 
     async def _handle_ws(self, websocket: WebSocket, setup: WebSocketServerSetup):
         request = BaseRequest(
