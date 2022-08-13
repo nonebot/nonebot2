@@ -2234,5 +2234,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_game_collection",
+    "project_link": "nonebot_plugin_game_collection",
+    "name": "小游戏合集",
+    "desc": "改自 nonebot_plugin_russian 合并了nonebot_plugin_horserace还有一些自编玩法的小游戏合集。",
+    "author": "KarisAya",
+    "homepage": "https://github.com/KarisAya/nonebot_plugin_game_collection",
+    "tags": [],
+    "is_official": false
   }
 ]
