@@ -45,7 +45,6 @@ class Rule:
             )
             for checker in checkers
         }
-
         """存储 `RuleChecker`"""
 
     async def __call__(

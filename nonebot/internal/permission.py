@@ -45,7 +45,6 @@ class Permission:
             )
             for checker in checkers
         }
-
         """存储 `PermissionChecker`"""
 
     async def __call__(

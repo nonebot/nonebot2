@@ -11,7 +11,7 @@ FrontMatter:
     sidebar_position: 11
     description: nonebot.typing 模块
 """
-from typing_extensions import ParamSpec
+
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -29,13 +29,7 @@ if TYPE_CHECKING:
     from nonebot.adapters import Bot
     from nonebot.permission import Permission
 
-
-P = ParamSpec("P")
 T = TypeVar("T")
-
-_CallableNoArg = Callable[[], T]
-_CallableSyncOrAsync = Union[Callable[P, T], Callable[P, Awaitable[T]]]
-_DependentCallable = _CallableSyncOrAsync[..., T]
 
 T_Wrapped = TypeVar("T_Wrapped", bound=Callable)
 
@@ -53,6 +47,8 @@ def overrides(InterfaceClass: object) -> Callable[[T_Wrapped], T_Wrapped]:
 # state
 T_State = Dict[Any, Any]
 """事件处理状态 State 类型"""
+
+_DependentCallable = Union[Callable[..., T], Callable[..., Awaitable[T]]]
 
 # driver hooks
 T_BotConnectionHook = _DependentCallable[Any]

@@ -1,16 +1,15 @@
 import signal
 import asyncio
 import threading
-from typing import Set, Callable, Awaitable, cast
+from typing import Set, Union, Callable, Awaitable, cast
 
 from nonebot.log import logger
 from nonebot.drivers import Driver
+from nonebot.typing import overrides
 from nonebot.config import Env, Config
 from nonebot.utils import run_sync, is_coroutine_callable
-from nonebot.typing import overrides, _CallableSyncOrAsync
 
-STARTUP_FUNC = _CallableSyncOrAsync[[], None]
-SHUTDOWN_FUNC = _CallableSyncOrAsync[[], None]
+HOOK_FUNC = Union[Callable[[], None], Callable[[], Awaitable[None]]]
 HANDLED_SIGNALS = (
     signal.SIGINT,  # Unix signal 2. Sent by Ctrl+C.
     signal.SIGTERM,  # Unix signal 15. Sent by `kill <pid>`.
@@ -20,8 +19,8 @@ HANDLED_SIGNALS = (
 class BlockDriver(Driver):
     def __init__(self, env: Env, config: Config):
         super().__init__(env, config)
-        self.startup_funcs: Set[STARTUP_FUNC] = set()
-        self.shutdown_funcs: Set[SHUTDOWN_FUNC] = set()
+        self.startup_funcs: Set[HOOK_FUNC] = set()
+        self.shutdown_funcs: Set[HOOK_FUNC] = set()
         self.should_exit: asyncio.Event = asyncio.Event()
         self.force_exit: bool = False
 
@@ -38,7 +37,7 @@ class BlockDriver(Driver):
         return logger
 
     @overrides(Driver)
-    def on_startup(self, func: STARTUP_FUNC) -> STARTUP_FUNC:
+    def on_startup(self, func: HOOK_FUNC) -> HOOK_FUNC:
         """
         注册一个启动时执行的函数
         """
@@ -46,7 +45,7 @@ class BlockDriver(Driver):
         return func
 
     @overrides(Driver)
-    def on_shutdown(self, func: SHUTDOWN_FUNC) -> SHUTDOWN_FUNC:
+    def on_shutdown(self, func: HOOK_FUNC) -> HOOK_FUNC:
         """
         注册一个停止时执行的函数
         """
