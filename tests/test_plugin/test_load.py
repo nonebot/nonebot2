@@ -52,17 +52,26 @@ async def test_load_nested_plugin(app: App, load_plugin: Set["Plugin"]):
 
 
 @pytest.mark.asyncio
+async def test_load_json(app: App):
+    import nonebot
+
+    nonebot.load_from_json("./plugins.json")
+
+    with pytest.raises(TypeError):
+        nonebot.load_from_json("./plugins.invalid.json")
+
+
+@pytest.mark.asyncio
 async def test_load_toml(app: App):
     import nonebot
 
     nonebot.load_from_toml("./plugins.toml")
 
+    with pytest.raises(ValueError):
+        nonebot.load_from_toml("./plugins.empty.toml")
 
-@pytest.mark.asyncio
-async def test_load_json(app: App):
-    import nonebot
-
-    nonebot.load_from_json("./plugins.json")
+    with pytest.raises(TypeError):
+        nonebot.load_from_toml("./plugins.invalid.toml")
 
 
 @pytest.mark.asyncio

@@ -74,6 +74,8 @@ def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     """
     with open(file_path, "r", encoding=encoding) as f:
         data = json.load(f)
+    if not isinstance(data, dict):
+        raise TypeError("json file must contains a dict!")
     plugins = data.get("plugins")
     plugin_dirs = data.get("plugin_dirs")
     assert isinstance(plugins, list), "plugins must be a list of plugin name"
@@ -103,7 +105,7 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
         data = tomlkit.parse(f.read())  # type: ignore
 
     nonebot_data = data.get("tool", {}).get("nonebot")
-    if not nonebot_data:
+    if nonebot_data is None:
         raise ValueError("Cannot find '[tool.nonebot]' in given toml file!")
     if not isinstance(nonebot_data, dict):
         raise TypeError("'[tool.nonebot]' must be a Table!")
