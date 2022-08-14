@@ -12,9 +12,8 @@ import re
 import shlex
 from itertools import product
 from argparse import Namespace
-from typing_extensions import TypedDict
 from argparse import ArgumentParser as ArgParser
-from typing import Any, List, Tuple, Union, Optional, Sequence, NamedTuple
+from typing import Any, List, Tuple, Union, Optional, Sequence, TypedDict, NamedTuple
 
 from pygtrie import CharTrie
 
@@ -83,8 +82,7 @@ class TrieRule:
         message_seg: MessageSegment = message[0]
         if message_seg.is_text():
             segment_text = str(message_seg).lstrip()
-            pf = cls.prefix.longest_prefix(segment_text)
-            if pf:
+            if pf := cls.prefix.longest_prefix(segment_text):
                 value: TRIE_VALUE = pf.value
                 prefix[RAW_CMD_KEY] = pf.key
                 prefix[CMD_START_KEY] = value.command_start

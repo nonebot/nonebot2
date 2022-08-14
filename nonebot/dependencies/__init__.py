@@ -7,7 +7,18 @@ FrontMatter:
 
 import abc
 import inspect
-from typing import Any, Dict, List, Type, Generic, TypeVar, Callable, Optional
+from typing import (
+    Any,
+    Dict,
+    List,
+    Type,
+    Generic,
+    TypeVar,
+    Callable,
+    Optional,
+    Awaitable,
+    cast,
+)
 
 from pydantic import BaseConfig
 from pydantic.schema import get_annotation_from_field_info
@@ -15,6 +26,7 @@ from pydantic.fields import Required, FieldInfo, Undefined, ModelField
 
 from nonebot.log import logger
 from nonebot.exception import TypeMisMatch
+from nonebot.typing import _DependentCallable
 from nonebot.utils import run_sync, is_coroutine_callable
 
 from .utils import check_field_type, get_typed_signature
@@ -64,7 +76,7 @@ class Dependent(Generic[R]):
     def __init__(
         self,
         *,
-        call: Callable[..., Any],
+        call: _DependentCallable[R],
         pre_checkers: Optional[List[Param]] = None,
         params: Optional[List[ModelField]] = None,
         parameterless: Optional[List[Param]] = None,
@@ -89,29 +101,25 @@ class Dependent(Generic[R]):
         values = await self.solve(**kwargs)
 
         if is_coroutine_callable(self.call):
-            return await self.call(**values)
+            return await cast(Callable[..., Awaitable[R]], self.call)(**values)
         else:
-            return await run_sync(self.call)(**values)
+            return await run_sync(cast(Callable[..., R], self.call))(**values)
 
     def parse_param(self, name: str, param: inspect.Parameter) -> Param:
         for allow_type in self.allow_types:
-            field_info = allow_type._check_param(self, name, param)
-            if field_info:
+            if field_info := allow_type._check_param(self, name, param):
                 return field_info
-        else:
-            raise ValueError(
-                f"Unknown parameter {name} for function {self.call} with type {param.annotation}"
-            )
+        raise ValueError(
+            f"Unknown parameter {name} for function {self.call} with type {param.annotation}"
+        )
 
     def parse_parameterless(self, value: Any) -> Param:
         for allow_type in self.allow_types:
-            field_info = allow_type._check_parameterless(self, value)
-            if field_info:
+            if field_info := allow_type._check_parameterless(self, value):
                 return field_info
-        else:
-            raise ValueError(
-                f"Unknown parameterless {value} for function {self.call} with type {type(value)}"
-            )
+        raise ValueError(
+            f"Unknown parameterless {value} for function {self.call} with type {type(value)}"
+        )
 
     def prepend_parameterless(self, value: Any) -> None:
         self.parameterless.insert(0, self.parse_parameterless(value))
@@ -121,12 +129,12 @@ class Dependent(Generic[R]):
 
     @classmethod
     def parse(
-        cls: Type[T],
+        cls,
         *,
-        call: Callable[..., Any],
+        call: _DependentCallable[R],
         parameterless: Optional[List[Any]] = None,
         allow_types: Optional[List[Type[Param]]] = None,
-    ) -> T:
+    ) -> "Dependent[R]":
         signature = get_typed_signature(call)
         params = signature.parameters
         dependent = cls(
@@ -141,10 +149,10 @@ class Dependent(Generic[R]):
 
             if isinstance(default_value, Param):
                 field_info = default_value
-                default_value = field_info.default
             else:
                 field_info = dependent.parse_param(param_name, param)
-                default_value = field_info.default
+
+            default_value = field_info.default
 
             annotation: Any = Any
             required = default_value == Required

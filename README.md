@@ -21,7 +21,7 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
   <a href="https://pypi.python.org/pypi/nonebot2">
     <img src="https://img.shields.io/pypi/v/nonebot2" alt="pypi">
   </a>
-  <img src="https://img.shields.io/badge/python-3.7.3+-blue" alt="python">
+  <img src="https://img.shields.io/badge/python-3.8+-blue" alt="python">
   <a href="https://codecov.io/gh/nonebot/nonebot2">
     <img src="https://codecov.io/gh/nonebot/nonebot2/branch/master/graph/badge.svg?token=2P0G0VS7N4" alt="codecov"/>
   </a>

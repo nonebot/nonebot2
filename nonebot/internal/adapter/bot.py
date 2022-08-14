@@ -1,8 +1,7 @@
 import abc
 import asyncio
 from functools import partial
-from typing_extensions import Protocol
-from typing import TYPE_CHECKING, Any, Set, Union, Optional
+from typing import TYPE_CHECKING, Any, Set, Union, Optional, Protocol
 
 from nonebot.log import logger
 from nonebot.config import Config
@@ -72,8 +71,7 @@ class Bot(abc.ABC):
         skip_calling_api: bool = False
         exception: Optional[Exception] = None
 
-        coros = list(map(lambda x: x(self, api, data), self._calling_api_hook))
-        if coros:
+        if coros := [hook(self, api, data) for hook in self._calling_api_hook]:
             try:
                 logger.debug("Running CallingAPI hooks...")
                 await asyncio.gather(*coros)
@@ -95,10 +93,9 @@ class Bot(abc.ABC):
             except Exception as e:
                 exception = e
 
-        coros = list(
-            map(lambda x: x(self, exception, api, data, result), self._called_api_hook)
-        )
-        if coros:
+        if coros := [
+            hook(self, exception, api, data, result) for hook in self._called_api_hook
+        ]:
             try:
                 logger.debug("Running CalledAPI hooks...")
                 await asyncio.gather(*coros)

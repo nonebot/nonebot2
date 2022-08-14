@@ -8,6 +8,7 @@ FrontMatter:
 """
 
 import asyncio
+import contextlib
 from datetime import datetime
 from contextlib import AsyncExitStack
 from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional, Coroutine
@@ -120,10 +121,8 @@ async def _check_matcher(
     dependency_cache: Optional[T_DependencyCache] = None,
 ) -> None:
     if Matcher.expire_time and datetime.now() > Matcher.expire_time:
-        try:
+        with contextlib.suppress(Exception):
             matchers[priority].remove(Matcher)
-        except Exception:
-            pass
         return
 
     try:
@@ -138,11 +137,8 @@ async def _check_matcher(
         return
 
     if Matcher.temp:
-        try:
+        with contextlib.suppress(Exception):
             matchers[priority].remove(Matcher)
-        except Exception:
-            pass
-
     await _run_matcher(Matcher, bot, event, state, stack, dependency_cache)
 
 
@@ -157,24 +153,20 @@ async def _run_matcher(
     logger.info(f"Event will be handled by {Matcher}")
 
     matcher = Matcher()
-
-    coros = list(
-        map(
-            lambda x: run_coro_with_catch(
-                x(
-                    matcher=matcher,
-                    bot=bot,
-                    event=event,
-                    state=state,
-                    stack=stack,
-                    dependency_cache=dependency_cache,
-                ),
-                (SkippedException,),
+    if coros := [
+        run_coro_with_catch(
+            proc(
+                matcher=matcher,
+                bot=bot,
+                event=event,
+                state=state,
+                stack=stack,
+                dependency_cache=dependency_cache,
             ),
-            _run_preprocessors,
+            (SkippedException,),
         )
-    )
-    if coros:
+        for proc in _run_preprocessors
+    ]:
         try:
             await asyncio.gather(*coros)
         except IgnoredException:
@@ -184,9 +176,9 @@ async def _run_matcher(
             return
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
-                "<r><bg #f8bbd0>Error when running RunPreProcessors. "
-                "Running cancelled!</bg #f8bbd0></r>"
+                "<r><bg #f8bbd0>Error when running RunPreProcessors. Running cancelled!</bg #f8bbd0></r>"
             )
+
             return
 
     exception = None
@@ -200,24 +192,21 @@ async def _run_matcher(
         )
         exception = e
 
-    coros = list(
-        map(
-            lambda x: run_coro_with_catch(
-                x(
-                    matcher=matcher,
-                    exception=exception,
-                    bot=bot,
-                    event=event,
-                    state=matcher.state,
-                    stack=stack,
-                    dependency_cache=dependency_cache,
-                ),
-                (SkippedException,),
+    if coros := [
+        run_coro_with_catch(
+            proc(
+                matcher=matcher,
+                exception=exception,
+                bot=bot,
+                event=event,
+                state=matcher.state,
+                stack=stack,
+                dependency_cache=dependency_cache,
             ),
-            _run_postprocessors,
+            (SkippedException,),
         )
-    )
-    if coros:
+        for proc in _run_postprocessors
+    ]:
         try:
             await asyncio.gather(*coros)
         except Exception as e:
@@ -256,22 +245,19 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
     dependency_cache: T_DependencyCache = {}
 
     async with AsyncExitStack() as stack:
-        coros = list(
-            map(
-                lambda x: run_coro_with_catch(
-                    x(
-                        bot=bot,
-                        event=event,
-                        state=state,
-                        stack=stack,
-                        dependency_cache=dependency_cache,
-                    ),
-                    (SkippedException,),
+        if coros := [
+            run_coro_with_catch(
+                proc(
+                    bot=bot,
+                    event=event,
+                    state=state,
+                    stack=stack,
+                    dependency_cache=dependency_cache,
                 ),
-                _event_preprocessors,
+                (SkippedException,),
             )
-        )
-        if coros:
+            for proc in _event_preprocessors
+        ]:
             try:
                 if show_log:
                     logger.debug("Running PreProcessors...")
@@ -324,22 +310,19 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
                         "<r><bg #f8bbd0>Error when checking Matcher.</bg #f8bbd0></r>"
                     )
 
-        coros = list(
-            map(
-                lambda x: run_coro_with_catch(
-                    x(
-                        bot=bot,
-                        event=event,
-                        state=state,
-                        stack=stack,
-                        dependency_cache=dependency_cache,
-                    ),
-                    (SkippedException,),
+        if coros := [
+            run_coro_with_catch(
+                proc(
+                    bot=bot,
+                    event=event,
+                    state=state,
+                    stack=stack,
+                    dependency_cache=dependency_cache,
                 ),
-                _event_postprocessors,
+                (SkippedException,),
             )
-        )
-        if coros:
+            for proc in _event_postprocessors
+        ]:
             try:
                 if show_log:
                     logger.debug("Running PostProcessors...")

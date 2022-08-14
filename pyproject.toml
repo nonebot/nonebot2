@@ -22,7 +22,7 @@ packages = [
 include = ["nonebot/py.typed"]
 
 [tool.poetry.dependencies]
-python = "^3.7.3"
+python = "^3.8"
 yarl = "^1.7.2"
 loguru = "^0.6.0"
 pygtrie = "^2.4.1"

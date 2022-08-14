@@ -24,6 +24,7 @@ from typing import (
     Coroutine,
     AsyncGenerator,
     ContextManager,
+    overload,
 )
 
 from pydantic.typing import is_union, is_none_type
@@ -129,11 +130,28 @@ async def run_sync_ctx_manager(
         await run_sync(cm.__exit__)(None, None, None)
 
 
+@overload
 async def run_coro_with_catch(
     coro: Coroutine[Any, Any, T],
     exc: Tuple[Type[Exception], ...],
-    return_on_err: R = None,
+) -> Union[T, None]:
+    ...
+
+
+@overload
+async def run_coro_with_catch(
+    coro: Coroutine[Any, Any, T],
+    exc: Tuple[Type[Exception], ...],
+    return_on_err: R,
 ) -> Union[T, R]:
+    ...
+
+
+async def run_coro_with_catch(
+    coro: Coroutine[Any, Any, T],
+    exc: Tuple[Type[Exception], ...],
+    return_on_err: Optional[R] = None,
+) -> Optional[Union[T, R]]:
     try:
         return await coro
     except exc:
@@ -173,7 +191,7 @@ def logger_wrapper(logger_name: str):
 
     def log(level: str, message: str, exception: Optional[Exception] = None):
         logger.opt(colors=True, exception=exception).log(
-            level, f"<m>{escape_tag(logger_name)}</m> | " + message
+            level, f"<m>{escape_tag(logger_name)}</m> | {message}"
         )
 
     return log
