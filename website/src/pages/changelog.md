@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 小游戏合集 [@yanyongyu](https://github.com/yanyongyu) ([#1150](https://github.com/nonebot/nonebot2/pull/1150))
 - Plugin: 简易群管（带入群欢迎） [@yanyongyu](https://github.com/yanyongyu) ([#1142](https://github.com/nonebot/nonebot2/pull/1142))
 - Plugin: wiki 条目搜索、获取简介 [@yanyongyu](https://github.com/yanyongyu) ([#1133](https://github.com/nonebot/nonebot2/pull/1133))
 - Plugin: bangumi 搜索 [@yanyongyu](https://github.com/yanyongyu) ([#1137](https://github.com/nonebot/nonebot2/pull/1137))
