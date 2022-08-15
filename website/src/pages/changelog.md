@@ -16,6 +16,10 @@ toc_max_heading_level: 2
 
 - Feature: 移除 Python 3.7 支持 [@yanyongyu](https://github.com/yanyongyu) ([#1148](https://github.com/nonebot/nonebot2/pull/1148))
 
+### 💫 杂项
+
+- Plugin: 修改插件多功能简易群管信息 [@HuYihe2008](https://github.com/HuYihe2008) ([#1154](https://github.com/nonebot/nonebot2/pull/1154))
+
 ### 🍻 插件发布
 
 - Plugin: 小游戏合集 [@yanyongyu](https://github.com/yanyongyu) ([#1150](https://github.com/nonebot/nonebot2/pull/1150))
