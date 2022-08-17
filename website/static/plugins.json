@@ -2244,5 +2244,15 @@
     "homepage": "https://github.com/KarisAya/nonebot_plugin_game_collection",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_drawer",
+    "project_link": "nonebot-plugin-drawer",
+    "name": "nonebot-plugin-drawer",
+    "desc": "适用于 Nonebot2 的AI画画插件",
+    "author": "CrazyBoyM",
+    "homepage": "https://github.com/CrazyBoyM/nonebot-plugin-drawer",
+    "tags": [],
+    "is_official": false
   }
 ]
