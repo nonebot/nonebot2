@@ -2254,5 +2254,24 @@
     "homepage": "https://github.com/CrazyBoyM/nonebot-plugin-drawer",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_jrrp-n",
+    "project_link": "nonebot-plugin-jrrp-n",
+    "name": "每日人品",
+    "desc": "不基于random的每日人品插件",
+    "author": "SkyDynamic",
+    "homepage": "https://github.com/SkyDynamic/nonebot_plugin_jrrp",
+    "tags": [
+      {
+        "label": "每日人品",
+        "color": "#ea5252"
+      },
+      {
+        "label": "jrrp",
+        "color": "#529fea"
+      }
+    ],
+    "is_official": false
   }
 ]
