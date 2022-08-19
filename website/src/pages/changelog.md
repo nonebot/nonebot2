@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 每日人品 [@yanyongyu](https://github.com/yanyongyu) ([#1156](https://github.com/nonebot/nonebot2/pull/1156))
 - Plugin: nonebot-plugin-drawer [@yanyongyu](https://github.com/yanyongyu) ([#1146](https://github.com/nonebot/nonebot2/pull/1146))
 - Plugin: 小游戏合集 [@yanyongyu](https://github.com/yanyongyu) ([#1150](https://github.com/nonebot/nonebot2/pull/1150))
 - Plugin: 简易群管（带入群欢迎） [@yanyongyu](https://github.com/yanyongyu) ([#1142](https://github.com/nonebot/nonebot2/pull/1142))
