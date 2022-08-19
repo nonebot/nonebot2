@@ -11,7 +11,6 @@ from nonebot.typing import T_State
 from nonebot.matcher import Matcher
 from nonebot.adapters import Event, Message
 from nonebot.internal.params import Arg as Arg
-from nonebot.internal.params import State as State
 from nonebot.internal.params import ArgStr as ArgStr
 from nonebot.internal.params import Depends as Depends
 from nonebot.internal.params import ArgParam as ArgParam
@@ -174,7 +173,6 @@ def LastReceived(default: Any = None) -> Any:
 
 __autodoc__ = {
     "Arg": True,
-    "State": True,
     "ArgStr": True,
     "Depends": True,
     "ArgParam": True,
