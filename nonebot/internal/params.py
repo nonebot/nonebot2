@@ -252,12 +252,6 @@ class StateInner(T_State):
     ...
 
 
-def State() -> T_State:
-    """**Deprecated**: 事件处理状态参数，请直接使用 {ref}`nonebot.typing.T_State`"""
-    warnings.warn("State() is deprecated, use `T_State` instead", DeprecationWarning)
-    return StateInner()
-
-
 class StateParam(Param):
     """事件处理状态参数"""
 
