@@ -2273,5 +2273,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_moegoe",
+    "project_link": "nonebot-plugin-moegoe",
+    "name": "日韩中 VITS 模型原神拟声",
+    "desc": "现在是琪亚娜时间~",
+    "author": "Yiyuiii",
+    "homepage": "https://github.com/Yiyuiii/nonebot-plugin-moegoe",
+    "tags": [],
+    "is_official": false
   }
 ]
