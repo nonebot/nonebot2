@@ -9,12 +9,14 @@ toc_max_heading_level: 2
 
 ### 💥 破坏性变更
 
+- Feature: 移除过时的 State 注入参数 [@yanyongyu](https://github.com/yanyongyu) ([#1160](https://github.com/nonebot/nonebot2/pull/1160))
 - Feature: 移除过时的 `nonebot.plugins` toml 配置 [@yanyongyu](https://github.com/yanyongyu) ([#1151](https://github.com/nonebot/nonebot2/pull/1151))
 - Feature: 移除 Python 3.7 支持 [@yanyongyu](https://github.com/yanyongyu) ([#1148](https://github.com/nonebot/nonebot2/pull/1148))
 - Remove: 删除过时的 Export 功能 [@yanyongyu](https://github.com/yanyongyu) ([#1125](https://github.com/nonebot/nonebot2/pull/1125))
 
 ### 🚀 新功能
 
+- Feature: 移除过时的 State 注入参数 [@yanyongyu](https://github.com/yanyongyu) ([#1160](https://github.com/nonebot/nonebot2/pull/1160))
 - Feature: 移除过时的 `nonebot.plugins` toml 配置 [@yanyongyu](https://github.com/yanyongyu) ([#1151](https://github.com/nonebot/nonebot2/pull/1151))
 - Feature: 移除 Python 3.7 支持 [@yanyongyu](https://github.com/yanyongyu) ([#1148](https://github.com/nonebot/nonebot2/pull/1148))
 
