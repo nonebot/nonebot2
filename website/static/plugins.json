@@ -2283,5 +2283,15 @@
     "homepage": "https://github.com/Yiyuiii/nonebot-plugin-moegoe",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_pixivbot",
+    "project_link": "nonebot-plugin-pixivbot",
+    "name": "PixivBot",
+    "desc": "NoneBot插件，发送随机Pixiv插画、画师更新推送、定时订阅推送……",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/ssttkkl/nonebot-plugin-pixivbot",
+    "tags": [],
+    "is_official": false
   }
 ]
