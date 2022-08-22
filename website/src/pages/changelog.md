@@ -14,6 +14,10 @@ toc_max_heading_level: 2
 - Remove: 移除 Python 3.7 支持 [@yanyongyu](https://github.com/yanyongyu) ([#1148](https://github.com/nonebot/nonebot2/pull/1148))
 - Remove: 删除过时的 Export 功能 [@yanyongyu](https://github.com/yanyongyu) ([#1125](https://github.com/nonebot/nonebot2/pull/1125))
 
+### 🐛 Bug 修复
+
+- Fix: 修复当消息与不支持的类型相加时抛出的异常类型错误 [@mnixry](https://github.com/mnixry) ([#1166](https://github.com/nonebot/nonebot2/pull/1166))
+
 ### 💫 杂项
 
 - Plugin: 修改插件多功能简易群管信息 [@HuYihe2008](https://github.com/HuYihe2008) ([#1159](https://github.com/nonebot/nonebot2/pull/1159))
