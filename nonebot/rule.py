@@ -403,8 +403,6 @@ class ShellCommandRule:
         if cmd not in self.cmds or msg is None:
             return False
 
-        # message = str(msg)
-        # state[SHELL_ARGV] = shlex.split(message)
         state[SHELL_ARGV] = list(
             chain.from_iterable(
                 shlex.split(str(seg)) if cast(MessageSegment, seg).is_text() else (seg,)
