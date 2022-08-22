@@ -11,11 +11,11 @@ def test_template_basis():
 
 def test_template_message():
     Message = make_fake_message()
-    template = Message.template("{a:custom}{b:text}{c:image}")
+    template = Message.template("{a:custom}{b:text}{c:image}/{d}")
 
     @template.add_format_spec
     def custom(input: str) -> str:
-        return input + "-custom!"
+        return f"{input}-custom!"
 
     try:
         template.add_format_spec(custom)
@@ -24,12 +24,17 @@ def test_template_message():
     else:
         raise AssertionError("Should raise ValueError")
 
-    format_args = {"a": "custom", "b": "text", "c": "https://example.com/test"}
+    format_args = {
+        "a": "custom",
+        "b": "text",
+        "c": "https://example.com/test",
+        "d": 114,
+    }
     formatted = template.format(**format_args)
 
     assert template.format_map(format_args) == formatted
-    assert formatted.extract_plain_text() == "custom-custom!text"
-    assert str(formatted) == "custom-custom!text[fake:image]"
+    assert formatted.extract_plain_text() == "custom-custom!text/114"
+    assert str(formatted) == "custom-custom!text[fake:image]/114"
 
 
 def test_rich_template_message():

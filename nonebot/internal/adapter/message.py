@@ -186,7 +186,7 @@ class Message(List[TMS], abc.ABC):
         elif isinstance(other, Iterable):
             self.extend(other)
         else:
-            raise ValueError(f"Unsupported type: {type(other)}")  # pragma: no cover
+            raise TypeError(f"Unsupported type {type(other)!r}")
         return self
 
     @overload
