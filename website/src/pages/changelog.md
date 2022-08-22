@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: PixivBot [@yanyongyu](https://github.com/yanyongyu) ([#1165](https://github.com/nonebot/nonebot2/pull/1165))
 - Plugin: 日韩中 VITS 模型原神拟声 [@yanyongyu](https://github.com/yanyongyu) ([#1162](https://github.com/nonebot/nonebot2/pull/1162))
 - Plugin: 每日人品 [@yanyongyu](https://github.com/yanyongyu) ([#1156](https://github.com/nonebot/nonebot2/pull/1156))
 - Plugin: nonebot-plugin-drawer [@yanyongyu](https://github.com/yanyongyu) ([#1146](https://github.com/nonebot/nonebot2/pull/1146))
