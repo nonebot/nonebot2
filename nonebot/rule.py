@@ -365,7 +365,7 @@ class ArgumentParser(ArgParser):
 
     def _parse_optional(
         self, arg_string: Union[str, MessageSegment]
-    ) -> Optional[tuple[Optional[Action], str, Optional[str]]]:
+    ) -> Optional[Tuple[Optional[Action], str, Optional[str]]]:
         return (
             super()._parse_optional(arg_string) if isinstance(arg_string, str) else None
         )
