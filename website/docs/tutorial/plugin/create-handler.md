@@ -277,7 +277,7 @@ async def _(foo: str = CommandStart()): ...
 
 ### ShellCommandArgs
 
-获取 shell 命令解析后的参数。
+获取 shell 命令解析后的参数，支持 MessageSegment 富文本（如：图片）。
 
 :::tip 提示
 如果参数解析失败，则为 [`ParserExit`](../../api/exception.md#ParserExit) 异常，并携带错误码与错误信息。
@@ -288,21 +288,28 @@ async def _(foo: str = CommandStart()): ...
 ```python {8,12}
 from nonebot import on_shell_command
 from nonebot.params import ShellCommandArgs
+from nonebot.rule import Namespace, ArgumentParser
 
+parser = ArgumentParser("demo")
+# parser.add_argument ...
 matcher = on_shell_command("cmd", parser)
 
 # 解析失败
 @matcher.handle()
-async def _(foo: ParserExit = ShellCommandArgs()): ...
+async def _(foo: ParserExit = ShellCommandArgs()):
+    if foo.status == 0:
+        foo.message  # help message
+    else:
+        foo.message  # error message
 
 # 解析成功
 @matcher.handle()
-async def _(foo: Dict[str, Any] = ShellCommandArgs()): ...
+async def _(foo: Namespace = ShellCommandArgs()): ...
 ```
 
 ### ShellCommandArgv
 
-获取 shell 命令解析前的参数列表。
+获取 shell 命令解析前的参数列表，支持 MessageSegment 富文本（如：图片）。
 
 ```python {7}
 from nonebot import on_shell_command
@@ -311,7 +318,7 @@ from nonebot.params import ShellCommandArgs
 matcher = on_shell_command("cmd")
 
 @matcher.handle()
-async def _(foo: List[str] = ShellCommandArgv()): ...
+async def _(foo: List[Union[str, MessageSegment]] = ShellCommandArgv()): ...
 ```
 
 ### RegexMatched

@@ -5,16 +5,16 @@ FrontMatter:
     description: nonebot.params 模块
 """
 
-from typing import Any, Dict, List, Tuple, Optional
+from typing import Any, Dict, List, Tuple, Union, Optional
 
 from nonebot.typing import T_State
 from nonebot.matcher import Matcher
-from nonebot.adapters import Event, Message
 from nonebot.internal.params import Arg as Arg
 from nonebot.internal.params import ArgStr as ArgStr
 from nonebot.internal.params import Depends as Depends
 from nonebot.internal.params import ArgParam as ArgParam
 from nonebot.internal.params import BotParam as BotParam
+from nonebot.adapters import Event, Message, MessageSegment
 from nonebot.internal.params import EventParam as EventParam
 from nonebot.internal.params import StateParam as StateParam
 from nonebot.internal.params import DependParam as DependParam
@@ -109,15 +109,15 @@ def CommandStart() -> str:
 
 
 def _shell_command_args(state: T_State) -> Any:
-    return state[SHELL_ARGS]
+    return state[SHELL_ARGS]  # Namespace or ParserExit
 
 
-def ShellCommandArgs():
+def ShellCommandArgs() -> Any:
     """shell 命令解析后的参数字典"""
     return Depends(_shell_command_args, use_cache=False)
 
 
-def _shell_command_argv(state: T_State) -> List[str]:
+def _shell_command_argv(state: T_State) -> List[Union[str, MessageSegment]]:
     return state[SHELL_ARGV]
 
 
