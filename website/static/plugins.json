@@ -2293,5 +2293,20 @@
     "homepage": "https://github.com/ssttkkl/nonebot-plugin-pixivbot",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_groupmate_waifu",
+    "project_link": "nonebot_plugin_groupmate_waifu",
+    "name": "娶群友",
+    "desc": "娶群友（纯爱版，ntr版）",
+    "author": "KarisAya",
+    "homepage": "https://github.com/KarisAya/nonebot_plugin_groupmate_waifu",
+    "tags": [
+      {
+        "label": "娶群友",
+        "color": "#529bea"
+      }
+    ],
+    "is_official": false
   }
 ]
