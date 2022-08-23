@@ -2308,5 +2308,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_workscore",
+    "project_link": "nonebot-plugin-workscore",
+    "name": "工作性价比",
+    "desc": "看看你的工作惨不惨",
+    "author": "yzyyz1387",
+    "homepage": "https://github.com/yzyyz1387/nonebot_plugin_workscore",
+    "tags": [
+      {
+        "label": "工作性价比计算器",
+        "color": "#3898fc"
+      }
+    ],
+    "is_official": false
   }
 ]
