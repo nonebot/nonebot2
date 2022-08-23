@@ -2371,5 +2371,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_flash_silentsave",
+    "project_link": "nonebot_plugin_flash_silentsave",
+    "name": "保存群聊闪照",
+    "desc": "静默保存群聊中的闪照",
+    "author": "KarisAya",
+    "homepage": "https://github.com/KarisAya/nonebot_plugin_flash_silentsave",
+    "tags": [
+      {
+        "label": "反闪照",
+        "color": "#52a5ea"
+      }
+    ],
+    "is_official": false
   }
 ]
