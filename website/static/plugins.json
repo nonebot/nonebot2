@@ -2323,5 +2323,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_treehelp",
+    "project_link": "nonebot-plugin-treehelp",
+    "name": "NoneBot 树形帮助插件",
+    "desc": "利用插件元数据生成插件帮助，并支持插件嵌套。",
+    "author": "he0119",
+    "homepage": "https://github.com/he0119/nonebot-plugin-treehelp",
+    "tags": [],
+    "is_official": false
   }
 ]
