@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 工作性价比 [@yanyongyu](https://github.com/yanyongyu) ([#1175](https://github.com/nonebot/nonebot2/pull/1175))
 - Plugin: 娶群友 [@yanyongyu](https://github.com/yanyongyu) ([#1170](https://github.com/nonebot/nonebot2/pull/1170))
 - Plugin: PixivBot [@yanyongyu](https://github.com/yanyongyu) ([#1165](https://github.com/nonebot/nonebot2/pull/1165))
 - Plugin: 日韩中 VITS 模型原神拟声 [@yanyongyu](https://github.com/yanyongyu) ([#1162](https://github.com/nonebot/nonebot2/pull/1162))
