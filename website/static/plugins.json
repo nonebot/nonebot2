@@ -2356,5 +2356,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_course",
+    "project_link": "nonebot-plugin-course",
+    "name": "课表查询",
+    "desc": "本周课表，完整课表，下节课在哪上，今天还有什么课🤔",
+    "author": "InariInDream",
+    "homepage": "https://github.com/InariInDream/nonebot_plugin_course",
+    "tags": [
+      {
+        "label": "课表",
+        "color": "#6e9af2"
+      }
+    ],
+    "is_official": false
   }
 ]
