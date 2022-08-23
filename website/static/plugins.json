@@ -2333,5 +2333,28 @@
     "homepage": "https://github.com/he0119/nonebot-plugin-treehelp",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "cqsat",
+    "project_link": "nonebot-plugin-cqsat",
+    "name": "业余无线电助手",
+    "desc": "一个业余无线电相关的插件",
+    "author": "yzyyz1387",
+    "homepage": "https://github.com/yzyyz1387/cqsat",
+    "tags": [
+      {
+        "label": "业余无线电",
+        "color": "#ea5252"
+      },
+      {
+        "label": "HAM",
+        "color": "#3898fc"
+      },
+      {
+        "label": "卫星追踪",
+        "color": "#fca638"
+      }
+    ],
+    "is_official": false
   }
 ]
