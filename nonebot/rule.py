@@ -10,10 +10,26 @@ FrontMatter:
 
 import re
 import shlex
-from itertools import product
-from argparse import Namespace
+from argparse import Action
+from argparse import ArgumentError
+from itertools import chain, product
+from argparse import Namespace as Namespace
 from argparse import ArgumentParser as ArgParser
-from typing import Any, List, Tuple, Union, Optional, Sequence, TypedDict, NamedTuple
+from typing import (
+    IO,
+    TYPE_CHECKING,
+    Any,
+    List,
+    Tuple,
+    Union,
+    TypeVar,
+    Optional,
+    Sequence,
+    TypedDict,
+    NamedTuple,
+    cast,
+    overload,
+)
 
 from pygtrie import CharTrie
 
@@ -43,6 +59,8 @@ from nonebot.consts import (
     CMD_START_KEY,
     REGEX_MATCHED,
 )
+
+T = TypeVar("T")
 
 CMD_RESULT = TypedDict(
     "CMD_RESULT",
@@ -318,25 +336,48 @@ class ArgumentParser(ArgParser):
         参考文档: [argparse](https://docs.python.org/3/library/argparse.html)
     """
 
-    def _print_message(self, message, file=None):
-        old_message: str = getattr(self, "message", "")
-        if old_message:
-            old_message += "\n"
-        old_message += message
-        setattr(self, "message", old_message)
+    if TYPE_CHECKING:
 
-    def exit(self, status: int = 0, message: Optional[str] = None):
-        raise ParserExit(
-            status=status, message=message or getattr(self, "message", None)
+        @overload
+        def parse_args(
+            self, args: Optional[Sequence[Union[str, MessageSegment]]] = ...
+        ) -> Namespace:
+            ...
+
+        @overload
+        def parse_args(
+            self, args: Optional[Sequence[Union[str, MessageSegment]]], namespace: None
+        ) -> Namespace:
+            ...  # type: ignore[misc]
+
+        @overload
+        def parse_args(
+            self, args: Optional[Sequence[Union[str, MessageSegment]]], namespace: T
+        ) -> T:
+            ...
+
+        def parse_args(
+            self,
+            args: Optional[Sequence[Union[str, MessageSegment]]] = None,
+            namespace: Optional[T] = None,
+        ) -> Union[Namespace, T]:
+            ...
+
+    def _parse_optional(
+        self, arg_string: Union[str, MessageSegment]
+    ) -> Optional[Tuple[Optional[Action], str, Optional[str]]]:
+        return (
+            super()._parse_optional(arg_string) if isinstance(arg_string, str) else None
         )
 
-    def parse_args(
-        self,
-        args: Optional[Sequence[str]] = None,
-        namespace: Optional[Namespace] = None,
-    ) -> Namespace:
-        setattr(self, "message", "")
-        return super().parse_args(args=args, namespace=namespace)  # type: ignore
+    def _print_message(self, message: str, file: Optional[IO[str]] = None):
+        if message:
+            setattr(self, "_message", getattr(self, "_message", "") + message)
+
+    def exit(self, status: int = 0, message: Optional[str] = None):
+        if message:
+            self._print_message(message)
+        raise ParserExit(status=status, message=getattr(self, "_message", None))
 
 
 class ShellCommandRule:
@@ -359,18 +400,25 @@ class ShellCommandRule:
         cmd: Optional[Tuple[str, ...]] = Command(),
         msg: Optional[Message] = CommandArg(),
     ) -> bool:
-        if cmd in self.cmds and msg is not None:
-            message = str(msg)
-            state[SHELL_ARGV] = shlex.split(message)
-            if self.parser:
-                try:
-                    args = self.parser.parse_args(state[SHELL_ARGV])
-                    state[SHELL_ARGS] = args
-                except ParserExit as e:
-                    state[SHELL_ARGS] = e
-            return True
-        else:
+        if cmd not in self.cmds or msg is None:
             return False
+
+        state[SHELL_ARGV] = list(
+            chain.from_iterable(
+                shlex.split(str(seg)) if cast(MessageSegment, seg).is_text() else (seg,)
+                for seg in msg
+            )
+        )
+
+        if self.parser:
+            try:
+                args = self.parser.parse_args(state[SHELL_ARGV])
+                state[SHELL_ARGS] = args
+            except ArgumentError as e:
+                state[SHELL_ARGS] = ParserExit(status=2, message=str(e))
+            except ParserExit as e:
+                state[SHELL_ARGS] = e
+        return True
 
 
 def shell_command(

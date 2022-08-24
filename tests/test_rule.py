@@ -1,3 +1,4 @@
+import sys
 from typing import Tuple, Union
 
 import pytest
@@ -202,7 +203,104 @@ async def test_command(app: App, cmds: Tuple[Tuple[str, ...]]):
         assert await dependent(state=state)
 
 
-# TODO: shell command
+@pytest.mark.asyncio
+async def test_shell_command(app: App):
+    from nonebot.typing import T_State
+    from nonebot.exception import ParserExit
+    from nonebot.consts import CMD_KEY, PREFIX_KEY, SHELL_ARGS, SHELL_ARGV, CMD_ARG_KEY
+    from nonebot.rule import Namespace, ArgumentParser, ShellCommandRule, shell_command
+
+    state: T_State
+    CMD = ("test",)
+    Message = make_fake_message()
+    MessageSegment = Message.get_segment_class()
+
+    test_not_cmd = shell_command(CMD)
+    dependent = list(test_not_cmd.checkers)[0]
+    checker = dependent.call
+    assert isinstance(checker, ShellCommandRule)
+    message = Message()
+    event = make_fake_event(_message=message)()
+    state = {PREFIX_KEY: {CMD_KEY: ("not",), CMD_ARG_KEY: message}}
+    assert not await dependent(event=event, state=state)
+
+    test_no_parser = shell_command(CMD)
+    dependent = list(test_no_parser.checkers)[0]
+    checker = dependent.call
+    assert isinstance(checker, ShellCommandRule)
+    message = Message()
+    event = make_fake_event(_message=message)()
+    state = {PREFIX_KEY: {CMD_KEY: CMD, CMD_ARG_KEY: message}}
+    assert await dependent(event=event, state=state)
+    assert state[SHELL_ARGV] == []
+    assert SHELL_ARGS not in state
+
+    parser = ArgumentParser("test")
+    parser.add_argument("-a", required=True)
+
+    test_simple_parser = shell_command(CMD, parser=parser)
+    dependent = list(test_simple_parser.checkers)[0]
+    checker = dependent.call
+    assert isinstance(checker, ShellCommandRule)
+    message = Message("-a 1")
+    event = make_fake_event(_message=message)()
+    state = {PREFIX_KEY: {CMD_KEY: CMD, CMD_ARG_KEY: message}}
+    assert await dependent(event=event, state=state)
+    assert state[SHELL_ARGV] == ["-a", "1"]
+    assert state[SHELL_ARGS] == Namespace(a="1")
+
+    test_parser_help = shell_command(CMD, parser=parser)
+    dependent = list(test_parser_help.checkers)[0]
+    checker = dependent.call
+    assert isinstance(checker, ShellCommandRule)
+    message = Message("-h")
+    event = make_fake_event(_message=message)()
+    state = {PREFIX_KEY: {CMD_KEY: CMD, CMD_ARG_KEY: message}}
+    assert await dependent(event=event, state=state)
+    assert state[SHELL_ARGV] == ["-h"]
+    assert isinstance(state[SHELL_ARGS], ParserExit)
+    assert state[SHELL_ARGS].status == 0
+    assert state[SHELL_ARGS].message == parser.format_help()
+
+    test_parser_error = shell_command(CMD, parser=parser)
+    dependent = list(test_parser_error.checkers)[0]
+    checker = dependent.call
+    assert isinstance(checker, ShellCommandRule)
+    message = Message()
+    event = make_fake_event(_message=message)()
+    state = {PREFIX_KEY: {CMD_KEY: CMD, CMD_ARG_KEY: message}}
+    assert await dependent(event=event, state=state)
+    assert state[SHELL_ARGV] == []
+    assert isinstance(state[SHELL_ARGS], ParserExit)
+    assert state[SHELL_ARGS].status != 0
+
+    test_message_parser = shell_command(CMD, parser=parser)
+    dependent = list(test_message_parser.checkers)[0]
+    checker = dependent.call
+    assert isinstance(checker, ShellCommandRule)
+    message = MessageSegment.text("-a") + MessageSegment.image("test")
+    event = make_fake_event(_message=message)()
+    state = {PREFIX_KEY: {CMD_KEY: CMD, CMD_ARG_KEY: message}}
+    assert await dependent(event=event, state=state)
+    assert state[SHELL_ARGV] == ["-a", MessageSegment.image("test")]
+    assert state[SHELL_ARGS] == Namespace(a=MessageSegment.image("test"))
+
+    if sys.version_info >= (3, 9):
+        parser = ArgumentParser("test", exit_on_error=False)
+        parser.add_argument("-a", required=True)
+
+        test_not_exit = shell_command(CMD, parser=parser)
+        dependent = list(test_not_exit.checkers)[0]
+        checker = dependent.call
+        assert isinstance(checker, ShellCommandRule)
+        message = Message()
+        event = make_fake_event(_message=message)()
+        state = {PREFIX_KEY: {CMD_KEY: CMD, CMD_ARG_KEY: message}}
+        assert await dependent(event=event, state=state)
+        assert state[SHELL_ARGV] == []
+        assert isinstance(state[SHELL_ARGS], ParserExit)
+        assert state[SHELL_ARGS].status != 0
+
 
 # TODO: regex
 
