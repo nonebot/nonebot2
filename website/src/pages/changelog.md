@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 修改插件多功能简易群管信息 [@HuYihe2008](https://github.com/HuYihe2008) ([#1180](https://github.com/nonebot/nonebot2/pull/1180))
 - Plugin: 修改插件多功能简易群管信息 [@HuYihe2008](https://github.com/HuYihe2008) ([#1159](https://github.com/nonebot/nonebot2/pull/1159))
 - Plugin: 修改 QQ 续火花插件信息 [@GC-ZF](https://github.com/GC-ZF) ([#1158](https://github.com/nonebot/nonebot2/pull/1158))
 - Plugin: 修改插件多功能简易群管信息 [@HuYihe2008](https://github.com/HuYihe2008) ([#1154](https://github.com/nonebot/nonebot2/pull/1154))
