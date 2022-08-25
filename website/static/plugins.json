@@ -2217,12 +2217,12 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_admin_hello",
-    "project_link": "nonebot-plugin-admin-hello",
-    "name": "多功能简易群管",
+    "module_name": "nonebot_plugin_groupmanager",
+    "project_link": "nonebot-plugin-groupmanager",
+    "name": "多功能群管",
     "desc": "与简易群管属于同个产品，就是多了一个入群欢迎，感谢@幼稚园园长 开发的原版插件的帮助",
     "author": "HuYihe2008",
-    "homepage": "https://github.com/HuYihe2008/nonebot_plugin_manager",
+    "homepage": "https://github.com/HuYihe2008/nonebot_plugin_groupmanager",
     "tags": [
       {
         "label": "简易群管",
