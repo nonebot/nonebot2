@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 保存群聊闪照 [@yanyongyu](https://github.com/yanyongyu) ([#1179](https://github.com/nonebot/nonebot2/pull/1179))
 - Plugin: 课表查询 [@yanyongyu](https://github.com/yanyongyu) ([#1168](https://github.com/nonebot/nonebot2/pull/1168))
 - Plugin: 业余无线电助手 [@yanyongyu](https://github.com/yanyongyu) ([#1173](https://github.com/nonebot/nonebot2/pull/1173))
 - Plugin: NoneBot 树形帮助插件 [@yanyongyu](https://github.com/yanyongyu) ([#1177](https://github.com/nonebot/nonebot2/pull/1177))
