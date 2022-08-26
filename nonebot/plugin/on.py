@@ -10,6 +10,7 @@ from types import ModuleType
 from datetime import datetime, timedelta
 from typing import Any, Set, Dict, List, Type, Tuple, Union, Optional
 
+from nonebot.adapters import Event
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.dependencies import Dependent
@@ -19,6 +20,7 @@ from nonebot.rule import (
     ArgumentParser,
     regex,
     command,
+    is_type,
     keyword,
     endswith,
     fullmatch,
@@ -437,6 +439,30 @@ def on_regex(
     return on_message(regex(pattern, flags) & rule, **kwargs, _depth=_depth + 1)
 
 
+def on_type(
+    types: Union[Type[Event], Tuple[Type[Event]]],
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    *,
+    _depth: int = 0,
+    **kwargs,
+) -> Type[Matcher]:
+    """注册一个事件响应器，并且当事件为指定类型时响应。
+
+    参数:
+        types: 事件类型
+        rule: 事件响应规则
+        permission: 事件响应权限
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
+    """
+    event_types = types if isinstance(types, tuple) else (types,)
+    return on(rule=is_type(*event_types) & rule, **kwargs, _depth=_depth + 1)
+
+
 class CommandGroup:
     """命令组，用于声明一组有相同名称前缀的命令。
 
@@ -792,5 +818,28 @@ class MatcherGroup:
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
         matcher = on_regex(pattern, flags=flags, **final_kwargs, _depth=1)
+        self.matchers.append(matcher)
+        return matcher
+
+    def on_type(
+        self, types: Union[Type[Event], Tuple[Type[Event]]], **kwargs
+    ) -> Type[Matcher]:
+        """注册一个事件响应器，并且当事件为指定类型时响应。
+
+        参数:
+            types: 事件类型
+            rule: 事件响应规则
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
+        """
+        final_kwargs = self.base_kwargs.copy()
+        final_kwargs.update(kwargs)
+        final_kwargs.pop("type", None)
+        matcher = on_type(types, **final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher
