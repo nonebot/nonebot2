@@ -2386,5 +2386,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_dialectlist",
+    "project_link": "nonebot-plugin-dialectlist",
+    "name": "话痨排行榜",
+    "desc": "给话多的群友一个排行",
+    "author": "X-Skirt-X",
+    "homepage": "https://github.com/X-Skirt-X/nonebot_plugin_dialectlist",
+    "tags": [],
+    "is_official": false
   }
 ]
