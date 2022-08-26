@@ -20,6 +20,7 @@ from typing import (
     TYPE_CHECKING,
     Any,
     List,
+    Type,
     Tuple,
     Union,
     TypeVar,
@@ -552,6 +553,28 @@ def to_me() -> Rule:
     """匹配与机器人有关的事件。"""
 
     return Rule(ToMeRule())
+
+
+class IsTypeRule:
+    """检查事件类型是否为指定类型。"""
+
+    __slots__ = ("types",)
+
+    def __init__(self, *types: Type[Event]):
+        self.types = types
+
+    async def __call__(self, event: Event) -> bool:
+        return isinstance(event, self.types)
+
+
+def is_type(*types: Type[Event]) -> Rule:
+    """匹配事件类型。
+
+    参数:
+        types: 事件类型
+    """
+
+    return Rule(IsTypeRule(*types))
 
 
 __autodoc__ = {
