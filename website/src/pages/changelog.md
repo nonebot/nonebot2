@@ -31,6 +31,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: MagiaDice 骰娘及 TRPGLOG [@yanyongyu](https://github.com/yanyongyu) ([#1185](https://github.com/nonebot/nonebot2/pull/1185))
 - Plugin: 面麻小助手 [@yanyongyu](https://github.com/yanyongyu) ([#1191](https://github.com/nonebot/nonebot2/pull/1191))
 - Plugin: 话痨排行榜 [@yanyongyu](https://github.com/yanyongyu) ([#1182](https://github.com/nonebot/nonebot2/pull/1182))
 - Plugin: 保存群聊闪照 [@yanyongyu](https://github.com/yanyongyu) ([#1179](https://github.com/nonebot/nonebot2/pull/1179))
