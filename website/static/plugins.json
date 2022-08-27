@@ -2419,5 +2419,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-magiadice",
+    "project_link": "nonebot-plugin-magiadice",
+    "name": "MagiaDice骰娘及TRPGLOG",
+    "desc": "能够实时在网页围观的TRPG记录插件，同时具有骰娘的功能",
+    "author": "sena-nana",
+    "homepage": "https://github.com/sena-nana/MutsukiBot/tree/main/nonebot-plugin-magiadice",
+    "tags": [
+      {
+        "label": "TRPG",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
