@@ -2396,5 +2396,28 @@
     "homepage": "https://github.com/X-Skirt-X/nonebot_plugin_dialectlist",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_offline_mahjong_helper",
+    "project_link": "nonebot-plugin-offline-mahjong-helper",
+    "name": "面麻小助手",
+    "desc": "可约桌、算点、精算、雀魂查询的面麻助手。",
+    "author": "Nranphy",
+    "homepage": "https://github.com/Nranphy/nonebot_plugin_offline_mahjong_helper",
+    "tags": [
+      {
+        "label": "Mahjong",
+        "color": "#ea5252"
+      },
+      {
+        "label": "雀魂",
+        "color": "#eaa452"
+      },
+      {
+        "label": "线下约桌",
+        "color": "#52a6ea"
+      }
+    ],
+    "is_official": false
   }
 ]
