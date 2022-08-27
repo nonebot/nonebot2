@@ -2434,5 +2434,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-send",
+    "project_link": "nonebot-plugin-send",
+    "name": "反馈及通知",
+    "desc": "用户通过bot向superuser发送反馈，以及bot向全群发送通知",
+    "author": "sena-nana",
+    "homepage": "https://github.com/sena-nana/MutsukiBot/tree/main/nonebot-plugin-send",
+    "tags": [
+      {
+        "label": "send",
+        "color": "#ea5252"
+      },
+      {
+        "label": "notice",
+        "color": "#ea5252"
+      },
+      {
+        "label": "公告",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
