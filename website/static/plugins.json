@@ -2457,5 +2457,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-ykt",
+    "project_link": "nonebot-plugin-ykt",
+    "name": "雨课堂自动签到",
+    "desc": "使用playwright模拟浏览器签到雨课堂，并将腾讯会议号发送给superuser",
+    "author": "sena-nana",
+    "homepage": "https://github.com/sena-nana/MutsukiBot/tree/main/nonebot-plugin-ykt",
+    "tags": [
+      {
+        "label": "playwright",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
