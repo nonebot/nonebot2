@@ -619,6 +619,7 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
+        final_kwargs.pop("permission", None)
         matcher = on_notice(**final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher
@@ -638,6 +639,7 @@ class MatcherGroup:
         final_kwargs = self.base_kwargs.copy()
         final_kwargs.update(kwargs)
         final_kwargs.pop("type", None)
+        final_kwargs.pop("permission", None)
         matcher = on_request(**final_kwargs, _depth=1)
         self.matchers.append(matcher)
         return matcher

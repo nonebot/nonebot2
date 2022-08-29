@@ -16,6 +16,7 @@
 - `on_command` => {ref}``on_command` <nonebot.plugin.on.on_command>`
 - `on_shell_command` => {ref}``on_shell_command` <nonebot.plugin.on.on_shell_command>`
 - `on_regex` => {ref}``on_regex` <nonebot.plugin.on.on_regex>`
+- `on_type` => {ref}``on_type` <nonebot.plugin.on.on_type>`
 - `CommandGroup` => {ref}``CommandGroup` <nonebot.plugin.on.CommandGroup>`
 - `Matchergroup` => {ref}``MatcherGroup` <nonebot.plugin.on.MatcherGroup>`
 - `load_plugin` => {ref}``load_plugin` <nonebot.plugin.load.load_plugin>`
@@ -260,6 +261,7 @@ def run(*args: Any, **kwargs: Any) -> None:
 
 
 from nonebot.plugin import on as on
+from nonebot.plugin import on_type as on_type
 from nonebot.plugin import require as require
 from nonebot.plugin import on_regex as on_regex
 from nonebot.plugin import on_notice as on_notice

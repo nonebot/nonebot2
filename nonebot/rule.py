@@ -130,6 +130,19 @@ class StartswithRule:
         self.msg = msg
         self.ignorecase = ignorecase
 
+    def __repr__(self) -> str:
+        return f"StartswithRule(msg={self.msg}, ignorecase={self.ignorecase})"
+
+    def __eq__(self, other: object) -> bool:
+        return (
+            isinstance(other, StartswithRule)
+            and frozenset(self.msg) == frozenset(other.msg)
+            and self.ignorecase == other.ignorecase
+        )
+
+    def __hash__(self) -> int:
+        return hash((frozenset(self.msg), self.ignorecase))
+
     async def __call__(
         self, type: str = EventType(), text: str = EventPlainText()
     ) -> Any:
@@ -171,6 +184,19 @@ class EndswithRule:
         self.msg = msg
         self.ignorecase = ignorecase
 
+    def __repr__(self) -> str:
+        return f"EndswithRule(msg={self.msg}, ignorecase={self.ignorecase})"
+
+    def __eq__(self, other: object) -> bool:
+        return (
+            isinstance(other, EndswithRule)
+            and frozenset(self.msg) == frozenset(other.msg)
+            and self.ignorecase == other.ignorecase
+        )
+
+    def __hash__(self) -> int:
+        return hash((frozenset(self.msg), self.ignorecase))
+
     async def __call__(
         self, type: str = EventType(), text: str = EventPlainText()
     ) -> Any:
@@ -209,8 +235,21 @@ class FullmatchRule:
     __slots__ = ("msg", "ignorecase")
 
     def __init__(self, msg: Tuple[str, ...], ignorecase: bool = False):
-        self.msg = frozenset(map(str.casefold, msg) if ignorecase else msg)
+        self.msg = tuple(map(str.casefold, msg) if ignorecase else msg)
         self.ignorecase = ignorecase
+
+    def __repr__(self) -> str:
+        return f"FullmatchRule(msg={self.msg}, ignorecase={self.ignorecase})"
+
+    def __eq__(self, other: object) -> bool:
+        return (
+            isinstance(other, FullmatchRule)
+            and frozenset(self.msg) == frozenset(other.msg)
+            and self.ignorecase == other.ignorecase
+        )
+
+    def __hash__(self) -> int:
+        return hash((frozenset(self.msg), self.ignorecase))
 
     async def __call__(
         self, type_: str = EventType(), text: str = EventPlainText()
@@ -246,6 +285,17 @@ class KeywordsRule:
     def __init__(self, *keywords: str):
         self.keywords = keywords
 
+    def __repr__(self) -> str:
+        return f"KeywordsRule(keywords={self.keywords})"
+
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, KeywordsRule) and frozenset(
+            self.keywords
+        ) == frozenset(other.keywords)
+
+    def __hash__(self) -> int:
+        return hash(frozenset(self.keywords))
+
     async def __call__(
         self, type: str = EventType(), text: str = EventPlainText()
     ) -> bool:
@@ -274,13 +324,21 @@ class CommandRule:
     __slots__ = ("cmds",)
 
     def __init__(self, cmds: List[Tuple[str, ...]]):
-        self.cmds = cmds
+        self.cmds = tuple(cmds)
+
+    def __repr__(self) -> str:
+        return f"CommandRule(cmds={self.cmds})"
+
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, CommandRule) and frozenset(self.cmds) == frozenset(
+            other.cmds
+        )
+
+    def __hash__(self) -> int:
+        return hash((frozenset(self.cmds),))
 
     async def __call__(self, cmd: Optional[Tuple[str, ...]] = Command()) -> bool:
         return cmd in self.cmds
-
-    def __repr__(self):
-        return f"<Command {self.cmds}>"
 
 
 def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
@@ -392,8 +450,21 @@ class ShellCommandRule:
     __slots__ = ("cmds", "parser")
 
     def __init__(self, cmds: List[Tuple[str, ...]], parser: Optional[ArgumentParser]):
-        self.cmds = cmds
+        self.cmds = tuple(cmds)
         self.parser = parser
+
+    def __repr__(self) -> str:
+        return f"ShellCommandRule(cmds={self.cmds}, parser={self.parser})"
+
+    def __eq__(self, other: object) -> bool:
+        return (
+            isinstance(other, ShellCommandRule)
+            and frozenset(self.cmds) == frozenset(other.cmds)
+            and self.parser is other.parser
+        )
+
+    def __hash__(self) -> int:
+        return hash((frozenset(self.cmds), self.parser))
 
     async def __call__(
         self,
@@ -499,6 +570,19 @@ class RegexRule:
         self.regex = regex
         self.flags = flags
 
+    def __repr__(self) -> str:
+        return f"RegexRule(regex={self.regex!r}, flags={self.flags})"
+
+    def __eq__(self, other: object) -> bool:
+        return (
+            isinstance(other, RegexRule)
+            and self.regex == other.regex
+            and self.flags == other.flags
+        )
+
+    def __hash__(self) -> int:
+        return hash((self.regex, self.flags))
+
     async def __call__(
         self,
         state: T_State,
@@ -545,6 +629,15 @@ class ToMeRule:
 
     __slots__ = ()
 
+    def __repr__(self) -> str:
+        return "ToMeRule()"
+
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, ToMeRule)
+
+    def __hash__(self) -> int:
+        return hash((self.__class__,))
+
     async def __call__(self, to_me: bool = EventToMe()) -> bool:
         return to_me
 
@@ -562,6 +655,15 @@ class IsTypeRule:
 
     def __init__(self, *types: Type[Event]):
         self.types = types
+
+    def __repr__(self) -> str:
+        return f"IsTypeRule(types={tuple(type.__name__ for type in self.types)})"
+
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, IsTypeRule) and self.types == other.types
+
+    def __hash__(self) -> int:
+        return hash((self.types,))
 
     async def __call__(self, event: Event) -> bool:
         return isinstance(event, self.types)

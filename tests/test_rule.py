@@ -145,7 +145,7 @@ async def test_fullmatch(
     checker = dependent.call
 
     assert isinstance(checker, FullmatchRule)
-    assert checker.msg == {msg} if isinstance(msg, str) else {*msg}
+    assert checker.msg == ((msg,) if isinstance(msg, str) else msg)
     assert checker.ignorecase == ignorecase
 
     message = make_fake_message()(text)
@@ -196,7 +196,7 @@ async def test_command(app: App, cmds: Tuple[Tuple[str, ...]]):
     checker = dependent.call
 
     assert isinstance(checker, CommandRule)
-    assert checker.cmds == list(cmds)
+    assert checker.cmds == cmds
 
     for cmd in cmds:
         state = {PREFIX_KEY: {CMD_KEY: cmd}}
