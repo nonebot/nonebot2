@@ -2472,5 +2472,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_todo_nlp",
+    "project_link": "nonebot-plugin-todo-nlp",
+    "name": "自识别todo",
+    "desc": "一款自动识别提醒内容，可生成todo图片并定时推送的nonebot2插件，v11适配器可用",
+    "author": "CofinCup",
+    "homepage": "https://github.com/CofinCup/nonebot-plugin-todo-nlp",
+    "tags": [
+      {
+        "label": "t:todo",
+        "color": "#499bdd"
+      },
+      {
+        "label": "t:nlp",
+        "color": "#83b279"
+      }
+    ],
+    "is_official": false
   }
 ]
