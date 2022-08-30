@@ -145,7 +145,7 @@ async def test_fullmatch(
     checker = dependent.call
 
     assert isinstance(checker, FullmatchRule)
-    assert checker.msg == {msg} if isinstance(msg, str) else {*msg}
+    assert checker.msg == ((msg,) if isinstance(msg, str) else msg)
     assert checker.ignorecase == ignorecase
 
     message = make_fake_message()(text)
@@ -196,7 +196,7 @@ async def test_command(app: App, cmds: Tuple[Tuple[str, ...]]):
     checker = dependent.call
 
     assert isinstance(checker, CommandRule)
-    assert checker.cmds == list(cmds)
+    assert checker.cmds == cmds
 
     for cmd in cmds:
         state = {PREFIX_KEY: {CMD_KEY: cmd}}
@@ -318,3 +318,24 @@ async def test_to_me(app: App, expected: bool):
 
     event = make_fake_event(_to_me=expected)()
     assert await dependent(event=event) == expected
+
+
+@pytest.mark.asyncio
+async def test_is_type(app: App):
+    from nonebot.rule import IsTypeRule, is_type
+
+    Event1 = make_fake_event()
+    Event2 = make_fake_event()
+    Event3 = make_fake_event()
+
+    test_type = is_type(Event1, Event2)
+    dependent = list(test_type.checkers)[0]
+    checker = dependent.call
+
+    assert isinstance(checker, IsTypeRule)
+
+    event = Event1()
+    assert await dependent(event=event)
+
+    event = Event3()
+    assert not await dependent(event=event)

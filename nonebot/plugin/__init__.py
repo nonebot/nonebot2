@@ -16,6 +16,7 @@
 - `on_command` => {ref}``on_command` <nonebot.plugin.on.on_command>`
 - `on_shell_command` => {ref}``on_shell_command` <nonebot.plugin.on.on_shell_command>`
 - `on_regex` => {ref}``on_regex` <nonebot.plugin.on.on_regex>`
+- `on_type` => {ref}``on_type` <nonebot.plugin.on.on_type>`
 - `CommandGroup` => {ref}``CommandGroup` <nonebot.plugin.on.CommandGroup>`
 - `Matchergroup` => {ref}``MatcherGroup` <nonebot.plugin.on.MatcherGroup>`
 - `load_plugin` => {ref}``load_plugin` <nonebot.plugin.load.load_plugin>`
@@ -105,6 +106,7 @@ def get_available_plugin_names() -> Set[str]:
 
 from .on import on as on
 from .manager import PluginManager
+from .on import on_type as on_type
 from .load import require as require
 from .on import on_regex as on_regex
 from .plugin import Plugin as Plugin

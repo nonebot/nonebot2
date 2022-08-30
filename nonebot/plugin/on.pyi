@@ -2,6 +2,7 @@ import re
 from datetime import datetime, timedelta
 from typing import Set, List, Type, Tuple, Union, Optional
 
+from nonebot.adapters import Event
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.dependencies import Dependent
@@ -152,6 +153,18 @@ def on_regex(
     block: bool = ...,
     state: Optional[T_State] = ...,
 ) -> Type[Matcher]: ...
+def on_type(
+    types: Union[Type[Event], Tuple[Type[Event]]],
+    rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+    *,
+    permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
+    handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
+    temp: bool = ...,
+    expire_time: Optional[Union[datetime, timedelta]] = ...,
+    priority: int = ...,
+    block: bool = ...,
+    state: Optional[T_State] = ...,
+) -> Type[Matcher]: ...
 
 class CommandGroup:
     def __init__(
@@ -171,8 +184,8 @@ class CommandGroup:
         self,
         cmd: Union[str, Tuple[str, ...]],
         *,
-        aliases: Optional[Set[Union[str, Tuple[str, ...]]]],
         rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+        aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
         permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
         handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
         temp: bool = ...,
@@ -186,7 +199,7 @@ class CommandGroup:
         cmd: Union[str, Tuple[str, ...]],
         *,
         rule: Optional[Union[Rule, T_RuleChecker]] = ...,
-        aliases: Optional[Set[Union[str, Tuple[str, ...]]]],
+        aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
         parser: Optional[ArgumentParser] = ...,
         permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
         handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
@@ -357,6 +370,19 @@ class MatcherGroup:
         self,
         pattern: str,
         flags: Union[int, re.RegexFlag] = ...,
+        *,
+        rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+        permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
+        handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
+        temp: bool = ...,
+        expire_time: Optional[Union[datetime, timedelta]] = ...,
+        priority: int = ...,
+        block: bool = ...,
+        state: Optional[T_State] = ...,
+    ) -> Type[Matcher]: ...
+    def on_type(
+        self,
+        types: Union[Type[Event], Tuple[Type[Event]]],
         *,
         rule: Optional[Union[Rule, T_RuleChecker]] = ...,
         permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
