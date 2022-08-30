@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 自识别 todo [@yanyongyu](https://github.com/yanyongyu) ([#1193](https://github.com/nonebot/nonebot2/pull/1193))
 - Plugin: 雨课堂自动签到 [@yanyongyu](https://github.com/yanyongyu) ([#1189](https://github.com/nonebot/nonebot2/pull/1189))
 - Plugin: 反馈及通知 [@yanyongyu](https://github.com/yanyongyu) ([#1187](https://github.com/nonebot/nonebot2/pull/1187))
 - Plugin: MagiaDice 骰娘及 TRPGLOG [@yanyongyu](https://github.com/yanyongyu) ([#1185](https://github.com/nonebot/nonebot2/pull/1185))
