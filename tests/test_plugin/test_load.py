@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 from dataclasses import asdict
 from typing import TYPE_CHECKING, Set
 
@@ -10,7 +11,21 @@ if TYPE_CHECKING:
 
 
 @pytest.mark.asyncio
-async def test_load_plugin(app: App, load_plugin: Set["Plugin"]):
+async def test_load_plugin(app: App):
+    import nonebot
+
+    # check regular
+    assert nonebot.load_plugin("plugins.metadata")
+
+    # check path
+    assert nonebot.load_plugin(Path("plugins/export"))
+
+    # check not found
+    assert nonebot.load_plugin("some_plugin_not_exist") is None
+
+
+@pytest.mark.asyncio
+async def test_load_plugins(app: App, load_plugin: Set["Plugin"]):
     import nonebot
     from nonebot.plugin import PluginManager
 
@@ -33,9 +48,6 @@ async def test_load_plugin(app: App, load_plugin: Set["Plugin"]):
         PluginManager(plugins=["plugins.export"]).load_all_plugins()
     with pytest.raises(RuntimeError):
         PluginManager(search_path=["plugins"]).load_all_plugins()
-
-    # check not found
-    assert nonebot.load_plugin("some_plugin_not_exist") is None
 
 
 @pytest.mark.asyncio
