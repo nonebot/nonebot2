@@ -33,6 +33,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 修仙模拟器 [@yanyongyu](https://github.com/yanyongyu) ([#1202](https://github.com/nonebot/nonebot2/pull/1202))
 - Plugin: 赛博浅草寺 [@yanyongyu](https://github.com/yanyongyu) ([#1206](https://github.com/nonebot/nonebot2/pull/1206))
 - Plugin: 不背单词 [@yanyongyu](https://github.com/yanyongyu) ([#1204](https://github.com/nonebot/nonebot2/pull/1204))
 - Plugin: 自识别 todo [@yanyongyu](https://github.com/yanyongyu) ([#1193](https://github.com/nonebot/nonebot2/pull/1193))
