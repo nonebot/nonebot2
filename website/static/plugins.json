@@ -2531,5 +2531,20 @@
     "homepage": "https://github.com/s52047qwas/nonebot_plugin_xiuxian",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_gspanel",
+    "project_link": "nonebot-plugin-gspanel",
+    "name": "原神角色展柜查询",
+    "desc": "移植自 @yoimiya-kokomi/miao-plugin 的原神游戏内角色展柜数据查询",
+    "author": "monsterxcn",
+    "homepage": "https://github.com/monsterxcn/nonebot-plugin-gspanel",
+    "tags": [
+      {
+        "label": "t:Genshin",
+        "color": "#ffd49f"
+      }
+    ],
+    "is_official": false
   }
 ]
