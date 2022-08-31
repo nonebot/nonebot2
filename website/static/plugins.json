@@ -2521,5 +2521,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_xiuxian",
+    "project_link": "nonebot-plugin-xiuxian",
+    "name": "修仙模拟器",
+    "desc": "加入群内修仙吧！",
+    "author": "s52047qwas",
+    "homepage": "https://github.com/s52047qwas/nonebot_plugin_xiuxian",
+    "tags": [],
+    "is_official": false
   }
 ]
