@@ -2491,5 +2491,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_wordsnorote",
+    "project_link": "nonebot-plugin-wordsnorote",
+    "name": "不背单词",
+    "desc": "哥们哥们，背单词么？哥们！",
+    "author": "GC-ZF",
+    "homepage": "https://github.com/GC-ZF/nonebot_plugin_wordsnorote",
+    "tags": [
+      {
+        "label": "四六级",
+        "color": "#24a0d8"
+      }
+    ],
+    "is_official": false
   }
 ]
