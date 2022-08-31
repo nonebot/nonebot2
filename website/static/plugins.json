@@ -2506,5 +2506,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_CyberSensoji",
+    "project_link": "nonebot-plugin-CyberSensoji",
+    "name": "赛博浅草寺",
+    "desc": "随机抽取浅草寺的一签运势",
+    "author": "Raidenneox",
+    "homepage": "https://github.com/Raidenneox/nonebot_plugin_CyberSensoji",
+    "tags": [
+      {
+        "label": "t:抽签",
+        "color": "#52eadf"
+      }
+    ],
+    "is_official": false
   }
 ]
