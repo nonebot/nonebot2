@@ -44,7 +44,7 @@ from nonebot.exception import (
 )
 
 from .rule import Rule
-from .permission import USER, Permission
+from .permission import USER, User, Permission
 from .adapter import Bot, Event, Message, MessageSegment, MessageTemplate
 from .params import (
     Depends,
@@ -635,15 +635,21 @@ class Matcher(metaclass=MatcherMeta):
 
     async def update_type(self, bot: Bot, event: Event) -> str:
         updater = self.__class__._default_type_updater
-        if not updater:
-            return "message"
-        return await updater(bot=bot, event=event, state=self.state, matcher=self)
+        return (
+            await updater(bot=bot, event=event, state=self.state, matcher=self)
+            if updater
+            else "message"
+        )
 
     async def update_permission(self, bot: Bot, event: Event) -> Permission:
-        updater = self.__class__._default_permission_updater
-        if not updater:
-            return USER(event.get_session_id(), perm=self.permission)
-        return await updater(bot=bot, event=event, state=self.state, matcher=self)
+        if updater := self.__class__._default_permission_updater:
+            return await updater(bot=bot, event=event, state=self.state, matcher=self)
+        permission = self.permission
+        if len(permission.checkers) == 1 and isinstance(
+            user_perm := tuple(permission.checkers)[0].call, User
+        ):
+            permission = user_perm.perm
+        return USER(event.get_session_id(), perm=permission)
 
     async def resolve_reject(self):
         handler = current_handler.get()
