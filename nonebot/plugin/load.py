@@ -5,24 +5,30 @@ FrontMatter:
     description: nonebot.plugin.load 模块
 """
 import json
-import warnings
+from pathlib import Path
 from types import ModuleType
-from typing import Set, Iterable, Optional
+from typing import Set, Union, Iterable, Optional
 
 import tomlkit
+
+from nonebot.utils import path_to_module_name
 
 from .plugin import Plugin
 from .manager import PluginManager
 from . import _managers, get_plugin, _module_name_to_plugin_name
 
 
-def load_plugin(module_path: str) -> Optional[Plugin]:
+def load_plugin(module_path: Union[str, Path]) -> Optional[Plugin]:
     """加载单个插件，可以是本地插件或是通过 `pip` 安装的插件。
 
     参数:
-        module_path: 插件名称 `path.to.your.plugin`
+        module_path: 插件名称 `path.to.your.plugin` 或插件路径 `pathlib.Path(path/to/your/plugin)`
     """
-
+    module_path = (
+        path_to_module_name(module_path)
+        if isinstance(module_path, Path)
+        else module_path
+    )
     manager = PluginManager([module_path])
     _managers.append(manager)
     return manager.load_plugin(module_path)

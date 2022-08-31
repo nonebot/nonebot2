@@ -17,7 +17,7 @@ from importlib.machinery import PathFinder, SourceFileLoader
 from typing import Set, Dict, List, Union, Iterable, Optional, Sequence
 
 from nonebot.log import logger
-from nonebot.utils import escape_tag
+from nonebot.utils import escape_tag, path_to_module_name
 
 from .plugin import Plugin, PluginMetadata
 from . import (
@@ -66,13 +66,6 @@ class PluginManager:
         """返回当前插件管理器中可用的插件名称。"""
         return self.third_party_plugins | self.searched_plugins
 
-    def _path_to_module_name(self, path: Path) -> str:
-        rel_path = path.resolve().relative_to(Path(".").resolve())
-        if rel_path.stem == "__init__":
-            return ".".join(rel_path.parts[:-1])
-        else:
-            return ".".join(rel_path.parts[:-1] + (rel_path.stem,))
-
     def _previous_plugins(self) -> Set[str]:
         _pre_managers: List[PluginManager]
         if self in _managers:
@@ -86,7 +79,6 @@ class PluginManager:
 
     def prepare_plugins(self) -> Set[str]:
         """搜索插件并缓存插件名称。"""
-
         # get all previous ready to load plugins
         previous_plugins = self._previous_plugins()
         searched_plugins: Dict[str, Path] = {}
@@ -118,11 +110,13 @@ class PluginManager:
                     f"Plugin already exists: {module_info.name}! Check your plugin name"
                 )
 
-            module_spec = module_info.module_finder.find_spec(module_info.name, None)
-            if not module_spec:
+            if not (
+                module_spec := module_info.module_finder.find_spec(
+                    module_info.name, None
+                )
+            ):
                 continue
-            module_path = module_spec.origin
-            if not module_path:
+            if not (module_path := module_spec.origin):
                 continue
             searched_plugins[module_info.name] = Path(module_path).resolve()
 
@@ -146,7 +140,7 @@ class PluginManager:
                 module = importlib.import_module(self._third_party_plugin_names[name])
             elif name in self._searched_plugin_names:
                 module = importlib.import_module(
-                    self._path_to_module_name(self._searched_plugin_names[name])
+                    path_to_module_name(self._searched_plugin_names[name])
                 )
             else:
                 raise RuntimeError(f"Plugin not found: {name}! Check your plugin name")
@@ -154,8 +148,7 @@ class PluginManager:
             logger.opt(colors=True).success(
                 f'Succeeded to import "<y>{escape_tag(name)}</y>"'
             )
-            plugin = getattr(module, "__plugin__", None)
-            if plugin is None:
+            if (plugin := getattr(module, "__plugin__", None)) is None:
                 raise RuntimeError(
                     f"Module {module.__name__} is not loaded as a plugin! "
                     "Make sure not to import it before loading."
