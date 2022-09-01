@@ -2546,5 +2546,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mcqq_mcrcon",
+    "project_link": "nonebot-plugin-mcqq-mcrcon",
+    "name": "MC_QQ_MCRcon",
+    "desc": "基于NoneBot的QQ群聊与Minecraft Server消息互通插件",
+    "author": "17TheWord",
+    "homepage": "https://github.com/17TheWord/nonebot-plugin-mcqq/tree/mcqq_mcrcon",
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#4aea7a"
+      },
+      {
+        "label": "消息互通",
+        "color": "#32ddea"
+      }
+    ],
+    "is_official": false
   }
 ]
