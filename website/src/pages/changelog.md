@@ -33,6 +33,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 原神角色展柜查询 [@yanyongyu](https://github.com/yanyongyu) ([#1209](https://github.com/nonebot/nonebot2/pull/1209))
 - Plugin: 修仙模拟器 [@yanyongyu](https://github.com/yanyongyu) ([#1202](https://github.com/nonebot/nonebot2/pull/1202))
 - Plugin: 赛博浅草寺 [@yanyongyu](https://github.com/yanyongyu) ([#1206](https://github.com/nonebot/nonebot2/pull/1206))
 - Plugin: 不背单词 [@yanyongyu](https://github.com/yanyongyu) ([#1204](https://github.com/nonebot/nonebot2/pull/1204))
