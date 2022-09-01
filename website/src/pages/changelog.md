@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修复 User 会话权限更新嵌套问题 [@yanyongyu](https://github.com/yanyongyu) ([#1208](https://github.com/nonebot/nonebot2/pull/1208))
 - Fix: 修复当消息与不支持的类型相加时抛出的异常类型错误 [@mnixry](https://github.com/mnixry) ([#1166](https://github.com/nonebot/nonebot2/pull/1166))
 
 ### 💫 杂项
@@ -33,6 +34,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: MC_QQ_MCRcon [@yanyongyu](https://github.com/yanyongyu) ([#1211](https://github.com/nonebot/nonebot2/pull/1211))
 - Plugin: 原神角色展柜查询 [@yanyongyu](https://github.com/yanyongyu) ([#1209](https://github.com/nonebot/nonebot2/pull/1209))
 - Plugin: 修仙模拟器 [@yanyongyu](https://github.com/yanyongyu) ([#1202](https://github.com/nonebot/nonebot2/pull/1202))
 - Plugin: 赛博浅草寺 [@yanyongyu](https://github.com/yanyongyu) ([#1206](https://github.com/nonebot/nonebot2/pull/1206))
