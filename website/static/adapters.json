@@ -87,6 +87,6 @@
     "author": "Melodyknit",
     "homepage": "https://github.com/nonebot/adapter-console",
     "tags": [],
-    "is_official": false
+    "is_official": true
   }
 ]
