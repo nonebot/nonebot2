@@ -78,5 +78,15 @@
     "homepage": "https://onebot.adapters.nonebot.dev/",
     "tags": [],
     "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.console",
+    "project_link": "nonebot-adapter-console",
+    "name": "Console",
+    "desc": "基于终端的交互式适配器",
+    "author": "Melodyknit",
+    "homepage": "https://github.com/nonebot/adapter-console",
+    "tags": [],
+    "is_official": false
   }
 ]
