@@ -2565,5 +2565,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_gsmaterial",
+    "project_link": "nonebot-plugin-gsmaterial",
+    "name": "原神每日材料查询",
+    "desc": "原神每日天赋培养、武器突破材料查询，通过 Project Amber 数据库（支持部分尚未实装角色）自动更新每日数据～",
+    "author": "monsterxcn",
+    "homepage": "https://github.com/monsterxcn/nonebot-plugin-gsmaterial",
+    "tags": [
+      {
+        "label": "t:Genshin",
+        "color": "#ffd49f"
+      }
+    ],
+    "is_official": false
   }
 ]
