@@ -63,6 +63,10 @@ toc_max_heading_level: 2
 - Plugin: MC_QQ 通信 [@yanyongyu](https://github.com/yanyongyu) ([#1127](https://github.com/nonebot/nonebot2/pull/1127))
 - Plugin: BAWiki [@yanyongyu](https://github.com/yanyongyu) ([#1129](https://github.com/nonebot/nonebot2/pull/1129))
 
+### 🍻 适配器发布
+
+- Adapter: Console [@yanyongyu](https://github.com/yanyongyu) ([#1213](https://github.com/nonebot/nonebot2/pull/1213))
+
 ## v2.0.0-beta.5
 
 ### 🚀 新功能
