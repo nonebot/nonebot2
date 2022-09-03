@@ -2580,5 +2580,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mystool",
+    "project_link": "nonebot-plugin-mystool",
+    "name": "米游社辅助工具",
+    "desc": "每日完成米游币任务、游戏签到、商品兑换、免抓包登录",
+    "author": "Ljzd-PRO",
+    "homepage": "https://github.com/Ljzd-PRO/nonebot-plugin-mystool",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "t:米游社",
+        "color": "#66e0ff"
+      },
+      {
+        "label": "t:米哈游",
+        "color": "#66e0ff"
+      }
+    ],
+    "is_official": false
   }
 ]
