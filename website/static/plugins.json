@@ -2603,5 +2603,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot2_manage",
+    "project_link": "nonebot2_manage",
+    "name": "nonebot2_manage",
+    "desc": "用于辅助管理群的插件，支持群禁言，单人禁言，不良语言撤回(可在群内自定义不良词汇)",
+    "author": "SDIJF1521",
+    "homepage": "https://github.com/SDIJF1521/nonebot2_manage",
+    "tags": [
+      {
+        "label": "群管理",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
