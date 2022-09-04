@@ -2603,5 +2603,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_warframe",
+    "project_link": "nonebot-plugin-warframe",
+    "name": "星际战甲事件查询",
+    "desc": "基于NoneBot的星际战甲事件查询插件",
+    "author": "17TheWord",
+    "homepage": "https://github.com/17TheWord/nonebot-plugin-warframe",
+    "tags": [
+      {
+        "label": "星际战甲",
+        "color": "#ed3f3f"
+      },
+      {
+        "label": "WarFrame",
+        "color": "#edea3f"
+      }
+    ],
+    "is_official": false
   }
 ]
