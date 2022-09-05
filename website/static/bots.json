@@ -233,5 +233,22 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "小白机器人",
+    "desc": "一个高度依赖数据库的群管理机器人",
+    "author": "SDIJF1521",
+    "homepage": "https://github.com/SDIJF1521/qqai",
+    "tags": [
+      {
+        "label": "群管理",
+        "color": "#ea5252"
+      },
+      {
+        "label": "新人作品",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
