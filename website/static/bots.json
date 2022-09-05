@@ -250,5 +250,18 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "GenshinUID",
+    "desc": "原神机器人",
+    "author": "84227871",
+    "homepage": "https://github.com/KimigaiiWuyi/GenshinUID",
+    "tags": [
+      {
+        "label": "原神",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
