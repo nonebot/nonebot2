@@ -67,6 +67,10 @@ toc_max_heading_level: 2
 - Plugin: MC_QQ 通信 [@yanyongyu](https://github.com/yanyongyu) ([#1127](https://github.com/nonebot/nonebot2/pull/1127))
 - Plugin: BAWiki [@yanyongyu](https://github.com/yanyongyu) ([#1129](https://github.com/nonebot/nonebot2/pull/1129))
 
+### 🍻 机器人发布
+
+- Bot: 小白机器人 [@yanyongyu](https://github.com/yanyongyu) ([#1224](https://github.com/nonebot/nonebot2/pull/1224))
+
 ### 🍻 适配器发布
 
 - Adapter: Console [@yanyongyu](https://github.com/yanyongyu) ([#1213](https://github.com/nonebot/nonebot2/pull/1213))
