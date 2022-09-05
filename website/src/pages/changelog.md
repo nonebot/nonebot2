@@ -35,6 +35,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 星际战甲事件查询 [@yanyongyu](https://github.com/yanyongyu) ([#1220](https://github.com/nonebot/nonebot2/pull/1220))
 - Plugin: 米游社辅助工具 [@yanyongyu](https://github.com/yanyongyu) ([#1218](https://github.com/nonebot/nonebot2/pull/1218))
 - Plugin: 原神每日材料查询 [@yanyongyu](https://github.com/yanyongyu) ([#1216](https://github.com/nonebot/nonebot2/pull/1216))
 - Plugin: MC_QQ_MCRcon [@yanyongyu](https://github.com/yanyongyu) ([#1211](https://github.com/nonebot/nonebot2/pull/1211))
