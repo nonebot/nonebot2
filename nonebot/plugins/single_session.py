@@ -1,12 +1,13 @@
 from typing import Dict, AsyncGenerator
 
 from nonebot.adapters import Event
-from nonebot.params import Depends
+from nonebot.params import depends
 from nonebot.message import IgnoredException, event_preprocessor
 
 _running_matcher: Dict[str, int] = {}
 
 
+@depends
 async def matcher_mutex(event: Event) -> AsyncGenerator[bool, None]:
     result = False
     try:
@@ -15,8 +16,7 @@ async def matcher_mutex(event: Event) -> AsyncGenerator[bool, None]:
         yield result
     else:
         current_event_id = id(event)
-        event_id = _running_matcher.get(session_id, None)
-        if event_id:
+        if event_id := _running_matcher.get(session_id, None):
             result = event_id != current_event_id
         else:
             _running_matcher[session_id] = current_event_id
@@ -26,6 +26,6 @@ async def matcher_mutex(event: Event) -> AsyncGenerator[bool, None]:
 
 
 @event_preprocessor
-async def preprocess(mutex: bool = Depends(matcher_mutex)):
+async def preprocess(mutex: bool = matcher_mutex):
     if mutex:
         raise IgnoredException("Another matcher running")

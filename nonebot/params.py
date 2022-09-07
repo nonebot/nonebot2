@@ -5,13 +5,13 @@ FrontMatter:
     description: nonebot.params 模块
 """
 
-from typing import Any, Dict, List, Tuple, Union, Optional
+from typing import Any, List, Union, Optional
 
 from nonebot.typing import T_State
 from nonebot.matcher import Matcher
 from nonebot.internal.params import Arg as Arg
 from nonebot.internal.params import ArgStr as ArgStr
-from nonebot.internal.params import Depends as Depends
+from nonebot.internal.params import depends as depends
 from nonebot.internal.params import ArgParam as ArgParam
 from nonebot.internal.params import BotParam as BotParam
 from nonebot.adapters import Event, Message, MessageSegment
@@ -36,145 +36,108 @@ from nonebot.consts import (
 )
 
 
-async def _event_type(event: Event) -> str:
+@depends
+async def event_type(event: Event) -> str:
+    """{ref}`nonebot.adapters.Event` 类型参数"""
     return event.get_type()
 
 
-def EventType() -> str:
-    """{ref}`nonebot.adapters.Event` 类型参数"""
-    return Depends(_event_type)
-
-
-async def _event_message(event: Event) -> Message:
+@depends
+async def event_message(event: Event) -> Message:
+    """{ref}`nonebot.adapters.Event` 消息参数"""
     return event.get_message()
 
 
-def EventMessage() -> Any:
-    """{ref}`nonebot.adapters.Event` 消息参数"""
-    return Depends(_event_message)
-
-
-async def _event_plain_text(event: Event) -> str:
+@depends
+async def event_plain_text(event: Event) -> str:
+    """{ref}`nonebot.adapters.Event` 纯文本消息参数"""
     return event.get_plaintext()
 
 
-def EventPlainText() -> str:
-    """{ref}`nonebot.adapters.Event` 纯文本消息参数"""
-    return Depends(_event_plain_text)
-
-
-async def _event_to_me(event: Event) -> bool:
+@depends
+async def event_to_me(event: Event) -> bool:
+    """{ref}`nonebot.adapters.Event` `to_me` 参数"""
     return event.is_tome()
 
 
-def EventToMe() -> bool:
-    """{ref}`nonebot.adapters.Event` `to_me` 参数"""
-    return Depends(_event_to_me)
-
-
-def _command(state: T_State) -> Message:
+@depends
+def command(state: T_State) -> Message:
+    """消息命令元组"""
     return state[PREFIX_KEY][CMD_KEY]
 
 
-def Command() -> Tuple[str, ...]:
-    """消息命令元组"""
-    return Depends(_command)
-
-
-def _raw_command(state: T_State) -> Message:
+@depends
+def raw_command(state: T_State) -> Message:
+    """消息命令文本"""
     return state[PREFIX_KEY][RAW_CMD_KEY]
 
 
-def RawCommand() -> str:
-    """消息命令文本"""
-    return Depends(_raw_command)
-
-
-def _command_arg(state: T_State) -> Message:
+@depends
+def command_arg(state: T_State) -> Message:
+    """消息命令参数"""
     return state[PREFIX_KEY][CMD_ARG_KEY]
 
 
-def CommandArg() -> Any:
-    """消息命令参数"""
-    return Depends(_command_arg)
-
-
-def _command_start(state: T_State) -> str:
+@depends
+def command_start(state: T_State) -> str:
+    """消息命令开头"""
     return state[PREFIX_KEY][CMD_START_KEY]
 
 
-def CommandStart() -> str:
-    """消息命令开头"""
-    return Depends(_command_start)
-
-
-def _shell_command_args(state: T_State) -> Any:
+@depends(use_cache=False)
+def shell_command_args(state: T_State) -> Any:
+    """shell 命令解析后的参数字典"""
     return state[SHELL_ARGS]  # Namespace or ParserExit
 
 
-def ShellCommandArgs() -> Any:
-    """shell 命令解析后的参数字典"""
-    return Depends(_shell_command_args, use_cache=False)
-
-
-def _shell_command_argv(state: T_State) -> List[Union[str, MessageSegment]]:
+@depends(use_cache=False)
+def shell_command_argv(state: T_State) -> List[Union[str, MessageSegment]]:
+    """shell 命令原始参数列表"""
     return state[SHELL_ARGV]
 
 
-def ShellCommandArgv() -> Any:
-    """shell 命令原始参数列表"""
-    return Depends(_shell_command_argv, use_cache=False)
-
-
-def _regex_matched(state: T_State) -> str:
+@depends(use_cache=False)
+def regex_matched(state: T_State) -> str:
+    """正则匹配结果"""
     return state[REGEX_MATCHED]
 
 
-def RegexMatched() -> str:
-    """正则匹配结果"""
-    return Depends(_regex_matched, use_cache=False)
-
-
-def _regex_group(state: T_State):
+@depends(use_cache=False)
+def regex_group(state: T_State):
+    """正则匹配结果 group 元组"""
     return state[REGEX_GROUP]
 
 
-def RegexGroup() -> Tuple[Any, ...]:
-    """正则匹配结果 group 元组"""
-    return Depends(_regex_group, use_cache=False)
-
-
-def _regex_dict(state: T_State):
+@depends(use_cache=False)
+def regex_dict(state: T_State):
+    """正则匹配结果 group 字典"""
     return state[REGEX_DICT]
 
 
-def RegexDict() -> Dict[str, Any]:
-    """正则匹配结果 group 字典"""
-    return Depends(_regex_dict, use_cache=False)
-
-
-def Received(id: Optional[str] = None, default: Any = None) -> Any:
+def received(id: Optional[str] = None, default: Any = None) -> Any:
     """`receive` 事件参数"""
 
+    @depends(use_cache=False)
     def _received(matcher: "Matcher"):
         return matcher.get_receive(id or "", default)
 
-    return Depends(_received, use_cache=False)
+    return _received
 
 
-def LastReceived(default: Any = None) -> Any:
+def last_received(default: Any = None) -> Any:
     """`last_receive` 事件参数"""
 
+    @depends(use_cache=False)
     def _last_received(matcher: "Matcher") -> Any:
         return matcher.get_last_receive(default)
 
-    return Depends(_last_received, use_cache=False)
+    return _last_received
 
 
 __autodoc__ = {
     "Arg": True,
     "ArgStr": True,
-    "Depends": True,
+    "depends": True,
     "ArgParam": True,
     "BotParam": True,
     "EventParam": True,

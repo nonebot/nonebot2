@@ -82,11 +82,12 @@ class SkippedException(ProcessException):
 
     用法:
         ```python
+        @depends
         def always_skip():
             Matcher.skip()
 
         @matcher.handle()
-        async def handler(dependency = Depends(always_skip)):
+        async def handler(dependency = always_skip):
             # never run
         ```
     """

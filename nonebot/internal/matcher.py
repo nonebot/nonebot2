@@ -48,7 +48,6 @@ from .rule import Rule
 from .permission import USER, User, Permission
 from .adapter import Bot, Event, Message, MessageSegment, MessageTemplate
 from .params import (
-    Depends,
     ArgParam,
     BotParam,
     EventParam,
@@ -56,6 +55,7 @@ from .params import (
     DependParam,
     DefaultParam,
     MatcherParam,
+    depends,
 )
 
 if TYPE_CHECKING:
@@ -370,6 +370,7 @@ class Matcher(metaclass=MatcherMeta):
             parameterless: 非参数类型依赖列表
         """
 
+        @depends
         async def _receive(event: Event, matcher: "Matcher") -> Union[None, NoReturn]:
             matcher.set_target(RECEIVE_KEY.format(id=id))
             if matcher.get_target() == RECEIVE_KEY.format(id=id):
@@ -379,7 +380,7 @@ class Matcher(metaclass=MatcherMeta):
                 return
             await matcher.reject()
 
-        _parameterless = (Depends(_receive), *(parameterless or tuple()))
+        _parameterless = (_receive, *(parameterless or tuple()))
 
         def _decorator(func: T_Handler) -> T_Handler:
 
@@ -418,6 +419,7 @@ class Matcher(metaclass=MatcherMeta):
             parameterless: 非参数类型依赖列表
         """
 
+        @depends
         async def _key_getter(event: Event, matcher: "Matcher"):
             matcher.set_target(ARG_KEY.format(key=key))
             if matcher.get_target() == ARG_KEY.format(key=key):
@@ -427,7 +429,7 @@ class Matcher(metaclass=MatcherMeta):
                 return
             await matcher.reject(prompt)
 
-        _parameterless = (Depends(_key_getter), *(parameterless or tuple()))
+        _parameterless = (_key_getter, *(parameterless or tuple()))
 
         def _decorator(func: T_Handler) -> T_Handler:
 

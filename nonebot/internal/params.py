@@ -5,8 +5,6 @@ from typing import TYPE_CHECKING, Any, Type, Tuple, Literal, Callable, Optional,
 
 from pydantic.fields import Required, Undefined, ModelField
 
-from nonebot.log import logger
-from nonebot.exception import TypeMisMatch
 from nonebot.dependencies.utils import check_field_type
 from nonebot.dependencies import Param, Dependent, CustomConfig
 from nonebot.typing import T_State, T_Handler, T_DependencyCache
@@ -35,13 +33,23 @@ class DependsInner:
         self.dependency = dependency
         self.use_cache = use_cache
 
+    def __call__(
+        self,
+        dependency: Optional[T_Handler] = None,
+        *,
+        use_cache: Optional[bool] = None,
+    ) -> Any:
+        dependency = dependency or self.dependency
+        use_cache = use_cache or self.use_cache
+        return self.__class__(dependency, use_cache=use_cache)
+
     def __repr__(self) -> str:
         dep = get_name(self.dependency)
         cache = "" if self.use_cache else ", use_cache=False"
         return f"{self.__class__.__name__}({dep}{cache})"
 
 
-def Depends(
+def depends(
     dependency: Optional[T_Handler] = None,
     *,
     use_cache: bool = True,
@@ -54,16 +62,18 @@ def Depends(
 
     用法:
         ```python
+        @depends
         def depend_func() -> Any:
             return ...
 
+        @depends(use_cache=False)
         def depend_gen_func():
             try:
                 yield ...
             finally:
                 ...
 
-        async def handler(param_name: Any = Depends(depend_func), gen: Any = Depends(depend_gen_func)):
+        async def handler(param_name: Any = depend_func, gen: Any = depend_gen_func):
             ...
         ```
     """
