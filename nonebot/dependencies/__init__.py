@@ -30,6 +30,7 @@ from pydantic.fields import Required, FieldInfo, Undefined, ModelField
 
 from nonebot.log import logger
 from nonebot.typing import _DependentCallable
+from nonebot.exception import SkippedException
 from nonebot.utils import run_sync, is_coroutine_callable
 
 from .utils import check_field_type, get_typed_signature
@@ -85,7 +86,15 @@ class Dependent(Generic[R]):
     parameterless: Tuple[Param] = field(default_factory=tuple)
 
     def __repr__(self) -> str:
-        return f"<Dependent call={self.call}>"
+        if inspect.isfunction(self.call) or inspect.isclass(self.call):
+            call_str = self.call.__name__
+        else:
+            call_str = repr(self.call)
+        return (
+            f"Dependent(call={call_str}"
+            + (f", parameterless={self.parameterless}" if self.parameterless else "")
+            + ")"
+        )
 
     async def __call__(self, **kwargs: Any) -> R:
         # do pre-check
@@ -178,19 +187,21 @@ class Dependent(Generic[R]):
             else cls.parse_parameterless(tuple(parameterless), allow_types)
         )
 
-        logger.trace(
-            f"Parsed dependent with call={call}, "
-            f"params={params}, "
-            f"parameterless={parameterless_params}"
-        )
-
         return cls(call, params, parameterless_params)
 
     async def check(self, **params: Any) -> None:
-        await asyncio.gather(*(param._check(**params) for param in self.parameterless))
-        await asyncio.gather(
-            *(cast(Param, param.field_info)._check(**params) for param in self.params)
-        )
+        try:
+            await asyncio.gather(
+                *(param._check(**params) for param in self.parameterless)
+            )
+            await asyncio.gather(
+                *(
+                    cast(Param, param.field_info)._check(**params)
+                    for param in self.params
+                )
+            )
+        except SkippedException as e:
+            logger.trace(f"{self} skipped due to {e!r}")
 
     async def _solve_field(self, field: ModelField, params: Dict[str, Any]) -> Any:
         value = await cast(Param, field.field_info)._solve(**params)

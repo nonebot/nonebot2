@@ -131,9 +131,7 @@ class Request:
                     self.files.append((name, file_info))  # type: ignore
 
     def __repr__(self) -> str:
-        class_name = self.__class__.__name__
-        url = str(self.url)
-        return f"<{class_name}({self.method!r}, {url!r})>"
+        return f"{self.__class__.__name__}(method={self.method!r}, url='{self.url!s}')"
 
 
 class Response:
@@ -161,11 +159,17 @@ class Response:
         # request
         self.request: Optional[Request] = request
 
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(status_code={self.status_code!r})"
+
 
 class WebSocket(abc.ABC):
     def __init__(self, *, request: Request):
         # request
         self.request: Request = request
+
+    def __repr__(self) -> str:
+        return f"WebSocket('{self.request.url!s}')"
 
     @property
     @abc.abstractmethod

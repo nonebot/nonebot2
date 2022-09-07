@@ -36,7 +36,6 @@ from nonebot.typing import (
     T_PermissionUpdater,
 )
 from nonebot.exception import (
-    TypeMisMatch,
     PausedException,
     StopPropagation,
     SkippedException,
@@ -73,28 +72,15 @@ current_handler: ContextVar[Dependent] = ContextVar("current_handler")
 
 class MatcherMeta(type):
     if TYPE_CHECKING:
-        module: Optional[str]
-        plugin_name: Optional[str]
         module_name: Optional[str]
-        module_prefix: Optional[str]
         type: str
-        rule: Rule
-        permission: Permission
-        handlers: List[T_Handler]
-        priority: int
-        block: bool
-        temp: bool
-        expire_time: Optional[datetime]
 
     def __repr__(self) -> str:
         return (
-            f"<Matcher from {self.module_name or 'unknown'}, "
-            f"type={self.type}, priority={self.priority}, "
-            f"temp={self.temp}>"
+            f"Matcher(type={self.type!r}"
+            + (f", module={self.module_name}" if self.module_name else "")
+            + ")"
         )
-
-    def __str__(self) -> str:
-        return repr(self)
 
 
 class Matcher(metaclass=MatcherMeta):
@@ -150,8 +136,9 @@ class Matcher(metaclass=MatcherMeta):
 
     def __repr__(self) -> str:
         return (
-            f"<Matcher from {self.module_name or 'unknown'}, type={self.type}, "
-            f"priority={self.priority}, temp={self.temp}>"
+            f"Matcher(type={self.type!r}"
+            + (f", module={self.module_name}" if self.module_name else "")
+            + ")"
         )
 
     @classmethod
@@ -683,8 +670,8 @@ class Matcher(metaclass=MatcherMeta):
         dependency_cache: Optional[T_DependencyCache] = None,
     ):
         logger.trace(
-            f"Matcher {self} run with incoming args: "
-            f"bot={bot}, event={event}, state={state}"
+            f"{self} run with incoming args: "
+            f"bot={bot}, event={event!r}, state={state!r}"
         )
         b_t = current_bot.set(bot)
         e_t = current_event.set(event)
@@ -706,12 +693,7 @@ class Matcher(metaclass=MatcherMeta):
                         stack=stack,
                         dependency_cache=dependency_cache,
                     )
-                except TypeMisMatch as e:
-                    logger.debug(
-                        f"Handler {handler} param {e.param.name} value {e.value} "
-                        f"mismatch type {e.param._type_display()}, skipped"
-                    )
-                except SkippedException as e:
+                except SkippedException:
                     logger.debug(f"Handler {handler} skipped")
         except StopPropagation:
             self.block = True

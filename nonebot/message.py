@@ -11,7 +11,7 @@ import asyncio
 import contextlib
 from datetime import datetime
 from contextlib import AsyncExitStack
-from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional, Coroutine
+from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
@@ -51,14 +51,14 @@ _event_postprocessors: Set[Dependent[Any]] = set()
 _run_preprocessors: Set[Dependent[Any]] = set()
 _run_postprocessors: Set[Dependent[Any]] = set()
 
-EVENT_PCS_PARAMS = [
+EVENT_PCS_PARAMS = (
     DependParam,
     BotParam,
     EventParam,
     StateParam,
     DefaultParam,
-]
-RUN_PREPCS_PARAMS = [
+)
+RUN_PREPCS_PARAMS = (
     DependParam,
     BotParam,
     EventParam,
@@ -66,8 +66,8 @@ RUN_PREPCS_PARAMS = [
     ArgParam,
     MatcherParam,
     DefaultParam,
-]
-RUN_POSTPCS_PARAMS = [
+)
+RUN_POSTPCS_PARAMS = (
     DependParam,
     ExceptionParam,
     BotParam,
@@ -76,7 +76,7 @@ RUN_POSTPCS_PARAMS = [
     ArgParam,
     MatcherParam,
     DefaultParam,
-]
+)
 
 
 def event_preprocessor(func: T_EventPreProcessor) -> T_EventPreProcessor:
@@ -233,7 +233,7 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
         ```
     """
     show_log = True
-    log_msg = f"<m>{escape_tag(bot.type.upper())} {escape_tag(bot.self_id)}</m> | "
+    log_msg = f"<m>{escape_tag(bot.type)} {escape_tag(bot.self_id)}</m> | "
     try:
         log_msg += event.get_log_string()
     except NoLogException:

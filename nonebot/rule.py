@@ -131,7 +131,7 @@ class StartswithRule:
         self.ignorecase = ignorecase
 
     def __repr__(self) -> str:
-        return f"StartswithRule(msg={self.msg}, ignorecase={self.ignorecase})"
+        return f"Startswith(msg={self.msg}, ignorecase={self.ignorecase})"
 
     def __eq__(self, other: object) -> bool:
         return (
@@ -185,7 +185,7 @@ class EndswithRule:
         self.ignorecase = ignorecase
 
     def __repr__(self) -> str:
-        return f"EndswithRule(msg={self.msg}, ignorecase={self.ignorecase})"
+        return f"Endswith(msg={self.msg}, ignorecase={self.ignorecase})"
 
     def __eq__(self, other: object) -> bool:
         return (
@@ -239,7 +239,7 @@ class FullmatchRule:
         self.ignorecase = ignorecase
 
     def __repr__(self) -> str:
-        return f"FullmatchRule(msg={self.msg}, ignorecase={self.ignorecase})"
+        return f"Fullmatch(msg={self.msg}, ignorecase={self.ignorecase})"
 
     def __eq__(self, other: object) -> bool:
         return (
@@ -286,7 +286,7 @@ class KeywordsRule:
         self.keywords = keywords
 
     def __repr__(self) -> str:
-        return f"KeywordsRule(keywords={self.keywords})"
+        return f"Keywords(keywords={self.keywords})"
 
     def __eq__(self, other: object) -> bool:
         return isinstance(other, KeywordsRule) and frozenset(
@@ -327,7 +327,7 @@ class CommandRule:
         self.cmds = tuple(cmds)
 
     def __repr__(self) -> str:
-        return f"CommandRule(cmds={self.cmds})"
+        return f"Command(cmds={self.cmds})"
 
     def __eq__(self, other: object) -> bool:
         return isinstance(other, CommandRule) and frozenset(self.cmds) == frozenset(
@@ -454,7 +454,7 @@ class ShellCommandRule:
         self.parser = parser
 
     def __repr__(self) -> str:
-        return f"ShellCommandRule(cmds={self.cmds}, parser={self.parser})"
+        return f"ShellCommand(cmds={self.cmds}, parser={self.parser})"
 
     def __eq__(self, other: object) -> bool:
         return (
@@ -571,7 +571,7 @@ class RegexRule:
         self.flags = flags
 
     def __repr__(self) -> str:
-        return f"RegexRule(regex={self.regex!r}, flags={self.flags})"
+        return f"Regex(regex={self.regex!r}, flags={self.flags})"
 
     def __eq__(self, other: object) -> bool:
         return (
@@ -630,7 +630,7 @@ class ToMeRule:
     __slots__ = ()
 
     def __repr__(self) -> str:
-        return "ToMeRule()"
+        return "ToMe()"
 
     def __eq__(self, other: object) -> bool:
         return isinstance(other, ToMeRule)
@@ -657,7 +657,7 @@ class IsTypeRule:
         self.types = types
 
     def __repr__(self) -> str:
-        return f"IsTypeRule(types={tuple(type.__name__ for type in self.types)})"
+        return f"IsType(types={tuple(type.__name__ for type in self.types)})"
 
     def __eq__(self, other: object) -> bool:
         return isinstance(other, IsTypeRule) and self.types == other.types

@@ -47,9 +47,13 @@ class ParserExit(NoneBotException):
         self.message = message
 
     def __repr__(self):
-        return f"<ParserExit status={self.status} message={self.message}>"
+        return (
+            f"ParserExit(status={self.status}"
+            + (f", message={self.message!r}" if self.message else "")
+            + ")"
+        )
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.__repr__()
 
 
@@ -69,9 +73,9 @@ class IgnoredException(ProcessException):
         self.reason: Any = reason
 
     def __repr__(self):
-        return f"<IgnoredException, reason={self.reason}>"
+        return f"IgnoredException(reason={self.reason!r})"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.__repr__()
 
 
@@ -100,10 +104,13 @@ class TypeMisMatch(SkippedException):
         self.value: Any = value
 
     def __repr__(self):
-        return f"<TypeMisMatch, param={self.param}, value={self.value}>"
+        return (
+            f"TypeMisMatch(param={self.param.name}, "
+            f"type={self.param._type_display()}, value={self.value!r}>"
+        )
 
-    def __str__(self):
-        self.__repr__()
+    def __str__(self) -> str:
+        return self.__repr__()
 
 
 class MockApiException(ProcessException):
@@ -117,9 +124,9 @@ class MockApiException(ProcessException):
         self.result = result
 
     def __repr__(self):
-        return f"<ApiCancelledException, result={self.result}>"
+        return f"MockApiException(result={self.result!r})"
 
-    def __str__(self):
+    def __str__(self) -> str:
         return self.__repr__()
 
 
@@ -195,7 +202,8 @@ class AdapterException(NoneBotException):
         adapter_name: 标识 adapter
     """
 
-    def __init__(self, adapter_name: str) -> None:
+    def __init__(self, adapter_name: str, *args: object) -> None:
+        super().__init__(*args)
         self.adapter_name: str = adapter_name
 
 
@@ -231,4 +239,11 @@ class WebSocketClosed(DriverException):
         self.reason = reason
 
     def __repr__(self) -> str:
-        return f"<WebSocketClosed code={self.code} reason={self.reason}>"
+        return (
+            f"WebSocketClosed(code={self.code}"
+            + (f", reason={self.reason!r}" if self.reason else "")
+            + ")"
+        )
+
+    def __str__(self) -> str:
+        return self.__repr__()

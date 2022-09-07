@@ -85,13 +85,15 @@ class CustomEnvSettings(EnvSettingsSource):
         if env_file_vars:
             for env_name in env_file_vars.keys():
                 env_val = env_vars[env_name]
-                try:
-                    if env_val:
-                        env_val = settings.__config__.json_loads(env_val.strip())
-                except ValueError as e:
-                    logger.opt(colors=True, exception=e).trace(
-                        f"Error while parsing JSON for {escape_tag(env_name)}. Assumed as string."
-                    )
+                if env_val and (val_striped := env_val.strip()):
+                    try:
+                        env_val = settings.__config__.json_loads(val_striped)
+                    except ValueError as e:
+                        logger.trace(
+                            "Error while parsing JSON for "
+                            f"{env_name!r}={val_striped!r}. "
+                            "Assumed as string."
+                        )
 
                 d[env_name] = env_val
 

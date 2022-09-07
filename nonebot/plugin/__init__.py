@@ -27,6 +27,7 @@
 - `load_builtin_plugin` => {ref}``load_builtin_plugin` <nonebot.plugin.load.load_builtin_plugin>`
 - `load_builtin_plugins` => {ref}``load_builtin_plugins` <nonebot.plugin.load.load_builtin_plugins>`
 - `require` => {ref}``require` <nonebot.plugin.load.require>`
+- `PluginMetadata` => {ref}``PluginMetadata` <nonebot.plugin.plugin.PluginMetadata>`
 
 FrontMatter:
     sidebar_position: 0
@@ -85,13 +86,12 @@ def get_plugin_by_module_name(module_name: str) -> Optional["Plugin"]:
     参数:
         module_name: 模块名，即 {ref}`nonebot.plugin.plugin.Plugin.module_name`。
     """
-    splits = module_name.split(".")
     loaded = {plugin.module_name: plugin for plugin in _plugins.values()}
-    while splits:
-        name = ".".join(splits)
-        if name in loaded:
-            return loaded[name]
-        splits.pop()
+    has_parent = True
+    while has_parent:
+        if module_name in loaded:
+            return loaded[module_name]
+        module_name, *has_parent = module_name.rsplit(".", 1)
 
 
 def get_loaded_plugins() -> Set["Plugin"]:

@@ -1,6 +1,6 @@
 import asyncio
 from contextlib import AsyncExitStack
-from typing import Any, Set, Tuple, Union, NoReturn, Optional, Coroutine
+from typing import Any, Set, Tuple, Union, NoReturn, Optional
 
 from nonebot.dependencies import Dependent
 from nonebot.utils import run_coro_with_catch
@@ -46,6 +46,9 @@ class Permission:
             for checker in checkers
         }
         """存储 `PermissionChecker`"""
+
+    def __repr__(self) -> str:
+        return f"Permission({', '.join(repr(checker) for checker in self.checkers)})"
 
     async def __call__(
         self,
@@ -120,6 +123,13 @@ class User:
     ) -> None:
         self.users = users
         self.perm = perm
+
+    def __repr__(self) -> str:
+        return (
+            f"User(users={self.users}"
+            + (f", permission={self.perm})" if self.perm else "")
+            + ")"
+        )
 
     async def __call__(self, bot: Bot, event: Event) -> bool:
         return bool(
