@@ -1,7 +1,7 @@
 from typing import Union
 
 from nonebot.adapters import Event, Message
-from nonebot.params import EventToMe, EventType, EventMessage, EventPlainText
+from nonebot.params import event_type, event_to_me, event_message, event_plain_text
 
 
 async def event(e: Event) -> Event:
@@ -36,17 +36,17 @@ async def not_event(e: Union[int, Event]):
     ...
 
 
-async def event_type(t: str = EventType()) -> str:
+async def event_type_test(t: str = event_type()) -> str:
     return t
 
 
-async def event_message(msg: Message = EventMessage()) -> Message:
+async def event_message_test(msg: Message = event_message()) -> Message:
     return msg
 
 
-async def event_plain_text(text: str = EventPlainText()) -> str:
+async def event_plain_text_test(text: str = event_plain_text()) -> str:
     return text
 
 
-async def event_to_me(to_me: bool = EventToMe()) -> bool:
+async def event_to_me_test(to_me: bool = event_to_me()) -> bool:
     return to_me

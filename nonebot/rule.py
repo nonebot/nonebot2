@@ -39,14 +39,14 @@ from nonebot.log import logger
 from nonebot.typing import T_State
 from nonebot.exception import ParserExit
 from nonebot.internal.rule import Rule as Rule
+from nonebot.params import command as command_param
 from nonebot.adapters import Bot, Event, Message, MessageSegment
 from nonebot.params import (
-    Command,
-    EventToMe,
-    EventType,
-    CommandArg,
-    EventMessage,
-    EventPlainText,
+    event_type,
+    command_arg,
+    event_to_me,
+    event_message,
+    event_plain_text,
 )
 from nonebot.consts import (
     CMD_KEY,
@@ -144,7 +144,7 @@ class StartswithRule:
         return hash((frozenset(self.msg), self.ignorecase))
 
     async def __call__(
-        self, type: str = EventType(), text: str = EventPlainText()
+        self, type: str = event_type(), text: str = event_plain_text()
     ) -> Any:
         if type != "message":
             return False
@@ -198,7 +198,7 @@ class EndswithRule:
         return hash((frozenset(self.msg), self.ignorecase))
 
     async def __call__(
-        self, type: str = EventType(), text: str = EventPlainText()
+        self, type: str = event_type(), text: str = event_plain_text()
     ) -> Any:
         if type != "message":
             return False
@@ -252,7 +252,7 @@ class FullmatchRule:
         return hash((frozenset(self.msg), self.ignorecase))
 
     async def __call__(
-        self, type_: str = EventType(), text: str = EventPlainText()
+        self, type_: str = event_type(), text: str = event_plain_text()
     ) -> bool:
         return (
             type_ == "message"
@@ -297,7 +297,7 @@ class KeywordsRule:
         return hash(frozenset(self.keywords))
 
     async def __call__(
-        self, type: str = EventType(), text: str = EventPlainText()
+        self, type: str = event_type(), text: str = event_plain_text()
     ) -> bool:
         if type != "message":
             return False
@@ -337,7 +337,7 @@ class CommandRule:
     def __hash__(self) -> int:
         return hash((frozenset(self.cmds),))
 
-    async def __call__(self, cmd: Optional[Tuple[str, ...]] = Command()) -> bool:
+    async def __call__(self, cmd: Optional[Tuple[str, ...]] = command_param()) -> bool:
         return cmd in self.cmds
 
 
@@ -347,9 +347,9 @@ def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
     根据配置里提供的 {ref}``command_start` <nonebot.config.Config.command_start>`,
     {ref}``command_sep` <nonebot.config.Config.command_sep>` 判断消息是否为命令。
 
-    可以通过 {ref}`nonebot.params.Command` 获取匹配成功的命令（例: `("test",)`），
-    通过 {ref}`nonebot.params.RawCommand` 获取匹配成功的原始命令文本（例: `"/test"`），
-    通过 {ref}`nonebot.params.CommandArg` 获取匹配成功的命令参数。
+    可以通过 {ref}`nonebot.params.command` 获取匹配成功的命令（例: `("test",)`），
+    通过 {ref}`nonebot.params.raw_command` 获取匹配成功的原始命令文本（例: `"/test"`），
+    通过 {ref}`nonebot.params.command_arg` 获取匹配成功的命令参数。
 
     参数:
         cmds: 命令文本或命令元组
@@ -469,8 +469,8 @@ class ShellCommandRule:
     async def __call__(
         self,
         state: T_State,
-        cmd: Optional[Tuple[str, ...]] = Command(),
-        msg: Optional[Message] = CommandArg(),
+        cmd: Optional[Tuple[str, ...]] = command_param(),
+        msg: Optional[Message] = command_arg(),
     ) -> bool:
         if cmd not in self.cmds or msg is None:
             return False
@@ -501,13 +501,13 @@ def shell_command(
     根据配置里提供的 {ref}``command_start` <nonebot.config.Config.command_start>`,
     {ref}``command_sep` <nonebot.config.Config.command_sep>` 判断消息是否为命令。
 
-    可以通过 {ref}`nonebot.params.Command` 获取匹配成功的命令（例: `("test",)`），
-    通过 {ref}`nonebot.params.RawCommand` 获取匹配成功的原始命令文本（例: `"/test"`），
-    通过 {ref}`nonebot.params.ShellCommandArgv` 获取解析前的参数列表（例: `["arg", "-h"]`），
-    通过 {ref}`nonebot.params.ShellCommandArgs` 获取解析后的参数字典（例: `{"arg": "arg", "h": True}`）。
+    可以通过 {ref}`nonebot.params.command` 获取匹配成功的命令（例: `("test",)`），
+    通过 {ref}`nonebot.params.raw_command` 获取匹配成功的原始命令文本（例: `"/test"`），
+    通过 {ref}`nonebot.params.shell_command_argv` 获取解析前的参数列表（例: `["arg", "-h"]`），
+    通过 {ref}`nonebot.params.shell_command_args` 获取解析后的参数字典（例: `{"arg": "arg", "h": True}`）。
 
     :::warning 警告
-    如果参数解析失败，则通过 {ref}`nonebot.params.ShellCommandArgs`
+    如果参数解析失败，则通过 {ref}`nonebot.params.shell_command_args`
     获取的将是 {ref}`nonebot.exception.ParserExit` 异常。
     :::
 
@@ -586,8 +586,8 @@ class RegexRule:
     async def __call__(
         self,
         state: T_State,
-        type: str = EventType(),
-        msg: Message = EventMessage(),
+        type: str = event_type(),
+        msg: Message = event_message(),
     ) -> bool:
         if type != "message":
             return False
@@ -604,9 +604,9 @@ class RegexRule:
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     """匹配符合正则表达式的消息字符串。
 
-    可以通过 {ref}`nonebot.params.RegexMatched` 获取匹配成功的字符串，
-    通过 {ref}`nonebot.params.RegexGroup` 获取匹配成功的 group 元组，
-    通过 {ref}`nonebot.params.RegexDict` 获取匹配成功的 group 字典。
+    可以通过 {ref}`nonebot.params.regex_matched` 获取匹配成功的字符串，
+    通过 {ref}`nonebot.params.regex_group` 获取匹配成功的 group 元组，
+    通过 {ref}`nonebot.params.regex_dict` 获取匹配成功的 group 字典。
 
     参数:
         regex: 正则表达式
@@ -638,7 +638,7 @@ class ToMeRule:
     def __hash__(self) -> int:
         return hash((self.__class__,))
 
-    async def __call__(self, to_me: bool = EventToMe()) -> bool:
+    async def __call__(self, to_me: bool = event_to_me()) -> bool:
         return to_me
 
 

@@ -1,7 +1,7 @@
 from nonebot import on_message
 from nonebot.matcher import Matcher
 from nonebot.adapters import Event, Message
-from nonebot.params import ArgStr, Received, EventMessage, LastReceived
+from nonebot.params import ArgStr, received, event_message, last_received
 
 test_handle = on_message()
 
@@ -30,7 +30,7 @@ test_receive = on_message()
 @test_receive.receive()
 @test_receive.receive("receive")
 async def receive(
-    x: Event = Received("receive"), y: Event = LastReceived(), z: Event = Received()
+    x: Event = received("receive"), y: Event = last_received(), z: Event = received()
 ):
     assert str(x.get_message()) == "text"
     assert str(z.get_message()) == "text"
@@ -44,7 +44,7 @@ test_combine = on_message()
 @test_combine.got("a")
 @test_combine.receive()
 @test_combine.got("b")
-async def combine(a: str = ArgStr(), b: str = ArgStr(), r: Event = Received()):
+async def combine(a: str = ArgStr(), b: str = ArgStr(), r: Event = received()):
     if a == "text":
         await test_combine.reject_arg("a")
     elif b == "text":
@@ -61,7 +61,7 @@ test_preset = on_message()
 
 
 @test_preset.handle()
-async def preset(matcher: Matcher, message: Message = EventMessage()):
+async def preset(matcher: Matcher, message: Message = event_message()):
     matcher.set_arg("a", message)
 
 

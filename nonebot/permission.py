@@ -8,7 +8,7 @@ FrontMatter:
     description: nonebot.permission 模块
 """
 
-from nonebot.params import EventType
+from nonebot.params import event_type
 from nonebot.adapters import Bot, Event
 from nonebot.internal.permission import USER as USER
 from nonebot.internal.permission import User as User
@@ -20,7 +20,7 @@ class Message:
 
     __slots__ = ()
 
-    async def __call__(self, type: str = EventType()) -> bool:
+    async def __call__(self, type: str = event_type()) -> bool:
         return type == "message"
 
 
@@ -29,7 +29,7 @@ class Notice:
 
     __slots__ = ()
 
-    async def __call__(self, type: str = EventType()) -> bool:
+    async def __call__(self, type: str = event_type()) -> bool:
         return type == "notice"
 
 
@@ -38,7 +38,7 @@ class Request:
 
     __slots__ = ()
 
-    async def __call__(self, type: str = EventType()) -> bool:
+    async def __call__(self, type: str = event_type()) -> bool:
         return type == "request"
 
 
@@ -47,7 +47,7 @@ class MetaEvent:
 
     __slots__ = ()
 
-    async def __call__(self, type: str = EventType()) -> bool:
+    async def __call__(self, type: str = event_type()) -> bool:
         return type == "meta_event"
 
 
