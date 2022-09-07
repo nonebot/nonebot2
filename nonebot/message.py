@@ -11,7 +11,7 @@ import asyncio
 import contextlib
 from datetime import datetime
 from contextlib import AsyncExitStack
-from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional, Coroutine
+from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
