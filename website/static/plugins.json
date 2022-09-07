@@ -2622,5 +2622,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "ETH_Terminal",
+    "project_link": "nonebot2-plugin-eth-terminal",
+    "name": "查询ETH合并日期",
+    "desc": "矿难！！！！",
+    "author": "Sclock",
+    "homepage": "https://github.com/Sclock/nonebot2_plugin_eth_terminal",
+    "tags": [
+      {
+        "label": "爬虫",
+        "color": "#ea5252"
+      },
+      {
+        "label": "ETH",
+        "color": "#5285ea"
+      }
+    ],
+    "is_official": false
   }
 ]
