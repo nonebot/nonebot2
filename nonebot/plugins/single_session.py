@@ -15,7 +15,8 @@ async def matcher_mutex(event: Event) -> AsyncGenerator[bool, None]:
         yield result
     else:
         current_event_id = id(event)
-        if event_id := _running_matcher.get(session_id, None):
+        event_id = _running_matcher.get(session_id, None)
+        if event_id:
             result = event_id != current_event_id
         else:
             _running_matcher[session_id] = current_event_id
