@@ -7,7 +7,6 @@ from nonebot.message import IgnoredException, event_preprocessor
 _running_matcher: Dict[str, int] = {}
 
 
-@depends
 async def matcher_mutex(event: Event) -> AsyncGenerator[bool, None]:
     result = False
     try:
@@ -26,6 +25,6 @@ async def matcher_mutex(event: Event) -> AsyncGenerator[bool, None]:
 
 
 @event_preprocessor
-async def preprocess(mutex: bool = matcher_mutex):
+async def preprocess(mutex: bool = depends(matcher_mutex)):
     if mutex:
         raise IgnoredException("Another matcher running")

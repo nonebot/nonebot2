@@ -10,12 +10,12 @@ async def test_depend(app: App, load_plugin):
     from plugins.param.param_depend import (
         ClassDependency,
         runned,
-        depends,
         class_depend,
+        depends_test,
         test_depends,
     )
 
-    async with app.test_dependent(depends, allow_types=[DependParam]) as ctx:
+    async with app.test_dependent(depends_test, allow_types=[DependParam]) as ctx:
         ctx.should_return(1)
 
     assert len(runned) == 1 and runned[0] == 1
@@ -90,13 +90,13 @@ async def test_event(app: App, load_plugin):
         event,
         not_event,
         sub_event,
-        event_type,
-        event_to_me,
         union_event,
         legacy_event,
-        event_message,
-        event_plain_text,
+        event_type_test,
+        event_to_me_test,
         not_legacy_event,
+        event_message_test,
+        event_plain_text_test,
     )
 
     fake_message = make_fake_message()("text")
@@ -134,25 +134,25 @@ async def test_event(app: App, load_plugin):
             ...
 
     async with app.test_dependent(
-        event_type, allow_types=[EventParam, DependParam]
+        event_type_test, allow_types=[EventParam, DependParam]
     ) as ctx:
         ctx.pass_params(event=fake_event)
         ctx.should_return(fake_event.get_type())
 
     async with app.test_dependent(
-        event_message, allow_types=[EventParam, DependParam]
+        event_message_test, allow_types=[EventParam, DependParam]
     ) as ctx:
         ctx.pass_params(event=fake_event)
         ctx.should_return(fake_event.get_message())
 
     async with app.test_dependent(
-        event_plain_text, allow_types=[EventParam, DependParam]
+        event_plain_text_test, allow_types=[EventParam, DependParam]
     ) as ctx:
         ctx.pass_params(event=fake_event)
         ctx.should_return(fake_event.get_plaintext())
 
     async with app.test_dependent(
-        event_to_me, allow_types=[EventParam, DependParam]
+        event_to_me_test, allow_types=[EventParam, DependParam]
     ) as ctx:
         ctx.pass_params(event=fake_event)
         ctx.should_return(fake_event.is_tome())
@@ -175,17 +175,17 @@ async def test_state(app: App, load_plugin):
     )
     from plugins.param.param_state import (
         state,
-        command,
-        regex_dict,
-        command_arg,
-        raw_command,
-        regex_group,
+        command_test,
         legacy_state,
-        command_start,
-        regex_matched,
+        regex_dict_test,
+        command_arg_test,
         not_legacy_state,
-        shell_command_args,
-        shell_command_argv,
+        raw_command_test,
+        regex_group_test,
+        command_start_test,
+        regex_matched_test,
+        shell_command_args_test,
+        shell_command_argv_test,
     )
 
     fake_message = make_fake_message()("text")
@@ -218,55 +218,55 @@ async def test_state(app: App, load_plugin):
             ...
 
     async with app.test_dependent(
-        command, allow_types=[StateParam, DependParam]
+        command_test, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[PREFIX_KEY][CMD_KEY])
 
     async with app.test_dependent(
-        raw_command, allow_types=[StateParam, DependParam]
+        raw_command_test, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[PREFIX_KEY][RAW_CMD_KEY])
 
     async with app.test_dependent(
-        command_arg, allow_types=[StateParam, DependParam]
+        command_arg_test, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[PREFIX_KEY][CMD_ARG_KEY])
 
     async with app.test_dependent(
-        command_start, allow_types=[StateParam, DependParam]
+        command_start_test, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[PREFIX_KEY][CMD_START_KEY])
 
     async with app.test_dependent(
-        shell_command_argv, allow_types=[StateParam, DependParam]
+        shell_command_argv_test, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[SHELL_ARGV])
 
     async with app.test_dependent(
-        shell_command_args, allow_types=[StateParam, DependParam]
+        shell_command_args_test, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[SHELL_ARGS])
 
     async with app.test_dependent(
-        regex_matched, allow_types=[StateParam, DependParam]
+        regex_matched_test, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[REGEX_MATCHED])
 
     async with app.test_dependent(
-        regex_group, allow_types=[StateParam, DependParam]
+        regex_group_test, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[REGEX_GROUP])
 
     async with app.test_dependent(
-        regex_dict, allow_types=[StateParam, DependParam]
+        regex_dict_test, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[REGEX_DICT])
@@ -276,7 +276,7 @@ async def test_state(app: App, load_plugin):
 async def test_matcher(app: App, load_plugin):
     from nonebot.matcher import Matcher
     from nonebot.params import DependParam, MatcherParam
-    from plugins.param.param_matcher import matcher, receive, last_receive
+    from plugins.param.param_matcher import matcher, receive_test, last_receive_test
 
     fake_matcher = Matcher()
 
@@ -290,13 +290,13 @@ async def test_matcher(app: App, load_plugin):
     fake_matcher.set_receive("", event_next)
 
     async with app.test_dependent(
-        receive, allow_types=[MatcherParam, DependParam]
+        receive_test, allow_types=[MatcherParam, DependParam]
     ) as ctx:
         ctx.pass_params(matcher=fake_matcher)
         ctx.should_return(event)
 
     async with app.test_dependent(
-        last_receive, allow_types=[MatcherParam, DependParam]
+        last_receive_test, allow_types=[MatcherParam, DependParam]
     ) as ctx:
         ctx.pass_params(matcher=fake_matcher)
         ctx.should_return(event_next)

@@ -38,7 +38,7 @@ class ClassDependency:
 
 # test parameterless
 @test_depends.handle(parameterless=[parameterless])
-async def depend(x: int = dependency):
+async def depends_test(x: int = dependency):
     # test dependency
     return x
 
