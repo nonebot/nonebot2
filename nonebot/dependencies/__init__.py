@@ -202,6 +202,7 @@ class Dependent(Generic[R]):
             )
         except SkippedException as e:
             logger.trace(f"{self} skipped due to {e}")
+            raise
 
     async def _solve_field(self, field: ModelField, params: Dict[str, Any]) -> Any:
         value = await cast(Param, field.field_info)._solve(**params)
