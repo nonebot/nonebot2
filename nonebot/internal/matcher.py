@@ -12,6 +12,7 @@ from typing import (
     Union,
     TypeVar,
     Callable,
+    Iterable,
     NoReturn,
     Optional,
     overload,
@@ -133,7 +134,7 @@ class Matcher(metaclass=MatcherMeta):
     _default_permission_updater: Optional[Dependent[Permission]] = None
     """事件响应器权限更新函数"""
 
-    HANDLER_PARAM_TYPES = [
+    HANDLER_PARAM_TYPES = (
         DependParam,
         BotParam,
         EventParam,
@@ -141,7 +142,7 @@ class Matcher(metaclass=MatcherMeta):
         ArgParam,
         MatcherParam,
         DefaultParam,
-    ]
+    )
 
     def __init__(self):
         self.handlers = self.handlers.copy()
@@ -152,9 +153,6 @@ class Matcher(metaclass=MatcherMeta):
             f"<Matcher from {self.module_name or 'unknown'}, type={self.type}, "
             f"priority={self.priority}, temp={self.temp}>"
         )
-
-    def __str__(self) -> str:
-        return repr(self)
 
     @classmethod
     def new(
@@ -219,27 +217,35 @@ class Matcher(metaclass=MatcherMeta):
                 "temp": temp,
                 "expire_time": (
                     expire_time
-                    if isinstance(expire_time, datetime)
-                    else expire_time and datetime.now() + expire_time
+                    and (
+                        expire_time
+                        if isinstance(expire_time, datetime)
+                        else datetime.now() + expire_time
+                    )
                 ),
                 "priority": priority,
                 "block": block,
                 "_default_state": default_state or {},
                 "_default_type_updater": (
                     default_type_updater
-                    if isinstance(default_type_updater, Dependent)
-                    else default_type_updater
-                    and Dependent[str].parse(
-                        call=default_type_updater, allow_types=cls.HANDLER_PARAM_TYPES
+                    and (
+                        default_type_updater
+                        if isinstance(default_type_updater, Dependent)
+                        else Dependent[str].parse(
+                            call=default_type_updater,
+                            allow_types=cls.HANDLER_PARAM_TYPES,
+                        )
                     )
                 ),
                 "_default_permission_updater": (
                     default_permission_updater
-                    if isinstance(default_permission_updater, Dependent)
-                    else default_permission_updater
-                    and Dependent[Permission].parse(
-                        call=default_permission_updater,
-                        allow_types=cls.HANDLER_PARAM_TYPES,
+                    and (
+                        default_permission_updater
+                        if isinstance(default_permission_updater, Dependent)
+                        else Dependent[Permission].parse(
+                            call=default_permission_updater,
+                            allow_types=cls.HANDLER_PARAM_TYPES,
+                        )
                     )
                 ),
             },
@@ -327,7 +333,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def append_handler(
-        cls, handler: T_Handler, parameterless: Optional[List[Any]] = None
+        cls, handler: T_Handler, parameterless: Optional[Iterable[Any]] = None
     ) -> Dependent[Any]:
         handler_ = Dependent[Any].parse(
             call=handler,
@@ -339,7 +345,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def handle(
-        cls, parameterless: Optional[List[Any]] = None
+        cls, parameterless: Optional[Iterable[Any]] = None
     ) -> Callable[[T_Handler], T_Handler]:
         """装饰一个函数来向事件响应器直接添加一个处理函数
 
@@ -355,7 +361,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def receive(
-        cls, id: str = "", parameterless: Optional[List[Any]] = None
+        cls, id: str = "", parameterless: Optional[Iterable[Any]] = None
     ) -> Callable[[T_Handler], T_Handler]:
         """装饰一个函数来指示 NoneBot 在接收用户新的一条消息后继续运行该函数
 
@@ -373,14 +379,21 @@ class Matcher(metaclass=MatcherMeta):
                 return
             await matcher.reject()
 
-        _parameterless = [Depends(_receive), *(parameterless or [])]
+        _parameterless = (Depends(_receive), *(parameterless or tuple()))
 
         def _decorator(func: T_Handler) -> T_Handler:
 
             if cls.handlers and cls.handlers[-1].call is func:
                 func_handler = cls.handlers[-1]
-                for depend in reversed(_parameterless):
-                    func_handler.prepend_parameterless(depend)
+                new_handler = Dependent(
+                    call=func_handler.call,
+                    params=func_handler.params,
+                    parameterless=Dependent.parse_parameterless(
+                        tuple(_parameterless), cls.HANDLER_PARAM_TYPES
+                    )
+                    + func_handler.parameterless,
+                )
+                cls.handlers[-1] = new_handler
             else:
                 cls.append_handler(func, parameterless=_parameterless)
 
@@ -393,7 +406,7 @@ class Matcher(metaclass=MatcherMeta):
         cls,
         key: str,
         prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
-        parameterless: Optional[List[Any]] = None,
+        parameterless: Optional[Iterable[Any]] = None,
     ) -> Callable[[T_Handler], T_Handler]:
         """装饰一个函数来指示 NoneBot 获取一个参数 `key`
 
@@ -414,17 +427,21 @@ class Matcher(metaclass=MatcherMeta):
                 return
             await matcher.reject(prompt)
 
-        _parameterless = [
-            Depends(_key_getter),
-            *(parameterless or []),
-        ]
+        _parameterless = (Depends(_key_getter), *(parameterless or tuple()))
 
         def _decorator(func: T_Handler) -> T_Handler:
 
             if cls.handlers and cls.handlers[-1].call is func:
                 func_handler = cls.handlers[-1]
-                for depend in reversed(_parameterless):
-                    func_handler.prepend_parameterless(depend)
+                new_handler = Dependent(
+                    call=func_handler.call,
+                    params=func_handler.params,
+                    parameterless=Dependent.parse_parameterless(
+                        tuple(_parameterless), cls.HANDLER_PARAM_TYPES
+                    )
+                    + func_handler.parameterless,
+                )
+                cls.handlers[-1] = new_handler
             else:
                 cls.append_handler(func, parameterless=_parameterless)
 
