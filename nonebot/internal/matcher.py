@@ -698,7 +698,7 @@ class Matcher(metaclass=MatcherMeta):
         except StopPropagation:
             self.block = True
         finally:
-            logger.info(f"Matcher {self} running complete")
+            logger.info(f"{self} running complete")
             current_bot.reset(b_t)
             current_event.reset(e_t)
             current_matcher.reset(m_t)

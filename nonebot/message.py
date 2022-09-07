@@ -170,9 +170,7 @@ async def _run_matcher(
         try:
             await asyncio.gather(*coros)
         except IgnoredException:
-            logger.opt(colors=True).info(
-                f"Matcher {matcher} running is <b>cancelled</b>"
-            )
+            logger.opt(colors=True).info(f"{matcher} running is <b>cancelled</b>")
             return
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
@@ -184,11 +182,11 @@ async def _run_matcher(
     exception = None
 
     try:
-        logger.debug(f"Running matcher {matcher}")
+        logger.debug(f"Running {matcher}")
         await matcher.run(bot, event, state, stack, dependency_cache)
     except Exception as e:
         logger.opt(colors=True, exception=e).error(
-            f"<r><bg #f8bbd0>Running matcher {matcher} failed.</bg #f8bbd0></r>"
+            f"<r><bg #f8bbd0>Running {matcher} failed.</bg #f8bbd0></r>"
         )
         exception = e
 
