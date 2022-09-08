@@ -1,6 +1,6 @@
 import asyncio
 from contextlib import AsyncExitStack
-from typing import Any, Set, Tuple, Union, NoReturn, Optional
+from typing import Set, Tuple, Union, NoReturn, Optional
 
 from nonebot.dependencies import Dependent
 from nonebot.utils import run_coro_with_catch

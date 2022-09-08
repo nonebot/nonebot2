@@ -5,8 +5,6 @@ from typing import TYPE_CHECKING, Any, Type, Tuple, Literal, Callable, Optional,
 
 from pydantic.fields import Required, Undefined, ModelField
 
-from nonebot.log import logger
-from nonebot.exception import TypeMisMatch
 from nonebot.dependencies.utils import check_field_type
 from nonebot.dependencies import Param, Dependent, CustomConfig
 from nonebot.typing import T_State, T_Handler, T_DependencyCache
