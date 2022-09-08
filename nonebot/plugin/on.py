@@ -464,7 +464,7 @@ def on_type(
     return on(rule=is_type(*event_types) & rule, **kwargs, _depth=_depth + 1)
 
 
-class Group:
+class _Group:
     def __init__(self, **kwargs):
         """创建一个事件响应器组合，参数为默认值，与 `on` 一致"""
         self.matchers: List[Type[Matcher]] = []
@@ -490,7 +490,7 @@ class Group:
         return final_kwargs
 
 
-class CommandGroup(Group):
+class CommandGroup(_Group):
     """命令组，用于声明一组有相同名称前缀的命令。
 
     参数:
@@ -557,7 +557,7 @@ class CommandGroup(Group):
         return matcher
 
 
-class MatcherGroup(Group):
+class MatcherGroup(_Group):
     """事件响应器组合，统一管理。为 `Matcher` 创建提供默认属性。"""
 
     def on(self, **kwargs) -> Type[Matcher]:
