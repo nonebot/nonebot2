@@ -492,7 +492,7 @@ class Group:
 
     def _get_final_kwargs(
         self, update: Dict[str, Any], *, exclude: Optional[Set[str]] = None
-    ) -> dict[str, Any]:
+    ) -> Dict[str, Any]:
         """获取最终传递给 `on` 的参数
 
         参数:
