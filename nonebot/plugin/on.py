@@ -486,7 +486,7 @@ class _Group:
         if exclude:
             for key in exclude:
                 final_kwargs.pop(key, None)
-        final_kwargs["_depth"] = 2
+        final_kwargs["_depth"] = 1
         return final_kwargs
 
 
