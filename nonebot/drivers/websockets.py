@@ -30,10 +30,10 @@ from nonebot.drivers import ForwardMixin, ForwardDriver, combine_driver
 try:
     from websockets.exceptions import ConnectionClosed
     from websockets.legacy.client import Connect, WebSocketClientProtocol
-except ImportError:
+except ImportError:  # pragma: no cover
     raise ImportError(
         "Please install websockets by using `pip install nonebot2[websockets]`"
-    )
+    ) from None
 
 logger = logging.Logger("websockets.client", "INFO")
 logger.addHandler(LoguruHandler())

@@ -25,7 +25,6 @@ from pydantic.env_settings import (
 )
 
 from nonebot.log import logger
-from nonebot.utils import escape_tag
 
 
 class CustomEnvSettings(EnvSettingsSource):

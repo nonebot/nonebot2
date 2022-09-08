@@ -32,9 +32,8 @@ from .manager import _current_plugin_chain
 
 
 def _store_matcher(matcher: Type[Matcher]) -> None:
-    plugins = _current_plugin_chain.get()
     # only store the matcher defined in the plugin
-    if plugins:
+    if plugins := _current_plugin_chain.get():
         plugins[-1].matcher.add(matcher)
 
 
