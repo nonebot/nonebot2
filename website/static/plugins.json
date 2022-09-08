@@ -2641,5 +2641,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "GenshinUID",
+    "project_link": "GenshinUID",
+    "name": "GenshinUID",
+    "desc": "原神Uid查询/原神Wiki/米社签到/树脂提醒插件",
+    "author": "KimigaiiWuyi",
+    "homepage": "https://github.com/KimigaiiWuyi/GenshinUID",
+    "tags": [
+      {
+        "label": "原神",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
