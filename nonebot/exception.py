@@ -46,7 +46,7 @@ class ParserExit(NoneBotException):
         self.status = status
         self.message = message
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             f"ParserExit(status={self.status}"
             + (f", message={self.message!r}" if self.message else "")
@@ -72,7 +72,7 @@ class IgnoredException(ProcessException):
     def __init__(self, reason: Any):
         self.reason: Any = reason
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"IgnoredException(reason={self.reason!r})"
 
     def __str__(self) -> str:
@@ -103,7 +103,7 @@ class TypeMisMatch(SkippedException):
         self.param: ModelField = param
         self.value: Any = value
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return (
             f"TypeMisMatch(param={self.param.name}, "
             f"type={self.param._type_display()}, value={self.value!r}>"
@@ -123,7 +123,7 @@ class MockApiException(ProcessException):
     def __init__(self, result: Any):
         self.result = result
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f"MockApiException(result={self.result!r})"
 
     def __str__(self) -> str:

@@ -169,7 +169,7 @@ class WebSocket(abc.ABC):
         self.request: Request = request
 
     def __repr__(self) -> str:
-        return f"WebSocket('{self.request.url!s}')"
+        return f"{self.__class__.__name__}('{self.request.url!s}')"
 
     @property
     @abc.abstractmethod
@@ -324,17 +324,15 @@ class Cookies(MutableMapping):
         return len(self.jar)
 
     def __iter__(self) -> Iterator[Cookie]:
-        return (cookie for cookie in self.jar)
+        return iter(self.jar)
 
     def __repr__(self) -> str:
         cookies_repr = ", ".join(
-            [
-                f"<Cookie {cookie.name}={cookie.value} for {cookie.domain} />"
-                for cookie in self.jar
-            ]
+            f"Cookie({cookie.name}={cookie.value} for {cookie.domain})"
+            for cookie in self.jar
         )
 
-        return f"<Cookies [{cookies_repr}]>"
+        return f"Cookies({cookies_repr})"
 
 
 @dataclass
