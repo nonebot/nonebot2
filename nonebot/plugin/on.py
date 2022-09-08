@@ -472,24 +472,6 @@ class Group:
         self.base_kwargs: Dict[str, Any] = kwargs
         """其他传递给 `on` 的参数默认值"""
 
-    def __init_subclass__(cls) -> None:
-        def add_matcher(
-            func: Callable[..., Type[Matcher]]
-        ) -> Callable[..., Type[Matcher]]:
-            @wraps(func)
-            def wrapper(self, *args, **kwargs) -> Type[Matcher]:
-                matcher = func(self, *args, **kwargs)
-                self.matchers.append(matcher)
-                return matcher
-
-            return wrapper
-
-        cls_attrs = inspect.getmembers(cls, inspect.isfunction)
-        for key, attr in cls_attrs:
-            return_annotation = inspect.signature(attr).return_annotation
-            if return_annotation == Type[Matcher]:
-                setattr(cls, key, add_matcher(attr))
-
     def _get_final_kwargs(
         self, update: Dict[str, Any], *, exclude: Optional[Set[str]] = None
     ) -> Dict[str, Any]:
@@ -546,7 +528,9 @@ class CommandGroup(Group):
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
-        return on_command(cmd, **self._get_final_kwargs(kwargs))
+        matcher = on_command(cmd, **self._get_final_kwargs(kwargs))
+        self.matchers.append(matcher)
+        return matcher
 
     def shell_command(
         self, cmd: Union[str, Tuple[str, ...]], **kwargs
@@ -568,7 +552,9 @@ class CommandGroup(Group):
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
-        return on_shell_command(cmd, **self._get_final_kwargs(kwargs))
+        matcher = on_shell_command(cmd, **self._get_final_kwargs(kwargs))
+        self.matchers.append(matcher)
+        return matcher
 
 
 class MatcherGroup(Group):
@@ -588,7 +574,9 @@ class MatcherGroup(Group):
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
         """
-        return on(**self._get_final_kwargs(kwargs))
+        matcher = on(**self._get_final_kwargs(kwargs))
+        self.matchers.append(matcher)
+        return matcher
 
     def on_metaevent(self, **kwargs) -> Type[Matcher]:
         """注册一个元事件响应器。
@@ -603,7 +591,9 @@ class MatcherGroup(Group):
             state: 默认 state
         """
         final_kwargs = self._get_final_kwargs(kwargs, exclude={"type", "permission"})
-        return on_metaevent(**final_kwargs)
+        matcher = on_metaevent(**final_kwargs)
+        self.matchers.append(matcher)
+        return matcher
 
     def on_message(self, **kwargs) -> Type[Matcher]:
         """注册一个消息事件响应器。
@@ -619,7 +609,9 @@ class MatcherGroup(Group):
             state: 默认 state
         """
         final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
-        return on_message(**final_kwargs)
+        matcher = on_message(**final_kwargs)
+        self.matchers.append(matcher)
+        return matcher
 
     def on_notice(self, **kwargs) -> Type[Matcher]:
         """注册一个通知事件响应器。
@@ -634,7 +626,9 @@ class MatcherGroup(Group):
             state: 默认 state
         """
         final_kwargs = self._get_final_kwargs(kwargs, exclude={"type", "permission"})
-        return on_notice(**final_kwargs)
+        matcher = on_notice(**final_kwargs)
+        self.matchers.append(matcher)
+        return matcher
 
     def on_request(self, **kwargs) -> Type[Matcher]:
         """注册一个请求事件响应器。
@@ -649,7 +643,9 @@ class MatcherGroup(Group):
             state: 默认 state
         """
         final_kwargs = self._get_final_kwargs(kwargs, exclude={"type", "permission"})
-        return on_request(**final_kwargs)
+        matcher = on_request(**final_kwargs)
+        self.matchers.append(matcher)
+        return matcher
 
     def on_startswith(
         self, msg: Union[str, Tuple[str, ...]], **kwargs
@@ -669,7 +665,9 @@ class MatcherGroup(Group):
             state: 默认 state
         """
         final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
-        return on_startswith(msg, **final_kwargs)
+        matcher = on_startswith(msg, **final_kwargs)
+        self.matchers.append(matcher)
+        return matcher
 
     def on_endswith(self, msg: Union[str, Tuple[str, ...]], **kwargs) -> Type[Matcher]:
         """注册一个消息事件响应器，并且当消息的**文本部分**以指定内容结尾时响应。
@@ -687,7 +685,9 @@ class MatcherGroup(Group):
             state: 默认 state
         """
         final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
-        return on_endswith(msg, **final_kwargs)
+        matcher = on_endswith(msg, **final_kwargs)
+        self.matchers.append(matcher)
+        return matcher
 
     def on_fullmatch(self, msg: Union[str, Tuple[str, ...]], **kwargs) -> Type[Matcher]:
         """注册一个消息事件响应器，并且当消息的**文本部分**与指定内容完全一致时响应。
@@ -705,7 +705,9 @@ class MatcherGroup(Group):
             state: 默认 state
         """
         final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
-        return on_fullmatch(msg, **final_kwargs)
+        matcher = on_fullmatch(msg, **final_kwargs)
+        self.matchers.append(matcher)
+        return matcher
 
     def on_keyword(self, keywords: Set[str], **kwargs) -> Type[Matcher]:
         """注册一个消息事件响应器，并且当消息纯文本部分包含关键词时响应。
@@ -722,7 +724,9 @@ class MatcherGroup(Group):
             state: 默认 state
         """
         final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
-        return on_keyword(keywords, **final_kwargs)
+        matcher = on_keyword(keywords, **final_kwargs)
+        self.matchers.append(matcher)
+        return matcher
 
     def on_command(
         self,
@@ -747,7 +751,9 @@ class MatcherGroup(Group):
             state: 默认 state
         """
         final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
-        return on_command(cmd, aliases=aliases, **final_kwargs)
+        matcher = on_command(cmd, aliases=aliases, **final_kwargs)
+        self.matchers.append(matcher)
+        return matcher
 
     def on_shell_command(
         self,
@@ -776,7 +782,9 @@ class MatcherGroup(Group):
             state: 默认 state
         """
         final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
-        return on_shell_command(cmd, aliases=aliases, parser=parser, **final_kwargs)
+        matcher = on_shell_command(cmd, aliases=aliases, parser=parser, **final_kwargs)
+        self.matchers.append(matcher)
+        return matcher
 
     def on_regex(
         self, pattern: str, flags: Union[int, re.RegexFlag] = 0, **kwargs
@@ -798,7 +806,9 @@ class MatcherGroup(Group):
             state: 默认 state
         """
         final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
-        return on_regex(pattern, flags=flags, **final_kwargs)
+        matcher = on_regex(pattern, flags=flags, **final_kwargs)
+        self.matchers.append(matcher)
+        return matcher
 
     def on_type(
         self, types: Union[Type[Event], Tuple[Type[Event]]], **kwargs
@@ -817,4 +827,6 @@ class MatcherGroup(Group):
             state: 默认 state
         """
         final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
-        return on_type(types, **final_kwargs)
+        matcher = on_type(types, **final_kwargs)
+        self.matchers.append(matcher)
+        return matcher
