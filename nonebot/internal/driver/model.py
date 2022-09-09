@@ -331,8 +331,7 @@ class Cookies(MutableMapping):
             f"Cookie({cookie.name}={cookie.value} for {cookie.domain})"
             for cookie in self.jar
         )
-
-        return f"Cookies({cookies_repr})"
+        return f"{self.__class__.__name__}({cookies_repr})"
 
 
 @dataclass
