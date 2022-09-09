@@ -470,9 +470,6 @@ class _Group:
         self.base_kwargs: Dict[str, Any] = kwargs
         """其他传递给 `on` 的参数默认值"""
 
-    def __repr__(self) -> str:
-        return f"{self.__class__.__name__}(matchers={len(self.matchers)})"
-
     def _get_final_kwargs(
         self, update: Dict[str, Any], *, exclude: Optional[Set[str]] = None
     ) -> Dict[str, Any]:
@@ -511,6 +508,9 @@ class CommandGroup(_Group):
         super().__init__(**kwargs)
         self.basecmd: Tuple[str, ...] = (cmd,) if isinstance(cmd, str) else cmd
         self.base_kwargs.pop("aliases", None)
+
+    def __repr__(self) -> str:
+        return f"CommandGroup(cmd={self.basecmd}, matchers={len(self.matchers)})"
 
     def command(self, cmd: Union[str, Tuple[str, ...]], **kwargs) -> Type[Matcher]:
         """注册一个新的命令。新参数将会覆盖命令组默认值
@@ -560,6 +560,9 @@ class CommandGroup(_Group):
 
 class MatcherGroup(_Group):
     """事件响应器组合，统一管理。为 `Matcher` 创建提供默认属性。"""
+
+    def __repr__(self) -> str:
+        return f"MatcherGroup(matchers={len(self.matchers)})"
 
     def on(self, **kwargs) -> Type[Matcher]:
         """注册一个基础事件响应器，可自定义类型。
