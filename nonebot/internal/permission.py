@@ -47,6 +47,9 @@ class Permission:
         }
         """存储 `PermissionChecker`"""
 
+    def __repr__(self) -> str:
+        return f"Permission({', '.join(repr(checker) for checker in self.checkers)})"
+
     async def __call__(
         self,
         bot: Bot,
@@ -120,6 +123,13 @@ class User:
     ) -> None:
         self.users = users
         self.perm = perm
+
+    def __repr__(self) -> str:
+        return (
+            f"User(users={self.users}"
+            + (f", permission={self.perm})" if self.perm else "")
+            + ")"
+        )
 
     async def __call__(self, bot: Bot, event: Event) -> bool:
         return bool(

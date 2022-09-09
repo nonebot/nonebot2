@@ -61,7 +61,7 @@ async def test_get(monkeypatch: pytest.MonkeyPatch, nonebug_clear):
     with pytest.raises(ValueError):
         get_bot()
 
-    monkeypatch.setattr(driver, "_clients", {"test": "test"})
+    monkeypatch.setattr(driver, "_bots", {"test": "test"})
     assert get_bot() == "test"
     assert get_bot("test") == "test"
     assert get_bots() == {"test": "test"}

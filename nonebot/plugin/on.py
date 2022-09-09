@@ -32,9 +32,8 @@ from .manager import _current_plugin_chain
 
 
 def _store_matcher(matcher: Type[Matcher]) -> None:
-    plugins = _current_plugin_chain.get()
     # only store the matcher defined in the plugin
-    if plugins:
+    if plugins := _current_plugin_chain.get():
         plugins[-1].matcher.add(matcher)
 
 
@@ -370,7 +369,7 @@ def on_command(
         state: 默认 state
     """
 
-    commands = set([cmd]) | (aliases or set())
+    commands = {cmd} | (aliases or set())
     block = kwargs.pop("block", False)
     return on_message(
         command(*commands) & rule, block=block, **kwargs, _depth=_depth + 1
@@ -405,7 +404,7 @@ def on_shell_command(
         state: 默认 state
     """
 
-    commands = set([cmd]) | (aliases or set())
+    commands = {cmd} | (aliases or set())
     return on_message(
         shell_command(*commands, parser=parser) & rule,
         **kwargs,
@@ -486,6 +485,9 @@ class CommandGroup:
         self.base_kwargs: Dict[str, Any] = kwargs
         """其他传递给 `on_command` 的参数默认值"""
 
+    def __repr__(self) -> str:
+        return f"CommandGroup(cmd={self.basecmd})"
+
     def command(self, cmd: Union[str, Tuple[str, ...]], **kwargs) -> Type[Matcher]:
         """注册一个新的命令。新参数将会覆盖命令组默认值
 
@@ -543,6 +545,9 @@ class MatcherGroup:
         """组内事件响应器列表"""
         self.base_kwargs: Dict[str, Any] = kwargs
         """其他传递给 `on` 的参数默认值"""
+
+    def __repr__(self) -> str:
+        return f"MatcherGroup(matchers={len(self.matchers)})"
 
     def on(self, **kwargs) -> Type[Matcher]:
         """注册一个基础事件响应器，可自定义类型。

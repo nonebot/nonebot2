@@ -13,10 +13,9 @@ if TYPE_CHECKING:
     from .adapter import Adapter
     from .message import Message, MessageSegment
 
-
-class _ApiCall(Protocol):
-    async def __call__(self, **kwargs: Any) -> Any:
-        ...
+    class _ApiCall(Protocol):
+        async def __call__(self, **kwargs: Any) -> Any:
+            ...
 
 
 class Bot(abc.ABC):
@@ -40,7 +39,10 @@ class Bot(abc.ABC):
         self.self_id: str = self_id
         """机器人 ID"""
 
-    def __getattr__(self, name: str) -> _ApiCall:
+    def __repr__(self) -> str:
+        return f"Bot(type={self.type!r}, self_id={self.self_id!r})"
+
+    def __getattr__(self, name: str) -> "_ApiCall":
         return partial(self.call_api, name)
 
     @property

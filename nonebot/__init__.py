@@ -40,10 +40,12 @@ FrontMatter:
 import importlib
 from typing import Any, Dict, Type, Optional
 
+import loguru
+
+from nonebot.log import logger
 from nonebot.adapters import Bot
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
-from nonebot.log import logger, default_filter
 from nonebot.drivers import Driver, ReverseDriver, combine_driver
 
 try:
@@ -206,6 +208,15 @@ def _resolve_combine_expr(obj_str: str) -> Type[Driver]:
     return combine_driver(DriverClass, *mixins)
 
 
+def _log_patcher(record: "loguru.Record"):
+    record["name"] = (
+        plugin.name
+        if (module_name := record["name"])
+        and (plugin := get_plugin_by_module_name(module_name))
+        else (module_name and module_name.split(".")[0])
+    )
+
+
 def init(*, _env_file: Optional[str] = None, **kwargs: Any) -> None:
     """初始化 NoneBot 以及 全局 {ref}`nonebot.drivers.Driver` 对象。
 
@@ -232,7 +243,9 @@ def init(*, _env_file: Optional[str] = None, **kwargs: Any) -> None:
             _env_file=_env_file or f".env.{env.environment}",
         )
 
-        default_filter.level = config.log_level
+        logger.configure(
+            extra={"nonebot_log_level": config.log_level}, patcher=_log_patcher
+        )
         logger.opt(colors=True).info(
             f"Current <y><b>Env: {escape_tag(env.environment)}</b></y>"
         )

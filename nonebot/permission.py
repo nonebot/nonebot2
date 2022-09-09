@@ -20,6 +20,9 @@ class Message:
 
     __slots__ = ()
 
+    def __repr__(self) -> str:
+        return "Message()"
+
     async def __call__(self, type: str = EventType()) -> bool:
         return type == "message"
 
@@ -28,6 +31,9 @@ class Notice:
     """检查是否为通知事件"""
 
     __slots__ = ()
+
+    def __repr__(self) -> str:
+        return "Notice()"
 
     async def __call__(self, type: str = EventType()) -> bool:
         return type == "notice"
@@ -38,6 +44,9 @@ class Request:
 
     __slots__ = ()
 
+    def __repr__(self) -> str:
+        return "Request()"
+
     async def __call__(self, type: str = EventType()) -> bool:
         return type == "request"
 
@@ -46,6 +55,9 @@ class MetaEvent:
     """检查是否为元事件"""
 
     __slots__ = ()
+
+    def __repr__(self) -> str:
+        return "MetaEvent()"
 
     async def __call__(self, type: str = EventType()) -> bool:
         return type == "meta_event"
@@ -77,6 +89,9 @@ class SuperUser:
     """检查当前事件是否是消息事件且属于超级管理员"""
 
     __slots__ = ()
+
+    def __repr__(self) -> str:
+        return "Superuser()"
 
     async def __call__(self, bot: Bot, event: Event) -> bool:
         return event.get_type() == "message" and (

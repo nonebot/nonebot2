@@ -37,7 +37,7 @@ try:
     from quart import Quart, Request, Response
     from quart.datastructures import FileStorage
     from quart import Websocket as QuartWebSocket
-except ImportError:
+except ImportError:  # pragma: no cover
     raise ImportError(
         "Please install Quart by using `pip install nonebot2[quart]`"
     ) from None
