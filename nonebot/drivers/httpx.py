@@ -31,7 +31,7 @@ from nonebot.drivers import (
 
 try:
     import httpx
-except ImportError:
+except ImportError:  # pragma: no cover
     raise ImportError(
         "Please install httpx by using `pip install nonebot2[httpx]`"
     ) from None

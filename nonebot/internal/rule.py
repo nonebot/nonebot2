@@ -47,6 +47,9 @@ class Rule:
         }
         """存储 `RuleChecker`"""
 
+    def __repr__(self) -> str:
+        return f"Rule({', '.join(repr(checker) for checker in self.checkers)})"
+
     async def __call__(
         self,
         bot: Bot,

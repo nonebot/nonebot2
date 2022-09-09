@@ -16,6 +16,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 调整日志输出格式与等级 [@yanyongyu](https://github.com/yanyongyu) ([#1233](https://github.com/nonebot/nonebot2/pull/1233))
 - Feature: 优化依赖注入结构 [@yanyongyu](https://github.com/yanyongyu) ([#1227](https://github.com/nonebot/nonebot2/pull/1227))
 - Featue: `load_plugin` 支持 `pathlib.Path` [@Lancercmd](https://github.com/Lancercmd) ([#1194](https://github.com/nonebot/nonebot2/pull/1194))
 - Feature: 新增事件类型过滤 rule [@yanyongyu](https://github.com/yanyongyu) ([#1183](https://github.com/nonebot/nonebot2/pull/1183))
@@ -37,6 +38,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Minecraft Server 聊天同步 [@yanyongyu](https://github.com/yanyongyu) ([#1245](https://github.com/nonebot/nonebot2/pull/1245))
 - Plugin: 查询 ETH 合并日期 [@yanyongyu](https://github.com/yanyongyu) ([#1232](https://github.com/nonebot/nonebot2/pull/1232))
 - Plugin: 星际战甲事件查询 [@yanyongyu](https://github.com/yanyongyu) ([#1220](https://github.com/nonebot/nonebot2/pull/1220))
 - Plugin: 米游社辅助工具 [@yanyongyu](https://github.com/yanyongyu) ([#1218](https://github.com/nonebot/nonebot2/pull/1218))

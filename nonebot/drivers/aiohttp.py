@@ -27,7 +27,7 @@ from nonebot.drivers import HTTPVersion, ForwardMixin, ForwardDriver, combine_dr
 
 try:
     import aiohttp
-except ImportError:
+except ImportError:  # pragma: no cover
     raise ImportError(
         "Please install aiohttp first to use this driver. `pip install nonebot2[aiohttp]`"
     ) from None

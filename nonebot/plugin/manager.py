@@ -51,6 +51,9 @@ class PluginManager:
         self._searched_plugin_names: Dict[str, Path] = {}
         self.prepare_plugins()
 
+    def __repr__(self) -> str:
+        return f"PluginManager(plugins={self.plugins}, search_path={self.search_path})"
+
     @property
     def third_party_plugins(self) -> Set[str]:
         """返回所有独立插件名称。"""

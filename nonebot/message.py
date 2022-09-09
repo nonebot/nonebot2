@@ -51,14 +51,14 @@ _event_postprocessors: Set[Dependent[Any]] = set()
 _run_preprocessors: Set[Dependent[Any]] = set()
 _run_postprocessors: Set[Dependent[Any]] = set()
 
-EVENT_PCS_PARAMS = [
+EVENT_PCS_PARAMS = (
     DependParam,
     BotParam,
     EventParam,
     StateParam,
     DefaultParam,
-]
-RUN_PREPCS_PARAMS = [
+)
+RUN_PREPCS_PARAMS = (
     DependParam,
     BotParam,
     EventParam,
@@ -66,8 +66,8 @@ RUN_PREPCS_PARAMS = [
     ArgParam,
     MatcherParam,
     DefaultParam,
-]
-RUN_POSTPCS_PARAMS = [
+)
+RUN_POSTPCS_PARAMS = (
     DependParam,
     ExceptionParam,
     BotParam,
@@ -76,7 +76,7 @@ RUN_POSTPCS_PARAMS = [
     ArgParam,
     MatcherParam,
     DefaultParam,
-]
+)
 
 
 def event_preprocessor(func: T_EventPreProcessor) -> T_EventPreProcessor:
@@ -170,9 +170,7 @@ async def _run_matcher(
         try:
             await asyncio.gather(*coros)
         except IgnoredException:
-            logger.opt(colors=True).info(
-                f"Matcher {matcher} running is <b>cancelled</b>"
-            )
+            logger.opt(colors=True).info(f"{matcher} running is <b>cancelled</b>")
             return
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
@@ -184,11 +182,11 @@ async def _run_matcher(
     exception = None
 
     try:
-        logger.debug(f"Running matcher {matcher}")
+        logger.debug(f"Running {matcher}")
         await matcher.run(bot, event, state, stack, dependency_cache)
     except Exception as e:
         logger.opt(colors=True, exception=e).error(
-            f"<r><bg #f8bbd0>Running matcher {matcher} failed.</bg #f8bbd0></r>"
+            f"<r><bg #f8bbd0>Running {matcher} failed.</bg #f8bbd0></r>"
         )
         exception = e
 
@@ -233,7 +231,7 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
         ```
     """
     show_log = True
-    log_msg = f"<m>{escape_tag(bot.type.upper())} {escape_tag(bot.self_id)}</m> | "
+    log_msg = f"<m>{escape_tag(bot.type)} {escape_tag(bot.self_id)}</m> | "
     try:
         log_msg += event.get_log_string()
     except NoLogException:

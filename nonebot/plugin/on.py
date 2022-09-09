@@ -6,10 +6,9 @@ FrontMatter:
 """
 import re
 import inspect
-from functools import wraps
 from types import ModuleType
 from datetime import datetime, timedelta
-from typing import Any, Set, Dict, List, Type, Tuple, Union, Callable, Optional
+from typing import Any, Set, Dict, List, Type, Tuple, Union, Optional
 
 from nonebot.adapters import Event
 from nonebot.matcher import Matcher
@@ -33,9 +32,8 @@ from .manager import _current_plugin_chain
 
 
 def _store_matcher(matcher: Type[Matcher]) -> None:
-    plugins = _current_plugin_chain.get()
     # only store the matcher defined in the plugin
-    if plugins:
+    if plugins := _current_plugin_chain.get():
         plugins[-1].matcher.add(matcher)
 
 
@@ -371,7 +369,7 @@ def on_command(
         state: 默认 state
     """
 
-    commands = set([cmd]) | (aliases or set())
+    commands = {cmd} | (aliases or set())
     block = kwargs.pop("block", False)
     return on_message(
         command(*commands) & rule, block=block, **kwargs, _depth=_depth + 1
@@ -406,7 +404,7 @@ def on_shell_command(
         state: 默认 state
     """
 
-    commands = set([cmd]) | (aliases or set())
+    commands = {cmd} | (aliases or set())
     return on_message(
         shell_command(*commands, parser=parser) & rule,
         **kwargs,
@@ -471,6 +469,9 @@ class _Group:
         """组内事件响应器列表"""
         self.base_kwargs: Dict[str, Any] = kwargs
         """其他传递给 `on` 的参数默认值"""
+
+    def __repr__(self) -> str:
+        return f"{self.__class__.__name__}(matchers={len(self.matchers)})"
 
     def _get_final_kwargs(
         self, update: Dict[str, Any], *, exclude: Optional[Set[str]] = None
