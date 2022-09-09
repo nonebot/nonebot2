@@ -56,6 +56,9 @@ class MessageTemplate(Formatter, Generic[TF]):
         self.factory: Type[TF] = factory
         self.format_specs: Dict[str, FormatSpecFunc] = {}
 
+    def __repr__(self) -> str:
+        return f"MessageTemplate({self.template!r}, factory={self.factory!r})"
+
     def add_format_spec(
         self, spec: FormatSpecFunc_T, name: Optional[str] = None
     ) -> FormatSpecFunc_T:

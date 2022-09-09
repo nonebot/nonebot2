@@ -36,7 +36,7 @@ class DependsInner:
     def __repr__(self) -> str:
         dep = get_name(self.dependency)
         cache = "" if self.use_cache else ", use_cache=False"
-        return f"{self.__class__.__name__}({dep}{cache})"
+        return f"DependsInner({dep}{cache})"
 
 
 def Depends(
@@ -70,6 +70,9 @@ def Depends(
 
 class DependParam(Param):
     """子依赖参数"""
+
+    def __repr__(self) -> str:
+        return f"Depends({self.extra['dependent']})"
 
     @classmethod
     def _check_param(
@@ -153,6 +156,17 @@ class DependParam(Param):
 class BotParam(Param):
     """{ref}`nonebot.adapters.Bot` 参数"""
 
+    def __repr__(self) -> str:
+        return (
+            "BotParam("
+            + (
+                repr(cast(ModelField, checker).type_)
+                if (checker := self.extra.get("checker"))
+                else ""
+            )
+            + ")"
+        )
+
     @classmethod
     def _check_param(
         cls, param: inspect.Parameter, allow_types: Tuple[Type[Param], ...]
@@ -179,12 +193,23 @@ class BotParam(Param):
         return bot
 
     async def _check(self, bot: "Bot", **kwargs: Any) -> None:
-        if checker := self.extra.get("checker", None):
+        if checker := self.extra.get("checker"):
             check_field_type(checker, bot)
 
 
 class EventParam(Param):
     """{ref}`nonebot.adapters.Event` 参数"""
+
+    def __repr__(self) -> str:
+        return (
+            "EventParam("
+            + (
+                repr(cast(ModelField, checker).type_)
+                if (checker := self.extra.get("checker"))
+                else ""
+            )
+            + ")"
+        )
 
     @classmethod
     def _check_param(
@@ -216,20 +241,17 @@ class EventParam(Param):
             check_field_type(checker, event)
 
 
-class StateInner(T_State):
-    ...
-
-
 class StateParam(Param):
     """事件处理状态参数"""
+
+    def __repr__(self) -> str:
+        return "StateParam()"
 
     @classmethod
     def _check_param(
         cls, param: inspect.Parameter, allow_types: Tuple[Type[Param], ...]
     ) -> Optional["StateParam"]:
-        if isinstance(param.default, StateInner):
-            return cls(Required)
-        elif param.default == param.empty:
+        if param.default == param.empty:
             if param.annotation is T_State:
                 return cls(Required)
             elif param.annotation == param.empty and param.name == "state":
@@ -241,6 +263,9 @@ class StateParam(Param):
 
 class MatcherParam(Param):
     """事件响应器实例参数"""
+
+    def __repr__(self) -> str:
+        return "MatcherParam()"
 
     @classmethod
     def _check_param(
@@ -264,6 +289,9 @@ class ArgInner:
         self.key = key
         self.type = type
 
+    def __repr__(self) -> str:
+        return f"ArgInner(key={self.key!r}, type={self.type!r})"
+
 
 def Arg(key: Optional[str] = None) -> Any:
     """`got` 的 Arg 参数消息"""
@@ -282,6 +310,9 @@ def ArgPlainText(key: Optional[str] = None) -> str:
 
 class ArgParam(Param):
     """`got` 的 Arg 参数"""
+
+    def __repr__(self) -> str:
+        return f"ArgParam(key={self.extra['key']!r}, type={self.extra['type']!r})"
 
     @classmethod
     def _check_param(
@@ -307,6 +338,9 @@ class ArgParam(Param):
 class ExceptionParam(Param):
     """`run_postprocessor` 的异常参数"""
 
+    def __repr__(self) -> str:
+        return "ExceptionParam()"
+
     @classmethod
     def _check_param(
         cls, param: inspect.Parameter, allow_types: Tuple[Type[Param], ...]
@@ -322,6 +356,9 @@ class ExceptionParam(Param):
 
 class DefaultParam(Param):
     """默认值参数"""
+
+    def __repr__(self) -> str:
+        return f"DefaultParam(default={self.default!r})"
 
     @classmethod
     def _check_param(

@@ -159,11 +159,10 @@ def require(name: str) -> ModuleType:
     """
     plugin = get_plugin(_module_name_to_plugin_name(name))
     if not plugin:
-        manager = _find_manager_by_name(name)
-        if manager:
+        if manager := _find_manager_by_name(name):
             plugin = manager.load_plugin(name)
         else:
             plugin = load_plugin(name)
-        if not plugin:
-            raise RuntimeError(f'Cannot load plugin "{name}"!')
+    if not plugin:
+        raise RuntimeError(f'Cannot load plugin "{name}"!')
     return plugin.module
