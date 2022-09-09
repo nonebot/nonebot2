@@ -2660,5 +2660,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "GenshinUID",
+    "project_link": "git+https://github.com/KimigaiiWuyi/GenshinUID.git@nonebot2-beta1#egg=GenshinUID",
+    "name": "GenshinUID",
+    "desc": "原神Uid查询/原神Wiki/米社签到/树脂提醒插件",
+    "author": "KimigaiiWuyi",
+    "homepage": "https://github.com/KimigaiiWuyi/GenshinUID/tree/nonebot2-beta1",
+    "tags": [
+      {
+        "label": "原神",
+        "color": "#8edffb"
+      }
+    ],
+    "is_official": false
   }
 ]
