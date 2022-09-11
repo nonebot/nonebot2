@@ -2675,5 +2675,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_RealESRGAN",
+    "project_link": "nonebot_plugin_RealESRGAN",
+    "name": "图像超分辨率重建",
+    "desc": "对图像进行超分辨率重建，可以理解成将图像变大变清晰，不过线上重建的效果没有本地的好，具体可以查阅仓库",
+    "author": "ppxxxg22",
+    "homepage": "https://github.com/ppxxxg22/nonebot_plugin_RealESRGAN",
+    "tags": [
+      {
+        "label": "图像超分辨率重建",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
