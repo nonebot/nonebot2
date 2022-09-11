@@ -40,6 +40,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 图像超分辨率重建 [@yanyongyu](https://github.com/yanyongyu) ([#1250](https://github.com/nonebot/nonebot2/pull/1250))
 - Plugin: Minecraft Server 聊天同步 [@yanyongyu](https://github.com/yanyongyu) ([#1245](https://github.com/nonebot/nonebot2/pull/1245))
 - Plugin: 查询 ETH 合并日期 [@yanyongyu](https://github.com/yanyongyu) ([#1232](https://github.com/nonebot/nonebot2/pull/1232))
 - Plugin: 星际战甲事件查询 [@yanyongyu](https://github.com/yanyongyu) ([#1220](https://github.com/nonebot/nonebot2/pull/1220))
