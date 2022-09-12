@@ -2690,5 +2690,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "ayaka",
+    "project_link": "nonebot-plugin-ayaka",
+    "name": "ayaka - 文字游戏开发辅助插件",
+    "desc": "提供了状态机、命令隔离、缓存、固存、帮助指令等功能，可以管理多个文字游戏避免命令冲突，帮助开发者在nonebot2框架基础上快速开发qq文字游戏",
+    "author": "bridgeL",
+    "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka",
+    "tags": [
+      {
+        "label": "a:cqhttp",
+        "color": "#000000"
+      },
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "t:文字游戏",
+        "color": "#e36306"
+      }
+    ],
+    "is_official": false
   }
 ]
