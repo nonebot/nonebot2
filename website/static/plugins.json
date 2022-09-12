@@ -2713,5 +2713,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-wolf-kill",
+    "project_link": "nonebot-plugin-wolf-kill",
+    "name": "狼人杀插件",
+    "desc": "在群里玩狼人杀",
+    "author": "AbCooly",
+    "homepage": "https://github.com/AbCooly/nonebot_plugin_wolf_kill",
+    "tags": [],
+    "is_official": false
   }
 ]
