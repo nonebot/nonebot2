@@ -84,7 +84,7 @@ def on(
         handlers=handlers,
         plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
-        group=group,
+        group=group,  # type: ignore
         default_state=state,
     )
     _store_matcher(matcher)
@@ -126,7 +126,7 @@ def on_metaevent(
         handlers=handlers,
         plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
-        group=group,
+        group=group,  # type: ignore
         default_state=state,
     )
     _store_matcher(matcher)
@@ -170,7 +170,7 @@ def on_message(
         handlers=handlers,
         plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
-        group=group,
+        group=group,  # type: ignore
         default_state=state,
     )
     _store_matcher(matcher)
@@ -212,7 +212,7 @@ def on_notice(
         handlers=handlers,
         plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
-        group=group,
+        group=group,  # type: ignore
         default_state=state,
     )
     _store_matcher(matcher)
@@ -254,7 +254,7 @@ def on_request(
         handlers=handlers,
         plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
-        group=group,
+        group=group,  # type: ignore
         default_state=state,
     )
     _store_matcher(matcher)
