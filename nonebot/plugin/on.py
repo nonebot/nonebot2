@@ -56,6 +56,7 @@ def on(
     priority: int = 1,
     block: bool = False,
     state: Optional[T_State] = None,
+    group: Optional[Union["CommandGroup", "MatcherGroup"]] = None,
     _depth: int = 0,
 ) -> Type[Matcher]:
     """注册一个基础事件响应器，可自定义类型。
@@ -83,6 +84,7 @@ def on(
         handlers=handlers,
         plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
+        group=group,
         default_state=state,
     )
     _store_matcher(matcher)
@@ -98,6 +100,7 @@ def on_metaevent(
     priority: int = 1,
     block: bool = False,
     state: Optional[T_State] = None,
+    group: Optional[Union["CommandGroup", "MatcherGroup"]] = None,
     _depth: int = 0,
 ) -> Type[Matcher]:
     """注册一个元事件响应器。
@@ -123,6 +126,7 @@ def on_metaevent(
         handlers=handlers,
         plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
+        group=group,
         default_state=state,
     )
     _store_matcher(matcher)
@@ -139,6 +143,7 @@ def on_message(
     priority: int = 1,
     block: bool = True,
     state: Optional[T_State] = None,
+    group: Optional[Union["CommandGroup", "MatcherGroup"]] = None,
     _depth: int = 0,
 ) -> Type[Matcher]:
     """注册一个消息事件响应器。
@@ -165,6 +170,7 @@ def on_message(
         handlers=handlers,
         plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
+        group=group,
         default_state=state,
     )
     _store_matcher(matcher)
@@ -180,6 +186,7 @@ def on_notice(
     priority: int = 1,
     block: bool = False,
     state: Optional[T_State] = None,
+    group: Optional[Union["CommandGroup", "MatcherGroup"]] = None,
     _depth: int = 0,
 ) -> Type[Matcher]:
     """注册一个通知事件响应器。
@@ -205,6 +212,7 @@ def on_notice(
         handlers=handlers,
         plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
+        group=group,
         default_state=state,
     )
     _store_matcher(matcher)
@@ -220,6 +228,7 @@ def on_request(
     priority: int = 1,
     block: bool = False,
     state: Optional[T_State] = None,
+    group: Optional[Union["CommandGroup", "MatcherGroup"]] = None,
     _depth: int = 0,
 ) -> Type[Matcher]:
     """注册一个请求事件响应器。
@@ -245,6 +254,7 @@ def on_request(
         handlers=handlers,
         plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
+        group=group,
         default_state=state,
     )
     _store_matcher(matcher)
@@ -485,6 +495,7 @@ class _Group:
             for key in exclude:
                 final_kwargs.pop(key, None)
         final_kwargs["_depth"] = 1
+        final_kwargs["group"] = self
         return final_kwargs
 
 

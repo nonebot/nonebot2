@@ -58,7 +58,7 @@ from .params import (
 )
 
 if TYPE_CHECKING:
-    from nonebot.plugin import Plugin
+    from nonebot.plugin import Plugin, CommandGroup, MatcherGroup
 
 T = TypeVar("T")
 
@@ -94,6 +94,8 @@ class Matcher(metaclass=MatcherMeta):
     """事件响应器所在插件名"""
     module_name: Optional[str] = None
     """事件响应器所在点分割插件模块路径"""
+    group: Optional[Union["CommandGroup", "MatcherGroup"]] = None
+    """事件响应器所在组"""
 
     type: str = ""
     """事件响应器类型"""
@@ -154,6 +156,7 @@ class Matcher(metaclass=MatcherMeta):
         *,
         plugin: Optional["Plugin"] = None,
         module: Optional[ModuleType] = None,
+        group: Optional[Union["CommandGroup", "MatcherGroup"]] = None,
         expire_time: Optional[Union[datetime, timedelta]] = None,
         default_state: Optional[T_State] = None,
         default_type_updater: Optional[Union[T_TypeUpdater, Dependent[str]]] = None,
@@ -174,6 +177,7 @@ class Matcher(metaclass=MatcherMeta):
             block: 是否阻止事件向更低优先级的响应器传播
             plugin: 事件响应器所在插件
             module: 事件响应器所在模块
+            group: 事件响应器所在组
             default_state: 默认状态 `state`
             expire_time: 事件响应器最终有效时间点，过时即被删除
 
@@ -188,6 +192,7 @@ class Matcher(metaclass=MatcherMeta):
                 "module": module,
                 "plugin_name": plugin and plugin.name,
                 "module_name": module and module.__name__,
+                "group": group,
                 "type": type_,
                 "rule": rule or Rule(),
                 "permission": permission or Permission(),
@@ -730,6 +735,7 @@ class Matcher(metaclass=MatcherMeta):
                 block=True,
                 plugin=self.plugin,
                 module=self.module,
+                group=self.group,
                 expire_time=bot.config.session_expire_timeout,
                 default_state=self.state,
                 default_type_updater=self.__class__._default_type_updater,
@@ -749,6 +755,7 @@ class Matcher(metaclass=MatcherMeta):
                 block=True,
                 plugin=self.plugin,
                 module=self.module,
+                group=self.group,
                 expire_time=bot.config.session_expire_timeout,
                 default_state=self.state,
                 default_type_updater=self.__class__._default_type_updater,
