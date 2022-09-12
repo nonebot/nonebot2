@@ -250,5 +250,18 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "LittlePaimon",
+    "desc": "小派蒙，多功能原神机器人。",
+    "author": "CMHopeSunshine",
+    "homepage": "https://github.com/CMHopeSunshine/LittlePaimon",
+    "tags": [
+      {
+        "label": "原神",
+        "color": "#7a52ea"
+      }
+    ],
+    "is_official": false
   }
 ]
