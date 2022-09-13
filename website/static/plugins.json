@@ -2723,5 +2723,28 @@
     "homepage": "https://github.com/AbCooly/nonebot_plugin_wolf_kill",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "iot",
+    "project_link": "nonebot-plugin-iot",
+    "name": "nonebot物联网插件",
+    "desc": "为nonebot接入物联网提供方案，目前支持天猫精灵终端，后续会增加",
+    "author": "littlebutt",
+    "homepage": "https://github.com/littlebutt/nonebot-plugin-iot",
+    "tags": [
+      {
+        "label": "t:物联网",
+        "color": "#4b86d7"
+      },
+      {
+        "label": "t:天猫精灵",
+        "color": "#4b86d7"
+      },
+      {
+        "label": "t:IOT",
+        "color": "#4b86d7"
+      }
+    ],
+    "is_official": false
   }
 ]
