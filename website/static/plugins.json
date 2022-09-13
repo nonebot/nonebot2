@@ -2723,5 +2723,24 @@
     "homepage": "https://github.com/AbCooly/nonebot_plugin_wolf_kill",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_BiliRequestsBarand",
+    "project_link": "nonebot-plugin-BiliRequestsBarand",
+    "name": "BiliRequestsBarand",
+    "desc": "通过UID审核入群",
+    "author": "Shadow403",
+    "homepage": "https://github.com/Shadow403/nonebot_plugin_BiliRequestsBarand.git",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#c119af"
+      },
+      {
+        "label": "requests",
+        "color": "#1d9e24"
+      }
+    ],
+    "is_official": false
   }
 ]
