@@ -263,5 +263,18 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "IdhagnBot",
+    "desc": "🐱🤖 一个以娱乐功能为主的缝合怪（划掉）QQ机器人，包含一定Furry要素但是不会卖萌（就是逊啦！）",
+    "author": "su226",
+    "homepage": "https://github.com/su226/IdhagnBot",
+    "tags": [
+      {
+        "label": "a:OneBot",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
