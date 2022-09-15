@@ -40,6 +40,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot 物联网插件 [@yanyongyu](https://github.com/yanyongyu) ([#1265](https://github.com/nonebot/nonebot2/pull/1265))
 - Plugin: 狼人杀插件 [@yanyongyu](https://github.com/yanyongyu) ([#1252](https://github.com/nonebot/nonebot2/pull/1252))
 - Plugin: ayaka - 文字游戏开发辅助插件 [@yanyongyu](https://github.com/yanyongyu) ([#1254](https://github.com/nonebot/nonebot2/pull/1254))
 - Plugin: 图像超分辨率重建 [@yanyongyu](https://github.com/yanyongyu) ([#1250](https://github.com/nonebot/nonebot2/pull/1250))
