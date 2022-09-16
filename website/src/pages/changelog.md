@@ -80,6 +80,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: IdhagnBot [@yanyongyu](https://github.com/yanyongyu) ([#1267](https://github.com/nonebot/nonebot2/pull/1267))
 - Bot: LittlePaimon [@yanyongyu](https://github.com/yanyongyu) ([#1256](https://github.com/nonebot/nonebot2/pull/1256))
 - Bot: GenshinUID [@yanyongyu](https://github.com/yanyongyu) ([#1226](https://github.com/nonebot/nonebot2/pull/1226))
 - Bot: 小白机器人 [@yanyongyu](https://github.com/yanyongyu) ([#1224](https://github.com/nonebot/nonebot2/pull/1224))
