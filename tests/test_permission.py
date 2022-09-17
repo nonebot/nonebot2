@@ -144,7 +144,7 @@ async def test_metaevent(
         ("message", "test", True),
         ("message", "foo", False),
         ("message", "faketest", True),
-        ("notice", "test", False),
+        ("notice", "test", True),
     ],
 )
 async def test_superuser(
