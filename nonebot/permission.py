@@ -97,8 +97,8 @@ class SuperUser:
         return (
             f"{bot.adapter.get_name().split(maxsplit=1)[0].lower()}:{event.get_user_id()}"
             in bot.config.superusers
-            or event.get_user_id() in bot.config.superusers # 兼容旧配置
-        )  
+            or event.get_user_id() in bot.config.superusers  # 兼容旧配置
+        )
 
 
 SUPERUSER: Permission = Permission(SuperUser())
