@@ -94,15 +94,15 @@ class SuperUser:
         return "Superuser()"
 
     async def __call__(self, bot: Bot, event: Event) -> bool:
-        return event.get_type() == "message" and (
+        return (
             f"{bot.adapter.get_name().split(maxsplit=1)[0].lower()}:{event.get_user_id()}"
             in bot.config.superusers
-            or event.get_user_id() in bot.config.superusers  # 兼容旧配置
-        )
+            or event.get_user_id() in bot.config.superusers # 兼容旧配置
+        )  
 
 
 SUPERUSER: Permission = Permission(SuperUser())
-"""匹配任意超级用户消息类型事件"""
+"""匹配任意超级用户事件"""
 
 __autodoc__ = {
     "Permission": True,
