@@ -327,6 +327,8 @@ class ArgParam(Param):
         message = matcher.get_arg(self.extra["key"])
         if message is None:
             return message
+        if isinstance(message, str):
+            return message
         if self.extra["type"] == "message":
             return message
         elif self.extra["type"] == "str":
