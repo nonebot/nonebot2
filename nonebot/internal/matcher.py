@@ -610,7 +610,11 @@ class Matcher(metaclass=MatcherMeta):
 
         如果没有找到对应的消息，返回 `default` 值
         """
-        return self.state.get(ARG_KEY.format(key=key), default)
+        _ = self.state.get(ARG_KEY.format(key=key), default)
+        if isinstance(_, Message) or default:
+            return _
+        else:
+            return Message(_)
 
     def set_arg(self, key: str, message: Message) -> None:
         """设置一个 `got` 消息"""
