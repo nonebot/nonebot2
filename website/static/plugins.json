@@ -2746,5 +2746,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bwiki_navigator",
+    "project_link": "nonebot-plugin-bwiki-navigator",
+    "name": "BWIKI助手移植版",
+    "desc": "BWIKI助手机器人Nonebot2插件移植版",
+    "author": "XZhouQD",
+    "homepage": "https://github.com/XZhouQD/nonebot-plugin-bwiki-navigator",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "t:wiki",
+        "color": "#29a5e3"
+      }
+    ],
+    "is_official": false
   }
 ]
