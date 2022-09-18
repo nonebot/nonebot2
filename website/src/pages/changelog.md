@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 💥 破坏性变更
 
+- Feature: `SUPERUSER` 权限匹配任意超管事件 [@AkiraXie](https://github.com/AkiraXie) ([#1275](https://github.com/nonebot/nonebot2/pull/1275))
 - Remove: 移除过时的 State 注入参数 [@yanyongyu](https://github.com/yanyongyu) ([#1160](https://github.com/nonebot/nonebot2/pull/1160))
 - Remove: 移除过时的 `nonebot.plugins` toml 配置 [@yanyongyu](https://github.com/yanyongyu) ([#1151](https://github.com/nonebot/nonebot2/pull/1151))
 - Remove: 移除 Python 3.7 支持 [@yanyongyu](https://github.com/yanyongyu) ([#1148](https://github.com/nonebot/nonebot2/pull/1148))
@@ -16,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: `SUPERUSER` 权限匹配任意超管事件 [@AkiraXie](https://github.com/AkiraXie) ([#1275](https://github.com/nonebot/nonebot2/pull/1275))
 - Feature: 改进 `CommandGroup` 与 `MatcherGroup` 的结构 [@A-kirami](https://github.com/A-kirami) ([#1240](https://github.com/nonebot/nonebot2/pull/1240))
 - Feature: 调整日志输出格式与等级 [@yanyongyu](https://github.com/yanyongyu) ([#1233](https://github.com/nonebot/nonebot2/pull/1233))
 - Feature: 优化依赖注入结构 [@yanyongyu](https://github.com/yanyongyu) ([#1227](https://github.com/nonebot/nonebot2/pull/1227))
