@@ -2765,5 +2765,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bottle",
+    "project_link": "nonebot-plugin-bottle",
+    "name": "漂流瓶",
+    "desc": "群与群互通的漂流瓶插件",
+    "author": "Todysheep",
+    "homepage": "https://github.com/Todysheep/nonebot_plugin_bottle",
+    "tags": [
+      {
+        "label": "漂流瓶",
+        "color": "#0893f2"
+      }
+    ],
+    "is_official": false
   }
 ]
