@@ -2780,5 +2780,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_BiliRequestsBarand",
+    "project_link": "nonebot-plugin-BiliRequestsBarand",
+    "name": "BiliRequestsBarand",
+    "desc": "通过B站UID审核入群（粉丝牌）",
+    "author": "Shadow403",
+    "homepage": "https://github.com/Shadow403/nonebot_plugin_BiliRequestsBarand",
+    "tags": [
+      {
+        "label": "UID入群审核",
+        "color": "#239717"
+      },
+      {
+        "label": "bilibili",
+        "color": "#b910c8"
+      }
+    ],
+    "is_official": false
   }
 ]
