@@ -42,6 +42,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 漂流瓶 [@yanyongyu](https://github.com/yanyongyu) ([#1279](https://github.com/nonebot/nonebot2/pull/1279))
 - Plugin: BWIKI 助手移植版 [@yanyongyu](https://github.com/yanyongyu) ([#1274](https://github.com/nonebot/nonebot2/pull/1274))
 - Plugin: nonebot 物联网插件 [@yanyongyu](https://github.com/yanyongyu) ([#1265](https://github.com/nonebot/nonebot2/pull/1265))
 - Plugin: 狼人杀插件 [@yanyongyu](https://github.com/yanyongyu) ([#1252](https://github.com/nonebot/nonebot2/pull/1252))
