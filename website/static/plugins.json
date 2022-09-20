@@ -2780,5 +2780,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_tts_gal",
+    "project_link": "nonebot-plugin-tts-gal",
+    "name": "gal角色语音生成",
+    "desc": "能够根据发送角色名和文本生成对应角色语音",
+    "author": "dpm12345",
+    "homepage": "https://github.com/dpm12345/nonebot_plugin_tts_gal",
+    "tags": [
+      {
+        "label": "VITS",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
