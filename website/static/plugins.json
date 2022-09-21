@@ -2795,5 +2795,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_alicdk_get",
+    "project_link": "nonebot-plugin-alicdk-get",
+    "name": "阿里云盘福利码自动兑换",
+    "desc": "基于nonebot2与aligo的阿里云盘兑换码自动获取和兑换插件。",
+    "author": "Kaguya233qwq",
+    "homepage": "https://github.com/Kaguya233qwq/nonebot_plugin_alicdk_get",
+    "tags": [
+      {
+        "label": "兑换码",
+        "color": "#595fd6"
+      },
+      {
+        "label": "auto",
+        "color": "#595fd6"
+      },
+      {
+        "label": "t:阿里云盘",
+        "color": "#595fd6"
+      }
+    ],
+    "is_official": false
   }
 ]
