@@ -2818,5 +2818,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "Candy_reply",
+    "project_link": "Candy-reply",
+    "name": "QQ表情回复",
+    "desc": "发送指定表情触发回复，目前已经编好了一些回复……",
+    "author": "zhulinyv",
+    "homepage": "https://github.com/zhulinyv/Candy_reply",
+    "tags": [
+      {
+        "label": "闲聊",
+        "color": "#FB04B7"
+      }
+    ],
+    "is_official": false
   }
 ]
