@@ -2818,5 +2818,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chatrecorder_guild_patch",
+    "project_link": "nonebot-plugin-chatrecorder-guild-patch",
+    "name": "聊天记录插件频道适配",
+    "desc": "适用于nonebot-plugin-chatrecorder的频道适配器",
+    "author": "X-Skirt-X",
+    "homepage": "https://github.com/X-Skirt-X/nonebot-plugin-chatrecorder-guild-patch",
+    "tags": [
+      {
+        "label": "t:消息记录",
+        "color": "#9dea52"
+      },
+      {
+        "label": "t:频道",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
