@@ -42,6 +42,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: PicStatus [@yanyongyu](https://github.com/yanyongyu) ([#1287](https://github.com/nonebot/nonebot2/pull/1287))
 - Plugin: 阿里云盘福利码自动兑换 [@yanyongyu](https://github.com/yanyongyu) ([#1283](https://github.com/nonebot/nonebot2/pull/1283))
 - Plugin: gal 角色语音生成 [@yanyongyu](https://github.com/yanyongyu) ([#1281](https://github.com/nonebot/nonebot2/pull/1281))
 - Plugin: 漂流瓶 [@yanyongyu](https://github.com/yanyongyu) ([#1279](https://github.com/nonebot/nonebot2/pull/1279))
