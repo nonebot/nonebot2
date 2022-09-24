@@ -2837,5 +2837,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_tuling",
+    "project_link": "nonebot-plugin-tuling",
+    "name": "图灵机器人",
+    "desc": "接入图灵机器人做聊天",
+    "author": "koking0",
+    "homepage": "https://github.com/Matrix-King-Studio/nonebot_plugin_tuling",
+    "tags": [],
+    "is_official": false
   }
 ]
