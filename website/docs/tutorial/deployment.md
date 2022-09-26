@@ -274,17 +274,17 @@ $ pm2 start "python -m nb_cli run" # 或者直接 nb run 也行
 
 此时 Bot 进程就在后台运行了, 注意到表格第一列的 ID, 它可以用来查看和控制进程的状态
 
-#### 在虚拟环境下启动 Bot 进程（以Poetry为例）
+#### 在虚拟环境下启动 Bot 进程（以 Poetry 为例）
 
 再次提醒注意必须先切换到 Bot 的工作目录下
 
 ```shell
 # 获取虚拟环境路径
-$ poetry env info | grep virtualenv.*python | awk '{print $2}' 
+$ poetry env info | grep virtualenv.*python | awk '{print $2}'
 /home/noah/.cache/pypoetry/virtualenvs/none-bot-guhZIsCX-py3.8/bin/python
 
 # 此处在 interpreter 后填入上述虚拟环境路径，在 name 处填入想取的项目名
-$ pm2 start ./bot.py --name=zhenxun --interpreter /home/noah/.cache/pypoetry/virtualenvs/none-bot-guhZIsCX-py3.8/bin/python 
+$ pm2 start ./bot.py --name=zhenxun --interpreter /home/noah/.cache/pypoetry/virtualenvs/none-bot-guhZIsCX-py3.8/bin/python
 
 [PM2] Starting /home/noah/zhenxun_bot/bot.py in fork_mode (1 instance)
 [PM2] Done.
@@ -294,6 +294,7 @@ $ pm2 start ./bot.py --name=zhenxun --interpreter /home/noah/.cache/pypoetry/vir
 │ 1   │ zhenxun          │ default     │ N/A     │ fork    │ 2515037  │ 0s     │ 0    │ online    │ 0%       │ 8.1mb    │ noah     │ disabled │
 └─────┴──────────────────┴─────────────┴─────────┴─────────┴──────────┴────────┴──────┴───────────┴──────────┴──────────┴──────────┴──────────┘
 ```
+
 此时 Bot 进程就在后台运行了, 注意到表格第一列的 ID 和第二列的 name, 它们都可以用来查看和控制进程的状态
 
 #### 常用命令
