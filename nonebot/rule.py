@@ -39,15 +39,8 @@ from nonebot.log import logger
 from nonebot.typing import T_State
 from nonebot.exception import ParserExit
 from nonebot.internal.rule import Rule as Rule
+from nonebot.params import Command, EventToMe, CommandArg
 from nonebot.adapters import Bot, Event, Message, MessageSegment
-from nonebot.params import (
-    Command,
-    EventToMe,
-    EventType,
-    CommandArg,
-    EventMessage,
-    EventPlainText,
-)
 from nonebot.consts import (
     CMD_KEY,
     PREFIX_KEY,
