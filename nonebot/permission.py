@@ -94,10 +94,14 @@ class SuperUser:
         return "Superuser()"
 
     async def __call__(self, bot: Bot, event: Event) -> bool:
+        try:
+            user_id = event.get_user_id()
+        except Exception:
+            return False
         return (
-            f"{bot.adapter.get_name().split(maxsplit=1)[0].lower()}:{event.get_user_id()}"
+            f"{bot.adapter.get_name().split(maxsplit=1)[0].lower()}:{user_id}"
             in bot.config.superusers
-            or event.get_user_id() in bot.config.superusers  # 兼容旧配置
+            or user_id in bot.config.superusers  # 兼容旧配置
         )
 
 

@@ -132,9 +132,12 @@ class User:
         )
 
     async def __call__(self, bot: Bot, event: Event) -> bool:
+        try:
+            session = event.get_session_id()
+        except Exception:
+            return False
         return bool(
-            event.get_session_id() in self.users
-            and (self.perm is None or await self.perm(bot, event))
+            session in self.users and (self.perm is None or await self.perm(bot, event))
         )
 
 
