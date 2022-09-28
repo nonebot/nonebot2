@@ -2847,5 +2847,20 @@
     "homepage": "https://github.com/Matrix-King-Studio/nonebot_plugin_tuling",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_makemidi",
+    "project_link": "nonebot_plugin_makemidi",
+    "name": "在线编曲",
+    "desc": "发送简谱生成音乐",
+    "author": "RandomEnch",
+    "homepage": "https://github.com/RandomEnch/nonebot_plugin_makemidi",
+    "tags": [
+      {
+        "label": "midi",
+        "color": "#6515a8"
+      }
+    ],
+    "is_official": false
   }
 ]
