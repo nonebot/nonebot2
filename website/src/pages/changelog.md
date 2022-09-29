@@ -98,6 +98,7 @@ toc_max_heading_level: 2
 
 ### 🍻 适配器发布
 
+- Adapter: GitHub [@yanyongyu](https://github.com/yanyongyu) ([#1297](https://github.com/nonebot/nonebot2/pull/1297))
 - Adapter: Console [@yanyongyu](https://github.com/yanyongyu) ([#1213](https://github.com/nonebot/nonebot2/pull/1213))
 
 ## v2.0.0-beta.5
