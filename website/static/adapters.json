@@ -88,5 +88,15 @@
     "homepage": "https://github.com/nonebot/adapter-console",
     "tags": [],
     "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.github",
+    "project_link": "nonebot-adapter-github",
+    "name": "GitHub",
+    "desc": "GitHub APP & OAuth APP integration",
+    "author": "yanyongyu",
+    "homepage": "https://github.com/nonebot/adapter-github",
+    "tags": [],
+    "is_official": true
   }
 ]
