@@ -39,15 +39,8 @@ from nonebot.log import logger
 from nonebot.typing import T_State
 from nonebot.exception import ParserExit
 from nonebot.internal.rule import Rule as Rule
+from nonebot.params import Command, EventToMe, CommandArg
 from nonebot.adapters import Bot, Event, Message, MessageSegment
-from nonebot.params import (
-    Command,
-    EventToMe,
-    EventType,
-    CommandArg,
-    EventMessage,
-    EventPlainText,
-)
 from nonebot.consts import (
     CMD_KEY,
     PREFIX_KEY,
@@ -143,10 +136,12 @@ class StartswithRule:
     def __hash__(self) -> int:
         return hash((frozenset(self.msg), self.ignorecase))
 
-    async def __call__(
-        self, type: str = EventType(), text: str = EventPlainText()
-    ) -> Any:
-        if type != "message":
+    async def __call__(self, event: Event) -> bool:
+        if event.get_type() != "message":
+            return False
+        try:
+            text = event.get_plaintext()
+        except Exception:
             return False
         return bool(
             re.match(
@@ -197,10 +192,12 @@ class EndswithRule:
     def __hash__(self) -> int:
         return hash((frozenset(self.msg), self.ignorecase))
 
-    async def __call__(
-        self, type: str = EventType(), text: str = EventPlainText()
-    ) -> Any:
-        if type != "message":
+    async def __call__(self, event: Event) -> bool:
+        if event.get_type() != "message":
+            return False
+        try:
+            text = event.get_plaintext()
+        except Exception:
             return False
         return bool(
             re.search(
@@ -251,13 +248,14 @@ class FullmatchRule:
     def __hash__(self) -> int:
         return hash((frozenset(self.msg), self.ignorecase))
 
-    async def __call__(
-        self, type_: str = EventType(), text: str = EventPlainText()
-    ) -> bool:
-        return (
-            type_ == "message"
-            and (text.casefold() if self.ignorecase else text) in self.msg
-        )
+    async def __call__(self, event: Event) -> bool:
+        if event.get_type() != "message":
+            return False
+        try:
+            text = event.get_plaintext()
+        except Exception:
+            return False
+        return (text.casefold() if self.ignorecase else text) in self.msg
 
 
 def fullmatch(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
@@ -296,10 +294,12 @@ class KeywordsRule:
     def __hash__(self) -> int:
         return hash(frozenset(self.keywords))
 
-    async def __call__(
-        self, type: str = EventType(), text: str = EventPlainText()
-    ) -> bool:
-        if type != "message":
+    async def __call__(self, event: Event) -> bool:
+        if event.get_type() != "message":
+            return False
+        try:
+            text = event.get_plaintext()
+        except Exception:
             return False
         return bool(text and any(keyword in text for keyword in self.keywords))
 
@@ -583,16 +583,14 @@ class RegexRule:
     def __hash__(self) -> int:
         return hash((self.regex, self.flags))
 
-    async def __call__(
-        self,
-        state: T_State,
-        type: str = EventType(),
-        msg: Message = EventMessage(),
-    ) -> bool:
-        if type != "message":
+    async def __call__(self, event: Event, state: T_State) -> bool:
+        if event.get_type() != "message":
             return False
-        matched = re.search(self.regex, str(msg), self.flags)
-        if matched:
+        try:
+            msg = event.get_message()
+        except Exception:
+            return False
+        if matched := re.search(self.regex, str(msg), self.flags):
             state[REGEX_MATCHED] = matched.group()
             state[REGEX_GROUP] = matched.groups()
             state[REGEX_DICT] = matched.groupdict()

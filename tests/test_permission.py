@@ -1,4 +1,4 @@
-from typing import Tuple
+from typing import Tuple, Optional
 
 import pytest
 from nonebug import App
@@ -144,6 +144,7 @@ async def test_metaevent(
         ("message", "test", True),
         ("message", "foo", False),
         ("message", "faketest", True),
+        ("message", None, False),
         ("notice", "test", True),
     ],
 )
@@ -173,10 +174,11 @@ async def test_superuser(
     [
         (("user", "foo"), "user", True),
         (("user", "foo"), "bar", False),
+        (("user", "foo"), None, False),
     ],
 )
 async def test_user(
-    app: App, session_ids: Tuple[str, ...], session_id: str, expected: bool
+    app: App, session_ids: Tuple[str, ...], session_id: Optional[str], expected: bool
 ):
     from nonebot.permission import USER, User
 
