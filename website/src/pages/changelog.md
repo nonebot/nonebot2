@@ -42,6 +42,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 文字识别 [@yanyongyu](https://github.com/yanyongyu) ([#1295](https://github.com/nonebot/nonebot2/pull/1295))
 - Plugin: 在线编曲 [@yanyongyu](https://github.com/yanyongyu) ([#1293](https://github.com/nonebot/nonebot2/pull/1293))
 - Plugin: 图灵机器人 [@yanyongyu](https://github.com/yanyongyu) ([#1289](https://github.com/nonebot/nonebot2/pull/1289))
 - Plugin: PicStatus [@yanyongyu](https://github.com/yanyongyu) ([#1287](https://github.com/nonebot/nonebot2/pull/1287))
