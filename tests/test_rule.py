@@ -1,5 +1,5 @@
 import sys
-from typing import Tuple, Union
+from typing import Dict, Tuple, Union, Optional
 
 import pytest
 from nonebug import App
@@ -52,6 +52,7 @@ async def test_rule(app: App):
         ("prefix", True, "message", "Prefix_", True),
         ("prefix", False, "message", "prefoo", False),
         ("prefix", False, "message", "fooprefix", False),
+        ("prefix", False, "message", None, False),
         (("prefix", "foo"), False, "message", "fooprefix", True),
         ("prefix", False, "notice", "foo", False),
     ],
@@ -61,7 +62,7 @@ async def test_startswith(
     msg: Union[str, Tuple[str, ...]],
     ignorecase: bool,
     type: str,
-    text: str,
+    text: Optional[str],
     expected: bool,
 ):
     from nonebot.rule import StartswithRule, startswith
@@ -74,7 +75,7 @@ async def test_startswith(
     assert checker.msg == (msg,) if isinstance(msg, str) else msg
     assert checker.ignorecase == ignorecase
 
-    message = make_fake_message()(text)
+    message = text if text is None else make_fake_message()(text)
     event = make_fake_event(_type=type, _message=message)()
     assert await dependent(event=event) == expected
 
@@ -89,6 +90,7 @@ async def test_startswith(
         ("suffix", True, "message", "_Suffix", True),
         ("suffix", False, "message", "suffoo", False),
         ("suffix", False, "message", "suffixfoo", False),
+        ("suffix", False, "message", None, False),
         (("suffix", "foo"), False, "message", "suffixfoo", True),
         ("suffix", False, "notice", "foo", False),
     ],
@@ -98,7 +100,7 @@ async def test_endswith(
     msg: Union[str, Tuple[str, ...]],
     ignorecase: bool,
     type: str,
-    text: str,
+    text: Optional[str],
     expected: bool,
 ):
     from nonebot.rule import EndswithRule, endswith
@@ -111,7 +113,7 @@ async def test_endswith(
     assert checker.msg == (msg,) if isinstance(msg, str) else msg
     assert checker.ignorecase == ignorecase
 
-    message = make_fake_message()(text)
+    message = text if text is None else make_fake_message()(text)
     event = make_fake_event(_type=type, _message=message)()
     assert await dependent(event=event) == expected
 
@@ -126,6 +128,7 @@ async def test_endswith(
         ("fullmatch", True, "message", "Fullmatch", True),
         ("fullmatch", False, "message", "fullfoo", False),
         ("fullmatch", False, "message", "_fullmatch_", False),
+        ("fullmatch", False, "message", None, False),
         (("fullmatch", "foo"), False, "message", "fullmatchfoo", False),
         ("fullmatch", False, "notice", "foo", False),
     ],
@@ -135,7 +138,7 @@ async def test_fullmatch(
     msg: Union[str, Tuple[str, ...]],
     ignorecase: bool,
     type: str,
-    text: str,
+    text: Optional[str],
     expected: bool,
 ):
     from nonebot.rule import FullmatchRule, fullmatch
@@ -148,7 +151,7 @@ async def test_fullmatch(
     assert checker.msg == ((msg,) if isinstance(msg, str) else msg)
     assert checker.ignorecase == ignorecase
 
-    message = make_fake_message()(text)
+    message = text if text is None else make_fake_message()(text)
     event = make_fake_event(_type=type, _message=message)()
     assert await dependent(event=event) == expected
 
@@ -159,6 +162,7 @@ async def test_fullmatch(
     [
         (("key",), "message", "_key_", True),
         (("key", "foo"), "message", "_foo_", True),
+        (("key",), "message", None, False),
         (("key",), "notice", "foo", False),
     ],
 )
@@ -166,7 +170,7 @@ async def test_keyword(
     app: App,
     kws: Tuple[str, ...],
     type: str,
-    text: str,
+    text: Optional[str],
     expected: bool,
 ):
     from nonebot.rule import KeywordsRule, keyword
@@ -178,7 +182,7 @@ async def test_keyword(
     assert isinstance(checker, KeywordsRule)
     assert checker.keywords == kws
 
-    message = make_fake_message()(text)
+    message = text if text is None else make_fake_message()(text)
     event = make_fake_event(_type=type, _message=message)()
     assert await dependent(event=event) == expected
 
@@ -302,7 +306,51 @@ async def test_shell_command(app: App):
         assert state[SHELL_ARGS].status != 0
 
 
-# TODO: regex
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "pattern,type,text,expected,matched,group,dict",
+    [
+        (
+            r"(?P<key>key\d)",
+            "message",
+            "_key1_",
+            True,
+            "key1",
+            ("key1",),
+            {"key": "key1"},
+        ),
+        (r"foo", "message", None, False, None, None, None),
+        (r"foo", "notice", "foo", False, None, None, None),
+    ],
+)
+async def test_regex(
+    app: App,
+    pattern: str,
+    type: str,
+    text: Optional[str],
+    expected: bool,
+    matched: Optional[str],
+    group: Optional[Tuple[str, ...]],
+    dict: Optional[Dict[str, str]],
+):
+    from nonebot.typing import T_State
+    from nonebot.rule import RegexRule, regex
+    from nonebot.consts import REGEX_DICT, REGEX_GROUP, REGEX_MATCHED
+
+    test_regex = regex(pattern)
+    dependent = list(test_regex.checkers)[0]
+    checker = dependent.call
+
+    assert isinstance(checker, RegexRule)
+    assert checker.regex == pattern
+
+    message = text if text is None else make_fake_message()(text)
+    event = make_fake_event(_type=type, _message=message)()
+    state = {}
+    assert await dependent(event=event, state=state) == expected
+    assert state.get(REGEX_MATCHED) == matched
+    assert state.get(REGEX_GROUP) == group
+    assert state.get(REGEX_DICT) == dict
 
 
 @pytest.mark.asyncio
@@ -310,8 +358,8 @@ async def test_shell_command(app: App):
 async def test_to_me(app: App, expected: bool):
     from nonebot.rule import ToMeRule, to_me
 
-    test_keyword = to_me()
-    dependent = list(test_keyword.checkers)[0]
+    test_to_me = to_me()
+    dependent = list(test_to_me.checkers)[0]
     checker = dependent.call
 
     assert isinstance(checker, ToMeRule)
