@@ -2862,5 +2862,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ocr",
+    "project_link": "nonebot-plugin-ocr",
+    "name": "文字识别",
+    "desc": "识别图片中的文字",
+    "author": "NewYearPrism",
+    "homepage": "https://github.com/NewYearPrism/nonebot-plugin-ocr",
+    "tags": [
+      {
+        "label": "ocr ",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
