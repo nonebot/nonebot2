@@ -2877,5 +2877,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_listener",
+    "project_link": "nonebot-plugin-listener",
+    "name": "监听者",
+    "desc": "监听指定消息并转发到指定群",
+    "author": "AbCooly",
+    "homepage": "https://github.com/AbCooly/nonebot_plugin_listener",
+    "tags": [],
+    "is_official": false
   }
 ]
