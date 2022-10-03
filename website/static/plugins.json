@@ -2553,7 +2553,7 @@
     "name": "MC_QQ_MCRcon",
     "desc": "基于NoneBot的QQ群聊与Minecraft Server消息互通插件",
     "author": "17TheWord",
-    "homepage": "https://github.com/17TheWord/nonebot-plugin-mcqq/tree/mcqq_mcrcon",
+    "homepage": "https://github.com/17TheWord/nonebot-plugin-mcqq",
     "tags": [
       {
         "label": "Minecraft",
