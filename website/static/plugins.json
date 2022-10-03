@@ -2887,5 +2887,24 @@
     "homepage": "https://github.com/AbCooly/nonebot_plugin_listener",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_BiliRequestAll",
+    "project_link": "nonebot-plugin-BiliRequestAll",
+    "name": "BiliRequestAll",
+    "desc": "通过B站UID审核入群",
+    "author": "Shadow403",
+    "homepage": "https://github.com/Shadow403/nonebot_plugin_BiliRequestAll",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#ea52e9"
+      },
+      {
+        "label": "request",
+        "color": "#5eea52"
+      }
+    ],
+    "is_official": false
   }
 ]
