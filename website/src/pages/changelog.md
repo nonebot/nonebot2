@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💫 杂项
+
+- Plugin: 修改插件 MCQQ MCRcon 主页地址 [@17TheWord](https://github.com/17TheWord) ([#1303](https://github.com/nonebot/nonebot2/pull/1303))
+
 ### 🍻 插件发布
 
 - Plugin: 监听者 [@yanyongyu](https://github.com/yanyongyu) ([#1299](https://github.com/nonebot/nonebot2/pull/1299))
