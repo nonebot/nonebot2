@@ -2906,5 +2906,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-masiro",
+    "project_link": "nonebot-plugin-masiro",
+    "name": "真白萌自动签到",
+    "desc": "帮你每天在真白萌签到，助力成为二次元婆罗门！",
+    "author": "Ankhyty",
+    "homepage": "https://github.com/Ankhyty/nonebot-plugin-masiro",
+    "tags": [
+      {
+        "label": "t:漫研",
+        "color": "#1435e4"
+      }
+    ],
+    "is_official": false
   }
 ]
