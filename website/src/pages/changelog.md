@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Remove: 移除无用的 namespace 声明 [@yanyongyu](https://github.com/yanyongyu) ([#1306](https://github.com/nonebot/nonebot2/pull/1306))
+
 ### 💫 杂项
 
 - Plugin: 修改插件 MCQQ MCRcon 主页地址 [@17TheWord](https://github.com/17TheWord) ([#1303](https://github.com/nonebot/nonebot2/pull/1303))
