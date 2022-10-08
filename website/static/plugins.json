@@ -2921,5 +2921,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_russian_ban",
+    "project_link": "nonebot-plugin-russian-ban",
+    "name": "轮盘禁言小游戏",
+    "desc": "轮盘禁言小游戏，附送快捷禁言/解禁",
+    "author": "KarisAya",
+    "homepage": "https://github.com/KarisAya/nonebot_plugin_russian_ban",
+    "tags": [],
+    "is_official": false
   }
 ]
