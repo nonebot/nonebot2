@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 轮盘禁言小游戏 [@yanyongyu](https://github.com/yanyongyu) ([#1311](https://github.com/nonebot/nonebot2/pull/1311))
 - Plugin: 真白萌自动签到 [@yanyongyu](https://github.com/yanyongyu) ([#1308](https://github.com/nonebot/nonebot2/pull/1308))
 - Plugin: BiliRequestAll [@yanyongyu](https://github.com/yanyongyu) ([#1302](https://github.com/nonebot/nonebot2/pull/1302))
 - Plugin: 监听者 [@yanyongyu](https://github.com/yanyongyu) ([#1299](https://github.com/nonebot/nonebot2/pull/1299))
