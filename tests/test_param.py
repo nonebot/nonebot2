@@ -170,12 +170,14 @@ async def test_state(app: App, load_plugin):
         CMD_ARG_KEY,
         RAW_CMD_KEY,
         REGEX_GROUP,
+        TRIGGER_KEY,
         CMD_START_KEY,
         REGEX_MATCHED,
     )
     from plugins.param.param_state import (
         state,
         command,
+        trigger,
         regex_dict,
         command_arg,
         raw_command,
@@ -201,6 +203,7 @@ async def test_state(app: App, load_plugin):
         REGEX_MATCHED: "[cq:test,arg=value]",
         REGEX_GROUP: ("test", "arg=value"),
         REGEX_DICT: {"type": "test", "arg": "value"},
+        TRIGGER_KEY: "trigger",
     }
 
     async with app.test_dependent(state, allow_types=[StateParam]) as ctx:
@@ -270,6 +273,12 @@ async def test_state(app: App, load_plugin):
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[REGEX_DICT])
+
+    async with app.test_dependent(
+        trigger, allow_types=[StateParam, DependParam]
+    ) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state[TRIGGER_KEY])
 
 
 @pytest.mark.asyncio

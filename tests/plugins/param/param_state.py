@@ -4,6 +4,7 @@ from nonebot.typing import T_State
 from nonebot.adapters import Message
 from nonebot.params import (
     Command,
+    Trigger,
     RegexDict,
     CommandArg,
     RawCommand,
@@ -65,3 +66,7 @@ async def regex_group(regex_group: Tuple = RegexGroup()) -> Tuple:
 
 async def regex_matched(regex_matched: str = RegexMatched()) -> str:
     return regex_matched
+
+
+async def trigger(trigger: str = Trigger()) -> str:
+    return trigger
