@@ -30,6 +30,8 @@ CMD_ARG_KEY: Literal["command_arg"] = "command_arg"
 """命令参数存储 key"""
 CMD_START_KEY: Literal["command_start"] = "command_start"
 """命令开头存储 key"""
+TRIGGER_KEY: Literal["_trigger"] = "_trigger"
+"""响应器触发消息 key"""
 
 SHELL_ARGS: Literal["_args"] = "_args"
 """shell 命令 parse 后参数字典存储 key"""

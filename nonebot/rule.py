@@ -18,7 +18,6 @@ from argparse import ArgumentParser as ArgParser
 from typing import (
     IO,
     TYPE_CHECKING,
-    Any,
     List,
     Type,
     Tuple,
@@ -50,6 +49,7 @@ from nonebot.consts import (
     CMD_ARG_KEY,
     RAW_CMD_KEY,
     REGEX_GROUP,
+    TRIGGER_KEY,
     CMD_START_KEY,
     REGEX_MATCHED,
 )
@@ -136,20 +136,22 @@ class StartswithRule:
     def __hash__(self) -> int:
         return hash((frozenset(self.msg), self.ignorecase))
 
-    async def __call__(self, event: Event) -> bool:
+    async def __call__(self, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         try:
             text = event.get_plaintext()
         except Exception:
             return False
-        return bool(
-            re.match(
-                f"^(?:{'|'.join(re.escape(prefix) for prefix in self.msg)})",
-                text,
-                re.IGNORECASE if self.ignorecase else 0,
-            )
+        match = re.match(
+            f"^(?:{'|'.join(re.escape(prefix) for prefix in self.msg)})",
+            text,
+            re.IGNORECASE if self.ignorecase else 0,
         )
+        if match:
+            state[TRIGGER_KEY] = match.group()
+            return True
+        return False
 
 
 def startswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
@@ -192,20 +194,22 @@ class EndswithRule:
     def __hash__(self) -> int:
         return hash((frozenset(self.msg), self.ignorecase))
 
-    async def __call__(self, event: Event) -> bool:
+    async def __call__(self, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         try:
             text = event.get_plaintext()
         except Exception:
             return False
-        return bool(
-            re.search(
-                f"(?:{'|'.join(re.escape(prefix) for prefix in self.msg)})$",
-                text,
-                re.IGNORECASE if self.ignorecase else 0,
-            )
+        match = re.search(
+            f"(?:{'|'.join(re.escape(suffix) for suffix in self.msg)})$",
+            text,
+            re.IGNORECASE if self.ignorecase else 0,
         )
+        if match:
+            state[TRIGGER_KEY] = match.group()
+            return True
+        return False
 
 
 def endswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
@@ -248,14 +252,19 @@ class FullmatchRule:
     def __hash__(self) -> int:
         return hash((frozenset(self.msg), self.ignorecase))
 
-    async def __call__(self, event: Event) -> bool:
+    async def __call__(self, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         try:
             text = event.get_plaintext()
         except Exception:
             return False
-        return (text.casefold() if self.ignorecase else text) in self.msg
+        text = text.casefold() if self.ignorecase else text
+        for full in self.msg:
+            if full == text:
+                state[TRIGGER_KEY] = full
+                return True
+        return False
 
 
 def fullmatch(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
@@ -294,14 +303,18 @@ class KeywordsRule:
     def __hash__(self) -> int:
         return hash(frozenset(self.keywords))
 
-    async def __call__(self, event: Event) -> bool:
+    async def __call__(self, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         try:
             text = event.get_plaintext()
         except Exception:
             return False
-        return bool(text and any(keyword in text for keyword in self.keywords))
+        for keyword in self.keywords:
+            if keyword in text:
+                state[TRIGGER_KEY] = keyword
+                return True
+        return False
 
 
 def keyword(*keywords: str) -> Rule:
