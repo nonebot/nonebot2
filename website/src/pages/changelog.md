@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Bot: 修改 Inkar Suki 描述 [@HornCopper](https://github.com/HornCopper) ([#1312](https://github.com/nonebot/nonebot2/pull/1312))
 - Plugin: 修改插件 MCQQ MCRcon 主页地址 [@17TheWord](https://github.com/17TheWord) ([#1303](https://github.com/nonebot/nonebot2/pull/1303))
 
 ### 🍻 插件发布
@@ -21,6 +22,10 @@ toc_max_heading_level: 2
 - Plugin: 真白萌自动签到 [@yanyongyu](https://github.com/yanyongyu) ([#1308](https://github.com/nonebot/nonebot2/pull/1308))
 - Plugin: BiliRequestAll [@yanyongyu](https://github.com/yanyongyu) ([#1302](https://github.com/nonebot/nonebot2/pull/1302))
 - Plugin: 监听者 [@yanyongyu](https://github.com/yanyongyu) ([#1299](https://github.com/nonebot/nonebot2/pull/1299))
+
+### 🍻 适配器发布
+
+- Adapter: Ntchat [@yanyongyu](https://github.com/yanyongyu) ([#1314](https://github.com/nonebot/nonebot2/pull/1314))
 
 ## v2.0.0-rc.1
 

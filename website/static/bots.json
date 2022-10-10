@@ -123,7 +123,7 @@
   },
   {
     "name": "Inkar Suki",
-    "desc": "一个十分方便的Bot，支持包括Webhook、群管、互动等一系列功能",
+    "desc": "一个十分方便的Bot，支持包括Webhook、群管、剑网3等一系列功能，持续更新中……",
     "author": "HornCopper",
     "homepage": "https://github.com/HornCopper/Inkar-Suki",
     "tags": [
@@ -136,8 +136,8 @@
         "color": "#374fd0"
       },
       {
-        "label": "群管",
-        "color": "#4ede39"
+        "label": "剑网3",
+        "color": "#ff0033"
       }
     ],
     "is_official": false
