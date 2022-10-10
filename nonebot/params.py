@@ -31,6 +31,7 @@ from nonebot.consts import (
     CMD_ARG_KEY,
     RAW_CMD_KEY,
     REGEX_GROUP,
+    TRIGGER_KEY,
     CMD_START_KEY,
     REGEX_MATCHED,
 )
@@ -151,6 +152,15 @@ def _regex_dict(state: T_State):
 def RegexDict() -> Dict[str, Any]:
     """正则匹配结果 group 字典"""
     return Depends(_regex_dict, use_cache=False)
+
+
+def _trigger(state: T_State) -> str:
+    return state[TRIGGER_KEY]
+
+
+def Trigger() -> str:
+    """响应器触发消息"""
+    return Depends(_trigger, use_cache=False)
 
 
 def Received(id: Optional[str] = None, default: Any = None) -> Any:
