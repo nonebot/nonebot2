@@ -47,11 +47,14 @@ from nonebot.consts import (
     SHELL_ARGS,
     SHELL_ARGV,
     CMD_ARG_KEY,
+    KEYWORD_KEY,
     RAW_CMD_KEY,
     REGEX_GROUP,
-    TRIGGER_KEY,
+    ENDSWITH_KEY,
     CMD_START_KEY,
+    FULLMATCH_KEY,
     REGEX_MATCHED,
+    STARTSWITH_KEY,
 )
 
 T = TypeVar("T")
@@ -149,7 +152,7 @@ class StartswithRule:
             re.IGNORECASE if self.ignorecase else 0,
         )
         if match:
-            state[TRIGGER_KEY] = match.group()
+            state[STARTSWITH_KEY] = match.group()
             return True
         return False
 
@@ -207,7 +210,7 @@ class EndswithRule:
             re.IGNORECASE if self.ignorecase else 0,
         )
         if match:
-            state[TRIGGER_KEY] = match.group()
+            state[ENDSWITH_KEY] = match.group()
             return True
         return False
 
@@ -259,10 +262,12 @@ class FullmatchRule:
             text = event.get_plaintext()
         except Exception:
             return False
+        if not text:
+            return False
         text = text.casefold() if self.ignorecase else text
         for full in self.msg:
             if full == text:
-                state[TRIGGER_KEY] = full
+                state[FULLMATCH_KEY] = full
                 return True
         return False
 
@@ -310,9 +315,11 @@ class KeywordsRule:
             text = event.get_plaintext()
         except Exception:
             return False
+        if not text:
+            return False
         for keyword in self.keywords:
             if keyword in text:
-                state[TRIGGER_KEY] = keyword
+                state[KEYWORD_KEY] = keyword
                 return True
         return False
 

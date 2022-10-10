@@ -29,11 +29,14 @@ from nonebot.consts import (
     SHELL_ARGS,
     SHELL_ARGV,
     CMD_ARG_KEY,
+    KEYWORD_KEY,
     RAW_CMD_KEY,
     REGEX_GROUP,
-    TRIGGER_KEY,
+    ENDSWITH_KEY,
     CMD_START_KEY,
+    FULLMATCH_KEY,
     REGEX_MATCHED,
+    STARTSWITH_KEY,
 )
 
 
@@ -154,13 +157,40 @@ def RegexDict() -> Dict[str, Any]:
     return Depends(_regex_dict, use_cache=False)
 
 
-def _trigger(state: T_State) -> str:
-    return state[TRIGGER_KEY]
+def _startswith(state: T_State) -> str:
+    return state[STARTSWITH_KEY]
 
 
-def Trigger() -> str:
-    """响应器触发消息"""
-    return Depends(_trigger, use_cache=False)
+def Startswith() -> str:
+    """响应触发前缀"""
+    return Depends(_startswith, use_cache=False)
+
+
+def _endswith(state: T_State) -> str:
+    return state[ENDSWITH_KEY]
+
+
+def Endswith() -> str:
+    """响应触发后缀"""
+    return Depends(_endswith, use_cache=False)
+
+
+def _fullmatch(state: T_State) -> str:
+    return state[FULLMATCH_KEY]
+
+
+def Fullmatch() -> str:
+    """响应触发完整消息"""
+    return Depends(_fullmatch, use_cache=False)
+
+
+def _keyword(state: T_State) -> str:
+    return state[KEYWORD_KEY]
+
+
+def Keyword() -> str:
+    """响应触发关键字"""
+    return Depends(_keyword, use_cache=False)
 
 
 def Received(id: Optional[str] = None, default: Any = None) -> Any:
