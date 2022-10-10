@@ -23,6 +23,10 @@ toc_max_heading_level: 2
 - Plugin: BiliRequestAll [@yanyongyu](https://github.com/yanyongyu) ([#1302](https://github.com/nonebot/nonebot2/pull/1302))
 - Plugin: 监听者 [@yanyongyu](https://github.com/yanyongyu) ([#1299](https://github.com/nonebot/nonebot2/pull/1299))
 
+### 🍻 适配器发布
+
+- Adapter: Ntchat [@yanyongyu](https://github.com/yanyongyu) ([#1314](https://github.com/nonebot/nonebot2/pull/1314))
+
 ## v2.0.0-rc.1
 
 ### 💥 破坏性变更
