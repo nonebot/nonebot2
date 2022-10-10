@@ -98,5 +98,20 @@
     "homepage": "https://github.com/nonebot/adapter-github",
     "tags": [],
     "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.ntchat",
+    "project_link": "nonebot-adapter-ntchat",
+    "name": "Ntchat",
+    "desc": "pc hook的微信客户端适配",
+    "author": "JustUndertaker",
+    "homepage": "https://github.com/JustUndertaker/adapter-ntchat",
+    "tags": [
+      {
+        "label": "微信",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
