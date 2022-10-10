@@ -65,6 +65,7 @@ async def test_startswith(
     text: Optional[str],
     expected: bool,
 ):
+    from nonebot.consts import TRIGGER_KEY
     from nonebot.rule import StartswithRule, startswith
 
     test_startswith = startswith(msg, ignorecase)
@@ -77,7 +78,11 @@ async def test_startswith(
 
     message = text if text is None else make_fake_message()(text)
     event = make_fake_event(_type=type, _message=message)()
-    assert await dependent(event=event) == expected
+    if isinstance(msg, str):
+        msg = (msg,)
+    for prefix in msg:
+        state = {TRIGGER_KEY: prefix}
+        assert await dependent(event=event, state=state) == expected
 
 
 @pytest.mark.asyncio
@@ -103,6 +108,7 @@ async def test_endswith(
     text: Optional[str],
     expected: bool,
 ):
+    from nonebot.consts import TRIGGER_KEY
     from nonebot.rule import EndswithRule, endswith
 
     test_endswith = endswith(msg, ignorecase)
@@ -115,7 +121,11 @@ async def test_endswith(
 
     message = text if text is None else make_fake_message()(text)
     event = make_fake_event(_type=type, _message=message)()
-    assert await dependent(event=event) == expected
+    if isinstance(msg, str):
+        msg = (msg,)
+    for suffix in msg:
+        state = {TRIGGER_KEY: suffix}
+        assert await dependent(event=event, state=state) == expected
 
 
 @pytest.mark.asyncio
@@ -141,6 +151,7 @@ async def test_fullmatch(
     text: Optional[str],
     expected: bool,
 ):
+    from nonebot.consts import TRIGGER_KEY
     from nonebot.rule import FullmatchRule, fullmatch
 
     test_fullmatch = fullmatch(msg, ignorecase)
@@ -153,7 +164,11 @@ async def test_fullmatch(
 
     message = text if text is None else make_fake_message()(text)
     event = make_fake_event(_type=type, _message=message)()
-    assert await dependent(event=event) == expected
+    if isinstance(msg, str):
+        msg = (msg,)
+    for full in msg:
+        state = {TRIGGER_KEY: full}
+        assert await dependent(event=event, state=state) == expected
 
 
 @pytest.mark.asyncio
@@ -164,6 +179,7 @@ async def test_fullmatch(
         (("key", "foo"), "message", "_foo_", True),
         (("key",), "message", None, False),
         (("key",), "notice", "foo", False),
+        (("key",), "message", "foo", False),
     ],
 )
 async def test_keyword(
@@ -173,6 +189,7 @@ async def test_keyword(
     text: Optional[str],
     expected: bool,
 ):
+    from nonebot.consts import TRIGGER_KEY
     from nonebot.rule import KeywordsRule, keyword
 
     test_keyword = keyword(*kws)
@@ -184,7 +201,9 @@ async def test_keyword(
 
     message = text if text is None else make_fake_message()(text)
     event = make_fake_event(_type=type, _message=message)()
-    assert await dependent(event=event) == expected
+    for kw in kws:
+        state = {TRIGGER_KEY: kw}
+        assert await dependent(event=event, state=state) == expected
 
 
 @pytest.mark.asyncio
