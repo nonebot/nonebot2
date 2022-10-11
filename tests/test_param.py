@@ -168,17 +168,23 @@ async def test_state(app: App, load_plugin):
         SHELL_ARGS,
         SHELL_ARGV,
         CMD_ARG_KEY,
+        KEYWORD_KEY,
         RAW_CMD_KEY,
         REGEX_GROUP,
-        TRIGGER_KEY,
+        ENDSWITH_KEY,
         CMD_START_KEY,
+        FULLMATCH_KEY,
         REGEX_MATCHED,
+        STARTSWITH_KEY,
     )
     from plugins.param.param_state import (
         state,
         command,
-        trigger,
+        keyword,
+        endswith,
+        fullmatch,
         regex_dict,
+        startswith,
         command_arg,
         raw_command,
         regex_group,
@@ -203,7 +209,10 @@ async def test_state(app: App, load_plugin):
         REGEX_MATCHED: "[cq:test,arg=value]",
         REGEX_GROUP: ("test", "arg=value"),
         REGEX_DICT: {"type": "test", "arg": "value"},
-        TRIGGER_KEY: "trigger",
+        STARTSWITH_KEY: "startswith",
+        ENDSWITH_KEY: "endswith",
+        FULLMATCH_KEY: "fullmatch",
+        KEYWORD_KEY: "keyword",
     }
 
     async with app.test_dependent(state, allow_types=[StateParam]) as ctx:
@@ -275,10 +284,28 @@ async def test_state(app: App, load_plugin):
         ctx.should_return(fake_state[REGEX_DICT])
 
     async with app.test_dependent(
-        trigger, allow_types=[StateParam, DependParam]
+        startswith, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
-        ctx.should_return(fake_state[TRIGGER_KEY])
+        ctx.should_return(fake_state[STARTSWITH_KEY])
+
+    async with app.test_dependent(
+        endswith, allow_types=[StateParam, DependParam]
+    ) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state[ENDSWITH_KEY])
+
+    async with app.test_dependent(
+        fullmatch, allow_types=[StateParam, DependParam]
+    ) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state[FULLMATCH_KEY])
+
+    async with app.test_dependent(
+        keyword, allow_types=[StateParam, DependParam]
+    ) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state[KEYWORD_KEY])
 
 
 @pytest.mark.asyncio

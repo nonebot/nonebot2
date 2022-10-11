@@ -4,11 +4,14 @@ from nonebot.typing import T_State
 from nonebot.adapters import Message
 from nonebot.params import (
     Command,
-    Trigger,
+    Keyword,
+    Endswith,
+    Fullmatch,
     RegexDict,
     CommandArg,
     RawCommand,
     RegexGroup,
+    Startswith,
     CommandStart,
     RegexMatched,
     ShellCommandArgs,
@@ -68,5 +71,17 @@ async def regex_matched(regex_matched: str = RegexMatched()) -> str:
     return regex_matched
 
 
-async def trigger(trigger: str = Trigger()) -> str:
-    return trigger
+async def startswith(startswith: str = Startswith()) -> str:
+    return startswith
+
+
+async def endswith(endswith: str = Endswith()) -> str:
+    return endswith
+
+
+async def fullmatch(fullmatch: str = Fullmatch()) -> str:
+    return fullmatch
+
+
+async def keyword(keyword: str = Keyword()) -> str:
+    return keyword
