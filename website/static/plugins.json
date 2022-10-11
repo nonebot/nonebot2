@@ -2931,5 +2931,15 @@
     "homepage": "https://github.com/KarisAya/nonebot_plugin_russian_ban",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_monitor",
+    "project_link": "nonebot-plugin-monitor",
+    "name": "监测群事件",
+    "desc": "监测群成员变动、文件上传、红包运气王、管理员变动等等...",
+    "author": "cjladmin",
+    "homepage": "https://github.com/cjladmin/nonebot_plugin_monitor",
+    "tags": [],
+    "is_official": false
   }
 ]
