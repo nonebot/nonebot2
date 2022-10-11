@@ -146,12 +146,11 @@ class StartswithRule:
             text = event.get_plaintext()
         except Exception:
             return False
-        match = re.match(
+        if match := re.match(
             f"^(?:{'|'.join(re.escape(prefix) for prefix in self.msg)})",
             text,
             re.IGNORECASE if self.ignorecase else 0,
-        )
-        if match:
+        ):
             state[STARTSWITH_KEY] = match.group()
             return True
         return False
@@ -204,12 +203,11 @@ class EndswithRule:
             text = event.get_plaintext()
         except Exception:
             return False
-        match = re.search(
+        if match := re.search(
             f"(?:{'|'.join(re.escape(suffix) for suffix in self.msg)})$",
             text,
             re.IGNORECASE if self.ignorecase else 0,
-        )
-        if match:
+        ):
             state[ENDSWITH_KEY] = match.group()
             return True
         return False
@@ -265,10 +263,9 @@ class FullmatchRule:
         if not text:
             return False
         text = text.casefold() if self.ignorecase else text
-        for full in self.msg:
-            if full == text:
-                state[FULLMATCH_KEY] = full
-                return True
+        if text in self.msg:
+            state[FULLMATCH_KEY] = text
+            return True
         return False
 
 
@@ -317,10 +314,9 @@ class KeywordsRule:
             return False
         if not text:
             return False
-        for keyword in self.keywords:
-            if keyword in text:
-                state[KEYWORD_KEY] = keyword
-                return True
+        if key := next((k for k in self.keywords if k in text), None):
+            state[KEYWORD_KEY] = key
+            return True
         return False
 
 

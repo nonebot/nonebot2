@@ -72,14 +72,14 @@ async def test_startswith(
     dependent = list(test_startswith.checkers)[0]
     checker = dependent.call
 
+    msg = (msg,) if isinstance(msg, str) else msg
+
     assert isinstance(checker, StartswithRule)
-    assert checker.msg == (msg,) if isinstance(msg, str) else msg
+    assert checker.msg == msg
     assert checker.ignorecase == ignorecase
 
     message = text if text is None else make_fake_message()(text)
     event = make_fake_event(_type=type, _message=message)()
-    if isinstance(msg, str):
-        msg = (msg,)
     for prefix in msg:
         state = {STARTSWITH_KEY: prefix}
         assert await dependent(event=event, state=state) == expected
@@ -115,14 +115,14 @@ async def test_endswith(
     dependent = list(test_endswith.checkers)[0]
     checker = dependent.call
 
+    msg = (msg,) if isinstance(msg, str) else msg
+
     assert isinstance(checker, EndswithRule)
-    assert checker.msg == (msg,) if isinstance(msg, str) else msg
+    assert checker.msg == msg
     assert checker.ignorecase == ignorecase
 
     message = text if text is None else make_fake_message()(text)
     event = make_fake_event(_type=type, _message=message)()
-    if isinstance(msg, str):
-        msg = (msg,)
     for suffix in msg:
         state = {ENDSWITH_KEY: suffix}
         assert await dependent(event=event, state=state) == expected
@@ -158,14 +158,14 @@ async def test_fullmatch(
     dependent = list(test_fullmatch.checkers)[0]
     checker = dependent.call
 
+    msg = (msg,) if isinstance(msg, str) else msg
+
     assert isinstance(checker, FullmatchRule)
-    assert checker.msg == ((msg,) if isinstance(msg, str) else msg)
+    assert checker.msg == msg
     assert checker.ignorecase == ignorecase
 
     message = text if text is None else make_fake_message()(text)
     event = make_fake_event(_type=type, _message=message)()
-    if isinstance(msg, str):
-        msg = (msg,)
     for full in msg:
         state = {FULLMATCH_KEY: full}
         assert await dependent(event=event, state=state) == expected
