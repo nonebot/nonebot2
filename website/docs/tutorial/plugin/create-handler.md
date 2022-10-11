@@ -363,6 +363,62 @@ matcher = on_regex("regex")
 async def _(foo: Dict[str, Any] = RegexDict()): ...
 ```
 
+### Startswith
+
+获取触发响应器的消息前缀字符串。
+
+```python {7}
+from nonebot import on_startswith
+from nonebot.params import Startswith
+
+matcher = on_startswith("prefix")
+
+@matcher.handle()
+async def _(foo: str = Startswith()): ...
+```
+
+### Endswith
+
+获取触发响应器的消息后缀字符串。
+
+```python {7}
+from nonebot import on_endswith
+from nonebot.params import Endswith
+
+matcher = on_endswith("suffix")
+
+@matcher.handle()
+async def _(foo: str = Endswith()): ...
+```
+
+### Fullmatch
+
+获取触发响应器的消息字符串。
+
+```python {7}
+from nonebot import on_fullmatch
+from nonebot.params import Fullmatch
+
+matcher = on_fullmatch("fullmatch")
+
+@matcher.handle()
+async def _(foo: str = Fullmatch()): ...
+```
+
+### Keyword
+
+获取触发响应器的关键字字符串。
+
+```python {7}
+from nonebot import on_keyword
+from nonebot.params import Keyword
+
+matcher = on_keyword({"keyword"})
+
+@matcher.handle()
+async def _(foo: str = Keyword()): ...
+```
+
 ### Matcher
 
 获取当前事件响应器实例。
