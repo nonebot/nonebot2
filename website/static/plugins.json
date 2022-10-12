@@ -2974,5 +2974,15 @@
     "homepage": "https://github.com/sena-nana/MutsukiBot/tree/main/nonebot-plugin-novelai",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_aidraw",
+    "project_link": "nonebot-plugin-aidraw",
+    "name": "AI绘图",
+    "desc": "使用第三方 API 的 NovelAI 绘图插件",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-aidraw",
+    "tags": [],
+    "is_official": false
   }
 ]
