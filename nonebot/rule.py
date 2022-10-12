@@ -18,7 +18,6 @@ from argparse import ArgumentParser as ArgParser
 from typing import (
     IO,
     TYPE_CHECKING,
-    Any,
     List,
     Type,
     Tuple,
@@ -48,10 +47,14 @@ from nonebot.consts import (
     SHELL_ARGS,
     SHELL_ARGV,
     CMD_ARG_KEY,
+    KEYWORD_KEY,
     RAW_CMD_KEY,
     REGEX_GROUP,
+    ENDSWITH_KEY,
     CMD_START_KEY,
+    FULLMATCH_KEY,
     REGEX_MATCHED,
+    STARTSWITH_KEY,
 )
 
 T = TypeVar("T")
@@ -136,20 +139,21 @@ class StartswithRule:
     def __hash__(self) -> int:
         return hash((frozenset(self.msg), self.ignorecase))
 
-    async def __call__(self, event: Event) -> bool:
+    async def __call__(self, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         try:
             text = event.get_plaintext()
         except Exception:
             return False
-        return bool(
-            re.match(
-                f"^(?:{'|'.join(re.escape(prefix) for prefix in self.msg)})",
-                text,
-                re.IGNORECASE if self.ignorecase else 0,
-            )
-        )
+        if match := re.match(
+            f"^(?:{'|'.join(re.escape(prefix) for prefix in self.msg)})",
+            text,
+            re.IGNORECASE if self.ignorecase else 0,
+        ):
+            state[STARTSWITH_KEY] = match.group()
+            return True
+        return False
 
 
 def startswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
@@ -192,20 +196,21 @@ class EndswithRule:
     def __hash__(self) -> int:
         return hash((frozenset(self.msg), self.ignorecase))
 
-    async def __call__(self, event: Event) -> bool:
+    async def __call__(self, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         try:
             text = event.get_plaintext()
         except Exception:
             return False
-        return bool(
-            re.search(
-                f"(?:{'|'.join(re.escape(prefix) for prefix in self.msg)})$",
-                text,
-                re.IGNORECASE if self.ignorecase else 0,
-            )
-        )
+        if match := re.search(
+            f"(?:{'|'.join(re.escape(suffix) for suffix in self.msg)})$",
+            text,
+            re.IGNORECASE if self.ignorecase else 0,
+        ):
+            state[ENDSWITH_KEY] = match.group()
+            return True
+        return False
 
 
 def endswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
@@ -248,14 +253,20 @@ class FullmatchRule:
     def __hash__(self) -> int:
         return hash((frozenset(self.msg), self.ignorecase))
 
-    async def __call__(self, event: Event) -> bool:
+    async def __call__(self, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         try:
             text = event.get_plaintext()
         except Exception:
             return False
-        return (text.casefold() if self.ignorecase else text) in self.msg
+        if not text:
+            return False
+        text = text.casefold() if self.ignorecase else text
+        if text in self.msg:
+            state[FULLMATCH_KEY] = text
+            return True
+        return False
 
 
 def fullmatch(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
@@ -294,14 +305,19 @@ class KeywordsRule:
     def __hash__(self) -> int:
         return hash(frozenset(self.keywords))
 
-    async def __call__(self, event: Event) -> bool:
+    async def __call__(self, event: Event, state: T_State) -> bool:
         if event.get_type() != "message":
             return False
         try:
             text = event.get_plaintext()
         except Exception:
             return False
-        return bool(text and any(keyword in text for keyword in self.keywords))
+        if not text:
+            return False
+        if key := next((k for k in self.keywords if k in text), None):
+            state[KEYWORD_KEY] = key
+            return True
+        return False
 
 
 def keyword(*keywords: str) -> Rule:
