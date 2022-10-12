@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 游戏王小程序查价 [@yanyongyu](https://github.com/yanyongyu) ([#1317](https://github.com/nonebot/nonebot2/pull/1317))
 - Plugin: 监测群事件 [@yanyongyu](https://github.com/yanyongyu) ([#1320](https://github.com/nonebot/nonebot2/pull/1320))
 - Plugin: 轮盘禁言小游戏 [@yanyongyu](https://github.com/yanyongyu) ([#1311](https://github.com/nonebot/nonebot2/pull/1311))
 - Plugin: 真白萌自动签到 [@yanyongyu](https://github.com/yanyongyu) ([#1308](https://github.com/nonebot/nonebot2/pull/1308))
