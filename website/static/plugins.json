@@ -2964,5 +2964,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-novelai",
+    "project_link": "nonebot-plugin-novelai",
+    "name": "novelai",
+    "desc": "调用novelai",
+    "author": "sena-nana",
+    "homepage": "https://github.com/sena-nana/MutsukiBot/tree/main/nonebot-plugin-novelai",
+    "tags": [],
+    "is_official": false
   }
 ]
