@@ -37,6 +37,7 @@ FrontMatter:
     description: nonebot 模块
 """
 
+import os
 import importlib
 from typing import Any, Dict, Type, Optional
 
@@ -238,9 +239,12 @@ def init(*, _env_file: Optional[DotenvType] = None, **kwargs: Any) -> None:
     if not _driver:
         logger.success("NoneBot is initializing...")
         env = Env()
+        _env_file = _env_file or f".env.{env.environment}"
         config = Config(
             **kwargs,
-            _env_file=_env_file or (".env", f".env.{env.environment}"),
+            _env_file=(".env", _env_file)
+            if isinstance(_env_file, (str, os.PathLike))
+            else _env_file,
         )
 
         logger.configure(
