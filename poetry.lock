@@ -115,11 +115,11 @@ tests_no_zope = ["coverage[toml] (>=5.0.2)", "hypothesis", "pympler", "pytest (>
 
 [[package]]
 name = "black"
-version = "22.8.0"
+version = "22.10.0"
 description = "The uncompromising code formatter."
 category = "dev"
 optional = false
-python-versions = ">=3.6.2"
+python-versions = ">=3.7"
 
 [package.dependencies]
 click = ">=8.0.0"
@@ -920,7 +920,7 @@ python-versions = ">=3.6,<4.0"
 
 [[package]]
 name = "typing-extensions"
-version = "4.3.0"
+version = "4.4.0"
 description = "Backported and Experimental Type Hints for Python 3.7+"
 category = "main"
 optional = false
@@ -1076,7 +1076,7 @@ websockets = ["websockets"]
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8"
-content-hash = "a4a8da0510758a7da5a2c941518505d44099bad4d77ccef30812e5e73e8a9f7f"
+content-hash = "9a5abe22ecaaa43b8e124bb2c01001da35f6243f3a827282ec4959912eeb5745"
 
 [metadata.files]
 aiodns = [
@@ -1571,10 +1571,7 @@ tomli = [
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
 tomlkit = []
-typing-extensions = [
-    {file = "typing_extensions-4.3.0-py3-none-any.whl", hash = "sha256:25642c956049920a5aa49edcdd6ab1e06d7e5d467fc00e0506c44ac86fbfca02"},
-    {file = "typing_extensions-4.3.0.tar.gz", hash = "sha256:e6d2677a32f47fc7eb2795db1dd15c1f34eff616bcaf2cfb5e997f854fa1c4a6"},
-]
+typing-extensions = []
 urllib3 = []
 uvicorn = []
 uvloop = []
