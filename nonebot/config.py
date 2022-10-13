@@ -99,7 +99,7 @@ class CustomEnvSettings(EnvSettingsSource):
                 for key in keys:
                     _tmp = _tmp.setdefault(key, {})
                 _tmp[last_key] = env_val
-                d[env_name] = deep_update(d[env_name], result)
+                d[env_name] = deep_update(d.get(env_name, {}), result)
             elif not nested_keys:
                 d[env_name] = env_val
 

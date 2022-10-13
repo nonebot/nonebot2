@@ -31,6 +31,7 @@ async def test_init(nonebug_init):
     assert config.common_config == "common"
     assert config.common_override == "new"
     assert config.nested_dict == {"a": 1, "b": 2, "c": {"d": 3}}
+    assert config.nested_missing_dict == {"a": 1, "b": {"c": 2}}
     assert config.not_nested == "some string"
 
 
