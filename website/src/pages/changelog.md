@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: AI 绘图 [@yanyongyu](https://github.com/yanyongyu) ([#1323](https://github.com/nonebot/nonebot2/pull/1323))
 - Plugin: novelai [@yanyongyu](https://github.com/yanyongyu) ([#1319](https://github.com/nonebot/nonebot2/pull/1319))
 - Plugin: 游戏王小程序查价 [@yanyongyu](https://github.com/yanyongyu) ([#1317](https://github.com/nonebot/nonebot2/pull/1317))
 - Plugin: 监测群事件 [@yanyongyu](https://github.com/yanyongyu) ([#1320](https://github.com/nonebot/nonebot2/pull/1320))
