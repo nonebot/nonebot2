@@ -37,10 +37,12 @@ FrontMatter:
     description: nonebot 模块
 """
 
+import os
 import importlib
 from typing import Any, Dict, Type, Optional
 
 import loguru
+from pydantic.env_settings import DotenvType
 
 from nonebot.log import logger
 from nonebot.adapters import Bot
@@ -217,7 +219,7 @@ def _log_patcher(record: "loguru.Record"):
     )
 
 
-def init(*, _env_file: Optional[str] = None, **kwargs: Any) -> None:
+def init(*, _env_file: Optional[DotenvType] = None, **kwargs: Any) -> None:
     """初始化 NoneBot 以及 全局 {ref}`nonebot.drivers.Driver` 对象。
 
     NoneBot 将会从 .env 文件中读取环境信息，并使用相应的 env 文件配置。
@@ -237,10 +239,12 @@ def init(*, _env_file: Optional[str] = None, **kwargs: Any) -> None:
     if not _driver:
         logger.success("NoneBot is initializing...")
         env = Env()
+        _env_file = _env_file or f".env.{env.environment}"
         config = Config(
             **kwargs,
-            _common_config=env.dict(),
-            _env_file=_env_file or f".env.{env.environment}",
+            _env_file=(".env", _env_file)
+            if isinstance(_env_file, (str, os.PathLike))
+            else _env_file,
         )
 
         logger.configure(
