@@ -20,6 +20,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: bnhhsh -「不能好好说话！」 [@yanyongyu](https://github.com/yanyongyu) ([#1326](https://github.com/nonebot/nonebot2/pull/1326))
 - Plugin: AI 绘图 [@yanyongyu](https://github.com/yanyongyu) ([#1323](https://github.com/nonebot/nonebot2/pull/1323))
 - Plugin: novelai [@yanyongyu](https://github.com/yanyongyu) ([#1319](https://github.com/nonebot/nonebot2/pull/1319))
 - Plugin: 游戏王小程序查价 [@yanyongyu](https://github.com/yanyongyu) ([#1317](https://github.com/nonebot/nonebot2/pull/1317))
