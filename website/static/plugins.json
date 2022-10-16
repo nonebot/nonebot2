@@ -3003,5 +3003,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "ayaka_games",
+    "project_link": "nonebot-plugin-ayaka-games",
+    "name": "ayaka衍生插件 - 小游戏合集",
+    "desc": "多功能聚合，基于ayaka插件实现：背包、 签到 、印加宝藏、生成糊文字截图、bingo、b站视频链接分析、原神接龙、成语接龙、缩写翻译",
+    "author": "bridgeL",
+    "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka-games",
+    "tags": [
+      {
+        "label": "a:cqhttp",
+        "color": "#0c0c0c"
+      },
+      {
+        "label": "a:onebot",
+        "color": "#0c0c0c"
+      },
+      {
+        "label": "t:文字游戏",
+        "color": "#e36306"
+      }
+    ],
+    "is_official": false
   }
 ]
