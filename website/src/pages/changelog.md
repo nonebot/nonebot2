@@ -20,6 +20,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: ayaka 衍生插件 - 谁是卧底 [@yanyongyu](https://github.com/yanyongyu) ([#1330](https://github.com/nonebot/nonebot2/pull/1330))
 - Plugin: ayaka 衍生插件 - 小游戏合集 [@yanyongyu](https://github.com/yanyongyu) ([#1328](https://github.com/nonebot/nonebot2/pull/1328))
 - Plugin: bnhhsh -「不能好好说话！」 [@yanyongyu](https://github.com/yanyongyu) ([#1326](https://github.com/nonebot/nonebot2/pull/1326))
 - Plugin: AI 绘图 [@yanyongyu](https://github.com/yanyongyu) ([#1323](https://github.com/nonebot/nonebot2/pull/1323))
