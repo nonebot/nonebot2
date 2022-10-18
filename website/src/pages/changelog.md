@@ -15,6 +15,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 补充 novelai 插件信息 [@sena-nana](https://github.com/sena-nana) ([#1333](https://github.com/nonebot/nonebot2/pull/1333))
 - Bot: 修改 Inkar Suki 描述 [@HornCopper](https://github.com/HornCopper) ([#1312](https://github.com/nonebot/nonebot2/pull/1312))
 - Plugin: 修改插件 MCQQ MCRcon 主页地址 [@17TheWord](https://github.com/17TheWord) ([#1303](https://github.com/nonebot/nonebot2/pull/1303))
 
