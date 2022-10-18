@@ -2969,10 +2969,23 @@
     "module_name": "nonebot-plugin-novelai",
     "project_link": "nonebot-plugin-novelai",
     "name": "novelai",
-    "desc": "调用novelai",
+    "desc": "一个支持novelai、naifu、webui，支持中文功能丰富的ai绘图插件",
     "author": "sena-nana",
     "homepage": "https://github.com/sena-nana/MutsukiBot/tree/main/nonebot-plugin-novelai",
-    "tags": [],
+    "tags": [
+      {
+        "label": "t:aidraw",
+        "color": "#ffc646"
+      },
+      {
+        "label": "t:naifu",
+        "color": "#ffc646"
+      },
+      {
+        "label": "t:webui",
+        "color": "#ffc646"
+      }
+    ],
     "is_official": false
   },
   {
