@@ -3026,5 +3026,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "ayaka_who_is_suspect",
+    "project_link": "nonebot-plugin-ayaka-who-is-suspect",
+    "name": "ayaka衍生插件 - 谁是卧底",
+    "desc": "至少4人游玩，游玩前需要加bot好友，否则无法通过私聊告知关键词",
+    "author": "bridgeL",
+    "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka-who-is-suspect",
+    "tags": [
+      {
+        "label": "a:cqhttp",
+        "color": "#000000"
+      },
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "t:文字游戏",
+        "color": "#e36306"
+      }
+    ],
+    "is_official": false
   }
 ]
