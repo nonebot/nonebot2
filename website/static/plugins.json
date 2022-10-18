@@ -3049,5 +3049,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "ayaka_timezone",
+    "project_link": "nonebot-plugin-ayaka-timezone",
+    "name": "ayaka衍生插件 - 时区助手",
+    "desc": "提供不同时区时间询问服务",
+    "author": "bridgeL",
+    "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka-timezone",
+    "tags": [
+      {
+        "label": "a:cqhttp",
+        "color": "#000000"
+      },
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "t:timezone",
+        "color": "#e36306"
+      }
+    ],
+    "is_official": false
   }
 ]
