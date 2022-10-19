@@ -3108,5 +3108,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_savor",
+    "project_link": "nonebot-plugin-savor",
+    "name": "二次元图像鉴赏",
+    "desc": "二次元图像分析",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-savor",
+    "tags": [],
+    "is_official": false
   }
 ]
