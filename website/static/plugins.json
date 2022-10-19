@@ -3085,5 +3085,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "ayaka_prevent_bad_words",
+    "project_link": "nonebot-plugin-ayaka-prevent-bad-words",
+    "name": "ayaka衍生插件 - 坏词撤回",
+    "desc": "撤回有问题的发言",
+    "author": "bridgeL",
+    "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka-prevent-bad-words",
+    "tags": [
+      {
+        "label": "a:cqhttp",
+        "color": "#000000"
+      },
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "t:撤回",
+        "color": "#e36306"
+      }
+    ],
+    "is_official": false
   }
 ]
