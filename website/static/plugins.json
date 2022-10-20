@@ -3118,5 +3118,28 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-savor",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_kfcrazy",
+    "project_link": "nonebot-plugin-kfcrazy",
+    "name": "kfcrazy",
+    "desc": "肯德基查询插件，输入地区即可查询全国店铺的数据，支持疯狂星期四",
+    "author": "Kaguya233qwq",
+    "homepage": "https://github.com/Kaguya233qwq/nonebot_plugin_kfcrazy",
+    "tags": [
+      {
+        "label": "肯德基",
+        "color": "#d93b3b"
+      },
+      {
+        "label": "疯狂星期四",
+        "color": "#e52124"
+      },
+      {
+        "label": "KFC",
+        "color": "#cb5c5e"
+      }
+    ],
+    "is_official": false
   }
 ]
