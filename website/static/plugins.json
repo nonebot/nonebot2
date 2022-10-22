@@ -3141,5 +3141,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-random",
+    "project_link": "nonebot-plugin-random",
+    "name": "通用抽图/语音",
+    "desc": "Nonebot2 通用抽图/语音插件",
+    "author": "jcjrobert",
+    "homepage": "https://github.com/jcjrobert/nonebot-plugin-random",
+    "tags": [],
+    "is_official": false
   }
 ]
