@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 通用抽图/语音 [@yanyongyu](https://github.com/yanyongyu) ([#1341](https://github.com/nonebot/nonebot2/pull/1341))
 - Plugin: kfcrazy [@yanyongyu](https://github.com/yanyongyu) ([#1339](https://github.com/nonebot/nonebot2/pull/1339))
 - Plugin: 二次元图像鉴赏 [@yanyongyu](https://github.com/yanyongyu) ([#1337](https://github.com/nonebot/nonebot2/pull/1337))
 - Plugin: ayaka 衍生插件 - 坏词撤回 [@yanyongyu](https://github.com/yanyongyu) ([#1335](https://github.com/nonebot/nonebot2/pull/1335))
