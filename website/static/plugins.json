@@ -2697,7 +2697,7 @@
     "name": "ayaka - 文字游戏开发辅助插件",
     "desc": "提供了状态机、命令隔离、缓存、固存、帮助指令等功能，可以管理多个文字游戏避免命令冲突，帮助开发者在nonebot2框架基础上快速开发qq文字游戏",
     "author": "bridgeL",
-    "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka",
+    "homepage": "https://bridgel.github.io/ayaka_doc/",
     "tags": [
       {
         "label": "a:cqhttp",
