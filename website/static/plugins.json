@@ -3151,5 +3151,20 @@
     "homepage": "https://github.com/jcjrobert/nonebot-plugin-random",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sqlalchemy",
+    "project_link": "nonebot-plugin-sqlalchemy",
+    "name": "NoneBot SQLAlchemy封装",
+    "desc": "提供简单的sqlalchemy封装",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/ssttkkl/nonebot-plugin-sqlalchemy",
+    "tags": [
+      {
+        "label": "t:sql",
+        "color": "#ad1717"
+      }
+    ],
+    "is_official": false
   }
 ]
