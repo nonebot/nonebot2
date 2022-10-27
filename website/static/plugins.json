@@ -3166,5 +3166,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_blacklist",
+    "project_link": "nonebot-plugin-blacklist",
+    "name": "用户&群聊黑名单",
+    "desc": "另一个黑名单插件, 可批量屏蔽用户和群聊",
+    "author": "tkgs0",
+    "homepage": "https://github.com/tkgs0/nonebot-plugin-blacklist",
+    "tags": [],
+    "is_official": false
   }
 ]
