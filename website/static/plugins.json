@@ -3176,5 +3176,24 @@
     "homepage": "https://github.com/tkgs0/nonebot-plugin-blacklist",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_antiinsult",
+    "project_link": "nonebot-plugin-antiinsult",
+    "name": "反嘴臭插件",
+    "desc": "检测到有用户 @机器人 并嘴臭时将其临时屏蔽(bot重启后失效), 当bot为群管理时会请对方喝昏睡红茶(禁言), 可批量增删敏感词",
+    "author": "tkgs0",
+    "homepage": "https://github.com/tkgs0/nonebot-plugin-antiinsult",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "t:被动",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
