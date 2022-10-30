@@ -3195,5 +3195,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_oddtext",
+    "project_link": "nonebot-plugin-oddtext",
+    "name": "文本生成器",
+    "desc": "抽象话、火星文等多种文本生成",
+    "author": "MeetWq",
+    "homepage": "https://github.com/noneplugin/nonebot-plugin-oddtext",
+    "tags": [
+      {
+        "label": "t:RCNB!",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
