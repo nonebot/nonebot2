@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 文本生成器 [@yanyongyu](https://github.com/yanyongyu) ([#1355](https://github.com/nonebot/nonebot2/pull/1355))
 - Plugin: 反嘴臭插件 [@yanyongyu](https://github.com/yanyongyu) ([#1350](https://github.com/nonebot/nonebot2/pull/1350))
 - Plugin: 用户\&群聊黑名单 [@yanyongyu](https://github.com/yanyongyu) ([#1348](https://github.com/nonebot/nonebot2/pull/1348))
 - Plugin: NoneBot SQLAlchemy 封装 [@yanyongyu](https://github.com/yanyongyu) ([#1345](https://github.com/nonebot/nonebot2/pull/1345))
