@@ -3210,5 +3210,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mahjong_scoreboard",
+    "project_link": "nonebot-plugin-mahjong-scoreboard",
+    "name": "日麻寄分器",
+    "desc": "为群友提供日麻对局分数记录。根据马点进行PT精算，统计PT增减，支持对局与榜单查询与导出。",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/ssttkkl/nonebot-plugin-mahjong-scoreboard",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#4684d3"
+      },
+      {
+        "label": "t:日麻",
+        "color": "#4684d3"
+      }
+    ],
+    "is_official": false
   }
 ]
