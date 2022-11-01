@@ -3229,5 +3229,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cartoon",
+    "project_link": "nonebot-plugin-cartoon",
+    "name": "二次元化图像",
+    "desc": "对三次元图像动漫化, 打开二次元的大门",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-cartoon",
+    "tags": [],
+    "is_official": false
   }
 ]
