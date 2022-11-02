@@ -3249,5 +3249,20 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-super-resolution",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mahjong_utils",
+    "project_link": "nonebot-plugin-mahjong-utils",
+    "name": "日麻小工具",
+    "desc": "日麻小工具插件，支持手牌分析、番符点数查询",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/ssttkkl/nonebot-plugin-mahjong-utils",
+    "tags": [
+      {
+        "label": "t:日麻",
+        "color": "#edad34"
+      }
+    ],
+    "is_official": false
   }
 ]
