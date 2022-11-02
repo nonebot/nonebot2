@@ -3239,5 +3239,15 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-cartoon",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_super_resolution",
+    "project_link": "nonebot-plugin-super-resolution",
+    "name": "图像超分辨率增强",
+    "desc": "动漫图像超分辨率增强",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-super-resolution",
+    "tags": [],
+    "is_official": false
   }
 ]
