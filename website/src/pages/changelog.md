@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 图像超分辨率增强 [@yanyongyu](https://github.com/yanyongyu) ([#1362](https://github.com/nonebot/nonebot2/pull/1362))
 - Plugin: 二次元化图像 [@yanyongyu](https://github.com/yanyongyu) ([#1360](https://github.com/nonebot/nonebot2/pull/1360))
 - Plugin: 日麻寄分器 [@yanyongyu](https://github.com/yanyongyu) ([#1357](https://github.com/nonebot/nonebot2/pull/1357))
 - Plugin: 文本生成器 [@yanyongyu](https://github.com/yanyongyu) ([#1355](https://github.com/nonebot/nonebot2/pull/1355))
