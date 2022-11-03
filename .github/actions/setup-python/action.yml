@@ -16,7 +16,7 @@ runs:
         python-version: ${{ inputs.python-version }}
         architecture: "x64"
 
-    - uses: Gr1N/setup-poetry@v7
+    - uses: nonebot/setup-poetry@master
 
     - id: poetry-cache
       run: echo "::set-output name=dir::$(poetry config virtualenvs.path)"
