@@ -276,5 +276,18 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "hsbot",
+    "desc": "服务于《炉石传说》玩家的机器人，上线至今已有加入十余个个炉石相关群聊，上千名用户使用，响应请求数万次。 数据使用：HSreplay, Fbigame, Hearthstone API",
+    "author": "gzy02",
+    "homepage": "https://github.com/gzy02/hsbot",
+    "tags": [
+      {
+        "label": "炉石传说",
+        "color": "#526fea"
+      }
+    ],
+    "is_official": false
   }
 ]
