@@ -19,7 +19,7 @@ runs:
     - uses: nonebot/setup-poetry@master
 
     - id: poetry-cache
-      run: echo "::set-output name=dir::$(poetry config virtualenvs.path)"
+      run: echo "dir=$(poetry config virtualenvs.path)" >> $GITHUB_OUTPUT
       shell: bash
 
     - uses: actions/cache@v2
