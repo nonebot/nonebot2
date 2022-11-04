@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- CI: 测试环境添加 Python 3.11 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1366](https://github.com/nonebot/nonebot2/pull/1366))
 - Feature: 新增 dotenv 嵌套配置项支持 [@yanyongyu](https://github.com/yanyongyu) ([#1324](https://github.com/nonebot/nonebot2/pull/1324))
 - Feature: 添加 State 响应器触发消息注入 [@A-kirami](https://github.com/A-kirami) ([#1315](https://github.com/nonebot/nonebot2/pull/1315))
 - Remove: 移除无用的 namespace 声明 [@yanyongyu](https://github.com/yanyongyu) ([#1306](https://github.com/nonebot/nonebot2/pull/1306))
