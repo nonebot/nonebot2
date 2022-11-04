@@ -10,22 +10,13 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - id: python
-      uses: actions/setup-python@v4
+    - name: Install poetry
+      run: pipx install poetry
+
+    - uses: actions/setup-python@v4
       with:
-        python-version: ${{ inputs.python-version }}
-        architecture: "x64"
-
-    - uses: nonebot/setup-poetry@master
-
-    - id: poetry-cache
-      run: echo "dir=$(poetry config virtualenvs.path)" >> $GITHUB_OUTPUT
-      shell: bash
-
-    - uses: actions/cache@v3
-      with:
-        path: ${{ steps.poetry-cache.outputs.dir }}
-        key: ${{ runner.os }}-poetry-${{ steps.python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
+        python-version: '3.9'
+        cache: 'poetry'
 
     - run: poetry install -E all
       shell: bash
