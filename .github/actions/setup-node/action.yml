@@ -12,7 +12,7 @@ runs:
       run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
       shell: bash
 
-    - uses: actions/cache@v2
+    - uses: actions/cache@v3
       with:
         path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
         key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}

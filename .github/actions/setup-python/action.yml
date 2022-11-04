@@ -22,7 +22,7 @@ runs:
       run: echo "dir=$(poetry config virtualenvs.path)" >> $GITHUB_OUTPUT
       shell: bash
 
-    - uses: actions/cache@v2
+    - uses: actions/cache@v3
       with:
         path: ${{ steps.poetry-cache.outputs.dir }}
         key: ${{ runner.os }}-poetry-${{ steps.python.outputs.python-version }}-${{ hashFiles('**/poetry.lock') }}
