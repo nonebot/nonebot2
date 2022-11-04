@@ -16,7 +16,8 @@ runs:
 
     - uses: actions/setup-python@v4
       with:
-        python-version: "3.9"
+        python-version: ${{ inputs.python-version }}
+        architecture: "x64"
         cache: "poetry"
 
     - run: poetry install -E all
