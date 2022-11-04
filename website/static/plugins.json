@@ -3264,5 +3264,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_animeres",
+    "project_link": "nonebot-plugin-animeres",
+    "name": "动漫资源获取",
+    "desc": "动漫资源获取",
+    "author": "Melodyknit",
+    "homepage": "https://github.com/Melodyknit/nonebot_plugin_animeres",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ec5252"
+      },
+      {
+        "label": "anime",
+        "color": "#ec5252"
+      }
+    ],
+    "is_official": false
   }
 ]
