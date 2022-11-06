@@ -3283,5 +3283,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-person",
+    "project_link": "nonebot-plugin-person",
+    "name": "随个人",
+    "desc": "随个群友当幸运观众🤪",
+    "author": "jcjrobert",
+    "homepage": "https://github.com/jcjrobert/nonebot-plugin-person",
+    "tags": [],
+    "is_official": false
   }
 ]
