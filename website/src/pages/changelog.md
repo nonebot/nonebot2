@@ -53,6 +53,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: Bread Dog Bot [@yanyongyu](https://github.com/yanyongyu) ([#1380](https://github.com/nonebot/nonebot2/pull/1380))
 - Bot: hsbot [@yanyongyu](https://github.com/yanyongyu) ([#1369](https://github.com/nonebot/nonebot2/pull/1369))
 
 ### 🍻 适配器发布
