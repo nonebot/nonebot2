@@ -2426,10 +2426,10 @@
     "name": "MagiaDice骰娘及TRPGLOG",
     "desc": "能够实时在网页围观的TRPG记录插件，同时具有骰娘的功能",
     "author": "sena-nana",
-    "homepage": "https://github.com/sena-nana/MutsukiBot/tree/main/nonebot-plugin-magiadice",
+    "homepage": "https://github.com/sena-nana/nonebot-plugin-magiadice",
     "tags": [
       {
-        "label": "TRPG",
+        "label": "t:TRPG",
         "color": "#ea5252"
       }
     ],
@@ -2439,20 +2439,20 @@
     "module_name": "nonebot-plugin-send",
     "project_link": "nonebot-plugin-send",
     "name": "反馈及通知",
-    "desc": "用户通过bot向superuser发送反馈，以及bot向全群发送通知",
+    "desc": "用户通过bot向superuser发送反馈，以及bot向所有群发送通知",
     "author": "sena-nana",
-    "homepage": "https://github.com/sena-nana/MutsukiBot/tree/main/nonebot-plugin-send",
+    "homepage": "https://github.com/sena-nana/nonebot-plugin-send",
     "tags": [
       {
-        "label": "send",
+        "label": "t:send",
         "color": "#ea5252"
       },
       {
-        "label": "notice",
+        "label": "t:notice",
         "color": "#ea5252"
       },
       {
-        "label": "公告",
+        "label": "t:公告",
         "color": "#ea5252"
       }
     ],
@@ -2464,10 +2464,10 @@
     "name": "雨课堂自动签到",
     "desc": "使用playwright模拟浏览器签到雨课堂，并将腾讯会议号发送给superuser",
     "author": "sena-nana",
-    "homepage": "https://github.com/sena-nana/MutsukiBot/tree/main/nonebot-plugin-ykt",
+    "homepage": "https://github.com/sena-nana/nonebot-plugin-ykt",
     "tags": [
       {
-        "label": "playwright",
+        "label": "t:playwright",
         "color": "#ea5252"
       }
     ],
@@ -2971,7 +2971,7 @@
     "name": "novelai",
     "desc": "一个支持novelai、naifu、webui，支持中文功能丰富的ai绘图插件",
     "author": "sena-nana",
-    "homepage": "https://github.com/sena-nana/MutsukiBot/tree/main/nonebot-plugin-novelai",
+    "homepage": "https://github.com/sena-nana/nonebot-plugin-novelai",
     "tags": [
       {
         "label": "t:aidraw",
