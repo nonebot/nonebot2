@@ -16,6 +16,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 由于 Sena-nana 项目拆分，之前的插件地址更改 [@sena-nana](https://github.com/sena-nana) ([#1378](https://github.com/nonebot/nonebot2/pull/1378))
 - Plugin: 更新 ayaka 插件的主页链接 [@bridgeL](https://github.com/bridgeL) ([#1346](https://github.com/nonebot/nonebot2/pull/1346))
 - Plugin: 补充 novelai 插件信息 [@sena-nana](https://github.com/sena-nana) ([#1333](https://github.com/nonebot/nonebot2/pull/1333))
 - Bot: 修改 Inkar Suki 描述 [@HornCopper](https://github.com/HornCopper) ([#1312](https://github.com/nonebot/nonebot2/pull/1312))
