@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Apex API Query [@yanyongyu](https://github.com/yanyongyu) ([#1375](https://github.com/nonebot/nonebot2/pull/1375))
 - Plugin: 随个人 [@yanyongyu](https://github.com/yanyongyu) ([#1373](https://github.com/nonebot/nonebot2/pull/1373))
 - Plugin: 动漫资源获取 [@yanyongyu](https://github.com/yanyongyu) ([#1371](https://github.com/nonebot/nonebot2/pull/1371))
 - Plugin: 日麻小工具 [@yanyongyu](https://github.com/yanyongyu) ([#1365](https://github.com/nonebot/nonebot2/pull/1365))
