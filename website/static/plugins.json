@@ -3303,5 +3303,15 @@
     "homepage": "https://github.com/H-xiaoH/nonebot-plugin-apex-api-query",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_reborn",
+    "project_link": "nonebot-plugin-reborn",
+    "name": "投胎模拟器",
+    "desc": "重生后你会到哪里？",
+    "author": "Aziteee",
+    "homepage": "https://github.com/Aziteee/nonebot_plugin_reborn",
+    "tags": [],
+    "is_official": false
   }
 ]
