@@ -310,5 +310,13 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "早苗&澪&浅羽",
+    "desc": "老牌古董机器人,从酷Q插件重构来的",
+    "author": "Hoshinonyaruko",
+    "homepage": "https://github.com/Hoshinonyaruko/SanaeBot",
+    "tags": [],
+    "is_official": false
   }
 ]
