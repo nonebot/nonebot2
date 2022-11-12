@@ -39,7 +39,7 @@ FrontMatter:
 
 import os
 import importlib
-from importlib.metadata import version
+from importlib.metadata import distribution
 from typing import Any, Dict, Type, Optional
 
 import loguru
@@ -51,7 +51,11 @@ from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.drivers import Driver, ReverseDriver, combine_driver
 
-__version__ = version("nonebot2")
+try:
+    _dist = distribution("nonebot2")
+    __version__ = _dist.version
+except Exception:  # pragma: no cover
+    __version__ = None
 
 _driver: Optional[Driver] = None
 
