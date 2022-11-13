@@ -3313,5 +3313,20 @@
     "homepage": "https://github.com/Aziteee/nonebot_plugin_reborn",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_searchBiliInfo",
+    "project_link": "nonebot-plugin-searchBiliInfo",
+    "name": "b站用户直播号、粉丝、舰团数查询",
+    "desc": "调用b站官方API获取用户直播号、粉丝、舰团数（文本形式返回）",
+    "author": "Ikaros-521",
+    "homepage": "https://github.com/Ikaros-521/nonebot_plugin_searchBiliInfo",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#e55d80"
+      }
+    ],
+    "is_official": false
   }
 ]
