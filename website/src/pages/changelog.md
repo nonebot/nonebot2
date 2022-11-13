@@ -29,6 +29,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: b 站用户直播号、粉丝、舰团数查询 [@yanyongyu](https://github.com/yanyongyu) ([#1385](https://github.com/nonebot/nonebot2/pull/1385))
 - Plugin: 投胎模拟器 [@yanyongyu](https://github.com/yanyongyu) ([#1382](https://github.com/nonebot/nonebot2/pull/1382))
 - Plugin: Apex API Query [@yanyongyu](https://github.com/yanyongyu) ([#1375](https://github.com/nonebot/nonebot2/pull/1375))
 - Plugin: 随个人 [@yanyongyu](https://github.com/yanyongyu) ([#1373](https://github.com/nonebot/nonebot2/pull/1373))
