@@ -3328,5 +3328,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_colab_novelai",
+    "project_link": "nonebot-plugin-colab-novelai",
+    "name": "Colab-NovelAI",
+    "desc": "解放你的双手，让Colab持续给你提供算力生产色图！",
+    "author": "EtherLeaF",
+    "homepage": "https://github.com/EtherLeaF/nonebot-plugin-colab-novelai",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:NovelAI",
+        "color": "#eacd52"
+      }
+    ],
+    "is_official": false
   }
 ]
