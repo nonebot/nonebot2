@@ -3347,5 +3347,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sky",
+    "project_link": "nonebot-plugin-sky",
+    "name": "sky光遇",
+    "desc": "基于NoneBot2的光遇每日攻略插件",
+    "author": "Kaguya233qwq",
+    "homepage": "https://github.com/Kaguya233qwq/nonebot_plugin_sky",
+    "tags": [
+      {
+        "label": "光遇",
+        "color": "#7ebdf0"
+      },
+      {
+        "label": "攻略",
+        "color": "#2079c1"
+      }
+    ],
+    "is_official": false
   }
 ]
