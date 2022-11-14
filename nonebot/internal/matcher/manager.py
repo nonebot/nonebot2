@@ -3,9 +3,11 @@ from typing import (
     Any,
     List,
     Type,
+    Union,
     TypeVar,
     Iterator,
     KeysView,
+    Optional,
     ItemsView,
     ValuesView,
     MutableMapping,
@@ -58,16 +60,16 @@ class MatcherManager(MutableMapping[int, List[Type["Matcher"]]]):
         return self.provider.items()
 
     @overload
-    def get(self, key: int) -> List[Type["Matcher"]] | None:
+    def get(self, key: int) -> Optional[List[Type["Matcher"]]]:
         ...
 
     @overload
-    def get(self, key: int, default: T) -> List[Type["Matcher"]] | T:
+    def get(self, key: int, default: T) -> Union[List[Type["Matcher"]], T]:
         ...
 
     def get(
-        self, key: int, default: T | None = None
-    ) -> List[Type["Matcher"]] | T | None:
+        self, key: int, default: Optional[T] = None
+    ) -> Optional[Union[List[Type["Matcher"]], T]]:
         return self.provider.get(key, default)
 
     def pop(self, key: int) -> List[Type["Matcher"]]:
