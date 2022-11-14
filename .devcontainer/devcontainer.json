@@ -38,7 +38,16 @@
           "**/target/**": true,
           "**/__pycache__": true
         }
-      }
+      },
+      "extensions": [
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "ms-python.isort",
+        "ms-python.black-formatter",
+        "EditorConfig.EditorConfig",
+        "esbenp.prettier-vscode",
+        "bradlc.vscode-tailwindcss"
+      ]
     }
   }
 }
