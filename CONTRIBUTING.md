@@ -33,6 +33,8 @@ pre-commit install
 
 ### 使用 GitHub Codespaces（Dev Container）
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=master&repo=289605524)
+
 使用 GitHub Codespaces 选择 `NoneBot2` 项目，然后选择 `.devcontainer/devcontainer.json` 配置即可。
 
 ### Commit 规范
