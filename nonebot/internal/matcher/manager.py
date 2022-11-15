@@ -3,6 +3,7 @@ from typing import (
     Any,
     List,
     Type,
+    Tuple,
     Union,
     TypeVar,
     Iterator,
@@ -75,7 +76,7 @@ class MatcherManager(MutableMapping[int, List[Type["Matcher"]]]):
     def pop(self, key: int) -> List[Type["Matcher"]]:
         return self.provider.pop(key)
 
-    def popitem(self) -> tuple[int, List[Type["Matcher"]]]:
+    def popitem(self) -> Tuple[int, List[Type["Matcher"]]]:
         return self.provider.popitem()
 
     def clear(self) -> None:
