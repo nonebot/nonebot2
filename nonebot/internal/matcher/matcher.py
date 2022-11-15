@@ -1,12 +1,10 @@
 from types import ModuleType
 from contextvars import ContextVar
-from collections import defaultdict
 from datetime import datetime, timedelta
 from contextlib import AsyncExitStack, contextmanager
 from typing import (
     TYPE_CHECKING,
     Any,
-    Dict,
     List,
     Type,
     Union,
