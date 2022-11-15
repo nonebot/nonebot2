@@ -18,4 +18,7 @@ from nonebot.internal.matcher import DEFAULT_PROVIDER as DEFAULT_PROVIDER
 __autodoc__ = {
     "Matcher": True,
     "matchers": True,
+    "MatcherManager": True,
+    "MatcherProvider": True,
+    "DEFAULT_PROVIDER": True,
 }
