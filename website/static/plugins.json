@@ -3366,5 +3366,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_zyk_novelai",
+    "project_link": "nonebot_plugin_zyk_novelai",
+    "name": "AI绘图",
+    "desc": "有后端就行",
+    "author": "ZYKsslm",
+    "homepage": "https://github.com/ZYKsslm/nonebot_plugin_zyk_novelai",
+    "tags": [],
+    "is_official": false
   }
 ]
