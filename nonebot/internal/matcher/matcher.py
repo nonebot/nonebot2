@@ -1,8 +1,8 @@
 from types import ModuleType
 from contextvars import ContextVar
 from collections import defaultdict
-from contextlib import AsyncExitStack
 from datetime import datetime, timedelta
+from contextlib import AsyncExitStack, contextmanager
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -666,6 +666,18 @@ class Matcher(metaclass=MatcherMeta):
         if REJECT_CACHE_TARGET in self.state:
             self.state[REJECT_TARGET] = self.state[REJECT_CACHE_TARGET]
 
+    @contextmanager
+    def ensure_context(self, bot: Bot, event: Event):
+        b_t = current_bot.set(bot)
+        e_t = current_event.set(event)
+        m_t = current_matcher.set(self)
+        try:
+            yield
+        finally:
+            current_bot.reset(b_t)
+            current_event.reset(e_t)
+            current_matcher.reset(m_t)
+
     async def simple_run(
         self,
         bot: Bot,
@@ -678,35 +690,31 @@ class Matcher(metaclass=MatcherMeta):
             f"{self} run with incoming args: "
             f"bot={bot}, event={event!r}, state={state!r}"
         )
-        b_t = current_bot.set(bot)
-        e_t = current_event.set(event)
-        m_t = current_matcher.set(self)
-        try:
-            # Refresh preprocess state
-            self.state.update(state)
 
-            while self.handlers:
-                handler = self.handlers.pop(0)
-                current_handler.set(handler)
-                logger.debug(f"Running handler {handler}")
-                try:
-                    await handler(
-                        matcher=self,
-                        bot=bot,
-                        event=event,
-                        state=self.state,
-                        stack=stack,
-                        dependency_cache=dependency_cache,
-                    )
-                except SkippedException:
-                    logger.debug(f"Handler {handler} skipped")
-        except StopPropagation:
-            self.block = True
-        finally:
-            logger.info(f"{self} running complete")
-            current_bot.reset(b_t)
-            current_event.reset(e_t)
-            current_matcher.reset(m_t)
+        with self.ensure_context(bot, event):
+            try:
+                # Refresh preprocess state
+                self.state.update(state)
+
+                while self.handlers:
+                    handler = self.handlers.pop(0)
+                    current_handler.set(handler)
+                    logger.debug(f"Running handler {handler}")
+                    try:
+                        await handler(
+                            matcher=self,
+                            bot=bot,
+                            event=event,
+                            state=self.state,
+                            stack=stack,
+                            dependency_cache=dependency_cache,
+                        )
+                    except SkippedException:
+                        logger.debug(f"Handler {handler} skipped")
+            except StopPropagation:
+                self.block = True
+            finally:
+                logger.info(f"{self} running complete")
 
     # 运行handlers
     async def run(

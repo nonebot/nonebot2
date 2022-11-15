@@ -20,6 +20,10 @@ toc_max_heading_level: 2
 - Feature: 添加 State 响应器触发消息注入 [@A-kirami](https://github.com/A-kirami) ([#1315](https://github.com/nonebot/nonebot2/pull/1315))
 - Remove: 移除无用的 namespace 声明 [@yanyongyu](https://github.com/yanyongyu) ([#1306](https://github.com/nonebot/nonebot2/pull/1306))
 
+### 🐛 Bug 修复
+
+- Fix: 修复 run pre/post hook 没有在正确的上下文中运行 [@yanyongyu](https://github.com/yanyongyu) ([#1391](https://github.com/nonebot/nonebot2/pull/1391))
+
 ### 💫 杂项
 
 - Plugin: 由于 Sena-nana 项目拆分，之前的插件地址更改 [@sena-nana](https://github.com/sena-nana) ([#1378](https://github.com/nonebot/nonebot2/pull/1378))
@@ -30,6 +34,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: sky 光遇 [@yanyongyu](https://github.com/yanyongyu) ([#1394](https://github.com/nonebot/nonebot2/pull/1394))
 - Plugin: Colab-NovelAI [@yanyongyu](https://github.com/yanyongyu) ([#1390](https://github.com/nonebot/nonebot2/pull/1390))
 - Plugin: b 站用户直播号、粉丝、舰团数查询 [@yanyongyu](https://github.com/yanyongyu) ([#1385](https://github.com/nonebot/nonebot2/pull/1385))
 - Plugin: 投胎模拟器 [@yanyongyu](https://github.com/yanyongyu) ([#1382](https://github.com/nonebot/nonebot2/pull/1382))

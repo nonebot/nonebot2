@@ -167,17 +167,19 @@ async def _run_matcher(
         )
         for proc in _run_preprocessors
     ]:
-        try:
-            await asyncio.gather(*coros)
-        except IgnoredException:
-            logger.opt(colors=True).info(f"{matcher} running is <b>cancelled</b>")
-            return
-        except Exception as e:
-            logger.opt(colors=True, exception=e).error(
-                "<r><bg #f8bbd0>Error when running RunPreProcessors. Running cancelled!</bg #f8bbd0></r>"
-            )
+        # ensure matcher function can be correctly called
+        with matcher.ensure_context(bot, event):
+            try:
+                await asyncio.gather(*coros)
+            except IgnoredException:
+                logger.opt(colors=True).info(f"{matcher} running is <b>cancelled</b>")
+                return
+            except Exception as e:
+                logger.opt(colors=True, exception=e).error(
+                    "<r><bg #f8bbd0>Error when running RunPreProcessors. Running cancelled!</bg #f8bbd0></r>"
+                )
 
-            return
+                return
 
     exception = None
 
@@ -205,12 +207,14 @@ async def _run_matcher(
         )
         for proc in _run_postprocessors
     ]:
-        try:
-            await asyncio.gather(*coros)
-        except Exception as e:
-            logger.opt(colors=True, exception=e).error(
-                "<r><bg #f8bbd0>Error when running RunPostProcessors</bg #f8bbd0></r>"
-            )
+        # ensure matcher function can be correctly called
+        with matcher.ensure_context(bot, event):
+            try:
+                await asyncio.gather(*coros)
+            except Exception as e:
+                logger.opt(colors=True, exception=e).error(
+                    "<r><bg #f8bbd0>Error when running RunPostProcessors</bg #f8bbd0></r>"
+                )
 
     if matcher.block:
         raise StopPropagation
