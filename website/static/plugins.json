@@ -3366,5 +3366,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_zyk_novelai",
+    "project_link": "nonebot_plugin_zyk_novelai",
+    "name": "免费版NovelAI生图插件",
+    "desc": "一个用于nonebot2的简约AI绘图插件。且没有繁琐的使用指令，配置过程简单迅捷，代码简洁易懂，还有更多功能将会陆续加入。",
+    "author": "ZYKsslm",
+    "homepage": "https://github.com/ZYKsslm/nonebot_plugin_zyk_novelai",
+    "tags": [
+      {
+        "label": "Free",
+        "color": "#52ead7"
+      },
+      {
+        "label": "NovelAI",
+        "color": "#6252ea"
+      },
+      {
+        "label": "Simple",
+        "color": "#d2ea52"
+      }
+    ],
+    "is_official": false
   }
 ]
