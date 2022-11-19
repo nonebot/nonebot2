@@ -3317,8 +3317,8 @@
   {
     "module_name": "nonebot_plugin_searchBiliInfo",
     "project_link": "nonebot-plugin-searchBiliInfo",
-    "name": "b站用户直播号、粉丝、舰团数查询",
-    "desc": "调用b站官方API获取用户直播号、粉丝、舰团数（文本形式返回）",
+    "name": "b站用户信息查询",
+    "desc": "查询b站用户粉丝数、舰团信息；主播直播收益数据（总收益、礼物、SC、上舰）；用户观看直播信息（观看、弹幕记录）；通过关键词搜昵称、UID等",
     "author": "Ikaros-521",
     "homepage": "https://github.com/Ikaros-521/nonebot_plugin_searchBiliInfo",
     "tags": [
