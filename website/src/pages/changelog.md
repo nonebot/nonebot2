@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: Bot `__getattr__` 不再对 `__xxx__` 方法返回 [@synodriver](https://github.com/synodriver) ([#1398](https://github.com/nonebot/nonebot2/pull/1398))
 - Fix: 修复 run pre/post hook 没有在正确的上下文中运行 [@yanyongyu](https://github.com/yanyongyu) ([#1391](https://github.com/nonebot/nonebot2/pull/1391))
 
 ### 💫 杂项
