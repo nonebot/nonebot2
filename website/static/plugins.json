@@ -3389,5 +3389,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_writer",
+    "project_link": "nonebot_plugin_writer",
+    "name": "nonebot_plugin_write",
+    "desc": "✨ 基于 百度文心大模型 的 NoneBot2 promote索引文字生成插件 ✨",
+    "author": "ANGJustinl",
+    "homepage": "https://github.com/ANGJustinl/nonebot_plugin_writer",
+    "tags": [
+      {
+        "label": "百度文心大模型",
+        "color": "#8fff00"
+      },
+      {
+        "label": "娱乐",
+        "color": "#0074ff"
+      }
+    ],
+    "is_official": false
   }
 ]
