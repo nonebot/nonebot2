@@ -310,5 +310,13 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "云崽Bot",
+    "desc": "原神机器人，提供原神查询服务和一堆有用没用的插件功能",
+    "author": "Duoream",
+    "homepage": "https://github.com/Le-niao/Yunzai-Bot",
+    "tags": [],
+    "is_official": false
   }
 ]
