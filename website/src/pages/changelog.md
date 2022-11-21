@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 支持自定义 matchers 存储管理 [@yanyongyu](https://github.com/yanyongyu) ([#1395](https://github.com/nonebot/nonebot2/pull/1395))
 - Feature: 升级 devcontainer 配置 [@yanyongyu](https://github.com/yanyongyu) ([#1392](https://github.com/nonebot/nonebot2/pull/1392))
 - Feature: 使用 `importlib.metadata` 替换 `pkg_resources` [@A-kirami](https://github.com/A-kirami) ([#1388](https://github.com/nonebot/nonebot2/pull/1388))
 - CI: 测试环境添加 Python 3.11 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1366](https://github.com/nonebot/nonebot2/pull/1366))
