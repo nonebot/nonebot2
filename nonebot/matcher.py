@@ -13,12 +13,12 @@ from nonebot.internal.matcher import MatcherManager as MatcherManager
 from nonebot.internal.matcher import MatcherProvider as MatcherProvider
 from nonebot.internal.matcher import current_handler as current_handler
 from nonebot.internal.matcher import current_matcher as current_matcher
-from nonebot.internal.matcher import DEFAULT_PROVIDER as DEFAULT_PROVIDER
+from nonebot.internal.matcher import DEFAULT_PROVIDER_CLASS as DEFAULT_PROVIDER_CLASS
 
 __autodoc__ = {
     "Matcher": True,
     "matchers": True,
     "MatcherManager": True,
     "MatcherProvider": True,
-    "DEFAULT_PROVIDER": True,
+    "DEFAULT_PROVIDER_CLASS": True,
 }

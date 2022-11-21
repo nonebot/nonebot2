@@ -1,6 +1,6 @@
 from .manager import MatcherManager as MatcherManager
 from .provider import MatcherProvider as MatcherProvider
-from .provider import DEFAULT_PROVIDER as DEFAULT_PROVIDER
+from .provider import DEFAULT_PROVIDER_CLASS as DEFAULT_PROVIDER_CLASS
 
 matchers = MatcherManager()
 

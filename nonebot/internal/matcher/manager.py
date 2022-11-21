@@ -15,7 +15,7 @@ from typing import (
     overload,
 )
 
-from .provider import DEFAULT_PROVIDER, MatcherProvider
+from .provider import DEFAULT_PROVIDER_CLASS, MatcherProvider
 
 if TYPE_CHECKING:
     from .matcher import Matcher
@@ -24,8 +24,13 @@ T = TypeVar("T")
 
 
 class MatcherManager(MutableMapping[int, List[Type["Matcher"]]]):
+    """事件响应器管理器
+
+    实现了常用字典操作，用于管理事件响应器。
+    """
+
     def __init__(self):
-        self.provider: MatcherProvider = DEFAULT_PROVIDER
+        self.provider: MatcherProvider = DEFAULT_PROVIDER_CLASS({})
 
     def __repr__(self) -> str:
         return f"MatcherManager(provider={self.provider!r})"
@@ -91,4 +96,9 @@ class MatcherManager(MutableMapping[int, List[Type["Matcher"]]]):
         return self.provider.setdefault(key, default)
 
     def set_provider(self, provider_class: Type[MatcherProvider]) -> None:
+        """设置事件响应器存储器
+
+        参数:
+            provider_class: 事件响应器存储器类
+        """
         self.provider = provider_class(self.provider)
