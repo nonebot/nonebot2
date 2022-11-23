@@ -40,12 +40,18 @@ class Driver(abc.ABC):
         """环境名称"""
         self.config: Config = config
         """全局配置对象"""
-        self._clients: Dict[str, "Bot"] = {}
+        self._bots: Dict[str, "Bot"] = {}
+
+    def __repr__(self) -> str:
+        return (
+            f"Driver(type={self.type!r}, "
+            f"adapters={len(self._adapters)}, bots={len(self._bots)})"
+        )
 
     @property
     def bots(self) -> Dict[str, "Bot"]:
         """获取当前所有已连接的 Bot"""
-        return self._clients
+        return self._bots
 
     def register_adapter(self, adapter: Type["Adapter"], **kwargs) -> None:
         """注册一个协议适配器
@@ -124,9 +130,9 @@ class Driver(abc.ABC):
 
     def _bot_connect(self, bot: "Bot") -> None:
         """在连接成功后，调用该函数来注册 bot 对象"""
-        if bot.self_id in self._clients:
+        if bot.self_id in self._bots:
             raise RuntimeError(f"Duplicate bot connection with id {bot.self_id}")
-        self._clients[bot.self_id] = bot
+        self._bots[bot.self_id] = bot
 
         async def _run_hook(bot: "Bot") -> None:
             coros = list(
@@ -148,8 +154,8 @@ class Driver(abc.ABC):
 
     def _bot_disconnect(self, bot: "Bot") -> None:
         """在连接断开后，调用该函数来注销 bot 对象"""
-        if bot.self_id in self._clients:
-            del self._clients[bot.self_id]
+        if bot.self_id in self._bots:
+            del self._bots[bot.self_id]
 
         async def _run_hook(bot: "Bot") -> None:
             coros = list(
@@ -233,13 +239,11 @@ def combine_driver(driver: Type[Driver], *mixins: Type[ForwardMixin]) -> Type[Dr
     if not mixins:
         return driver
 
-    class CombinedDriver(*mixins, driver, ForwardDriver):  # type: ignore
-        @property
-        def type(self) -> str:
-            return (
-                driver.type.__get__(self)
-                + "+"
-                + "+".join(map(lambda x: x.type.__get__(self), mixins))
-            )
+    def type_(self: ForwardDriver) -> str:
+        return (
+            driver.type.__get__(self)
+            + "+"
+            + "+".join(map(lambda x: x.type.__get__(self), mixins))
+        )
 
-    return CombinedDriver
+    return type("CombinedDriver", (*mixins, driver, ForwardDriver), {"type": property(type_)})  # type: ignore

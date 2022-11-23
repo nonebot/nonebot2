@@ -37,7 +37,7 @@ try:
     from quart import Quart, Request, Response
     from quart.datastructures import FileStorage
     from quart import Websocket as QuartWebSocket
-except ImportError:
+except ImportError:  # pragma: no cover
     raise ImportError(
         "Please install Quart by using `pip install nonebot2[quart]`"
     ) from None
@@ -63,7 +63,7 @@ class Config(BaseSettings):
     """开启/关闭冷重载"""
     quart_reload_dirs: Optional[List[str]] = None
     """重载监控文件夹列表，默认为 uvicorn 默认值"""
-    quart_reload_delay: Optional[float] = None
+    quart_reload_delay: float = 0.25
     """重载延迟，默认为 uvicorn 默认值"""
     quart_reload_includes: Optional[List[str]] = None
     """要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""

@@ -13,20 +13,20 @@ repos:
         stages: [commit]
 
   - repo: https://github.com/psf/black
-    rev: 22.6.0
+    rev: 22.10.0
     hooks:
       - id: black
         stages: [commit]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.7.1
+    rev: v3.0.0-alpha.4
     hooks:
       - id: prettier
-        types_or: [javascript, jsx, ts, tsx, markdown, yaml]
+        types_or: [javascript, jsx, ts, tsx, markdown, yaml, json]
         stages: [commit]
 
   - repo: https://github.com/nonebot/nonemoji
-    rev: v0.1.2
+    rev: v0.1.3
     hooks:
       - id: nonemoji
         stages: [prepare-commit-msg]

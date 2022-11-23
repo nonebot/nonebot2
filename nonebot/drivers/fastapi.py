@@ -9,7 +9,9 @@ FrontMatter:
     description: nonebot.drivers.fastapi 模块
 """
 
+
 import logging
+import contextlib
 from functools import wraps
 from typing import Any, List, Tuple, Union, Callable, Optional
 
@@ -57,7 +59,7 @@ class Config(BaseSettings):
     """开启/关闭冷重载"""
     fastapi_reload_dirs: Optional[List[str]] = None
     """重载监控文件夹列表，默认为 uvicorn 默认值"""
-    fastapi_reload_delay: Optional[float] = None
+    fastapi_reload_delay: float = 0.25
     """重载延迟，默认为 uvicorn 默认值"""
     fastapi_reload_includes: Optional[List[str]] = None
     """要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
@@ -186,14 +188,12 @@ class Driver(ReverseDriver):
         setup: HTTPServerSetup,
     ) -> Response:
         json: Any = None
-        try:
+        with contextlib.suppress(Exception):
             json = await request.json()
-        except Exception:
-            pass
 
         data: Optional[dict] = None
         files: Optional[List[Tuple[str, FileTypes]]] = None
-        try:
+        with contextlib.suppress(Exception):
             form = await request.form()
             data = {}
             files = []
@@ -204,8 +204,7 @@ class Driver(ReverseDriver):
                     )
                 else:
                     data[key] = value
-        except Exception:
-            pass
+
         http_request = BaseRequest(
             request.method,
             str(request.url),
@@ -219,7 +218,9 @@ class Driver(ReverseDriver):
         )
 
         response = await setup.handle_func(http_request)
-        return Response(response.content, response.status_code, dict(response.headers))
+        return Response(
+            response.content, response.status_code, dict(response.headers.items())
+        )
 
     async def _handle_ws(self, websocket: WebSocket, setup: WebSocketServerSetup):
         request = BaseRequest(

@@ -28,8 +28,7 @@ def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
         )
         for param in signature.parameters.values()
     ]
-    typed_signature = inspect.Signature(typed_params)
-    return typed_signature
+    return inspect.Signature(typed_params)
 
 
 def get_typed_annotation(param: inspect.Parameter, globalns: Dict[str, Any]) -> Any:

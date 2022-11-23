@@ -78,5 +78,40 @@
     "homepage": "https://onebot.adapters.nonebot.dev/",
     "tags": [],
     "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.console",
+    "project_link": "nonebot-adapter-console",
+    "name": "Console",
+    "desc": "基于终端的交互式适配器",
+    "author": "Melodyknit",
+    "homepage": "https://github.com/nonebot/adapter-console",
+    "tags": [],
+    "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.github",
+    "project_link": "nonebot-adapter-github",
+    "name": "GitHub",
+    "desc": "GitHub APP & OAuth APP integration",
+    "author": "yanyongyu",
+    "homepage": "https://github.com/nonebot/adapter-github",
+    "tags": [],
+    "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.ntchat",
+    "project_link": "nonebot-adapter-ntchat",
+    "name": "Ntchat",
+    "desc": "pc hook的微信客户端适配",
+    "author": "JustUndertaker",
+    "homepage": "https://github.com/JustUndertaker/adapter-ntchat",
+    "tags": [
+      {
+        "label": "微信",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]

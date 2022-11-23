@@ -12,7 +12,7 @@ include = ["nonebot_plugin_docs/dist/**/*"]
 
 
 [tool.poetry.dependencies]
-python = "^3.7.3"
+python = "^3.8"
 nonebot2 = "^2.0.0-beta.1"
 
 [tool.poetry.dev-dependencies]

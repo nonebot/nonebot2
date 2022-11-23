@@ -29,6 +29,10 @@ async def test_init(nonebug_init):
     assert config.config_override == "new"
     assert config.config_from_init == "init"
     assert config.common_config == "common"
+    assert config.common_override == "new"
+    assert config.nested_dict == {"a": 1, "b": 2, "c": {"d": 3}}
+    assert config.nested_missing_dict == {"a": 1, "b": {"c": 2}}
+    assert config.not_nested == "some string"
 
 
 @pytest.mark.asyncio
@@ -61,7 +65,7 @@ async def test_get(monkeypatch: pytest.MonkeyPatch, nonebug_clear):
     with pytest.raises(ValueError):
         get_bot()
 
-    monkeypatch.setattr(driver, "_clients", {"test": "test"})
+    monkeypatch.setattr(driver, "_bots", {"test": "test"})
     assert get_bot() == "test"
     assert get_bot("test") == "test"
     assert get_bots() == {"test": "test"}

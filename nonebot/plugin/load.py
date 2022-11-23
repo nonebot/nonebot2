@@ -5,24 +5,30 @@ FrontMatter:
     description: nonebot.plugin.load 模块
 """
 import json
-import warnings
-from typing import Set, Iterable, Optional
+from pathlib import Path
+from types import ModuleType
+from typing import Set, Union, Iterable, Optional
 
 import tomlkit
 
-from .export import Export
+from nonebot.utils import path_to_module_name
+
 from .plugin import Plugin
 from .manager import PluginManager
 from . import _managers, get_plugin, _module_name_to_plugin_name
 
 
-def load_plugin(module_path: str) -> Optional[Plugin]:
+def load_plugin(module_path: Union[str, Path]) -> Optional[Plugin]:
     """加载单个插件，可以是本地插件或是通过 `pip` 安装的插件。
 
     参数:
-        module_path: 插件名称 `path.to.your.plugin`
+        module_path: 插件名称 `path.to.your.plugin` 或插件路径 `pathlib.Path(path/to/your/plugin)`
     """
-
+    module_path = (
+        path_to_module_name(module_path)
+        if isinstance(module_path, Path)
+        else module_path
+    )
     manager = PluginManager([module_path])
     _managers.append(manager)
     return manager.load_plugin(module_path)
@@ -74,6 +80,8 @@ def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     """
     with open(file_path, "r", encoding=encoding) as f:
         data = json.load(f)
+    if not isinstance(data, dict):
+        raise TypeError("json file must contains a dict!")
     plugins = data.get("plugins")
     plugin_dirs = data.get("plugin_dirs")
     assert isinstance(plugins, list), "plugins must be a list of plugin name"
@@ -103,15 +111,10 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
         data = tomlkit.parse(f.read())  # type: ignore
 
     nonebot_data = data.get("tool", {}).get("nonebot")
-    if not nonebot_data:
-        nonebot_data = data.get("nonebot", {}).get("plugins")
-        if nonebot_data:
-            warnings.warn(
-                "[nonebot.plugins] table is deprecated. Use [tool.nonebot] instead.",
-                DeprecationWarning,
-            )
-        else:
-            raise ValueError("Cannot find '[tool.nonebot]' in given toml file!")
+    if nonebot_data is None:
+        raise ValueError("Cannot find '[tool.nonebot]' in given toml file!")
+    if not isinstance(nonebot_data, dict):
+        raise TypeError("'[tool.nonebot]' must be a Table!")
     plugins = nonebot_data.get("plugins", [])
     plugin_dirs = nonebot_data.get("plugin_dirs", [])
     assert isinstance(plugins, list), "plugins must be a list of plugin name"
@@ -143,7 +146,7 @@ def _find_manager_by_name(name: str) -> Optional[PluginManager]:
             return manager
 
 
-def require(name: str) -> Export:
+def require(name: str) -> ModuleType:
     """获取一个插件的导出内容。
 
     如果为 `load_plugins` 文件夹导入的插件，则为文件(夹)名。
@@ -156,11 +159,10 @@ def require(name: str) -> Export:
     """
     plugin = get_plugin(_module_name_to_plugin_name(name))
     if not plugin:
-        manager = _find_manager_by_name(name)
-        if manager:
+        if manager := _find_manager_by_name(name):
             plugin = manager.load_plugin(name)
         else:
             plugin = load_plugin(name)
-        if not plugin:
-            raise RuntimeError(f'Cannot load plugin "{name}"!')
-    return plugin.export
+    if not plugin:
+        raise RuntimeError(f'Cannot load plugin "{name}"!')
+    return plugin.module

@@ -123,7 +123,7 @@
   },
   {
     "name": "Inkar Suki",
-    "desc": "一个十分方便的Bot，支持包括Webhook、群管、互动等一系列功能",
+    "desc": "一个十分方便的Bot，支持包括Webhook、群管、剑网3等一系列功能，持续更新中……",
     "author": "HornCopper",
     "homepage": "https://github.com/HornCopper/Inkar-Suki",
     "tags": [
@@ -136,8 +136,8 @@
         "color": "#374fd0"
       },
       {
-        "label": "群管",
-        "color": "#4ede39"
+        "label": "剑网3",
+        "color": "#ff0033"
       }
     ],
     "is_official": false
@@ -209,6 +209,104 @@
       {
         "label": "群管",
         "color": "#41aecb"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "name": "SkadiBot",
+    "desc": "明日方舟主题机器人—斯卡蒂",
+    "author": "yuyuziYYZ",
+    "homepage": "https://github.com/yuyuziYYZ/skadi_bot",
+    "tags": [
+      {
+        "label": "明日方舟",
+        "color": "#a48888"
+      },
+      {
+        "label": "斯卡蒂",
+        "color": "#a48888"
+      },
+      {
+        "label": "arknights",
+        "color": "#a48888"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "name": "小白机器人",
+    "desc": "一个高度依赖数据库的群管理机器人",
+    "author": "SDIJF1521",
+    "homepage": "https://github.com/SDIJF1521/qqai",
+    "tags": [
+      {
+        "label": "群管理",
+        "color": "#ea5252"
+      },
+      {
+        "label": "新人作品",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "name": "LittlePaimon",
+    "desc": "小派蒙，多功能原神机器人。",
+    "author": "CMHopeSunshine",
+    "homepage": "https://github.com/CMHopeSunshine/LittlePaimon",
+    "tags": [
+      {
+        "label": "原神",
+        "color": "#7a52ea"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "name": "IdhagnBot",
+    "desc": "🐱🤖 一个以娱乐功能为主的缝合怪（划掉）QQ机器人，包含一定Furry要素但是不会卖萌（就是逊啦！）",
+    "author": "su226",
+    "homepage": "https://github.com/su226/IdhagnBot",
+    "tags": [
+      {
+        "label": "a:OneBot",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "name": "hsbot",
+    "desc": "服务于《炉石传说》玩家的机器人，上线至今已有加入十余个个炉石相关群聊，上千名用户使用，响应请求数万次。 数据使用：HSreplay, Fbigame, Hearthstone API",
+    "author": "gzy02",
+    "homepage": "https://github.com/gzy02/hsbot",
+    "tags": [
+      {
+        "label": "炉石传说",
+        "color": "#526fea"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "name": "Bread Dog Bot",
+    "desc": "Terraria TShock QQ 机器人",
+    "author": "Qianyiovo",
+    "homepage": "https://github.com/Qianyiovo/bread_dog_bot",
+    "tags": [
+      {
+        "label": "TShock",
+        "color": "#ea5252"
+      },
+      {
+        "label": "泰拉瑞亚",
+        "color": "#5dea52"
+      },
+      {
+        "label": "Terraria",
+        "color": "#5dea52"
       }
     ],
     "is_official": false

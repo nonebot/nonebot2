@@ -33,6 +33,9 @@ class Adapter(abc.ABC):
         self.bots: Dict[str, Bot] = {}
         """本协议适配器已建立连接的 {ref}`nonebot.adapters.Bot` 实例"""
 
+    def __repr__(self) -> str:
+        return f"Adapter(name={self.get_name()!r})"
+
     @classmethod
     @abc.abstractmethod
     def get_name(cls) -> str:

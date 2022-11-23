@@ -4,7 +4,7 @@ FrontMatter:
     sidebar_position: 9
     description: nonebot.consts 模块
 """
-from typing_extensions import Literal
+from typing import Literal
 
 # used by Matcher
 RECEIVE_KEY: Literal["_receive_{id}"] = "_receive_{id}"
@@ -42,3 +42,11 @@ REGEX_GROUP: Literal["_matched_groups"] = "_matched_groups"
 """正则匹配 group 元组存储 key"""
 REGEX_DICT: Literal["_matched_dict"] = "_matched_dict"
 """正则匹配 group 字典存储 key"""
+STARTSWITH_KEY: Literal["_startswith"] = "_startswith"
+"""响应触发前缀 key"""
+ENDSWITH_KEY: Literal["_endswith"] = "_endswith"
+"""响应触发后缀 key"""
+FULLMATCH_KEY: Literal["_fullmatch"] = "_fullmatch"
+"""响应触发完整消息 key"""
+KEYWORD_KEY: Literal["_keyword"] = "_keyword"
+"""响应触发关键字 key"""

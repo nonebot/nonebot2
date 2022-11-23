@@ -10,11 +10,26 @@ FrontMatter:
 
 import re
 import shlex
-from itertools import product
-from argparse import Namespace
-from typing_extensions import TypedDict
+from argparse import Action
+from argparse import ArgumentError
+from itertools import chain, product
+from argparse import Namespace as Namespace
 from argparse import ArgumentParser as ArgParser
-from typing import Any, List, Tuple, Union, Optional, Sequence, NamedTuple
+from typing import (
+    IO,
+    TYPE_CHECKING,
+    List,
+    Type,
+    Tuple,
+    Union,
+    TypeVar,
+    Optional,
+    Sequence,
+    TypedDict,
+    NamedTuple,
+    cast,
+    overload,
+)
 
 from pygtrie import CharTrie
 
@@ -23,15 +38,8 @@ from nonebot.log import logger
 from nonebot.typing import T_State
 from nonebot.exception import ParserExit
 from nonebot.internal.rule import Rule as Rule
+from nonebot.params import Command, EventToMe, CommandArg
 from nonebot.adapters import Bot, Event, Message, MessageSegment
-from nonebot.params import (
-    Command,
-    EventToMe,
-    EventType,
-    CommandArg,
-    EventMessage,
-    EventPlainText,
-)
 from nonebot.consts import (
     CMD_KEY,
     PREFIX_KEY,
@@ -39,11 +47,17 @@ from nonebot.consts import (
     SHELL_ARGS,
     SHELL_ARGV,
     CMD_ARG_KEY,
+    KEYWORD_KEY,
     RAW_CMD_KEY,
     REGEX_GROUP,
+    ENDSWITH_KEY,
     CMD_START_KEY,
+    FULLMATCH_KEY,
     REGEX_MATCHED,
+    STARTSWITH_KEY,
 )
+
+T = TypeVar("T")
 
 CMD_RESULT = TypedDict(
     "CMD_RESULT",
@@ -83,8 +97,7 @@ class TrieRule:
         message_seg: MessageSegment = message[0]
         if message_seg.is_text():
             segment_text = str(message_seg).lstrip()
-            pf = cls.prefix.longest_prefix(segment_text)
-            if pf:
+            if pf := cls.prefix.longest_prefix(segment_text):
                 value: TRIE_VALUE = pf.value
                 prefix[RAW_CMD_KEY] = pf.key
                 prefix[CMD_START_KEY] = value.command_start
@@ -113,18 +126,34 @@ class StartswithRule:
         self.msg = msg
         self.ignorecase = ignorecase
 
-    async def __call__(
-        self, type: str = EventType(), text: str = EventPlainText()
-    ) -> Any:
-        if type != "message":
-            return False
-        return bool(
-            re.match(
-                f"^(?:{'|'.join(re.escape(prefix) for prefix in self.msg)})",
-                text,
-                re.IGNORECASE if self.ignorecase else 0,
-            )
+    def __repr__(self) -> str:
+        return f"Startswith(msg={self.msg}, ignorecase={self.ignorecase})"
+
+    def __eq__(self, other: object) -> bool:
+        return (
+            isinstance(other, StartswithRule)
+            and frozenset(self.msg) == frozenset(other.msg)
+            and self.ignorecase == other.ignorecase
         )
+
+    def __hash__(self) -> int:
+        return hash((frozenset(self.msg), self.ignorecase))
+
+    async def __call__(self, event: Event, state: T_State) -> bool:
+        if event.get_type() != "message":
+            return False
+        try:
+            text = event.get_plaintext()
+        except Exception:
+            return False
+        if match := re.match(
+            f"^(?:{'|'.join(re.escape(prefix) for prefix in self.msg)})",
+            text,
+            re.IGNORECASE if self.ignorecase else 0,
+        ):
+            state[STARTSWITH_KEY] = match.group()
+            return True
+        return False
 
 
 def startswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
@@ -154,18 +183,34 @@ class EndswithRule:
         self.msg = msg
         self.ignorecase = ignorecase
 
-    async def __call__(
-        self, type: str = EventType(), text: str = EventPlainText()
-    ) -> Any:
-        if type != "message":
-            return False
-        return bool(
-            re.search(
-                f"(?:{'|'.join(re.escape(prefix) for prefix in self.msg)})$",
-                text,
-                re.IGNORECASE if self.ignorecase else 0,
-            )
+    def __repr__(self) -> str:
+        return f"Endswith(msg={self.msg}, ignorecase={self.ignorecase})"
+
+    def __eq__(self, other: object) -> bool:
+        return (
+            isinstance(other, EndswithRule)
+            and frozenset(self.msg) == frozenset(other.msg)
+            and self.ignorecase == other.ignorecase
         )
+
+    def __hash__(self) -> int:
+        return hash((frozenset(self.msg), self.ignorecase))
+
+    async def __call__(self, event: Event, state: T_State) -> bool:
+        if event.get_type() != "message":
+            return False
+        try:
+            text = event.get_plaintext()
+        except Exception:
+            return False
+        if match := re.search(
+            f"(?:{'|'.join(re.escape(suffix) for suffix in self.msg)})$",
+            text,
+            re.IGNORECASE if self.ignorecase else 0,
+        ):
+            state[ENDSWITH_KEY] = match.group()
+            return True
+        return False
 
 
 def endswith(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
@@ -192,16 +237,36 @@ class FullmatchRule:
     __slots__ = ("msg", "ignorecase")
 
     def __init__(self, msg: Tuple[str, ...], ignorecase: bool = False):
-        self.msg = frozenset(map(str.casefold, msg) if ignorecase else msg)
+        self.msg = tuple(map(str.casefold, msg) if ignorecase else msg)
         self.ignorecase = ignorecase
 
-    async def __call__(
-        self, type_: str = EventType(), text: str = EventPlainText()
-    ) -> bool:
+    def __repr__(self) -> str:
+        return f"Fullmatch(msg={self.msg}, ignorecase={self.ignorecase})"
+
+    def __eq__(self, other: object) -> bool:
         return (
-            type_ == "message"
-            and (text.casefold() if self.ignorecase else text) in self.msg
+            isinstance(other, FullmatchRule)
+            and frozenset(self.msg) == frozenset(other.msg)
+            and self.ignorecase == other.ignorecase
         )
+
+    def __hash__(self) -> int:
+        return hash((frozenset(self.msg), self.ignorecase))
+
+    async def __call__(self, event: Event, state: T_State) -> bool:
+        if event.get_type() != "message":
+            return False
+        try:
+            text = event.get_plaintext()
+        except Exception:
+            return False
+        if not text:
+            return False
+        text = text.casefold() if self.ignorecase else text
+        if text in self.msg:
+            state[FULLMATCH_KEY] = text
+            return True
+        return False
 
 
 def fullmatch(msg: Union[str, Tuple[str, ...]], ignorecase: bool = False) -> Rule:
@@ -229,12 +294,30 @@ class KeywordsRule:
     def __init__(self, *keywords: str):
         self.keywords = keywords
 
-    async def __call__(
-        self, type: str = EventType(), text: str = EventPlainText()
-    ) -> bool:
-        if type != "message":
+    def __repr__(self) -> str:
+        return f"Keywords(keywords={self.keywords})"
+
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, KeywordsRule) and frozenset(
+            self.keywords
+        ) == frozenset(other.keywords)
+
+    def __hash__(self) -> int:
+        return hash(frozenset(self.keywords))
+
+    async def __call__(self, event: Event, state: T_State) -> bool:
+        if event.get_type() != "message":
             return False
-        return bool(text and any(keyword in text for keyword in self.keywords))
+        try:
+            text = event.get_plaintext()
+        except Exception:
+            return False
+        if not text:
+            return False
+        if key := next((k for k in self.keywords if k in text), None):
+            state[KEYWORD_KEY] = key
+            return True
+        return False
 
 
 def keyword(*keywords: str) -> Rule:
@@ -257,13 +340,21 @@ class CommandRule:
     __slots__ = ("cmds",)
 
     def __init__(self, cmds: List[Tuple[str, ...]]):
-        self.cmds = cmds
+        self.cmds = tuple(cmds)
+
+    def __repr__(self) -> str:
+        return f"Command(cmds={self.cmds})"
+
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, CommandRule) and frozenset(self.cmds) == frozenset(
+            other.cmds
+        )
+
+    def __hash__(self) -> int:
+        return hash((frozenset(self.cmds),))
 
     async def __call__(self, cmd: Optional[Tuple[str, ...]] = Command()) -> bool:
         return cmd in self.cmds
-
-    def __repr__(self):
-        return f"<Command {self.cmds}>"
 
 
 def command(*cmds: Union[str, Tuple[str, ...]]) -> Rule:
@@ -320,25 +411,48 @@ class ArgumentParser(ArgParser):
         参考文档: [argparse](https://docs.python.org/3/library/argparse.html)
     """
 
-    def _print_message(self, message, file=None):
-        old_message: str = getattr(self, "message", "")
-        if old_message:
-            old_message += "\n"
-        old_message += message
-        setattr(self, "message", old_message)
+    if TYPE_CHECKING:
 
-    def exit(self, status: int = 0, message: Optional[str] = None):
-        raise ParserExit(
-            status=status, message=message or getattr(self, "message", None)
+        @overload
+        def parse_args(
+            self, args: Optional[Sequence[Union[str, MessageSegment]]] = ...
+        ) -> Namespace:
+            ...
+
+        @overload
+        def parse_args(
+            self, args: Optional[Sequence[Union[str, MessageSegment]]], namespace: None
+        ) -> Namespace:
+            ...  # type: ignore[misc]
+
+        @overload
+        def parse_args(
+            self, args: Optional[Sequence[Union[str, MessageSegment]]], namespace: T
+        ) -> T:
+            ...
+
+        def parse_args(
+            self,
+            args: Optional[Sequence[Union[str, MessageSegment]]] = None,
+            namespace: Optional[T] = None,
+        ) -> Union[Namespace, T]:
+            ...
+
+    def _parse_optional(
+        self, arg_string: Union[str, MessageSegment]
+    ) -> Optional[Tuple[Optional[Action], str, Optional[str]]]:
+        return (
+            super()._parse_optional(arg_string) if isinstance(arg_string, str) else None
         )
 
-    def parse_args(
-        self,
-        args: Optional[Sequence[str]] = None,
-        namespace: Optional[Namespace] = None,
-    ) -> Namespace:
-        setattr(self, "message", "")
-        return super().parse_args(args=args, namespace=namespace)  # type: ignore
+    def _print_message(self, message: str, file: Optional[IO[str]] = None):
+        if message:
+            setattr(self, "_message", getattr(self, "_message", "") + message)
+
+    def exit(self, status: int = 0, message: Optional[str] = None):
+        if message:
+            self._print_message(message)
+        raise ParserExit(status=status, message=getattr(self, "_message", None))
 
 
 class ShellCommandRule:
@@ -352,8 +466,21 @@ class ShellCommandRule:
     __slots__ = ("cmds", "parser")
 
     def __init__(self, cmds: List[Tuple[str, ...]], parser: Optional[ArgumentParser]):
-        self.cmds = cmds
+        self.cmds = tuple(cmds)
         self.parser = parser
+
+    def __repr__(self) -> str:
+        return f"ShellCommand(cmds={self.cmds}, parser={self.parser})"
+
+    def __eq__(self, other: object) -> bool:
+        return (
+            isinstance(other, ShellCommandRule)
+            and frozenset(self.cmds) == frozenset(other.cmds)
+            and self.parser is other.parser
+        )
+
+    def __hash__(self) -> int:
+        return hash((frozenset(self.cmds), self.parser))
 
     async def __call__(
         self,
@@ -361,18 +488,25 @@ class ShellCommandRule:
         cmd: Optional[Tuple[str, ...]] = Command(),
         msg: Optional[Message] = CommandArg(),
     ) -> bool:
-        if cmd in self.cmds and msg is not None:
-            message = str(msg)
-            state[SHELL_ARGV] = shlex.split(message)
-            if self.parser:
-                try:
-                    args = self.parser.parse_args(state[SHELL_ARGV])
-                    state[SHELL_ARGS] = args
-                except ParserExit as e:
-                    state[SHELL_ARGS] = e
-            return True
-        else:
+        if cmd not in self.cmds or msg is None:
             return False
+
+        state[SHELL_ARGV] = list(
+            chain.from_iterable(
+                shlex.split(str(seg)) if cast(MessageSegment, seg).is_text() else (seg,)
+                for seg in msg
+            )
+        )
+
+        if self.parser:
+            try:
+                args = self.parser.parse_args(state[SHELL_ARGV])
+                state[SHELL_ARGS] = args
+            except ArgumentError as e:
+                state[SHELL_ARGS] = ParserExit(status=2, message=str(e))
+            except ParserExit as e:
+                state[SHELL_ARGS] = e
+        return True
 
 
 def shell_command(
@@ -452,16 +586,27 @@ class RegexRule:
         self.regex = regex
         self.flags = flags
 
-    async def __call__(
-        self,
-        state: T_State,
-        type: str = EventType(),
-        msg: Message = EventMessage(),
-    ) -> bool:
-        if type != "message":
+    def __repr__(self) -> str:
+        return f"Regex(regex={self.regex!r}, flags={self.flags})"
+
+    def __eq__(self, other: object) -> bool:
+        return (
+            isinstance(other, RegexRule)
+            and self.regex == other.regex
+            and self.flags == other.flags
+        )
+
+    def __hash__(self) -> int:
+        return hash((self.regex, self.flags))
+
+    async def __call__(self, event: Event, state: T_State) -> bool:
+        if event.get_type() != "message":
             return False
-        matched = re.search(self.regex, str(msg), self.flags)
-        if matched:
+        try:
+            msg = event.get_message()
+        except Exception:
+            return False
+        if matched := re.search(self.regex, str(msg), self.flags):
             state[REGEX_MATCHED] = matched.group()
             state[REGEX_GROUP] = matched.groups()
             state[REGEX_DICT] = matched.groupdict()
@@ -498,6 +643,15 @@ class ToMeRule:
 
     __slots__ = ()
 
+    def __repr__(self) -> str:
+        return "ToMe()"
+
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, ToMeRule)
+
+    def __hash__(self) -> int:
+        return hash((self.__class__,))
+
     async def __call__(self, to_me: bool = EventToMe()) -> bool:
         return to_me
 
@@ -506,6 +660,37 @@ def to_me() -> Rule:
     """匹配与机器人有关的事件。"""
 
     return Rule(ToMeRule())
+
+
+class IsTypeRule:
+    """检查事件类型是否为指定类型。"""
+
+    __slots__ = ("types",)
+
+    def __init__(self, *types: Type[Event]):
+        self.types = types
+
+    def __repr__(self) -> str:
+        return f"IsType(types={tuple(type.__name__ for type in self.types)})"
+
+    def __eq__(self, other: object) -> bool:
+        return isinstance(other, IsTypeRule) and self.types == other.types
+
+    def __hash__(self) -> int:
+        return hash((self.types,))
+
+    async def __call__(self, event: Event) -> bool:
+        return isinstance(event, self.types)
+
+
+def is_type(*types: Type[Event]) -> Rule:
+    """匹配事件类型。
+
+    参数:
+        types: 事件类型
+    """
+
+    return Rule(IsTypeRule(*types))
 
 
 __autodoc__ = {

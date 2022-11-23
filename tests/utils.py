@@ -65,7 +65,7 @@ def make_fake_event(
     _type: str = "message",
     _name: str = "test",
     _description: str = "test",
-    _user_id: str = "test",
+    _user_id: Optional[str] = "test",
     _session_id: Optional[str] = "test",
     _message: Optional["Message"] = None,
     _to_me: bool = True,
@@ -86,7 +86,9 @@ def make_fake_event(
             return _description
 
         def get_user_id(self) -> str:
-            return _user_id
+            if _user_id is not None:
+                return _user_id
+            raise NotImplementedError
 
         def get_session_id(self) -> str:
             if _session_id is not None:

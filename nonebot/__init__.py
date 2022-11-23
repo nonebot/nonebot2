@@ -16,6 +16,7 @@
 - `on_command` => {ref}``on_command` <nonebot.plugin.on.on_command>`
 - `on_shell_command` => {ref}``on_shell_command` <nonebot.plugin.on.on_shell_command>`
 - `on_regex` => {ref}``on_regex` <nonebot.plugin.on.on_regex>`
+- `on_type` => {ref}``on_type` <nonebot.plugin.on.on_type>`
 - `CommandGroup` => {ref}``CommandGroup` <nonebot.plugin.on.CommandGroup>`
 - `Matchergroup` => {ref}``MatcherGroup` <nonebot.plugin.on.MatcherGroup>`
 - `load_plugin` => {ref}``load_plugin` <nonebot.plugin.load.load_plugin>`
@@ -29,7 +30,6 @@
 - `get_plugin_by_module_name` => {ref}``get_plugin_by_module_name` <nonebot.plugin.get_plugin_by_module_name>`
 - `get_loaded_plugins` => {ref}``get_loaded_plugins` <nonebot.plugin.get_loaded_plugins>`
 - `get_available_plugin_names` => {ref}``get_available_plugin_names` <nonebot.plugin.get_available_plugin_names>`
-- `export` => {ref}``export` <nonebot.plugin.export.export>`
 - `require` => {ref}``require` <nonebot.plugin.load.require>`
 
 FrontMatter:
@@ -37,24 +37,24 @@ FrontMatter:
     description: nonebot 模块
 """
 
+import os
 import importlib
+from importlib.metadata import version
 from typing import Any, Dict, Type, Optional
 
-import pkg_resources
+import loguru
+from pydantic.env_settings import DotenvType
 
+from nonebot.log import logger
 from nonebot.adapters import Bot
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
-from nonebot.log import logger, default_filter
 from nonebot.drivers import Driver, ReverseDriver, combine_driver
 
 try:
-    _dist: pkg_resources.Distribution = pkg_resources.get_distribution("nonebot2")
-    __version__ = _dist.version
-    VERSION = _dist.parsed_version
-except pkg_resources.DistributionNotFound:  # pragma: no cover
+    __version__ = version("nonebot2")
+except Exception:  # pragma: no cover
     __version__ = None
-    VERSION = None
 
 _driver: Optional[Driver] = None
 
@@ -172,8 +172,7 @@ def get_bots() -> Dict[str, Bot]:
         bots = nonebot.get_bots()
         ```
     """
-    driver = get_driver()
-    return driver.bots
+    return get_driver().bots
 
 
 def _resolve_dot_notation(
@@ -207,7 +206,16 @@ def _resolve_combine_expr(obj_str: str) -> Type[Driver]:
     return combine_driver(DriverClass, *mixins)
 
 
-def init(*, _env_file: Optional[str] = None, **kwargs: Any) -> None:
+def _log_patcher(record: "loguru.Record"):
+    record["name"] = (
+        plugin.name
+        if (module_name := record["name"])
+        and (plugin := get_plugin_by_module_name(module_name))
+        else (module_name and module_name.split(".")[0])
+    )
+
+
+def init(*, _env_file: Optional[DotenvType] = None, **kwargs: Any) -> None:
     """初始化 NoneBot 以及 全局 {ref}`nonebot.drivers.Driver` 对象。
 
     NoneBot 将会从 .env 文件中读取环境信息，并使用相应的 env 文件配置。
@@ -227,13 +235,17 @@ def init(*, _env_file: Optional[str] = None, **kwargs: Any) -> None:
     if not _driver:
         logger.success("NoneBot is initializing...")
         env = Env()
+        _env_file = _env_file or f".env.{env.environment}"
         config = Config(
             **kwargs,
-            _common_config=env.dict(),
-            _env_file=_env_file or f".env.{env.environment}",
+            _env_file=(".env", _env_file)
+            if isinstance(_env_file, (str, os.PathLike))
+            else _env_file,
         )
 
-        default_filter.level = config.log_level
+        logger.configure(
+            extra={"nonebot_log_level": config.log_level}, patcher=_log_patcher
+        )
         logger.opt(colors=True).info(
             f"Current <y><b>Env: {escape_tag(env.environment)}</b></y>"
         )
@@ -241,7 +253,7 @@ def init(*, _env_file: Optional[str] = None, **kwargs: Any) -> None:
             f"Loaded <y><b>Config</b></y>: {escape_tag(str(config.dict()))}"
         )
 
-        DriverClass: Type[Driver] = _resolve_combine_expr(config.driver)
+        DriverClass = _resolve_combine_expr(config.driver)
         _driver = DriverClass(env, config)
 
 
@@ -262,7 +274,7 @@ def run(*args: Any, **kwargs: Any) -> None:
 
 
 from nonebot.plugin import on as on
-from nonebot.plugin import export as export
+from nonebot.plugin import on_type as on_type
 from nonebot.plugin import require as require
 from nonebot.plugin import on_regex as on_regex
 from nonebot.plugin import on_notice as on_notice

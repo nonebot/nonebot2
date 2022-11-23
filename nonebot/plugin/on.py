@@ -10,6 +10,7 @@ from types import ModuleType
 from datetime import datetime, timedelta
 from typing import Any, Set, Dict, List, Type, Tuple, Union, Optional
 
+from nonebot.adapters import Event
 from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.dependencies import Dependent
@@ -19,6 +20,7 @@ from nonebot.rule import (
     ArgumentParser,
     regex,
     command,
+    is_type,
     keyword,
     endswith,
     fullmatch,
@@ -26,14 +28,13 @@ from nonebot.rule import (
     shell_command,
 )
 
-from .manager import _current_plugin
+from .manager import _current_plugin_chain
 
 
 def _store_matcher(matcher: Type[Matcher]) -> None:
-    plugin = _current_plugin.get()
     # only store the matcher defined in the plugin
-    if plugin:
-        plugin.matcher.add(matcher)
+    if plugins := _current_plugin_chain.get():
+        plugins[-1].matcher.add(matcher)
 
 
 def _get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
@@ -70,6 +71,7 @@ def on(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
+    plugin_chain = _current_plugin_chain.get()
     matcher = Matcher.new(
         type,
         Rule() & rule,
@@ -79,7 +81,7 @@ def on(
         priority=priority,
         block=block,
         handlers=handlers,
-        plugin=_current_plugin.get(),
+        plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
         default_state=state,
     )
@@ -109,6 +111,7 @@ def on_metaevent(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
+    plugin_chain = _current_plugin_chain.get()
     matcher = Matcher.new(
         "meta_event",
         Rule() & rule,
@@ -118,7 +121,7 @@ def on_metaevent(
         priority=priority,
         block=block,
         handlers=handlers,
-        plugin=_current_plugin.get(),
+        plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
         default_state=state,
     )
@@ -150,6 +153,7 @@ def on_message(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
+    plugin_chain = _current_plugin_chain.get()
     matcher = Matcher.new(
         "message",
         Rule() & rule,
@@ -159,7 +163,7 @@ def on_message(
         priority=priority,
         block=block,
         handlers=handlers,
-        plugin=_current_plugin.get(),
+        plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
         default_state=state,
     )
@@ -189,6 +193,7 @@ def on_notice(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
+    plugin_chain = _current_plugin_chain.get()
     matcher = Matcher.new(
         "notice",
         Rule() & rule,
@@ -198,7 +203,7 @@ def on_notice(
         priority=priority,
         block=block,
         handlers=handlers,
-        plugin=_current_plugin.get(),
+        plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
         default_state=state,
     )
@@ -228,6 +233,7 @@ def on_request(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
+    plugin_chain = _current_plugin_chain.get()
     matcher = Matcher.new(
         "request",
         Rule() & rule,
@@ -237,7 +243,7 @@ def on_request(
         priority=priority,
         block=block,
         handlers=handlers,
-        plugin=_current_plugin.get(),
+        plugin=plugin_chain[-1] if plugin_chain else None,
         module=_get_matcher_module(_depth + 1),
         default_state=state,
     )
@@ -363,7 +369,7 @@ def on_command(
         state: 默认 state
     """
 
-    commands = set([cmd]) | (aliases or set())
+    commands = {cmd} | (aliases or set())
     block = kwargs.pop("block", False)
     return on_message(
         command(*commands) & rule, block=block, **kwargs, _depth=_depth + 1
@@ -398,7 +404,7 @@ def on_shell_command(
         state: 默认 state
     """
 
-    commands = set([cmd]) | (aliases or set())
+    commands = {cmd} | (aliases or set())
     return on_message(
         shell_command(*commands, parser=parser) & rule,
         **kwargs,
@@ -432,7 +438,57 @@ def on_regex(
     return on_message(regex(pattern, flags) & rule, **kwargs, _depth=_depth + 1)
 
 
-class CommandGroup:
+def on_type(
+    types: Union[Type[Event], Tuple[Type[Event]]],
+    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    *,
+    _depth: int = 0,
+    **kwargs,
+) -> Type[Matcher]:
+    """注册一个事件响应器，并且当事件为指定类型时响应。
+
+    参数:
+        types: 事件类型
+        rule: 事件响应规则
+        permission: 事件响应权限
+        handlers: 事件处理函数列表
+        temp: 是否为临时事件响应器（仅执行一次）
+        expire_time: 事件响应器最终有效时间点，过时即被删除
+        priority: 事件响应器优先级
+        block: 是否阻止事件向更低优先级传递
+        state: 默认 state
+    """
+    event_types = types if isinstance(types, tuple) else (types,)
+    return on(rule=is_type(*event_types) & rule, **kwargs, _depth=_depth + 1)
+
+
+class _Group:
+    def __init__(self, **kwargs):
+        """创建一个事件响应器组合，参数为默认值，与 `on` 一致"""
+        self.matchers: List[Type[Matcher]] = []
+        """组内事件响应器列表"""
+        self.base_kwargs: Dict[str, Any] = kwargs
+        """其他传递给 `on` 的参数默认值"""
+
+    def _get_final_kwargs(
+        self, update: Dict[str, Any], *, exclude: Optional[Set[str]] = None
+    ) -> Dict[str, Any]:
+        """获取最终传递给 `on` 的参数
+
+        参数:
+            update: 更新的关键字参数
+            exclude: 需要排除的参数
+        """
+        final_kwargs = self.base_kwargs.copy()
+        final_kwargs.update(update)
+        if exclude:
+            for key in exclude:
+                final_kwargs.pop(key, None)
+        final_kwargs["_depth"] = 1
+        return final_kwargs
+
+
+class CommandGroup(_Group):
     """命令组，用于声明一组有相同名称前缀的命令。
 
     参数:
@@ -448,12 +504,13 @@ class CommandGroup:
     """
 
     def __init__(self, cmd: Union[str, Tuple[str, ...]], **kwargs):
-        self.basecmd: Tuple[str, ...] = (cmd,) if isinstance(cmd, str) else cmd
         """命令前缀"""
-        if "aliases" in kwargs:
-            del kwargs["aliases"]
-        self.base_kwargs: Dict[str, Any] = kwargs
-        """其他传递给 `on_command` 的参数默认值"""
+        super().__init__(**kwargs)
+        self.basecmd: Tuple[str, ...] = (cmd,) if isinstance(cmd, str) else cmd
+        self.base_kwargs.pop("aliases", None)
+
+    def __repr__(self) -> str:
+        return f"CommandGroup(cmd={self.basecmd}, matchers={len(self.matchers)})"
 
     def command(self, cmd: Union[str, Tuple[str, ...]], **kwargs) -> Type[Matcher]:
         """注册一个新的命令。新参数将会覆盖命令组默认值
@@ -472,10 +529,9 @@ class CommandGroup:
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
-
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        return on_command(cmd, **final_kwargs, _depth=1)
+        matcher = on_command(cmd, **self._get_final_kwargs(kwargs))
+        self.matchers.append(matcher)
+        return matcher
 
     def shell_command(
         self, cmd: Union[str, Tuple[str, ...]], **kwargs
@@ -497,21 +553,16 @@ class CommandGroup:
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
+        matcher = on_shell_command(cmd, **self._get_final_kwargs(kwargs))
+        self.matchers.append(matcher)
+        return matcher
 
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        return on_shell_command(cmd, **final_kwargs, _depth=1)
 
-
-class MatcherGroup:
+class MatcherGroup(_Group):
     """事件响应器组合，统一管理。为 `Matcher` 创建提供默认属性。"""
 
-    def __init__(self, **kwargs):
-        """创建一个事件响应器组合，参数为默认值，与 `on` 一致"""
-        self.matchers: List[Type[Matcher]] = []
-        """组内事件响应器列表"""
-        self.base_kwargs: Dict[str, Any] = kwargs
-        """其他传递给 `on` 的参数默认值"""
+    def __repr__(self) -> str:
+        return f"MatcherGroup(matchers={len(self.matchers)})"
 
     def on(self, **kwargs) -> Type[Matcher]:
         """注册一个基础事件响应器，可自定义类型。
@@ -527,9 +578,7 @@ class MatcherGroup:
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
         """
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        matcher = on(**final_kwargs, _depth=1)
+        matcher = on(**self._get_final_kwargs(kwargs))
         self.matchers.append(matcher)
         return matcher
 
@@ -545,11 +594,8 @@ class MatcherGroup:
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
         """
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        final_kwargs.pop("type", None)
-        final_kwargs.pop("permission", None)
-        matcher = on_metaevent(**final_kwargs, _depth=1)
+        final_kwargs = self._get_final_kwargs(kwargs, exclude={"type", "permission"})
+        matcher = on_metaevent(**final_kwargs)
         self.matchers.append(matcher)
         return matcher
 
@@ -566,10 +612,8 @@ class MatcherGroup:
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
         """
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        final_kwargs.pop("type", None)
-        matcher = on_message(**final_kwargs, _depth=1)
+        final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
+        matcher = on_message(**final_kwargs)
         self.matchers.append(matcher)
         return matcher
 
@@ -585,10 +629,8 @@ class MatcherGroup:
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
         """
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        final_kwargs.pop("type", None)
-        matcher = on_notice(**final_kwargs, _depth=1)
+        final_kwargs = self._get_final_kwargs(kwargs, exclude={"type", "permission"})
+        matcher = on_notice(**final_kwargs)
         self.matchers.append(matcher)
         return matcher
 
@@ -604,10 +646,8 @@ class MatcherGroup:
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
         """
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        final_kwargs.pop("type", None)
-        matcher = on_request(**final_kwargs, _depth=1)
+        final_kwargs = self._get_final_kwargs(kwargs, exclude={"type", "permission"})
+        matcher = on_request(**final_kwargs)
         self.matchers.append(matcher)
         return matcher
 
@@ -628,10 +668,8 @@ class MatcherGroup:
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
         """
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        final_kwargs.pop("type", None)
-        matcher = on_startswith(msg, **final_kwargs, _depth=1)
+        final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
+        matcher = on_startswith(msg, **final_kwargs)
         self.matchers.append(matcher)
         return matcher
 
@@ -650,10 +688,8 @@ class MatcherGroup:
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
         """
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        final_kwargs.pop("type", None)
-        matcher = on_endswith(msg, **final_kwargs, _depth=1)
+        final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
+        matcher = on_endswith(msg, **final_kwargs)
         self.matchers.append(matcher)
         return matcher
 
@@ -672,10 +708,8 @@ class MatcherGroup:
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
         """
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        final_kwargs.pop("type", None)
-        matcher = on_fullmatch(msg, **final_kwargs, _depth=1)
+        final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
+        matcher = on_fullmatch(msg, **final_kwargs)
         self.matchers.append(matcher)
         return matcher
 
@@ -693,10 +727,8 @@ class MatcherGroup:
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
         """
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        final_kwargs.pop("type", None)
-        matcher = on_keyword(keywords, **final_kwargs, _depth=1)
+        final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
+        matcher = on_keyword(keywords, **final_kwargs)
         self.matchers.append(matcher)
         return matcher
 
@@ -722,10 +754,8 @@ class MatcherGroup:
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
         """
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        final_kwargs.pop("type", None)
-        matcher = on_command(cmd, aliases=aliases, **final_kwargs, _depth=1)
+        final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
+        matcher = on_command(cmd, aliases=aliases, **final_kwargs)
         self.matchers.append(matcher)
         return matcher
 
@@ -755,12 +785,8 @@ class MatcherGroup:
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
         """
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        final_kwargs.pop("type", None)
-        matcher = on_shell_command(
-            cmd, aliases=aliases, parser=parser, **final_kwargs, _depth=1
-        )
+        final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
+        matcher = on_shell_command(cmd, aliases=aliases, parser=parser, **final_kwargs)
         self.matchers.append(matcher)
         return matcher
 
@@ -783,9 +809,28 @@ class MatcherGroup:
             block: 是否阻止事件向更低优先级传递
             state: 默认 state
         """
-        final_kwargs = self.base_kwargs.copy()
-        final_kwargs.update(kwargs)
-        final_kwargs.pop("type", None)
-        matcher = on_regex(pattern, flags=flags, **final_kwargs, _depth=1)
+        final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
+        matcher = on_regex(pattern, flags=flags, **final_kwargs)
+        self.matchers.append(matcher)
+        return matcher
+
+    def on_type(
+        self, types: Union[Type[Event], Tuple[Type[Event]]], **kwargs
+    ) -> Type[Matcher]:
+        """注册一个事件响应器，并且当事件为指定类型时响应。
+
+        参数:
+            types: 事件类型
+            rule: 事件响应规则
+            permission: 事件响应权限
+            handlers: 事件处理函数列表
+            temp: 是否为临时事件响应器（仅执行一次）
+            expire_time: 事件响应器最终有效时间点，过时即被删除
+            priority: 事件响应器优先级
+            block: 是否阻止事件向更低优先级传递
+            state: 默认 state
+        """
+        final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
+        matcher = on_type(types, **final_kwargs)
         self.matchers.append(matcher)
         return matcher

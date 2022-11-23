@@ -1,3 +1,5 @@
+from typing import Tuple, Optional
+
 import pytest
 from nonebug import App
 
@@ -142,10 +144,11 @@ async def test_metaevent(
         ("message", "test", True),
         ("message", "foo", False),
         ("message", "faketest", True),
-        ("notice", "test", False),
+        ("message", None, False),
+        ("notice", "test", True),
     ],
 )
-async def test_startswith(
+async def test_superuser(
     app: App,
     type: str,
     user_id: str,
@@ -159,6 +162,32 @@ async def test_startswith(
     assert isinstance(checker, SuperUser)
 
     event = make_fake_event(_type=type, _user_id=user_id)()
+
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        assert await dependent(bot=bot, event=event) == expected
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "session_ids,session_id,expected",
+    [
+        (("user", "foo"), "user", True),
+        (("user", "foo"), "bar", False),
+        (("user", "foo"), None, False),
+    ],
+)
+async def test_user(
+    app: App, session_ids: Tuple[str, ...], session_id: Optional[str], expected: bool
+):
+    from nonebot.permission import USER, User
+
+    dependent = list(USER(*session_ids).checkers)[0]
+    checker = dependent.call
+
+    assert isinstance(checker, User)
+
+    event = make_fake_event(_session_id=session_id)()
 
     async with app.test_api() as ctx:
         bot = ctx.create_bot()

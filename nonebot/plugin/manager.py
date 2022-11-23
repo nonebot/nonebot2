@@ -17,14 +17,14 @@ from importlib.machinery import PathFinder, SourceFileLoader
 from typing import Set, Dict, List, Union, Iterable, Optional, Sequence
 
 from nonebot.log import logger
-from nonebot.utils import escape_tag
+from nonebot.utils import escape_tag, path_to_module_name
 
 from .plugin import Plugin, PluginMetadata
 from . import (
     _managers,
     _new_plugin,
     _revert_plugin,
-    _current_plugin,
+    _current_plugin_chain,
     _module_name_to_plugin_name,
 )
 
@@ -51,6 +51,9 @@ class PluginManager:
         self._searched_plugin_names: Dict[str, Path] = {}
         self.prepare_plugins()
 
+    def __repr__(self) -> str:
+        return f"PluginManager(plugins={self.plugins}, search_path={self.search_path})"
+
     @property
     def third_party_plugins(self) -> Set[str]:
         """返回所有独立插件名称。"""
@@ -66,13 +69,6 @@ class PluginManager:
         """返回当前插件管理器中可用的插件名称。"""
         return self.third_party_plugins | self.searched_plugins
 
-    def _path_to_module_name(self, path: Path) -> str:
-        rel_path = path.resolve().relative_to(Path(".").resolve())
-        if rel_path.stem == "__init__":
-            return ".".join(rel_path.parts[:-1])
-        else:
-            return ".".join(rel_path.parts[:-1] + (rel_path.stem,))
-
     def _previous_plugins(self) -> Set[str]:
         _pre_managers: List[PluginManager]
         if self in _managers:
@@ -86,7 +82,6 @@ class PluginManager:
 
     def prepare_plugins(self) -> Set[str]:
         """搜索插件并缓存插件名称。"""
-
         # get all previous ready to load plugins
         previous_plugins = self._previous_plugins()
         searched_plugins: Dict[str, Path] = {}
@@ -118,11 +113,13 @@ class PluginManager:
                     f"Plugin already exists: {module_info.name}! Check your plugin name"
                 )
 
-            module_spec = module_info.module_finder.find_spec(module_info.name, None)
-            if not module_spec:
+            if not (
+                module_spec := module_info.module_finder.find_spec(
+                    module_info.name, None
+                )
+            ):
                 continue
-            module_path = module_spec.origin
-            if not module_path:
+            if not (module_path := module_spec.origin):
                 continue
             searched_plugins[module_info.name] = Path(module_path).resolve()
 
@@ -146,7 +143,7 @@ class PluginManager:
                 module = importlib.import_module(self._third_party_plugin_names[name])
             elif name in self._searched_plugin_names:
                 module = importlib.import_module(
-                    self._path_to_module_name(self._searched_plugin_names[name])
+                    path_to_module_name(self._searched_plugin_names[name])
                 )
             else:
                 raise RuntimeError(f"Plugin not found: {name}! Check your plugin name")
@@ -154,8 +151,7 @@ class PluginManager:
             logger.opt(colors=True).success(
                 f'Succeeded to import "<y>{escape_tag(name)}</y>"'
             )
-            plugin = getattr(module, "__plugin__", None)
-            if plugin is None:
+            if (plugin := getattr(module, "__plugin__", None)) is None:
                 raise RuntimeError(
                     f"Module {module.__name__} is not loaded as a plugin! "
                     "Make sure not to import it before loading."
@@ -223,15 +219,15 @@ class PluginLoader(SourceFileLoader):
         setattr(module, "__plugin__", plugin)
 
         # detect parent plugin before entering current plugin context
-        parent_plugin = _current_plugin.get()
-        if parent_plugin and _managers.index(parent_plugin.manager) < _managers.index(
-            self.manager
-        ):
-            plugin.parent_plugin = parent_plugin
-            parent_plugin.sub_plugins.add(plugin)
+        parent_plugins = _current_plugin_chain.get()
+        for pre_plugin in reversed(parent_plugins):
+            if _managers.index(pre_plugin.manager) < _managers.index(self.manager):
+                plugin.parent_plugin = pre_plugin
+                pre_plugin.sub_plugins.add(plugin)
+                break
 
         # enter plugin context
-        _plugin_token = _current_plugin.set(plugin)
+        _plugin_token = _current_plugin_chain.set(parent_plugins + (plugin,))
 
         try:
             super().exec_module(module)
@@ -240,7 +236,7 @@ class PluginLoader(SourceFileLoader):
             raise
         finally:
             # leave plugin context
-            _current_plugin.reset(_plugin_token)
+            _current_plugin_chain.reset(_plugin_token)
 
         # get plugin metadata
         metadata: Optional[PluginMetadata] = getattr(module, "__plugin_meta__", None)

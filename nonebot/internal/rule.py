@@ -37,15 +37,18 @@ class Rule:
     ]
 
     def __init__(self, *checkers: Union[T_RuleChecker, Dependent[bool]]) -> None:
-        self.checkers: Set[Dependent[bool]] = set(
+        self.checkers: Set[Dependent[bool]] = {
             checker
             if isinstance(checker, Dependent)
             else Dependent[bool].parse(
                 call=checker, allow_types=self.HANDLER_PARAM_TYPES
             )
             for checker in checkers
-        )
+        }
         """存储 `RuleChecker`"""
+
+    def __repr__(self) -> str:
+        return f"Rule({', '.join(repr(checker) for checker in self.checkers)})"
 
     async def __call__(
         self,

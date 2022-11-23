@@ -20,6 +20,9 @@ class Message:
 
     __slots__ = ()
 
+    def __repr__(self) -> str:
+        return "Message()"
+
     async def __call__(self, type: str = EventType()) -> bool:
         return type == "message"
 
@@ -28,6 +31,9 @@ class Notice:
     """检查是否为通知事件"""
 
     __slots__ = ()
+
+    def __repr__(self) -> str:
+        return "Notice()"
 
     async def __call__(self, type: str = EventType()) -> bool:
         return type == "notice"
@@ -38,6 +44,9 @@ class Request:
 
     __slots__ = ()
 
+    def __repr__(self) -> str:
+        return "Request()"
+
     async def __call__(self, type: str = EventType()) -> bool:
         return type == "request"
 
@@ -46,6 +55,9 @@ class MetaEvent:
     """检查是否为元事件"""
 
     __slots__ = ()
+
+    def __repr__(self) -> str:
+        return "MetaEvent()"
 
     async def __call__(self, type: str = EventType()) -> bool:
         return type == "meta_event"
@@ -78,16 +90,23 @@ class SuperUser:
 
     __slots__ = ()
 
+    def __repr__(self) -> str:
+        return "Superuser()"
+
     async def __call__(self, bot: Bot, event: Event) -> bool:
-        return event.get_type() == "message" and (
-            f"{bot.adapter.get_name().split(maxsplit=1)[0].lower()}:{event.get_user_id()}"
+        try:
+            user_id = event.get_user_id()
+        except Exception:
+            return False
+        return (
+            f"{bot.adapter.get_name().split(maxsplit=1)[0].lower()}:{user_id}"
             in bot.config.superusers
-            or event.get_user_id() in bot.config.superusers  # 兼容旧配置
+            or user_id in bot.config.superusers  # 兼容旧配置
         )
 
 
 SUPERUSER: Permission = Permission(SuperUser())
-"""匹配任意超级用户消息类型事件"""
+"""匹配任意超级用户事件"""
 
 __autodoc__ = {
     "Permission": True,

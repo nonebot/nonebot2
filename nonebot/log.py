@@ -14,16 +14,14 @@ FrontMatter:
 
 import sys
 import logging
-from typing import TYPE_CHECKING, Union
+from typing import TYPE_CHECKING
 
 import loguru
 
 if TYPE_CHECKING:
     # avoid sphinx autodoc resolve annotation failed
     # because loguru module do not have `Logger` class actually
-    from loguru import Logger
-
-    from nonebot.plugin import Plugin
+    from loguru import Logger, Record
 
 # logger = logging.getLogger("nonebot")
 logger: "Logger" = loguru.logger
@@ -47,26 +45,10 @@ logger: "Logger" = loguru.logger
 # logger.addHandler(default_handler)
 
 
-class Filter:
-    def __init__(self) -> None:
-        self.level: Union[int, str] = "INFO"
-
-    def __call__(self, record):
-        module_name: str = record["name"]
-        # TODO: get plugin name instead of module name
-        # module = sys.modules.get(module_name)
-        # if module and hasattr(module, "__plugin__"):
-        #     plugin: "Plugin" = getattr(module, "__plugin__")
-        #     module_name = plugin.module_name
-        record["name"] = module_name.split(".")[0]
-        levelno = (
-            logger.level(self.level).no if isinstance(self.level, str) else self.level
-        )
-        return record["level"].no >= levelno
-
-
 class LoguruHandler(logging.Handler):  # pragma: no cover
-    def emit(self, record):
+    """logging 与 loguru 之间的桥梁，将 logging 的日志转发到 loguru。"""
+
+    def emit(self, record: logging.LogRecord):
         try:
             level = logger.level(record.levelname).name
         except ValueError:
@@ -82,9 +64,13 @@ class LoguruHandler(logging.Handler):  # pragma: no cover
         )
 
 
-logger.remove()
-default_filter: Filter = Filter()
-"""默认日志等级过滤器"""
+def default_filter(record: "Record"):
+    """默认的日志过滤器，根据 `config.log_level` 配置改变日志等级。"""
+    log_level = record["extra"].get("nonebot_log_level", "INFO")
+    levelno = logger.level(log_level).no if isinstance(log_level, str) else log_level
+    return record["level"].no >= levelno
+
+
 default_format: str = (
     "<g>{time:MM-DD HH:mm:ss}</g> "
     "[<lvl>{level}</lvl>] "
@@ -93,6 +79,8 @@ default_format: str = (
     "{message}"
 )
 """默认日志格式"""
+
+logger.remove()
 logger_id = logger.add(
     sys.stdout,
     level=0,
@@ -101,4 +89,4 @@ logger_id = logger.add(
     format=default_format,
 )
 
-__autodoc__ = {"Filter": False, "LoguruHandler": False}
+__autodoc__ = {"logger_id": False}

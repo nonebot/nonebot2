@@ -5,17 +5,16 @@ FrontMatter:
     description: nonebot.params 模块
 """
 
-from typing import Any, Dict, List, Tuple, Optional
+from typing import Any, Dict, List, Tuple, Union, Optional
 
 from nonebot.typing import T_State
 from nonebot.matcher import Matcher
-from nonebot.adapters import Event, Message
 from nonebot.internal.params import Arg as Arg
-from nonebot.internal.params import State as State
 from nonebot.internal.params import ArgStr as ArgStr
 from nonebot.internal.params import Depends as Depends
 from nonebot.internal.params import ArgParam as ArgParam
 from nonebot.internal.params import BotParam as BotParam
+from nonebot.adapters import Event, Message, MessageSegment
 from nonebot.internal.params import EventParam as EventParam
 from nonebot.internal.params import StateParam as StateParam
 from nonebot.internal.params import DependParam as DependParam
@@ -30,10 +29,14 @@ from nonebot.consts import (
     SHELL_ARGS,
     SHELL_ARGV,
     CMD_ARG_KEY,
+    KEYWORD_KEY,
     RAW_CMD_KEY,
     REGEX_GROUP,
+    ENDSWITH_KEY,
     CMD_START_KEY,
+    FULLMATCH_KEY,
     REGEX_MATCHED,
+    STARTSWITH_KEY,
 )
 
 
@@ -110,15 +113,15 @@ def CommandStart() -> str:
 
 
 def _shell_command_args(state: T_State) -> Any:
-    return state[SHELL_ARGS]
+    return state[SHELL_ARGS]  # Namespace or ParserExit
 
 
-def ShellCommandArgs():
+def ShellCommandArgs() -> Any:
     """shell 命令解析后的参数字典"""
     return Depends(_shell_command_args, use_cache=False)
 
 
-def _shell_command_argv(state: T_State) -> List[str]:
+def _shell_command_argv(state: T_State) -> List[Union[str, MessageSegment]]:
     return state[SHELL_ARGV]
 
 
@@ -154,6 +157,42 @@ def RegexDict() -> Dict[str, Any]:
     return Depends(_regex_dict, use_cache=False)
 
 
+def _startswith(state: T_State) -> str:
+    return state[STARTSWITH_KEY]
+
+
+def Startswith() -> str:
+    """响应触发前缀"""
+    return Depends(_startswith, use_cache=False)
+
+
+def _endswith(state: T_State) -> str:
+    return state[ENDSWITH_KEY]
+
+
+def Endswith() -> str:
+    """响应触发后缀"""
+    return Depends(_endswith, use_cache=False)
+
+
+def _fullmatch(state: T_State) -> str:
+    return state[FULLMATCH_KEY]
+
+
+def Fullmatch() -> str:
+    """响应触发完整消息"""
+    return Depends(_fullmatch, use_cache=False)
+
+
+def _keyword(state: T_State) -> str:
+    return state[KEYWORD_KEY]
+
+
+def Keyword() -> str:
+    """响应触发关键字"""
+    return Depends(_keyword, use_cache=False)
+
+
 def Received(id: Optional[str] = None, default: Any = None) -> Any:
     """`receive` 事件参数"""
 
@@ -174,7 +213,6 @@ def LastReceived(default: Any = None) -> Any:
 
 __autodoc__ = {
     "Arg": True,
-    "State": True,
     "ArgStr": True,
     "Depends": True,
     "ArgParam": True,

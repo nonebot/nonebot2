@@ -1,8 +1,7 @@
 import abc
 import asyncio
 from functools import partial
-from typing_extensions import Protocol
-from typing import TYPE_CHECKING, Any, Set, Union, Optional
+from typing import TYPE_CHECKING, Any, Set, Union, Optional, Protocol
 
 from nonebot.log import logger
 from nonebot.config import Config
@@ -14,10 +13,9 @@ if TYPE_CHECKING:
     from .adapter import Adapter
     from .message import Message, MessageSegment
 
-
-class _ApiCall(Protocol):
-    async def __call__(self, **kwargs: Any) -> Any:
-        ...
+    class _ApiCall(Protocol):
+        async def __call__(self, **kwargs: Any) -> Any:
+            ...
 
 
 class Bot(abc.ABC):
@@ -41,7 +39,14 @@ class Bot(abc.ABC):
         self.self_id: str = self_id
         """机器人 ID"""
 
-    def __getattr__(self, name: str) -> _ApiCall:
+    def __repr__(self) -> str:
+        return f"Bot(type={self.type!r}, self_id={self.self_id!r})"
+
+    def __getattr__(self, name: str) -> "_ApiCall":
+        if name.startswith("__") and name.endswith("__"):
+            raise AttributeError(
+                f"'{self.__class__.__name__}' object has no attribute '{name}'"
+            )
         return partial(self.call_api, name)
 
     @property
@@ -72,8 +77,7 @@ class Bot(abc.ABC):
         skip_calling_api: bool = False
         exception: Optional[Exception] = None
 
-        coros = list(map(lambda x: x(self, api, data), self._calling_api_hook))
-        if coros:
+        if coros := [hook(self, api, data) for hook in self._calling_api_hook]:
             try:
                 logger.debug("Running CallingAPI hooks...")
                 await asyncio.gather(*coros)
@@ -95,10 +99,9 @@ class Bot(abc.ABC):
             except Exception as e:
                 exception = e
 
-        coros = list(
-            map(lambda x: x(self, exception, api, data, result), self._called_api_hook)
-        )
-        if coros:
+        if coros := [
+            hook(self, exception, api, data, result) for hook in self._called_api_hook
+        ]:
             try:
                 logger.debug("Running CalledAPI hooks...")
                 await asyncio.gather(*coros)

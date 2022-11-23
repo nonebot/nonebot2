@@ -16,6 +16,7 @@
 - `on_command` => {ref}``on_command` <nonebot.plugin.on.on_command>`
 - `on_shell_command` => {ref}``on_shell_command` <nonebot.plugin.on.on_shell_command>`
 - `on_regex` => {ref}``on_regex` <nonebot.plugin.on.on_regex>`
+- `on_type` => {ref}``on_type` <nonebot.plugin.on.on_type>`
 - `CommandGroup` => {ref}``CommandGroup` <nonebot.plugin.on.CommandGroup>`
 - `Matchergroup` => {ref}``MatcherGroup` <nonebot.plugin.on.MatcherGroup>`
 - `load_plugin` => {ref}``load_plugin` <nonebot.plugin.load.load_plugin>`
@@ -25,8 +26,8 @@
 - `load_from_toml` => {ref}``load_from_toml` <nonebot.plugin.load.load_from_toml>`
 - `load_builtin_plugin` => {ref}``load_builtin_plugin` <nonebot.plugin.load.load_builtin_plugin>`
 - `load_builtin_plugins` => {ref}``load_builtin_plugins` <nonebot.plugin.load.load_builtin_plugins>`
-- `export` => {ref}``export` <nonebot.plugin.export.export>`
 - `require` => {ref}``require` <nonebot.plugin.load.require>`
+- `PluginMetadata` => {ref}``PluginMetadata` <nonebot.plugin.plugin.PluginMetadata>`
 
 FrontMatter:
     sidebar_position: 0
@@ -36,12 +37,12 @@ FrontMatter:
 from itertools import chain
 from types import ModuleType
 from contextvars import ContextVar
-from typing import Set, Dict, List, Optional
+from typing import Set, Dict, List, Tuple, Optional
 
 _plugins: Dict[str, "Plugin"] = {}
 _managers: List["PluginManager"] = []
-_current_plugin: ContextVar[Optional["Plugin"]] = ContextVar(
-    "_current_plugin", default=None
+_current_plugin_chain: ContextVar[Tuple["Plugin", ...]] = ContextVar(
+    "_current_plugin_chain", default=tuple()
 )
 
 
@@ -85,13 +86,12 @@ def get_plugin_by_module_name(module_name: str) -> Optional["Plugin"]:
     参数:
         module_name: 模块名，即 {ref}`nonebot.plugin.plugin.Plugin.module_name`。
     """
-    splits = module_name.split(".")
     loaded = {plugin.module_name: plugin for plugin in _plugins.values()}
-    while splits:
-        name = ".".join(splits)
-        if name in loaded:
-            return loaded[name]
-        splits.pop()
+    has_parent = True
+    while has_parent:
+        if module_name in loaded:
+            return loaded[module_name]
+        module_name, *has_parent = module_name.rsplit(".", 1)
 
 
 def get_loaded_plugins() -> Set["Plugin"]:
@@ -106,8 +106,7 @@ def get_available_plugin_names() -> Set[str]:
 
 from .on import on as on
 from .manager import PluginManager
-from .export import Export as Export
-from .export import export as export
+from .on import on_type as on_type
 from .load import require as require
 from .on import on_regex as on_regex
 from .plugin import Plugin as Plugin

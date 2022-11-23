@@ -7,6 +7,176 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💥 破坏性变更
+
+- Feature: 使用 `importlib.metadata` 替换 `pkg_resources` [@A-kirami](https://github.com/A-kirami) ([#1388](https://github.com/nonebot/nonebot2/pull/1388))
+
+### 🚀 新功能
+
+- Feature: 支持自定义 matchers 存储管理 [@yanyongyu](https://github.com/yanyongyu) ([#1395](https://github.com/nonebot/nonebot2/pull/1395))
+- Feature: 升级 devcontainer 配置 [@yanyongyu](https://github.com/yanyongyu) ([#1392](https://github.com/nonebot/nonebot2/pull/1392))
+- Feature: 使用 `importlib.metadata` 替换 `pkg_resources` [@A-kirami](https://github.com/A-kirami) ([#1388](https://github.com/nonebot/nonebot2/pull/1388))
+- CI: 测试环境添加 Python 3.11 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1366](https://github.com/nonebot/nonebot2/pull/1366))
+- Feature: 新增 dotenv 嵌套配置项支持 [@yanyongyu](https://github.com/yanyongyu) ([#1324](https://github.com/nonebot/nonebot2/pull/1324))
+- Feature: 添加 State 响应器触发消息注入 [@A-kirami](https://github.com/A-kirami) ([#1315](https://github.com/nonebot/nonebot2/pull/1315))
+- Remove: 移除无用的 namespace 声明 [@yanyongyu](https://github.com/yanyongyu) ([#1306](https://github.com/nonebot/nonebot2/pull/1306))
+
+### 🐛 Bug 修复
+
+- Fix: Bot `__getattr__` 不再对 `__xxx__` 方法返回 [@synodriver](https://github.com/synodriver) ([#1398](https://github.com/nonebot/nonebot2/pull/1398))
+- Fix: 修复 run pre/post hook 没有在正确的上下文中运行 [@yanyongyu](https://github.com/yanyongyu) ([#1391](https://github.com/nonebot/nonebot2/pull/1391))
+
+### 💫 杂项
+
+- Plugin: b 站用户信息查询 [@Ikaros-521](https://github.com/Ikaros-521) ([#1410](https://github.com/nonebot/nonebot2/pull/1410))
+- Plugin: 由于 Sena-nana 项目拆分，之前的插件地址更改 [@sena-nana](https://github.com/sena-nana) ([#1378](https://github.com/nonebot/nonebot2/pull/1378))
+- Plugin: 更新 ayaka 插件的主页链接 [@bridgeL](https://github.com/bridgeL) ([#1346](https://github.com/nonebot/nonebot2/pull/1346))
+- Plugin: 补充 novelai 插件信息 [@sena-nana](https://github.com/sena-nana) ([#1333](https://github.com/nonebot/nonebot2/pull/1333))
+- Bot: 修改 Inkar Suki 描述 [@HornCopper](https://github.com/HornCopper) ([#1312](https://github.com/nonebot/nonebot2/pull/1312))
+- Plugin: 修改插件 MCQQ MCRcon 主页地址 [@17TheWord](https://github.com/17TheWord) ([#1303](https://github.com/nonebot/nonebot2/pull/1303))
+
+### 🍻 插件发布
+
+- Plugin: 免费版 NovelAI 生图插件 [@yanyongyu](https://github.com/yanyongyu) ([#1408](https://github.com/nonebot/nonebot2/pull/1408))
+- Plugin: sky 光遇 [@yanyongyu](https://github.com/yanyongyu) ([#1394](https://github.com/nonebot/nonebot2/pull/1394))
+- Plugin: Colab-NovelAI [@yanyongyu](https://github.com/yanyongyu) ([#1390](https://github.com/nonebot/nonebot2/pull/1390))
+- Plugin: b 站用户直播号、粉丝、舰团数查询 [@yanyongyu](https://github.com/yanyongyu) ([#1385](https://github.com/nonebot/nonebot2/pull/1385))
+- Plugin: 投胎模拟器 [@yanyongyu](https://github.com/yanyongyu) ([#1382](https://github.com/nonebot/nonebot2/pull/1382))
+- Plugin: Apex API Query [@yanyongyu](https://github.com/yanyongyu) ([#1375](https://github.com/nonebot/nonebot2/pull/1375))
+- Plugin: 随个人 [@yanyongyu](https://github.com/yanyongyu) ([#1373](https://github.com/nonebot/nonebot2/pull/1373))
+- Plugin: 动漫资源获取 [@yanyongyu](https://github.com/yanyongyu) ([#1371](https://github.com/nonebot/nonebot2/pull/1371))
+- Plugin: 日麻小工具 [@yanyongyu](https://github.com/yanyongyu) ([#1365](https://github.com/nonebot/nonebot2/pull/1365))
+- Plugin: 图像超分辨率增强 [@yanyongyu](https://github.com/yanyongyu) ([#1362](https://github.com/nonebot/nonebot2/pull/1362))
+- Plugin: 二次元化图像 [@yanyongyu](https://github.com/yanyongyu) ([#1360](https://github.com/nonebot/nonebot2/pull/1360))
+- Plugin: 日麻寄分器 [@yanyongyu](https://github.com/yanyongyu) ([#1357](https://github.com/nonebot/nonebot2/pull/1357))
+- Plugin: 文本生成器 [@yanyongyu](https://github.com/yanyongyu) ([#1355](https://github.com/nonebot/nonebot2/pull/1355))
+- Plugin: 反嘴臭插件 [@yanyongyu](https://github.com/yanyongyu) ([#1350](https://github.com/nonebot/nonebot2/pull/1350))
+- Plugin: 用户\&群聊黑名单 [@yanyongyu](https://github.com/yanyongyu) ([#1348](https://github.com/nonebot/nonebot2/pull/1348))
+- Plugin: NoneBot SQLAlchemy 封装 [@yanyongyu](https://github.com/yanyongyu) ([#1345](https://github.com/nonebot/nonebot2/pull/1345))
+- Plugin: 通用抽图/语音 [@yanyongyu](https://github.com/yanyongyu) ([#1341](https://github.com/nonebot/nonebot2/pull/1341))
+- Plugin: kfcrazy [@yanyongyu](https://github.com/yanyongyu) ([#1339](https://github.com/nonebot/nonebot2/pull/1339))
+- Plugin: 二次元图像鉴赏 [@yanyongyu](https://github.com/yanyongyu) ([#1337](https://github.com/nonebot/nonebot2/pull/1337))
+- Plugin: ayaka 衍生插件 - 坏词撤回 [@yanyongyu](https://github.com/yanyongyu) ([#1335](https://github.com/nonebot/nonebot2/pull/1335))
+- Plugin: ayaka 衍生插件 - 时区助手 [@yanyongyu](https://github.com/yanyongyu) ([#1332](https://github.com/nonebot/nonebot2/pull/1332))
+- Plugin: ayaka 衍生插件 - 谁是卧底 [@yanyongyu](https://github.com/yanyongyu) ([#1330](https://github.com/nonebot/nonebot2/pull/1330))
+- Plugin: ayaka 衍生插件 - 小游戏合集 [@yanyongyu](https://github.com/yanyongyu) ([#1328](https://github.com/nonebot/nonebot2/pull/1328))
+- Plugin: bnhhsh -「不能好好说话！」 [@yanyongyu](https://github.com/yanyongyu) ([#1326](https://github.com/nonebot/nonebot2/pull/1326))
+- Plugin: AI 绘图 [@yanyongyu](https://github.com/yanyongyu) ([#1323](https://github.com/nonebot/nonebot2/pull/1323))
+- Plugin: novelai [@yanyongyu](https://github.com/yanyongyu) ([#1319](https://github.com/nonebot/nonebot2/pull/1319))
+- Plugin: 游戏王小程序查价 [@yanyongyu](https://github.com/yanyongyu) ([#1317](https://github.com/nonebot/nonebot2/pull/1317))
+- Plugin: 监测群事件 [@yanyongyu](https://github.com/yanyongyu) ([#1320](https://github.com/nonebot/nonebot2/pull/1320))
+- Plugin: 轮盘禁言小游戏 [@yanyongyu](https://github.com/yanyongyu) ([#1311](https://github.com/nonebot/nonebot2/pull/1311))
+- Plugin: 真白萌自动签到 [@yanyongyu](https://github.com/yanyongyu) ([#1308](https://github.com/nonebot/nonebot2/pull/1308))
+- Plugin: BiliRequestAll [@yanyongyu](https://github.com/yanyongyu) ([#1302](https://github.com/nonebot/nonebot2/pull/1302))
+- Plugin: 监听者 [@yanyongyu](https://github.com/yanyongyu) ([#1299](https://github.com/nonebot/nonebot2/pull/1299))
+
+### 🍻 机器人发布
+
+- Bot: Bread Dog Bot [@yanyongyu](https://github.com/yanyongyu) ([#1380](https://github.com/nonebot/nonebot2/pull/1380))
+- Bot: hsbot [@yanyongyu](https://github.com/yanyongyu) ([#1369](https://github.com/nonebot/nonebot2/pull/1369))
+
+### 🍻 适配器发布
+
+- Adapter: Ntchat [@yanyongyu](https://github.com/yanyongyu) ([#1314](https://github.com/nonebot/nonebot2/pull/1314))
+
+## v2.0.0-rc.1
+
+### 💥 破坏性变更
+
+- Feature: `SUPERUSER` 权限匹配任意超管事件 [@AkiraXie](https://github.com/AkiraXie) ([#1275](https://github.com/nonebot/nonebot2/pull/1275))
+- Remove: 移除过时的 State 注入参数 [@yanyongyu](https://github.com/yanyongyu) ([#1160](https://github.com/nonebot/nonebot2/pull/1160))
+- Remove: 移除过时的 `nonebot.plugins` toml 配置 [@yanyongyu](https://github.com/yanyongyu) ([#1151](https://github.com/nonebot/nonebot2/pull/1151))
+- Remove: 移除 Python 3.7 支持 [@yanyongyu](https://github.com/yanyongyu) ([#1148](https://github.com/nonebot/nonebot2/pull/1148))
+- Remove: 删除过时的 Export 功能 [@yanyongyu](https://github.com/yanyongyu) ([#1125](https://github.com/nonebot/nonebot2/pull/1125))
+
+### 🚀 新功能
+
+- Feature: `SUPERUSER` 权限匹配任意超管事件 [@AkiraXie](https://github.com/AkiraXie) ([#1275](https://github.com/nonebot/nonebot2/pull/1275))
+- Feature: 改进 `CommandGroup` 与 `MatcherGroup` 的结构 [@A-kirami](https://github.com/A-kirami) ([#1240](https://github.com/nonebot/nonebot2/pull/1240))
+- Feature: 调整日志输出格式与等级 [@yanyongyu](https://github.com/yanyongyu) ([#1233](https://github.com/nonebot/nonebot2/pull/1233))
+- Feature: 优化依赖注入结构 [@yanyongyu](https://github.com/yanyongyu) ([#1227](https://github.com/nonebot/nonebot2/pull/1227))
+- Featue: `load_plugin` 支持 `pathlib.Path` [@Lancercmd](https://github.com/Lancercmd) ([#1194](https://github.com/nonebot/nonebot2/pull/1194))
+- Feature: 新增事件类型过滤 rule [@yanyongyu](https://github.com/yanyongyu) ([#1183](https://github.com/nonebot/nonebot2/pull/1183))
+- Feature: shell command 添加富文本支持 [@yanyongyu](https://github.com/yanyongyu) ([#1171](https://github.com/nonebot/nonebot2/pull/1171))
+
+### 🐛 Bug 修复
+
+- Fix: 内置规则和权限没有捕获错误 [@yanyongyu](https://github.com/yanyongyu) ([#1291](https://github.com/nonebot/nonebot2/pull/1291))
+- Fix: 修复 User 会话权限更新嵌套问题 [@yanyongyu](https://github.com/yanyongyu) ([#1208](https://github.com/nonebot/nonebot2/pull/1208))
+- Fix: 修复当消息与不支持的类型相加时抛出的异常类型错误 [@mnixry](https://github.com/mnixry) ([#1166](https://github.com/nonebot/nonebot2/pull/1166))
+
+### 💫 杂项
+
+- Fix: 修正 GenshinUID 的发布类型 [@A-kirami](https://github.com/A-kirami) ([#1243](https://github.com/nonebot/nonebot2/pull/1243))
+- Remove: 移除未使用的导入 [@A-kirami](https://github.com/A-kirami) ([#1236](https://github.com/nonebot/nonebot2/pull/1236))
+- Plugin: 更新插件米游社辅助工具 tag [@Ljzd-PRO](https://github.com/Ljzd-PRO) ([#1221](https://github.com/nonebot/nonebot2/pull/1221))
+- Plugin: 修改插件多功能简易群管信息 [@HuYihe2008](https://github.com/HuYihe2008) ([#1180](https://github.com/nonebot/nonebot2/pull/1180))
+- Plugin: 修改插件多功能简易群管信息 [@HuYihe2008](https://github.com/HuYihe2008) ([#1159](https://github.com/nonebot/nonebot2/pull/1159))
+- Plugin: 修改 QQ 续火花插件信息 [@GC-ZF](https://github.com/GC-ZF) ([#1158](https://github.com/nonebot/nonebot2/pull/1158))
+- Plugin: 修改插件多功能简易群管信息 [@HuYihe2008](https://github.com/HuYihe2008) ([#1154](https://github.com/nonebot/nonebot2/pull/1154))
+
+### 🍻 插件发布
+
+- Plugin: 文字识别 [@yanyongyu](https://github.com/yanyongyu) ([#1295](https://github.com/nonebot/nonebot2/pull/1295))
+- Plugin: 在线编曲 [@yanyongyu](https://github.com/yanyongyu) ([#1293](https://github.com/nonebot/nonebot2/pull/1293))
+- Plugin: 图灵机器人 [@yanyongyu](https://github.com/yanyongyu) ([#1289](https://github.com/nonebot/nonebot2/pull/1289))
+- Plugin: PicStatus [@yanyongyu](https://github.com/yanyongyu) ([#1287](https://github.com/nonebot/nonebot2/pull/1287))
+- Plugin: 阿里云盘福利码自动兑换 [@yanyongyu](https://github.com/yanyongyu) ([#1283](https://github.com/nonebot/nonebot2/pull/1283))
+- Plugin: gal 角色语音生成 [@yanyongyu](https://github.com/yanyongyu) ([#1281](https://github.com/nonebot/nonebot2/pull/1281))
+- Plugin: 漂流瓶 [@yanyongyu](https://github.com/yanyongyu) ([#1279](https://github.com/nonebot/nonebot2/pull/1279))
+- Plugin: BWIKI 助手移植版 [@yanyongyu](https://github.com/yanyongyu) ([#1274](https://github.com/nonebot/nonebot2/pull/1274))
+- Plugin: nonebot 物联网插件 [@yanyongyu](https://github.com/yanyongyu) ([#1265](https://github.com/nonebot/nonebot2/pull/1265))
+- Plugin: 狼人杀插件 [@yanyongyu](https://github.com/yanyongyu) ([#1252](https://github.com/nonebot/nonebot2/pull/1252))
+- Plugin: ayaka - 文字游戏开发辅助插件 [@yanyongyu](https://github.com/yanyongyu) ([#1254](https://github.com/nonebot/nonebot2/pull/1254))
+- Plugin: 图像超分辨率重建 [@yanyongyu](https://github.com/yanyongyu) ([#1250](https://github.com/nonebot/nonebot2/pull/1250))
+- Plugin: Minecraft Server 聊天同步 [@yanyongyu](https://github.com/yanyongyu) ([#1245](https://github.com/nonebot/nonebot2/pull/1245))
+- Plugin: 查询 ETH 合并日期 [@yanyongyu](https://github.com/yanyongyu) ([#1232](https://github.com/nonebot/nonebot2/pull/1232))
+- Plugin: 星际战甲事件查询 [@yanyongyu](https://github.com/yanyongyu) ([#1220](https://github.com/nonebot/nonebot2/pull/1220))
+- Plugin: 米游社辅助工具 [@yanyongyu](https://github.com/yanyongyu) ([#1218](https://github.com/nonebot/nonebot2/pull/1218))
+- Plugin: 原神每日材料查询 [@yanyongyu](https://github.com/yanyongyu) ([#1216](https://github.com/nonebot/nonebot2/pull/1216))
+- Plugin: MC_QQ_MCRcon [@yanyongyu](https://github.com/yanyongyu) ([#1211](https://github.com/nonebot/nonebot2/pull/1211))
+- Plugin: 原神角色展柜查询 [@yanyongyu](https://github.com/yanyongyu) ([#1209](https://github.com/nonebot/nonebot2/pull/1209))
+- Plugin: 修仙模拟器 [@yanyongyu](https://github.com/yanyongyu) ([#1202](https://github.com/nonebot/nonebot2/pull/1202))
+- Plugin: 赛博浅草寺 [@yanyongyu](https://github.com/yanyongyu) ([#1206](https://github.com/nonebot/nonebot2/pull/1206))
+- Plugin: 不背单词 [@yanyongyu](https://github.com/yanyongyu) ([#1204](https://github.com/nonebot/nonebot2/pull/1204))
+- Plugin: 自识别 todo [@yanyongyu](https://github.com/yanyongyu) ([#1193](https://github.com/nonebot/nonebot2/pull/1193))
+- Plugin: 雨课堂自动签到 [@yanyongyu](https://github.com/yanyongyu) ([#1189](https://github.com/nonebot/nonebot2/pull/1189))
+- Plugin: 反馈及通知 [@yanyongyu](https://github.com/yanyongyu) ([#1187](https://github.com/nonebot/nonebot2/pull/1187))
+- Plugin: MagiaDice 骰娘及 TRPGLOG [@yanyongyu](https://github.com/yanyongyu) ([#1185](https://github.com/nonebot/nonebot2/pull/1185))
+- Plugin: 面麻小助手 [@yanyongyu](https://github.com/yanyongyu) ([#1191](https://github.com/nonebot/nonebot2/pull/1191))
+- Plugin: 话痨排行榜 [@yanyongyu](https://github.com/yanyongyu) ([#1182](https://github.com/nonebot/nonebot2/pull/1182))
+- Plugin: 保存群聊闪照 [@yanyongyu](https://github.com/yanyongyu) ([#1179](https://github.com/nonebot/nonebot2/pull/1179))
+- Plugin: 课表查询 [@yanyongyu](https://github.com/yanyongyu) ([#1168](https://github.com/nonebot/nonebot2/pull/1168))
+- Plugin: 业余无线电助手 [@yanyongyu](https://github.com/yanyongyu) ([#1173](https://github.com/nonebot/nonebot2/pull/1173))
+- Plugin: NoneBot 树形帮助插件 [@yanyongyu](https://github.com/yanyongyu) ([#1177](https://github.com/nonebot/nonebot2/pull/1177))
+- Plugin: 工作性价比 [@yanyongyu](https://github.com/yanyongyu) ([#1175](https://github.com/nonebot/nonebot2/pull/1175))
+- Plugin: 娶群友 [@yanyongyu](https://github.com/yanyongyu) ([#1170](https://github.com/nonebot/nonebot2/pull/1170))
+- Plugin: PixivBot [@yanyongyu](https://github.com/yanyongyu) ([#1165](https://github.com/nonebot/nonebot2/pull/1165))
+- Plugin: 日韩中 VITS 模型原神拟声 [@yanyongyu](https://github.com/yanyongyu) ([#1162](https://github.com/nonebot/nonebot2/pull/1162))
+- Plugin: 每日人品 [@yanyongyu](https://github.com/yanyongyu) ([#1156](https://github.com/nonebot/nonebot2/pull/1156))
+- Plugin: nonebot-plugin-drawer [@yanyongyu](https://github.com/yanyongyu) ([#1146](https://github.com/nonebot/nonebot2/pull/1146))
+- Plugin: 小游戏合集 [@yanyongyu](https://github.com/yanyongyu) ([#1150](https://github.com/nonebot/nonebot2/pull/1150))
+- Plugin: 简易群管（带入群欢迎） [@yanyongyu](https://github.com/yanyongyu) ([#1142](https://github.com/nonebot/nonebot2/pull/1142))
+- Plugin: wiki 条目搜索、获取简介 [@yanyongyu](https://github.com/yanyongyu) ([#1133](https://github.com/nonebot/nonebot2/pull/1133))
+- Plugin: bangumi 搜索 [@yanyongyu](https://github.com/yanyongyu) ([#1137](https://github.com/nonebot/nonebot2/pull/1137))
+- Plugin: 疫情小助手-频道版 [@yanyongyu](https://github.com/yanyongyu) ([#1131](https://github.com/nonebot/nonebot2/pull/1131))
+- Plugin: MC_QQ 通信 [@yanyongyu](https://github.com/yanyongyu) ([#1127](https://github.com/nonebot/nonebot2/pull/1127))
+- Plugin: BAWiki [@yanyongyu](https://github.com/yanyongyu) ([#1129](https://github.com/nonebot/nonebot2/pull/1129))
+
+### 🍻 机器人发布
+
+- Bot: IdhagnBot [@yanyongyu](https://github.com/yanyongyu) ([#1267](https://github.com/nonebot/nonebot2/pull/1267))
+- Bot: LittlePaimon [@yanyongyu](https://github.com/yanyongyu) ([#1256](https://github.com/nonebot/nonebot2/pull/1256))
+- Bot: GenshinUID [@yanyongyu](https://github.com/yanyongyu) ([#1226](https://github.com/nonebot/nonebot2/pull/1226))
+- Bot: 小白机器人 [@yanyongyu](https://github.com/yanyongyu) ([#1224](https://github.com/nonebot/nonebot2/pull/1224))
+
+### 🍻 适配器发布
+
+- Adapter: GitHub [@yanyongyu](https://github.com/yanyongyu) ([#1297](https://github.com/nonebot/nonebot2/pull/1297))
+- Adapter: Console [@yanyongyu](https://github.com/yanyongyu) ([#1213](https://github.com/nonebot/nonebot2/pull/1213))
+
+## v2.0.0-beta.5
+
 ### 🚀 新功能
 
 - Feature: on_x 支持 expire_time 参数 [@Dobiichi-Origami](https://github.com/Dobiichi-Origami) ([#1106](https://github.com/nonebot/nonebot2/pull/1106))
@@ -14,19 +184,30 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修复插件父子关系识别错漏 [@yanyongyu](https://github.com/yanyongyu) ([#1121](https://github.com/nonebot/nonebot2/pull/1121))
+- Fix: run post hook 应该处理 matcher.state [@AkiraXie](https://github.com/AkiraXie) ([#1119](https://github.com/nonebot/nonebot2/pull/1119))
+- Fix: 修复 setuptools 未安装导致 ImportError [@yanyongyu](https://github.com/yanyongyu) ([#1116](https://github.com/nonebot/nonebot2/pull/1116))
 - Fix: 修复 typing 中 T_RunPostProcessor 类型的注释描述不正确 [@A-kirami](https://github.com/A-kirami) ([#1057](https://github.com/nonebot/nonebot2/pull/1057))
 
 ### 📝 文档
 
 - Docs: 添加 nonemoji 并更新开发指南 [@yanyongyu](https://github.com/yanyongyu) ([#1088](https://github.com/nonebot/nonebot2/pull/1088))
-- Docs: fix event message type error [@yanyongyu](https://github.com/yanyongyu) ([#1079](https://github.com/nonebot/nonebot2/pull/1079))
+- Docs: 修复 event message 类型注释错误 [@yanyongyu](https://github.com/yanyongyu) ([#1079](https://github.com/nonebot/nonebot2/pull/1079))
 - Docs: 修复旧 Vuepress 文档缓存问题 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1077](https://github.com/nonebot/nonebot2/pull/1077))
 - Docs: 更新 Readme 贡献图片 [@yanyongyu](https://github.com/yanyongyu) ([#1074](https://github.com/nonebot/nonebot2/pull/1074))
 - Docs: 注销旧 Vuepress 文档的 Service Worker [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1073](https://github.com/nonebot/nonebot2/pull/1073))
 - Docs: 修改 `权限控制` 一节中主动调用的错误 [@MingxuanGame](https://github.com/MingxuanGame) ([#1072](https://github.com/nonebot/nonebot2/pull/1072))
 
+### 💫 杂项
+
+- Bot: 修改剑网三 bot 信息 [@JustUndertaker](https://github.com/JustUndertaker) ([#1107](https://github.com/nonebot/nonebot2/pull/1107))
+
 ### 🍻 插件发布
 
+- Plugin: 「能不能好好说话？」缩写翻译 [@yanyongyu](https://github.com/yanyongyu) ([#1118](https://github.com/nonebot/nonebot2/pull/1118))
+- Plugin: 推送钩子 [@yanyongyu](https://github.com/yanyongyu) ([#1115](https://github.com/nonebot/nonebot2/pull/1115))
+- Plugin: 易命令 [@yanyongyu](https://github.com/yanyongyu) ([#1111](https://github.com/nonebot/nonebot2/pull/1111))
+- Plugin: 群昵称时间 [@yanyongyu](https://github.com/yanyongyu) ([#1109](https://github.com/nonebot/nonebot2/pull/1109))
 - Plugin: 处理好友添加和群邀请 [@yanyongyu](https://github.com/yanyongyu) ([#1099](https://github.com/nonebot/nonebot2/pull/1099))
 - Plugin: 明日方舟寻访记录分析 [@yanyongyu](https://github.com/yanyongyu) ([#1097](https://github.com/nonebot/nonebot2/pull/1097))
 - Plugin: b 站视频每日推送 [@yanyongyu](https://github.com/yanyongyu) ([#1095](https://github.com/nonebot/nonebot2/pull/1095))
@@ -44,6 +225,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: SkadiBot [@yanyongyu](https://github.com/yanyongyu) ([#1113](https://github.com/nonebot/nonebot2/pull/1113))
 - Bot: 真宵 Bot [@yanyongyu](https://github.com/yanyongyu) ([#1103](https://github.com/nonebot/nonebot2/pull/1103))
 
 ## v2.0.0-beta.4

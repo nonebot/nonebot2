@@ -277,7 +277,7 @@ async def _(foo: str = CommandStart()): ...
 
 ### ShellCommandArgs
 
-获取 shell 命令解析后的参数。
+获取 shell 命令解析后的参数，支持 MessageSegment 富文本（如：图片）。
 
 :::tip 提示
 如果参数解析失败，则为 [`ParserExit`](../../api/exception.md#ParserExit) 异常，并携带错误码与错误信息。
@@ -288,21 +288,28 @@ async def _(foo: str = CommandStart()): ...
 ```python {8,12}
 from nonebot import on_shell_command
 from nonebot.params import ShellCommandArgs
+from nonebot.rule import Namespace, ArgumentParser
 
+parser = ArgumentParser("demo")
+# parser.add_argument ...
 matcher = on_shell_command("cmd", parser)
 
 # 解析失败
 @matcher.handle()
-async def _(foo: ParserExit = ShellCommandArgs()): ...
+async def _(foo: ParserExit = ShellCommandArgs()):
+    if foo.status == 0:
+        foo.message  # help message
+    else:
+        foo.message  # error message
 
 # 解析成功
 @matcher.handle()
-async def _(foo: Dict[str, Any] = ShellCommandArgs()): ...
+async def _(foo: Namespace = ShellCommandArgs()): ...
 ```
 
 ### ShellCommandArgv
 
-获取 shell 命令解析前的参数列表。
+获取 shell 命令解析前的参数列表，支持 MessageSegment 富文本（如：图片）。
 
 ```python {7}
 from nonebot import on_shell_command
@@ -311,7 +318,7 @@ from nonebot.params import ShellCommandArgs
 matcher = on_shell_command("cmd")
 
 @matcher.handle()
-async def _(foo: List[str] = ShellCommandArgv()): ...
+async def _(foo: List[Union[str, MessageSegment]] = ShellCommandArgv()): ...
 ```
 
 ### RegexMatched
@@ -354,6 +361,62 @@ matcher = on_regex("regex")
 
 @matcher.handle()
 async def _(foo: Dict[str, Any] = RegexDict()): ...
+```
+
+### Startswith
+
+获取触发响应器的消息前缀字符串。
+
+```python {7}
+from nonebot import on_startswith
+from nonebot.params import Startswith
+
+matcher = on_startswith("prefix")
+
+@matcher.handle()
+async def _(foo: str = Startswith()): ...
+```
+
+### Endswith
+
+获取触发响应器的消息后缀字符串。
+
+```python {7}
+from nonebot import on_endswith
+from nonebot.params import Endswith
+
+matcher = on_endswith("suffix")
+
+@matcher.handle()
+async def _(foo: str = Endswith()): ...
+```
+
+### Fullmatch
+
+获取触发响应器的消息字符串。
+
+```python {7}
+from nonebot import on_fullmatch
+from nonebot.params import Fullmatch
+
+matcher = on_fullmatch("fullmatch")
+
+@matcher.handle()
+async def _(foo: str = Fullmatch()): ...
+```
+
+### Keyword
+
+获取触发响应器的关键字字符串。
+
+```python {7}
+from nonebot import on_keyword
+from nonebot.params import Keyword
+
+matcher = on_keyword({"keyword"})
+
+@matcher.handle()
+async def _(foo: str = Keyword()): ...
 ```
 
 ### Matcher
