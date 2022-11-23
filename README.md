@@ -107,6 +107,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
   |                        Console                        |  ✅  |                             控制台交互                             |
   |        [开黑啦](https://developer.kookapp.cn/)        |  ↗️  |                             由社区贡献                             |
   | [Mirai](https://docs.mirai.mamoe.net/mirai-api-http/) |  ↗️  |                             由社区贡献                             |
+  | [Ntchat](https://github.com/JustUndertaker/adapter-ntchat) |  ↗️  |                             由社区贡献                             |
 
 - 坚实后盾：支持多种 web 框架，可自定义替换、组合
 
