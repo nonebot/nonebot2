@@ -3389,5 +3389,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_repeep",
+    "project_link": "nonebot-plugin-repeep",
+    "name": "谁在窥屏",
+    "desc": "用于获取QQ中当前窥屏用户信息",
+    "author": "p0ise",
+    "homepage": "https://github.com/p0ise/nonebot-plugin-repeep",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
