@@ -41,6 +41,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 谁在窥屏 [@yanyongyu](https://github.com/yanyongyu) ([#1416](https://github.com/nonebot/nonebot2/pull/1416))
 - Plugin: 免费版 NovelAI 生图插件 [@yanyongyu](https://github.com/yanyongyu) ([#1408](https://github.com/nonebot/nonebot2/pull/1408))
 - Plugin: sky 光遇 [@yanyongyu](https://github.com/yanyongyu) ([#1394](https://github.com/nonebot/nonebot2/pull/1394))
 - Plugin: Colab-NovelAI [@yanyongyu](https://github.com/yanyongyu) ([#1390](https://github.com/nonebot/nonebot2/pull/1390))
