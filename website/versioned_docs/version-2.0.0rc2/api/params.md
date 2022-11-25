@@ -307,6 +307,46 @@ description: nonebot.params 模块
 
   - dict[str, Any]
 
+## _def_ `Startswith()` {#Startswith}
+
+- **说明**
+
+  响应触发前缀
+
+- **返回**
+
+  - str
+
+## _def_ `Endswith()` {#Endswith}
+
+- **说明**
+
+  响应触发后缀
+
+- **返回**
+
+  - str
+
+## _def_ `Fullmatch()` {#Fullmatch}
+
+- **说明**
+
+  响应触发完整消息
+
+- **返回**
+
+  - str
+
+## _def_ `Keyword()` {#Keyword}
+
+- **说明**
+
+  响应触发关键字
+
+- **返回**
+
+  - str
+
 ## _def_ `Received(id=None, default=None)` {#Received}
 
 - **说明**

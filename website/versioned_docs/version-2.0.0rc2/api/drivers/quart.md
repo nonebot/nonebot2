@@ -25,7 +25,7 @@ pip install nonebot2[quart]
 
 - **参数**
 
-  - `_env_file` (str | os.PathLike | NoneType)
+  - `_env_file` (str | os.PathLike | list[str | os.PathLike] | tuple[str | os.PathLike, ...] | NoneType)
 
   - `_env_file_encoding` (str | None)
 
@@ -35,13 +35,13 @@ pip install nonebot2[quart]
 
   - `quart_reload` (bool)
 
-  - `quart_reload_dirs` (list[str])
+  - `quart_reload_dirs` (list[str] | None)
 
   - `quart_reload_delay` (float)
 
-  - `quart_reload_includes` (list[str])
+  - `quart_reload_includes` (list[str] | None)
 
-  - `quart_reload_excludes` (list[str])
+  - `quart_reload_excludes` (list[str] | None)
 
 ### _class-var_ `quart_reload` {#Config-quart_reload}
 

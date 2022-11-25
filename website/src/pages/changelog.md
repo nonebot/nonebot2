@@ -5,17 +5,35 @@ toc_max_heading_level: 2
 
 # 更新日志
 
-## 最近更新
+## v2.0.0rc2
+
+### 💥 破坏性变更
+
+- Feature: 使用 `importlib.metadata` 替换 `pkg_resources` [@A-kirami](https://github.com/A-kirami) ([#1388](https://github.com/nonebot/nonebot2/pull/1388))
 
 ### 🚀 新功能
 
+- Feature: 支持自定义 matchers 存储管理 [@yanyongyu](https://github.com/yanyongyu) ([#1395](https://github.com/nonebot/nonebot2/pull/1395))
+- Feature: 升级 devcontainer 配置 [@yanyongyu](https://github.com/yanyongyu) ([#1392](https://github.com/nonebot/nonebot2/pull/1392))
+- Feature: 使用 `importlib.metadata` 替换 `pkg_resources` [@A-kirami](https://github.com/A-kirami) ([#1388](https://github.com/nonebot/nonebot2/pull/1388))
 - CI: 测试环境添加 Python 3.11 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1366](https://github.com/nonebot/nonebot2/pull/1366))
 - Feature: 新增 dotenv 嵌套配置项支持 [@yanyongyu](https://github.com/yanyongyu) ([#1324](https://github.com/nonebot/nonebot2/pull/1324))
 - Feature: 添加 State 响应器触发消息注入 [@A-kirami](https://github.com/A-kirami) ([#1315](https://github.com/nonebot/nonebot2/pull/1315))
 - Remove: 移除无用的 namespace 声明 [@yanyongyu](https://github.com/yanyongyu) ([#1306](https://github.com/nonebot/nonebot2/pull/1306))
 
+### 🐛 Bug 修复
+
+- Fix: Bot `__getattr__` 不再对 `__xxx__` 方法返回 [@synodriver](https://github.com/synodriver) ([#1398](https://github.com/nonebot/nonebot2/pull/1398))
+- Fix: 修复 run pre/post hook 没有在正确的上下文中运行 [@yanyongyu](https://github.com/yanyongyu) ([#1391](https://github.com/nonebot/nonebot2/pull/1391))
+
+### 📝 文档
+
+- Docs: 添加 ntchat 社区适配器 [@JustUndertaker](https://github.com/JustUndertaker) ([#1414](https://github.com/nonebot/nonebot2/pull/1414))
+
 ### 💫 杂项
 
+- Plugin: b 站用户信息查询 [@Ikaros-521](https://github.com/Ikaros-521) ([#1410](https://github.com/nonebot/nonebot2/pull/1410))
+- Plugin: 由于 Sena-nana 项目拆分，之前的插件地址更改 [@sena-nana](https://github.com/sena-nana) ([#1378](https://github.com/nonebot/nonebot2/pull/1378))
 - Plugin: 更新 ayaka 插件的主页链接 [@bridgeL](https://github.com/bridgeL) ([#1346](https://github.com/nonebot/nonebot2/pull/1346))
 - Plugin: 补充 novelai 插件信息 [@sena-nana](https://github.com/sena-nana) ([#1333](https://github.com/nonebot/nonebot2/pull/1333))
 - Bot: 修改 Inkar Suki 描述 [@HornCopper](https://github.com/HornCopper) ([#1312](https://github.com/nonebot/nonebot2/pull/1312))
@@ -23,6 +41,13 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 谁在窥屏 [@yanyongyu](https://github.com/yanyongyu) ([#1416](https://github.com/nonebot/nonebot2/pull/1416))
+- Plugin: 免费版 NovelAI 生图插件 [@yanyongyu](https://github.com/yanyongyu) ([#1408](https://github.com/nonebot/nonebot2/pull/1408))
+- Plugin: sky 光遇 [@yanyongyu](https://github.com/yanyongyu) ([#1394](https://github.com/nonebot/nonebot2/pull/1394))
+- Plugin: Colab-NovelAI [@yanyongyu](https://github.com/yanyongyu) ([#1390](https://github.com/nonebot/nonebot2/pull/1390))
+- Plugin: b 站用户直播号、粉丝、舰团数查询 [@yanyongyu](https://github.com/yanyongyu) ([#1385](https://github.com/nonebot/nonebot2/pull/1385))
+- Plugin: 投胎模拟器 [@yanyongyu](https://github.com/yanyongyu) ([#1382](https://github.com/nonebot/nonebot2/pull/1382))
+- Plugin: Apex API Query [@yanyongyu](https://github.com/yanyongyu) ([#1375](https://github.com/nonebot/nonebot2/pull/1375))
 - Plugin: 随个人 [@yanyongyu](https://github.com/yanyongyu) ([#1373](https://github.com/nonebot/nonebot2/pull/1373))
 - Plugin: 动漫资源获取 [@yanyongyu](https://github.com/yanyongyu) ([#1371](https://github.com/nonebot/nonebot2/pull/1371))
 - Plugin: 日麻小工具 [@yanyongyu](https://github.com/yanyongyu) ([#1365](https://github.com/nonebot/nonebot2/pull/1365))
@@ -52,6 +77,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: Bread Dog Bot [@yanyongyu](https://github.com/yanyongyu) ([#1380](https://github.com/nonebot/nonebot2/pull/1380))
 - Bot: hsbot [@yanyongyu](https://github.com/yanyongyu) ([#1369](https://github.com/nonebot/nonebot2/pull/1369))
 
 ### 🍻 适配器发布

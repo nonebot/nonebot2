@@ -67,6 +67,18 @@ description: nonebot.matcher 模块
 
   - bool: 是否满足匹配规则
 
+### _method_ `ensure_context(self, bot, event)` {#Matcher-ensure_context}
+
+- **参数**
+
+  - `bot` (nonebot.internal.adapter.bot.Bot)
+
+  - `event` (nonebot.internal.adapter.event.Event)
+
+- **返回**
+
+  - Unknown
+
 ### _async classmethod_ `finish(cls, message=None, **kwargs)` {#Matcher-finish}
 
 - **说明**
@@ -479,3 +491,115 @@ description: nonebot.matcher 模块
 - **返回**
 
   - str
+
+## _class_ `MatcherManager()` {#MatcherManager}
+
+- **说明**
+
+  事件响应器管理器
+
+  实现了常用字典操作，用于管理事件响应器。
+
+### _method_ `clear(self)` {#MatcherManager-clear}
+
+- **返回**
+
+  - None
+
+### _method_ `get(self, key, default=None)` {#MatcherManager-get}
+
+- **参数**
+
+  - `key` (int)
+
+  - `default` ((~ T) | None)
+
+- **返回**
+
+  - list[Type[Matcher]] | (~ T) | NoneType
+
+### _method_ `items(self)` {#MatcherManager-items}
+
+- **返回**
+
+  - ItemsView[int, list[Type[Matcher]]]
+
+### _method_ `keys(self)` {#MatcherManager-keys}
+
+- **返回**
+
+  - KeysView[int]
+
+### _method_ `pop(self, key)` {#MatcherManager-pop}
+
+- **参数**
+
+  - `key` (int)
+
+- **返回**
+
+  - list[Type[Matcher]]
+
+### _method_ `popitem(self)` {#MatcherManager-popitem}
+
+- **返回**
+
+  - tuple[int, list[Type[Matcher]]]
+
+### _method_ `set_provider(self, provider_class)` {#MatcherManager-set_provider}
+
+- **说明**
+
+  设置事件响应器存储器
+
+- **参数**
+
+  - `provider_class` (Type[nonebot.internal.matcher.provider.MatcherProvider]): 事件响应器存储器类
+
+- **返回**
+
+  - None
+
+### _method_ `setdefault(self, key, default)` {#MatcherManager-setdefault}
+
+- **参数**
+
+  - `key` (int)
+
+  - `default` (list[Type[Matcher]])
+
+- **返回**
+
+  - list[Type[Matcher]]
+
+### _method_ `update(self, _MatcherManager__m)` {#MatcherManager-update}
+
+- **参数**
+
+  - `_MatcherManager__m` (MutableMapping[int, list[Type[Matcher]]])
+
+- **返回**
+
+  - None
+
+### _method_ `values(self)` {#MatcherManager-values}
+
+- **返回**
+
+  - ValuesView[list[Type[Matcher]]]
+
+## _abstract class_ `MatcherProvider(matchers)` {#MatcherProvider}
+
+- **说明**
+
+  事件响应器存储器基类
+
+- **参数**
+
+  - `matchers` (Mapping[int, list[Type[Matcher]]]): 当前存储器中已有的事件响应器
+
+## _class_ `DEFAULT_PROVIDER_CLASS(matchers)` {#DEFAULT_PROVIDER_CLASS}
+
+- **参数**
+
+  - `matchers` (Mapping[int, list[Type[Matcher]]])

@@ -3293,5 +3293,116 @@
     "homepage": "https://github.com/jcjrobert/nonebot-plugin-person",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_apex_api_query",
+    "project_link": "nonebot-plugin-apex-api-query",
+    "name": "Apex API Query",
+    "desc": "Apex Legends API 查询插件",
+    "author": "H-xiaoH",
+    "homepage": "https://github.com/H-xiaoH/nonebot-plugin-apex-api-query",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_reborn",
+    "project_link": "nonebot-plugin-reborn",
+    "name": "投胎模拟器",
+    "desc": "重生后你会到哪里？",
+    "author": "Aziteee",
+    "homepage": "https://github.com/Aziteee/nonebot_plugin_reborn",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_searchBiliInfo",
+    "project_link": "nonebot-plugin-searchBiliInfo",
+    "name": "b站用户信息查询",
+    "desc": "查询b站用户粉丝数、舰团信息；主播直播收益数据（总收益、礼物、SC、上舰）；用户观看直播信息（观看、弹幕记录）；通过关键词搜昵称、UID等",
+    "author": "Ikaros-521",
+    "homepage": "https://github.com/Ikaros-521/nonebot_plugin_searchBiliInfo",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#e55d80"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_colab_novelai",
+    "project_link": "nonebot-plugin-colab-novelai",
+    "name": "Colab-NovelAI",
+    "desc": "解放你的双手，让Colab持续给你提供算力生产色图！",
+    "author": "EtherLeaF",
+    "homepage": "https://github.com/EtherLeaF/nonebot-plugin-colab-novelai",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:NovelAI",
+        "color": "#eacd52"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sky",
+    "project_link": "nonebot-plugin-sky",
+    "name": "sky光遇",
+    "desc": "基于NoneBot2的光遇每日攻略插件",
+    "author": "Kaguya233qwq",
+    "homepage": "https://github.com/Kaguya233qwq/nonebot_plugin_sky",
+    "tags": [
+      {
+        "label": "光遇",
+        "color": "#7ebdf0"
+      },
+      {
+        "label": "攻略",
+        "color": "#2079c1"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_zyk_novelai",
+    "project_link": "nonebot-plugin-zyk-novelai",
+    "name": "免费版NovelAI生图插件",
+    "desc": "一个用于nonebot2的简约AI绘图插件。没有繁琐的使用指令，配置过程简单迅捷，代码简洁易懂，还有更多功能将会陆续加入。",
+    "author": "ZYKsslm",
+    "homepage": "https://github.com/ZYKsslm/nonebot_plugin_zyk_novelai",
+    "tags": [
+      {
+        "label": "Free",
+        "color": "#42e22f"
+      },
+      {
+        "label": "Simple",
+        "color": "#e2d92f"
+      },
+      {
+        "label": "Novelai",
+        "color": "#3e10e9"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_repeep",
+    "project_link": "nonebot-plugin-repeep",
+    "name": "谁在窥屏",
+    "desc": "用于获取QQ中当前窥屏用户信息",
+    "author": "p0ise",
+    "homepage": "https://github.com/p0ise/nonebot-plugin-repeep",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]

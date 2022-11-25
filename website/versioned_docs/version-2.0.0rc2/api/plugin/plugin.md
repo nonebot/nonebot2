@@ -65,7 +65,7 @@ description: nonebot.plugin.plugin 模块
 
   - `manager` (PluginManager)
 
-  - `matcher` (set[Type[nonebot.internal.matcher.Matcher]])
+  - `matcher` (set[Type[nonebot.internal.matcher.matcher.Matcher]])
 
   - `parent_plugin` (Plugin | None)
 
@@ -105,7 +105,7 @@ description: nonebot.plugin.plugin 模块
 
 ### _instance-var_ `matcher` {#Plugin-matcher}
 
-- **类型:** set[Type[nonebot.internal.matcher.Matcher]]
+- **类型:** set[Type[nonebot.internal.matcher.matcher.Matcher]]
 
 - **说明:** 插件内定义的 `Matcher`
 

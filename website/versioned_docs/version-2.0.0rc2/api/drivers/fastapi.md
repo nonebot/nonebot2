@@ -19,7 +19,7 @@ description: nonebot.drivers.fastapi 模块
 
 - **参数**
 
-  - `_env_file` (str | os.PathLike | NoneType)
+  - `_env_file` (str | os.PathLike | list[str | os.PathLike] | tuple[str | os.PathLike, ...] | NoneType)
 
   - `_env_file_encoding` (str | None)
 
@@ -27,23 +27,23 @@ description: nonebot.drivers.fastapi 模块
 
   - `_secrets_dir` (str | os.PathLike | NoneType)
 
-  - `fastapi_openapi_url` (str)
+  - `fastapi_openapi_url` (str | None)
 
-  - `fastapi_docs_url` (str)
+  - `fastapi_docs_url` (str | None)
 
-  - `fastapi_redoc_url` (str)
+  - `fastapi_redoc_url` (str | None)
 
   - `fastapi_include_adapter_schema` (bool)
 
   - `fastapi_reload` (bool)
 
-  - `fastapi_reload_dirs` (list[str])
+  - `fastapi_reload_dirs` (list[str] | None)
 
   - `fastapi_reload_delay` (float)
 
-  - `fastapi_reload_includes` (list[str])
+  - `fastapi_reload_includes` (list[str] | None)
 
-  - `fastapi_reload_excludes` (list[str])
+  - `fastapi_reload_excludes` (list[str] | None)
 
 ### _class-var_ `fastapi_openapi_url` {#Config-fastapi_openapi_url}
 

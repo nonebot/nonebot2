@@ -262,7 +262,7 @@ class FastAPIWebSocket(BaseWebSocket):
     async def close(
         self, code: int = status.WS_1000_NORMAL_CLOSURE, reason: str = ""
     ) -> None:
-        await self.websocket.close(code)
+        await self.websocket.close(code, reason)
 
     @overrides(BaseWebSocket)
     async def receive(self) -> Union[str, bytes]:

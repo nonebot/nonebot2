@@ -289,5 +289,26 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "Bread Dog Bot",
+    "desc": "Terraria TShock QQ 机器人",
+    "author": "Qianyiovo",
+    "homepage": "https://github.com/Qianyiovo/bread_dog_bot",
+    "tags": [
+      {
+        "label": "TShock",
+        "color": "#ea5252"
+      },
+      {
+        "label": "泰拉瑞亚",
+        "color": "#5dea52"
+      },
+      {
+        "label": "Terraria",
+        "color": "#5dea52"
+      }
+    ],
+    "is_official": false
   }
 ]
