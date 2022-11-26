@@ -3419,5 +3419,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_note",
+    "project_link": "nonebot-plugin-note",
+    "name": "记事本",
+    "desc": "一个有提醒功能的记事本",
+    "author": "Passerby-D",
+    "homepage": "https://github.com/Passerby-D/nonebot_plugin_note",
+    "tags": [],
+    "is_official": false
   }
 ]
