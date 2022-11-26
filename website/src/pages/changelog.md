@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 🍻 插件发布
+
+- Plugin: 原神前瞻直播兑换码查询 [@yanyongyu](https://github.com/yanyongyu) ([#1422](https://github.com/nonebot/nonebot2/pull/1422))
+
 ## v2.0.0rc2
 
 ### 💥 破坏性变更

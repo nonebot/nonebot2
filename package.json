@@ -11,7 +11,7 @@
     "start": "yarn workspace nonebot start",
     "serve": "yarn workspace nonebot serve",
     "clear": "yarn workspace nonebot clear",
-    "prettier": "prettier --config ./.prettierrc --write \"./website/**/*.md\""
+    "prettier": "prettier --config ./.prettierrc --write \"./website/\""
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
