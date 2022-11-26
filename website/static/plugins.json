@@ -2421,7 +2421,7 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot-plugin-magiadice",
+    "module_name": "nonebot_plugin_magiadice",
     "project_link": "nonebot-plugin-magiadice",
     "name": "MagiaDice骰娘及TRPGLOG",
     "desc": "能够实时在网页围观的TRPG记录插件，同时具有骰娘的功能",
@@ -2436,7 +2436,7 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot-plugin-send",
+    "module_name": "nonebot_plugin_send",
     "project_link": "nonebot-plugin-send",
     "name": "反馈及通知",
     "desc": "用户通过bot向superuser发送反馈，以及bot向所有群发送通知",
@@ -2966,7 +2966,7 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot-plugin-novelai",
+    "module_name": "nonebot_plugin_novelai",
     "project_link": "nonebot-plugin-novelai",
     "name": "novelai",
     "desc": "一个支持novelai、naifu、webui，支持中文功能丰富的ai绘图插件",
