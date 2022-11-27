@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💫 杂项
+
+- Plugin: 修改 novelai send magiadice 插件模块名 [@sena-nana](https://github.com/sena-nana) ([#1423](https://github.com/nonebot/nonebot2/pull/1423))
+
 ### 🍻 插件发布
 
 - Plugin: 记事本 [@yanyongyu](https://github.com/yanyongyu) ([#1420](https://github.com/nonebot/nonebot2/pull/1420))
