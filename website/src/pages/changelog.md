@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🐛 Bug 修复
+
+- Fix: 修复 ArgumentParser 错误信息叠加问题 [@yanyongyu](https://github.com/yanyongyu) ([#1426](https://github.com/nonebot/nonebot2/pull/1426))
+
 ### 💫 杂项
 
 - Plugin: 修改 novelai send magiadice 插件模块名 [@sena-nana](https://github.com/sena-nana) ([#1423](https://github.com/nonebot/nonebot2/pull/1423))
