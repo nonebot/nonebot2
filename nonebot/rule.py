@@ -12,6 +12,7 @@ import re
 import shlex
 from argparse import Action
 from argparse import ArgumentError
+from contextvars import ContextVar
 from itertools import chain, product
 from argparse import Namespace as Namespace
 from argparse import ArgumentParser as ArgParser
@@ -72,6 +73,8 @@ CMD_RESULT = TypedDict(
 TRIE_VALUE = NamedTuple(
     "TRIE_VALUE", [("command_start", str), ("command", Tuple[str, ...])]
 )
+
+parser_message: ContextVar[str] = ContextVar("parser_message")
 
 
 class TrieRule:
@@ -446,13 +449,15 @@ class ArgumentParser(ArgParser):
         )
 
     def _print_message(self, message: str, file: Optional[IO[str]] = None):
-        if message:
-            setattr(self, "_message", getattr(self, "_message", "") + message)
+        if (msg := parser_message.get(None)) is not None:
+            parser_message.set(msg + message)
+        else:
+            super()._print_message(message, file)
 
     def exit(self, status: int = 0, message: Optional[str] = None):
         if message:
             self._print_message(message)
-        raise ParserExit(status=status, message=getattr(self, "_message", None))
+        raise ParserExit(status=status, message=parser_message.get(None))
 
 
 class ShellCommandRule:
@@ -499,6 +504,7 @@ class ShellCommandRule:
         )
 
         if self.parser:
+            t = parser_message.set("")
             try:
                 args = self.parser.parse_args(state[SHELL_ARGV])
                 state[SHELL_ARGS] = args
@@ -506,6 +512,8 @@ class ShellCommandRule:
                 state[SHELL_ARGS] = ParserExit(status=2, message=str(e))
             except ParserExit as e:
                 state[SHELL_ARGS] = e
+            finally:
+                parser_message.reset(t)
         return True
 
 

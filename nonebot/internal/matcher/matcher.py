@@ -1,12 +1,10 @@
 from types import ModuleType
 from contextvars import ContextVar
-from collections import defaultdict
-from contextlib import AsyncExitStack
 from datetime import datetime, timedelta
+from contextlib import AsyncExitStack, contextmanager
 from typing import (
     TYPE_CHECKING,
     Any,
-    Dict,
     List,
     Type,
     Union,
@@ -19,7 +17,16 @@ from typing import (
 )
 
 from nonebot.log import logger
+from nonebot.internal.rule import Rule
 from nonebot.dependencies import Dependent
+from nonebot.internal.permission import USER, User, Permission
+from nonebot.internal.adapter import (
+    Bot,
+    Event,
+    Message,
+    MessageSegment,
+    MessageTemplate,
+)
 from nonebot.consts import (
     ARG_KEY,
     RECEIVE_KEY,
@@ -42,11 +49,7 @@ from nonebot.exception import (
     FinishedException,
     RejectedException,
 )
-
-from .rule import Rule
-from .permission import USER, User, Permission
-from .adapter import Bot, Event, Message, MessageSegment, MessageTemplate
-from .params import (
+from nonebot.internal.params import (
     Depends,
     ArgParam,
     BotParam,
@@ -57,13 +60,13 @@ from .params import (
     MatcherParam,
 )
 
+from . import matchers
+
 if TYPE_CHECKING:
     from nonebot.plugin import Plugin
 
 T = TypeVar("T")
 
-matchers: Dict[int, List[Type["Matcher"]]] = defaultdict(list)
-"""用于存储当前所有的事件响应器"""
 current_bot: ContextVar[Bot] = ContextVar("current_bot")
 current_event: ContextVar[Event] = ContextVar("current_event")
 current_matcher: ContextVar["Matcher"] = ContextVar("current_matcher")
@@ -661,6 +664,18 @@ class Matcher(metaclass=MatcherMeta):
         if REJECT_CACHE_TARGET in self.state:
             self.state[REJECT_TARGET] = self.state[REJECT_CACHE_TARGET]
 
+    @contextmanager
+    def ensure_context(self, bot: Bot, event: Event):
+        b_t = current_bot.set(bot)
+        e_t = current_event.set(event)
+        m_t = current_matcher.set(self)
+        try:
+            yield
+        finally:
+            current_bot.reset(b_t)
+            current_event.reset(e_t)
+            current_matcher.reset(m_t)
+
     async def simple_run(
         self,
         bot: Bot,
@@ -673,35 +688,31 @@ class Matcher(metaclass=MatcherMeta):
             f"{self} run with incoming args: "
             f"bot={bot}, event={event!r}, state={state!r}"
         )
-        b_t = current_bot.set(bot)
-        e_t = current_event.set(event)
-        m_t = current_matcher.set(self)
-        try:
-            # Refresh preprocess state
-            self.state.update(state)
 
-            while self.handlers:
-                handler = self.handlers.pop(0)
-                current_handler.set(handler)
-                logger.debug(f"Running handler {handler}")
-                try:
-                    await handler(
-                        matcher=self,
-                        bot=bot,
-                        event=event,
-                        state=self.state,
-                        stack=stack,
-                        dependency_cache=dependency_cache,
-                    )
-                except SkippedException:
-                    logger.debug(f"Handler {handler} skipped")
-        except StopPropagation:
-            self.block = True
-        finally:
-            logger.info(f"{self} running complete")
-            current_bot.reset(b_t)
-            current_event.reset(e_t)
-            current_matcher.reset(m_t)
+        with self.ensure_context(bot, event):
+            try:
+                # Refresh preprocess state
+                self.state.update(state)
+
+                while self.handlers:
+                    handler = self.handlers.pop(0)
+                    current_handler.set(handler)
+                    logger.debug(f"Running handler {handler}")
+                    try:
+                        await handler(
+                            matcher=self,
+                            bot=bot,
+                            event=event,
+                            state=self.state,
+                            stack=stack,
+                            dependency_cache=dependency_cache,
+                        )
+                    except SkippedException:
+                        logger.debug(f"Handler {handler} skipped")
+            except StopPropagation:
+                self.block = True
+            finally:
+                logger.info(f"{self} running complete")
 
     # 运行handlers
     async def run(
@@ -756,14 +767,3 @@ class Matcher(metaclass=MatcherMeta):
             )
         except FinishedException:
             pass
-
-
-__autodoc__ = {
-    "MatcherMeta": False,
-    "Matcher.get_target": False,
-    "Matcher.set_target": False,
-    "Matcher.update_type": False,
-    "Matcher.update_permission": False,
-    "Matcher.resolve_reject": False,
-    "Matcher.simple_run": False,
-}

@@ -296,6 +296,7 @@ async def test_shell_command(app: App):
     assert state[SHELL_ARGV] == []
     assert isinstance(state[SHELL_ARGS], ParserExit)
     assert state[SHELL_ARGS].status != 0
+    assert state[SHELL_ARGS].message.startswith(parser.format_usage() + "test: error:")
 
     test_message_parser = shell_command(CMD, parser=parser)
     dependent = list(test_message_parser.checkers)[0]

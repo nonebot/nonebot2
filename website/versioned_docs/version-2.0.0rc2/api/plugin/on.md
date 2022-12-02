@@ -35,7 +35,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _def_ `on_metaevent(rule=..., *, handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#on_metaevent}
 
@@ -61,7 +61,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _def_ `on_message(rule=..., permission=..., *, handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#on_message}
 
@@ -89,7 +89,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _def_ `on_notice(rule=..., *, handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#on_notice}
 
@@ -115,7 +115,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _def_ `on_request(rule=..., *, handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#on_request}
 
@@ -141,7 +141,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _def_ `on_startswith(msg, rule=..., ignorecase=..., *, permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#on_startswith}
 
@@ -173,7 +173,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _def_ `on_endswith(msg, rule=..., ignorecase=..., *, permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#on_endswith}
 
@@ -205,7 +205,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _def_ `on_fullmatch(msg, rule=..., ignorecase=..., *, permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#on_fullmatch}
 
@@ -237,7 +237,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _def_ `on_keyword(keywords, rule=..., *, permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#on_keyword}
 
@@ -267,7 +267,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _def_ `on_command(cmd, rule=..., aliases=..., *, permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#on_command}
 
@@ -301,7 +301,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _def_ `on_shell_command(cmd, rule=..., aliases=..., parser=..., *, permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#on_shell_command}
 
@@ -339,7 +339,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _def_ `on_regex(pattern, flags=..., rule=..., *, permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#on_regex}
 
@@ -373,7 +373,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _def_ `on_type(types, rule=..., *, permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#on_type}
 
@@ -403,7 +403,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _class_ `CommandGroup(cmd, *, rule=..., permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#CommandGroup}
 
@@ -457,7 +457,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ### _method_ `shell_command(self, cmd, *, rule=..., aliases=..., parser=..., permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#CommandGroup-shell_command}
 
@@ -491,7 +491,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ## _class_ `MatcherGroup(*, type=..., rule=..., permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#MatcherGroup}
 
@@ -543,7 +543,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ### _method_ `on_command(self, cmd, aliases=..., *, rule=..., permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#MatcherGroup-on_command}
 
@@ -577,7 +577,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ### _method_ `on_endswith(self, msg, *, ignorecase=..., rule=..., permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#MatcherGroup-on_endswith}
 
@@ -609,7 +609,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ### _method_ `on_fullmatch(self, msg, *, ignorecase=..., rule=..., permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#MatcherGroup-on_fullmatch}
 
@@ -641,7 +641,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ### _method_ `on_keyword(self, keywords, *, rule=..., permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#MatcherGroup-on_keyword}
 
@@ -671,7 +671,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ### _method_ `on_message(self, *, rule=..., permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#MatcherGroup-on_message}
 
@@ -699,7 +699,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ### _method_ `on_metaevent(self, *, rule=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#MatcherGroup-on_metaevent}
 
@@ -725,7 +725,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ### _method_ `on_notice(self, *, rule=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#MatcherGroup-on_notice}
 
@@ -751,7 +751,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ### _method_ `on_regex(self, pattern, flags=..., *, rule=..., permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#MatcherGroup-on_regex}
 
@@ -785,7 +785,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ### _method_ `on_request(self, *, rule=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#MatcherGroup-on_request}
 
@@ -811,7 +811,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ### _method_ `on_shell_command(self, cmd, aliases=..., parser=..., *, rule=..., permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#MatcherGroup-on_shell_command}
 
@@ -849,7 +849,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ### _method_ `on_startswith(self, msg, *, ignorecase=..., rule=..., permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#MatcherGroup-on_startswith}
 
@@ -881,7 +881,7 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]
 
 ### _method_ `on_type(self, types, *, rule=..., permission=..., handlers=..., temp=..., expire_time=..., priority=..., block=..., state=...)` {#MatcherGroup-on_type}
 
@@ -911,4 +911,4 @@ description: nonebot.plugin.on 模块
 
 - **返回**
 
-  - Type[nonebot.internal.matcher.Matcher]
+  - Type[nonebot.internal.matcher.matcher.Matcher]

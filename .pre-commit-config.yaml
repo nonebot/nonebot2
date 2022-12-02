@@ -22,7 +22,7 @@ repos:
     rev: v3.0.0-alpha.4
     hooks:
       - id: prettier
-        types_or: [javascript, jsx, ts, tsx, markdown, yaml]
+        types_or: [javascript, jsx, ts, tsx, markdown, yaml, json]
         stages: [commit]
 
   - repo: https://github.com/nonebot/nonemoji

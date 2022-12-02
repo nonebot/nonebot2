@@ -43,6 +43,10 @@ class Bot(abc.ABC):
         return f"Bot(type={self.type!r}, self_id={self.self_id!r})"
 
     def __getattr__(self, name: str) -> "_ApiCall":
+        if name.startswith("__") and name.endswith("__"):
+            raise AttributeError(
+                f"'{self.__class__.__name__}' object has no attribute '{name}'"
+            )
         return partial(self.call_api, name)
 
     @property
