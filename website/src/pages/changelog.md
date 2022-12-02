@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: b 站图片下载 [@yanyongyu](https://github.com/yanyongyu) ([#1430](https://github.com/nonebot/nonebot2/pull/1430))
 - Plugin: 记事本 [@yanyongyu](https://github.com/yanyongyu) ([#1420](https://github.com/nonebot/nonebot2/pull/1420))
 - Plugin: 原神前瞻直播兑换码查询 [@yanyongyu](https://github.com/yanyongyu) ([#1422](https://github.com/nonebot/nonebot2/pull/1422))
 
