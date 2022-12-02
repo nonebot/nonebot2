@@ -3429,5 +3429,15 @@
     "homepage": "https://github.com/Passerby-D/nonebot_plugin_note",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-bilibili-image",
+    "project_link": "nonebot-plugin-bilibili-image",
+    "name": "b站图片下载",
+    "desc": "b站封面提取，动态图片/专栏图片下载",
+    "author": "jcjrobert",
+    "homepage": "https://github.com/jcjrobert/nonebot-plugin-bilibili-image",
+    "tags": [],
+    "is_official": false
   }
 ]
