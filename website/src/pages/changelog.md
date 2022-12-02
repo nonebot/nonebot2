@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 更新 ayaka_games 介绍 [@bridgeL](https://github.com/bridgeL) ([#1431](https://github.com/nonebot/nonebot2/pull/1431))
 - Plugin: 修改 novelai send magiadice 插件模块名 [@sena-nana](https://github.com/sena-nana) ([#1423](https://github.com/nonebot/nonebot2/pull/1423))
 
 ### 🍻 插件发布
