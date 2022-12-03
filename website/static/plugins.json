@@ -3439,5 +3439,28 @@
     "homepage": "https://github.com/jcjrobert/nonebot-plugin-bilibili-image",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_trace_moe",
+    "project_link": "nonebot-plugin-trace-moe",
+    "name": "动画截图追溯来源",
+    "desc": "调用trace.moe的API查询动画截图源自的作品名和时间段",
+    "author": "Ikaros-521",
+    "homepage": "https://github.com/Ikaros-521/nonebot_plugin_trace_moe",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#191919"
+      },
+      {
+        "label": "t:trace",
+        "color": "#191919"
+      },
+      {
+        "label": "t:image",
+        "color": "#00a0ff"
+      }
+    ],
+    "is_official": false
   }
 ]
