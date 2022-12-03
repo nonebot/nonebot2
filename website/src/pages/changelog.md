@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Fix: 修复 ArgumentParser 错误信息叠加问题 [@yanyongyu](https://github.com/yanyongyu) ([#1426](https://github.com/nonebot/nonebot2/pull/1426))
 
+### 📝 文档
+
+- Docs: 修正文档中部分配置文件示例的符号误用 [@MingxuanGame](https://github.com/MingxuanGame) ([#1432](https://github.com/nonebot/nonebot2/pull/1432))
+
 ### 💫 杂项
 
 - Plugin: 更新 ayaka_games 介绍 [@bridgeL](https://github.com/bridgeL) ([#1431](https://github.com/nonebot/nonebot2/pull/1431))
