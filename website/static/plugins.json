@@ -3462,5 +3462,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_zyk_music",
+    "project_link": "nonebot-plugin-zyk-music",
+    "name": "免费快捷点歌插件",
+    "desc": "一个用于nonebot2的点歌插件。操作简单粗暴，交互简洁易懂.",
+    "author": "ZYKsslm",
+    "homepage": "https://github.com/ZYKsslm/nonebot_plugin_zyk_music",
+    "tags": [
+      {
+        "label": "Free",
+        "color": "#26d019"
+      },
+      {
+        "label": "Simple",
+        "color": "#b8c10d"
+      },
+      {
+        "label": "Music",
+        "color": "#0d92c1"
+      }
+    ],
+    "is_official": false
   }
 ]
