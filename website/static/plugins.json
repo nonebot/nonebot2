@@ -3485,5 +3485,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chatgpt",
+    "project_link": "nonebot-plugin-chatgpt",
+    "name": "ChatGPT",
+    "desc": "AI 聊天对话",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-chatgpt",
+    "tags": [],
+    "is_official": false
   }
 ]
