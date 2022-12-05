@@ -3495,5 +3495,20 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-chatgpt",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_majsoul",
+    "project_link": "nonebot-plugin-majsoul",
+    "name": "雀魂信息查询",
+    "desc": "根据牌谱屋的数据查询雀魂账号信息",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/ssttkkl/nonebot-plugin-majsoul",
+    "tags": [
+      {
+        "label": "t:majsoul",
+        "color": "#e54141"
+      }
+    ],
+    "is_official": false
   }
 ]
