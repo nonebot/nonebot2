@@ -3495,5 +3495,24 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-chatgpt",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_openai",
+    "project_link": "nonebot-plugin-openai",
+    "name": "基于OpenAI的AI聊天",
+    "desc": "另一个AI聊天对话",
+    "author": "InariInDream",
+    "homepage": "https://github.com/InariInDream/nonebot_plugin_openai",
+    "tags": [
+      {
+        "label": "AI聊天",
+        "color": "#3b5fdd"
+      },
+      {
+        "label": "chat",
+        "color": "#62e8d0"
+      }
+    ],
+    "is_official": false
   }
 ]
