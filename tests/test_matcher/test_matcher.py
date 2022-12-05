@@ -188,7 +188,7 @@ async def test_expire(app: App, load_plugin):
         bot = ctx.create_bot()
         assert test_temp_matcher in matchers[test_temp_matcher.priority]
         await _check_matcher(
-            test_temp_matcher.priority, test_temp_matcher, bot, event, {}
+            test_temp_matcher, bot, event, {}
         )
         assert test_temp_matcher not in matchers[test_temp_matcher.priority]
 
@@ -197,7 +197,7 @@ async def test_expire(app: App, load_plugin):
         bot = ctx.create_bot()
         assert test_datetime_matcher in matchers[test_datetime_matcher.priority]
         await _check_matcher(
-            test_datetime_matcher.priority, test_datetime_matcher, bot, event, {}
+            test_datetime_matcher, bot, event, {}
         )
         assert test_datetime_matcher not in matchers[test_datetime_matcher.priority]
 
@@ -206,6 +206,6 @@ async def test_expire(app: App, load_plugin):
         bot = ctx.create_bot()
         assert test_timedelta_matcher in matchers[test_timedelta_matcher.priority]
         await _check_matcher(
-            test_timedelta_matcher.priority, test_timedelta_matcher, bot, event, {}
+            test_timedelta_matcher, bot, event, {}
         )
         assert test_timedelta_matcher not in matchers[test_timedelta_matcher.priority]
