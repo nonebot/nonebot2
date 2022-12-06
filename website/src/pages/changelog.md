@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 图片背景消除 [@yanyongyu](https://github.com/yanyongyu) ([#1446](https://github.com/nonebot/nonebot2/pull/1446))
 - Plugin: 雀魂信息查询 [@yanyongyu](https://github.com/yanyongyu) ([#1443](https://github.com/nonebot/nonebot2/pull/1443))
 - Plugin: ChatGPT [@yanyongyu](https://github.com/yanyongyu) ([#1439](https://github.com/nonebot/nonebot2/pull/1439))
 - Plugin: 免费快捷点歌插件 [@yanyongyu](https://github.com/yanyongyu) ([#1436](https://github.com/nonebot/nonebot2/pull/1436))
