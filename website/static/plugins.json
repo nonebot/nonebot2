@@ -3510,5 +3510,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_remove_bg",
+    "project_link": "nonebot-plugin-remove-bg",
+    "name": "图片背景消除",
+    "desc": "适用于onebot v11的基于remove.bg的图片背景消除插件",
+    "author": "Ikaros-521",
+    "homepage": "https://github.com/Ikaros-521/nonebot_plugin_remove_bg",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:img",
+        "color": "#111111"
+      },
+      {
+        "label": "t:removeBG",
+        "color": "#7a7a7a"
+      }
+    ],
+    "is_official": false
   }
 ]
