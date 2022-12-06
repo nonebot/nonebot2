@@ -248,6 +248,11 @@ class Matcher(metaclass=MatcherMeta):
         return NewMatcher
 
     @classmethod
+    def destroy(cls) -> None:
+        """销毁当前的事件响应器"""
+        matchers[cls.priority].remove(cls)
+
+    @classmethod
     async def check_perm(
         cls,
         bot: Bot,

@@ -112,7 +112,6 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
 
 
 async def _check_matcher(
-    priority: int,
     Matcher: Type[Matcher],
     bot: "Bot",
     event: "Event",
@@ -122,7 +121,7 @@ async def _check_matcher(
 ) -> None:
     if Matcher.expire_time and datetime.now() > Matcher.expire_time:
         with contextlib.suppress(Exception):
-            matchers[priority].remove(Matcher)
+            Matcher.destroy()
         return
 
     try:
@@ -138,7 +137,7 @@ async def _check_matcher(
 
     if Matcher.temp:
         with contextlib.suppress(Exception):
-            matchers[priority].remove(Matcher)
+            Matcher.destroy()
     await _run_matcher(Matcher, bot, event, state, stack, dependency_cache)
 
 
@@ -294,7 +293,7 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
 
             pending_tasks = [
                 _check_matcher(
-                    priority, matcher, bot, event, state.copy(), stack, dependency_cache
+                    matcher, bot, event, state.copy(), stack, dependency_cache
                 )
                 for matcher in matchers[priority]
             ]
