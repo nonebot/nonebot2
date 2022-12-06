@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 支持主动销毁事件响应器 [@A-kirami](https://github.com/A-kirami) ([#1444](https://github.com/nonebot/nonebot2/pull/1444))
+
 ### 🐛 Bug 修复
 
 - Fix: 修复 ArgumentParser 错误信息叠加问题 [@yanyongyu](https://github.com/yanyongyu) ([#1426](https://github.com/nonebot/nonebot2/pull/1426))
