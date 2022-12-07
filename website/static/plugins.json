@@ -3533,5 +3533,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_broadcast",
+    "project_link": "nonebot-plugin-broadcast",
+    "name": "全群广播",
+    "desc": "将你的消息广播到全部群聊中",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-broadcast",
+    "tags": [],
+    "is_official": false
   }
 ]
