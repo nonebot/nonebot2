@@ -11,7 +11,7 @@ NoneBot 使用 [Loguru](https://loguru.readthedocs.io/) 进行日志记录，并
 
 NoneBot 启动时会添加一个默认的日志 handler。此 handler 将会将日志输出到 **stdout**，并且根据配置的日志级别进行过滤。
 
-[默认格式](../api/log.md#default_format)):
+[默认格式](../api/log.md#default_format):
 
 ```python
 default_format: str = (
