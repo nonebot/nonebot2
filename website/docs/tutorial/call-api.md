@@ -29,7 +29,7 @@ bot = get_bot("bot_id")  # 获取指定 bot_id 的 bot 实例
 from nonebot.adapters import Bot
 
 async def handle_func(bot: Bot):  # 通过依赖注入获取 bot 实例
-    ......
+    ...
 ```
 
 ## 调用 API
