@@ -17,11 +17,12 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 移除文档 `自定义日志` 中多余的符号 [@A-kirami](https://github.com/A-kirami) ([#1448](https://github.com/nonebot/nonebot2/pull/1448))
+- Docs: 完善 `调用平台 API` 部分 [@A-kirami](https://github.com/A-kirami) ([#1447](https://github.com/nonebot/nonebot2/pull/1447))
 - Docs: 修正文档中部分配置文件示例的符号误用 [@MingxuanGame](https://github.com/MingxuanGame) ([#1432](https://github.com/nonebot/nonebot2/pull/1432))
 
 ### 💫 杂项
 
-- Docs: 完善 `调用平台 API` 部分 [@A-kirami](https://github.com/A-kirami) ([#1447](https://github.com/nonebot/nonebot2/pull/1447))
 - Plugin: 更新 ayaka_games 介绍 [@bridgeL](https://github.com/bridgeL) ([#1431](https://github.com/nonebot/nonebot2/pull/1431))
 - Plugin: 修改 novelai send magiadice 插件模块名 [@sena-nana](https://github.com/sena-nana) ([#1423](https://github.com/nonebot/nonebot2/pull/1423))
 
