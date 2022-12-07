@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Docs: 完善 `调用平台 API` 部分 [@A-kirami](https://github.com/A-kirami) ([#1447](https://github.com/nonebot/nonebot2/pull/1447))
 - Plugin: 更新 ayaka_games 介绍 [@bridgeL](https://github.com/bridgeL) ([#1431](https://github.com/nonebot/nonebot2/pull/1431))
 - Plugin: 修改 novelai send magiadice 插件模块名 [@sena-nana](https://github.com/sena-nana) ([#1423](https://github.com/nonebot/nonebot2/pull/1423))
 
