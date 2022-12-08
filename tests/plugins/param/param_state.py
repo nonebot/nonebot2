@@ -1,5 +1,4 @@
-from re import Match
-from typing import List, Tuple
+from typing import List, Match, Tuple
 
 from nonebot.typing import T_State
 from nonebot.adapters import Message

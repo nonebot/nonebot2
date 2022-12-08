@@ -328,7 +328,7 @@ async def _(foo: List[Union[str, MessageSegment]] = ShellCommandArgv()): ...
 ```python {7}
 from nonebot import on_regex
 from nonebot.params import RegexMatched
-from re import Match
+from typing import Match
 
 matcher = on_regex("regex")
 

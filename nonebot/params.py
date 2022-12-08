@@ -5,8 +5,7 @@ FrontMatter:
     description: nonebot.params 模块
 """
 
-from re import Match
-from typing import Any, Dict, List, Tuple, Union, Optional
+from typing import Any, Dict, List, Match, Tuple, Union, Optional
 
 from nonebot.typing import T_State
 from nonebot.matcher import Matcher

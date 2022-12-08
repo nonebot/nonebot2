@@ -1,6 +1,6 @@
 import re
 import sys
-from typing import Dict, Tuple, Union, Optional
+from typing import Dict, Match, Tuple, Union, Optional
 
 import pytest
 from nonebug import App
@@ -350,7 +350,7 @@ async def test_regex(
     type: str,
     text: Optional[str],
     expected: bool,
-    matched: Optional[re.Match[str]],
+    matched: Optional[Match[str]],
     group: Optional[Tuple[str, ...]],
     dict: Optional[Dict[str, str]],
 ):
