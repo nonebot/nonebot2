@@ -3543,5 +3543,15 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-broadcast",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_exchangerate",
+    "project_link": "nonebot-plugin-exchangerate",
+    "name": "汇率换算",
+    "desc": "支持汇率换算与汇率查询",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-exchangerate",
+    "tags": [],
+    "is_official": false
   }
 ]
