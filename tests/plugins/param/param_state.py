@@ -1,3 +1,4 @@
+from re import Match
 from typing import List, Tuple
 
 from nonebot.typing import T_State
@@ -67,7 +68,7 @@ async def regex_group(regex_group: Tuple = RegexGroup()) -> Tuple:
     return regex_group
 
 
-async def regex_matched(regex_matched: str = RegexMatched()) -> str:
+async def regex_matched(regex_matched: Match[str] = RegexMatched()) -> Match[str]:
     return regex_matched
 
 

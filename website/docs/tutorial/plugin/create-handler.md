@@ -328,11 +328,12 @@ async def _(foo: List[Union[str, MessageSegment]] = ShellCommandArgv()): ...
 ```python {7}
 from nonebot import on_regex
 from nonebot.params import RegexMatched
+from re import Match
 
 matcher = on_regex("regex")
 
 @matcher.handle()
-async def _(foo: str = RegexMatched()): ...
+async def _(foo: Match[str] = RegexMatched()): ...
 ```
 
 ### RegexGroup

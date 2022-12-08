@@ -1,3 +1,5 @@
+import re
+
 import pytest
 from nonebug import App
 
@@ -206,7 +208,7 @@ async def test_state(app: App, load_plugin):
         },
         SHELL_ARGV: ["-h"],
         SHELL_ARGS: {"help": True},
-        REGEX_MATCHED: "[cq:test,arg=value]",
+        REGEX_MATCHED: re.search(r"", "[cq:test,arg=value]"),
         REGEX_GROUP: ("test", "arg=value"),
         REGEX_DICT: {"type": "test", "arg": "value"},
         STARTSWITH_KEY: "startswith",

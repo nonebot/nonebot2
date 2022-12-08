@@ -615,7 +615,7 @@ class RegexRule:
         except Exception:
             return False
         if matched := re.search(self.regex, str(msg), self.flags):
-            state[REGEX_MATCHED] = matched.group()
+            state[REGEX_MATCHED] = matched
             state[REGEX_GROUP] = matched.groups()
             state[REGEX_DICT] = matched.groupdict()
             return True
@@ -626,7 +626,7 @@ class RegexRule:
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     """匹配符合正则表达式的消息字符串。
 
-    可以通过 {ref}`nonebot.params.RegexMatched` 获取匹配成功的字符串，
+    可以通过 {ref}`nonebot.params.RegexMatched` 获取匹配成功的 Match 对象，
     通过 {ref}`nonebot.params.RegexGroup` 获取匹配成功的 group 元组，
     通过 {ref}`nonebot.params.RegexDict` 获取匹配成功的 group 字典。
 

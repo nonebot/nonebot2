@@ -5,6 +5,7 @@ FrontMatter:
     description: nonebot.params 模块
 """
 
+from re import Match
 from typing import Any, Dict, List, Tuple, Union, Optional
 
 from nonebot.typing import T_State
@@ -130,11 +131,11 @@ def ShellCommandArgv() -> Any:
     return Depends(_shell_command_argv, use_cache=False)
 
 
-def _regex_matched(state: T_State) -> str:
+def _regex_matched(state: T_State) -> Match[str]:
     return state[REGEX_MATCHED]
 
 
-def RegexMatched() -> str:
+def RegexMatched() -> Match[str]:
     """正则匹配结果"""
     return Depends(_regex_matched, use_cache=False)
 

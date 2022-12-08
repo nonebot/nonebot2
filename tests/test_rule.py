@@ -1,3 +1,4 @@
+import re
 import sys
 from typing import Dict, Tuple, Union, Optional
 
@@ -335,7 +336,7 @@ async def test_shell_command(app: App):
             "message",
             "_key1_",
             True,
-            "key1",
+            re.search(r"(?P<key>key\d)", "_key1_"),
             ("key1",),
             {"key": "key1"},
         ),
@@ -349,7 +350,7 @@ async def test_regex(
     type: str,
     text: Optional[str],
     expected: bool,
-    matched: Optional[str],
+    matched: Optional[re.Match[str]],
     group: Optional[Tuple[str, ...]],
     dict: Optional[Dict[str, str]],
 ):
@@ -368,7 +369,7 @@ async def test_regex(
     event = make_fake_event(_type=type, _message=message)()
     state = {}
     assert await dependent(event=event, state=state) == expected
-    assert state.get(REGEX_MATCHED) == matched
+    assert str(state.get(REGEX_MATCHED)) == str(matched)
     assert state.get(REGEX_GROUP) == group
     assert state.get(REGEX_DICT) == dict
 
