@@ -328,7 +328,7 @@ async def test_shell_command(app: App):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "pattern,type,text,expected,matched,group,dict",
+    "pattern,type,text,expected,matched,string,group,dict",
     [
         (
             r"(?P<key>key\d)",
@@ -336,11 +336,12 @@ async def test_shell_command(app: App):
             "_key1_",
             True,
             "key1",
+            "key1",
             ("key1",),
             {"key": "key1"},
         ),
-        (r"foo", "message", None, False, None, None, None),
-        (r"foo", "notice", "foo", False, None, None, None),
+        (r"foo", "message", None, False, None, None, None, None),
+        (r"foo", "notice", "foo", False, None, None, None, None),
     ],
 )
 async def test_regex(
@@ -350,12 +351,13 @@ async def test_regex(
     text: Optional[str],
     expected: bool,
     matched: Optional[str],
+    string: Optional[str],
     group: Optional[Tuple[str, ...]],
     dict: Optional[Dict[str, str]],
 ):
     from nonebot.typing import T_State
     from nonebot.rule import RegexRule, regex
-    from nonebot.consts import REGEX_DICT, REGEX_GROUP, REGEX_MATCHED
+    from nonebot.consts import REGEX_STR, REGEX_DICT, REGEX_GROUP, REGEX_MATCHED
 
     test_regex = regex(pattern)
     dependent = list(test_regex.checkers)[0]
@@ -369,6 +371,7 @@ async def test_regex(
     state = {}
     assert await dependent(event=event, state=state) == expected
     assert state.get(REGEX_MATCHED) == matched
+    assert state.get(REGEX_STR) == string
     assert state.get(REGEX_GROUP) == group
     assert state.get(REGEX_DICT) == dict
 

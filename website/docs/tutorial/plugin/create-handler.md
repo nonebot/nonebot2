@@ -321,18 +321,18 @@ matcher = on_shell_command("cmd")
 async def _(foo: List[Union[str, MessageSegment]] = ShellCommandArgv()): ...
 ```
 
-### RegexMatched
+### RegexStr
 
-获取正则匹配结果。
+获取正则匹配结果的文本。
 
 ```python {7}
 from nonebot import on_regex
-from nonebot.params import RegexMatched
+from nonebot.params import RegexStr
 
 matcher = on_regex("regex")
 
 @matcher.handle()
-async def _(foo: str = RegexMatched()): ...
+async def _(foo: str = RegexStr()): ...
 ```
 
 ### RegexGroup
