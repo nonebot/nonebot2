@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Fix: 补充 `params` 模块的类型注解 [@A-kirami](https://github.com/A-kirami) ([#1458](https://github.com/nonebot/nonebot2/pull/1458))
 - Docs: 移除文档 `自定义日志` 中多余的符号 [@A-kirami](https://github.com/A-kirami) ([#1448](https://github.com/nonebot/nonebot2/pull/1448))
 - Docs: 完善 `调用平台 API` 部分 [@A-kirami](https://github.com/A-kirami) ([#1447](https://github.com/nonebot/nonebot2/pull/1447))
 - Docs: 修正文档中部分配置文件示例的符号误用 [@MingxuanGame](https://github.com/MingxuanGame) ([#1432](https://github.com/nonebot/nonebot2/pull/1432))
