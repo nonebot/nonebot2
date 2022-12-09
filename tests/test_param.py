@@ -163,6 +163,7 @@ async def test_state(app: App, load_plugin):
     from nonebot.params import StateParam, DependParam
     from nonebot.consts import (
         CMD_KEY,
+        REGEX_STR,
         PREFIX_KEY,
         REGEX_DICT,
         SHELL_ARGS,
@@ -183,6 +184,7 @@ async def test_state(app: App, load_plugin):
         keyword,
         endswith,
         fullmatch,
+        regex_str,
         regex_dict,
         startswith,
         command_arg,
@@ -207,6 +209,7 @@ async def test_state(app: App, load_plugin):
         SHELL_ARGV: ["-h"],
         SHELL_ARGS: {"help": True},
         REGEX_MATCHED: "[cq:test,arg=value]",
+        REGEX_STR: "[cq:test,arg=value]",
         REGEX_GROUP: ("test", "arg=value"),
         REGEX_DICT: {"type": "test", "arg": "value"},
         STARTSWITH_KEY: "startswith",
@@ -270,6 +273,12 @@ async def test_state(app: App, load_plugin):
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[REGEX_MATCHED])
+        
+    async with app.test_dependent(
+        regex_str, allow_types=[StateParam, DependParam]
+    ) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state[REGEX_STR])
 
     async with app.test_dependent(
         regex_group, allow_types=[StateParam, DependParam]

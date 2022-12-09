@@ -38,6 +38,8 @@ SHELL_ARGV: Literal["_argv"] = "_argv"
 
 REGEX_MATCHED: Literal["_matched"] = "_matched"
 """正则匹配结果存储 key"""
+REGEX_STR: Literal["_matched_str"] = "_matched_str"
+"""正则匹配文本存储 key"""
 REGEX_GROUP: Literal["_matched_groups"] = "_matched_groups"
 """正则匹配 group 元组存储 key"""
 REGEX_DICT: Literal["_matched_dict"] = "_matched_dict"
