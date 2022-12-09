@@ -273,7 +273,7 @@ async def test_state(app: App, load_plugin):
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[REGEX_MATCHED])
-        
+
     async with app.test_dependent(
         regex_str, allow_types=[StateParam, DependParam]
     ) as ctx:
