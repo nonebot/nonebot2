@@ -139,8 +139,9 @@ def _regex_matched(state: T_State) -> str:
 def RegexMatched() -> str:
     """正则匹配结果"""
     warnings.warn(
-        "nonebot.params.RegexMatched() will be changed to `re.Match` object, use nonebot.params.RegexStr()."
-        "See https://github.com/nonebot/nonebot2/pull/1453.",
+        '"RegexMatched()" will be changed to "re.Match" object, '
+        'use "RegexStr()" instead. '
+        "See https://github.com/nonebot/nonebot2/pull/1453 .",
         DeprecationWarning,
     )
     return Depends(_regex_matched, use_cache=False)
