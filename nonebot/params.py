@@ -156,7 +156,7 @@ def RegexStr() -> str:
     return Depends(_regex_str, use_cache=False)
 
 
-def _regex_group(state: T_State):
+def _regex_group(state: T_State) -> Tuple[Any, ...]:
     return state[REGEX_GROUP]
 
 
@@ -165,7 +165,7 @@ def RegexGroup() -> Tuple[Any, ...]:
     return Depends(_regex_group, use_cache=False)
 
 
-def _regex_dict(state: T_State):
+def _regex_dict(state: T_State) -> Dict[str, Any]:
     return state[REGEX_DICT]
 
 
@@ -213,7 +213,7 @@ def Keyword() -> str:
 def Received(id: Optional[str] = None, default: Any = None) -> Any:
     """`receive` 事件参数"""
 
-    def _received(matcher: "Matcher"):
+    def _received(matcher: "Matcher") -> Any:
         return matcher.get_receive(id or "", default)
 
     return Depends(_received, use_cache=False)
