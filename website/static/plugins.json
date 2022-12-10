@@ -3553,5 +3553,20 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-exchangerate",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_access_control",
+    "project_link": "nonebot-plugin-access-control",
+    "name": "权限控制",
+    "desc": "支持功能级别的细粒度权限控制，对未适配插件也支持插件级别的权限控制",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/ssttkkl/nonebot-plugin-access-control",
+    "tags": [
+      {
+        "label": "t:权限控制",
+        "color": "#0e9763"
+      }
+    ],
+    "is_official": false
   }
 ]
