@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 权限控制 [@yanyongyu](https://github.com/yanyongyu) ([#1464](https://github.com/nonebot/nonebot2/pull/1464))
 - Plugin: 汇率换算 [@yanyongyu](https://github.com/yanyongyu) ([#1452](https://github.com/nonebot/nonebot2/pull/1452))
 - Plugin: 全群广播 [@yanyongyu](https://github.com/yanyongyu) ([#1450](https://github.com/nonebot/nonebot2/pull/1450))
 - Plugin: 图片背景消除 [@yanyongyu](https://github.com/yanyongyu) ([#1446](https://github.com/nonebot/nonebot2/pull/1446))
