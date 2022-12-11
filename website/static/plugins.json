@@ -3578,5 +3578,28 @@
     "homepage": "https://github.com/chrisyy2003/lingyin-bot/tree/main/plugins/chatGPT",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_colormind",
+    "project_link": "nonebot-plugin-colormind",
+    "name": "随机配色方案",
+    "desc": "调用colormind.io的API随机获取一种配色方案",
+    "author": "Ikaros-521",
+    "homepage": "https://github.com/Ikaros-521/nonebot_plugin_colormind",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "t:color",
+        "color": "#ffffff"
+      },
+      {
+        "label": "t:配色",
+        "color": "#fbff03"
+      }
+    ],
+    "is_official": false
   }
 ]
