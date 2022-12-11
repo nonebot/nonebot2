@@ -3568,5 +3568,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_multi_chatgpt",
+    "project_link": "nonebot-plugin-multi-chatgpt",
+    "name": "multi-ChatGPT",
+    "desc": "多账户的ChatGPT插件",
+    "author": "chrisyy2003",
+    "homepage": "https://github.com/chrisyy2003/lingyin-bot/tree/main/plugins/chatGPT",
+    "tags": [],
+    "is_official": false
   }
 ]
