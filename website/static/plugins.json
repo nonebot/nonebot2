@@ -3601,5 +3601,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_kuma_san",
+    "project_link": "nonebot-plugin-kuma-san",
+    "name": "熊老板",
+    "desc": "一个获取斯普拉遁3场地信息用的nonebot插件",
+    "author": "ReiiNoki",
+    "homepage": "https://github.com/ReiiNoki/nonebot-plugin-kuma-san",
+    "tags": [],
+    "is_official": false
   }
 ]
