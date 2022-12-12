@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 随机配色方案 [@yanyongyu](https://github.com/yanyongyu) ([#1466](https://github.com/nonebot/nonebot2/pull/1466))
 - Plugin: multi-ChatGPT [@yanyongyu](https://github.com/yanyongyu) ([#1462](https://github.com/nonebot/nonebot2/pull/1462))
 - Plugin: 权限控制 [@yanyongyu](https://github.com/yanyongyu) ([#1464](https://github.com/nonebot/nonebot2/pull/1464))
 - Plugin: 汇率换算 [@yanyongyu](https://github.com/yanyongyu) ([#1452](https://github.com/nonebot/nonebot2/pull/1452))
