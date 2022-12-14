@@ -3601,5 +3601,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_idiom",
+    "project_link": "nonebot-plugin-idiom",
+    "name": "nonebot_plugin_idiom",
+    "desc": "成语接龙",
+    "author": "wsdtl",
+    "homepage": "https://github.com/wsdtl/nonebot_plugin_Idiom",
+    "tags": [],
+    "is_official": false
   }
 ]
