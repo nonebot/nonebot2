@@ -3630,5 +3630,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_backup",
+    "project_link": "nonebot-plugin-backup",
+    "name": "QQ群文件备份",
+    "desc": "备份qq群文件",
+    "author": "Yuelioi",
+    "homepage": "https://github.com/Yuelioi/nonebot-plugin-backup",
+    "tags": [],
+    "is_official": false
   }
 ]
