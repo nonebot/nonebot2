@@ -31,6 +31,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 熊老板 [@yanyongyu](https://github.com/yanyongyu) ([#1472](https://github.com/nonebot/nonebot2/pull/1472))
 - Plugin: QQ 群文件备份 [@yanyongyu](https://github.com/yanyongyu) ([#1478](https://github.com/nonebot/nonebot2/pull/1478))
 - Plugin: 戒色打卡日记 [@yanyongyu](https://github.com/yanyongyu) ([#1475](https://github.com/nonebot/nonebot2/pull/1475))
 - Plugin: nonebot_plugin_idiom [@yanyongyu](https://github.com/yanyongyu) ([#1469](https://github.com/nonebot/nonebot2/pull/1469))
