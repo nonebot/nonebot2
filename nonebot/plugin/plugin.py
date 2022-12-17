@@ -12,7 +12,8 @@ from pydantic import BaseModel
 
 from nonebot.matcher import Matcher
 
-from . import _plugins as plugins  # FIXME: backport for nonebug
+# FIXME: backport for nonebug
+from . import _plugins as plugins  # nopycln: import
 
 if TYPE_CHECKING:
     from .manager import PluginManager
