@@ -439,7 +439,7 @@ def on_regex(
 
 
 def on_type(
-    types: Union[Type[Event], Tuple[Type[Event]]],
+    types: Union[Type[Event], Tuple[Type[Event], ...]],
     rule: Optional[Union[Rule, T_RuleChecker]] = None,
     *,
     _depth: int = 0,
