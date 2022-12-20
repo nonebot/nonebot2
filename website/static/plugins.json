@@ -3660,5 +3660,15 @@
     "homepage": "https://github.com/chrisyy2003/lingyin-bot/tree/main/plugins/gpt3",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ikun_evolution",
+    "project_link": "nonebot-plugin-ikun-evolution",
+    "name": "只因进化录",
+    "desc": "q群挂机小游戏。开局一只因，进化全靠吞",
+    "author": "RShock",
+    "homepage": "https://github.com/RShock/nonebot_plugin_ikun_evolution",
+    "tags": [],
+    "is_official": false
   }
 ]
