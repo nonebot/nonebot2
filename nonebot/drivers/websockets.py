@@ -70,7 +70,7 @@ class Mixin(ForwardMixin):
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
         connection = Connect(
             str(setup.url),
-            extra_headers=setup.headers.items(),
+            extra_headers={**setup.headers, **setup.cookies.as_header(setup)},
             open_timeout=setup.timeout,
         )
         async with connection as ws:
@@ -101,8 +101,7 @@ class WebSocket(BaseWebSocket):
     @overrides(BaseWebSocket)
     @catch_closed
     async def receive(self) -> Union[str, bytes]:
-        msg = await self.websocket.recv()
-        return msg
+        return await self.websocket.recv()
 
     @overrides(BaseWebSocket)
     @catch_closed

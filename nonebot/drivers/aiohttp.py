@@ -56,7 +56,13 @@ class Mixin(ForwardMixin):
             files = aiohttp.FormData()
             for name, file in setup.files:
                 files.add_field(name, file[1], content_type=file[2], filename=file[0])
-        async with aiohttp.ClientSession(version=version, trust_env=True) as session:
+
+        cookies = {
+            cookie.name: cookie.value for cookie in setup.cookies if cookie.value
+        }
+        async with aiohttp.ClientSession(
+            cookies=cookies, version=version, trust_env=True
+        ) as session:
             async with session.request(
                 setup.method,
                 setup.url,
@@ -66,13 +72,12 @@ class Mixin(ForwardMixin):
                 timeout=timeout,
                 proxy=setup.proxy,
             ) as response:
-                res = Response(
+                return Response(
                     response.status,
                     headers=response.headers.copy(),
                     content=await response.read(),
                     request=setup,
                 )
-                return res
 
     @overrides(ForwardMixin)
     @asynccontextmanager
@@ -92,8 +97,7 @@ class Mixin(ForwardMixin):
                 headers=setup.headers,
                 proxy=setup.proxy,
             ) as ws:
-                websocket = WebSocket(request=setup, session=session, websocket=ws)
-                yield websocket
+                yield WebSocket(request=setup, session=session, websocket=ws)
 
 
 class WebSocket(BaseWebSocket):

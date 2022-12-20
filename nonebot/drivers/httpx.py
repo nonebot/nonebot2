@@ -48,17 +48,18 @@ class Mixin(ForwardMixin):
     @overrides(ForwardMixin)
     async def request(self, setup: Request) -> Response:
         async with httpx.AsyncClient(
+            cookies=setup.cookies.jar,
             http2=setup.version == HTTPVersion.H2,
-            proxies=setup.proxy,  # type: ignore
+            proxies=setup.proxy,
             follow_redirects=True,
         ) as client:
             response = await client.request(
                 setup.method,
                 str(setup.url),
-                content=setup.content,  # type: ignore
-                data=setup.data,  # type: ignore
+                content=setup.content,
+                data=setup.data,
                 json=setup.json,
-                files=setup.files,  # type: ignore
+                files=setup.files,
                 headers=tuple(setup.headers.items()),
                 timeout=setup.timeout,
             )
