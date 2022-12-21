@@ -12,6 +12,7 @@ import re
 import shlex
 from argparse import Action
 from argparse import ArgumentError
+from contextvars import ContextVar
 from itertools import chain, product
 from argparse import Namespace as Namespace
 from argparse import ArgumentParser as ArgParser
@@ -42,6 +43,7 @@ from nonebot.params import Command, EventToMe, CommandArg
 from nonebot.adapters import Bot, Event, Message, MessageSegment
 from nonebot.consts import (
     CMD_KEY,
+    REGEX_STR,
     PREFIX_KEY,
     REGEX_DICT,
     SHELL_ARGS,
@@ -72,6 +74,8 @@ CMD_RESULT = TypedDict(
 TRIE_VALUE = NamedTuple(
     "TRIE_VALUE", [("command_start", str), ("command", Tuple[str, ...])]
 )
+
+parser_message: ContextVar[str] = ContextVar("parser_message")
 
 
 class TrieRule:
@@ -446,13 +450,15 @@ class ArgumentParser(ArgParser):
         )
 
     def _print_message(self, message: str, file: Optional[IO[str]] = None):
-        if message:
-            setattr(self, "_message", getattr(self, "_message", "") + message)
+        if (msg := parser_message.get(None)) is not None:
+            parser_message.set(msg + message)
+        else:
+            super()._print_message(message, file)
 
     def exit(self, status: int = 0, message: Optional[str] = None):
         if message:
             self._print_message(message)
-        raise ParserExit(status=status, message=getattr(self, "_message", None))
+        raise ParserExit(status=status, message=parser_message.get(None))
 
 
 class ShellCommandRule:
@@ -499,6 +505,7 @@ class ShellCommandRule:
         )
 
         if self.parser:
+            t = parser_message.set("")
             try:
                 args = self.parser.parse_args(state[SHELL_ARGV])
                 state[SHELL_ARGS] = args
@@ -506,6 +513,8 @@ class ShellCommandRule:
                 state[SHELL_ARGS] = ParserExit(status=2, message=str(e))
             except ParserExit as e:
                 state[SHELL_ARGS] = e
+            finally:
+                parser_message.reset(t)
         return True
 
 
@@ -608,6 +617,7 @@ class RegexRule:
             return False
         if matched := re.search(self.regex, str(msg), self.flags):
             state[REGEX_MATCHED] = matched.group()
+            state[REGEX_STR] = matched.group()
             state[REGEX_GROUP] = matched.groups()
             state[REGEX_DICT] = matched.groupdict()
             return True
@@ -618,7 +628,7 @@ class RegexRule:
 def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     """匹配符合正则表达式的消息字符串。
 
-    可以通过 {ref}`nonebot.params.RegexMatched` 获取匹配成功的字符串，
+    可以通过 {ref}`nonebot.params.RegexStr` 获取匹配成功的字符串，
     通过 {ref}`nonebot.params.RegexGroup` 获取匹配成功的 group 元组，
     通过 {ref}`nonebot.params.RegexDict` 获取匹配成功的 group 字典。
 

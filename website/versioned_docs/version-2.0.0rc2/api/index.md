@@ -170,7 +170,7 @@ description: nonebot 模块
 
 - **参数**
 
-  - `_env_file` (str | None): 配置文件名，默认从 `.env.{env_name}` 中读取配置
+  - `_env_file` (str | os.PathLike | list[str | os.PathLike] | tuple[str | os.PathLike, ...] | NoneType): 配置文件名，默认从 `.env.{env_name}` 中读取配置
 
   - `**kwargs` (Any): 任意变量，将会存储到 {ref}`nonebot.drivers.Driver.config` 对象里
 

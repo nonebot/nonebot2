@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot2"
-version = "2.0.0-rc.1"
+version = "2.0.0rc2"
 description = "An asynchronous python bot framework."
 authors = ["yanyongyu <yyy@nonebot.dev>"]
 license = "MIT"
@@ -26,25 +26,31 @@ python = "^3.8"
 yarl = "^1.7.2"
 loguru = "^0.6.0"
 pygtrie = "^2.4.1"
-fastapi = "^0.79.0"
+fastapi = ">=0.87.0,<1.0.0"
 tomlkit = ">=0.10.0,<1.0.0"
 typing-extensions = ">=3.10.0,<5.0.0"
-Quart = { version = "^0.17.0", optional = true }
-websockets = { version="^10.0", optional = true }
 pydantic = { version = "^1.10.0", extras = ["dotenv"] }
-uvicorn = { version = "^0.18.0", extras = ["standard"] }
-aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
-httpx = { version = ">=0.20.0, <1.0.0", extras = ["http2"], optional = true }
+uvicorn = { version = ">=0.20.0,<1.0.0", extras = ["standard"] }
 
-[tool.poetry.dev-dependencies]
+websockets = { version="^10.0", optional = true }
+Quart = { version = ">=0.18.0,<1.0.0", optional = true }
+aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
+httpx = { version = ">=0.20.0,<1.0.0", extras = ["http2"], optional = true }
+
+[tool.poetry.group.dev.dependencies]
+pycln = "^2.1.2"
 isort = "^5.10.1"
 black = "^22.1.0"
 nonemoji = "^0.1.2"
-pytest-cov = "^3.0.0"
 pre-commit = "^2.16.0"
-pytest-xdist = "^2.5.0"
-pytest-asyncio = "^0.19.0"
+
+[tool.poetry.group.test.dependencies]
+pytest-cov = "^4.0.0"
+pytest-xdist = "^3.0.2"
+pytest-asyncio = "^0.20.0"
 nonebug = { git = "https://github.com/nonebot/nonebug.git" }
+
+[tool.poetry.group.docs.dependencies]
 nb-autodoc = { git = "https://github.com/nonebot/nb-autodoc.git" }
 
 [tool.poetry.extras]
@@ -64,7 +70,7 @@ filterwarnings = [
 
 [tool.black]
 line-length = 88
-target-version = ["py37", "py38", "py39", "py310"]
+target-version = ["py38", "py39", "py310", "py311"]
 include = '\.pyi?$'
 extend-exclude = '''
 '''
@@ -77,6 +83,13 @@ skip_gitignore = true
 force_sort_within_sections = true
 src_paths = ["nonebot", "tests"]
 extra_standard_library = ["typing_extensions"]
+
+[tool.pycln]
+path = "."
+all = false
+
+[tool.pyright]
+reportShadowedImports = false
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]

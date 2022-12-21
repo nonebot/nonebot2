@@ -96,3 +96,27 @@ description: nonebot.consts 模块
 - **类型:** Literal['_matched_dict']
 
 - **说明:** 正则匹配 group 字典存储 key
+
+## _var_ `STARTSWITH_KEY` {#STARTSWITH_KEY}
+
+- **类型:** Literal['_startswith']
+
+- **说明:** 响应触发前缀 key
+
+## _var_ `ENDSWITH_KEY` {#ENDSWITH_KEY}
+
+- **类型:** Literal['_endswith']
+
+- **说明:** 响应触发后缀 key
+
+## _var_ `FULLMATCH_KEY` {#FULLMATCH_KEY}
+
+- **类型:** Literal['_fullmatch']
+
+- **说明:** 响应触发完整消息 key
+
+## _var_ `KEYWORD_KEY` {#KEYWORD_KEY}
+
+- **类型:** Literal['_keyword']
+
+- **说明:** 响应触发关键字 key

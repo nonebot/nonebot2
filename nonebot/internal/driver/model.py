@@ -1,4 +1,5 @@
 import abc
+import urllib.request
 from enum import Enum
 from dataclasses import dataclass
 from http.cookiejar import Cookie, CookieJar
@@ -105,12 +106,9 @@ class Request:
         self.url: URL = url
 
         # headers
-        self.headers: CIMultiDict[str]
-        if headers is not None:
-            self.headers = CIMultiDict(headers)
-        else:
-            self.headers = CIMultiDict()
-
+        self.headers: CIMultiDict[str] = (
+            CIMultiDict(headers) if headers is not None else CIMultiDict()
+        )
         # cookies
         self.cookies = Cookies(cookies)
 
@@ -147,12 +145,9 @@ class Response:
         self.status_code: int = status_code
 
         # headers
-        self.headers: CIMultiDict[str]
-        if headers is not None:
-            self.headers = CIMultiDict(headers)
-        else:
-            self.headers = CIMultiDict()
-
+        self.headers: CIMultiDict[str] = (
+            CIMultiDict(headers) if headers is not None else CIMultiDict()
+        )
         # body
         self.content: ContentTypes = content
 
@@ -308,6 +303,11 @@ class Cookies(MutableMapping):
         for cookie in cookies.jar:
             self.jar.set_cookie(cookie)
 
+    def as_header(self, request: Request) -> Dict[str, str]:
+        urllib_request = self._CookieCompatRequest(request)
+        self.jar.add_cookie_header(urllib_request)
+        return urllib_request.added_headers
+
     def __setitem__(self, name: str, value: str) -> None:
         return self.set(name, value)
 
@@ -332,6 +332,20 @@ class Cookies(MutableMapping):
             for cookie in self.jar
         )
         return f"{self.__class__.__name__}({cookies_repr})"
+
+    class _CookieCompatRequest(urllib.request.Request):
+        def __init__(self, request: Request) -> None:
+            super().__init__(
+                url=str(request.url),
+                headers=dict(request.headers),
+                method=request.method,
+            )
+            self.request = request
+            self.added_headers: Dict[str, str] = {}
+
+        def add_unredirected_header(self, key: str, value: str) -> None:
+            super().add_unredirected_header(key, value)
+            self.added_headers[key] = value
 
 
 @dataclass

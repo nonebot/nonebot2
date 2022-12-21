@@ -21,7 +21,7 @@ NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及 [`pytho
 
 - **参数**
 
-  - `_env_file` (str | os.PathLike | NoneType)
+  - `_env_file` (str | os.PathLike | list[str | os.PathLike] | tuple[str | os.PathLike, ...] | NoneType)
 
   - `_env_file_encoding` (str | None)
 
@@ -56,7 +56,7 @@ NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及 [`pytho
 
 - **参数**
 
-  - `_env_file` (str | os.PathLike | NoneType)
+  - `_env_file` (str | os.PathLike | list[str | os.PathLike] | tuple[str | os.PathLike, ...] | NoneType)
 
   - `_env_file_encoding` (str | None)
 
@@ -72,7 +72,7 @@ NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及 [`pytho
 
   - `log_level` (int | str)
 
-  - `api_timeout` (float)
+  - `api_timeout` (float | None)
 
   - `superusers` (set[str])
 

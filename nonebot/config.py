@@ -9,7 +9,6 @@ FrontMatter:
     description: nonebot.config 模块
 """
 import os
-from pathlib import Path
 from datetime import timedelta
 from ipaddress import IPv4Address
 from typing import TYPE_CHECKING, Any, Set, Dict, Tuple, Union, Mapping, Optional

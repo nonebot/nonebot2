@@ -5,6 +5,7 @@ FrontMatter:
     description: nonebot.params 模块
 """
 
+import warnings
 from typing import Any, Dict, List, Tuple, Union, Optional
 
 from nonebot.typing import T_State
@@ -24,6 +25,7 @@ from nonebot.internal.params import MatcherParam as MatcherParam
 from nonebot.internal.params import ExceptionParam as ExceptionParam
 from nonebot.consts import (
     CMD_KEY,
+    REGEX_STR,
     PREFIX_KEY,
     REGEX_DICT,
     SHELL_ARGS,
@@ -136,10 +138,25 @@ def _regex_matched(state: T_State) -> str:
 
 def RegexMatched() -> str:
     """正则匹配结果"""
+    warnings.warn(
+        '"RegexMatched()" will be changed to "re.Match" object, '
+        'use "RegexStr()" instead. '
+        "See https://github.com/nonebot/nonebot2/pull/1453 .",
+        DeprecationWarning,
+    )
     return Depends(_regex_matched, use_cache=False)
 
 
-def _regex_group(state: T_State):
+def _regex_str(state: T_State) -> str:
+    return state[REGEX_STR]
+
+
+def RegexStr() -> str:
+    """正则匹配结果文本"""
+    return Depends(_regex_str, use_cache=False)
+
+
+def _regex_group(state: T_State) -> Tuple[Any, ...]:
     return state[REGEX_GROUP]
 
 
@@ -148,7 +165,7 @@ def RegexGroup() -> Tuple[Any, ...]:
     return Depends(_regex_group, use_cache=False)
 
 
-def _regex_dict(state: T_State):
+def _regex_dict(state: T_State) -> Dict[str, Any]:
     return state[REGEX_DICT]
 
 
@@ -196,7 +213,7 @@ def Keyword() -> str:
 def Received(id: Optional[str] = None, default: Any = None) -> Any:
     """`receive` 事件参数"""
 
-    def _received(matcher: "Matcher"):
+    def _received(matcher: "Matcher") -> Any:
         return matcher.get_receive(id or "", default)
 
     return Depends(_received, use_cache=False)

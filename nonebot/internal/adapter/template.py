@@ -49,11 +49,11 @@ class MessageTemplate(Formatter, Generic[TF]):
     ) -> None:
         ...
 
-    def __init__(  # type:ignore
-        self, template, factory=str
-    ) -> None:  # TODO: fix type hint here
-        self.template: TF = template
-        self.factory: Type[TF] = factory
+    def __init__(
+        self, template: Union[str, TM], factory: Union[Type[str], Type[TM]] = str
+    ) -> None:
+        self.template: TF = template  # type: ignore
+        self.factory: Type[TF] = factory  # type: ignore
         self.format_specs: Dict[str, FormatSpecFunc] = {}
 
     def __repr__(self) -> str:
@@ -98,7 +98,7 @@ class MessageTemplate(Formatter, Generic[TF]):
         else:
             raise TypeError("template must be a string or instance of Message!")
 
-        self.check_unused_args(list(used_args), args, kwargs)
+        self.check_unused_args(used_args, args, kwargs)
         return cast(TF, full_message)
 
     def vformat(

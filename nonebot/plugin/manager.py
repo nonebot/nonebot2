@@ -14,7 +14,7 @@ from itertools import chain
 from types import ModuleType
 from importlib.abc import MetaPathFinder
 from importlib.machinery import PathFinder, SourceFileLoader
-from typing import Set, Dict, List, Union, Iterable, Optional, Sequence
+from typing import Set, Dict, List, Iterable, Optional, Sequence
 
 from nonebot.log import logger
 from nonebot.utils import escape_tag, path_to_module_name
@@ -174,7 +174,7 @@ class PluginFinder(MetaPathFinder):
     def find_spec(
         self,
         fullname: str,
-        path: Optional[Sequence[Union[bytes, str]]],
+        path: Optional[Sequence[str]],
         target: Optional[ModuleType] = None,
     ):
         if _managers:

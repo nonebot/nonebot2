@@ -154,7 +154,7 @@ def on_regex(
     state: Optional[T_State] = ...,
 ) -> Type[Matcher]: ...
 def on_type(
-    types: Union[Type[Event], Tuple[Type[Event]]],
+    types: Union[Type[Event], Tuple[Type[Event], ...]],
     rule: Optional[Union[Rule, T_RuleChecker]] = ...,
     *,
     permission: Optional[Union[Permission, T_PermissionChecker]] = ...,

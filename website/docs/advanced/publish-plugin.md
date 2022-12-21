@@ -32,7 +32,7 @@ options:
 
 ### 申请发布到 NoneBot2 插件商店
 
-完成在 PyPI 的插件发布流程与源代码托管流程后，请您前往 [**NoneBot2 商店**](https://v2.nonebot.dev/store.html)页面，切换到**插件**页签，点击**发布插件**按钮。
+完成在 PyPI 的插件发布流程与源代码托管流程后，请您前往 [**NoneBot2 商店**](https://v2.nonebot.dev/store)页面，切换到**插件**页签，点击**发布插件**按钮。
 
 ![插件发布界面](./images/plugin_store_publish.png)
 
@@ -61,12 +61,12 @@ import 包名：您的插件通过 Python 导入时使用的包名，如 nonebot
 
 之后，NoneBot2 的维护者们将会对插件进行进一步的检查，以确保用户能够正常安装并使用该插件。
 
-完成这些步骤后，您的插件将会被合并到 [**NoneBot2 商店**](https://v2.nonebot.dev/store.html)，而您也将成为 [**NoneBot2 贡献者**](https://github.com/nonebot/nonebot2/graphs/contributors)中的一员。
+完成这些步骤后，您的插件将会被合并到 [**NoneBot2 商店**](https://v2.nonebot.dev/store)，而您也将成为 [**NoneBot2 贡献者**](https://github.com/nonebot/nonebot2/graphs/contributors)中的一员。
 
 ## 完成
 
 恭喜您，经过上述的发布流程，您的插件已经成功发布到 NoneBot2 商店了。
 
-此时，您可以在 [**NoneBot2 商店**](https://v2.nonebot.dev/store.html)的插件页签查找到您的插件。同时，欢迎您成为 [**NoneBot2 贡献者**](https://github.com/nonebot/nonebot2/graphs/contributors)！
+此时，您可以在 [**NoneBot2 商店**](https://v2.nonebot.dev/store)的插件页签查找到您的插件。同时，欢迎您成为 [**NoneBot2 贡献者**](https://github.com/nonebot/nonebot2/graphs/contributors)！
 
 **Congratulations!**

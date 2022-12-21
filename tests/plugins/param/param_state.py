@@ -6,6 +6,7 @@ from nonebot.params import (
     Command,
     Keyword,
     Endswith,
+    RegexStr,
     Fullmatch,
     RegexDict,
     CommandArg,
@@ -68,6 +69,10 @@ async def regex_group(regex_group: Tuple = RegexGroup()) -> Tuple:
 
 
 async def regex_matched(regex_matched: str = RegexMatched()) -> str:
+    return regex_matched
+
+
+async def regex_str(regex_matched: str = RegexStr()) -> str:
     return regex_matched
 
 

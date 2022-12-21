@@ -4,11 +4,11 @@ FrontMatter:
     description: nonebot.dependencies.utils 模块
 """
 import inspect
-from typing import Any, Dict, TypeVar, Callable
+from typing import Any, Dict, TypeVar, Callable, ForwardRef
 
 from loguru import logger
 from pydantic.fields import ModelField
-from pydantic.typing import ForwardRef, evaluate_forwardref
+from pydantic.typing import evaluate_forwardref
 
 from nonebot.exception import TypeMisMatch
 

@@ -224,8 +224,8 @@ NICKNAME=["bot"]
 命令消息的起始符和分隔符。用于 [`command`](../api/rule.md#command) 规则。
 
 ```env
-COMMAND_START={"/", "!"}
-COMMAND_SEP={".", "/"}
+COMMAND_START=["/", "!"]
+COMMAND_SEP=[".", "/"]
 ```
 
 ### Session Expire Timeout

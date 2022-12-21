@@ -2421,7 +2421,7 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot-plugin-magiadice",
+    "module_name": "nonebot_plugin_magiadice",
     "project_link": "nonebot-plugin-magiadice",
     "name": "MagiaDice骰娘及TRPGLOG",
     "desc": "能够实时在网页围观的TRPG记录插件，同时具有骰娘的功能",
@@ -2436,7 +2436,7 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot-plugin-send",
+    "module_name": "nonebot_plugin_send",
     "project_link": "nonebot-plugin-send",
     "name": "反馈及通知",
     "desc": "用户通过bot向superuser发送反馈，以及bot向所有群发送通知",
@@ -2695,7 +2695,7 @@
     "module_name": "ayaka",
     "project_link": "nonebot-plugin-ayaka",
     "name": "ayaka - 文字游戏开发辅助插件",
-    "desc": "提供了状态机、命令隔离、缓存、固存、帮助指令等功能，可以管理多个文字游戏避免命令冲突，帮助开发者在nonebot2框架基础上快速开发qq文字游戏",
+    "desc": "提供了状态机、命令隔离、缓存、持久化、帮助指令等功能，可以管理多个文字游戏避免命令冲突，帮助开发者在nonebot2框架基础上快速开发qq文字游戏",
     "author": "bridgeL",
     "homepage": "https://bridgel.github.io/ayaka_doc/",
     "tags": [
@@ -2966,7 +2966,7 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot-plugin-novelai",
+    "module_name": "nonebot_plugin_novelai",
     "project_link": "nonebot-plugin-novelai",
     "name": "novelai",
     "desc": "一个支持novelai、naifu、webui，支持中文功能丰富的ai绘图插件",
@@ -3021,7 +3021,7 @@
     "module_name": "ayaka_games",
     "project_link": "nonebot-plugin-ayaka-games",
     "name": "ayaka衍生插件 - 小游戏合集",
-    "desc": "多功能聚合，基于ayaka插件实现：背包、 签到 、印加宝藏、生成糊文字截图、bingo、b站视频链接分析、原神接龙、成语接龙、缩写翻译",
+    "desc": "多功能聚合，基于ayaka插件实现：背包，签到，印加宝藏，接龙（多题库可选，原神/成语），谁是卧底，抢30，mana，加一秒，24点/48点，b站视频链接自动解析，留言，缩写翻译",
     "author": "bridgeL",
     "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka-games",
     "tags": [
@@ -3365,6 +3365,343 @@
         "color": "#2079c1"
       }
     ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_zyk_novelai",
+    "project_link": "nonebot-plugin-zyk-novelai",
+    "name": "免费版NovelAI生图插件",
+    "desc": "一个用于nonebot2的简约AI绘图插件。没有繁琐的使用指令，配置过程简单迅捷，代码简洁易懂，还有更多功能将会陆续加入。",
+    "author": "ZYKsslm",
+    "homepage": "https://github.com/ZYKsslm/nonebot_plugin_zyk_novelai",
+    "tags": [
+      {
+        "label": "Free",
+        "color": "#42e22f"
+      },
+      {
+        "label": "Simple",
+        "color": "#e2d92f"
+      },
+      {
+        "label": "Novelai",
+        "color": "#3e10e9"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_repeep",
+    "project_link": "nonebot-plugin-repeep",
+    "name": "谁在窥屏",
+    "desc": "用于获取QQ中当前窥屏用户信息",
+    "author": "p0ise",
+    "homepage": "https://github.com/p0ise/nonebot-plugin-repeep",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_gscode",
+    "project_link": "nonebot-plugin-gscode",
+    "name": "原神前瞻直播兑换码查询",
+    "desc": "原神前瞻直播兑换码查询，数据来自米哈游官方接口",
+    "author": "monsterxcn",
+    "homepage": "https://github.com/monsterxcn/nonebot-plugin-gscode",
+    "tags": [
+      {
+        "label": "t:Genshin",
+        "color": "#ffd49f"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_note",
+    "project_link": "nonebot-plugin-note",
+    "name": "记事本",
+    "desc": "一个有提醒功能的记事本",
+    "author": "Passerby-D",
+    "homepage": "https://github.com/Passerby-D/nonebot_plugin_note",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-bilibili-image",
+    "project_link": "nonebot-plugin-bilibili-image",
+    "name": "b站图片下载",
+    "desc": "b站封面提取，动态图片/专栏图片下载",
+    "author": "jcjrobert",
+    "homepage": "https://github.com/jcjrobert/nonebot-plugin-bilibili-image",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_trace_moe",
+    "project_link": "nonebot-plugin-trace-moe",
+    "name": "动画截图追溯来源",
+    "desc": "调用trace.moe的API查询动画截图源自的作品名和时间段",
+    "author": "Ikaros-521",
+    "homepage": "https://github.com/Ikaros-521/nonebot_plugin_trace_moe",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#191919"
+      },
+      {
+        "label": "t:trace",
+        "color": "#191919"
+      },
+      {
+        "label": "t:image",
+        "color": "#00a0ff"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_zyk_music",
+    "project_link": "nonebot-plugin-zyk-music",
+    "name": "免费快捷点歌插件",
+    "desc": "一个用于nonebot2的点歌插件。操作简单粗暴，交互简洁易懂.",
+    "author": "ZYKsslm",
+    "homepage": "https://github.com/ZYKsslm/nonebot_plugin_zyk_music",
+    "tags": [
+      {
+        "label": "Free",
+        "color": "#26d019"
+      },
+      {
+        "label": "Simple",
+        "color": "#b8c10d"
+      },
+      {
+        "label": "Music",
+        "color": "#0d92c1"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chatgpt",
+    "project_link": "nonebot-plugin-chatgpt",
+    "name": "ChatGPT",
+    "desc": "AI 聊天对话",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-chatgpt",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_majsoul",
+    "project_link": "nonebot-plugin-majsoul",
+    "name": "雀魂信息查询",
+    "desc": "根据牌谱屋的数据查询雀魂账号信息",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/ssttkkl/nonebot-plugin-majsoul",
+    "tags": [
+      {
+        "label": "t:majsoul",
+        "color": "#e54141"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_remove_bg",
+    "project_link": "nonebot-plugin-remove-bg",
+    "name": "图片背景消除",
+    "desc": "适用于onebot v11的基于remove.bg的图片背景消除插件",
+    "author": "Ikaros-521",
+    "homepage": "https://github.com/Ikaros-521/nonebot_plugin_remove_bg",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:img",
+        "color": "#111111"
+      },
+      {
+        "label": "t:removeBG",
+        "color": "#7a7a7a"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_broadcast",
+    "project_link": "nonebot-plugin-broadcast",
+    "name": "全群广播",
+    "desc": "将你的消息广播到全部群聊中",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-broadcast",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_exchangerate",
+    "project_link": "nonebot-plugin-exchangerate",
+    "name": "汇率换算",
+    "desc": "支持汇率换算与汇率查询",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-exchangerate",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_access_control",
+    "project_link": "nonebot-plugin-access-control",
+    "name": "权限控制",
+    "desc": "支持功能级别的细粒度权限控制，对未适配插件也支持插件级别的权限控制",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/ssttkkl/nonebot-plugin-access-control",
+    "tags": [
+      {
+        "label": "t:权限控制",
+        "color": "#0e9763"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_multi_chatgpt",
+    "project_link": "nonebot-plugin-multi-chatgpt",
+    "name": "multi-ChatGPT",
+    "desc": "多账户的ChatGPT插件",
+    "author": "chrisyy2003",
+    "homepage": "https://github.com/chrisyy2003/nonebot-plugin-multi-chatgpt",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_colormind",
+    "project_link": "nonebot-plugin-colormind",
+    "name": "随机配色方案",
+    "desc": "调用colormind.io的API随机获取一种配色方案",
+    "author": "Ikaros-521",
+    "homepage": "https://github.com/Ikaros-521/nonebot_plugin_colormind",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "t:color",
+        "color": "#ffffff"
+      },
+      {
+        "label": "t:配色",
+        "color": "#fbff03"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_idiom",
+    "project_link": "nonebot-plugin-idiom",
+    "name": "nonebot_plugin_idiom",
+    "desc": "成语接龙",
+    "author": "wsdtl",
+    "homepage": "https://github.com/wsdtl/nonebot_plugin_Idiom",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_abstain_diary",
+    "project_link": "nonebot-plugin-abstain-diary",
+    "name": "戒色打卡日记",
+    "desc": "适用于onebot v11的戒色打卡日记插件。财能使人贪，色能使人嗜，名能使人矜，潜能使人倚，四患既都去，岂在浮尘里。",
+    "author": "Ikaros-521",
+    "homepage": "https://github.com/Ikaros-521/nonebot_plugin_abstain_diary",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "t:戒色",
+        "color": "#ffffff"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_backup",
+    "project_link": "nonebot-plugin-backup",
+    "name": "QQ群文件备份",
+    "desc": "备份qq群文件",
+    "author": "Yuelioi",
+    "homepage": "https://github.com/Yuelioi/nonebot-plugin-backup",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_kuma_san",
+    "project_link": "nonebot-plugin-kuma-san",
+    "name": "熊老板",
+    "desc": "用于查询斯普拉遁3场地信息的 NoneBot2 插件",
+    "author": "ReiiNoki",
+    "homepage": "https://github.com/ReiiNoki/nonebot-plugin-kuma-san",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-gpt3",
+    "project_link": "nonebot-plugin-gpt3",
+    "name": "GPT3",
+    "desc": "openai官方api的会话插件",
+    "author": "chrisyy2003",
+    "homepage": "https://github.com/chrisyy2003/nonebot-plugin-gpt3",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ikun_evolution",
+    "project_link": "nonebot-plugin-ikun-evolution",
+    "name": "只因进化录",
+    "desc": "q群挂机小游戏。开局一只因，进化全靠吞",
+    "author": "RShock",
+    "homepage": "https://github.com/RShock/nonebot_plugin_ikun_evolution",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_random_ban",
+    "project_link": "nonebot-plugin-random-ban",
+    "name": "随机禁言",
+    "desc": "适用于onebot v11的随机禁言一名群员n分钟（n通过传入数字然后随机实现）",
+    "author": "Ikaros-521",
+    "homepage": "https://github.com/Ikaros-521/nonebot_plugin_random_ban",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:禁言",
+        "color": "#020202"
+      },
+      {
+        "label": "t:ban",
+        "color": "#ffffff"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_antirecall",
+    "project_link": "nonebot-plugin-antirecall",
+    "name": "防撤回",
+    "desc": "防撤回",
+    "author": "Jerry080801",
+    "homepage": "https://github.com/Jerry080801/nonebot-plugin-antirecall/",
+    "tags": [],
     "is_official": false
   }
 ]
