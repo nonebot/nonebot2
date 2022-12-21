@@ -81,6 +81,8 @@ async def test_reverse_driver(app: App):
 
             await ws.close()
 
+    await asyncio.sleep(1)
+
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
@@ -133,7 +135,6 @@ async def test_http_driver(app: App):
     data = json.loads(response.content)
     assert data["files"] == {"test": "test"}
 
-    # wait for transport close :(
     await asyncio.sleep(1)
 
 
