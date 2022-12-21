@@ -3693,5 +3693,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_antirecall",
+    "project_link": "nonebot-plugin-antirecall",
+    "name": "防撤回",
+    "desc": "防撤回",
+    "author": "Jerry080801",
+    "homepage": "https://github.com/Jerry080801/nonebot-plugin-antirecall/",
+    "tags": [],
+    "is_official": false
   }
 ]
