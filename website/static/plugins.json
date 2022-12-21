@@ -3675,7 +3675,7 @@
     "module_name": "nonebot_plugin_random_ban",
     "project_link": "nonebot-plugin-random-ban",
     "name": "随机禁言",
-    "desc": "适用于onebot v11的随机禁言一名群员n分钟（n通过传入数字然后随机实现）",
+    "desc": "适用于onebot v11的随机禁言一名群员或自己n分钟（n通过传入数字然后随机实现）",
     "author": "Ikaros-521",
     "homepage": "https://github.com/Ikaros-521/nonebot_plugin_random_ban",
     "tags": [
