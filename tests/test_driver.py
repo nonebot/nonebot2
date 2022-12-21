@@ -1,3 +1,5 @@
+import json
+import asyncio
 from typing import cast
 
 import pytest
@@ -78,6 +80,61 @@ async def test_reverse_driver(app: App):
             assert await ws.receive_bytes() == b"pong"
 
             await ws.close()
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "nonebug_init",
+    [
+        pytest.param({"driver": "nonebot.drivers.httpx:Driver"}, id="httpx"),
+        pytest.param({"driver": "nonebot.drivers.aiohttp:Driver"}, id="aiohttp"),
+    ],
+    indirect=True,
+)
+async def test_http_driver(app: App):
+    import nonebot
+    from nonebot.drivers import Request, ForwardDriver
+
+    driver = cast(ForwardDriver, nonebot.get_driver())
+
+    request = Request(
+        "POST",
+        "https://httpbin.org/post",
+        params={"param": "test"},
+        headers={"X-Test": "test"},
+        cookies={"session": "test"},
+        content="test",
+    )
+    response = await driver.request(request)
+    assert response.status_code == 200 and response.content
+    data = json.loads(response.content)
+    assert data["args"] == {"param": "test"}
+    assert data["headers"].get("X-Test") == "test"
+    assert data["headers"].get("Cookie") == "session=test"
+    assert data["data"] == "test"
+
+    request = Request("POST", "https://httpbin.org/post", data={"form": "test"})
+    response = await driver.request(request)
+    assert response.status_code == 200 and response.content
+    data = json.loads(response.content)
+    assert data["form"] == {"form": "test"}
+
+    request = Request("POST", "https://httpbin.org/post", json={"json": "test"})
+    response = await driver.request(request)
+    assert response.status_code == 200 and response.content
+    data = json.loads(response.content)
+    assert data["json"] == {"json": "test"}
+
+    request = Request(
+        "POST", "https://httpbin.org/post", files={"test": ("test.txt", b"test")}
+    )
+    response = await driver.request(request)
+    assert response.status_code == 200 and response.content
+    data = json.loads(response.content)
+    assert data["files"] == {"test": "test"}
+
+    # wait for transport close :(
+    await asyncio.sleep(1)
 
 
 @pytest.mark.asyncio
