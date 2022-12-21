@@ -34,6 +34,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 防撤回 [@yanyongyu](https://github.com/yanyongyu) ([#1489](https://github.com/nonebot/nonebot2/pull/1489))
 - Plugin: 随机禁言 [@yanyongyu](https://github.com/yanyongyu) ([#1486](https://github.com/nonebot/nonebot2/pull/1486))
 - Plugin: 只因进化录 [@yanyongyu](https://github.com/yanyongyu) ([#1484](https://github.com/nonebot/nonebot2/pull/1484))
 - Plugin: GPT3 [@yanyongyu](https://github.com/yanyongyu) ([#1480](https://github.com/nonebot/nonebot2/pull/1480))
