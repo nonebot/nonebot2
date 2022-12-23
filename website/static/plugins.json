@@ -3575,7 +3575,7 @@
     "name": "multi-ChatGPT",
     "desc": "多账户的ChatGPT插件",
     "author": "chrisyy2003",
-    "homepage": "https://github.com/chrisyy2003/lingyin-bot/tree/main/plugins/chatGPT",
+    "homepage": "https://github.com/chrisyy2003/nonebot-plugin-multi-chatgptT",
     "tags": [],
     "is_official": false
   },
@@ -3657,7 +3657,7 @@
     "name": "GPT3",
     "desc": "openai官方api的会话插件",
     "author": "chrisyy2003",
-    "homepage": "https://github.com/chrisyy2003/lingyin-bot/tree/main/plugins/gpt3",
+    "homepage": "https://github.com/chrisyy2003/nonebot-plugin-gpt3",
     "tags": [],
     "is_official": false
   },
