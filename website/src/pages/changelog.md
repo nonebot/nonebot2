@@ -36,6 +36,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 不要复读 [@yanyongyu](https://github.com/yanyongyu) ([#1500](https://github.com/nonebot/nonebot2/pull/1500))
 - Plugin: JAVA MC 服务器信息查询 [@yanyongyu](https://github.com/yanyongyu) ([#1497](https://github.com/nonebot/nonebot2/pull/1497))
 - Plugin: 防撤回 [@yanyongyu](https://github.com/yanyongyu) ([#1489](https://github.com/nonebot/nonebot2/pull/1489))
 - Plugin: 随机禁言 [@yanyongyu](https://github.com/yanyongyu) ([#1486](https://github.com/nonebot/nonebot2/pull/1486))
