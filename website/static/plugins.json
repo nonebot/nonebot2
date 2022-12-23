@@ -3718,5 +3718,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_no_repeat",
+    "project_link": "nonebot-plugin-no-repeat",
+    "name": "不要复读",
+    "desc": "防止代码炸了在群里复读刷屏，让你写插件的时候更安全",
+    "author": "bridgeL",
+    "homepage": "https://github.com/bridgeL/nonebot-plugin-no-repeat",
+    "tags": [],
+    "is_official": false
   }
 ]
