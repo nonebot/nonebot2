@@ -29,6 +29,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 更新 gpt3 插件模块名 [@chrisyy2003](https://github.com/chrisyy2003) ([#1501](https://github.com/nonebot/nonebot2/pull/1501))
 - Plugin: 更新 随机禁言 插件功能描述 [@Ikaros-521](https://github.com/Ikaros-521) ([#1495](https://github.com/nonebot/nonebot2/pull/1495))
 - Plugin: 更新 multi chatgpt 插件仓库地址 [@chrisyy2003](https://github.com/chrisyy2003) ([#1487](https://github.com/nonebot/nonebot2/pull/1487))
 - Plugin: 更新 ayaka_games 介绍 [@bridgeL](https://github.com/bridgeL) ([#1431](https://github.com/nonebot/nonebot2/pull/1431))
