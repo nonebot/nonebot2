@@ -3728,5 +3728,15 @@
     "homepage": "https://github.com/bridgeL/nonebot-plugin-no-repeat",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bfchat",
+    "project_link": "nonebot-plugin-bfchat",
+    "name": "战地群聊天插件",
+    "desc": "群内绑定战地一/五账号，快速查询战地战绩，查看服务器信息",
+    "author": "050644zf",
+    "homepage": "https://github.com/050644zf/nonebot-plugin-bfchat",
+    "tags": [],
+    "is_official": false
   }
 ]
