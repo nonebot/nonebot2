@@ -3748,5 +3748,15 @@
     "homepage": "https://github.com/zhulinyv/nonebot_plugin_summon",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ping",
+    "project_link": "nonebot-plugin-ping",
+    "name": "Ping",
+    "desc": "调用api，获取网站信息",
+    "author": "zhulinyv",
+    "homepage": "https://github.com/zhulinyv/nonebot_plugin_ping",
+    "tags": [],
+    "is_official": false
   }
 ]
