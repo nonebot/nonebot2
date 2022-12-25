@@ -3738,5 +3738,15 @@
     "homepage": "https://github.com/050644zf/nonebot-plugin-bfchat",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_summon",
+    "project_link": "nonebot-plugin-summon",
+    "name": "群友召唤术",
+    "desc": "群友召唤术",
+    "author": "zhulinyv",
+    "homepage": "https://github.com/zhulinyv/nonebot_plugin_summon",
+    "tags": [],
+    "is_official": false
   }
 ]
