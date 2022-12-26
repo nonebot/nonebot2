@@ -3615,8 +3615,8 @@
   {
     "module_name": "nonebot_plugin_abstain_diary",
     "project_link": "nonebot-plugin-abstain-diary",
-    "name": "戒色打卡日记",
-    "desc": "适用于onebot v11的戒色打卡日记插件。财能使人贪，色能使人嗜，名能使人矜，潜能使人倚，四患既都去，岂在浮尘里。",
+    "name": "戒x打卡日记",
+    "desc": "适用于onebot v11的戒x打卡日记插件。用户可以自定义戒的内容。财能使人贪，色能使人嗜，名能使人矜，潜能使人倚，四患既都去，岂在浮尘里。",
     "author": "Ikaros-521",
     "homepage": "https://github.com/Ikaros-521/nonebot_plugin_abstain_diary",
     "tags": [
@@ -3625,7 +3625,7 @@
         "color": "#000000"
       },
       {
-        "label": "t:戒色",
+        "label": "t:戒",
         "color": "#ffffff"
       }
     ],
