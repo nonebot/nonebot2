@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Ping [@yanyongyu](https://github.com/yanyongyu) ([#1508](https://github.com/nonebot/nonebot2/pull/1508))
 - Plugin: 群友召唤术 [@yanyongyu](https://github.com/yanyongyu) ([#1503](https://github.com/nonebot/nonebot2/pull/1503))
 - Plugin: 战地群聊天插件 [@yanyongyu](https://github.com/yanyongyu) ([#1506](https://github.com/nonebot/nonebot2/pull/1506))
 - Plugin: 不要复读 [@yanyongyu](https://github.com/yanyongyu) ([#1500](https://github.com/nonebot/nonebot2/pull/1500))
