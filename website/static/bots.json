@@ -310,5 +310,13 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "RanBot",
+    "desc": "不@会很安静的Bot",
+    "author": "IAXRetailer",
+    "homepage": "https://github.com/Hecatia-Hell-Workshop/RanBot",
+    "tags": [],
+    "is_official": false
   }
 ]
