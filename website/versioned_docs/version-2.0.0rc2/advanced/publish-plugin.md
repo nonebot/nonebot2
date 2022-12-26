@@ -20,7 +20,11 @@ options:
 
 您可以选择自己喜欢的方式将插件发布到 [**PyPI**](https://pypi.org/)，如使用 [**setuptools**](https://pypi.org/project/setuptools/) 或 [**Poetry**](https://pypi.org/project/poetry/)。
 
-发布时，请您为自己的插件取一个清晰易懂的名字。通常而言，一款 NoneBot2 插件名称使用 `nonebot-plugin-` 作为前缀（如`nonebot-plugin-foo`），以 `nonebot_plugin_` 作为包名的前缀（如`nonebot_plugin_foo`），这并非强制规范，而是为了防止与其他 PyPI 包产生冲突，所以我们推荐您在没有特殊需求的情况下这样做。
+发布时，请您为自己的插件取一个清晰易懂的名字。通常而言，一款 NoneBot2 插件名称使用 `nonebot-plugin-` 作为 PyPI 项目名前缀（如`nonebot-plugin-foo`），以 `nonebot_plugin_` 作为 Python 包名的前缀（如`nonebot_plugin_foo`），这并非强制规范，而是为了防止与其他 PyPI 包产生冲突，所以我们推荐您在没有特殊需求的情况下这样做。
+
+:::warning
+虽然在 NoneBot 2 载入插件时，插件的 Python 包名中可以使用 `-`，但是在 Python 的 import 语句中，`-` 不会被解析为包名的一部分。如果插件需要向外界提供 import 语法导入的支持，应在 Python 包名中使用 `_` 代替 `-`。
+:::
 
 发布后，请确保您的插件已能公开的从 PyPI 访问到，试着检查您的插件在 PyPI 的地址，如 `https://pypi.org/project/<您的 NoneBot2 插件项目名>`。
 

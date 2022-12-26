@@ -49,8 +49,8 @@ async def init_adapter(app: App, import_hook):
 
 1. 反向 HTTP（WebHook）
 2. 反向 WebSocket
-3. ~~正向 HTTP（尚未实现）~~
-4. ~~正向 WebSocket（尚未实现）~~
+3. 正向 HTTP
+4. 正向 WebSocket
 
 NoneBug 的 `test_server` 方法可以供我们测试反向连接方式。
 
