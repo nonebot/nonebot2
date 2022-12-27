@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 移除 `nonebot-plugin-filehost` [@mnixry](https://github.com/mnixry) ([#1516](https://github.com/nonebot/nonebot2/pull/1516))
 - Plugin: 更新 `abstain_diary` 插件名和描述 [@Ikaros-521](https://github.com/Ikaros-521) ([#1509](https://github.com/nonebot/nonebot2/pull/1509))
 - Plugin: 更新 gpt3 插件模块名 [@chrisyy2003](https://github.com/chrisyy2003) ([#1501](https://github.com/nonebot/nonebot2/pull/1501))
 - Plugin: 更新 随机禁言 插件功能描述 [@Ikaros-521](https://github.com/Ikaros-521) ([#1495](https://github.com/nonebot/nonebot2/pull/1495))
