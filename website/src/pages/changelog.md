@@ -66,6 +66,10 @@ toc_max_heading_level: 2
 - Plugin: 记事本 [@yanyongyu](https://github.com/yanyongyu) ([#1420](https://github.com/nonebot/nonebot2/pull/1420))
 - Plugin: 原神前瞻直播兑换码查询 [@yanyongyu](https://github.com/yanyongyu) ([#1422](https://github.com/nonebot/nonebot2/pull/1422))
 
+### 🍻 机器人发布
+
+- Bot: RanBot [@yanyongyu](https://github.com/yanyongyu) ([#1511](https://github.com/nonebot/nonebot2/pull/1511))
+
 ## v2.0.0rc2
 
 ### 💥 破坏性变更
