@@ -3748,5 +3748,24 @@
     "homepage": "https://github.com/zhulinyv/nonebot_plugin_ping",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_face2cartoonpic",
+    "project_link": "nonebot_plugin_face2cartoonpic",
+    "name": "腾讯云图像变换",
+    "desc": "✨基于腾讯云合成图的以图绘图的Nonebot插件✨",
+    "author": "ANGJustinl",
+    "homepage": "https://github.com/ANGJustinl/nonebot_plugin_face2cartoonpic_main",
+    "tags": [
+      {
+        "label": "以图绘图",
+        "color": "#72f15e"
+      },
+      {
+        "label": "腾讯云",
+        "color": "#3785f1"
+      }
+    ],
+    "is_official": false
   }
 ]
