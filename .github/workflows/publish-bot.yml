@@ -16,9 +16,10 @@ jobs:
       result: ${{ steps.plugin-test.outputs.RESULT }}
       output: ${{ steps.plugin-test.outputs.OUTPUT }}
     steps:
-      - name: Install poetry
+      - name: Install Poetry
         run: pipx install poetry
-      - uses: actions/setup-python@v4
+      - name: Setup Python
+        uses: actions/setup-python@v4
         with:
           python-version: "3.10"
       - name: Test Plugin
@@ -31,11 +32,10 @@ jobs:
     name: nonebot2 publish bot
     needs: plugin_test
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
-
       - name: NoneBot2 Publish Bot
         uses: docker://ghcr.io/nonebot/nonebot2-publish-bot:main
         with:
