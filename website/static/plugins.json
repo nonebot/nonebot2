@@ -3767,5 +3767,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_servicestate",
+    "project_link": "nonebot-plugin-servicestate",
+    "name": "服务状态查询",
+    "desc": "查询服务可用状态",
+    "author": "OREOCODEDEV",
+    "homepage": "https://github.com/OREOCODEDEV/nonebot-plugin-servicestate",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:api",
+        "color": "#52ea7f"
+      },
+      {
+        "label": "t:state",
+        "color": "#52cfea"
+      }
+    ],
+    "is_official": false
   }
 ]
