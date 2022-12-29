@@ -5,6 +5,8 @@ on:
     types: [opened, reopened, edited]
   pull_request_target:
     types: [closed]
+  issue_comment:
+    types: [created]
 
 jobs:
   plugin_test:
