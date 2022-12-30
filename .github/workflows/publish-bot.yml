@@ -5,17 +5,39 @@ on:
     types: [opened, reopened, edited]
   pull_request_target:
     types: [closed]
+  issue_comment:
+    types: [created]
 
 jobs:
+  plugin_test:
+    runs-on: ubuntu-latest
+    name: nonebot2 plugin test
+    permissions:
+      issues: read
+    outputs:
+      result: ${{ steps.plugin-test.outputs.RESULT }}
+      output: ${{ steps.plugin-test.outputs.OUTPUT }}
+    steps:
+      - name: Install Poetry
+        run: pipx install poetry
+      - name: Setup Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.10"
+      - name: Test Plugin
+        id: plugin-test
+        run: |
+          curl -sSL https://raw.githubusercontent.com/nonebot/nonebot2-publish-bot/main/plugin_test.py -o plugin_test.py
+          python plugin_test.py
   publish_bot:
     runs-on: ubuntu-latest
     name: nonebot2 publish bot
+    needs: plugin_test
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
         with:
           token: ${{ secrets.GH_TOKEN }}
-
       - name: NoneBot2 Publish Bot
         uses: docker://ghcr.io/nonebot/nonebot2-publish-bot:main
         with:
@@ -27,3 +49,6 @@ jobs:
               "bot_path": "website/static/bots.json",
               "adapter_path": "website/static/adapters.json"
             }
+        env:
+          PLUGIN_TEST_RESULT: ${{ needs.plugin_test.outputs.result }}
+          PLUGIN_TEST_OUTPUT: ${{ needs.plugin_test.outputs.output }}
