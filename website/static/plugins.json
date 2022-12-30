@@ -3790,5 +3790,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_animalVoice",
+    "project_link": "nonebot-plugin-animalVoice",
+    "name": "AnimalVoice_Convert",
+    "desc": "✨支持切噜语和兽语的Nonebot译者插件✨",
+    "author": "ANGJustinl",
+    "homepage": "https://github.com/ANGJustinl/nonebot_plugin_animalVoice/",
+    "tags": [
+      {
+        "label": "切噜语~",
+        "color": "#e75f9d"
+      },
+      {
+        "label": "兽语",
+        "color": "#5fe5e7"
+      },
+      {
+        "label": "加密语言",
+        "color": "#79e556"
+      }
+    ],
+    "is_official": false
   }
 ]
