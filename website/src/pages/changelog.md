@@ -41,6 +41,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: AnimalVoice_Convert [@yanyongyu](https://github.com/yanyongyu) ([#1518](https://github.com/nonebot/nonebot2/pull/1518))
 - Plugin: 服务状态查询 [@yanyongyu](https://github.com/yanyongyu) ([#1513](https://github.com/nonebot/nonebot2/pull/1513))
 - Plugin: 腾讯云图像变换 [@yanyongyu](https://github.com/yanyongyu) ([#1515](https://github.com/nonebot/nonebot2/pull/1515))
 - Plugin: Ping [@yanyongyu](https://github.com/yanyongyu) ([#1508](https://github.com/nonebot/nonebot2/pull/1508))
