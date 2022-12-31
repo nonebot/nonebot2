@@ -2684,8 +2684,8 @@
   {
     "module_name": "ayaka",
     "project_link": "nonebot-plugin-ayaka",
-    "name": "ayaka - 文字游戏开发辅助插件",
-    "desc": "提供了状态机、命令隔离、缓存、持久化、帮助指令等功能，可以管理多个文字游戏避免命令冲突，帮助开发者在nonebot2框架基础上快速开发qq文字游戏",
+    "name": "ayaka - 为群聊插件开发提供状态机支持",
+    "desc": "提供了状态机、命令隔离、数据隔离，可以帮助开发小游戏",
     "author": "bridgeL",
     "homepage": "https://bridgel.github.io/ayaka_doc/",
     "tags": [
@@ -2698,7 +2698,7 @@
         "color": "#000000"
       },
       {
-        "label": "t:文字游戏",
+        "label": "t:小游戏",
         "color": "#e36306"
       }
     ],
@@ -3011,7 +3011,7 @@
     "module_name": "ayaka_games",
     "project_link": "nonebot-plugin-ayaka-games",
     "name": "ayaka衍生插件 - 小游戏合集",
-    "desc": "多功能聚合，基于ayaka插件实现：背包，签到，印加宝藏，接龙（多题库可选，原神/成语），谁是卧底，抢30，mana，加一秒，24点/48点，b站视频链接自动解析，留言，缩写翻译",
+    "desc": "多功能聚合，基于ayaka插件实现：背包，签到，印加宝藏，接龙（多题库可选，原神/成语），谁是卧底，抢30，mana，加一秒，24点/48点",
     "author": "bridgeL",
     "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka-games",
     "tags": [
@@ -3024,30 +3024,7 @@
         "color": "#0c0c0c"
       },
       {
-        "label": "t:文字游戏",
-        "color": "#e36306"
-      }
-    ],
-    "is_official": false
-  },
-  {
-    "module_name": "ayaka_who_is_suspect",
-    "project_link": "nonebot-plugin-ayaka-who-is-suspect",
-    "name": "ayaka衍生插件 - 谁是卧底",
-    "desc": "至少4人游玩，游玩前需要加bot好友，否则无法通过私聊告知关键词",
-    "author": "bridgeL",
-    "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka-who-is-suspect",
-    "tags": [
-      {
-        "label": "a:cqhttp",
-        "color": "#000000"
-      },
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "t:文字游戏",
+        "label": "t:小游戏",
         "color": "#e36306"
       }
     ],
