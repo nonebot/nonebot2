@@ -45,7 +45,7 @@ from typing import Any, Dict, Type, Optional
 import loguru
 from pydantic.env_settings import DotenvType
 
-from nonebot.log import logger
+from nonebot.log import logger as logger
 from nonebot.adapters import Bot
 from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
