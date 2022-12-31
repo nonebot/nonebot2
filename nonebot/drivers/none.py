@@ -5,7 +5,7 @@
 :::
 
 FrontMatter:
-    sidebar_position: 1
+    sidebar_position: 6
     description: nonebot.drivers.none 模块
 """
 
