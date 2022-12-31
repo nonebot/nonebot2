@@ -149,7 +149,7 @@ async def test_http_driver(app: App):
         ),
         pytest.param(
             {"driver": "~httpx:Driver+~websockets"},
-            "block_driver+httpx+websockets",
+            "none+httpx+websockets",
             id="httpx+websockets",
         ),
     ],
