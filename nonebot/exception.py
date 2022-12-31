@@ -37,6 +37,9 @@ from pydantic.fields import ModelField
 class NoneBotException(Exception):
     """所有 NoneBot 发生的异常基类。"""
 
+    def __str__(self) -> str:
+        return self.__repr__()
+
 
 # Rule Exception
 class ParserExit(NoneBotException):
@@ -52,9 +55,6 @@ class ParserExit(NoneBotException):
             + (f", message={self.message!r}" if self.message else "")
             + ")"
         )
-
-    def __str__(self) -> str:
-        return self.__repr__()
 
 
 # Processor Exception
@@ -74,9 +74,6 @@ class IgnoredException(ProcessException):
 
     def __repr__(self) -> str:
         return f"IgnoredException(reason={self.reason!r})"
-
-    def __str__(self) -> str:
-        return self.__repr__()
 
 
 class SkippedException(ProcessException):
@@ -109,9 +106,6 @@ class TypeMisMatch(SkippedException):
             f"type={self.param._type_display()}, value={self.value!r}>"
         )
 
-    def __str__(self) -> str:
-        return self.__repr__()
-
 
 class MockApiException(ProcessException):
     """指示 NoneBot 阻止本次 API 调用或修改本次调用返回值，并返回自定义内容。可由 api hook 抛出。
@@ -125,9 +119,6 @@ class MockApiException(ProcessException):
 
     def __repr__(self) -> str:
         return f"MockApiException(result={self.result!r})"
-
-    def __str__(self) -> str:
-        return self.__repr__()
 
 
 class StopPropagation(ProcessException):
@@ -244,6 +235,3 @@ class WebSocketClosed(DriverException):
             + (f", reason={self.reason!r}" if self.reason else "")
             + ")"
         )
-
-    def __str__(self) -> str:
-        return self.__repr__()
