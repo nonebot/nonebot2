@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Fix: 修复异常在 traceback 中无法正常显示信息 [@he0119](https://github.com/he0119) ([#1521](https://github.com/nonebot/nonebot2/pull/1521))
 - CI: 添加插件加载测试 [@he0119](https://github.com/he0119) ([#1519](https://github.com/nonebot/nonebot2/pull/1519))
 - Plugin: 移除 `nonebot-plugin-filehost` [@mnixry](https://github.com/mnixry) ([#1516](https://github.com/nonebot/nonebot2/pull/1516))
 - Plugin: 更新 `abstain_diary` 插件名和描述 [@Ikaros-521](https://github.com/Ikaros-521) ([#1509](https://github.com/nonebot/nonebot2/pull/1509))
