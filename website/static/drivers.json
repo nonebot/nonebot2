@@ -48,5 +48,15 @@
     "homepage": "/docs/tutorial/choose-driver",
     "tags": [],
     "is_official": true
+  },
+  {
+    "module_name": "nonebot.drivers.none",
+    "project_link": "",
+    "name": "None",
+    "desc": "None 驱动器",
+    "author": "yanyongyu",
+    "homepage": "/docs/tutorial/choose-driver",
+    "tags": [],
+    "is_official": true
   }
 ]

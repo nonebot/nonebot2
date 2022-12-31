@@ -4,9 +4,9 @@ import threading
 from typing import Set, Union, Callable, Awaitable, cast
 
 from nonebot.log import logger
-from nonebot.drivers import Driver
 from nonebot.typing import overrides
 from nonebot.config import Env, Config
+from nonebot.drivers import Driver as BaseDriver
 from nonebot.utils import run_sync, is_coroutine_callable
 
 HOOK_FUNC = Union[Callable[[], None], Callable[[], Awaitable[None]]]
@@ -16,7 +16,9 @@ HANDLED_SIGNALS = (
 )
 
 
-class BlockDriver(Driver):
+class Driver(BaseDriver):
+    """None 驱动框架"""
+
     def __init__(self, env: Env, config: Config):
         super().__init__(env, config)
         self.startup_funcs: Set[HOOK_FUNC] = set()
@@ -25,18 +27,18 @@ class BlockDriver(Driver):
         self.force_exit: bool = False
 
     @property
-    @overrides(Driver)
+    @overrides(BaseDriver)
     def type(self) -> str:
-        """驱动名称: `block_driver`"""
-        return "block_driver"
+        """驱动名称: `none`"""
+        return "none"
 
     @property
-    @overrides(Driver)
+    @overrides(BaseDriver)
     def logger(self):
-        """block driver 使用的 logger"""
+        """none driver 使用的 logger"""
         return logger
 
-    @overrides(Driver)
+    @overrides(BaseDriver)
     def on_startup(self, func: HOOK_FUNC) -> HOOK_FUNC:
         """
         注册一个启动时执行的函数
@@ -44,7 +46,7 @@ class BlockDriver(Driver):
         self.startup_funcs.add(func)
         return func
 
-    @overrides(Driver)
+    @overrides(BaseDriver)
     def on_shutdown(self, func: HOOK_FUNC) -> HOOK_FUNC:
         """
         注册一个停止时执行的函数
@@ -52,9 +54,9 @@ class BlockDriver(Driver):
         self.shutdown_funcs.add(func)
         return func
 
-    @overrides(Driver)
+    @overrides(BaseDriver)
     def run(self, *args, **kwargs):
-        """启动 block driver"""
+        """启动 none driver"""
         super().run(*args, **kwargs)
         loop = asyncio.get_event_loop()
         loop.run_until_complete(self.serve())
