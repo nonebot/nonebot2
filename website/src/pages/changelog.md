@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 将 block driver 转正为 none 驱动器 [@he0119](https://github.com/he0119) ([#1522](https://github.com/nonebot/nonebot2/pull/1522))
 - Develop: 使用 pycln 自动移除未使用的 import [@yanyongyu](https://github.com/yanyongyu) ([#1481](https://github.com/nonebot/nonebot2/pull/1481))
 - Feature: 添加正则匹配文本注入 [@A-kirami](https://github.com/A-kirami) ([#1457](https://github.com/nonebot/nonebot2/pull/1457))
 - Feature: 支持主动销毁事件响应器 [@A-kirami](https://github.com/A-kirami) ([#1444](https://github.com/nonebot/nonebot2/pull/1444))
