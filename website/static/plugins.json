@@ -3790,5 +3790,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ayaka_scan_cmd",
+    "project_link": "nonebot-plugin-ayaka-scan-cmd",
+    "name": "命令探查",
+    "desc": "命令探查，缓解下载了新插件却不会使用的焦虑",
+    "author": "bridgeL",
+    "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka-scan-cmd",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "t:命令探查",
+        "color": "#e36306"
+      }
+    ],
+    "is_official": false
   }
 ]
