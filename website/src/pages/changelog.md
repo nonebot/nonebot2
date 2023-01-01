@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 添加 `logger` 重导出 [@A-kirami](https://github.com/A-kirami) ([#1526](https://github.com/nonebot/nonebot2/pull/1526))
 - Feature: 将 block driver 转正为 none 驱动器 [@he0119](https://github.com/he0119) ([#1522](https://github.com/nonebot/nonebot2/pull/1522))
 - Develop: 使用 pycln 自动移除未使用的 import [@yanyongyu](https://github.com/yanyongyu) ([#1481](https://github.com/nonebot/nonebot2/pull/1481))
 - Feature: 添加正则匹配文本注入 [@A-kirami](https://github.com/A-kirami) ([#1457](https://github.com/nonebot/nonebot2/pull/1457))
@@ -44,6 +45,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 命令探查 [@yanyongyu](https://github.com/yanyongyu) ([#1524](https://github.com/nonebot/nonebot2/pull/1524))
 - Plugin: AnimalVoice_Convert [@yanyongyu](https://github.com/yanyongyu) ([#1518](https://github.com/nonebot/nonebot2/pull/1518))
 - Plugin: 服务状态查询 [@yanyongyu](https://github.com/yanyongyu) ([#1513](https://github.com/nonebot/nonebot2/pull/1513))
 - Plugin: 腾讯云图像变换 [@yanyongyu](https://github.com/yanyongyu) ([#1515](https://github.com/nonebot/nonebot2/pull/1515))
