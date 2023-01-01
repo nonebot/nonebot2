@@ -21,7 +21,7 @@ from contextlib import asynccontextmanager
 from nonebot.typing import overrides
 from nonebot.drivers import Request, Response
 from nonebot.exception import WebSocketClosed
-from nonebot.drivers._block_driver import BlockDriver
+from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers import HTTPVersion, ForwardMixin, ForwardDriver, combine_driver
 
@@ -170,5 +170,5 @@ class WebSocket(BaseWebSocket):
         await self.websocket.send_bytes(data)
 
 
-Driver: Type[ForwardDriver] = combine_driver(BlockDriver, Mixin)  # type: ignore
+Driver: Type[ForwardDriver] = combine_driver(NoneDriver, Mixin)  # type: ignore
 """AIOHTTP Driver"""

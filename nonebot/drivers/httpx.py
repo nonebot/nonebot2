@@ -18,7 +18,7 @@ from typing import Type, AsyncGenerator
 from contextlib import asynccontextmanager
 
 from nonebot.typing import overrides
-from nonebot.drivers._block_driver import BlockDriver
+from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.drivers import (
     Request,
     Response,
@@ -77,5 +77,5 @@ class Mixin(ForwardMixin):
             yield ws
 
 
-Driver: Type[ForwardDriver] = combine_driver(BlockDriver, Mixin)  # type: ignore
+Driver: Type[ForwardDriver] = combine_driver(NoneDriver, Mixin)  # type: ignore
 """HTTPX Driver"""
