@@ -3828,5 +3828,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_revoke",
+    "project_link": "nonebot-plugin-revoke",
+    "name": "主动消息撤回",
+    "desc": "让机器人撤回自己发出的消息",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/ssttkkl/nonebot-plugin-revoke",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
