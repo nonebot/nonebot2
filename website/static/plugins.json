@@ -3809,5 +3809,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_HttpCat",
+    "project_link": "nonebot-plugin-HttpCat",
+    "name": "HttpCat🐱猫猫http状态码",
+    "desc": "✨Nonebot猫猫http状态码插件✨",
+    "author": "ANGJustinl",
+    "homepage": "https://github.com/ANGJustinl/nonebot_plugin_HttpCat",
+    "tags": [
+      {
+        "label": "HttpCat",
+        "color": "#1f4ddc"
+      },
+      {
+        "label": "http状态码",
+        "color": "#dc1f1f"
+      }
+    ],
+    "is_official": false
   }
 ]
