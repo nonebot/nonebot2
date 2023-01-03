@@ -205,6 +205,12 @@ nonebot.run(app="bot:app")
 默认值：`None`  
 说明：不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
 
+##### `quart_extra`
+
+类型：`Dist[str, Any]`  
+默认值：`{}`  
+说明：传递给 `Quart` 的其他参数
+
 ### HTTPX
 
 类型：`ForwardDriver`
