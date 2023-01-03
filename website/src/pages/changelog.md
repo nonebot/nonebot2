@@ -45,6 +45,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 主动消息撤回 [@yanyongyu](https://github.com/yanyongyu) ([#1536](https://github.com/nonebot/nonebot2/pull/1536))
 - Plugin: HttpCat🐱 猫猫 http 状态码 [@yanyongyu](https://github.com/yanyongyu) ([#1529](https://github.com/nonebot/nonebot2/pull/1529))
 - Plugin: 命令探查 [@yanyongyu](https://github.com/yanyongyu) ([#1524](https://github.com/nonebot/nonebot2/pull/1524))
 - Plugin: AnimalVoice_Convert [@yanyongyu](https://github.com/yanyongyu) ([#1518](https://github.com/nonebot/nonebot2/pull/1518))
