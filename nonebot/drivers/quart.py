@@ -84,7 +84,9 @@ class Driver(ReverseDriver):
 
         self.quart_config = Config(**config.dict())
 
-        self._server_app = Quart(self.__class__.__qualname__)
+        self._server_app = Quart(
+            self.__class__.__qualname__, **self.quart_config.quart_extra
+        )
 
     @property
     @overrides(ReverseDriver)
