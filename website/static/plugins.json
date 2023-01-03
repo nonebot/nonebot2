@@ -3809,5 +3809,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_setu_customization",
+    "project_link": "nonebot_plugin_setu_customization",
+    "name": "setu_customization",
+    "desc": "可动态管理API并带网页浏览的setu插件",
+    "author": "nikissXI",
+    "homepage": "https://github.com/nikissXI/nonebot_plugins/tree/main/nonebot_plugin_setu_customization",
+    "tags": [
+      {
+        "label": "色图",
+        "color": "#e9ea52"
+      }
+    ],
+    "is_official": false
   }
 ]
