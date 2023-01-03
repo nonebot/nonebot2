@@ -13,7 +13,7 @@ FrontMatter:
 import logging
 import contextlib
 from functools import wraps
-from typing import Any, List, Tuple, Union, Callable, Optional
+from typing import Any, Dict, List, Tuple, Union, Callable, Optional
 
 import uvicorn
 from pydantic import BaseSettings
@@ -65,6 +65,8 @@ class Config(BaseSettings):
     """要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
     fastapi_reload_excludes: Optional[List[str]] = None
     """不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
+    fastapi_extra: Dict[str, Any] = {}
+    """传递给 `FastAPI` 的其他参数。"""
 
     class Config:
         extra = "ignore"
@@ -82,6 +84,7 @@ class Driver(ReverseDriver):
             openapi_url=self.fastapi_config.fastapi_openapi_url,
             docs_url=self.fastapi_config.fastapi_docs_url,
             redoc_url=self.fastapi_config.fastapi_redoc_url,
+            **self.fastapi_config.fastapi_extra,
         )
 
     @property
