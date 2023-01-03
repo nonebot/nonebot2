@@ -3809,5 +3809,43 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_HttpCat",
+    "project_link": "nonebot-plugin-HttpCat",
+    "name": "HttpCat🐱猫猫http状态码",
+    "desc": "✨Nonebot猫猫http状态码插件✨",
+    "author": "ANGJustinl",
+    "homepage": "https://github.com/ANGJustinl/nonebot_plugin_HttpCat",
+    "tags": [
+      {
+        "label": "HttpCat",
+        "color": "#1f4ddc"
+      },
+      {
+        "label": "http状态码",
+        "color": "#dc1f1f"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_revoke",
+    "project_link": "nonebot-plugin-revoke",
+    "name": "主动消息撤回",
+    "desc": "让机器人撤回自己发出的消息",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/ssttkkl/nonebot-plugin-revoke",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:gocqhttp",
+        "color": "#52ea95"
+      }
+    ],
+    "is_official": false
   }
 ]
