@@ -53,3 +53,10 @@ class Plugin:
     sub_plugins: Set["Plugin"] = field(default_factory=set)
     """子插件集合"""
     metadata: Optional[PluginMetadata] = None
+
+    @property
+    def full_name(self) -> str:
+        """插件完整索引标识，包含所有父插件的标识符"""
+        if parent := self.parent_plugin:
+            return f"{parent.full_name}.{self.name}"
+        return self.name

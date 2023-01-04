@@ -59,7 +59,9 @@ async def test_load_nested_plugin(app: App, load_plugin: Set["Plugin"]):
     sub_plugin2 = nonebot.get_plugin("nested_subplugin2")
     assert parent_plugin and sub_plugin and sub_plugin2
     assert sub_plugin.parent_plugin is parent_plugin
+    assert sub_plugin.full_name == "nested.nested_subplugin"
     assert sub_plugin2.parent_plugin is parent_plugin
+    assert sub_plugin2.full_name == "nested.nested_subplugin2"
     assert parent_plugin.sub_plugins == {sub_plugin, sub_plugin2}
 
 
