@@ -16,15 +16,23 @@ export type Obj = {
   is_official: boolean;
 };
 
+function fuzzySearch(search: string, ...data: string[]): boolean {
+  const reg = new RegExp(search, "i");
+  return data.some((str) => reg.test(str));
+}
+
 export function filterObjs(filter: string, objs: Obj[]): Obj[] {
   return objs.filter((o) => {
     return (
-      o.module_name?.includes(filter) ||
-      o.project_link?.includes(filter) ||
-      o.name.includes(filter) ||
-      o.desc.includes(filter) ||
-      o.author.includes(filter) ||
-      o.tags.filter((t) => t.label.includes(filter)).length > 0
+      fuzzySearch(
+        filter,
+        o.module_name,
+        o.project_link,
+        o.name,
+        o.desc,
+        o.author,
+      ) ||
+      o.tags.some((t) => fuzzySearch(filter, t.label))
     );
   });
 }
