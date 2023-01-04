@@ -5,6 +5,10 @@ on:
     branches:
       - master
   pull_request:
+    paths:
+      - 'nonebot/**'
+      - 'packages/**'
+      - 'tests/**'
 
 jobs:
   test:
