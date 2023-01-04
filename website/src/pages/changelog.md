@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 支持给 `FastAPI` 和 `Quart` 传递额外的参数 [@A-kirami](https://github.com/A-kirami) ([#1543](https://github.com/nonebot/nonebot2/pull/1543))
 - Feature: 添加 `logger` 重导出 [@A-kirami](https://github.com/A-kirami) ([#1526](https://github.com/nonebot/nonebot2/pull/1526))
 - Feature: 将 block driver 转正为 none 驱动器 [@he0119](https://github.com/he0119) ([#1522](https://github.com/nonebot/nonebot2/pull/1522))
 - Develop: 使用 pycln 自动移除未使用的 import [@yanyongyu](https://github.com/yanyongyu) ([#1481](https://github.com/nonebot/nonebot2/pull/1481))
