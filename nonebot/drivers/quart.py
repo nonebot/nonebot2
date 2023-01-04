@@ -17,7 +17,7 @@ FrontMatter:
 
 import asyncio
 from functools import wraps
-from typing import List, Tuple, Union, TypeVar, Callable, Optional, Coroutine
+from typing import Any, Dict, List, Tuple, Union, TypeVar, Callable, Optional, Coroutine
 
 import uvicorn
 from pydantic import BaseSettings
@@ -69,6 +69,8 @@ class Config(BaseSettings):
     """要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
     quart_reload_excludes: Optional[List[str]] = None
     """不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
+    quart_extra: Dict[str, Any] = {}
+    """传递给 `Quart` 的其他参数。"""
 
     class Config:
         extra = "ignore"
@@ -82,7 +84,9 @@ class Driver(ReverseDriver):
 
         self.quart_config = Config(**config.dict())
 
-        self._server_app = Quart(self.__class__.__qualname__)
+        self._server_app = Quart(
+            self.__class__.__qualname__, **self.quart_config.quart_extra
+        )
 
     @property
     @overrides(ReverseDriver)
