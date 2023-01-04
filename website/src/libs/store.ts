@@ -30,9 +30,8 @@ export function filterObjs(filter: string, objs: Obj[]): Obj[] {
         o.project_link,
         o.name,
         o.desc,
-        o.author,
-      ) ||
-      o.tags.some((t) => fuzzySearch(filter, t.label))
+        o.author
+      ) || o.tags.some((t) => fuzzySearch(filter, t.label))
     );
   });
 }
