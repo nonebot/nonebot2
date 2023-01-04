@@ -47,6 +47,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 求生之路 2——服务器操作 [@yanyongyu](https://github.com/yanyongyu) ([#1538](https://github.com/nonebot/nonebot2/pull/1538))
 - Plugin: setu_customization [@yanyongyu](https://github.com/yanyongyu) ([#1537](https://github.com/nonebot/nonebot2/pull/1537))
 - Plugin: 主动消息撤回 [@yanyongyu](https://github.com/yanyongyu) ([#1536](https://github.com/nonebot/nonebot2/pull/1536))
 - Plugin: HttpCat🐱 猫猫 http 状态码 [@yanyongyu](https://github.com/yanyongyu) ([#1529](https://github.com/nonebot/nonebot2/pull/1529))
