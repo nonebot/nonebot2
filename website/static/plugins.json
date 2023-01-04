@@ -3862,5 +3862,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_l4d2_server",
+    "project_link": "nonebot-plugin-l4d2-server",
+    "name": "求生之路2——服务器操作",
+    "desc": "在Q群里做求生之路服务器相关操作，方便操作",
+    "author": "Umamusume-Agnes-Digital",
+    "homepage": "https://github.com/Umamusume-Agnes-Digital/nonebot_plugin_l4d2_server",
+    "tags": [
+      {
+        "label": "l4d2",
+        "color": "#05ff00"
+      }
+    ],
+    "is_official": false
   }
 ]
