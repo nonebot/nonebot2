@@ -3877,5 +3877,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_learning_chat",
+    "project_link": "nonebot-plugin-learning-chat",
+    "name": "群聊学习",
+    "desc": "让Bot学习群友说话和发表情包！",
+    "author": "CMHopeSunshine",
+    "homepage": "https://github.com/CMHopeSunshine/nonebot-plugin-learning-chat",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
