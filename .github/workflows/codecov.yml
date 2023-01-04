@@ -6,9 +6,9 @@ on:
       - master
   pull_request:
     paths:
-      - 'nonebot/**'
-      - 'packages/**'
-      - 'tests/**'
+      - "nonebot/**"
+      - "packages/**"
+      - "tests/**"
 
 jobs:
   test:
