@@ -3892,5 +3892,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_couplets",
+    "project_link": "nonebot-plugin-couplets",
+    "name": "对对联",
+    "desc": "人工智能给你对对联",
+    "author": "CMHopeSunshine",
+    "homepage": "https://github.com/CMHopeSunshine/nonebot-plugin-couplets",
+    "tags": [],
+    "is_official": false
   }
 ]
