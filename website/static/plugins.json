@@ -3902,5 +3902,24 @@
     "homepage": "https://github.com/CMHopeSunshine/nonebot-plugin-couplets",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_Imagelabels",
+    "project_link": "nonebot-plugin-Imagelabels",
+    "name": "图像标注",
+    "desc": "基于yolov5的图像标注插件",
+    "author": "istrashguy",
+    "homepage": "https://github.com/istrashguy/nonebot_plugin_Imagelabels",
+    "tags": [
+      {
+        "label": "Yolov5",
+        "color": "#9a2828"
+      },
+      {
+        "label": "图像标注",
+        "color": "#e981dc"
+      }
+    ],
+    "is_official": false
   }
 ]
