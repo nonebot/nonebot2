@@ -3959,5 +3959,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_hypixel",
+    "project_link": "nonebot-plugin-hypixel",
+    "name": "Hypixel数据查询",
+    "desc": "查询Hypixel的数据",
+    "author": "SkyDynamic",
+    "homepage": "https://github.com/SkyDynamic/nonebot_plugin_hypixel",
+    "tags": [
+      {
+        "label": "MC",
+        "color": "#6fea52"
+      },
+      {
+        "label": "Hypixel",
+        "color": "#d5ea52"
+      },
+      {
+        "label": "Hyp",
+        "color": "#d5ea52"
+      }
+    ],
+    "is_official": false
   }
 ]
