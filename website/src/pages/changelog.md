@@ -47,6 +47,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 图像标注 [@yanyongyu](https://github.com/yanyongyu) ([#1550](https://github.com/nonebot/nonebot2/pull/1550))
 - Plugin: 对对联 [@yanyongyu](https://github.com/yanyongyu) ([#1542](https://github.com/nonebot/nonebot2/pull/1542))
 - Plugin: 群聊学习 [@yanyongyu](https://github.com/yanyongyu) ([#1540](https://github.com/nonebot/nonebot2/pull/1540))
 - Plugin: 求生之路 2——服务器操作 [@yanyongyu](https://github.com/yanyongyu) ([#1538](https://github.com/nonebot/nonebot2/pull/1538))
