@@ -3921,5 +3921,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cloudsignx",
+    "project_link": "nonebot-plugin-cloudsignx",
+    "name": "云签到",
+    "desc": "基于云端的签到，所有插件使用者数据互通",
+    "author": "Monarchdos",
+    "homepage": "https://github.com/Monarchdos/nonebot_plugin_cloudsign",
+    "tags": [
+      {
+        "label": "a:云签到",
+        "color": "#2be491"
+      },
+      {
+        "label": "a:数据互通",
+        "color": "#3be42b"
+      }
+    ],
+    "is_official": false
   }
 ]
