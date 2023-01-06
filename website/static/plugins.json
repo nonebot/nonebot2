@@ -3940,5 +3940,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_imgexploration",
+    "project_link": "nonebot-plugin-imgexploration",
+    "name": "查找图片出处",
+    "desc": "通过saucenao、ascii2d、Google、Yandx查询图片出处",
+    "author": "cpuopt",
+    "homepage": "https://github.com/cpuopt/nonebot_plugin_imgexploration",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:搜图",
+        "color": "#453df1"
+      }
+    ],
+    "is_official": false
   }
 ]
