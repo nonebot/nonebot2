@@ -26,16 +26,16 @@ python = "^3.8"
 yarl = "^1.7.2"
 loguru = "^0.6.0"
 pygtrie = "^2.4.1"
-fastapi = ">=0.87.0,<1.0.0"
 tomlkit = ">=0.10.0,<1.0.0"
 typing-extensions = ">=3.10.0,<5.0.0"
 pydantic = { version = "^1.10.0", extras = ["dotenv"] }
-uvicorn = { version = ">=0.20.0,<1.0.0", extras = ["standard"] }
 
-websockets = { version="^10.0", optional = true }
+websockets = { version = "^10.0", optional = true }
 Quart = { version = ">=0.18.0,<1.0.0", optional = true }
+fastapi = { version = ">=0.87.0,<1.0.0", optional = true }
 aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
 httpx = { version = ">=0.20.0,<1.0.0", extras = ["http2"], optional = true }
+uvicorn = { version = ">=0.20.0,<1.0.0", extras = ["standard"], optional = true }
 
 [tool.poetry.group.dev.dependencies]
 pycln = "^2.1.2"
@@ -54,11 +54,12 @@ nonebug = { git = "https://github.com/nonebot/nonebug.git" }
 nb-autodoc = { git = "https://github.com/nonebot/nb-autodoc.git" }
 
 [tool.poetry.extras]
-quart = ["quart"]
 httpx = ["httpx"]
 aiohttp = ["aiohttp"]
 websockets = ["websockets"]
-all = ["quart", "aiohttp", "httpx", "websockets"]
+quart = ["quart", "uvicorn"]
+fastapi = ["fastapi", "uvicorn"]
+all = ["fastapi", "quart", "aiohttp", "httpx", "websockets", "uvicorn"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"

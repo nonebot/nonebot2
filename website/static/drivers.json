@@ -1,7 +1,17 @@
 [
   {
-    "module_name": "nonebot.drivers.fastapi",
+    "module_name": "~none",
     "project_link": "",
+    "name": "None",
+    "desc": "None 驱动器",
+    "author": "yanyongyu",
+    "homepage": "/docs/tutorial/choose-driver",
+    "tags": [],
+    "is_official": true
+  },
+  {
+    "module_name": "~fastapi",
+    "project_link": "nonebot2[fastapi]",
     "name": "FastAPI",
     "desc": "FastAPI 驱动器",
     "author": "yanyongyu",
@@ -10,8 +20,8 @@
     "is_official": true
   },
   {
-    "module_name": "nonebot.drivers.quart",
-    "project_link": "quart",
+    "module_name": "~quart",
+    "project_link": "nonebot2[quart]",
     "name": "Quart",
     "desc": "Quart 驱动器",
     "author": "yanyongyu",
@@ -20,8 +30,8 @@
     "is_official": true
   },
   {
-    "module_name": "nonebot.drivers.httpx",
-    "project_link": "httpx",
+    "module_name": "~httpx",
+    "project_link": "nonebot2[httpx]",
     "name": "HTTPX",
     "desc": "HTTPX 驱动器",
     "author": "yanyongyu",
@@ -30,8 +40,8 @@
     "is_official": true
   },
   {
-    "module_name": "nonebot.drivers.websockets",
-    "project_link": "websockets",
+    "module_name": "~websockets",
+    "project_link": "nonebot2[websockets]",
     "name": "websockets",
     "desc": "websockets 驱动器",
     "author": "yanyongyu",
@@ -40,20 +50,10 @@
     "is_official": true
   },
   {
-    "module_name": "nonebot.drivers.aiohttp",
-    "project_link": "aiohttp",
+    "module_name": "~aiohttp",
+    "project_link": "nonebot2[aiohttp]",
     "name": "AIOHTTP",
     "desc": "AIOHTTP 驱动器",
-    "author": "yanyongyu",
-    "homepage": "/docs/tutorial/choose-driver",
-    "tags": [],
-    "is_official": true
-  },
-  {
-    "module_name": "nonebot.drivers.none",
-    "project_link": "",
-    "name": "None",
-    "desc": "None 驱动器",
     "author": "yanyongyu",
     "homepage": "/docs/tutorial/choose-driver",
     "tags": [],
