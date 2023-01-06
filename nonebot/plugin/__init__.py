@@ -65,6 +65,8 @@ def _revert_plugin(plugin: "Plugin") -> None:
     if plugin.name not in _plugins:
         raise RuntimeError("Plugin not found!")
     del _plugins[plugin.name]
+    if parent_plugin := plugin.parent_plugin:
+        parent_plugin.sub_plugins.remove(plugin)
 
 
 def get_plugin(name: str) -> Optional["Plugin"]:
