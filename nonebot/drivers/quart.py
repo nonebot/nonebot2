@@ -19,7 +19,6 @@ import asyncio
 from functools import wraps
 from typing import Any, Dict, List, Tuple, Union, TypeVar, Callable, Optional, Coroutine
 
-import uvicorn
 from pydantic import BaseSettings
 
 from nonebot.config import Env
@@ -32,6 +31,7 @@ from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers import ReverseDriver, HTTPServerSetup, WebSocketServerSetup
 
 try:
+    import uvicorn
     from quart import request as _request
     from quart import websocket as _websocket
     from quart import Quart, Request, Response

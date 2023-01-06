@@ -1,5 +1,11 @@
 """[FastAPI](https://fastapi.tiangolo.com/) 驱动适配
 
+```bash
+nb driver install fastapi
+# 或者
+pip install nonebot2[fastapi]
+```
+
 :::tip 提示
 本驱动仅支持服务端连接
 :::
@@ -15,11 +21,7 @@ import contextlib
 from functools import wraps
 from typing import Any, Dict, List, Tuple, Union, Callable, Optional
 
-import uvicorn
 from pydantic import BaseSettings
-from fastapi.responses import Response
-from fastapi import FastAPI, Request, UploadFile, status
-from starlette.websockets import WebSocket, WebSocketState, WebSocketDisconnect
 
 from nonebot.config import Env
 from nonebot.typing import overrides
@@ -29,6 +31,16 @@ from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers import ReverseDriver, HTTPServerSetup, WebSocketServerSetup
+
+try:
+    import uvicorn
+    from fastapi.responses import Response
+    from fastapi import FastAPI, Request, UploadFile, status
+    from starlette.websockets import WebSocket, WebSocketState, WebSocketDisconnect
+except ImportError:  # pragma: no cover
+    raise ImportError(
+        "Please install FastAPI by using `pip install nonebot2[fastapi]`"
+    ) from None
 
 
 def catch_closed(func):
