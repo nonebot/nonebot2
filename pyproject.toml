@@ -90,6 +90,13 @@ all = false
 
 [tool.pyright]
 reportShadowedImports = false
+pythonVersion = "3.8"
+pythonPlatform = "All"
+executionEnvironments = [
+  { root = "./tests", extraPaths = ["./"] },
+  { root = "./" },
+]
+
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]
