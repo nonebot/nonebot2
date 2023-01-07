@@ -35,6 +35,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 更新 OlivOS.nb2 import 包名 [@j1g5awi](https://github.com/j1g5awi) ([#1560](https://github.com/nonebot/nonebot2/pull/1560))
 - Develop: 添加 pyright 环境配置 [@yanyongyu](https://github.com/yanyongyu) ([#1554](https://github.com/nonebot/nonebot2/pull/1554))
 - CI: 优化触发条件减少无效运行 [@he0119](https://github.com/he0119) ([#1545](https://github.com/nonebot/nonebot2/pull/1545))
 - Plugin: 删除 ayaka_who_is_suspect 插件 [@bridgeL](https://github.com/bridgeL) ([#1525](https://github.com/nonebot/nonebot2/pull/1525))
