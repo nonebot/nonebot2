@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修复子插件加载失败时没有从父插件中移除的问题 [@A-kirami](https://github.com/A-kirami) ([#1559](https://github.com/nonebot/nonebot2/pull/1559))
 - Fix: 修复客户端请求未处理 cookies [@yanyongyu](https://github.com/yanyongyu) ([#1491](https://github.com/nonebot/nonebot2/pull/1491))
 - Fix: `on_type` typing error [@yanyongyu](https://github.com/yanyongyu) ([#1482](https://github.com/nonebot/nonebot2/pull/1482))
 - Fix: 修复 ArgumentParser 错误信息叠加问题 [@yanyongyu](https://github.com/yanyongyu) ([#1426](https://github.com/nonebot/nonebot2/pull/1426))
