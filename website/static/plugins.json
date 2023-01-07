@@ -646,7 +646,7 @@
     "is_official": false
   },
   {
-    "module_name": "OlivOS",
+    "module_name": "OlivOS.nonebot",
     "project_link": "olivos.nb2",
     "name": "OlivOS.nb2",
     "desc": "在 NoneBot2 中加载 OlivOS 插件",
