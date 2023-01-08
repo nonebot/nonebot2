@@ -3982,5 +3982,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nowtime",
+    "project_link": "nonebot-plugin-nowtime",
+    "name": "整点报时",
+    "desc": "每时为你语音整点报时",
+    "author": "Cvandia",
+    "homepage": "https://github.com/Cvandia/nonebot_plugin_nowtime",
+    "tags": [
+      {
+        "label": "t:整点报时",
+        "color": "#5eea52"
+      },
+      {
+        "label": "语音",
+        "color": "#c84fdb"
+      }
+    ],
+    "is_official": false
   }
 ]
