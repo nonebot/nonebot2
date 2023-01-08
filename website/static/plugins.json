@@ -3991,5 +3991,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cave",
+    "project_link": "nonebot-plugin-cave",
+    "name": "回声洞",
+    "desc": "PCL2内群的回声洞，添加了审核功能。",
+    "author": "hmzz804",
+    "homepage": "https://github.com/hmzz804/nonebot_plugin_cave",
+    "tags": [],
+    "is_official": false
   }
 ]
