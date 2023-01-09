@@ -52,6 +52,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 回声洞 [@yanyongyu](https://github.com/yanyongyu) ([#1573](https://github.com/nonebot/nonebot2/pull/1573))
 - Plugin: 整点报时 [@yanyongyu](https://github.com/yanyongyu) ([#1569](https://github.com/nonebot/nonebot2/pull/1569))
 - Plugin: Hypixel 数据查询 [@yanyongyu](https://github.com/yanyongyu) ([#1556](https://github.com/nonebot/nonebot2/pull/1556))
 - Plugin: 查找图片出处 [@yanyongyu](https://github.com/yanyongyu) ([#1553](https://github.com/nonebot/nonebot2/pull/1553))
