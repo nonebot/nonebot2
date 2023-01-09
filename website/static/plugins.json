@@ -4001,5 +4001,15 @@
     "homepage": "https://github.com/hmzz804/nonebot_plugin_cave",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_xingzuo",
+    "project_link": "nonebot-plugin-xingzuo",
+    "name": "星座运势",
+    "desc": "返回星座的运势",
+    "author": "mengxinyuan638",
+    "homepage": "https://github.com/mengxinyuan638/xingzuo_luck",
+    "tags": [],
+    "is_official": false
   }
 ]
