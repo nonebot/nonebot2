@@ -4011,5 +4011,28 @@
     "homepage": "https://github.com/mengxinyuan638/xingzuo_luck",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_BingImage",
+    "project_link": "nonebot-plugin-BingImage",
+    "name": "Bing每日图片获取",
+    "desc": "获取Bing每日一图",
+    "author": "ericzhang-debug",
+    "homepage": "https://github.com/ericzhang-debug/nonebot_plugin_BingImage",
+    "tags": [
+      {
+        "label": "风景图",
+        "color": "#0ce354"
+      },
+      {
+        "label": "Bing",
+        "color": "#0c43e3"
+      },
+      {
+        "label": "必应",
+        "color": "#eddf13"
+      }
+    ],
+    "is_official": false
   }
 ]
