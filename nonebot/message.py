@@ -312,7 +312,7 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
                     )
 
         if show_log:
-            logger.debug("Check matchers completed")
+            logger.debug("Checking for matchers completed")
 
         if coros := [
             run_coro_with_catch(
