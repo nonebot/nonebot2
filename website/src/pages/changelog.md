@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 添加事件响应器检查完成日志 [@A-kirami](https://github.com/A-kirami) ([#1578](https://github.com/nonebot/nonebot2/pull/1578))
 - Remove: 移除默认安装 FastAPI [@yanyongyu](https://github.com/yanyongyu) ([#1557](https://github.com/nonebot/nonebot2/pull/1557))
 - Feature: 支持给 `FastAPI` 和 `Quart` 传递额外的参数 [@A-kirami](https://github.com/A-kirami) ([#1543](https://github.com/nonebot/nonebot2/pull/1543))
 - Feature: 添加 `logger` 重导出 [@A-kirami](https://github.com/A-kirami) ([#1526](https://github.com/nonebot/nonebot2/pull/1526))
