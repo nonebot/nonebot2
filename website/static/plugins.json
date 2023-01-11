@@ -2774,8 +2774,8 @@
   {
     "module_name": "nonebot_plugin_tts_gal",
     "project_link": "nonebot-plugin-tts-gal",
-    "name": "gal角色语音生成",
-    "desc": "能够根据发送角色名和文本生成对应角色语音",
+    "name": "vits角色语音合成本地化",
+    "desc": "基于nonebot2和vits的本地化角色语音合成插件",
     "author": "dpm12345",
     "homepage": "https://github.com/dpm12345/nonebot_plugin_tts_gal",
     "tags": [
