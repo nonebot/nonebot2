@@ -318,5 +318,26 @@
     "homepage": "https://github.com/Hecatia-Hell-Workshop/RanBot",
     "tags": [],
     "is_official": false
+  },
+  {
+    "name": "辞辞(cici)Bot",
+    "desc": "一个集成娱乐和群管为一体的机器人",
+    "author": "mengxinyuan638",
+    "homepage": "https://github.com/mengxinyuan638/cici-bot",
+    "tags": [
+      {
+        "label": "辞辞Bot",
+        "color": "#04de4d"
+      },
+      {
+        "label": "萌新源",
+        "color": "#fd1c06"
+      },
+      {
+        "label": "群管",
+        "color": "#06b8fd"
+      }
+    ],
+    "is_official": false
   }
 ]
