@@ -4034,5 +4034,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_soup",
+    "project_link": "nonebot-plugin-soup",
+    "name": "心灵鸡汤",
+    "desc": "来一碗心灵鸡汤吧",
+    "author": "Monarchdos",
+    "homepage": "https://github.com/Monarchdos/nonebot_plugin_soup",
+    "tags": [
+      {
+        "label": "心灵鸡汤",
+        "color": "#52eaea"
+      },
+      {
+        "label": "鸡汤",
+        "color": "#ea529a"
+      },
+      {
+        "label": "毒鸡汤",
+        "color": "#604a55"
+      }
+    ],
+    "is_official": false
   }
 ]
