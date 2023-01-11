@@ -311,6 +311,9 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
                         "<r><bg #f8bbd0>Error when checking Matcher.</bg #f8bbd0></r>"
                     )
 
+        if show_log:
+            logger.debug("Checking for matchers completed")
+
         if coros := [
             run_coro_with_catch(
                 proc(
