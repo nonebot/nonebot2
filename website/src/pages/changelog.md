@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 更新 tts_gal 插件名和描述 [@dpm12345](https://github.com/dpm12345) ([#1581](https://github.com/nonebot/nonebot2/pull/1581))
 - Plugin: 移除 `nonebot_plugin_super_resolution` [@A-kirami](https://github.com/A-kirami) ([#1561](https://github.com/nonebot/nonebot2/pull/1561))
 - Plugin: 更新 OlivOS.nb2 import 包名 [@j1g5awi](https://github.com/j1g5awi) ([#1560](https://github.com/nonebot/nonebot2/pull/1560))
 - Develop: 添加 pyright 环境配置 [@yanyongyu](https://github.com/yanyongyu) ([#1554](https://github.com/nonebot/nonebot2/pull/1554))
