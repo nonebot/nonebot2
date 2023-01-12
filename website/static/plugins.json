@@ -2682,29 +2682,6 @@
     "is_official": false
   },
   {
-    "module_name": "ayaka",
-    "project_link": "nonebot-plugin-ayaka",
-    "name": "ayaka - 为群聊插件开发提供状态机支持",
-    "desc": "提供了状态机、命令隔离、数据隔离，可以帮助开发小游戏",
-    "author": "bridgeL",
-    "homepage": "https://bridgel.github.io/ayaka_doc/",
-    "tags": [
-      {
-        "label": "a:cqhttp",
-        "color": "#000000"
-      },
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "t:小游戏",
-        "color": "#e36306"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot-plugin-wolf-kill",
     "project_link": "nonebot-plugin-wolf-kill",
     "name": "狼人杀插件",
@@ -3009,16 +2986,12 @@
   },
   {
     "module_name": "ayaka_games",
-    "project_link": "nonebot-plugin-ayaka-games",
-    "name": "ayaka衍生插件 - 小游戏合集",
-    "desc": "多功能聚合，基于ayaka插件实现：背包，签到，印加宝藏，接龙（多题库可选，原神/成语），谁是卧底，抢30，mana，加一秒，24点/48点",
+    "project_link": "ayaka_games",
+    "name": "ayaka小游戏合集",
+    "desc": "背包，签到，印加宝藏，接龙（原神/成语），谁是卧底，抢30，mana，加一秒，24点/48点，文字税，祈祷，原神随机事件",
     "author": "bridgeL",
-    "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka-games",
+    "homepage": "https://bridgel.github.io/ayaka_games/",
     "tags": [
-      {
-        "label": "a:cqhttp",
-        "color": "#0c0c0c"
-      },
       {
         "label": "a:onebot",
         "color": "#0c0c0c"
