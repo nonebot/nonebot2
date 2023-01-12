@@ -102,6 +102,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: 辞辞(cici)Bot [@yanyongyu](https://github.com/yanyongyu) ([#1583](https://github.com/nonebot/nonebot2/pull/1583))
 - Bot: RanBot [@yanyongyu](https://github.com/yanyongyu) ([#1511](https://github.com/nonebot/nonebot2/pull/1511))
 
 ## v2.0.0rc2
