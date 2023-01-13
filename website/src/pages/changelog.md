@@ -56,6 +56,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 原神实时公告 [@yanyongyu](https://github.com/yanyongyu) ([#1585](https://github.com/nonebot/nonebot2/pull/1585))
 - Plugin: 心灵鸡汤 [@yanyongyu](https://github.com/yanyongyu) ([#1580](https://github.com/nonebot/nonebot2/pull/1580))
 - Plugin: Bing 每日图片获取 [@yanyongyu](https://github.com/yanyongyu) ([#1577](https://github.com/nonebot/nonebot2/pull/1577))
 - Plugin: 星座运势 [@yanyongyu](https://github.com/yanyongyu) ([#1572](https://github.com/nonebot/nonebot2/pull/1572))
