@@ -3625,15 +3625,15 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_javamc_status",
-    "project_link": "nonebot-plugin-javamc-status",
-    "name": "JAVA MC服务器信息查询",
-    "desc": "可获取JAVA MC的服务器的在线人数和玩家ID",
+    "module_name": "nonebot_plugin_mc_server_status",
+    "project_link": "nonebot-plugin-mc-server-status",
+    "name": "Minecraft服务器信息查询",
+    "desc": "支持Java和基岩服务器",
     "author": "nikissXI",
-    "homepage": "https://github.com/nikissXI/nonebot_plugins/tree/main/nonebot_plugin_javamc_status",
+    "homepage": "https://github.com/nikissXI/nonebot_plugins/tree/main/nonebot_plugin_mc_server_status",
     "tags": [
       {
-        "label": "MC",
+        "label": "Minecraft",
         "color": "#a438cd"
       }
     ],
