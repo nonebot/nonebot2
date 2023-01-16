@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 更新 MC 的插件信息 [@nikissXI](https://github.com/nikissXI) ([#1589](https://github.com/nonebot/nonebot2/pull/1589))
 - Plugin: 移除 `nonebot-plugin-aidraw` [@A-kirami](https://github.com/A-kirami) ([#1588](https://github.com/nonebot/nonebot2/pull/1588))
 - Plugins: 更新 ayaka_games 插件名和描述 [@bridgeL](https://github.com/bridgeL) ([#1586](https://github.com/nonebot/nonebot2/pull/1586))
 - Plugin: 更新 tts_gal 插件名和描述 [@dpm12345](https://github.com/dpm12345) ([#1581](https://github.com/nonebot/nonebot2/pull/1581))
