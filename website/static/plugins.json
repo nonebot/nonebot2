@@ -4069,5 +4069,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_orangedice",
+    "project_link": "nonebot-plugin-orangedice",
+    "name": "OrangeDice!",
+    "desc": "一个COC跑团用插件",
+    "author": "BigOrangeQWQ",
+    "homepage": "https://github.com/BigOrangeQWQ/nonebot_plugin_orangedice",
+    "tags": [
+      {
+        "label": "dice",
+        "color": "#08c0bb"
+      },
+      {
+        "label": "COC",
+        "color": "#a2bc0c"
+      }
+    ],
+    "is_official": false
   }
 ]
