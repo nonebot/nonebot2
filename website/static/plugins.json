@@ -4054,5 +4054,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_easy_translate",
+    "project_link": "nonebot-plugin-easy-translate",
+    "name": "简易谷歌翻译插件",
+    "desc": "免api key简单谷歌翻译插件",
+    "author": "nikissXI",
+    "homepage": "https://github.com/nikissXI/nonebot_plugins/tree/main/nonebot_plugin_easy_translate",
+    "tags": [
+      {
+        "label": "翻译",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
