@@ -4039,5 +4039,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bilibili_yuan",
+    "project_link": "nonebot-plugin-bilibili-yuan",
+    "name": "哔哩哔哩q群登录",
+    "desc": "实现哔哩哔哩q群登录的插件",
+    "author": "mengxinyuan638",
+    "homepage": "https://github.com/mengxinyuan638/nonebot-plugin-bilibili-yuan",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
