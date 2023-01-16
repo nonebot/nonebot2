@@ -58,6 +58,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: OrangeDice! [@yanyongyu](https://github.com/yanyongyu) ([#1595](https://github.com/nonebot/nonebot2/pull/1595))
 - Plugin: 简易谷歌翻译插件 [@yanyongyu](https://github.com/yanyongyu) ([#1593](https://github.com/nonebot/nonebot2/pull/1593))
 - Plugin: 哔哩哔哩 q 群登录 [@yanyongyu](https://github.com/yanyongyu) ([#1591](https://github.com/nonebot/nonebot2/pull/1591))
 - Plugin: 原神实时公告 [@yanyongyu](https://github.com/yanyongyu) ([#1585](https://github.com/nonebot/nonebot2/pull/1585))
