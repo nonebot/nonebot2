@@ -4088,5 +4088,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_record",
+    "project_link": "nonebot-plugin-record",
+    "name": "语音功能",
+    "desc": "语音功能适配插件，包括语音事件响应器，语音识别、语音合成等功能",
+    "author": "itsevin",
+    "homepage": "https://github.com/itsevin/nonebot_plugin_record",
+    "tags": [
+      {
+        "label": "t:语音",
+        "color": "#fff35d"
+      },
+      {
+        "label": "语音识别",
+        "color": "#37c0f6"
+      },
+      {
+        "label": "语音事件响应器",
+        "color": "#18e13c"
+      }
+    ],
+    "is_official": false
   }
 ]
