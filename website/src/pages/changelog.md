@@ -58,6 +58,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 喵喵自记菜谱 [@yanyongyu](https://github.com/yanyongyu) ([#1599](https://github.com/nonebot/nonebot2/pull/1599))
 - Plugin: 语音功能 [@yanyongyu](https://github.com/yanyongyu) ([#1597](https://github.com/nonebot/nonebot2/pull/1597))
 - Plugin: OrangeDice! [@yanyongyu](https://github.com/yanyongyu) ([#1595](https://github.com/nonebot/nonebot2/pull/1595))
 - Plugin: 简易谷歌翻译插件 [@yanyongyu](https://github.com/yanyongyu) ([#1593](https://github.com/nonebot/nonebot2/pull/1593))
