@@ -4111,5 +4111,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nya_cook_menu",
+    "project_link": "nonebot-plugin-nya-cook-menu",
+    "name": "喵喵自记菜谱",
+    "desc": "记录生活中的小菜谱",
+    "author": "nikissXI",
+    "homepage": "https://github.com/nikissXI/nonebot_plugins/tree/main/nonebot_plugin_nya_cook_menu",
+    "tags": [
+      {
+        "label": "菜谱",
+        "color": "#e65de5"
+      }
+    ],
+    "is_official": false
   }
 ]
