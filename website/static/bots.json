@@ -339,5 +339,26 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "SuzunoBot",
+    "desc": "多功能音游bot，主要服务maimaiDX、Arcaea",
+    "author": "Rinfair-CSP-A016",
+    "homepage": "https://github.com/Rinfair-CSP-A016/SuzunoBot-AGLAS",
+    "tags": [
+      {
+        "label": "t:maimaiDX",
+        "color": "#189ede"
+      },
+      {
+        "label": "t:Arcaea",
+        "color": "#d551ef"
+      },
+      {
+        "label": "t:coc",
+        "color": "#7fe4d0"
+      }
+    ],
+    "is_official": false
   }
 ]
