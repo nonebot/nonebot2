@@ -69,11 +69,11 @@ const config = {
             type: "docsMenu",
             category: "guide",
           },
-          {
-            label: "进阶",
-            type: "docsMenu",
-            category: "advanced",
-          },
+          // {
+          //   label: "进阶",
+          //   type: "docsMenu",
+          //   category: "advanced",
+          // },
           {
             label: "API",
             type: "docLink",
@@ -121,7 +121,8 @@ const config = {
             icon: ["fas", "book"],
             items: [
               { label: "Introduction", to: "/docs/" },
-              { label: "Installation", to: "/docs/start/installation" },
+              { label: "QuickStart", to: "/docs/tutorial/quick-start" },
+              { label: "Changelog", to: "/changelog" },
             ],
           },
           {
@@ -136,7 +137,7 @@ const config = {
                 label: "NoneBot V1",
                 href: "https://docs.nonebot.dev",
               },
-              { label: "NoneBot V2", to: "/" },
+              { label: "NoneBot CLI", href: "https://cli.nonebot.dev" },
             ],
           },
           {

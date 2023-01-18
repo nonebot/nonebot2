@@ -6,7 +6,7 @@ slug: /
 
 # 概览
 
-NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架，它基于 Python 的类型注解和异步特性，能够为你的需求实现提供便捷灵活的支持。
+NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架，它基于 Python 的类型注解和异步优先特性（兼容同步），能够为你的需求实现提供便捷灵活的支持。同时，拥有大量的开发者为其开发插件，可以不进行任何代码编写，仅需要完成环境配置及插件安装后便可正常使用。
 
 需要注意的是，NoneBot2 仅支持 **Python 3.8 以上版本**
 
@@ -18,11 +18,13 @@ NoneBot2 基于 Python [asyncio](https://docs.python.org/3/library/asyncio.html)
 
 ### 完整的类型注解
 
-NoneBot2 参考 [PEP 484](https://www.python.org/dev/peps/pep-0484/) 等 PEP 完整实现了类型注解，通过 `pyright`/`pylance` 检查。配合编辑器的类型推导功能，能将绝大多数的 Bug 杜绝在编辑器中（[编辑器支持](./start/editor-support)）。
+NoneBot2 参考 [PEP 484](https://www.python.org/dev/peps/pep-0484/) 等 PEP 完整实现了类型注解，通过 `pyright`/`pylance` 检查。配合编辑器的类型推导功能，能将绝大多数的 Bug 杜绝在编辑器中（[编辑器支持](./editor-support)）。
 
 ### 开箱即用
 
-NoneBot2 提供了使用便捷、具有交互式功能的命令行工具--`nb-cli`，使得初次接触 NoneBot2 时更容易上手。详细使用方法请参考各文档章节以及[使用脚手架](./start/nb-cli)。
+<!-- TODO: 教程链接 -->
+
+NoneBot2 提供了使用便捷、具有交互式功能的命令行工具--`nb-cli`，使得初次接触 NoneBot2 时更容易上手。使用方法请阅读本文档教程以及 [CLI 文档](https://cli.nonebot.dev/)。
 
 ### 插件系统
 
