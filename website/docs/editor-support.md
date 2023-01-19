@@ -5,7 +5,7 @@ description: 配置编辑器以获得最佳体验
 
 # 编辑器支持
 
-框架基于 [PEP484](https://www.python.org/dev/peps/pep-0484/)、[PEP 561](https://www.python.org/dev/peps/pep-0561/)、[PEP8](https://www.python.org/dev/peps/pep-0008/) 等规范进行开发并且是 **Fully Typed**。框架使用 `pyright`（`Pylance`）工具进行类型检查，确保代码可以被编辑器正确解析。
+框架基于 [PEP484](https://www.python.org/dev/peps/pep-0484/)、[PEP 561](https://www.python.org/dev/peps/pep-0561/)、[PEP8](https://www.python.org/dev/peps/pep-0008/) 等规范进行开发并且**拥有完整类型注解**。框架使用 `Pyright`（`Pylance`）工具进行类型检查，确保代码可以被编辑器正确解析。
 
 ## 编辑器推荐配置
 
