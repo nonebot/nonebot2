@@ -10,6 +10,7 @@ import Tag from "../Tag";
 
 export default function Card({
   module_name,
+  project_link,
   name,
   desc,
   author,
@@ -65,8 +66,15 @@ export default function Card({
           ))}
         </div>
       )}
+      {/* FIXME: full height */}
       {desc && (
         <div className="pb-4 text-sm font-normal opacity-60">{desc}</div>
+      )}
+      {project_link && (
+        <div className="my-2 text-sm font-normal opacity-60 font-mono">
+          <FontAwesomeIcon icon={["fas", "cube"]} className="mr-2" />
+          {project_link}
+        </div>
       )}
       {module_name && (
         <div className="my-2 text-sm font-normal opacity-60 font-mono">
@@ -74,6 +82,8 @@ export default function Card({
           {module_name}
         </div>
       )}
+      {/* TODO: add user avatar */}
+      {/* link: https://github.com/<username>.png */}
       {author && (
         <div className="my-2 text-sm font-normal opacity-60 font-mono">
           <FontAwesomeIcon icon={["fas", "user"]} className="mr-2" />

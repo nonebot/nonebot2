@@ -1,6 +1,6 @@
 ---
 sidebar_position: 0
-description: 创建一个 NoneBot2 项目
+description: 尝试使用 NoneBot2
 
 options:
   menu:
@@ -9,6 +9,7 @@ options:
 ---
 
 import Asciinema from "@site/src/components/Asciinema";
+import Messenger from "@site/src/components/Messenger";
 
 # 快速上手
 
@@ -82,11 +83,15 @@ nb create
    [?] 要使用哪些适配器? Console (基于终端的交互式适配器)
    [?] 立即安装依赖? (Y/n) Yes
    [?] 创建虚拟环境? (Y/n) Yes
-   ...
-   完成!
    ```
 
-<!-- TODO: builtin plugins -->
+4. 选择内置插件
+
+   ```bash
+   [?] 要使用哪些内置插件? echo
+   ```
+
+   这里我们选择 `echo` 插件作为示例。这是一个简单的复读回显插件，可以用于测试你的机器人是否正常运行。
 
 ## 运行项目
 
@@ -97,3 +102,14 @@ nb run
 ```
 
 你现在应该已经运行起来了你的第一个 NoneBot2 项目了！请注意，生成的项目中使用了 `FastAPI` 驱动器和 `Console` 适配器，你之后可以自行修改配置或安装其他适配器。
+
+## 尝试使用
+
+在项目运行起来后，`Console` 适配器会在你的终端启动交互模式，你可以直接在输入框中输入 `/echo hello world` 来测试你的机器人是否正常运行。
+
+<Messenger
+  msgs={[
+    { position: "right", msg: "/echo hello world" },
+    { position: "left", msg: "hello world" },
+  ]}
+/>
