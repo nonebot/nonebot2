@@ -4111,5 +4111,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "criminal_dance",
+    "project_link": "criminal-dance",
+    "name": "犯人在跳舞",
+    "desc": "文字版桌游，犯人在跳舞",
+    "author": "bridgeL",
+    "homepage": "https://github.com/bridgeL/criminal_dance",
+    "tags": [
+      {
+        "label": "t:文字版桌游",
+        "color": "#e36306"
+      },
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
