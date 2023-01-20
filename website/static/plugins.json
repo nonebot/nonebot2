@@ -283,21 +283,6 @@
     "is_official": true
   },
   {
-    "module_name": "nonebot_plugin_puppet",
-    "project_link": "nonebot-plugin-puppet",
-    "name": "nonebot_plugin_puppet",
-    "desc": "高度自定义的会话转接",
-    "author": "j1g5awi",
-    "homepage": "https://github.com/nonepkg/nonebot-plugin-puppet",
-    "tags": [
-      {
-        "label": "a:cqhttp",
-        "color": "#000000"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_mcstatus",
     "project_link": "nonebot-plugin-mcstatus",
     "name": "Minecraft 服务器状态查询",
