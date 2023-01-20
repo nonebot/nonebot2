@@ -121,7 +121,7 @@ const config = {
             icon: ["fas", "book"],
             items: [
               { label: "Introduction", to: "/docs/" },
-              { label: "QuickStart", to: "/docs/tutorial/quick-start" },
+              // { label: "QuickStart", to: "/docs/tutorial/quick-start" },
               { label: "Changelog", to: "/changelog" },
             ],
           },
