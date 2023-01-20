@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 0
 description: 创建一个 NoneBot 项目
 
 options:

@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 description: 配置编辑器以获得最佳体验
 ---
 

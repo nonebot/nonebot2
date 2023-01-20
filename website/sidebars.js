@@ -15,9 +15,12 @@
 const sidebars = {
   // By default, Docusaurus generates a sidebar from the docs folder structure
   tutorial: [
-    "index",
-    "editor-support",
-    "question",
+    {
+      type: "category",
+      label: "开始",
+      collapsible: false,
+      items: ["index", "quick-start", "editor-support", "question"],
+    },
     // {
     //   type: "category",
     //   label: "开始",

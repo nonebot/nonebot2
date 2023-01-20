@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 1
 description: NoneBot 机器人构成及基本使用
 
 options:

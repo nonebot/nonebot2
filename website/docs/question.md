@@ -1,9 +1,9 @@
 ---
-sidebar-position: 2
-description: 如何获取帮助
+sidebar-position: 3
+description: 遇到问题如何获取帮助
 ---
 
-# 遇到问题
+# 获取帮助
 
 如果在安装或者开发过程中遇到了任何问题，可以通过以下方式解决：
 
