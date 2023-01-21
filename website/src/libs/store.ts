@@ -17,14 +17,16 @@ export type Obj = {
 };
 
 export function filterObjs(filter: string, objs: Obj[]): Obj[] {
+  let filterLower = filter.toLowerCase();
   return objs.filter((o) => {
     return (
-      o.module_name?.toLowerCase().includes(filter) ||
-      o.project_link?.toLowerCase().includes(filter) ||
-      o.name.toLowerCase().includes(filter) ||
-      o.desc.toLowerCase().includes(filter) ||
-      o.author.toLowerCase().includes(filter) ||
-      o.tags.filter((t) => t.label.toLowerCase().includes(filter)).length > 0
+      o.module_name?.toLowerCase().includes(filterLower) ||
+      o.project_link?.toLowerCase().includes(filterLower) ||
+      o.name.toLowerCase().includes(filterLower) ||
+      o.desc.toLowerCase().includes(filterLower) ||
+      o.author.toLowerCase().includes(filterLower) ||
+      o.tags.filter((t) => t.label.toLowerCase().includes(filterLower)).length >
+        0
     );
   });
 }
