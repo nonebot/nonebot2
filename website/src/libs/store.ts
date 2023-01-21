@@ -19,12 +19,12 @@ export type Obj = {
 export function filterObjs(filter: string, objs: Obj[]): Obj[] {
   return objs.filter((o) => {
     return (
-      o.module_name?.includes(filter) ||
-      o.project_link?.includes(filter) ||
-      o.name.includes(filter) ||
-      o.desc.includes(filter) ||
-      o.author.includes(filter) ||
-      o.tags.filter((t) => t.label.includes(filter)).length > 0
+      o.module_name?.toLowerCase().includes(filter) ||
+      o.project_link?.toLowerCase().includes(filter) ||
+      o.name.toLowerCase().includes(filter) ||
+      o.desc.toLowerCase().includes(filter) ||
+      o.author.toLowerCase().includes(filter) ||
+      o.tags.filter((t) => t.label.toLowerCase().includes(filter)).length > 0
     );
   });
 }
