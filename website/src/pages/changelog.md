@@ -124,6 +124,7 @@ toc_max_heading_level: 2
 
 ### 🍻 适配器发布
 
+- Adapter: BilibiliLive [@yanyongyu](https://github.com/yanyongyu) ([#1617](https://github.com/nonebot/nonebot2/pull/1617))
 - Adapter: Spigot [@yanyongyu](https://github.com/yanyongyu) ([#1612](https://github.com/nonebot/nonebot2/pull/1612))
 
 ## v2.0.0rc2
