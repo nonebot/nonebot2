@@ -3846,5 +3846,15 @@
     "homepage": "https://github.com/limnium/nonebot_plugin_wantwords",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_pvz",
+    "project_link": "nonebot-plugin-pvz",
+    "name": "植物大战僵尸小游戏",
+    "desc": "通过签到获取金币购买植物或者僵尸，放置植物在草坪上抵御入侵，或者进行僵尸入侵来吃掉别人的脑子",
+    "author": "longchengguxiao",
+    "homepage": "https://github.com/longchengguxiao/nonebot_plugin_pvz",
+    "tags": [],
+    "is_official": false
   }
 ]
