@@ -119,6 +119,10 @@ toc_max_heading_level: 2
 - Bot: 辞辞(cici)Bot [@yanyongyu](https://github.com/yanyongyu) ([#1583](https://github.com/nonebot/nonebot2/pull/1583))
 - Bot: RanBot [@yanyongyu](https://github.com/yanyongyu) ([#1511](https://github.com/nonebot/nonebot2/pull/1511))
 
+### 🍻 适配器发布
+
+- Adapter: Spigot [@yanyongyu](https://github.com/yanyongyu) ([#1612](https://github.com/nonebot/nonebot2/pull/1612))
+
 ## v2.0.0rc2
 
 ### 💥 破坏性变更
