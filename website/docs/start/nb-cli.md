@@ -10,10 +10,12 @@ options:
 
 # 使用脚手架
 
+`nb-cli` 详细参考文档已移至 <https://cli.nonebot.dev>。
+
 ## 安装
 
 ```bash
-pip install nb-cli
+pipx install nb-cli
 ```
 
 ## 初次使用
@@ -21,14 +23,11 @@ pip install nb-cli
 在安装完成之后，即可在命令行使用 nb-cli 的命令 `nb` 进行开发：
 
 ```bash
-# 直接使用 nb 命令
 nb
-# 或使用 Python 执行 module
-python -m nb_cli
 ```
 
 :::warning 注意
-通常情况下，你可以直接在命令行使用 `nb` 命令，但如果命令行出现 `Command not found` 错误，这是由于环境变量 `PATH` 没有正确配置或未配置导致的，可以使用第二种方式代替。
+通常情况下，你可以直接在命令行使用 `nb` 命令。如果出现无法找到命令的情况（例如：`Command not found`），请参考 [pipx 文档](https://pypa.github.io/pipx/) 检查你的环境变量。
 :::
 
 ## 使用方式
