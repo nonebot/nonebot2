@@ -71,7 +71,7 @@ COMMAND_SEP=["."]  # 配置命令分割字符
 
 ## 创建入口文件
 
-入口文件（ Entrypoint ）顾名思义，是用来初始化并运行机器人的 Python 文件。
+入口文件（ Entrypoint ）顾名思义，是用来初始化并运行机器人的 Python 文件。入口文件需要完成框架的初始化、注册适配器、加载插件等工作。
 
 :::tip 提示
 如果你使用 `nb-cli` 创建项目，入口文件不会被创建，该文件功能会被 `nb run` 命令代替。
@@ -83,8 +83,10 @@ COMMAND_SEP=["."]  # 配置命令分割字符
 import nonebot
 from nonebot.adapters.console import Adapter as ConsoleAdapter  # 避免重复命名
 
+# 初始化 NoneBot
 nonebot.init()
 
+# 注册适配器
 driver = nonebot.get_driver()
 driver.register_adapter(ConsoleAdapter)
 
