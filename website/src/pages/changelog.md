@@ -28,6 +28,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修改更新部分文档 [@yanyongyu](https://github.com/yanyongyu) ([#1615](https://github.com/nonebot/nonebot2/pull/1615))
 - Docs: 商店搜索大小写不敏感 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1609](https://github.com/nonebot/nonebot2/pull/1609))
 - Docs: 更新测试文档中的连接方式\&细化插件发布描述 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1504](https://github.com/nonebot/nonebot2/pull/1504))
 - Docs: 修复文档中部分超链接跳转到 `/store.html` 的问题 [@yzyyz1387](https://github.com/yzyyz1387) ([#1470](https://github.com/nonebot/nonebot2/pull/1470))
