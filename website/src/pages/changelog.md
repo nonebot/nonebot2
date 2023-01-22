@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 💫 杂项
+
+- Docs: 移除商店中的过期插件 2023 [@j1g5awi](https://github.com/j1g5awi) ([#1610](https://github.com/nonebot/nonebot2/pull/1610))
+
 ## v2.0.0rc3
 
 ### 🚀 新功能
