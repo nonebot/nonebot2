@@ -61,6 +61,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 反向词典 [@yanyongyu](https://github.com/yanyongyu) ([#1619](https://github.com/nonebot/nonebot2/pull/1619))
 - Plugin: PicMCStat [@yanyongyu](https://github.com/yanyongyu) ([#1614](https://github.com/nonebot/nonebot2/pull/1614))
 - Plugin: 犯人在跳舞 [@yanyongyu](https://github.com/yanyongyu) ([#1608](https://github.com/nonebot/nonebot2/pull/1608))
 - Plugin: 喵喵自记菜谱 [@yanyongyu](https://github.com/yanyongyu) ([#1599](https://github.com/nonebot/nonebot2/pull/1599))
