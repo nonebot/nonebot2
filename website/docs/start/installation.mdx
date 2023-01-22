@@ -27,12 +27,20 @@ pip uninstall nonebot
 
 ## 通过脚手架安装（推荐）
 
-1. （可选）使用你喜欢的 Python 环境管理工具（如 Poetry、venv、Conda 等）创建新的虚拟环境
-2. 使用 pip 或其他包管理工具安装 nb-cli，NoneBot2 会作为其依赖被一起安装
+1. 安装 [pipx](https://pypa.github.io/pipx/)
 
    ```bash
-   pip install nb-cli
+   python -m pip install --user pipx
+   python -m pipx ensurepath
    ```
+
+2. 安装脚手架
+
+   ```bash
+   pipx install nb-cli
+   ```
+
+安装完成后，你可以在命令行使用 `nb` 命令来使用脚手架。如果出现无法找到命令的情况（例如：`Command not found`），请参考 [pipx 文档](https://pypa.github.io/pipx/) 检查你的环境变量。
 
 <Asciinema
   url="https://asciinema.org/a/464654.cast"
