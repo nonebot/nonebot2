@@ -338,6 +338,16 @@
     "is_official": false
   },
   {
+    "module_name": "nonebot_plugin_russian",
+    "project_link": "nonebot-plugin-russian",
+    "name": "nonebot_plugin_russian",
+    "desc": "群内小游戏，使用金币赌注的俄罗斯轮盘",
+    "author": "HibiKier",
+    "homepage": "https://github.com/HibiKier/nonebot_plugin_russian",
+    "tags": [],
+    "is_official": false
+  },
+  {
     "module_name": "nonebot_plugin_setu",
     "project_link": "nonebot-plugin-setu",
     "name": "nonebot_plugin_setu",
