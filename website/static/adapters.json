@@ -128,5 +128,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot.adapter.bilibili",
+    "project_link": "nonebot-adapter-bilibili",
+    "name": "BilibiliLive",
+    "desc": "b站直播间ws协议",
+    "author": "wwweww",
+    "homepage": "https://github.com/wwweww/adapter-bilibili",
+    "tags": [],
+    "is_official": false
   }
 ]
