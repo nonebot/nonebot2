@@ -61,6 +61,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: PicMCStat [@yanyongyu](https://github.com/yanyongyu) ([#1614](https://github.com/nonebot/nonebot2/pull/1614))
 - Plugin: 犯人在跳舞 [@yanyongyu](https://github.com/yanyongyu) ([#1608](https://github.com/nonebot/nonebot2/pull/1608))
 - Plugin: 喵喵自记菜谱 [@yanyongyu](https://github.com/yanyongyu) ([#1599](https://github.com/nonebot/nonebot2/pull/1599))
 - Plugin: 语音功能 [@yanyongyu](https://github.com/yanyongyu) ([#1597](https://github.com/nonebot/nonebot2/pull/1597))
