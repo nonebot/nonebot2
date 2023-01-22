@@ -136,7 +136,12 @@
     "desc": "b站直播间ws协议",
     "author": "wwweww",
     "homepage": "https://github.com/wwweww/adapter-bilibili",
-    "tags": [],
+    "tags": [
+      {
+        "label": "BiliBili Live",
+        "color": "#00aeec"
+      }
+    ],
     "is_official": false
   }
 ]
