@@ -4130,5 +4130,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_picmcstat",
+    "project_link": "nonebot-plugin-picmcstat",
+    "name": "PicMCStat",
+    "desc": "将 Minecraft 服务器的 MOTD 信息绘制为一张图片",
+    "author": "lgc2333",
+    "homepage": "https://github.com/lgc2333/nonebot-plugin-picmcstat",
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#7fbf55"
+      }
+    ],
+    "is_official": false
   }
 ]
