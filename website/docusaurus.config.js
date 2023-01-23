@@ -67,7 +67,12 @@ const config = {
           {
             label: "指南",
             type: "docsMenu",
-            category: "guide",
+            category: "tutorial",
+          },
+          {
+            label: "深入",
+            type: "docsMenu",
+            category: "appendices",
           },
           // {
           //   label: "进阶",

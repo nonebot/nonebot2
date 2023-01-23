@@ -5,7 +5,7 @@ description: NoneBot 机器人构成及基本使用
 options:
   menu:
     weight: 30
-    category: guide
+    category: tutorial
 ---
 
 # 机器人的构成

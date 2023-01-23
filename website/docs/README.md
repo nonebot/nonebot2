@@ -22,7 +22,7 @@ NoneBot 参考 [PEP 484](https://www.python.org/dev/peps/pep-0484/) 等 PEP 完�
 
 ### 开箱即用
 
-NoneBot 提供了使用便捷、具有交互式功能的命令行工具--`nb-cli`，使得初次接触 NoneBot 时更容易上手。使用方法请阅读本文档[教程](./quick-start.mdx)以及 [CLI 文档](https://cli.nonebot.dev/)。
+NoneBot 提供了使用便捷、具有交互式功能的命令行工具--`nb-cli`，使得初次接触 NoneBot 时更容易上手。使用方法请阅读本文档[指南](./quick-start.mdx)以及 [CLI 文档](https://cli.nonebot.dev/)。
 
 ### 插件系统
 

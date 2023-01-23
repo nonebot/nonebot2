@@ -5,7 +5,7 @@ description: 创建一个 NoneBot 项目
 options:
   menu:
     weight: 20
-    category: guide
+    category: tutorial
 ---
 
 # 创建一个项目
