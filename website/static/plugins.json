@@ -3856,5 +3856,15 @@
     "homepage": "https://github.com/longchengguxiao/nonebot_plugin_pvz",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_molar_mass",
+    "project_link": "nonebot-plugin-molar-mass",
+    "name": "摩尔质量计算器",
+    "desc": "帮助中学生计算摩尔质量或相对分子质量的小工具。",
+    "author": "kifuan",
+    "homepage": "https://github.com/kifuan/nonebot-plugin-molar-mass",
+    "tags": [],
+    "is_official": false
   }
 ]
