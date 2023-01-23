@@ -22,9 +22,7 @@ NoneBot 参考 [PEP 484](https://www.python.org/dev/peps/pep-0484/) 等 PEP 完�
 
 ### 开箱即用
 
-<!-- TODO: 教程链接 -->
-
-NoneBot 提供了使用便捷、具有交互式功能的命令行工具--`nb-cli`，使得初次接触 NoneBot 时更容易上手。使用方法请阅读本文档教程以及 [CLI 文档](https://cli.nonebot.dev/)。
+NoneBot 提供了使用便捷、具有交互式功能的命令行工具--`nb-cli`，使得初次接触 NoneBot 时更容易上手。使用方法请阅读本文档[教程](./quick-start.mdx)以及 [CLI 文档](https://cli.nonebot.dev/)。
 
 ### 插件系统
 
@@ -45,7 +43,7 @@ NoneBot 采用了一套自行定义的依赖注入系统，可以让事件的处
 - 这部分代码拥有共享的逻辑（同样的代码逻辑多次重复）
 - 共享数据库以及网络请求连接会话
   - 比如 `httpx.AsyncClient`、`aiohttp.ClientSession` 和 `sqlalchemy.Session`
-- 用户权限检查以及认证
+- 机器人用户权限检查以及认证
 - 还有更多...
 
 它在完成上述工作的同时，还能尽量减少代码的耦合和重复
