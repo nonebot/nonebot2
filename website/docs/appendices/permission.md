@@ -1,10 +1,10 @@
 ---
-sidebar_position: 2
+sidebar_position: 5
 description: 控制事件响应器的权限
 
 options:
   menu:
-    weight: 30
+    weight: 60
     category: appendices
 ---
 

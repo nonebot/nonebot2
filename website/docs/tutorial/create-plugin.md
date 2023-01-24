@@ -14,7 +14,7 @@ options:
 
 ## 插件结构
 
-在 NoneBot 中，插件即是 Python 的一个[模块 `module`](https://docs.python.org/3/glossary.html#term-module)。NoneBot 会在导入时对这些模块做一些特殊的处理使得他们成为一个插件。插件间应尽量减少耦合，可以进行有限制的插件之间相互调用，NoneBot 能够正确解析插件间的依赖关系。
+在 NoneBot 中，插件即是 Python 的一个[模块 `module`](https://docs.python.org/zh-cn/3/glossary.html#term-module)。NoneBot 会在导入时对这些模块做一些特殊的处理使得他们成为一个插件。插件间应尽量减少耦合，可以进行有限制的插件之间相互调用，NoneBot 能够正确解析插件间的依赖关系。
 
 ### 单文件插件
 
@@ -29,7 +29,7 @@ options:
 
 ### 包插件
 
-一个包含 `__init__.py` 的文件夹即是一个常规 Python [包 `package`](https://docs.python.org/3/glossary.html#term-regular-package)，例如创建一个 `foo` 文件夹：
+一个包含 `__init__.py` 的文件夹即是一个常规 Python [包 `package`](https://docs.python.org/zh-cn/3/glossary.html#term-regular-package)，例如创建一个 `foo` 文件夹：
 
 ```tree title=Project
 📂 plugins

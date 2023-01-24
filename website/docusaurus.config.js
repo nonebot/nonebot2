@@ -74,11 +74,11 @@ const config = {
             type: "docsMenu",
             category: "appendices",
           },
-          // {
-          //   label: "进阶",
-          //   type: "docsMenu",
-          //   category: "advanced",
-          // },
+          {
+            label: "进阶",
+            type: "docsMenu",
+            category: "advanced",
+          },
           {
             label: "API",
             type: "docLink",
