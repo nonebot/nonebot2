@@ -3866,5 +3866,20 @@
     "homepage": "https://github.com/kifuan/nonebot-plugin-molar-mass",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_report_manager",
+    "project_link": "nonebot-plugin-report-manager",
+    "name": "对话超管",
+    "desc": "群员通过Bot对话超管",
+    "author": "Hiroshi12138",
+    "homepage": "https://github.com/Hiroshi12138/nonebot_plugin_report_manager",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#a95454"
+      }
+    ],
+    "is_official": false
   }
 ]
