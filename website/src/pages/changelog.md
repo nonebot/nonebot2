@@ -22,6 +22,10 @@ toc_max_heading_level: 2
 - Plugin: 摩尔质量计算器 [@yanyongyu](https://github.com/yanyongyu) ([#1625](https://github.com/nonebot/nonebot2/pull/1625))
 - Plugin: 植物大战僵尸小游戏 [@yanyongyu](https://github.com/yanyongyu) ([#1622](https://github.com/nonebot/nonebot2/pull/1622))
 
+### 🍻 机器人发布
+
+- Bot: 青岚 [@yanyongyu](https://github.com/yanyongyu) ([#1630](https://github.com/nonebot/nonebot2/pull/1630))
+
 ## v2.0.0rc3
 
 ### 🚀 新功能
