@@ -360,5 +360,18 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "青岚",
+    "desc": "基于NoneBot的与Minecraft Server互通消息的机器人",
+    "author": "17TheWord",
+    "homepage": "https://github.com/17TheWord/qinglan_bot",
+    "tags": [
+      {
+        "label": "MineCraft",
+        "color": "#4ef0ea"
+      }
+    ],
+    "is_official": false
   }
 ]
