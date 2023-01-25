@@ -7,12 +7,17 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 添加端口配置项约束验证 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1632](https://github.com/nonebot/nonebot2/pull/1632))
+
 ### 💫 杂项
 
 - Docs: 移除商店中的过期插件 2023 [@j1g5awi](https://github.com/j1g5awi) ([#1610](https://github.com/nonebot/nonebot2/pull/1610))
 
 ### 🍻 插件发布
 
+- Plugin: 对话超管 [@yanyongyu](https://github.com/yanyongyu) ([#1627](https://github.com/nonebot/nonebot2/pull/1627))
 - Plugin: 摩尔质量计算器 [@yanyongyu](https://github.com/yanyongyu) ([#1625](https://github.com/nonebot/nonebot2/pull/1625))
 - Plugin: 植物大战僵尸小游戏 [@yanyongyu](https://github.com/yanyongyu) ([#1622](https://github.com/nonebot/nonebot2/pull/1622))
 
