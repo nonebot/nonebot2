@@ -3896,5 +3896,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_easy_group_manager",
+    "project_link": "nonebot-plugin-easy-group-manager",
+    "name": "简易群管女生自用99新",
+    "desc": "简单的群管插件，BOT不是群主也可以设置管理员啦……",
+    "author": "zhulinyv",
+    "homepage": "https://github.com/zhulinyv/nonebot_plugin_easy_group_manager",
+    "tags": [
+      {
+        "label": "群管",
+        "color": "#1eb262"
+      },
+      {
+        "label": "女生自用",
+        "color": "#b21e82"
+      }
+    ],
+    "is_official": false
   }
 ]
