@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 简易群管女生自用 99 新 [@yanyongyu](https://github.com/yanyongyu) ([#1635](https://github.com/nonebot/nonebot2/pull/1635))
 - Plugin: 青岚 [@yanyongyu](https://github.com/yanyongyu) ([#1631](https://github.com/nonebot/nonebot2/pull/1631))
 - Plugin: 对话超管 [@yanyongyu](https://github.com/yanyongyu) ([#1627](https://github.com/nonebot/nonebot2/pull/1627))
 - Plugin: 摩尔质量计算器 [@yanyongyu](https://github.com/yanyongyu) ([#1625](https://github.com/nonebot/nonebot2/pull/1625))
