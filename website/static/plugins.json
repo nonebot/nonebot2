@@ -3961,5 +3961,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-mcport",
+    "project_link": "nonebot-plugin-mcport",
+    "name": "nonebot-plugin-mcport",
+    "desc": "我的世界JAVA服务器通过RCON连接远程执行命令",
+    "author": "Proviasw",
+    "homepage": "https://github.com/Proviasw/nonebot-plugin-mcport",
+    "tags": [],
+    "is_official": false
   }
 ]
