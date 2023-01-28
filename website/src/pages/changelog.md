@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-mcport [@yanyongyu](https://github.com/yanyongyu) ([#1640](https://github.com/nonebot/nonebot2/pull/1640))
 - Plugin: Alconna 命令工具 [@yanyongyu](https://github.com/yanyongyu) ([#1639](https://github.com/nonebot/nonebot2/pull/1639))
 - Plugin: Group_Link_Guild [@yanyongyu](https://github.com/yanyongyu) ([#1637](https://github.com/nonebot/nonebot2/pull/1637))
 - Plugin: 简易群管女生自用 99 新 [@yanyongyu](https://github.com/yanyongyu) ([#1635](https://github.com/nonebot/nonebot2/pull/1635))
