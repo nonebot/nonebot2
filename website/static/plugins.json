@@ -3971,5 +3971,20 @@
     "homepage": "https://github.com/Proviasw/nonebot-plugin-mcport",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_xdu_support",
+    "project_link": "nonebot_plugin_xdu_support",
+    "name": "XDU校园服务",
+    "desc": "Nonebot2插件，提供基础的西电校园服务，如课表提醒，体育打卡查询及提醒，晨午晚检打卡和马原测试等功能。",
+    "author": "longchengguxiao",
+    "homepage": "https://github.com/longchengguxiao/nonebot_plugin_xdu_support",
+    "tags": [
+      {
+        "label": "大学校园",
+        "color": "#52b5ea"
+      }
+    ],
+    "is_official": false
   }
 ]
