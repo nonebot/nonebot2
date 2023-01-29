@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: XDU 校园服务 [@yanyongyu](https://github.com/yanyongyu) ([#1642](https://github.com/nonebot/nonebot2/pull/1642))
 - Plugin: nonebot-plugin-mcport [@yanyongyu](https://github.com/yanyongyu) ([#1640](https://github.com/nonebot/nonebot2/pull/1640))
 - Plugin: Alconna 命令工具 [@yanyongyu](https://github.com/yanyongyu) ([#1639](https://github.com/nonebot/nonebot2/pull/1639))
 - Plugin: Group_Link_Guild [@yanyongyu](https://github.com/yanyongyu) ([#1637](https://github.com/nonebot/nonebot2/pull/1637))
