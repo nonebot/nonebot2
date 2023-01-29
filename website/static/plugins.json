@@ -4001,5 +4001,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_dog",
+    "project_link": "nonebot-plugin-dog",
+    "name": "舔狗日记",
+    "desc": "随机发送一句舔狗日记文案",
+    "author": "Reversedeer",
+    "homepage": "https://github.com/Reversedeer/nonebot_plugin_dog",
+    "tags": [
+      {
+        "label": "a:nonebot",
+        "color": "#c61b1b"
+      }
+    ],
+    "is_official": false
   }
 ]
