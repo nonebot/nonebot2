@@ -3986,5 +3986,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_zyk_lightNVL",
+    "project_link": "nonebot-plugin-zyk-lightNVL",
+    "name": "查找轻小说",
+    "desc": "基于哔哩轻小说网站的爬虫插件",
+    "author": "ZYKsslm",
+    "homepage": "https://github.com/ZYKsslm/nonebot_plugin_zyk_lightNVL",
+    "tags": [
+      {
+        "label": "轻小说",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
