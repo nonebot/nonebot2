@@ -4016,5 +4016,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_uuid",
+    "project_link": "nonebot-plugin-uuid",
+    "name": "uuid生成器",
+    "desc": "通过 uuid4 与 uuid5 生成 uuid ，并且支持快速去除短横线",
+    "author": "ZombieFly",
+    "homepage": "https://github.com/ZombieFly/nonebot-plugin-uuid",
+    "tags": [
+      {
+        "label": "工具",
+        "color": "#39c5bb"
+      }
+    ],
+    "is_official": false
   }
 ]
