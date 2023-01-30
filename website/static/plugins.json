@@ -4031,5 +4031,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_naturel_gpt",
+    "project_link": "nonebot-plugin-naturel-gpt",
+    "name": "更人性化的GPT-Ai聊天插件",
+    "desc": "一个基于NoneBot框架的Ai聊天插件，对接OpenAi文本生成接口，优化了群聊场景的上下文支持。",
+    "author": "KroMiose",
+    "homepage": "https://github.com/KroMiose/nonebot_plugin_naturel_gpt",
+    "tags": [
+      {
+        "label": "GPT3",
+        "color": "#66ccff"
+      },
+      {
+        "label": "OpenAi",
+        "color": "#cc66ff"
+      }
+    ],
+    "is_official": false
   }
 ]
