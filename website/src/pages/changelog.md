@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 舔狗日记 [@yanyongyu](https://github.com/yanyongyu) ([#1646](https://github.com/nonebot/nonebot2/pull/1646))
 - Plugin: 查找轻小说 [@yanyongyu](https://github.com/yanyongyu) ([#1644](https://github.com/nonebot/nonebot2/pull/1644))
 - Plugin: XDU 校园服务 [@yanyongyu](https://github.com/yanyongyu) ([#1642](https://github.com/nonebot/nonebot2/pull/1642))
 - Plugin: nonebot-plugin-mcport [@yanyongyu](https://github.com/yanyongyu) ([#1640](https://github.com/nonebot/nonebot2/pull/1640))
