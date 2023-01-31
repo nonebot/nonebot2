@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 更人性化的 GPT-Ai 聊天插件 [@yanyongyu](https://github.com/yanyongyu) ([#1651](https://github.com/nonebot/nonebot2/pull/1651))
 - Plugin: uuid 生成器 [@yanyongyu](https://github.com/yanyongyu) ([#1649](https://github.com/nonebot/nonebot2/pull/1649))
 - Plugin: 舔狗日记 [@yanyongyu](https://github.com/yanyongyu) ([#1646](https://github.com/nonebot/nonebot2/pull/1646))
 - Plugin: 查找轻小说 [@yanyongyu](https://github.com/yanyongyu) ([#1644](https://github.com/nonebot/nonebot2/pull/1644))
