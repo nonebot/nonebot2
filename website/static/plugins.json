@@ -4050,5 +4050,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_impact",
+    "project_link": "nonebot-plugin-impact",
+    "name": "impact淫趴",
+    "desc": "让群友们眼前一黑的nonebot2淫趴插件",
+    "author": "Special-Week",
+    "homepage": "https://github.com/Special-Week/nonebot_plugin_impact",
+    "tags": [],
+    "is_official": false
   }
 ]
