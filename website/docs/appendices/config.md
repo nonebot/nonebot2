@@ -84,6 +84,8 @@ MULTILINE_CONFIG='
   }
 ]
 '
+EMPTY_CONFIG=
+NULL_CONFIG
 ```
 
 将被解析为：
@@ -94,6 +96,8 @@ dotenv_config = {
     "list_config": [1, 2, 3],
     "dict_config": {"key": "value"},
     "multiline_config": [{"item_key": "item_value"}],
+    "empty_config": "",
+    "null_config": None
 }
 ```
 
@@ -172,7 +176,7 @@ superusers = config.superusers
 
 在一个涉及大量配置项的项目中，通过直接读取配置项的方式显然并不高效。同时，由于额外的全局配置项没有预先定义，开发时编辑器将无法提示字段与类型，并且运行时没有对配置项直接进行合法性检查。那么就需要一种方式来规范定义插件配置项。
 
-在 NoneBot 中，我们使用强大高效的 `pydantic` 来定义配置模型，这个模型可以被用于配置的读取和类型检查等。例如在插件目录中新建 `config.py` 来定义一个模型：
+在 NoneBot 中，我们使用强大高效的 `pydantic` 来定义配置模型，这个模型可以被用于配置的读取和类型检查等。例如在 `weather` 插件目录中新建 `config.py` 来定义一个模型：
 
 ```python title=weather/config.py
 from pydantic import BaseModel, validator
