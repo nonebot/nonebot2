@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: MC Ping [@yanyongyu](https://github.com/yanyongyu) ([#1656](https://github.com/nonebot/nonebot2/pull/1656))
 - Plugin: impact 淫趴 [@yanyongyu](https://github.com/yanyongyu) ([#1653](https://github.com/nonebot/nonebot2/pull/1653))
 - Plugin: 更人性化的 GPT-Ai 聊天插件 [@yanyongyu](https://github.com/yanyongyu) ([#1651](https://github.com/nonebot/nonebot2/pull/1651))
 - Plugin: uuid 生成器 [@yanyongyu](https://github.com/yanyongyu) ([#1649](https://github.com/nonebot/nonebot2/pull/1649))
