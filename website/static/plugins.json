@@ -4060,5 +4060,24 @@
     "homepage": "https://github.com/Special-Week/nonebot_plugin_impact",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mcping",
+    "project_link": "nonebot-plugin-mcping",
+    "name": "MC Ping",
+    "desc": "查询MineCraft服务器状态并返回图片的插件，支持JE/BE服务端",
+    "author": "17TheWord",
+    "homepage": "https://github.com/17TheWord/nonebot-plugin-mcping",
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#47d754"
+      },
+      {
+        "label": "服务器状态",
+        "color": "#d7cd47"
+      }
+    ],
+    "is_official": false
   }
 ]
