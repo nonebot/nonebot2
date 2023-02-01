@@ -195,14 +195,22 @@ class Config(BaseModel):
 
 在 `config.py` 中，我们定义了一个 `Config` 类，它继承自 `pydantic.BaseModel`，并定义了一些配置项。在 `Config` 类中，我们还定义了一个 `check_priority` 方法，它用于检查 `weather_command_priority` 配置项的合法性。更多关于 `pydantic` 的编写方式，可以参考 [pydantic 官方文档](https://docs.pydantic.dev/)。
 
-在定义好配置模型后，我们可以在插件加载时获取全局配置，导入插件自身的配置模型：
+在定义好配置模型后，我们可以在插件加载时获取全局配置，导入插件自身的配置模型并使用：
 
-```python title=weather/__init__.py
+```python {5,11} title=weather/__init__.py
 from nonebot import get_driver
 
 from .config import Config
 
 plugin_config = Config.parse_obj(get_driver().config)
+
+weather = on_command(
+    "天气",
+    rule=to_me(),
+    aliases={"weather", "查天气"},
+    priority=plugin_config.weather_command_priority,
+    block=True,
+)
 ```
 
 然后，我们便可以从 `plugin_config` 中读取配置了，例如 `plugin_config.weather_api_key`。

@@ -1,0 +1,129 @@
+---
+sidebar_position: 2
+description: 更灵活的会话控制
+
+options:
+  menu:
+    weight: 30
+    category: appendices
+---
+
+# 会话控制
+
+import Messenger from "@site/src/components/Messenger";
+
+在[指南](../tutorial/event-data.mdx#使用依赖注入)的 `weather` 插件中，我们使用依赖注入获取了机器人用户发送的地名参数，并根据地名参数进行相应的回复。但是，一问一答的对话模式仅仅适用于简单的对话场景，如果我们想要实现更复杂的对话模式，就需要使用会话控制。
+
+## 询问并获取用户输入
+
+在 `weather` 插件中，我们对于用户未输入地名参数的情况直接回复了 `请输入地名` 并结束了事件流程。但是，这样用户体验并不好，需要重新输入指令和地名参数才能获取天气回复。我们现在来实现询问并获取用户地名参数的功能。
+
+### 询问用户
+
+我们可以使用事件响应器操作中的 `got` 装饰器来表示当前事件处理流程需要询问并获取用户输入的消息：
+
+```python {6} title=weather/__init__.py
+@weather.handle()
+async def handle_function(args: Message = CommandArg()):
+    if location := args.extract_plain_text():
+        await weather.finish(f"今天{location}的天气是...")
+
+@weather.got("location", prompt="请输入地名")
+async def got_location():
+    ...
+```
+
+在上面的代码中，我们使用 `got` 事件响应器操作来向用户发送 `prompt` 消息，并等待用户的回复。用户的回复消息将会被作为 `location` 参数存储于事件响应器状态中。
+
+:::tip 提示
+事件处理函数根据定义的顺序依次执行。
+:::
+
+### 获取用户输入
+
+在询问以及用户回复之后，我们就可以获取到我们需要的 `location` 参数了。我们使用 `ArgPlainText` 依赖注入来获取参数纯文本信息：
+
+```python {9} title=weather/__init__.py
+from nonebot.params import ArgPlainText
+
+@weather.handle()
+async def handle_function(args: Message = CommandArg()):
+    if location := args.extract_plain_text():
+        await weather.finish(f"今天{location}的天气是...")
+
+@weather.got("location", prompt="请输入地名")
+async def got_location(location: str = ArgPlainText()):
+    await weather.finish(f"今天{location}的天气是...")
+```
+
+<Messenger
+  msgs={[
+    { position: "right", msg: "/天气" },
+    { position: "left", msg: "请输入地名" },
+    { position: "right", msg: "北京" },
+    { position: "left", msg: "今天北京的天气是..." },
+  ]}
+/>
+
+在上面的代码中，我们在 `got_location` 函数中定义了一个依赖注入参数 `location`，他的值将会是用户回复的消息纯文本信息。获取到用户输入的地名参数后，我们就可以进行天气查询并回复了。
+
+:::tip 提示
+如果想要获取用户回复的消息对象 `Message` ，可以使用 `Arg` 依赖注入。
+:::
+
+### 跳过询问
+
+在上面的代码中，如果用户在输入天气指令时，同时提供了地名参数，我们直接回复了天气信息，这部分的逻辑是和询问用户地名参数之后的逻辑一致的。如果在复杂的业务场景下，我们希望这部分代码应该复用以减少代码冗余。我们可以使用事件响应器操作中的 `set_arg` 来主动设置一个参数：
+
+```python {4,6} title=weather/__init__.py
+from nonebot.matcher import Matcher
+
+@weather.handle()
+async def handle_function(matcher: Matcher, args: Message = CommandArg()):
+    if args.extract_plain_text():
+        matcher.set_arg("location", args)
+
+@weather.got("location", prompt="请输入地名")
+async def got_location(location: str = ArgPlainText()):
+    await weather.finish(f"今天{location}的天气是...")
+```
+
+请注意，设置参数需要使用依赖注入来获取 `Matcher` 实例以确保上下文正确，且参数值应为 `Message` 对象。
+
+在 `location` 参数被设置之后，`got` 事件响应器操作将不再会询问并等待用户的回复，而是直接进入 `got_location` 函数。
+
+## 请求重新输入
+
+在实际的业务场景中，用户的输入很有可能并非是我们所期望的，而结束事件处理流程让用户重新发送指令也不是一个好的体验。这时我们可以使用 `reject` 事件响应器操作来请求用户重新输入：
+
+```python {8,9} title=weather/__init__.py
+@weather.handle()
+async def handle_function(matcher: Matcher, args: Message = CommandArg()):
+    if args.extract_plain_text():
+        matcher.set_arg("location", args)
+
+@weather.got("location", prompt="请输入地名")
+async def got_location(location: str = ArgPlainText()):
+    if location not in ["北京", "上海", "广州", "深圳"]:
+        await weather.reject(f"你想查询的城市 {location} 暂不支持，请重新输入！")
+    await weather.finish(f"今天{location}的天气是...")
+```
+
+<Messenger
+  msgs={[
+    { position: "right", msg: "/天气" },
+    { position: "left", msg: "请输入地名" },
+    { position: "right", msg: "南京" },
+    { position: "left", msg: "你想查询的城市 南京 暂不支持，请重新输入！" },
+    { position: "right", msg: "北京" },
+    { position: "left", msg: "今天北京的天气是..." },
+  ]}
+/>
+
+在上面的代码中，我们在 `got_location` 函数中判断用户输入的地名是否在支持的城市列表中，如果不在，则使用 `reject` 事件响应器操作。操作将会向用户发送 `reject` 参数中的消息，并等待用户回复后，重新执行 `got_location` 函数。
+
+`reject` 事件响应器操作与 `finish` 类似，NoneBot 会在向机器人用户发送消息内容后抛出 `RejectedException` 异常来暂停事件响应流程以等待用户输入。也就是说，在 `reject` 被执行后，后续的程序同样是不会被执行的。
+
+<!-- FIXME: 事件处理进阶链接 -->
+
+更多事件响应器操作可参考[事件处理进阶](#)。

@@ -27,7 +27,7 @@ async def is_enable() -> bool:
     return plugin_config.weather_plugin_enabled
 
 
-weather = on_command("weather", rule=is_enable)
+weather = on_command("天气", rule=is_enable)
 ```
 
 在上面的代码中，我们定义了一个函数 `is_enable`，它会检查配置项 `weather_plugin_enabled` 是否为 `True`。这个函数 `is_enable` 即为一个 `RuleChecker`。
@@ -48,14 +48,14 @@ async def is_blacklisted(event: Event) -> bool:
 
 rule = Rule(is_enable, is_blacklisted)
 
-weather = on_command("weather", rule=rule)
+weather = on_command("天气", rule=rule)
 ```
 
 ## 合并响应规则
 
 在定义响应规则时，我们可以将规则进行细分，来更好地复用规则。而在使用时，我们需要合并多个规则。除了使用 `Rule` 对象来组合多个 `RuleChecker` 外，我们还可以对 `Rule` 对象进行合并。在原 `weather` 插件中，我们可以将 `rule=to_me()` 与 `rule=is_enable` 使用 `&` 运算符合并：
 
-```python {8} title=weather/__init__.py
+```python {10} title=weather/__init__.py
 from nonebot.rule import to_me
 
 plugin_config = Config.parse_obj(get_driver().config)
@@ -63,7 +63,13 @@ plugin_config = Config.parse_obj(get_driver().config)
 async def is_enable() -> bool:
     return plugin_config.weather_plugin_enabled
 
-weather = on_command("weather", rule=to_me() & is_enable)
+weather = on_command(
+    "天气",
+    rule=to_me() & is_enable,
+    aliases={"weather", "查天气"},
+    priority=plugin_config.weather_command_priority
+    block=True,
+)
 ```
 
 这样，`weather` 命令就只会在插件启用且在私聊或者 `@bot` 时才会响应。
