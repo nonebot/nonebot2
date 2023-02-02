@@ -4098,5 +4098,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_autoreply",
+    "project_link": "nonebot-plugin-autoreply",
+    "name": "AutoReply",
+    "desc": "一个简单的只有配置文件的无数据库自动回复插件，支持多种匹配模式",
+    "author": "lgc2333",
+    "homepage": "https://github.com/lgc2333/nonebot-plugin-autoreply/",
+    "tags": [
+      {
+        "label": "t:自动回复",
+        "color": "#ea881e"
+      }
+    ],
+    "is_official": false
   }
 ]
