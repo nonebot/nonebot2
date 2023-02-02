@@ -4079,5 +4079,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_b23",
+    "project_link": "nonebot-plugin-b23",
+    "name": "B站热搜",
+    "desc": "获取B站热搜",
+    "author": "eya46",
+    "homepage": "https://github.com/eya46/nonebot_plugin_b23",
+    "tags": [
+      {
+        "label": "t:bilibili",
+        "color": "#00aeec"
+      },
+      {
+        "label": "热搜",
+        "color": "#00aeec"
+      }
+    ],
+    "is_official": false
   }
 ]
