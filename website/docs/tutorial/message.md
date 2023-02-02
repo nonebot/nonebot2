@@ -225,11 +225,19 @@ msg.extend([MessageSegment.text("text")])
 - 多行富文本编排（包含图片,文字以及表情等）
 - 客制化（由 Bot 最终用户提供消息模板时）
 
-在事实上, 它的用法和 `str.format` 极为相近, 所以你在使用的时候, 总是可以参考[Python 文档](https://docs.python.org/zh-cn/3/library/stdtypes.html#str.format)来达到你想要的效果
+在事实上, 它的用法和 `str.format` 极为相近, 所以你在使用的时候, 总是可以参考[Python 文档](https://docs.python.org/zh-cn/3/library/stdtypes.html#str.format)来达到你想要的效果，这里给出几个简单的例子。
 
-这里给出几个简单的例子:
+默认情况下，消息模板采用 `str` 纯文本形式的格式化：
 
 ```python title=基础格式化用法
+>>> from nonebot.adapters import MessageTemplate
+>>> MessageTemplate("{} {}").format("hello", "world")
+'hello world'
+```
+
+如果 `Message.template` 构建消息模板，那么消息模板将采用消息序列形式的格式化，此时的消息将会是平台特定的：
+
+```python title=平台格式化用法
 >>> from nonebot.adapters.console import Message, MessageSegment
 >>> Message.template("{} {}").format("hello", "world")
 Message(
@@ -239,6 +247,8 @@ Message(
 )
 ```
 
+消息模板支持使用消息段进行格式化：
+
 ```python title=对消息段进行安全的拼接
 >>> from nonebot.adapters.console import Message, MessageSegment
 >>> Message.template("{}{}").format(MessageSegment.markdown("**markup**"), "world")
@@ -247,6 +257,8 @@ Message(
     MessageSegment(type='text', data={'text': 'world'})
 )
 ```
+
+消息模板同样支持使用消息序列作为模板：
 
 ```python title=以消息对象作为模板
 >>> from nonebot.adapters.console import Message, MessageSegment
@@ -260,6 +272,12 @@ Message(
     MessageSegment(type='text', data={'text': 'hello world'})
 )
 ```
+
+:::warning 注意
+只有消息序列中的文本类型消息段才能被格式化，其他类型的消息段将会原样添加。
+:::
+
+消息模板支持使用拓展控制符来控制消息段类型：
 
 ```python title=使用消息段的拓展控制符
 >>> from nonebot.adapters.console import Message, MessageSegment
