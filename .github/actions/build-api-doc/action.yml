@@ -5,7 +5,10 @@ runs:
   using: "composite"
   steps:
     - run: |
-        poetry run nb-autodoc nonebot
+        poetry run nb-autodoc nonebot \
+          -s nonebot.plugins \
+          -u nonebot.internal \
+          -u nonebot.internal.*
         cp -r ./build/nonebot/* ./website/docs/api/
         yarn prettier
       shell: bash
