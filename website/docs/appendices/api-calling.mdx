@@ -29,7 +29,7 @@ from nonebot.adapters.console import MessageSegment
 
 @weather.got("location", prompt=MessageSegment.emoji("question") + "请输入地名")
 async def got_location(location: str = ArgPlainText()):
-    await weather.finish(
+    result = await weather.send(
         MessageSegment.markdown(
             inspect.cleandoc(
                 f"""
@@ -54,6 +54,8 @@ async def got_location(location: str = ArgPlainText()):
 />
 
 在上面的示例中，我们使用了 `Console` 协议适配器提供的 `MessageSegment` 类来发送平台特定的消息 `emoji` 和 `markdown`。这两种消息可以显示在终端中，但是无法在其他平台上使用。在事件响应器操作中，我们可以使用 `str`、消息序列、消息段、消息模板四种类型来发送消息，但其中只有 `str` 和[纯文本形式的消息模板类型](../tutorial/message.md#使用消息模板)消息可以在所有平台上使用。
+
+`send` 事件响应器操作实际上是由协议适配器通过调用平台 API 来实现的，通常会将 API 调用的结果作为返回值返回。
 
 ## 调用平台 API
 
@@ -111,7 +113,7 @@ from nonebot.adapters.console import Bot, MessageSegment
 
 @weather.got("location", prompt=MessageSegment.emoji("question") + "请输入地名")
 async def got_location(bot: Bot, location: str = ArgPlainText()):
-    await weather.finish(
+    await weather.send(
         MessageSegment.markdown(
             inspect.cleandoc(
                 f"""
