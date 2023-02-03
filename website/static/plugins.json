@@ -4113,5 +4113,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_setu_collection",
+    "project_link": "nonebot-plugin-setu-collection",
+    "name": "我要一张xx涩图",
+    "desc": "从多个api获取色图并根据场景整合的色图插件",
+    "author": "KarisAya",
+    "homepage": "https://github.com/KarisAya/nonebot_plugin_setu_collection",
+    "tags": [
+      {
+        "label": "LoliconAPI",
+        "color": "#5adba8"
+      },
+      {
+        "label": "色图",
+        "color": "#7ab2e1"
+      }
+    ],
+    "is_official": false
   }
 ]
