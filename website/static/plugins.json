@@ -4147,5 +4147,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_jrrp2",
+    "project_link": "nonebot-plugin-jrrp2",
+    "name": "每日人品2",
+    "desc": "带数据库可查询历史平均人品的jrrp插件",
+    "author": "Rene8028",
+    "homepage": "https://github.com/Rene8028/nonebot_plugin_jrrp2",
+    "tags": [
+      {
+        "label": "每日人品",
+        "color": "#ea5252"
+      },
+      {
+        "label": "jrrp",
+        "color": "#5290ea"
+      },
+      {
+        "label": "jrrp2",
+        "color": "#52bbea"
+      }
+    ],
+    "is_official": false
   }
 ]
