@@ -85,8 +85,20 @@ rule = rule1 & bar_checker
 rule = foo_checker & rule2
 ```
 
-同时，你也无需担心合并了一个 `None` 值，`Rule` 会忽略 `None` 值。
+同时，我们也无需担心合并了一个 `None` 值，`Rule` 会忽略 `None` 值。
 
 ```python
 assert (rule & None) is rule
 ```
+
+## 主动使用响应规则
+
+除了在事件响应器中使用响应规则外，我们也可以主动使用响应规则来判断事件是否符合条件。例如：
+
+```python {3}
+rule = Rule(some_checker)
+
+result: bool = await rule(bot, event, state)
+```
+
+我们只需要传入 `Bot` 实例、事件和会话状态，`Rule` 会并发调用所有 `RuleChecker` 进行检查，并返回结果。
