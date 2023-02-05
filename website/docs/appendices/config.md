@@ -107,7 +107,7 @@ dotenv_config = {
 DICT={"k1": "v1", "k2": null}
 DICT__K2=v2
 DICT__K3=v2
-DICT__INNER_K4=v4
+DICT__INNER__K4=v4
 ```
 
 将被解析为：
