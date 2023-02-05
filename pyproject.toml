@@ -40,9 +40,9 @@ uvicorn = { version = ">=0.20.0,<1.0.0", extras = ["standard"], optional = true 
 [tool.poetry.group.dev.dependencies]
 pycln = "^2.1.2"
 isort = "^5.10.1"
-black = "^22.1.0"
+black = "^23.1.0"
 nonemoji = "^0.1.2"
-pre-commit = "^2.16.0"
+pre-commit = "^3.0.0"
 
 [tool.poetry.group.test.dependencies]
 pytest-cov = "^4.0.0"
