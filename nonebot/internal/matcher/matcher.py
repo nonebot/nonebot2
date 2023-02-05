@@ -377,7 +377,6 @@ class Matcher(metaclass=MatcherMeta):
         _parameterless = (Depends(_receive), *(parameterless or tuple()))
 
         def _decorator(func: T_Handler) -> T_Handler:
-
             if cls.handlers and cls.handlers[-1].call is func:
                 func_handler = cls.handlers[-1]
                 new_handler = Dependent(
@@ -425,7 +424,6 @@ class Matcher(metaclass=MatcherMeta):
         _parameterless = (Depends(_key_getter), *(parameterless or tuple()))
 
         def _decorator(func: T_Handler) -> T_Handler:
-
             if cls.handlers and cls.handlers[-1].call is func:
                 func_handler = cls.handlers[-1]
                 new_handler = Dependent(
