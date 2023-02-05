@@ -4170,5 +4170,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_dicky_pk",
+    "project_link": "nonebot-plugin-dicky-pk",
+    "name": "DickyPK",
+    "desc": "移植自OPQBot的群聊小游戏 CHINCHIN-PK",
+    "author": "tkgs0",
+    "homepage": "https://github.com/tkgs0/nonebot-plugin-dicky-pk",
+    "tags": [
+      {
+        "label": "a:onebot11",
+        "color": "#000000"
+      },
+      {
+        "label": "t:群聊小游戏",
+        "color": "#ffd500"
+      }
+    ],
+    "is_official": false
   }
 ]
