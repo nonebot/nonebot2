@@ -4189,5 +4189,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_eventmonitor",
+    "project_link": "nonebot-plugin-eventmonitor",
+    "name": "Q群消息事件监控",
+    "desc": "监控群事件的插件，支持戳一戳，成员变动，群荣誉变化等",
+    "author": "Reversedeer",
+    "homepage": "https://github.com/Reversedeer/nonebot_plugin_eventmonitor",
+    "tags": [
+      {
+        "label": "t:QQGroup",
+        "color": "#2885c0"
+      }
+    ],
+    "is_official": false
   }
 ]
