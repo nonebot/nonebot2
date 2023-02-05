@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 每日人品 2 [@yanyongyu](https://github.com/yanyongyu) ([#1669](https://github.com/nonebot/nonebot2/pull/1669))
 - Plugin: 娶群友 [@yanyongyu](https://github.com/yanyongyu) ([#1665](https://github.com/nonebot/nonebot2/pull/1665))
 - Plugin: 我要一张 xx 涩图 [@yanyongyu](https://github.com/yanyongyu) ([#1663](https://github.com/nonebot/nonebot2/pull/1663))
 - Plugin: AutoReply [@yanyongyu](https://github.com/yanyongyu) ([#1660](https://github.com/nonebot/nonebot2/pull/1660))
