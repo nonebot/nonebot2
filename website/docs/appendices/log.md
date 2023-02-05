@@ -1,10 +1,10 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 description: 记录与控制日志
 
 options:
   menu:
-    weight: 60
+    weight: 70
     category: appendices
 ---
 
