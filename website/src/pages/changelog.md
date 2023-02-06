@@ -42,6 +42,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: ChensQBOTv2 [@yanyongyu](https://github.com/yanyongyu) ([#1676](https://github.com/nonebot/nonebot2/pull/1676))
 - Bot: 青岚 [@yanyongyu](https://github.com/yanyongyu) ([#1630](https://github.com/nonebot/nonebot2/pull/1630))
 
 ## v2.0.0rc3
