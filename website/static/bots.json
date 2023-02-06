@@ -373,5 +373,13 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "ChensQBOTv2",
+    "desc": "多功能QQ群机器人，权限管理/联ban/社工等等等等，以及拥有一个强大的开发者",
+    "author": "cnchens",
+    "homepage": "https://github.com/cnchens/ChensQBOTv2",
+    "tags": [],
+    "is_official": false
   }
 ]
