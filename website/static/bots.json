@@ -381,5 +381,26 @@
     "homepage": "https://github.com/cnchens/ChensQBOTv2",
     "tags": [],
     "is_official": false
+  },
+  {
+    "name": "koishi",
+    "desc": "支持爬取 codeforces, atcoder, 牛客上程序设计赛事的 bot。",
+    "author": "CupidsBow",
+    "homepage": "https://github.com/CupidsBow/koishi",
+    "tags": [
+      {
+        "label": "acm",
+        "color": "#f71d1d"
+      },
+      {
+        "label": "codeforces",
+        "color": "#1df721"
+      },
+      {
+        "label": "atcoder",
+        "color": "#aa1df7"
+      }
+    ],
+    "is_official": false
   }
 ]
