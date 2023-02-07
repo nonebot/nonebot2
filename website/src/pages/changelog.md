@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 今天吃喝什么（图片版） [@yanyongyu](https://github.com/yanyongyu) ([#1678](https://github.com/nonebot/nonebot2/pull/1678))
 - Plugin: Q 群消息事件监控 [@yanyongyu](https://github.com/yanyongyu) ([#1672](https://github.com/nonebot/nonebot2/pull/1672))
 - Plugin: DickyPK [@yanyongyu](https://github.com/yanyongyu) ([#1670](https://github.com/nonebot/nonebot2/pull/1670))
 - Plugin: 每日人品 2 [@yanyongyu](https://github.com/yanyongyu) ([#1669](https://github.com/nonebot/nonebot2/pull/1669))
