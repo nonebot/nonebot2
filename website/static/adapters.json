@@ -130,7 +130,7 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot.adapter.bilibili",
+    "module_name": "nonebot.adapters.bilibili",
     "project_link": "nonebot-adapter-bilibili",
     "name": "BilibiliLive",
     "desc": "b站直播间ws协议",
