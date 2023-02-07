@@ -4204,5 +4204,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_whateat_pic",
+    "project_link": "nonebot-plugin-whateat-pic",
+    "name": "今天吃喝什么（图片版）",
+    "desc": "今天吃什么呢",
+    "author": "Cvandia",
+    "homepage": "https://github.com/Cvandia/nonebot-plugin-whateat-pic",
+    "tags": [
+      {
+        "label": "t:吃什么",
+        "color": "#e4ea52"
+      },
+      {
+        "label": "t:喝什么",
+        "color": "#52ea8b"
+      }
+    ],
+    "is_official": false
   }
 ]
