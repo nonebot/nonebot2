@@ -4238,5 +4238,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_acm_reminder",
+    "project_link": "nonebot-plugin-acm-reminder",
+    "name": "ACMReminder",
+    "desc": "获取CF/牛客等平台的竞赛信息的插件",
+    "author": "BigOrangeQWQ",
+    "homepage": "https://github.com/BigOrangeQWQ/nonebot_plugin_acm_reminder",
+    "tags": [
+      {
+        "label": "ACM",
+        "color": "#3b8b74"
+      }
+    ],
+    "is_official": false
   }
 ]
