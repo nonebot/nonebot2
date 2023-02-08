@@ -4223,5 +4223,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_matcher_block",
+    "project_link": "nonebot-plugin-matcher-block",
+    "name": "通用指令阻断",
+    "desc": "可以为指令添加cd，或在该群屏蔽，支持正则",
+    "author": "KarisAya",
+    "homepage": "https://github.com/KarisAya/nonebot_plugin_matcher_block",
+    "tags": [
+      {
+        "label": "指令阻断",
+        "color": "#525fea"
+      }
+    ],
+    "is_official": false
   }
 ]
