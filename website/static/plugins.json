@@ -4253,5 +4253,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_maimai",
+    "project_link": "nonebot-plugin-maimai",
+    "name": "舞萌maimai插件版",
+    "desc": "要使用游客模式吗？ 要使用游客模式吗？",
+    "author": "Umamusume-Agnes-Digital",
+    "homepage": "https://github.com/Umamusume-Agnes-Digital/nonebot_plugin_maimai",
+    "tags": [
+      {
+        "label": "maimai",
+        "color": "#5262ea"
+      }
+    ],
+    "is_official": false
   }
 ]
