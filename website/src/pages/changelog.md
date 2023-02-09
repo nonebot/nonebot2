@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 在加载 driver 引发 ImportError 时，使用 `raise from e` [@shoucandanghehe](https://github.com/shoucandanghehe) ([#1689](https://github.com/nonebot/nonebot2/pull/1689))
 - Feature: 添加端口配置项约束验证 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1632](https://github.com/nonebot/nonebot2/pull/1632))
 
 ### 💫 杂项
@@ -18,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 舞萌 maimai 插件版 [@yanyongyu](https://github.com/yanyongyu) ([#1687](https://github.com/nonebot/nonebot2/pull/1687))
 - Plugin: ACMReminder [@yanyongyu](https://github.com/yanyongyu) ([#1686](https://github.com/nonebot/nonebot2/pull/1686))
 - Plugin: 通用指令阻断 [@yanyongyu](https://github.com/yanyongyu) ([#1683](https://github.com/nonebot/nonebot2/pull/1683))
 - Plugin: 今天吃喝什么（图片版） [@yanyongyu](https://github.com/yanyongyu) ([#1678](https://github.com/nonebot/nonebot2/pull/1678))
