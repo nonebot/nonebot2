@@ -37,10 +37,10 @@ try:
     from fastapi.responses import Response
     from fastapi import FastAPI, Request, UploadFile, status
     from starlette.websockets import WebSocket, WebSocketState, WebSocketDisconnect
-except ImportError:  # pragma: no cover
+except ImportError as e:  # pragma: no cover
     raise ImportError(
         "Please install FastAPI by using `pip install nonebot2[fastapi]`"
-    ) from None
+    ) from e
 
 
 def catch_closed(func):

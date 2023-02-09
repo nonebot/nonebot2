@@ -31,10 +31,10 @@ from nonebot.drivers import (
 
 try:
     import httpx
-except ImportError:  # pragma: no cover
+except ImportError as e:  # pragma: no cover
     raise ImportError(
         "Please install httpx by using `pip install nonebot2[httpx]`"
-    ) from None
+    ) from e
 
 
 class Mixin(ForwardMixin):
