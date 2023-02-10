@@ -33,7 +33,7 @@ jobs:
       - name: Test Plugin
         id: plugin-test
         run: |
-          curl -sSL https://raw.githubusercontent.com/nonebot/nonebot2-publish-bot/main/plugin_test.py -o plugin_test.py
+          curl -sSL https://github.com/nonebot/nonebot2-publish-bot/releases/latest/download/plugin_test.py -o plugin_test.py
           python plugin_test.py
   publish_bot:
     runs-on: ubuntu-latest
@@ -45,7 +45,7 @@ jobs:
         with:
           token: ${{ secrets.GH_TOKEN }}
       - name: NoneBot2 Publish Bot
-        uses: docker://ghcr.io/nonebot/nonebot2-publish-bot:main
+        uses: docker://ghcr.io/nonebot/nonebot2-publish-bot:latest
         with:
           token: ${{ secrets.GH_TOKEN }}
           config: >
