@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- CI: 发布机器人使用 latest 标签 [@he0119](https://github.com/he0119) ([#1690](https://github.com/nonebot/nonebot2/pull/1690))
 - Fix: 修改 bilibili live 的模块路径 [@yanyongyu](https://github.com/yanyongyu) ([#1679](https://github.com/nonebot/nonebot2/pull/1679))
 - Docs: 移除商店中的过期插件 2023 [@j1g5awi](https://github.com/j1g5awi) ([#1610](https://github.com/nonebot/nonebot2/pull/1610))
 
