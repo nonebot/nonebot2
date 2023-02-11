@@ -198,6 +198,4 @@ nonebot.load_builtin_plugins("echo", "single_session")
 
 ### 其他加载方式
 
-<!-- FIXME: 链接 -->
-
-有关其他插件加载的方式，可参考 [跨插件访问](#) 和 [嵌套插件](#))。
+有关其他插件加载的方式，可参考 [跨插件访问](../advanced/requiring.md) 和 [嵌套插件](../advanced/plugin-nesting.md)。
