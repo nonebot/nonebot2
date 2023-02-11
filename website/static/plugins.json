@@ -4268,5 +4268,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_all4one",
+    "project_link": "nonebot-plugin-all4one",
+    "name": "OneBot 实现",
+    "desc": "让 NoneBot2 成为 OneBot 实现！",
+    "author": "j1g5awi",
+    "homepage": "https://github.com/nonepkg/nonebot-plugin-all4one",
+    "tags": [
+      {
+        "label": "a:OneBot",
+        "color": "#000000"
+      },
+      {
+        "label": "a:Telegram",
+        "color": "#34a9e5"
+      }
+    ],
+    "is_official": false
   }
 ]
