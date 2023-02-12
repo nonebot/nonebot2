@@ -4321,5 +4321,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_arktools",
+    "project_link": "nonebot-plugin-arktools",
+    "name": "明日方舟工具箱",
+    "desc": "基于 OneBot 适配器的 NoneBot2 明日方舟小工具箱插件",
+    "author": "NumberSir",
+    "homepage": "https://github.com/NumberSir/nonebot_plugin_arktools",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "arknights",
+        "color": "#22bbff"
+      },
+      {
+        "label": "t:game",
+        "color": "#db905e"
+      }
+    ],
+    "is_official": false
   }
 ]
