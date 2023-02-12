@@ -4306,5 +4306,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_gsabyss",
+    "project_link": "nonebot-plugin-gsabyss",
+    "name": "原神深境螺旋数据查询",
+    "desc": "原神深渊讨伐列表、渊月祝福、玩家战斗统计等信息查询，数据来自 Honey Hunter World 和 Akasha Database",
+    "author": "monsterxcn",
+    "homepage": "https://github.com/monsterxcn/nonebot-plugin-gsabyss",
+    "tags": [
+      {
+        "label": "t:Genshin",
+        "color": "#ffd49f"
+      }
+    ],
+    "is_official": false
   }
 ]
