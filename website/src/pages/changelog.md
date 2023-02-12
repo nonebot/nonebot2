@@ -20,6 +20,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: OneBot 实现 [@yanyongyu](https://github.com/yanyongyu) ([#1692](https://github.com/nonebot/nonebot2/pull/1692))
 - Plugin: 舞萌 maimai 插件版 [@yanyongyu](https://github.com/yanyongyu) ([#1687](https://github.com/nonebot/nonebot2/pull/1687))
 - Plugin: ACMReminder [@yanyongyu](https://github.com/yanyongyu) ([#1686](https://github.com/nonebot/nonebot2/pull/1686))
 - Plugin: 通用指令阻断 [@yanyongyu](https://github.com/yanyongyu) ([#1683](https://github.com/nonebot/nonebot2/pull/1683))
