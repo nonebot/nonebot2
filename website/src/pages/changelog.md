@@ -20,6 +20,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 明日方舟工具箱 [@yanyongyu](https://github.com/yanyongyu) ([#1698](https://github.com/nonebot/nonebot2/pull/1698))
 - Plugin: 原神深境螺旋数据查询 [@yanyongyu](https://github.com/yanyongyu) ([#1696](https://github.com/nonebot/nonebot2/pull/1696))
 - Plugin: 工具拓展 [@yanyongyu](https://github.com/yanyongyu) ([#1694](https://github.com/nonebot/nonebot2/pull/1694))
 - Plugin: OneBot 实现 [@yanyongyu](https://github.com/yanyongyu) ([#1692](https://github.com/nonebot/nonebot2/pull/1692))
