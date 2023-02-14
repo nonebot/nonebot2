@@ -4344,5 +4344,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nodice",
+    "project_link": "nonebot_plugin_nodice",
+    "name": "SSXQww",
+    "desc": "www",
+    "author": "SongSongXve",
+    "homepage": "https://github.com/thereisnodice/nodice2",
+    "tags": [],
+    "is_official": false
   }
 ]
