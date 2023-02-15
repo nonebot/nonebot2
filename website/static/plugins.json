@@ -4344,5 +4344,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "gartic_room",
+    "project_link": "nonebot-plugin-gartic-room",
+    "name": "你画我猜组队",
+    "desc": "自动创建gartic房间，主题为综合，将房间链接发送到群聊",
+    "author": "bridgeL",
+    "homepage": "https://github.com/bridgeL/gartic_room",
+    "tags": [
+      {
+        "label": "ayaka",
+        "color": "#e36306"
+      }
+    ],
+    "is_official": false
   }
 ]
