@@ -4359,5 +4359,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-resolver",
+    "project_link": "nonebot-plugin-resolver",
+    "name": "视频、图片解析器",
+    "desc": "适用于nonebot2 解析视频、图片链接/小程序插件，tiktok、bilibili、twitter等实时发送！",
+    "author": "zhiyu1998",
+    "homepage": "https://github.com/zhiyu1998/nonebot-plugin-resolver",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#f8a5c2"
+      },
+      {
+        "label": "tiktok",
+        "color": "#303952"
+      },
+      {
+        "label": "twitter",
+        "color": "#1b9cfc"
+      }
+    ],
+    "is_official": false
   }
 ]
