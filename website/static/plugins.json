@@ -4382,5 +4382,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bing_chat",
+    "project_link": "nonebot-plugin-bing-chat",
+    "name": "Bing Chat",
+    "desc": "使用新版必应的聊天功能",
+    "author": "Harry-Jing",
+    "homepage": "https://github.com/Harry-Jing/nonebot-plugin-bing-chat",
+    "tags": [],
+    "is_official": false
   }
 ]
