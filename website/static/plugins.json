@@ -4363,8 +4363,8 @@
   {
     "module_name": "nonebot-plugin-resolver",
     "project_link": "nonebot-plugin-resolver",
-    "name": "视频、图片解析器",
-    "desc": "适用于nonebot2 解析视频、图片链接/小程序插件，tiktok、bilibili、twitter等实时发送！",
+    "name": "链接分享解析器",
+    "desc": "适用于nonebot2 解析视频、图片链接/小程序插件，tiktok、bilibili、twitter、xhs等实时发送！",
     "author": "zhiyu1998",
     "homepage": "https://github.com/zhiyu1998/nonebot-plugin-resolver",
     "tags": [
