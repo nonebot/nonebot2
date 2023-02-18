@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Bing Chat [@yanyongyu](https://github.com/yanyongyu) ([#1714](https://github.com/nonebot/nonebot2/pull/1714))
 - Plugin: 视频、图片解析器 [@yanyongyu](https://github.com/yanyongyu) ([#1710](https://github.com/nonebot/nonebot2/pull/1710))
 - Plugin: 你画我猜组队 [@yanyongyu](https://github.com/yanyongyu) ([#1705](https://github.com/nonebot/nonebot2/pull/1705))
 - Plugin: 明日方舟工具箱 [@yanyongyu](https://github.com/yanyongyu) ([#1698](https://github.com/nonebot/nonebot2/pull/1698))
