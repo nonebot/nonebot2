@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 修改链接分享解析器插件名称 [@zhiyu1998](https://github.com/zhiyu1998) ([#1715](https://github.com/nonebot/nonebot2/pull/1715))
 - Bot: 移除 ShigureBot [@lgc2333](https://github.com/lgc2333) ([#1699](https://github.com/nonebot/nonebot2/pull/1699))
 - CI: 发布机器人使用 latest 标签 [@he0119](https://github.com/he0119) ([#1690](https://github.com/nonebot/nonebot2/pull/1690))
 - Fix: 修改 bilibili live 的模块路径 [@yanyongyu](https://github.com/yanyongyu) ([#1679](https://github.com/nonebot/nonebot2/pull/1679))
