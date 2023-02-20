@@ -17,7 +17,7 @@ from . import _managers, get_plugin, _module_name_to_plugin_name
 
 try:
     import tomllib  # pyright: reportMissingImports=false
-except Exception:
+except ModuleNotFoundError:
     import tomli as tomllib
 
 
