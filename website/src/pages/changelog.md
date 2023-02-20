@@ -14,6 +14,10 @@ toc_max_heading_level: 2
 - Feature: 在加载 driver 引发 ImportError 时，使用 `raise from e` [@shoucandanghehe](https://github.com/shoucandanghehe) ([#1689](https://github.com/nonebot/nonebot2/pull/1689))
 - Feature: 添加端口配置项约束验证 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1632](https://github.com/nonebot/nonebot2/pull/1632))
 
+### 📝 文档
+
+- Docs: 修正交互模式命令 [@3yude](https://github.com/3yude) ([#1719](https://github.com/nonebot/nonebot2/pull/1719))
+
 ### 💫 杂项
 
 - Plugin: 修改链接分享解析器插件名称 [@zhiyu1998](https://github.com/zhiyu1998) ([#1715](https://github.com/nonebot/nonebot2/pull/1715))
