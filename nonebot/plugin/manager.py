@@ -148,14 +148,21 @@ class PluginManager:
             else:
                 raise RuntimeError(f"Plugin not found: {name}! Check your plugin name")
 
-            logger.opt(colors=True).success(
-                f'Succeeded to import "<y>{escape_tag(name)}</y>"'
-            )
-            if (plugin := getattr(module, "__plugin__", None)) is None:
+            if (
+                plugin := getattr(module, "__plugin__", None)
+            ) is None or not isinstance(plugin, Plugin):
                 raise RuntimeError(
                     f"Module {module.__name__} is not loaded as a plugin! "
                     "Make sure not to import it before loading."
                 )
+            logger.opt(colors=True).success(
+                f'Succeeded to load plugin "<y>{escape_tag(plugin.name)}</y>"'
+                + (
+                    f' from "<y>{escape_tag(plugin.module_name)}</y>"'
+                    if plugin.module_name != plugin.name
+                    else ""
+                )
+            )
             return plugin
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
