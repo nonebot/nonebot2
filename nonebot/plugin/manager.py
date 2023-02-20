@@ -158,7 +158,7 @@ class PluginManager:
             logger.opt(colors=True).success(
                 f'Succeeded to load plugin "<y>{escape_tag(plugin.name)}</y>"'
                 + (
-                    f' from "<y>{escape_tag(plugin.module_name)}</y>"'
+                    f' from "<m>{escape_tag(plugin.module_name)}</m>"'
                     if plugin.module_name != plugin.name
                     else ""
                 )
