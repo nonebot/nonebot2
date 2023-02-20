@@ -9,13 +9,16 @@ from pathlib import Path
 from types import ModuleType
 from typing import Set, Union, Iterable, Optional
 
-import tomlkit
-
 from nonebot.utils import path_to_module_name
 
 from .plugin import Plugin
 from .manager import PluginManager
 from . import _managers, get_plugin, _module_name_to_plugin_name
+
+try:
+    import tomllib  # pyright: reportMissingImports=false
+except Exception:
+    import tomli as tomllib
 
 
 def load_plugin(module_path: Union[str, Path]) -> Optional[Plugin]:
@@ -108,7 +111,7 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
         ```
     """
     with open(file_path, "r", encoding=encoding) as f:
-        data = tomlkit.parse(f.read())  # type: ignore
+        data = tomllib.loads(f.read())
 
     nonebot_data = data.get("tool", {}).get("nonebot")
     if nonebot_data is None:
