@@ -16,6 +16,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: pip 安装指令添加引号 [@3yude](https://github.com/3yude) ([#1724](https://github.com/nonebot/nonebot2/pull/1724))
 - Docs: 修正交互模式命令 [@3yude](https://github.com/3yude) ([#1719](https://github.com/nonebot/nonebot2/pull/1719))
 
 ### 💫 杂项
