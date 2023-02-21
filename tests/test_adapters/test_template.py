@@ -1,9 +1,8 @@
+from nonebot.adapters import MessageTemplate
 from utils import escape_text, make_fake_message
 
 
 def test_template_basis():
-    from nonebot.adapters import MessageTemplate
-
     template = MessageTemplate("{key:.3%}")
     formatted = template.format(key=0.123456789)
     assert formatted == "12.346%"

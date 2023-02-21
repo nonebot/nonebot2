@@ -1,11 +1,10 @@
 import json
 
 from utils import make_fake_message
+from nonebot.utils import DataclassEncoder
 
 
 def test_dataclass_encoder():
-    from nonebot.utils import DataclassEncoder
-
     simple = json.dumps("123", cls=DataclassEncoder)
     assert simple == '"123"'
 

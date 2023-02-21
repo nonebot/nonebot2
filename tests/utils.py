@@ -1,9 +1,8 @@
-from typing import TYPE_CHECKING, Type, Union, Mapping, Iterable, Optional
+from typing import Type, Union, Mapping, Iterable, Optional
 
 from pydantic import create_model
 
-if TYPE_CHECKING:
-    from nonebot.adapters import Event, Message
+from nonebot.adapters import Event, Message, MessageSegment
 
 
 def escape_text(s: str, *, escape_comma: bool = True) -> str:
@@ -14,8 +13,6 @@ def escape_text(s: str, *, escape_comma: bool = True) -> str:
 
 
 def make_fake_message():
-    from nonebot.adapters import Message, MessageSegment
-
     class FakeMessageSegment(MessageSegment):
         @classmethod
         def get_message_class(cls):
@@ -61,18 +58,16 @@ def make_fake_message():
 
 
 def make_fake_event(
-    _base: Optional[Type["Event"]] = None,
+    _base: Optional[Type[Event]] = None,
     _type: str = "message",
     _name: str = "test",
     _description: str = "test",
     _user_id: Optional[str] = "test",
     _session_id: Optional[str] = "test",
-    _message: Optional["Message"] = None,
+    _message: Optional[Message] = None,
     _to_me: bool = True,
     **fields,
-) -> Type["Event"]:
-    from nonebot.adapters import Event
-
+) -> Type[Event]:
     _Fake = create_model("_Fake", __base__=_base or Event, **fields)
 
     class FakeEvent(_Fake):

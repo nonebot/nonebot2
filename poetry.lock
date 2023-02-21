@@ -1442,7 +1442,7 @@ develop = false
 [package.dependencies]
 asgiref = "^3.4.0"
 async-asgi-testclient = "^1.4.8"
-nonebot2 = "^2.0.0-beta.1"
+nonebot2 = "^2.0.0-rc.2"
 pytest = "^7.0.0"
 typing-extensions = "^4.0.0"
 
@@ -1450,7 +1450,7 @@ typing-extensions = "^4.0.0"
 type = "git"
 url = "https://github.com/nonebot/nonebug.git"
 reference = "HEAD"
-resolved_reference = "9e40f5717b8f7bf3e19933f9a2b63a470db6005a"
+resolved_reference = "c8473696a31827a401affe9e9d3032f7157e5801"
 
 [[package]]
 name = "nonemoji"
@@ -1966,14 +1966,14 @@ idna2008 = ["idna"]
 
 [[package]]
 name = "setuptools"
-version = "67.3.2"
+version = "67.3.3"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "setuptools-67.3.2-py3-none-any.whl", hash = "sha256:bb6d8e508de562768f2027902929f8523932fcd1fb784e6d573d2cafac995a48"},
-    {file = "setuptools-67.3.2.tar.gz", hash = "sha256:95f00380ef2ffa41d9bba85d95b27689d923c93dfbafed4aecd7cf988a25e012"},
+    {file = "setuptools-67.3.3-py3-none-any.whl", hash = "sha256:9d3de8591bd6f6522594406fa46a6418eabd0562dacb267f8556675762801514"},
+    {file = "setuptools-67.3.3.tar.gz", hash = "sha256:ed4e75fafe103c79b692f217158ba87edf38d31004b9dbc1913debb48793c828"},
 ]
 
 [package.extras]

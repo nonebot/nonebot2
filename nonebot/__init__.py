@@ -38,7 +38,6 @@ FrontMatter:
 """
 
 import os
-import importlib
 from importlib.metadata import version
 from typing import Any, Dict, Type, Optional
 
@@ -46,9 +45,9 @@ import loguru
 from pydantic.env_settings import DotenvType
 
 from nonebot.adapters import Bot
-from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.log import logger as logger
+from nonebot.utils import escape_tag, resolve_dot_notation
 from nonebot.drivers import Driver, ReverseDriver, combine_driver
 
 try:
@@ -175,31 +174,16 @@ def get_bots() -> Dict[str, Bot]:
     return get_driver().bots
 
 
-def _resolve_dot_notation(
-    obj_str: str, default_attr: str, default_prefix: Optional[str] = None
-) -> Any:
-    modulename, _, cls = obj_str.partition(":")
-    if default_prefix is not None and modulename.startswith("~"):
-        modulename = default_prefix + modulename[1:]
-    module = importlib.import_module(modulename)
-    if not cls:
-        return getattr(module, default_attr)
-    instance = module
-    for attr_str in cls.split("."):
-        instance = getattr(instance, attr_str)
-    return instance
-
-
 def _resolve_combine_expr(obj_str: str) -> Type[Driver]:
     drivers = obj_str.split("+")
-    DriverClass = _resolve_dot_notation(
+    DriverClass = resolve_dot_notation(
         drivers[0], "Driver", default_prefix="nonebot.drivers."
     )
     if len(drivers) == 1:
         logger.trace(f"Detected driver {DriverClass} with no mixins.")
         return DriverClass
     mixins = [
-        _resolve_dot_notation(mixin, "Mixin", default_prefix="nonebot.drivers.")
+        resolve_dot_notation(mixin, "Mixin", default_prefix="nonebot.drivers.")
         for mixin in drivers[1:]
     ]
     logger.trace(f"Detected driver {DriverClass} with mixins {mixins}.")
