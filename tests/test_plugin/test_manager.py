@@ -1,12 +1,11 @@
 import pytest
-from nonebug import App
+
+from nonebot.plugin import PluginManager
 
 
 @pytest.mark.asyncio
-async def test_load_plugin_name(app: App):
-    from nonebot.plugin import PluginManager
-
-    m = PluginManager(plugins=["plugins.export"])
-    module1 = m.load_plugin("export")
-    module2 = m.load_plugin("plugins.export")
+async def test_load_plugin_name():
+    m = PluginManager(plugins=["dynamic.manager"])
+    module1 = m.load_plugin("manager")
+    module2 = m.load_plugin("dynamic.manager")
     assert module1 is module2

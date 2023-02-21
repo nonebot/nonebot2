@@ -63,7 +63,7 @@ all = ["fastapi", "quart", "aiohttp", "httpx", "websockets", "uvicorn"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-addopts = "--cov=nonebot --cov-report=term-missing"
+addopts = "--cov=nonebot --cov-append --cov-report=term-missing"
 filterwarnings = [
     "error",
     "ignore::DeprecationWarning",

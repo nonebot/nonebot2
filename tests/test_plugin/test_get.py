@@ -1,16 +1,11 @@
-from typing import TYPE_CHECKING, Set
-
 import pytest
-from nonebug import App
 
-if TYPE_CHECKING:
-    from nonebot.plugin import Plugin
+import nonebot
+from nonebot.plugin import PluginManager, _managers
 
 
 @pytest.mark.asyncio
-async def test_get_plugin(app: App, load_plugin: Set["Plugin"]):
-    import nonebot
-
+async def test_get_plugin():
     # check simple plugin
     plugin = nonebot.get_plugin("export")
     assert plugin
@@ -28,12 +23,15 @@ async def test_get_plugin(app: App, load_plugin: Set["Plugin"]):
 
 
 @pytest.mark.asyncio
-async def test_get_available_plugin(app: App):
-    import nonebot
-    from nonebot.plugin import PluginManager, _managers
+async def test_get_available_plugin():
+    old_managers = _managers.copy()
+    _managers.clear()
+    try:
+        _managers.append(PluginManager(["plugins.export", "plugin.require"]))
 
-    _managers.append(PluginManager(["plugins.export", "plugin.require"]))
-
-    # check get available plugins
-    plugin_names = nonebot.get_available_plugin_names()
-    assert plugin_names == {"export", "require"}
+        # check get available plugins
+        plugin_names = nonebot.get_available_plugin_names()
+        assert plugin_names == {"export", "require"}
+    finally:
+        _managers.clear()
+        _managers.extend(old_managers)
