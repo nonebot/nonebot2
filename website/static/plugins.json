@@ -4392,5 +4392,15 @@
     "homepage": "https://github.com/Harry-Jing/nonebot-plugin-bing-chat",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_saa",
+    "project_link": "nonebot-plugin-send-anything-anywhere",
+    "name": "峯驰物流",
+    "desc": "自适应通用消息发送器，根据 adapter 的类型转换并发送各种消息",
+    "author": "felinae98",
+    "homepage": "https://github.com/felinae98/nonebot-plugin-send-anything-anywhere",
+    "tags": [],
+    "is_official": false
   }
 ]
