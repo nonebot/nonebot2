@@ -4,13 +4,26 @@ import pytest
 from nonebug import App
 
 from utils import make_fake_event
+from nonebot.exception import SkippedException
+from nonebot.permission import (
+    USER,
+    NOTICE,
+    MESSAGE,
+    REQUEST,
+    METAEVENT,
+    SUPERUSER,
+    User,
+    Notice,
+    Message,
+    Request,
+    MetaEvent,
+    SuperUser,
+    Permission,
+)
 
 
 @pytest.mark.asyncio
 async def test_permission(app: App):
-    from nonebot.permission import Permission
-    from nonebot.exception import SkippedException
-
     async def falsy():
         return False
 
@@ -42,20 +55,8 @@ async def test_permission(app: App):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize(
-    "type,expected",
-    [
-        ("message", True),
-        ("notice", False),
-    ],
-)
-async def test_message(
-    app: App,
-    type: str,
-    expected: bool,
-):
-    from nonebot.permission import MESSAGE, Message
-
+@pytest.mark.parametrize("type, expected", [("message", True), ("notice", False)])
+async def test_message(type: str, expected: bool):
     dependent = list(MESSAGE.checkers)[0]
     checker = dependent.call
 
@@ -66,20 +67,8 @@ async def test_message(
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize(
-    "type,expected",
-    [
-        ("message", False),
-        ("notice", True),
-    ],
-)
-async def test_notice(
-    app: App,
-    type: str,
-    expected: bool,
-):
-    from nonebot.permission import NOTICE, Notice
-
+@pytest.mark.parametrize("type, expected", [("message", False), ("notice", True)])
+async def test_notice(type: str, expected: bool):
     dependent = list(NOTICE.checkers)[0]
     checker = dependent.call
 
@@ -90,20 +79,8 @@ async def test_notice(
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize(
-    "type,expected",
-    [
-        ("message", False),
-        ("request", True),
-    ],
-)
-async def test_request(
-    app: App,
-    type: str,
-    expected: bool,
-):
-    from nonebot.permission import REQUEST, Request
-
+@pytest.mark.parametrize("type, expected", [("message", False), ("request", True)])
+async def test_request(type: str, expected: bool):
     dependent = list(REQUEST.checkers)[0]
     checker = dependent.call
 
@@ -114,20 +91,8 @@ async def test_request(
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize(
-    "type,expected",
-    [
-        ("message", False),
-        ("meta_event", True),
-    ],
-)
-async def test_metaevent(
-    app: App,
-    type: str,
-    expected: bool,
-):
-    from nonebot.permission import METAEVENT, MetaEvent
-
+@pytest.mark.parametrize("type, expected", [("message", False), ("meta_event", True)])
+async def test_metaevent(type: str, expected: bool):
     dependent = list(METAEVENT.checkers)[0]
     checker = dependent.call
 
@@ -139,7 +104,7 @@ async def test_metaevent(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "type,user_id,expected",
+    "type, user_id, expected",
     [
         ("message", "test", True),
         ("message", "foo", False),
@@ -148,14 +113,7 @@ async def test_metaevent(
         ("notice", "test", True),
     ],
 )
-async def test_superuser(
-    app: App,
-    type: str,
-    user_id: str,
-    expected: bool,
-):
-    from nonebot.permission import SUPERUSER, SuperUser
-
+async def test_superuser(app: App, type: str, user_id: str, expected: bool):
     dependent = list(SUPERUSER.checkers)[0]
     checker = dependent.call
 
@@ -170,7 +128,7 @@ async def test_superuser(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "session_ids,session_id,expected",
+    "session_ids, session_id, expected",
     [
         (("user", "foo"), "user", True),
         (("user", "foo"), "bar", False),
@@ -180,8 +138,6 @@ async def test_superuser(
 async def test_user(
     app: App, session_ids: Tuple[str, ...], session_id: Optional[str], expected: bool
 ):
-    from nonebot.permission import USER, User
-
     dependent = list(USER(*session_ids).checkers)[0]
     checker = dependent.call
 

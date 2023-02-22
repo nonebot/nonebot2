@@ -1,38 +1,32 @@
 import sys
+from typing import Set
 from pathlib import Path
 from dataclasses import asdict
-from typing import TYPE_CHECKING, Set
 
 import pytest
-from nonebug import App
 
-if TYPE_CHECKING:
-    from nonebot.plugin import Plugin
+import nonebot
+from nonebot.plugin import Plugin, PluginManager, _managers
 
 
 @pytest.mark.asyncio
-async def test_load_plugin(app: App):
-    import nonebot
-
+async def test_load_plugin():
     # check regular
-    assert nonebot.load_plugin("plugins.metadata")
+    assert nonebot.load_plugin("dynamic.simple")
 
     # check path
-    assert nonebot.load_plugin(Path("plugins/export"))
+    assert nonebot.load_plugin(Path("dynamic/path.py"))
 
     # check not found
     assert nonebot.load_plugin("some_plugin_not_exist") is None
 
 
 @pytest.mark.asyncio
-async def test_load_plugins(app: App, load_plugin: Set["Plugin"]):
-    import nonebot
-    from nonebot.plugin import PluginManager
-
+async def test_load_plugins(load_plugin: Set[Plugin], load_example: Set[Plugin]):
     loaded_plugins = {
         plugin for plugin in nonebot.get_loaded_plugins() if not plugin.parent_plugin
     }
-    assert loaded_plugins == load_plugin
+    assert loaded_plugins >= load_plugin | load_example
 
     # check simple plugin
     assert "plugins.export" in sys.modules
@@ -51,9 +45,7 @@ async def test_load_plugins(app: App, load_plugin: Set["Plugin"]):
 
 
 @pytest.mark.asyncio
-async def test_load_nested_plugin(app: App, load_plugin: Set["Plugin"]):
-    import nonebot
-
+async def test_load_nested_plugin():
     parent_plugin = nonebot.get_plugin("nested")
     sub_plugin = nonebot.get_plugin("nested_subplugin")
     sub_plugin2 = nonebot.get_plugin("nested_subplugin2")
@@ -64,9 +56,7 @@ async def test_load_nested_plugin(app: App, load_plugin: Set["Plugin"]):
 
 
 @pytest.mark.asyncio
-async def test_load_json(app: App):
-    import nonebot
-
+async def test_load_json():
     nonebot.load_from_json("./plugins.json")
 
     with pytest.raises(TypeError):
@@ -74,9 +64,7 @@ async def test_load_json(app: App):
 
 
 @pytest.mark.asyncio
-async def test_load_toml(app: App):
-    import nonebot
-
+async def test_load_toml():
     nonebot.load_from_toml("./plugins.toml")
 
     with pytest.raises(ValueError):
@@ -87,35 +75,27 @@ async def test_load_toml(app: App):
 
 
 @pytest.mark.asyncio
-async def test_bad_plugin(app: App):
-    import nonebot
-
+async def test_bad_plugin():
     nonebot.load_plugins("bad_plugins")
 
     assert nonebot.get_plugin("bad_plugins") is None
 
 
 @pytest.mark.asyncio
-async def test_require_loaded(app: App, monkeypatch: pytest.MonkeyPatch):
-    import nonebot
-
+async def test_require_loaded(monkeypatch: pytest.MonkeyPatch):
     def _patched_find(name: str):
-        assert False
+        pytest.fail("require existing plugin should not call find_manager_by_name")
 
     monkeypatch.setattr("nonebot.plugin.load._find_manager_by_name", _patched_find)
-
-    nonebot.load_plugin("plugins.export")
 
     nonebot.require("plugins.export")
 
 
 @pytest.mark.asyncio
-async def test_require_not_loaded(app: App, monkeypatch: pytest.MonkeyPatch):
-    import nonebot
-    from nonebot.plugin import PluginManager, _managers
-
-    m = PluginManager(["plugins.export"])
+async def test_require_not_loaded(monkeypatch: pytest.MonkeyPatch):
+    m = PluginManager(["dynamic.require_not_loaded"])
     _managers.append(m)
+    num_managers = len(_managers)
 
     origin_load = PluginManager.load_plugin
 
@@ -125,33 +105,29 @@ async def test_require_not_loaded(app: App, monkeypatch: pytest.MonkeyPatch):
 
     monkeypatch.setattr(PluginManager, "load_plugin", _patched_load)
 
-    nonebot.require("plugins.export")
+    nonebot.require("dynamic.require_not_loaded")
 
-    assert len(_managers) == 1
-
-
-@pytest.mark.asyncio
-async def test_require_not_declared(app: App):
-    import nonebot
-    from nonebot.plugin import _managers
-
-    nonebot.require("plugins.export")
-
-    assert len(_managers) == 1
-    assert _managers[-1].plugins == {"plugins.export"}
+    assert len(_managers) == num_managers
 
 
 @pytest.mark.asyncio
-async def test_require_not_found(app: App):
-    import nonebot
+async def test_require_not_declared():
+    num_managers = len(_managers)
 
+    nonebot.require("dynamic.require_not_declared")
+
+    assert len(_managers) == num_managers + 1
+    assert _managers[-1].plugins == {"dynamic.require_not_declared"}
+
+
+@pytest.mark.asyncio
+async def test_require_not_found():
     with pytest.raises(RuntimeError):
         nonebot.require("some_plugin_not_exist")
 
 
 @pytest.mark.asyncio
-async def test_plugin_metadata(app: App, load_plugin: Set["Plugin"]):
-    import nonebot
+async def test_plugin_metadata():
     from plugins.metadata import Config
 
     plugin = nonebot.get_plugin("metadata")

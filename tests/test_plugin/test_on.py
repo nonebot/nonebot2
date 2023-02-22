@@ -1,25 +1,25 @@
 from typing import Type, Optional
 
 import pytest
-from nonebug import App
+
+import nonebot
+from nonebot.typing import T_RuleChecker
+from nonebot.matcher import Matcher, matchers
+from nonebot.rule import (
+    RegexRule,
+    IsTypeRule,
+    CommandRule,
+    EndswithRule,
+    KeywordsRule,
+    FullmatchRule,
+    StartswithRule,
+    ShellCommandRule,
+)
 
 
 @pytest.mark.asyncio
-async def test_on(app: App, load_plugin):
-    import nonebot
+async def test_on():
     import plugins.plugin.matchers as module
-    from nonebot.typing import T_RuleChecker
-    from nonebot.matcher import Matcher, matchers
-    from nonebot.rule import (
-        RegexRule,
-        IsTypeRule,
-        CommandRule,
-        EndswithRule,
-        KeywordsRule,
-        FullmatchRule,
-        StartswithRule,
-        ShellCommandRule,
-    )
     from plugins.plugin.matchers import (
         TestEvent,
         rule,

@@ -1,11 +1,14 @@
 import pytest
 from nonebug import App
 
+from nonebot.permission import User
+from nonebot.message import _check_matcher
+from nonebot.matcher import Matcher, matchers
 from utils import make_fake_event, make_fake_message
 
 
 @pytest.mark.asyncio
-async def test_matcher(app: App, load_plugin):
+async def test_matcher(app: App):
     from plugins.matcher.matcher_process import (
         test_got,
         test_handle,
@@ -77,7 +80,7 @@ async def test_matcher(app: App, load_plugin):
 
 
 @pytest.mark.asyncio
-async def test_type_updater(app: App, load_plugin):
+async def test_type_updater(app: App):
     from plugins.matcher.matcher_type import test_type_updater, test_custom_updater
 
     event = make_fake_event()()
@@ -98,8 +101,7 @@ async def test_type_updater(app: App, load_plugin):
 
 
 @pytest.mark.asyncio
-async def test_permission_updater(app: App, load_plugin):
-    from nonebot.permission import User
+async def test_permission_updater(app: App):
     from plugins.matcher.matcher_permission import (
         default_permission,
         test_custom_updater,
@@ -143,40 +145,37 @@ async def test_permission_updater(app: App, load_plugin):
 
 @pytest.mark.asyncio
 async def test_run(app: App):
-    from nonebot.matcher import Matcher, matchers
+    with app.provider.context({}):
+        assert not matchers
+        event = make_fake_event()()
 
-    assert not matchers
-    event = make_fake_event()()
+        async def reject():
+            await Matcher.reject()
 
-    async def reject():
-        await Matcher.reject()
+        test_reject = Matcher.new(handlers=[reject])
 
-    test_reject = Matcher.new(handlers=[reject])
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            await test_reject().run(bot, event, {})
+            assert len(matchers[0]) == 1
+            assert len(matchers[0][0].handlers) == 1
 
-    async with app.test_api() as ctx:
-        bot = ctx.create_bot()
-        await test_reject().run(bot, event, {})
-        assert len(matchers[0]) == 1
-        assert len(matchers[0][0].handlers) == 1
+        del matchers[0]
 
-    del matchers[0]
+        async def pause():
+            await Matcher.pause()
 
-    async def pause():
-        await Matcher.pause()
+        test_pause = Matcher.new(handlers=[pause])
 
-    test_pause = Matcher.new(handlers=[pause])
-
-    async with app.test_api() as ctx:
-        bot = ctx.create_bot()
-        await test_pause().run(bot, event, {})
-        assert len(matchers[0]) == 1
-        assert len(matchers[0][0].handlers) == 0
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            await test_pause().run(bot, event, {})
+            assert len(matchers[0]) == 1
+            assert len(matchers[0][0].handlers) == 0
 
 
 @pytest.mark.asyncio
-async def test_expire(app: App, load_plugin):
-    from nonebot.matcher import matchers
-    from nonebot.message import _check_matcher
+async def test_expire(app: App):
     from plugins.matcher.matcher_expire import (
         test_temp_matcher,
         test_datetime_matcher,

@@ -9,6 +9,7 @@ import re
 import json
 import asyncio
 import inspect
+import importlib
 import dataclasses
 from pathlib import Path
 from functools import wraps, partial
@@ -167,11 +168,28 @@ def get_name(obj: Any) -> str:
 
 
 def path_to_module_name(path: Path) -> str:
-    rel_path = path.resolve().relative_to(Path(".").resolve())
+    """转换路径为模块名"""
+    rel_path = path.resolve().relative_to(Path.cwd().resolve())
     if rel_path.stem == "__init__":
         return ".".join(rel_path.parts[:-1])
     else:
         return ".".join(rel_path.parts[:-1] + (rel_path.stem,))
+
+
+def resolve_dot_notation(
+    obj_str: str, default_attr: str, default_prefix: Optional[str] = None
+) -> Any:
+    """解析并导入点分表示法的对象"""
+    modulename, _, cls = obj_str.partition(":")
+    if default_prefix is not None and modulename.startswith("~"):
+        modulename = default_prefix + modulename[1:]
+    module = importlib.import_module(modulename)
+    if not cls:
+        return getattr(module, default_attr)
+    instance = module
+    for attr_str in cls.split("."):
+        instance = getattr(instance, attr_str)
+    return instance
 
 
 class DataclassEncoder(json.JSONEncoder):

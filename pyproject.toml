@@ -45,10 +45,10 @@ nonemoji = "^0.1.2"
 pre-commit = "^3.0.0"
 
 [tool.poetry.group.test.dependencies]
+nonebug = "^0.3.0"
 pytest-cov = "^4.0.0"
 pytest-xdist = "^3.0.2"
 pytest-asyncio = "^0.20.0"
-nonebug = { git = "https://github.com/nonebot/nonebug.git" }
 
 [tool.poetry.group.docs.dependencies]
 nb-autodoc = { git = "https://github.com/nonebot/nb-autodoc.git" }
@@ -63,7 +63,7 @@ all = ["fastapi", "quart", "aiohttp", "httpx", "websockets", "uvicorn"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-addopts = "--cov=nonebot --cov-report=term-missing"
+addopts = "--cov=nonebot --cov-append --cov-report=term-missing"
 filterwarnings = [
     "error",
     "ignore::DeprecationWarning",

@@ -4,14 +4,51 @@ from typing import Dict, Tuple, Union, Optional
 import pytest
 from nonebug import App
 
+from nonebot.typing import T_State
 from utils import make_fake_event, make_fake_message
+from nonebot.exception import ParserExit, SkippedException
+from nonebot.consts import (
+    CMD_KEY,
+    REGEX_STR,
+    PREFIX_KEY,
+    REGEX_DICT,
+    SHELL_ARGS,
+    SHELL_ARGV,
+    CMD_ARG_KEY,
+    KEYWORD_KEY,
+    REGEX_GROUP,
+    ENDSWITH_KEY,
+    FULLMATCH_KEY,
+    REGEX_MATCHED,
+    STARTSWITH_KEY,
+)
+from nonebot.rule import (
+    Rule,
+    ToMeRule,
+    Namespace,
+    RegexRule,
+    IsTypeRule,
+    CommandRule,
+    EndswithRule,
+    KeywordsRule,
+    FullmatchRule,
+    ArgumentParser,
+    StartswithRule,
+    ShellCommandRule,
+    regex,
+    to_me,
+    command,
+    is_type,
+    keyword,
+    endswith,
+    fullmatch,
+    startswith,
+    shell_command,
+)
 
 
 @pytest.mark.asyncio
 async def test_rule(app: App):
-    from nonebot.rule import Rule
-    from nonebot.exception import SkippedException
-
     async def falsy():
         return False
 
@@ -44,7 +81,7 @@ async def test_rule(app: App):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "msg,ignorecase,type,text,expected",
+    "msg, ignorecase, type, text, expected",
     [
         ("prefix", False, "message", "prefix_", True),
         ("prefix", False, "message", "Prefix_", False),
@@ -58,16 +95,12 @@ async def test_rule(app: App):
     ],
 )
 async def test_startswith(
-    app: App,
     msg: Union[str, Tuple[str, ...]],
     ignorecase: bool,
     type: str,
     text: Optional[str],
     expected: bool,
 ):
-    from nonebot.consts import STARTSWITH_KEY
-    from nonebot.rule import StartswithRule, startswith
-
     test_startswith = startswith(msg, ignorecase)
     dependent = list(test_startswith.checkers)[0]
     checker = dependent.call
@@ -87,7 +120,7 @@ async def test_startswith(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "msg,ignorecase,type,text,expected",
+    "msg, ignorecase, type, text, expected",
     [
         ("suffix", False, "message", "_suffix", True),
         ("suffix", False, "message", "_Suffix", False),
@@ -101,16 +134,12 @@ async def test_startswith(
     ],
 )
 async def test_endswith(
-    app: App,
     msg: Union[str, Tuple[str, ...]],
     ignorecase: bool,
     type: str,
     text: Optional[str],
     expected: bool,
 ):
-    from nonebot.consts import ENDSWITH_KEY
-    from nonebot.rule import EndswithRule, endswith
-
     test_endswith = endswith(msg, ignorecase)
     dependent = list(test_endswith.checkers)[0]
     checker = dependent.call
@@ -130,7 +159,7 @@ async def test_endswith(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "msg,ignorecase,type,text,expected",
+    "msg, ignorecase, type, text, expected",
     [
         ("fullmatch", False, "message", "fullmatch", True),
         ("fullmatch", False, "message", "Fullmatch", False),
@@ -144,16 +173,12 @@ async def test_endswith(
     ],
 )
 async def test_fullmatch(
-    app: App,
     msg: Union[str, Tuple[str, ...]],
     ignorecase: bool,
     type: str,
     text: Optional[str],
     expected: bool,
 ):
-    from nonebot.consts import FULLMATCH_KEY
-    from nonebot.rule import FullmatchRule, fullmatch
-
     test_fullmatch = fullmatch(msg, ignorecase)
     dependent = list(test_fullmatch.checkers)[0]
     checker = dependent.call
@@ -173,7 +198,7 @@ async def test_fullmatch(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "kws,type,text,expected",
+    "kws, type, text, expected",
     [
         (("key",), "message", "_key_", True),
         (("key", "foo"), "message", "_foo_", True),
@@ -183,15 +208,11 @@ async def test_fullmatch(
     ],
 )
 async def test_keyword(
-    app: App,
     kws: Tuple[str, ...],
     type: str,
     text: Optional[str],
     expected: bool,
 ):
-    from nonebot.consts import KEYWORD_KEY
-    from nonebot.rule import KeywordsRule, keyword
-
     test_keyword = keyword(*kws)
     dependent = list(test_keyword.checkers)[0]
     checker = dependent.call
@@ -210,10 +231,7 @@ async def test_keyword(
 @pytest.mark.parametrize(
     "cmds", [(("help",),), (("help", "foo"),), (("help",), ("foo",))]
 )
-async def test_command(app: App, cmds: Tuple[Tuple[str, ...]]):
-    from nonebot.rule import CommandRule, command
-    from nonebot.consts import CMD_KEY, PREFIX_KEY
-
+async def test_command(cmds: Tuple[Tuple[str, ...]]):
     test_command = command(*cmds)
     dependent = list(test_command.checkers)[0]
     checker = dependent.call
@@ -227,12 +245,7 @@ async def test_command(app: App, cmds: Tuple[Tuple[str, ...]]):
 
 
 @pytest.mark.asyncio
-async def test_shell_command(app: App):
-    from nonebot.typing import T_State
-    from nonebot.exception import ParserExit
-    from nonebot.consts import CMD_KEY, PREFIX_KEY, SHELL_ARGS, SHELL_ARGV, CMD_ARG_KEY
-    from nonebot.rule import Namespace, ArgumentParser, ShellCommandRule, shell_command
-
+async def test_shell_command():
     state: T_State
     CMD = ("test",)
     Message = make_fake_message()
@@ -328,7 +341,7 @@ async def test_shell_command(app: App):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "pattern,type,text,expected,matched,string,group,dict",
+    "pattern, type, text, expected, matched, string, group, dict",
     [
         (
             r"(?P<key>key\d)",
@@ -345,7 +358,6 @@ async def test_shell_command(app: App):
     ],
 )
 async def test_regex(
-    app: App,
     pattern: str,
     type: str,
     text: Optional[str],
@@ -355,10 +367,6 @@ async def test_regex(
     group: Optional[Tuple[str, ...]],
     dict: Optional[Dict[str, str]],
 ):
-    from nonebot.typing import T_State
-    from nonebot.rule import RegexRule, regex
-    from nonebot.consts import REGEX_STR, REGEX_DICT, REGEX_GROUP, REGEX_MATCHED
-
     test_regex = regex(pattern)
     dependent = list(test_regex.checkers)[0]
     checker = dependent.call
@@ -378,9 +386,7 @@ async def test_regex(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize("expected", [True, False])
-async def test_to_me(app: App, expected: bool):
-    from nonebot.rule import ToMeRule, to_me
-
+async def test_to_me(expected: bool):
     test_to_me = to_me()
     dependent = list(test_to_me.checkers)[0]
     checker = dependent.call
@@ -392,9 +398,7 @@ async def test_to_me(app: App, expected: bool):
 
 
 @pytest.mark.asyncio
-async def test_is_type(app: App):
-    from nonebot.rule import IsTypeRule, is_type
-
+async def test_is_type():
     Event1 = make_fake_event()
     Event2 = make_fake_event()
     Event3 = make_fake_event()

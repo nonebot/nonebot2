@@ -5,30 +5,45 @@ from typing import cast
 import pytest
 from nonebug import App
 
+import nonebot
+from nonebot.config import Env
+from nonebot import _resolve_combine_expr
+from nonebot.exception import WebSocketClosed
+from nonebot.drivers import (
+    URL,
+    Driver,
+    Request,
+    Response,
+    WebSocket,
+    ForwardDriver,
+    ReverseDriver,
+    HTTPServerSetup,
+    WebSocketServerSetup,
+)
+
+
+@pytest.fixture(name="driver")
+def load_driver(request: pytest.FixtureRequest) -> Driver:
+    driver_name = getattr(request, "param", None)
+    global_driver = nonebot.get_driver()
+    if driver_name is None:
+        return global_driver
+
+    DriverClass = _resolve_combine_expr(driver_name)
+    return DriverClass(Env(environment=global_driver.env), global_driver.config)
+
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "nonebug_init",
+    "driver",
     [
-        pytest.param({"driver": "nonebot.drivers.fastapi:Driver"}, id="fastapi"),
-        pytest.param({"driver": "nonebot.drivers.quart:Driver"}, id="quart"),
+        pytest.param("nonebot.drivers.fastapi:Driver", id="fastapi"),
+        pytest.param("nonebot.drivers.quart:Driver", id="quart"),
     ],
     indirect=True,
 )
-async def test_reverse_driver(app: App):
-    import nonebot
-    from nonebot.exception import WebSocketClosed
-    from nonebot.drivers import (
-        URL,
-        Request,
-        Response,
-        WebSocket,
-        ReverseDriver,
-        HTTPServerSetup,
-        WebSocketServerSetup,
-    )
-
-    driver = cast(ReverseDriver, nonebot.get_driver())
+async def test_reverse_driver(app: App, driver: Driver):
+    driver = cast(ReverseDriver, driver)
 
     async def _handle_http(request: Request) -> Response:
         assert request.content in (b"test", "test")
@@ -61,7 +76,7 @@ async def test_reverse_driver(app: App):
     ws_setup = WebSocketServerSetup(URL("/ws_test"), "ws_test", _handle_ws)
     driver.setup_websocket_server(ws_setup)
 
-    async with app.test_server() as ctx:
+    async with app.test_server(driver.asgi) as ctx:
         client = ctx.get_client()
         response = await client.post("/http_test", data="test")
         assert response.status_code == 200
@@ -86,18 +101,15 @@ async def test_reverse_driver(app: App):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "nonebug_init",
+    "driver",
     [
-        pytest.param({"driver": "nonebot.drivers.httpx:Driver"}, id="httpx"),
-        pytest.param({"driver": "nonebot.drivers.aiohttp:Driver"}, id="aiohttp"),
+        pytest.param("nonebot.drivers.httpx:Driver", id="httpx"),
+        pytest.param("nonebot.drivers.aiohttp:Driver", id="aiohttp"),
     ],
     indirect=True,
 )
-async def test_http_driver(app: App):
-    import nonebot
-    from nonebot.drivers import Request, ForwardDriver
-
-    driver = cast(ForwardDriver, nonebot.get_driver())
+async def test_http_driver(driver: Driver):
+    driver = cast(ForwardDriver, driver)
 
     request = Request(
         "POST",
@@ -140,23 +152,20 @@ async def test_http_driver(app: App):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "nonebug_init, driver_type",
+    "driver, driver_type",
     [
         pytest.param(
-            {"driver": "nonebot.drivers.fastapi:Driver+nonebot.drivers.aiohttp:Mixin"},
+            "nonebot.drivers.fastapi:Driver+nonebot.drivers.aiohttp:Mixin",
             "fastapi+aiohttp",
             id="fastapi+aiohttp",
         ),
         pytest.param(
-            {"driver": "~httpx:Driver+~websockets"},
+            "~httpx:Driver+~websockets",
             "none+httpx+websockets",
             id="httpx+websockets",
         ),
     ],
-    indirect=["nonebug_init"],
+    indirect=["driver"],
 )
-async def test_combine_driver(app: App, driver_type: str):
-    import nonebot
-
-    driver = nonebot.get_driver()
+async def test_combine_driver(driver: Driver, driver_type: str):
     assert driver.type == driver_type

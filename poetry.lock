@@ -1431,26 +1431,22 @@ setuptools = "*"
 
 [[package]]
 name = "nonebug"
-version = "0.2.3"
+version = "0.3.0"
 description = "nonebot2 test framework"
 category = "dev"
 optional = false
-python-versions = "^3.8"
-files = []
-develop = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "nonebug-0.3.0-py3-none-any.whl", hash = "sha256:ba6adef16c73042ac717c840aceb0e68fe06ebca948fe69511139265752b77f9"},
+    {file = "nonebug-0.3.0.tar.gz", hash = "sha256:189d0d8efbcaf06dd9bdf73b48f270b60a31ec9e76b546ab6607c392929de9bd"},
+]
 
 [package.dependencies]
-asgiref = "^3.4.0"
-async-asgi-testclient = "^1.4.8"
-nonebot2 = "^2.0.0-beta.1"
-pytest = "^7.0.0"
-typing-extensions = "^4.0.0"
-
-[package.source]
-type = "git"
-url = "https://github.com/nonebot/nonebug.git"
-reference = "HEAD"
-resolved_reference = "9e40f5717b8f7bf3e19933f9a2b63a470db6005a"
+asgiref = ">=3.4.0,<4.0.0"
+async-asgi-testclient = ">=1.4.8,<2.0.0"
+nonebot2 = ">=2.0.0-rc.2,<3.0.0"
+pytest = ">=7.0.0,<8.0.0"
+typing-extensions = ">=4.0.0,<5.0.0"
 
 [[package]]
 name = "nonemoji"
@@ -1571,14 +1567,14 @@ files = [
 
 [[package]]
 name = "prompt-toolkit"
-version = "3.0.36"
+version = "3.0.37"
 description = "Library for building powerful interactive command lines in Python"
 category = "dev"
 optional = false
-python-versions = ">=3.6.2"
+python-versions = ">=3.7.0"
 files = [
-    {file = "prompt_toolkit-3.0.36-py3-none-any.whl", hash = "sha256:aa64ad242a462c5ff0363a7b9cfe696c20d55d9fc60c11fd8e632d064804d305"},
-    {file = "prompt_toolkit-3.0.36.tar.gz", hash = "sha256:3e163f254bef5a03b146397d7c1963bd3e2812f0964bb9a24e6ec761fd28db63"},
+    {file = "prompt_toolkit-3.0.37-py3-none-any.whl", hash = "sha256:6a2948ec427dfcc7c983027b1044b355db6aaa8be374f54ad2015471f7d81c5b"},
+    {file = "prompt_toolkit-3.0.37.tar.gz", hash = "sha256:d5d73d4b5eb1a92ba884a88962b157f49b71e06c4348b417dd622b25cdd3800b"},
 ]
 
 [package.dependencies]
@@ -1966,14 +1962,14 @@ idna2008 = ["idna"]
 
 [[package]]
 name = "setuptools"
-version = "67.3.2"
+version = "67.4.0"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "setuptools-67.3.2-py3-none-any.whl", hash = "sha256:bb6d8e508de562768f2027902929f8523932fcd1fb784e6d573d2cafac995a48"},
-    {file = "setuptools-67.3.2.tar.gz", hash = "sha256:95f00380ef2ffa41d9bba85d95b27689d923c93dfbafed4aecd7cf988a25e012"},
+    {file = "setuptools-67.4.0-py3-none-any.whl", hash = "sha256:f106dee1b506dee5102cc3f3e9e68137bbad6d47b616be7991714b0c62204251"},
+    {file = "setuptools-67.4.0.tar.gz", hash = "sha256:e5fd0a713141a4a105412233c63dc4e17ba0090c8e8334594ac790ec97792330"},
 ]
 
 [package.extras]
@@ -2491,4 +2487,4 @@ websockets = ["websockets"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "9b82bb373f396eb553e6fcc33d26722957ff85590a1bd8b29b89cce4d7ed4489"
+content-hash = "d8e1468d5f5e1c5e48a7bf9717cd3f181cc05d4c0153cab3a75f429c6453766f"
