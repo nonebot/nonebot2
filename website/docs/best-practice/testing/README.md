@@ -66,7 +66,7 @@ def pytest_configure(config: pytest.Config):
 
 ## 编写插件测试
 
-在配置完成插件加载后，我们就可以在测试中使用插件了。NoneBug 通过 pytest fixture `app` 提供各种测试方法，我们可以在测试中使用它来测试插件。现在，我们创建一个测试脚本来测试[深入指南](../appendices/session-control.mdx)中编写的天气插件。首先，我们先要导入我们需要的模块：
+在配置完成插件加载后，我们就可以在测试中使用插件了。NoneBug 通过 pytest fixture `app` 提供各种测试方法，我们可以在测试中使用它来测试插件。现在，我们创建一个测试脚本来测试[深入指南](../../appendices/session-control.mdx)中编写的天气插件。首先，我们先要导入我们需要的模块：
 
 <details>
   <summary>插件示例</summary>
