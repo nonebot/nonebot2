@@ -4402,5 +4402,20 @@
     "homepage": "https://github.com/felinae98/nonebot-plugin-send-anything-anywhere",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_random_stereotypes",
+    "project_link": "nonebot-plugin-random-stereotypes",
+    "name": "发病语录",
+    "desc": "对输入的人，随机返回一条本地的发病语录",
+    "author": "Ikaros-521",
+    "homepage": "https://github.com/Ikaros-521/nonebot_plugin_random_stereotypes",
+    "tags": [
+      {
+        "label": "语录",
+        "color": "#6a6060"
+      }
+    ],
+    "is_official": false
   }
 ]
