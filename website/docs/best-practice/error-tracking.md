@@ -11,7 +11,7 @@ description: 使用 sentry 进行错误跟踪
 
 在使用前请先安装 `nonebot-plugin-sentry` 插件至项目环境中，可参考[获取商店插件](../tutorial/store.mdx#安装插件)来了解并选择安装插件的方式。如：
 
-在项目目录下执行以下命令：
+在**项目目录**下执行以下命令：
 
 ```bash
 nb plugin install nonebot-plugin-sentry
