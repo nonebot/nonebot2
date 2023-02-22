@@ -4417,5 +4417,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_xiuxian_2",
+    "project_link": "nonebot_plugin_xiuxian_2",
+    "name": "修仙_2.0",
+    "desc": "基于原版修仙的修改与重构",
+    "author": "QingMuCat",
+    "homepage": "https://github.com/QingMuCat/nonebot_plugin_xiuxian_2.0",
+    "tags": [
+      {
+        "label": "文游",
+        "color": "#ea5252"
+      },
+      {
+        "label": "修仙",
+        "color": "#4e9f9f"
+      }
+    ],
+    "is_official": false
   }
 ]
