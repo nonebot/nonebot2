@@ -37,12 +37,7 @@ jobs:
       - name: Run Pytest
         run: |
           cd tests/
-          poetry run coverage erase
           poetry run pytest -n auto --cov-report xml
-        env:
-          COV_CORE_SOURCE: nonebot
-          COV_CORE_CONFIG: .coveragerc
-          COV_CORE_DATAFILE: .coverage
 
       - name: Upload coverage report
         uses: codecov/codecov-action@v3
