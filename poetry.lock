@@ -1431,26 +1431,22 @@ setuptools = "*"
 
 [[package]]
 name = "nonebug"
-version = "0.2.3"
+version = "0.3.0"
 description = "nonebot2 test framework"
 category = "dev"
 optional = false
-python-versions = "^3.8"
-files = []
-develop = false
+python-versions = ">=3.8,<4.0"
+files = [
+    {file = "nonebug-0.3.0-py3-none-any.whl", hash = "sha256:ba6adef16c73042ac717c840aceb0e68fe06ebca948fe69511139265752b77f9"},
+    {file = "nonebug-0.3.0.tar.gz", hash = "sha256:189d0d8efbcaf06dd9bdf73b48f270b60a31ec9e76b546ab6607c392929de9bd"},
+]
 
 [package.dependencies]
-asgiref = "^3.4.0"
-async-asgi-testclient = "^1.4.8"
-nonebot2 = "^2.0.0-rc.2"
-pytest = "^7.0.0"
-typing-extensions = "^4.0.0"
-
-[package.source]
-type = "git"
-url = "https://github.com/nonebot/nonebug.git"
-reference = "HEAD"
-resolved_reference = "27518a878f0fcff608d10869c6adc24562806bab"
+asgiref = ">=3.4.0,<4.0.0"
+async-asgi-testclient = ">=1.4.8,<2.0.0"
+nonebot2 = ">=2.0.0-rc.2,<3.0.0"
+pytest = ">=7.0.0,<8.0.0"
+typing-extensions = ">=4.0.0,<5.0.0"
 
 [[package]]
 name = "nonemoji"
@@ -2491,4 +2487,4 @@ websockets = ["websockets"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.8"
-content-hash = "9b82bb373f396eb553e6fcc33d26722957ff85590a1bd8b29b89cce4d7ed4489"
+content-hash = "d8e1468d5f5e1c5e48a7bf9717cd3f181cc05d4c0153cab3a75f429c6453766f"
