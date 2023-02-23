@@ -1,6 +1,8 @@
 ---
 sidebar_position: 1
 description: 使用 NoneBug 进行单元测试
+
+slug: /best-practice/testing/
 ---
 
 # 配置与测试事件响应器
@@ -17,19 +19,55 @@ description: 使用 NoneBug 进行单元测试
 
 在**项目目录**下激活虚拟环境后运行以下命令安装 NoneBug：
 
+<Tabs groupId="tool">
+  <TabItem value="poetry" label="Poetry" default>
+
+```bash
+poetry add nonebug --group dev
+```
+
+  </TabItem>
+  <TabItem value="pdm" label="PDM">
+
+```bash
+pdm add nonebug -dG test
+```
+
+  </TabItem>
+  <TabItem value="pip" label="pip">
+
 ```bash
 pip install nonebug
-# 或使用 poetry
-poetry add nonebug
 ```
+
+  </TabItem>
+</Tabs>
 
 要运行 NoneBug 测试，还需要额外安装 pytest 异步插件 `pytest-asyncio` 或 `anyio` 以支持异步测试。文档中，我们以 `pytest-asyncio` 为例：
 
+<Tabs groupId="tool">
+  <TabItem value="poetry" label="Poetry" default>
+
+```bash
+poetry add pytest-asyncio -G dev
+```
+
+  </TabItem>
+  <TabItem value="pdm" label="PDM">
+
+```bash
+pdm add pytest-asyncio -dG test
+```
+
+  </TabItem>
+  <TabItem value="pip" label="pip">
+
 ```bash
 pip install pytest-asyncio
-# 或使用 poetry
-poetry add pytest-asyncio
 ```
+
+  </TabItem>
+</Tabs>
 
 ## 配置测试
 
