@@ -4436,5 +4436,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_h2e",
+    "project_link": "nonebot-plugin-h2e",
+    "name": "呆呆兽都会起来锻炼 H2E",
+    "desc": "类似\"今天吃什么\"的一个插件，通过命令返回健身、游泳、瑜伽的锻炼方式啦",
+    "author": "Gin2O",
+    "homepage": "https://github.com/Gin2O/nonebot_plugin_h2e",
+    "tags": [
+      {
+        "label": "锻炼",
+        "color": "#da4a4a"
+      },
+      {
+        "label": "t:what2eat",
+        "color": "#99da4a"
+      },
+      {
+        "label": "t: how2exe",
+        "color": "#99da4a"
+      }
+    ],
+    "is_official": false
   }
 ]
