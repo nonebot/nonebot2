@@ -7,6 +7,9 @@ slug: /best-practice/testing/
 
 # 配置与测试事件响应器
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 > 在计算机编程中，单元测试（Unit Testing）又称为模块测试，是针对程序模块（软件设计的最小单位）来进行正确性检验的测试工作。
 
 为了保证代码的正确运行，我们不仅需要对错误进行跟踪，还需要对代码进行正确性检验，也就是测试。NoneBot 提供了一个测试工具——NoneBug，它是一个 [pytest](https://docs.pytest.org/en/stable/) 插件，可以帮助我们便捷地进行单元测试。
@@ -23,7 +26,7 @@ slug: /best-practice/testing/
   <TabItem value="poetry" label="Poetry" default>
 
 ```bash
-poetry add nonebug --group dev
+poetry add nonebug -G test
 ```
 
   </TabItem>
@@ -49,7 +52,7 @@ pip install nonebug
   <TabItem value="poetry" label="Poetry" default>
 
 ```bash
-poetry add pytest-asyncio -G dev
+poetry add pytest-asyncio -G test
 ```
 
   </TabItem>
@@ -141,7 +144,7 @@ from nonebot.adapters.console import User, Message, MessageEvent
 
 @pytest.mark.asyncio
 async def test_weather(app: App):
-    from src.plugins.weather import weather
+    from awesome_bot.plugins.weather import weather
 
     event = MessageEvent(
         time=datetime.now(),
@@ -151,12 +154,12 @@ async def test_weather(app: App):
     )
 ```
 
-在上面代码中，我们引入了 NoneBug 的测试 `App` 对象，以及必要的适配器消息与事件定义等。在测试函数 `test_weather` 中，我们导入了要进行测试的事件响应器 `weather`。请注意，由于需要等待 NoneBot 初始化并加载插件完毕，插件内容必须在**测试函数内部**进行导入。然后，我们创建了一个 `MessageEvent` 事件对象，它模拟了一个用户发送了 `/天气 北京` 的消息。接下来，我们使用 `app.test_matcher` 方法来测试 `weather` 事件响应器：
+在上面的代码中，我们引入了 NoneBug 的测试 `App` 对象，以及必要的适配器消息与事件定义等。在测试函数 `test_weather` 中，我们导入了要进行测试的事件响应器 `weather`。请注意，由于需要等待 NoneBot 初始化并加载插件完毕，插件内容必须在**测试函数内部**进行导入。然后，我们创建了一个 `MessageEvent` 事件对象，它模拟了一个用户发送了 `/天气 北京` 的消息。接下来，我们使用 `app.test_matcher` 方法来测试 `weather` 事件响应器：
 
 ```python {11-15} title=tests/test_weather.py
 @pytest.mark.asyncio
 async def test_weather(app: App):
-    from src.plugins.weather import weather
+    from awesome_bot.plugins.weather import weather
 
     event = MessageEvent(
         time=datetime.now(),
@@ -176,7 +179,7 @@ async def test_weather(app: App):
 为了测试更复杂的情况，我们可以为添加更多的测试用例。例如，我们可以测试用户输入了一个不支持的地名时机器人的反应：
 
 ```python {17-21,23-26} title=tests/test_weather.py
-def make_event(message: str) -> MessageEvent:
+def make_event(message: str = "") -> MessageEvent:
     return MessageEvent(
         time=datetime.now(),
         self_id=bot.self_id,
@@ -186,7 +189,7 @@ def make_event(message: str) -> MessageEvent:
 
 @pytest.mark.asyncio
 async def test_weather(app: App):
-    from src.plugins.weather import weather
+    from awesome_bot.plugins.weather import weather
 
     async with app.test_matcher(weather) as ctx:
         ...  # 省略前面的测试用例
