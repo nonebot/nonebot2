@@ -29,6 +29,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 呆呆兽都会起来锻炼 H2E [@yanyongyu](https://github.com/yanyongyu) ([#1739](https://github.com/nonebot/nonebot2/pull/1739))
 - Plugin: 修仙\_2.0 [@yanyongyu](https://github.com/yanyongyu) ([#1730](https://github.com/nonebot/nonebot2/pull/1730))
 - Plugin: 发病语录 [@yanyongyu](https://github.com/yanyongyu) ([#1728](https://github.com/nonebot/nonebot2/pull/1728))
 - Plugin: 峯驰物流 [@yanyongyu](https://github.com/yanyongyu) ([#1723](https://github.com/nonebot/nonebot2/pull/1723))
