@@ -4482,5 +4482,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_warframe_mode",
+    "project_link": "nonebot-plugin-warframe-mode",
+    "name": "wf的wm市场",
+    "desc": "warframe游戏的WM市场查询",
+    "author": "mmxd12",
+    "homepage": "https://github.com/mmxd12/nonebot_plugin_warframe_mode",
+    "tags": [
+      {
+        "label": "星际战甲",
+        "color": "#ea5252"
+      },
+      {
+        "label": "warframe",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
