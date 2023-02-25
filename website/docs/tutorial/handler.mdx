@@ -64,7 +64,7 @@ async def handle_function():
   ]}
 />
 
-值得注意的是，在执行 `finish` 方法时，NoneBot 会在向机器人用户发送消息内容后抛出 `FinishedException` 异常来结束事件响应流程。也就是说，在 `finish` 被执行后，后续的程序是不会被执行的（如果你需要回复机器人用户消息但不想事件处理流程结束，可以使用注释的部分中展示的 `send` 方法）。
+值得注意的是，在执行 `finish` 方法时，NoneBot 会在向机器人用户发送消息内容后抛出 `FinishedException` 异常来结束事件响应流程。也就是说，在 `finish` 被执行后，后续的程序是不会被执行的。如果你需要回复机器人用户消息但不想事件处理流程结束，可以使用注释的部分中展示的 `send` 方法。
 
 :::danger 警告
 由于 `finish` 是通过抛出 `FinishedException` 异常来结束事件的，因此异常可能会被未加限制的 `try-except` 捕获，影响事件处理流程正确处理，导致无法正常结束此事件。请务必在异常捕获中指定错误类型或排除所有 [MatcherException](../api/exception.md#MatcherException) 类型的异常（如下所示），或将 `finish` 移出捕获范围进行使用。

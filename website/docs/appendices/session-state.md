@@ -20,11 +20,11 @@ from nonebot.typing import T_State
 @matcher.got("key", prompt="请输入密码")
 async def _(state: T_State, key: str = ArgPlainText()):
     if key != "some password":
-        retry_count = state.get("retry_count", 0)
-        if retry_count >= 3:
+        try_count = state.get("try_count", 1)
+        if try_count >= 3:
             await matcher.finish("密码错误次数过多")
         else:
-            state["retry_count"] = retry_count + 1
+            state["try_count"] = try_count + 1
             await matcher.reject("密码错误，请重新输入")
     await matcher.finish("密码正确")
 ```
