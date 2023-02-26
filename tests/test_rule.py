@@ -273,16 +273,18 @@ async def test_keyword(
 @pytest.mark.parametrize(
     "cmds, force_whitespace, whitespace, expected",
     [
-        [(("help",),), None, None, True],
-        [(("help", "foo"),), True, " ", True],
-        [(("help",), ("foo",)), " ", " ", True],
-        [(("help",),), False, " ", False],
-        [(("help",),), True, None, False],
-        [(("help",),), "\n", " ", False],
+        [(("help",),), ("help",), None, None, True],
+        [(("help",),), ("foo",), None, None, False],
+        [(("help", "foo"),), ("help",), True, " ", True],
+        [(("help",), ("foo",)), ("help",), " ", " ", True],
+        [(("help",),), ("help",), False, " ", False],
+        [(("help",),), ("help",), True, None, False],
+        [(("help",),), ("help",), "\n", " ", False],
     ],
 )
 async def test_command(
     cmds: Tuple[Tuple[str, ...]],
+    cmd: Tuple[str, ...],
     force_whitespace: Optional[Union[str, bool]],
     whitespace: Optional[str],
     expected: bool,
@@ -294,9 +296,8 @@ async def test_command(
     assert isinstance(checker, CommandRule)
     assert checker.cmds == cmds
 
-    for cmd in cmds + (("unknown",),):
-        state = {PREFIX_KEY: {CMD_KEY: cmd, CMD_WHITESPACE_KEY: whitespace}}
-        assert await dependent(state=state) == expected
+    state = {PREFIX_KEY: {CMD_KEY: cmd, CMD_WHITESPACE_KEY: whitespace}}
+    assert await dependent(state=state) == expected
 
 
 @pytest.mark.asyncio
