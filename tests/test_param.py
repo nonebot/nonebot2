@@ -30,6 +30,7 @@ from nonebot.consts import (
     FULLMATCH_KEY,
     REGEX_MATCHED,
     STARTSWITH_KEY,
+    CMD_WHITESPACE_KEY,
 )
 
 
@@ -202,6 +203,7 @@ async def test_state(app: App):
         command_start,
         regex_matched,
         not_legacy_state,
+        command_whitespace,
         shell_command_args,
         shell_command_argv,
     )
@@ -213,6 +215,7 @@ async def test_state(app: App):
             RAW_CMD_KEY: "/cmd",
             CMD_START_KEY: "/",
             CMD_ARG_KEY: fake_message,
+            CMD_WHITESPACE_KEY: " ",
         },
         SHELL_ARGV: ["-h"],
         SHELL_ARGS: {"help": True},
@@ -263,6 +266,12 @@ async def test_state(app: App):
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[PREFIX_KEY][CMD_START_KEY])
+
+    async with app.test_dependent(
+        command_whitespace, allow_types=[StateParam, DependParam]
+    ) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state[PREFIX_KEY][CMD_WHITESPACE_KEY])
 
     async with app.test_dependent(
         shell_command_argv, allow_types=[StateParam, DependParam]

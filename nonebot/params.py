@@ -39,6 +39,7 @@ from nonebot.consts import (
     FULLMATCH_KEY,
     REGEX_MATCHED,
     STARTSWITH_KEY,
+    CMD_WHITESPACE_KEY,
 )
 
 
@@ -112,6 +113,15 @@ def _command_start(state: T_State) -> str:
 def CommandStart() -> str:
     """消息命令开头"""
     return Depends(_command_start)
+
+
+def _command_whitespace(state: T_State) -> str:
+    return state[PREFIX_KEY][CMD_WHITESPACE_KEY]
+
+
+def CommandWhitespace() -> str:
+    """消息命令与参数之间的空白"""
+    return Depends(_command_whitespace)
 
 
 def _shell_command_args(state: T_State) -> Any:

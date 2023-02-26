@@ -349,6 +349,7 @@ def on_command(
     cmd: Union[str, Tuple[str, ...]],
     rule: Optional[Union[Rule, T_RuleChecker]] = None,
     aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
+    force_whitespace: Optional[Union[str, bool]] = None,
     _depth: int = 0,
     **kwargs,
 ) -> Type[Matcher]:
@@ -360,6 +361,7 @@ def on_command(
         cmd: 指定命令内容
         rule: 事件响应规则
         aliases: 命令别名
+        force_whitespace: 是否强制命令后必须有指定空白符
         permission: 事件响应权限
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
@@ -372,7 +374,10 @@ def on_command(
     commands = {cmd} | (aliases or set())
     block = kwargs.pop("block", False)
     return on_message(
-        command(*commands) & rule, block=block, **kwargs, _depth=_depth + 1
+        command(*commands, force_whitespace=force_whitespace) & rule,
+        block=block,
+        **kwargs,
+        _depth=_depth + 1,
     )
 
 
@@ -518,6 +523,7 @@ class CommandGroup(_Group):
         参数:
             cmd: 指定命令内容
             aliases: 命令别名
+            force_whitespace: 是否强制命令后必须有指定空白符
             rule: 事件响应规则
             permission: 事件响应权限
             handlers: 事件处理函数列表
@@ -736,6 +742,7 @@ class MatcherGroup(_Group):
         self,
         cmd: Union[str, Tuple[str, ...]],
         aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = None,
+        force_whitespace: Optional[Union[str, bool]] = None,
         **kwargs,
     ) -> Type[Matcher]:
         """注册一个消息事件响应器，并且当消息以指定命令开头时响应。
@@ -745,6 +752,7 @@ class MatcherGroup(_Group):
         参数:
             cmd: 指定命令内容
             aliases: 命令别名
+            force_whitespace: 是否强制命令后必须有指定空白符
             rule: 事件响应规则
             permission: 事件响应权限
             handlers: 事件处理函数列表
@@ -755,7 +763,9 @@ class MatcherGroup(_Group):
             state: 默认 state
         """
         final_kwargs = self._get_final_kwargs(kwargs, exclude={"type"})
-        matcher = on_command(cmd, aliases=aliases, **final_kwargs)
+        matcher = on_command(
+            cmd, aliases=aliases, force_whitespace=force_whitespace, **final_kwargs
+        )
         self.matchers.append(matcher)
         return matcher
 
