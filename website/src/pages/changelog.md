@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 爱发电审核 [@yanyongyu](https://github.com/yanyongyu) ([#1750](https://github.com/nonebot/nonebot2/pull/1750))
 - Plugin: 战地一入群审批 [@yanyongyu](https://github.com/yanyongyu) ([#1745](https://github.com/nonebot/nonebot2/pull/1745))
 - Plugin: wf 的 wm 市场 [@yanyongyu](https://github.com/yanyongyu) ([#1742](https://github.com/nonebot/nonebot2/pull/1742))
 - Plugin: 呆呆兽都会用的 chatbot 接 api [@yanyongyu](https://github.com/yanyongyu) ([#1740](https://github.com/nonebot/nonebot2/pull/1740))
