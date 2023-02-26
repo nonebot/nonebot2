@@ -1,8 +1,17 @@
 import pytest
+from nonebug import App
 
 import nonebot
-from nonebot.drivers import ReverseDriver
-from nonebot import get_app, get_bot, get_asgi, get_bots, get_driver
+from nonebot.drivers import Driver, ReverseDriver
+from nonebot import (
+    get_app,
+    get_bot,
+    get_asgi,
+    get_bots,
+    get_driver,
+    get_adapter,
+    get_adapters,
+)
 
 
 @pytest.mark.asyncio
@@ -22,7 +31,7 @@ async def test_init():
 
 
 @pytest.mark.asyncio
-async def test_get(monkeypatch: pytest.MonkeyPatch):
+async def test_get(app: App, monkeypatch: pytest.MonkeyPatch):
     with monkeypatch.context() as m:
         m.setattr(nonebot, "_driver", None)
         with pytest.raises(ValueError):
@@ -32,6 +41,18 @@ async def test_get(monkeypatch: pytest.MonkeyPatch):
     assert isinstance(driver, ReverseDriver)
     assert get_asgi() == driver.asgi
     assert get_app() == driver.server_app
+
+    async with app.test_api() as ctx:
+        adapter = ctx.create_adapter()
+        adapter_name = adapter.get_name()
+
+        with monkeypatch.context() as m:
+            m.setattr(Driver, "_adapters", {adapter_name: adapter})
+            assert get_adapters() == {adapter_name: adapter}
+            assert get_adapter(adapter_name) is adapter
+            assert get_adapter(adapter.__class__) is adapter
+            with pytest.raises(ValueError):
+                get_adapter("not exist")
 
     runned = False
 
