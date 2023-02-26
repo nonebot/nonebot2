@@ -39,14 +39,14 @@ FrontMatter:
 
 import os
 from importlib.metadata import version
-from typing import Any, Dict, Type, Optional
+from typing import Any, Dict, Type, Union, Optional
 
 import loguru
 from pydantic.env_settings import DotenvType
 
-from nonebot.adapters import Bot
 from nonebot.config import Env, Config
 from nonebot.log import logger as logger
+from nonebot.adapters import Bot, Adapter
 from nonebot.utils import escape_tag, resolve_dot_notation
 from nonebot.drivers import Driver, ReverseDriver, combine_driver
 
@@ -77,6 +77,46 @@ def get_driver() -> Driver:
     if _driver is None:
         raise ValueError("NoneBot has not been initialized.")
     return _driver
+
+
+def get_adapter(name: Union[str, Type[Adapter]]) -> Adapter:
+    """获取已注册的 {ref}`nonebot.adapters.Adapter` 实例。
+
+    返回:
+        指定名称或类型的 {ref}`nonebot.adapters.Adapter` 对象
+
+    异常:
+        ValueError: 指定的 {ref}`nonebot.adapters.Adapter` 未注册
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
+
+    用法:
+        ```python
+        from nonebot.adapters.console import Adapter
+        adapter = nonebot.get_adapter(Adapter)
+        ```
+    """
+    adapters = get_adapters()
+    target = name if isinstance(name, str) else name.get_name()
+    if target not in adapters:
+        raise ValueError(f"Adapter {target} not registered.")
+    return adapters[target]
+
+
+def get_adapters() -> Dict[str, Adapter]:
+    """获取所有已注册的 {ref}`nonebot.adapters.Adapter` 实例。
+
+    返回:
+        所有 {ref}`nonebot.adapters.Adapter` 实例字典
+
+    异常:
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
+
+    用法:
+        ```python
+        adapters = nonebot.get_adapters()
+        ```
+    """
+    return get_driver()._adapters.copy()
 
 
 def get_app() -> Any:
