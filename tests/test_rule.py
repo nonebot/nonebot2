@@ -271,7 +271,7 @@ async def test_keyword(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "cmds, force_whitespace, whitespace, expected",
+    "cmds, cmd, force_whitespace, whitespace, expected",
     [
         [(("help",),), ("help",), None, None, True],
         [(("help",),), ("foo",), None, None, False],
