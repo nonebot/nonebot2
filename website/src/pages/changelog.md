@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 添加获取已注册适配器的方法 [@yanyongyu](https://github.com/yanyongyu) ([#1747](https://github.com/nonebot/nonebot2/pull/1747))
 - Feature: 使用 `tomllib` 读取 toml 配置 [@yanyongyu](https://github.com/yanyongyu) ([#1720](https://github.com/nonebot/nonebot2/pull/1720))
 - Feature: 优化插件加载日志 [@yanyongyu](https://github.com/yanyongyu) ([#1716](https://github.com/nonebot/nonebot2/pull/1716))
 - Feature: 在加载 driver 引发 ImportError 时，使用 `raise from e` [@shoucandanghehe](https://github.com/shoucandanghehe) ([#1689](https://github.com/nonebot/nonebot2/pull/1689))
