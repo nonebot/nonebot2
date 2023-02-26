@@ -4516,5 +4516,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_afd",
+    "project_link": "nonebot-plugin-afd",
+    "name": "爱发电审核",
+    "desc": "审核爱发电订单号进群",
+    "author": "17TheWord",
+    "homepage": "https://github.com/17TheWord/nonebot-plugin-afd",
+    "tags": [
+      {
+        "label": "爱发电",
+        "color": "#ea5252"
+      },
+      {
+        "label": "自动审核进群",
+        "color": "#52eae9"
+      }
+    ],
+    "is_official": false
   }
 ]
