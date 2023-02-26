@@ -275,7 +275,7 @@ async def test_keyword(
     [
         [(("help",),), ("help",), None, None, True],
         [(("help",),), ("foo",), None, None, False],
-        [(("help", "foo"),), ("help",), True, " ", True],
+        [(("help", "foo"),), ("help", "foo"), True, " ", True],
         [(("help",), ("foo",)), ("help",), " ", " ", True],
         [(("help",),), ("help",), False, " ", False],
         [(("help",),), ("help",), True, None, False],
