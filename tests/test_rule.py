@@ -21,10 +21,14 @@ from nonebot.consts import (
     FULLMATCH_KEY,
     REGEX_MATCHED,
     STARTSWITH_KEY,
+    CMD_WHITESPACE_KEY,
 )
 from nonebot.rule import (
+    CMD_RESULT,
+    TRIE_VALUE,
     Rule,
     ToMeRule,
+    TrieRule,
     Namespace,
     RegexRule,
     IsTypeRule,
@@ -77,6 +81,44 @@ async def test_rule(app: App):
         assert await Rule(skipped)(bot, event, {}) == False
         assert await Rule(truthy, falsy)(bot, event, {}) == False
         assert await Rule(truthy, skipped)(bot, event, {}) == False
+
+
+@pytest.mark.asyncio
+async def test_trie(app: App):
+    TrieRule.add_prefix("/fake-prefix", TRIE_VALUE("/", ("fake-prefix",)))
+
+    Message = make_fake_message()
+    MessageSegment = Message.get_segment_class()
+
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        message = Message("/fake-prefix some args")
+        event = make_fake_event(_message=message)()
+        state = {}
+        TrieRule.get_value(bot, event, state)
+        assert state[PREFIX_KEY] == CMD_RESULT(
+            command=("fake-prefix",),
+            raw_command="/fake-prefix",
+            command_arg=Message("some args"),
+            command_start="/",
+            command_whitespace=" ",
+        )
+
+        message = MessageSegment.text("/fake-prefix ") + MessageSegment.image(
+            "fake url"
+        )
+        event = make_fake_event(_message=message)()
+        state = {}
+        TrieRule.get_value(bot, event, state)
+        assert state[PREFIX_KEY] == CMD_RESULT(
+            command=("fake-prefix",),
+            raw_command="/fake-prefix",
+            command_arg=Message(MessageSegment.image("fake url")),
+            command_start="/",
+            command_whitespace=" ",
+        )
+
+    del TrieRule.prefix["/fake-prefix"]
 
 
 @pytest.mark.asyncio
@@ -229,19 +271,33 @@ async def test_keyword(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "cmds", [(("help",),), (("help", "foo"),), (("help",), ("foo",))]
+    "cmds, cmd, force_whitespace, whitespace, expected",
+    [
+        [(("help",),), ("help",), None, None, True],
+        [(("help",),), ("foo",), None, None, False],
+        [(("help", "foo"),), ("help", "foo"), True, " ", True],
+        [(("help",), ("foo",)), ("help",), " ", " ", True],
+        [(("help",),), ("help",), False, " ", False],
+        [(("help",),), ("help",), True, None, False],
+        [(("help",),), ("help",), "\n", " ", False],
+    ],
 )
-async def test_command(cmds: Tuple[Tuple[str, ...]]):
-    test_command = command(*cmds)
+async def test_command(
+    cmds: Tuple[Tuple[str, ...]],
+    cmd: Tuple[str, ...],
+    force_whitespace: Optional[Union[str, bool]],
+    whitespace: Optional[str],
+    expected: bool,
+):
+    test_command = command(*cmds, force_whitespace=force_whitespace)
     dependent = list(test_command.checkers)[0]
     checker = dependent.call
 
     assert isinstance(checker, CommandRule)
     assert checker.cmds == cmds
 
-    for cmd in cmds:
-        state = {PREFIX_KEY: {CMD_KEY: cmd}}
-        assert await dependent(state=state)
+    state = {PREFIX_KEY: {CMD_KEY: cmd, CMD_WHITESPACE_KEY: whitespace}}
+    assert await dependent(state=state) == expected
 
 
 @pytest.mark.asyncio

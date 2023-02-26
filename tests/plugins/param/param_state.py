@@ -17,6 +17,7 @@ from nonebot.params import (
     RegexMatched,
     ShellCommandArgs,
     ShellCommandArgv,
+    CommandWhitespace,
 )
 
 
@@ -46,6 +47,10 @@ async def command_arg(cmd_arg: Message = CommandArg()) -> Message:
 
 async def command_start(start: str = CommandStart()) -> str:
     return start
+
+
+async def command_whitespace(whitespace: str = CommandWhitespace()) -> str:
+    return whitespace
 
 
 async def shell_command_args(
