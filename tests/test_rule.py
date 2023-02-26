@@ -294,7 +294,7 @@ async def test_command(
     assert isinstance(checker, CommandRule)
     assert checker.cmds == cmds
 
-    for cmd in cmds:
+    for cmd in cmds + (("unknown",),):
         state = {PREFIX_KEY: {CMD_KEY: cmd, CMD_WHITESPACE_KEY: whitespace}}
         assert await dependent(state=state) == expected
 
