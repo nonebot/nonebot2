@@ -97,7 +97,7 @@ async def test_trie(app: App):
         state = {}
         TrieRule.get_value(bot, event, state)
         assert state[PREFIX_KEY] == CMD_RESULT(
-            command=("fake_prefix",),
+            command=("fake-prefix",),
             raw_command="/fake-prefix",
             command_arg=Message("some args"),
             command_start="/",
@@ -111,7 +111,7 @@ async def test_trie(app: App):
         state = {}
         TrieRule.get_value(bot, event, state)
         assert state[PREFIX_KEY] == CMD_RESULT(
-            command=("fake_prefix",),
+            command=("fake-prefix",),
             raw_command="/fake-prefix",
             command_arg=Message(MessageSegment.image("fake url")),
             command_start="/",
