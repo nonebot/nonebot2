@@ -4501,5 +4501,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bf1_groptools",
+    "project_link": "nonebot-plugin-bf1-groptools",
+    "name": "战地一入群审批",
+    "desc": "战地一通过游戏id的入群审核并其修改群名片为id",
+    "author": "zzcqie666",
+    "homepage": "https://github.com/zzcqie666/nonebot_plugin_bf1_groptools",
+    "tags": [
+      {
+        "label": "战地一",
+        "color": "#52eae4"
+      }
+    ],
+    "is_official": false
   }
 ]
