@@ -39,7 +39,7 @@ FrontMatter:
 
 import os
 from importlib.metadata import version
-from typing import Any, Dict, Type, Union, Optional
+from typing import Any, Dict, Type, TypeVar, Union, Optional, overload
 
 import loguru
 from pydantic.env_settings import DotenvType
@@ -54,6 +54,8 @@ try:
     __version__ = version("nonebot2")
 except Exception:  # pragma: no cover
     __version__ = None
+
+A = TypeVar("A", bound=Adapter)
 
 _driver: Optional[Driver] = None
 
@@ -79,7 +81,17 @@ def get_driver() -> Driver:
     return _driver
 
 
-def get_adapter(name: Union[str, Type[Adapter]]) -> Adapter:
+@overload
+def get_adapter(name: str) -> Adapter:
+    ...
+
+
+@overload
+def get_adapter(name: Type[A]) -> A:
+    ...
+
+
+def get_adapter(name: Union[str, Type[A]]) -> A:
     """获取已注册的 {ref}`nonebot.adapters.Adapter` 实例。
 
     返回:
@@ -99,7 +111,7 @@ def get_adapter(name: Union[str, Type[Adapter]]) -> Adapter:
     target = name if isinstance(name, str) else name.get_name()
     if target not in adapters:
         raise ValueError(f"Adapter {target} not registered.")
-    return adapters[target]
+    return adapters[target]  # type: ignore
 
 
 def get_adapters() -> Dict[str, Adapter]:
