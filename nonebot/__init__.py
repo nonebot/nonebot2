@@ -39,7 +39,7 @@ FrontMatter:
 
 import os
 from importlib.metadata import version
-from typing import Any, Dict, Type, TypeVar, Union, Optional, overload
+from typing import Any, Dict, Type, Union, TypeVar, Optional, overload
 
 import loguru
 from pydantic.env_settings import DotenvType
