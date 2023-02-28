@@ -1,9 +1,12 @@
 [report]
 exclude_lines =
+  pragma: no cover
   def __repr__
   def __str__
-  pragma: no cover
-  if TYPE_CHECKING:
+  @(typing\.)?overload
+  if (typing\.)?TYPE_CHECKING( is True)?:
   @(abc\.)?abstractmethod
   raise NotImplementedError
+  \.\.\.
+  pass
   if __name__ == .__main__.:
