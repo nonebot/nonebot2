@@ -39,7 +39,7 @@ FrontMatter:
 
 import os
 from importlib.metadata import version
-from typing import Any, Dict, Type, Union, Optional
+from typing import Any, Dict, Type, Union, TypeVar, Optional, overload
 
 import loguru
 from pydantic.env_settings import DotenvType
@@ -54,6 +54,8 @@ try:
     __version__ = version("nonebot2")
 except Exception:  # pragma: no cover
     __version__ = None
+
+A = TypeVar("A", bound=Adapter)
 
 _driver: Optional[Driver] = None
 
@@ -77,6 +79,16 @@ def get_driver() -> Driver:
     if _driver is None:
         raise ValueError("NoneBot has not been initialized.")
     return _driver
+
+
+@overload
+def get_adapter(name: str) -> Adapter:
+    ...
+
+
+@overload
+def get_adapter(name: Type[A]) -> A:
+    ...
 
 
 def get_adapter(name: Union[str, Type[Adapter]]) -> Adapter:
