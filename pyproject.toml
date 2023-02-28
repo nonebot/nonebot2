@@ -51,7 +51,7 @@ pytest-xdist = "^3.0.2"
 pytest-asyncio = "^0.20.0"
 
 [tool.poetry.group.docs.dependencies]
-nb-autodoc = { git = "https://github.com/nonebot/nb-autodoc.git" }
+nb-autodoc = "^1.0.0a5"
 
 [tool.poetry.extras]
 httpx = ["httpx"]
