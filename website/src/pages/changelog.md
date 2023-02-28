@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 添加 `get_adapter` 类型 overload [@yanyongyu](https://github.com/yanyongyu) ([#1755](https://github.com/nonebot/nonebot2/pull/1755))
 - Feature: 命令匹配支持强制指定空白符 [@yanyongyu](https://github.com/yanyongyu) ([#1748](https://github.com/nonebot/nonebot2/pull/1748))
 - Feature: 添加获取已注册适配器的方法 [@yanyongyu](https://github.com/yanyongyu) ([#1747](https://github.com/nonebot/nonebot2/pull/1747))
 - Feature: 使用 `tomllib` 读取 toml 配置 [@yanyongyu](https://github.com/yanyongyu) ([#1720](https://github.com/nonebot/nonebot2/pull/1720))
