@@ -91,7 +91,7 @@ def get_adapter(name: Type[A]) -> A:
     ...
 
 
-def get_adapter(name: Union[str, Type[A]]) -> A:
+def get_adapter(name: Union[str, Type[Adapter]]) -> Adapter:
     """获取已注册的 {ref}`nonebot.adapters.Adapter` 实例。
 
     返回:
@@ -111,7 +111,7 @@ def get_adapter(name: Union[str, Type[A]]) -> A:
     target = name if isinstance(name, str) else name.get_name()
     if target not in adapters:
         raise ValueError(f"Adapter {target} not registered.")
-    return adapters[target]  # type: ignore
+    return adapters[target]
 
 
 def get_adapters() -> Dict[str, Adapter]:
