@@ -66,8 +66,9 @@ class Adapter(abc.ABC):
         参数:
             bot: {ref}`nonebot.adapters.Bot` 实例
         """
+        if self.bots.pop(bot.self_id, None) is None:
+            raise RuntimeError(f"{bot} not found in adapter {self.get_name()}")
         self.driver._bot_disconnect(bot)
-        self.bots.pop(bot.self_id, None)
 
     def setup_http_server(self, setup: HTTPServerSetup):
         """设置一个 HTTP 服务器路由配置"""
