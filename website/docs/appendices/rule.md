@@ -26,7 +26,6 @@ plugin_config = Config.parse_obj(get_driver().config)
 async def is_enable() -> bool:
     return plugin_config.weather_plugin_enabled
 
-
 weather = on_command("天气", rule=is_enable)
 ```
 

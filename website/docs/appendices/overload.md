@@ -58,7 +58,6 @@ from nonebot.adapters.onebot.v11 import Bot as OneBot
 async def handle_console(bot: ConsoleBot):
     await bot.bell()
 
-
 @matcher.handle()
 async def handle_onebot(bot: OneBot):
     await bot.send_group_message(group_id=123123, message="OneBot")

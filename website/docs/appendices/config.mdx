@@ -253,7 +253,7 @@ export DRIVER='~fastapi+~httpx+~websockets'
   </TabItem>
   <TabItem value="init" label="直接传入">
 
-```python
+```python title=bot.py
 import nonebot
 
 nonebot.init(driver="~fastapi+~httpx+~websockets")
@@ -289,7 +289,7 @@ export HOST='127.0.0.1'
   </TabItem>
   <TabItem value="init" label="直接传入">
 
-```python
+```python title=bot.py
 import nonebot
 
 nonebot.init(host="127.0.0.1")
@@ -325,7 +325,7 @@ export PORT='8080'
   </TabItem>
   <TabItem value="init" label="直接传入">
 
-```python
+```python title=bot.py
 import nonebot
 
 nonebot.init(port=8080)
@@ -365,7 +365,7 @@ export LOG_LEVEL='DEBUG'
   </TabItem>
   <TabItem value="init" label="直接传入">
 
-```python
+```python title=bot.py
 import nonebot
 
 nonebot.init(log_level="DEBUG")
@@ -401,7 +401,7 @@ export API_TIMEOUT='10.0'
   </TabItem>
   <TabItem value="init" label="直接传入">
 
-```python
+```python title=bot.py
 import nonebot
 
 nonebot.init(api_timeout=10.0)
@@ -437,7 +437,7 @@ export SUPERUSERS='["123123123"]'
   </TabItem>
   <TabItem value="init" label="直接传入">
 
-```python
+```python title=bot.py
 import nonebot
 
 nonebot.init(superusers={"123123123"})
@@ -473,7 +473,7 @@ export NICKNAME='["bot"]'
   </TabItem>
   <TabItem value="init" label="直接传入">
 
-```python
+```python title=bot.py
 import nonebot
 
 nonebot.init(nickname={"bot"})
@@ -516,7 +516,7 @@ export COMMAND_SEP='[".", " "]'
   </TabItem>
   <TabItem value="init" label="直接传入">
 
-```python
+```python title=bot.py
 import nonebot
 
 nonebot.init(command_start={"/", ""}, command_sep={".", " "})
@@ -552,7 +552,7 @@ export SESSION_EXPIRE_TIMEOUT='120'
   </TabItem>
   <TabItem value="init" label="直接传入">
 
-```python
+```python title=bot.py
 import nonebot
 
 nonebot.init(session_expire_timeout=120)

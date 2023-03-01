@@ -49,11 +49,9 @@ from nonebot_plugin_apscheduler import scheduler
 async def run_every_2_hour(arg1: int, arg2: int):
     pass
 
-
 # 基于 add_job 方法的方式
 def run_every_day(arg1: int, arg2: int):
     pass
-
 
 scheduler.add_job(
     run_every_day, "interval", days=1, id="job_1", args=[1], kwargs={arg2: 2}
