@@ -17,6 +17,10 @@ toc_max_heading_level: 2
 - Feature: 在加载 driver 引发 ImportError 时，使用 `raise from e` [@shoucandanghehe](https://github.com/shoucandanghehe) ([#1689](https://github.com/nonebot/nonebot2/pull/1689))
 - Feature: 添加端口配置项约束验证 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1632](https://github.com/nonebot/nonebot2/pull/1632))
 
+### 🐛 Bug 修复
+
+- Fix: 修复适配器能断开非自身所有的 Bot 对象 [@yanyongyu](https://github.com/yanyongyu) ([#1757](https://github.com/nonebot/nonebot2/pull/1757))
+
 ### 📝 文档
 
 - Docs: pip 安装指令添加引号 [@3yude](https://github.com/3yude) ([#1724](https://github.com/nonebot/nonebot2/pull/1724))
