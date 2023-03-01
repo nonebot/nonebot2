@@ -18,7 +18,7 @@ options:
 
 ## RuleChecker
 
-`RuleChecker` 是一个返回值为 `bool` 类型的依赖函数，即 `RuleChecker` 支持依赖注入。我们可以根据上一节中添加的[配置项](./config.md#插件配置)，在 `weather` 插件目录中编写一个响应规则：
+`RuleChecker` 是一个返回值为 `bool` 类型的依赖函数，即 `RuleChecker` 支持依赖注入。我们可以根据上一节中添加的[配置项](./config.mdx#插件配置)，在 `weather` 插件目录中编写一个响应规则：
 
 ```python {3,4} title=weather/__init__.py
 plugin_config = Config.parse_obj(get_driver().config)

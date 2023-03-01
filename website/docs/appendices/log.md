@@ -28,7 +28,7 @@ logger.error("This is an error message")
 logger.critical("This is a critical message")
 ```
 
-我们仅需一行代码即可记录对应级别的日志。日志可以通过配置 [`LOG_LEVEL` 配置项](../api/config.md#Config-log_level)来过滤输出等级，控制台中仅会输出大于等于 `LOG_LEVEL` 的日志。默认的 `LOG_LEVEL` 为 `INFO`，即只会输出 `INFO`、`SUCCESS`、`WARNING`、`ERROR`、`CRITICAL` 级别的日志。
+我们仅需一行代码即可记录对应级别的日志。日志可以通过配置 [`LOG_LEVEL` 配置项](./config.mdx#log-level)来过滤输出等级，控制台中仅会输出大于等于 `LOG_LEVEL` 的日志。默认的 `LOG_LEVEL` 为 `INFO`，即只会输出 `INFO`、`SUCCESS`、`WARNING`、`ERROR`、`CRITICAL` 级别的日志。
 
 如果需要记录 `Exception traceback` 日志，可以向 `logger` 添加 `exception` 选项：
 
