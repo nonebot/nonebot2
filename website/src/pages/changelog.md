@@ -36,6 +36,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 网抑云 [@yanyongyu](https://github.com/yanyongyu) ([#1760](https://github.com/nonebot/nonebot2/pull/1760))
 - Plugin: nonebot_plugin_eventdone [@yanyongyu](https://github.com/yanyongyu) ([#1758](https://github.com/nonebot/nonebot2/pull/1758))
 - Plugin: 爱发电审核 [@yanyongyu](https://github.com/yanyongyu) ([#1750](https://github.com/nonebot/nonebot2/pull/1750))
 - Plugin: 战地一入群审批 [@yanyongyu](https://github.com/yanyongyu) ([#1745](https://github.com/nonebot/nonebot2/pull/1745))
