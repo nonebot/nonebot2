@@ -4550,5 +4550,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ncm_saying",
+    "project_link": "nonebot-plugin-ncm-saying",
+    "name": "网抑云",
+    "desc": "一开口就老网抑云了",
+    "author": "techotaku39",
+    "homepage": "https://github.com/techotaku39/nonebot-plugin-ncm-saying",
+    "tags": [],
+    "is_official": false
   }
 ]
