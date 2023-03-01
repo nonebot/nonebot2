@@ -102,3 +102,7 @@ result: bool = await rule(bot, event, state)
 ```
 
 我们只需要传入 `Bot` 实例、事件和会话状态，`Rule` 会并发调用所有 `RuleChecker` 进行检查，并返回结果。
+
+## 内置响应规则
+
+NoneBot 内置了一些常用的响应规则，可以直接通过事件响应器辅助函数或者自行合并其他规则使用。内置响应规则列表可以参考[事件响应器进阶](../advanced/matcher.md)

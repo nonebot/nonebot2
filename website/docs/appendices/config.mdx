@@ -10,11 +10,14 @@ options:
 
 # 配置
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 配置是项目中非常重要的一部分，为了方便我们控制机器人的行为，NoneBot 提供了一套配置系统。下面我们将会补充[指南](../quick-start.mdx)中的天气插件，使其能够读取用户配置。在这之前，我们需要先了解一下配置系统，如果你已经了解了 NoneBot 中的配置方法，可以跳转到[编写插件配置](#插件配置)。
 
 NoneBot 使用 [`pydantic`](https://docs.pydantic.dev/) 以及 [`python-dotenv`](https://saurabh-kumar.com/python-dotenv/) 来读取 dotenv 配置文件以及环境变量，从而控制机器人行为。配置文件需要符合 dotenv 格式，复杂数据类型需使用 JSON 格式或 [pydantic 支持格式](https://docs.pydantic.dev/usage/types/)填写。
 
-NoneBot 内置的配置项列表及含义可以在 [Config](../api/config.md#Config) 中查看。
+NoneBot 内置的配置项列表及含义可以在[内置配置项](#内置配置项)中查看。
 
 ## 配置项的加载
 
@@ -52,9 +55,9 @@ CUSTOM_CONFIG=config in dotenv
 
 ```bash
 # windows
-set CUSTOM_CONFIG=config in environment variables
+set CUSTOM_CONFIG "config in environment variables"
 # linux/macOS
-export CUSTOM_CONFIG=config in environment variables
+export CUSTOM_CONFIG="config in environment variables"
 ```
 
 那最终 NoneBot 所读取的内容为环境变量中的内容，即 `config in environment variables`。
@@ -216,3 +219,344 @@ weather = on_command(
 然后，我们便可以从 `plugin_config` 中读取配置了，例如 `plugin_config.weather_api_key`。
 
 这种方式可以简洁、高效地读取配置项，同时也可以设置默认值或者在运行时对配置项进行合法性检查，防止由于配置项导致的插件出错等情况出现。
+
+## 内置配置项
+
+配置项 API 文档可以前往 [class Config](../api/config.md#Config) 查看。
+
+### Driver
+
+- **类型**: `str`
+- **默认值**: `"~fastapi"`
+
+<!-- FIXME: choose driver link -->
+
+NoneBot 运行所使用的驱动器。具体配置方法可以参考[安装驱动器](../tutorial/store.mdx#安装驱动器)和[选择驱动器](../advanced/driver.md)。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+DRIVER=~fastapi+~httpx+~websockets
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows
+set DRIVER '~fastapi+~httpx+~websockets'
+# linux/macOS
+export DRIVER='~fastapi+~httpx+~websockets'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python
+import nonebot
+
+nonebot.init(driver="~fastapi+~httpx+~websockets")
+```
+
+  </TabItem>
+</Tabs>
+
+### Host
+
+- **类型**: `IPvAnyAddress`
+- **默认值**: `127.0.0.1`
+
+当 NoneBot 作为服务端时，监听的 IP / 主机名。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+HOST=127.0.0.1
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows
+set HOST '127.0.0.1'
+# linux/macOS
+export HOST='127.0.0.1'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python
+import nonebot
+
+nonebot.init(host="127.0.0.1")
+```
+
+  </TabItem>
+</Tabs>
+
+### Port
+
+- **类型**: `int` (1 ~ 65535)
+- **默认值**: `8080`
+
+当 NoneBot 作为服务端时，监听的端口。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+PORT=8080
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows
+set PORT '8080'
+# linux/macOS
+export PORT='8080'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python
+import nonebot
+
+nonebot.init(port=8080)
+```
+
+  </TabItem>
+</Tabs>
+
+### Log Level
+
+- **类型**: `int | str`
+- **默认值**: `INFO`
+
+NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称。具体等级对照表参考 [loguru 日志等级](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
+
+:::tip 提示
+日志等级名称应为大写，如 `INFO`。
+:::
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+LOG_LEVEL=DEBUG
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows
+set LOG_LEVEL 'DEBUG'
+# linux/macOS
+export LOG_LEVEL='DEBUG'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python
+import nonebot
+
+nonebot.init(log_level="DEBUG")
+```
+
+  </TabItem>
+</Tabs>
+
+### API Timeout
+
+- **类型**: `float | None`
+- **默认值**: `30.0`
+
+调用平台接口的超时时间，单位为秒。`None` 表示不设置超时时间。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+API_TIMEOUT=10.0
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows
+set API_TIMEOUT '10.0'
+# linux/macOS
+export API_TIMEOUT='10.0'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python
+import nonebot
+
+nonebot.init(api_timeout=10.0)
+```
+
+  </TabItem>
+</Tabs>
+
+### SuperUsers
+
+- **类型**: `set[str]`
+- **默认值**: `set()`
+
+机器人超级用户，可以使用权限 [`SUPERUSER`](../api/permission.md#SUPERUSER)。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+SUPERUSERS=["123123123"]
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows
+set SUPERUSERS '["123123123"]'
+# linux/macOS
+export SUPERUSERS='["123123123"]'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python
+import nonebot
+
+nonebot.init(superusers={"123123123"})
+```
+
+  </TabItem>
+</Tabs>
+
+### Nickname
+
+- **类型**: `set[str]`
+- **默认值**: `set()`
+
+机器人昵称，通常协议适配器会根据用户是否 @user 或者是否以机器人昵称开头来判断是否是向机器人发送的消息。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+NICKNAME=["bot"]
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows
+set NICKNAME '["bot"]'
+# linux/macOS
+export NICKNAME='["bot"]'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python
+import nonebot
+
+nonebot.init(nickname={"bot"})
+```
+
+  </TabItem>
+</Tabs>
+
+### Command Start 和 Command Separator
+
+- **类型**: `set[str]`
+- **默认值**:
+  - Command Start: `{"/"}`
+  - Command Separator: `{"."}`
+
+<!-- FIXME: command rule docs -->
+
+命令消息的起始符和分隔符。用于 [`command`](./rule.md#) 规则。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+COMMAND_START=["/", ""]
+COMMAND_SEP=[".", " "]
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows
+set COMMAND_START '["/", ""]'
+set COMMAND_SEP '[".", " "]'
+# linux/macOS
+export COMMAND_START='["/", ""]'
+export COMMAND_SEP='[".", " "]'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python
+import nonebot
+
+nonebot.init(command_start={"/", ""}, command_sep={".", " "})
+```
+
+  </TabItem>
+</Tabs>
+
+### Session Expire Timeout
+
+- **类型**: `timedelta`
+- **默认值**: `timedelta(minutes=2)`
+
+用户会话超时时间，配置格式参考 [Datetime Types](https://docs.pydantic.dev/usage/types/#datetime-types)，可以为单位为秒的 `int | float` 等。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+SESSION_EXPIRE_TIMEOUT=120
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows
+set SESSION_EXPIRE_TIMEOUT '120'
+# linux/macOS
+export SESSION_EXPIRE_TIMEOUT='120'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python
+import nonebot
+
+nonebot.init(session_expire_timeout=120)
+```
+
+  </TabItem>
+</Tabs>

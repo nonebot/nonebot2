@@ -63,6 +63,28 @@ options:
 
 :::
 
+:::warning 注意
+如果在之前的[创建项目](./application.md)章节中手动创建了相关文件，那么你需要做出如下修改：
+
+1. 在项目目录中创建一个两层文件夹 `awesome_bot/plugins`
+
+   ```tree title=Project
+   📦 awesome-bot
+   ├── 📂 awesome_bot
+   │   └── 📂 plugins
+   └── 📜 bot.py
+   ```
+
+2. 修改 `bot.py` 文件中的加载插件部分，取消注释或者添加如下代码
+
+   ```python title=bot.py
+   # 在这里加载插件
+   nonebot.load_builtin_plugins("echo")  # 内置插件
+   nonebot.load_plugins("awesome_bot/plugins")  # 本地插件
+   ```
+
+:::
+
 创建插件可以通过 `nb-cli` 命令从完整模板创建，也可以手动新建空白文件。通过以下命令创建一个名为 `weather` 的插件：
 
 ```bash

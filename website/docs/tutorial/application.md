@@ -41,7 +41,7 @@ options:
 2. 安装 nonebot2 以及驱动器
 
    ```bash
-   pip install nonebot2[fastapi]
+   pip install 'nonebot2[fastapi]'
    ```
 
    驱动器包名可以在 [驱动器商店](/store) 中找到。
@@ -61,7 +61,7 @@ options:
 在**项目文件夹**中创建一个 `.env` 文本文件，并写入以下内容:
 
 ```bash title=.env
-HOST=0.0.0.0  # 配置 NoneBot 监听的 IP/主机名
+HOST=0.0.0.0  # 配置 NoneBot 监听的 IP / 主机名
 PORT=8080  # 配置 NoneBot 监听的端口
 COMMAND_START=["/"]  # 配置命令起始字符
 COMMAND_SEP=["."]  # 配置命令分割字符
@@ -97,7 +97,7 @@ if __name__ == "__main__":
     nonebot.run()
 ```
 
-在创建完成以上文件并确认已安装所需适配器和插件后，即可运行机器人。
+我们暂时不需要了解其中内容的含义，这些将会在稍后的章节中逐一介绍。在创建完成以上文件并确认已安装所需适配器和插件后，即可运行机器人。
 
 ## 运行机器人
 
