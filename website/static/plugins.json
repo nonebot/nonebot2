@@ -4583,5 +4583,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_auto_teenstudy",
+    "project_link": "nonebot-plugin-auto-teenstudy",
+    "name": "青年大学习提交(基础版)",
+    "desc": "使用httpx向各地区大学习发送post请求完成大学习，返回完成截图",
+    "author": "ZM25XC",
+    "homepage": "https://github.com/ZM25XC/nonebot_plugin_auto_teenstudy",
+    "tags": [
+      {
+        "label": "青年大学习",
+        "color": "#e8f710"
+      },
+      {
+        "label": "多地区",
+        "color": "#108ef7"
+      }
+    ],
+    "is_official": false
   }
 ]
