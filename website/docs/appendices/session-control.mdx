@@ -289,6 +289,14 @@ async def _(a: str = ArgPlainText(), b: str = ArgPlainText()):
 
 `reject_receive` 操作接受一个可选的 id 参数以及可选的 prompt 参数。id 参数默认为空 `""`，prompt 参数与 [`send`](#send) 相同。
 
+```python
+@matcher.receive("a")
+@matcher.receive("b")
+async def _(a: Event = Received("a"), b: Event = Received("b")):
+    if a.get_user_id() != b.get_user_id():
+        await matcher.reject_receive("a")
+```
+
 ### skip
 
 立即结束当前事件处理函数，进入下一个事件处理函数。
