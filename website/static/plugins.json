@@ -4602,5 +4602,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_60s",
+    "project_link": "nonebot-plugin-60s",
+    "name": "60s日历",
+    "desc": "每天60秒读懂世界",
+    "author": "techotaku39",
+    "homepage": "https://github.com/techotaku39/nonebot-plugin-60s",
+    "tags": [],
+    "is_official": false
   }
 ]
