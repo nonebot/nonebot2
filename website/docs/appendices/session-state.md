@@ -43,7 +43,7 @@ async def _(state: T_State):
     await matcher.finish(state["key"])
 ```
 
-会话状态还可以用于发送动态 prompt 消息，消息模板在发送时会使用会话状态字典进行渲染。
+会话状态还可以用于发送动态消息，消息模板在发送时会使用会话状态字典进行渲染。消息模板的使用方法已经在 [消息处理](../tutorial/message.md#使用消息模板) 中介绍过，这里不再赘述。
 
 ```python
 from nonebot.typing import T_State
@@ -54,6 +54,6 @@ async def _(state: T_State):
     state["username"] = "user"
 
 @matcher.got("password", prompt=MessageTemplate("请输入 {username} 的密码"))
-async def _(state: T_State, password: str = ArgPlainText()):
-    await matcher.finish(f"密码为 {password}")
+async def _():
+    await matcher.finish(MessageTemplate("密码为 {password}"))
 ```
