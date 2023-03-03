@@ -4612,5 +4612,15 @@
     "homepage": "https://github.com/techotaku39/nonebot-plugin-60s",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_AutoRepeater",
+    "project_link": "nonebot-plugin-AutoRepeater",
+    "name": "AutoRepeater",
+    "desc": "连续发送2条相同消息，机器人就会自动 +1。包括普通消息，QQ表情,还有图片（表情包）。支持图片夹文字和表情夹文字的消息！具有动态多群控制和跟随撤回功能（手表API可能无法监测）。",
+    "author": "DMCSWCG",
+    "homepage": "https://github.com/DMCSWCG/nonebot-plugin-AutoRepeater",
+    "tags": [],
+    "is_official": false
   }
 ]
