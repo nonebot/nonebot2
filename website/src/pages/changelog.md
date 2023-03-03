@@ -36,6 +36,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 60s 日历 [@yanyongyu](https://github.com/yanyongyu) ([#1765](https://github.com/nonebot/nonebot2/pull/1765))
 - Plugin: 青年大学习提交(基础版) [@yanyongyu](https://github.com/yanyongyu) ([#1764](https://github.com/nonebot/nonebot2/pull/1764))
 - Plugin: 青年大学习提交(Web UI) [@yanyongyu](https://github.com/yanyongyu) ([#1762](https://github.com/nonebot/nonebot2/pull/1762))
 - Plugin: 网抑云 [@yanyongyu](https://github.com/yanyongyu) ([#1760](https://github.com/nonebot/nonebot2/pull/1760))
