@@ -36,6 +36,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 小爱课程表 [@yanyongyu](https://github.com/yanyongyu) ([#1773](https://github.com/nonebot/nonebot2/pull/1773))
 - Plugin: AutoRepeater [@yanyongyu](https://github.com/yanyongyu) ([#1769](https://github.com/nonebot/nonebot2/pull/1769))
 - Plugin: 60s 日历 [@yanyongyu](https://github.com/yanyongyu) ([#1765](https://github.com/nonebot/nonebot2/pull/1765))
 - Plugin: 青年大学习提交(基础版) [@yanyongyu](https://github.com/yanyongyu) ([#1764](https://github.com/nonebot/nonebot2/pull/1764))
