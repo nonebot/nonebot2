@@ -4622,5 +4622,15 @@
     "homepage": "https://github.com/DMCSWCG/nonebot-plugin-AutoRepeater",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ai_timetable",
+    "project_link": "nonebot-plugin-ai-timetable",
+    "name": "小爱课程表",
+    "desc": "解放双手，一键导入小爱课表、订阅课表、查询课表",
+    "author": "maoxig",
+    "homepage": "https://github.com/maoxig/nonebot-plugin-ai-timetable",
+    "tags": [],
+    "is_official": false
   }
 ]
