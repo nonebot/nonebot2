@@ -4632,5 +4632,15 @@
     "homepage": "https://github.com/maoxig/nonebot-plugin-ai-timetable",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sanae",
+    "project_link": "nonebot-plugin-sanae",
+    "name": "Sanae",
+    "desc": "早苗连接器,也可转发其他onebotv11到nb2~",
+    "author": "Hoshinonyaruko",
+    "homepage": "https://github.com/Hoshinonyaruko/nonebot-plugin-sanae",
+    "tags": [],
+    "is_official": false
   }
 ]
