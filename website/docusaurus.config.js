@@ -90,15 +90,15 @@ const config = {
             items: [
               {
                 label: "最佳实践",
-                type: "doclink",
+                type: "docLink",
                 docId: "best-practice/scheduler",
               },
               {
                 label: "开发者",
-                type: "doclink",
+                type: "docLink",
                 docId: "developer/plugin-publishing",
               },
-              { label: "生态", type: "doclink", docId: "ecosystem/contact" },
+              { label: "生态", type: "docLink", docId: "ecosystem/contact" },
               { label: "更新日志", to: "/changelog" },
             ],
           },
