@@ -87,6 +87,7 @@ const config = {
           {
             label: "更多",
             type: "dropdown",
+            to: "/store",
             items: [
               {
                 label: "最佳实践",
@@ -99,6 +100,7 @@ const config = {
                 docId: "developer/plugin-publishing",
               },
               { label: "生态", type: "docLink", docId: "ecosystem/contact" },
+              { label: "商店", to: "/store" },
               { label: "更新日志", to: "/changelog" },
             ],
           },
