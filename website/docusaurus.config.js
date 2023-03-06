@@ -84,8 +84,24 @@ const config = {
             type: "docLink",
             docId: "api/index",
           },
-          { label: "商店", to: "/store" },
-          { label: "更新日志", to: "/changelog" },
+          {
+            label: "更多",
+            type: "dropdown",
+            items: [
+              {
+                label: "最佳实践",
+                type: "doclink",
+                docId: "best-practice/scheduler",
+              },
+              {
+                label: "开发者",
+                type: "doclink",
+                docId: "developer/plugin-publishing",
+              },
+              { label: "生态", type: "doclink", docId: "ecosystem/contact" },
+              { label: "更新日志", to: "/changelog" },
+            ],
+          },
           {
             icon: ["fab", "github"],
             href: "https://github.com/nonebot/nonebot2",

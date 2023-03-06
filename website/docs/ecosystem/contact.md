@@ -1,11 +1,11 @@
 ---
-sidebar-position: 3
+sidebar-position: 0
 description: 遇到问题如何获取帮助
 ---
 
-# 获取帮助
+# 参与讨论
 
-如果在安装或者开发过程中遇到了任何问题，可以通过以下方式解决：
+如果在安装或者开发 NoneBot 过程中遇到了任何问题，或者有新奇的点子，欢迎参与我们的社区讨论：
 
 1. 点击下方链接前往 GitHub，前往 Issues 页面，在 `New Issue` Template 中选择 `Question`
 
