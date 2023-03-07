@@ -99,7 +99,7 @@ const config = {
                 type: "docLink",
                 docId: "developer/plugin-publishing",
               },
-              { label: "生态", type: "docLink", docId: "ecosystem/contact" },
+              { label: "社区", type: "docLink", docId: "community/contact" },
               { label: "商店", to: "/store" },
               { label: "更新日志", to: "/changelog" },
             ],
