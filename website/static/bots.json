@@ -407,5 +407,22 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "LOVE酱",
+    "desc": "为铁锈战争游戏群服务的虚拟少女,内置了爬取铁锈房间列表功能,以及游戏内单位查询功能,并制作了教学系统以及铁锈相关游戏群的收集功能。",
+    "author": "allureluoli",
+    "homepage": "https://github.com/allureluoli/LOVE-",
+    "tags": [
+      {
+        "label": "铁锈战争",
+        "color": "#19e229"
+      },
+      {
+        "label": "RW",
+        "color": "#19e229"
+      }
+    ],
+    "is_official": false
   }
 ]
