@@ -89,6 +89,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: LOVE 酱 [@yanyongyu](https://github.com/yanyongyu) ([#1779](https://github.com/nonebot/nonebot2/pull/1779))
 - Bot: 脑积水 [@yanyongyu](https://github.com/yanyongyu) ([#1771](https://github.com/nonebot/nonebot2/pull/1771))
 - Bot: koishi [@yanyongyu](https://github.com/yanyongyu) ([#1681](https://github.com/nonebot/nonebot2/pull/1681))
 - Bot: ChensQBOTv2 [@yanyongyu](https://github.com/yanyongyu) ([#1676](https://github.com/nonebot/nonebot2/pull/1676))
