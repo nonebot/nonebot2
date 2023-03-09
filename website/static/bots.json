@@ -424,5 +424,22 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "fubot",
+    "desc": "基于nonebot与go-cqhttp的QQ娱乐bot，提供群日常娱乐功能与舞萌DX游戏相关的信息查询功能。",
+    "author": "HCskia",
+    "homepage": "https://github.com/HCskia/fu-Bot",
+    "tags": [
+      {
+        "label": "maimai",
+        "color": "#52eaa5"
+      },
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
