@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 明日方舟抽卡记录分析 [@yanyongyu](https://github.com/yanyongyu) ([#1786](https://github.com/nonebot/nonebot2/pull/1786))
 - Plugin: Sanae [@yanyongyu](https://github.com/yanyongyu) ([#1775](https://github.com/nonebot/nonebot2/pull/1775))
 - Plugin: 小爱课程表 [@yanyongyu](https://github.com/yanyongyu) ([#1773](https://github.com/nonebot/nonebot2/pull/1773))
 - Plugin: AutoRepeater [@yanyongyu](https://github.com/yanyongyu) ([#1769](https://github.com/nonebot/nonebot2/pull/1769))
