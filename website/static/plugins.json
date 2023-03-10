@@ -4684,5 +4684,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chatgpt_on_qq",
+    "project_link": "nonebot-plugin-chatgpt-on-qq",
+    "name": "多功能的ChatGPT机器人",
+    "desc": "基于chatGPT3.5-turboAPI,有利用模板创建新对话、保存历史记录、多重对话不互相干扰等功能",
+    "author": "Suxmx",
+    "homepage": "https://github.com/Suxmx/nonebot_plugin_chatgpt_on_qq",
+    "tags": [],
+    "is_official": false
   }
 ]
