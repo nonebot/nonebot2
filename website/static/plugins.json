@@ -4665,5 +4665,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chatgpt_turbo",
+    "project_link": "nonebot-plugin-chatgpt-turbo",
+    "name": "ChatGPT官方接口版",
+    "desc": "适配新版OpenAI API的nonebot插件，可以调用官方稳定版ChatGPT进行回复",
+    "author": "Alpaca4610",
+    "homepage": "https://github.com/Alpaca4610/nonebot_plugin_chatgpt_turbo",
+    "tags": [
+      {
+        "label": "ChatGPT",
+        "color": "#ea5252"
+      },
+      {
+        "label": "OpenAI",
+        "color": "#52ea92"
+      }
+    ],
+    "is_official": false
   }
 ]
