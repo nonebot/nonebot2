@@ -4694,5 +4694,24 @@
     "homepage": "https://github.com/Suxmx/nonebot_plugin_chatgpt_on_qq",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_tuan_chatgpt",
+    "project_link": "nonebot-plugin-tuan-chatgpt",
+    "name": "和团子聊天！",
+    "desc": "来和团子聊天吧~  Powered by chatgpt",
+    "author": "TheLZY",
+    "homepage": "https://github.com/TheLZY/nonebot_plugin_tuan_chatgpt",
+    "tags": [
+      {
+        "label": "t:chat",
+        "color": "#ff9d97"
+      },
+      {
+        "label": "t:chatgpt",
+        "color": "#ff9d97"
+      }
+    ],
+    "is_official": false
   }
 ]
