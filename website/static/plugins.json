@@ -2652,25 +2652,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_bnhhsh",
-    "project_link": "nonebot-plugin-bnhhsh",
-    "name": "bnhhsh -「不能好好说话！」",
-    "desc": "不对劲的拼音首字母缩写翻译工具 | 基于 RimoChan/bnhhsh",
-    "author": "lgc2333",
-    "homepage": "https://github.com/lgc2333/nonebot-plugin-bnhhsh",
-    "tags": [
-      {
-        "label": "a:OB V11",
-        "color": "#000000"
-      },
-      {
-        "label": "t:涩涩！",
-        "color": "#ffc646"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "ayaka_games",
     "project_link": "ayaka_games",
     "name": "ayaka小游戏合集",
