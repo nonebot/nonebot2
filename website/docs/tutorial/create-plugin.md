@@ -90,6 +90,7 @@ options:
 ```bash
 $ nb plugin create
 [?] 插件名称: weather
+[?] 使用嵌套插件? (y/N) N
 [?] 输出目录: awesome_bot/plugins
 ```
 
