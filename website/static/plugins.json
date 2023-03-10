@@ -4732,5 +4732,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_rimofun",
+    "project_link": "nonebot-plugin-rimofun",
+    "name": "RimoFun",
+    "desc": "使用 RimoChan 开发的项目做的一个有趣的插件",
+    "author": "lgc2333",
+    "homepage": "https://github.com/lgc2333/nonebot-plugin-rimofun",
+    "tags": [
+      {
+        "label": "RimoChan",
+        "color": "#f3e5bf"
+      },
+      {
+        "label": "bnhhsh",
+        "color": "#ebbcc6"
+      }
+    ],
+    "is_official": false
   }
 ]
