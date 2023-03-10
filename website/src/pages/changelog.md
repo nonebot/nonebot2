@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 多功能的 ChatGPT 机器人 [@yanyongyu](https://github.com/yanyongyu) ([#1781](https://github.com/nonebot/nonebot2/pull/1781))
 - Plugin: ChatGPT 官方接口版 [@yanyongyu](https://github.com/yanyongyu) ([#1767](https://github.com/nonebot/nonebot2/pull/1767))
 - Plugin: 明日方舟抽卡记录分析 [@yanyongyu](https://github.com/yanyongyu) ([#1786](https://github.com/nonebot/nonebot2/pull/1786))
 - Plugin: Sanae [@yanyongyu](https://github.com/yanyongyu) ([#1775](https://github.com/nonebot/nonebot2/pull/1775))
