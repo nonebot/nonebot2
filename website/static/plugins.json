@@ -4713,5 +4713,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chatpdf",
+    "project_link": "nonebot-plugin-chatpdf",
+    "name": "ChatPDF文章分析",
+    "desc": "在nonebot中使用ChatPDF的最小实现来中分析文章内容",
+    "author": "Alpaca4610",
+    "homepage": "https://github.com/Alpaca4610/nonebot_plugin_chatpdf",
+    "tags": [
+      {
+        "label": "ChatGPT",
+        "color": "#ea5252"
+      },
+      {
+        "label": "ChatPDF",
+        "color": "#6c7abd"
+      }
+    ],
+    "is_official": false
   }
 ]
