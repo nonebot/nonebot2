@@ -4732,5 +4732,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_customemote",
+    "project_link": "nonebot-plugin-customemote",
+    "name": "群聊自定义表情包",
+    "desc": "发送 表情名称 加 (.jpg或.png或.gif)后缀，就会发送设置好的表情。快速方便，聊天必备。",
+    "author": "DMCSWCG",
+    "homepage": "https://github.com/DMCSWCG/nonebot-plugin-customemote/",
+    "tags": [],
+    "is_official": false
   }
 ]
