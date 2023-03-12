@@ -22,7 +22,7 @@ NoneBot 内置了四种常用事件类型：`meta_event`、`message`、`notice`�
 
 ### 事件触发权限
 
-事件触发权限 `permission` 是一个 `Permission` 对象，这在[权限控制](../appendices/permission.md)一节中已经介绍过。事件触发权限会在事件响应器的类型检查通过后进行检查，如果权限检查通过，则执行响应规则检查。
+事件触发权限 `permission` 是一个 `Permission` 对象，这在[权限控制](../appendices/permission.mdx)一节中已经介绍过。事件触发权限会在事件响应器的类型检查通过后进行检查，如果权限检查通过，则执行响应规则检查。
 
 ### 事件响应规则
 
@@ -47,3 +47,262 @@ NoneBot 内置的事件响应器中，所有非 `command` 规则的 `message` �
 ### 默认状态
 
 事件响应器的默认状态 `default_state` 是一个 `dict` 对象，用于指定响应器的默认状态。在响应器被触发时，响应器将会初始化默认状态然后开始执行事件处理流程。
+
+## 基本辅助函数
+
+NoneBot 为四种类型的事件响应器提供了五个基本的辅助函数：
+
+- `on`：创建任何类型的事件响应器。
+- `on_metaevent`：创建元事件响应器。
+- `on_message`：创建消息事件响应器。
+- `on_request`：创建请求事件响应器。
+- `on_notice`：创建通知事件响应器。
+
+除了 `on` 函数具有一个 `type` 参数外，其余参数均相同：
+
+- `rule`：响应规则，可以是 `Rule` 对象或者 `RuleChecker` 函数。
+- `permission`：事件触发权限，可以是 `Permission` 对象或者 `PermissionChecker` 函数。
+- `handlers`：事件处理函数列表。
+- `temp`：是否为临时响应器。
+- `expire_time`：响应器的过期时间。
+- `priority`：响应器的优先级。
+- `block`：是否阻断事件传播。
+- `state`：响应器的默认状态。
+
+在消息类型的事件响应器的基础上，NoneBot 还内置了一些常用的响应规则，并结合为辅助函数来方便我们快速创建指定功能的响应器。下面我们逐个介绍。
+
+## 内置响应规则
+
+### `startswith`
+
+`startswith` 响应规则用于匹配消息纯文本部分的开头是否与指定字符串（或一系列字符串）相同。可选参数 `ignorecase` 用于指定是否忽略大小写，默认为 `False`。
+
+例如，我们可以创建一个匹配消息开头为 `!` 或者 `/` 的规则：
+
+```python
+from nonebot.rule import startswith
+
+rule = startswith(("!", "/"), ignorecase=False)
+```
+
+也可以直接使用辅助函数新建一个响应器：
+
+```python
+from nonebot import on_startswith
+
+matcher = on_startswith(("!", "/"), ignorecase=False)
+```
+
+### `endswith`
+
+`endswith` 响应规则用于匹配消息纯文本部分的结尾是否与指定字符串（或一系列字符串）相同。可选参数 `ignorecase` 用于指定是否忽略大小写，默认为 `False`。
+
+例如，我们可以创建一个匹配消息结尾为 `.` 或者 `。` 的规则：
+
+```python
+from nonebot.rule import endswith
+
+rule = endswith((".", "。"), ignorecase=False)
+```
+
+也可以直接使用辅助函数新建一个响应器：
+
+```python
+from nonebot import on_endswith
+
+matcher = on_endswith((".", "。"), ignorecase=False)
+```
+
+### `fullmatch`
+
+`fullmatch` 响应规则用于匹配消息纯文本部分是否与指定字符串（或一系列字符串）完全相同。可选参数 `ignorecase` 用于指定是否忽略大小写，默认为 `False`。
+
+例如，我们可以创建一个匹配消息为 `ping` 或者 `pong` 的规则：
+
+```python
+from nonebot.rule import fullmatch
+
+rule = fullmatch(("ping", "pong"), ignorecase=False)
+```
+
+也可以直接使用辅助函数新建一个响应器：
+
+```python
+from nonebot import on_fullmatch
+
+matcher = on_fullmatch(("ping", "pong"), ignorecase=False)
+```
+
+### `keyword`
+
+`keyword` 响应规则用于匹配消息纯文本部分是否包含指定字符串（或一系列字符串）。
+
+例如，我们可以创建一个匹配消息中包含 `hello` 或者 `hi` 的规则：
+
+```python
+from nonebot.rule import keyword
+
+rule = keyword("hello", "hi")
+```
+
+也可以直接使用辅助函数新建一个响应器：
+
+```python
+from nonebot import on_keyword
+
+matcher = on_keyword("hello", "hi")
+```
+
+### `command`
+
+`command` 是最常用的响应规则，它用于匹配消息是否为命令。它会根据配置中的 [Command Start 和 Command Separator](../appendices/config.mdx#command-start-和-command-separator) 来判断消息是否为命令。
+
+例如，当我们配置了 `Command Start` 为 `/`，`Command Separator` 为 `.` 时：
+
+```python
+from nonebot.rule import command
+
+# 匹配 "/help" 或者 "/帮助" 开头的消息
+rule = command("help", "帮助")
+# 匹配 "/help.cmd" 开头的消息
+rule = command(("help", "cmd"))
+```
+
+也可以直接使用辅助函数新建一个响应器：
+
+```python
+from nonebot import on_command
+
+matcher = on_command("help", aliases={"帮助"})
+```
+
+此外，`command` 响应规则默认允许消息命令与参数间不加空格，如果需要严格匹配命令与参数间的空白符，可以使用 `command` 函数的 `force_whitespace` 参数。`force_whitespace` 参数可以是 bool 类型或者具体的字符串，默认为 `False`。如果为 `True`，则命令与参数间必须有任意个数的空白符；如果为字符串，则命令与参数间必须有且与给定字符串一致的空白符。
+
+```python
+rule = command("help", force_whitespace=True)
+rule = command("help", force_whitespace=" ")
+```
+
+<!-- FIXME: di link -->
+
+命令解析后的结果可以通过 [`Command`](./context-info.md)、[`RawCommand`](./context-info.md)、[`CommandArg`](./context-info.md)、[`CommandWhitespace`](./context-info.md) 依赖注入获取。
+
+### `shell_command`
+
+`shell_command` 响应规则用于匹配类 shell 命令形式的消息。它首先与 [`command`](#command) 响应规则一样进行命令匹配，如果匹配成功，则会进行进一步的参数解析。参数解析采用 `argparse` 标准库进行，在此基础上添加了消息序列 `Message` 支持。
+
+例如，我们可以创建一个匹配 `/cmd` 命令并且带有 `-v` 选项与默认 `-h` 帮助选项的规则：
+
+```python
+from nonebot.rule import shell_command, ArgumentParser
+
+parser = ArgumentParser()
+parser.add_argument("-v", "--verbose", action="store_true")
+
+rule = shell_command("cmd", parser=parser)
+```
+
+更多关于 `argparse` 的使用方法请参考 [argparse 文档](https://docs.python.org/zh-cn/3/library/argparse.html)。我们也可以选择不提供 `parser` 参数，这样 `shell_command` 将不会解析参数，但会提供参数列表 `argv`。
+
+直接使用辅助函数新建一个响应器：
+
+```python
+from nonebot import on_shell_command
+from nonebot.rule import ArgumentParser
+
+parser = ArgumentParser()
+parser.add_argument("-v", "--verbose", action="store_true")
+
+matcher = on_shell_command("cmd", parser=parser)
+```
+
+<!-- FIXME: di link -->
+
+参数解析后的结果可以通过 [`ShellCommandArgv`](./context-info.md)、[`ShellCommandArgs`](./context-info.md) 依赖注入获取。
+
+### `regex`
+
+`regex` 响应规则用于匹配消息是否与指定正则表达式匹配。
+
+:::tip 提示
+正则表达式匹配使用 search 而非 match，如需从头匹配请使用 `r"^xxx"` 模式来确保匹配开头。
+:::
+
+例如，我们可以创建一个匹配消息中包含字母并且忽略大小写的规则：
+
+```python
+from nonebot.rule import regex
+
+rule = regex(r"[a-z]+", flags=re.IGNORECASE)
+```
+
+也可以直接使用辅助函数新建一个响应器：
+
+```python
+from nonebot import on_regex
+
+matcher = on_regex(r"[a-z]+", flags=re.IGNORECASE)
+```
+
+正则匹配后的结果可以通过 [`RegexMatched`](./context-info.md)、[`RegexStr`](./context-info.md)、[`RegexGroup`](./context-info.md)、[`RegexDict`](./context-info.md) 依赖注入获取。
+
+### `to_me`
+
+`to_me` 响应规则用于匹配事件是否与机器人相关。
+
+例如：
+
+```python
+from nonebot.rule import to_me
+
+rule = to_me()
+```
+
+### `is_type`
+
+`is_type` 响应规则用于匹配事件类型是否为指定类型（或者一系列类型）。
+
+例如，我们可以创建一个匹配 OneBot v11 私聊和群聊消息事件的规则：
+
+```python
+from nonebot.rule import is_type
+from nonebot.adapters.onebot.v11 import PrivateMessageEvent, GroupMessageEvent
+
+rule = is_type(PrivateMessageEvent, GroupMessageEvent)
+```
+
+## 响应器组
+
+为了更方便的管理一系列功能相近的响应器，NoneBot 提供了两种响应器组，它们可以帮助我们进行响应器的统一管理。
+
+### `CommandGroup`
+
+`CommandGroup` 可以用于管理一系列具有相同前置命令的子命令响应器。
+
+例如，我们创建 `/cmd`、`/cmd.sub`、`/cmd.help` 三个命令，他们具有相同的优先级：
+
+```python
+from nonebot import CommandGroup
+
+group = CommandGroup("cmd", priority=10)
+
+cmd = group.command(tuple())
+sub_cmd = group.command("sub")
+help_cmd = group.command("help")
+```
+
+### `MatcherGroup`
+
+`MatcherGroup` 可以用于管理一系列具有相同属性的响应器。
+
+例如，我们创建一个具有相同响应规则的响应器组：
+
+```python
+from nonebot.rule import to_me
+from nonebot import MatcherGroup
+
+group = MatcherGroup(rule=to_me())
+
+matcher1 = group.on_message()
+matcher2 = group.on_message()
+```
