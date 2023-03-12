@@ -37,6 +37,63 @@ driver.register_adapter(Adapter)
 
 我们首先需要从适配器模块中导入所需要的适配器类，然后通过驱动器的 `register_adapter` 方法将适配器注册到驱动器中即可。
 
+## 获取已注册的适配器
+
+NoneBot 提供了 `get_adapter` 方法来获取已注册的适配器，我们可以通过适配器的名称或类型来获取指定的适配器实例：
+
+```python
+import nonebot
+from nonebot.adapters.console import Adapter
+
+adapters = nonebot.get_adapters()
+console_adapter = nonebot.get_adapter(Adapter)
+console_adapter = nonebot.get_adapter(Adapter.get_name())
+```
+
+## 获取 Bot 对象
+
+当前所有适配器已连接的 Bot 对象可以通过 `get_bots` 方法获取，这是一个以机器人 ID 为键的字典：
+
+```python
+import nonebot
+
+bots = nonebot.get_bots()
+```
+
+我们也可以通过 `get_bot` 方法获取指定 ID 的 Bot 对象。如果省略 ID 参数，将会返回所有 Bot 中的第一个：
+
+```python
+import nonebot
+
+bot = nonebot.get_bot("bot_id")
+```
+
+如果需要获取指定适配器连接的 Bot 对象，我们可以通过适配器的 `bots` 属性获取，这也是一个以机器人 ID 为键的字典：
+
+```python
+import nonebot
+from nonebot.adapters.console import Adapter
+
+console_adapter = nonebot.get_adapter(Adapter)
+bots = console_adapter.bots
+```
+
+Bot 对象都具有一个 `self_id` 属性，它是机器人的唯一 ID，由适配器填写，通常为机器人的帐号 ID 或者 APP ID。
+
+## 获取事件通用信息
+
+适配器的所有事件模型均继承自 `Event` 基类，在[事件类型与重载](../appendices/overload.md)一节中，我们也提到了如何使用基类抽象方法来获取事件通用信息。基类所能提供的信息有如下几个方法：
+
+- `get_type`：获取事件类型。
+- `get_event_name`：获取事件名称。通常用于日志记录。
+- `get_event_description`：获取事件描述。通常用于日志记录。
+- `get_log_string`：获取事件日志字符串。
+- `get_user_id`：获取事件主体 ID。
+- `get_session_id`：获取事件会话 ID。
+- `get_message`：获取事件消息。
+- `get_plaintext`：获取事件消息的纯文本内容。
+- `is_tome`：判断事件是否与机器人有关。
+
 ## 更多
 
 官方支持的适配器和社区贡献的适配器均可在[商店](/store)中查看。如果你想要开发自己的适配器，可以参考[开发文档](../developer/adapter-writing.md)。欢迎通过商店发布你的适配器。

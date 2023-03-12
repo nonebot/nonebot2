@@ -75,11 +75,9 @@ async def got_location(bot: Bot, location: str = ArgPlainText()):
     ...
 ```
 
-<!-- FIXME: 依赖注入进阶链接 -->
+依赖注入会确保你获得的 Bot 对象与类型注解的 Bot 类型一致。也就是说，如果你使用的是 Bot 基类，将会允许任何平台的 Bot 对象；如果你使用的是平台特定的 Bot 类型，将会只允许该平台的 Bot 对象，其他类型的 Bot 将会跳过这个事件处理函数。更多详情请参考[事件处理重载](./overload.md)。
 
-依赖注入会确保你获得的 Bot 对象与类型注解的 Bot 类型一致。也就是说，如果你使用的是 Bot 基类，将会允许任何平台的 Bot 对象；如果你使用的是平台特定的 Bot 类型，将会只允许该平台的 Bot 对象，其他类型的 Bot 将会跳过这个事件处理函数。更多详情请参考[依赖注入 —— 重载](#)。
-
-在其他情况下，我们可以通过 NoneBot 提供的方法来获取 Bot 对象：
+在其他情况下，我们可以通过 NoneBot 提供的方法来获取 Bot 对象，这些方法将会在[使用适配器](../advanced/adapter.md#获取-Bot-对象)中详细介绍：
 
 ```python {4,6}
 from nonebot import get_bot
