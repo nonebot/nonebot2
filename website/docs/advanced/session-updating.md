@@ -1,10 +1,10 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
 description: 控制会话响应对象
 
 options:
   menu:
-    weight: 70
+    weight: 80
     category: advanced
 ---
 

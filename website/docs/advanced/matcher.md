@@ -185,7 +185,7 @@ rule = command("help", force_whitespace=" ")
 
 <!-- FIXME: di link -->
 
-命令解析后的结果可以通过 [`Command`](./context-info.md)、[`RawCommand`](./context-info.md)、[`CommandArg`](./context-info.md)、[`CommandWhitespace`](./context-info.md) 依赖注入获取。
+命令解析后的结果可以通过 [`Command`](./dependency.mdx)、[`RawCommand`](./dependency.mdx)、[`CommandArg`](./dependency.mdx)、[`CommandWhitespace`](./dependency.mdx) 依赖注入获取。
 
 ### `shell_command`
 
@@ -218,7 +218,7 @@ matcher = on_shell_command("cmd", parser=parser)
 
 <!-- FIXME: di link -->
 
-参数解析后的结果可以通过 [`ShellCommandArgv`](./context-info.md)、[`ShellCommandArgs`](./context-info.md) 依赖注入获取。
+参数解析后的结果可以通过 [`ShellCommandArgv`](./dependency.mdx)、[`ShellCommandArgs`](./dependency.mdx) 依赖注入获取。
 
 ### `regex`
 
@@ -244,7 +244,7 @@ from nonebot import on_regex
 matcher = on_regex(r"[a-z]+", flags=re.IGNORECASE)
 ```
 
-正则匹配后的结果可以通过 [`RegexMatched`](./context-info.md)、[`RegexStr`](./context-info.md)、[`RegexGroup`](./context-info.md)、[`RegexDict`](./context-info.md) 依赖注入获取。
+正则匹配后的结果可以通过 [`RegexMatched`](./dependency.mdx)、[`RegexStr`](./dependency.mdx)、[`RegexGroup`](./dependency.mdx)、[`RegexDict`](./dependency.mdx) 依赖注入获取。
 
 ### `to_me`
 

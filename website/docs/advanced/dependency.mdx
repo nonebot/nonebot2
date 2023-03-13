@@ -1,0 +1,167 @@
+---
+sidebar_position: 6
+description: 通过依赖注入获取上下文信息
+
+options:
+  menu:
+    weight: 70
+    category: advanced
+---
+
+# 依赖注入
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+在事件处理流程中，事件响应器具有自己独立的上下文，例如：当前的事件、机器人等信息。在 NoneBot 中，这些信息通过依赖注入的方式提供给事件处理函数，可以让代码更加整洁可读、提升复用能力。
+
+在了解如何使用依赖注入获取上下文信息之前，我们需要先了解两个概念：
+
+- `Dependent`：使用依赖注入的函数或其他任意可调用对象。如：事件处理函数、自定义的依赖函数等。
+- `Dependency`：依赖注入的对象。如：当前事件、机器人等。
+
+在之前的文档中，我们已经多次使用了依赖注入来获取事件信息。通过对函数参数依照一定规则填写类型注解，即可获得想要的上下文信息。任何一个事件处理函数在添加到事件处理流程时，都会根据一定规则提前将其解析成一个 `Dependent` 对象，方便运行时进行注入。如果遇到无法解析的参数，将会抛出 `ValueError("Unknown parameter")` 的异常。
+
+:::danger 警告
+在依赖注入中，类型注解是非常重要的，因为它不仅可以决定依赖注入的对象，还可以触发[重载机制](../appendices/overload.md#重载)。如果类型注解与实际获得数据类型不一致，将会跳过当前 `Dependent` 对象（即事件处理函数）。
+:::
+
+:::tip 提示
+如果对于依赖注入的解析流程有疑问，可以调整[日志等级配置项](../appendices/config.mdx#log-level)为 `TRACE`，查看依赖解析日志。
+:::
+
+## 同步支持
+
+对于依赖注入系统中的 `Dependent` 或者 `Dependency` 对象，均支持同步类型的函数或可调用对象。例如：
+
+```python {6,10}
+from nonebot import on_command
+from nonebot.params import Depends
+
+matcher = on_command("foo")
+
+def dependency() -> str:
+    return "something"
+
+@matcher.handle()
+def _(result: str = Depends(dependency)):
+    ...
+```
+
+## 类型依赖注入
+
+这一类的依赖注入仅需要在函数参数中添加对应的类型注解即可。
+
+### Bot
+
+获取当前事件的 Bot 对象。
+
+通过标注参数为 `Bot` 类型，或者一系列 `Bot` 类型，即可获取到当前事件的 Bot 对象。为兼容性考虑，如果参数名为 `bot` 且无类型注解，也会视为 `Bot` 依赖注入。
+
+<Tabs groupId="python">
+  <TabItem value="3.10" label="Python 3.10+" default>
+
+```python
+from nonebot.adapters import Bot
+from nonebot.adapters.console import Bot as ConsoleBot
+from nonebot.adapters.onebot.v11 import Bot as OneBotV11Bot
+
+async def _(foo: Bot): ...
+async def _(foo: ConsoleBot | OneBotV11Bot): ...
+async def _(bot): ...  # 兼容性处理
+```
+
+  </TabItem>
+  <TabItem value="3.8" label="Python 3.8+">
+
+```python
+from typing import Union
+
+from nonebot.adapters import Bot
+from nonebot.adapters.console import Bot as ConsoleBot
+from nonebot.adapters.onebot.v11 import Bot as OneBotV11Bot
+
+async def _(foo: Bot): ...
+async def _(foo: Union[ConsoleBot, OneBotV11Bot]): ...
+async def _(bot): ...  # 兼容性处理
+```
+
+  </TabItem>
+</Tabs>
+
+### Event
+
+获取当前事件。
+
+通过标注参数为 `Event` 类型，或者一系列 `Event` 类型，即可获取到当前事件。为兼容性考虑，如果参数名为 `event` 且无类型注解，也会视为 `Event` 依赖注入。
+
+<Tabs groupId="python">
+  <TabItem value="3.10" label="Python 3.10+" default>
+
+```python
+from nonebot.adapters import Event
+from nonebot.adapters.onebot.v11 import PrivateMessageEvent, GroupMessageEvent
+
+async def _(foo: Event): ...
+async def _(foo: PrivateMessageEvent | GroupMessageEvent): ...
+async def _(event): ...  # 兼容性处理
+```
+
+  </TabItem>
+  <TabItem value="3.8" label="Python 3.8+">
+
+```python
+from typing import Union
+
+from nonebot.adapters import Event
+from nonebot.adapters.onebot.v11 import PrivateMessageEvent, GroupMessageEvent
+
+async def _(foo: Event): ...
+async def _(foo: Union[PrivateMessageEvent, GroupMessageEvent]): ...
+async def _(event): ...  # 兼容性处理
+```
+
+  </TabItem>
+</Tabs>
+
+### State
+
+获取当前[会话状态](../appendices/session-state.md)。
+
+```python
+from nonebot.typing import T_State
+
+async def _(foo: T_State): ...
+```
+
+### Matcher
+
+获取当前事件响应器实例。常用于使用[事件响应器操作](../appendices/session-control.mdx)。
+
+```python
+from nonebot.matcher import Matcher
+
+async def _(matcher: Matcher): ...
+```
+
+## 子依赖
+
+在依赖注入系统中，我们可以定义一个子依赖，来执行自定义的操作，提高代码复用性以及处理性能。子依赖使用 `Depends` 标记进行定义，其参数即依赖的函数或可调用对象，同样会被解析为 `Dependent` 对象，将会在依赖注入期间执行。我们来看一个例子：
+
+```python {}
+from nonebot import on_command
+from nonebot.params import Depends
+from nonebot.matcher import Matcher
+from nonebot.adapters.console import MessageEvent
+
+test = on_command("test")
+
+async def check(event: MessageEvent, matcher: Matcher) -> MessageEvent:
+    if event.get_user_id() in BLACKLIST:
+        await matcher.finish()
+    return event
+
+@test.handle()
+async def _(event: MessageEvent = Depends(check)):
+    ...
+```
