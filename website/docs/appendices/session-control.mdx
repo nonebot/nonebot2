@@ -160,9 +160,7 @@ async def handle_func():
 
 `got` 装饰器接受一个参数 `key` 和一个可选参数 `prompt`。当会话状态中不存在 `key` 对应的消息时，会向用户发送 `prompt` 参数的消息，并等待用户回复。`prompt` 参数的类型和 [`send`](#send) 事件响应器操作的参数类型一致。
 
-<!-- FIXME: injection link -->
-
-在事件处理函数中，可以通过依赖注入的方式来获取接收到的消息，参考：[`Arg`](../advanced/context-info.md)、[`ArgStr`](../advanced/context-info.md)、[`ArgPlainText`](../advanced/context-info.md)。
+在事件处理函数中，可以通过依赖注入的方式来获取接收到的消息，参考：[`Arg`](../advanced/dependency.mdx#arg)、[`ArgStr`](../advanced/dependency.mdx#argstr)、[`ArgPlainText`](../advanced/dependency.mdx#argplaintext)。
 
 ```python
 @matcher.got("key", prompt="请输入...")
@@ -186,9 +184,7 @@ async def got_func(key1: Message = Arg(), key2: Message = Arg(), key3: Event = R
 
 `receive` 装饰器接受一个可选参数 id，用于标识当前需要接收的事件，如果不指定，则默认为空 `""`。
 
-<!-- FIXME: injection link -->
-
-在事件处理函数中，可以通过依赖注入的方式来获取接收到的事件，参考：[`Received`](../advanced/context-info.md)、[`LastReceived`](../advanced/context-info.md)。
+在事件处理函数中，可以通过依赖注入的方式来获取接收到的事件，参考：[`Received`](../advanced/dependency.mdx#received)、[`LastReceived`](../advanced/dependency.mdx#lastreceived)。
 
 ```python
 @matcher.receive("id")

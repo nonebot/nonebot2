@@ -468,6 +468,32 @@ async def _(foo: str = CommandWhitespace()): ...
 命令详情只能在**触发命令型事件响应器时**获取。如果在事件处理后续流程中获取，则会获取到不同的值。
 :::
 
+### ShellCommandArgv
+
+获取 shell 命令解析前的参数列表，列表中可能包含文本字符串和富文本消息段（如：图片）。
+
+<Tabs groupId="python">
+  <TabItem value="3.10" label="Python 3.10+" default>
+
+```python {3}
+from nonebot.params import ShellCommandArgs
+
+async def _(foo: list[str | MessageSegment] = ShellCommandArgv()): ...
+```
+
+  </TabItem>
+  <TabItem value="3.8" label="Python 3.8+">
+
+```python {4}
+from typing import List, Union
+from nonebot.params import ShellCommandArgs
+
+async def _(foo: List[Union[str, MessageSegment]] = ShellCommandArgv()): ...
+```
+
+  </TabItem>
+</Tabs>
+
 ### ShellCommandArgs
 
 获取 shell 命令解析后的参数 Namespace，支持 MessageSegment 富文本（如：图片）。
@@ -501,32 +527,6 @@ async def _(foo: ParserExit = ShellCommandArgs()):
 async def _(foo: Namespace = ShellCommandArgs()):
     arg_dict = vars(foo)
 ```
-
-### ShellCommandArgv
-
-获取 shell 命令解析前的参数列表，列表中可能包含文本字符串和富文本消息段（如：图片）。
-
-<Tabs groupId="python">
-  <TabItem value="3.10" label="Python 3.10+" default>
-
-```python {3}
-from nonebot.params import ShellCommandArgs
-
-async def _(foo: list[str | MessageSegment] = ShellCommandArgv()): ...
-```
-
-  </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
-
-```python {4}
-from typing import List, Union
-from nonebot.params import ShellCommandArgs
-
-async def _(foo: List[Union[str, MessageSegment]] = ShellCommandArgv()): ...
-```
-
-  </TabItem>
-</Tabs>
 
 ### RegexStr
 
