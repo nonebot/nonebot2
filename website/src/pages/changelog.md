@@ -38,6 +38,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 发 6 [@yanyongyu](https://github.com/yanyongyu) ([#1798](https://github.com/nonebot/nonebot2/pull/1798))
 - Plugin: 群聊自定义表情包 [@yanyongyu](https://github.com/yanyongyu) ([#1795](https://github.com/nonebot/nonebot2/pull/1795))
 - Plugin: RimoFun [@yanyongyu](https://github.com/yanyongyu) ([#1791](https://github.com/nonebot/nonebot2/pull/1791))
 - Plugin: ChatPDF 文章分析 [@yanyongyu](https://github.com/yanyongyu) ([#1788](https://github.com/nonebot/nonebot2/pull/1788))
