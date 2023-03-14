@@ -4742,5 +4742,15 @@
     "homepage": "https://github.com/DMCSWCG/nonebot-plugin-customemote/",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_justsix",
+    "project_link": "nonebot-plugin-justsix",
+    "name": "发6",
+    "desc": "发送6，机器人就回复6",
+    "author": "iidamie",
+    "homepage": "https://github.com/iidamie/nonebot_plugin_justsix",
+    "tags": [],
+    "is_official": false
   }
 ]
