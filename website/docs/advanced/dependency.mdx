@@ -499,7 +499,7 @@ async def _(foo: List[Union[str, MessageSegment]] = ShellCommandArgv()): ...
 获取 shell 命令解析后的参数 Namespace，支持 MessageSegment 富文本（如：图片）。
 
 :::tip 提示
-如果参数解析失败，则为 [`ParserExit`](../../api/exception.md#ParserExit) 异常，并携带错误码与错误信息。通过重载机制即可处理两种不同的情况。
+如果参数解析成功，则为 parser 返回的 Namespace；如果参数解析失败，则为 [`ParserExit`](../api/exception.md#ParserExit) 异常，并携带错误码与错误信息。通过重载机制即可处理两种不同的情况。
 
 由于 `ArgumentParser` 在解析到 `--help` 参数时也会抛出异常，这种情况下错误码为 `0` 且错误信息即为帮助信息。
 :::
