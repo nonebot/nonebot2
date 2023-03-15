@@ -441,5 +441,18 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "桃桃酱",
+    "desc": "一个会拆家的高性能缝合萝卜子",
+    "author": "tkgs0",
+    "homepage": "https://github.com/tkgs0/Momoko",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
