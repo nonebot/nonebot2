@@ -4752,5 +4752,24 @@
     "homepage": "https://github.com/iidamie/nonebot_plugin_justsix",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_simulator_xiuxian",
+    "project_link": "nonebot-plugin-simulator-xiuxian",
+    "name": "修仙模拟器",
+    "desc": "基于原版修仙的修改",
+    "author": "luoyefufeng",
+    "homepage": "https://github.com/luoyefufeng/nonebot_plugin_simulator_xiuxian",
+    "tags": [
+      {
+        "label": "文游",
+        "color": "#4256da"
+      },
+      {
+        "label": "修仙1.0",
+        "color": "#1d1b1c"
+      }
+    ],
+    "is_official": false
   }
 ]
