@@ -4771,5 +4771,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bracket",
+    "project_link": "nonebot-plugin-bracket",
+    "name": "括号补全",
+    "desc": "整活插件，用于补全消息中的左括号，治愈强迫症",
+    "author": "MeetWq",
+    "homepage": "https://github.com/noneplugin/nonebot-plugin-bracket",
+    "tags": [],
+    "is_official": false
   }
 ]
