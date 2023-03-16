@@ -39,6 +39,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 原神历史卡池 [@yanyongyu](https://github.com/yanyongyu) ([#1806](https://github.com/nonebot/nonebot2/pull/1806))
 - Plugin: 括号补全 [@yanyongyu](https://github.com/yanyongyu) ([#1804](https://github.com/nonebot/nonebot2/pull/1804))
 - Plugin: 修仙模拟器 [@yanyongyu](https://github.com/yanyongyu) ([#1802](https://github.com/nonebot/nonebot2/pull/1802))
 - Plugin: 发 6 [@yanyongyu](https://github.com/yanyongyu) ([#1798](https://github.com/nonebot/nonebot2/pull/1798))
