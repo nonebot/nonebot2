@@ -4800,5 +4800,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_unoconv",
+    "project_link": "nonebot-plugin-unoconv",
+    "name": "unoconv文件转换",
+    "desc": "基于unoconv的文件转换工具，支持输出pdf、doc、jpg等格式",
+    "author": "Zeta-qixi",
+    "homepage": "https://github.com/Zeta-qixi/nonebot-plugin-unoconv",
+    "tags": [
+      {
+        "label": "文件转换",
+        "color": "#ea5252"
+      },
+      {
+        "label": "pdf转换",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
