@@ -4781,5 +4781,24 @@
     "homepage": "https://github.com/noneplugin/nonebot-plugin-bracket",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_gshisbanner",
+    "project_link": "nonebot-plugin-gshisbanner",
+    "name": "原神历史卡池",
+    "desc": "原神历史卡池查询",
+    "author": "forchannot",
+    "homepage": "https://github.com/forchannot/nonebot-plugin-gshisbanner",
+    "tags": [
+      {
+        "label": "t:原神",
+        "color": "#ea5252"
+      },
+      {
+        "label": "卡池",
+        "color": "#52ea56"
+      }
+    ],
+    "is_official": false
   }
 ]
