@@ -4829,5 +4829,15 @@
     "homepage": "https://github.com/Windylh/nonebot_plugin_apexranklookup",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_randomnana",
+    "project_link": "nonebot-plugin-randomnana",
+    "name": "随机狗妈",
+    "desc": "随机抽取神乐七奈表情包图片",
+    "author": "NanakoOfficial",
+    "homepage": "https://github.com/NanakoOfficial/nonebot_plugin_randomnana",
+    "tags": [],
+    "is_official": false
   }
 ]
