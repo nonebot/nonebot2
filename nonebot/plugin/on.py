@@ -89,21 +89,12 @@ def on(
     return matcher
 
 
-def on_metaevent(
-    rule: Optional[Union[Rule, T_RuleChecker]] = None,
-    *,
-    handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
-    temp: bool = False,
-    expire_time: Optional[Union[datetime, timedelta]] = None,
-    priority: int = 1,
-    block: bool = False,
-    state: Optional[T_State] = None,
-    _depth: int = 0,
-) -> Type[Matcher]:
+def on_metaevent(*args, _depth: int = 0, **kwargs) -> Type[Matcher]:
     """注册一个元事件响应器。
 
     参数:
         rule: 事件响应规则
+        permission: 事件响应权限
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
         expire_time: 事件响应器最终有效时间点，过时即被删除
@@ -111,36 +102,10 @@ def on_metaevent(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
-    plugin_chain = _current_plugin_chain.get()
-    matcher = Matcher.new(
-        "meta_event",
-        Rule() & rule,
-        Permission(),
-        temp=temp,
-        expire_time=expire_time,
-        priority=priority,
-        block=block,
-        handlers=handlers,
-        plugin=plugin_chain[-1] if plugin_chain else None,
-        module=_get_matcher_module(_depth + 1),
-        default_state=state,
-    )
-    _store_matcher(matcher)
-    return matcher
+    return on("meta_event", *args, **kwargs, _depth=_depth + 1)
 
 
-def on_message(
-    rule: Optional[Union[Rule, T_RuleChecker]] = None,
-    permission: Optional[Union[Permission, T_PermissionChecker]] = None,
-    *,
-    handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
-    temp: bool = False,
-    expire_time: Optional[Union[datetime, timedelta]] = None,
-    priority: int = 1,
-    block: bool = True,
-    state: Optional[T_State] = None,
-    _depth: int = 0,
-) -> Type[Matcher]:
+def on_message(*args, _depth: int = 0, **kwargs) -> Type[Matcher]:
     """注册一个消息事件响应器。
 
     参数:
@@ -153,39 +118,15 @@ def on_message(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
-    plugin_chain = _current_plugin_chain.get()
-    matcher = Matcher.new(
-        "message",
-        Rule() & rule,
-        Permission() | permission,
-        temp=temp,
-        expire_time=expire_time,
-        priority=priority,
-        block=block,
-        handlers=handlers,
-        plugin=plugin_chain[-1] if plugin_chain else None,
-        module=_get_matcher_module(_depth + 1),
-        default_state=state,
-    )
-    _store_matcher(matcher)
-    return matcher
+    return on("message", *args, **kwargs, _depth=_depth + 1)
 
 
-def on_notice(
-    rule: Optional[Union[Rule, T_RuleChecker]] = None,
-    *,
-    handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
-    temp: bool = False,
-    expire_time: Optional[Union[datetime, timedelta]] = None,
-    priority: int = 1,
-    block: bool = False,
-    state: Optional[T_State] = None,
-    _depth: int = 0,
-) -> Type[Matcher]:
+def on_notice(*args, _depth: int = 0, **kwargs) -> Type[Matcher]:
     """注册一个通知事件响应器。
 
     参数:
         rule: 事件响应规则
+        permission: 事件响应权限
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
         expire_time: 事件响应器最终有效时间点，过时即被删除
@@ -193,39 +134,15 @@ def on_notice(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
-    plugin_chain = _current_plugin_chain.get()
-    matcher = Matcher.new(
-        "notice",
-        Rule() & rule,
-        Permission(),
-        temp=temp,
-        expire_time=expire_time,
-        priority=priority,
-        block=block,
-        handlers=handlers,
-        plugin=plugin_chain[-1] if plugin_chain else None,
-        module=_get_matcher_module(_depth + 1),
-        default_state=state,
-    )
-    _store_matcher(matcher)
-    return matcher
+    return on("notice", *args, **kwargs, _depth=_depth + 1)
 
 
-def on_request(
-    rule: Optional[Union[Rule, T_RuleChecker]] = None,
-    *,
-    handlers: Optional[List[Union[T_Handler, Dependent]]] = None,
-    temp: bool = False,
-    expire_time: Optional[Union[datetime, timedelta]] = None,
-    priority: int = 1,
-    block: bool = False,
-    state: Optional[T_State] = None,
-    _depth: int = 0,
-) -> Type[Matcher]:
+def on_request(*args, _depth: int = 0, **kwargs) -> Type[Matcher]:
     """注册一个请求事件响应器。
 
     参数:
         rule: 事件响应规则
+        permission: 事件响应权限
         handlers: 事件处理函数列表
         temp: 是否为临时事件响应器（仅执行一次）
         expire_time: 事件响应器最终有效时间点，过时即被删除
@@ -233,22 +150,7 @@ def on_request(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
-    plugin_chain = _current_plugin_chain.get()
-    matcher = Matcher.new(
-        "request",
-        Rule() & rule,
-        Permission(),
-        temp=temp,
-        expire_time=expire_time,
-        priority=priority,
-        block=block,
-        handlers=handlers,
-        plugin=plugin_chain[-1] if plugin_chain else None,
-        module=_get_matcher_module(_depth + 1),
-        default_state=state,
-    )
-    _store_matcher(matcher)
-    return matcher
+    return on("request", *args, **kwargs, _depth=_depth + 1)
 
 
 def on_startswith(
@@ -593,6 +495,7 @@ class MatcherGroup(_Group):
 
         参数:
             rule: 事件响应规则
+            permission: 事件响应权限
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
             expire_time: 事件响应器最终有效时间点，过时即被删除
@@ -628,6 +531,7 @@ class MatcherGroup(_Group):
 
         参数:
             rule: 事件响应规则
+            permission: 事件响应权限
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
             expire_time: 事件响应器最终有效时间点，过时即被删除
@@ -645,6 +549,7 @@ class MatcherGroup(_Group):
 
         参数:
             rule: 事件响应规则
+            permission: 事件响应权限
             handlers: 事件处理函数列表
             temp: 是否为临时事件响应器（仅执行一次）
             expire_time: 事件响应器最终有效时间点，过时即被删除

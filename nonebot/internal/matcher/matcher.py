@@ -1,5 +1,6 @@
 from types import ModuleType
 from contextvars import ContextVar
+from typing_extensions import Self
 from datetime import datetime, timedelta
 from contextlib import AsyncExitStack, contextmanager
 from typing import (
@@ -81,7 +82,7 @@ class MatcherMeta(type):
 
     def __repr__(self) -> str:
         return (
-            f"Matcher(type={self.type!r}"
+            f"{self.__name__}(type={self.type!r}"
             + (f", module={self.module_name}" if self.module_name else "")
             + ")"
         )
@@ -140,7 +141,7 @@ class Matcher(metaclass=MatcherMeta):
 
     def __repr__(self) -> str:
         return (
-            f"Matcher(type={self.type!r}"
+            f"{self.__class__.__name__}(type={self.type!r}"
             + (f", module={self.module_name}" if self.module_name else "")
             + ")"
         )
@@ -164,7 +165,7 @@ class Matcher(metaclass=MatcherMeta):
         default_permission_updater: Optional[
             Union[T_PermissionUpdater, Dependent[Permission]]
         ] = None,
-    ) -> Type["Matcher"]:
+    ) -> Type[Self]:
         """
         创建一个新的事件响应器，并存储至 `matchers <#matchers>`_
 
@@ -185,8 +186,8 @@ class Matcher(metaclass=MatcherMeta):
             Type[Matcher]: 新的事件响应器类
         """
         NewMatcher = type(
-            "Matcher",
-            (Matcher,),
+            cls.__name__,
+            (cls,),
             {
                 "plugin": plugin,
                 "module": module,
@@ -763,7 +764,7 @@ class Matcher(metaclass=MatcherMeta):
                 bot, event, stack, dependency_cache
             )
 
-            Matcher.new(
+            self.new(
                 type_,
                 Rule(),
                 permission,
@@ -784,7 +785,7 @@ class Matcher(metaclass=MatcherMeta):
                 bot, event, stack, dependency_cache
             )
 
-            Matcher.new(
+            self.new(
                 type_,
                 Rule(),
                 permission,
