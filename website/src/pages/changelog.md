@@ -39,6 +39,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 随机狗妈 [@yanyongyu](https://github.com/yanyongyu) ([#1813](https://github.com/nonebot/nonebot2/pull/1813))
 - Plugin: apex 信息查询 [@yanyongyu](https://github.com/yanyongyu) ([#1811](https://github.com/nonebot/nonebot2/pull/1811))
 - Plugin: unoconv 文件转换 [@yanyongyu](https://github.com/yanyongyu) ([#1809](https://github.com/nonebot/nonebot2/pull/1809))
 - Plugin: 原神历史卡池 [@yanyongyu](https://github.com/yanyongyu) ([#1806](https://github.com/nonebot/nonebot2/pull/1806))
