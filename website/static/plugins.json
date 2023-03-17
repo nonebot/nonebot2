@@ -4819,5 +4819,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_apexranklookup",
+    "project_link": "nonebot-plugin-apexranklookup",
+    "name": "apex信息查询",
+    "desc": "查询apex玩家信息、地图等信息",
+    "author": "Windylh",
+    "homepage": "https://github.com/Windylh/nonebot_plugin_apexranklookup",
+    "tags": [],
+    "is_official": false
   }
 ]
