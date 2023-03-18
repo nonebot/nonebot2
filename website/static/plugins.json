@@ -4858,5 +4858,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_memes_api",
+    "project_link": "nonebot-plugin-memes-api",
+    "name": "表情包制作（调用API版）",
+    "desc": "用于制作各种沙雕表情包，功能与 nonebot-plugin-memes 基本相同",
+    "author": "MeetWq",
+    "homepage": "https://github.com/noneplugin/nonebot-plugin-memes-api",
+    "tags": [],
+    "is_official": false
   }
 ]
