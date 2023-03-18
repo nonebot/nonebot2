@@ -4839,5 +4839,24 @@
     "homepage": "https://github.com/NanakoOfficial/nonebot_plugin_randomnana",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_quote",
+    "project_link": "nonebot-plugin-quote",
+    "name": "群聊语录库",
+    "desc": "一款QQ群语录库——支持上传聊天截图为语录，随机投放语录，关键词搜索语录精准投放",
+    "author": "RongRongJi",
+    "homepage": "https://github.com/RongRongJi/nonebot_plugin_quote",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#326bad"
+      },
+      {
+        "label": "t:语录",
+        "color": "#003f88"
+      }
+    ],
+    "is_official": false
   }
 ]
