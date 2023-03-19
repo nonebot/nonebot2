@@ -4868,5 +4868,24 @@
     "homepage": "https://github.com/noneplugin/nonebot-plugin-memes-api",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_rrc",
+    "project_link": "nonebot-plugin-rrc",
+    "name": "随机点名",
+    "desc": "就是群聊点名，让学生感受刺激",
+    "author": "QingMuCat",
+    "homepage": "https://github.com/QingMuCat/nonebot-plugin-rrc",
+    "tags": [
+      {
+        "label": "课堂",
+        "color": "#ea5252"
+      },
+      {
+        "label": "抽人",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
