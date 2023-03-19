@@ -4887,5 +4887,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_hotsearch",
+    "project_link": "nonebot-plugin-hotsearch",
+    "name": "多平台热搜获取插件",
+    "desc": "获取微博/百度/知乎/贴吧/b站的热搜信息",
+    "author": "Astolfocat",
+    "homepage": "https://github.com/Astolfocat/nonebot_plugin_hotsearch",
+    "tags": [],
+    "is_official": false
   }
 ]
