@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 移除内置响应规则事件类型限制 [@yanyongyu](https://github.com/yanyongyu) ([#1824](https://github.com/nonebot/nonebot2/pull/1824))
 - Feature: 允许继承和使用 Matcher 子类 [@yanyongyu](https://github.com/yanyongyu) ([#1815](https://github.com/nonebot/nonebot2/pull/1815))
 - Feature: 添加 `get_adapter` 类型 overload [@yanyongyu](https://github.com/yanyongyu) ([#1755](https://github.com/nonebot/nonebot2/pull/1755))
 - Feature: 命令匹配支持强制指定空白符 [@yanyongyu](https://github.com/yanyongyu) ([#1748](https://github.com/nonebot/nonebot2/pull/1748))
