@@ -55,6 +55,16 @@ DRIVER=~httpx+~websockets
 DRIVER=~fastapi+~httpx+~websockets
 ```
 
+## 获取驱动器
+
+在 NoneBot 框架初始化完成后，我们就可以通过 `get_driver()` 方法获取全局驱动器实例：
+
+```python
+from nonebot import get_driver
+
+driver = get_driver()
+```
+
 ## 内置驱动器
 
 ### None
