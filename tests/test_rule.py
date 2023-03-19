@@ -133,6 +133,7 @@ async def test_trie(app: App):
         ("prefix", False, "message", "fooprefix", False),
         ("prefix", False, "message", None, False),
         (("prefix", "foo"), False, "message", "fooprefix", True),
+        ("prefix", False, "notice", "prefix", True),
         ("prefix", False, "notice", "foo", False),
     ],
 )
@@ -172,6 +173,7 @@ async def test_startswith(
         ("suffix", False, "message", "suffixfoo", False),
         ("suffix", False, "message", None, False),
         (("suffix", "foo"), False, "message", "suffixfoo", True),
+        ("suffix", False, "notice", "suffix", True),
         ("suffix", False, "notice", "foo", False),
     ],
 )
@@ -211,6 +213,7 @@ async def test_endswith(
         ("fullmatch", False, "message", "_fullmatch_", False),
         ("fullmatch", False, "message", None, False),
         (("fullmatch", "foo"), False, "message", "fullmatchfoo", False),
+        ("fullmatch", False, "notice", "fullmatch", True),
         ("fullmatch", False, "notice", "foo", False),
     ],
 )
@@ -245,8 +248,9 @@ async def test_fullmatch(
         (("key",), "message", "_key_", True),
         (("key", "foo"), "message", "_foo_", True),
         (("key",), "message", None, False),
-        (("key",), "notice", "foo", False),
         (("key",), "message", "foo", False),
+        (("key",), "notice", "_key_", True),
+        (("key",), "notice", "foo", False),
     ],
 )
 async def test_keyword(
@@ -410,7 +414,8 @@ async def test_shell_command():
             {"key": "key1"},
         ),
         (r"foo", "message", None, False, None, None, None, None),
-        (r"foo", "notice", "foo", False, None, None, None, None),
+        (r"foo", "notice", "foo", True, None, None, None, None),
+        (r"foo", "notice", "bar", False, None, None, None, None),
     ],
 )
 async def test_regex(
