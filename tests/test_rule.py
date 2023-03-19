@@ -414,7 +414,7 @@ async def test_shell_command():
             {"key": "key1"},
         ),
         (r"foo", "message", None, False, None, None, None, None),
-        (r"foo", "notice", "foo", True, None, None, None, None),
+        (r"foo", "notice", "foo", True, "foo", "foo", tuple(), {}),
         (r"foo", "notice", "bar", False, None, None, None, None),
     ],
 )
