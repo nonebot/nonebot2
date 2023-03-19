@@ -21,7 +21,7 @@ from typing import (
 from nonebot.log import logger
 from nonebot.internal.rule import Rule
 from nonebot.dependencies import Dependent
-from nonebot.internal.permission import USER, User, Permission
+from nonebot.internal.permission import User, Permission
 from nonebot.internal.adapter import (
     Bot,
     Event,
@@ -682,12 +682,7 @@ class Matcher(metaclass=MatcherMeta):
                 stack=stack,
                 dependency_cache=dependency_cache,
             )
-        permission = self.permission
-        if len(permission.checkers) == 1 and isinstance(
-            user_perm := tuple(permission.checkers)[0].call, User
-        ):
-            permission = user_perm.perm
-        return USER(event.get_session_id(), perm=permission)
+        return Permission(User.from_event(event, perm=self.permission))
 
     async def resolve_reject(self):
         handler = current_handler.get()

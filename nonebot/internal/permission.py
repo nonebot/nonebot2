@@ -1,4 +1,5 @@
 import asyncio
+from typing_extensions import Self
 from contextlib import AsyncExitStack
 from typing import Set, Tuple, Union, NoReturn, Optional
 
@@ -139,6 +140,22 @@ class User:
         return bool(
             session in self.users and (self.perm is None or await self.perm(bot, event))
         )
+
+    @classmethod
+    def from_event(cls, event: Event, perm: Optional[Permission] = None) -> Self:
+        """从事件中获取会话 ID
+
+        参数:
+            event: Event 对象
+            perm: 需同时满足的权限
+        """
+        if (
+            perm
+            and len(perm.checkers) == 1
+            and isinstance(user_perm := tuple(perm.checkers)[0].call, cls)
+        ):
+            perm = user_perm.perm
+        return cls((event.get_session_id(),), perm)
 
 
 def USER(*users: str, perm: Optional[Permission] = None):
