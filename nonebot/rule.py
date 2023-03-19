@@ -164,8 +164,6 @@ class StartswithRule:
         return hash((frozenset(self.msg), self.ignorecase))
 
     async def __call__(self, event: Event, state: T_State) -> bool:
-        if event.get_type() != "message":
-            return False
         try:
             text = event.get_plaintext()
         except Exception:
@@ -221,8 +219,6 @@ class EndswithRule:
         return hash((frozenset(self.msg), self.ignorecase))
 
     async def __call__(self, event: Event, state: T_State) -> bool:
-        if event.get_type() != "message":
-            return False
         try:
             text = event.get_plaintext()
         except Exception:
@@ -278,8 +274,6 @@ class FullmatchRule:
         return hash((frozenset(self.msg), self.ignorecase))
 
     async def __call__(self, event: Event, state: T_State) -> bool:
-        if event.get_type() != "message":
-            return False
         try:
             text = event.get_plaintext()
         except Exception:
@@ -330,8 +324,6 @@ class KeywordsRule:
         return hash(frozenset(self.keywords))
 
     async def __call__(self, event: Event, state: T_State) -> bool:
-        if event.get_type() != "message":
-            return False
         try:
             text = event.get_plaintext()
         except Exception:
@@ -649,8 +641,6 @@ class RegexRule:
         return hash((self.regex, self.flags))
 
     async def __call__(self, event: Event, state: T_State) -> bool:
-        if event.get_type() != "message":
-            return False
         try:
             msg = event.get_message()
         except Exception:
