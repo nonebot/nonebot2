@@ -58,7 +58,7 @@ class Permission:
         stack: Optional[AsyncExitStack] = None,
         dependency_cache: Optional[T_DependencyCache] = None,
     ) -> bool:
-        """检查是否满足某个权限
+        """检查是否满足某个权限。
 
         参数:
             bot: Bot 对象
@@ -110,7 +110,7 @@ class Permission:
 
 
 class User:
-    """检查当前事件是否属于指定会话
+    """检查当前事件是否属于指定会话。
 
     参数:
         users: 会话 ID 元组
@@ -142,28 +142,46 @@ class User:
         )
 
     @classmethod
+    def _clean_permission(cls, perm: Permission) -> Optional[Permission]:
+        if len(perm.checkers) == 1 and isinstance(
+            user_perm := tuple(perm.checkers)[0].call, cls
+        ):
+            return user_perm.perm
+        return perm
+
+    @classmethod
     def from_event(cls, event: Event, perm: Optional[Permission] = None) -> Self:
-        """从事件中获取会话 ID
+        """从事件中获取会话 ID。
+
+        如果 `perm` 中仅有 `User` 类型的权限检查函数，则会去除原有的会话 ID 限制。
 
         参数:
             event: Event 对象
             perm: 需同时满足的权限
         """
-        if (
-            perm
-            and len(perm.checkers) == 1
-            and isinstance(user_perm := tuple(perm.checkers)[0].call, cls)
-        ):
-            perm = user_perm.perm
-        return cls((event.get_session_id(),), perm)
+        return cls((event.get_session_id(),), perm=perm and cls._clean_permission(perm))
+
+    @classmethod
+    def from_permission(cls, *users: str, perm: Optional[Permission] = None) -> Self:
+        """指定会话与权限。
+
+        如果 `perm` 中仅有 `User` 类型的权限检查函数，则会去除原有的会话 ID 限制。
+
+        参数:
+            users: 会话白名单
+            perm: 需同时满足的权限
+        """
+        return cls(users, perm=perm and cls._clean_permission(perm))
 
 
 def USER(*users: str, perm: Optional[Permission] = None):
-    """匹配当前事件属于指定会话
+    """匹配当前事件属于指定会话。
+
+    如果 `perm` 中仅有 `User` 类型的权限检查函数，则会去除原有检查函数的会话 ID 限制。
 
     参数:
         user: 会话白名单
         perm: 需要同时满足的权限
     """
 
-    return Permission(User(users, perm))
+    return Permission(User.from_permission(*users, perm=perm))
