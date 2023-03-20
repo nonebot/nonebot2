@@ -87,7 +87,6 @@ def test_message_add():
 
 
 def test_message_getitem():
-
     Message = make_fake_message()
     MessageSegment = Message.get_segment_class()
 
@@ -102,7 +101,7 @@ def test_message_getitem():
 
     assert message[0] == MessageSegment.text("test")
 
-    assert message[0:2] == Message(
+    assert message[:2] == Message(
         [MessageSegment.text("test"), MessageSegment.image("test2")]
     )
 

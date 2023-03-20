@@ -23,6 +23,7 @@ def on(
 ) -> Type[Matcher]: ...
 def on_metaevent(
     rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+    permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
     *,
     handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
     temp: bool = ...,
@@ -44,6 +45,7 @@ def on_message(
 ) -> Type[Matcher]: ...
 def on_notice(
     rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+    permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
     *,
     handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
     temp: bool = ...,
@@ -54,6 +56,7 @@ def on_notice(
 ) -> Type[Matcher]: ...
 def on_request(
     rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+    permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
     *,
     handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
     temp: bool = ...,
@@ -117,6 +120,7 @@ def on_command(
     cmd: Union[str, Tuple[str, ...]],
     rule: Optional[Union[Rule, T_RuleChecker]] = ...,
     aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
+    force_whitespace: Optional[Union[str, bool]] = ...,
     *,
     permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
     handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
@@ -186,6 +190,7 @@ class CommandGroup:
         *,
         rule: Optional[Union[Rule, T_RuleChecker]] = ...,
         aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
+        force_whitespace: Optional[Union[str, bool]] = ...,
         permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
         handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
         temp: bool = ...,
@@ -241,6 +246,7 @@ class MatcherGroup:
         self,
         *,
         rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+        permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
         handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
         temp: bool = ...,
         expire_time: Optional[Union[datetime, timedelta]] = ...,
@@ -264,6 +270,7 @@ class MatcherGroup:
         self,
         *,
         rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+        permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
         handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
         temp: bool = ...,
         expire_time: Optional[Union[datetime, timedelta]] = ...,
@@ -275,6 +282,7 @@ class MatcherGroup:
         self,
         *,
         rule: Optional[Union[Rule, T_RuleChecker]] = ...,
+        permission: Optional[Union[Permission, T_PermissionChecker]] = ...,
         handlers: Optional[List[Union[T_Handler, Dependent]]] = ...,
         temp: bool = ...,
         expire_time: Optional[Union[datetime, timedelta]] = ...,
@@ -341,6 +349,7 @@ class MatcherGroup:
         self,
         cmd: Union[str, Tuple[str, ...]],
         aliases: Optional[Set[Union[str, Tuple[str, ...]]]] = ...,
+        force_whitespace: Optional[Union[str, bool]] = ...,
         *,
         rule: Optional[Union[Rule, T_RuleChecker]] = ...,
         permission: Optional[Union[Permission, T_PermissionChecker]] = ...,

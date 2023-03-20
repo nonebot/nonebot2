@@ -2,7 +2,7 @@
   "name": "Default Linux Universal",
   "image": "mcr.microsoft.com/devcontainers/universal:2-linux",
   "features": {
-    "ghcr.io/devcontainers-contrib/features/poetry:1": {}
+    "ghcr.io/devcontainers-contrib/features/poetry:2": {}
   },
   "postCreateCommand": "poetry config virtualenvs.in-project true && poetry install -E all && poetry run pre-commit install && yarn install",
   "customizations": {

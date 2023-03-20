@@ -96,18 +96,20 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
 - 社区丰富：社区用户众多，直接和间接用户超过十万人，每天都有大量的活跃用户 ([社区资源](#社区资源))
 - 海纳百川：一个框架，支持多个聊天软件平台，可自定义通信协议
 
-  |                          协议名称                          | 状态 |                                注释                                |
-  | :--------------------------------------------------------: | :--: | :----------------------------------------------------------------: |
-  |             [OneBot 协议](https://onebot.dev/)             |  ✅  | 支持 QQ、TG、微信公众号等[平台](https://onebot.dev/ecosystem.html) |
-  |       [Telegram](https://core.telegram.org/bots/api)       |  ✅  |                                                                    |
-  |     [飞书](https://open.feishu.cn/document/home/index)     |  ✅  |                                                                    |
-  |    [GitHub](https://docs.github.com/en/developers/apps)    |  ✅  |                       GitHub APP & OAuth APP                       |
-  |           [QQ 频道](https://bot.q.qq.com/wiki/)            |  ✅  |                          官方接口调整较多                          |
-  |        [钉钉](https://open.dingtalk.com/document/)         |  🤗  |                          寻找 Maintainer                           |
-  |                          Console                           |  ✅  |                             控制台交互                             |
-  |          [开黑啦](https://developer.kookapp.cn/)           |  ↗️  |                             由社区贡献                             |
-  |   [Mirai](https://docs.mirai.mamoe.net/mirai-api-http/)    |  ↗️  |                             由社区贡献                             |
-  | [Ntchat](https://github.com/JustUndertaker/adapter-ntchat) |  ↗️  |                             由社区贡献                             |
+  |                                 协议名称                                  | 状态 |                                注释                                |
+  | :-----------------------------------------------------------------------: | :--: | :----------------------------------------------------------------: |
+  |                    [OneBot 协议](https://onebot.dev/)                     |  ✅  | 支持 QQ、TG、微信公众号等[平台](https://onebot.dev/ecosystem.html) |
+  |              [Telegram](https://core.telegram.org/bots/api)               |  ✅  |                                                                    |
+  |            [飞书](https://open.feishu.cn/document/home/index)             |  ✅  |                                                                    |
+  |           [GitHub](https://docs.github.com/en/developers/apps)            |  ✅  |                       GitHub APP & OAuth APP                       |
+  |                   [QQ 频道](https://bot.q.qq.com/wiki/)                   |  ✅  |                          官方接口调整较多                          |
+  |                [钉钉](https://open.dingtalk.com/document/)                |  🤗  |                          寻找 Maintainer                           |
+  |                                  Console                                  |  ✅  |                             控制台交互                             |
+  |                  [开黑啦](https://developer.kookapp.cn/)                  |  ↗️  |                             由社区贡献                             |
+  |           [Mirai](https://docs.mirai.mamoe.net/mirai-api-http/)           |  ↗️  |                             由社区贡献                             |
+  |        [Ntchat](https://github.com/JustUndertaker/adapter-ntchat)         |  ↗️  |                             由社区贡献                             |
+  | [MineCraft (Spigot)](https://github.com/17TheWord/nonebot-adapter-spigot) |  ↗️  |                             由社区贡献                             |
+  |        [BiliBili Live](https://github.com/wwweww/adapter-bilibili)        |  ↗️  |                             由社区贡献                             |
 
 - 坚实后盾：支持多种 web 框架，可自定义替换、组合
 
@@ -135,18 +137,29 @@ NoneBot2 不是 NoneBot1 的替代品。事实上，它们都在被积极的维�
 
 懒得看文档？下面是快速安装指南：
 
-1. (**强烈建议**)使用你喜欢的 Python 环境管理工具创建新的虚拟环境。
-
-2. 使用 `pip` (或其他) 安装 NoneBot 脚手架。
+1. 安装 [pipx](https://pypa.github.io/pipx/)
 
    ```bash
-   pip install nb-cli
+   python -m pip install --user pipx
+   python -m pipx ensurepath
+   ```
+
+2. 安装脚手架
+
+   ```bash
+   pipx install nb-cli
    ```
 
 3. 使用脚手架创建项目
 
    ```bash
    nb create
+   ```
+
+4. 运行项目
+
+   ```bash
+   nb run
    ```
 
 ## 社区资源

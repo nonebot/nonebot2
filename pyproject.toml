@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot2"
-version = "2.0.0rc2"
+version = "2.0.0rc3"
 description = "An asynchronous python bot framework."
 authors = ["yanyongyu <yyy@nonebot.dev>"]
 license = "MIT"
@@ -26,8 +26,8 @@ python = "^3.8"
 yarl = "^1.7.2"
 loguru = "^0.6.0"
 pygtrie = "^2.4.1"
-tomlkit = ">=0.10.0,<1.0.0"
-typing-extensions = ">=3.10.0,<5.0.0"
+typing-extensions = ">=4.0.0,<5.0.0"
+tomli = { version = "^2.0.1", python = "<3.11" }
 pydantic = { version = "^1.10.0", extras = ["dotenv"] }
 
 websockets = { version = "^10.0", optional = true }
@@ -40,18 +40,18 @@ uvicorn = { version = ">=0.20.0,<1.0.0", extras = ["standard"], optional = true 
 [tool.poetry.group.dev.dependencies]
 pycln = "^2.1.2"
 isort = "^5.10.1"
-black = "^22.1.0"
+black = "^23.1.0"
 nonemoji = "^0.1.2"
-pre-commit = "^2.16.0"
+pre-commit = "^3.0.0"
 
 [tool.poetry.group.test.dependencies]
+nonebug = "^0.3.0"
 pytest-cov = "^4.0.0"
 pytest-xdist = "^3.0.2"
 pytest-asyncio = "^0.20.0"
-nonebug = { git = "https://github.com/nonebot/nonebug.git" }
 
 [tool.poetry.group.docs.dependencies]
-nb-autodoc = { git = "https://github.com/nonebot/nb-autodoc.git" }
+nb-autodoc = "^1.0.0a5"
 
 [tool.poetry.extras]
 httpx = ["httpx"]
@@ -63,7 +63,7 @@ all = ["fastapi", "quart", "aiohttp", "httpx", "websockets", "uvicorn"]
 
 [tool.pytest.ini_options]
 asyncio_mode = "auto"
-addopts = "--cov=nonebot --cov-report=term-missing"
+addopts = "--cov=nonebot --cov-append --cov-report=term-missing"
 filterwarnings = [
     "error",
     "ignore::DeprecationWarning",

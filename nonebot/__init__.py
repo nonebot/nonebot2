@@ -38,23 +38,24 @@ FrontMatter:
 """
 
 import os
-import importlib
 from importlib.metadata import version
-from typing import Any, Dict, Type, Optional
+from typing import Any, Dict, Type, Union, TypeVar, Optional, overload
 
 import loguru
 from pydantic.env_settings import DotenvType
 
-from nonebot.adapters import Bot
-from nonebot.utils import escape_tag
 from nonebot.config import Env, Config
 from nonebot.log import logger as logger
+from nonebot.adapters import Bot, Adapter
+from nonebot.utils import escape_tag, resolve_dot_notation
 from nonebot.drivers import Driver, ReverseDriver, combine_driver
 
 try:
     __version__ = version("nonebot2")
 except Exception:  # pragma: no cover
     __version__ = None
+
+A = TypeVar("A", bound=Adapter)
 
 _driver: Optional[Driver] = None
 
@@ -78,6 +79,56 @@ def get_driver() -> Driver:
     if _driver is None:
         raise ValueError("NoneBot has not been initialized.")
     return _driver
+
+
+@overload
+def get_adapter(name: str) -> Adapter:
+    ...
+
+
+@overload
+def get_adapter(name: Type[A]) -> A:
+    ...
+
+
+def get_adapter(name: Union[str, Type[Adapter]]) -> Adapter:
+    """获取已注册的 {ref}`nonebot.adapters.Adapter` 实例。
+
+    返回:
+        指定名称或类型的 {ref}`nonebot.adapters.Adapter` 对象
+
+    异常:
+        ValueError: 指定的 {ref}`nonebot.adapters.Adapter` 未注册
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
+
+    用法:
+        ```python
+        from nonebot.adapters.console import Adapter
+        adapter = nonebot.get_adapter(Adapter)
+        ```
+    """
+    adapters = get_adapters()
+    target = name if isinstance(name, str) else name.get_name()
+    if target not in adapters:
+        raise ValueError(f"Adapter {target} not registered.")
+    return adapters[target]
+
+
+def get_adapters() -> Dict[str, Adapter]:
+    """获取所有已注册的 {ref}`nonebot.adapters.Adapter` 实例。
+
+    返回:
+        所有 {ref}`nonebot.adapters.Adapter` 实例字典
+
+    异常:
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
+
+    用法:
+        ```python
+        adapters = nonebot.get_adapters()
+        ```
+    """
+    return get_driver()._adapters.copy()
 
 
 def get_app() -> Any:
@@ -175,31 +226,16 @@ def get_bots() -> Dict[str, Bot]:
     return get_driver().bots
 
 
-def _resolve_dot_notation(
-    obj_str: str, default_attr: str, default_prefix: Optional[str] = None
-) -> Any:
-    modulename, _, cls = obj_str.partition(":")
-    if default_prefix is not None and modulename.startswith("~"):
-        modulename = default_prefix + modulename[1:]
-    module = importlib.import_module(modulename)
-    if not cls:
-        return getattr(module, default_attr)
-    instance = module
-    for attr_str in cls.split("."):
-        instance = getattr(instance, attr_str)
-    return instance
-
-
 def _resolve_combine_expr(obj_str: str) -> Type[Driver]:
     drivers = obj_str.split("+")
-    DriverClass = _resolve_dot_notation(
+    DriverClass = resolve_dot_notation(
         drivers[0], "Driver", default_prefix="nonebot.drivers."
     )
     if len(drivers) == 1:
         logger.trace(f"Detected driver {DriverClass} with no mixins.")
         return DriverClass
     mixins = [
-        _resolve_dot_notation(mixin, "Mixin", default_prefix="nonebot.drivers.")
+        resolve_dot_notation(mixin, "Mixin", default_prefix="nonebot.drivers.")
         for mixin in drivers[1:]
     ]
     logger.trace(f"Detected driver {DriverClass} with mixins {mixins}.")

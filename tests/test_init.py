@@ -1,30 +1,25 @@
-import os
-
 import pytest
+from nonebug import App
 
-os.environ["CONFIG_FROM_ENV"] = '{"test": "test"}'
-os.environ["CONFIG_OVERRIDE"] = "new"
+import nonebot
+from nonebot.drivers import Driver, ReverseDriver
+from nonebot import (
+    get_app,
+    get_bot,
+    get_asgi,
+    get_bots,
+    get_driver,
+    get_adapter,
+    get_adapters,
+)
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize(
-    "nonebug_init",
-    [
-        {
-            "config_from_init": "init",
-            "driver": "~fastapi+~httpx+~websockets",
-        },
-        {"config_from_init": "init", "driver": "~fastapi+~aiohttp"},
-    ],
-    indirect=True,
-)
-async def test_init(nonebug_init):
-    from nonebot import get_driver
-
-    env = get_driver().env
+async def test_init():
+    env = nonebot.get_driver().env
     assert env == "test"
 
-    config = get_driver().config
+    config = nonebot.get_driver().config
     assert config.config_from_env == {"test": "test"}
     assert config.config_override == "new"
     assert config.config_from_init == "init"
@@ -36,20 +31,28 @@ async def test_init(nonebug_init):
 
 
 @pytest.mark.asyncio
-async def test_get(monkeypatch: pytest.MonkeyPatch, nonebug_clear):
-    import nonebot
-    from nonebot.drivers import ForwardDriver, ReverseDriver
-    from nonebot import get_app, get_bot, get_asgi, get_bots, get_driver
-
-    with pytest.raises(ValueError):
-        get_driver()
-
-    nonebot.init(driver="nonebot.drivers.fastapi")
+async def test_get(app: App, monkeypatch: pytest.MonkeyPatch):
+    with monkeypatch.context() as m:
+        m.setattr(nonebot, "_driver", None)
+        with pytest.raises(ValueError):
+            get_driver()
 
     driver = get_driver()
     assert isinstance(driver, ReverseDriver)
     assert get_asgi() == driver.asgi
     assert get_app() == driver.server_app
+
+    async with app.test_api() as ctx:
+        adapter = ctx.create_adapter()
+        adapter_name = adapter.get_name()
+
+        with monkeypatch.context() as m:
+            m.setattr(Driver, "_adapters", {adapter_name: adapter})
+            assert get_adapters() == {adapter_name: adapter}
+            assert get_adapter(adapter_name) is adapter
+            assert get_adapter(adapter.__class__) is adapter
+            with pytest.raises(ValueError):
+                get_adapter("not exist")
 
     runned = False
 

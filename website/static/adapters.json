@@ -113,5 +113,30 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot.adapters.spigot",
+    "project_link": "nonebot-adapter-spigot",
+    "name": "Spigot",
+    "desc": "MineCraft通信适配",
+    "author": "17TheWord",
+    "homepage": "https://github.com/17TheWord/nonebot-adapter-spigot",
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#4ef0ea"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot.adapters.bilibili",
+    "project_link": "nonebot-adapter-bilibili",
+    "name": "BilibiliLive",
+    "desc": "b站直播间ws协议",
+    "author": "wwweww",
+    "homepage": "https://github.com/wwweww/adapter-bilibili",
+    "tags": [],
+    "is_official": false
   }
 ]

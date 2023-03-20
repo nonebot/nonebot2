@@ -1,13 +1,15 @@
 import pytest
 from nonebug import App
 
+from utils import make_fake_event, make_fake_message
+
 
 @pytest.mark.asyncio
-async def test_weather(app: App, load_example):
+async def test_weather(app: App):
     from examples.weather import weather
-    from utils import make_fake_event, make_fake_message
 
     # 将此处的 make_fake_message() 替换为你要发送的平台消息 Message 类型
+    # from nonebot.adapters.console import Message
     Message = make_fake_message()
 
     async with app.test_matcher(weather) as ctx:
@@ -15,6 +17,8 @@ async def test_weather(app: App, load_example):
 
         msg = Message("/天气 上海")
         # 将此处的 make_fake_event() 替换为你要发送的平台事件 Event 类型
+        # from nonebot.adapters.console import MessageEvent
+        # event = MessageEvent(message=msg, to_me=True, ...)
         event = make_fake_event(_message=msg, _to_me=True)()
 
         ctx.receive_event(bot, event)

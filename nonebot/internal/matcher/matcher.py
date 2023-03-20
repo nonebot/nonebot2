@@ -1,5 +1,6 @@
 from types import ModuleType
 from contextvars import ContextVar
+from typing_extensions import Self
 from datetime import datetime, timedelta
 from contextlib import AsyncExitStack, contextmanager
 from typing import (
@@ -10,6 +11,7 @@ from typing import (
     Union,
     TypeVar,
     Callable,
+    ClassVar,
     Iterable,
     NoReturn,
     Optional,
@@ -19,7 +21,7 @@ from typing import (
 from nonebot.log import logger
 from nonebot.internal.rule import Rule
 from nonebot.dependencies import Dependent
-from nonebot.internal.permission import USER, User, Permission
+from nonebot.internal.permission import User, Permission
 from nonebot.internal.adapter import (
     Bot,
     Event,
@@ -80,7 +82,7 @@ class MatcherMeta(type):
 
     def __repr__(self) -> str:
         return (
-            f"Matcher(type={self.type!r}"
+            f"{self.__name__}(type={self.type!r}"
             + (f", module={self.module_name}" if self.module_name else "")
             + ")"
         )
@@ -89,38 +91,38 @@ class MatcherMeta(type):
 class Matcher(metaclass=MatcherMeta):
     """事件响应器类"""
 
-    plugin: Optional["Plugin"] = None
+    plugin: ClassVar[Optional["Plugin"]] = None
     """事件响应器所在插件"""
-    module: Optional[ModuleType] = None
+    module: ClassVar[Optional[ModuleType]] = None
     """事件响应器所在插件模块"""
-    plugin_name: Optional[str] = None
+    plugin_name: ClassVar[Optional[str]] = None
     """事件响应器所在插件名"""
-    module_name: Optional[str] = None
+    module_name: ClassVar[Optional[str]] = None
     """事件响应器所在点分割插件模块路径"""
 
-    type: str = ""
+    type: ClassVar[str] = ""
     """事件响应器类型"""
-    rule: Rule = Rule()
+    rule: ClassVar[Rule] = Rule()
     """事件响应器匹配规则"""
-    permission: Permission = Permission()
+    permission: ClassVar[Permission] = Permission()
     """事件响应器触发权限"""
     handlers: List[Dependent[Any]] = []
     """事件响应器拥有的事件处理函数列表"""
-    priority: int = 1
+    priority: ClassVar[int] = 1
     """事件响应器优先级"""
     block: bool = False
     """事件响应器是否阻止事件传播"""
-    temp: bool = False
+    temp: ClassVar[bool] = False
     """事件响应器是否为临时"""
-    expire_time: Optional[datetime] = None
+    expire_time: ClassVar[Optional[datetime]] = None
     """事件响应器过期时间点"""
 
-    _default_state: T_State = {}
+    _default_state: ClassVar[T_State] = {}
     """事件响应器默认状态"""
 
-    _default_type_updater: Optional[Dependent[str]] = None
+    _default_type_updater: ClassVar[Optional[Dependent[str]]] = None
     """事件响应器类型更新函数"""
-    _default_permission_updater: Optional[Dependent[Permission]] = None
+    _default_permission_updater: ClassVar[Optional[Dependent[Permission]]] = None
     """事件响应器权限更新函数"""
 
     HANDLER_PARAM_TYPES = (
@@ -139,7 +141,7 @@ class Matcher(metaclass=MatcherMeta):
 
     def __repr__(self) -> str:
         return (
-            f"Matcher(type={self.type!r}"
+            f"{self.__class__.__name__}(type={self.type!r}"
             + (f", module={self.module_name}" if self.module_name else "")
             + ")"
         )
@@ -163,7 +165,7 @@ class Matcher(metaclass=MatcherMeta):
         default_permission_updater: Optional[
             Union[T_PermissionUpdater, Dependent[Permission]]
         ] = None,
-    ) -> Type["Matcher"]:
+    ) -> Type[Self]:
         """
         创建一个新的事件响应器，并存储至 `matchers <#matchers>`_
 
@@ -184,8 +186,8 @@ class Matcher(metaclass=MatcherMeta):
             Type[Matcher]: 新的事件响应器类
         """
         NewMatcher = type(
-            "Matcher",
-            (Matcher,),
+            cls.__name__,
+            (cls,),
             {
                 "plugin": plugin,
                 "module": module,
@@ -377,7 +379,6 @@ class Matcher(metaclass=MatcherMeta):
         _parameterless = (Depends(_receive), *(parameterless or tuple()))
 
         def _decorator(func: T_Handler) -> T_Handler:
-
             if cls.handlers and cls.handlers[-1].call is func:
                 func_handler = cls.handlers[-1]
                 new_handler = Dependent(
@@ -425,7 +426,6 @@ class Matcher(metaclass=MatcherMeta):
         _parameterless = (Depends(_key_getter), *(parameterless or tuple()))
 
         def _decorator(func: T_Handler) -> T_Handler:
-
             if cls.handlers and cls.handlers[-1].call is func:
                 func_handler = cls.handlers[-1]
                 new_handler = Dependent(
@@ -645,23 +645,44 @@ class Matcher(metaclass=MatcherMeta):
         """阻止事件传播"""
         self.block = True
 
-    async def update_type(self, bot: Bot, event: Event) -> str:
+    async def update_type(
+        self,
+        bot: Bot,
+        event: Event,
+        stack: Optional[AsyncExitStack] = None,
+        dependency_cache: Optional[T_DependencyCache] = None,
+    ) -> str:
         updater = self.__class__._default_type_updater
         return (
-            await updater(bot=bot, event=event, state=self.state, matcher=self)
+            await updater(
+                bot=bot,
+                event=event,
+                state=self.state,
+                matcher=self,
+                stack=stack,
+                dependency_cache=dependency_cache,
+            )
             if updater
             else "message"
         )
 
-    async def update_permission(self, bot: Bot, event: Event) -> Permission:
+    async def update_permission(
+        self,
+        bot: Bot,
+        event: Event,
+        stack: Optional[AsyncExitStack] = None,
+        dependency_cache: Optional[T_DependencyCache] = None,
+    ) -> Permission:
         if updater := self.__class__._default_permission_updater:
-            return await updater(bot=bot, event=event, state=self.state, matcher=self)
-        permission = self.permission
-        if len(permission.checkers) == 1 and isinstance(
-            user_perm := tuple(permission.checkers)[0].call, User
-        ):
-            permission = user_perm.perm
-        return USER(event.get_session_id(), perm=permission)
+            return await updater(
+                bot=bot,
+                event=event,
+                state=self.state,
+                matcher=self,
+                stack=stack,
+                dependency_cache=dependency_cache,
+            )
+        return Permission(User.from_event(event, perm=self.permission))
 
     async def resolve_reject(self):
         handler = current_handler.get()
@@ -733,10 +754,12 @@ class Matcher(metaclass=MatcherMeta):
 
         except RejectedException:
             await self.resolve_reject()
-            type_ = await self.update_type(bot, event)
-            permission = await self.update_permission(bot, event)
+            type_ = await self.update_type(bot, event, stack, dependency_cache)
+            permission = await self.update_permission(
+                bot, event, stack, dependency_cache
+            )
 
-            Matcher.new(
+            self.new(
                 type_,
                 Rule(),
                 permission,
@@ -752,10 +775,12 @@ class Matcher(metaclass=MatcherMeta):
                 default_permission_updater=self.__class__._default_permission_updater,
             )
         except PausedException:
-            type_ = await self.update_type(bot, event)
-            permission = await self.update_permission(bot, event)
+            type_ = await self.update_type(bot, event, stack, dependency_cache)
+            permission = await self.update_permission(
+                bot, event, stack, dependency_cache
+            )
 
-            Matcher.new(
+            self.new(
                 type_,
                 Rule(),
                 permission,

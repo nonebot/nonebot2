@@ -1,12 +1,41 @@
 import pytest
 from nonebug import App
 
+from nonebot.matcher import Matcher
+from nonebot.exception import TypeMisMatch
 from utils import make_fake_event, make_fake_message
+from nonebot.params import (
+    ArgParam,
+    BotParam,
+    EventParam,
+    StateParam,
+    DependParam,
+    DefaultParam,
+    MatcherParam,
+    ExceptionParam,
+)
+from nonebot.consts import (
+    CMD_KEY,
+    REGEX_STR,
+    PREFIX_KEY,
+    REGEX_DICT,
+    SHELL_ARGS,
+    SHELL_ARGV,
+    CMD_ARG_KEY,
+    KEYWORD_KEY,
+    RAW_CMD_KEY,
+    REGEX_GROUP,
+    ENDSWITH_KEY,
+    CMD_START_KEY,
+    FULLMATCH_KEY,
+    REGEX_MATCHED,
+    STARTSWITH_KEY,
+    CMD_WHITESPACE_KEY,
+)
 
 
 @pytest.mark.asyncio
-async def test_depend(app: App, load_plugin):
-    from nonebot.params import DependParam
+async def test_depend(app: App):
     from plugins.param.param_depend import (
         ClassDependency,
         runned,
@@ -29,14 +58,14 @@ async def test_depend(app: App, load_plugin):
 
     assert len(runned) == 2 and runned[0] == runned[1] == 1
 
+    runned.clear()
+
     async with app.test_dependent(class_depend, allow_types=[DependParam]) as ctx:
         ctx.should_return(ClassDependency(x=1, y=2))
 
 
 @pytest.mark.asyncio
-async def test_bot(app: App, load_plugin):
-    from nonebot.params import BotParam
-    from nonebot.exception import TypeMisMatch
+async def test_bot(app: App):
     from plugins.param.param_bot import (
         FooBot,
         get_bot,
@@ -82,9 +111,7 @@ async def test_bot(app: App, load_plugin):
 
 
 @pytest.mark.asyncio
-async def test_event(app: App, load_plugin):
-    from nonebot.exception import TypeMisMatch
-    from nonebot.params import EventParam, DependParam
+async def test_event(app: App):
     from plugins.param.param_event import (
         FooEvent,
         event,
@@ -159,25 +186,7 @@ async def test_event(app: App, load_plugin):
 
 
 @pytest.mark.asyncio
-async def test_state(app: App, load_plugin):
-    from nonebot.params import StateParam, DependParam
-    from nonebot.consts import (
-        CMD_KEY,
-        REGEX_STR,
-        PREFIX_KEY,
-        REGEX_DICT,
-        SHELL_ARGS,
-        SHELL_ARGV,
-        CMD_ARG_KEY,
-        KEYWORD_KEY,
-        RAW_CMD_KEY,
-        REGEX_GROUP,
-        ENDSWITH_KEY,
-        CMD_START_KEY,
-        FULLMATCH_KEY,
-        REGEX_MATCHED,
-        STARTSWITH_KEY,
-    )
+async def test_state(app: App):
     from plugins.param.param_state import (
         state,
         command,
@@ -194,6 +203,7 @@ async def test_state(app: App, load_plugin):
         command_start,
         regex_matched,
         not_legacy_state,
+        command_whitespace,
         shell_command_args,
         shell_command_argv,
     )
@@ -205,6 +215,7 @@ async def test_state(app: App, load_plugin):
             RAW_CMD_KEY: "/cmd",
             CMD_START_KEY: "/",
             CMD_ARG_KEY: fake_message,
+            CMD_WHITESPACE_KEY: " ",
         },
         SHELL_ARGV: ["-h"],
         SHELL_ARGS: {"help": True},
@@ -255,6 +266,12 @@ async def test_state(app: App, load_plugin):
     ) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state[PREFIX_KEY][CMD_START_KEY])
+
+    async with app.test_dependent(
+        command_whitespace, allow_types=[StateParam, DependParam]
+    ) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state[PREFIX_KEY][CMD_WHITESPACE_KEY])
 
     async with app.test_dependent(
         shell_command_argv, allow_types=[StateParam, DependParam]
@@ -318,9 +335,7 @@ async def test_state(app: App, load_plugin):
 
 
 @pytest.mark.asyncio
-async def test_matcher(app: App, load_plugin):
-    from nonebot.matcher import Matcher
-    from nonebot.params import DependParam, MatcherParam
+async def test_matcher(app: App):
     from plugins.param.param_matcher import matcher, receive, last_receive
 
     fake_matcher = Matcher()
@@ -348,9 +363,7 @@ async def test_matcher(app: App, load_plugin):
 
 
 @pytest.mark.asyncio
-async def test_arg(app: App, load_plugin):
-    from nonebot.matcher import Matcher
-    from nonebot.params import ArgParam
+async def test_arg(app: App):
     from plugins.param.param_arg import arg, arg_str, arg_plain_text
 
     matcher = Matcher()
@@ -371,8 +384,7 @@ async def test_arg(app: App, load_plugin):
 
 
 @pytest.mark.asyncio
-async def test_exception(app: App, load_plugin):
-    from nonebot.params import ExceptionParam
+async def test_exception(app: App):
     from plugins.param.param_exception import exc
 
     exception = ValueError("test")
@@ -382,8 +394,7 @@ async def test_exception(app: App, load_plugin):
 
 
 @pytest.mark.asyncio
-async def test_default(app: App, load_plugin):
-    from nonebot.params import DefaultParam
+async def test_default(app: App):
     from plugins.param.param_default import default
 
     async with app.test_dependent(default, allow_types=[DefaultParam]) as ctx:

@@ -14,7 +14,7 @@ from ipaddress import IPv4Address
 from typing import TYPE_CHECKING, Any, Set, Dict, Tuple, Union, Mapping, Optional
 
 from pydantic.utils import deep_update
-from pydantic import Extra, BaseSettings, IPvAnyAddress
+from pydantic import Extra, Field, BaseSettings, IPvAnyAddress
 from pydantic.env_settings import (
     DotenvType,
     SettingsError,
@@ -173,7 +173,7 @@ class Config(BaseConfig):
     """
     host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
     """NoneBot {ref}`nonebot.drivers.ReverseDriver` 服务端监听的 IP/主机名。"""
-    port: int = 8080
+    port: int = Field(default=8080, ge=1, le=65535)
     """NoneBot {ref}`nonebot.drivers.ReverseDriver` 服务端监听的端口。"""
     log_level: Union[int, str] = "INFO"
     """NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称

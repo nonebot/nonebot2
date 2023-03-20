@@ -1,6 +1,6 @@
 import abc
 import asyncio
-from contextlib import asynccontextmanager
+from contextlib import AsyncExitStack, asynccontextmanager
 from typing import TYPE_CHECKING, Any, Set, Dict, Type, Callable, AsyncGenerator
 
 from nonebot.log import logger
@@ -8,8 +8,12 @@ from nonebot.config import Env, Config
 from nonebot.dependencies import Dependent
 from nonebot.exception import SkippedException
 from nonebot.utils import escape_tag, run_coro_with_catch
-from nonebot.typing import T_BotConnectionHook, T_BotDisconnectionHook
 from nonebot.internal.params import BotParam, DependParam, DefaultParam
+from nonebot.typing import (
+    T_DependencyCache,
+    T_BotConnectionHook,
+    T_BotDisconnectionHook,
+)
 
 from .model import Request, Response, WebSocket, HTTPServerSetup, WebSocketServerSetup
 
@@ -135,20 +139,22 @@ class Driver(abc.ABC):
         self._bots[bot.self_id] = bot
 
         async def _run_hook(bot: "Bot") -> None:
-            coros = list(
-                map(
-                    lambda x: run_coro_with_catch(x(bot=bot), (SkippedException,)),
-                    self._bot_connection_hook,
-                )
-            )
-            if coros:
-                try:
-                    await asyncio.gather(*coros)
-                except Exception as e:
-                    logger.opt(colors=True, exception=e).error(
-                        "<r><bg #f8bbd0>Error when running WebSocketConnection hook. "
-                        "Running cancelled!</bg #f8bbd0></r>"
+            dependency_cache: T_DependencyCache = {}
+            async with AsyncExitStack() as stack:
+                if coros := [
+                    run_coro_with_catch(
+                        hook(bot=bot, stack=stack, dependency_cache=dependency_cache),
+                        (SkippedException,),
                     )
+                    for hook in self._bot_connection_hook
+                ]:
+                    try:
+                        await asyncio.gather(*coros)
+                    except Exception as e:
+                        logger.opt(colors=True, exception=e).error(
+                            "<r><bg #f8bbd0>Error when running WebSocketConnection hook. "
+                            "Running cancelled!</bg #f8bbd0></r>"
+                        )
 
         asyncio.create_task(_run_hook(bot))
 
@@ -158,20 +164,22 @@ class Driver(abc.ABC):
             del self._bots[bot.self_id]
 
         async def _run_hook(bot: "Bot") -> None:
-            coros = list(
-                map(
-                    lambda x: run_coro_with_catch(x(bot=bot), (SkippedException,)),
-                    self._bot_disconnection_hook,
-                )
-            )
-            if coros:
-                try:
-                    await asyncio.gather(*coros)
-                except Exception as e:
-                    logger.opt(colors=True, exception=e).error(
-                        "<r><bg #f8bbd0>Error when running WebSocketDisConnection hook. "
-                        "Running cancelled!</bg #f8bbd0></r>"
+            dependency_cache: T_DependencyCache = {}
+            async with AsyncExitStack() as stack:
+                if coros := [
+                    run_coro_with_catch(
+                        hook(bot=bot, stack=stack, dependency_cache=dependency_cache),
+                        (SkippedException,),
                     )
+                    for hook in self._bot_disconnection_hook
+                ]:
+                    try:
+                        await asyncio.gather(*coros)
+                    except Exception as e:
+                        logger.opt(colors=True, exception=e).error(
+                            "<r><bg #f8bbd0>Error when running WebSocketDisConnection hook. "
+                            "Running cancelled!</bg #f8bbd0></r>"
+                        )
 
         asyncio.create_task(_run_hook(bot))
 
