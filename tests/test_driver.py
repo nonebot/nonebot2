@@ -7,6 +7,8 @@ from nonebug import App
 
 import nonebot
 from nonebot.config import Env
+from nonebot.adapters import Bot
+from nonebot.params import Depends
 from nonebot import _resolve_combine_expr
 from nonebot.dependencies import Dependent
 from nonebot.exception import WebSocketClosed
@@ -182,16 +184,42 @@ async def test_bot_connect_hook(app: App, driver: Driver):
 
         conn_should_be_called = False
         disconn_should_be_called = False
+        dependency_should_be_run = False
+        dependency_should_be_cleaned = False
+
+        async def dependency():
+            nonlocal dependency_should_be_run, dependency_should_be_cleaned
+            dependency_should_be_run = True
+            try:
+                yield 1
+            finally:
+                dependency_should_be_cleaned = True
 
         @driver.on_bot_connect
-        async def conn_hook():
+        async def conn_hook(foo: Bot, dep: int = Depends(dependency), default: int = 1):
             nonlocal conn_should_be_called
             conn_should_be_called = True
 
+            if foo is not bot:
+                pytest.fail("on_bot_connect hook called with wrong bot")
+            if dep != 1:
+                pytest.fail("on_bot_connect hook called with wrong dependency")
+            if default != 1:
+                pytest.fail("on_bot_connect hook called with wrong default value")
+
         @driver.on_bot_disconnect
-        async def disconn_hook():
+        async def disconn_hook(
+            foo: Bot, dep: int = Depends(dependency), default: int = 1
+        ):
             nonlocal disconn_should_be_called
             disconn_should_be_called = True
+
+            if foo is not bot:
+                pytest.fail("on_bot_disconnect hook called with wrong bot")
+            if dep != 1:
+                pytest.fail("on_bot_connect hook called with wrong dependency")
+            if default != 1:
+                pytest.fail("on_bot_connect hook called with wrong default value")
 
         if conn_hook not in {hook.call for hook in conn_hooks}:
             pytest.fail("on_bot_connect hook not registered")
@@ -199,10 +227,14 @@ async def test_bot_connect_hook(app: App, driver: Driver):
             pytest.fail("on_bot_disconnect hook not registered")
 
         async with app.test_api() as ctx:
-            ctx.create_bot()
+            bot = ctx.create_bot()
 
         await asyncio.sleep(1)
         if not conn_should_be_called:
             pytest.fail("on_bot_connect hook not called")
         if not disconn_should_be_called:
             pytest.fail("on_bot_disconnect hook not called")
+        if not dependency_should_be_run:
+            pytest.fail("dependency not run")
+        if not dependency_should_be_cleaned:
+            pytest.fail("dependency not cleaned")
