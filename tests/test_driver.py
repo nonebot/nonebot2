@@ -1,6 +1,6 @@
 import json
 import asyncio
-from typing import cast
+from typing import Any, Set, cast
 
 import pytest
 from nonebug import App
@@ -8,6 +8,7 @@ from nonebug import App
 import nonebot
 from nonebot.config import Env
 from nonebot import _resolve_combine_expr
+from nonebot.dependencies import Dependent
 from nonebot.exception import WebSocketClosed
 from nonebot.drivers import (
     URL,
@@ -174,8 +175,8 @@ async def test_combine_driver(driver: Driver, driver_type: str):
 @pytest.mark.asyncio
 async def test_bot_connect_hook(app: App, driver: Driver):
     with pytest.MonkeyPatch.context() as m:
-        conn_hooks = set()
-        disconn_hooks = set()
+        conn_hooks: Set[Dependent[Any]] = set()
+        disconn_hooks: Set[Dependent[Any]] = set()
         m.setattr(Driver, "_bot_connection_hook", conn_hooks)
         m.setattr(Driver, "_bot_disconnection_hook", disconn_hooks)
 
@@ -192,14 +193,15 @@ async def test_bot_connect_hook(app: App, driver: Driver):
             nonlocal disconn_should_be_called
             disconn_should_be_called = True
 
-        if conn_hook not in conn_hooks:
+        if conn_hook not in {hook.call for hook in conn_hooks}:
             pytest.fail("on_bot_connect hook not registered")
-        if disconn_hook not in disconn_hooks:
+        if disconn_hook not in {hook.call for hook in disconn_hooks}:
             pytest.fail("on_bot_disconnect hook not registered")
 
         async with app.test_api() as ctx:
             ctx.create_bot()
 
+        await asyncio.sleep(1)
         if not conn_should_be_called:
             pytest.fail("on_bot_connect hook not called")
         if not disconn_should_be_called:
