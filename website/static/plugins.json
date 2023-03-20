@@ -4897,5 +4897,24 @@
     "homepage": "https://github.com/Astolfocat/nonebot_plugin_hotsearch",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ai_interviewer",
+    "project_link": "nonebot-plugin-ai-interviewer",
+    "name": "基于OpenAI的AI模拟面试官",
+    "desc": "本插件基于OpenAI的API开发，在nonebot框架下实现一个聊天式的可自定义面试职位的AI辅助面试官。",
+    "author": "Alpaca4610",
+    "homepage": "https://github.com/Alpaca4610/nonebot-plugin-ai-interviewer",
+    "tags": [
+      {
+        "label": "ChatGPT",
+        "color": "#4366eb"
+      },
+      {
+        "label": "模拟面试",
+        "color": "#af286f"
+      }
+    ],
+    "is_official": false
   }
 ]
