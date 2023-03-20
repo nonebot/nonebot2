@@ -24,25 +24,25 @@ options:
 
 驱动器的类型有两种：
 
-- `ForwardDriver`：即客户端类型驱动器，多用于使用 HTTP 轮询，WebSocket 连接服务器等情形。
-- `ReverseDriver`：即服务端类型驱动器，多用于使用 WebHook，接收 WebSocket 客户端连接等情形。
+- `ForwardDriver`：即客户端型驱动器，多用于使用 HTTP 轮询，连接 WebSocket 服务器等情形。
+- `ReverseDriver`：即服务端型驱动器，多用于使用 WebHook，接收 WebSocket 客户端连接等情形。
 
-客户端类型驱动器具有以下两种功能：
+客户端型驱动器具有以下两种功能：
 
 1. 异步发送 HTTP 请求，自定义 `HTTP Method`、`URL`、`Header`、`Body`、`Cookie`、`Proxy`、`Timeout` 等。
 2. 异步建立 WebSocket 连接上下文，自定义 `WebSocket URL`、`Header`、`Cookie`、`Proxy`、`Timeout` 等。
 
-服务端类型驱动器通常为 asgi 应用框架，具有以下功能：
+服务端型驱动器通常为 ASGI 应用框架，具有以下功能：
 
 1. 协议适配器自定义 HTTP 上报地址以及对上报数据处理的回调函数。
 2. 协议适配器自定义 WebSocket 连接请求地址以及对 WebSocket 请求处理的回调函数。
-3. 用户可以向 asgi 应用添加任何服务端相关功能，如：[添加自定义路由](./routing.md)。
+3. 用户可以向 ASGI 应用添加任何服务端相关功能，如：[添加自定义路由](./routing.md)。
 
 ## 配置驱动器
 
 驱动器的配置方法已经在[配置](../appendices/config.mdx)章节中简单进行了介绍，这里将详细介绍驱动器配置的格式。
 
-NoneBot 中的客户端和服务端类型驱动器可以相互配合使用，但服务端驱动器**仅能选择一个**。所有驱动器模块都会包含一个 `Driver` 子类，即驱动器类，他可以作为驱动器单独运行。同时，客户端驱动器模块中还会提供一个 `Mixin` 子类，用于在与其他驱动器配合使用时加载。因此，驱动器配置格式采用特殊语法：`<module>[:<Driver>][+<module>[:<Mixin>]]*`。
+NoneBot 中的客户端和服务端型驱动器可以相互配合使用，但服务端驱动器**仅能选择一个**。所有驱动器模块都会包含一个 `Driver` 子类，即驱动器类，他可以作为驱动器单独运行。同时，客户端驱动器模块中还会提供一个 `Mixin` 子类，用于在与其他驱动器配合使用时加载。因此，驱动器配置格式采用特殊语法：`<module>[:<Driver>][+<module>[:<Mixin>]]*`。
 
 其中，`<module>` 代表**驱动器模块路径**；`<Driver>` 代表**驱动器类名**，默认为 `Driver`；`<Mixin>` 代表**驱动器混入类名**，默认为 `Mixin`。即，我们需要选择一个主要驱动器，然后在其基础上配合使用其他驱动器的功能。主要驱动器可以为客户端或服务端类型，但混入类驱动器只能为客户端类型。
 
@@ -145,7 +145,7 @@ nb run --reload
 
 类型：`bool`  
 默认值：`False`  
-说明：是否开启 `uvicorn` 的 `reload` 功能，需要在机器人入口文件提供 asgi 应用路径。
+说明：是否开启 `uvicorn` 的 `reload` 功能，需要在机器人入口文件提供 ASGI 应用路径。
 
 ```python title=bot.py
 app = nonebot.get_asgi()
@@ -209,7 +209,7 @@ nb run --reload
 
 类型：`bool`  
 默认值：`False`  
-说明：是否开启 `uvicorn` 的 `reload` 功能，需要在机器人入口文件提供 asgi 应用路径。
+说明：是否开启 `uvicorn` 的 `reload` 功能，需要在机器人入口文件提供 ASGI 应用路径。
 
 ```python title=bot.py
 app = nonebot.get_asgi()

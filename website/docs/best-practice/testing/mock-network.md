@@ -18,7 +18,7 @@ NoneBot 中的网络通信主要包括以下几种：
 
 ## 测试 HTTP 服务端
 
-当 NoneBot 作为 asgi 服务端应用时，我们可以定义一系列的路由来处理 HTTP 请求，适配器同样也可以通过定义路由来响应机器人相关的网络通信。下面假设我们使用了一个适配器 `fake` ，它定义了一个路由 `/fake/http` ，用于接收平台 WebHook 并处理。实际应用测试时，应将该路由地址替换为**真实适配器注册的路由地址**。
+当 NoneBot 作为 ASGI 服务端应用时，我们可以定义一系列的路由来处理 HTTP 请求，适配器同样也可以通过定义路由来响应机器人相关的网络通信。下面假设我们使用了一个适配器 `fake` ，它定义了一个路由 `/fake/http` ，用于接收平台 WebHook 并处理。实际应用测试时，应将该路由地址替换为**真实适配器注册的路由地址**。
 
 我们首先需要获取测试用模拟客户端：
 
@@ -31,7 +31,7 @@ async def test_http_server(app: App):
         client = ctx.get_client()
 ```
 
-默认情况下，`app.test_server()` 会通过 `nonebot.get_asgi` 获取测试对象，我们也可以通过参数指定 asgi 应用：
+默认情况下，`app.test_server()` 会通过 `nonebot.get_asgi` 获取测试对象，我们也可以通过参数指定 ASGI 应用：
 
 ```python
 async with app.test_server(asgi=asgi_app) as ctx:
@@ -63,7 +63,7 @@ async def test_http_server(app: App):
 
 ## 测试 WebSocket 服务端
 
-当 NoneBot 作为 asgi 服务端应用时，我们还可以定义一系列的路由来处理 WebSocket 通信。下面假设我们使用了一个适配器 `fake` ，它定义了一个路由 `/fake/ws` ，用于处理平台 WebSocket 连接信息。实际应用测试时，应将该路由地址替换为**真实适配器注册的路由地址**。
+当 NoneBot 作为 ASGI 服务端应用时，我们还可以定义一系列的路由来处理 WebSocket 通信。下面假设我们使用了一个适配器 `fake` ，它定义了一个路由 `/fake/ws` ，用于处理平台 WebSocket 连接信息。实际应用测试时，应将该路由地址替换为**真实适配器注册的路由地址**。
 
 我们同样需要通过 `app.test_server()` 获取测试用模拟客户端，这里就不再赘述。在获取到模拟客户端后，我们可以通过 `client.websocket_connect` 方法来模拟 WebSocket 连接：
 

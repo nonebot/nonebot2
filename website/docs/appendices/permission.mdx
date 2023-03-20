@@ -14,7 +14,7 @@ import Messenger from "@site/src/components/Messenger";
 
 **权限控制**是机器人在实际应用中需要解决的重点问题之一，NoneBot 提供了灵活的权限控制机制 —— `Permission`。
 
-类似与响应规则 `Rule`，`Permission` 是由非负整数个 `PermissionChecker` 所共同组成的**用于筛选事件**的对象。但需要特别说明的是，权限和响应规则有如下区别：
+类似于响应规则 `Rule`，`Permission` 是由非负整数个 `PermissionChecker` 所共同组成的**用于筛选事件**的对象。但需要特别说明的是，权限和响应规则有如下区别：
 
 1. 权限检查**先于**响应规则检查
 2. `Permission` 只需**其中一个** `PermissionChecker` 返回 `True` 时就会检查通过

@@ -74,9 +74,9 @@ NoneBot2 文档并没有具体的行文风格规范，但我们建议你尽量�
 4. **不要使用斜体**，你不需要一种与粗体不同的强调。除此之外，你也可以考虑使用 docusaurus 提供的[告示](https://docusaurus.io/zh-CN/docs/markdown-features/admonitions)功能。
 5. 文档中应以“我们”指代机器人开发者，以“机器人用户”指代机器人的使用者。
 
-这是由[社区创始人 richardchien 的中文排版规范](https://stdrc.cc/style-guides/chinese)补充修改得到。
+以上由[社区创始人 richardchien 的中文排版规范](https://stdrc.cc/style-guides/chinese)补充修改得到。
 
-如果你需要编辑器提示 Markdown 规范，可以安装 VSCode 上的 markdownlint 插件。
+如果你需要编辑器检查 Markdown 规范，可以在 VSCode 中安装 markdownlint 扩展。
 
 ### 参与开发
 

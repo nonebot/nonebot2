@@ -14,7 +14,7 @@ options:
 
 ## 插件结构
 
-在 NoneBot 中，插件即是 Python 的一个[模块 `module`](https://docs.python.org/zh-cn/3/glossary.html#term-module)。NoneBot 会在导入时对这些模块做一些特殊的处理使得他们成为一个插件。插件间应尽量减少耦合，可以进行有限制的插件之间相互调用，NoneBot 能够正确解析插件间的依赖关系。
+在 NoneBot 中，插件即是 Python 的一个[模块（module）](https://docs.python.org/zh-cn/3/glossary.html#term-module)。NoneBot 会在导入时对这些模块做一些特殊的处理使得他们成为一个插件。插件间应尽量减少耦合，可以进行有限制的插件之间相互调用，NoneBot 能够正确解析插件间的依赖关系。
 
 ### 单文件插件
 
@@ -115,7 +115,7 @@ $ nb plugin create
 
 加载插件是在机器人入口文件中完成的，需要在框架初始化之后，运行之前进行。
 
-如果你使用的 `nb-cli` 进行的插件管理，那么你可以跳过这一节，`nb-cli` 将会自动处理加载。
+如果你使用 `nb-cli` 管理插件，那么你可以跳过这一节，`nb-cli` 将会自动处理加载。
 
 如果你**使用自定义的入口文件** `bot.py`，那么你需要在 `bot.py` 中加载插件。
 

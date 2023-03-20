@@ -6,7 +6,7 @@ slug: /
 
 # 概览
 
-NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架（下称 NoneBot），它基于 Python 的类型注解和异步优先特性（兼容同步），能够为你的需求实现提供便捷灵活的支持。同时，拥有大量的开发者为其开发插件，可以不进行任何代码编写，仅需要完成环境配置及插件安装后便可正常使用。
+NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架（下称 NoneBot），它基于 Python 的类型注解和异步优先特性（兼容同步），能够为你的需求实现提供便捷灵活的支持。同时，NoneBot 拥有大量的开发者为其开发插件，用户无需编写任何代码，仅需完成环境配置及插件安装，就可以正常使用 NoneBot。
 
 需要注意的是，NoneBot 仅支持 **Python 3.8 以上版本**
 
@@ -22,7 +22,7 @@ NoneBot 参考 [PEP 484](https://www.python.org/dev/peps/pep-0484/) 等 PEP 完�
 
 ### 开箱即用
 
-NoneBot 提供了使用便捷、具有交互式功能的命令行工具--`nb-cli`，使得初次接触 NoneBot 时更容易上手。使用方法请阅读本文档[指南](./quick-start.mdx)以及 [CLI 文档](https://cli.nonebot.dev/)。
+NoneBot 提供了使用便捷、具有交互式功能的命令行工具--`nb-cli`，使得用户初次接触 NoneBot 时更容易上手。使用方法请阅读本文档[指南](./quick-start.mdx)以及 [CLI 文档](https://cli.nonebot.dev/)。
 
 ### 插件系统
 

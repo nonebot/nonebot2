@@ -15,9 +15,9 @@ options:
 NoneBot 中，我们可以通过两种途径向驱动器添加路由规则：
 
 1. 通过 NoneBot 的兼容层建立路由规则。
-2. 直接向 asgi 应用添加路由规则。
+2. 直接向 ASGI 应用添加路由规则。
 
-这两种途径各有优劣，前者可以在各种服务端类型驱动器下运行，但并不能直接使用 asgi 应用框架提供的特性与功能；后者直接使用 asgi 应用，更自由、功能完整，但只能在特定类型驱动器下运行。
+这两种途径各有优劣，前者可以在各种服务端型驱动器下运行，但并不能直接使用 ASGI 应用框架提供的特性与功能；后者直接使用 ASGI 应用，更自由、功能完整，但只能在特定类型驱动器下运行。
 
 在向驱动器添加路由规则时，我们需要注意驱动器是否为服务端类型，我们可以通过以下方式判断：
 
@@ -103,11 +103,11 @@ if isinstance((driver := get_driver()), ReverseDriver):
 
 对于 `WebSocket` 的详细信息，可以参考 [API 文档](../api/drivers/index.md)。
 
-## 使用 asgi 应用添加路由
+## 使用 ASGI 应用添加路由
 
-### 获取 asgi 应用
+### 获取 ASGI 应用
 
-NoneBot 服务端类型的驱动器具有两个属性 `server_app` 和 `asgi`，分别对应驱动框架应用和 asgi 应用。通常情况下，这两个应用是同一个对象。我们可以通过 `get_app()` 方法快速获取：
+NoneBot 服务端类型的驱动器具有两个属性 `server_app` 和 `asgi`，分别对应驱动框架应用和 ASGI 应用。通常情况下，这两个应用是同一个对象。我们可以通过 `get_app()` 方法快速获取：
 
 ```python
 import nonebot
@@ -118,7 +118,7 @@ asgi = nonebot.get_asgi()
 
 ### 添加路由规则
 
-在获取到了 asgi 应用后，我们就可以直接使用 asgi 应用框架提供的功能来添加路由规则了。这里我们以 [FastAPI](./driver.md#fastapi默认) 为例，演示如何添加路由规则。
+在获取到了 ASGI 应用后，我们就可以直接使用 ASGI 应用框架提供的功能来添加路由规则了。这里我们以 [FastAPI](./driver.md#fastapi默认) 为例，演示如何添加路由规则。
 
 在下面的代码中，我们添加了一个 `GET` 类型的 `/api` 路由，具体方法参考 [FastAPI 文档](https://fastapi.tiangolo.com/)。
 

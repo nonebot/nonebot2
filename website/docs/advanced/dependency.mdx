@@ -27,7 +27,7 @@ import TabItem from "@theme/TabItem";
   - 生成 `Dependent` 对象。
 - 执行
   - 根据已经解析的 `Dependency` 依赖，执行调用。
-  - 将所有 `Dependency` 的返回值根据参数名传入 `Dependent` 调。
+  - 将所有 `Dependency` 的返回值根据参数名传入并调用 `Dependent` 。
 
 :::danger 警告
 在依赖注入中，类型注解是非常重要的，因为它不仅可以决定依赖注入的对象，还可以触发[重载机制](../appendices/overload.md#重载)。如果类型注解与实际获得数据类型不一致，将会跳过当前 `Dependent` 对象（即事件处理函数）。
