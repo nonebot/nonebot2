@@ -81,7 +81,7 @@ async def test_example(app: App):
 在上面的代码中，我们分别对 `foo` 和 `bar` 事件响应器进行响应测试。我们使用 `ctx.should_pass_rule` 和 `ctx.should_pass_permission` 断言 `foo` 事件响应器应该被触发，使用 `ctx.should_not_pass_rule` 和 `ctx.should_not_pass_permission` 断言 `bar` 事件响应器应该被忽略。
 
   </TabItem>
-  <TabItem value="global" label="整体测试">
+  <TabItem value="global" label="集成测试">
 
 ```python title=tests/test_example.py
 from datetime import datetime
