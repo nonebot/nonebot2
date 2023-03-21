@@ -43,6 +43,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 基于 OpenAI 的 AI 模拟面试官 [@yanyongyu](https://github.com/yanyongyu) ([#1829](https://github.com/nonebot/nonebot2/pull/1829))
 - Plugin: 多平台热搜获取插件 [@yanyongyu](https://github.com/yanyongyu) ([#1823](https://github.com/nonebot/nonebot2/pull/1823))
 - Plugin: 随机点名 [@yanyongyu](https://github.com/yanyongyu) ([#1819](https://github.com/nonebot/nonebot2/pull/1819))
 - Plugin: 表情包制作（调用 API 版） [@yanyongyu](https://github.com/yanyongyu) ([#1821](https://github.com/nonebot/nonebot2/pull/1821))
