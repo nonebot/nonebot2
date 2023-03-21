@@ -38,9 +38,7 @@ options:
 在以下的示例中，为了更好的理解多种类型的消息组成方式，我们将使用 `Console` 协议适配器来演示消息序列的使用方法。在实际使用中，你需要确保你使用的**消息序列类型**与你所要发送的**平台类型**一致。
 :::
 
-<!-- FIXME: 消息注入链接 -->
-
-通常情况下，适配器在接收到消息时，会将消息转换为消息序列，可以通过依赖注入 [`EventMessage`](#), 或者使用 `event.get_message()` 获取。
+通常情况下，适配器在接收到消息时，会将消息转换为消息序列，可以通过依赖注入 [`EventMessage`](../advanced/dependency.mdx#eventmessage), 或者使用 `event.get_message()` 获取。
 
 由于消息序列是 `List[MessageSegment]` 的子类, 所以你总是可以用和操作 `List` 类似的方式来处理消息序列。例如：
 

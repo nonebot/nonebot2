@@ -233,8 +233,6 @@ weather = on_command(
 - **类型**: `str`
 - **默认值**: `"~fastapi"`
 
-<!-- FIXME: choose driver link -->
-
 NoneBot 运行所使用的驱动器。具体配置方法可以参考[安装驱动器](../tutorial/store.mdx#安装驱动器)和[选择驱动器](../advanced/driver.md)。
 
 <Tabs groupId="configMethod">
@@ -493,9 +491,7 @@ nonebot.init(nickname={"bot"})
   - Command Start: `{"/"}`
   - Command Separator: `{"."}`
 
-<!-- FIXME: command rule docs -->
-
-命令消息的起始符和分隔符。用于 [`command`](./rule.md#) 规则。
+命令消息的起始符和分隔符。用于 [`command`](../advanced/matcher.md#command) 规则。
 
 <Tabs groupId="configMethod">
   <TabItem value="dotenv" label="dotenv" default>
