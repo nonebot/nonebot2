@@ -42,7 +42,7 @@ import Messenger from "@site/src/components/Messenger";
    pipx install nb-cli
    ```
 
-安装完成后，你可以在命令行使用 `nb` 命令来使用脚手架。如果出现无法找到命令的情况（例如：`Command not found`），请参考 [pipx 文档](https://pypa.github.io/pipx/) 检查你的环境变量。
+安装完成后，你可以在命令行使用 `nb` 命令来使用脚手架。如果出现无法找到命令的情况（例如出现“Command not found”字样），请参考 [pipx 文档](https://pypa.github.io/pipx/) 检查你的环境变量。
 
 <Asciinema
   url="https://asciinema.org/a/464654.cast"
@@ -76,7 +76,7 @@ nb create
    这里我们以 `awesome-bot` 为例，作为项目名称。你可以根据自己的需要来命名。
 
 3. 其他选项
-   请注意，多选项使用空格选中或取消，回车确认。
+   请注意，多选项使用**空格**选中或取消，**回车**确认。
 
    ```bash
    [?] 要使用哪些驱动器? FastAPI (FastAPI 驱动器)
@@ -85,7 +85,7 @@ nb create
    [?] 创建虚拟环境? (Y/n) Yes
    ```
 
-   这里我们选择了创建虚拟环境，nb-cli 在之后的操作中将会自动使用这个虚拟环境。如果你不需要自动创建虚拟环境，nb-cli 将会安装依赖至当前激活的 Python 环境。
+   这里我们选择了创建虚拟环境，nb-cli 在之后的操作中将会自动使用这个虚拟环境。如果你不需要自动创建虚拟环境或者已经创建了其他虚拟环境，nb-cli 将会安装依赖至当前激活的 Python 虚拟环境。
 
 4. 选择内置插件
 
