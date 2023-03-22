@@ -80,16 +80,16 @@ class DependParam(Param):
     def _check_param(
         cls, param: inspect.Parameter, allow_types: Tuple[Type[Param], ...]
     ) -> Optional["DependParam"]:
-        type_annotation = param.annotation
-        depends_inner = (
-            param.default if isinstance(param.default, DependsInner) else None
-        )
+        type_annotation, depends_inner = param.annotation, None
         if get_origin(param.annotation) is Annotated:
             type_annotation, *extra_args = get_args(param.annotation)
             depends_inner = next(
                 (x for x in extra_args if isinstance(x, DependsInner)), None
             )
 
+        depends_inner = (
+            param.default if isinstance(param.default, DependsInner) else depends_inner
+        )
         if depends_inner is None:
             return
 
