@@ -1,7 +1,19 @@
 import asyncio
 import inspect
+from typing_extensions import Annotated
 from contextlib import AsyncExitStack, contextmanager, asynccontextmanager
-from typing import TYPE_CHECKING, Any, Type, Tuple, Literal, Callable, Optional, cast
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Type,
+    Tuple,
+    Literal,
+    Callable,
+    Optional,
+    cast,
+    get_args,
+    get_origin,
+)
 
 from pydantic.fields import Required, Undefined, ModelField
 
@@ -78,20 +90,32 @@ class DependParam(Param):
     def _check_param(
         cls, param: inspect.Parameter, allow_types: Tuple[Type[Param], ...]
     ) -> Optional["DependParam"]:
-        if isinstance(param.default, DependsInner):
-            dependency: T_Handler
-            if param.default.dependency is None:
-                assert param.annotation is not param.empty, "Dependency cannot be empty"
-                dependency = param.annotation
-            else:
-                dependency = param.default.dependency
-            sub_dependent = Dependent[Any].parse(
-                call=dependency,
-                allow_types=allow_types,
+        type_annotation = param.annotation
+        depends_inner = (
+            param.default if isinstance(param.default, DependsInner) else None
+        )
+        if get_origin(param.annotation) is Annotated:
+            type_annotation, *extra_args = get_args(param.annotation)
+            depends_inner = next(
+                (x for x in extra_args if isinstance(x, DependsInner)), None
             )
-            return cls(
-                Required, use_cache=param.default.use_cache, dependent=sub_dependent
-            )
+
+        if depends_inner is None:
+            return
+
+        dependency: T_Handler
+        if depends_inner.dependency is None:
+            assert (
+                type_annotation is not inspect.Signature.empty
+            ), "Dependency cannot be empty"
+            dependency = type_annotation
+        else:
+            dependency = depends_inner.dependency
+        sub_dependent = Dependent[Any].parse(
+            call=dependency,
+            allow_types=allow_types,
+        )
+        return cls(Required, use_cache=depends_inner.use_cache, dependent=sub_dependent)
 
     @classmethod
     def _check_parameterless(
