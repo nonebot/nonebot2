@@ -42,6 +42,9 @@ async def test_depend(app: App):
         depends,
         class_depend,
         test_depends,
+        annotated_depend,
+        annotated_class_depend,
+        annotated_prior_depend,
     )
 
     async with app.test_dependent(depends, allow_types=[DependParam]) as ctx:
@@ -61,6 +64,20 @@ async def test_depend(app: App):
     runned.clear()
 
     async with app.test_dependent(class_depend, allow_types=[DependParam]) as ctx:
+        ctx.should_return(ClassDependency(x=1, y=2))
+
+    async with app.test_dependent(annotated_depend, allow_types=[DependParam]) as ctx:
+        ctx.should_return(1)
+
+    async with app.test_dependent(
+        annotated_prior_depend, allow_types=[DependParam]
+    ) as ctx:
+        ctx.should_return(1)
+    assert runned == [1, 1]
+
+    async with app.test_dependent(
+        annotated_class_depend, allow_types=[DependParam]
+    ) as ctx:
         ctx.should_return(ClassDependency(x=1, y=2))
 
 

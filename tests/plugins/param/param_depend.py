@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from typing_extensions import Annotated
 
 from nonebot import on_message
 from nonebot.params import Depends
@@ -47,3 +48,17 @@ async def depends_cache(y: int = Depends(dependency, use_cache=True)):
 
 async def class_depend(c: ClassDependency = Depends()):
     return c
+
+
+async def annotated_depend(x: Annotated[int, Depends(dependency)]):
+    return x
+
+
+async def annotated_class_depend(c: Annotated[ClassDependency, Depends()]):
+    return c
+
+
+async def annotated_prior_depend(
+    x: Annotated[int, Depends(lambda: 2)] = Depends(dependency)
+):
+    return x
