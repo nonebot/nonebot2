@@ -41,8 +41,8 @@ async def test_depend(app: App):
         runned,
         depends,
         class_depend,
-        annotated_depend,
         test_depends,
+        annotated_depend,
     )
 
     async with app.test_dependent(depends, allow_types=[DependParam]) as ctx:
