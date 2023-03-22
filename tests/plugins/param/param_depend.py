@@ -52,3 +52,7 @@ async def class_depend(c: ClassDependency = Depends()):
 
 async def annotated_depend(x: Annotated[int, Depends(dependency)]):
     return x
+
+
+async def annotated_class_depend(c: Annotated[ClassDependency, Depends()]):
+    return c
