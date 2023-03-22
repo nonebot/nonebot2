@@ -2,19 +2,9 @@ import asyncio
 import inspect
 from typing_extensions import Annotated
 from contextlib import AsyncExitStack, contextmanager, asynccontextmanager
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Type,
-    Tuple,
-    Literal,
-    Callable,
-    Optional,
-    cast,
-    get_args,
-    get_origin,
-)
+from typing import TYPE_CHECKING, Any, Type, Tuple, Literal, Callable, Optional, cast
 
+from pydantic.typing import get_args, get_origin
 from pydantic.fields import Required, Undefined, ModelField
 
 from nonebot.dependencies.utils import check_field_type
