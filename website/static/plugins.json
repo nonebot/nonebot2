@@ -4916,5 +4916,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chatglm",
+    "project_link": "nonebot-plugin-chatglm",
+    "name": "ChatGLM",
+    "desc": "基于ChatGLM-6B模型，提供本地中文（汉语）聊天机器人功能",
+    "author": "DaoMingze",
+    "homepage": "https://github.com/DaoMingze/zhukebot/tree/main/zhukebot/plugins/chatglm",
+    "tags": [
+      {
+        "label": "t:Chatbot",
+        "color": "#4366eb"
+      },
+      {
+        "label": "ChatGLM",
+        "color": "#af286f"
+      }
+    ],
+    "is_official": false
   }
 ]
