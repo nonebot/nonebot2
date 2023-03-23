@@ -89,4 +89,16 @@ logger_id = logger.add(
     format=default_format,
 )
 
+
+def new_logger(
+    name: str,
+) -> Logger:
+    """创建新的日志记录器
+
+    参数:
+        name: 日志名称
+    """
+    return logger.patch(lambda record: record.update(name=name))  # type: ignore
+
+
 __autodoc__ = {"logger_id": False}
