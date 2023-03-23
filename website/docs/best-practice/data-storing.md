@@ -21,7 +21,7 @@ nb plugin install nonebot-plugin-localstore
 
 `nonebot-plugin-localstore` 插件兼容 Windows、Linux 和 macOS 等操作系统，使用时无需关心操作系统的差异。同时插件提供 `nb-cli` 脚本，可以使用 `nb localstore` 命令来检查数据存储路径。
 
-在使用本插件前同样需要使用 `require` 方法进行**加载**并**导入**需要使用的方法，如：
+在使用本插件前同样需要使用 `require` 方法进行**加载**并**导入**需要使用的方法，可参考 [跨插件访问](../advanced/requiring.md) 一节进行了解，如：
 
 ```python
 from nonebot import require

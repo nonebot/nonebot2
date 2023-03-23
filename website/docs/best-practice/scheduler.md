@@ -23,7 +23,7 @@ nb plugin install nonebot-plugin-apscheduler
 
 ### 导入调度器
 
-由于 `nonebot_plugin_apscheduler` 作为插件，因此需要在使用前对其进行**加载**并**导入**其中的 `scheduler` 调度器来创建定时任务。使用 `require` 方法可轻松完成这一过程，可参考 [跨插件访问](#) 一节进行了解。
+由于 `nonebot_plugin_apscheduler` 作为插件，因此需要在使用前对其进行**加载**并**导入**其中的 `scheduler` 调度器来创建定时任务。使用 `require` 方法可轻松完成这一过程，可参考 [跨插件访问](../advanced/requiring.md) 一节进行了解。
 
 ```python
 from nonebot import require
@@ -59,7 +59,7 @@ scheduler.add_job(
 ```
 
 :::warning 注意
-由于 APScheduler 的定时任务并不是**由事件响应器所触发的事件**，因此其任务函数无法同[事件处理依赖](../tutorial/handler.mdx#事件处理函数)一样通过[依赖注入](../tutorial/event-data.mdx#认识依赖注入)获取上下文信息，也无法通过事件响应器对象的方法进行任何操作，因此我们需要使用[调用平台 API](../appendices/api-calling.mdx#调用平台-API)的方式来获取信息或收发消息。
+由于 APScheduler 的定时任务并不是**由事件响应器所触发的事件**，因此其任务函数无法同[事件处理函数](../tutorial/handler.mdx#事件处理函数)一样通过[依赖注入](../tutorial/event-data.mdx#认识依赖注入)获取上下文信息，也无法通过事件响应器对象的方法进行任何操作，因此我们需要使用[调用平台 API](../appendices/api-calling.mdx#调用平台-api)的方式来获取信息或收发消息。
 
 相对于事件处理依赖而言，编写定时任务更像是编写普通的函数，需要我们自行获取信息以及发送信息，请**不要**将事件处理依赖的特殊语法用于定时任务！
 :::
@@ -91,6 +91,6 @@ apscheduler 输出的日志等级
 - **类型**: `dict`
 - **默认值**: `{ "apscheduler.timezone": "Asia/Shanghai" }`
 
-`apscheduler` 的相关配置。参考 [配置调度器](https://apscheduler.readthedocs.io/en/latest/userguide.html#scheduler-config), [配置参数](https://apscheduler.readthedocs.io/en/latest/modules/schedulers/base.html#apscheduler.schedulers.base.BaseScheduler)
+`apscheduler` 的相关配置。参考[配置调度器](https://apscheduler.readthedocs.io/en/latest/userguide.html#scheduler-config), [配置参数](https://apscheduler.readthedocs.io/en/latest/modules/schedulers/base.html#apscheduler.schedulers.base.BaseScheduler)
 
 配置需要包含 `apscheduler.` 作为前缀，例如 `apscheduler.timezone`。

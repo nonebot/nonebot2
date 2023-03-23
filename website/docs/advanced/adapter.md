@@ -18,10 +18,10 @@ options:
 
 为了实现这两种功能，适配器通常由四个部分组成：
 
-- **适配器**：负责转换事件和调用接口，正确创建 Bot 对象并注册到 NoneBot 中。
+- **Adapter**：负责转换事件和调用接口，正确创建 Bot 对象并注册到 NoneBot 中。
 - **Bot**：负责存储平台机器人相关信息，并提供回复事件的方法。
-- **事件模型**：负责定义事件内容，以及事件主体对象。
-- **消息序列**：负责正确序列化消息，以便机器人插件处理。
+- **Event**：负责定义事件内容，以及事件主体对象。
+- **Message**：负责正确序列化消息，以便机器人插件处理。
 
 ## 注册适配器
 
@@ -82,17 +82,79 @@ Bot 对象都具有一个 `self_id` 属性，它是机器人的唯一 ID，由�
 
 ## 获取事件通用信息
 
-适配器的所有事件模型均继承自 `Event` 基类，在[事件类型与重载](../appendices/overload.md)一节中，我们也提到了如何使用基类抽象方法来获取事件通用信息。基类所能提供的信息有如下几个方法：
+适配器的所有事件模型均继承自 `Event` 基类，在[事件类型与重载](../appendices/overload.md)一节中，我们也提到了如何使用基类抽象方法来获取事件通用信息。基类能提供如下信息：
 
-- `get_type`：获取事件类型。
-- `get_event_name`：获取事件名称。通常用于日志记录。
-- `get_event_description`：获取事件描述。通常用于日志记录。
-- `get_log_string`：获取事件日志字符串。
-- `get_user_id`：获取事件主体 ID。
-- `get_session_id`：获取事件会话 ID。
-- `get_message`：获取事件消息。
-- `get_plaintext`：获取事件消息的纯文本内容。
-- `is_tome`：判断事件是否与机器人有关。
+### 事件类型
+
+事件类型通常为 `meta_event`、`message`、`notice`、`request`。
+
+```python
+type: str = event.get_type()
+```
+
+### 事件名称
+
+事件名称由适配器定义，通常用于日志记录。
+
+```python
+name: str = event.get_event_name()
+```
+
+### 事件描述
+
+事件描述由适配器定义，通常用于日志记录。
+
+```python
+description: str = event.get_event_description()
+```
+
+### 事件日志字符串
+
+事件日志字符串由事件名称和事件描述组成，用于日志记录。
+
+```python
+log: str = event.get_log_string()
+```
+
+### 事件主体 ID
+
+事件主体 ID 通常为机器人用户 ID。
+
+```python
+user_id: str = event.get_user_id()
+```
+
+### 事件会话 ID
+
+事件会话 ID 通常为机器人用户 ID 与群聊/频道 ID 组合而成。
+
+```python
+session_id: str = event.get_session_id()
+```
+
+### 事件消息
+
+如果事件包含消息，则可以通过该方法获取，否则会产生异常。
+
+```python
+message: Message = event.get_message()
+```
+
+### 事件纯文本消息
+
+通常为事件消息的纯文本内容，如果事件不包含消息，则会产生异常。
+
+```python
+text: str = event.get_plaintext()
+```
+
+### 事件是否与机器人有关
+
+由适配器实现的判断，通常将事件目标主体为机器人、消息中包含“@机器人”或以“机器人的昵称”开始视为与机器人有关。
+
+```python
+is_tome: bool = event.is_tome()
+```
 
 ## 更多
 

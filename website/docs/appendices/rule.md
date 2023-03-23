@@ -100,7 +100,7 @@ rule = Rule(some_checker)
 result: bool = await rule(bot, event, state)
 ```
 
-我们只需要传入 `Bot` 实例、事件和会话状态，`Rule` 会并发调用所有 `RuleChecker` 进行检查，并返回结果。
+我们只需要传入 `Bot` 对象、事件和会话状态，`Rule` 会并发调用所有 `RuleChecker` 进行检查，并返回结果。
 
 ## 内置响应规则
 

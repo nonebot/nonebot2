@@ -45,9 +45,9 @@ __plugin_meta__ = PluginMetadata(
 )
 ```
 
-我们可以看到，插件元数据 `PluginMetadata` 有三个基本属性：插件名称、插件描述、插件使用方法。除此之外，还有两个可选的属性。`config` 属性用于指定插件的配置类，`extra` 属性，它是一个字典，可以用于存储任意信息。其他插件可以通过约定 `extra` 字典的键名来达成收集某些特殊信息的目的。
+我们可以看到，插件元数据 `PluginMetadata` 有三个基本属性：插件名称、插件描述、插件使用方法。除此之外，还有两个可选的属性。`config` 属性用于指定插件的[配置类](../appendices/config.mdx#插件配置)，`extra` 属性，它是一个字典，可以用于存储任意信息。其他插件可以通过约定 `extra` 字典的键名来达成收集某些特殊信息的目的。
 
-请注意，这里的**插件名称**是供使用者或机器人用户查看的，与插件索引名称无关。**插件索引名称**仅用于 NoneBot 插件系统**内部索引**。
+请注意，这里的**插件名称**是供使用者或机器人用户查看的，与插件索引名称无关。**插件索引名称（插件模块名称）**仅用于 NoneBot 插件系统**内部索引**。
 
 ## 获取插件信息
 
@@ -64,7 +64,7 @@ plugins: set[Plugin] = nonebot.get_loaded_plugins()
 ```python
 import nonebot
 
-plugin: Optional[Plugin] = nonebot.get_plugin("example")
+plugin: Plugin | None = nonebot.get_plugin("example")
 ```
 
 或者通过模块路径获取插件对象：
@@ -72,7 +72,7 @@ plugin: Optional[Plugin] = nonebot.get_plugin("example")
 ```python
 import nonebot
 
-plugin: Optional[Plugin] = nonebot.get_plugin_by_module_name("awesome_bot.plugins.example")
+plugin: Plugin | None = nonebot.get_plugin_by_module_name("awesome_bot.plugins.example")
 ```
 
 如果需要获取所有当前声明的插件名称（可能还未加载），可以使用 `get_available_plugin_names` 函数：

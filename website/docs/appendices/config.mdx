@@ -145,9 +145,9 @@ COMMON_CONFIG=common config  # 这个配置项在任何环境中都会被加载
 在生产环境中，可以通过设置环境变量 `ENVIRONMENT=prod` 来确保 NoneBot 读取正确的环境配置。
 :::
 
-#### .env.\* 文件
+#### .env.{ENVIRONMENT} 文件
 
-`.env.*` 文件类似于预设，可以让我们在多套不同的配置方案中灵活切换，默认 NoneBot 会读取 `.env.prod` 配置。如果你使用了 `nb-cli` 创建 `simple` 项目，那么将含有两套预设配置：`.env.dev` 和 `.env.prod`。
+`.env.{ENVIRONMENT}` 文件类似于预设，可以让我们在多套不同的配置方案中灵活切换，默认 NoneBot 会读取 `.env.prod` 配置。如果你使用了 `nb-cli` 创建 `simple` 项目，那么将含有两套预设配置：`.env.dev` 和 `.env.prod`。
 
 在 NoneBot 初始化时，可以指定加载某个环境配置文件：
 
@@ -155,7 +155,7 @@ COMMON_CONFIG=common config  # 这个配置项在任何环境中都会被加载
 nonebot.init(_env_file=".env.dev")
 ```
 
-这将忽略在 `.env` 文件中指定的 `ENVIRONMENT` 配置项。
+这将忽略在 `.env` 文件或环境变量中指定的 `ENVIRONMENT` 配置项。
 
 ## 读取配置项
 
@@ -226,7 +226,7 @@ weather = on_command(
 
 ## 内置配置项
 
-配置项 API 文档可以前往 [class Config](../api/config.md#Config) 查看。
+配置项 API 文档可以前往 [Config 类](../api/config.md#Config)查看。
 
 ### Driver
 

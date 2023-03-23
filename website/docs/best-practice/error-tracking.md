@@ -43,10 +43,10 @@ SENTRY_DSN=<your_sentry_dsn>
 
 - `sentry_dsn: str`
 - `sentry_debug: bool = False`
-- `sentry_release: Optional[str] = None`
-- `sentry_release: Optional[str] = None`
-- `sentry_environment: Optional[str] = nonebot env`
-- `sentry_server_name: Optional[str] = None`
+- `sentry_release: str | None = None`
+- `sentry_release: str | None = None`
+- `sentry_environment: str | None = nonebot env`
+- `sentry_server_name: str | None = None`
 - `sentry_sample_rate: float = 1.`
 - `sentry_max_breadcrumbs: int = 100`
 - `sentry_attach_stacktrace: bool = False`
@@ -55,10 +55,10 @@ SENTRY_DSN=<your_sentry_dsn>
 - `sentry_in_app_exclude: List[str] = Field(default_factory=list)`
 - `sentry_request_bodies: str = "medium"`
 - `sentry_with_locals: bool = True`
-- `sentry_ca_certs: Optional[str] = None`
-- `sentry_before_send: Optional[Callable[[Any, Any], Optional[Any]]] = None`
-- `sentry_before_breadcrumb: Optional[Callable[[Any, Any], Optional[Any]]] = None`
-- `sentry_transport: Optional[Any] = None`
-- `sentry_http_proxy: Optional[str] = None`
-- `sentry_https_proxy: Optional[str] = None`
+- `sentry_ca_certs: str | None = None`
+- `sentry_before_send: Callable[[Any, Any], Any | None] | None = None`
+- `sentry_before_breadcrumb: Callable[[Any, Any], Any | None] | None = None`
+- `sentry_transport: Any | None = None`
+- `sentry_http_proxy: str | None = None`
+- `sentry_https_proxy: str | None = None`
 - `sentry_shutdown_timeout: int = 2`

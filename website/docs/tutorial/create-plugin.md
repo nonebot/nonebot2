@@ -14,7 +14,7 @@ options:
 
 ## 插件结构
 
-在 NoneBot 中，插件即是 Python 的一个[模块（module）](https://docs.python.org/zh-cn/3/glossary.html#term-module)。NoneBot 会在导入时对这些模块做一些特殊的处理使得他们成为一个插件。插件间应尽量减少耦合，可以进行有限制的插件之间相互调用，NoneBot 能够正确解析插件间的依赖关系。
+在 NoneBot 中，插件即是 Python 的一个[模块（module）](https://docs.python.org/zh-cn/3/glossary.html#term-module)。NoneBot 会在导入时对这些模块做一些特殊的处理使得他们成为一个插件。插件间应尽量减少耦合，可以进行有限制的相互调用，NoneBot 能够正确解析插件间的依赖关系。
 
 ### 单文件插件
 
@@ -115,11 +115,13 @@ $ nb plugin create
 
 加载插件是在机器人入口文件中完成的，需要在框架初始化之后，运行之前进行。
 
+请注意，加载的插件模块名称（插件文件名或文件夹名）**不能相同**，且每一个插件**只能被加载一次**，重复加载将会导致异常。
+
 如果你使用 `nb-cli` 管理插件，那么你可以跳过这一节，`nb-cli` 将会自动处理加载。
 
 如果你**使用自定义的入口文件** `bot.py`，那么你需要在 `bot.py` 中加载插件。
 
-```python title=bot.py
+```python {5} title=bot.py
 import nonebot
 
 nonebot.init()
@@ -143,7 +145,7 @@ nonebot.load_plugin(Path("./path/to/your/plugin.py"))  # 加载项目插件
 ```
 
 :::warning 注意
-请注意本地插件的路径应该为相对机器人 **入口文件（通常为 bot.py）** 可导入的，例如在项目 `plugins` 目录下。
+请注意，本地插件的路径应该为相对机器人 **入口文件（通常为 bot.py）** 可导入的，例如在项目 `plugins` 目录下。
 :::
 
 ### `load_plugins`
@@ -155,7 +157,7 @@ nonebot.load_plugins("src/plugins", "path/to/your/plugins")
 ```
 
 :::warning 注意
-请注意，插件目录应该为相对机器人 **入口文件（通常为 bot.py）** 可导入的，例如项目 `plugins` 目录。
+请注意，插件目录应该为相对机器人 **入口文件（通常为 bot.py）** 可导入的，例如在项目 `plugins` 目录下。
 :::
 
 ### `load_all_plugins`
@@ -199,7 +201,7 @@ plugin_dirs = ["path/to/your/plugins"]
 nonebot.load_from_toml("plugin_config.toml", encoding="utf-8")
 ```
 
-:::tip 注意
+:::tip 提示
 如果 TOML 配置文件中的字段无法满足你的需求，可以使用 [`load_all_plugins`](#load_all_plugins) 方法自行读取配置来加载插件。
 :::
 
@@ -221,4 +223,4 @@ nonebot.load_builtin_plugins("echo", "single_session")
 
 ### 其他加载方式
 
-有关其他插件加载的方式，可参考 [跨插件访问](../advanced/requiring.md) 和 [嵌套插件](../advanced/plugin-nesting.md)。
+有关其他插件加载的方式，可参考[跨插件访问](../advanced/requiring.md)和[嵌套插件](../advanced/plugin-nesting.md)。

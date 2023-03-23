@@ -42,7 +42,7 @@ options:
 
 驱动器的配置方法已经在[配置](../appendices/config.mdx)章节中简单进行了介绍，这里将详细介绍驱动器配置的格式。
 
-NoneBot 中的客户端和服务端型驱动器可以相互配合使用，但服务端驱动器**仅能选择一个**。所有驱动器模块都会包含一个 `Driver` 子类，即驱动器类，他可以作为驱动器单独运行。同时，客户端驱动器模块中还会提供一个 `Mixin` 子类，用于在与其他驱动器配合使用时加载。因此，驱动器配置格式采用特殊语法：`<module>[:<Driver>][+<module>[:<Mixin>]]*`。
+NoneBot 中的客户端和服务端型驱动器可以相互配合使用，但服务端型驱动器**仅能选择一个**。所有驱动器模块都会包含一个 `Driver` 子类，即驱动器类，他可以作为驱动器单独运行。同时，客户端驱动器模块中还会提供一个 `Mixin` 子类，用于在与其他驱动器配合使用时加载。因此，驱动器配置格式采用特殊语法：`<module>[:<Driver>][+<module>[:<Mixin>]]*`。
 
 其中，`<module>` 代表**驱动器模块路径**；`<Driver>` 代表**驱动器类名**，默认为 `Driver`；`<Mixin>` 代表**驱动器混入类名**，默认为 `Mixin`。即，我们需要选择一个主要驱动器，然后在其基础上配合使用其他驱动器的功能。主要驱动器可以为客户端或服务端类型，但混入类驱动器只能为客户端类型。
 
@@ -93,19 +93,19 @@ DRIVER=~fastapi
 
 ##### `fastapi_openapi_url`
 
-类型：`Optional[str]`  
+类型：`str | None`  
 默认值：`None`  
 说明：`FastAPI` 提供的 `OpenAPI` JSON 定义地址，如果为 `None`，则不提供 `OpenAPI` JSON 定义。
 
 ##### `fastapi_docs_url`
 
-类型：`Optional[str]`  
+类型：`str | None`  
 默认值：`None`  
 说明：`FastAPI` 提供的 `Swagger` 文档地址，如果为 `None`，则不提供 `Swagger` 文档。
 
 ##### `fastapi_redoc_url`
 
-类型：`Optional[str]`  
+类型：`str | None`  
 默认值：`None`  
 说明：`FastAPI` 提供的 `ReDoc` 文档地址，如果为 `None`，则不提供 `ReDoc` 文档。
 
@@ -135,9 +135,10 @@ nb run --reload
 3. ...
 
 > 具体信息参考 [Python 文档](https://docs.python.org/zh-cn/3/library/asyncio-platforms.html#windows)
-> 所以，一些使用了 asyncio 的库因此可能无法正常工作，如：
 
-1. [playwright](https://playwright.dev/python/docs/intro#incompatible-with-selectoreventloop-of-asyncio-on-windows)
+所以，一些使用了 asyncio 的库因此可能无法正常工作，如：
+
+1. [playwright](https://playwright.dev/python/docs/library#incompatible-with-selectoreventloop-of-asyncio-on-windows)
 
 如果在开启该功能后，原本**正常运行**的代码报错，且打印的异常堆栈信息和 asyncio 有关（异常一般为 `NotImplementedError`），
 你可能就需要考虑相关库对事件循环的支持，以及是否启用该功能。
@@ -154,25 +155,25 @@ nonebot.run(app="bot:app")
 
 ##### `fastapi_reload_dirs`
 
-类型：`Optional[List[str]]`  
+类型：`List[str] | None`  
 默认值：`None`  
 说明：重载监控文件夹列表，默认为 uvicorn 默认值
 
 ##### `fastapi_reload_delay`
 
-类型：`Optional[float]`  
+类型：`float | None`  
 默认值：`None`  
 说明：重载延迟，默认为 uvicorn 默认值
 
 ##### `fastapi_reload_includes`
 
-类型：`Optional[List[str]]`  
+类型：`List[str] | None`  
 默认值：`None`  
 说明：要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
 
 ##### `fastapi_reload_excludes`
 
-类型：`Optional[List[str]]`  
+类型：`List[str] | None`  
 默认值：`None`  
 说明：不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
 
@@ -218,25 +219,25 @@ nonebot.run(app="bot:app")
 
 ##### `quart_reload_dirs`
 
-类型：`Optional[List[str]]`  
+类型：`List[str] | None`  
 默认值：`None`  
 说明：重载监控文件夹列表，默认为 uvicorn 默认值
 
 ##### `quart_reload_delay`
 
-类型：`Optional[float]`  
+类型：`float | None`  
 默认值：`None`  
 说明：重载延迟，默认为 uvicorn 默认值
 
 ##### `quart_reload_includes`
 
-类型：`Optional[List[str]]`  
+类型：`List[str] | None`  
 默认值：`None`  
 说明：要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
 
 ##### `quart_reload_excludes`
 
-类型：`Optional[List[str]]`  
+类型：`List[str] | None`  
 默认值：`None`  
 说明：不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值
 

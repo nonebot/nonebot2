@@ -13,7 +13,7 @@ options:
 import Messenger from "@site/src/components/Messenger";
 import MarkdownText from "!!raw-loader!./assets/console-markdown.txt";
 
-在 NoneBot 中，存在部分无法使用事件响应器的情况，例如[定时任务](../best-practice/scheduler.md)。此时，我们可以通过使用协议适配器提供的方法来使用平台特定的接口，完成发送消息、获取信息等操作。
+在 NoneBot 中，除了使用事件响应器操作发送文本消息外，我们还可以直接通过使用协议适配器提供的方法来使用平台特定的接口，完成发送特殊消息、获取信息等其他平台提供的功能。同时，在部分无法使用事件响应器的情况中，例如[定时任务](../best-practice/scheduler.md)，我们也可以使用平台接口来完成需要的功能。
 
 ## 发送平台特殊消息
 
