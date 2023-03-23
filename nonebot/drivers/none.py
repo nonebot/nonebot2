@@ -10,13 +10,13 @@ FrontMatter:
 """
 
 
-import sys
 import signal
 import asyncio
 import threading
 from typing import Set, Union, Callable, Awaitable, cast
 
 from nonebot.log import logger
+from nonebot.consts import WINDOWS
 from nonebot.typing import overrides
 from nonebot.config import Env, Config
 from nonebot.drivers import Driver as BaseDriver
@@ -27,7 +27,7 @@ HANDLED_SIGNALS = (
     signal.SIGINT,  # Unix signal 2. Sent by Ctrl+C.
     signal.SIGTERM,  # Unix signal 15. Sent by `kill <pid>`.
 )
-if sys.platform == "win32":
+if WINDOWS:
     HANDLED_SIGNALS += (signal.SIGBREAK,)  # Windows signal 21. Sent by Ctrl+Break.
 
 
