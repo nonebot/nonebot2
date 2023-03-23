@@ -4935,5 +4935,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chatglm6b",
+    "project_link": "nonebot-plugin-chatglm6b",
+    "name": "ChatGLM-6B API版",
+    "desc": "通过ChatGLM-6B API来和已经部署好的ChatGLM对话",
+    "author": "QNLanYang",
+    "homepage": "https://github.com/QNLanYang/nonebot_plugin_ChatGLM6B",
+    "tags": [
+      {
+        "label": "t:ChatGLM",
+        "color": "#52d6ea"
+      },
+      {
+        "label": "AI Chat",
+        "color": "#8e52ea"
+      }
+    ],
+    "is_official": false
   }
 ]
