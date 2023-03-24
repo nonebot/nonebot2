@@ -112,7 +112,7 @@ async def do_something(event: Event, matcher: Matcher, exception: Optional[Excep
 
 ### 平台接口调用钩子
 
-这个钩子函数会在 `Bot` 调用平台接口时运行。在这个钩子函数中，我们可以通过引起 `MockApiException` 来阻止 `Bot` 调用平台接口并返回指定的结果。
+这个钩子函数会在 `Bot` 对象调用平台接口时运行。在这个钩子函数中，我们可以通过引起 `MockApiException` 异常来阻止 `Bot` 对象调用平台接口并返回指定的结果。
 
 ```python
 from nonebot.adapters import Bot
@@ -126,7 +126,7 @@ async def handle_api_call(bot: Bot, api: str, data: Dict[str, Any]):
 
 ### 平台接口调用后钩子
 
-这个钩子函数会在 `Bot` 调用平台接口后运行。在这个钩子函数中，我们可以通过引起 `MockApiException` 来阻止 `Bot` 调用平台接口并返回指定的结果。
+这个钩子函数会在 `Bot` 对象调用平台接口后运行。在这个钩子函数中，我们可以通过引起 `MockApiException` 异常来忽略平台接口返回的结果并返回指定的结果。
 
 ```python
 from nonebot.adapters import Bot
