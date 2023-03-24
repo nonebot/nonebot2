@@ -66,16 +66,17 @@ yarn start
 
 NoneBot2 文档并没有具体的行文风格规范，但我们建议你尽量写得简单易懂。
 
-以下是比较重要的排版规范。目前 NoneBot2 文档中仍有部分文档不完全遵守此规范，如果在阅读时发现欢迎提交 PR。
+以下是比较重要的编写与排版规范。目前 NoneBot2 文档中仍有部分文档不完全遵守此规范，如果在阅读时发现欢迎提交 PR。
 
 1. 中文与英文、数字、半角符号之间需要有空格。例：`NoneBot2 是一个可扩展的 Python 异步机器人框架。`
 2. 若非英文整句，使用全角标点符号。例：`现在你可以看到机器人回复你：“Hello, World !”。`
 3. 直引号`「」`和弯引号`“”`都可接受，但同一份文件里应使用同种引号。
 4. **不要使用斜体**，你不需要一种与粗体不同的强调。除此之外，你也可以考虑使用 docusaurus 提供的[告示](https://docusaurus.io/zh-CN/docs/markdown-features/admonitions)功能。
+5. 文档中应以“我们”指代机器人开发者，以“机器人用户”指代机器人的使用者。
 
-这是社区创始人 richardchien 的中文排版规范，可供参考：<https://stdrc.cc/style-guides/chinese>。
+以上由[社区创始人 richardchien 的中文排版规范](https://stdrc.cc/style-guides/chinese)补充修改得到。
 
-如果你需要编辑器提示 Markdown 规范，可以安装 VSCode 上的 markdownlint 插件。
+如果你需要编辑器检查 Markdown 规范，可以在 VSCode 中安装 markdownlint 扩展。
 
 ### 参与开发
 

@@ -79,7 +79,7 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
 </p>
 
 <p align="center">
-  <a href="https://asciinema.org/a/464654">
+  <a href="https://asciinema.org/a/569440">
     <img src="https://v2.nonebot.dev/img/setup.svg">
   </a>
 </p>
