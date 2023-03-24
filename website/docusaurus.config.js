@@ -111,6 +111,10 @@ const config = {
         ],
         docsVersionItemAfter: [
           {
+            label: "2.0.0rc3",
+            href: "https://63ccf1c05efb245d36e901fa--nonebot2.netlify.app/",
+          },
+          {
             label: "2.0.0a16",
             href: "https://61d3d9dbcadf413fd3238e89--nonebot2.netlify.app/",
           },
