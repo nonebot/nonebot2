@@ -71,9 +71,7 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
 <p align="center">
   <a href="https://v2.nonebot.dev/">文档</a>
   ·
-  <a href="https://v2.nonebot.dev/docs/start/installation">安装</a>
-  ·
-  <a href="https://v2.nonebot.dev/docs/tutorial/create-project">开始使用</a>
+  <a href="https://v2.nonebot.dev/docs/quick-start">快速上手</a>
   ·
   <a href="#插件">文档打不开？</a>
 </p>
@@ -92,7 +90,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
 
 - 异步优先：基于 Python 的异步特性，即使是~~非常~~大量的消息，也能吞吐自如
 - 易于开发：配合 NB-CLI 脚手架，代码编写上手简单，没有过多的冗余代码，可以让开发者专注于业务逻辑
-- 生而可靠：100% 类型注解覆盖，配合编辑器的类型推导功能，能将绝大多数的 Bug 杜绝在编辑器中 ([编辑器支持](https://v2.nonebot.dev/docs/start/editor-support))
+- 生而可靠：100% 类型注解覆盖，配合编辑器的类型推导功能，能将绝大多数的 Bug 杜绝在编辑器中 ([编辑器支持](https://v2.nonebot.dev/docs/editor-support))
 - 社区丰富：社区用户众多，直接和间接用户超过十万人，每天都有大量的活跃用户 ([社区资源](#社区资源))
 - 海纳百川：一个框架，支持多个聊天软件平台，可自定义通信协议
 
