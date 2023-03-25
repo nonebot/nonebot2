@@ -28,3 +28,7 @@
 .message.messageRight .messageBox::after {
   @apply !left-full !right-auto !rounded-bl-[0] !rounded-br-lg;
 }
+
+.message {
+  -webkit-tap-highlight-color: transparent;
+}
