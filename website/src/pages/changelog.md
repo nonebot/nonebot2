@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 更新指向文档的链接 [@he0119](https://github.com/he0119) ([#1841](https://github.com/nonebot/nonebot2/pull/1841))
 - Docs: 更新 setup 动图 [@yanyongyu](https://github.com/yanyongyu) ([#1840](https://github.com/nonebot/nonebot2/pull/1840))
 - Docs: 重写教程与进阶指南 [@yanyongyu](https://github.com/yanyongyu) ([#1604](https://github.com/nonebot/nonebot2/pull/1604))
 - Docs: pip 安装指令添加引号 [@3yude](https://github.com/3yude) ([#1724](https://github.com/nonebot/nonebot2/pull/1724))
