@@ -71,10 +71,18 @@ export default function Messenger({
       <div className="px-3">
         <div className="flex flex-row items-center">
           <div className="flex-1 p-1 max-w-full">
-            <input className="w-full rounded bg-light dark:bg-dark" />
+            <input
+              className="w-full rounded bg-light dark:bg-dark focus:outline-none focus:ring focus:border-blue-500"
+              readOnly
+            />
           </div>
           <div className="flex-initial grow-0 w-fit">
-            <button className="h-7 px-3 rounded-full bg-blue-500 text-white">
+            <button
+              className={clsx(
+                "h-7 px-3 rounded-full bg-blue-500 text-white",
+                styles.messageSendButton
+              )}
+            >
               <span>发送</span>
             </button>
           </div>
