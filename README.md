@@ -71,9 +71,7 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
 <p align="center">
   <a href="https://v2.nonebot.dev/">文档</a>
   ·
-  <a href="https://v2.nonebot.dev/docs/start/installation">安装</a>
-  ·
-  <a href="https://v2.nonebot.dev/docs/tutorial/create-project">开始使用</a>
+  <a href="https://v2.nonebot.dev/docs/quick-start">快速上手</a>
   ·
   <a href="#插件">文档打不开？</a>
 </p>
