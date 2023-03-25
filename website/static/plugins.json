@@ -4954,5 +4954,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nya_music",
+    "project_link": "nonebot-plugin-nya-music",
+    "name": "喵喵点歌",
+    "desc": "可听歌可下载，音乐源酷我音乐",
+    "author": "nikissXI",
+    "homepage": "https://github.com/nikissXI/nonebot_plugins/tree/main/nonebot_plugin_nya_music",
+    "tags": [
+      {
+        "label": "点歌",
+        "color": "#f05cea"
+      },
+      {
+        "label": "酷我",
+        "color": "#dea833"
+      }
+    ],
+    "is_official": false
   }
 ]
