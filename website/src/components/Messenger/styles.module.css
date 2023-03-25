@@ -29,6 +29,6 @@
   @apply !left-full !right-auto !rounded-bl-[0] !rounded-br-lg;
 }
 
-.message {
+.message > button {
   -webkit-tap-highlight-color: transparent;
 }
