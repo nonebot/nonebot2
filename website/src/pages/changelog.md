@@ -49,6 +49,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 喵喵点歌 [@yanyongyu](https://github.com/yanyongyu) ([#1838](https://github.com/nonebot/nonebot2/pull/1838))
 - Plugin: ChatGLM-6B API 版 [@yanyongyu](https://github.com/yanyongyu) ([#1834](https://github.com/nonebot/nonebot2/pull/1834))
 - Plugin: ChatGLM [@yanyongyu](https://github.com/yanyongyu) ([#1831](https://github.com/nonebot/nonebot2/pull/1831))
 - Plugin: 基于 OpenAI 的 AI 模拟面试官 [@yanyongyu](https://github.com/yanyongyu) ([#1829](https://github.com/nonebot/nonebot2/pull/1829))
