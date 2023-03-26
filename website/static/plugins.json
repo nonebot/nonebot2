@@ -4983,5 +4983,24 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-helloworld",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_overbracket",
+    "project_link": "nonebot-plugin-overbracket",
+    "name": "通括膨胀",
+    "desc": "让你的机器人随机发括号",
+    "author": "NCBM",
+    "homepage": "https://github.com/NCBM/nonebot-plugin-overbracket",
+    "tags": [
+      {
+        "label": "t:useless",
+        "color": "#0a930e"
+      },
+      {
+        "label": "a:all",
+        "color": "#e15149"
+      }
+    ],
+    "is_official": false
   }
 ]
