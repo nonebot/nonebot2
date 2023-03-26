@@ -49,6 +49,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Hello World [@yanyongyu](https://github.com/yanyongyu) ([#1845](https://github.com/nonebot/nonebot2/pull/1845))
 - Plugin: 喵喵点歌 [@yanyongyu](https://github.com/yanyongyu) ([#1838](https://github.com/nonebot/nonebot2/pull/1838))
 - Plugin: ChatGLM-6B API 版 [@yanyongyu](https://github.com/yanyongyu) ([#1834](https://github.com/nonebot/nonebot2/pull/1834))
 - Plugin: ChatGLM [@yanyongyu](https://github.com/yanyongyu) ([#1831](https://github.com/nonebot/nonebot2/pull/1831))
