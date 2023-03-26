@@ -4973,5 +4973,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_helloworld",
+    "project_link": "nonebot-plugin-helloworld",
+    "name": "Hello World",
+    "desc": "你好，世界",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-helloworld",
+    "tags": [],
+    "is_official": false
   }
 ]
