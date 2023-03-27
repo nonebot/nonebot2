@@ -235,6 +235,10 @@ msg.extend([MessageSegment.text("text")])
 
 如果 `Message.template` 构建消息模板，那么消息模板将采用消息序列形式的格式化，此时的消息将会是平台特定的：
 
+:::warning 注意
+使用 `Message.template` 构建消息模板时，应注意消息序列为平台适配器提供的类型，不能使用 `nonebot.adapters.Message` 基类作为模板构建。使用基类构建模板与使用 `str` 构建模板的效果是一样的，因此请使用上述的 `MessageTemplate` 类直接构建模板。：
+:::
+
 ```python title=平台格式化用法
 >>> from nonebot.adapters.console import Message, MessageSegment
 >>> Message.template("{} {}").format("hello", "world")
