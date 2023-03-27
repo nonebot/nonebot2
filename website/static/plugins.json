@@ -5012,5 +5012,15 @@
     "homepage": "https://github.com/CMHopeSunshine/nonebot-plugin-miao",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_questionmark",
+    "project_link": "nonebot-plugin-questionmark",
+    "name": "颠倒问号",
+    "desc": "发送单个问号 `?` 或 `？`, bot会自动回复颠倒的问号 `¿`",
+    "author": "NumberSir",
+    "homepage": "https://github.com/NumberSir/nonebot-plugin-questionmark",
+    "tags": [],
+    "is_official": false
   }
 ]
