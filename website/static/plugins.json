@@ -5022,5 +5022,28 @@
     "homepage": "https://github.com/NumberSir/nonebot-plugin-questionmark",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_genshin_cos",
+    "project_link": "nonebot-plugin-genshin-cos",
+    "name": "原神cos",
+    "desc": "获取米游社cos图片",
+    "author": "Cvandia",
+    "homepage": "https://github.com/Cvandia/nonebot_plugin_genshin_cos",
+    "tags": [
+      {
+        "label": "t:原神",
+        "color": "#f55400"
+      },
+      {
+        "label": "t:cos",
+        "color": "#00d0f5"
+      },
+      {
+        "label": "t:coser",
+        "color": "#eb1dd3"
+      }
+    ],
+    "is_official": false
   }
 ]
