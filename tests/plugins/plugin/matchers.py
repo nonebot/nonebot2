@@ -1,6 +1,8 @@
+from typing import Type
 from datetime import datetime, timezone
 
 from nonebot.adapters import Event
+from nonebot.matcher import Matcher
 from nonebot import (
     CommandGroup,
     MatcherGroup,
@@ -48,6 +50,20 @@ matcher_on = on(
     block=True,
     state=state,
 )
+
+
+def matcher_on_factory() -> Type[Matcher]:
+    return on(
+        "test",
+        rule=rule,
+        permission=permission,
+        handlers=[handler],
+        temp=True,
+        expire_time=expire_time,
+        priority=priority,
+        block=True,
+        state=state,
+    )
 
 
 matcher_on_metaevent = on_metaevent(

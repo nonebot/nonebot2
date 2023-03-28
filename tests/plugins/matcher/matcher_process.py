@@ -90,3 +90,6 @@ async def overload(event: FakeEvent):
 @test_overload.handle()
 async def finish():
     await test_overload.finish()
+
+
+test_destroy = on_message()
