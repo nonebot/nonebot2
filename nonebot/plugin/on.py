@@ -31,13 +31,13 @@ from nonebot.rule import (
 from .manager import _current_plugin_chain
 
 
-def _store_matcher(matcher: Type[Matcher]) -> None:
+def store_matcher(matcher: Type[Matcher]) -> None:
     # only store the matcher defined in the plugin
     if plugins := _current_plugin_chain.get():
         plugins[-1].matcher.add(matcher)
 
 
-def _get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
+def get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
     current_frame = inspect.currentframe()
     if current_frame is None:
         return None
@@ -82,10 +82,10 @@ def on(
         block=block,
         handlers=handlers,
         plugin=plugin_chain[-1] if plugin_chain else None,
-        module=_get_matcher_module(_depth + 1),
+        module=get_matcher_module(_depth + 1),
         default_state=state,
     )
-    _store_matcher(matcher)
+    store_matcher(matcher)
     return matcher
 
 
