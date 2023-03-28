@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 添加 Message 基类模板使用警告 [@yanyongyu](https://github.com/yanyongyu) ([#1853](https://github.com/nonebot/nonebot2/pull/1853))
 - Docs: 移除 Messenger 移动端预期外的蓝色遮罩 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1842](https://github.com/nonebot/nonebot2/pull/1842))
 - Docs: 更新指向文档的链接 [@he0119](https://github.com/he0119) ([#1841](https://github.com/nonebot/nonebot2/pull/1841))
 - Docs: 更新 setup 动图 [@yanyongyu](https://github.com/yanyongyu) ([#1840](https://github.com/nonebot/nonebot2/pull/1840))
