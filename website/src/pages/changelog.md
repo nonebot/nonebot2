@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Test: 使用 conditional coverage 插件 [@yanyongyu](https://github.com/yanyongyu) ([#1858](https://github.com/nonebot/nonebot2/pull/1858))
 - Feature: 在 Windows 上处理 SIGBREAK 信号 [@he0119](https://github.com/he0119) ([#1836](https://github.com/nonebot/nonebot2/pull/1836))
 - Feature: 为子依赖添加 PEP593 `Annotated` 支持 [@mnixry](https://github.com/mnixry) ([#1832](https://github.com/nonebot/nonebot2/pull/1832))
 - Feature: 为 `User` 权限添加便捷创建方法 [@yanyongyu](https://github.com/yanyongyu) ([#1825](https://github.com/nonebot/nonebot2/pull/1825))
