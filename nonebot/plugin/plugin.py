@@ -47,7 +47,7 @@ class Plugin:
     manager: "PluginManager"
     """导入该插件的插件管理器"""
     matcher: Set[Type[Matcher]] = field(default_factory=set)
-    """插件内定义的 `Matcher`"""
+    """插件加载时定义的 `Matcher`"""
     parent_plugin: Optional["Plugin"] = None
     """父插件"""
     sub_plugins: Set["Plugin"] = field(default_factory=set)

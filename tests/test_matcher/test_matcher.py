@@ -80,6 +80,20 @@ async def test_matcher(app: App):
 
 
 @pytest.mark.asyncio
+async def test_matcher_destroy(app: App):
+    from plugins.matcher.matcher_process import test_destroy
+
+    async with app.test_matcher(test_destroy) as ctx:
+        assert len(matchers) == 1
+        assert len(matchers[test_destroy.priority]) == 1
+        assert matchers[test_destroy.priority][0] is test_destroy
+
+        test_destroy.destroy()
+
+        assert len(matchers[test_destroy.priority]) == 0
+
+
+@pytest.mark.asyncio
 async def test_type_updater(app: App):
     from plugins.matcher.matcher_type import test_type_updater, test_custom_updater
 
