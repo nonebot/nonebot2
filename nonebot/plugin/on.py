@@ -118,6 +118,7 @@ def on_message(*args, _depth: int = 0, **kwargs) -> Type[Matcher]:
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
+    kwargs.setdefault("block", True)
     return on("message", *args, **kwargs, _depth=_depth + 1)
 
 
@@ -274,10 +275,9 @@ def on_command(
     """
 
     commands = {cmd} | (aliases or set())
-    block = kwargs.pop("block", False)
+    kwargs.setdefault("block", False)
     return on_message(
         command(*commands, force_whitespace=force_whitespace) & rule,
-        block=block,
         **kwargs,
         _depth=_depth + 1,
     )
