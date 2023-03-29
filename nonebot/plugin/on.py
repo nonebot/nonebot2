@@ -33,24 +33,39 @@ from . import get_plugin_by_module_name
 from .manager import _current_plugin_chain
 
 
-def _store_matcher(matcher: Type[Matcher]) -> None:
+def store_matcher(matcher: Type[Matcher]) -> None:
+    """存储一个事件响应器到插件。
+
+    参数:
+        matcher: 事件响应器
+    """
     # only store the matcher defined when plugin loading
     if plugin_chain := _current_plugin_chain.get():
         plugin_chain[-1].matcher.add(matcher)
 
 
-def _get_matcher_plugin(depth: int = 1) -> Optional[Plugin]:
+def get_matcher_plugin(depth: int = 1) -> Optional[Plugin]:
+    """获取事件响应器定义所在插件。
+
+    参数:
+        depth: 调用栈深度
+    """
     # matcher defined when plugin loading
     if plugin_chain := _current_plugin_chain.get():
         return plugin_chain[-1]
 
     # matcher defined when plugin running
-    if module := _get_matcher_module(depth + 1):
+    if module := get_matcher_module(depth + 1):
         if plugin := get_plugin_by_module_name(module.__name__):
             return plugin
 
 
-def _get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
+def get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
+    """获取事件响应器定义所在模块。
+
+    参数:
+        depth: 调用栈深度
+    """
     current_frame = inspect.currentframe()
     if current_frame is None:
         return None
@@ -93,11 +108,11 @@ def on(
         priority=priority,
         block=block,
         handlers=handlers,
-        plugin=_get_matcher_plugin(_depth + 1),
-        module=_get_matcher_module(_depth + 1),
+        plugin=get_matcher_plugin(_depth + 1),
+        module=get_matcher_module(_depth + 1),
         default_state=state,
     )
-    _store_matcher(matcher)
+    store_matcher(matcher)
     return matcher
 
 
