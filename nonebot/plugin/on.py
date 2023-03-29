@@ -45,6 +45,11 @@ def store_matcher(matcher: Type[Matcher]) -> None:
 
 
 def get_matcher_plugin(depth: int = 1) -> Optional[Plugin]:
+    """获取事件响应器定义所在插件。
+
+    参数:
+        depth: 调用栈深度
+    """
     # matcher defined when plugin loading
     if plugin_chain := _current_plugin_chain.get():
         return plugin_chain[-1]
