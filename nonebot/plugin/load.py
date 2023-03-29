@@ -15,9 +15,9 @@ from .plugin import Plugin
 from .manager import PluginManager
 from . import _managers, get_plugin, _module_name_to_plugin_name
 
-try:
+try:  # pragma: py-gte-311
     import tomllib  # pyright: reportMissingImports=false
-except ModuleNotFoundError:
+except ModuleNotFoundError:  # pragma: py-lt-311
     import tomli as tomllib
 
 
