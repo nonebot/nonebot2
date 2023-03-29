@@ -19,7 +19,7 @@ FrontMatter:
 import logging
 import contextlib
 from functools import wraps
-from typing import Any, Dict, List, Tuple, Union, Callable, Optional
+from typing import Any, Dict, List, Tuple, Union, Optional
 
 from pydantic import BaseSettings
 
@@ -32,12 +32,14 @@ from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers import ReverseDriver, HTTPServerSetup, WebSocketServerSetup
 
+from ._lifespan import LIFESPAN_FUNC, Lifespan
+
 try:
     import uvicorn
     from fastapi.responses import Response
     from fastapi import FastAPI, Request, UploadFile, status
     from starlette.websockets import WebSocket, WebSocketState, WebSocketDisconnect
-except ImportError as e:  # pragma: no cover
+except ModuleNotFoundError as e:  # pragma: no cover
     raise ImportError(
         "Please install FastAPI by using `pip install nonebot2[fastapi]`"
     ) from e
@@ -92,7 +94,10 @@ class Driver(ReverseDriver):
 
         self.fastapi_config: Config = Config(**config.dict())
 
+        self._lifespan = Lifespan()
+
         self._server_app = FastAPI(
+            lifespan=self._lifespan_manager,
             openapi_url=self.fastapi_config.fastapi_openapi_url,
             docs_url=self.fastapi_config.fastapi_docs_url,
             redoc_url=self.fastapi_config.fastapi_redoc_url,
@@ -148,14 +153,20 @@ class Driver(ReverseDriver):
         )
 
     @overrides(ReverseDriver)
-    def on_startup(self, func: Callable) -> Callable:
-        """参考文档: `Events <https://fastapi.tiangolo.com/advanced/events/#startup-event>`_"""
-        return self.server_app.on_event("startup")(func)
+    def on_startup(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
+        return self._lifespan.on_startup(func)
 
     @overrides(ReverseDriver)
-    def on_shutdown(self, func: Callable) -> Callable:
-        """参考文档: `Events <https://fastapi.tiangolo.com/advanced/events/#shutdown-event>`_"""
-        return self.server_app.on_event("shutdown")(func)
+    def on_shutdown(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
+        return self._lifespan.on_shutdown(func)
+
+    @contextlib.asynccontextmanager
+    async def _lifespan_manager(self, app: FastAPI):
+        await self._lifespan.startup()
+        try:
+            yield
+        finally:
+            await self._lifespan.shutdown()
 
     @overrides(ReverseDriver)
     def run(
