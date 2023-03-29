@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Test: coverage condition invert [@yanyongyu](https://github.com/yanyongyu) ([#1862](https://github.com/nonebot/nonebot2/pull/1862))
 - Fix: 检测运行时创建响应器的插件 [@yanyongyu](https://github.com/yanyongyu) ([#1857](https://github.com/nonebot/nonebot2/pull/1857))
 - Fix: 修复事件响应器辅助函数丢失 block [@yanyongyu](https://github.com/yanyongyu) ([#1859](https://github.com/nonebot/nonebot2/pull/1859))
 - Fix: 修复 bot hook 缺少依赖缓存和上下文管理 [@yanyongyu](https://github.com/yanyongyu) ([#1826](https://github.com/nonebot/nonebot2/pull/1826))
