@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修复事件响应器辅助函数丢失 block [@yanyongyu](https://github.com/yanyongyu) ([#1859](https://github.com/nonebot/nonebot2/pull/1859))
 - Fix: 修复 bot hook 缺少依赖缓存和上下文管理 [@yanyongyu](https://github.com/yanyongyu) ([#1826](https://github.com/nonebot/nonebot2/pull/1826))
 - Fix: 会话更新依赖注入缺少缓存和上下文管理 [@yanyongyu](https://github.com/yanyongyu) ([#1807](https://github.com/nonebot/nonebot2/pull/1807))
 - Fix: 修复适配器能断开非自身所有的 Bot 对象 [@yanyongyu](https://github.com/yanyongyu) ([#1757](https://github.com/nonebot/nonebot2/pull/1757))
