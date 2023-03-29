@@ -19,7 +19,6 @@ from nonebot.consts import WINDOWS
 from nonebot.typing import overrides
 from nonebot.config import Env, Config
 from nonebot.drivers import Driver as BaseDriver
-from nonebot.utils import run_sync, is_coroutine_callable
 
 from ._lifespan import LIFESPAN_FUNC, Lifespan
 
