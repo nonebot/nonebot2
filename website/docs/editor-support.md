@@ -14,7 +14,10 @@ description: 配置编辑器以获得最佳体验
 在 Visual Studio Code 中，可以使用 Pylance Language Server 并启用 `Type Checking` 配置以达到最佳开发体验。
 
 1. 在 VSCode 插件视图搜索并安装 `Python (ms-python.python)` 和 `Pylance (ms-python.vscode-pylance)` 插件。
-2. 在 VSCode 设置视图搜索配置项或者向项目 `.vscode` 文件夹中配置文件添加以下内容：
+2. 修改 VSCode 配置
+   在 VSCode 设置视图搜索配置项 `Python: Language Server` 并将其值设置为 `Pylance`，搜索配置项 `Python > Analysis: Type Checking Mode` 并将其值设置为 `basic`。
+
+   或者向项目 `.vscode` 文件夹中配置文件添加以下内容：
 
    ```json title=settings.json
    {
