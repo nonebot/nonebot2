@@ -61,6 +61,11 @@ def get_matcher_plugin(depth: int = 1) -> Optional[Plugin]:
 
 
 def get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
+    """获取事件响应器定义所在模块。
+
+    参数:
+        depth: 调用栈深度
+    """
     current_frame = inspect.currentframe()
     if current_frame is None:
         return None
