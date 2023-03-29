@@ -10,7 +10,10 @@ from nonebot.dependencies import Dependent
 from nonebot.rule import Rule, ArgumentParser
 from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_PermissionChecker
 
+from .plugin import Plugin
+
 def store_matcher(matcher: Type[Matcher]) -> None: ...
+def get_matcher_plugin(depth: int = ...) -> Optional[Plugin]: ...
 def get_matcher_module(depth: int = ...) -> Optional[ModuleType]: ...
 def on(
     type: str = "",

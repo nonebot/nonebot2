@@ -49,6 +49,7 @@ nonebug = "^0.3.0"
 pytest-cov = "^4.0.0"
 pytest-xdist = "^3.0.2"
 pytest-asyncio = "^0.20.0"
+coverage-conditional-plugin = "^0.8.0"
 
 [tool.poetry.group.docs.dependencies]
 nb-autodoc = "^1.0.0a5"

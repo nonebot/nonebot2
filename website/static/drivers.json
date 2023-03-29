@@ -5,7 +5,7 @@
     "name": "None",
     "desc": "None 驱动器",
     "author": "yanyongyu",
-    "homepage": "/docs/tutorial/choose-driver",
+    "homepage": "/docs/advanced/driver",
     "tags": [],
     "is_official": true
   },
@@ -15,7 +15,7 @@
     "name": "FastAPI",
     "desc": "FastAPI 驱动器",
     "author": "yanyongyu",
-    "homepage": "/docs/tutorial/choose-driver",
+    "homepage": "/docs/advanced/driver",
     "tags": [],
     "is_official": true
   },
@@ -25,7 +25,7 @@
     "name": "Quart",
     "desc": "Quart 驱动器",
     "author": "yanyongyu",
-    "homepage": "/docs/tutorial/choose-driver",
+    "homepage": "/docs/advanced/driver",
     "tags": [],
     "is_official": true
   },
@@ -35,7 +35,7 @@
     "name": "HTTPX",
     "desc": "HTTPX 驱动器",
     "author": "yanyongyu",
-    "homepage": "/docs/tutorial/choose-driver",
+    "homepage": "/docs/advanced/driver",
     "tags": [],
     "is_official": true
   },
@@ -45,7 +45,7 @@
     "name": "websockets",
     "desc": "websockets 驱动器",
     "author": "yanyongyu",
-    "homepage": "/docs/tutorial/choose-driver",
+    "homepage": "/docs/advanced/driver",
     "tags": [],
     "is_official": true
   },
@@ -55,7 +55,7 @@
     "name": "AIOHTTP",
     "desc": "AIOHTTP 驱动器",
     "author": "yanyongyu",
-    "homepage": "/docs/tutorial/choose-driver",
+    "homepage": "/docs/advanced/driver",
     "tags": [],
     "is_official": true
   }

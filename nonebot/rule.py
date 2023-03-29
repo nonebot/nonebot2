@@ -541,7 +541,7 @@ class ShellCommandRule:
             try:
                 args = self.parser.parse_args(state[SHELL_ARGV])
                 state[SHELL_ARGS] = args
-            except ArgumentError as e:
+            except ArgumentError as e:  # pragma: py-gte-39
                 state[SHELL_ARGS] = ParserExit(status=2, message=str(e))
             except ParserExit as e:
                 state[SHELL_ARGS] = e

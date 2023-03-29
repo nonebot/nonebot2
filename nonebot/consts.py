@@ -4,6 +4,8 @@ FrontMatter:
     sidebar_position: 9
     description: nonebot.consts 模块
 """
+import os
+import sys
 from typing import Literal
 
 # used by Matcher
@@ -54,3 +56,5 @@ FULLMATCH_KEY: Literal["_fullmatch"] = "_fullmatch"
 """响应触发完整消息 key"""
 KEYWORD_KEY: Literal["_keyword"] = "_keyword"
 """响应触发关键字 key"""
+
+WINDOWS = sys.platform.startswith("win") or (sys.platform == "cli" and os.name == "nt")

@@ -28,13 +28,26 @@ from nonebot.rule import (
     shell_command,
 )
 
+from .plugin import Plugin
+from . import get_plugin_by_module_name
 from .manager import _current_plugin_chain
 
 
 def store_matcher(matcher: Type[Matcher]) -> None:
-    # only store the matcher defined in the plugin
-    if plugins := _current_plugin_chain.get():
-        plugins[-1].matcher.add(matcher)
+    # only store the matcher defined when plugin loading
+    if plugin_chain := _current_plugin_chain.get():
+        plugin_chain[-1].matcher.add(matcher)
+
+
+def get_matcher_plugin(depth: int = 1) -> Optional[Plugin]:
+    # matcher defined when plugin loading
+    if plugin_chain := _current_plugin_chain.get():
+        return plugin_chain[-1]
+
+    # matcher defined when plugin running
+    if module := get_matcher_module(depth + 1):
+        if plugin := get_plugin_by_module_name(module.__name__):
+            return plugin
 
 
 def get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
@@ -71,7 +84,6 @@ def on(
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
-    plugin_chain = _current_plugin_chain.get()
     matcher = Matcher.new(
         type,
         Rule() & rule,
@@ -81,7 +93,7 @@ def on(
         priority=priority,
         block=block,
         handlers=handlers,
-        plugin=plugin_chain[-1] if plugin_chain else None,
+        plugin=get_matcher_plugin(_depth + 1),
         module=get_matcher_module(_depth + 1),
         default_state=state,
     )
@@ -118,6 +130,7 @@ def on_message(*args, _depth: int = 0, **kwargs) -> Type[Matcher]:
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
     """
+    kwargs.setdefault("block", True)
     return on("message", *args, **kwargs, _depth=_depth + 1)
 
 
@@ -274,10 +287,9 @@ def on_command(
     """
 
     commands = {cmd} | (aliases or set())
-    block = kwargs.pop("block", False)
+    kwargs.setdefault("block", False)
     return on_message(
         command(*commands, force_whitespace=force_whitespace) & rule,
-        block=block,
         **kwargs,
         _depth=_depth + 1,
     )

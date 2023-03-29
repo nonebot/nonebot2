@@ -67,7 +67,12 @@ const config = {
           {
             label: "指南",
             type: "docsMenu",
-            category: "guide",
+            category: "tutorial",
+          },
+          {
+            label: "深入",
+            type: "docsMenu",
+            category: "appendices",
           },
           {
             label: "进阶",
@@ -79,14 +84,36 @@ const config = {
             type: "docLink",
             docId: "api/index",
           },
-          { label: "商店", to: "/store" },
-          { label: "更新日志", to: "/changelog" },
+          {
+            label: "更多",
+            type: "dropdown",
+            to: "/store",
+            items: [
+              {
+                label: "最佳实践",
+                type: "docLink",
+                docId: "best-practice/scheduler",
+              },
+              {
+                label: "开发者",
+                type: "docLink",
+                docId: "developer/plugin-publishing",
+              },
+              { label: "社区", type: "docLink", docId: "community/contact" },
+              { label: "商店", to: "/store" },
+              { label: "更新日志", to: "/changelog" },
+            ],
+          },
           {
             icon: ["fab", "github"],
             href: "https://github.com/nonebot/nonebot2",
           },
         ],
         docsVersionItemAfter: [
+          {
+            label: "2.0.0rc3",
+            href: "https://63ccf1c05efb245d36e901fa--nonebot2.netlify.app/",
+          },
           {
             label: "2.0.0a16",
             href: "https://61d3d9dbcadf413fd3238e89--nonebot2.netlify.app/",
@@ -121,7 +148,8 @@ const config = {
             icon: ["fas", "book"],
             items: [
               { label: "Introduction", to: "/docs/" },
-              { label: "Installation", to: "/docs/start/installation" },
+              // { label: "QuickStart", to: "/docs/quick-start" },
+              { label: "Changelog", to: "/changelog" },
             ],
           },
           {
@@ -136,7 +164,7 @@ const config = {
                 label: "NoneBot V1",
                 href: "https://docs.nonebot.dev",
               },
-              { label: "NoneBot V2", to: "/" },
+              { label: "NoneBot CLI", href: "https://cli.nonebot.dev" },
             ],
           },
           {

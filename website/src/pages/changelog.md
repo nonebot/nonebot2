@@ -9,6 +9,9 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 重构驱动器 lifespan 方法 [@yanyongyu](https://github.com/yanyongyu) ([#1860](https://github.com/nonebot/nonebot2/pull/1860))
+- Test: 使用 conditional coverage 插件 [@yanyongyu](https://github.com/yanyongyu) ([#1858](https://github.com/nonebot/nonebot2/pull/1858))
+- Feature: 在 Windows 上处理 SIGBREAK 信号 [@he0119](https://github.com/he0119) ([#1836](https://github.com/nonebot/nonebot2/pull/1836))
 - Feature: 为子依赖添加 PEP593 `Annotated` 支持 [@mnixry](https://github.com/mnixry) ([#1832](https://github.com/nonebot/nonebot2/pull/1832))
 - Feature: 为 `User` 权限添加便捷创建方法 [@yanyongyu](https://github.com/yanyongyu) ([#1825](https://github.com/nonebot/nonebot2/pull/1825))
 - Feature: 移除内置响应规则事件类型限制 [@yanyongyu](https://github.com/yanyongyu) ([#1824](https://github.com/nonebot/nonebot2/pull/1824))
@@ -23,12 +26,20 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Test: coverage condition invert [@yanyongyu](https://github.com/yanyongyu) ([#1862](https://github.com/nonebot/nonebot2/pull/1862))
+- Fix: 检测运行时创建响应器的插件 [@yanyongyu](https://github.com/yanyongyu) ([#1857](https://github.com/nonebot/nonebot2/pull/1857))
+- Fix: 修复事件响应器辅助函数丢失 block [@yanyongyu](https://github.com/yanyongyu) ([#1859](https://github.com/nonebot/nonebot2/pull/1859))
 - Fix: 修复 bot hook 缺少依赖缓存和上下文管理 [@yanyongyu](https://github.com/yanyongyu) ([#1826](https://github.com/nonebot/nonebot2/pull/1826))
 - Fix: 会话更新依赖注入缺少缓存和上下文管理 [@yanyongyu](https://github.com/yanyongyu) ([#1807](https://github.com/nonebot/nonebot2/pull/1807))
 - Fix: 修复适配器能断开非自身所有的 Bot 对象 [@yanyongyu](https://github.com/yanyongyu) ([#1757](https://github.com/nonebot/nonebot2/pull/1757))
 
 ### 📝 文档
 
+- Docs: 添加 Message 基类模板使用警告 [@yanyongyu](https://github.com/yanyongyu) ([#1853](https://github.com/nonebot/nonebot2/pull/1853))
+- Docs: 移除 Messenger 移动端预期外的蓝色遮罩 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1842](https://github.com/nonebot/nonebot2/pull/1842))
+- Docs: 更新指向文档的链接 [@he0119](https://github.com/he0119) ([#1841](https://github.com/nonebot/nonebot2/pull/1841))
+- Docs: 更新 setup 动图 [@yanyongyu](https://github.com/yanyongyu) ([#1840](https://github.com/nonebot/nonebot2/pull/1840))
+- Docs: 重写教程与进阶指南 [@yanyongyu](https://github.com/yanyongyu) ([#1604](https://github.com/nonebot/nonebot2/pull/1604))
 - Docs: pip 安装指令添加引号 [@3yude](https://github.com/3yude) ([#1724](https://github.com/nonebot/nonebot2/pull/1724))
 - Docs: 修正交互模式命令 [@3yude](https://github.com/3yude) ([#1719](https://github.com/nonebot/nonebot2/pull/1719))
 
@@ -44,6 +55,12 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 原神 cos [@yanyongyu](https://github.com/yanyongyu) ([#1855](https://github.com/nonebot/nonebot2/pull/1855))
+- Plugin: 颠倒问号 [@yanyongyu](https://github.com/yanyongyu) ([#1849](https://github.com/nonebot/nonebot2/pull/1849))
+- Plugin: nonebot-plugin-miao [@yanyongyu](https://github.com/yanyongyu) ([#1851](https://github.com/nonebot/nonebot2/pull/1851))
+- Plugin: 通括膨胀 [@yanyongyu](https://github.com/yanyongyu) ([#1847](https://github.com/nonebot/nonebot2/pull/1847))
+- Plugin: Hello World [@yanyongyu](https://github.com/yanyongyu) ([#1845](https://github.com/nonebot/nonebot2/pull/1845))
+- Plugin: 喵喵点歌 [@yanyongyu](https://github.com/yanyongyu) ([#1838](https://github.com/nonebot/nonebot2/pull/1838))
 - Plugin: ChatGLM-6B API 版 [@yanyongyu](https://github.com/yanyongyu) ([#1834](https://github.com/nonebot/nonebot2/pull/1834))
 - Plugin: ChatGLM [@yanyongyu](https://github.com/yanyongyu) ([#1831](https://github.com/nonebot/nonebot2/pull/1831))
 - Plugin: 基于 OpenAI 的 AI 模拟面试官 [@yanyongyu](https://github.com/yanyongyu) ([#1829](https://github.com/nonebot/nonebot2/pull/1829))

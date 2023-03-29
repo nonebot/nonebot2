@@ -4954,5 +4954,96 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nya_music",
+    "project_link": "nonebot-plugin-nya-music",
+    "name": "喵喵点歌",
+    "desc": "可听歌可下载，音乐源酷我音乐",
+    "author": "nikissXI",
+    "homepage": "https://github.com/nikissXI/nonebot_plugins/tree/main/nonebot_plugin_nya_music",
+    "tags": [
+      {
+        "label": "点歌",
+        "color": "#f05cea"
+      },
+      {
+        "label": "酷我",
+        "color": "#dea833"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_helloworld",
+    "project_link": "nonebot-plugin-helloworld",
+    "name": "Hello World",
+    "desc": "你好，世界",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-helloworld",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_overbracket",
+    "project_link": "nonebot-plugin-overbracket",
+    "name": "通括膨胀",
+    "desc": "让你的机器人随机发括号",
+    "author": "NCBM",
+    "homepage": "https://github.com/NCBM/nonebot-plugin-overbracket",
+    "tags": [
+      {
+        "label": "t:useless",
+        "color": "#0a930e"
+      },
+      {
+        "label": "a:all",
+        "color": "#e15149"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_miao",
+    "project_link": "nonebot-plugin-miao",
+    "name": "nonebot-plugin-miao",
+    "desc": "给Bot的发言添加一些奇怪的口癖",
+    "author": "CMHopeSunshine",
+    "homepage": "https://github.com/CMHopeSunshine/nonebot-plugin-miao",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_questionmark",
+    "project_link": "nonebot-plugin-questionmark",
+    "name": "颠倒问号",
+    "desc": "发送单个问号 `?` 或 `？`, bot会自动回复颠倒的问号 `¿`",
+    "author": "NumberSir",
+    "homepage": "https://github.com/NumberSir/nonebot-plugin-questionmark",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_genshin_cos",
+    "project_link": "nonebot-plugin-genshin-cos",
+    "name": "原神cos",
+    "desc": "获取米游社cos图片",
+    "author": "Cvandia",
+    "homepage": "https://github.com/Cvandia/nonebot_plugin_genshin_cos",
+    "tags": [
+      {
+        "label": "t:原神",
+        "color": "#f55400"
+      },
+      {
+        "label": "t:cos",
+        "color": "#00d0f5"
+      },
+      {
+        "label": "t:coser",
+        "color": "#eb1dd3"
+      }
+    ],
+    "is_official": false
   }
 ]
