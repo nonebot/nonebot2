@@ -34,6 +34,11 @@ from .manager import _current_plugin_chain
 
 
 def store_matcher(matcher: Type[Matcher]) -> None:
+    """存储一个事件响应器到插件。
+
+    参数:
+        matcher: 事件响应器
+    """
     # only store the matcher defined when plugin loading
     if plugin_chain := _current_plugin_chain.get():
         plugin_chain[-1].matcher.add(matcher)
