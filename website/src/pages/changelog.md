@@ -58,6 +58,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: ChatGPT 网页端 API [@yanyongyu](https://github.com/yanyongyu) ([#1865](https://github.com/nonebot/nonebot2/pull/1865))
 - Plugin: 原神 cos [@yanyongyu](https://github.com/yanyongyu) ([#1855](https://github.com/nonebot/nonebot2/pull/1855))
 - Plugin: 颠倒问号 [@yanyongyu](https://github.com/yanyongyu) ([#1849](https://github.com/nonebot/nonebot2/pull/1849))
 - Plugin: nonebot-plugin-miao [@yanyongyu](https://github.com/yanyongyu) ([#1851](https://github.com/nonebot/nonebot2/pull/1851))
