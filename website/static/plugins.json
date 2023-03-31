@@ -5045,5 +5045,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chatgpt_plus",
+    "project_link": "nonebot-plugin-chatgpt-plus",
+    "name": "ChatGPT网页端API",
+    "desc": "免费、无限使用ChatGPT，PLUS账号可使用ChatGPT4.0，绕过ChatGPT的Cloudflare盾来使用免费网页端ChatGPT",
+    "author": "AkashiCoin",
+    "homepage": "https://github.com/AkashiCoin/nonebot-plugin-chatgpt-plus",
+    "tags": [
+      {
+        "label": "ChatGPT",
+        "color": "#ea5252"
+      },
+      {
+        "label": "GPT4",
+        "color": "#2ecf57"
+      }
+    ],
+    "is_official": false
   }
 ]
