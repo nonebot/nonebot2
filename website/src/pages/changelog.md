@@ -36,6 +36,8 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修改 NoneBug 独立测试模式流程控制参数 [@yanyongyu](https://github.com/yanyongyu) ([#1866](https://github.com/nonebot/nonebot2/pull/1866))
+- Docs: 添加 VSCode 配置项名称 [@yanyongyu](https://github.com/yanyongyu) ([#1863](https://github.com/nonebot/nonebot2/pull/1863))
 - Docs: 添加 Message 基类模板使用警告 [@yanyongyu](https://github.com/yanyongyu) ([#1853](https://github.com/nonebot/nonebot2/pull/1853))
 - Docs: 移除 Messenger 移动端预期外的蓝色遮罩 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#1842](https://github.com/nonebot/nonebot2/pull/1842))
 - Docs: 更新指向文档的链接 [@he0119](https://github.com/he0119) ([#1841](https://github.com/nonebot/nonebot2/pull/1841))
