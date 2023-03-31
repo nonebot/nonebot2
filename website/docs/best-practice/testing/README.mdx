@@ -171,7 +171,7 @@ async def test_weather(app: App):
         bot = ctx.create_bot()
         ctx.receive_event(bot, event)
         ctx.should_call_send(event, "今天北京的天气是...", result=None)
-        ctx.should_finished()
+        ctx.should_finished(weather)
 ```
 
 这里我们使用 `async with` 语句并通过参数指定要测试的事件响应器 `weather` 来进入测试上下文。在测试上下文中，我们可以使用 `ctx.create_bot` 方法创建一个虚拟的机器人实例，并使用 `ctx.receive_event` 方法来模拟机器人接收到消息事件。然后，我们就可以定义预期行为来测试机器人是否正确运行。在上面的代码中，我们使用 `ctx.should_call_send` 方法来断言机器人应该发送 `今天北京的天气是...` 这条消息，并且将发送函数的调用结果作为第三个参数返回给事件处理函数。如果断言失败，测试将会不通过。我们也可以使用 `ctx.should_finished` 方法来断言机器人应该结束会话。
@@ -199,12 +199,12 @@ async def test_weather(app: App):
         event = make_event("/天气 南京")
         ctx.receive_event(bot, event)
         ctx.should_call_send(event, "你想查询的城市 南京 暂不支持，请重新输入！", result=None)
-        ctx.should_rejected()
+        ctx.should_rejected(weather)
 
         event = make_event("北京")
         ctx.receive_event(bot, event)
         ctx.should_call_send(event, "今天北京的天气是...", result=None)
-        ctx.should_finished()
+        ctx.should_finished(weather)
 ```
 
 在上面的代码中，我们使用 `ctx.should_rejected` 来断言机器人应该请求用户重新输入。然后，我们再次使用 `ctx.receive_event` 方法来模拟用户回复了 `北京`，并使用 `ctx.should_finished` 来断言机器人应该结束会话。
