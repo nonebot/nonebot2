@@ -5064,5 +5064,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sayoroll",
+    "project_link": "nonebot-plugin-sayoroll",
+    "name": "ROLL",
+    "desc": "高仿小夜的roll功能",
+    "author": "mas-alone",
+    "homepage": "https://github.com/mas-alone/nonebot-plugin-sayoroll",
+    "tags": [],
+    "is_official": false
   }
 ]
