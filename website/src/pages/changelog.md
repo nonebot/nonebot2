@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💫 杂项
+
+- CI: 移除 poetry 版本限制 [@yanyongyu](https://github.com/yanyongyu) ([#1872](https://github.com/nonebot/nonebot2/pull/1872))
+
 ### 🍻 插件发布
 
 - Plugin: 激战 2！！！ [@yanyongyu](https://github.com/yanyongyu) ([#1871](https://github.com/nonebot/nonebot2/pull/1871))
