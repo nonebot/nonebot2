@@ -11,7 +11,7 @@ runs:
   using: "composite"
   steps:
     - name: Install poetry
-      run: pipx install poetry==1.3.2
+      run: pipx install poetry
       shell: bash
 
     - uses: actions/setup-python@v4
