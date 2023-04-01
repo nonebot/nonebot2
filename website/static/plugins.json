@@ -5074,5 +5074,20 @@
     "homepage": "https://github.com/mas-alone/nonebot-plugin-sayoroll",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-gw2",
+    "project_link": "nonebot-plugin-gw2",
+    "name": "激战2！！！",
+    "desc": "通过激战2星岬岛来返回信息",
+    "author": "Umamusume-Agnes-Digital",
+    "homepage": "https://github.com/Umamusume-Agnes-Digital/nonebot_plugin_gw2",
+    "tags": [
+      {
+        "label": "gw2",
+        "color": "#52ea5a"
+      }
+    ],
+    "is_official": false
   }
 ]
