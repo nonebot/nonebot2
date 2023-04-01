@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 🍻 插件发布
+
+- Plugin: ROLL [@yanyongyu](https://github.com/yanyongyu) ([#1868](https://github.com/nonebot/nonebot2/pull/1868))
+
 ## v2.0.0rc4
 
 ### 🚀 新功能
