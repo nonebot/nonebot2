@@ -5089,5 +5089,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_today_waifu",
+    "project_link": "nonebot-plugin-today-waifu",
+    "name": "今日老婆",
+    "desc": "随机抓取群友做老婆",
+    "author": "glamorgan9826",
+    "homepage": "https://github.com/glamorgan9826/nonebot-plugin-today-waifu",
+    "tags": [
+      {
+        "label": "娱乐",
+        "color": "#eac752"
+      },
+      {
+        "label": "每日老婆",
+        "color": "#9beff6"
+      }
+    ],
+    "is_official": false
   }
 ]
