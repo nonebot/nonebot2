@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 今日老婆 [@yanyongyu](https://github.com/yanyongyu) ([#1874](https://github.com/nonebot/nonebot2/pull/1874))
 - Plugin: 激战 2！！！ [@yanyongyu](https://github.com/yanyongyu) ([#1871](https://github.com/nonebot/nonebot2/pull/1871))
 - Plugin: ROLL [@yanyongyu](https://github.com/yanyongyu) ([#1868](https://github.com/nonebot/nonebot2/pull/1868))
 
