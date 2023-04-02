@@ -5108,5 +5108,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sleep",
+    "project_link": "nonebot-plugin-sleep",
+    "name": "来份睡眠套餐",
+    "desc": "让bot给你一份精致的睡眠套餐(发指令禁言)",
+    "author": "mas-alone",
+    "homepage": "https://github.com/mas-alone/nonebot-plugin-sleep",
+    "tags": [],
+    "is_official": false
   }
 ]
