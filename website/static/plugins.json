@@ -5118,5 +5118,15 @@
     "homepage": "https://github.com/mas-alone/nonebot-plugin-sleep",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_api_paddle",
+    "project_link": "nonebot-api-paddle",
+    "name": "nonebot_api_paddle",
+    "desc": "nonebot_api_paddleocr",
+    "author": "canxin121",
+    "homepage": "https://github.com/canxin121/nonebot_api_paddleocr",
+    "tags": [],
+    "is_official": false
   }
 ]
