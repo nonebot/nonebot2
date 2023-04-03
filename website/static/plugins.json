@@ -5153,5 +5153,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_steam_game_status",
+    "project_link": "nonebot-plugin-steam-game-status",
+    "name": "Steam游戏状态播报",
+    "desc": "在群内监控播报群友的Steam游戏状态",
+    "author": "nek0us",
+    "homepage": "https://github.com/nek0us/nonebot_plugin_steam_game_status",
+    "tags": [
+      {
+        "label": "t:Steam",
+        "color": "#6690a5"
+      }
+    ],
+    "is_official": false
   }
 ]
