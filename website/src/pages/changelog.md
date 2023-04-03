@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot_api_paddle [@yanyongyu](https://github.com/yanyongyu) ([#1880](https://github.com/nonebot/nonebot2/pull/1880))
 - Plugin: 来份睡眠套餐 [@yanyongyu](https://github.com/yanyongyu) ([#1876](https://github.com/nonebot/nonebot2/pull/1876))
 - Plugin: 今日老婆 [@yanyongyu](https://github.com/yanyongyu) ([#1874](https://github.com/nonebot/nonebot2/pull/1874))
 - Plugin: 激战 2！！！ [@yanyongyu](https://github.com/yanyongyu) ([#1871](https://github.com/nonebot/nonebot2/pull/1871))
