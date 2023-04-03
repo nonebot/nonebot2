@@ -5128,5 +5128,15 @@
     "homepage": "https://github.com/canxin121/nonebot_api_paddleocr",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_paddle_ocr",
+    "project_link": "nonebot-paddle-ocr",
+    "name": "nonebot_paddle_ocr",
+    "desc": "nonebot_paddle_ocr",
+    "author": "canxin121",
+    "homepage": "https://github.com/canxin121/nonebot_paddle_ocr",
+    "tags": [],
+    "is_official": false
   }
 ]
