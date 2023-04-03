@@ -94,27 +94,58 @@ nb docker up
 
 当看到 `Running` 字样时，说明机器人已经启动成功。我们可以通过以下命令来查看机器人的运行日志：
 
+<Tabs groupId="deploy-tool">
+  <TabItem value="nb-cli" label="NB CLI" default>
+
 ```bash
 nb docker logs
 ```
 
+  </TabItem>
+  <TabItem value="docker-compose" label="Docker Compose">
+
+```bash
+docker compose logs
+```
+
+  </TabItem>
+</Tabs>
+
 如果需要停止机器人，我们可以使用以下命令：
+
+<Tabs groupId="deploy-tool">
+  <TabItem value="nb-cli" label="NB CLI" default>
 
 ```bash
 nb docker down
 ```
 
+  </TabItem>
+  <TabItem value="docker-compose" label="Docker Compose">
+
+```bash
+docker compose down
+```
+
+  </TabItem>
+</Tabs>
+
 ### 自定义部署
 
-通常情况下，自动生成的配置文件并不能满足复杂场景，我们需要根据实际需求手动修改配置文件。使用以下命令来生成基础配置文件：
+在部分情况下，我们需要事先生成 Docker 配置文件，再到生产环境进行部署；或者自动生成的配置文件并不能满足复杂场景，需要根据实际需求手动修改配置文件。我们可以使用以下命令来生成基础配置文件：
 
 ```bash
 nb docker generate
 ```
 
-nb-cli 将会在项目目录下生成 `docker-compose.yml` 和 `Dockerfile` 等配置文件，我们可以参考 [Dockerfile 文件规范](https://docs.docker.com/engine/reference/builder/)和 [Compose 文件规范](https://docs.docker.com/compose/compose-file/)修改这两个文件。
+nb-cli 将会在项目目录下生成 `docker-compose.yml` 和 `Dockerfile` 等配置文件。在 nb-cli 完成配置文件的生成后，我们可以根据部署环境的实际情况使用 nb-cli 或者 Docker Compose 来启动机器人。
+
+我们可以参考 [Dockerfile 文件规范](https://docs.docker.com/engine/reference/builder/)和 [Compose 文件规范](https://docs.docker.com/compose/compose-file/)修改这两个文件。
 
 修改完成后我们可以直接启动或者手动构建镜像：
+
+<Tabs groupId="deploy-tool">
+  <TabItem value="nb-cli" label="NB CLI" default>
 
 ```bash
 # 启动机器人
@@ -122,6 +153,19 @@ nb docker up
 # 手动构建镜像
 nb docker build
 ```
+
+  </TabItem>
+  <TabItem value="docker-compose" label="Docker Compose">
+
+```bash
+# 启动机器人
+docker compose up -d
+# 手动构建镜像
+docker compose build
+```
+
+  </TabItem>
+</Tabs>
 
 ### 持续集成
 
