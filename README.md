@@ -49,9 +49,9 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
   </a>
   <a href="https://bot.q.qq.com/wiki/">
     <img src="https://img.shields.io/badge/QQ%E9%A2%91%E9%81%93-Bot-lightgrey?style=social&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMTIuODIgMTMwLjg5Ij48ZyBkYXRhLW5hbWU9IuWbvuWxgiAyIj48ZyBkYXRhLW5hbWU9IuWbvuWxgiAxIj48cGF0aCBkPSJNNTUuNjMgMTMwLjhjLTcgMC0xMy45LjA4LTIwLjg2IDAtMTkuMTUtLjI1LTMxLjcxLTExLjQtMzQuMjItMzAuMy00LjA3LTMwLjY2IDE0LjkzLTU5LjIgNDQuODMtNjYuNjQgMi0uNTEgNS4yMS0uMzEgNS4yMS0xLjYzIDAtMi4xMy4xNC0yLjEzLjE0LTUuNTcgMC0uODktMS4zLTEuNDYtMi4yMi0yLjMxLTYuNzMtNi4yMy03LjY3LTEzLjQxLTEtMjAuMTggNS40LTUuNTIgMTEuODctNS40IDE3LjgtLjU5IDYuNDkgNS4yNiA2LjMxIDEzLjA4LS44NiAyMS0uNjguNzQtMS43OCAxLjYtMS43OCAyLjY3djQuMjFjMCAxLjM1IDIuMiAxLjYyIDQuNzkgMi4zNSAzMS4wOSA4LjY1IDQ4LjE3IDM0LjEzIDQ1IDY2LjM3LTEuNzYgMTguMTUtMTQuNTYgMzAuMjMtMzIuNyAzMC42My04LjAyLjE5LTE2LjA3LS4wMS0yNC4xMy0uMDF6IiBmaWxsPSIjMDI5OWZlIi8+PHBhdGggZD0iTTMxLjQ2IDExOC4zOGMtMTAuNS0uNjktMTYuOC02Ljg2LTE4LjM4LTE3LjI3LTMtMTkuNDIgMi43OC0zNS44NiAxOC40Ni00Ny44MyAxNC4xNi0xMC44IDI5Ljg3LTEyIDQ1LjM4LTMuMTkgMTcuMjUgOS44NCAyNC41OSAyNS44MSAyNCA0NS4yOS0uNDkgMTUuOS04LjQyIDIzLjE0LTI0LjM4IDIzLjUtNi41OS4xNC0xMy4xOSAwLTE5Ljc5IDAiIGZpbGw9IiNmZWZlZmUiLz48cGF0aCBkPSJNNDYuMDUgNzkuNThjLjA5IDUgLjIzIDkuODItNyA5Ljc3LTcuODItLjA2LTYuMS01LjY5LTYuMjQtMTAuMTktLjE1LTQuODItLjczLTEwIDYuNzMtOS44NHM2LjM3IDUuNTUgNi41MSAxMC4yNnoiIGZpbGw9IiMxMDlmZmUiLz48cGF0aCBkPSJNODAuMjcgNzkuMjdjLS41MyAzLjkxIDEuNzUgOS42NC01Ljg4IDEwLTcuNDcuMzctNi44MS00LjgyLTYuNjEtOS41LjItNC4zMi0xLjgzLTEwIDUuNzgtMTAuNDJzNi41OSA0Ljg5IDYuNzEgOS45MnoiIGZpbGw9IiMwODljZmUiLz48L2c+PC9nPjwvc3ZnPg==" alt="QQ频道">
-  <a href="https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p">
-    <img src="https://img.shields.io/badge/%E9%92%89%E9%92%89-Bot-lightgrey?style=social&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAnFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4jUzeAAAAM3RSTlMAQKSRaA+/f0YyFevh29R3cyklIfrlyrGsn41tVUs48c/HqJm9uZdhX1otGwkF9IN8V1CX0Q+IAAABY0lEQVRYw+3V2W7CMBAF0JuNQAhhX9OEfYdu9///rUVWpagE27Ef2gfO+0zGozsKnv6bMGzAhkNytIe5gDdzrwtTCwrbI8x4/NF668NAxgI3Q3UtFi3TyPwNQtPLUUmDd8YfqGLNe4v22XwEYb5zoOuF5baHq2UHtsKe5ivWfGAwrWu2mC34QM0PoCAuqZdOmiwV+5BLyMRtZ7dTSEcs48rzWfzwptMLyzpApka1SJ5FtR4kfCqNIBPEVDmqoqgwUYY5plQOlf6UEjNoOPnuKB6wzDyCrks///TDza8+PnR109WQdxLo8RKWq0PPnuXG0OXKQ6wWLFnCg75uYYbhmMIVVdQ709q33aHbGIj6Duz+2k1HQFX9VwqmY8xYsEJll2ahvhWgsjYLHFRXvIi2Qb0jzMQCzC3FAoydxCma88UCzE3JCWwkjCNYyMUCzHX4DiuTMawEwwhW6hnshPhjZzzJfAH0YacpbmRd7QAAAABJRU5ErkJggg==" alt="dingtalk">
   </a>
+  <!-- <a href="https://ding-doc.dingtalk.com/document#/org-dev-guide/elzz1p">
+    <img src="https://img.shields.io/badge/%E9%92%89%E9%92%89-Bot-lightgrey?style=social&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAEAAAABACAMAAACdt4HsAAAAnFBMVEUAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAD4jUzeAAAAM3RSTlMAQKSRaA+/f0YyFevh29R3cyklIfrlyrGsn41tVUs48c/HqJm9uZdhX1otGwkF9IN8V1CX0Q+IAAABY0lEQVRYw+3V2W7CMBAF0JuNQAhhX9OEfYdu9///rUVWpagE27Ef2gfO+0zGozsKnv6bMGzAhkNytIe5gDdzrwtTCwrbI8x4/NF668NAxgI3Q3UtFi3TyPwNQtPLUUmDd8YfqGLNe4v22XwEYb5zoOuF5baHq2UHtsKe5ivWfGAwrWu2mC34QM0PoCAuqZdOmiwV+5BLyMRtZ7dTSEcs48rzWfzwptMLyzpApka1SJ5FtR4kfCqNIBPEVDmqoqgwUYY5plQOlf6UEjNoOPnuKB6wzDyCrks///TDza8+PnR109WQdxLo8RKWq0PPnuXG0OXKQ6wWLFnCg75uYYbhmMIVVdQ709q33aHbGIj6Duz+2k1HQFX9VwqmY8xYsEJll2ahvhWgsjYLHFRXvIi2Qb0jzMQCzC3FAoydxCma88UCzE3JCWwkjCNYyMUCzHX4DiuTMawEwwhW6hnshPhjZzzJfAH0YacpbmRd7QAAAABJRU5ErkJggg==" alt="dingtalk"> -->
   </a>
   <br />
   <a href="https://jq.qq.com/?_wv=1027&k=5OFifDh">
@@ -94,20 +94,21 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
 - 社区丰富：社区用户众多，直接和间接用户超过十万人，每天都有大量的活跃用户 ([社区资源](#社区资源))
 - 海纳百川：一个框架，支持多个聊天软件平台，可自定义通信协议
 
-  |                                 协议名称                                  | 状态 |                                注释                                |
-  | :-----------------------------------------------------------------------: | :--: | :----------------------------------------------------------------: |
-  |                    [OneBot 协议](https://onebot.dev/)                     |  ✅  | 支持 QQ、TG、微信公众号等[平台](https://onebot.dev/ecosystem.html) |
-  |              [Telegram](https://core.telegram.org/bots/api)               |  ✅  |                                                                    |
-  |            [飞书](https://open.feishu.cn/document/home/index)             |  ✅  |                                                                    |
-  |           [GitHub](https://docs.github.com/en/developers/apps)            |  ✅  |                       GitHub APP & OAuth APP                       |
-  |                   [QQ 频道](https://bot.q.qq.com/wiki/)                   |  ✅  |                          官方接口调整较多                          |
-  |                [钉钉](https://open.dingtalk.com/document/)                |  🤗  |                          寻找 Maintainer                           |
-  |                                  Console                                  |  ✅  |                             控制台交互                             |
-  |                  [开黑啦](https://developer.kookapp.cn/)                  |  ↗️  |                             由社区贡献                             |
-  |           [Mirai](https://docs.mirai.mamoe.net/mirai-api-http/)           |  ↗️  |                             由社区贡献                             |
-  |        [Ntchat](https://github.com/JustUndertaker/adapter-ntchat)         |  ↗️  |                             由社区贡献                             |
-  | [MineCraft (Spigot)](https://github.com/17TheWord/nonebot-adapter-spigot) |  ↗️  |                             由社区贡献                             |
-  |        [BiliBili Live](https://github.com/wwweww/adapter-bilibili)        |  ↗️  |                             由社区贡献                             |
+  |                                  协议名称                                   | 状态 |                                注释                                |
+  | :-------------------------------------------------------------------------: | :--: | :----------------------------------------------------------------: |
+  |                     [OneBot 协议](https://onebot.dev/)                      |  ✅  | 支持 QQ、TG、微信公众号等[平台](https://onebot.dev/ecosystem.html) |
+  |               [Telegram](https://core.telegram.org/bots/api)                |  ✅  |                                                                    |
+  |             [飞书](https://open.feishu.cn/document/home/index)              |  ✅  |                                                                    |
+  |            [GitHub](https://docs.github.com/en/developers/apps)             |  ✅  |                       GitHub APP & OAuth APP                       |
+  |                    [QQ 频道](https://bot.q.qq.com/wiki/)                    |  ✅  |                          官方接口调整较多                          |
+  |                 [钉钉](https://open.dingtalk.com/document/)                 |  🤗  |                     寻找 Maintainer (暂不可用)                     |
+  |                                   Console                                   |  ✅  |                             控制台交互                             |
+  |                   [开黑啦](https://developer.kookapp.cn/)                   |  ↗️  |                             由社区贡献                             |
+  |            [Mirai](https://docs.mirai.mamoe.net/mirai-api-http/)            |  ↗️  |                             由社区贡献                             |
+  |         [Ntchat](https://github.com/JustUndertaker/adapter-ntchat)          |  ↗️  |                             由社区贡献                             |
+  |  [MineCraft (Spigot)](https://github.com/17TheWord/nonebot-adapter-spigot)  |  ↗️  |                             由社区贡献                             |
+  |         [BiliBili Live](https://github.com/wwweww/adapter-bilibili)         |  ↗️  |                             由社区贡献                             |
+  | [Walle-Q (QQ 协议)](https://github.com/onebot-walle/nonebot_adapter_walleq) |  ↗️  |                             由社区贡献                             |
 
 - 坚实后盾：支持多种 web 框架，可自定义替换、组合
 
