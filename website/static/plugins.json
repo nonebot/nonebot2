@@ -5138,5 +5138,20 @@
     "homepage": "https://github.com/canxin121/nonebot_paddle_ocr",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chatppt",
+    "project_link": "nonebot-plugin-chatppt",
+    "name": "AI生成PPT",
+    "desc": "在nonebot框架下实现一个AI生成指定主题PPT的文件并上传到群文件中",
+    "author": "Alpaca4610",
+    "homepage": "https://github.com/Alpaca4610/nonebot-plugin-chatppt",
+    "tags": [
+      {
+        "label": "ChatGPT",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
