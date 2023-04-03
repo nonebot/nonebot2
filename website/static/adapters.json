@@ -138,5 +138,20 @@
     "homepage": "https://github.com/wwweww/adapter-bilibili",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_adapter_walleq",
+    "project_link": "nonebot-adapter-walleq",
+    "name": "Walle-Q",
+    "desc": "内置 QQ 协议实现",
+    "author": "abrahum",
+    "homepage": "https://github.com/onebot-walle/nonebot_adapter_walleq",
+    "tags": [
+      {
+        "label": "QQ",
+        "color": "#34a9cc"
+      }
+    ],
+    "is_official": false
   }
 ]
