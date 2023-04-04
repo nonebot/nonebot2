@@ -18,9 +18,16 @@ jobs:
       group: pull-request-changelog
       cancel-in-progress: true
     steps:
+      - name: Generate token
+        id: generate-token
+        uses: tibdex/github-app-token@v1
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_KEY }}
+
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          token: ${{ steps.generate-token.outputs.token }}
 
       - name: Setup Node Environment
         uses: ./.github/actions/setup-node
@@ -43,8 +50,8 @@ jobs:
       - name: Commit and Push
         run: |
           yarn prettier
-          git config user.name github-actions[bot]
-          git config user.email github-actions[bot]@users.noreply.github.com
+          git config user.name noneflow[bot]
+          git config user.email 129742071+noneflow[bot]@users.noreply.github.com
           git add .
           git diff-index --quiet HEAD || git commit -m ":memo: Update changelog"
           git push
