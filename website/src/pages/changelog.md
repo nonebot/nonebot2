@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- CI: 使用 NoneFlow 管理工作流 [@yanyongyu](https://github.com/yanyongyu) ([#1892](https://github.com/nonebot/nonebot2/pull/1892))
 - CI: 移除 poetry 版本限制 [@yanyongyu](https://github.com/yanyongyu) ([#1872](https://github.com/nonebot/nonebot2/pull/1872))
 
 ### 🍻 插件发布
