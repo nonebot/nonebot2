@@ -28,6 +28,10 @@ toc_max_heading_level: 2
 - Plugin: 激战 2！！！ [@yanyongyu](https://github.com/yanyongyu) ([#1871](https://github.com/nonebot/nonebot2/pull/1871))
 - Plugin: ROLL [@yanyongyu](https://github.com/yanyongyu) ([#1868](https://github.com/nonebot/nonebot2/pull/1868))
 
+### 🍻 机器人发布
+
+- Bot: CoolQBot [@noneflow](https://github.com/noneflow) ([#1894](https://github.com/nonebot/nonebot2/pull/1894))
+
 ### 🍻 适配器发布
 
 - Adapter: Walle-Q [@yanyongyu](https://github.com/yanyongyu) ([#1889](https://github.com/nonebot/nonebot2/pull/1889))
