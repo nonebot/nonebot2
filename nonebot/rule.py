@@ -67,7 +67,7 @@ CMD_RESULT = TypedDict(
     {
         "command": Optional[Tuple[str, ...]],
         "raw_command": Optional[str],
-        "command_arg": Optional[Message[MessageSegment]],
+        "command_arg": Optional[Message],
         "command_start": Optional[str],
         "command_whitespace": Optional[str],
     },

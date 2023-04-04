@@ -13,7 +13,7 @@ def escape_text(s: str, *, escape_comma: bool = True) -> str:
 
 
 def make_fake_message():
-    class FakeMessageSegment(MessageSegment):
+    class FakeMessageSegment(MessageSegment["FakeMessage"]):
         @classmethod
         def get_message_class(cls):
             return FakeMessage
@@ -36,7 +36,7 @@ def make_fake_message():
         def is_text(self) -> bool:
             return self.type == "text"
 
-    class FakeMessage(Message):
+    class FakeMessage(Message[FakeMessageSegment]):
         @classmethod
         def get_segment_class(cls):
             return FakeMessageSegment
@@ -50,7 +50,9 @@ def make_fake_message():
                     yield FakeMessageSegment(**seg)
             return
 
-        def __add__(self, other):
+        def __add__(
+            self, other: Union[str, FakeMessageSegment, Iterable[FakeMessageSegment]]
+        ):
             other = escape_text(other) if isinstance(other, str) else other
             return super().__add__(other)
 
