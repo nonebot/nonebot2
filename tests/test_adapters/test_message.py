@@ -41,6 +41,26 @@ def test_segment_validate():
         parse_obj_as(MessageSegment, {"data": {}})
 
 
+def test_segment_join():
+    Message = make_fake_message()
+    MessageSegment = Message.get_segment_class()
+
+    seg = MessageSegment.text("test")
+    iterable = [
+        MessageSegment.text("first"),
+        Message([MessageSegment.text("second"), MessageSegment.text("third")]),
+    ]
+
+    assert seg.join(iterable) == Message(
+        [
+            MessageSegment.text("first"),
+            MessageSegment.text("test"),
+            MessageSegment.text("second"),
+            MessageSegment.text("third"),
+        ]
+    )
+
+
 def test_segment():
     Message = make_fake_message()
     MessageSegment = Message.get_segment_class()
@@ -146,3 +166,124 @@ def test_message_validate():
 
     with pytest.raises(ValidationError):
         parse_obj_as(Message, object())
+
+
+def test_message_contains():
+    Message = make_fake_message()
+    MessageSegment = Message.get_segment_class()
+
+    message = Message(
+        [
+            MessageSegment.text("test"),
+            MessageSegment.image("test2"),
+            MessageSegment.image("test3"),
+            MessageSegment.text("test4"),
+        ]
+    )
+
+    assert message.has(MessageSegment.text("test")) is True
+    assert MessageSegment.text("test") in message
+    assert message.has("image") is True
+    assert "image" in message
+
+    assert message.has(MessageSegment.text("foo")) is False
+    assert MessageSegment.text("foo") not in message
+    assert message.has("foo") is False
+    assert "foo" not in message
+
+
+def test_message_only():
+    Message = make_fake_message()
+    MessageSegment = Message.get_segment_class()
+
+    message = Message(
+        [
+            MessageSegment.text("test"),
+            MessageSegment.text("test2"),
+        ]
+    )
+
+    assert message.only("text") is True
+    assert message.only(MessageSegment.text("test")) is False
+
+    message = Message(
+        [
+            MessageSegment.text("test"),
+            MessageSegment.image("test2"),
+            MessageSegment.image("test3"),
+            MessageSegment.text("test4"),
+        ]
+    )
+
+    assert message.only("text") is False
+
+    message = Message(
+        [
+            MessageSegment.text("test"),
+            MessageSegment.text("test"),
+        ]
+    )
+
+    assert message.only(MessageSegment.text("test")) is True
+
+
+def test_message_join():
+    Message = make_fake_message()
+    MessageSegment = Message.get_segment_class()
+
+    msg = Message([MessageSegment.text("test")])
+    iterable = [
+        MessageSegment.text("first"),
+        Message([MessageSegment.text("second"), MessageSegment.text("third")]),
+    ]
+
+    assert msg.join(iterable) == Message(
+        [
+            MessageSegment.text("first"),
+            MessageSegment.text("test"),
+            MessageSegment.text("second"),
+            MessageSegment.text("third"),
+        ]
+    )
+
+
+def test_message_include():
+    Message = make_fake_message()
+    MessageSegment = Message.get_segment_class()
+
+    message = Message(
+        [
+            MessageSegment.text("test"),
+            MessageSegment.image("test2"),
+            MessageSegment.image("test3"),
+            MessageSegment.text("test4"),
+        ]
+    )
+
+    assert message.include("text") == Message(
+        [
+            MessageSegment.text("test"),
+            MessageSegment.text("test4"),
+        ]
+    )
+
+
+def test_message_exclude():
+    Message = make_fake_message()
+    MessageSegment = Message.get_segment_class()
+
+    message = Message(
+        [
+            MessageSegment.text("test"),
+            MessageSegment.image("test2"),
+            MessageSegment.image("test3"),
+            MessageSegment.text("test4"),
+        ]
+    )
+
+    assert message.exclude("image") == Message(
+        [
+            MessageSegment.text("test"),
+            MessageSegment.text("test4"),
+        ]
+    )

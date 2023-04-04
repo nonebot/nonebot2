@@ -85,6 +85,9 @@ class MessageSegment(abc.ABC, Generic[TM]):
     def items(self):
         return asdict(self).items()
 
+    def join(self: TMS, iterable: Iterable[Union[TMS, TM]]) -> TM:
+        return self.get_message_class()(self).join(iterable)
+
     def copy(self) -> Self:
         return deepcopy(self)
 
