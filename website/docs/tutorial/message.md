@@ -120,16 +120,37 @@ Message(
 
 ### 遍历
 
-`Message` 继承自 `List[MessageSegment]` ，因此可以使用 `for` 循环遍历消息段。
+消息序列继承自 `List[MessageSegment]` ，因此可以使用 `for` 循环遍历消息段。
 
 ```python
 for segment in message:
     ...
 ```
 
-### 索引与切片
+### 比较
 
-`Message` 对列表的索引与切片进行了增强，在原有列表 int 索引与切片的基础上，支持 `type` 过滤索引与切片。
+消息和消息段都可以使用 `==` 或 `!=` 运算符比较是否相同。
+
+```python
+MessageSegment.text("text") != MessageSegment.text("foo")
+
+some_message == Message([MessageSegment.text("text")])
+```
+
+### 检查消息段
+
+我们可以通过 `in` 运算符或消息序列的 `has` 方法来：
+
+```python
+# 是否存在消息段
+MessageSegment.text("text") in message
+# 是否存在指定类型的消息段
+"text" in message
+```
+
+### 过滤、索引与切片
+
+消息序列对列表的索引与切片进行了增强，在原有列表 `int` 索引与 `slice` 切片的基础上，支持 `type` 过滤索引与切片。
 
 ```python
 from nonebot.adapters.console import Message, MessageSegment
@@ -160,7 +181,14 @@ message["markdown", 0:2] == Message(
 )
 ```
 
-同样的，`Message` 对列表的 `index`、`count` 方法也进行了增强，可以用于索引指定类型的消息段。
+我们也可以通过消息序列的 `include`、`exclude` 方法进行类型过滤。
+
+```python
+message.include("text", "markdown")
+message.exclude("text")
+```
+
+同样的，消息序列对列表的 `index`、`count` 方法也进行了增强，可以用于索引指定类型的消息段。
 
 ```python
 # 指定类型首个消息段索引
@@ -169,7 +197,7 @@ message.index("markdown") == 1
 message.count("markdown") == 2
 ```
 
-此外，`Message` 添加了一个 `get` 方法，可以用于获取指定类型指定个数的消息段。
+此外，消息序列添加了一个 `get` 方法，可以用于获取指定类型指定个数的消息段。
 
 ```python
 # 获取指定类型指定个数的消息段
@@ -212,6 +240,31 @@ msg.append("text")
 msg.append(MessageSegment.text("text"))
 # 扩展
 msg.extend([MessageSegment.text("text")])
+```
+
+我们也可以通过消息段或消息序列的 `join` 方法来拼接一串消息：
+
+```python
+seg = MessageSegment.text("text")
+msg = seg.join(
+    [
+        MessageSegment.text("first"),
+        Message(
+            [
+                MessageSegment.text("second"),
+                MessageSegment.text("third"),
+            ]
+        )
+    ]
+)
+msg == Message(
+    [
+        MessageSegment.text("first"),
+        MessageSegment.text("text"),
+        MessageSegment.text("second"),
+        MessageSegment.text("third"),
+    ]
+)
 ```
 
 ### 使用消息模板
