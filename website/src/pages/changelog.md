@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 为消息类添加 `has` `join` `include` `exclude` 方法 [@yanyongyu](https://github.com/yanyongyu) ([#1895](https://github.com/nonebot/nonebot2/pull/1895))
+
 ### 📝 文档
 
 - Docs: 添加 Walle-Q 到 Readme [@yanyongyu](https://github.com/yanyongyu) ([#1891](https://github.com/nonebot/nonebot2/pull/1891))
