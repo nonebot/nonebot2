@@ -23,6 +23,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 多功能哔哩哔哩解析工具 [@noneflow](https://github.com/noneflow) ([#1898](https://github.com/nonebot/nonebot2/pull/1898))
 - Plugin: Steam 游戏状态播报 [@yanyongyu](https://github.com/yanyongyu) ([#1887](https://github.com/nonebot/nonebot2/pull/1887))
 - Plugin: AI 生成 PPT [@yanyongyu](https://github.com/yanyongyu) ([#1884](https://github.com/nonebot/nonebot2/pull/1884))
 - Plugin: nonebot_paddle_ocr [@yanyongyu](https://github.com/yanyongyu) ([#1882](https://github.com/nonebot/nonebot2/pull/1882))
