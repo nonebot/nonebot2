@@ -1,4 +1,4 @@
-name: NoneBot2 Publish Bot
+name: NoneFlow
 
 on:
   issues:
@@ -7,6 +7,8 @@ on:
     types: [closed]
   issue_comment:
     types: [created]
+  pull_request_review:
+    types: [submitted]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.issue.number || github.run_id }}
@@ -35,10 +37,10 @@ jobs:
       - name: Test Plugin
         id: plugin-test
         run: |
-          curl -sSL https://github.com/nonebot/nonebot2-publish-bot/releases/latest/download/plugin_test.py | python -
-  publish_bot:
+          curl -sSL https://github.com/nonebot/noneflow/releases/latest/download/plugin_test.py | python -
+  noneflow:
     runs-on: ubuntu-latest
-    name: nonebot2 publish bot
+    name: noneflow
     needs: plugin_test
     steps:
       - name: Generate token
@@ -53,10 +55,9 @@ jobs:
         with:
           token: ${{ steps.generate-token.outputs.token }}
 
-      - name: NoneBot2 Publish Bot
-        uses: docker://ghcr.io/nonebot/nonebot2-publish-bot:latest
+      - name: NoneFlow
+        uses: docker://ghcr.io/nonebot/noneflow:latest
         with:
-          token: ${{ steps.generate-token.outputs.token }}
           config: >
             {
               "base": "master",
@@ -67,3 +68,5 @@ jobs:
         env:
           PLUGIN_TEST_RESULT: ${{ needs.plugin_test.outputs.result }}
           PLUGIN_TEST_OUTPUT: ${{ needs.plugin_test.outputs.output }}
+          APP_ID: ${{ secrets.APP_ID }}
+          PRIVATE_KEY: ${{ secrets.APP_KEY }}
