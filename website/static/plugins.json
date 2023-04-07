@@ -5191,5 +5191,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "GenshinUID",
+    "project_link": "nonebot-plugin-genshinuid",
+    "name": "GenshinUID",
+    "desc": "支持大部分适配器的全功能NoneBot2原神插件",
+    "author": "KimigaiiWuyi",
+    "homepage": "https://github.com/KimigaiiWuyi/GenshinUID",
+    "tags": [
+      {
+        "label": "a:all",
+        "color": "#ea5252"
+      },
+      {
+        "label": "原神",
+        "color": "#000000"
+      },
+      {
+        "label": "早柚核心",
+        "color": "#7937a9"
+      }
+    ],
+    "is_official": false
   }
 ]
