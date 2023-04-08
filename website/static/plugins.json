@@ -5214,5 +5214,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_blive_danmaku",
+    "project_link": "nonebot-plugin-blive-danmaku",
+    "name": "B站直播间路灯",
+    "desc": "通过弹幕记录直播高能点",
+    "author": "zangxx66",
+    "homepage": "https://github.com/zangxx66/nonebot_plugin_blive_danmaku",
+    "tags": [
+      {
+        "label": "t:bilibili",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
