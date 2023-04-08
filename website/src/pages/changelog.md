@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 移除旧版本的 GenshinUID [@KimigaiiWuyi](https://github.com/KimigaiiWuyi) ([#1904](https://github.com/nonebot/nonebot2/pull/1904))
 - CI: 使用最新的 NoneFlow [@he0119](https://github.com/he0119) ([#1899](https://github.com/nonebot/nonebot2/pull/1899))
 - CI: 使用 NoneFlow 管理工作流 [@yanyongyu](https://github.com/yanyongyu) ([#1892](https://github.com/nonebot/nonebot2/pull/1892))
 - CI: 移除 poetry 版本限制 [@yanyongyu](https://github.com/yanyongyu) ([#1872](https://github.com/nonebot/nonebot2/pull/1872))
