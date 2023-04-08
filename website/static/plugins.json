@@ -5214,5 +5214,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_clock",
+    "project_link": "nonebot-plugin-clock",
+    "name": "nonebot clock 群闹钟 ⏰",
+    "desc": "支持群聊 私聊的⏰插件",
+    "author": "Zeta-qixi",
+    "homepage": "https://github.com/Zeta-qixi/nonebot-plugin-clock",
+    "tags": [
+      {
+        "label": "闹钟",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
