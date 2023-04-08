@@ -18,7 +18,23 @@ jobs:
   plugin_test:
     runs-on: ubuntu-latest
     name: nonebot2 plugin test
-    if: github.event_name != 'issue_comment' || !github.event.issue.pull_request
+    if: |
+      !(
+        (
+          github.event.pull_request &&
+          (
+            github.event.pull_request.head.repo.fork ||
+            !(
+              contains(github.event.pull_request.labels.*.name, 'Plugin') ||
+              contains(github.event.pull_request.labels.*.name, 'Adapter') ||
+              contains(github.event.pull_request.labels.*.name, 'Bot')
+            )
+          )
+        ) ||
+        (
+          github.event_name == 'issue_comment' && github.event.issue.pull_request
+        )
+      )
     permissions:
       issues: read
     outputs:
