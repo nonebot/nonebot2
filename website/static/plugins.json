@@ -5229,5 +5229,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_SDGPT",
+    "project_link": "nonebot-plugin-SDGPT",
+    "name": "SDGPT",
+    "desc": "链接 ChatGPT / Bing / Stable-Diffusion: ChatGPT Bing 聊天, gpt 解析自然语言转 Stable-Diffusion 生成图像",
+    "author": "thx114",
+    "homepage": "https://github.com/thx114/sdgpt",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      },
+      {
+        "label": "chatGPT",
+        "color": "#54b490"
+      },
+      {
+        "label": "novelai",
+        "color": "#f0dc4e"
+      }
+    ],
+    "is_official": false
   }
 ]
