@@ -5262,5 +5262,15 @@
     "homepage": "https://github.com/lgc2333/nonebot-plugin-fuckyou",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_pokemonfusion",
+    "project_link": "nonebot-plugin-pokemonfusion",
+    "name": "宝可梦融合",
+    "desc": "Pokemon Infinite Fusion的中文版融合计算器，支持融合420^2=176400种宝可梦",
+    "author": "IllusiveBull",
+    "homepage": "https://github.com/IllusiveBull/nonebot_plugin_pokemonfusion",
+    "tags": [],
+    "is_official": false
   }
 ]
