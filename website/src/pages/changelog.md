@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 更新多功能哔哩哔哩解析工具 [@djkcyl](https://github.com/djkcyl) ([#1913](https://github.com/nonebot/nonebot2/pull/1913))
 - CI: 跳过 PR 仓库为 fork 的情况 [@he0119](https://github.com/he0119) ([#1905](https://github.com/nonebot/nonebot2/pull/1905))
 - Plugin: 移除旧版本的 GenshinUID [@KimigaiiWuyi](https://github.com/KimigaiiWuyi) ([#1904](https://github.com/nonebot/nonebot2/pull/1904))
 - CI: 使用最新的 NoneFlow [@he0119](https://github.com/he0119) ([#1899](https://github.com/nonebot/nonebot2/pull/1899))
