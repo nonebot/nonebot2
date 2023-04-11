@@ -27,6 +27,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: TataruBot2 [@noneflow](https://github.com/noneflow) ([#1915](https://github.com/nonebot/nonebot2/pull/1915))
 - Plugin: 宝可梦融合 [@noneflow](https://github.com/noneflow) ([#1912](https://github.com/nonebot/nonebot2/pull/1912))
 - Plugin: FuckYou [@noneflow](https://github.com/noneflow) ([#1910](https://github.com/nonebot/nonebot2/pull/1910))
 - Plugin: SDGPT [@noneflow](https://github.com/noneflow) ([#1908](https://github.com/nonebot/nonebot2/pull/1908))
