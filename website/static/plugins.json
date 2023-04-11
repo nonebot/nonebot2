@@ -5272,5 +5272,20 @@
     "homepage": "https://github.com/IllusiveBull/nonebot_plugin_pokemonfusion",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "tatarubot2",
+    "project_link": "tatarubot2",
+    "name": "TataruBot2",
+    "desc": "FF14相关轻量功能，如查物价、logs、看微博等",
+    "author": "aaron-lii",
+    "homepage": "https://github.com/aaron-lii/TataruBot2",
+    "tags": [
+      {
+        "label": "t:FF14",
+        "color": "#5282ea"
+      }
+    ],
+    "is_official": false
   }
 ]
