@@ -5317,5 +5317,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bilifan",
+    "project_link": "nonebot-plugin-bilifan",
+    "name": "Bilifan",
+    "desc": "自动刷b站直播间牌子",
+    "author": "Agnes4m",
+    "homepage": "https://github.com/Agnes4m/nonebot_plugin_bilifan",
+    "tags": [
+      {
+        "label": "t:bilibili",
+        "color": "#ec15c6"
+      }
+    ],
+    "is_official": false
   }
 ]
