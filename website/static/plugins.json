@@ -5302,5 +5302,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_osuverify",
+    "project_link": "nonebot-plugin-osuverify",
+    "name": "osu!入群审批",
+    "desc": "通过osu!用户名的入群审核并其修改群名片为id",
+    "author": "mas-alone",
+    "homepage": "https://github.com/mas-alone/nonebot-plugin-osuverify",
+    "tags": [
+      {
+        "label": "OSU",
+        "color": "#eb5d9b"
+      }
+    ],
+    "is_official": false
   }
 ]
