@@ -27,6 +27,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: osu!入群审批 [@noneflow](https://github.com/noneflow) ([#1919](https://github.com/nonebot/nonebot2/pull/1919))
 - Plugin: 与 ChatGpt 聊天 [@noneflow](https://github.com/noneflow) ([#1917](https://github.com/nonebot/nonebot2/pull/1917))
 - Plugin: TataruBot2 [@noneflow](https://github.com/noneflow) ([#1915](https://github.com/nonebot/nonebot2/pull/1915))
 - Plugin: 宝可梦融合 [@noneflow](https://github.com/noneflow) ([#1912](https://github.com/nonebot/nonebot2/pull/1912))
