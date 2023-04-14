@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Feature: 为消息类添加 `has` `join` `include` `exclude` 方法 [@yanyongyu](https://github.com/yanyongyu) ([#1895](https://github.com/nonebot/nonebot2/pull/1895))
 
+### 🐛 Bug 修复
+
+- Fix: shell command 包含富文本时报错信息出错 [@yanyongyu](https://github.com/yanyongyu) ([#1923](https://github.com/nonebot/nonebot2/pull/1923))
+
 ### 📝 文档
 
 - Docs: 添加 Walle-Q 到 Readme [@yanyongyu](https://github.com/yanyongyu) ([#1891](https://github.com/nonebot/nonebot2/pull/1891))
