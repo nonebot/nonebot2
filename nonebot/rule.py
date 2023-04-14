@@ -11,6 +11,7 @@ FrontMatter:
 import re
 import shlex
 from argparse import Action
+from gettext import gettext
 from argparse import ArgumentError
 from contextvars import ContextVar
 from itertools import chain, product
@@ -450,29 +451,60 @@ class ArgumentParser(ArgParser):
     if TYPE_CHECKING:
 
         @overload
-        def parse_args(
-            self, args: Optional[Sequence[Union[str, MessageSegment]]] = ...
-        ) -> Namespace:
+        def parse_known_args(
+            self,
+            args: Optional[Sequence[Union[str, MessageSegment]]] = None,
+            namespace: None = None,
+        ) -> Tuple[Namespace, List[Union[str, MessageSegment]]]:
             ...
 
         @overload
-        def parse_args(
-            self, args: Optional[Sequence[Union[str, MessageSegment]]], namespace: None
-        ) -> Namespace:
-            ...  # type: ignore[misc]
-
-        @overload
-        def parse_args(
+        def parse_known_args(
             self, args: Optional[Sequence[Union[str, MessageSegment]]], namespace: T
-        ) -> T:
+        ) -> Tuple[T, List[Union[str, MessageSegment]]]:
             ...
 
-        def parse_args(
+        @overload
+        def parse_known_args(
+            self, *, namespace: T
+        ) -> Tuple[T, List[Union[str, MessageSegment]]]:
+            ...
+
+        def parse_known_args(
             self,
             args: Optional[Sequence[Union[str, MessageSegment]]] = None,
             namespace: Optional[T] = None,
-        ) -> Union[Namespace, T]:
+        ) -> Tuple[Union[Namespace, T], List[Union[str, MessageSegment]]]:
             ...
+
+    @overload
+    def parse_args(
+        self,
+        args: Optional[Sequence[Union[str, MessageSegment]]] = None,
+        namespace: None = None,
+    ) -> Namespace:
+        ...
+
+    @overload
+    def parse_args(
+        self, args: Optional[Sequence[Union[str, MessageSegment]]], namespace: T
+    ) -> T:
+        ...
+
+    @overload
+    def parse_args(self, *, namespace: T) -> T:
+        ...
+
+    def parse_args(
+        self,
+        args: Optional[Sequence[Union[str, MessageSegment]]] = None,
+        namespace: Optional[T] = None,
+    ) -> Union[Namespace, T]:
+        result, argv = self.parse_known_args(args, namespace)
+        if argv:
+            msg = gettext("unrecognized arguments: %s")
+            self.error(msg % " ".join(map(str, argv)))
+        return cast(Union[Namespace, T], result)
 
     def _parse_optional(
         self, arg_string: Union[str, MessageSegment]
