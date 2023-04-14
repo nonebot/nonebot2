@@ -371,6 +371,19 @@ async def test_shell_command():
     assert state[SHELL_ARGS].status != 0
     assert state[SHELL_ARGS].message.startswith(parser.format_usage() + "test: error:")
 
+    test_parser_remain_args = shell_command(CMD, parser=parser)
+    dependent = list(test_parser_remain_args.checkers)[0]
+    checker = dependent.call
+    assert isinstance(checker, ShellCommandRule)
+    message = MessageSegment.text("-a 1 2") + MessageSegment.image("test")
+    event = make_fake_event(_message=message)()
+    state = {PREFIX_KEY: {CMD_KEY: CMD, CMD_ARG_KEY: message}}
+    assert await dependent(event=event, state=state)
+    assert state[SHELL_ARGV] == ["-a", "1", "2", MessageSegment.image("test")]
+    assert isinstance(state[SHELL_ARGS], ParserExit)
+    assert state[SHELL_ARGS].status != 0
+    assert state[SHELL_ARGS].message.startswith(parser.format_usage() + "test: error:")
+
     test_message_parser = shell_command(CMD, parser=parser)
     dependent = list(test_message_parser.checkers)[0]
     checker = dependent.call
