@@ -5332,5 +5332,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_akinator",
+    "project_link": "nonebot-plugin-akinator",
+    "name": "Akinator",
+    "desc": "把网络天才 Akinator 搬进你的 Bot",
+    "author": "lgc2333",
+    "homepage": "https://github.com/lgc2333/nonebot-plugin-akinator",
+    "tags": [
+      {
+        "label": "t:Akinator",
+        "color": "#6599fe"
+      },
+      {
+        "label": "t:网络天才",
+        "color": "#6599fe"
+      }
+    ],
+    "is_official": false
   }
 ]
