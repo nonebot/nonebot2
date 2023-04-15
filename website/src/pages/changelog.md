@@ -31,6 +31,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Akinator [@noneflow](https://github.com/noneflow) ([#1925](https://github.com/nonebot/nonebot2/pull/1925))
 - Plugin: Bilifan [@noneflow](https://github.com/noneflow) ([#1921](https://github.com/nonebot/nonebot2/pull/1921))
 - Plugin: osu!入群审批 [@noneflow](https://github.com/noneflow) ([#1919](https://github.com/nonebot/nonebot2/pull/1919))
 - Plugin: 与 ChatGpt 聊天 [@noneflow](https://github.com/noneflow) ([#1917](https://github.com/nonebot/nonebot2/pull/1917))
