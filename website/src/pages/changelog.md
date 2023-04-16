@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修正教程中部分 import 缺失的问题 [@Well2333](https://github.com/Well2333) ([#1927](https://github.com/nonebot/nonebot2/pull/1927))
 - Docs: 添加 Walle-Q 到 Readme [@yanyongyu](https://github.com/yanyongyu) ([#1891](https://github.com/nonebot/nonebot2/pull/1891))
 - Docs: 更新部署文档 [@yanyongyu](https://github.com/yanyongyu) ([#1890](https://github.com/nonebot/nonebot2/pull/1890))
 
