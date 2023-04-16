@@ -1,0 +1,94 @@
+name: Bug report
+title: "Bug: Something went wrong"
+description: Create a bug report to help us improve
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: env-os
+    attributes:
+      label: OS
+      description: 选择运行 nonebot 的系统
+      options:
+        - Windows (64)
+        - Windows (32/x84)
+        - MacOS
+        - Linux
+        - Ubuntu
+        - CentOS
+        - ArchLinux
+        - UNIX (Android)
+        - Other
+    validations:
+      required: true
+
+  - type: dropdown
+    id: env-python-ver
+    attributes:
+      label: Python 版本
+      description: 选择运行 nonebot 的 python 版本
+      options:
+        - "3.8"
+        - "3.9"
+        - "3.10"
+        - "3.11"
+    validations:
+      required: true
+
+  - type: input
+    id: env-nb-ver
+    attributes:
+      label: Nonebot 版本
+      description: 运行的 nonebot 版本
+      placeholder: 2.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: env-protocol
+    attributes:
+      label: 协议端
+      description: 连接 nonebot 的协议端
+      placeholder: go-cqhttp
+    validations:
+      required: true
+
+  - type: input
+    id: env-protocol-ver
+    attributes:
+      label: 协议端版本
+      description: 连接 nonebot 的协议端版本
+      placeholder: 1.0.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: describe
+    attributes:
+      label: 描述问题
+      description: 清晰简洁地说明问题是什么
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 复现步骤
+      description: 提供能复现此问题的详细操作步骤
+      placeholder: |
+        1. 首先……
+        2. 然后……
+        3. 发生……
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望的结果
+      description: 清晰简洁地描述你期望发生的事情
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 截图或日志
+      description: 提供有助于诊断问题的任何日志和截图
