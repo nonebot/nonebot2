@@ -236,7 +236,7 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
     show_log = True
     log_msg = f"<m>{escape_tag(bot.type)} {escape_tag(bot.self_id)}</m> | "
     try:
-        log_msg += event.get_log_string()
+        log_msg += escape_tag(event.get_log_string())
     except NoLogException:
         show_log = False
     if show_log:
