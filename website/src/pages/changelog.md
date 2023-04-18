@@ -55,6 +55,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: XDbot2 [@noneflow](https://github.com/noneflow) ([#1932](https://github.com/nonebot/nonebot2/pull/1932))
 - Bot: CoolQBot [@noneflow](https://github.com/noneflow) ([#1894](https://github.com/nonebot/nonebot2/pull/1894))
 
 ### 🍻 适配器发布
