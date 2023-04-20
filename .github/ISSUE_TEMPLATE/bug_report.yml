@@ -28,7 +28,7 @@ body:
   - type: input
     id: env-nb-ver
     attributes:
-      label: Nonebot 版本
+      label: NoneBot 版本
       description: 运行的 NoneBot 版本
       placeholder: e.g. 2.0.0
     validations:
