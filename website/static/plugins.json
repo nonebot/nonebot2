@@ -5351,5 +5351,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_rename",
+    "project_link": "nonebot-plugin-rename",
+    "name": "更改BOT群名片",
+    "desc": "通过定时任务更改机器人不同群的群名片",
+    "author": "forchannot",
+    "homepage": "https://github.com/forchannot/nonebot_plugin_rename",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ed4646"
+      },
+      {
+        "label": "群名片",
+        "color": "#466bed"
+      }
+    ],
+    "is_official": false
   }
 ]
