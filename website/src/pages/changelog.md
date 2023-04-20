@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 更改 BOT 群名片 [@noneflow](https://github.com/noneflow) ([#1934](https://github.com/nonebot/nonebot2/pull/1934))
 - Plugin: Akinator [@noneflow](https://github.com/noneflow) ([#1925](https://github.com/nonebot/nonebot2/pull/1925))
 - Plugin: Bilifan [@noneflow](https://github.com/noneflow) ([#1921](https://github.com/nonebot/nonebot2/pull/1921))
 - Plugin: osu!入群审批 [@noneflow](https://github.com/noneflow) ([#1919](https://github.com/nonebot/nonebot2/pull/1919))
