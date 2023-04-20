@@ -462,5 +462,18 @@
     "homepage": "https://github.com/he0119/CoolQBot",
     "tags": [],
     "is_official": false
+  },
+  {
+    "name": "XDbot2",
+    "desc": "简单的QQ功能型机器人",
+    "author": "This-is-XiaoDeng",
+    "homepage": "https://github.com/ITCraftDevelopmentTeam/XDbot2",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
