@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- :memo: Docs: 新增插件跨适配器支持文档 [@Well2333](https://github.com/Well2333) ([#1929](https://github.com/nonebot/nonebot2/pull/1929))
 - Docs: 修正教程中部分 import 缺失的问题 [@Well2333](https://github.com/Well2333) ([#1927](https://github.com/nonebot/nonebot2/pull/1927))
 - Docs: 添加 Walle-Q 到 Readme [@yanyongyu](https://github.com/yanyongyu) ([#1891](https://github.com/nonebot/nonebot2/pull/1891))
 - Docs: 更新部署文档 [@yanyongyu](https://github.com/yanyongyu) ([#1890](https://github.com/nonebot/nonebot2/pull/1890))
@@ -32,6 +33,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot_poe_chat [@noneflow](https://github.com/noneflow) ([#1937](https://github.com/nonebot/nonebot2/pull/1937))
 - Plugin: 更改 BOT 群名片 [@noneflow](https://github.com/noneflow) ([#1934](https://github.com/nonebot/nonebot2/pull/1934))
 - Plugin: Akinator [@noneflow](https://github.com/noneflow) ([#1925](https://github.com/nonebot/nonebot2/pull/1925))
 - Plugin: Bilifan [@noneflow](https://github.com/noneflow) ([#1921](https://github.com/nonebot/nonebot2/pull/1921))
