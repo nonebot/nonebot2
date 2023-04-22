@@ -17,13 +17,13 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
-- :memo: Docs: 新增插件跨适配器支持文档 [@Well2333](https://github.com/Well2333) ([#1929](https://github.com/nonebot/nonebot2/pull/1929))
 - Docs: 修正教程中部分 import 缺失的问题 [@Well2333](https://github.com/Well2333) ([#1927](https://github.com/nonebot/nonebot2/pull/1927))
 - Docs: 添加 Walle-Q 到 Readme [@yanyongyu](https://github.com/yanyongyu) ([#1891](https://github.com/nonebot/nonebot2/pull/1891))
 - Docs: 更新部署文档 [@yanyongyu](https://github.com/yanyongyu) ([#1890](https://github.com/nonebot/nonebot2/pull/1890))
 
 ### 💫 杂项
 
+- Plugin: 更新 lgc2333 插件仓库地址 [@lgc2333](https://github.com/lgc2333) ([#1935](https://github.com/nonebot/nonebot2/pull/1935))
 - Plugin: 更新多功能哔哩哔哩解析工具 [@djkcyl](https://github.com/djkcyl) ([#1913](https://github.com/nonebot/nonebot2/pull/1913))
 - CI: 跳过 PR 仓库为 fork 的情况 [@he0119](https://github.com/he0119) ([#1905](https://github.com/nonebot/nonebot2/pull/1905))
 - Plugin: 移除旧版本的 GenshinUID [@KimigaiiWuyi](https://github.com/KimigaiiWuyi) ([#1904](https://github.com/nonebot/nonebot2/pull/1904))
