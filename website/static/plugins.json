@@ -1955,7 +1955,7 @@
     "name": "BAWiki",
     "desc": "基于 NoneBot2 的碧蓝档案 Wiki 插件",
     "author": "lgc2333",
-    "homepage": "https://github.com/lgc2333/nonebot-plugin-bawiki/",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-bawiki/",
     "tags": [
       {
         "label": "t:碧蓝档案",
@@ -2498,7 +2498,7 @@
     "name": "PicStatus",
     "desc": "服务器运行状态图片版",
     "author": "lgc2333",
-    "homepage": "https://github.com/lgc2333/nonebot-plugin-picstatus",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-picstatus",
     "tags": [
       {
         "label": "t:server",
@@ -3794,7 +3794,7 @@
     "name": "PicMCStat",
     "desc": "将 Minecraft 服务器的 MOTD 信息绘制为一张图片",
     "author": "lgc2333",
-    "homepage": "https://github.com/lgc2333/nonebot-plugin-picmcstat",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-picmcstat",
     "tags": [
       {
         "label": "Minecraft",
@@ -4071,7 +4071,7 @@
     "name": "AutoReply",
     "desc": "一个简单的只有配置文件的无数据库自动回复插件，支持多种匹配模式",
     "author": "lgc2333",
-    "homepage": "https://github.com/lgc2333/nonebot-plugin-autoreply/",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-autoreply/",
     "tags": [
       {
         "label": "t:自动回复",
@@ -4705,7 +4705,7 @@
     "name": "RimoFun",
     "desc": "使用 RimoChan 开发的项目做的一个有趣的插件",
     "author": "lgc2333",
-    "homepage": "https://github.com/lgc2333/nonebot-plugin-rimofun",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-rimofun",
     "tags": [
       {
         "label": "RimoChan",
@@ -5259,7 +5259,7 @@
     "name": "FuckYou",
     "desc": "NoneBot2 骂人插件",
     "author": "lgc2333",
-    "homepage": "https://github.com/lgc2333/nonebot-plugin-fuckyou",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-fuckyou",
     "tags": [],
     "is_official": false
   },
@@ -5339,7 +5339,7 @@
     "name": "Akinator",
     "desc": "把网络天才 Akinator 搬进你的 Bot",
     "author": "lgc2333",
-    "homepage": "https://github.com/lgc2333/nonebot-plugin-akinator",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-akinator",
     "tags": [
       {
         "label": "t:Akinator",
