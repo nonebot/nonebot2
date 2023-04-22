@@ -1,0 +1,224 @@
+---
+sidebar_position: 4
+description: 插件跨适配器支持
+---
+
+# 插件跨适配器支持
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+由于不同平台存在着不同的接口和开发规范，因此 NoneBot 中并不存在一个全平台的适配器。为了使我们的插件适配尽可能多的平台，我们需要在编写插件时引入多个适配器。
+
+:::warning 警告
+本文将会涉及到大量 NoneBot 的基础知识，请确保您在阅读此文前了解单适配器的基本使用方式。
+:::
+
+## 引入多适配器
+
+首先请参考 [使用适配器](../advanced/adapter.md) 安装对应的适配器，并在入口文件中声明并注册，这样bot才能同时接收到来自多个适配器的消息。
+
+本文中，我们将会采用 [ONEBOT 协议适配器](https://onebot.adapters.nonebot.dev/) 中的 [ONEBOT V11](https://github.com/botuniverse/onebot-11) 和 [ONEBOT V12](https://12.onebot.dev/) 两个适配器进行演示，其入口文件如下所示。
+
+```py
+import nonebot
+from nonebot.adapters.onebot.v11 import Adapter as ONEBOT_V11Adapter
+from nonebot.adapters.onebot.v12 import Adapter as ONEBOT_V12Adapter
+
+nonebot.init()
+
+driver = nonebot.get_driver()
+driver.register_adapter(ONEBOT_V11Adapter)
+driver.register_adapter(ONEBOT_V12Adapter)
+
+# nonebot.load_plugin("example_plugin_path")
+
+if __name__ == "__main__":
+    nonebot.run()
+```
+
+## 基于基类的跨适配器
+
+在 [获取事件信息](../tutorial/event-data.mdx) 中，我们实现了下方的插件。
+
+```py
+from nonebot import on_command
+from nonebot.adapters import Message
+from nonebot.params import CommandArg
+
+weather = on_command("天气", aliases={"weather", "查天气"}, priority=10, block=True)
+
+
+@weather.handle()
+async def handle_function(args: Message = CommandArg()):
+    # 提取参数纯文本作为地名，并判断是否有效
+    if location := args.extract_plain_text():
+        await weather.finish(f"今天{location}的天气是...")
+    else:
+        await weather.finish("请输入地名")
+```
+
+由于此插件仅包含了纯文本的交互方式，因此可以直接使用基类中的 `Message` 对象完成代码的构建，此方法由于不使用某特定适配器的对象，因此是原生跨平台的，并不需要额外处理。
+
+而在一些较为复杂的需求下，例如发送图片消息时，基类中的 `Message` 对象便无能为力，因此我们需要引入特定平台的适配器了。
+
+## 基于依赖注入的跨适配器
+
+由于依赖注入可以自由的定义需要的依赖类型，因此对于**差异不大**的数据类型我们可以使用将其注入到**同一个变量中**，以实现在同一个事件处理函数中响应多个不同适配器的事件。
+
+<Tabs groupId="python">
+  <TabItem value="3.10" label="Python 3.10+" default>
+
+```py
+from nonebot import on_command
+from nonebot.adapters import Message
+from nonebot.adapters.onebot.v11 import MessageEvent as V11_MessageEvent
+from nonebot.adapters.onebot.v12 import MessageEvent as V12_MessageEvent
+from nonebot.params import CommandArg
+
+weather = on_command("天气", aliases={"weather", "查天气"}, priority=10, block=True)
+
+
+@weather.handle()
+async def handle_function(event: V11_MessageEvent | V12_MessageEvent, args: Message = CommandArg()):
+    user_id = event.get_user_id()
+    # 提取参数纯文本作为地名，并判断是否有效
+    if location := args.extract_plain_text():
+        await weather.finish(f"用户 {user_id} ，今天{location}的天气是...")
+    else:
+        await weather.finish(f"用户 {user_id} ，请输入地名")
+```
+
+  </TabItem>
+  <TabItem value="3.8" label="Python 3.8+">
+
+```py
+from typing import Union
+
+from nonebot import on_command
+from nonebot.adapters import Message
+from nonebot.adapters.onebot.v11 import MessageEvent as V11_MessageEvent
+from nonebot.adapters.onebot.v12 import MessageEvent as V12_MessageEvent
+from nonebot.params import CommandArg
+
+weather = on_command("天气", aliases={"weather", "查天气"}, priority=10, block=True)
+
+
+@weather.handle()
+async def handle_function(event: Union[V11_MessageEvent, V12_MessageEvent], args: Message = CommandArg()):
+    user_id = event.get_user_id()
+    # 提取参数纯文本作为地名，并判断是否有效
+    if location := args.extract_plain_text():
+        await weather.finish(f"用户 {user_id} ，今天{location}的天气是...")
+    else:
+        await weather.finish(f"用户 {user_id} ，请输入地名")
+```
+
+  </TabItem>
+</Tabs>
+
+## 基于事件重载的跨适配器
+
+在事件处理流程中，我们可以通过**依赖注入**为**不同的事件处理函数**注入**不同种类的依赖**，从而实现[事件重载](../appendices/overload.md)。那么通过为事件处理函数进行事件重载，便可以实现对**不同适配器事件**的分别处理了。此方法对于**差异较大**的数据类型可以分别编写逻辑，因此兼容性强于 [基于依赖注入的跨适配器](#基于依赖注入的跨适配器)，但也带来了代码重复度较高的问题，因此我们可以使用 [会话控制](../appendices/session-control.mdx) 或 [自定义依赖注入](../advanced/dependency.mdx) 中的方法对一些信息进行预处理，避免重复的代码。
+
+<Tabs groupId="overload">
+  <TabItem value="session-control" label="会话控制" default>
+
+```py
+from nonebot import on_command
+from nonebot.adapters import Message
+from nonebot.adapters.onebot.v11 import MessageEvent as V11_MessageEvent
+from nonebot.adapters.onebot.v12 import MessageEvent as V12_MessageEvent
+from nonebot.adapters.onebot.v11 import MessageSegment as V11_MessageSegment
+from nonebot.adapters.onebot.v12 import MessageSegment as V12_MessageSegment
+from nonebot.adapters.onebot.v12 import Bot as V12_Bot
+from nonebot.params import CommandArg
+from nonebot.typing import T_State
+
+weather = on_command("天气", aliases={"weather", "查天气"}, priority=10, block=True)
+
+
+def render_weather_img(location:str) -> bytes:
+    # 根据城市名称渲染天气预报的图片
+    # do something here
+    ...
+
+@weather.handle()
+async def get_location(args: Message = CommandArg(), state: T_State):
+    # 获取城市名称，并获取其对应的图片二进制数据
+    if location := args.extract_plain_text():
+        weather_img = render_weather_img(location)
+        state["weather"] = weather_img
+    else:
+        await weather.finish("请输入地名")
+
+
+@weather.handle()
+async def handle_function_v11(event: V11_MessageEvent, state: T_State):
+    # V11 的处理函数
+    reply = V11_MessageSegment.reply(event.message_id)
+    image = V11_MessageSegment.image(state["weather"])
+    await weather.finish(reply + image)
+
+@weather.handle()
+async def handle_function_v12(bot: V12_Bot,event: V12_MessageEvent, state: T_State):
+    # V12 的处理函数
+    reply = V12_MessageSegment.reply(event.message_id)
+    fileid = await bot.upload_file(
+        type="data", name="weather.jpg", data=state["weather"]
+    )
+    image = V12_MessageSegment.image(file_id=fileid["file_id"])
+    await weather.finish(reply + image)
+```
+
+  </TabItem>
+  <TabItem value="dependency" label="自定义依赖注入">
+
+```py
+from nonebot import on_command
+from nonebot.adapters import Message
+from nonebot.adapters.onebot.v11 import MessageEvent as V11_MessageEvent
+from nonebot.adapters.onebot.v11 import MessageSegment as V11_MessageSegment
+from nonebot.adapters.onebot.v12 import Bot as V12_Bot
+from nonebot.adapters.onebot.v12 import MessageEvent as V12_MessageEvent
+from nonebot.adapters.onebot.v12 import MessageSegment as V12_MessageSegment
+from nonebot.params import CommandArg, Depends
+
+weather = on_command("天气", aliases={"weather", "查天气"}, priority=10, block=True)
+
+
+def render_weather_img(location: str) -> bytes:
+    # 根据城市名称渲染天气预报的图片
+    # do something here
+    ...
+
+
+async def get_location(args: Message = CommandArg()):
+    # 获取城市名称，并获取其对应的图片二进制数据
+    if location := args.extract_plain_text():
+        return render_weather_img(location)
+    else:
+        await weather.finish("请输入地名")
+
+
+@weather.handle()
+async def handle_function_v11(event: V11_MessageEvent, data: bytes = Depends(get_location, use_cache=False)):
+    # V11 的处理函数
+    reply = V11_MessageSegment.reply(event.message_id)
+    image = V11_MessageSegment.image(data)
+    await weather.finish(reply + image)
+
+
+@weather.handle()
+async def handle_function_v12(
+    bot: V12_Bot, event: V12_MessageEvent, data: bytes = Depends(get_location, use_cache=False)
+):
+    # V12 的处理函数
+    reply = V12_MessageSegment.reply(event.message_id)
+    fileid = await bot.upload_file(type="data", name="weather.jpg", data=data)
+    image = V12_MessageSegment.image(file_id=fileid["file_id"])
+    await weather.finish(reply + image)
+```
+
+  </TabItem>
+</Tabs>
