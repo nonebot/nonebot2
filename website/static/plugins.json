@@ -5393,5 +5393,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_appinsights",
+    "project_link": "nonebot-plugin-appinsights",
+    "name": "AppInsights日志监控",
+    "desc": "使用Azure Appinsights监控机器人日志",
+    "author": "XZhouQD",
+    "homepage": "https://github.com/XZhouQD/nonebot-plugin-appinsights",
+    "tags": [],
+    "is_official": false
   }
 ]
