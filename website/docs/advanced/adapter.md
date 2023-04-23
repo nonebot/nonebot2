@@ -35,7 +35,7 @@ driver = nonebot.get_driver()
 driver.register_adapter(Adapter)
 ```
 
-我们首先需要从适配器模块中导入所需要的适配器类，然后通过驱动器的 `register_adapter` 方法将适配器注册到驱动器中即可。
+我们首先需要从适配器模块中导入所需要的适配器类，然后通过驱动器的 `register_adapter` 方法将适配器注册到驱动器中即可。如果我们需要多平台支持，可以多次调用 `register_adapter` 方法来注册多个适配器。
 
 ## 获取已注册的适配器
 

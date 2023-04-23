@@ -68,3 +68,7 @@ async def handle_onebot(bot: OneBot):
 
 但 Bot 和 Event 二者的参数类型注解具有最高检查优先级，如果二者类型注解不匹配，那么其他依赖注入将不会执行（如：`Depends`）。
 :::
+
+:::tip 提示
+如何更好地编写一个跨平台的插件，我们将在[最佳实践](../best-practice/multi-adapter.mdx)中介绍。
+:::
