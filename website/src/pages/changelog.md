@@ -35,6 +35,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Mixin [@noneflow](https://github.com/noneflow) ([#1947](https://github.com/nonebot/nonebot2/pull/1947))
 - Plugin: AppInsights 日志监控 [@noneflow](https://github.com/noneflow) ([#1940](https://github.com/nonebot/nonebot2/pull/1940))
 - Plugin: nonebot_poe_chat [@noneflow](https://github.com/noneflow) ([#1937](https://github.com/nonebot/nonebot2/pull/1937))
 - Plugin: 更改 BOT 群名片 [@noneflow](https://github.com/noneflow) ([#1934](https://github.com/nonebot/nonebot2/pull/1934))
