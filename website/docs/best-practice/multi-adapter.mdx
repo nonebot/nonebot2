@@ -102,6 +102,8 @@ async def handle_function(time: datetime = Depends(get_event_time)):
     await echo.finish(time.strftime("%Y-%m-%d %H:%M:%S"))
 ```
 
+示例中 ，我们为 `handle_function` 事件处理函数注入了自定义的 `get_event_time` 子依赖，而此子依赖注入参数为 Console 适配器的 `MessageEvent`。因此 `handle_function` 仅会响应 Console 适配器的 `MessageEvent` ，而不能响应其他事件。
+
 ### 处理多平台事件
 
 不同平台的事件之间，往往存在着极大的差异性。为了满足我们插件的跨平台运行，通常我们需要抽离业务逻辑，以保证代码的复用性。一个合理的做法是，在事件响应器的处理流程中，首先先针对不同平台的事件分别进行处理，提取出核心业务逻辑所需要的信息；然后再将这些信息传递给业务逻辑处理函数；最后将业务逻辑的输出以各平台合适的方式返回给用户。也就是说，与平台绑定的处理部分应该与平台无关部分尽量分离。例如：
