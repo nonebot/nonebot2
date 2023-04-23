@@ -5403,5 +5403,24 @@
     "homepage": "https://github.com/XZhouQD/nonebot-plugin-appinsights",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mixin",
+    "project_link": "nonebot-plugin-mixin",
+    "name": "Mixin",
+    "desc": "通过代码或非代码方式外部介入 NoneBot2 插件行为",
+    "author": "NCBM",
+    "homepage": "https://github.com/NCBM/nonebot-plugin-mixin",
+    "tags": [
+      {
+        "label": "t:dev",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:mixin",
+        "color": "#529fea"
+      }
+    ],
+    "is_official": false
   }
 ]
