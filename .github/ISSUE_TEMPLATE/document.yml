@@ -1,6 +1,6 @@
-name: Document improvement
-title: "Docs: some description"
-description: Feedback on documentation, including errors and ideas
+name: 文档改进
+title: "Docs: 描述"
+description: 文档错误及改进意见反馈
 labels: ["documentation"]
 body:
   - type: textarea
