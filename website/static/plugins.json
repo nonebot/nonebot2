@@ -5422,5 +5422,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_brainfuck",
+    "project_link": "nonebot-plugin-brainfuck",
+    "name": "brainfuck",
+    "desc": "一个brainfuck解释器，允许在群聊中输入brainfuck:{command}:{inbox}执行brainfuck代码，并返回outbox",
+    "author": "campanulamediuml",
+    "homepage": "https://github.com/campanulamediuml/nonebot-plugin-brainfuck",
+    "tags": [
+      {
+        "label": "t:dev",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:bf",
+        "color": "#529fea"
+      }
+    ],
+    "is_official": false
   }
 ]
