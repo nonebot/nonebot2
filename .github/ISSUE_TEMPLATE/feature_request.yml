@@ -6,15 +6,15 @@ body:
   - type: textarea
     id: problem
     attributes:
-      label: 希望能解决什么样的问题？
-      description: 是否在使用中遇到某些问题而需要新的特性？
+      label: 希望能解决的问题
+      description: 在使用中遇到什么问题而需要新的功能？
     validations:
       required: true
 
   - type: textarea
     id: feature
     attributes:
-      label: 描述你所需要的特性
-      description: 请说明您希望使用什么样的方法解决上述问题。
+      label: 描述所需要的功能
+      description: 请说明需要的功能或解决方法
     validations:
       required: true

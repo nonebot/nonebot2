@@ -20,7 +20,7 @@ body:
     id: env-python-ver
     attributes:
       label: Python 版本
-      description: 选择运行 NoneBot 的 Python 版本
+      description: 填写运行 NoneBot 的 Python 版本
       placeholder: e.g. 2.0.0
     validations:
       required: true
@@ -29,8 +29,17 @@ body:
     id: env-nb-ver
     attributes:
       label: NoneBot 版本
-      description: 运行的 NoneBot 版本
+      description: 填写 NoneBot 版本
       placeholder: e.g. 2.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: env-adapter
+    attributes:
+      label: 适配器
+      description: 填写使用的适配器以及版本
+      placeholder: e.g. OneBot v11 2.2.2
     validations:
       required: true
 
@@ -38,17 +47,8 @@ body:
     id: env-protocol
     attributes:
       label: 协议端
-      description: 连接 NoneBot 的协议端
-      placeholder: e.g. go-cqhttp
-    validations:
-      required: true
-
-  - type: input
-    id: env-protocol-ver
-    attributes:
-      label: 协议端版本
-      description: 连接 NoneBot 的协议端版本
-      placeholder: e.g. 2.0.0
+      description: 填写连接 NoneBot 的协议端及版本
+      placeholder: e.g. go-cqhttp 1.0.0
     validations:
       required: true
 
