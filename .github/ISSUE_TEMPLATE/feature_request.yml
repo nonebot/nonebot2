@@ -1,0 +1,20 @@
+name: 功能建议
+title: "Feature: 功能描述"
+description: 提出关于项目新功能的想法
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 希望能解决的问题
+      description: 在使用中遇到什么问题而需要新的功能？
+    validations:
+      required: true
+
+  - type: textarea
+    id: feature
+    attributes:
+      label: 描述所需要的功能
+      description: 请说明需要的功能或解决方法
+    validations:
+      required: true

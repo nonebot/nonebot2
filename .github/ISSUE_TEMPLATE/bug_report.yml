@@ -1,0 +1,85 @@
+name: Bug 反馈
+title: "Bug: 出现异常"
+description: 提交 Bug 反馈以帮助我们改进代码
+labels: ["bug"]
+body:
+  - type: dropdown
+    id: env-os
+    attributes:
+      label: OS
+      description: 选择运行 NoneBot 的系统
+      options:
+        - Windows
+        - MacOS
+        - Linux
+        - Other
+    validations:
+      required: true
+
+  - type: input
+    id: env-python-ver
+    attributes:
+      label: Python 版本
+      description: 填写运行 NoneBot 的 Python 版本
+      placeholder: e.g. 2.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: env-nb-ver
+    attributes:
+      label: NoneBot 版本
+      description: 填写 NoneBot 版本
+      placeholder: e.g. 2.0.0
+    validations:
+      required: true
+
+  - type: input
+    id: env-adapter
+    attributes:
+      label: 适配器
+      description: 填写使用的适配器以及版本
+      placeholder: e.g. OneBot v11 2.2.2
+    validations:
+      required: true
+
+  - type: input
+    id: env-protocol
+    attributes:
+      label: 协议端
+      description: 填写连接 NoneBot 的协议端及版本
+      placeholder: e.g. go-cqhttp 1.0.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: describe
+    attributes:
+      label: 描述问题
+      description: 清晰简洁地说明问题是什么
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: 复现步骤
+      description: 提供能复现此问题的详细操作步骤
+      placeholder: |
+        1. 首先……
+        2. 然后……
+        3. 发生……
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: 期望的结果
+      description: 清晰简洁地描述你期望发生的事情
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: 截图或日志
+      description: 提供有助于诊断问题的任何日志和截图

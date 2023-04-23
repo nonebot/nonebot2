@@ -1,0 +1,18 @@
+name: 文档改进
+title: "Docs: 描述"
+description: 文档错误及改进意见反馈
+labels: ["documentation"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: 描述问题或主题
+    validations:
+      required: true
+
+  - type: textarea
+    id: improve
+    attributes:
+      label: 需做出的修改
+    validations:
+      required: true
