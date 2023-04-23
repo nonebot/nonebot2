@@ -49,12 +49,13 @@ async def handle_function():
 from nonebot import on_command
 from nonebot.adapters import Message
 from nonebot.params import CommandArg
-from nonebot.adapters.github import IssueCommentCreated, IssueCommentEdited
+from nonebot.adapters.onebot.v11 import MessageEvent as OnebotV11MessageEvent
+from nonebot.adapters.onebot.v12 import MessageEvent as OnebotV12MessageEvent
 
 echo = on_command("/echo", priority=10, block=True)
 
 @echo.handle()
-async def handle_function(event: IssueCommentCreated | IssueCommentEdited, args: Message = CommandArg()):
+async def handle_function(event: OnebotV11MessageEvent | OnebotV12MessageEvent, args: Message = CommandArg()):
     await echo.finish(args)
 ```
 
@@ -67,12 +68,13 @@ from typing import Union
 from nonebot import on_command
 from nonebot.adapters import Message
 from nonebot.params import CommandArg
-from nonebot.adapters.github import IssueCommentCreated, IssueCommentEdited
+from nonebot.adapters.onebot.v11 import MessageEvent as OnebotV11MessageEvent
+from nonebot.adapters.onebot.v12 import MessageEvent as OnebotV12MessageEvent
 
 echo = on_command("/echo", priority=10, block=True)
 
 @echo.handle()
-async def handle_function(event: Union[IssueCommentCreated, IssueCommentEdited], args: Message = CommandArg()):
+async def handle_function(event: Union[OnebotV11MessageEvent, OnebotV12MessageEvent], args: Message = CommandArg()):
     await echo.finish(args)
 ```
 
