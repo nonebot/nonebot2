@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 移除 `MC_QQ_MCRcon` [@17TheWord](https://github.com/17TheWord) ([#1948](https://github.com/nonebot/nonebot2/pull/1948))
 - Plugin: 更新 lgc2333 插件仓库地址 [@lgc2333](https://github.com/lgc2333) ([#1935](https://github.com/nonebot/nonebot2/pull/1935))
 - Plugin: 更新多功能哔哩哔哩解析工具 [@djkcyl](https://github.com/djkcyl) ([#1913](https://github.com/nonebot/nonebot2/pull/1913))
 - CI: 跳过 PR 仓库为 fork 的情况 [@he0119](https://github.com/he0119) ([#1905](https://github.com/nonebot/nonebot2/pull/1905))
