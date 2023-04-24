@@ -212,19 +212,18 @@ async def _(e: Union[ActionFailed, NetworkError]): ...
 from typing import Annotated
 
 from nonebot import on_command
+from nonebot.adapters import Event
 from nonebot.params import Depends
-from nonebot.matcher import Matcher
-from nonebot.adapters.console import MessageEvent
 
 test = on_command("test")
 
-async def check(event: MessageEvent, matcher: Matcher) -> MessageEvent:
+async def check(event: Event) -> Event:
     if event.get_user_id() in BLACKLIST:
-        await matcher.finish()
+        await test.finish()
     return event
 
 @test.handle()
-async def _(event: Annotated[MessageEvent, Depends(check)]):
+async def _(event: Annotated[Event, Depends(check)]):
     ...
 ```
 
@@ -233,19 +232,18 @@ async def _(event: Annotated[MessageEvent, Depends(check)]):
 
 ```python {2,14}
 from nonebot import on_command
+from nonebot.adapters import Event
 from nonebot.params import Depends
-from nonebot.matcher import Matcher
-from nonebot.adapters.console import MessageEvent
 
 test = on_command("test")
 
-async def check(event: MessageEvent, matcher: Matcher) -> MessageEvent:
+async def check(event: Event) -> Event:
     if event.get_user_id() in BLACKLIST:
-        await matcher.finish()
+        await test.finish()
     return event
 
 @test.handle()
-async def _(event: MessageEvent = Depends(check)):
+async def _(event: Event = Depends(check)):
     ...
 ```
 
@@ -255,6 +253,24 @@ async def _(event: MessageEvent = Depends(check)):
 在上面的代码中，我们使用 `Depends` 标记定义了一个子依赖 `check`。它判断事件主体用户是否在黑名单中，如果在，则直接结束事件处理流程。如果不在，则返回事件对象，以便事件处理函数可以继续执行。
 
 通过将 `Depends` 包裹的子依赖作为参数的默认值，我们就可以在执行事件处理函数之前执行子依赖，并将其返回值作为参数传入事件处理函数。子依赖和普通的事件处理函数并没有区别，同样可以使用依赖注入，并且可以返回任何类型的值。但需要注意的是，如果事件处理函数参数的类型注解与子依赖返回值的类型**不一致**，将会触发[重载](../appendices/overload.md)而跳过当前事件处理函数。
+
+特别的，我们可以为 `Dependent` 对象定义一系列前置子依赖，它们会在参数执行前被顺序执行，且返回值将会被忽略，例如：
+
+```python {2,14}
+from nonebot import on_command
+from nonebot.adapters import Event
+from nonebot.params import Depends
+
+test = on_command("test")
+
+async def check(event: Event):
+    if event.get_user_id() in BLACKLIST:
+        await test.finish()
+
+@test.handle(parameterless=[Depends(check)])
+async def _():
+    ...
+```
 
 ### 依赖缓存
 
