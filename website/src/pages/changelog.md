@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 新增插件跨平台指南 [@Well2333](https://github.com/Well2333) ([#1938](https://github.com/nonebot/nonebot2/pull/1938))
 - Docs: 开启 blank issues [@yanyongyu](https://github.com/yanyongyu) ([#1945](https://github.com/nonebot/nonebot2/pull/1945))
 - Docs: 使用 issue 表单替换 issue 模板 [@A-kirami](https://github.com/A-kirami) ([#1928](https://github.com/nonebot/nonebot2/pull/1928))
 - Docs: 修正教程中部分 import 缺失的问题 [@Well2333](https://github.com/Well2333) ([#1927](https://github.com/nonebot/nonebot2/pull/1927))
