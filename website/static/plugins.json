@@ -4050,7 +4050,7 @@
     "module_name": "nonebot_plugin_autoreply",
     "project_link": "nonebot-plugin-autoreply",
     "name": "AutoReply",
-    "desc": "一个简单的只有配置文件的无数据库自动回复插件，支持多种匹配模式",
+    "desc": "一个高度可自定义的自动回复插件，支持多种匹配模式",
     "author": "lgc2333",
     "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-autoreply/",
     "tags": [
