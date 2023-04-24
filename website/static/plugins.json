@@ -5422,5 +5422,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-coderun",
+    "project_link": "nonebot-plugin-coderun",
+    "name": "运行代码",
+    "desc": "基于runoob.com的在线代码运行插件",
+    "author": "Yincmewy",
+    "homepage": "https://github.com/Yincmewy/nonebot_plugin_coderun",
+    "tags": [],
+    "is_official": false
   }
 ]
