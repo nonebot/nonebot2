@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 运行代码 [@noneflow](https://github.com/noneflow) ([#1942](https://github.com/nonebot/nonebot2/pull/1942))
 - Plugin: brainfuck [@noneflow](https://github.com/noneflow) ([#1944](https://github.com/nonebot/nonebot2/pull/1944))
 - Plugin: Mixin [@noneflow](https://github.com/noneflow) ([#1947](https://github.com/nonebot/nonebot2/pull/1947))
 - Plugin: AppInsights 日志监控 [@noneflow](https://github.com/noneflow) ([#1940](https://github.com/nonebot/nonebot2/pull/1940))
