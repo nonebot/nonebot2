@@ -44,15 +44,12 @@ from nonebot.adapters import Bot, Event, Message, MessageSegment
 from nonebot.params import Command, EventToMe, CommandArg, CommandWhitespace
 from nonebot.consts import (
     CMD_KEY,
-    REGEX_STR,
     PREFIX_KEY,
-    REGEX_DICT,
     SHELL_ARGS,
     SHELL_ARGV,
     CMD_ARG_KEY,
     KEYWORD_KEY,
     RAW_CMD_KEY,
-    REGEX_GROUP,
     ENDSWITH_KEY,
     CMD_START_KEY,
     FULLMATCH_KEY,
@@ -678,10 +675,7 @@ class RegexRule:
         except Exception:
             return False
         if matched := re.search(self.regex, str(msg), self.flags):
-            state[REGEX_MATCHED] = matched.group()
-            state[REGEX_STR] = matched.group()
-            state[REGEX_GROUP] = matched.groups()
-            state[REGEX_DICT] = matched.groupdict()
+            state[REGEX_MATCHED] = matched
             return True
         else:
             return False
