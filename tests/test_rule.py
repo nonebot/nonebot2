@@ -412,7 +412,7 @@ async def test_shell_command():
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "pattern, type, text, expected, matched, string, group, dict",
+    "pattern, type, text, expected, matched",
     [
         (
             r"(?P<key>key\d)",
