@@ -1,5 +1,6 @@
+import re
 import sys
-from typing import Dict, Tuple, Union, Optional
+from typing import Match, Tuple, Union, Optional
 
 import pytest
 from nonebug import App
@@ -9,14 +10,11 @@ from utils import make_fake_event, make_fake_message
 from nonebot.exception import ParserExit, SkippedException
 from nonebot.consts import (
     CMD_KEY,
-    REGEX_STR,
     PREFIX_KEY,
-    REGEX_DICT,
     SHELL_ARGS,
     SHELL_ARGV,
     CMD_ARG_KEY,
     KEYWORD_KEY,
-    REGEX_GROUP,
     ENDSWITH_KEY,
     FULLMATCH_KEY,
     REGEX_MATCHED,
@@ -421,14 +419,11 @@ async def test_shell_command():
             "message",
             "_key1_",
             True,
-            "key1",
-            "key1",
-            ("key1",),
-            {"key": "key1"},
+            re.search(r"(?P<key>key\d)", "_key1_"),
         ),
-        (r"foo", "message", None, False, None, None, None, None),
-        (r"foo", "notice", "foo", True, "foo", "foo", tuple(), {}),
-        (r"foo", "notice", "bar", False, None, None, None, None),
+        (r"foo", "message", None, False, None),
+        (r"foo", "notice", "foo", True, re.search(r"foo", "foo")),
+        (r"foo", "notice", "bar", False, None),
     ],
 )
 async def test_regex(
@@ -436,10 +431,7 @@ async def test_regex(
     type: str,
     text: Optional[str],
     expected: bool,
-    matched: Optional[str],
-    string: Optional[str],
-    group: Optional[Tuple[str, ...]],
-    dict: Optional[Dict[str, str]],
+    matched: Optional[Match[str]],
 ):
     test_regex = regex(pattern)
     dependent = list(test_regex.checkers)[0]
@@ -452,10 +444,13 @@ async def test_regex(
     event = make_fake_event(_type=type, _message=message)()
     state = {}
     assert await dependent(event=event, state=state) == expected
-    assert state.get(REGEX_MATCHED) == matched
-    assert state.get(REGEX_STR) == string
-    assert state.get(REGEX_GROUP) == group
-    assert state.get(REGEX_DICT) == dict
+    result: Optional[Match[str]] = state.get(REGEX_MATCHED)
+    if matched is None:
+        assert result is None
+    else:
+        assert isinstance(result, Match)
+        assert result.group() == matched.group()
+        assert result.span() == matched.span()
 
 
 @pytest.mark.asyncio

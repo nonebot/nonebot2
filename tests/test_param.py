@@ -1,3 +1,5 @@
+import re
+
 import pytest
 from nonebug import App
 
@@ -16,15 +18,12 @@ from nonebot.params import (
 )
 from nonebot.consts import (
     CMD_KEY,
-    REGEX_STR,
     PREFIX_KEY,
-    REGEX_DICT,
     SHELL_ARGS,
     SHELL_ARGV,
     CMD_ARG_KEY,
     KEYWORD_KEY,
     RAW_CMD_KEY,
-    REGEX_GROUP,
     ENDSWITH_KEY,
     CMD_START_KEY,
     FULLMATCH_KEY,
@@ -226,6 +225,7 @@ async def test_state(app: App):
     )
 
     fake_message = make_fake_message()("text")
+    fake_matched = re.match(r"\[cq:(?P<type>.*?),(?P<arg>.*?)\]", "[cq:test,arg=value]")
     fake_state = {
         PREFIX_KEY: {
             CMD_KEY: ("cmd",),
@@ -236,10 +236,7 @@ async def test_state(app: App):
         },
         SHELL_ARGV: ["-h"],
         SHELL_ARGS: {"help": True},
-        REGEX_MATCHED: "[cq:test,arg=value]",
-        REGEX_STR: "[cq:test,arg=value]",
-        REGEX_GROUP: ("test", "arg=value"),
-        REGEX_DICT: {"type": "test", "arg": "value"},
+        REGEX_MATCHED: fake_matched,
         STARTSWITH_KEY: "startswith",
         ENDSWITH_KEY: "endswith",
         FULLMATCH_KEY: "fullmatch",
@@ -312,19 +309,19 @@ async def test_state(app: App):
         regex_str, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
-        ctx.should_return(fake_state[REGEX_STR])
+        ctx.should_return("[cq:test,arg=value]")
 
     async with app.test_dependent(
         regex_group, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
-        ctx.should_return(fake_state[REGEX_GROUP])
+        ctx.should_return(("test", "arg=value"))
 
     async with app.test_dependent(
         regex_dict, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
-        ctx.should_return(fake_state[REGEX_DICT])
+        ctx.should_return({"type": "test", "arg": "arg=value"})
 
     async with app.test_dependent(
         startswith, allow_types=[StateParam, DependParam]

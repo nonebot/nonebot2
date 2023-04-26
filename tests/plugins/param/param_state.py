@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Match, Tuple
 
 from nonebot.typing import T_State
 from nonebot.adapters import Message
@@ -73,12 +73,12 @@ async def regex_group(regex_group: Tuple = RegexGroup()) -> Tuple:
     return regex_group
 
 
-async def regex_matched(regex_matched: str = RegexMatched()) -> str:
+async def regex_matched(regex_matched: Match[str] = RegexMatched()) -> Match[str]:
     return regex_matched
 
 
-async def regex_str(regex_matched: str = RegexStr()) -> str:
-    return regex_matched
+async def regex_str(regex_str: str = RegexStr()) -> str:
+    return regex_str
 
 
 async def startswith(startswith: str = Startswith()) -> str:
