@@ -55,16 +55,12 @@ class Driver(BaseDriver):
 
     @overrides(BaseDriver)
     def on_startup(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
-        """
-        注册一个启动时执行的函数
-        """
+        """注册一个启动时执行的函数"""
         return self._lifespan.on_startup(func)
 
     @overrides(BaseDriver)
     def on_shutdown(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
-        """
-        注册一个停止时执行的函数
-        """
+        """注册一个停止时执行的函数"""
         return self._lifespan.on_shutdown(func)
 
     @overrides(BaseDriver)
@@ -146,7 +142,15 @@ class Driver(BaseDriver):
                 signal.signal(sig, self._handle_exit)
 
     def _handle_exit(self, sig, frame):
-        if self.should_exit.is_set():
-            self.force_exit = True
-        else:
+        self.exit(force=self.should_exit.is_set())
+
+    def exit(self, force: bool = False):
+        """退出 none driver
+
+        参数:
+            force: 强制退出
+        """
+        if not self.should_exit.is_set():
             self.should_exit.set()
+        if force:
+            self.force_exit = True
