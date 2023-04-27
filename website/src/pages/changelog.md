@@ -7,8 +7,14 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💥 破坏性变更
+
+- Feature: 支持 `re.Match` 依赖注入 [@yanyongyu](https://github.com/yanyongyu) ([#1950](https://github.com/nonebot/nonebot2/pull/1950))
+
 ### 🚀 新功能
 
+- Feature: 支持 `re.Match` 依赖注入 [@yanyongyu](https://github.com/yanyongyu) ([#1950](https://github.com/nonebot/nonebot2/pull/1950))
+- Feature: 支持主动停止 `none` 系列驱动器 [@yanyongyu](https://github.com/yanyongyu) ([#1951](https://github.com/nonebot/nonebot2/pull/1951))
 - Feature: 为消息类添加 `has` `join` `include` `exclude` 方法 [@yanyongyu](https://github.com/yanyongyu) ([#1895](https://github.com/nonebot/nonebot2/pull/1895))
 
 ### 🐛 Bug 修复
