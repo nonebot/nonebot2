@@ -5432,5 +5432,24 @@
     "homepage": "https://github.com/Yincmewy/nonebot_plugin_coderun",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_abot_place",
+    "project_link": "nonebot-plugin-abot-place",
+    "name": "公共画板插件",
+    "desc": "可以让所有的 Bot 用户一起来画画（参考 Reddit Place）",
+    "author": "djkcyl",
+    "homepage": "https://github.com/Aunly/nonebot-plugin-abot-place",
+    "tags": [
+      {
+        "label": "ABot",
+        "color": "#52aaea"
+      },
+      {
+        "label": "Place",
+        "color": "#ea6dda"
+      }
+    ],
+    "is_official": false
   }
 ]
