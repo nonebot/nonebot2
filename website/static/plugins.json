@@ -5470,5 +5470,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_manga_translator",
+    "project_link": "nonebot-plugin-manga-translator",
+    "name": "图片/漫画翻译",
+    "desc": "图片/漫画翻译插件，适配多API，将图片翻译并返回图片",
+    "author": "maoxig",
+    "homepage": "https://github.com/maoxig/nonebot-plugin-manga-translator",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:漫画翻译",
+        "color": "#527bea"
+      },
+      {
+        "label": "t:图片翻译",
+        "color": "#c452ea"
+      }
+    ],
+    "is_official": false
   }
 ]
