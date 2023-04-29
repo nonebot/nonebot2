@@ -5451,5 +5451,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_megumin",
+    "project_link": "nonebot-plugin-megumin",
+    "name": "为美好群聊献上爆炎",
+    "desc": "现在，你的群友可以触发失传已久的爆裂魔法了",
+    "author": "youlanan",
+    "homepage": "https://github.com/youlanan/nonebot_plugin_megumin",
+    "tags": [
+      {
+        "label": "小游戏",
+        "color": "#f9971c"
+      },
+      {
+        "label": "Explosion",
+        "color": "#f94b1c"
+      }
+    ],
+    "is_official": false
   }
 ]
