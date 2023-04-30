@@ -6,7 +6,7 @@ body:
   - type: dropdown
     id: env-os
     attributes:
-      label: OS
+      label: 操作系统
       description: 选择运行 NoneBot 的系统
       options:
         - Windows
@@ -21,7 +21,7 @@ body:
     attributes:
       label: Python 版本
       description: 填写运行 NoneBot 的 Python 版本
-      placeholder: e.g. 2.0.0
+      placeholder: e.g. 3.11.0
     validations:
       required: true
 
