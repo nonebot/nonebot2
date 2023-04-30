@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Docs: 更正 issue 表单部分内容 [@A-kirami](https://github.com/A-kirami) ([#1961](https://github.com/nonebot/nonebot2/pull/1961))
 - Plugin: 更新 AutoReply 插件描述 [@lgc2333](https://github.com/lgc2333) ([#1949](https://github.com/nonebot/nonebot2/pull/1949))
 - Plugin: 移除 `MC_QQ_MCRcon` [@17TheWord](https://github.com/17TheWord) ([#1948](https://github.com/nonebot/nonebot2/pull/1948))
 - Plugin: 更新 lgc2333 插件仓库地址 [@lgc2333](https://github.com/lgc2333) ([#1935](https://github.com/nonebot/nonebot2/pull/1935))
