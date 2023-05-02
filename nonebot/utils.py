@@ -12,6 +12,7 @@ import inspect
 import importlib
 import dataclasses
 from pathlib import Path
+from contextvars import copy_context
 from functools import wraps, partial
 from contextlib import asynccontextmanager
 from typing_extensions import ParamSpec, get_args, get_origin
@@ -111,7 +112,9 @@ def run_sync(call: Callable[P, R]) -> Callable[P, Coroutine[None, None, R]]:
     async def _wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
         loop = asyncio.get_running_loop()
         pfunc = partial(call, *args, **kwargs)
-        result = await loop.run_in_executor(None, pfunc)
+        context = copy_context()
+        context_run = context.run
+        result = await loop.run_in_executor(None, context_run, pfunc)
         return result
 
     return _wrapper
