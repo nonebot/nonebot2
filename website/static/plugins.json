@@ -5493,5 +5493,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_watermarker",
+    "project_link": "nonebot-plugin-watermarker",
+    "name": "水印大师",
+    "desc": "给bot发的图片增加水印,支持随机水印添加",
+    "author": "X-Skirt-X",
+    "homepage": "https://github.com/X-Skirt-X/nonebot-plugin-watermarker",
+    "tags": [
+      {
+        "label": "t:水印",
+        "color": "#52eae7"
+      },
+      {
+        "label": "t:图片水印",
+        "color": "#ef258f"
+      }
+    ],
+    "is_official": false
   }
 ]
