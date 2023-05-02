@@ -45,6 +45,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 星穹铁道活动日历 [@noneflow](https://github.com/noneflow) ([#1970](https://github.com/nonebot/nonebot2/pull/1970))
 - Plugin: 水印大师 [@noneflow](https://github.com/noneflow) ([#1965](https://github.com/nonebot/nonebot2/pull/1965))
 - Plugin: 图片/漫画翻译 [@noneflow](https://github.com/noneflow) ([#1955](https://github.com/nonebot/nonebot2/pull/1955))
 - Plugin: 为美好群聊献上爆炎 [@noneflow](https://github.com/noneflow) ([#1953](https://github.com/nonebot/nonebot2/pull/1953))
