@@ -5512,5 +5512,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_starrail_calendar",
+    "project_link": "nonebot-plugin-starrail-calendar",
+    "name": "星穹铁道活动日历",
+    "desc": "查看《崩坏：星穹铁道》官方活动",
+    "author": "nicklly",
+    "homepage": "https://github.com/nicklly/nonebot_plugin_StarRail_calendar",
+    "tags": [],
+    "is_official": false
   }
 ]
