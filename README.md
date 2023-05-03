@@ -106,7 +106,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
   |                   [开黑啦](https://developer.kookapp.cn/)                   |  ↗️  |                             由社区贡献                             |
   |            [Mirai](https://docs.mirai.mamoe.net/mirai-api-http/)            |  ↗️  |                             由社区贡献                             |
   |         [Ntchat](https://github.com/JustUndertaker/adapter-ntchat)          |  ↗️  |                             由社区贡献                             |
-  |  [MineCraft (Spigot)](https://github.com/17TheWord/nonebot-adapter-spigot)  |  ↗️  |                             由社区贡献                             |
+  |      [MineCraft](https://github.com/17TheWord/nonebot-adapter-minecraft)    |  ↗️  |                             由社区贡献                             |
   |         [BiliBili Live](https://github.com/wwweww/adapter-bilibili)         |  ↗️  |                             由社区贡献                             |
   | [Walle-Q (QQ 协议)](https://github.com/onebot-walle/nonebot_adapter_walleq) |  ↗️  |                             由社区贡献                             |
 
