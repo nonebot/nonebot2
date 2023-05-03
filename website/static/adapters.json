@@ -115,12 +115,12 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot.adapters.spigot",
-    "project_link": "nonebot-adapter-spigot",
-    "name": "Spigot",
-    "desc": "MineCraft通信适配",
+    "module_name": "nonebot.adapters.minecraft",
+    "project_link": "nonebot-adapter-minecraft",
+    "name": "Minecraft",
+    "desc": "MineCraft通信适配，支持Rcon",
     "author": "17TheWord",
-    "homepage": "https://github.com/17TheWord/nonebot-adapter-spigot",
+    "homepage": "https://github.com/17TheWord/nonebot-adapter-minecraft",
     "tags": [
       {
         "label": "Minecraft",
