@@ -273,22 +273,34 @@ async def test_keyword(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "cmds, cmd, force_whitespace, whitespace, expected",
+    "cmds, force_whitespace, cmd, whitespace, arg_text, expected",
     [
-        [(("help",),), ("help",), None, None, True],
-        [(("help",),), ("foo",), None, None, False],
-        [(("help", "foo"),), ("help", "foo"), True, " ", True],
-        [(("help",), ("foo",)), ("help",), " ", " ", True],
-        [(("help",),), ("help",), False, " ", False],
-        [(("help",),), ("help",), True, None, False],
-        [(("help",),), ("help",), "\n", " ", False],
+        # command tests
+        [(("help",),), None, ("help",), None, None, True],
+        [(("help",),), None, ("foo",), None, None, False],
+        [(("help", "foo"),), None, ("help", "foo"), None, None, True],
+        [(("help", "foo"),), None, ("help", "bar"), None, None, False],
+        [(("help",), ("foo",)), None, ("help",), None, None, True],
+        [(("help",), ("foo",)), None, ("bar",), None, None, False],
+        # whitespace tests
+        [(("help",),), True, ("help",), " ", "arg", True],
+        [(("help",),), True, ("help",), None, "arg", False],
+        [(("help",),), True, ("help",), None, None, True],
+        [(("help",),), False, ("help",), " ", "arg", False],
+        [(("help",),), False, ("help",), None, "arg", True],
+        [(("help",),), False, ("help",), None, None, True],
+        [(("help",),), " ", ("help",), " ", "arg", True],
+        [(("help",),), " ", ("help",), "\n", "arg", False],
+        [(("help",),), " ", ("help",), None, "arg", False],
+        [(("help",),), " ", ("help",), None, None, True],
     ],
 )
 async def test_command(
     cmds: Tuple[Tuple[str, ...]],
-    cmd: Tuple[str, ...],
     force_whitespace: Optional[Union[str, bool]],
+    cmd: Tuple[str, ...],
     whitespace: Optional[str],
+    arg_text: Optional[str],
     expected: bool,
 ):
     test_command = command(*cmds, force_whitespace=force_whitespace)
@@ -298,7 +310,10 @@ async def test_command(
     assert isinstance(checker, CommandRule)
     assert checker.cmds == cmds
 
-    state = {PREFIX_KEY: {CMD_KEY: cmd, CMD_WHITESPACE_KEY: whitespace}}
+    arg = arg_text if arg_text is None else make_fake_message()(arg_text)
+    state = {
+        PREFIX_KEY: {CMD_KEY: cmd, CMD_WHITESPACE_KEY: whitespace, CMD_ARG_KEY: arg}
+    }
     assert await dependent(state=state) == expected
 
 
