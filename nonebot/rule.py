@@ -376,11 +376,12 @@ class CommandRule:
     async def __call__(
         self,
         cmd: Optional[Tuple[str, ...]] = Command(),
+        cmd_arg: Optional[Message] = CommandArg(),
         cmd_whitespace: Optional[str] = CommandWhitespace(),
     ) -> bool:
         if cmd not in self.cmds:
             return False
-        if self.force_whitespace is None:
+        if self.force_whitespace is None or not cmd_arg:
             return True
         if isinstance(self.force_whitespace, str):
             return self.force_whitespace == cmd_whitespace
