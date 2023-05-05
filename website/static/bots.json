@@ -475,5 +475,22 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "March7th",
+    "desc": "三月七 - 崩坏：星穹铁道机器人",
+    "author": "mobyw",
+    "homepage": "https://github.com/Mar-7th/March7th",
+    "tags": [
+      {
+        "label": "StarRail",
+        "color": "#5a8ccc"
+      },
+      {
+        "label": "星穹铁道",
+        "color": "#6faec6"
+      }
+    ],
+    "is_official": false
   }
 ]
