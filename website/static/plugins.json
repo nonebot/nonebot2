@@ -5522,5 +5522,15 @@
     "homepage": "https://github.com/nicklly/nonebot_plugin_StarRail_calendar",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_wordle_help",
+    "project_link": "nonebot-plugin-wordle-help",
+    "name": "wordle_help",
+    "desc": "wordle小游戏助手",
+    "author": "Special-Week",
+    "homepage": "https://github.com/Special-Week/Hinata-Bot/tree/main/src/plugins/wordle_help",
+    "tags": [],
+    "is_official": false
   }
 ]
