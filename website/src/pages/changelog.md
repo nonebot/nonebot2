@@ -25,6 +25,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复获取事件信息文档代码范例中的高亮行 [@Lptr-byte](https://github.com/Lptr-byte) ([#1983](https://github.com/nonebot/nonebot2/pull/1983))
 - Docs: 修复事件处理函数文档代码范例中缺失的 import [@Lptr-byte](https://github.com/Lptr-byte) ([#1982](https://github.com/nonebot/nonebot2/pull/1982))
 - Docs: 修复获取事件信息文档代码范例中缺失的 import [@Lptr-byte](https://github.com/Lptr-byte) ([#1980](https://github.com/nonebot/nonebot2/pull/1980))
 - Docs: 新增插件跨平台指南 [@Well2333](https://github.com/Well2333) ([#1938](https://github.com/nonebot/nonebot2/pull/1938))
