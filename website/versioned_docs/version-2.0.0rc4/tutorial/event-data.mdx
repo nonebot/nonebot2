@@ -30,6 +30,7 @@ import Messenger from "@site/src/components/Messenger";
 from nonebot import on_command
 from nonebot.adapters import Message
 from nonebot.params import CommandArg
+from nonebot.rule import to_me
 
 weather = on_command("天气", rule=to_me(), aliases={"weather", "查天气"}, priority=10, block=True)
 
