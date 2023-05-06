@@ -28,6 +28,7 @@ import Messenger from "@site/src/components/Messenger";
 
 ```python {5-7} title=weather/__init__.py
 from nonebot.plugin import on_command
+from nonebot.rule import to_me
 
 weather = on_command("天气", rule=to_me(), aliases={"weather", "查天气"}, priority=10, block=True)
 
