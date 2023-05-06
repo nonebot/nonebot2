@@ -5532,5 +5532,24 @@
     "homepage": "https://github.com/Special-Week/Hinata-Bot/tree/main/src/plugins/wordle_help",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-csgo-case-simulator",
+    "project_link": "nonebot-plugin-csgo-case-simulator",
+    "name": "CSGO开箱模拟器",
+    "desc": "内置所有最新武器箱，可多箱连开",
+    "author": "roiiiu",
+    "homepage": "https://github.com/roiiiu/nonebot-plugin-csgo-case-simulator",
+    "tags": [
+      {
+        "label": "CSGO",
+        "color": "#47aeff"
+      },
+      {
+        "label": "开箱模拟器",
+        "color": "#ff4781"
+      }
+    ],
+    "is_official": false
   }
 ]
