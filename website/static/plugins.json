@@ -5566,5 +5566,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_callapi",
+    "project_link": "nonebot-plugin-callapi",
+    "name": "CallAPI",
+    "desc": "使用 Bot 指令来直接调用 Bot 的 API",
+    "author": "lgc2333",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-callapi",
+    "tags": [],
+    "is_official": false
   }
 ]
