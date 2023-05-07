@@ -89,6 +89,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: ay 机器人 [@noneflow](https://github.com/noneflow) ([#1993](https://github.com/nonebot/nonebot2/pull/1993))
 - Bot: March7th [@noneflow](https://github.com/noneflow) ([#1978](https://github.com/nonebot/nonebot2/pull/1978))
 - Bot: XDbot2 [@noneflow](https://github.com/noneflow) ([#1932](https://github.com/nonebot/nonebot2/pull/1932))
 - Bot: CoolQBot [@noneflow](https://github.com/noneflow) ([#1894](https://github.com/nonebot/nonebot2/pull/1894))
