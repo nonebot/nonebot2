@@ -5551,5 +5551,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_grouplock",
+    "project_link": "nonebot-plugin-grouplock",
+    "name": "群聊人数锁定",
+    "desc": "一个基于nonebot2和go-cqhttp的群聊人数锁定插件",
+    "author": "ZM25XC",
+    "homepage": "https://github.com/ZM25XC/nonebot-plugin-grouplock",
+    "tags": [
+      {
+        "label": "群管",
+        "color": "#52b5ea"
+      }
+    ],
+    "is_official": false
   }
 ]
