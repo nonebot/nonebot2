@@ -492,5 +492,26 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "ay机器人",
+    "desc": "codeforces和洛谷卷王监视、股票监控、ai聊天",
+    "author": "863109569",
+    "homepage": "https://github.com/863109569/qqbot",
+    "tags": [
+      {
+        "label": "acm",
+        "color": "#ea5252"
+      },
+      {
+        "label": "洛谷",
+        "color": "#81ea52"
+      },
+      {
+        "label": "codeforces",
+        "color": "#5261ea"
+      }
+    ],
+    "is_official": false
   }
 ]
