@@ -51,6 +51,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: CallAPI [@noneflow](https://github.com/noneflow) ([#1990](https://github.com/nonebot/nonebot2/pull/1990))
 - Plugin: 群聊人数锁定 [@noneflow](https://github.com/noneflow) ([#1988](https://github.com/nonebot/nonebot2/pull/1988))
 - Plugin: CSGO 开箱模拟器 [@noneflow](https://github.com/noneflow) ([#1986](https://github.com/nonebot/nonebot2/pull/1986))
 - Plugin: wordle_help [@noneflow](https://github.com/noneflow) ([#1974](https://github.com/nonebot/nonebot2/pull/1974))
