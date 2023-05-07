@@ -51,6 +51,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: CSGO 开箱模拟器 [@noneflow](https://github.com/noneflow) ([#1986](https://github.com/nonebot/nonebot2/pull/1986))
 - Plugin: wordle_help [@noneflow](https://github.com/noneflow) ([#1974](https://github.com/nonebot/nonebot2/pull/1974))
 - Plugin: 星穹铁道活动日历 [@noneflow](https://github.com/noneflow) ([#1970](https://github.com/nonebot/nonebot2/pull/1970))
 - Plugin: 水印大师 [@noneflow](https://github.com/noneflow) ([#1965](https://github.com/nonebot/nonebot2/pull/1965))
