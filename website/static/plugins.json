@@ -5576,5 +5576,15 @@
     "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-callapi",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_penguin",
+    "project_link": "nonebot-plugin-penguin",
+    "name": "企鹅物流统计数据查询",
+    "desc": "在群里就能查询明日方舟关卡掉落物统计数据",
+    "author": "AzideCupric",
+    "homepage": "https://github.com/AzideCupric/nonebot-plugin-penguin",
+    "tags": [],
+    "is_official": false
   }
 ]
