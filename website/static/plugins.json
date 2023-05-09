@@ -5586,5 +5586,28 @@
     "homepage": "https://github.com/AzideCupric/nonebot-plugin-penguin",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_spark_gpt",
+    "project_link": "nonebot-plugin-spark-gpt",
+    "name": "Spark-GPT",
+    "desc": "将多来源的gpt接入qq及更多平台，使用便捷，管理完善，功能强大",
+    "author": "canxin121",
+    "homepage": "https://github.com/canxin121/Spark-GPT",
+    "tags": [
+      {
+        "label": "ChatGPT",
+        "color": "#52aeea"
+      },
+      {
+        "label": "Claude",
+        "color": "#52aeea"
+      },
+      {
+        "label": "Newbing",
+        "color": "#52aeea"
+      }
+    ],
+    "is_official": false
   }
 ]
