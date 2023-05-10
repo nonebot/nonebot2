@@ -5609,5 +5609,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_logpile",
+    "project_link": "nonebot-plugin-logpile",
+    "name": "nonebot-plugin-logpile",
+    "desc": "本地日志保存",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-logpile",
+    "tags": [],
+    "is_official": false
   }
 ]
