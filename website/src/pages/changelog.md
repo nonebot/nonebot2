@@ -51,6 +51,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-logpile [@noneflow](https://github.com/noneflow) ([#1999](https://github.com/nonebot/nonebot2/pull/1999))
 - Plugin: Spark-GPT [@noneflow](https://github.com/noneflow) ([#1997](https://github.com/nonebot/nonebot2/pull/1997))
 - Plugin: 企鹅物流统计数据查询 [@noneflow](https://github.com/noneflow) ([#1995](https://github.com/nonebot/nonebot2/pull/1995))
 - Plugin: CallAPI [@noneflow](https://github.com/noneflow) ([#1990](https://github.com/nonebot/nonebot2/pull/1990))
