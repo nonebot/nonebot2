@@ -5619,5 +5619,28 @@
     "homepage": "https://github.com/A-kirami/nonebot-plugin-logpile",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_segbuilder",
+    "project_link": "nonebot-plugin-segbuilder",
+    "name": "雷神工业",
+    "desc": "为不同的适配器提供更通用且简易的消息段构建方式",
+    "author": "Well2333",
+    "homepage": "https://github.com/Well2333/nonebot-plugin-segbuilder",
+    "tags": [
+      {
+        "label": "a:OneBot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "a:mirai2",
+        "color": "#ea5252"
+      },
+      {
+        "label": "a:qqguild",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
