@@ -5665,5 +5665,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_msgbuf",
+    "project_link": "nonebot-plugin-msgbuf",
+    "name": "信鸽巴夫",
+    "desc": "适用于 NoneBot2 插件的被动消息构造集成",
+    "author": "NCBM",
+    "homepage": "https://github.com/NCBM/nonebot-plugin-msgbuf",
+    "tags": [
+      {
+        "label": "t:dev",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
