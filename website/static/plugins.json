@@ -5690,5 +5690,24 @@
     "homepage": "https://github.com/mute23-code/nonebot_plugin_og",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_hoshino_sign",
+    "project_link": "nonebot-plugin-hoshino-sign",
+    "name": "签到",
+    "desc": "从 hoshino 搬过来的 pcr 签到, 略作修改。",
+    "author": "zhulinyv",
+    "homepage": "https://github.com/zhulinyv/nonebot_plugin_hoshino_sign",
+    "tags": [
+      {
+        "label": "PCR",
+        "color": "#ff0000"
+      },
+      {
+        "label": "签到",
+        "color": "#008000"
+      }
+    ],
+    "is_official": false
   }
 ]
