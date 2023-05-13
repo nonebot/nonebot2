@@ -1,14 +1,5 @@
-blank_issues_enabled: true
+blank_issues_enabled: false
 contact_links:
-  - name: Question
+  - name: NoneBot 论坛
     url: https://discussions.nonebot.dev/
-    about: Ask questions about nonebot
-  - name: Plugin Publish
-    url: https://v2.nonebot.dev/store
-    about: Publish your plugin to nonebot homepage and nb-cli
-  - name: Adapter Publish
-    url: https://v2.nonebot.dev/store
-    about: Publish your adapter to nonebot homepage and nb-cli
-  - name: Bot Publish
-    url: https://v2.nonebot.dev/store
-    about: Publish your bot to nonebot homepage and nb-cli
+    about: 前往 NoneBot 论坛提问

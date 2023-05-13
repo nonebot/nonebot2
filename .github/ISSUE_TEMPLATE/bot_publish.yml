@@ -1,0 +1,37 @@
+name: 发布机器人
+title: "Bot: {name}"
+description: 发布机器人到 NoneBot 官方商店
+labels: ["Bot"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: 机器人名称
+      description: 机器人名称
+    validations:
+      required: true
+
+  - type: input
+    id: description
+    attributes:
+      label: 机器人描述
+      description: 机器人描述
+    validations:
+      required: true
+
+  - type: input
+    id: homepage
+    attributes:
+      label: 机器人项目仓库/主页链接
+      description: 机器人项目仓库/主页链接
+      placeholder: e.g. https://github.com/xxx/xxx
+
+  - type: input
+    id: tags
+    attributes:
+      label: 标签
+      description: 标签
+      placeholder: 'e.g. [{"label": "标签名", "color": "#ea5252"}]'
+      value: "[]"
+    validations:
+      required: true
