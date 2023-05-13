@@ -41,42 +41,27 @@ export default function Plugin(): JSX.Element {
   const [label, setLabel] = useState<string>("");
   const [color, setColor] = useState<string>("#ea5252");
 
+  const urlEncode = (str: string) =>
+    encodeURIComponent(str).replace(/%2B/gi, "+");
+
   const onSubmit = () => {
     setModalOpen(false);
-    const title = encodeURIComponent(`Plugin: ${form.name}`).replace(
-      /%2B/gi,
-      "+"
-    );
-    const body = encodeURIComponent(
-      `
-**插件名称：**
-
-${form.name}
-
-**插件功能：**
-
-${form.desc}
-
-**PyPI 项目名：**
-
-${form.projectLink}
-
-**插件 import 包名：**
-
-${form.moduleName}
-
-**插件项目仓库/主页链接：**
-
-${form.homepage}
-
-**标签：**
-
-${JSON.stringify(tags)}
-`.trim()
-    ).replace(/%2B/gi, "+");
-    window.open(
-      `https://github.com/nonebot/nonebot2/issues/new?title=${title}&body=${body}&labels=Plugin`
-    );
+    const queries: { key: string; value: string }[] = [
+      { key: "template", value: "plugin_publish.yml" },
+      { key: "title", value: form.name && `Plugin: ${form.name}` },
+      { key: "labels", value: "Plugin" },
+      { key: "name", value: form.name },
+      { key: "description", value: form.desc },
+      { key: "pypi", value: form.projectLink },
+      { key: "module", value: form.moduleName },
+      { key: "homepage", value: form.homepage },
+      { key: "tags", value: JSON.stringify(tags) },
+    ];
+    const urlQueries = queries
+      .filter((query) => !!query.value)
+      .map((query) => `${query.key}=${urlEncode(query.value)}`)
+      .join("&");
+    window.open(`https://github.com/nonebot/nonebot2/issues/new?${urlQueries}`);
   };
   const onChange = (event) => {
     const target = event.target;

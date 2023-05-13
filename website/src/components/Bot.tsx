@@ -39,31 +39,25 @@ export default function Bot(): JSX.Element {
   const [label, setLabel] = useState<string>("");
   const [color, setColor] = useState<string>("#ea5252");
 
+  const urlEncode = (str: string) =>
+    encodeURIComponent(str).replace(/%2B/gi, "+");
+
   const onSubmit = () => {
     setModalOpen(false);
-    const title = encodeURIComponent(`Bot: ${form.name}`).replace(/%2B/gi, "+");
-    const body = encodeURIComponent(
-      `
-**机器人名称：**
-
-${form.name}
-
-**机器人功能：**
-
-${form.desc}
-
-**机器人项目仓库/主页链接：**
-
-${form.homepage}
-
-**标签：**
-
-${JSON.stringify(tags)}
-`.trim()
-    ).replace(/%2B/gi, "+");
-    window.open(
-      `https://github.com/nonebot/nonebot2/issues/new?title=${title}&body=${body}&labels=Bot`
-    );
+    const queries: { key: string; value: string }[] = [
+      { key: "template", value: "bot_publish.yml" },
+      { key: "title", value: form.name && `Bot: ${form.name}` },
+      { key: "labels", value: "Bot" },
+      { key: "name", value: form.name },
+      { key: "description", value: form.desc },
+      { key: "homepage", value: form.homepage },
+      { key: "tags", value: JSON.stringify(tags) },
+    ];
+    const urlQueries = queries
+      .filter((query) => !!query.value)
+      .map((query) => `${query.key}=${urlEncode(query.value)}`)
+      .join("&");
+    window.open(`https://github.com/nonebot/nonebot2/issues/new?${urlQueries}`);
   };
   const onChange = (event) => {
     const target = event.target;

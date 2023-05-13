@@ -1,0 +1,57 @@
+name: 发布适配器
+title: "Adapter: {name}"
+description: 发布适配器到 NoneBot 官方商店
+labels: ["Adapter"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: 适配器名称
+      description: 适配器名称
+    validations:
+      required: true
+
+  - type: input
+    id: description
+    attributes:
+      label: 适配器描述
+      description: 适配器描述
+    validations:
+      required: true
+
+  - type: input
+    id: pypi
+    attributes:
+      label: PyPI 项目名
+      description: PyPI 项目名
+      placeholder: e.g. nonebot-adapter-xxx
+    validations:
+      required: true
+
+  - type: input
+    id: module
+    attributes:
+      label: 适配器 import 包名
+      description: 适配器 import 包名
+      placeholder: e.g. nonebot_adapter_xxx
+    validations:
+      required: true
+
+  - type: input
+    id: homepage
+    attributes:
+      label: 适配器项目仓库/主页链接
+      description: 适配器项目仓库/主页链接
+      placeholder: e.g. https://github.com/xxx/xxx
+    validations:
+      required: true
+
+  - type: input
+    id: tags
+    attributes:
+      label: 标签
+      description: 标签
+      placeholder: 'e.g. [{"label": "标签名", "color": "#ea5252"}]'
+      value: "[]"
+    validations:
+      required: true
