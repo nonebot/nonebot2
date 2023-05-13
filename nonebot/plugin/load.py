@@ -16,7 +16,7 @@ from .manager import PluginManager
 from . import _managers, get_plugin, _module_name_to_plugin_name
 
 try:  # pragma: py-gte-311
-    import tomllib  # pyright: reportMissingImports=false
+    import tomllib  # pyright: ignore[reportMissingImports]
 except ModuleNotFoundError:  # pragma: py-lt-311
     import tomli as tomllib
 

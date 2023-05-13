@@ -1,9 +1,10 @@
-"""本模块定义插件对象。
+"""本模块定义插件相关信息。
 
 FrontMatter:
     sidebar_position: 3
     description: nonebot.plugin.plugin 模块
 """
+
 from types import ModuleType
 from dataclasses import field, dataclass
 from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional
@@ -11,9 +12,6 @@ from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional
 from pydantic import BaseModel
 
 from nonebot.matcher import Matcher
-
-# FIXME: backport for nonebug
-from . import _plugins as plugins  # nopycln: import
 
 if TYPE_CHECKING:
     from .manager import PluginManager
@@ -24,14 +22,21 @@ class PluginMetadata:
     """插件元信息，由插件编写者提供"""
 
     name: str
-    """插件可阅读名称"""
+    """插件名称"""
     description: str
     """插件功能介绍"""
     usage: str
     """插件使用方法"""
+    type: Optional[str] = None
+    """插件类型，用于商店分类"""
+    homepage: Optional[str] = None
+    """插件主页"""
     config: Optional[Type[BaseModel]] = None
     """插件配置项"""
+    supported_adapters: Optional[Set[str]] = None
+    """插件支持的适配器模块路径，`None` 表示支持所有适配器"""
     extra: Dict[Any, Any] = field(default_factory=dict)
+    """插件额外信息，可由插件编写者自由扩展定义"""
 
 
 @dataclass(eq=False)
