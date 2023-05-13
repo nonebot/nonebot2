@@ -95,6 +95,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: 狐尾 [@noneflow](https://github.com/noneflow) ([#2009](https://github.com/nonebot/nonebot2/pull/2009))
 - Bot: ay 机器人 [@noneflow](https://github.com/noneflow) ([#1993](https://github.com/nonebot/nonebot2/pull/1993))
 - Bot: March7th [@noneflow](https://github.com/noneflow) ([#1978](https://github.com/nonebot/nonebot2/pull/1978))
 - Bot: XDbot2 [@noneflow](https://github.com/noneflow) ([#1932](https://github.com/nonebot/nonebot2/pull/1932))
