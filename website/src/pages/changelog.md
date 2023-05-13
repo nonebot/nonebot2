@@ -51,6 +51,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 信鸽巴夫 [@noneflow](https://github.com/noneflow) ([#2008](https://github.com/nonebot/nonebot2/pull/2008))
 - Plugin: 明日方舟抽卡模拟 [@noneflow](https://github.com/noneflow) ([#2005](https://github.com/nonebot/nonebot2/pull/2005))
 - Plugin: 雷神工业 [@noneflow](https://github.com/noneflow) ([#2003](https://github.com/nonebot/nonebot2/pull/2003))
 - Plugin: nonebot-plugin-logpile [@noneflow](https://github.com/noneflow) ([#1999](https://github.com/nonebot/nonebot2/pull/1999))
