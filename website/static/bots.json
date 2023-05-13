@@ -513,5 +513,22 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "狐尾",
+    "desc": "一个整合了兽云祭api的机器人，支持账号令牌操作，以及上传兽图",
+    "author": "bingqiu456",
+    "homepage": "https://github.com/bingqiu456/shouyun",
+    "tags": [
+      {
+        "label": "a:onebot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:shouyun",
+        "color": "#52ea7a"
+      }
+    ],
+    "is_official": false
   }
 ]
