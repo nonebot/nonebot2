@@ -5680,5 +5680,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_og",
+    "project_link": "nonebot-plugin-og",
+    "name": "链接解析",
+    "desc": "检测链接并发送网站简介及预览图",
+    "author": "mute23-code",
+    "homepage": "https://github.com/mute23-code/nonebot_plugin_og",
+    "tags": [],
+    "is_official": false
   }
 ]
