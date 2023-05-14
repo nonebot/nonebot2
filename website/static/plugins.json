@@ -5709,5 +5709,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_multincm",
+    "project_link": "nonebot-plugin-multincm",
+    "name": "MultiNCM",
+    "desc": "使用自定义音乐卡片的网易云多选点歌插件，可以登录账号点VIP歌听",
+    "author": "lgc2333",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-multincm",
+    "tags": [
+      {
+        "label": "t:网易云",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:ncm",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
