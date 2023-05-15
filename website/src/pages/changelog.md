@@ -52,6 +52,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: MultiNCM [@noneflow](https://github.com/noneflow) ([#2018](https://github.com/nonebot/nonebot2/pull/2018))
 - Plugin: 签到 [@noneflow](https://github.com/noneflow) ([#2014](https://github.com/nonebot/nonebot2/pull/2014))
 - Plugin: 链接解析 [@noneflow](https://github.com/noneflow) ([#2011](https://github.com/nonebot/nonebot2/pull/2011))
 - Plugin: 信鸽巴夫 [@noneflow](https://github.com/noneflow) ([#2008](https://github.com/nonebot/nonebot2/pull/2008))
