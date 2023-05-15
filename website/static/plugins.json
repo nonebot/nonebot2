@@ -5728,5 +5728,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_smallapi",
+    "project_link": "nonebot-plugin-smallapi",
+    "name": "小小的WEBAPI调用插件",
+    "desc": "顾名思义～不要骂我～",
+    "author": "chaichaisi",
+    "homepage": "https://github.com/chaichaisi/nonebot_plugin_smallapi",
+    "tags": [
+      {
+        "label": "webapi",
+        "color": "#52ea7d"
+      },
+      {
+        "label": "api",
+        "color": "#52ea7d"
+      }
+    ],
+    "is_official": false
   }
 ]
