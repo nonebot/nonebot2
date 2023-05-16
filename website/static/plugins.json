@@ -5747,5 +5747,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_p5generator",
+    "project_link": "nonebot-plugin-p5generator",
+    "name": "《女神异闻录5》预告信生成器",
+    "desc": "可以生成仿《女神异闻录5》中心之怪盗团向罪人宣战的预告信",
+    "author": "xi-yue-233",
+    "homepage": "https://github.com/xi-yue-233/nonebot-plugin-p5generator",
+    "tags": [],
+    "is_official": false
   }
 ]
