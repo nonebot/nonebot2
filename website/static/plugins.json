@@ -5772,5 +5772,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_session",
+    "project_link": "nonebot-plugin-session",
+    "name": "会话 id",
+    "desc": "会话信息提取与会话 id 定义插件",
+    "author": "MeetWq",
+    "homepage": "https://github.com/noneplugin/nonebot-plugin-session",
+    "tags": [],
+    "is_official": false
   }
 ]
