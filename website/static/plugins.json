@@ -5757,5 +5757,20 @@
     "homepage": "https://github.com/xi-yue-233/nonebot-plugin-p5generator",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sd_webui",
+    "project_link": "nonebot-plugin-sd-webui",
+    "name": "SD绘画插件",
+    "desc": "基于stable-diffusion-webui的nonebot绘画插件，支持文生图、图生图、参数指定、模型管理、翻译等功能",
+    "author": "evan-gyy",
+    "homepage": "https://github.com/evan-gyy/nonebot_plugin_sd_webui",
+    "tags": [
+      {
+        "label": "sd",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
