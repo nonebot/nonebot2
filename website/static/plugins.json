@@ -5763,5 +5763,20 @@
     "homepage": "https://github.com/noneplugin/nonebot-plugin-session",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_pluginupdatecheck",
+    "project_link": "nonebot-plugin-pluginupdatecheck",
+    "name": "便携插件安装器",
+    "desc": "一个nonebot2的插件便捷安装和升级插件（基于nb-cli和pip)",
+    "author": "xi-yue-233",
+    "homepage": "https://github.com/xi-yue-233/nonebot-plugin-pluginupdatecheck",
+    "tags": [
+      {
+        "label": "便携安装",
+        "color": "#e42828"
+      }
+    ],
+    "is_official": false
   }
 ]
