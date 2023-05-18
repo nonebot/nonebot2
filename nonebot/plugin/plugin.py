@@ -5,6 +5,7 @@ FrontMatter:
     description: nonebot.plugin.plugin 模块
 """
 
+import contextlib
 from types import ModuleType
 from dataclasses import field, dataclass
 from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional
@@ -12,8 +13,11 @@ from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional
 from pydantic import BaseModel
 
 from nonebot.matcher import Matcher
+from nonebot.utils import resolve_dot_notation
 
 if TYPE_CHECKING:
+    from nonebot.adapters import Adapter
+
     from .manager import PluginManager
 
 
@@ -34,9 +38,27 @@ class PluginMetadata:
     config: Optional[Type[BaseModel]] = None
     """插件配置项"""
     supported_adapters: Optional[Set[str]] = None
-    """插件支持的适配器模块路径，`None` 表示支持所有适配器"""
+    """插件支持的适配器模块路径
+
+    格式为 `<module>[:<Adapter>]`，`~` 为 `nonebot.adapters.` 的缩写。
+
+    `None` 表示支持**所有适配器**。
+    """
     extra: Dict[Any, Any] = field(default_factory=dict)
     """插件额外信息，可由插件编写者自由扩展定义"""
+
+    def get_supported_adapters(self) -> Optional[Set[Type["Adapter"]]]:
+        """获取当前已安装的插件支持适配器类列表"""
+        if self.supported_adapters is None:
+            return None
+
+        adapters = set()
+        for adapter in self.supported_adapters:
+            with contextlib.suppress(ModuleNotFoundError, AttributeError):
+                adapters.add(
+                    resolve_dot_notation(adapter, "Adapter", "nonebot.adapters.")
+                )
+        return adapters
 
 
 @dataclass(eq=False)

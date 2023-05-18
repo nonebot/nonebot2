@@ -1,10 +1,15 @@
 from pydantic import BaseModel
 
+from nonebot.adapters import Adapter
 from nonebot.plugin import PluginMetadata
 
 
 class Config(BaseModel):
     custom: str = ""
+
+
+class FakeAdapter(Adapter):
+    ...
 
 
 __plugin_meta__ = PluginMetadata(
@@ -14,6 +19,6 @@ __plugin_meta__ = PluginMetadata(
     type="application",
     homepage="https://v2.nonebot.dev",
     config=Config,
-    supported_adapters={"nonebot.adapters.onebot.v11"},
+    supported_adapters={"~onebot.v11", "plugins.metadata:FakeAdapter"},
     extra={"author": "NoneBot"},
 )
