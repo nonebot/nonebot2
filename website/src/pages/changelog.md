@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 添加插件元数据字段 `type` `homepage` `supported_adapters` [@yanyongyu](https://github.com/yanyongyu) ([#2012](https://github.com/nonebot/nonebot2/pull/2012))
 - Feature: 支持 `re.Match` 依赖注入 [@yanyongyu](https://github.com/yanyongyu) ([#1950](https://github.com/nonebot/nonebot2/pull/1950))
 - Feature: 支持主动停止 `none` 系列驱动器 [@yanyongyu](https://github.com/yanyongyu) ([#1951](https://github.com/nonebot/nonebot2/pull/1951))
 - Feature: 为消息类添加 `has` `join` `include` `exclude` 方法 [@yanyongyu](https://github.com/yanyongyu) ([#1895](https://github.com/nonebot/nonebot2/pull/1895))
