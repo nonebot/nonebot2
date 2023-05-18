@@ -128,7 +128,7 @@ async def test_require_not_found():
 
 @pytest.mark.asyncio
 async def test_plugin_metadata():
-    from plugins.metadata import Config
+    from plugins.metadata import Config, FakeAdapter
 
     plugin = nonebot.get_plugin("metadata")
     assert plugin
@@ -137,6 +137,11 @@ async def test_plugin_metadata():
         "name": "测试插件",
         "description": "测试插件元信息",
         "usage": "无法使用",
+        "type": "application",
+        "homepage": "https://v2.nonebot.dev",
         "config": Config,
+        "supported_adapters": {"~onebot.v11", "plugins.metadata:FakeAdapter"},
         "extra": {"author": "NoneBot"},
     }
+
+    assert plugin.metadata.get_supported_adapters() == {FakeAdapter}
