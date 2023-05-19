@@ -4236,25 +4236,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_extrautils",
-    "project_link": "nonebot-plugin-extrautils",
-    "name": "工具拓展",
-    "desc": "便于开发 nonebot2 插件的工具拓展",
-    "author": "NCBM",
-    "homepage": "https://github.com/NCBM/nonebot-plugin-extrautils",
-    "tags": [
-      {
-        "label": "t:dev",
-        "color": "#c99309"
-      },
-      {
-        "label": "t:utils",
-        "color": "#3a46f6"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_gsabyss",
     "project_link": "nonebot-plugin-gsabyss",
     "name": "原神深境螺旋数据查询",
