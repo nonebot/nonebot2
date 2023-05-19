@@ -59,7 +59,7 @@ def generic_check_issubclass(
     """检查 cls 是否是 class_or_tuple 中的一个类型子类。
 
     特别的，如果 cls 是 `typing.Union` 或 `types.UnionType` 类型，
-    则会检查其中的类型是否是 class_or_tuple 中的一个类型子类。（None 会被忽略）
+    则会检查其中的所有类型是否是 class_or_tuple 中一个类型的子类或 None。
     """
     try:
         return issubclass(cls, class_or_tuple)

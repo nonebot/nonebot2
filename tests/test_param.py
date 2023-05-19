@@ -4,6 +4,7 @@ import pytest
 from nonebug import App
 
 from nonebot.matcher import Matcher
+from nonebot.dependencies import Dependent
 from nonebot.exception import TypeMisMatch
 from utils import make_fake_event, make_fake_message
 from nonebot.params import (
@@ -413,3 +414,41 @@ async def test_default(app: App):
 
     async with app.test_dependent(default, allow_types=[DefaultParam]) as ctx:
         ctx.should_return(1)
+
+
+@pytest.mark.asyncio
+async def test_priority():
+    from plugins.param.priority import complex_priority
+
+    dependent = Dependent.parse(
+        call=complex_priority,
+        allow_types=[
+            DependParam,
+            BotParam,
+            EventParam,
+            StateParam,
+            MatcherParam,
+            ArgParam,
+            ExceptionParam,
+            DefaultParam,
+        ],
+    )
+    for param in dependent.params:
+        if param.name == "sub":
+            assert isinstance(param.field_info, DependParam)
+        elif param.name == "bot":
+            assert isinstance(param.field_info, BotParam)
+        elif param.name == "event":
+            assert isinstance(param.field_info, EventParam)
+        elif param.name == "state":
+            assert isinstance(param.field_info, StateParam)
+        elif param.name == "matcher":
+            assert isinstance(param.field_info, MatcherParam)
+        elif param.name == "arg":
+            assert isinstance(param.field_info, ArgParam)
+        elif param.name == "exception":
+            assert isinstance(param.field_info, ExceptionParam)
+        elif param.name == "default":
+            assert isinstance(param.field_info, DefaultParam)
+        else:
+            raise ValueError(f"unknown param {param.name}")
