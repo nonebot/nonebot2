@@ -54,6 +54,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 便携插件安装器 [@noneflow](https://github.com/noneflow) ([#2027](https://github.com/nonebot/nonebot2/pull/2027))
 - Plugin: 会话 id [@noneflow](https://github.com/noneflow) ([#2025](https://github.com/nonebot/nonebot2/pull/2025))
 - Plugin: SD 绘画插件 [@noneflow](https://github.com/noneflow) ([#2023](https://github.com/nonebot/nonebot2/pull/2023))
 - Plugin: 《女神异闻录 5》预告信生成器 [@noneflow](https://github.com/noneflow) ([#2021](https://github.com/nonebot/nonebot2/pull/2021))
