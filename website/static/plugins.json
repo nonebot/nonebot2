@@ -5778,5 +5778,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_forjyf",
+    "project_link": "nonebot_plugin_forjyf",
+    "name": "JYF复读插件",
+    "desc": "若JYF说了富有JYF特征的词汇，则进行复读",
+    "author": "Calanosay",
+    "homepage": "https://github.com/Calanosay/nonebot_plugin_forjyf",
+    "tags": [
+      {
+        "label": "JYF",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
