@@ -5778,5 +5778,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_stockhelper",
+    "project_link": "nonebot-plugin-stockhelper",
+    "name": "股票看盘助手",
+    "desc": "股票波动超过设定值提醒，省去一直盯盘的烦恼",
+    "author": "Calanosay",
+    "homepage": "https://github.com/Calanosay/nonebot_plugin_stockhelper",
+    "tags": [
+      {
+        "label": "股票",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
