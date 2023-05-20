@@ -1457,21 +1457,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_rtfm",
-    "project_link": "nonebot-plugin-rtfm",
-    "name": "NoneBot2 文档搜索",
-    "desc": "在 QQ 群内搜索 NoneBot2 文档",
-    "author": "MingxuanGame",
-    "homepage": "https://github.com/MingxuanGame/nonebot-plugin-rtfm",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_chess",
     "project_link": "nonebot-plugin-chess",
     "name": "国际象棋",
