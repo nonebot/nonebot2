@@ -5062,16 +5062,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_paddle_ocr",
-    "project_link": "nonebot-paddle-ocr",
-    "name": "nonebot_paddle_ocr",
-    "desc": "nonebot_paddle_ocr",
-    "author": "canxin121",
-    "homepage": "https://github.com/canxin121/nonebot_paddle_ocr",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_chatppt",
     "project_link": "nonebot-plugin-chatppt",
     "name": "AI生成PPT",
@@ -5314,29 +5304,6 @@
       {
         "label": "群名片",
         "color": "#466bed"
-      }
-    ],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_poe_chat",
-    "project_link": "nonebot-poe-chat",
-    "name": "nonebot_poe_chat",
-    "desc": "基于Nonebot和playwright，可以将poe.com接入qq,使用gpt3.5和claude两种模型，支持管理员邮箱互动登陆，互动式管理预设，支持自定义预设和本地预设,完善的用户隔离和等待队列.",
-    "author": "canxin121",
-    "homepage": "https://github.com/canxin121/nonebot_poe_chat",
-    "tags": [
-      {
-        "label": "t:poe",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:gpt3.5",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:claude",
-        "color": "#ea5252"
       }
     ],
     "is_official": false
