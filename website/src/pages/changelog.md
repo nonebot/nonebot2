@@ -39,6 +39,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 移除 `nonebot_paddle_ocr` 和 `nonebot_poe_chat` [@canxin121](https://github.com/canxin121) ([#2039](https://github.com/nonebot/nonebot2/pull/2039))
 - Plugin: 移除 `nonebot-plugin-rtfm` 插件 [@MingxuanGame](https://github.com/MingxuanGame) ([#2037](https://github.com/nonebot/nonebot2/pull/2037))
 - Plugin: 移除 extrautils 工具拓展插件（暂停维护） [@NCBM](https://github.com/NCBM) ([#2033](https://github.com/nonebot/nonebot2/pull/2033))
 - Adapter: 更新 Minecraft 适配器 [@17TheWord](https://github.com/17TheWord) ([#1972](https://github.com/nonebot/nonebot2/pull/1972))
