@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修复插件 require 未声明插件会识别为子插件 [@yanyongyu](https://github.com/yanyongyu) ([#2040](https://github.com/nonebot/nonebot2/pull/2040))
 - Fix: 修复命令强制空白符影响无参数情况 [@yanyongyu](https://github.com/yanyongyu) ([#1975](https://github.com/nonebot/nonebot2/pull/1975))
 - Fix: `run_sync` 上下文 [@synodriver](https://github.com/synodriver) ([#1968](https://github.com/nonebot/nonebot2/pull/1968))
 - Fix: shell command 包含富文本时报错信息出错 [@yanyongyu](https://github.com/yanyongyu) ([#1923](https://github.com/nonebot/nonebot2/pull/1923))
