@@ -5745,5 +5745,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-aitx",
+    "project_link": "nonebot-plugin-aitx",
+    "name": "AI聊天(腾讯云)",
+    "desc": "基于腾讯云接口的的ai聊天功能",
+    "author": "Calanosay",
+    "homepage": "https://github.com/Calanosay/nonebot-plugin-aitx",
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
