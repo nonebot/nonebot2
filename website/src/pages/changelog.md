@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 移除部分依赖注入参数默认值检查 [@yanyongyu](https://github.com/yanyongyu) ([#2034](https://github.com/nonebot/nonebot2/pull/2034))
 - Feature: 添加插件元数据字段 `type` `homepage` `supported_adapters` [@yanyongyu](https://github.com/yanyongyu) ([#2012](https://github.com/nonebot/nonebot2/pull/2012))
 - Feature: 支持 `re.Match` 依赖注入 [@yanyongyu](https://github.com/yanyongyu) ([#1950](https://github.com/nonebot/nonebot2/pull/1950))
 - Feature: 支持主动停止 `none` 系列驱动器 [@yanyongyu](https://github.com/yanyongyu) ([#1951](https://github.com/nonebot/nonebot2/pull/1951))
