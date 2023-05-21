@@ -13,7 +13,7 @@ from nonebot.utils import path_to_module_name
 
 from .plugin import Plugin
 from .manager import PluginManager
-from . import _managers, get_plugin, _module_name_to_plugin_name
+from . import _managers, get_plugin, _current_plugin_chain, _module_name_to_plugin_name
 
 try:  # pragma: py-gte-311
     import tomllib  # pyright: ignore[reportMissingImports]
@@ -161,11 +161,19 @@ def require(name: str) -> ModuleType:
         RuntimeError: 插件无法加载
     """
     plugin = get_plugin(_module_name_to_plugin_name(name))
+    # if plugin not loaded
     if not plugin:
+        # plugin already declared
         if manager := _find_manager_by_name(name):
             plugin = manager.load_plugin(name)
+        # plugin not declared, try to declare and load it
         else:
-            plugin = load_plugin(name)
+            # clear current plugin chain, ensure plugin loaded in a new context
+            _t = _current_plugin_chain.set(())
+            try:
+                plugin = load_plugin(name)
+            finally:
+                _current_plugin_chain.reset(_t)
     if not plugin:
         raise RuntimeError(f'Cannot load plugin "{name}"!')
     return plugin.module
