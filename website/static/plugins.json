@@ -5745,5 +5745,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_githubcard",
+    "project_link": "nonebot-plugin-githubcard",
+    "name": "Github仓库卡片",
+    "desc": "检测GitHub仓库链接并自动发送卡片信息",
+    "author": "ElainaFanBoy",
+    "homepage": "https://github.com/ElainaFanBoy/nonebot_plugin_githubcard",
+    "tags": [
+      {
+        "label": "t: Github",
+        "color": "#171a21"
+      },
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
