@@ -5764,5 +5764,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_lua",
+    "project_link": "nonebot-plugin-lua",
+    "name": "nonebot-plugin-lua",
+    "desc": "在nonebot中执行lua（experimental）",
+    "author": "synodriver",
+    "homepage": "https://github.com/synodriver/nonebot_plugin_lua",
+    "tags": [],
+    "is_official": false
   }
 ]
