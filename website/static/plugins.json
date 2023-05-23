@@ -5774,5 +5774,24 @@
     "homepage": "https://github.com/synodriver/nonebot_plugin_lua",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cube",
+    "project_link": "nonebot-plugin-cube",
+    "name": "cuber",
+    "desc": "魔方插件",
+    "author": "initialencounter",
+    "homepage": "https://github.com/initialencounter/nonebot-plugin-cube",
+    "tags": [
+      {
+        "label": "魔方",
+        "color": "#ea5252"
+      },
+      {
+        "label": "sqlite3",
+        "color": "#c2ea52"
+      }
+    ],
+    "is_official": false
   }
 ]
