@@ -58,6 +58,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Github 仓库卡片 [@noneflow](https://github.com/noneflow) ([#2042](https://github.com/nonebot/nonebot2/pull/2042))
 - Plugin: 股票看盘助手 [@noneflow](https://github.com/noneflow) ([#2032](https://github.com/nonebot/nonebot2/pull/2032))
 - Plugin: 便携插件安装器 [@noneflow](https://github.com/noneflow) ([#2027](https://github.com/nonebot/nonebot2/pull/2027))
 - Plugin: 会话 id [@noneflow](https://github.com/noneflow) ([#2025](https://github.com/nonebot/nonebot2/pull/2025))
