@@ -5546,8 +5546,8 @@
   {
     "module_name": "nonebot_plugin_logpile",
     "project_link": "nonebot-plugin-logpile",
-    "name": "nonebot-plugin-logpile",
-    "desc": "本地日志保存",
+    "name": "本地日志保存",
+    "desc": "将 bot 日志记录保存到本地文件中",
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-logpile",
     "tags": [],
