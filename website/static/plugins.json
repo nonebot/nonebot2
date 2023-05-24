@@ -5803,5 +5803,28 @@
     "homepage": "https://github.com/Special-Week/Hinata-Bot/tree/main/src/plugins/homo_mathematician",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_puzzle",
+    "project_link": "nonebot-plugin-puzzle",
+    "name": "puzzle",
+    "desc": "数字华容道，拼图游戏，查看群华容排名",
+    "author": "initialencounter",
+    "homepage": "https://github.com/initialencounter/nonebot-plugin-puzzle",
+    "tags": [
+      {
+        "label": "数字华容道",
+        "color": "#ea5252"
+      },
+      {
+        "label": "拼图游戏",
+        "color": "#a7ea52"
+      },
+      {
+        "label": "puzzle",
+        "color": "#52eadd"
+      }
+    ],
+    "is_official": false
   }
 ]
