@@ -5831,5 +5831,28 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_herocard",
+    "project_link": "nonebot-plugin-herocard",
+    "name": "本子标题关键词提取",
+    "desc": "为了方便各位平时搜索本子用，发扬hero精神",
+    "author": "Xie-Tiao",
+    "homepage": "https://github.com/Xie-Tiao/nonebot_plugin_herocard",
+    "tags": [
+      {
+        "label": "文本提取",
+        "color": "#6bc6bf"
+      },
+      {
+        "label": "日语",
+        "color": "#53bbd8"
+      },
+      {
+        "label": "本子",
+        "color": "#eea1b1"
+      }
+    ],
+    "is_official": false
   }
 ]
