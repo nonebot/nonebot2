@@ -58,6 +58,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: puzzle [@noneflow](https://github.com/noneflow) ([#2054](https://github.com/nonebot/nonebot2/pull/2054))
 - Plugin: homo_mathematician [@noneflow](https://github.com/noneflow) ([#2052](https://github.com/nonebot/nonebot2/pull/2052))
 - Plugin: cuber [@noneflow](https://github.com/noneflow) ([#2048](https://github.com/nonebot/nonebot2/pull/2048))
 - Plugin: nonebot-plugin-lua [@noneflow](https://github.com/noneflow) ([#2049](https://github.com/nonebot/nonebot2/pull/2049))
