@@ -4913,7 +4913,12 @@
     "desc": "你好，世界",
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-helloworld",
-    "tags": [],
+    "tags": [
+      {
+        "label": "good first plugin",
+        "color": "#6c58f6"
+      }
+    ],
     "is_official": false
   },
   {
