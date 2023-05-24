@@ -5793,5 +5793,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_homo_mathematician",
+    "project_link": "nonebot-plugin-homo-mathematician",
+    "name": "homo_mathematician",
+    "desc": "哇 数学 真是有趣 真有逻辑",
+    "author": "Special-Week",
+    "homepage": "https://github.com/Special-Week/Hinata-Bot/tree/main/src/plugins/homo_mathematician",
+    "tags": [],
+    "is_official": false
   }
 ]
