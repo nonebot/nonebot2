@@ -5888,5 +5888,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_stable_diffusion_diao",
+    "project_link": "nonebot-plugin-stable-diffusion-diao",
+    "name": "stablediffusion绘画插件",
+    "desc": "另一个绘画插件，支持多SD后端，负载均衡，lora，emb，chatgpt prompt生成，更换模型等等更多功能",
+    "author": "DiaoDaiaChan",
+    "homepage": "https://github.com/DiaoDaiaChan/nonebot-plugin-stable-diffusion-diao",
+    "tags": [
+      {
+        "label": "AI绘图",
+        "color": "#eaaf52"
+      },
+      {
+        "label": "SD",
+        "color": "#eaaf52"
+      }
+    ],
+    "is_official": false
   }
 ]
