@@ -5869,5 +5869,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_random_draw",
+    "project_link": "nonebot-plugin-random-draw",
+    "name": "随机抽取自定义内容",
+    "desc": "通过添加各种想要抽取的内容，进行随机抽取。选择困难症的福音",
+    "author": "Ikaros-521",
+    "homepage": "https://github.com/Ikaros-521/nonebot_plugin_random_draw",
+    "tags": [
+      {
+        "label": "随机",
+        "color": "#ffe0aa"
+      },
+      {
+        "label": "a:onebot",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
