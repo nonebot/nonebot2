@@ -60,6 +60,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: NAGA 公交车 [@noneflow](https://github.com/noneflow) ([#2062](https://github.com/nonebot/nonebot2/pull/2062))
 - Plugin: 本子标题关键词提取 [@noneflow](https://github.com/noneflow) ([#2058](https://github.com/nonebot/nonebot2/pull/2058))
 - Plugin: puzzle [@noneflow](https://github.com/noneflow) ([#2054](https://github.com/nonebot/nonebot2/pull/2054))
 - Plugin: homo_mathematician [@noneflow](https://github.com/noneflow) ([#2052](https://github.com/nonebot/nonebot2/pull/2052))
