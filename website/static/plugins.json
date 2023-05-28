@@ -5854,5 +5854,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nagabus",
+    "project_link": "nonebot-plugin-nagabus",
+    "name": "NAGA公交车",
+    "desc": "通过指令在NAGA进行雀魂/天凤牌谱解析",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/ssttkkl/nonebot-plugin-nagabus",
+    "tags": [
+      {
+        "label": "日麻",
+        "color": "#b52ee1"
+      }
+    ],
+    "is_official": false
   }
 ]
