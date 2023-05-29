@@ -520,7 +520,7 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
                 logger.debug(f"Checking for matchers in priority {priority}...")
 
             pending_tasks = [
-                _check_matcher(
+                check_and_run_matcher(
                     matcher, bot, event, state.copy(), stack, dependency_cache
                 )
                 for matcher in matchers[priority]
