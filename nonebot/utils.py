@@ -113,8 +113,7 @@ def run_sync(call: Callable[P, R]) -> Callable[P, Coroutine[None, None, R]]:
         loop = asyncio.get_running_loop()
         pfunc = partial(call, *args, **kwargs)
         context = copy_context()
-        context_run = context.run
-        result = await loop.run_in_executor(None, context_run, pfunc)
+        result = await loop.run_in_executor(None, partial(context.run, pfunc))
         return result
 
     return _wrapper
@@ -139,6 +138,7 @@ async def run_sync_ctx_manager(
 async def run_coro_with_catch(
     coro: Coroutine[Any, Any, T],
     exc: Tuple[Type[Exception], ...],
+    return_on_err: None = None,
 ) -> Union[T, None]:
     ...
 
