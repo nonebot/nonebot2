@@ -152,17 +152,19 @@ async def _apply_event_preprocessors(
 
     try:
         await asyncio.gather(
-            run_coro_with_catch(
-                proc(
-                    bot=bot,
-                    event=event,
-                    state=state,
-                    stack=stack,
-                    dependency_cache=dependency_cache,
-                ),
-                (SkippedException,),
+            *(
+                run_coro_with_catch(
+                    proc(
+                        bot=bot,
+                        event=event,
+                        state=state,
+                        stack=stack,
+                        dependency_cache=dependency_cache,
+                    ),
+                    (SkippedException,),
+                )
+                for proc in _event_preprocessors
             )
-            for proc in _event_preprocessors
         )
     except IgnoredException as e:
         logger.opt(colors=True).info(
@@ -205,17 +207,19 @@ async def _apply_event_postprocessors(
 
     try:
         await asyncio.gather(
-            run_coro_with_catch(
-                proc(
-                    bot=bot,
-                    event=event,
-                    state=state,
-                    stack=stack,
-                    dependency_cache=dependency_cache,
-                ),
-                (SkippedException,),
+            *(
+                run_coro_with_catch(
+                    proc(
+                        bot=bot,
+                        event=event,
+                        state=state,
+                        stack=stack,
+                        dependency_cache=dependency_cache,
+                    ),
+                    (SkippedException,),
+                )
+                for proc in _event_postprocessors
             )
-            for proc in _event_postprocessors
         )
     except Exception as e:
         logger.opt(colors=True, exception=e).error(
@@ -251,18 +255,20 @@ async def _apply_run_preprocessors(
     with matcher.ensure_context(bot, event):
         try:
             await asyncio.gather(
-                run_coro_with_catch(
-                    proc(
-                        matcher=matcher,
-                        bot=bot,
-                        event=event,
-                        state=state,
-                        stack=stack,
-                        dependency_cache=dependency_cache,
-                    ),
-                    (SkippedException,),
+                *(
+                    run_coro_with_catch(
+                        proc(
+                            matcher=matcher,
+                            bot=bot,
+                            event=event,
+                            state=state,
+                            stack=stack,
+                            dependency_cache=dependency_cache,
+                        ),
+                        (SkippedException,),
+                    )
+                    for proc in _run_preprocessors
                 )
-                for proc in _run_preprocessors
             )
         except IgnoredException:
             logger.opt(colors=True).info(f"{matcher} running is <b>cancelled</b>")
@@ -301,19 +307,21 @@ async def _apply_run_postprocessors(
     with matcher.ensure_context(bot, event):
         try:
             await asyncio.gather(
-                run_coro_with_catch(
-                    proc(
-                        matcher=matcher,
-                        exception=exception,
-                        bot=bot,
-                        event=event,
-                        state=matcher.state,
-                        stack=stack,
-                        dependency_cache=dependency_cache,
-                    ),
-                    (SkippedException,),
+                *(
+                    run_coro_with_catch(
+                        proc(
+                            matcher=matcher,
+                            exception=exception,
+                            bot=bot,
+                            event=event,
+                            state=matcher.state,
+                            stack=stack,
+                            dependency_cache=dependency_cache,
+                        ),
+                        (SkippedException,),
+                    )
+                    for proc in _run_postprocessors
                 )
-                for proc in _run_postprocessors
             )
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
