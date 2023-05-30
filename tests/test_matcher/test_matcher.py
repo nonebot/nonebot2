@@ -2,8 +2,8 @@ import pytest
 from nonebug import App
 
 from nonebot.permission import User
-from nonebot.message import _check_matcher
 from nonebot.matcher import Matcher, matchers
+from nonebot.message import check_and_run_matcher
 from utils import make_fake_event, make_fake_message
 
 
@@ -200,19 +200,19 @@ async def test_expire(app: App):
     async with app.test_api() as ctx:
         bot = ctx.create_bot()
         assert test_temp_matcher in matchers[test_temp_matcher.priority]
-        await _check_matcher(test_temp_matcher, bot, event, {})
+        await check_and_run_matcher(test_temp_matcher, bot, event, {})
         assert test_temp_matcher not in matchers[test_temp_matcher.priority]
 
     event = make_fake_event()()
     async with app.test_api() as ctx:
         bot = ctx.create_bot()
         assert test_datetime_matcher in matchers[test_datetime_matcher.priority]
-        await _check_matcher(test_datetime_matcher, bot, event, {})
+        await check_and_run_matcher(test_datetime_matcher, bot, event, {})
         assert test_datetime_matcher not in matchers[test_datetime_matcher.priority]
 
     event = make_fake_event()()
     async with app.test_api() as ctx:
         bot = ctx.create_bot()
         assert test_timedelta_matcher in matchers[test_timedelta_matcher.priority]
-        await _check_matcher(test_timedelta_matcher, bot, event, {})
+        await check_and_run_matcher(test_timedelta_matcher, bot, event, {})
         assert test_timedelta_matcher not in matchers[test_timedelta_matcher.priority]
