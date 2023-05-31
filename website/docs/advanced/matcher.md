@@ -10,7 +10,7 @@ options:
 
 # 事件响应器进阶
 
-在[指南](../tutorial/matcher.md)与[深入](../appendices/rule.md)中，我们已经介绍了事件响应器的基本用法以及响应规则、权限控制等功能。在这一节中，我们将介绍事件响应器的组成，内置的响应规则，与第三方插件下的响应规则拓展。
+在[指南](../tutorial/matcher.md)与[深入](../appendices/rule.md)中，我们已经介绍了事件响应器的基本用法以及响应规则、权限控制等功能。在这一节中，我们将介绍事件响应器的组成，内置的响应规则，与第三方响应规则拓展。
 
 ## 事件响应器组成
 
@@ -303,15 +303,15 @@ matcher1 = group.on_message()
 matcher2 = group.on_message()
 ```
 
-## 第三方规则
+## 第三方响应规则
 
-### Nonebot Plugin Alconna
+### Alconna
 
-[`nonebot-plugin·alconna`](https://github.com/ArcletProject/nonebot-plugin·alconna) 是一类提供了拓展响应规则的插件。
+[`nonebot-plugin-alconna`](https://github.com/ArcletProject/nonebot-plugin-alconna) 是一类提供了拓展响应规则的插件。
 该插件使用 [`Alconna`](https://github.com/ArcletProject/Alconna) 作为命令解析器，
-其是一个简单、灵活、高效的命令参数解析器, 并且不局限于解析命令式字符串。
+是一个简单、灵活、高效的命令参数解析器, 并且不局限于解析命令式字符串。
 
-其特点包括:
+特点包括:
 
 - 高效
 - 直观的命令组件创建方式
@@ -342,33 +342,35 @@ matcher2 = group.on_message()
 #### 插件安装
 
 ```shell
-pip install nonebot-plugin-alconna
+nb plugin install nonebot-plugin-alconna
 ```
-
 或
 
 ```shell
-nb plugin install nonebot-plugin-alconna
+pip install nonebot-plugin-alconna
 ```
 
 #### 展示
 
 ```python
-from nonebot.adapters.onebot.v12 import Message, MessageSegment as Ob12MS
-from nonebot_plugin_alconna import on_alconna, AlconnaMatches
+from arclet.alconna import Alconna, Args, Arparma, MultiVar, Option, Subcommand
+from nonebot.adapters.onebot.v12 import Message
+from nonebot.adapters.onebot.v12 import MessageSegment as Ob12MS
+from nonebot_plugin_alconna import AlconnaMatches, on_alconna
 from nonebot_plugin_alconna.adapters import At
 from nonebot_plugin_alconna.adapters.onebot12 import Image
-from arclet.alconna import Alconna, Args, Option, Arparma, Subcommand, MultiVar
 
 alc = Alconna(
     "role-group",
     Subcommand(
-        "add", Args["name", str],
+        "add",
+        Args["name", str],
         Option("member", Args["target", MultiVar(At)]),
     ),
     Option("list"),
 )
 rg = on_alconna(alc, auto_send_output=True)
+
 
 @rg.handle()
 async def _(result: Arparma = AlconnaMatches()):
@@ -378,7 +380,7 @@ async def _(result: Arparma = AlconnaMatches()):
     if result.find("add"):
         group = await create_role_group(result["add.name"])
         if result.find("add.member"):
-            ats: tuple[Ob12MS] = result["add.member.target"]
+            ats: tuple[Ob12MS, ...] = result["add.member.target"]
             group.extend(member.data["user_id"] for member in ats)
         await rg.finish("添加成功")
 ```
