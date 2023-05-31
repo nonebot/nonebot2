@@ -303,7 +303,7 @@ matcher1 = group.on_message()
 matcher2 = group.on_message()
 ```
 
-## Nonebot Plugin Alconna 
+## Nonebot Plugin Alconna
 
 [`nonebot-plugin·alconna`]((https://github.com/ArcletProject/nonebot-plugin·alconna) 是一类提供了拓展响应规则的插件。
 该插件使用 [`Alconna`](https://github.com/ArcletProject/Alconna) 作为命令解析器，
@@ -311,21 +311,22 @@ matcher2 = group.on_message()
 
 其特点包括:
 
-* 高效
-* 直观的命令组件创建方式
-* 强大的类型解析与类型转换功能
-* 自定义的帮助信息格式
-* 多语言支持
-* 易用的快捷命令创建与使用
-* 可创建命令补全会话, 以实现多轮连续的补全提示
-* 可嵌套的多级子命令
-* 正则匹配支持
+- 高效
+- 直观的命令组件创建方式
+- 强大的类型解析与类型转换功能
+- 自定义的帮助信息格式
+- 多语言支持
+- 易用的快捷命令创建与使用
+- 可创建命令补全会话, 以实现多轮连续的补全提示
+- 可嵌套的多级子命令
+- 正则匹配支持
 
 该插件提供了一类新的事件响应器辅助函数 `on_alconna`，以及 `AlconnaResult` 等依赖注入函数。
 
 同时，基于 [`Annotated` 支持](https://github.com/nonebot/nonebot2/pull/1832), 添加了两类注解 `AlcMatches` 与`AlcResult`
 
 该插件还可以通过 `handle(parameterless)` 来控制一个具体的响应函数是否在不满足条件时跳过响应：
+
 - `pip.handle([Check(assign("add.name", "nb"))])` 表示仅在命令为 `role-group add` 并且 name 为 `nb` 时响应
 - `pip.handle([Check(assign("list"))])` 表示仅在命令为 `role-group list` 时响应
 - `pip.handle([Check(assign("add"))])` 表示仅在命令为 `role-group add` 时响应
@@ -415,4 +416,3 @@ async def _(result: Arparma = AlconnaMatches()):
 QQ 交流群: [🔗链接](https://jq.qq.com/?_wv=1027&k=PUPOnCSH)
 
 友链: [📚文档](https://graiax.cn/guide/message_parser/alconna.html)
-
