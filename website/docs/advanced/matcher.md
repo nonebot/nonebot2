@@ -354,12 +354,12 @@ pip install nonebot-plugin-alconna
 #### 展示
 
 ```python
-from arclet.alconna import Alconna, Args, Arparma, MultiVar, Option, Subcommand
-from nonebot.adapters.onebot.v12 import Message
-from nonebot.adapters.onebot.v12 import MessageSegment as Ob12MS
-from nonebot_plugin_alconna import AlconnaMatches, on_alconna
 from nonebot_plugin_alconna.adapters import At
+from nonebot.adapters.onebot.v12 import Message
 from nonebot_plugin_alconna.adapters.onebot12 import Image
+from nonebot_plugin_alconna import AlconnaMatches, on_alconna
+from nonebot.adapters.onebot.v12 import MessageSegment as Ob12MS
+from arclet.alconna import Args, Option, Alconna, Arparma, MultiVar, Subcommand
 
 alc = Alconna(
     "role-group",
