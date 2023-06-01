@@ -105,6 +105,11 @@ const sidebars = {
           label: "商店",
           href: "/store",
         },
+        {
+          type: "link",
+          label: "论坛",
+          href: "https://discussions.nonebot.dev",
+        },
       ],
     },
   ],

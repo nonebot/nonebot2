@@ -103,6 +103,7 @@ const config = {
               { label: "开源之夏", type: "docLink", docId: "ospp/2023" },
               { label: "商店", to: "/store" },
               { label: "更新日志", to: "/changelog" },
+              { label: "论坛", href: "https://discussions.nonebot.dev" },
             ],
           },
           {
