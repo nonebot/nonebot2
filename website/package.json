@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "description": "跨平台 Python 异步机器人框架",
   "private": true,
-  "homepage": "https://v2.nonebot.dev/",
+  "homepage": "https://nonebot.dev/",
   "repository": "https://github.com/nonebot/nonebot2/",
   "bugs": {
     "url": "https://github.com/nonebot/nonebot2/issues"

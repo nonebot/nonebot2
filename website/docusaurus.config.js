@@ -8,7 +8,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 const config = {
   title: "NoneBot",
   tagline: "跨平台 Python 异步机器人框架",
-  url: "https://v2.nonebot.dev",
+  url: "https://nonebot.dev",
   baseUrl: process.env.BASE_URL || "/",
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
@@ -100,8 +100,10 @@ const config = {
                 docId: "developer/plugin-publishing",
               },
               { label: "社区", type: "docLink", docId: "community/contact" },
+              { label: "开源之夏", type: "docLink", docId: "ospp/2023" },
               { label: "商店", to: "/store" },
               { label: "更新日志", to: "/changelog" },
+              { label: "论坛", href: "https://discussions.nonebot.dev" },
             ],
           },
           {
@@ -111,12 +113,12 @@ const config = {
         ],
         docsVersionItemAfter: [
           {
-            label: "2.0.0rc3",
-            href: "https://63ccf1c05efb245d36e901fa--nonebot2.netlify.app/",
-          },
-          {
             label: "2.0.0a16",
             href: "https://61d3d9dbcadf413fd3238e89--nonebot2.netlify.app/",
+          },
+          {
+            label: "1.x",
+            href: "https://v1.nonebot.dev/",
           },
         ],
       },

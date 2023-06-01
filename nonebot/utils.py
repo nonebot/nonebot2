@@ -196,7 +196,7 @@ def resolve_dot_notation(
 
 
 class DataclassEncoder(json.JSONEncoder):
-    """在JSON序列化 {re}`nonebot.adapters._message.Message` (List[Dataclass]) 时使用的 `JSONEncoder`"""
+    """在JSON序列化 {ref}`nonebot.adapters.Message` (List[Dataclass]) 时使用的 `JSONEncoder`"""
 
     @overrides(json.JSONEncoder)
     def default(self, o):

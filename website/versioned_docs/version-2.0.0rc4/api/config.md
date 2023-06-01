@@ -42,7 +42,7 @@ NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及 [`pytho
   除了 NoneBot 的配置项外，还可以自行添加配置项到 `.env.{environment}` 文件中。
   这些配置将会在 json 反序列化后一起带入 `Config` 类中。
 
-  配置方法参考: [配置](https://v2.nonebot.dev/docs/appendices/config)
+  配置方法参考: [配置](https://nonebot.dev/docs/appendices/config)
 
 - **参数**
 

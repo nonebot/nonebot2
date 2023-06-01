@@ -1,6 +1,6 @@
 <!-- markdownlint-disable MD033 MD041 -->
 <p align="center">
-  <a href="https://v2.nonebot.dev/"><img src="https://v2.nonebot.dev/logo.png" width="200" height="200" alt="nonebot"></a>
+  <a href="https://nonebot.dev/"><img src="https://nonebot.dev/logo.png" width="200" height="200" alt="nonebot"></a>
 </p>
 
 <div align="center">
@@ -69,16 +69,16 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
 </p>
 
 <p align="center">
-  <a href="https://v2.nonebot.dev/">文档</a>
+  <a href="https://nonebot.dev/">文档</a>
   ·
-  <a href="https://v2.nonebot.dev/docs/quick-start">快速上手</a>
+  <a href="https://nonebot.dev/docs/quick-start">快速上手</a>
   ·
   <a href="#插件">文档打不开？</a>
 </p>
 
 <p align="center">
   <a href="https://asciinema.org/a/569440">
-    <img src="https://v2.nonebot.dev/img/setup.svg">
+    <img src="https://nonebot.dev/img/setup.svg">
   </a>
 </p>
 
@@ -90,7 +90,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
 
 - 异步优先：基于 Python 的异步特性，即使是~~非常~~大量的消息，也能吞吐自如
 - 易于开发：配合 NB-CLI 脚手架，代码编写上手简单，没有过多的冗余代码，可以让开发者专注于业务逻辑
-- 生而可靠：100% 类型注解覆盖，配合编辑器的类型推导功能，能将绝大多数的 Bug 杜绝在编辑器中 ([编辑器支持](https://v2.nonebot.dev/docs/editor-support))
+- 生而可靠：100% 类型注解覆盖，配合编辑器的类型推导功能，能将绝大多数的 Bug 杜绝在编辑器中 ([编辑器支持](https://nonebot.dev/docs/editor-support))
 - 社区丰富：社区用户众多，直接和间接用户超过十万人，每天都有大量的活跃用户 ([社区资源](#社区资源))
 - 海纳百川：一个框架，支持多个聊天软件平台，可自定义通信协议
 
@@ -120,7 +120,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
   |               [httpx](https://www.python-httpx.org/)                | 客户端 |
   |     [websockets](https://websockets.readthedocs.io/en/stable/)      | 客户端 |
 
-更多：[概览](https://v2.nonebot.dev/docs/)
+更多：[概览](https://nonebot.dev/docs/)
 
 ## 什么不是 NoneBot2
 
@@ -132,7 +132,7 @@ NoneBot2 不是 NoneBot1 的替代品。事实上，它们都在被积极的维�
 
 ## 即刻开始
 
-~~完整~~文档可以在 [这里](https://v2.nonebot.dev/) 查看。
+~~完整~~文档可以在 [这里](https://nonebot.dev/) 查看。
 
 懒得看文档？下面是快速安装指南：
 
@@ -189,7 +189,7 @@ NoneBot2 不是 NoneBot1 的替代品。事实上，它们都在被积极的维�
   - [文档镜像(中国境内)](https://nb2.baka.icu)
   - [文档镜像(Vercel)](https://nonebot2-vercel-mirror.vercel.app)
 
-- 其他插件请查看 [商店](https://v2.nonebot.dev/store)
+- 其他插件请查看 [商店](https://nonebot.dev/store)
 
 ## 许可证
 

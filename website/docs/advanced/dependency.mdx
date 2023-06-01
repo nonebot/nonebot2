@@ -444,7 +444,7 @@ async def get_client() -> AsyncGenerator[httpx.AsyncClient, None]:
 
 @test.handle()
 async def _(x: Annotated[httpx.AsyncClient, Depends(get_client)]):
-    resp = await x.get("https://v2.nonebot.dev")
+    resp = await x.get("https://nonebot.dev")
 ```
 
   </TabItem>
@@ -466,7 +466,7 @@ async def get_client() -> AsyncGenerator[httpx.AsyncClient, None]:
 
 @test.handle()
 async def _(x: httpx.AsyncClient = Depends(get_client)):
-    resp = await x.get("https://v2.nonebot.dev")
+    resp = await x.get("https://nonebot.dev")
 ```
 
   </TabItem>
