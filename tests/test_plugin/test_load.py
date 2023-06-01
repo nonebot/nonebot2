@@ -138,7 +138,7 @@ async def test_plugin_metadata():
         "description": "测试插件元信息",
         "usage": "无法使用",
         "type": "application",
-        "homepage": "https://v2.nonebot.dev",
+        "homepage": "https://nonebot.dev",
         "config": Config,
         "supported_adapters": {"~onebot.v11", "plugins.metadata:FakeAdapter"},
         "extra": {"author": "NoneBot"},
