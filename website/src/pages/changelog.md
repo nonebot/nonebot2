@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 💫 杂项
+
+- Plugin: 删除插件 nonebot_plugin_r6s [@BalconyJH](https://github.com/BalconyJH) ([#2071](https://github.com/nonebot/nonebot2/pull/2071))
+
 ## v2.0.0
 
 ### 💥 破坏性变更
