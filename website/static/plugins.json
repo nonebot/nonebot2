@@ -208,16 +208,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_r6s",
-    "project_link": "nonebot-plugin-r6s",
-    "author": "abrahum",
-    "desc": "查询彩虹六号玩家信息",
-    "name": "nonebot-plugin-r6s",
-    "homepage": "https://github.com/abrahum/nonebot_plugin_r6s",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_guess",
     "project_link": "nonebot-plugin-guess",
     "author": "ffreemt",
