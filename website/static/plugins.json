@@ -5897,5 +5897,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_al",
+    "project_link": "nonebot-plugin-al",
+    "name": "碧蓝航线攻略",
+    "desc": "从b站wiki搬运碧蓝井号榜等等攻略一图流",
+    "author": "Agnes4m",
+    "homepage": "https://github.com/Agnes4m/nonebot_plugin_AL",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#ea52e5"
+      }
+    ],
+    "is_official": false
   }
 ]
