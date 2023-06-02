@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 移除过时未更新的插件\&Bot [@FYWinds](https://github.com/FYWinds) ([#2072](https://github.com/nonebot/nonebot2/pull/2072))
 - Plugin: 删除插件 nonebot_plugin_r6s [@BalconyJH](https://github.com/BalconyJH) ([#2071](https://github.com/nonebot/nonebot2/pull/2071))
 
 ### 🍻 插件发布
