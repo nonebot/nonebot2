@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Plugin: 删除插件 nonebot_plugin_r6s [@BalconyJH](https://github.com/BalconyJH) ([#2071](https://github.com/nonebot/nonebot2/pull/2071))
 
+### 🍻 插件发布
+
+- Plugin: 碧蓝航线攻略 [@noneflow](https://github.com/noneflow) ([#2076](https://github.com/nonebot/nonebot2/pull/2076))
+
 ## v2.0.0
 
 ### 💥 破坏性变更
