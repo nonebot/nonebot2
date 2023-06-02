@@ -403,25 +403,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_atri",
-    "project_link": "nonebot-plugin-atri",
-    "name": "ATRI语音包",
-    "desc": "一个ATRI语音包，基于文本相似度匹配回复",
-    "author": "FYWinds",
-    "homepage": "https://github.com/FYWinds/nonebot-plugin-atri",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "a:cqhttp",
-        "color": "#000000"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_simplemusic",
     "project_link": "nonebot-plugin-simplemusic",
     "name": "SimpleMusic",
@@ -489,25 +470,6 @@
     "author": "ayanamiblhx",
     "homepage": "https://github.com/ayanamiblhx/nonebot_plugin_youthstudy",
     "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "gocqapi",
-    "project_link": "gocqapi",
-    "name": "gocqapi",
-    "desc": "对 go-cqhttp 的 API 调用添加了类型注解与滥用OOP的返回值Model支持，远离魔法方法的Dict[Any, Any]",
-    "author": "FYWinds",
-    "homepage": "https://github.com/FYWinds/gocqapi",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "a:cqhttp",
-        "color": "#000000"
-      }
-    ],
     "is_official": false
   },
   {
