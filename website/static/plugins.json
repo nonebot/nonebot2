@@ -5874,5 +5874,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_escape_url",
+    "project_link": "nonebot-plugin-escape-url",
+    "name": "链接防夹",
+    "desc": "自动转换发送消息中的URL，逃避URL检测",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/bot-ssttkkl/nonebot-plugin-escape-url",
+    "tags": [
+      {
+        "label": "a:OneBot",
+        "color": "#5293ea"
+      },
+      {
+        "label": "a:QQGuild",
+        "color": "#5293ea"
+      }
+    ],
+    "is_official": false
   }
 ]
