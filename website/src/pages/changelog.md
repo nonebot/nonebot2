@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🐛 Bug 修复
+
+- Fix: 修复因 loguru 更新导致的启动和关闭日志 name 不正常 [@DiheChen](https://github.com/DiheChen) ([#2080](https://github.com/nonebot/nonebot2/pull/2080))
+
 ### 💫 杂项
 
 - Plugin: 移除过时未更新的插件\&Bot [@FYWinds](https://github.com/FYWinds) ([#2072](https://github.com/nonebot/nonebot2/pull/2072))
