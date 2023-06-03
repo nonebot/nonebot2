@@ -29,7 +29,6 @@ description: 编写适配器对接新的平台
 
 当然这并非强制要求，不过我们仍建议您按照这种规范。
 
-
 :::tip 提示
 
 本章节的代码中提到的`Adapter`、`Bot`、`Event`和`Message`等，均为下文由您适配器所编写的类，而非`NoneBot`中的基类。
@@ -49,16 +48,16 @@ from nonebot.drivers import Driver
 from .bot import Bot
 
 class Adapter(BaseAdapter):
-    
+
     @overrides(BaseAdapter)
     def __init__(self, driver: Driver, **kwargs: Any):
         super().__init__(driver, **kwargs)
-    
+
     @classmethod
     @overrides(BaseAdapter)
     def get_name(cls) -> str:
         return "your_adapter_name"
-    
+
     @overrides(BaseAdapter)
     async def _call_api(self, bot: Bot, api: str, **data: Any) -> Any:
         # 实际调用 api 的逻辑实现函数，实现该方法以调用 api。
@@ -138,7 +137,7 @@ class Adapter(BaseAdapter):
         super().__init__(driver, **kwargs)
         self.platform_config: Config = Config(**self.config.dict())
         self.setup()
-        
+
     def setup(self) -> None:
         if not isinstance(self.driver, ForwardDriver):
             # 判断用户配置的Driver类型是否符合您的适配器要求，不符合时应抛出异常
@@ -149,12 +148,12 @@ class Adapter(BaseAdapter):
         # 如果适配器需要在nonebot启动和关闭时进行某些操作，则需要添加以下代码
         self.driver.on_startup(self.startup)
         self.driver.on_shutdown(self.shutdown)
-        
-        
+
+
     async def startup(self) -> None:
         """定义启动时的操作，例如和平台建立连接"""
         ...
-        
+
     async def shutdown(self) -> None:
         """定义关闭时的操作，例如停止任务、断开连接"""
         ...
@@ -168,17 +167,15 @@ class Adapter(BaseAdapter):
 from .bot import Bot
 
 class Adapter(BaseAdapter):
-    
+
     def _handle_connect(self):
         bot_id = ...  # 通过配置或者平台API等方式，获取到Bot的ID
         bot = Bot(self, self_id=bot_id)  # 实例化Bot
         self.bot_connect(bot)  # 建立Bot连接
-        
+
 	def _handle_disconnect(self):
         self.bot_disconnect(bot)  # 断开Bot连接
 ```
-
-
 
 ### 处理`Event`事件
 
@@ -189,7 +186,7 @@ import asyncio
 from .event import Event
 
 class Adapter(BaseAdapter):
-	
+
     @classmethod
     def payload_to_event(cls, payload: Dict[str, Any]) -> Event:
         # 自行编写方法，将payload转为对应的具体Event
@@ -206,15 +203,13 @@ class Adapter(BaseAdapter):
             # 未知的事件类型，转为基础的Event
             return Event.parse_obj(payload)
        	return event_class.parse_obj(payload)
-    
+
     async def _forward(self, bot: Bot):
         payload: Dict[str, Any]  # 接收到的事件数据
-        
+
         event = self.payload_to_event(payload)
         asyncio.create_task(bot.handle_event(event))
 ```
-
-
 
 ### 调用平台API
 
@@ -224,7 +219,7 @@ class Adapter(BaseAdapter):
 from nonebot.drivers import Request
 
 class Adapter(BaseAdapter):
-    
+
     @overrides(BaseAdapter)
     async def _call_api(self, bot: Bot, api: str, **data: Any) -> Any:
         log("DEBUG", f"Calling API <y>{api}</y>")
@@ -232,13 +227,13 @@ class Adapter(BaseAdapter):
             method="GET",  # 请求方法自行处理
             url=api,  # 接口地址
             headers=...,  # 请求头，通常需要包含鉴权信息
-            params=data,  # 自行处理数据的传输形式  
+            params=data,  # 自行处理数据的传输形式
             # json=data,
             # data=data,
         )
         return await self.adapter.request(request)  # 发送请求，返回结果
-        
-        
+
+
         # 或者您可以编写一系列API处理函数，例如：
         if (api_handler := API_HANDLERS.get(api)) is None:
             # 没有该API处理函数时抛出异常
@@ -255,7 +250,6 @@ class Adapter(BaseAdapter):
 
 以下提供部分网络通信方式示例，仅供参考：
 
-
 <details>
 <summary>Websocket 客户端</summary>
 `Websocket 客户端`需要一个`ForwardDriver`类型的驱动器，例如`httpx`和`websockets`
@@ -271,12 +265,12 @@ class Adapter(BaseAdapter):
         self.platform_config: Config = Config(**self.config.dict())
         self.task: Optional[asyncio.Task] = None
         self.setup()
-        
+
     @classmethod
     @overrides(BaseAdapter)
     def get_name(cls) -> str:
         return "your_adapter_name"
-    
+
     def setup(self) -> None:
         if not isinstance(self.driver, ForwardDriver):
             raise RuntimeError(
@@ -285,18 +279,18 @@ class Adapter(BaseAdapter):
             )
         self.driver.on_startup(self.startup)
         self.driver.on_shutdown(self.shutdown)
-	
+
     async def startup(self):
         bot_id = self.platform_config.bot_id
         bot_token = self.platform_config.bot_token
         bot = Bot(self, self_id=bot_id, token=bot_token)
         self.bot_connect(bot)
         self.task = asyncio.create_task(self._forward_ws(bot))
-        
+
     async def shutdown(self):
         if self.task is not None and not self.task.done():
             self.task.cancel()
-            
+
 	async def _forward_ws(self, bot: Bot):
         request = Request(
         	method="GET",
@@ -309,12 +303,12 @@ class Adapter(BaseAdapter):
                     try:
                         # 一些鉴权和心跳操作等，请自行编写
                         ...
-                        
+
                         payload = await ws.receive()  # 接收事件数据
                         payload = json.loads(payload)
                         event = self.payload_to_event(payload)
                         asyncio.create_task(bot.handle_event(event))
-                        
+
                     except WebSocketClosed as e:
 						log(
                             "ERROR",
@@ -337,14 +331,13 @@ class Adapter(BaseAdapter):
                     e,
                 )
                 await asyncio.sleep(3)  # 重连间隔
-    
+
 ```
 
 </details>
 
 <details>
 <summary>HTTP WebHook</summary>
-
 
 `HTTP WebHook`需要一个`ReverseDriver`类型的驱动器，例如`fastapi`
 
@@ -355,7 +348,7 @@ from nonebot.drivers import (
     URL,
     Request,
     Response,
-    ReverseDriver, 
+    ReverseDriver,
     HTTPServerSetup
 )
 
@@ -386,7 +379,7 @@ class Adapter(BaseAdapter):
             self._handle_http,  # 处理函数
         )
         self.setup_http_server(http_setup)
-    
+
     async def _handle_http(self, request: Request) -> Response:
         # 在此处对接收到到的请求进行处理，最终返回响应
         payload = json.loads(request.content)  # 请求内容
@@ -401,7 +394,7 @@ class Adapter(BaseAdapter):
         	asyncio.create_task(bot.handle_event(event))
         else:
             log("WARNING", "Missing bot_id in request")
-        
+
         return Response(
         	status_code=200,  # 状态码
             headers={"something": "something"}  # 响应头
@@ -411,8 +404,6 @@ class Adapter(BaseAdapter):
 ```
 
 </details>
-
-
 
 更多通信交互方式可以参考以下适配器：
 
@@ -448,8 +439,8 @@ class Bot(BaseBot):
     def __init__(self, adapter: Adapter, self_id: str, **kwargs: Any):
         super().__init__(adapter, self_id)
         self.adapter: Adapter = adapter
-    
-    
+
+
     async def handle_event(self, event: Event):
         # 根据需要对收到的事件先进行预处理，然后调用handle_event让nonebot对事件进行处理
         if isinstance(event, MessageEvent):
@@ -468,7 +459,6 @@ class Bot(BaseBot):
         # 对消息进行一些处理后，调用发送消息接口进行发送
         ...
 ```
-
 
 ## Event
 
@@ -517,7 +507,7 @@ class Event(BaseEvent):
 ```python {5,14,27,35} title="event.py"
 class HeartbeatEvent(Event):
     """心跳时间，通常为元事件"""
-    
+
     @overrides(BaseEvent)
     def get_type(self) -> str:
         return "meta_event"
@@ -530,7 +520,7 @@ class MessageEvent(Event):
 	@overrides(BaseEvent)
     def get_type(self) -> str:
         return "message"
-    
+
     @overrides(BaseEvent)
     def get_user_id(self) -> str:
         return self.user_id
@@ -539,7 +529,7 @@ class JoinRoomEvent(Event):
 	"""加入房间事件，通常为通知事件"""
 	user_id: str
 	room_id: str
-	
+
 	@overrides(BaseEvent)
     def get_type(self) -> str:
         return "notice"
@@ -547,13 +537,11 @@ class JoinRoomEvent(Event):
 class ApplyAddFriendEvent(Event):
 	"""申请添加好友事件，通常为请求事件"""
 	user_id: str
-	
+
 	@overrides(BaseEvent)
     def get_type(self) -> str:
         return "request"
 ```
-
-
 
 ## Message
 
@@ -574,25 +562,25 @@ class MessageSegment(BaseMessageSegment["Message"]):
     def get_message_class(cls) -> Type["Message"]:
         # 返回适配器的Message类型本身
         return Message
-    
+
     @overrides(BaseMessageSegment)
     def __str__(self) -> str:
         # 返回该消息段的纯文本表现形式，在命令匹配部分使用
         return "text of MessageSegment"
-    
+
     @overrides(BaseMessageSegment)
     def is_text(self) -> bool:
         # 判断该消息段是否为纯文本
         return self.type == "text"
 
-    
+
 class Message(BaseMessage[MessageSegment]):
     @classmethod
     @overrides(BaseMessage)
     def get_segment_class(cls) -> Type[MessageSegment]:
         # 返回适配器的MessageSegment类型本身
         return MessageSegment
-    
+
     @staticmethod
     @overrides(BaseMessage)
     def _construct(msg: str) -> Iterable[MessageSegment]:
@@ -604,4 +592,3 @@ class Message(BaseMessage[MessageSegment]):
 
 - [OneBot](https://github.com/nonebot/adapter-onebot/blob/master/nonebot/adapters/onebot/v11/message.py#LL76-L254)
 - [QQGuild](https://github.com/nonebot/adapter-qqguild/blob/master/nonebot/adapters/qqguild/message.py#L22-L150)
-
