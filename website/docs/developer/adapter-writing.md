@@ -252,6 +252,7 @@ class Adapter(BaseAdapter):
 
 <details>
 <summary>Websocket 客户端</summary>
+
 `Websocket 客户端`需要一个`ForwardDriver`类型的驱动器，例如`httpx`和`websockets`
 
 ```python title="adapter.py"
@@ -584,7 +585,7 @@ class Message(BaseMessage[MessageSegment]):
     @staticmethod
     @overrides(BaseMessage)
     def _construct(msg: str) -> Iterable[MessageSegment]:
-        # 实现相关方法，从字符串中构造消息数据
+        # 实现相关方法，从字符串中构造消息数组
         ...
 ```
 
