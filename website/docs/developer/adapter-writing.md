@@ -95,7 +95,7 @@ class Adapter(BaseAdapter):
 from pydantic import BaseModel, Extra
 
 class Config(BaseModel, extra=Extra.ignore):
-	xxx_id: str
+    xxx_id: str
     xxx_token: str
 ```
 
@@ -173,7 +173,7 @@ class Adapter(BaseAdapter):
         bot = Bot(self, self_id=bot_id)  # 实例化Bot
         self.bot_connect(bot)  # 建立Bot连接
 
-	def _handle_disconnect(self):
+    def _handle_disconnect(self):
         self.bot_disconnect(bot)  # 断开Bot连接
 ```
 
@@ -202,7 +202,7 @@ class Adapter(BaseAdapter):
             )
             # 未知的事件类型，转为基础的Event
             return Event.parse_obj(payload)
-       	return event_class.parse_obj(payload)
+           return event_class.parse_obj(payload)
 
     async def _forward(self, bot: Bot):
         payload: Dict[str, Any]  # 接收到的事件数据
@@ -292,9 +292,9 @@ class Adapter(BaseAdapter):
         if self.task is not None and not self.task.done():
             self.task.cancel()
 
-	async def _forward_ws(self, bot: Bot):
+    async def _forward_ws(self, bot: Bot):
         request = Request(
-        	method="GET",
+            method="GET",
             url="your_platform_websocket_url",
             headers={"token": bot.token}
         )
@@ -311,12 +311,12 @@ class Adapter(BaseAdapter):
                         asyncio.create_task(bot.handle_event(event))
 
                     except WebSocketClosed as e:
-						log(
+                        log(
                             "ERROR",
                             "<r><bg #f8bbd0>WebSocket Closed</bg #f8bbd0></r>",
                             e,
                         )
-					except Exception as e:
+                    except Exception as e:
                         log(
                             "ERROR",
                             "<r><bg #f8bbd0>Error while process data from websocket "
@@ -325,7 +325,7 @@ class Adapter(BaseAdapter):
                         )
                     finally:
                         self.bot_disconnect(bot)  # 断开Bot链接
-			except Exception as e:
+            except Exception as e:
                 log(
                     "ERROR",
                     "<r><bg #f8bbd0>Error while setup websocket to your_platform_websocket_url. Trying to reconnect...</bg #f8bbd0></r>",
@@ -392,12 +392,12 @@ class Adapter(BaseAdapter):
                 self.bot_connect(bot)
             bot = cast(Bot, bot)  # for type checking
             event = self.payload_to_event(payload)
-        	asyncio.create_task(bot.handle_event(event))
+            asyncio.create_task(bot.handle_event(event))
         else:
             log("WARNING", "Missing bot_id in request")
 
         return Response(
-        	status_code=200,  # 状态码
+            status_code=200,  # 状态码
             headers={"something": "something"}  # 响应头
             content="xxx"  # 响应内容
             request=Request(...)  # 请求
@@ -514,11 +514,11 @@ class HeartbeatEvent(Event):
         return "meta_event"
 
 class MessageEvent(Event):
-	"""消息事件"""
-	message_id: str
-	user_id: str
+    """消息事件"""
+    message_id: str
+    user_id: str
 
-	@overrides(BaseEvent)
+    @overrides(BaseEvent)
     def get_type(self) -> str:
         return "message"
 
@@ -527,19 +527,19 @@ class MessageEvent(Event):
         return self.user_id
 
 class JoinRoomEvent(Event):
-	"""加入房间事件，通常为通知事件"""
-	user_id: str
-	room_id: str
+    """加入房间事件，通常为通知事件"""
+    user_id: str
+    room_id: str
 
-	@overrides(BaseEvent)
+    @overrides(BaseEvent)
     def get_type(self) -> str:
         return "notice"
 
 class ApplyAddFriendEvent(Event):
-	"""申请添加好友事件，通常为请求事件"""
-	user_id: str
+    """申请添加好友事件，通常为请求事件"""
+    user_id: str
 
-	@overrides(BaseEvent)
+    @overrides(BaseEvent)
     def get_type(self) -> str:
         return "request"
 ```
