@@ -5893,5 +5893,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_twitter",
+    "project_link": "nonebot-plugin-twitter",
+    "name": "twitter订阅",
+    "desc": "订阅推送 twitter 推文",
+    "author": "nek0us",
+    "homepage": "https://github.com/nek0us/nonebot-plugin-twitter",
+    "tags": [
+      {
+        "label": "twitter",
+        "color": "#29a8dc"
+      }
+    ],
+    "is_official": false
   }
 ]
