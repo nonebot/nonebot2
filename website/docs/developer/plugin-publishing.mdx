@@ -20,12 +20,12 @@ NoneBot 为开发者提供了分享插件给大家使用的方式 —— 商店�
 
 NoneBot 插件使用下述命名规范：
 
-- 对于**项目名**，建议统一以 `nonebot-plugin-` 开头，之后为拟定的插件名字，词间用横杠 `-` 分隔
-  - **项目名**用于代码仓库名称、PyPI 包的发布名称等
-  - 本文使用 `nonebot-plugin-{your-plugin-name}` 为例
-- 对于**模块名**，最好与**项目名**一致，但词间用下划线 `_` 分隔，即统一以 `nonebot_plugin_` 开头，之后为拟定的插件名字
-  - **模块名**用于程序导入使用，应为插件文件（夹）的名称
-  - 本文使用 `nonebot_plugin_{your_plugin_name}` 为例；
+- 对于**项目名**，建议统一以 `nonebot-plugin-` 开头，之后为拟定的插件名字，词间用横杠 `-` 分隔；
+  - **项目名**用于代码仓库名称、PyPI 包的发布名称等；
+  - 本文使用 `nonebot-plugin-{your-plugin-name}` 为例。
+- 对于**模块名**，建议与**项目名**一致，但词间用下划线 `_` 分隔，即统一以 `nonebot_plugin_` 开头，之后为拟定的插件名字；
+  - **模块名**用于程序导入使用，应为插件文件（夹）的名称；
+  - 本文使用 `nonebot_plugin_{your_plugin_name}` 为例。
 
 ### 项目结构
 
@@ -42,6 +42,7 @@ NoneBot 插件使用下述命名规范：
 ├── 📂 nonebot_plugin_{your_plugin_name}
 │   ├── 📜 __init__.py
 │   └── 📜 config.py
+├── 📜 pyproject.toml
 └── 📜 README.md
 ```
 
@@ -52,7 +53,7 @@ NoneBot 插件使用下述命名规范：
 :::tip 提示
 本文档**不保证**第三方模板的适用性。
 
-根据项目模板提供的使用指导补全/修改相应内容后上传到 GitHub 上即可。
+根据项目模板提供的使用指导补全/修改相应内容后上传到 GitHub 即可。
 :::
 
 ### 插件依赖
@@ -63,8 +64,8 @@ NoneBot 插件使用下述命名规范：
 
 :::warning 注意
 
-1. 插件需要添加 `nonebot2` 为依赖以避免“幽灵依赖”
-2. 插件需要将使用的适配器加入依赖列表，如：使用 OneBot 适配器的插件应添加 `nonebot-adapter-onebot` 依赖
+1. 插件需要添加 `nonebot2` 为依赖以避免“幽灵依赖”；
+2. 插件需要将使用的适配器加入依赖列表，如：使用 OneBot 适配器的插件应添加 `nonebot-adapter-onebot` 依赖；
 3. 由于 `nonebot` 是指 `nonebot1` **而非** `nonebot2`，因此要注意**不要**将 `nonebot` 添加为插件的依赖，以免造成冲突；
 4. 尽可能避免使用 `==` 锁定单一版本，增强与其它插件的兼容性。
 
@@ -119,7 +120,7 @@ __plugin_meta__ = PluginMetadata(
 内容大致包括：
 
 - 插件功能介绍
-- 安装方法（建议至少有 `nb-cli` 方式安装，不要使用旧式的 `bot.py` 配置）
+- 安装方法（建议至少有 `nb-cli` 方式安装，**不要**使用旧式的 `bot.py` 配置）
 - 插件配置项（若无可跳过）
 - 插件设置的触发规则（若无可跳过）
 - 插件的其它用法（按需编写）
@@ -154,8 +155,9 @@ pdm publish --no-build  # 只发布先前的构建
   <TabItem value="poetry" label="Poetry" default>
 
 ```bash
-poetry publish --build
+poetry publish --build  # 构建并发布
 
+# 等效于以下两个命令
 poetry build            # 只构建
 poetry publish          # 只发布先前的构建
 
@@ -164,13 +166,18 @@ poetry publish          # 只发布先前的构建
   <TabItem value="setuptools" label="Setuptools (PEP 517)" default>
 
 ```bash
-pip install build twine
+pip install build twine             # 安装通用构建与发布工具
+
 python -m build --sdist --wheel .   # 只构建
-twine upload dists/*                # 只发布先前的构建
+twine upload dist/*                 # 只发布先前的构建
 ```
 
   </TabItem>
 </Tabs>
+
+:::tip 提示
+发布前建议自行测试构建包是否可用，避免遗漏代码文件或资源文件等问题。
+:::
 
 ## 商店审核
 
