@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: twitter 订阅 [@noneflow](https://github.com/noneflow) ([#2082](https://github.com/nonebot/nonebot2/pull/2082))
 - Plugin: 链接防夹 [@noneflow](https://github.com/noneflow) ([#2074](https://github.com/nonebot/nonebot2/pull/2074))
 - Plugin: 碧蓝航线攻略 [@noneflow](https://github.com/noneflow) ([#2076](https://github.com/nonebot/nonebot2/pull/2076))
 
