@@ -153,5 +153,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot.adapters.villa",
+    "project_link": "nonebot-adapter-villa",
+    "name": "大别野",
+    "desc": "米游社大别野官方Bot适配",
+    "author": "CMHopeSunshine",
+    "homepage": "https://github.com/CMHopeSunshine/nonebot-adapter-villa",
+    "tags": [
+      {
+        "label": "米哈游",
+        "color": "#e10909"
+      }
+    ],
+    "is_official": false
   }
 ]
