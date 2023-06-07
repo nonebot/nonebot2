@@ -109,6 +109,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
   |                      MineCraft（[仓库](https://github.com/17TheWord/nonebot-adapter-minecraft)）                      |  ↗️  |                                由社区贡献                                 |
   |                          BiliBili Live（[仓库](https://github.com/wwweww/adapter-bilibili)）                          |  ↗️  |                                由社区贡献                                 |
   |                       Walle-Q（[仓库](https://github.com/onebot-walle/nonebot_adapter_walleq)）                       |  ↗️  |                            QQ 协议，由社区贡献                            |
+  |                       Villa（[仓库](https://github.com/CMHopeSunshine/nonebot-adapter-villa)）                        |  ↗️  |                     米游社大别野 Bot 协议，由社区贡献                     |
 
 - 坚实后盾：支持多种 web 框架，可自定义替换、组合
 
