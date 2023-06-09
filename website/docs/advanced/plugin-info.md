@@ -18,7 +18,7 @@ NoneBot 是一个插件化的框架，可以通过加载插件来扩展功能。
 
 现在，假设我们有一个插件 `example`, 它的模块结构如下：
 
-```tree
+```tree {4-6} title=Project
 📦 awesome-bot
 ├── 📂 awesome_bot
 │   └── 📂 plugins
@@ -31,7 +31,7 @@ NoneBot 是一个插件化的框架，可以通过加载插件来扩展功能。
 
 我们需要在插件顶层模块 `example/__init__.py` 中添加插件元数据，如下所示：
 
-```python
+```python {1,5-11} title=example/__init__.py
 from nonebot.plugin import PluginMetadata
 
 from .config import Config
