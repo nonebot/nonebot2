@@ -140,18 +140,6 @@ __plugin_meta__ = PluginMetadata(
 :::
 
 <Tabs groupId="publishMethod">
-  <TabItem value="pdm" label="PDM" default>
-
-```bash
-pdm publish             # 构建并发布
-
-# 等效于以下两个命令
-pdm build               # 只构建
-pdm publish --no-build  # 只发布先前的构建
-```
-
-  </TabItem>
-
   <TabItem value="poetry" label="Poetry" default>
 
 ```bash
@@ -160,6 +148,18 @@ poetry publish --build  # 构建并发布
 # 等效于以下两个命令
 poetry build            # 只构建
 poetry publish          # 只发布先前的构建
+```
+
+  </TabItem>
+
+  <TabItem value="pdm" label="PDM" default>
+
+```bash
+pdm publish             # 构建并发布
+
+# 等效于以下两个命令
+pdm build               # 只构建
+pdm publish --no-build  # 只发布先前的构建
 ```
 
   </TabItem>
