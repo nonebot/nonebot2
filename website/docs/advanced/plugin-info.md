@@ -18,7 +18,7 @@ NoneBot 是一个插件化的框架，可以通过加载插件来扩展功能。
 
 现在，假设我们有一个插件 `example`, 它的模块结构如下：
 
-```tree {4-6} title=Project
+```tree
 📦 awesome-bot
 ├── 📂 awesome_bot
 │   └── 📂 plugins
@@ -31,7 +31,7 @@ NoneBot 是一个插件化的框架，可以通过加载插件来扩展功能。
 
 我们需要在插件顶层模块 `example/__init__.py` 中添加插件元数据，如下所示：
 
-```python {1,5-11} title=example/__init__.py
+```python
 from nonebot.plugin import PluginMetadata
 
 from .config import Config
@@ -45,7 +45,13 @@ __plugin_meta__ = PluginMetadata(
 )
 ```
 
-我们可以看到，插件元数据 `PluginMetadata` 有三个基本属性：插件名称、插件描述、插件使用方法。除此之外，还有两个可选的属性。`config` 属性用于指定插件的[配置类](../appendices/config.mdx#插件配置)，`extra` 属性，它是一个字典，可以用于存储任意信息。其他插件可以通过约定 `extra` 字典的键名来达成收集某些特殊信息的目的。
+我们可以看到，插件元数据 `PluginMetadata` 有三个基本属性：插件名称、插件描述、插件使用方法。除此之外，还有几个可选的属性：
+
+- `type`：插件类别，发布插件必填。当前有效类别有：`library`（为其他插件编写提供功能），`application`（向机器人用户提供功能）；
+- `homepage`：插件项目主页，发布插件必填；
+- `config`：插件的[配置类](../appendices/config.mdx#插件配置)，如无配置类可不填；
+- `supported_adapters`：支持的适配器模块名集合，若插件可以保证兼容所有适配器（即仅使用基本适配器功能）可不填写；
+- `extra`：一个字典，可以用于存储任意信息。其他插件可以通过约定 `extra` 字典的键名来达成收集某些特殊信息的目的。
 
 请注意，这里的**插件名称**是供使用者或机器人用户查看的，与插件索引名称无关。**插件索引名称（插件模块名称）**仅用于 NoneBot 插件系统**内部索引**。
 
