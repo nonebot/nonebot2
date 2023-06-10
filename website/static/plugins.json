@@ -5908,5 +5908,24 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_pcrjjc",
+    "project_link": "nonebot-plugin-pcrjjc",
+    "name": "pcrjjc",
+    "desc": "pcrjjc排名监测插件",
+    "author": "reine-ishyanami",
+    "homepage": "https://github.com/reine-ishyanami/nonebot-plugin-pcrjjc",
+    "tags": [
+      {
+        "label": "t:公主连结",
+        "color": "#778a1e"
+      },
+      {
+        "label": "t:pcrjjc",
+        "color": "#778a1e"
+      }
+    ],
+    "is_official": false
   }
 ]
