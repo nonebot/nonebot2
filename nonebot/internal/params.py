@@ -317,13 +317,27 @@ class MatcherParam(Param):
 
         # param type is Matcher(s) or subclass(es) of Matcher or None
         if generic_check_issubclass(param.annotation, Matcher):
-            return cls(Required)
+            checker: Optional[ModelField] = None
+            if param.annotation is not Matcher:
+                checker = ModelField(
+                    name=param.name,
+                    type_=param.annotation,
+                    class_validators=None,
+                    model_config=CustomConfig,
+                    default=None,
+                    required=True,
+                )
+            return cls(Required, checker=checker)
         # legacy: param is named "matcher" and has no type annotation
         elif param.annotation == param.empty and param.name == "matcher":
             return cls(Required)
 
     async def _solve(self, matcher: "Matcher", **kwargs: Any) -> Any:
         return matcher
+
+    async def _check(self, matcher: "Matcher", **kwargs: Any) -> Any:
+        if checker := self.extra.get("checker", None):
+            check_field_type(checker, matcher)
 
 
 class ArgInner:

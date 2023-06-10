@@ -90,7 +90,9 @@ async def test_bot(app: App):
         sub_bot,
         union_bot,
         legacy_bot,
+        generic_bot,
         not_legacy_bot,
+        generic_bot_none,
     )
 
     async with app.test_dependent(get_bot, allow_types=[BotParam]) as ctx:
@@ -122,6 +124,16 @@ async def test_bot(app: App):
         ctx.pass_params(bot=bot)
         ctx.should_return(bot)
 
+    async with app.test_dependent(generic_bot, allow_types=[BotParam]) as ctx:
+        bot = ctx.create_bot()
+        ctx.pass_params(bot=bot)
+        ctx.should_return(bot)
+
+    async with app.test_dependent(generic_bot_none, allow_types=[BotParam]) as ctx:
+        bot = ctx.create_bot()
+        ctx.pass_params(bot=bot)
+        ctx.should_return(bot)
+
     with pytest.raises(ValueError):
         async with app.test_dependent(not_bot, allow_types=[BotParam]) as ctx:
             ...
@@ -139,8 +151,10 @@ async def test_event(app: App):
         union_event,
         legacy_event,
         event_message,
+        generic_event,
         event_plain_text,
         not_legacy_event,
+        generic_event_none,
     )
 
     fake_message = make_fake_message()("text")
@@ -171,6 +185,14 @@ async def test_event(app: App):
 
     async with app.test_dependent(union_event, allow_types=[EventParam]) as ctx:
         ctx.pass_params(event=fake_fooevent)
+        ctx.should_return(fake_event)
+
+    async with app.test_dependent(generic_event, allow_types=[EventParam]) as ctx:
+        ctx.pass_params(event=fake_event)
+        ctx.should_return(fake_event)
+
+    async with app.test_dependent(generic_event_none, allow_types=[EventParam]) as ctx:
+        ctx.pass_params(event=fake_event)
         ctx.should_return(fake_event)
 
     with pytest.raises(ValueError):
@@ -351,13 +373,62 @@ async def test_state(app: App):
 
 @pytest.mark.asyncio
 async def test_matcher(app: App):
-    from plugins.param.param_matcher import matcher, receive, last_receive
+    from plugins.param.param_matcher import (
+        FooMatcher,
+        matcher,
+        receive,
+        not_matcher,
+        sub_matcher,
+        last_receive,
+        union_matcher,
+        legacy_matcher,
+        generic_matcher,
+        not_legacy_matcher,
+        generic_matcher_none,
+    )
 
     fake_matcher = Matcher()
+    foo_matcher = FooMatcher()
 
     async with app.test_dependent(matcher, allow_types=[MatcherParam]) as ctx:
         ctx.pass_params(matcher=fake_matcher)
         ctx.should_return(fake_matcher)
+
+    async with app.test_dependent(legacy_matcher, allow_types=[MatcherParam]) as ctx:
+        ctx.pass_params(matcher=fake_matcher)
+        ctx.should_return(fake_matcher)
+
+    with pytest.raises(ValueError):
+        async with app.test_dependent(
+            not_legacy_matcher, allow_types=[MatcherParam]
+        ) as ctx:
+            ...
+
+    async with app.test_dependent(sub_matcher, allow_types=[MatcherParam]) as ctx:
+        ctx.pass_params(matcher=foo_matcher)
+        ctx.should_return(foo_matcher)
+
+    with pytest.raises(TypeMisMatch):
+        async with app.test_dependent(sub_matcher, allow_types=[MatcherParam]) as ctx:
+            ctx.pass_params(matcher=fake_matcher)
+
+    async with app.test_dependent(union_matcher, allow_types=[MatcherParam]) as ctx:
+        ctx.pass_params(matcher=foo_matcher)
+        ctx.should_return(foo_matcher)
+
+    async with app.test_dependent(generic_matcher, allow_types=[MatcherParam]) as ctx:
+        ctx.pass_params(matcher=fake_matcher)
+        ctx.should_return(fake_matcher)
+
+    async with app.test_dependent(
+        generic_matcher_none, allow_types=[MatcherParam]
+    ) as ctx:
+        ctx.pass_params(matcher=fake_matcher)
+        ctx.should_return(fake_matcher)
+
+    with pytest.raises(ValueError):
+        async with app.test_dependent(not_matcher, allow_types=[MatcherParam]) as ctx:
+            ...
 
     event = make_fake_event()()
     fake_matcher.set_receive("test", event)
