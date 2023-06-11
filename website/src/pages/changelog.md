@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 依赖注入支持 Generic TypeVar 和 Matcher 重载 [@yanyongyu](https://github.com/yanyongyu) ([#2089](https://github.com/nonebot/nonebot2/pull/2089))
+
 ### 🐛 Bug 修复
 
 - Fix: aiohttp 请求时 data 和 file 不能同时存在 [@j1g5awi](https://github.com/j1g5awi) ([#2088](https://github.com/nonebot/nonebot2/pull/2088))
