@@ -5927,5 +5927,20 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_audiocraft",
+    "project_link": "nonebot-plugin-audiocraft",
+    "name": "AI作曲",
+    "desc": "Nonebot框架下的AI作曲插件",
+    "author": "Alpaca4610",
+    "homepage": "https://github.com/Alpaca4610/nonebot-plugin-audiocraft",
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
