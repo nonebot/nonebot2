@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 插件商店适配最新的插件元数据 [@he0119](https://github.com/he0119) ([#2094](https://github.com/nonebot/nonebot2/pull/2094))
 - Feature: 依赖注入支持 Generic TypeVar 和 Matcher 重载 [@yanyongyu](https://github.com/yanyongyu) ([#2089](https://github.com/nonebot/nonebot2/pull/2089))
 
 ### 🐛 Bug 修复
