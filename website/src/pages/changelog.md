@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 更新插件元数据的相关描述 [@NCBM](https://github.com/NCBM) ([#2087](https://github.com/nonebot/nonebot2/pull/2087))
 - Docs: 添加 Villa 适配器到 README [@CMHopeSunshine](https://github.com/CMHopeSunshine) ([#2086](https://github.com/nonebot/nonebot2/pull/2086))
 
 ### 💫 杂项
