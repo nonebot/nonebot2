@@ -58,8 +58,12 @@ def generic_check_issubclass(
 ) -> bool:
     """检查 cls 是否是 class_or_tuple 中的一个类型子类。
 
-    特别的，如果 cls 是 `typing.Union` 或 `types.UnionType` 类型，
-    则会检查其中的所有类型是否是 class_or_tuple 中一个类型的子类或 None。
+    特别的：
+
+    - 如果 cls 是 `typing.Union` 或 `types.UnionType` 类型，
+      则会检查其中的所有类型是否是 class_or_tuple 中一个类型的子类或 None。
+    - 如果 cls 是 `typing.TypeVar` 类型，
+      则会检查其 `__bound__` 或 `__constraints__` 是否是 class_or_tuple 中一个类型的子类或 None。
     """
     try:
         return issubclass(cls, class_or_tuple)
@@ -70,8 +74,18 @@ def generic_check_issubclass(
                 is_none_type(type_) or generic_check_issubclass(type_, class_or_tuple)
                 for type_ in get_args(cls)
             )
+        # ensure generic List, Dict can be checked
         elif origin:
             return issubclass(origin, class_or_tuple)
+        elif isinstance(cls, TypeVar):
+            if cls.__constraints__:
+                return all(
+                    is_none_type(type_)
+                    or generic_check_issubclass(type_, class_or_tuple)
+                    for type_ in cls.__constraints__
+                )
+            elif cls.__bound__:
+                return generic_check_issubclass(cls.__bound__, class_or_tuple)
         return False
 
 
