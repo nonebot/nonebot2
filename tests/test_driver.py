@@ -177,11 +177,15 @@ async def test_http_driver(driver: Driver):
     assert data["json"] == {"json": "test"}
 
     request = Request(
-        "POST", "https://httpbin.org/post", files={"test": ("test.txt", b"test")}
+        "POST",
+        "https://httpbin.org/post",
+        data={"form": "test"},
+        files={"test": ("test.txt", b"test")},
     )
     response = await driver.request(request)
     assert response.status_code == 200 and response.content
     data = json.loads(response.content)
+    assert data["form"] == {"form": "test"}
     assert data["files"] == {"test": "test"}
 
     await asyncio.sleep(1)
