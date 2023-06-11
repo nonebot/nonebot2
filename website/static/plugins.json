@@ -12,7 +12,9 @@
         "color": "#aeeaa8"
       }
     ],
-    "is_official": true
+    "is_official": true,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "haruka_bot",
@@ -27,7 +29,9 @@
         "color": "#e55d80"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_rauthman",
@@ -42,7 +46,9 @@
         "color": "#4ec9b0"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_docs",
@@ -52,7 +58,9 @@
     "name": "NoneBot离线文档",
     "homepage": "https://github.com/nonebot/nonebot2/tree/master/packages/nonebot-plugin-docs",
     "tags": [],
-    "is_official": true
+    "is_official": true,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_sentry",
@@ -67,7 +75,9 @@
         "color": "#6be3ea"
       }
     ],
-    "is_official": true
+    "is_official": true,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_apscheduler",
@@ -77,7 +87,9 @@
     "name": "定时任务",
     "homepage": "https://github.com/nonebot/plugin-apscheduler",
     "tags": [],
-    "is_official": true
+    "is_official": true,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_picsearcher",
@@ -87,7 +99,9 @@
     "name": "图片搜索",
     "homepage": "https://github.com/synodriver/nonebot_plugin_picsearcher",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_navicat",
@@ -97,7 +111,9 @@
     "name": "通用数据库连接",
     "homepage": "https://github.com/synodriver/nonebot_plugin_navicat",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_translator",
@@ -112,7 +128,9 @@
         "color": "#dcdcaa"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_mqtt",
@@ -122,7 +140,9 @@
     "name": "mqtt接入",
     "homepage": "https://github.com/synodriver/nonebot_plugin_mqtt",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_songpicker2",
@@ -132,7 +152,9 @@
     "name": "songpicker2",
     "homepage": "https://github.com/maxesisn/nonebot_plugin_songpicker2",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_strman",
@@ -142,7 +164,9 @@
     "name": "字符串管理工具",
     "homepage": "https://github.com/echobot-dev/nonebot-plugin-strman",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_bison",
@@ -157,7 +181,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot-plugin-ncm",
@@ -180,7 +206,9 @@
         "color": "#ec4141"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_cocdicer",
@@ -190,7 +218,9 @@
     "name": "nonebot-plugin-cocdicer",
     "homepage": "https://github.com/abrahum/nonebot_plugin_cocdicer",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_trpglogger",
@@ -205,7 +235,9 @@
         "color": "#80070B"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_guess",
@@ -215,7 +247,9 @@
     "name": "猜猜看",
     "homepage": "https://github.com/ffreemt/nonebot-plugin-guess-game",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_abbrreply",
@@ -225,7 +259,9 @@
     "name": "缩写查询器",
     "homepage": "https://github.com/anlen123/nonebot_plugin_abbrreply",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_biliav",
@@ -235,7 +271,9 @@
     "name": "biliav小程序转换器",
     "homepage": "https://github.com/knva/nonebot_plugin_biliav",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_manager",
@@ -250,7 +288,9 @@
         "color": "#80070B"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_analysis_bilibili",
@@ -260,7 +300,9 @@
     "author": "mengshouer",
     "homepage": "https://github.com/mengshouer/nonebot_plugin_analysis_bilibili",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_localstore",
@@ -270,7 +312,9 @@
     "author": "yanyongyu",
     "homepage": "https://github.com/nonebot/plugin-localstore",
     "tags": [],
-    "is_official": true
+    "is_official": true,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_mcstatus",
@@ -285,7 +329,9 @@
         "color": "#80070B"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_help",
@@ -295,7 +341,9 @@
     "author": "XZhouQD",
     "homepage": "https://github.com/XZhouQD/nonebot-plugin-help",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_alias",
@@ -305,7 +353,9 @@
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-alias",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_withdraw",
@@ -315,7 +365,9 @@
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-withdraw",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_pixivrank_search",
@@ -325,7 +377,9 @@
     "author": "HibiKier",
     "homepage": "https://github.com/HibiKier/nonebot_plugin_pixivrank_search",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_russian",
@@ -335,7 +389,9 @@
     "author": "HibiKier",
     "homepage": "https://github.com/HibiKier/nonebot_plugin_russian",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_setu",
@@ -345,7 +401,9 @@
     "author": "ayanamiblhx",
     "homepage": "https://github.com/ayanamiblhx/nonebot_plugin_setu",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_heweather",
@@ -360,7 +418,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_autohelp",
@@ -370,7 +430,9 @@
     "author": "ffreemt",
     "homepage": "https://github.com/ffreemt/nonebot-plugin-autohelp",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_flexperm",
@@ -380,7 +442,9 @@
     "author": "rmuchan",
     "homepage": "https://github.com/rmuchan/nonebot-plugin-flexperm",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_epicfree",
@@ -390,7 +454,9 @@
     "author": "monsterxcn",
     "homepage": "https://github.com/monsterxcn/nonebot_plugin_epicfree",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "ELF_RSS2",
@@ -400,7 +466,9 @@
     "author": "Quan666",
     "homepage": "https://github.com/Quan666/ELF_RSS",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_simplemusic",
@@ -415,7 +483,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_phlogo",
@@ -425,7 +495,9 @@
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-phlogo",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nb2chan",
@@ -435,7 +507,9 @@
     "author": "yucongo",
     "homepage": "https://github.com/ffreemt/nb2chan",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_setu_now",
@@ -450,7 +524,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "leetcode",
@@ -460,7 +536,9 @@
     "author": "zxz0415",
     "homepage": "https://github.com/zxz0415/leetcode",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_youthstudy",
@@ -470,7 +548,9 @@
     "author": "ayanamiblhx",
     "homepage": "https://github.com/ayanamiblhx/nonebot_plugin_youthstudy",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_asoulcnki",
@@ -480,7 +560,9 @@
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-asoulcnki",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_petpet",
@@ -490,7 +572,9 @@
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-petpet",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_shindan",
@@ -500,7 +584,9 @@
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-shindan",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_code",
@@ -515,7 +601,9 @@
         "color": "#dcdcaa"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_heisi",
@@ -525,7 +613,9 @@
     "author": "yzyyz1387",
     "homepage": "https://github.com/yzyyz1387/nonebot_plugin_heisi",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_picsbank",
@@ -535,7 +625,9 @@
     "author": "Diaosi1111",
     "homepage": "https://github.com/Diaosi1111/nonebot_plugin_picsbank",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_tvseries",
@@ -550,7 +642,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_lolmatch",
@@ -560,7 +654,9 @@
     "author": "Diaosi1111",
     "homepage": "https://github.com/Diaosi1111/nonebot_plugin_lolmatch",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "OlivOS.nonebot",
@@ -575,7 +671,9 @@
         "color": "#00a0ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_htmlrender",
@@ -590,7 +688,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_admin",
@@ -600,7 +700,9 @@
     "author": "yzyyz1387",
     "homepage": "https://github.com/yzyyz1387/nonebot_plugin_admin",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_logo",
@@ -610,7 +712,9 @@
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-logo",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_memes",
@@ -620,7 +724,9 @@
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-memes",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_repeater",
@@ -630,7 +736,9 @@
     "author": "ninthseason",
     "homepage": "https://github.com/ninthseason/nonebot-plugin-repeater",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_directlinker",
@@ -645,7 +753,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_forwarder",
@@ -655,7 +765,9 @@
     "author": "ninthseason",
     "homepage": "https://github.com/ninthseason/nonebot_plugin_forwarder",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_roll",
@@ -670,7 +782,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_crazy_thursday",
@@ -685,7 +799,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_covid19_news",
@@ -695,7 +811,9 @@
     "author": "Zeta-qixi",
     "homepage": "https://github.com/Zeta-qixi/nonebot-plugin-covid19-news",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_remake",
@@ -714,7 +832,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_caiyunai",
@@ -733,7 +853,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_weather_lite",
@@ -748,7 +870,9 @@
         "color": "#6ec3d9"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_fortune",
@@ -767,7 +891,9 @@
         "color": "#ea6f52"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_tarot",
@@ -786,7 +912,9 @@
         "color": "#461264"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_emojimix",
@@ -801,7 +929,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_what2eat",
@@ -820,7 +950,9 @@
         "color": "#f09526"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_datastore",
@@ -830,7 +962,9 @@
     "author": "he0119",
     "homepage": "https://github.com/he0119/nonebot-plugin-datastore",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_gocqhttp",
@@ -849,7 +983,9 @@
         "color": "#eabd52"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_guild_patch",
@@ -868,7 +1004,9 @@
         "color": "#a2ea52"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_boardgame",
@@ -883,7 +1021,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_wordcloud",
@@ -893,7 +1033,9 @@
     "author": "he0119",
     "homepage": "https://github.com/he0119/nonebot-plugin-wordcloud",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_chatrecorder",
@@ -908,7 +1050,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_antiflash",
@@ -923,7 +1067,9 @@
         "color": "#6f64d4"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_word_bank2",
@@ -942,7 +1088,9 @@
         "color": "#0b00ff"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_txt2img",
@@ -957,7 +1105,9 @@
         "color": "#0083ff"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_morning",
@@ -976,7 +1126,9 @@
         "color": "#ebc025"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_pixiv",
@@ -995,7 +1147,9 @@
         "color": "#ffff00"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "YetAnotherPicSearch",
@@ -1010,7 +1164,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_gachalogs",
@@ -1025,7 +1181,9 @@
         "color": "#ffd49f"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_everyday_en",
@@ -1044,7 +1202,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_fire",
@@ -1054,7 +1214,9 @@
     "author": "25252www",
     "homepage": "https://github.com/25252www/nonebot_plugin_fire",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_qrcode",
@@ -1073,7 +1235,9 @@
         "color": "#0020ff"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_ygo",
@@ -1096,7 +1260,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bilibilibot",
@@ -1115,7 +1281,9 @@
         "color": "#05f6e4"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_color",
@@ -1130,7 +1298,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_blackjack",
@@ -1140,7 +1310,9 @@
     "author": "yaowan233",
     "homepage": "https://github.com/yaowan233/nonebot-plugin-blackjack",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_arcaeabot",
@@ -1159,7 +1331,9 @@
         "color": "#ff2e00"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_ddcheck",
@@ -1174,7 +1348,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_leetcode2",
@@ -1184,7 +1360,9 @@
     "author": "Nranphy",
     "homepage": "https://github.com/Nranphy/nonebot_plugin_leetcode2",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_hikarisearch",
@@ -1199,7 +1377,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_mediawiki",
@@ -1218,7 +1398,9 @@
         "color": "#679ff9"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_wordle",
@@ -1233,7 +1415,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_giyf",
@@ -1248,7 +1432,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_abstract",
@@ -1258,7 +1444,9 @@
     "author": "CherryCherries",
     "homepage": "https://github.com/CherryCherries/nonebot-plugin-abstract",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_params",
@@ -1273,7 +1461,9 @@
         "color": "#ffe873"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_handle",
@@ -1288,7 +1478,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_minesweeper",
@@ -1303,7 +1495,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_draw",
@@ -1313,7 +1507,9 @@
     "author": "bingganhe123",
     "homepage": "https://github.com/bingganhe123/nonebot_plugin_draw",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_randomtkk",
@@ -1336,7 +1532,9 @@
         "color": "#465dfd"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_dida",
@@ -1351,7 +1549,9 @@
         "color": "#007ffd"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_alipayvoice",
@@ -1361,7 +1561,9 @@
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-alipayvoice",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_answersbook",
@@ -1371,7 +1573,9 @@
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-answersbook",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_hitokoto",
@@ -1381,7 +1585,9 @@
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-hitokoto",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bilicover",
@@ -1391,7 +1597,9 @@
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-bilicover",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_cchess",
@@ -1406,7 +1614,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_chess",
@@ -1421,7 +1631,9 @@
         "color": "#020202"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_charpic",
@@ -1431,7 +1643,9 @@
     "author": "RafuiiChan",
     "homepage": "https://github.com/RafuiiChan/nonebot_plugin_charpic",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_miragetank",
@@ -1441,7 +1655,9 @@
     "author": "RafuiiChan",
     "homepage": "https://github.com/RafuiiChan/nonebot_plugin_miragetank",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_covid",
@@ -1451,7 +1667,9 @@
     "author": "nicklly",
     "homepage": "https://github.com/nicklly/nonebot2_covid_plugin",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_yulu",
@@ -1461,7 +1679,9 @@
     "author": "bingqiu456",
     "homepage": "https://github.com/bingqiu456/nonebot-plugin-yulu",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_maze",
@@ -1476,7 +1696,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_moyu",
@@ -1486,7 +1708,9 @@
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-moyu",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_imageutils",
@@ -1496,7 +1720,9 @@
     "author": "MeetWq",
     "homepage": "https://github.com/noneplugin/nonebot-plugin-imageutils",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_mockingbird",
@@ -1511,7 +1737,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_baidutranslate",
@@ -1521,7 +1749,9 @@
     "author": "NumberSir",
     "homepage": "https://github.com/NumberSir/nonebot_plugin_baidutranslate",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_tortoise_orm",
@@ -1531,7 +1761,9 @@
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-tortoise-orm",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_dailysign",
@@ -1546,7 +1778,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_tetris_stats",
@@ -1561,7 +1795,9 @@
         "color": "#da2b2b"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bilibili_viode",
@@ -1571,7 +1807,9 @@
     "author": "ASTWY",
     "homepage": "https://github.com/ASTWY/nonebot_plugin_bilibili_viode",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_imagetools",
@@ -1586,7 +1824,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_warframe_clock",
@@ -1605,7 +1845,9 @@
         "color": "#149090"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "hikari_bot",
@@ -1615,7 +1857,9 @@
     "author": "benx1n",
     "homepage": "https://github.com/benx1n/HikariBot",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_who_at_me",
@@ -1634,7 +1878,9 @@
         "color": "#52afea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_covid_19_by",
@@ -1649,7 +1895,9 @@
         "color": "#52ea8a"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_reboot",
@@ -1659,7 +1907,9 @@
     "author": "18870",
     "homepage": "https://github.com/18870/nonebot-plugin-reboot",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_setu4",
@@ -1669,7 +1919,9 @@
     "author": "Special-Week",
     "homepage": "https://github.com/Special-Week/nonebot_plugin_setu4",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_smart_reply",
@@ -1679,7 +1931,9 @@
     "author": "Special-Week",
     "homepage": "https://github.com/Special-Week/nonebot_plugin_smart_reply",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_today_in_history",
@@ -1689,7 +1943,9 @@
     "author": "AquamarineCyan",
     "homepage": "https://github.com/AquamarineCyan/nonebot-plugin-today-in-history",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_BitTorrent",
@@ -1699,7 +1955,9 @@
     "author": "Special-Week",
     "homepage": "https://github.com/Special-Week/nonebot_plugin_BitTorrent",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_namelist",
@@ -1709,7 +1967,9 @@
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-namelist",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bread_shop",
@@ -1719,7 +1979,9 @@
     "author": "Mai-icy",
     "homepage": "https://github.com/Mai-icy/nonebot-plugin-bread-shop",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_PicMenu",
@@ -1738,7 +2000,9 @@
         "color": "#753dc6"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_horserace",
@@ -1748,7 +2012,9 @@
     "author": "shinianj",
     "homepage": "https://github.com/shinianj/nonebot_plugin_horserace",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_firexN",
@@ -1758,7 +2024,9 @@
     "author": "GC-ZF",
     "homepage": "https://github.com/GC-ZF/nonebot_plugin_firexN",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bfinfo",
@@ -1768,7 +2036,9 @@
     "author": "GC-ZF",
     "homepage": "https://github.com/GC-ZF/nonebot_plugin_bfinfo",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_osubot",
@@ -1787,7 +2057,9 @@
         "color": "#eb5d9b"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_acc_calculate",
@@ -1797,7 +2069,9 @@
     "author": "10-24",
     "homepage": "https://github.com/10-24/nonebot-plugin-acc-calculate",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_kawaii_robot",
@@ -1807,7 +2081,9 @@
     "author": "KarisAya",
     "homepage": "https://github.com/KarisAya/nonebot_plugin_kawaii_robot",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_addFriend",
@@ -1817,7 +2093,9 @@
     "author": "ziru-w",
     "homepage": "https://github.com/ziru-w/nonebot_plugin_addFriend",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_date_name",
@@ -1836,7 +2114,9 @@
         "color": "#e552ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_easyCommand",
@@ -1846,7 +2126,9 @@
     "author": "ziru-w",
     "homepage": "https://github.com/ziru-w/nonebot_plugin_easyCommand",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_report",
@@ -1865,7 +2147,9 @@
         "color": "#3985f7"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_hammer_nbnhhsh",
@@ -1884,7 +2168,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bawiki",
@@ -1903,7 +2189,9 @@
         "color": "#00d7fb"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_mcqq",
@@ -1922,7 +2210,9 @@
         "color": "#52eadf"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_covid_19_by_guild",
@@ -1941,7 +2231,9 @@
         "color": "#526fea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_wiki",
@@ -1951,7 +2243,9 @@
     "author": "ZombieFly",
     "homepage": "https://github.com/ZombieFly/nb2-wiki",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_groupmanager",
@@ -1970,7 +2264,9 @@
         "color": "#2b7be2"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_game_collection",
@@ -1980,7 +2276,9 @@
     "author": "KarisAya",
     "homepage": "https://github.com/KarisAya/nonebot_plugin_game_collection",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_drawer",
@@ -1990,7 +2288,9 @@
     "author": "CrazyBoyM",
     "homepage": "https://github.com/CrazyBoyM/nonebot-plugin-drawer",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_jrrp-n",
@@ -2009,7 +2309,9 @@
         "color": "#529fea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_moegoe",
@@ -2019,7 +2321,9 @@
     "author": "Yiyuiii",
     "homepage": "https://github.com/Yiyuiii/nonebot-plugin-moegoe",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_pixivbot",
@@ -2029,7 +2333,9 @@
     "author": "ssttkkl",
     "homepage": "https://github.com/ssttkkl/nonebot-plugin-pixivbot",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_workscore",
@@ -2044,7 +2350,9 @@
         "color": "#3898fc"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_treehelp",
@@ -2054,7 +2362,9 @@
     "author": "he0119",
     "homepage": "https://github.com/he0119/nonebot-plugin-treehelp",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "cqsat",
@@ -2077,7 +2387,9 @@
         "color": "#fca638"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_course",
@@ -2092,7 +2404,9 @@
         "color": "#6e9af2"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_dialectlist",
@@ -2102,7 +2416,9 @@
     "author": "X-Skirt-X",
     "homepage": "https://github.com/X-Skirt-X/nonebot_plugin_dialectlist",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_offline_mahjong_helper",
@@ -2125,7 +2441,9 @@
         "color": "#52a6ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_send",
@@ -2148,7 +2466,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_todo_nlp",
@@ -2167,7 +2487,9 @@
         "color": "#83b279"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_wordsnorote",
@@ -2182,7 +2504,9 @@
         "color": "#24a0d8"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_CyberSensoji",
@@ -2197,7 +2521,9 @@
         "color": "#52eadf"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_gspanel",
@@ -2212,7 +2538,9 @@
         "color": "#ffd49f"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_gsmaterial",
@@ -2227,7 +2555,9 @@
         "color": "#ffd49f"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_mystool",
@@ -2250,7 +2580,9 @@
         "color": "#faf3c4"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_warframe",
@@ -2269,7 +2601,9 @@
         "color": "#edea3f"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_mcqq_server",
@@ -2288,7 +2622,9 @@
         "color": "#52e5ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_RealESRGAN",
@@ -2303,7 +2639,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot-plugin-wolf-kill",
@@ -2313,7 +2651,9 @@
     "author": "AbCooly",
     "homepage": "https://github.com/AbCooly/nonebot_plugin_wolf_kill",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "iot",
@@ -2336,7 +2676,9 @@
         "color": "#4b86d7"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bwiki_navigator",
@@ -2355,7 +2697,9 @@
         "color": "#29a5e3"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bottle",
@@ -2370,7 +2714,9 @@
         "color": "#0893f2"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_tts_gal",
@@ -2385,7 +2731,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_alicdk_get",
@@ -2408,7 +2756,9 @@
         "color": "#595fd6"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_picstatus",
@@ -2427,7 +2777,9 @@
         "color": "#ff43c3"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_tuling",
@@ -2437,7 +2789,9 @@
     "author": "koking0",
     "homepage": "https://github.com/Matrix-King-Studio/nonebot_plugin_tuling",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_makemidi",
@@ -2452,7 +2806,9 @@
         "color": "#6515a8"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_ocr",
@@ -2467,7 +2823,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_listener",
@@ -2477,7 +2835,9 @@
     "author": "AbCooly",
     "homepage": "https://github.com/AbCooly/nonebot_plugin_listener",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_BiliRequestAll",
@@ -2496,7 +2856,9 @@
         "color": "#5eea52"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_russian_ban",
@@ -2506,7 +2868,9 @@
     "author": "KarisAya",
     "homepage": "https://github.com/KarisAya/nonebot_plugin_russian_ban",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_ygo_trade",
@@ -2529,7 +2893,9 @@
         "color": "#eada52"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_novelai",
@@ -2552,7 +2918,9 @@
         "color": "#ffc646"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "ayaka_games",
@@ -2571,7 +2939,9 @@
         "color": "#e36306"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "ayaka_timezone",
@@ -2594,7 +2964,9 @@
         "color": "#e36306"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "ayaka_prevent_bad_words",
@@ -2617,7 +2989,9 @@
         "color": "#e36306"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_savor",
@@ -2627,7 +3001,9 @@
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-savor",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_kfcrazy",
@@ -2650,7 +3026,9 @@
         "color": "#cb5c5e"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot-plugin-random",
@@ -2660,7 +3038,9 @@
     "author": "jcjrobert",
     "homepage": "https://github.com/jcjrobert/nonebot-plugin-random",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_sqlalchemy",
@@ -2675,7 +3055,9 @@
         "color": "#ad1717"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_blacklist",
@@ -2685,7 +3067,9 @@
     "author": "tkgs0",
     "homepage": "https://github.com/tkgs0/nonebot-plugin-blacklist",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_antiinsult",
@@ -2704,7 +3088,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_oddtext",
@@ -2719,7 +3105,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_mahjong_scoreboard",
@@ -2738,7 +3126,9 @@
         "color": "#4684d3"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_cartoon",
@@ -2748,7 +3138,9 @@
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-cartoon",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_mahjong_utils",
@@ -2763,7 +3155,9 @@
         "color": "#edad34"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_animeres",
@@ -2782,7 +3176,9 @@
         "color": "#ec5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot-plugin-person",
@@ -2792,7 +3188,9 @@
     "author": "jcjrobert",
     "homepage": "https://github.com/jcjrobert/nonebot-plugin-person",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_apex_api_query",
@@ -2802,7 +3200,9 @@
     "author": "H-xiaoH",
     "homepage": "https://github.com/H-xiaoH/nonebot-plugin-apex-api-query",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_reborn",
@@ -2812,7 +3212,9 @@
     "author": "Aziteee",
     "homepage": "https://github.com/Aziteee/nonebot_plugin_reborn",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_searchBiliInfo",
@@ -2827,7 +3229,9 @@
         "color": "#e55d80"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_colab_novelai",
@@ -2846,7 +3250,9 @@
         "color": "#eacd52"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_sky",
@@ -2865,7 +3271,9 @@
         "color": "#2079c1"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_zyk_novelai",
@@ -2888,7 +3296,9 @@
         "color": "#3e10e9"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_repeep",
@@ -2903,7 +3313,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_gscode",
@@ -2918,7 +3330,9 @@
         "color": "#ffd49f"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_note",
@@ -2928,7 +3342,9 @@
     "author": "Passerby-D",
     "homepage": "https://github.com/Passerby-D/nonebot_plugin_note",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot-plugin-bilibili-image",
@@ -2938,7 +3354,9 @@
     "author": "jcjrobert",
     "homepage": "https://github.com/jcjrobert/nonebot-plugin-bilibili-image",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_trace_moe",
@@ -2961,7 +3379,9 @@
         "color": "#00a0ff"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_zyk_music",
@@ -2984,7 +3404,9 @@
         "color": "#0d92c1"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_chatgpt",
@@ -2994,7 +3416,9 @@
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-chatgpt",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_majsoul",
@@ -3009,7 +3433,9 @@
         "color": "#e54141"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_remove_bg",
@@ -3032,7 +3458,9 @@
         "color": "#7a7a7a"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_broadcast",
@@ -3042,7 +3470,9 @@
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-broadcast",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_exchangerate",
@@ -3052,7 +3482,9 @@
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-exchangerate",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_access_control",
@@ -3067,7 +3499,9 @@
         "color": "#0e9763"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_colormind",
@@ -3090,7 +3524,9 @@
         "color": "#fbff03"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_abstain_diary",
@@ -3109,7 +3545,9 @@
         "color": "#ffffff"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_backup",
@@ -3119,7 +3557,9 @@
     "author": "Yuelioi",
     "homepage": "https://github.com/Yuelioi/nonebot-plugin-backup",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_kuma_san",
@@ -3129,7 +3569,9 @@
     "author": "ReiiNoki",
     "homepage": "https://github.com/ReiiNoki/nonebot-plugin-kuma-san",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_gpt3",
@@ -3139,7 +3581,9 @@
     "author": "chrisyy2003",
     "homepage": "https://github.com/chrisyy2003/nonebot-plugin-gpt3",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_ikun_evolution",
@@ -3149,7 +3593,9 @@
     "author": "RShock",
     "homepage": "https://github.com/RShock/nonebot_plugin_ikun_evolution",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_random_ban",
@@ -3172,7 +3618,9 @@
         "color": "#ffffff"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_antirecall",
@@ -3182,7 +3630,9 @@
     "author": "Jerry080801",
     "homepage": "https://github.com/Jerry080801/nonebot-plugin-antirecall/",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_mc_server_status",
@@ -3197,7 +3647,9 @@
         "color": "#a438cd"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_no_repeat",
@@ -3207,7 +3659,9 @@
     "author": "bridgeL",
     "homepage": "https://github.com/bridgeL/nonebot-plugin-no-repeat",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bfchat",
@@ -3217,7 +3671,9 @@
     "author": "050644zf",
     "homepage": "https://github.com/050644zf/nonebot-plugin-bfchat",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_summon",
@@ -3227,7 +3683,9 @@
     "author": "zhulinyv",
     "homepage": "https://github.com/zhulinyv/nonebot_plugin_summon",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_ping",
@@ -3237,7 +3695,9 @@
     "author": "zhulinyv",
     "homepage": "https://github.com/zhulinyv/nonebot_plugin_ping",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_face2cartoonpic",
@@ -3256,7 +3716,9 @@
         "color": "#3785f1"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_servicestate",
@@ -3279,7 +3741,9 @@
         "color": "#52cfea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_animalVoice",
@@ -3302,7 +3766,9 @@
         "color": "#79e556"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_ayaka_scan_cmd",
@@ -3321,7 +3787,9 @@
         "color": "#e36306"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_HttpCat",
@@ -3340,7 +3808,9 @@
         "color": "#dc1f1f"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_revoke",
@@ -3359,7 +3829,9 @@
         "color": "#52ea95"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_setu_customization",
@@ -3374,7 +3846,9 @@
         "color": "#e9ea52"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_l4d2_server",
@@ -3389,7 +3863,9 @@
         "color": "#05ff00"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_learning_chat",
@@ -3404,7 +3880,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_couplets",
@@ -3414,7 +3892,9 @@
     "author": "CMHopeSunshine",
     "homepage": "https://github.com/CMHopeSunshine/nonebot-plugin-couplets",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_Imagelabels",
@@ -3433,7 +3913,9 @@
         "color": "#e981dc"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_cloudsignx",
@@ -3452,7 +3934,9 @@
         "color": "#3be42b"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_imgexploration",
@@ -3471,7 +3955,9 @@
         "color": "#453df1"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_hypixel",
@@ -3494,7 +3980,9 @@
         "color": "#d5ea52"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_nowtime",
@@ -3513,7 +4001,9 @@
         "color": "#c84fdb"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_cave",
@@ -3523,7 +4013,9 @@
     "author": "hmzz804",
     "homepage": "https://github.com/hmzz804/nonebot_plugin_cave",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_xingzuo",
@@ -3533,7 +4025,9 @@
     "author": "mengxinyuan638",
     "homepage": "https://github.com/mengxinyuan638/xingzuo_luck",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_BingImage",
@@ -3556,7 +4050,9 @@
         "color": "#eddf13"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_soup",
@@ -3579,7 +4075,9 @@
         "color": "#604a55"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_yuanshen_notice",
@@ -3598,7 +4096,9 @@
         "color": "#00ef04"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bilibili_yuan",
@@ -3613,7 +4113,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_easy_translate",
@@ -3628,7 +4130,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_orangedice",
@@ -3647,7 +4151,9 @@
         "color": "#a2bc0c"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_record",
@@ -3670,7 +4176,9 @@
         "color": "#18e13c"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_nya_cook_menu",
@@ -3685,7 +4193,9 @@
         "color": "#e65de5"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "criminal_dance",
@@ -3704,7 +4214,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_picmcstat",
@@ -3719,7 +4231,9 @@
         "color": "#7fbf55"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_wantwords",
@@ -3729,7 +4243,9 @@
     "author": "Limnium",
     "homepage": "https://github.com/limnium/nonebot_plugin_wantwords",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_pvz",
@@ -3739,7 +4255,9 @@
     "author": "longchengguxiao",
     "homepage": "https://github.com/longchengguxiao/nonebot_plugin_pvz",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_molar_mass",
@@ -3749,7 +4267,9 @@
     "author": "kifuan",
     "homepage": "https://github.com/kifuan/nonebot-plugin-molar-mass",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_report_manager",
@@ -3764,7 +4284,9 @@
         "color": "#a95454"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "qinglan_bot",
@@ -3779,7 +4301,9 @@
         "color": "#4ef0ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_easy_group_manager",
@@ -3798,7 +4322,9 @@
         "color": "#b21e82"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_group_link_guild",
@@ -3821,7 +4347,9 @@
         "color": "#50c545"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_alconna",
@@ -3844,7 +4372,9 @@
         "color": "#5452ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot-plugin-mcport",
@@ -3854,7 +4384,9 @@
     "author": "Proviasw",
     "homepage": "https://github.com/Proviasw/nonebot-plugin-mcport",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_xdu_support",
@@ -3869,7 +4401,9 @@
         "color": "#52b5ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_zyk_lightNVL",
@@ -3884,7 +4418,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_dog",
@@ -3899,7 +4435,9 @@
         "color": "#c61b1b"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_uuid",
@@ -3914,7 +4452,9 @@
         "color": "#39c5bb"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_naturel_gpt",
@@ -3933,7 +4473,9 @@
         "color": "#cc66ff"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_impact",
@@ -3943,7 +4485,9 @@
     "author": "Special-Week",
     "homepage": "https://github.com/Special-Week/nonebot_plugin_impact",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_mcping",
@@ -3962,7 +4506,9 @@
         "color": "#d7cd47"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_b23",
@@ -3981,7 +4527,9 @@
         "color": "#00aeec"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_autoreply",
@@ -3996,7 +4544,9 @@
         "color": "#ea881e"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_setu_collection",
@@ -4015,7 +4565,9 @@
         "color": "#7ab2e1"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_groupmate_waifu",
@@ -4030,7 +4582,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_jrrp2",
@@ -4053,7 +4607,9 @@
         "color": "#52bbea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_dicky_pk",
@@ -4072,7 +4628,9 @@
         "color": "#ffd500"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_eventmonitor",
@@ -4087,7 +4645,9 @@
         "color": "#2885c0"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_whateat_pic",
@@ -4106,7 +4666,9 @@
         "color": "#52ea8b"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_matcher_block",
@@ -4121,7 +4683,9 @@
         "color": "#525fea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_acm_reminder",
@@ -4136,7 +4700,9 @@
         "color": "#3b8b74"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_maimai",
@@ -4151,7 +4717,9 @@
         "color": "#5262ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_all4one",
@@ -4170,7 +4738,9 @@
         "color": "#34a9e5"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_gsabyss",
@@ -4185,7 +4755,9 @@
         "color": "#ffd49f"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_arktools",
@@ -4208,7 +4780,9 @@
         "color": "#db905e"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "gartic_room",
@@ -4223,7 +4797,9 @@
         "color": "#e36306"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot-plugin-resolver",
@@ -4246,7 +4822,9 @@
         "color": "#1b9cfc"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bing_chat",
@@ -4256,7 +4834,9 @@
     "author": "Harry-Jing",
     "homepage": "https://github.com/Harry-Jing/nonebot-plugin-bing-chat",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_saa",
@@ -4266,7 +4846,9 @@
     "author": "felinae98",
     "homepage": "https://github.com/felinae98/nonebot-plugin-send-anything-anywhere",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_random_stereotypes",
@@ -4281,7 +4863,9 @@
         "color": "#6a6060"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_xiuxian_2",
@@ -4300,7 +4884,9 @@
         "color": "#4e9f9f"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_h2e",
@@ -4323,7 +4909,9 @@
         "color": "#99da4a"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_oachat",
@@ -4346,7 +4934,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_warframe_mode",
@@ -4365,7 +4955,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bf1_groptools",
@@ -4380,7 +4972,9 @@
         "color": "#52eae4"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_afd",
@@ -4399,7 +4993,9 @@
         "color": "#52eae9"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_eventdone",
@@ -4414,7 +5010,9 @@
         "color": "#ba2d2d"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_ncm_saying",
@@ -4424,7 +5022,9 @@
     "author": "techotaku39",
     "homepage": "https://github.com/techotaku39/nonebot-plugin-ncm-saying",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "TeenStudy",
@@ -4447,7 +5047,9 @@
         "color": "#5295ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_auto_teenstudy",
@@ -4466,7 +5068,9 @@
         "color": "#108ef7"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_60s",
@@ -4476,7 +5080,9 @@
     "author": "techotaku39",
     "homepage": "https://github.com/techotaku39/nonebot-plugin-60s",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_AutoRepeater",
@@ -4486,7 +5092,9 @@
     "author": "DMCSWCG",
     "homepage": "https://github.com/DMCSWCG/nonebot-plugin-AutoRepeater",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_ai_timetable",
@@ -4496,7 +5104,9 @@
     "author": "maoxig",
     "homepage": "https://github.com/maoxig/nonebot-plugin-ai-timetable",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_sanae",
@@ -4506,7 +5116,9 @@
     "author": "Hoshinonyaruko",
     "homepage": "https://github.com/Hoshinonyaruko/nonebot-plugin-sanae",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_arkrecord",
@@ -4529,7 +5141,9 @@
         "color": "#c39191"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_chatgpt_turbo",
@@ -4548,7 +5162,9 @@
         "color": "#52ea92"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_chatgpt_on_qq",
@@ -4558,7 +5174,9 @@
     "author": "Suxmx",
     "homepage": "https://github.com/Suxmx/nonebot_plugin_chatgpt_on_qq",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_tuan_chatgpt",
@@ -4577,7 +5195,9 @@
         "color": "#ff9d97"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_chatpdf",
@@ -4596,7 +5216,9 @@
         "color": "#6c7abd"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_rimofun",
@@ -4615,7 +5237,9 @@
         "color": "#ebbcc6"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_customemote",
@@ -4625,7 +5249,9 @@
     "author": "DMCSWCG",
     "homepage": "https://github.com/DMCSWCG/nonebot-plugin-customemote/",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_justsix",
@@ -4635,7 +5261,9 @@
     "author": "iidamie",
     "homepage": "https://github.com/iidamie/nonebot_plugin_justsix",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_simulator_xiuxian",
@@ -4654,7 +5282,9 @@
         "color": "#1d1b1c"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bracket",
@@ -4664,7 +5294,9 @@
     "author": "MeetWq",
     "homepage": "https://github.com/noneplugin/nonebot-plugin-bracket",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_gshisbanner",
@@ -4683,7 +5315,9 @@
         "color": "#52ea56"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_unoconv",
@@ -4702,7 +5336,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_apexranklookup",
@@ -4712,7 +5348,9 @@
     "author": "Windylh",
     "homepage": "https://github.com/Windylh/nonebot_plugin_apexranklookup",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_randomnana",
@@ -4722,7 +5360,9 @@
     "author": "NanakoOfficial",
     "homepage": "https://github.com/NanakoOfficial/nonebot_plugin_randomnana",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_quote",
@@ -4741,7 +5381,9 @@
         "color": "#003f88"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_memes_api",
@@ -4751,7 +5393,9 @@
     "author": "MeetWq",
     "homepage": "https://github.com/noneplugin/nonebot-plugin-memes-api",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_rrc",
@@ -4770,7 +5414,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_hotsearch",
@@ -4780,7 +5426,9 @@
     "author": "Astolfocat",
     "homepage": "https://github.com/Astolfocat/nonebot_plugin_hotsearch",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_ai_interviewer",
@@ -4799,7 +5447,9 @@
         "color": "#af286f"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_chatglm",
@@ -4818,7 +5468,9 @@
         "color": "#af286f"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_chatglm6b",
@@ -4837,7 +5489,9 @@
         "color": "#8e52ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_nya_music",
@@ -4856,7 +5510,9 @@
         "color": "#dea833"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_helloworld",
@@ -4871,7 +5527,9 @@
         "color": "#6c58f6"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_overbracket",
@@ -4890,7 +5548,9 @@
         "color": "#e15149"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_miao",
@@ -4900,7 +5560,9 @@
     "author": "CMHopeSunshine",
     "homepage": "https://github.com/CMHopeSunshine/nonebot-plugin-miao",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_questionmark",
@@ -4910,7 +5572,9 @@
     "author": "NumberSir",
     "homepage": "https://github.com/NumberSir/nonebot-plugin-questionmark",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_genshin_cos",
@@ -4933,7 +5597,9 @@
         "color": "#eb1dd3"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_chatgpt_plus",
@@ -4952,7 +5618,9 @@
         "color": "#2ecf57"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_sayoroll",
@@ -4962,7 +5630,9 @@
     "author": "mas-alone",
     "homepage": "https://github.com/mas-alone/nonebot-plugin-sayoroll",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot-plugin-gw2",
@@ -4977,7 +5647,9 @@
         "color": "#52ea5a"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_today_waifu",
@@ -4996,7 +5668,9 @@
         "color": "#9beff6"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_sleep",
@@ -5006,7 +5680,9 @@
     "author": "mas-alone",
     "homepage": "https://github.com/mas-alone/nonebot-plugin-sleep",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_api_paddle",
@@ -5016,7 +5692,9 @@
     "author": "canxin121",
     "homepage": "https://github.com/canxin121/nonebot_api_paddleocr",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_chatppt",
@@ -5031,7 +5709,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_steam_game_status",
@@ -5046,7 +5726,9 @@
         "color": "#6690a5"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bilichat",
@@ -5069,7 +5751,9 @@
         "color": "#75ffc0"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "GenshinUID",
@@ -5092,7 +5776,9 @@
         "color": "#7937a9"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_blive_danmaku",
@@ -5107,7 +5793,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_clock",
@@ -5122,7 +5810,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_SDGPT",
@@ -5145,7 +5835,9 @@
         "color": "#f0dc4e"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_fuckyou",
@@ -5155,7 +5847,9 @@
     "author": "lgc2333",
     "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-fuckyou",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_pokemonfusion",
@@ -5165,7 +5859,9 @@
     "author": "IllusiveBull",
     "homepage": "https://github.com/IllusiveBull/nonebot_plugin_pokemonfusion",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "tatarubot2",
@@ -5180,7 +5876,9 @@
         "color": "#5282ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_talk_with_chatgpt",
@@ -5195,7 +5893,9 @@
         "color": "#1a834e"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_osuverify",
@@ -5210,7 +5910,9 @@
         "color": "#eb5d9b"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_bilifan",
@@ -5225,7 +5927,9 @@
         "color": "#ec15c6"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_akinator",
@@ -5244,7 +5948,9 @@
         "color": "#6599fe"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_rename",
@@ -5263,7 +5969,9 @@
         "color": "#466bed"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_appinsights",
@@ -5273,7 +5981,9 @@
     "author": "XZhouQD",
     "homepage": "https://github.com/XZhouQD/nonebot-plugin-appinsights",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_mixin",
@@ -5292,7 +6002,9 @@
         "color": "#529fea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_brainfuck",
@@ -5311,7 +6023,9 @@
         "color": "#529fea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot-plugin-coderun",
@@ -5321,7 +6035,9 @@
     "author": "Yincmewy",
     "homepage": "https://github.com/Yincmewy/nonebot_plugin_coderun",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_abot_place",
@@ -5340,7 +6056,9 @@
         "color": "#ea6dda"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_megumin",
@@ -5359,7 +6077,9 @@
         "color": "#f94b1c"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_manga_translator",
@@ -5382,7 +6102,9 @@
         "color": "#c452ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_watermarker",
@@ -5401,7 +6123,9 @@
         "color": "#ef258f"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_starrail_calendar",
@@ -5411,7 +6135,9 @@
     "author": "nicklly",
     "homepage": "https://github.com/nicklly/nonebot_plugin_StarRail_calendar",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_wordle_help",
@@ -5421,7 +6147,9 @@
     "author": "Special-Week",
     "homepage": "https://github.com/Special-Week/Hinata-Bot/tree/main/src/plugins/wordle_help",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot-plugin-csgo-case-simulator",
@@ -5440,7 +6168,9 @@
         "color": "#ff4781"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_grouplock",
@@ -5455,7 +6185,9 @@
         "color": "#52b5ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_callapi",
@@ -5465,7 +6197,9 @@
     "author": "lgc2333",
     "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-callapi",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_penguin",
@@ -5475,7 +6209,9 @@
     "author": "AzideCupric",
     "homepage": "https://github.com/AzideCupric/nonebot-plugin-penguin",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_spark_gpt",
@@ -5498,7 +6234,9 @@
         "color": "#52aeea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_logpile",
@@ -5508,7 +6246,9 @@
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-logpile",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_segbuilder",
@@ -5531,7 +6271,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_arkgacha",
@@ -5554,7 +6296,9 @@
         "color": "#c852ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_msgbuf",
@@ -5569,7 +6313,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_og",
@@ -5579,7 +6325,9 @@
     "author": "mute23-code",
     "homepage": "https://github.com/mute23-code/nonebot_plugin_og",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_hoshino_sign",
@@ -5598,7 +6346,9 @@
         "color": "#008000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_multincm",
@@ -5617,7 +6367,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_smallapi",
@@ -5636,7 +6388,9 @@
         "color": "#52ea7d"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_p5generator",
@@ -5646,7 +6400,9 @@
     "author": "xi-yue-233",
     "homepage": "https://github.com/xi-yue-233/nonebot-plugin-p5generator",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_sd_webui",
@@ -5661,7 +6417,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_session",
@@ -5671,7 +6429,9 @@
     "author": "MeetWq",
     "homepage": "https://github.com/noneplugin/nonebot-plugin-session",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_pluginupdatecheck",
@@ -5686,7 +6446,9 @@
         "color": "#e42828"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_stockhelper",
@@ -5701,7 +6463,9 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_githubcard",
@@ -5720,7 +6484,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_lua",
@@ -5730,7 +6496,9 @@
     "author": "synodriver",
     "homepage": "https://github.com/synodriver/nonebot_plugin_lua",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_cube",
@@ -5749,7 +6517,9 @@
         "color": "#c2ea52"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_homo_mathematician",
@@ -5759,7 +6529,9 @@
     "author": "Special-Week",
     "homepage": "https://github.com/Special-Week/Hinata-Bot/tree/main/src/plugins/homo_mathematician",
     "tags": [],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_puzzle",
@@ -5782,7 +6554,9 @@
         "color": "#52eadd"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_herocard",
@@ -5805,7 +6579,9 @@
         "color": "#eea1b1"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_nagabus",
@@ -5820,7 +6596,9 @@
         "color": "#b52ee1"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_random_draw",
@@ -5839,7 +6617,9 @@
         "color": "#000000"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_stable_diffusion_diao",
@@ -5858,7 +6638,9 @@
         "color": "#eaaf52"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_al",
@@ -5873,7 +6655,9 @@
         "color": "#ea52e5"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_escape_url",
@@ -5892,7 +6676,9 @@
         "color": "#5293ea"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_twitter",
@@ -5907,7 +6693,9 @@
         "color": "#29a8dc"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_pcrjjc",
@@ -5926,7 +6714,9 @@
         "color": "#778a1e"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   },
   {
     "module_name": "nonebot_plugin_audiocraft",
@@ -5941,6 +6731,8 @@
         "color": "#ea5252"
       }
     ],
-    "is_official": false
+    "is_official": false,
+    "type": null,
+    "supported_adapters": null
   }
 ]
