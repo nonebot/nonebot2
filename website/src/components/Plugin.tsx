@@ -48,7 +48,7 @@ export default function Plugin(): JSX.Element {
     setModalOpen(false);
     const queries: { key: string; value: string }[] = [
       { key: "template", value: "plugin_publish.yml" },
-      { key: "title", value: form.name && `Plugin: ${form.name}` },
+      { key: "title", value: form.projectLink && `Plugin: ${form.projectLink}` },
       { key: "labels", value: "Plugin" },
       { key: "name", value: form.name },
       { key: "description", value: form.desc },
@@ -138,25 +138,6 @@ export default function Plugin(): JSX.Element {
           <form onSubmit={onSubmit}>
             <div className="grid grid-cols-1 gap-4 p-4">
               <label className="flex flex-wrap">
-                <span className="mr-2">插件名称:</span>
-                <input
-                  type="text"
-                  name="name"
-                  maxLength={20}
-                  className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
-                  onChange={onChange}
-                />
-              </label>
-              <label className="flex flex-wrap">
-                <span className="mr-2">插件介绍:</span>
-                <input
-                  type="text"
-                  name="desc"
-                  className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
-                  onChange={onChange}
-                />
-              </label>
-              <label className="flex flex-wrap">
                 <span className="mr-2">PyPI 项目名:</span>
                 <input
                   type="text"
@@ -170,15 +151,6 @@ export default function Plugin(): JSX.Element {
                 <input
                   type="text"
                   name="moduleName"
-                  className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
-                  onChange={onChange}
-                />
-              </label>
-              <label className="flex flex-wrap">
-                <span className="mr-2">仓库/主页:</span>
-                <input
-                  type="text"
-                  name="homepage"
                   className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
                   onChange={onChange}
                 />
@@ -211,21 +183,7 @@ export default function Plugin(): JSX.Element {
               disableAlpha={true}
               onChangeComplete={onChangeColor}
             />
-            <div className="flex flex-wrap mt-2 items-center">
-              <span className="mr-2">Type:</span>
-              <button
-                className="px-2 h-9 min-w-[64px] rounded text-hero hover:bg-hero hover:bg-opacity-[.08]"
-                onClick={() => insertTagType("a:")}
-              >
-                Adapter
-              </button>
-              <button
-                className="px-2 h-9 min-w-[64px] rounded text-hero hover:bg-hero hover:bg-opacity-[.08]"
-                onClick={() => insertTagType("t:")}
-              >
-                Topic
-              </button>
-            </div>
+
             <div className="flex mt-2">
               <TagComponent label={label} color={color} />
               <button
