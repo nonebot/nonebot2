@@ -53,11 +53,8 @@ export default function Plugin(): JSX.Element {
         value: form.projectLink && `Plugin: ${form.projectLink}`,
       },
       { key: "labels", value: "Plugin" },
-      { key: "name", value: form.name },
-      { key: "description", value: form.desc },
       { key: "pypi", value: form.projectLink },
       { key: "module", value: form.moduleName },
-      { key: "homepage", value: form.homepage },
       { key: "tags", value: JSON.stringify(tags) },
     ];
     const urlQueries = queries
