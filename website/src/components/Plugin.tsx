@@ -29,12 +29,9 @@ export default function Plugin(): JSX.Element {
   const currentPlugins = filteredPlugins.slice(startIndex, endIndex + 1);
 
   const [form, setForm] = useState<{
-    name: string;
-    desc: string;
     projectLink: string;
     moduleName: string;
-    homepage: string;
-  }>({ name: "", desc: "", projectLink: "", moduleName: "", homepage: "" });
+  }>({ projectLink: "", moduleName: "" });
 
   const ref = useRef<HTMLInputElement>(null);
   const [tags, setTags] = useState<Tag[]>([]);
