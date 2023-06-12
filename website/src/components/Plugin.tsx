@@ -48,7 +48,10 @@ export default function Plugin(): JSX.Element {
     setModalOpen(false);
     const queries: { key: string; value: string }[] = [
       { key: "template", value: "plugin_publish.yml" },
-      { key: "title", value: form.projectLink && `Plugin: ${form.projectLink}` },
+      {
+        key: "title",
+        value: form.projectLink && `Plugin: ${form.projectLink}`,
+      },
       { key: "labels", value: "Plugin" },
       { key: "name", value: form.name },
       { key: "description", value: form.desc },
