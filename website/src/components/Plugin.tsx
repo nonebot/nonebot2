@@ -92,10 +92,6 @@ export default function Plugin(): JSX.Element {
   const delTag = (index: number) => {
     setTags(tags.filter((_, i) => i !== index));
   };
-  const insertTagType = (text: string) => {
-    setLabel(text + label);
-    ref.current.value = text + label;
-  };
 
   return (
     <>
