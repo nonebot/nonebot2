@@ -31,7 +31,7 @@ NoneBot 是一个插件化的框架，可以通过加载插件来扩展功能。
 
 我们需要在插件顶层模块 `example/__init__.py` 中添加插件元数据，如下所示：
 
-```python {1,5-11} title=example/__init__.py
+```python {1,5-12} title=example/__init__.py
 from nonebot.plugin import PluginMetadata
 
 from .config import Config
@@ -40,12 +40,13 @@ __plugin_meta__ = PluginMetadata(
     name="示例插件",
     description="这是一个示例插件",
     usage="没什么用",
+    type="application",
     config=Config,
     extra={},
 )
 ```
 
-我们可以看到，插件元数据 `PluginMetadata` 有三个基本属性：插件名称、插件描述、插件使用方法。除此之外，还有几个可选的属性：
+我们可以看到，插件元数据 `PluginMetadata` 有三个基本属性：插件名称、插件描述、插件使用方法。除此之外，还有几个可选的属性（具体填写见[发布插件](../developer/plugin-publishing.mdx#填写插件元数据)章节）：
 
 - `type`：插件类别，发布插件必填。当前有效类别有：`library`（为其他插件编写提供功能），`application`（向机器人用户提供功能）；
 - `homepage`：插件项目主页，发布插件必填；
