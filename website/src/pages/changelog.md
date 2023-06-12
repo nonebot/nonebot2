@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 删除商店插件发布多余模块 [@forchannot](https://github.com/forchannot) ([#2095](https://github.com/nonebot/nonebot2/pull/2095))
 - Docs: 微调插件元数据的部分描述 [@NCBM](https://github.com/NCBM) ([#2096](https://github.com/nonebot/nonebot2/pull/2096))
 - Docs: 完成发布插件教程 [@NCBM](https://github.com/NCBM) ([#2078](https://github.com/nonebot/nonebot2/pull/2078))
 - Docs: 更新插件元数据的相关描述 [@NCBM](https://github.com/NCBM) ([#2087](https://github.com/nonebot/nonebot2/pull/2087))
