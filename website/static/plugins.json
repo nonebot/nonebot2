@@ -6750,8 +6750,6 @@
     ],
     "is_official": false,
     "type": "application",
-    "supported_adapters": [
-      "nonebot.adapters.onebot.v11"
-    ]
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
