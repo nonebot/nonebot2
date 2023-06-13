@@ -6751,5 +6751,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_warthunder_player_check",
+    "project_link": "nonebot-plugin-warthunder-player-check",
+    "name": "战雷查水表",
+    "desc": "搜索warthunder社区查询玩家履历",
+    "author": "0Neptune0",
+    "homepage": "https://github.com/0Neptune0/nonebot-plugin-warthunder-player-check",
+    "tags": [
+      {
+        "label": "Wathunder",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
