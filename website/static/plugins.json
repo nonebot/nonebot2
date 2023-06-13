@@ -6734,5 +6734,24 @@
     "is_official": false,
     "type": null,
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_bili_push",
+    "project_link": "nonebot-plugin-bili-push",
+    "name": "bili_push",
+    "desc": "推送b站动态",
+    "author": "SuperGuGuGu",
+    "homepage": "https://github.com/SuperGuGuGu/nonebot_plugin_bili_push",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#de5d92"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": [
+      "nonebot.adapters.onebot.v11"
+    ]
   }
 ]
