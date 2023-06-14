@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 战雷查水表 [@noneflow](https://github.com/noneflow) ([#2103](https://github.com/nonebot/nonebot2/pull/2103))
 - Plugin: bili_push [@noneflow](https://github.com/noneflow) ([#2101](https://github.com/nonebot/nonebot2/pull/2101))
 - Plugin: AI 作曲 [@noneflow](https://github.com/noneflow) ([#2093](https://github.com/nonebot/nonebot2/pull/2093))
 - Plugin: pcrjjc [@noneflow](https://github.com/noneflow) ([#2091](https://github.com/nonebot/nonebot2/pull/2091))
