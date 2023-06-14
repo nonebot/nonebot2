@@ -253,7 +253,7 @@ class Adapter(BaseAdapter):
 <details>
 <summary>Websocket 客户端</summary>
 
-`Websocket 客户端`需要一个`ForwardDriver`类型的驱动器，例如`httpx`和`websockets`
+`Websocket 客户端`需要一个支持 WebSocket 的`ForwardDriver`类型的驱动器，例如`aiohttp`和`websockets`
 
 ```python title="adapter.py"
 import asyncio
@@ -591,5 +591,5 @@ class Message(BaseMessage[MessageSegment]):
 
 然后根据您的平台具体的消息类型，来实现各种`MessageSegment`消息段，具体可以参考以下适配器：
 
-- [OneBot](https://github.com/nonebot/adapter-onebot/blob/master/nonebot/adapters/onebot/v11/message.py#LL76-L254)
+- [OneBot](https://github.com/nonebot/adapter-onebot/blob/master/nonebot/adapters/onebot/v11/message.py#L77-L261)
 - [QQGuild](https://github.com/nonebot/adapter-qqguild/blob/master/nonebot/adapters/qqguild/message.py#L22-L150)
