@@ -3,8 +3,8 @@ from nonebug import App
 
 from nonebot.permission import User
 from nonebot.matcher import Matcher, matchers
+from utils import FakeMessage, make_fake_event
 from nonebot.message import check_and_run_matcher
-from utils import make_fake_event, make_fake_message
 
 
 @pytest.mark.asyncio
@@ -18,9 +18,9 @@ async def test_matcher(app: App):
         test_overload,
     )
 
-    message = make_fake_message()("text")
+    message = FakeMessage("text")
     event = make_fake_event(_message=message)()
-    message_next = make_fake_message()("text_next")
+    message_next = FakeMessage("text_next")
     event_next = make_fake_event(_message=message_next)()
 
     assert len(test_handle.handlers) == 1

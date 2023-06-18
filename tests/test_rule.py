@@ -6,8 +6,8 @@ import pytest
 from nonebug import App
 
 from nonebot.typing import T_State
-from utils import make_fake_event, make_fake_message
 from nonebot.exception import ParserExit, SkippedException
+from utils import FakeMessage, FakeMessageSegment, make_fake_event
 from nonebot.consts import (
     CMD_KEY,
     PREFIX_KEY,
@@ -85,24 +85,21 @@ async def test_rule(app: App):
 async def test_trie(app: App):
     TrieRule.add_prefix("/fake-prefix", TRIE_VALUE("/", ("fake-prefix",)))
 
-    Message = make_fake_message()
-    MessageSegment = Message.get_segment_class()
-
     async with app.test_api() as ctx:
         bot = ctx.create_bot()
-        message = Message("/fake-prefix some args")
+        message = FakeMessage("/fake-prefix some args")
         event = make_fake_event(_message=message)()
         state = {}
         TrieRule.get_value(bot, event, state)
         assert state[PREFIX_KEY] == CMD_RESULT(
             command=("fake-prefix",),
             raw_command="/fake-prefix",
-            command_arg=Message("some args"),
+            command_arg=FakeMessage("some args"),
             command_start="/",
             command_whitespace=" ",
         )
 
-        message = MessageSegment.text("/fake-prefix ") + MessageSegment.image(
+        message = FakeMessageSegment.text("/fake-prefix ") + FakeMessageSegment.image(
             "fake url"
         )
         event = make_fake_event(_message=message)()
@@ -111,7 +108,7 @@ async def test_trie(app: App):
         assert state[PREFIX_KEY] == CMD_RESULT(
             command=("fake-prefix",),
             raw_command="/fake-prefix",
-            command_arg=Message(MessageSegment.image("fake url")),
+            command_arg=FakeMessage(FakeMessageSegment.image("fake url")),
             command_start="/",
             command_whitespace=" ",
         )
@@ -152,7 +149,7 @@ async def test_startswith(
     assert checker.msg == msg
     assert checker.ignorecase == ignorecase
 
-    message = text if text is None else make_fake_message()(text)
+    message = text if text is None else FakeMessage(text)
     event = make_fake_event(_type=type, _message=message)()
     for prefix in msg:
         state = {STARTSWITH_KEY: prefix}
@@ -192,7 +189,7 @@ async def test_endswith(
     assert checker.msg == msg
     assert checker.ignorecase == ignorecase
 
-    message = text if text is None else make_fake_message()(text)
+    message = text if text is None else FakeMessage(text)
     event = make_fake_event(_type=type, _message=message)()
     for suffix in msg:
         state = {ENDSWITH_KEY: suffix}
@@ -232,7 +229,7 @@ async def test_fullmatch(
     assert checker.msg == msg
     assert checker.ignorecase == ignorecase
 
-    message = text if text is None else make_fake_message()(text)
+    message = text if text is None else FakeMessage(text)
     event = make_fake_event(_type=type, _message=message)()
     for full in msg:
         state = {FULLMATCH_KEY: full}
@@ -264,7 +261,7 @@ async def test_keyword(
     assert isinstance(checker, KeywordsRule)
     assert checker.keywords == kws
 
-    message = text if text is None else make_fake_message()(text)
+    message = text if text is None else FakeMessage(text)
     event = make_fake_event(_type=type, _message=message)()
     for kw in kws:
         state = {KEYWORD_KEY: kw}
@@ -310,7 +307,7 @@ async def test_command(
     assert isinstance(checker, CommandRule)
     assert checker.cmds == cmds
 
-    arg = arg_text if arg_text is None else make_fake_message()(arg_text)
+    arg = arg_text if arg_text is None else FakeMessage(arg_text)
     state = {
         PREFIX_KEY: {CMD_KEY: cmd, CMD_WHITESPACE_KEY: whitespace, CMD_ARG_KEY: arg}
     }
@@ -321,7 +318,7 @@ async def test_command(
 async def test_shell_command():
     state: T_State
     CMD = ("test",)
-    Message = make_fake_message()
+    Message = FakeMessage
     MessageSegment = Message.get_segment_class()
 
     test_not_cmd = shell_command(CMD)
@@ -455,7 +452,7 @@ async def test_regex(
     assert isinstance(checker, RegexRule)
     assert checker.regex == pattern
 
-    message = text if text is None else make_fake_message()(text)
+    message = text if text is None else FakeMessage(text)
     event = make_fake_event(_type=type, _message=message)()
     state = {}
     assert await dependent(event=event, state=state) == expected

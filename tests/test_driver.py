@@ -145,12 +145,12 @@ async def test_reverse_driver(app: App, driver: Driver):
     ],
     indirect=True,
 )
-async def test_http_driver(driver: Driver):
+async def test_http_driver(driver: Driver, server_url: URL):
     driver = cast(ForwardDriver, driver)
 
     request = Request(
         "POST",
-        "https://httpbin.org/post",
+        server_url,
         params={"param": "test"},
         headers={"X-Test": "test"},
         cookies={"session": "test"},
@@ -164,13 +164,13 @@ async def test_http_driver(driver: Driver):
     assert data["headers"].get("Cookie") == "session=test"
     assert data["data"] == "test"
 
-    request = Request("POST", "https://httpbin.org/post", data={"form": "test"})
+    request = Request("POST", server_url, data={"form": "test"})
     response = await driver.request(request)
     assert response.status_code == 200 and response.content
     data = json.loads(response.content)
     assert data["form"] == {"form": "test"}
 
-    request = Request("POST", "https://httpbin.org/post", json={"json": "test"})
+    request = Request("POST", server_url, json={"json": "test"})
     response = await driver.request(request)
     assert response.status_code == 200 and response.content
     data = json.loads(response.content)
@@ -178,7 +178,7 @@ async def test_http_driver(driver: Driver):
 
     request = Request(
         "POST",
-        "https://httpbin.org/post",
+        server_url,
         data={"form": "test"},
         files={"test": ("test.txt", b"test")},
     )

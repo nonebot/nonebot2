@@ -6,7 +6,7 @@ from nonebug import App
 from nonebot.matcher import Matcher
 from nonebot.dependencies import Dependent
 from nonebot.exception import TypeMisMatch
-from utils import make_fake_event, make_fake_message
+from utils import FakeMessage, make_fake_event
 from nonebot.params import (
     ArgParam,
     BotParam,
@@ -157,7 +157,7 @@ async def test_event(app: App):
         generic_event_none,
     )
 
-    fake_message = make_fake_message()("text")
+    fake_message = FakeMessage("text")
     fake_event = make_fake_event(_message=fake_message)()
     fake_fooevent = make_fake_event(_base=FooEvent)()
 
@@ -247,7 +247,7 @@ async def test_state(app: App):
         shell_command_argv,
     )
 
-    fake_message = make_fake_message()("text")
+    fake_message = FakeMessage("text")
     fake_matched = re.match(r"\[cq:(?P<type>.*?),(?P<arg>.*?)\]", "[cq:test,arg=value]")
     fake_state = {
         PREFIX_KEY: {
@@ -453,7 +453,7 @@ async def test_arg(app: App):
     from plugins.param.param_arg import arg, arg_str, arg_plain_text
 
     matcher = Matcher()
-    message = make_fake_message()("text")
+    message = FakeMessage("text")
     matcher.set_arg("key", message)
 
     async with app.test_dependent(arg, allow_types=[ArgParam]) as ctx:

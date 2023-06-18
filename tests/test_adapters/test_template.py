@@ -1,5 +1,5 @@
 from nonebot.adapters import MessageTemplate
-from utils import escape_text, make_fake_message
+from utils import FakeMessage, FakeMessageSegment, escape_text
 
 
 def test_template_basis():
@@ -9,8 +9,7 @@ def test_template_basis():
 
 
 def test_template_message():
-    Message = make_fake_message()
-    template = Message.template("{a:custom}{b:text}{c:image}/{d}")
+    template = FakeMessage.template("{a:custom}{b:text}{c:image}/{d}")
 
     @template.add_format_spec
     def custom(input: str) -> str:
@@ -37,29 +36,24 @@ def test_template_message():
 
 
 def test_rich_template_message():
-    Message = make_fake_message()
-    MS = Message.get_segment_class()
-
     pic1, pic2, pic3 = (
-        MS.image("file:///pic1.jpg"),
-        MS.image("file:///pic2.jpg"),
-        MS.image("file:///pic3.jpg"),
+        FakeMessageSegment.image("file:///pic1.jpg"),
+        FakeMessageSegment.image("file:///pic2.jpg"),
+        FakeMessageSegment.image("file:///pic3.jpg"),
     )
 
-    template = Message.template("{}{}" + pic2 + "{}")
+    template = FakeMessage.template("{}{}" + pic2 + "{}")
 
     result = template.format(pic1, "[fake:image]", pic3)
 
-    assert result["image"] == Message([pic1, pic2, pic3])
+    assert result["image"] == FakeMessage([pic1, pic2, pic3])
     assert str(result) == (
         "[fake:image]" + escape_text("[fake:image]") + "[fake:image]" + "[fake:image]"
     )
 
 
 def test_message_injection():
-    Message = make_fake_message()
-
-    template = Message.template("{name}Is Bad")
+    template = FakeMessage.template("{name}Is Bad")
     message = template.format(name="[fake:image]")
 
     assert message.extract_plain_text() == escape_text("[fake:image]Is Bad")

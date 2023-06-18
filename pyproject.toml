@@ -51,6 +51,7 @@ pre-commit = "^3.0.0"
 
 [tool.poetry.group.test.dependencies]
 nonebug = "^0.3.0"
+werkzeug = "^2.3.6"
 pytest-cov = "^4.0.0"
 pytest-xdist = "^3.0.2"
 pytest-asyncio = "^0.21.0"
@@ -68,7 +69,7 @@ fastapi = ["fastapi", "uvicorn"]
 all = ["fastapi", "quart", "aiohttp", "httpx", "websockets", "uvicorn"]
 
 [tool.pytest.ini_options]
-asyncio_mode = "auto"
+asyncio_mode = "strict"
 addopts = "--cov=nonebot --cov-append --cov-report=term-missing"
 filterwarnings = [
     "error",
