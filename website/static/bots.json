@@ -522,5 +522,18 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "ReimeiBot-黎明机器人",
+    "desc": "流星飞逝，黎明终将到来。",
+    "author": "ThirdBlood",
+    "homepage": "https://github.com/3rdBit/ReimeiBot",
+    "tags": [
+      {
+        "label": "a:onebot11",
+        "color": "#090100"
+      }
+    ],
+    "is_official": false
   }
 ]
