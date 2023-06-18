@@ -41,6 +41,10 @@ toc_max_heading_level: 2
 - Plugin: 链接防夹 [@noneflow](https://github.com/noneflow) ([#2074](https://github.com/nonebot/nonebot2/pull/2074))
 - Plugin: 碧蓝航线攻略 [@noneflow](https://github.com/noneflow) ([#2076](https://github.com/nonebot/nonebot2/pull/2076))
 
+### 🍻 机器人发布
+
+- Bot: ReimeiBot-黎明机器人 [@noneflow](https://github.com/noneflow) ([#2107](https://github.com/nonebot/nonebot2/pull/2107))
+
 ### 🍻 适配器发布
 
 - Adapter: 大别野 [@noneflow](https://github.com/noneflow) ([#2085](https://github.com/nonebot/nonebot2/pull/2085))
