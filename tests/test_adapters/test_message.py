@@ -1,135 +1,136 @@
 import pytest
 from pydantic import ValidationError, parse_obj_as
 
-from utils import make_fake_message
+from nonebot.adapters import Message
+from utils import FakeMessage, FakeMessageSegment
 
 
-def test_segment_add():
-    Message = make_fake_message()
-    MessageSegment = Message.get_segment_class()
-
-    assert MessageSegment.text("text") + MessageSegment.text("text") == Message(
-        [MessageSegment.text("text"), MessageSegment.text("text")]
-    )
-
-    assert MessageSegment.text("text") + "text" == Message(
-        [MessageSegment.text("text"), MessageSegment.text("text")]
-    )
-
-    assert (
-        MessageSegment.text("text") + Message([MessageSegment.text("text")])
-    ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
-
-    assert "text" + MessageSegment.text("text") == Message(
-        [MessageSegment.text("text"), MessageSegment.text("text")]
-    )
-
-
-def test_segment_validate():
-    Message = make_fake_message()
-    MessageSegment = Message.get_segment_class()
-
-    assert parse_obj_as(
-        MessageSegment,
-        {"type": "text", "data": {"text": "text"}, "extra": "should be ignored"},
-    ) == MessageSegment.text("text")
-
-    with pytest.raises(ValidationError):
-        parse_obj_as(MessageSegment, "some str")
-
-    with pytest.raises(ValidationError):
-        parse_obj_as(MessageSegment, {"data": {}})
-
-
-def test_segment_join():
-    Message = make_fake_message()
-    MessageSegment = Message.get_segment_class()
-
-    seg = MessageSegment.text("test")
-    iterable = [
-        MessageSegment.text("first"),
-        Message([MessageSegment.text("second"), MessageSegment.text("third")]),
-    ]
-
-    assert seg.join(iterable) == Message(
-        [
-            MessageSegment.text("first"),
-            MessageSegment.text("test"),
-            MessageSegment.text("second"),
-            MessageSegment.text("third"),
-        ]
-    )
-
-
-def test_segment():
-    Message = make_fake_message()
-    MessageSegment = Message.get_segment_class()
-
-    assert len(MessageSegment.text("text")) == 4
-    assert MessageSegment.text("text") != MessageSegment.text("other")
-    assert MessageSegment.text("text").get("data") == {"text": "text"}
-    assert list(MessageSegment.text("text").keys()) == ["type", "data"]
-    assert list(MessageSegment.text("text").values()) == ["text", {"text": "text"}]
-    assert list(MessageSegment.text("text").items()) == [
+def test_segment_data():
+    assert len(FakeMessageSegment.text("text")) == 4
+    assert FakeMessageSegment.text("text").get("data") == {"text": "text"}
+    assert list(FakeMessageSegment.text("text").keys()) == ["type", "data"]
+    assert list(FakeMessageSegment.text("text").values()) == ["text", {"text": "text"}]
+    assert list(FakeMessageSegment.text("text").items()) == [
         ("type", "text"),
         ("data", {"text": "text"}),
     ]
 
-    origin = MessageSegment.text("text")
+
+def test_segment_equal():
+    assert FakeMessageSegment("text", {"text": "text"}) == FakeMessageSegment(
+        "text", {"text": "text"}
+    )
+    assert FakeMessageSegment("text", {"text": "text"}) != FakeMessageSegment(
+        "text", {"text": "other"}
+    )
+    assert FakeMessageSegment("text", {"text": "text"}) != FakeMessageSegment(
+        "other", {"text": "text"}
+    )
+
+
+def test_segment_add():
+    assert FakeMessageSegment.text("text") + FakeMessageSegment.text(
+        "text"
+    ) == FakeMessage([FakeMessageSegment.text("text"), FakeMessageSegment.text("text")])
+
+    assert FakeMessageSegment.text("text") + "text" == FakeMessage(
+        [FakeMessageSegment.text("text"), FakeMessageSegment.text("text")]
+    )
+
+    assert (
+        FakeMessageSegment.text("text") + FakeMessage([FakeMessageSegment.text("text")])
+    ) == FakeMessage([FakeMessageSegment.text("text"), FakeMessageSegment.text("text")])
+
+    assert "text" + FakeMessageSegment.text("text") == FakeMessage(
+        [FakeMessageSegment.text("text"), FakeMessageSegment.text("text")]
+    )
+
+
+def test_segment_validate():
+    assert parse_obj_as(
+        FakeMessageSegment,
+        {"type": "text", "data": {"text": "text"}, "extra": "should be ignored"},
+    ) == FakeMessageSegment.text("text")
+
+    with pytest.raises(ValidationError):
+        parse_obj_as(FakeMessageSegment, "some str")
+
+    with pytest.raises(ValidationError):
+        parse_obj_as(FakeMessageSegment, {"data": {}})
+
+
+def test_segment_join():
+    seg = FakeMessageSegment.text("test")
+    iterable = [
+        FakeMessageSegment.text("first"),
+        FakeMessage(
+            [FakeMessageSegment.text("second"), FakeMessageSegment.text("third")]
+        ),
+    ]
+
+    assert seg.join(iterable) == FakeMessage(
+        [
+            FakeMessageSegment.text("first"),
+            FakeMessageSegment.text("test"),
+            FakeMessageSegment.text("second"),
+            FakeMessageSegment.text("third"),
+        ]
+    )
+
+
+def test_segment_copy():
+    origin = FakeMessageSegment.text("text")
     copy = origin.copy()
     assert origin is not copy
     assert origin == copy
 
 
 def test_message_add():
-    Message = make_fake_message()
-    MessageSegment = Message.get_segment_class()
-
     assert (
-        Message([MessageSegment.text("text")]) + MessageSegment.text("text")
-    ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
+        FakeMessage([FakeMessageSegment.text("text")]) + FakeMessageSegment.text("text")
+    ) == FakeMessage([FakeMessageSegment.text("text"), FakeMessageSegment.text("text")])
 
-    assert Message([MessageSegment.text("text")]) + "text" == Message(
-        [MessageSegment.text("text"), MessageSegment.text("text")]
+    assert FakeMessage([FakeMessageSegment.text("text")]) + "text" == FakeMessage(
+        [FakeMessageSegment.text("text"), FakeMessageSegment.text("text")]
     )
 
     assert (
-        Message([MessageSegment.text("text")]) + Message([MessageSegment.text("text")])
-    ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
+        FakeMessage([FakeMessageSegment.text("text")])
+        + FakeMessage([FakeMessageSegment.text("text")])
+    ) == FakeMessage([FakeMessageSegment.text("text"), FakeMessageSegment.text("text")])
 
-    assert "text" + Message([MessageSegment.text("text")]) == Message(
-        [MessageSegment.text("text"), MessageSegment.text("text")]
+    assert "text" + FakeMessage([FakeMessageSegment.text("text")]) == FakeMessage(
+        [FakeMessageSegment.text("text"), FakeMessageSegment.text("text")]
     )
 
-    msg = Message([MessageSegment.text("text")])
-    msg += MessageSegment.text("text")
-    assert msg == Message([MessageSegment.text("text"), MessageSegment.text("text")])
+    msg = FakeMessage([FakeMessageSegment.text("text")])
+    msg += FakeMessageSegment.text("text")
+    assert msg == FakeMessage(
+        [FakeMessageSegment.text("text"), FakeMessageSegment.text("text")]
+    )
 
 
 def test_message_getitem():
-    Message = make_fake_message()
-    MessageSegment = Message.get_segment_class()
-
-    message = Message(
+    message = FakeMessage(
         [
-            MessageSegment.text("test"),
-            MessageSegment.image("test2"),
-            MessageSegment.image("test3"),
-            MessageSegment.text("test4"),
+            FakeMessageSegment.text("test"),
+            FakeMessageSegment.image("test2"),
+            FakeMessageSegment.image("test3"),
+            FakeMessageSegment.text("test4"),
         ]
     )
 
-    assert message[0] == MessageSegment.text("test")
+    assert message[0] == FakeMessageSegment.text("test")
 
-    assert message[:2] == Message(
-        [MessageSegment.text("test"), MessageSegment.image("test2")]
+    assert message[:2] == FakeMessage(
+        [FakeMessageSegment.text("test"), FakeMessageSegment.image("test2")]
     )
 
-    assert message["image"] == Message(
-        [MessageSegment.image("test2"), MessageSegment.image("test3")]
+    assert message["image"] == FakeMessage(
+        [FakeMessageSegment.image("test2"), FakeMessageSegment.image("test3")]
     )
 
-    assert message["image", 0] == MessageSegment.image("test2")
+    assert message["image", 0] == FakeMessageSegment.image("test2")
     assert message["image", 0:2] == message["image"]
 
     assert message.index(message[0]) == 0
@@ -137,153 +138,137 @@ def test_message_getitem():
 
     assert message.get("image") == message["image"]
     assert message.get("image", 114514) == message["image"]
-    assert message.get("image", 1) == Message([message["image", 0]])
+    assert message.get("image", 1) == FakeMessage([message["image", 0]])
 
     assert message.count("image") == 2
 
 
 def test_message_validate():
-    Message = make_fake_message()
-    MessageSegment = Message.get_segment_class()
-
-    Message_ = make_fake_message()
-
-    assert parse_obj_as(Message, Message([])) == Message([])
+    assert parse_obj_as(FakeMessage, FakeMessage([])) == FakeMessage([])
 
     with pytest.raises(ValidationError):
-        parse_obj_as(Message, Message_([]))
+        parse_obj_as(type("FakeMessage2", (Message,), {}), FakeMessage([]))
 
-    assert parse_obj_as(Message, "text") == Message([MessageSegment.text("text")])
-
-    assert parse_obj_as(Message, {"type": "text", "data": {"text": "text"}}) == Message(
-        [MessageSegment.text("text")]
+    assert parse_obj_as(FakeMessage, "text") == FakeMessage(
+        [FakeMessageSegment.text("text")]
     )
 
     assert parse_obj_as(
-        Message,
-        [MessageSegment.text("text"), {"type": "text", "data": {"text": "text"}}],
-    ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
+        FakeMessage, {"type": "text", "data": {"text": "text"}}
+    ) == FakeMessage([FakeMessageSegment.text("text")])
+
+    assert parse_obj_as(
+        FakeMessage,
+        [FakeMessageSegment.text("text"), {"type": "text", "data": {"text": "text"}}],
+    ) == FakeMessage([FakeMessageSegment.text("text"), FakeMessageSegment.text("text")])
 
     with pytest.raises(ValidationError):
-        parse_obj_as(Message, object())
+        parse_obj_as(FakeMessage, object())
 
 
 def test_message_contains():
-    Message = make_fake_message()
-    MessageSegment = Message.get_segment_class()
-
-    message = Message(
+    message = FakeMessage(
         [
-            MessageSegment.text("test"),
-            MessageSegment.image("test2"),
-            MessageSegment.image("test3"),
-            MessageSegment.text("test4"),
+            FakeMessageSegment.text("test"),
+            FakeMessageSegment.image("test2"),
+            FakeMessageSegment.image("test3"),
+            FakeMessageSegment.text("test4"),
         ]
     )
 
-    assert message.has(MessageSegment.text("test")) is True
-    assert MessageSegment.text("test") in message
+    assert message.has(FakeMessageSegment.text("test")) is True
+    assert FakeMessageSegment.text("test") in message
     assert message.has("image") is True
     assert "image" in message
 
-    assert message.has(MessageSegment.text("foo")) is False
-    assert MessageSegment.text("foo") not in message
+    assert message.has(FakeMessageSegment.text("foo")) is False
+    assert FakeMessageSegment.text("foo") not in message
     assert message.has("foo") is False
     assert "foo" not in message
 
 
 def test_message_only():
-    Message = make_fake_message()
-    MessageSegment = Message.get_segment_class()
-
-    message = Message(
+    message = FakeMessage(
         [
-            MessageSegment.text("test"),
-            MessageSegment.text("test2"),
+            FakeMessageSegment.text("test"),
+            FakeMessageSegment.text("test2"),
         ]
     )
 
     assert message.only("text") is True
-    assert message.only(MessageSegment.text("test")) is False
+    assert message.only(FakeMessageSegment.text("test")) is False
 
-    message = Message(
+    message = FakeMessage(
         [
-            MessageSegment.text("test"),
-            MessageSegment.image("test2"),
-            MessageSegment.image("test3"),
-            MessageSegment.text("test4"),
+            FakeMessageSegment.text("test"),
+            FakeMessageSegment.image("test2"),
+            FakeMessageSegment.image("test3"),
+            FakeMessageSegment.text("test4"),
         ]
     )
 
     assert message.only("text") is False
 
-    message = Message(
+    message = FakeMessage(
         [
-            MessageSegment.text("test"),
-            MessageSegment.text("test"),
+            FakeMessageSegment.text("test"),
+            FakeMessageSegment.text("test"),
         ]
     )
 
-    assert message.only(MessageSegment.text("test")) is True
+    assert message.only(FakeMessageSegment.text("test")) is True
 
 
 def test_message_join():
-    Message = make_fake_message()
-    MessageSegment = Message.get_segment_class()
-
-    msg = Message([MessageSegment.text("test")])
+    msg = FakeMessage([FakeMessageSegment.text("test")])
     iterable = [
-        MessageSegment.text("first"),
-        Message([MessageSegment.text("second"), MessageSegment.text("third")]),
+        FakeMessageSegment.text("first"),
+        FakeMessage(
+            [FakeMessageSegment.text("second"), FakeMessageSegment.text("third")]
+        ),
     ]
 
-    assert msg.join(iterable) == Message(
+    assert msg.join(iterable) == FakeMessage(
         [
-            MessageSegment.text("first"),
-            MessageSegment.text("test"),
-            MessageSegment.text("second"),
-            MessageSegment.text("third"),
+            FakeMessageSegment.text("first"),
+            FakeMessageSegment.text("test"),
+            FakeMessageSegment.text("second"),
+            FakeMessageSegment.text("third"),
         ]
     )
 
 
 def test_message_include():
-    Message = make_fake_message()
-    MessageSegment = Message.get_segment_class()
-
-    message = Message(
+    message = FakeMessage(
         [
-            MessageSegment.text("test"),
-            MessageSegment.image("test2"),
-            MessageSegment.image("test3"),
-            MessageSegment.text("test4"),
+            FakeMessageSegment.text("test"),
+            FakeMessageSegment.image("test2"),
+            FakeMessageSegment.image("test3"),
+            FakeMessageSegment.text("test4"),
         ]
     )
 
-    assert message.include("text") == Message(
+    assert message.include("text") == FakeMessage(
         [
-            MessageSegment.text("test"),
-            MessageSegment.text("test4"),
+            FakeMessageSegment.text("test"),
+            FakeMessageSegment.text("test4"),
         ]
     )
 
 
 def test_message_exclude():
-    Message = make_fake_message()
-    MessageSegment = Message.get_segment_class()
-
-    message = Message(
+    message = FakeMessage(
         [
-            MessageSegment.text("test"),
-            MessageSegment.image("test2"),
-            MessageSegment.image("test3"),
-            MessageSegment.text("test4"),
+            FakeMessageSegment.text("test"),
+            FakeMessageSegment.image("test2"),
+            FakeMessageSegment.image("test3"),
+            FakeMessageSegment.text("test4"),
         ]
     )
 
-    assert message.exclude("image") == Message(
+    assert message.exclude("image") == FakeMessage(
         [
-            MessageSegment.text("test"),
-            MessageSegment.text("test4"),
+            FakeMessageSegment.text("test"),
+            FakeMessageSegment.text("test4"),
         ]
     )
