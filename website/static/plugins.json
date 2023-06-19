@@ -6768,5 +6768,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_follow_withdraw",
+    "project_link": "nonebot-plugin-follow-withdraw",
+    "name": "follow_withdraw",
+    "desc": "当命令消息被撤回时，Bot跟随撤回命令结果",
+    "author": "CMHopeSunshine",
+    "homepage": "https://github.com/CMHopeSunshine/nonebot-plugin-follow-withdraw",
+    "tags": [],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": [
+      "nonebot.adapters.onebot.v11",
+      "nonebot.adapters.kaiheila",
+      "nonebot.adapters.onebot.v12",
+      "nonebot.adapters.qqguild"
+    ]
   }
 ]
