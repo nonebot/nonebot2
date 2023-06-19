@@ -79,12 +79,36 @@ async def test_lifespan():
     ],
     indirect=True,
 )
-async def test_reverse_driver(app: App, driver: Driver):
+async def test_http_server(app: App, driver: Driver):
     driver = cast(ReverseDriver, driver)
 
     async def _handle_http(request: Request) -> Response:
         assert request.content in (b"test", "test")
         return Response(200, content="test")
+
+    http_setup = HTTPServerSetup(URL("/http_test"), "POST", "http_test", _handle_http)
+    driver.setup_http_server(http_setup)
+
+    async with app.test_server(driver.asgi) as ctx:
+        client = ctx.get_client()
+        response = await client.post("/http_test", data="test")
+        assert response.status_code == 200
+        assert response.text == "test"
+
+    await asyncio.sleep(1)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "driver",
+    [
+        pytest.param("nonebot.drivers.fastapi:Driver", id="fastapi"),
+        pytest.param("nonebot.drivers.quart:Driver", id="quart"),
+    ],
+    indirect=True,
+)
+async def test_websocket_server(app: App, driver: Driver):
+    driver = cast(ReverseDriver, driver)
 
     async def _handle_ws(ws: WebSocket) -> None:
         await ws.accept()
@@ -107,17 +131,11 @@ async def test_reverse_driver(app: App, driver: Driver):
         with pytest.raises(WebSocketClosed):
             await ws.receive()
 
-    http_setup = HTTPServerSetup(URL("/http_test"), "POST", "http_test", _handle_http)
-    driver.setup_http_server(http_setup)
-
     ws_setup = WebSocketServerSetup(URL("/ws_test"), "ws_test", _handle_ws)
     driver.setup_websocket_server(ws_setup)
 
     async with app.test_server(driver.asgi) as ctx:
         client = ctx.get_client()
-        response = await client.post("/http_test", data="test")
-        assert response.status_code == 200
-        assert response.text == "test"
 
         async with client.websocket_connect("/ws_test") as ws:
             await ws.send_text("ping")
@@ -145,9 +163,10 @@ async def test_reverse_driver(app: App, driver: Driver):
     ],
     indirect=True,
 )
-async def test_http_driver(driver: Driver, server_url: URL):
+async def test_http_client(driver: Driver, server_url: URL):
     driver = cast(ForwardDriver, driver)
 
+    # simple post with query, headers, cookies and content
     request = Request(
         "POST",
         server_url,
@@ -159,23 +178,29 @@ async def test_http_driver(driver: Driver, server_url: URL):
     response = await driver.request(request)
     assert response.status_code == 200 and response.content
     data = json.loads(response.content)
+    assert data["method"] == "POST"
     assert data["args"] == {"param": "test"}
     assert data["headers"].get("X-Test") == "test"
     assert data["headers"].get("Cookie") == "session=test"
     assert data["data"] == "test"
 
+    # post with data body
     request = Request("POST", server_url, data={"form": "test"})
     response = await driver.request(request)
     assert response.status_code == 200 and response.content
     data = json.loads(response.content)
+    assert data["method"] == "POST"
     assert data["form"] == {"form": "test"}
 
+    # post with json body
     request = Request("POST", server_url, json={"json": "test"})
     response = await driver.request(request)
     assert response.status_code == 200 and response.content
     data = json.loads(response.content)
+    assert data["method"] == "POST"
     assert data["json"] == {"json": "test"}
 
+    # post with files and form data
     request = Request(
         "POST",
         server_url,
@@ -185,6 +210,7 @@ async def test_http_driver(driver: Driver, server_url: URL):
     response = await driver.request(request)
     assert response.status_code == 200 and response.content
     data = json.loads(response.content)
+    assert data["method"] == "POST"
     assert data["form"] == {"form": "test"}
     assert data["files"] == {"test": "test"}
 
@@ -236,7 +262,6 @@ async def test_bot_connect_hook(app: App, driver: Driver):
         @driver.on_bot_connect
         async def conn_hook(foo: Bot, dep: int = Depends(dependency), default: int = 1):
             nonlocal conn_should_be_called
-            conn_should_be_called = True
 
             if foo is not bot:
                 pytest.fail("on_bot_connect hook called with wrong bot")
@@ -245,12 +270,13 @@ async def test_bot_connect_hook(app: App, driver: Driver):
             if default != 1:
                 pytest.fail("on_bot_connect hook called with wrong default value")
 
+            conn_should_be_called = True
+
         @driver.on_bot_disconnect
         async def disconn_hook(
             foo: Bot, dep: int = Depends(dependency), default: int = 1
         ):
             nonlocal disconn_should_be_called
-            disconn_should_be_called = True
 
             if foo is not bot:
                 pytest.fail("on_bot_disconnect hook called with wrong bot")
@@ -258,6 +284,8 @@ async def test_bot_connect_hook(app: App, driver: Driver):
                 pytest.fail("on_bot_connect hook called with wrong dependency")
             if default != 1:
                 pytest.fail("on_bot_connect hook called with wrong default value")
+
+            disconn_should_be_called = True
 
         if conn_hook not in {hook.call for hook in conn_hooks}:
             pytest.fail("on_bot_connect hook not registered")
@@ -268,6 +296,7 @@ async def test_bot_connect_hook(app: App, driver: Driver):
             bot = ctx.create_bot()
 
         await asyncio.sleep(1)
+
         if not conn_should_be_called:
             pytest.fail("on_bot_connect hook not called")
         if not disconn_should_be_called:

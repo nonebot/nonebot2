@@ -5,6 +5,29 @@ from nonebot.adapters import Message
 from utils import FakeMessage, FakeMessageSegment
 
 
+def test_segment_data():
+    assert len(FakeMessageSegment.text("text")) == 4
+    assert FakeMessageSegment.text("text").get("data") == {"text": "text"}
+    assert list(FakeMessageSegment.text("text").keys()) == ["type", "data"]
+    assert list(FakeMessageSegment.text("text").values()) == ["text", {"text": "text"}]
+    assert list(FakeMessageSegment.text("text").items()) == [
+        ("type", "text"),
+        ("data", {"text": "text"}),
+    ]
+
+
+def test_segment_equal():
+    assert FakeMessageSegment("text", {"text": "text"}) == FakeMessageSegment(
+        "text", {"text": "text"}
+    )
+    assert FakeMessageSegment("text", {"text": "text"}) != FakeMessageSegment(
+        "text", {"text": "other"}
+    )
+    assert FakeMessageSegment("text", {"text": "text"}) != FakeMessageSegment(
+        "other", {"text": "text"}
+    )
+
+
 def test_segment_add():
     assert FakeMessageSegment.text("text") + FakeMessageSegment.text(
         "text"
@@ -55,17 +78,7 @@ def test_segment_join():
     )
 
 
-def test_segment():
-    assert len(FakeMessageSegment.text("text")) == 4
-    assert FakeMessageSegment.text("text") != FakeMessageSegment.text("other")
-    assert FakeMessageSegment.text("text").get("data") == {"text": "text"}
-    assert list(FakeMessageSegment.text("text").keys()) == ["type", "data"]
-    assert list(FakeMessageSegment.text("text").values()) == ["text", {"text": "text"}]
-    assert list(FakeMessageSegment.text("text").items()) == [
-        ("type", "text"),
-        ("data", {"text": "text"}),
-    ]
-
+def test_segment_copy():
     origin = FakeMessageSegment.text("text")
     copy = origin.copy()
     assert origin is not copy

@@ -9,8 +9,7 @@ from werkzeug.serving import BaseWSGIServer, make_server
 
 import nonebot
 from nonebot.drivers import URL
-
-from .fake_server import request_handler
+from fake_server import request_handler
 
 os.environ["CONFIG_FROM_ENV"] = '{"test": "test"}'
 os.environ["CONFIG_OVERRIDE"] = "new"

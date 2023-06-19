@@ -31,17 +31,29 @@ async def test_init():
 
 
 @pytest.mark.asyncio
-async def test_get(app: App, monkeypatch: pytest.MonkeyPatch):
+async def test_get_driver(app: App, monkeypatch: pytest.MonkeyPatch):
     with monkeypatch.context() as m:
         m.setattr(nonebot, "_driver", None)
         with pytest.raises(ValueError):
             get_driver()
 
+
+@pytest.mark.asyncio
+async def test_get_asgi(app: App, monkeypatch: pytest.MonkeyPatch):
     driver = get_driver()
     assert isinstance(driver, ReverseDriver)
     assert get_asgi() == driver.asgi
+
+
+@pytest.mark.asyncio
+async def test_get_app(app: App, monkeypatch: pytest.MonkeyPatch):
+    driver = get_driver()
+    assert isinstance(driver, ReverseDriver)
     assert get_app() == driver.server_app
 
+
+@pytest.mark.asyncio
+async def test_get_adapter(app: App, monkeypatch: pytest.MonkeyPatch):
     async with app.test_api() as ctx:
         adapter = ctx.create_adapter()
         adapter_name = adapter.get_name()
@@ -54,6 +66,9 @@ async def test_get(app: App, monkeypatch: pytest.MonkeyPatch):
             with pytest.raises(ValueError):
                 get_adapter("not exist")
 
+
+@pytest.mark.asyncio
+async def test_run(app: App, monkeypatch: pytest.MonkeyPatch):
     runned = False
 
     def mock_run(*args, **kwargs):
@@ -61,14 +76,24 @@ async def test_get(app: App, monkeypatch: pytest.MonkeyPatch):
         runned = True
         assert args == ("arg",) and kwargs == {"kwarg": "kwarg"}
 
-    monkeypatch.setattr(driver, "run", mock_run)
-    nonebot.run("arg", kwarg="kwarg")
+    driver = get_driver()
+
+    with monkeypatch.context() as m:
+        m.setattr(driver, "run", mock_run)
+        nonebot.run("arg", kwarg="kwarg")
+
     assert runned
+
+
+@pytest.mark.asyncio
+async def test_get_bot(app: App, monkeypatch: pytest.MonkeyPatch):
+    driver = get_driver()
 
     with pytest.raises(ValueError):
         get_bot()
 
-    monkeypatch.setattr(driver, "_bots", {"test": "test"})
-    assert get_bot() == "test"
-    assert get_bot("test") == "test"
-    assert get_bots() == {"test": "test"}
+    with monkeypatch.context() as m:
+        m.setattr(driver, "_bots", {"test": "test"})
+        assert get_bot() == "test"
+        assert get_bot("test") == "test"
+        assert get_bots() == {"test": "test"}
