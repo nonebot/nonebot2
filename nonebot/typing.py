@@ -1,17 +1,16 @@
 """本模块定义了 NoneBot 模块中共享的一些类型。
 
-下面的文档中，「类型」部分使用 Python 的 Type Hint 语法，
+使用 Python 的 Type Hint 语法，
 参考 [`PEP 484`](https://www.python.org/dev/peps/pep-0484/),
 [`PEP 526`](https://www.python.org/dev/peps/pep-0526/) 和
 [`typing`](https://docs.python.org/3/library/typing.html)。
-
-除了 Python 内置的类型，下面还出现了如下 NoneBot 自定类型，实际上它们是 Python 内置类型的别名。
 
 FrontMatter:
     sidebar_position: 11
     description: nonebot.typing 模块
 """
 
+from typing_extensions import ParamSpec, TypeAlias
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -30,8 +29,9 @@ if TYPE_CHECKING:
     from nonebot.permission import Permission
 
 T = TypeVar("T")
+P = ParamSpec("P")
 
-T_Wrapped = TypeVar("T_Wrapped", bound=Callable)
+T_Wrapped: TypeAlias = Callable[P, T]
 
 
 def overrides(InterfaceClass: object) -> Callable[[T_Wrapped], T_Wrapped]:
@@ -45,13 +45,13 @@ def overrides(InterfaceClass: object) -> Callable[[T_Wrapped], T_Wrapped]:
 
 
 # state
-T_State = Dict[Any, Any]
+T_State: TypeAlias = Dict[Any, Any]
 """事件处理状态 State 类型"""
 
-_DependentCallable = Union[Callable[..., T], Callable[..., Awaitable[T]]]
+_DependentCallable: TypeAlias = Union[Callable[..., T], Callable[..., Awaitable[T]]]
 
 # driver hooks
-T_BotConnectionHook = _DependentCallable[Any]
+T_BotConnectionHook: TypeAlias = _DependentCallable[Any]
 """Bot 连接建立时钩子函数
 
 依赖参数:
@@ -60,7 +60,7 @@ T_BotConnectionHook = _DependentCallable[Any]
 - BotParam: Bot 对象
 - DefaultParam: 带有默认值的参数
 """
-T_BotDisconnectionHook = _DependentCallable[Any]
+T_BotDisconnectionHook: TypeAlias = _DependentCallable[Any]
 """Bot 连接断开时钩子函数
 
 依赖参数:
@@ -71,15 +71,15 @@ T_BotDisconnectionHook = _DependentCallable[Any]
 """
 
 # api hooks
-T_CallingAPIHook = Callable[["Bot", str, Dict[str, Any]], Awaitable[Any]]
+T_CallingAPIHook: TypeAlias = Callable[["Bot", str, Dict[str, Any]], Awaitable[Any]]
 """`bot.call_api` 钩子函数"""
-T_CalledAPIHook = Callable[
+T_CalledAPIHook: TypeAlias = Callable[
     ["Bot", Optional[Exception], str, Dict[str, Any], Any], Awaitable[Any]
 ]
 """`bot.call_api` 后执行的函数，参数分别为 bot, exception, api, data, result"""
 
 # event hooks
-T_EventPreProcessor = _DependentCallable[Any]
+T_EventPreProcessor: TypeAlias = _DependentCallable[Any]
 """事件预处理函数 EventPreProcessor 类型
 
 依赖参数:
@@ -90,7 +90,7 @@ T_EventPreProcessor = _DependentCallable[Any]
 - StateParam: State 对象
 - DefaultParam: 带有默认值的参数
 """
-T_EventPostProcessor = _DependentCallable[Any]
+T_EventPostProcessor: TypeAlias = _DependentCallable[Any]
 """事件预处理函数 EventPostProcessor 类型
 
 依赖参数:
@@ -103,7 +103,7 @@ T_EventPostProcessor = _DependentCallable[Any]
 """
 
 # matcher run hooks
-T_RunPreProcessor = _DependentCallable[Any]
+T_RunPreProcessor: TypeAlias = _DependentCallable[Any]
 """事件响应器运行前预处理函数 RunPreProcessor 类型
 
 依赖参数:
@@ -115,7 +115,7 @@ T_RunPreProcessor = _DependentCallable[Any]
 - MatcherParam: Matcher 对象
 - DefaultParam: 带有默认值的参数
 """
-T_RunPostProcessor = _DependentCallable[Any]
+T_RunPostProcessor: TypeAlias = _DependentCallable[Any]
 """事件响应器运行后后处理函数 RunPostProcessor 类型
 
 依赖参数:
@@ -130,7 +130,7 @@ T_RunPostProcessor = _DependentCallable[Any]
 """
 
 # rule, permission
-T_RuleChecker = _DependentCallable[bool]
+T_RuleChecker: TypeAlias = _DependentCallable[bool]
 """RuleChecker 即判断是否响应事件的处理函数。
 
 依赖参数:
@@ -141,7 +141,7 @@ T_RuleChecker = _DependentCallable[bool]
 - StateParam: State 对象
 - DefaultParam: 带有默认值的参数
 """
-T_PermissionChecker = _DependentCallable[bool]
+T_PermissionChecker: TypeAlias = _DependentCallable[bool]
 """PermissionChecker 即判断事件是否满足权限的处理函数。
 
 依赖参数:
@@ -152,10 +152,11 @@ T_PermissionChecker = _DependentCallable[bool]
 - DefaultParam: 带有默认值的参数
 """
 
-T_Handler = _DependentCallable[Any]
+T_Handler: TypeAlias = _DependentCallable[Any]
 """Handler 处理函数。"""
-T_TypeUpdater = _DependentCallable[str]
-"""TypeUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新响应的事件类型。默认会更新为 `message`。
+T_TypeUpdater: TypeAlias = _DependentCallable[str]
+"""TypeUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新响应的事件类型。
+默认会更新为 `message`。
 
 依赖参数:
 
@@ -166,8 +167,9 @@ T_TypeUpdater = _DependentCallable[str]
 - MatcherParam: Matcher 对象
 - DefaultParam: 带有默认值的参数
 """
-T_PermissionUpdater = _DependentCallable["Permission"]
-"""PermissionUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新会话对象权限。默认会更新为当前事件的触发对象。
+T_PermissionUpdater: TypeAlias = _DependentCallable["Permission"]
+"""PermissionUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新会话对象权限。
+默认会更新为当前事件的触发对象。
 
 依赖参数:
 
@@ -178,5 +180,5 @@ T_PermissionUpdater = _DependentCallable["Permission"]
 - MatcherParam: Matcher 对象
 - DefaultParam: 带有默认值的参数
 """
-T_DependencyCache = Dict[_DependentCallable[Any], "Task[Any]"]
+T_DependencyCache: TypeAlias = Dict[_DependentCallable[Any], "Task[Any]"]
 """依赖缓存, 用于存储依赖函数的返回值"""

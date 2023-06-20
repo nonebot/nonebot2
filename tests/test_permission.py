@@ -47,15 +47,15 @@ async def test_permission(app: App):
 
     async with app.test_api() as ctx:
         bot = ctx.create_bot()
-        assert await Permission(falsy)(bot, event) == False
-        assert await Permission(truthy)(bot, event) == True
-        assert await Permission(skipped)(bot, event) == False
-        assert await Permission(truthy, falsy)(bot, event) == True
-        assert await Permission(truthy, skipped)(bot, event) == True
+        assert await Permission(falsy)(bot, event) is False
+        assert await Permission(truthy)(bot, event) is True
+        assert await Permission(skipped)(bot, event) is False
+        assert await Permission(truthy, falsy)(bot, event) is True
+        assert await Permission(truthy, skipped)(bot, event) is True
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("type, expected", [("message", True), ("notice", False)])
+@pytest.mark.parametrize(("type", "expected"), [("message", True), ("notice", False)])
 async def test_message(type: str, expected: bool):
     dependent = list(MESSAGE.checkers)[0]
     checker = dependent.call
@@ -67,7 +67,7 @@ async def test_message(type: str, expected: bool):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("type, expected", [("message", False), ("notice", True)])
+@pytest.mark.parametrize(("type", "expected"), [("message", False), ("notice", True)])
 async def test_notice(type: str, expected: bool):
     dependent = list(NOTICE.checkers)[0]
     checker = dependent.call
@@ -79,7 +79,7 @@ async def test_notice(type: str, expected: bool):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("type, expected", [("message", False), ("request", True)])
+@pytest.mark.parametrize(("type", "expected"), [("message", False), ("request", True)])
 async def test_request(type: str, expected: bool):
     dependent = list(REQUEST.checkers)[0]
     checker = dependent.call
@@ -91,7 +91,9 @@ async def test_request(type: str, expected: bool):
 
 
 @pytest.mark.asyncio
-@pytest.mark.parametrize("type, expected", [("message", False), ("meta_event", True)])
+@pytest.mark.parametrize(
+    ("type", "expected"), [("message", False), ("meta_event", True)]
+)
 async def test_metaevent(type: str, expected: bool):
     dependent = list(METAEVENT.checkers)[0]
     checker = dependent.call
@@ -104,7 +106,7 @@ async def test_metaevent(type: str, expected: bool):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "type, user_id, expected",
+    ("type", "user_id", "expected"),
     [
         ("message", "test", True),
         ("message", "foo", False),
@@ -128,7 +130,7 @@ async def test_superuser(app: App, type: str, user_id: str, expected: bool):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "session_ids, session_id, expected",
+    ("session_ids", "session_id", "expected"),
     [
         (("user", "foo"), "user", True),
         (("user", "foo"), "bar", False),

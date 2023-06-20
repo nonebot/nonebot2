@@ -108,7 +108,8 @@ class TypeMisMatch(SkippedException):
 
 
 class MockApiException(ProcessException):
-    """指示 NoneBot 阻止本次 API 调用或修改本次调用返回值，并返回自定义内容。可由 api hook 抛出。
+    """指示 NoneBot 阻止本次 API 调用或修改本次调用返回值，并返回自定义内容。
+    可由 api hook 抛出。
 
     参数:
         result: 返回的内容
@@ -144,7 +145,8 @@ class MatcherException(NoneBotException):
 
 
 class PausedException(MatcherException):
-    """指示 NoneBot 结束当前 `Handler` 并等待下一条消息后继续下一个 `Handler`。可用于用户输入新信息。
+    """指示 NoneBot 结束当前 `Handler` 并等待下一条消息后继续下一个 `Handler`。
+    可用于用户输入新信息。
 
     可以在 `Handler` 中通过 {ref}`nonebot.matcher.Matcher.pause` 抛出。
 
@@ -158,7 +160,8 @@ class PausedException(MatcherException):
 
 
 class RejectedException(MatcherException):
-    """指示 NoneBot 结束当前 `Handler` 并等待下一条消息后重新运行当前 `Handler`。可用于用户重新输入。
+    """指示 NoneBot 结束当前 `Handler` 并等待下一条消息后重新运行当前 `Handler`。
+    可用于用户重新输入。
 
     可以在 `Handler` 中通过 {ref}`nonebot.matcher.Matcher.reject` 抛出。
 
@@ -210,7 +213,9 @@ class ApiNotAvailable(AdapterException):
 
 
 class NetworkError(AdapterException):
-    """在网络出现问题时抛出，如: API 请求地址不正确, API 请求无返回或返回状态非正常等。"""
+    """在网络出现问题时抛出，
+    如: API 请求地址不正确, API 请求无返回或返回状态非正常等。
+    """
 
 
 class ActionFailed(AdapterException):

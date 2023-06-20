@@ -4,6 +4,7 @@ FrontMatter:
     sidebar_position: 9
     description: nonebot.consts 模块
 """
+
 import os
 import sys
 from typing import Literal

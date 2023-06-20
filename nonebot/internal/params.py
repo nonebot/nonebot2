@@ -63,7 +63,10 @@ def Depends(
             finally:
                 ...
 
-        async def handler(param_name: Any = Depends(depend_func), gen: Any = Depends(depend_gen_func)):
+        async def handler(
+            param_name: Any = Depends(depend_func),
+            gen: Any = Depends(depend_gen_func),
+        ):
             ...
         ```
     """

@@ -24,12 +24,17 @@
 - `load_all_plugins` => {ref}``load_all_plugins` <nonebot.plugin.load.load_all_plugins>`
 - `load_from_json` => {ref}``load_from_json` <nonebot.plugin.load.load_from_json>`
 - `load_from_toml` => {ref}``load_from_toml` <nonebot.plugin.load.load_from_toml>`
-- `load_builtin_plugin` => {ref}``load_builtin_plugin` <nonebot.plugin.load.load_builtin_plugin>`
-- `load_builtin_plugins` => {ref}``load_builtin_plugins` <nonebot.plugin.load.load_builtin_plugins>`
+- `load_builtin_plugin` =>
+  {ref}``load_builtin_plugin` <nonebot.plugin.load.load_builtin_plugin>`
+- `load_builtin_plugins` =>
+  {ref}``load_builtin_plugins` <nonebot.plugin.load.load_builtin_plugins>`
 - `get_plugin` => {ref}``get_plugin` <nonebot.plugin.get_plugin>`
-- `get_plugin_by_module_name` => {ref}``get_plugin_by_module_name` <nonebot.plugin.get_plugin_by_module_name>`
-- `get_loaded_plugins` => {ref}``get_loaded_plugins` <nonebot.plugin.get_loaded_plugins>`
-- `get_available_plugin_names` => {ref}``get_available_plugin_names` <nonebot.plugin.get_available_plugin_names>`
+- `get_plugin_by_module_name` =>
+  {ref}``get_plugin_by_module_name` <nonebot.plugin.get_plugin_by_module_name>`
+- `get_loaded_plugins` =>
+  {ref}``get_loaded_plugins` <nonebot.plugin.get_loaded_plugins>`
+- `get_available_plugin_names` =>
+  {ref}``get_available_plugin_names` <nonebot.plugin.get_available_plugin_names>`
 - `require` => {ref}``require` <nonebot.plugin.load.require>`
 
 FrontMatter:
@@ -69,7 +74,8 @@ def get_driver() -> Driver:
         全局 {ref}`nonebot.drivers.Driver` 对象
 
     异常:
-        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化
+            ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
     用法:
         ```python
@@ -99,7 +105,8 @@ def get_adapter(name: Union[str, Type[Adapter]]) -> Adapter:
 
     异常:
         ValueError: 指定的 {ref}`nonebot.adapters.Adapter` 未注册
-        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化
+            ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
     用法:
         ```python
@@ -121,7 +128,8 @@ def get_adapters() -> Dict[str, Adapter]:
         所有 {ref}`nonebot.adapters.Adapter` 实例字典
 
     异常:
-        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化
+            ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
     用法:
         ```python
@@ -139,7 +147,8 @@ def get_app() -> Any:
 
     异常:
         AssertionError: 全局 Driver 对象不是 {ref}`nonebot.drivers.ReverseDriver` 类型
-        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化
+            ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
     用法:
         ```python
@@ -154,14 +163,16 @@ def get_app() -> Any:
 
 
 def get_asgi() -> Any:
-    """获取全局 {ref}`nonebot.drivers.ReverseDriver` 对应 [ASGI](https://asgi.readthedocs.io/) 对象。
+    """获取全局 {ref}`nonebot.drivers.ReverseDriver` 对应
+    [ASGI](https://asgi.readthedocs.io/) 对象。
 
     返回:
         ASGI 对象
 
     异常:
         AssertionError: 全局 Driver 对象不是 {ref}`nonebot.drivers.ReverseDriver` 类型
-        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化
+            ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
     用法:
         ```python
@@ -182,7 +193,8 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
     当不提供时，返回一个 {ref}`nonebot.adapters.Bot`。
 
     参数:
-        self_id: 用来识别 {ref}`nonebot.adapters.Bot` 的 {ref}`nonebot.adapters.Bot.self_id` 属性
+        self_id: 用来识别 {ref}`nonebot.adapters.Bot` 的
+            {ref}`nonebot.adapters.Bot.self_id` 属性
 
     返回:
         {ref}`nonebot.adapters.Bot` 对象
@@ -190,7 +202,8 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
     异常:
         KeyError: 对应 self_id 的 Bot 不存在
         ValueError: 没有传入 self_id 且没有 Bot 可用
-        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化
+            ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
     用法:
         ```python
@@ -213,10 +226,12 @@ def get_bots() -> Dict[str, Bot]:
     """获取所有连接到 NoneBot 的 {ref}`nonebot.adapters.Bot` 对象。
 
     返回:
-        一个以 {ref}`nonebot.adapters.Bot.self_id` 为键，{ref}`nonebot.adapters.Bot` 对象为值的字典
+        一个以 {ref}`nonebot.adapters.Bot.self_id` 为键
+        {ref}`nonebot.adapters.Bot` 对象为值的字典
 
     异常:
-        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化 ({ref}`nonebot.init <nonebot.init>` 尚未调用)
+        ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化
+            ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
     用法:
         ```python

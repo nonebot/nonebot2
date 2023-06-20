@@ -1,6 +1,5 @@
 from pathlib import Path
 
-import nonebot
 from nonebot.plugin import PluginManager, _managers
 
 manager = PluginManager(

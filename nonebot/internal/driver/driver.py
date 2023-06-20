@@ -152,8 +152,10 @@ class Driver(abc.ABC):
                         await asyncio.gather(*coros)
                     except Exception as e:
                         logger.opt(colors=True, exception=e).error(
-                            "<r><bg #f8bbd0>Error when running WebSocketConnection hook. "
-                            "Running cancelled!</bg #f8bbd0></r>"
+                            "<r><bg #f8bbd0>"
+                            "Error when running WebSocketConnection hook. "
+                            "Running cancelled!"
+                            "</bg #f8bbd0></r>"
                         )
 
         asyncio.create_task(_run_hook(bot))
@@ -177,8 +179,10 @@ class Driver(abc.ABC):
                         await asyncio.gather(*coros)
                     except Exception as e:
                         logger.opt(colors=True, exception=e).error(
-                            "<r><bg #f8bbd0>Error when running WebSocketDisConnection hook. "
-                            "Running cancelled!</bg #f8bbd0></r>"
+                            "<r><bg #f8bbd0>"
+                            "Error when running WebSocketDisConnection hook. "
+                            "Running cancelled!"
+                            "</bg #f8bbd0></r>"
                         )
 
         asyncio.create_task(_run_hook(bot))
@@ -241,7 +245,7 @@ def combine_driver(driver: Type[Driver], *mixins: Type[ForwardMixin]) -> Type[Dr
     # check first
     assert issubclass(driver, Driver), "`driver` must be subclass of Driver"
     assert all(
-        map(lambda m: issubclass(m, ForwardMixin), mixins)
+        issubclass(m, ForwardMixin) for m in mixins
     ), "`mixins` must be subclass of ForwardMixin"
 
     if not mixins:
@@ -251,7 +255,9 @@ def combine_driver(driver: Type[Driver], *mixins: Type[ForwardMixin]) -> Type[Dr
         return (
             driver.type.__get__(self)
             + "+"
-            + "+".join(map(lambda x: x.type.__get__(self), mixins))
+            + "+".join(x.type.__get__(self) for x in mixins)
         )
 
-    return type("CombinedDriver", (*mixins, driver, ForwardDriver), {"type": property(type_)})  # type: ignore
+    return type(
+        "CombinedDriver", (*mixins, driver, ForwardDriver), {"type": property(type_)}
+    )  # type: ignore

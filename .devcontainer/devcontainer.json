@@ -13,6 +13,7 @@
         "[python]": {
           "editor.defaultFormatter": "ms-python.black-formatter",
           "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": true,
             "source.organizeImports": true
           }
         },
@@ -44,6 +45,7 @@
         "ms-python.vscode-pylance",
         "ms-python.isort",
         "ms-python.black-formatter",
+        "charliermarsh.ruff",
         "EditorConfig.EditorConfig",
         "esbenp.prettier-vscode",
         "bradlc.vscode-tailwindcss"

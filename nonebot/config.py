@@ -1,13 +1,16 @@
 """本模块定义了 NoneBot 本身运行所需的配置项。
 
-NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及 [`python-dotenv`](https://saurabh-kumar.com/python-dotenv/) 来读取配置。
+NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及
+[`python-dotenv`](https://saurabh-kumar.com/python-dotenv/) 来读取配置。
 
-配置项需符合特殊格式或 json 序列化格式。详情见 [`pydantic Field Type`](https://pydantic-docs.helpmanual.io/usage/types/) 文档。
+配置项需符合特殊格式或 json 序列化格式
+详情见 [`pydantic Field Type`](https://pydantic-docs.helpmanual.io/usage/types/) 文档。
 
 FrontMatter:
     sidebar_position: 1
     description: nonebot.config 模块
 """
+
 import os
 from datetime import timedelta
 from ipaddress import IPv4Address
@@ -28,9 +31,8 @@ from nonebot.log import logger
 
 class CustomEnvSettings(EnvSettingsSource):
     def __call__(self, settings: BaseSettings) -> Dict[str, Any]:
-        """
-        Build environment variables suitable for passing to the Model.
-        """
+        """Build environment variables suitable for passing to the Model."""
+
         d: Dict[str, Any] = {}
 
         if settings.__config__.case_sensitive:
@@ -56,7 +58,8 @@ class CustomEnvSettings(EnvSettingsSource):
                     if env_val_built := self.explode_env_vars(field, env_vars):
                         d[field.alias] = env_val_built
                 else:
-                    # field is complex and there's a value, decode that as JSON, then add explode_env_vars
+                    # field is complex and there's a value
+                    # decode that as JSON, then add explode_env_vars
                     try:
                         env_val = settings.__config__.parse_env_var(field.name, env_val)
                     except ValueError as e:
@@ -72,7 +75,8 @@ class CustomEnvSettings(EnvSettingsSource):
                     else:
                         d[field.alias] = env_val
             elif env_val is not None:
-                # simplest case, field is not complex, we only need to add the value if it was found
+                # simplest case, field is not complex
+                # we only need to add the value if it was found
                 d[field.alias] = env_val
 
         # remain user custom config
@@ -82,7 +86,7 @@ class CustomEnvSettings(EnvSettingsSource):
                 # there's a value, decode that as JSON
                 try:
                     env_val = settings.__config__.parse_env_var(env_name, val_striped)
-                except ValueError as e:
+                except ValueError:
                     logger.trace(
                         "Error while parsing JSON for "
                         f"{env_name!r}={val_striped!r}. "

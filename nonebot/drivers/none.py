@@ -9,7 +9,6 @@ FrontMatter:
     description: nonebot.drivers.none 模块
 """
 
-
 import signal
 import asyncio
 import threading

@@ -74,11 +74,11 @@ async def test_rule(app: App):
 
     async with app.test_api() as ctx:
         bot = ctx.create_bot()
-        assert await Rule(falsy)(bot, event, {}) == False
-        assert await Rule(truthy)(bot, event, {}) == True
-        assert await Rule(skipped)(bot, event, {}) == False
-        assert await Rule(truthy, falsy)(bot, event, {}) == False
-        assert await Rule(truthy, skipped)(bot, event, {}) == False
+        assert await Rule(falsy)(bot, event, {}) is False
+        assert await Rule(truthy)(bot, event, {}) is True
+        assert await Rule(skipped)(bot, event, {}) is False
+        assert await Rule(truthy, falsy)(bot, event, {}) is False
+        assert await Rule(truthy, skipped)(bot, event, {}) is False
 
 
 @pytest.mark.asyncio
@@ -118,7 +118,7 @@ async def test_trie(app: App):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "msg, ignorecase, type, text, expected",
+    ("msg", "ignorecase", "type", "text", "expected"),
     [
         ("prefix", False, "message", "prefix_", True),
         ("prefix", False, "message", "Prefix_", False),
@@ -158,7 +158,7 @@ async def test_startswith(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "msg, ignorecase, type, text, expected",
+    ("msg", "ignorecase", "type", "text", "expected"),
     [
         ("suffix", False, "message", "_suffix", True),
         ("suffix", False, "message", "_Suffix", False),
@@ -198,7 +198,7 @@ async def test_endswith(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "msg, ignorecase, type, text, expected",
+    ("msg", "ignorecase", "type", "text", "expected"),
     [
         ("fullmatch", False, "message", "fullmatch", True),
         ("fullmatch", False, "message", "Fullmatch", False),
@@ -238,7 +238,7 @@ async def test_fullmatch(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "kws, type, text, expected",
+    ("kws", "type", "text", "expected"),
     [
         (("key",), "message", "_key_", True),
         (("key", "foo"), "message", "_foo_", True),
@@ -270,26 +270,26 @@ async def test_keyword(
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "cmds, force_whitespace, cmd, whitespace, arg_text, expected",
+    ("cmds", "force_whitespace", "cmd", "whitespace", "arg_text", "expected"),
     [
         # command tests
-        [(("help",),), None, ("help",), None, None, True],
-        [(("help",),), None, ("foo",), None, None, False],
-        [(("help", "foo"),), None, ("help", "foo"), None, None, True],
-        [(("help", "foo"),), None, ("help", "bar"), None, None, False],
-        [(("help",), ("foo",)), None, ("help",), None, None, True],
-        [(("help",), ("foo",)), None, ("bar",), None, None, False],
+        ((("help",),), None, ("help",), None, None, True),
+        ((("help",),), None, ("foo",), None, None, False),
+        ((("help", "foo"),), None, ("help", "foo"), None, None, True),
+        ((("help", "foo"),), None, ("help", "bar"), None, None, False),
+        ((("help",), ("foo",)), None, ("help",), None, None, True),
+        ((("help",), ("foo",)), None, ("bar",), None, None, False),
         # whitespace tests
-        [(("help",),), True, ("help",), " ", "arg", True],
-        [(("help",),), True, ("help",), None, "arg", False],
-        [(("help",),), True, ("help",), None, None, True],
-        [(("help",),), False, ("help",), " ", "arg", False],
-        [(("help",),), False, ("help",), None, "arg", True],
-        [(("help",),), False, ("help",), None, None, True],
-        [(("help",),), " ", ("help",), " ", "arg", True],
-        [(("help",),), " ", ("help",), "\n", "arg", False],
-        [(("help",),), " ", ("help",), None, "arg", False],
-        [(("help",),), " ", ("help",), None, None, True],
+        ((("help",),), True, ("help",), " ", "arg", True),
+        ((("help",),), True, ("help",), None, "arg", False),
+        ((("help",),), True, ("help",), None, None, True),
+        ((("help",),), False, ("help",), " ", "arg", False),
+        ((("help",),), False, ("help",), None, "arg", True),
+        ((("help",),), False, ("help",), None, None, True),
+        ((("help",),), " ", ("help",), " ", "arg", True),
+        ((("help",),), " ", ("help",), "\n", "arg", False),
+        ((("help",),), " ", ("help",), None, "arg", False),
+        ((("help",),), " ", ("help",), None, None, True),
     ],
 )
 async def test_command(
@@ -424,7 +424,7 @@ async def test_shell_command():
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "pattern, type, text, expected, matched",
+    ("pattern", "type", "text", "expected", "matched"),
     [
         (
             r"(?P<key>key\d)",

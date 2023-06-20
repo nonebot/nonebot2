@@ -63,7 +63,8 @@ def generic_check_issubclass(
     - 如果 cls 是 `typing.Union` 或 `types.UnionType` 类型，
       则会检查其中的所有类型是否是 class_or_tuple 中一个类型的子类或 None。
     - 如果 cls 是 `typing.TypeVar` 类型，
-      则会检查其 `__bound__` 或 `__constraints__` 是否是 class_or_tuple 中一个类型的子类或 None。
+      则会检查其 `__bound__` 或 `__constraints__`
+      是否是 class_or_tuple 中一个类型的子类或 None。
     """
     try:
         return issubclass(cls, class_or_tuple)
@@ -171,6 +172,17 @@ async def run_coro_with_catch(
     exc: Tuple[Type[Exception], ...],
     return_on_err: Optional[R] = None,
 ) -> Optional[Union[T, R]]:
+    """运行协程并当遇到指定异常时返回指定值。
+
+    参数:
+        coro: 要运行的协程
+        exc: 要捕获的异常
+        return_on_err: 当发生异常时返回的值
+
+    返回:
+        协程的返回值或发生异常时的指定值
+    """
+
     try:
         return await coro
     except exc:
@@ -210,7 +222,7 @@ def resolve_dot_notation(
 
 
 class DataclassEncoder(json.JSONEncoder):
-    """在JSON序列化 {ref}`nonebot.adapters.Message` (List[Dataclass]) 时使用的 `JSONEncoder`"""
+    """可以序列化 {ref}`nonebot.adapters.Message`(List[Dataclass]) 的 `JSONEncoder`"""
 
     @overrides(json.JSONEncoder)
     def default(self, o):

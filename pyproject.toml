@@ -48,6 +48,7 @@ isort = "^5.10.1"
 black = "^23.1.0"
 nonemoji = "^0.1.2"
 pre-commit = "^3.0.0"
+ruff = "^0.0.272"
 
 [tool.poetry.group.test.dependencies]
 nonebug = "^0.3.0"
@@ -95,6 +96,17 @@ extra_standard_library = ["typing_extensions"]
 [tool.pycln]
 path = "."
 all = false
+
+[tool.ruff]
+select = ["E", "W", "F", "UP", "C", "T", "PYI", "PT", "Q"]
+ignore = ["E402", "C901"]
+
+line-length = 88
+target-version = "py38"
+
+[tool.ruff.flake8-pytest-style]
+fixture-parentheses = false
+mark-parentheses = false
 
 [tool.pyright]
 reportShadowedImports = false

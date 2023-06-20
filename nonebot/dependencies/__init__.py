@@ -82,8 +82,8 @@ class Dependent(Generic[R]):
     """
 
     call: _DependentCallable[R]
-    params: Tuple[ModelField] = field(default_factory=tuple)
-    parameterless: Tuple[Param] = field(default_factory=tuple)
+    params: Tuple[ModelField, ...] = field(default_factory=tuple)
+    parameterless: Tuple[Param, ...] = field(default_factory=tuple)
 
     def __repr__(self) -> str:
         if inspect.isfunction(self.call) or inspect.isclass(self.call):
@@ -129,7 +129,8 @@ class Dependent(Generic[R]):
                         break
                 else:
                     raise ValueError(
-                        f"Unknown parameter {param.name} for function {call} with type {param.annotation}"
+                        f"Unknown parameter {param.name} "
+                        f"for function {call} with type {param.annotation}"
                     )
 
             default_value = field_info.default
@@ -182,7 +183,7 @@ class Dependent(Generic[R]):
 
         params = cls.parse_params(call, allow_types)
         parameterless_params = (
-            tuple()
+            ()
             if parameterless is None
             else cls.parse_parameterless(tuple(parameterless), allow_types)
         )

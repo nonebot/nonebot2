@@ -34,7 +34,7 @@ async def test_init():
 async def test_get_driver(app: App, monkeypatch: pytest.MonkeyPatch):
     with monkeypatch.context() as m:
         m.setattr(nonebot, "_driver", None)
-        with pytest.raises(ValueError):
+        with pytest.raises(ValueError, match="initialized"):
             get_driver()
 
 
@@ -63,7 +63,7 @@ async def test_get_adapter(app: App, monkeypatch: pytest.MonkeyPatch):
             assert get_adapters() == {adapter_name: adapter}
             assert get_adapter(adapter_name) is adapter
             assert get_adapter(adapter.__class__) is adapter
-            with pytest.raises(ValueError):
+            with pytest.raises(ValueError, match="registered"):
                 get_adapter("not exist")
 
 
@@ -74,7 +74,8 @@ async def test_run(app: App, monkeypatch: pytest.MonkeyPatch):
     def mock_run(*args, **kwargs):
         nonlocal runned
         runned = True
-        assert args == ("arg",) and kwargs == {"kwarg": "kwarg"}
+        assert args == ("arg",)
+        assert kwargs == {"kwarg": "kwarg"}
 
     driver = get_driver()
 
@@ -89,7 +90,7 @@ async def test_run(app: App, monkeypatch: pytest.MonkeyPatch):
 async def test_get_bot(app: App, monkeypatch: pytest.MonkeyPatch):
     driver = get_driver()
 
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="no bots"):
         get_bot()
 
     with monkeypatch.context() as m:

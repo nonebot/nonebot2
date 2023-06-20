@@ -166,7 +166,7 @@ async def _apply_event_preprocessors(
                 for proc in _event_preprocessors
             )
         )
-    except IgnoredException as e:
+    except IgnoredException:
         logger.opt(colors=True).info(
             f"Event {escape_tag(event.get_event_name())} is <b>ignored</b>"
         )
