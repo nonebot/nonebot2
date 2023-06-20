@@ -1,7 +1,7 @@
 """本模块是 {ref}`nonebot.matcher.Matcher.rule` 的类型定义。
 
 每个{ref}`事件响应器 <nonebot.matcher.Matcher>`拥有一个
-{ref}`<nonebot.rule.Rule>`，其中是 `RuleChecker` 的集合。
+{ref}`nonebot.rule.Rule`，其中是 `RuleChecker` 的集合。
 只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
 
 FrontMatter:
