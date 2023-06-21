@@ -12,7 +12,7 @@ on:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.event.issue.number || github.run_id }}
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   plugin_test:
@@ -40,6 +40,7 @@ jobs:
     outputs:
       result: ${{ steps.plugin-test.outputs.RESULT }}
       output: ${{ steps.plugin-test.outputs.OUTPUT }}
+      metadata: ${{ steps.plugin-test.outputs.METADATA }}
     steps:
       - name: Install Poetry
         if: ${{ !startsWith(github.event_name, 'pull_request') }}
@@ -71,6 +72,12 @@ jobs:
         with:
           token: ${{ steps.generate-token.outputs.token }}
 
+      - name: Cache pre-commit hooks
+        uses: actions/cache@v3
+        with:
+          path: .cache/.pre-commit
+          key: noneflow-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}
+
       - name: NoneFlow
         uses: docker://ghcr.io/nonebot/noneflow:latest
         with:
@@ -84,5 +91,10 @@ jobs:
         env:
           PLUGIN_TEST_RESULT: ${{ needs.plugin_test.outputs.result }}
           PLUGIN_TEST_OUTPUT: ${{ needs.plugin_test.outputs.output }}
+          PLUGIN_TEST_METADATA: ${{ needs.plugin_test.outputs.metadata }}
           APP_ID: ${{ secrets.APP_ID }}
           PRIVATE_KEY: ${{ secrets.APP_KEY }}
+          PRE_COMMIT_HOME: /github/workspace/.cache/.pre-commit
+
+      - name: Fix permission
+        run: sudo chown -R $(whoami):$(id -ng) .cache/.pre-commit

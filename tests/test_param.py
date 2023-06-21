@@ -4,8 +4,9 @@ import pytest
 from nonebug import App
 
 from nonebot.matcher import Matcher
+from nonebot.dependencies import Dependent
 from nonebot.exception import TypeMisMatch
-from utils import make_fake_event, make_fake_message
+from utils import FakeMessage, make_fake_event
 from nonebot.params import (
     ArgParam,
     BotParam,
@@ -89,7 +90,9 @@ async def test_bot(app: App):
         sub_bot,
         union_bot,
         legacy_bot,
+        generic_bot,
         not_legacy_bot,
+        generic_bot_none,
     )
 
     async with app.test_dependent(get_bot, allow_types=[BotParam]) as ctx:
@@ -121,6 +124,16 @@ async def test_bot(app: App):
         ctx.pass_params(bot=bot)
         ctx.should_return(bot)
 
+    async with app.test_dependent(generic_bot, allow_types=[BotParam]) as ctx:
+        bot = ctx.create_bot()
+        ctx.pass_params(bot=bot)
+        ctx.should_return(bot)
+
+    async with app.test_dependent(generic_bot_none, allow_types=[BotParam]) as ctx:
+        bot = ctx.create_bot()
+        ctx.pass_params(bot=bot)
+        ctx.should_return(bot)
+
     with pytest.raises(ValueError):
         async with app.test_dependent(not_bot, allow_types=[BotParam]) as ctx:
             ...
@@ -138,11 +151,13 @@ async def test_event(app: App):
         union_event,
         legacy_event,
         event_message,
+        generic_event,
         event_plain_text,
         not_legacy_event,
+        generic_event_none,
     )
 
-    fake_message = make_fake_message()("text")
+    fake_message = FakeMessage("text")
     fake_event = make_fake_event(_message=fake_message)()
     fake_fooevent = make_fake_event(_base=FooEvent)()
 
@@ -170,6 +185,14 @@ async def test_event(app: App):
 
     async with app.test_dependent(union_event, allow_types=[EventParam]) as ctx:
         ctx.pass_params(event=fake_fooevent)
+        ctx.should_return(fake_event)
+
+    async with app.test_dependent(generic_event, allow_types=[EventParam]) as ctx:
+        ctx.pass_params(event=fake_event)
+        ctx.should_return(fake_event)
+
+    async with app.test_dependent(generic_event_none, allow_types=[EventParam]) as ctx:
+        ctx.pass_params(event=fake_event)
         ctx.should_return(fake_event)
 
     with pytest.raises(ValueError):
@@ -224,7 +247,7 @@ async def test_state(app: App):
         shell_command_argv,
     )
 
-    fake_message = make_fake_message()("text")
+    fake_message = FakeMessage("text")
     fake_matched = re.match(r"\[cq:(?P<type>.*?),(?P<arg>.*?)\]", "[cq:test,arg=value]")
     fake_state = {
         PREFIX_KEY: {
@@ -350,13 +373,62 @@ async def test_state(app: App):
 
 @pytest.mark.asyncio
 async def test_matcher(app: App):
-    from plugins.param.param_matcher import matcher, receive, last_receive
+    from plugins.param.param_matcher import (
+        FooMatcher,
+        matcher,
+        receive,
+        not_matcher,
+        sub_matcher,
+        last_receive,
+        union_matcher,
+        legacy_matcher,
+        generic_matcher,
+        not_legacy_matcher,
+        generic_matcher_none,
+    )
 
     fake_matcher = Matcher()
+    foo_matcher = FooMatcher()
 
     async with app.test_dependent(matcher, allow_types=[MatcherParam]) as ctx:
         ctx.pass_params(matcher=fake_matcher)
         ctx.should_return(fake_matcher)
+
+    async with app.test_dependent(legacy_matcher, allow_types=[MatcherParam]) as ctx:
+        ctx.pass_params(matcher=fake_matcher)
+        ctx.should_return(fake_matcher)
+
+    with pytest.raises(ValueError):
+        async with app.test_dependent(
+            not_legacy_matcher, allow_types=[MatcherParam]
+        ) as ctx:
+            ...
+
+    async with app.test_dependent(sub_matcher, allow_types=[MatcherParam]) as ctx:
+        ctx.pass_params(matcher=foo_matcher)
+        ctx.should_return(foo_matcher)
+
+    with pytest.raises(TypeMisMatch):
+        async with app.test_dependent(sub_matcher, allow_types=[MatcherParam]) as ctx:
+            ctx.pass_params(matcher=fake_matcher)
+
+    async with app.test_dependent(union_matcher, allow_types=[MatcherParam]) as ctx:
+        ctx.pass_params(matcher=foo_matcher)
+        ctx.should_return(foo_matcher)
+
+    async with app.test_dependent(generic_matcher, allow_types=[MatcherParam]) as ctx:
+        ctx.pass_params(matcher=fake_matcher)
+        ctx.should_return(fake_matcher)
+
+    async with app.test_dependent(
+        generic_matcher_none, allow_types=[MatcherParam]
+    ) as ctx:
+        ctx.pass_params(matcher=fake_matcher)
+        ctx.should_return(fake_matcher)
+
+    with pytest.raises(ValueError):
+        async with app.test_dependent(not_matcher, allow_types=[MatcherParam]) as ctx:
+            ...
 
     event = make_fake_event()()
     fake_matcher.set_receive("test", event)
@@ -381,7 +453,7 @@ async def test_arg(app: App):
     from plugins.param.param_arg import arg, arg_str, arg_plain_text
 
     matcher = Matcher()
-    message = make_fake_message()("text")
+    message = FakeMessage("text")
     matcher.set_arg("key", message)
 
     async with app.test_dependent(arg, allow_types=[ArgParam]) as ctx:
@@ -413,3 +485,41 @@ async def test_default(app: App):
 
     async with app.test_dependent(default, allow_types=[DefaultParam]) as ctx:
         ctx.should_return(1)
+
+
+@pytest.mark.asyncio
+async def test_priority():
+    from plugins.param.priority import complex_priority
+
+    dependent = Dependent.parse(
+        call=complex_priority,
+        allow_types=[
+            DependParam,
+            BotParam,
+            EventParam,
+            StateParam,
+            MatcherParam,
+            ArgParam,
+            ExceptionParam,
+            DefaultParam,
+        ],
+    )
+    for param in dependent.params:
+        if param.name == "sub":
+            assert isinstance(param.field_info, DependParam)
+        elif param.name == "bot":
+            assert isinstance(param.field_info, BotParam)
+        elif param.name == "event":
+            assert isinstance(param.field_info, EventParam)
+        elif param.name == "state":
+            assert isinstance(param.field_info, StateParam)
+        elif param.name == "matcher":
+            assert isinstance(param.field_info, MatcherParam)
+        elif param.name == "arg":
+            assert isinstance(param.field_info, ArgParam)
+        elif param.name == "exception":
+            assert isinstance(param.field_info, ExceptionParam)
+        elif param.name == "default":
+            assert isinstance(param.field_info, DefaultParam)
+        else:
+            raise ValueError(f"unknown param {param.name}")

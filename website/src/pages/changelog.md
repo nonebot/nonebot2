@@ -7,12 +7,61 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 添加内置插件的插件元数据 [@yanyongyu](https://github.com/yanyongyu) ([#2113](https://github.com/nonebot/nonebot2/pull/2113))
+- Feature: 插件商店适配最新的插件元数据 [@he0119](https://github.com/he0119) ([#2094](https://github.com/nonebot/nonebot2/pull/2094))
+- Feature: 依赖注入支持 Generic TypeVar 和 Matcher 重载 [@yanyongyu](https://github.com/yanyongyu) ([#2089](https://github.com/nonebot/nonebot2/pull/2089))
+
+### 🐛 Bug 修复
+
+- Fix: aiohttp 请求时 data 和 file 不能同时存在 [@j1g5awi](https://github.com/j1g5awi) ([#2088](https://github.com/nonebot/nonebot2/pull/2088))
+- Fix: 修复因 loguru 更新导致的启动和关闭日志 name 不正常 [@DiheChen](https://github.com/DiheChen) ([#2080](https://github.com/nonebot/nonebot2/pull/2080))
+
+### 📝 文档
+
+- Docs: 删除商店插件发布多余模块 [@forchannot](https://github.com/forchannot) ([#2095](https://github.com/nonebot/nonebot2/pull/2095))
+- Docs: 微调插件元数据的部分描述 [@NCBM](https://github.com/NCBM) ([#2096](https://github.com/nonebot/nonebot2/pull/2096))
+- Docs: 完成发布插件教程 [@NCBM](https://github.com/NCBM) ([#2078](https://github.com/nonebot/nonebot2/pull/2078))
+- Docs: 更新插件元数据的相关描述 [@NCBM](https://github.com/NCBM) ([#2087](https://github.com/nonebot/nonebot2/pull/2087))
+- Docs: 添加 Villa 适配器到 README [@CMHopeSunshine](https://github.com/CMHopeSunshine) ([#2086](https://github.com/nonebot/nonebot2/pull/2086))
+
+### 💫 杂项
+
+- Test: 移除 httpbin 并整理测试 [@yanyongyu](https://github.com/yanyongyu) ([#2110](https://github.com/nonebot/nonebot2/pull/2110))
+- CI: 缓存 NoneFlow 所需的 pre-commit hooks [@he0119](https://github.com/he0119) ([#2104](https://github.com/nonebot/nonebot2/pull/2104))
+- Plugin: 移除过时未更新的插件\&Bot [@FYWinds](https://github.com/FYWinds) ([#2072](https://github.com/nonebot/nonebot2/pull/2072))
+- Plugin: 删除插件 nonebot_plugin_r6s [@BalconyJH](https://github.com/BalconyJH) ([#2071](https://github.com/nonebot/nonebot2/pull/2071))
+
+### 🍻 插件发布
+
+- Plugin: follow_withdraw [@noneflow](https://github.com/noneflow) ([#2112](https://github.com/nonebot/nonebot2/pull/2112))
+- Plugin: 战雷查水表 [@noneflow](https://github.com/noneflow) ([#2103](https://github.com/nonebot/nonebot2/pull/2103))
+- Plugin: bili_push [@noneflow](https://github.com/noneflow) ([#2101](https://github.com/nonebot/nonebot2/pull/2101))
+- Plugin: AI 作曲 [@noneflow](https://github.com/noneflow) ([#2093](https://github.com/nonebot/nonebot2/pull/2093))
+- Plugin: pcrjjc [@noneflow](https://github.com/noneflow) ([#2091](https://github.com/nonebot/nonebot2/pull/2091))
+- Plugin: twitter 订阅 [@noneflow](https://github.com/noneflow) ([#2082](https://github.com/nonebot/nonebot2/pull/2082))
+- Plugin: 链接防夹 [@noneflow](https://github.com/noneflow) ([#2074](https://github.com/nonebot/nonebot2/pull/2074))
+- Plugin: 碧蓝航线攻略 [@noneflow](https://github.com/noneflow) ([#2076](https://github.com/nonebot/nonebot2/pull/2076))
+
+### 🍻 机器人发布
+
+- Bot: ReimeiBot-黎明机器人 [@noneflow](https://github.com/noneflow) ([#2107](https://github.com/nonebot/nonebot2/pull/2107))
+
+### 🍻 适配器发布
+
+- Adapter: 大别野 [@noneflow](https://github.com/noneflow) ([#2085](https://github.com/nonebot/nonebot2/pull/2085))
+
+## v2.0.0
+
 ### 💥 破坏性变更
 
 - Feature: 支持 `re.Match` 依赖注入 [@yanyongyu](https://github.com/yanyongyu) ([#1950](https://github.com/nonebot/nonebot2/pull/1950))
 
 ### 🚀 新功能
 
+- Feature: 优化事件分发方法 [@yanyongyu](https://github.com/yanyongyu) ([#2067](https://github.com/nonebot/nonebot2/pull/2067))
+- Feature: 移除部分依赖注入参数默认值检查 [@yanyongyu](https://github.com/yanyongyu) ([#2034](https://github.com/nonebot/nonebot2/pull/2034))
 - Feature: 添加插件元数据字段 `type` `homepage` `supported_adapters` [@yanyongyu](https://github.com/yanyongyu) ([#2012](https://github.com/nonebot/nonebot2/pull/2012))
 - Feature: 支持 `re.Match` 依赖注入 [@yanyongyu](https://github.com/yanyongyu) ([#1950](https://github.com/nonebot/nonebot2/pull/1950))
 - Feature: 支持主动停止 `none` 系列驱动器 [@yanyongyu](https://github.com/yanyongyu) ([#1951](https://github.com/nonebot/nonebot2/pull/1951))
@@ -20,12 +69,15 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修复插件 require 未声明插件会识别为子插件 [@yanyongyu](https://github.com/yanyongyu) ([#2040](https://github.com/nonebot/nonebot2/pull/2040))
 - Fix: 修复命令强制空白符影响无参数情况 [@yanyongyu](https://github.com/yanyongyu) ([#1975](https://github.com/nonebot/nonebot2/pull/1975))
 - Fix: `run_sync` 上下文 [@synodriver](https://github.com/synodriver) ([#1968](https://github.com/nonebot/nonebot2/pull/1968))
 - Fix: shell command 包含富文本时报错信息出错 [@yanyongyu](https://github.com/yanyongyu) ([#1923](https://github.com/nonebot/nonebot2/pull/1923))
 
 ### 📝 文档
 
+- Docs: 添加 Alconna 响应器介绍 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2069](https://github.com/nonebot/nonebot2/pull/2069))
+- Docs: 更新 README 适配器链接 [@yanyongyu](https://github.com/yanyongyu) ([#2068](https://github.com/nonebot/nonebot2/pull/2068))
 - Docs: 使用 issue form 进行商店发布 [@yanyongyu](https://github.com/yanyongyu) ([#2010](https://github.com/nonebot/nonebot2/pull/2010))
 - Docs: 修复获取事件信息文档代码范例中的高亮行 [@Lptr-byte](https://github.com/Lptr-byte) ([#1983](https://github.com/nonebot/nonebot2/pull/1983))
 - Docs: 修复事件处理函数文档代码范例中缺失的 import [@Lptr-byte](https://github.com/Lptr-byte) ([#1982](https://github.com/nonebot/nonebot2/pull/1982))
@@ -39,6 +91,11 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: Hello World 添加 tag [@A-kirami](https://github.com/A-kirami) ([#2056](https://github.com/nonebot/nonebot2/pull/2056))
+- Plugin: 修改 nonebot-plugin-logpile 的名称和描述 [@A-kirami](https://github.com/A-kirami) ([#2057](https://github.com/nonebot/nonebot2/pull/2057))
+- Plugin: 移除 `nonebot_paddle_ocr` 和 `nonebot_poe_chat` [@canxin121](https://github.com/canxin121) ([#2039](https://github.com/nonebot/nonebot2/pull/2039))
+- Plugin: 移除 `nonebot-plugin-rtfm` 插件 [@MingxuanGame](https://github.com/MingxuanGame) ([#2037](https://github.com/nonebot/nonebot2/pull/2037))
+- Plugin: 移除 extrautils 工具拓展插件（暂停维护） [@NCBM](https://github.com/NCBM) ([#2033](https://github.com/nonebot/nonebot2/pull/2033))
 - Adapter: 更新 Minecraft 适配器 [@17TheWord](https://github.com/17TheWord) ([#1972](https://github.com/nonebot/nonebot2/pull/1972))
 - Docs: 更正 issue 表单部分内容 [@A-kirami](https://github.com/A-kirami) ([#1961](https://github.com/nonebot/nonebot2/pull/1961))
 - Plugin: 更新 AutoReply 插件描述 [@lgc2333](https://github.com/lgc2333) ([#1949](https://github.com/nonebot/nonebot2/pull/1949))
@@ -53,6 +110,17 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: stablediffusion 绘画插件 [@noneflow](https://github.com/noneflow) ([#2066](https://github.com/nonebot/nonebot2/pull/2066))
+- Plugin: 随机抽取自定义内容 [@noneflow](https://github.com/noneflow) ([#2064](https://github.com/nonebot/nonebot2/pull/2064))
+- Plugin: NAGA 公交车 [@noneflow](https://github.com/noneflow) ([#2062](https://github.com/nonebot/nonebot2/pull/2062))
+- Plugin: 本子标题关键词提取 [@noneflow](https://github.com/noneflow) ([#2058](https://github.com/nonebot/nonebot2/pull/2058))
+- Plugin: puzzle [@noneflow](https://github.com/noneflow) ([#2054](https://github.com/nonebot/nonebot2/pull/2054))
+- Plugin: homo_mathematician [@noneflow](https://github.com/noneflow) ([#2052](https://github.com/nonebot/nonebot2/pull/2052))
+- Plugin: cuber [@noneflow](https://github.com/noneflow) ([#2048](https://github.com/nonebot/nonebot2/pull/2048))
+- Plugin: nonebot-plugin-lua [@noneflow](https://github.com/noneflow) ([#2049](https://github.com/nonebot/nonebot2/pull/2049))
+- Plugin: Github 仓库卡片 [@noneflow](https://github.com/noneflow) ([#2042](https://github.com/nonebot/nonebot2/pull/2042))
+- Plugin: 股票看盘助手 [@noneflow](https://github.com/noneflow) ([#2032](https://github.com/nonebot/nonebot2/pull/2032))
+- Plugin: 便携插件安装器 [@noneflow](https://github.com/noneflow) ([#2027](https://github.com/nonebot/nonebot2/pull/2027))
 - Plugin: 会话 id [@noneflow](https://github.com/noneflow) ([#2025](https://github.com/nonebot/nonebot2/pull/2025))
 - Plugin: SD 绘画插件 [@noneflow](https://github.com/noneflow) ([#2023](https://github.com/nonebot/nonebot2/pull/2023))
 - Plugin: 《女神异闻录 5》预告信生成器 [@noneflow](https://github.com/noneflow) ([#2021](https://github.com/nonebot/nonebot2/pull/2021))

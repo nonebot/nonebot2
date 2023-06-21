@@ -2,7 +2,7 @@
 
 NoneBot 使用 [`loguru`][loguru] 来记录日志信息。
 
-自定义 logger 请参考 [自定义日志](https://v2.nonebot.dev/docs/appendices/log)
+自定义 logger 请参考 [自定义日志](https://nonebot.dev/docs/appendices/log)
 以及 [`loguru`][loguru] 文档。
 
 [loguru]: https://github.com/Delgan/loguru
@@ -54,7 +54,7 @@ class LoguruHandler(logging.Handler):  # pragma: no cover
         except ValueError:
             level = record.levelno
 
-        frame, depth = logging.currentframe(), 2
+        frame, depth = sys._getframe(6), 6
         while frame and frame.f_code.co_filename == logging.__file__:
             frame = frame.f_back
             depth += 1

@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot-plugin-docs"
-version = "2.0.0-beta.1"
+version = "2.0.0"
 description = "View NoneBot2 Docs Locally"
 authors = ["yanyongyu <yyy@nonebot.dev>"]
 license = "MIT"
@@ -13,7 +13,7 @@ include = ["nonebot_plugin_docs/dist/**/*"]
 
 [tool.poetry.dependencies]
 python = "^3.8"
-nonebot2 = "^2.0.0-beta.1"
+nonebot2 = "^2.0.0"
 
 [tool.poetry.dev-dependencies]
 

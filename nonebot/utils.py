@@ -58,8 +58,12 @@ def generic_check_issubclass(
 ) -> bool:
     """检查 cls 是否是 class_or_tuple 中的一个类型子类。
 
-    特别的，如果 cls 是 `typing.Union` 或 `types.UnionType` 类型，
-    则会检查其中的类型是否是 class_or_tuple 中的一个类型子类。（None 会被忽略）
+    特别的：
+
+    - 如果 cls 是 `typing.Union` 或 `types.UnionType` 类型，
+      则会检查其中的所有类型是否是 class_or_tuple 中一个类型的子类或 None。
+    - 如果 cls 是 `typing.TypeVar` 类型，
+      则会检查其 `__bound__` 或 `__constraints__` 是否是 class_or_tuple 中一个类型的子类或 None。
     """
     try:
         return issubclass(cls, class_or_tuple)
@@ -70,8 +74,18 @@ def generic_check_issubclass(
                 is_none_type(type_) or generic_check_issubclass(type_, class_or_tuple)
                 for type_ in get_args(cls)
             )
+        # ensure generic List, Dict can be checked
         elif origin:
             return issubclass(origin, class_or_tuple)
+        elif isinstance(cls, TypeVar):
+            if cls.__constraints__:
+                return all(
+                    is_none_type(type_)
+                    or generic_check_issubclass(type_, class_or_tuple)
+                    for type_ in cls.__constraints__
+                )
+            elif cls.__bound__:
+                return generic_check_issubclass(cls.__bound__, class_or_tuple)
         return False
 
 
@@ -113,8 +127,7 @@ def run_sync(call: Callable[P, R]) -> Callable[P, Coroutine[None, None, R]]:
         loop = asyncio.get_running_loop()
         pfunc = partial(call, *args, **kwargs)
         context = copy_context()
-        context_run = context.run
-        result = await loop.run_in_executor(None, context_run, pfunc)
+        result = await loop.run_in_executor(None, partial(context.run, pfunc))
         return result
 
     return _wrapper
@@ -139,6 +152,7 @@ async def run_sync_ctx_manager(
 async def run_coro_with_catch(
     coro: Coroutine[Any, Any, T],
     exc: Tuple[Type[Exception], ...],
+    return_on_err: None = None,
 ) -> Union[T, None]:
     ...
 
@@ -196,7 +210,7 @@ def resolve_dot_notation(
 
 
 class DataclassEncoder(json.JSONEncoder):
-    """在JSON序列化 {re}`nonebot.adapters._message.Message` (List[Dataclass]) 时使用的 `JSONEncoder`"""
+    """在JSON序列化 {ref}`nonebot.adapters.Message` (List[Dataclass]) 时使用的 `JSONEncoder`"""
 
     @overrides(json.JSONEncoder)
     def default(self, o):

@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://v2.nonebot.dev/"><img src="https://raw.githubusercontent.com/nonebot/nonebot2/master/docs/.vuepress/public/logo.png" width="200" height="200" alt="nonebot"></a>
+  <a href="https://nonebot.dev/"><img src="https://nonebot.dev/logo.png" width="200" height="200" alt="nonebot"></a>
 </p>
 
 <div align="center">
@@ -22,6 +22,6 @@ _✨ NoneBot 本地文档插件 ✨_
 
 ## 使用方式
 
-加载插件并启动 Bot ，在浏览器内打开 `http://host:port/docs/`。
+加载插件并启动 Bot ，在浏览器内打开 `http://host:port/website/`。
 
 具体网址会在控制台内输出。

@@ -22,11 +22,11 @@ async def test_load_plugin():
 
 
 @pytest.mark.asyncio
-async def test_load_plugins(load_plugin: Set[Plugin], load_example: Set[Plugin]):
+async def test_load_plugins(load_plugin: Set[Plugin], load_builtin_plugin: Set[Plugin]):
     loaded_plugins = {
         plugin for plugin in nonebot.get_loaded_plugins() if not plugin.parent_plugin
     }
-    assert loaded_plugins >= load_plugin | load_example
+    assert loaded_plugins >= load_plugin | load_builtin_plugin
 
     # check simple plugin
     assert "plugins.export" in sys.modules
@@ -138,7 +138,7 @@ async def test_plugin_metadata():
         "description": "测试插件元信息",
         "usage": "无法使用",
         "type": "application",
-        "homepage": "https://v2.nonebot.dev",
+        "homepage": "https://nonebot.dev",
         "config": Config,
         "supported_adapters": {"~onebot.v11", "plugins.metadata:FakeAdapter"},
         "extra": {"author": "NoneBot"},

@@ -84,7 +84,7 @@ NoneBot2 的代码风格遵循 [PEP 8](https://www.python.org/dev/peps/pep-0008/
 
 ## 为社区做贡献
 
-你可以在 NoneBot 商店上架自己的适配器、插件、机器人，具体步骤可参考 [发布插件](https://v2.nonebot.dev/docs/developer/plugin-publishing) 一节。
+你可以在 NoneBot 商店上架自己的适配器、插件、机器人，具体步骤可参考 [发布插件](https://nonebot.dev/docs/developer/plugin-publishing) 一节。
 
 我们仅对插件的兼容性进行简单测试，并会在下一个版本发布前对与该版本不兼容的插件作出处理。
 

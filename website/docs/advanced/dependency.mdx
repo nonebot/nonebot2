@@ -71,7 +71,9 @@ async def _(foo: str = "bar"): ...
 
 获取当前事件的 Bot 对象。
 
-通过标注参数为 `Bot` 类型，或者一系列 `Bot` 类型，即可获取到当前事件的 Bot 对象。为兼容性考虑，如果参数名为 `bot` 且无类型注解，也会视为 `Bot` 依赖注入。
+通过标注参数为 `Bot` 类型，或者一系列 `Bot` 类型，即可获取到当前事件的 Bot 对象。为兼容性考虑，如果参数名为 `bot` 且无类型注解，也会视为 Bot 依赖注入。
+
+Bot 依赖注入支持重载（即：可以标注参数为子类型）且具有[重载优先检查权](../appendices/overload.md#重载)。
 
 <Tabs groupId="python">
   <TabItem value="3.10" label="Python 3.10+" default>
@@ -108,7 +110,9 @@ async def _(bot): ...  # 兼容性处理
 
 获取当前事件。
 
-通过标注参数为 `Event` 类型，或者一系列 `Event` 类型，即可获取到当前事件。为兼容性考虑，如果参数名为 `event` 且无类型注解，也会视为 `Event` 依赖注入。
+通过标注参数为 `Event` 类型，或者一系列 `Event` 类型，即可获取到当前事件。为兼容性考虑，如果参数名为 `event` 且无类型注解，也会视为 Event 依赖注入。
+
+Event 依赖注入支持重载（即：可以标注参数为子类型）且具有[重载优先检查权](../appendices/overload.md#重载)。
 
 <Tabs groupId="python">
   <TabItem value="3.10" label="Python 3.10+" default>
@@ -143,6 +147,8 @@ async def _(event): ...  # 兼容性处理
 
 获取当前[会话状态](../appendices/session-state.md)。
 
+通过标注参数为 `T_State` 类型，即可获取到当前会话状态。为兼容性考虑，如果参数名为 `state` 且无类型注解，也会视为 State 依赖注入。
+
 ```python
 from nonebot.typing import T_State
 
@@ -153,10 +159,15 @@ async def _(foo: T_State): ...
 
 获取当前事件响应器实例。常用于使用[事件响应器操作](../appendices/session-control.mdx)。
 
+通过标注参数为 `Matcher` 类型，或者一系列 `Matcher` 类型，即可获取到当前事件。为兼容性考虑，如果参数名为 `matcher` 且无类型注解，也会视为 Matcher 依赖注入。
+
+Matcher 依赖注入支持重载（即：可以标注参数为子类型）且具有[重载优先检查权](../appendices/overload.md#重载)。
+
 ```python
 from nonebot.matcher import Matcher
 
-async def _(matcher: Matcher): ...
+async def _(foo: Matcher): ...
+async def _(matcher): ...  # 兼容性处理
 ```
 
 ### Exception
@@ -444,7 +455,7 @@ async def get_client() -> AsyncGenerator[httpx.AsyncClient, None]:
 
 @test.handle()
 async def _(x: Annotated[httpx.AsyncClient, Depends(get_client)]):
-    resp = await x.get("https://v2.nonebot.dev")
+    resp = await x.get("https://nonebot.dev")
 ```
 
   </TabItem>
@@ -466,7 +477,7 @@ async def get_client() -> AsyncGenerator[httpx.AsyncClient, None]:
 
 @test.handle()
 async def _(x: httpx.AsyncClient = Depends(get_client)):
-    resp = await x.get("https://v2.nonebot.dev")
+    resp = await x.get("https://nonebot.dev")
 ```
 
   </TabItem>

@@ -4,22 +4,6 @@ description: 发布插件到 NoneBot 官方商店
 labels: ["Plugin"]
 body:
   - type: input
-    id: name
-    attributes:
-      label: 插件名称
-      description: 插件名称
-    validations:
-      required: true
-
-  - type: input
-    id: description
-    attributes:
-      label: 插件描述
-      description: 插件描述
-    validations:
-      required: true
-
-  - type: input
     id: pypi
     attributes:
       label: PyPI 项目名
@@ -38,15 +22,6 @@ body:
       required: true
 
   - type: input
-    id: homepage
-    attributes:
-      label: 插件项目仓库/主页链接
-      description: 插件项目仓库/主页链接
-      placeholder: e.g. https://github.com/xxx/xxx
-    validations:
-      required: true
-
-  - type: input
     id: tags
     attributes:
       label: 标签
@@ -55,3 +30,14 @@ body:
       value: "[]"
     validations:
       required: true
+
+  - type: textarea
+    id: config
+    attributes:
+      label: 插件配置项
+      description: 插件配置项
+      render: dotenv
+      placeholder: |
+        # e.g.
+        # KEY=VALUE
+        # KEY2=VALUE2

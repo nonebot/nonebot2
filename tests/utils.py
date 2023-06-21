@@ -1,6 +1,6 @@
 from typing import Type, Union, Mapping, Iterable, Optional
 
-from pydantic import create_model
+from pydantic import Extra, create_model
 
 from nonebot.adapters import Event, Message, MessageSegment
 
@@ -12,51 +12,49 @@ def escape_text(s: str, *, escape_comma: bool = True) -> str:
     return s
 
 
-def make_fake_message():
-    class FakeMessageSegment(MessageSegment["FakeMessage"]):
-        @classmethod
-        def get_message_class(cls):
-            return FakeMessage
+class FakeMessageSegment(MessageSegment["FakeMessage"]):
+    @classmethod
+    def get_message_class(cls):
+        return FakeMessage
 
-        def __str__(self) -> str:
-            return self.data["text"] if self.type == "text" else f"[fake:{self.type}]"
+    def __str__(self) -> str:
+        return self.data["text"] if self.type == "text" else f"[fake:{self.type}]"
 
-        @classmethod
-        def text(cls, text: str):
-            return cls("text", {"text": text})
+    @classmethod
+    def text(cls, text: str):
+        return cls("text", {"text": text})
 
-        @staticmethod
-        def image(url: str):
-            return FakeMessageSegment("image", {"url": url})
+    @staticmethod
+    def image(url: str):
+        return FakeMessageSegment("image", {"url": url})
 
-        @staticmethod
-        def nested(content: "FakeMessage"):
-            return FakeMessageSegment("node", {"content": content})
+    @staticmethod
+    def nested(content: "FakeMessage"):
+        return FakeMessageSegment("node", {"content": content})
 
-        def is_text(self) -> bool:
-            return self.type == "text"
+    def is_text(self) -> bool:
+        return self.type == "text"
 
-    class FakeMessage(Message[FakeMessageSegment]):
-        @classmethod
-        def get_segment_class(cls):
-            return FakeMessageSegment
 
-        @staticmethod
-        def _construct(msg: Union[str, Iterable[Mapping]]):
-            if isinstance(msg, str):
-                yield FakeMessageSegment.text(msg)
-            else:
-                for seg in msg:
-                    yield FakeMessageSegment(**seg)
-            return
+class FakeMessage(Message[FakeMessageSegment]):
+    @classmethod
+    def get_segment_class(cls):
+        return FakeMessageSegment
 
-        def __add__(
-            self, other: Union[str, FakeMessageSegment, Iterable[FakeMessageSegment]]
-        ):
-            other = escape_text(other) if isinstance(other, str) else other
-            return super().__add__(other)
+    @staticmethod
+    def _construct(msg: Union[str, Iterable[Mapping]]):
+        if isinstance(msg, str):
+            yield FakeMessageSegment.text(msg)
+        else:
+            for seg in msg:
+                yield FakeMessageSegment(**seg)
+        return
 
-    return FakeMessage
+    def __add__(
+        self, other: Union[str, FakeMessageSegment, Iterable[FakeMessageSegment]]
+    ):
+        other = escape_text(other) if isinstance(other, str) else other
+        return super().__add__(other)
 
 
 def make_fake_event(
@@ -70,9 +68,9 @@ def make_fake_event(
     _to_me: bool = True,
     **fields,
 ) -> Type[Event]:
-    _Fake = create_model("_Fake", __base__=_base or Event, **fields)
+    Base = _base or Event
 
-    class FakeEvent(_Fake):
+    class FakeEvent(Base, extra=Extra.forbid):
         def get_type(self) -> str:
             return _type
 
@@ -100,7 +98,4 @@ def make_fake_event(
         def is_tome(self) -> bool:
             return _to_me
 
-        class Config:
-            extra = "forbid"
-
-    return FakeEvent
+    return create_model("FakeEvent", __base__=FakeEvent, **fields)
