@@ -3853,10 +3853,10 @@
   {
     "module_name": "nonebot_plugin_l4d2_server",
     "project_link": "nonebot-plugin-l4d2-server",
-    "name": "求生之路2——服务器操作",
-    "desc": "在Q群里做求生之路服务器相关操作，方便操作",
-    "author": "Umamusume-Agnes-Digital",
-    "homepage": "https://github.com/Umamusume-Agnes-Digital/nonebot_plugin_l4d2_server",
+    "name": "求生之路2—相关功能",
+    "desc": "群内查询服务器状态，为自己的服务器传三分图等等，以及电信anne服的rank查询",
+    "author": "Agnes4m",
+    "homepage": "https://github.com/Agnes4m/nonebot_plugin_l4d2_server",
     "tags": [
       {
         "label": "l4d2",
@@ -4709,8 +4709,8 @@
     "project_link": "nonebot-plugin-maimai",
     "name": "舞萌maimai插件版",
     "desc": "要使用游客模式吗？ 要使用游客模式吗？",
-    "author": "Umamusume-Agnes-Digital",
-    "homepage": "https://github.com/Umamusume-Agnes-Digital/nonebot_plugin_maimai",
+    "author": "Agnes4m",
+    "homepage": "https://github.com/Agnes4m/nonebot_plugin_maimai",
     "tags": [
       {
         "label": "maimai",
@@ -5639,8 +5639,8 @@
     "project_link": "nonebot-plugin-gw2",
     "name": "激战2！！！",
     "desc": "通过激战2星岬岛来返回信息",
-    "author": "Umamusume-Agnes-Digital",
-    "homepage": "https://github.com/Umamusume-Agnes-Digital/nonebot_plugin_gw2",
+    "author": "Agnes4m",
+    "homepage": "https://github.com/Agnes4m/nonebot_plugin_gw2",
     "tags": [
       {
         "label": "gw2",
@@ -6646,7 +6646,7 @@
     "module_name": "nonebot_plugin_al",
     "project_link": "nonebot-plugin-al",
     "name": "碧蓝航线攻略",
-    "desc": "从b站wiki搬运碧蓝井号榜等等攻略一图流",
+    "desc": "从b站wiki搬运碧蓝井号榜,以及blhx_wiki的移植",
     "author": "Agnes4m",
     "homepage": "https://github.com/Agnes4m/nonebot_plugin_AL",
     "tags": [
