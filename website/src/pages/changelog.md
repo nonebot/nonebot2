@@ -28,6 +28,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 修改插件信息和仓库地址 [@Agnes4m](https://github.com/Agnes4m) ([#2115](https://github.com/nonebot/nonebot2/pull/2115))
 - Test: 移除 httpbin 并整理测试 [@yanyongyu](https://github.com/yanyongyu) ([#2110](https://github.com/nonebot/nonebot2/pull/2110))
 - CI: 缓存 NoneFlow 所需的 pre-commit hooks [@he0119](https://github.com/he0119) ([#2104](https://github.com/nonebot/nonebot2/pull/2104))
 - Plugin: 移除过时未更新的插件\&Bot [@FYWinds](https://github.com/FYWinds) ([#2072](https://github.com/nonebot/nonebot2/pull/2072))
