@@ -6785,5 +6785,23 @@
       "nonebot.adapters.onebot.v12",
       "nonebot.adapters.qqguild"
     ]
+  },
+  {
+    "module_name": "nonebot_plugin_error_alert",
+    "project_link": "nonebot-plugin-error-alert",
+    "name": "错误告警",
+    "desc": "当Bot发生运行错误时发送消息提醒",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/bot-ssttkkl/nonebot-plugin-error-alert",
+    "tags": [],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": [
+      "nonebot.adapters.onebot.v12",
+      "nonebot.adapters.telegram",
+      "nonebot.adapters.qqguild",
+      "nonebot.adapters.kaiheila",
+      "nonebot.adapters.onebot.v11"
+    ]
   }
 ]
