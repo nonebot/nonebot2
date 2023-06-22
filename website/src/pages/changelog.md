@@ -36,6 +36,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 错误告警 [@noneflow](https://github.com/noneflow) ([#2117](https://github.com/nonebot/nonebot2/pull/2117))
 - Plugin: follow_withdraw [@noneflow](https://github.com/noneflow) ([#2112](https://github.com/nonebot/nonebot2/pull/2112))
 - Plugin: 战雷查水表 [@noneflow](https://github.com/noneflow) ([#2103](https://github.com/nonebot/nonebot2/pull/2103))
 - Plugin: bili_push [@noneflow](https://github.com/noneflow) ([#2101](https://github.com/nonebot/nonebot2/pull/2101))
