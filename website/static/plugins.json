@@ -6803,5 +6803,26 @@
       "nonebot.adapters.kaiheila",
       "nonebot.adapters.onebot.v11"
     ]
+  },
+  {
+    "module_name": "nonebot_plugin_ocgbot_v2",
+    "project_link": "nonebot-plugin-ocgbot-v2",
+    "name": "nonbot-plugin-ocgbot-v2",
+    "desc": "提供游戏王相关服务",
+    "author": "fireinsect",
+    "homepage": "https://github.com/fireinsect/nonebot-plugin-ocgbot-v2/",
+    "tags": [
+      {
+        "label": "游戏王",
+        "color": "#2ecbed"
+      },
+      {
+        "label": "ygo",
+        "color": "#f77117"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
