@@ -89,19 +89,28 @@ def get_driver() -> Driver:
 
 @overload
 def get_adapter(name: str) -> Adapter:
-    ...
+    """
+    参数:
+        name: 适配器名称
+
+    返回:
+        指定名称的 {ref}`nonebot.adapters.Adapter` 对象
+    """
 
 
 @overload
 def get_adapter(name: Type[A]) -> A:
-    ...
+    """
+    参数:
+        name: 适配器类型
+
+    返回:
+        指定类型的 {ref}`nonebot.adapters.Adapter` 对象
+    """
 
 
 def get_adapter(name: Union[str, Type[Adapter]]) -> Adapter:
     """获取已注册的 {ref}`nonebot.adapters.Adapter` 实例。
-
-    返回:
-        指定名称或类型的 {ref}`nonebot.adapters.Adapter` 对象
 
     异常:
         ValueError: 指定的 {ref}`nonebot.adapters.Adapter` 未注册
