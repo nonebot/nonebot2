@@ -6303,7 +6303,7 @@
   {
     "module_name": "nonebot_plugin_msgbuf",
     "project_link": "nonebot-plugin-msgbuf",
-    "name": "不雅信达",
+    "name": "雅信达",
     "desc": "适用于 NoneBot2 插件的被动消息构造集成",
     "author": "NCBM",
     "homepage": "https://github.com/NCBM/nonebot-plugin-msgbuf",
