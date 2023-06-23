@@ -43,11 +43,11 @@ httpx = { version = ">=0.20.0,<1.0.0", extras = ["http2"], optional = true }
 uvicorn = { version = ">=0.20.0,<1.0.0", extras = ["standard"], optional = true }
 
 [tool.poetry.group.dev.dependencies]
+ruff = "^0.0.272"
 isort = "^5.10.1"
 black = "^23.1.0"
 nonemoji = "^0.1.2"
 pre-commit = "^3.0.0"
-ruff = "^0.0.272"
 
 [tool.poetry.group.test.dependencies]
 nonebug = "^0.3.0"
