@@ -43,7 +43,7 @@ class NoneBotException(Exception):
 
 # Rule Exception
 class ParserExit(NoneBotException):
-    """{ref}`nonebot.rule.shell_command` 处理消息失败时返回的异常"""
+    """{ref}`nonebot.rule.shell_command` 处理消息失败时返回的异常。"""
 
     def __init__(self, status: int = 0, message: Optional[str] = None) -> None:
         self.status = status
@@ -224,11 +224,11 @@ class ActionFailed(AdapterException):
 
 # Driver Exceptions
 class DriverException(NoneBotException):
-    """`Driver` 抛出的异常基类"""
+    """`Driver` 抛出的异常基类。"""
 
 
 class WebSocketClosed(DriverException):
-    """WebSocket 连接已关闭"""
+    """WebSocket 连接已关闭。"""
 
     def __init__(self, code: int, reason: Optional[str] = None) -> None:
         self.code = code

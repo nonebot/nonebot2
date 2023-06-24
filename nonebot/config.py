@@ -184,7 +184,7 @@ class Config(BaseConfig):
     log_level: Union[int, str] = "INFO"
     """NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称。
 
-    参考 [记录日志](https://nonebot.dev/docs/appendices/log)，[`loguru 日志等级`](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
+    参考 [记录日志](https://nonebot.dev/docs/appendices/log)，[loguru 日志等级](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
 
     :::tip 提示
     日志等级名称应为大写，如 `INFO`。
