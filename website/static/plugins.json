@@ -5635,7 +5635,7 @@
     "supported_adapters": null
   },
   {
-    "module_name": "nonebot-plugin-gw2",
+    "module_name": "nonebot_plugin_gw2",
     "project_link": "nonebot-plugin-gw2",
     "name": "激战2！！！",
     "desc": "通过激战2星岬岛来返回信息",
