@@ -28,6 +28,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Develop: 添加 ruff linter [@yanyongyu](https://github.com/yanyongyu) ([#2114](https://github.com/nonebot/nonebot2/pull/2114))
 - Plugin: 更新 `nonebot-plugin-msgbuf` 插件的名称等信息 [@NCBM](https://github.com/NCBM) ([#2119](https://github.com/nonebot/nonebot2/pull/2119))
 - Plugin: 修改插件信息和仓库地址 [@Agnes4m](https://github.com/Agnes4m) ([#2115](https://github.com/nonebot/nonebot2/pull/2115))
 - Test: 移除 httpbin 并整理测试 [@yanyongyu](https://github.com/yanyongyu) ([#2110](https://github.com/nonebot/nonebot2/pull/2110))
