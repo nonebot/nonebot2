@@ -1,13 +1,16 @@
 """本模块定义了 NoneBot 本身运行所需的配置项。
 
-NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及 [`python-dotenv`](https://saurabh-kumar.com/python-dotenv/) 来读取配置。
+NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及
+[`python-dotenv`](https://saurabh-kumar.com/python-dotenv/) 来读取配置。
 
-配置项需符合特殊格式或 json 序列化格式。详情见 [`pydantic Field Type`](https://pydantic-docs.helpmanual.io/usage/types/) 文档。
+配置项需符合特殊格式或 json 序列化格式
+详情见 [`pydantic Field Type`](https://pydantic-docs.helpmanual.io/usage/types/) 文档。
 
 FrontMatter:
     sidebar_position: 1
     description: nonebot.config 模块
 """
+
 import os
 from datetime import timedelta
 from ipaddress import IPv4Address
@@ -28,9 +31,8 @@ from nonebot.log import logger
 
 class CustomEnvSettings(EnvSettingsSource):
     def __call__(self, settings: BaseSettings) -> Dict[str, Any]:
-        """
-        Build environment variables suitable for passing to the Model.
-        """
+        """从环境变量和 dotenv 配置文件中读取配置项。"""
+
         d: Dict[str, Any] = {}
 
         if settings.__config__.case_sensitive:
@@ -56,7 +58,8 @@ class CustomEnvSettings(EnvSettingsSource):
                     if env_val_built := self.explode_env_vars(field, env_vars):
                         d[field.alias] = env_val_built
                 else:
-                    # field is complex and there's a value, decode that as JSON, then add explode_env_vars
+                    # field is complex and there's a value
+                    # decode that as JSON, then add explode_env_vars
                     try:
                         env_val = settings.__config__.parse_env_var(field.name, env_val)
                     except ValueError as e:
@@ -72,7 +75,8 @@ class CustomEnvSettings(EnvSettingsSource):
                     else:
                         d[field.alias] = env_val
             elif env_val is not None:
-                # simplest case, field is not complex, we only need to add the value if it was found
+                # simplest case, field is not complex
+                # we only need to add the value if it was found
                 d[field.alias] = env_val
 
         # remain user custom config
@@ -82,7 +86,7 @@ class CustomEnvSettings(EnvSettingsSource):
                 # there's a value, decode that as JSON
                 try:
                     env_val = settings.__config__.parse_env_var(env_name, val_striped)
-                except ValueError as e:
+                except ValueError:
                     logger.trace(
                         "Error while parsing JSON for "
                         f"{env_name!r}={val_striped!r}. "
@@ -139,7 +143,7 @@ class BaseConfig(BaseSettings):
 class Env(BaseConfig):
     """运行环境配置。大小写不敏感。
 
-    将会从 `环境变量` > `.env 环境配置文件` 的优先级读取环境信息。
+    将会从 **环境变量** > **dotenv 配置文件** 的优先级读取环境信息。
     """
 
     environment: str = "prod"
@@ -170,15 +174,17 @@ class Config(BaseConfig):
     配置格式为 `<module>[:<Driver>][+<module>[:<Mixin>]]*`。
 
     `~` 为 `nonebot.drivers.` 的缩写。
+
+    配置方法参考: [配置驱动器](https://nonebot.dev/docs/advanced/driver#%E9%85%8D%E7%BD%AE%E9%A9%B1%E5%8A%A8%E5%99%A8)
     """
     host: IPvAnyAddress = IPv4Address("127.0.0.1")  # type: ignore
     """NoneBot {ref}`nonebot.drivers.ReverseDriver` 服务端监听的 IP/主机名。"""
     port: int = Field(default=8080, ge=1, le=65535)
     """NoneBot {ref}`nonebot.drivers.ReverseDriver` 服务端监听的端口。"""
     log_level: Union[int, str] = "INFO"
-    """NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称
+    """NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称。
 
-    参考 [`loguru 日志等级`](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
+    参考 [记录日志](https://nonebot.dev/docs/appendices/log)，[loguru 日志等级](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
 
     :::tip 提示
     日志等级名称应为大写，如 `INFO`。
@@ -209,6 +215,8 @@ class Config(BaseConfig):
     command_start: Set[str] = {"/"}
     """命令的起始标记，用于判断一条消息是不是命令。
 
+    参考[命令响应规则](https://nonebot.dev/docs/advanced/matcher#command)。
+
     用法:
         ```conf
         COMMAND_START=["/", ""]
@@ -216,6 +224,8 @@ class Config(BaseConfig):
     """
     command_sep: Set[str] = {"."}
     """命令的分隔标记，用于将文本形式的命令切分为元组（实际的命令名）。
+
+    参考[命令响应规则](https://nonebot.dev/docs/advanced/matcher#command)。
 
     用法:
         ```conf

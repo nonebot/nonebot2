@@ -33,6 +33,8 @@ from nonebot.consts import (
     CMD_WHITESPACE_KEY,
 )
 
+UNKNOWN_PARAM = "Unknown parameter"
+
 
 @pytest.mark.asyncio
 async def test_depend(app: App):
@@ -50,7 +52,8 @@ async def test_depend(app: App):
     async with app.test_dependent(depends, allow_types=[DependParam]) as ctx:
         ctx.should_return(1)
 
-    assert len(runned) == 1 and runned[0] == 1
+    assert len(runned) == 1
+    assert runned[0] == 1
 
     runned.clear()
 
@@ -59,7 +62,8 @@ async def test_depend(app: App):
         event_next = make_fake_event()()
         ctx.receive_event(bot, event_next)
 
-    assert len(runned) == 2 and runned[0] == runned[1] == 1
+    assert len(runned) == 2
+    assert runned[0] == runned[1] == 1
 
     runned.clear()
 
@@ -105,16 +109,15 @@ async def test_bot(app: App):
         ctx.pass_params(bot=bot)
         ctx.should_return(bot)
 
-    with pytest.raises(ValueError):
-        async with app.test_dependent(not_legacy_bot, allow_types=[BotParam]) as ctx:
-            ...
+    with pytest.raises(ValueError, match=UNKNOWN_PARAM):
+        app.test_dependent(not_legacy_bot, allow_types=[BotParam])
 
     async with app.test_dependent(sub_bot, allow_types=[BotParam]) as ctx:
         bot = ctx.create_bot(base=FooBot)
         ctx.pass_params(bot=bot)
         ctx.should_return(bot)
 
-    with pytest.raises(TypeMisMatch):
+    with pytest.raises(TypeMisMatch):  # noqa: PT012
         async with app.test_dependent(sub_bot, allow_types=[BotParam]) as ctx:
             bot = ctx.create_bot()
             ctx.pass_params(bot=bot)
@@ -134,9 +137,8 @@ async def test_bot(app: App):
         ctx.pass_params(bot=bot)
         ctx.should_return(bot)
 
-    with pytest.raises(ValueError):
-        async with app.test_dependent(not_bot, allow_types=[BotParam]) as ctx:
-            ...
+    with pytest.raises(ValueError, match=UNKNOWN_PARAM):
+        app.test_dependent(not_bot, allow_types=[BotParam])
 
 
 @pytest.mark.asyncio
@@ -169,17 +171,14 @@ async def test_event(app: App):
         ctx.pass_params(event=fake_event)
         ctx.should_return(fake_event)
 
-    with pytest.raises(ValueError):
-        async with app.test_dependent(
-            not_legacy_event, allow_types=[EventParam]
-        ) as ctx:
-            ...
+    with pytest.raises(ValueError, match=UNKNOWN_PARAM):
+        app.test_dependent(not_legacy_event, allow_types=[EventParam])
 
     async with app.test_dependent(sub_event, allow_types=[EventParam]) as ctx:
         ctx.pass_params(event=fake_fooevent)
         ctx.should_return(fake_fooevent)
 
-    with pytest.raises(TypeMisMatch):
+    with pytest.raises(TypeMisMatch):  # noqa: PT012
         async with app.test_dependent(sub_event, allow_types=[EventParam]) as ctx:
             ctx.pass_params(event=fake_event)
 
@@ -195,9 +194,8 @@ async def test_event(app: App):
         ctx.pass_params(event=fake_event)
         ctx.should_return(fake_event)
 
-    with pytest.raises(ValueError):
-        async with app.test_dependent(not_event, allow_types=[EventParam]) as ctx:
-            ...
+    with pytest.raises(ValueError, match=UNKNOWN_PARAM):
+        app.test_dependent(not_event, allow_types=[EventParam])
 
     async with app.test_dependent(
         event_type, allow_types=[EventParam, DependParam]
@@ -274,11 +272,8 @@ async def test_state(app: App):
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state)
 
-    with pytest.raises(ValueError):
-        async with app.test_dependent(
-            not_legacy_state, allow_types=[StateParam]
-        ) as ctx:
-            ...
+    with pytest.raises(ValueError, match=UNKNOWN_PARAM):
+        app.test_dependent(not_legacy_state, allow_types=[StateParam])
 
     async with app.test_dependent(
         command, allow_types=[StateParam, DependParam]
@@ -398,17 +393,14 @@ async def test_matcher(app: App):
         ctx.pass_params(matcher=fake_matcher)
         ctx.should_return(fake_matcher)
 
-    with pytest.raises(ValueError):
-        async with app.test_dependent(
-            not_legacy_matcher, allow_types=[MatcherParam]
-        ) as ctx:
-            ...
+    with pytest.raises(ValueError, match=UNKNOWN_PARAM):
+        app.test_dependent(not_legacy_matcher, allow_types=[MatcherParam])
 
     async with app.test_dependent(sub_matcher, allow_types=[MatcherParam]) as ctx:
         ctx.pass_params(matcher=foo_matcher)
         ctx.should_return(foo_matcher)
 
-    with pytest.raises(TypeMisMatch):
+    with pytest.raises(TypeMisMatch):  # noqa: PT012
         async with app.test_dependent(sub_matcher, allow_types=[MatcherParam]) as ctx:
             ctx.pass_params(matcher=fake_matcher)
 
@@ -426,9 +418,8 @@ async def test_matcher(app: App):
         ctx.pass_params(matcher=fake_matcher)
         ctx.should_return(fake_matcher)
 
-    with pytest.raises(ValueError):
-        async with app.test_dependent(not_matcher, allow_types=[MatcherParam]) as ctx:
-            ...
+    with pytest.raises(ValueError, match=UNKNOWN_PARAM):
+        app.test_dependent(not_matcher, allow_types=[MatcherParam])
 
     event = make_fake_event()()
     fake_matcher.set_receive("test", event)

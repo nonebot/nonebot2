@@ -14,6 +14,7 @@ FrontMatter:
     sidebar_position: 3
     description: nonebot.drivers.httpx 模块
 """
+
 from typing import Type, AsyncGenerator
 from contextlib import asynccontextmanager
 
@@ -33,7 +34,8 @@ try:
     import httpx
 except ModuleNotFoundError as e:  # pragma: no cover
     raise ImportError(
-        "Please install httpx by using `pip install nonebot2[httpx]`"
+        "Please install httpx first to use this driver. "
+        "Install with pip: `pip install nonebot2[httpx]`"
     ) from e
 
 

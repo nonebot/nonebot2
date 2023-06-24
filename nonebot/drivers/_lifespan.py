@@ -1,10 +1,11 @@
+from typing_extensions import TypeAlias
 from typing import Any, List, Union, Callable, Awaitable, cast
 
 from nonebot.utils import run_sync, is_coroutine_callable
 
-SYNC_LIFESPAN_FUNC = Callable[[], Any]
-ASYNC_LIFESPAN_FUNC = Callable[[], Awaitable[Any]]
-LIFESPAN_FUNC = Union[SYNC_LIFESPAN_FUNC, ASYNC_LIFESPAN_FUNC]
+SYNC_LIFESPAN_FUNC: TypeAlias = Callable[[], Any]
+ASYNC_LIFESPAN_FUNC: TypeAlias = Callable[[], Awaitable[Any]]
+LIFESPAN_FUNC: TypeAlias = Union[SYNC_LIFESPAN_FUNC, ASYNC_LIFESPAN_FUNC]
 
 
 class Lifespan:

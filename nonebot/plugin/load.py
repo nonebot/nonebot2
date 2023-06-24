@@ -4,6 +4,7 @@ FrontMatter:
     sidebar_position: 1
     description: nonebot.plugin.load 模块
 """
+
 import json
 from pathlib import Path
 from types import ModuleType
@@ -25,7 +26,8 @@ def load_plugin(module_path: Union[str, Path]) -> Optional[Plugin]:
     """加载单个插件，可以是本地插件或是通过 `pip` 安装的插件。
 
     参数:
-        module_path: 插件名称 `path.to.your.plugin` 或插件路径 `pathlib.Path(path/to/your/plugin)`
+        module_path: 插件名称 `path.to.your.plugin`
+            或插件路径 `pathlib.Path(path/to/your/plugin)`
     """
     module_path = (
         path_to_module_name(module_path)
@@ -63,7 +65,8 @@ def load_all_plugins(
 
 
 def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
-    """导入指定 json 文件中的 `plugins` 以及 `plugin_dirs` 下多个插件，以 `_` 开头的插件不会被导入!
+    """导入指定 json 文件中的 `plugins` 以及 `plugin_dirs` 下多个插件。
+    以 `_` 开头的插件不会被导入!
 
     参数:
         file_path: 指定 json 文件路径
@@ -81,7 +84,7 @@ def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
         nonebot.load_from_json("plugins.json")
         ```
     """
-    with open(file_path, "r", encoding=encoding) as f:
+    with open(file_path, encoding=encoding) as f:
         data = json.load(f)
     if not isinstance(data, dict):
         raise TypeError("json file must contains a dict!")
@@ -93,7 +96,9 @@ def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
 
 
 def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
-    """导入指定 toml 文件 `[tool.nonebot]` 中的 `plugins` 以及 `plugin_dirs` 下多个插件，以 `_` 开头的插件不会被导入!
+    """导入指定 toml 文件 `[tool.nonebot]` 中的
+    `plugins` 以及 `plugin_dirs` 下多个插件。
+    以 `_` 开头的插件不会被导入!
 
     参数:
         file_path: 指定 toml 文件路径
@@ -110,7 +115,7 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
         nonebot.load_from_toml("pyproject.toml")
         ```
     """
-    with open(file_path, "r", encoding=encoding) as f:
+    with open(file_path, encoding=encoding) as f:
         data = tomllib.loads(f.read())
 
     nonebot_data = data.get("tool", {}).get("nonebot")

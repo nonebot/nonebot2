@@ -39,7 +39,8 @@ try:
     from quart import Websocket as QuartWebSocket
 except ModuleNotFoundError as e:  # pragma: no cover
     raise ImportError(
-        "Please install Quart by using `pip install nonebot2[quart]`"
+        "Please install Quart first to use this driver. "
+        "Install with pip: `pip install nonebot2[quart]`"
     ) from e
 
 _AsyncCallable = TypeVar("_AsyncCallable", bound=Callable[..., Coroutine])
@@ -188,9 +189,7 @@ class Driver(ReverseDriver):
     async def _handle_http(self, setup: HTTPServerSetup) -> Response:
         request: Request = _request
 
-        json = None
-        if request.is_json:
-            json = await request.get_json()
+        json = await request.get_json() if request.is_json else None
 
         data = await request.form
         files_dict = await request.files

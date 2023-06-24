@@ -98,7 +98,7 @@ class MessageSegment(abc.ABC, Generic[TM]):
 
 
 class Message(List[TMS], abc.ABC):
-    """消息数组
+    """消息序列
 
     参数:
         message: 消息内容
@@ -124,9 +124,9 @@ class Message(List[TMS], abc.ABC):
     def template(cls, format_string: Union[str, TM]) -> MessageTemplate[Self]:
         """创建消息模板。
 
-        用法和 `str.format` 大致相同, 但是可以输出消息对象, 并且支持以 `Message` 对象作为消息模板
-
-        并且提供了拓展的格式化控制符, 可以用适用于该消息类型的 `MessageSegment` 的工厂方法创建消息
+        用法和 `str.format` 大致相同，支持以 `Message` 对象作为消息模板并输出消息对象。
+        并且提供了拓展的格式化控制符，
+        可以通过该消息类型的 `MessageSegment` 工厂方法创建消息。
 
         参数:
             format_string: 格式化模板

@@ -49,7 +49,9 @@ async def test_load_nested_plugin():
     parent_plugin = nonebot.get_plugin("nested")
     sub_plugin = nonebot.get_plugin("nested_subplugin")
     sub_plugin2 = nonebot.get_plugin("nested_subplugin2")
-    assert parent_plugin and sub_plugin and sub_plugin2
+    assert parent_plugin
+    assert sub_plugin
+    assert sub_plugin2
     assert sub_plugin.parent_plugin is parent_plugin
     assert sub_plugin2.parent_plugin is parent_plugin
     assert parent_plugin.sub_plugins == {sub_plugin, sub_plugin2}
@@ -67,7 +69,7 @@ async def test_load_json():
 async def test_load_toml():
     nonebot.load_from_toml("./plugins.toml")
 
-    with pytest.raises(ValueError):
+    with pytest.raises(ValueError, match="Cannot find"):
         nonebot.load_from_toml("./plugins.empty.toml")
 
     with pytest.raises(TypeError):

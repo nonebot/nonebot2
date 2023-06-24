@@ -4,6 +4,7 @@ FrontMatter:
     sidebar_position: 2
     description: nonebot.plugin.on 模块
 """
+
 import re
 import inspect
 from types import ModuleType
@@ -322,7 +323,8 @@ def on_shell_command(
 
     与普通的 `on_command` 不同的是，在添加 `parser` 参数时, 响应器会自动处理消息。
 
-    并将用户输入的原始参数列表保存在 `state["argv"]`, `parser` 处理的参数保存在 `state["args"]` 中
+    可以通过 {ref}`nonebot.params.ShellCommandArgv` 获取原始参数列表，
+    通过 {ref}`nonebot.params.ShellCommandArgs` 获取解析后的参数字典。
 
     参数:
         cmd: 指定命令内容
@@ -712,7 +714,8 @@ class MatcherGroup(_Group):
 
         与普通的 `on_command` 不同的是，在添加 `parser` 参数时, 响应器会自动处理消息。
 
-        并将用户输入的原始参数列表保存在 `state["argv"]`, `parser` 处理的参数保存在 `state["args"]` 中
+        可以通过 {ref}`nonebot.params.ShellCommandArgv` 获取原始参数列表，
+        通过 {ref}`nonebot.params.ShellCommandArgs` 获取解析后的参数字典。
 
         参数:
             cmd: 指定命令内容

@@ -1,5 +1,6 @@
 import functools
 from string import Formatter
+from typing_extensions import TypeAlias
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -25,7 +26,7 @@ if TYPE_CHECKING:
 TM = TypeVar("TM", bound="Message")
 TF = TypeVar("TF", str, "Message")
 
-FormatSpecFunc = Callable[[Any], str]
+FormatSpecFunc: TypeAlias = Callable[[Any], str]
 FormatSpecFunc_T = TypeVar("FormatSpecFunc_T", bound=FormatSpecFunc)
 
 

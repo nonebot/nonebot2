@@ -1,4 +1,4 @@
-from nonebot.adapters import Event, Message
+from nonebot.adapters import Message
 from nonebot.params import Arg, ArgStr, ArgPlainText
 
 

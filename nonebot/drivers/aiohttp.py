@@ -29,7 +29,8 @@ try:
     import aiohttp
 except ModuleNotFoundError as e:  # pragma: no cover
     raise ImportError(
-        "Please install aiohttp first to use this driver. `pip install nonebot2[aiohttp]`"
+        "Please install aiohttp first to use this driver. "
+        "Install with pip: `pip install nonebot2[aiohttp]`"
     ) from e
 
 

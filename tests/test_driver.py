@@ -176,7 +176,8 @@ async def test_http_client(driver: Driver, server_url: URL):
         content="test",
     )
     response = await driver.request(request)
-    assert response.status_code == 200 and response.content
+    assert response.status_code == 200
+    assert response.content
     data = json.loads(response.content)
     assert data["method"] == "POST"
     assert data["args"] == {"param": "test"}
@@ -187,7 +188,8 @@ async def test_http_client(driver: Driver, server_url: URL):
     # post with data body
     request = Request("POST", server_url, data={"form": "test"})
     response = await driver.request(request)
-    assert response.status_code == 200 and response.content
+    assert response.status_code == 200
+    assert response.content
     data = json.loads(response.content)
     assert data["method"] == "POST"
     assert data["form"] == {"form": "test"}
@@ -195,7 +197,8 @@ async def test_http_client(driver: Driver, server_url: URL):
     # post with json body
     request = Request("POST", server_url, json={"json": "test"})
     response = await driver.request(request)
-    assert response.status_code == 200 and response.content
+    assert response.status_code == 200
+    assert response.content
     data = json.loads(response.content)
     assert data["method"] == "POST"
     assert data["json"] == {"json": "test"}
@@ -208,7 +211,8 @@ async def test_http_client(driver: Driver, server_url: URL):
         files={"test": ("test.txt", b"test")},
     )
     response = await driver.request(request)
-    assert response.status_code == 200 and response.content
+    assert response.status_code == 200
+    assert response.content
     data = json.loads(response.content)
     assert data["method"] == "POST"
     assert data["form"] == {"form": "test"}
@@ -219,7 +223,7 @@ async def test_http_client(driver: Driver, server_url: URL):
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "driver, driver_type",
+    ("driver", "driver_type"),
     [
         pytest.param(
             "nonebot.drivers.fastapi:Driver+nonebot.drivers.aiohttp:Mixin",

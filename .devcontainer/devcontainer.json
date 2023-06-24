@@ -10,9 +10,11 @@
       "settings": {
         "python.analysis.diagnosticMode": "workspace",
         "python.analysis.typeCheckingMode": "basic",
+        "ruff.organizeImports": false,
         "[python]": {
           "editor.defaultFormatter": "ms-python.black-formatter",
           "editor.codeActionsOnSave": {
+            "source.fixAll.ruff": true,
             "source.organizeImports": true
           }
         },
@@ -44,6 +46,7 @@
         "ms-python.vscode-pylance",
         "ms-python.isort",
         "ms-python.black-formatter",
+        "charliermarsh.ruff",
         "EditorConfig.EditorConfig",
         "esbenp.prettier-vscode",
         "bradlc.vscode-tailwindcss"

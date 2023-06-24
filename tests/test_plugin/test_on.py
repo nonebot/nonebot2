@@ -20,7 +20,7 @@ from nonebot.rule import (
 
 @pytest.mark.asyncio
 @pytest.mark.parametrize(
-    "matcher_name, pre_rule_factory, has_permission",
+    ("matcher_name", "pre_rule_factory", "has_permission"),
     [
         pytest.param("matcher_on", None, True),
         pytest.param("matcher_on_metaevent", None, False),

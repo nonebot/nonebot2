@@ -6,11 +6,12 @@ ci:
   autoupdate_schedule: monthly
   autoupdate_commit_msg: ":arrow_up: auto update by pre-commit hooks"
 repos:
-  - repo: https://github.com/hadialqattan/pycln
-    rev: v2.1.5
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.0.274
     hooks:
-      - id: pycln
-        args: [--config, pyproject.toml]
+      - id: ruff
+        args: [--fix, --exit-non-zero-on-fix]
+        stages: [commit]
 
   - repo: https://github.com/pycqa/isort
     rev: 5.12.0

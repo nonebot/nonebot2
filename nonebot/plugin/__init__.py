@@ -24,8 +24,10 @@
 - `load_all_plugins` => {ref}``load_all_plugins` <nonebot.plugin.load.load_all_plugins>`
 - `load_from_json` => {ref}``load_from_json` <nonebot.plugin.load.load_from_json>`
 - `load_from_toml` => {ref}``load_from_toml` <nonebot.plugin.load.load_from_toml>`
-- `load_builtin_plugin` => {ref}``load_builtin_plugin` <nonebot.plugin.load.load_builtin_plugin>`
-- `load_builtin_plugins` => {ref}``load_builtin_plugins` <nonebot.plugin.load.load_builtin_plugins>`
+- `load_builtin_plugin` =>
+  {ref}``load_builtin_plugin` <nonebot.plugin.load.load_builtin_plugin>`
+- `load_builtin_plugins` =>
+  {ref}``load_builtin_plugins` <nonebot.plugin.load.load_builtin_plugins>`
 - `require` => {ref}``require` <nonebot.plugin.load.require>`
 - `PluginMetadata` => {ref}``PluginMetadata` <nonebot.plugin.plugin.PluginMetadata>`
 
@@ -42,7 +44,7 @@ from typing import Set, Dict, List, Tuple, Optional
 _plugins: Dict[str, "Plugin"] = {}
 _managers: List["PluginManager"] = []
 _current_plugin_chain: ContextVar[Tuple["Plugin", ...]] = ContextVar(
-    "_current_plugin_chain", default=tuple()
+    "_current_plugin_chain", default=()
 )
 
 
