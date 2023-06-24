@@ -392,9 +392,7 @@ class ArgParam(Param):
         elif get_origin(param.annotation) is Annotated:
             for arg in get_args(param.annotation):
                 if isinstance(arg, ArgInner):
-                    return cls(
-                        Required, key=arg.key or param.name, type=arg.type
-                    )
+                    return cls(Required, key=arg.key or param.name, type=arg.type)
 
     async def _solve(self, matcher: "Matcher", **kwargs: Any) -> Any:
         key: str = self.extra["key"]
