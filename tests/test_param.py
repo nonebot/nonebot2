@@ -441,7 +441,10 @@ async def test_matcher(app: App):
 
 @pytest.mark.asyncio
 async def test_arg(app: App):
-    from plugins.param.param_arg import arg, arg_str, arg_plain_text
+    from plugins.param.param_arg import (
+        arg, arg_str, arg_plain_text,
+        arg_annotated, arg_str_annotated, arg_plain_text_annotated
+    )
 
     matcher = Matcher()
     message = FakeMessage("text")
@@ -456,6 +459,18 @@ async def test_arg(app: App):
         ctx.should_return(str(message))
 
     async with app.test_dependent(arg_plain_text, allow_types=[ArgParam]) as ctx:
+        ctx.pass_params(matcher=matcher)
+        ctx.should_return(message.extract_plain_text())
+
+    async with app.test_dependent(arg_annotated, allow_types=[ArgParam]) as ctx:
+        ctx.pass_params(matcher=matcher)
+        ctx.should_return(message)
+
+    async with app.test_dependent(arg_str_annotated, allow_types=[ArgParam]) as ctx:
+        ctx.pass_params(matcher=matcher)
+        ctx.should_return(str(message))
+
+    async with app.test_dependent(arg_plain_text_annotated, allow_types=[ArgParam]) as ctx:
         ctx.pass_params(matcher=matcher)
         ctx.should_return(message.extract_plain_text())
 
