@@ -14,10 +14,12 @@ FrontMatter:
     sidebar_position: 4
     description: nonebot.drivers.websockets 模块
 """
+
 import logging
 from functools import wraps
+from typing_extensions import ParamSpec
 from contextlib import asynccontextmanager
-from typing import Type, Union, AsyncGenerator
+from typing import Type, Union, TypeVar, Callable, Awaitable, AsyncGenerator
 
 from nonebot.typing import overrides
 from nonebot.log import LoguruHandler
@@ -32,16 +34,20 @@ try:
     from websockets.legacy.client import Connect, WebSocketClientProtocol
 except ModuleNotFoundError as e:  # pragma: no cover
     raise ImportError(
-        "Please install websockets by using `pip install nonebot2[websockets]`"
+        "Please install websockets first to use this driver. "
+        "Install with pip: `pip install nonebot2[websockets]`"
     ) from e
+
+T = TypeVar("T")
+P = ParamSpec("P")
 
 logger = logging.Logger("websockets.client", "INFO")
 logger.addHandler(LoguruHandler())
 
 
-def catch_closed(func):
+def catch_closed(func: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]:
     @wraps(func)
-    async def decorator(*args, **kwargs):
+    async def decorator(*args: P.args, **kwargs: P.kwargs) -> T:
         try:
             return await func(*args, **kwargs)
         except ConnectionClosed as e:

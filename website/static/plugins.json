@@ -6303,7 +6303,7 @@
   {
     "module_name": "nonebot_plugin_msgbuf",
     "project_link": "nonebot-plugin-msgbuf",
-    "name": "信鸽巴夫",
+    "name": "雅信达",
     "desc": "适用于 NoneBot2 插件的被动消息构造集成",
     "author": "NCBM",
     "homepage": "https://github.com/NCBM/nonebot-plugin-msgbuf",
@@ -6314,8 +6314,13 @@
       }
     ],
     "is_official": false,
-    "type": null,
-    "supported_adapters": null
+    "type": "library",
+    "supported_adapters": [
+      "nonebot.adapters.onebot.v11",
+      "nonebot.adapters.onebot.v12",
+      "nonebot.adapters.qqguild",
+      "nonebot.adapters.telegram"
+    ]
   },
   {
     "module_name": "nonebot_plugin_og",
@@ -6785,5 +6790,44 @@
       "nonebot.adapters.onebot.v12",
       "nonebot.adapters.qqguild"
     ]
+  },
+  {
+    "module_name": "nonebot_plugin_error_alert",
+    "project_link": "nonebot-plugin-error-alert",
+    "name": "错误告警",
+    "desc": "当Bot发生运行错误时发送消息提醒",
+    "author": "ssttkkl",
+    "homepage": "https://github.com/bot-ssttkkl/nonebot-plugin-error-alert",
+    "tags": [],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": [
+      "nonebot.adapters.onebot.v12",
+      "nonebot.adapters.telegram",
+      "nonebot.adapters.qqguild",
+      "nonebot.adapters.kaiheila",
+      "nonebot.adapters.onebot.v11"
+    ]
+  },
+  {
+    "module_name": "nonebot_plugin_ocgbot_v2",
+    "project_link": "nonebot-plugin-ocgbot-v2",
+    "name": "nonbot-plugin-ocgbot-v2",
+    "desc": "提供游戏王相关服务",
+    "author": "fireinsect",
+    "homepage": "https://github.com/fireinsect/nonebot-plugin-ocgbot-v2/",
+    "tags": [
+      {
+        "label": "游戏王",
+        "color": "#2ecbed"
+      },
+      {
+        "label": "ygo",
+        "color": "#f77117"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]

@@ -44,10 +44,11 @@ class Event(abc.ABC, BaseModel):
     def get_log_string(self) -> str:
         """获取事件日志信息的方法。
 
-        通常你不需要修改这个方法，只有当希望 NoneBot 隐藏该事件日志时，可以抛出 `NoLogException` 异常。
+        通常你不需要修改这个方法，只有当希望 NoneBot 隐藏该事件日志时，
+        可以抛出 `NoLogException` 异常。
 
         异常:
-            NoLogException:
+            NoLogException: 希望 NoneBot 隐藏该事件日志
         """
         return f"[{self.get_event_name()}]: {self.get_event_description()}"
 
@@ -58,7 +59,9 @@ class Event(abc.ABC, BaseModel):
 
     @abc.abstractmethod
     def get_session_id(self) -> str:
-        """获取会话 id 的方法，用于判断当前事件属于哪一个会话，通常是用户 id、群组 id 组合。"""
+        """获取会话 id 的方法，用于判断当前事件属于哪一个会话，
+        通常是用户 id、群组 id 组合。
+        """
         raise NotImplementedError
 
     @abc.abstractmethod

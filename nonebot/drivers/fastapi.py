@@ -41,7 +41,8 @@ try:
     from starlette.websockets import WebSocket, WebSocketState, WebSocketDisconnect
 except ModuleNotFoundError as e:  # pragma: no cover
     raise ImportError(
-        "Please install FastAPI by using `pip install nonebot2[fastapi]`"
+        "Please install FastAPI first to use this driver. "
+        "Install with pip: `pip install nonebot2[fastapi]`"
     ) from e
 
 
@@ -90,7 +91,7 @@ class Driver(ReverseDriver):
     """FastAPI 驱动框架。"""
 
     def __init__(self, env: Env, config: NoneBotConfig):
-        super(Driver, self).__init__(env, config)
+        super().__init__(env, config)
 
         self.fastapi_config: Config = Config(**config.dict())
 

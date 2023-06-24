@@ -1,0 +1,21 @@
+name: Ruff Lint
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    paths:
+      - "nonebot/**"
+      - "packages/**"
+      - "tests/**"
+
+jobs:
+  ruff:
+    name: Ruff Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Ruff Lint
+        uses: chartboost/ruff-action@v1

@@ -166,7 +166,7 @@ async def _apply_event_preprocessors(
                 for proc in _event_preprocessors
             )
         )
-    except IgnoredException as e:
+    except IgnoredException:
         logger.opt(colors=True).info(
             f"Event {escape_tag(event.get_event_name())} is <b>ignored</b>"
         )
@@ -293,7 +293,7 @@ async def _apply_run_postprocessors(
 ) -> None:
     """运行事件响应器运行后处理。
 
-    Args:
+    参数:
         bot: Bot 对象
         event: Event 对象
         matcher: 事件响应器

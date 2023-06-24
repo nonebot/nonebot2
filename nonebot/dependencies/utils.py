@@ -3,6 +3,7 @@ FrontMatter:
     sidebar_position: 1
     description: nonebot.dependencies.utils 模块
 """
+
 import inspect
 from typing import Any, Dict, TypeVar, Callable, ForwardRef
 
@@ -17,6 +18,7 @@ V = TypeVar("V")
 
 def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
     """获取可调用对象签名"""
+
     signature = inspect.signature(call)
     globalns = getattr(call, "__globals__", {})
     typed_params = [
@@ -33,6 +35,7 @@ def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
 
 def get_typed_annotation(param: inspect.Parameter, globalns: Dict[str, Any]) -> Any:
     """获取参数的类型注解"""
+
     annotation = param.annotation
     if isinstance(annotation, str):
         annotation = ForwardRef(annotation)
@@ -47,6 +50,8 @@ def get_typed_annotation(param: inspect.Parameter, globalns: Dict[str, Any]) -> 
 
 
 def check_field_type(field: ModelField, value: V) -> V:
+    """检查字段类型是否匹配"""
+
     _, errs_ = field.validate(value, {}, loc=())
     if errs_:
         raise TypeMisMatch(field, value)

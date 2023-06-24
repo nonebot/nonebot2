@@ -29,20 +29,19 @@ from nonebot.internal.adapter import (
     MessageSegment,
     MessageTemplate,
 )
+from nonebot.typing import (
+    T_State,
+    T_Handler,
+    T_TypeUpdater,
+    T_DependencyCache,
+    T_PermissionUpdater,
+)
 from nonebot.consts import (
     ARG_KEY,
     RECEIVE_KEY,
     REJECT_TARGET,
     LAST_RECEIVE_KEY,
     REJECT_CACHE_TARGET,
-)
-from nonebot.typing import (
-    Any,
-    T_State,
-    T_Handler,
-    T_TypeUpdater,
-    T_DependencyCache,
-    T_PermissionUpdater,
 )
 from nonebot.exception import (
     PausedException,
@@ -376,7 +375,7 @@ class Matcher(metaclass=MatcherMeta):
                 return
             await matcher.reject()
 
-        _parameterless = (Depends(_receive), *(parameterless or tuple()))
+        _parameterless = (Depends(_receive), *(parameterless or ()))
 
         def _decorator(func: T_Handler) -> T_Handler:
             if cls.handlers and cls.handlers[-1].call is func:
@@ -406,7 +405,8 @@ class Matcher(metaclass=MatcherMeta):
     ) -> Callable[[T_Handler], T_Handler]:
         """装饰一个函数来指示 NoneBot 获取一个参数 `key`
 
-        当要获取的 `key` 不存在时接收用户新的一条消息再运行该函数，如果 `key` 已存在则直接继续运行
+        当要获取的 `key` 不存在时接收用户新的一条消息再运行该函数，
+        如果 `key` 已存在则直接继续运行
 
         参数:
             key: 参数名
@@ -423,7 +423,7 @@ class Matcher(metaclass=MatcherMeta):
                 return
             await matcher.reject(prompt)
 
-        _parameterless = (Depends(_key_getter), *(parameterless or tuple()))
+        _parameterless = (Depends(_key_getter), *(parameterless or ()))
 
         def _decorator(func: T_Handler) -> T_Handler:
             if cls.handlers and cls.handlers[-1].call is func:
@@ -454,7 +454,8 @@ class Matcher(metaclass=MatcherMeta):
 
         参数:
             message: 消息内容
-            kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+            kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，
+                请参考对应 adapter 的 bot 对象 api
         """
         bot = current_bot.get()
         event = current_event.get()
@@ -475,7 +476,8 @@ class Matcher(metaclass=MatcherMeta):
 
         参数:
             message: 消息内容
-            kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+            kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，
+                请参考对应 adapter 的 bot 对象 api
         """
         if message is not None:
             await cls.send(message, **kwargs)
@@ -491,7 +493,8 @@ class Matcher(metaclass=MatcherMeta):
 
         参数:
             prompt: 消息内容
-            kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+            kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，
+                请参考对应 adapter 的 bot 对象 api
         """
         if prompt is not None:
             await cls.send(prompt, **kwargs)
@@ -508,7 +511,8 @@ class Matcher(metaclass=MatcherMeta):
 
         参数:
             prompt: 消息内容
-            kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+            kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，
+                请参考对应 adapter 的 bot 对象 api
         """
         if prompt is not None:
             await cls.send(prompt, **kwargs)
@@ -527,7 +531,8 @@ class Matcher(metaclass=MatcherMeta):
         参数:
             key: 参数名
             prompt: 消息内容
-            kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+            kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，
+                请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()
         matcher.set_target(ARG_KEY.format(key=key))
@@ -548,7 +553,8 @@ class Matcher(metaclass=MatcherMeta):
         参数:
             id: 消息 id
             prompt: 消息内容
-            kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，请参考对应 adapter 的 bot 对象 api
+            kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，
+                请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()
         matcher.set_target(RECEIVE_KEY.format(id=id))

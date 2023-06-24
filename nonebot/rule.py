@@ -1,7 +1,8 @@
 """本模块是 {ref}`nonebot.matcher.Matcher.rule` 的类型定义。
 
-每个事件响应器 {ref}`nonebot.matcher.Matcher` 拥有一个匹配规则 {ref}`nonebot.rule.Rule`
-其中是 `RuleChecker` 的集合，只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
+每个{ref}`事件响应器 <nonebot.matcher.Matcher>`拥有一个
+{ref}`nonebot.rule.Rule`，其中是 `RuleChecker` 的集合。
+只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
 
 FrontMatter:
     sidebar_position: 5
@@ -60,20 +61,19 @@ from nonebot.consts import (
 
 T = TypeVar("T")
 
-CMD_RESULT = TypedDict(
-    "CMD_RESULT",
-    {
-        "command": Optional[Tuple[str, ...]],
-        "raw_command": Optional[str],
-        "command_arg": Optional[Message],
-        "command_start": Optional[str],
-        "command_whitespace": Optional[str],
-    },
-)
 
-TRIE_VALUE = NamedTuple(
-    "TRIE_VALUE", [("command_start", str), ("command", Tuple[str, ...])]
-)
+class CMD_RESULT(TypedDict):
+    command: Optional[Tuple[str, ...]]
+    raw_command: Optional[str]
+    command_arg: Optional[Message]
+    command_start: Optional[str]
+    command_whitespace: Optional[str]
+
+
+class TRIE_VALUE(NamedTuple):
+    command_start: str
+    command: Tuple[str, ...]
+
 
 parser_message: ContextVar[str] = ContextVar("parser_message")
 
@@ -406,7 +406,7 @@ def command(
         force_whitespace: 是否强制命令后必须有指定空白符
 
     用法:
-        使用默认 `command_start`, `command_sep` 配置
+        使用默认 `command_start`, `command_sep` 配置情况下：
 
         命令 `("test",)` 可以匹配: `/test` 开头的消息
         命令 `("test", "sub")` 可以匹配: `/test.sub` 开头的消息
@@ -440,6 +440,8 @@ def command(
 
 class ArgumentParser(ArgParser):
     """`shell_like` 命令参数解析器，解析出错时不会退出程序。
+
+    支持 {ref}`nonebot.adapters.Message` 富文本解析。
 
     用法:
         用法与 `argparse.ArgumentParser` 相同，
@@ -588,10 +590,14 @@ def shell_command(
     根据配置里提供的 {ref}``command_start` <nonebot.config.Config.command_start>`,
     {ref}``command_sep` <nonebot.config.Config.command_sep>` 判断消息是否为命令。
 
-    可以通过 {ref}`nonebot.params.Command` 获取匹配成功的命令（例: `("test",)`），
-    通过 {ref}`nonebot.params.RawCommand` 获取匹配成功的原始命令文本（例: `"/test"`），
-    通过 {ref}`nonebot.params.ShellCommandArgv` 获取解析前的参数列表（例: `["arg", "-h"]`），
-    通过 {ref}`nonebot.params.ShellCommandArgs` 获取解析后的参数字典（例: `{"arg": "arg", "h": True}`）。
+    可以通过 {ref}`nonebot.params.Command` 获取匹配成功的命令
+    （例: `("test",)`），
+    通过 {ref}`nonebot.params.RawCommand` 获取匹配成功的原始命令文本
+    （例: `"/test"`），
+    通过 {ref}`nonebot.params.ShellCommandArgv` 获取解析前的参数列表
+    （例: `["arg", "-h"]`），
+    通过 {ref}`nonebot.params.ShellCommandArgs` 获取解析后的参数字典
+    （例: `{"arg": "arg", "h": True}`）。
 
     :::warning 警告
     如果参数解析失败，则通过 {ref}`nonebot.params.ShellCommandArgs`
@@ -603,7 +609,8 @@ def shell_command(
         parser: {ref}`nonebot.rule.ArgumentParser` 对象
 
     用法:
-        使用默认 `command_start`, `command_sep` 配置，更多示例参考 `argparse` 标准库文档。
+        使用默认 `command_start`, `command_sep` 配置，更多示例参考
+        [argparse](https://docs.python.org/3/library/argparse.html) 标准库文档。
 
         ```python
         from nonebot.rule import ArgumentParser
@@ -698,7 +705,8 @@ def regex(regex: str, flags: Union[int, re.RegexFlag] = 0) -> Rule:
     :::
 
     :::tip 提示
-    正则表达式匹配使用 `EventMessage` 的 `str` 字符串，而非 `EventMessage` 的 `PlainText` 纯文本字符串
+    正则表达式匹配使用 `EventMessage` 的 `str` 字符串，
+    而非 `EventMessage` 的 `PlainText` 纯文本字符串
     :::
     """
 

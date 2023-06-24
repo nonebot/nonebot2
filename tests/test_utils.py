@@ -118,7 +118,9 @@ def test_dataclass_encoder():
 
     ms = FakeMessageSegment.nested(FakeMessage(FakeMessageSegment.text("text")))
     s = json.dumps(ms, cls=DataclassEncoder)
-    assert (
-        s
-        == '{"type": "node", "data": {"content": [{"type": "text", "data": {"text": "text"}}]}}'
+    assert s == (
+        "{"
+        '"type": "node", '
+        '"data": {"content": [{"type": "text", "data": {"text": "text"}}]}'
+        "}"
     )

@@ -2,6 +2,7 @@ import abc
 import urllib.request
 from enum import Enum
 from dataclasses import dataclass
+from typing_extensions import TypeAlias
 from http.cookiejar import Cookie, CookieJar
 from typing import (
     IO,
@@ -21,28 +22,30 @@ from typing import (
 from yarl import URL as URL
 from multidict import CIMultiDict
 
-RawURL = Tuple[bytes, bytes, Optional[int], bytes]
+RawURL: TypeAlias = Tuple[bytes, bytes, Optional[int], bytes]
 
-SimpleQuery = Union[str, int, float]
-QueryVariable = Union[SimpleQuery, List[SimpleQuery]]
-QueryTypes = Union[
+SimpleQuery: TypeAlias = Union[str, int, float]
+QueryVariable: TypeAlias = Union[SimpleQuery, List[SimpleQuery]]
+QueryTypes: TypeAlias = Union[
     None, str, Mapping[str, QueryVariable], List[Tuple[str, QueryVariable]]
 ]
 
-HeaderTypes = Union[
+HeaderTypes: TypeAlias = Union[
     None,
     CIMultiDict[str],
     Dict[str, str],
     List[Tuple[str, str]],
 ]
 
-CookieTypes = Union[None, "Cookies", CookieJar, Dict[str, str], List[Tuple[str, str]]]
+CookieTypes: TypeAlias = Union[
+    None, "Cookies", CookieJar, Dict[str, str], List[Tuple[str, str]]
+]
 
-ContentTypes = Union[str, bytes, None]
-DataTypes = Union[dict, None]
-FileContent = Union[IO[bytes], bytes]
-FileType = Tuple[Optional[str], FileContent, Optional[str]]
-FileTypes = Union[
+ContentTypes: TypeAlias = Union[str, bytes, None]
+DataTypes: TypeAlias = Union[dict, None]
+FileContent: TypeAlias = Union[IO[bytes], bytes]
+FileType: TypeAlias = Tuple[Optional[str], FileContent, Optional[str]]
+FileTypes: TypeAlias = Union[
     # file (or bytes)
     FileContent,
     # (filename, file (or bytes))
@@ -50,7 +53,7 @@ FileTypes = Union[
     # (filename, file (or bytes), content_type)
     FileType,
 ]
-FilesTypes = Union[Dict[str, FileTypes], List[Tuple[str, FileTypes]], None]
+FilesTypes: TypeAlias = Union[Dict[str, FileTypes], List[Tuple[str, FileTypes]], None]
 
 
 class HTTPVersion(Enum):
@@ -160,7 +163,6 @@ class Response:
 
 class WebSocket(abc.ABC):
     def __init__(self, *, request: Request):
-        # request
         self.request: Request = request
 
     def __repr__(self) -> str:
@@ -169,9 +171,7 @@ class WebSocket(abc.ABC):
     @property
     @abc.abstractmethod
     def closed(self) -> bool:
-        """
-        连接是否已经关闭
-        """
+        """连接是否已经关闭"""
         raise NotImplementedError
 
     @abc.abstractmethod
