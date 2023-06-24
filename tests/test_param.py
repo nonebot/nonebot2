@@ -442,8 +442,12 @@ async def test_matcher(app: App):
 @pytest.mark.asyncio
 async def test_arg(app: App):
     from plugins.param.param_arg import (
-        arg, arg_str, arg_plain_text,
-        annotated_arg, annotated_arg_str, annotated_arg_plain_text
+        arg,
+        arg_str,
+        arg_plain_text,
+        annotated_arg,
+        annotated_arg_str,
+        annotated_arg_plain_text
     )
 
     matcher = Matcher()
