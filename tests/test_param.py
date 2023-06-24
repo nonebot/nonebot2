@@ -444,10 +444,10 @@ async def test_arg(app: App):
     from plugins.param.param_arg import (
         arg,
         arg_str,
-        arg_plain_text,
         annotated_arg,
+        arg_plain_text,
         annotated_arg_str,
-        annotated_arg_plain_text
+        annotated_arg_plain_text,
     )
 
     matcher = Matcher()
@@ -474,7 +474,9 @@ async def test_arg(app: App):
         ctx.pass_params(matcher=matcher)
         ctx.should_return(str(message))
 
-    async with app.test_dependent(annotated_arg_plain_text, allow_types=[ArgParam]) as ctx:
+    async with app.test_dependent(
+        annotated_arg_plain_text, allow_types=[ArgParam]
+    ) as ctx:
         ctx.pass_params(matcher=matcher)
         ctx.should_return(message.extract_plain_text())
 
