@@ -89,9 +89,7 @@ class Driver(abc.ABC):
 
     @abc.abstractmethod
     def run(self, *args, **kwargs):
-        """
-        启动驱动框架
-        """
+        """启动驱动框架"""
         logger.opt(colors=True).debug(
             f"<g>Loaded adapters: {escape_tag(', '.join(self._adapters))}</g>"
         )

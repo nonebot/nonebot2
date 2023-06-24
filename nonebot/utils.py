@@ -240,9 +240,11 @@ def logger_wrapper(logger_name: str):
     返回:
         日志记录函数
 
-            - level: 日志等级
-            - message: 日志信息
-            - exception: 异常信息
+        日志记录函数的参数:
+
+        - level: 日志等级
+        - message: 日志信息
+        - exception: 异常信息
     """
 
     def log(level: str, message: str, exception: Optional[Exception] = None):

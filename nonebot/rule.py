@@ -406,7 +406,7 @@ def command(
         force_whitespace: 是否强制命令后必须有指定空白符
 
     用法:
-        使用默认 `command_start`, `command_sep` 配置
+        使用默认 `command_start`, `command_sep` 配置情况下：
 
         命令 `("test",)` 可以匹配: `/test` 开头的消息
         命令 `("test", "sub")` 可以匹配: `/test.sub` 开头的消息
@@ -440,6 +440,8 @@ def command(
 
 class ArgumentParser(ArgParser):
     """`shell_like` 命令参数解析器，解析出错时不会退出程序。
+
+    支持 {ref}`nonebot.adapters.Message` 富文本解析。
 
     用法:
         用法与 `argparse.ArgumentParser` 相同，

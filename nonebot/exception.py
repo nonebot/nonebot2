@@ -45,7 +45,7 @@ class NoneBotException(Exception):
 class ParserExit(NoneBotException):
     """{ref}`nonebot.rule.shell_command` 处理消息失败时返回的异常"""
 
-    def __init__(self, status: int = 0, message: Optional[str] = None):
+    def __init__(self, status: int = 0, message: Optional[str] = None) -> None:
         self.status = status
         self.message = message
 
@@ -69,7 +69,7 @@ class IgnoredException(ProcessException):
         reason: 忽略事件的原因
     """
 
-    def __init__(self, reason: Any):
+    def __init__(self, reason: Any) -> None:
         self.reason: Any = reason
 
     def __repr__(self) -> str:
@@ -96,7 +96,7 @@ class SkippedException(ProcessException):
 class TypeMisMatch(SkippedException):
     """当前 `Handler` 的参数类型不匹配。"""
 
-    def __init__(self, param: ModelField, value: Any):
+    def __init__(self, param: ModelField, value: Any) -> None:
         self.param: ModelField = param
         self.value: Any = value
 
@@ -190,7 +190,7 @@ class FinishedException(MatcherException):
 
 # Adapter Exceptions
 class AdapterException(NoneBotException):
-    """代表 `Adapter` 抛出的异常，所有的 `Adapter` 都要在内部继承自这个 `Exception`
+    """代表 `Adapter` 抛出的异常，所有的 `Adapter` 都要在内部继承自这个 `Exception`。
 
     参数:
         adapter_name: 标识 adapter
@@ -230,7 +230,7 @@ class DriverException(NoneBotException):
 class WebSocketClosed(DriverException):
     """WebSocket 连接已关闭"""
 
-    def __init__(self, code: int, reason: Optional[str] = None):
+    def __init__(self, code: int, reason: Optional[str] = None) -> None:
         self.code = code
         self.reason = reason
 

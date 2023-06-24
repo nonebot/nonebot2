@@ -88,5 +88,6 @@ logger_id = logger.add(
     filter=default_filter,
     format=default_format,
 )
+"""默认日志处理器 id"""
 
 __autodoc__ = {"logger_id": False}

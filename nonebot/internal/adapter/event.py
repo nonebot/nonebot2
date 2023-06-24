@@ -48,7 +48,7 @@ class Event(abc.ABC, BaseModel):
         可以抛出 `NoLogException` 异常。
 
         异常:
-            NoLogException:
+            NoLogException: 希望 NoneBot 隐藏该事件日志
         """
         return f"[{self.get_event_name()}]: {self.get_event_description()}"
 

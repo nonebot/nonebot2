@@ -98,7 +98,7 @@ class MessageSegment(abc.ABC, Generic[TM]):
 
 
 class Message(List[TMS], abc.ABC):
-    """消息数组
+    """消息序列
 
     参数:
         message: 消息内容
