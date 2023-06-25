@@ -41,6 +41,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Diablo4 地狱狂潮 boss 提醒小助手 [@noneflow](https://github.com/noneflow) ([#2122](https://github.com/nonebot/nonebot2/pull/2122))
 - Plugin: nonbot-plugin-ocgbot-v2 [@noneflow](https://github.com/noneflow) ([#2120](https://github.com/nonebot/nonebot2/pull/2120))
 - Plugin: 错误告警 [@noneflow](https://github.com/noneflow) ([#2117](https://github.com/nonebot/nonebot2/pull/2117))
 - Plugin: follow_withdraw [@noneflow](https://github.com/noneflow) ([#2112](https://github.com/nonebot/nonebot2/pull/2112))
