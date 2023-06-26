@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复依赖注入文档 `ArgStr` 3.9+ 和 3.8+ 版本代码写反 [@eya46](https://github.com/eya46) ([#2126](https://github.com/nonebot/nonebot2/pull/2126))
 - Docs: 删除商店插件发布多余模块 [@forchannot](https://github.com/forchannot) ([#2095](https://github.com/nonebot/nonebot2/pull/2095))
 - Docs: 微调插件元数据的部分描述 [@NCBM](https://github.com/NCBM) ([#2096](https://github.com/nonebot/nonebot2/pull/2096))
 - Docs: 完成发布插件教程 [@NCBM](https://github.com/NCBM) ([#2078](https://github.com/nonebot/nonebot2/pull/2078))
@@ -40,6 +41,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Diablo4 地狱狂潮 boss 提醒小助手 [@noneflow](https://github.com/noneflow) ([#2122](https://github.com/nonebot/nonebot2/pull/2122))
 - Plugin: nonbot-plugin-ocgbot-v2 [@noneflow](https://github.com/noneflow) ([#2120](https://github.com/nonebot/nonebot2/pull/2120))
 - Plugin: 错误告警 [@noneflow](https://github.com/noneflow) ([#2117](https://github.com/nonebot/nonebot2/pull/2117))
 - Plugin: follow_withdraw [@noneflow](https://github.com/noneflow) ([#2112](https://github.com/nonebot/nonebot2/pull/2112))

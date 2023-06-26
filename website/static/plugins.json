@@ -6829,5 +6829,26 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_helltide",
+    "project_link": "nonebot-plugin-helltide",
+    "name": "Diablo4地狱狂潮boss提醒小助手",
+    "desc": "支持订阅，在D4继续上班",
+    "author": "QBkira",
+    "homepage": "https://github.com/QBkira/nonebot-plugin-helltide",
+    "tags": [
+      {
+        "label": "helltide",
+        "color": "#ff0000"
+      },
+      {
+        "label": "diablo4",
+        "color": "#ff3300"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
