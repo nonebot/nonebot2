@@ -488,18 +488,6 @@
     "supported_adapters": null
   },
   {
-    "module_name": "nonebot_plugin_phlogo",
-    "project_link": "nonebot-plugin-phlogo",
-    "name": "pornhub风格图标生成",
-    "desc": "生成pornhub风格logo",
-    "author": "kexue-z",
-    "homepage": "https://github.com/kexue-z/nonebot-plugin-phlogo",
-    "tags": [],
-    "is_official": false,
-    "type": null,
-    "supported_adapters": null
-  },
-  {
     "module_name": "nb2chan",
     "project_link": "nb2chan",
     "name": "nb2chan",
