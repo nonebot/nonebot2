@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 删除 nonebot-plugin-phlogo [@kexue-z](https://github.com/kexue-z) ([#2128](https://github.com/nonebot/nonebot2/pull/2128))
 - Plugin: 修改 `nonebot-plugin-gw2` 模块名 [@Agnes4m](https://github.com/Agnes4m) ([#2123](https://github.com/nonebot/nonebot2/pull/2123))
 - Develop: 添加 ruff linter [@yanyongyu](https://github.com/yanyongyu) ([#2114](https://github.com/nonebot/nonebot2/pull/2114))
 - Plugin: 更新 `nonebot-plugin-msgbuf` 插件的名称等信息 [@NCBM](https://github.com/NCBM) ([#2119](https://github.com/nonebot/nonebot2/pull/2119))
