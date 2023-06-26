@@ -165,14 +165,17 @@ async def test_inherit_supported_adapters():
     plugin_1 = nonebot.get_plugin("metadata")
     assert plugin_1
     assert plugin_1.metadata
-    assert (
-        inherit_supported_adapters("metadata") == plugin_1.metadata.supported_adapters
-    )
+    assert inherit_supported_adapters("metadata") == {
+        "nonebot.adapters.onebot.v11",
+        "plugins.metadata:FakeAdapter",
+    }
 
     plugin_2 = nonebot.get_plugin("metadata_2")
     assert plugin_2
     assert plugin_2.metadata
-    assert inherit_supported_adapters("metadata", "metadata_2") == {"~onebot.v11"}
+    assert inherit_supported_adapters("metadata", "metadata_2") == {
+        "nonebot.adapters.onebot.v11"
+    }
     assert inherit_supported_adapters("metadata", "echo", "metadata_2") == {
-        "~onebot.v11"
+        "nonebot.adapters.onebot.v11"
     }

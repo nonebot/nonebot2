@@ -216,9 +216,7 @@ def inherit_supported_adapters(*names: str) -> Optional[Set[str]]:
         final_supported
         if final_supported is None
         else {
-            f"~{adapter_name[17:]}"  # strip full name
-            if adapter_name.startswith("nonebot.adapters.")
-            else adapter_name
+            adapter_name.replace("~", "nonebot.adapters.", 1)
             for adapter_name in final_supported
         }
     )
