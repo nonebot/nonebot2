@@ -56,6 +56,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: web_bot [@noneflow](https://github.com/noneflow) ([#2131](https://github.com/nonebot/nonebot2/pull/2131))
 - Bot: ReimeiBot-黎明机器人 [@noneflow](https://github.com/noneflow) ([#2107](https://github.com/nonebot/nonebot2/pull/2107))
 
 ### 🍻 适配器发布
