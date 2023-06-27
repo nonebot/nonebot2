@@ -212,11 +212,9 @@ def inherit_supported_adapters(*names: str) -> Optional[Set[str]]:
             support if final_supported is None else (final_supported & support)
         )
 
-    return (
-        final_supported
-        if final_supported is None
-        else {
-            adapter_name.replace("~", "nonebot.adapters.", 1)
-            for adapter_name in final_supported
-        }
-    )
+    return final_supported and {
+        f"nonebot.adapters.{adapter_name[1:]}"
+        if adapter_name.startswith("~")
+        else adapter_name
+        for adapter_name in final_supported
+    }
