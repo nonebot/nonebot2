@@ -6838,5 +6838,24 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_userinfo",
+    "project_link": "nonebot-plugin-userinfo",
+    "name": "用户信息",
+    "desc": "多平台的用户信息获取插件",
+    "author": "MeetWq",
+    "homepage": "https://github.com/noneplugin/nonebot-plugin-userinfo",
+    "tags": [],
+    "is_official": false,
+    "type": "library",
+    "supported_adapters": [
+      "nonebot.adapters.onebot.v12",
+      "nonebot.adapters.telegram",
+      "nonebot.adapters.console",
+      "nonebot.adapters.qqguild",
+      "nonebot.adapters.onebot.v11",
+      "nonebot.adapters.kaiheila"
+    ]
   }
 ]
