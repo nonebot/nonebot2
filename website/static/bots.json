@@ -535,5 +535,18 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "web_bot",
+    "desc": "把机器人搬到网络上",
+    "author": "wsdtl",
+    "homepage": "https://github.com/wsdtl/web_bot",
+    "tags": [
+      {
+        "label": "xiaonan",
+        "color": "#775151"
+      }
+    ],
+    "is_official": false
   }
 ]
