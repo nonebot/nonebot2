@@ -134,3 +134,4 @@ from .plugin import PluginMetadata as PluginMetadata
 from .load import load_all_plugins as load_all_plugins
 from .load import load_builtin_plugin as load_builtin_plugin
 from .load import load_builtin_plugins as load_builtin_plugins
+from .load import inherit_supported_adapters as inherit_supported_adapters
