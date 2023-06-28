@@ -469,7 +469,9 @@ class CommandGroup(_Group):
         if aliases := kwargs.get("aliases"):
             _aliases = set()
             for alias in aliases:
-                _aliases.add(self.basecmd + (alias,) if isinstance(alias, str) else alias)
+                _aliases.add(
+                    self.basecmd + (alias,) if isinstance(alias, str) else alias
+                )
             kwargs["aliases"] = _aliases
         matcher = on_command(cmd, **self._get_final_kwargs(kwargs))
         self.matchers.append(matcher)
@@ -498,7 +500,9 @@ class CommandGroup(_Group):
         if aliases := kwargs.get("aliases"):
             _aliases = set()
             for alias in aliases:
-                _aliases.add(self.basecmd + (alias,) if isinstance(alias, str) else alias)
+                _aliases.add(
+                    self.basecmd + (alias,) if isinstance(alias, str) else alias
+                )
             kwargs["aliases"] = _aliases
         matcher = on_shell_command(cmd, **self._get_final_kwargs(kwargs))
         self.matchers.append(matcher)
