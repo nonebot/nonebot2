@@ -437,13 +437,15 @@ class CommandGroup(_Group):
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
+        affect_aliases: 是否影响命令别名，给命令别名加前缀
     """
 
-    def __init__(self, cmd: Union[str, Tuple[str, ...]], **kwargs):
+    def __init__(self, cmd: Union[str, Tuple[str, ...]], affect_aliases: bool = False, **kwargs):
         """命令前缀"""
         super().__init__(**kwargs)
         self.basecmd: Tuple[str, ...] = (cmd,) if isinstance(cmd, str) else cmd
         self.base_kwargs.pop("aliases", None)
+        self.affect_aliases = affect_aliases
 
     def __repr__(self) -> str:
         return f"CommandGroup(cmd={self.basecmd}, matchers={len(self.matchers)})"
@@ -466,10 +468,10 @@ class CommandGroup(_Group):
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
-        if aliases := kwargs.get("aliases"):
+        if self.affect_aliases and (aliases := kwargs.get("aliases")):
             _aliases = set()
             for alias in aliases:
-                _aliases.add(self.basecmd + (alias,) if isinstance(alias, str) else alias)
+                _aliases.add(self.basecmd + ((alias,) if isinstance(alias, str) else alias))
             kwargs["aliases"] = _aliases
         matcher = on_command(cmd, **self._get_final_kwargs(kwargs))
         self.matchers.append(matcher)
@@ -495,10 +497,10 @@ class CommandGroup(_Group):
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
-        if aliases := kwargs.get("aliases"):
+        if self.affect_aliases and (aliases := kwargs.get("aliases")):
             _aliases = set()
             for alias in aliases:
-                _aliases.add(self.basecmd + (alias,) if isinstance(alias, str) else alias)
+                _aliases.add(self.basecmd + ((alias,) if isinstance(alias, str) else alias))
             kwargs["aliases"] = _aliases
         matcher = on_shell_command(cmd, **self._get_final_kwargs(kwargs))
         self.matchers.append(matcher)

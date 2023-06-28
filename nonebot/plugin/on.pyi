@@ -188,6 +188,7 @@ class CommandGroup:
         priority: int = ...,
         block: bool = ...,
         state: T_State | None = ...,
+        affect_aliases: bool = ...,
     ): ...
     def command(
         self,
