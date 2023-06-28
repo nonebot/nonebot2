@@ -182,3 +182,39 @@ def require(name: str) -> ModuleType:
     if not plugin:
         raise RuntimeError(f'Cannot load plugin "{name}"!')
     return plugin.module
+
+
+def inherit_supported_adapters(*names: str) -> Optional[Set[str]]:
+    """获取已加载插件的适配器支持状态集合。
+
+    如果传入了多个插件名称，返回值会自动取交集。
+
+    参数:
+        names: 插件名称列表。
+
+    异常:
+        RuntimeError: 插件未加载
+        ValueError: 插件缺少元数据
+    """
+    final_supported: Optional[Set[str]] = None
+
+    for name in names:
+        plugin = get_plugin(_module_name_to_plugin_name(name))
+        if plugin is None:
+            raise RuntimeError(f'Plugin "{name}" is not loaded!')
+        meta = plugin.metadata
+        if meta is None:
+            raise ValueError(f'Plugin "{name}" has no metadata!')
+        support = meta.supported_adapters
+        if support is None:
+            continue
+        final_supported = (
+            support if final_supported is None else (final_supported & support)
+        )
+
+    return final_supported and {
+        f"nonebot.adapters.{adapter_name[1:]}"
+        if adapter_name.startswith("~")
+        else adapter_name
+        for adapter_name in final_supported
+    }

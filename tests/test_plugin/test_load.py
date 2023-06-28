@@ -6,7 +6,7 @@ from dataclasses import asdict
 import pytest
 
 import nonebot
-from nonebot.plugin import Plugin, PluginManager, _managers
+from nonebot.plugin import Plugin, PluginManager, _managers, inherit_supported_adapters
 
 
 @pytest.mark.asyncio
@@ -147,3 +147,35 @@ async def test_plugin_metadata():
     }
 
     assert plugin.metadata.get_supported_adapters() == {FakeAdapter}
+
+
+@pytest.mark.asyncio
+async def test_inherit_supported_adapters():
+    with pytest.raises(RuntimeError):
+        inherit_supported_adapters("some_plugin_not_exist")
+
+    with pytest.raises(ValueError, match="has no metadata!"):
+        inherit_supported_adapters("export")
+
+    echo = nonebot.get_plugin("echo")
+    assert echo
+    assert echo.metadata
+    assert inherit_supported_adapters("echo") is None
+
+    plugin_1 = nonebot.get_plugin("metadata")
+    assert plugin_1
+    assert plugin_1.metadata
+    assert inherit_supported_adapters("metadata") == {
+        "nonebot.adapters.onebot.v11",
+        "plugins.metadata:FakeAdapter",
+    }
+
+    plugin_2 = nonebot.get_plugin("metadata_2")
+    assert plugin_2
+    assert plugin_2.metadata
+    assert inherit_supported_adapters("metadata", "metadata_2") == {
+        "nonebot.adapters.onebot.v11"
+    }
+    assert inherit_supported_adapters("metadata", "echo", "metadata_2") == {
+        "nonebot.adapters.onebot.v11"
+    }
