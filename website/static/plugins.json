@@ -6857,5 +6857,23 @@
       "nonebot.adapters.onebot.v11",
       "nonebot.adapters.kaiheila"
     ]
+  },
+  {
+    "module_name": "nonebot_plugin_eitherchoice",
+    "project_link": "nonebot-plugin-eitherchoice",
+    "name": "EitherChoice",
+    "desc": "让 AI 帮你对比两件事物",
+    "author": "lgc2333",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-eitherchoice",
+    "tags": [],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": [
+      "nonebot.adapters.qqguild",
+      "nonebot.adapters.onebot.v12",
+      "nonebot.adapters.kaiheila",
+      "nonebot.adapters.telegram",
+      "nonebot.adapters.onebot.v11"
+    ]
   }
 ]
