@@ -291,7 +291,7 @@ sub_cmd = group.command("sub")
 help_cmd = group.command("help")
 ```
 
-如果需要为alias设置前缀，可以添加 `prefix_aliases=True` 参数:
+如果需要为aliases设置前缀，可以添加 `prefix_aliases=True` 参数:
 
 ```python
 from nonebot import CommandGroup
@@ -304,7 +304,7 @@ help_cmd = group.command("help", aliases={"帮助"})
 ```
 这样就能成功匹配 `/cmd`、`/cmd.sub`、`/cmd.subs`、`/cmd.help`、`/cmd.帮助` 五个命令。
 
-如果未设置，将默认匹配 `/cmd`、`/cmd.sub`、`/subs`、`/cmd.help`、`/帮助`
+如果未设置，将默认匹配 `/cmd`、`/cmd.sub`、`/subs`、`/cmd.help`、`/帮助` 五个命令。
 
 ### `MatcherGroup`
 
