@@ -43,6 +43,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: EitherChoice [@noneflow](https://github.com/noneflow) ([#2137](https://github.com/nonebot/nonebot2/pull/2137))
 - Plugin: 用户信息 [@noneflow](https://github.com/noneflow) ([#2133](https://github.com/nonebot/nonebot2/pull/2133))
 - Plugin: Diablo4 地狱狂潮 boss 提醒小助手 [@noneflow](https://github.com/noneflow) ([#2122](https://github.com/nonebot/nonebot2/pull/2122))
 - Plugin: nonbot-plugin-ocgbot-v2 [@noneflow](https://github.com/noneflow) ([#2120](https://github.com/nonebot/nonebot2/pull/2120))
