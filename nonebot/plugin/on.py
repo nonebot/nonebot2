@@ -429,6 +429,7 @@ class CommandGroup(_Group):
 
     参数:
         cmd: 指定命令内容
+        prefix_aliases: 是否影响命令别名，给命令别名加前缀
         rule: 事件响应规则
         permission: 事件响应权限
         handlers: 事件处理函数列表
@@ -437,17 +438,16 @@ class CommandGroup(_Group):
         priority: 事件响应器优先级
         block: 是否阻止事件向更低优先级传递
         state: 默认 state
-        affect_aliases: 是否影响命令别名，给命令别名加前缀
     """
 
     def __init__(
-        self, cmd: Union[str, Tuple[str, ...]], affect_aliases: bool = False, **kwargs
+        self, cmd: Union[str, Tuple[str, ...]], prefix_aliases: bool = False, **kwargs
     ):
         """命令前缀"""
         super().__init__(**kwargs)
         self.basecmd: Tuple[str, ...] = (cmd,) if isinstance(cmd, str) else cmd
         self.base_kwargs.pop("aliases", None)
-        self.affect_aliases = affect_aliases
+        self.prefix_aliases = prefix_aliases
 
     def __repr__(self) -> str:
         return f"CommandGroup(cmd={self.basecmd}, matchers={len(self.matchers)})"
@@ -470,13 +470,11 @@ class CommandGroup(_Group):
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
-        if self.affect_aliases and (aliases := kwargs.get("aliases")):
-            _aliases = set()
-            for alias in aliases:
-                _aliases.add(
-                    self.basecmd + ((alias,) if isinstance(alias, str) else alias)
-                )
-            kwargs["aliases"] = _aliases
+        if self.prefix_aliases and (aliases := kwargs.get("aliases")):
+            kwargs["aliases"] = {
+                self.basecmd + ((alias,) if isinstance(alias, str) else alias)
+                for alias in aliases
+            }
         matcher = on_command(cmd, **self._get_final_kwargs(kwargs))
         self.matchers.append(matcher)
         return matcher
@@ -501,13 +499,11 @@ class CommandGroup(_Group):
         """
         sub_cmd = (cmd,) if isinstance(cmd, str) else cmd
         cmd = self.basecmd + sub_cmd
-        if self.affect_aliases and (aliases := kwargs.get("aliases")):
-            _aliases = set()
-            for alias in aliases:
-                _aliases.add(
-                    self.basecmd + ((alias,) if isinstance(alias, str) else alias)
-                )
-            kwargs["aliases"] = _aliases
+        if self.prefix_aliases and (aliases := kwargs.get("aliases")):
+            kwargs["aliases"] = {
+                self.basecmd + ((alias,) if isinstance(alias, str) else alias)
+                for alias in aliases
+            }
         matcher = on_shell_command(cmd, **self._get_final_kwargs(kwargs))
         self.matchers.append(matcher)
         return matcher
