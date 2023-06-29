@@ -302,6 +302,7 @@ cmd = group.command(tuple())
 sub_cmd = group.command("sub", aliases={"subs"})
 help_cmd = group.command("help", aliases={"帮助"})
 ```
+
 这样就能成功匹配 `/cmd`、`/cmd.sub`、`/cmd.subs`、`/cmd.help`、`/cmd.帮助` 五个命令。
 
 如果未设置，将默认匹配 `/cmd`、`/cmd.sub`、`/subs`、`/cmd.help`、`/帮助` 五个命令。
