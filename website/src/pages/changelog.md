@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复日志自定义文档 typo [@17TheWord](https://github.com/17TheWord) ([#2140](https://github.com/nonebot/nonebot2/pull/2140))
 - Docs: 修复依赖注入文档 `ArgStr` 3.9+ 和 3.8+ 版本代码写反 [@eya46](https://github.com/eya46) ([#2126](https://github.com/nonebot/nonebot2/pull/2126))
 - Docs: 删除商店插件发布多余模块 [@forchannot](https://github.com/forchannot) ([#2095](https://github.com/nonebot/nonebot2/pull/2095))
 - Docs: 微调插件元数据的部分描述 [@NCBM](https://github.com/NCBM) ([#2096](https://github.com/nonebot/nonebot2/pull/2096))
