@@ -6875,5 +6875,22 @@
       "nonebot.adapters.telegram",
       "nonebot.adapters.onebot.v11"
     ]
+  },
+  {
+    "module_name": "nonebot_plugin_poke",
+    "project_link": "nonebot-plugin-poke",
+    "name": "戳一戳事件",
+    "desc": "自定义戳一戳事件",
+    "author": "Agnes4m",
+    "homepage": "https://github.com/Agnes4m/nonebot_plugin_poke",
+    "tags": [
+      {
+        "label": "v11",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
