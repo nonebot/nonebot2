@@ -231,7 +231,9 @@ cmd_group = CommandGroup(
     state=state,
 )
 matcher_prefix_cmd = cmd_group.command("sub", aliases={"help", ("help", "foo")})
-matcher_prefix_shell_cmd = cmd_group.shell_command("sub", aliases={"help", ("help", "foo")})
+matcher_prefix_shell_cmd = cmd_group.shell_command(
+    "sub", aliases={"help", ("help", "foo")}
+)
 
 
 cmd_group_prefix_aliases = CommandGroup(
@@ -246,8 +248,12 @@ cmd_group_prefix_aliases = CommandGroup(
     block=True,
     state=state,
 )
-matcher_prefix_aliases_cmd = cmd_group_prefix_aliases.command("sub", aliases={"help", ("help", "foo")})
-matcher_prefix_aliases_shell_cmd = cmd_group_prefix_aliases.shell_command("sub", aliases={"help", ("help", "foo")})
+matcher_prefix_aliases_cmd = cmd_group_prefix_aliases.command(
+    "sub", aliases={"help", ("help", "foo")}
+)
+matcher_prefix_aliases_shell_cmd = cmd_group_prefix_aliases.shell_command(
+    "sub", aliases={"help", ("help", "foo")}
+)
 
 
 matcher_group = MatcherGroup(
