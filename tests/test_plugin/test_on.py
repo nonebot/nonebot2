@@ -41,10 +41,30 @@ from nonebot.rule import (
         ),
         pytest.param("matcher_on_regex", lambda e: RegexRule("test"), True),
         pytest.param("matcher_on_type", lambda e: IsTypeRule(e), True),
-        pytest.param("matcher_sub_cmd", lambda e: CommandRule([("test", "sub")]), True),
         pytest.param(
-            "matcher_sub_shell_cmd",
-            lambda e: ShellCommandRule([("test", "sub")], None),
+            "matcher_prefix_cmd",
+            lambda e: CommandRule([("prefix", "sub"), ("help",), ("help", "foo")]),
+            True,
+        ),
+        pytest.param(
+            "matcher_prefix_shell_cmd",
+            lambda e: ShellCommandRule(
+                [("prefix", "sub"), ("help",), ("help", "foo")], None
+            ),
+            True,
+        ),
+        pytest.param(
+            "matcher_prefix_aliases_cmd",
+            lambda e: CommandRule(
+                [("prefix", "sub"), ("prefix", "help"), ("prefix", "help", "foo")]
+            ),
+            True,
+        ),
+        pytest.param(
+            "matcher_prefix_aliases_shell_cmd",
+            lambda e: ShellCommandRule(
+                [("prefix", "sub"), ("prefix", "help"), ("prefix", "help", "foo")], None
+            ),
             True,
         ),
         pytest.param("matcher_group_on", None, True),

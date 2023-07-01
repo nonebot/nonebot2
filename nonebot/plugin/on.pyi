@@ -179,6 +179,7 @@ class CommandGroup:
     def __init__(
         self,
         cmd: str | tuple[str, ...],
+        prefix_aliases: bool = ...,
         *,
         rule: Rule | T_RuleChecker | None = ...,
         permission: Permission | T_PermissionChecker | None = ...,

@@ -220,7 +220,7 @@ matcher_on_type = on_type(
 
 
 cmd_group = CommandGroup(
-    "test",
+    "prefix",
     rule=rule,
     permission=permission,
     handlers=[handler],
@@ -230,8 +230,30 @@ cmd_group = CommandGroup(
     block=True,
     state=state,
 )
-matcher_sub_cmd = cmd_group.command("sub")
-matcher_sub_shell_cmd = cmd_group.shell_command("sub")
+matcher_prefix_cmd = cmd_group.command("sub", aliases={"help", ("help", "foo")})
+matcher_prefix_shell_cmd = cmd_group.shell_command(
+    "sub", aliases={"help", ("help", "foo")}
+)
+
+
+cmd_group_prefix_aliases = CommandGroup(
+    "prefix",
+    prefix_aliases=True,
+    rule=rule,
+    permission=permission,
+    handlers=[handler],
+    temp=True,
+    expire_time=expire_time,
+    priority=priority,
+    block=True,
+    state=state,
+)
+matcher_prefix_aliases_cmd = cmd_group_prefix_aliases.command(
+    "sub", aliases={"help", ("help", "foo")}
+)
+matcher_prefix_aliases_shell_cmd = cmd_group_prefix_aliases.shell_command(
+    "sub", aliases={"help", ("help", "foo")}
+)
 
 
 matcher_group = MatcherGroup(
