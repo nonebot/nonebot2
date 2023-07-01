@@ -75,7 +75,7 @@ logger.add(
     sys.stdout,
     level=0,
     diagnose=True,
-    format="<g>{time:MM-DD HH:mm:ss}</g> [<lvl>{level}</lvl>] <c><u>{full_name}</u></c> | {message}",
+    format="<g>{time:MM-DD HH:mm:ss}</g> [<lvl>{level}</lvl>] <c><u>{name}</u></c> | {message}",
     filter=default_filter
 )
 ```
