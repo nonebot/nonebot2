@@ -6800,7 +6800,7 @@
   {
     "module_name": "nonebot_plugin_ocgbot_v2",
     "project_link": "nonebot-plugin-ocgbot-v2",
-    "name": "nonbot-plugin-ocgbot-v2",
+    "name": "nonebot-plugin-ocgbot-v2",
     "desc": "提供游戏王相关服务",
     "author": "fireinsect",
     "homepage": "https://github.com/fireinsect/nonebot-plugin-ocgbot-v2/",
