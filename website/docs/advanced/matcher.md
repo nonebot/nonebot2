@@ -298,7 +298,7 @@ from nonebot import CommandGroup
 
 group = CommandGroup("cmd", prefix_aliases=True)
 
-sub_cmd = group.command("sub", aliases={"subs"})
+cmd = group.command(tuple())
 help_cmd = group.command("help", aliases={"帮助"})
 ```
 
