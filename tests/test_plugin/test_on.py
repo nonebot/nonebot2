@@ -44,21 +44,27 @@ from nonebot.rule import (
         pytest.param(
             "matcher_prefix_cmd",
             lambda e: CommandRule([("prefix", "sub"), ("help",), ("help", "foo")]),
-            True
+            True,
         ),
         pytest.param(
             "matcher_prefix_shell_cmd",
-            lambda e: ShellCommandRule([("prefix", "sub"), ("help",), ("help", "foo")], None),
+            lambda e: ShellCommandRule(
+                [("prefix", "sub"), ("help",), ("help", "foo")], None
+            ),
             True,
         ),
         pytest.param(
             "matcher_prefix_aliases_cmd",
-            lambda e: CommandRule([("prefix", "sub"), ("prefix", "help"), ("prefix", "help", "foo")]),
-            True
+            lambda e: CommandRule(
+                [("prefix", "sub"), ("prefix", "help"), ("prefix", "help", "foo")]
+            ),
+            True,
         ),
         pytest.param(
             "matcher_prefix_aliases_shell_cmd",
-            lambda e: ShellCommandRule([("prefix", "sub"), ("prefix", "help"), ("prefix", "help", "foo")], None),
+            lambda e: ShellCommandRule(
+                [("prefix", "sub"), ("prefix", "help"), ("prefix", "help", "foo")], None
+            ),
             True,
         ),
         pytest.param("matcher_group_on", None, True),
