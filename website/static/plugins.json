@@ -6743,9 +6743,7 @@
     ],
     "is_official": false,
     "type": "application",
-    "supported_adapters": [
-      "nonebot.adapters.onebot.v11"
-    ]
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   },
   {
     "module_name": "nonebot_plugin_warthunder_player_check",
@@ -6762,9 +6760,7 @@
     ],
     "is_official": false,
     "type": "application",
-    "supported_adapters": [
-      "nonebot.adapters.onebot.v11"
-    ]
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   },
   {
     "module_name": "nonebot_plugin_follow_withdraw",
@@ -6820,9 +6816,7 @@
     ],
     "is_official": false,
     "type": "application",
-    "supported_adapters": [
-      "nonebot.adapters.onebot.v11"
-    ]
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   },
   {
     "module_name": "nonebot_plugin_helltide",
@@ -6843,9 +6837,7 @@
     ],
     "is_official": false,
     "type": "application",
-    "supported_adapters": [
-      "nonebot.adapters.onebot.v11"
-    ]
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   },
   {
     "module_name": "nonebot_plugin_userinfo",
@@ -6899,8 +6891,6 @@
     ],
     "is_official": false,
     "type": "application",
-    "supported_adapters": [
-      "nonebot.adapters.onebot.v11"
-    ]
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
