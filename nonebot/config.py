@@ -17,8 +17,8 @@ from ipaddress import IPv4Address
 from typing_extensions import get_args
 from typing import TYPE_CHECKING, Any, Set, Dict, Tuple, Union, Mapping, Optional
 
-from pydantic.utils import deep_update
 from pydantic.fields import Undefined
+from pydantic.utils import deep_update
 from pydantic import Extra, Field, BaseSettings, IPvAnyAddress
 from pydantic.env_settings import (
     DotenvType,
