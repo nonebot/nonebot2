@@ -18,6 +18,7 @@ from typing import TYPE_CHECKING, Any, Set, Dict, Tuple, Union, Mapping, Optiona
 from typing_extensions import get_args
 
 from pydantic.utils import deep_update
+from pydantic.fields import Undefined
 from pydantic import Extra, Field, BaseSettings, IPvAnyAddress
 from pydantic.env_settings import (
     DotenvType,
@@ -45,14 +46,15 @@ class CustomEnvSettings(EnvSettingsSource):
         env_vars = {**env_file_vars, **env_vars}
 
         for field in settings.__fields__.values():
-            env_val: Optional[str] = None
+            env_val: Optional[str] = Undefined
             for env_name in field.field_info.extra["env_names"]:
-                env_val = env_vars.get(env_name)
+                env_val = env_vars.get(env_name, Undefined)
                 if env_name in env_file_vars:
                     del env_file_vars[env_name]
                 if env_val is not None:
                     break
-
+            if env_val is Undefined:
+                continue
             is_complex, allow_parse_failure = self.field_is_complex(field)
             if is_complex:
                 if env_val is None:
