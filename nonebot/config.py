@@ -15,6 +15,7 @@ import os
 from datetime import timedelta
 from ipaddress import IPv4Address
 from typing import TYPE_CHECKING, Any, Set, Dict, Tuple, Union, Mapping, Optional
+from typing_extensions import get_args
 
 from pydantic.utils import deep_update
 from pydantic import Extra, Field, BaseSettings, IPvAnyAddress
@@ -74,7 +75,7 @@ class CustomEnvSettings(EnvSettingsSource):
                         )
                     else:
                         d[field.alias] = env_val
-            elif env_val is not None or isinstance(None, field.annotation):
+            elif env_val is not None or type(env_val) in get_args(field.annotation):
                 # simplest case, field is not complex
                 # we only need to add the value if it was found
                 d[field.alias] = env_val
