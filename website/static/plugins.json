@@ -6219,7 +6219,7 @@
       }
     ],
     "is_official": false,
-    "type": null,
+    "type": "application",
     "supported_adapters": [
       "nonebot.adapters.kaiheila",
       "nonebot.adapters.telegram",
