@@ -33,6 +33,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 更新 SparkGPT 插件描述 [@canxin121](https://github.com/canxin121) ([#2144](https://github.com/nonebot/nonebot2/pull/2144))
 - Plugin: 修改 nonebot-plugin-ocgbot-v2 插件名称 [@fireinsect](https://github.com/fireinsect) ([#2141](https://github.com/nonebot/nonebot2/pull/2141))
 - Plugin: 删除 nonebot-plugin-phlogo [@kexue-z](https://github.com/kexue-z) ([#2128](https://github.com/nonebot/nonebot2/pull/2128))
 - Plugin: 修改 `nonebot-plugin-gw2` 模块名 [@Agnes4m](https://github.com/Agnes4m) ([#2123](https://github.com/nonebot/nonebot2/pull/2123))
