@@ -6205,26 +6205,26 @@
     "module_name": "nonebot_plugin_spark_gpt",
     "project_link": "nonebot-plugin-spark-gpt",
     "name": "Spark-GPT",
-    "desc": "将多来源的gpt接入qq及更多平台，使用便捷，管理完善，功能强大",
+    "desc": "将poe,chatgpt,slack claude,Newbing,google bard,讯飞星火模型(SparkDesk),通义千问等接入qq,tg,kook(原开黑啦)多平台用户绑定实现数据互通,并提供webui进行便捷配置,自适应文转图,实现预设人格化bot的便捷创建,使用和管理",
     "author": "canxin121",
     "homepage": "https://github.com/canxin121/Spark-GPT",
     "tags": [
       {
-        "label": "ChatGPT",
-        "color": "#52aeea"
+        "label": "多来源语言GPT",
+        "color": "#5599ff"
       },
       {
-        "label": "Claude",
-        "color": "#52aeea"
-      },
-      {
-        "label": "Newbing",
-        "color": "#52aeea"
+        "label": "多平台用户数据互通",
+        "color": "#ffff77"
       }
     ],
     "is_official": false,
-    "type": null,
-    "supported_adapters": null
+    "type": "application",
+    "supported_adapters": [
+      "nonebot.adapters.kaiheila",
+      "nonebot.adapters.telegram",
+      "nonebot.adapters.onebot.v11"
+    ]
   },
   {
     "module_name": "nonebot_plugin_logpile",
@@ -6800,8 +6800,8 @@
   {
     "module_name": "nonebot_plugin_ocgbot_v2",
     "project_link": "nonebot-plugin-ocgbot-v2",
-    "name": "nonebot-plugin-ocgbot-v2",
-    "desc": "提供游戏王相关服务",
+    "name": "游戏王小蓝卡查",
+    "desc": "提供游戏王查卡等相关服务",
     "author": "fireinsect",
     "homepage": "https://github.com/fireinsect/nonebot-plugin-ocgbot-v2/",
     "tags": [
@@ -6889,6 +6889,18 @@
         "color": "#ea5252"
       }
     ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_friends",
+    "project_link": "nonebot-plugin-friends",
+    "name": "远程同意好友",
+    "desc": "自定义远程同意好友",
+    "author": "Agnes4m",
+    "homepage": "https://github.com/Agnes4m/nonebot_plugin_friends",
+    "tags": [],
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
