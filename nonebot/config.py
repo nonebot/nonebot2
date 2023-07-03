@@ -77,7 +77,7 @@ class CustomEnvSettings(EnvSettingsSource):
                         )
                     else:
                         d[field.alias] = env_val
-            elif env_val is not None or type(env_val) in get_args(field.annotation):
+            else:
                 # simplest case, field is not complex
                 # we only need to add the value if it was found
                 d[field.alias] = env_val
