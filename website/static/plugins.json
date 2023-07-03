@@ -6892,5 +6892,17 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_friends",
+    "project_link": "nonebot-plugin-friends",
+    "name": "远程同意好友",
+    "desc": "自定义远程同意好友",
+    "author": "Agnes4m",
+    "homepage": "https://github.com/Agnes4m/nonebot_plugin_friends",
+    "tags": [],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
