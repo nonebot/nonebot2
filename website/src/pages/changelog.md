@@ -47,6 +47,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 远程同意好友 [@noneflow](https://github.com/noneflow) ([#2146](https://github.com/nonebot/nonebot2/pull/2146))
 - Plugin: 戳一戳事件 [@noneflow](https://github.com/noneflow) ([#2139](https://github.com/nonebot/nonebot2/pull/2139))
 - Plugin: EitherChoice [@noneflow](https://github.com/noneflow) ([#2137](https://github.com/nonebot/nonebot2/pull/2137))
 - Plugin: 用户信息 [@noneflow](https://github.com/noneflow) ([#2133](https://github.com/nonebot/nonebot2/pull/2133))
