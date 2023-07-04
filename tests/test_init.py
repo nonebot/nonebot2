@@ -20,6 +20,11 @@ async def test_init():
     assert env == "test"
 
     config = nonebot.get_driver().config
+    assert config.nickname == {"test"}
+    assert config.superusers == {"test", "fake:faketest"}
+    assert config.api_timeout is None
+
+    assert config.simple_none is None
     assert config.config_from_env == {"test": "test"}
     assert config.config_override == "new"
     assert config.config_from_init == "init"
