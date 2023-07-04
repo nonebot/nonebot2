@@ -17,6 +17,7 @@ from ipaddress import IPv4Address
 from typing import TYPE_CHECKING, Any, Set, Dict, Tuple, Union, Mapping, Optional
 
 from pydantic.utils import deep_update
+from pydantic.fields import Undefined, UndefinedType
 from pydantic import Extra, Field, BaseSettings, IPvAnyAddress
 from pydantic.env_settings import (
     DotenvType,
@@ -44,19 +45,22 @@ class CustomEnvSettings(EnvSettingsSource):
         env_vars = {**env_file_vars, **env_vars}
 
         for field in settings.__fields__.values():
-            env_val: Optional[str] = None
+            env_val: Union[str, None, UndefinedType] = Undefined
             for env_name in field.field_info.extra["env_names"]:
-                env_val = env_vars.get(env_name)
+                env_val = env_vars.get(env_name, Undefined)
                 if env_name in env_file_vars:
                     del env_file_vars[env_name]
-                if env_val is not None:
+                if env_val is not Undefined:
                     break
 
             is_complex, allow_parse_failure = self.field_is_complex(field)
             if is_complex:
-                if env_val is None:
+                if isinstance(env_val, UndefinedType):
+                    # field is complex but no value found so far, try explode_env_vars
                     if env_val_built := self.explode_env_vars(field, env_vars):
                         d[field.alias] = env_val_built
+                elif env_val is None:
+                    d[field.alias] = env_val
                 else:
                     # field is complex and there's a value
                     # decode that as JSON, then add explode_env_vars
@@ -74,7 +78,7 @@ class CustomEnvSettings(EnvSettingsSource):
                         )
                     else:
                         d[field.alias] = env_val
-            elif env_val is not None:
+            elif not isinstance(env_val, UndefinedType):
                 # simplest case, field is not complex
                 # we only need to add the value if it was found
                 d[field.alias] = env_val
