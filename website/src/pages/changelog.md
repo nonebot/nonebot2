@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 补充响应器组属性 [@eya46](https://github.com/eya46) ([#2154](https://github.com/nonebot/nonebot2/pull/2154))
 - Feature: CommandGroup 支持命令别名添加前缀选项 [@eya46](https://github.com/eya46) ([#2134](https://github.com/nonebot/nonebot2/pull/2134))
 - Feature: 添加用于动态继承支持适配器数据的方法 [@NCBM](https://github.com/NCBM) ([#2127](https://github.com/nonebot/nonebot2/pull/2127))
 - Feature: 添加内置插件的插件元数据 [@yanyongyu](https://github.com/yanyongyu) ([#2113](https://github.com/nonebot/nonebot2/pull/2113))
