@@ -25,6 +25,7 @@ def on(
     priority: int = ...,
     block: bool = ...,
     state: T_State | None = ...,
+    _depth: int = ...,
 ) -> type[Matcher]: ...
 def on_metaevent(
     rule: Rule | T_RuleChecker | None = ...,
@@ -47,6 +48,7 @@ def on_message(
     priority: int = ...,
     block: bool = ...,
     state: T_State | None = ...,
+    _depth: int = ...,
 ) -> type[Matcher]: ...
 def on_notice(
     rule: Rule | T_RuleChecker | None = ...,
@@ -189,7 +191,17 @@ class CommandGroup:
         priority: int = ...,
         block: bool = ...,
         state: T_State | None = ...,
-    ): ...
+    ):
+        self.matchers: list[type[Matcher]] = ...
+        self.basecmd: tuple[str, ...] = ...
+        self.base_kwargs: dict[str, ...] = ...
+        self.prefix_aliases: bool = ...
+        ...
+
+    def _get_final_kwargs(
+        self, update: dict[str, ...], *, exclude: set[str, ...] | None = None
+    ) -> dict[str, ...]:
+        ...
     def command(
         self,
         cmd: str | tuple[str, ...],
@@ -234,7 +246,15 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: T_State | None = ...,
-    ): ...
+    ):
+        self.matchers: list[type[Matcher]] = ...
+        self.base_kwargs: dict[str, ...] = ...
+        ...
+
+    def _get_final_kwargs(
+        self, update: dict[str, ...], *, exclude: set[str, ...] | None = None
+    ) -> dict[str, ...]:
+        ...
     def on(
         self,
         *,
