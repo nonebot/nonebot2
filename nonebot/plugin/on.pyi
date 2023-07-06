@@ -175,7 +175,16 @@ def on_type(
     state: T_State | None = ...,
 ) -> type[Matcher]: ...
 
-class CommandGroup:
+class _Group:
+    matchers: list[type[Matcher]] = ...
+    base_kwargs: dict[str, ...] = ...
+    def _get_final_kwargs(
+        self, update: dict[str, ...], *, exclude: set[str, ...] | None = None
+    ) -> dict[str, ...]: ...
+
+class CommandGroup(_Group):
+    basecmd: tuple[str, ...] = ...
+    prefix_aliases: bool = ...
     def __init__(
         self,
         cmd: str | tuple[str, ...],
@@ -221,7 +230,7 @@ class CommandGroup:
         state: T_State | None = ...,
     ) -> type[Matcher]: ...
 
-class MatcherGroup:
+class MatcherGroup(_Group):
     def __init__(
         self,
         *,
