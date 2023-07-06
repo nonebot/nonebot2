@@ -25,7 +25,6 @@ def on(
     priority: int = ...,
     block: bool = ...,
     state: T_State | None = ...,
-    _depth: int = ...,
 ) -> type[Matcher]: ...
 def on_metaevent(
     rule: Rule | T_RuleChecker | None = ...,
@@ -48,7 +47,6 @@ def on_message(
     priority: int = ...,
     block: bool = ...,
     state: T_State | None = ...,
-    _depth: int = ...,
 ) -> type[Matcher]: ...
 def on_notice(
     rule: Rule | T_RuleChecker | None = ...,
