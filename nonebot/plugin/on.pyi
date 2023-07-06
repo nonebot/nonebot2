@@ -175,10 +175,15 @@ def on_type(
     state: T_State | None = ...,
 ) -> type[Matcher]: ...
 
-class CommandGroup:
+class _Group:
     matchers: list[type[Matcher]] = ...
-    basecmd: tuple[str, ...] = ...
     base_kwargs: dict[str, ...] = ...
+    def _get_final_kwargs(
+        self, update: dict[str, ...], *, exclude: set[str, ...] | None = None
+    ) -> dict[str, ...]: ...
+
+class CommandGroup(_Group):
+    basecmd: tuple[str, ...] = ...
     prefix_aliases: bool = ...
     def __init__(
         self,
@@ -194,9 +199,6 @@ class CommandGroup:
         block: bool = ...,
         state: T_State | None = ...,
     ): ...
-    def _get_final_kwargs(
-        self, update: dict[str, ...], *, exclude: set[str, ...] | None = None
-    ) -> dict[str, ...]: ...
     def command(
         self,
         cmd: str | tuple[str, ...],
@@ -228,9 +230,7 @@ class CommandGroup:
         state: T_State | None = ...,
     ) -> type[Matcher]: ...
 
-class MatcherGroup:
-    matchers: list[type[Matcher]] = ...
-    base_kwargs: dict[str, ...] = ...
+class MatcherGroup(_Group):
     def __init__(
         self,
         *,
@@ -244,9 +244,6 @@ class MatcherGroup:
         block: bool = ...,
         state: T_State | None = ...,
     ): ...
-    def _get_final_kwargs(
-        self, update: dict[str, ...], *, exclude: set[str, ...] | None = None
-    ) -> dict[str, ...]: ...
     def on(
         self,
         *,
