@@ -195,8 +195,7 @@ class CommandGroup:
         priority: int = ...,
         block: bool = ...,
         state: T_State | None = ...,
-    ):
-        ...
+    ): ...
     def _get_final_kwargs(
         self, update: dict[str, ...], *, exclude: set[str, ...] | None = None
     ) -> dict[str, ...]: ...
@@ -246,8 +245,7 @@ class MatcherGroup:
         priority: int = ...,
         block: bool = ...,
         state: T_State | None = ...,
-    ):
-        ...
+    ): ...
     def _get_final_kwargs(
         self, update: dict[str, ...], *, exclude: set[str, ...] | None = None
     ) -> dict[str, ...]: ...
