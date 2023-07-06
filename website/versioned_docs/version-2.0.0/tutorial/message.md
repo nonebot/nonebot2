@@ -148,6 +148,22 @@ MessageSegment.text("text") in message
 "text" in message
 ```
 
+我们还可以使用消息序列的 `only` 方法来检查消息中是否仅包含指定的消息段。
+
+```python
+message = Message(
+    [
+        MessageSegment.text("test"),
+        MessageSegment.text("test2"),
+    ]
+)
+
+# 是否仅包含text类型的消息段
+message.only("text") is True
+# 是否都为 "test" 的消息段
+message.only(MessageSegment.text("test")) is False
+```
+
 ### 过滤、索引与切片
 
 消息序列对列表的索引与切片进行了增强，在原有列表 `int` 索引与 `slice` 切片的基础上，支持 `type` 过滤索引与切片。
