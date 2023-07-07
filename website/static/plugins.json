@@ -6925,5 +6925,26 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_cp_broadcast",
+    "project_link": "nonebot-plugin-cp-broadcast",
+    "name": "算法竞赛比赛查询",
+    "desc": "可以查询牛客、atcoder、codeforces平台的今天和近几天的比赛信息",
+    "author": "HuParry",
+    "homepage": "https://github.com/HuParry/nonebot-plugin-cp-broadcast",
+    "tags": [
+      {
+        "label": "算法竞赛",
+        "color": "#ea5252"
+      },
+      {
+        "label": "比赛播报",
+        "color": "#55ea52"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
