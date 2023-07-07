@@ -6967,5 +6967,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_splatoon3",
+    "project_link": "nonebot-plugin-splatoon3",
+    "name": "nonebot-plugin-splatoon3",
+    "desc": "一个基于nonebot2框架的splatoon3游戏日程查询插件",
+    "author": "Cypas",
+    "homepage": "https://github.com/Skyminers/Bot-Splatoon3",
+    "tags": [
+      {
+        "label": "splatoon3",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
