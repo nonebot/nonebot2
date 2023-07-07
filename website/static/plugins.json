@@ -1954,7 +1954,16 @@
     "desc": "简易黑白用户名单管理",
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-namelist",
-    "tags": [],
+    "tags": [
+      {
+        "label": "黑名单",
+        "color": "#323232"
+      },
+      {
+        "label": "白名单",
+        "color": "#fafafa"
+      }
+    ],
     "is_official": false,
     "type": null,
     "supported_adapters": null
