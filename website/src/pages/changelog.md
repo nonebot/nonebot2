@@ -51,6 +51,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 算法竞赛比赛查询 [@noneflow](https://github.com/noneflow) ([#2159](https://github.com/nonebot/nonebot2/pull/2159))
 - Plugin: nonebot-plugin-update [@noneflow](https://github.com/noneflow) ([#2153](https://github.com/nonebot/nonebot2/pull/2153))
 - Plugin: 远程同意好友 [@noneflow](https://github.com/noneflow) ([#2146](https://github.com/nonebot/nonebot2/pull/2146))
 - Plugin: 戳一戳事件 [@noneflow](https://github.com/noneflow) ([#2139](https://github.com/nonebot/nonebot2/pull/2139))
