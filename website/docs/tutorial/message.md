@@ -151,17 +151,10 @@ MessageSegment.text("text") in message
 我们还可以使用消息序列的 `only` 方法来检查消息中是否仅包含指定的消息段。
 
 ```python
-message = Message(
-    [
-        MessageSegment.text("test"),
-        MessageSegment.text("test2"),
-    ]
-)
-
-# 是否仅包含text类型的消息段
-message.only("text") is True
-# 是否都为 "test" 的消息段
-message.only(MessageSegment.text("test")) is False
+# 是否都为指定消息段
+message.only(MessageSegment.text("test"))
+# 是否仅包含指定类型的消息段
+message.only("text")
 ```
 
 ### 过滤、索引与切片
