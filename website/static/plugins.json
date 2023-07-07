@@ -6946,5 +6946,26 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_cfassistant",
+    "project_link": "nonebot-plugin-cfassistant",
+    "name": "nonebot-plugin-cfassistant",
+    "desc": "一个支持CF(codeforces)平台查询比赛/比赛提醒/监测分数变化的nonebot机器人插件",
+    "author": "coyude",
+    "homepage": "https://github.com/coyude/nonebot-plugin-cfassistant",
+    "tags": [
+      {
+        "label": "ACM",
+        "color": "#52EACF"
+      },
+      {
+        "label": "Codeforces",
+        "color": "#52EACF"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
