@@ -98,6 +98,7 @@ async def do_something(event: Event):
 
 ```python
 from nonebot.message import event_postprocessor
+
 @event_postprocessor
 async def do_something(event: Event):
     pass
@@ -109,6 +110,7 @@ async def do_something(event: Event):
 
 ```python
 from nonebot.message import run_preprocessor
+
 @run_preprocessor
 async def do_something(event: Event, matcher: Matcher):
     pass
