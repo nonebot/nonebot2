@@ -51,6 +51,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-splatoon3 [@noneflow](https://github.com/noneflow) ([#2165](https://github.com/nonebot/nonebot2/pull/2165))
 - Plugin: nonebot-plugin-cfassistant [@noneflow](https://github.com/noneflow) ([#2164](https://github.com/nonebot/nonebot2/pull/2164))
 - Plugin: 算法竞赛比赛查询 [@noneflow](https://github.com/noneflow) ([#2159](https://github.com/nonebot/nonebot2/pull/2159))
 - Plugin: nonebot-plugin-update [@noneflow](https://github.com/noneflow) ([#2153](https://github.com/nonebot/nonebot2/pull/2153))
