@@ -25,6 +25,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 格式化钩子函数中的代码片段 [@A-kirami](https://github.com/A-kirami) ([#2172](https://github.com/nonebot/nonebot2/pull/2172))
 - Docs: 补充 Message.only 文档 [@eya46](https://github.com/eya46) ([#2155](https://github.com/nonebot/nonebot2/pull/2155))
 - Docs: 修复日志自定义文档 typo [@17TheWord](https://github.com/17TheWord) ([#2140](https://github.com/nonebot/nonebot2/pull/2140))
 - Docs: 修复依赖注入文档 `ArgStr` 3.9+ 和 3.8+ 版本代码写反 [@eya46](https://github.com/eya46) ([#2126](https://github.com/nonebot/nonebot2/pull/2126))
