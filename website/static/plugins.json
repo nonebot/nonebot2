@@ -6967,5 +6967,54 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_splatoon3",
+    "project_link": "nonebot-plugin-splatoon3",
+    "name": "nonebot-plugin-splatoon3",
+    "desc": "一个基于nonebot2框架的splatoon3游戏日程查询插件",
+    "author": "Cypas",
+    "homepage": "https://github.com/Skyminers/Bot-Splatoon3",
+    "tags": [
+      {
+        "label": "splatoon3",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_capoo",
+    "project_link": "nonebot-plugin-capoo",
+    "name": "猫猫虫咖波图片发送",
+    "desc": "发送capoo指令后bot会随机发出一张capoo的可爱表情包",
+    "author": "HuParry",
+    "homepage": "https://github.com/HuParry/nonebot-plugin-capoo",
+    "tags": [
+      {
+        "label": "猫猫虫咖波",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_eventexpiry",
+    "project_link": "nonebot-plugin-eventexpiry",
+    "name": "过期事件过滤器",
+    "desc": "自动过滤过期事件",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-eventexpiry",
+    "tags": [],
+    "is_official": false,
+    "type": "library",
+    "supported_adapters": [
+      "nonebot.adapters.onebot.v11",
+      "nonebot.adapters.onebot.v12"
+    ]
   }
 ]
