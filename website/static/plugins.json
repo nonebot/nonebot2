@@ -6984,5 +6984,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_capoo",
+    "project_link": "nonebot-plugin-capoo",
+    "name": "猫猫虫咖波图片发送",
+    "desc": "发送capoo指令后bot会随机发出一张capoo的可爱表情包",
+    "author": "HuParry",
+    "homepage": "https://github.com/HuParry/nonebot-plugin-capoo",
+    "tags": [
+      {
+        "label": "猫猫虫咖波",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
