@@ -25,6 +25,10 @@ options:
 这个钩子函数会在 NoneBot 启动时运行。很多时候，我们并不希望在模块被导入时就执行一些耗时操作，如：连接数据库，这时候我们可以在这个钩子函数中进行这些操作。
 
 ```python
+from nonebot import get_driver
+
+driver = get_driver()
+
 @driver.on_startup
 async def do_something():
     pass
@@ -35,6 +39,10 @@ async def do_something():
 这个钩子函数会在 NoneBot 终止时运行。我们可以在这个钩子函数中进行一些清理工作，如：关闭数据库连接。
 
 ```python
+from nonebot import get_driver
+
+driver = get_driver()
+
 @driver.on_shutdown
 async def do_something():
     pass
@@ -45,6 +53,10 @@ async def do_something():
 这个钩子函数会在任何协议适配器连接 `Bot` 对象至 NoneBot 时运行。支持依赖注入，可以直接注入 `Bot` 对象。
 
 ```python
+from nonebot import get_driver
+
+driver = get_driver()
+
 @driver.on_bot_connect
 async def do_something(bot: Bot):
     pass
@@ -55,6 +67,10 @@ async def do_something(bot: Bot):
 这个钩子函数会在 `Bot` 断开与 NoneBot 的连接时运行。支持依赖注入，可以直接注入 `Bot` 对象。
 
 ```python
+from nonebot import get_driver
+
+driver = get_driver()
+
 @driver.on_bot_disconnect
 async def do_something(bot: Bot):
     pass
