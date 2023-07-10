@@ -7050,5 +7050,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_blocker",
+    "project_link": "nonebot-plugin-blocker",
+    "name": "Blocker",
+    "desc": "分群配置关闭Bot插件",
+    "author": "MerCuJerry",
+    "homepage": "https://github.com/MerCuJerry/nonebot-plugin-blocker",
+    "tags": [
+      {
+        "label": "Blocker",
+        "color": "#39c5bb"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
