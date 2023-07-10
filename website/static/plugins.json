@@ -7025,5 +7025,30 @@
       "nonebot.adapters.onebot.v11",
       "nonebot.adapters.onebot.v12"
     ]
+  },
+  {
+    "module_name": "nonebot_plugin_nobahpicture",
+    "project_link": "nonebot-plugin-nobahpicture",
+    "name": "nonebot-plugin-nobahpicture",
+    "desc": "获取碧蓝档案涩图",
+    "author": "Lptr-byte",
+    "homepage": "https://github.com/Lptr-byte/nonebot-plugin-nobahpicture",
+    "tags": [
+      {
+        "label": "碧蓝档案",
+        "color": "#00defe"
+      },
+      {
+        "label": "蔚蓝档案",
+        "color": "#00defe"
+      },
+      {
+        "label": "涩图",
+        "color": "#00defe"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
