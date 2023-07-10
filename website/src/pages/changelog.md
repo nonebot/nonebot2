@@ -54,6 +54,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-nobahpicture [@noneflow](https://github.com/noneflow) ([#2176](https://github.com/nonebot/nonebot2/pull/2176))
 - Plugin: 过期事件过滤器 [@noneflow](https://github.com/noneflow) ([#2169](https://github.com/nonebot/nonebot2/pull/2169))
 - Plugin: 猫猫虫咖波图片发送 [@noneflow](https://github.com/noneflow) ([#2167](https://github.com/nonebot/nonebot2/pull/2167))
 - Plugin: nonebot-plugin-splatoon3 [@noneflow](https://github.com/noneflow) ([#2165](https://github.com/nonebot/nonebot2/pull/2165))
