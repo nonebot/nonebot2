@@ -7067,5 +7067,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_picture_api",
+    "project_link": "nonebot-plugin-picture-api",
+    "name": "nonebot-plugin-picture-api",
+    "desc": "一款可以自由增删图片指令和api的插件",
+    "author": "Q1351998764",
+    "homepage": "https://github.com/Q1351998764/nonebot-plugin-picture-api",
+    "tags": [
+      {
+        "label": "图片api",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
