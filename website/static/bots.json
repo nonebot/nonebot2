@@ -548,5 +548,22 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "林汐",
+    "desc": "多平台功能型Bot",
+    "author": "mute23-code",
+    "homepage": "https://github.com/netsora/SoraBot",
+    "tags": [
+      {
+        "label": "QQ频道",
+        "color": "#f47070"
+      },
+      {
+        "label": "OneBot v11",
+        "color": "#212121"
+      }
+    ],
+    "is_official": false
   }
 ]
