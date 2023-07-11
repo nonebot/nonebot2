@@ -54,6 +54,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-picture-api [@noneflow](https://github.com/noneflow) ([#2180](https://github.com/nonebot/nonebot2/pull/2180))
 - Plugin: Blocker [@noneflow](https://github.com/noneflow) ([#2178](https://github.com/nonebot/nonebot2/pull/2178))
 - Plugin: nonebot-plugin-nobahpicture [@noneflow](https://github.com/noneflow) ([#2176](https://github.com/nonebot/nonebot2/pull/2176))
 - Plugin: 过期事件过滤器 [@noneflow](https://github.com/noneflow) ([#2169](https://github.com/nonebot/nonebot2/pull/2169))
