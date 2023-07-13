@@ -221,7 +221,7 @@ class Adapter(BaseAdapter):
         event = self.payload_to_event(payload)
         # 让 bot 对事件进行处理
         asyncio.create_task(bot.handle_event(event))
-        
+
 ```
 
 #### 调用平台API
@@ -670,7 +670,6 @@ class Message(BaseMessage[MessageSegment]):
 
 - [OneBot](https://github.com/nonebot/adapter-onebot/blob/master/nonebot/adapters/onebot/v11/message.py#L77-L261)
 - [QQGuild](https://github.com/nonebot/adapter-qqguild/blob/master/nonebot/adapters/qqguild/message.py#L22-L150)
-
 
 ## 后续工作
 
