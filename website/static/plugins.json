@@ -7118,5 +7118,26 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_mongodb",
+    "project_link": "nonebot-plugin-mongodb",
+    "name": "MongoDB",
+    "desc": "基于 MongoDB ODM 的数据库管理插件",
+    "author": "Well2333",
+    "homepage": "https://github.com/Well2333/nonebot-plugin-mongodb",
+    "tags": [
+      {
+        "label": "mongodb",
+        "color": "#30a340"
+      },
+      {
+        "label": "beanie",
+        "color": "#ff0a0a"
+      }
+    ],
+    "is_official": false,
+    "type": "library",
+    "supported_adapters": null
   }
 ]
