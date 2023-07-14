@@ -54,6 +54,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: MongoDB [@noneflow](https://github.com/noneflow) ([#2189](https://github.com/nonebot/nonebot2/pull/2189))
 - Plugin: pjsk 表情 [@noneflow](https://github.com/noneflow) ([#2187](https://github.com/nonebot/nonebot2/pull/2187))
 - Plugin: nonebot-plugin-wenan [@noneflow](https://github.com/noneflow) ([#2184](https://github.com/nonebot/nonebot2/pull/2184))
 - Plugin: nonebot-plugin-picture-api [@noneflow](https://github.com/noneflow) ([#2180](https://github.com/nonebot/nonebot2/pull/2180))
