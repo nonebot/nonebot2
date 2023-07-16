@@ -565,5 +565,13 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "米缸",
+    "desc": "基于nonebot2的米缸Bot",
+    "author": "LambdaYH",
+    "homepage": "https://github.com/LambdaYH/MigangBot",
+    "tags": [],
+    "is_official": false
   }
 ]
