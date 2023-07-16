@@ -84,6 +84,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: 米缸 [@noneflow](https://github.com/noneflow) ([#2191](https://github.com/nonebot/nonebot2/pull/2191))
 - Bot: 林汐 [@noneflow](https://github.com/noneflow) ([#2182](https://github.com/nonebot/nonebot2/pull/2182))
 - Bot: web_bot [@noneflow](https://github.com/noneflow) ([#2131](https://github.com/nonebot/nonebot2/pull/2131))
 - Bot: ReimeiBot-黎明机器人 [@noneflow](https://github.com/noneflow) ([#2107](https://github.com/nonebot/nonebot2/pull/2107))
