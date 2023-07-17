@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Develop: 添加 Pyright 检查 [@yanyongyu](https://github.com/yanyongyu) ([#2194](https://github.com/nonebot/nonebot2/pull/2194))
 - Feature: 使用 `typing.override` 标记 [@yanyongyu](https://github.com/yanyongyu) ([#2193](https://github.com/nonebot/nonebot2/pull/2193))
 - Feature: 补充响应器组属性 [@eya46](https://github.com/eya46) ([#2154](https://github.com/nonebot/nonebot2/pull/2154))
 - Feature: CommandGroup 支持命令别名添加前缀选项 [@eya46](https://github.com/eya46) ([#2134](https://github.com/nonebot/nonebot2/pull/2134))
