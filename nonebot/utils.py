@@ -15,7 +15,7 @@ from pathlib import Path
 from contextvars import copy_context
 from functools import wraps, partial
 from contextlib import asynccontextmanager
-from typing_extensions import ParamSpec, get_args, get_origin
+from typing_extensions import ParamSpec, get_args, override, get_origin
 from typing import (
     Any,
     Type,
@@ -33,7 +33,6 @@ from typing import (
 from pydantic.typing import is_union, is_none_type
 
 from nonebot.log import logger
-from nonebot.typing import overrides
 
 P = ParamSpec("P")
 R = TypeVar("R")
@@ -224,7 +223,7 @@ def resolve_dot_notation(
 class DataclassEncoder(json.JSONEncoder):
     """可以序列化 {ref}`nonebot.adapters.Message`(List[Dataclass]) 的 `JSONEncoder`"""
 
-    @overrides(json.JSONEncoder)
+    @override
     def default(self, o):
         if dataclasses.is_dataclass(o):
             return {f.name: getattr(o, f.name) for f in dataclasses.fields(o)}
