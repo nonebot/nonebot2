@@ -15,10 +15,10 @@ FrontMatter:
     description: nonebot.drivers.aiohttp 模块
 """
 
+from typing_extensions import override
 from typing import Type, AsyncGenerator
 from contextlib import asynccontextmanager
 
-from nonebot.typing import overrides
 from nonebot.drivers import Request, Response
 from nonebot.exception import WebSocketClosed
 from nonebot.drivers.none import Driver as NoneDriver
@@ -38,11 +38,11 @@ class Mixin(ForwardMixin):
     """AIOHTTP Mixin"""
 
     @property
-    @overrides(ForwardMixin)
+    @override
     def type(self) -> str:
         return "aiohttp"
 
-    @overrides(ForwardMixin)
+    @override
     async def request(self, setup: Request) -> Response:
         if setup.version == HTTPVersion.H10:
             version = aiohttp.HttpVersion10
@@ -81,7 +81,7 @@ class Mixin(ForwardMixin):
                     request=setup,
                 )
 
-    @overrides(ForwardMixin)
+    @override
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
         if setup.version == HTTPVersion.H10:
@@ -117,15 +117,15 @@ class WebSocket(BaseWebSocket):
         self.websocket = websocket
 
     @property
-    @overrides(BaseWebSocket)
+    @override
     def closed(self):
         return self.websocket.closed
 
-    @overrides(BaseWebSocket)
+    @override
     async def accept(self):
         raise NotImplementedError
 
-    @overrides(BaseWebSocket)
+    @override
     async def close(self, code: int = 1000):
         await self.websocket.close(code=code)
         await self.session.close()
@@ -136,7 +136,7 @@ class WebSocket(BaseWebSocket):
             raise WebSocketClosed(self.websocket.close_code or 1006)
         return msg
 
-    @overrides(BaseWebSocket)
+    @override
     async def receive(self) -> str:
         msg = await self._receive()
         if msg.type not in (aiohttp.WSMsgType.TEXT, aiohttp.WSMsgType.BINARY):
@@ -145,7 +145,7 @@ class WebSocket(BaseWebSocket):
             )
         return msg.data
 
-    @overrides(BaseWebSocket)
+    @override
     async def receive_text(self) -> str:
         msg = await self._receive()
         if msg.type != aiohttp.WSMsgType.TEXT:
@@ -154,7 +154,7 @@ class WebSocket(BaseWebSocket):
             )
         return msg.data
 
-    @overrides(BaseWebSocket)
+    @override
     async def receive_bytes(self) -> bytes:
         msg = await self._receive()
         if msg.type != aiohttp.WSMsgType.BINARY:
@@ -163,11 +163,11 @@ class WebSocket(BaseWebSocket):
             )
         return msg.data
 
-    @overrides(BaseWebSocket)
+    @override
     async def send_text(self, data: str) -> None:
         await self.websocket.send_str(data)
 
-    @overrides(BaseWebSocket)
+    @override
     async def send_bytes(self, data: bytes) -> None:
         await self.websocket.send_bytes(data)
 

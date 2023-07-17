@@ -15,10 +15,10 @@ FrontMatter:
     description: nonebot.drivers.httpx 模块
 """
 
+from typing_extensions import override
 from typing import Type, AsyncGenerator
 from contextlib import asynccontextmanager
 
-from nonebot.typing import overrides
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.drivers import (
     Request,
@@ -43,11 +43,11 @@ class Mixin(ForwardMixin):
     """HTTPX Mixin"""
 
     @property
-    @overrides(ForwardMixin)
+    @override
     def type(self) -> str:
         return "httpx"
 
-    @overrides(ForwardMixin)
+    @override
     async def request(self, setup: Request) -> Response:
         async with httpx.AsyncClient(
             cookies=setup.cookies.jar,
@@ -72,7 +72,7 @@ class Mixin(ForwardMixin):
                 request=setup,
             )
 
-    @overrides(ForwardMixin)
+    @override
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator[WebSocket, None]:
         async with super(Mixin, self).websocket(setup) as ws:

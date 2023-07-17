@@ -17,12 +17,12 @@ FrontMatter:
 
 import asyncio
 from functools import wraps
+from typing_extensions import override
 from typing import Any, Dict, List, Tuple, Union, TypeVar, Callable, Optional, Coroutine
 
 from pydantic import BaseSettings
 
 from nonebot.config import Env
-from nonebot.typing import overrides
 from nonebot.exception import WebSocketClosed
 from nonebot.internal.driver import FileTypes
 from nonebot.config import Config as NoneBotConfig
@@ -90,30 +90,30 @@ class Driver(ReverseDriver):
         )
 
     @property
-    @overrides(ReverseDriver)
+    @override
     def type(self) -> str:
         """驱动名称: `quart`"""
         return "quart"
 
     @property
-    @overrides(ReverseDriver)
+    @override
     def server_app(self) -> Quart:
         """`Quart` 对象"""
         return self._server_app
 
     @property
-    @overrides(ReverseDriver)
+    @override
     def asgi(self):
         """`Quart` 对象"""
         return self._server_app
 
     @property
-    @overrides(ReverseDriver)
+    @override
     def logger(self):
         """Quart 使用的 logger"""
         return self._server_app.logger
 
-    @overrides(ReverseDriver)
+    @override
     def setup_http_server(self, setup: HTTPServerSetup):
         async def _handle() -> Response:
             return await self._handle_http(setup)
@@ -125,7 +125,7 @@ class Driver(ReverseDriver):
             view_func=_handle,
         )
 
-    @overrides(ReverseDriver)
+    @override
     def setup_websocket_server(self, setup: WebSocketServerSetup) -> None:
         async def _handle() -> None:
             return await self._handle_ws(setup)
@@ -136,17 +136,17 @@ class Driver(ReverseDriver):
             view_func=_handle,
         )
 
-    @overrides(ReverseDriver)
+    @override
     def on_startup(self, func: _AsyncCallable) -> _AsyncCallable:
         """参考文档: [`Startup and Shutdown`](https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html)"""
         return self.server_app.before_serving(func)  # type: ignore
 
-    @overrides(ReverseDriver)
+    @override
     def on_shutdown(self, func: _AsyncCallable) -> _AsyncCallable:
         """参考文档: [`Startup and Shutdown`](https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html)"""
         return self.server_app.after_serving(func)  # type: ignore
 
-    @overrides(ReverseDriver)
+    @override
     def run(
         self,
         host: Optional[str] = None,
@@ -245,25 +245,25 @@ class WebSocket(BaseWebSocket):
         self.websocket = websocket
 
     @property
-    @overrides(BaseWebSocket)
+    @override
     def closed(self):
         # FIXME
         return True
 
-    @overrides(BaseWebSocket)
+    @override
     async def accept(self):
         await self.websocket.accept()
 
-    @overrides(BaseWebSocket)
+    @override
     async def close(self, code: int = 1000, reason: str = ""):
         await self.websocket.close(code, reason)
 
-    @overrides(BaseWebSocket)
+    @override
     @catch_closed
     async def receive(self) -> Union[str, bytes]:
         return await self.websocket.receive()
 
-    @overrides(BaseWebSocket)
+    @override
     @catch_closed
     async def receive_text(self) -> str:
         msg = await self.websocket.receive()
@@ -271,7 +271,7 @@ class WebSocket(BaseWebSocket):
             raise TypeError("WebSocket received unexpected frame type: bytes")
         return msg
 
-    @overrides(BaseWebSocket)
+    @override
     @catch_closed
     async def receive_bytes(self) -> bytes:
         msg = await self.websocket.receive()
@@ -279,11 +279,11 @@ class WebSocket(BaseWebSocket):
             raise TypeError("WebSocket received unexpected frame type: str")
         return msg
 
-    @overrides(BaseWebSocket)
+    @override
     async def send_text(self, data: str):
         await self.websocket.send(data)
 
-    @overrides(BaseWebSocket)
+    @override
     async def send_bytes(self, data: bytes):
         await self.websocket.send(data)
 

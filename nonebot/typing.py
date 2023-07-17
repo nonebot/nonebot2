@@ -10,7 +10,8 @@ FrontMatter:
     description: nonebot.typing 模块
 """
 
-from typing_extensions import ParamSpec, TypeAlias
+import warnings
+from typing_extensions import ParamSpec, TypeAlias, override
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -34,14 +35,16 @@ P = ParamSpec("P")
 T_Wrapped: TypeAlias = Callable[P, T]
 
 
-def overrides(InterfaceClass: object) -> Callable[[T_Wrapped], T_Wrapped]:
+def overrides(InterfaceClass: object):
     """标记一个方法为父类 interface 的 implement"""
 
-    def overrider(func: T_Wrapped) -> T_Wrapped:
-        assert func.__name__ in dir(InterfaceClass), f"Error method: {func.__name__}"
-        return func
-
-    return overrider
+    warnings.warn(
+        "overrides is deprecated and will be removed in a future version, "
+        "use @typing_extensions.override instead. "
+        "See [PEP 698](https://peps.python.org/pep-0698/) for more details.",
+        DeprecationWarning,
+    )
+    return override
 
 
 # state

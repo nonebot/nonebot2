@@ -17,11 +17,10 @@ FrontMatter:
 
 import logging
 from functools import wraps
-from typing_extensions import ParamSpec
 from contextlib import asynccontextmanager
+from typing_extensions import ParamSpec, override
 from typing import Type, Union, TypeVar, Callable, Awaitable, AsyncGenerator
 
-from nonebot.typing import overrides
 from nonebot.log import LoguruHandler
 from nonebot.drivers import Request, Response
 from nonebot.exception import WebSocketClosed
@@ -63,15 +62,15 @@ class Mixin(ForwardMixin):
     """Websockets Mixin"""
 
     @property
-    @overrides(ForwardMixin)
+    @override
     def type(self) -> str:
         return "websockets"
 
-    @overrides(ForwardMixin)
+    @override
     async def request(self, setup: Request) -> Response:
         return await super(Mixin, self).request(setup)
 
-    @overrides(ForwardMixin)
+    @override
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
         connection = Connect(
@@ -86,30 +85,30 @@ class Mixin(ForwardMixin):
 class WebSocket(BaseWebSocket):
     """Websockets WebSocket Wrapper"""
 
-    @overrides(BaseWebSocket)
+    @override
     def __init__(self, *, request: Request, websocket: WebSocketClientProtocol):
         super().__init__(request=request)
         self.websocket = websocket
 
     @property
-    @overrides(BaseWebSocket)
+    @override
     def closed(self) -> bool:
         return self.websocket.closed
 
-    @overrides(BaseWebSocket)
+    @override
     async def accept(self):
         raise NotImplementedError
 
-    @overrides(BaseWebSocket)
+    @override
     async def close(self, code: int = 1000, reason: str = ""):
         await self.websocket.close(code, reason)
 
-    @overrides(BaseWebSocket)
+    @override
     @catch_closed
     async def receive(self) -> Union[str, bytes]:
         return await self.websocket.recv()
 
-    @overrides(BaseWebSocket)
+    @override
     @catch_closed
     async def receive_text(self) -> str:
         msg = await self.websocket.recv()
@@ -117,7 +116,7 @@ class WebSocket(BaseWebSocket):
             raise TypeError("WebSocket received unexpected frame type: bytes")
         return msg
 
-    @overrides(BaseWebSocket)
+    @override
     @catch_closed
     async def receive_bytes(self) -> bytes:
         msg = await self.websocket.recv()
@@ -125,11 +124,11 @@ class WebSocket(BaseWebSocket):
             raise TypeError("WebSocket received unexpected frame type: str")
         return msg
 
-    @overrides(BaseWebSocket)
+    @override
     async def send_text(self, data: str) -> None:
         await self.websocket.send(data)
 
-    @overrides(BaseWebSocket)
+    @override
     async def send_bytes(self, data: bytes) -> None:
         await self.websocket.send(data)
 
