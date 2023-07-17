@@ -18,7 +18,18 @@ FrontMatter:
 import asyncio
 from functools import wraps
 from typing_extensions import override
-from typing import Any, Dict, List, Tuple, Union, TypeVar, Callable, Optional, Coroutine
+from typing import (
+    Any,
+    Dict,
+    List,
+    Tuple,
+    Union,
+    TypeVar,
+    Callable,
+    Optional,
+    Coroutine,
+    cast,
+)
 
 from pydantic import BaseSettings
 
@@ -33,7 +44,8 @@ from nonebot.drivers import ReverseDriver, HTTPServerSetup, WebSocketServerSetup
 try:
     import uvicorn
     from quart import request as _request
-    from quart import websocket as _websocket
+    from quart.ctx import WebsocketContext
+    from quart.globals import websocket_ctx
     from quart import Quart, Request, Response
     from quart.datastructures import FileStorage
     from quart import Websocket as QuartWebSocket
@@ -222,7 +234,8 @@ class Driver(ReverseDriver):
         )
 
     async def _handle_ws(self, setup: WebSocketServerSetup) -> None:
-        websocket: QuartWebSocket = _websocket
+        ctx = cast(WebsocketContext, websocket_ctx.copy())
+        websocket = websocket_ctx.websocket
 
         http_request = BaseRequest(
             websocket.method,
@@ -232,7 +245,7 @@ class Driver(ReverseDriver):
             version=websocket.http_version,
         )
 
-        ws = WebSocket(request=http_request, websocket=websocket)
+        ws = WebSocket(request=http_request, websocket_ctx=ctx)
 
         await setup.handle_func(ws)
 
@@ -240,9 +253,13 @@ class Driver(ReverseDriver):
 class WebSocket(BaseWebSocket):
     """Quart WebSocket Wrapper"""
 
-    def __init__(self, *, request: BaseRequest, websocket: QuartWebSocket):
+    def __init__(self, *, request: BaseRequest, websocket_ctx: WebsocketContext):
         super().__init__(request=request)
-        self.websocket = websocket
+        self.websocket_ctx = websocket_ctx
+
+    @property
+    def websocket(self) -> QuartWebSocket:
+        return self.websocket_ctx.websocket
 
     @property
     @override

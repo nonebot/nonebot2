@@ -1,6 +1,6 @@
 import json
 import asyncio
-from typing import Any, Set, cast
+from typing import Any, Set, Optional, cast
 
 import pytest
 from nonebug import App
@@ -151,6 +151,63 @@ async def test_websocket_server(app: App, driver: Driver):
 
             await ws.close()
 
+    await asyncio.sleep(1)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "driver",
+    [
+        pytest.param("nonebot.drivers.fastapi:Driver", id="fastapi"),
+        pytest.param("nonebot.drivers.quart:Driver", id="quart"),
+    ],
+    indirect=True,
+)
+async def test_cross_context(app: App, driver: Driver):
+    driver = cast(ReverseDriver, driver)
+
+    ws: Optional[WebSocket] = None
+    ws_ready = asyncio.Event()
+    ws_should_close = asyncio.Event()
+
+    async def background_task():
+        try:
+            await ws_ready.wait()
+            assert ws is not None
+
+            await ws.send("ping")
+            data = await ws.receive()
+            assert data == "pong"
+        finally:
+            ws_should_close.set()
+
+    task = asyncio.create_task(background_task())
+
+    async def _handle_ws(websocket: WebSocket) -> None:
+        nonlocal ws
+        await websocket.accept()
+        ws = websocket
+        ws_ready.set()
+
+        await ws_should_close.wait()
+        await websocket.close()
+
+    ws_setup = WebSocketServerSetup(URL("/ws_test"), "ws_test", _handle_ws)
+    driver.setup_websocket_server(ws_setup)
+
+    async with app.test_server(driver.asgi) as ctx:
+        client = ctx.get_client()
+
+        async with client.websocket_connect("/ws_test") as websocket:
+            try:
+                data = await websocket.receive_text()
+                assert data == "ping"
+                await websocket.send_text("pong")
+            except Exception as e:
+                if not e.args or "websocket.close" not in str(e.args[0]):
+                    raise
+
+    await task
     await asyncio.sleep(1)
 
 
