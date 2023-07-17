@@ -6219,6 +6219,11 @@ pupa@^2.1.1:
   dependencies:
     escape-goat "^2.0.0"
 
+pyright@^1.1.317:
+  version "1.1.317"
+  resolved "https://registry.npmjs.org/pyright/-/pyright-1.1.317.tgz#753ac481e2b9c9e2a7b9faf6e2a49a1dc1c73806"
+  integrity sha512-3tGq//Nmqfp8IDuFfQwF18dqDBq5SRo/OPBJLiW0p+VwDVSth1LS1fBrMy/u14Mqcdi7C+ARVnxXTBCpczZahg==
+
 q@^1.1.2:
   version "1.5.1"
   resolved "https://registry.npmjs.org/q/-/q-1.5.1.tgz#7e32f75b41381291d04611f1bf14109ac00651d7"

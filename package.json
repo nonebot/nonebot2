@@ -11,10 +11,12 @@
     "start": "yarn workspace nonebot start",
     "serve": "yarn workspace nonebot serve",
     "clear": "yarn workspace nonebot clear",
-    "prettier": "prettier --config ./.prettierrc --write \"./website/\""
+    "prettier": "prettier --config ./.prettierrc --write \"./website/\"",
+    "pyright": "pyright"
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "prettier": "^2.5.0"
+    "prettier": "^2.5.0",
+    "pyright": "^1.1.317"
   }
 }

@@ -1,0 +1,26 @@
+name: Pyright Lint
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    paths:
+      - "nonebot/**"
+      - "packages/**"
+      - "tests/**"
+
+jobs:
+  pyright:
+    name: Pyright Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Setup Python environment
+        uses: ./.github/actions/setup-python
+
+      - run: echo "$(poetry env info --path)/bin" >> $GITHUB_PATH
+
+      - name: Run Pyright
+        uses: jakebailey/pyright-action@v1

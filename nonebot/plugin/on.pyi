@@ -1,4 +1,5 @@
 import re
+from typing import Any
 from types import ModuleType
 from datetime import datetime, timedelta
 
@@ -177,10 +178,10 @@ def on_type(
 
 class _Group:
     matchers: list[type[Matcher]] = ...
-    base_kwargs: dict[str, ...] = ...
+    base_kwargs: dict[str, Any] = ...
     def _get_final_kwargs(
-        self, update: dict[str, ...], *, exclude: set[str, ...] | None = None
-    ) -> dict[str, ...]: ...
+        self, update: dict[str, Any], *, exclude: set[str] | None = None
+    ) -> dict[str, Any]: ...
 
 class CommandGroup(_Group):
     basecmd: tuple[str, ...] = ...

@@ -19,9 +19,19 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
     <img src="https://img.shields.io/github/license/nonebot/nonebot2" alt="license">
   </a>
   <a href="https://pypi.python.org/pypi/nonebot2">
-    <img src="https://img.shields.io/pypi/v/nonebot2" alt="pypi">
+    <img src="https://img.shields.io/pypi/v/nonebot2?logo=python&logoColor=edb641" alt="pypi">
   </a>
-  <img src="https://img.shields.io/badge/python-3.8+-blue" alt="python">
+  <img src="https://img.shields.io/badge/python-3.8+-blue?logo=python&logoColor=edb641" alt="python">
+  <a href="https://github.com/psf/black">
+    <img src="https://img.shields.io/badge/code%20style-black-000000.svg?logo=python&logoColor=edb641" alt="black">
+  </a>
+  <a href="https://github.com/Microsoft/pyright">
+    <img src="https://img.shields.io/badge/types-pyright-797952.svg?logo=python&logoColor=edb641" alt="pyright">
+  </a>
+  <a href="https://github.com/astral-sh/ruff">
+    <img src="https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/charliermarsh/ruff/main/assets/badge/v2.json" alt="ruff">
+  </a>
+  <br />
   <a href="https://codecov.io/gh/nonebot/nonebot2">
     <img src="https://codecov.io/gh/nonebot/nonebot2/branch/master/graph/badge.svg?token=2P0G0VS7N4" alt="codecov"/>
   </a>
@@ -30,6 +40,12 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
   </a>
   <a href="https://results.pre-commit.ci/latest/github/nonebot/nonebot2/master">
     <img src="https://results.pre-commit.ci/badge/github/nonebot/nonebot2/master.svg" alt="pre-commit" />
+  </a>
+  <a href="https://github.com/nonebot/nonebot2/actions/workflows/pyright.yml">
+    <img src="https://github.com/nonebot/nonebot2/actions/workflows/pyright.yml/badge.svg?branch=master&event=push" alt="pyright">
+  </a>
+  <a href="https://github.com/nonebot/nonebot2/actions/workflows/ruff.yml">
+    <img src="https://github.com/nonebot/nonebot2/actions/workflows/ruff.yml/badge.svg?branch=master&event=push" alt="ruff">
   </a>
   <br />
   <a href="https://onebot.dev/">
