@@ -234,7 +234,7 @@ async def test_run_preprocessor(app: App, monkeypatch: pytest.MonkeyPatch):
                 bot = ctx.create_bot()
                 event = make_fake_event()()
                 ctx.receive_event(bot, event)
-                ctx.should_call_send(event, "test", True, bot)
+                ctx.should_call_send(event, "test", True, bot=bot)
 
         assert runned, "run_preprocessor should runned"
 
@@ -346,7 +346,7 @@ async def test_run_postprocessor(app: App, monkeypatch: pytest.MonkeyPatch):
                 bot = ctx.create_bot()
                 event = make_fake_event()()
                 ctx.receive_event(bot, event)
-                ctx.should_call_send(event, "test", True, bot)
+                ctx.should_call_send(event, "test", True, bot=bot)
 
         assert runned, "run_postprocessor should runned"
 
