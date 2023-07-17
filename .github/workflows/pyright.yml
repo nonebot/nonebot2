@@ -1,0 +1,21 @@
+name: Pyright Lint
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    paths:
+      - "nonebot/**"
+      - "packages/**"
+      - "tests/**"
+
+jobs:
+  pyright:
+    name: Pyright Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Run Pyright
+        uses: jakebailey/pyright-action@v1
