@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修复 Quart WS task 上下文错误 [@yanyongyu](https://github.com/yanyongyu) ([#2192](https://github.com/nonebot/nonebot2/pull/2192))
 - Fix: 修复 dotenv 配置项为 None 将会跳过赋值 [@eya46](https://github.com/eya46) ([#2143](https://github.com/nonebot/nonebot2/pull/2143))
 - Fix: 修复 `ArgParam` 不支持 `Annotated` [@eya46](https://github.com/eya46) ([#2124](https://github.com/nonebot/nonebot2/pull/2124))
 - Fix: aiohttp 请求时 data 和 file 不能同时存在 [@j1g5awi](https://github.com/j1g5awi) ([#2088](https://github.com/nonebot/nonebot2/pull/2088))
