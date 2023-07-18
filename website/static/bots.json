@@ -551,18 +551,21 @@
   },
   {
     "name": "林汐",
-    "desc": "多平台功能型Bot",
-    "author": "mute23-code",
+    "desc": "多平台互通，功能型Bot",
+    "author": "Komorebi",
     "homepage": "https://github.com/netsora/SoraBot",
     "tags": [
       {
-        "label": "QQ频道",
+        "label": "a:QQ频道",
         "color": "#f47070"
       },
       {
-        "label": "OneBot v11",
+        "label": "a:OneBot v11",
         "color": "#212121"
-      }
+      },
+      {
+        "label": "a:Telegram",
+        "color": "#34A9E5"
     ],
     "is_official": false
   },
