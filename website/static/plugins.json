@@ -7139,5 +7139,26 @@
     "is_official": false,
     "type": "library",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_templates",
+    "project_link": "nonebot-plugin-templates",
+    "name": "templates_render",
+    "desc": "使用htmlrender和jinja2渲染,使用构建的menu,card或dict进行模板渲染",
+    "author": "canxin121",
+    "homepage": "https://github.com/canxin121/nonebot_plugin_templates",
+    "tags": [
+      {
+        "label": "模板渲染",
+        "color": "#eacd52"
+      },
+      {
+        "label": "图片生成",
+        "color": "#adea52"
+      }
+    ],
+    "is_official": false,
+    "type": "library",
+    "supported_adapters": null
   }
 ]
