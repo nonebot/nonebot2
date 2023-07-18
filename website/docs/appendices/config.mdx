@@ -224,6 +224,32 @@ weather = on_command(
 发布插件应该为自身的事件响应器提供可配置的优先级，以便插件使用者可以自定义多个插件间的响应顺序。
 :::
 
+由于插件配置项是从全局配置中读取的，通常我们需要在配置项名称前面添加前缀名，以防止配置项冲突。例如在上方的示例中，我们就添加了配置项前缀 `weather_`。但是这样会导致在使用配置项时过长的变量名，因此我们可以使用 `pydantic` 的 `alias` 或者通过配置 scope 来简化配置项名称。这里我们以 scope 配置为例：
+
+```python title=weather/config.py
+from pydantic import BaseModel
+
+class Config(BaseModel):
+    api_key: str
+    command_priority: int = 10
+    plugin_enabled: bool = True
+```
+
+```python title=weather/__init__.py
+from nonebot import get_driver
+
+from .config import Config
+
+plugin_config = Config.parse_obj(getattr(get_driver().config, "weather", {}))
+```
+
+这样我们就可以省略插件配置项名称中的前缀 `weather_` 了。但需要注意的是，如果我们使用了 scope 配置，那么在配置文件中也需要使用 [`env_nested_delimiter` 格式](#配置项解析)，例如：
+
+```dotenv
+WEATHER__API_KEY=123456
+WEATHER__COMMAND_PRIORITY=10
+```
+
 ## 内置配置项
 
 配置项 API 文档可以前往 [Config 类](../api/config.md#Config)查看。
