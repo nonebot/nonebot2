@@ -7160,5 +7160,22 @@
     "is_official": false,
     "type": "library",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_pokesomeone",
+    "project_link": "nonebot-plugin-pokesomeone",
+    "name": "指定戳一戳",
+    "desc": "指定戳某人若干次",
+    "author": "canxin121",
+    "homepage": "https://github.com/canxin121/nonebot_plugin_pokesomeone",
+    "tags": [
+      {
+        "label": "戳一戳",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
