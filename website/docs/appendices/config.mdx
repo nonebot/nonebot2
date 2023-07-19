@@ -229,10 +229,13 @@ weather = on_command(
 ```python title=weather/config.py
 from pydantic import BaseModel
 
-class Config(BaseModel):
+class ScopedConfig(BaseModel):
     api_key: str
     command_priority: int = 10
     plugin_enabled: bool = True
+
+class Config(BaseModel):
+    weather: ScopedConfig
 ```
 
 ```python title=weather/__init__.py
@@ -240,7 +243,7 @@ from nonebot import get_driver
 
 from .config import Config
 
-plugin_config = Config.parse_obj(getattr(get_driver().config, "weather", {}))
+plugin_config = Config.parse_obj(get_driver().config).weather
 ```
 
 这样我们就可以省略插件配置项名称中的前缀 `weather_` 了。但需要注意的是，如果我们使用了 scope 配置，那么在配置文件中也需要使用 [`env_nested_delimiter` 格式](#配置项解析)，例如：
