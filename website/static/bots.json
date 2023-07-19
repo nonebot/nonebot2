@@ -155,10 +155,6 @@
       {
         "label": "AI",
         "color": "#ea5252"
-      },
-      {
-        "label": "a:onebot",
-        "color": "#000000"
       }
     ],
     "is_official": false
@@ -253,12 +249,7 @@
     "desc": "🐱🤖 一个以娱乐功能为主的缝合怪（划掉）QQ机器人，包含一定Furry要素但是不会卖萌（就是逊啦！）",
     "author": "su226",
     "homepage": "https://github.com/su226/IdhagnBot",
-    "tags": [
-      {
-        "label": "a:OneBot",
-        "color": "#ea5252"
-      }
-    ],
+    "tags": [],
     "is_official": false
   },
   {
@@ -331,15 +322,15 @@
     "homepage": "https://github.com/Rinfair-CSP-A016/SuzunoBot-AGLAS",
     "tags": [
       {
-        "label": "t:maimaiDX",
+        "label": "maimaiDX",
         "color": "#189ede"
       },
       {
-        "label": "t:Arcaea",
+        "label": "Arcaea",
         "color": "#d551ef"
       },
       {
-        "label": "t:coc",
+        "label": "coc",
         "color": "#7fe4d0"
       }
     ],
@@ -426,10 +417,6 @@
       {
         "label": "maimai",
         "color": "#52eaa5"
-      },
-      {
-        "label": "a:onebot",
-        "color": "#000000"
       }
     ],
     "is_official": false
@@ -439,12 +426,7 @@
     "desc": "一个会拆家的高性能缝合萝卜子",
     "author": "tkgs0",
     "homepage": "https://github.com/tkgs0/Momoko",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false
   },
   {
@@ -460,12 +442,7 @@
     "desc": "简单的QQ功能型机器人",
     "author": "This-is-XiaoDeng",
     "homepage": "https://github.com/ITCraftDevelopmentTeam/XDbot2",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      }
-    ],
+    "tags": [],
     "is_official": false
   },
   {
@@ -513,11 +490,7 @@
     "homepage": "https://github.com/bingqiu456/shouyun",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:shouyun",
+        "label": "shouyun",
         "color": "#52ea7a"
       }
     ],
@@ -528,12 +501,7 @@
     "desc": "流星飞逝，黎明终将到来。",
     "author": "ThirdBlood",
     "homepage": "https://github.com/3rdBit/ReimeiBot",
-    "tags": [
-      {
-        "label": "a:onebot11",
-        "color": "#090100"
-      }
-    ],
+    "tags": [],
     "is_official": false
   },
   {

@@ -8,7 +8,7 @@
     "homepage": "https://github.com/cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_status",
     "tags": [
       {
-        "label": "t:server",
+        "label": "server",
         "color": "#aeeaa8"
       }
     ],
@@ -25,7 +25,7 @@
     "homepage": "https://github.com/SK-415/HarukaBot",
     "tags": [
       {
-        "label": "t:bilibili",
+        "label": "bilibili",
         "color": "#e55d80"
       }
     ],
@@ -42,7 +42,7 @@
     "homepage": "https://github.com/Lancercmd/nonebot_plugin_rauthman",
     "tags": [
       {
-        "label": "t:rule",
+        "label": "rule",
         "color": "#4ec9b0"
       }
     ],
@@ -71,7 +71,7 @@
     "homepage": "https://github.com/cscs181/QQ-GitHub-Bot/tree/master/src/plugins/nonebot_plugin_sentry",
     "tags": [
       {
-        "label": "t:log",
+        "label": "log",
         "color": "#6be3ea"
       }
     ],
@@ -124,7 +124,7 @@
     "homepage": "https://github.com/Lancercmd/nonebot_plugin_translator",
     "tags": [
       {
-        "label": "t:func",
+        "label": "func",
         "color": "#dcdcaa"
       }
     ],
@@ -175,12 +175,7 @@
     "desc": "订阅来自微博，B站，网易云，RSS以及各种网站的动态，转发到QQ群中",
     "name": "Bison",
     "homepage": "https://github.com/felinae98/nonebot-bison",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -194,15 +189,7 @@
     "homepage": "https://github.com/kitUIN/nonebot-plugin-ncm",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "a:cqhttp",
-        "color": "#000000"
-      },
-      {
-        "label": "t:Netease",
+        "label": "Netease",
         "color": "#ec4141"
       }
     ],
@@ -231,7 +218,7 @@
     "homepage": "https://github.com/thereisnodice/TRPGLogger",
     "tags": [
       {
-        "label": "t:TRPG",
+        "label": "TRPG",
         "color": "#80070B"
       }
     ],
@@ -284,7 +271,7 @@
     "homepage": "https://github.com/nonepkg/nonebot-plugin-manager",
     "tags": [
       {
-        "label": "t:PluginManager",
+        "label": "PluginManager",
         "color": "#80070B"
       }
     ],
@@ -325,7 +312,7 @@
     "homepage": "https://github.com/nonepkg/nonebot-plugin-mcstatus",
     "tags": [
       {
-        "label": "t:Minecraft",
+        "label": "Minecraft",
         "color": "#80070B"
       }
     ],
@@ -412,12 +399,7 @@
     "desc": "获取和风天气信息并转换为图片",
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-heweather",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -477,12 +459,7 @@
     "desc": "最简Q群点歌插件，支持QQ音乐、网易云、酷我、酷狗、咪咕、B站音频区",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-simplemusic",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -506,12 +483,7 @@
     "desc": "另一个色图插件，即时下载并保存，可选WebDAV。可选特殊色图",
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-setu-now",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -585,7 +557,7 @@
     "homepage": "https://github.com/yzyyz1387/nonebot_plugin_code",
     "tags": [
       {
-        "label": "t:func",
+        "label": "func",
         "color": "#dcdcaa"
       }
     ],
@@ -624,12 +596,7 @@
     "desc": "获取聚集更新",
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-tvseries",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -655,7 +622,7 @@
     "homepage": "https://github.com/nonepkg/OlivOS.nb2",
     "tags": [
       {
-        "label": "t:OlivOS",
+        "label": "OlivOS",
         "color": "#00a0ea"
       }
     ],
@@ -670,12 +637,7 @@
     "desc": "通过playwright加一点点前端知识来简单的生成图片",
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-htmlrender",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -735,12 +697,7 @@
     "desc": "提取群文件的下载直链。",
     "author": "ninthseason",
     "homepage": "https://github.com/ninthseason/nonebot-plugin-directlinker",
-    "tags": [
-      {
-        "label": "a:cqhttp",
-        "color": "#ea5252"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -766,7 +723,7 @@
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_roll",
     "tags": [
       {
-        "label": "t:roll",
+        "label": "roll",
         "color": "#ea5252"
       }
     ],
@@ -783,7 +740,7 @@
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_crazy_thursday",
     "tags": [
       {
-        "label": "t:Thursday",
+        "label": "Thursday",
         "color": "#ea5252"
       }
     ],
@@ -810,16 +767,7 @@
     "desc": "这垃圾人生一秒也不想待了？立即重开！",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-remake",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "a:cqhttp",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -831,16 +779,7 @@
     "desc": "基于彩云小梦的小说AI续写插件",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-caiyunai",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "a:cqhttp",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -854,7 +793,7 @@
     "homepage": "https://github.com/zjkwdy/nonebot_plugin_weather_lite",
     "tags": [
       {
-        "label": "t:天气",
+        "label": "天气",
         "color": "#6ec3d9"
       }
     ],
@@ -871,11 +810,7 @@
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_fortune",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#6952ea"
-      },
-      {
-        "label": "t:fortune",
+        "label": "fortune",
         "color": "#ea6f52"
       }
     ],
@@ -892,11 +827,7 @@
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_tarot",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#eaa452"
-      },
-      {
-        "label": "t:tarot",
+        "label": "tarot",
         "color": "#461264"
       }
     ],
@@ -913,7 +844,7 @@
     "homepage": "https://github.com/MeetWq/nonebot-plugin-emojimix",
     "tags": [
       {
-        "label": "t:emoji",
+        "label": "emoji",
         "color": "#ea5252"
       }
     ],
@@ -930,11 +861,7 @@
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_what2eat",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#cd3d3d"
-      },
-      {
-        "label": "t:what2eat",
+        "label": "what2eat",
         "color": "#f09526"
       }
     ],
@@ -963,11 +890,7 @@
     "homepage": "https://github.com/mnixry/nonebot-plugin-gocqhttp",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:gocqhttp",
+        "label": "gocqhttp",
         "color": "#eabd52"
       }
     ],
@@ -984,11 +907,7 @@
     "homepage": "https://github.com/mnixry/nonebot-plugin-guild-patch",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:gocqhttp",
+        "label": "gocqhttp",
         "color": "#a2ea52"
       }
     ],
@@ -1003,12 +922,7 @@
     "desc": "棋类游戏插件，目前支持 五子棋、黑白棋、围棋",
     "author": "MeetWq",
     "homepage": "https://github.com/noneplugin/nonebot-plugin-boardgame",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1032,12 +946,7 @@
     "desc": "记录机器人收到和发出的消息",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-chatrecorder",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1049,12 +958,7 @@
     "desc": "顾名思义🎇",
     "author": "KafCoppelia",
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_antiflash",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#6f64d4"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1067,10 +971,6 @@
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-word-bank2",
     "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#ff0000"
-      },
       {
         "label": "wordbank",
         "color": "#0b00ff"
@@ -1087,12 +987,7 @@
     "desc": "基于PIL的轻量文字转图片插件",
     "author": "mobyw",
     "homepage": "https://github.com/mobyw/nonebot-plugin-txt2img",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#0083ff"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1106,11 +1001,7 @@
     "homepage": "https://github.com/KafCoppelia/nonebot_plugin_morning",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#da421c"
-      },
-      {
-        "label": "t:morning",
+        "label": "morning",
         "color": "#ebc025"
       }
     ],
@@ -1127,7 +1018,7 @@
     "homepage": "https://github.com/anlen123/nonebot_plugin_pixiv",
     "tags": [
       {
-        "label": "t: pixiv",
+        "label": " pixiv",
         "color": "#0096fa"
       },
       {
@@ -1146,12 +1037,7 @@
     "desc": "基于 kitUIN/PicImageSearch 的另一个 Nonebot 搜图插件。",
     "author": "NekoAria",
     "homepage": "https://github.com/NekoAria/YetAnotherPicSearch",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1165,7 +1051,7 @@
     "homepage": "https://github.com/monsterxcn/nonebot-plugin-gachalogs",
     "tags": [
       {
-        "label": "t:Genshin",
+        "label": "Genshin",
         "color": "#ffd49f"
       }
     ],
@@ -1181,10 +1067,6 @@
     "author": "MelodyYuuka",
     "homepage": "https://github.com/MelodyYuuka/nonebot_plugin_everyday_en",
     "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
       {
         "label": "EveryDay",
         "color": "#ea5252"
@@ -1215,10 +1097,6 @@
     "homepage": "https://github.com/kexue-z/nonebot-plugin-qrcode",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      },
-      {
         "label": "QRcode",
         "color": "#0020ff"
       }
@@ -1236,7 +1114,7 @@
     "homepage": "https://github.com/anlen123/nonebot_plugin_ygo",
     "tags": [
       {
-        "label": "t:游戏王",
+        "label": "游戏王",
         "color": "#ea5252"
       },
       {
@@ -1263,10 +1141,6 @@
       {
         "label": "bilibili",
         "color": "#f605dd"
-      },
-      {
-        "label": "a:onebot11",
-        "color": "#05f6e4"
       }
     ],
     "is_official": false,
@@ -1280,12 +1154,7 @@
     "desc": "Nonebot2 色图生成插件！哎哟这个色啊，好色！",
     "author": "monsterxcn",
     "homepage": "https://github.com/monsterxcn/nonebot-plugin-color",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1313,10 +1182,6 @@
       {
         "label": "Arcaea",
         "color": "#db52ea"
-      },
-      {
-        "label": "a:onebot",
-        "color": "#ff2e00"
       }
     ],
     "is_official": false,
@@ -1330,12 +1195,7 @@
     "desc": "查询B站关注列表的VTuber成分",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-ddcheck",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1359,12 +1219,7 @@
     "desc": "使用 HikariSearch 的又一个搜图插件",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-hikarisearch",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1378,11 +1233,7 @@
     "homepage": "https://github.com/KoishiStudio/nonebot-plugin-mediawiki",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "t:wiki",
+        "label": "wiki",
         "color": "#679ff9"
       }
     ],
@@ -1397,12 +1248,7 @@
     "desc": "wordle猜单词游戏",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-wordle",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1414,12 +1260,7 @@
     "desc": "指引群友快速 访 ~~(tui)~~ 问 ~~(dao)~~ 谷歌娘（在中国大陆大概就是度娘了～）",
     "author": "KoishiStudio",
     "homepage": "https://github.com/KoishiStudio/nonebot-plugin-giyf",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1445,7 +1286,7 @@
     "homepage": "https://github.com/iyume/nonebot-plugin-params",
     "tags": [
       {
-        "label": "t:helper",
+        "label": "helper",
         "color": "#ffe873"
       }
     ],
@@ -1460,12 +1301,7 @@
     "desc": "汉字版Wordle 猜成语插件",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-handle",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1477,12 +1313,7 @@
     "desc": "在qq中玩扫雷",
     "author": "MeetWq",
     "homepage": "https://github.com/MeetWq/nonebot-plugin-minesweeper",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1508,15 +1339,11 @@
     "homepage": "https://github.com/MinatoAquaCrews/nonebot_plugin_randomtkk",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#d62222"
-      },
-      {
-        "label": "t:Tan Kuku",
+        "label": "Tan Kuku",
         "color": "#fdaf75"
       },
       {
-        "label": "t:Liyuu",
+        "label": "Liyuu",
         "color": "#465dfd"
       }
     ],
@@ -1533,7 +1360,7 @@
     "homepage": "https://github.com/TDK1969/nonebot_plugin_dida",
     "tags": [
       {
-        "label": "t:滴答清单",
+        "label": "滴答清单",
         "color": "#007ffd"
       }
     ],
@@ -1596,12 +1423,7 @@
     "desc": "象棋，支持人机和对战",
     "author": "MeetWq",
     "homepage": "https://github.com/noneplugin/nonebot-plugin-cchess",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1613,12 +1435,7 @@
     "desc": "国际象棋，支持人机和对战",
     "author": "MeetWq",
     "homepage": "https://github.com/noneplugin/nonebot-plugin-chess",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#020202"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1678,12 +1495,7 @@
     "desc": "与机器人交互解迷宫",
     "author": "EtherLeaF",
     "homepage": "https://github.com/EtherLeaF/nonebot_plugin_maze",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1719,12 +1531,7 @@
     "desc": "利用MockingBird来生成语音，并支持多种语音切换",
     "author": "AkashiCoin",
     "homepage": "https://github.com/AkashiCoin/nonebot_plugin_mockingbird",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1760,12 +1567,7 @@
     "desc": "签到获取金币 别的插件也能用金币balabala",
     "author": "kexue-z",
     "homepage": "https://github.com/kexue-z/nonebot-plugin-dailysign",
-    "tags": [
-      {
-        "label": "a: onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1777,12 +1579,7 @@
     "desc": "一个基于nonebot2的用于查询TETRIS相关游戏玩家数据的插件",
     "author": "shoucandanghehe",
     "homepage": "https://github.com/shoucandanghehe/nonebot-plugin-tetris-stats",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#da2b2b"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1806,12 +1603,7 @@
     "desc": "一些简单的图片操作",
     "author": "MeetWq",
     "homepage": "https://github.com/noneplugin/nonebot-plugin-imagetools",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1824,10 +1616,6 @@
     "author": "axStar",
     "homepage": "https://github.com/axStar/nonebot_plugin_warframe_clock",
     "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
       {
         "label": "Warframe",
         "color": "#149090"
@@ -1858,11 +1646,7 @@
     "homepage": "https://github.com/SEAFHMC/nonebot-plugin-who-at-me",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:群聊",
+        "label": "群聊",
         "color": "#52afea"
       }
     ],
@@ -1877,12 +1661,7 @@
     "desc": "疫情小助手 支持查地区 风险地区 境外输入等",
     "author": "bingqiu456",
     "homepage": "https://github.com/bingqiu456/nonebot-plugin-covid-19-by",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#52ea8a"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -1989,11 +1768,7 @@
     "homepage": "https://github.com/hamo-reid/nonenot_plugin_PicMenu",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#030303"
-      },
-      {
-        "label": "t:menu",
+        "label": "menu",
         "color": "#753dc6"
       }
     ],
@@ -2045,10 +1820,6 @@
     "author": "yaowan233",
     "homepage": "https://github.com/yaowan233/nonebot-plugin-osubot",
     "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      },
       {
         "label": "OSU",
         "color": "#eb5d9b"
@@ -2103,11 +1874,7 @@
     "homepage": "https://github.com/bingqiu456/nonebot-plugin-date-name",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#a552ea"
-      },
-      {
-        "label": "t:qun_card",
+        "label": "qun_card",
         "color": "#e552ea"
       }
     ],
@@ -2136,11 +1903,11 @@
     "homepage": "https://github.com/syrinka/nonebot-plugin-report",
     "tags": [
       {
-        "label": "t:webhook",
+        "label": "webhook",
         "color": "#51b3a8"
       },
       {
-        "label": "t:notify",
+        "label": "notify",
         "color": "#3985f7"
       }
     ],
@@ -2155,16 +1922,7 @@
     "desc": "拼音首字母及阿拉伯数字缩写翻译",
     "author": "ArgonarioD",
     "homepage": "https://github.com/ArgonarioD/nonebot-plugin-hammer-nbnhhsh",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "a:cqhttp",
-        "color": "#000000"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -2178,11 +1936,11 @@
     "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-bawiki/",
     "tags": [
       {
-        "label": "t:碧蓝档案",
+        "label": "碧蓝档案",
         "color": "#00d7fb"
       },
       {
-        "label": "t:蔚藍檔案",
+        "label": "蔚藍檔案",
         "color": "#00d7fb"
       }
     ],
@@ -2220,11 +1978,7 @@
     "homepage": "https://github.com/bingqiu456/nonebot-plugin-covid-19-by-guild",
     "tags": [
       {
-        "label": "a:QQ频道",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:疫情小助手",
+        "label": "疫情小助手",
         "color": "#526fea"
       }
     ],
@@ -2451,15 +2205,15 @@
     "homepage": "https://github.com/sena-nana/nonebot-plugin-send",
     "tags": [
       {
-        "label": "t:send",
+        "label": "send",
         "color": "#ea5252"
       },
       {
-        "label": "t:notice",
+        "label": "notice",
         "color": "#ea5252"
       },
       {
-        "label": "t:公告",
+        "label": "公告",
         "color": "#ea5252"
       }
     ],
@@ -2476,11 +2230,11 @@
     "homepage": "https://github.com/CofinCup/nonebot-plugin-todo-nlp",
     "tags": [
       {
-        "label": "t:todo",
+        "label": "todo",
         "color": "#499bdd"
       },
       {
-        "label": "t:nlp",
+        "label": "nlp",
         "color": "#83b279"
       }
     ],
@@ -2514,7 +2268,7 @@
     "homepage": "https://github.com/Raidenneox/nonebot_plugin_CyberSensoji",
     "tags": [
       {
-        "label": "t:抽签",
+        "label": "抽签",
         "color": "#52eadf"
       }
     ],
@@ -2531,7 +2285,7 @@
     "homepage": "https://github.com/monsterxcn/nonebot-plugin-gspanel",
     "tags": [
       {
-        "label": "t:Genshin",
+        "label": "Genshin",
         "color": "#ffd49f"
       }
     ],
@@ -2548,7 +2302,7 @@
     "homepage": "https://github.com/monsterxcn/nonebot-plugin-gsmaterial",
     "tags": [
       {
-        "label": "t:Genshin",
+        "label": "Genshin",
         "color": "#ffd49f"
       }
     ],
@@ -2565,15 +2319,11 @@
     "homepage": "https://github.com/Ljzd-PRO/nonebot-plugin-mystool",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "t:米游社",
+        "label": "米游社",
         "color": "#66e0ff"
       },
       {
-        "label": "t:原神",
+        "label": "原神",
         "color": "#faf3c4"
       }
     ],
@@ -2661,15 +2411,15 @@
     "homepage": "https://github.com/littlebutt/nonebot-plugin-iot",
     "tags": [
       {
-        "label": "t:物联网",
+        "label": "物联网",
         "color": "#4b86d7"
       },
       {
-        "label": "t:天猫精灵",
+        "label": "天猫精灵",
         "color": "#4b86d7"
       },
       {
-        "label": "t:IOT",
+        "label": "IOT",
         "color": "#4b86d7"
       }
     ],
@@ -2686,11 +2436,7 @@
     "homepage": "https://github.com/XZhouQD/nonebot-plugin-bwiki-navigator",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "t:wiki",
+        "label": "wiki",
         "color": "#29a5e3"
       }
     ],
@@ -2749,7 +2495,7 @@
         "color": "#595fd6"
       },
       {
-        "label": "t:阿里云盘",
+        "label": "阿里云盘",
         "color": "#595fd6"
       }
     ],
@@ -2766,12 +2512,8 @@
     "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-picstatus",
     "tags": [
       {
-        "label": "t:server",
+        "label": "server",
         "color": "#8bff00"
-      },
-      {
-        "label": "a:OB V11",
-        "color": "#ff43c3"
       }
     ],
     "is_official": false,
@@ -2903,15 +2645,15 @@
     "homepage": "https://github.com/sena-nana/nonebot-plugin-novelai",
     "tags": [
       {
-        "label": "t:aidraw",
+        "label": "aidraw",
         "color": "#ffc646"
       },
       {
-        "label": "t:naifu",
+        "label": "naifu",
         "color": "#ffc646"
       },
       {
-        "label": "t:webui",
+        "label": "webui",
         "color": "#ffc646"
       }
     ],
@@ -2928,11 +2670,7 @@
     "homepage": "https://bridgel.github.io/ayaka_games/",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#0c0c0c"
-      },
-      {
-        "label": "t:小游戏",
+        "label": "小游戏",
         "color": "#e36306"
       }
     ],
@@ -2949,15 +2687,7 @@
     "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka-timezone",
     "tags": [
       {
-        "label": "a:cqhttp",
-        "color": "#000000"
-      },
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "t:timezone",
+        "label": "timezone",
         "color": "#e36306"
       }
     ],
@@ -2974,15 +2704,7 @@
     "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka-prevent-bad-words",
     "tags": [
       {
-        "label": "a:cqhttp",
-        "color": "#000000"
-      },
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "t:撤回",
+        "label": "撤回",
         "color": "#e36306"
       }
     ],
@@ -3048,7 +2770,7 @@
     "homepage": "https://github.com/ssttkkl/nonebot-plugin-sqlalchemy",
     "tags": [
       {
-        "label": "t:sql",
+        "label": "sql",
         "color": "#ad1717"
       }
     ],
@@ -3077,11 +2799,7 @@
     "homepage": "https://github.com/tkgs0/nonebot-plugin-antiinsult",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "t:被动",
+        "label": "被动",
         "color": "#ea5252"
       }
     ],
@@ -3098,7 +2816,7 @@
     "homepage": "https://github.com/noneplugin/nonebot-plugin-oddtext",
     "tags": [
       {
-        "label": "t:RCNB!",
+        "label": "RCNB!",
         "color": "#ea5252"
       }
     ],
@@ -3115,11 +2833,7 @@
     "homepage": "https://github.com/ssttkkl/nonebot-plugin-mahjong-scoreboard",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#4684d3"
-      },
-      {
-        "label": "t:日麻",
+        "label": "日麻",
         "color": "#4684d3"
       }
     ],
@@ -3148,7 +2862,7 @@
     "homepage": "https://github.com/ssttkkl/nonebot-plugin-mahjong-utils",
     "tags": [
       {
-        "label": "t:日麻",
+        "label": "日麻",
         "color": "#edad34"
       }
     ],
@@ -3164,10 +2878,6 @@
     "author": "Melodyknit",
     "homepage": "https://github.com/Melodyknit/nonebot_plugin_animeres",
     "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#ec5252"
-      },
       {
         "label": "anime",
         "color": "#ec5252"
@@ -3239,11 +2949,7 @@
     "homepage": "https://github.com/EtherLeaF/nonebot-plugin-colab-novelai",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:NovelAI",
+        "label": "NovelAI",
         "color": "#eacd52"
       }
     ],
@@ -3304,12 +3010,7 @@
     "desc": "用于获取QQ中当前窥屏用户信息",
     "author": "p0ise",
     "homepage": "https://github.com/p0ise/nonebot-plugin-repeep",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -3323,7 +3024,7 @@
     "homepage": "https://github.com/monsterxcn/nonebot-plugin-gscode",
     "tags": [
       {
-        "label": "t:Genshin",
+        "label": "Genshin",
         "color": "#ffd49f"
       }
     ],
@@ -3364,15 +3065,11 @@
     "homepage": "https://github.com/Ikaros-521/nonebot_plugin_trace_moe",
     "tags": [
       {
-        "label": "a:onebot",
+        "label": "trace",
         "color": "#191919"
       },
       {
-        "label": "t:trace",
-        "color": "#191919"
-      },
-      {
-        "label": "t:image",
+        "label": "image",
         "color": "#00a0ff"
       }
     ],
@@ -3426,7 +3123,7 @@
     "homepage": "https://github.com/ssttkkl/nonebot-plugin-majsoul",
     "tags": [
       {
-        "label": "t:majsoul",
+        "label": "majsoul",
         "color": "#e54141"
       }
     ],
@@ -3443,15 +3140,11 @@
     "homepage": "https://github.com/Ikaros-521/nonebot_plugin_remove_bg",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:img",
+        "label": "img",
         "color": "#111111"
       },
       {
-        "label": "t:removeBG",
+        "label": "removeBG",
         "color": "#7a7a7a"
       }
     ],
@@ -3492,7 +3185,7 @@
     "homepage": "https://github.com/ssttkkl/nonebot-plugin-access-control",
     "tags": [
       {
-        "label": "t:权限控制",
+        "label": "权限控制",
         "color": "#0e9763"
       }
     ],
@@ -3509,15 +3202,11 @@
     "homepage": "https://github.com/Ikaros-521/nonebot_plugin_colormind",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "t:color",
+        "label": "color",
         "color": "#ffffff"
       },
       {
-        "label": "t:配色",
+        "label": "配色",
         "color": "#fbff03"
       }
     ],
@@ -3534,11 +3223,7 @@
     "homepage": "https://github.com/Ikaros-521/nonebot_plugin_abstain_diary",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "t:戒",
+        "label": "戒",
         "color": "#ffffff"
       }
     ],
@@ -3603,15 +3288,11 @@
     "homepage": "https://github.com/Ikaros-521/nonebot_plugin_random_ban",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:禁言",
+        "label": "禁言",
         "color": "#020202"
       },
       {
-        "label": "t:ban",
+        "label": "ban",
         "color": "#ffffff"
       }
     ],
@@ -3726,15 +3407,11 @@
     "homepage": "https://github.com/OREOCODEDEV/nonebot-plugin-servicestate",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:api",
+        "label": "api",
         "color": "#52ea7f"
       },
       {
-        "label": "t:state",
+        "label": "state",
         "color": "#52cfea"
       }
     ],
@@ -3776,11 +3453,7 @@
     "homepage": "https://github.com/bridgeL/nonebot-plugin-ayaka-scan-cmd",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
-        "label": "t:命令探查",
+        "label": "命令探查",
         "color": "#e36306"
       }
     ],
@@ -3818,11 +3491,7 @@
     "homepage": "https://github.com/ssttkkl/nonebot-plugin-revoke",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:gocqhttp",
+        "label": "gocqhttp",
         "color": "#52ea95"
       }
     ],
@@ -3871,12 +3540,7 @@
     "desc": "让Bot学习群友说话和发表情包！",
     "author": "CMHopeSunshine",
     "homepage": "https://github.com/CMHopeSunshine/nonebot-plugin-learning-chat",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -3921,16 +3585,7 @@
     "desc": "基于云端的签到，所有插件使用者数据互通",
     "author": "Monarchdos",
     "homepage": "https://github.com/Monarchdos/nonebot_plugin_cloudsign",
-    "tags": [
-      {
-        "label": "a:云签到",
-        "color": "#2be491"
-      },
-      {
-        "label": "a:数据互通",
-        "color": "#3be42b"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -3944,11 +3599,7 @@
     "homepage": "https://github.com/cpuopt/nonebot_plugin_imgexploration",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:搜图",
+        "label": "搜图",
         "color": "#453df1"
       }
     ],
@@ -3990,7 +3641,7 @@
     "homepage": "https://github.com/Cvandia/nonebot_plugin_nowtime",
     "tags": [
       {
-        "label": "t:整点报时",
+        "label": "整点报时",
         "color": "#5eea52"
       },
       {
@@ -4161,7 +3812,7 @@
     "homepage": "https://github.com/itsevin/nonebot_plugin_record",
     "tags": [
       {
-        "label": "t:语音",
+        "label": "语音",
         "color": "#fff35d"
       },
       {
@@ -4203,12 +3854,8 @@
     "homepage": "https://github.com/bridgeL/criminal_dance",
     "tags": [
       {
-        "label": "t:文字版桌游",
+        "label": "文字版桌游",
         "color": "#e36306"
-      },
-      {
-        "label": "a:onebot",
-        "color": "#000000"
       }
     ],
     "is_official": false,
@@ -4275,12 +3922,7 @@
     "desc": "群员通过Bot对话超管",
     "author": "Hiroshi12138",
     "homepage": "https://github.com/Hiroshi12138/nonebot_plugin_report_manager",
-    "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#a95454"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -4357,15 +3999,15 @@
     "homepage": "https://github.com/ArcletProject/nonebot-plugin-alconna",
     "tags": [
       {
-        "label": "t:matcher",
+        "label": "matcher",
         "color": "#5280ea"
       },
       {
-        "label": "t:command",
+        "label": "command",
         "color": "#ea6f52"
       },
       {
-        "label": "t:alconna",
+        "label": "alconna",
         "color": "#5452ea"
       }
     ],
@@ -4426,12 +4068,7 @@
     "desc": "随机发送一句舔狗日记文案",
     "author": "Reversedeer",
     "homepage": "https://github.com/Reversedeer/nonebot_plugin_dog",
-    "tags": [
-      {
-        "label": "a:nonebot",
-        "color": "#c61b1b"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -4516,7 +4153,7 @@
     "homepage": "https://github.com/eya46/nonebot_plugin_b23",
     "tags": [
       {
-        "label": "t:bilibili",
+        "label": "bilibili",
         "color": "#00aeec"
       },
       {
@@ -4537,7 +4174,7 @@
     "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-autoreply/",
     "tags": [
       {
-        "label": "t:自动回复",
+        "label": "自动回复",
         "color": "#ea881e"
       }
     ],
@@ -4617,11 +4254,7 @@
     "homepage": "https://github.com/tkgs0/nonebot-plugin-dicky-pk",
     "tags": [
       {
-        "label": "a:onebot11",
-        "color": "#000000"
-      },
-      {
-        "label": "t:群聊小游戏",
+        "label": "群聊小游戏",
         "color": "#ffd500"
       }
     ],
@@ -4638,7 +4271,7 @@
     "homepage": "https://github.com/Reversedeer/nonebot_plugin_eventmonitor",
     "tags": [
       {
-        "label": "t:QQGroup",
+        "label": "QQGroup",
         "color": "#2885c0"
       }
     ],
@@ -4655,11 +4288,11 @@
     "homepage": "https://github.com/Cvandia/nonebot-plugin-whateat-pic",
     "tags": [
       {
-        "label": "t:吃什么",
+        "label": "吃什么",
         "color": "#e4ea52"
       },
       {
-        "label": "t:喝什么",
+        "label": "喝什么",
         "color": "#52ea8b"
       }
     ],
@@ -4725,16 +4358,7 @@
     "desc": "让 NoneBot2 成为 OneBot 实现！",
     "author": "j1g5awi",
     "homepage": "https://github.com/nonepkg/nonebot-plugin-all4one",
-    "tags": [
-      {
-        "label": "a:OneBot",
-        "color": "#000000"
-      },
-      {
-        "label": "a:Telegram",
-        "color": "#34a9e5"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -4748,7 +4372,7 @@
     "homepage": "https://github.com/monsterxcn/nonebot-plugin-gsabyss",
     "tags": [
       {
-        "label": "t:Genshin",
+        "label": "Genshin",
         "color": "#ffd49f"
       }
     ],
@@ -4765,15 +4389,11 @@
     "homepage": "https://github.com/NumberSir/nonebot_plugin_arktools",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
-      {
         "label": "arknights",
         "color": "#22bbff"
       },
       {
-        "label": "t:game",
+        "label": "game",
         "color": "#db905e"
       }
     ],
@@ -4898,11 +4518,11 @@
         "color": "#da4a4a"
       },
       {
-        "label": "t:what2eat",
+        "label": "what2eat",
         "color": "#99da4a"
       },
       {
-        "label": "t: how2exe",
+        "label": " how2exe",
         "color": "#99da4a"
       }
     ],
@@ -5184,11 +4804,11 @@
     "homepage": "https://github.com/TheLZY/nonebot_plugin_tuan_chatgpt",
     "tags": [
       {
-        "label": "t:chat",
+        "label": "chat",
         "color": "#ff9d97"
       },
       {
-        "label": "t:chatgpt",
+        "label": "chatgpt",
         "color": "#ff9d97"
       }
     ],
@@ -5304,7 +4924,7 @@
     "homepage": "https://github.com/forchannot/nonebot-plugin-gshisbanner",
     "tags": [
       {
-        "label": "t:原神",
+        "label": "原神",
         "color": "#ea5252"
       },
       {
@@ -5370,11 +4990,7 @@
     "homepage": "https://github.com/RongRongJi/nonebot_plugin_quote",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#326bad"
-      },
-      {
-        "label": "t:语录",
+        "label": "语录",
         "color": "#003f88"
       }
     ],
@@ -5457,7 +5073,7 @@
     "homepage": "https://github.com/DaoMingze/zhukebot/tree/main/zhukebot/plugins/chatglm",
     "tags": [
       {
-        "label": "t:Chatbot",
+        "label": "Chatbot",
         "color": "#4366eb"
       },
       {
@@ -5478,7 +5094,7 @@
     "homepage": "https://github.com/QNLanYang/nonebot_plugin_ChatGLM6B",
     "tags": [
       {
-        "label": "t:ChatGLM",
+        "label": "ChatGLM",
         "color": "#52d6ea"
       },
       {
@@ -5537,12 +5153,8 @@
     "homepage": "https://github.com/NCBM/nonebot-plugin-overbracket",
     "tags": [
       {
-        "label": "t:useless",
+        "label": "useless",
         "color": "#0a930e"
-      },
-      {
-        "label": "a:all",
-        "color": "#e15149"
       }
     ],
     "is_official": false,
@@ -5582,15 +5194,15 @@
     "homepage": "https://github.com/Cvandia/nonebot_plugin_genshin_cos",
     "tags": [
       {
-        "label": "t:原神",
+        "label": "原神",
         "color": "#f55400"
       },
       {
-        "label": "t:cos",
+        "label": "cos",
         "color": "#00d0f5"
       },
       {
-        "label": "t:coser",
+        "label": "coser",
         "color": "#eb1dd3"
       }
     ],
@@ -5719,7 +5331,7 @@
     "homepage": "https://github.com/nek0us/nonebot_plugin_steam_game_status",
     "tags": [
       {
-        "label": "t:Steam",
+        "label": "Steam",
         "color": "#6690a5"
       }
     ],
@@ -5736,15 +5348,11 @@
     "homepage": "https://github.com/djkcyl/nonebot-plugin-bilichat",
     "tags": [
       {
-        "label": "t:哔哩哔哩",
+        "label": "哔哩哔哩",
         "color": "#ffc8ea"
       },
       {
-        "label": "a:onebot",
-        "color": "#ff75a8"
-      },
-      {
-        "label": "t:ChatGPT",
+        "label": "ChatGPT",
         "color": "#75ffc0"
       }
     ],
@@ -5760,10 +5368,6 @@
     "author": "KimigaiiWuyi",
     "homepage": "https://github.com/KimigaiiWuyi/GenshinUID",
     "tags": [
-      {
-        "label": "a:all",
-        "color": "#ea5252"
-      },
       {
         "label": "原神",
         "color": "#000000"
@@ -5786,7 +5390,7 @@
     "homepage": "https://github.com/zangxx66/nonebot_plugin_blive_danmaku",
     "tags": [
       {
-        "label": "t:bilibili",
+        "label": "bilibili",
         "color": "#ea5252"
       }
     ],
@@ -5819,10 +5423,6 @@
     "author": "thx114",
     "homepage": "https://github.com/thx114/sdgpt",
     "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#000000"
-      },
       {
         "label": "chatGPT",
         "color": "#54b490"
@@ -5869,7 +5469,7 @@
     "homepage": "https://github.com/aaron-lii/TataruBot2",
     "tags": [
       {
-        "label": "t:FF14",
+        "label": "FF14",
         "color": "#5282ea"
       }
     ],
@@ -5920,7 +5520,7 @@
     "homepage": "https://github.com/Agnes4m/nonebot_plugin_bilifan",
     "tags": [
       {
-        "label": "t:bilibili",
+        "label": "bilibili",
         "color": "#ec15c6"
       }
     ],
@@ -5937,11 +5537,11 @@
     "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-akinator",
     "tags": [
       {
-        "label": "t:Akinator",
+        "label": "Akinator",
         "color": "#6599fe"
       },
       {
-        "label": "t:网络天才",
+        "label": "网络天才",
         "color": "#6599fe"
       }
     ],
@@ -5957,10 +5557,6 @@
     "author": "forchannot",
     "homepage": "https://github.com/forchannot/nonebot_plugin_rename",
     "tags": [
-      {
-        "label": "a:onebot",
-        "color": "#ed4646"
-      },
       {
         "label": "群名片",
         "color": "#466bed"
@@ -5991,11 +5587,11 @@
     "homepage": "https://github.com/NCBM/nonebot-plugin-mixin",
     "tags": [
       {
-        "label": "t:dev",
+        "label": "dev",
         "color": "#ea5252"
       },
       {
-        "label": "t:mixin",
+        "label": "mixin",
         "color": "#529fea"
       }
     ],
@@ -6012,11 +5608,11 @@
     "homepage": "https://github.com/campanulamediuml/nonebot-plugin-brainfuck",
     "tags": [
       {
-        "label": "t:dev",
+        "label": "dev",
         "color": "#ea5252"
       },
       {
-        "label": "t:bf",
+        "label": "bf",
         "color": "#529fea"
       }
     ],
@@ -6087,15 +5683,11 @@
     "homepage": "https://github.com/maoxig/nonebot-plugin-manga-translator",
     "tags": [
       {
-        "label": "a:onebot",
-        "color": "#ea5252"
-      },
-      {
-        "label": "t:漫画翻译",
+        "label": "漫画翻译",
         "color": "#527bea"
       },
       {
-        "label": "t:图片翻译",
+        "label": "图片翻译",
         "color": "#c452ea"
       }
     ],
@@ -6112,11 +5704,11 @@
     "homepage": "https://github.com/X-Skirt-X/nonebot-plugin-watermarker",
     "tags": [
       {
-        "label": "t:水印",
+        "label": "水印",
         "color": "#52eae7"
       },
       {
-        "label": "t:图片水印",
+        "label": "图片水印",
         "color": "#ef258f"
       }
     ],
@@ -6254,20 +5846,7 @@
     "desc": "为不同的适配器提供更通用且简易的消息段构建方式",
     "author": "Well2333",
     "homepage": "https://github.com/Well2333/nonebot-plugin-segbuilder",
-    "tags": [
-      {
-        "label": "a:OneBot",
-        "color": "#ea5252"
-      },
-      {
-        "label": "a:mirai2",
-        "color": "#ea5252"
-      },
-      {
-        "label": "a:qqguild",
-        "color": "#ea5252"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -6281,7 +5860,7 @@
     "homepage": "https://github.com/RF-Tar-Railt/nonebot-plugin-arkgacha",
     "tags": [
       {
-        "label": "t:game",
+        "label": "game",
         "color": "#eaa852"
       },
       {
@@ -6306,7 +5885,7 @@
     "homepage": "https://github.com/NCBM/nonebot-plugin-msgbuf",
     "tags": [
       {
-        "label": "t:dev",
+        "label": "dev",
         "color": "#ea5252"
       }
     ],
@@ -6361,11 +5940,11 @@
     "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-multincm",
     "tags": [
       {
-        "label": "t:网易云",
+        "label": "网易云",
         "color": "#ea5252"
       },
       {
-        "label": "t:ncm",
+        "label": "ncm",
         "color": "#ea5252"
       }
     ],
@@ -6478,12 +6057,8 @@
     "homepage": "https://github.com/ElainaFanBoy/nonebot_plugin_githubcard",
     "tags": [
       {
-        "label": "t: Github",
+        "label": " Github",
         "color": "#171a21"
-      },
-      {
-        "label": "a:onebot",
-        "color": "#000000"
       }
     ],
     "is_official": false,
@@ -6613,10 +6188,6 @@
       {
         "label": "随机",
         "color": "#ffe0aa"
-      },
-      {
-        "label": "a:onebot",
-        "color": "#000000"
       }
     ],
     "is_official": false,
@@ -6668,16 +6239,7 @@
     "desc": "自动转换发送消息中的URL，逃避URL检测",
     "author": "ssttkkl",
     "homepage": "https://github.com/bot-ssttkkl/nonebot-plugin-escape-url",
-    "tags": [
-      {
-        "label": "a:OneBot",
-        "color": "#5293ea"
-      },
-      {
-        "label": "a:QQGuild",
-        "color": "#5293ea"
-      }
-    ],
+    "tags": [],
     "is_official": false,
     "type": null,
     "supported_adapters": null
@@ -6708,11 +6270,11 @@
     "homepage": "https://github.com/reine-ishyanami/nonebot-plugin-pcrjjc",
     "tags": [
       {
-        "label": "t:公主连结",
+        "label": "公主连结",
         "color": "#778a1e"
       },
       {
-        "label": "t:pcrjjc",
+        "label": "pcrjjc",
         "color": "#778a1e"
       }
     ],
