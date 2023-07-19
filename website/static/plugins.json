@@ -7177,5 +7177,26 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_dall-e",
+    "project_link": "nonebot-plugin-dall-e",
+    "name": "DALL-E绘图",
+    "desc": "使用DALL·E绘图",
+    "author": "Rockytkg",
+    "homepage": "https://github.com/Rockytkg/nonebot_plugin_dall-e",
+    "tags": [
+      {
+        "label": "DALL-E",
+        "color": "#ea5252"
+      },
+      {
+        "label": "AI画图",
+        "color": "#52ea61"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
