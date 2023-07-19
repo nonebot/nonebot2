@@ -28,6 +28,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 添加 scoped 插件配置指南 [@yanyongyu](https://github.com/yanyongyu) ([#2198](https://github.com/nonebot/nonebot2/pull/2198))
 - Docs: 钩子函数代码片段补充 [@A-kirami](https://github.com/A-kirami) ([#2173](https://github.com/nonebot/nonebot2/pull/2173))
 - Docs: 格式化钩子函数中的代码片段 [@A-kirami](https://github.com/A-kirami) ([#2172](https://github.com/nonebot/nonebot2/pull/2172))
 - Docs: 补充 Message.only 文档 [@eya46](https://github.com/eya46) ([#2155](https://github.com/nonebot/nonebot2/pull/2155))
