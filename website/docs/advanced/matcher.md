@@ -319,3 +319,19 @@ group = MatcherGroup(rule=to_me())
 matcher1 = group.on_message()
 matcher2 = group.on_message()
 ```
+
+
+## 第三方响应规则
+
+### Alconna
+
+[`nonebot-plugin-alconna`](https://github.com/nonebot/plugin-alconna) 是一类提供了拓展响应规则的插件。
+该插件使用 [Alconna](https://github.com/ArcletProject/Alconna) 作为命令解析器，
+是一个简单、灵活、高效的命令参数解析器, 并且不局限于解析命令式字符串。
+
+该插件提供了一类新的事件响应器辅助函数 `on_alconna`，以及 `AlconnaResult` 等依赖注入函数。
+
+基于 `Alconna` 的特性，该插件同时提供了一系列便捷的消息段标注。
+标注可用于在 `Alconna` 中匹配消息中除 text 外的其他消息段，也可用于快速创建各适配器下的消息段。所有标注位于 `nonebot_plugin_alconna.adapters` 中。
+
+详情请阅读最佳实践中的 [命令解析拓展](../best-practice/alconna.md) 章节。
