@@ -146,6 +146,7 @@ args = Args["foo", BasePattern("@\d+")]
 示例中传入的 `str` 是因为 `str` 已经注册在了 `nepattern.global_patterns` 中，因此会替换为 `nepattern.global_patterns[str]`。
 
 默认支持的类型有：
+
 - `str`: 匹配任意字符串
 - `int`: 匹配整数
 - `float`: 匹配浮点数
@@ -162,6 +163,7 @@ args = Args["foo", BasePattern("@\d+")]
 - `Number`: 匹配 `int` 与 `float`，转为 `int`
 
 同时可以使用 typing 中的类型：
+
 - `Literal[X]`: 匹配其中的任意一个值
 - `Union[X, Y]`: 匹配其中的任意一个类型
 - `Optional[xxx]`: 会自动将默认值设为 `None`，并在解析失败时使用默认值
@@ -171,6 +173,7 @@ args = Args["foo", BasePattern("@\d+")]
 
 :::tip
 几类特殊的传入标记：
+
 - `"foo"`: 匹配字符串 "foo" (若没有某个 `BasePattern` 与之关联)
 - `RawStr("foo")`: 匹配字符串 "foo" (不会被 `BasePattern` 替换)
 - `"foo|bar|baz"`: 匹配 "foo" 或 "bar" 或 "baz"
@@ -235,8 +238,8 @@ class File(Segment):
     id: str
     name: Optional[str] = field(default=None)
 ```
-:::
 
+:::
 
 ### 响应器使用
 
