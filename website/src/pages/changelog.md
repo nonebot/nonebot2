@@ -28,6 +28,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 移动 Alconna 文档至最佳实践 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2208](https://github.com/nonebot/nonebot2/pull/2208))
 - Docs: 移除商店中不符合现规范的 tag [@j1g5awi](https://github.com/j1g5awi) ([#2205](https://github.com/nonebot/nonebot2/pull/2205))
 - Docs: 添加 scoped 插件配置指南 [@yanyongyu](https://github.com/yanyongyu) ([#2198](https://github.com/nonebot/nonebot2/pull/2198))
 - Docs: 钩子函数代码片段补充 [@A-kirami](https://github.com/A-kirami) ([#2173](https://github.com/nonebot/nonebot2/pull/2173))
