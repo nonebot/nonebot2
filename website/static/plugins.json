@@ -3994,9 +3994,9 @@
     "module_name": "nonebot_plugin_alconna",
     "project_link": "nonebot-plugin-alconna",
     "name": "Alconna 命令工具",
-    "desc": "提供一系列工具以在 nonebot 下使用 Alconna 命令解析",
+    "desc": "提供一系列工具以在 nonebot 下使用 Alconna 拓展命令解析",
     "author": "RF-Tar-Railt",
-    "homepage": "https://github.com/ArcletProject/nonebot-plugin-alconna",
+    "homepage": "https://github.com/nonebot/plugin-alconna",
     "tags": [
       {
         "label": "matcher",
@@ -4011,7 +4011,7 @@
         "color": "#5452ea"
       }
     ],
-    "is_official": false,
+    "is_official": true,
     "type": null,
     "supported_adapters": null
   },
