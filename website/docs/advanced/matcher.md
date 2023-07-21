@@ -320,7 +320,6 @@ matcher1 = group.on_message()
 matcher2 = group.on_message()
 ```
 
-
 ## 第三方响应规则
 
 ### Alconna
