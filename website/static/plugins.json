@@ -7198,5 +7198,17 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_tempfile",
+    "project_link": "nonebot-plugin-tempfile",
+    "name": "方寸狭间",
+    "desc": "临时文件/IO 依赖注入支持",
+    "author": "NCBM",
+    "homepage": "https://github.com/NCBM/nonebot-plugin-tempfile",
+    "tags": [],
+    "is_official": false,
+    "type": "library",
+    "supported_adapters": null
   }
 ]
