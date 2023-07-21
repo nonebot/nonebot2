@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 6
 description: 命令解析拓展
 ---
 
