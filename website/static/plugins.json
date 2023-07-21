@@ -4369,7 +4369,7 @@
         "color": "#5452ea"
       }
     ],
-    "is_official": false,
+    "is_official": true,
     "type": null,
     "supported_adapters": null
   },
