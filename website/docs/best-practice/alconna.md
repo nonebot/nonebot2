@@ -5,7 +5,7 @@ description: 命令解析拓展
 
 # Alconna 插件
 
-[`nonebot-plugin-alconna`](https://github.com/ArcletProject/nonebot-plugin-alconna) 是一类提供了拓展响应规则的插件。
+[`nonebot-plugin-alconna`](https://github.com/nonebot/plugin-alconna) 是一类提供了拓展响应规则的插件。
 该插件使用 [Alconna](https://github.com/ArcletProject/Alconna) 作为命令解析器，
 是一个简单、灵活、高效的命令参数解析器, 并且不局限于解析命令式字符串。
 
