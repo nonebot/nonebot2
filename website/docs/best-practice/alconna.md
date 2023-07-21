@@ -1,9 +1,9 @@
 ---
 sidebar_position: 6
-description: 命令解析拓展
+description: Alconna 命令解析拓展
 ---
 
-# Alconna 插件
+# Alconna 命令解析
 
 [`nonebot-plugin-alconna`](https://github.com/nonebot/plugin-alconna) 是一类提供了拓展响应规则的插件。
 该插件使用 [Alconna](https://github.com/ArcletProject/Alconna) 作为命令解析器，
