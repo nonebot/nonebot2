@@ -237,7 +237,7 @@ class Adapter(BaseAdapter):
             headers={"something": "something"},  # 响应头
             content="xxx",  # 响应内容
         )
-    
+
     async def _handle_ws(self, websocket: WebSocket) -> Any:
         """WebSocket 路由处理函数，只有一个类型为 WebSocket 的参数"""
         ...
@@ -282,7 +282,7 @@ class Adapter(BaseAdapter):
     @classmethod
     def payload_to_event(cls, payload: Dict[str, Any]) -> Event:
         """根据平台事件的特性，转换平台 payload 为具体 Event
-        
+
         Event 模型继承自 pydantic.BaseModel，具体请参考 pydantic 文档
         """
 
@@ -354,14 +354,15 @@ class Adapter(BaseAdapter):
 `调用平台API`实现方式具体可以参考以下适配器：
 
 Websocket:
+
 - [OneBot V11](https://github.com/nonebot/adapter-onebot/blob/master/nonebot/adapters/onebot/v11/adapter.py#L127)
 - [OneBot V12](https://github.com/nonebot/adapter-onebot/blob/master/nonebot/adapters/onebot/v12/adapter.py#L162)
 
 HTTP:
+
 - [QQ 频道](https://github.com/nonebot/adapter-qqguild/blob/master/nonebot/adapters/qqguild/adapter.py#L354)
 - [Telegram](https://github.com/nonebot/adapter-telegram/blob/beta/nonebot/adapters/telegram/adapter.py#L145)
 - [飞书](https://github.com/nonebot/adapter-feishu/blob/master/nonebot/adapters/feishu/adapter.py#L158)
-
 
 ### Bot
 
