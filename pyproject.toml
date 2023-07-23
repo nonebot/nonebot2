@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot2"
-version = "2.0.0"
+version = "2.0.1"
 description = "An asynchronous python bot framework."
 authors = ["yanyongyu <yyy@nonebot.dev>"]
 license = "MIT"
@@ -43,11 +43,11 @@ httpx = { version = ">=0.20.0,<1.0.0", extras = ["http2"], optional = true }
 uvicorn = { version = ">=0.20.0,<1.0.0", extras = ["standard"], optional = true }
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.0.272"
 isort = "^5.10.1"
 black = "^23.1.0"
 nonemoji = "^0.1.2"
 pre-commit = "^3.0.0"
+ruff = ">=0.0.272,<1.0.0"
 
 [tool.poetry.group.test.dependencies]
 nonebug = "^0.3.0"
@@ -55,7 +55,7 @@ werkzeug = "^2.3.6"
 pytest-cov = "^4.0.0"
 pytest-xdist = "^3.0.2"
 pytest-asyncio = "^0.21.0"
-coverage-conditional-plugin = "^0.8.0"
+coverage-conditional-plugin = "^0.9.0"
 
 [tool.poetry.group.docs.dependencies]
 nb-autodoc = "^1.0.0a5"
