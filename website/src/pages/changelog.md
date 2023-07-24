@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Develop: 添加 git attributes 定义 [@yanyongyu](https://github.com/yanyongyu) ([#2210](https://github.com/nonebot/nonebot2/pull/2210))
 
+### 🍻 插件发布
+
+- Plugin: bot 断连通知 [@noneflow](https://github.com/noneflow) ([#2212](https://github.com/nonebot/nonebot2/pull/2212))
+
 ## v2.0.1
 
 ### 🚀 新功能
