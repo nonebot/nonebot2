@@ -6797,5 +6797,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_BotMailNotice",
+    "project_link": "nonebot-plugin-BotMailNotice",
+    "name": "Bot上下线邮件通知",
+    "desc": "Bot上下线发送邮件通知的插件",
+    "author": "ZM25XC",
+    "homepage": "https://github.com/ZM25XC/BotMailNotice",
+    "tags": [
+      {
+        "label": "Mail",
+        "color": "#52e5ea"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
   }
 ]
