@@ -6772,5 +6772,30 @@
     "is_official": false,
     "type": "library",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_disconnect_notice",
+    "project_link": "nonebot-plugin-disconnect-notice",
+    "name": "bot断连通知",
+    "desc": "bot断连时的通知插件，当前支持邮件通知",
+    "author": "Cypas",
+    "homepage": "https://github.com/Cypas/nonebot_plugin_disconnect_notice",
+    "tags": [
+      {
+        "label": "掉线通知",
+        "color": "#ea5252"
+      },
+      {
+        "label": "邮件",
+        "color": "#52eaa4"
+      },
+      {
+        "label": "通知",
+        "color": "#cbea52"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
   }
 ]
