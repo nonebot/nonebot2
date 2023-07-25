@@ -6814,5 +6814,26 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_theworld",
+    "project_link": "nonebot-plugin-theworld",
+    "name": "The World",
+    "desc": "「ザ・ワールド」ッ！ 時よ止まれ！",
+    "author": "A-kirami",
+    "homepage": "https://github.com/A-kirami/nonebot-plugin-theworld",
+    "tags": [
+      {
+        "label": "JOJO",
+        "color": "#75147c"
+      },
+      {
+        "label": "DIO",
+        "color": "#f9d849"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
