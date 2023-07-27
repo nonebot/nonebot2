@@ -6835,5 +6835,28 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_nonememe",
+    "project_link": "nonebot-plugin-nonememe",
+    "name": "NoneMeme",
+    "desc": "NoneBot 群大佬的日常",
+    "author": "lgc2333",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-nonememe",
+    "tags": [
+      {
+        "label": "NoneMeme",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": [
+      "nonebot.adapters.kaiheila",
+      "nonebot.adapters.onebot.v11",
+      "nonebot.adapters.onebot.v12",
+      "nonebot.adapters.qqguild",
+      "nonebot.adapters.telegram"
+    ]
   }
 ]
