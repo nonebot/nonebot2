@@ -137,6 +137,7 @@ class Matcher(metaclass=MatcherMeta):
     def __init__(self):
         self.handlers = self.handlers.copy()
         self.state = self._default_state.copy()
+        self._m_t = current_matcher.set(self)
 
     def __repr__(self) -> str:
         return (
@@ -620,53 +621,19 @@ class Matcher(metaclass=MatcherMeta):
         ...
 
     @classmethod
-    @overload
     def get_arg(
         cls, key: str, default: Optional[T] = None
-    ) -> Optional[Union[Message, T]]:
-        ...
-
-    @overload
-    def get_arg(self, key: str) -> Union[Message, None]:
-        ...
-
-    @overload
-    def get_arg(self, key: str, default: T) -> Union[Message, T]:
-        ...
-
-    @overload
-    def get_arg(
-        self, key: str, default: Optional[T] = None
-    ) -> Optional[Union[Message, T]]:
-        ...
-
-    def get_arg(
-        self, key: str = None, default: Optional[T] = None
     ) -> Optional[Union[Message, T]]:
         """获取一个 `got` 消息
 
         如果没有找到对应的消息，返回 `default` 值
         """
-        if isinstance(self, Matcher):
-            return self.state.get(ARG_KEY.format(key=key), default)
-        else:
-            return current_matcher.get().state.get(ARG_KEY.format(key=self), key)
+        return current_matcher.get().state.get(ARG_KEY.format(key=key), default)
 
     @classmethod
-    @overload
     def set_arg(cls, key: str, message: Message) -> None:
-        ...
-
-    @overload
-    def set_arg(self, key: str, message: Message) -> None:
-        ...
-
-    def set_arg(self, key: str, message: Message = None) -> None:
         """设置一个 `got` 消息"""
-        if isinstance(self, Matcher):
-            self.state[ARG_KEY.format(key=key)] = message
-        else:
-            current_matcher.get().state[ARG_KEY.format(key=self)] = key
+        current_matcher.get().state[ARG_KEY.format(key=key)] = message
 
     def set_target(self, target: str, cache: bool = True) -> None:
         if cache:
@@ -738,13 +705,13 @@ class Matcher(metaclass=MatcherMeta):
     def ensure_context(self, bot: Bot, event: Event):
         b_t = current_bot.set(bot)
         e_t = current_event.set(event)
-        m_t = current_matcher.set(self)
+        self._m_t = current_matcher.set(self)
         try:
             yield
         finally:
             current_bot.reset(b_t)
             current_event.reset(e_t)
-            current_matcher.reset(m_t)
+            current_matcher.reset(self._m_t)
 
     async def simple_run(
         self,
