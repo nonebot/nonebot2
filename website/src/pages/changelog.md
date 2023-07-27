@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: NoneMeme [@noneflow](https://github.com/noneflow) ([#2219](https://github.com/nonebot/nonebot2/pull/2219))
 - Plugin: The World [@noneflow](https://github.com/noneflow) ([#2216](https://github.com/nonebot/nonebot2/pull/2216))
 - Plugin: Bot 上下线邮件通知 [@noneflow](https://github.com/noneflow) ([#2214](https://github.com/nonebot/nonebot2/pull/2214))
 - Plugin: bot 断连通知 [@noneflow](https://github.com/noneflow) ([#2212](https://github.com/nonebot/nonebot2/pull/2212))
