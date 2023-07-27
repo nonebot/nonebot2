@@ -9,7 +9,7 @@ description: 编写适配器对接新的平台
 
 ## 组织结构
 
-NoneBot 适配器项目通常以`nonebot-adapter-{adapter-name}`作为项目名，并以**命名空间包**的形式编写，即在`nonebot/adapters/{adapter-name}`目录中编写实际代码，例如：
+NoneBot 适配器项目通常以 `nonebot-adapter-{adapter-name}` 作为项目名，并以**命名空间包**的形式编写，即在 `nonebot/adapters/{adapter-name}` 目录中编写实际代码，例如：
 
 ```tree
 📦 nonebot-adapter-{adapter-name}
@@ -36,7 +36,7 @@ NoneBot 适配器项目通常以`nonebot-adapter-{adapter-name}`作为项目名�
 
 :::tip 提示
 
-本章节的代码中提到的 `Adapter`、`Bot`、`Event` 和 `Message`等，均为下文中适配器所编写的类，而非 NoneBot 中的基类。
+本章节的代码中提到的 `Adapter`、`Bot`、`Event` 和 `Message` 等，均为下文中适配器所编写的类，而非 NoneBot 中的基类。
 
 :::
 
@@ -68,7 +68,7 @@ except Exception as e:
 
 通常适配器需要一些配置项，例如平台连接密钥等。适配器的配置方法与[插件配置](../appendices/config#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE)类似，例如：
 
-```
+```python title=config.py
 from pydantic import BaseModel, Extra
 
 class Config(BaseModel, extra=Extra.ignore):
@@ -76,7 +76,7 @@ class Config(BaseModel, extra=Extra.ignore):
     xxx_token: str
 ```
 
-配置项的读取将在下方[Adapter](#adapter)中介绍。
+配置项的读取将在下方 [Adapter](#adapter) 中介绍。
 
 ### Adapter
 
@@ -103,7 +103,6 @@ class Adapter(BaseAdapter):
     def get_name(cls) -> str:
         """适配器名称"""
         return "your_adapter_name"
-
 ```
 
 #### 与平台交互
@@ -259,7 +258,7 @@ from .bot import Bot
 class Adapter(BaseAdapter):
 
     def _handle_connect(self):
-        bot_id = ...  # 通过配置或者平台API等方式，获取到 Bot 的 ID
+        bot_id = ...  # 通过配置或者平台 API 等方式，获取到 Bot 的 ID
         bot = Bot(self, self_id=bot_id)  # 实例化 Bot
         self.bot_connect(bot)  # 建立 Bot 连接
 
@@ -269,7 +268,7 @@ class Adapter(BaseAdapter):
 
 #### 转换 Event 事件
 
-在接收到来自平台的事件数据后，我们需要将其转为适配器的[Event](#event)，并调用`Bot`的`handle_event`方法来让`Bot`对事件进行处理：
+在接收到来自平台的事件数据后，我们需要将其转为适配器的 [Event](#event)，并调用 Bot 的 `handle_event` 方法来让 Bot 对事件进行处理：
 
 ```python title=adapter.py
 import asyncio
@@ -305,7 +304,6 @@ class Adapter(BaseAdapter):
         event = self.payload_to_event(payload)
         # 让 bot 对事件进行处理
         asyncio.create_task(bot.handle_event(event))
-
 ```
 
 #### 调用平台 API
@@ -322,7 +320,7 @@ class Adapter(BaseAdapter):
     @overrides(BaseAdapter)
     async def _call_api(self, bot: Bot, api: str, **data: Any) -> Any:
         log("DEBUG", f"Calling API <y>{api}</y>")  # 给予日志提示
-        platform_data = self.your_handle_data_method()  # 自行将数据转为平台所需要的格式
+        platform_data = your_handle_data_method(data)  # 自行将数据转为平台所需要的格式
 
         # 采用 HTTP 请求的方式，需要构造一个 Request 对象
         request = Request(
@@ -339,7 +337,7 @@ class Adapter(BaseAdapter):
 
         # 采用 WebSocket 通信的方式，可以直接调用 send 方法发送数据
         # 通过某种方式获取到 bot 对应的 websocket 对象
-        ws: WebSocket = self.your_get_websocket_method(bot.self_id)
+        ws: WebSocket = your_get_websocket_method(bot.self_id)
 
         await ws.send_text(platform_data)  # 发送 str 类型的数据
         await ws.send_bytes(platform_data)  # 发送 bytes 类型的数据
@@ -351,7 +349,7 @@ class Adapter(BaseAdapter):
         return await ws.receive()
 ```
 
-`调用平台API`实现方式具体可以参考以下适配器：
+`调用平台 API` 实现方式具体可以参考以下适配器：
 
 Websocket:
 
@@ -395,8 +393,8 @@ class Bot(BaseBot):
 
     async def handle_event(self, event: Event):
         # 根据需要，对事件进行某些预处理，例如：
-        # 检查事件是否和机器人有关操作，去除事件消息收尾的@bot
-        # 检查事件是否有回复消息，调用平台API获取原始消息的消息内容
+        # 检查事件是否和机器人有关操作，去除事件消息首尾的 @bot
+        # 检查事件是否有回复消息，调用平台 API 获取原始消息的消息内容
         ...
         # 调用 handle_event 让 NoneBot 对事件进行处理
         await handle_event(self, event)
@@ -422,7 +420,7 @@ class Bot(BaseBot):
 
 Event 是 NoneBot 中的事件主体对象，所有平台消息在进入处理流程前需要转换为 NoneBot 事件。我们需要继承基类 `Event`，并实现相关方法：
 
-```python {6,9,14,19,24,29,34} title="event.py"
+```python {6,9,14,19,24,29,34} title=event.py
 from typing_extensions import override
 
 from nonebot.typing import overrides
@@ -461,13 +459,15 @@ class Event(BaseEvent):
         return False
 ```
 
-然后根据平台消息的类型，编写各种不同的事件，并且注意要根据事件类型实现 `get_type` 方法，具体请参考[事件类型](../advanced/adapter#事件类型)，消息类型事件还应重写`get_user_id`方法，例如：
+然后根据平台消息的类型，编写各种不同的事件，并且注意要根据事件类型实现 `get_type` 方法，具体请参考[事件类型](../advanced/adapter#事件类型)。消息类型事件还应重写 `get_message` 和 `get_user_id` 等方法，例如：
 
-```python {5,14,18,27,35} title=event.py
+```python {7,16,20,25,34,42} title=event.py
+from .message import Message
+
 class HeartbeatEvent(Event):
     """心跳时间，通常为元事件"""
 
-    @overrides(BaseEvent)
+    @override
     def get_type(self) -> str:
         return "meta_event"
 
@@ -476,11 +476,16 @@ class MessageEvent(Event):
     message_id: str
     user_id: str
 
-    @overrides(BaseEvent)
+    @override
     def get_type(self) -> str:
         return "message"
 
-    @overrides(BaseEvent)
+    @override
+    def get_message(self) -> Message:
+        # 返回事件消息对应的 NoneBot Message 对象
+        return self.message
+
+    @override
     def get_user_id(self) -> str:
         return self.user_id
 
@@ -506,7 +511,7 @@ class ApplyAddFriendEvent(Event):
 
 Message 负责正确序列化消息，以便机器人插件处理。我们需要继承 `MessageSegment` 和 `Message` 两个类，并实现相关方法：
 
-```python {9,12,17,22,27,30,36} title="message.py"
+```python {9,12,17,22,27,30,36} title=message.py
 from typing import Type, Iterable
 from typing_extensions import override
 
@@ -547,10 +552,11 @@ class Message(BaseMessage[MessageSegment]):
         ...
 ```
 
-然后根据平台具体的消息类型，来实现各种`MessageSegment`消息段，具体可以参考以下适配器：
+然后根据平台具体的消息类型，来实现各种 `MessageSegment` 消息段，具体可以参考以下适配器：
 
 - [OneBot](https://github.com/nonebot/adapter-onebot/blob/master/nonebot/adapters/onebot/v11/message.py#L77-L261)
 - [QQGuild](https://github.com/nonebot/adapter-qqguild/blob/master/nonebot/adapters/qqguild/message.py#L22-L150)
+- [Telegram](https://github.com/nonebot/adapter-telegram/blob/beta/nonebot/adapters/telegram/message.py#L43-L250)
 
 ## 后续工作
 
