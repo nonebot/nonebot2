@@ -6858,5 +6858,26 @@
       "nonebot.adapters.qqguild",
       "nonebot.adapters.telegram"
     ]
+  },
+  {
+    "module_name": "nonebot_plugin_aujob",
+    "project_link": "nonebot-plugin-aujob",
+    "name": "Among US中的TOH模组职业介绍",
+    "desc": "查询TOH模组里职业的玩法描述",
+    "author": "qwqZYLqwq",
+    "homepage": "https://github.com/qwqZYLqwq/nonebot-plugin-aujob",
+    "tags": [
+      {
+        "label": "among us",
+        "color": "#48d5bf"
+      },
+      {
+        "label": "TOH",
+        "color": "#05c4f2"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
   }
 ]
