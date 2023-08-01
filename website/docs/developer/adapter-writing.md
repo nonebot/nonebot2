@@ -19,9 +19,9 @@ NoneBot 适配器项目通常以 `nonebot-adapter-{adapter-name}` 作为项目�
 │   │   │   ├── 📜 __init__.py
 │   │   │   ├── 📜 adapter.py
 │   │   │   ├── 📜 bot.py
-│   │   │   └── 📜 config.py
+│   │   │   ├── 📜 config.py
 │   │   │   ├── 📜 event.py
-│   │   │   ├── 📜 message.py
+│   │   │   └── 📜 message.py
 ├── 📜 pyproject.toml
 └── 📜 README.md
 ```
@@ -106,7 +106,7 @@ class Adapter(BaseAdapter):
     def __init__(self, driver: Driver, **kwargs: Any):
         super().__init__(driver, **kwargs)
         # 读取适配器所需的配置项
-        self.adapter_config = Config.parse_obj(self.config)
+        self.adapter_config: Config = Config(**self.config.dict())
 
     @classmethod
     @override
@@ -121,8 +121,10 @@ NoneBot 提供了多种 [Driver](../advanced/driver) 来帮助适配器进行网
 
 ##### 客户端通信方式
 
-```python {10,21,22} title=adapter.py
+```python {12,23,24} title=adapter.py
 import asyncio
+from typing_extensions import override
+
 from nonebot.drivers import Request, ForwardDriver
 from nonebot.exception import WebSocketClosed
 
@@ -130,7 +132,7 @@ class Adapter(BaseAdapter):
     @override
     def __init__(self, driver: Driver, **kwargs: Any):
         super().__init__(driver, **kwargs)
-        self.platform_config: Config = Config(**self.config.dict())
+        self.adapter_config: Config = Config(**self.config.dict())
         self.task: Optional[asyncio.Task] = None  # 存储 ws 任务
         self.setup()
 
@@ -210,7 +212,7 @@ class Adapter(BaseAdapter):
     @override
     def __init__(self, driver: Driver, **kwargs: Any):
         super().__init__(driver, **kwargs)
-        self.platform_config: Config = Config(**self.config.dict())
+        self.adapter_config: Config = Config(**self.config.dict())
         self.setup()
 
     def setup(self) -> None:
@@ -282,9 +284,11 @@ class Adapter(BaseAdapter):
 
 ```python title=adapter.py
 import asyncio
-from pydantic
+from typing import Any, Dict
+
 from .bot import Bot
 from .event import Event
+from .log import log
 
 class Adapter(BaseAdapter):
 
@@ -320,14 +324,17 @@ class Adapter(BaseAdapter):
 
 我们需要实现 `Adapter` 的 `_call_api` 方法，使开发者能够调用平台提供的 API。如果通过 WebSocket 通信可以通过 `send` 方法来发送数据，如果采用 HTTP 请求，则需要通过 NoneBot 提供的 `Request` 对象，调用 `driver` 的 `request` 方法来发送请求。
 
-```python {8} title=adapter.py
-from typing import Dict, Callable
+```python {11} title=adapter.py
+from typing import Any
+from typing_extensions import override
 
 from nonebot.drivers import Request, WebSocket
 
+from .bot import Bot
+
 class Adapter(BaseAdapter):
 
-    @overrides(BaseAdapter)
+    @override
     async def _call_api(self, bot: Bot, api: str, **data: Any) -> Any:
         log("DEBUG", f"Calling API <y>{api}</y>")  # 给予日志提示
         platform_data = your_handle_data_method(data)  # 自行将数据转为平台所需要的格式
@@ -430,10 +437,9 @@ class Bot(BaseBot):
 
 Event 是 NoneBot 中的事件主体对象，所有平台消息在进入处理流程前需要转换为 NoneBot 事件。我们需要继承基类 `Event`，并实现相关方法：
 
-```python {6,9,14,19,24,29,34} title=event.py
+```python {5,8,13,18,23,28,33} title=event.py
 from typing_extensions import override
 
-from nonebot.typing import overrides
 from nonebot.adapters import Event as BaseEvent
 
 class Event(BaseEvent):
@@ -504,7 +510,7 @@ class JoinRoomEvent(Event):
     user_id: str
     room_id: str
 
-    @overrides(BaseEvent)
+    @override
     def get_type(self) -> str:
         return "notice"
 
@@ -512,7 +518,7 @@ class ApplyAddFriendEvent(Event):
     """申请添加好友事件，通常为请求事件"""
     user_id: str
 
-    @overrides(BaseEvent)
+    @override
     def get_type(self) -> str:
         return "request"
 ```
@@ -532,17 +538,17 @@ from nonebot.adapters import MessageSegment as BaseMessageSegment
 
 class MessageSegment(BaseMessageSegment["Message"]):
     @classmethod
-    @overrides(BaseMessageSegment)
+    @override
     def get_message_class(cls) -> Type["Message"]:
         # 返回适配器的 Message 类型本身
         return Message
 
-    @overrides(BaseMessageSegment)
+    @override
     def __str__(self) -> str:
         # 返回该消息段的纯文本表现形式，通常在日志中展示
         return "text of MessageSegment"
 
-    @overrides(BaseMessageSegment)
+    @override
     def is_text(self) -> bool:
         # 判断该消息段是否为纯文本
         return self.type == "text"
@@ -550,13 +556,13 @@ class MessageSegment(BaseMessageSegment["Message"]):
 
 class Message(BaseMessage[MessageSegment]):
     @classmethod
-    @overrides(BaseMessage)
+    @override
     def get_segment_class(cls) -> Type[MessageSegment]:
         # 返回适配器的 MessageSegment 类型本身
         return MessageSegment
 
     @staticmethod
-    @overrides(BaseMessage)
+    @override
     def _construct(msg: str) -> Iterable[MessageSegment]:
         # 实现从字符串中构造消息数组，如无字符串嵌入格式可直接返回文本类型 MessageSegment
         ...
