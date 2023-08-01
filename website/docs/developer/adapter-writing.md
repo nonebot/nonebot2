@@ -32,6 +32,14 @@ NoneBot 适配器项目通常以 `nonebot-adapter-{adapter-name}` 作为项目�
 
 :::
 
+### 使用 NB-CLI 创建项目
+
+我们可以使用脚手架快速创建项目：
+```shell
+nb adapter create
+```
+按照指引，输入适配器名称以及存储位置，即可创建一个带有基本结构的适配器项目。
+
 ## 组成部分
 
 :::tip 提示
