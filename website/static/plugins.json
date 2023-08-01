@@ -6879,5 +6879,32 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_bind",
+    "project_link": "nonebot-plugin-bind",
+    "name": "跨平台账户绑定",
+    "desc": "nonebot多适配器通用的跨平台账户绑定插件",
+    "author": "canxin121",
+    "homepage": "https://github.com/canxin121/nonebot_plugin_bind",
+    "tags": [
+      {
+        "label": "跨平台",
+        "color": "#5289ea"
+      },
+      {
+        "label": "账户绑定",
+        "color": "#6eb428"
+      }
+    ],
+    "is_official": false,
+    "type": "library",
+    "supported_adapters": [
+      "nonebot.adapters.feishu",
+      "nonebot.adapters.kaiheila",
+      "nonebot.adapters.onebot.v11",
+      "nonebot.adapters.telegram",
+      "nonebot.adapters.villa"
+    ]
   }
 ]
