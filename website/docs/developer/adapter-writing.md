@@ -106,7 +106,7 @@ class Adapter(BaseAdapter):
     def __init__(self, driver: Driver, **kwargs: Any):
         super().__init__(driver, **kwargs)
         # 读取适配器所需的配置项
-        self.adapter_config = Config.parse_obj(self.config)
+        self.adapter_config: Config = Config(**self.config.dict())
 
     @classmethod
     @override
@@ -130,7 +130,7 @@ class Adapter(BaseAdapter):
     @override
     def __init__(self, driver: Driver, **kwargs: Any):
         super().__init__(driver, **kwargs)
-        self.platform_config: Config = Config(**self.config.dict())
+        self.adapter_config: Config = Config(**self.config.dict())
         self.task: Optional[asyncio.Task] = None  # 存储 ws 任务
         self.setup()
 
@@ -210,7 +210,7 @@ class Adapter(BaseAdapter):
     @override
     def __init__(self, driver: Driver, **kwargs: Any):
         super().__init__(driver, **kwargs)
-        self.platform_config: Config = Config(**self.config.dict())
+        self.adapter_config: Config = Config(**self.config.dict())
         self.setup()
 
     def setup(self) -> None:
