@@ -6906,5 +6906,22 @@
       "nonebot.adapters.telegram",
       "nonebot.adapters.villa"
     ]
+  },
+  {
+    "module_name": "nonebot_plugin_savepic",
+    "project_link": "nonebot-plugin-savepic",
+    "name": "Savepic",
+    "desc": "表情包保存",
+    "author": "Yan-Zero",
+    "homepage": "https://github.com/Yan-Zero/nonebot-plugin-savepic",
+    "tags": [
+      {
+        "label": "表情包",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
