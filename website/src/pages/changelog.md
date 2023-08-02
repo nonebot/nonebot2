@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Savepic [@noneflow](https://github.com/noneflow) ([#2232](https://github.com/nonebot/nonebot2/pull/2232))
 - Plugin: 跨平台账户绑定 [@noneflow](https://github.com/noneflow) ([#2227](https://github.com/nonebot/nonebot2/pull/2227))
 - Plugin: Among US 中的 TOH 模组职业介绍 [@noneflow](https://github.com/noneflow) ([#2221](https://github.com/nonebot/nonebot2/pull/2221))
 - Plugin: NoneMeme [@noneflow](https://github.com/noneflow) ([#2219](https://github.com/nonebot/nonebot2/pull/2219))
