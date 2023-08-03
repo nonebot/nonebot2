@@ -6923,5 +6923,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_lostark_wandering_trader",
+    "project_link": "nonebot-plugin-lostark-wandering-trader",
+    "name": "命运方舟流浪商人卡牌刷新提示",
+    "desc": "国服命运方舟流浪商人稀有史诗传说卡牌刷新提示",
+    "author": "EmiyaGm",
+    "homepage": "https://github.com/EmiyaGm/nonebot-plugin-lostark-wandering-trader",
+    "tags": [
+      {
+        "label": "命运方舟",
+        "color": "#5289ea"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
