@@ -13,6 +13,8 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: CSGO 饰品查询机器人 [@noneflow](https://github.com/noneflow) ([#2225](https://github.com/nonebot/nonebot2/pull/2225))
+- Plugin: talk with poe ai [@noneflow](https://github.com/noneflow) ([#2230](https://github.com/nonebot/nonebot2/pull/2230))
 - Plugin: 命运方舟流浪商人卡牌刷新提示 [@noneflow](https://github.com/noneflow) ([#2234](https://github.com/nonebot/nonebot2/pull/2234))
 - Plugin: Savepic [@noneflow](https://github.com/noneflow) ([#2232](https://github.com/nonebot/nonebot2/pull/2232))
 - Plugin: 跨平台账户绑定 [@noneflow](https://github.com/noneflow) ([#2227](https://github.com/nonebot/nonebot2/pull/2227))
