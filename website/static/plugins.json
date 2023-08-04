@@ -6961,5 +6961,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_csornament",
+    "project_link": "nonebot-plugin-csornament",
+    "name": "CSGO饰品查询机器人",
+    "desc": "一款模拟查找饰品价格的机器人",
+    "author": "Sydrr0",
+    "homepage": "https://github.com/Sydrr0/nonebot-plugin-csornament",
+    "tags": [
+      {
+        "label": "CS:GO",
+        "color": "#047b97"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
   }
 ]
