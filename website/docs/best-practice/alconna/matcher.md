@@ -85,7 +85,6 @@ async def login_got(password: str = AlconnaArg("password")):
 
 `Alconna` 的解析结果会放入 `Arparma` 类中，或用户指定的 `Duplication` 类。
 
-
 `nonebot_plugin_alconna` 提供了一系列的依赖注入函数，他们包括：
 
 - `AlconnaResult`: `CommandResult` 类型的依赖注入函数
@@ -96,6 +95,7 @@ async def login_got(password: str = AlconnaArg("password")):
 - `AlconnaExecResult`: 提供挂载在命令上的 callback 的返回结果 (`Dict[str, Any]`) 的依赖注入函数
 
 可以看到，本插件提供了几类额外的模型：
+
 - `CommandResult`: 解析结果，包括了源命令 `command: Alconna` ，解析结果 `result: Arparma`，以及可能的输出信息 `output: str | None` 字段
 - `Match`: 匹配项，表示参数是否存在于 `all_matched_args` 内，可用 `Match.available` 判断是否匹配，`Match.result` 获取匹配的值
 - `Query`: 查询项，表示参数是否可由 `Arparma.query` 查询并获得结果，可用 `Query.available` 判断是否查询成功，`Query.result` 获取查询结果
@@ -107,6 +107,7 @@ async def login_got(password: str = AlconnaArg("password")):
 - `AlcExecResult`: 同 `AlconnaExecResult`
 
 实例:
+
 ```python
 ...
 from nonebot import require
@@ -114,10 +115,10 @@ require("nonebot_plugin_alconna")
 ...
 
 from nonebot_plugin_alconna import (
-    on_alconna, 
+    on_alconna,
     Match,
     Query,
-    AlconnaMatch, 
+    AlconnaMatch,
     AlconnaQuery,
     AlconnaMatches,
     AlcResult
@@ -146,7 +147,7 @@ async def handle_test2(result: Arparma = AlconnaMatches()):
 
 @test.handle()
 async def handle_test3(bar: Match[int] = AlconnaMatch("bar")):
-    if bar.available:    
+    if bar.available:
         await test.send(f"foo={bar.result}")
 
 @test.handle()
@@ -209,9 +210,6 @@ class File(Segment):
 ```
 
 :::
-
-
-
 
 ## 特殊装饰器
 

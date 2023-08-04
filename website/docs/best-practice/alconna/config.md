@@ -26,7 +26,6 @@ description: 配置项
 
 是否全局启用命令自动补全，启用后会在参数缺失或触发 `--comp` 选项时自自动启用交互式补全。
 
-
 ## alconna_use_origin
 
 - **类型**: `bool`
