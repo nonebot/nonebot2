@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 📝 文档
+
+- Docs: 更新最佳实践部分的 Alconna 章节 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2237](https://github.com/nonebot/nonebot2/pull/2237))
+
 ### 💫 杂项
 
 - Develop: 添加 git attributes 定义 [@yanyongyu](https://github.com/yanyongyu) ([#2210](https://github.com/nonebot/nonebot2/pull/2210))
