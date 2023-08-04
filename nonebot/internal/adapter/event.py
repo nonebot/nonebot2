@@ -72,9 +72,9 @@ class Event(abc.ABC, BaseModel):
     def get_plaintext(self) -> str:
         """获取消息纯文本的方法。
 
-        通常不需要修改，默认通过 `get_message().extract_plain_text` 获取。
+        通常不需要修改，默认通过 `get_message().extract_plain_text().strip()` 获取。
         """
-        return self.get_message().extract_plain_text()
+        return self.get_message().extract_plain_text().strip()
 
     @abc.abstractmethod
     def is_tome(self) -> bool:
