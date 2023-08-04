@@ -168,5 +168,15 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot.adapters.red",
+    "project_link": "nonebot-adapter-red",
+    "name": "RedProtocol",
+    "desc": "RedProtocol 适配",
+    "author": "zhaomaoniu",
+    "homepage": "https://github.com/zhaomaoniu/nonebot-adapter-red",
+    "tags": [],
+    "is_official": false
   }
 ]
