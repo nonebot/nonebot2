@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复文档 Last updated author 错误 [@eya46](https://github.com/eya46) ([#2241](https://github.com/nonebot/nonebot2/pull/2241))
 - Docs: 更新最佳实践部分的 Alconna 章节 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2237](https://github.com/nonebot/nonebot2/pull/2237))
 
 ### 💫 杂项
