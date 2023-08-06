@@ -6978,5 +6978,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_kanonbot",
+    "project_link": "nonebot-plugin-kanonbot",
+    "name": "KanonBot",
+    "desc": "KanonBot for Nonebot2",
+    "author": "SuperGuGuGu",
+    "homepage": "https://github.com/SuperGuGuGu/nonebot_plugin_kanonbot",
+    "tags": [
+      {
+        "label": "KanonBot",
+        "color": "#44ddff"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
