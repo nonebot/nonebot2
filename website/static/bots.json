@@ -541,5 +541,13 @@
     "homepage": "https://github.com/LambdaYH/MigangBot",
     "tags": [],
     "is_official": false
+  },
+  {
+    "name": "不正经的妹妹",
+    "desc": "一款功能丰富、简单易用、自定义性强、扩展性强的可爱的QQ娱乐机器人",
+    "author": "itsevin",
+    "homepage": "https://github.com/itsevin/sister_bot",
+    "tags": [],
+    "is_official": false
   }
 ]
