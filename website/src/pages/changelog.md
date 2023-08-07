@@ -30,6 +30,10 @@ toc_max_heading_level: 2
 - Plugin: Bot 上下线邮件通知 [@noneflow](https://github.com/noneflow) ([#2214](https://github.com/nonebot/nonebot2/pull/2214))
 - Plugin: bot 断连通知 [@noneflow](https://github.com/noneflow) ([#2212](https://github.com/nonebot/nonebot2/pull/2212))
 
+### 🍻 机器人发布
+
+- Bot: 不正经的妹妹 [@noneflow](https://github.com/noneflow) ([#2249](https://github.com/nonebot/nonebot2/pull/2249))
+
 ### 🍻 适配器发布
 
 - Adapter: RedProtocol [@noneflow](https://github.com/noneflow) ([#2239](https://github.com/nonebot/nonebot2/pull/2239))
