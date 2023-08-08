@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Muteme(我禁我自己) [@noneflow](https://github.com/noneflow) ([#2252](https://github.com/nonebot/nonebot2/pull/2252))
 - Plugin: MC 版本更新检测 [@noneflow](https://github.com/noneflow) ([#2247](https://github.com/nonebot/nonebot2/pull/2247))
 - Plugin: KanonBot [@noneflow](https://github.com/noneflow) ([#2244](https://github.com/nonebot/nonebot2/pull/2244))
 - Plugin: CSGO 饰品查询机器人 [@noneflow](https://github.com/noneflow) ([#2225](https://github.com/nonebot/nonebot2/pull/2225))
