@@ -7016,5 +7016,26 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_muteme",
+    "project_link": "nonebot-plugin-muteme",
+    "name": "Muteme(我禁我自己)",
+    "desc": "高仿@能干辉的muteme,我禁我自己",
+    "author": "XTxiaoting14332",
+    "homepage": "https://github.com/XTxiaoting14332/nonebot-plugin-muteme",
+    "tags": [
+      {
+        "label": "禁言",
+        "color": "#e45b8d"
+      },
+      {
+        "label": "muteme",
+        "color": "#5bc2e4"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
