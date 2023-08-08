@@ -6995,5 +6995,26 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_mcversion",
+    "project_link": "nonebot-plugin-mcversion",
+    "name": "MC版本更新检测",
+    "desc": "一个用于检测MC最新版本的插件",
+    "author": "CN171-1",
+    "homepage": "https://github.com/CN171-1/nonebot_plugin_mcversion",
+    "tags": [
+      {
+        "label": "版本",
+        "color": "#ea5252"
+      },
+      {
+        "label": "MC",
+        "color": "#52e7ea"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
