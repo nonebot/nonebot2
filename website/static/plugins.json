@@ -7037,5 +7037,26 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_jx3",
+    "project_link": "nonebot-plugin-jx3",
+    "name": "剑网三查询和推送",
+    "desc": "是一个使用 NoneBot 框架编写的插件，提供多种剑网三功能如日常查询，预测，金价查询，鲜花，公告，沙盘，jjc，黑市，骚话，奇遇，招募以及多种消息推送功能。",
+    "author": "fuyang0811",
+    "homepage": "https://github.com/fuyang0811/nonebot-plugin-jx3",
+    "tags": [
+      {
+        "label": "剑网三",
+        "color": "#ea5252"
+      },
+      {
+        "label": "jx3",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
