@@ -15,6 +15,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Develop: 添加 dependabot actions 更新检查 [@yanyongyu](https://github.com/yanyongyu) ([#2256](https://github.com/nonebot/nonebot2/pull/2256))
 - Develop: 添加 git attributes 定义 [@yanyongyu](https://github.com/yanyongyu) ([#2210](https://github.com/nonebot/nonebot2/pull/2210))
 
 ### 🍻 插件发布
