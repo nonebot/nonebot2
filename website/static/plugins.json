@@ -7058,5 +7058,26 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_xinghuo_api",
+    "project_link": "nonebot-plugin-xinghuo-api",
+    "name": "科大讯飞星火大模型聊天",
+    "desc": "Nonebot框架下的科大讯飞星火大模型聊天插件",
+    "author": "Alpaca4610",
+    "homepage": "https://github.com/Alpaca4610/nonebot-plugin-xinghuo-api",
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      },
+      {
+        "label": "Chat",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
