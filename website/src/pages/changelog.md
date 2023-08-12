@@ -38,6 +38,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: 星见 Kirami [@noneflow](https://github.com/noneflow) ([#2263](https://github.com/nonebot/nonebot2/pull/2263))
 - Bot: 不正经的妹妹 [@noneflow](https://github.com/noneflow) ([#2249](https://github.com/nonebot/nonebot2/pull/2249))
 
 ### 🍻 适配器发布
