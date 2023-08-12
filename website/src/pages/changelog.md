@@ -20,6 +20,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 科大讯飞星火大模型聊天 [@noneflow](https://github.com/noneflow) ([#2258](https://github.com/nonebot/nonebot2/pull/2258))
 - Plugin: 剑网三查询和推送 [@noneflow](https://github.com/noneflow) ([#2254](https://github.com/nonebot/nonebot2/pull/2254))
 - Plugin: Muteme(我禁我自己) [@noneflow](https://github.com/noneflow) ([#2252](https://github.com/nonebot/nonebot2/pull/2252))
 - Plugin: MC 版本更新检测 [@noneflow](https://github.com/noneflow) ([#2247](https://github.com/nonebot/nonebot2/pull/2247))
