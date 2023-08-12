@@ -549,5 +549,13 @@
     "homepage": "https://github.com/itsevin/sister_bot",
     "tags": [],
     "is_official": false
+  },
+  {
+    "name": "星见Kirami",
+    "desc": "🌟 读作 Kirami，写作星见，简明轻快的聊天机器人应用。",
+    "author": "A-kirami",
+    "homepage": "https://kiramibot.dev/",
+    "tags": [],
+    "is_official": false
   }
 ]
