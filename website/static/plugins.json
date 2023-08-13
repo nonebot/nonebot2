@@ -7079,5 +7079,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "dicergirl",
+    "project_link": "dicergirl",
+    "name": "欧若可骰娘",
+    "desc": "完善的跑团机器人, 支持 COC/DND/SCP 等跑团模式.",
+    "author": "fu050409",
+    "homepage": "https://gitee.com/unvisitor/dicer",
+    "tags": [
+      {
+        "label": "跑团",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
