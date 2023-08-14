@@ -7096,5 +7096,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_uvdiviner",
+    "project_link": "nonebot-plugin-uvdiviner",
+    "name": "周易蓍草占卜",
+    "desc": "基于古蓍草占卜的算法, 简单的使用`.divine`指令.",
+    "author": "fu050409",
+    "homepage": "https://gitee.com/unvisitor/nonebot-plugin-uvdiviner",
+    "tags": [
+      {
+        "label": "占卜",
+        "color": "#440e0e"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
   }
 ]
