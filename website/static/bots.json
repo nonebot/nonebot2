@@ -557,5 +557,22 @@
     "homepage": "https://kiramibot.dev/",
     "tags": [],
     "is_official": false
+  },
+  {
+    "name": "OCNbot",
+    "desc": "OI Contest Notifier bot，一个可以推送洛谷、cf、atcoder、牛客比赛通知的bot",
+    "author": "ACnoway",
+    "homepage": "https://github.com/ACnoway/OCNbot",
+    "tags": [
+      {
+        "label": "OI",
+        "color": "#2fccff"
+      },
+      {
+        "label": "ACM",
+        "color": "#ff0004"
+      }
+    ],
+    "is_official": false
   }
 ]
