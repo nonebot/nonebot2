@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复配置文档中 `Nickname` 属性的描述错误 [@A-kirami](https://github.com/A-kirami) ([#2271](https://github.com/nonebot/nonebot2/pull/2271))
 - Docs: 适配器编写教程 [@CMHopeSunshine](https://github.com/CMHopeSunshine) ([#2079](https://github.com/nonebot/nonebot2/pull/2079))
 - Docs: 更新贡献指南 [@A-kirami](https://github.com/A-kirami) ([#2255](https://github.com/nonebot/nonebot2/pull/2255))
 - Docs: 修复文档 Last updated author 错误 [@eya46](https://github.com/eya46) ([#2241](https://github.com/nonebot/nonebot2/pull/2241))
@@ -40,6 +41,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: OCNbot [@noneflow](https://github.com/noneflow) ([#2261](https://github.com/nonebot/nonebot2/pull/2261))
 - Bot: 星见 Kirami [@noneflow](https://github.com/noneflow) ([#2263](https://github.com/nonebot/nonebot2/pull/2263))
 - Bot: 不正经的妹妹 [@noneflow](https://github.com/noneflow) ([#2249](https://github.com/nonebot/nonebot2/pull/2249))
 
