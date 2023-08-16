@@ -38,9 +38,9 @@ options:
 在以下的示例中，为了更好的理解多种类型的消息组成方式，我们将使用 `Console` 协议适配器来演示消息序列的使用方法。在实际使用中，你需要确保你使用的**消息序列类型**与你所要发送的**平台类型**一致。
 :::
 
-通常情况下，适配器在接收到消息时，会将消息转换为消息序列，可以通过依赖注入 [`EventMessage`](../advanced/dependency.mdx#eventmessage), 或者使用 `event.get_message()` 获取。
+通常情况下，适配器在接收到消息时，会将消息转换为消息序列，可以通过依赖注入 [`EventMessage`](../advanced/dependency.mdx#eventmessage)，或者使用 `event.get_message()` 获取。
 
-由于消息序列是 `List[MessageSegment]` 的子类, 所以你总是可以用和操作 `List` 类似的方式来处理消息序列。例如：
+由于消息序列是 `List[MessageSegment]` 的子类，所以你总是可以用和操作 `List` 类似的方式来处理消息序列。例如：
 
 ```python
 >>> from nonebot.adapters.console import Message, MessageSegment
@@ -216,14 +216,14 @@ msg.extend([MessageSegment.text("text")])
 
 ### 使用消息模板
 
-为了提供安全可靠的跨平台模板字符, 我们提供了一个消息模板功能来构建消息序列
+为了提供安全可靠的跨平台模板字符，我们提供了一个消息模板功能来构建消息序列
 
-它在以下常见场景中尤其有用:
+它在以下常见场景中尤其有用：
 
-- 多行富文本编排（包含图片,文字以及表情等）
+- 多行富文本编排（包含图片，文字以及表情等）
 - 客制化（由 Bot 最终用户提供消息模板时）
 
-在事实上, 它的用法和 `str.format` 极为相近, 所以你在使用的时候, 总是可以参考[Python 文档](https://docs.python.org/zh-cn/3/library/stdtypes.html#str.format)来达到你想要的效果，这里给出几个简单的例子。
+在事实上，它的用法和 `str.format` 极为相近，所以你在使用的时候，总是可以参考[Python 文档](https://docs.python.org/zh-cn/3/library/stdtypes.html#str.format)来达到你想要的效果，这里给出几个简单的例子。
 
 默认情况下，消息模板采用 `str` 纯文本形式的格式化：
 
