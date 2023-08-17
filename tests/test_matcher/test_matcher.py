@@ -276,3 +276,27 @@ async def test_timedelta_expire(app: App):
         assert test_timedelta_matcher in matchers[test_timedelta_matcher.priority]
         await check_and_run_matcher(test_timedelta_matcher, bot, event, {})
         assert test_timedelta_matcher not in matchers[test_timedelta_matcher.priority]
+
+
+@pytest.mark.asyncio
+async def test_matcher_check(app: App):
+    from plugins.matcher.matcher_check import (
+        to_falsy_rule_matcher,
+        to_bad_rule_matcher,
+        to_falsy_perm_matcher,
+        to_bad_perm_matcher
+    )
+    runned = False
+
+    async def handle():
+        nonlocal runned
+        runned = True
+
+    event = make_fake_event(_type="test")()
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        await check_and_run_matcher(to_falsy_rule_matcher(handle), bot, event, {})
+        await check_and_run_matcher(to_bad_rule_matcher(handle), bot, event, {})
+        await check_and_run_matcher(to_falsy_perm_matcher(handle), bot, event, {})
+        await check_and_run_matcher(to_bad_perm_matcher(handle), bot, event, {})
+        assert not runned, "matcher should not runned"
