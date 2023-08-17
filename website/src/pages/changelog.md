@@ -23,6 +23,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 周易蓍草占卜 [@noneflow](https://github.com/noneflow) ([#2268](https://github.com/nonebot/nonebot2/pull/2268))
 - Plugin: 欧若可骰娘 [@noneflow](https://github.com/noneflow) ([#2266](https://github.com/nonebot/nonebot2/pull/2266))
 - Plugin: 科大讯飞星火大模型聊天 [@noneflow](https://github.com/noneflow) ([#2258](https://github.com/nonebot/nonebot2/pull/2258))
 - Plugin: 剑网三查询和推送 [@noneflow](https://github.com/noneflow) ([#2254](https://github.com/nonebot/nonebot2/pull/2254))
