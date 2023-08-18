@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复子依赖部分代码行号错误 [@A-kirami](https://github.com/A-kirami) ([#2279](https://github.com/nonebot/nonebot2/pull/2279))
 - Docs: 补充 `get_last_receive` 示例 [@A-kirami](https://github.com/A-kirami) ([#2278](https://github.com/nonebot/nonebot2/pull/2278))
 - Docs: 修复文档中错误的标点 [@A-kirami](https://github.com/A-kirami) ([#2275](https://github.com/nonebot/nonebot2/pull/2275))
 - Docs: 修复配置文档中 `Nickname` 属性的描述错误 [@A-kirami](https://github.com/A-kirami) ([#2271](https://github.com/nonebot/nonebot2/pull/2271))
