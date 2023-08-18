@@ -1,6 +1,5 @@
 from typing import (
     TYPE_CHECKING,
-    Any,
     List,
     Type,
     Tuple,
@@ -53,7 +52,7 @@ class MatcherManager(MutableMapping[int, List[Type["Matcher"]]]):
     def __delitem__(self, key: int) -> None:
         del self.provider[key]
 
-    def __eq__(self, other: Any) -> bool:
+    def __eq__(self, other: object) -> bool:
         return isinstance(other, MatcherManager) and self.provider == other.provider
 
     def keys(self) -> KeysView[int]:
