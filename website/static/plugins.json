@@ -7113,5 +7113,30 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_push",
+    "project_link": "nonebot-plugin-push",
+    "name": "消息推送插件",
+    "desc": "通过邮件、Feishu Webhook 等方式推送消息",
+    "author": "mobyw",
+    "homepage": "https://github.com/mobyw/nonebot-plugin-push",
+    "tags": [
+      {
+        "label": "邮件",
+        "color": "#91c0bd"
+      },
+      {
+        "label": "飞书",
+        "color": "#7aaccc"
+      },
+      {
+        "label": "推送",
+        "color": "#9e97c4"
+      }
+    ],
+    "is_official": false,
+    "type": "library",
+    "supported_adapters": null
   }
 ]
