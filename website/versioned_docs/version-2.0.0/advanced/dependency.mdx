@@ -208,7 +208,7 @@ async def _(e: Union[ActionFailed, NetworkError]): ...
 <Tabs groupId="python">
   <TabItem value="3.9" label="Python 3.9+" default>
 
-```python {4,16}
+```python {5,15}
 from typing import Annotated
 
 from nonebot import on_command
@@ -230,7 +230,7 @@ async def _(event: Annotated[Event, Depends(check)]):
   </TabItem>
   <TabItem value="3.8" label="Python 3.8+">
 
-```python {2,14}
+```python {3,13}
 from nonebot import on_command
 from nonebot.adapters import Event
 from nonebot.params import Depends
@@ -256,7 +256,7 @@ async def _(event: Event = Depends(check)):
 
 特别的，我们可以为 `Dependent` 对象定义一系列前置子依赖，它们会在参数执行前被顺序执行，且返回值将会被忽略，例如：
 
-```python {2,14}
+```python {11}
 from nonebot import on_command
 from nonebot.adapters import Event
 from nonebot.params import Depends
