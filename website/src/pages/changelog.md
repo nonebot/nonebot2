@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: SUDO [@noneflow](https://github.com/noneflow) ([#2277](https://github.com/nonebot/nonebot2/pull/2277))
 - Plugin: 消息推送插件 [@noneflow](https://github.com/noneflow) ([#2273](https://github.com/nonebot/nonebot2/pull/2273))
 - Plugin: 周易蓍草占卜 [@noneflow](https://github.com/noneflow) ([#2268](https://github.com/nonebot/nonebot2/pull/2268))
 - Plugin: 欧若可骰娘 [@noneflow](https://github.com/noneflow) ([#2266](https://github.com/nonebot/nonebot2/pull/2266))
