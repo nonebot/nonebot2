@@ -281,10 +281,10 @@ async def test_timedelta_expire(app: App):
 @pytest.mark.asyncio
 async def test_matcher_check(app: App):
     from plugins.matcher.matcher_check import (
-        to_falsy_rule_matcher,
+        to_bad_perm_matcher,
         to_bad_rule_matcher,
         to_falsy_perm_matcher,
-        to_bad_perm_matcher,
+        to_falsy_rule_matcher,
     )
 
     runned = False
