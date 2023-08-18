@@ -1,6 +1,6 @@
+from nonebot.internal.rule import Rule
 from nonebot.internal.matcher import Matcher
 from nonebot.internal.permission import Permission
-from nonebot.internal.rule import Rule
 
 
 async def bad():

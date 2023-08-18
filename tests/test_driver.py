@@ -238,14 +238,16 @@ async def test_http_client(driver: Driver, server_url: URL):
             server_url.scheme.encode("ascii"),
             server_url.host.encode("ascii"),
             server_url.port,
-            server_url.path.encode("ascii")
+            server_url.path.encode("ascii"),
         ),
         params={"param": "test"},
         headers={"X-Test": "test"},
         cookies={"session": "test"},
         content="test",
     )
-    assert request.url == request_raw_url.url, "request.url should be equal to request_raw_url.url"
+    assert (
+        request.url == request_raw_url.url
+    ), "request.url should be equal to request_raw_url.url"
     response = await driver.request(request)
     assert response.status_code == 200
     assert response.content
