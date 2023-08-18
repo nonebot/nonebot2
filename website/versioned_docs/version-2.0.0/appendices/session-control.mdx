@@ -374,6 +374,14 @@ async def _(matcher: Matcher):
 
 `get_last_receive` 操作接受一个可选的 default 参数。当事件不存在时，将返回 default 或 `None`。
 
+```python
+from nonebot.matcher import Matcher
+
+@matcher.handle()
+async def _(matcher: Matcher):
+    event = matcher.get_last_receive(default=None)
+```
+
 ### set_receive
 
 设置 / 覆盖一个 `receive` 接收的事件。
