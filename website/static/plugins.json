@@ -7175,5 +7175,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_anime_trace",
+    "project_link": "nonebot-plugin-anime-trace",
+    "name": "识别动漫gal角色",
+    "desc": "通过ai.animedb.cn的api识别动漫、galgame角色",
+    "author": "tomorinao-www",
+    "homepage": "https://github.com/tomorinao-www/nonebot-plugin-anime-trace",
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#f541dc"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
