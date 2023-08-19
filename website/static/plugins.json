@@ -7150,5 +7150,30 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_arxivRSS",
+    "project_link": "nonebot-plugin-arxivRSS",
+    "name": "arxiv订阅",
+    "desc": "订阅arxiv指定领域每天更新的论文",
+    "author": "LuckySJTU",
+    "homepage": "https://github.com/LuckySJTU/nonebot-plugin-arxivRSS/",
+    "tags": [
+      {
+        "label": "arxiv",
+        "color": "#f30f0f"
+      },
+      {
+        "label": "RSS",
+        "color": "#70a7d8"
+      },
+      {
+        "label": "论文",
+        "color": "#f541dc"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
