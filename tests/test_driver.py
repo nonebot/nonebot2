@@ -233,6 +233,7 @@ async def test_http_client(driver: Driver, server_url: URL):
         content="test",
     )
     response = await driver.request(request)
+    assert server_url.host is not None
     request_raw_url = Request(
         "POST",
         (
@@ -316,6 +317,8 @@ async def test_file(driver: Driver, server_url: URL):
         ],
     )
     response = await driver.request(request)
+    assert response.status_code == 200
+    assert response.content
     data = json.loads(response.content)
 
     assert data["files"] == {
