@@ -292,24 +292,9 @@ async def test_http_client(driver: Driver, server_url: URL):
     assert data["form"] == {"form": "test"}
     assert data["files"] == {"test": "test"}
 
-    await asyncio.sleep(1)
-
-
-@pytest.mark.asyncio
-@pytest.mark.parametrize(
-    "driver",
-    [
-        pytest.param("nonebot.drivers.httpx:Driver", id="httpx"),
-        pytest.param("nonebot.drivers.aiohttp:Driver", id="aiohttp"),
-    ],
-    indirect=True,
-)
-async def test_file(driver: Driver, server_url: URL):
-    driver = cast(ForwardDriver, driver)
     request = Request(
         "POST",
         server_url,
-        data={"form": "test"},
         files=[
             ("test1", b"test"),
             ("test2", ("test.txt", b"test")),
@@ -326,6 +311,8 @@ async def test_file(driver: Driver, server_url: URL):
         "test2": "test",
         "test3": "test",
     }, "file parsing error"
+
+    await asyncio.sleep(1)
 
 
 @pytest.mark.asyncio
