@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🐛 Bug 修复
+
+- Fix: 设置 file request 默认 filename [@eya46](https://github.com/eya46) ([#2284](https://github.com/nonebot/nonebot2/pull/2284))
+
 ### 📝 文档
 
 - Docs: 修复 Alconna 中 `CommandResult` 描述错误 [@KomoriDev](https://github.com/KomoriDev) ([#2282](https://github.com/nonebot/nonebot2/pull/2282))
