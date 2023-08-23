@@ -7192,5 +7192,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_send_message",
+    "project_link": "nonebot-plugin-send-message",
+    "name": "双向聊天插件",
+    "desc": "一个支持双向聊天的传话插件，可用于临时聊天而不想加好友场景",
+    "author": "bingqiu456",
+    "homepage": "https://github.com/bingqiu456/nonebot_plugin_send_message",
+    "tags": [
+      {
+        "label": "传话",
+        "color": "#52ea75"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
