@@ -78,11 +78,13 @@ class MatcherMeta(type):
     if TYPE_CHECKING:
         module_name: Optional[str]
         type: str
+        rule: Rule
 
     def __repr__(self) -> str:
         return (
             f"{self.__name__}(type={self.type!r}"
             + (f", module={self.module_name}" if self.module_name else "")
+            + (f", rule={self.rule}" if self.rule else "")
             + ")"
         )
 
@@ -142,6 +144,7 @@ class Matcher(metaclass=MatcherMeta):
         return (
             f"{self.__class__.__name__}(type={self.type!r}"
             + (f", module={self.module_name}" if self.module_name else "")
+            + (f", rule={self.rule}" if self.rule else "")
             + ")"
         )
 
