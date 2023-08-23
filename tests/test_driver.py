@@ -282,19 +282,6 @@ async def test_http_client(driver: Driver, server_url: URL):
         "POST",
         server_url,
         data={"form": "test"},
-        files={"test": ("test.txt", b"test")},
-    )
-    response = await driver.request(request)
-    assert response.status_code == 200
-    assert response.content
-    data = json.loads(response.content)
-    assert data["method"] == "POST"
-    assert data["form"] == {"form": "test"}
-    assert data["files"] == {"test": "test"}
-
-    request = Request(
-        "POST",
-        server_url,
         files=[
             ("test1", b"test"),
             ("test2", ("test.txt", b"test")),
@@ -305,7 +292,8 @@ async def test_http_client(driver: Driver, server_url: URL):
     assert response.status_code == 200
     assert response.content
     data = json.loads(response.content)
-
+    assert data["method"] == "POST"
+    assert data["form"] == {"form": "test"}
     assert data["files"] == {
         "test1": "test",
         "test2": "test",
