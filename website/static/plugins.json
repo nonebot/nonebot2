@@ -7113,5 +7113,101 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_push",
+    "project_link": "nonebot-plugin-push",
+    "name": "消息推送插件",
+    "desc": "通过邮件、Feishu Webhook 等方式推送消息",
+    "author": "mobyw",
+    "homepage": "https://github.com/mobyw/nonebot-plugin-push",
+    "tags": [
+      {
+        "label": "邮件",
+        "color": "#91c0bd"
+      },
+      {
+        "label": "飞书",
+        "color": "#7aaccc"
+      },
+      {
+        "label": "推送",
+        "color": "#9e97c4"
+      }
+    ],
+    "is_official": false,
+    "type": "library",
+    "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_sudo",
+    "project_link": "nonebot-plugin-sudo",
+    "name": "SUDO",
+    "desc": "以指定用户身份执行命令",
+    "author": "This-is-XiaoDeng",
+    "homepage": "https://github.com/This-is-XiaoDeng/nonebot-plugin-sudo",
+    "tags": [],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_arxivRSS",
+    "project_link": "nonebot-plugin-arxivRSS",
+    "name": "arxiv订阅",
+    "desc": "订阅arxiv指定领域每天更新的论文",
+    "author": "LuckySJTU",
+    "homepage": "https://github.com/LuckySJTU/nonebot-plugin-arxivRSS/",
+    "tags": [
+      {
+        "label": "arxiv",
+        "color": "#f30f0f"
+      },
+      {
+        "label": "RSS",
+        "color": "#70a7d8"
+      },
+      {
+        "label": "论文",
+        "color": "#f541dc"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_anime_trace",
+    "project_link": "nonebot-plugin-anime-trace",
+    "name": "识别动漫gal角色",
+    "desc": "通过ai.animedb.cn的api识别动漫、galgame角色",
+    "author": "tomorinao-www",
+    "homepage": "https://github.com/tomorinao-www/nonebot-plugin-anime-trace",
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#f541dc"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_send_message",
+    "project_link": "nonebot-plugin-send-message",
+    "name": "双向聊天插件",
+    "desc": "一个支持双向聊天的传话插件，可用于临时聊天而不想加好友场景",
+    "author": "bingqiu456",
+    "homepage": "https://github.com/bingqiu456/nonebot_plugin_send_message",
+    "tags": [
+      {
+        "label": "传话",
+        "color": "#52ea75"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]

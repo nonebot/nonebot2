@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复 Alconna 中 `CommandResult` 描述错误 [@KomoriDev](https://github.com/KomoriDev) ([#2282](https://github.com/nonebot/nonebot2/pull/2282))
 - Docs: 修复子依赖部分代码行号错误 [@A-kirami](https://github.com/A-kirami) ([#2279](https://github.com/nonebot/nonebot2/pull/2279))
 - Docs: 补充 `get_last_receive` 示例 [@A-kirami](https://github.com/A-kirami) ([#2278](https://github.com/nonebot/nonebot2/pull/2278))
 - Docs: 修复文档中错误的标点 [@A-kirami](https://github.com/A-kirami) ([#2275](https://github.com/nonebot/nonebot2/pull/2275))
@@ -20,11 +21,17 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Fix: 修复 ruff 发现的问题 [@yanyongyu](https://github.com/yanyongyu) ([#2286](https://github.com/nonebot/nonebot2/pull/2286))
 - Develop: 添加 dependabot actions 更新检查 [@yanyongyu](https://github.com/yanyongyu) ([#2256](https://github.com/nonebot/nonebot2/pull/2256))
 - Develop: 添加 git attributes 定义 [@yanyongyu](https://github.com/yanyongyu) ([#2210](https://github.com/nonebot/nonebot2/pull/2210))
 
 ### 🍻 插件发布
 
+- Plugin: 双向聊天插件 [@noneflow](https://github.com/noneflow) ([#2291](https://github.com/nonebot/nonebot2/pull/2291))
+- Plugin: 识别动漫 gal 角色 [@noneflow](https://github.com/noneflow) ([#2288](https://github.com/nonebot/nonebot2/pull/2288))
+- Plugin: arxiv 订阅 [@noneflow](https://github.com/noneflow) ([#2285](https://github.com/nonebot/nonebot2/pull/2285))
+- Plugin: SUDO [@noneflow](https://github.com/noneflow) ([#2277](https://github.com/nonebot/nonebot2/pull/2277))
+- Plugin: 消息推送插件 [@noneflow](https://github.com/noneflow) ([#2273](https://github.com/nonebot/nonebot2/pull/2273))
 - Plugin: 周易蓍草占卜 [@noneflow](https://github.com/noneflow) ([#2268](https://github.com/nonebot/nonebot2/pull/2268))
 - Plugin: 欧若可骰娘 [@noneflow](https://github.com/noneflow) ([#2266](https://github.com/nonebot/nonebot2/pull/2266))
 - Plugin: 科大讯飞星火大模型聊天 [@noneflow](https://github.com/noneflow) ([#2258](https://github.com/nonebot/nonebot2/pull/2258))

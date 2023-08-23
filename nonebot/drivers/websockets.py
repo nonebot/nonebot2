@@ -68,7 +68,7 @@ class Mixin(ForwardMixin):
 
     @override
     async def request(self, setup: Request) -> Response:
-        return await super(Mixin, self).request(setup)
+        return await super().request(setup)
 
     @override
     @asynccontextmanager

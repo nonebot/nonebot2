@@ -75,7 +75,7 @@ class Mixin(ForwardMixin):
     @override
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator[WebSocket, None]:
-        async with super(Mixin, self).websocket(setup) as ws:
+        async with super().websocket(setup) as ws:
             yield ws
 
 
