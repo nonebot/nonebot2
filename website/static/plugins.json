@@ -5343,9 +5343,9 @@
     "module_name": "nonebot_plugin_bilichat",
     "project_link": "nonebot-plugin-bilichat",
     "name": "多功能 BiliBili 解析工具",
-    "desc": "视频链接解析，并根据其内容生成基本信息、词云和使用 ChatGPT 进行内容总结",
-    "author": "djkcyl",
-    "homepage": "https://github.com/djkcyl/nonebot-plugin-bilichat",
+    "desc": "多种B站链接解析，视频词云，AI总结，你想要的都在 bilichat",
+    "author": "Well2333",
+    "homepage": "https://github.com/Well2333/nonebot-plugin-bilichat",
     "tags": [
       {
         "label": "哔哩哔哩",
@@ -5834,18 +5834,6 @@
     "desc": "将 bot 日志记录保存到本地文件中",
     "author": "A-kirami",
     "homepage": "https://github.com/A-kirami/nonebot-plugin-logpile",
-    "tags": [],
-    "is_official": false,
-    "type": null,
-    "supported_adapters": null
-  },
-  {
-    "module_name": "nonebot_plugin_segbuilder",
-    "project_link": "nonebot-plugin-segbuilder",
-    "name": "雷神工业",
-    "desc": "为不同的适配器提供更通用且简易的消息段构建方式",
-    "author": "Well2333",
-    "homepage": "https://github.com/Well2333/nonebot-plugin-segbuilder",
     "tags": [],
     "is_official": false,
     "type": null,
