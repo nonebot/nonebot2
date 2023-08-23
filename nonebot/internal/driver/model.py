@@ -125,7 +125,7 @@ class Request:
             files_ = files.items() if isinstance(files, dict) else files
             for name, file_info in files_:
                 if not isinstance(file_info, tuple):
-                    self.files.append((name, (None, file_info, None)))
+                    self.files.append((name, (name, file_info, None)))
                 elif len(file_info) == 2:
                     self.files.append((name, (file_info[0], file_info[1], None)))
                 else:

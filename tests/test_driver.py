@@ -233,6 +233,23 @@ async def test_http_client(driver: Driver, server_url: URL):
         content="test",
     )
     response = await driver.request(request)
+    assert server_url.host is not None
+    request_raw_url = Request(
+        "POST",
+        (
+            server_url.scheme.encode("ascii"),
+            server_url.host.encode("ascii"),
+            server_url.port,
+            server_url.path.encode("ascii"),
+        ),
+        params={"param": "test"},
+        headers={"X-Test": "test"},
+        cookies={"session": "test"},
+        content="test",
+    )
+    assert (
+        request.url == request_raw_url.url
+    ), "request.url should be equal to request_raw_url.url"
     assert response.status_code == 200
     assert response.content
     data = json.loads(response.content)
@@ -265,7 +282,11 @@ async def test_http_client(driver: Driver, server_url: URL):
         "POST",
         server_url,
         data={"form": "test"},
-        files={"test": ("test.txt", b"test")},
+        files=[
+            ("test1", b"test"),
+            ("test2", ("test.txt", b"test")),
+            ("test3", ("test.txt", b"test", "text/plain")),
+        ],
     )
     response = await driver.request(request)
     assert response.status_code == 200
@@ -273,7 +294,11 @@ async def test_http_client(driver: Driver, server_url: URL):
     data = json.loads(response.content)
     assert data["method"] == "POST"
     assert data["form"] == {"form": "test"}
-    assert data["files"] == {"test": "test"}
+    assert data["files"] == {
+        "test1": "test",
+        "test2": "test",
+        "test3": "test",
+    }, "file parsing error"
 
     await asyncio.sleep(1)
 
