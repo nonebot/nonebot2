@@ -574,5 +574,22 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "huanxin_bot",
+    "desc": "开发中",
+    "author": "huanxin996",
+    "homepage": "https://github.com/huanxin996/nonebot_huanxin_bot",
+    "tags": [
+      {
+        "label": "幻歆",
+        "color": "#27d2d2"
+      },
+      {
+        "label": "bot",
+        "color": "#dc1c15"
+      }
+    ],
+    "is_official": false
   }
 ]
