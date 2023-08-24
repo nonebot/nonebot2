@@ -22,21 +22,22 @@ options:
 
 ## 驱动器类型
 
-驱动器的类型有两种：
+驱动器类型大体上可以分为两种：
 
-- `ForwardDriver`：即客户端型驱动器，多用于使用 HTTP 轮询，连接 WebSocket 服务器等情形。
-- `ReverseDriver`：即服务端型驱动器，多用于使用 WebHook，接收 WebSocket 客户端连接等情形。
+- `Forward`：即客户端型驱动器，多用于使用 HTTP 轮询，连接 WebSocket 服务器等情形。
+- `Reverse`：即服务端型驱动器，多用于使用 WebHook，接收 WebSocket 客户端连接等情形。
 
-客户端型驱动器具有以下两种功能：
+客户端型驱动器可以分为以下两种：
 
 1. 异步发送 HTTP 请求，自定义 `HTTP Method`、`URL`、`Header`、`Body`、`Cookie`、`Proxy`、`Timeout` 等。
 2. 异步建立 WebSocket 连接上下文，自定义 `WebSocket URL`、`Header`、`Cookie`、`Proxy`、`Timeout` 等。
 
-服务端型驱动器通常为 ASGI 应用框架，具有以下功能：
+服务端型驱动器目前有：
 
-1. 协议适配器自定义 HTTP 上报地址以及对上报数据处理的回调函数。
-2. 协议适配器自定义 WebSocket 连接请求地址以及对 WebSocket 请求处理的回调函数。
-3. 用户可以向 ASGI 应用添加任何服务端相关功能，如：[添加自定义路由](./routing.md)。
+1. ASGI 应用框架，具有以下功能：
+   - 协议适配器自定义 HTTP 上报地址以及对上报数据处理的回调函数。
+   - 协议适配器自定义 WebSocket 连接请求地址以及对 WebSocket 请求处理的回调函数。
+   - 用户可以向 ASGI 应用添加任何服务端相关功能，如：[添加自定义路由](./routing.md)。
 
 ## 配置驱动器
 
@@ -79,7 +80,7 @@ DRIVER=~none
 
 ### FastAPI（默认）
 
-**类型：**服务端驱动器
+**类型：**ASGI 服务端驱动器
 
 > FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.6+ based on standard Python type hints.
 
@@ -185,7 +186,7 @@ nonebot.run(app="bot:app")
 
 ### Quart
 
-**类型：**`ReverseDriver`
+**类型：**ASGI 服务端驱动器
 
 > Quart is an asyncio reimplementation of the popular Flask microframework API.
 
@@ -249,7 +250,7 @@ nonebot.run(app="bot:app")
 
 ### HTTPX
 
-**类型：**`ForwardDriver`
+**类型：**HTTP 客户端驱动器
 
 :::warning 注意
 本驱动器仅支持 HTTP 请求，不支持 WebSocket 连接请求。
@@ -263,7 +264,7 @@ DRIVER=~httpx
 
 ### websockets
 
-**类型：**`ForwardDriver`
+**类型：**WebSocket 客户端驱动器
 
 :::warning 注意
 本驱动器仅支持 WebSocket 连接请求，不支持 HTTP 请求。
@@ -277,7 +278,7 @@ DRIVER=~websockets
 
 ### AIOHTTP
 
-**类型：**`ForwardDriver`
+**类型：**HTTP/WebSocket 客户端驱动器
 
 > [AIOHTTP](https://docs.aiohttp.org/): Asynchronous HTTP Client/Server for asyncio and Python.
 
