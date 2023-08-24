@@ -1,4 +1,5 @@
 from .model import URL as URL
+from .driver import Mixin as Mixin
 from .model import RawURL as RawURL
 from .driver import Driver as Driver
 from .model import Cookies as Cookies
@@ -8,6 +9,7 @@ from .model import Response as Response
 from .model import DataTypes as DataTypes
 from .model import FileTypes as FileTypes
 from .model import WebSocket as WebSocket
+from .driver import ASGIMixin as ASGIMixin
 from .model import FilesTypes as FilesTypes
 from .model import QueryTypes as QueryTypes
 from .model import CookieTypes as CookieTypes
@@ -17,9 +19,12 @@ from .model import HeaderTypes as HeaderTypes
 from .model import SimpleQuery as SimpleQuery
 from .model import ContentTypes as ContentTypes
 from .driver import ForwardMixin as ForwardMixin
+from .driver import ReverseMixin as ReverseMixin
 from .model import QueryVariable as QueryVariable
 from .driver import ForwardDriver as ForwardDriver
 from .driver import ReverseDriver as ReverseDriver
 from .driver import combine_driver as combine_driver
 from .model import HTTPServerSetup as HTTPServerSetup
+from .driver import HTTPClientMixin as HTTPClientMixin
 from .model import WebSocketServerSetup as WebSocketServerSetup
+from .driver import WebSocketClientMixin as WebSocketClientMixin

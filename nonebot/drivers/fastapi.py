@@ -25,12 +25,14 @@ from typing import Any, Dict, List, Tuple, Union, Optional
 from pydantic import BaseSettings
 
 from nonebot.config import Env
+from nonebot.drivers import ASGIMixin
 from nonebot.exception import WebSocketClosed
 from nonebot.internal.driver import FileTypes
+from nonebot.drivers import Driver as BaseDriver
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.drivers import ReverseDriver, HTTPServerSetup, WebSocketServerSetup
+from nonebot.drivers import HTTPServerSetup, WebSocketServerSetup
 
 from ._lifespan import LIFESPAN_FUNC, Lifespan
 
@@ -87,7 +89,7 @@ class Config(BaseSettings):
         extra = "ignore"
 
 
-class Driver(ReverseDriver):
+class Driver(BaseDriver, ASGIMixin):
     """FastAPI 驱动框架。"""
 
     def __init__(self, env: Env, config: NoneBotConfig):
@@ -179,7 +181,7 @@ class Driver(ReverseDriver):
         **kwargs,
     ):
         """使用 `uvicorn` 启动 FastAPI"""
-        super().run(host, port, app, **kwargs)
+        super().run(host, port, app=app, **kwargs)
         LOGGING_CONFIG = {
             "version": 1,
             "disable_existing_loggers": False,

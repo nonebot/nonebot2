@@ -53,7 +53,7 @@ from nonebot.config import Env, Config
 from nonebot.log import logger as logger
 from nonebot.adapters import Bot, Adapter
 from nonebot.utils import escape_tag, resolve_dot_notation
-from nonebot.drivers import Driver, ReverseDriver, combine_driver
+from nonebot.drivers import Driver, ASGIMixin, combine_driver
 
 try:
     __version__ = version("nonebot2")
@@ -149,13 +149,13 @@ def get_adapters() -> Dict[str, Adapter]:
 
 
 def get_app() -> Any:
-    """获取全局 {ref}`nonebot.drivers.ReverseDriver` 对应的 Server App 对象。
+    """获取全局 {ref}`nonebot.drivers.ASGIMixin` 对应的 Server App 对象。
 
     返回:
         Server App 对象
 
     异常:
-        AssertionError: 全局 Driver 对象不是 {ref}`nonebot.drivers.ReverseDriver` 类型
+        AssertionError: 全局 Driver 对象不是 {ref}`nonebot.drivers.ASGIMixin` 类型
         ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化
             ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
@@ -165,21 +165,19 @@ def get_app() -> Any:
         ```
     """
     driver = get_driver()
-    assert isinstance(
-        driver, ReverseDriver
-    ), "app object is only available for reverse driver"
+    assert isinstance(driver, ASGIMixin), "app object is only available for asgi driver"
     return driver.server_app
 
 
 def get_asgi() -> Any:
-    """获取全局 {ref}`nonebot.drivers.ReverseDriver` 对应
+    """获取全局 {ref}`nonebot.drivers.ASGIMixin` 对应
     [ASGI](https://asgi.readthedocs.io/) 对象。
 
     返回:
         ASGI 对象
 
     异常:
-        AssertionError: 全局 Driver 对象不是 {ref}`nonebot.drivers.ReverseDriver` 类型
+        AssertionError: 全局 Driver 对象不是 {ref}`nonebot.drivers.ASGIMixin` 类型
         ValueError: 全局 {ref}`nonebot.drivers.Driver` 对象尚未初始化
             ({ref}`nonebot.init <nonebot.init>` 尚未调用)
 
@@ -190,7 +188,7 @@ def get_asgi() -> Any:
     """
     driver = get_driver()
     assert isinstance(
-        driver, ReverseDriver
+        driver, ASGIMixin
     ), "asgi object is only available for reverse driver"
     return driver.asgi
 

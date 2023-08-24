@@ -14,11 +14,9 @@ classifiers = [
   "Framework :: Robot Framework",
   "Framework :: Robot Framework :: Library",
   "Operating System :: OS Independent",
-  "Programming Language :: Python :: 3"
+  "Programming Language :: Python :: 3",
 ]
-packages = [
-  { include = "nonebot" },
-]
+packages = [{ include = "nonebot" }]
 include = ["nonebot/py.typed"]
 
 [tool.poetry.urls]
@@ -31,7 +29,7 @@ python = "^3.8"
 yarl = "^1.7.2"
 pygtrie = "^2.4.1"
 loguru = ">=0.6.0,<1.0.0"
-typing-extensions = ">=4.0.0,<5.0.0"
+typing-extensions = ">=4.4.0,<5.0.0"
 tomli = { version = "^2.0.1", python = "<3.11" }
 pydantic = { version = "^1.10.0", extras = ["dotenv"] }
 
@@ -40,7 +38,9 @@ Quart = { version = ">=0.18.0,<1.0.0", optional = true }
 fastapi = { version = ">=0.93.0,<1.0.0", optional = true }
 aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
 httpx = { version = ">=0.20.0,<1.0.0", extras = ["http2"], optional = true }
-uvicorn = { version = ">=0.20.0,<1.0.0", extras = ["standard"], optional = true }
+uvicorn = { version = ">=0.20.0,<1.0.0", extras = [
+  "standard",
+], optional = true }
 
 [tool.poetry.group.dev.dependencies]
 isort = "^5.10.1"
@@ -71,10 +71,7 @@ all = ["fastapi", "quart", "aiohttp", "httpx", "websockets", "uvicorn"]
 [tool.pytest.ini_options]
 asyncio_mode = "strict"
 addopts = "--cov=nonebot --cov-append --cov-report=term-missing"
-filterwarnings = [
-    "error",
-    "ignore::DeprecationWarning",
-]
+filterwarnings = ["error", "ignore::DeprecationWarning"]
 
 [tool.black]
 line-length = 88
@@ -107,7 +104,9 @@ mark-parentheses = false
 pythonVersion = "3.8"
 pythonPlatform = "All"
 executionEnvironments = [
-  { root = "./tests", extraPaths = ["./"] },
+  { root = "./tests", extraPaths = [
+    "./",
+  ] },
   { root = "./" },
 ]
 

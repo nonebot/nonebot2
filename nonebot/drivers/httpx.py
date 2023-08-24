@@ -15,18 +15,15 @@ FrontMatter:
     description: nonebot.drivers.httpx 模块
 """
 
+from typing import TYPE_CHECKING
 from typing_extensions import override
-from typing import Type, AsyncGenerator
-from contextlib import asynccontextmanager
 
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.drivers import (
     Request,
     Response,
-    WebSocket,
     HTTPVersion,
-    ForwardMixin,
-    ForwardDriver,
+    HTTPClientMixin,
     combine_driver,
 )
 
@@ -39,7 +36,7 @@ except ModuleNotFoundError as e:  # pragma: no cover
     ) from e
 
 
-class Mixin(ForwardMixin):
+class Mixin(HTTPClientMixin):
     """HTTPX Mixin"""
 
     @property
@@ -72,12 +69,12 @@ class Mixin(ForwardMixin):
                 request=setup,
             )
 
-    @override
-    @asynccontextmanager
-    async def websocket(self, setup: Request) -> AsyncGenerator[WebSocket, None]:
-        async with super().websocket(setup) as ws:
-            yield ws
 
+if TYPE_CHECKING:
 
-Driver: Type[ForwardDriver] = combine_driver(NoneDriver, Mixin)  # type: ignore
-"""HTTPX Driver"""
+    class Driver(Mixin, NoneDriver):
+        ...
+
+else:
+    Driver = combine_driver(NoneDriver, Mixin)
+    """HTTPX Driver"""
