@@ -7197,5 +7197,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_requests",
+    "project_link": "nonebot-plugin-requests",
+    "name": "Nonebot Requests",
+    "desc": "封装 ForwardDriver 实现 HttpClient 功能",
+    "author": "Ailitonia",
+    "homepage": "https://github.com/Ailitonia/nonebot-plugin-requests",
+    "tags": [
+      {
+        "label": "requests",
+        "color": "#80bcc2"
+      }
+    ],
+    "is_official": false,
+    "type": "library",
+    "supported_adapters": null
   }
 ]
