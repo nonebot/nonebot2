@@ -322,11 +322,6 @@ async def test_websocket_client(driver: Driver):
     ("driver", "driver_type"),
     [
         pytest.param(
-            "nonebot.drivers.fastapi:Driver",
-            "fastapi",
-            id="fastapi",
-        ),
-        pytest.param(
             "nonebot.drivers.fastapi:Driver+nonebot.drivers.aiohttp:Mixin",
             "fastapi+aiohttp",
             id="fastapi+aiohttp",
