@@ -5,11 +5,8 @@ from typing import Any, Set, Optional
 import pytest
 from nonebug import App
 
-import nonebot
-from nonebot.config import Env
 from nonebot.adapters import Bot
 from nonebot.params import Depends
-from nonebot import _resolve_combine_expr
 from nonebot.dependencies import Dependent
 from nonebot.exception import WebSocketClosed
 from nonebot.drivers._lifespan import Lifespan
@@ -25,17 +22,6 @@ from nonebot.drivers import (
     WebSocketClientMixin,
     WebSocketServerSetup,
 )
-
-
-@pytest.fixture(name="driver")
-def load_driver(request: pytest.FixtureRequest) -> Driver:
-    driver_name = getattr(request, "param", None)
-    global_driver = nonebot.get_driver()
-    if driver_name is None:
-        return global_driver
-
-    DriverClass = _resolve_combine_expr(driver_name)
-    return DriverClass(Env(environment=global_driver.env), global_driver.config)
 
 
 @pytest.mark.asyncio
