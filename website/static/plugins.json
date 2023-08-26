@@ -7214,5 +7214,22 @@
     "is_official": false,
     "type": "library",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_shutup",
+    "project_link": "nonebot-plugin-shutup",
+    "name": "雪豹闭嘴",
+    "desc": "基于 NoneBot2 的 插件，用于机器人当前会话闭嘴,支持全适配器",
+    "author": "Agnes4m",
+    "homepage": "https://github.com/Agnes4m/nonebot_pluigin_shutup",
+    "tags": [
+      {
+        "label": "阻断",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
   }
 ]
