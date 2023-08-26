@@ -452,7 +452,7 @@ alc.parse("test_fuzy")
 
 普通情况下使用，需要利用到 **ArgsStub**、**OptionStub** 和 **SubcommandStub** 三个部分，
 
-以pip为例，其对应的 Duplication 应如下构造：
+以 pip 为例，其对应的 Duplication 应如下构造：
 
 ```python
 from arclet.alconna import OptionResult, Duplication, SubcommandStub
