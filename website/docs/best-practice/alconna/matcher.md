@@ -8,7 +8,7 @@ description: 响应规则的使用
 以下为一个简单的使用示例：
 
 ```python
-from nonebot_plugin_alconna.adapters import At
+from nonebot_plugin_alconna import At
 from nonebot.adapters.onebot.v12 import Message
 from nonebot_plugin_alconna.adapters.onebot12 import Image
 from nonebot_plugin_alconna import AlconnaMatches, on_alconna
@@ -36,8 +36,8 @@ async def _(result: Arparma = AlconnaMatches()):
     if result.find("add"):
         group = await create_role_group(result["add.name"])
         if result.find("add.member"):
-            ats: tuple[Ob12MS, ...] = result["add.member.target"]
-            group.extend(member.data["user_id"] for member in ats)
+            ats: tuple[At, ...] = result["add.member.target"]
+            group.extend(member.target for member in ats)
         await rg.finish("添加成功")
 ```
 
@@ -52,12 +52,14 @@ async def _(result: Arparma = AlconnaMatches()):
 - `aliases: set[str | tuple[str, ...]] | None = None`: 命令别名， 作用类似于 `on_command` 中的 aliases
 - `comp_config: CompConfig | None = None`: 补全会话配置， 不传入则不启用补全会话
 - `use_origin: bool = False`: 是否使用未经 to_me 等处理过的消息
+- `use_cmd_start`: 是否使用 COMMAND_START 作为命令前缀
 
-`on_alconna` 返回的是 `Matcher` 的子类 `AlconnaMatcher`，其拓展了四类方法：
+`on_alconna` 返回的是 `Matcher` 的子类 `AlconnaMatcher`，其拓展了五类方法：
 
 - `.assign(path, value, or_not)`: 用于对包含多个选项/子命令的命令的分派处理
-- `.got_path(path, prompt)`: 在 `got` 方法的基础上，会以 path 对应的参数为准，读取传入 message 的最后一个消息段并验证转换
+- `.got_path(path, prompt, middleware)`: 在 `got` 方法的基础上，会以 path 对应的参数为准，读取传入 message 的最后一个消息段并验证转换
 - `.set_path_arg(key, value)`, `.get_path_arg(key)`: 类似 `set_arg` 和 `got_arg`，为 `got_path` 的特化版本
+- `.reject_path(path[, prompt])`: 类似于 `reject_arg`，对应 `got_path`
 
 用例：
 
@@ -90,8 +92,8 @@ async def login_got(password: str = AlconnaArg("password")):
 - `AlconnaResult`: `CommandResult` 类型的依赖注入函数
 - `AlconnaMatches`: `Arparma` 类型的依赖注入函数
 - `AlconnaDuplication`: `Duplication` 类型的依赖注入函数
-- `AlconnaMatch`: `Match` 类型的依赖注入函数
-- `AlconnaQuery`: `Query` 类型的依赖注入函数
+- `AlconnaMatch`: `Match` 类型的依赖注入函数，其能够额外传入一个 middleware 函数来处理得到的参数
+- `AlconnaQuery`: `Query` 类型的依赖注入函数，其能够额外传入一个 middleware 函数来处理得到的参数
 - `AlconnaExecResult`: 提供挂载在命令上的 callback 的返回结果 (`Dict[str, Any]`) 的依赖注入函数
 
 可以看到，本插件提供了几类额外的模型：
@@ -100,11 +102,28 @@ async def login_got(password: str = AlconnaArg("password")):
 - `Match`: 匹配项，表示参数是否存在于 `all_matched_args` 内，可用 `Match.available` 判断是否匹配，`Match.result` 获取匹配的值
 - `Query`: 查询项，表示参数是否可由 `Arparma.query` 查询并获得结果，可用 `Query.available` 判断是否查询成功，`Query.result` 获取查询结果
 
-同时，基于 [`Annotated` 支持](https://github.com/nonebot/nonebot2/pull/1832), 添加了两类注解:
+同时，基于 [`Annotated` 支持](https://github.com/nonebot/nonebot2/pull/1832), 添加了三类注解:
 
 - `AlcMatches`：同 `AlconnaMatches`
 - `AlcResult`：同 `AlconnaResult`
 - `AlcExecResult`: 同 `AlconnaExecResult`
+
+而若设置配置项 **ALCONNA_USE_PARAM** (默认为 True) 为 True，则上述依赖注入的目标参数皆不需要使用依赖注入函数：
+
+```python
+async def handle(
+    result: CommandResult,
+    arp: Arparma,
+    dup: Duplication,
+    source: Alconna,
+    abc: str,  # 类似 Match, 但是若匹配结果不存在对应字段则跳过该 handler
+    foo: Match[str],
+    bar: Query[int] = Query("ttt.bar", 0)  # Query 仍然需要一个默认值来传递 path 参数
+):
+    ...
+```
+
+该效果对于 `got_path` 下的 Arg 同样有效
 
 实例:
 
@@ -118,9 +137,7 @@ from nonebot_plugin_alconna import (
     on_alconna,
     Match,
     Query,
-    AlconnaMatch,
     AlconnaQuery,
-    AlconnaMatches,
     AlcResult
 )
 from arclet.alconna import Alconna, Args, Option, Arparma
@@ -141,12 +158,12 @@ async def handle_test1(result: AlcResult):
     await test.send(f"maybe output: {result.output}")
 
 @test.handle()
-async def handle_test2(result: Arparma = AlconnaMatches()):
+async def handle_test2(result: Arparma):
     await test.send(f"head result: {result.header_result}")
     await test.send(f"args: {result.all_matched_args}")
 
 @test.handle()
-async def handle_test3(bar: Match[int] = AlconnaMatch("bar")):
+async def handle_test3(bar: Match[int]):
     if bar.available:
         await test.send(f"foo={bar.result}")
 
@@ -160,18 +177,10 @@ async def handle_test4(qux: Query[bool] = AlconnaQuery("baz.qux", False)):
 
 示例中使用了消息段标注，其中 `At` 属于通用标注，而 `Image` 属于 `onebot12` 适配器下的标注。
 
-消息段标注会匹配特定的 `MessageSegment`：
+适配器下的消息段标注会匹配特定的 `MessageSegment`：
 
-```python
-...
-ats: tuple[Ob12MS, ...] = result["add.member.target"]
-group.extend(member.data["user_id"] for member in ats)
-```
-
-:::tip
-通用标注与适配器标注的区别在于，通用标注会匹配多个适配器中相似类型的消息段。
-
-通用标注返回的是 `nonebot_plugin_alconna.adapters` 中定义的 `Segment` 模型:
+而通用标注与适配器标注的区别在于，通用标注会匹配多个适配器中相似类型的消息段，并返回
+`nonebot_plugin_alconna.adapters` 中定义的 `Segment` 模型:
 
 ```python
 class Segment:
@@ -180,7 +189,11 @@ class Segment:
 
 class At(Segment):
     """At对象, 表示一类提醒某用户的元素"""
+    type: Literal["user", "role", "channel"]
     target: str
+
+class AtAll(Segment):
+    """AtAll对象, 表示一类提醒所有人的元素"""
 
 class Emoji(Segment):
     """Emoji对象, 表示一类表情元素"""
@@ -206,33 +219,85 @@ class Video(Media):
 class File(Segment):
     """File对象, 表示一类文件元素"""
     id: str
-    name: Optional[str] = field(default=None)
+    name: Optional[str]
+
+class Reply(Segment):
+    """Reply对象，表示一类回复消息"""
+    origin: Any
+    id: str
+    msg: Optional[Union[Message, str]]
+
+class Other(Segment):
+    """其他 Segment"""
 ```
 
 :::
 
-## 特殊装饰器
-
-`nonebot_plugin_alconna` 提供 了一个 `funcommand` 装饰器, 其用于将一个接受任意参数，
-返回 `str` 或 `Message` 或 `MessageSegment` 的函数转换为命令响应器。
+例如：
 
 ```python
-from nonebot_plugin_alconna import funcommand
-
-@funcommand()
-async def echo(msg: str):
-    return msg
+...
+ats: tuple[At, ...] = result["add.member.target"]
+group.extend(member.target for member in ats)
 ```
 
-其等同于
+这样插件使用者就不用考虑平台之间字段的差异
+
+## 条件控制
+
+本插件可以通过 `handle(parameterless)` 来控制一个具体的响应函数是否在不满足条件时跳过响应。
 
 ```python
-from arclet.alconna import Alconna, Args
-from nonebot_plugin_alconna import on_alconna, AlconnaMatch, Match
+...
+from nonebot import require
+require("nonebot_plugin_alconna")
+...
 
-echo = on_alconna(Alconna("echo", Args["msg", str]))
+from arclet.alconna import Alconna, Subcommand, Option, Args
+from nonebot_plugin_alconna import assign, on_alconna, CommandResult, Check
 
-@echo.handle()
-async def echo_exit(msg: Match[str] = AlconnaMatch("msg")):
-    await echo.finish(msg.result)
+pip = Alconna(
+    "pip",
+    Subcommand(
+        "install", Args["pak", str],
+        Option("--upgrade"),
+        Option("--force-reinstall")
+    ),
+    Subcommand("list", Option("--out-dated"))
+)
+
+pip_cmd = on_alconna(pip)
+
+# 仅在命令为 `pip install` 并且 pak 为 `pip` 时响应
+@pip_cmd.handle([Check(assign("install.pak", "pip"))])
+async def update(arp: CommandResult):
+    ...
+
+# 仅在命令为 `pip list` 时响应
+@pip_cmd.handle([Check(assign("list"))])
+async def list_(arp: CommandResult):
+    ...
+
+# 仅在命令为 `pip install` 时响应
+@pip_cmd.handle([Check(assign("install"))])
+async def install(arp: CommandResult):
+    ...
+```
+
+或者使用 `AlconnaMatcher.assign`：
+
+```python
+@pip_cmd.assign("install.pak", "pip")
+async def update(arp: CommandResult):
+    ...
+
+# 仅在命令为 `pip list` 时响应
+@pip_cmd.assign("list")
+async def list_(arp: CommandResult):
+    ...
+
+# 仅在命令为 `pip install` 时响应
+@pip_cmd.assign("install")
+async def install(arp: CommandResult):
+    ...
 ```

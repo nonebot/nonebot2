@@ -64,6 +64,15 @@ alc = Alconna(".rd{roll:int}")
 assert alc.parse(".rd123").header["roll"] == 123
 ```
 
+Bracket Header 类似 python 里的 f-string 写法，通过 "{}" 声明匹配类型
+
+"{}" 中的内容为 "name:type or pat"：
+
+- "{}", "{:}": 占位符，等价于 "(.+)"
+- "{foo}": 等价于 "(?P&lt;foo&gt;.+)"
+- "{:\d+}": 等价于 "(\d+)"
+- "{foo:int}": 等价于 "(?P&lt;foo&gt;\d+)"，其中 "int" 部分若能转为 `BasePattern` 则读取里面的表达式
+
 ### 组件
 
 我们可以看到主要的两大组件：`Option` 与 `Subcommand`。
@@ -73,6 +82,27 @@ assert alc.parse(".rd123").header["roll"] == 123
 传入别名后，Option 会选择其中长度最长的作为选项名称。若传入为 "--foo|-f"，则命令名称为 "--foo"。
 
 `Subcommand` 则可以传入自己的 **Option** 与 **Subcommand**。
+
+```python
+from arclet.alconna import Alconna, Option, Subcommand
+
+alc = Alconna(
+    "command_name",
+    Option("opt1"),
+    Option("--opt2"),
+    Subcommand(
+        "sub1",
+        Option("sub1_opt1"),
+        Option("-SO2"),
+        Subcommand(
+            "sub1_sub1"
+        )
+    ),
+    Subcommand(
+        "sub2"
+    )
+)
+```
 
 他们拥有如下共同参数：
 
@@ -237,8 +267,8 @@ assert alc.parse("test123 BARabc").matched
 
 ```python
 >>> from arclet.alconna import Alconna, Option, Args, append
->>> alc = Alconna("gcc", Option("--flag|-F", Args["content", str], action=append))
->>> alc.parse("gcc -Fabc -Fdef -Fxyz").query("flag.content")
+>>> alc = Alconna("gcc", Option("--flag|-F", Args["content", str], action=append, compact=True))
+>>> alc.parse("gcc -Fabc -Fdef -Fxyz").query[list[str]]("flag.content")
 ['abc', 'def', 'xyz']
 ```
 
@@ -247,7 +277,7 @@ assert alc.parse("test123 BARabc").matched
 ```python
 >>> from arclet.alconna import Alconna, Option, Args, count
 >>> alc = Alconna("pp", Option("--verbose|-v", action=count, default=0))
->>> alc.parse("pp -vvv").query("verbose.value")
+>>> alc.parse("pp -vvv").query[int]("verbose.value")
 3
 ```
 
@@ -291,13 +321,13 @@ with namespace(config.default_namespace.name) as np:
 
 半自动补全为用户提供了推荐后续输入的功能。
 
-补全默认通过 `--comp` 或 `-cp` 触发：（命名空间配置可修改名称）
+补全默认通过 `--comp` 或 `-cp` 或 `?` 触发：（命名空间配置可修改名称）
 
 ```python
 from arclet.alconna import Alconna, Args, Option
 
 alc = Alconna("test", Args["abc", int]) + Option("foo") + Option("bar")
-alc.parse("test --comp")
+alc.parse("test ?")
 
 '''
 output
@@ -323,7 +353,7 @@ output
 >>> from arclet.alconna import Alconna, Args
 >>> alc = Alconna("setu", Args["count", int])
 >>> alc.shortcut("涩图(\d+)张", {"args": ["{0}"]})
-'Alconna::setu 的快截指令: "涩图(\\d+)张" 添加成功'
+'Alconna::setu 的快捷指令: "涩图(\\d+)张" 添加成功'
 >>> alc.parse("涩图3张").query("count")
 3
 ```
@@ -331,31 +361,39 @@ output
 `shortcut` 的第一个参数为快捷指令名称，第二个参数为 `ShortcutArgs`，作为快捷指令的配置
 
 ```python
-class ShortcutArgs(TypedDict, Generic[TDC]):
+class ShortcutArgs(TypedDict):
     """快捷指令参数"""
 
-    command: NotRequired[TDC]
+    command: NotRequired[DataCollection[Any]]
     """快捷指令的命令"""
     args: NotRequired[list[Any]]
     """快捷指令的附带参数"""
     fuzzy: NotRequired[bool]
     """是否允许命令后随参数"""
+    prefix: NotRequired[bool]
+    """是否调用时保留指令前缀"""
 ```
 
 当 `fuzzy` 为 False 时，传入 `"涩图1张 abc"` 之类的快捷指令将视为解析失败
 
 快捷指令允许三类特殊的 placeholder:
 
-- `{%X}`: 只用于 `command`, 如 `setu {%0}`，表示此处填入快截指令后随的第 X 个参数。
+- `{%X}`: 如 `setu {%0}`，表示此处填入快捷指令后随的第 X 个参数。
 
   例如，若快捷指令为 `涩图`, 配置为 `{"command": "setu {%0}"}`, 则指令 `涩图 1` 相当于 `setu 1`
 
-- `{*}`: 只用于 `command`, 表示此处填入所有后随参数，并且可以通过 `{*X}` 的方式指定组合参数之间的分隔符。
-- `{X}`: 用于 `command` 与 `args`， 表示此处填入可能的正则匹配的组：
+- `{*}`: 表示此处填入所有后随参数，并且可以通过 `{*X}` 的方式指定组合参数之间的分隔符。
+- `{X}`: 表示此处填入可能的正则匹配的组：
   - 若 `command` 中存在匹配组 `(xxx)`，则 `{X}` 表示第 X 个匹配组的内容
   - 若 `command` 中存储匹配组 `(?P<xxx>...)`, 则 `{X}` 表示名字为 X 的匹配结果
 
 除此之外, 通过内置选项 `--shortcut` 可以动态操作快捷指令。
+
+例如：
+
+- `cmd --shortcut <key> <cmd>` 来增加一个快捷指令
+- `cmd --shortcut list` 来列出当前指令的所有快捷指令
+- `cmd --shortcut delete key` 来删除一个快捷指令
 
 ### 使用模糊匹配
 
@@ -369,4 +407,78 @@ from arclet.alconna import Alconna, CommandMeta
 alc = Alconna("test_fuzzy", meta=CommandMeta(fuzzy_match=True))
 alc.parse("test_fuzy")
 # output: test_fuzy is not matched. Do you mean "test_fuzzy"?
+```
+
+## 解析结果
+
+`Alconna.parse` 会返回由 **Arparma** 承载的解析结果。
+
+`Arpamar` 会有如下参数：
+
+- 调试类
+
+  - matched: 是否匹配成功
+  - error_data: 解析失败时剩余的数据
+  - error_info: 解析失败时的异常内容
+  - origin: 原始命令，可以类型标注
+
+- 分析类
+  - header_match: 命令头部的解析结果，包括原始头部、解析后头部、解析结果与可能的正则匹配组
+  - main_args: 命令的主参数的解析结果
+  - options: 命令所有选项的解析结果
+  - subcommands: 命令所有子命令的解析结果
+  - other_args: 除主参数外的其他解析结果
+  - all_matched_args: 所有 Args 的解析结果
+
+`Arparma` 同时提供了便捷的查询方法 `query[type]()`，会根据传入的 `path` 查找参数并返回
+
+`path` 支持如下：
+
+- `main_args`, `options`, ...: 返回对应的属性
+- `args`: 返回 all_matched_args
+- `main_args.xxx`, `options.xxx`, ...: 返回字典中 `xxx`键对应的值
+- `args.xxx`: 返回 all_matched_args 中 `xxx`键对应的值
+- `options.foo`, `foo`: 返回选项 `foo` 的解析结果 (OptionResult)
+- `options.foo.value`, `foo.value`: 返回选项 `foo` 的解析值
+- `options.foo.args`, `foo.args`: 返回选项 `foo` 的解析参数字典
+- `options.foo.args.bar`, `foo.bar`: 返回选项 `foo` 的参数字典中 `bar` 键对应的值
+  ...
+
+同样, `Arparma["foo.bar"]` 的表现与 `query()` 一致
+
+## Duplication
+
+**Duplication** 用来提供更好的自动补全，类似于 **ArgParse** 的 **Namespace**，经测试表现良好（好耶）。
+
+普通情况下使用，需要利用到 **ArgsStub**、**OptionStub** 和 **SubcommandStub** 三个部分，
+
+以pip为例，其对应的 Duplication 应如下构造：
+
+```python
+from arclet.alconna import OptionResult, Duplication, SubcommandStub
+
+class MyDup(Duplication):
+    verbose: OptionResult
+    install: SubcommandStub  # 选项与子命令对应的stub的变量名必须与其名字相同
+```
+
+并在解析时传入 Duplication：
+
+```python
+result = alc.parse("pip -v install ...", duplication=MyDup)
+>>> type(result)
+<class MyDup>
+```
+
+**Duplication** 也可以如 **Namespace** 一样直接标明参数名称和类型：
+
+```python
+from typing import Optional
+from arclet.alconna import Duplication
+
+
+class MyDup(Duplication):
+    package: str
+    file: Optional[str] = None
+    url: Optional[str] = None
 ```
