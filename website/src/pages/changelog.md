@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 细化 driver 职责类型 [@yanyongyu](https://github.com/yanyongyu) ([#2296](https://github.com/nonebot/nonebot2/pull/2296))
+
 ### 🐛 Bug 修复
 
 - Fix: 设置 file request 默认 filename [@eya46](https://github.com/eya46) ([#2284](https://github.com/nonebot/nonebot2/pull/2284))
