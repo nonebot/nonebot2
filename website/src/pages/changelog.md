@@ -36,6 +36,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 雪豹闭嘴 [@noneflow](https://github.com/noneflow) ([#2300](https://github.com/nonebot/nonebot2/pull/2300))
 - Plugin: Nonebot Requests [@noneflow](https://github.com/noneflow) ([#2294](https://github.com/nonebot/nonebot2/pull/2294))
 - Plugin: 双向聊天插件 [@noneflow](https://github.com/noneflow) ([#2291](https://github.com/nonebot/nonebot2/pull/2291))
 - Plugin: 识别动漫 gal 角色 [@noneflow](https://github.com/noneflow) ([#2288](https://github.com/nonebot/nonebot2/pull/2288))
