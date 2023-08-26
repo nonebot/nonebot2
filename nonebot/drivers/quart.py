@@ -34,12 +34,14 @@ from typing import (
 from pydantic import BaseSettings
 
 from nonebot.config import Env
+from nonebot.drivers import ASGIMixin
 from nonebot.exception import WebSocketClosed
 from nonebot.internal.driver import FileTypes
+from nonebot.drivers import Driver as BaseDriver
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.drivers import ReverseDriver, HTTPServerSetup, WebSocketServerSetup
+from nonebot.drivers import HTTPServerSetup, WebSocketServerSetup
 
 try:
     import uvicorn
@@ -89,7 +91,7 @@ class Config(BaseSettings):
         extra = "ignore"
 
 
-class Driver(ReverseDriver):
+class Driver(BaseDriver, ASGIMixin):
     """Quart 驱动框架"""
 
     def __init__(self, env: Env, config: NoneBotConfig):

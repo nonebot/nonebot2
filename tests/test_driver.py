@@ -1,15 +1,12 @@
 import json
 import asyncio
-from typing import Any, Set, Optional, cast
+from typing import Any, Set, Optional
 
 import pytest
 from nonebug import App
 
-import nonebot
-from nonebot.config import Env
 from nonebot.adapters import Bot
 from nonebot.params import Depends
-from nonebot import _resolve_combine_expr
 from nonebot.dependencies import Dependent
 from nonebot.exception import WebSocketClosed
 from nonebot.drivers._lifespan import Lifespan
@@ -18,23 +15,13 @@ from nonebot.drivers import (
     Driver,
     Request,
     Response,
+    ASGIMixin,
     WebSocket,
-    ForwardDriver,
-    ReverseDriver,
+    HTTPClientMixin,
     HTTPServerSetup,
+    WebSocketClientMixin,
     WebSocketServerSetup,
 )
-
-
-@pytest.fixture(name="driver")
-def load_driver(request: pytest.FixtureRequest) -> Driver:
-    driver_name = getattr(request, "param", None)
-    global_driver = nonebot.get_driver()
-    if driver_name is None:
-        return global_driver
-
-    DriverClass = _resolve_combine_expr(driver_name)
-    return DriverClass(Env(environment=global_driver.env), global_driver.config)
 
 
 @pytest.mark.asyncio
@@ -80,7 +67,7 @@ async def test_lifespan():
     indirect=True,
 )
 async def test_http_server(app: App, driver: Driver):
-    driver = cast(ReverseDriver, driver)
+    assert isinstance(driver, ASGIMixin)
 
     async def _handle_http(request: Request) -> Response:
         assert request.content in (b"test", "test")
@@ -108,7 +95,7 @@ async def test_http_server(app: App, driver: Driver):
     indirect=True,
 )
 async def test_websocket_server(app: App, driver: Driver):
-    driver = cast(ReverseDriver, driver)
+    assert isinstance(driver, ASGIMixin)
 
     async def _handle_ws(ws: WebSocket) -> None:
         await ws.accept()
@@ -164,7 +151,7 @@ async def test_websocket_server(app: App, driver: Driver):
     indirect=True,
 )
 async def test_cross_context(app: App, driver: Driver):
-    driver = cast(ReverseDriver, driver)
+    assert isinstance(driver, ASGIMixin)
 
     ws: Optional[WebSocket] = None
     ws_ready = asyncio.Event()
@@ -221,7 +208,7 @@ async def test_cross_context(app: App, driver: Driver):
     indirect=True,
 )
 async def test_http_client(driver: Driver, server_url: URL):
-    driver = cast(ForwardDriver, driver)
+    assert isinstance(driver, HTTPClientMixin)
 
     # simple post with query, headers, cookies and content
     request = Request(
@@ -301,6 +288,19 @@ async def test_http_client(driver: Driver, server_url: URL):
     }, "file parsing error"
 
     await asyncio.sleep(1)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "driver",
+    [
+        pytest.param("nonebot.drivers.websockets:Driver", id="websockets"),
+        pytest.param("nonebot.drivers.aiohttp:Driver", id="aiohttp"),
+    ],
+    indirect=True,
+)
+async def test_websocket_client(driver: Driver):
+    assert isinstance(driver, WebSocketClientMixin)
 
 
 @pytest.mark.asyncio

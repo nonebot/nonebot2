@@ -16,14 +16,19 @@ FrontMatter:
 """
 
 from typing_extensions import override
-from typing import Type, AsyncGenerator
 from contextlib import asynccontextmanager
+from typing import TYPE_CHECKING, AsyncGenerator
 
 from nonebot.drivers import Request, Response
 from nonebot.exception import WebSocketClosed
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.drivers import HTTPVersion, ForwardMixin, ForwardDriver, combine_driver
+from nonebot.drivers import (
+    HTTPVersion,
+    HTTPClientMixin,
+    WebSocketClientMixin,
+    combine_driver,
+)
 
 try:
     import aiohttp
@@ -34,7 +39,7 @@ except ModuleNotFoundError as e:  # pragma: no cover
     ) from e
 
 
-class Mixin(ForwardMixin):
+class Mixin(HTTPClientMixin, WebSocketClientMixin):
     """AIOHTTP Mixin"""
 
     @property
@@ -172,5 +177,11 @@ class WebSocket(BaseWebSocket):
         await self.websocket.send_bytes(data)
 
 
-Driver: Type[ForwardDriver] = combine_driver(NoneDriver, Mixin)  # type: ignore
-"""AIOHTTP Driver"""
+if TYPE_CHECKING:
+
+    class Driver(Mixin, NoneDriver):
+        ...
+
+else:
+    Driver = combine_driver(NoneDriver, Mixin)
+    """AIOHTTP Driver"""

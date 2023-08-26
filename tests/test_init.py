@@ -2,7 +2,7 @@ import pytest
 from nonebug import App
 
 import nonebot
-from nonebot.drivers import Driver, ReverseDriver
+from nonebot.drivers import Driver, ASGIMixin, ReverseDriver
 from nonebot import (
     get_app,
     get_bot,
@@ -47,6 +47,7 @@ async def test_get_driver(app: App, monkeypatch: pytest.MonkeyPatch):
 async def test_get_asgi(app: App, monkeypatch: pytest.MonkeyPatch):
     driver = get_driver()
     assert isinstance(driver, ReverseDriver)
+    assert isinstance(driver, ASGIMixin)
     assert get_asgi() == driver.asgi
 
 
@@ -54,6 +55,7 @@ async def test_get_asgi(app: App, monkeypatch: pytest.MonkeyPatch):
 async def test_get_app(app: App, monkeypatch: pytest.MonkeyPatch):
     driver = get_driver()
     assert isinstance(driver, ReverseDriver)
+    assert isinstance(driver, ASGIMixin)
     assert get_app() == driver.server_app
 
 

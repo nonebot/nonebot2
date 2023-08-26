@@ -12,7 +12,7 @@ options:
 
 在[驱动器](./driver.md)一节中，我们了解了驱动器的两种类型。既然驱动器可以作为服务端运行，那么我们就可以向驱动器添加路由规则，从而实现自定义的 API 接口等功能。在添加路由规则时，我们需要注意驱动器的类型，详情可以参考[选择驱动器](./driver.md#配置驱动器)。
 
-NoneBot 中，我们可以通过两种途径向驱动器添加路由规则：
+NoneBot 中，我们可以通过两种途径向 ASGI 驱动器添加路由规则：
 
 1. 通过 NoneBot 的兼容层建立路由规则。
 2. 直接向 ASGI 应用添加路由规则。
@@ -23,9 +23,9 @@ NoneBot 中，我们可以通过两种途径向驱动器添加路由规则：
 
 ```python {3}
 from nonebot import get_driver
-from nonebot.drivers import ReverseDriver
+from nonebot.drivers import ASGIMixin
 
-can_use = isinstance(get_driver(), ReverseDriver)
+can_use = isinstance(get_driver(), ASGIMixin)
 ```
 
 ## 通过兼容层添加路由
@@ -45,12 +45,12 @@ NoneBot 兼容层定义了两个数据类 `HTTPServerSetup` 和 `WebSocketServer
 
 ```python
 from nonebot import get_driver
-from nonebot.drivers import URL, Request, Response, HTTPServerSetup
+from nonebot.drivers import URL, Request, Response, ASGIMixin, HTTPServerSetup
 
 async def hello(request: Request) -> Response:
     return Response(200, content="Hello, world!")
 
-if isinstance((driver := get_driver()), ReverseDriver):
+if isinstance((driver := get_driver()), ASGIMixin):
     driver.setup_http_server(
         HTTPServerSetup(
             path=URL("/hello"),
@@ -75,7 +75,7 @@ if isinstance((driver := get_driver()), ReverseDriver):
 
 ```python
 from nonebot import get_driver
-from nonebot.drivers import URL, WebSocket, WebSocketServerSetup
+from nonebot.drivers import URL, ASGIMixin, WebSocket, WebSocketServerSetup
 
 async def ws_handler(ws: WebSocket):
     await ws.accept()
@@ -91,7 +91,7 @@ async def ws_handler(ws: WebSocket):
             await websocket.close()
         # do some cleanup
 
-if isinstance((driver := get_driver()), ReverseDriver):
+if isinstance((driver := get_driver()), ASGIMixin):
     driver.setup_websocket_server(
         WebSocketServerSetup(
             path=URL("/ws"),

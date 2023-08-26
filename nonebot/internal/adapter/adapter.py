@@ -7,10 +7,11 @@ from nonebot.internal.driver import (
     Driver,
     Request,
     Response,
+    ASGIMixin,
     WebSocket,
-    ForwardDriver,
-    ReverseDriver,
+    HTTPClientMixin,
     HTTPServerSetup,
+    WebSocketClientMixin,
     WebSocketServerSetup,
 )
 
@@ -72,26 +73,26 @@ class Adapter(abc.ABC):
 
     def setup_http_server(self, setup: HTTPServerSetup):
         """设置一个 HTTP 服务器路由配置"""
-        if not isinstance(self.driver, ReverseDriver):
+        if not isinstance(self.driver, ASGIMixin):
             raise TypeError("Current driver does not support http server")
         self.driver.setup_http_server(setup)
 
     def setup_websocket_server(self, setup: WebSocketServerSetup):
         """设置一个 WebSocket 服务器路由配置"""
-        if not isinstance(self.driver, ReverseDriver):
+        if not isinstance(self.driver, ASGIMixin):
             raise TypeError("Current driver does not support websocket server")
         self.driver.setup_websocket_server(setup)
 
     async def request(self, setup: Request) -> Response:
         """进行一个 HTTP 客户端请求"""
-        if not isinstance(self.driver, ForwardDriver):
+        if not isinstance(self.driver, HTTPClientMixin):
             raise TypeError("Current driver does not support http client")
         return await self.driver.request(setup)
 
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator[WebSocket, None]:
         """建立一个 WebSocket 客户端连接请求"""
-        if not isinstance(self.driver, ForwardDriver):
+        if not isinstance(self.driver, WebSocketClientMixin):
             raise TypeError("Current driver does not support websocket client")
         async with self.driver.websocket(setup) as ws:
             yield ws

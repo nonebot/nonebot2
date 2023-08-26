@@ -125,8 +125,8 @@ NoneBot 提供了多种 [Driver](../advanced/driver) 来帮助适配器进行网
 import asyncio
 from typing_extensions import override
 
-from nonebot.drivers import Request, ForwardDriver
 from nonebot.exception import WebSocketClosed
+from nonebot.drivers import Request, WebSocketClientMixin
 
 class Adapter(BaseAdapter):
     @override
@@ -137,11 +137,11 @@ class Adapter(BaseAdapter):
         self.setup()
 
     def setup(self) -> None:
-        if not isinstance(self.driver, ForwardDriver):
+        if not isinstance(self.driver, WebSocketClientMixin):
             # 判断用户配置的Driver类型是否符合适配器要求，不符合时应抛出异常
             raise RuntimeError(
-                f"Current driver {self.config.driver} doesn't support forward connections!"
-                f"{self.get_name()} Adapter need a ForwardDriver to work."
+                f"Current driver {self.config.driver} doesn't support websocket client connections!"
+                f"{self.get_name()} Adapter need a WebSocket Client Driver to work."
             )
         # 在 NoneBot 启动和关闭时进行相关操作
         self.driver.on_startup(self.startup)
@@ -202,8 +202,8 @@ class Adapter(BaseAdapter):
 ```python {30,38} title=adapter.py
 from nonebot.drivers import (
     Request,
+    ASGIMixin,
     WebSocket,
-    ReverseDriver,
     HTTPServerSetup,
     WebSocketServerSetup
 )
@@ -216,10 +216,10 @@ class Adapter(BaseAdapter):
         self.setup()
 
     def setup(self) -> None:
-        if not isinstance(self.driver, ReverseDriver):
+        if not isinstance(self.driver, ASGIMixin):
             raise RuntimeError(
-                f"Current driver {self.config.driver} doesn't support forward connections!"
-                f"{self.get_name()} Adapter need a ReverseDriver to work."
+                f"Current driver {self.config.driver} doesn't support asgi server!"
+                f"{self.get_name()} Adapter need a asgi server driver to work."
             )
         # 建立服务端路由
         # HTTP Webhook 路由
