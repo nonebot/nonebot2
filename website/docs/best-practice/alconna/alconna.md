@@ -28,20 +28,20 @@ description: Alconna 基本介绍
 
 在 Alconna 中，你可以传入多种类型的命令头，例如：
 
-|              前缀              |    命令名     |                           匹配内容                            |    说明    |
-|:----------------------------:|:----------:|:---------------------------------------------------------:|:--------:|
-|              -               |   "foo"    |                          `"foo"`                          | 无前缀的纯文字头 |
-|              -               |    123     |                           `123`                           | 无前缀的元素头  |
-|              -               | "re:\d{2}" |                          `"32"`                           | 无前缀的正则头  |
-|              -               |    int     |                      `123` 或 `"456"`                      | 无前缀的类型头  |
-|         [int, bool]          |     -      |                      `True` 或 `123`                       | 无名的元素类头  |
-|        ["foo", "bar"]        |     -      |                     `"foo"` 或 `"bar"`                     | 无名的纯文字头  |
-|        ["foo", "bar"]        |   "baz"    |                  `"foobaz"` 或 `"barbaz"`                  |   纯文字头   |
-|         [int, bool]          |   "foo"    |             `[123, "foo"]` 或 `[False, "foo"]`             |   类型头    |
-|         [123, 4567]          |   "foo"    |             `[123, "foo"]` 或 `[4567, "foo"]`              |   元素头    |
-|      [nepattern.NUMBER]      |   "bar"    |            `[123, "bar"]` 或 `[123.456, "bar"]`            |   表达式头   |
-|         [123, "foo"]         |   "bar"    |      `[123, "bar"]` 或 `"foobar"` 或 `["foo", "bar"]`       |   混合头    |
-| [(int, "foo"), (456, "bar")] |   "baz"    | `[123, "foobaz"]` 或 `[456, "foobaz"]` 或 `[456, "barbaz"]` |    对头    |
+|             前缀             |   命令名   |                          匹配内容                           |       说明       |
+| :--------------------------: | :--------: | :---------------------------------------------------------: | :--------------: |
+|              -               |   "foo"    |                           `"foo"`                           | 无前缀的纯文字头 |
+|              -               |    123     |                            `123`                            |  无前缀的元素头  |
+|              -               | "re:\d{2}" |                           `"32"`                            |  无前缀的正则头  |
+|              -               |    int     |                      `123` 或 `"456"`                       |  无前缀的类型头  |
+|         [int, bool]          |     -      |                       `True` 或 `123`                       |  无名的元素类头  |
+|        ["foo", "bar"]        |     -      |                     `"foo"` 或 `"bar"`                      |  无名的纯文字头  |
+|        ["foo", "bar"]        |   "baz"    |                  `"foobaz"` 或 `"barbaz"`                   |     纯文字头     |
+|         [int, bool]          |   "foo"    |             `[123, "foo"]` 或 `[False, "foo"]`              |      类型头      |
+|         [123, 4567]          |   "foo"    |              `[123, "foo"]` 或 `[4567, "foo"]`              |      元素头      |
+|      [nepattern.NUMBER]      |   "bar"    |            `[123, "bar"]` 或 `[123.456, "bar"]`             |     表达式头     |
+|         [123, "foo"]         |   "bar"    |      `[123, "bar"]` 或 `"foobar"` 或 `["foo", "bar"]`       |      混合头      |
+| [(int, "foo"), (456, "bar")] |   "baz"    | `[123, "foobaz"]` 或 `[456, "foobaz"]` 或 `[456, "barbaz"]` |       对头       |
 
 其中
 
@@ -67,6 +67,7 @@ assert alc.parse(".rd123").header["roll"] == 123
 Bracket Header 类似 python 里的 f-string 写法，通过 "{}" 声明匹配类型
 
 "{}" 中的内容为 "name:type or pat"：
+
 - "{}", "{:}": 占位符，等价于 "(.+)"
 - "{foo}": 等价于 "(?P<foo>.+)"
 - "{:\d+}": 等价于 "(\d+)"
@@ -380,6 +381,7 @@ class ShortcutArgs(TypedDict):
 - `{%X}`: 如 `setu {%0}`，表示此处填入快捷指令后随的第 X 个参数。
 
   例如，若快捷指令为 `涩图`, 配置为 `{"command": "setu {%0}"}`, 则指令 `涩图 1` 相当于 `setu 1`
+
 - `{*}`: 表示此处填入所有后随参数，并且可以通过 `{*X}` 的方式指定组合参数之间的分隔符。
 - `{X}`: 表示此处填入可能的正则匹配的组：
   - 若 `command` 中存在匹配组 `(xxx)`，则 `{X}` 表示第 X 个匹配组的内容
@@ -387,7 +389,8 @@ class ShortcutArgs(TypedDict):
 
 除此之外, 通过内置选项 `--shortcut` 可以动态操作快捷指令。
 
-例如： 
+例如：
+
 - `cmd --shortcut <key> <cmd>` 来增加一个快捷指令
 - `cmd --shortcut list` 来列出当前指令的所有快捷指令
 - `cmd --shortcut delete key` 来删除一个快捷指令
@@ -406,7 +409,6 @@ alc.parse("test_fuzy")
 # output: test_fuzy is not matched. Do you mean "test_fuzzy"?
 ```
 
-
 ## 解析结果
 
 `Alconna.parse` 会返回由 **Arparma** 承载的解析结果。
@@ -414,6 +416,7 @@ alc.parse("test_fuzy")
 `Arpamar` 会有如下参数：
 
 - 调试类
+
   - matched: 是否匹配成功
   - error_data: 解析失败时剩余的数据
   - error_info: 解析失败时的异常内容
@@ -430,6 +433,7 @@ alc.parse("test_fuzy")
 `Arparma` 同时提供了便捷的查询方法 `query[type]()`，会根据传入的 `path` 查找参数并返回
 
 `path` 支持如下：
+
 - `main_args`, `options`, ...: 返回对应的属性
 - `args`: 返回 all_matched_args
 - `main_args.xxx`, `options.xxx`, ...: 返回字典中 `xxx`键对应的值
@@ -438,10 +442,9 @@ alc.parse("test_fuzy")
 - `options.foo.value`, `foo.value`: 返回选项 `foo` 的解析值
 - `options.foo.args`, `foo.args`: 返回选项 `foo` 的解析参数字典
 - `options.foo.args.bar`, `foo.bar`: 返回选项 `foo` 的参数字典中 `bar` 键对应的值
-...
+  ...
 
 同样, `Arparma["foo.bar"]` 的表现与 `query()` 一致
-
 
 ## Duplication
 

@@ -134,7 +134,7 @@ require("nonebot_plugin_alconna")
 ...
 
 from nonebot_plugin_alconna import (
-    on_alconna, 
+    on_alconna,
     Match,
     Query,
     AlconnaQuery,
@@ -164,7 +164,7 @@ async def handle_test2(result: Arparma):
 
 @test.handle()
 async def handle_test3(bar: Match[int]):
-    if bar.available:    
+    if bar.available:
         await test.send(f"foo={bar.result}")
 
 @test.handle()
@@ -191,7 +191,7 @@ class At(Segment):
     """At对象, 表示一类提醒某用户的元素"""
     type: Literal["user", "role", "channel"]
     target: str
-    
+
 class AtAll(Segment):
     """AtAll对象, 表示一类提醒所有人的元素"""
 
@@ -234,6 +234,7 @@ class Other(Segment):
 :::
 
 例如：
+
 ```python
 ...
 ats: tuple[At, ...] = result["add.member.target"]
@@ -258,8 +259,8 @@ from nonebot_plugin_alconna import assign, on_alconna, CommandResult, Check
 pip = Alconna(
     "pip",
     Subcommand(
-        "install", Args["pak", str], 
-        Option("--upgrade"), 
+        "install", Args["pak", str],
+        Option("--upgrade"),
         Option("--force-reinstall")
     ),
     Subcommand("list", Option("--out-dated"))

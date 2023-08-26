@@ -7,7 +7,6 @@ description: 杂项
 
 ## 通用消息序列
 
-
 除了之前提到的通用标注外，`nonebot_plugin_alconna` 还提供了一个类似于 `Message` 的 `UniMessage` 类型，其元素为经过通用标注转换后的 `Segment`。
 
 你可以通过提供的 `UniversalMessage` 或 `UniMsg` 依赖注入器来获取 `UniMessage`。
@@ -26,7 +25,6 @@ async def _(msg: UniMsg):
         print(ats)
     ...
 ```
-
 
 ### 获取消息纯文本
 
