@@ -6930,27 +6930,6 @@
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
   },
   {
-    "module_name": "nonebot_plugin_talk_with_poe_ai",
-    "project_link": "nonebot-plugin-talk-with-poe-ai",
-    "name": "talk with poe ai",
-    "desc": "Nonebot2 基于poe cookie登录AI聊天插件",
-    "author": "nikissXI",
-    "homepage": "https://github.com/nikissXI/nonebot_plugins/tree/main/nonebot_plugin_talk_with_poe_ai",
-    "tags": [
-      {
-        "label": "poe",
-        "color": "#cd52ea"
-      },
-      {
-        "label": "ai",
-        "color": "#cd52ea"
-      }
-    ],
-    "is_official": false,
-    "type": "application",
-    "supported_adapters": ["nonebot.adapters.onebot.v11"]
-  },
-  {
     "module_name": "nonebot_plugin_csornament",
     "project_link": "nonebot-plugin-csornament",
     "name": "CSGO饰品查询机器人",
