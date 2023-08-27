@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: httpcat-状态猫 😺 [@noneflow](https://github.com/noneflow) ([#2306](https://github.com/nonebot/nonebot2/pull/2306))
 - Plugin: 雪豹闭嘴 [@noneflow](https://github.com/noneflow) ([#2300](https://github.com/nonebot/nonebot2/pull/2300))
 - Plugin: Nonebot Requests [@noneflow](https://github.com/noneflow) ([#2294](https://github.com/nonebot/nonebot2/pull/2294))
 - Plugin: 双向聊天插件 [@noneflow](https://github.com/noneflow) ([#2291](https://github.com/nonebot/nonebot2/pull/2291))
