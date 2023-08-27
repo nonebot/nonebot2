@@ -7248,5 +7248,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_qrcode2",
+    "project_link": "nonebot-plugin-qrcode2",
+    "name": "二维码",
+    "desc": "通过pyzbar解析二维码",
+    "author": "tomorinao-www",
+    "homepage": "https://github.com/tomorinao-www/nonebot-plugin-qrcode2",
+    "tags": [
+      {
+        "label": "qrcode",
+        "color": "#f541dc"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
