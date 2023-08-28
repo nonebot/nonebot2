@@ -45,6 +45,10 @@ class Param(abc.ABC, FieldInfo):
     继承自 `pydantic.fields.FieldInfo`，用于描述参数信息（不包括参数名）。
     """
 
+    def __init__(self, *args, validate: bool = False, **kwargs: Any) -> None:
+        super().__init__(*args, **kwargs)
+        self.validate = validate
+
     @classmethod
     def _check_param(
         cls, param: inspect.Parameter, allow_types: Tuple[Type["Param"], ...]
@@ -206,10 +210,12 @@ class Dependent(Generic[R]):
             raise
 
     async def _solve_field(self, field: ModelField, params: Dict[str, Any]) -> Any:
-        value = await cast(Param, field.field_info)._solve(**params)
+        param = cast(Param, field.field_info)
+        value = await param._solve(**params)
         if value is Undefined:
             value = field.get_default()
-        return check_field_type(field, value)
+        v = check_field_type(field, value)
+        return v if param.validate else value
 
     async def solve(self, **params: Any) -> Dict[str, Any]:
         # solve parameterless
