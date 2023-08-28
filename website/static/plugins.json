@@ -7244,5 +7244,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_fakemsg",
+    "project_link": "nonebot-plugin-fakemsg",
+    "name": "消息伪造",
+    "desc": "伪造消息",
+    "author": "Cvandia",
+    "homepage": "https://github.com/Cvandia/nonebot-plugin-fakemsg",
+    "tags": [
+      {
+        "label": "合并转发",
+        "color": "#1ae32c"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
