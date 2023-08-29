@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 支持子依赖定义 Pydantic 类型校验 [@yanyongyu](https://github.com/yanyongyu) ([#2310](https://github.com/nonebot/nonebot2/pull/2310))
 - Feature: 细化 driver 职责类型 [@yanyongyu](https://github.com/yanyongyu) ([#2296](https://github.com/nonebot/nonebot2/pull/2296))
 
 ### 🐛 Bug 修复
