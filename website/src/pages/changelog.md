@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 添加 Discord 适配器描述，补充 Villa 适配器协议链接 [@CMHopeSunshine](https://github.com/CMHopeSunshine) ([#2316](https://github.com/nonebot/nonebot2/pull/2316))
 - Docs: 添加 Red 适配器描述 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2313](https://github.com/nonebot/nonebot2/pull/2313))
 - Docs: 更新最佳实践部分的 Alconna 章节 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2303](https://github.com/nonebot/nonebot2/pull/2303))
 - Docs: 修复 Alconna 中 `CommandResult` 描述错误 [@KomoriDev](https://github.com/KomoriDev) ([#2282](https://github.com/nonebot/nonebot2/pull/2282))
