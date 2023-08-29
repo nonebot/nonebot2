@@ -75,6 +75,7 @@ toc_max_heading_level: 2
 
 ### 🍻 适配器发布
 
+- Adapter: Discord [@noneflow](https://github.com/noneflow) ([#2315](https://github.com/nonebot/nonebot2/pull/2315))
 - Adapter: RedProtocol [@noneflow](https://github.com/noneflow) ([#2239](https://github.com/nonebot/nonebot2/pull/2239))
 
 ## v2.0.1
