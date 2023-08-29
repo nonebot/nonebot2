@@ -353,6 +353,80 @@ async def _(x: int = Depends(random_result, use_cache=False)):
 缓存的生命周期与当前接收到的事件相同。接收到事件后，子依赖在首次执行时缓存，在该事件处理完成后，缓存就会被清除。
 :::
 
+### 类型转换与校验
+
+在依赖注入系统中，我们可以对子依赖的返回值进行自动类型转换与校验。这个功能由 Pydantic 支持，因此我们通过参数类型注解自动使用 Pydantic 支持的类型转换。例如：
+
+<Tabs groupId="python">
+  <TabItem value="3.9" label="Python 3.9+" default>
+
+```python {6,9}
+from typing import Annotated
+
+from nonebot.params import Depends
+from nonebot.adapters import Event
+
+def get_user_id(event: Event) -> str:
+    return event.get_user_id()
+
+async def _(user_id: Annotated[int, Depends(get_user_id, validate=True)]):
+    print(user_id)
+```
+
+  </TabItem>
+  <TabItem value="3.8" label="Python 3.8+">
+
+```python {4,7}
+from nonebot.params import Depends
+from nonebot.adapters import Event
+
+def get_user_id(event: Event) -> str:
+    return event.get_user_id()
+
+async def _(user_id: int = Depends(get_user_id, validate=True)):
+    print(user_id)
+```
+
+  </TabItem>
+</Tabs>
+
+在进行类型自动转换的同时，Pydantic 还支持对数据进行更多的限制，如：大于、小于、长度等。使用方法如下：
+
+<Tabs groupId="python">
+  <TabItem value="3.9" label="Python 3.9+" default>
+
+```python {7,10}
+from typing import Annotated
+
+from pydantic import Field
+from nonebot.params import Depends
+from nonebot.adapters import Event
+
+def get_user_id(event: Event) -> str:
+    return event.get_user_id()
+
+async def _(user_id: Annotated[int, Depends(get_user_id, validate=Field(gt=100))]):
+    print(user_id)
+```
+
+  </TabItem>
+  <TabItem value="3.8" label="Python 3.8+">
+
+```python {5,8}
+from pydantic import Field
+from nonebot.params import Depends
+from nonebot.adapters import Event
+
+def get_user_id(event: Event) -> str:
+    return event.get_user_id()
+
+async def _(user_id: int = Depends(get_user_id, validate=Field(gt=100))):
+    print(user_id)
+```
+
+  </TabItem>
+</Tabs>
+
 ### 类作为依赖
 
 在前面的事例中，我们使用了函数作为子依赖。实际上，我们还可以使用类作为依赖。当我们在实例化一个类的时候，其实我们就在调用它，类本身也是一个可调用对象。例如：

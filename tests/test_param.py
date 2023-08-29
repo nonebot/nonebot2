@@ -42,9 +42,14 @@ async def test_depend(app: App):
         ClassDependency,
         runned,
         depends,
+        validate,
         class_depend,
         test_depends,
+        validate_fail,
+        validate_field,
         annotated_depend,
+        sub_type_mismatch,
+        validate_field_fail,
         annotated_class_depend,
         annotated_prior_depend,
     )
@@ -62,8 +67,7 @@ async def test_depend(app: App):
         event_next = make_fake_event()()
         ctx.receive_event(bot, event_next)
 
-    assert len(runned) == 2
-    assert runned[0] == runned[1] == 1
+    assert runned == [1, 1]
 
     runned.clear()
 
@@ -83,6 +87,29 @@ async def test_depend(app: App):
         annotated_class_depend, allow_types=[DependParam]
     ) as ctx:
         ctx.should_return(ClassDependency(x=1, y=2))
+
+    with pytest.raises(TypeMisMatch):  # noqa: PT012
+        async with app.test_dependent(
+            sub_type_mismatch, allow_types=[DependParam, BotParam]
+        ) as ctx:
+            bot = ctx.create_bot()
+            ctx.pass_params(bot=bot)
+
+    async with app.test_dependent(validate, allow_types=[DependParam]) as ctx:
+        ctx.should_return(1)
+
+    with pytest.raises(TypeMisMatch):
+        async with app.test_dependent(validate_fail, allow_types=[DependParam]) as ctx:
+            ...
+
+    async with app.test_dependent(validate_field, allow_types=[DependParam]) as ctx:
+        ctx.should_return(1)
+
+    with pytest.raises(TypeMisMatch):
+        async with app.test_dependent(
+            validate_field_fail, allow_types=[DependParam]
+        ) as ctx:
+            ...
 
 
 @pytest.mark.asyncio

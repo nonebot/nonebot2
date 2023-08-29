@@ -5,15 +5,13 @@ FrontMatter:
 """
 
 import inspect
-from typing import Any, Dict, TypeVar, Callable, ForwardRef
+from typing import Any, Dict, Callable, ForwardRef
 
 from loguru import logger
 from pydantic.fields import ModelField
 from pydantic.typing import evaluate_forwardref
 
 from nonebot.exception import TypeMisMatch
-
-V = TypeVar("V")
 
 
 def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
@@ -49,10 +47,10 @@ def get_typed_annotation(param: inspect.Parameter, globalns: Dict[str, Any]) -> 
     return annotation
 
 
-def check_field_type(field: ModelField, value: V) -> V:
+def check_field_type(field: ModelField, value: Any) -> Any:
     """检查字段类型是否匹配"""
 
-    _, errs_ = field.validate(value, {}, loc=())
+    v, errs_ = field.validate(value, {}, loc=())
     if errs_:
         raise TypeMisMatch(field, value)
-    return value
+    return v
