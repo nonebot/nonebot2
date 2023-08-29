@@ -178,5 +178,15 @@
     "homepage": "https://github.com/nonebot/adapter-red",
     "tags": [],
     "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.discord",
+    "project_link": "nonebot-adapter-discord",
+    "name": "Discord",
+    "desc": "Discord 官方 Bot 协议适配",
+    "author": "CMHopeSunshine",
+    "homepage": "https://github.com/nonebot/adapter-discord",
+    "tags": [],
+    "is_official": false
   }
 ]
