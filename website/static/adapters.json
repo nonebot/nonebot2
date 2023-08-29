@@ -187,6 +187,6 @@
     "author": "CMHopeSunshine",
     "homepage": "https://github.com/nonebot/adapter-discord",
     "tags": [],
-    "is_official": false
+    "is_official": true
   }
 ]
