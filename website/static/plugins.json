@@ -7261,5 +7261,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_alchelper",
+    "project_link": "nonebot-plugin-alchelper",
+    "name": "Alconna 帮助工具",
+    "desc": "基于 nonebot-plugin-alconna，给出所有命令帮助以及统计",
+    "author": "RF-Tar-Railt",
+    "homepage": "https://github.com/RF-Tar-Railt/nonebot-plugin-alchelper",
+    "tags": [
+      {
+        "label": "Alconna",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
   }
 ]
