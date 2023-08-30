@@ -7261,5 +7261,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_systools_dev",
+    "project_link": "nonebot-plugin-systools-dev",
+    "name": "系统助手-Dev",
+    "desc": "系统助手 for Nonebot - 支持运行系统命令、备份 Koishi 配置文件到 GitHub、查询系统状态、获取 IP 地址等进阶操作",
+    "author": "StarJian-Team",
+    "homepage": "https://github.com/zhuhansan666/nonebot-plugin-systools/tree/Dev_for_shanshui",
+    "tags": [
+      {
+        "label": "systools",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
