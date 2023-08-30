@@ -574,5 +574,13 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "星崽丨StarZai",
+    "desc": "星崽Bot，QQ438668362",
+    "author": "StarJian-Team",
+    "homepage": "https://github.com/StarJian-Team",
+    "tags": [],
+    "is_official": false
   }
 ]
