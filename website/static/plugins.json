@@ -7278,5 +7278,17 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_starzai_plugin_memu",
+    "project_link": "nonebot-plugin-starzai-plugin-memu",
+    "name": "星崽Bot-菜单",
+    "desc": "为星崽系列插件提供菜单",
+    "author": "StarJian-Team",
+    "homepage": "https://github.com/StarJian-Team/StarZai-Plugin/tree/Stable/Memu/NoneBot",
+    "tags": [],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
