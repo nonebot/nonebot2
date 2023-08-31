@@ -4644,52 +4644,6 @@
     "supported_adapters": null
   },
   {
-    "module_name": "TeenStudy",
-    "project_link": "teenstudy",
-    "name": "青年大学习提交(Web UI)",
-    "desc": "利用httpx库，向后台提交数据完成大学习，返回完成截图",
-    "author": "ZM25XC",
-    "homepage": "https://github.com/ZM25XC/TeenStudy",
-    "tags": [
-      {
-        "label": "青年大学习",
-        "color": "#e5ea52"
-      },
-      {
-        "label": "httpx",
-        "color": "#52ea5f"
-      },
-      {
-        "label": "Web UI",
-        "color": "#5295ea"
-      }
-    ],
-    "is_official": false,
-    "type": null,
-    "supported_adapters": null
-  },
-  {
-    "module_name": "nonebot_plugin_auto_teenstudy",
-    "project_link": "nonebot-plugin-auto-teenstudy",
-    "name": "青年大学习提交(基础版)",
-    "desc": "使用httpx向各地区大学习发送post请求完成大学习，返回完成截图",
-    "author": "ZM25XC",
-    "homepage": "https://github.com/ZM25XC/nonebot_plugin_auto_teenstudy",
-    "tags": [
-      {
-        "label": "青年大学习",
-        "color": "#e8f710"
-      },
-      {
-        "label": "多地区",
-        "color": "#108ef7"
-      }
-    ],
-    "is_official": false,
-    "type": null,
-    "supported_adapters": null
-  },
-  {
     "module_name": "nonebot_plugin_60s",
     "project_link": "nonebot-plugin-60s",
     "name": "60s日历",
@@ -5755,23 +5709,6 @@
       {
         "label": "开箱模拟器",
         "color": "#ff4781"
-      }
-    ],
-    "is_official": false,
-    "type": null,
-    "supported_adapters": null
-  },
-  {
-    "module_name": "nonebot_plugin_grouplock",
-    "project_link": "nonebot-plugin-grouplock",
-    "name": "群聊人数锁定",
-    "desc": "一个基于nonebot2和go-cqhttp的群聊人数锁定插件",
-    "author": "ZM25XC",
-    "homepage": "https://github.com/ZM25XC/nonebot-plugin-grouplock",
-    "tags": [
-      {
-        "label": "群管",
-        "color": "#52b5ea"
       }
     ],
     "is_official": false,
