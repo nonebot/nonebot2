@@ -33,6 +33,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 删除不再维护的插件 [@ZM25XC](https://github.com/ZM25XC) ([#2330](https://github.com/nonebot/nonebot2/pull/2330))
 - Plugin: 删除插件 poe ai [@nikissXI](https://github.com/nikissXI) ([#2308](https://github.com/nonebot/nonebot2/pull/2308))
 - Plugin: 移除不再维护的插件，修改插件信息 [@Well2333](https://github.com/Well2333) ([#2292](https://github.com/nonebot/nonebot2/pull/2292))
 - Fix: 修复 ruff 发现的问题 [@yanyongyu](https://github.com/yanyongyu) ([#2286](https://github.com/nonebot/nonebot2/pull/2286))
