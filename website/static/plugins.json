@@ -7215,5 +7215,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_souti",
+    "project_link": "nonebot-plugin-souti",
+    "name": "nonebot-plugin-souti",
+    "desc": "使用百度不挂科题库, 可以实现文字搜题功能",
+    "author": "xiaoWangSec",
+    "homepage": "https://github.com/xiaoWangSec/nonebot-plugin-souti",
+    "tags": [
+      {
+        "label": "搜题",
+        "color": "#49e3d5"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
   }
 ]
