@@ -43,6 +43,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-souti [@noneflow](https://github.com/noneflow) ([#2334](https://github.com/nonebot/nonebot2/pull/2334))
 - Plugin: Alconna 帮助工具 [@noneflow](https://github.com/noneflow) ([#2326](https://github.com/nonebot/nonebot2/pull/2326))
 - Plugin: 消息伪造 [@noneflow](https://github.com/noneflow) ([#2312](https://github.com/nonebot/nonebot2/pull/2312))
 - Plugin: 二维码 [@noneflow](https://github.com/noneflow) ([#2302](https://github.com/nonebot/nonebot2/pull/2302))
