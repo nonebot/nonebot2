@@ -7253,5 +7253,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_wearskirt",
+    "project_link": "nonebot-plugin-wearskirt",
+    "name": "女装 !",
+    "desc": "Nonebot 赛博女装插件",
+    "author": "Lfhsheng",
+    "homepage": "https://github.com/Lfhsheng/nonebot-plugin-wearskirt",
+    "tags": [
+      {
+        "label": "女装",
+        "color": "#ffc0cb"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
   }
 ]
