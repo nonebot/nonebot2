@@ -7232,5 +7232,26 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_helper_plus",
+    "project_link": "nonebot-plugin-helper-plus",
+    "name": "helper_plus",
+    "desc": "带有指令调用控制的高级helper",
+    "author": "fR0Z863xF",
+    "homepage": "https://github.com/fR0Z863xF/nonebot-plugin-helper-plus",
+    "tags": [
+      {
+        "label": "帮助",
+        "color": "#eae152"
+      },
+      {
+        "label": "命令控制",
+        "color": "#52ea5c"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
