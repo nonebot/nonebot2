@@ -16,7 +16,7 @@
   },
   "devDependencies": {
     "cross-env": "^7.0.3",
-    "prettier": "^2.5.0",
+    "prettier": "^3.0.3",
     "pyright": "^1.1.317"
   }
 }

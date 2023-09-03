@@ -6,7 +6,7 @@
     "types": [
       "node",
       "@docusaurus/module-type-aliases",
-      "docusaurus-theme-nonepress"
+      "@nullbot/docusaurus-theme-nonepress"
     ],
     "resolveJsonModule": true
   }

@@ -1,28 +1,16 @@
 module.exports = {
-  // content: [
-  //   `${__dirname}/src/**/*.{js,jsx,ts,tsx}`,
-  //   `${__dirname}/docs/**/*.{js,jsx,ts,tsx}`,
-  // ],
-  theme: {
-    extend: {
-      nonepress: {
+  daisyui: {
+    themes: [
+      {
         light: {
-          theme: {
-            DEFAULT: "#ea5252",
-          },
+          ...require("daisyui/src/theming/themes")["[data-theme=light]"],
         },
+      },
+      {
         dark: {
-          theme: {
-            DEFAULT: "#ea5252",
-          },
+          ...require("daisyui/src/theming/themes")["[data-theme=dark]"],
         },
       },
-      colors: {
-        hero: "#ea5252",
-        light: {
-          DEFAULT: "#fffdfd",
-        },
-      },
-    },
+    ],
   },
 };
