@@ -116,7 +116,7 @@ class Dependent(Generic[R]):
     @staticmethod
     def parse_params(
         call: _DependentCallable[R], allow_types: Tuple[Type[Param], ...]
-    ) -> Tuple[ModelField]:
+    ) -> Tuple[ModelField, ...]:
         fields: List[ModelField] = []
         params = get_typed_signature(call).parameters.values()
 
