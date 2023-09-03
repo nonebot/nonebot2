@@ -7301,5 +7301,17 @@
       "nonebot.adapters.qqguild",
       "nonebot.adapters.telegram"
     ]
+  },
+  {
+    "module_name": "nonebot_plugin_group_whitelist",
+    "project_link": "nonebot-plugin-group-whitelist",
+    "name": "nonebot_plugin_group_whitelist",
+    "desc": "简易群聊白名单",
+    "author": "Rikka-desu",
+    "homepage": "https://github.com/Rikka-desu/nonebot_plugin_group_whitelist",
+    "tags": [],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
