@@ -7270,5 +7270,36 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_skland_arksign",
+    "project_link": "nonebot-plugin-skland-arksign",
+    "name": "森空岛明日方舟签到器",
+    "desc": "私聊机器人以获得自动明日方舟森空岛签到服务",
+    "author": "GuGuMur",
+    "homepage": "https://github.com/GuGuMur/nonebot-plugin-skland-arksign",
+    "tags": [
+      {
+        "label": "森空岛",
+        "color": "#c8eb21"
+      },
+      {
+        "label": "明日方舟",
+        "color": "#111111"
+      },
+      {
+        "label": "签到",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": [
+      "nonebot.adapters.kaiheila",
+      "nonebot.adapters.onebot.v11",
+      "nonebot.adapters.onebot.v12",
+      "nonebot.adapters.qqguild",
+      "nonebot.adapters.telegram"
+    ]
   }
 ]
