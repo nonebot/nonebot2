@@ -101,17 +101,21 @@ class Dependent(Generic[R]):
         )
 
     async def __call__(self, **kwargs: Any) -> R:
-        # do pre-check
-        await self.check(**kwargs)
+        try:
+            # do pre-check
+            await self.check(**kwargs)
 
-        # solve param values
-        values = await self.solve(**kwargs)
+            # solve param values
+            values = await self.solve(**kwargs)
 
-        # call function
-        if is_coroutine_callable(self.call):
-            return await cast(Callable[..., Awaitable[R]], self.call)(**values)
-        else:
-            return await run_sync(cast(Callable[..., R], self.call))(**values)
+            # call function
+            if is_coroutine_callable(self.call):
+                return await cast(Callable[..., Awaitable[R]], self.call)(**values)
+            else:
+                return await run_sync(cast(Callable[..., R], self.call))(**values)
+        except SkippedException as e:
+            logger.trace(f"{self} skipped due to {e}")
+            raise
 
     @staticmethod
     def parse_params(
@@ -195,19 +199,10 @@ class Dependent(Generic[R]):
         return cls(call, params, parameterless_params)
 
     async def check(self, **params: Any) -> None:
-        try:
-            await asyncio.gather(
-                *(param._check(**params) for param in self.parameterless)
-            )
-            await asyncio.gather(
-                *(
-                    cast(Param, param.field_info)._check(**params)
-                    for param in self.params
-                )
-            )
-        except SkippedException as e:
-            logger.trace(f"{self} skipped due to {e}")
-            raise
+        await asyncio.gather(*(param._check(**params) for param in self.parameterless))
+        await asyncio.gather(
+            *(cast(Param, param.field_info)._check(**params) for param in self.params)
+        )
 
     async def _solve_field(self, field: ModelField, params: Dict[str, Any]) -> Any:
         param = cast(Param, field.field_info)
