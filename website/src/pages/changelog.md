@@ -44,6 +44,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot_plugin_group_whitelist [@noneflow](https://github.com/noneflow) ([#2320](https://github.com/nonebot/nonebot2/pull/2320))
 - Plugin: 森空岛明日方舟签到器 [@noneflow](https://github.com/noneflow) ([#2340](https://github.com/nonebot/nonebot2/pull/2340))
 - Plugin: 女装 ! [@noneflow](https://github.com/noneflow) ([#2337](https://github.com/nonebot/nonebot2/pull/2337))
 - Plugin: helper_plus [@noneflow](https://github.com/noneflow) ([#2324](https://github.com/nonebot/nonebot2/pull/2324))
