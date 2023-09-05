@@ -15,7 +15,7 @@ jobs:
     name: Pyright Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
       - name: Setup Python environment
         uses: ./.github/actions/setup-python
