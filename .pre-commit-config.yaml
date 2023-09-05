@@ -7,7 +7,7 @@ ci:
   autoupdate_commit_msg: ":arrow_up: auto update by pre-commit hooks"
 repos:
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.0.281
+    rev: v0.0.287
     hooks:
       - id: ruff
         args: [--fix, --exit-non-zero-on-fix]
@@ -26,7 +26,7 @@ repos:
         stages: [commit]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v3.0.0
+    rev: v3.0.3
     hooks:
       - id: prettier
         types_or: [javascript, jsx, ts, tsx, markdown, yaml, json]
