@@ -7313,5 +7313,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_ernie",
+    "project_link": "nonebot-plugin-ernie",
+    "name": "文心一言",
+    "desc": "Nonebot框架下的文心一言聊天插件",
+    "author": "Noctulus",
+    "homepage": "https://github.com/Noctulus/nonebot-plugin-ernie",
+    "tags": [
+      {
+        "label": "文心一言",
+        "color": "#2e317c"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
   }
 ]
