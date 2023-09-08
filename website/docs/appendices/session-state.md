@@ -4,8 +4,8 @@ description: 会话状态信息
 
 options:
   menu:
-    weight: 40
-    category: appendices
+    - category: appendices
+      weight: 40
 ---
 
 # 会话状态

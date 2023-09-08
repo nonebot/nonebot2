@@ -4,8 +4,8 @@ description: 创建并加载自定义插件
 
 options:
   menu:
-    weight: 50
-    category: tutorial
+    - category: tutorial
+      weight: 50
 ---
 
 # 插件编写准备

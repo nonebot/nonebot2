@@ -4,13 +4,13 @@ description: 创建一个 NoneBot 项目
 
 options:
   menu:
-    weight: 20
-    category: tutorial
+    - category: tutorial
+      weight: 20
 ---
 
 # 手动创建项目
 
-在[快速上手](./quick-start.mdx)中，我们已经介绍了如何安装和使用 `nb-cli` 创建一个项目。在本章节中，我们将简要介绍如何在不使用 `nb-cli` 的方式创建一个机器人项目的**最小实例**并启动。如果你想要了解 NoneBot 的启动流程，也可以阅读本章节。
+在[快速上手](../quick-start.mdx)中，我们已经介绍了如何安装和使用 `nb-cli` 创建一个项目。在本章节中，我们将简要介绍如何在不使用 `nb-cli` 的方式创建一个机器人项目的**最小实例**并启动。如果你想要了解 NoneBot 的启动流程，也可以阅读本章节。
 
 :::warning
 我们十分不推荐直接创建机器人项目，请优先考虑使用 nb-cli 进行项目创建。

@@ -1,0 +1,45 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "lib": ["ESNext"],
+    "module": "NodeNext",
+    "declaration": true,
+    "declarationMap": false,
+    "sourceMap": false,
+    "jsx": "react-native",
+    "noEmit": true,
+
+    /* Strict Type-Checking Options */
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+
+    /* Additional Checks */
+    // "noUnusedLocals": false, // ensured by eslint, should not block compilation
+    // "noImplicitReturns": true,
+    // "noFallthroughCasesInSwitch": true,
+
+    /* Disabled on purpose (handled by ESLint, should not block compilation) */
+    "noUnusedParameters": false,
+
+    /* Module Resolution Options */
+    "moduleResolution": "nodenext",
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "isolatedModules": true,
+
+    /* Advanced Options */
+    "resolveJsonModule": true,
+    "skipLibCheck": true, // @types/webpack and webpack/types.d.ts are not the same thing
+
+    /* Use tslib */
+    "importHelpers": true,
+    "noEmitHelpers": true
+  },
+  "include": ["./**/.eslintrc.js", "./**/.stylelintrc.js"],
+  "exclude": ["node_modules", "**/lib/**/*"]
+}

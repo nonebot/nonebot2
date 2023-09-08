@@ -4,8 +4,8 @@ description: 注册适配器与指定平台交互
 
 options:
   menu:
-    weight: 20
-    category: advanced
+    - category: advanced
+      weight: 20
 ---
 
 # 使用适配器

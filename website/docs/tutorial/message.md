@@ -4,8 +4,8 @@ description: 处理消息序列与消息段
 
 options:
   menu:
-    weight: 90
-    category: tutorial
+    - category: tutorial
+      weight: 90
 ---
 
 # 处理消息

@@ -4,8 +4,8 @@ description: 填写与获取插件相关的信息
 
 options:
   menu:
-    weight: 30
-    category: advanced
+    - category: advanced
+      weight: 30
 ---
 
 # 插件信息

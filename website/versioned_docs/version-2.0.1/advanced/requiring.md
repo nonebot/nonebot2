@@ -4,8 +4,8 @@ description: 使用其他插件提供的功能
 
 options:
   menu:
-    weight: 50
-    category: advanced
+    - category: advanced
+      weight: 50
 ---
 
 # 跨插件访问

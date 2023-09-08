@@ -4,8 +4,8 @@ description: 事件响应器组成与内置响应规则
 
 options:
   menu:
-    weight: 60
-    category: advanced
+    - category: advanced
+      weight: 60
 ---
 
 # 事件响应器进阶

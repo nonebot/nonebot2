@@ -4,8 +4,8 @@ description: 记录与控制日志
 
 options:
   menu:
-    weight: 70
-    category: appendices
+    - category: appendices
+      weight: 70
 ---
 
 # 日志

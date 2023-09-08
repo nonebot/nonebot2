@@ -1,10 +1,12 @@
-import clsx from "clsx";
 import React, { useCallback, useState } from "react";
-import { usePagination } from "react-use-pagination";
+
+import clsx from "clsx";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { usePagination } from "react-use-pagination";
 
 import { useContentWidth } from "../../libs/width";
+
 import styles from "./styles.module.css";
 
 export default function Paginate({

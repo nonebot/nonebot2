@@ -20,7 +20,7 @@ const navbar = {
     height: 32,
     width: 32,
   },
-  hideOnScroll: true,
+  hideOnScroll: false,
   items: [
     {
       label: "指南",
@@ -83,7 +83,6 @@ const footer = {
   links: [
     {
       title: "Learn",
-      icon: ["fas", "book"],
       items: [
         { label: "Introduction", to: "/docs/" },
         // { label: "QuickStart", to: "/docs/quick-start" },
@@ -92,7 +91,6 @@ const footer = {
     },
     {
       title: "NoneBot Team",
-      icon: ["fas", "user-friends"],
       items: [
         {
           label: "Homepage",
@@ -107,7 +105,6 @@ const footer = {
     },
     {
       title: "Related",
-      icon: ["fas", "external-link-alt"],
       items: [
         { label: "OneBot", href: "https://onebot.dev/" },
         { label: "go-cqhttp", href: "https://docs.go-cqhttp.org/" },
@@ -119,10 +116,14 @@ const footer = {
 
 // prism config
 /** @type {import('prism-react-renderer').PrismTheme} */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+// eslint-disable-next-line import/order
 const lightCodeTheme = require("prism-react-renderer/themes/github");
 /** @type {import('prism-react-renderer').PrismTheme} */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-ignore
+// eslint-disable-next-line import/order
 const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 /** @type {import('@nullbot/docusaurus-preset-nonepress').ThemeConfig["prism"]} */
@@ -239,6 +240,25 @@ const siteConfig = {
           //   "**/*.test.{js,jsx,ts,tsx}",
           //   "**/__tests__/**",
           // ],
+          // async sidebarItemsGenerator({
+          //   isCategoryIndex: defaultCategoryIndexMatcher,
+          //   defaultSidebarItemsGenerator,
+          //   ...args
+          // }) {
+          //   return defaultSidebarItemsGenerator({
+          //     ...args,
+          //     isCategoryIndex(doc) {
+          //       // disable category index convention for generated API docs
+          //       if (
+          //         doc.directories.length > 0 &&
+          //         doc.directories.at(-1) === "api"
+          //       ) {
+          //         return false;
+          //       }
+          //       return defaultCategoryIndexMatcher(doc);
+          //     },
+          //   });
+          // },
         },
         theme: {
           customCss: require.resolve("./src/css/custom.css"),

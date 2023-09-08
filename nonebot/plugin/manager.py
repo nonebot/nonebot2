@@ -20,7 +20,7 @@ from typing import Set, Dict, List, Iterable, Optional, Sequence
 from nonebot.log import logger
 from nonebot.utils import escape_tag, path_to_module_name
 
-from .plugin import Plugin, PluginMetadata
+from .model import Plugin, PluginMetadata
 from . import (
     _managers,
     _new_plugin,

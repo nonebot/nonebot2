@@ -1,8 +1,10 @@
 import React from "react";
+
 import { usePagination } from "react-use-pagination";
 
 import drivers from "../../static/drivers.json";
 import { useFilteredObjs } from "../libs/store";
+
 import Card from "./Card";
 import Paginate from "./Paginate";
 

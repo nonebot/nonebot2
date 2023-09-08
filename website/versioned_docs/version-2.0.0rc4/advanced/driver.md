@@ -4,8 +4,8 @@ description: 选择合适的驱动器运行机器人
 
 options:
   menu:
-    weight: 10
-    category: advanced
+    - category: advanced
+      weight: 10
 ---
 
 # 选择驱动器

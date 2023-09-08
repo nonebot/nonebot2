@@ -3,6 +3,7 @@ import React, { PropsWithChildren } from "react";
 import Link from "@docusaurus/Link";
 import useDocusaurusContext from "@docusaurus/useDocusaurusContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import Logo from "@theme/Logo";
 
 export function Hero(): JSX.Element {

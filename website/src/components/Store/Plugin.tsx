@@ -1,17 +1,19 @@
-import clsx from "clsx";
 import React, { useRef, useState } from "react";
+
+import clsx from "clsx";
+
 import { ChromePicker } from "react-color";
 import { usePagination } from "react-use-pagination";
 
-import plugins from "../../static/plugins.json";
-import { Tag, useFilteredObjs } from "../libs/store";
-import Card from "./Card";
-import Modal from "./Modal";
-import ModalAction from "./ModalAction";
-import ModalContent from "./ModalContent";
-import ModalTitle from "./ModalTitle";
-import Paginate from "./Paginate";
-import TagComponent from "./Tag";
+import plugins from "../../../static/plugins.json";
+import { Tag, useFilteredObjs } from "../../libs/store";
+import Card from "../Card/index";
+import Modal from "../Modal/index";
+import ModalAction from "../ModalAction/index";
+import ModalContent from "../ModalContent/index";
+import ModalTitle from "../ModalTitle/index";
+import Paginate from "../Paginate/index";
+import TagComponent from "../Tag/index";
 
 export default function Plugin(): JSX.Element {
   const [modalOpen, setModalOpen] = useState<boolean>(false);

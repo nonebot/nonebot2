@@ -1,4 +1,5 @@
 import { useLayoutEffect, useRef } from "react";
+
 import ResizeObserver from "resize-observer-polyfill";
 
 export function useResizeNotifier(

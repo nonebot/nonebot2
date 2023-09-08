@@ -1,5 +1,6 @@
-import * as AsciinemaPlayer from "asciinema-player";
 import React, { useEffect, useRef } from "react";
+
+import * as AsciinemaPlayer from "asciinema-player";
 
 export type AsciinemaOptions = {
   cols: number;
@@ -16,7 +17,7 @@ export type AsciinemaOptions = {
   fontSize: string;
 };
 
-export type AsciinemaProps = {
+export type Props = {
   url: string;
   options?: Partial<AsciinemaOptions>;
 };
@@ -24,12 +25,12 @@ export type AsciinemaProps = {
 export default function AsciinemaContainer({
   url,
   options = {},
-}: AsciinemaProps): JSX.Element {
+}: Props): JSX.Element {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     AsciinemaPlayer.create(url, ref.current, options);
-  }, []);
+  }, [url, options]);
 
-  return <div ref={ref} className="not-prose w-full max-w-full my-4"></div>;
+  return <div ref={ref} className="not-prose ap-container"></div>;
 }

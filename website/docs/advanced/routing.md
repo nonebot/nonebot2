@@ -4,8 +4,8 @@ description: 添加服务端路由规则
 
 options:
   menu:
-    weight: 100
-    category: advanced
+    - category: advanced
+      weight: 100
 ---
 
 # 添加路由

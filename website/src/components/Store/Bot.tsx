@@ -1,10 +1,13 @@
-import clsx from "clsx";
 import React, { useRef, useState } from "react";
+
+import clsx from "clsx";
+
 import { ChromePicker } from "react-color";
 import { usePagination } from "react-use-pagination";
 
-import adapters from "../../static/adapters.json";
+import bots from "../../static/bots.json";
 import { Tag, useFilteredObjs } from "../libs/store";
+
 import Card from "./Card";
 import Modal from "./Modal";
 import ModalAction from "./ModalAction";
@@ -13,28 +16,26 @@ import ModalTitle from "./ModalTitle";
 import Paginate from "./Paginate";
 import TagComponent from "./Tag";
 
-export default function Adapter(): JSX.Element {
+export default function Bot(): JSX.Element {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
   const {
     filter,
     setFilter,
-    filteredObjs: filteredAdapters,
-  } = useFilteredObjs(adapters);
+    filteredObjs: filteredBots,
+  } = useFilteredObjs(bots);
 
   const props = usePagination({
-    totalItems: filteredAdapters.length,
+    totalItems: filteredBots.length,
     initialPageSize: 10,
   });
   const { startIndex, endIndex } = props;
-  const currentAdapters = filteredAdapters.slice(startIndex, endIndex + 1);
+  const currentBots = filteredBots.slice(startIndex, endIndex + 1);
 
   const [form, setForm] = useState<{
     name: string;
     desc: string;
-    projectLink: string;
-    moduleName: string;
     homepage: string;
-  }>({ name: "", desc: "", projectLink: "", moduleName: "", homepage: "" });
+  }>({ name: "", desc: "", homepage: "" });
 
   const ref = useRef<HTMLInputElement>(null);
   const [tags, setTags] = useState<Tag[]>([]);
@@ -47,13 +48,11 @@ export default function Adapter(): JSX.Element {
   const onSubmit = () => {
     setModalOpen(false);
     const queries: { key: string; value: string }[] = [
-      { key: "template", value: "adapter_publish.yml" },
-      { key: "title", value: form.name && `Adapter: ${form.name}` },
-      { key: "labels", value: "Adapter" },
+      { key: "template", value: "bot_publish.yml" },
+      { key: "title", value: form.name && `Bot: ${form.name}` },
+      { key: "labels", value: "Bot" },
       { key: "name", value: form.name },
       { key: "description", value: form.desc },
-      { key: "pypi", value: form.projectLink },
-      { key: "module", value: form.moduleName },
       { key: "homepage", value: form.homepage },
       { key: "tags", value: JSON.stringify(tags) },
     ];
@@ -106,39 +105,34 @@ export default function Adapter(): JSX.Element {
         <input
           className="w-full px-4 py-2 border rounded-full bg-light-nonepress-100 dark:bg-dark-nonepress-100"
           value={filter}
-          placeholder="搜索适配器"
+          placeholder="搜索机器人"
           onChange={(event) => setFilter(event.target.value)}
         />
         <button
           className="w-full rounded-lg bg-hero text-white"
           onClick={() => setModalOpen(true)}
         >
-          发布适配器
+          发布机器人
         </button>
       </div>
       <div className="grid grid-cols-1 p-4">
         <Paginate {...props} />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 px-4">
-        {currentAdapters.map((adapter, index) => (
-          <Card
-            key={index}
-            {...adapter}
-            action={`nb adapter install ${adapter.project_link}`}
-            actionDisabled={!adapter.project_link}
-          />
+        {currentBots.map((bot, index) => (
+          <Card key={index} {...bot} />
         ))}
       </div>
       <div className="grid grid-cols-1 p-4">
         <Paginate {...props} />
       </div>
       <Modal active={modalOpen} setActive={setModalOpen}>
-        <ModalTitle title={"适配器信息"} />
+        <ModalTitle title={"机器人信息"} />
         <ModalContent>
           <form onSubmit={onSubmit}>
             <div className="grid grid-cols-1 gap-4 p-4">
               <label className="flex flex-wrap">
-                <span className="mr-2">适配器名称:</span>
+                <span className="mr-2">机器人名称:</span>
                 <input
                   type="text"
                   name="name"
@@ -148,28 +142,10 @@ export default function Adapter(): JSX.Element {
                 />
               </label>
               <label className="flex flex-wrap">
-                <span className="mr-2">适配器介绍:</span>
+                <span className="mr-2">机器人介绍:</span>
                 <input
                   type="text"
                   name="desc"
-                  className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
-                  onChange={onChange}
-                />
-              </label>
-              <label className="flex flex-wrap">
-                <span className="mr-2">PyPI 项目名:</span>
-                <input
-                  type="text"
-                  name="projectLink"
-                  className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
-                  onChange={onChange}
-                />
-              </label>
-              <label className="flex flex-wrap">
-                <span className="mr-2">import 包名:</span>
-                <input
-                  type="text"
-                  name="moduleName"
                   className="px-2 flex-grow rounded bg-light-nonepress-200 dark:bg-dark-nonepress-200"
                   onChange={onChange}
                 />

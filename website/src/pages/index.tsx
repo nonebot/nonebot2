@@ -1,47 +1,48 @@
-import clsx from "clsx";
 import React from "react";
+
+import clsx from "clsx";
 
 import CodeBlock from "@theme/CodeBlock";
 import Layout from "@theme/Layout";
 
-import { Hero, HeroFeature } from "../components/Hero";
-import type { Feature } from "../components/Hero";
-import styles from "../css/index.module.css";
+// import { Hero, HeroFeature } from "../components/Hero";
+// import type { Feature } from "../components/Hero";
+// import styles from "../css/index.module.css";
 
 export default function Home() {
-  const firstFeature: Feature = {
-    title: "开箱即用",
-    tagline: "out of box",
-    description: "使用 NB-CLI 快速构建属于你的机器人",
-  } as const;
-  const secondFeatures = [
-    {
-      title: "插件系统",
-      tagline: "plugin system",
-      description: "插件化开发，模块化管理",
-    },
-    {
-      title: "跨平台支持",
-      tagline: "cross-platform support",
-      description: "支持多种平台，以及多样的事件响应方式",
-    },
-  ] as const;
-  const thirdFeatures = [
-    {
-      title: "异步开发",
-      tagline: "asynchronous first",
-      description: "异步优先式开发，提高运行效率",
-    },
-    {
-      title: "依赖注入",
-      tagline: "builtin dependency injection system",
-      description: "简单清晰的依赖注入系统，内置依赖函数减少用户代码",
-    },
-  ];
+  // const firstFeature: Feature = {
+  //   title: "开箱即用",
+  //   tagline: "out of box",
+  //   description: "使用 NB-CLI 快速构建属于你的机器人",
+  // } as const;
+  // const secondFeatures = [
+  //   {
+  //     title: "插件系统",
+  //     tagline: "plugin system",
+  //     description: "插件化开发，模块化管理",
+  //   },
+  //   {
+  //     title: "跨平台支持",
+  //     tagline: "cross-platform support",
+  //     description: "支持多种平台，以及多样的事件响应方式",
+  //   },
+  // ] as const;
+  // const thirdFeatures = [
+  //   {
+  //     title: "异步开发",
+  //     tagline: "asynchronous first",
+  //     description: "异步优先式开发，提高运行效率",
+  //   },
+  //   {
+  //     title: "依赖注入",
+  //     tagline: "builtin dependency injection system",
+  //     description: "简单清晰的依赖注入系统，内置依赖函数减少用户代码",
+  //   },
+  // ];
 
   return (
     <Layout>
-      <Hero />
+      {/* <Hero />
       <div className="max-w-7xl mx-auto py-16 px-4 text-center md:px-16">
         <HeroFeature {...firstFeature}>
           <CodeBlock
@@ -159,7 +160,7 @@ export default function Home() {
             </CodeBlock>
           </HeroFeature>
         </div>
-      </div>
+      </div> */}
     </Layout>
   );
 }

@@ -4,8 +4,8 @@ description: 根据事件类型进行不同的处理
 
 options:
   menu:
-    weight: 80
-    category: appendices
+    - category: appendices
+      weight: 80
 ---
 
 # 事件类型与重载

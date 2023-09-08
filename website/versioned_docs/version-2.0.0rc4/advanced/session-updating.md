@@ -4,8 +4,8 @@ description: 控制会话响应对象
 
 options:
   menu:
-    weight: 80
-    category: advanced
+    - category: advanced
+      weight: 80
 ---
 
 # 会话更新

@@ -2,18 +2,7 @@ import abc
 import asyncio
 from typing_extensions import TypeAlias
 from contextlib import AsyncExitStack, asynccontextmanager
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Set,
-    Dict,
-    Type,
-    Union,
-    TypeVar,
-    Callable,
-    AsyncGenerator,
-    overload,
-)
+from typing import TYPE_CHECKING, Any, Set, Dict, Type, Callable, AsyncGenerator
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
@@ -32,8 +21,6 @@ from .model import Request, Response, WebSocket, HTTPServerSetup, WebSocketServe
 if TYPE_CHECKING:
     from nonebot.internal.adapter import Bot, Adapter
 
-
-D = TypeVar("D", bound="Driver")
 
 BOT_HOOK_PARAMS = [DependParam, BotParam, DefaultParam]
 
@@ -295,44 +282,3 @@ ReverseDriver: TypeAlias = ReverseMixin
 
 **Deprecated**，请使用 {ref}`nonebot.drivers.ReverseMixin` 或其子类代替。
 """
-
-
-if TYPE_CHECKING:
-
-    class CombinedDriver(Driver, Mixin):
-        ...
-
-
-@overload
-def combine_driver(driver: Type[D]) -> Type[D]:
-    ...
-
-
-@overload
-def combine_driver(driver: Type[D], *mixins: Type[Mixin]) -> Type["CombinedDriver"]:
-    ...
-
-
-def combine_driver(
-    driver: Type[D], *mixins: Type[Mixin]
-) -> Union[Type[D], Type["CombinedDriver"]]:
-    """将一个驱动器和多个混入类合并。"""
-    # check first
-    assert issubclass(driver, Driver), "`driver` must be subclass of Driver"
-    assert all(
-        issubclass(m, Mixin) for m in mixins
-    ), "`mixins` must be subclass of Mixin"
-
-    if not mixins:
-        return driver
-
-    def type_(self: "CombinedDriver") -> str:
-        return (
-            driver.type.__get__(self)
-            + "+"
-            + "+".join(x.type.__get__(self) for x in mixins)
-        )
-
-    return type(
-        "CombinedDriver", (*mixins, driver), {"type": property(type_)}
-    )  # type: ignore

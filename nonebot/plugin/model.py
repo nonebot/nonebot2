@@ -2,7 +2,7 @@
 
 FrontMatter:
     sidebar_position: 3
-    description: nonebot.plugin.plugin 模块
+    description: nonebot.plugin.model 模块
 """
 
 import contextlib
