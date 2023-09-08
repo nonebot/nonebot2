@@ -180,7 +180,7 @@ async def handle_test4(qux: Query[bool] = AlconnaQuery("baz.qux", False)):
 适配器下的消息段标注会匹配特定的 `MessageSegment`：
 
 而通用标注与适配器标注的区别在于，通用标注会匹配多个适配器中相似类型的消息段，并返回
-`nonebot_plugin_alconna.uniseg` 中定义的 [`Segment` 模型](./utils.md#通用消息段) 
+`nonebot_plugin_alconna.uniseg` 中定义的 [`Segment` 模型](./utils.md#通用消息段)
 
 例如：
 
@@ -194,16 +194,16 @@ group.extend(member.target for member in ats)
 
 本插件为以下适配器提供了专门的适配器标注：
 
-| 协议名称                                                                | 路径                                   |
-|---------------------------------------------------------------------|--------------------------------------|
-| [OneBot 协议](https://github.com/nonebot/adapter-onebot)              | adapters.onebot11, adapters.onebot12 |
+| 协议名称                                                            | 路径                                 |
+| ------------------------------------------------------------------- | ------------------------------------ |
+| [OneBot 协议](https://github.com/nonebot/adapter-onebot)            | adapters.onebot11, adapters.onebot12 |
 | [Telegram](https://github.com/nonebot/adapter-telegram)             | adapters.telegram                    |
-| [飞书](https://github.com/nonebot/adapter-feishu)                     | adapters.feishu                      |
+| [飞书](https://github.com/nonebot/adapter-feishu)                   | adapters.feishu                      |
 | [GitHub](https://github.com/nonebot/adapter-github)                 | adapters.github                      |
-| [QQ 频道](https://github.com/nonebot/adapter-qqguild)                 | adapters.qqguild                     |
-| [钉钉](https://github.com/nonebot/adapter-ding)                       | adapters.ding                        |
+| [QQ 频道](https://github.com/nonebot/adapter-qqguild)               | adapters.qqguild                     |
+| [钉钉](https://github.com/nonebot/adapter-ding)                     | adapters.ding                        |
 | [Console](https://github.com/nonebot/adapter-console)               | adapters.console                     |
-| [开黑啦](https://github.com/Tian-que/nonebot-adapter-kaiheila)         | adapters.kook                        |
+| [开黑啦](https://github.com/Tian-que/nonebot-adapter-kaiheila)      | adapters.kook                        |
 | [Mirai](https://github.com/ieew/nonebot_adapter_mirai2)             | adapters.mirai                       |
 | [Ntchat](https://github.com/JustUndertaker/adapter-ntchat)          | adapters.ntchat                      |
 | [MineCraft](https://github.com/17TheWord/nonebot-adapter-minecraft) | adapters.minecraft                   |
@@ -211,8 +211,7 @@ group.extend(member.target for member in ats)
 | [Walle-Q](https://github.com/onebot-walle/nonebot_adapter_walleq)   | adapters.onebot12                    |
 | [Villa](https://github.com/CMHopeSunshine/nonebot-adapter-villa)    | adapters.villa                       |
 | [Discord](https://github.com/nonebot/adapter-discord)               | adapters.discord                     |
-| [Red 协议](https://github.com/nonebot/adapter-red)                    | adapters.red                         |
-
+| [Red 协议](https://github.com/nonebot/adapter-red)                  | adapters.red                         |
 
 ## 条件控制
 

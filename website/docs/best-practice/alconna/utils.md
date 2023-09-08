@@ -70,7 +70,6 @@ class Other(Segment):
 
 来自各自适配器的消息序列都会经过这些通用消息段对应的标注转换，以达到跨平台接收消息的作用
 
-
 ## 通用消息序列
 
 除了通用消息段外，`nonebot-plugin-alconna` 还提供了一个类似于 `Message` 的 `UniMessage` 类型，其元素为经过通用标注转换后的通用消息段。
@@ -182,7 +181,6 @@ message.count(Text) == 2
 # 获取指定类型指定个数的消息段
 message.get(Text, 1) == UniMessage([Text("test1")])
 ```
-
 
 ### 拼接消息
 
