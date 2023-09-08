@@ -12,9 +12,9 @@ from datetime import datetime, timedelta
 from typing import Any, Set, Dict, List, Type, Tuple, Union, Optional
 
 from nonebot.adapters import Event
-from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.dependencies import Dependent
+from nonebot.matcher import Matcher, MatcherSource
 from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_PermissionChecker
 from nonebot.rule import (
     Rule,
@@ -48,21 +48,27 @@ def store_matcher(matcher: Type[Matcher]) -> None:
 def get_matcher_plugin(depth: int = 1) -> Optional[Plugin]:
     """获取事件响应器定义所在插件。
 
+    **Deprecated**, 请使用 {ref}`nonebot.plugin.on.get_matcher_source` 获取信息。
+
     参数:
         depth: 调用栈深度
     """
-    # matcher defined when plugin loading
-    if plugin_chain := _current_plugin_chain.get():
-        return plugin_chain[-1]
-
-    # matcher defined when plugin running
-    if module := get_matcher_module(depth + 1):
-        if plugin := get_plugin_by_module_name(module.__name__):
-            return plugin
+    return (source := get_matcher_source(depth + 1)) and source.plugin
 
 
 def get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
     """获取事件响应器定义所在模块。
+
+    **Deprecated**, 请使用 {ref}`nonebot.plugin.on.get_matcher_source` 获取信息。
+
+    参数:
+        depth: 调用栈深度
+    """
+    return (source := get_matcher_source(depth + 1)) and source.module
+
+
+def get_matcher_source(depth: int = 1) -> Optional[MatcherSource]:
+    """获取事件响应器定义所在源码信息。
 
     参数:
         depth: 调用栈深度
@@ -71,7 +77,23 @@ def get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
     if current_frame is None:
         return None
     frame = inspect.getouterframes(current_frame)[depth + 1].frame
-    return inspect.getmodule(frame)
+
+    module_name = (module := inspect.getmodule(frame)) and module.__name__
+
+    # matcher defined when plugin loading
+    if plugin_chain := _current_plugin_chain.get():
+        plugin = plugin_chain[-1]
+    # matcher defined when plugin running
+    elif module_name:
+        plugin = get_plugin_by_module_name(module_name)
+    else:
+        plugin = None
+
+    return MatcherSource(
+        plugin_name=plugin and plugin.name,
+        module_name=module_name,
+        lineno=frame.f_lineno,
+    )
 
 
 def on(
@@ -109,8 +131,7 @@ def on(
         priority=priority,
         block=block,
         handlers=handlers,
-        plugin=get_matcher_plugin(_depth + 1),
-        module=get_matcher_module(_depth + 1),
+        source=get_matcher_source(_depth + 1),
         default_state=state,
     )
     store_matcher(matcher)
