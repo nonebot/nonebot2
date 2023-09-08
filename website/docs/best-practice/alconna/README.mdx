@@ -15,14 +15,17 @@ slug: /best-practice/alconna/
 
 同时，基于 [Annotated 支持](https://github.com/nonebot/nonebot2/pull/1832), 添加了两类注解 `AlcMatches` 与 `AlcResult`
 
-该插件还可以通过 `handle(parameterless)` 来控制一个具体的响应函数是否在不满足条件时跳过响应：
+该插件声明了一个 `Matcher` 的子类 `AlconnaMatcher`，并在 `AlconnaMatcher` 中添加了一些新的方法，例如：
 
-- `pip.handle([Check(assign("add.name", "nb"))])` 表示仅在命令为 `role-group add` 并且 name 为 `nb` 时响应
-- `pip.handle([Check(assign("list"))])` 表示仅在命令为 `role-group list` 时响应
-- `pip.handle([Check(assign("add"))])` 表示仅在命令为 `role-group add` 时响应
+- `assign`：基于 `Alconna` 解析结果，执行满足目标路径的处理函数
+- `dispatch`：类似 `CommandGroup`，对目标路径创建一个新的 `AlconnaMatcher`，并将解析结果分配给该 `AlconnaMatcher`
+- `got_path`：类似 `got`，但是可以指定目标路径，并且能够验证解析结果是否可用
+- ...
 
 基于 `Alconna` 的特性，该插件同时提供了一系列便捷的消息段标注。
 标注可用于在 `Alconna` 中匹配消息中除 text 外的其他消息段，也可用于快速创建各适配器下的消息段。所有标注位于 `nonebot_plugin_alconna.adapters` 中。
+
+该插件同时通过提供 `UniMessage` (通用消息模型) 实现了**跨平台接收和发送消息**的功能。
 
 ## 安装插件
 
@@ -83,29 +86,32 @@ async def got_location(location: str = ArgPlainText()):
 
 </details>
 
-```python {5-8,11-13,15-16}
+```python {5-10,14-16,18-19}
 from nonebot.rule import to_me
 from arclet.alconna import Alconna, Args
-from nonebot_plugin_alconna import Match, AlconnaMatch, on_alconna, AlconnaMatcher, AlconnaArg
+from nonebot_plugin_alconna import Match, AlconnaMatcher, on_alconna
 
 weather = on_alconna(
-    Alconna(["天气", "weather", "天气预报"], Args["location?", str]),
+    Alconna("天气", Args["location?", str]),
     rule=to_me(),
 )
+weather.shortcut("weather", {"command": "天气"})
+weather.shortcut("天气预报", {"command": "天气"})
+
 
 @weather.handle()
-async def handle_function(matcher: AlconnaMatcher, location: Match[str] = AlconnaMatch("location")):
+async def handle_function(matcher: AlconnaMatcher, location: Match[str]):
     if location.available:
-        matcher.set_path_arg("location", location.value)
+        matcher.set_path_arg("location", location.result)
 
 @weather.got_path("location", prompt="请输入地名")
-async def got_location(location: str = AlconnaArg("location")):
+async def got_location(location: str):
     if location not in ["北京", "上海", "广州", "深圳"]:
         await weather.reject(f"你想查询的城市 {location} 暂不支持，请重新输入！")
     await weather.finish(f"今天{location}的天气是...")
 ```
 
-在上面的代码中，我们使用 `Alconna` 来解析命令，`on_alconna` 用来创建响应器，使用 `AlconnaMatch` 来获取解析结果。
+在上面的代码中，我们使用 `Alconna` 来解析命令，`on_alconna` 用来创建响应器，使用 `Match` 来获取解析结果。
 
 关于更多 `Alconna` 的使用方法，可参考 [Alconna 文档](https://arclet.top/docs/tutorial/alconna)，
 或阅读 [Alconna 基本介绍](./alconna.md) 一节。
