@@ -8,6 +8,7 @@ from typing import (
     Any,
     List,
     Type,
+    Tuple,
     Union,
     TypeVar,
     Callable,
@@ -124,7 +125,7 @@ class Matcher(metaclass=MatcherMeta):
     _default_permission_updater: ClassVar[Optional[Dependent[Permission]]] = None
     """事件响应器权限更新函数"""
 
-    HANDLER_PARAM_TYPES: ClassVar[Type[Param], ...] = (
+    HANDLER_PARAM_TYPES: ClassVar[Tuple[Type[Param], ...]] = (
         DependParam,
         BotParam,
         EventParam,
