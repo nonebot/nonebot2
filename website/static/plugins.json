@@ -591,18 +591,6 @@
     "supported_adapters": null
   },
   {
-    "module_name": "nonebot_plugin_heisi",
-    "project_link": "nonebot-plugin-heisi",
-    "name": "随机黑丝",
-    "desc": "发送一张黑丝涩图，内置CD",
-    "author": "yzyyz1387",
-    "homepage": "https://github.com/yzyyz1387/nonebot_plugin_heisi",
-    "tags": [],
-    "is_official": false,
-    "type": null,
-    "supported_adapters": null
-  },
-  {
     "module_name": "nonebot_plugin_picsbank",
     "project_link": "nonebot-plugin-picsbank",
     "name": "picsbank",
