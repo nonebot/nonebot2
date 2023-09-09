@@ -333,4 +333,6 @@ matcher2 = group.on_message()
 基于 `Alconna` 的特性，该插件同时提供了一系列便捷的消息段标注。
 标注可用于在 `Alconna` 中匹配消息中除 text 外的其他消息段，也可用于快速创建各适配器下的消息段。所有标注位于 `nonebot_plugin_alconna.adapters` 中。
 
+该插件同时通过提供 `UniMessage` (通用消息模型) 实现了**跨平台接收和发送消息**的功能。
+
 详情请阅读最佳实践中的 [命令解析拓展](../best-practice/alconna/README.mdx) 章节。

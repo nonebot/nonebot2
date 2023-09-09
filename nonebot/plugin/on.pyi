@@ -4,10 +4,10 @@ from types import ModuleType
 from datetime import datetime, timedelta
 
 from nonebot.adapters import Event
-from nonebot.matcher import Matcher
 from nonebot.permission import Permission
 from nonebot.dependencies import Dependent
 from nonebot.rule import Rule, ArgumentParser
+from nonebot.matcher import Matcher, MatcherSource
 from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_PermissionChecker
 
 from .plugin import Plugin
@@ -15,6 +15,7 @@ from .plugin import Plugin
 def store_matcher(matcher: type[Matcher]) -> None: ...
 def get_matcher_plugin(depth: int = ...) -> Plugin | None: ...
 def get_matcher_module(depth: int = ...) -> ModuleType | None: ...
+def get_matcher_source(depth: int = ...) -> MatcherSource | None: ...
 def on(
     type: str = "",
     rule: Rule | T_RuleChecker | None = ...,

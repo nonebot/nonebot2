@@ -8,11 +8,8 @@ description: 响应规则的使用
 以下为一个简单的使用示例：
 
 ```python
-from nonebot_plugin_alconna import At
-from nonebot.adapters.onebot.v12 import Message
 from nonebot_plugin_alconna.adapters.onebot12 import Image
-from nonebot_plugin_alconna import AlconnaMatches, on_alconna
-from nonebot.adapters.onebot.v12 import MessageSegment as Ob12MS
+from nonebot_plugin_alconna import At, AlconnaMatches, on_alconna
 from arclet.alconna import Args, Option, Alconna, Arparma, MultiVar, Subcommand
 
 alc = Alconna(
@@ -24,6 +21,7 @@ alc = Alconna(
         Option("member", Args["target", MultiVar(At)]),
     ),
     Option("list"),
+    Option("icon", Args["icon", Image])
 )
 rg = on_alconna(alc, auto_send_output=True)
 
@@ -32,11 +30,11 @@ rg = on_alconna(alc, auto_send_output=True)
 async def _(result: Arparma = AlconnaMatches()):
     if result.find("list"):
         img = await gen_role_group_list_image()
-        await rg.finish(Message([Image(img)]))
+        await rg.finish(Image(img))
     if result.find("add"):
-        group = await create_role_group(result["add.name"])
+        group = await create_role_group(result.query[str]("add.name"))
         if result.find("add.member"):
-            ats: tuple[At, ...] = result["add.member.target"]
+            ats = result.query[tuple[At, ...]]("add.member.target")
             group.extend(member.target for member in ats)
         await rg.finish("添加成功")
 ```
@@ -54,12 +52,14 @@ async def _(result: Arparma = AlconnaMatches()):
 - `use_origin: bool = False`: 是否使用未经 to_me 等处理过的消息
 - `use_cmd_start`: 是否使用 COMMAND_START 作为命令前缀
 
-`on_alconna` 返回的是 `Matcher` 的子类 `AlconnaMatcher`，其拓展了五类方法：
+`on_alconna` 返回的是 `Matcher` 的子类 `AlconnaMatcher`，其拓展了如下方法：
 
 - `.assign(path, value, or_not)`: 用于对包含多个选项/子命令的命令的分派处理
 - `.got_path(path, prompt, middleware)`: 在 `got` 方法的基础上，会以 path 对应的参数为准，读取传入 message 的最后一个消息段并验证转换
 - `.set_path_arg(key, value)`, `.get_path_arg(key)`: 类似 `set_arg` 和 `got_arg`，为 `got_path` 的特化版本
-- `.reject_path(path[, prompt])`: 类似于 `reject_arg`，对应 `got_path`
+- `.reject_path(path[, prompt, fallback])`: 类似于 `reject_arg`，对应 `got_path`
+- `.dispatch`: 同样的分派处理，但是是类似 `CommandGroup` 一样返回新的 `AlconnaMatcher`
+- `.got`, `send`, `reject`, ...: 拓展了 prompt 类型，即支持使用 `UniMessage` 作为 prompt
 
 用例：
 
@@ -180,68 +180,38 @@ async def handle_test4(qux: Query[bool] = AlconnaQuery("baz.qux", False)):
 适配器下的消息段标注会匹配特定的 `MessageSegment`：
 
 而通用标注与适配器标注的区别在于，通用标注会匹配多个适配器中相似类型的消息段，并返回
-`nonebot_plugin_alconna.adapters` 中定义的 `Segment` 模型:
-
-```python
-class Segment:
-    """基类标注"""
-    origin: MessageSegment
-
-class At(Segment):
-    """At对象, 表示一类提醒某用户的元素"""
-    type: Literal["user", "role", "channel"]
-    target: str
-
-class AtAll(Segment):
-    """AtAll对象, 表示一类提醒所有人的元素"""
-
-class Emoji(Segment):
-    """Emoji对象, 表示一类表情元素"""
-    id: str
-    name: Optional[str]
-
-class Media(Segment):
-    url: Optional[str]
-    id: Optional[str]
-
-class Image(Media):
-    """Image对象, 表示一类图片元素"""
-
-class Audio(Media):
-    """Audio对象, 表示一类音频元素"""
-
-class Voice(Media):
-    """Voice对象, 表示一类语音元素"""
-
-class Video(Media):
-    """Video对象, 表示一类视频元素"""
-
-class File(Segment):
-    """File对象, 表示一类文件元素"""
-    id: str
-    name: Optional[str]
-
-class Reply(Segment):
-    """Reply对象，表示一类回复消息"""
-    origin: Any
-    id: str
-    msg: Optional[Union[Message, str]]
-
-class Other(Segment):
-    """其他 Segment"""
-```
-
-:::
+`nonebot_plugin_alconna.uniseg` 中定义的 [`Segment` 模型](./utils.md#通用消息段)
 
 例如：
 
 ```python
 ...
-ats: tuple[At, ...] = result["add.member.target"]
+ats = result.query[tuple[At, ...]]("add.member.target")
 group.extend(member.target for member in ats)
 ```
 
 这样插件使用者就不用考虑平台之间字段的差异
+
+本插件为以下适配器提供了专门的适配器标注：
+
+| 协议名称                                                            | 路径                                 |
+| ------------------------------------------------------------------- | ------------------------------------ |
+| [OneBot 协议](https://github.com/nonebot/adapter-onebot)            | adapters.onebot11, adapters.onebot12 |
+| [Telegram](https://github.com/nonebot/adapter-telegram)             | adapters.telegram                    |
+| [飞书](https://github.com/nonebot/adapter-feishu)                   | adapters.feishu                      |
+| [GitHub](https://github.com/nonebot/adapter-github)                 | adapters.github                      |
+| [QQ 频道](https://github.com/nonebot/adapter-qqguild)               | adapters.qqguild                     |
+| [钉钉](https://github.com/nonebot/adapter-ding)                     | adapters.ding                        |
+| [Console](https://github.com/nonebot/adapter-console)               | adapters.console                     |
+| [开黑啦](https://github.com/Tian-que/nonebot-adapter-kaiheila)      | adapters.kook                        |
+| [Mirai](https://github.com/ieew/nonebot_adapter_mirai2)             | adapters.mirai                       |
+| [Ntchat](https://github.com/JustUndertaker/adapter-ntchat)          | adapters.ntchat                      |
+| [MineCraft](https://github.com/17TheWord/nonebot-adapter-minecraft) | adapters.minecraft                   |
+| [BiliBili Live](https://github.com/wwweww/adapter-bilibili)         | adapters.bilibili                    |
+| [Walle-Q](https://github.com/onebot-walle/nonebot_adapter_walleq)   | adapters.onebot12                    |
+| [Villa](https://github.com/CMHopeSunshine/nonebot-adapter-villa)    | adapters.villa                       |
+| [Discord](https://github.com/nonebot/adapter-discord)               | adapters.discord                     |
+| [Red 协议](https://github.com/nonebot/adapter-red)                  | adapters.red                         |
 
 ## 条件控制
 
@@ -299,5 +269,17 @@ async def list_(arp: CommandResult):
 # 仅在命令为 `pip install` 时响应
 @pip_cmd.assign("install")
 async def install(arp: CommandResult):
+    ...
+```
+
+或者使用 `AlconnaMatcher.dispatch`：
+
+此外，还能像 `CommandGroup` 一样为每个分发设置独立的 matcher：
+
+```python
+update_cmd = pip_cmd.dispatch("install.pak", "pip")
+
+@update_cmd.handle()
+async def update(arp: CommandResult = AlconnaResult()):
     ...
 ```
