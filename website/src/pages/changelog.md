@@ -38,6 +38,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 删除插件 nonebot-plugin-heisi [@yzyyz1387](https://github.com/yzyyz1387) ([#2353](https://github.com/nonebot/nonebot2/pull/2353))
 - CI: 更新到 node 18 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2344](https://github.com/nonebot/nonebot2/pull/2344))
 - CI: 插件测试使用最新的稳定版 Python 版本 [@he0119](https://github.com/he0119) ([#2336](https://github.com/nonebot/nonebot2/pull/2336))
 - Plugin: 删除不再维护的插件 [@ZM25XC](https://github.com/ZM25XC) ([#2330](https://github.com/nonebot/nonebot2/pull/2330))
