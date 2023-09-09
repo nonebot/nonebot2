@@ -13,6 +13,7 @@ from typing import (
     Any,
     List,
     Type,
+    Tuple,
     Union,
     TypeVar,
     Callable,
@@ -26,7 +27,7 @@ from typing import (
 from nonebot.log import logger
 from nonebot.internal.rule import Rule
 from nonebot.utils import classproperty
-from nonebot.dependencies import Dependent
+from nonebot.dependencies import Param, Dependent
 from nonebot.internal.permission import User, Permission
 from nonebot.internal.adapter import (
     Bot,
@@ -159,7 +160,7 @@ class Matcher(metaclass=MatcherMeta):
     _default_permission_updater: ClassVar[Optional[Dependent[Permission]]] = None
     """事件响应器权限更新函数"""
 
-    HANDLER_PARAM_TYPES = (
+    HANDLER_PARAM_TYPES: ClassVar[Tuple[Type[Param], ...]] = (
         DependParam,
         BotParam,
         EventParam,
