@@ -1,4 +1,5 @@
 import sys
+from pathlib import Path
 
 import pytest
 from nonebug import App
@@ -11,7 +12,7 @@ from nonebot.message import check_and_run_matcher
 
 
 @pytest.mark.asyncio
-async def test_matcher_create(app: App):
+async def test_matcher_info(app: App):
     from plugins.matcher.matcher_info import matcher
 
     assert issubclass(matcher, Matcher)
@@ -30,6 +31,11 @@ async def test_matcher_create(app: App):
     assert matcher._source.plugin_name == "matcher_info"
     assert matcher.plugin is get_plugin("matcher_info")
     assert matcher.plugin_name == "matcher_info"
+
+    assert (
+        matcher._source.file
+        == (Path(__file__).parent.parent / "plugins/matcher/matcher_info.py").absolute()
+    )
 
     assert matcher._source.lineno == 3
 
