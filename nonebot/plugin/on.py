@@ -45,7 +45,7 @@ def store_matcher(matcher: Type[Matcher]) -> None:
         plugin_chain[-1].matcher.add(matcher)
 
 
-def get_matcher_plugin(depth: int = 1) -> Optional[Plugin]:
+def get_matcher_plugin(depth: int = 1) -> Optional[Plugin]:  # pragma: no cover
     """获取事件响应器定义所在插件。
 
     **Deprecated**, 请使用 {ref}`nonebot.plugin.on.get_matcher_source` 获取信息。
@@ -56,7 +56,7 @@ def get_matcher_plugin(depth: int = 1) -> Optional[Plugin]:
     return (source := get_matcher_source(depth + 1)) and source.plugin
 
 
-def get_matcher_module(depth: int = 1) -> Optional[ModuleType]:
+def get_matcher_module(depth: int = 1) -> Optional[ModuleType]:  # pragma: no cover
     """获取事件响应器定义所在模块。
 
     **Deprecated**, 请使用 {ref}`nonebot.plugin.on.get_matcher_source` 获取信息。
@@ -80,14 +80,13 @@ def get_matcher_source(depth: int = 1) -> Optional[MatcherSource]:
 
     module_name = (module := inspect.getmodule(frame)) and module.__name__
 
+    plugin: Optional["Plugin"] = None
     # matcher defined when plugin loading
     if plugin_chain := _current_plugin_chain.get():
         plugin = plugin_chain[-1]
     # matcher defined when plugin running
     elif module_name:
         plugin = get_plugin_by_module_name(module_name)
-    else:
-        plugin = None
 
     return MatcherSource(
         plugin_name=plugin and plugin.name,
