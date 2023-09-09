@@ -7,6 +7,7 @@ FrontMatter:
 
 import re
 import inspect
+import warnings
 from types import ModuleType
 from datetime import datetime, timedelta
 from typing import Any, Set, Dict, List, Type, Tuple, Union, Optional
@@ -53,6 +54,10 @@ def get_matcher_plugin(depth: int = 1) -> Optional[Plugin]:  # pragma: no cover
     参数:
         depth: 调用栈深度
     """
+    warnings.warn(
+        "`get_matcher_plugin` is deprecated, please use `get_matcher_source` instead",
+        DeprecationWarning,
+    )
     return (source := get_matcher_source(depth + 1)) and source.plugin
 
 
@@ -64,6 +69,10 @@ def get_matcher_module(depth: int = 1) -> Optional[ModuleType]:  # pragma: no co
     参数:
         depth: 调用栈深度
     """
+    warnings.warn(
+        "`get_matcher_module` is deprecated, please use `get_matcher_source` instead",
+        DeprecationWarning,
+    )
     return (source := get_matcher_source(depth + 1)) and source.module
 
 
