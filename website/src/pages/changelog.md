@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 为事件响应器添加更多源码信息 [@yanyongyu](https://github.com/yanyongyu) ([#2351](https://github.com/nonebot/nonebot2/pull/2351))
 - Feature: 补充依赖注入部分情况下类型错误时的日志提示 [@A-kirami](https://github.com/A-kirami) ([#2343](https://github.com/nonebot/nonebot2/pull/2343))
 - Feature: 支持子依赖定义 Pydantic 类型校验 [@yanyongyu](https://github.com/yanyongyu) ([#2310](https://github.com/nonebot/nonebot2/pull/2310))
 - Feature: 细化 driver 职责类型 [@yanyongyu](https://github.com/yanyongyu) ([#2296](https://github.com/nonebot/nonebot2/pull/2296))
