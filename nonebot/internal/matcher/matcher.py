@@ -124,7 +124,7 @@ class Matcher(metaclass=MatcherMeta):
     _default_permission_updater: ClassVar[Optional[Dependent[Permission]]] = None
     """事件响应器权限更新函数"""
 
-    HANDLER_PARAM_TYPES: ClassVar[type[Param], ...] = (
+    HANDLER_PARAM_TYPES: ClassVar[Type[Param], ...] = (
         DependParam,
         BotParam,
         EventParam,
