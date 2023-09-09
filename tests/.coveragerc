@@ -11,6 +11,7 @@ exclude_lines =
   if (typing\.)?TYPE_CHECKING( is True)?:
   @(abc\.)?abstractmethod
   raise NotImplementedError
+  warnings\.warn
   \.\.\.
   pass
   if __name__ == .__main__.:

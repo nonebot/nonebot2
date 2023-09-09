@@ -21,6 +21,7 @@ from typing import (
     Type,
     Tuple,
     Union,
+    Generic,
     TypeVar,
     Callable,
     Optional,
@@ -218,6 +219,16 @@ def resolve_dot_notation(
     for attr_str in cls.split("."):
         instance = getattr(instance, attr_str)
     return instance
+
+
+class classproperty(Generic[T]):
+    """类属性装饰器"""
+
+    def __init__(self, func: Callable[[Any], T]) -> None:
+        self.func = func
+
+    def __get__(self, instance: Any, owner: Optional[Type[Any]] = None) -> T:
+        return self.func(type(instance) if owner is None else owner)
 
 
 class DataclassEncoder(json.JSONEncoder):
