@@ -1,10 +1,43 @@
+import sys
+from pathlib import Path
+
 import pytest
 from nonebug import App
 
+from nonebot import get_plugin
 from nonebot.permission import User
 from nonebot.matcher import Matcher, matchers
 from utils import FakeMessage, make_fake_event
 from nonebot.message import check_and_run_matcher
+
+
+@pytest.mark.asyncio
+async def test_matcher_info(app: App):
+    from plugins.matcher.matcher_info import matcher
+
+    assert issubclass(matcher, Matcher)
+    assert matcher.type == "message"
+    assert matcher.priority == 1
+    assert matcher.temp is False
+    assert matcher.expire_time is None
+    assert matcher.block is True
+
+    assert matcher._source
+
+    assert matcher._source.module_name == "plugins.matcher.matcher_info"
+    assert matcher.module is sys.modules["plugins.matcher.matcher_info"]
+    assert matcher.module_name == "plugins.matcher.matcher_info"
+
+    assert matcher._source.plugin_name == "matcher_info"
+    assert matcher.plugin is get_plugin("matcher_info")
+    assert matcher.plugin_name == "matcher_info"
+
+    assert (
+        matcher._source.file
+        == (Path(__file__).parent.parent / "plugins/matcher/matcher_info.py").absolute()
+    )
+
+    assert matcher._source.lineno == 3
 
 
 @pytest.mark.asyncio

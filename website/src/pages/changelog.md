@@ -7,17 +7,28 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🍻 插件发布
+
+- Plugin: 青年大学习提交 [@noneflow](https://github.com/noneflow) ([#2357](https://github.com/nonebot/nonebot2/pull/2357))
+
+## v2.1.0
+
 ### 🚀 新功能
 
+- Feature: 为 Matcher.HANDLER_PARAM_TYPES 补增类型 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2352](https://github.com/nonebot/nonebot2/pull/2352))
+- Feature: 为事件响应器添加更多源码信息 [@yanyongyu](https://github.com/yanyongyu) ([#2351](https://github.com/nonebot/nonebot2/pull/2351))
+- Feature: 补充依赖注入部分情况下类型错误时的日志提示 [@A-kirami](https://github.com/A-kirami) ([#2343](https://github.com/nonebot/nonebot2/pull/2343))
 - Feature: 支持子依赖定义 Pydantic 类型校验 [@yanyongyu](https://github.com/yanyongyu) ([#2310](https://github.com/nonebot/nonebot2/pull/2310))
 - Feature: 细化 driver 职责类型 [@yanyongyu](https://github.com/yanyongyu) ([#2296](https://github.com/nonebot/nonebot2/pull/2296))
 
 ### 🐛 Bug 修复
 
+- Fix: 修复依赖注入解析类型标注错误 [@yanyongyu](https://github.com/yanyongyu) ([#2338](https://github.com/nonebot/nonebot2/pull/2338))
 - Fix: 设置 file request 默认 filename [@eya46](https://github.com/eya46) ([#2284](https://github.com/nonebot/nonebot2/pull/2284))
 
 ### 📝 文档
 
+- Docs: 更新最佳实践部分的 Alconna 章节 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2349](https://github.com/nonebot/nonebot2/pull/2349))
 - Docs: 添加 Discord 适配器描述，补充 Villa 适配器协议链接 [@CMHopeSunshine](https://github.com/CMHopeSunshine) ([#2316](https://github.com/nonebot/nonebot2/pull/2316))
 - Docs: 添加 Red 适配器描述 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2313](https://github.com/nonebot/nonebot2/pull/2313))
 - Docs: 更新最佳实践部分的 Alconna 章节 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2303](https://github.com/nonebot/nonebot2/pull/2303))
@@ -33,6 +44,10 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 删除插件 nonebot-plugin-heisi [@yzyyz1387](https://github.com/yzyyz1387) ([#2353](https://github.com/nonebot/nonebot2/pull/2353))
+- CI: 更新到 node 18 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2344](https://github.com/nonebot/nonebot2/pull/2344))
+- CI: 插件测试使用最新的稳定版 Python 版本 [@he0119](https://github.com/he0119) ([#2336](https://github.com/nonebot/nonebot2/pull/2336))
+- Plugin: 删除不再维护的插件 [@ZM25XC](https://github.com/ZM25XC) ([#2330](https://github.com/nonebot/nonebot2/pull/2330))
 - Plugin: 删除插件 poe ai [@nikissXI](https://github.com/nikissXI) ([#2308](https://github.com/nonebot/nonebot2/pull/2308))
 - Plugin: 移除不再维护的插件，修改插件信息 [@Well2333](https://github.com/Well2333) ([#2292](https://github.com/nonebot/nonebot2/pull/2292))
 - Fix: 修复 ruff 发现的问题 [@yanyongyu](https://github.com/yanyongyu) ([#2286](https://github.com/nonebot/nonebot2/pull/2286))
@@ -41,6 +56,13 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 文心一言 [@noneflow](https://github.com/noneflow) ([#2342](https://github.com/nonebot/nonebot2/pull/2342))
+- Plugin: nonebot_plugin_group_whitelist [@noneflow](https://github.com/noneflow) ([#2320](https://github.com/nonebot/nonebot2/pull/2320))
+- Plugin: 森空岛明日方舟签到器 [@noneflow](https://github.com/noneflow) ([#2340](https://github.com/nonebot/nonebot2/pull/2340))
+- Plugin: 女装 ! [@noneflow](https://github.com/noneflow) ([#2337](https://github.com/nonebot/nonebot2/pull/2337))
+- Plugin: helper_plus [@noneflow](https://github.com/noneflow) ([#2324](https://github.com/nonebot/nonebot2/pull/2324))
+- Plugin: nonebot-plugin-souti [@noneflow](https://github.com/noneflow) ([#2334](https://github.com/nonebot/nonebot2/pull/2334))
+- Plugin: Alconna 帮助工具 [@noneflow](https://github.com/noneflow) ([#2326](https://github.com/nonebot/nonebot2/pull/2326))
 - Plugin: 消息伪造 [@noneflow](https://github.com/noneflow) ([#2312](https://github.com/nonebot/nonebot2/pull/2312))
 - Plugin: 二维码 [@noneflow](https://github.com/noneflow) ([#2302](https://github.com/nonebot/nonebot2/pull/2302))
 - Plugin: httpcat-状态猫 😺 [@noneflow](https://github.com/noneflow) ([#2306](https://github.com/nonebot/nonebot2/pull/2306))

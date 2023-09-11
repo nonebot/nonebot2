@@ -591,18 +591,6 @@
     "supported_adapters": null
   },
   {
-    "module_name": "nonebot_plugin_heisi",
-    "project_link": "nonebot-plugin-heisi",
-    "name": "随机黑丝",
-    "desc": "发送一张黑丝涩图，内置CD",
-    "author": "yzyyz1387",
-    "homepage": "https://github.com/yzyyz1387/nonebot_plugin_heisi",
-    "tags": [],
-    "is_official": false,
-    "type": null,
-    "supported_adapters": null
-  },
-  {
     "module_name": "nonebot_plugin_picsbank",
     "project_link": "nonebot-plugin-picsbank",
     "name": "picsbank",
@@ -4644,52 +4632,6 @@
     "supported_adapters": null
   },
   {
-    "module_name": "TeenStudy",
-    "project_link": "teenstudy",
-    "name": "青年大学习提交(Web UI)",
-    "desc": "利用httpx库，向后台提交数据完成大学习，返回完成截图",
-    "author": "ZM25XC",
-    "homepage": "https://github.com/ZM25XC/TeenStudy",
-    "tags": [
-      {
-        "label": "青年大学习",
-        "color": "#e5ea52"
-      },
-      {
-        "label": "httpx",
-        "color": "#52ea5f"
-      },
-      {
-        "label": "Web UI",
-        "color": "#5295ea"
-      }
-    ],
-    "is_official": false,
-    "type": null,
-    "supported_adapters": null
-  },
-  {
-    "module_name": "nonebot_plugin_auto_teenstudy",
-    "project_link": "nonebot-plugin-auto-teenstudy",
-    "name": "青年大学习提交(基础版)",
-    "desc": "使用httpx向各地区大学习发送post请求完成大学习，返回完成截图",
-    "author": "ZM25XC",
-    "homepage": "https://github.com/ZM25XC/nonebot_plugin_auto_teenstudy",
-    "tags": [
-      {
-        "label": "青年大学习",
-        "color": "#e8f710"
-      },
-      {
-        "label": "多地区",
-        "color": "#108ef7"
-      }
-    ],
-    "is_official": false,
-    "type": null,
-    "supported_adapters": null
-  },
-  {
     "module_name": "nonebot_plugin_60s",
     "project_link": "nonebot-plugin-60s",
     "name": "60s日历",
@@ -5755,23 +5697,6 @@
       {
         "label": "开箱模拟器",
         "color": "#ff4781"
-      }
-    ],
-    "is_official": false,
-    "type": null,
-    "supported_adapters": null
-  },
-  {
-    "module_name": "nonebot_plugin_grouplock",
-    "project_link": "nonebot-plugin-grouplock",
-    "name": "群聊人数锁定",
-    "desc": "一个基于nonebot2和go-cqhttp的群聊人数锁定插件",
-    "author": "ZM25XC",
-    "homepage": "https://github.com/ZM25XC/nonebot-plugin-grouplock",
-    "tags": [
-      {
-        "label": "群管",
-        "color": "#52b5ea"
       }
     ],
     "is_official": false,
@@ -7256,6 +7181,163 @@
       {
         "label": "合并转发",
         "color": "#1ae32c"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_alchelper",
+    "project_link": "nonebot-plugin-alchelper",
+    "name": "Alconna 帮助工具",
+    "desc": "基于 nonebot-plugin-alconna，给出所有命令帮助以及统计",
+    "author": "RF-Tar-Railt",
+    "homepage": "https://github.com/RF-Tar-Railt/nonebot-plugin-alchelper",
+    "tags": [
+      {
+        "label": "Alconna",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_souti",
+    "project_link": "nonebot-plugin-souti",
+    "name": "nonebot-plugin-souti",
+    "desc": "使用百度不挂科题库, 可以实现文字搜题功能",
+    "author": "xiaoWangSec",
+    "homepage": "https://github.com/xiaoWangSec/nonebot-plugin-souti",
+    "tags": [
+      {
+        "label": "搜题",
+        "color": "#49e3d5"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_helper_plus",
+    "project_link": "nonebot-plugin-helper-plus",
+    "name": "helper_plus",
+    "desc": "带有指令调用控制的高级helper",
+    "author": "fR0Z863xF",
+    "homepage": "https://github.com/fR0Z863xF/nonebot-plugin-helper-plus",
+    "tags": [
+      {
+        "label": "帮助",
+        "color": "#eae152"
+      },
+      {
+        "label": "命令控制",
+        "color": "#52ea5c"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_wearskirt",
+    "project_link": "nonebot-plugin-wearskirt",
+    "name": "女装 !",
+    "desc": "Nonebot 赛博女装插件",
+    "author": "Lfhsheng",
+    "homepage": "https://github.com/Lfhsheng/nonebot-plugin-wearskirt",
+    "tags": [
+      {
+        "label": "女装",
+        "color": "#ffc0cb"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
+  },
+  {
+    "module_name": "nonebot_plugin_skland_arksign",
+    "project_link": "nonebot-plugin-skland-arksign",
+    "name": "森空岛明日方舟签到器",
+    "desc": "私聊机器人以获得自动明日方舟森空岛签到服务",
+    "author": "GuGuMur",
+    "homepage": "https://github.com/GuGuMur/nonebot-plugin-skland-arksign",
+    "tags": [
+      {
+        "label": "森空岛",
+        "color": "#c8eb21"
+      },
+      {
+        "label": "明日方舟",
+        "color": "#111111"
+      },
+      {
+        "label": "签到",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": [
+      "nonebot.adapters.kaiheila",
+      "nonebot.adapters.onebot.v11",
+      "nonebot.adapters.onebot.v12",
+      "nonebot.adapters.qqguild",
+      "nonebot.adapters.telegram"
+    ]
+  },
+  {
+    "module_name": "nonebot_plugin_group_whitelist",
+    "project_link": "nonebot-plugin-group-whitelist",
+    "name": "nonebot_plugin_group_whitelist",
+    "desc": "简易群聊白名单",
+    "author": "Rikka-desu",
+    "homepage": "https://github.com/Rikka-desu/nonebot_plugin_group_whitelist",
+    "tags": [],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_ernie",
+    "project_link": "nonebot-plugin-ernie",
+    "name": "文心一言",
+    "desc": "Nonebot框架下的文心一言聊天插件",
+    "author": "Noctulus",
+    "homepage": "https://github.com/Noctulus/nonebot-plugin-ernie",
+    "tags": [
+      {
+        "label": "文心一言",
+        "color": "#2e317c"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": null
+  },
+  {
+    "module_name": "TeenStudy",
+    "project_link": "teenstudy",
+    "name": "青年大学习提交",
+    "desc": "一个可以自动提交多地区青年大学习的插件",
+    "author": "TeenStudyFlow",
+    "homepage": "https://github.com/YouthLearning/TeenStudy",
+    "tags": [
+      {
+        "label": "青年大学习",
+        "color": "#7aea52"
+      },
+      {
+        "label": "Web UI",
+        "color": "#52eaea"
+      },
+      {
+        "label": "多地区",
+        "color": "#dfea52"
       }
     ],
     "is_official": false,
