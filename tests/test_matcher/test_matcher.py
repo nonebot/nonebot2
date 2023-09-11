@@ -309,3 +309,14 @@ async def test_timedelta_expire(app: App):
         assert test_timedelta_matcher in matchers[test_timedelta_matcher.priority]
         await check_and_run_matcher(test_timedelta_matcher, bot, event, {})
         assert test_timedelta_matcher not in matchers[test_timedelta_matcher.priority]
+
+
+@pytest.mark.asyncio
+async def test_matcher_check(app: App):
+    from plugins.matcher.matcher_check import test_check
+
+    event = make_fake_event(_type="test")()
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        for matcher in test_check.matchers:
+            await check_and_run_matcher(matcher, bot, event, {})
