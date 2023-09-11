@@ -7318,5 +7318,30 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": null
+  },
+  {
+    "module_name": "TeenStudy",
+    "project_link": "teenstudy",
+    "name": "青年大学习提交",
+    "desc": "一个可以自动提交多地区青年大学习的插件",
+    "author": "TeenStudyFlow",
+    "homepage": "https://github.com/YouthLearning/TeenStudy",
+    "tags": [
+      {
+        "label": "青年大学习",
+        "color": "#7aea52"
+      },
+      {
+        "label": "Web UI",
+        "color": "#52eaea"
+      },
+      {
+        "label": "多地区",
+        "color": "#dfea52"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
