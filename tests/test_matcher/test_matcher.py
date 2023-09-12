@@ -119,7 +119,7 @@ async def test_matcher_receive(app: App):
 
 
 @pytest.mark.asyncio
-async def test_matcher_(app: App):
+async def test_matcher_combine(app: App):
     from plugins.matcher.matcher_process import test_combine
 
     message = FakeMessage("text")
