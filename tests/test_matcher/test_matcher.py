@@ -41,6 +41,30 @@ async def test_matcher_info(app: App):
 
 
 @pytest.mark.asyncio
+async def test_matcher_check(app: App):
+    from plugins.matcher.matcher_check import error, falsy, test_check, truthy
+
+    event = make_fake_event(_type="test")()
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        assert (
+            await _check_matcher(test_check.on(permission=falsy), bot, event, {})
+            is False
+        )
+        assert (
+            await _check_matcher(test_check.on(permission=truthy), bot, event, {})
+            is True
+        )
+        assert (
+            await _check_matcher(test_check.on(permission=error), bot, event, {})
+            is False
+        )
+        assert await _check_matcher(test_check.on(rule=falsy), bot, event, {}) is False
+        assert await _check_matcher(test_check.on(rule=truthy), bot, event, {}) is True
+        assert await _check_matcher(test_check.on(rule=error), bot, event, {}) is False
+
+
+@pytest.mark.asyncio
 async def test_matcher_handle(app: App):
     from plugins.matcher.matcher_process import test_handle
 
@@ -309,17 +333,3 @@ async def test_timedelta_expire(app: App):
         assert test_timedelta_matcher in matchers[test_timedelta_matcher.priority]
         await check_and_run_matcher(test_timedelta_matcher, bot, event, {})
         assert test_timedelta_matcher not in matchers[test_timedelta_matcher.priority]
-
-
-@pytest.mark.asyncio
-async def test_matcher_check(app: App):
-    from plugins.matcher.matcher_check import test_check
-
-    event = make_fake_event(_type="test")()
-    async with app.test_api() as ctx:
-        bot = ctx.create_bot()
-        for matcher in test_check.matchers:
-            assert (
-                await _check_matcher(matcher, bot, event, {})
-                == matcher._default_state["expect"]
-            )
