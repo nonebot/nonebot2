@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 📝 文档
+
+- Docs: 更新 `get_asgi` 函数的文档字符串 [@A-kirami](https://github.com/A-kirami) ([#2359](https://github.com/nonebot/nonebot2/pull/2359))
+
 ### 🍻 插件发布
 
 - Plugin: 青年大学习提交 [@noneflow](https://github.com/noneflow) ([#2357](https://github.com/nonebot/nonebot2/pull/2357))
