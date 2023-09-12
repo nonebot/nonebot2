@@ -3,13 +3,13 @@ from pathlib import Path
 
 import pytest
 from nonebug import App
-from utils import FakeMessage, make_fake_event
 
+from nonebot.rule import Rule
 from nonebot import get_plugin
 from nonebot.matcher import Matcher, matchers
+from utils import FakeMessage, make_fake_event
+from nonebot.permission import User, Permission
 from nonebot.message import _check_matcher, check_and_run_matcher
-from nonebot.permission import Permission, User
-from nonebot.rule import Rule
 
 
 @pytest.mark.asyncio
@@ -210,7 +210,7 @@ async def test_matcher_destroy(app: App):
 
 @pytest.mark.asyncio
 async def test_type_updater(app: App):
-    from plugins.matcher.matcher_type import test_custom_updater, test_type_updater
+    from plugins.matcher.matcher_type import test_type_updater, test_custom_updater
 
     event = make_fake_event()()
 
@@ -275,8 +275,8 @@ async def test_user_permission_updater(app: App):
 @pytest.mark.asyncio
 async def test_custom_permission_updater(app: App):
     from plugins.matcher.matcher_permission import (
-        default_permission,
         new_permission,
+        default_permission,
         test_custom_updater,
     )
 
