@@ -51,6 +51,7 @@ async def test_depend(app: App):
         sub_type_mismatch,
         validate_field_fail,
         annotated_class_depend,
+        annotated_multi_depend,
         annotated_prior_depend,
     )
 
@@ -81,7 +82,12 @@ async def test_depend(app: App):
         annotated_prior_depend, allow_types=[DependParam]
     ) as ctx:
         ctx.should_return(1)
-    assert runned == [1, 1]
+
+    async with app.test_dependent(
+        annotated_multi_depend, allow_types=[DependParam]
+    ) as ctx:
+        ctx.should_return(1)
+    assert runned == [1, 1, 1]
 
     async with app.test_dependent(
         annotated_class_depend, allow_types=[DependParam]

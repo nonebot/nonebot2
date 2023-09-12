@@ -142,7 +142,7 @@ class DependParam(Param):
         if get_origin(param.annotation) is Annotated:
             type_annotation, *extra_args = get_args(param.annotation)
             depends_inner = next(
-                (x for x in extra_args if isinstance(x, DependsInner)), None
+                (x for x in reversed(extra_args) if isinstance(x, DependsInner)), None
             )
 
         # param default value takes higher priority
@@ -462,7 +462,7 @@ class ArgParam(Param):
                 Required, key=param.default.key or param.name, type=param.default.type
             )
         elif get_origin(param.annotation) is Annotated:
-            for arg in get_args(param.annotation):
+            for arg in reversed(get_args(param.annotation)):
                 if isinstance(arg, ArgInner):
                     return cls(Required, key=arg.key or param.name, type=arg.type)
 
