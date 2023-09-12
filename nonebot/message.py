@@ -358,9 +358,18 @@ async def _check_matcher(
         return False
 
     try:
-        if not await Matcher.check_perm(
-            bot, event, stack, dependency_cache
-        ) or not await Matcher.check_rule(bot, event, state, stack, dependency_cache):
+        if not await Matcher.check_perm(bot, event, stack, dependency_cache):
+            logger.trace(f"Permission conditions not met for {Matcher}")
+            return False
+    except Exception as e:
+        logger.opt(colors=True, exception=e).error(
+            f"<r><bg #f8bbd0>Permission check failed for {Matcher}.</bg #f8bbd0></r>"
+        )
+        return False
+
+    try:
+        if not await Matcher.check_rule(bot, event, state, stack, dependency_cache):
+            logger.trace(f"Rule conditions not met for {Matcher}")
             return False
     except Exception as e:
         logger.opt(colors=True, exception=e).error(

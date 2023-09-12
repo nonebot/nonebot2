@@ -4,11 +4,12 @@ from pathlib import Path
 import pytest
 from nonebug import App
 
+from nonebot.rule import Rule
 from nonebot import get_plugin
-from nonebot.permission import User
 from nonebot.matcher import Matcher, matchers
 from utils import FakeMessage, make_fake_event
-from nonebot.message import check_and_run_matcher
+from nonebot.permission import User, Permission
+from nonebot.message import _check_matcher, check_and_run_matcher
 
 
 @pytest.mark.asyncio
@@ -38,6 +39,50 @@ async def test_matcher_info(app: App):
     )
 
     assert matcher._source.lineno == 3
+
+
+@pytest.mark.asyncio
+async def test_matcher_check(app: App):
+    async def falsy():
+        return False
+
+    async def truthy():
+        return True
+
+    async def error():
+        raise RuntimeError
+
+    event = make_fake_event(_type="test")()
+    with app.provider.context({}):
+        test_perm_falsy = Matcher.new(permission=Permission(falsy))
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            assert await _check_matcher(test_perm_falsy, bot, event, {}) is False
+
+        test_perm_truthy = Matcher.new(permission=Permission(truthy))
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            assert await _check_matcher(test_perm_truthy, bot, event, {}) is True
+
+        test_perm_error = Matcher.new(permission=Permission(error))
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            assert await _check_matcher(test_perm_error, bot, event, {}) is False
+
+        test_rule_falsy = Matcher.new(rule=Rule(falsy))
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            assert await _check_matcher(test_rule_falsy, bot, event, {}) is False
+
+        test_rule_truthy = Matcher.new(rule=Rule(truthy))
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            assert await _check_matcher(test_rule_truthy, bot, event, {}) is True
+
+        test_rule_error = Matcher.new(rule=Rule(error))
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            assert await _check_matcher(test_rule_error, bot, event, {}) is False
 
 
 @pytest.mark.asyncio
@@ -95,7 +140,7 @@ async def test_matcher_receive(app: App):
 
 
 @pytest.mark.asyncio
-async def test_matcher_(app: App):
+async def test_matcher_combine(app: App):
     from plugins.matcher.matcher_process import test_combine
 
     message = FakeMessage("text")
