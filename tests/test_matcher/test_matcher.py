@@ -8,7 +8,7 @@ from nonebot import get_plugin
 from nonebot.permission import User
 from nonebot.matcher import Matcher, matchers
 from utils import FakeMessage, make_fake_event
-from nonebot.message import check_and_run_matcher
+from nonebot.message import check_and_run_matcher, _check_matcher
 
 
 @pytest.mark.asyncio
@@ -319,4 +319,7 @@ async def test_matcher_check(app: App):
     async with app.test_api() as ctx:
         bot = ctx.create_bot()
         for matcher in test_check.matchers:
-            await check_and_run_matcher(matcher, bot, event, {})
+            assert (
+                await _check_matcher(matcher, bot, event, {})
+                == matcher._default_state["expect"]
+            )

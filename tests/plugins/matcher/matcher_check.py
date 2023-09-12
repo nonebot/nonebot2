@@ -13,10 +13,9 @@ async def error():
     raise RuntimeError
 
 
+checks = [(falsy, False), (truthy, True), (error, False)]
+
 test_check = MatcherGroup(type="test")
-test_check.on(permission=falsy)
-test_check.on(permission=truthy)
-test_check.on(permission=error)
-test_check.on(rule=falsy)
-test_check.on(rule=truthy)
-test_check.on(rule=error)
+for check, result in checks:
+    test_check.on(permission=check, state={"expect": result})
+    test_check.on(rule=check, state={"expect": result})
