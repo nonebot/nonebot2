@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 优化检查事件响应器的日志 [@A-kirami](https://github.com/A-kirami) ([#2355](https://github.com/nonebot/nonebot2/pull/2355))
+
 ### 📝 文档
 
 - Docs: 更新 `get_asgi` 函数的文档字符串 [@A-kirami](https://github.com/A-kirami) ([#2359](https://github.com/nonebot/nonebot2/pull/2359))
