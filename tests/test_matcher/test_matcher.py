@@ -3,12 +3,13 @@ from pathlib import Path
 
 import pytest
 from nonebug import App
+from utils import FakeMessage, make_fake_event
 
 from nonebot import get_plugin
-from nonebot.permission import User
 from nonebot.matcher import Matcher, matchers
-from utils import FakeMessage, make_fake_event
 from nonebot.message import _check_matcher, check_and_run_matcher
+from nonebot.permission import Permission, User
+from nonebot.rule import Rule
 
 
 @pytest.mark.asyncio
@@ -42,26 +43,46 @@ async def test_matcher_info(app: App):
 
 @pytest.mark.asyncio
 async def test_matcher_check(app: App):
-    from plugins.matcher.matcher_check import error, falsy, truthy, test_check
+    async def falsy():
+        return False
+
+    async def truthy():
+        return True
+
+    async def error():
+        raise RuntimeError
 
     event = make_fake_event(_type="test")()
-    async with app.test_api() as ctx:
-        bot = ctx.create_bot()
-        assert (
-            await _check_matcher(test_check.on(permission=falsy), bot, event, {})
-            is False
-        )
-        assert (
-            await _check_matcher(test_check.on(permission=truthy), bot, event, {})
-            is True
-        )
-        assert (
-            await _check_matcher(test_check.on(permission=error), bot, event, {})
-            is False
-        )
-        assert await _check_matcher(test_check.on(rule=falsy), bot, event, {}) is False
-        assert await _check_matcher(test_check.on(rule=truthy), bot, event, {}) is True
-        assert await _check_matcher(test_check.on(rule=error), bot, event, {}) is False
+    with app.provider.context({}):
+        test_perm_falsy = Matcher.new(permission=Permission(falsy))
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            assert await _check_matcher(test_perm_falsy, bot, event, {}) is False
+
+        test_perm_truthy = Matcher.new(permission=Permission(truthy))
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            assert await _check_matcher(test_perm_truthy, bot, event, {}) is True
+
+        test_perm_error = Matcher.new(permission=Permission(error))
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            assert await _check_matcher(test_perm_error, bot, event, {}) is False
+
+        test_rule_falsy = Matcher.new(rule=Rule(falsy))
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            assert await _check_matcher(test_rule_falsy, bot, event, {}) is False
+
+        test_rule_truthy = Matcher.new(rule=Rule(truthy))
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            assert await _check_matcher(test_rule_truthy, bot, event, {}) is True
+
+        test_rule_error = Matcher.new(rule=Rule(error))
+        async with app.test_api() as ctx:
+            bot = ctx.create_bot()
+            assert await _check_matcher(test_rule_error, bot, event, {}) is False
 
 
 @pytest.mark.asyncio
@@ -189,7 +210,7 @@ async def test_matcher_destroy(app: App):
 
 @pytest.mark.asyncio
 async def test_type_updater(app: App):
-    from plugins.matcher.matcher_type import test_type_updater, test_custom_updater
+    from plugins.matcher.matcher_type import test_custom_updater, test_type_updater
 
     event = make_fake_event()()
 
@@ -254,8 +275,8 @@ async def test_user_permission_updater(app: App):
 @pytest.mark.asyncio
 async def test_custom_permission_updater(app: App):
     from plugins.matcher.matcher_permission import (
-        new_permission,
         default_permission,
+        new_permission,
         test_custom_updater,
     )
 
