@@ -8,7 +8,7 @@ from nonebot import get_plugin
 from nonebot.permission import User
 from nonebot.matcher import Matcher, matchers
 from utils import FakeMessage, make_fake_event
-from nonebot.message import check_and_run_matcher, _check_matcher
+from nonebot.message import _check_matcher, check_and_run_matcher
 
 
 @pytest.mark.asyncio
