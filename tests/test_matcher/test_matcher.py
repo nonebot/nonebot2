@@ -42,7 +42,7 @@ async def test_matcher_info(app: App):
 
 @pytest.mark.asyncio
 async def test_matcher_check(app: App):
-    from plugins.matcher.matcher_check import error, falsy, test_check, truthy
+    from plugins.matcher.matcher_check import error, falsy, truthy, test_check
 
     event = make_fake_event(_type="test")()
     async with app.test_api() as ctx:
