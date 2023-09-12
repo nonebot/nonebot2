@@ -170,7 +170,7 @@ def get_app() -> Any:
 
 
 def get_asgi() -> Any:
-    """获取全局 {ref}`nonebot.drivers.ASGIMixin` 对应
+    """获取全局 {ref}`nonebot.drivers.ASGIMixin` 对应的
     [ASGI](https://asgi.readthedocs.io/) 对象。
 
     返回:
@@ -189,7 +189,7 @@ def get_asgi() -> Any:
     driver = get_driver()
     assert isinstance(
         driver, ASGIMixin
-    ), "asgi object is only available for reverse driver"
+    ), "asgi object is only available for asgi driver"
     return driver.asgi
 
 
