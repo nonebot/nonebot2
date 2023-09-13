@@ -18,7 +18,7 @@ export default function TOC({ className, ...props }: TOCProps): JSX.Element {
       />
       <div className="sticky bottom-0 w-full max-w-full mt-2">
         <div
-          className="wwads-cn wwads-horizontal max-w-full !bg-light !dark:bg-dark !text-black !dark:text-white"
+          className="wwads-cn wwads-horizontal max-w-full !bg-light dark:!bg-dark !text-black dark:!text-white"
           data-id="281"
         ></div>
       </div>
