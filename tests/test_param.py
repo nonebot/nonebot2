@@ -87,6 +87,7 @@ async def test_depend(app: App):
         annotated_multi_depend, allow_types=[DependParam]
     ) as ctx:
         ctx.should_return(1)
+
     assert runned == [1, 1, 1]
 
     async with app.test_dependent(
