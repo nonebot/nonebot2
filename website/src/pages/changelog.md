@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 优先使用 `Annotated` 的最后一个子依赖 [@ProgramRipper](https://github.com/ProgramRipper) ([#2360](https://github.com/nonebot/nonebot2/pull/2360))
 - Feature: 优化检查事件响应器的日志 [@A-kirami](https://github.com/A-kirami) ([#2355](https://github.com/nonebot/nonebot2/pull/2355))
 
 ### 📝 文档
