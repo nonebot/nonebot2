@@ -462,7 +462,7 @@ class ArgParam(Param):
                 Required, key=param.default.key or param.name, type=param.default.type
             )
         elif get_origin(param.annotation) is Annotated:
-            for arg in reversed(get_args(param.annotation)):
+            for arg in reversed(get_args(param.annotation)[1::-1]):
                 if isinstance(arg, ArgInner):
                     return cls(Required, key=arg.key or param.name, type=arg.type)
 

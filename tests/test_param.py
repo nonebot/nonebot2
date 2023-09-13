@@ -481,6 +481,8 @@ async def test_arg(app: App):
         annotated_arg,
         arg_plain_text,
         annotated_arg_str,
+        annotated_multi_arg,
+        annotated_prior_arg,
         annotated_arg_plain_text,
     )
 
@@ -511,6 +513,14 @@ async def test_arg(app: App):
     async with app.test_dependent(
         annotated_arg_plain_text, allow_types=[ArgParam]
     ) as ctx:
+        ctx.pass_params(matcher=matcher)
+        ctx.should_return(message.extract_plain_text())
+
+    async with app.test_dependent(annotated_multi_arg, allow_types=[ArgParam]) as ctx:
+        ctx.pass_params(matcher=matcher)
+        ctx.should_return(message.extract_plain_text())
+
+    async with app.test_dependent(annotated_prior_arg, allow_types=[ArgParam]) as ctx:
         ctx.pass_params(matcher=matcher)
         ctx.should_return(message.extract_plain_text())
 
