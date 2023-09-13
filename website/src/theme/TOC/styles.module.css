@@ -25,7 +25,11 @@
 }
 
 .tocAds {
-  @apply max-w-full !bg-light dark:!bg-dark;
+  @apply max-w-full !bg-light;
+}
+
+:global .dark :local .tocAds {
+  @apply !bg-dark;
 }
 
 .tocAds :global .wwads-text {
