@@ -23,6 +23,15 @@ const config = {
     },
   },
 
+  scripts: [
+    {
+      type: "text/javascript",
+      charset: "UTF-8",
+      src: "https://cdn.wwads.cn/js/makemoney.js",
+      async: true,
+    },
+  ],
+
   presets: [
     [
       "docusaurus-preset-nonepress",

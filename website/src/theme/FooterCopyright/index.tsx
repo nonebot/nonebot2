@@ -3,7 +3,7 @@ import React from "react";
 import Link from "@docusaurus/Link";
 import OriginCopyright from "@theme-original/FooterCopyright";
 
-function FooterCopyright() {
+export default function FooterCopyright(): JSX.Element {
   return (
     <>
       <OriginCopyright />
@@ -24,7 +24,7 @@ function FooterCopyright() {
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
               >
-                <g clip-path="url(#clip0_236_25)">
+                <g clipPath="url(#clip0_236_25)">
                   <path
                     d="M58.4704 103.765V77.4144L59.0165 76.8683H65.6043L66.1504 77.4144V103.765L65.6043 104.311H59.0165L58.4704 103.765Z"
                     fill="#05BDBA"
@@ -117,5 +117,3 @@ function FooterCopyright() {
     </>
   );
 }
-
-export default FooterCopyright;

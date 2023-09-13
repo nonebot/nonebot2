@@ -1,0 +1,21 @@
+.toc {
+  max-height: calc(100vh - 7rem);
+
+  @apply sticky top-28 overflow-y-auto;
+}
+
+.toc-link {
+  @apply text-light-text;
+}
+
+:global .dark :local .toc-link {
+  @apply text-dark-text;
+}
+
+.toc-link-active {
+  @apply text-light-text-active;
+}
+
+:global .dark :local .toc-link-active {
+  @apply text-dark-text-active;
+}
