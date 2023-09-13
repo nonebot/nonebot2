@@ -4,18 +4,34 @@ updates:
     directory: "/"
     schedule:
       interval: daily
+    groups:
+      actions:
+        patterns:
+          - "*"
 
   - package-ecosystem: github-actions
     directory: "/.github/actions/build-api-doc"
     schedule:
       interval: daily
+    groups:
+      actions:
+        patterns:
+          - "*"
 
   - package-ecosystem: github-actions
     directory: "/.github/actions/setup-node"
     schedule:
       interval: daily
+    groups:
+      actions:
+        patterns:
+          - "*"
 
   - package-ecosystem: github-actions
     directory: "/.github/actions/setup-python"
     schedule:
       interval: daily
+    groups:
+      actions:
+        patterns:
+          - "*"
