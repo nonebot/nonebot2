@@ -19,3 +19,19 @@
 :global .dark :local .toc-link-active {
   @apply text-dark-text-active;
 }
+
+.tocAdsContainer {
+  @apply sticky bottom-0 w-full max-w-full mt-2;
+}
+
+.tocAds {
+  @apply max-w-full !bg-light dark:!bg-dark;
+}
+
+.tocAds :global .wwads-text {
+  @apply text-light-text;
+}
+
+:global .dark :local .tocAds :global .wwads-text {
+  @apply text-dark-text;
+}

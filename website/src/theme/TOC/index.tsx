@@ -16,9 +16,9 @@ export default function TOC({ className, ...props }: TOCProps): JSX.Element {
         linkClassName={LINK_CLASS_NAME}
         linkActiveClassName={LINK_ACTIVE_CLASS_NAME}
       />
-      <div className="sticky bottom-0 w-full max-w-full mt-2">
+      <div className={styles.tocAdsContainer}>
         <div
-          className="wwads-cn wwads-horizontal max-w-full !bg-light dark:!bg-dark !text-black dark:!text-white"
+          className={clsx("wwads-cn wwads-horizontal", styles.tocAds)}
           data-id="281"
         ></div>
       </div>
