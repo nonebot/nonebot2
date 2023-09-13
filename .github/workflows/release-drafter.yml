@@ -92,10 +92,12 @@ jobs:
       - name: Build and Publish Package
         run: |
           poetry build
-          poetry publish -u ${{secrets.PYPI_USERNAME}} -p ${{secrets.PYPI_PASSWORD}}
           gh release upload --clobber ${{ env.TAG_NAME }} dist/*.tar.gz dist/*.whl
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+
+      - name: Publish package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
 
       - name: Build and Publish Doc Package
         run: |
@@ -104,7 +106,11 @@ jobs:
           cd packages/nonebot-plugin-docs/
           poetry version $NONEBOT_VERSION
           poetry build
-          poetry publish -u ${{secrets.PYPI_USERNAME}} -p ${{secrets.PYPI_PASSWORD}}
           gh release upload --clobber ${{ env.TAG_NAME }} dist/*.tar.gz dist/*.whl
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
+
+      - name: Publish Doc Package to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: packages/nonebot-plugin-docs/
