@@ -51,6 +51,7 @@ async def test_depend(app: App):
         sub_type_mismatch,
         validate_field_fail,
         annotated_class_depend,
+        annotated_multi_depend,
         annotated_prior_depend,
     )
 
@@ -81,7 +82,13 @@ async def test_depend(app: App):
         annotated_prior_depend, allow_types=[DependParam]
     ) as ctx:
         ctx.should_return(1)
-    assert runned == [1, 1]
+
+    async with app.test_dependent(
+        annotated_multi_depend, allow_types=[DependParam]
+    ) as ctx:
+        ctx.should_return(1)
+
+    assert runned == [1, 1, 1]
 
     async with app.test_dependent(
         annotated_class_depend, allow_types=[DependParam]
@@ -474,6 +481,8 @@ async def test_arg(app: App):
         annotated_arg,
         arg_plain_text,
         annotated_arg_str,
+        annotated_multi_arg,
+        annotated_prior_arg,
         annotated_arg_plain_text,
     )
 
@@ -504,6 +513,14 @@ async def test_arg(app: App):
     async with app.test_dependent(
         annotated_arg_plain_text, allow_types=[ArgParam]
     ) as ctx:
+        ctx.pass_params(matcher=matcher)
+        ctx.should_return(message.extract_plain_text())
+
+    async with app.test_dependent(annotated_multi_arg, allow_types=[ArgParam]) as ctx:
+        ctx.pass_params(matcher=matcher)
+        ctx.should_return(message.extract_plain_text())
+
+    async with app.test_dependent(annotated_prior_arg, allow_types=[ArgParam]) as ctx:
         ctx.pass_params(matcher=matcher)
         ctx.should_return(message.extract_plain_text())
 
