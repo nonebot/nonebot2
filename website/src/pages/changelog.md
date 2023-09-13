@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- CI: 使用更现代的功能 [@he0119](https://github.com/he0119) ([#2362](https://github.com/nonebot/nonebot2/pull/2362))
 - Docs: 添加 wwads [@yanyongyu](https://github.com/yanyongyu) ([#2361](https://github.com/nonebot/nonebot2/pull/2361))
 
 ### 🍻 插件发布
