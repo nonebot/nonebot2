@@ -7343,5 +7343,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_video_api",
+    "project_link": "nonebot-plugin-video-api",
+    "name": "nonebot-plugin-video-api",
+    "desc": "一款可以自由增删视频指令和api的插件",
+    "author": "Q1351998764",
+    "homepage": "https://github.com/Q1351998764/nonebot-plugin-video-api",
+    "tags": [
+      {
+        "label": "视频api",
+        "color": "#14d8de"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
