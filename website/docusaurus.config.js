@@ -273,6 +273,7 @@ const siteConfig = {
       }),
     ],
   ],
+  plugins: [require("./src/plugins/webpack-plugin.cjs")],
 
   themeConfig,
 };

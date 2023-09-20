@@ -1,6 +1,6 @@
 import type { Tag } from "./tag";
 
-export type Adapter = {
+type BaseAdapter = {
   module_name: string;
   project_link: string;
   name: string;
@@ -11,4 +11,6 @@ export type Adapter = {
   is_official: boolean;
 };
 
-export type AdaptersResponse = Adapter[];
+export type Adapter = { type: "adapter" } & BaseAdapter;
+
+export type AdaptersResponse = BaseAdapter[];

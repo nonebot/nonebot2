@@ -1,6 +1,6 @@
 import type { Tag } from "./tag";
 
-export type Plugin = {
+type BasePlugin = {
   author: string;
   name: string;
   desc: string;
@@ -17,4 +17,6 @@ export type Plugin = {
   version: string;
 };
 
-export type PluginsResponse = Plugin[];
+export type Plugin = { type: "plugin" } & BasePlugin;
+
+export type PluginsResponse = BasePlugin[];

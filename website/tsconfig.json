@@ -12,6 +12,25 @@
       "@/*": ["./src/*"],
       "@theme/*": ["./src/theme/*"]
     },
-    "resolveJsonModule": true
+
+    /* Strict Type-Checking Options */
+    "strict": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+
+    /* Disabled on purpose (handled by ESLint, should not block compilation) */
+    "noUnusedParameters": false,
+
+    /* Advanced Options */
+    "resolveJsonModule": true,
+    "skipLibCheck": true, // @types/webpack and webpack/types.d.ts are not the same thing
+
+    /* Use tslib */
+    "importHelpers": true,
+    "noEmitHelpers": true
   }
 }

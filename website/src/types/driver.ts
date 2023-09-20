@@ -1,6 +1,6 @@
 import type { Tag } from "./tag";
 
-export type Driver = {
+type BaseDriver = {
   module_name: string;
   project_link: string;
   name: string;
@@ -11,4 +11,6 @@ export type Driver = {
   is_official: boolean;
 };
 
-export type DriversResponse = Driver[];
+export type Driver = { type: "driver" } & BaseDriver;
+
+export type DriversResponse = BaseDriver[];

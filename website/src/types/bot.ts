@@ -1,6 +1,6 @@
 import type { Tag } from "./tag";
 
-export type Bot = {
+type BaseBot = {
   name: string;
   desc: string;
   author: string;
@@ -9,4 +9,6 @@ export type Bot = {
   is_official: boolean;
 };
 
-export type BotsResponse = Bot[];
+export type Bot = { type: "bot" } & BaseBot;
+
+export type BotsResponse = BaseBot[];
