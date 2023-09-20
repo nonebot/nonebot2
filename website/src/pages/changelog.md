@@ -23,6 +23,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-video-api [@noneflow](https://github.com/noneflow) ([#2367](https://github.com/nonebot/nonebot2/pull/2367))
 - Plugin: 青年大学习提交 [@noneflow](https://github.com/noneflow) ([#2357](https://github.com/nonebot/nonebot2/pull/2357))
 
 ## v2.1.0
