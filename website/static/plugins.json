@@ -7360,5 +7360,30 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_ottohzys",
+    "project_link": "nonebot-plugin-ottohzys",
+    "name": "大电老师活字印刷",
+    "desc": "大家好啊，今天来点大家想看的东西",
+    "author": "lgc2333",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-ottohzys",
+    "tags": [
+      {
+        "label": "otto",
+        "color": "#00a6ed"
+      },
+      {
+        "label": "电棍",
+        "color": "#00a6ed"
+      },
+      {
+        "label": "活字印刷",
+        "color": "#00a6ed"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
   }
 ]
