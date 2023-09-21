@@ -1,8 +1,12 @@
 .resource-card {
   &-container {
-    @apply flex flex-col gap-y-2 w-full h-48 p-4 cursor-pointer;
-    @apply transition-colors duration-300 ease-in-out bg-base-200;
-    @apply border-2 border-base-200 hover:border-primary rounded-lg;
+    @apply flex flex-col gap-y-2 w-full min-h-[12rem] p-4;
+    @apply transition-colors duration-500 bg-base-200;
+    @apply border-2 border-base-200 rounded-lg;
+
+    &-clickable {
+      @apply cursor-pointer hover:border-primary;
+    }
   }
 
   &-header {
@@ -29,7 +33,7 @@
     @apply flex flex-col w-full cursor-default;
 
     &-tags {
-      @apply grid grid-flow-row-dense gap-1;
+      @apply flex flex-wrap gap-1;
     }
 
     &-tag {

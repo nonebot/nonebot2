@@ -11,7 +11,7 @@ import type { Resource } from "@/libs/store";
 
 export type Props = {
   resource: Resource;
-  onClick: () => void;
+  onClick?: () => void;
   onTagClick: (tag: string) => void;
   onAuthorClick: () => void;
   className?: string;
@@ -38,7 +38,11 @@ export default function ResourceCard({
 
   return (
     <div
-      className={clsx("resource-card-container", className)}
+      className={clsx(
+        "resource-card-container",
+        onClick && "resource-card-container-clickable",
+        className
+      )}
       onClick={onClick}
     >
       <div className="resource-card-header">

@@ -107,6 +107,21 @@ const sidebars = {
         },
         {
           type: "link",
+          label: "适配器商店",
+          href: "/store/adapters",
+        },
+        {
+          type: "link",
+          label: "驱动器商店",
+          href: "/store/drivers",
+        },
+        {
+          type: "link",
+          label: "机器人商店",
+          href: "/store/bots",
+        },
+        {
+          type: "link",
           label: "论坛",
           href: "https://discussions.nonebot.dev",
         },

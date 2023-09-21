@@ -3,17 +3,14 @@ import React, { useCallback, useEffect, useState } from "react";
 import Translate from "@docusaurus/Translate";
 import { usePagination } from "react-use-pagination";
 
-import "./styles.css";
+import Admonition from "@theme/Admonition";
+
+import Paginate from "@/components/Paginate";
 import ResourceCard from "@/components/Resource/Card";
 import Searcher from "@/components/Searcher";
-import {
-  fetchRegistryData,
-  queryFilter,
-  authorFilter,
-  tagFilter,
-  useFilteredResources,
-} from "@/libs/store";
-import type { Filter } from "@/libs/store";
+import { authorFilter, tagFilter } from "@/libs/filter";
+import { useSearchControl } from "@/libs/search";
+import { fetchRegistryData, loadFailedTitle } from "@/libs/store";
 import type { Plugin } from "@/types/plugin";
 
 export default function PluginPage(): JSX.Element {
@@ -21,21 +18,31 @@ export default function PluginPage(): JSX.Element {
   const pluginCount = plugins?.length ?? 0;
   const loading = plugins === null;
 
-  const [filter, setFilter] = useState<Filter<Plugin> | null>(null);
+  const [error, setError] = useState<Error | null>(null);
 
   const {
-    filters,
-    addFilter,
-    removeFilter,
     filteredResources: filteredPlugins,
-  } = useFilteredResources(plugins ?? []);
+    searcherTags,
+    addFilter,
+    onSearchQueryChange,
+    onSearchQuerySubmit,
+    onSearchBackspace,
+    onSearchClear,
+    onSearchTagClick,
+  } = useSearchControl<Plugin>(plugins ?? []);
   const filteredPluginCount = filteredPlugins.length;
 
-  // display tags in searcher (except current filter)
-  const searcherFilters = filters.filter((f) => !(filter && f === filter));
-  const searcherTags = searcherFilters.map((filter) => filter.displayName);
-
-  const { startIndex, endIndex } = usePagination({
+  const {
+    startIndex,
+    endIndex,
+    totalPages,
+    currentPage,
+    setNextPage,
+    setPreviousPage,
+    setPage,
+    previousEnabled,
+    nextEnabled,
+  } = usePagination({
     totalItems: filteredPlugins.length,
     initialPageSize: 12,
   });
@@ -43,52 +50,17 @@ export default function PluginPage(): JSX.Element {
 
   // load plugins asynchronously
   useEffect(() => {
-    fetchRegistryData("plugin").then(setPlugins).catch(console.error);
+    fetchRegistryData("plugin")
+      .then(setPlugins)
+      .catch((e) => {
+        setError(e);
+        console.error(e);
+      });
   }, []);
 
-  const onSearchQueryChange = useCallback(
-    (newQuery: string) => {
-      // remove filter if query is empty
-      if (newQuery === "") {
-        filter && removeFilter(filter);
-        setFilter(null);
-        return;
-      }
-
-      const newFilter = queryFilter<Plugin>(newQuery);
-      // do nothing if filter is not changed
-      if (filter?.id === newFilter.id) return;
-
-      // remove old filter
-      filter && removeFilter(filter);
-      // add new filter
-      setFilter(newFilter);
-      addFilter(newFilter);
-    },
-    [filter, setFilter, addFilter, removeFilter]
-  );
-
-  const onSearchSubmit = useCallback(() => {
-    setFilter(null);
-  }, [setFilter]);
-
-  const onSearchBackspace = useCallback(() => {
-    removeFilter(searcherFilters[searcherFilters.length - 1]);
-  }, [removeFilter, searcherFilters]);
-
-  const onSearchClear = useCallback(() => {
-    searcherFilters.forEach((filter) => removeFilter(filter));
-  }, [removeFilter, searcherFilters]);
-
-  const onSearchTagClick = useCallback(
-    (index: number) => {
-      removeFilter(searcherFilters[index]);
-    },
-    [removeFilter, searcherFilters]
-  );
-
-  const onCardClick = useCallback(() => {
-    console.log("card clicked");
+  const onCardClick = useCallback((plugin: Plugin) => {
+    // TODO: open plugin modal
+    console.log(plugin, "clicked");
   }, []);
 
   const onCardTagClick = useCallback(
@@ -129,14 +101,18 @@ export default function PluginPage(): JSX.Element {
       <Searcher
         className="store-searcher not-prose"
         onChange={onSearchQueryChange}
-        onSubmit={onSearchSubmit}
+        onSubmit={onSearchQuerySubmit}
         onBackspace={onSearchBackspace}
         onClear={onSearchClear}
         onTagClick={onSearchTagClick}
         tags={searcherTags}
         disabled={loading}
       />
-      {loading ? (
+      {error ? (
+        <Admonition type="caution" title={loadFailedTitle}>
+          {error.message}
+        </Admonition>
+      ) : loading ? (
         <p className="store-loading-container">
           <span className="loading loading-dots loading-lg store-loading"></span>
         </p>
@@ -147,13 +123,23 @@ export default function PluginPage(): JSX.Element {
               key={index}
               className="not-prose"
               resource={plugin}
-              onClick={onCardClick}
+              onClick={() => onCardClick(plugin)}
               onTagClick={onCardTagClick}
               onAuthorClick={() => onAuthorClick(plugin.author)}
             />
           ))}
         </div>
       )}
+      <Paginate
+        className="not-prose"
+        totalPages={totalPages}
+        currentPage={currentPage}
+        setNextPage={setNextPage}
+        setPreviousPage={setPreviousPage}
+        setPage={setPage}
+        nextEnabled={nextEnabled}
+        previousEnabled={previousEnabled}
+      />
     </>
   );
 }

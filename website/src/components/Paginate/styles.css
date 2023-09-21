@@ -1,0 +1,30 @@
+.paginate {
+  &-container {
+    @apply flex items-center justify-center gap-2;
+  }
+
+  &-button {
+    @apply flex items-center justify-center cursor-pointer select-none;
+    @apply w-8 h-8 text-sm leading-8 text-center bg-base-200 text-base-content;
+
+    &.ellipsis {
+      @apply !text-base-content cursor-default;
+    }
+
+    &.active {
+      @apply bg-primary !text-primary-content cursor-default;
+    }
+
+    &:hover {
+      @apply text-primary;
+    }
+
+    &:disabled {
+      @apply !text-base-content/80 cursor-not-allowed;
+    }
+  }
+
+  &-pager {
+    @apply flex items-center justify-center gap-2;
+  }
+}

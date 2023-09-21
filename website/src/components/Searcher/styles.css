@@ -1,6 +1,7 @@
 .searcher {
   &-box {
     @apply flex items-center w-full rounded-3xl bg-base-200;
+    @apply transition-[color,background-color] duration-500;
   }
 
   &-container {
