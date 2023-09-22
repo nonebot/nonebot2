@@ -234,3 +234,9 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 <a href="https://github.com/nonebot/nonebot2/graphs/contributors">
   <img src="https://contrib.rocks/image?repo=nonebot/nonebot2&max=1000" />
 </a>
+
+感谢以下赞助者对 NoneBot 项目提供的资金支持：
+
+<a href="https://assets.nonebot.dev/sponsors.svg">
+  <img src='https://assets.nonebot.dev/sponsors.svg'/>
+</a>
