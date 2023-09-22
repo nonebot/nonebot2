@@ -206,7 +206,6 @@ NoneBot2 不是 NoneBot1 的替代品。事实上，它们都在被积极的维�
   或者尝试以下镜像：
 
   - [文档镜像(中国境内)](https://nb2.baka.icu)
-  - [文档镜像(Vercel)](https://nonebot2-vercel-mirror.vercel.app)
 
 - 其他插件请查看 [商店](https://nonebot.dev/store)
 
@@ -227,7 +226,17 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 请参考 [贡献指南](./CONTRIBUTING.md)
 
-### 鸣谢
+## 鸣谢
+
+### 赞助者
+
+感谢以下赞助者对 NoneBot 项目提供的资金支持：
+
+<a href="https://assets.nonebot.dev/sponsors.svg">
+  <img src='https://assets.nonebot.dev/sponsors.svg'/>
+</a>
+
+### 开发者
 
 感谢以下开发者对 NoneBot2 作出的贡献：
 
