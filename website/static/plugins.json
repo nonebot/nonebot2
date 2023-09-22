@@ -6580,19 +6580,29 @@
   {
     "module_name": "nonebot_plugin_pjsk",
     "project_link": "nonebot-plugin-pjsk",
-    "name": "pjsk表情",
-    "desc": "pjsk表情",
+    "name": "Sekai Stickers",
+    "desc": "基于 NoneBot2 的 Project Sekai 表情包制作插件",
     "author": "Agnes4m",
-    "homepage": "https://github.com/Agnes4m/nonebot_plugin_pjsk",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-pjsk",
     "tags": [
       {
         "label": "pjsk",
+        "color": "#e852eb"
+      },
+      {
+        "label": "啤酒烧烤",
         "color": "#e852eb"
       }
     ],
     "is_official": false,
     "type": "application",
-    "supported_adapters": ["nonebot.adapters.onebot.v11"]
+    "supported_adapters": [
+      "nonebot.adapters.onebot.v11",
+      "nonebot.adapters.onebot.v12",
+      "nonebot.adapters.kaiheila",
+      "nonebot.adapters.qqguild",
+      "nonebot.adapters.telegram"
+    ]
   },
   {
     "module_name": "nonebot_plugin_mongodb",
