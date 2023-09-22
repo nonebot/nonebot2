@@ -226,20 +226,20 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 请参考 [贡献指南](./CONTRIBUTING.md)
 
-### 鸣谢
+## 鸣谢
 
-#### 开发者
-
-感谢以下开发者对 NoneBot2 作出的贡献：
-
-<a href="https://github.com/nonebot/nonebot2/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=nonebot/nonebot2&max=1000" />
-</a>
-
-#### 赞助者
+### 赞助者
 
 感谢以下赞助者对 NoneBot 项目提供的资金支持：
 
 <a href="https://assets.nonebot.dev/sponsors.svg">
   <img src='https://assets.nonebot.dev/sponsors.svg'/>
+</a>
+
+### 开发者
+
+感谢以下开发者对 NoneBot2 作出的贡献：
+
+<a href="https://github.com/nonebot/nonebot2/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=nonebot/nonebot2&max=1000" />
 </a>
