@@ -28,7 +28,7 @@ export default function ResourceCard({
     resource.homepage
   );
 
-  const isPlugin = resource.type === "plugin";
+  const isPlugin = resource.resourceType === "plugin";
   const registryLink =
     isPlugin &&
     `https://registry.nonebot.dev/plugin/${resource.project_link}:${resource.module_name}`;

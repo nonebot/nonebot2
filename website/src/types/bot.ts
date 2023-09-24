@@ -9,6 +9,6 @@ type BaseBot = {
   is_official: boolean;
 };
 
-export type Bot = { type: "bot" } & BaseBot;
+export type Bot = { resourceType: "bot" } & BaseBot;
 
 export type BotsResponse = BaseBot[];

@@ -17,6 +17,6 @@ type BasePlugin = {
   version: string;
 };
 
-export type Plugin = { type: "plugin" } & BasePlugin;
+export type Plugin = { resourceType: "plugin" } & BasePlugin;
 
 export type PluginsResponse = BasePlugin[];

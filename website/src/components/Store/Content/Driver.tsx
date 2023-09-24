@@ -101,6 +101,7 @@ export default function DriverPage(): JSX.Element {
           </Translate>
         )}
       </p>
+
       <Searcher
         className="store-searcher not-prose"
         onChange={onSearchQueryChange}
@@ -111,6 +112,7 @@ export default function DriverPage(): JSX.Element {
         tags={searcherTags}
         disabled={loading}
       />
+
       {error ? (
         <Admonition type="caution" title={loadFailedTitle}>
           {error.message}
@@ -133,6 +135,7 @@ export default function DriverPage(): JSX.Element {
           ))}
         </div>
       )}
+
       <Paginate
         className="not-prose"
         totalPages={totalPages}

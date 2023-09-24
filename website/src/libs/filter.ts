@@ -64,7 +64,7 @@ export const queryFilter = <T extends Resource = Resource>(
     if (!query) return true;
     const queryLower = query.toLowerCase();
     const pluginMatch =
-      resource.type === "plugin" &&
+      resource.resourceType === "plugin" &&
       (resource.module_name?.toLowerCase().includes(queryLower) ||
         resource.project_link?.toLowerCase().includes(queryLower));
     const commonMatch =

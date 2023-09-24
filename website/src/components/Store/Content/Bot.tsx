@@ -8,9 +8,11 @@ import Admonition from "@theme/Admonition";
 import Paginate from "@/components/Paginate";
 import ResourceCard from "@/components/Resource/Card";
 import Searcher from "@/components/Searcher";
+import StoreToolbar, { type Action } from "@/components/Store/Toolbar";
 import { authorFilter, tagFilter } from "@/libs/filter";
 import { useSearchControl } from "@/libs/search";
 import { fetchRegistryData, loadFailedTitle } from "@/libs/store";
+import { useToolbar } from "@/libs/toolbar";
 import type { Bot } from "@/types/bot";
 
 export default function PluginPage(): JSX.Element {
@@ -58,6 +60,22 @@ export default function PluginPage(): JSX.Element {
       });
   }, []);
 
+  const { filters: filterTools } = useToolbar({
+    resources: bots ?? [],
+    addFilter,
+  });
+
+  const actionTool: Action = {
+    label: "发布机器人",
+    icon: ["fas", "plus"],
+    onClick: () => {
+      // TODO: open bot release modal
+      window.open(
+        "https://github.com/nonebot/nonebot2/issues/new?template=bot_publish.yml"
+      );
+    },
+  };
+
   const onCardTagClick = useCallback(
     (tag: string) => {
       addFilter(tagFilter(tag));
@@ -96,6 +114,7 @@ export default function PluginPage(): JSX.Element {
           </Translate>
         )}
       </p>
+
       <Searcher
         className="store-searcher not-prose"
         onChange={onSearchQueryChange}
@@ -106,6 +125,13 @@ export default function PluginPage(): JSX.Element {
         tags={searcherTags}
         disabled={loading}
       />
+
+      <StoreToolbar
+        className="not-prose"
+        filters={filterTools}
+        action={actionTool}
+      />
+
       {error ? (
         <Admonition type="caution" title={loadFailedTitle}>
           {error.message}
@@ -127,6 +153,7 @@ export default function PluginPage(): JSX.Element {
           ))}
         </div>
       )}
+
       <Paginate
         className="not-prose"
         totalPages={totalPages}

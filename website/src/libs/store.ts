@@ -36,7 +36,7 @@ export async function fetchRegistryData<T extends RegistryDataType>(
     );
   const data = (await resp.json()) as RegistryDataResponseTypes[T];
   return data.map(
-    (resource) => ({ ...resource, type: dataType }) as ResourceTypes[T]
+    (resource) => ({ ...resource, resourceType: dataType }) as ResourceTypes[T]
   );
 }
 

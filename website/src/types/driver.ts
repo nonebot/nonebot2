@@ -11,6 +11,6 @@ type BaseDriver = {
   is_official: boolean;
 };
 
-export type Driver = { type: "driver" } & BaseDriver;
+export type Driver = { resourceType: "driver" } & BaseDriver;
 
 export type DriversResponse = BaseDriver[];

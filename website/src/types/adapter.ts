@@ -11,6 +11,6 @@ type BaseAdapter = {
   is_official: boolean;
 };
 
-export type Adapter = { type: "adapter" } & BaseAdapter;
+export type Adapter = { resourceType: "adapter" } & BaseAdapter;
 
 export type AdaptersResponse = BaseAdapter[];

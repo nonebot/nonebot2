@@ -8,9 +8,11 @@ import Admonition from "@theme/Admonition";
 import Paginate from "@/components/Paginate";
 import ResourceCard from "@/components/Resource/Card";
 import Searcher from "@/components/Searcher";
+import StoreToolbar, { type Action } from "@/components/Store/Toolbar";
 import { authorFilter, tagFilter } from "@/libs/filter";
 import { useSearchControl } from "@/libs/search";
 import { fetchRegistryData, loadFailedTitle } from "@/libs/store";
+import { useToolbar } from "@/libs/toolbar";
 import type { Adapter } from "@/types/adapter";
 
 export default function AdapterPage(): JSX.Element {
@@ -58,6 +60,22 @@ export default function AdapterPage(): JSX.Element {
       });
   }, []);
 
+  const { filters: filterTools } = useToolbar({
+    resources: adapters ?? [],
+    addFilter,
+  });
+
+  const actionTool: Action = {
+    label: "发布适配器",
+    icon: ["fas", "plus"],
+    onClick: () => {
+      // TODO: open adapter release modal
+      window.open(
+        "https://github.com/nonebot/nonebot2/issues/new?template=adapter_publish.yml"
+      );
+    },
+  };
+
   const onCardClick = useCallback((adapter: Adapter) => {
     // TODO: open adapter modal
     console.log(adapter, "clicked");
@@ -70,7 +88,7 @@ export default function AdapterPage(): JSX.Element {
     [addFilter]
   );
 
-  const onAuthorClick = useCallback(
+  const onCardAuthorClick = useCallback(
     (author: string) => {
       addFilter(authorFilter(author));
     },
@@ -101,6 +119,7 @@ export default function AdapterPage(): JSX.Element {
           </Translate>
         )}
       </p>
+
       <Searcher
         className="store-searcher not-prose"
         onChange={onSearchQueryChange}
@@ -111,6 +130,13 @@ export default function AdapterPage(): JSX.Element {
         tags={searcherTags}
         disabled={loading}
       />
+
+      <StoreToolbar
+        className="not-prose"
+        filters={filterTools}
+        action={actionTool}
+      />
+
       {error ? (
         <Admonition type="caution" title={loadFailedTitle}>
           {error.message}
@@ -128,11 +154,12 @@ export default function AdapterPage(): JSX.Element {
               resource={adapter}
               onClick={() => onCardClick(adapter)}
               onTagClick={onCardTagClick}
-              onAuthorClick={() => onAuthorClick(adapter.author)}
+              onAuthorClick={() => onCardAuthorClick(adapter.author)}
             />
           ))}
         </div>
       )}
+
       <Paginate
         className="not-prose"
         totalPages={totalPages}
