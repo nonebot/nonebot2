@@ -106,7 +106,10 @@ class Bot(abc.ABC):
                 logger.debug("Running CalledAPI hooks...")
                 await asyncio.gather(*coros)
             except MockApiException as e:
+                # mock api result
                 result = e.result
+                # ignore exception
+                exception = None
                 logger.debug(
                     f"Calling API {api} result is mocked. Return {result} instead."
                 )
