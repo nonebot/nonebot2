@@ -122,6 +122,11 @@ const sidebars = {
         },
         {
           type: "link",
+          label: "Awesome NoneBot",
+          href: "https://awesome.nonebot.dev",
+        },
+        {
+          type: "link",
           label: "论坛",
           href: "https://discussions.nonebot.dev",
         },
