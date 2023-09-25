@@ -76,7 +76,6 @@ class Bot(abc.ABC):
         result: Any = None
         skip_calling_api: bool = False
         exception: Optional[Exception] = None
-        ignore_exception: bool = False
 
         if coros := [hook(self, api, data) for hook in self._calling_api_hook]:
             try:
@@ -107,8 +106,10 @@ class Bot(abc.ABC):
                 logger.debug("Running CalledAPI hooks...")
                 await asyncio.gather(*coros)
             except MockApiException as e:
-                ignore_exception = True
+                # mock api result
                 result = e.result
+                # ignore exception
+                exception = None
                 logger.debug(
                     f"Calling API {api} result is mocked. Return {result} instead."
                 )
@@ -118,7 +119,7 @@ class Bot(abc.ABC):
                     "Running cancelled!</bg #f8bbd0></r>"
                 )
 
-        if not ignore_exception and exception:
+        if exception:
             raise exception
         return result
 
