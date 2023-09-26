@@ -1854,26 +1854,26 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nullbot/docusaurus-plugin-docsmenu@^2.1.3":
-  version "2.1.3"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-docsmenu/-/docusaurus-plugin-docsmenu-2.1.3.tgz#94b306fc8b049f62b92909010e661f2d9e3ae890"
-  integrity sha512-D09pbQ6U78YqMA+En/abF4f9pfGzBPOviFTtLDtqHg61fvhIpS5y9hbxMgg/Zj3LkPjK44UAA/N8JPSkpVNjAQ==
+"@nullbot/docusaurus-plugin-docsmenu@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-docsmenu/-/docusaurus-plugin-docsmenu-2.1.4.tgz#19c07cbc20f69705d1454a36e5d203d6878bad20"
+  integrity sha512-YACUVldfU2hiid/NRx4WPbkmNZFajM5PuH0t0wzwLe8qMJgyW2Vgj66cWv2BpdQdxBVicjYyijP7KYcQSEUp/A==
   dependencies:
     "@docusaurus/core" "^2.4.0"
     "@docusaurus/plugin-content-docs" "^2.4.0"
 
-"@nullbot/docusaurus-plugin-getsidebar@^2.1.3":
-  version "2.1.3"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-getsidebar/-/docusaurus-plugin-getsidebar-2.1.3.tgz#a5ab211590f19bcbbd2d53c47241509d860a3849"
-  integrity sha512-ReG5z0hS9EbMl4T4fCLWwzxOqBipZBDp2Aq7uXAvUoioN3Agnws3+P7AjO0aDpCygizKb7CGhtMpEIFjMiUPXg==
+"@nullbot/docusaurus-plugin-getsidebar@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-getsidebar/-/docusaurus-plugin-getsidebar-2.1.4.tgz#a08c4d9b75aba41daf17acd72db1584bd89d4dcf"
+  integrity sha512-yaKNTggLhYEXMKEow4pvlydPGfpRm/JTLySHBbkAV0OvGIqgNLsKl2Z03EundrPIfcaITCe2HnBiJDtBr+ECVQ==
   dependencies:
     "@docusaurus/core" "^2.4.0"
     "@docusaurus/plugin-content-docs" "^2.4.0"
 
 "@nullbot/docusaurus-preset-nonepress@^2.1.2":
-  version "2.1.3"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-preset-nonepress/-/docusaurus-preset-nonepress-2.1.3.tgz#49316b318bf491e9d7a6a054b8e887f59dbaaa3c"
-  integrity sha512-XuKymEJhM12Gn7BHkGq4dcumFZbtINX4NlwJrG4EWUaDp7SJJPNNVAXrKgs6XkX8JkNZKdrVT33zxkw5UlRkQw==
+  version "2.1.4"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-preset-nonepress/-/docusaurus-preset-nonepress-2.1.4.tgz#e93e361061c7a49ceb7081a97d5197c4aff6b99b"
+  integrity sha512-MxqknSqGRGswGNhwGcQYcfRxlM/itst7iQht5FoXBQ+CsabXeiKu/I9+GTiMInIf6nyI+0uecTT+K7VGCNH6Sg==
   dependencies:
     "@docusaurus/core" "^2.4.0"
     "@docusaurus/plugin-content-docs" "^2.4.0"
@@ -1883,13 +1883,13 @@
     "@docusaurus/plugin-google-tag-manager" "^2.4.0"
     "@docusaurus/plugin-sitemap" "^2.4.0"
     "@docusaurus/theme-search-algolia" "^2.4.0"
-    "@nullbot/docusaurus-plugin-getsidebar" "^2.1.3"
-    "@nullbot/docusaurus-theme-nonepress" "^2.1.3"
+    "@nullbot/docusaurus-plugin-getsidebar" "^2.1.4"
+    "@nullbot/docusaurus-theme-nonepress" "^2.1.4"
 
-"@nullbot/docusaurus-theme-nonepress@^2.1.3":
-  version "2.1.3"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-theme-nonepress/-/docusaurus-theme-nonepress-2.1.3.tgz#57d9b2bea00113e6bb5d78f01e4a4d7715281989"
-  integrity sha512-NmWTDpUbe67RN1D3sBtOUEGKAsSSdP/zZhbMieo6uLxrOL5DPE9fwNxpzHBVO789JBvkEWU/AxxvL0Eb++NeYQ==
+"@nullbot/docusaurus-theme-nonepress@^2.1.4":
+  version "2.1.4"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-theme-nonepress/-/docusaurus-theme-nonepress-2.1.4.tgz#e5a9e9d802429e9202a370614f199442887f49cf"
+  integrity sha512-UBnXAFB21QG8wffHqTw66qF1b0hWlbZzJdEzalAVBX3kOL1nv0/Z0pMbz+Ic51kPJ9SfOqYF0ZAtQ4IskGm7Og==
   dependencies:
     "@docsearch/react" "^3.5.1"
     "@docusaurus/core" "^2.4.0"
@@ -1908,7 +1908,7 @@
     "@fortawesome/free-solid-svg-icons" "^6.4.0"
     "@fortawesome/react-fontawesome" "^0.2.0"
     "@mdx-js/react" "^1.6.22"
-    "@nullbot/docusaurus-plugin-docsmenu" "^2.1.3"
+    "@nullbot/docusaurus-plugin-docsmenu" "^2.1.4"
     "@seznam/compose-react-refs" "^1.0.6"
     "@tailwindcss/typography" "^0.5.0"
     autoprefixer "^10.3.1"
