@@ -269,9 +269,9 @@ const siteConfig = {
           //   });
           // },
         },
-        theme: {
-          customCss: require.resolve("./src/css/custom.css"),
-        },
+        // theme: {
+        //   customCss: require.resolve("./src/css/custom.css"),
+        // },
         sitemap: {
           changefreq: "daily",
           priority: 0.5,
