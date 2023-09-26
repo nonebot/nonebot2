@@ -24,7 +24,7 @@
   "dependencies": {
     "@docusaurus/core": "^2.4.1",
     "@mdx-js/react": "^1.6.22",
-    "@nullbot/docusaurus-preset-nonepress": "^2.1.1",
+    "@nullbot/docusaurus-preset-nonepress": "^2.1.2",
     "clsx": "^1.2.1",
     "copy-text-to-clipboard": "^3.0.1",
     "prism-react-renderer": "^1.3.5",

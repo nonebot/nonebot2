@@ -45,7 +45,7 @@ const navbar = {
     {
       label: "更多",
       type: "dropdown",
-      to: "/store",
+      to: "/store/plugins",
       items: [
         {
           label: "最佳实践",
@@ -85,7 +85,7 @@ const footer = {
       title: "Learn",
       items: [
         { label: "Introduction", to: "/docs/" },
-        // { label: "QuickStart", to: "/docs/quick-start" },
+        { label: "QuickStart", to: "/docs/quick-start" },
         { label: "Changelog", to: "/changelog" },
       ],
     },
@@ -98,7 +98,7 @@ const footer = {
         },
         {
           label: "NoneBot V1",
-          href: "https://docs.nonebot.dev",
+          href: "https://v1.nonebot.dev",
         },
         { label: "NoneBot CLI", href: "https://cli.nonebot.dev" },
       ],
