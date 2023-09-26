@@ -6580,19 +6580,29 @@
   {
     "module_name": "nonebot_plugin_pjsk",
     "project_link": "nonebot-plugin-pjsk",
-    "name": "pjsk表情",
-    "desc": "pjsk表情",
+    "name": "Sekai Stickers",
+    "desc": "基于 NoneBot2 的 Project Sekai 表情包制作插件",
     "author": "Agnes4m",
-    "homepage": "https://github.com/Agnes4m/nonebot_plugin_pjsk",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-pjsk",
     "tags": [
       {
         "label": "pjsk",
+        "color": "#e852eb"
+      },
+      {
+        "label": "啤酒烧烤",
         "color": "#e852eb"
       }
     ],
     "is_official": false,
     "type": "application",
-    "supported_adapters": ["nonebot.adapters.onebot.v11"]
+    "supported_adapters": [
+      "nonebot.adapters.onebot.v11",
+      "nonebot.adapters.onebot.v12",
+      "nonebot.adapters.kaiheila",
+      "nonebot.adapters.qqguild",
+      "nonebot.adapters.telegram"
+    ]
   },
   {
     "module_name": "nonebot_plugin_mongodb",
@@ -7338,6 +7348,48 @@
       {
         "label": "多地区",
         "color": "#dfea52"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_video_api",
+    "project_link": "nonebot-plugin-video-api",
+    "name": "nonebot-plugin-video-api",
+    "desc": "一款可以自由增删视频指令和api的插件",
+    "author": "Q1351998764",
+    "homepage": "https://github.com/Q1351998764/nonebot-plugin-video-api",
+    "tags": [
+      {
+        "label": "视频api",
+        "color": "#14d8de"
+      }
+    ],
+    "is_official": false,
+    "type": "application",
+    "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_ottohzys",
+    "project_link": "nonebot-plugin-ottohzys",
+    "name": "大电老师活字印刷",
+    "desc": "大家好啊，今天来点大家想看的东西",
+    "author": "lgc2333",
+    "homepage": "https://github.com/lgc-NB2Dev/nonebot-plugin-ottohzys",
+    "tags": [
+      {
+        "label": "otto",
+        "color": "#00a6ed"
+      },
+      {
+        "label": "电棍",
+        "color": "#00a6ed"
+      },
+      {
+        "label": "活字印刷",
+        "color": "#00a6ed"
       }
     ],
     "is_official": false,

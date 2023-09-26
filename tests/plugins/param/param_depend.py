@@ -79,6 +79,12 @@ async def annotated_prior_depend(
     return x
 
 
+async def annotated_multi_depend(
+    x: Annotated[Annotated[int, Depends(lambda: 2)], Depends(dependency)]
+):
+    return x
+
+
 # test sub dependency type mismatch
 async def sub_type_mismatch(b: FooBot = Depends(sub_bot)):
     return b

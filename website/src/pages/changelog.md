@@ -7,8 +7,30 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 优先使用 `Annotated` 的最后一个子依赖 [@ProgramRipper](https://github.com/ProgramRipper) ([#2360](https://github.com/nonebot/nonebot2/pull/2360))
+- Feature: 优化检查事件响应器的日志 [@A-kirami](https://github.com/A-kirami) ([#2355](https://github.com/nonebot/nonebot2/pull/2355))
+
+### 🐛 Bug 修复
+
+- Fix: bot.call_api 在被 called api hook mock 后应该忽略 exception [@Ailitonia](https://github.com/Ailitonia) ([#2374](https://github.com/nonebot/nonebot2/pull/2374))
+
+### 📝 文档
+
+- Docs: 增加赞助者显示 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2371](https://github.com/nonebot/nonebot2/pull/2371))
+- Docs: 更新 `get_asgi` 函数的文档字符串 [@A-kirami](https://github.com/A-kirami) ([#2359](https://github.com/nonebot/nonebot2/pull/2359))
+
+### 💫 杂项
+
+- Plugin: 修改 `Sekai Stickers` 插件信息 [@lgc2333](https://github.com/lgc2333) ([#2372](https://github.com/nonebot/nonebot2/pull/2372))
+- CI: 使用更现代的功能 [@he0119](https://github.com/he0119) ([#2362](https://github.com/nonebot/nonebot2/pull/2362))
+- Docs: 添加 wwads [@yanyongyu](https://github.com/yanyongyu) ([#2361](https://github.com/nonebot/nonebot2/pull/2361))
+
 ### 🍻 插件发布
 
+- Plugin: 大电老师活字印刷 [@noneflow](https://github.com/noneflow) ([#2370](https://github.com/nonebot/nonebot2/pull/2370))
+- Plugin: nonebot-plugin-video-api [@noneflow](https://github.com/noneflow) ([#2367](https://github.com/nonebot/nonebot2/pull/2367))
 - Plugin: 青年大学习提交 [@noneflow](https://github.com/noneflow) ([#2357](https://github.com/nonebot/nonebot2/pull/2357))
 
 ## v2.1.0
