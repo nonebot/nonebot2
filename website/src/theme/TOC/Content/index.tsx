@@ -9,7 +9,7 @@ export default function TOCContent(props: Props): JSX.Element {
     <>
       <OriginTOCContent {...props} />
       <div className="toc-ads-container">
-        <div className="wwads-cn wwads-horizontal toc-ads" data-id="281"></div>
+        <div className="wwads-cn wwads-vertical toc-ads" data-id="281"></div>
       </div>
     </>
   );
