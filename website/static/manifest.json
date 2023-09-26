@@ -3,7 +3,7 @@
   "short_name": "NoneBot",
   "background-color": "#ffffff",
   "theme-color": "#ea5252",
-  "description": "跨平台 Python 异步 QQ 机器人框架",
+  "description": "跨平台 Python 异步聊天机器人框架",
   "display": "standalone",
   "icons": [
     {
