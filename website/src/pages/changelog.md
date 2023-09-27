@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 升级新版 NonePress 主题 [@yanyongyu](https://github.com/yanyongyu) ([#2375](https://github.com/nonebot/nonebot2/pull/2375))
 - Docs: 增加赞助者显示 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2371](https://github.com/nonebot/nonebot2/pull/2371))
 - Docs: 更新 `get_asgi` 函数的文档字符串 [@A-kirami](https://github.com/A-kirami) ([#2359](https://github.com/nonebot/nonebot2/pull/2359))
 
