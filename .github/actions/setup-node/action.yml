@@ -7,15 +7,7 @@ runs:
     - uses: actions/setup-node@v3
       with:
         node-version: "18"
+        cache: "yarn"
 
-    - id: yarn-cache-dir-path
-      run: echo "dir=$(yarn cache dir)" >> $GITHUB_OUTPUT
-      shell: bash
-
-    - uses: actions/cache@v3
-      with:
-        path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-        key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-
-    - run: yarn install
+    - run: yarn install --frozen-lockfile
       shell: bash
