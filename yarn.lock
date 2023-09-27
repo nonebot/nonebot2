@@ -1854,26 +1854,26 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nullbot/docusaurus-plugin-docsmenu@^2.1.6":
-  version "2.1.6"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-docsmenu/-/docusaurus-plugin-docsmenu-2.1.6.tgz#41682ca030d03b6daef7245175e508ce04a2c477"
-  integrity sha512-qssCbiizblNljnc8QOoKsJpb47lqqVJVGjvxHYkTenRyrlhUdixacilgzlIYiP6RHl3uPphn3Z6tbYT6CC2SBg==
+"@nullbot/docusaurus-plugin-docsmenu@^2.1.7":
+  version "2.1.7"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-docsmenu/-/docusaurus-plugin-docsmenu-2.1.7.tgz#db7f1616372e3f0da4ffb3dd3f4103a7952024dd"
+  integrity sha512-euvNhD5HZVvrpuGOUHimIKNVv7i1p9WdAgqtJQBO3hzWrbb+W7fvPkiocIq4H/AjoJAIESIgGWShj6lfv2nB7w==
   dependencies:
     "@docusaurus/core" "^2.4.0"
     "@docusaurus/plugin-content-docs" "^2.4.0"
 
-"@nullbot/docusaurus-plugin-getsidebar@^2.1.6":
-  version "2.1.6"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-getsidebar/-/docusaurus-plugin-getsidebar-2.1.6.tgz#ea4467ed60d177ac1c4c7beb1648cc7947b3bdef"
-  integrity sha512-qHzGMOA43+o0d4zhyU3qQdk/6DYUUY27BXy5xfkOwIG5XeLrnYU65kRtJeo2cpk5SK821JOH/zhV7yMMji9d1Q==
+"@nullbot/docusaurus-plugin-getsidebar@^2.1.7":
+  version "2.1.7"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-getsidebar/-/docusaurus-plugin-getsidebar-2.1.7.tgz#bfd43a68a095f19809885a3856b17b184008c95c"
+  integrity sha512-Q/D2OT/BMxyaywkoKGfrQltI4boRwHMZ0aF+ueFbnazEqxaattEdW0X+RSVS/BRpAKMMjkdNoF1BzWfp1qjcBw==
   dependencies:
     "@docusaurus/core" "^2.4.0"
     "@docusaurus/plugin-content-docs" "^2.4.0"
 
 "@nullbot/docusaurus-preset-nonepress@^2.1.2":
-  version "2.1.6"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-preset-nonepress/-/docusaurus-preset-nonepress-2.1.6.tgz#643546e1c5ebc3cfb02b2689a51332d7870bb4b3"
-  integrity sha512-qdGwQUIb2KZmZqt5KMV9E6CLeHbygt+xKVCRAmD8SYGXtr3Sx7gnUyhK4YSNq/a+uIk63kWoi6EtfYefarJtLg==
+  version "2.1.7"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-preset-nonepress/-/docusaurus-preset-nonepress-2.1.7.tgz#34d26d8d4e17dd11b93b91b23dfd3846f052124e"
+  integrity sha512-sWLhWN6KxrwBoyfx63dokG8g2VJVCOtTyeUl6gSm2iN76nAl/RZwIhTPd36vZ1evi08Qebfx9UlrvO32eI4dYg==
   dependencies:
     "@docusaurus/core" "^2.4.0"
     "@docusaurus/plugin-content-docs" "^2.4.0"
@@ -1883,13 +1883,13 @@
     "@docusaurus/plugin-google-tag-manager" "^2.4.0"
     "@docusaurus/plugin-sitemap" "^2.4.0"
     "@docusaurus/theme-search-algolia" "^2.4.0"
-    "@nullbot/docusaurus-plugin-getsidebar" "^2.1.6"
-    "@nullbot/docusaurus-theme-nonepress" "^2.1.6"
+    "@nullbot/docusaurus-plugin-getsidebar" "^2.1.7"
+    "@nullbot/docusaurus-theme-nonepress" "^2.1.7"
 
-"@nullbot/docusaurus-theme-nonepress@^2.1.6":
-  version "2.1.6"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-theme-nonepress/-/docusaurus-theme-nonepress-2.1.6.tgz#c417645bb2e2608c9517795f8cb3bed64ebfa4ef"
-  integrity sha512-ZLMR4en16vt5QAcR+ZtxvLDtLbnfJFJT0BH1yc5fSqJ/fzzbaIYKf9DJ1P5kG8rZ/U4f1Yq/5VOSVkJWnJALzw==
+"@nullbot/docusaurus-theme-nonepress@^2.1.7":
+  version "2.1.7"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-theme-nonepress/-/docusaurus-theme-nonepress-2.1.7.tgz#94b708dcfbe44f9318341e54d1d4ae6b1df0de65"
+  integrity sha512-DhgNEmtz2IalCZRnlrcHtLSpItVYlHO93dCGnyUMVjWY/bRBUVK857gkgZdaRQIAb2hWeOFxnZ6MSUbSbieeOw==
   dependencies:
     "@docsearch/react" "^3.5.1"
     "@docusaurus/core" "^2.4.0"
@@ -1908,7 +1908,7 @@
     "@fortawesome/free-solid-svg-icons" "^6.4.0"
     "@fortawesome/react-fontawesome" "^0.2.0"
     "@mdx-js/react" "^1.6.22"
-    "@nullbot/docusaurus-plugin-docsmenu" "^2.1.6"
+    "@nullbot/docusaurus-plugin-docsmenu" "^2.1.7"
     "@seznam/compose-react-refs" "^1.0.6"
     "@tailwindcss/typography" "^0.5.0"
     autoprefixer "^10.3.1"
@@ -3261,9 +3261,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001538, caniuse-lite@^1.0.30001539:
-  version "1.0.30001539"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001539.tgz#325a387ab1ed236df2c12dc6cd43a4fff9903a44"
-  integrity sha512-hfS5tE8bnNiNvEOEkm8HElUHroYwlqMMENEzELymy77+tJ6m+gA2krtHl5hxJaj71OlpC2cHZbdSMX1/YEqEkA==
+  version "1.0.30001540"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001540.tgz#a316ca4f2ae673ab02ff0ec533334016d56ff658"
+  integrity sha512-9JL38jscuTJBTcuETxm8QLsFr/F6v0CYYTEU6r5+qSM98P2Q0Hmu0eG1dTG5GBUmywU3UlcVOUSIJYY47rdFSw==
 
 ccount@^1.0.0:
   version "1.1.0"
