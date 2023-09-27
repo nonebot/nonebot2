@@ -4,8 +4,8 @@ description: 自定义事件响应器存储
 
 options:
   menu:
-    weight: 110
-    category: advanced
+    - category: advanced
+      weight: 110
 ---
 
 # 事件响应器存储

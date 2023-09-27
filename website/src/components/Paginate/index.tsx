@@ -1,39 +1,55 @@
+import React, { useCallback } from "react";
+
 import clsx from "clsx";
-import React, { useCallback, useState } from "react";
-import { usePagination } from "react-use-pagination";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import type { usePagination } from "react-use-pagination";
 
-import { useContentWidth } from "../../libs/width";
-import styles from "./styles.module.css";
+import "./styles.css";
+
+const MAX_LENGTH = 7;
+
+export type Props = Pick<
+  ReturnType<typeof usePagination>,
+  | "totalPages"
+  | "currentPage"
+  | "setNextPage"
+  | "setPreviousPage"
+  | "setPage"
+  | "previousEnabled"
+  | "nextEnabled"
+> & {
+  className?: string;
+};
 
 export default function Paginate({
+  className,
   totalPages,
+  currentPage,
   setPreviousPage,
   setNextPage,
   setPage,
-  currentPage,
   previousEnabled,
   nextEnabled,
-}: ReturnType<typeof usePagination>): JSX.Element {
-  const [containerElement, setContainerElement] = useState<HTMLElement | null>(
-    null
-  );
+}: Props): JSX.Element {
+  // const [containerElement, setContainerElement] = useState<HTMLElement | null>(
+  //   null
+  // );
 
-  const ref = useCallback(
-    (element: HTMLElement | null) => {
-      setContainerElement(element);
-    },
-    [setContainerElement]
-  );
+  // const ref = useCallback(
+  //   (element: HTMLElement | null) => {
+  //     setContainerElement(element);
+  //   },
+  //   [setContainerElement]
+  // );
 
-  const maxWidth = useContentWidth(
-    containerElement?.parentElement ?? undefined
-  );
-  const maxLength = Math.min(
-    (maxWidth && Math.floor(maxWidth / 50) - 2) || totalPages,
-    totalPages
-  );
+  // const maxWidth = useContentWidth(
+  //   containerElement?.parentElement ?? undefined
+  // );
+  // const maxLength = Math.min(
+  //   (maxWidth && Math.floor(maxWidth / 50) - 2) || totalPages,
+  //   totalPages
+  // );
 
   const range = useCallback((start: number, end: number) => {
     const result = [];
@@ -47,12 +63,12 @@ export default function Paginate({
   const pages: (React.ReactNode | number)[] = [];
   const ellipsis = <FontAwesomeIcon icon="ellipsis-h" />;
 
-  const even = maxLength % 2 === 0 ? 1 : 0;
-  const left = Math.floor(maxLength / 2);
+  const even = MAX_LENGTH % 2 === 0 ? 1 : 0;
+  const left = Math.floor(MAX_LENGTH / 2);
   const right = totalPages - left + even + 1;
   currentPage = currentPage + 1;
 
-  if (totalPages <= maxLength) {
+  if (totalPages <= MAX_LENGTH) {
     pages.push(...range(1, totalPages));
   } else if (currentPage > left && currentPage < right) {
     const firstItem = 1;
@@ -74,34 +90,44 @@ export default function Paginate({
   }
 
   return (
-    <nav role="navigation" aria-label="Pagination Navigation" ref={ref}>
-      <ul className={styles.container}>
-        <li
-          className={clsx(styles.li, { [styles.disabled]: !previousEnabled })}
-        >
-          <button className={styles.button} onClick={setPreviousPage}>
-            <FontAwesomeIcon icon="chevron-left" />
-          </button>
-        </li>
+    <nav
+      className={clsx("paginate-container", className)}
+      role="navigation"
+      aria-label="Pagination Navigation"
+    >
+      <button
+        className="paginate-button"
+        onClick={setPreviousPage}
+        disabled={!previousEnabled}
+      >
+        <FontAwesomeIcon icon={["fas", "chevron-left"]} />
+      </button>
+      <ul className="paginate-pager">
         {pages.map((page, index) => (
-          <li className={styles.li} key={index}>
-            <button
-              className={clsx(styles.button, {
-                [styles.active]: page === currentPage,
-                "pointer-events-none": typeof page !== "number",
-              })}
-              onClick={() => typeof page === "number" && setPage(page - 1)}
-            >
-              {page}
-            </button>
+          <li
+            key={index}
+            className={clsx(
+              "paginate-button",
+              typeof page !== "number" && "ellipsis",
+              currentPage === page && "active"
+            )}
+            onClick={() =>
+              typeof page === "number" &&
+              currentPage !== page &&
+              setPage(page - 1)
+            }
+          >
+            {page}
           </li>
         ))}
-        <li className={clsx(styles.li, { [styles.disabled]: !nextEnabled })}>
-          <button className={styles.button} onClick={setNextPage}>
-            <FontAwesomeIcon icon="chevron-right" />
-          </button>
-        </li>
       </ul>
+      <button
+        className="paginate-button"
+        onClick={setNextPage}
+        disabled={!nextEnabled}
+      >
+        <FontAwesomeIcon icon={["fas", "chevron-right"]} />
+      </button>
     </nav>
   );
 }

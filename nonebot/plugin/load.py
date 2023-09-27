@@ -12,7 +12,7 @@ from typing import Set, Union, Iterable, Optional
 
 from nonebot.utils import path_to_module_name
 
-from .plugin import Plugin
+from .model import Plugin
 from .manager import PluginManager
 from . import _managers, get_plugin, _current_plugin_chain, _module_name_to_plugin_name
 
@@ -160,7 +160,7 @@ def require(name: str) -> ModuleType:
     如果为 `load_plugins` 文件夹导入的插件，则为文件(夹)名。
 
     参数:
-        name: 插件名，即 {ref}`nonebot.plugin.plugin.Plugin.name`。
+        name: 插件名，即 {ref}`nonebot.plugin.model.Plugin.name`。
 
     异常:
         RuntimeError: 插件无法加载

@@ -10,7 +10,7 @@ from nonebot.rule import Rule, ArgumentParser
 from nonebot.matcher import Matcher, MatcherSource
 from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_PermissionChecker
 
-from .plugin import Plugin
+from .model import Plugin
 
 def store_matcher(matcher: type[Matcher]) -> None: ...
 def get_matcher_plugin(depth: int = ...) -> Plugin | None: ...

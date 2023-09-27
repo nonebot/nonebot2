@@ -1,0 +1,66 @@
+.messenger {
+  &-container {
+    @apply block w-full my-4 overflow-hidden;
+    @apply rounded-lg outline-none bg-base-200;
+    @apply transition-[background-color] duration-500;
+  }
+
+  &-title {
+    @apply flex items-center h-12 px-4 bg-info text-white;
+
+    &-back {
+      @apply text-left text-base grow;
+    }
+
+    &-name {
+      @apply flex-initial grow-0 text-xl font-bold;
+    }
+
+    &-more {
+      @apply text-right text-base grow;
+    }
+  }
+
+  &-chat {
+    @apply p-4 min-h-[150px];
+
+    &-avatar {
+      @apply !flex items-center justify-center;
+      @apply w-10 rounded-full;
+
+      &-user {
+        @apply bg-info text-white;
+      }
+    }
+
+    &-bubble {
+      @apply bg-base-100 text-base-content [word-break:break-word];
+      @apply transition-[color,background-color] duration-500;
+    }
+  }
+
+  &-footer {
+    @apply px-4;
+
+    &-action {
+      @apply flex items-center gap-2;
+
+      &-input {
+        @apply flex-1;
+
+        & > input {
+          @apply transition-[color,background-color] duration-500;
+        }
+      }
+
+      &-send {
+        @apply flex-initial w-fit;
+      }
+    }
+
+    &-tools {
+      @apply grid grid-cols-6 items-center py-1;
+      @apply text-center text-base text-base-content/60;
+    }
+  }
+}

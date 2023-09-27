@@ -27,7 +27,7 @@ nb plugin install nonebot-plugin-sentry
 
 ### 配置插件
 
-:::warning 注意
+:::caution 注意
 错误跟踪通常在生产环境中使用，因此开发环境中 `sentry_dsn` 留空即会停用插件。
 :::
 

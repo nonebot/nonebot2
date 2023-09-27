@@ -4,8 +4,8 @@ description: 通过依赖注入获取上下文信息
 
 options:
   menu:
-    weight: 70
-    category: advanced
+    - category: advanced
+      weight: 70
 ---
 
 # 依赖注入
@@ -483,7 +483,7 @@ async def _(x: httpx.AsyncClient = Depends(get_client)):
   </TabItem>
 </Tabs>
 
-:::warning 注意
+:::caution 注意
 生成器作为依赖时，其中只能进行一次 `yield`，否则将会触发异常。如果对此有疑问并想探究原因，可以参考 [contextmanager](https://docs.python.org/zh-cn/3/library/contextlib.html#contextlib.contextmanager) 和 [asynccontextmanager](https://docs.python.org/zh-cn/3/library/contextlib.html#contextlib.asynccontextmanager) 文档。事实上，NoneBot 内部就使用了这两个装饰器。
 :::
 

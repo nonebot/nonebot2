@@ -4,8 +4,8 @@ description: 根据事件类型进行不同的处理
 
 options:
   menu:
-    weight: 80
-    category: appendices
+    - category: appendices
+      weight: 80
 ---
 
 # 事件类型与重载
@@ -28,7 +28,7 @@ async def got_location(event: MessageEvent, location: str = ArgPlainText()):
 
 在上面的代码中，我们获取了 `Console` 协议适配器的消息事件提供的发送时间 `time` 属性。
 
-:::warning 注意
+:::caution 注意
 如果**基类**就能满足你的需求，那么就**不要修改**事件参数类型注解，这样可以使你的代码更加**通用**，可以在更多平台上运行。如何根据不同平台事件类型进行不同的处理，我们将在[重载](#重载)一节中介绍。
 :::
 
@@ -63,7 +63,7 @@ async def handle_onebot(bot: OneBot):
     await bot.send_group_message(group_id=123123, message="OneBot")
 ```
 
-:::warning 注意
+:::caution 注意
 重载机制对所有的参数类型注解都有效，因此，依赖注入也可以使用这个特性来对不同的返回值进行处理。
 
 但 Bot 和 Event 二者的参数类型注解具有最高检查优先级，如果二者类型注解不匹配，那么其他依赖注入将不会执行（如：`Depends`）。

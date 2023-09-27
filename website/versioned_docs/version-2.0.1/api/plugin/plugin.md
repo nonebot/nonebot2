@@ -1,6 +1,8 @@
 ---
 sidebar_position: 3
 description: nonebot.plugin.plugin 模块
+
+slug: /api/plugin/plugin
 ---
 
 # nonebot.plugin.plugin

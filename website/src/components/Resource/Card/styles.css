@@ -1,0 +1,75 @@
+.resource-card {
+  &-container {
+    @apply flex flex-col gap-y-2 w-full min-h-[12rem] p-4;
+    @apply transition-colors duration-500 bg-base-200;
+    @apply border-2 border-base-200 rounded-lg;
+
+    &-clickable {
+      @apply cursor-pointer hover:border-primary;
+    }
+  }
+
+  &-header {
+    @apply flex items-center w-full text-lg font-medium;
+
+    &-title {
+      @apply grow text-left truncate;
+    }
+
+    &-check {
+      @apply ml-2 text-success w-5 h-5 fill-current;
+    }
+
+    &-expand {
+      @apply flex-none fill-current;
+    }
+  }
+
+  &-desc {
+    @apply flex-1 w-full text-sm text-ellipsis break-words;
+  }
+
+  &-footer {
+    @apply flex flex-col w-full cursor-default;
+
+    &-tags {
+      @apply flex flex-wrap gap-1;
+    }
+
+    &-tag {
+      @apply cursor-pointer;
+    }
+
+    &-divider {
+      @apply m-0;
+    }
+
+    &-info {
+      @apply flex items-center justify-between w-full;
+    }
+
+    &-group {
+      @apply flex items-center justify-center gap-x-1 leading-none;
+    }
+
+    &-icon {
+      @apply w-5 h-5 fill-current opacity-80;
+
+      &:hover {
+        @apply opacity-100;
+      }
+    }
+
+    &-avatar {
+      @apply w-5 h-5 rounded-full transition-shadow;
+
+      &:hover {
+        @apply ring-1 ring-primary ring-offset-base-100 ring-offset-1;
+      }
+    }
+
+    &-author {
+      @apply text-sm cursor-pointer;
+    }
+  }
+}

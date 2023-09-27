@@ -4,8 +4,8 @@ description: 更灵活的会话控制
 
 options:
   menu:
-    weight: 30
-    category: appendices
+    - category: appendices
+      weight: 30
 ---
 
 # 会话控制
@@ -322,7 +322,7 @@ async def _(matcher: Matcher):
     matcher.stop_propagation()
 ```
 
-:::warning 注意
+:::caution 注意
 `stop_propagation` 操作是实例方法，需要先通过依赖注入获取事件响应器实例再进行调用。
 :::
 

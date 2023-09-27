@@ -1,48 +1,47 @@
-import { useState } from "react";
+import { translate } from "@docusaurus/Translate";
 
-export type Tag = {
-  label: string;
-  color: string;
+import type { Adapter, AdaptersResponse } from "@/types/adapter";
+import type { Bot, BotsResponse } from "@/types/bot";
+import type { Driver, DriversResponse } from "@/types/driver";
+import type { Plugin, PluginsResponse } from "@/types/plugin";
+
+type RegistryDataResponseTypes = {
+  adapter: AdaptersResponse;
+  bot: BotsResponse;
+  driver: DriversResponse;
+  plugin: PluginsResponse;
+};
+type RegistryDataType = keyof RegistryDataResponseTypes;
+
+type ResourceTypes = {
+  adapter: Adapter;
+  bot: Bot;
+  driver: Driver;
+  plugin: Plugin;
 };
 
-export type Obj = {
-  module_name?: string;
-  project_link?: string;
-  name: string;
-  desc: string;
-  author: string;
-  homepage: string;
-  tags: Tag[];
-  is_official: boolean;
-};
+export type Resource = Adapter | Bot | Driver | Plugin;
 
-export function filterObjs(filter: string, objs: Obj[]): Obj[] {
-  let filterLower = filter.toLowerCase();
-  return objs.filter((o) => {
-    return (
-      o.module_name?.toLowerCase().includes(filterLower) ||
-      o.project_link?.toLowerCase().includes(filterLower) ||
-      o.name.toLowerCase().includes(filterLower) ||
-      o.desc.toLowerCase().includes(filterLower) ||
-      o.author.toLowerCase().includes(filterLower) ||
-      o.tags.filter((t) => t.label.toLowerCase().includes(filterLower)).length >
-        0
-    );
+export async function fetchRegistryData<T extends RegistryDataType>(
+  dataType: T
+): Promise<ResourceTypes[T][]> {
+  const resp = await fetch(
+    `https://registry.nonebot.dev/${dataType}s.json`
+  ).catch((e) => {
+    throw new Error(`Failed to fetch ${dataType}s: ${e}`);
   });
+  if (!resp.ok)
+    throw new Error(
+      `Failed to fetch ${dataType}s: ${resp.status} ${resp.statusText}`
+    );
+  const data = (await resp.json()) as RegistryDataResponseTypes[T];
+  return data.map(
+    (resource) => ({ ...resource, resourceType: dataType }) as ResourceTypes[T]
+  );
 }
 
-type useFilteredObjsReturn = {
-  filter: string;
-  setFilter: (filter: string) => void;
-  filteredObjs: Obj[];
-};
-
-export function useFilteredObjs(objs: Obj[]): useFilteredObjsReturn {
-  const [filter, setFilter] = useState<string>("");
-  const filteredObjs = filterObjs(filter, objs);
-  return {
-    filter,
-    setFilter,
-    filteredObjs,
-  };
-}
+export const loadFailedTitle = translate({
+  id: "pages.store.loadFailed.title",
+  message: "加载失败",
+  description: "Title to display when loading content failed",
+});

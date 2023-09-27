@@ -30,7 +30,7 @@ from nonebot.rule import (
     shell_command,
 )
 
-from .plugin import Plugin
+from .model import Plugin
 from . import get_plugin_by_module_name
 from .manager import _current_plugin_chain
 

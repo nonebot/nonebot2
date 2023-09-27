@@ -1,0 +1,38 @@
+.store {
+  &-title {
+    @apply text-center;
+  }
+
+  &-description {
+    @apply text-center;
+  }
+
+  &-searcher {
+    @apply max-w-2xl mx-auto my-4;
+  }
+
+  &-toolbar {
+    @apply flex items-center justify-center my-4;
+
+    &-filters {
+      @apply flex grow gap-2;
+    }
+
+    &-dropdown {
+      @apply w-36 z-10 m-0 p-2;
+      @apply rounded-md bg-base-100 shadow-lg border border-base-200;
+    }
+  }
+
+  &-loading {
+    @apply text-primary;
+
+    &-container {
+      @apply text-center;
+    }
+  }
+
+  &-container {
+    @apply grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-6 mt-4 mb-8;
+  }
+}

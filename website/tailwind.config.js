@@ -1,28 +1,48 @@
+const lightTheme = require("daisyui/src/theming/themes")["[data-theme=light]"];
+const darkTheme = require("daisyui/src/theming/themes")["[data-theme=dark]"];
+
+/**
+ * @param {{[key: string]: string}} theme
+ * @param {string[]} exclude
+ * @returns {{[key: string]: string}}
+ */
+function excludeThemeColor(theme, exclude) {
+  /** @type {typeof theme} */
+  const newObj = {};
+  for (const key in theme) {
+    if (exclude.includes(key)) continue;
+    newObj[key] = theme[key];
+  }
+  return newObj;
+}
+
 module.exports = {
-  // content: [
-  //   `${__dirname}/src/**/*.{js,jsx,ts,tsx}`,
-  //   `${__dirname}/docs/**/*.{js,jsx,ts,tsx}`,
-  // ],
-  theme: {
-    extend: {
-      nonepress: {
+  daisyui: {
+    themes: [
+      {
         light: {
-          theme: {
-            DEFAULT: "#ea5252",
-          },
+          ...excludeThemeColor(lightTheme, [
+            "primary-content",
+            "secondary-content",
+            "accent-content",
+          ]),
+          primary: "#ea5252",
+          secondary: "#ef9fbc",
+          accent: "#65c3c8",
         },
+      },
+      {
         dark: {
-          theme: {
-            DEFAULT: "#ea5252",
-          },
+          ...excludeThemeColor(darkTheme, [
+            "primary-content",
+            "secondary-content",
+            "accent-content",
+          ]),
+          primary: "#ea5252",
+          secondary: "#ef9fbc",
+          accent: "#65c3c8",
         },
       },
-      colors: {
-        hero: "#ea5252",
-        light: {
-          DEFAULT: "#fffdfd",
-        },
-      },
-    },
+    ],
   },
 };

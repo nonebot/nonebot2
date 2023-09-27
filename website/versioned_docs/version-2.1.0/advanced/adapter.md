@@ -4,8 +4,8 @@ description: 注册适配器与指定平台交互
 
 options:
   menu:
-    weight: 20
-    category: advanced
+    - category: advanced
+      weight: 20
 ---
 
 # 使用适配器
@@ -158,4 +158,4 @@ is_tome: bool = event.is_tome()
 
 ## 更多
 
-官方支持的适配器和社区贡献的适配器均可在[商店](/store)中查看。如果你想要开发自己的适配器，可以参考[开发文档](../developer/adapter-writing.md)。欢迎通过商店发布你的适配器。
+官方支持的适配器和社区贡献的适配器均可在[商店](/store/adapters)中查看。如果你想要开发自己的适配器，可以参考[开发文档](../developer/adapter-writing.md)。欢迎通过商店发布你的适配器。

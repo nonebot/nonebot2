@@ -29,7 +29,7 @@
 - `load_builtin_plugins` =>
   {ref}``load_builtin_plugins` <nonebot.plugin.load.load_builtin_plugins>`
 - `require` => {ref}``require` <nonebot.plugin.load.require>`
-- `PluginMetadata` => {ref}``PluginMetadata` <nonebot.plugin.plugin.PluginMetadata>`
+- `PluginMetadata` => {ref}``PluginMetadata` <nonebot.plugin.model.PluginMetadata>`
 
 FrontMatter:
     sidebar_position: 0
@@ -77,7 +77,7 @@ def get_plugin(name: str) -> Optional["Plugin"]:
     如果为 `load_plugins` 文件夹导入的插件，则为文件(夹)名。
 
     参数:
-        name: 插件名，即 {ref}`nonebot.plugin.plugin.Plugin.name`。
+        name: 插件名，即 {ref}`nonebot.plugin.model.Plugin.name`。
     """
     return _plugins.get(name)
 
@@ -88,7 +88,7 @@ def get_plugin_by_module_name(module_name: str) -> Optional["Plugin"]:
     如果提供的模块名为某个插件的子模块，同样会返回该插件。
 
     参数:
-        module_name: 模块名，即 {ref}`nonebot.plugin.plugin.Plugin.module_name`。
+        module_name: 模块名，即 {ref}`nonebot.plugin.model.Plugin.module_name`。
     """
     loaded = {plugin.module_name: plugin for plugin in _plugins.values()}
     has_parent = True
@@ -111,9 +111,9 @@ def get_available_plugin_names() -> Set[str]:
 from .on import on as on
 from .manager import PluginManager
 from .on import on_type as on_type
+from .model import Plugin as Plugin
 from .load import require as require
 from .on import on_regex as on_regex
-from .plugin import Plugin as Plugin
 from .on import on_notice as on_notice
 from .on import on_command as on_command
 from .on import on_keyword as on_keyword
@@ -129,8 +129,8 @@ from .load import load_plugins as load_plugins
 from .on import on_startswith as on_startswith
 from .load import load_from_json as load_from_json
 from .load import load_from_toml as load_from_toml
+from .model import PluginMetadata as PluginMetadata
 from .on import on_shell_command as on_shell_command
-from .plugin import PluginMetadata as PluginMetadata
 from .load import load_all_plugins as load_all_plugins
 from .load import load_builtin_plugin as load_builtin_plugin
 from .load import load_builtin_plugins as load_builtin_plugins

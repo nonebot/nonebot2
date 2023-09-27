@@ -1,0 +1,4 @@
+.resource-tag {
+  @apply inline-flex items-center justify-center;
+  @apply text-xs font-mono w-fit h-5 px-2 rounded;
+}

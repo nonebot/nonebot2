@@ -189,7 +189,7 @@ async def _(bot: Bot):
 
 然后我们对该插件进行测试：
 
-```python {19,20,23,24} title=tests/test_example.py
+```python title=tests/test_example.py
 from datetime import datetime
 
 import pytest
@@ -210,12 +210,16 @@ async def test_example(app: App):
     from awesome_bot.plugins.example import foo
 
     async with app.test_matcher(foo) as ctx:
+        # highlight-start
         adapter = nonebot.get_adapter(Adapter)
         bot = ctx.create_bot(base=Bot, adapter=adapter)
+        # highlight-end
         event = make_event("/foo")
         ctx.receive_event(bot, event)
+        # highlight-start
         ctx.should_call_send(event, "message", result=None, bot=bot)
         ctx.should_call_api("bell", {}, result=None, adapter=adapter)
+        # highlight-end
 ```
 
 请注意，对于在依赖注入中使用了非基类对象的情况，我们需要在 `create_bot` 方法中指定 `base` 和 `adapter` 参数，确保不会因为重载功能而出现非预期情况。

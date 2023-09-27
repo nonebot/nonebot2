@@ -1,0 +1,41 @@
+.home {
+  &-container {
+    @apply -mt-16;
+  }
+
+  &-hero {
+    @apply relative flex flex-col items-center justify-center gap-4 h-screen;
+
+    &-logo {
+      @apply h-48 w-auto;
+    }
+
+    &-title {
+      @apply text-5xl font-normal tracking-tight;
+    }
+
+    &-tagline {
+      @apply text-sm font-medium uppercase tracking-wide text-base-content/70;
+    }
+
+    &-actions {
+      @apply flex flex-col sm:flex-row gap-4;
+    }
+
+    &-copy {
+      @apply font-normal normal-case text-base-content/70;
+    }
+
+    &-next {
+      @apply absolute bottom-4;
+
+      & svg {
+        @apply animate-bounce text-primary text-4xl;
+      }
+    }
+  }
+
+  &-codeblock {
+    @apply inline-block !max-w-[600px];
+  }
+}

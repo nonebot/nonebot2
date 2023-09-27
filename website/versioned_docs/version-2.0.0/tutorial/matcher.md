@@ -4,8 +4,8 @@ description: 响应接收到的特定事件
 
 options:
   menu:
-    weight: 60
-    category: tutorial
+    - category: tutorial
+      weight: 60
 ---
 
 # 事件响应器

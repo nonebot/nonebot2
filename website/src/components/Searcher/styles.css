@@ -1,0 +1,37 @@
+.searcher {
+  &-box {
+    @apply flex items-center w-full rounded-3xl bg-base-200;
+    @apply transition-[color,background-color] duration-500;
+  }
+
+  &-container {
+    @apply flex-1 flex items-center flex-wrap gap-x-1 gap-y-2;
+    @apply pl-5 py-3;
+  }
+
+  &-tag {
+    @apply flex-initial shrink-0;
+    @apply font-medium cursor-pointer select-none;
+  }
+
+  &-input {
+    @apply flex-1 text-sm min-w-[10rem];
+    @apply bg-transparent border-none outline-none;
+  }
+
+  &-action {
+    @apply flex-initial shrink-0 flex items-center justify-center cursor-pointer w-12 h-10;
+
+    &-icon {
+      @apply h-4 opacity-50;
+    }
+
+    &:hover &-icon.search {
+      @apply hidden;
+    }
+
+    &:not(:hover) &-icon.close {
+      @apply hidden;
+    }
+  }
+}

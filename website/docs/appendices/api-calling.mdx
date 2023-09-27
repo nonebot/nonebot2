@@ -4,14 +4,13 @@ description: 使用平台接口，完成更多功能
 
 options:
   menu:
-    weight: 50
-    category: appendices
+    - category: appendices
+      weight: 50
 ---
 
 # 使用平台接口
 
-import Messenger from "@site/src/components/Messenger";
-import MarkdownText from "!!raw-loader!./assets/console-markdown.txt";
+import Messenger from "@/components/Messenger";
 
 在 NoneBot 中，除了使用事件响应器操作发送文本消息外，我们还可以直接通过使用协议适配器提供的方法来使用平台特定的接口，完成发送特殊消息、获取信息等其他平台提供的功能。同时，在部分无法使用事件响应器的情况中，例如[定时任务](../best-practice/scheduler.md)，我们也可以使用平台接口来完成需要的功能。
 
@@ -19,7 +18,7 @@ import MarkdownText from "!!raw-loader!./assets/console-markdown.txt";
 
 在之前的章节中，我们介绍了如何向用户发送文本消息以及[如何处理平台消息](../tutorial/message.md)，现在我们来向用户发送平台特殊消息。
 
-:::warning 注意
+:::caution 注意
 在以下的示例中，我们将使用 `Console` 协议适配器来演示如何发送平台消息。在实际使用中，你需要确保你使用的**消息序列类型**与你所要发送的**平台类型**一致。
 :::
 
@@ -49,7 +48,11 @@ async def got_location(location: str = ArgPlainText()):
     { position: "right", msg: "/天气" },
     { position: "left", msg: "❓请输入地名" },
     { position: "right", msg: "北京" },
-    { position: "left", msg: MarkdownText },
+    {
+      position: "left",
+      monospace: true,
+      msg: "┏━━━━━━━━━━━━━━━━┓\n┃      北京       ┃\n┗━━━━━━━━━━━━━━━━┛\n• 今天\n⛅ 多云 20℃~24℃",
+    },
   ]}
 />
 
@@ -100,7 +103,7 @@ result = await bot.get_user_info(user_id=12345678)
 result = await bot.call_api("get_user_info", user_id=12345678)
 ```
 
-:::warning 注意
+:::caution 注意
 实际可以使用的 API 以及参数取决于平台提供的接口以及协议适配器的实现，请参考协议适配器以及平台文档。
 :::
 

@@ -4,8 +4,8 @@ description: 添加服务端路由规则
 
 options:
   menu:
-    weight: 100
-    category: advanced
+    - category: advanced
+      weight: 100
 ---
 
 # 添加路由
@@ -21,10 +21,11 @@ NoneBot 中，我们可以通过两种途径向 ASGI 驱动器添加路由规则
 
 在向驱动器添加路由规则时，我们需要注意驱动器是否为服务端类型，我们可以通过以下方式判断：
 
-```python {3}
+```python
 from nonebot import get_driver
 from nonebot.drivers import ASGIMixin
 
+# highlight-next-line
 can_use = isinstance(get_driver(), ASGIMixin)
 ```
 

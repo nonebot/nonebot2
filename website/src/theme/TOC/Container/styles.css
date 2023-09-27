@@ -1,0 +1,12 @@
+.toc-ads {
+  @apply max-w-full !m-0 !bg-transparent;
+
+  & .wwads-text {
+    @apply !text-base-content;
+    @apply transition-[color] duration-500;
+  }
+
+  &-container {
+    @apply shrink-0 w-full max-w-full px-4;
+  }
+}
