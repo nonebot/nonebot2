@@ -19,7 +19,7 @@
     }
 
     &-actions {
-      @apply flex gap-4;
+      @apply flex flex-col sm:flex-row gap-4;
     }
 
     &-copy {
