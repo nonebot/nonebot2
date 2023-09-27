@@ -100,7 +100,7 @@ export default function ResourceCard({
             <div className="avatar">
               <div className="resource-card-footer-avatar">
                 <Link href={authorLink}>
-                  <img src={authorAvatar} />
+                  <img src={authorAvatar} key={resource.author} />
                 </Link>
               </div>
             </div>
