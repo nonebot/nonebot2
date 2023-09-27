@@ -41,7 +41,7 @@ options:
 
 ## 创建插件
 
-:::warning 注意
+:::caution 注意
 如果在之前的[快速上手](../quick-start.mdx)章节中已经使用 `bootstrap` 模板创建了项目，那么你需要做出如下修改：
 
 1. 在项目目录中创建一个两层文件夹 `awesome_bot/plugins`
@@ -63,7 +63,7 @@ options:
 
 :::
 
-:::warning 注意
+:::caution 注意
 如果在之前的[创建项目](./application.md)章节中手动创建了相关文件，那么你需要做出如下修改：
 
 1. 在项目目录中创建一个两层文件夹 `awesome_bot/plugins`
@@ -144,7 +144,7 @@ nonebot.load_plugin("path.to.your.plugin")  # 加载第三方插件
 nonebot.load_plugin(Path("./path/to/your/plugin.py"))  # 加载项目插件
 ```
 
-:::warning 注意
+:::caution 注意
 请注意，本地插件的路径应该为相对机器人 **入口文件（通常为 bot.py）** 可导入的，例如在项目 `plugins` 目录下。
 :::
 
@@ -156,7 +156,7 @@ nonebot.load_plugin(Path("./path/to/your/plugin.py"))  # 加载项目插件
 nonebot.load_plugins("src/plugins", "path/to/your/plugins")
 ```
 
-:::warning 注意
+:::caution 注意
 请注意，插件目录应该为相对机器人 **入口文件（通常为 bot.py）** 可导入的，例如在项目 `plugins` 目录下。
 :::
 

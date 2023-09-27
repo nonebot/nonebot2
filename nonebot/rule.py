@@ -599,7 +599,7 @@ def shell_command(
     通过 {ref}`nonebot.params.ShellCommandArgs` 获取解析后的参数字典
     （例: `{"arg": "arg", "h": True}`）。
 
-    :::warning 警告
+    :::caution 警告
     如果参数解析失败，则通过 {ref}`nonebot.params.ShellCommandArgs`
     获取的将是 {ref}`nonebot.exception.ParserExit` 异常。
     :::

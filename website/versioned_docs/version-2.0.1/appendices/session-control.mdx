@@ -322,7 +322,7 @@ async def _(matcher: Matcher):
     matcher.stop_propagation()
 ```
 
-:::warning 注意
+:::caution 注意
 `stop_propagation` 操作是实例方法，需要先通过依赖注入获取事件响应器实例再进行调用。
 :::
 

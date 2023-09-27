@@ -62,7 +62,7 @@ NoneBot 插件使用下述命名规范：
 
 依赖填写的基本原则：程序直接导入了什么第三方库，就添加什么第三方包依赖；能用哪些第三方库的特性，就根据使用的特性锁定第三方包版本。
 
-:::warning 注意
+:::caution 注意
 
 1. 插件需要添加 `nonebot2` 为依赖以避免“幽灵依赖”；
 2. 插件需要将使用的适配器加入依赖列表，如：使用 OneBot 适配器的插件应添加 `nonebot-adapter-onebot` 依赖；
@@ -102,7 +102,7 @@ __plugin_meta__ = PluginMetadata(
 )
 ```
 
-:::warning 注意
+:::caution 注意
 `__plugin_meta__` 变量**必须**处于插件最外层（如 `__init__.py` 中），否则无法正常识别。
 
 一般做法是在 `__init__.py` 中定义 `__plugin_meta__`。
@@ -183,7 +183,7 @@ twine upload dist/*                 # 只发布先前的构建
 
 ### 提交申请
 
-完成在 PyPI 的插件发布流程后，前往[商店](/store)页面，切换到插件页签，点击 **发布插件** 按钮。
+完成在 PyPI 的插件发布流程后，前往[商店](/store/plugins)页面，切换到插件页签，点击 **发布插件** 按钮。
 
 在弹出的插件信息提交表单内，填入您所要发布的相应插件信息。请注意，如果插件需要必要配置项才能正常导入，请在“插件配置项”中填写必要的内容（请勿填写密钥等敏感信息）。
 
@@ -199,4 +199,4 @@ twine upload dist/*                 # 只发布先前的构建
 
 之后，NoneBot 的维护者和一些插件开发者会初步检查插件代码，帮助减少该插件的问题。
 
-完成这些步骤后，您的插件将会被自动合并到[商店](/store)，而您也将成为 [**NoneBot 贡献者**](https://github.com/nonebot/nonebot2/graphs/contributors)的一员。
+完成这些步骤后，您的插件将会被自动合并到[商店](/store/plugins)，而您也将成为 [**NoneBot 贡献者**](https://github.com/nonebot/nonebot2/graphs/contributors)的一员。

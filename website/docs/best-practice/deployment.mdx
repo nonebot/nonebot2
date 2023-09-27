@@ -180,7 +180,7 @@ docker compose build
 
 将以下文件添加至**项目目录**下的 `.github/workflows/` 目录下，并将文件中高亮行中的仓库名称替换为你的仓库名称：
 
-```yaml title=.github/workflows/build.yml {34}
+```yaml title=.github/workflows/build.yml
 name: Docker Hub Release
 
 on:
@@ -213,6 +213,7 @@ jobs:
         id: metadata
         with:
           images: |
+            # highlight-next-line
             {organization}/{repository}
           tags: |
             type=semver,pattern={{version}}

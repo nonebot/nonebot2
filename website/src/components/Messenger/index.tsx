@@ -24,8 +24,8 @@ function MessageBox({
     navbar: { logo },
   } = useNonepressThemeConfig();
   const sources = {
-    light: useBaseUrl(logo.src),
-    dark: useBaseUrl(logo.srcDark || logo.src),
+    light: useBaseUrl(logo!.src),
+    dark: useBaseUrl(logo!.srcDark || logo!.src),
   };
 
   const isRight = position === "right";

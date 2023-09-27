@@ -1634,9 +1634,9 @@
     eslint-visitor-keys "^3.3.0"
 
 "@eslint-community/regexpp@^4.4.0", "@eslint-community/regexpp@^4.5.0", "@eslint-community/regexpp@^4.5.1", "@eslint-community/regexpp@^4.6.1":
-  version "4.8.2"
-  resolved "https://registry.npmjs.org/@eslint-community/regexpp/-/regexpp-4.8.2.tgz#26585b7c0ba36362893d3a3c206ee0c57c389616"
-  integrity sha512-0MGxAVt1m/ZK+LTJp/j0qF7Hz97D9O/FH9Ms3ltnyIdDD57cbb1ACIQTkbHvNXtWDv5TPq7w5Kq56+cNukbo7g==
+  version "4.9.0"
+  resolved "https://registry.npmjs.org/@eslint-community/regexpp/-/regexpp-4.9.0.tgz#7ccb5f58703fa61ffdcbf39e2c604a109e781162"
+  integrity sha512-zJmuCWj2VLBt4c25CfBIbMZLGLyhkvs7LznyVX5HfpzeocThgIj5XQK4L+g3U36mMcx8bPMhGyPpwCATamC4jQ==
 
 "@eslint/eslintrc@^2.1.2":
   version "2.1.2"
@@ -1854,26 +1854,26 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@nullbot/docusaurus-plugin-docsmenu@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-docsmenu/-/docusaurus-plugin-docsmenu-2.1.4.tgz#19c07cbc20f69705d1454a36e5d203d6878bad20"
-  integrity sha512-YACUVldfU2hiid/NRx4WPbkmNZFajM5PuH0t0wzwLe8qMJgyW2Vgj66cWv2BpdQdxBVicjYyijP7KYcQSEUp/A==
+"@nullbot/docusaurus-plugin-docsmenu@^2.1.6":
+  version "2.1.6"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-docsmenu/-/docusaurus-plugin-docsmenu-2.1.6.tgz#41682ca030d03b6daef7245175e508ce04a2c477"
+  integrity sha512-qssCbiizblNljnc8QOoKsJpb47lqqVJVGjvxHYkTenRyrlhUdixacilgzlIYiP6RHl3uPphn3Z6tbYT6CC2SBg==
   dependencies:
     "@docusaurus/core" "^2.4.0"
     "@docusaurus/plugin-content-docs" "^2.4.0"
 
-"@nullbot/docusaurus-plugin-getsidebar@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-getsidebar/-/docusaurus-plugin-getsidebar-2.1.4.tgz#a08c4d9b75aba41daf17acd72db1584bd89d4dcf"
-  integrity sha512-yaKNTggLhYEXMKEow4pvlydPGfpRm/JTLySHBbkAV0OvGIqgNLsKl2Z03EundrPIfcaITCe2HnBiJDtBr+ECVQ==
+"@nullbot/docusaurus-plugin-getsidebar@^2.1.6":
+  version "2.1.6"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-getsidebar/-/docusaurus-plugin-getsidebar-2.1.6.tgz#ea4467ed60d177ac1c4c7beb1648cc7947b3bdef"
+  integrity sha512-qHzGMOA43+o0d4zhyU3qQdk/6DYUUY27BXy5xfkOwIG5XeLrnYU65kRtJeo2cpk5SK821JOH/zhV7yMMji9d1Q==
   dependencies:
     "@docusaurus/core" "^2.4.0"
     "@docusaurus/plugin-content-docs" "^2.4.0"
 
 "@nullbot/docusaurus-preset-nonepress@^2.1.2":
-  version "2.1.4"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-preset-nonepress/-/docusaurus-preset-nonepress-2.1.4.tgz#e93e361061c7a49ceb7081a97d5197c4aff6b99b"
-  integrity sha512-MxqknSqGRGswGNhwGcQYcfRxlM/itst7iQht5FoXBQ+CsabXeiKu/I9+GTiMInIf6nyI+0uecTT+K7VGCNH6Sg==
+  version "2.1.6"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-preset-nonepress/-/docusaurus-preset-nonepress-2.1.6.tgz#643546e1c5ebc3cfb02b2689a51332d7870bb4b3"
+  integrity sha512-qdGwQUIb2KZmZqt5KMV9E6CLeHbygt+xKVCRAmD8SYGXtr3Sx7gnUyhK4YSNq/a+uIk63kWoi6EtfYefarJtLg==
   dependencies:
     "@docusaurus/core" "^2.4.0"
     "@docusaurus/plugin-content-docs" "^2.4.0"
@@ -1883,13 +1883,13 @@
     "@docusaurus/plugin-google-tag-manager" "^2.4.0"
     "@docusaurus/plugin-sitemap" "^2.4.0"
     "@docusaurus/theme-search-algolia" "^2.4.0"
-    "@nullbot/docusaurus-plugin-getsidebar" "^2.1.4"
-    "@nullbot/docusaurus-theme-nonepress" "^2.1.4"
+    "@nullbot/docusaurus-plugin-getsidebar" "^2.1.6"
+    "@nullbot/docusaurus-theme-nonepress" "^2.1.6"
 
-"@nullbot/docusaurus-theme-nonepress@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-theme-nonepress/-/docusaurus-theme-nonepress-2.1.4.tgz#e5a9e9d802429e9202a370614f199442887f49cf"
-  integrity sha512-UBnXAFB21QG8wffHqTw66qF1b0hWlbZzJdEzalAVBX3kOL1nv0/Z0pMbz+Ic51kPJ9SfOqYF0ZAtQ4IskGm7Og==
+"@nullbot/docusaurus-theme-nonepress@^2.1.6":
+  version "2.1.6"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-theme-nonepress/-/docusaurus-theme-nonepress-2.1.6.tgz#c417645bb2e2608c9517795f8cb3bed64ebfa4ef"
+  integrity sha512-ZLMR4en16vt5QAcR+ZtxvLDtLbnfJFJT0BH1yc5fSqJ/fzzbaIYKf9DJ1P5kG8rZ/U4f1Yq/5VOSVkJWnJALzw==
   dependencies:
     "@docsearch/react" "^3.5.1"
     "@docusaurus/core" "^2.4.0"
@@ -1908,7 +1908,7 @@
     "@fortawesome/free-solid-svg-icons" "^6.4.0"
     "@fortawesome/react-fontawesome" "^0.2.0"
     "@mdx-js/react" "^1.6.22"
-    "@nullbot/docusaurus-plugin-docsmenu" "^2.1.4"
+    "@nullbot/docusaurus-plugin-docsmenu" "^2.1.6"
     "@seznam/compose-react-refs" "^1.0.6"
     "@tailwindcss/typography" "^0.5.0"
     autoprefixer "^10.3.1"
@@ -2222,16 +2222,16 @@
   integrity sha512-z/QT1XN4K4KYuslS23k62yDIDLwLFkzxOuMplDtObz0+y7VqJCaO2o+SPwHCvLFZh7xazvvoor2tA/hPz9ee7g==
 
 "@types/istanbul-lib-report@*":
-  version "3.0.0"
-  resolved "https://registry.npmjs.org/@types/istanbul-lib-report/-/istanbul-lib-report-3.0.0.tgz#c14c24f18ea8190c118ee7562b7ff99a36552686"
-  integrity sha512-plGgXAPfVKFoYfa9NpYDAkseG+g6Jr294RqeqcqDixSbU34MZVJRi/P+7Y8GDpzkEwLaGZZOpKIEmeVZNtKsrg==
+  version "3.0.1"
+  resolved "https://registry.npmjs.org/@types/istanbul-lib-report/-/istanbul-lib-report-3.0.1.tgz#412e0725ef41cde73bfa03e0e833eaff41e0fd63"
+  integrity sha512-gPQuzaPR5h/djlAv2apEG1HVOyj1IUs7GpfMZixU0/0KXT3pm64ylHuMUI1/Akh+sq/iikxg6Z2j+fcMDXaaTQ==
   dependencies:
     "@types/istanbul-lib-coverage" "*"
 
 "@types/istanbul-reports@^3.0.0":
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/@types/istanbul-reports/-/istanbul-reports-3.0.1.tgz#9153fe98bba2bd565a63add9436d6f0d7f8468ff"
-  integrity sha512-c3mAZEuK0lvBp8tmuL74XRKn1+y2dcwOUpH7x4WrF6gk1GIgiluDRgMYQtw2OFcBvAJWlt6ASU3tSqxp0Uu0Aw==
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/@types/istanbul-reports/-/istanbul-reports-3.0.2.tgz#edc8e421991a3b4df875036d381fc0a5a982f549"
+  integrity sha512-kv43F9eb3Lhj+lr/Hn6OcLCs/sSM8bt+fIaP11rCYngfV6NVjzWXJ17owQtDQTL9tQ8WSLUrGsSJ6rJz0F1w1A==
   dependencies:
     "@types/istanbul-lib-report" "*"
 
@@ -2334,9 +2334,9 @@
     "@types/react" "*"
 
 "@types/react@*":
-  version "18.2.22"
-  resolved "https://registry.npmjs.org/@types/react/-/react-18.2.22.tgz#abe778a1c95a07fa70df40a52d7300a40b949ccb"
-  integrity sha512-60fLTOLqzarLED2O3UQImc/lsNRgG0jE/a1mPW9KjMemY0LMITWEsbS4VvZ4p6rorEHd5YKxxmMKSDK505GHpA==
+  version "18.2.23"
+  resolved "https://registry.npmjs.org/@types/react/-/react-18.2.23.tgz#60ad6cf4895e93bed858db0e03bcc4ff97d0410e"
+  integrity sha512-qHLW6n1q2+7KyBEYnrZpcsAmU/iiCh9WGCKgXvMxx89+TYdJWRjZohVIo9XTcoLhfX3+/hP0Pbulu3bCZQ9PSA==
   dependencies:
     "@types/prop-types" "*"
     "@types/scheduler" "*"
@@ -3165,12 +3165,12 @@ braces@^3.0.2, braces@~3.0.2:
     fill-range "^7.0.1"
 
 browserslist@^4.0.0, browserslist@^4.14.5, browserslist@^4.18.1, browserslist@^4.21.10, browserslist@^4.21.4, browserslist@^4.21.9:
-  version "4.21.11"
-  resolved "https://registry.npmjs.org/browserslist/-/browserslist-4.21.11.tgz#35f74a3e51adc4d193dcd76ea13858de7b8fecb8"
-  integrity sha512-xn1UXOKUz7DjdGlg9RrUr0GGiWzI97UQJnugHtH0OLDfJB7jMgoIkYvRIEO1l9EeEERVqeqLYOcFBW9ldjypbQ==
+  version "4.22.0"
+  resolved "https://registry.npmjs.org/browserslist/-/browserslist-4.22.0.tgz#6adc8116589ccea8a99d0df79c5de2436199abdb"
+  integrity sha512-v+Jcv64L2LbfTC6OnRcaxtqJNJuQAVhZKSJfR/6hn7lhnChUXl4amwVviqN1k411BB+3rRoKMitELRn1CojeRA==
   dependencies:
-    caniuse-lite "^1.0.30001538"
-    electron-to-chromium "^1.4.526"
+    caniuse-lite "^1.0.30001539"
+    electron-to-chromium "^1.4.530"
     node-releases "^2.0.13"
     update-browserslist-db "^1.0.13"
 
@@ -3260,7 +3260,7 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001538:
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001538, caniuse-lite@^1.0.30001539:
   version "1.0.30001539"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001539.tgz#325a387ab1ed236df2c12dc6cd43a4fff9903a44"
   integrity sha512-hfS5tE8bnNiNvEOEkm8HElUHroYwlqMMENEzELymy77+tJ6m+gA2krtHl5hxJaj71OlpC2cHZbdSMX1/YEqEkA==
@@ -4178,10 +4178,10 @@ ee-first@1.1.1:
   resolved "https://registry.npmjs.org/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
-electron-to-chromium@^1.4.526:
-  version "1.4.529"
-  resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.529.tgz#8c3377a05e5737f899770d14524dd8e2e4cb2351"
-  integrity sha512-6uyPyXTo8lkv8SWAmjKFbG42U073TXlzD4R8rW3EzuznhFS2olCIAfjjQtV2dV2ar/vRF55KUd3zQYnCB0dd3A==
+electron-to-chromium@^1.4.530:
+  version "1.4.531"
+  resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.4.531.tgz#22966d894c4680726c17cf2908ee82ff5d26ac25"
+  integrity sha512-H6gi5E41Rn3/mhKlPaT1aIMg/71hTAqn0gYEllSuw9igNWtvQwu185jiCZoZD29n7Zukgh7GVZ3zGf0XvkhqjQ==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -7605,9 +7605,9 @@ pure-color@^1.2.0:
   integrity sha512-QFADYnsVoBMw1srW7OVKEYjG+MbIa49s54w1MA1EDY6r2r/sTcKKYqRX1f4GYvnXP7eN/Pe9HFcX+hwzmrXRHA==
 
 pyright@^1.1.317:
-  version "1.1.328"
-  resolved "https://registry.npmjs.org/pyright/-/pyright-1.1.328.tgz#edcb196b7b2c1eb95c2bf067d15ea6770e5c4c59"
-  integrity sha512-LiFIELh/6wVZuvgH+OGZ81ln0EpB8si2gt1M229qKnG4lbh93A0gyXLwu62XtTie8FDUcznmdCEiMal8jxJ7+w==
+  version "1.1.329"
+  resolved "https://registry.npmjs.org/pyright/-/pyright-1.1.329.tgz#f4c0e0e854eb2264282cc75b9acd392718982c82"
+  integrity sha512-5AT98Mi0OYcDiQ5lD1nPJ3cq8gX/HHaXrQ5WjJ/QZkaJtGqnEdrUp5Gq5wBPipWgOnv/l5e50YScaaNDMjoy9Q==
   optionalDependencies:
     fsevents "~2.3.2"
 
@@ -8245,9 +8245,9 @@ safe-regex-test@^1.0.0:
   integrity sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==
 
 sax@^1.2.4:
-  version "1.2.4"
-  resolved "https://registry.npmjs.org/sax/-/sax-1.2.4.tgz#2816234e2378bddc4e5354fab5caa895df7100d9"
-  integrity sha512-NqVDv9TpANUjFm0N8uM5GxL36UgKi9/atZw+x7YFnQ8ckwFGKrl4xX4yWtrey3UJm5nP1kUbnYgLopqWNSRhWw==
+  version "1.3.0"
+  resolved "https://registry.npmjs.org/sax/-/sax-1.3.0.tgz#a5dbe77db3be05c9d1ee7785dbd3ea9de51593d0"
+  integrity sha512-0s+oAmw9zLl1V1cS9BtZN7JAd0cW5e0QH4W3LWEK6a4LaLEA2OTpGYWDY+6XasBLtz6wkm3u1xRw95mRuJ59WA==
 
 scheduler@^0.20.2:
   version "0.20.2"

@@ -2,6 +2,7 @@
   &-container {
     @apply block w-full my-4 overflow-hidden;
     @apply rounded-lg outline-none bg-base-200;
+    @apply transition-[background-color] duration-500;
   }
 
   &-title {
@@ -33,7 +34,8 @@
     }
 
     &-bubble {
-      @apply bg-base-100 text-base-content;
+      @apply bg-base-100 text-base-content [word-break:break-word];
+      @apply transition-[color,background-color] duration-500;
     }
   }
 
@@ -45,6 +47,10 @@
 
       &-input {
         @apply flex-1;
+
+        & > input {
+          @apply transition-[color,background-color] duration-500;
+        }
       }
 
       &-send {

@@ -117,7 +117,7 @@ DRIVER=~fastapi
 
 ##### `fastapi_reload`
 
-:::warning 警告
+:::caution 警告
 不推荐开启该配置项，在 Windows 平台上开启该功能有可能会造成预料之外的影响！替代方案：使用 `nb-cli` 命令行工具以及参数 `--reload` 启动 NoneBot。
 
 ```bash
@@ -199,7 +199,7 @@ DRIVER=~quart
 
 ##### `quart_reload`
 
-:::warning 警告
+:::caution 警告
 不推荐开启该配置项，在 Windows 平台上开启该功能有可能会造成预料之外的影响！替代方案：使用 `nb-cli` 命令行工具以及参数 `--reload` 启动 NoneBot。
 
 ```bash
@@ -251,7 +251,7 @@ nonebot.run(app="bot:app")
 
 **类型：**`ForwardDriver`
 
-:::warning 注意
+:::caution 注意
 本驱动器仅支持 HTTP 请求，不支持 WebSocket 连接请求。
 :::
 
@@ -265,7 +265,7 @@ DRIVER=~httpx
 
 **类型：**`ForwardDriver`
 
-:::warning 注意
+:::caution 注意
 本驱动器仅支持 WebSocket 连接请求，不支持 HTTP 请求。
 :::
 

@@ -207,7 +207,7 @@ NoneBot2 不是 NoneBot1 的替代品。事实上，它们都在被积极的维�
 
   - [文档镜像(中国境内)](https://nb2.baka.icu)
 
-- 其他插件请查看 [商店](https://nonebot.dev/store)
+- 其他插件请查看 [商店](https://nonebot.dev/store/plugins)
 
 ## 许可证
 

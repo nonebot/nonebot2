@@ -273,7 +273,7 @@ description: nonebot.rule 模块
   通过 [ShellCommandArgv](params.md#ShellCommandArgv) 获取解析前的参数列表（例: `["arg", "-h"]`），
   通过 [ShellCommandArgs](params.md#ShellCommandArgs) 获取解析后的参数字典（例: `{"arg": "arg", "h": True}`）。
 
-  :::warning 警告
+  :::caution 警告
   如果参数解析失败，则通过 [ShellCommandArgs](params.md#ShellCommandArgs)
   获取的将是 [ParserExit](exception.md#ParserExit) 异常。
   :::
