@@ -115,7 +115,7 @@ export default function AdapterPage(): JSX.Element {
               filteredAdapterCount,
             }}
           >
-            {"当前共有 {filteredAdapterCount} / {adapterCount} 个插件"}
+            {"当前共有 {filteredAdapterCount} / {adapterCount} 个适配器"}
           </Translate>
         )}
       </p>

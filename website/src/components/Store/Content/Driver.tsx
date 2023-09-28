@@ -86,7 +86,7 @@ export default function DriverPage(): JSX.Element {
             description="Drivers info of the driver store page"
             values={{ driverCount }}
           >
-            {"当前共有 {driverCount} 个插件"}
+            {"当前共有 {driverCount} 个驱动器"}
           </Translate>
         ) : (
           <Translate
@@ -97,7 +97,7 @@ export default function DriverPage(): JSX.Element {
               filteredDriverCount,
             }}
           >
-            {"当前共有 {filteredDriverCount} / {driverCount} 个插件"}
+            {"当前共有 {filteredDriverCount} / {driverCount} 个驱动器"}
           </Translate>
         )}
       </p>
