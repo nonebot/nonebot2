@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复商店搜索信息的错字 [@KomoriDev](https://github.com/KomoriDev) ([#2377](https://github.com/nonebot/nonebot2/pull/2377))
 - Docs: 修复侧边栏 TOC 在 SSR 模式下的渲染问题 [@yanyongyu](https://github.com/yanyongyu) ([#2376](https://github.com/nonebot/nonebot2/pull/2376))
 - Docs: 升级新版 NonePress 主题 [@yanyongyu](https://github.com/yanyongyu) ([#2375](https://github.com/nonebot/nonebot2/pull/2375))
 - Docs: 增加赞助者显示 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2371](https://github.com/nonebot/nonebot2/pull/2371))
