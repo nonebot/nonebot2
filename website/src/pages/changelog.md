@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Develop: 禁用 Pyright Bytes Promotion 配置 [@yanyongyu](https://github.com/yanyongyu) ([#2379](https://github.com/nonebot/nonebot2/pull/2379))
 - Plugin: 修改 `Sekai Stickers` 插件信息 [@lgc2333](https://github.com/lgc2333) ([#2372](https://github.com/nonebot/nonebot2/pull/2372))
 - CI: 使用更现代的功能 [@he0119](https://github.com/he0119) ([#2362](https://github.com/nonebot/nonebot2/pull/2362))
 - Docs: 添加 wwads [@yanyongyu](https://github.com/yanyongyu) ([#2361](https://github.com/nonebot/nonebot2/pull/2361))
