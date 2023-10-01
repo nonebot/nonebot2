@@ -112,7 +112,7 @@ executionEnvironments = [
 
 typeCheckingMode = "basic"
 reportShadowedImports = false
-
+disableBytesTypePromotions = true
 
 [build-system]
 requires = ["poetry_core>=1.0.0"]
