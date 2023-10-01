@@ -123,7 +123,7 @@ jobs:
       - name: Publish Doc Package to PyPI
         uses: pypa/gh-action-pypi-publish@release/v1
         with:
-          packages-dir: packages/nonebot-plugin-docs/
+          packages-dir: packages/nonebot-plugin-docs/dist/
 
       - name: Publish Doc Package to GitHub
         run: |
