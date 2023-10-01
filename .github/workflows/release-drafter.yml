@@ -81,13 +81,21 @@ jobs:
       - name: Build API Doc
         uses: ./.github/actions/build-api-doc
 
-      - run: |
-          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
+      - name: Get Version
+        id: version
+        run: |
+          echo "VERSION=$(poetry version -s)" >> $GITHUB_OUTPUT
+          echo "TAG_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+          echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+
+      - name: Check Version
+        if: steps.version.outputs.VERSION != steps.version.outputs.TAG_VERSION
+        run: exit 1
 
       - uses: release-drafter/release-drafter@v5
         with:
-          name: Release ${{ env.TAG_NAME }} 🌈
-          tag: ${{ env.TAG_NAME }}
+          name: Release ${{ steps.version.outputs.TAG_NAME }} 🌈
+          tag: ${{ steps.version.outputs.TAG_NAME }}
           publish: true
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
@@ -101,16 +109,15 @@ jobs:
 
       - name: Publish package to GitHub
         run: |
-          gh release upload --clobber ${{ env.TAG_NAME }} dist/*.tar.gz dist/*.whl
+          gh release upload --clobber ${{ steps.version.outputs.TAG_NAME }} dist/*.tar.gz dist/*.whl
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
 
       - name: Build and Publish Doc Package
         run: |
           yarn build:plugin --out-dir ../packages/nonebot-plugin-docs/nonebot_plugin_docs/dist
-          export NONEBOT_VERSION=`poetry version -s`
           cd packages/nonebot-plugin-docs/
-          poetry version $NONEBOT_VERSION
+          poetry version ${{ steps.version.outputs.VERSION }}
           poetry build
 
       - name: Publish Doc Package to PyPI
@@ -121,6 +128,6 @@ jobs:
       - name: Publish Doc Package to GitHub
         run: |
           cd packages/nonebot-plugin-docs/
-          gh release upload --clobber ${{ env.TAG_NAME }} dist/*.tar.gz dist/*.whl
+          gh release upload --clobber ${{ steps.version.outputs.TAG_NAME }} dist/*.tar.gz dist/*.whl
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
