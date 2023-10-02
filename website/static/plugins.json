@@ -7395,5 +7395,22 @@
     "is_official": false,
     "type": "application",
     "supported_adapters": ["nonebot.adapters.onebot.v11"]
+  },
+  {
+    "module_name": "nonebot_plugin_ability",
+    "project_link": "nonebot-plugin-ability",
+    "name": "聚能环",
+    "desc": "NoneBot 外置电池",
+    "author": "KomoriDev",
+    "homepage": "https://github.com/KomoriDev/nonebot-plugin-ability",
+    "tags": [
+      {
+        "label": "🔋",
+        "color": "#8bff00"
+      }
+    ],
+    "is_official": false,
+    "type": "library",
+    "supported_adapters": null
   }
 ]
