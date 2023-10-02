@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- CI: 调整商店数据存放位置与内容 [@he0119](https://github.com/he0119) ([#2385](https://github.com/nonebot/nonebot2/pull/2385))
 - Adapter: 修改频道适配器为 QQ 适配器 [@yanyongyu](https://github.com/yanyongyu) ([#2382](https://github.com/nonebot/nonebot2/pull/2382))
 
 ### 🍻 插件发布
