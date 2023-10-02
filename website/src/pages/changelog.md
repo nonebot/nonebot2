@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Adapter: 修改频道适配器为 QQ 适配器 [@yanyongyu](https://github.com/yanyongyu) ([#2382](https://github.com/nonebot/nonebot2/pull/2382))
 
+### 🍻 插件发布
+
+- Plugin: 聚能环 [@noneflow](https://github.com/noneflow) ([#2384](https://github.com/nonebot/nonebot2/pull/2384))
+
 ## v2.1.1
 
 ### 🚀 新功能
