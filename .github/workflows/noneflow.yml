@@ -84,9 +84,9 @@ jobs:
           config: >
             {
               "base": "master",
-              "plugin_path": "website/static/plugins.json",
-              "bot_path": "website/static/bots.json",
-              "adapter_path": "website/static/adapters.json"
+              "plugin_path": "assets/plugins.json",
+              "bot_path": "assets/bots.json",
+              "adapter_path": "assets/adapters.json"
             }
         env:
           PLUGIN_TEST_RESULT: ${{ needs.plugin_test.outputs.result }}
