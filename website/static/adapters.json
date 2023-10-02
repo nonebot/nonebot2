@@ -40,12 +40,12 @@
     "is_official": true
   },
   {
-    "module_name": "nonebot.adapters.qqguild",
-    "project_link": "nonebot-adapter-qqguild",
-    "name": "QQ 频道",
-    "desc": "QQ 频道官方机器人",
+    "module_name": "nonebot.adapters.qq",
+    "project_link": "nonebot-adapter-qq",
+    "name": "QQ",
+    "desc": "QQ 官方机器人",
     "author": "yanyongyu",
-    "homepage": "https://github.com/nonebot/adapter-qqguild",
+    "homepage": "https://github.com/nonebot/adapter-qq",
     "tags": [],
     "is_official": true
   },
