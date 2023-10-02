@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 💫 杂项
+
+- Adapter: 修改频道适配器为 QQ 适配器 [@yanyongyu](https://github.com/yanyongyu) ([#2382](https://github.com/nonebot/nonebot2/pull/2382))
+
 ## v2.1.1
 
 ### 🚀 新功能
