@@ -5087,5 +5087,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_agent",
+    "project_link": "nonebot-plugin-agent",
+    "author": "Dobiichi-Origami",
+    "tags": [
+      {
+        "label": "agent",
+        "color": "#99ccff"
+      }
+    ],
+    "is_official": false
   }
 ]
