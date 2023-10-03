@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 📝 文档
+
+- Docs: 修复文档主页 Features 不居中 [@MingxuanGame](https://github.com/MingxuanGame) ([#2390](https://github.com/nonebot/nonebot2/pull/2390))
+
 ### 💫 杂项
 
 - CI: 调整商店数据存放位置与内容 [@he0119](https://github.com/he0119) ([#2385](https://github.com/nonebot/nonebot2/pull/2385))
