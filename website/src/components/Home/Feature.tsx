@@ -34,7 +34,7 @@ export function HomeFeature({
 
 function HomeFeatureSingleColumn(props: Feature): JSX.Element {
   return (
-    <div className="grid grid-cols-1 px-4 py-8 md:px-16">
+    <div className="grid grid-cols-1 px-4 py-8 md:px-16 mx-auto">
       <HomeFeature {...props} />
     </div>
   );
@@ -50,7 +50,7 @@ function HomeFeatureDoubleColumn({
   const [children1, children2] = children ?? [];
 
   return (
-    <div className="grid gap-x-6 gap-y-8 grid-cols-1 lg:grid-cols-2 max-w-7xl px-4 py-8 md:px-16">
+    <div className="grid gap-x-6 gap-y-8 grid-cols-1 lg:grid-cols-2 max-w-7xl px-4 py-8 md:px-16 mx-auto">
       <HomeFeature {...feature1}>{children1}</HomeFeature>
       <HomeFeature {...feature2}>{children2}</HomeFeature>
     </div>
