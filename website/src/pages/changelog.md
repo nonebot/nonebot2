@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Nonebot Agent [@noneflow](https://github.com/noneflow) ([#2389](https://github.com/nonebot/nonebot2/pull/2389))
 - Plugin: 聚能环 [@noneflow](https://github.com/noneflow) ([#2384](https://github.com/nonebot/nonebot2/pull/2384))
 
 ## v2.1.1
