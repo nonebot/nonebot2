@@ -5099,5 +5099,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_blockwords",
+    "project_link": "nonebot-plugin-blockwords",
+    "author": "MelodyKnit",
+    "tags": [
+      {
+        "label": "word",
+        "color": "#99ccff"
+      },
+      {
+        "label": "屏蔽词",
+        "color": "#ffcc99"
+      },
+      {
+        "label": "blockwords",
+        "color": "#ffcc99"
+      }
+    ],
+    "is_official": false
   }
 ]
