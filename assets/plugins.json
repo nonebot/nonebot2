@@ -5119,5 +5119,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_matchreminder",
+    "project_link": "nonebot-plugin-matchreminder",
+    "author": "zhuhiki",
+    "tags": [],
+    "is_official": false
   }
 ]
