@@ -71,7 +71,7 @@ export default function AdapterPage(): JSX.Element {
     onClick: () => {
       // TODO: open adapter release modal
       window.open(
-        "https://github.com/nonebot/nonebot2/issues/new?template=adapter_publish.yml"
+        "https://github.com/nonebot/nonebot2/issues/new?template=adapter_publish.yml&title=Adapter%3A+%7Bname%7D&labels=Adapter"
       );
     },
   };

@@ -71,7 +71,7 @@ export default function PluginPage(): JSX.Element {
     onClick: () => {
       // TODO: open plugin release modal
       window.open(
-        "https://github.com/nonebot/nonebot2/issues/new?template=plugin_publish.yml"
+        "https://github.com/nonebot/nonebot2/issues/new?template=plugin_publish.yml&title=Plugin%3A+%7Bname%7D&labels=Plugin"
       );
     },
   };
