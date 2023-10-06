@@ -5146,5 +5146,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_playercheck",
+    "project_link": "nonebot-plugin-playercheck",
+    "author": "Ohdmire",
+    "tags": [
+      {
+        "label": "音游",
+        "color": "#ec623c"
+      },
+      {
+        "label": "成分",
+        "color": "#ef5ec4"
+      }
+    ],
+    "is_official": false
   }
 ]
