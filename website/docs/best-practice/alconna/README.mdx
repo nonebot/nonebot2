@@ -13,8 +13,6 @@ slug: /best-practice/alconna/
 
 该插件提供了一类新的事件响应器辅助函数 `on_alconna`，以及 `AlconnaResult` 等依赖注入函数。
 
-同时，基于 [Annotated 支持](https://github.com/nonebot/nonebot2/pull/1832), 添加了两类注解 `AlcMatches` 与 `AlcResult`
-
 该插件声明了一个 `Matcher` 的子类 `AlconnaMatcher`，并在 `AlconnaMatcher` 中添加了一些新的方法，例如：
 
 - `assign`：基于 `Alconna` 解析结果，执行满足目标路径的处理函数
@@ -112,7 +110,7 @@ async def got_location(location: str):
 ```
 
 在上面的代码中，我们使用 `Alconna` 来解析命令，`on_alconna` 用来创建响应器，使用 `Match` 来获取解析结果。
-command
+
 关于更多 `Alconna` 的使用方法，可参考 [Alconna 文档](https://arclet.top/docs/tutorial/alconna)，
 或阅读 [Alconna 基本介绍](./command.md) 一节。
 

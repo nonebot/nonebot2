@@ -199,15 +199,15 @@
     "author": "RF-Tar-Railt",
     "tags": [
       {
-        "label": "matcher",
+        "label": "多适配器",
         "color": "#5280ea"
       },
       {
-        "label": "command",
+        "label": "消息匹配",
         "color": "#ea6f52"
       },
       {
-        "label": "alconna",
+        "label": "跨平台",
         "color": "#5452ea"
       }
     ],

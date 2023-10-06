@@ -77,9 +77,14 @@ Bracket Header 类似 python 里的 f-string 写法，通过 "{}" 声明匹配�
 
 我们可以看到主要的两大组件：`Option` 与 `Subcommand`。
 
-`Option` 可以传入一组 `alias`，如 `Option("--foo|-F|--FOO|-f")` 或 `Option("--foo", alias=["-F"])`
+`Option` 可以传入一组 `alias`，如 `Option("--foo|-F|FOO|f")` 或 `Option("--foo", alias=["-F"])`
 
 传入别名后，Option 会选择其中长度最长的作为选项名称。若传入为 "--foo|-f"，则命令名称为 "--foo"。
+
+:::tip 特别提醒！！！
+在 Alconna 中 Option 的名字或别名**没有要求**必须在前面写上 `-`
+
+:::
 
 `Subcommand` 则可以传入自己的 **Option** 与 **Subcommand**。
 
@@ -93,7 +98,7 @@ alc = Alconna(
     Subcommand(
         "sub1",
         Option("sub1_opt1"),
-        Option("-SO2"),
+        Option("SO2"),
         Subcommand(
             "sub1_sub1"
         )
@@ -112,7 +117,7 @@ alc = Alconna(
   对于命令 `test foo bar baz qux <a:int>` 来讲，因为`foo bar baz` 仅需要判断是否相等, 所以可以这么编写：
 
   ```python
-  Alconna("test", Option("qux", Args.a[int], requires=["foo", "bar", "baz"]))
+  Alconna("test", Option("qux", Args["a", int], requires=["foo", "bar", "baz"]))
   ```
 
 - `default`: 默认值，在该组件未被解析时使用使用该值替换。
@@ -174,7 +179,7 @@ from arclet.alconna import Alconna, Args
 
 alc = Alconna("test", Args["foo", str])
 alc.parse("test --foo abc")  # 错误
-alc.parse("test abc")  # 之前
+alc.parse("test abc")  # 正确
 ```
 
 若需要 `test --foo abc`，你应该使用 `Option`：
@@ -378,7 +383,7 @@ class ShortcutArgs(TypedDict):
 
 快捷指令允许三类特殊的 placeholder:
 
-- `{%X}`: 如 `setu {%0}`，表示此处填入快捷指令后随的第 X 个参数。
+- `{%X}`: 如 `setu {%0}`，表示此处必须填入快捷指令后随的第 X 个参数。
 
   例如，若快捷指令为 `涩图`, 配置为 `{"command": "setu {%0}"}`, 则指令 `涩图 1` 相当于 `setu 1`
 
