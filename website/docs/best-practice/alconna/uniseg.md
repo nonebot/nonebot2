@@ -289,7 +289,7 @@ async def tt_h(matcher: AlconnaMatcher, target: Match[At]):
         matcher.set_path_arg("target", target.result)
 
 @test_cmd.got_path(
-    "target", 
+    "target",
     prompt=UniMessage.template("{:At(user, $event.get_user_id())} 请确认目标")
 )
 async def tt():

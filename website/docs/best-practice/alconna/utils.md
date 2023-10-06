@@ -67,12 +67,11 @@ book = (
 )
 ```
 
-
 ## 中间件
 
 在 `AlconnaMatch`, `AlconnaQuery` 或 `got_path` 中，你可以使用 `middleware` 参数来传入一个对返回值进行处理的函数，
 
-```python  {1, 9}
+```python {1, 9}
 from nonebot_plugin_alconna import image_fetch
 
 mask_cmd = on_alconna(

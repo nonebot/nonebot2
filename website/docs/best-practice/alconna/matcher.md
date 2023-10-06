@@ -117,7 +117,7 @@ async def login_got(password: str = AlconnaArg("password")):
 ...
 @cmd.handle()
 async def handle1(
-    result: CommandResult = AlconnaResult(), 
+    result: CommandResult = AlconnaResult(),
     arp: Arparma = AlconnaMatches(),
     dup: Duplication = AlconnaDuplication(Duplication),
     ext: Extension = AlconnaExtension(Extension),
@@ -317,11 +317,11 @@ async def tt(target: Union[str, At]):
      ),
      Subcommand("list", Option("--out-dated")),
  )
- 
+
  pipcmd = on_alconna(pip)
  pip_install_cmd = pipcmd.dispatch("install")
- 
- 
+
+
  @pip_install_cmd.assign("~upgrade")
  async def pip1_u(pak: Query[str] = Query("~pak")):
      await pip_install_cmd.finish(f"pip upgrading {pak.result}...")
@@ -346,10 +346,10 @@ class LLMExtension(Extension):
     @property
     def id(self) -> str:
         return "LLMExtension"
-    
+
     def __init__(self, llm):
       self.llm = llm
-    
+
     def post_init(self, alc: Alconna) -> None:
         self.llm.add_context(alc.command, alc.meta.description)
 
@@ -358,7 +358,7 @@ class LLMExtension(Extension):
         return receive.__class__(resp.content)
 
 matcher = on_alconna(
-    Alconna(...), 
+    Alconna(...),
     extensions=[LLMExtension(LLM)]
 )
 ...
@@ -367,6 +367,7 @@ matcher = on_alconna(
 那么使用了 `LLMExtension` 的响应器便能接受任何能通过 llm 翻译为具体命令的自然语言消息。
 
 目前 `Extension` 的功能有：
+
 - 对于事件的来源适配器或 bot 选择是否接受响应
 - 输出信息的自定义转换方法
 - 从传入事件中自定义提取消息的方法
