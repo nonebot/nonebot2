@@ -219,7 +219,8 @@ group.extend(member.target for member in ats)
 | [Telegram](https://github.com/nonebot/adapter-telegram)             | adapters.telegram                    |
 | [飞书](https://github.com/nonebot/adapter-feishu)                   | adapters.feishu                      |
 | [GitHub](https://github.com/nonebot/adapter-github)                 | adapters.github                      |
-| [QQ 频道](https://github.com/nonebot/adapter-qqguild)               | adapters.qqguild                     |
+| [QQ bot](https://github.com/nonebot/adapter-qq)                     | adapters.qq                          |
+| [QQ 频道bot](https://github.com/nonebot/adapter-qq)                 | adapters.qqguild                     |
 | [钉钉](https://github.com/nonebot/adapter-ding)                     | adapters.ding                        |
 | [Console](https://github.com/nonebot/adapter-console)               | adapters.console                     |
 | [开黑啦](https://github.com/Tian-que/nonebot-adapter-kaiheila)      | adapters.kook                        |
