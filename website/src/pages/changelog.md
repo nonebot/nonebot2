@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: talk with eop ai [@noneflow](https://github.com/noneflow) ([#2397](https://github.com/nonebot/nonebot2/pull/2397))
 - Plugin: 算法比赛查询和今日比赛自动提醒 [@noneflow](https://github.com/noneflow) ([#2395](https://github.com/nonebot/nonebot2/pull/2395))
 - Plugin: 屏蔽词插件 [@noneflow](https://github.com/noneflow) ([#2392](https://github.com/nonebot/nonebot2/pull/2392))
 - Plugin: Nonebot Agent [@noneflow](https://github.com/noneflow) ([#2389](https://github.com/nonebot/nonebot2/pull/2389))
