@@ -3434,22 +3434,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_nya_music",
-    "project_link": "nonebot-plugin-nya-music",
-    "author": "nikissXI",
-    "tags": [
-      {
-        "label": "点歌",
-        "color": "#f05cea"
-      },
-      {
-        "label": "酷我",
-        "color": "#dea833"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_helloworld",
     "project_link": "nonebot-plugin-helloworld",
     "author": "A-kirami",
