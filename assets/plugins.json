@@ -5126,5 +5126,25 @@
     "author": "zhuhiki",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_eop_ai",
+    "project_link": "nonebot-plugin-eop-ai",
+    "author": "nikissXI",
+    "tags": [
+      {
+        "label": "POE",
+        "color": "#bf40bf"
+      },
+      {
+        "label": "GPT",
+        "color": "#aaff00"
+      },
+      {
+        "label": "AI",
+        "color": "#fa5f55"
+      }
+    ],
+    "is_official": false
   }
 ]
