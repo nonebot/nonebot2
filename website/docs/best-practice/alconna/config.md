@@ -39,3 +39,17 @@ description: 配置项
 - **默认值**: `True`
 
 是否使用特制的 Param 提供更好的依赖注入，该选项不会对使用依赖注入函数形式造成影响
+
+## alconna_use_command_sep
+
+- **类型**: `bool`
+- **默认值**: `False`
+
+是否读取 Nonebot 的配置项 `COMMAND_SEP` 来作为全局的 Alconna 命令分隔符
+
+## alconna_global_extensions
+
+- **类型**: `List[str]`
+- **默认值**: `[]`
+
+全局加载的扩展, 路径以 . 分隔, 如 foo.bar.baz:DemoExtension
