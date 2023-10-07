@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: op-finder [@noneflow](https://github.com/noneflow) ([#2403](https://github.com/nonebot/nonebot2/pull/2403))
 - Plugin: nonebot-plugin-playercheck [@noneflow](https://github.com/noneflow) ([#2400](https://github.com/nonebot/nonebot2/pull/2400))
 - Plugin: talk with eop ai [@noneflow](https://github.com/noneflow) ([#2397](https://github.com/nonebot/nonebot2/pull/2397))
 - Plugin: 算法比赛查询和今日比赛自动提醒 [@noneflow](https://github.com/noneflow) ([#2395](https://github.com/nonebot/nonebot2/pull/2395))
