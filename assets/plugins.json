@@ -5146,5 +5146,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_op_finder",
+    "project_link": "nonebot-plugin-op-finder",
+    "author": "ninthseason",
+    "tags": [
+      {
+        "label": "原神",
+        "color": "#00a0ea"
+      }
+    ],
+    "is_official": false
   }
 ]
