@@ -82,6 +82,7 @@ Bracket Header 类似 python 里的 f-string 写法，通过 "{}" 声明匹配�
 传入别名后，Option 会选择其中长度最长的作为选项名称。若传入为 "--foo|-f"，则命令名称为 "--foo"。
 
 :::tip 特别提醒！！！
+
 在 Alconna 中 Option 的名字或别名**没有要求**必须在前面写上 `-`
 
 :::
@@ -172,6 +173,7 @@ alc = Alconna(
 `foo#这是注释;?` 或 `foo?#这是注释`
 
 :::tip
+
 `Args` 中的 `name` 在实际命令中并不需要传入（keyword 参数除外）：
 
 ```python
@@ -231,6 +233,7 @@ args = Args["foo", BasePattern("@\d+")]
 - ...
 
 :::tip
+
 几类特殊的传入标记：
 
 - `"foo"`: 匹配字符串 "foo" (若没有某个 `BasePattern` 与之关联)
@@ -249,11 +252,13 @@ args = Args["foo", BasePattern("@\d+")]
 同样的还有 `KeyWordVar`，其构造方法形如 `KeyWordVar(str)`，用于告知解析器该参数为一个 keyword-only 参数。
 
 :::tip
+
 `MultiVar` 与 `KeyWordVar` 组合时，代表该参数为一个可接受多个 key-value 的参数，其构造方法形如 `MultiVar(KeyWordVar(str))`
 
 `MultiVar` 与 `KeyWordVar` 也可以传入 `default` 参数，用于指定默认值。
 
 `MultiVar` 不能在 `KeyWordVar` 之后传入。
+
 :::
 
 ### 紧凑命令
