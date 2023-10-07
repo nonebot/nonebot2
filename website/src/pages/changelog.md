@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 更新最佳实践 Alconna [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2401](https://github.com/nonebot/nonebot2/pull/2401))
 - Docs: 修改商店发布的跳转链接 [@KomoriDev](https://github.com/KomoriDev) ([#2387](https://github.com/nonebot/nonebot2/pull/2387))
 - Docs: 修复文档主页 Features 不居中 [@MingxuanGame](https://github.com/MingxuanGame) ([#2390](https://github.com/nonebot/nonebot2/pull/2390))
 
