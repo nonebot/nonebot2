@@ -305,6 +305,7 @@ async def tt(target: Union[str, At]):
 `got_path` 会获取消息的最后一个消息段并转为 path 对应的类型，例如示例中 `target` 对应的 Arg 里要求 str 或 At，则 got 后用户输入的消息只有为 text 或 at 才能进入处理函数。
 
 :::tip
+
 `path` 支持 ~XXX 语法，其会把 ~ 替换为可能的父级路径：
 
 ```python
@@ -402,5 +403,4 @@ async def add(plugin: Match[str], priority: Match[int]):
 @matcher.assign("remove")
 async def remove(plugin: Match[str], time: Match[int]):
     await matcher.finish(f"removed {plugin.result} with {time.result if time.available else -1}")
-
 ```
