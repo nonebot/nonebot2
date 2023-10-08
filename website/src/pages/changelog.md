@@ -29,6 +29,10 @@ toc_max_heading_level: 2
 - Plugin: Nonebot Agent [@noneflow](https://github.com/noneflow) ([#2389](https://github.com/nonebot/nonebot2/pull/2389))
 - Plugin: 聚能环 [@noneflow](https://github.com/noneflow) ([#2384](https://github.com/nonebot/nonebot2/pull/2384))
 
+### 🍻 适配器发布
+
+- Adapter: Satori [@noneflow](https://github.com/noneflow) ([#2405](https://github.com/nonebot/nonebot2/pull/2405))
+
 ## v2.1.1
 
 ### 🚀 新功能
