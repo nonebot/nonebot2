@@ -188,5 +188,20 @@
     "homepage": "https://github.com/nonebot/adapter-discord",
     "tags": [],
     "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.satori",
+    "project_link": "nonebot-adapter-satori",
+    "name": "Satori",
+    "desc": "Satori 协议适配器",
+    "author": "RF-Tar-Railt",
+    "homepage": "https://github.com/nonebot/adapter-satori",
+    "tags": [
+      {
+        "label": "跨平台",
+        "color": "#bf40bf"
+      }
+    ],
+    "is_official": false
   }
 ]
