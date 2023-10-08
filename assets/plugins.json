@@ -5158,5 +5158,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_morep_finder",
+    "project_link": "nonebot-plugin-morep-finder",
+    "author": "ninthseason",
+    "tags": [],
+    "is_official": false
   }
 ]
