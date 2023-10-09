@@ -5165,5 +5165,12 @@
     "author": "ninthseason",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-yesman",
+    "project_link": "nonebot-plugin-yesman",
+    "author": "EuDs63",
+    "tags": [],
+    "is_official": false
   }
 ]
