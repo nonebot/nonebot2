@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: morep-finder [@noneflow](https://github.com/noneflow) ([#2407](https://github.com/nonebot/nonebot2/pull/2407))
 - Plugin: op-finder [@noneflow](https://github.com/noneflow) ([#2403](https://github.com/nonebot/nonebot2/pull/2403))
 - Plugin: nonebot-plugin-playercheck [@noneflow](https://github.com/noneflow) ([#2400](https://github.com/nonebot/nonebot2/pull/2400))
 - Plugin: talk with eop ai [@noneflow](https://github.com/noneflow) ([#2397](https://github.com/nonebot/nonebot2/pull/2397))
