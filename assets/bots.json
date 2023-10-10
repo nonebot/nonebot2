@@ -574,5 +574,13 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "妃爱",
+    "desc": "超可爱的妃爱QQ群聊机器人",
+    "author": "jiangyuxiaoxiao",
+    "homepage": "https://github.com/jiangyuxiaoxiao/Hiyori",
+    "tags": [],
+    "is_official": false
   }
 ]
