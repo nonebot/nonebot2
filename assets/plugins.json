@@ -5172,5 +5172,17 @@
     "author": "EuDs63",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_fgoavatarguess",
+    "project_link": "nonebot-plugin-fgoavatarguess",
+    "author": "influ3nza",
+    "tags": [
+      {
+        "label": "FGO",
+        "color": "#66cccc"
+      }
+    ],
+    "is_official": false
   }
 ]
