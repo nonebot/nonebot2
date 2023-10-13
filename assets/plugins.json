@@ -5196,5 +5196,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_batitle",
+    "project_link": "nonebot-plugin-batitle",
+    "author": "MerCuJerry",
+    "tags": [
+      {
+        "label": "碧蓝档案",
+        "color": "#00d7fb"
+      }
+    ],
+    "is_official": false
   }
 ]
