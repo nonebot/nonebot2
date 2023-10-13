@@ -5184,5 +5184,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_vrchat",
+    "project_link": "nonebot-plugin-vrchat",
+    "author": "Agnes4m",
+    "tags": [
+      {
+        "label": "VRChat",
+        "color": "#7aea53"
+      }
+    ],
+    "is_official": false
   }
 ]
