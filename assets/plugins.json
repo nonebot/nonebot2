@@ -5220,5 +5220,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_getbapics",
+    "project_link": "nonebot-plugin-getbapics",
+    "author": "hanasa2023",
+    "tags": [
+      {
+        "label": "碧蓝档案",
+        "color": "#00defe"
+      },
+      {
+        "label": "BA",
+        "color": "#00defe"
+      }
+    ],
+    "is_official": false
   }
 ]
