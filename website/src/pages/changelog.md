@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-maimaidx [@noneflow](https://github.com/noneflow) ([#2422](https://github.com/nonebot/nonebot2/pull/2422))
 - Plugin: BlueArchive Title Generator [@noneflow](https://github.com/noneflow) ([#2418](https://github.com/nonebot/nonebot2/pull/2418))
 - Plugin: VRChat查询 [@noneflow](https://github.com/noneflow) ([#2411](https://github.com/nonebot/nonebot2/pull/2411))
 - Plugin: FGO猜从者 [@noneflow](https://github.com/noneflow) ([#2416](https://github.com/nonebot/nonebot2/pull/2416))
