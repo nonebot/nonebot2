@@ -5208,5 +5208,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_maimaidx",
+    "project_link": "nonebot-plugin-maimaidx",
+    "author": "Yuri-YuzuChaN",
+    "tags": [
+      {
+        "label": "maimai",
+        "color": "#cea6ff"
+      }
+    ],
+    "is_official": false
   }
 ]
