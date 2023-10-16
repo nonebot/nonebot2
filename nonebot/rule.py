@@ -125,10 +125,9 @@ class TrieRule:
                     arg_str = str(msg[0])
                     arg_str_stripped = arg_str.lstrip()
 
-                if (
-                    arg_str_stripped
-                    and (stripped_len := len(arg_str) - len(arg_str_stripped)) > 0
-                ):
+                if (arg_str_stripped or msg) and (
+                    stripped_len := len(arg_str) - len(arg_str_stripped)
+                ) > 0:
                     prefix[CMD_WHITESPACE_KEY] = arg_str[:stripped_len]
 
                 # construct command arg
