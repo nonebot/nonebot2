@@ -227,6 +227,12 @@ const siteConfig = {
     {
       type: "text/javascript",
       charset: "UTF-8",
+      src: "https://hm.baidu.com/hm.js?875efa50097818701ee681edd63eaac6",
+      async: true,
+    },
+    {
+      type: "text/javascript",
+      charset: "UTF-8",
       src: "https://cdn.wwads.cn/js/makemoney.js",
       async: true,
     },
