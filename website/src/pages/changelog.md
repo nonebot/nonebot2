@@ -39,6 +39,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: 芙芙 [@noneflow](https://github.com/noneflow) ([#2426](https://github.com/nonebot/nonebot2/pull/2426))
 - Bot: 妃爱 [@noneflow](https://github.com/noneflow) ([#2413](https://github.com/nonebot/nonebot2/pull/2413))
 
 ### 🍻 适配器发布
