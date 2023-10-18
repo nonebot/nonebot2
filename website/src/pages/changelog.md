@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 添加多消息段命令解析支持 [@RainEggplant](https://github.com/RainEggplant) ([#2419](https://github.com/nonebot/nonebot2/pull/2419))
+
 ### 📝 文档
 
 - Docs: 文档启用百度统计 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2424](https://github.com/nonebot/nonebot2/pull/2424))
