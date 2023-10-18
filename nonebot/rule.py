@@ -117,27 +117,22 @@ class TrieRule:
                 # check whitespace
                 arg_str = segment_text[len(pf.key) :]
                 arg_str_stripped = arg_str.lstrip()
-                check_remaining_segments = (
-                    len(arg_str_stripped) == 0 and msg and msg[0].is_text()
-                )
-                if check_remaining_segments:
-                    # the arg is from the remaining segments
-                    arg_str = str(msg[0])
+                # check next segment until arg detected or no text remain
+                while not arg_str_stripped and msg and msg[0].is_text():
+                    arg_str += str(msg.pop(0))
                     arg_str_stripped = arg_str.lstrip()
-
-                if (arg_str_stripped or msg) and (
-                    stripped_len := len(arg_str) - len(arg_str_stripped)
-                ) > 0:
+                has_arg = arg_str_stripped or msg
+                if (
+                    has_arg
+                    and (stripped_len := len(arg_str) - len(arg_str_stripped)) > 0
+                ):
                     prefix[CMD_WHITESPACE_KEY] = arg_str[:stripped_len]
 
                 # construct command arg
                 if arg_str_stripped:
-                    if check_remaining_segments:
-                        msg[0] = msg.__class__(arg_str_stripped)[0]
-                    else:
-                        new_message = msg.__class__(arg_str_stripped)
-                        for new_segment in reversed(new_message):
-                            msg.insert(0, new_segment)
+                    new_message = msg.__class__(arg_str_stripped)
+                    for new_segment in reversed(new_message):
+                        msg.insert(0, new_segment)
                 prefix[CMD_ARG_KEY] = msg
 
         return prefix
