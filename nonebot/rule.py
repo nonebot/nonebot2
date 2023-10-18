@@ -121,6 +121,7 @@ class TrieRule:
                 while not arg_str_stripped and msg and msg[0].is_text():
                     arg_str += str(msg.pop(0))
                     arg_str_stripped = arg_str.lstrip()
+
                 has_arg = arg_str_stripped or msg
                 if (
                     has_arg
