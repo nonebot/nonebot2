@@ -113,7 +113,7 @@ async def test_trie(app: App):
             command_whitespace=" ",
         )
 
-        message = FakeMessageSegment.text("/fake-prefix") + FakeMessageSegment.text(
+        message = FakeMessageSegment.text("/fake-prefix ") + FakeMessageSegment.text(
             " some args"
         )
         event = make_fake_event(_message=message)()
@@ -124,7 +124,23 @@ async def test_trie(app: App):
             raw_command="/fake-prefix",
             command_arg=FakeMessage("some args"),
             command_start="/",
-            command_whitespace=" ",
+            command_whitespace="  ",
+        )
+
+        message = (
+            FakeMessageSegment.text("/fake-prefix ")
+            + FakeMessageSegment.text("    ")
+            + FakeMessageSegment.text(" some args")
+        )
+        event = make_fake_event(_message=message)()
+        state = {}
+        TrieRule.get_value(bot, event, state)
+        assert state[PREFIX_KEY] == CMD_RESULT(
+            command=("fake-prefix",),
+            raw_command="/fake-prefix",
+            command_arg=FakeMessage("some args"),
+            command_start="/",
+            command_whitespace="      ",
         )
 
     del TrieRule.prefix["/fake-prefix"]
