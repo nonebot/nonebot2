@@ -582,5 +582,13 @@
     "homepage": "https://github.com/jiangyuxiaoxiao/Hiyori",
     "tags": [],
     "is_official": false
+  },
+  {
+    "name": "芙芙",
+    "desc": "供 Mooncell Wiki 协作使用的跨平台机器人",
+    "author": "StarHeartHunt",
+    "homepage": "https://github.com/MooncellWiki/BotFooChan",
+    "tags": [],
+    "is_official": false
   }
 ]
