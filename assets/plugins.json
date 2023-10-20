@@ -5236,5 +5236,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_make_choice",
+    "project_link": "nonebot-plugin-make-choice",
+    "author": "SherkeyXD",
+    "tags": [
+      {
+        "label": "choice",
+        "color": "#77c5ff"
+      }
+    ],
+    "is_official": false
   }
 ]
