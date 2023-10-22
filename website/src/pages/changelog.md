@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复 Alconna 文档 typo [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2429](https://github.com/nonebot/nonebot2/pull/2429))
 - Docs: 文档启用百度统计 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2424](https://github.com/nonebot/nonebot2/pull/2424))
 - Docs: 更新最佳实践 Alconna [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2401](https://github.com/nonebot/nonebot2/pull/2401))
 - Docs: 修改商店发布的跳转链接 [@KomoriDev](https://github.com/KomoriDev) ([#2387](https://github.com/nonebot/nonebot2/pull/2387))
