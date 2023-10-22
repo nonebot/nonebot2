@@ -174,7 +174,7 @@ from arclet.alconna import Alconna, Args
 
 alc = Alconna("test", Args["foo", str])
 alc.parse("test --foo abc")  # 错误
-alc.parse("test abc")  # 之前
+alc.parse("test abc")  # 正确
 ```
 
 若需要 `test --foo abc`，你应该使用 `Option`：
