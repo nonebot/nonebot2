@@ -5248,5 +5248,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_scheduled_broadcast",
+    "project_link": "nonebot-plugin-scheduled-broadcast",
+    "author": "T0nyX1ang",
+    "tags": [],
+    "is_official": false
   }
 ]
