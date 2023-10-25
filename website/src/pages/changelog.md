@@ -27,6 +27,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 定时广播插件 [@noneflow](https://github.com/noneflow) ([#2432](https://github.com/nonebot/nonebot2/pull/2432))
 - Plugin: 选择困难症 [@noneflow](https://github.com/noneflow) ([#2428](https://github.com/nonebot/nonebot2/pull/2428))
 - Plugin: nonebot-plugin-getbapics [@noneflow](https://github.com/noneflow) ([#2423](https://github.com/nonebot/nonebot2/pull/2423))
 - Plugin: nonebot-plugin-maimaidx [@noneflow](https://github.com/noneflow) ([#2422](https://github.com/nonebot/nonebot2/pull/2422))
