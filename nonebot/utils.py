@@ -31,7 +31,7 @@ from typing import (
     overload,
 )
 
-from pydantic.typing import is_union, is_none_type
+from pydantic.typing import is_union, is_none_type, is_literal_type, all_literal_values
 
 from nonebot.log import logger
 
@@ -75,9 +75,17 @@ def generic_check_issubclass(
                 is_none_type(type_) or generic_check_issubclass(type_, class_or_tuple)
                 for type_ in get_args(cls)
             )
+        elif is_literal_type(cls):
+            return all(
+                is_none_type(value) or isinstance(value, class_or_tuple)
+                for value in all_literal_values(cls)
+            )
         # ensure generic List, Dict can be checked
         elif origin:
-            return issubclass(origin, class_or_tuple)
+            try:
+                return issubclass(origin, class_or_tuple)
+            except TypeError:
+                return False
         elif isinstance(cls, TypeVar):
             if cls.__constraints__:
                 return all(
