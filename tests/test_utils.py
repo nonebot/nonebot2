@@ -1,5 +1,5 @@
 import json
-from typing import Dict, List, Union, TypeVar
+from typing import Dict, List, Union, Literal, TypeVar, ClassVar
 
 from utils import FakeMessage, FakeMessageSegment
 from nonebot.utils import (
@@ -24,8 +24,11 @@ def test_generic_check_issubclass():
     assert generic_check_issubclass(int, (int, float))
     assert not generic_check_issubclass(str, (int, float))
     assert generic_check_issubclass(Union[int, float, None], (int, float))
+    assert generic_check_issubclass(Literal[1, 2, 3], int)
+    assert not generic_check_issubclass(Literal[1, 2, "3"], int)
     assert generic_check_issubclass(List[int], list)
     assert generic_check_issubclass(Dict[str, int], dict)
+    assert not generic_check_issubclass(ClassVar[int], int)
     assert generic_check_issubclass(TypeVar("T", int, float), (int, float))
     assert generic_check_issubclass(TypeVar("T", bound=int), (int, float))
 
