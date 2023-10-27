@@ -82,6 +82,7 @@ def generic_check_issubclass(
             )
         # ensure generic List, Dict can be checked
         elif origin:
+            # avoid class check error (typing.Final, typing.ClassVar, etc...)
             try:
                 return issubclass(origin, class_or_tuple)
             except TypeError:
