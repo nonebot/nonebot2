@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Feature: 添加多消息段命令解析支持 [@RainEggplant](https://github.com/RainEggplant) ([#2419](https://github.com/nonebot/nonebot2/pull/2419))
 
+### 🐛 Bug 修复
+
+- Fix: 修复依赖注入对 Literal 检查报错 [@yanyongyu](https://github.com/yanyongyu) ([#2433](https://github.com/nonebot/nonebot2/pull/2433))
+
 ### 📝 文档
 
 - Docs: 修复 Alconna 文档 typo [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2429](https://github.com/nonebot/nonebot2/pull/2429))
