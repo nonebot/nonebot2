@@ -19,6 +19,8 @@ os.environ["CONFIG_OVERRIDE"] = "new"
 if TYPE_CHECKING:
     from nonebot.plugin import Plugin
 
+collect_ignore = ["plugins/", "dynamic/", "bad_plugins/"]
+
 
 def pytest_configure(config: pytest.Config) -> None:
     config.stash[NONEBOT_INIT_KWARGS] = {"config_from_init": "init"}

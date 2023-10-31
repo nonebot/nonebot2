@@ -51,10 +51,10 @@ ruff = ">=0.0.272,<1.0.0"
 
 [tool.poetry.group.test.dependencies]
 nonebug = "^0.3.0"
-werkzeug = "^2.3.6"
 pytest-cov = "^4.0.0"
 pytest-xdist = "^3.0.2"
-pytest-asyncio = "^0.21.0"
+pytest-asyncio = "^0.22.0"
+werkzeug = ">=2.3.6,<4.0.0"
 coverage-conditional-plugin = "^0.9.0"
 
 [tool.poetry.group.docs.dependencies]
