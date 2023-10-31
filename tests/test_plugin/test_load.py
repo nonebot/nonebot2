@@ -80,7 +80,7 @@ async def test_load_toml():
 async def test_bad_plugin():
     nonebot.load_plugins("bad_plugins")
 
-    assert nonebot.get_plugin("bad_plugins") is None
+    assert nonebot.get_plugin("bad_plugin") is None
 
 
 @pytest.mark.asyncio
