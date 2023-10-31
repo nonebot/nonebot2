@@ -25,6 +25,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Fix: 修复升级 pytest-asyncio 0.22 pytest collect 问题 [@yanyongyu](https://github.com/yanyongyu) ([#2436](https://github.com/nonebot/nonebot2/pull/2436))
 - Plugin: 移除 `nonebot-plugin-nya-music` 插件 [@nikissXI](https://github.com/nikissXI) ([#2398](https://github.com/nonebot/nonebot2/pull/2398))
 - CI: 调整商店数据存放位置与内容 [@he0119](https://github.com/he0119) ([#2385](https://github.com/nonebot/nonebot2/pull/2385))
 - Adapter: 修改频道适配器为 QQ 适配器 [@yanyongyu](https://github.com/yanyongyu) ([#2382](https://github.com/nonebot/nonebot2/pull/2382))
