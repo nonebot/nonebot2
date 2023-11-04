@@ -590,5 +590,22 @@
     "homepage": "https://github.com/MooncellWiki/BotFooChan",
     "tags": [],
     "is_official": false
+  },
+  {
+    "name": "Sakiko",
+    "desc": "基于 LiteLoaderBDS 的 Minecraft 基岩版 Bot",
+    "author": "zhaomaoniu",
+    "homepage": "https://github.com/zhaomaoniu/Sakiko",
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#6cc349"
+      },
+      {
+        "label": "BanGDream",
+        "color": "#e70050"
+      }
+    ],
+    "is_official": false
   }
 ]
