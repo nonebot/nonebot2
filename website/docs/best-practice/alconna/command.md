@@ -20,6 +20,91 @@ description: Alconna 基本介绍
 - 可嵌套的多级子命令
 - 正则匹配支持
 
+## 命令示范
+
+```python 
+import sys
+from io import StringIO
+
+from arclet.alconna import Alconna, Args, Field, Option, CommandMeta, MultiVar, Arparma
+from nepattern import AnyString
+
+alc = Alconna(
+    "exec",
+    Args["code", MultiVar(AnyString), Field(completion=lambda: "print(1+1)")] / "\n",
+    Option("纯文本"),
+    Option("无输出"),
+    Option("目标", Args["name", str, "res"]),
+    meta=CommandMeta("exec python code", example="exec\\nprint(1+1)"),
+)
+
+alc.shortcut(
+    "echo",
+    {"command": "exec 纯文本\nprint(\\'{*}\\')"},
+)
+
+alc.shortcut(
+    "sin(\d+)",
+    {"command": "exec 纯文本\nimport math\nprint(math.sin({0}*math.pi/180))"},
+)
+
+
+def exec_code(result: Arparma):
+    if result.find("纯文本"):
+        codes = list(result.code)
+    else:
+        codes = str(result.origin).split("\n")[1:]
+    output = result.query[str]("目标.name", "res")
+    if not codes:
+        return ""
+    lcs = {}
+    _stdout = StringIO()
+    _to = sys.stdout
+    sys.stdout = _stdout
+    try:
+        exec(
+            "def rc(__out: str):\n    "
+            + "    ".join(_code + "\n" for _code in codes)
+            + "    return locals().get(__out)",
+            {**globals(), **locals()},
+            lcs,
+        )
+        code_res = lcs["rc"](output)
+        sys.stdout = _to
+        if result.find("无输出"):
+            return ""
+        if code_res is not None:
+            return f"{output}: {code_res}"
+        _out = _stdout.getvalue()
+        return f"输出: {_out}"
+    except Exception as e:
+        sys.stdout = _to
+        return str(e)
+    finally:
+        sys.stdout = _to
+
+print(exec_code(alc.parse("echo 1234")))
+print(exec_code(alc.parse("sin30")))
+print(
+    exec_code(
+        alc.parse(
+"""\
+exec
+print(
+    exec_code(
+        alc.parse(
+            "exec\\n"
+            "import sys;print(sys.version)"
+        )
+    )
+)
+"""
+        )
+    )
+)
+```
+
+
 ## 命令编写
 
 ### 命令头
@@ -263,7 +348,7 @@ args = Args["foo", BasePattern("@\d+")]
 
 ### 紧凑命令
 
-`Alconna`, `Option` 与 `Subcommand` 可以设置 `compact=True` 使得解析命令时允许名称与后随参数之间没有分隔：
+`Alconna`, `Option` 可以设置 `compact=True` 使得解析命令时允许名称与后随参数之间没有分隔：
 
 ```python
 from arclet.alconna import Alconna, Option, CommandMeta, Args

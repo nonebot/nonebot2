@@ -58,9 +58,16 @@ class File(Segment):
 
 class Reply(Segment):
     """Reply对象，表示一类回复消息"""
-    origin: Any
     id: str
+    """此处不一定是消息ID，可能是其他ID，如消息序号等"""
     msg: Optional[Union[Message, str]]
+    origin: Optional[Any]
+
+class Reference(Segment):
+    """Reference对象，表示一类引用消息。转发消息 (Forward) 也属于此类"""
+    id: Optional[str]
+    """此处不一定是消息ID，可能是其他ID，如消息序号等"""
+    content: Optional[Union[Message, str, List[Union[RefNode, CustomNode]]]]
 
 class Card(Segment):
 	type: Literal["xml", "json"]
@@ -76,7 +83,12 @@ class Other(Segment):
 
 `nonebot-plugin-alconna.uniseg` 同时提供了一个类似于 `Message` 的 `UniMessage` 类型，其元素为经过通用标注转换后的通用消息段。
 
-你可以通过提供的 `UniversalMessage` 或 `UniMsg` 依赖注入器来获取 `UniMessage`。
+你可以用如下方式获取 `UniMessage` ：
+
+<Tabs groupId="get_unimsg">
+<TabItem value="depend" label="使用依赖注入">
+
+通过提供的 `UniversalMessage` 或 `UniMsg` 依赖注入器来获取 `UniMessage`。
 
 ```python
 from nonebot_plugin_alconna.uniseg import UniMsg, At, Reply
@@ -93,7 +105,26 @@ async def _(msg: UniMsg):
     ...
 ```
 
-不仅如此，你还可以通过 `UniMessage` 的 `export` 方法来**跨平台发送消息**。
+</TabItem>
+<TabItem value="method" label="使用 UniMessage.generate">
+
+注意，`generate` 方法在响应器以外的地方需要 `bot` 参数。
+
+```python
+from nonebot import Message, EventMessage
+from nonebot_plugin_alconna.uniseg import UniMessage
+
+matcher = on_xxx(...)
+
+@matcher.handle()
+async def _(message: Message = EventMessage()):
+    msg = await UniMessage.generate(message=message)
+```
+
+</TabItem>
+</Tabs>
+
+不仅如此，你还可以通过 `UniMessage` 的 `export` 与 `send` 方法来**跨平台发送消息**。
 
 `UniMessage.export` 会通过传入的 `bot: Bot` 参数读取适配器信息，并使用对应的生成方法把通用消息转为适配器对应的消息序列：
 
@@ -125,6 +156,43 @@ async def tt_h(matcher: AlconnaMatcher, target: Match[At]):
 @test_cmd.got_path("target", prompt="请输入目标")
 async def tt(target: At):
     await test_cmd.send(UniMessage([target, "\ndone."]))
+```
+
+除此之外 `UniMessage.send` 方法基于 `UniMessage.export` 并调用各适配器下的发送消息方法，返回一个 `Receipt` 对象，用于修改/撤回消息：
+
+```python
+from nonebot import Bot, on_command
+from nonebot_plugin_alconna.uniseg import UniMessage
+
+test = on_command("test")
+
+@test.handle()
+async def handle(bot: Bot, event: Event):
+    receipt = await UniMessage.text("hello!").send(event, bot, at_sender=True, reply_to=True)
+    await receipt.recall(delay=1)
+```
+
+### 构造
+
+如同 `Message`, `UniMessage` 可以传入单个字符串/消息段，或可迭代的字符串/消息段：
+
+```python
+from nonebot_plugin_alconna.uniseg import UniMessage, At
+
+msg = UniMessage("Hello")
+msg1 = UniMessage(At("user", "124"))
+msg2 = UniMessage(["Hello", At("user", "124")])
+```
+
+`UniMessage` 上同时存在便捷方法，令其可以链式地添加消息段：
+
+```python
+from nonebot_plugin_alconna.uniseg import UniMessage, At, Image
+
+msg = UniMessage.text("Hello").at("124").image(path="/path/to/img")
+assert msg == UniMessage(
+    ["Hello", At("user", "124"), Image(path="/path/to/img")]
+)
 ```
 
 ### 获取消息纯文本
@@ -277,7 +345,7 @@ UniMessage(At("user", "123"))
 
 而在 `AlconnaMatcher` 中，{:XXX} 更进一步地提供了获取 `event` 和 `bot` 中的属性的功能
 
-```python title=在 AlconnaMatcher 中使用通用消息段的拓展控制符
+```python title=在AlconnaMatcher中使用通用消息段的拓展控制符
 from arclet.alconna import Alconna, Args
 from nonebot_plugin_alconna import At, Match, UniMessage, AlconnaMatcher, on_alconna
 
@@ -297,3 +365,55 @@ async def tt():
       UniMessage.template("{:At(user, $event.get_user_id())} 已确认目标为 {target}")
     )
 ```
+
+另外也有 `$message_id` 与 `$target` 两个特殊值。
+
+## 消息发送
+
+前面提到, 通用消息可用 `UniMessage.send` 发送自身：
+
+```python
+async def send(
+    self,
+    target: Union[Event, Target],
+    bot: Optional[Bot] = None,
+    fallback: bool = True,
+    at_sender: Union[str, bool] = False,
+    reply_to: Union[str, bool] = False,
+) -> Receipt:
+```
+
+实际上，`UniMessage` 同时提供了获取消息事件 id 与消息发送对象的方法:
+
+```python
+from nonebot import Event, Bot
+from nonebot_plugin_alconna.uniseg import UniMessage, Target
+
+matcher = on_xxx(...)
+
+@matcher.handle()
+asycn def _(bot: Bot, event: Event):
+    target: Target = UniMessage.get_target(event, bot)
+    msg_id: str = UniMessage.get_message_id(event, bot)
+
+```
+
+其中，`Target`:
+
+```python
+class Target:
+    id: str
+    """目标id；若为群聊则为group_id或者channel_id，若为私聊则为user_id"""
+    parent_id: str = ""
+    """父级id；若为频道则为guild_id，其他情况为空字符串"""
+    channel: bool = False
+    """是否为频道，仅当目标平台同时支持群聊和频道时有效"""
+    private: bool = False
+    """是否为私聊"""
+    source: str = ""
+    """可能的事件id"""
+```
+
+是用来描述响应消息时的发送对象。
+
+同样的，你可以通过依赖注入的方式在响应器中直接获取它们。
