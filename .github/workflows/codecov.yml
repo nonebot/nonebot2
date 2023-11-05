@@ -9,6 +9,9 @@ on:
       - "nonebot/**"
       - "packages/**"
       - "tests/**"
+      - "actions/setup-python/**"
+      - "pyproject.toml"
+      - "poetry.lock"
 
 jobs:
   test:
