@@ -22,7 +22,7 @@ description: Alconna 基本介绍
 
 ## 命令示范
 
-```python 
+```python
 import sys
 from io import StringIO
 
@@ -103,7 +103,6 @@ print(
     )
 )
 ```
-
 
 ## 命令编写
 

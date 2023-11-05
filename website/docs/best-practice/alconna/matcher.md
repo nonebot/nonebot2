@@ -127,7 +127,6 @@ async def handle(
 
 :::
 
-
 实例:
 
 ```python
@@ -164,7 +163,6 @@ async def handle_test3(qux: Query[bool] = AlconnaQuery("baz.qux", False)):
     if qux.available:
         await test.send(f"baz.qux={qux.result}")
 ```
-
 
 ## 消息段标注
 
