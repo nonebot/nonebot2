@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 🍻 机器人发布
+
+- Bot: Sakiko [@noneflow](https://github.com/noneflow) ([#2439](https://github.com/nonebot/nonebot2/pull/2439))
+
 ## v2.1.2
 
 ### 🚀 新功能
