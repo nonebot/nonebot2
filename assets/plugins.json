@@ -5255,5 +5255,25 @@
     "author": "T0nyX1ang",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_any",
+    "project_link": "nonebot-plugin-any",
+    "author": "MelodyYuuka",
+    "tags": [
+      {
+        "label": "跨平台",
+        "color": "#36d399"
+      },
+      {
+        "label": "统一",
+        "color": "#fa5f55"
+      },
+      {
+        "label": "工具库",
+        "color": "#52eadd"
+      }
+    ],
+    "is_official": false
   }
 ]
