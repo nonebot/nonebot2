@@ -388,7 +388,7 @@ async def remove(plugin: Match[str], time: Match[int]):
     await matcher.finish(f"removed {plugin.result} with {time.result if time.available else -1}")
 ```
 
-:::tips
+:::tip
 
 全局的 Extension 可延迟加载 (即若有全局拓展加载于部分 AlconnaMatcher 之后，这部分响应器会被追加拓展)
 
