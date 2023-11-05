@@ -9,7 +9,8 @@ on:
       - "nonebot/**"
       - "packages/**"
       - "tests/**"
-      - "actions/setup-python/**"
+      - ".github/actions/setup-python/**"
+      - ".github/workflows/codecov.yml"
       - "pyproject.toml"
       - "poetry.lock"
 
