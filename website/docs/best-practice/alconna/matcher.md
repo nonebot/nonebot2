@@ -49,7 +49,7 @@ async def _(result: Arparma):
 - `aliases: set[str | tuple[str, ...]] | None = None`: 命令别名，作用类似于 `on_command` 中的 aliases
 - `comp_config: CompConfig | None = None`: 补全会话配置，不传入则不启用补全会话
 - `extensions: list[type[Extension] | Extension] | None = None`: 需要加载的匹配扩展，可以是扩展类或扩展实例
-- `exclude_ext: list[type[Extension] | str] | None = None`: 需要排除的匹配扩展，可以是扩展类或扩展的id
+- `exclude_ext: list[type[Extension] | str] | None = None`: 需要排除的匹配扩展，可以是扩展类或扩展的 id
 - `use_origin: bool = False`: 是否使用未经 to_me 等处理过的消息
 - `use_cmd_start: bool = False`: 是否使用 COMMAND_START 作为命令前缀
 - `use_cmd_sep: bool = False`: 是否使用 COMMAND_SEP 作为命令分隔符
@@ -115,7 +115,7 @@ async def handle(
 
 :::note
 
-如果你更喜欢 Depends式的依赖注入，`nonebot_plugin_alconna` 同时提供了一系列的依赖注入函数，他们包括：
+如果你更喜欢 Depends 式的依赖注入，`nonebot_plugin_alconna` 同时提供了一系列的依赖注入函数，他们包括：
 
 - `AlconnaResult`: `CommandResult` 类型的依赖注入函数
 - `AlconnaMatches`: `Arparma` 类型的依赖注入函数
@@ -192,7 +192,7 @@ group.extend(member.target for member in ats)
 | [飞书](https://github.com/nonebot/adapter-feishu)                   | adapters.feishu                      |
 | [GitHub](https://github.com/nonebot/adapter-github)                 | adapters.github                      |
 | [QQ bot](https://github.com/nonebot/adapter-qq)                     | adapters.qq                          |
-| [QQ 频道bot](https://github.com/nonebot/adapter-qq)                 | adapters.qqguild                     |
+| [QQ 频道 bot](https://github.com/nonebot/adapter-qq)                | adapters.qqguild                     |
 | [钉钉](https://github.com/nonebot/adapter-ding)                     | adapters.ding                        |
 | [Console](https://github.com/nonebot/adapter-console)               | adapters.console                     |
 | [开黑啦](https://github.com/Tian-que/nonebot-adapter-kaiheila)      | adapters.kook                        |
@@ -362,7 +362,7 @@ matcher = on_alconna(
 - `catch`: 自定义依赖注入处理函数
 - `post_init`: 响应器创建后对命令对象的额外除了
 
-例如内置的 `DiscordSlashExtension`，其可自动将 Alconna 对象翻译成 slash指令并注册，且将收到的指令交互事件转为指令供命令解析:
+例如内置的 `DiscordSlashExtension`，其可自动将 Alconna 对象翻译成 slash 指令并注册，且将收到的指令交互事件转为指令供命令解析:
 
 ```python
 from nonebot_plugin_alconna import Match, on_alconna
