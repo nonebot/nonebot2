@@ -31,7 +31,7 @@ description: 配置项
 - **类型**: `bool`
 - **默认值**: `False`
 
-是否全局使用原始消息 (即未经过 to_me 等处理的), 该选项会影响到 Alconna 的匹配行为。
+是否全局使用原始消息 (即未经过 to_me 等处理的)，该选项会影响到 Alconna 的匹配行为。
 
 ## alconna_use_command_sep
 
@@ -45,4 +45,4 @@ description: 配置项
 - **类型**: `List[str]`
 - **默认值**: `[]`
 
-全局加载的扩展, 路径以 . 分隔, 如 foo.bar.baz:DemoExtension
+全局加载的扩展，路径以 . 分隔，如 `foo.bar.baz:DemoExtension`

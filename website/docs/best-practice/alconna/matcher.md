@@ -46,10 +46,10 @@ async def _(result: Arparma):
 - `command: Alconna | str`: Alconna 命令
 - `skip_for_unmatch: bool = True`: 是否在命令不匹配时跳过该响应
 - `auto_send_output: bool = False`: 是否自动发送输出信息并跳过响应
-- `aliases: set[str | tuple[str, ...]] | None = None`: 命令别名， 作用类似于 `on_command` 中的 aliases
-- `comp_config: CompConfig | None = None`: 补全会话配置， 不传入则不启用补全会话
-- `extensions: list[type[Extension] | Extension] | None = None`: 需要加载的匹配扩展, 可以是扩展类或扩展实例
-- `exclude_ext: list[type[Extension] | str] | None = None`: 需要排除的匹配扩展, 可以是扩展类或扩展的id
+- `aliases: set[str | tuple[str, ...]] | None = None`: 命令别名，作用类似于 `on_command` 中的 aliases
+- `comp_config: CompConfig | None = None`: 补全会话配置，不传入则不启用补全会话
+- `extensions: list[type[Extension] | Extension] | None = None`: 需要加载的匹配扩展，可以是扩展类或扩展实例
+- `exclude_ext: list[type[Extension] | str] | None = None`: 需要排除的匹配扩展，可以是扩展类或扩展的id
 - `use_origin: bool = False`: 是否使用未经 to_me 等处理过的消息
 - `use_cmd_start: bool = False`: 是否使用 COMMAND_START 作为命令前缀
 - `use_cmd_sep: bool = False`: 是否使用 COMMAND_SEP 作为命令分隔符
@@ -274,7 +274,7 @@ async def tt(target: Union[str, At]):
     await test_cmd.send(UniMessage(["ok\n", target]))
 ```
 
-`got_path` 与 `assign`, `Match`, `Query` 等地方一样，都需要指明 `path` 参数 (即对应 Arg 验证的路径)
+`got_path` 与 `assign`，`Match`，`Query` 等地方一样，都需要指明 `path` 参数 (即对应 Arg 验证的路径)
 
 `got_path` 会获取消息的最后一个消息段并转为 path 对应的类型，例如示例中 `target` 对应的 Arg 里要求 str 或 At，则 got 后用户输入的消息只有为 text 或 at 才能进入处理函数。
 

@@ -6,7 +6,7 @@ description: Alconna 基本介绍
 # Alconna 命令解析
 
 [Alconna](https://github.com/ArcletProject/Alconna) 作为命令解析器，
-是一个简单、灵活、高效的命令参数解析器, 并且不局限于解析命令式字符串。
+是一个简单、灵活、高效的命令参数解析器，并且不局限于解析命令式字符串。
 
 特点包括:
 
@@ -16,7 +16,7 @@ description: Alconna 基本介绍
 - 自定义的帮助信息格式
 - 多语言支持
 - 易用的快捷命令创建与使用
-- 可创建命令补全会话, 以实现多轮连续的补全提示
+- 可创建命令补全会话，以实现多轮连续的补全提示
 - 可嵌套的多级子命令
 - 正则匹配支持
 
@@ -199,7 +199,7 @@ alc = Alconna(
 - `help_text`: 传入该组件的帮助信息
 - `dest`: 被指定为解析完成时标注匹配结果的标识符，不传入时默认为选项或子命令的名称 (name)
 - `requires`: 一段指定顺序的字符串列表，作为唯一的前置序列与命令嵌套替换
-  对于命令 `test foo bar baz qux <a:int>` 来讲，因为`foo bar baz` 仅需要判断是否相等, 所以可以这么编写：
+  对于命令 `test foo bar baz qux <a:int>` 来讲，因为`foo bar baz` 仅需要判断是否相等，所以可以这么编写：
 
   ```python
   Alconna("test", Option("qux", Args["a", int], requires=["foo", "bar", "baz"]))
@@ -347,7 +347,7 @@ args = Args["foo", BasePattern("@\d+")]
 
 ### 紧凑命令
 
-`Alconna`, `Option` 可以设置 `compact=True` 使得解析命令时允许名称与后随参数之间没有分隔：
+`Alconna`，`Option` 可以设置 `compact=True` 使得解析命令时允许名称与后随参数之间没有分隔：
 
 ```python
 from arclet.alconna import Alconna, Option, CommandMeta, Args
@@ -474,14 +474,14 @@ class ShortcutArgs(TypedDict):
 
 - `{%X}`: 如 `setu {%0}`，表示此处必须填入快捷指令后随的第 X 个参数。
 
-  例如，若快捷指令为 `涩图`, 配置为 `{"command": "setu {%0}"}`, 则指令 `涩图 1` 相当于 `setu 1`
+  例如，若快捷指令为 `涩图`，配置为 `{"command": "setu {%0}"}`，则指令 `涩图 1` 相当于 `setu 1`
 
 - `{*}`: 表示此处填入所有后随参数，并且可以通过 `{*X}` 的方式指定组合参数之间的分隔符。
 - `{X}`: 表示此处填入可能的正则匹配的组：
   - 若 `command` 中存在匹配组 `(xxx)`，则 `{X}` 表示第 X 个匹配组的内容
-  - 若 `command` 中存储匹配组 `(?P<xxx>...)`, 则 `{X}` 表示名字为 X 的匹配结果
+  - 若 `command` 中存储匹配组 `(?P<xxx>...)`，则 `{X}` 表示名字为 X 的匹配结果
 
-除此之外, 通过内置选项 `--shortcut` 可以动态操作快捷指令。
+除此之外，通过内置选项 `--shortcut` 可以动态操作快捷指令。
 
 例如：
 
@@ -528,17 +528,17 @@ alc.parse("test_fuzy")
 
 `path` 支持如下：
 
-- `main_args`, `options`, ...: 返回对应的属性
+- `main_args`，`options`，...: 返回对应的属性
 - `args`: 返回 all_matched_args
-- `main_args.xxx`, `options.xxx`, ...: 返回字典中 `xxx`键对应的值
+- `main_args.xxx`，`options.xxx`，...: 返回字典中 `xxx`键对应的值
 - `args.xxx`: 返回 all_matched_args 中 `xxx`键对应的值
-- `options.foo`, `foo`: 返回选项 `foo` 的解析结果 (OptionResult)
-- `options.foo.value`, `foo.value`: 返回选项 `foo` 的解析值
-- `options.foo.args`, `foo.args`: 返回选项 `foo` 的解析参数字典
-- `options.foo.args.bar`, `foo.bar`: 返回选项 `foo` 的参数字典中 `bar` 键对应的值
+- `options.foo`，`foo`: 返回选项 `foo` 的解析结果 (OptionResult)
+- `options.foo.value`，`foo.value`: 返回选项 `foo` 的解析值
+- `options.foo.args`，`foo.args`: 返回选项 `foo` 的解析参数字典
+- `options.foo.args.bar`，`foo.bar`: 返回选项 `foo` 的参数字典中 `bar` 键对应的值
   ...
 
-同样, `Arparma["foo.bar"]` 的表现与 `query()` 一致
+同样，`Arparma["foo.bar"]` 的表现与 `query()` 一致
 
 ## Duplication
 
