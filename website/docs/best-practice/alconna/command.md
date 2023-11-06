@@ -8,7 +8,7 @@ description: Alconna 基本介绍
 [Alconna](https://github.com/ArcletProject/Alconna) 作为命令解析器，
 是一个简单、灵活、高效的命令参数解析器，并且不局限于解析命令式字符串。
 
-特点包括:
+特点包括：
 
 - 高效
 - 直观的命令组件创建方式
