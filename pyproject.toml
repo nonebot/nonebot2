@@ -36,7 +36,7 @@ pydantic = { version = "^1.10.0", extras = ["dotenv"] }
 websockets = { version = ">=10.0", optional = true }
 Quart = { version = ">=0.18.0,<1.0.0", optional = true }
 fastapi = { version = ">=0.93.0,<1.0.0", optional = true }
-aiohttp = { version = "^3.7.4", extras = ["speedups"], optional = true }
+aiohttp = { version = "^3.9.0b0", extras = ["speedups"], optional = true }
 httpx = { version = ">=0.20.0,<1.0.0", extras = ["http2"], optional = true }
 uvicorn = { version = ">=0.20.0,<1.0.0", extras = [
   "standard",
@@ -53,7 +53,7 @@ ruff = ">=0.0.272,<1.0.0"
 nonebug = "^0.3.0"
 pytest-cov = "^4.0.0"
 pytest-xdist = "^3.0.2"
-pytest-asyncio = "^0.22.0"
+pytest-asyncio = "^0.21.1"
 werkzeug = ">=2.3.6,<4.0.0"
 coverage-conditional-plugin = "^0.9.0"
 
