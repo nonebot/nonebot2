@@ -9,7 +9,7 @@ description: 响应规则的使用
 
 ```python
 from nonebot_plugin_alconna.adapters.onebot12 import Image
-from nonebot_plugin_alconna import At, AlconnaMatches, on_alconna
+from nonebot_plugin_alconna import At, on_alconna
 from arclet.alconna import Args, Option, Alconna, Arparma, MultiVar, Subcommand
 
 alc = Alconna(
@@ -27,9 +27,9 @@ rg = on_alconna(alc, auto_send_output=True)
 
 
 @rg.handle()
-async def _(result: Arparma = AlconnaMatches()):
+async def _(result: Arparma):
     if result.find("list"):
-        img = await gen_role_group_list_image()
+        img = await ob12_gen_role_group_list_image()
         await rg.finish(Image(img))
     if result.find("add"):
         group = await create_role_group(result.query[str]("add.name"))
@@ -46,10 +46,10 @@ async def _(result: Arparma = AlconnaMatches()):
 - `command: Alconna | str`: Alconna 命令
 - `skip_for_unmatch: bool = True`: 是否在命令不匹配时跳过该响应
 - `auto_send_output: bool = False`: 是否自动发送输出信息并跳过响应
-- `aliases: set[str | tuple[str, ...]] | None = None`: 命令别名， 作用类似于 `on_command` 中的 aliases
-- `comp_config: CompConfig | None = None`: 补全会话配置， 不传入则不启用补全会话
-- `extensions: list[type[Extension] | Extension] | None = None`: 需要加载的匹配扩展, 可以是扩展类或扩展实例
-- `exclude_ext: list[type[Extension] | str] | None = None`: 需要排除的匹配扩展, 可以是扩展类或扩展的id
+- `aliases: set[str | tuple[str, ...]] | None = None`: 命令别名，作用类似于 `on_command` 中的 aliases
+- `comp_config: CompConfig | None = None`: 补全会话配置，不传入则不启用补全会话
+- `extensions: list[type[Extension] | Extension] | None = None`: 需要加载的匹配扩展，可以是扩展类或扩展实例
+- `exclude_ext: list[type[Extension] | str] | None = None`: 需要排除的匹配扩展，可以是扩展类或扩展的 id
 - `use_origin: bool = False`: 是否使用未经 to_me 等处理过的消息
 - `use_cmd_start: bool = False`: 是否使用 COMMAND_START 作为命令前缀
 - `use_cmd_sep: bool = False`: 是否使用 COMMAND_SEP 作为命令分隔符
@@ -67,7 +67,7 @@ async def _(result: Arparma = AlconnaMatches()):
 
 ```python
 from arclet.alconna import Alconna, Option, Args
-from nonebot_plugin_alconna import on_alconna, AlconnaMatch, Match, AlconnaMatcher, AlconnaArg, UniMessage
+from nonebot_plugin_alconna import on_alconna, AlconnaMatch, Match, UniMessage
 
 login = on_alconna(Alconna(["/"], "login", Args["password?", str], Option("-r|--recall")))
 
@@ -76,11 +76,12 @@ async def login_exit():
     await login.finish("已退出")
 
 @login.assign("password")
-async def login_handle(matcher: AlconnaMatcher, pw: Match[str] = AlconnaMatch("password")):
-    matcher.set_path_arg("password", pw.result)
+async def login_handle(pw: Match[str] = AlconnaMatch("password")):
+    if pw.available:
+        login.set_path_arg("password", pw.result)
 
 @login.got_path("password", prompt=UniMessage.template("{:At(user, $event.get_user_id())} 请输入密码"))
-async def login_got(password: str = AlconnaArg("password")):
+async def login_got(password: str):
     assert password
     await login.send("登录成功")
 ```
@@ -89,50 +90,14 @@ async def login_got(password: str = AlconnaArg("password")):
 
 `Alconna` 的解析结果会放入 `Arparma` 类中，或用户指定的 `Duplication` 类。
 
-`nonebot_plugin_alconna` 提供了一系列的依赖注入函数，他们包括：
-
-- `AlconnaResult`: `CommandResult` 类型的依赖注入函数
-- `AlconnaMatches`: `Arparma` 类型的依赖注入函数
-- `AlconnaDuplication`: `Duplication` 类型的依赖注入函数
-- `AlconnaMatch`: `Match` 类型的依赖注入函数，其能够额外传入一个 middleware 函数来处理得到的参数
-- `AlconnaQuery`: `Query` 类型的依赖注入函数，其能够额外传入一个 middleware 函数来处理得到的参数
-- `AlconnaExecResult`: 提供挂载在命令上的 callback 的返回结果 (`Dict[str, Any]`) 的依赖注入函数
-- `AlconnaExtension`: 提供指定类型的 `Extension` 的依赖注入函数
-
-可以看到，本插件提供了几类额外的模型：
-
-- `CommandResult`: 解析结果，包括了源命令 `source: Alconna` ，解析结果 `result: Arparma`，以及可能的输出信息 `output: str | None` 字段
-- `Match`: 匹配项，表示参数是否存在于 `all_matched_args` 内，可用 `Match.available` 判断是否匹配，`Match.result` 获取匹配的值
-- `Query`: 查询项，表示参数是否可由 `Arparma.query` 查询并获得结果，可用 `Query.available` 判断是否查询成功，`Query.result` 获取查询结果
-
-同时，基于 [`Annotated` 支持](https://github.com/nonebot/nonebot2/pull/1832), 添加了三类注解:
-
-- `AlcMatches`：同 `AlconnaMatches`
-- `AlcResult`：同 `AlconnaResult`
-- `AlcExecResult`: 同 `AlconnaExecResult`
-
-而若设置配置项 **ALCONNA_USE_PARAM** (默认为 True) 为 True，则上述依赖注入的目标参数皆不需要使用依赖注入函数：
+而 `AlconnaMatcher` 在原有 Matcher 的基础上拓展了允许的依赖注入：
 
 ```python
-...
 @cmd.handle()
-async def handle1(
-    result: CommandResult = AlconnaResult(),
-    arp: Arparma = AlconnaMatches(),
-    dup: Duplication = AlconnaDuplication(Duplication),
-    ext: Extension = AlconnaExtension(Extension),
-    foo: Match[str] = AlconnaMatch("foo"),
-    bar: Query[int] = AlconnaQuery("ttt.bar", 0)
-):
-    ...
-
-# ALCONNA_USE_PARAM 为 True 后
-
-@cmd.handle()
-async def handle2(
+async def handle(
     result: CommandResult,
     arp: Arparma,
-    dup: Duplication,
+    dup: Duplication,  # 基类或子类都可以
     ext: Extension,
     source: Alconna,
     abc: str,  # 类似 Match, 但是若匹配结果不存在对应字段则跳过该 handler
@@ -142,7 +107,25 @@ async def handle2(
     ...
 ```
 
-该效果对于 `got_path` 下的 Arg 同样有效
+可以看到，本插件提供了几类额外的模型：
+
+- `CommandResult`: 解析结果，包括了源命令 `source: Alconna` ，解析结果 `result: Arparma`，以及可能的输出信息 `output: str | None` 字段
+- `Match`: 匹配项，表示参数是否存在于 `all_matched_args` 内，可用 `Match.available` 判断是否匹配，`Match.result` 获取匹配的值
+- `Query`: 查询项，表示参数是否可由 `Arparma.query` 查询并获得结果，可用 `Query.available` 判断是否查询成功，`Query.result` 获取查询结果
+
+:::note
+
+如果你更喜欢 Depends 式的依赖注入，`nonebot_plugin_alconna` 同时提供了一系列的依赖注入函数，他们包括：
+
+- `AlconnaResult`: `CommandResult` 类型的依赖注入函数
+- `AlconnaMatches`: `Arparma` 类型的依赖注入函数
+- `AlconnaDuplication`: `Duplication` 类型的依赖注入函数
+- `AlconnaMatch`: `Match` 类型的依赖注入函数，其能够额外传入一个 middleware 函数来处理得到的参数
+- `AlconnaQuery`: `Query` 类型的依赖注入函数，其能够额外传入一个 middleware 函数来处理得到的参数
+- `AlconnaExecResult`: 提供挂载在命令上的 callback 的返回结果 (`Dict[str, Any]`) 的依赖注入函数
+- `AlconnaExtension`: 提供指定类型的 `Extension` 的依赖注入函数
+
+:::
 
 实例:
 
@@ -152,13 +135,7 @@ from nonebot import require
 require("nonebot_plugin_alconna")
 ...
 
-from nonebot_plugin_alconna import (
-    on_alconna,
-    Match,
-    Query,
-    AlconnaQuery,
-    AlcResult
-)
+from nonebot_plugin_alconna import on_alconna, Match, Query, AlconnaQuery
 from arclet.alconna import Alconna, Args, Option, Arparma
 
 test = on_alconna(
@@ -177,17 +154,12 @@ async def handle_test1(result: AlcResult):
     await test.send(f"maybe output: {result.output}")
 
 @test.handle()
-async def handle_test2(result: Arparma):
-    await test.send(f"head result: {result.header_result}")
-    await test.send(f"args: {result.all_matched_args}")
-
-@test.handle()
-async def handle_test3(bar: Match[int]):
+async def handle_test2(bar: Match[int]):
     if bar.available:
         await test.send(f"foo={bar.result}")
 
 @test.handle()
-async def handle_test4(qux: Query[bool] = AlconnaQuery("baz.qux", False)):
+async def handle_test3(qux: Query[bool] = AlconnaQuery("baz.qux", False)):
     if qux.available:
         await test.send(f"baz.qux={qux.result}")
 ```
@@ -220,7 +192,7 @@ group.extend(member.target for member in ats)
 | [飞书](https://github.com/nonebot/adapter-feishu)                   | adapters.feishu                      |
 | [GitHub](https://github.com/nonebot/adapter-github)                 | adapters.github                      |
 | [QQ bot](https://github.com/nonebot/adapter-qq)                     | adapters.qq                          |
-| [QQ 频道bot](https://github.com/nonebot/adapter-qq)                 | adapters.qqguild                     |
+| [QQ 频道 bot](https://github.com/nonebot/adapter-qq)                | adapters.qqguild                     |
 | [钉钉](https://github.com/nonebot/adapter-ding)                     | adapters.ding                        |
 | [Console](https://github.com/nonebot/adapter-console)               | adapters.console                     |
 | [开黑啦](https://github.com/Tian-que/nonebot-adapter-kaiheila)      | adapters.kook                        |
@@ -232,6 +204,7 @@ group.extend(member.target for member in ats)
 | [Villa](https://github.com/CMHopeSunshine/nonebot-adapter-villa)    | adapters.villa                       |
 | [Discord](https://github.com/nonebot/adapter-discord)               | adapters.discord                     |
 | [Red 协议](https://github.com/nonebot/adapter-red)                  | adapters.red                         |
+| [Satori 协议](https://github.com/nonebot/adapter-satori)            | adapters.satori                      |
 
 ## 条件控制
 
@@ -258,6 +231,7 @@ pip = Alconna(
 
 pip_cmd = on_alconna(pip)
 
+# 仅在命令为 `pip install pip` 时响应
 @pip_cmd.assign("install.pak", "pip")
 async def update(res: CommandResult):
     ...
@@ -267,7 +241,7 @@ async def update(res: CommandResult):
 async def list_(res: CommandResult):
     ...
 
-# 仅在命令为 `pip install` 时响应
+# 在命令为 `pip install xxx` 时响应
 @pip_cmd.assign("install")
 async def install(res: CommandResult):
     ...
@@ -279,28 +253,28 @@ async def install(res: CommandResult):
 update_cmd = pip_cmd.dispatch("install.pak", "pip")
 
 @update_cmd.handle()
-async def update(arp: CommandResult = AlconnaResult()):
+async def update(arp: CommandResult):
     ...
 ```
 
 另外，`AlconnaMatcher` 有类似于 `got` 的 `got_path`：
 
 ```python
-from nonebot_plugin_alconna import At, Match, UniMessage, AlconnaMatcher, on_alconna
+from nonebot_plugin_alconna import At, Match, UniMessage, on_alconna
 
 test_cmd = on_alconna(Alconna("test", Args["target?", Union[str, At]]))
 
 @test_cmd.handle()
-async def tt_h(matcher: AlconnaMatcher, target: Match[Union[str, At]]):
+async def tt_h(target: Match[Union[str, At]]):
     if target.available:
-        matcher.set_path_arg("target", target.result)
+        test_cmd.set_path_arg("target", target.result)
 
 @test_cmd.got_path("target", prompt="请输入目标")
 async def tt(target: Union[str, At]):
     await test_cmd.send(UniMessage(["ok\n", target]))
 ```
 
-`got_path` 与 `assign`, `Match`, `Query` 等地方一样，都需要指明 `path` 参数 (即对应 Arg 验证的路径)
+`got_path` 与 `assign`，`Match`，`Query` 等地方一样，都需要指明 `path` 参数 (即对应 Arg 验证的路径)
 
 `got_path` 会获取消息的最后一个消息段并转为 path 对应的类型，例如示例中 `target` 对应的 Arg 里要求 str 或 At，则 got 后用户输入的消息只有为 text 或 at 才能进入处理函数。
 
@@ -338,7 +312,7 @@ async def tt(target: Union[str, At]):
 例如 `LLMExtension` (仅举例)：
 
 ```python
-from nonebot_plugin_alconna import Extension, Alconna, on_alconna
+from nonebot_plugin_alconna import Extension, Alconna, on_alconna, Interface
 
 class LLMExtension(Extension):
     @property
@@ -359,6 +333,13 @@ class LLMExtension(Extension):
         resp = await self.llm.input(str(receive))
         return receive.__class__(resp.content)
 
+    def before_catch(self, name, annotation, default):
+        return name == "llm"
+
+    def catch(self, interface: Interface):
+        if interface.name == "llm":
+            return self.llm
+
 matcher = on_alconna(
     Alconna(...),
     extensions=[LLMExtension(LLM)]
@@ -366,20 +347,22 @@ matcher = on_alconna(
 ...
 ```
 
-那么使用了 `LLMExtension` 的响应器便能接受任何能通过 llm 翻译为具体命令的自然语言消息。
+那么使用了 `LLMExtension` 的响应器便能接受任何能通过 llm 翻译为具体命令的自然语言消息，同时可以在响应器中为所有 `llm` 参数注入模型变量
 
 目前 `Extension` 的功能有：
 
-- 对于事件的来源适配器或 bot 选择是否接受响应
-- 输出信息的自定义转换方法
-- 从传入事件中自定义提取消息的方法
-- 对于传入的alc对象的追加的自定义处理
-- 对传入的消息 (Message 或 UniMessage) 的额外处理
-- 对命令解析结果的额外处理
-- 对发送的消息 (Message 或 UniMessage) 的额外处理
-- 自定义额外的matcher api
+- `validate`: 对于事件的来源适配器或 bot 选择是否接受响应
+- `output_converter`: 输出信息的自定义转换方法
+- `message_provider`: 从传入事件中自定义提取消息的方法
+- `receive_provider`: 对传入的消息 (Message 或 UniMessage) 的额外处理
+- `permission_check`: 命令对消息解析并确认头部匹配（即确认选择响应）时对发送者的权限判断
+- `parse_wrapper`: 对命令解析结果的额外处理
+- `send_wrapper`: 对发送的消息 (Message 或 UniMessage) 的额外处理
+- `before_catch`: 自定义依赖注入的绑定确认函数
+- `catch`: 自定义依赖注入处理函数
+- `post_init`: 响应器创建后对命令对象的额外除了
 
-例如内置的 `DiscordSlashExtension`，其可自动将 Alconna 对象翻译成 slash指令并注册，且将收到的指令交互事件转为指令供命令解析:
+例如内置的 `DiscordSlashExtension`，其可自动将 Alconna 对象翻译成 slash 指令并注册，且将收到的指令交互事件转为指令供命令解析:
 
 ```python
 from nonebot_plugin_alconna import Match, on_alconna
@@ -404,3 +387,9 @@ async def add(plugin: Match[str], priority: Match[int]):
 async def remove(plugin: Match[str], time: Match[int]):
     await matcher.finish(f"removed {plugin.result} with {time.result if time.available else -1}")
 ```
+
+:::tip
+
+全局的 Extension 可延迟加载 (即若有全局拓展加载于部分 AlconnaMatcher 之后，这部分响应器会被追加拓展)
+
+:::

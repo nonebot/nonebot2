@@ -7,7 +7,7 @@ description: 杂项
 
 ## 特殊装饰器
 
-`nonebot_plugin_alconna` 提供 了一个 `funcommand` 装饰器, 其用于将一个接受任意参数，
+`nonebot_plugin_alconna` 提供 了一个 `funcommand` 装饰器，其用于将一个接受任意参数，
 返回 `str` 或 `Message` 或 `MessageSegment` 的函数转换为命令响应器。
 
 ```python

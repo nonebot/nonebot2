@@ -5,11 +5,14 @@ description: Alconna 命令解析拓展
 slug: /best-practice/alconna/
 ---
 
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
 # Alconna 插件
 
 [`nonebot-plugin-alconna`](https://github.com/nonebot/plugin-alconna) 是一类提供了拓展响应规则的插件。
 该插件使用 [Alconna](https://github.com/ArcletProject/Alconna) 作为命令解析器，
-是一个简单、灵活、高效的命令参数解析器, 并且不局限于解析命令式字符串。
+是一个简单、灵活、高效的命令参数解析器，并且不局限于解析命令式字符串。
 
 该插件提供了一类新的事件响应器辅助函数 `on_alconna`，以及 `AlconnaResult` 等依赖注入函数。
 
@@ -31,15 +34,30 @@ slug: /best-practice/alconna/
 
 在**项目目录**下执行以下命令：
 
+<Tabs groupId="install">
+<TabItem value="cli" label="使用 nb-cli">
+
 ```shell
 nb plugin install nonebot-plugin-alconna
 ```
 
-或
+</TabItem>
+<TabItem value="pip" label="使用 pip">
 
 ```shell
 pip install nonebot-plugin-alconna
 ```
+
+</TabItem>
+
+<TabItem value="pdm" label="使用 pdm">
+
+```shell
+pdm add nonebot-plugin-alconna
+```
+
+</TabItem>
+</Tabs>
 
 ## 导入插件
 
@@ -87,7 +105,7 @@ async def got_location(location: str = ArgPlainText()):
 ```python {5-10,14-16,18-19}
 from nonebot.rule import to_me
 from arclet.alconna import Alconna, Args
-from nonebot_plugin_alconna import Match, AlconnaMatcher, on_alconna
+from nonebot_plugin_alconna import Match, on_alconna
 
 weather = on_alconna(
     Alconna("天气", Args["location?", str]),
@@ -98,9 +116,9 @@ weather.shortcut("天气预报", {"command": "天气"})
 
 
 @weather.handle()
-async def handle_function(matcher: AlconnaMatcher, location: Match[str]):
+async def handle_function(location: Match[str]):
     if location.available:
-        matcher.set_path_arg("location", location.result)
+        weather.set_path_arg("location", location.result)
 
 @weather.got_path("location", prompt="请输入地名")
 async def got_location(location: str):
