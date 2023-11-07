@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 📝 文档
+
+- Docs: 更新最佳实践的 Alconna 部分 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2443](https://github.com/nonebot/nonebot2/pull/2443))
+
 ### 🍻 插件发布
 
 - Plugin: nonebot-plugin-bertvits2 [@noneflow](https://github.com/noneflow) ([#2446](https://github.com/nonebot/nonebot2/pull/2446))
