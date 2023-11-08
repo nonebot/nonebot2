@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Docs: 更新最佳实践的 Alconna 部分 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2443](https://github.com/nonebot/nonebot2/pull/2443))
 
+### 💫 杂项
+
+- CI: 测试矩阵添加 Python 3.12 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2441](https://github.com/nonebot/nonebot2/pull/2441))
+
 ### 🍻 插件发布
 
 - Plugin: nonebot-plugin-bertvits2 [@noneflow](https://github.com/noneflow) ([#2446](https://github.com/nonebot/nonebot2/pull/2446))
