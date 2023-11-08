@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 局域网唤醒 [@noneflow](https://github.com/noneflow) ([#2449](https://github.com/nonebot/nonebot2/pull/2449))
 - Plugin: nonebot-plugin-bertvits2 [@noneflow](https://github.com/noneflow) ([#2446](https://github.com/nonebot/nonebot2/pull/2446))
 - Plugin: Nonebot2 Any 多平台服务 [@noneflow](https://github.com/noneflow) ([#2442](https://github.com/nonebot/nonebot2/pull/2442))
 
