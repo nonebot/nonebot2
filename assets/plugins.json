@@ -5303,5 +5303,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bingimagecreator",
+    "project_link": "nonebot-plugin-bingimagecreator",
+    "author": "Alpaca4610",
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      },
+      {
+        "label": "绘图",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
