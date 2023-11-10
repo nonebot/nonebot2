@@ -122,7 +122,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
   |        Red （[仓库](https://github.com/nonebot/adapter-red)，[协议](https://chrononeko.github.io/QQNTRedProtocol/)）         |  ✅  |                                  QQ 协议                                  |
   |               Satori（[仓库](https://github.com/nonebot/adapter-satori)，[协议](https://satori.js.org/zh-CN)）               |  ✅  |               支持 Onebot、TG、飞书、微信公众号、Koishi 等                |
   |      Discord （[仓库](https://github.com/nonebot/adapter-discord)，[协议](https://discord.com/developers/docs/intro)）       |  ✅  |                             Discord Bot 协议                              |
-  | DoDo （[仓库](https://github.com/nonebot/adapter-dodo)，[协议](https://open.imdodo.com/)） | ✅ | DoDo Bot 协议 |
+  |                  DoDo （[仓库](https://github.com/nonebot/adapter-dodo)，[协议](https://open.imdodo.com/)）                  |  ✅  |                               DoDo Bot 协议                               |
   |        开黑啦（[仓库](https://github.com/Tian-que/nonebot-adapter-kaiheila)，[协议](https://developer.kookapp.cn/)）         |  ↗️  |                                由社区贡献                                 |
   |    Mirai（[仓库](https://github.com/ieew/nonebot_adapter_mirai2)，[协议](https://docs.mirai.mamoe.net/mirai-api-http/)）     |  ↗️  |                            QQ 协议，由社区贡献                            |
   |                              Ntchat（[仓库](https://github.com/JustUndertaker/adapter-ntchat)）                              |  ↗️  |                           微信协议，由社区贡献                            |
