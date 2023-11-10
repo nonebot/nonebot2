@@ -203,5 +203,15 @@
       }
     ],
     "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.dodo",
+    "project_link": "nonebot-adapter-dodo",
+    "name": "DoDo",
+    "desc": "DoDo Bot 协议适配器",
+    "author": "CMHopeSunshine",
+    "homepage": "https://github.com/nonebot/adapter-dodo",
+    "tags": [],
+    "is_official": false
   }
 ]
