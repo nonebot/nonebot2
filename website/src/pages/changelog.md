@@ -26,6 +26,10 @@ toc_max_heading_level: 2
 
 - Bot: Sakiko [@noneflow](https://github.com/noneflow) ([#2439](https://github.com/nonebot/nonebot2/pull/2439))
 
+### 🍻 适配器发布
+
+- Adapter: DoDo [@noneflow](https://github.com/noneflow) ([#2456](https://github.com/nonebot/nonebot2/pull/2456))
+
 ## v2.1.2
 
 ### 🚀 新功能
