@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修改 QQ 频道为 QQ [@bingqiu456](https://github.com/bingqiu456) ([#2457](https://github.com/nonebot/nonebot2/pull/2457))
 - Docs: 更新最佳实践的 Alconna 部分 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2443](https://github.com/nonebot/nonebot2/pull/2443))
 
 ### 💫 杂项
