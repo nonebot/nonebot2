@@ -120,11 +120,11 @@ function HomeFeatures(): JSX.Element {
             "import nonebot",
             "# OneBot",
             "from nonebot.adapters.onebot.v11 import Adapter as OneBotAdapter",
-            "# QQ 频道",
-            "from nonebot.adapters.qqguild import Adapter as QQGuildAdapter",
+            "# QQ 机器人",
+            "from nonebot.adapters.qq import Adapter as QQAdapter",
             "driver = nonebot.get_driver()",
             "driver.register_adapter(OneBotAdapter)",
-            "driver.register_adapter(QQGuildAdapter)",
+            "driver.register_adapter(QQAdapter)",
           ].join("\n")}
         </CodeBlock>
       </HomeFeatureDoubleColumn>
