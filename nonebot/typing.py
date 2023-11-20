@@ -94,7 +94,7 @@ T_EventPreProcessor: TypeAlias = _DependentCallable[Any]
 - DefaultParam: 带有默认值的参数
 """
 T_EventPostProcessor: TypeAlias = _DependentCallable[Any]
-"""事件预处理函数 EventPostProcessor 类型
+"""事件后处理函数 EventPostProcessor 类型
 
 依赖参数:
 
