@@ -59,17 +59,15 @@ export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
             onClick={() => delTag(index)}
           />
         ))}
-        <span
-          className={clsx(
-            "add-btn",
-            { "add-btn-disabled": !validateTag() },
-            { hidden: tags.length >= 3 }
-          )}
-          onClick={() => newTag()}
-        >
-          <FontAwesomeIcon className="pr-1" icon={["fas", "plus"]} />
-          新建标签
-        </span>
+        {tags.length < 3 && (
+          <span
+            className={clsx("add-btn", { "add-btn-disabled": !validateTag() })}
+            onClick={() => newTag()}
+          >
+            <FontAwesomeIcon className="pr-1" icon={["fas", "plus"]} />
+            新建标签
+          </span>
+        )}
       </label>
       <div className="form-item-container">
         <span className="form-item form-item-title">标签类型</span>
