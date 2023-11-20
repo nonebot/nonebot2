@@ -75,12 +75,14 @@ export function Form({
       </div>
       <div className="flex justify-between">
         <button
-          className={clsx("form-btn-prev", { hidden: currentStep === 0 })}
+          className={clsx("form-btn form-btn-prev", {
+            hidden: currentStep === 0,
+          })}
           onClick={onPrev}
         >
           上一步
         </button>
-        <button className="form-btn-next" onClick={onNext}>
+        <button className="form-btn form-btn-next" onClick={onNext}>
           {currentStep === formItems.length - 1 ? "提交" : "下一步"}
         </button>
       </div>
@@ -117,7 +119,7 @@ export function FormItem({
       )}
       {type === "text" && !result[inputName] && (
         <label className="label">
-          <span className="form-label-error">请输入{labelText}</span>
+          <span className="form-label form-label-error">请输入{labelText}</span>
         </label>
       )}
       {type === "tag" && (

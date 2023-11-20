@@ -72,9 +72,9 @@ export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
         </span>
       </label>
       <div className="form-item-container">
-        <span className="form-item-title">标签类型</span>
+        <span className="form-item form-item-title">标签类型</span>
         <select
-          className="form-item-select"
+          className="form-item form-item-select"
           defaultValue=""
           onChange={onChangeLabelType}
         >
@@ -84,10 +84,10 @@ export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
         </select>
       </div>
       <div className="form-item-container">
-        <span className="form-item-title">标签名称</span>
+        <span className="form-item form-item-title">标签名称</span>
         <input
           type="text"
-          className="form-item-input"
+          className="form-item form-item-input"
           placeholder="请输入"
           onChange={onChangeLabel}
         />

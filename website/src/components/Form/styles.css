@@ -15,7 +15,7 @@
 }
 
 .form-label {
-  @apply text-xs
+  @apply text-xs;
 
   &-error {
     @apply text-error;
