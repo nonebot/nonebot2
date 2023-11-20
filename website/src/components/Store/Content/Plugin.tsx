@@ -170,7 +170,7 @@ export default function PluginPage(): JSX.Element {
       {isOpenModal && (
         <Modal
           className="not-prose"
-          title="创建适配器"
+          title="发布插件"
           setOpenModal={setIsOpenModal}
         >
           <PluginForm />

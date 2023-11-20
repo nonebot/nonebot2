@@ -173,7 +173,7 @@ export default function AdapterPage(): JSX.Element {
       {isOpenModal && (
         <Modal
           className="not-prose"
-          title="创建适配器"
+          title="发布适配器"
           setOpenModal={setIsOpenModal}
         >
           <AdapterForm />
