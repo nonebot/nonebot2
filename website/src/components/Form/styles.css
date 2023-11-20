@@ -1,5 +1,5 @@
 .form-btn {
-  @apply btn btn-sm btn-primary no-animation
+  @apply btn btn-sm btn-primary no-animation;
 
   &-prev {
     @apply mr-auto;
