@@ -50,7 +50,7 @@ export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
 
   return (
     <>
-      <label className="flex flex-wrap">
+      <label className="flex flex-wrap gap-x-1 gap-y-1">
         {tags.map((tag, index) => (
           <TagComponent
             key={index}
