@@ -2,7 +2,6 @@ import React, { useState } from "react";
 
 import clsx from "clsx";
 
-import "./styles.css";
 import TagFormItem from "./TagFormItem";
 
 export type FormItemData = {
@@ -33,10 +32,18 @@ export function Form({
     setResult({ ...result, [key]: value });
   };
 
+  const handleNextStep = () => {
+    const currentStepNames = formItems[currentStep].items.map(
+      (item) => item.inputName
+    );
+    if (currentStepNames.every((name) => result[name]))
+      setCurrentStep(currentStep + 1);
+    else return;
+  };
   const onPrev = () => currentStep > 0 && setCurrentStep(currentStep - 1);
   const onNext = () =>
     currentStep < formItems.length - 1
-      ? setCurrentStep(currentStep + 1)
+      ? handleNextStep()
       : handleSubmit(result);
 
   return (
@@ -59,6 +66,7 @@ export function Form({
               type={item.type}
               inputName={item.inputName}
               labelText={item.labelText}
+              result={result}
               setResult={setFormValue}
             />
           ))}
@@ -88,8 +96,10 @@ export function FormItem({
   type,
   inputName,
   labelText,
+  result,
   setResult,
 }: FormItemData & {
+  result: Record<string, string>;
   setResult: (key: string, value: string) => void;
 }): JSX.Element {
   return (
@@ -99,12 +109,20 @@ export function FormItem({
       </label>
       {type === "text" && (
         <input
+          value={result[inputName]}
           type="text"
           name={inputName}
           onChange={(e) => setResult(inputName, e.target.value)}
           placeholder="请输入"
-          className="input input-bordered w-full max-w-xs"
+          className={clsx("input input-bordered w-full max-w-xs", {
+            "input-error": !result[inputName],
+          })}
         />
+      )}
+      {type === "text" && !result[inputName] && (
+        <label className="label">
+          <span className="label-text-alt text-error">请输入{labelText}</span>
+        </label>
       )}
       {type === "tag" && (
         <TagFormItem
