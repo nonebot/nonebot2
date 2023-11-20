@@ -121,7 +121,7 @@ export function FormItem({
       )}
       {type === "text" && !result[inputName] && (
         <label className="label">
-          <span className="text-error">请输入{labelText}</span>
+          <span className="text-xs text-error">请输入{labelText}</span>
         </label>
       )}
       {type === "tag" && (

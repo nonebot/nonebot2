@@ -59,7 +59,7 @@ export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
         ))}
         <span
           className={clsx(
-            "px-2 h-9 select-none cursor-pointer min-w-[64px] rounded-full text-hero hover:bg-hero hover:bg-opacity-[.08]",
+            "px-2 select-none cursor-pointer min-w-[64px] rounded-full text-hero hover:bg-hero hover:bg-opacity-[.08]",
             "flex justify-center items-center border-dashed border-2 border-primary-600",
             { "pointer-events-none opacity-60": !validateTag() },
             { hidden: tags.length >= 3 }
