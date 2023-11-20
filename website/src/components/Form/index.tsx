@@ -54,7 +54,7 @@ export function Form({
         {formItems.map((item, index) => (
           <li
             key={index}
-            className={clsx("step", currentStep == index && "step-primary")}
+            className={clsx("step", currentStep === index && "step-primary")}
           >
             {item.name}
           </li>
