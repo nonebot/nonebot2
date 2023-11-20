@@ -2,6 +2,8 @@ import React from "react";
 
 import clsx from "clsx";
 
+import "./styles.css";
+
 import { pickTextColor } from "@/libs/color";
 import { Tag as TagType } from "@/types/tag";
 
@@ -16,10 +18,7 @@ export default function Tag({
 }): JSX.Element {
   return (
     <span
-      className={clsx(
-        "font-mono inline-flex px-3 rounded-full items-center align-middle mr-2",
-        className
-      )}
+      className={clsx("tag", className)}
       style={{
         backgroundColor: color,
         color: pickTextColor(color, "#fff", "#000"),

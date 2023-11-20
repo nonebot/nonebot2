@@ -5,6 +5,8 @@ import clsx from "clsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { ChromePicker, type ColorResult } from "react-color";
 
+import "./styles.css";
+
 import TagComponent from "@/components/Tag";
 import { Tag as TagType } from "@/types/tag";
 
@@ -59,9 +61,8 @@ export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
         ))}
         <span
           className={clsx(
-            "px-2 select-none cursor-pointer min-w-[64px] rounded-full text-hero hover:bg-hero hover:bg-opacity-[.08]",
-            "flex justify-center items-center border-dashed border-2 border-primary-600",
-            { "pointer-events-none opacity-60": !validateTag() },
+            "add-btn",
+            { "add-btn-disabled": !validateTag() },
             { hidden: tags.length >= 3 }
           )}
           onClick={() => newTag()}
@@ -70,10 +71,10 @@ export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
           新建标签
         </span>
       </label>
-      <div className="flex items-center mt-2">
-        <span className="basis-1/4 label-text">标签类型</span>
+      <div className="form-item-container">
+        <span className="form-item-title">标签类型</span>
         <select
-          className="basis-3/4 ml-auto select select-sm select-bordered"
+          className="form-item-select"
           defaultValue=""
           onChange={onChangeLabelType}
         >
@@ -82,11 +83,11 @@ export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
           <option value="t:">Topic</option>
         </select>
       </div>
-      <div className="flex items-center mt-2">
-        <span className="basis-1/4 label-text">标签名称</span>
+      <div className="form-item-container">
+        <span className="form-item-title">标签名称</span>
         <input
           type="text"
-          className="basis-3/4 ml-auto input input-sm input-bordered"
+          className="form-item-input"
           placeholder="请输入"
           onChange={onChangeLabel}
         />

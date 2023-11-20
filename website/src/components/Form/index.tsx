@@ -2,7 +2,9 @@ import React, { useState } from "react";
 
 import clsx from "clsx";
 
-import TagFormItem from "./TagFormItem";
+import "./styles.css";
+
+import TagFormItem from "./Items/Tag";
 
 export type FormItemData = {
   type: string;
@@ -73,18 +75,12 @@ export function Form({
       </div>
       <div className="flex justify-between">
         <button
-          className={clsx(
-            "mr-auto btn btn-sm btn-primary no-animation",
-            currentStep === 0 && "hidden"
-          )}
+          className={clsx("form-btn-prev", { hidden: currentStep === 0 })}
           onClick={onPrev}
         >
           上一步
         </button>
-        <button
-          className="ml-auto btn btn-sm btn-primary no-animation"
-          onClick={onNext}
-        >
+        <button className="form-btn-next" onClick={onNext}>
           {currentStep === formItems.length - 1 ? "提交" : "下一步"}
         </button>
       </div>
@@ -114,14 +110,14 @@ export function FormItem({
           name={inputName}
           onChange={(e) => setResult(inputName, e.target.value)}
           placeholder="请输入"
-          className={clsx("input input-bordered w-full max-w-xs", {
+          className={clsx("form-input", {
             "input-error": !result[inputName],
           })}
         />
       )}
       {type === "text" && !result[inputName] && (
         <label className="label">
-          <span className="text-xs text-error">请输入{labelText}</span>
+          <span className="form-label-error">请输入{labelText}</span>
         </label>
       )}
       {type === "tag" && (
