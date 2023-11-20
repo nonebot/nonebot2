@@ -60,7 +60,7 @@ export function Form({
           </li>
         ))}
       </ul>
-      <div className="form-control w-full max-w-xs min-h-[300px]">
+      <div className="form-control w-full min-h-[300px]">
         {children ||
           formItems[currentStep].items.map((item) => (
             <FormItem
