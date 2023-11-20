@@ -5,6 +5,8 @@ import { usePagination } from "react-use-pagination";
 
 import Admonition from "@theme/Admonition";
 
+import AdapterForm from "@/components/Form/Adapter";
+import Modal from "@/components/Modal";
 import Paginate from "@/components/Paginate";
 import ResourceCard from "@/components/Resource/Card";
 import Searcher from "@/components/Searcher";
@@ -21,6 +23,7 @@ export default function AdapterPage(): JSX.Element {
   const loading = adapters === null;
 
   const [error, setError] = useState<Error | null>(null);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const {
     filteredResources: filteredAdapters,
@@ -69,10 +72,7 @@ export default function AdapterPage(): JSX.Element {
     label: "发布适配器",
     icon: ["fas", "plus"],
     onClick: () => {
-      // TODO: open adapter release modal
-      window.open(
-        "https://github.com/nonebot/nonebot2/issues/new?template=adapter_publish.yml&title=Adapter%3A+%7Bname%7D&labels=Adapter"
-      );
+      setIsOpenModal(true);
     },
   };
 
@@ -170,6 +170,15 @@ export default function AdapterPage(): JSX.Element {
         nextEnabled={nextEnabled}
         previousEnabled={previousEnabled}
       />
+      {isOpenModal && (
+        <Modal
+          className="not-prose"
+          title="创建适配器"
+          setOpenModal={setIsOpenModal}
+        >
+          <AdapterForm />
+        </Modal>
+      )}
     </>
   );
 }

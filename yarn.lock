@@ -2307,6 +2307,14 @@
   resolved "https://registry.npmjs.org/@types/range-parser/-/range-parser-1.2.5.tgz#38bd1733ae299620771bd414837ade2e57757498"
   integrity sha512-xrO9OoVPqFuYyR/loIHjnbvvyRZREYKLjxV4+dY6v3FQR3stQ9ZxIGkaclF7YhI9hfjpuTbu14hZEy94qKLtOA==
 
+"@types/react-color@^3.0.10":
+  version "3.0.10"
+  resolved "https://registry.npmjs.org/@types/react-color/-/react-color-3.0.10.tgz#f869ab3a46938fb97a5c2ee568bc6469f82b14dd"
+  integrity sha512-6K5BAn3zyd8lW8UbckIAVeXGxR82Za9jyGD2DBEynsa7fKaguLDVtjfypzs7fgEV7bULgs7uhds8A8v1wABTvQ==
+  dependencies:
+    "@types/react" "*"
+    "@types/reactcss" "*"
+
 "@types/react-router-config@*", "@types/react-router-config@^5.0.6":
   version "5.0.8"
   resolved "https://registry.npmjs.org/@types/react-router-config/-/react-router-config-5.0.8.tgz#dd00654de4d79927570a4a8807c4a728feed59f3"
@@ -2341,6 +2349,13 @@
     "@types/prop-types" "*"
     "@types/scheduler" "*"
     csstype "^3.0.2"
+
+"@types/reactcss@*":
+  version "1.2.9"
+  resolved "https://registry.npmjs.org/@types/reactcss/-/reactcss-1.2.9.tgz#e3ddff5ee18c02e62cdef3588dd408203b275610"
+  integrity sha512-dN2TtynLIZaZZ4gQNK6WM0Nff8GWYCXKl1Kvsp59WgROtx03ixCwuC1UWdesgt2O1P5Qk+0+SIfsy3eiwblMEA==
+  dependencies:
+    "@types/react" "*"
 
 "@types/retry@0.12.0":
   version "0.12.0"

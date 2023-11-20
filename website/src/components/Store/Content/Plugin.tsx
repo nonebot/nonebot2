@@ -5,6 +5,8 @@ import { usePagination } from "react-use-pagination";
 
 import Admonition from "@theme/Admonition";
 
+import PluginForm from "@/components/Form/Plugin";
+import Modal from "@/components/Modal";
 import Paginate from "@/components/Paginate";
 import ResourceCard from "@/components/Resource/Card";
 import Searcher from "@/components/Searcher";
@@ -21,6 +23,7 @@ export default function PluginPage(): JSX.Element {
   const loading = plugins === null;
 
   const [error, setError] = useState<Error | null>(null);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
 
   const {
     filteredResources: filteredPlugins,
@@ -69,10 +72,7 @@ export default function PluginPage(): JSX.Element {
     label: "发布插件",
     icon: ["fas", "plus"],
     onClick: () => {
-      // TODO: open plugin release modal
-      window.open(
-        "https://github.com/nonebot/nonebot2/issues/new?template=plugin_publish.yml&title=Plugin%3A+%7Bname%7D&labels=Plugin"
-      );
+      setIsOpenModal(true);
     },
   };
 
@@ -167,6 +167,15 @@ export default function PluginPage(): JSX.Element {
         nextEnabled={nextEnabled}
         previousEnabled={previousEnabled}
       />
+      {isOpenModal && (
+        <Modal
+          className="not-prose"
+          title="创建适配器"
+          setOpenModal={setIsOpenModal}
+        >
+          <PluginForm />
+        </Modal>
+      )}
     </>
   );
 }
