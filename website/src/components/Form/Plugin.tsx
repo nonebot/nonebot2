@@ -23,7 +23,7 @@ export default function PluginForm(): JSX.Element {
         labels: "Plugin",
         projects: "",
         template: "plugin_publish.yml",
-        title: `Plugin: ${result.name}`,
+        title: `Plugin: ${result.pypi}`,
         ...result,
       })}`
     );
