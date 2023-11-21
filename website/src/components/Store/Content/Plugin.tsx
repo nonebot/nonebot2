@@ -9,6 +9,7 @@ import PluginForm from "@/components/Form/Plugin";
 import Modal from "@/components/Modal";
 import Paginate from "@/components/Paginate";
 import ResourceCard from "@/components/Resource/Card";
+import ResourceDetailCard from "@/components/Resource/DetailCard";
 import Searcher from "@/components/Searcher";
 import StoreToolbar, { type Action } from "@/components/Store/Toolbar";
 import { authorFilter, tagFilter } from "@/libs/filter";
@@ -24,6 +25,8 @@ export default function PluginPage(): JSX.Element {
 
   const [error, setError] = useState<Error | null>(null);
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [isOpenCardModal, setIsOpenCardModal] = useState<boolean>(false);
+  const [clickedPlugin, setClickedPlugin] = useState<Plugin | null>(null);
 
   const {
     filteredResources: filteredPlugins,
@@ -77,8 +80,8 @@ export default function PluginPage(): JSX.Element {
   };
 
   const onCardClick = useCallback((plugin: Plugin) => {
-    // TODO: open plugin modal
-    console.log(plugin, "clicked");
+    setClickedPlugin(plugin);
+    setIsOpenCardModal(true);
   }, []);
 
   const onCardTagClick = useCallback(
@@ -174,6 +177,17 @@ export default function PluginPage(): JSX.Element {
           setOpenModal={setIsOpenModal}
         >
           <PluginForm />
+        </Modal>
+      )}
+      {isOpenCardModal && (
+        <Modal
+          className="not-prose"
+          useCustomTitle
+          backdropExit
+          title="适配器详情"
+          setOpenModal={setIsOpenCardModal}
+        >
+          {clickedPlugin && <ResourceDetailCard resource={clickedPlugin} />}
         </Modal>
       )}
     </>
