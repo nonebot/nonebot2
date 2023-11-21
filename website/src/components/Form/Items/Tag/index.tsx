@@ -16,7 +16,6 @@ export type Props = {
 
 export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
   const [tags, setTags] = useState<TagType[]>([]);
-  const [labelType, setLabelType] = useState<string>("");
   const [label, setLabel] = useState<TagType["label"]>("");
   const [color, setColor] = useState<TagType["color"]>("#ea5252");
 
@@ -30,7 +29,7 @@ export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
       return;
     }
     if (validateTag()) {
-      const tag: TagType = { label: labelType + label, color };
+      const tag: TagType = { label: label, color };
       setTags([...tags, tag]);
     }
   };
@@ -43,9 +42,6 @@ export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
   };
   const onChangeColor = (color: ColorResult) => {
     setColor(color.hex as TagType["color"]);
-  };
-  const onChangeLabelType = (e: { target: { value: string } }) => {
-    setLabelType(e.target.value);
   };
 
   return (
@@ -69,18 +65,6 @@ export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
           </span>
         )}
       </label>
-      <div className="form-item-container">
-        <span className="form-item form-item-title">标签类型</span>
-        <select
-          className="form-item form-item-select"
-          defaultValue=""
-          onChange={onChangeLabelType}
-        >
-          <option value="">Other</option>
-          <option value="a:">Adapter</option>
-          <option value="t:">Topic</option>
-        </select>
-      </div>
       <div className="form-item-container">
         <span className="form-item form-item-title">标签名称</span>
         <input
