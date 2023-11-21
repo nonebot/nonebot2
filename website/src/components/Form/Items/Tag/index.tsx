@@ -99,7 +99,7 @@ export default function TagFormItem({
       <div className="form-item-container">
         <span className="form-item-title">标签颜色</span>
         <ChromePicker
-          className="my-4"
+          className="my-4 fix-input-color"
           color={color}
           disableAlpha={true}
           onChangeComplete={onChangeColor}
