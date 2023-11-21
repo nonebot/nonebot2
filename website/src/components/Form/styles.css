@@ -12,6 +12,10 @@
 
 .form-input {
   @apply input input-bordered w-full;
+
+  &-error {
+    @apply input-error;
+  }
 }
 
 .form-label {

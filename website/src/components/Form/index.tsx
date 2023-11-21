@@ -113,7 +113,7 @@ export function FormItem({
           onChange={(e) => setResult(inputName, e.target.value)}
           placeholder="请输入"
           className={clsx("form-input", {
-            "input-error": !result[inputName],
+            "form-input-error": !result[inputName],
           })}
         />
       )}
