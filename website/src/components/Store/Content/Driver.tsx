@@ -5,8 +5,10 @@ import { usePagination } from "react-use-pagination";
 
 import Admonition from "@theme/Admonition";
 
+import Modal from "@/components/Modal";
 import Paginate from "@/components/Paginate";
 import ResourceCard from "@/components/Resource/Card";
+import ResourceDetailCard from "@/components/Resource/DetailCard";
 import Searcher from "@/components/Searcher";
 import { authorFilter, tagFilter } from "@/libs/filter";
 import { useSearchControl } from "@/libs/search";
@@ -19,6 +21,8 @@ export default function DriverPage(): JSX.Element {
   const loading = drivers === null;
 
   const [error, setError] = useState<Error | null>(null);
+  const [isOpenCardModal, setIsOpenCardModal] = useState<boolean>(false);
+  const [clickedDriver, setClickedDriver] = useState<Driver | null>(null);
 
   const {
     filteredResources: filteredDrivers,
@@ -59,8 +63,8 @@ export default function DriverPage(): JSX.Element {
   }, []);
 
   const onCardClick = useCallback((driver: Driver) => {
-    // TODO: open driver modal
-    console.log(driver, "clicked");
+    setClickedDriver(driver);
+    setIsOpenCardModal(true);
   }, []);
 
   const onCardTagClick = useCallback(
@@ -146,6 +150,17 @@ export default function DriverPage(): JSX.Element {
         nextEnabled={nextEnabled}
         previousEnabled={previousEnabled}
       />
+      {isOpenCardModal && (
+        <Modal
+          className="not-prose"
+          useCustomTitle
+          backdropExit
+          title="适配器详情"
+          setOpenModal={setIsOpenCardModal}
+        >
+          {clickedDriver && <ResourceDetailCard resource={clickedDriver} />}
+        </Modal>
+      )}
     </>
   );
 }

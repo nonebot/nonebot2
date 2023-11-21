@@ -20,7 +20,11 @@
   }
 
   &-copy-button {
-    @apply ml-auto btn btn-sm lg:hidden;
+    @apply ml-auto btn btn-sm;
+
+    &-mobile {
+      @apply lg:hidden;
+    }
 
     &-desktop {
       @apply max-lg:hidden;
