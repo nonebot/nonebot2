@@ -25,6 +25,7 @@ export default function BotForm(): JSX.Element {
       items: [{ type: "tag", name: "tags", labelText: "标签" }],
     },
   ];
+
   const handleSubmit = (result: Record<string, string>) => {
     window.open(
       `https://github.com/nonebot/nonebot2/issues/new?${new URLSearchParams({
@@ -38,5 +39,5 @@ export default function BotForm(): JSX.Element {
     );
   };
 
-  return <Form formItems={formItems} handleSubmit={handleSubmit} />;
+  return <Form type="bot" formItems={formItems} handleSubmit={handleSubmit} />;
 }

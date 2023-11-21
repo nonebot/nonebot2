@@ -8,7 +8,7 @@
 }
 
 .form-item {
-  @apply basis-3/4 ml-auto;
+  @apply basis-3/4;
 
   &-title {
     @apply basis-1/4 label-text;

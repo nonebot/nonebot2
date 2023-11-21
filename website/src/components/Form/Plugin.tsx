@@ -29,5 +29,7 @@ export default function PluginForm(): JSX.Element {
     );
   };
 
-  return <Form formItems={formItems} handleSubmit={handleSubmit} />;
+  return (
+    <Form type="plugin" formItems={formItems} handleSubmit={handleSubmit} />
+  );
 }

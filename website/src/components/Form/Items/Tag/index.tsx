@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 
 import clsx from "clsx";
 
@@ -11,15 +11,24 @@ import TagComponent from "@/components/Tag";
 import { Tag as TagType } from "@/types/tag";
 
 export type Props = {
+  allowTags: TagType[];
   onTagUpdate: (tags: TagType[]) => void;
 };
 
-export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
+export default function TagFormItem({
+  allowTags,
+  onTagUpdate,
+}: Props): JSX.Element {
   const [tags, setTags] = useState<TagType[]>([]);
   const [label, setLabel] = useState<TagType["label"]>("");
   const [color, setColor] = useState<TagType["color"]>("#ea5252");
-
-  useEffect(() => onTagUpdate(tags), [onTagUpdate, tags]);
+  const slicedTags = Array.from(
+    new Set(
+      allowTags
+        .filter((tag) => tag.label.toLocaleLowerCase().includes(label))
+        .map((e) => e.label)
+    )
+  ).slice(0, 5);
 
   const validateTag = () => {
     return label.length >= 1 && label.length <= 10;
@@ -29,16 +38,14 @@ export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
       return;
     }
     if (validateTag()) {
-      const tag: TagType = { label: label, color };
+      const tag: TagType = { label, color };
       setTags([...tags, tag]);
+      onTagUpdate(tags);
     }
   };
   const delTag = (index: number) => {
     setTags(tags.filter((_, i) => i !== index));
-  };
-
-  const onChangeLabel = (e: { target: { value: string } }) => {
-    setLabel(e.target.value);
+    onTagUpdate(tags);
   };
   const onChangeColor = (color: ColorResult) => {
     setColor(color.hex as TagType["color"]);
@@ -66,20 +73,38 @@ export default function TagFormItem({ onTagUpdate }: Props): JSX.Element {
         )}
       </label>
       <div className="form-item-container">
-        <span className="form-item form-item-title">标签名称</span>
-        <input
-          type="text"
-          className="form-item form-item-input"
-          placeholder="请输入"
-          onChange={onChangeLabel}
+        <span className="form-item-title">标签名称</span>
+        <div className="dropdown dropdown-bottom w-full">
+          <input
+            type="text"
+            value={label}
+            className="form-item form-item-input"
+            placeholder="请输入"
+            onChange={(e) => setLabel(e.target.value)}
+          />
+          {slicedTags.length > 0 && (
+            <ul
+              tabIndex={0}
+              className="dropdown-content z-10 menu p-2 shadow bg-base-100 rounded-box w-52"
+            >
+              {slicedTags.map((tag) => (
+                <li key={tag}>
+                  <a onClick={() => setLabel(tag)}>{tag}</a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
+      </div>
+      <div className="form-item-container">
+        <span className="form-item-title">标签颜色</span>
+        <ChromePicker
+          className="my-4"
+          color={color}
+          disableAlpha={true}
+          onChangeComplete={onChangeColor}
         />
       </div>
-      <ChromePicker
-        className="my-4"
-        color={color}
-        disableAlpha={true}
-        onChangeComplete={onChangeColor}
-      />
     </>
   );
 }

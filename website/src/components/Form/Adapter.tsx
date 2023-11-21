@@ -45,5 +45,7 @@ export default function AdapterForm(): JSX.Element {
     );
   };
 
-  return <Form formItems={formItems} handleSubmit={handleSubmit} />;
+  return (
+    <Form type="adapter" formItems={formItems} handleSubmit={handleSubmit} />
+  );
 }

@@ -1,10 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import clsx from "clsx";
 
 import "./styles.css";
 
 import TagFormItem from "./Items/Tag";
+
+import { fetchRegistryData, Resource } from "@/libs/store";
+import { Tag as TagType } from "@/types/tag";
 
 export type FormItemData = {
   type: string;
@@ -19,17 +22,37 @@ export type FormItemGroup = {
 
 export type Props = {
   children?: React.ReactNode;
+  type: Resource["resourceType"];
   formItems: FormItemGroup[];
   handleSubmit: (result: Record<string, string>) => void;
 };
 
 export function Form({
+  type,
   children,
   formItems,
   handleSubmit,
 }: Props): JSX.Element {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [result, setResult] = useState<Record<string, string>>({});
+  const [allowTags, setAllowTags] = useState<TagType[]>([]);
+
+  // load tags asynchronously
+  useEffect(() => {
+    fetchRegistryData(type)
+      .then((data) =>
+        setAllowTags(
+          data
+            .filter((item) => item.tags.length > 0)
+            .map((ele) => ele.tags)
+            .flat()
+        )
+      )
+      .catch((e) => {
+        console.error(e);
+      });
+  }, [type]);
+
   const setFormValue = (key: string, value: string) => {
     setResult({ ...result, [key]: value });
   };
@@ -68,6 +91,7 @@ export function Form({
               type={item.type}
               name={item.name}
               labelText={item.labelText}
+              allowTags={allowTags}
               result={result}
               setResult={setFormValue}
             />
@@ -94,9 +118,11 @@ export function FormItem({
   type,
   name,
   labelText,
+  allowTags,
   result,
   setResult,
 }: FormItemData & {
+  allowTags: TagType[];
   result: Record<string, string>;
   setResult: (key: string, value: string) => void;
 }): JSX.Element {
@@ -107,7 +133,7 @@ export function FormItem({
       </label>
       {type === "text" && (
         <input
-          value={result[name]}
+          value={result[name] || ""}
           type="text"
           name={name}
           onChange={(e) => setResult(name, e.target.value)}
@@ -124,6 +150,7 @@ export function FormItem({
       )}
       {type === "tag" && (
         <TagFormItem
+          allowTags={allowTags}
           onTagUpdate={(tags) => setResult(name, JSON.stringify(tags))}
         />
       )}
