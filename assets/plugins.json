@@ -5319,5 +5319,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_user",
+    "project_link": "nonebot-plugin-user",
+    "author": "he0119",
+    "tags": [],
+    "is_official": false
   }
 ]
