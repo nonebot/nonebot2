@@ -9,20 +9,20 @@ export default function BotForm(): JSX.Element {
       items: [
         {
           type: "text",
-          inputName: "name",
+          name: "name",
           labelText: "机器人名称",
         },
-        { type: "text", inputName: "description", labelText: "机器人描述" },
+        { type: "text", name: "description", labelText: "机器人描述" },
         {
           type: "text",
-          inputName: "homepage",
+          name: "homepage",
           labelText: "机器人项目仓库/主页链接",
         },
       ],
     },
     {
       name: "其他信息",
-      items: [{ type: "tag", inputName: "tags", labelText: "标签" }],
+      items: [{ type: "tag", name: "tags", labelText: "标签" }],
     },
   ];
   const handleSubmit = (result: Record<string, string>) => {

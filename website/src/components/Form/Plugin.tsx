@@ -7,13 +7,13 @@ export default function PluginForm(): JSX.Element {
     {
       name: "包信息",
       items: [
-        { type: "text", inputName: "pypi", labelText: "PyPI 项目名" },
-        { type: "text", inputName: "module", labelText: "插件 import 包名" },
+        { type: "text", name: "pypi", labelText: "PyPI 项目名" },
+        { type: "text", name: "module", labelText: "插件 import 包名" },
       ],
     },
     {
       name: "其他信息",
-      items: [{ type: "tag", inputName: "tags", labelText: "标签" }],
+      items: [{ type: "tag", name: "tags", labelText: "标签" }],
     },
   ];
   const handleSubmit = (result: Record<string, string>) => {

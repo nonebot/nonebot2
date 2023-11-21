@@ -8,7 +8,7 @@ import TagFormItem from "./Items/Tag";
 
 export type FormItemData = {
   type: string;
-  inputName: string;
+  name: string;
   labelText: string;
 };
 
@@ -36,7 +36,7 @@ export function Form({
 
   const handleNextStep = () => {
     const currentStepNames = formItems[currentStep].items.map(
-      (item) => item.inputName
+      (item) => item.name
     );
     if (currentStepNames.every((name) => result[name]))
       setCurrentStep(currentStep + 1);
@@ -64,9 +64,9 @@ export function Form({
         {children ||
           formItems[currentStep].items.map((item) => (
             <FormItem
-              key={item.inputName}
+              key={item.name}
               type={item.type}
-              inputName={item.inputName}
+              name={item.name}
               labelText={item.labelText}
               result={result}
               setResult={setFormValue}
@@ -92,7 +92,7 @@ export function Form({
 
 export function FormItem({
   type,
-  inputName,
+  name,
   labelText,
   result,
   setResult,
@@ -107,24 +107,24 @@ export function FormItem({
       </label>
       {type === "text" && (
         <input
-          value={result[inputName]}
+          value={result[name]}
           type="text"
-          name={inputName}
-          onChange={(e) => setResult(inputName, e.target.value)}
+          name={name}
+          onChange={(e) => setResult(name, e.target.value)}
           placeholder="请输入"
           className={clsx("form-input", {
-            "form-input-error": !result[inputName],
+            "form-input-error": !result[name],
           })}
         />
       )}
-      {type === "text" && !result[inputName] && (
+      {type === "text" && !result[name] && (
         <label className="label">
           <span className="form-label form-label-error">请输入{labelText}</span>
         </label>
       )}
       {type === "tag" && (
         <TagFormItem
-          onTagUpdate={(tags) => setResult(inputName, JSON.stringify(tags))}
+          onTagUpdate={(tags) => setResult(name, JSON.stringify(tags))}
         />
       )}
     </>

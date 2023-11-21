@@ -9,13 +9,13 @@ export default function AdapterForm(): JSX.Element {
       items: [
         {
           type: "text",
-          inputName: "name",
+          name: "name",
           labelText: "适配器名称",
         },
-        { type: "text", inputName: "description", labelText: "适配器描述" },
+        { type: "text", name: "description", labelText: "适配器描述" },
         {
           type: "text",
-          inputName: "homepage",
+          name: "homepage",
           labelText: "适配器项目仓库/主页链接",
         },
       ],
@@ -23,13 +23,13 @@ export default function AdapterForm(): JSX.Element {
     {
       name: "包信息",
       items: [
-        { type: "text", inputName: "pypi", labelText: "PyPI 项目名" },
-        { type: "text", inputName: "module", labelText: "适配器 import 包名" },
+        { type: "text", name: "pypi", labelText: "PyPI 项目名" },
+        { type: "text", name: "module", labelText: "适配器 import 包名" },
       ],
     },
     {
       name: "其他信息",
-      items: [{ type: "tag", inputName: "tags", labelText: "标签" }],
+      items: [{ type: "tag", name: "tags", labelText: "标签" }],
     },
   ];
   const handleSubmit = (result: Record<string, string>) => {
