@@ -104,6 +104,12 @@ export default function ResourceDetailCard({ resource }: Props) {
         <div className="detail-card-body-divider" />
         <div className="detail-card-body-right">
           <div className="detail-card-meta-item">
+            <span>
+              <FontAwesomeIcon className="fa-fw" icon={["fab", "python"]} />{" "}
+              {(pypiData && pypiData.info.requires_python) || "无"}
+            </span>
+          </div>
+          <div className="detail-card-meta-item">
             <FontAwesomeIcon className="fa-fw" icon={["fas", "file-zipper"]} />{" "}
             {(pypiData &&
               pypiData.releases[pypiData.info.version] &&
