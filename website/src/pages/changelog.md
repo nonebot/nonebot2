@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 用户 [@noneflow](https://github.com/noneflow) ([#2463](https://github.com/nonebot/nonebot2/pull/2463))
 - Plugin: DALL-E 3绘图 [@noneflow](https://github.com/noneflow) ([#2452](https://github.com/nonebot/nonebot2/pull/2452))
 - Plugin: 局域网唤醒 [@noneflow](https://github.com/noneflow) ([#2449](https://github.com/nonebot/nonebot2/pull/2449))
 - Plugin: nonebot-plugin-bertvits2 [@noneflow](https://github.com/noneflow) ([#2446](https://github.com/nonebot/nonebot2/pull/2446))
