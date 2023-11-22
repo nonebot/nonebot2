@@ -31,17 +31,17 @@ export default function Modal({
   useEffect(onFadeIn, []);
 
   return (
-    <div className={clsx("modal-root", className)}>
+    <div className={clsx("nb-modal-root", className)}>
       <div
-        className={clsx("modal-backdrop", transitionClass)}
+        className={clsx("nb-modal-backdrop", transitionClass)}
         onTransitionEnd={onTransitionEnd}
         onClick={() => backdropExit && onFadeOut()}
       />
-      <div className={clsx("modal-container", transitionClass)}>
+      <div className={clsx("nb-modal-container", transitionClass)}>
         <div className="card bg-base-100 shadow-xl">
           <div className="card-body">
             {!useCustomTitle && (
-              <div className="modal-title">
+              <div className="nb-modal-title">
                 {title}
                 <div className="card-actions ml-auto">
                   <button className="btn btn-square btn-sm" onClick={onFadeOut}>

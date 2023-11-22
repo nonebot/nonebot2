@@ -1,4 +1,4 @@
-.modal {
+.nb-modal {
   &-title {
     @apply flex items-center font-bold;
   }
