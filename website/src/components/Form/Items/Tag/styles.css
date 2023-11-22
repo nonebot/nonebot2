@@ -1,0 +1,35 @@
+.add-btn {
+  @apply px-2 select-none cursor-pointer min-w-[64px] rounded-full hover:bg-opacity-[.08];
+  @apply flex justify-center items-center border-dashed border-2;
+
+  &-disabled {
+    @apply pointer-events-none opacity-60;
+  }
+}
+
+.form-item {
+  @apply basis-3/4;
+
+  &-title {
+    @apply basis-1/4 label-text;
+  }
+
+  &-input {
+    @apply input input-sm input-bordered;
+  }
+
+  &-select {
+    @apply select select-sm select-bordered;
+  }
+
+  &-container {
+    @apply flex items-center mt-2;
+  }
+}
+
+.fix-input-color {
+  @apply !text-base-content !bg-base-100;
+  input {
+    @apply !text-base-content !bg-base-100;
+  }
+}

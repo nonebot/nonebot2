@@ -1,0 +1,31 @@
+.form-btn {
+  @apply btn btn-sm btn-primary no-animation;
+
+  &-prev {
+    @apply mr-auto;
+  }
+
+  &-next {
+    @apply ml-auto;
+  }
+
+  &-hidden {
+    @apply hidden;
+  }
+}
+
+.form-input {
+  @apply input input-bordered w-full;
+
+  &-error {
+    @apply input-error;
+  }
+}
+
+.form-label {
+  @apply text-xs;
+
+  &-error {
+    @apply text-error;
+  }
+}

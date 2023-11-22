@@ -5,8 +5,11 @@ import { usePagination } from "react-use-pagination";
 
 import Admonition from "@theme/Admonition";
 
+import PluginForm from "@/components/Form/Plugin";
+import Modal from "@/components/Modal";
 import Paginate from "@/components/Paginate";
 import ResourceCard from "@/components/Resource/Card";
+import ResourceDetailCard from "@/components/Resource/DetailCard";
 import Searcher from "@/components/Searcher";
 import StoreToolbar, { type Action } from "@/components/Store/Toolbar";
 import { authorFilter, tagFilter } from "@/libs/filter";
@@ -21,6 +24,9 @@ export default function PluginPage(): JSX.Element {
   const loading = plugins === null;
 
   const [error, setError] = useState<Error | null>(null);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const [isOpenCardModal, setIsOpenCardModal] = useState<boolean>(false);
+  const [clickedPlugin, setClickedPlugin] = useState<Plugin | null>(null);
 
   const {
     filteredResources: filteredPlugins,
@@ -69,16 +75,13 @@ export default function PluginPage(): JSX.Element {
     label: "发布插件",
     icon: ["fas", "plus"],
     onClick: () => {
-      // TODO: open plugin release modal
-      window.open(
-        "https://github.com/nonebot/nonebot2/issues/new?template=plugin_publish.yml&title=Plugin%3A+%7Bname%7D&labels=Plugin"
-      );
+      setIsOpenModal(true);
     },
   };
 
   const onCardClick = useCallback((plugin: Plugin) => {
-    // TODO: open plugin modal
-    console.log(plugin, "clicked");
+    setClickedPlugin(plugin);
+    setIsOpenCardModal(true);
   }, []);
 
   const onCardTagClick = useCallback(
@@ -167,6 +170,26 @@ export default function PluginPage(): JSX.Element {
         nextEnabled={nextEnabled}
         previousEnabled={previousEnabled}
       />
+      {isOpenModal && (
+        <Modal
+          className="not-prose"
+          title="发布插件"
+          setOpenModal={setIsOpenModal}
+        >
+          <PluginForm />
+        </Modal>
+      )}
+      {isOpenCardModal && (
+        <Modal
+          className="not-prose"
+          useCustomTitle
+          backdropExit
+          title="插件详情"
+          setOpenModal={setIsOpenCardModal}
+        >
+          {clickedPlugin && <ResourceDetailCard resource={clickedPlugin} />}
+        </Modal>
+      )}
     </>
   );
 }

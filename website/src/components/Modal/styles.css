@@ -1,0 +1,36 @@
+.nb-modal {
+  &-title {
+    @apply flex items-center font-bold;
+  }
+
+  &-root {
+    @apply fixed z-[1300] inset-0 flex items-center justify-center;
+  }
+
+  &-container {
+    @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 min-w-[400px] lg:min-w-[600px];
+    @apply p-8 opacity-0;
+    @apply transition-opacity duration-[225ms] ease-in-out delay-0;
+
+    &.fade-in {
+      @apply opacity-100;
+    }
+
+    &.fade-out {
+      @apply opacity-0;
+    }
+  }
+
+  &-backdrop {
+    @apply fixed flex right-0 bottom-0 top-0 left-0 bg-transparent opacity-0;
+    @apply transition-all duration-[225ms] ease-in-out delay-0 -z-[1];
+
+    &.fade-in {
+      @apply opacity-100 bg-black/50;
+    }
+
+    &.fade-out {
+      @apply opacity-0 bg-transparent;
+    }
+  }
+}

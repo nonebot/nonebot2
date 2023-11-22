@@ -1,0 +1,3 @@
+.tag {
+  @apply font-mono inline-flex px-3 rounded-full items-center align-middle;
+}

@@ -1,0 +1,53 @@
+.detail-card {
+  &-header {
+    @apply flex items-center align-middle;
+  }
+
+  &-avatar {
+    @apply mr-3 w-12 h-12 rounded-full;
+  }
+
+  &-title {
+    @apply inline-flex flex-col h-12 justify-start;
+
+    &-main {
+      @apply font-bold;
+    }
+
+    &-sub {
+      @apply text-sm;
+    }
+  }
+
+  &-copy-button {
+    @apply ml-auto btn btn-sm;
+
+    &-mobile {
+      @apply lg:hidden;
+    }
+
+    &-desktop {
+      @apply max-lg:hidden;
+    }
+  }
+
+  &-body {
+    @apply flex flex-col w-full lg:flex-row;
+
+    &-left {
+      @apply flex flex-col min-h-[150px] lg:basis-3/4;
+    }
+
+    &-divider {
+      @apply divider lg:divider-horizontal;
+    }
+
+    &-right {
+      @apply flex flex-col justify-start gap-y-2 lg:basis-1/4;
+    }
+  }
+
+  &-meta-item {
+    @apply text-sm whitespace-nowrap;
+  }
+}
