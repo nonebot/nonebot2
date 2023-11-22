@@ -155,7 +155,7 @@ export default function DriverPage(): JSX.Element {
           className="not-prose"
           useCustomTitle
           backdropExit
-          title="适配器详情"
+          title="驱动器详情"
           setOpenModal={setIsOpenCardModal}
         >
           {clickedDriver && <ResourceDetailCard resource={clickedDriver} />}
