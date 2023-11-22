@@ -95,7 +95,7 @@ export default function ResourceDetailCard({ resource }: Props) {
       <div className="detail-card-body">
         <div className="detail-card-body-left">
           <span className="h-full">{resource.desc}</span>
-          <div className="mb-4">
+          <div className="resource-card-footer-tags mb-4">
             {resource.tags.map((tag, index) => (
               <Tag className="align-bottom" key={index} {...tag} />
             ))}
