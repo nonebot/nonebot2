@@ -8,6 +8,10 @@
   &-next {
     @apply ml-auto;
   }
+
+  &-hidden {
+    @apply hidden;
+  }
 }
 
 .form-input {

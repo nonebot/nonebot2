@@ -100,7 +100,7 @@ export function Form({
       <div className="flex justify-between">
         <button
           className={clsx("form-btn form-btn-prev", {
-            hidden: currentStep === 0,
+            "form-btn-hidden": currentStep === 0,
           })}
           onClick={onPrev}
         >
