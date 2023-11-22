@@ -10,7 +10,7 @@
   }
 
   &-hidden {
-    @apply hidden;
+    @apply !hidden;
   }
 }
 
