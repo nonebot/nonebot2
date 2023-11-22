@@ -105,12 +105,12 @@ export default function ResourceDetailCard({ resource }: Props) {
         <div className="detail-card-body-right">
           <div className="detail-card-meta-item">
             <span>
-              <FontAwesomeIcon className="fa-fw" icon={["fab", "python"]} />{" "}
+              <FontAwesomeIcon fixedWidth icon={["fab", "python"]} />{" "}
               {(pypiData && pypiData.info.requires_python) || "无"}
             </span>
           </div>
           <div className="detail-card-meta-item">
-            <FontAwesomeIcon className="fa-fw" icon={["fas", "file-zipper"]} />{" "}
+            <FontAwesomeIcon fixedWidth icon={["fas", "file-zipper"]} />{" "}
             {(pypiData &&
               pypiData.releases[pypiData.info.version] &&
               `${
@@ -131,17 +131,17 @@ export default function ResourceDetailCard({ resource }: Props) {
             </span>
           </div>
           <div className="detail-card-meta-item">
-            <FontAwesomeIcon className="fa-fw" icon={["fas", "tag"]} />{" "}
+            <FontAwesomeIcon fixedWidth icon={["fas", "tag"]} />{" "}
             {(pypiData && pypiData.info.version) || "无"}
           </div>
 
           <div className="detail-card-meta-item">
-            <FontAwesomeIcon className="fa-fw" icon={["fas", "fingerprint"]} />{" "}
+            <FontAwesomeIcon fixedWidth icon={["fas", "fingerprint"]} />{" "}
             <span>{moduleName}</span>
           </div>
 
           <div className="detail-card-meta-item">
-            <FontAwesomeIcon className="fa-fw" icon={["fas", "cubes"]} />{" "}
+            <FontAwesomeIcon fixedWidth icon={["fas", "cubes"]} />{" "}
             <span>{projectLink}</span>
           </div>
           <button
