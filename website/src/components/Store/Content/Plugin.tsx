@@ -184,7 +184,7 @@ export default function PluginPage(): JSX.Element {
           className="not-prose"
           useCustomTitle
           backdropExit
-          title="适配器详情"
+          title="插件详情"
           setOpenModal={setIsOpenCardModal}
         >
           {clickedPlugin && <ResourceDetailCard resource={clickedPlugin} />}
