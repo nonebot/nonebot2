@@ -5333,5 +5333,12 @@
     "author": "StarHeartHunt",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_filehost",
+    "project_link": "nonebot-plugin-filehost",
+    "author": "mnixry",
+    "tags": [],
+    "is_official": false
   }
 ]
