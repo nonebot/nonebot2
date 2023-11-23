@@ -5326,5 +5326,12 @@
     "author": "he0119",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_shorturl",
+    "project_link": "nonebot-plugin-shorturl",
+    "author": "StarHeartHunt",
+    "tags": [],
+    "is_official": false
   }
 ]
