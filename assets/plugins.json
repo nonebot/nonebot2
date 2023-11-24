@@ -5340,5 +5340,12 @@
     "author": "mnixry",
     "tags": [],
     "is_official": true
+  },
+  {
+    "module_name": "nonebot_plugin_smms",
+    "project_link": "nonebot-plugin-smms",
+    "author": "mobyw",
+    "tags": [],
+    "is_official": false
   }
 ]
