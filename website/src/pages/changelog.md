@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 文件托管支持 [@noneflow](https://github.com/noneflow) ([#2468](https://github.com/nonebot/nonebot2/pull/2468))
 - Plugin: 短链接服务支持 [@noneflow](https://github.com/noneflow) ([#2466](https://github.com/nonebot/nonebot2/pull/2466))
 - Plugin: 用户 [@noneflow](https://github.com/noneflow) ([#2463](https://github.com/nonebot/nonebot2/pull/2463))
 - Plugin: DALL-E 3绘图 [@noneflow](https://github.com/noneflow) ([#2452](https://github.com/nonebot/nonebot2/pull/2452))
