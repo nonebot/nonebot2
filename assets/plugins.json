@@ -3750,22 +3750,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_mixin",
-    "project_link": "nonebot-plugin-mixin",
-    "author": "NCBM",
-    "tags": [
-      {
-        "label": "dev",
-        "color": "#ea5252"
-      },
-      {
-        "label": "mixin",
-        "color": "#529fea"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_brainfuck",
     "project_link": "nonebot-plugin-brainfuck",
     "author": "campanulamediuml",
@@ -3935,18 +3919,6 @@
       {
         "label": "抽卡",
         "color": "#c852ea"
-      }
-    ],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_msgbuf",
-    "project_link": "nonebot-plugin-msgbuf",
-    "author": "NCBM",
-    "tags": [
-      {
-        "label": "dev",
-        "color": "#ea5252"
       }
     ],
     "is_official": false
