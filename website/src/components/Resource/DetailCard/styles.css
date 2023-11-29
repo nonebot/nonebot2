@@ -48,6 +48,6 @@
   }
 
   &-meta-item {
-    @apply text-sm whitespace-nowrap truncate;
+    @apply text-sm truncate;
   }
 }
