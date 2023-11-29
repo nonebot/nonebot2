@@ -338,20 +338,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_asoulcnki",
-    "project_link": "nonebot-plugin-asoulcnki",
-    "author": "MeetWq",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_petpet",
-    "project_link": "nonebot-plugin-petpet",
-    "author": "MeetWq",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_shindan",
     "project_link": "nonebot-plugin-shindan",
     "author": "MeetWq",
@@ -418,13 +404,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_logo",
-    "project_link": "nonebot-plugin-logo",
-    "author": "MeetWq",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_memes",
     "project_link": "nonebot-plugin-memes",
     "author": "MeetWq",
@@ -486,13 +465,6 @@
   {
     "module_name": "nonebot_plugin_remake",
     "project_link": "nonebot-plugin-remake",
-    "author": "MeetWq",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_caiyunai",
-    "project_link": "nonebot-plugin-caiyunai",
     "author": "MeetWq",
     "tags": [],
     "is_official": false
@@ -967,13 +939,6 @@
     "module_name": "nonebot_plugin_moyu",
     "project_link": "nonebot-plugin-moyu",
     "author": "A-kirami",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_imageutils",
-    "project_link": "nonebot-plugin-imageutils",
-    "author": "MeetWq",
     "tags": [],
     "is_official": false
   },
