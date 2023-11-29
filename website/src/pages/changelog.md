@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 移除不再维护的插件 [@NCBM](https://github.com/NCBM) ([#2472](https://github.com/nonebot/nonebot2/pull/2472))
 - Plugin: 移除不再维护的插件 [@MeetWq](https://github.com/MeetWq) ([#2471](https://github.com/nonebot/nonebot2/pull/2471))
 - CI: 测试矩阵添加 Python 3.12 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2441](https://github.com/nonebot/nonebot2/pull/2441))
 
