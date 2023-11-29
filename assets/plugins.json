@@ -135,18 +135,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_trpglogger",
-    "project_link": "nonebot-plugin-trpglogger",
-    "author": "j1g5awi",
-    "tags": [
-      {
-        "label": "TRPG",
-        "color": "#80070B"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_guess",
     "project_link": "nonebot-plugin-guess",
     "author": "ffreemt",
@@ -165,18 +153,6 @@
     "project_link": "nonebot-plugin-biliav",
     "author": "knva",
     "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_manager",
-    "project_link": "nonebot-plugin-manager",
-    "author": "j1g5awi",
-    "tags": [
-      {
-        "label": "PluginManager",
-        "color": "#80070B"
-      }
-    ],
     "is_official": false
   },
   {
