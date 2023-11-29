@@ -40,7 +40,7 @@ export default function Modal({
         onClick={() => backdropExit && onFadeOut()}
       />
       <div className={clsx("nb-modal-container", transitionClass)}>
-        <div className="card bg-base-100 shadow-xl">
+        <div className="card bg-base-100 shadow-xl max-w-2xl">
           <div className="card-body">
             {!useCustomTitle && (
               <div className="nb-modal-title">

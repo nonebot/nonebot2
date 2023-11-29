@@ -43,7 +43,6 @@ export default function ResourceCard({
         onClick && "resource-card-container-clickable",
         className
       )}
-      onClick={onClick}
     >
       <div className="resource-card-header">
         <div className="resource-card-header-title">
@@ -55,7 +54,7 @@ export default function ResourceCard({
             />
           )}
         </div>
-        <div className="resource-card-header-expand">
+        <div className="resource-card-header-expand" onClick={onClick}>
           <FontAwesomeIcon icon={["fas", "expand"]} />
         </div>
       </div>
