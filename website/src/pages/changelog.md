@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 商店详情卡片添加宽度限制与文本省略 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2473](https://github.com/nonebot/nonebot2/pull/2473))
 - Docs: 修复商店发布 上一步 按钮显示问题 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2464](https://github.com/nonebot/nonebot2/pull/2464))
 - Docs: 添加商店表单支持 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2460](https://github.com/nonebot/nonebot2/pull/2460))
 - Docs: 修复事件后处理函数类型 docstring 错误 [@lgc2333](https://github.com/lgc2333) ([#2459](https://github.com/nonebot/nonebot2/pull/2459))
