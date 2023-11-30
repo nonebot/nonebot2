@@ -3,10 +3,7 @@
     @apply flex flex-col gap-y-2 w-full min-h-[12rem] p-4;
     @apply transition-colors duration-500 bg-base-200;
     @apply border-2 border-base-200 rounded-lg;
-
-    &-clickable {
-      @apply cursor-pointer hover:border-primary;
-    }
+    @apply hover:border-primary;
   }
 
   &-header {
@@ -21,7 +18,7 @@
     }
 
     &-expand {
-      @apply flex-none fill-current;
+      @apply flex-none fill-current cursor-pointer;
     }
   }
 

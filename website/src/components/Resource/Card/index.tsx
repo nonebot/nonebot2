@@ -37,13 +37,7 @@ export default function ResourceCard({
   const authorAvatar = `${authorLink}.png?size=80`;
 
   return (
-    <div
-      className={clsx(
-        "resource-card-container",
-        onClick && "resource-card-container-clickable",
-        className
-      )}
-    >
+    <div className={clsx("resource-card-container", className)}>
       <div className="resource-card-header">
         <div className="resource-card-header-title">
           {resource.name}
