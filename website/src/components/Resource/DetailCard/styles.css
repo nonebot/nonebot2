@@ -35,7 +35,7 @@
     @apply flex flex-col w-full lg:flex-row;
 
     &-left {
-      @apply flex flex-col min-h-[150px] lg:basis-3/4;
+      @apply flex flex-col min-h-[150px] lg:basis-3/4 max-w-[65%];
     }
 
     &-divider {
@@ -43,11 +43,11 @@
     }
 
     &-right {
-      @apply flex flex-col justify-start gap-y-2 lg:basis-1/4;
+      @apply flex flex-col justify-start gap-y-2 lg:basis-1/4 max-w-[45%];
     }
   }
 
   &-meta-item {
-    @apply text-sm whitespace-nowrap;
+    @apply text-sm truncate;
   }
 }

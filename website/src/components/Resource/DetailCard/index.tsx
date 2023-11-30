@@ -80,7 +80,7 @@ export default function ResourceDetailCard({ resource }: Props) {
           src={authorAvatar}
           className="detail-card-avatar"
           decoding="async"
-        ></img>
+        />
         <div className="detail-card-title">
           <span className="detail-card-title-main">{resource.name}</span>
           <span className="detail-card-title-sub">{resource.author}</span>
@@ -123,10 +123,7 @@ export default function ResourceDetailCard({ resource }: Props) {
           </div>
           <div className="detail-card-meta-item">
             <span>
-              <FontAwesomeIcon
-                className="fa-fw"
-                icon={["fas", "scale-balanced"]}
-              />{" "}
+              <FontAwesomeIcon fixedWidth icon={["fas", "scale-balanced"]} />{" "}
               {(pypiData && pypiData.info.license) || "无"}
             </span>
           </div>

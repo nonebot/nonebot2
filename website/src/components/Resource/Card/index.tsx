@@ -37,14 +37,7 @@ export default function ResourceCard({
   const authorAvatar = `${authorLink}.png?size=80`;
 
   return (
-    <div
-      className={clsx(
-        "resource-card-container",
-        onClick && "resource-card-container-clickable",
-        className
-      )}
-      onClick={onClick}
-    >
+    <div className={clsx("resource-card-container", className)}>
       <div className="resource-card-header">
         <div className="resource-card-header-title">
           {resource.name}
@@ -55,7 +48,7 @@ export default function ResourceCard({
             />
           )}
         </div>
-        <div className="resource-card-header-expand">
+        <div className="resource-card-header-expand" onClick={onClick}>
           <FontAwesomeIcon icon={["fas", "expand"]} />
         </div>
       </div>
