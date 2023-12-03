@@ -25,6 +25,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 群聊 NSFW 图片检测 [@noneflow](https://github.com/noneflow) ([#2477](https://github.com/nonebot/nonebot2/pull/2477))
 - Plugin: sm.ms图床 [@noneflow](https://github.com/noneflow) ([#2470](https://github.com/nonebot/nonebot2/pull/2470))
 - Plugin: 文件托管支持 [@noneflow](https://github.com/noneflow) ([#2468](https://github.com/nonebot/nonebot2/pull/2468))
 - Plugin: 短链接服务支持 [@noneflow](https://github.com/noneflow) ([#2466](https://github.com/nonebot/nonebot2/pull/2466))
