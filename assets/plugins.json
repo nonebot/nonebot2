@@ -5260,5 +5260,12 @@
     "author": "mobyw",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nsfw",
+    "project_link": "nonebot-plugin-nsfw",
+    "author": "iyume",
+    "tags": [],
+    "is_official": false
   }
 ]
