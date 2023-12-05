@@ -18,18 +18,7 @@ FrontMatter:
 import asyncio
 from functools import wraps
 from typing_extensions import override
-from typing import (
-    Any,
-    Dict,
-    List,
-    Tuple,
-    Union,
-    TypeVar,
-    Callable,
-    Optional,
-    Coroutine,
-    cast,
-)
+from typing import Any, Dict, List, Tuple, Union, Optional, cast
 
 from pydantic import BaseSettings
 
@@ -56,8 +45,6 @@ except ModuleNotFoundError as e:  # pragma: no cover
         "Please install Quart first to use this driver. "
         "Install with pip: `pip install nonebot2[quart]`"
     ) from e
-
-_AsyncCallable = TypeVar("_AsyncCallable", bound=Callable[..., Coroutine])
 
 
 def catch_closed(func):
@@ -102,6 +89,8 @@ class Driver(BaseDriver, ASGIMixin):
         self._server_app = Quart(
             self.__class__.__qualname__, **self.quart_config.quart_extra
         )
+        self._server_app.before_serving(self._lifespan.startup)
+        self._server_app.after_serving(self._lifespan.shutdown)
 
     @property
     @override
@@ -149,16 +138,6 @@ class Driver(BaseDriver, ASGIMixin):
             endpoint=setup.name,
             view_func=_handle,
         )
-
-    @override
-    def on_startup(self, func: _AsyncCallable) -> _AsyncCallable:
-        """参考文档: [`Startup and Shutdown`](https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html)"""
-        return self.server_app.before_serving(func)  # type: ignore
-
-    @override
-    def on_shutdown(self, func: _AsyncCallable) -> _AsyncCallable:
-        """参考文档: [`Startup and Shutdown`](https://pgjones.gitlab.io/quart/how_to_guides/startup_shutdown.html)"""
-        return self.server_app.after_serving(func)  # type: ignore
 
     @override
     def run(

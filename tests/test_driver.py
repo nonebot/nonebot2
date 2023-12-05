@@ -9,7 +9,7 @@ from nonebot.adapters import Bot
 from nonebot.params import Depends
 from nonebot.dependencies import Dependent
 from nonebot.exception import WebSocketClosed
-from nonebot.drivers._lifespan import Lifespan
+from nonebot.internal.driver._lifespan import Lifespan
 from nonebot.drivers import (
     URL,
     Driver,

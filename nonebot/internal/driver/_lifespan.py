@@ -11,6 +11,7 @@ LIFESPAN_FUNC: TypeAlias = Union[SYNC_LIFESPAN_FUNC, ASYNC_LIFESPAN_FUNC]
 class Lifespan:
     def __init__(self) -> None:
         self._startup_funcs: List[LIFESPAN_FUNC] = []
+        self._ready_funcs: List[LIFESPAN_FUNC] = []
         self._shutdown_funcs: List[LIFESPAN_FUNC] = []
 
     def on_startup(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
@@ -19,6 +20,10 @@ class Lifespan:
 
     def on_shutdown(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
         self._shutdown_funcs.append(func)
+        return func
+
+    def _on_ready(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
+        self._ready_funcs.append(func)
         return func
 
     @staticmethod
@@ -34,6 +39,8 @@ class Lifespan:
     async def startup(self) -> None:
         if self._startup_funcs:
             await self._run_lifespan_func(self._startup_funcs)
+
+        await self._run_lifespan_func(self._ready_funcs)
 
     async def shutdown(self) -> None:
         if self._shutdown_funcs:
