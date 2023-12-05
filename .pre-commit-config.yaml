@@ -26,7 +26,7 @@ repos:
         stages: [commit]
 
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v4.0.0-alpha.3
+    rev: v3.0.3
     hooks:
       - id: prettier
         types_or: [javascript, jsx, ts, tsx, markdown, yaml, json]
