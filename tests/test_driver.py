@@ -25,34 +25,47 @@ from nonebot.drivers import (
 
 
 @pytest.mark.asyncio
-async def test_lifespan():
-    lifespan = Lifespan()
+async def test_lifespan(driver: Driver):
+    lifespan = driver._lifespan
 
     start_log = []
+    ready_log = []
     shutdown_log = []
 
-    @lifespan.on_startup
+    @driver.on_startup
     async def _startup1():
         assert start_log == []
         start_log.append(1)
 
-    @lifespan.on_startup
+    @driver.on_startup
     async def _startup2():
         assert start_log == [1]
         start_log.append(2)
 
-    @lifespan.on_shutdown
+    @lifespan.on_startup
+    def _ready1():
+        assert start_log == [1, 2]
+        assert ready_log == []
+        ready_log.append(1)
+
+    @lifespan.on_startup
+    def _ready2():
+        assert ready_log == [1]
+        ready_log.append(2)
+
+    @driver.on_shutdown
     async def _shutdown1():
         assert shutdown_log == []
         shutdown_log.append(1)
 
-    @lifespan.on_shutdown
+    @driver.on_shutdown
     async def _shutdown2():
         assert shutdown_log == [1]
         shutdown_log.append(2)
 
     async with lifespan:
         assert start_log == [1, 2]
+        assert ready_log == [1, 2]
 
     assert shutdown_log == [1, 2]
 

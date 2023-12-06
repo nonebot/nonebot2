@@ -40,7 +40,8 @@ class Lifespan:
         if self._startup_funcs:
             await self._run_lifespan_func(self._startup_funcs)
 
-        await self._run_lifespan_func(self._ready_funcs)
+        if self._ready_funcs:
+            await self._run_lifespan_func(self._ready_funcs)
 
     async def shutdown(self) -> None:
         if self._shutdown_funcs:
