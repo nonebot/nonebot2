@@ -35,9 +35,9 @@ def combine_driver(
 
     def type_(self: "CombinedDriver") -> str:
         return (
-            driver.type.__get__(self)
+            driver.type.__get__(self)  # type: ignore
             + "+"
-            + "+".join(x.type.__get__(self) for x in mixins)
+            + "+".join(x.type.__get__(self) for x in mixins)  # type: ignore
         )
 
     return type(
