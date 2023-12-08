@@ -5,6 +5,7 @@ from typing import Any, Set, Optional
 import pytest
 from nonebug import App
 
+from utils import FakeAdapter
 from nonebot.adapters import Bot
 from nonebot.params import Depends
 from nonebot.dependencies import Dependent
@@ -28,6 +29,8 @@ from nonebot.drivers import (
     "driver", [pytest.param("nonebot.drivers.none:Driver", id="none")], indirect=True
 )
 async def test_lifespan(driver: Driver):
+    adapter = FakeAdapter(driver)
+
     start_log = []
     ready_log = []
     shutdown_log = []
@@ -42,13 +45,13 @@ async def test_lifespan(driver: Driver):
         assert start_log == [1]
         start_log.append(2)
 
-    @driver._lifespan.on_ready
+    @adapter.on_ready
     def _ready1():
         assert start_log == [1, 2]
         assert ready_log == []
         ready_log.append(1)
 
-    @driver._lifespan.on_ready
+    @adapter.on_ready
     def _ready2():
         assert ready_log == [1]
         ready_log.append(2)
