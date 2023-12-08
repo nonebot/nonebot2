@@ -5279,5 +5279,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cnrail",
+    "project_link": "nonebot-plugin-cnrail",
+    "author": "lgc2333",
+    "tags": [],
+    "is_official": false
   }
 ]
