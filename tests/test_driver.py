@@ -9,6 +9,7 @@ from nonebot.adapters import Bot
 from nonebot.params import Depends
 from nonebot.dependencies import Dependent
 from nonebot.exception import WebSocketClosed
+from nonebot.internal.driver._lifespan import Lifespan
 from nonebot.drivers import (
     URL,
     Driver,
@@ -24,19 +25,19 @@ from nonebot.drivers import (
 
 
 @pytest.mark.asyncio
-async def test_lifespan(driver: Driver):
-    lifespan = driver._lifespan
+async def test_lifespan():
+    lifespan = Lifespan()
 
     start_log = []
     ready_log = []
     shutdown_log = []
 
-    @driver.on_startup
+    @lifespan.on_startup
     async def _startup1():
         assert start_log == []
         start_log.append(1)
 
-    @driver.on_startup
+    @lifespan.on_startup
     async def _startup2():
         assert start_log == [1]
         start_log.append(2)
@@ -52,12 +53,12 @@ async def test_lifespan(driver: Driver):
         assert ready_log == [1]
         ready_log.append(2)
 
-    @driver.on_shutdown
+    @lifespan.on_shutdown
     async def _shutdown1():
         assert shutdown_log == []
         shutdown_log.append(1)
 
-    @driver.on_shutdown
+    @lifespan.on_shutdown
     async def _shutdown2():
         assert shutdown_log == [1]
         shutdown_log.append(2)
