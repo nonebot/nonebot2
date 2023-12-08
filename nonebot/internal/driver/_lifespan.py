@@ -22,7 +22,7 @@ class Lifespan:
         self._shutdown_funcs.append(func)
         return func
 
-    def _on_ready(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
+    def on_ready(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
         self._ready_funcs.append(func)
         return func
 
