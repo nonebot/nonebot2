@@ -41,13 +41,13 @@ async def test_lifespan(driver: Driver):
         assert start_log == [1]
         start_log.append(2)
 
-    @lifespan.on_startup
+    @lifespan.on_ready
     def _ready1():
         assert start_log == [1, 2]
         assert ready_log == []
         ready_log.append(1)
 
-    @lifespan.on_startup
+    @lifespan.on_ready
     def _ready2():
         assert ready_log == [1]
         ready_log.append(2)
