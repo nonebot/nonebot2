@@ -5267,5 +5267,17 @@
     "author": "iyume",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_batarot",
+    "project_link": "nonebot-plugin-batarot",
+    "author": "Perseus037",
+    "tags": [
+      {
+        "label": "碧蓝档案",
+        "color": "#15a0df"
+      }
+    ],
+    "is_official": false
   }
 ]

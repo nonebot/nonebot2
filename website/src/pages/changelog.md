@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🐛 Bug 修复
+
+- Fix: 忽略 Pyright 对动态类创建的检查错误 [@yanyongyu](https://github.com/yanyongyu) ([#2486](https://github.com/nonebot/nonebot2/pull/2486))
+
 ### 📝 文档
 
 - Docs: 商店详情卡片添加宽度限制与文本省略 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2473](https://github.com/nonebot/nonebot2/pull/2473))
@@ -25,6 +29,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: ba塔罗牌，运势与魔法占卜！ [@noneflow](https://github.com/noneflow) ([#2481](https://github.com/nonebot/nonebot2/pull/2481))
 - Plugin: 群聊 NSFW 图片检测 [@noneflow](https://github.com/noneflow) ([#2477](https://github.com/nonebot/nonebot2/pull/2477))
 - Plugin: sm.ms图床 [@noneflow](https://github.com/noneflow) ([#2470](https://github.com/nonebot/nonebot2/pull/2470))
 - Plugin: 文件托管支持 [@noneflow](https://github.com/noneflow) ([#2468](https://github.com/nonebot/nonebot2/pull/2468))
