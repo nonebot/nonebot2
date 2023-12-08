@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🐛 Bug 修复
+
+- Fix: 忽略 Pyright 对动态类创建的检查错误 [@yanyongyu](https://github.com/yanyongyu) ([#2486](https://github.com/nonebot/nonebot2/pull/2486))
+
 ### 📝 文档
 
 - Docs: 商店详情卡片添加宽度限制与文本省略 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2473](https://github.com/nonebot/nonebot2/pull/2473))
