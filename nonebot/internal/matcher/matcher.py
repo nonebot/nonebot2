@@ -313,7 +313,7 @@ class Matcher(metaclass=MatcherMeta):
 
         matchers[priority].append(NewMatcher)
 
-        return NewMatcher
+        return NewMatcher  # type: ignore
 
     @classmethod
     def destroy(cls) -> None:
