@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 新增 `Lifespan._on_ready()` 供适配器使用 [@ProgramRipper](https://github.com/ProgramRipper) ([#2483](https://github.com/nonebot/nonebot2/pull/2483))
 - Fix: 忽略 Pyright 对动态类创建的检查错误 [@yanyongyu](https://github.com/yanyongyu) ([#2486](https://github.com/nonebot/nonebot2/pull/2486))
 
 ### 📝 文档
