@@ -2,7 +2,7 @@ import abc
 import asyncio
 from typing_extensions import TypeAlias
 from contextlib import AsyncExitStack, asynccontextmanager
-from typing import TYPE_CHECKING, Any, Set, Dict, Type, Callable, AsyncGenerator
+from typing import TYPE_CHECKING, Any, Set, Dict, Type, AsyncGenerator
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
@@ -16,6 +16,7 @@ from nonebot.typing import (
     T_BotDisconnectionHook,
 )
 
+from ._lifespan import LIFESPAN_FUNC, Lifespan
 from .model import Request, Response, WebSocket, HTTPServerSetup, WebSocketServerSetup
 
 if TYPE_CHECKING:
@@ -49,6 +50,7 @@ class Driver(abc.ABC):
         """全局配置对象"""
         self._bots: Dict[str, "Bot"] = {}
         self._bot_tasks: Set[asyncio.Task] = set()
+        self._lifespan = Lifespan()
 
     def __repr__(self) -> str:
         return (
@@ -100,15 +102,13 @@ class Driver(abc.ABC):
 
         self.on_shutdown(self._cleanup)
 
-    @abc.abstractmethod
-    def on_startup(self, func: Callable) -> Callable:
-        """注册一个在驱动器启动时执行的函数"""
-        raise NotImplementedError
+    def on_startup(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
+        """注册一个启动时执行的函数"""
+        return self._lifespan.on_startup(func)
 
-    @abc.abstractmethod
-    def on_shutdown(self, func: Callable) -> Callable:
-        """注册一个在驱动器停止时执行的函数"""
-        raise NotImplementedError
+    def on_shutdown(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
+        """注册一个停止时执行的函数"""
+        return self._lifespan.on_shutdown(func)
 
     @classmethod
     def on_bot_connect(cls, func: T_BotConnectionHook) -> T_BotConnectionHook:

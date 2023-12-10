@@ -5,11 +5,11 @@ from typing import Any, Set, Optional
 import pytest
 from nonebug import App
 
+from utils import FakeAdapter
 from nonebot.adapters import Bot
 from nonebot.params import Depends
 from nonebot.dependencies import Dependent
 from nonebot.exception import WebSocketClosed
-from nonebot.drivers._lifespan import Lifespan
 from nonebot.drivers import (
     URL,
     Driver,
@@ -25,34 +25,50 @@ from nonebot.drivers import (
 
 
 @pytest.mark.asyncio
-async def test_lifespan():
-    lifespan = Lifespan()
+@pytest.mark.parametrize(
+    "driver", [pytest.param("nonebot.drivers.none:Driver", id="none")], indirect=True
+)
+async def test_lifespan(driver: Driver):
+    adapter = FakeAdapter(driver)
 
     start_log = []
+    ready_log = []
     shutdown_log = []
 
-    @lifespan.on_startup
+    @driver.on_startup
     async def _startup1():
         assert start_log == []
         start_log.append(1)
 
-    @lifespan.on_startup
+    @driver.on_startup
     async def _startup2():
         assert start_log == [1]
         start_log.append(2)
 
-    @lifespan.on_shutdown
+    @adapter.on_ready
+    def _ready1():
+        assert start_log == [1, 2]
+        assert ready_log == []
+        ready_log.append(1)
+
+    @adapter.on_ready
+    def _ready2():
+        assert ready_log == [1]
+        ready_log.append(2)
+
+    @driver.on_shutdown
     async def _shutdown1():
         assert shutdown_log == []
         shutdown_log.append(1)
 
-    @lifespan.on_shutdown
+    @driver.on_shutdown
     async def _shutdown2():
         assert shutdown_log == [1]
         shutdown_log.append(2)
 
-    async with lifespan:
+    async with driver._lifespan:
         assert start_log == [1, 2]
+        assert ready_log == [1, 2]
 
     assert shutdown_log == [1, 2]
 

@@ -3,6 +3,7 @@ from contextlib import asynccontextmanager
 from typing import Any, Dict, AsyncGenerator
 
 from nonebot.config import Config
+from nonebot.internal.driver._lifespan import LIFESPAN_FUNC
 from nonebot.internal.driver import (
     Driver,
     Request,
@@ -96,6 +97,9 @@ class Adapter(abc.ABC):
             raise TypeError("Current driver does not support websocket client")
         async with self.driver.websocket(setup) as ws:
             yield ws
+
+    def on_ready(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
+        return self.driver._lifespan.on_ready(func)
 
     @abc.abstractmethod
     async def _call_api(self, bot: Bot, api: str, **data: Any) -> Any:

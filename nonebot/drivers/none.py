@@ -19,8 +19,6 @@ from nonebot.consts import WINDOWS
 from nonebot.config import Env, Config
 from nonebot.drivers import Driver as BaseDriver
 
-from ._lifespan import LIFESPAN_FUNC, Lifespan
-
 HANDLED_SIGNALS = (
     signal.SIGINT,  # Unix signal 2. Sent by Ctrl+C.
     signal.SIGTERM,  # Unix signal 15. Sent by `kill <pid>`.
@@ -34,8 +32,6 @@ class Driver(BaseDriver):
 
     def __init__(self, env: Env, config: Config):
         super().__init__(env, config)
-
-        self._lifespan = Lifespan()
 
         self.should_exit: asyncio.Event = asyncio.Event()
         self.force_exit: bool = False
@@ -51,16 +47,6 @@ class Driver(BaseDriver):
     def logger(self):
         """none driver 使用的 logger"""
         return logger
-
-    @override
-    def on_startup(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
-        """注册一个启动时执行的函数"""
-        return self._lifespan.on_startup(func)
-
-    @override
-    def on_shutdown(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
-        """注册一个停止时执行的函数"""
-        return self._lifespan.on_shutdown(func)
 
     @override
     def run(self, *args, **kwargs):

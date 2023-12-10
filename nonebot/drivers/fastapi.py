@@ -34,8 +34,6 @@ from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers import HTTPServerSetup, WebSocketServerSetup
 
-from ._lifespan import LIFESPAN_FUNC, Lifespan
-
 try:
     import uvicorn
     from fastapi.responses import Response
@@ -97,8 +95,6 @@ class Driver(BaseDriver, ASGIMixin):
 
         self.fastapi_config: Config = Config(**config.dict())
 
-        self._lifespan = Lifespan()
-
         self._server_app = FastAPI(
             lifespan=self._lifespan_manager,
             openapi_url=self.fastapi_config.fastapi_openapi_url,
@@ -154,14 +150,6 @@ class Driver(BaseDriver, ASGIMixin):
             _handle,
             name=setup.name,
         )
-
-    @override
-    def on_startup(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
-        return self._lifespan.on_startup(func)
-
-    @override
-    def on_shutdown(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
-        return self._lifespan.on_shutdown(func)
 
     @contextlib.asynccontextmanager
     async def _lifespan_manager(self, app: FastAPI):
