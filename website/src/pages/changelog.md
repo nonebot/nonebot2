@@ -9,7 +9,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
-- Fix: 新增 `Lifespan._on_ready()` 供适配器使用 [@ProgramRipper](https://github.com/ProgramRipper) ([#2483](https://github.com/nonebot/nonebot2/pull/2483))
+- Fix: 新增 `Lifespan.on_ready()` 供适配器使用 [@ProgramRipper](https://github.com/ProgramRipper) ([#2483](https://github.com/nonebot/nonebot2/pull/2483))
 - Fix: 忽略 Pyright 对动态类创建的检查错误 [@yanyongyu](https://github.com/yanyongyu) ([#2486](https://github.com/nonebot/nonebot2/pull/2486))
 
 ### 📝 文档
@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot_plugin_longtu [@noneflow](https://github.com/noneflow) ([#2490](https://github.com/nonebot/nonebot2/pull/2490))
 - Plugin: CNRail [@noneflow](https://github.com/noneflow) ([#2488](https://github.com/nonebot/nonebot2/pull/2488))
 - Plugin: ba塔罗牌，运势与魔法占卜！ [@noneflow](https://github.com/noneflow) ([#2481](https://github.com/nonebot/nonebot2/pull/2481))
 - Plugin: 群聊 NSFW 图片检测 [@noneflow](https://github.com/noneflow) ([#2477](https://github.com/nonebot/nonebot2/pull/2477))
