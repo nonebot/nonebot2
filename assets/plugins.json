@@ -5286,5 +5286,17 @@
     "author": "lgc2333",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_longtu",
+    "project_link": "nonebot-plugin-longtu",
+    "author": "Perseus037",
+    "tags": [
+      {
+        "label": "龙图",
+        "color": "#e1122d"
+      }
+    ],
+    "is_official": false
   }
 ]
