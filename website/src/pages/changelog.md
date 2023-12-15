@@ -23,6 +23,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 删除不维护的 `eitherchoice` 插件 [@lgc2333](https://github.com/lgc2333) ([#2491](https://github.com/nonebot/nonebot2/pull/2491))
 - Plugin: 移除不再维护的插件 [@j1g5awi](https://github.com/j1g5awi) ([#2474](https://github.com/nonebot/nonebot2/pull/2474))
 - Plugin: 移除不再维护的插件 [@NCBM](https://github.com/NCBM) ([#2472](https://github.com/nonebot/nonebot2/pull/2472))
 - Plugin: 移除不再维护的插件 [@MeetWq](https://github.com/MeetWq) ([#2471](https://github.com/nonebot/nonebot2/pull/2471))
