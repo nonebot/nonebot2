@@ -4295,8 +4295,8 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_splatoon3",
-    "project_link": "nonebot-plugin-splatoon3",
+    "module_name": "nonebot_plugin_splatoon3_schedule",
+    "project_link": "nonebot-plugin-splatoon3-schedule",
     "author": "Cypas",
     "tags": [
       {
