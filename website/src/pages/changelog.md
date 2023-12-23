@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Phigros查分器(Adapter-qq) [@noneflow](https://github.com/noneflow) ([#2497](https://github.com/nonebot/nonebot2/pull/2497))
 - Plugin: Riffusion [@noneflow](https://github.com/noneflow) ([#2493](https://github.com/nonebot/nonebot2/pull/2493))
 - Plugin: nonebot_plugin_longtu [@noneflow](https://github.com/noneflow) ([#2490](https://github.com/nonebot/nonebot2/pull/2490))
 - Plugin: CNRail [@noneflow](https://github.com/noneflow) ([#2488](https://github.com/nonebot/nonebot2/pull/2488))
