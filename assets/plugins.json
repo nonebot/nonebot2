@@ -5303,5 +5303,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_phigros_qq",
+    "project_link": "nonebot-plugin-phigros-qq",
+    "author": "XTxiaoting14332",
+    "tags": [
+      {
+        "label": "Phigros",
+        "color": "#b0339a"
+      }
+    ],
+    "is_official": false
   }
 ]
