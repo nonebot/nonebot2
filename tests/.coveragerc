@@ -12,7 +12,7 @@ exclude_lines =
   @(abc\.)?abstractmethod
   raise NotImplementedError
   warnings\.warn
-  \.\.\.
+  ^\.\.\.$
   pass
   if __name__ == .__main__.:
 
