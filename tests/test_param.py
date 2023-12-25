@@ -361,7 +361,9 @@ async def test_state(app: App):
         regex_str, allow_types=[StateParam, DependParam]
     ) as ctx:
         ctx.pass_params(state=fake_state)
-        ctx.should_return("[cq:test,arg=value]")
+        ctx.should_return(
+            ("[cq:test,arg=value]", "test", "arg=value", ("test", "arg=value"))
+        )
 
     async with app.test_dependent(
         regex_group, allow_types=[StateParam, DependParam]

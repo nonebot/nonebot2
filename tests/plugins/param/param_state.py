@@ -77,8 +77,13 @@ async def regex_matched(regex_matched: Match[str] = RegexMatched()) -> Match[str
     return regex_matched
 
 
-async def regex_str(regex_str: str = RegexStr()) -> str:
-    return regex_str
+async def regex_str(
+    entire: str = RegexStr(),
+    type_: str = RegexStr("type"),
+    second: str = RegexStr(2),
+    groups: Tuple[str, ...] = RegexStr(1, "arg"),
+) -> Tuple[str, str, str, Tuple[str, ...]]:
+    return entire, type_, second, groups
 
 
 async def startswith(startswith: str = Startswith()) -> str:
