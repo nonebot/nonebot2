@@ -5315,5 +5315,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_antimonkey",
+    "project_link": "nonebot-plugin-antimonkey",
+    "author": "phquathi",
+    "tags": [
+      {
+        "label": "猴子",
+        "color": "#ea5252"
+      },
+      {
+        "label": "群管",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
