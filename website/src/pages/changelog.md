@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 🍻 插件发布
+
+- Plugin: AntiMonkey [@noneflow](https://github.com/noneflow) ([#2501](https://github.com/nonebot/nonebot2/pull/2501))
+
 ## v2.1.3
 
 ### 🐛 Bug 修复
