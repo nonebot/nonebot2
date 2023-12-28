@@ -4228,6 +4228,13 @@
     "is_official": false
   },
   {
+    "module_name": "nonebot_plugin_eitherchoice",
+    "project_link": "nonebot-plugin-eitherchoice",
+    "author": "lgc2333",
+    "tags": [],
+    "is_official": false
+  },
+  {
     "module_name": "nonebot_plugin_poke",
     "project_link": "nonebot-plugin-poke",
     "author": "Agnes4m",
