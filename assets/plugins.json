@@ -5350,5 +5350,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_imagemaster",
+    "project_link": "nonebot-plugin-imagemaster",
+    "author": "phquathi",
+    "tags": [
+      {
+        "label": "修图",
+        "color": "#52d4ea"
+      }
+    ],
+    "is_official": false
   }
 ]
