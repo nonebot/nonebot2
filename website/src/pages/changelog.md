@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💫 杂项
+
+- Plugin: 恢复删除的插件 `nonebot-plugin-eitherchoice` [@lgc2333](https://github.com/lgc2333) ([#2502](https://github.com/nonebot/nonebot2/pull/2502))
+
 ### 🍻 插件发布
 
 - Plugin: AntiMonkey [@noneflow](https://github.com/noneflow) ([#2501](https://github.com/nonebot/nonebot2/pull/2501))
