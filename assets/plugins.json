@@ -5338,5 +5338,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_waiter",
+    "project_link": "nonebot-plugin-waiter",
+    "author": "RF-Tar-Railt",
+    "tags": [
+      {
+        "label": "waiter",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
