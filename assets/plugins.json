@@ -5362,5 +5362,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nikke",
+    "project_link": "nonebot-plugin-nikke",
+    "author": "Perseus037",
+    "tags": [
+      {
+        "label": "nikke",
+        "color": "#e111b7"
+      }
+    ],
+    "is_official": false
   }
 ]
