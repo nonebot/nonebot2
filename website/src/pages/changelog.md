@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-imagemaster [@noneflow](https://github.com/noneflow) ([#2504](https://github.com/nonebot/nonebot2/pull/2504))
 - Plugin: Waiter 插件 [@noneflow](https://github.com/noneflow) ([#2506](https://github.com/nonebot/nonebot2/pull/2506))
 - Plugin: AntiMonkey [@noneflow](https://github.com/noneflow) ([#2501](https://github.com/nonebot/nonebot2/pull/2501))
 
