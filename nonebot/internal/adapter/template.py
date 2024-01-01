@@ -1,5 +1,7 @@
 import functools
 from string import Formatter
+from _string import formatter_field_name_split  # type: ignore
+
 from typing_extensions import TypeAlias
 from typing import (
     TYPE_CHECKING,
@@ -23,13 +25,11 @@ from typing import (
 if TYPE_CHECKING:
     from .message import Message, MessageSegment
 
-    def formatter_field_name_split(
+    def formatter_field_name_split(  # noqa: F811
         field_name: str,
     ) -> Tuple[str, List[Tuple[bool, str]]]:
         ...
 
-else:
-    from _string import formatter_field_name_split
 
 TM = TypeVar("TM", bound="Message")
 TF = TypeVar("TF", str, "Message")
@@ -188,7 +188,7 @@ class MessageTemplate(Formatter, Generic[TF]):
 
     def get_field(
         self, field_name: str, args: Sequence[Any], kwargs: Mapping[str, Any]
-    ) -> Any:
+    ) -> Tuple[Any, Union[int, str]]:
         first, rest = formatter_field_name_split(field_name)
         obj = self.get_value(first, args, kwargs)
 
