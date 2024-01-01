@@ -44,17 +44,24 @@ class MessageTemplate(Formatter, Generic[TF]):
     参数:
         template: 模板
         factory: 消息类型工厂，默认为 `str`
+        private_getattr: 是否允许在模板中访问私有属性，默认为 `False`
     """
 
     @overload
     def __init__(
-        self: "MessageTemplate[str]", template: str, factory: Type[str] = str
+        self: "MessageTemplate[str]",
+        template: str,
+        factory: Type[str] = str,
+        private_getattr: bool = False,
     ) -> None:
         ...
 
     @overload
     def __init__(
-        self: "MessageTemplate[TM]", template: Union[str, TM], factory: Type[TM]
+        self: "MessageTemplate[TM]",
+        template: Union[str, TM],
+        factory: Type[TM],
+        private_getattr: bool = False,
     ) -> None:
         ...
 
@@ -62,11 +69,12 @@ class MessageTemplate(Formatter, Generic[TF]):
         self,
         template: Union[str, TM],
         factory: Union[Type[str], Type[TM]] = str,
+        private_getattr: bool = False,
     ) -> None:
         self.template: TF = template  # type: ignore
         self.factory: Type[TF] = factory  # type: ignore
         self.format_specs: Dict[str, FormatSpecFunc] = {}
-        self.private_getattr = False
+        self.private_getattr = private_getattr
 
     def __repr__(self) -> str:
         return f"MessageTemplate({self.template!r}, factory={self.factory!r})"

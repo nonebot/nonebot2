@@ -70,5 +70,7 @@ def test_malformed_template():
     with pytest.raises(ValueError, match="must not start with"):
         message = malformed_template.format(a=globals())
 
-    malformed_template.private_getattr = True
-    message = malformed_template.format(a=globals())
+    malformed_template = MessageTemplate(
+        "{a[__builtins__][__import__]}{b.__init__}", private_getattr=True
+    )
+    message = malformed_template.format(a=globals(), b="b")
