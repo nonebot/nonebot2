@@ -1,7 +1,5 @@
 import functools
 from string import Formatter
-from _string import formatter_field_name_split  # type: ignore
-
 from typing_extensions import TypeAlias
 from typing import (
     TYPE_CHECKING,
@@ -21,6 +19,8 @@ from typing import (
     cast,
     overload,
 )
+
+from _string import formatter_field_name_split  # type: ignore
 
 if TYPE_CHECKING:
     from .message import Message, MessageSegment
