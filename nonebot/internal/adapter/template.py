@@ -23,6 +23,13 @@ from typing import (
 if TYPE_CHECKING:
     from .message import Message, MessageSegment
 
+    def formatter_field_name_split(
+        field_name: str,
+    ) -> Tuple[str, List[Tuple[bool, str]]]:
+        ...
+else:
+    from _string import formatter_field_name_split
+
 TM = TypeVar("TM", bound="Message")
 TF = TypeVar("TF", str, "Message")
 
@@ -51,11 +58,14 @@ class MessageTemplate(Formatter, Generic[TF]):
         ...
 
     def __init__(
-        self, template: Union[str, TM], factory: Union[Type[str], Type[TM]] = str
+        self,
+        template: Union[str, TM],
+        factory: Union[Type[str], Type[TM]] = str,
     ) -> None:
         self.template: TF = template  # type: ignore
         self.factory: Type[TF] = factory  # type: ignore
         self.format_specs: Dict[str, FormatSpecFunc] = {}
+        self.private_getattr = False
 
     def __repr__(self) -> str:
         return f"MessageTemplate({self.template!r}, factory={self.factory!r})"
@@ -166,6 +176,19 @@ class MessageTemplate(Formatter, Generic[TF]):
                 results.append(formatted_text)
 
         return functools.reduce(self._add, results), auto_arg_index
+
+    def get_field(
+        self, field_name: str, args: Sequence[Any], kwargs: Mapping[str, Any]
+    ) -> Any:
+        first, rest = formatter_field_name_split(field_name)
+        obj = self.get_value(first, args, kwargs)
+
+        for is_attr, value in rest:
+            if not self.private_getattr and is_attr and value.startswith("_"):
+                raise ValueError("attribute name must not start with underscore")
+            obj = getattr(obj, value) if is_attr else obj[value]
+
+        return obj, first
 
     def format_field(self, value: Any, format_spec: str) -> Any:
         formatter: Optional[FormatSpecFunc] = self.format_specs.get(format_spec)
