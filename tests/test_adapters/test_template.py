@@ -1,6 +1,7 @@
+import pytest
+
 from nonebot.adapters import MessageTemplate
 from utils import FakeMessage, FakeMessageSegment, escape_text
-import pytest
 
 
 def test_template_basis():

@@ -27,6 +27,7 @@ if TYPE_CHECKING:
         field_name: str,
     ) -> Tuple[str, List[Tuple[bool, str]]]:
         ...
+
 else:
     from _string import formatter_field_name_split
 
