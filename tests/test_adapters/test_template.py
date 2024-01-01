@@ -63,11 +63,11 @@ def test_malformed_template():
     assert message.extract_plain_text() == "ab"
 
     malformed_template = FakeMessage.template("{a.__init__}")
-    with pytest.raises(ValueError, match="must not start with"):
+    with pytest.raises(ValueError, match="private attribute"):
         message = malformed_template.format(a="a")
 
     malformed_template = FakeMessage.template("{a[__builtins__]}")
-    with pytest.raises(ValueError, match="must not start with"):
+    with pytest.raises(ValueError, match="private attribute"):
         message = malformed_template.format(a=globals())
 
     malformed_template = MessageTemplate(
