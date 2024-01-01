@@ -185,7 +185,7 @@ class MessageTemplate(Formatter, Generic[TF]):
         obj = self.get_value(first, args, kwargs)
 
         for is_attr, value in rest:
-            if not self.private_getattr and is_attr and value.startswith("_"):
+            if not self.private_getattr and value.startswith("_"):
                 raise ValueError("attribute name must not start with underscore")
             obj = getattr(obj, value) if is_attr else obj[value]
 

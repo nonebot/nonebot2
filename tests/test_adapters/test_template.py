@@ -62,12 +62,13 @@ def test_malformed_template():
     message = positive_template.format(a="a", b="b")
     assert message.extract_plain_text() == "ab"
 
-    malformed_template = FakeMessage.template(
-        "{a.__init__}{b[__builtins__][__import__]}"
-    )
-
+    malformed_template = FakeMessage.template("{a.__init__}")
     with pytest.raises(ValueError, match="must not start with"):
-        message = malformed_template.format(a="a", b=globals())
+        message = malformed_template.format(a="a")
+
+    malformed_template = FakeMessage.template("{a[__builtins__]}")
+    with pytest.raises(ValueError, match="must not start with"):
+        message = malformed_template.format(a=globals())
 
     malformed_template.private_getattr = True
-    message = malformed_template.format(a="a", b=globals())
+    message = malformed_template.format(a=globals())
