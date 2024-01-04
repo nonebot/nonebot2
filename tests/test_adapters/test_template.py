@@ -1,3 +1,5 @@
+import pytest
+
 from nonebot.adapters import MessageTemplate
 from utils import FakeMessage, FakeMessageSegment, escape_text
 
@@ -15,12 +17,8 @@ def test_template_message():
     def custom(input: str) -> str:
         return f"{input}-custom!"
 
-    try:
+    with pytest.raises(ValueError, match="already exists"):
         template.add_format_spec(custom)
-    except ValueError:
-        pass
-    else:
-        raise AssertionError("Should raise ValueError")
 
     format_args = {
         "a": "custom",
@@ -57,3 +55,22 @@ def test_message_injection():
     message = template.format(name="[fake:image]")
 
     assert message.extract_plain_text() == escape_text("[fake:image]Is Bad")
+
+
+def test_malformed_template():
+    positive_template = FakeMessage.template("{a}{b}")
+    message = positive_template.format(a="a", b="b")
+    assert message.extract_plain_text() == "ab"
+
+    malformed_template = FakeMessage.template("{a.__init__}")
+    with pytest.raises(ValueError, match="private attribute"):
+        message = malformed_template.format(a="a")
+
+    malformed_template = FakeMessage.template("{a[__builtins__]}")
+    with pytest.raises(ValueError, match="private attribute"):
+        message = malformed_template.format(a=globals())
+
+    malformed_template = MessageTemplate(
+        "{a[__builtins__][__import__]}{b.__init__}", private_getattr=True
+    )
+    message = malformed_template.format(a=globals(), b="b")

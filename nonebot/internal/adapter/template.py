@@ -20,8 +20,16 @@ from typing import (
     overload,
 )
 
+from _string import formatter_field_name_split  # type: ignore
+
 if TYPE_CHECKING:
     from .message import Message, MessageSegment
+
+    def formatter_field_name_split(  # noqa: F811
+        field_name: str,
+    ) -> Tuple[str, List[Tuple[bool, str]]]:
+        ...
+
 
 TM = TypeVar("TM", bound="Message")
 TF = TypeVar("TF", str, "Message")
@@ -36,26 +44,37 @@ class MessageTemplate(Formatter, Generic[TF]):
     参数:
         template: 模板
         factory: 消息类型工厂，默认为 `str`
+        private_getattr: 是否允许在模板中访问私有属性，默认为 `False`
     """
 
     @overload
     def __init__(
-        self: "MessageTemplate[str]", template: str, factory: Type[str] = str
+        self: "MessageTemplate[str]",
+        template: str,
+        factory: Type[str] = str,
+        private_getattr: bool = False,
     ) -> None:
         ...
 
     @overload
     def __init__(
-        self: "MessageTemplate[TM]", template: Union[str, TM], factory: Type[TM]
+        self: "MessageTemplate[TM]",
+        template: Union[str, TM],
+        factory: Type[TM],
+        private_getattr: bool = False,
     ) -> None:
         ...
 
     def __init__(
-        self, template: Union[str, TM], factory: Union[Type[str], Type[TM]] = str
+        self,
+        template: Union[str, TM],
+        factory: Union[Type[str], Type[TM]] = str,
+        private_getattr: bool = False,
     ) -> None:
         self.template: TF = template  # type: ignore
         self.factory: Type[TF] = factory  # type: ignore
         self.format_specs: Dict[str, FormatSpecFunc] = {}
+        self.private_getattr = private_getattr
 
     def __repr__(self) -> str:
         return f"MessageTemplate({self.template!r}, factory={self.factory!r})"
@@ -166,6 +185,19 @@ class MessageTemplate(Formatter, Generic[TF]):
                 results.append(formatted_text)
 
         return functools.reduce(self._add, results), auto_arg_index
+
+    def get_field(
+        self, field_name: str, args: Sequence[Any], kwargs: Mapping[str, Any]
+    ) -> Tuple[Any, Union[int, str]]:
+        first, rest = formatter_field_name_split(field_name)
+        obj = self.get_value(first, args, kwargs)
+
+        for is_attr, value in rest:
+            if not self.private_getattr and value.startswith("_"):
+                raise ValueError("Cannot access private attribute")
+            obj = getattr(obj, value) if is_attr else obj[value]
+
+        return obj, first
 
     def format_field(self, value: Any, format_spec: str) -> Any:
         formatter: Optional[FormatSpecFunc] = self.format_specs.get(format_spec)
