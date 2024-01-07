@@ -5374,5 +5374,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mcpic",
+    "project_link": "nonebot-plugin-mcpic",
+    "author": "wlm3201",
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#3cb371"
+      },
+      {
+        "label": "MC",
+        "color": "#3cb371"
+      },
+      {
+        "label": "图片",
+        "color": "#3cb371"
+      }
+    ],
+    "is_official": false
   }
 ]
