@@ -5394,5 +5394,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_pingti",
+    "project_link": "nonebot-plugin-pingti",
+    "author": "lgc2333",
+    "tags": [],
+    "is_official": false
   }
 ]
