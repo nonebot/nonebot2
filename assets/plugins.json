@@ -5408,5 +5408,21 @@
     "author": "Pasumao",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_BiliMedalWall",
+    "project_link": "nonebot-plugin-BiliMedalWall",
+    "author": "Shadow403",
+    "tags": [
+      {
+        "label": "BiliBili",
+        "color": "#ea52e5"
+      },
+      {
+        "label": "粉丝牌",
+        "color": "#d2691e"
+      }
+    ],
+    "is_official": false
   }
 ]
