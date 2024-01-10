@@ -5401,5 +5401,12 @@
     "author": "lgc2333",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_wx4",
+    "project_link": "nonebot-plugin-wx4",
+    "author": "Pasumao",
+    "tags": [],
+    "is_official": false
   }
 ]
