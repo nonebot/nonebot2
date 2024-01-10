@@ -1,0 +1,26 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: NoneBot
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Yongyu
+    family-names: Yan
+    email: yyy@nonebot.dev
+  - name: NoneBot Team
+    email: contact@nonebot.dev
+    website: 'https://github.com/nonebot'
+repository-code: 'https://github.com/nonebot/nonebot2'
+url: 'https://nonebot.dev/'
+abstract: >-
+  NoneBot, an asynchronous multi-platform chatbot framework
+  written in Python
+keywords:
+  - nonebot
+  - chatbot
+  - pydantic
+license: MIT
