@@ -17,8 +17,8 @@ authors:
 repository-code: 'https://github.com/nonebot/nonebot2'
 url: 'https://nonebot.dev/'
 abstract: >-
-  NoneBot framework, an asynchronous multi-platform chatbot
-  framework written in Python
+  NoneBot, an asynchronous multi-platform chatbot framework
+  written in Python
 keywords:
   - nonebot
   - chatbot
