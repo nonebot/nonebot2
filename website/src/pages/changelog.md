@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Fix: `MessageTemplate` 禁止访问私有属性 [@mnixry](https://github.com/mnixry) ([#2509](https://github.com/nonebot/nonebot2/pull/2509))
 
+### 📝 文档
+
+- Docs: 添加 CITATION 文件 [@yanyongyu](https://github.com/yanyongyu) ([#2520](https://github.com/nonebot/nonebot2/pull/2520))
+
 ### 💫 杂项
 
 - Plugin: 恢复删除的插件 `nonebot-plugin-eitherchoice` [@lgc2333](https://github.com/lgc2333) ([#2502](https://github.com/nonebot/nonebot2/pull/2502))
