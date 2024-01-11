@@ -5,7 +5,18 @@ FrontMatter:
     description: nonebot.params 模块
 """
 
-from typing import Any, Dict, List, Match, Tuple, Union, Optional
+from typing import (
+    Any,
+    Dict,
+    List,
+    Match,
+    Tuple,
+    Union,
+    Literal,
+    Callable,
+    Optional,
+    overload,
+)
 
 from nonebot.typing import T_State
 from nonebot.matcher import Matcher
@@ -147,13 +158,37 @@ def RegexMatched() -> Match[str]:
     return Depends(_regex_matched, use_cache=False)
 
 
-def _regex_str(state: T_State) -> str:
-    return _regex_matched(state).group()
+def _regex_str(
+    groups: Tuple[Union[str, int], ...]
+) -> Callable[[T_State], Union[str, Tuple[Union[str, Any], ...], Any]]:
+    def _regex_str_dependency(
+        state: T_State,
+    ) -> Union[str, Tuple[Union[str, Any], ...], Any]:
+        return _regex_matched(state).group(*groups)
+
+    return _regex_str_dependency
 
 
-def RegexStr() -> str:
+@overload
+def RegexStr(__group: Literal[0] = 0) -> str:
+    ...
+
+
+@overload
+def RegexStr(__group: Union[str, int]) -> Union[str, Any]:
+    ...
+
+
+@overload
+def RegexStr(
+    __group1: Union[str, int], __group2: Union[str, int], *groups: Union[str, int]
+) -> Tuple[Union[str, Any], ...]:
+    ...
+
+
+def RegexStr(*groups: Union[str, int]) -> Union[str, Tuple[Union[str, Any], ...], Any]:
     """正则匹配结果文本"""
-    return Depends(_regex_str, use_cache=False)
+    return Depends(_regex_str(groups), use_cache=False)
 
 
 def _regex_group(state: T_State) -> Tuple[Any, ...]:
