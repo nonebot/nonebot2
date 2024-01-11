@@ -288,6 +288,7 @@ class BaseSettings(BaseModel):
         _env_file: Optional[DOTENV_TYPE] = ENV_FILE_SENTINEL,
         _env_file_encoding: Optional[str] = None,
         _env_nested_delimiter: Optional[str] = None,
+        _custom_sources: Optional[List[Type[BaseSettingsSource]]] = None,
         **values: Any,
     ) -> None:
         super().__init__(
@@ -296,6 +297,7 @@ class BaseSettings(BaseModel):
                 env_file=_env_file,
                 env_file_encoding=_env_file_encoding,
                 env_nested_delimiter=_env_nested_delimiter,
+                custom_sources=_custom_sources,
             )
         )
 
@@ -305,6 +307,7 @@ class BaseSettings(BaseModel):
         env_file: Optional[DOTENV_TYPE] = None,
         env_file_encoding: Optional[str] = None,
         env_nested_delimiter: Optional[str] = None,
+        custom_sources: Optional[List[Type[BaseSettingsSource]]] = None,
     ) -> Dict[str, Any]:
         init_settings = InitSettingsSource(self.__class__, init_kwargs=init_kwargs)
         env_settings = DotEnvSettingsSource(
@@ -313,7 +316,14 @@ class BaseSettings(BaseModel):
             env_file_encoding=env_file_encoding,
             env_nested_delimiter=env_nested_delimiter,
         )
-        return deep_update(env_settings(), init_settings())
+        custom_settings = [
+            custom_source(self.__class__) for custom_source in (custom_sources or [])
+        ]
+        return deep_update(
+            env_settings(),
+            *reversed([custom_setting() for custom_setting in custom_settings]),
+            init_settings(),
+        )
 
 
 class Env(BaseSettings):
@@ -431,6 +441,10 @@ class Config(BaseSettings):
 
 
 __autodoc__ = {
-    "CustomEnvSettings": False,
-    "BaseConfig": False,
+    "SettingsError": False,
+    "BaseSettingsSource": False,
+    "InitSettingsSource": False,
+    "DotEnvSettingsSource": False,
+    "SettingsConfig": False,
+    "BaseSettings": False,
 }
