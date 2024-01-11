@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 带参数的 `RegexStr()` [@ProgramRipper](https://github.com/ProgramRipper) ([#2499](https://github.com/nonebot/nonebot2/pull/2499))
+
 ### 🐛 Bug 修复
 
 - Fix: `MessageTemplate` 禁止访问私有属性 [@mnixry](https://github.com/mnixry) ([#2509](https://github.com/nonebot/nonebot2/pull/2509))
