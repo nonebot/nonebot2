@@ -154,6 +154,21 @@ class DotEnvSettingsSource(BaseSettingsSource):
                 dotenv_vars.update(self._read_env_file(env_path))
         return dotenv_vars
 
+    def _next_field(
+        self, field: Optional[ModelField], key: str
+    ) -> Optional[ModelField]:
+        if not field or is_union(get_origin(field.annotation)):
+            return None
+        elif (
+            field.annotation
+            and isinstance(
+                (fields := getattr(field.annotation, "__fields__", None)), dict
+            )
+            and (field := fields.get(key))
+        ):
+            return field
+        return None
+
     def _explode_env_vars(
         self,
         field: ModelField,
@@ -175,8 +190,23 @@ class DotEnvSettingsSource(BaseSettingsSource):
 
             _, *keys, last_key = env_name.split(self.env_nested_delimiter)
             env_var = result
+            target_field: Optional[ModelField] = field
             for key in keys:
+                target_field = self._next_field(target_field, key)
                 env_var = env_var.setdefault(key, {})
+
+            target_field = self._next_field(target_field, last_key)
+            if target_field and env_val:
+                is_complex, allow_parse_failure = self._field_is_complex(target_field)
+                if is_complex:
+                    try:
+                        env_val = self.settings_cls.__config__.json_loads(env_val)
+                    except ValueError as e:
+                        if not allow_parse_failure:
+                            raise SettingsError(
+                                f'error parsing env var "{env_name}"'
+                            ) from e
+
             env_var[last_key] = env_val
 
         return result
@@ -218,7 +248,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
                     except ValueError as e:
                         if not allow_parse_failure:
                             raise SettingsError(
-                                f'error parsing env var "{env_name}"'  # type: ignore
+                                f'error parsing env var "{env_name}"'
                             ) from e
 
                     if isinstance(env_val, dict):

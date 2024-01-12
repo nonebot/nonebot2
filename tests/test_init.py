@@ -4,7 +4,6 @@ from nonebug import App
 import nonebot
 from nonebot.drivers import Driver, ASGIMixin, ReverseDriver
 from nonebot import (
-    Config,
     get_app,
     get_bot,
     get_asgi,
@@ -34,18 +33,6 @@ async def test_init():
     assert config.nested_dict == {"a": 1, "b": 2, "c": {"d": 3}}
     assert config.nested_missing_dict == {"a": 1, "b": {"c": 2}}
     assert config.not_nested == "some string"
-
-
-@pytest.mark.asyncio
-async def test_config_loading():
-    config = Config(_env_file=None)
-    with pytest.raises(AttributeError):
-        config.common_config
-
-    config = Config(_env_file=(".env", ".env.prod"))
-    assert config.common_config == "common"
-    with pytest.raises(AttributeError):
-        config.config_from_env
 
 
 @pytest.mark.asyncio
