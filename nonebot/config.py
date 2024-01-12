@@ -341,7 +341,7 @@ class Config(BaseSettings):
     配置方法参考: [配置](https://nonebot.dev/docs/appendices/config)
     """
 
-    _env_file: DOTENV_TYPE = ".env", ".env.prod"
+    _env_file: Optional[DOTENV_TYPE] = ".env", ".env.prod"
 
     # nonebot configs
     driver: str = "~fastapi"
