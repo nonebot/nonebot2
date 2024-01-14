@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修复 `echo` 发送空消息 [@yanyongyu](https://github.com/yanyongyu) ([#2525](https://github.com/nonebot/nonebot2/pull/2525))
 - Fix: `MessageTemplate` 禁止访问私有属性 [@mnixry](https://github.com/mnixry) ([#2509](https://github.com/nonebot/nonebot2/pull/2509))
 
 ### 📝 文档
