@@ -19,4 +19,5 @@ echo = on_command("echo", to_me())
 
 @echo.handle()
 async def handle_echo(message: Message = CommandArg()):
-    await echo.send(message=message)
+    if any((not seg.is_text()) or str(seg) for seg in message):
+        await echo.send(message=message)
