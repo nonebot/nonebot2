@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 最终台词 [@noneflow](https://github.com/noneflow) ([#2523](https://github.com/nonebot/nonebot2/pull/2523))
 - Plugin: nonebot-plugin-nekoimage [@noneflow](https://github.com/noneflow) ([#2534](https://github.com/nonebot/nonebot2/pull/2534))
 - Plugin: 谷歌Bard聊天 [@noneflow](https://github.com/noneflow) ([#2529](https://github.com/nonebot/nonebot2/pull/2529))
 - Plugin: nonebot-plugin-mypower [@noneflow](https://github.com/noneflow) ([#2533](https://github.com/nonebot/nonebot2/pull/2533))
