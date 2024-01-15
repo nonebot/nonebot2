@@ -5422,5 +5422,12 @@
     "author": "Alpaca4610",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nekoimage",
+    "project_link": "nonebot-plugin-nekoimage",
+    "author": "pk5ls20",
+    "tags": [],
+    "is_official": false
   }
 ]
