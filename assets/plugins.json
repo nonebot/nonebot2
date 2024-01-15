@@ -5408,5 +5408,12 @@
     "author": "Pasumao",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mypower",
+    "project_link": "nonebot-plugin-mypower",
+    "author": "tianyisama",
+    "tags": [],
+    "is_official": false
   }
 ]
