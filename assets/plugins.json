@@ -5429,5 +5429,17 @@
     "author": "pk5ls20",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_finallines",
+    "project_link": "nonebot-plugin-finallines",
+    "author": "Perseus037",
+    "tags": [
+      {
+        "label": "最终台词",
+        "color": "#052199"
+      }
+    ],
+    "is_official": false
   }
 ]
