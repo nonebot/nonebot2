@@ -222,7 +222,6 @@ class DotEnvSettingsSource(BaseSettingsSource):
 
         for field in self.settings_cls.__fields__.values():
             field_key = field.name
-            env_name = self._apply_case_sensitive(field.name)
             env_name = self._apply_case_sensitive(field_key)
             # try get values from env vars
             env_val = env_vars.get(env_name, Undefined)
