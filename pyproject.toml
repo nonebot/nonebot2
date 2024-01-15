@@ -28,10 +28,11 @@ include = ["nonebot/py.typed"]
 python = "^3.8"
 yarl = "^1.7.2"
 pygtrie = "^2.4.1"
+pydantic = "^1.10.0"
 loguru = ">=0.6.0,<1.0.0"
+python-dotenv = ">=0.21.0,<2.0.0"
 typing-extensions = ">=4.4.0,<5.0.0"
 tomli = { version = "^2.0.1", python = "<3.11" }
-pydantic = { version = "^1.10.0", extras = ["dotenv"] }
 
 websockets = { version = ">=10.0", optional = true }
 Quart = { version = ">=0.18.0,<1.0.0", optional = true }
