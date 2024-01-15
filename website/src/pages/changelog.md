@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 谷歌Bard聊天 [@noneflow](https://github.com/noneflow) ([#2529](https://github.com/nonebot/nonebot2/pull/2529))
 - Plugin: nonebot-plugin-mypower [@noneflow](https://github.com/noneflow) ([#2533](https://github.com/nonebot/nonebot2/pull/2533))
 - Plugin: 文心一言4适配 [@noneflow](https://github.com/noneflow) ([#2516](https://github.com/nonebot/nonebot2/pull/2516))
 - Plugin: 最佳平替 [@noneflow](https://github.com/noneflow) ([#2519](https://github.com/nonebot/nonebot2/pull/2519))
