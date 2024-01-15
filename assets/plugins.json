@@ -5415,5 +5415,12 @@
     "author": "tianyisama",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bard",
+    "project_link": "nonebot-plugin-bard",
+    "author": "Alpaca4610",
+    "tags": [],
+    "is_official": false
   }
 ]
