@@ -15,7 +15,7 @@ from itertools import chain
 from types import ModuleType
 from importlib.abc import MetaPathFinder
 from importlib.machinery import PathFinder, SourceFileLoader
-from typing import Set, Dict, List, Iterable, Optional, Sequence
+from typing import Set, Dict, List, Tuple, Union, Iterable, Optional, Sequence
 
 from nonebot.log import logger
 from nonebot.utils import escape_tag, path_to_module_name
@@ -26,6 +26,7 @@ from . import (
     _new_plugin,
     _revert_plugin,
     _current_plugin_chain,
+    _plugin_name_to_plugin_id,
     _module_name_to_plugin_name,
 )
 
@@ -48,29 +49,29 @@ class PluginManager:
         self.search_path: Set[str] = set(search_path or [])
 
         # cache plugins
-        self._third_party_plugin_names: Dict[str, str] = {}
-        self._searched_plugin_names: Dict[str, Path] = {}
+        self._third_party_plugin_names: Dict[Union[str, Tuple[str, ...]], str] = {}
+        self._searched_plugin_names: Dict[Union[str, Tuple[str, ...]], Path] = {}
         self.prepare_plugins()
 
     def __repr__(self) -> str:
         return f"PluginManager(plugins={self.plugins}, search_path={self.search_path})"
 
     @property
-    def third_party_plugins(self) -> Set[str]:
+    def third_party_plugins(self) -> Set[Union[str, Tuple[str, ...]]]:
         """返回所有独立插件名称。"""
         return set(self._third_party_plugin_names.keys())
 
     @property
-    def searched_plugins(self) -> Set[str]:
+    def searched_plugins(self) -> Set[Union[str, Tuple[str, ...]]]:
         """返回已搜索到的插件名称。"""
         return set(self._searched_plugin_names.keys())
 
     @property
-    def available_plugins(self) -> Set[str]:
+    def available_plugins(self) -> Set[Union[str, Tuple[str, ...]]]:
         """返回当前插件管理器中可用的插件名称。"""
         return self.third_party_plugins | self.searched_plugins
 
-    def _previous_plugins(self) -> Set[str]:
+    def _previous_plugins(self) -> Set[Union[str, Tuple[str, ...]]]:
         _pre_managers: List[PluginManager]
         if self in _managers:
             _pre_managers = _managers[: _managers.index(self)]
@@ -81,21 +82,24 @@ class PluginManager:
             *chain.from_iterable(manager.available_plugins for manager in _pre_managers)
         }
 
-    def prepare_plugins(self) -> Set[str]:
+    def prepare_plugins(self) -> Set[Union[str, Tuple[str, ...]]]:
         """搜索插件并缓存插件名称。"""
         # get all previous ready to load plugins
         previous_plugins = self._previous_plugins()
-        searched_plugins: Dict[str, Path] = {}
-        third_party_plugins: Dict[str, str] = {}
+        searched_plugins: Dict[Union[str, Tuple[str, ...]], Path] = {}
+        third_party_plugins: Dict[Union[str, Tuple[str, ...]], str] = {}
 
         # check third party plugins
         for plugin in self.plugins:
             name = _module_name_to_plugin_name(plugin)
-            if name in third_party_plugins or name in previous_plugins:
+            plugin_id = _plugin_name_to_plugin_id(name)
+            plugin_id_str = ".".join(plugin_id)
+            if plugin_id in third_party_plugins or plugin_id in previous_plugins:
                 raise RuntimeError(
-                    f"Plugin already exists: {name}! Check your plugin name"
+                    f"Plugin already exists: {plugin_id_str}! Check your plugin name"
                 )
             third_party_plugins[name] = plugin
+            third_party_plugins[plugin_id] = plugin
 
         self._third_party_plugin_names = third_party_plugins
 
@@ -105,13 +109,16 @@ class PluginManager:
             if module_info.name.startswith("_"):
                 continue
 
+            plugin_id = _plugin_name_to_plugin_id(module_info.name)
+            plugin_id_str = ".".join(plugin_id)
+
             if (
-                module_info.name in searched_plugins
-                or module_info.name in previous_plugins
-                or module_info.name in third_party_plugins
+                plugin_id in searched_plugins
+                or plugin_id in previous_plugins
+                or plugin_id in third_party_plugins
             ):
                 raise RuntimeError(
-                    f"Plugin already exists: {module_info.name}! Check your plugin name"
+                    f"Plugin already exists: {plugin_id_str}! Check your plugin name"
                 )
 
             if not (
@@ -123,12 +130,13 @@ class PluginManager:
             if not (module_path := module_spec.origin):
                 continue
             searched_plugins[module_info.name] = Path(module_path).resolve()
+            searched_plugins[plugin_id] = Path(module_path).resolve()
 
         self._searched_plugin_names = searched_plugins
 
         return self.available_plugins
 
-    def load_plugin(self, name: str) -> Optional[Plugin]:
+    def load_plugin(self, name: Union[str, Tuple[str, ...]]) -> Optional[Plugin]:
         """加载指定插件。
 
         对于独立插件，可以使用完整插件模块名或者插件名称。
@@ -166,6 +174,8 @@ class PluginManager:
             )
             return plugin
         except Exception as e:
+            if isinstance(name, tuple):
+                name = name[-1]
             logger.opt(colors=True, exception=e).error(
                 f'<r><bg #f8bbd0>Failed to import "{escape_tag(name)}"</bg #f8bbd0></r>'
             )

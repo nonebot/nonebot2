@@ -39,9 +39,9 @@ FrontMatter:
 from itertools import chain
 from types import ModuleType
 from contextvars import ContextVar
-from typing import Set, Dict, List, Tuple, Optional
+from typing import Set, Dict, List, Tuple, Union, Optional
 
-_plugins: Dict[str, "Plugin"] = {}
+_plugins: Dict[Union[str, Tuple[str, ...]], "Plugin"] = {}
 _managers: List["PluginManager"] = []
 _current_plugin_chain: ContextVar[Tuple["Plugin", ...]] = ContextVar(
     "_current_plugin_chain", default=()
@@ -52,14 +52,29 @@ def _module_name_to_plugin_name(module_name: str) -> str:
     return module_name.rsplit(".", 1)[-1]
 
 
+def _plugin_name_to_plugin_id(
+    plugin_name: str, manager: Optional["PluginManager"] = None
+) -> Tuple[str, ...]:
+    parents = _current_plugin_chain.get()
+    if manager is None:
+        return (*(parent.name for parent in parents), plugin_name)
+    for pre_plugin in reversed(parents):
+        if _managers.index(pre_plugin.manager) < _managers.index(manager):
+            return (*pre_plugin.id, plugin_name)
+    else:
+        return (plugin_name,)
+
+
 def _new_plugin(
     module_name: str, module: ModuleType, manager: "PluginManager"
 ) -> "Plugin":
     plugin_name = _module_name_to_plugin_name(module_name)
-    if plugin_name in _plugins:
+    plugin_id = _plugin_name_to_plugin_id(plugin_name, manager)
+    if plugin_name in _plugins or plugin_id in _plugins:
         raise RuntimeError("Plugin already exists! Check your plugin name.")
     plugin = Plugin(plugin_name, module, module_name, manager)
     _plugins[plugin_name] = plugin
+    _plugins[plugin_id] = plugin
     return plugin
 
 
@@ -67,11 +82,12 @@ def _revert_plugin(plugin: "Plugin") -> None:
     if plugin.name not in _plugins:
         raise RuntimeError("Plugin not found!")
     del _plugins[plugin.name]
+    del _plugins[plugin.id]
     if parent_plugin := plugin.parent_plugin:
         parent_plugin.sub_plugins.remove(plugin)
 
 
-def get_plugin(name: str) -> Optional["Plugin"]:
+def get_plugin(name: Union[str, Tuple[str, ...]]) -> Optional["Plugin"]:
     """获取已经导入的某个插件。
 
     如果为 `load_plugins` 文件夹导入的插件，则为文件(夹)名。
@@ -105,7 +121,24 @@ def get_loaded_plugins() -> Set["Plugin"]:
 
 def get_available_plugin_names() -> Set[str]:
     """获取当前所有可用的插件名（包含尚未加载的插件）。"""
-    return {*chain.from_iterable(manager.available_plugins for manager in _managers)}
+    return {
+        plugin
+        for plugin in chain.from_iterable(
+            manager.available_plugins for manager in _managers
+        )
+        if isinstance(plugin, str)
+    }
+
+
+def get_available_plugin_ids() -> Set[Tuple[str, ...]]:
+    """获取当前所有可用的插件名（包含尚未加载的插件）。"""
+    return {
+        plugin
+        for plugin in chain.from_iterable(
+            manager.available_plugins for manager in _managers
+        )
+        if isinstance(plugin, tuple)
+    }
 
 
 from .on import on as on
