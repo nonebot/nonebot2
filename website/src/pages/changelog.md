@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: websockets 驱动器连接关闭 code 获取错误 [@yanyongyu](https://github.com/yanyongyu) ([#2537](https://github.com/nonebot/nonebot2/pull/2537))
 - Fix: 修复 `echo` 发送空消息 [@yanyongyu](https://github.com/yanyongyu) ([#2525](https://github.com/nonebot/nonebot2/pull/2525))
 - Fix: `MessageTemplate` 禁止访问私有属性 [@mnixry](https://github.com/mnixry) ([#2509](https://github.com/nonebot/nonebot2/pull/2509))
 
@@ -27,6 +28,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-gemini [@noneflow](https://github.com/noneflow) ([#2527](https://github.com/nonebot/nonebot2/pull/2527))
 - Plugin: 最终台词 [@noneflow](https://github.com/noneflow) ([#2523](https://github.com/nonebot/nonebot2/pull/2523))
 - Plugin: nonebot-plugin-nekoimage [@noneflow](https://github.com/noneflow) ([#2534](https://github.com/nonebot/nonebot2/pull/2534))
 - Plugin: 谷歌Bard聊天 [@noneflow](https://github.com/noneflow) ([#2529](https://github.com/nonebot/nonebot2/pull/2529))
