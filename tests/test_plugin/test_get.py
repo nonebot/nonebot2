@@ -57,7 +57,7 @@ async def test_get_available_plugin():
         # check get available plugins
         plugin_names = nonebot.get_available_plugin_names()
         assert plugin_names == {"export", "require"}
-        # check get available plugins' id
+        # check get available plugins' fullpath
         plugin_fullpaths = nonebot.get_available_plugin_fullpaths()
         assert plugin_fullpaths == {("export",), ("require",)}
     finally:

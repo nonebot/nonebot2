@@ -132,7 +132,7 @@ def get_available_plugin_names() -> Set[str]:
 
 
 def get_available_plugin_fullpaths() -> Set[Tuple[str, ...]]:
-    """获取当前所有可用的插件模块路径（包含尚未加载的插件）。"""
+    """获取当前所有可用的插件路径（包含尚未加载的插件）。"""
     return {
         plugin
         for plugin in chain.from_iterable(

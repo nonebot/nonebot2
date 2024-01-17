@@ -112,7 +112,6 @@ class PluginManager:
                 continue
 
             plugin_fullpath = _plugin_name_to_plugin_fullpath(module_info.name)
-            plugin_fullpath_str = ".".join(plugin_fullpath)
 
             if (
                 plugin_fullpath in searched_plugins
@@ -120,7 +119,7 @@ class PluginManager:
                 or plugin_fullpath in third_party_plugins
             ):
                 raise RuntimeError(
-                    f"Plugin already exists: {plugin_fullpath_str}! Check your plugin name"
+                    f"Plugin already exists: {plugin_fullpath}! Check your plugin name"
                 )
 
             if not (
@@ -144,7 +143,7 @@ class PluginManager:
         对于独立插件，可以使用完整插件模块名或者插件名称。
 
         参数:
-            name: 插件名称。
+            name: 插件名称或插件路径。
         """
 
         try:
