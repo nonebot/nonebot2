@@ -28,19 +28,23 @@ async def test_get_plugin_by_id():
     plugin = nonebot.get_plugin(("export",))
     assert plugin
     assert plugin.module_name == "plugins.export"
+    assert plugin.fullpath == ("export",)
 
     # check sub plugin
     plugin = nonebot.get_plugin(("nested",))
     assert plugin
     assert plugin.module_name == "plugins.nested"
+    assert plugin.fullpath == ("nested",)
 
     plugin = nonebot.get_plugin(("nested", "nested_subplugin"))
     assert plugin
     assert plugin.module_name == "plugins.nested.plugins.nested_subplugin"
+    assert plugin.fullpath == ("nested", "nested_subplugin")
 
     plugin = nonebot.get_plugin(("nested", "nested_subplugin2"))
     assert plugin
     assert plugin.module_name == "plugins.nested.plugins.nested_subplugin2"
+    assert plugin.fullpath == ("nested", "nested_subplugin2")
 
 
 @pytest.mark.asyncio
