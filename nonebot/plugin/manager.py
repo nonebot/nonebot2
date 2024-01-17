@@ -26,8 +26,8 @@ from . import (
     _new_plugin,
     _revert_plugin,
     _current_plugin_chain,
-    _plugin_name_to_plugin_id,
     _module_name_to_plugin_name,
+    _plugin_name_to_plugin_fullpath,
 )
 
 
@@ -92,14 +92,17 @@ class PluginManager:
         # check third party plugins
         for plugin in self.plugins:
             name = _module_name_to_plugin_name(plugin)
-            plugin_id = _plugin_name_to_plugin_id(name)
-            plugin_id_str = ".".join(plugin_id)
-            if plugin_id in third_party_plugins or plugin_id in previous_plugins:
+            plugin_fullpath = _plugin_name_to_plugin_fullpath(name)
+            plugin_fullpath_str = ".".join(plugin_fullpath)
+            if (
+                plugin_fullpath in third_party_plugins
+                or plugin_fullpath in previous_plugins
+            ):
                 raise RuntimeError(
-                    f"Plugin already exists: {plugin_id_str}! Check your plugin name"
+                    f"Plugin already exists: {plugin_fullpath_str}! Check your plugin name"
                 )
             third_party_plugins[name] = plugin
-            third_party_plugins[plugin_id] = plugin
+            third_party_plugins[plugin_fullpath] = plugin
 
         self._third_party_plugin_names = third_party_plugins
 
@@ -109,16 +112,16 @@ class PluginManager:
             if module_info.name.startswith("_"):
                 continue
 
-            plugin_id = _plugin_name_to_plugin_id(module_info.name)
-            plugin_id_str = ".".join(plugin_id)
+            plugin_fullpath = _plugin_name_to_plugin_fullpath(module_info.name)
+            plugin_fullpath_str = ".".join(plugin_fullpath)
 
             if (
-                plugin_id in searched_plugins
-                or plugin_id in previous_plugins
-                or plugin_id in third_party_plugins
+                plugin_fullpath in searched_plugins
+                or plugin_fullpath in previous_plugins
+                or plugin_fullpath in third_party_plugins
             ):
                 raise RuntimeError(
-                    f"Plugin already exists: {plugin_id_str}! Check your plugin name"
+                    f"Plugin already exists: {plugin_fullpath_str}! Check your plugin name"
                 )
 
             if not (
@@ -130,7 +133,7 @@ class PluginManager:
             if not (module_path := module_spec.origin):
                 continue
             searched_plugins[module_info.name] = Path(module_path).resolve()
-            searched_plugins[plugin_id] = Path(module_path).resolve()
+            searched_plugins[plugin_fullpath] = Path(module_path).resolve()
 
         self._searched_plugin_names = searched_plugins
 

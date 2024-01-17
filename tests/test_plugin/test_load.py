@@ -250,7 +250,7 @@ async def test_require_not_found():
         nonebot.require("some_plugin_not_exist")
 
     with pytest.raises(RuntimeError):
-        nonebot.require(("some_plugin_id_not_exist",))
+        nonebot.require(("some_plugin_fullpath_not_exist",))
 
 
 @pytest.mark.asyncio

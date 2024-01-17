@@ -355,8 +355,10 @@ from nonebot.plugin import on_shell_command as on_shell_command
 from nonebot.plugin import get_loaded_plugins as get_loaded_plugins
 from nonebot.plugin import load_builtin_plugin as load_builtin_plugin
 from nonebot.plugin import load_builtin_plugins as load_builtin_plugins
-from nonebot.plugin import get_available_plugin_ids as get_available_plugin_ids
 from nonebot.plugin import get_plugin_by_module_name as get_plugin_by_module_name
 from nonebot.plugin import get_available_plugin_names as get_available_plugin_names
+from nonebot.plugin import (
+    get_available_plugin_fullpaths as get_available_plugin_fullpaths,
+)
 
 __autodoc__ = {"internal": False}

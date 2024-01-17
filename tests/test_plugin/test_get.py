@@ -54,8 +54,8 @@ async def test_get_available_plugin():
         plugin_names = nonebot.get_available_plugin_names()
         assert plugin_names == {"export", "require"}
         # check get available plugins' id
-        plugin_ids = nonebot.get_available_plugin_ids()
-        assert plugin_ids == {("export",), ("require",)}
+        plugin_fullpaths = nonebot.get_available_plugin_fullpaths()
+        assert plugin_fullpaths == {("export",), ("require",)}
     finally:
         _managers.clear()
         _managers.extend(old_managers)

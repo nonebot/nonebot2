@@ -14,13 +14,7 @@ from nonebot.utils import path_to_module_name
 
 from .model import Plugin
 from .manager import PluginManager
-from . import (
-    _managers,
-    get_plugin,
-    _current_plugin_chain,
-    _plugin_name_to_plugin_id,
-    _module_name_to_plugin_name,
-)
+from . import _managers, get_plugin, _current_plugin_chain, _module_name_to_plugin_name
 
 try:  # pragma: py-gte-311
     import tomllib  # pyright: ignore[reportMissingImports]

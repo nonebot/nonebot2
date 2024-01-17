@@ -52,7 +52,7 @@ def _module_name_to_plugin_name(module_name: str) -> str:
     return module_name.rsplit(".", 1)[-1]
 
 
-def _plugin_name_to_plugin_id(
+def _plugin_name_to_plugin_fullpath(
     plugin_name: str, manager: Optional["PluginManager"] = None
 ) -> Tuple[str, ...]:
     parents = _current_plugin_chain.get()
@@ -60,7 +60,7 @@ def _plugin_name_to_plugin_id(
         return (*(parent.name for parent in parents), plugin_name)
     for pre_plugin in reversed(parents):
         if _managers.index(pre_plugin.manager) < _managers.index(manager):
-            return (*pre_plugin.id, plugin_name)
+            return (*pre_plugin.fillpath, plugin_name)
     else:
         return (plugin_name,)
 
@@ -69,12 +69,12 @@ def _new_plugin(
     module_name: str, module: ModuleType, manager: "PluginManager"
 ) -> "Plugin":
     plugin_name = _module_name_to_plugin_name(module_name)
-    plugin_id = _plugin_name_to_plugin_id(plugin_name, manager)
-    if plugin_id in _plugins:
+    plugin_fullpath = _plugin_name_to_plugin_fullpath(plugin_name, manager)
+    if plugin_fullpath in _plugins:
         raise RuntimeError("Plugin already exists! Check your plugin name.")
     plugin = Plugin(plugin_name, module, module_name, manager)
     _plugins[plugin_name] = plugin
-    _plugins[plugin_id] = plugin
+    _plugins[plugin_fullpath] = plugin
     return plugin
 
 
@@ -82,7 +82,7 @@ def _revert_plugin(plugin: "Plugin") -> None:
     if plugin.name not in _plugins:
         raise RuntimeError("Plugin not found!")
     del _plugins[plugin.name]
-    del _plugins[plugin.id]
+    del _plugins[plugin.fillpath]
     if parent_plugin := plugin.parent_plugin:
         parent_plugin.sub_plugins.remove(plugin)
 
@@ -130,7 +130,7 @@ def get_available_plugin_names() -> Set[str]:
     }
 
 
-def get_available_plugin_ids() -> Set[Tuple[str, ...]]:
+def get_available_plugin_fullpaths() -> Set[Tuple[str, ...]]:
     """获取当前所有可用的插件名（包含尚未加载的插件）。"""
     return {
         plugin

@@ -82,8 +82,8 @@ class Plugin:
     metadata: Optional[PluginMetadata] = None
 
     @property
-    def id(self) -> Tuple[str, ...]:
+    def fillpath(self) -> Tuple[str, ...]:
         if self.parent_plugin is None:
             return (self.name,)
         else:
-            return (*self.parent_plugin.id, self.name)
+            return (*self.parent_plugin.fillpath, self.name)
