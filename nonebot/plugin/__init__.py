@@ -60,7 +60,7 @@ def _plugin_name_to_plugin_fullpath(
         return (*(parent.name for parent in parents), plugin_name)
     for pre_plugin in reversed(parents):
         if _managers.index(pre_plugin.manager) < _managers.index(manager):
-            return (*pre_plugin.fillpath, plugin_name)
+            return (*pre_plugin.fullpath, plugin_name)
     else:
         return (plugin_name,)
 
@@ -82,7 +82,7 @@ def _revert_plugin(plugin: "Plugin") -> None:
     if plugin.name not in _plugins:
         raise RuntimeError("Plugin not found!")
     del _plugins[plugin.name]
-    del _plugins[plugin.fillpath]
+    del _plugins[plugin.fullpath]
     if parent_plugin := plugin.parent_plugin:
         parent_plugin.sub_plugins.remove(plugin)
 
