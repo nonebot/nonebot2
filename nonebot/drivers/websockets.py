@@ -50,10 +50,7 @@ def catch_closed(func: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]:
         try:
             return await func(*args, **kwargs)
         except ConnectionClosed as e:
-            if e.rcvd_then_sent:
-                raise WebSocketClosed(e.rcvd.code, e.rcvd.reason)  # type: ignore
-            else:
-                raise WebSocketClosed(e.sent.code, e.sent.reason)  # type: ignore
+            raise WebSocketClosed(e.code, e.reason)
 
     return decorator
 
