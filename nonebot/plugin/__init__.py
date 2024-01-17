@@ -70,7 +70,7 @@ def _new_plugin(
 ) -> "Plugin":
     plugin_name = _module_name_to_plugin_name(module_name)
     plugin_id = _plugin_name_to_plugin_id(plugin_name, manager)
-    if plugin_name in _plugins or plugin_id in _plugins:
+    if plugin_id in _plugins:
         raise RuntimeError("Plugin already exists! Check your plugin name.")
     plugin = Plugin(plugin_name, module, module_name, manager)
     _plugins[plugin_name] = plugin

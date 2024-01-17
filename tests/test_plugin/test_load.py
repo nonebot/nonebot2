@@ -71,6 +71,108 @@ async def test_load_nested_plugin_by_id():
 
 
 @pytest.mark.asyncio
+async def test_load_multinested_plugin():
+    parent_plugin = nonebot.get_plugin(("multinested",))
+    sub_plugin1 = nonebot.get_plugin(("multinested", "multinested_subnested1"))
+    sub_plugin2 = nonebot.get_plugin(("multinested", "multinested_subnested2"))
+    same_plugin1 = nonebot.get_plugin(("multinested", "multinested_samename_subplugin"))
+
+    same_plugin1_sub_same = nonebot.get_plugin(
+        (
+            "multinested",
+            "multinested_samename_subplugin",
+            "multinested_samename_subplugin",
+        )
+    )
+    same_plugin1_sub_another = nonebot.get_plugin(
+        (
+            "multinested",
+            "multinested_samename_subplugin",
+            "multinested_samename_anotherplugin",
+        )
+    )
+    sub_plugin1_sub_same = nonebot.get_plugin(
+        (
+            "multinested",
+            "multinested_subnested1",
+            "multinested_samename_subplugin",
+        )
+    )
+    sub_plugin1_sub_another = nonebot.get_plugin(
+        (
+            "multinested",
+            "multinested_subnested1",
+            "multinested_subnested1_plugin",
+        )
+    )
+    sub_plugin2_sub_same = nonebot.get_plugin(
+        (
+            "multinested",
+            "multinested_subnested2",
+            "multinested_samename_subplugin",
+        )
+    )
+    sub_plugin2_sub_another = nonebot.get_plugin(
+        (
+            "multinested",
+            "multinested_subnested2",
+            "multinested_subnested2_plugin",
+        )
+    )
+    assert parent_plugin
+    assert sub_plugin1
+    assert sub_plugin2
+    assert same_plugin1
+    assert same_plugin1_sub_same
+    assert same_plugin1_sub_another
+    assert sub_plugin1_sub_same
+    assert sub_plugin1_sub_another
+    assert sub_plugin2_sub_same
+    assert sub_plugin2_sub_another
+
+    assert same_plugin1_sub_same.module.a == "subsame.subsame"
+    assert same_plugin1_sub_another.module.a == "subsame.another"
+    assert sub_plugin1_sub_same.module.a == "sub1.subsame"
+    assert sub_plugin1_sub_another.module.a == "sub1.another"
+    assert sub_plugin2_sub_same.module.a == "sub2.subsame"
+    assert sub_plugin2_sub_another.module.a == "sub2.another"
+
+
+@pytest.mark.asyncio
+async def test_load_multinested_plugin_by_name():
+    plugin = nonebot.get_plugin("multinested_samename_subplugin")
+
+    same1 = nonebot.get_plugin(("multinested", "multinested_samename_subplugin"))
+    same2 = nonebot.get_plugin(
+        (
+            "multinested",
+            "multinested_samename_subplugin",
+            "multinested_samename_subplugin",
+        )
+    )
+    same3 = nonebot.get_plugin(
+        (
+            "multinested",
+            "multinested_subnested1",
+            "multinested_samename_subplugin",
+        )
+    )
+    same4 = nonebot.get_plugin(
+        (
+            "multinested",
+            "multinested_subnested2",
+            "multinested_samename_subplugin",
+        )
+    )
+    assert plugin
+    assert same1
+    assert same2
+    assert same3
+    assert same4
+    assert plugin in (same1, same2, same3, same4)
+
+
+@pytest.mark.asyncio
 async def test_load_json():
     nonebot.load_from_json("./plugins.json")
 
