@@ -82,8 +82,9 @@ class Plugin:
     metadata: Optional[PluginMetadata] = None
 
     @property
-    def fullpath(self) -> Tuple[str, ...]:
+    def plugin_fullpath(self) -> Tuple[str, ...]:
+        """插件路径，返回一个插件从顶层插件到底层的所有插件名元组"""
         if self.parent_plugin is None:
             return (self.name,)
         else:
-            return (*self.parent_plugin.fullpath, self.name)
+            return (*self.parent_plugin.plugin_fullpath, self.name)

@@ -160,7 +160,8 @@ def require(name: Union[str, Tuple[str, ...]]) -> ModuleType:
     如果为 `load_plugins` 文件夹导入的插件，则为文件(夹)名。
 
     参数:
-        name: 插件名，即 {ref}`nonebot.plugin.model.Plugin.name`。
+        name: 插件名或插件路径，即 {ref}`nonebot.plugin.model.Plugin.name`
+            或 {ref}`nonebot.plugin.model.Plugin.plugin_fullpath`。
 
     异常:
         RuntimeError: 插件无法加载

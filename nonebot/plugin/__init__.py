@@ -60,7 +60,7 @@ def _plugin_name_to_plugin_fullpath(
         return (*(parent.name for parent in parents), plugin_name)
     for pre_plugin in reversed(parents):
         if _managers.index(pre_plugin.manager) < _managers.index(manager):
-            return (*pre_plugin.fullpath, plugin_name)
+            return (*pre_plugin.plugin_fullpath, plugin_name)
     else:
         return (plugin_name,)
 
@@ -82,7 +82,7 @@ def _revert_plugin(plugin: "Plugin") -> None:
     if plugin.name not in _plugins:
         raise RuntimeError("Plugin not found!")
     del _plugins[plugin.name]
-    del _plugins[plugin.fullpath]
+    del _plugins[plugin.plugin_fullpath]
     if parent_plugin := plugin.parent_plugin:
         parent_plugin.sub_plugins.remove(plugin)
 
@@ -93,7 +93,8 @@ def get_plugin(name: Union[str, Tuple[str, ...]]) -> Optional["Plugin"]:
     如果为 `load_plugins` 文件夹导入的插件，则为文件(夹)名。
 
     参数:
-        name: 插件名，即 {ref}`nonebot.plugin.model.Plugin.name`。
+        name: 插件名或插件路径，即 {ref}`nonebot.plugin.model.Plugin.name`
+            或 {ref}`nonebot.plugin.model.Plugin.plugin_fullpath`。
     """
     return _plugins.get(name)
 
@@ -131,7 +132,7 @@ def get_available_plugin_names() -> Set[str]:
 
 
 def get_available_plugin_fullpaths() -> Set[Tuple[str, ...]]:
-    """获取当前所有可用的插件名（包含尚未加载的插件）。"""
+    """获取当前所有可用的插件模块路径（包含尚未加载的插件）。"""
     return {
         plugin
         for plugin in chain.from_iterable(

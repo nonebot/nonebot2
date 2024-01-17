@@ -137,18 +137,21 @@ async def test_load_multinested_plugin():
     assert sub_plugin2_sub_same.module.a == "sub2.subsame"
     assert sub_plugin2_sub_another.module.a == "sub2.another"
 
-    assert same_plugin1.fullpath == ("multinested", "multinested_samename_subplugin")
-    assert same_plugin1_sub_same.fullpath == (
+    assert same_plugin1.plugin_fullpath == (
+        "multinested",
+        "multinested_samename_subplugin",
+    )
+    assert same_plugin1_sub_same.plugin_fullpath == (
         "multinested",
         "multinested_samename_subplugin",
         "multinested_samename_subplugin",
     )
-    assert sub_plugin1_sub_same.fullpath == (
+    assert sub_plugin1_sub_same.plugin_fullpath == (
         "multinested",
         "multinested_subnested1",
         "multinested_samename_subplugin",
     )
-    assert sub_plugin2_sub_same.fullpath == (
+    assert sub_plugin2_sub_same.plugin_fullpath == (
         "multinested",
         "multinested_subnested2",
         "multinested_samename_subplugin",
