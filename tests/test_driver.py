@@ -131,7 +131,7 @@ async def test_websocket_server(app: App, driver: Driver):
         assert data == b"ping"
         await ws.send(b"pong")
 
-        with pytest.raises(WebSocketClosed):
+        with pytest.raises(WebSocketClosed, match=r"code=1000"):
             await ws.receive()
 
     ws_setup = WebSocketServerSetup(URL("/ws_test"), "ws_test", _handle_ws)
@@ -152,7 +152,7 @@ async def test_websocket_server(app: App, driver: Driver):
             await ws.send_bytes(b"ping")
             assert await ws.receive_bytes() == b"pong"
 
-            await ws.close()
+            await ws.close(code=1000)
 
     await asyncio.sleep(1)
 
@@ -315,8 +315,28 @@ async def test_http_client(driver: Driver, server_url: URL):
     ],
     indirect=True,
 )
-async def test_websocket_client(driver: Driver):
+async def test_websocket_client(driver: Driver, server_url: URL):
     assert isinstance(driver, WebSocketClientMixin)
+
+    request = Request("GET", server_url.with_scheme("ws"))
+    async with driver.websocket(request) as ws:
+        await ws.send("test")
+        assert await ws.receive() == "test"
+
+        await ws.send(b"test")
+        assert await ws.receive() == b"test"
+
+        await ws.send_text("test")
+        assert await ws.receive_text() == "test"
+
+        await ws.send_bytes(b"test")
+        assert await ws.receive_bytes() == b"test"
+
+        await ws.send("quit")
+        with pytest.raises(WebSocketClosed, match=r"code=1000"):
+            await ws.receive()
+
+    await asyncio.sleep(1)
 
 
 @pytest.mark.asyncio
