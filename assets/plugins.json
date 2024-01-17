@@ -5441,5 +5441,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_gemini",
+    "project_link": "nonebot-plugin-gemini",
+    "author": "zhaomaoniu",
+    "tags": [
+      {
+        "label": "Gemini",
+        "color": "#3e8ffb"
+      }
+    ],
+    "is_official": false
   }
 ]
