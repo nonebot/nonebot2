@@ -115,7 +115,6 @@ def websocket_echo(request: Request) -> Response:
                     out_data += ws.send(BytesMessage(data=event.data))
 
         if out_data:
-            print(out_data)
             stream.send(out_data)
 
         if not running:
@@ -124,6 +123,7 @@ def websocket_echo(request: Request) -> Response:
         in_data = stream.recv(4096)
         ws.receive_data(in_data)
 
+    stream.close()
     return Response("", status=204)
 
 
