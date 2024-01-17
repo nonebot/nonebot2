@@ -1,5 +1,6 @@
 import json
 import base64
+import socket
 from typing import Dict, List, Union, TypeVar
 
 from wsproto.events import Ping
@@ -123,7 +124,7 @@ def websocket_echo(request: Request) -> Response:
         in_data = stream.recv(4096)
         ws.receive_data(in_data)
 
-    stream.close()
+    stream.shutdown(socket.SHUT_RDWR)
     return Response("", status=204)
 
 
