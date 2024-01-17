@@ -93,13 +93,12 @@ class PluginManager:
         for plugin in self.plugins:
             name = _module_name_to_plugin_name(plugin)
             plugin_fullpath = _plugin_name_to_plugin_fullpath(name)
-            plugin_fullpath_str = ".".join(plugin_fullpath)
             if (
                 plugin_fullpath in third_party_plugins
                 or plugin_fullpath in previous_plugins
             ):
                 raise RuntimeError(
-                    f"Plugin already exists: {plugin_fullpath_str}! Check your plugin name"
+                    f"Plugin already exists: {plugin_fullpath}! Check your plugin name"
                 )
             third_party_plugins[name] = plugin
             third_party_plugins[plugin_fullpath] = plugin
