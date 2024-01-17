@@ -140,6 +140,9 @@ async def test_load_multinested_plugin():
 
 @pytest.mark.asyncio
 async def test_load_multinested_plugin_by_name():
+    """
+    get plugin by name, but only one of the plugins with the same name can be obtained
+    """
     plugin = nonebot.get_plugin("multinested_samename_subplugin")
 
     same1 = nonebot.get_plugin(("multinested", "multinested_samename_subplugin"))
@@ -226,6 +229,10 @@ async def test_require_not_loaded(monkeypatch: pytest.MonkeyPatch):
 
     assert len(_managers) == num_managers
 
+    nonebot.require(("require_not_loaded",))
+
+    assert len(_managers) == num_managers
+
 
 @pytest.mark.asyncio
 async def test_require_not_declared():
@@ -241,6 +248,9 @@ async def test_require_not_declared():
 async def test_require_not_found():
     with pytest.raises(RuntimeError):
         nonebot.require("some_plugin_not_exist")
+
+    with pytest.raises(RuntimeError):
+        nonebot.require(("some_plugin_id_not_exist",))
 
 
 @pytest.mark.asyncio
