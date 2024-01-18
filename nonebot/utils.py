@@ -18,6 +18,7 @@ from contextlib import asynccontextmanager
 from typing_extensions import ParamSpec, get_args, override, get_origin
 from typing import (
     Any,
+    Dict,
     Type,
     Tuple,
     Union,
@@ -31,9 +32,13 @@ from typing import (
     overload,
 )
 
-from pydantic.typing import is_union, is_none_type, is_literal_type, all_literal_values
-
 from nonebot.log import logger
+from nonebot.typing import (
+    is_none_type,
+    origin_is_union,
+    origin_is_literal,
+    all_literal_values,
+)
 
 P = ParamSpec("P")
 R = TypeVar("R")
@@ -53,6 +58,24 @@ def escape_tag(s: str) -> str:
     return re.sub(r"</?((?:[fb]g\s)?[^<>\s]*)>", r"\\\g<0>", s)
 
 
+def deep_update(
+    mapping: Dict[K, Any], *updating_mappings: Dict[K, Any]
+) -> Dict[K, Any]:
+    """深度更新合并字典"""
+    updated_mapping = mapping.copy()
+    for updating_mapping in updating_mappings:
+        for k, v in updating_mapping.items():
+            if (
+                k in updated_mapping
+                and isinstance(updated_mapping[k], dict)
+                and isinstance(v, dict)
+            ):
+                updated_mapping[k] = deep_update(updated_mapping[k], v)
+            else:
+                updated_mapping[k] = v
+    return updated_mapping
+
+
 def generic_check_issubclass(
     cls: Any, class_or_tuple: Union[Type[Any], Tuple[Type[Any], ...]]
 ) -> bool:
@@ -70,12 +93,12 @@ def generic_check_issubclass(
         return issubclass(cls, class_or_tuple)
     except TypeError:
         origin = get_origin(cls)
-        if is_union(origin):
+        if origin_is_union(origin):
             return all(
                 is_none_type(type_) or generic_check_issubclass(type_, class_or_tuple)
                 for type_ in get_args(cls)
             )
-        elif is_literal_type(cls):
+        elif origin_is_literal(origin):
             return all(
                 is_none_type(value) or isinstance(value, class_or_tuple)
                 for value in all_literal_values(cls)

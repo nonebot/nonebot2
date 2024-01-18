@@ -20,7 +20,7 @@ from functools import wraps
 from typing_extensions import override
 from typing import Any, Dict, List, Tuple, Union, Optional, cast
 
-from pydantic import BaseSettings
+from pydantic import BaseModel
 
 from nonebot.config import Env
 from nonebot.drivers import ASGIMixin
@@ -58,7 +58,7 @@ def catch_closed(func):
     return decorator
 
 
-class Config(BaseSettings):
+class Config(BaseModel):
     """Quart 驱动框架设置"""
 
     quart_reload: bool = False
@@ -73,9 +73,6 @@ class Config(BaseSettings):
     """不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
     quart_extra: Dict[str, Any] = {}
     """传递给 `Quart` 的其他参数。"""
-
-    class Config:
-        extra = "ignore"
 
 
 class Driver(BaseDriver, ASGIMixin):

@@ -32,12 +32,14 @@ from typing import (
 )
 
 from dotenv import dotenv_values
-from pydantic.typing import is_union
-from pydantic.utils import deep_update
-from pydantic.fields import Undefined, ModelField, UndefinedType
-from pydantic import Extra, Field, BaseModel, BaseConfig, JsonWrapper, IPvAnyAddress
+from pydantic.networks import IPvAnyAddress
+from pydantic import Extra, Field, BaseModel
+from pydantic.fields import Undefined, UndefinedType
 
 from nonebot.log import logger
+from nonebot.utils import deep_update
+from nonebot.typing import origin_is_union
+from nonebot._compat import BaseConfig, ModelField, model_fields
 
 DOTENV_TYPE: TypeAlias = Union[
     Path, str, List[Union[Path, str]], Tuple[Union[Path, str], ...]
@@ -110,18 +112,10 @@ class DotEnvSettingsSource(BaseSettingsSource):
         return var_name if self.case_sensitive else var_name.lower()
 
     def _field_is_complex(self, field: ModelField) -> Tuple[bool, bool]:
-        try:
-            if isinstance(field.annotation, type) and issubclass(
-                field.annotation, JsonWrapper
-            ):
-                return True, False
-        except TypeError:
-            pass
-
         if field.is_complex():
             return True, False
         elif (
-            is_union(get_origin(field.type_))
+            origin_is_union(get_origin(field.type_))
             and field.sub_fields
             and any(f.is_complex() for f in field.sub_fields)
         ):
@@ -157,7 +151,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
     def _next_field(
         self, field: Optional[ModelField], key: str
     ) -> Optional[ModelField]:
-        if not field or is_union(get_origin(field.annotation)):
+        if not field or origin_is_union(get_origin(field.annotation)):
             return None
         elif (
             field.annotation
@@ -220,9 +214,8 @@ class DotEnvSettingsSource(BaseSettingsSource):
         env_file_vars = self._read_env_files()
         env_vars = {**env_file_vars, **env_vars}
 
-        for field in self.settings_cls.__fields__.values():
-            field_key = field.name
-            env_name = self._apply_case_sensitive(field_key)
+        for field_name, field in model_fields(self.settings_cls).items():
+            env_name = self._apply_case_sensitive(field_name)
             # try get values from env vars
             env_val = env_vars.get(env_name, Undefined)
             # delete from file vars when used
@@ -236,9 +229,9 @@ class DotEnvSettingsSource(BaseSettingsSource):
                     if env_val_built := self._explode_env_vars(
                         field, env_vars, env_file_vars
                     ):
-                        d[field_key] = env_val_built
+                        d[field_name] = env_val_built
                 elif env_val is None:
-                    d[field_key] = env_val
+                    d[field_name] = env_val
                 else:
                     # field is complex and there's a value
                     # decode that as JSON, then add explode_env_vars
@@ -253,16 +246,16 @@ class DotEnvSettingsSource(BaseSettingsSource):
                     if isinstance(env_val, dict):
                         # field value is a dict
                         # try explode_env_vars to find more sub-values
-                        d[field_key] = deep_update(
+                        d[field_name] = deep_update(
                             env_val,
                             self._explode_env_vars(field, env_vars, env_file_vars),
                         )
                     else:
-                        d[field_key] = env_val
+                        d[field_name] = env_val
             elif not isinstance(env_val, UndefinedType):
                 # simplest case, field is not complex
                 # we only need to add the value if it was found
-                d[field_key] = env_val
+                d[field_name] = env_val
 
         # remain user custom config
         for env_name in env_file_vars:
@@ -370,7 +363,8 @@ class Config(BaseSettings):
     配置方法参考: [配置](https://nonebot.dev/docs/appendices/config)
     """
 
-    _env_file: Optional[DOTENV_TYPE] = ".env", ".env.prod"
+    if TYPE_CHECKING:
+        _env_file: Optional[DOTENV_TYPE] = ".env", ".env.prod"
 
     # nonebot configs
     driver: str = "~fastapi"

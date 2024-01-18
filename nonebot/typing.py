@@ -10,18 +10,13 @@ FrontMatter:
     description: nonebot.typing 模块
 """
 
+import sys
+import types
 import warnings
-from typing_extensions import ParamSpec, TypeAlias, override
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Dict,
-    Union,
-    TypeVar,
-    Callable,
-    Optional,
-    Awaitable,
-)
+import typing as t
+import typing_extensions as t_ext
+from typing import TYPE_CHECKING, TypeVar
+from typing_extensions import ParamSpec, TypeAlias, get_args, override, get_origin
 
 if TYPE_CHECKING:
     from asyncio import Task
@@ -32,7 +27,7 @@ if TYPE_CHECKING:
 T = TypeVar("T")
 P = ParamSpec("P")
 
-T_Wrapped: TypeAlias = Callable[P, T]
+T_Wrapped: TypeAlias = t.Callable[P, T]
 
 
 def overrides(InterfaceClass: object):
@@ -47,14 +42,55 @@ def overrides(InterfaceClass: object):
     return override
 
 
+if sys.version_info < (3, 10):
+
+    def origin_is_union(origin: t.Optional[t.Type[t.Any]]) -> bool:
+        """判断是否是 Union 类型"""
+        return origin is t.Union
+
+else:
+
+    def origin_is_union(origin: t.Optional[t.Type[t.Any]]) -> bool:
+        return origin is t.Union or origin is types.UnionType
+
+
+def origin_is_literal(origin: t.Optional[t.Type[t.Any]]) -> bool:
+    """判断是否是 Literal 类型"""
+    return origin is t.Literal or origin is t_ext.Literal
+
+
+def _literal_values(type_: t.Type[t.Any]) -> t.Tuple[t.Any, ...]:
+    return get_args(type_)
+
+
+def all_literal_values(type_: t.Type[t.Any]) -> t.List[t.Any]:
+    """获取 Literal 类型包含的所有值"""
+    if not origin_is_literal(get_origin(type_)):
+        return [type_]
+
+    return [x for value in _literal_values(type_) for x in all_literal_values(value)]
+
+
+NONE_TYPES = {None, type(None), t.Literal[None], t_ext.Literal[None]}
+if sys.version_info >= (3, 10):
+    NONE_TYPES.add(types.NoneType)
+
+
+def is_none_type(type_: t.Type[t.Any]) -> bool:
+    """判断是否是 None 类型"""
+    return type_ in NONE_TYPES
+
+
 # state
-T_State: TypeAlias = Dict[Any, Any]
+T_State: TypeAlias = t.Dict[t.Any, t.Any]
 """事件处理状态 State 类型"""
 
-_DependentCallable: TypeAlias = Union[Callable[..., T], Callable[..., Awaitable[T]]]
+_DependentCallable: TypeAlias = t.Union[
+    t.Callable[..., T], t.Callable[..., t.Awaitable[T]]
+]
 
 # driver hooks
-T_BotConnectionHook: TypeAlias = _DependentCallable[Any]
+T_BotConnectionHook: TypeAlias = _DependentCallable[t.Any]
 """Bot 连接建立时钩子函数
 
 依赖参数:
@@ -63,7 +99,7 @@ T_BotConnectionHook: TypeAlias = _DependentCallable[Any]
 - BotParam: Bot 对象
 - DefaultParam: 带有默认值的参数
 """
-T_BotDisconnectionHook: TypeAlias = _DependentCallable[Any]
+T_BotDisconnectionHook: TypeAlias = _DependentCallable[t.Any]
 """Bot 连接断开时钩子函数
 
 依赖参数:
@@ -74,15 +110,17 @@ T_BotDisconnectionHook: TypeAlias = _DependentCallable[Any]
 """
 
 # api hooks
-T_CallingAPIHook: TypeAlias = Callable[["Bot", str, Dict[str, Any]], Awaitable[Any]]
+T_CallingAPIHook: TypeAlias = t.Callable[
+    ["Bot", str, t.Dict[str, t.Any]], t.Awaitable[t.Any]
+]
 """`bot.call_api` 钩子函数"""
-T_CalledAPIHook: TypeAlias = Callable[
-    ["Bot", Optional[Exception], str, Dict[str, Any], Any], Awaitable[Any]
+T_CalledAPIHook: TypeAlias = t.Callable[
+    ["Bot", t.Optional[Exception], str, t.Dict[str, t.Any], t.Any], t.Awaitable[t.Any]
 ]
 """`bot.call_api` 后执行的函数，参数分别为 bot, exception, api, data, result"""
 
 # event hooks
-T_EventPreProcessor: TypeAlias = _DependentCallable[Any]
+T_EventPreProcessor: TypeAlias = _DependentCallable[t.Any]
 """事件预处理函数 EventPreProcessor 类型
 
 依赖参数:
@@ -93,7 +131,7 @@ T_EventPreProcessor: TypeAlias = _DependentCallable[Any]
 - StateParam: State 对象
 - DefaultParam: 带有默认值的参数
 """
-T_EventPostProcessor: TypeAlias = _DependentCallable[Any]
+T_EventPostProcessor: TypeAlias = _DependentCallable[t.Any]
 """事件后处理函数 EventPostProcessor 类型
 
 依赖参数:
@@ -106,7 +144,7 @@ T_EventPostProcessor: TypeAlias = _DependentCallable[Any]
 """
 
 # matcher run hooks
-T_RunPreProcessor: TypeAlias = _DependentCallable[Any]
+T_RunPreProcessor: TypeAlias = _DependentCallable[t.Any]
 """事件响应器运行前预处理函数 RunPreProcessor 类型
 
 依赖参数:
@@ -118,7 +156,7 @@ T_RunPreProcessor: TypeAlias = _DependentCallable[Any]
 - MatcherParam: Matcher 对象
 - DefaultParam: 带有默认值的参数
 """
-T_RunPostProcessor: TypeAlias = _DependentCallable[Any]
+T_RunPostProcessor: TypeAlias = _DependentCallable[t.Any]
 """事件响应器运行后后处理函数 RunPostProcessor 类型
 
 依赖参数:
@@ -155,7 +193,7 @@ T_PermissionChecker: TypeAlias = _DependentCallable[bool]
 - DefaultParam: 带有默认值的参数
 """
 
-T_Handler: TypeAlias = _DependentCallable[Any]
+T_Handler: TypeAlias = _DependentCallable[t.Any]
 """Handler 处理函数。"""
 T_TypeUpdater: TypeAlias = _DependentCallable[str]
 """TypeUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新响应的事件类型。
@@ -183,5 +221,5 @@ T_PermissionUpdater: TypeAlias = _DependentCallable["Permission"]
 - MatcherParam: Matcher 对象
 - DefaultParam: 带有默认值的参数
 """
-T_DependencyCache: TypeAlias = Dict[_DependentCallable[Any], "Task[Any]"]
+T_DependencyCache: TypeAlias = t.Dict[_DependentCallable[t.Any], "Task[t.Any]"]
 """依赖缓存, 用于存储依赖函数的返回值"""
