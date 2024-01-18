@@ -5453,5 +5453,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "haruka_bot_red",
+    "project_link": "haruka_bot_red",
+    "author": "boxie123",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#c83f3f"
+      }
+    ],
+    "is_official": false
   }
 ]
