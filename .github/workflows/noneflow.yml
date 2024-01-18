@@ -73,7 +73,7 @@ jobs:
           token: ${{ steps.generate-token.outputs.token }}
 
       - name: Cache pre-commit hooks
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .cache/.pre-commit
           key: noneflow-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}
