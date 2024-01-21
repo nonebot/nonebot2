@@ -28,6 +28,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: SakuraFrp [@noneflow](https://github.com/noneflow) ([#2543](https://github.com/nonebot/nonebot2/pull/2543))
 - Plugin: haruka_bot_red [@noneflow](https://github.com/noneflow) ([#2541](https://github.com/nonebot/nonebot2/pull/2541))
 - Plugin: nonebot-plugin-gemini [@noneflow](https://github.com/noneflow) ([#2527](https://github.com/nonebot/nonebot2/pull/2527))
 - Plugin: 最终台词 [@noneflow](https://github.com/noneflow) ([#2523](https://github.com/nonebot/nonebot2/pull/2523))
