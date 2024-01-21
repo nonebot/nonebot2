@@ -38,8 +38,8 @@
 
     /* Use tslib */
     "importHelpers": true,
-    "noEmitHelpers": true
+    "noEmitHelpers": true,
   },
   "include": ["./**/.eslintrc.js", "./**/.stylelintrc.js"],
-  "exclude": ["node_modules", "**/lib/**/*"]
+  "exclude": ["node_modules", "**/lib/**/*"],
 }
