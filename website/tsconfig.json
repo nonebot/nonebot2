@@ -6,11 +6,11 @@
     "types": [
       "node",
       "@docusaurus/module-type-aliases",
-      "@nullbot/docusaurus-theme-nonepress"
+      "@nullbot/docusaurus-theme-nonepress",
     ],
     "paths": {
       "@/*": ["./src/*"],
-      "@theme/*": ["./src/theme/*"]
+      "@theme/*": ["./src/theme/*"],
     },
 
     /* Strict Type-Checking Options */
@@ -31,6 +31,6 @@
 
     /* Use tslib */
     "importHelpers": true,
-    "noEmitHelpers": true
-  }
+    "noEmitHelpers": true,
+  },
 }
