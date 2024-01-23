@@ -11,7 +11,7 @@ python = "^3.8"
 [tool.poetry.group.dev.dependencies]
 pydantic = "^1.0.0"
 nonebot-test = { path = "../test/", develop = false }
-nonebot = { path = "../../", extras = ["all"], develop = true }
+nonebot2 = { path = "../../", extras = ["all"], develop = true }
 
 [build-system]
 requires = ["poetry-core"]
