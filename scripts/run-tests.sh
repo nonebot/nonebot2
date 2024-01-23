@@ -1,6 +1,6 @@
 #! /usr/bin/env bash
 
-# cd to the root of the project
+# cd to the root of the tests
 cd "$(dirname "$0")/../tests"
 
 # Run the tests
