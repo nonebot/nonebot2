@@ -81,6 +81,21 @@ def is_none_type(type_: t.Type[t.Any]) -> bool:
     return type_ in NONE_TYPES
 
 
+if sys.version_info < (3, 9):  # pragma: py-lt-39
+
+    def evaluate_forwardref(
+        ref: t.ForwardRef, globalns: t.Dict[str, t.Any], localns: t.Dict[str, t.Any]
+    ) -> t.Any:
+        return ref._evaluate(globalns, localns)
+
+else:  # pragma: py-gte-39
+
+    def evaluate_forwardref(
+        ref: t.ForwardRef, globalns: t.Dict[str, t.Any], localns: t.Dict[str, t.Any]
+    ) -> t.Any:
+        return ref._evaluate(globalns, localns, frozenset())
+
+
 # state
 T_State: TypeAlias = t.Dict[t.Any, t.Any]
 """事件处理状态 State 类型"""

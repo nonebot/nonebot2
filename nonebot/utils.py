@@ -11,7 +11,6 @@ import asyncio
 import inspect
 import importlib
 import dataclasses
-from enum import Enum
 from pathlib import Path
 from collections import deque
 from contextvars import copy_context
@@ -25,7 +24,6 @@ from typing import (
     Tuple,
     Union,
     Generic,
-    Literal,
     Mapping,
     TypeVar,
     Callable,
@@ -34,14 +32,12 @@ from typing import (
     Coroutine,
     AsyncGenerator,
     ContextManager,
-    final,
     overload,
 )
 
 from pydantic import BaseModel
 
 from nonebot.log import logger
-from nonebot._compat import custom_validation
 from nonebot.typing import (
     is_none_type,
     origin_is_union,
@@ -54,40 +50,6 @@ R = TypeVar("R")
 T = TypeVar("T")
 K = TypeVar("K")
 V = TypeVar("V")
-
-
-@final
-@custom_validation
-class Unset(Enum):
-    _UNSET = "<UNSET>"
-
-    def __repr__(self) -> str:
-        return "<UNSET>"
-
-    def __str__(self) -> str:
-        return self.__repr__()
-
-    def __bool__(self) -> Literal[False]:
-        return False
-
-    def __copy__(self):
-        return self._UNSET
-
-    def __deepcopy__(self, memo: Dict[int, Any]):
-        return self._UNSET
-
-    @classmethod
-    def __get_validators__(cls):
-        yield cls._validate
-
-    @classmethod
-    def _validate(cls, value: Any):
-        if value is not cls._UNSET:
-            raise ValueError(f"{value!r} is not UNSET")
-        return value
-
-
-UNSET = Unset._UNSET
 
 
 def escape_tag(s: str) -> str:

@@ -218,7 +218,7 @@ async def test_event(app: App):
 
     async with app.test_dependent(union_event, allow_types=[EventParam]) as ctx:
         ctx.pass_params(event=fake_fooevent)
-        ctx.should_return(fake_event)
+        ctx.should_return(fake_fooevent)
 
     async with app.test_dependent(generic_event, allow_types=[EventParam]) as ctx:
         ctx.pass_params(event=fake_event)

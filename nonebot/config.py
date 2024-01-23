@@ -37,11 +37,13 @@ from pydantic.networks import IPvAnyAddress
 
 from nonebot.log import logger
 from nonebot.typing import origin_is_union
-from nonebot.utils import UNSET, deep_update, type_is_complex
+from nonebot.utils import deep_update, type_is_complex
 from nonebot._compat import (
     PYDANTIC_V2,
-    BaseConfig,
+    ConfigDict,
     ModelField,
+    PydanticUndefined,
+    PydanticUndefinedType,
     model_config,
     model_fields,
 )
@@ -226,14 +228,14 @@ class DotEnvSettingsSource(BaseSettingsSource):
             env_name = self._apply_case_sensitive(field_name)
 
             # try get values from env vars
-            env_val = env_vars.get(env_name, UNSET)
+            env_val = env_vars.get(env_name, PydanticUndefined)
             # delete from file vars when used
             if env_name in env_file_vars:
                 del env_file_vars[env_name]
 
             is_complex, allow_parse_failure = self._field_is_complex(field)
             if is_complex:
-                if env_val is UNSET:
+                if isinstance(env_val, PydanticUndefinedType):
                     # field is complex but no value found so far, try explode_env_vars
                     if env_val_built := self._explode_env_vars(
                         field, env_vars, env_file_vars
@@ -261,7 +263,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
                         )
                     else:
                         d[field_name] = env_val
-            elif env_val is not UNSET:
+            elif env_val is not PydanticUndefined:
                 # simplest case, field is not complex
                 # we only need to add the value if it was found
                 d[field_name] = env_val
@@ -296,7 +298,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
         return d
 
 
-class SettingsConfig(BaseConfig, total=False):
+class SettingsConfig(ConfigDict, total=False):
     env_file: Optional[DOTENV_TYPE]
     env_file_encoding: str
     case_sensitive: bool
@@ -309,7 +311,7 @@ class BaseSettings(BaseModel):
         def __getattr__(self, name: str) -> Any:  # pragma: no cover
             return self.__dict__.get(name)
 
-    if PYDANTIC_V2:
+    if PYDANTIC_V2:  # pragma: pydantic-v2
         model_config: SettingsConfig = SettingsConfig(
             extra="allow",
             env_file=".env",
@@ -317,7 +319,7 @@ class BaseSettings(BaseModel):
             case_sensitive=False,
             env_nested_delimiter="__",
         )
-    else:
+    else:  # pragma: pydantic-v1
 
         class Config(SettingsConfig):
             extra = "allow"

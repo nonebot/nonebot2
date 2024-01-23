@@ -24,14 +24,11 @@ from typing import (
     cast,
 )
 
-from pydantic import BaseConfig
-from pydantic.schema import get_annotation_from_field_info
-from pydantic.fields import Required, FieldInfo, Undefined, ModelField
-
 from nonebot.log import logger
 from nonebot.typing import _DependentCallable
 from nonebot.exception import SkippedException
 from nonebot.utils import run_sync, is_coroutine_callable
+from nonebot._compat import FieldInfo, ModelField, PydanticUndefined
 
 from .utils import check_field_type, get_typed_signature
 
@@ -67,10 +64,6 @@ class Param(abc.ABC, FieldInfo):
 
     async def _check(self, **kwargs: Any) -> None:
         return
-
-
-class CustomConfig(BaseConfig):
-    arbitrary_types_allowed = True
 
 
 @dataclass(frozen=True)
@@ -125,12 +118,8 @@ class Dependent(Generic[R]):
         params = get_typed_signature(call).parameters.values()
 
         for param in params:
-            default_value = Required
-            if param.default != param.empty:
-                default_value = param.default
-
-            if isinstance(default_value, Param):
-                field_info = default_value
+            if isinstance(param.default, Param):
+                field_info = param.default
             else:
                 for allow_type in allow_types:
                     if field_info := allow_type._check_param(param, allow_types):
@@ -141,25 +130,13 @@ class Dependent(Generic[R]):
                         f"for function {call} with type {param.annotation}"
                     )
 
-            default_value = field_info.default
-
             annotation: Any = Any
-            required = default_value == Required
-            if param.annotation != param.empty:
+            if param.annotation is not param.empty:
                 annotation = param.annotation
-            annotation = get_annotation_from_field_info(
-                annotation, field_info, param.name
-            )
 
             fields.append(
                 ModelField(
-                    name=param.name,
-                    type_=annotation,
-                    class_validators=None,
-                    model_config=CustomConfig,
-                    default=None if required else default_value,
-                    required=required,
-                    field_info=field_info,
+                    name=param.name, annotation=annotation, field_info=field_info
                 )
             )
 
@@ -207,7 +184,7 @@ class Dependent(Generic[R]):
     async def _solve_field(self, field: ModelField, params: Dict[str, Any]) -> Any:
         param = cast(Param, field.field_info)
         value = await param._solve(**params)
-        if value is Undefined:
+        if value is PydanticUndefined:
             value = field.get_default()
         v = check_field_type(field, value)
         return v if param.validate else value
