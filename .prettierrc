@@ -5,5 +5,17 @@
   "arrowParens": "always",
   "singleQuote": false,
   "trailingComma": "es5",
-  "semi": true
+  "semi": true,
+  "overrides": [
+    {
+      "files": [
+        "**/devcontainer.json",
+        "**/tsconfig.json",
+        "**/tsconfig.*.json"
+      ],
+      "options": {
+        "parser": "json"
+      }
+    }
+  ]
 }
