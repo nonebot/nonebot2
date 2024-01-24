@@ -54,6 +54,11 @@ __all__ = (
     "custom_validation",
 )
 
+__autodoc__ = {
+    "PydanticUndefined": "Pydantic Undefined object",
+    "PydanticUndefinedType": "Pydantic Undefined type",
+}
+
 
 if PYDANTIC_V2:  # pragma: pydantic-v2
     from pydantic_core import CoreSchema, core_schema
