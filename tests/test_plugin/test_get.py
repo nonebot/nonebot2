@@ -23,6 +23,31 @@ async def test_get_plugin():
 
 
 @pytest.mark.asyncio
+async def test_get_plugin_by_id():
+    # check simple plugin
+    plugin = nonebot.get_plugin(("export",))
+    assert plugin
+    assert plugin.module_name == "plugins.export"
+    assert plugin.plugin_fullpath == ("export",)
+
+    # check sub plugin
+    plugin = nonebot.get_plugin(("nested",))
+    assert plugin
+    assert plugin.module_name == "plugins.nested"
+    assert plugin.plugin_fullpath == ("nested",)
+
+    plugin = nonebot.get_plugin(("nested", "nested_subplugin"))
+    assert plugin
+    assert plugin.module_name == "plugins.nested.plugins.nested_subplugin"
+    assert plugin.plugin_fullpath == ("nested", "nested_subplugin")
+
+    plugin = nonebot.get_plugin(("nested", "nested_subplugin2"))
+    assert plugin
+    assert plugin.module_name == "plugins.nested.plugins.nested_subplugin2"
+    assert plugin.plugin_fullpath == ("nested", "nested_subplugin2")
+
+
+@pytest.mark.asyncio
 async def test_get_available_plugin():
     old_managers = _managers.copy()
     _managers.clear()
@@ -32,6 +57,9 @@ async def test_get_available_plugin():
         # check get available plugins
         plugin_names = nonebot.get_available_plugin_names()
         assert plugin_names == {"export", "require"}
+        # check get available plugins' fullpath
+        plugin_fullpaths = nonebot.get_available_plugin_fullpaths()
+        assert plugin_fullpaths == {("export",), ("require",)}
     finally:
         _managers.clear()
         _managers.extend(old_managers)

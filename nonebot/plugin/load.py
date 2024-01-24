@@ -8,7 +8,7 @@ FrontMatter:
 import json
 from pathlib import Path
 from types import ModuleType
-from typing import Set, Union, Iterable, Optional
+from typing import Set, Tuple, Union, Iterable, Optional
 
 from nonebot.utils import path_to_module_name
 
@@ -148,26 +148,31 @@ def load_builtin_plugins(*plugins: str) -> Set[Plugin]:
     return load_all_plugins([f"nonebot.plugins.{p}" for p in plugins], [])
 
 
-def _find_manager_by_name(name: str) -> Optional[PluginManager]:
+def _find_manager_by_name(name: Union[str, Tuple[str, ...]]) -> Optional[PluginManager]:
     for manager in reversed(_managers):
         if name in manager.plugins or name in manager.searched_plugins:
             return manager
 
 
-def require(name: str) -> ModuleType:
+def require(name: Union[str, Tuple[str, ...]]) -> ModuleType:
     """获取一个插件的导出内容。
 
     如果为 `load_plugins` 文件夹导入的插件，则为文件(夹)名。
 
     参数:
-        name: 插件名，即 {ref}`nonebot.plugin.model.Plugin.name`。
+        name: 插件名或插件路径，即 {ref}`nonebot.plugin.model.Plugin.name`
+            或 {ref}`nonebot.plugin.model.Plugin.plugin_fullpath`。
 
     异常:
         RuntimeError: 插件无法加载
     """
-    plugin = get_plugin(_module_name_to_plugin_name(name))
+    if isinstance(name, str):
+        plugin_name = _module_name_to_plugin_name(name)
+    else:
+        plugin_name = name
+    plugin = get_plugin(plugin_name)
     # if plugin not loaded
-    if not plugin:
+    if not plugin and not isinstance(name, tuple):
         # plugin already declared
         if manager := _find_manager_by_name(name):
             plugin = manager.load_plugin(name)
@@ -184,7 +189,9 @@ def require(name: str) -> ModuleType:
     return plugin.module
 
 
-def inherit_supported_adapters(*names: str) -> Optional[Set[str]]:
+def inherit_supported_adapters(
+    *names: Union[str, Tuple[str, ...]]
+) -> Optional[Set[str]]:
     """获取已加载插件的适配器支持状态集合。
 
     如果传入了多个插件名称，返回值会自动取交集。
@@ -199,7 +206,9 @@ def inherit_supported_adapters(*names: str) -> Optional[Set[str]]:
     final_supported: Optional[Set[str]] = None
 
     for name in names:
-        plugin = get_plugin(_module_name_to_plugin_name(name))
+        if isinstance(name, str):
+            name = _module_name_to_plugin_name(name)
+        plugin = get_plugin(name)
         if plugin is None:
             raise RuntimeError(f'Plugin "{name}" is not loaded!')
         meta = plugin.metadata

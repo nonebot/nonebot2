@@ -8,7 +8,7 @@ FrontMatter:
 import contextlib
 from types import ModuleType
 from dataclasses import field, dataclass
-from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional
+from typing import TYPE_CHECKING, Any, Set, Dict, Type, Tuple, Optional
 
 from pydantic import BaseModel
 
@@ -80,3 +80,11 @@ class Plugin:
     sub_plugins: Set["Plugin"] = field(default_factory=set)
     """子插件集合"""
     metadata: Optional[PluginMetadata] = None
+
+    @property
+    def plugin_fullpath(self) -> Tuple[str, ...]:
+        """插件路径，返回一个插件从顶层插件到底层的所有插件名元组"""
+        if self.parent_plugin is None:
+            return (self.name,)
+        else:
+            return (*self.parent_plugin.plugin_fullpath, self.name)
