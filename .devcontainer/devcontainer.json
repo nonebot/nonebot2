@@ -2,7 +2,7 @@
   "name": "Default Linux Universal",
   "image": "mcr.microsoft.com/devcontainers/universal:2-linux",
   "features": {
-    "ghcr.io/devcontainers-contrib/features/poetry:2": {},
+    "ghcr.io/devcontainers-contrib/features/poetry:2": {}
   },
   "postCreateCommand": "poetry config virtualenvs.in-project true && poetry install -E all && poetry run pre-commit install && yarn install",
   "customizations": {
@@ -15,31 +15,31 @@
           "editor.defaultFormatter": "ms-python.black-formatter",
           "editor.codeActionsOnSave": {
             "source.fixAll.ruff": true,
-            "source.organizeImports": true,
-          },
+            "source.organizeImports": true
+          }
         },
         "[javascript]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
         "[html]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
         "[typescript]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
         "[javascriptreact]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
         "[typescriptreact]": {
-          "editor.defaultFormatter": "esbenp.prettier-vscode",
+          "editor.defaultFormatter": "esbenp.prettier-vscode"
         },
         "files.exclude": {
-          "**/__pycache__": true,
+          "**/__pycache__": true
         },
         "files.watcherExclude": {
           "**/target/**": true,
-          "**/__pycache__": true,
-        },
+          "**/__pycache__": true
+        }
       },
       "extensions": [
         "ms-python.python",
@@ -49,8 +49,8 @@
         "charliermarsh.ruff",
         "EditorConfig.EditorConfig",
         "esbenp.prettier-vscode",
-        "bradlc.vscode-tailwindcss",
-      ],
-    },
-  },
+        "bradlc.vscode-tailwindcss"
+      ]
+    }
+  }
 }
