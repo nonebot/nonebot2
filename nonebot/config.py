@@ -38,7 +38,7 @@ from pydantic.networks import IPvAnyAddress
 from nonebot.log import logger
 from nonebot.typing import origin_is_union
 from nonebot.utils import deep_update, type_is_complex, lenient_issubclass
-from nonebot._compat import (
+from nonebot.compat import (
     PYDANTIC_V2,
     ConfigDict,
     ModelField,

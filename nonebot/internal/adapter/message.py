@@ -17,7 +17,7 @@ from typing import (
     overload,
 )
 
-from nonebot._compat import custom_validation, type_validate_python
+from nonebot.compat import custom_validation, type_validate_python
 
 from .template import MessageTemplate
 

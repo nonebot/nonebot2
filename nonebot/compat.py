@@ -1,3 +1,12 @@
+"""本模块为 Pydantic 版本兼容层模块
+
+为兼容 Pydantic V1 与 V2 版本，定义了一系列兼容函数与类供使用。
+
+FrontMatter:
+    sidebar_position: 16
+    description: nonebot.compat 模块
+"""
+
 from dataclasses import dataclass, is_dataclass
 from typing_extensions import Self, Annotated, is_typeddict
 from typing import (
@@ -21,16 +30,12 @@ PYDANTIC_V2 = int(VERSION.split(".", 1)[0]) == 2
 
 if TYPE_CHECKING:
 
-    class ModelBeforeValidator(Protocol):
-        def __call__(self, cls: Any, __value: Any) -> Any:
-            ...
-
-    class CustomValidationClass(Protocol):
+    class _CustomValidationClass(Protocol):
         @classmethod
         def __get_validators__(cls) -> Generator[Callable[..., Any], None, None]:
             ...
 
-    CVC = TypeVar("CVC", bound=CustomValidationClass)
+    CVC = TypeVar("CVC", bound=_CustomValidationClass)
 
 
 __all__ = (
@@ -69,6 +74,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
     from pydantic import ConfigDict as ConfigDict
 
     DEFAULT_CONFIG = ConfigDict(extra="allow", arbitrary_types_allowed=True)
+    """Default config for validations"""
 
     class FieldInfo(BaseFieldInfo):
         """FieldInfo class with extra property for compatibility with pydantic v1"""
@@ -177,7 +183,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
         return TypeAdapter(type_).validate_python(data)
 
     def __get_pydantic_core_schema__(
-        cls: Type["CustomValidationClass"],
+        cls: Type["_CustomValidationClass"],
         source_type: Any,
         handler: GetCoreSchemaHandler,
     ) -> CoreSchema:

@@ -11,7 +11,7 @@ from loguru import logger
 
 from nonebot.exception import TypeMisMatch
 from nonebot.typing import evaluate_forwardref
-from nonebot._compat import DEFAULT_CONFIG, ModelField, model_field_validate
+from nonebot.compat import DEFAULT_CONFIG, ModelField, model_field_validate
 
 
 def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:

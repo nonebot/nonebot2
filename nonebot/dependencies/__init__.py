@@ -28,7 +28,7 @@ from nonebot.log import logger
 from nonebot.typing import _DependentCallable
 from nonebot.exception import SkippedException
 from nonebot.utils import run_sync, is_coroutine_callable
-from nonebot._compat import FieldInfo, ModelField, PydanticUndefined
+from nonebot.compat import FieldInfo, ModelField, PydanticUndefined
 
 from .utils import check_field_type, get_typed_signature
 

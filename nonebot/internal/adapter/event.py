@@ -4,7 +4,7 @@ from typing import Any, Type, TypeVar
 from pydantic import BaseModel
 
 from nonebot.utils import DataclassEncoder
-from nonebot._compat import PYDANTIC_V2, ConfigDict
+from nonebot.compat import PYDANTIC_V2, ConfigDict
 
 from .message import Message
 

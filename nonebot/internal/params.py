@@ -19,7 +19,7 @@ from pydantic.fields import FieldInfo as PydanticFieldInfo
 from nonebot.dependencies import Param, Dependent
 from nonebot.dependencies.utils import check_field_type
 from nonebot.typing import T_State, T_Handler, T_DependencyCache
-from nonebot._compat import FieldInfo, ModelField, PydanticUndefined, extract_field_info
+from nonebot.compat import FieldInfo, ModelField, PydanticUndefined, extract_field_info
 from nonebot.utils import (
     get_name,
     run_sync,

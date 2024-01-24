@@ -1,7 +1,7 @@
 import pytest
 from pydantic import ValidationError
 
-from nonebot._compat import type_validate_python
+from nonebot.compat import type_validate_python
 from utils import FakeMessage, FakeMessageSegment
 from nonebot.adapters import Message, MessageSegment
 
