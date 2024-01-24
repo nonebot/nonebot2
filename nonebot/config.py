@@ -37,7 +37,7 @@ from pydantic.networks import IPvAnyAddress
 
 from nonebot.log import logger
 from nonebot.typing import origin_is_union
-from nonebot.utils import deep_update, type_is_complex
+from nonebot.utils import deep_update, type_is_complex, lenient_issubclass
 from nonebot._compat import (
     PYDANTIC_V2,
     ConfigDict,
@@ -162,14 +162,10 @@ class DotEnvSettingsSource(BaseSettingsSource):
     ) -> Optional[ModelField]:
         if not field or origin_is_union(get_origin(field.annotation)):
             return None
-        elif (
-            field.annotation
-            and isinstance(
-                (fields := getattr(field.annotation, "__fields__", None)), dict
-            )
-            and (field := fields.get(key))
-        ):
-            return field
+        elif field.annotation and lenient_issubclass(field.annotation, BaseModel):
+            for field in model_fields(field.annotation):
+                if field.name == key:
+                    return field
         return None
 
     def _explode_env_vars(
@@ -298,11 +294,21 @@ class DotEnvSettingsSource(BaseSettingsSource):
         return d
 
 
-class SettingsConfig(ConfigDict, total=False):
-    env_file: Optional[DOTENV_TYPE]
-    env_file_encoding: str
-    case_sensitive: bool
-    env_nested_delimiter: Optional[str]
+if PYDANTIC_V2:  # pragma: pydantic-v2
+
+    class SettingsConfig(ConfigDict, total=False):
+        env_file: Optional[DOTENV_TYPE]
+        env_file_encoding: str
+        case_sensitive: bool
+        env_nested_delimiter: Optional[str]
+
+else:  # pragma: pydantic-v1
+
+    class SettingsConfig(ConfigDict):
+        env_file: Optional[DOTENV_TYPE]
+        env_file_encoding: str
+        case_sensitive: bool
+        env_nested_delimiter: Optional[str]
 
 
 class BaseSettings(BaseModel):
@@ -322,7 +328,7 @@ class BaseSettings(BaseModel):
     else:  # pragma: pydantic-v1
 
         class Config(SettingsConfig):
-            extra = "allow"
+            extra = "allow"  # type: ignore
             env_file = ".env"
             env_file_encoding = "utf-8"
             case_sensitive = False
@@ -469,9 +475,9 @@ class Config(BaseSettings):
     # custom configs can be assigned during nonebot.init
     # or from env file using json loads
 
-    if PYDANTIC_V2:
+    if PYDANTIC_V2:  # pragma: pydantic-v2
         model_config = SettingsConfig(env_file=(".env", ".env.prod"))
-    else:
+    else:  # pragma: pydantic-v1
 
         class Config(SettingsConfig):
             env_file = ".env", ".env.prod"

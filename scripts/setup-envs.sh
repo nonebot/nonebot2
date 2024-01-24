@@ -10,5 +10,5 @@ poetry install --all-extras && poetry run pre-commit install && yarn install
 # setup pydantic v2 test environment
 for env in $(find ./envs/ -maxdepth 1 -mindepth 1 -type d -not -name test); do
   echo "Setting up $env environment"
-  poetry install --no-root -C $env
+  (cd $env && poetry install --no-root)
 done

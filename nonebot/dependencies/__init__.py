@@ -135,7 +135,7 @@ class Dependent(Generic[R]):
                 annotation = param.annotation
 
             fields.append(
-                ModelField(
+                ModelField.construct(
                     name=param.name, annotation=annotation, field_info=field_info
                 )
             )

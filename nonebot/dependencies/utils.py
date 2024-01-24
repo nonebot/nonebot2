@@ -11,7 +11,7 @@ from loguru import logger
 
 from nonebot.exception import TypeMisMatch
 from nonebot.typing import evaluate_forwardref
-from nonebot._compat import PYDANTIC_V2, ConfigDict, ModelField
+from nonebot._compat import DEFAULT_CONFIG, ModelField, model_field_validate
 
 
 def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
@@ -47,18 +47,10 @@ def get_typed_annotation(param: inspect.Parameter, globalns: Dict[str, Any]) -> 
     return annotation
 
 
-if PYDANTIC_V2:  # pragma: pydantic-v2
-    CONFIG = ConfigDict(arbitrary_types_allowed=True)
-else:  # pragma: pydantic-v1
-
-    class CONFIG(ConfigDict):
-        arbitrary_types_allowed: bool = True
-
-
 def check_field_type(field: ModelField, value: Any) -> Any:
     """检查字段类型是否匹配"""
 
     try:
-        return field.validate(value, CONFIG)
+        return model_field_validate(field, value, DEFAULT_CONFIG)
     except ValueError:
         raise TypeMisMatch(field, value)

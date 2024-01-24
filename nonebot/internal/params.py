@@ -257,7 +257,7 @@ class BotParam(Param):
         if generic_check_issubclass(param.annotation, Bot):
             checker: Optional[ModelField] = None
             if param.annotation is not Bot:
-                checker = ModelField(
+                checker = ModelField.construct(
                     name=param.name, annotation=param.annotation, field_info=FieldInfo()
                 )
             return cls(checker=checker)
@@ -307,7 +307,7 @@ class EventParam(Param):
         if generic_check_issubclass(param.annotation, Event):
             checker: Optional[ModelField] = None
             if param.annotation is not Event:
-                checker = ModelField(
+                checker = ModelField.construct(
                     name=param.name, annotation=param.annotation, field_info=FieldInfo()
                 )
             return cls(checker=checker)
@@ -385,7 +385,7 @@ class MatcherParam(Param):
         if generic_check_issubclass(param.annotation, Matcher):
             checker: Optional[ModelField] = None
             if param.annotation is not Matcher:
-                checker = ModelField(
+                checker = ModelField.construct(
                     name=param.name, annotation=param.annotation, field_info=FieldInfo()
                 )
             return cls(checker=checker)

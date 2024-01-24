@@ -19,7 +19,7 @@ class Event(abc.ABC, BaseModel):
     else:  # pragma: pydantic-v1
 
         class Config(ConfigDict):
-            extra = "allow"
+            extra = "allow"  # type: ignore
             json_encoders = {Message: DataclassEncoder}
 
     if not PYDANTIC_V2:  # pragma: pydantic-v1

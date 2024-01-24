@@ -1,5 +1,5 @@
 from dataclasses import dataclass, is_dataclass
-from typing_extensions import Annotated, is_typeddict
+from typing_extensions import Self, Annotated, is_typeddict
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -38,9 +38,11 @@ __all__ = (
     "PydanticUndefined",
     "PydanticUndefinedType",
     "ConfigDict",
+    "DEFAULT_CONFIG",
     "FieldInfo",
     "ModelField",
     "extract_field_info",
+    "model_field_validate",
     "model_fields",
     "model_config",
     "type_validate_python",
@@ -65,6 +67,8 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
 
     # Export model config dict
     from pydantic import ConfigDict as ConfigDict
+
+    DEFAULT_CONFIG = ConfigDict(extra="allow", arbitrary_types_allowed=True)
 
     class FieldInfo(BaseFieldInfo):
         """FieldInfo class with extra property for compatibility with pydantic v1"""
@@ -97,6 +101,17 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
         field_info: FieldInfo
         """The FieldInfo of the field."""
 
+        @classmethod
+        def _construct(cls, name: str, annotation: Any, field_info: FieldInfo) -> Self:
+            return cls(name, annotation, field_info)
+
+        @classmethod
+        def construct(
+            cls, name: str, annotation: Any, field_info: Optional[FieldInfo] = None
+        ) -> Self:
+            """Construct a ModelField from given infos."""
+            return cls._construct(name, annotation, field_info or FieldInfo())
+
         def _annotation_has_config(self) -> bool:
             """Check if the annotation has config.
 
@@ -116,13 +131,6 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             """Get the default value of the field."""
             return self.field_info.get_default(call_default_factory=True)
 
-        def validate(self, value: Any, config: Optional[ConfigDict] = None) -> Any:
-            """Validate the value pass to the field."""
-            type: Any = Annotated[self.annotation, self.field_info]
-            return TypeAdapter(
-                type, config=None if self._annotation_has_config() else config
-            ).validate_python(value)
-
         def _type_display(self):
             """Get the display of the type of the field."""
             return display_as_type(self.annotation)
@@ -139,11 +147,20 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
         kwargs["annotation"] = field_info.rebuild_annotation()
         return kwargs
 
+    def model_field_validate(
+        model_field: ModelField, value: Any, config: Optional[ConfigDict] = None
+    ) -> Any:
+        """Validate the value pass to the field."""
+        type: Any = Annotated[model_field.annotation, model_field.field_info]
+        return TypeAdapter(
+            type, config=None if model_field._annotation_has_config() else config
+        ).validate_python(value)
+
     def model_fields(model: Type[BaseModel]) -> List[ModelField]:
         """Get field list of a model."""
 
         return [
-            ModelField(
+            ModelField._construct(
                 name=name,
                 annotation=field_info.rebuild_annotation(),
                 field_info=FieldInfo(**extract_field_info(field_info)),
@@ -182,6 +199,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
         return class_
 
 else:  # pragma: pydantic-v1
+    from pydantic import Extra
     from pydantic import parse_obj_as
     from pydantic import BaseConfig as PydanticConfig
     from pydantic.fields import FieldInfo as BaseFieldInfo
@@ -205,22 +223,26 @@ else:  # pragma: pydantic-v1
             """Get a config value."""
             return getattr(cls, field, default)
 
+    class DEFAULT_CONFIG(ConfigDict):
+        extra = Extra.allow
+        arbitrary_types_allowed = True
+
     class FieldInfo(BaseFieldInfo):
         def __init__(self, default: Any = PydanticUndefined, **kwargs: Any):
             # preprocess default value to make it compatible with pydantic v2
             # when default is Required, set it to PydanticUndefined
             if default is Required:
                 default = PydanticUndefined
-            super().__init__(self, default, **kwargs)
+            super().__init__(default, **kwargs)
 
     class ModelField(BaseModelField):
-        # rewrite init method to simplify the logic
-        def __init__(self, name: str, annotation: Any, field_info: FieldInfo):
-            super().__init__(
+        @classmethod
+        def _construct(cls, name: str, annotation: Any, field_info: FieldInfo) -> Self:
+            return cls(
                 name=name,
-                type_=get_annotation_from_field_info(annotation, field_info, name),
+                type_=annotation,
                 class_validators=None,
-                model_config=ConfigDict,
+                model_config=DEFAULT_CONFIG,
                 default=field_info.default,
                 default_factory=field_info.default_factory,
                 required=(
@@ -230,43 +252,55 @@ else:  # pragma: pydantic-v1
                 field_info=field_info,
             )
 
-        def validate(
-            self, value: Any, config: Optional[Type[ConfigDict]] = None
-        ) -> Any:
-            """Validate the value pass to the field.
+        @classmethod
+        def construct(
+            cls, name: str, annotation: Any, field_info: Optional[FieldInfo] = None
+        ) -> Self:
+            """Construct a ModelField from given infos.
 
-            Set config before validate to ensure validate correctly.
+            Field annotation is preprocessed with field_info.
             """
-
-            if self.model_config is not config:
-                self.set_config(config or ConfigDict)
-
-            v, errs_ = super().validate(value, {}, loc=())
-            if errs_:
-                raise ValueError(value, self)
-            return v
+            if field_info is not None:
+                annotation = get_annotation_from_field_info(
+                    annotation, field_info, name
+                )
+            return cls._construct(name, annotation, field_info or FieldInfo())
 
     def extract_field_info(field_info: BaseFieldInfo) -> Dict[str, Any]:
         """Get FieldInfo init kwargs from a FieldInfo instance."""
 
-        kwargs = {"annotation": getattr(field_info, "annotation", Any)}
-        kwargs.update(
-            (s, getattr(field_info, s)) for s in field_info.__slots__ if s != "extra"
-        )
+        kwargs = {
+            s: getattr(field_info, s) for s in field_info.__slots__ if s != "extra"
+        }
         kwargs.update(field_info.extra)
         return kwargs
+
+    def model_field_validate(
+        model_field: ModelField, value: Any, config: Optional[Type[ConfigDict]] = None
+    ) -> Any:
+        """Validate the value pass to the field.
+
+        Set config before validate to ensure validate correctly.
+        """
+
+        if model_field.model_config is not config:
+            model_field.set_config(config or ConfigDict)
+
+        v, errs_ = model_field.validate(value, {}, loc=())
+        if errs_:
+            raise ValueError(value, model_field)
+        return v
 
     def model_fields(model: Type[BaseModel]) -> List[ModelField]:
         """Get field list of a model."""
 
+        # construct the model field without preprocess to avoid error
         return [
-            ModelField(
+            ModelField._construct(
                 name=model_field.name,
+                annotation=model_field.annotation,
                 field_info=FieldInfo(
-                    **{
-                        **extract_field_info(model_field.field_info),
-                        "annotation": model_field.annotation,
-                    },
+                    **extract_field_info(model_field.field_info),
                 ),
             )
             for model_field in model.__fields__.values()

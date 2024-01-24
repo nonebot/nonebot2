@@ -99,7 +99,7 @@ mark-parentheses = false
 [tool.pyright]
 pythonVersion = "3.8"
 pythonPlatform = "All"
-defineConstant = { PYDANTIC_V2 = true }
+defineConstant = { PYDANTIC_V2 = false }
 executionEnvironments = [
   { root = "./tests", extraPaths = [
     "./",
