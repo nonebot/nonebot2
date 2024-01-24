@@ -78,7 +78,7 @@ pdm add nonebot-plugin-orm[sqlite]
 </TabItem>
 </Tabs>
 
-默认情况下，数据库文件为 `<data path>/nonebot-plugin-orm/db.sqlite3`（数据目录由 [nonebot-plugin-localstore](/docs/next/best-practice/data-storing) 提供）。
+默认情况下，数据库文件为 `<data path>/nonebot-plugin-orm/db.sqlite3`（数据目录由 [nonebot-plugin-localstore](../data-storing) 提供）。
 或者，你可以通过配置 `SQLALCHEMY_DATABASE_URL` 来指定数据库文件路径：
 
 ```shell
@@ -140,7 +140,7 @@ SQLALCHEMY_DATABASE_URL=mysql+aiomysql://user:password@host:port/dbname[?key=val
 
 ## 迁移
 
-本插件提供了数据库迁移功能（此功能依赖于 [nb-cli 脚手架](/docs/next/quick-start#安装脚手架)）。
+本插件提供了数据库迁移功能（此功能依赖于 [nb-cli 脚手架](../../quick-start#安装脚手架)）。
 在安装了新的插件或机器人之后，你需要执行一次数据库迁移操作，将数据库同步至与机器人一致的状态：
 
 ```shell
