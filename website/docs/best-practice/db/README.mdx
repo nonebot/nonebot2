@@ -45,16 +45,17 @@ pdm add nonebot-plugin-orm
 </TabItem>
 </Tabs>
 
-但是，只有插件本身是不够的，你还需要安装额外的依赖，参见 [数据库选择](#数据库选择)。
+但是，只有插件本身是不够的，你还需要安装额外的依赖，参见 [数据库服务](#数据库服务)。
 
-## 数据库后端
+## 数据库服务
 
-本插件只提供数据库连接能力，不提供数据库服务。你需要自行安装并配置一个数据库后端。
-常见的数据库后端有：
+本插件只提供数据库连接能力，不提供数据库服务。
+你需要自行安装并配置一个数据库服务。
+常见的数据库有：
 
 ### SQLite
 
-[SQLite](https://www.sqlite.org/) 是一个轻量级的嵌入式数据库，它的数据以文件的形式存储在本地，不需要单独的数据库服务。
+[SQLite](https://www.sqlite.org/) 是一个轻量级的嵌入式数据库，它的数据以单文件的形式存储在本地，不需要单独的数据库服务。
 SQLite 非常适合用于开发环境和小型应用，但是不适合用于大型应用的生产环境。
 
 虽然不需要单独的数据库服务，并且 [Python 标准库有对 SQLite 的内建支持](https://docs.python.org/zh-cn/3/library/sqlite3.html)，但你仍然需要安装额外的依赖：
@@ -136,3 +137,20 @@ pdm add nonebot-plugin-orm[mysql]
 ```shell
 SQLALCHEMY_DATABASE_URL=mysql+aiomysql://user:password@host:port/dbname[?key=value&key=value...]
 ```
+
+## 迁移
+
+本插件提供了数据库迁移功能（此功能依赖于 [nb-cli 脚手架](/docs/next/quick-start#安装脚手架)）。
+在安装了新的插件或机器人之后，你需要执行一次数据库迁移操作，将数据库同步至与机器人一致的状态：
+
+```shell
+nb orm upgrade
+```
+
+运行完毕后，可以检查一下：
+
+```shell
+nb orm check
+```
+
+如果输出是 `没有检测到新的升级操作`，那么恭喜你，数据库已经迁移完成了，你可以启动机器人了。
