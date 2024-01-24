@@ -8,7 +8,8 @@ inputs:
     default: "3.10"
   env-dir:
     description: Environment directory
-    required: true
+    required: false
+    default: "."
   no-root:
     description: Do not install package in the environment
     required: false
