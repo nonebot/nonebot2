@@ -529,10 +529,14 @@ async def test_arg(app: App):
 
 @pytest.mark.asyncio
 async def test_exception(app: App):
-    from plugins.param.param_exception import exc
+    from plugins.param.param_exception import exc, legacy_exc
 
     exception = ValueError("test")
     async with app.test_dependent(exc, allow_types=[ExceptionParam]) as ctx:
+        ctx.pass_params(exception=exception)
+        ctx.should_return(exception)
+
+    async with app.test_dependent(legacy_exc, allow_types=[ExceptionParam]) as ctx:
         ctx.pass_params(exception=exception)
         ctx.should_return(exception)
 
