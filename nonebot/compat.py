@@ -99,11 +99,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             # comprehension not inlined in cpython < 3.12
             # https://peps.python.org/pep-0709/
             slots = super().__slots__
-            return {
-                k: v
-                for k, v in self._attributes_set.items()
-                if k not in slots
-            }
+            return {k: v for k, v in self._attributes_set.items() if k not in slots}
 
     @dataclass
     class ModelField:
