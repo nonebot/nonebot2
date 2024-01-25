@@ -95,14 +95,14 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             For compatibility with pydantic v1.
             """
             # extract extra data from attributes set except used slots
-            # we need to explicitly call super due to
+            # we need to call super in advance due to
             # comprehension not inlined in cpython < 3.12
             # https://peps.python.org/pep-0709/
-            # https://github.com/python/cpython/pull/101441
+            slots = super().__slots__
             return {
                 k: v
                 for k, v in self._attributes_set.items()
-                if k not in super(FieldInfo, self).__slots__
+                if k not in slots
             }
 
     @dataclass
