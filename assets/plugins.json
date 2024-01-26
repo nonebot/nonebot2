@@ -5472,5 +5472,12 @@
     "author": "eya46",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nezha",
+    "project_link": "nonebot-plugin-nezha",
+    "author": "eya46",
+    "tags": [],
+    "is_official": false
   }
 ]
