@@ -12,28 +12,38 @@ import inspect
 import importlib
 import dataclasses
 from pathlib import Path
+from collections import deque
 from contextvars import copy_context
 from functools import wraps, partial
 from contextlib import asynccontextmanager
 from typing_extensions import ParamSpec, get_args, override, get_origin
 from typing import (
     Any,
+    Dict,
     Type,
     Tuple,
     Union,
     Generic,
+    Mapping,
     TypeVar,
     Callable,
     Optional,
+    Sequence,
     Coroutine,
     AsyncGenerator,
     ContextManager,
     overload,
 )
 
-from pydantic.typing import is_union, is_none_type, is_literal_type, all_literal_values
+from pydantic import BaseModel
 
 from nonebot.log import logger
+from nonebot.typing import (
+    is_none_type,
+    origin_is_union,
+    origin_is_literal,
+    all_literal_values,
+)
 
 P = ParamSpec("P")
 R = TypeVar("R")
@@ -53,6 +63,34 @@ def escape_tag(s: str) -> str:
     return re.sub(r"</?((?:[fb]g\s)?[^<>\s]*)>", r"\\\g<0>", s)
 
 
+def deep_update(
+    mapping: Dict[K, Any], *updating_mappings: Dict[K, Any]
+) -> Dict[K, Any]:
+    """深度更新合并字典"""
+    updated_mapping = mapping.copy()
+    for updating_mapping in updating_mappings:
+        for k, v in updating_mapping.items():
+            if (
+                k in updated_mapping
+                and isinstance(updated_mapping[k], dict)
+                and isinstance(v, dict)
+            ):
+                updated_mapping[k] = deep_update(updated_mapping[k], v)
+            else:
+                updated_mapping[k] = v
+    return updated_mapping
+
+
+def lenient_issubclass(
+    cls: Any, class_or_tuple: Union[Type[Any], Tuple[Type[Any], ...]]
+) -> bool:
+    """检查 cls 是否是 class_or_tuple 中的一个类型子类并忽略类型错误。"""
+    try:
+        return isinstance(cls, type) and issubclass(cls, class_or_tuple)
+    except TypeError:
+        return False
+
+
 def generic_check_issubclass(
     cls: Any, class_or_tuple: Union[Type[Any], Tuple[Type[Any], ...]]
 ) -> bool:
@@ -62,6 +100,8 @@ def generic_check_issubclass(
 
     - 如果 cls 是 `typing.Union` 或 `types.UnionType` 类型，
       则会检查其中的所有类型是否是 class_or_tuple 中一个类型的子类或 None。
+    - 如果 cls 是 `typing.Literal` 类型，
+      则会检查其中的所有值是否是 class_or_tuple 中一个类型的实例。
     - 如果 cls 是 `typing.TypeVar` 类型，
       则会检查其 `__bound__` 或 `__constraints__`
       是否是 class_or_tuple 中一个类型的子类或 None。
@@ -70,12 +110,12 @@ def generic_check_issubclass(
         return issubclass(cls, class_or_tuple)
     except TypeError:
         origin = get_origin(cls)
-        if is_union(origin):
+        if origin_is_union(origin):
             return all(
                 is_none_type(type_) or generic_check_issubclass(type_, class_or_tuple)
                 for type_ in get_args(cls)
             )
-        elif is_literal_type(cls):
+        elif origin_is_literal(origin):
             return all(
                 is_none_type(value) or isinstance(value, class_or_tuple)
                 for value in all_literal_values(cls)
@@ -97,6 +137,21 @@ def generic_check_issubclass(
             elif cls.__bound__:
                 return generic_check_issubclass(cls.__bound__, class_or_tuple)
         return False
+
+
+def type_is_complex(type_: Type[Any]) -> bool:
+    """检查 type_ 是否是复杂类型"""
+    origin = get_origin(type_)
+    return _type_is_complex_inner(type_) or _type_is_complex_inner(origin)
+
+
+def _type_is_complex_inner(type_: Optional[Type[Any]]) -> bool:
+    if lenient_issubclass(type_, (str, bytes)):
+        return False
+
+    return lenient_issubclass(
+        type_, (BaseModel, Mapping, Sequence, tuple, set, frozenset, deque)
+    ) or dataclasses.is_dataclass(type_)
 
 
 def is_coroutine_callable(call: Callable[..., Any]) -> bool:

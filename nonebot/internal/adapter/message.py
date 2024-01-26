@@ -17,7 +17,7 @@ from typing import (
     overload,
 )
 
-from pydantic import parse_obj_as
+from nonebot.compat import custom_validation, type_validate_python
 
 from .template import MessageTemplate
 
@@ -25,6 +25,7 @@ TMS = TypeVar("TMS", bound="MessageSegment")
 TM = TypeVar("TM", bound="Message")
 
 
+@custom_validation
 @dataclass
 class MessageSegment(abc.ABC, Generic[TM]):
     """消息段基类"""
@@ -65,6 +66,8 @@ class MessageSegment(abc.ABC, Generic[TM]):
     def _validate(cls, value) -> Self:
         if isinstance(value, cls):
             return value
+        if isinstance(value, MessageSegment):
+            raise ValueError(f"Type {type(value)} can not be converted to {cls}")
         if not isinstance(value, dict):
             raise ValueError(f"Expected dict for MessageSegment, got {type(value)}")
         if "type" not in value:
@@ -97,6 +100,7 @@ class MessageSegment(abc.ABC, Generic[TM]):
         raise NotImplementedError
 
 
+@custom_validation
 class Message(List[TMS], abc.ABC):
     """消息序列
 
@@ -158,9 +162,9 @@ class Message(List[TMS], abc.ABC):
         elif isinstance(value, str):
             pass
         elif isinstance(value, dict):
-            value = parse_obj_as(cls.get_segment_class(), value)
+            value = type_validate_python(cls.get_segment_class(), value)
         elif isinstance(value, Iterable):
-            value = [parse_obj_as(cls.get_segment_class(), v) for v in value]
+            value = [type_validate_python(cls.get_segment_class(), v) for v in value]
         else:
             raise ValueError(
                 f"Expected str, dict or iterable for Message, got {type(value)}"

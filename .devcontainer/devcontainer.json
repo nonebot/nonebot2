@@ -4,7 +4,7 @@
   "features": {
     "ghcr.io/devcontainers-contrib/features/poetry:2": {}
   },
-  "postCreateCommand": "poetry config virtualenvs.in-project true && poetry install -E all && poetry run pre-commit install && yarn install",
+  "postCreateCommand": "./scripts/setup-envs.sh",
   "customizations": {
     "vscode": {
       "settings": {

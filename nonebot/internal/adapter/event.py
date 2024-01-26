@@ -4,6 +4,7 @@ from typing import Any, Type, TypeVar
 from pydantic import BaseModel
 
 from nonebot.utils import DataclassEncoder
+from nonebot.compat import PYDANTIC_V2, ConfigDict
 
 from .message import Message
 
@@ -13,15 +14,21 @@ E = TypeVar("E", bound="Event")
 class Event(abc.ABC, BaseModel):
     """Event 基类。提供获取关键信息的方法，其余信息可直接获取。"""
 
-    class Config:
-        extra = "allow"
-        json_encoders = {Message: DataclassEncoder}
+    if PYDANTIC_V2:  # pragma: pydantic-v2
+        model_config = ConfigDict(extra="allow")
+    else:  # pragma: pydantic-v1
 
-    @classmethod
-    def validate(cls: Type["E"], value: Any) -> "E":
-        if isinstance(value, Event) and not isinstance(value, cls):
-            raise TypeError(f"{value} is incompatible with Event type {cls}")
-        return super().validate(value)
+        class Config(ConfigDict):
+            extra = "allow"  # type: ignore
+            json_encoders = {Message: DataclassEncoder}
+
+    if not PYDANTIC_V2:  # pragma: pydantic-v1
+
+        @classmethod
+        def validate(cls: Type["E"], value: Any) -> "E":
+            if isinstance(value, Event) and not isinstance(value, cls):
+                raise TypeError(f"{value} is incompatible with Event type {cls}")
+            return super().validate(value)
 
     @abc.abstractmethod
     def get_type(self) -> str:

@@ -31,7 +31,7 @@ FrontMatter:
 
 from typing import Any, Optional
 
-from pydantic.fields import ModelField
+from nonebot.compat import ModelField
 
 
 class NoneBotException(Exception):

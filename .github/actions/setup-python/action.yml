@@ -6,6 +6,14 @@ inputs:
     description: Python version
     required: false
     default: "3.10"
+  env-dir:
+    description: Environment directory
+    required: false
+    default: "."
+  no-root:
+    description: Do not install package in the environment
+    required: false
+    default: "false"
 
 runs:
   using: "composite"
@@ -19,6 +27,15 @@ runs:
         python-version: ${{ inputs.python-version }}
         architecture: "x64"
         cache: "poetry"
+        cache-dependency-path: |
+          ./poetry.lock
+          ${{ inputs.env-dir }}/poetry.lock
 
-    - run: poetry install -E all
+    - run: |
+        cd ${{ inputs.env-dir }}
+        if [ "${{ inputs.no-root }}" = "true" ]; then
+          poetry install --all-extras --no-root
+        else
+          poetry install --all-extras
+        fi
       shell: bash
