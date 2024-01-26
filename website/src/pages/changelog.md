@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 兼容 Pydantic v2 [@yanyongyu](https://github.com/yanyongyu) ([#2544](https://github.com/nonebot/nonebot2/pull/2544))
 - Feature: 使用自定义配置加载替代 `pydantic-settings` [@yanyongyu](https://github.com/yanyongyu) ([#2521](https://github.com/nonebot/nonebot2/pull/2521))
 - Feature: 带参数的 `RegexStr()` [@ProgramRipper](https://github.com/ProgramRipper) ([#2499](https://github.com/nonebot/nonebot2/pull/2499))
 
