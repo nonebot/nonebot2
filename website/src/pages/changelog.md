@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 哪吒监控插件 [@noneflow](https://github.com/noneflow) ([#2552](https://github.com/nonebot/nonebot2/pull/2552))
 - Plugin: SakuraFrp [@noneflow](https://github.com/noneflow) ([#2543](https://github.com/nonebot/nonebot2/pull/2543))
 - Plugin: haruka_bot_red [@noneflow](https://github.com/noneflow) ([#2541](https://github.com/nonebot/nonebot2/pull/2541))
 - Plugin: nonebot-plugin-gemini [@noneflow](https://github.com/noneflow) ([#2527](https://github.com/nonebot/nonebot2/pull/2527))
