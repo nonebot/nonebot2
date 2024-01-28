@@ -5486,5 +5486,12 @@
     "author": "HuParry",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_BAdrawcard",
+    "project_link": "nonebot-plugin-badrawcard",
+    "author": "lengmianzz",
+    "tags": [],
+    "is_official": false
   }
 ]
