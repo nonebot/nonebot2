@@ -39,13 +39,15 @@ export default function TagFormItem({
     }
     if (validateTag()) {
       const tag: TagType = { label, color };
-      setTags([...tags, tag]);
-      onTagUpdate(tags);
+      const newTags = [...tags, tag];
+      setTags(newTags);
+      onTagUpdate(newTags);
     }
   };
   const delTag = (index: number) => {
-    setTags(tags.filter((_, i) => i !== index));
-    onTagUpdate(tags);
+    const newTags = tags.filter((_, i) => i !== index);
+    setTags(newTags);
+    onTagUpdate(newTags);
   };
   const onChangeColor = (color: ColorResult) => {
     setColor(color.hex as TagType["color"]);
