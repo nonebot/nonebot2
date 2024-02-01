@@ -31,6 +31,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: ChatGPT 聊天 [@noneflow](https://github.com/noneflow) ([#2556](https://github.com/nonebot/nonebot2/pull/2556))
 - Plugin: BA模拟抽卡 [@noneflow](https://github.com/noneflow) ([#2550](https://github.com/nonebot/nonebot2/pull/2550))
 - Plugin: 随机发送图片 [@noneflow](https://github.com/noneflow) ([#2548](https://github.com/nonebot/nonebot2/pull/2548))
 - Plugin: 哪吒监控插件 [@noneflow](https://github.com/noneflow) ([#2552](https://github.com/nonebot/nonebot2/pull/2552))
