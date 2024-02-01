@@ -5493,5 +5493,17 @@
     "author": "lengmianzz",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_gpt",
+    "project_link": "nonebot-plugin-gpt",
+    "author": "nek0us",
+    "tags": [
+      {
+        "label": "ChatGPT",
+        "color": "#50ec9d"
+      }
+    ],
+    "is_official": false
   }
 ]
