@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复表单标签状态更新 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2558](https://github.com/nonebot/nonebot2/pull/2558))
 - Docs: 添加 CITATION 文件 [@yanyongyu](https://github.com/yanyongyu) ([#2520](https://github.com/nonebot/nonebot2/pull/2520))
 
 ### 💫 杂项
