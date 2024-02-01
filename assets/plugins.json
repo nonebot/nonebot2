@@ -5505,5 +5505,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_easy_blacklist",
+    "project_link": "nonebot-plugin-easy-blacklist",
+    "author": "bingqiu456",
+    "tags": [],
+    "is_official": false
   }
 ]
