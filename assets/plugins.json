@@ -513,30 +513,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_gocqhttp",
-    "project_link": "nonebot-plugin-gocqhttp",
-    "author": "mnixry",
-    "tags": [
-      {
-        "label": "gocqhttp",
-        "color": "#eabd52"
-      }
-    ],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_guild_patch",
-    "project_link": "nonebot-plugin-guild-patch",
-    "author": "mnixry",
-    "tags": [
-      {
-        "label": "gocqhttp",
-        "color": "#a2ea52"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_boardgame",
     "project_link": "nonebot-plugin-boardgame",
     "author": "MeetWq",
