@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 定时提醒 [@noneflow](https://github.com/noneflow) ([#2559](https://github.com/nonebot/nonebot2/pull/2559))
 - Plugin: 黑名单插件 [@noneflow](https://github.com/noneflow) ([#2554](https://github.com/nonebot/nonebot2/pull/2554))
 - Plugin: ChatGPT 聊天 [@noneflow](https://github.com/noneflow) ([#2556](https://github.com/nonebot/nonebot2/pull/2556))
 - Plugin: BA模拟抽卡 [@noneflow](https://github.com/noneflow) ([#2550](https://github.com/nonebot/nonebot2/pull/2550))
