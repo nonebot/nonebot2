@@ -5488,5 +5488,17 @@
     "author": "bingqiu456",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_reminder",
+    "project_link": "nonebot-plugin-reminder",
+    "author": "velor2012",
+    "tags": [
+      {
+        "label": "scheduler",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
