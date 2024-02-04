@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 移除不再维护的几款插件 [@mnixry](https://github.com/mnixry) ([#2561](https://github.com/nonebot/nonebot2/pull/2561))
 - CI: 更新 prettier 配置 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2546](https://github.com/nonebot/nonebot2/pull/2546))
 - Plugin: 恢复删除的插件 `nonebot-plugin-eitherchoice` [@lgc2333](https://github.com/lgc2333) ([#2502](https://github.com/nonebot/nonebot2/pull/2502))
 
