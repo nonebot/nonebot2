@@ -56,7 +56,7 @@ options:
 
 ## 创建配置文件
 
-配置文件用于存放 NoneBot 运行所需要的配置项，使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及 [`python-dotenv`](https://saurabh-kumar.com/python-dotenv/) 来读取配置。配置项需符合 dotenv 格式，复杂类型数据需使用 JSON 格式填写。具体可选配置方式以及配置项详情参考[配置](../appendices/config.mdx)。
+配置文件用于存放 NoneBot 运行所需要的配置项，使用 [`pydantic`](https://docs.pydantic.dev/) 以及 [`python-dotenv`](https://saurabh-kumar.com/python-dotenv/) 来读取配置。配置项需符合 dotenv 格式，复杂类型数据需使用 JSON 格式填写。具体可选配置方式以及配置项详情参考[配置](../appendices/config.mdx)。
 
 在**项目文件夹**中创建一个 `.env` 文本文件，并写入以下内容:
 

@@ -182,18 +182,19 @@ superusers = config.superusers
 在 NoneBot 中，我们使用强大高效的 `pydantic` 来定义配置模型，这个模型可以被用于配置的读取和类型检查等。例如在 `weather` 插件目录中新建 `config.py` 来定义一个模型：
 
 ```python title=weather/config.py
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, field_validator
 
 class Config(BaseModel):
     weather_api_key: str
     weather_command_priority: int = 10
     weather_plugin_enabled: bool = True
 
-    @validator("weather_command_priority")
-    def check_priority(cls, v):
-        if isinstance(v, int) and v >= 1:
+    @field_validator("weather_command_priority")
+    @classmethod
+    def check_priority(cls, v: int) -> int:
+        if v >= 1:
             return v
-        raise ValueError("weather command priority must be an integer and greater than 1")
+        raise ValueError("weather command priority must greater than 1")
 ```
 
 在 `config.py` 中，我们定义了一个 `Config` 类，它继承自 `pydantic.BaseModel`，并定义了一些配置项。在 `Config` 类中，我们还定义了一个 `check_priority` 方法，它用于检查 `weather_command_priority` 配置项的合法性。更多关于 `pydantic` 的编写方式，可以参考 [pydantic 官方文档](https://docs.pydantic.dev/)。
@@ -205,7 +206,7 @@ from nonebot import get_driver
 
 from .config import Config
 
-plugin_config = Config.parse_obj(get_driver().config)
+plugin_config = Config.parse_obj(dict(get_driver().config))
 
 weather = on_command(
     "天气",
@@ -243,7 +244,7 @@ from nonebot import get_driver
 
 from .config import Config
 
-plugin_config = Config.parse_obj(get_driver().config).weather
+plugin_config = Config.parse_obj(dict(get_driver().config)).weather
 ```
 
 这样我们就可以省略插件配置项名称中的前缀 `weather_` 了。但需要注意的是，如果我们使用了 scope 配置，那么在配置文件中也需要使用 [`env_nested_delimiter` 格式](#配置项解析)，例如：
