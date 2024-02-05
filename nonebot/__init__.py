@@ -35,6 +35,7 @@
   {ref}``get_loaded_plugins` <nonebot.plugin.get_loaded_plugins>`
 - `get_available_plugin_names` =>
   {ref}``get_available_plugin_names` <nonebot.plugin.get_available_plugin_names>`
+- `get_plugin_config` => {ref}``get_plugin_config` <nonebot.plugin.get_plugin_config>`
 - `require` => {ref}``require` <nonebot.plugin.load.require>`
 
 FrontMatter:
@@ -352,6 +353,7 @@ from nonebot.plugin import load_from_json as load_from_json
 from nonebot.plugin import load_from_toml as load_from_toml
 from nonebot.plugin import load_all_plugins as load_all_plugins
 from nonebot.plugin import on_shell_command as on_shell_command
+from nonebot.plugin import get_plugin_config as get_plugin_config
 from nonebot.plugin import get_loaded_plugins as get_loaded_plugins
 from nonebot.plugin import load_builtin_plugin as load_builtin_plugin
 from nonebot.plugin import load_builtin_plugins as load_builtin_plugins

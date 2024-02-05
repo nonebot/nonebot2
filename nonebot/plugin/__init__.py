@@ -39,7 +39,14 @@ FrontMatter:
 from itertools import chain
 from types import ModuleType
 from contextvars import ContextVar
-from typing import Set, Dict, List, Tuple, Optional
+from typing import Set, Dict, List, Type, Tuple, TypeVar, Optional
+
+from pydantic import BaseModel
+
+from nonebot import get_driver
+from nonebot.compat import model_dump, type_validate_python
+
+C = TypeVar("C", bound=BaseModel)
 
 _plugins: Dict[str, "Plugin"] = {}
 _managers: List["PluginManager"] = []
@@ -106,6 +113,11 @@ def get_loaded_plugins() -> Set["Plugin"]:
 def get_available_plugin_names() -> Set[str]:
     """获取当前所有可用的插件名（包含尚未加载的插件）。"""
     return {*chain.from_iterable(manager.available_plugins for manager in _managers)}
+
+
+def get_plugin_config(config: Type[C]) -> C:
+    """从全局配置获取当前插件需要的配置项。"""
+    return type_validate_python(config, model_dump(get_driver().config))
 
 
 from .on import on as on

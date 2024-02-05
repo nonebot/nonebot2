@@ -19,6 +19,25 @@ NoneBot 使用 [`pydantic`](https://docs.pydantic.dev/) 以及 [`python-dotenv`]
 
 NoneBot 内置的配置项列表及含义可以在[内置配置项](#内置配置项)中查看。
 
+:::caution 注意
+
+NoneBot 自 2.2.0 起兼容了 Pydantic v1 与 v2 版本，以下文档中 Pydantic 相关示例均采用 v2 版本用法。
+
+如果在使用商店或其他第三方插件的过程中遇到 Pydantic 相关警告或报错，例如：
+
+```python
+pydantic_core._pydantic_core.ValidationError: 1 validation error for Config
+  Input should be a valid dictionary or instance of Config [type=model_type, input_value=Config(...), input_type=Config]
+```
+
+请考虑降级 Pydantic 至 v1 版本：
+
+```bash
+pip install --force-reinstall 'pydantic~=1.10'
+```
+
+:::
+
 ## 配置项的加载
 
 在 NoneBot 中，我们可以把配置途径分为 **直接传入**、**系统环境变量**、**dotenv 配置文件** 三种，其加载优先级依次由高到低。
@@ -202,11 +221,11 @@ class Config(BaseModel):
 在定义好配置模型后，我们可以在插件加载时获取全局配置，导入插件自身的配置模型并使用：
 
 ```python {5,11} title=weather/__init__.py
-from nonebot import get_driver
+from nonebot import get_driver, get_plugin_config
 
 from .config import Config
 
-plugin_config = Config.parse_obj(dict(get_driver().config))
+plugin_config = get_plugin_config(Config)
 
 weather = on_command(
     "天气",
@@ -240,11 +259,11 @@ class Config(BaseModel):
 ```
 
 ```python title=weather/__init__.py
-from nonebot import get_driver
+from nonebot import get_driver, get_plugin_config
 
 from .config import Config
 
-plugin_config = Config.parse_obj(dict(get_driver().config)).weather
+plugin_config = get_plugin_config(Config).weather
 ```
 
 这样我们就可以省略插件配置项名称中的前缀 `weather_` 了。但需要注意的是，如果我们使用了 scope 配置，那么在配置文件中也需要使用 [`env_nested_delimiter` 格式](#配置项解析)，例如：

@@ -12,6 +12,7 @@ from typing_extensions import Self, Annotated, is_typeddict
 from typing import (
     TYPE_CHECKING,
     Any,
+    Set,
     Dict,
     List,
     Type,
@@ -50,6 +51,7 @@ __all__ = (
     "model_field_validate",
     "model_fields",
     "model_config",
+    "model_dump",
     "type_validate_python",
     "custom_validation",
 )
@@ -182,6 +184,13 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
     def model_config(model: Type[BaseModel]) -> Any:
         """Get config of a model."""
         return model.model_config
+
+    def model_dump(
+        model: BaseModel,
+        include: Optional[Set[str]] = None,
+        exclude: Optional[Set[str]] = None,
+    ) -> Dict[str, Any]:
+        return model.model_dump(include=include, exclude=exclude)
 
     def type_validate_python(type_: Type[T], data: Any) -> T:
         """Validate data with given type."""
@@ -320,6 +329,13 @@ else:  # pragma: pydantic-v1
     def model_config(model: Type[BaseModel]) -> Any:
         """Get config of a model."""
         return model.__config__
+
+    def model_dump(
+        model: BaseModel,
+        include: Optional[Set[str]] = None,
+        exclude: Optional[Set[str]] = None,
+    ) -> Dict[str, Any]:
+        return model.dict(include=include, exclude=exclude)
 
     def type_validate_python(type_: Type[T], data: Any) -> T:
         """Validate data with given type."""
