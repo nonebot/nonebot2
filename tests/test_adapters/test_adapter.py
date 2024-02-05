@@ -99,8 +99,7 @@ async def test_adapter_server(driver: Driver):
         async def handle_http(request: Request):
             return Response(200, content="test")
 
-        async def handle_ws(ws: WebSocket):
-            ...
+        async def handle_ws(ws: WebSocket): ...
 
         adapter = FakeAdapter(driver)
 

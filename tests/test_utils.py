@@ -34,19 +34,15 @@ def test_generic_check_issubclass():
 
 
 def test_is_coroutine_callable():
-    async def test1():
-        ...
+    async def test1(): ...
 
-    def test2():
-        ...
+    def test2(): ...
 
     class TestClass1:
-        async def __call__(self):
-            ...
+        async def __call__(self): ...
 
     class TestClass2:
-        def __call__(self):
-            ...
+        def __call__(self): ...
 
     assert is_coroutine_callable(test1)
     assert not is_coroutine_callable(test2)
@@ -62,8 +58,7 @@ def test_is_gen_callable():
     async def test2():
         yield
 
-    def test3():
-        ...
+    def test3(): ...
 
     class TestClass1:
         def __call__(self):
@@ -74,8 +69,7 @@ def test_is_gen_callable():
             yield
 
     class TestClass3:
-        def __call__(self):
-            ...
+        def __call__(self): ...
 
     assert is_gen_callable(test1)
     assert not is_gen_callable(test2)
@@ -92,8 +86,7 @@ def test_is_async_gen_callable():
     def test2():
         yield
 
-    async def test3():
-        ...
+    async def test3(): ...
 
     class TestClass1:
         async def __call__(self):
@@ -104,8 +97,7 @@ def test_is_async_gen_callable():
             yield
 
     class TestClass3:
-        async def __call__(self):
-            ...
+        async def __call__(self): ...
 
     assert is_async_gen_callable(test1)
     assert not is_async_gen_callable(test2)

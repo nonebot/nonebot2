@@ -6,18 +6,15 @@ D = TypeVar("D", bound="Driver")
 
 if TYPE_CHECKING:
 
-    class CombinedDriver(Driver, Mixin):
-        ...
+    class CombinedDriver(Driver, Mixin): ...
 
 
 @overload
-def combine_driver(driver: Type[D]) -> Type[D]:
-    ...
+def combine_driver(driver: Type[D]) -> Type[D]: ...
 
 
 @overload
-def combine_driver(driver: Type[D], *mixins: Type[Mixin]) -> Type["CombinedDriver"]:
-    ...
+def combine_driver(driver: Type[D], *mixins: Type[Mixin]) -> Type["CombinedDriver"]: ...
 
 
 def combine_driver(

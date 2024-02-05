@@ -170,20 +170,17 @@ def _regex_str(
 
 
 @overload
-def RegexStr(__group: Literal[0] = 0) -> str:
-    ...
+def RegexStr(__group: Literal[0] = 0) -> str: ...
 
 
 @overload
-def RegexStr(__group: Union[str, int]) -> Union[str, Any]:
-    ...
+def RegexStr(__group: Union[str, int]) -> Union[str, Any]: ...
 
 
 @overload
 def RegexStr(
     __group1: Union[str, int], __group2: Union[str, int], *groups: Union[str, int]
-) -> Tuple[Union[str, Any], ...]:
-    ...
+) -> Tuple[Union[str, Any], ...]: ...
 
 
 def RegexStr(*groups: Union[str, int]) -> Union[str, Tuple[Union[str, Any], ...], Any]:

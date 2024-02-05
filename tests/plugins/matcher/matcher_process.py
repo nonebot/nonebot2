@@ -78,8 +78,7 @@ async def reject_preset(a: str = ArgStr(), b: str = ArgStr()):
 test_overload = on_message()
 
 
-class FakeEvent(Event):
-    ...
+class FakeEvent(Event): ...
 
 
 @test_overload.got("a")

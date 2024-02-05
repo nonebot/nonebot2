@@ -33,8 +33,7 @@ if TYPE_CHECKING:
 
     class _CustomValidationClass(Protocol):
         @classmethod
-        def __get_validators__(cls) -> Generator[Callable[..., Any], None, None]:
-            ...
+        def __get_validators__(cls) -> Generator[Callable[..., Any], None, None]: ...
 
     CVC = TypeVar("CVC", bound=_CustomValidationClass)
 

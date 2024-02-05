@@ -65,12 +65,10 @@ class MatcherManager(MutableMapping[int, List[Type["Matcher"]]]):
         return self.provider.items()
 
     @overload
-    def get(self, key: int) -> Optional[List[Type["Matcher"]]]:
-        ...
+    def get(self, key: int) -> Optional[List[Type["Matcher"]]]: ...
 
     @overload
-    def get(self, key: int, default: T) -> Union[List[Type["Matcher"]], T]:
-        ...
+    def get(self, key: int, default: T) -> Union[List[Type["Matcher"]], T]: ...
 
     def get(
         self, key: int, default: Optional[T] = None

@@ -460,45 +460,38 @@ class ArgumentParser(ArgParser):
             self,
             args: Optional[Sequence[Union[str, MessageSegment]]] = None,
             namespace: None = None,
-        ) -> Tuple[Namespace, List[Union[str, MessageSegment]]]:
-            ...
+        ) -> Tuple[Namespace, List[Union[str, MessageSegment]]]: ...
 
         @overload
         def parse_known_args(
             self, args: Optional[Sequence[Union[str, MessageSegment]]], namespace: T
-        ) -> Tuple[T, List[Union[str, MessageSegment]]]:
-            ...
+        ) -> Tuple[T, List[Union[str, MessageSegment]]]: ...
 
         @overload
         def parse_known_args(
             self, *, namespace: T
-        ) -> Tuple[T, List[Union[str, MessageSegment]]]:
-            ...
+        ) -> Tuple[T, List[Union[str, MessageSegment]]]: ...
 
         def parse_known_args(
             self,
             args: Optional[Sequence[Union[str, MessageSegment]]] = None,
             namespace: Optional[T] = None,
-        ) -> Tuple[Union[Namespace, T], List[Union[str, MessageSegment]]]:
-            ...
+        ) -> Tuple[Union[Namespace, T], List[Union[str, MessageSegment]]]: ...
 
     @overload
     def parse_args(
         self,
         args: Optional[Sequence[Union[str, MessageSegment]]] = None,
         namespace: None = None,
-    ) -> Namespace:
-        ...
+    ) -> Namespace: ...
 
     @overload
     def parse_args(
         self, args: Optional[Sequence[Union[str, MessageSegment]]], namespace: T
-    ) -> T:
-        ...
+    ) -> T: ...
 
     @overload
-    def parse_args(self, *, namespace: T) -> T:
-        ...
+    def parse_args(self, *, namespace: T) -> T: ...
 
     def parse_args(
         self,

@@ -29,8 +29,7 @@ async def legacy_state(state):
     return state
 
 
-async def not_legacy_state(state: int):
-    ...
+async def not_legacy_state(state: int): ...
 
 
 async def command(cmd: Tuple[str, ...] = Command()) -> Tuple[str, ...]:

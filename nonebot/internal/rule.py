@@ -38,10 +38,12 @@ class Rule:
 
     def __init__(self, *checkers: Union[T_RuleChecker, Dependent[bool]]) -> None:
         self.checkers: Set[Dependent[bool]] = {
-            checker
-            if isinstance(checker, Dependent)
-            else Dependent[bool].parse(
-                call=checker, allow_types=self.HANDLER_PARAM_TYPES
+            (
+                checker
+                if isinstance(checker, Dependent)
+                else Dependent[bool].parse(
+                    call=checker, allow_types=self.HANDLER_PARAM_TYPES
+                )
             )
             for checker in checkers
         }

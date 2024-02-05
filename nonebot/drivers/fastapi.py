@@ -15,7 +15,6 @@ FrontMatter:
     description: nonebot.drivers.fastapi 模块
 """
 
-
 import logging
 import contextlib
 from functools import wraps

@@ -14,8 +14,7 @@ if TYPE_CHECKING:
     from .message import Message, MessageSegment
 
     class _ApiCall(Protocol):
-        async def __call__(self, **kwargs: Any) -> Any:
-            ...
+        async def __call__(self, **kwargs: Any) -> Any: ...
 
 
 class Bot(abc.ABC):

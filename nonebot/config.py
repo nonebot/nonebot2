@@ -55,8 +55,7 @@ DOTENV_TYPE: TypeAlias = Union[
 ENV_FILE_SENTINEL = Path("")
 
 
-class SettingsError(ValueError):
-    ...
+class SettingsError(ValueError): ...
 
 
 class BaseSettingsSource(abc.ABC):
