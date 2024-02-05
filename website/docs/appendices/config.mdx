@@ -221,7 +221,7 @@ class Config(BaseModel):
 在定义好配置模型后，我们可以在插件加载时获取全局配置，导入插件自身的配置模型并使用：
 
 ```python {5,11} title=weather/__init__.py
-from nonebot import get_driver, get_plugin_config
+from nonebot import get_plugin_config
 
 from .config import Config
 
@@ -259,7 +259,7 @@ class Config(BaseModel):
 ```
 
 ```python title=weather/__init__.py
-from nonebot import get_driver, get_plugin_config
+from nonebot import get_plugin_config
 
 from .config import Config
 
