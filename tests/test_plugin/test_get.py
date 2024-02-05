@@ -1,4 +1,5 @@
 import pytest
+from pydantic import BaseModel
 
 import nonebot
 from nonebot.plugin import PluginManager, _managers
@@ -35,3 +36,14 @@ async def test_get_available_plugin():
     finally:
         _managers.clear()
         _managers.extend(old_managers)
+
+
+@pytest.mark.asyncio
+async def test_get_plugin_config():
+    class Config(BaseModel):
+        plugin_config: int
+
+    # check get plugin config
+    config = nonebot.get_plugin_config(Config)
+    assert isinstance(config, Config)
+    assert config.plugin_config == 1

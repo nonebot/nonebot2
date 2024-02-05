@@ -79,9 +79,9 @@ except Exception as e:
 通常适配器需要一些配置项，例如平台连接密钥等。适配器的配置方法与[插件配置](../appendices/config#%E6%8F%92%E4%BB%B6%E9%85%8D%E7%BD%AE)类似，例如：
 
 ```python title=config.py
-from pydantic import BaseModel, Extra
+from pydantic import BaseModel
 
-class Config(BaseModel, extra=Extra.ignore):
+class Config(BaseModel):
     xxx_id: str
     xxx_token: str
 ```

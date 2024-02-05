@@ -2,12 +2,14 @@ from typing import Any
 from dataclasses import dataclass
 
 import pytest
+from pydantic import BaseModel
 
 from nonebot.compat import (
     DEFAULT_CONFIG,
     Required,
     FieldInfo,
     PydanticUndefined,
+    model_dump,
     custom_validation,
     type_validate_python,
 )
@@ -26,6 +28,16 @@ async def test_field_info():
 
     # field info should allow extra attributes
     assert FieldInfo(test="test").extra["test"] == "test"
+
+
+@pytest.mark.asyncio
+async def test_model_dump():
+    class TestModel(BaseModel):
+        test1: int
+        test2: int
+
+    assert model_dump(TestModel(test1=1, test2=2), include={"test1"}) == {"test1": 1}
+    assert model_dump(TestModel(test1=1, test2=2), exclude={"test1"}) == {"test2": 2}
 
 
 @pytest.mark.asyncio

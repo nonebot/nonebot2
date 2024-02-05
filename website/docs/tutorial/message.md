@@ -82,20 +82,19 @@ Message([MessageSegment.text("Hello, world!")])
 
 #### 从字典数组构造
 
-`Message` 对象支持 Pydantic 自定义类型构造，可以使用 Pydantic 的 `parse_obj_as` 方法进行构造。
+`Message` 对象支持 Pydantic 自定义类型构造，可以使用 Pydantic 的 `TypeAdapter` 方法进行构造。
 
 ```python
-from pydantic import parse_obj_as
+from pydantic import TypeAdapter
 from nonebot.adapters.console import Message, MessageSegment
 
 # 由字典构造消息段
-parse_obj_as(
-    MessageSegment, {"type": "text", "data": {"text": "text"}}
+TypeAdapter(MessageSegment).validate_python(
+    {"type": "text", "data": {"text": "text"}}
 ) == MessageSegment.text("text")
 
 # 由字典数组构造消息序列
-parse_obj_as(
-    Message,
+TypeAdapter(Message).validate_python(
     [MessageSegment.text("text"), {"type": "text", "data": {"text": "text"}}],
 ) == Message([MessageSegment.text("text"), MessageSegment.text("text")])
 ```
