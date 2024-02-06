@@ -218,8 +218,7 @@ async def run_coro_with_catch(
     coro: Coroutine[Any, Any, T],
     exc: Tuple[Type[Exception], ...],
     return_on_err: None = None,
-) -> Union[T, None]:
-    ...
+) -> Union[T, None]: ...
 
 
 @overload
@@ -227,8 +226,7 @@ async def run_coro_with_catch(
     coro: Coroutine[Any, Any, T],
     exc: Tuple[Type[Exception], ...],
     return_on_err: R,
-) -> Union[T, R]:
-    ...
+) -> Union[T, R]: ...
 
 
 async def run_coro_with_catch(

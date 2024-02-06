@@ -44,11 +44,11 @@ uvicorn = { version = ">=0.20.0,<1.0.0", extras = [
 ], optional = true }
 
 [tool.poetry.group.dev.dependencies]
+ruff = "^0.2.0"
 isort = "^5.10.1"
-black = "^23.1.0"
+black = "^24.0.0"
 nonemoji = "^0.1.2"
 pre-commit = "^3.0.0"
-ruff = ">=0.0.272,<1.0.0"
 
 [tool.poetry.group.test.dependencies]
 nonebot-test = { path = "./envs/test/", develop = false }
@@ -86,13 +86,14 @@ src_paths = ["nonebot", "tests"]
 extra_standard_library = ["typing_extensions"]
 
 [tool.ruff]
-select = ["E", "W", "F", "UP", "C", "T", "PYI", "PT", "Q"]
-ignore = ["E402", "C901", "UP037"]
-
 line-length = 88
 target-version = "py38"
 
-[tool.ruff.flake8-pytest-style]
+[tool.ruff.lint]
+select = ["E", "W", "F", "UP", "C", "T", "PYI", "PT", "Q"]
+ignore = ["E402", "C901", "UP037"]
+
+[tool.ruff.lint.flake8-pytest-style]
 fixture-parentheses = false
 mark-parentheses = false
 

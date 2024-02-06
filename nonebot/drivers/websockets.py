@@ -128,8 +128,7 @@ class WebSocket(BaseWebSocket):
 
 if TYPE_CHECKING:
 
-    class Driver(Mixin, NoneDriver):
-        ...
+    class Driver(Mixin, NoneDriver): ...
 
 else:
     Driver = combine_driver(NoneDriver, Mixin)

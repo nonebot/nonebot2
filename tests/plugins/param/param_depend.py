@@ -36,8 +36,7 @@ class ClassDependency:
     y: int = Depends(gen_async)
 
 
-class FooBot(Bot):
-    ...
+class FooBot(Bot): ...
 
 
 async def sub_bot(b: FooBot) -> FooBot:

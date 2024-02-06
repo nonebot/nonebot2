@@ -12,20 +12,17 @@ async def legacy_event(event):
     return event
 
 
-async def not_legacy_event(event: int):
-    ...
+async def not_legacy_event(event: int): ...
 
 
-class FooEvent(Event):
-    ...
+class FooEvent(Event): ...
 
 
 async def sub_event(e: FooEvent) -> FooEvent:
     return e
 
 
-class BarEvent(Event):
-    ...
+class BarEvent(Event): ...
 
 
 async def union_event(e: Union[FooEvent, BarEvent]) -> Union[FooEvent, BarEvent]:
@@ -46,8 +43,7 @@ async def generic_event_none(e: CE) -> CE:
     return e
 
 
-async def not_event(e: Union[int, Event]):
-    ...
+async def not_event(e: Union[int, Event]): ...
 
 
 async def event_type(t: str = EventType()) -> str:

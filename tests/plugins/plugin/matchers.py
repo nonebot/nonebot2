@@ -202,8 +202,7 @@ matcher_on_regex = on_regex(
 )
 
 
-class TestEvent(Event):
-    ...
+class TestEvent(Event): ...
 
 
 matcher_on_type = on_type(

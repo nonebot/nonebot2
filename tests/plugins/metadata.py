@@ -8,8 +8,7 @@ class Config(BaseModel):
     custom: str = ""
 
 
-class FakeAdapter(Adapter):
-    ...
+class FakeAdapter(Adapter): ...
 
 
 __plugin_meta__ = PluginMetadata(

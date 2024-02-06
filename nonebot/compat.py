@@ -8,7 +8,7 @@ FrontMatter:
 """
 
 from dataclasses import dataclass, is_dataclass
-from typing_extensions import Self, Annotated, is_typeddict
+from typing_extensions import Self, Annotated, get_args, get_origin, is_typeddict
 from typing import (
     TYPE_CHECKING,
     Any,
@@ -25,6 +25,8 @@ from typing import (
 
 from pydantic import VERSION, BaseModel
 
+from nonebot.typing import origin_is_annotated
+
 T = TypeVar("T")
 
 PYDANTIC_V2 = int(VERSION.split(".", 1)[0]) == 2
@@ -33,8 +35,7 @@ if TYPE_CHECKING:
 
     class _CustomValidationClass(Protocol):
         @classmethod
-        def __get_validators__(cls) -> Generator[Callable[..., Any], None, None]:
-            ...
+        def __get_validators__(cls) -> Generator[Callable[..., Any], None, None]: ...
 
     CVC = TypeVar("CVC", bound=_CustomValidationClass)
 
@@ -131,11 +132,15 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             TypeAdapter raise error when annotation has config
             and given config is not None.
             """
+            type_is_annotated = origin_is_annotated(get_origin(self.annotation))
+            inner_type = (
+                get_args(self.annotation)[0] if type_is_annotated else self.annotation
+            )
             try:
                 return (
-                    issubclass(self.annotation, BaseModel)
-                    or is_dataclass(self.annotation)
-                    or is_typeddict(self.annotation)
+                    issubclass(inner_type, BaseModel)
+                    or is_dataclass(inner_type)
+                    or is_typeddict(inner_type)
                 )
             except TypeError:
                 return False

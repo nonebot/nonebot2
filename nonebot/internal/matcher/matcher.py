@@ -262,16 +262,20 @@ class Matcher(metaclass=MatcherMeta):
                 "type": type_,
                 "rule": rule or Rule(),
                 "permission": permission or Permission(),
-                "handlers": [
-                    handler
-                    if isinstance(handler, Dependent)
-                    else Dependent[Any].parse(
-                        call=handler, allow_types=cls.HANDLER_PARAM_TYPES
-                    )
-                    for handler in handlers
-                ]
-                if handlers
-                else [],
+                "handlers": (
+                    [
+                        (
+                            handler
+                            if isinstance(handler, Dependent)
+                            else Dependent[Any].parse(
+                                call=handler, allow_types=cls.HANDLER_PARAM_TYPES
+                            )
+                        )
+                        for handler in handlers
+                    ]
+                    if handlers
+                    else []
+                ),
                 "temp": temp,
                 "expire_time": (
                     expire_time
@@ -658,12 +662,10 @@ class Matcher(metaclass=MatcherMeta):
         raise SkippedException
 
     @overload
-    def get_receive(self, id: str) -> Union[Event, None]:
-        ...
+    def get_receive(self, id: str) -> Union[Event, None]: ...
 
     @overload
-    def get_receive(self, id: str, default: T) -> Union[Event, T]:
-        ...
+    def get_receive(self, id: str, default: T) -> Union[Event, T]: ...
 
     def get_receive(
         self, id: str, default: Optional[T] = None
@@ -680,12 +682,10 @@ class Matcher(metaclass=MatcherMeta):
         self.state[LAST_RECEIVE_KEY] = event
 
     @overload
-    def get_last_receive(self) -> Union[Event, None]:
-        ...
+    def get_last_receive(self) -> Union[Event, None]: ...
 
     @overload
-    def get_last_receive(self, default: T) -> Union[Event, T]:
-        ...
+    def get_last_receive(self, default: T) -> Union[Event, T]: ...
 
     def get_last_receive(
         self, default: Optional[T] = None
@@ -697,12 +697,10 @@ class Matcher(metaclass=MatcherMeta):
         return self.state.get(LAST_RECEIVE_KEY, default)
 
     @overload
-    def get_arg(self, key: str) -> Union[Message, None]:
-        ...
+    def get_arg(self, key: str) -> Union[Message, None]: ...
 
     @overload
-    def get_arg(self, key: str, default: T) -> Union[Message, T]:
-        ...
+    def get_arg(self, key: str, default: T) -> Union[Message, T]: ...
 
     def get_arg(
         self, key: str, default: Optional[T] = None
@@ -724,12 +722,10 @@ class Matcher(metaclass=MatcherMeta):
             self.state[REJECT_TARGET] = target
 
     @overload
-    def get_target(self) -> Union[str, None]:
-        ...
+    def get_target(self) -> Union[str, None]: ...
 
     @overload
-    def get_target(self, default: T) -> Union[str, T]:
-        ...
+    def get_target(self, default: T) -> Union[str, T]: ...
 
     def get_target(self, default: Optional[T] = None) -> Optional[Union[str, T]]:
         return self.state.get(REJECT_TARGET, default)

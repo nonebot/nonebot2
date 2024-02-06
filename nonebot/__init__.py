@@ -296,9 +296,11 @@ def init(*, _env_file: Optional[DOTENV_TYPE] = None, **kwargs: Any) -> None:
         _env_file = _env_file or f".env.{env.environment}"
         config = Config(
             **kwargs,
-            _env_file=(".env", _env_file)
-            if isinstance(_env_file, (str, os.PathLike))
-            else _env_file,
+            _env_file=(
+                (".env", _env_file)
+                if isinstance(_env_file, (str, os.PathLike))
+                else _env_file
+            ),
         )
 
         logger.configure(

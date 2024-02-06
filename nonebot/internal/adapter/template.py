@@ -27,8 +27,7 @@ if TYPE_CHECKING:
 
     def formatter_field_name_split(  # noqa: F811
         field_name: str,
-    ) -> Tuple[str, List[Tuple[bool, str]]]:
-        ...
+    ) -> Tuple[str, List[Tuple[bool, str]]]: ...
 
 
 TM = TypeVar("TM", bound="Message")
@@ -53,8 +52,7 @@ class MessageTemplate(Formatter, Generic[TF]):
         template: str,
         factory: Type[str] = str,
         private_getattr: bool = False,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     @overload
     def __init__(
@@ -62,8 +60,7 @@ class MessageTemplate(Formatter, Generic[TF]):
         template: Union[str, TM],
         factory: Type[TM],
         private_getattr: bool = False,
-    ) -> None:
-        ...
+    ) -> None: ...
 
     def __init__(
         self,
