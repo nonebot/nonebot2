@@ -86,13 +86,14 @@ src_paths = ["nonebot", "tests"]
 extra_standard_library = ["typing_extensions"]
 
 [tool.ruff]
-select = ["E", "W", "F", "UP", "C", "T", "PYI", "PT", "Q"]
-ignore = ["E402", "C901", "UP037"]
-
 line-length = 88
 target-version = "py38"
 
-[tool.ruff.flake8-pytest-style]
+[tool.ruff.lint]
+select = ["E", "W", "F", "UP", "C", "T", "PYI", "PT", "Q"]
+ignore = ["E402", "C901", "UP037"]
+
+[tool.ruff.lint.flake8-pytest-style]
 fixture-parentheses = false
 mark-parentheses = false
 
