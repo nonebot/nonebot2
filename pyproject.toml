@@ -44,11 +44,11 @@ uvicorn = { version = ">=0.20.0,<1.0.0", extras = [
 ], optional = true }
 
 [tool.poetry.group.dev.dependencies]
+ruff = "^0.2.0"
 isort = "^5.10.1"
-black = "^23.1.0"
+black = "^24.0.0"
 nonemoji = "^0.1.2"
 pre-commit = "^3.0.0"
-ruff = ">=0.0.272,<1.0.0"
 
 [tool.poetry.group.test.dependencies]
 nonebot-test = { path = "./envs/test/", develop = false }
