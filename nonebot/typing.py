@@ -13,6 +13,7 @@ FrontMatter:
 import sys
 import types
 import warnings
+import contextlib
 import typing as t
 import typing_extensions as t_ext
 from typing import TYPE_CHECKING, TypeVar
@@ -69,6 +70,13 @@ def all_literal_values(type_: t.Type[t.Any]) -> t.List[t.Any]:
         return [type_]
 
     return [x for value in _literal_values(type_) for x in all_literal_values(value)]
+
+
+def origin_is_annotated(origin: t.Optional[t.Type[t.Any]]) -> bool:
+    """判断是否是 Annotated 类型"""
+    with contextlib.suppress(TypeError):
+        return origin is not None and issubclass(origin, t_ext.Annotated)
+    return False
 
 
 NONE_TYPES = {None, type(None), t.Literal[None], t_ext.Literal[None]}
