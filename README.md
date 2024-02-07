@@ -252,12 +252,25 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
       <source media="(prefers-color-scheme: dark)" srcset="https://assets.nonebot.dev/sentry-dark.svg">
       <img src="https://assets.nonebot.dev/sentry-light.svg" height="50" alt="sentry">
     </picture>
-  </a>&nbsp;&nbsp;&nbsp;&nbsp;
+  </a>
+</p>
+<p align="center">
   <a href="https://www.docker.com/">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://assets.nonebot.dev/docker-dark.svg">
       <img src="https://assets.nonebot.dev/docker-light.svg" height="50" alt="docker">
     </picture>
+  </a>&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://www.algolia.com/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://assets.nonebot.dev/algolia-dark.svg">
+      <img src="https://assets.nonebot.dev/algolia-light.svg" height="50" alt="algolia">
+    </picture>
+  </a>
+</p>
+<p align="center">
+  <a href="https://www.jetbrains.com/">
+    <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" height="80" alt="jetbrains" >
   </a>
 </p>
 
