@@ -94,7 +94,7 @@ _✨ 跨平台 Python 异步机器人框架 ✨_
 
 <p align="center">
   <a href="https://asciinema.org/a/569440">
-    <img src="https://nonebot.dev/img/setup.svg">
+    <img src="https://nonebot.dev/img/setup.svg" alt="setup" >
   </a>
 </p>
 
@@ -232,10 +232,39 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 ### 赞助者
 
+感谢以下产品对 NoneBot 项目提供的赞助：
+
+<p align="center">
+  <a href="https://github.com/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://assets.nonebot.dev/github-dark.png">
+      <img src="https://assets.nonebot.dev/github-light.png" height="50" alt="github">
+    </picture>
+  </a>&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://www.netlify.com/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://assets.nonebot.dev/netlify-dark.svg">
+      <img src="https://assets.nonebot.dev/netlify-light.svg" height="50" alt="netlify">
+    </picture>
+  </a>&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://sentry.io/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://assets.nonebot.dev/sentry-dark.svg">
+      <img src="https://assets.nonebot.dev/sentry-light.svg" height="50" alt="sentry">
+    </picture>
+  </a>&nbsp;&nbsp;&nbsp;&nbsp;
+  <a href="https://www.docker.com/">
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://assets.nonebot.dev/docker-dark.svg">
+      <img src="https://assets.nonebot.dev/docker-light.svg" height="50" alt="docker">
+    </picture>
+  </a>
+</p>
+
 感谢以下赞助者对 NoneBot 项目提供的资金支持：
 
 <a href="https://assets.nonebot.dev/sponsors.svg">
-  <img src='https://assets.nonebot.dev/sponsors.svg'/>
+  <img src="https://assets.nonebot.dev/sponsors.svg" alt="sponsors" />
 </a>
 
 ### 开发者
@@ -243,5 +272,5 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 感谢以下开发者对 NoneBot2 作出的贡献：
 
 <a href="https://github.com/nonebot/nonebot2/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=nonebot/nonebot2&max=1000" />
+  <img src="https://contrib.rocks/image?repo=nonebot/nonebot2&max=1000" alt="contributors" />
 </a>
