@@ -238,7 +238,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
   <a href="https://github.com/">
     <picture>
       <source media="(prefers-color-scheme: dark)" srcset="https://assets.nonebot.dev/github-dark.png">
-      <img src="https://assets.nonebot.dev/github-light.png" height="50" alt="github">
+      <img src="https://assets.nonebot.dev/github-light.png" height="50" alt="GitHub">
     </picture>
   </a>&nbsp;&nbsp;&nbsp;&nbsp;
   <a href="https://www.netlify.com/">
@@ -270,7 +270,7 @@ CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 </p>
 <p align="center">
   <a href="https://www.jetbrains.com/">
-    <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" height="80" alt="jetbrains" >
+    <img src="https://resources.jetbrains.com/storage/products/company/brand/logos/jb_beam.svg" height="80" alt="JetBrains" >
   </a>
 </p>
 
