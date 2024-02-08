@@ -172,7 +172,7 @@ assert alc.parse(".rd123").header["roll"] == 123
 
 Bracket Header 类似 python 里的 f-string 写法，通过 "{}" 声明匹配类型
 
-"{}" 中的内容为 "name:type or pat"：
+"{}" 中的格式为 "name:type or pat"：
 - "{}", "{:}" **⇔** "(.+)", 占位符
 - "{foo}" **⇔** "(?P&lt;foo&gt;.+)"
 - "{:\d+}" **⇔** "(\d+)"
