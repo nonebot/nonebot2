@@ -89,7 +89,7 @@ require("nonebot_plugin_alconna")
 from arclet.alconna import Alconna, Option, Args
 from nonebot_plugin_alconna import on_alconna, AlconnaMatch, Match, UniMessage
 
-  
+
 login = on_alconna(Alconna(["/"], "login", Args["password?", str], Option("-r|--recall"))) # 这里["/"]指命令前缀必须是/
 
 @login.assign("recall") # /login -r
@@ -133,6 +133,7 @@ async def tt_h(target: Match[Union[str, At]]):
 async def tt(target: Union[str, At]):
     await test_cmd.send(UniMessage(["ok\n", target]))
 ```
+
 :::tip
 
 `path`支持 ~XXX 语法，其会把 ~ 替换为可能的父级路径:
@@ -159,7 +160,6 @@ async def tt(target: Union[str, At]):
 ```
 
 :::
-
 
 ## Alconna的依赖注入
 
@@ -208,7 +208,7 @@ async def handle(
 - `AlconnaQuery`: `Query` 类型的依赖注入函数，其能够额外传入一个 middleware 函数来处理得到的参数
 - `AlconnaExecResult`: 提供挂载在命令上的 callback 的返回结果 (`Dict[str, Any]`) 的依赖注入函数
 - `AlconnaExtension`: 提供指定类型的 `Extension` 的依赖注入函数
-  
+
 :::
 
 实例:
@@ -218,7 +218,7 @@ from nonebot import require
 require("nonebot_plugin_alconna")
 
 from nonebot_plugin_alconna import (
-    on_alconna, 
+    on_alconna,
     Match,
     Query,
     AlconnaMatch,
@@ -248,7 +248,7 @@ async def handle_test2(result: Arparma):
 
 @test.handle()
 async def handle_test3(bar: Match[int] = AlconnaMatch("bar")):
-    if bar.available:    
+    if bar.available:
         await test.send(f"foo={bar.result}")
 
 @test.handle()
@@ -257,14 +257,13 @@ async def handle_test4(qux: Query[bool] = Query("baz.qux", False)):
         await test.send(f"baz.qux={qux.result}")
 ```
 
-
 ## 跨平台适配
 
 `uniseg` 模块属于 `nonebot-plugin-alconna` 的子插件，其提供了一套通用的消息组件，用于在 `nonebot-plugin-alconna` 下构建通用消息.
 
 ### 通用消息段
 
-适配器下的消息段标注会匹配适配器特定的 `MessageSegment`, 而通用消息段与适配器消息段的区别在于:  
+适配器下的消息段标注会匹配适配器特定的 `MessageSegment`, 而通用消息段与适配器消息段的区别在于:
 
 通用消息段会匹配多个适配器中相似类型的消息段，并返回 `uniseg` 模块中定义的 [`Segment` 模型](https://nonebot.dev/docs/next/best-practice/alconna/utils#%E9%80%9A%E7%94%A8%E6%B6%88%E6%81%AF%E6%AE%B5), 以达到**跨平台接收消息**的作用
 
@@ -335,6 +334,7 @@ class Card(Segment):
 class Other(Segment):
     """其他 Segment"""
 ```
+
 此类消息段通过 `UniMessage.export` 可以转为特定的 `MessageSegment`.
 
 ### 通用信息序列
@@ -372,6 +372,7 @@ test = on_command("test")
 async def handle_test():
     await test.send(await UniMessage(Image(path="path/to/img")).export())
 ```
+
 `UniMessage.export` 会通过传入的 `bot: Bot` 参数，或上下文中的 `Bot` 对象读取适配器信息，并使用对应的生成方法把通用消息转为适配器对应的消息序列.
 
 而在 `AlconnaMatcher` 下，`got`, `send`, `reject` 等可以发送消息的方法皆支持使用 `UniMessage`，不需要手动调用 export 方法：
@@ -408,32 +409,32 @@ async def handle():
     receipt = await UniMessage.text("hello!").send(at_sender=True, reply_to=True)
     await receipt.recall(delay=1)
 ```
+
 在响应器以外的地方，`bot` 参数必须手动传入
 
 本插件为以下设配器提供了 **Segment** 标注，可用于匹配各适配器的 `MessageSegment`，也可用于创建 `MessageSegment`:
 
-|协议名称|路径|
-|---|---|
-|[OneBot 协议](https://github.com/nonebot/adapter-onebot)|adapters.onebot11, adapters.onebot12|
-|[Telegram](https://github.com/nonebot/adapter-telegram)|adapters.telegram|
-|[飞书](https://github.com/nonebot/adapter-feishu)|adapters.feishu|
-|[GitHub](https://github.com/nonebot/adapter-github)|adapters.github|
-|[QQ bot](https://github.com/nonebot/adapter-qq)|adapters.qq|
-|[QQ 频道](https://github.com/nonebot/adapter-qqguild)|adapters.qqguild|
-|[钉钉](https://github.com/nonebot/adapter-ding)|adapters.ding|
-|[Console](https://github.com/nonebot/adapter-console)|adapters.console|
-|[开黑啦](https://github.com/Tian-que/nonebot-adapter-kaiheila)|adapters.kook|
-|[Mirai](https://github.com/ieew/nonebot_adapter_mirai2)|adapters.mirai|
-|[Ntchat](https://github.com/JustUndertaker/adapter-ntchat)|adapters.ntchat|
-|[MineCraft](https://github.com/17TheWord/nonebot-adapter-minecraft)|adapters.minecraft|
-|[BiliBili Live](https://github.com/wwweww/adapter-bilibili)|adapters.bilibili|
-|[Walle-Q](https://github.com/onebot-walle/nonebot_adapter_walleq)|adapters.onebot12|
-|[Villa](https://github.com/CMHopeSunshine/nonebot-adapter-villa)|adapters.villa|
-|[Discord](https://github.com/nonebot/adapter-discord)|adapters.discord|
-|[Red 协议](https://github.com/nonebot/adapter-red)|adapters.red|
-|[Satori](https://github.com/nonebot/adapter-satori)|adapters.satori|
-|[Dodo IM](https://github.com/nonebot/adapter-dodo)|adapters.dodo|  
-
+| 协议名称                                                            | 路径                                 |
+| ------------------------------------------------------------------- | ------------------------------------ |
+| [OneBot 协议](https://github.com/nonebot/adapter-onebot)            | adapters.onebot11, adapters.onebot12 |
+| [Telegram](https://github.com/nonebot/adapter-telegram)             | adapters.telegram                    |
+| [飞书](https://github.com/nonebot/adapter-feishu)                   | adapters.feishu                      |
+| [GitHub](https://github.com/nonebot/adapter-github)                 | adapters.github                      |
+| [QQ bot](https://github.com/nonebot/adapter-qq)                     | adapters.qq                          |
+| [QQ 频道](https://github.com/nonebot/adapter-qqguild)               | adapters.qqguild                     |
+| [钉钉](https://github.com/nonebot/adapter-ding)                     | adapters.ding                        |
+| [Console](https://github.com/nonebot/adapter-console)               | adapters.console                     |
+| [开黑啦](https://github.com/Tian-que/nonebot-adapter-kaiheila)      | adapters.kook                        |
+| [Mirai](https://github.com/ieew/nonebot_adapter_mirai2)             | adapters.mirai                       |
+| [Ntchat](https://github.com/JustUndertaker/adapter-ntchat)          | adapters.ntchat                      |
+| [MineCraft](https://github.com/17TheWord/nonebot-adapter-minecraft) | adapters.minecraft                   |
+| [BiliBili Live](https://github.com/wwweww/adapter-bilibili)         | adapters.bilibili                    |
+| [Walle-Q](https://github.com/onebot-walle/nonebot_adapter_walleq)   | adapters.onebot12                    |
+| [Villa](https://github.com/CMHopeSunshine/nonebot-adapter-villa)    | adapters.villa                       |
+| [Discord](https://github.com/nonebot/adapter-discord)               | adapters.discord                     |
+| [Red 协议](https://github.com/nonebot/adapter-red)                  | adapters.red                         |
+| [Satori](https://github.com/nonebot/adapter-satori)                 | adapters.satori                      |
+| [Dodo IM](https://github.com/nonebot/adapter-dodo)                  | adapters.dodo                        |
 
 #### 构造
 
@@ -542,6 +543,7 @@ async def tt():
       UniMessage.template("{:At(user, $event.get_user_id())} 已确认目标为 {target}")
     )
 ```
+
 另外也有 `$message_id` 与 `$target` 两个特殊值
 
 #### 检查消息段
@@ -567,7 +569,8 @@ message.only(Text)
 #### 获取消息纯文本
 
 类似于 `Message.extract_plain_text()`，用于获取通用消息的纯文本.
-```python 
+
+```python
 from nonebot_plugin_alconna.uniseg import UniMessage, At
 
 
@@ -616,8 +619,8 @@ message[Text, 0:2] == UniMessage([Text("text1"), Text("text2")])
 
 我们也可以通过消息序列的 `include`、`exclude` 方法进行类型过滤.
 
-```python 
-message.include(Text, At)  
+```python
+message.include(Text, At)
 message.exclude(Reply)
 ```
 
@@ -685,6 +688,7 @@ class Target:
     source: str = ""
     """可能的事件id"""
 ```
+
 是用来描述响应消息时的发送对象.
 
 同样的，你可以通过依赖注入的方式在响应器中直接获取它们.
@@ -694,41 +698,40 @@ class Target:
 本插件可以通过 `assign` 来控制一个具体的响应函数是否在不满足条件时跳过响应
 
 ```python
-from nonebot import require  
-require("nonebot_plugin_alconna")  
-...  
-  
-from arclet.alconna import Alconna, Subcommand, Option, Args  
-from nonebot_plugin_alconna import on_alconna, CommandResult  
-  
-pip = Alconna(  
-"pip",  
-Subcommand(  
-"install", Args["pak", str],  
-Option("--upgrade"),  
-Option("--force-reinstall")  
-),  
-Subcommand("list", Option("--out-dated"))  
-)  
-  
-pip_cmd = on_alconna(pip)  
-  
-# 仅在命令为 `pip install pip` 时响应  
-@pip_cmd.assign("install.pak", "pip")  
-async def update(res: CommandResult):  
-...  
-  
-# 仅在命令为 `pip list` 时响应  
-@pip_cmd.assign("list")  
-async def list_(res: CommandResult):  
-...  
-  
-# 在命令为 `pip install xxx` 时响应  
-@pip_cmd.assign("install")  
-async def install(res: CommandResult):  
+from nonebot import require
+require("nonebot_plugin_alconna")
+...
+
+from arclet.alconna import Alconna, Subcommand, Option, Args
+from nonebot_plugin_alconna import on_alconna, CommandResult
+
+pip = Alconna(
+"pip",
+Subcommand(
+"install", Args["pak", str],
+Option("--upgrade"),
+Option("--force-reinstall")
+),
+Subcommand("list", Option("--out-dated"))
+)
+
+pip_cmd = on_alconna(pip)
+
+# 仅在命令为 `pip install pip` 时响应
+@pip_cmd.assign("install.pak", "pip")
+async def update(res: CommandResult):
+...
+
+# 仅在命令为 `pip list` 时响应
+@pip_cmd.assign("list")
+async def list_(res: CommandResult):
+...
+
+# 在命令为 `pip install xxx` 时响应
+@pip_cmd.assign("install")
+async def install(res: CommandResult):
 ...
 ```
-
 
 ## 响应器创建装饰
 
@@ -814,7 +817,6 @@ async def mask_h(matcher: AlconnaMatcher, img: Match[bytes] = AlconnaMatch("img"
 ```
 
 其中，`image_fetch` 是一个中间件，其接受一个 `Image` 对象，并提取图片的二进制数据返回.
-
 
 ## 匹配拓展
 

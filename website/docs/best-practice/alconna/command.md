@@ -123,7 +123,7 @@ alc = Alconna(
 res = alc.parse("pip install nonebot2 -i URL")
 
 print(res)
-# matched=True, header_match=(origin='pip' result='pip' matched=True groups={}), subcommands={'install': (value=Ellipsis args={'package': 'nonebot2'} options={'index-url': (value=None args={'url': 'URL'})} subcommands={})}, other_args={'package': 'nonebot2', 'url': 'URL'} 
+# matched=True, header_match=(origin='pip' result='pip' matched=True groups={}), subcommands={'install': (value=Ellipsis args={'package': 'nonebot2'} options={'index-url': (value=None args={'url': 'URL'})} subcommands={})}, other_args={'package': 'nonebot2', 'url': 'URL'}
 
 print(res.all_matched_args)
 # {'package': 'nonebot2', 'url': 'URL'}
@@ -134,6 +134,7 @@ print(res.all_matched_args)
 ## 组成
 
 ### 命令头
+
 命令头是指命令的前缀 (Prefix) 与命令名 (Command) 的组合，例如 !help 中的 ! 与 help.
 
 |             前缀             |   命令名   |                          匹配内容                           |       说明       |
@@ -173,25 +174,26 @@ assert alc.parse(".rd123").header["roll"] == 123
 Bracket Header 类似 python 里的 f-string 写法，通过 "{}" 声明匹配类型
 
 "{}" 中的格式为 "name:type or pat"：
+
 - "{}", "{:}" **⇔** "(.+)", 占位符
 - "{foo}" **⇔** "(?P&lt;foo&gt;.+)"
 - "{:\d+}" **⇔** "(\d+)"
 - "{foo:int}" **⇔** "(?P&lt;foo&gt;\d+)"，其中 "int" 部分若能转为 `BasePattern` 则读取里面的表达式
 
-
 ### 参数声明(Args)
 
 `Args` 是用于声明命令参数的组件, 可以通过以下几种方式构造 **Args** :
 
- - `Args[key, var, default][key1, var1, default1][...]` 
- - `Args[(key, var, default)]`
- - `Args.key[var, default]`
- 
+- `Args[key, var, default][key1, var1, default1][...]`
+- `Args[(key, var, default)]`
+- `Args.key[var, default]`
+
 其中，key **一定**是字符串，而 var 一般为参数的类型，default 为具体的值或者 **arclet.alconna.args.Field**.
 
 其与函数签名类似，但是允许含有默认值的参数在前；同时支持 keyword-only 参数不依照构造顺序传入 （但是仍需要在非 keyword-only 参数之后）.
 
 #### key
+
 `key` 的作用是用以标记解析出来的参数并存放于 **Arparma** 中，以方便用户调用.
 
 其有三种为 Args 注解的标识符:  `?`、`/`、 `!`, 标识符与 key 之间建议以 `;` 分隔:
@@ -200,20 +202,20 @@ Bracket Header 类似 python 里的 f-string 写法，通过 "{}" 声明匹配�
 - `?` 标识符表示该参数为**可选**参数，会在无参数匹配时跳过。
 - `/` 标识符表示该参数的类型注解需要隐藏。
 
-另外，对于参数的注释也可以标记在 `key` 中，其与 key 或者标识符 以 `#` 分割：  
+另外，对于参数的注释也可以标记在 `key` 中，其与 key 或者标识符 以 `#` 分割：
 
-`foo#这是注释;?` 或 `foo?#这是注释`  
+`foo#这是注释;?` 或 `foo?#这是注释`
 
-:::tip  
+:::tip
 
 `Args` 中的 `key` 在实际命令中并不需要传入（keyword 参数除外）：
 
 ```python
-from arclet.alconna import Alconna, Args  
+from arclet.alconna import Alconna, Args
 
 
-alc = Alconna("test", Args["foo", str])  
-alc.parse("test --foo abc") # 错误  
+alc = Alconna("test", Args["foo", str])
+alc.parse("test --foo abc") # 错误
 alc.parse("test abc") # 正确
 ```
 
@@ -228,18 +230,18 @@ alc = Alconna("test", Option("--foo", Args["foo", str]))
 
 :::
 
-
 #### var
+
 var 负责命令参数的**类型检查**与**类型转化**.
 
 `Args` 的`var`表面上看需要传入一个 `type`，但实际上它需要的是一个 `nepattern.BasePattern` 的实例.
 
 ```python
-from arclet.alconna import Args  
-from nepattern import BasePattern  
+from arclet.alconna import Args
+from nepattern import BasePattern
 
 
-# 表示 foo 参数需要匹配一个 @number 样式的字符串  
+# 表示 foo 参数需要匹配一个 @number 样式的字符串
 args = Args["foo", BasePattern("@\d+")]
 ```
 
@@ -271,7 +273,7 @@ args = Args["foo", BasePattern("@\d+")]
 - `Dict[X, Y]`: 匹配一个字典，其中的 key 为 `X` 类型，value 为 `Y` 类型
 - ...
 
-:::tip  
+:::tip
 
 几类特殊的传入标记：
 
@@ -299,8 +301,8 @@ args = Args["foo", BasePattern("@\d+")]
 
 :::
 
-
 ### **Option** 和 **Subcommand**
+
 `Option` 可以传入一组 `alias`，如 `Option("--foo|-F|--FOO|-f")` 或 `Option("--foo", alias=["-F"]`.
 
 传入别名后，`option` 会选择其中长度最长的作为选项名称。若传入为 "--foo|-f"，则命令名称为 "--foo".
@@ -318,20 +320,21 @@ args = Args["foo", BasePattern("@\d+")]
 - `help_text`: 传入该组件的帮助信息
 - `dest`: 被指定为解析完成时标注匹配结果的标识符，不传入时默认为选项或子命令的名称 (name)
 - `requires`: 一段指定顺序的字符串列表，作为唯一的前置序列与命令嵌套替换
-对于命令 `test foo bar baz qux <a:int>` 来讲，因为`foo bar baz` 仅需要判断是否相等, 所以可以这么编写：
+  对于命令 `test foo bar baz qux <a:int>` 来讲，因为`foo bar baz` 仅需要判断是否相等, 所以可以这么编写：
+
 ```python
 Alconna("test", Option("qux", Args.a[int], requires=["foo", "bar", "baz"]))
 ```
 
 - `default`: 默认值，在该组件未被解析时使用使用该值替换。
-特别的，使用 `OptionResult` 或 `SubcomanndResult` 可以设置包括参数字典在内的默认值：
+  特别的，使用 `OptionResult` 或 `SubcomanndResult` 可以设置包括参数字典在内的默认值：
+
 ```python
 from arclet.alconna import Option, OptionResult
 
 opt1 = Option("--foo", default=False)
 opt2 = Option("--foo", default=OptionResult(value=False, args={"bar": 1}))
 ```
-
 
 `Option` 可以特别设置传入一类 `Action`，作为解析操作.
 
@@ -347,7 +350,6 @@ opt2 = Option("--foo", default=OptionResult(value=False, args={"bar": 1}))
 - `append`，`append_value`
 - `count`
 
-
 ### Arparma
 
 `Alconna.parse` 会返回由 **Arparma** 承载的解析结果.
@@ -355,22 +357,24 @@ opt2 = Option("--foo", default=OptionResult(value=False, args={"bar": 1}))
 `Arparma` 会有如下参数：
 
 - 调试类
-    - matched: 是否匹配成功
-    - error_data: 解析失败时剩余的数据
-    - error_info: 解析失败时的异常内容
-    - origin: 原始命令，可以类型标注
+
+  - matched: 是否匹配成功
+  - error_data: 解析失败时剩余的数据
+  - error_info: 解析失败时的异常内容
+  - origin: 原始命令，可以类型标注
 
 - 分析类
-    - header_match: 命令头部的解析结果，包括原始头部、解析后头部、解析结果与可能的正则匹配组
-    - main_args: 命令的主参数的解析结果
-    - options: 命令所有选项的解析结果
-    - subcommands: 命令所有子命令的解析结果
-    - other_args: 除主参数外的其他解析结果
-    - all_matched_args: 所有 Args 的解析结果
+  - header_match: 命令头部的解析结果，包括原始头部、解析后头部、解析结果与可能的正则匹配组
+  - main_args: 命令的主参数的解析结果
+  - options: 命令所有选项的解析结果
+  - subcommands: 命令所有子命令的解析结果
+  - other_args: 除主参数外的其他解析结果
+  - all_matched_args: 所有 Args 的解析结果
 
 `Arparma` 同时提供了便捷的查询方法 `query[type]()`，会根据传入的 `path` 查找参数并返回
 
 `path` 支持如下:
+
 - `main_args`, `options`, ...: 返回对应的属性
 - `args`: 返回 all_matched_args
 - `main_args.xxx`, `options.xxx`, ...: 返回字典中 `xxx`键对应的值
@@ -379,7 +383,6 @@ opt2 = Option("--foo", default=OptionResult(value=False, args={"bar": 1}))
 - `options.foo.value`, `foo.value`: 返回选项 `foo` 的解析值
 - `options.foo.args`, `foo.args`: 返回选项 `foo` 的解析参数字典
 - `options.foo.args.bar`, `foo.bar`: 返回选项 `foo` 的参数字典中 `bar` 键对应的值 ...
-
 
 ## 命名空间配置
 
@@ -398,6 +401,7 @@ opt2 = Option("--foo", default=OptionResult(value=False, args={"bar": 1}))
 - ...
 
 ### 新建命名空间并替换
+
 ```python
 from arclet.alconna import Alconna, namespace, Namespace, Subcommand, Args, config
 
@@ -418,8 +422,8 @@ config.namespaces["foo"] = ns  # 将命名空间挂载到 config 上
 alc = Alconna("pip", Subcommand("install", Args["package", str]), namespace=config.namespaces["foo"]) # 也是同样可以切换到"foo"命名空间
 ```
 
-
 ### 修改默认的命名空间
+
 ```python
 from arclet.alconna import config, namespace, Namespace
 
@@ -432,7 +436,6 @@ config.default_namespace = np  # 更换默认的命名空间
 with namespace(config.default_namespace.name) as np:
     np.prefixes = [...]
 ```
-
 
 ## 快捷指令
 
@@ -514,6 +517,7 @@ alc.parse("echo hello world!")
 除此之外, 通过 **Alconna** 内置选项 `--shortcut` 可以动态操作快捷指令.
 
 例如:
+
 - `cmd --shortcut <key> <cmd>` 来增加一个快捷指令
 - `cmd --shortcut list` 来列出当前指令的所有快捷指令
 - `cmd --shortcut delete key` 来删除一个快捷指令
@@ -531,6 +535,7 @@ alc.parse("eval --shortcut list")
 ```
 
 ## 紧凑命令
+
 `Alconna`, `Option` 与 `Subcommand` 可以设置 `compact=True` 使得解析命令时允许名称与后随参数之间没有分隔:
 
 ```python
@@ -564,7 +569,6 @@ print(alc.parse("pp -vvv").query[int]("verbose.value"))
 # 3
 ```
 
-
 ## 模糊匹配
 
 模糊匹配通过在 Alconna 中设置其 CommandMeta 开启。
@@ -580,7 +584,6 @@ alc = Alconna("test_fuzzy", meta=CommandMeta(fuzzy_match=True))
 alc.parse("test_fuzy")
 # test_fuzy is not matched. Do you mean "test_fuzzy"?
 ```
-
 
 ## 半自动补全
 
@@ -608,7 +611,6 @@ output
 * bar
 '''
 ```
-
 
 ## Duplication
 
@@ -649,6 +651,7 @@ print(result.install)
 ```
 
 **Duplication** 也可以如 **Namespace** 一样直接标明参数名称和类型:
+
 ```python
 from typing import Optional
 from arclet.alconna import Duplication
