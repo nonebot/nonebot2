@@ -816,7 +816,7 @@ async def mask_h(matcher: AlconnaMatcher, img: Match[bytes] = AlconnaMatch("img"
 其中，`image_fetch` 是一个中间件，其接受一个 `Image` 对象，并提取图片的二进制数据返回.
 
 
-### 匹配拓展
+## 匹配拓展
 
 本插件提供了一个 `Extension` 类，其用于自定义 AlconnaMatcher 的部分行为.
 
