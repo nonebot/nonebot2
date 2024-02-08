@@ -5,8 +5,8 @@ description: 数据库
 slug: /best-practice/db/
 ---
 
-import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
+import Tabs from "@theme/Tabs";
 
 # 数据库
 
@@ -45,20 +45,17 @@ pdm add nonebot-plugin-orm
 </TabItem>
 </Tabs>
 
-但是，只有插件本身是不够的，你还需要安装额外的依赖，参见 [数据库服务](#数据库服务)。
+## 数据库驱动和服务
 
-## 数据库服务
-
-本插件只提供数据库连接能力，不提供数据库服务。
-你需要自行安装并配置一个数据库服务。
-常见的数据库有：
+本插件只提供了 ORM 功能，没有数据库服务，也没有直接连接数据库服务的能力。
+所以你需要另行安装数据库驱动和数据库服务，并且配置数据库连接信息。
 
 ### SQLite
 
 [SQLite](https://www.sqlite.org/) 是一个轻量级的嵌入式数据库，它的数据以单文件的形式存储在本地，不需要单独的数据库服务。
 SQLite 非常适合用于开发环境和小型应用，但是不适合用于大型应用的生产环境。
 
-虽然不需要单独的数据库服务，并且 [Python 标准库有对 SQLite 的内建支持](https://docs.python.org/zh-cn/3/library/sqlite3.html)，但你仍然需要安装额外的依赖：
+虽然不需要另行安装数据库服务，但你仍然需要安装数据库驱动：
 
 <Tabs groupId="install">
 <TabItem value="pip" label="使用 pip">
@@ -138,7 +135,7 @@ pdm add nonebot-plugin-orm[mysql]
 SQLALCHEMY_DATABASE_URL=mysql+aiomysql://user:password@host:port/dbname[?key=value&key=value...]
 ```
 
-## 迁移
+## 使用
 
 本插件提供了数据库迁移功能（此功能依赖于 [nb-cli 脚手架](../../quick-start#安装脚手架)）。
 在安装了新的插件或机器人之后，你需要执行一次数据库迁移操作，将数据库同步至与机器人一致的状态：
