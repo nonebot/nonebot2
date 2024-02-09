@@ -74,7 +74,7 @@ def on_alconna(
 
 `on_alconna` 返回的是 `Matcher` 的子类 `AlconnaMatcher` ，其拓展了如下方法：
 
-- `.assign(path, value, or_not)`: 用于对包含多个选项/子命令的命令的分派处理（具体请看[条件控制](./matcher.md##条件控制)）
+- `.assign(path, value, or_not)`: 用于对包含多个选项/子命令的命令的分派处理（具体请看[条件控制](./matcher.md#条件控制)）
 - `.got_path(path, prompt, middleware)`: 在 `got` 方法的基础上，会以 path 对应的参数为准，读取传入 message 的最后一个消息段并验证转换
 - `.set_path_arg(key, value)`, `.get_path_arg(key)`: 类似 `set_arg` 和 `got_arg`，为 `got_path` 的特化版本
 - `.reject_path(path[, prompt, fallback])`: 类似于 `reject_arg`，对应 `got_path`
@@ -213,7 +213,7 @@ async def handle_test4(qux: Query[bool] = Query("baz.qux", False)):
 
 响应器使用示例中使用了消息段标注，其中 `At` 属于通用标注，而 `Image` 属于 `onebot12` 适配器下的标注。
 
-具体介绍和使用请查看 [通用信息组件](./uniseg.mdx#通用消息组件)
+具体介绍和使用请查看 [通用信息组件](./uniseg.mdx#通用消息段)
 
 本插件为以下适配器提供了专门的适配器标注：
 
