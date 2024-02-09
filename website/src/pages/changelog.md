@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 更新 Alconna 文档 [@lengmianzz](https://github.com/lengmianzz) ([#2568](https://github.com/nonebot/nonebot2/pull/2568))
 - Docs: 添加产品赞助列表 [@yanyongyu](https://github.com/yanyongyu) ([#2566](https://github.com/nonebot/nonebot2/pull/2566))
 - Docs: 修复表单标签状态更新 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2558](https://github.com/nonebot/nonebot2/pull/2558))
 - Docs: 添加 CITATION 文件 [@yanyongyu](https://github.com/yanyongyu) ([#2520](https://github.com/nonebot/nonebot2/pull/2520))
