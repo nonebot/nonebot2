@@ -10,7 +10,7 @@ description: 配置项
 - **类型**: `bool`
 - **默认值**: `False`
 
-是否全局启用输出信息自动发送，不启用则会在触特殊内置选项后仍然将解析结果传递至响应器。
+是否全局启用输出信息自动发送，不启用则会在触发特殊内置选项后仍然将解析结果传递至响应器。
 
 ## alconna_use_command_start
 
@@ -38,11 +38,11 @@ description: 配置项
 - **类型**: `bool`
 - **默认值**: `False`
 
-是否读取 Nonebot 的配置项 `COMMAND_SEP` 来作为全局的 Alconna 命令分隔符
+是否读取 Nonebot 的配置项 `COMMAND_SEP` 来作为全局的 Alconna 命令分隔符。
 
 ## alconna_global_extensions
 
 - **类型**: `List[str]`
 - **默认值**: `[]`
 
-全局加载的扩展，路径以 . 分隔，如 `foo.bar.baz:DemoExtension`
+全局加载的扩展，路径以 . 分隔，如 `foo.bar.baz:DemoExtension`。
