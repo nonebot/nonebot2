@@ -212,7 +212,7 @@ async def handle_test4(qux: Query[bool] = Query("baz.qux", False)):
 
 响应器使用示例中使用了消息段标注，其中 `At` 属于通用标注，而 `Image` 属于 `onebot12` 适配器下的标注。
 
-具体介绍和使用请查看 [`Segment` 模型](./uniseg.mdx##通用消息段)
+具体介绍和使用请查看 [通用信息组件](./uniseg.mdx#通用消息组件)
 
 本插件为以下适配器提供了专门的适配器标注：
 
@@ -249,6 +249,7 @@ require("nonebot_plugin_alconna")
 
 from arclet.alconna import Alconna, Subcommand, Option, Args
 from nonebot_plugin_alconna import on_alconna, CommandResult
+
 
 pip = Alconna(
     "pip",
