@@ -60,6 +60,7 @@ def on_alconna(
     ...,
 ):
 ```
+
 - `command`: Alconna 命令或字符串，字符串将通过 `AlconnaFormat` 转换为 Alconna 命令
 - `skip_for_unmatch`: 是否在命令不匹配时跳过该响应
 - `auto_send_output`: 是否自动发送输出信息并跳过响应
@@ -89,24 +90,24 @@ require("nonebot_plugin_alconna")
 from arclet.alconna import Alconna, Option, Args
 from nonebot_plugin_alconna import on_alconna, AlconnaMatch, Match, UniMessage
 
-  
+
 login = on_alconna(Alconna(["/"], "login", Args["password?", str], Option("-r|--recall"))) # 这里["/"]指命令前缀必须是/
 
 # /login -r 触发
-@login.assign("recall") 
+@login.assign("recall")
 async def login_exit():
     await login.finish("已退出")
 
 # /login xxx 触发
-@login.assign("password") 
+@login.assign("password")
 async def login_handle(pw: Match[str] = AlconnaMatch("password")):
     if pw.available:
         login.set_path_arg("password", pw.result)
 
 # /login 触发
-@login.got_path("password", prompt=UniMessage.template("{:At(user, $event.get_user_id())} 请输入密码"))  
-async def login_got(password: str):  
-	assert password  
+@login.got_path("password", prompt=UniMessage.template("{:At(user, $event.get_user_id())} 请输入密码"))
+async def login_got(password: str):
+	assert password
 	await login.send("登录成功")
 ```
 
@@ -167,7 +168,7 @@ from nonebot import require
 require("nonebot_plugin_alconna")
 
 from nonebot_plugin_alconna import (
-    on_alconna, 
+    on_alconna,
     Match,
     Query,
     AlconnaMatch,
@@ -197,7 +198,7 @@ async def handle_test2(result: Arparma):
 
 @test.handle()
 async def handle_test3(bar: Match[int] = AlconnaMatch("bar")):
-    if bar.available:    
+    if bar.available:
         await test.send(f"foo={bar.result}")
 
 @test.handle()
@@ -422,7 +423,6 @@ async def mask_h(matcher: AlconnaMatcher, img: Match[bytes] = AlconnaMatch("img"
 ```
 
 其中，`image_fetch` 是一个中间件，其接受一个 `Image` 对象，并提取图片的二进制数据返回。
-
 
 ## 匹配拓展
 
