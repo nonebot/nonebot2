@@ -574,6 +574,27 @@ class Message(BaseMessage[MessageSegment]):
 - [QQGuild](https://github.com/nonebot/adapter-qqguild/blob/master/nonebot/adapters/qqguild/message.py#L22-L150)
 - [Telegram](https://github.com/nonebot/adapter-telegram/blob/beta/nonebot/adapters/telegram/message.py#L43-L250)
 
+## 适配器测试
+
+关于适配器测试相关内容在这里不再展开，开发者可以根据需要进行合适的测试。这里为开发者提供几个常见问题的解决方法：
+
+1. 在测试中无法导入 editable 模式安装的适配器代码。在 pytest 的 `conftest.py` 内添加如下代码：
+
+   ```python title=tests/conftest.py
+   from pathlib import Path
+   import nonebot.adapters
+   nonebot.adapters.__path__.append(  # type: ignore
+       str((Path(__file__).parent.parent / "nonebot" / "adapters").resolve())
+   )
+   ```
+
+2. 需要计算适配器测试覆盖率，请在 `pyproject.toml` 中添加 pytest 配置：
+
+   ```toml title=pyproject.toml
+   [tool.pytest.ini_options]
+   addopts = "--cov nonebot/adapters/{adapter-name} --cov-report term-missing"
+   ```
+
 ## 后续工作
 
 在完成适配器代码的编写后，如果想要将适配器发布到 NoneBot 商店，我们需要将适配器发布到 PyPI 中，然后前往[商店](/store/adapters)页面，切换到适配器页签，点击**发布适配器**按钮，填写适配器相关信息并提交。
