@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 📝 文档
+
+- Docs: 添加适配器测试注意事项 [@yanyongyu](https://github.com/yanyongyu) ([#2570](https://github.com/nonebot/nonebot2/pull/2570))
+
 ## v2.2.0
 
 ### 🚀 新功能
