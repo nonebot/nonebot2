@@ -278,3 +278,7 @@ def test_message_exclude():
             FakeMessageSegment.text("test4"),
         ]
     )
+
+
+def test_message_contains():
+    assert "text" in FakeMessage(PatchedFakeMessageSegment.text(""))
