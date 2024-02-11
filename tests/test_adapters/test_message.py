@@ -192,6 +192,7 @@ def test_message_contains():
     assert message.has("foo") is False
     assert "foo" not in message
 
+    assert not bool(FakeMessageSegment.text(""))
     msg_with_empty_seg = FakeMessage([FakeMessageSegment.text("")])
     assert msg_with_empty_seg.has("text") is True
     assert "text" in msg_with_empty_seg
