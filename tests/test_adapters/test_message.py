@@ -192,6 +192,8 @@ def test_message_contains():
     assert message.has("foo") is False
     assert "foo" not in message
 
+    assert "text" in FakeMessage(FakeMessageSegment.text(""))
+
 
 def test_message_only():
     message = FakeMessage(
@@ -278,7 +280,3 @@ def test_message_exclude():
             FakeMessageSegment.text("test4"),
         ]
     )
-
-
-def test_message_contains():
-    assert "text" in FakeMessage(FakeMessageSegment.text(""))
