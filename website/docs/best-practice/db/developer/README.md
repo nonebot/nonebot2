@@ -92,7 +92,6 @@ click.exceptions.UsageError: 检测到新的升级操作:
 
 首先，我们需要创建一个迁移脚本：
 
-
 ```shell
 nb orm revision -m "first revision" --branch-label weather
 ```
