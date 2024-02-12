@@ -144,7 +144,7 @@ SQLALCHEMY_ENGINE_OPTIONS='{
 }'
 ```
 
-:::danger 警告
+:::caution 注意
 以上配置之间有覆盖关系，遵循特殊优先于一般的原则，具体为 [`sqlalchemy_database_url`](#sqlalchemy_database_url) > [`sqlalchemy_bind`](#sqlalchemy_bind) > [`sqlalchemy_echo`](#sqlalchemy_echo) > [`sqlalchemy_engine_options`](#sqlalchemy_engine_options)。
 但覆盖顺序并非显而易见，出于清晰考虑，请只配置必要的选项。
 :::
