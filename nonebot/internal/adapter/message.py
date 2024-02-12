@@ -285,7 +285,7 @@ class Message(List[TMS], abc.ABC):
             消息内是否存在给定消息段或给定类型的消息段
         """
         if isinstance(value, str):
-            return bool(next((seg for seg in self if seg.type == value), None))
+            return next((seg for seg in self if seg.type == value), None) is not None
         return super().__contains__(value)
 
     def has(self, value: Union[TMS, str]) -> bool:
