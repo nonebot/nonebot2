@@ -5500,5 +5500,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chikari_yinpa",
+    "project_link": "nonebot-plugin-chikari-yinpa",
+    "author": "mrqx0195",
+    "tags": [
+      {
+        "label": "yinpa",
+        "color": "#ffff00"
+      }
+    ],
+    "is_official": false
   }
 ]
