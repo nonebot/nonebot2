@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🐛 Bug 修复
+
+- Fix: `Message.__contains__()` 未考虑 `bool(MessageSegment)` 存在 False 情况导致的异常结果 [@lgc2333](https://github.com/lgc2333) ([#2572](https://github.com/nonebot/nonebot2/pull/2572))
+
 ### 📝 文档
 
 - Docs: 添加适配器测试注意事项 [@yanyongyu](https://github.com/yanyongyu) ([#2570](https://github.com/nonebot/nonebot2/pull/2570))
