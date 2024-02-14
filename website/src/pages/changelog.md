@@ -15,6 +15,10 @@ toc_max_heading_level: 2
 
 - Docs: 添加适配器测试注意事项 [@yanyongyu](https://github.com/yanyongyu) ([#2570](https://github.com/nonebot/nonebot2/pull/2570))
 
+### 🍻 插件发布
+
+- Plugin: Chikari_yinpa [@noneflow](https://github.com/noneflow) ([#2573](https://github.com/nonebot/nonebot2/pull/2573))
+
 ## v2.2.0
 
 ### 🚀 新功能
