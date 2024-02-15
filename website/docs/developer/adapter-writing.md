@@ -97,6 +97,7 @@ from typing import Any
 from typing_extensions import override
 
 from nonebot.drivers import Driver
+from nonebot import get_plugin_config
 from nonebot.adapters import Adapter as BaseAdapter
 
 from .config import Config
@@ -106,7 +107,7 @@ class Adapter(BaseAdapter):
     def __init__(self, driver: Driver, **kwargs: Any):
         super().__init__(driver, **kwargs)
         # 读取适配器所需的配置项
-        self.adapter_config: Config = Config(**self.config.dict())
+        self.adapter_config: Config = get_plugin_config(Config)
 
     @classmethod
     @override
@@ -125,6 +126,7 @@ NoneBot 提供了多种 [Driver](../advanced/driver) 来帮助适配器进行网
 import asyncio
 from typing_extensions import override
 
+from nonebot import get_plugin_config
 from nonebot.exception import WebSocketClosed
 from nonebot.drivers import Request, WebSocketClientMixin
 
@@ -132,7 +134,7 @@ class Adapter(BaseAdapter):
     @override
     def __init__(self, driver: Driver, **kwargs: Any):
         super().__init__(driver, **kwargs)
-        self.adapter_config: Config = Config(**self.config.dict())
+        self.adapter_config: Config = get_plugin_config(Config)
         self.task: Optional[asyncio.Task] = None  # 存储 ws 任务
         self.setup()
 
@@ -200,6 +202,7 @@ class Adapter(BaseAdapter):
 ##### 服务端通信方式
 
 ```python {30,38} title=adapter.py
+from nonebot import get_plugin_config
 from nonebot.drivers import (
     Request,
     ASGIMixin,
@@ -212,7 +215,7 @@ class Adapter(BaseAdapter):
     @override
     def __init__(self, driver: Driver, **kwargs: Any):
         super().__init__(driver, **kwargs)
-        self.adapter_config: Config = Config(**self.config.dict())
+        self.adapter_config: Config = get_plugin_config(Config)
         self.setup()
 
     def setup(self) -> None:
@@ -286,6 +289,8 @@ class Adapter(BaseAdapter):
 import asyncio
 from typing import Any, Dict
 
+from nonebot.compat import type_validate_python
+
 from .bot import Bot
 from .event import Event
 from .log import log
@@ -301,7 +306,7 @@ class Adapter(BaseAdapter):
 
         # 做一层异常处理，以应对平台事件数据的变更
         try:
-            return your_event_class.parse_obj(payload)
+            return type_validate_python(your_event_class, payload)
         except Exception as e:
             # 无法正常解析为具体 Event 时，给出日志提示
             log(
@@ -309,7 +314,7 @@ class Adapter(BaseAdapter):
                 f"Parse event error: {str(payload)}",
             )
             # 也可以尝试转为基础 Event 进行处理
-            return Event.parse_obj(payload)
+            return type_validate_python(Event, payload)
 
 
     async def _forward(self, bot: Bot):
@@ -440,6 +445,7 @@ Event 是 NoneBot 中的事件主体对象，所有平台消息在进入处理�
 ```python {5,8,13,18,23,28,33} title=event.py
 from typing_extensions import override
 
+from nonebot.compat import model_dump
 from nonebot.adapters import Event as BaseEvent
 
 class Event(BaseEvent):
@@ -452,7 +458,7 @@ class Event(BaseEvent):
     @override
     def get_event_description(self) -> str:
         # 返回事件的描述，用于日志打印，请注意转义 loguru tag
-        return escape_tag(repr(self.dict()))
+        return escape_tag(repr(model_dump(self)))
 
     @override
     def get_message(self):

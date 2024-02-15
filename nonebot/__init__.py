@@ -49,6 +49,7 @@ from typing import Any, Dict, Type, Union, TypeVar, Optional, overload
 
 import loguru
 
+from nonebot.compat import model_dump
 from nonebot.log import logger as logger
 from nonebot.adapters import Bot, Adapter
 from nonebot.config import DOTENV_TYPE, Env, Config
@@ -310,7 +311,7 @@ def init(*, _env_file: Optional[DOTENV_TYPE] = None, **kwargs: Any) -> None:
             f"Current <y><b>Env: {escape_tag(env.environment)}</b></y>"
         )
         logger.opt(colors=True).debug(
-            f"Loaded <y><b>Config</b></y>: {escape_tag(str(config.dict()))}"
+            f"Loaded <y><b>Config</b></y>: {escape_tag(str(model_dump(config)))}"
         )
 
         DriverClass = _resolve_combine_expr(config.driver)
