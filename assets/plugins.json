@@ -5512,5 +5512,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_splatoon3_nso",
+    "project_link": "nonebot-plugin-splatoon3-nso",
+    "author": "Cypas",
+    "tags": [
+      {
+        "label": "splatoon3",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
