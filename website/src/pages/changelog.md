@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修改遗漏的过时 Pydantic 方法 [@yanyongyu](https://github.com/yanyongyu) ([#2577](https://github.com/nonebot/nonebot2/pull/2577))
 - Fix: `Message.__contains__()` 未考虑 `bool(MessageSegment)` 存在 False 情况导致的异常结果 [@lgc2333](https://github.com/lgc2333) ([#2572](https://github.com/nonebot/nonebot2/pull/2572))
 
 ### 📝 文档
