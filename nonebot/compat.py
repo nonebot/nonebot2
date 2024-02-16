@@ -194,8 +194,9 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
         model: BaseModel,
         include: Optional[Set[str]] = None,
         exclude: Optional[Set[str]] = None,
+        by_alias: bool = False,
     ) -> Dict[str, Any]:
-        return model.model_dump(include=include, exclude=exclude)
+        return model.model_dump(include=include, exclude=exclude, by_alias=by_alias)
 
     def type_validate_python(type_: Type[T], data: Any) -> T:
         """Validate data with given type."""
@@ -339,8 +340,9 @@ else:  # pragma: pydantic-v1
         model: BaseModel,
         include: Optional[Set[str]] = None,
         exclude: Optional[Set[str]] = None,
+        by_alias: bool = False,
     ) -> Dict[str, Any]:
-        return model.dict(include=include, exclude=exclude)
+        return model.dict(include=include, exclude=exclude, by_alias=by_alias)
 
     def type_validate_python(type_: Type[T], data: Any) -> T:
         """Validate data with given type."""

@@ -21,7 +21,7 @@ options:
 `RuleChecker` 是一个返回值为 `bool` 类型的依赖函数，即 `RuleChecker` 支持依赖注入。我们可以根据上一节中添加的[配置项](./config.mdx#插件配置)，在 `weather` 插件目录中编写一个响应规则：
 
 ```python {3,4} title=weather/__init__.py
-plugin_config = Config.parse_obj(get_driver().config)
+plugin_config = get_plugin_config(Config)
 
 async def is_enable() -> bool:
     return plugin_config.weather_plugin_enabled
@@ -57,7 +57,7 @@ weather = on_command("天气", rule=rule)
 ```python {10} title=weather/__init__.py
 from nonebot.rule import to_me
 
-plugin_config = Config.parse_obj(get_driver().config)
+plugin_config = get_plugin_config(Config)
 
 async def is_enable() -> bool:
     return plugin_config.weather_plugin_enabled

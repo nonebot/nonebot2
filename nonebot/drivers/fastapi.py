@@ -31,6 +31,7 @@ from nonebot.drivers import Driver as BaseDriver
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
+from nonebot.compat import model_dump, type_validate_python
 from nonebot.drivers import HTTPServerSetup, WebSocketServerSetup
 
 try:
@@ -89,7 +90,7 @@ class Driver(BaseDriver, ASGIMixin):
     def __init__(self, env: Env, config: NoneBotConfig):
         super().__init__(env, config)
 
-        self.fastapi_config: Config = Config(**config.dict())
+        self.fastapi_config: Config = type_validate_python(Config, model_dump(config))
 
         self._server_app = FastAPI(
             lifespan=self._lifespan_manager,
