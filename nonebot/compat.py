@@ -16,6 +16,7 @@ from typing import (
     Dict,
     List,
     Type,
+    Union,
     TypeVar,
     Callable,
     Optional,
@@ -212,6 +213,10 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
         """Validate data with given type."""
         return TypeAdapter(type_).validate_python(data)
 
+    def type_validate_json(type_: Type[T], data: Union[str, bytes]) -> T:
+        """Validate JSON with given type."""
+        return TypeAdapter(type_).validate_json(data)
+
     def __get_pydantic_core_schema__(
         cls: Type["_CustomValidationClass"],
         source_type: Any,
@@ -236,7 +241,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
 
 else:  # pragma: pydantic-v1
     from pydantic import Extra
-    from pydantic import parse_obj_as
+    from pydantic import parse_obj_as, parse_raw_as
     from pydantic import BaseConfig as PydanticConfig
     from pydantic.fields import FieldInfo as BaseFieldInfo
     from pydantic.fields import ModelField as BaseModelField
@@ -367,6 +372,10 @@ else:  # pragma: pydantic-v1
     def type_validate_python(type_: Type[T], data: Any) -> T:
         """Validate data with given type."""
         return parse_obj_as(type_, data)
+
+    def type_validate_json(type_: Type[T], data: Union[str, bytes]) -> T:
+        """Validate JSON with given type."""
+        return parse_raw_as(type_, data)
 
     def custom_validation(class_: Type["CVC"]) -> Type["CVC"]:
         """Do nothing in pydantic v1"""
