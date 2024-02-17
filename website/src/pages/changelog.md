@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 优化 pydantic 兼容函数 `model_dump` 和 `type_validate_json` [@MingxuanGame](https://github.com/MingxuanGame) ([#2579](https://github.com/nonebot/nonebot2/pull/2579))
+
 ### 🐛 Bug 修复
 
 - Fix: 修改遗漏的过时 Pydantic 方法 [@yanyongyu](https://github.com/yanyongyu) ([#2577](https://github.com/nonebot/nonebot2/pull/2577))
