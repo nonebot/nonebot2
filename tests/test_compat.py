@@ -79,17 +79,14 @@ async def test_validate_json():
         test5: list
         test6: Optional[int]
 
-    assert (
-        type_validate_json(
-            TestModel,
-            "{"
-            '  "test1": 1,'
-            '  "test2": "2",'
-            '  "test3": true,'
-            '  "test4": {},'
-            '  "test5": [],'
-            '  "test6": null'
-            '}',
-        )
-        == TestModel(test1=1, test2="2", test3=True, test4={}, test5=[], test6=None)
-    )
+    assert type_validate_json(
+        TestModel,
+        "{"
+        '  "test1": 1,'
+        '  "test2": "2",'
+        '  "test3": true,'
+        '  "test4": {},'
+        '  "test5": [],'
+        '  "test6": null'
+        "}",
+    ) == TestModel(test1=1, test2="2", test3=True, test4={}, test5=[], test6=None)
