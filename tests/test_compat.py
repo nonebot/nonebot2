@@ -1,4 +1,4 @@
-from typing import Any
+from typing import Any, Optional
 from dataclasses import dataclass
 
 import pytest
@@ -11,6 +11,7 @@ from nonebot.compat import (
     PydanticUndefined,
     model_dump,
     custom_validation,
+    type_validate_json,
     type_validate_python,
 )
 
@@ -66,3 +67,26 @@ async def test_custom_validation():
 
     assert type_validate_python(TestModel, {"test": 1}) == TestModel(test=1)
     assert called == [1, 2]
+
+
+@pytest.mark.asyncio
+async def test_validate_json():
+    class TestModel(BaseModel):
+        test1: int
+        test2: str
+        test3: bool
+        test4: dict
+        test5: list
+        test6: Optional[int]
+
+    assert type_validate_json(
+        TestModel,
+        "{"
+        '  "test1": 1,'
+        '  "test2": "2",'
+        '  "test3": true,'
+        '  "test4": {},'
+        '  "test5": [],'
+        '  "test6": null'
+        "}",
+    ) == TestModel(test1=1, test2="2", test3=True, test4={}, test5=[], test6=None)
