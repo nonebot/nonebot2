@@ -55,6 +55,7 @@ __all__ = (
     "model_config",
     "model_dump",
     "type_validate_python",
+    "type_validate_json",
     "custom_validation",
 )
 
