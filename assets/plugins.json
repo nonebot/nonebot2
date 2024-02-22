@@ -5524,5 +5524,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bf1marneserverlist",
+    "project_link": "nonebot-plugin-bf1marneserverlist",
+    "author": "SAFEluren",
+    "tags": [
+      {
+        "label": "server",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
