@@ -461,9 +461,8 @@ class Config(BaseSettings):
 
     用法:
         ```conf
-        SESSION_EXPIRE_TIMEOUT=120  # 单位: 秒
-        SESSION_EXPIRE_TIMEOUT=[DD ][HH:MM]SS[.ffffff]
-        SESSION_EXPIRE_TIMEOUT=P[DD]DT[HH]H[MM]M[SS]S  # ISO 8601
+        SESSION_EXPIRE_TIMEOUT=[-][DD]D[,][HH:MM:]SS[.ffffff]
+        SESSION_EXPIRE_TIMEOUT=[±]P[DD]DT[HH]H[MM]M[SS]S  # ISO 8601
         ```
     """
 
