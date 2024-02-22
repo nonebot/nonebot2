@@ -579,13 +579,13 @@ nonebot.init(command_start={"/", ""}, command_sep={".", " "})
 - **类型**: `timedelta`
 - **默认值**: `timedelta(minutes=2)`
 
-用户会话超时时间，配置格式参考 [Datetime Types](https://docs.pydantic.dev/usage/types/#datetime-types)，可以为单位为秒的 `int | float` 等。
+用户会话超时时间，配置格式参考 [Datetime Types](https://docs.pydantic.dev/latest/api/standard_library_types/#datetimetimedelta)，可以为单位为秒的 `int | float` 等。
 
 <Tabs groupId="configMethod">
   <TabItem value="dotenv" label="dotenv" default>
 
 ```dotenv
-SESSION_EXPIRE_TIMEOUT=120
+SESSION_EXPIRE_TIMEOUT=00:02:00
 ```
 
   </TabItem>
@@ -593,9 +593,9 @@ SESSION_EXPIRE_TIMEOUT=120
 
 ```bash
 # windows
-set SESSION_EXPIRE_TIMEOUT '120'
+set SESSION_EXPIRE_TIMEOUT '00:02:00'
 # linux/macOS
-export SESSION_EXPIRE_TIMEOUT='120'
+export SESSION_EXPIRE_TIMEOUT='00:02:00'
 ```
 
   </TabItem>
