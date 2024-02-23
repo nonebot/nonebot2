@@ -5536,5 +5536,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_kawaii_status",
+    "project_link": "nonebot-plugin-kawaii-status",
+    "author": "KomoriDev",
+    "tags": [
+      {
+        "label": "简约",
+        "color": "#54adff"
+      },
+      {
+        "label": "可爱",
+        "color": "#ffb3cc"
+      }
+    ],
+    "is_official": false
   }
 ]
