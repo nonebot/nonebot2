@@ -23,6 +23,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 运行状态 [@noneflow](https://github.com/noneflow) ([#2587](https://github.com/nonebot/nonebot2/pull/2587))
 - Plugin: nonebot-plugin-bf1marneserverlist [@noneflow](https://github.com/noneflow) ([#2584](https://github.com/nonebot/nonebot2/pull/2584))
 - Plugin: splatoon3游戏nso查询 [@noneflow](https://github.com/noneflow) ([#2576](https://github.com/nonebot/nonebot2/pull/2576))
 - Plugin: Chikari_yinpa [@noneflow](https://github.com/noneflow) ([#2573](https://github.com/nonebot/nonebot2/pull/2573))
