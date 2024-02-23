@@ -21,6 +21,10 @@ toc_max_heading_level: 2
 - Docs: 更新 Session Expire Timeout​ 文档 [@MingxuanGame](https://github.com/MingxuanGame) ([#2585](https://github.com/nonebot/nonebot2/pull/2585))
 - Docs: 添加适配器测试注意事项 [@yanyongyu](https://github.com/yanyongyu) ([#2570](https://github.com/nonebot/nonebot2/pull/2570))
 
+### 💫 杂项
+
+- Plugin: 修改 phigros 相关内容 [@XTxiaoting14332](https://github.com/XTxiaoting14332) ([#2578](https://github.com/nonebot/nonebot2/pull/2578))
+
 ### 🍻 插件发布
 
 - Plugin: 运行状态 [@noneflow](https://github.com/noneflow) ([#2587](https://github.com/nonebot/nonebot2/pull/2587))
