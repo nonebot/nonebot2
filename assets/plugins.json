@@ -5288,8 +5288,8 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_phigros_qq",
-    "project_link": "nonebot-plugin-phigros-qq",
+    "module_name": "nonebot_plugin_phigros",
+    "project_link": "nonebot-plugin-phigros",
     "author": "XTxiaoting14332",
     "tags": [
       {
