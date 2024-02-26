@@ -20,7 +20,7 @@ slug: /best-practice/db/developer
 其中，一个地方只会有一种天气，而不同地方可能有相同的天气。
 所以，我们可以设计出如下的模型：
 
-```python title=weather/__init__.py
+```python title=weather/__init__.py showLineNumbers
 from nonebot_plugin_orm import Model
 from sqlalchemy.orm import Mapped, mapped_column
 
@@ -30,7 +30,8 @@ class Weather(Model):
     weather: Mapped[str]
 ```
 
-其中，`primary_key=True` 意味着此列 (`location`) 是主键，即内容是唯一的且非空的。每一个模型必须有至少一个主键。
+其中，`primary_key=True` 意味着此列 (`location`) 是主键，即内容是唯一的且非空的。
+每一个模型必须有至少一个主键。
 
 我们可以用以下代码检查模型生成的数据库模式是否正确：
 
@@ -48,8 +49,7 @@ CREATE TABLE weather_weather (
 )
 ```
 
-注意到了吗？
-表名是 `weather_weather` 而不是 `Weather` 或者 `weather`。
+可以注意到表名是 `weather_weather` 而不是 `Weather` 或者 `weather`。
 这是因为 `nonebot-plugin-orm` 会自动为模型生成一个表名，规则是：`<插件模块名>_<类名小写>`。
 
 你也可以通过指定 `__tablename__` 属性来自定义表名：
@@ -66,7 +66,7 @@ CREATE TABLE weather (
 )
 ```
 
-但是，并不推荐这么做，因为这可能会导致不同插件间的表名重复，引发冲突。
+但是，并不推荐你这么做，因为这可能会导致不同插件间的表名重复，引发冲突。
 特别是当你会发布插件时，你并不知道其他插件会不会使用相同的表名。
 
 ### 首次迁移
@@ -109,7 +109,7 @@ weather
 这就是我们创建的迁移脚本，它记录了数据库模式的变化。
 我们可以查看一下它的内容：
 
-```python {25-33,39-41} showLineNumbers
+```python title=weather/migrations/xxxxxxxxxxxx_first_revision.py {25-33,39-41} showLineNumbers
 """first revision
 
 迁移 ID: xxxxxxxxxxxx
@@ -173,7 +173,7 @@ op.drop_table("weather_weather")  # DROP TABLE weather_weather;
 # ### end Alembic commands ###
 ```
 
-虽然我们不是很懂这些代码的意思，但是可以注意到它们几乎与 SQL 语句一一对应。
+虽然我们不是很懂这些代码的意思，但是可以注意到它们几乎与 SQL 语句 (DDL) 一一对应。
 显然，它们是用来创建和删除表的。
 
 我们还可以注意到，`upgrade()` 和 `downgrade()` 函数中的代码是**互逆**的。
@@ -187,7 +187,8 @@ op.drop_table("weather_weather")  # DROP TABLE weather_weather;
 :::caution 注意
 迁移脚本冗长且繁琐，我们一般不会手写它们，而是由 Alembic 自动生成。
 一般情况下，Alembic 足够智能，可以正确地生成迁移脚本。
-但是，在复杂或有歧义的情况下，我们可能需要手动调整迁移脚本。所以，**永远要检查迁移脚本，并且在开发环境中测试！**
+但是，在复杂或有歧义的情况下，我们可能需要手动调整迁移脚本。
+所以，**永远要检查迁移脚本，并且在开发环境中测试！**
 
 **迁移脚本中任何一处错误都足以使数据付之东流！**
 :::
@@ -208,4 +209,191 @@ nb orm upgrade
 ALEMBIC_STARTUP_CHECK=false
 ```
 
-现在，每次启动机器人时，数据库模式会自动与模型定义同步。
+现在，每次启动机器人时，数据库模式会自动与模型定义同步，无需手动迁移。
+
+### 会话管理
+
+我们已经成功定义了模型，并且迁移了数据库，现在可以开始使用数据库了……吗？
+并不能，因为模型只是数据结构的定义，并不能通过它操作数据（如果你曾经使用过 [Tortoise ORM](https://tortoise.github.io/)，可能会知道 `await Weather.get(location="上海")` 这样的面向对象编程。
+但是 SQLAlchemy 不同，选择了命令式编程）。
+我们需要使用**会话**操作数据：
+
+```python title=weather/__init__.py {10,13} showLineNumbers
+from nonebot import on_command
+from nonebot.adapters import Message
+from nonebot.params import CommandArg
+from nonebot_plugin_orm import async_scoped_session
+
+weather_get = on_command("天气")
+
+
+@weather_get.handle()
+async def _(session: async_scoped_session, args: Message = CommandArg()):
+    location = args.extract_plain_text()
+
+    if weather := await session.get(Weather, location):
+        await weather_get.finish(f"今天{location}的天气是{weather.weather}")
+
+    await weather_get.finish(f"未查询到{location}的天气")
+```
+
+我们通过 `session: async_scoped_session` 依赖注入获得了一个会话，然后使用 `await session.get(Weather, location)` 查询数据库。
+`async_scoped_session` 是一个有作用域限制的会话，作用域为当前事件、当前事件响应器。
+会话产生的模型实例（例如此处的 `weather := await session.get(Weather, location)`）作用域与会话相同。
+
+:::caution 注意
+此处提到的“会话”指的是 ORM 会话，而非 [NoneBot 会话](../../appendices/session-control)，两者的生命周期也是不同的（NoneBot 会话的生命周期中可能包含多个事件，不同的事件也会有不同的事件响应器）。
+具体而言，就是不要将 ORM 会话和模型实例存储在 NoneBot 会话状态中：
+
+```python {12}
+from nonebot.params import ArgPlainText
+from nonebot.typing import T_State
+
+
+@weather.got("location", prompt="请输入地名")
+async def _(state: T_State, session: async_scoped_session, location: str = ArgPlainText()):
+    wea = await session.get(Weather, location)
+
+    if not wea:
+        await weather.finish(f"未查询到{location}的天气")
+
+    state["weather"] = wea  # 不要这么做，除非你知道自己在做什么
+```
+
+当然非要这么做也不是不可以：
+
+```python {6}
+@weather.handle()
+async def _(state: T_State, session: async_scoped_session):
+    # 通过 await session.merge(state["weather"]) 获得了此 ORM 会话中的相应模型实例，
+    # 而非直接使用会话状态中的模型实例，
+    # 因为先前的 ORM 会话已经关闭了。
+    wea = await session.merge(state["weather"])
+    await weather.finish(f"今天{state['location']}的天气是{wea.weather}")
+```
+
+:::
+
+当有数据更改时，我们需要提交事务，也要注意会话作用域问题：
+
+```python title=weather/__init__.py {12,20} showLineNumbers
+from nonebot.params import Depends
+
+
+async def get_weather(
+    session: async_scoped_session, args: Message = CommandArg()
+) -> Weather:
+    location = args.extract_plain_text()
+
+    if not (wea := await session.get(Weather, location)):
+        wea = Weather(location=location, weather="未知")
+        session.add(wea)
+        # await session.commit()  # 不应该在其他地方提交事务
+
+    return wea
+
+
+@weather.handle()
+async def _(session: async_scoped_session, wea: Weather = Depends(get_weather)):
+    await weather.send(f"今天的天气是{wea.weather}")
+    await session.commit()  # 而应该在事件响应器结束前提交事务
+```
+
+当然我们也可以获得一个新的会话，不过此时就要手动管理会话了：
+
+```python title=weather/__init__.py {5-6} showLineNumbers
+from nonebot_plugin_orm import get_session
+
+
+async def get_weather(location: str) -> str:
+    session = get_session()
+    async with session.begin():
+        wea = await session.get(Weather, location)
+
+        if not wea:
+            wea = Weather(location=location, weather="未知")
+            session.add(wea)
+
+        return wea.weather
+
+
+@weather.handle()
+async def _(args: Message = CommandArg()):
+    wea = await get_weather(args.extract_plain_text())
+    await weather.send(f"今天的天气是{wea}")
+```
+
+### 依赖注入
+
+在上面的示例中，我们都是通过会话获得数据的。
+不过，我们也可以通过依赖注入获得数据：
+
+```python title=weather/__init__.py {11-13} showLineNumbers
+from nonebot_plugin_orm import SQLDepends
+from sqlalchemy import select
+
+
+def extract_arg_plain_text(args: Message = CommandArg()):
+    return args.extract_plain_text()
+
+
+@weather.handle()
+async def _(
+    wea: Weather = SQLDepends(
+        select(Weather).where(Weather.location == Depends(extract_arg_plain_text))
+    ),
+):
+    await weather.send(f"今天的天气是{wea.weather}")
+```
+
+其中，`SQLDepends` 是一个特殊的依赖注入，它会根据类型标注和 SQL 语句提供数据，SQL 语句中也可以有子依赖。
+
+不同的类型标注也会获得不同形式的数据：
+
+```python title=weather/__init__.py {3} showLineNumbers
+@weather.handle()
+async def _(
+    weas: Sequence[Weather] = SQLDepends(
+        select(Weather).where(Weather.weather == Depends(extract_arg_plain_text))
+    ),
+):
+    await weather.send(f"今天的天气是{weas[0].weather}的城市有{'，'.join(wea.location for wea in weas)}")
+```
+
+支持的类型标注有：
+
+| 类型标注（及其父类型，`import sqlalchemy as sa; import sqlalchemy.ext.asyncio as sa_async`） | 对应操作（`session: async_scoped_session`）                 |
+| -------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
+| `AsyncIterator[Sequence[sa.Row[tuple[Model, ...]]]]`                                         | `await (await session.stream(sql).partitions())`            |
+| `AsyncIterator[Sequence[tuple[Model, ...]]]`                                                 | `await (await session.stream(sql).partitions())`            |
+| `AsyncIterator[Sequence[Model]]`                                                             | `await (await session.stream(sql).scalars().partitions())`  |
+| `Iterator[Sequence[sa.Row[tuple[Model, ...]]]]`                                              | `await session.execute(sql).partitions()`                   |
+| `Iterator[Sequence[tuple[Model, ...]]]`                                                      | `await session.execute(sql).partitions()`                   |
+| `Iterator[Sequence[Model]]`                                                                  | `await session.execute(sql).scalars().partitions()`         |
+| `sa_async.AsyncResult[tuple[Model, ...]]`                                                    | `await session.stream(sql)`                                 |
+| `sa_async.AsyncScalarResult[Model]`                                                          | `await session.stream(sql).scalars()`                       |
+| `sa.Result[tuple[Model, ...]]`                                                               | `await session.execute(sql)`                                |
+| `sa.ScalarResult[Model]`                                                                     | `await session.execute(sql).scalars()`                      |
+| `AsyncIterator[sa.Row[tuple[Model, ...]]]`                                                   | `await session.stream(sql)`                                 |
+| `Iterator[sa.Row[tuple[Model, ...]]]`                                                        | `await session.execute(sql)`                                |
+| `Sequence[sa.Row[tuple[Model, ...]]]`                                                        | `await (await session.stream(sql).all())`                   |
+| `Sequence[tuple[Model, ...]]`                                                                | `await (await session.stream(sql).all())`                   |
+| `Sequence[Model]`                                                                            | `await (await session.stream(sql).scalars().all())`         |
+| `tuple[Model, ...]`                                                                          | `await (await session.stream(sql).one_or_none())`           |
+| `Model`                                                                                      | `await (await session.stream(sql).scalars().one_or_none())` |
+
+我们也可以像 [类作为依赖](../../../advanced/dependency#类作为依赖) 那样，在类属性中声明子依赖：
+
+```python title=weather/__init__.py {3-4,8} showLineNumbers
+class Weather(Model):
+    location: Mapped[str] = mapped_column(primary_key=True)
+    weather: Mapped[str] = Depends(extract_arg_plain_text)
+    # weather: Annotated[Mapped[str], Depends(extract_arg_plain_text)]  # Annotated 支持
+
+
+@weather.handle()
+async def _(weas: Sequence[Weather]):
+    await weather.send(
+        f"今天的天气是{weas[0].weather}的城市有{'，'.join(wea.location for wea in weas)}"
+    )
+```
