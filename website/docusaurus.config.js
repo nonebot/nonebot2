@@ -230,9 +230,9 @@ const siteConfig = {
       tagName: "meta",
       attributes: {
         name: "baidu-site-verification",
-        content: "codeva-0GTZpDnDrW"
-      }
-    }
+        content: "codeva-0GTZpDnDrW",
+      },
+    },
   ],
   scripts: [
     // 百度统计
