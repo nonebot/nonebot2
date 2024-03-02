@@ -223,13 +223,28 @@ const siteConfig = {
     locales: ["zh-Hans"],
   },
 
+  headTags: [
+    // 百度搜索资源平台
+    // https://ziyuan.baidu.com/
+    {
+      tagName: "meta",
+      attributes: {
+        name: "baidu-site-verification",
+        content: "codeva-0GTZpDnDrW",
+      },
+    },
+  ],
   scripts: [
+    // 百度统计
+    // https://tongji.baidu.com/
     {
       type: "text/javascript",
       charset: "UTF-8",
       src: "https://hm.baidu.com/hm.js?875efa50097818701ee681edd63eaac6",
       async: true,
     },
+    // 万维广告
+    // https://wwads.cn/
     {
       type: "text/javascript",
       charset: "UTF-8",
