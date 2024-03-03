@@ -5552,5 +5552,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_vits_tts",
+    "project_link": "nonebot-plugin-vits-tts",
+    "author": "Redmomn",
+    "tags": [
+      {
+        "label": "VITS",
+        "color": "#ea5252"
+      },
+      {
+        "label": "TTS",
+        "color": "#52dbea"
+      }
+    ],
+    "is_official": false
   }
 ]
