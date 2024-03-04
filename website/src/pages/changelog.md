@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Docs: 添加百度搜索资源验证 [@yanyongyu](https://github.com/yanyongyu) ([#2590](https://github.com/nonebot/nonebot2/pull/2590))
 
+### 🍻 插件发布
+
+- Plugin: nonebot-plugin-vits-tts [@noneflow](https://github.com/noneflow) ([#2595](https://github.com/nonebot/nonebot2/pull/2595))
+
 ## v2.2.1
 
 ### 🚀 新功能
