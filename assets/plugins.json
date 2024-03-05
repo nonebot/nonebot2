@@ -5568,5 +5568,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chatglm_plus",
+    "project_link": "nonebot-plugin-chatglm-plus",
+    "author": "XTxiaoting14332",
+    "tags": [
+      {
+        "label": "ChatGLM",
+        "color": "#73cccc"
+      }
+    ],
+    "is_official": false
   }
 ]
