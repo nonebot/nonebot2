@@ -91,24 +91,26 @@ target-version = "py38"
 
 [tool.ruff.lint]
 select = [
-  "W",   # pycodestyle warnings
-  "E",   # pycodestyle errors
-  "F",   # Pyflakes
-  "UP",  # pyupgrade
-  "C4",  # flake8-comprehensions
-  "T10", # flake8-debugger
-  "T20", # flake8-print
-  "PYI", # flake8-pyi
-  "PT",  # flake8-pytest-style
-  "Q",   # flake8-quotes
-  "RUF", # Ruff-specific rules
+  "F",     # Pyflakes
+  "W",     # pycodestyle warnings
+  "E",     # pycodestyle errors
+  "C90",   # mccabe
+  "UP",    # pyupgrade
+  "ASYNC", # flake8-async
+  "C4",    # flake8-comprehensions
+  "T10",   # flake8-debugger
+  "T20",   # flake8-print
+  "PYI",   # flake8-pyi
+  "PT",    # flake8-pytest-style
+  "Q",     # flake8-quotes
+  "RUF",   # Ruff-specific rules
 ]
 ignore = [
-  "E402",   # module-import-not-at-top-of-file, Module level import not at top of cell
-  "UP037",  # quoted-annotation, Remove quotes from type annotation
-  "RUF001", # ambiguous-unicode-character-string, String contains ambiguous {}. Did you mean {}?
-  "RUF002",
-  "RUF003",
+  "E402",   # module-import-not-at-top-of-file
+  "UP037",  # quoted-annotation
+  "RUF001", # ambiguous-unicode-character-string
+  "RUF002", # ambiguous-unicode-character-docstring
+  "RUF003", # ambiguous-unicode-character-comment
 ]
 
 [tool.ruff.lint.flake8-pytest-style]
