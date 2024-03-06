@@ -457,7 +457,7 @@ class Matcher(metaclass=MatcherMeta):
             parameterless: 非参数类型依赖列表
         """
 
-        async def _receive(event: Event, matcher: "Matcher") -> Union[None, NoReturn]:
+        async def _receive(event: Event, matcher: "Matcher") -> None:
             matcher.set_target(RECEIVE_KEY.format(id=id))
             if matcher.get_target() == RECEIVE_KEY.format(id=id):
                 matcher.set_receive(id, event)

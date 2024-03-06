@@ -25,7 +25,7 @@ from _string import formatter_field_name_split  # type: ignore
 if TYPE_CHECKING:
     from .message import Message, MessageSegment
 
-    def formatter_field_name_split(  # noqa: F811
+    def formatter_field_name_split(
         field_name: str,
     ) -> Tuple[str, List[Tuple[bool, str]]]: ...
 
