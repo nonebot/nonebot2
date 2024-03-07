@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Develop: 添加 ruff RUF 规则 [@he0119](https://github.com/he0119) ([#2598](https://github.com/nonebot/nonebot2/pull/2598))
+
 ### 📝 文档
 
 - Docs: 添加百度搜索资源验证 [@yanyongyu](https://github.com/yanyongyu) ([#2590](https://github.com/nonebot/nonebot2/pull/2590))
