@@ -212,7 +212,7 @@ async def test_event(app: App):
         ctx.pass_params(event=fake_fooevent)
         ctx.should_return(fake_fooevent)
 
-    with pytest.raises(TypeMisMatch):  # noqa: PT012
+    with pytest.raises(TypeMisMatch):
         async with app.test_dependent(sub_event, allow_types=[EventParam]) as ctx:
             ctx.pass_params(event=fake_event)
 
@@ -436,7 +436,7 @@ async def test_matcher(app: App):
         ctx.pass_params(matcher=foo_matcher)
         ctx.should_return(foo_matcher)
 
-    with pytest.raises(TypeMisMatch):  # noqa: PT012
+    with pytest.raises(TypeMisMatch):
         async with app.test_dependent(sub_matcher, allow_types=[MatcherParam]) as ctx:
             ctx.pass_params(matcher=fake_matcher)
 

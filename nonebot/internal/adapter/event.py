@@ -20,7 +20,7 @@ class Event(abc.ABC, BaseModel):
 
         class Config(ConfigDict):
             extra = "allow"  # type: ignore
-            json_encoders = {Message: DataclassEncoder}
+            json_encoders = {Message: DataclassEncoder}  # noqa: RUF012
 
     if not PYDANTIC_V2:  # pragma: pydantic-v1
 

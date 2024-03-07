@@ -57,7 +57,7 @@ async def test_permission(app: App):
 @pytest.mark.asyncio
 @pytest.mark.parametrize(("type", "expected"), [("message", True), ("notice", False)])
 async def test_message(type: str, expected: bool):
-    dependent = list(MESSAGE.checkers)[0]
+    dependent = next(iter(MESSAGE.checkers))
     checker = dependent.call
 
     assert isinstance(checker, Message)
@@ -69,7 +69,7 @@ async def test_message(type: str, expected: bool):
 @pytest.mark.asyncio
 @pytest.mark.parametrize(("type", "expected"), [("message", False), ("notice", True)])
 async def test_notice(type: str, expected: bool):
-    dependent = list(NOTICE.checkers)[0]
+    dependent = next(iter(NOTICE.checkers))
     checker = dependent.call
 
     assert isinstance(checker, Notice)
@@ -81,7 +81,7 @@ async def test_notice(type: str, expected: bool):
 @pytest.mark.asyncio
 @pytest.mark.parametrize(("type", "expected"), [("message", False), ("request", True)])
 async def test_request(type: str, expected: bool):
-    dependent = list(REQUEST.checkers)[0]
+    dependent = next(iter(REQUEST.checkers))
     checker = dependent.call
 
     assert isinstance(checker, Request)
@@ -95,7 +95,7 @@ async def test_request(type: str, expected: bool):
     ("type", "expected"), [("message", False), ("meta_event", True)]
 )
 async def test_metaevent(type: str, expected: bool):
-    dependent = list(METAEVENT.checkers)[0]
+    dependent = next(iter(METAEVENT.checkers))
     checker = dependent.call
 
     assert isinstance(checker, MetaEvent)
@@ -116,7 +116,7 @@ async def test_metaevent(type: str, expected: bool):
     ],
 )
 async def test_superuser(app: App, type: str, user_id: str, expected: bool):
-    dependent = list(SUPERUSER.checkers)[0]
+    dependent = next(iter(SUPERUSER.checkers))
     checker = dependent.call
 
     assert isinstance(checker, SuperUser)
@@ -140,7 +140,7 @@ async def test_superuser(app: App, type: str, user_id: str, expected: bool):
 async def test_user(
     app: App, session_ids: Tuple[str, ...], session_id: Optional[str], expected: bool
 ):
-    dependent = list(USER(*session_ids).checkers)[0]
+    dependent = next(iter(USER(*session_ids).checkers))
     checker = dependent.call
 
     assert isinstance(checker, User)

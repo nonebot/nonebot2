@@ -236,7 +236,7 @@ class PluginLoader(SourceFileLoader):
                 break
 
         # enter plugin context
-        _plugin_token = _current_plugin_chain.set(parent_plugins + (plugin,))
+        _plugin_token = _current_plugin_chain.set((*parent_plugins, plugin))
 
         try:
             super().exec_module(module)

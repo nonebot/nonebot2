@@ -141,7 +141,7 @@ class Matcher(metaclass=MatcherMeta):
     """事件响应器匹配规则"""
     permission: ClassVar[Permission] = Permission()
     """事件响应器触发权限"""
-    handlers: List[Dependent[Any]] = []
+    handlers: ClassVar[List[Dependent[Any]]] = []
     """事件响应器拥有的事件处理函数列表"""
     priority: ClassVar[int] = 1
     """事件响应器优先级"""
@@ -171,7 +171,7 @@ class Matcher(metaclass=MatcherMeta):
     )
 
     def __init__(self):
-        self.handlers = self.handlers.copy()
+        self.remain_handlers: List[Dependent[Any]] = self.handlers.copy()
         self.state = self._default_state.copy()
 
     def __repr__(self) -> str:
@@ -457,7 +457,7 @@ class Matcher(metaclass=MatcherMeta):
             parameterless: 非参数类型依赖列表
         """
 
-        async def _receive(event: Event, matcher: "Matcher") -> Union[None, NoReturn]:
+        async def _receive(event: Event, matcher: "Matcher") -> None:
             matcher.set_target(RECEIVE_KEY.format(id=id))
             if matcher.get_target() == RECEIVE_KEY.format(id=id):
                 matcher.set_receive(id, event)
@@ -775,7 +775,7 @@ class Matcher(metaclass=MatcherMeta):
 
     async def resolve_reject(self):
         handler = current_handler.get()
-        self.handlers.insert(0, handler)
+        self.remain_handlers.insert(0, handler)
         if REJECT_CACHE_TARGET in self.state:
             self.state[REJECT_TARGET] = self.state[REJECT_CACHE_TARGET]
 
@@ -809,8 +809,8 @@ class Matcher(metaclass=MatcherMeta):
                 # Refresh preprocess state
                 self.state.update(state)
 
-                while self.handlers:
-                    handler = self.handlers.pop(0)
+                while self.remain_handlers:
+                    handler = self.remain_handlers.pop(0)
                     current_handler.set(handler)
                     logger.debug(f"Running handler {handler}")
                     try:
@@ -852,7 +852,7 @@ class Matcher(metaclass=MatcherMeta):
                 type_,
                 Rule(),
                 permission,
-                self.handlers,
+                self.remain_handlers,
                 temp=True,
                 priority=0,
                 block=True,
@@ -872,7 +872,7 @@ class Matcher(metaclass=MatcherMeta):
                 type_,
                 Rule(),
                 permission,
-                self.handlers,
+                self.remain_handlers,
                 temp=True,
                 priority=0,
                 block=True,

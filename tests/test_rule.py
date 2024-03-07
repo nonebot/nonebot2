@@ -170,7 +170,7 @@ async def test_startswith(
     expected: bool,
 ):
     test_startswith = startswith(msg, ignorecase)
-    dependent = list(test_startswith.checkers)[0]
+    dependent = next(iter(test_startswith.checkers))
     checker = dependent.call
 
     msg = (msg,) if isinstance(msg, str) else msg
@@ -210,7 +210,7 @@ async def test_endswith(
     expected: bool,
 ):
     test_endswith = endswith(msg, ignorecase)
-    dependent = list(test_endswith.checkers)[0]
+    dependent = next(iter(test_endswith.checkers))
     checker = dependent.call
 
     msg = (msg,) if isinstance(msg, str) else msg
@@ -250,7 +250,7 @@ async def test_fullmatch(
     expected: bool,
 ):
     test_fullmatch = fullmatch(msg, ignorecase)
-    dependent = list(test_fullmatch.checkers)[0]
+    dependent = next(iter(test_fullmatch.checkers))
     checker = dependent.call
 
     msg = (msg,) if isinstance(msg, str) else msg
@@ -285,7 +285,7 @@ async def test_keyword(
     expected: bool,
 ):
     test_keyword = keyword(*kws)
-    dependent = list(test_keyword.checkers)[0]
+    dependent = next(iter(test_keyword.checkers))
     checker = dependent.call
 
     assert isinstance(checker, KeywordsRule)
@@ -331,7 +331,7 @@ async def test_command(
     expected: bool,
 ):
     test_command = command(*cmds, force_whitespace=force_whitespace)
-    dependent = list(test_command.checkers)[0]
+    dependent = next(iter(test_command.checkers))
     checker = dependent.call
 
     assert isinstance(checker, CommandRule)
@@ -352,7 +352,7 @@ async def test_shell_command():
     MessageSegment = Message.get_segment_class()
 
     test_not_cmd = shell_command(CMD)
-    dependent = list(test_not_cmd.checkers)[0]
+    dependent = next(iter(test_not_cmd.checkers))
     checker = dependent.call
     assert isinstance(checker, ShellCommandRule)
     message = Message()
@@ -361,7 +361,7 @@ async def test_shell_command():
     assert not await dependent(event=event, state=state)
 
     test_no_parser = shell_command(CMD)
-    dependent = list(test_no_parser.checkers)[0]
+    dependent = next(iter(test_no_parser.checkers))
     checker = dependent.call
     assert isinstance(checker, ShellCommandRule)
     message = Message()
@@ -375,7 +375,7 @@ async def test_shell_command():
     parser.add_argument("-a", required=True)
 
     test_simple_parser = shell_command(CMD, parser=parser)
-    dependent = list(test_simple_parser.checkers)[0]
+    dependent = next(iter(test_simple_parser.checkers))
     checker = dependent.call
     assert isinstance(checker, ShellCommandRule)
     message = Message("-a 1")
@@ -386,7 +386,7 @@ async def test_shell_command():
     assert state[SHELL_ARGS] == Namespace(a="1")
 
     test_parser_help = shell_command(CMD, parser=parser)
-    dependent = list(test_parser_help.checkers)[0]
+    dependent = next(iter(test_parser_help.checkers))
     checker = dependent.call
     assert isinstance(checker, ShellCommandRule)
     message = Message("-h")
@@ -399,7 +399,7 @@ async def test_shell_command():
     assert state[SHELL_ARGS].message == parser.format_help()
 
     test_parser_error = shell_command(CMD, parser=parser)
-    dependent = list(test_parser_error.checkers)[0]
+    dependent = next(iter(test_parser_error.checkers))
     checker = dependent.call
     assert isinstance(checker, ShellCommandRule)
     message = Message()
@@ -412,7 +412,7 @@ async def test_shell_command():
     assert state[SHELL_ARGS].message.startswith(parser.format_usage() + "test: error:")
 
     test_parser_remain_args = shell_command(CMD, parser=parser)
-    dependent = list(test_parser_remain_args.checkers)[0]
+    dependent = next(iter(test_parser_remain_args.checkers))
     checker = dependent.call
     assert isinstance(checker, ShellCommandRule)
     message = MessageSegment.text("-a 1 2") + MessageSegment.image("test")
@@ -425,7 +425,7 @@ async def test_shell_command():
     assert state[SHELL_ARGS].message.startswith(parser.format_usage() + "test: error:")
 
     test_message_parser = shell_command(CMD, parser=parser)
-    dependent = list(test_message_parser.checkers)[0]
+    dependent = next(iter(test_message_parser.checkers))
     checker = dependent.call
     assert isinstance(checker, ShellCommandRule)
     message = MessageSegment.text("-a") + MessageSegment.image("test")
@@ -440,7 +440,7 @@ async def test_shell_command():
         parser.add_argument("-a", required=True)
 
         test_not_exit = shell_command(CMD, parser=parser)
-        dependent = list(test_not_exit.checkers)[0]
+        dependent = next(iter(test_not_exit.checkers))
         checker = dependent.call
         assert isinstance(checker, ShellCommandRule)
         message = Message()
@@ -476,7 +476,7 @@ async def test_regex(
     matched: Optional[Match[str]],
 ):
     test_regex = regex(pattern)
-    dependent = list(test_regex.checkers)[0]
+    dependent = next(iter(test_regex.checkers))
     checker = dependent.call
 
     assert isinstance(checker, RegexRule)
@@ -499,7 +499,7 @@ async def test_regex(
 @pytest.mark.parametrize("expected", [True, False])
 async def test_to_me(expected: bool):
     test_to_me = to_me()
-    dependent = list(test_to_me.checkers)[0]
+    dependent = next(iter(test_to_me.checkers))
     checker = dependent.call
 
     assert isinstance(checker, ToMeRule)
@@ -515,7 +515,7 @@ async def test_is_type():
     Event3 = make_fake_event()
 
     test_type = is_type(Event1, Event2)
-    dependent = list(test_type.checkers)[0]
+    dependent = next(iter(test_type.checkers))
     checker = dependent.call
 
     assert isinstance(checker, IsTypeRule)

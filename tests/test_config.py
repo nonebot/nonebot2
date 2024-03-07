@@ -1,7 +1,7 @@
 from typing import List, Union, Optional
 
 import pytest
-from pydantic import BaseModel
+from pydantic import Field, BaseModel
 
 from nonebot.config import DOTENV_TYPE, BaseSettings, SettingsError
 
@@ -18,7 +18,7 @@ class Example(BaseSettings):
     _env_nested_delimiter: Optional[str] = "__"
 
     simple: str = ""
-    complex: List[int] = [1]
+    complex: List[int] = Field(default=[1])
     complex_none: Optional[List[int]] = None
     complex_union: Union[int, List[int]] = 1
     nested: Simple = Simple()

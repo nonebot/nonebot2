@@ -2,7 +2,7 @@ import abc
 import asyncio
 from typing_extensions import TypeAlias
 from contextlib import AsyncExitStack, asynccontextmanager
-from typing import TYPE_CHECKING, Any, Set, Dict, Type, AsyncGenerator
+from typing import TYPE_CHECKING, Any, Set, Dict, Type, ClassVar, AsyncGenerator
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
@@ -36,11 +36,11 @@ class Driver(abc.ABC):
         config: 包含配置信息的 Config 对象
     """
 
-    _adapters: Dict[str, "Adapter"] = {}
+    _adapters: ClassVar[Dict[str, "Adapter"]] = {}
     """已注册的适配器列表"""
-    _bot_connection_hook: Set[Dependent[Any]] = set()
+    _bot_connection_hook: ClassVar[Set[Dependent[Any]]] = set()
     """Bot 连接建立时执行的函数"""
-    _bot_disconnection_hook: Set[Dependent[Any]] = set()
+    _bot_disconnection_hook: ClassVar[Set[Dependent[Any]]] = set()
     """Bot 连接断开时执行的函数"""
 
     def __init__(self, env: Env, config: Config):
