@@ -44,7 +44,7 @@ uvicorn = { version = ">=0.20.0,<1.0.0", extras = [
 ], optional = true }
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.2.0"
+ruff = "^0.3.0"
 isort = "^5.10.1"
 black = "^24.0.0"
 nonemoji = "^0.1.2"
@@ -94,7 +94,6 @@ select = [
   "F",     # Pyflakes
   "W",     # pycodestyle warnings
   "E",     # pycodestyle errors
-  "C90",   # mccabe
   "UP",    # pyupgrade
   "ASYNC", # flake8-async
   "C4",    # flake8-comprehensions

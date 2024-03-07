@@ -409,9 +409,9 @@ async def test_bot_connect_hook(app: App, driver: Driver):
 
             disconn_should_be_called = True
 
-        if conn_hook not in {hook.call for hook in conn_hooks}:
+        if conn_hook not in {hook.call for hook in conn_hooks}:  # type: ignore
             pytest.fail("on_bot_connect hook not registered")
-        if disconn_hook not in {hook.call for hook in disconn_hooks}:
+        if disconn_hook not in {hook.call for hook in disconn_hooks}:  # type: ignore
             pytest.fail("on_bot_disconnect hook not registered")
 
         async with app.test_api() as ctx:

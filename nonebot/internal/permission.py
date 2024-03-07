@@ -1,7 +1,7 @@
 import asyncio
 from typing_extensions import Self
 from contextlib import AsyncExitStack
-from typing import Set, Tuple, Union, NoReturn, Optional
+from typing import Set, List, Type, Tuple, Union, ClassVar, NoReturn, Optional
 
 from nonebot.dependencies import Dependent
 from nonebot.utils import run_coro_with_catch
@@ -9,7 +9,7 @@ from nonebot.exception import SkippedException
 from nonebot.typing import T_DependencyCache, T_PermissionChecker
 
 from .adapter import Bot, Event
-from .params import BotParam, EventParam, DependParam, DefaultParam
+from .params import Param, BotParam, EventParam, DependParam, DefaultParam
 
 
 class Permission:
@@ -30,7 +30,7 @@ class Permission:
 
     __slots__ = ("checkers",)
 
-    HANDLER_PARAM_TYPES = [
+    HANDLER_PARAM_TYPES: ClassVar[List[Type[Param]]] = [
         DependParam,
         BotParam,
         EventParam,
@@ -146,7 +146,7 @@ class User:
     @classmethod
     def _clean_permission(cls, perm: Permission) -> Optional[Permission]:
         if len(perm.checkers) == 1 and isinstance(
-            user_perm := tuple(perm.checkers)[0].call, cls
+            user_perm := next(iter(perm.checkers)).call, cls
         ):
             return user_perm.perm
         return perm
