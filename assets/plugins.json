@@ -5580,5 +5580,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_fishing",
+    "project_link": "nonebot-plugin-fishing",
+    "author": "C14H22O",
+    "tags": [
+      {
+        "label": "钓鱼",
+        "color": "#87cefa"
+      }
+    ],
+    "is_official": false
   }
 ]
