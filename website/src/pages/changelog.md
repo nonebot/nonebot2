@@ -15,6 +15,10 @@ toc_max_heading_level: 2
 
 - Docs: 添加百度搜索资源验证 [@yanyongyu](https://github.com/yanyongyu) ([#2590](https://github.com/nonebot/nonebot2/pull/2590))
 
+### 💫 杂项
+
+- Plugin: 移除不维护的插件 `eitherchoice` [@lgc2333](https://github.com/lgc2333) ([#2599](https://github.com/nonebot/nonebot2/pull/2599))
+
 ### 🍻 插件发布
 
 - Plugin: 赛博钓鱼 [@noneflow](https://github.com/noneflow) ([#2596](https://github.com/nonebot/nonebot2/pull/2596))
