@@ -5585,5 +5585,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_a2s_query",
+    "project_link": "nonebot-plugin-a2s-query",
+    "author": "NanakaNeko",
+    "tags": [
+      {
+        "label": "游戏服务器",
+        "color": "#ea5252"
+      },
+      {
+        "label": "value",
+        "color": "#99ea52"
+      }
+    ],
+    "is_official": false
   }
 ]
