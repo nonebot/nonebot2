@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-dice-narrator [@noneflow](https://github.com/noneflow) ([#2606](https://github.com/nonebot/nonebot2/pull/2606))
 - Plugin: a2s查询 [@noneflow](https://github.com/noneflow) ([#2603](https://github.com/nonebot/nonebot2/pull/2603))
 - Plugin: 赛博钓鱼 [@noneflow](https://github.com/noneflow) ([#2596](https://github.com/nonebot/nonebot2/pull/2596))
 - Plugin: 人性化的ChatGLM [@noneflow](https://github.com/noneflow) ([#2592](https://github.com/nonebot/nonebot2/pull/2592))
