@@ -5617,5 +5617,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_steam_info",
+    "project_link": "nonebot-plugin-steam-info",
+    "author": "zhaomaoniu",
+    "tags": [
+      {
+        "label": "Steam",
+        "color": "#14305e"
+      }
+    ],
+    "is_official": false
   }
 ]
