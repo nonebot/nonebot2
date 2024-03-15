@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Steam Info [@noneflow](https://github.com/noneflow) ([#2608](https://github.com/nonebot/nonebot2/pull/2608))
 - Plugin: nonebot-plugin-dice-narrator [@noneflow](https://github.com/noneflow) ([#2606](https://github.com/nonebot/nonebot2/pull/2606))
 - Plugin: a2s查询 [@noneflow](https://github.com/noneflow) ([#2603](https://github.com/nonebot/nonebot2/pull/2603))
 - Plugin: 赛博钓鱼 [@noneflow](https://github.com/noneflow) ([#2596](https://github.com/nonebot/nonebot2/pull/2596))
