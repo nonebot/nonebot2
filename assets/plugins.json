@@ -5629,5 +5629,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_orangejuice",
+    "project_link": "nonebot-plugin-orangejuice",
+    "author": "GLDYM",
+    "tags": [
+      {
+        "label": "百橙",
+        "color": "#ed6f00"
+      },
+      {
+        "label": "100OJ",
+        "color": "#ed6f00"
+      }
+    ],
+    "is_official": false
   }
 ]
