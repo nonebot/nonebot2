@@ -5645,5 +5645,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_md",
+    "project_link": "nonebot_plugin_md",
+    "author": "Agnes4m",
+    "tags": [
+      {
+        "label": "muse dash",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
