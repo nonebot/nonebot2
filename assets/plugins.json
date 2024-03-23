@@ -5657,5 +5657,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_duel",
+    "project_link": "nonebot-plugin-duel",
+    "author": "Redmomn",
+    "tags": [
+      {
+        "label": "决斗",
+        "color": "#5be7d1"
+      }
+    ],
+    "is_official": false
   }
 ]
