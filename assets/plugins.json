@@ -5681,5 +5681,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_humanaticstore",
+    "project_link": "nonebot-plugin-humanaticstore",
+    "author": "QuanhuZeYu",
+    "tags": [
+      {
+        "label": "config",
+        "color": "#ea5252"
+      },
+      {
+        "label": "配置工具",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
