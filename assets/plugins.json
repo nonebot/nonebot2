@@ -5669,5 +5669,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_pallas_repeater",
+    "project_link": "nonebot-plugin-pallas-repeater",
+    "author": "Redmomn",
+    "tags": [
+      {
+        "label": "复读鸡",
+        "color": "#52eae7"
+      }
+    ],
+    "is_official": false
   }
 ]
