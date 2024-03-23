@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-pallas-repeater [@noneflow](https://github.com/noneflow) ([#2614](https://github.com/nonebot/nonebot2/pull/2614))
 - Plugin: nonebot-plugin-duel [@noneflow](https://github.com/noneflow) ([#2612](https://github.com/nonebot/nonebot2/pull/2612))
 - Plugin: Sekai Stickers [@noneflow](https://github.com/noneflow) ([#2610](https://github.com/nonebot/nonebot2/pull/2610))
 - Plugin: 100orangejuice [@noneflow](https://github.com/noneflow) ([#2601](https://github.com/nonebot/nonebot2/pull/2601))
