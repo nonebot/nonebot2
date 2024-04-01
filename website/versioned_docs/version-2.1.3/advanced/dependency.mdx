@@ -948,6 +948,34 @@ async def _(foo: Namespace = ShellCommandArgs()):
   </TabItem>
 </Tabs>
 
+### RegexMatched
+
+获取正则匹配结果的对象。
+
+<Tabs groupId="python">
+  <TabItem value="3.9" label="Python 3.9+" default>
+
+```python {4}
+from re import Match
+from typing import Annotated
+from nonebot.params import RegexMatched
+
+async def _(foo: Annotated[Match[str], RegexMatched()]): ...
+```
+
+  </TabItem>
+  <TabItem value="3.8" label="Python 3.8+">
+
+```python {3}
+from typing import Match
+from nonebot.params import RegexMatched
+
+async def _(foo: Match[str] = RegexMatched()): ...
+```
+
+  </TabItem>
+</Tabs>
+
 ### RegexStr
 
 获取正则匹配结果的文本。
