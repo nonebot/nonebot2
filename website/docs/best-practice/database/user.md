@@ -109,7 +109,7 @@ nb orm check
 
 ### sqlalchemy_database_url
 
-默认数据库连接 URL。参见 [数据库服务](.#数据库服务) 和 [引擎配置 — SQLAlchemy 2.0 文档](https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls)。
+默认数据库连接 URL。参见 [数据库驱动和后端](.#数据库驱动和后端) 和 [引擎配置 — SQLAlchemy 2.0 文档](https://docs.sqlalchemy.org/en/20/core/engines.html#database-urls)。
 
 ```shell
 SQLALCHEMY_DATABASE_URL=dialect+driver://username:password@host:port/database
@@ -144,11 +144,6 @@ SQLALCHEMY_ENGINE_OPTIONS='{
 }'
 ```
 
-:::caution 注意
-以上配置之间有覆盖关系，遵循特殊优先于一般的原则，具体为 [`sqlalchemy_database_url`](#sqlalchemy_database_url) > [`sqlalchemy_bind`](#sqlalchemy_bind) > [`sqlalchemy_echo`](#sqlalchemy_echo) > [`sqlalchemy_engine_options`](#sqlalchemy_engine_options)。
-但覆盖顺序并非显而易见，出于清晰考虑，请只配置必要的选项。
-:::
-
 ### sqlalchemy_echo
 
 开启 [Echo 选项](https://docs.sqlalchemy.org/en/20/core/engines.html#sqlalchemy.create_engine.params.echo) 和 [Echo Pool 选项](https://docs.sqlalchemy.org/en/20/core/engines.html#sqlalchemy.create_engine.params.echo_pool) 便于 debug。
@@ -156,3 +151,8 @@ SQLALCHEMY_ENGINE_OPTIONS='{
 ```shell
 SQLALCHEMY_ECHO=true
 ```
+
+:::caution 注意
+以上配置之间有覆盖关系，遵循特殊优先于一般的原则，具体为 [`sqlalchemy_database_url`](#sqlalchemy_database_url) > [`sqlalchemy_bind`](#sqlalchemy_bind) > [`sqlalchemy_echo`](#sqlalchemy_echo) > [`sqlalchemy_engine_options`](#sqlalchemy_engine_options)。
+但覆盖顺序并非显而易见，出于清晰考虑，请只配置必要的选项。
+:::

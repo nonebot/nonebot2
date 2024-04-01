@@ -1,10 +1,3 @@
----
-sidebar_position: 1
-description: 数据库
-
-slug: /best-practice/db/
----
-
 import TabItem from "@theme/TabItem";
 import Tabs from "@theme/Tabs";
 
@@ -45,23 +38,23 @@ pdm add nonebot-plugin-orm
 </TabItem>
 </Tabs>
 
-## 数据库驱动和服务
+## 数据库驱动和后端
 
-本插件只提供了 ORM 功能，没有数据库服务，也没有直接连接数据库服务的能力。
-所以你需要另行安装数据库驱动和数据库服务，并且配置数据库连接信息。
+本插件只提供了 ORM 功能，没有数据库后端，也没有直接连接数据库后端的能力。
+所以你需要另行安装数据库驱动和数据库后端，并且配置数据库连接信息。
 
 ### SQLite
 
-[SQLite](https://www.sqlite.org/) 是一个轻量级的嵌入式数据库，它的数据以单文件的形式存储在本地，不需要单独的数据库服务。
+[SQLite](https://www.sqlite.org/) 是一个轻量级的嵌入式数据库，它的数据以单文件的形式存储在本地，不需要单独的数据库后端。
 SQLite 非常适合用于开发环境和小型应用，但是不适合用于大型应用的生产环境。
 
-虽然不需要另行安装数据库服务，但你仍然需要安装数据库驱动：
+虽然不需要另行安装数据库后端，但你仍然需要安装数据库驱动：
 
 <Tabs groupId="install">
 <TabItem value="pip" label="使用 pip">
 
 ```shell
-pip install nonebot-plugin-orm[sqlite]
+pip install "nonebot-plugin-orm[sqlite]"
 ```
 
 </TabItem>
@@ -69,7 +62,7 @@ pip install nonebot-plugin-orm[sqlite]
 <TabItem value="pdm" label="使用 pdm">
 
 ```shell
-pdm add nonebot-plugin-orm[sqlite]
+pdm add "nonebot-plugin-orm[sqlite]"
 ```
 
 </TabItem>
@@ -103,7 +96,6 @@ pdm add nonebot-plugin-orm[postgresql]
 
 </TabItem>
 </Tabs>
-
 
 ```shell
 SQLALCHEMY_DATABASE_URL=postgresql+psycopg://user:password@host:port/dbname[?key=value&key=value...]

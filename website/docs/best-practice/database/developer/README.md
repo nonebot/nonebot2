@@ -1,10 +1,3 @@
----
-sidebar_position: 1
-description: 开发者指南
-
-slug: /best-practice/db/developer
----
-
 # 开发者指南
 
 开发者指南内容较多，故分为了一个示例以及数个专题。
@@ -96,6 +89,7 @@ click.exceptions.UsageError: 检测到新的升级操作:
 nb orm revision -m "first revision" --branch-label weather
 ```
 
+其中，`-m` 参数是迁移脚本的描述，`--branch-label` 参数是迁移脚本的分支，一般为插件模块名。
 执行命令过后，出现了一个 `weather/migrations` 目录，其中有一个 `xxxxxxxxxxxx_first_revision.py` 文件：
 
 ```shell {4,5}
@@ -224,22 +218,22 @@ from nonebot.adapters import Message
 from nonebot.params import CommandArg
 from nonebot_plugin_orm import async_scoped_session
 
-weather_get = on_command("天气")
+weather = on_command("天气")
 
 
-@weather_get.handle()
+@weather.handle()
 async def _(session: async_scoped_session, args: Message = CommandArg()):
     location = args.extract_plain_text()
 
-    if weather := await session.get(Weather, location):
-        await weather_get.finish(f"今天{location}的天气是{weather.weather}")
+    if wea := await session.get(Weather, location):
+        await weather.finish(f"今天{location}的天气是{wea.weather}")
 
-    await weather_get.finish(f"未查询到{location}的天气")
+    await weather.finish(f"未查询到{location}的天气")
 ```
 
 我们通过 `session: async_scoped_session` 依赖注入获得了一个会话，然后使用 `await session.get(Weather, location)` 查询数据库。
 `async_scoped_session` 是一个有作用域限制的会话，作用域为当前事件、当前事件响应器。
-会话产生的模型实例（例如此处的 `weather := await session.get(Weather, location)`）作用域与会话相同。
+会话产生的模型实例（例如此处的 `wea := await session.get(Weather, location)`）作用域与会话相同。
 
 :::caution 注意
 此处提到的“会话”指的是 ORM 会话，而非 [NoneBot 会话](../../appendices/session-control)，两者的生命周期也是不同的（NoneBot 会话的生命周期中可能包含多个事件，不同的事件也会有不同的事件响应器）。
@@ -333,7 +327,7 @@ from nonebot_plugin_orm import SQLDepends
 from sqlalchemy import select
 
 
-def extract_arg_plain_text(args: Message = CommandArg()):
+def extract_arg_plain_text(args: Message = CommandArg()) -> str:
     return args.extract_plain_text()
 
 
@@ -360,27 +354,7 @@ async def _(
     await weather.send(f"今天的天气是{weas[0].weather}的城市有{'，'.join(wea.location for wea in weas)}")
 ```
 
-支持的类型标注有：
-
-| 类型标注（及其父类型，`import sqlalchemy as sa; import sqlalchemy.ext.asyncio as sa_async`） | 对应操作（`session: async_scoped_session`）                 |
-| -------------------------------------------------------------------------------------------- | ----------------------------------------------------------- |
-| `AsyncIterator[Sequence[sa.Row[tuple[Model, ...]]]]`                                         | `await (await session.stream(sql).partitions())`            |
-| `AsyncIterator[Sequence[tuple[Model, ...]]]`                                                 | `await (await session.stream(sql).partitions())`            |
-| `AsyncIterator[Sequence[Model]]`                                                             | `await (await session.stream(sql).scalars().partitions())`  |
-| `Iterator[Sequence[sa.Row[tuple[Model, ...]]]]`                                              | `await session.execute(sql).partitions()`                   |
-| `Iterator[Sequence[tuple[Model, ...]]]`                                                      | `await session.execute(sql).partitions()`                   |
-| `Iterator[Sequence[Model]]`                                                                  | `await session.execute(sql).scalars().partitions()`         |
-| `sa_async.AsyncResult[tuple[Model, ...]]`                                                    | `await session.stream(sql)`                                 |
-| `sa_async.AsyncScalarResult[Model]`                                                          | `await session.stream(sql).scalars()`                       |
-| `sa.Result[tuple[Model, ...]]`                                                               | `await session.execute(sql)`                                |
-| `sa.ScalarResult[Model]`                                                                     | `await session.execute(sql).scalars()`                      |
-| `AsyncIterator[sa.Row[tuple[Model, ...]]]`                                                   | `await session.stream(sql)`                                 |
-| `Iterator[sa.Row[tuple[Model, ...]]]`                                                        | `await session.execute(sql)`                                |
-| `Sequence[sa.Row[tuple[Model, ...]]]`                                                        | `await (await session.stream(sql).all())`                   |
-| `Sequence[tuple[Model, ...]]`                                                                | `await (await session.stream(sql).all())`                   |
-| `Sequence[Model]`                                                                            | `await (await session.stream(sql).scalars().all())`         |
-| `tuple[Model, ...]`                                                                          | `await (await session.stream(sql).one_or_none())`           |
-| `Model`                                                                                      | `await (await session.stream(sql).scalars().one_or_none())` |
+支持的类型标注请参见 [依赖注入](developer/dependency)。
 
 我们也可以像 [类作为依赖](../../../advanced/dependency#类作为依赖) 那样，在类属性中声明子依赖：
 
