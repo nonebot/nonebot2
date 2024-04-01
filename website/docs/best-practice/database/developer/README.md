@@ -236,7 +236,7 @@ async def _(session: async_scoped_session, args: Message = CommandArg()):
 会话产生的模型实例（例如此处的 `wea := await session.get(Weather, location)`）作用域与会话相同。
 
 :::caution 注意
-此处提到的“会话”指的是 ORM 会话，而非 [NoneBot 会话](../../appendices/session-control)，两者的生命周期也是不同的（NoneBot 会话的生命周期中可能包含多个事件，不同的事件也会有不同的事件响应器）。
+此处提到的“会话”指的是 ORM 会话，而非 [NoneBot 会话](../../../appendices/session-control)，两者的生命周期也是不同的（NoneBot 会话的生命周期中可能包含多个事件，不同的事件也会有不同的事件响应器）。
 具体而言，就是不要将 ORM 会话和模型实例存储在 NoneBot 会话状态中：
 
 ```python {12}
@@ -354,7 +354,7 @@ async def _(
     await weather.send(f"今天的天气是{weas[0].weather}的城市有{'，'.join(wea.location for wea in weas)}")
 ```
 
-支持的类型标注请参见 [依赖注入](developer/dependency)。
+支持的类型标注请参见 [依赖注入](dependency)。
 
 我们也可以像 [类作为依赖](../../../advanced/dependency#类作为依赖) 那样，在类属性中声明子依赖：
 
