@@ -60,7 +60,7 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
 
         data = setup.data
         if setup.files:
-            data = aiohttp.FormData(data or {})
+            data = aiohttp.FormData(data or {}, quote_fields=False)
             for name, file in setup.files:
                 data.add_field(name, file[1], content_type=file[2], filename=file[0])
 
