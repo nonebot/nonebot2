@@ -5697,5 +5697,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ghtiles",
+    "project_link": "nonebot-plugin-ghtiles",
+    "author": "Lipraty",
+    "tags": [
+      {
+        "label": "Github",
+        "color": "#2a2a2a"
+      }
+    ],
+    "is_official": false
   }
 ]
