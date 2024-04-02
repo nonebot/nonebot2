@@ -26,5 +26,6 @@ from .abstract import ReverseDriver as ReverseDriver
 from .combine import combine_driver as combine_driver
 from .model import HTTPServerSetup as HTTPServerSetup
 from .abstract import HTTPClientMixin as HTTPClientMixin
+from .abstract import HTTPClientSession as HTTPClientSession
 from .model import WebSocketServerSetup as WebSocketServerSetup
 from .abstract import WebSocketClientMixin as WebSocketClientMixin
