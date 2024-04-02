@@ -45,6 +45,28 @@ export default function ResourceDetailCard({ resource }: Props) {
     }
   };
 
+  const getHomepageLink = (resource: Resource) => {
+    switch (resource.resourceType) {
+      case "plugin":
+      case "adapter":
+      case "driver":
+        return resource.homepage;
+      default:
+        return null;
+    }
+  };
+
+  const getPypiProjectLink = (resource: Resource) => {
+    switch (resource.resourceType) {
+      case "plugin":
+      case "adapter":
+      case "driver":
+        return `https://pypi.org/project/${resource.project_link}`;
+      default:
+        return null;
+    }
+  };
+
   const fetchPypiProject = (projectName: string) =>
     fetch(`https://pypi.org/pypi/${projectName}/json`)
       .then((response) => response.json())
@@ -72,6 +94,8 @@ export default function ResourceDetailCard({ resource }: Props) {
 
   const projectLink = getProjectLink(resource) || "无";
   const moduleName = getModuleName(resource) || "无";
+  const homepageLink = getHomepageLink(resource) || undefined;
+  const pypiProjectLink = getPypiProjectLink(resource) || undefined;
 
   return (
     <>
@@ -83,7 +107,14 @@ export default function ResourceDetailCard({ resource }: Props) {
         />
         <div className="detail-card-title">
           <span className="detail-card-title-main">{resource.name}</span>
-          <span className="detail-card-title-sub">{resource.author}</span>
+          <a
+            className="detail-card-title-sub hover:underline hover:text-primary"
+            target="_blank"
+            rel="noreferrer"
+            href={authorLink}
+          >
+            {resource.author}
+          </a>
         </div>
         <button
           className="detail-card-copy-button detail-card-copy-button-desktop"
@@ -134,12 +165,32 @@ export default function ResourceDetailCard({ resource }: Props) {
 
           <div className="detail-card-meta-item">
             <FontAwesomeIcon fixedWidth icon={["fas", "fingerprint"]} />{" "}
-            <span>{moduleName}</span>
+            <a
+              href={homepageLink}
+              target="_blank"
+              rel="noreferrer"
+              className={
+                homepageLink ? "hover:underline hover:text-primary" : undefined
+              }
+            >
+              {moduleName}
+            </a>
           </div>
 
           <div className="detail-card-meta-item">
             <FontAwesomeIcon fixedWidth icon={["fas", "cubes"]} />{" "}
-            <span>{projectLink}</span>
+            <a
+              href={pypiProjectLink}
+              target="_blank"
+              rel="noreferrer"
+              className={
+                pypiProjectLink
+                  ? "hover:underline hover:text-primary"
+                  : undefined
+              }
+            >
+              {projectLink}
+            </a>
           </div>
           <button
             className="detail-card-copy-button detail-card-copy-button-mobile w-full"
