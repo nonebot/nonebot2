@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Develop: 添加 ruff RUF 规则 [@he0119](https://github.com/he0119) ([#2598](https://github.com/nonebot/nonebot2/pull/2598))
 
+### 🐛 Bug 修复
+
+- Fix: 将 aiohttp 的 quote_fields 默认设为 False [@j1g5awi](https://github.com/j1g5awi) ([#2619](https://github.com/nonebot/nonebot2/pull/2619))
+
 ### 📝 文档
 
 - Docs: 添加 `RegexMatched` 依赖注入文档 [@A-kirami](https://github.com/A-kirami) ([#2618](https://github.com/nonebot/nonebot2/pull/2618))
