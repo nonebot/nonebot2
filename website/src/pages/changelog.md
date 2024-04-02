@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 添加 `RegexMatched` 依赖注入文档 [@A-kirami](https://github.com/A-kirami) ([#2618](https://github.com/nonebot/nonebot2/pull/2618))
 - Docs: 添加百度搜索资源验证 [@yanyongyu](https://github.com/yanyongyu) ([#2590](https://github.com/nonebot/nonebot2/pull/2590))
 
 ### 💫 杂项
