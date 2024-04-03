@@ -75,13 +75,14 @@ export default function ResourceCard({
 
   const ValidDisplay = () => {
     return validStatus !== ValidStatus.MISSING ? (
+      // TODO: Add tooltip
       <a target="_blank" rel="noreferrer" href={registryLink}>
         <FontAwesomeIcon
           className={clsx({
             "mr-1": true,
             "text-success": ValidStatus.VALID === validStatus,
             "text-error": ValidStatus.INVALID === validStatus,
-            "text-warning": ValidStatus.SKIP === validStatus,
+            "text-info": ValidStatus.SKIP === validStatus,
           })}
           icon={["fas", validIcons[validStatus]]}
         />
