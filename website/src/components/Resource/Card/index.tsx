@@ -3,12 +3,12 @@ import React from "react";
 import clsx from "clsx";
 
 import Link from "@docusaurus/Link";
-import type { IconName } from "@fortawesome/fontawesome-common-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./styles.css";
 import Tag from "@/components/Resource/Tag";
 import type { Resource } from "@/libs/store";
+import { getValidStatus, validIcons, ValidStatus } from "@/libs/valid";
 
 export type Props = {
   resource: Resource;
@@ -34,24 +34,6 @@ export default function ResourceCard({
   const authorLink = `https://github.com/${resource.author}`;
   const authorAvatar = `${authorLink}.png?size=80`;
 
-  enum ValidStatus {
-    VALID = "valid",
-    INVALID = "invalid",
-    SKIP = "skip",
-    MISSING = "missing",
-  }
-
-  const getValid = (resource: Resource) => {
-    switch (resource.resourceType) {
-      case "plugin":
-        if (resource.skip_test) return ValidStatus.SKIP;
-        if (resource.valid) return ValidStatus.VALID;
-        return ValidStatus.INVALID;
-      default:
-        return ValidStatus.MISSING;
-    }
-  };
-
   const getRegistryLink = (resource: Resource) => {
     switch (resource.resourceType) {
       case "plugin":
@@ -61,16 +43,7 @@ export default function ResourceCard({
     }
   };
 
-  const validIcons: {
-    [key in ValidStatus]: IconName;
-  } = {
-    [ValidStatus.VALID]: "plug-circle-check",
-    [ValidStatus.INVALID]: "plug-circle-xmark",
-    [ValidStatus.SKIP]: "plug-circle-exclamation",
-    [ValidStatus.MISSING]: "plug-circle-exclamation",
-  };
-
-  const validStatus = getValid(resource);
+  const validStatus = getValidStatus(resource);
   const registryLink = getRegistryLink(resource);
 
   const ValidDisplay = () => {
@@ -80,9 +53,9 @@ export default function ResourceCard({
         <FontAwesomeIcon
           className={clsx({
             "mr-1": true,
-            "text-success": ValidStatus.VALID === validStatus,
-            "text-error": ValidStatus.INVALID === validStatus,
-            "text-info": ValidStatus.SKIP === validStatus,
+            "text-success/90": ValidStatus.VALID === validStatus,
+            "text-error/90": ValidStatus.INVALID === validStatus,
+            "text-info/90": ValidStatus.SKIP === validStatus,
           })}
           icon={["fas", validIcons[validStatus]]}
         />

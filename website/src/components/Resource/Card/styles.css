@@ -14,7 +14,7 @@
     }
 
     &-check {
-      @apply ml-2 text-success fill-current;
+      @apply ml-2 text-success/90 fill-current;
     }
 
     &-expand {
