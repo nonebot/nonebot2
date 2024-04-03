@@ -3,6 +3,7 @@ import React from "react";
 import clsx from "clsx";
 
 import Link from "@docusaurus/Link";
+import type { IconName } from "@fortawesome/fontawesome-common-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./styles.css";
@@ -29,17 +30,70 @@ export default function ResourceCard({
   );
 
   const isPlugin = resource.resourceType === "plugin";
-  const registryLink =
-    isPlugin &&
-    `https://registry.nonebot.dev/plugin/${resource.project_link}:${resource.module_name}`;
 
   const authorLink = `https://github.com/${resource.author}`;
   const authorAvatar = `${authorLink}.png?size=80`;
+
+  enum ValidStatus {
+    VALID = "valid",
+    INVALID = "invalid",
+    SKIP = "skip",
+    MISSING = "missing",
+  }
+
+  const getValid = (resource: Resource) => {
+    switch (resource.resourceType) {
+      case "plugin":
+        if (resource.skip_test) return ValidStatus.SKIP;
+        if (resource.valid) return ValidStatus.VALID;
+        return ValidStatus.INVALID;
+      default:
+        return ValidStatus.MISSING;
+    }
+  };
+
+  const getRegistryLink = (resource: Resource) => {
+    switch (resource.resourceType) {
+      case "plugin":
+        return `https://registry.nonebot.dev/plugin/${resource.project_link}:${resource.module_name}`;
+      default:
+        return undefined;
+    }
+  };
+
+  const validIcons: {
+    [key in ValidStatus]: IconName;
+  } = {
+    [ValidStatus.VALID]: "plug-circle-check",
+    [ValidStatus.INVALID]: "plug-circle-xmark",
+    [ValidStatus.SKIP]: "plug-circle-exclamation",
+    [ValidStatus.MISSING]: "plug-circle-exclamation",
+  };
+
+  const validStatus = getValid(resource);
+  const registryLink = getRegistryLink(resource);
+
+  const ValidDisplay = () => {
+    return validStatus !== ValidStatus.MISSING ? (
+      <a target="_blank" rel="noreferrer" href={registryLink}>
+        <FontAwesomeIcon
+          className={clsx({
+            "mr-1": true,
+            "text-success": ValidStatus.VALID === validStatus,
+            "text-error": ValidStatus.INVALID === validStatus,
+            "text-warning": ValidStatus.SKIP === validStatus,
+          })}
+          icon={["fas", validIcons[validStatus]]}
+        />
+      </a>
+    ) : null;
+  };
 
   return (
     <div className={clsx("resource-card-container", className)}>
       <div className="resource-card-header">
         <div className="resource-card-header-title">
+          <ValidDisplay />
           {resource.name}
           {resource.is_official && (
             <FontAwesomeIcon
@@ -81,7 +135,7 @@ export default function ResourceCard({
               )}
             </Link>
             {isPlugin && (
-              <Link href={registryLink as string}>
+              <Link href={registryLink}>
                 <FontAwesomeIcon
                   className="resource-card-footer-icon"
                   icon={["fas", "cube"]}
