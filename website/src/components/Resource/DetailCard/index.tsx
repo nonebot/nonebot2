@@ -111,12 +111,18 @@ export default function ResourceDetailCard({ resource }: Props) {
 
   const validStatus = getValidStatus(resource);
 
-  const ValidDisplay = () => {
+  const ValidDisplay = ({ className }: { className?: string }) => {
     return validStatus !== ValidStatus.MISSING ? (
-      <a target="_blank" rel="noreferrer" href={registryLink}>
+      <a
+        target="_blank"
+        rel="noreferrer"
+        href={registryLink}
+        className={className}
+      >
         <div
           className={clsx({
-            "rounded-md text-sm flex items-center gap-x-1 px-2 py-1": true,
+            "rounded-md text-sm flex items-center gap-x-1 px-2 py-1 whitespace-nowrap":
+              true,
             "bg-success/10 text-success/90": ValidStatus.VALID === validStatus,
             "bg-error/10 text-error/90": ValidStatus.INVALID === validStatus,
             "bg-info/10 text-info/90": ValidStatus.SKIP === validStatus,
@@ -162,9 +168,9 @@ export default function ResourceDetailCard({ resource }: Props) {
           </a>
         </div>
         <div className="detail-card-actions">
-          <ValidDisplay />
+          <ValidDisplay className="detail-card-actions-desktop" />
           <button
-            className="detail-card-actions-button detail-card-actions-button-desktop w-28"
+            className="detail-card-actions-button detail-card-actions-desktop w-28"
             onClick={() => copyCommand(resource)}
           >
             {copied ? "复制成功" : "复制安装命令"}
@@ -241,12 +247,15 @@ export default function ResourceDetailCard({ resource }: Props) {
               {projectLink}
             </a>
           </div>
-          <button
-            className="detail-card-actions detail-card-actions-button detail-card-actions-button-mobile w-full"
-            onClick={() => copyCommand(resource)}
-          >
-            {copied ? "复制成功" : "复制安装命令"}
-          </button>
+          <div className="detail-card-actions">
+            <ValidDisplay className="detail-card-actions-mobile" />
+            <button
+              className="detail-card-actions detail-card-actions-button detail-card-actions-mobile w-28"
+              onClick={() => copyCommand(resource)}
+            >
+              {copied ? "复制成功" : "复制安装命令"}
+            </button>
+          </div>
         </div>
       </div>
     </>
