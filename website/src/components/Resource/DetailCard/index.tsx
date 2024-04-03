@@ -144,7 +144,14 @@ export default function ResourceDetailCard({ resource }: Props) {
           decoding="async"
         />
         <div className="detail-card-title">
-          <span className="detail-card-title-main">{resource.name}</span>
+          <span className="detail-card-title-main flex items-center gap-x-1">
+            {resource.name}
+            {resource.is_official && (
+              <div className="rounded-md text-sm bg-success/10 text-success px-1 py-0.5">
+                官方
+              </div>
+            )}
+          </span>
           <a
             className="detail-card-title-sub hover:underline hover:text-primary"
             target="_blank"
