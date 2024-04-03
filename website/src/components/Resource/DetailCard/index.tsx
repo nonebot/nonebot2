@@ -63,7 +63,6 @@ export default function ResourceDetailCard({ resource }: Props) {
     switch (resource.resourceType) {
       case "plugin":
       case "adapter":
-      case "driver":
         return `https://pypi.org/project/${resource.project_link}`;
       default:
         return null;
