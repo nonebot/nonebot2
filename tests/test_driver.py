@@ -319,11 +319,16 @@ async def test_http_client(driver: Driver, server_url: URL):
 async def test_http_client_session(driver: Driver, server_url: URL):
     assert isinstance(driver, HTTPClientMixin)
 
-    async with driver.get_session(
+    session = driver.get_session(
         params={"session": "test"},
         headers={"X-Session": "test"},
         cookies={"session": "test"},
-    ) as session:
+    )
+    request = Request("GET", server_url)
+    with pytest.raises(RuntimeError):
+        await session.request(request)
+
+    async with session as session:
         # simple post with query, headers, cookies and content
         request = Request(
             "POST",
