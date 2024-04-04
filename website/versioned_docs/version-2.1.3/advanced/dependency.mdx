@@ -955,7 +955,7 @@ async def _(foo: Namespace = ShellCommandArgs()):
 <Tabs groupId="python">
   <TabItem value="3.9" label="Python 3.9+" default>
 
-```python {4}
+```python {5}
 from re import Match
 from typing import Annotated
 from nonebot.params import RegexMatched
@@ -966,7 +966,7 @@ async def _(foo: Annotated[Match[str], RegexMatched()]): ...
   </TabItem>
   <TabItem value="3.8" label="Python 3.8+">
 
-```python {3}
+```python {4}
 from typing import Match
 from nonebot.params import RegexMatched
 
