@@ -108,8 +108,7 @@ class Session(HTTPClientSession):
         async with await self.client.request(
             setup.method,
             url,
-            content=setup.content or data,
-            data=setup.data,
+            data=setup.content or data,
             json=setup.json,
             cookies=cookies,
             headers=setup.headers,
