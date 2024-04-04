@@ -967,7 +967,7 @@ async def _(foo: Annotated[Match[str], RegexMatched()]): ...
   <TabItem value="3.8" label="Python 3.8+">
 
 ```python {4}
-from re import Match
+from typing import Match
 from nonebot.params import RegexMatched
 
 async def _(foo: Match[str] = RegexMatched()): ...
