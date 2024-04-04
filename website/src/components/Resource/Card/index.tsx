@@ -7,8 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./styles.css";
 import Tag from "@/components/Resource/Tag";
+import ValidStatus from "@/components/Resource/ValidStatus";
 import type { Resource } from "@/libs/store";
-import { getValidStatus, validIcons, ValidStatus } from "@/libs/valid";
 
 export type Props = {
   resource: Resource;
@@ -37,30 +37,15 @@ export default function ResourceCard({
   const authorLink = `https://github.com/${resource.author}`;
   const authorAvatar = `${authorLink}.png?size=80`;
 
-  const validStatus = getValidStatus(resource);
-
-  const ValidDisplay = () => {
-    return validStatus !== ValidStatus.MISSING ? (
-      // TODO: Add tooltip
-      <a target="_blank" rel="noreferrer" href={registryLink as string}>
-        <FontAwesomeIcon
-          className={clsx({
-            "mr-1": true,
-            "text-success/90": ValidStatus.VALID === validStatus,
-            "text-error/90": ValidStatus.INVALID === validStatus,
-            "text-info/90": ValidStatus.SKIP === validStatus,
-          })}
-          icon={["fas", validIcons[validStatus]]}
-        />
-      </a>
-    ) : null;
-  };
-
   return (
     <div className={clsx("resource-card-container", className)}>
       <div className="resource-card-header">
-        <div className="resource-card-header-title">
-          <ValidDisplay />
+        <div className="resource-card-header-title flex items-center">
+          <ValidStatus
+            resource={resource}
+            validLink={registryLink as string}
+            simple
+          />
           {resource.name}
           {resource.is_official && (
             <FontAwesomeIcon

@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 
-import { clsx } from "clsx";
-
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // @ts-expect-error: we need to make package have type: module
 import copy from "copy-text-to-clipboard";
@@ -9,8 +7,8 @@ import copy from "copy-text-to-clipboard";
 import { PyPIData } from "./types";
 
 import Tag from "@/components/Resource/Tag";
+import ValidStatus from "@/components/Resource/ValidStatus";
 import type { Resource } from "@/libs/store";
-import { getValidStatus, validIcons, ValidStatus } from "@/libs/valid";
 
 import "./styles.css";
 
@@ -104,34 +102,6 @@ export default function ResourceDetailCard({ resource }: Props) {
   const homepageLink = getHomepageLink(resource) || undefined;
   const pypiProjectLink = getPypiProjectLink(resource) || undefined;
 
-  const validStatus = getValidStatus(resource);
-
-  const ValidDisplay = ({ className }: { className?: string }) => {
-    return validStatus !== ValidStatus.MISSING ? (
-      <a
-        target="_blank"
-        rel="noreferrer"
-        href={registryLink as string}
-        className={className}
-      >
-        <div
-          className={clsx({
-            "rounded-md text-sm flex items-center gap-x-1 px-2 py-1 whitespace-nowrap":
-              true,
-            "bg-success/10 text-success/90": ValidStatus.VALID === validStatus,
-            "bg-error/10 text-error/90": ValidStatus.INVALID === validStatus,
-            "bg-info/10 text-info/90": ValidStatus.SKIP === validStatus,
-          })}
-        >
-          <FontAwesomeIcon icon={validIcons[validStatus]} />
-          {ValidStatus.VALID === validStatus && <p>插件已通过测试</p>}
-          {ValidStatus.INVALID === validStatus && <p>插件未通过测试</p>}
-          {ValidStatus.SKIP === validStatus && <p>插件跳过测试</p>}
-        </div>
-      </a>
-    ) : null;
-  };
-
   return (
     <>
       <div className="detail-card-header">
@@ -159,7 +129,11 @@ export default function ResourceDetailCard({ resource }: Props) {
           </a>
         </div>
         <div className="detail-card-actions">
-          <ValidDisplay className="detail-card-actions-desktop" />
+          <ValidStatus
+            resource={resource}
+            validLink={registryLink as string}
+            className="detail-card-actions-desktop"
+          />
           <button
             className="detail-card-actions-button detail-card-actions-desktop w-28"
             onClick={() => copyCommand(resource)}
@@ -239,7 +213,11 @@ export default function ResourceDetailCard({ resource }: Props) {
             </a>
           </div>
           <div className="detail-card-actions">
-            <ValidDisplay className="detail-card-actions-mobile" />
+            <ValidStatus
+              resource={resource}
+              validLink={registryLink as string}
+              className="detail-card-actions-mobile"
+            />
             <button
               className="detail-card-actions detail-card-actions-button detail-card-actions-mobile w-28"
               onClick={() => copyCommand(resource)}

@@ -1,6 +1,6 @@
 import type { IconName } from "@fortawesome/fontawesome-common-types";
 
-import { Resource } from "./store";
+import { Resource } from "@/libs/store";
 
 export enum ValidStatus {
   VALID = "valid",
