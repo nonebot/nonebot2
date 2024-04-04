@@ -124,13 +124,9 @@ export default function ResourceDetailCard({ resource }: Props) {
           })}
         >
           <FontAwesomeIcon icon={validIcons[validStatus]} />
-          {
-            {
-              [ValidStatus.VALID]: <p>插件已通过测试</p>,
-              [ValidStatus.INVALID]: <p>插件未通过测试</p>,
-              [ValidStatus.SKIP]: <p>插件跳过测试</p>,
-            }[validStatus]
-          }
+          {ValidStatus.VALID === validStatus && <p>插件已通过测试</p>}
+          {ValidStatus.INVALID === validStatus && <p>插件未通过测试</p>}
+          {ValidStatus.SKIP === validStatus && <p>插件跳过测试</p>}
         </div>
       </a>
     ) : null;
