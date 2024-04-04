@@ -25,6 +25,11 @@ export default function ResourceDetailCard({ resource }: Props) {
   const authorLink = `https://github.com/${resource.author}`;
   const authorAvatar = `${authorLink}.png?size=100`;
 
+  const isPlugin = resource.resourceType === "plugin";
+  const registryLink =
+    isPlugin &&
+    `https://registry.nonebot.dev/plugin/${resource.project_link}:${resource.module_name}`;
+
   const getProjectLink = (resource: Resource) => {
     switch (resource.resourceType) {
       case "plugin":
@@ -69,15 +74,6 @@ export default function ResourceDetailCard({ resource }: Props) {
     }
   };
 
-  const getRegistryLink = (resource: Resource) => {
-    switch (resource.resourceType) {
-      case "plugin":
-        return `https://registry.nonebot.dev/plugin/${resource.project_link}:${resource.module_name}`;
-      default:
-        return undefined;
-    }
-  };
-
   const fetchPypiProject = (projectName: string) =>
     fetch(`https://pypi.org/pypi/${projectName}/json`)
       .then((response) => response.json())
@@ -107,7 +103,6 @@ export default function ResourceDetailCard({ resource }: Props) {
   const moduleName = getModuleName(resource) || "无";
   const homepageLink = getHomepageLink(resource) || undefined;
   const pypiProjectLink = getPypiProjectLink(resource) || undefined;
-  const registryLink = getRegistryLink(resource);
 
   const validStatus = getValidStatus(resource);
 
@@ -116,7 +111,7 @@ export default function ResourceDetailCard({ resource }: Props) {
       <a
         target="_blank"
         rel="noreferrer"
-        href={registryLink}
+        href={registryLink as string}
         className={className}
       >
         <div

@@ -30,26 +30,19 @@ export default function ResourceCard({
   );
 
   const isPlugin = resource.resourceType === "plugin";
+  const registryLink =
+    isPlugin &&
+    `https://registry.nonebot.dev/plugin/${resource.project_link}:${resource.module_name}`;
 
   const authorLink = `https://github.com/${resource.author}`;
   const authorAvatar = `${authorLink}.png?size=80`;
 
-  const getRegistryLink = (resource: Resource) => {
-    switch (resource.resourceType) {
-      case "plugin":
-        return `https://registry.nonebot.dev/plugin/${resource.project_link}:${resource.module_name}`;
-      default:
-        return undefined;
-    }
-  };
-
   const validStatus = getValidStatus(resource);
-  const registryLink = getRegistryLink(resource);
 
   const ValidDisplay = () => {
     return validStatus !== ValidStatus.MISSING ? (
       // TODO: Add tooltip
-      <a target="_blank" rel="noreferrer" href={registryLink}>
+      <a target="_blank" rel="noreferrer" href={registryLink as string}>
         <FontAwesomeIcon
           className={clsx({
             "mr-1": true,
@@ -109,7 +102,7 @@ export default function ResourceCard({
               )}
             </Link>
             {isPlugin && (
-              <Link href={registryLink}>
+              <Link href={registryLink as string}>
                 <FontAwesomeIcon
                   className="resource-card-footer-icon"
                   icon={["fas", "cube"]}
