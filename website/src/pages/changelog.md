@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 支持 HTTP 客户端会话 [@yanyongyu](https://github.com/yanyongyu) ([#2627](https://github.com/nonebot/nonebot2/pull/2627))
 - Develop: 添加 ruff RUF 规则 [@he0119](https://github.com/he0119) ([#2598](https://github.com/nonebot/nonebot2/pull/2598))
 
 ### 🐛 Bug 修复
