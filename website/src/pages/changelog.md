@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Chikari_economy [@noneflow](https://github.com/noneflow) ([#2631](https://github.com/nonebot/nonebot2/pull/2631))
 - Plugin: diffsinger [@noneflow](https://github.com/noneflow) ([#2625](https://github.com/nonebot/nonebot2/pull/2625))
 - Plugin: ghtiles [@noneflow](https://github.com/noneflow) ([#2622](https://github.com/nonebot/nonebot2/pull/2622))
 - Plugin: 人类友好数据配置 [@noneflow](https://github.com/noneflow) ([#2616](https://github.com/nonebot/nonebot2/pull/2616))
