@@ -1,8 +1,19 @@
 import abc
 import asyncio
-from typing_extensions import TypeAlias
+from types import TracebackType
+from typing_extensions import Self, TypeAlias
 from contextlib import AsyncExitStack, asynccontextmanager
-from typing import TYPE_CHECKING, Any, Set, Dict, Type, ClassVar, AsyncGenerator
+from typing import (
+    TYPE_CHECKING,
+    Any,
+    Set,
+    Dict,
+    Type,
+    Union,
+    ClassVar,
+    Optional,
+    AsyncGenerator,
+)
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
@@ -17,7 +28,17 @@ from nonebot.typing import (
 )
 
 from ._lifespan import LIFESPAN_FUNC, Lifespan
-from .model import Request, Response, WebSocket, HTTPServerSetup, WebSocketServerSetup
+from .model import (
+    Request,
+    Response,
+    WebSocket,
+    QueryTypes,
+    CookieTypes,
+    HeaderTypes,
+    HTTPVersion,
+    HTTPServerSetup,
+    WebSocketServerSetup,
+)
 
 if TYPE_CHECKING:
     from nonebot.internal.adapter import Bot, Adapter
@@ -222,12 +243,68 @@ class ReverseMixin(Mixin):
     """服务端混入基类。"""
 
 
+class HTTPClientSession(abc.ABC):
+    """HTTP 客户端会话基类。"""
+
+    @abc.abstractmethod
+    def __init__(
+        self,
+        params: QueryTypes = None,
+        headers: HeaderTypes = None,
+        cookies: CookieTypes = None,
+        version: Union[str, HTTPVersion] = HTTPVersion.H11,
+        timeout: Optional[float] = None,
+        proxy: Optional[str] = None,
+    ):
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    async def request(self, setup: Request) -> Response:
+        """发送一个 HTTP 请求"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    async def setup(self) -> None:
+        """初始化会话"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    async def close(self) -> None:
+        """关闭会话"""
+        raise NotImplementedError
+
+    async def __aenter__(self) -> Self:
+        await self.setup()
+        return self
+
+    async def __aexit__(
+        self,
+        exc_type: Optional[Type[BaseException]],
+        exc: Optional[BaseException],
+        tb: Optional[TracebackType],
+    ) -> None:
+        await self.close()
+
+
 class HTTPClientMixin(ForwardMixin):
     """HTTP 客户端混入基类。"""
 
     @abc.abstractmethod
     async def request(self, setup: Request) -> Response:
         """发送一个 HTTP 请求"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_session(
+        self,
+        params: QueryTypes = None,
+        headers: HeaderTypes = None,
+        cookies: CookieTypes = None,
+        version: Union[str, HTTPVersion] = HTTPVersion.H11,
+        timeout: Optional[float] = None,
+        proxy: Optional[str] = None,
+    ) -> HTTPClientSession:
+        """获取一个 HTTP 会话"""
         raise NotImplementedError
 
 

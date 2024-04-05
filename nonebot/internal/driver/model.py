@@ -27,7 +27,7 @@ RawURL: TypeAlias = Tuple[bytes, bytes, Optional[int], bytes]
 SimpleQuery: TypeAlias = Union[str, int, float]
 QueryVariable: TypeAlias = Union[SimpleQuery, List[SimpleQuery]]
 QueryTypes: TypeAlias = Union[
-    None, str, Mapping[str, QueryVariable], List[Tuple[str, QueryVariable]]
+    None, str, Mapping[str, QueryVariable], List[Tuple[str, SimpleQuery]]
 ]
 
 HeaderTypes: TypeAlias = Union[

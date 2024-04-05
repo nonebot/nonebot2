@@ -23,6 +23,7 @@ from nonebot.internal.driver import ReverseDriver as ReverseDriver
 from nonebot.internal.driver import combine_driver as combine_driver
 from nonebot.internal.driver import HTTPClientMixin as HTTPClientMixin
 from nonebot.internal.driver import HTTPServerSetup as HTTPServerSetup
+from nonebot.internal.driver import HTTPClientSession as HTTPClientSession
 from nonebot.internal.driver import WebSocketClientMixin as WebSocketClientMixin
 from nonebot.internal.driver import WebSocketServerSetup as WebSocketServerSetup
 
