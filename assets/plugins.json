@@ -5721,5 +5721,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chikari_economy",
+    "project_link": "nonebot-plugin-chikari-economy",
+    "author": "mrqx0195",
+    "tags": [
+      {
+        "label": "经济",
+        "color": "#adad73"
+      }
+    ],
+    "is_official": false
   }
 ]
