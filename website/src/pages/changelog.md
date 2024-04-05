@@ -29,6 +29,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: diffsinger [@noneflow](https://github.com/noneflow) ([#2625](https://github.com/nonebot/nonebot2/pull/2625))
 - Plugin: ghtiles [@noneflow](https://github.com/noneflow) ([#2622](https://github.com/nonebot/nonebot2/pull/2622))
 - Plugin: 人类友好数据配置 [@noneflow](https://github.com/noneflow) ([#2616](https://github.com/nonebot/nonebot2/pull/2616))
 - Plugin: nonebot-plugin-pallas-repeater [@noneflow](https://github.com/noneflow) ([#2614](https://github.com/nonebot/nonebot2/pull/2614))
