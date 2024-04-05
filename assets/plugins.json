@@ -5709,5 +5709,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_diffsinger",
+    "project_link": "nonebot-plugin-diffsinger",
+    "author": "zhzhongshi",
+    "tags": [
+      {
+        "label": "diffsinger",
+        "color": "#c24444"
+      }
+    ],
+    "is_official": false
   }
 ]
