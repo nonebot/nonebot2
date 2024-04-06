@@ -41,11 +41,6 @@ export default function ResourceCard({
     <div className={clsx("resource-card-container", className)}>
       <div className="resource-card-header">
         <div className="resource-card-header-title flex items-center">
-          <ValidStatus
-            resource={resource}
-            validLink={registryLink as string}
-            simple
-          />
           {resource.name}
           {resource.is_official && (
             <FontAwesomeIcon
@@ -53,6 +48,11 @@ export default function ResourceCard({
               icon={["fas", "circle-check"]}
             />
           )}
+          <ValidStatus
+            resource={resource}
+            validLink={registryLink as string}
+            simple
+          />
         </div>
         <div className="resource-card-header-expand" onClick={onClick}>
           <FontAwesomeIcon icon={["fas", "expand"]} />
