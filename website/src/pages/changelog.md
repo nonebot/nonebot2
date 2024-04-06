@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 为商店插件卡片添加更多展示内容 [@AzideCupric](https://github.com/AzideCupric) ([#2626](https://github.com/nonebot/nonebot2/pull/2626))
 - Docs: 修复 `RegexMatched` 文档类型标注错误 [@A-kirami](https://github.com/A-kirami) ([#2629](https://github.com/nonebot/nonebot2/pull/2629))
 - Docs: 修复 `RegexMatched​` 文档高亮行错误 [@A-kirami](https://github.com/A-kirami) ([#2628](https://github.com/nonebot/nonebot2/pull/2628))
 - Docs: 为商店的详情卡片添加跳转链接 [@AzideCupric](https://github.com/AzideCupric) ([#2623](https://github.com/nonebot/nonebot2/pull/2623))
