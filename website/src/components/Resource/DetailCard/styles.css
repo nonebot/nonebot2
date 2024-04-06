@@ -1,6 +1,10 @@
 .detail-card {
   &-header {
     @apply flex items-center align-middle;
+
+    &-divider {
+      @apply m-0;
+    }
   }
 
   &-avatar {
@@ -19,8 +23,12 @@
     }
   }
 
-  &-copy-button {
-    @apply ml-auto btn btn-sm;
+  &-actions {
+    @apply flex items-center gap-x-2 ml-auto;
+
+    &-button {
+      @apply btn btn-sm;
+    }
 
     &-mobile {
       @apply lg:hidden;

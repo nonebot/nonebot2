@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import "./styles.css";
 import Tag from "@/components/Resource/Tag";
+import ValidStatus from "@/components/Resource/ValidStatus";
 import type { Resource } from "@/libs/store";
 
 export type Props = {
@@ -39,7 +40,7 @@ export default function ResourceCard({
   return (
     <div className={clsx("resource-card-container", className)}>
       <div className="resource-card-header">
-        <div className="resource-card-header-title">
+        <div className="resource-card-header-title flex items-center">
           {resource.name}
           {resource.is_official && (
             <FontAwesomeIcon
@@ -47,6 +48,11 @@ export default function ResourceCard({
               icon={["fas", "circle-check"]}
             />
           )}
+          <ValidStatus
+            resource={resource}
+            validLink={registryLink as string}
+            simple
+          />
         </div>
         <div className="resource-card-header-expand" onClick={onClick}>
           <FontAwesomeIcon icon={["fas", "expand"]} />

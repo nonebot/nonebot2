@@ -7,6 +7,7 @@ import copy from "copy-text-to-clipboard";
 import { PyPIData } from "./types";
 
 import Tag from "@/components/Resource/Tag";
+import ValidStatus from "@/components/Resource/ValidStatus";
 import type { Resource } from "@/libs/store";
 
 import "./styles.css";
@@ -21,6 +22,11 @@ export default function ResourceDetailCard({ resource }: Props) {
 
   const authorLink = `https://github.com/${resource.author}`;
   const authorAvatar = `${authorLink}.png?size=100`;
+
+  const isPlugin = resource.resourceType === "plugin";
+  const registryLink =
+    isPlugin &&
+    `https://registry.nonebot.dev/plugin/${resource.project_link}:${resource.module_name}`;
 
   const getProjectLink = (resource: Resource) => {
     switch (resource.resourceType) {
@@ -60,7 +66,6 @@ export default function ResourceDetailCard({ resource }: Props) {
     switch (resource.resourceType) {
       case "plugin":
       case "adapter":
-      case "driver":
         return `https://pypi.org/project/${resource.project_link}`;
       default:
         return null;
@@ -106,7 +111,14 @@ export default function ResourceDetailCard({ resource }: Props) {
           decoding="async"
         />
         <div className="detail-card-title">
-          <span className="detail-card-title-main">{resource.name}</span>
+          <span className="detail-card-title-main flex items-center gap-x-1">
+            {resource.name}
+            {resource.is_official && (
+              <div className="rounded-md text-sm bg-success/10 text-success px-1 py-0.5">
+                官方
+              </div>
+            )}
+          </span>
           <a
             className="detail-card-title-sub hover:underline hover:text-primary"
             target="_blank"
@@ -116,13 +128,21 @@ export default function ResourceDetailCard({ resource }: Props) {
             {resource.author}
           </a>
         </div>
-        <button
-          className="detail-card-copy-button detail-card-copy-button-desktop"
-          onClick={() => copyCommand(resource)}
-        >
-          {copied ? "复制成功" : "复制安装命令"}
-        </button>
+        <div className="detail-card-actions">
+          <ValidStatus
+            resource={resource}
+            validLink={registryLink as string}
+            className="detail-card-actions-desktop"
+          />
+          <button
+            className="detail-card-actions-button detail-card-actions-desktop w-28"
+            onClick={() => copyCommand(resource)}
+          >
+            {copied ? "复制成功" : "复制安装命令"}
+          </button>
+        </div>
       </div>
+      <div className="divider detail-card-header-divider"></div>
       <div className="detail-card-body">
         <div className="detail-card-body-left">
           <span className="h-full">{resource.desc}</span>
@@ -192,12 +212,19 @@ export default function ResourceDetailCard({ resource }: Props) {
               {projectLink}
             </a>
           </div>
-          <button
-            className="detail-card-copy-button detail-card-copy-button-mobile w-full"
-            onClick={() => copyCommand(resource)}
-          >
-            {copied ? "复制成功" : "复制安装命令"}
-          </button>
+          <div className="detail-card-actions">
+            <ValidStatus
+              resource={resource}
+              validLink={registryLink as string}
+              className="detail-card-actions-mobile"
+            />
+            <button
+              className="detail-card-actions detail-card-actions-button detail-card-actions-mobile w-28"
+              onClick={() => copyCommand(resource)}
+            >
+              {copied ? "复制成功" : "复制安装命令"}
+            </button>
+          </div>
         </div>
       </div>
     </>
