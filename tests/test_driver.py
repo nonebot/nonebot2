@@ -328,7 +328,7 @@ async def test_http_client_session(driver: Driver, server_url: URL):
     with pytest.raises(RuntimeError):
         await session.request(request)
 
-    with pytest.raises(RuntimeError):
+    with pytest.raises(RuntimeError):  # noqa: PT012
         async with session:
             async with session:
                 ...
