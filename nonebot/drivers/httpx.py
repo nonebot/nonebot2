@@ -93,6 +93,8 @@ class Session(HTTPClientSession):
 
     @override
     async def setup(self) -> None:
+        if self._client is not None:
+            raise RuntimeError("Session has already been initialized")
         self._client = httpx.AsyncClient(
             params=self._params,
             headers=self._headers,

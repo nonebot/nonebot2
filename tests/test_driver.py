@@ -328,6 +328,11 @@ async def test_http_client_session(driver: Driver, server_url: URL):
     with pytest.raises(RuntimeError):
         await session.request(request)
 
+    with pytest.raises(RuntimeError):
+        async with session:
+            async with session:
+                ...
+
     async with session as session:
         # simple post with query, headers, cookies and content
         request = Request(
