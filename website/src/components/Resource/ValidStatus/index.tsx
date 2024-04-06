@@ -2,11 +2,31 @@ import React from "react";
 
 import clsx from "clsx";
 
+import type { IconName } from "@fortawesome/fontawesome-common-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { ValidStatus, validIcons, getValidStatus } from "./utils";
-
 import { Resource } from "@/libs/store";
+import { ValidStatus } from "@/libs/valid";
+
+export const getValidStatus = (resource: Resource) => {
+  switch (resource.resourceType) {
+    case "plugin":
+      if (resource.skip_test) return ValidStatus.SKIP;
+      if (resource.valid) return ValidStatus.VALID;
+      return ValidStatus.INVALID;
+    default:
+      return ValidStatus.MISSING;
+  }
+};
+
+export const validIcons: {
+  [key in ValidStatus]: IconName;
+} = {
+  [ValidStatus.VALID]: "plug-circle-check",
+  [ValidStatus.INVALID]: "plug-circle-xmark",
+  [ValidStatus.SKIP]: "plug-circle-exclamation",
+  [ValidStatus.MISSING]: "plug-circle-exclamation",
+};
 
 export type Props = {
   resource: Resource;
@@ -15,7 +35,12 @@ export type Props = {
   simple?: boolean;
 };
 
-const ValidDisplay = ({ resource, validLink, className, simple }: Props) => {
+export default function ValidDisplay({
+  resource,
+  validLink,
+  className,
+  simple,
+}: Props) {
   const validStatus = getValidStatus(resource);
 
   const isValid = validStatus === ValidStatus.VALID;
@@ -55,6 +80,4 @@ const ValidDisplay = ({ resource, validLink, className, simple }: Props) => {
       </a>
     )
   );
-};
-
-export default ValidDisplay;
+}
