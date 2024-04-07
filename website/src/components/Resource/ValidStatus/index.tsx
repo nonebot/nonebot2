@@ -59,7 +59,6 @@ export default function ValidDisplay({
           className={clsx({
             "rounded-md text-sm flex items-center gap-x-1 px-2 py-1 whitespace-nowrap":
               !simple,
-            "ml-2": simple,
             "bg-green-400/10": !simple && isValid,
             "text-green-600 dark:text-green-400": isValid,
             "bg-red-400/10": !simple && isInvalid,

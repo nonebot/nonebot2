@@ -39,9 +39,11 @@ export default function ResourceCard({
 
   return (
     <div className={clsx("resource-card-container", className)}>
-      <div className="resource-card-header">
+      <div className="resource-card-header" data-tip={resource.name}>
         <div className="resource-card-header-title">
-          {resource.name}
+          <div className="resource-card-header-text">
+            <span>{resource.name}</span>
+          </div>
           {resource.is_official && (
             <FontAwesomeIcon
               className="resource-card-header-check"
@@ -49,6 +51,7 @@ export default function ResourceCard({
             />
           )}
           <ValidStatus
+            className="mx-2"
             resource={resource}
             validLink={registryLink as string}
             simple
