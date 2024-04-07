@@ -114,7 +114,7 @@ export default function ResourceDetailCard({ resource }: Props) {
           <span className="detail-card-title-main flex items-center gap-x-1">
             {resource.name}
             {resource.is_official && (
-              <div className="rounded-md text-sm bg-success/10 text-success px-1 py-0.5">
+              <div className="rounded-md text-sm bg-green-400/10 text-green-600 px-1 py-0.5">
                 官方
               </div>
             )}
@@ -189,9 +189,7 @@ export default function ResourceDetailCard({ resource }: Props) {
               href={homepageLink}
               target="_blank"
               rel="noreferrer"
-              className={
-                homepageLink ? "hover:underline hover:text-primary" : undefined
-              }
+              className={homepageLink && "hover:underline hover:text-primary"}
             >
               {moduleName}
             </a>
@@ -204,9 +202,7 @@ export default function ResourceDetailCard({ resource }: Props) {
               target="_blank"
               rel="noreferrer"
               className={
-                pypiProjectLink
-                  ? "hover:underline hover:text-primary"
-                  : undefined
+                pypiProjectLink && "hover:underline hover:text-primary"
               }
             >
               {projectLink}

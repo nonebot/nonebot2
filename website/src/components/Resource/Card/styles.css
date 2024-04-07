@@ -10,11 +10,11 @@
     @apply flex items-center w-full text-lg font-medium;
 
     &-title {
-      @apply grow text-left truncate;
+      @apply grow justify-start truncate flex items-center;
     }
 
     &-check {
-      @apply ml-2 text-success/90 fill-current;
+      @apply ml-2 text-green-600 dark:text-green-400 fill-current;
     }
 
     &-expand {

@@ -17,6 +17,7 @@ function excludeThemeColor(theme, exclude) {
 }
 
 module.exports = {
+  darkMode: ["class", '[data-theme="dark"]'],
   daisyui: {
     themes: [
       {

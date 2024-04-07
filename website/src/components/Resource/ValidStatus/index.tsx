@@ -60,12 +60,12 @@ export default function ValidDisplay({
             "rounded-md text-sm flex items-center gap-x-1 px-2 py-1 whitespace-nowrap":
               !simple,
             "ml-2": simple,
-            "bg-success/10": !simple && isValid,
-            "text-success/90": isValid,
-            "bg-error/10": !simple && isInvalid,
-            "text-error/90": isInvalid,
-            "bg-info/10": !simple && isSkip,
-            "text-info/90": isSkip,
+            "bg-green-400/10": !simple && isValid,
+            "text-green-600 dark:text-green-400": isValid,
+            "bg-red-400/10": !simple && isInvalid,
+            "text-red-600 dark:text-red-400": isInvalid,
+            "bg-blue-400/10": !simple && isSkip,
+            "text-blue-600 dark:text-blue-400": isSkip,
           })}
         >
           <FontAwesomeIcon icon={validIcons[validStatus]} />

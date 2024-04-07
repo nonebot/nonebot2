@@ -40,7 +40,7 @@ export default function ResourceCard({
   return (
     <div className={clsx("resource-card-container", className)}>
       <div className="resource-card-header">
-        <div className="resource-card-header-title flex items-center">
+        <div className="resource-card-header-title">
           {resource.name}
           {resource.is_official && (
             <FontAwesomeIcon
