@@ -7,14 +7,14 @@
   }
 
   &-header {
-    @apply flex items-center w-full text-lg font-medium tooltip;
+    @apply min-w-0 flex items-center w-full text-lg font-medium;
 
     &-title {
-      @apply truncate grow justify-start flex items-center;
+      @apply min-w-0 grow justify-start flex items-center flex-initial;
     }
 
     &-text {
-      @apply truncate flex-initial cursor-help;
+      @apply min-w-0 cursor-help tooltip;
     }
 
     &-check {

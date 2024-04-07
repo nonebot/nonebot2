@@ -39,10 +39,10 @@ export default function ResourceCard({
 
   return (
     <div className={clsx("resource-card-container", className)}>
-      <div className="resource-card-header" data-tip={resource.name}>
+      <div className="resource-card-header">
         <div className="resource-card-header-title">
-          <div className="resource-card-header-text">
-            <span>{resource.name}</span>
+          <div className="resource-card-header-text" data-tip={resource.name}>
+            <div className="truncate min-w-0">{resource.name}</div>
           </div>
           {resource.is_official && (
             <FontAwesomeIcon
