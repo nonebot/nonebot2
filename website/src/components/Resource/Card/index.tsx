@@ -40,8 +40,10 @@ export default function ResourceCard({
   return (
     <div className={clsx("resource-card-container", className)}>
       <div className="resource-card-header">
-        <div className="resource-card-header-title flex items-center">
-          {resource.name}
+        <div className="resource-card-header-title">
+          <div className="resource-card-header-text" data-tip={resource.name}>
+            <div className="truncate min-w-0">{resource.name}</div>
+          </div>
           {resource.is_official && (
             <FontAwesomeIcon
               className="resource-card-header-check"
@@ -49,6 +51,7 @@ export default function ResourceCard({
             />
           )}
           <ValidStatus
+            className="mx-2"
             resource={resource}
             validLink={registryLink as string}
             simple
