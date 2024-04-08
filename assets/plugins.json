@@ -5733,5 +5733,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_auto_bot_selector",
+    "project_link": "nonebot-plugin-auto-bot-selector",
+    "author": "Well2333",
+    "tags": [
+      {
+        "label": "多适配器",
+        "color": "#5280ea"
+      },
+      {
+        "label": "跨平台",
+        "color": "#5452ea"
+      }
+    ],
+    "is_official": false
   }
 ]
