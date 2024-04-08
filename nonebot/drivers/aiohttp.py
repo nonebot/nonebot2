@@ -124,6 +124,8 @@ class Session(HTTPClientSession):
 
     @override
     async def setup(self) -> None:
+        if self._client is not None:
+            raise RuntimeError("Session has already been initialized")
         self._client = aiohttp.ClientSession(
             cookies=self._cookies,
             headers=self._headers,
