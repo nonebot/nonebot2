@@ -33,6 +33,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-auto-bot-selector [@noneflow](https://github.com/noneflow) ([#2635](https://github.com/nonebot/nonebot2/pull/2635))
 - Plugin: Chikari_economy [@noneflow](https://github.com/noneflow) ([#2631](https://github.com/nonebot/nonebot2/pull/2631))
 - Plugin: diffsinger [@noneflow](https://github.com/noneflow) ([#2625](https://github.com/nonebot/nonebot2/pull/2625))
 - Plugin: ghtiles [@noneflow](https://github.com/noneflow) ([#2622](https://github.com/nonebot/nonebot2/pull/2622))
