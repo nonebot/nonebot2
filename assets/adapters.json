@@ -213,5 +213,15 @@
     "homepage": "https://github.com/nonebot/adapter-dodo",
     "tags": [],
     "is_official": true
+  },
+  {
+    "module_name": "nonebot.adapters.rocketchat",
+    "project_link": "nonebot-adapter-rocketchat",
+    "name": "RocketChat",
+    "desc": "RocketChat adapter for nonebot2",
+    "author": "IllTamer",
+    "homepage": "https://github.com/IUnlimit/nonebot-adapter-rocketchat",
+    "tags": [],
+    "is_official": false
   }
 ]
