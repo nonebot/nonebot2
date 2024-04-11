@@ -49,6 +49,10 @@ toc_max_heading_level: 2
 - Plugin: 人性化的ChatGLM [@noneflow](https://github.com/noneflow) ([#2592](https://github.com/nonebot/nonebot2/pull/2592))
 - Plugin: nonebot-plugin-vits-tts [@noneflow](https://github.com/noneflow) ([#2595](https://github.com/nonebot/nonebot2/pull/2595))
 
+### 🍻 适配器发布
+
+- Adapter: RocketChat [@noneflow](https://github.com/noneflow) ([#2637](https://github.com/nonebot/nonebot2/pull/2637))
+
 ## v2.2.1
 
 ### 🚀 新功能
