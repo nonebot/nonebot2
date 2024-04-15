@@ -39,7 +39,7 @@ FrontMatter:
 from itertools import chain
 from types import ModuleType
 from contextvars import ContextVar
-from typing import Set, Dict, List, Type, Tuple, TypeVar, Optional
+from typing import TypeVar, Optional
 
 from pydantic import BaseModel
 
@@ -48,9 +48,9 @@ from nonebot.compat import model_dump, type_validate_python
 
 C = TypeVar("C", bound=BaseModel)
 
-_plugins: Dict[str, "Plugin"] = {}
-_managers: List["PluginManager"] = []
-_current_plugin_chain: ContextVar[Tuple["Plugin", ...]] = ContextVar(
+_plugins: dict[str, "Plugin"] = {}
+_managers: list["PluginManager"] = []
+_current_plugin_chain: ContextVar[tuple["Plugin", ...]] = ContextVar(
     "_current_plugin_chain", default=()
 )
 
@@ -105,17 +105,17 @@ def get_plugin_by_module_name(module_name: str) -> Optional["Plugin"]:
         module_name, *has_parent = module_name.rsplit(".", 1)
 
 
-def get_loaded_plugins() -> Set["Plugin"]:
+def get_loaded_plugins() -> set["Plugin"]:
     """获取当前已导入的所有插件。"""
     return set(_plugins.values())
 
 
-def get_available_plugin_names() -> Set[str]:
+def get_available_plugin_names() -> set[str]:
     """获取当前所有可用的插件名（包含尚未加载的插件）。"""
     return {*chain.from_iterable(manager.available_plugins for manager in _managers)}
 
 
-def get_plugin_config(config: Type[C]) -> C:
+def get_plugin_config(config: type[C]) -> C:
     """从全局配置获取当前插件需要的配置项。"""
     return type_validate_python(config, model_dump(get_driver().config))
 

@@ -6,19 +6,17 @@ from types import ModuleType
 from dataclasses import dataclass
 from contextvars import ContextVar
 from typing_extensions import Self
+from collections.abc import Iterable
 from datetime import datetime, timedelta
 from contextlib import AsyncExitStack, contextmanager
-from typing import (
+from typing import (  # noqa: UP035
     TYPE_CHECKING,
     Any,
-    List,
     Type,
-    Tuple,
     Union,
     TypeVar,
     Callable,
     ClassVar,
-    Iterable,
     NoReturn,
     Optional,
     overload,
@@ -141,7 +139,7 @@ class Matcher(metaclass=MatcherMeta):
     """事件响应器匹配规则"""
     permission: ClassVar[Permission] = Permission()
     """事件响应器触发权限"""
-    handlers: ClassVar[List[Dependent[Any]]] = []
+    handlers: ClassVar[list[Dependent[Any]]] = []
     """事件响应器拥有的事件处理函数列表"""
     priority: ClassVar[int] = 1
     """事件响应器优先级"""
@@ -160,7 +158,7 @@ class Matcher(metaclass=MatcherMeta):
     _default_permission_updater: ClassVar[Optional[Dependent[Permission]]] = None
     """事件响应器权限更新函数"""
 
-    HANDLER_PARAM_TYPES: ClassVar[Tuple[Type[Param], ...]] = (
+    HANDLER_PARAM_TYPES: ClassVar[tuple[Type[Param], ...]] = (  # noqa: UP006
         DependParam,
         BotParam,
         EventParam,
@@ -171,7 +169,7 @@ class Matcher(metaclass=MatcherMeta):
     )
 
     def __init__(self):
-        self.remain_handlers: List[Dependent[Any]] = self.handlers.copy()
+        self.remain_handlers: list[Dependent[Any]] = self.handlers.copy()
         self.state = self._default_state.copy()
 
     def __repr__(self) -> str:
@@ -192,7 +190,7 @@ class Matcher(metaclass=MatcherMeta):
         type_: str = "",
         rule: Optional[Rule] = None,
         permission: Optional[Permission] = None,
-        handlers: Optional[List[Union[T_Handler, Dependent[Any]]]] = None,
+        handlers: Optional[list[Union[T_Handler, Dependent[Any]]]] = None,
         temp: bool = False,
         priority: int = 1,
         block: bool = False,
@@ -206,7 +204,7 @@ class Matcher(metaclass=MatcherMeta):
         default_permission_updater: Optional[
             Union[T_PermissionUpdater, Dependent[Permission]]
         ] = None,
-    ) -> Type[Self]:
+    ) -> Type[Self]:  # noqa: UP006
         """
         创建一个新的事件响应器，并存储至 `matchers <#matchers>`_
 

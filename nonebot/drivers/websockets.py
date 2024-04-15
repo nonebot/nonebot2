@@ -19,7 +19,8 @@ import logging
 from functools import wraps
 from contextlib import asynccontextmanager
 from typing_extensions import ParamSpec, override
-from typing import TYPE_CHECKING, Union, TypeVar, Callable, Awaitable, AsyncGenerator
+from collections.abc import Coroutine, AsyncGenerator
+from typing import TYPE_CHECKING, Any, Union, TypeVar, Callable
 
 from nonebot.drivers import Request
 from nonebot.log import LoguruHandler
@@ -44,7 +45,9 @@ logger = logging.Logger("websockets.client", "INFO")
 logger.addHandler(LoguruHandler())
 
 
-def catch_closed(func: Callable[P, Awaitable[T]]) -> Callable[P, Awaitable[T]]:
+def catch_closed(
+    func: Callable[P, Coroutine[Any, Any, T]]
+) -> Callable[P, Coroutine[Any, Any, T]]:
     @wraps(func)
     async def decorator(*args: P.args, **kwargs: P.kwargs) -> T:
         try:

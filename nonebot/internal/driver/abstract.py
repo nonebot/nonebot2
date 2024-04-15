@@ -1,19 +1,10 @@
 import abc
 import asyncio
 from types import TracebackType
+from collections.abc import AsyncGenerator
 from typing_extensions import Self, TypeAlias
 from contextlib import AsyncExitStack, asynccontextmanager
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Set,
-    Dict,
-    Type,
-    Union,
-    ClassVar,
-    Optional,
-    AsyncGenerator,
-)
+from typing import TYPE_CHECKING, Any, Union, ClassVar, Optional
 
 from nonebot.log import logger
 from nonebot.config import Env, Config
@@ -57,11 +48,11 @@ class Driver(abc.ABC):
         config: 包含配置信息的 Config 对象
     """
 
-    _adapters: ClassVar[Dict[str, "Adapter"]] = {}
+    _adapters: ClassVar[dict[str, "Adapter"]] = {}
     """已注册的适配器列表"""
-    _bot_connection_hook: ClassVar[Set[Dependent[Any]]] = set()
+    _bot_connection_hook: ClassVar[set[Dependent[Any]]] = set()
     """Bot 连接建立时执行的函数"""
-    _bot_disconnection_hook: ClassVar[Set[Dependent[Any]]] = set()
+    _bot_disconnection_hook: ClassVar[set[Dependent[Any]]] = set()
     """Bot 连接断开时执行的函数"""
 
     def __init__(self, env: Env, config: Config):
@@ -69,8 +60,8 @@ class Driver(abc.ABC):
         """环境名称"""
         self.config: Config = config
         """全局配置对象"""
-        self._bots: Dict[str, "Bot"] = {}
-        self._bot_tasks: Set[asyncio.Task] = set()
+        self._bots: dict[str, "Bot"] = {}
+        self._bot_tasks: set[asyncio.Task] = set()
         self._lifespan = Lifespan()
 
     def __repr__(self) -> str:
@@ -80,11 +71,11 @@ class Driver(abc.ABC):
         )
 
     @property
-    def bots(self) -> Dict[str, "Bot"]:
+    def bots(self) -> dict[str, "Bot"]:
         """获取当前所有已连接的 Bot"""
         return self._bots
 
-    def register_adapter(self, adapter: Type["Adapter"], **kwargs) -> None:
+    def register_adapter(self, adapter: type["Adapter"], **kwargs) -> None:
         """注册一个协议适配器
 
         参数:
@@ -279,7 +270,7 @@ class HTTPClientSession(abc.ABC):
 
     async def __aexit__(
         self,
-        exc_type: Optional[Type[BaseException]],
+        exc_type: Optional[type[BaseException]],
         exc: Optional[BaseException],
         tb: Optional[TracebackType],
     ) -> None:

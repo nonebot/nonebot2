@@ -1,6 +1,7 @@
 import abc
+from typing import Any
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import Any, Dict, AsyncGenerator
 
 from nonebot.config import Config
 from nonebot.internal.driver._lifespan import LIFESPAN_FUNC
@@ -32,7 +33,7 @@ class Adapter(abc.ABC):
     def __init__(self, driver: Driver, **kwargs: Any):
         self.driver: Driver = driver
         """{ref}`nonebot.drivers.Driver` 实例"""
-        self.bots: Dict[str, Bot] = {}
+        self.bots: dict[str, Bot] = {}
         """本协议适配器已建立连接的 {ref}`nonebot.adapters.Bot` 实例"""
 
     def __repr__(self) -> str:

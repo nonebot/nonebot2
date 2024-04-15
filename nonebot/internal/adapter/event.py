@@ -1,5 +1,5 @@
 import abc
-from typing import Any, Type, TypeVar
+from typing import Any, TypeVar
 
 from pydantic import BaseModel
 
@@ -25,7 +25,7 @@ class Event(abc.ABC, BaseModel):
     if not PYDANTIC_V2:  # pragma: pydantic-v1
 
         @classmethod
-        def validate(cls: Type["E"], value: Any) -> "E":
+        def validate(cls: type["E"], value: Any) -> "E":
             if isinstance(value, Event) and not isinstance(value, cls):
                 raise TypeError(f"{value} is incompatible with Event type {cls}")
             return super().validate(value)

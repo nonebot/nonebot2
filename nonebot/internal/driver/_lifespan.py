@@ -1,5 +1,6 @@
+from collections.abc import Awaitable
 from typing_extensions import TypeAlias
-from typing import Any, List, Union, Callable, Awaitable, cast
+from typing import Any, Union, Callable, cast
 
 from nonebot.utils import run_sync, is_coroutine_callable
 
@@ -10,9 +11,9 @@ LIFESPAN_FUNC: TypeAlias = Union[SYNC_LIFESPAN_FUNC, ASYNC_LIFESPAN_FUNC]
 
 class Lifespan:
     def __init__(self) -> None:
-        self._startup_funcs: List[LIFESPAN_FUNC] = []
-        self._ready_funcs: List[LIFESPAN_FUNC] = []
-        self._shutdown_funcs: List[LIFESPAN_FUNC] = []
+        self._startup_funcs: list[LIFESPAN_FUNC] = []
+        self._ready_funcs: list[LIFESPAN_FUNC] = []
+        self._shutdown_funcs: list[LIFESPAN_FUNC] = []
 
     def on_startup(self, func: LIFESPAN_FUNC) -> LIFESPAN_FUNC:
         self._startup_funcs.append(func)
@@ -28,7 +29,7 @@ class Lifespan:
 
     @staticmethod
     async def _run_lifespan_func(
-        funcs: List[LIFESPAN_FUNC],
+        funcs: list[LIFESPAN_FUNC],
     ) -> None:
         for func in funcs:
             if is_coroutine_callable(func):

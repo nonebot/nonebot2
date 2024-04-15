@@ -1,7 +1,7 @@
 import json
 import asyncio
+from typing import Any, Optional
 from http.cookies import SimpleCookie
-from typing import Any, Set, Optional
 
 import pytest
 from nonebug import App
@@ -479,8 +479,8 @@ async def test_combine_driver(driver: Driver, driver_type: str):
 @pytest.mark.asyncio
 async def test_bot_connect_hook(app: App, driver: Driver):
     with pytest.MonkeyPatch.context() as m:
-        conn_hooks: Set[Dependent[Any]] = set()
-        disconn_hooks: Set[Dependent[Any]] = set()
+        conn_hooks: set[Dependent[Any]] = set()
+        disconn_hooks: set[Dependent[Any]] = set()
         m.setattr(Driver, "_bot_connection_hook", conn_hooks)
         m.setattr(Driver, "_bot_disconnection_hook", disconn_hooks)
 

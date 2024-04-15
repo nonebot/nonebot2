@@ -8,7 +8,8 @@ FrontMatter:
 import json
 from pathlib import Path
 from types import ModuleType
-from typing import Set, Union, Iterable, Optional
+from typing import Union, Optional
+from collections.abc import Iterable
 
 from nonebot.utils import path_to_module_name
 
@@ -39,7 +40,7 @@ def load_plugin(module_path: Union[str, Path]) -> Optional[Plugin]:
     return manager.load_plugin(module_path)
 
 
-def load_plugins(*plugin_dir: str) -> Set[Plugin]:
+def load_plugins(*plugin_dir: str) -> set[Plugin]:
     """导入文件夹下多个插件，以 `_` 开头的插件不会被导入!
 
     参数:
@@ -52,7 +53,7 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
 
 def load_all_plugins(
     module_path: Iterable[str], plugin_dir: Iterable[str]
-) -> Set[Plugin]:
+) -> set[Plugin]:
     """导入指定列表中的插件以及指定目录下多个插件，以 `_` 开头的插件不会被导入!
 
     参数:
@@ -64,7 +65,7 @@ def load_all_plugins(
     return manager.load_all_plugins()
 
 
-def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
+def load_from_json(file_path: str, encoding: str = "utf-8") -> set[Plugin]:
     """导入指定 json 文件中的 `plugins` 以及 `plugin_dirs` 下多个插件。
     以 `_` 开头的插件不会被导入!
 
@@ -95,7 +96,7 @@ def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     return load_all_plugins(set(plugins), set(plugin_dirs))
 
 
-def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
+def load_from_toml(file_path: str, encoding: str = "utf-8") -> set[Plugin]:
     """导入指定 toml 文件 `[tool.nonebot]` 中的
     `plugins` 以及 `plugin_dirs` 下多个插件。
     以 `_` 开头的插件不会被导入!
@@ -139,7 +140,7 @@ def load_builtin_plugin(name: str) -> Optional[Plugin]:
     return load_plugin(f"nonebot.plugins.{name}")
 
 
-def load_builtin_plugins(*plugins: str) -> Set[Plugin]:
+def load_builtin_plugins(*plugins: str) -> set[Plugin]:
     """导入多个 NoneBot 内置插件。
 
     参数:
@@ -184,7 +185,7 @@ def require(name: str) -> ModuleType:
     return plugin.module
 
 
-def inherit_supported_adapters(*names: str) -> Optional[Set[str]]:
+def inherit_supported_adapters(*names: str) -> Optional[set[str]]:
     """获取已加载插件的适配器支持状态集合。
 
     如果传入了多个插件名称，返回值会自动取交集。
@@ -196,7 +197,7 @@ def inherit_supported_adapters(*names: str) -> Optional[Set[str]]:
         RuntimeError: 插件未加载
         ValueError: 插件缺少元数据
     """
-    final_supported: Optional[Set[str]] = None
+    final_supported: Optional[set[str]] = None
 
     for name in names:
         plugin = get_plugin(_module_name_to_plugin_name(name))

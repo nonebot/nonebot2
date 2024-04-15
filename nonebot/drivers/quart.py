@@ -18,7 +18,7 @@ FrontMatter:
 import asyncio
 from functools import wraps
 from typing_extensions import override
-from typing import Any, Dict, List, Tuple, Union, Optional, cast
+from typing import Any, Union, Optional, cast
 
 from pydantic import BaseModel
 
@@ -64,15 +64,15 @@ class Config(BaseModel):
 
     quart_reload: bool = False
     """开启/关闭冷重载"""
-    quart_reload_dirs: Optional[List[str]] = None
+    quart_reload_dirs: Optional[list[str]] = None
     """重载监控文件夹列表，默认为 uvicorn 默认值"""
     quart_reload_delay: float = 0.25
     """重载延迟，默认为 uvicorn 默认值"""
-    quart_reload_includes: Optional[List[str]] = None
+    quart_reload_includes: Optional[list[str]] = None
     """要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
-    quart_reload_excludes: Optional[List[str]] = None
+    quart_reload_excludes: Optional[list[str]] = None
     """不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
-    quart_extra: Dict[str, Any] = {}
+    quart_extra: dict[str, Any] = {}
     """传递给 `Quart` 的其他参数。"""
 
 
@@ -142,7 +142,7 @@ class Driver(BaseDriver, ASGIMixin):
         self,
         host: Optional[str] = None,
         port: Optional[int] = None,
-        *,
+        *args,
         app: Optional[str] = None,
         **kwargs,
     ):
@@ -184,7 +184,7 @@ class Driver(BaseDriver, ASGIMixin):
 
         data = await request.form
         files_dict = await request.files
-        files: List[Tuple[str, FileTypes]] = []
+        files: list[tuple[str, FileTypes]] = []
         key: str
         value: FileStorage
         for key, value in files_dict.items():

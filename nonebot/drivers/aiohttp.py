@@ -16,8 +16,9 @@ FrontMatter:
 """
 
 from typing_extensions import override
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import TYPE_CHECKING, Union, Optional, AsyncGenerator
+from typing import TYPE_CHECKING, Union, Optional
 
 from multidict import CIMultiDict
 
@@ -221,8 +222,8 @@ class WebSocket(BaseWebSocket):
         raise NotImplementedError
 
     @override
-    async def close(self, code: int = 1000):
-        await self.websocket.close(code=code)
+    async def close(self, code: int = 1000, reason: str = ""):
+        await self.websocket.close(code=code, message=reason.encode("utf-8"))
         await self.session.close()
 
     async def _receive(self) -> aiohttp.WSMessage:

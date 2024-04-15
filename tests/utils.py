@@ -1,5 +1,6 @@
+from typing import Union, Optional
 from typing_extensions import override
-from typing import Type, Union, Mapping, Iterable, Optional
+from collections.abc import Mapping, Iterable
 
 from pydantic import Extra, create_model
 
@@ -76,7 +77,7 @@ class FakeMessage(Message[FakeMessageSegment]):
 
 
 def make_fake_event(
-    _base: Optional[Type[Event]] = None,
+    _base: Optional[type[Event]] = None,
     _type: str = "message",
     _name: str = "test",
     _description: str = "test",
@@ -85,7 +86,7 @@ def make_fake_event(
     _message: Optional[Message] = None,
     _to_me: bool = True,
     **fields,
-) -> Type[Event]:
+) -> type[Event]:
     Base = _base or Event
 
     class FakeEvent(Base, extra=Extra.forbid):

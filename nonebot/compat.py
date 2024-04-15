@@ -7,21 +7,18 @@ FrontMatter:
     description: nonebot.compat 模块
 """
 
+from collections.abc import Generator
 from dataclasses import dataclass, is_dataclass
-from typing_extensions import Self, Annotated, get_args, get_origin, is_typeddict
+from typing_extensions import Self, get_args, get_origin, is_typeddict
 from typing import (
     TYPE_CHECKING,
     Any,
-    Set,
-    Dict,
-    List,
-    Type,
     Union,
     TypeVar,
     Callable,
     Optional,
     Protocol,
-    Generator,
+    Annotated,
 )
 
 from pydantic import VERSION, BaseModel
@@ -94,7 +91,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             super().__init__(default=default, **kwargs)
 
         @property
-        def extra(self) -> Dict[str, Any]:
+        def extra(self) -> dict[str, Any]:
             """Extra data that is not part of the standard pydantic fields.
 
             For compatibility with pydantic v1.
@@ -160,7 +157,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             # to allow store them in a set.
             return id(self)
 
-    def extract_field_info(field_info: BaseFieldInfo) -> Dict[str, Any]:
+    def extract_field_info(field_info: BaseFieldInfo) -> dict[str, Any]:
         """Get FieldInfo init kwargs from a FieldInfo instance."""
 
         kwargs = field_info._attributes_set.copy()
@@ -176,7 +173,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             type, config=None if model_field._annotation_has_config() else config
         ).validate_python(value)
 
-    def model_fields(model: Type[BaseModel]) -> List[ModelField]:
+    def model_fields(model: type[BaseModel]) -> list[ModelField]:
         """Get field list of a model."""
 
         return [
@@ -188,19 +185,19 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             for name, field_info in model.model_fields.items()
         ]
 
-    def model_config(model: Type[BaseModel]) -> Any:
+    def model_config(model: type[BaseModel]) -> Any:
         """Get config of a model."""
         return model.model_config
 
     def model_dump(
         model: BaseModel,
-        include: Optional[Set[str]] = None,
-        exclude: Optional[Set[str]] = None,
+        include: Optional[set[str]] = None,
+        exclude: Optional[set[str]] = None,
         by_alias: bool = False,
         exclude_unset: bool = False,
         exclude_defaults: bool = False,
         exclude_none: bool = False,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         return model.model_dump(
             include=include,
             exclude=exclude,
@@ -210,16 +207,16 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             exclude_none=exclude_none,
         )
 
-    def type_validate_python(type_: Type[T], data: Any) -> T:
+    def type_validate_python(type_: type[T], data: Any) -> T:
         """Validate data with given type."""
         return TypeAdapter(type_).validate_python(data)
 
-    def type_validate_json(type_: Type[T], data: Union[str, bytes]) -> T:
+    def type_validate_json(type_: type[T], data: Union[str, bytes]) -> T:
         """Validate JSON with given type."""
         return TypeAdapter(type_).validate_json(data)
 
     def __get_pydantic_core_schema__(
-        cls: Type["_CustomValidationClass"],
+        cls: type["_CustomValidationClass"],
         source_type: Any,
         handler: GetCoreSchemaHandler,
     ) -> CoreSchema:
@@ -230,7 +227,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             [core_schema.no_info_plain_validator_function(func) for func in validators]
         )
 
-    def custom_validation(class_: Type["CVC"]) -> Type["CVC"]:
+    def custom_validation(class_: type["CVC"]) -> type["CVC"]:
         """Use pydantic v1 like validator generator in pydantic v2"""
 
         setattr(
@@ -308,7 +305,7 @@ else:  # pragma: pydantic-v1
                 )
             return cls._construct(name, annotation, field_info or FieldInfo())
 
-    def extract_field_info(field_info: BaseFieldInfo) -> Dict[str, Any]:
+    def extract_field_info(field_info: BaseFieldInfo) -> dict[str, Any]:
         """Get FieldInfo init kwargs from a FieldInfo instance."""
 
         kwargs = {
@@ -318,7 +315,7 @@ else:  # pragma: pydantic-v1
         return kwargs
 
     def model_field_validate(
-        model_field: ModelField, value: Any, config: Optional[Type[ConfigDict]] = None
+        model_field: ModelField, value: Any, config: Optional[type[ConfigDict]] = None
     ) -> Any:
         """Validate the value pass to the field.
 
@@ -333,7 +330,7 @@ else:  # pragma: pydantic-v1
             raise ValueError(value, model_field)
         return v
 
-    def model_fields(model: Type[BaseModel]) -> List[ModelField]:
+    def model_fields(model: type[BaseModel]) -> list[ModelField]:
         """Get field list of a model."""
 
         # construct the model field without preprocess to avoid error
@@ -348,19 +345,19 @@ else:  # pragma: pydantic-v1
             for model_field in model.__fields__.values()
         ]
 
-    def model_config(model: Type[BaseModel]) -> Any:
+    def model_config(model: type[BaseModel]) -> Any:
         """Get config of a model."""
         return model.__config__
 
     def model_dump(
         model: BaseModel,
-        include: Optional[Set[str]] = None,
-        exclude: Optional[Set[str]] = None,
+        include: Optional[set[str]] = None,
+        exclude: Optional[set[str]] = None,
         by_alias: bool = False,
         exclude_unset: bool = False,
         exclude_defaults: bool = False,
         exclude_none: bool = False,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         return model.dict(
             include=include,
             exclude=exclude,
@@ -370,14 +367,14 @@ else:  # pragma: pydantic-v1
             exclude_none=exclude_none,
         )
 
-    def type_validate_python(type_: Type[T], data: Any) -> T:
+    def type_validate_python(type_: type[T], data: Any) -> T:
         """Validate data with given type."""
         return parse_obj_as(type_, data)
 
-    def type_validate_json(type_: Type[T], data: Union[str, bytes]) -> T:
+    def type_validate_json(type_: type[T], data: Union[str, bytes]) -> T:
         """Validate JSON with given type."""
         return parse_raw_as(type_, data)
 
-    def custom_validation(class_: Type["CVC"]) -> Type["CVC"]:
+    def custom_validation(class_: type["CVC"]) -> type["CVC"]:
         """Do nothing in pydantic v1"""
         return class_

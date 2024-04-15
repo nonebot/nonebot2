@@ -1,5 +1,4 @@
 import sys
-from typing import Set
 from pathlib import Path
 from dataclasses import asdict
 
@@ -22,7 +21,7 @@ async def test_load_plugin():
 
 
 @pytest.mark.asyncio
-async def test_load_plugins(load_plugin: Set[Plugin], load_builtin_plugin: Set[Plugin]):
+async def test_load_plugins(load_plugin: set[Plugin], load_builtin_plugin: set[Plugin]):
     loaded_plugins = {
         plugin for plugin in nonebot.get_loaded_plugins() if not plugin.parent_plugin
     }

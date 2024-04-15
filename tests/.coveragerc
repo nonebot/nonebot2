@@ -21,8 +21,6 @@ rules =
   "sys_platform != 'win32'": py-win32
   "sys_platform != 'linux'": py-linux
   "sys_platform != 'darwin'": py-darwin
-  "sys_version_info < (3, 9)": py-gte-39
-  "sys_version_info >= (3, 9)": py-lt-39
   "sys_version_info < (3, 11)": py-gte-311
   "sys_version_info >= (3, 11)": py-lt-311
   "package_version('pydantic') < (2,)": pydantic-v2
