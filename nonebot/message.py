@@ -11,7 +11,7 @@ import asyncio
 import contextlib
 from datetime import datetime
 from contextlib import AsyncExitStack
-from typing import TYPE_CHECKING, Any, Set, Dict, Type, Optional
+from typing import TYPE_CHECKING, Any, Optional
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
@@ -46,10 +46,10 @@ from nonebot.internal.params import (
 if TYPE_CHECKING:
     from nonebot.adapters import Bot, Event
 
-_event_preprocessors: Set[Dependent[Any]] = set()
-_event_postprocessors: Set[Dependent[Any]] = set()
-_run_preprocessors: Set[Dependent[Any]] = set()
-_run_postprocessors: Set[Dependent[Any]] = set()
+_event_preprocessors: set[Dependent[Any]] = set()
+_event_postprocessors: set[Dependent[Any]] = set()
+_run_preprocessors: set[Dependent[Any]] = set()
+_run_postprocessors: set[Dependent[Any]] = set()
 
 EVENT_PCS_PARAMS = (
     DependParam,
@@ -330,7 +330,7 @@ async def _apply_run_postprocessors(
 
 
 async def _check_matcher(
-    Matcher: Type[Matcher],
+    Matcher: type[Matcher],
     bot: "Bot",
     event: "Event",
     state: T_State,
@@ -381,7 +381,7 @@ async def _check_matcher(
 
 
 async def _run_matcher(
-    Matcher: Type[Matcher],
+    Matcher: type[Matcher],
     bot: "Bot",
     event: "Event",
     state: T_State,
@@ -446,7 +446,7 @@ async def _run_matcher(
 
 
 async def check_and_run_matcher(
-    Matcher: Type[Matcher],
+    Matcher: type[Matcher],
     bot: "Bot",
     event: "Event",
     state: T_State,
@@ -505,7 +505,7 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
     if show_log:
         logger.opt(colors=True).success(log_msg)
 
-    state: Dict[Any, Any] = {}
+    state: dict[Any, Any] = {}
     dependency_cache: T_DependencyCache = {}
 
     # create event scope context

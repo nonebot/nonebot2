@@ -12,10 +12,11 @@ import pkgutil
 import importlib
 from pathlib import Path
 from itertools import chain
+from typing import Optional
 from types import ModuleType
 from importlib.abc import MetaPathFinder
+from collections.abc import Iterable, Sequence
 from importlib.machinery import PathFinder, SourceFileLoader
-from typing import Set, Dict, List, Iterable, Optional, Sequence
 
 from nonebot.log import logger
 from nonebot.utils import escape_tag, path_to_module_name
@@ -44,34 +45,34 @@ class PluginManager:
         search_path: Optional[Iterable[str]] = None,
     ):
         # simple plugin not in search path
-        self.plugins: Set[str] = set(plugins or [])
-        self.search_path: Set[str] = set(search_path or [])
+        self.plugins: set[str] = set(plugins or [])
+        self.search_path: set[str] = set(search_path or [])
 
         # cache plugins
-        self._third_party_plugin_names: Dict[str, str] = {}
-        self._searched_plugin_names: Dict[str, Path] = {}
+        self._third_party_plugin_names: dict[str, str] = {}
+        self._searched_plugin_names: dict[str, Path] = {}
         self.prepare_plugins()
 
     def __repr__(self) -> str:
         return f"PluginManager(plugins={self.plugins}, search_path={self.search_path})"
 
     @property
-    def third_party_plugins(self) -> Set[str]:
+    def third_party_plugins(self) -> set[str]:
         """返回所有独立插件名称。"""
         return set(self._third_party_plugin_names.keys())
 
     @property
-    def searched_plugins(self) -> Set[str]:
+    def searched_plugins(self) -> set[str]:
         """返回已搜索到的插件名称。"""
         return set(self._searched_plugin_names.keys())
 
     @property
-    def available_plugins(self) -> Set[str]:
+    def available_plugins(self) -> set[str]:
         """返回当前插件管理器中可用的插件名称。"""
         return self.third_party_plugins | self.searched_plugins
 
-    def _previous_plugins(self) -> Set[str]:
-        _pre_managers: List[PluginManager]
+    def _previous_plugins(self) -> set[str]:
+        _pre_managers: list[PluginManager]
         if self in _managers:
             _pre_managers = _managers[: _managers.index(self)]
         else:
@@ -81,12 +82,12 @@ class PluginManager:
             *chain.from_iterable(manager.available_plugins for manager in _pre_managers)
         }
 
-    def prepare_plugins(self) -> Set[str]:
+    def prepare_plugins(self) -> set[str]:
         """搜索插件并缓存插件名称。"""
         # get all previous ready to load plugins
         previous_plugins = self._previous_plugins()
-        searched_plugins: Dict[str, Path] = {}
-        third_party_plugins: Dict[str, str] = {}
+        searched_plugins: dict[str, Path] = {}
+        third_party_plugins: dict[str, str] = {}
 
         # check third party plugins
         for plugin in self.plugins:
@@ -170,7 +171,7 @@ class PluginManager:
                 f'<r><bg #f8bbd0>Failed to import "{escape_tag(name)}"</bg #f8bbd0></r>'
             )
 
-    def load_all_plugins(self) -> Set[Plugin]:
+    def load_all_plugins(self) -> set[Plugin]:
         """加载所有可用插件。"""
 
         return set(

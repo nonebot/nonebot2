@@ -17,19 +17,9 @@ import json
 from pathlib import Path
 from datetime import timedelta
 from ipaddress import IPv4Address
+from collections.abc import Mapping
+from typing import TYPE_CHECKING, Any, Union, Optional
 from typing_extensions import TypeAlias, get_args, get_origin
-from typing import (
-    TYPE_CHECKING,
-    Any,
-    Set,
-    Dict,
-    List,
-    Type,
-    Tuple,
-    Union,
-    Mapping,
-    Optional,
-)
 
 from dotenv import dotenv_values
 from pydantic import Field, BaseModel
@@ -49,7 +39,7 @@ from nonebot.compat import (
 )
 
 DOTENV_TYPE: TypeAlias = Union[
-    Path, str, List[Union[Path, str]], Tuple[Union[Path, str], ...]
+    Path, str, list[Union[Path, str]], tuple[Union[Path, str], ...]
 ]
 
 ENV_FILE_SENTINEL = Path("")
@@ -59,7 +49,7 @@ class SettingsError(ValueError): ...
 
 
 class BaseSettingsSource(abc.ABC):
-    def __init__(self, settings_cls: Type["BaseSettings"]) -> None:
+    def __init__(self, settings_cls: type["BaseSettings"]) -> None:
         self.settings_cls = settings_cls
 
     @property
@@ -67,7 +57,7 @@ class BaseSettingsSource(abc.ABC):
         return model_config(self.settings_cls)
 
     @abc.abstractmethod
-    def __call__(self) -> Dict[str, Any]:
+    def __call__(self) -> dict[str, Any]:
         raise NotImplementedError
 
 
@@ -75,12 +65,12 @@ class InitSettingsSource(BaseSettingsSource):
     __slots__ = ("init_kwargs",)
 
     def __init__(
-        self, settings_cls: Type["BaseSettings"], init_kwargs: Dict[str, Any]
+        self, settings_cls: type["BaseSettings"], init_kwargs: dict[str, Any]
     ) -> None:
         self.init_kwargs = init_kwargs
         super().__init__(settings_cls)
 
-    def __call__(self) -> Dict[str, Any]:
+    def __call__(self) -> dict[str, Any]:
         return self.init_kwargs
 
     def __repr__(self) -> str:
@@ -90,7 +80,7 @@ class InitSettingsSource(BaseSettingsSource):
 class DotEnvSettingsSource(BaseSettingsSource):
     def __init__(
         self,
-        settings_cls: Type["BaseSettings"],
+        settings_cls: type["BaseSettings"],
         env_file: Optional[DOTENV_TYPE] = ENV_FILE_SENTINEL,
         env_file_encoding: Optional[str] = None,
         case_sensitive: Optional[bool] = None,
@@ -121,7 +111,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
     def _apply_case_sensitive(self, var_name: str) -> str:
         return var_name if self.case_sensitive else var_name.lower()
 
-    def _field_is_complex(self, field: ModelField) -> Tuple[bool, bool]:
+    def _field_is_complex(self, field: ModelField) -> tuple[bool, bool]:
         if type_is_complex(field.annotation):
             return True, False
         elif origin_is_union(get_origin(field.annotation)) and any(
@@ -132,16 +122,16 @@ class DotEnvSettingsSource(BaseSettingsSource):
 
     def _parse_env_vars(
         self, env_vars: Mapping[str, Optional[str]]
-    ) -> Dict[str, Optional[str]]:
+    ) -> dict[str, Optional[str]]:
         return {
             self._apply_case_sensitive(key): value for key, value in env_vars.items()
         }
 
-    def _read_env_file(self, file_path: Path) -> Dict[str, Optional[str]]:
+    def _read_env_file(self, file_path: Path) -> dict[str, Optional[str]]:
         file_vars = dotenv_values(file_path, encoding=self.env_file_encoding)
         return self._parse_env_vars(file_vars)
 
-    def _read_env_files(self) -> Dict[str, Optional[str]]:
+    def _read_env_files(self) -> dict[str, Optional[str]]:
         env_files = self.env_file
         if env_files is None:
             return {}
@@ -149,7 +139,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
         if isinstance(env_files, (str, os.PathLike)):
             env_files = [env_files]
 
-        dotenv_vars: Dict[str, Optional[str]] = {}
+        dotenv_vars: dict[str, Optional[str]] = {}
         for env_file in env_files:
             env_path = Path(env_file).expanduser()
             if env_path.is_file():
@@ -170,14 +160,14 @@ class DotEnvSettingsSource(BaseSettingsSource):
     def _explode_env_vars(
         self,
         field: ModelField,
-        env_vars: Dict[str, Optional[str]],
-        env_file_vars: Dict[str, Optional[str]],
-    ) -> Dict[str, Any]:
+        env_vars: dict[str, Optional[str]],
+        env_file_vars: dict[str, Optional[str]],
+    ) -> dict[str, Any]:
         if self.env_nested_delimiter is None:
             return {}
 
         prefix = f"{field.name}{self.env_nested_delimiter}"
-        result: Dict[str, Any] = {}
+        result: dict[str, Any] = {}
         for env_name, env_val in env_vars.items():
             if not env_name.startswith(prefix):
                 continue
@@ -209,10 +199,10 @@ class DotEnvSettingsSource(BaseSettingsSource):
 
         return result
 
-    def __call__(self) -> Dict[str, Any]:
+    def __call__(self) -> dict[str, Any]:
         """从环境变量和 dotenv 配置文件中读取配置项。"""
 
-        d: Dict[str, Any] = {}
+        d: dict[str, Any] = {}
 
         env_vars = self._parse_env_vars(os.environ)
         env_file_vars = self._read_env_files()
@@ -317,7 +307,7 @@ class BaseSettings(BaseModel):
             return self.__dict__.get(name)
 
     if PYDANTIC_V2:  # pragma: pydantic-v2
-        model_config: SettingsConfig = SettingsConfig(
+        model_config = SettingsConfig(
             extra="allow",
             env_file=".env",
             env_file_encoding="utf-8",
@@ -351,11 +341,11 @@ class BaseSettings(BaseModel):
 
     def _settings_build_values(
         self,
-        init_kwargs: Dict[str, Any],
+        init_kwargs: dict[str, Any],
         env_file: Optional[DOTENV_TYPE] = None,
         env_file_encoding: Optional[str] = None,
         env_nested_delimiter: Optional[str] = None,
-    ) -> Dict[str, Any]:
+    ) -> dict[str, Any]:
         init_settings = InitSettingsSource(self.__class__, init_kwargs=init_kwargs)
         env_settings = DotEnvSettingsSource(
             self.__class__,
@@ -426,7 +416,7 @@ class Config(BaseSettings):
     """API 请求超时时间，单位: 秒。"""
 
     # bot runtime configs
-    superusers: Set[str] = set()
+    superusers: set[str] = set()
     """机器人超级用户。
 
     用法:
@@ -434,9 +424,9 @@ class Config(BaseSettings):
         SUPERUSERS=["12345789"]
         ```
     """
-    nickname: Set[str] = set()
+    nickname: set[str] = set()
     """机器人昵称。"""
-    command_start: Set[str] = {"/"}
+    command_start: set[str] = {"/"}
     """命令的起始标记，用于判断一条消息是不是命令。
 
     参考[命令响应规则](https://nonebot.dev/docs/advanced/matcher#command)。
@@ -446,7 +436,7 @@ class Config(BaseSettings):
         COMMAND_START=["/", ""]
         ```
     """
-    command_sep: Set[str] = {"."}
+    command_sep: set[str] = {"."}
     """命令的分隔标记，用于将文本形式的命令切分为元组（实际的命令名）。
 
     参考[命令响应规则](https://nonebot.dev/docs/advanced/matcher#command)。

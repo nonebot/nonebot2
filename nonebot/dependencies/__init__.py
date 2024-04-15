@@ -9,20 +9,8 @@ import abc
 import asyncio
 import inspect
 from dataclasses import field, dataclass
-from typing import (
-    Any,
-    Dict,
-    List,
-    Type,
-    Tuple,
-    Generic,
-    TypeVar,
-    Callable,
-    Iterable,
-    Optional,
-    Awaitable,
-    cast,
-)
+from collections.abc import Iterable, Awaitable
+from typing import Any, Generic, TypeVar, Callable, Optional, cast
 
 from nonebot.log import logger
 from nonebot.typing import _DependentCallable
@@ -48,13 +36,13 @@ class Param(abc.ABC, FieldInfo):
 
     @classmethod
     def _check_param(
-        cls, param: inspect.Parameter, allow_types: Tuple[Type["Param"], ...]
+        cls, param: inspect.Parameter, allow_types: tuple[type["Param"], ...]
     ) -> Optional["Param"]:
         return
 
     @classmethod
     def _check_parameterless(
-        cls, value: Any, allow_types: Tuple[Type["Param"], ...]
+        cls, value: Any, allow_types: tuple[type["Param"], ...]
     ) -> Optional["Param"]:
         return
 
@@ -79,8 +67,8 @@ class Dependent(Generic[R]):
     """
 
     call: _DependentCallable[R]
-    params: Tuple[ModelField, ...] = field(default_factory=tuple)
-    parameterless: Tuple[Param, ...] = field(default_factory=tuple)
+    params: tuple[ModelField, ...] = field(default_factory=tuple)
+    parameterless: tuple[Param, ...] = field(default_factory=tuple)
 
     def __repr__(self) -> str:
         if inspect.isfunction(self.call) or inspect.isclass(self.call):
@@ -112,9 +100,9 @@ class Dependent(Generic[R]):
 
     @staticmethod
     def parse_params(
-        call: _DependentCallable[R], allow_types: Tuple[Type[Param], ...]
-    ) -> Tuple[ModelField, ...]:
-        fields: List[ModelField] = []
+        call: _DependentCallable[R], allow_types: tuple[type[Param], ...]
+    ) -> tuple[ModelField, ...]:
+        fields: list[ModelField] = []
         params = get_typed_signature(call).parameters.values()
 
         for param in params:
@@ -144,9 +132,9 @@ class Dependent(Generic[R]):
 
     @staticmethod
     def parse_parameterless(
-        parameterless: Tuple[Any, ...], allow_types: Tuple[Type[Param], ...]
-    ) -> Tuple[Param, ...]:
-        parameterless_params: List[Param] = []
+        parameterless: tuple[Any, ...], allow_types: tuple[type[Param], ...]
+    ) -> tuple[Param, ...]:
+        parameterless_params: list[Param] = []
         for value in parameterless:
             for allow_type in allow_types:
                 if param := allow_type._check_parameterless(value, allow_types):
@@ -162,7 +150,7 @@ class Dependent(Generic[R]):
         *,
         call: _DependentCallable[R],
         parameterless: Optional[Iterable[Any]] = None,
-        allow_types: Iterable[Type[Param]],
+        allow_types: Iterable[type[Param]],
     ) -> "Dependent[R]":
         allow_types = tuple(allow_types)
 
@@ -181,7 +169,7 @@ class Dependent(Generic[R]):
             *(cast(Param, param.field_info)._check(**params) for param in self.params)
         )
 
-    async def _solve_field(self, field: ModelField, params: Dict[str, Any]) -> Any:
+    async def _solve_field(self, field: ModelField, params: dict[str, Any]) -> Any:
         param = cast(Param, field.field_info)
         value = await param._solve(**params)
         if value is PydanticUndefined:
@@ -189,7 +177,7 @@ class Dependent(Generic[R]):
         v = check_field_type(field, value)
         return v if param.validate else value
 
-    async def solve(self, **params: Any) -> Dict[str, Any]:
+    async def solve(self, **params: Any) -> dict[str, Any]:
         # solve parameterless
         for param in self.parameterless:
             await param._solve(**params)

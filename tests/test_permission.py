@@ -1,4 +1,4 @@
-from typing import Tuple, Optional
+from typing import Optional
 
 import pytest
 from nonebug import App
@@ -138,7 +138,7 @@ async def test_superuser(app: App, type: str, user_id: str, expected: bool):
     ],
 )
 async def test_user(
-    app: App, session_ids: Tuple[str, ...], session_id: Optional[str], expected: bool
+    app: App, session_ids: tuple[str, ...], session_id: Optional[str], expected: bool
 ):
     dependent = next(iter(USER(*session_ids).checkers))
     checker = dependent.call

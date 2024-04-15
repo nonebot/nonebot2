@@ -89,7 +89,7 @@ async def _(bot): ...  # 兼容性处理
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="3.9" label="Python 3.9">
 
 ```python
 from typing import Union
@@ -127,7 +127,7 @@ async def _(event): ...  # 兼容性处理
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="3.9" label="Python 3.9">
 
 ```python
 from typing import Union
@@ -191,7 +191,7 @@ async def _(e: ActionFailed | NetworkError): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="3.9" label="Python 3.9">
 
 ```python {6,9}
 from typing import Union
@@ -216,8 +216,8 @@ async def _(e: Union[ActionFailed, NetworkError]): ...
 
 子依赖使用 `Depends` 标记进行定义，其参数即依赖的函数或可调用对象，同样会被解析为 `Dependent` 对象，将会在依赖注入期间执行。我们来看一个例子：
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {5,15}
 from typing import Annotated
@@ -239,7 +239,7 @@ async def _(event: Annotated[Event, Depends(check)]):
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {3,13}
 from nonebot import on_command
@@ -287,8 +287,8 @@ async def _():
 
 NoneBot 在执行子依赖时，会将其返回值缓存起来。当我们在使用子依赖时，`Depends` 具有一个参数 `use_cache`，默认为 `True`。此时在事件处理流程中，多次使用同一个子依赖时，将会使用缓存中的结果而不会重复执行。这在很多情景中非常有用，例如：
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {7}
 import random
@@ -302,7 +302,7 @@ async def _(x: Annotated[int, Depends(random_result)]):
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {6}
 import random
@@ -319,8 +319,8 @@ async def _(x: int = Depends(random_result)):
 
 此时，在同一事件处理流程中，这个随机函数的返回值将会保持一致。如果我们希望每次都重新执行子依赖，可以将 `use_cache` 设置为 `False`。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {7}
 import random
@@ -334,7 +334,7 @@ async def _(x: Annotated[int, Depends(random_result, use_cache=False)]):
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {6}
 import random
@@ -357,8 +357,8 @@ async def _(x: int = Depends(random_result, use_cache=False)):
 
 在依赖注入系统中，我们可以对子依赖的返回值进行自动类型转换与校验。这个功能由 Pydantic 支持，因此我们通过参数类型注解自动使用 Pydantic 支持的类型转换。例如：
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {6,9}
 from typing import Annotated
@@ -374,7 +374,7 @@ async def _(user_id: Annotated[int, Depends(get_user_id, validate=True)]):
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {4,7}
 from nonebot.params import Depends
@@ -392,8 +392,8 @@ async def _(user_id: int = Depends(get_user_id, validate=True)):
 
 在进行类型自动转换的同时，Pydantic 还支持对数据进行更多的限制，如：大于、小于、长度等。使用方法如下：
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {7,10}
 from typing import Annotated
@@ -410,7 +410,7 @@ async def _(user_id: Annotated[int, Depends(get_user_id, validate=Field(gt=100))
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {5,8}
 from pydantic import Field
@@ -431,8 +431,8 @@ async def _(user_id: int = Depends(get_user_id, validate=Field(gt=100))):
 
 在前面的事例中，我们使用了函数作为子依赖。实际上，我们还可以使用类作为依赖。当我们在实例化一个类的时候，其实我们就在调用它，类本身也是一个可调用对象。例如：
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {16}
 from typing import Annotated
@@ -455,7 +455,7 @@ async def _(data: Annotated[ClassDependency, Depends(ClassDependency)]):
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {15}
 from dataclasses import dataclass
@@ -481,8 +481,8 @@ async def _(data: ClassDependency = Depends(ClassDependency)):
 
 可以看到，我们使用 `dataclass` 定义了一个类。由于这个类的 `__init__` 方法可以被依赖注入系统解析，因此，我们可以将其作为子依赖进行声明。特别地，对于类依赖，`Depends` 的参数可以为空，NoneBot 将会使用参数的类型注解进行解析与推断：
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python
 from typing import Annotated
@@ -492,7 +492,7 @@ async def _(data: Annotated[ClassDependency, Depends()]):
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python
 async def _(data: ClassDependency = Depends()):
@@ -510,11 +510,12 @@ NoneBot 的依赖注入支持依赖项在事件处理流程结束后进行一些
 
 我们可以看下述代码段, 使用 `httpx.AsyncClient` 异步网络 IO，并在事件处理流程中共用一个 client：
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {15}
-from typing import Annotated, AsyncGenerator
+from typing import Annotated
+from collections.abc import AsyncGenerator
 
 import httpx
 from nonebot.params import Depends
@@ -533,10 +534,10 @@ async def _(x: Annotated[httpx.AsyncClient, Depends(get_client)]):
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {15}
-from typing import AsyncGenerator
+from collections.abc import AsyncGenerator
 
 import httpx
 from nonebot.params import Depends
@@ -566,11 +567,10 @@ async def _(x: httpx.AsyncClient = Depends(get_client)):
 在 Python 里，为类定义 `__call__` 方法就可以使得这个类的实例成为一个可调用对象。因此，我们也可以将定义了 `__call__` 方法的类的实例作为依赖。事实上，NoneBot 的[内置响应规则](./matcher.md#内置响应规则)就广泛使用了这种方式，以 `is_type` 规则为例：
 
 ```python
-from typing import Type
 from nonebot.adapters import Event
 
 class IsTypeRule:
-    def __init__(self, *types: Type[Event]):
+    def __init__(self, *types: type[Event]):
         self.types = types
 
     async def __call__(self, event: Event) -> bool:
@@ -587,8 +587,8 @@ class IsTypeRule:
 
 获取当前事件的类型。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Annotated
@@ -598,7 +598,7 @@ async def _(foo: Annotated[str, EventType()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {3}
 from nonebot.params import EventType
@@ -613,8 +613,8 @@ async def _(foo: str = EventType()): ...
 
 获取当前事件的消息。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {5}
 from typing import Annotated
@@ -625,7 +625,7 @@ async def _(foo: Annotated[Message, EventMessage()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {4}
 from nonebot.adapters import Message
@@ -641,8 +641,8 @@ async def _(foo: Message = EventMessage()): ...
 
 获取当前事件的消息纯文本部分。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Annotated
@@ -652,7 +652,7 @@ async def _(foo: Annotated[str, EventPlainText()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {3}
 from nonebot.params import EventPlainText
@@ -667,8 +667,8 @@ async def _(foo: str = EventPlainText()): ...
 
 获取当前事件是否与机器人相关。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Annotated
@@ -678,7 +678,7 @@ async def _(foo: Annotated[bool, EventToMe()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {3}
 from nonebot.params import EventToMe
@@ -693,8 +693,8 @@ async def _(foo: bool = EventToMe()): ...
 
 获取当前命令型消息的元组形式命令名。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Annotated
@@ -704,13 +704,12 @@ async def _(foo: Annotated[tuple[str, ...], Command()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {4}
-from typing import Tuple
 from nonebot.params import Command
 
-async def _(foo: Tuple[str, ...] = Command()): ...
+async def _(foo: tuple[str, ...] = Command()): ...
 ```
 
   </TabItem>
@@ -724,8 +723,8 @@ async def _(foo: Tuple[str, ...] = Command()): ...
 
 获取当前命令型消息的文本形式命令名。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Annotated
@@ -735,7 +734,7 @@ async def _(foo: Annotated[str, RawCommand()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {3}
 from nonebot.params import RawCommand
@@ -754,8 +753,8 @@ async def _(foo: str = RawCommand()): ...
 
 获取命令型消息命令后跟随的参数。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {5}
 from typing import Annotated
@@ -766,7 +765,7 @@ async def _(foo: Annotated[Message, CommandArg()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {4}
 from nonebot.adapters import Message
@@ -786,8 +785,8 @@ async def _(foo: Message = CommandArg()): ...
 
 获取命令型消息命令前缀。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Annotated
@@ -797,7 +796,7 @@ async def _(foo: Annotated[str, CommandStart()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {3}
 from nonebot.params import CommandStart
@@ -816,8 +815,8 @@ async def _(foo: str = CommandStart()): ...
 
 获取命令型消息命令与参数间空白符。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Annotated
@@ -827,7 +826,7 @@ async def _(foo: Annotated[str, CommandWhitespace()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {3}
 from nonebot.params import CommandWhitespace
@@ -856,8 +855,14 @@ from nonebot.params import ShellCommandArgs
 async def _(foo: Annotated[list[str | MessageSegment], ShellCommandArgv()]): ...
 ```
 
+```python {4}
+from nonebot.params import ShellCommandArgs
+
+async def _(foo: list[str | MessageSegment] = ShellCommandArgv()): ...
+```
+
   </TabItem>
-  <TabItem value="3.9" label="Python 3.9+">
+  <TabItem value="3.9" label="Python 3.9">
 
 ```python {4}
 from typing import Union, Annotated
@@ -866,14 +871,11 @@ from nonebot.params import ShellCommandArgs
 async def _(foo: Annotated[list[Union[str, MessageSegment]], ShellCommandArgv()]): ...
 ```
 
-  </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
-
 ```python {4}
-from typing import List, Union
+from typing import Union
 from nonebot.params import ShellCommandArgs
 
-async def _(foo: List[Union[str, MessageSegment]] = ShellCommandArgv()): ...
+async def _(foo: list[Union[str, MessageSegment]] = ShellCommandArgv()): ...
 ```
 
   </TabItem>
@@ -889,8 +891,8 @@ async def _(foo: List[Union[str, MessageSegment]] = ShellCommandArgv()): ...
 由于 `ArgumentParser` 在解析到 `--help` 参数时也会抛出异常，这种情况下错误码为 `0` 且错误信息即为帮助信息。
 :::
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {14,22}
 from typing import Annotated
@@ -919,7 +921,7 @@ async def _(foo: Annotated[Namespace, ShellCommandArgs()]):
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {12,20}
 from nonebot import on_shell_command
@@ -952,8 +954,8 @@ async def _(foo: Namespace = ShellCommandArgs()):
 
 获取正则匹配结果的对象。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {5}
 from re import Match
@@ -964,10 +966,10 @@ async def _(foo: Annotated[Match[str], RegexMatched()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {4}
-from typing import Match
+from re import Match
 from nonebot.params import RegexMatched
 
 async def _(foo: Match[str] = RegexMatched()): ...
@@ -980,8 +982,8 @@ async def _(foo: Match[str] = RegexMatched()): ...
 
 获取正则匹配结果的文本。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Annotated
@@ -991,7 +993,7 @@ async def _(foo: Annotated[str, RegexStr()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {3}
 from nonebot.params import RegexStr
@@ -1006,8 +1008,8 @@ async def _(foo: str = RegexStr()): ...
 
 获取正则匹配结果的 group 元组。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Any, Annotated
@@ -1017,13 +1019,13 @@ async def _(foo: Annotated[tuple[Any, ...], RegexGroup()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {4}
-from typing import Tuple, Any
+from typing import Any
 from nonebot.params import RegexGroup
 
-async def _(foo: Tuple[Any, ...] = RegexGroup()): ...
+async def _(foo: tuple[Any, ...] = RegexGroup()): ...
 ```
 
   </TabItem>
@@ -1033,8 +1035,8 @@ async def _(foo: Tuple[Any, ...] = RegexGroup()): ...
 
 获取正则匹配结果的 group 字典。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Any, Annotated
@@ -1044,13 +1046,13 @@ async def _(foo: Annotated[dict[str, Any], RegexDict()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {4}
-from typing import Any, Dict
+from typing import Any
 from nonebot.params import RegexDict
 
-async def _(foo: Dict[str, Any] = RegexDict()): ...
+async def _(foo: dict[str, Any] = RegexDict()): ...
 ```
 
   </TabItem>
@@ -1060,8 +1062,8 @@ async def _(foo: Dict[str, Any] = RegexDict()): ...
 
 获取触发响应器的消息前缀字符串。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Annotated
@@ -1071,7 +1073,7 @@ async def _(foo: Annotated[str, Startswith()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {3}
 from nonebot.params import Startswith
@@ -1086,8 +1088,8 @@ async def _(foo: str = Startswith()): ...
 
 获取触发响应器的消息后缀字符串。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Annotated
@@ -1097,7 +1099,7 @@ async def _(foo: Annotated[str, Endswith()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {3}
 from nonebot.params import Endswith
@@ -1112,8 +1114,8 @@ async def _(foo: str = Endswith()): ...
 
 获取触发响应器的消息字符串。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Annotated
@@ -1123,7 +1125,7 @@ async def _(foo: Annotated[str, Fullmatch()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {3}
 from nonebot.params import Fullmatch
@@ -1138,8 +1140,8 @@ async def _(foo: str = Fullmatch()): ...
 
 获取触发响应器的关键字字符串。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {4}
 from typing import Annotated
@@ -1149,7 +1151,7 @@ async def _(foo: Annotated[str, Keyword()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {3}
 from nonebot.params import Keyword
@@ -1164,8 +1166,8 @@ async def _(foo: str = Keyword()): ...
 
 获取某次 `receive` 接收的事件。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {7}
 from typing import Annotated
@@ -1178,7 +1180,7 @@ async def _(foo: Annotated[Event, Received("id")]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {5}
 from nonebot.adapters import Event
@@ -1195,8 +1197,8 @@ async def _(foo: Event = Received("id")): ...
 
 获取最近一次 `receive` 接收的事件。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {7}
 from typing import Annotated
@@ -1209,7 +1211,7 @@ async def _(foo: Annotated[Event, LastReceived()]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {5}
 from nonebot.adapters import Event
@@ -1226,8 +1228,8 @@ async def _(foo: Event = LastReceived()): ...
 
 获取某次 `got` 接收的参数。如果 `Arg` 参数留空，则使用函数的参数名作为要获取的参数。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {7,8}
 from typing import Annotated
@@ -1241,7 +1243,7 @@ async def _(foo: Annotated[Message, Arg("key")]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {5,6}
 from nonebot.params import Arg
@@ -1259,8 +1261,8 @@ async def _(foo: Message = Arg("key")): ...
 
 获取某次 `got` 接收的参数，并转换为字符串。如果 `Arg` 参数留空，则使用函数的参数名作为要获取的参数。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {6,7}
 from typing import Annotated
@@ -1273,7 +1275,7 @@ async def _(foo: Annotated[str, ArgStr("key")]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {4,5}
 from nonebot.params import ArgStr
@@ -1290,8 +1292,8 @@ async def _(foo: str = ArgStr("key")): ...
 
 获取某次 `got` 接收的参数的纯文本部分。如果 `Arg` 参数留空，则使用函数的参数名作为要获取的参数。
 
-<Tabs groupId="python">
-  <TabItem value="3.9" label="Python 3.9+" default>
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
 
 ```python {6,7}
 from typing import Annotated
@@ -1304,7 +1306,7 @@ async def _(foo: Annotated[str, ArgPlainText("key")]): ...
 ```
 
   </TabItem>
-  <TabItem value="3.8" label="Python 3.8+">
+  <TabItem value="no-annotated" label="Without Annotated">
 
 ```python {4,5}
 from nonebot.params import ArgPlainText

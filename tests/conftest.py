@@ -1,7 +1,8 @@
 import os
 import threading
 from pathlib import Path
-from typing import TYPE_CHECKING, Set, Generator
+from typing import TYPE_CHECKING
+from collections.abc import Generator
 
 import pytest
 from nonebug import NONEBOT_INIT_KWARGS
@@ -38,13 +39,13 @@ def load_driver(request: pytest.FixtureRequest) -> Driver:
 
 
 @pytest.fixture(scope="session", autouse=True)
-def load_plugin(nonebug_init: None) -> Set["Plugin"]:
+def load_plugin(nonebug_init: None) -> set["Plugin"]:
     # preload global plugins
     return nonebot.load_plugins(str(Path(__file__).parent / "plugins"))
 
 
 @pytest.fixture(scope="session", autouse=True)
-def load_builtin_plugin(nonebug_init: None) -> Set["Plugin"]:
+def load_builtin_plugin(nonebug_init: None) -> set["Plugin"]:
     # preload builtin plugins
     return nonebot.load_builtin_plugins("echo", "single_session")
 

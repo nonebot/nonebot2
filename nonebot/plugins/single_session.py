@@ -1,4 +1,4 @@
-from typing import Dict, AsyncGenerator
+from collections.abc import AsyncGenerator
 
 from nonebot.adapters import Event
 from nonebot.params import Depends
@@ -15,7 +15,7 @@ __plugin_meta__ = PluginMetadata(
     supported_adapters=None,
 )
 
-_running_matcher: Dict[str, int] = {}
+_running_matcher: dict[str, int] = {}
 
 
 async def matcher_mutex(event: Event) -> AsyncGenerator[bool, None]:

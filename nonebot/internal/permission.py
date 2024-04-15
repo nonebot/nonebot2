@@ -1,7 +1,7 @@
 import asyncio
 from typing_extensions import Self
 from contextlib import AsyncExitStack
-from typing import Set, List, Type, Tuple, Union, ClassVar, NoReturn, Optional
+from typing import Union, ClassVar, NoReturn, Optional
 
 from nonebot.dependencies import Dependent
 from nonebot.utils import run_coro_with_catch
@@ -30,7 +30,7 @@ class Permission:
 
     __slots__ = ("checkers",)
 
-    HANDLER_PARAM_TYPES: ClassVar[List[Type[Param]]] = [
+    HANDLER_PARAM_TYPES: ClassVar[list[type[Param]]] = [
         DependParam,
         BotParam,
         EventParam,
@@ -38,7 +38,7 @@ class Permission:
     ]
 
     def __init__(self, *checkers: Union[T_PermissionChecker, Dependent[bool]]) -> None:
-        self.checkers: Set[Dependent[bool]] = {
+        self.checkers: set[Dependent[bool]] = {
             (
                 checker
                 if isinstance(checker, Dependent)
@@ -122,7 +122,7 @@ class User:
     __slots__ = ("users", "perm")
 
     def __init__(
-        self, users: Tuple[str, ...], perm: Optional[Permission] = None
+        self, users: tuple[str, ...], perm: Optional[Permission] = None
     ) -> None:
         self.users = users
         self.perm = perm

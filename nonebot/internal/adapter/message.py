@@ -1,17 +1,14 @@
 import abc
 from copy import deepcopy
 from typing_extensions import Self
+from collections.abc import Iterable
 from dataclasses import field, asdict, dataclass
-from typing import (
+from typing import (  # noqa: UP035
     Any,
-    Dict,
-    List,
     Type,
-    Tuple,
     Union,
     Generic,
     TypeVar,
-    Iterable,
     Optional,
     SupportsIndex,
     overload,
@@ -32,12 +29,12 @@ class MessageSegment(abc.ABC, Generic[TM]):
 
     type: str
     """消息段类型"""
-    data: Dict[str, Any] = field(default_factory=dict)
+    data: dict[str, Any] = field(default_factory=dict)
     """消息段数据"""
 
     @classmethod
     @abc.abstractmethod
-    def get_message_class(cls) -> Type[TM]:
+    def get_message_class(cls) -> Type[TM]:  # noqa: UP006
         """获取消息数组类型"""
         raise NotImplementedError
 
@@ -49,7 +46,9 @@ class MessageSegment(abc.ABC, Generic[TM]):
     def __len__(self) -> int:
         return len(str(self))
 
-    def __ne__(self, other: Self) -> bool:
+    def __ne__(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, other: Self
+    ) -> bool:
         return not self == other
 
     def __add__(self: TMS, other: Union[str, TMS, Iterable[TMS]]) -> TM:
@@ -101,7 +100,7 @@ class MessageSegment(abc.ABC, Generic[TM]):
 
 
 @custom_validation
-class Message(List[TMS], abc.ABC):
+class Message(list[TMS], abc.ABC):
     """消息序列
 
     参数:
@@ -142,7 +141,7 @@ class Message(List[TMS], abc.ABC):
 
     @classmethod
     @abc.abstractmethod
-    def get_segment_class(cls) -> Type[TMS]:
+    def get_segment_class(cls) -> type[TMS]:
         """获取消息段类型"""
         raise NotImplementedError
 
@@ -177,7 +176,9 @@ class Message(List[TMS], abc.ABC):
         """构造消息数组"""
         raise NotImplementedError
 
-    def __add__(self, other: Union[str, TMS, Iterable[TMS]]) -> Self:
+    def __add__(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, other: Union[str, TMS, Iterable[TMS]]
+    ) -> Self:
         result = self.copy()
         result += other
         return result
@@ -209,7 +210,7 @@ class Message(List[TMS], abc.ABC):
         """
 
     @overload
-    def __getitem__(self, args: Tuple[str, int]) -> TMS:
+    def __getitem__(self, args: tuple[str, int]) -> TMS:
         """索引指定类型的消息段
 
         参数:
@@ -220,7 +221,7 @@ class Message(List[TMS], abc.ABC):
         """
 
     @overload
-    def __getitem__(self, args: Tuple[str, slice]) -> Self:
+    def __getitem__(self, args: tuple[str, slice]) -> Self:
         """切片指定类型的消息段
 
         参数:
@@ -252,12 +253,12 @@ class Message(List[TMS], abc.ABC):
             消息切片 `args`
         """
 
-    def __getitem__(
+    def __getitem__(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         args: Union[
             str,
-            Tuple[str, int],
-            Tuple[str, slice],
+            tuple[str, int],
+            tuple[str, slice],
             int,
             slice,
         ],
@@ -276,7 +277,9 @@ class Message(List[TMS], abc.ABC):
         else:
             raise ValueError("Incorrect arguments to slice")  # pragma: no cover
 
-    def __contains__(self, value: Union[TMS, str]) -> bool:
+    def __contains__(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, value: Union[TMS, str]
+    ) -> bool:
         """检查消息段是否存在
 
         参数:
@@ -359,7 +362,9 @@ class Message(List[TMS], abc.ABC):
             return all(seg.type == value for seg in self)
         return all(seg == value for seg in self)
 
-    def append(self, obj: Union[str, TMS]) -> Self:
+    def append(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, obj: Union[str, TMS]
+    ) -> Self:
         """添加一个消息段到消息数组末尾。
 
         参数:
@@ -373,7 +378,9 @@ class Message(List[TMS], abc.ABC):
             raise ValueError(f"Unexpected type: {type(obj)} {obj}")  # pragma: no cover
         return self
 
-    def extend(self, obj: Union[Self, Iterable[TMS]]) -> Self:
+    def extend(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, obj: Union[Self, Iterable[TMS]]
+    ) -> Self:
         """拼接一个消息数组或多个消息段到消息数组末尾。
 
         参数:

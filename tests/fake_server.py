@@ -1,7 +1,7 @@
 import json
 import base64
 import socket
-from typing import Dict, List, Union, TypeVar
+from typing import Union, TypeVar
 
 from wsproto.events import Ping
 from werkzeug import Request, Response
@@ -31,7 +31,7 @@ def json_safe(string, content_type="application/octet-stream") -> str:
         ).decode("utf-8")
 
 
-def flattern(d: "MultiDict[K, V]") -> Dict[K, Union[V, List[V]]]:
+def flattern(d: "MultiDict[K, V]") -> dict[K, Union[V, list[V]]]:
     return {k: v[0] if len(v) == 1 else v for k, v in d.to_dict(flat=False).items()}
 
 

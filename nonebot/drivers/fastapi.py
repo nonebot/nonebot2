@@ -19,7 +19,7 @@ import logging
 import contextlib
 from functools import wraps
 from typing_extensions import override
-from typing import Any, Dict, List, Tuple, Union, Optional
+from typing import Any, Union, Optional
 
 from pydantic import BaseModel
 
@@ -72,15 +72,15 @@ class Config(BaseModel):
     """是否包含适配器路由的 schema，默认为 `True`"""
     fastapi_reload: bool = False
     """开启/关闭冷重载"""
-    fastapi_reload_dirs: Optional[List[str]] = None
+    fastapi_reload_dirs: Optional[list[str]] = None
     """重载监控文件夹列表，默认为 uvicorn 默认值"""
     fastapi_reload_delay: float = 0.25
     """重载延迟，默认为 uvicorn 默认值"""
-    fastapi_reload_includes: Optional[List[str]] = None
+    fastapi_reload_includes: Optional[list[str]] = None
     """要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
-    fastapi_reload_excludes: Optional[List[str]] = None
+    fastapi_reload_excludes: Optional[list[str]] = None
     """不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
-    fastapi_extra: Dict[str, Any] = {}
+    fastapi_extra: dict[str, Any] = {}
     """传递给 `FastAPI` 的其他参数。"""
 
 
@@ -161,7 +161,7 @@ class Driver(BaseDriver, ASGIMixin):
         self,
         host: Optional[str] = None,
         port: Optional[int] = None,
-        *,
+        *args,
         app: Optional[str] = None,
         **kwargs,
     ):
@@ -206,7 +206,7 @@ class Driver(BaseDriver, ASGIMixin):
             json = await request.json()
 
         data: Optional[dict] = None
-        files: Optional[List[Tuple[str, FileTypes]]] = None
+        files: Optional[list[tuple[str, FileTypes]]] = None
         with contextlib.suppress(Exception):
             form = await request.form()
             data = {}

@@ -1,6 +1,6 @@
 import re
-import sys
-from typing import Match, Tuple, Union, Optional
+from re import Match
+from typing import Union, Optional
 
 import pytest
 from nonebug import App
@@ -163,7 +163,7 @@ async def test_trie(app: App):
     ],
 )
 async def test_startswith(
-    msg: Union[str, Tuple[str, ...]],
+    msg: Union[str, tuple[str, ...]],
     ignorecase: bool,
     type: str,
     text: Optional[str],
@@ -203,7 +203,7 @@ async def test_startswith(
     ],
 )
 async def test_endswith(
-    msg: Union[str, Tuple[str, ...]],
+    msg: Union[str, tuple[str, ...]],
     ignorecase: bool,
     type: str,
     text: Optional[str],
@@ -243,7 +243,7 @@ async def test_endswith(
     ],
 )
 async def test_fullmatch(
-    msg: Union[str, Tuple[str, ...]],
+    msg: Union[str, tuple[str, ...]],
     ignorecase: bool,
     type: str,
     text: Optional[str],
@@ -279,7 +279,7 @@ async def test_fullmatch(
     ],
 )
 async def test_keyword(
-    kws: Tuple[str, ...],
+    kws: tuple[str, ...],
     type: str,
     text: Optional[str],
     expected: bool,
@@ -323,9 +323,9 @@ async def test_keyword(
     ],
 )
 async def test_command(
-    cmds: Tuple[Tuple[str, ...]],
+    cmds: tuple[tuple[str, ...]],
     force_whitespace: Optional[Union[str, bool]],
-    cmd: Tuple[str, ...],
+    cmd: tuple[str, ...],
     whitespace: Optional[str],
     arg_text: Optional[str],
     expected: bool,
@@ -435,21 +435,20 @@ async def test_shell_command():
     assert state[SHELL_ARGV] == ["-a", MessageSegment.image("test")]
     assert state[SHELL_ARGS] == Namespace(a=MessageSegment.image("test"))
 
-    if sys.version_info >= (3, 9):
-        parser = ArgumentParser("test", exit_on_error=False)
-        parser.add_argument("-a", required=True)
+    parser = ArgumentParser("test", exit_on_error=False)
+    parser.add_argument("-a", required=True)
 
-        test_not_exit = shell_command(CMD, parser=parser)
-        dependent = next(iter(test_not_exit.checkers))
-        checker = dependent.call
-        assert isinstance(checker, ShellCommandRule)
-        message = Message()
-        event = make_fake_event(_message=message)()
-        state = {PREFIX_KEY: {CMD_KEY: CMD, CMD_ARG_KEY: message}}
-        assert await dependent(event=event, state=state)
-        assert state[SHELL_ARGV] == []
-        assert isinstance(state[SHELL_ARGS], ParserExit)
-        assert state[SHELL_ARGS].status != 0
+    test_not_exit = shell_command(CMD, parser=parser)
+    dependent = next(iter(test_not_exit.checkers))
+    checker = dependent.call
+    assert isinstance(checker, ShellCommandRule)
+    message = Message()
+    event = make_fake_event(_message=message)()
+    state = {PREFIX_KEY: {CMD_KEY: CMD, CMD_ARG_KEY: message}}
+    assert await dependent(event=event, state=state)
+    assert state[SHELL_ARGV] == []
+    assert isinstance(state[SHELL_ARGS], ParserExit)
+    assert state[SHELL_ARGS].status != 0
 
 
 @pytest.mark.asyncio

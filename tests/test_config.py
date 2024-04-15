@@ -1,9 +1,10 @@
-from typing import List, Union, Optional
+from typing import TYPE_CHECKING, Union, Optional
 
 import pytest
 from pydantic import Field, BaseModel
 
-from nonebot.config import DOTENV_TYPE, BaseSettings, SettingsError
+from nonebot.compat import PYDANTIC_V2
+from nonebot.config import DOTENV_TYPE, BaseSettings, SettingsError, SettingsConfig
 
 
 class Simple(BaseModel):
@@ -14,24 +15,35 @@ class Simple(BaseModel):
 
 
 class Example(BaseSettings):
-    _env_file: Optional[DOTENV_TYPE] = ".env", ".env.example"
-    _env_nested_delimiter: Optional[str] = "__"
+    if TYPE_CHECKING:
+        _env_file: Optional[DOTENV_TYPE] = ".env", ".env.example"
+        _env_nested_delimiter: Optional[str] = "__"
+
+    if PYDANTIC_V2:
+        model_config = SettingsConfig(
+            env_file=(".env", ".env.example"), env_nested_delimiter="__"
+        )
+    else:
+
+        class Config(SettingsConfig):
+            env_file = ".env", ".env.example"
+            env_nested_delimiter = "__"
 
     simple: str = ""
-    complex: List[int] = Field(default=[1])
-    complex_none: Optional[List[int]] = None
-    complex_union: Union[int, List[int]] = 1
+    complex: list[int] = Field(default=[1])
+    complex_none: Optional[list[int]] = None
+    complex_union: Union[int, list[int]] = 1
     nested: Simple = Simple()
     nested_inner: Simple = Simple()
 
-    class Config:
-        env_file = ".env", ".env.example"
-        env_nested_delimiter = "__"
-
 
 class ExampleWithoutDelimiter(Example):
-    class Config:
-        env_nested_delimiter = None
+    if PYDANTIC_V2:
+        model_config = SettingsConfig(env_nested_delimiter=None)
+    else:
+
+        class Config(SettingsConfig):
+            env_nested_delimiter = None
 
 
 @pytest.mark.asyncio

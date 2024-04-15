@@ -1,7 +1,7 @@
 import abc
 import asyncio
 from functools import partial
-from typing import TYPE_CHECKING, Any, Set, Union, ClassVar, Optional, Protocol
+from typing import TYPE_CHECKING, Any, Union, ClassVar, Optional, Protocol
 
 from nonebot.log import logger
 from nonebot.config import Config
@@ -27,9 +27,9 @@ class Bot(abc.ABC):
         self_id: 机器人 ID
     """
 
-    _calling_api_hook: ClassVar[Set[T_CallingAPIHook]] = set()
+    _calling_api_hook: ClassVar[set[T_CallingAPIHook]] = set()
     """call_api 时执行的函数"""
-    _called_api_hook: ClassVar[Set[T_CalledAPIHook]] = set()
+    _called_api_hook: ClassVar[set[T_CalledAPIHook]] = set()
     """call_api 后执行的函数"""
 
     def __init__(self, adapter: "Adapter", self_id: str):

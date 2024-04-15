@@ -45,7 +45,7 @@ FrontMatter:
 
 import os
 from importlib.metadata import version
-from typing import Any, Dict, Type, Union, TypeVar, Optional, overload
+from typing import Any, Union, TypeVar, Optional, overload
 
 import loguru
 
@@ -100,7 +100,7 @@ def get_adapter(name: str) -> Adapter:
 
 
 @overload
-def get_adapter(name: Type[A]) -> A:
+def get_adapter(name: type[A]) -> A:
     """
     参数:
         name: 适配器类型
@@ -110,7 +110,7 @@ def get_adapter(name: Type[A]) -> A:
     """
 
 
-def get_adapter(name: Union[str, Type[Adapter]]) -> Adapter:
+def get_adapter(name: Union[str, type[Adapter]]) -> Adapter:
     """获取已注册的 {ref}`nonebot.adapters.Adapter` 实例。
 
     异常:
@@ -131,7 +131,7 @@ def get_adapter(name: Union[str, Type[Adapter]]) -> Adapter:
     return adapters[target]
 
 
-def get_adapters() -> Dict[str, Adapter]:
+def get_adapters() -> dict[str, Adapter]:
     """获取所有已注册的 {ref}`nonebot.adapters.Adapter` 实例。
 
     返回:
@@ -230,7 +230,7 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
     raise ValueError("There are no bots to get.")
 
 
-def get_bots() -> Dict[str, Bot]:
+def get_bots() -> dict[str, Bot]:
     """获取所有连接到 NoneBot 的 {ref}`nonebot.adapters.Bot` 对象。
 
     返回:
@@ -249,7 +249,7 @@ def get_bots() -> Dict[str, Bot]:
     return get_driver().bots
 
 
-def _resolve_combine_expr(obj_str: str) -> Type[Driver]:
+def _resolve_combine_expr(obj_str: str) -> type[Driver]:
     drivers = obj_str.split("+")
     DriverClass = resolve_dot_notation(
         drivers[0], "Driver", default_prefix="nonebot.drivers."

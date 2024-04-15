@@ -5,7 +5,7 @@ FrontMatter:
 """
 
 import inspect
-from typing import Any, Dict, Callable, ForwardRef
+from typing import Any, Callable, ForwardRef
 
 from loguru import logger
 
@@ -31,7 +31,7 @@ def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
     return inspect.Signature(typed_params)
 
 
-def get_typed_annotation(param: inspect.Parameter, globalns: Dict[str, Any]) -> Any:
+def get_typed_annotation(param: inspect.Parameter, globalns: dict[str, Any]) -> Any:
     """获取参数的类型注解"""
 
     annotation = param.annotation

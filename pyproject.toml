@@ -25,7 +25,7 @@ include = ["nonebot/py.typed"]
 "Funding" = "https://afdian.net/@nonebot"
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 yarl = "^1.7.2"
 pygtrie = "^2.4.1"
 loguru = ">=0.6.0,<1.0.0"
@@ -71,7 +71,7 @@ filterwarnings = ["error", "ignore::DeprecationWarning"]
 
 [tool.black]
 line-length = 88
-target-version = ["py38", "py39", "py310", "py311"]
+target-version = ["py39", "py310", "py311", "py312"]
 include = '\.pyi?$'
 extend-exclude = '''
 '''
@@ -87,7 +87,7 @@ extra_standard_library = ["typing_extensions"]
 
 [tool.ruff]
 line-length = 88
-target-version = "py38"
+target-version = "py39"
 
 [tool.ruff.lint]
 select = [
@@ -117,7 +117,7 @@ fixture-parentheses = false
 mark-parentheses = false
 
 [tool.pyright]
-pythonVersion = "3.8"
+pythonVersion = "3.9"
 pythonPlatform = "All"
 defineConstant = { PYDANTIC_V2 = true }
 executionEnvironments = [
@@ -127,7 +127,7 @@ executionEnvironments = [
   { root = "./" },
 ]
 
-typeCheckingMode = "basic"
+typeCheckingMode = "standard"
 reportShadowedImports = false
 disableBytesTypePromotions = true
 

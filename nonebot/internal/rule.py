@@ -1,6 +1,6 @@
 import asyncio
 from contextlib import AsyncExitStack
-from typing import Set, List, Type, Union, ClassVar, NoReturn, Optional
+from typing import Union, ClassVar, NoReturn, Optional
 
 from nonebot.dependencies import Dependent
 from nonebot.exception import SkippedException
@@ -28,7 +28,7 @@ class Rule:
 
     __slots__ = ("checkers",)
 
-    HANDLER_PARAM_TYPES: ClassVar[List[Type[Param]]] = [
+    HANDLER_PARAM_TYPES: ClassVar[list[type[Param]]] = [
         DependParam,
         BotParam,
         EventParam,
@@ -37,7 +37,7 @@ class Rule:
     ]
 
     def __init__(self, *checkers: Union[T_RuleChecker, Dependent[bool]]) -> None:
-        self.checkers: Set[Dependent[bool]] = {
+        self.checkers: set[Dependent[bool]] = {
             (
                 checker
                 if isinstance(checker, Dependent)

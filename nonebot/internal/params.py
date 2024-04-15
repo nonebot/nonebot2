@@ -1,16 +1,15 @@
 import asyncio
 import inspect
+from typing_extensions import Self, get_args, override, get_origin
 from contextlib import AsyncExitStack, contextmanager, asynccontextmanager
-from typing_extensions import Self, Annotated, get_args, override, get_origin
 from typing import (
     TYPE_CHECKING,
     Any,
-    Type,
-    Tuple,
     Union,
     Literal,
     Callable,
     Optional,
+    Annotated,
     cast,
 )
 
@@ -126,7 +125,7 @@ class DependParam(Param):
     @classmethod
     @override
     def _check_param(
-        cls, param: inspect.Parameter, allow_types: Tuple[Type[Param], ...]
+        cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
     ) -> Optional[Self]:
         type_annotation, depends_inner = param.annotation, None
         # extract type annotation and dependency from Annotated
@@ -166,7 +165,7 @@ class DependParam(Param):
     @classmethod
     @override
     def _check_parameterless(
-        cls, value: Any, allow_types: Tuple[Type[Param], ...]
+        cls, value: Any, allow_types: tuple[type[Param], ...]
     ) -> Optional["Param"]:
         if isinstance(value, DependsInner):
             assert value.dependency, "Dependency cannot be empty"
@@ -249,7 +248,7 @@ class BotParam(Param):
     @classmethod
     @override
     def _check_param(
-        cls, param: inspect.Parameter, allow_types: Tuple[Type[Param], ...]
+        cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
     ) -> Optional[Self]:
         from nonebot.adapters import Bot
 
@@ -266,11 +265,15 @@ class BotParam(Param):
             return cls()
 
     @override
-    async def _solve(self, bot: "Bot", **kwargs: Any) -> Any:
+    async def _solve(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, bot: "Bot", **kwargs: Any
+    ) -> Any:
         return bot
 
     @override
-    async def _check(self, bot: "Bot", **kwargs: Any) -> None:
+    async def _check(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, bot: "Bot", **kwargs: Any
+    ) -> None:
         if self.checker is not None:
             check_field_type(self.checker, bot)
 
@@ -299,7 +302,7 @@ class EventParam(Param):
     @classmethod
     @override
     def _check_param(
-        cls, param: inspect.Parameter, allow_types: Tuple[Type[Param], ...]
+        cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
     ) -> Optional[Self]:
         from nonebot.adapters import Event
 
@@ -316,11 +319,15 @@ class EventParam(Param):
             return cls()
 
     @override
-    async def _solve(self, event: "Event", **kwargs: Any) -> Any:
+    async def _solve(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, event: "Event", **kwargs: Any
+    ) -> Any:
         return event
 
     @override
-    async def _check(self, event: "Event", **kwargs: Any) -> Any:
+    async def _check(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, event: "Event", **kwargs: Any
+    ) -> Any:
         if self.checker is not None:
             check_field_type(self.checker, event)
 
@@ -339,7 +346,7 @@ class StateParam(Param):
     @classmethod
     @override
     def _check_param(
-        cls, param: inspect.Parameter, allow_types: Tuple[Type[Param], ...]
+        cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
     ) -> Optional[Self]:
         # param type is T_State
         if param.annotation is T_State:
@@ -349,7 +356,9 @@ class StateParam(Param):
             return cls()
 
     @override
-    async def _solve(self, state: T_State, **kwargs: Any) -> Any:
+    async def _solve(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, state: T_State, **kwargs: Any
+    ) -> Any:
         return state
 
 
@@ -377,7 +386,7 @@ class MatcherParam(Param):
     @classmethod
     @override
     def _check_param(
-        cls, param: inspect.Parameter, allow_types: Tuple[Type[Param], ...]
+        cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
     ) -> Optional[Self]:
         from nonebot.matcher import Matcher
 
@@ -394,11 +403,15 @@ class MatcherParam(Param):
             return cls()
 
     @override
-    async def _solve(self, matcher: "Matcher", **kwargs: Any) -> Any:
+    async def _solve(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, matcher: "Matcher", **kwargs: Any
+    ) -> Any:
         return matcher
 
     @override
-    async def _check(self, matcher: "Matcher", **kwargs: Any) -> Any:
+    async def _check(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, matcher: "Matcher", **kwargs: Any
+    ) -> Any:
         if self.checker is not None:
             check_field_type(self.checker, matcher)
 
@@ -455,7 +468,7 @@ class ArgParam(Param):
     @classmethod
     @override
     def _check_param(
-        cls, param: inspect.Parameter, allow_types: Tuple[Type[Param], ...]
+        cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
     ) -> Optional[Self]:
         if isinstance(param.default, ArgInner):
             return cls(key=param.default.key or param.name, type=param.default.type)
@@ -464,7 +477,9 @@ class ArgParam(Param):
                 if isinstance(arg, ArgInner):
                     return cls(key=arg.key or param.name, type=arg.type)
 
-    async def _solve(self, matcher: "Matcher", **kwargs: Any) -> Any:
+    async def _solve(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, matcher: "Matcher", **kwargs: Any
+    ) -> Any:
         message = matcher.get_arg(self.key)
         if message is None:
             return message
@@ -490,7 +505,7 @@ class ExceptionParam(Param):
     @classmethod
     @override
     def _check_param(
-        cls, param: inspect.Parameter, allow_types: Tuple[Type[Param], ...]
+        cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
     ) -> Optional[Self]:
         # param type is Exception(s) or subclass(es) of Exception or None
         if generic_check_issubclass(param.annotation, Exception):
@@ -518,7 +533,7 @@ class DefaultParam(Param):
     @classmethod
     @override
     def _check_param(
-        cls, param: inspect.Parameter, allow_types: Tuple[Type[Param], ...]
+        cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
     ) -> Optional[Self]:
         if param.default != param.empty:
             return cls(default=param.default)
