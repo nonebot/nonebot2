@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💥 破坏性变更
+
+- Remove: 移除 Python 3.8 支持 [@yanyongyu](https://github.com/yanyongyu) ([#2641](https://github.com/nonebot/nonebot2/pull/2641))
+
 ### 🚀 新功能
 
 - Feature: 支持 HTTP 客户端会话 [@yanyongyu](https://github.com/yanyongyu) ([#2627](https://github.com/nonebot/nonebot2/pull/2627))
