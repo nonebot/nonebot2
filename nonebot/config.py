@@ -467,7 +467,9 @@ class Config(BaseSettings):
         model_config = SettingsConfig(env_file=(".env", ".env.prod"))
     else:  # pragma: pydantic-v1
 
-        class Config(SettingsConfig):
+        class Config(  # pyright: ignore[reportIncompatibleVariableOverride]
+            SettingsConfig
+        ):
             env_file = ".env", ".env.prod"
 
 

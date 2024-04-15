@@ -10,6 +10,7 @@ import json
 import asyncio
 import inspect
 import importlib
+import contextlib
 import dataclasses
 from pathlib import Path
 from collections import deque
@@ -25,6 +26,7 @@ from pydantic import BaseModel
 from nonebot.log import logger
 from nonebot.typing import (
     is_none_type,
+    type_has_args,
     origin_is_union,
     origin_is_literal,
     all_literal_values,
@@ -91,37 +93,37 @@ def generic_check_issubclass(
       则会检查其 `__bound__` 或 `__constraints__`
       是否是 class_or_tuple 中一个类型的子类或 None。
     """
-    try:
-        return issubclass(cls, class_or_tuple)
-    except TypeError:
-        origin = get_origin(cls)
-        if origin_is_union(origin):
+    if not type_has_args(cls):
+        with contextlib.suppress(TypeError):
+            return issubclass(cls, class_or_tuple)
+
+    origin = get_origin(cls)
+    if origin_is_union(origin):
+        return all(
+            is_none_type(type_) or generic_check_issubclass(type_, class_or_tuple)
+            for type_ in get_args(cls)
+        )
+    elif origin_is_literal(origin):
+        return all(
+            is_none_type(value) or isinstance(value, class_or_tuple)
+            for value in all_literal_values(cls)
+        )
+    # ensure generic List, Dict can be checked
+    elif origin:
+        # avoid class check error (typing.Final, typing.ClassVar, etc...)
+        try:
+            return issubclass(origin, class_or_tuple)
+        except TypeError:
+            return False
+    elif isinstance(cls, TypeVar):
+        if cls.__constraints__:
             return all(
                 is_none_type(type_) or generic_check_issubclass(type_, class_or_tuple)
-                for type_ in get_args(cls)
+                for type_ in cls.__constraints__
             )
-        elif origin_is_literal(origin):
-            return all(
-                is_none_type(value) or isinstance(value, class_or_tuple)
-                for value in all_literal_values(cls)
-            )
-        # ensure generic List, Dict can be checked
-        elif origin:
-            # avoid class check error (typing.Final, typing.ClassVar, etc...)
-            try:
-                return issubclass(origin, class_or_tuple)
-            except TypeError:
-                return False
-        elif isinstance(cls, TypeVar):
-            if cls.__constraints__:
-                return all(
-                    is_none_type(type_)
-                    or generic_check_issubclass(type_, class_or_tuple)
-                    for type_ in cls.__constraints__
-                )
-            elif cls.__bound__:
-                return generic_check_issubclass(cls.__bound__, class_or_tuple)
-        return False
+        elif cls.__bound__:
+            return generic_check_issubclass(cls.__bound__, class_or_tuple)
+    return False
 
 
 def type_is_complex(type_: type[Any]) -> bool:

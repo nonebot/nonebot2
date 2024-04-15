@@ -45,6 +45,18 @@ def overrides(InterfaceClass: object):
 
 if sys.version_info < (3, 10):
 
+    def type_has_args(type_: type[t.Any]) -> bool:
+        """判断类型是否有参数"""
+        return isinstance(type_, (t._GenericAlias, types.GenericAlias))  # type: ignore
+
+else:
+
+    def type_has_args(type_: type[t.Any]) -> bool:
+        return isinstance(type_, (t._GenericAlias, types.GenericAlias, types.UnionType))  # type: ignore
+
+
+if sys.version_info < (3, 10):
+
     def origin_is_union(origin: t.Optional[type[t.Any]]) -> bool:
         """判断是否是 Union 类型"""
         return origin is t.Union

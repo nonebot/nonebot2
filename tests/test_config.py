@@ -25,7 +25,9 @@ class Example(BaseSettings):
         )
     else:
 
-        class Config(SettingsConfig):
+        class Config(  # pyright: ignore[reportIncompatibleVariableOverride]
+            SettingsConfig
+        ):
             env_file = ".env", ".env.example"
             env_nested_delimiter = "__"
 
@@ -42,7 +44,9 @@ class ExampleWithoutDelimiter(Example):
         model_config = SettingsConfig(env_nested_delimiter=None)
     else:
 
-        class Config(SettingsConfig):
+        class Config(  # pyright: ignore[reportIncompatibleVariableOverride]
+            SettingsConfig
+        ):
             env_nested_delimiter = None
 
 
