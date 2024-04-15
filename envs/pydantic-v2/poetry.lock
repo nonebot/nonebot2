@@ -1245,7 +1245,7 @@ develop = false
 
 [package.dependencies]
 coverage-conditional-plugin = "^0.9.0"
-nonebug = "^0.3.0"
+nonebug = "^0.3.7"
 pytest-asyncio = "^0.23.2"
 pytest-cov = "^5.0.0"
 pytest-xdist = "^3.0.2"
@@ -1294,13 +1294,13 @@ url = "../.."
 
 [[package]]
 name = "nonebug"
-version = "0.3.6"
+version = "0.3.7"
 description = "nonebot2 test framework"
 optional = false
-python-versions = ">=3.8,<4.0"
+python-versions = "<4.0,>=3.8"
 files = [
-    {file = "nonebug-0.3.6-py3-none-any.whl", hash = "sha256:d73e850756647e341ed68e27e341cdbe3d4b79026248619a2f0b6c3744103150"},
-    {file = "nonebug-0.3.6.tar.gz", hash = "sha256:02e2f60dd6c09f5bb372cebb562fe3f3d58290497c1cdab099ef414b28c9d132"},
+    {file = "nonebug-0.3.7-py3-none-any.whl", hash = "sha256:c39f462aafe20660602a8b789a575db6c9346ab5b6f1985eb9d98b861528299a"},
+    {file = "nonebug-0.3.7.tar.gz", hash = "sha256:8a75183400681f34eafc7caa2bb6dd511c3b5660c59264f1c379a088c7ac2247"},
 ]
 
 [package.dependencies]
