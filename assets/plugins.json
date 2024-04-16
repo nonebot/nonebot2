@@ -5749,5 +5749,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nai3",
+    "project_link": "nonebot-plugin-nai3",
+    "author": "zhulinyv",
+    "tags": [
+      {
+        "label": "NovelAI",
+        "color": "#35f139"
+      }
+    ],
+    "is_official": false
   }
 ]
