@@ -5761,5 +5761,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_clovers",
+    "project_link": "nonebot-plugin-clovers",
+    "author": "KarisAya",
+    "tags": [],
+    "is_official": false
   }
 ]
