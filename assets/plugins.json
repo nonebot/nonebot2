@@ -5788,5 +5788,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_fhl",
+    "project_link": "nonebot-plugin-fhl",
+    "author": "baiqwerdvd",
+    "tags": [
+      {
+        "label": "飞花令",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
