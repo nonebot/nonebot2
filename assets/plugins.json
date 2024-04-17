@@ -5768,5 +5768,25 @@
     "author": "KarisAya",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_hx_yinying",
+    "project_link": "nonebot-plugin-hx-yinying",
+    "author": "huanxin996",
+    "tags": [
+      {
+        "label": "Chat",
+        "color": "#3b53ff"
+      },
+      {
+        "label": "幻歆！",
+        "color": "#0d7ccd"
+      },
+      {
+        "label": "银影！",
+        "color": "#2b4dae"
+      }
+    ],
+    "is_official": false
   }
 ]
