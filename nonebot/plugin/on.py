@@ -76,7 +76,7 @@ def get_matcher_module(depth: int = 1) -> Optional[ModuleType]:  # pragma: no co
     return (source := get_matcher_source(depth + 1)) and source.module
 
 
-def get_matcher_source(depth: int = 1) -> Optional[MatcherSource]:
+def get_matcher_source(depth: int = 0) -> Optional[MatcherSource]:
     """获取事件响应器定义所在源码信息。
 
     参数:
@@ -85,7 +85,14 @@ def get_matcher_source(depth: int = 1) -> Optional[MatcherSource]:
     current_frame = inspect.currentframe()
     if current_frame is None:
         return None
-    frame = inspect.getouterframes(current_frame)[depth + 1].frame
+
+    frame = current_frame
+    d = depth + 1
+    while d > 0:
+        frame = frame.f_back
+        if frame is None:
+            raise ValueError("Depth out of range")
+        d -= 1
 
     module_name = (module := inspect.getmodule(frame)) and module.__name__
 
