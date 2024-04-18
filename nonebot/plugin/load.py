@@ -207,11 +207,11 @@ def inherit_supported_adapters(*names: str) -> Optional[set[str]]:
         if meta is None:
             raise ValueError(f'Plugin "{name}" has no metadata!')
 
-        if not (raw := meta.supported_adapters):
+        if (raw := meta.supported_adapters) is None:
             continue
 
         support = {
-            f"nonebot.adapters.{adapter[1:]}" if name.startswith("~") else adapter
+            f"nonebot.adapters.{adapter[1:]}" if adapter.startswith("~") else adapter
             for adapter in raw
         }
 
