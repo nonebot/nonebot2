@@ -157,46 +157,73 @@ async def test_inherit_supported_adapters_not_found():
         inherit_supported_adapters("export")
 
 
-inherit_map = {
-    ("echo",): None,
-    ("metadata",): {
-        "nonebot.adapters.onebot.v11",
-        "plugins.metadata:FakeAdapter",
-    },
-    ("metadata_2",): {
-        "nonebot.adapters.onebot.v11",
-        "nonebot.adapters.onebot.v12",
-    },
-    ("metadata_3",): {
-        "nonebot.adapters.onebot.v11",
-        "nonebot.adapters.onebot.v12",
-        "nonebot.adapters.qq",
-    },
-    ("metadata", "metadata_2"): {
-        "nonebot.adapters.onebot.v11",
-    },
-    ("metadata", "metadata_3"): {
-        "nonebot.adapters.onebot.v11",
-    },
-    ("metadata_2", "metadata_3"): {
-        "nonebot.adapters.onebot.v11",
-        "nonebot.adapters.onebot.v12",
-    },
-    ("metadata", "metadata_2", "metadata_3"): {
-        "nonebot.adapters.onebot.v11",
-    },
-    ("metadata", "echo"): {
-        "nonebot.adapters.onebot.v11",
-        "plugins.metadata:FakeAdapter",
-    },
-    ("metadata", "metadata_2", "echo"): {
-        "nonebot.adapters.onebot.v11",
-    },
-}
-
-
 @pytest.mark.asyncio
-@pytest.mark.parametrize(("inherit_plugins", "expected"), inherit_map.items())
+@pytest.mark.parametrize(
+    ("inherit_plugins", "expected"),
+    [
+        (("echo",), None),
+        (
+            ("metadata",),
+            {
+                "nonebot.adapters.onebot.v11",
+                "plugins.metadata:FakeAdapter",
+            },
+        ),
+        (
+            ("metadata_2",),
+            {
+                "nonebot.adapters.onebot.v11",
+                "nonebot.adapters.onebot.v12",
+            },
+        ),
+        (
+            ("metadata_3",),
+            {
+                "nonebot.adapters.onebot.v11",
+                "nonebot.adapters.onebot.v12",
+                "nonebot.adapters.qq",
+            },
+        ),
+        (
+            ("metadata", "metadata_2"),
+            {
+                "nonebot.adapters.onebot.v11",
+            },
+        ),
+        (
+            ("metadata", "metadata_3"),
+            {
+                "nonebot.adapters.onebot.v11",
+            },
+        ),
+        (
+            ("metadata_2", "metadata_3"),
+            {
+                "nonebot.adapters.onebot.v11",
+                "nonebot.adapters.onebot.v12",
+            },
+        ),
+        (
+            ("metadata", "metadata_2", "metadata_3"),
+            {
+                "nonebot.adapters.onebot.v11",
+            },
+        ),
+        (
+            ("metadata", "echo"),
+            {
+                "nonebot.adapters.onebot.v11",
+                "plugins.metadata:FakeAdapter",
+            },
+        ),
+        (
+            ("metadata", "metadata_2", "echo"),
+            {
+                "nonebot.adapters.onebot.v11",
+            },
+        ),
+    ],
+)
 async def test_inherit_supported_adapters_combine(
     inherit_plugins: tuple[str], expected: set[str]
 ):
