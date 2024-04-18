@@ -123,6 +123,7 @@ class Markdown(Custom):
 def markdown(seg: QQMessageSegment) -> Markdown:
     return Markdown("markdown", content=seg.data["content"])
 ```
+
 :::
 
 ## 通用消息序列
@@ -449,7 +450,6 @@ async def send(
 
 实际上，`UniMessage` 同时提供了获取消息事件 id 与消息发送对象的方法:
 
-
 <Tabs groupId="get_unimsg">
 <TabItem value="depend" label="使用依赖注入">
 
@@ -513,6 +513,7 @@ class Target:
 ```
 
 其构造时需要如下参数：
+
 - `id` 为目标id；若为群聊则为 group_id 或者 channel_id，若为私聊则为user_id
 - `parent_id` 为父级id；若为频道则为 guild_id，其他情况下可能为空字符串（例如 Feishu 下可作为部门 id）
 - `channel` 为是否为频道，仅当目标平台符合频道概念时

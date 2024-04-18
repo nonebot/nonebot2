@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 更新最佳实践的 Alconna 部分 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2656](https://github.com/nonebot/nonebot2/pull/2656))
 - Docs: 添加 RocketChat 适配器说明 [@yanyongyu](https://github.com/yanyongyu) ([#2640](https://github.com/nonebot/nonebot2/pull/2640))
 - Docs: 商店卡片样式调整 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2633](https://github.com/nonebot/nonebot2/pull/2633))
 - Docs: 为商店插件卡片添加更多展示内容 [@AzideCupric](https://github.com/AzideCupric) ([#2626](https://github.com/nonebot/nonebot2/pull/2626))
