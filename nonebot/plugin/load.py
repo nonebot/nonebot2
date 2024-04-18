@@ -199,9 +199,6 @@ def inherit_supported_adapters(*names: str) -> Optional[set[str]]:
     """
     final_supported: Optional[set[str]] = None
 
-    def adapter_name_expand(name: str) -> str:
-        return f"nonebot.adapters.{name[1:]}" if name.startswith("~") else name
-
     for name in names:
         plugin = get_plugin(_module_name_to_plugin_name(name))
         if plugin is None:
@@ -213,7 +210,7 @@ def inherit_supported_adapters(*names: str) -> Optional[set[str]]:
         if not (raw := meta.supported_adapters):
             continue
 
-        support = {adapter_name_expand(adapter) for adapter in raw}
+        support = {f"nonebot.adapters.{adapter[1:]}" if name.startswith("~") else adapter for adapter in raw}
 
         final_supported = (
             support if final_supported is None else (final_supported & support)
