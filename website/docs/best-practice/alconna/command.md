@@ -96,7 +96,7 @@ Bracket Header 类似 python 里的 f-string 写法，通过 "{}" 声明匹配�
 
 `key` 的作用是用以标记解析出来的参数并存放于 **Arparma** 中，以方便用户调用。
 
-其有三种为 Args 注解的标识符:  `?`、`/`、 `!`, 标识符与 key 之间建议以 `;` 分隔：
+其有三种为 Args 注解的标识符: `?`、`/`、 `!`, 标识符与 key 之间建议以 `;` 分隔：
 
 - `!` 标识符表示该处传入的参数应**不是**规定的类型，或**不在**指定的值中。
 - `?` 标识符表示该参数为**可选**参数，会在无参数匹配时跳过。
@@ -192,7 +192,7 @@ args = Args["foo", BasePattern("@\d+")]
 
 #### MultiVar 与 KeyWordVar
 
-`MultiVar` 是一个特殊的标注，用于告知解析器该参数可以接受多个值，类似于函数中的 `*args`，其构造方法形如 `MultiVar(str)`。 
+`MultiVar` 是一个特殊的标注，用于告知解析器该参数可以接受多个值，类似于函数中的 `*args`，其构造方法形如 `MultiVar(str)`。
 
 同样的还有 `KeyWordVar`，类似于函数中的 `*, name: type`，其构造方法形如 `KeyWordVar(str)`，用于告知解析器该参数为一个 keyword-only 参数。
 
@@ -213,6 +213,7 @@ args = Args["foo", BasePattern("@\d+")]
 默认情况下 (即不声明) `default` 的值为特殊值 `Empty`。这也意味着你可以将默认值设置为 `None` 表示默认值为空值。
 
 `Field` 构造需要的参数说明如下：
+
 - default: 参数单元的默认值
 - alias: 参数单元默认值的别名
 - completion: 参数单元的补全说明生成函数
@@ -277,6 +278,7 @@ opt2 = Option("--foo", default=OptionResult(value=False, args={"bar": 1}))
 `Arparma` 有如下属性：
 
 - 调试类
+
   - matched: 是否匹配成功
   - error_data: 解析失败时剩余的数据
   - error_info: 解析失败时的异常内容
@@ -306,6 +308,7 @@ opt2 = Option("--foo", default=OptionResult(value=False, args={"bar": 1}))
 ## 元数据(CommandMeta)
 
 `Alconna` 的元数据相当于其配置，拥有以下条目：
+
 - `description`: 命令的描述
 - `usage`: 命令的用法
 - `example`: 命令的使用样例
@@ -336,6 +339,7 @@ alc = Alconna(..., meta=CommandMeta("foo", example="bar"))
 `Alconna` 默认使用 "Alconna" 命名空间。
 
 命名空间有以下几个属性：
+
 - name: 命名空间名称
 - prefixes: 默认前缀配置
 - separators: 默认分隔符配置
@@ -490,7 +494,7 @@ alc.parse("eval --shortcut list")
 
 ## 紧凑命令
 
-`Alconna`,  `Option` 与 `Subcommand` 可以设置 `compact=True` 使得解析命令时允许名称与后随参数之间没有分隔：
+`Alconna`, `Option` 与 `Subcommand` 可以设置 `compact=True` 使得解析命令时允许名称与后随参数之间没有分隔：
 
 ```python
 from arclet.alconna import Alconna, Option, CommandMeta, Args
@@ -631,5 +635,6 @@ alc.parse("test $(bar)", {"bar": 123})
 ```
 
 context_style 的值分两种：
+
 - `"bracket"`: 插值格式为 `{...}`，例如 `{foo}`
 - `"parentheses"`: 插值格式为 `$(...)`，例如 `$(bar)`
