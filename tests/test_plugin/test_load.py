@@ -149,32 +149,55 @@ async def test_plugin_metadata():
 
 
 @pytest.mark.asyncio
-async def test_inherit_supported_adapters():
+async def test_inherit_supported_adapters_not_found():
     with pytest.raises(RuntimeError):
         inherit_supported_adapters("some_plugin_not_exist")
 
     with pytest.raises(ValueError, match="has no metadata!"):
         inherit_supported_adapters("export")
 
-    echo = nonebot.get_plugin("echo")
-    assert echo
-    assert echo.metadata
-    assert inherit_supported_adapters("echo") is None
 
-    plugin_1 = nonebot.get_plugin("metadata")
-    assert plugin_1
-    assert plugin_1.metadata
-    assert inherit_supported_adapters("metadata") == {
+inherit_map = {
+    ("echo",): None,
+    ("metadata",): {
         "nonebot.adapters.onebot.v11",
         "plugins.metadata:FakeAdapter",
-    }
+    },
+    ("metadata_2",): {
+        "nonebot.adapters.onebot.v11",
+        "nonebot.adapters.onebot.v12",
+    },
+    ("metadata_3",): {
+        "nonebot.adapters.onebot.v11",
+        "nonebot.adapters.onebot.v12",
+        "nonebot.adapters.qq",
+    },
+    ("metadata", "metadata_2"): {
+        "nonebot.adapters.onebot.v11",
+    },
+    ("metadata", "metadata_3"): {
+        "nonebot.adapters.onebot.v11",
+    },
+    ("metadata_2", "metadata_3"): {
+        "nonebot.adapters.onebot.v11",
+        "nonebot.adapters.onebot.v12",
+    },
+    ("metadata", "metadata_2", "metadata_3"): {
+        "nonebot.adapters.onebot.v11",
+    },
+    ("metadata", "echo"): {
+        "nonebot.adapters.onebot.v11",
+        "plugins.metadata:FakeAdapter",
+    },
+    ("metadata", "metadata_2", "echo"): {
+        "nonebot.adapters.onebot.v11",
+    },
+}
 
-    plugin_2 = nonebot.get_plugin("metadata_2")
-    assert plugin_2
-    assert plugin_2.metadata
-    assert inherit_supported_adapters("metadata", "metadata_2") == {
-        "nonebot.adapters.onebot.v11"
-    }
-    assert inherit_supported_adapters("metadata", "echo", "metadata_2") == {
-        "nonebot.adapters.onebot.v11"
-    }
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(("inherit_plugins", "expected"), inherit_map.items())
+async def test_inherit_supported_adapters_combine(
+    inherit_plugins: tuple[str], expected: set[str]
+):
+    assert inherit_supported_adapters(*inherit_plugins) == expected
