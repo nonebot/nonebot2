@@ -12,8 +12,8 @@ import TabItem from "@theme/TabItem";
 
 ## 通用消息段
 
-适配器下的消息段标注会匹配适配器特定的 `MessageSegment`， 而通用消息段与适配器消息段的区别在于：  
-通用消息段会匹配多个适配器中相似类型的消息段，并返回 `uniseg` 模块中定义的 [`Segment` 模型](https://nonebot.dev/docs/next/best-practice/alconna/utils#%E9%80%9A%E7%94%A8%E6%B6%88%E6%81%AF%E6%AE%B5), 以达到**跨平台接收消息**的作用。
+适配器下的消息段标注会匹配适配器特定的 `MessageSegment`， 而通用消息段与适配器消息段的区别在于：
+通用消息段会匹配多个适配器中相似类型的消息段，并返回 `uniseg` 模块中定义的 [`Segment` 模型](https://nonebot.dev/docs/next/best-practice/alconna/utils#%E9%80%9A%E7%94%A8%E6%B6%88%E6%81%AF%E6%AE%B5), 以达到**跨平台接收消息**的作用。
 
 `nonebot-plugin-alconna.uniseg` 提供了类似 `MessageSegment` 的通用消息段，并可在 `Alconna` 下直接标注使用：
 
@@ -24,15 +24,17 @@ class Segment:
 class Text(Segment):
     """Text对象, 表示一类文本元素"""
     text: str
-    style: Optional[str]
+    styles: Dict[Tuple[int, int], List[str]]
 
 class At(Segment):
     """At对象, 表示一类提醒某用户的元素"""
-    type: Literal["user", "role", "channel"]
+    flag: Literal["user", "role", "channel"]
     target: str
+    display: Optional[str]
 
 class AtAll(Segment):
     """AtAll对象, 表示一类提醒所有人的元素"""
+    here: bool
 
 class Emoji(Segment):
     """Emoji对象, 表示一类表情元素"""
@@ -42,17 +44,23 @@ class Emoji(Segment):
 class Media(Segment):
     url: Optional[str]
     id: Optional[str]
-    path: Optional[str]
-    raw: Optional[bytes]
+    path: Optional[Union[str, Path]]
+    raw: Optional[Union[bytes, BytesIO]]
+    mimetype: Optional[str]
+    name: str
+
+    to_url: ClassVar[Optional[MediaToUrl]]
 
 class Image(Media):
     """Image对象, 表示一类图片元素"""
 
 class Audio(Media):
     """Audio对象, 表示一类音频元素"""
+    duration: Optional[int]
 
 class Voice(Media):
     """Voice对象, 表示一类语音元素"""
+    duration: Optional[int]
 
 class Video(Media):
     """Video对象, 表示一类视频元素"""
@@ -75,15 +83,47 @@ class Reference(Segment):
     """此处不一定是消息ID，可能是其他ID，如消息序号等"""
     content: Optional[Union[Message, str, List[Union[RefNode, CustomNode]]]]
 
-class Card(Segment):
-	type: Literal["xml", "json"]
-	raw: str
+class Hyper(Segment):
+    """Hyper对象，表示一类超级消息。如卡片消息、ark消息、小程序等"""
+    format: Literal["xml", "json"]
+    raw: Optional[str]
+    content: Optional[Union[dict, list]]
 
 class Other(Segment):
     """其他 Segment"""
+    origin: MessageSegment
+
+class Custom(Segment, abc.ABC):
+    """Custom对象，表示一类自定义消息"""
+
+    mstype: str
+    content: Any
+
+    @abc.abstractmethod
+    def export(self, msg_type: Type[TM]) -> MessageSegment[TM]: ...
 ```
 
-此类消息段通过 `UniMessage.export` 可以转为特定的 `MessageSegment`
+此类消息段通过 `UniMessage.export` 可以转为特定的 `MessageSegment`
+
+:::tips
+
+`Custom` 是一个抽象类，你可以通过继承 `Custom` 来实现自定义消息段：
+
+```python
+from nonebot_plugin_alconna.uniseg import Custom, custom_register
+from nonebot.adapters.qq import Message as QQMessage, MessageSegment as QQMessageSegment
+
+class Markdown(Custom):
+
+    def export(self, msg_type: Type[TM]) -> MessageSegment[TM]:
+        if msg_type is QQMessage:
+            return QQMessageSegment.markdown(self.content)
+
+@custom_register(Markdown, "markdown")
+def markdown(seg: QQMessageSegment) -> Markdown:
+    return Markdown("markdown", content=seg.data["content"])
+```
+:::
 
 ## 通用消息序列
 
@@ -127,6 +167,7 @@ matcher = on_xxx(...)
 @matcher.handle()
 async def _(message: Message = EventMessage()):
     msg = await UniMessage.generate(message=message)
+    msg1 = UniMessage.generate_without_reply(message=message)
 ```
 
 </TabItem>
@@ -146,6 +187,21 @@ test = on_command("test")
 @test.handle()
 async def handle_test():
     await test.send(await UniMessage(Image(path="path/to/img")).export())
+```
+
+除此之外 `UniMessage.send` 方法基于 `UniMessage.export` 并调用各适配器下的发送消息方法，返回一个 `Receipt` 对象，用于修改/撤回消息：
+
+```python
+from nonebot import Bot, on_command
+from nonebot_plugin_alconna.uniseg import UniMessage
+
+
+test = on_command("test")
+
+@test.handle()
+async def handle():
+    receipt = await UniMessage.text("hello!").send(at_sender=True, reply_to=True)
+    await receipt.recall(delay=1)
 ```
 
 而在 `AlconnaMatcher` 下，`got`, `send`, `reject` 等可以发送消息的方法皆支持使用 `UniMessage`，不需要手动调用 export 方法：
@@ -168,24 +224,9 @@ async def tt(target: At):
     await test_cmd.send(UniMessage([target, "\ndone."]))
 ```
 
-除此之外 `UniMessage.send` 方法基于 `UniMessage.export` 并调用各适配器下的发送消息方法，返回一个 `Receipt` 对象，用于修改/撤回消息：
-
-```python
-from nonebot import Bot, on_command
-from nonebot_plugin_alconna.uniseg import UniMessage
-
-
-test = on_command("test")
-
-@test.handle()
-async def handle():
-    receipt = await UniMessage.text("hello!").send(at_sender=True, reply_to=True)
-    await receipt.recall(delay=1)
-```
-
 :::caution
 
-在响应器以外的地方，`bot` 参数必须手动传入。
+在响应器以外的地方，除非启用了 `alconna_apply_fetch_targets` 配置项，否则 `bot` 参数必须手动传入。
 
 :::
 
@@ -391,7 +432,7 @@ message.count(Text) == 2
 message.get(Text, 1) == UniMessage([Text("test1")])
 ```
 
-### 消息发送
+## 消息发送
 
 前面提到，通用消息可用 `UniMessage.send` 发送自身：
 
@@ -408,6 +449,26 @@ async def send(
 
 实际上，`UniMessage` 同时提供了获取消息事件 id 与消息发送对象的方法:
 
+
+<Tabs groupId="get_unimsg">
+<TabItem value="depend" label="使用依赖注入">
+
+通过提供的 `MessageTarget`, `MessageId` 或 `MsgTarget`, `MsgId` 依赖注入器来获取消息事件 id 与消息发送对象。
+
+```python
+from nonebot_plugin_alconna.uniseg import MessageId, MsgTarget
+
+
+matcher = on_xxx(...)
+
+@matcher.handle()
+asycn def _(target: MsgTarget, msg_id: MessageId):
+    ...
+```
+
+</TabItem>
+<TabItem value="method" label="使用 UniMessage 的方法">
+
 ```python
 from nonebot import Event, Bot
 from nonebot_plugin_alconna.uniseg import UniMessage, Target
@@ -422,24 +483,76 @@ asycn def _(bot: Bot, event: Event):
 
 ```
 
+</TabItem>
+</Tabs>
+
 `send`, `get_target`, `get_message_id` 中与 `event`, `bot` 相关的参数都会尝试从上下文中获取对象。
 
-其中，`Target`:
+### 消息发送对象
+
+消息发送对象是用来描述响应消息时的发送对象或者主动发送消息时的目标对象的对象，它包含了以下属性：
 
 ```python
 class Target:
     id: str
     """目标id；若为群聊则为group_id或者channel_id，若为私聊则为user_id"""
-    parent_id: str = ""
-    """父级id；若为频道则为guild_id，其他情况为空字符串"""
-    channel: bool = False
-    """是否为频道，仅当目标平台同时支持群聊和频道时有效"""
-    private: bool = False
+    parent_id: str
+    """父级id；若为频道则为guild_id，其他情况下可能为空字符串（例如 Feishu 下可作为部门 id）"""
+    channel: bool
+    """是否为频道，仅当目标平台符合频道概念时"""
+    private: bool
     """是否为私聊"""
-    source: str = ""
+    source: str
     """可能的事件id"""
+    self_id: Union[str, None]
+    """机器人id，若为 None 则 Bot 对象会随机选择"""
+    selector: Union[Callable[[Bot], Awaitable[bool]], None]
+    """选择器，用于在多个 Bot 对象中选择特定 Bot"""
+    extra: Dict[str, Any]
+    """额外信息，用于适配器扩展"""
 ```
 
-是用来描述响应消息时的发送对象。
+其构造时需要如下参数：
+- `id` 为目标id；若为群聊则为 group_id 或者 channel_id，若为私聊则为user_id
+- `parent_id` 为父级id；若为频道则为 guild_id，其他情况下可能为空字符串（例如 Feishu 下可作为部门 id）
+- `channel` 为是否为频道，仅当目标平台符合频道概念时
+- `private` 为是否为私聊
+- `source` 为可能的事件id
+- `self_id` 为机器人id，若为 None 则 Bot 对象会随机选择
+- `selector` 为选择器，用于在多个 Bot 对象中选择特定 Bot
+- `scope` 为适配器范围，用于传入内置的特定选择器
+- `adapter` 为适配器名称，若为 None 则需要明确指定 Bot 对象
+- `platform` 为平台名称，仅当目标适配器存在多个平台时使用
+- `extra` 为额外信息，用于适配器扩展
 
-同样的，你可以通过依赖注入的方式在响应器中直接获取它们。
+通过 `Target` 对象，我们可以在 `UniMessage.send` 中指定发送对象：
+
+```python
+from nonebot_plugin_alconna.uniseg import UniMessage, MsgTarget, Target, SupportScope
+
+
+matcher = on_xxx(...)
+
+@matcher.handle()
+async def _(target: MsgTarget):
+    await UniMessage("Hello!").send(target=target)
+    target1 = Target("xxxx", scope=SupportScope.qq_client)
+    await UniMessage("Hello!").send(target=target1)
+```
+
+### 主动发送消息
+
+`UniMessage.send` 也可以用于主动发送消息：
+
+```python
+from nonebot_plugin_alconna.uniseg import UniMessage, Target, SupportScope
+from nonebot import get_driver
+
+
+driver = get_driver()
+
+@driver.on_startup
+async def on_startup():
+    target = Target("xxxx", scope=SupportScope.qq_client)
+    await UniMessage("Hello!").send(target=target)
+```

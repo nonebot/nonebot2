@@ -102,17 +102,16 @@ async def got_location(location: str = ArgPlainText()):
 
 </details>
 
-```python {5-10,14-16,18-19}
+```python {5-9,13-15,17-18}
 from nonebot.rule import to_me
 from arclet.alconna import Alconna, Args
 from nonebot_plugin_alconna import Match, on_alconna
 
 weather = on_alconna(
     Alconna("天气", Args["location?", str]),
+    aliases={"weather", "天气预报"},
     rule=to_me(),
 )
-weather.shortcut("weather", {"command": "天气"})
-weather.shortcut("天气预报", {"command": "天气"})
 
 
 @weather.handle()
