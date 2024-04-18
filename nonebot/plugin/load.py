@@ -210,7 +210,10 @@ def inherit_supported_adapters(*names: str) -> Optional[set[str]]:
         if not (raw := meta.supported_adapters):
             continue
 
-        support = {f"nonebot.adapters.{adapter[1:]}" if name.startswith("~") else adapter for adapter in raw}
+        support = {
+            f"nonebot.adapters.{adapter[1:]}" if name.startswith("~") else adapter
+            for adapter in raw
+        }
 
         final_supported = (
             support if final_supported is None else (final_supported & support)
