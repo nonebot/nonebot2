@@ -223,5 +223,20 @@
     "homepage": "https://github.com/IUnlimit/nonebot-adapter-rocketchat",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot.adapters.kritor",
+    "project_link": "nonebot-adapter-kritor",
+    "name": "Kritor",
+    "desc": "Kritor 协议适配",
+    "author": "RF-Tar-Railt",
+    "homepage": "https://github.com/nonebot/adapter-kritor",
+    "tags": [
+      {
+        "label": "QQNT",
+        "color": "#35a7c9"
+      }
+    ],
+    "is_official": false
   }
 ]
