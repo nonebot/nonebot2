@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Bug: inherit_supported_adapters 在展开缩写前取交集 [@AzideCupric](https://github.com/AzideCupric) ([#2654](https://github.com/nonebot/nonebot2/pull/2654))
 - Bug: 添加 HTTP 客户端会话上下文检查 [@yanyongyu](https://github.com/yanyongyu) ([#2632](https://github.com/nonebot/nonebot2/pull/2632))
 - Fix: 将 aiohttp 的 quote_fields 默认设为 False [@j1g5awi](https://github.com/j1g5awi) ([#2619](https://github.com/nonebot/nonebot2/pull/2619))
 
