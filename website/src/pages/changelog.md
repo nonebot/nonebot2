@@ -63,6 +63,7 @@ toc_max_heading_level: 2
 
 ### 🍻 适配器发布
 
+- Adapter: Kritor [@noneflow](https://github.com/noneflow) ([#2659](https://github.com/nonebot/nonebot2/pull/2659))
 - Adapter: RocketChat [@noneflow](https://github.com/noneflow) ([#2637](https://github.com/nonebot/nonebot2/pull/2637))
 
 ## v2.2.1
