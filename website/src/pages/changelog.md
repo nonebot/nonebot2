@@ -25,6 +25,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 添加 Kritor 适配器说明 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2660](https://github.com/nonebot/nonebot2/pull/2660))
 - Docs: 更新最佳实践的 Alconna 部分 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2656](https://github.com/nonebot/nonebot2/pull/2656))
 - Docs: 添加 RocketChat 适配器说明 [@yanyongyu](https://github.com/yanyongyu) ([#2640](https://github.com/nonebot/nonebot2/pull/2640))
 - Docs: 商店卡片样式调整 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2633](https://github.com/nonebot/nonebot2/pull/2633))
