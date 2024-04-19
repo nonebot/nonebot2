@@ -19,11 +19,15 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Bug: inherit_supported_adapters 在展开缩写前取交集 [@AzideCupric](https://github.com/AzideCupric) ([#2654](https://github.com/nonebot/nonebot2/pull/2654))
 - Bug: 添加 HTTP 客户端会话上下文检查 [@yanyongyu](https://github.com/yanyongyu) ([#2632](https://github.com/nonebot/nonebot2/pull/2632))
 - Fix: 将 aiohttp 的 quote_fields 默认设为 False [@j1g5awi](https://github.com/j1g5awi) ([#2619](https://github.com/nonebot/nonebot2/pull/2619))
 
 ### 📝 文档
 
+- Docs: 更新 Villa 适配器说明 [@CMHopeSunshine](https://github.com/CMHopeSunshine) ([#2661](https://github.com/nonebot/nonebot2/pull/2661))
+- Docs: 添加 Kritor 适配器说明 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2660](https://github.com/nonebot/nonebot2/pull/2660))
+- Docs: 更新最佳实践的 Alconna 部分 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2656](https://github.com/nonebot/nonebot2/pull/2656))
 - Docs: 添加 RocketChat 适配器说明 [@yanyongyu](https://github.com/yanyongyu) ([#2640](https://github.com/nonebot/nonebot2/pull/2640))
 - Docs: 商店卡片样式调整 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2633](https://github.com/nonebot/nonebot2/pull/2633))
 - Docs: 为商店插件卡片添加更多展示内容 [@AzideCupric](https://github.com/AzideCupric) ([#2626](https://github.com/nonebot/nonebot2/pull/2626))
@@ -39,6 +43,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 淫语 [@noneflow](https://github.com/noneflow) ([#2650](https://github.com/nonebot/nonebot2/pull/2650))
 - Plugin: 飞花令 [@noneflow](https://github.com/noneflow) ([#2648](https://github.com/nonebot/nonebot2/pull/2648))
 - Plugin: Hx_YinYing [@noneflow](https://github.com/noneflow) ([#2646](https://github.com/nonebot/nonebot2/pull/2646))
 - Plugin: clovers插件框架 [@noneflow](https://github.com/noneflow) ([#2643](https://github.com/nonebot/nonebot2/pull/2643))
@@ -61,6 +66,7 @@ toc_max_heading_level: 2
 
 ### 🍻 适配器发布
 
+- Adapter: Kritor [@noneflow](https://github.com/noneflow) ([#2659](https://github.com/nonebot/nonebot2/pull/2659))
 - Adapter: RocketChat [@noneflow](https://github.com/noneflow) ([#2637](https://github.com/nonebot/nonebot2/pull/2637))
 
 ## v2.2.1

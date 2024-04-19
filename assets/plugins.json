@@ -5800,5 +5800,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_yinyu",
+    "project_link": "nonebot-plugin-yinyu",
+    "author": "shi-yingyingjiang",
+    "tags": [],
+    "is_official": false
   }
 ]
