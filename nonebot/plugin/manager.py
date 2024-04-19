@@ -54,7 +54,7 @@ class PluginManager:
         self._prepare_plugins()
 
     def __repr__(self) -> str:
-        return f"PluginManager(plugins={self.plugins}, search_path={self.search_path})"
+        return f"PluginManager(available_plugins={self.controlled_modules})"
 
     @property
     def third_party_plugins(self) -> set[str]:
@@ -73,13 +73,14 @@ class PluginManager:
 
     @property
     def controlled_modules(self) -> dict[str, str]:
+        """返回当前插件管理器中控制的插件标识符与模块路径映射字典。"""
         return dict(
             chain(
                 self._third_party_plugin_ids.items(), self._searched_plugin_ids.items()
             )
         )
 
-    def _previous_plugins(self) -> set[str]:
+    def _previous_controlled_modules(self) -> dict[str, str]:
         _pre_managers: list[PluginManager]
         if self in _managers:
             _pre_managers = _managers[: _managers.index(self)]
@@ -87,20 +88,30 @@ class PluginManager:
             _pre_managers = _managers[:]
 
         return {
-            *chain.from_iterable(manager.available_plugins for manager in _pre_managers)
+            plugin_id: module_name
+            for manager in _pre_managers
+            for plugin_id, module_name in manager.controlled_modules.items()
         }
 
     def _prepare_plugins(self) -> set[str]:
         """搜索插件并缓存插件名称。"""
         # get all previous ready to load plugins
-        previous_plugins = self._previous_plugins()
+        previous_plugin_ids = self._previous_controlled_modules()
+
+        # if self not in global managers, merge self's controlled modules
+        def get_controlled_modules():
+            return (
+                previous_plugin_ids
+                if self in _managers
+                else {**previous_plugin_ids, **self.controlled_modules}
+            )
 
         # check third party plugins
         for plugin in self.plugins:
-            plugin_id = _module_name_to_plugin_id(plugin)
+            plugin_id = _module_name_to_plugin_id(plugin, get_controlled_modules())
             if (
                 plugin_id in self._third_party_plugin_ids
-                or plugin_id in previous_plugins
+                or plugin_id in previous_plugin_ids
             ):
                 raise RuntimeError(
                     f"Plugin already exists: {plugin_id}! Check your plugin name"
@@ -126,10 +137,10 @@ class PluginManager:
             # get module name from path, pkgutil does not return the actual module name
             module_path = Path(module_spec.origin).resolve()
             module_name = path_to_module_name(module_path)
-            plugin_id = _module_name_to_plugin_id(module_name)
+            plugin_id = _module_name_to_plugin_id(module_name, get_controlled_modules())
 
             if (
-                plugin_id in previous_plugins
+                plugin_id in previous_plugin_ids
                 or plugin_id in self._third_party_plugin_ids
                 or plugin_id in self._searched_plugin_ids
             ):
@@ -170,7 +181,7 @@ class PluginManager:
             ) is None or not isinstance(plugin, Plugin):
                 raise RuntimeError(
                     f"Module {module.__name__} is not loaded as a plugin! "
-                    "Make sure not to import it before loading."
+                    f"Make sure not to import it before loading."
                 )
             logger.opt(colors=True).success(
                 f'Succeeded to load plugin "<y>{escape_tag(plugin.id_)}</y>"'
@@ -210,7 +221,7 @@ class PluginFinder(MetaPathFinder):
                 return
 
             for manager in reversed(_managers):
-                if fullname in manager.controlled_modules:
+                if fullname in manager.controlled_modules.values():
                     module_spec.loader = PluginLoader(manager, fullname, module_origin)
                     return module_spec
         return

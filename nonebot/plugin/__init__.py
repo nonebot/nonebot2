@@ -59,23 +59,34 @@ def _module_name_to_plugin_name(module_name: str) -> str:
     return module_name.rsplit(".", 1)[-1]
 
 
-def _find_parent_plugin_id(module_name: str) -> Optional[str]:
-    available = {
-        module: plugin_id
+def _controlled_modules() -> dict[str, str]:
+    return {
+        plugin_id: module_name
         for manager in _managers
-        for plugin_id, module in manager.controlled_modules
+        for plugin_id, module_name in manager.controlled_modules.items()
     }
-    has_parent = True
-    while has_parent:
+
+
+def _find_parent_plugin_id(
+    module_name: str, controlled_modules: Optional[dict[str, str]] = None
+) -> Optional[str]:
+    if controlled_modules is None:
+        controlled_modules = _controlled_modules()
+    available = {
+        module_name: plugin_id for plugin_id, module_name in controlled_modules.items()
+    }
+    while "." in module_name:
+        module_name, _ = module_name.rsplit(".", 1)
         if module_name in available:
             return available[module_name]
-        module_name, *has_parent = module_name.rsplit(".", 1)
 
 
-def _module_name_to_plugin_id(module_name: str) -> str:
+def _module_name_to_plugin_id(
+    module_name: str, controlled_modules: Optional[dict[str, str]] = None
+) -> str:
     plugin_name = _module_name_to_plugin_name(module_name)
-    if parent_plugin_id := _find_parent_plugin_id(module_name):
-        return f"{parent_plugin_id}.{plugin_name}"
+    if parent_plugin_id := _find_parent_plugin_id(module_name, controlled_modules):
+        return f"{parent_plugin_id}:{plugin_name}"
     return plugin_name
 
 
@@ -89,20 +100,23 @@ def _new_plugin(
         )
 
     parent_plugin_id = _find_parent_plugin_id(module_name)
-    if parent_plugin_id not in _plugins:
+    if parent_plugin_id is not None and parent_plugin_id not in _plugins:
         raise RuntimeError(
             f"Parent plugin {parent_plugin_id} must "
             f"be loaded before loading {plugin_id}."
         )
-    parent_plugin = _plugins[parent_plugin_id]
+    parent_plugin = _plugins[parent_plugin_id] if parent_plugin_id is not None else None
 
     plugin = Plugin(
-        name=plugin_id,
+        name=_module_name_to_plugin_name(module_name),
         module=module,
         module_name=module_name,
         manager=manager,
         parent_plugin=parent_plugin,
     )
+    if parent_plugin:
+        parent_plugin.sub_plugins.add(plugin)
+
     _plugins[plugin_id] = plugin
     return plugin
 

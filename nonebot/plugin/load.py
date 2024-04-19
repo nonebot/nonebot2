@@ -206,7 +206,9 @@ def inherit_supported_adapters(*names: str) -> Optional[set[str]]:
     for name in names:
         plugin = get_plugin(_module_name_to_plugin_id(name))
         if plugin is None:
-            raise RuntimeError(f'Plugin "{name}" is not loaded!')
+            raise RuntimeError(
+                f'Plugin "{name}" is not loaded! You should require it first.'
+            )
         meta = plugin.metadata
         if meta is None:
             raise ValueError(f'Plugin "{name}" has no metadata!')

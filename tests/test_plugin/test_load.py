@@ -29,12 +29,13 @@ async def test_load_plugins(load_plugin: set[Plugin], load_builtin_plugin: set[P
 
     # check simple plugin
     assert "plugins.export" in sys.modules
+    assert "plugin._hidden" not in sys.modules
 
     # check sub plugin
-    plugin = nonebot.get_plugin("nested_subplugin")
+    plugin = nonebot.get_plugin("nested:nested_subplugin")
     assert plugin
     assert "plugins.nested.plugins.nested_subplugin" in sys.modules
-    assert plugin.parent_plugin == nonebot.get_plugin("nested")
+    assert plugin.parent_plugin is nonebot.get_plugin("nested")
 
     # check load again
     with pytest.raises(RuntimeError):
@@ -46,8 +47,8 @@ async def test_load_plugins(load_plugin: set[Plugin], load_builtin_plugin: set[P
 @pytest.mark.asyncio
 async def test_load_nested_plugin():
     parent_plugin = nonebot.get_plugin("nested")
-    sub_plugin = nonebot.get_plugin("nested_subplugin")
-    sub_plugin2 = nonebot.get_plugin("nested_subplugin2")
+    sub_plugin = nonebot.get_plugin("nested:nested_subplugin")
+    sub_plugin2 = nonebot.get_plugin("nested:nested_subplugin2")
     assert parent_plugin
     assert sub_plugin
     assert sub_plugin2
@@ -89,12 +90,16 @@ async def test_require_loaded(monkeypatch: pytest.MonkeyPatch):
 
     monkeypatch.setattr("nonebot.plugin.load._find_manager_by_name", _patched_find)
 
+    # require use module name
     nonebot.require("plugins.export")
+    # require use plugin id
+    nonebot.require("export")
+    nonebot.require("nested:nested_subplugin")
 
 
 @pytest.mark.asyncio
 async def test_require_not_loaded(monkeypatch: pytest.MonkeyPatch):
-    m = PluginManager(["dynamic.require_not_loaded"])
+    m = PluginManager(["dynamic.require_not_loaded"], ["dynamic/require_not_loaded/"])
     _managers.append(m)
     num_managers = len(_managers)
 
@@ -106,7 +111,11 @@ async def test_require_not_loaded(monkeypatch: pytest.MonkeyPatch):
 
     monkeypatch.setattr(PluginManager, "load_plugin", _patched_load)
 
+    # require standalone plugin
     nonebot.require("dynamic.require_not_loaded")
+    # require searched plugin
+    nonebot.require("dynamic.require_not_loaded.subplugin1")
+    nonebot.require("require_not_loaded:subplugin2")
 
     assert len(_managers) == num_managers
 

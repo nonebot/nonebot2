@@ -103,7 +103,7 @@ def get_matcher_source(depth: int = 0) -> Optional[MatcherSource]:
         plugin = get_plugin_by_module_name(module_name)
 
     return MatcherSource(
-        plugin_name=plugin and plugin.name,
+        plugin_id=plugin and plugin.id_,
         module_name=module_name,
         lineno=frame.f_lineno,
     )

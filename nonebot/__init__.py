@@ -266,11 +266,12 @@ def _resolve_combine_expr(obj_str: str) -> type[Driver]:
 
 
 def _log_patcher(record: "loguru.Record"):
+    """使用插件标识优化日志展示"""
     record["name"] = (
-        plugin.name
+        plugin.id_
         if (module_name := record["name"])
         and (plugin := get_plugin_by_module_name(module_name))
-        else (module_name and module_name.split(".")[0])
+        else (module_name and module_name.split(".", maxsplit=1)[0])
     )
 
 

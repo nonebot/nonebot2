@@ -8,5 +8,5 @@ manager = PluginManager(
 _managers.append(manager)
 
 # test load nested plugin with require
-manager.load_plugin("nested_subplugin")
-manager.load_plugin("nested_subplugin2")
+manager.load_plugin("plugins.nested.plugins.nested_subplugin")
+manager.load_plugin("nested:nested_subplugin2")
