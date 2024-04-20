@@ -5807,5 +5807,21 @@
     "author": "shi-yingyingjiang",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_yinying_chat",
+    "project_link": "nonebot-plugin-yinying-chat",
+    "author": "YuxiCN",
+    "tags": [
+      {
+        "label": "Furry",
+        "color": "#ea5252"
+      },
+      {
+        "label": "银影",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
