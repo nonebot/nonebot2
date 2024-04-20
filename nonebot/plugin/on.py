@@ -31,8 +31,8 @@ from nonebot.rule import (
 )
 
 from .model import Plugin
+from .manager import _current_plugin
 from . import get_plugin_by_module_name
-from .manager import _current_plugin_chain
 
 
 def store_matcher(matcher: type[Matcher]) -> None:
@@ -42,8 +42,8 @@ def store_matcher(matcher: type[Matcher]) -> None:
         matcher: 事件响应器
     """
     # only store the matcher defined when plugin loading
-    if plugin_chain := _current_plugin_chain.get():
-        plugin_chain[-1].matcher.add(matcher)
+    if plugin := _current_plugin.get():
+        plugin.matcher.add(matcher)
 
 
 def get_matcher_plugin(depth: int = 1) -> Optional[Plugin]:  # pragma: no cover
@@ -96,16 +96,14 @@ def get_matcher_source(depth: int = 0) -> Optional[MatcherSource]:
 
     module_name = (module := inspect.getmodule(frame)) and module.__name__
 
-    plugin: Optional["Plugin"] = None
     # matcher defined when plugin loading
-    if plugin_chain := _current_plugin_chain.get():
-        plugin = plugin_chain[-1]
+    plugin: Optional["Plugin"] = _current_plugin.get()
     # matcher defined when plugin running
-    elif module_name:
+    if plugin is None and module_name:
         plugin = get_plugin_by_module_name(module_name)
 
     return MatcherSource(
-        plugin_name=plugin and plugin.name,
+        plugin_id=plugin and plugin.id_,
         module_name=module_name,
         lineno=frame.f_lineno,
     )

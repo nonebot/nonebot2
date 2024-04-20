@@ -83,8 +83,8 @@ current_handler: ContextVar[Dependent] = ContextVar("current_handler")
 class MatcherSource:
     """Matcher 源代码上下文信息"""
 
-    plugin_name: Optional[str] = None
-    """事件响应器所在插件名称"""
+    plugin_id: Optional[str] = None
+    """事件响应器所在插件标识符"""
     module_name: Optional[str] = None
     """事件响应器所在插件模块的路径名"""
     lineno: Optional[int] = None
@@ -95,8 +95,13 @@ class MatcherSource:
         """事件响应器所在插件"""
         from nonebot.plugin import get_plugin
 
-        if self.plugin_name is not None:
-            return get_plugin(self.plugin_name)
+        if self.plugin_id is not None:
+            return get_plugin(self.plugin_id)
+
+    @property
+    def plugin_name(self) -> Optional[str]:
+        """事件响应器所在插件名"""
+        return self.plugin and self.plugin.name
 
     @property
     def module(self) -> Optional[ModuleType]:
@@ -245,7 +250,7 @@ class Matcher(metaclass=MatcherMeta):
             )
         source = source or (
             MatcherSource(
-                plugin_name=plugin and plugin.name,
+                plugin_id=plugin and plugin.id_,
                 module_name=module and module.__name__,
             )
             if plugin is not None or module is not None
@@ -328,14 +333,19 @@ class Matcher(metaclass=MatcherMeta):
         return cls._source and cls._source.plugin
 
     @classproperty
-    def module(cls) -> Optional[ModuleType]:
-        """事件响应器所在插件模块"""
-        return cls._source and cls._source.module
+    def plugin_id(cls) -> Optional[str]:
+        """事件响应器所在插件标识符"""
+        return cls._source and cls._source.plugin_id
 
     @classproperty
     def plugin_name(cls) -> Optional[str]:
         """事件响应器所在插件名"""
         return cls._source and cls._source.plugin_name
+
+    @classproperty
+    def module(cls) -> Optional[ModuleType]:
+        """事件响应器所在插件模块"""
+        return cls._source and cls._source.module
 
     @classproperty
     def module_name(cls) -> Optional[str]:

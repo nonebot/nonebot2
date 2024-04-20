@@ -29,8 +29,10 @@ async def test_matcher_info(app: App):
     assert matcher.module is sys.modules["plugins.matcher.matcher_info"]
     assert matcher.module_name == "plugins.matcher.matcher_info"
 
+    assert matcher._source.plugin_id == "matcher:matcher_info"
     assert matcher._source.plugin_name == "matcher_info"
-    assert matcher.plugin is get_plugin("matcher_info")
+    assert matcher.plugin is get_plugin("matcher:matcher_info")
+    assert matcher.plugin_id == "matcher:matcher_info"
     assert matcher.plugin_name == "matcher_info"
 
     assert (
