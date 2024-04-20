@@ -45,6 +45,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Yinying-Chat [@noneflow](https://github.com/noneflow) ([#2662](https://github.com/nonebot/nonebot2/pull/2662))
 - Plugin: 淫语 [@noneflow](https://github.com/noneflow) ([#2650](https://github.com/nonebot/nonebot2/pull/2650))
 - Plugin: 飞花令 [@noneflow](https://github.com/noneflow) ([#2648](https://github.com/nonebot/nonebot2/pull/2648))
 - Plugin: Hx_YinYing [@noneflow](https://github.com/noneflow) ([#2646](https://github.com/nonebot/nonebot2/pull/2646))
