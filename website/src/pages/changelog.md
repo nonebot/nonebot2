@@ -9,10 +9,12 @@ toc_max_heading_level: 2
 
 ### 💥 破坏性变更
 
+- Feature: 嵌套插件名称作用域优化 [@yanyongyu](https://github.com/yanyongyu) ([#2665](https://github.com/nonebot/nonebot2/pull/2665))
 - Remove: 移除 Python 3.8 支持 [@yanyongyu](https://github.com/yanyongyu) ([#2641](https://github.com/nonebot/nonebot2/pull/2641))
 
 ### 🚀 新功能
 
+- Feature: 嵌套插件名称作用域优化 [@yanyongyu](https://github.com/yanyongyu) ([#2665](https://github.com/nonebot/nonebot2/pull/2665))
 - Feature: 优化调用栈识别 [@yanyongyu](https://github.com/yanyongyu) ([#2644](https://github.com/nonebot/nonebot2/pull/2644))
 - Feature: 支持 HTTP 客户端会话 [@yanyongyu](https://github.com/yanyongyu) ([#2627](https://github.com/nonebot/nonebot2/pull/2627))
 - Develop: 添加 ruff RUF 规则 [@he0119](https://github.com/he0119) ([#2598](https://github.com/nonebot/nonebot2/pull/2598))
