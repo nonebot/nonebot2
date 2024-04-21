@@ -5835,5 +5835,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_zsmeme",
+    "project_link": "nonebot-plugin-zsmeme",
+    "author": "shi-yingyingjiang",
+    "tags": [
+      {
+        "label": "帕弥什",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
