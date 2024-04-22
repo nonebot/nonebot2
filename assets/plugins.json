@@ -5847,5 +5847,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sanyao",
+    "project_link": "nonebot-plugin-sanyao",
+    "author": "afterow",
+    "tags": [
+      {
+        "label": "占卜",
+        "color": "#415656"
+      }
+    ],
+    "is_official": false
   }
 ]
