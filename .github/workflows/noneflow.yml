@@ -15,6 +15,39 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  reaction:
+    runs-on: ubuntu-latest
+    name: reaction
+    if: |
+      (
+        github.event_name == 'issue_comment' &&
+        github.event.action == 'created'
+      ) ||
+      (
+        github.event_name == 'issue' &&
+        github.event.action == 'opened'
+      )
+    steps:
+      - name: Generate token
+        id: generate-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_KEY }}
+
+      - name: Reaction on issue
+        if: github.event_name == 'issue'
+        run: |
+          gh api --method POST /repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/reactions -f "content=rocket"
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+
+      - name: Reaction on issue comment
+        if: github.event_name == 'issue_comment'
+        run: |
+          gh api --method POST /repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions -f "content=rocket"
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
   plugin_test:
     runs-on: ubuntu-latest
     name: nonebot2 plugin test
