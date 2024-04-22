@@ -24,7 +24,7 @@ jobs:
         github.event.action == 'created'
       ) ||
       (
-        github.event_name == 'issue' &&
+        github.event_name == 'issues' &&
         github.event.action == 'opened'
       )
     steps:
