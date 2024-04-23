@@ -5859,5 +5859,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cyberfurry",
+    "project_link": "nonebot-plugin-cyberfurry",
+    "author": "cubstaryow",
+    "tags": [
+      {
+        "label": "幼龙云端",
+        "color": "#ccc719"
+      },
+      {
+        "label": "银影",
+        "color": "#af2af3"
+      }
+    ],
+    "is_official": false
   }
 ]
