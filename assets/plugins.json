@@ -5875,5 +5875,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_helpwithpic",
+    "project_link": "nonebot-plugin-HelpWithPic",
+    "author": "cubstaryow",
+    "tags": [
+      {
+        "label": "帮助",
+        "color": "#c61b1b"
+      },
+      {
+        "label": "图片生成",
+        "color": "#c61b1b"
+      }
+    ],
+    "is_official": false
   }
 ]
