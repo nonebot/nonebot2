@@ -42,6 +42,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- CI: 修复测试 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2682](https://github.com/nonebot/nonebot2/pull/2682))
 - CI: NoneFlow 添加 reaction 响应提示 [@yanyongyu](https://github.com/yanyongyu) ([#2677](https://github.com/nonebot/nonebot2/pull/2677))
 - Plugin: 移除不维护的插件 `eitherchoice` [@lgc2333](https://github.com/lgc2333) ([#2599](https://github.com/nonebot/nonebot2/pull/2599))
 
