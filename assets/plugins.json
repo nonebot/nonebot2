@@ -5891,5 +5891,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sticker_saver",
+    "project_link": "nonebot-plugin-sticker-saver",
+    "author": "colasama",
+    "tags": [
+      {
+        "label": "表情包",
+        "color": "#f1ce15"
+      }
+    ],
+    "is_official": false
   }
 ]
