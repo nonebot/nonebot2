@@ -28,20 +28,6 @@ jobs:
         python-version: ["3.9", "3.10", "3.11", "3.12"]
         os: [ubuntu-latest, windows-latest, macos-latest]
         env: [pydantic-v1, pydantic-v2]
-        exclude:
-          - python-version: "3.9"
-            os: macos-latest
-            env: pydantic-v1
-          - python-version: "3.9"
-            os: macos-latest
-            env: pydantic-v2
-        include:
-          - python-version: "3.9"
-            os: macos-13
-            env: pydantic-v1
-          - python-version: "3.9"
-            os: macos-13
-            env: pydantic-v2
     env:
       OS: ${{ matrix.os }}
       PYTHON_VERSION: ${{ matrix.python-version }}
