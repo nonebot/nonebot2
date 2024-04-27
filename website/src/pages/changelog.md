@@ -48,6 +48,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 表情包保存器 [@noneflow](https://github.com/noneflow) ([#2684](https://github.com/nonebot/nonebot2/pull/2684))
 - Plugin: HelpWithPic [@noneflow](https://github.com/noneflow) ([#2681](https://github.com/nonebot/nonebot2/pull/2681))
 - Plugin: cyberfurry [@noneflow](https://github.com/noneflow) ([#2679](https://github.com/nonebot/nonebot2/pull/2679))
 - Plugin: 三爻易数 [@noneflow](https://github.com/noneflow) ([#2675](https://github.com/nonebot/nonebot2/pull/2675))
