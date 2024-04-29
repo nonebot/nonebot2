@@ -15,9 +15,33 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
+  check:
+    runs-on: ubuntu-latest
+    name: check
+    # do not run on forked PRs, do not run on not related issues, do not run on pr comments
+    if: |
+      !(
+        (
+          github.event.pull_request &&
+          (
+            github.event.pull_request.head.repo.fork ||
+            !(
+              contains(github.event.pull_request.labels.*.name, 'Plugin') ||
+              contains(github.event.pull_request.labels.*.name, 'Adapter') ||
+              contains(github.event.pull_request.labels.*.name, 'Bot')
+            )
+          )
+        ) ||
+        (
+          github.event_name == 'issue_comment' && github.event.issue.pull_request
+        )
+      )
+    steps:
+      - run: echo "Check passed"
   reaction:
     runs-on: ubuntu-latest
     name: reaction
+    needs: check
     if: |
       (
         github.event_name == 'issue_comment' &&
@@ -51,23 +75,7 @@ jobs:
   plugin_test:
     runs-on: ubuntu-latest
     name: nonebot2 plugin test
-    if: |
-      !(
-        (
-          github.event.pull_request &&
-          (
-            github.event.pull_request.head.repo.fork ||
-            !(
-              contains(github.event.pull_request.labels.*.name, 'Plugin') ||
-              contains(github.event.pull_request.labels.*.name, 'Adapter') ||
-              contains(github.event.pull_request.labels.*.name, 'Bot')
-            )
-          )
-        ) ||
-        (
-          github.event_name == 'issue_comment' && github.event.issue.pull_request
-        )
-      )
+    needs: check
     permissions:
       issues: read
     outputs:
