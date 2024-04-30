@@ -96,10 +96,12 @@ class Other(Segment):
 
 ```
 
-::: tips
+:::tips
 
-或许你注意到了 `Segment` 上有一个 `children` 属性。这是因为在 [`Satori`](https://satori.js.org/zh-CN/) 协议的影响下，一类元素可以用其子元素来代表兼容性消息
-（例如，商场表情在某些平台上可以用图片代替）。
+或许你注意到了 `Segment` 上有一个 `children` 属性。
+
+这是因为在 [`Satori`](https://satori.js.org/zh-CN/) 协议的规定下，一类元素可以用其子元素来代表一类兼容性消息
+（例如，qq 的商场表情在某些平台上可以用图片代替）。
 
 为此，本插件提供了两种方式来表达 "获取子元素" 的方法：
 
