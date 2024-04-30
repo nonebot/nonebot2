@@ -29,8 +29,10 @@ async def test_matcher_info(app: App):
     assert matcher.module is sys.modules["plugins.matcher.matcher_info"]
     assert matcher.module_name == "plugins.matcher.matcher_info"
 
+    assert matcher._source.plugin_id == "matcher:matcher_info"
     assert matcher._source.plugin_name == "matcher_info"
-    assert matcher.plugin is get_plugin("matcher_info")
+    assert matcher.plugin is get_plugin("matcher:matcher_info")
+    assert matcher.plugin_id == "matcher:matcher_info"
     assert matcher.plugin_name == "matcher_info"
 
     assert (
@@ -244,7 +246,7 @@ async def test_default_permission_updater(app: App):
         matcher = test_permission_updater()
         new_perm = await matcher.update_permission(bot, event)
         assert len(new_perm.checkers) == 1
-        checker = list(new_perm.checkers)[0].call
+        checker = next(iter(new_perm.checkers)).call
         assert isinstance(checker, User)
         assert checker.users == ("test",)
         assert checker.perm is default_permission
@@ -258,7 +260,7 @@ async def test_user_permission_updater(app: App):
     )
 
     event = make_fake_event(_session_id="test")()
-    user_permission = list(test_user_permission_updater.permission.checkers)[0].call
+    user_permission = next(iter(test_user_permission_updater.permission.checkers)).call
     assert isinstance(user_permission, User)
     assert user_permission.perm is default_permission
     async with app.test_api() as ctx:
@@ -266,7 +268,7 @@ async def test_user_permission_updater(app: App):
         matcher = test_user_permission_updater()
         new_perm = await matcher.update_permission(bot, event)
         assert len(new_perm.checkers) == 1
-        checker = list(new_perm.checkers)[0].call
+        checker = next(iter(new_perm.checkers)).call
         assert isinstance(checker, User)
         assert checker.users == ("test",)
         assert checker.perm is default_permission

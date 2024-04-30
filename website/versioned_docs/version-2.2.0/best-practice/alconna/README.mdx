@@ -1,0 +1,142 @@
+---
+sidebar_position: 1
+description: Alconna 命令解析拓展
+
+slug: /best-practice/alconna/
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# Alconna 插件
+
+[`nonebot-plugin-alconna`](https://github.com/nonebot/plugin-alconna) 是一类提供了拓展响应规则的插件。
+该插件使用 [Alconna](https://github.com/ArcletProject/Alconna) 作为命令解析器，
+是一个简单、灵活、高效的命令参数解析器，并且不局限于解析命令式字符串。
+
+该插件提供了一类新的事件响应器辅助函数 `on_alconna`，以及 `AlconnaResult` 等依赖注入函数。
+
+该插件声明了一个 `Matcher` 的子类 `AlconnaMatcher`，并在 `AlconnaMatcher` 中添加了一些新的方法，例如：
+
+- `assign`：基于 `Alconna` 解析结果，执行满足目标路径的处理函数
+- `dispatch`：类似 `CommandGroup`，对目标路径创建一个新的 `AlconnaMatcher`，并将解析结果分配给该 `AlconnaMatcher`
+- `got_path`：类似 `got`，但是可以指定目标路径，并且能够验证解析结果是否可用
+- ...
+
+基于 `Alconna` 的特性，该插件同时提供了一系列便捷的消息段标注。
+标注可用于在 `Alconna` 中匹配消息中除 text 外的其他消息段，也可用于快速创建各适配器下的消息段。所有标注位于 `nonebot_plugin_alconna.adapters` 中。
+
+该插件同时通过提供 `UniMessage` (通用消息模型) 实现了**跨平台接收和发送消息**的功能。
+
+## 安装插件
+
+在使用前请先安装 `nonebot-plugin-alconna` 插件至项目环境中，可参考[获取商店插件](../../tutorial/store.mdx#安装插件)来了解并选择安装插件的方式。如：
+
+在**项目目录**下执行以下命令：
+
+<Tabs groupId="install">
+<TabItem value="cli" label="使用 nb-cli">
+
+```shell
+nb plugin install nonebot-plugin-alconna
+```
+
+</TabItem>
+<TabItem value="pip" label="使用 pip">
+
+```shell
+pip install nonebot-plugin-alconna
+```
+
+</TabItem>
+
+<TabItem value="pdm" label="使用 pdm">
+
+```shell
+pdm add nonebot-plugin-alconna
+```
+
+</TabItem>
+</Tabs>
+
+## 导入插件
+
+由于 `nonebot-plugin-alconna` 作为插件，因此需要在使用前对其进行**加载**并**导入**其中的 `on_alconna` 来使用命令拓展。使用 `require` 方法可轻松完成这一过程，可参考 [跨插件访问](../../advanced/requiring.md) 一节进行了解。
+
+```python
+from nonebot import require
+
+require("nonebot_plugin_alconna")
+
+from nonebot_plugin_alconna import on_alconna
+```
+
+## 使用插件
+
+在前面的[深入指南](../../appendices/session-control.mdx)中，我们已经得到了一个天气插件。
+现在我们将使用 `Alconna` 来改写这个插件。
+
+<details>
+  <summary>插件示例</summary>
+
+```python title=weather/__init__.py
+from nonebot import on_command
+from nonebot.rule import to_me
+from nonebot.matcher import Matcher
+from nonebot.adapters import Message
+from nonebot.params import CommandArg, ArgPlainText
+
+weather = on_command("天气", rule=to_me(), aliases={"weather", "天气预报"})
+
+@weather.handle()
+async def handle_function(matcher: Matcher, args: Message = CommandArg()):
+    if args.extract_plain_text():
+        matcher.set_arg("location", args)
+
+@weather.got("location", prompt="请输入地名")
+async def got_location(location: str = ArgPlainText()):
+    if location not in ["北京", "上海", "广州", "深圳"]:
+        await weather.reject(f"你想查询的城市 {location} 暂不支持，请重新输入！")
+    await weather.finish(f"今天{location}的天气是...")
+```
+
+</details>
+
+```python {5-10,14-16,18-19}
+from nonebot.rule import to_me
+from arclet.alconna import Alconna, Args
+from nonebot_plugin_alconna import Match, on_alconna
+
+weather = on_alconna(
+    Alconna("天气", Args["location?", str]),
+    rule=to_me(),
+)
+weather.shortcut("weather", {"command": "天气"})
+weather.shortcut("天气预报", {"command": "天气"})
+
+
+@weather.handle()
+async def handle_function(location: Match[str]):
+    if location.available:
+        weather.set_path_arg("location", location.result)
+
+@weather.got_path("location", prompt="请输入地名")
+async def got_location(location: str):
+    if location not in ["北京", "上海", "广州", "深圳"]:
+        await weather.reject(f"你想查询的城市 {location} 暂不支持，请重新输入！")
+    await weather.finish(f"今天{location}的天气是...")
+```
+
+在上面的代码中，我们使用 `Alconna` 来解析命令，`on_alconna` 用来创建响应器，使用 `Match` 来获取解析结果。
+
+关于更多 `Alconna` 的使用方法，可参考 [Alconna 文档](https://arclet.top/docs/tutorial/alconna)，
+或阅读 [Alconna 基本介绍](./command.md) 一节。
+
+关于更多 `on_alconna` 的使用方法，可参考 [插件文档](https://github.com/nonebot/plugin-alconna/blob/master/docs.md)，
+或阅读 [响应规则的使用](./matcher.md) 一节。
+
+## 交流与反馈
+
+QQ 交流群: [🔗 链接](https://jq.qq.com/?_wv=1027&k=PUPOnCSH)
+
+友链: [📚 文档](https://graiax.cn/guide/message_parser/alconna.html)

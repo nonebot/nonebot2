@@ -1,8 +1,9 @@
 import pytest
-from pydantic import ValidationError, parse_obj_as
+from pydantic import ValidationError
 
-from nonebot.adapters import Message
+from nonebot.compat import type_validate_python
 from utils import FakeMessage, FakeMessageSegment
+from nonebot.adapters import Message, MessageSegment
 
 
 def test_segment_data():
@@ -47,16 +48,21 @@ def test_segment_add():
 
 
 def test_segment_validate():
-    assert parse_obj_as(
+    assert type_validate_python(
         FakeMessageSegment,
         {"type": "text", "data": {"text": "text"}, "extra": "should be ignored"},
     ) == FakeMessageSegment.text("text")
+    with pytest.raises(ValidationError):
+        type_validate_python(
+            type("FakeMessageSegment2", (MessageSegment,), {}),
+            FakeMessageSegment.text("text"),
+        )
 
     with pytest.raises(ValidationError):
-        parse_obj_as(FakeMessageSegment, "some str")
+        type_validate_python(FakeMessageSegment, "some str")
 
     with pytest.raises(ValidationError):
-        parse_obj_as(FakeMessageSegment, {"data": {}})
+        type_validate_python(FakeMessageSegment, {"data": {}})
 
 
 def test_segment_join():
@@ -144,26 +150,26 @@ def test_message_getitem():
 
 
 def test_message_validate():
-    assert parse_obj_as(FakeMessage, FakeMessage([])) == FakeMessage([])
+    assert type_validate_python(FakeMessage, FakeMessage([])) == FakeMessage([])
 
     with pytest.raises(ValidationError):
-        parse_obj_as(type("FakeMessage2", (Message,), {}), FakeMessage([]))
+        type_validate_python(type("FakeMessage2", (Message,), {}), FakeMessage([]))
 
-    assert parse_obj_as(FakeMessage, "text") == FakeMessage(
+    assert type_validate_python(FakeMessage, "text") == FakeMessage(
         [FakeMessageSegment.text("text")]
     )
 
-    assert parse_obj_as(
+    assert type_validate_python(
         FakeMessage, {"type": "text", "data": {"text": "text"}}
     ) == FakeMessage([FakeMessageSegment.text("text")])
 
-    assert parse_obj_as(
+    assert type_validate_python(
         FakeMessage,
         [FakeMessageSegment.text("text"), {"type": "text", "data": {"text": "text"}}],
     ) == FakeMessage([FakeMessageSegment.text("text"), FakeMessageSegment.text("text")])
 
     with pytest.raises(ValidationError):
-        parse_obj_as(FakeMessage, object())
+        type_validate_python(FakeMessage, object())
 
 
 def test_message_contains():
@@ -185,6 +191,11 @@ def test_message_contains():
     assert FakeMessageSegment.text("foo") not in message
     assert message.has("foo") is False
     assert "foo" not in message
+
+    assert not bool(FakeMessageSegment.text(""))
+    msg_with_empty_seg = FakeMessage([FakeMessageSegment.text("")])
+    assert msg_with_empty_seg.has("text") is True
+    assert "text" in msg_with_empty_seg
 
 
 def test_message_only():

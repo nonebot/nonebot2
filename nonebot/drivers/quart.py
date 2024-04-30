@@ -18,9 +18,9 @@ FrontMatter:
 import asyncio
 from functools import wraps
 from typing_extensions import override
-from typing import Any, Dict, List, Tuple, Union, Optional, cast
+from typing import Any, Union, Optional, cast
 
-from pydantic import BaseSettings
+from pydantic import BaseModel
 
 from nonebot.config import Env
 from nonebot.drivers import ASGIMixin
@@ -30,6 +30,7 @@ from nonebot.drivers import Driver as BaseDriver
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
+from nonebot.compat import model_dump, type_validate_python
 from nonebot.drivers import HTTPServerSetup, WebSocketServerSetup
 
 try:
@@ -58,24 +59,21 @@ def catch_closed(func):
     return decorator
 
 
-class Config(BaseSettings):
+class Config(BaseModel):
     """Quart 驱动框架设置"""
 
     quart_reload: bool = False
     """开启/关闭冷重载"""
-    quart_reload_dirs: Optional[List[str]] = None
+    quart_reload_dirs: Optional[list[str]] = None
     """重载监控文件夹列表，默认为 uvicorn 默认值"""
     quart_reload_delay: float = 0.25
     """重载延迟，默认为 uvicorn 默认值"""
-    quart_reload_includes: Optional[List[str]] = None
+    quart_reload_includes: Optional[list[str]] = None
     """要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
-    quart_reload_excludes: Optional[List[str]] = None
+    quart_reload_excludes: Optional[list[str]] = None
     """不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
-    quart_extra: Dict[str, Any] = {}
+    quart_extra: dict[str, Any] = {}
     """传递给 `Quart` 的其他参数。"""
-
-    class Config:
-        extra = "ignore"
 
 
 class Driver(BaseDriver, ASGIMixin):
@@ -84,7 +82,7 @@ class Driver(BaseDriver, ASGIMixin):
     def __init__(self, env: Env, config: NoneBotConfig):
         super().__init__(env, config)
 
-        self.quart_config = Config(**config.dict())
+        self.quart_config = type_validate_python(Config, model_dump(config))
 
         self._server_app = Quart(
             self.__class__.__qualname__, **self.quart_config.quart_extra
@@ -144,7 +142,7 @@ class Driver(BaseDriver, ASGIMixin):
         self,
         host: Optional[str] = None,
         port: Optional[int] = None,
-        *,
+        *args,
         app: Optional[str] = None,
         **kwargs,
     ):
@@ -186,7 +184,7 @@ class Driver(BaseDriver, ASGIMixin):
 
         data = await request.form
         files_dict = await request.files
-        files: List[Tuple[str, FileTypes]] = []
+        files: list[tuple[str, FileTypes]] = []
         key: str
         value: FileStorage
         for key, value in files_dict.items():

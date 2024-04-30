@@ -5,18 +5,8 @@ FrontMatter:
     description: nonebot.params 模块
 """
 
-from typing import (
-    Any,
-    Dict,
-    List,
-    Match,
-    Tuple,
-    Union,
-    Literal,
-    Callable,
-    Optional,
-    overload,
-)
+from re import Match
+from typing import Any, Union, Literal, Callable, Optional, overload
 
 from nonebot.typing import T_State
 from nonebot.matcher import Matcher
@@ -90,7 +80,7 @@ def _command(state: T_State) -> Message:
     return state[PREFIX_KEY][CMD_KEY]
 
 
-def Command() -> Tuple[str, ...]:
+def Command() -> tuple[str, ...]:
     """消息命令元组"""
     return Depends(_command)
 
@@ -140,7 +130,7 @@ def ShellCommandArgs() -> Any:
     return Depends(_shell_command_args, use_cache=False)
 
 
-def _shell_command_argv(state: T_State) -> List[Union[str, MessageSegment]]:
+def _shell_command_argv(state: T_State) -> list[Union[str, MessageSegment]]:
     return state[SHELL_ARGV]
 
 
@@ -159,52 +149,49 @@ def RegexMatched() -> Match[str]:
 
 
 def _regex_str(
-    groups: Tuple[Union[str, int], ...]
-) -> Callable[[T_State], Union[str, Tuple[Union[str, Any], ...], Any]]:
+    groups: tuple[Union[str, int], ...]
+) -> Callable[[T_State], Union[str, tuple[Union[str, Any], ...], Any]]:
     def _regex_str_dependency(
         state: T_State,
-    ) -> Union[str, Tuple[Union[str, Any], ...], Any]:
+    ) -> Union[str, tuple[Union[str, Any], ...], Any]:
         return _regex_matched(state).group(*groups)
 
     return _regex_str_dependency
 
 
 @overload
-def RegexStr(__group: Literal[0] = 0) -> str:
-    ...
+def RegexStr(__group: Literal[0] = 0) -> str: ...
 
 
 @overload
-def RegexStr(__group: Union[str, int]) -> Union[str, Any]:
-    ...
+def RegexStr(__group: Union[str, int]) -> Union[str, Any]: ...
 
 
 @overload
 def RegexStr(
     __group1: Union[str, int], __group2: Union[str, int], *groups: Union[str, int]
-) -> Tuple[Union[str, Any], ...]:
-    ...
+) -> tuple[Union[str, Any], ...]: ...
 
 
-def RegexStr(*groups: Union[str, int]) -> Union[str, Tuple[Union[str, Any], ...], Any]:
+def RegexStr(*groups: Union[str, int]) -> Union[str, tuple[Union[str, Any], ...], Any]:
     """正则匹配结果文本"""
     return Depends(_regex_str(groups), use_cache=False)
 
 
-def _regex_group(state: T_State) -> Tuple[Any, ...]:
+def _regex_group(state: T_State) -> tuple[Any, ...]:
     return _regex_matched(state).groups()
 
 
-def RegexGroup() -> Tuple[Any, ...]:
+def RegexGroup() -> tuple[Any, ...]:
     """正则匹配结果 group 元组"""
     return Depends(_regex_group, use_cache=False)
 
 
-def _regex_dict(state: T_State) -> Dict[str, Any]:
+def _regex_dict(state: T_State) -> dict[str, Any]:
     return _regex_matched(state).groupdict()
 
 
-def RegexDict() -> Dict[str, Any]:
+def RegexDict() -> dict[str, Any]:
     """正则匹配结果 group 字典"""
     return Depends(_regex_dict, use_cache=False)
 

@@ -1,4 +1,4 @@
-from typing import Type, Callable, Optional
+from typing import Callable, Optional
 
 import pytest
 
@@ -104,7 +104,7 @@ from nonebot.rule import (
 )
 async def test_on(
     matcher_name: str,
-    pre_rule_factory: Optional[Callable[[Type[Event]], T_RuleChecker]],
+    pre_rule_factory: Optional[Callable[[type[Event]], T_RuleChecker]],
     has_permission: bool,
 ):
     import plugins.plugin.matchers as module
@@ -145,6 +145,7 @@ async def test_on(
     assert matcher.plugin is plugin
     assert matcher in plugin.matcher
     assert matcher.module is module
+    assert matcher.plugin_id == "plugin"
     assert matcher.plugin_name == "plugin"
     assert matcher.module_name == "plugins.plugin.matchers"
 
@@ -163,6 +164,7 @@ async def test_runtime_on():
         assert matcher.plugin is plugin
         assert matcher not in plugin.matcher
         assert matcher.module is module
+        assert matcher.plugin_id == "plugin"
         assert matcher.plugin_name == "plugin"
         assert matcher.module_name == "plugins.plugin.matchers"
     finally:

@@ -1,5 +1,5 @@
+from typing import Annotated
 from dataclasses import dataclass
-from typing_extensions import Annotated
 
 from pydantic import Field
 
@@ -32,12 +32,11 @@ async def gen_async():
 
 @dataclass
 class ClassDependency:
-    x: int = Depends(gen_sync)
-    y: int = Depends(gen_async)
+    x: int = Depends(gen_sync)  # noqa: RUF009
+    y: int = Depends(gen_async)  # noqa: RUF009
 
 
-class FooBot(Bot):
-    ...
+class FooBot(Bot): ...
 
 
 async def sub_bot(b: FooBot) -> FooBot:

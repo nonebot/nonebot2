@@ -1,5 +1,4 @@
 import sys
-from typing import Set
 from pathlib import Path
 from dataclasses import asdict
 
@@ -22,7 +21,7 @@ async def test_load_plugin():
 
 
 @pytest.mark.asyncio
-async def test_load_plugins(load_plugin: Set[Plugin], load_builtin_plugin: Set[Plugin]):
+async def test_load_plugins(load_plugin: set[Plugin], load_builtin_plugin: set[Plugin]):
     loaded_plugins = {
         plugin for plugin in nonebot.get_loaded_plugins() if not plugin.parent_plugin
     }
@@ -30,12 +29,13 @@ async def test_load_plugins(load_plugin: Set[Plugin], load_builtin_plugin: Set[P
 
     # check simple plugin
     assert "plugins.export" in sys.modules
+    assert "plugin._hidden" not in sys.modules
 
     # check sub plugin
-    plugin = nonebot.get_plugin("nested_subplugin")
+    plugin = nonebot.get_plugin("nested:nested_subplugin")
     assert plugin
     assert "plugins.nested.plugins.nested_subplugin" in sys.modules
-    assert plugin.parent_plugin == nonebot.get_plugin("nested")
+    assert plugin.parent_plugin is nonebot.get_plugin("nested")
 
     # check load again
     with pytest.raises(RuntimeError):
@@ -47,8 +47,8 @@ async def test_load_plugins(load_plugin: Set[Plugin], load_builtin_plugin: Set[P
 @pytest.mark.asyncio
 async def test_load_nested_plugin():
     parent_plugin = nonebot.get_plugin("nested")
-    sub_plugin = nonebot.get_plugin("nested_subplugin")
-    sub_plugin2 = nonebot.get_plugin("nested_subplugin2")
+    sub_plugin = nonebot.get_plugin("nested:nested_subplugin")
+    sub_plugin2 = nonebot.get_plugin("nested:nested_subplugin2")
     assert parent_plugin
     assert sub_plugin
     assert sub_plugin2
@@ -90,12 +90,16 @@ async def test_require_loaded(monkeypatch: pytest.MonkeyPatch):
 
     monkeypatch.setattr("nonebot.plugin.load._find_manager_by_name", _patched_find)
 
+    # require use module name
     nonebot.require("plugins.export")
+    # require use plugin id
+    nonebot.require("export")
+    nonebot.require("nested:nested_subplugin")
 
 
 @pytest.mark.asyncio
 async def test_require_not_loaded(monkeypatch: pytest.MonkeyPatch):
-    m = PluginManager(["dynamic.require_not_loaded"])
+    m = PluginManager(["dynamic.require_not_loaded"], ["dynamic/require_not_loaded/"])
     _managers.append(m)
     num_managers = len(_managers)
 
@@ -107,7 +111,11 @@ async def test_require_not_loaded(monkeypatch: pytest.MonkeyPatch):
 
     monkeypatch.setattr(PluginManager, "load_plugin", _patched_load)
 
+    # require standalone plugin
     nonebot.require("dynamic.require_not_loaded")
+    # require searched plugin
+    nonebot.require("dynamic.require_not_loaded.subplugin1")
+    nonebot.require("require_not_loaded:subplugin2")
 
     assert len(_managers) == num_managers
 
@@ -150,32 +158,82 @@ async def test_plugin_metadata():
 
 
 @pytest.mark.asyncio
-async def test_inherit_supported_adapters():
+async def test_inherit_supported_adapters_not_found():
     with pytest.raises(RuntimeError):
         inherit_supported_adapters("some_plugin_not_exist")
 
     with pytest.raises(ValueError, match="has no metadata!"):
         inherit_supported_adapters("export")
 
-    echo = nonebot.get_plugin("echo")
-    assert echo
-    assert echo.metadata
-    assert inherit_supported_adapters("echo") is None
 
-    plugin_1 = nonebot.get_plugin("metadata")
-    assert plugin_1
-    assert plugin_1.metadata
-    assert inherit_supported_adapters("metadata") == {
-        "nonebot.adapters.onebot.v11",
-        "plugins.metadata:FakeAdapter",
-    }
-
-    plugin_2 = nonebot.get_plugin("metadata_2")
-    assert plugin_2
-    assert plugin_2.metadata
-    assert inherit_supported_adapters("metadata", "metadata_2") == {
-        "nonebot.adapters.onebot.v11"
-    }
-    assert inherit_supported_adapters("metadata", "echo", "metadata_2") == {
-        "nonebot.adapters.onebot.v11"
-    }
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    ("inherit_plugins", "expected"),
+    [
+        (("echo",), None),
+        (
+            ("metadata",),
+            {
+                "nonebot.adapters.onebot.v11",
+                "plugins.metadata:FakeAdapter",
+            },
+        ),
+        (
+            ("metadata_2",),
+            {
+                "nonebot.adapters.onebot.v11",
+                "nonebot.adapters.onebot.v12",
+            },
+        ),
+        (
+            ("metadata_3",),
+            {
+                "nonebot.adapters.onebot.v11",
+                "nonebot.adapters.onebot.v12",
+                "nonebot.adapters.qq",
+            },
+        ),
+        (
+            ("metadata", "metadata_2"),
+            {
+                "nonebot.adapters.onebot.v11",
+            },
+        ),
+        (
+            ("metadata", "metadata_3"),
+            {
+                "nonebot.adapters.onebot.v11",
+            },
+        ),
+        (
+            ("metadata_2", "metadata_3"),
+            {
+                "nonebot.adapters.onebot.v11",
+                "nonebot.adapters.onebot.v12",
+            },
+        ),
+        (
+            ("metadata", "metadata_2", "metadata_3"),
+            {
+                "nonebot.adapters.onebot.v11",
+            },
+        ),
+        (
+            ("metadata", "echo"),
+            {
+                "nonebot.adapters.onebot.v11",
+                "plugins.metadata:FakeAdapter",
+            },
+        ),
+        (
+            ("metadata", "metadata_2", "echo"),
+            {
+                "nonebot.adapters.onebot.v11",
+            },
+        ),
+    ],
+)
+async def test_inherit_supported_adapters_combine(
+    inherit_plugins: tuple[str], expected: set[str]
+):
+    assert inherit_supported_adapters(*inherit_plugins) == expected

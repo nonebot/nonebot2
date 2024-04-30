@@ -19,5 +19,4 @@ async def complex_priority(
     arg: Message = Arg(),
     exception: Optional[Exception] = None,
     default: int = 1,
-):
-    ...
+): ...

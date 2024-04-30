@@ -1,5 +1,5 @@
 import json
-from typing import Dict, List, Union, Literal, TypeVar, ClassVar
+from typing import Dict, List, Union, Literal, TypeVar, ClassVar  # noqa: UP035
 
 from utils import FakeMessage, FakeMessageSegment
 from nonebot.utils import (
@@ -26,27 +26,25 @@ def test_generic_check_issubclass():
     assert generic_check_issubclass(Union[int, float, None], (int, float))
     assert generic_check_issubclass(Literal[1, 2, 3], int)
     assert not generic_check_issubclass(Literal[1, 2, "3"], int)
-    assert generic_check_issubclass(List[int], list)
-    assert generic_check_issubclass(Dict[str, int], dict)
+    assert generic_check_issubclass(List[int], list)  # noqa: UP006
+    assert generic_check_issubclass(Dict[str, int], dict)  # noqa: UP006
+    assert generic_check_issubclass(list[int], list)
+    assert generic_check_issubclass(dict[str, int], dict)
     assert not generic_check_issubclass(ClassVar[int], int)
     assert generic_check_issubclass(TypeVar("T", int, float), (int, float))
     assert generic_check_issubclass(TypeVar("T", bound=int), (int, float))
 
 
 def test_is_coroutine_callable():
-    async def test1():
-        ...
+    async def test1(): ...
 
-    def test2():
-        ...
+    def test2(): ...
 
     class TestClass1:
-        async def __call__(self):
-            ...
+        async def __call__(self): ...
 
     class TestClass2:
-        def __call__(self):
-            ...
+        def __call__(self): ...
 
     assert is_coroutine_callable(test1)
     assert not is_coroutine_callable(test2)
@@ -62,8 +60,7 @@ def test_is_gen_callable():
     async def test2():
         yield
 
-    def test3():
-        ...
+    def test3(): ...
 
     class TestClass1:
         def __call__(self):
@@ -74,8 +71,7 @@ def test_is_gen_callable():
             yield
 
     class TestClass3:
-        def __call__(self):
-            ...
+        def __call__(self): ...
 
     assert is_gen_callable(test1)
     assert not is_gen_callable(test2)
@@ -92,8 +88,7 @@ def test_is_async_gen_callable():
     def test2():
         yield
 
-    async def test3():
-        ...
+    async def test3(): ...
 
     class TestClass1:
         async def __call__(self):
@@ -104,8 +99,7 @@ def test_is_async_gen_callable():
             yield
 
     class TestClass3:
-        async def __call__(self):
-            ...
+        async def __call__(self): ...
 
     assert is_async_gen_callable(test1)
     assert not is_async_gen_callable(test2)

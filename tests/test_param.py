@@ -212,13 +212,13 @@ async def test_event(app: App):
         ctx.pass_params(event=fake_fooevent)
         ctx.should_return(fake_fooevent)
 
-    with pytest.raises(TypeMisMatch):  # noqa: PT012
+    with pytest.raises(TypeMisMatch):
         async with app.test_dependent(sub_event, allow_types=[EventParam]) as ctx:
             ctx.pass_params(event=fake_event)
 
     async with app.test_dependent(union_event, allow_types=[EventParam]) as ctx:
         ctx.pass_params(event=fake_fooevent)
-        ctx.should_return(fake_event)
+        ctx.should_return(fake_fooevent)
 
     async with app.test_dependent(generic_event, allow_types=[EventParam]) as ctx:
         ctx.pass_params(event=fake_event)
@@ -436,7 +436,7 @@ async def test_matcher(app: App):
         ctx.pass_params(matcher=foo_matcher)
         ctx.should_return(foo_matcher)
 
-    with pytest.raises(TypeMisMatch):  # noqa: PT012
+    with pytest.raises(TypeMisMatch):
         async with app.test_dependent(sub_matcher, allow_types=[MatcherParam]) as ctx:
             ctx.pass_params(matcher=fake_matcher)
 
@@ -529,10 +529,14 @@ async def test_arg(app: App):
 
 @pytest.mark.asyncio
 async def test_exception(app: App):
-    from plugins.param.param_exception import exc
+    from plugins.param.param_exception import exc, legacy_exc
 
     exception = ValueError("test")
     async with app.test_dependent(exc, allow_types=[ExceptionParam]) as ctx:
+        ctx.pass_params(exception=exception)
+        ctx.should_return(exception)
+
+    async with app.test_dependent(legacy_exc, allow_types=[ExceptionParam]) as ctx:
         ctx.pass_params(exception=exception)
         ctx.should_return(exception)
 

@@ -15,14 +15,13 @@ FrontMatter:
     description: nonebot.drivers.fastapi 模块
 """
 
-
 import logging
 import contextlib
 from functools import wraps
 from typing_extensions import override
-from typing import Any, Dict, List, Tuple, Union, Optional
+from typing import Any, Union, Optional
 
-from pydantic import BaseSettings
+from pydantic import BaseModel
 
 from nonebot.config import Env
 from nonebot.drivers import ASGIMixin
@@ -32,6 +31,7 @@ from nonebot.drivers import Driver as BaseDriver
 from nonebot.config import Config as NoneBotConfig
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
+from nonebot.compat import model_dump, type_validate_python
 from nonebot.drivers import HTTPServerSetup, WebSocketServerSetup
 
 try:
@@ -59,7 +59,7 @@ def catch_closed(func):
     return decorator
 
 
-class Config(BaseSettings):
+class Config(BaseModel):
     """FastAPI 驱动框架设置，详情参考 FastAPI 文档"""
 
     fastapi_openapi_url: Optional[str] = None
@@ -72,19 +72,16 @@ class Config(BaseSettings):
     """是否包含适配器路由的 schema，默认为 `True`"""
     fastapi_reload: bool = False
     """开启/关闭冷重载"""
-    fastapi_reload_dirs: Optional[List[str]] = None
+    fastapi_reload_dirs: Optional[list[str]] = None
     """重载监控文件夹列表，默认为 uvicorn 默认值"""
     fastapi_reload_delay: float = 0.25
     """重载延迟，默认为 uvicorn 默认值"""
-    fastapi_reload_includes: Optional[List[str]] = None
+    fastapi_reload_includes: Optional[list[str]] = None
     """要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
-    fastapi_reload_excludes: Optional[List[str]] = None
+    fastapi_reload_excludes: Optional[list[str]] = None
     """不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
-    fastapi_extra: Dict[str, Any] = {}
+    fastapi_extra: dict[str, Any] = {}
     """传递给 `FastAPI` 的其他参数。"""
-
-    class Config:
-        extra = "ignore"
 
 
 class Driver(BaseDriver, ASGIMixin):
@@ -93,7 +90,7 @@ class Driver(BaseDriver, ASGIMixin):
     def __init__(self, env: Env, config: NoneBotConfig):
         super().__init__(env, config)
 
-        self.fastapi_config: Config = Config(**config.dict())
+        self.fastapi_config: Config = type_validate_python(Config, model_dump(config))
 
         self._server_app = FastAPI(
             lifespan=self._lifespan_manager,
@@ -164,7 +161,7 @@ class Driver(BaseDriver, ASGIMixin):
         self,
         host: Optional[str] = None,
         port: Optional[int] = None,
-        *,
+        *args,
         app: Optional[str] = None,
         **kwargs,
     ):
@@ -209,7 +206,7 @@ class Driver(BaseDriver, ASGIMixin):
             json = await request.json()
 
         data: Optional[dict] = None
-        files: Optional[List[Tuple[str, FileTypes]]] = None
+        files: Optional[list[tuple[str, FileTypes]]] = None
         with contextlib.suppress(Exception):
             form = await request.form()
             data = {}

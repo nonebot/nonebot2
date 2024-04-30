@@ -13,20 +13,17 @@ async def legacy_matcher(matcher):
     return matcher
 
 
-async def not_legacy_matcher(matcher: int):
-    ...
+async def not_legacy_matcher(matcher: int): ...
 
 
-class FooMatcher(Matcher):
-    ...
+class FooMatcher(Matcher): ...
 
 
 async def sub_matcher(m: FooMatcher) -> FooMatcher:
     return m
 
 
-class BarMatcher(Matcher):
-    ...
+class BarMatcher(Matcher): ...
 
 
 async def union_matcher(
@@ -49,8 +46,7 @@ async def generic_matcher_none(m: CM) -> CM:
     return m
 
 
-async def not_matcher(m: Union[int, Matcher]):
-    ...
+async def not_matcher(m: Union[int, Matcher]): ...
 
 
 async def receive(e: Event = Received("test")) -> Event:

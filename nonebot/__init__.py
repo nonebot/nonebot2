@@ -35,6 +35,7 @@
   {ref}``get_loaded_plugins` <nonebot.plugin.get_loaded_plugins>`
 - `get_available_plugin_names` =>
   {ref}``get_available_plugin_names` <nonebot.plugin.get_available_plugin_names>`
+- `get_plugin_config` => {ref}``get_plugin_config` <nonebot.plugin.get_plugin_config>`
 - `require` => {ref}``require` <nonebot.plugin.load.require>`
 
 FrontMatter:
@@ -44,10 +45,11 @@ FrontMatter:
 
 import os
 from importlib.metadata import version
-from typing import Any, Dict, Type, Union, TypeVar, Optional, overload
+from typing import Any, Union, TypeVar, Optional, overload
 
 import loguru
 
+from nonebot.compat import model_dump
 from nonebot.log import logger as logger
 from nonebot.adapters import Bot, Adapter
 from nonebot.config import DOTENV_TYPE, Env, Config
@@ -98,7 +100,7 @@ def get_adapter(name: str) -> Adapter:
 
 
 @overload
-def get_adapter(name: Type[A]) -> A:
+def get_adapter(name: type[A]) -> A:
     """
     参数:
         name: 适配器类型
@@ -108,7 +110,7 @@ def get_adapter(name: Type[A]) -> A:
     """
 
 
-def get_adapter(name: Union[str, Type[Adapter]]) -> Adapter:
+def get_adapter(name: Union[str, type[Adapter]]) -> Adapter:
     """获取已注册的 {ref}`nonebot.adapters.Adapter` 实例。
 
     异常:
@@ -129,7 +131,7 @@ def get_adapter(name: Union[str, Type[Adapter]]) -> Adapter:
     return adapters[target]
 
 
-def get_adapters() -> Dict[str, Adapter]:
+def get_adapters() -> dict[str, Adapter]:
     """获取所有已注册的 {ref}`nonebot.adapters.Adapter` 实例。
 
     返回:
@@ -228,7 +230,7 @@ def get_bot(self_id: Optional[str] = None) -> Bot:
     raise ValueError("There are no bots to get.")
 
 
-def get_bots() -> Dict[str, Bot]:
+def get_bots() -> dict[str, Bot]:
     """获取所有连接到 NoneBot 的 {ref}`nonebot.adapters.Bot` 对象。
 
     返回:
@@ -247,7 +249,7 @@ def get_bots() -> Dict[str, Bot]:
     return get_driver().bots
 
 
-def _resolve_combine_expr(obj_str: str) -> Type[Driver]:
+def _resolve_combine_expr(obj_str: str) -> type[Driver]:
     drivers = obj_str.split("+")
     DriverClass = resolve_dot_notation(
         drivers[0], "Driver", default_prefix="nonebot.drivers."
@@ -264,11 +266,12 @@ def _resolve_combine_expr(obj_str: str) -> Type[Driver]:
 
 
 def _log_patcher(record: "loguru.Record"):
+    """使用插件标识优化日志展示"""
     record["name"] = (
-        plugin.name
+        plugin.id_
         if (module_name := record["name"])
         and (plugin := get_plugin_by_module_name(module_name))
-        else (module_name and module_name.split(".")[0])
+        else (module_name and module_name.split(".", maxsplit=1)[0])
     )
 
 
@@ -295,9 +298,11 @@ def init(*, _env_file: Optional[DOTENV_TYPE] = None, **kwargs: Any) -> None:
         _env_file = _env_file or f".env.{env.environment}"
         config = Config(
             **kwargs,
-            _env_file=(".env", _env_file)
-            if isinstance(_env_file, (str, os.PathLike))
-            else _env_file,
+            _env_file=(
+                (".env", _env_file)
+                if isinstance(_env_file, (str, os.PathLike))
+                else _env_file
+            ),
         )
 
         logger.configure(
@@ -307,7 +312,7 @@ def init(*, _env_file: Optional[DOTENV_TYPE] = None, **kwargs: Any) -> None:
             f"Current <y><b>Env: {escape_tag(env.environment)}</b></y>"
         )
         logger.opt(colors=True).debug(
-            f"Loaded <y><b>Config</b></y>: {escape_tag(str(config.dict()))}"
+            f"Loaded <y><b>Config</b></y>: {escape_tag(str(model_dump(config)))}"
         )
 
         DriverClass = _resolve_combine_expr(config.driver)
@@ -352,10 +357,9 @@ from nonebot.plugin import load_from_json as load_from_json
 from nonebot.plugin import load_from_toml as load_from_toml
 from nonebot.plugin import load_all_plugins as load_all_plugins
 from nonebot.plugin import on_shell_command as on_shell_command
+from nonebot.plugin import get_plugin_config as get_plugin_config
 from nonebot.plugin import get_loaded_plugins as get_loaded_plugins
 from nonebot.plugin import load_builtin_plugin as load_builtin_plugin
 from nonebot.plugin import load_builtin_plugins as load_builtin_plugins
 from nonebot.plugin import get_plugin_by_module_name as get_plugin_by_module_name
 from nonebot.plugin import get_available_plugin_names as get_available_plugin_names
-
-__autodoc__ = {"internal": False}

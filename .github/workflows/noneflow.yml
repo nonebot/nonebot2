@@ -15,9 +15,10 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  plugin_test:
+  check:
     runs-on: ubuntu-latest
-    name: nonebot2 plugin test
+    name: check
+    # do not run on forked PRs, do not run on not related issues, do not run on pr comments
     if: |
       !(
         (
@@ -35,6 +36,46 @@ jobs:
           github.event_name == 'issue_comment' && github.event.issue.pull_request
         )
       )
+    steps:
+      - run: echo "Check passed"
+  reaction:
+    runs-on: ubuntu-latest
+    name: reaction
+    needs: check
+    if: |
+      (
+        github.event_name == 'issue_comment' &&
+        github.event.action == 'created'
+      ) ||
+      (
+        github.event_name == 'issues' &&
+        github.event.action == 'opened'
+      )
+    steps:
+      - name: Generate token
+        id: generate-token
+        uses: tibdex/github-app-token@v2
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          private_key: ${{ secrets.APP_KEY }}
+
+      - name: Reaction on issue
+        if: github.event_name == 'issues'
+        run: |
+          gh api --method POST /repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/reactions -f "content=rocket"
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+
+      - name: Reaction on issue comment
+        if: github.event_name == 'issue_comment'
+        run: |
+          gh api --method POST /repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions -f "content=rocket"
+        env:
+          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
+  plugin_test:
+    runs-on: ubuntu-latest
+    name: nonebot2 plugin test
+    needs: check
     permissions:
       issues: read
     outputs:

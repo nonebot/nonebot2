@@ -8,13 +8,14 @@ FrontMatter:
 import json
 from pathlib import Path
 from types import ModuleType
-from typing import Set, Union, Iterable, Optional
+from typing import Union, Optional
+from collections.abc import Iterable
 
 from nonebot.utils import path_to_module_name
 
 from .model import Plugin
 from .manager import PluginManager
-from . import _managers, get_plugin, _current_plugin_chain, _module_name_to_plugin_name
+from . import _managers, get_plugin, _module_name_to_plugin_id
 
 try:  # pragma: py-gte-311
     import tomllib  # pyright: ignore[reportMissingImports]
@@ -39,7 +40,7 @@ def load_plugin(module_path: Union[str, Path]) -> Optional[Plugin]:
     return manager.load_plugin(module_path)
 
 
-def load_plugins(*plugin_dir: str) -> Set[Plugin]:
+def load_plugins(*plugin_dir: str) -> set[Plugin]:
     """导入文件夹下多个插件，以 `_` 开头的插件不会被导入!
 
     参数:
@@ -52,7 +53,7 @@ def load_plugins(*plugin_dir: str) -> Set[Plugin]:
 
 def load_all_plugins(
     module_path: Iterable[str], plugin_dir: Iterable[str]
-) -> Set[Plugin]:
+) -> set[Plugin]:
     """导入指定列表中的插件以及指定目录下多个插件，以 `_` 开头的插件不会被导入!
 
     参数:
@@ -64,7 +65,7 @@ def load_all_plugins(
     return manager.load_all_plugins()
 
 
-def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
+def load_from_json(file_path: str, encoding: str = "utf-8") -> set[Plugin]:
     """导入指定 json 文件中的 `plugins` 以及 `plugin_dirs` 下多个插件。
     以 `_` 开头的插件不会被导入!
 
@@ -95,7 +96,7 @@ def load_from_json(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
     return load_all_plugins(set(plugins), set(plugin_dirs))
 
 
-def load_from_toml(file_path: str, encoding: str = "utf-8") -> Set[Plugin]:
+def load_from_toml(file_path: str, encoding: str = "utf-8") -> set[Plugin]:
     """导入指定 toml 文件 `[tool.nonebot]` 中的
     `plugins` 以及 `plugin_dirs` 下多个插件。
     以 `_` 开头的插件不会被导入!
@@ -139,7 +140,7 @@ def load_builtin_plugin(name: str) -> Optional[Plugin]:
     return load_plugin(f"nonebot.plugins.{name}")
 
 
-def load_builtin_plugins(*plugins: str) -> Set[Plugin]:
+def load_builtin_plugins(*plugins: str) -> set[Plugin]:
     """导入多个 NoneBot 内置插件。
 
     参数:
@@ -150,41 +151,45 @@ def load_builtin_plugins(*plugins: str) -> Set[Plugin]:
 
 def _find_manager_by_name(name: str) -> Optional[PluginManager]:
     for manager in reversed(_managers):
-        if name in manager.plugins or name in manager.searched_plugins:
+        if (
+            name in manager.controlled_modules
+            or name in manager.controlled_modules.values()
+        ):
             return manager
 
 
 def require(name: str) -> ModuleType:
-    """获取一个插件的导出内容。
-
-    如果为 `load_plugins` 文件夹导入的插件，则为文件(夹)名。
+    """声明依赖插件。
 
     参数:
-        name: 插件名，即 {ref}`nonebot.plugin.model.Plugin.name`。
+        name: 插件模块名或插件标识符，仅在已声明插件的情况下可使用标识符。
 
     异常:
         RuntimeError: 插件无法加载
     """
-    plugin = get_plugin(_module_name_to_plugin_name(name))
+    if "." in name:
+        # name is a module name
+        plugin = get_plugin(_module_name_to_plugin_id(name))
+    else:
+        # name is a plugin id or simple module name (equals to plugin id)
+        plugin = get_plugin(name)
+
     # if plugin not loaded
-    if not plugin:
-        # plugin already declared
+    if plugin is None:
+        # plugin already declared, module name / plugin id
         if manager := _find_manager_by_name(name):
             plugin = manager.load_plugin(name)
+
         # plugin not declared, try to declare and load it
         else:
-            # clear current plugin chain, ensure plugin loaded in a new context
-            _t = _current_plugin_chain.set(())
-            try:
-                plugin = load_plugin(name)
-            finally:
-                _current_plugin_chain.reset(_t)
-    if not plugin:
+            plugin = load_plugin(name)
+
+    if plugin is None:
         raise RuntimeError(f'Cannot load plugin "{name}"!')
     return plugin.module
 
 
-def inherit_supported_adapters(*names: str) -> Optional[Set[str]]:
+def inherit_supported_adapters(*names: str) -> Optional[set[str]]:
     """获取已加载插件的适配器支持状态集合。
 
     如果传入了多个插件名称，返回值会自动取交集。
@@ -196,25 +201,28 @@ def inherit_supported_adapters(*names: str) -> Optional[Set[str]]:
         RuntimeError: 插件未加载
         ValueError: 插件缺少元数据
     """
-    final_supported: Optional[Set[str]] = None
+    final_supported: Optional[set[str]] = None
 
     for name in names:
-        plugin = get_plugin(_module_name_to_plugin_name(name))
+        plugin = get_plugin(_module_name_to_plugin_id(name))
         if plugin is None:
-            raise RuntimeError(f'Plugin "{name}" is not loaded!')
+            raise RuntimeError(
+                f'Plugin "{name}" is not loaded! You should require it first.'
+            )
         meta = plugin.metadata
         if meta is None:
             raise ValueError(f'Plugin "{name}" has no metadata!')
-        support = meta.supported_adapters
-        if support is None:
+
+        if (raw := meta.supported_adapters) is None:
             continue
+
+        support = {
+            f"nonebot.adapters.{adapter[1:]}" if adapter.startswith("~") else adapter
+            for adapter in raw
+        }
+
         final_supported = (
             support if final_supported is None else (final_supported & support)
         )
 
-    return final_supported and {
-        f"nonebot.adapters.{adapter_name[1:]}"
-        if adapter_name.startswith("~")
-        else adapter_name
-        for adapter_name in final_supported
-    }
+    return final_supported

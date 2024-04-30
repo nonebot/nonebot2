@@ -513,30 +513,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_gocqhttp",
-    "project_link": "nonebot-plugin-gocqhttp",
-    "author": "mnixry",
-    "tags": [
-      {
-        "label": "gocqhttp",
-        "color": "#eabd52"
-      }
-    ],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_guild_patch",
-    "project_link": "nonebot-plugin-guild-patch",
-    "author": "mnixry",
-    "tags": [
-      {
-        "label": "gocqhttp",
-        "color": "#a2ea52"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_boardgame",
     "project_link": "nonebot-plugin-boardgame",
     "author": "MeetWq",
@@ -4228,13 +4204,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_eitherchoice",
-    "project_link": "nonebot-plugin-eitherchoice",
-    "author": "lgc2333",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_poke",
     "project_link": "nonebot-plugin-poke",
     "author": "Agnes4m",
@@ -5312,8 +5281,8 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_phigros_qq",
-    "project_link": "nonebot-plugin-phigros-qq",
+    "module_name": "nonebot_plugin_phigros",
+    "project_link": "nonebot-plugin-phigros",
     "author": "XTxiaoting14332",
     "tags": [
       {
@@ -5471,6 +5440,468 @@
     "project_link": "nonebot-plugin-enatfrp",
     "author": "eya46",
     "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nezha",
+    "project_link": "nonebot-plugin-nezha",
+    "author": "eya46",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_randpic",
+    "project_link": "nonebot-plugin-randpic",
+    "author": "HuParry",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_BAdrawcard",
+    "project_link": "nonebot-plugin-badrawcard",
+    "author": "lengmianzz",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_gpt",
+    "project_link": "nonebot-plugin-gpt",
+    "author": "nek0us",
+    "tags": [
+      {
+        "label": "ChatGPT",
+        "color": "#50ec9d"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_easy_blacklist",
+    "project_link": "nonebot-plugin-easy-blacklist",
+    "author": "bingqiu456",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_reminder",
+    "project_link": "nonebot-plugin-reminder",
+    "author": "velor2012",
+    "tags": [
+      {
+        "label": "scheduler",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chikari_yinpa",
+    "project_link": "nonebot-plugin-chikari-yinpa",
+    "author": "mrqx0195",
+    "tags": [
+      {
+        "label": "yinpa",
+        "color": "#ffff00"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_splatoon3_nso",
+    "project_link": "nonebot-plugin-splatoon3-nso",
+    "author": "Cypas",
+    "tags": [
+      {
+        "label": "splatoon3",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bf1marneserverlist",
+    "project_link": "nonebot-plugin-bf1marneserverlist",
+    "author": "SAFEluren",
+    "tags": [
+      {
+        "label": "server",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_kawaii_status",
+    "project_link": "nonebot-plugin-kawaii-status",
+    "author": "KomoriDev",
+    "tags": [
+      {
+        "label": "简约",
+        "color": "#54adff"
+      },
+      {
+        "label": "可爱",
+        "color": "#ffb3cc"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_vits_tts",
+    "project_link": "nonebot-plugin-vits-tts",
+    "author": "Redmomn",
+    "tags": [
+      {
+        "label": "VITS",
+        "color": "#ea5252"
+      },
+      {
+        "label": "TTS",
+        "color": "#52dbea"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chatglm_plus",
+    "project_link": "nonebot-plugin-chatglm-plus",
+    "author": "XTxiaoting14332",
+    "tags": [
+      {
+        "label": "ChatGLM",
+        "color": "#73cccc"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_fishing",
+    "project_link": "nonebot-plugin-fishing",
+    "author": "C14H22O",
+    "tags": [
+      {
+        "label": "钓鱼",
+        "color": "#87cefa"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_a2s_query",
+    "project_link": "nonebot-plugin-a2s-query",
+    "author": "NanakaNeko",
+    "tags": [
+      {
+        "label": "游戏服务器",
+        "color": "#ea5252"
+      },
+      {
+        "label": "value",
+        "color": "#99ea52"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_dice_narrator",
+    "project_link": "nonebot-plugin-dice-narrator",
+    "author": "KroMiose",
+    "tags": [
+      {
+        "label": "GPT",
+        "color": "#29b752"
+      },
+      {
+        "label": "掷骰姬",
+        "color": "#c84b9d"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_steam_info",
+    "project_link": "nonebot-plugin-steam-info",
+    "author": "zhaomaoniu",
+    "tags": [
+      {
+        "label": "Steam",
+        "color": "#14305e"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_orangejuice",
+    "project_link": "nonebot-plugin-orangejuice",
+    "author": "GLDYM",
+    "tags": [
+      {
+        "label": "百橙",
+        "color": "#ed6f00"
+      },
+      {
+        "label": "100OJ",
+        "color": "#ed6f00"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_md",
+    "project_link": "nonebot_plugin_md",
+    "author": "Agnes4m",
+    "tags": [
+      {
+        "label": "muse dash",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_duel",
+    "project_link": "nonebot-plugin-duel",
+    "author": "Redmomn",
+    "tags": [
+      {
+        "label": "决斗",
+        "color": "#5be7d1"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_pallas_repeater",
+    "project_link": "nonebot-plugin-pallas-repeater",
+    "author": "Redmomn",
+    "tags": [
+      {
+        "label": "复读鸡",
+        "color": "#52eae7"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_humanaticstore",
+    "project_link": "nonebot-plugin-humanaticstore",
+    "author": "QuanhuZeYu",
+    "tags": [
+      {
+        "label": "config",
+        "color": "#ea5252"
+      },
+      {
+        "label": "配置工具",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ghtiles",
+    "project_link": "nonebot-plugin-ghtiles",
+    "author": "Lipraty",
+    "tags": [
+      {
+        "label": "Github",
+        "color": "#2a2a2a"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_diffsinger",
+    "project_link": "nonebot-plugin-diffsinger",
+    "author": "zhzhongshi",
+    "tags": [
+      {
+        "label": "diffsinger",
+        "color": "#c24444"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_chikari_economy",
+    "project_link": "nonebot-plugin-chikari-economy",
+    "author": "mrqx0195",
+    "tags": [
+      {
+        "label": "经济",
+        "color": "#adad73"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_auto_bot_selector",
+    "project_link": "nonebot-plugin-auto-bot-selector",
+    "author": "Well2333",
+    "tags": [
+      {
+        "label": "多适配器",
+        "color": "#5280ea"
+      },
+      {
+        "label": "跨平台",
+        "color": "#5452ea"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nai3",
+    "project_link": "nonebot-plugin-nai3",
+    "author": "zhulinyv",
+    "tags": [
+      {
+        "label": "NovelAI",
+        "color": "#35f139"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_clovers",
+    "project_link": "nonebot-plugin-clovers",
+    "author": "KarisAya",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_hx_yinying",
+    "project_link": "nonebot-plugin-hx-yinying",
+    "author": "huanxin996",
+    "tags": [
+      {
+        "label": "Chat",
+        "color": "#3b53ff"
+      },
+      {
+        "label": "幻歆！",
+        "color": "#0d7ccd"
+      },
+      {
+        "label": "银影！",
+        "color": "#2b4dae"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_fhl",
+    "project_link": "nonebot-plugin-fhl",
+    "author": "baiqwerdvd",
+    "tags": [
+      {
+        "label": "飞花令",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_yinyu",
+    "project_link": "nonebot-plugin-yinyu",
+    "author": "shi-yingyingjiang",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_yinying_chat",
+    "project_link": "nonebot-plugin-yinying-chat",
+    "author": "YuxiCN",
+    "tags": [
+      {
+        "label": "Furry",
+        "color": "#ea5252"
+      },
+      {
+        "label": "银影",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_dcqg_relay",
+    "project_link": "nonebot-plugin-dcqg-relay",
+    "author": "Autuamn",
+    "tags": [
+      {
+        "label": "消息互通",
+        "color": "#52beea"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_zsmeme",
+    "project_link": "nonebot-plugin-zsmeme",
+    "author": "shi-yingyingjiang",
+    "tags": [
+      {
+        "label": "帕弥什",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sanyao",
+    "project_link": "nonebot-plugin-sanyao",
+    "author": "afterow",
+    "tags": [
+      {
+        "label": "占卜",
+        "color": "#415656"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cyberfurry",
+    "project_link": "nonebot-plugin-cyberfurry",
+    "author": "cubstaryow",
+    "tags": [
+      {
+        "label": "幼龙云端",
+        "color": "#ccc719"
+      },
+      {
+        "label": "银影",
+        "color": "#af2af3"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_helpwithpic",
+    "project_link": "nonebot-plugin-HelpWithPic",
+    "author": "cubstaryow",
+    "tags": [
+      {
+        "label": "帮助",
+        "color": "#c61b1b"
+      },
+      {
+        "label": "图片生成",
+        "color": "#c61b1b"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sticker_saver",
+    "project_link": "nonebot-plugin-sticker-saver",
+    "author": "colasama",
+    "tags": [
+      {
+        "label": "表情包",
+        "color": "#f1ce15"
+      }
+    ],
     "is_official": false
   }
 ]

@@ -12,6 +12,9 @@ import TabItem from "@theme/TabItem";
 
 ## 通用消息段
 
+适配器下的消息段标注会匹配适配器特定的 `MessageSegment`， 而通用消息段与适配器消息段的区别在于：
+通用消息段会匹配多个适配器中相似类型的消息段，并返回 `uniseg` 模块中定义的 [`Segment` 模型](https://nonebot.dev/docs/next/best-practice/alconna/utils#%E9%80%9A%E7%94%A8%E6%B6%88%E6%81%AF%E6%AE%B5), 以达到**跨平台接收消息**的作用。
+
 `nonebot-plugin-alconna.uniseg` 提供了类似 `MessageSegment` 的通用消息段，并可在 `Alconna` 下直接标注使用：
 
 ```python
@@ -21,15 +24,17 @@ class Segment:
 class Text(Segment):
     """Text对象, 表示一类文本元素"""
     text: str
-    style: Optional[str]
+    styles: Dict[Tuple[int, int], List[str]]
 
 class At(Segment):
     """At对象, 表示一类提醒某用户的元素"""
-    type: Literal["user", "role", "channel"]
+    flag: Literal["user", "role", "channel"]
     target: str
+    display: Optional[str]
 
 class AtAll(Segment):
     """AtAll对象, 表示一类提醒所有人的元素"""
+    here: bool
 
 class Emoji(Segment):
     """Emoji对象, 表示一类表情元素"""
@@ -39,17 +44,23 @@ class Emoji(Segment):
 class Media(Segment):
     url: Optional[str]
     id: Optional[str]
-    path: Optional[str]
-    raw: Optional[bytes]
+    path: Optional[Union[str, Path]]
+    raw: Optional[Union[bytes, BytesIO]]
+    mimetype: Optional[str]
+    name: str
+
+    to_url: ClassVar[Optional[MediaToUrl]]
 
 class Image(Media):
     """Image对象, 表示一类图片元素"""
 
 class Audio(Media):
     """Audio对象, 表示一类音频元素"""
+    duration: Optional[int]
 
 class Voice(Media):
     """Voice对象, 表示一类语音元素"""
+    duration: Optional[int]
 
 class Video(Media):
     """Video对象, 表示一类视频元素"""
@@ -72,21 +83,54 @@ class Reference(Segment):
     """此处不一定是消息ID，可能是其他ID，如消息序号等"""
     content: Optional[Union[Message, str, List[Union[RefNode, CustomNode]]]]
 
-class Card(Segment):
-	type: Literal["xml", "json"]
-	raw: str
+class Hyper(Segment):
+    """Hyper对象，表示一类超级消息。如卡片消息、ark消息、小程序等"""
+    format: Literal["xml", "json"]
+    raw: Optional[str]
+    content: Optional[Union[dict, list]]
 
 class Other(Segment):
     """其他 Segment"""
+    origin: MessageSegment
+
+class Custom(Segment, abc.ABC):
+    """Custom对象，表示一类自定义消息"""
+
+    mstype: str
+    content: Any
+
+    @abc.abstractmethod
+    def export(self, msg_type: Type[TM]) -> MessageSegment[TM]: ...
 ```
 
-来自各自适配器的消息序列都会经过这些通用消息段对应的标注转换，以达到跨平台接收消息的作用
+此类消息段通过 `UniMessage.export` 可以转为特定的 `MessageSegment`
+
+:::tips
+
+`Custom` 是一个抽象类，你可以通过继承 `Custom` 来实现自定义消息段：
+
+```python
+from nonebot_plugin_alconna.uniseg import Custom, custom_register
+from nonebot.adapters.qq import Message as QQMessage, MessageSegment as QQMessageSegment
+
+class Markdown(Custom):
+
+    def export(self, msg_type: Type[TM]) -> MessageSegment[TM]:
+        if msg_type is QQMessage:
+            return QQMessageSegment.markdown(self.content)
+
+@custom_register(Markdown, "markdown")
+def markdown(seg: QQMessageSegment) -> Markdown:
+    return Markdown("markdown", content=seg.data["content"])
+```
+
+:::
 
 ## 通用消息序列
 
 `nonebot-plugin-alconna.uniseg` 同时提供了一个类似于 `Message` 的 `UniMessage` 类型，其元素为经过通用标注转换后的通用消息段。
 
-你可以用如下方式获取 `UniMessage` ：
+你可以用如下方式获取 `UniMessage`：
 
 <Tabs groupId="get_unimsg">
 <TabItem value="depend" label="使用依赖注入">
@@ -95,6 +139,7 @@ class Other(Segment):
 
 ```python
 from nonebot_plugin_alconna.uniseg import UniMsg, At, Reply
+
 
 matcher = on_xxx(...)
 
@@ -117,11 +162,13 @@ async def _(msg: UniMsg):
 from nonebot import Message, EventMessage
 from nonebot_plugin_alconna.uniseg import UniMessage
 
+
 matcher = on_xxx(...)
 
 @matcher.handle()
 async def _(message: Message = EventMessage()):
     msg = await UniMessage.generate(message=message)
+    msg1 = UniMessage.generate_without_reply(message=message)
 ```
 
 </TabItem>
@@ -129,11 +176,12 @@ async def _(message: Message = EventMessage()):
 
 不仅如此，你还可以通过 `UniMessage` 的 `export` 与 `send` 方法来**跨平台发送消息**。
 
-`UniMessage.export` 会通过传入的 `bot: Bot` 参数，或上下文中的 `Bot` 对象读取适配器信息，并使用对应的生成方法把通用消息转为适配器对应的消息序列
+`UniMessage.export` 会通过传入的 `bot: Bot` 参数，或上下文中的 `Bot` 对象读取适配器信息，并使用对应的生成方法把通用消息转为适配器对应的消息序列：
 
 ```python
 from nonebot import Bot, on_command
 from nonebot_plugin_alconna.uniseg import Image, UniMessage
+
 
 test = on_command("test")
 
@@ -142,12 +190,28 @@ async def handle_test():
     await test.send(await UniMessage(Image(path="path/to/img")).export())
 ```
 
+除此之外 `UniMessage.send` 方法基于 `UniMessage.export` 并调用各适配器下的发送消息方法，返回一个 `Receipt` 对象，用于修改/撤回消息：
+
+```python
+from nonebot import Bot, on_command
+from nonebot_plugin_alconna.uniseg import UniMessage
+
+
+test = on_command("test")
+
+@test.handle()
+async def handle():
+    receipt = await UniMessage.text("hello!").send(at_sender=True, reply_to=True)
+    await receipt.recall(delay=1)
+```
+
 而在 `AlconnaMatcher` 下，`got`, `send`, `reject` 等可以发送消息的方法皆支持使用 `UniMessage`，不需要手动调用 export 方法：
 
 ```python
 from arclet.alconna import Alconna, Args
 from nonebot_plugin_alconna import Match, AlconnaMatcher, on_alconna
 from nonebot_plugin_alconna.uniseg import At,  UniMessage
+
 
 test_cmd = on_alconna(Alconna("test", Args["target?", At]))
 
@@ -161,23 +225,9 @@ async def tt(target: At):
     await test_cmd.send(UniMessage([target, "\ndone."]))
 ```
 
-除此之外 `UniMessage.send` 方法基于 `UniMessage.export` 并调用各适配器下的发送消息方法，返回一个 `Receipt` 对象，用于修改/撤回消息：
-
-```python
-from nonebot import Bot, on_command
-from nonebot_plugin_alconna.uniseg import UniMessage
-
-test = on_command("test")
-
-@test.handle()
-async def handle():
-    receipt = await UniMessage.text("hello!").send(at_sender=True, reply_to=True)
-    await receipt.recall(delay=1)
-```
-
 :::caution
 
-在响应器以外的地方，`bot` 参数必须手动传入。
+在响应器以外的地方，除非启用了 `alconna_apply_fetch_targets` 配置项，否则 `bot` 参数必须手动传入。
 
 :::
 
@@ -187,6 +237,7 @@ async def handle():
 
 ```python
 from nonebot_plugin_alconna.uniseg import UniMessage, At
+
 
 msg = UniMessage("Hello")
 msg1 = UniMessage(At("user", "124"))
@@ -198,32 +249,95 @@ msg2 = UniMessage(["Hello", At("user", "124")])
 ```python
 from nonebot_plugin_alconna.uniseg import UniMessage, At, Image
 
+
 msg = UniMessage.text("Hello").at("124").image(path="/path/to/img")
 assert msg == UniMessage(
     ["Hello", At("user", "124"), Image(path="/path/to/img")]
 )
 ```
 
-### 获取消息纯文本
+### 拼接消息
 
-类似于 `Message.extract_plain_text()`，用于获取通用消息的纯文本。
-
-```python
-from nonebot_plugin_alconna.uniseg import UniMessage, At
-# 提取消息纯文本字符串
-assert UniMessage(
-    [At("user", "1234"), "text"]
-).extract_plain_text() == "text"
-```
-
-### 遍历
-
-通用消息序列继承自 `List[Segment]` ，因此可以使用 `for` 循环遍历消息段。
+`str`、`UniMessage`、`Segment` 对象之间可以直接相加，相加均会返回一个新的 `UniMessage` 对象：
 
 ```python
-for segment in message:  # type: Segment
-    ...
+# 消息序列与消息段相加
+UniMessage("text") + Text("text")
+# 消息序列与字符串相加
+UniMessage([Text("text")]) + "text"
+# 消息序列与消息序列相加
+UniMessage("text") + UniMessage([Text("text")])
+# 字符串与消息序列相加
+"text" + UniMessage([Text("text")])
+# 消息段与消息段相加
+Text("text") + Text("text")
+# 消息段与字符串相加
+Text("text") + "text"
+# 消息段与消息序列相加
+Text("text") + UniMessage([Text("text")])
+# 字符串与消息段相加
+"text" + Text("text")
 ```
+
+如果需要在当前消息序列后直接拼接新的消息段，可以使用 `Message.append`、`Message.extend` 方法，或者使用自加：
+
+```python
+msg = UniMessage([Text("text")])
+# 自加
+msg += "text"
+msg += Text("text")
+msg += UniMessage([Text("text")])
+# 附加
+msg.append(Text("text"))
+# 扩展
+msg.extend([Text("text")])
+```
+
+### 使用消息模板
+
+`UniMessage.template` 同样类似于 `Message.template`，可以用于格式化消息，大体用法参考 [消息模板](../../tutorial/message#使用消息模板)。
+
+这里额外说明 `UniMessage.template` 的拓展控制符
+
+相比 `Message`，UniMessage 对于 {:XXX} 做了另一类拓展。其能够识别例如 At(xxx, yyy) 或 Emoji(aaa, bbb)的字符串并执行
+
+以 At(...) 为例：
+
+```python title=使用通用消息段的拓展控制符
+>>> from nonebot_plugin_alconna.uniseg import UniMessage
+>>>  UniMessage.template("{:At(user, target)}").format(target="123")
+UniMessage(At("user", "123"))
+>>> UniMessage.template("{:At(type=user, target=id)}").format(id="123")
+UniMessage(At("user", "123"))
+>>> UniMessage.template("{:At(type=user, target=123)}").format()
+UniMessage(At("user", "123"))
+```
+
+而在 `AlconnaMatcher` 中，{:XXX} 更进一步地提供了获取 `event` 和 `bot` 中的属性的功能：
+
+```python title=在AlconnaMatcher中使用通用消息段的拓展控制符
+from arclet.alconna import Alconna, Args
+from nonebot_plugin_alconna import At, Match, UniMessage, AlconnaMatcher, on_alconna
+
+
+test_cmd = on_alconna(Alconna("test", Args["target?", At]))
+
+@test_cmd.handle()
+async def tt_h(matcher: AlconnaMatcher, target: Match[At]):
+    if target.available:
+        matcher.set_path_arg("target", target.result)
+
+@test_cmd.got_path(
+    "target",
+    prompt=UniMessage.template("{:At(user, $event.get_user_id())} 请确认目标")
+)
+async def tt():
+    await test_cmd.send(
+      UniMessage.template("{:At(user, $event.get_user_id())} 已确认目标为 {target}")
+    )
+```
+
+另外也有 `$message_id` 与 `$target` 两个特殊值。
 
 ### 检查消息段
 
@@ -236,7 +350,7 @@ At("user", "1234") in message
 At in message
 ```
 
-我们还可以使用 `only` 方法来检查消息中是否仅包含指定的消息段。
+我们还可以使用 `only` 方法来检查消息中是否仅包含指定的消息段：
 
 ```python
 # 是否都为 "test"
@@ -245,12 +359,36 @@ message.only("test")
 message.only(Text)
 ```
 
+### 获取消息纯文本
+
+类似于 `Message.extract_plain_text()`，用于获取通用消息的纯文本：
+
+```python
+from nonebot_plugin_alconna.uniseg import UniMessage, At
+
+
+# 提取消息纯文本字符串
+assert UniMessage(
+    [At("user", "1234"), "text"]
+).extract_plain_text() == "text"
+```
+
+### 遍历
+
+通用消息序列继承自 `List[Segment]` ，因此可以使用 `for` 循环遍历消息段：
+
+```python
+for segment in message:  # type: Segment
+    ...
+```
+
 ### 过滤、索引与切片
 
-消息序列对列表的索引与切片进行了增强，在原有列表 `int` 索引与 `slice` 切片的基础上，支持 `type` 过滤索引与切片。
+消息序列对列表的索引与切片进行了增强，在原有列表 `int` 索引与 `slice` 切片的基础上，支持 `type` 过滤索引与切片：
 
 ```python
 from nonebot_plugin_alconna.uniseg import UniMessage, At, Text, Reply
+
 
 message = UniMessage(
     [
@@ -272,14 +410,14 @@ message[At, 0] == At("user", "1234")
 message[Text, 0:2] == UniMessage([Text("text1"), Text("text2")])
 ```
 
-我们也可以通过消息序列的 `include`、`exclude` 方法进行类型过滤。
+我们也可以通过消息序列的 `include`、`exclude` 方法进行类型过滤：
 
 ```python
 message.include(Text, At)
 message.exclude(Reply)
 ```
 
-同样的，消息序列对列表的 `index`、`count` 方法也进行了增强，可以用于索引指定类型的消息段。
+同样的，消息序列对列表的 `index`、`count` 方法也进行了增强，可以用于索引指定类型的消息段：
 
 ```python
 # 指定类型首个消息段索引
@@ -288,94 +426,12 @@ message.index(Text) == 1
 message.count(Text) == 2
 ```
 
-此外，消息序列添加了一个 `get` 方法，可以用于获取指定类型指定个数的消息段。
+此外，消息序列添加了一个 `get` 方法，可以用于获取指定类型指定个数的消息段：
 
 ```python
 # 获取指定类型指定个数的消息段
 message.get(Text, 1) == UniMessage([Text("test1")])
 ```
-
-### 拼接消息
-
-`str`、`UniMessage`、`Segment` 对象之间可以直接相加，相加均会返回一个新的 `UniMessage` 对象。
-
-```python
-# 消息序列与消息段相加
-UniMessage("text") + Text("text")
-# 消息序列与字符串相加
-UniMessage([Text("text")]) + "text"
-# 消息序列与消息序列相加
-UniMessage("text") + UniMessage([Text("text")])
-# 字符串与消息序列相加
-"text" + UniMessage([Text("text")])
-# 消息段与消息段相加
-Text("text") + Text("text")
-# 消息段与字符串相加
-Text("text") + "text"
-# 消息段与消息序列相加
-Text("text") + UniMessage([Text("text")])
-# 字符串与消息段相加
-"text" + Text("text")
-```
-
-如果需要在当前消息序列后直接拼接新的消息段，可以使用 `Message.append`、`Message.extend` 方法，或者使用自加。
-
-```python
-msg = UniMessage([Text("text")])
-# 自加
-msg += "text"
-msg += Text("text")
-msg += UniMessage([Text("text")])
-# 附加
-msg.append(Text("text"))
-# 扩展
-msg.extend([Text("text")])
-```
-
-### 使用消息模板
-
-`UniMessage.template` 同样类似于 `Message.template`，可以用于格式化消息。大体用法参考 [消息模板](../../tutorial/message#使用消息模板)。
-
-这里额外说明 `UniMessage.template` 的拓展控制符
-
-相比 `Message`，UniMessage 对于 {:XXX} 做了另一类拓展。其能够识别例如 At(xxx, yyy) 或 Emoji(aaa, bbb)的字符串并执行
-
-以 At(...) 为例：
-
-```python title=使用通用消息段的拓展控制符
->>> from nonebot_plugin_alconna.uniseg import UniMessage
->>>  UniMessage.template("{:At(user, target)}").format(target="123")
-UniMessage(At("user", "123"))
->>> UniMessage.template("{:At(type=user, target=id)}").format(id="123")
-UniMessage(At("user", "123"))
->>> UniMessage.template("{:At(type=user, target=123)}").format()
-UniMessage(At("user", "123"))
-```
-
-而在 `AlconnaMatcher` 中，{:XXX} 更进一步地提供了获取 `event` 和 `bot` 中的属性的功能
-
-```python title=在AlconnaMatcher中使用通用消息段的拓展控制符
-from arclet.alconna import Alconna, Args
-from nonebot_plugin_alconna import At, Match, UniMessage, AlconnaMatcher, on_alconna
-
-test_cmd = on_alconna(Alconna("test", Args["target?", At]))
-
-@test_cmd.handle()
-async def tt_h(matcher: AlconnaMatcher, target: Match[At]):
-    if target.available:
-        matcher.set_path_arg("target", target.result)
-
-@test_cmd.got_path(
-    "target",
-    prompt=UniMessage.template("{:At(user, $event.get_user_id())} 请确认目标")
-)
-async def tt():
-    await test_cmd.send(
-      UniMessage.template("{:At(user, $event.get_user_id())} 已确认目标为 {target}")
-    )
-```
-
-另外也有 `$message_id` 与 `$target` 两个特殊值。
 
 ## 消息发送
 
@@ -394,9 +450,29 @@ async def send(
 
 实际上，`UniMessage` 同时提供了获取消息事件 id 与消息发送对象的方法:
 
+<Tabs groupId="get_unimsg">
+<TabItem value="depend" label="使用依赖注入">
+
+通过提供的 `MessageTarget`, `MessageId` 或 `MsgTarget`, `MsgId` 依赖注入器来获取消息事件 id 与消息发送对象。
+
+```python
+from nonebot_plugin_alconna.uniseg import MessageId, MsgTarget
+
+
+matcher = on_xxx(...)
+
+@matcher.handle()
+asycn def _(target: MsgTarget, msg_id: MessageId):
+    ...
+```
+
+</TabItem>
+<TabItem value="method" label="使用 UniMessage 的方法">
+
 ```python
 from nonebot import Event, Bot
 from nonebot_plugin_alconna.uniseg import UniMessage, Target
+
 
 matcher = on_xxx(...)
 
@@ -407,24 +483,77 @@ asycn def _(bot: Bot, event: Event):
 
 ```
 
+</TabItem>
+</Tabs>
+
 `send`, `get_target`, `get_message_id` 中与 `event`, `bot` 相关的参数都会尝试从上下文中获取对象。
 
-其中，`Target`:
+### 消息发送对象
+
+消息发送对象是用来描述响应消息时的发送对象或者主动发送消息时的目标对象的对象，它包含了以下属性：
 
 ```python
 class Target:
     id: str
     """目标id；若为群聊则为group_id或者channel_id，若为私聊则为user_id"""
-    parent_id: str = ""
-    """父级id；若为频道则为guild_id，其他情况为空字符串"""
-    channel: bool = False
-    """是否为频道，仅当目标平台同时支持群聊和频道时有效"""
-    private: bool = False
+    parent_id: str
+    """父级id；若为频道则为guild_id，其他情况下可能为空字符串（例如 Feishu 下可作为部门 id）"""
+    channel: bool
+    """是否为频道，仅当目标平台符合频道概念时"""
+    private: bool
     """是否为私聊"""
-    source: str = ""
+    source: str
     """可能的事件id"""
+    self_id: Union[str, None]
+    """机器人id，若为 None 则 Bot 对象会随机选择"""
+    selector: Union[Callable[[Bot], Awaitable[bool]], None]
+    """选择器，用于在多个 Bot 对象中选择特定 Bot"""
+    extra: Dict[str, Any]
+    """额外信息，用于适配器扩展"""
 ```
 
-是用来描述响应消息时的发送对象。
+其构造时需要如下参数：
 
-同样的，你可以通过依赖注入的方式在响应器中直接获取它们。
+- `id` 为目标id；若为群聊则为 group_id 或者 channel_id，若为私聊则为user_id
+- `parent_id` 为父级id；若为频道则为 guild_id，其他情况下可能为空字符串（例如 Feishu 下可作为部门 id）
+- `channel` 为是否为频道，仅当目标平台符合频道概念时
+- `private` 为是否为私聊
+- `source` 为可能的事件id
+- `self_id` 为机器人id，若为 None 则 Bot 对象会随机选择
+- `selector` 为选择器，用于在多个 Bot 对象中选择特定 Bot
+- `scope` 为适配器范围，用于传入内置的特定选择器
+- `adapter` 为适配器名称，若为 None 则需要明确指定 Bot 对象
+- `platform` 为平台名称，仅当目标适配器存在多个平台时使用
+- `extra` 为额外信息，用于适配器扩展
+
+通过 `Target` 对象，我们可以在 `UniMessage.send` 中指定发送对象：
+
+```python
+from nonebot_plugin_alconna.uniseg import UniMessage, MsgTarget, Target, SupportScope
+
+
+matcher = on_xxx(...)
+
+@matcher.handle()
+async def _(target: MsgTarget):
+    await UniMessage("Hello!").send(target=target)
+    target1 = Target("xxxx", scope=SupportScope.qq_client)
+    await UniMessage("Hello!").send(target=target1)
+```
+
+### 主动发送消息
+
+`UniMessage.send` 也可以用于主动发送消息：
+
+```python
+from nonebot_plugin_alconna.uniseg import UniMessage, Target, SupportScope
+from nonebot import get_driver
+
+
+driver = get_driver()
+
+@driver.on_startup
+async def on_startup():
+    target = Target("xxxx", scope=SupportScope.qq_client)
+    await UniMessage("Hello!").send(target=target)
+```

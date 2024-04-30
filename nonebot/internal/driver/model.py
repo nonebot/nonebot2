@@ -4,56 +4,44 @@ from enum import Enum
 from dataclasses import dataclass
 from typing_extensions import TypeAlias
 from http.cookiejar import Cookie, CookieJar
-from typing import (
-    IO,
-    Any,
-    Dict,
-    List,
-    Tuple,
-    Union,
-    Mapping,
-    Callable,
-    Iterator,
-    Optional,
-    Awaitable,
-    MutableMapping,
-)
+from typing import IO, Any, Union, Callable, Optional
+from collections.abc import Mapping, Iterator, Awaitable, MutableMapping
 
 from yarl import URL as URL
 from multidict import CIMultiDict
 
-RawURL: TypeAlias = Tuple[bytes, bytes, Optional[int], bytes]
+RawURL: TypeAlias = tuple[bytes, bytes, Optional[int], bytes]
 
 SimpleQuery: TypeAlias = Union[str, int, float]
-QueryVariable: TypeAlias = Union[SimpleQuery, List[SimpleQuery]]
+QueryVariable: TypeAlias = Union[SimpleQuery, list[SimpleQuery]]
 QueryTypes: TypeAlias = Union[
-    None, str, Mapping[str, QueryVariable], List[Tuple[str, QueryVariable]]
+    None, str, Mapping[str, QueryVariable], list[tuple[str, SimpleQuery]]
 ]
 
 HeaderTypes: TypeAlias = Union[
     None,
     CIMultiDict[str],
-    Dict[str, str],
-    List[Tuple[str, str]],
+    dict[str, str],
+    list[tuple[str, str]],
 ]
 
 CookieTypes: TypeAlias = Union[
-    None, "Cookies", CookieJar, Dict[str, str], List[Tuple[str, str]]
+    None, "Cookies", CookieJar, dict[str, str], list[tuple[str, str]]
 ]
 
 ContentTypes: TypeAlias = Union[str, bytes, None]
 DataTypes: TypeAlias = Union[dict, None]
 FileContent: TypeAlias = Union[IO[bytes], bytes]
-FileType: TypeAlias = Tuple[Optional[str], FileContent, Optional[str]]
+FileType: TypeAlias = tuple[Optional[str], FileContent, Optional[str]]
 FileTypes: TypeAlias = Union[
     # file (or bytes)
     FileContent,
     # (filename, file (or bytes))
-    Tuple[Optional[str], FileContent],
+    tuple[Optional[str], FileContent],
     # (filename, file (or bytes), content_type)
     FileType,
 ]
-FilesTypes: TypeAlias = Union[Dict[str, FileTypes], List[Tuple[str, FileTypes]], None]
+FilesTypes: TypeAlias = Union[dict[str, FileTypes], list[tuple[str, FileTypes]], None]
 
 
 class HTTPVersion(Enum):
@@ -119,7 +107,7 @@ class Request:
         self.content: ContentTypes = content
         self.data: DataTypes = data
         self.json: Any = json
-        self.files: Optional[List[Tuple[str, FileType]]] = None
+        self.files: Optional[list[tuple[str, FileType]]] = None
         if files:
             self.files = []
             files_ = files.items() if isinstance(files, dict) else files
@@ -257,7 +245,7 @@ class Cookies(MutableMapping):
         )
         self.jar.set_cookie(cookie)
 
-    def get(
+    def get(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         name: str,
         default: Optional[str] = None,
@@ -298,12 +286,14 @@ class Cookies(MutableMapping):
     def clear(self, domain: Optional[str] = None, path: Optional[str] = None) -> None:
         self.jar.clear(domain, path)
 
-    def update(self, cookies: CookieTypes = None) -> None:
+    def update(  # pyright: ignore[reportIncompatibleMethodOverride]
+        self, cookies: CookieTypes = None
+    ) -> None:
         cookies = Cookies(cookies)
         for cookie in cookies.jar:
             self.jar.set_cookie(cookie)
 
-    def as_header(self, request: Request) -> Dict[str, str]:
+    def as_header(self, request: Request) -> dict[str, str]:
         urllib_request = self._CookieCompatRequest(request)
         self.jar.add_cookie_header(urllib_request)
         return urllib_request.added_headers
@@ -341,9 +331,11 @@ class Cookies(MutableMapping):
                 method=request.method,
             )
             self.request = request
-            self.added_headers: Dict[str, str] = {}
+            self.added_headers: dict[str, str] = {}
 
-        def add_unredirected_header(self, key: str, value: str) -> None:
+        def add_unredirected_header(  # pyright: ignore[reportIncompatibleMethodOverride]
+            self, key: str, value: str
+        ) -> None:
             super().add_unredirected_header(key, value)
             self.added_headers[key] = value
 

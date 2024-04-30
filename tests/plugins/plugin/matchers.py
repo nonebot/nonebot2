@@ -1,4 +1,3 @@
-from typing import Type
 from datetime import datetime, timezone
 
 from nonebot.adapters import Event
@@ -52,7 +51,7 @@ matcher_on = on(
 )
 
 
-def matcher_on_factory() -> Type[Matcher]:
+def matcher_on_factory() -> type[Matcher]:
     return on(
         "test",
         rule=rule,
@@ -202,8 +201,7 @@ matcher_on_regex = on_regex(
 )
 
 
-class TestEvent(Event):
-    ...
+class TestEvent(Event): ...
 
 
 matcher_on_type = on_type(

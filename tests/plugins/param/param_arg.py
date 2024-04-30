@@ -1,4 +1,4 @@
-from typing_extensions import Annotated
+from typing import Annotated
 
 from nonebot.adapters import Message
 from nonebot.params import Arg, ArgStr, ArgPlainText

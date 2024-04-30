@@ -10,7 +10,7 @@ description: 配置项
 - **类型**: `bool`
 - **默认值**: `False`
 
-是否全局启用输出信息自动发送，不启用则会在触特殊内置选项后仍然将解析结果传递至响应器。
+是否全局启用输出信息自动发送，不启用则会在触发特殊内置选项后仍然将解析结果传递至响应器。
 
 ## alconna_use_command_start
 
@@ -38,11 +38,39 @@ description: 配置项
 - **类型**: `bool`
 - **默认值**: `False`
 
-是否读取 Nonebot 的配置项 `COMMAND_SEP` 来作为全局的 Alconna 命令分隔符
+是否读取 Nonebot 的配置项 `COMMAND_SEP` 来作为全局的 Alconna 命令分隔符。
 
 ## alconna_global_extensions
 
 - **类型**: `List[str]`
 - **默认值**: `[]`
 
-全局加载的扩展，路径以 . 分隔，如 `foo.bar.baz:DemoExtension`
+全局加载的扩展，路径以 . 分隔，如 `foo.bar.baz:DemoExtension`。
+
+## alconna_context_style
+
+- **类型**: `Optional[Literal["bracket", "parentheses"]]`
+- **默认值**: `None`
+
+全局命令上下文插值的风格，None 为关闭，bracket 为 `{...}`，parentheses 为 `$(...)`。
+
+## alconna_enable_saa_patch
+
+- **类型**: `bool`
+- **默认值**: `False`
+
+是否启用 SAA 补丁。
+
+## alconna_apply_filehost
+
+- **类型**: `bool`
+- **默认值**: `False`
+
+是否启用文件托管。
+
+## alconna_apply_fetch_targets
+
+- **类型**: `bool`
+- **默认值**: `False`
+
+是否启动时拉取一次发送对象列表。

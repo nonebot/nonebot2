@@ -7,14 +7,18 @@
   }
 
   &-header {
-    @apply flex items-center w-full text-lg font-medium;
+    @apply min-w-0 flex items-center w-full text-lg font-medium;
 
     &-title {
-      @apply grow text-left truncate;
+      @apply min-w-0 grow justify-start flex items-center flex-initial;
+    }
+
+    &-text {
+      @apply min-w-0 cursor-help tooltip;
     }
 
     &-check {
-      @apply ml-2 text-success w-5 h-5 fill-current;
+      @apply ml-2 text-green-600 dark:text-green-400 fill-current;
     }
 
     &-expand {

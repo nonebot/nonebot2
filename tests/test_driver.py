@@ -1,6 +1,7 @@
 import json
 import asyncio
-from typing import Any, Set, Optional
+from typing import Any, Optional
+from http.cookies import SimpleCookie
 
 import pytest
 from nonebug import App
@@ -310,6 +311,121 @@ async def test_http_client(driver: Driver, server_url: URL):
 @pytest.mark.parametrize(
     "driver",
     [
+        pytest.param("nonebot.drivers.httpx:Driver", id="httpx"),
+        pytest.param("nonebot.drivers.aiohttp:Driver", id="aiohttp"),
+    ],
+    indirect=True,
+)
+async def test_http_client_session(driver: Driver, server_url: URL):
+    assert isinstance(driver, HTTPClientMixin)
+
+    session = driver.get_session(
+        params={"session": "test"},
+        headers={"X-Session": "test"},
+        cookies={"session": "test"},
+    )
+    request = Request("GET", server_url)
+    with pytest.raises(RuntimeError):
+        await session.request(request)
+
+    with pytest.raises(RuntimeError):  # noqa: PT012
+        async with session:
+            async with session:
+                ...
+
+    async with session as session:
+        # simple post with query, headers, cookies and content
+        request = Request(
+            "POST",
+            server_url,
+            params={"param": "test"},
+            headers={"X-Test": "test"},
+            cookies={"cookie": "test"},
+            content="test",
+        )
+        response = await session.request(request)
+        assert response.status_code == 200
+        assert response.content
+        data = json.loads(response.content)
+        assert data["method"] == "POST"
+        assert data["args"] == {"session": "test", "param": "test"}
+        assert data["headers"].get("X-Session") == "test"
+        assert data["headers"].get("X-Test") == "test"
+        assert {
+            key: cookie.value
+            for key, cookie in SimpleCookie(data["headers"].get("Cookie")).items()
+        } == {
+            "session": "test",
+            "cookie": "test",
+        }
+        assert data["data"] == "test"
+
+        # post with data body
+        request = Request("POST", server_url, data={"form": "test"})
+        response = await session.request(request)
+        assert response.status_code == 200
+        assert response.content
+        data = json.loads(response.content)
+        assert data["method"] == "POST"
+        assert data["args"] == {"session": "test"}
+        assert data["headers"].get("X-Session") == "test"
+        assert {
+            key: cookie.value
+            for key, cookie in SimpleCookie(data["headers"].get("Cookie")).items()
+        } == {"session": "test"}
+        assert data["form"] == {"form": "test"}
+
+        # post with json body
+        request = Request("POST", server_url, json={"json": "test"})
+        response = await session.request(request)
+        assert response.status_code == 200
+        assert response.content
+        data = json.loads(response.content)
+        assert data["method"] == "POST"
+        assert data["args"] == {"session": "test"}
+        assert data["headers"].get("X-Session") == "test"
+        assert {
+            key: cookie.value
+            for key, cookie in SimpleCookie(data["headers"].get("Cookie")).items()
+        } == {"session": "test"}
+        assert data["json"] == {"json": "test"}
+
+        # post with files and form data
+        request = Request(
+            "POST",
+            server_url,
+            data={"form": "test"},
+            files=[
+                ("test1", b"test"),
+                ("test2", ("test.txt", b"test")),
+                ("test3", ("test.txt", b"test", "text/plain")),
+            ],
+        )
+        response = await session.request(request)
+        assert response.status_code == 200
+        assert response.content
+        data = json.loads(response.content)
+        assert data["method"] == "POST"
+        assert data["args"] == {"session": "test"}
+        assert data["headers"].get("X-Session") == "test"
+        assert {
+            key: cookie.value
+            for key, cookie in SimpleCookie(data["headers"].get("Cookie")).items()
+        } == {"session": "test"}
+        assert data["form"] == {"form": "test"}
+        assert data["files"] == {
+            "test1": "test",
+            "test2": "test",
+            "test3": "test",
+        }, "file parsing error"
+
+    await asyncio.sleep(1)
+
+
+@pytest.mark.asyncio
+@pytest.mark.parametrize(
+    "driver",
+    [
         pytest.param("nonebot.drivers.websockets:Driver", id="websockets"),
         pytest.param("nonebot.drivers.aiohttp:Driver", id="aiohttp"),
     ],
@@ -363,8 +479,8 @@ async def test_combine_driver(driver: Driver, driver_type: str):
 @pytest.mark.asyncio
 async def test_bot_connect_hook(app: App, driver: Driver):
     with pytest.MonkeyPatch.context() as m:
-        conn_hooks: Set[Dependent[Any]] = set()
-        disconn_hooks: Set[Dependent[Any]] = set()
+        conn_hooks: set[Dependent[Any]] = set()
+        disconn_hooks: set[Dependent[Any]] = set()
         m.setattr(Driver, "_bot_connection_hook", conn_hooks)
         m.setattr(Driver, "_bot_disconnection_hook", disconn_hooks)
 
@@ -409,9 +525,9 @@ async def test_bot_connect_hook(app: App, driver: Driver):
 
             disconn_should_be_called = True
 
-        if conn_hook not in {hook.call for hook in conn_hooks}:
+        if conn_hook not in {hook.call for hook in conn_hooks}:  # type: ignore
             pytest.fail("on_bot_connect hook not registered")
-        if disconn_hook not in {hook.call for hook in disconn_hooks}:
+        if disconn_hook not in {hook.call for hook in disconn_hooks}:  # type: ignore
             pytest.fail("on_bot_disconnect hook not registered")
 
         async with app.test_api() as ctx:

@@ -1,7 +1,7 @@
 import asyncio
 from typing_extensions import Self
 from contextlib import AsyncExitStack
-from typing import Set, Tuple, Union, NoReturn, Optional
+from typing import Union, ClassVar, NoReturn, Optional
 
 from nonebot.dependencies import Dependent
 from nonebot.utils import run_coro_with_catch
@@ -9,7 +9,7 @@ from nonebot.exception import SkippedException
 from nonebot.typing import T_DependencyCache, T_PermissionChecker
 
 from .adapter import Bot, Event
-from .params import BotParam, EventParam, DependParam, DefaultParam
+from .params import Param, BotParam, EventParam, DependParam, DefaultParam
 
 
 class Permission:
@@ -30,7 +30,7 @@ class Permission:
 
     __slots__ = ("checkers",)
 
-    HANDLER_PARAM_TYPES = [
+    HANDLER_PARAM_TYPES: ClassVar[list[type[Param]]] = [
         DependParam,
         BotParam,
         EventParam,
@@ -38,11 +38,13 @@ class Permission:
     ]
 
     def __init__(self, *checkers: Union[T_PermissionChecker, Dependent[bool]]) -> None:
-        self.checkers: Set[Dependent[bool]] = {
-            checker
-            if isinstance(checker, Dependent)
-            else Dependent[bool].parse(
-                call=checker, allow_types=self.HANDLER_PARAM_TYPES
+        self.checkers: set[Dependent[bool]] = {
+            (
+                checker
+                if isinstance(checker, Dependent)
+                else Dependent[bool].parse(
+                    call=checker, allow_types=self.HANDLER_PARAM_TYPES
+                )
             )
             for checker in checkers
         }
@@ -120,7 +122,7 @@ class User:
     __slots__ = ("users", "perm")
 
     def __init__(
-        self, users: Tuple[str, ...], perm: Optional[Permission] = None
+        self, users: tuple[str, ...], perm: Optional[Permission] = None
     ) -> None:
         self.users = users
         self.perm = perm
@@ -144,7 +146,7 @@ class User:
     @classmethod
     def _clean_permission(cls, perm: Permission) -> Optional[Permission]:
         if len(perm.checkers) == 1 and isinstance(
-            user_perm := tuple(perm.checkers)[0].call, cls
+            user_perm := next(iter(perm.checkers)).call, cls
         ):
             return user_perm.perm
         return perm

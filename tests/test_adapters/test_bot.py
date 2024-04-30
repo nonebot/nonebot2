@@ -1,4 +1,4 @@
-from typing import Any, Dict, Optional
+from typing import Any, Optional
 
 import pytest
 from nonebug import App
@@ -27,7 +27,7 @@ async def test_bot_call_api(app: App):
 async def test_bot_calling_api_hook_simple(app: App):
     runned: bool = False
 
-    async def calling_api_hook(bot: Bot, api: str, data: Dict[str, Any]):
+    async def calling_api_hook(bot: Bot, api: str, data: dict[str, Any]):
         nonlocal runned
         runned = True
 
@@ -53,7 +53,7 @@ async def test_bot_calling_api_hook_simple(app: App):
 async def test_bot_calling_api_hook_mock(app: App):
     runned: bool = False
 
-    async def calling_api_hook(bot: Bot, api: str, data: Dict[str, Any]):
+    async def calling_api_hook(bot: Bot, api: str, data: dict[str, Any]):
         nonlocal runned
         runned = True
 
@@ -84,7 +84,7 @@ async def test_bot_called_api_hook_simple(app: App):
         bot: Bot,
         exception: Optional[Exception],
         api: str,
-        data: Dict[str, Any],
+        data: dict[str, Any],
         result: Any,
     ):
         nonlocal runned
@@ -116,7 +116,7 @@ async def test_bot_called_api_hook_mock(app: App):
         bot: Bot,
         exception: Optional[Exception],
         api: str,
-        data: Dict[str, Any],
+        data: dict[str, Any],
         result: Any,
     ):
         nonlocal runned

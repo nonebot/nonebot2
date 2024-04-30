@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "nonebot-pydantic-v1"
+version = "0.1.0"
+description = "Private pydantic v1 test env for nonebot"
+authors = ["yanyongyu <yyy@nonebot.dev>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+
+[tool.poetry.group.dev.dependencies]
+pydantic = "^1.0.0"
+nonebot-test = { path = "../test/", develop = false }
+nonebot2 = { path = "../../", extras = ["all"], develop = true }
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

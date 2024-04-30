@@ -6,19 +6,17 @@ from types import ModuleType
 from dataclasses import dataclass
 from contextvars import ContextVar
 from typing_extensions import Self
+from collections.abc import Iterable
 from datetime import datetime, timedelta
 from contextlib import AsyncExitStack, contextmanager
-from typing import (
+from typing import (  # noqa: UP035
     TYPE_CHECKING,
     Any,
-    List,
     Type,
-    Tuple,
     Union,
     TypeVar,
     Callable,
     ClassVar,
-    Iterable,
     NoReturn,
     Optional,
     overload,
@@ -85,8 +83,8 @@ current_handler: ContextVar[Dependent] = ContextVar("current_handler")
 class MatcherSource:
     """Matcher 源代码上下文信息"""
 
-    plugin_name: Optional[str] = None
-    """事件响应器所在插件名称"""
+    plugin_id: Optional[str] = None
+    """事件响应器所在插件标识符"""
     module_name: Optional[str] = None
     """事件响应器所在插件模块的路径名"""
     lineno: Optional[int] = None
@@ -97,8 +95,13 @@ class MatcherSource:
         """事件响应器所在插件"""
         from nonebot.plugin import get_plugin
 
-        if self.plugin_name is not None:
-            return get_plugin(self.plugin_name)
+        if self.plugin_id is not None:
+            return get_plugin(self.plugin_id)
+
+    @property
+    def plugin_name(self) -> Optional[str]:
+        """事件响应器所在插件名"""
+        return self.plugin and self.plugin.name
 
     @property
     def module(self) -> Optional[ModuleType]:
@@ -141,7 +144,7 @@ class Matcher(metaclass=MatcherMeta):
     """事件响应器匹配规则"""
     permission: ClassVar[Permission] = Permission()
     """事件响应器触发权限"""
-    handlers: List[Dependent[Any]] = []
+    handlers: ClassVar[list[Dependent[Any]]] = []
     """事件响应器拥有的事件处理函数列表"""
     priority: ClassVar[int] = 1
     """事件响应器优先级"""
@@ -160,7 +163,7 @@ class Matcher(metaclass=MatcherMeta):
     _default_permission_updater: ClassVar[Optional[Dependent[Permission]]] = None
     """事件响应器权限更新函数"""
 
-    HANDLER_PARAM_TYPES: ClassVar[Tuple[Type[Param], ...]] = (
+    HANDLER_PARAM_TYPES: ClassVar[tuple[Type[Param], ...]] = (  # noqa: UP006
         DependParam,
         BotParam,
         EventParam,
@@ -171,7 +174,7 @@ class Matcher(metaclass=MatcherMeta):
     )
 
     def __init__(self):
-        self.handlers = self.handlers.copy()
+        self.remain_handlers: list[Dependent[Any]] = self.handlers.copy()
         self.state = self._default_state.copy()
 
     def __repr__(self) -> str:
@@ -192,7 +195,7 @@ class Matcher(metaclass=MatcherMeta):
         type_: str = "",
         rule: Optional[Rule] = None,
         permission: Optional[Permission] = None,
-        handlers: Optional[List[Union[T_Handler, Dependent[Any]]]] = None,
+        handlers: Optional[list[Union[T_Handler, Dependent[Any]]]] = None,
         temp: bool = False,
         priority: int = 1,
         block: bool = False,
@@ -206,7 +209,7 @@ class Matcher(metaclass=MatcherMeta):
         default_permission_updater: Optional[
             Union[T_PermissionUpdater, Dependent[Permission]]
         ] = None,
-    ) -> Type[Self]:
+    ) -> Type[Self]:  # noqa: UP006
         """
         创建一个新的事件响应器，并存储至 `matchers <#matchers>`_
 
@@ -247,7 +250,7 @@ class Matcher(metaclass=MatcherMeta):
             )
         source = source or (
             MatcherSource(
-                plugin_name=plugin and plugin.name,
+                plugin_id=plugin and plugin.id_,
                 module_name=module and module.__name__,
             )
             if plugin is not None or module is not None
@@ -262,16 +265,20 @@ class Matcher(metaclass=MatcherMeta):
                 "type": type_,
                 "rule": rule or Rule(),
                 "permission": permission or Permission(),
-                "handlers": [
-                    handler
-                    if isinstance(handler, Dependent)
-                    else Dependent[Any].parse(
-                        call=handler, allow_types=cls.HANDLER_PARAM_TYPES
-                    )
-                    for handler in handlers
-                ]
-                if handlers
-                else [],
+                "handlers": (
+                    [
+                        (
+                            handler
+                            if isinstance(handler, Dependent)
+                            else Dependent[Any].parse(
+                                call=handler, allow_types=cls.HANDLER_PARAM_TYPES
+                            )
+                        )
+                        for handler in handlers
+                    ]
+                    if handlers
+                    else []
+                ),
                 "temp": temp,
                 "expire_time": (
                     expire_time
@@ -326,14 +333,19 @@ class Matcher(metaclass=MatcherMeta):
         return cls._source and cls._source.plugin
 
     @classproperty
-    def module(cls) -> Optional[ModuleType]:
-        """事件响应器所在插件模块"""
-        return cls._source and cls._source.module
+    def plugin_id(cls) -> Optional[str]:
+        """事件响应器所在插件标识符"""
+        return cls._source and cls._source.plugin_id
 
     @classproperty
     def plugin_name(cls) -> Optional[str]:
         """事件响应器所在插件名"""
         return cls._source and cls._source.plugin_name
+
+    @classproperty
+    def module(cls) -> Optional[ModuleType]:
+        """事件响应器所在插件模块"""
+        return cls._source and cls._source.module
 
     @classproperty
     def module_name(cls) -> Optional[str]:
@@ -453,7 +465,7 @@ class Matcher(metaclass=MatcherMeta):
             parameterless: 非参数类型依赖列表
         """
 
-        async def _receive(event: Event, matcher: "Matcher") -> Union[None, NoReturn]:
+        async def _receive(event: Event, matcher: "Matcher") -> None:
             matcher.set_target(RECEIVE_KEY.format(id=id))
             if matcher.get_target() == RECEIVE_KEY.format(id=id):
                 matcher.set_receive(id, event)
@@ -658,12 +670,10 @@ class Matcher(metaclass=MatcherMeta):
         raise SkippedException
 
     @overload
-    def get_receive(self, id: str) -> Union[Event, None]:
-        ...
+    def get_receive(self, id: str) -> Union[Event, None]: ...
 
     @overload
-    def get_receive(self, id: str, default: T) -> Union[Event, T]:
-        ...
+    def get_receive(self, id: str, default: T) -> Union[Event, T]: ...
 
     def get_receive(
         self, id: str, default: Optional[T] = None
@@ -680,12 +690,10 @@ class Matcher(metaclass=MatcherMeta):
         self.state[LAST_RECEIVE_KEY] = event
 
     @overload
-    def get_last_receive(self) -> Union[Event, None]:
-        ...
+    def get_last_receive(self) -> Union[Event, None]: ...
 
     @overload
-    def get_last_receive(self, default: T) -> Union[Event, T]:
-        ...
+    def get_last_receive(self, default: T) -> Union[Event, T]: ...
 
     def get_last_receive(
         self, default: Optional[T] = None
@@ -697,12 +705,10 @@ class Matcher(metaclass=MatcherMeta):
         return self.state.get(LAST_RECEIVE_KEY, default)
 
     @overload
-    def get_arg(self, key: str) -> Union[Message, None]:
-        ...
+    def get_arg(self, key: str) -> Union[Message, None]: ...
 
     @overload
-    def get_arg(self, key: str, default: T) -> Union[Message, T]:
-        ...
+    def get_arg(self, key: str, default: T) -> Union[Message, T]: ...
 
     def get_arg(
         self, key: str, default: Optional[T] = None
@@ -724,12 +730,10 @@ class Matcher(metaclass=MatcherMeta):
             self.state[REJECT_TARGET] = target
 
     @overload
-    def get_target(self) -> Union[str, None]:
-        ...
+    def get_target(self) -> Union[str, None]: ...
 
     @overload
-    def get_target(self, default: T) -> Union[str, T]:
-        ...
+    def get_target(self, default: T) -> Union[str, T]: ...
 
     def get_target(self, default: Optional[T] = None) -> Optional[Union[str, T]]:
         return self.state.get(REJECT_TARGET, default)
@@ -779,7 +783,7 @@ class Matcher(metaclass=MatcherMeta):
 
     async def resolve_reject(self):
         handler = current_handler.get()
-        self.handlers.insert(0, handler)
+        self.remain_handlers.insert(0, handler)
         if REJECT_CACHE_TARGET in self.state:
             self.state[REJECT_TARGET] = self.state[REJECT_CACHE_TARGET]
 
@@ -813,8 +817,8 @@ class Matcher(metaclass=MatcherMeta):
                 # Refresh preprocess state
                 self.state.update(state)
 
-                while self.handlers:
-                    handler = self.handlers.pop(0)
+                while self.remain_handlers:
+                    handler = self.remain_handlers.pop(0)
                     current_handler.set(handler)
                     logger.debug(f"Running handler {handler}")
                     try:
@@ -856,7 +860,7 @@ class Matcher(metaclass=MatcherMeta):
                 type_,
                 Rule(),
                 permission,
-                self.handlers,
+                self.remain_handlers,
                 temp=True,
                 priority=0,
                 block=True,
@@ -876,7 +880,7 @@ class Matcher(metaclass=MatcherMeta):
                 type_,
                 Rule(),
                 permission,
-                self.handlers,
+                self.remain_handlers,
                 temp=True,
                 priority=0,
                 block=True,
