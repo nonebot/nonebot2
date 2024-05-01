@@ -251,6 +251,12 @@ const siteConfig = {
       src: "https://cdn.wwads.cn/js/makemoney.js",
       async: true,
     },
+    // uwu logo
+    {
+      type: "text/javascript",
+      charset: "UTF-8",
+      src: "/uwu.js",
+    },
   ],
 
   presets: [

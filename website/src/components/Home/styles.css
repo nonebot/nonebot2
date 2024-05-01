@@ -39,3 +39,15 @@
     @apply inline-block !max-w-[600px];
   }
 }
+
+.home-hero-uwu {
+  @apply hidden;
+}
+
+.uwu .home-hero-uwu {
+  @apply block max-w-xs;
+}
+
+.uwu .home-hero-logo,.home-hero-title {
+  @apply hidden;
+}
