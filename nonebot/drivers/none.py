@@ -68,9 +68,11 @@ class Driver(BaseDriver):
             await self._lifespan.startup()
         except Exception as e:
             logger.opt(colors=True, exception=e).error(
-                "<r><bg #f8bbd0>Error when running startup function. "
-                "Ignored!</bg #f8bbd0></r>"
+                "<r><bg #f8bbd0>Application startup failed. "
+                "Exiting.</bg #f8bbd0></r>"
             )
+            self.should_exit.set()
+            return
 
         logger.info("Application startup completed.")
 
