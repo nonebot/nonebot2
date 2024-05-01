@@ -44,11 +44,11 @@
   @apply hidden;
 }
 
-[data-uwu=true] .home-hero-uwu {
+[data-uwu="true"] .home-hero-uwu {
   @apply block max-w-xs;
 }
 
-[data-uwu=true] .home-hero-logo,
-[data-uwu=true] .home-hero-title {
+[data-uwu="true"] .home-hero-logo,
+[data-uwu="true"] .home-hero-title {
   @apply hidden;
 }

@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 📝 文档
+
+- Docs: 添加 uwu logo [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2689](https://github.com/nonebot/nonebot2/pull/2689))
+
 ## v2.3.0
 
 ### 💥 破坏性变更
