@@ -134,10 +134,10 @@ async def _(
 
 类型标注决定依赖注入的数据结构，主要影响以下几个层面：
 
-- 迭代器（`session.excute()`）或异步迭代器（`session.stream()`）
+- 迭代器（`session.execute()`）或异步迭代器（`session.stream()`）
 - 标量（`session.execute().scalars()`）或元组（`session.execute()`）
-- 一个（`session.excute().one_or_none()`，注意 `None` 时可能触发 [重载](../../../appendices/overload#重载)）或全部（`session.excute()` / `session.excute().all()`）
-- 连续（`session().excute()`）或分块（`session.excute().partitions()`）
+- 一个（`session.execute().one_or_none()`，注意 `None` 时可能触发 [重载](../../../appendices/overload#重载)）或全部（`session.execute()` / `session.execute().all()`）
+- 连续（`session().execute()`）或分块（`session.execute().partitions()`）
 
 具体如下（可以使用父类型作为类型标注）：
 
@@ -170,7 +170,7 @@ async def _(
 
 - ```python
   async def _(model_partitions: Iterator[Sequence[Model]]):
-      # 等价于 model_partitions = await (await session.excute(sql).scalars().partitions())
+      # 等价于 model_partitions = await (await session.execute(sql).scalars().partitions())
 
       for partition in model_partitions:
           for model in partition:

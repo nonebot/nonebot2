@@ -70,13 +70,12 @@ CREATE TABLE weather (
 $ nb run
 01-02 15:04:05 [SUCCESS] nonebot | NoneBot is initializing...
 01-02 15:04:05 [ERROR] nonebot_plugin_orm | 启动检查失败
-01-02 15:04:05 [ERROR] nonebot | Error when running startup function. Ignored!
+01-02 15:04:05 [ERROR] nonebot | Application startup failed. Exiting.
 Traceback (most recent call last):
   ...
 click.exceptions.UsageError: 检测到新的升级操作:
 [('add_table',
   Table('weather', MetaData(), Column('location', String(), table=<weather>, primary_key=True, nullable=False), Column('weather', String(), table=<weather>, nullable=False), schema=None))]
-```
 
 咦，发生了什么？
 `nonebot-plugin-orm` 试图阻止我们启动机器人。
@@ -322,9 +321,10 @@ async def _(args: Message = CommandArg()):
 在上面的示例中，我们都是通过会话获得数据的。
 不过，我们也可以通过依赖注入获得数据：
 
-```python title=weather/__init__.py {11-13} showLineNumbers
-from nonebot_plugin_orm import SQLDepends
+```python title=weather/__init__.py {12-14} showLineNumbers
 from sqlalchemy import select
+from nonebot.params import Depends
+from nonebot_plugin_orm import SQLDepends
 
 
 def extract_arg_plain_text(args: Message = CommandArg()) -> str:
@@ -338,13 +338,14 @@ async def _(
     ),
 ):
     await weather.send(f"今天的天气是{wea.weather}")
-```
 
 其中，`SQLDepends` 是一个特殊的依赖注入，它会根据类型标注和 SQL 语句提供数据，SQL 语句中也可以有子依赖。
 
 不同的类型标注也会获得不同形式的数据：
 
-```python title=weather/__init__.py {3} showLineNumbers
+```python title=weather/__init__.py {5} showLineNumbers
+from collections.abc import Sequence
+
 @weather.handle()
 async def _(
     weas: Sequence[Weather] = SQLDepends(
@@ -352,13 +353,14 @@ async def _(
     ),
 ):
     await weather.send(f"今天的天气是{weas[0].weather}的城市有{'，'.join(wea.location for wea in weas)}")
-```
 
 支持的类型标注请参见 [依赖注入](dependency)。
 
 我们也可以像 [类作为依赖](../../../advanced/dependency#类作为依赖) 那样，在类属性中声明子依赖：
 
-```python title=weather/__init__.py {3-4,8} showLineNumbers
+```python title=weather/__init__.py {5-6,10} showLineNumbers
+from collections.abc import Sequence
+
 class Weather(Model):
     location: Mapped[str] = mapped_column(primary_key=True)
     weather: Mapped[str] = Depends(extract_arg_plain_text)
@@ -370,4 +372,3 @@ async def _(weas: Sequence[Weather]):
     await weather.send(
         f"今天的天气是{weas[0].weather}的城市有{'，'.join(wea.location for wea in weas)}"
     )
-```
