@@ -1,4 +1,4 @@
 document.addEventListener("DOMContentLoaded", () => {
   if (location.search.includes("?uwu"))
-    document.querySelector("body").classList.add("uwu");
+    document.documentElement.setAttribute("data-uwu", "true");
 });
