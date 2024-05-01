@@ -510,6 +510,7 @@ async def remove(plugin: Match[str], time: Match[int]):
 ```
 
 目前插件提供了 4 个内置的 `Extension`，它们在 `nonebot_plugin_alconna.builtins.extensions` 下：
+
 - `ReplyRecordExtension`: 将消息事件中的回复暂存在 extension 中，使得解析用的消息不带回复信息，同时可以在后续的处理中获取回复信息。
 - `DiscordSlashExtension`: 将 Alconna 的命令自动转换为 Discord 的 Slash Command，并将 Slash Command 的交互事件转换为消息交给 Alconna 处理。
 - `MarkdownOutputExtension`: 将 Alconna 的自动输出转换为 Markdown 格式
@@ -596,7 +597,10 @@ load_builtin_plugins("echo", "help")
 <Messenger
   msgs={[
     { position: "right", msg: "/帮助" },
-    { position: "left", msg: "# 当前可用的命令有:\n 0 /echo : echo 指令\n 1 /help : 显示所有命令帮助\n# 输入'命令名 -h|--help' 查看特定命令的语法" },
+    {
+      position: "left",
+      msg: "# 当前可用的命令有:\n 0 /echo : echo 指令\n 1 /help : 显示所有命令帮助\n# 输入'命令名 -h|--help' 查看特定命令的语法",
+    },
     { position: "right", msg: "/echo [图片]" },
     { position: "left", msg: "[图片]" },
   ]}
