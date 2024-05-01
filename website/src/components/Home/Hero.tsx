@@ -47,6 +47,7 @@ function HomeHero(): JSX.Element {
 
   return (
     <div className="home-hero">
+      <img src="/img/uwu.svg" alt="uwu" className="home-hero-uwu" />
       <img src={logo!.src} alt={logo!.alt} className="home-hero-logo" />
       <h1 className="home-hero-title">
         <span className="text-primary">None</span>
