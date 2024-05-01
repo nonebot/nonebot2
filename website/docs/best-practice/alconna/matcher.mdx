@@ -487,7 +487,7 @@ matcher = on_alconna(
 
 ```python
 from nonebot_plugin_alconna import Match, on_alconna
-from nonebot_plugin_alconna.adapters.discord import DiscordSlashExtension
+from nonebot_plugin_alconna.builtins.plugins.discord import DiscordSlashExtension
 
 
 alc = Alconna(
@@ -508,6 +508,12 @@ async def add(plugin: Match[str], priority: Match[int]):
 async def remove(plugin: Match[str], time: Match[int]):
     await matcher.finish(f"removed {plugin.result} with {time.result if time.available else -1}")
 ```
+
+目前插件提供了 4 个内置的 `Extension`，它们在 `nonebot_plugin_alconna.builtins.extensions` 下：
+- `ReplyRecordExtension`: 将消息事件中的回复暂存在 extension 中，使得解析用的消息不带回复信息，同时可以在后续的处理中获取回复信息。
+- `DiscordSlashExtension`: 将 Alconna 的命令自动转换为 Discord 的 Slash Command，并将 Slash Command 的交互事件转换为消息交给 Alconna 处理。
+- `MarkdownOutputExtension`: 将 Alconna 的自动输出转换为 Markdown 格式
+- `TelegramSlashExtension`: 将 Alconna 的命令注册在 Telegram 上以获得提示。
 
 :::tip
 
@@ -572,3 +578,26 @@ class CompConfig(TypedDict):
     lite: NotRequired[bool]
     """是否使用简洁版本的补全会话（相当于同时配置 disables、hides、hide_tabs）"""
 ```
+
+## 内置插件
+
+类似于 Nonebot 本身提供的内置插件，`nonebot_plugin_alconna` 提供了两个内置插件：`echo` 和 `help`。
+
+你可以用本插件的 `load_builtin_plugin(s)` 来加载它们：
+
+```python
+from nonebot_plugin_alconna import load_builtin_plugins
+
+load_builtin_plugins("echo", "help")
+```
+
+其中 `help` 仅能列出所有 Alconna 指令。
+
+<Messenger
+  msgs={[
+    { position: "right", msg: "/帮助" },
+    { position: "left", msg: "# 当前可用的命令有:\n 0 /echo : echo 指令\n 1 /help : 显示所有命令帮助\n# 输入'命令名 -h|--help' 查看特定命令的语法" },
+    { position: "right", msg: "/echo [图片]" },
+    { position: "left", msg: "[图片]" },
+  ]}
+/>
