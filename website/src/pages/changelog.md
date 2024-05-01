@@ -28,6 +28,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 数据库最佳实践 [@ProgramRipper](https://github.com/ProgramRipper) ([#2545](https://github.com/nonebot/nonebot2/pull/2545))
 - Docs: 更新最佳实践的 Alconna 部分 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2686](https://github.com/nonebot/nonebot2/pull/2686))
 - Docs: 添加 OSPP 2024 项目说明 [@yanyongyu](https://github.com/yanyongyu) ([#2676](https://github.com/nonebot/nonebot2/pull/2676))
 - Docs: 更新 Villa 适配器说明 [@CMHopeSunshine](https://github.com/CMHopeSunshine) ([#2661](https://github.com/nonebot/nonebot2/pull/2661))
