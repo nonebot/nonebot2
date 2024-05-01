@@ -48,6 +48,7 @@
   @apply block max-w-xs;
 }
 
-.uwu .home-hero-logo,.home-hero-title {
+.uwu .home-hero-logo,
+.uwu .home-hero-title {
   @apply hidden;
 }

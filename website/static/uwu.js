@@ -1,2 +1,4 @@
-location.search.includes("?uwu") &&
-  document.documentElement.classList.add("uwu");
+document.addEventListener("DOMContentLoaded", () => {
+  if (location.search.includes("?uwu"))
+    document.querySelector("body").classList.add("uwu");
+});
