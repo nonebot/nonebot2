@@ -10,7 +10,7 @@ description: 测试
 不同的用户会有不同的配置，为了提高项目的兼容性，我们需要在不同数据库后端上测试。
 手动进行大量的、重复的测试不可靠，也不现实，因此我们推荐使用 [GitHub Actions](https://github.com/features/actions) 进行自动化测试：
 
-```yaml title=.github/workflows/test.yml {12-42,52-54} showLineNumbers
+```yaml title=.github/workflows/test.yml {12-42,52-53} showLineNumbers
 name: Test
 
 on:
@@ -78,7 +78,7 @@ jobs:
 | **Windows** | SQLite     | SQLite      | SQLite      | SQLite                      |
 | **macOS**   | SQLite     | SQLite      | SQLite      | SQLite                      |
 
-```yaml title=.github/workflows/test.yml {13-24} showLineNumbers
+```yaml title=.github/workflows/test.yml {12-24} showLineNumbers
 name: Test
 
 on:
