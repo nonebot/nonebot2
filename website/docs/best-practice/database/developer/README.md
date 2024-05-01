@@ -66,7 +66,7 @@ CREATE TABLE weather (
 
 我们成功定义了模型，现在启动机器人试试吧：
 
-```shell
+````shell
 $ nb run
 01-02 15:04:05 [SUCCESS] nonebot | NoneBot is initializing...
 01-02 15:04:05 [ERROR] nonebot_plugin_orm | 启动检查失败
@@ -86,7 +86,7 @@ click.exceptions.UsageError: 检测到新的升级操作:
 
 ```shell
 nb orm revision -m "first revision" --branch-label weather
-```
+````
 
 其中，`-m` 参数是迁移脚本的描述，`--branch-label` 参数是迁移脚本的分支，一般为插件模块名。
 执行命令过后，出现了一个 `weather/migrations` 目录，其中有一个 `xxxxxxxxxxxx_first_revision.py` 文件：
@@ -321,7 +321,7 @@ async def _(args: Message = CommandArg()):
 在上面的示例中，我们都是通过会话获得数据的。
 不过，我们也可以通过依赖注入获得数据：
 
-```python title=weather/__init__.py {12-14} showLineNumbers
+````python title=weather/__init__.py {12-14} showLineNumbers
 from sqlalchemy import select
 from nonebot.params import Depends
 from nonebot_plugin_orm import SQLDepends
@@ -372,3 +372,4 @@ async def _(weas: Sequence[Weather]):
     await weather.send(
         f"今天的天气是{weas[0].weather}的城市有{'，'.join(wea.location for wea in weas)}"
     )
+````
