@@ -5903,5 +5903,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_anime_downloader",
+    "project_link": "nonebot-plugin-anime-downloader",
+    "author": "zhaomaoniu",
+    "tags": [
+      {
+        "label": "Anime",
+        "color": "#ff7474"
+      }
+    ],
+    "is_official": false
   }
 ]
