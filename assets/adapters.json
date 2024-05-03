@@ -238,5 +238,15 @@
       }
     ],
     "is_official": true
+  },
+  {
+    "module_name": "nonebot_adapter_tailchat",
+    "project_link": "nonebot-adapter-tailchat",
+    "name": "Tailchat",
+    "desc": "Tailchat 适配器",
+    "author": "eya46",
+    "homepage": "https://github.com/eya46/nonebot-adapter-tailchat",
+    "tags": [],
+    "is_official": false
   }
 ]
