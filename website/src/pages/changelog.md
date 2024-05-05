@@ -12,6 +12,10 @@ toc_max_heading_level: 2
 - Docs: 添加 Tailchat 适配器说明 [@eya46](https://github.com/eya46) ([#2694](https://github.com/nonebot/nonebot2/pull/2694))
 - Docs: 添加 uwu logo [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2689](https://github.com/nonebot/nonebot2/pull/2689))
 
+### 🍻 插件发布
+
+- Plugin: 番剧下载 [@noneflow](https://github.com/noneflow) ([#2691](https://github.com/nonebot/nonebot2/pull/2691))
+
 ### 🍻 适配器发布
 
 - Adapter: Tailchat [@noneflow](https://github.com/noneflow) ([#2693](https://github.com/nonebot/nonebot2/pull/2693))
