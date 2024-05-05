@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Docs: 添加 uwu logo [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2689](https://github.com/nonebot/nonebot2/pull/2689))
 
+### 🍻 适配器发布
+
+- Adapter: Tailchat [@noneflow](https://github.com/noneflow) ([#2693](https://github.com/nonebot/nonebot2/pull/2693))
+
 ## v2.3.0
 
 ### 💥 破坏性变更
