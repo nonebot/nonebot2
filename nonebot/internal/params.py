@@ -17,8 +17,14 @@ from pydantic.fields import FieldInfo as PydanticFieldInfo
 
 from nonebot.dependencies import Param, Dependent
 from nonebot.dependencies.utils import check_field_type
-from nonebot.typing import T_State, T_Handler, T_DependencyCache
 from nonebot.compat import FieldInfo, ModelField, PydanticUndefined, extract_field_info
+from nonebot.typing import (
+    _STATE_FLAG,
+    T_State,
+    T_Handler,
+    T_DependencyCache,
+    origin_is_annotated,
+)
 from nonebot.utils import (
     get_name,
     run_sync,
@@ -349,7 +355,9 @@ class StateParam(Param):
         cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
     ) -> Optional[Self]:
         # param type is T_State
-        if param.annotation is T_State:
+        if origin_is_annotated(
+            get_origin(param.annotation)
+        ) and _STATE_FLAG in get_args(param.annotation):
             return cls()
         # legacy: param is named "state" and has no type annotation
         elif param.annotation == param.empty and param.name == "state":
