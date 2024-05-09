@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🐛 Bug 修复
+
+- Fix: State ForwardRef 检测错误 [@yanyongyu](https://github.com/yanyongyu) ([#2698](https://github.com/nonebot/nonebot2/pull/2698))
+
 ### 📝 文档
 
 - Docs: 添加 Tailchat 适配器说明 [@eya46](https://github.com/eya46) ([#2694](https://github.com/nonebot/nonebot2/pull/2694))
