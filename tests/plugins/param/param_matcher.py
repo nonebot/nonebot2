@@ -9,6 +9,10 @@ async def matcher(m: Matcher) -> Matcher:
     return m
 
 
+async def postpone_matcher(m: "Matcher") -> Matcher:
+    return m
+
+
 async def legacy_matcher(matcher):
     return matcher
 
@@ -27,7 +31,7 @@ class BarMatcher(Matcher): ...
 
 
 async def union_matcher(
-    m: Union[FooMatcher, BarMatcher]
+    m: Union[FooMatcher, BarMatcher],
 ) -> Union[FooMatcher, BarMatcher]:
     return m
 

@@ -7,6 +7,10 @@ async def get_bot(b: Bot) -> Bot:
     return b
 
 
+async def postpone_bot(b: "Bot") -> Bot:
+    return b
+
+
 async def legacy_bot(bot):
     return bot
 

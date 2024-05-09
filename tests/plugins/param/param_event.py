@@ -8,6 +8,10 @@ async def event(e: Event) -> Event:
     return e
 
 
+async def postpone_event(e: "Event") -> Event:
+    return e
+
+
 async def legacy_event(event):
     return event
 

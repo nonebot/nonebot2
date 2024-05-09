@@ -129,11 +129,17 @@ async def test_bot(app: App):
         union_bot,
         legacy_bot,
         generic_bot,
+        postpone_bot,
         not_legacy_bot,
         generic_bot_none,
     )
 
     async with app.test_dependent(get_bot, allow_types=[BotParam]) as ctx:
+        bot = ctx.create_bot()
+        ctx.pass_params(bot=bot)
+        ctx.should_return(bot)
+
+    async with app.test_dependent(postpone_bot, allow_types=[BotParam]) as ctx:
         bot = ctx.create_bot()
         ctx.pass_params(bot=bot)
         ctx.should_return(bot)
@@ -188,6 +194,7 @@ async def test_event(app: App):
         legacy_event,
         event_message,
         generic_event,
+        postpone_event,
         event_plain_text,
         not_legacy_event,
         generic_event_none,
@@ -198,6 +205,10 @@ async def test_event(app: App):
     fake_fooevent = make_fake_event(_base=FooEvent)()
 
     async with app.test_dependent(event, allow_types=[EventParam]) as ctx:
+        ctx.pass_params(event=fake_event)
+        ctx.should_return(fake_event)
+
+    async with app.test_dependent(postpone_event, allow_types=[EventParam]) as ctx:
         ctx.pass_params(event=fake_event)
         ctx.should_return(fake_event)
 
@@ -273,6 +284,7 @@ async def test_state(app: App):
         legacy_state,
         command_start,
         regex_matched,
+        postpone_state,
         not_legacy_state,
         command_whitespace,
         shell_command_args,
@@ -299,6 +311,10 @@ async def test_state(app: App):
     }
 
     async with app.test_dependent(state, allow_types=[StateParam]) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state)
+
+    async with app.test_dependent(postpone_state, allow_types=[StateParam]) as ctx:
         ctx.pass_params(state=fake_state)
         ctx.should_return(fake_state)
 
@@ -414,6 +430,7 @@ async def test_matcher(app: App):
         union_matcher,
         legacy_matcher,
         generic_matcher,
+        postpone_matcher,
         not_legacy_matcher,
         generic_matcher_none,
     )
@@ -422,6 +439,10 @@ async def test_matcher(app: App):
     foo_matcher = FooMatcher()
 
     async with app.test_dependent(matcher, allow_types=[MatcherParam]) as ctx:
+        ctx.pass_params(matcher=fake_matcher)
+        ctx.should_return(fake_matcher)
+
+    async with app.test_dependent(postpone_matcher, allow_types=[MatcherParam]) as ctx:
         ctx.pass_params(matcher=fake_matcher)
         ctx.should_return(fake_matcher)
 
