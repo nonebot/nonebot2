@@ -108,7 +108,15 @@ def evaluate_forwardref(
 
 
 # state
-T_State: TypeAlias = dict[t.Any, t.Any]
+# use annotated flag to avoid ForwardRef recreate generic type (py >= 3.11)
+class StateFlag:
+    def __repr__(self) -> str:
+        return "StateFlag()"
+
+
+_STATE_FLAG = StateFlag()
+
+T_State: TypeAlias = t.Annotated[dict[t.Any, t.Any], _STATE_FLAG]
 """事件处理状态 State 类型"""
 
 _DependentCallable: TypeAlias = t.Union[

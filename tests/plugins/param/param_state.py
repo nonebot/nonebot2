@@ -25,6 +25,10 @@ async def state(x: T_State) -> T_State:
     return x
 
 
+async def postpone_state(x: "T_State") -> T_State:
+    return x
+
+
 async def legacy_state(state):
     return state
 
