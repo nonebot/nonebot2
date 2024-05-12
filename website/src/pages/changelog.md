@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-furryfusion [@noneflow](https://github.com/noneflow) ([#2705](https://github.com/nonebot/nonebot2/pull/2705))
 - Plugin: nonebot-plugin-RanFurryPic [@noneflow](https://github.com/noneflow) ([#2703](https://github.com/nonebot/nonebot2/pull/2703))
 - Plugin: with_ai_agents [@noneflow](https://github.com/noneflow) ([#2697](https://github.com/nonebot/nonebot2/pull/2697))
 - Plugin: 番剧下载 [@noneflow](https://github.com/noneflow) ([#2691](https://github.com/nonebot/nonebot2/pull/2691))
