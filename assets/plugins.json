@@ -5975,5 +5975,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_tsugu_frontend",
+    "project_link": "nonebot-plugin-tsugu-frontend",
+    "author": "zhaomaoniu",
+    "tags": [
+      {
+        "label": "BanGDream",
+        "color": "#e70050"
+      }
+    ],
+    "is_official": false
   }
 ]
