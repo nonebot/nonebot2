@@ -5931,5 +5931,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_RanFurryPic",
+    "project_link": "nonebot-plugin-RanFurryPic",
+    "author": "Ekac00",
+    "tags": [
+      {
+        "label": "furry",
+        "color": "#8cb9e3"
+      }
+    ],
+    "is_official": false
   }
 ]
