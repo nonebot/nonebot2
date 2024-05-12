@@ -5955,5 +5955,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mysticism",
+    "project_link": "nonebot-plugin-mysticism",
+    "author": "Yan-Zero",
+    "tags": [
+      {
+        "label": "占卜",
+        "color": "#ea5252"
+      },
+      {
+        "label": "tarot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "神秘学",
+        "color": "#2d4168"
+      }
+    ],
+    "is_official": false
   }
 ]
