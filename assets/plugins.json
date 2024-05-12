@@ -5987,5 +5987,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_kurogames",
+    "project_link": "nonebot-plugin-kurogames",
+    "author": "ConcyWee",
+    "tags": [
+      {
+        "label": "战双帕弥什",
+        "color": "#ea5252"
+      },
+      {
+        "label": "鸣潮",
+        "color": "#ea5252"
+      },
+      {
+        "label": "库洛",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
