@@ -248,5 +248,15 @@
     "homepage": "https://github.com/eya46/nonebot-adapter-tailchat",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot.adapters.mirai",
+    "project_link": "nonebot-adapter-mirai",
+    "name": "Mirai",
+    "desc": "mirai-api-http v2 协议适配",
+    "author": "RF-Tar-Railt",
+    "homepage": "https://github.com/nonebot/adapter-mirai",
+    "tags": [],
+    "is_official": false
   }
 ]
