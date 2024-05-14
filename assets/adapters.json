@@ -60,14 +60,14 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot.adapters.mirai2",
-    "project_link": "nonebot_adapter_mirai2",
-    "name": "mirai2",
-    "desc": "为 nonebot2 添加 mirai_api_http2.x的兼容适配器",
-    "author": "ieew",
-    "homepage": "https://github.com/ieew/nonebot_adapter_mirai2",
+    "module_name": "nonebot.adapters.mirai",
+    "project_link": "nonebot-adapter-mirai",
+    "name": "Mirai",
+    "desc": "mirai-api-http v2 协议适配",
+    "author": "RF-Tar-Railt",
+    "homepage": "https://github.com/nonebot/adapter-mirai",
     "tags": [],
-    "is_official": false
+    "is_official": true
   },
   {
     "module_name": "nonebot.adapters.onebot.v12",
@@ -246,16 +246,6 @@
     "desc": "Tailchat 适配器",
     "author": "eya46",
     "homepage": "https://github.com/eya46/nonebot-adapter-tailchat",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot.adapters.mirai",
-    "project_link": "nonebot-adapter-mirai",
-    "name": "Mirai",
-    "desc": "mirai-api-http v2 协议适配",
-    "author": "RF-Tar-Railt",
-    "homepage": "https://github.com/nonebot/adapter-mirai",
     "tags": [],
     "is_official": false
   }
