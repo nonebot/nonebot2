@@ -16,6 +16,10 @@ toc_max_heading_level: 2
 - Docs: 添加 Tailchat 适配器说明 [@eya46](https://github.com/eya46) ([#2694](https://github.com/nonebot/nonebot2/pull/2694))
 - Docs: 添加 uwu logo [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2689](https://github.com/nonebot/nonebot2/pull/2689))
 
+### 💫 杂项
+
+- Plugin: 移除已在 PyPI 上删除的 `covid` 插件和 `molar-mass` 插件 [@NCBM](https://github.com/NCBM) ([#2712](https://github.com/nonebot/nonebot2/pull/2712))
+
 ### 🍻 插件发布
 
 - Plugin: nonebot_plugin_valve_server_query [@noneflow](https://github.com/noneflow) ([#2711](https://github.com/nonebot/nonebot2/pull/2711))
