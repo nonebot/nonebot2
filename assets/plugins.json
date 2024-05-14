@@ -6007,5 +6007,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_valve_server_query",
+    "project_link": "nonebot-plugin-valve-server-query",
+    "author": "LiLuo-B",
+    "tags": [
+      {
+        "label": "valve",
+        "color": "#ea5252"
+      },
+      {
+        "label": "query",
+        "color": "#ea5252"
+      },
+      {
+        "label": "a2s",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
