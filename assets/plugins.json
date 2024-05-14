@@ -867,13 +867,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_covid",
-    "project_link": "nonebot-plugin-covid",
-    "author": "nicklly",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_yulu",
     "project_link": "nonebot-plugin-yulu",
     "author": "bingqiu456",
@@ -2540,13 +2533,6 @@
     "module_name": "nonebot_plugin_pvz",
     "project_link": "nonebot-plugin-pvz",
     "author": "longchengguxiao",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_molar_mass",
-    "project_link": "nonebot-plugin-molar-mass",
-    "author": "kifuan",
     "tags": [],
     "is_official": false
   },
