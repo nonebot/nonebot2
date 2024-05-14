@@ -33,6 +33,7 @@ toc_max_heading_level: 2
 
 ### 🍻 适配器发布
 
+- Adapter: Mirai [@noneflow](https://github.com/noneflow) ([#2714](https://github.com/nonebot/nonebot2/pull/2714))
 - Adapter: Tailchat [@noneflow](https://github.com/noneflow) ([#2693](https://github.com/nonebot/nonebot2/pull/2693))
 
 ## v2.3.0
