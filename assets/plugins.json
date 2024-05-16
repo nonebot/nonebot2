@@ -6013,5 +6013,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sparkapi",
+    "project_link": "nonebot-plugin-sparkapi",
+    "author": "CCLMSY",
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#00ff00"
+      }
+    ],
+    "is_official": false
   }
 ]
