@@ -23,6 +23,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 科大讯飞星火大语言模型官方API聊天机器人插件 [@noneflow](https://github.com/noneflow) ([#2717](https://github.com/nonebot/nonebot2/pull/2717))
 - Plugin: nonebot_plugin_valve_server_query [@noneflow](https://github.com/noneflow) ([#2711](https://github.com/nonebot/nonebot2/pull/2711))
 - Plugin: 库洛游戏信息 [@noneflow](https://github.com/noneflow) ([#2706](https://github.com/nonebot/nonebot2/pull/2706))
 - Plugin: BanG Dream! Tsugu Frontend [@noneflow](https://github.com/noneflow) ([#2708](https://github.com/nonebot/nonebot2/pull/2708))
