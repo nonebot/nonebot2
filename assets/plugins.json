@@ -6025,5 +6025,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_tsugu_bangdream_bot",
+    "project_link": "nonebot-plugin-tsugu-bangdream-bot",
+    "author": "WindowsSov8forUs",
+    "tags": [
+      {
+        "label": "tsugu",
+        "color": "#ffee88"
+      }
+    ],
+    "is_official": false
   }
 ]
