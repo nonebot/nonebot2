@@ -6044,5 +6044,21 @@
     "author": "ajdgg",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nai3_bot",
+    "project_link": "nonebot-plugin-nai3-bot",
+    "author": "Alpaca4610",
+    "tags": [
+      {
+        "label": "NovelAI",
+        "color": "#52ea52"
+      },
+      {
+        "label": "NAI3",
+        "color": "#52ea52"
+      }
+    ],
+    "is_official": false
   }
 ]
