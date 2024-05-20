@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 自定义人格和AI绘图的混合聊天BOT [@noneflow](https://github.com/noneflow) ([#2724](https://github.com/nonebot/nonebot2/pull/2724))
 - Plugin: nonebot-plugin-calc24 [@noneflow](https://github.com/noneflow) ([#2721](https://github.com/nonebot/nonebot2/pull/2721))
 - Plugin: nonebot-plugin-tsugu-bangdream-bot [@noneflow](https://github.com/noneflow) ([#2719](https://github.com/nonebot/nonebot2/pull/2719))
 - Plugin: 科大讯飞星火大语言模型官方API聊天机器人插件 [@noneflow](https://github.com/noneflow) ([#2717](https://github.com/nonebot/nonebot2/pull/2717))
