@@ -6060,5 +6060,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_dg_lab_play",
+    "project_link": "nonebot-plugin-dg-lab-play",
+    "author": "Ljzd-PRO",
+    "tags": [
+      {
+        "label": "dg-lab",
+        "color": "#fee99d"
+      },
+      {
+        "label": "dg-lab-v3",
+        "color": "#fee99d"
+      },
+      {
+        "label": "t:game",
+        "color": "#019bf1"
+      }
+    ],
+    "is_official": false
   }
 ]
