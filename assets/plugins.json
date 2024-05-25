@@ -6100,5 +6100,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_zhichang",
+    "project_link": "nonebot-plugin-zhichang",
+    "author": "Priopus",
+    "tags": [],
+    "is_official": false
   }
 ]
