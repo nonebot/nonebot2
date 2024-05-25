@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 插件响应鉴权 [@noneflow](https://github.com/noneflow) ([#2727](https://github.com/nonebot/nonebot2/pull/2727))
 - Plugin: DG-Lab-Play [@noneflow](https://github.com/noneflow) ([#2729](https://github.com/nonebot/nonebot2/pull/2729))
 
 ## v2.3.1
