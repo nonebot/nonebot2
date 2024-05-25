@@ -6080,5 +6080,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_authrespond",
+    "project_link": "nonebot-plugin-authrespond",
+    "author": "cubstaryow",
+    "tags": [
+      {
+        "label": "黑名单",
+        "color": "#e81616"
+      },
+      {
+        "label": "cubplugins",
+        "color": "#28a5d1"
+      },
+      {
+        "label": "权限控制",
+        "color": "#c75d59"
+      }
+    ],
+    "is_official": false
   }
 ]
