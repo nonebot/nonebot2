@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 📝 文档
+
+- Docs: 修改依赖注入定义链接 [@Weltolk](https://github.com/Weltolk) ([#2733](https://github.com/nonebot/nonebot2/pull/2733))
+
 ### 🍻 插件发布
 
 - Plugin: DG-Lab-Play [@noneflow](https://github.com/noneflow) ([#2729](https://github.com/nonebot/nonebot2/pull/2729))
