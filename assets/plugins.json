@@ -6100,5 +6100,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_shutdown_hook",
+    "project_link": "nonebot-plugin-shutdown-hook",
+    "author": "Sclock",
+    "tags": [
+      {
+        "label": "工具",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
