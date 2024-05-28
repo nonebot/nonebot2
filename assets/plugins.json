@@ -6112,5 +6112,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_plus_one",
+    "project_link": "nonebot-plugin-plus-one",
+    "author": "yejue",
+    "tags": [
+      {
+        "label": "复读姬",
+        "color": "#df3cda"
+      },
+      {
+        "label": "船新版本",
+        "color": "#28d98e"
+      }
+    ],
+    "is_official": false
   }
 ]
