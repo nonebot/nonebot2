@@ -150,7 +150,7 @@ async def test_weather(app: App):
         time=datetime.now(),
         self_id="test",
         message=Message("/天气 北京"),
-        user=User(user_id=123456789),
+        user=User(id="user"),
     )
 ```
 
@@ -165,7 +165,7 @@ async def test_weather(app: App):
         time=datetime.now(),
         self_id="test",
         message=Message("/天气 北京"),
-        user=User(user_id=123456789),
+        user=User(id="user"),
     )
     async with app.test_matcher(weather) as ctx:
         bot = ctx.create_bot()
@@ -184,7 +184,7 @@ def make_event(message: str = "") -> MessageEvent:
         time=datetime.now(),
         self_id="test",
         message=Message(message),
-        user=User(user_id=123456789),
+        user=User(id="user"),
     )
 
 @pytest.mark.asyncio
