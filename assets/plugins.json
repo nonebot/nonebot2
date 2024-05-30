@@ -6128,5 +6128,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_aising",
+    "project_link": "nonebot-plugin-aising",
+    "author": "CCYellowStar2",
+    "tags": [
+      {
+        "label": "唱歌",
+        "color": "#ea5252"
+      },
+      {
+        "label": "NeuCoSVC",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
