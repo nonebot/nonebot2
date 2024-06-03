@@ -6144,5 +6144,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_qqshell",
+    "project_link": "nonebot-plugin-qqshell",
+    "author": "yejue",
+    "tags": [
+      {
+        "label": "SSH",
+        "color": "#cd2a8f"
+      }
+    ],
+    "is_official": false
   }
 ]
