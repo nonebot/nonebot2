@@ -6156,5 +6156,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_lynchpined",
+    "project_link": "nonebot-plugin-lynchpined",
+    "author": "050644zf",
+    "tags": [],
+    "is_official": false
   }
 ]
