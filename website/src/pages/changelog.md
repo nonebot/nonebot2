@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-lynchpined [@noneflow](https://github.com/noneflow) ([#2748](https://github.com/nonebot/nonebot2/pull/2748))
 - Plugin: QQShell [@noneflow](https://github.com/noneflow) ([#2745](https://github.com/nonebot/nonebot2/pull/2745))
 - Plugin: ai唱歌 [@noneflow](https://github.com/noneflow) ([#2743](https://github.com/nonebot/nonebot2/pull/2743))
 - Plugin: 复读姬+1 PlusOne [@noneflow](https://github.com/noneflow) ([#2732](https://github.com/nonebot/nonebot2/pull/2732))
