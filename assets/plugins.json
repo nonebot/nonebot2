@@ -6179,5 +6179,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_beauty_rater",
+    "project_link": "nonebot-plugin-beauty-rater",
+    "author": "KomoriDev",
+    "tags": [
+      {
+        "label": "🌐",
+        "color": "#e7f4ff"
+      }
+    ],
+    "is_official": false
   }
 ]
