@@ -6191,5 +6191,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_xjie_weather",
+    "project_link": "nonebot-plugin-xjie-weather",
+    "author": "ajdgg",
+    "tags": [],
+    "is_official": false
   }
 ]
