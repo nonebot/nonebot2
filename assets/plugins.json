@@ -6210,5 +6210,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_saalc",
+    "project_link": "nonebot-plugin-saalc",
+    "author": "AzideCupric",
+    "tags": [
+      {
+        "label": "SAA",
+        "color": "#17a5fe"
+      },
+      {
+        "label": "Alconna",
+        "color": "#fe9517"
+      }
+    ],
+    "is_official": false
   }
 ]
