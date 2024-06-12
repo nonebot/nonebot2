@@ -6198,5 +6198,17 @@
     "author": "ajdgg",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_wwgachalogs",
+    "project_link": "nonebot-plugin-wwgachalogs",
+    "author": "BraveCowardp",
+    "tags": [
+      {
+        "label": "鸣潮",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
