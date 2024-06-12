@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 鸣潮抽卡记录分析 [@noneflow](https://github.com/noneflow) ([#2763](https://github.com/nonebot/nonebot2/pull/2763))
 - Plugin: nonebot-plugin-xjie-weather [@noneflow](https://github.com/noneflow) ([#2756](https://github.com/nonebot/nonebot2/pull/2756))
 - Plugin: 颜值评分 [@noneflow](https://github.com/noneflow) ([#2752](https://github.com/nonebot/nonebot2/pull/2752))
 - Plugin: 学园偶像大师算分插件 [@noneflow](https://github.com/noneflow) ([#2750](https://github.com/nonebot/nonebot2/pull/2750))
