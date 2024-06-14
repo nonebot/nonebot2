@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-easymarkdown [@noneflow](https://github.com/noneflow) ([#2767](https://github.com/nonebot/nonebot2/pull/2767))
 - Plugin: 峯驰外包 [@noneflow](https://github.com/noneflow) ([#2765](https://github.com/nonebot/nonebot2/pull/2765))
 - Plugin: 鸣潮抽卡记录分析 [@noneflow](https://github.com/noneflow) ([#2763](https://github.com/nonebot/nonebot2/pull/2763))
 - Plugin: nonebot-plugin-xjie-weather [@noneflow](https://github.com/noneflow) ([#2756](https://github.com/nonebot/nonebot2/pull/2756))
