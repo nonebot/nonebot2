@@ -6226,5 +6226,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_easymarkdown",
+    "project_link": "nonebot-plugin-easymarkdown",
+    "author": "phquathi",
+    "tags": [
+      {
+        "label": "code",
+        "color": "#5284ea"
+      }
+    ],
+    "is_official": false
   }
 ]
