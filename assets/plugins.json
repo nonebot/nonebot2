@@ -6238,5 +6238,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_multigpt",
+    "project_link": "nonebot-plugin-multigpt",
+    "author": "syagina",
+    "tags": [
+      {
+        "label": "GPT",
+        "color": "#52d7ea"
+      },
+      {
+        "label": "PPT",
+        "color": "#ea52c7"
+      },
+      {
+        "label": "多模",
+        "color": "#eac252"
+      }
+    ],
+    "is_official": false
   }
 ]
