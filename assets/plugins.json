@@ -6258,5 +6258,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mcsm",
+    "project_link": "nonebot-plugin-mcsm",
+    "author": "LiLuo-B",
+    "tags": [
+      {
+        "label": "MCSM",
+        "color": "#ea5252"
+      },
+      {
+        "label": "应用托管",
+        "color": "#5272ea"
+      },
+      {
+        "label": "服务器管理",
+        "color": "#4cc275"
+      }
+    ],
+    "is_official": false
   }
 ]
