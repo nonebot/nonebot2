@@ -6290,5 +6290,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mahjong_hand_guess",
+    "project_link": "nonebot-plugin-mahjong-hand-guess",
+    "author": "ElainaFanBoy",
+    "tags": [
+      {
+        "label": "game",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
