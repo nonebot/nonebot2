@@ -6278,5 +6278,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_helldivers",
+    "project_link": "nonebot-plugin-helldivers",
+    "author": "SherkeyXD",
+    "tags": [
+      {
+        "label": "helldivers",
+        "color": "#ffd700"
+      }
+    ],
+    "is_official": false
   }
 ]
