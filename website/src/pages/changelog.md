@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 绝地潜兵信息查询小助手 [@noneflow](https://github.com/noneflow) ([#2772](https://github.com/nonebot/nonebot2/pull/2772))
 - Plugin: MCSM小助手 [@noneflow](https://github.com/noneflow) ([#2773](https://github.com/nonebot/nonebot2/pull/2773))
 - Plugin: 多模态AI工具 [@noneflow](https://github.com/noneflow) ([#2758](https://github.com/nonebot/nonebot2/pull/2758))
 - Plugin: nonebot-plugin-easymarkdown [@noneflow](https://github.com/noneflow) ([#2767](https://github.com/nonebot/nonebot2/pull/2767))
