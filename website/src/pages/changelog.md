@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🐛 Bug 修复
+
+- Fix: 修复 ForwardRef eval 时参数 recursive_guard 缺失 [@he0119](https://github.com/he0119) ([#2778](https://github.com/nonebot/nonebot2/pull/2778))
+
 ### 📝 文档
 
 - Docs: 修复单元测试示例代码 [@mobyw](https://github.com/mobyw) ([#2741](https://github.com/nonebot/nonebot2/pull/2741))
