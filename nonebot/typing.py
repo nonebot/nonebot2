@@ -104,7 +104,11 @@ def is_none_type(type_: type[t.Any]) -> bool:
 def evaluate_forwardref(
     ref: t.ForwardRef, globalns: dict[str, t.Any], localns: dict[str, t.Any]
 ) -> t.Any:
-    return ref._evaluate(globalns, localns, frozenset())
+    # Python 3.13/3.12.4+ made `recursive_guard` a kwarg,
+    # so name it explicitly to avoid:
+    # TypeError: ForwardRef._evaluate()
+    # missing 1 required keyword-only argument: 'recursive_guard'
+    return ref._evaluate(globalns, localns, recursive_guard=frozenset())
 
 
 # state
