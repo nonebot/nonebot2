@@ -6302,5 +6302,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_asmr",
+    "project_link": "nonebot-plugin-asmr",
+    "author": "CCYellowStar2",
+    "tags": [
+      {
+        "label": "asmr",
+        "color": "#ea5252"
+      },
+      {
+        "label": "音声",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
