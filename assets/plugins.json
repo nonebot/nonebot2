@@ -6366,5 +6366,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_biliforward",
+    "project_link": "nonebot-plugin-biliforward",
+    "author": "BraveCowardp",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#ea5252"
+      },
+      {
+        "label": "哔哩哔哩",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
