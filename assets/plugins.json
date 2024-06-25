@@ -6318,5 +6318,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ntqq_restart",
+    "project_link": "nonebot-plugin-ntqq-restart",
+    "author": "kanbereina",
+    "tags": [
+      {
+        "label": "llonebot",
+        "color": "#f9e642"
+      },
+      {
+        "label": "NTQQ",
+        "color": "#ede9e9"
+      },
+      {
+        "label": "Windows",
+        "color": "#52aaea"
+      }
+    ],
+    "is_official": false
   }
 ]
