@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: asmr [@noneflow](https://github.com/noneflow) ([#2775](https://github.com/nonebot/nonebot2/pull/2775))
 - Plugin: 日麻猜手牌小游戏 [@noneflow](https://github.com/noneflow) ([#2777](https://github.com/nonebot/nonebot2/pull/2777))
 - Plugin: 绝地潜兵信息查询小助手 [@noneflow](https://github.com/noneflow) ([#2772](https://github.com/nonebot/nonebot2/pull/2772))
 - Plugin: MCSM小助手 [@noneflow](https://github.com/noneflow) ([#2773](https://github.com/nonebot/nonebot2/pull/2773))
