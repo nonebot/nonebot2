@@ -6338,5 +6338,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_eve_tool",
+    "project_link": "nonebot-plugin-eve-tool",
+    "author": "zifox666",
+    "tags": [
+      {
+        "label": "game",
+        "color": "#ea5252"
+      },
+      {
+        "label": "eve",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
