@@ -18,6 +18,9 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: EVE ONLINE 多功能机器人
+  版本 - v0.2.3
+  [@noneflow](https://github.com/noneflow) ([#2782](https://github.com/nonebot/nonebot2/pull/2782))
 - Plugin: NTQQ自动登录/断连重启 [@noneflow](https://github.com/noneflow) ([#2786](https://github.com/nonebot/nonebot2/pull/2786))
 - Plugin: asmr [@noneflow](https://github.com/noneflow) ([#2775](https://github.com/nonebot/nonebot2/pull/2775))
 - Plugin: 日麻猜手牌小游戏 [@noneflow](https://github.com/noneflow) ([#2777](https://github.com/nonebot/nonebot2/pull/2777))
