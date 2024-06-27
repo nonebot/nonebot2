@@ -6382,5 +6382,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_obastatus",
+    "project_link": "nonebot-plugin-obastatus",
+    "author": "Dongyanmio",
+    "tags": [
+      {
+        "label": "BMCLAPI",
+        "color": "#5f82ba"
+      }
+    ],
+    "is_official": false
   }
 ]
