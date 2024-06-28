@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot_plugin_obastatus [@noneflow](https://github.com/noneflow) ([#2780](https://github.com/nonebot/nonebot2/pull/2780))
 - Plugin: b站消息转发 [@noneflow](https://github.com/noneflow) ([#2785](https://github.com/nonebot/nonebot2/pull/2785))
 - Plugin: Daily Task [@noneflow](https://github.com/noneflow) ([#2769](https://github.com/nonebot/nonebot2/pull/2769))
 - Plugin: EVE ONLINE 多功能机器人
