@@ -6394,5 +6394,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_dcqq_relay",
+    "project_link": "nonebot-plugin-dcqq-relay",
+    "author": "Autuamn",
+    "tags": [
+      {
+        "label": "消息互通",
+        "color": "#428fdb"
+      }
+    ],
+    "is_official": false
   }
 ]
