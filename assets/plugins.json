@@ -6406,5 +6406,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ncupdate",
+    "project_link": "nonebot-plugin-ncupdate",
+    "author": "tianyisama",
+    "tags": [
+      {
+        "label": "NapCat",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
