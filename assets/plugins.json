@@ -6418,5 +6418,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_anymate",
+    "project_link": "nonebot-plugin-anymate",
+    "author": "QuickLAW",
+    "tags": [
+      {
+        "label": "server",
+        "color": "#ea5252"
+      },
+      {
+        "label": "func",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
