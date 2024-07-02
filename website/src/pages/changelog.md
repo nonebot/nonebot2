@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 指令更新NapCat [@noneflow](https://github.com/noneflow) ([#2791](https://github.com/nonebot/nonebot2/pull/2791))
 - Plugin: QQ群-Discord 互通 [@noneflow](https://github.com/noneflow) ([#2788](https://github.com/nonebot/nonebot2/pull/2788))
 - Plugin: nonebot_plugin_obastatus [@noneflow](https://github.com/noneflow) ([#2780](https://github.com/nonebot/nonebot2/pull/2780))
 - Plugin: b站消息转发 [@noneflow](https://github.com/noneflow) ([#2785](https://github.com/nonebot/nonebot2/pull/2785))
