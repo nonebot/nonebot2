@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: `on_keyword` 参数类型错误 [@TaskManagerOL](https://github.com/TaskManagerOL) ([#2795](https://github.com/nonebot/nonebot2/pull/2795))
 - Docs: 修复单元测试示例代码 [@mobyw](https://github.com/mobyw) ([#2741](https://github.com/nonebot/nonebot2/pull/2741))
 - Docs: 修改依赖注入定义链接 [@Weltolk](https://github.com/Weltolk) ([#2733](https://github.com/nonebot/nonebot2/pull/2733))
 
