@@ -154,7 +154,7 @@ rule = keyword("hello", "hi")
 ```python
 from nonebot import on_keyword
 
-matcher = on_keyword("hello", "hi")
+matcher = on_keyword({"hello", "hi"})
 ```
 
 ### `command`
