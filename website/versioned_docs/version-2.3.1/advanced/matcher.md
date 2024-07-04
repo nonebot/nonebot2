@@ -146,7 +146,7 @@ matcher = on_fullmatch(("ping", "pong"), ignorecase=False)
 ```python
 from nonebot.rule import keyword
 
-rule = keyword({"hello", "hi"})
+rule = keyword("hello", "hi")
 ```
 
 也可以直接使用辅助函数新建一个响应器：
