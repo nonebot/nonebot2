@@ -8,51 +8,64 @@ options:
       weight: 60
 ---
 
-# 事件响应器
+# 事件(消息)响应器
 
 事件响应器（Matcher）是对接收到的事件进行响应的基本单元，所有的事件响应器都继承自 `Matcher` 基类。
 
-在 NoneBot 中，事件响应器可以通过一系列特定的规则**筛选**出**具有某种特征的事件**，并按照**特定的流程**交由**预定义的事件处理依赖**进行处理。例如，在[快速上手](../quick-start.mdx)中，我们使用了内置插件 `echo` ，它定义的事件响应器能响应机器人用户发送的“/echo hello world”消息，提取“hello world”信息并作为回复消息发送。
+Matcher用于将消息和规则进行匹配/检查/筛选, 当消息匹配时执行`@matcher_obj.handle()`装饰的函数
 
-## 事件响应器辅助函数
+# 定义响应规则(Matcher/Rule/事件响应器辅助函数)
 
-NoneBot 中所有事件响应器均继承自 `Matcher` 基类，但直接使用 `Matcher.new()` 方法创建事件响应器过于繁琐且不能记录插件信息。因此，NoneBot 中提供了一系列“事件响应器辅助函数”（下称“辅助函数”）来辅助我们用**最简的方式**创建**带有不同规则预设**的事件响应器，提高代码可读性和书写效率。通常情况下，我们只需要使用辅助函数即可完成事件响应器的创建。
+事件响应器辅助函数具体细节已移至[事件响应器进阶](../advanced/matcher.md)
 
-在 NoneBot 中，辅助函数以 `on()` 或 `on_<type/rule>()` 形式出现（例如 `on_command()`），调用后根据不同的参数返回一个 `Type[Matcher]` 类型的新事件响应器。
+响应器(Matcher)对消息进行初筛, 常用的有
 
-目前 NoneBot 提供了多种功能各异的辅助函数、具有共同命令名称前缀的命令组以及具有共同参数的响应器组，均可以从 `nonebot` 模块直接导入使用，具体内容参考[事件响应器进阶](../advanced/matcher.md)。
+- on_message() 处理所有消息(无限制)
+- on_command() 匹配指令例如"/echo hello world"中匹配"/echo"
+- on_regex() 对整个消息文本进行正则表达式匹配
 
-## 创建事件响应器
+Rule对消息进行二次筛选, 常用的有:
 
-在上一节[创建插件](./create-plugin.md#创建插件)中，我们创建了一个 `weather` 插件，现在我们来实现他的功能。
+- to_me() 私聊或 `@bot`或`@全体成员` 时才会响应
 
-我们直接使用 `on_command()` 辅助函数来创建一个事件响应器：
+经过Matcher和Rule筛选的消息会触发函数进行处理
+
+## 在哪导入
+
+**matcher**
+编辑器中输入`from nonebot import on`以后, 大部分编辑器已经能够给出代码提示
+
+示例`from nonebot import on_message, on_regex`
+
+**rule**
+示例`from nonebot.rule import to_me`
+
+## on_command示例
 
 ```python {3} title=weather/__init__.py
-from nonebot import on_command
-
-weather = on_command("天气")
-```
-
-这样，我们就获得一个名为 `weather` 的事件响应器了，这个事件响应器会对 `/天气` 开头的消息进行响应。
-
-:::tip 提示
-如果一条消息中包含“@机器人”或以“机器人的昵称”开始，例如 `@bot /天气` 时，协议适配器会将 `event.is_tome()` 判断为 `True` ，同时也会自动去除 `@bot`，即事件响应器收到的信息内容为 `/天气`，方便进行命令匹配。
-:::
-
-### 为事件响应器添加参数
-
-在辅助函数中，我们可以添加一些参数来对事件响应器进行更加精细的调整，例如事件响应器的优先级、匹配规则等。例如：
-
-```python {4} title=weather/__init__.py
 from nonebot import on_command
 from nonebot.rule import to_me
 
 weather = on_command("天气", rule=to_me(), aliases={"weather", "查天气"}, priority=10, block=True)
 ```
 
-这样，我们就获得了一个可以响应 `天气`、`weather`、`查天气` 三个命令，需要私聊或 `@bot` 时才会响应，优先级为 10 ，阻断事件传播的事件响应器了。这些内容的意义和使用方法将会在后续的章节中一一介绍。
+:::tip 提示
+如果一条消息中包含“@机器人”或以“机器人的昵称”开始，例如 `@bot /天气` 时，协议适配器会将 `event.is_tome()`(is to me)
+判断为 `True` ，同时也会自动去除 `@bot`，即事件响应器收到的信息内容为 `/天气`，方便进行命令匹配。
+:::
+
+这样，我们就获得了一个可以响应 `天气`、`weather`、`查天气`(aliases可以设置命令的别名) 三个命令的响应规则，需要私聊或 `@bot`
+或`@全体成员` 时才会响应，优先级为 10 (越小越先)，阻断事件传播(block=True, 不响应优先级值更大的matcher)
+的事件响应器了。这些内容的意义和使用方法将会在后续的章节中一一介绍。
 
 :::tip 提示
 需要注意的是，不同的辅助函数有不同的可选参数，在使用之前可以参考[事件响应器进阶](../advanced/matcher.md)或编辑器的提示。
 :::
+
+## on_regex示例
+
+```
+on_regex(r"^1$", flags=re.IGNORECASE, priority=5, block=True)
+```
+
+这段代码会将所有消息进行正则表达式匹配, 当消息文本为"1"的时候(匹配"^1$")满足该matcher
