@@ -58,7 +58,7 @@ const navbar = {
           docId: "developer/plugin-publishing",
         },
         { label: "社区", type: "doc", docId: "community/contact" },
-        { label: "开源之夏", type: "doc", docId: "ospp/2023" },
+        { label: "开源之夏", type: "doc", docId: "ospp/2024" },
         { label: "商店", to: "/store/plugins" },
         { label: "更新日志", to: "/changelog" },
         { label: "论坛", href: "https://discussions.nonebot.dev" },
