@@ -256,8 +256,9 @@ class DotEnvSettingsSource(BaseSettingsSource):
         # remain user custom config
         for env_name in env_file_vars:
             env_val = env_vars[env_name]
-            if env_val and (val_striped := env_val.strip()):
+            if env_val and (val_striped := env_val.strip()).startswith(("[", "{")):
                 # there's a value, decode that as JSON
+                # fuck pydantic2's type_validate_python, just load arrays and objects
                 try:
                     env_val = json.loads(val_striped)
                 except ValueError:
