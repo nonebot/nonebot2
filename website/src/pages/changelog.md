@@ -5,6 +5,10 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+- No changes
+
 ## v2.3.2
 
 ### 🐛 Bug 修复
