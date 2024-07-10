@@ -7,7 +7,9 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
-- No changes
+### 🍻 插件发布
+
+- Plugin: AnyMate小助手 [@noneflow](https://github.com/noneflow) ([#2761](https://github.com/nonebot/nonebot2/pull/2761))
 
 ## v2.3.2
 
