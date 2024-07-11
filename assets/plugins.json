@@ -6475,5 +6475,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_acgnshow",
+    "project_link": "nonebot-plugin-acgnshow",
+    "author": "Asankilp",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#f21010"
+      }
+    ],
+    "is_official": false
   }
 ]
