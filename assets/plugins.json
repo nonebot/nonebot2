@@ -6434,5 +6434,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cfr2",
+    "project_link": "nonebot-plugin-cfr2",
+    "author": "1v7w",
+    "tags": [],
+    "is_official": false
   }
 ]
