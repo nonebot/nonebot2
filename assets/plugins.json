@@ -6441,5 +6441,21 @@
     "author": "1v7w",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_WWwiki",
+    "project_link": "nonebot-plugin-WWwiki",
+    "author": "shi-yingyingjiang",
+    "tags": [
+      {
+        "label": "鸣潮",
+        "color": "#ea5252"
+      },
+      {
+        "label": "wiki",
+        "color": "#30af29"
+      }
+    ],
+    "is_official": false
   }
 ]
