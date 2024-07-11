@@ -855,15 +855,33 @@
   {
     "module_name": "nonebot_plugin_charpic",
     "project_link": "nonebot-plugin-charpic",
-    "author": "RafuiiChan",
-    "tags": [],
+    "author": "1umine",
+    "tags": [
+      {
+        "label": "字符画",
+        "color": "#ea5252"
+      },
+      {
+        "label": "多平台适配",
+        "color": "#ea5252"
+      }
+    ],
     "is_official": false
   },
   {
     "module_name": "nonebot_plugin_miragetank",
     "project_link": "nonebot-plugin-miragetank",
-    "author": "RafuiiChan",
-    "tags": [],
+    "author": "1umine",
+    "tags": [
+      {
+        "label": "幻影坦克",
+        "color": "#ea5252"
+      },
+      {
+        "label": "多平台适配",
+        "color": "#ea5252"
+      }
+    ],
     "is_official": false
   },
   {
