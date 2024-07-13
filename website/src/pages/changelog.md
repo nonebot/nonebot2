@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 更新插件 sparkapi 信息 [@CCLMSY](https://github.com/CCLMSY) ([#2812](https://github.com/nonebot/nonebot2/pull/2812))
 - Plugin: 修改插件 miragetank \& charpic 信息 [@1umine](https://github.com/1umine) ([#2807](https://github.com/nonebot/nonebot2/pull/2807))
 
 ### 🍻 插件发布
