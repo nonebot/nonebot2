@@ -6040,6 +6040,14 @@
       {
         "label": "AI",
         "color": "#00ff00"
+      },
+      {
+        "label": "星火",
+        "color": "#0000ff"
+      },
+      {
+        "label": "Chat",
+        "color": "#ff0000"
       }
     ],
     "is_official": false
