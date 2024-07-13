@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 漫展/展览查询 [@noneflow](https://github.com/noneflow) ([#2811](https://github.com/nonebot/nonebot2/pull/2811))
 - Plugin: 鸣潮wiki [@noneflow](https://github.com/noneflow) ([#2804](https://github.com/nonebot/nonebot2/pull/2804))
 - Plugin: cloudfare R2 客服端 [@noneflow](https://github.com/noneflow) ([#2806](https://github.com/nonebot/nonebot2/pull/2806))
 - Plugin: AnyMate小助手 [@noneflow](https://github.com/noneflow) ([#2761](https://github.com/nonebot/nonebot2/pull/2761))
