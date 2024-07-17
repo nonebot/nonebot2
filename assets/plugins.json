@@ -4573,18 +4573,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_kanonbot",
-    "project_link": "nonebot-plugin-kanonbot",
-    "author": "SuperGuGuGu",
-    "tags": [
-      {
-        "label": "KanonBot",
-        "color": "#44ddff"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_mcversion",
     "project_link": "nonebot-plugin-mcversion",
     "author": "CN171-1",
