@@ -6490,5 +6490,12 @@
     "author": "NCBM",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_wordle_simple",
+    "project_link": "nonebot-plugin-wordle-simple",
+    "author": "shiyihang2007",
+    "tags": [],
+    "is_official": false
   }
 ]
