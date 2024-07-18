@@ -607,5 +607,13 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "星辰 Bot",
+    "desc": "欢迎使用 星辰 Bot 项目！这是一款基于 NoneBot2 打造的智能 QQ 机器人，旨在为用户提供丰富的功能体验。无论是获取一言的灵感，探索历史上的今天，还是穿梭60s世界，星辰 Bot 为您打开了全新的交流之门。快来尝试吧！",
+    "author": "StarXinXin",
+    "homepage": "https://github.com/StarXinXin/StarsBot",
+    "tags": [],
+    "is_official": false
   }
 ]
