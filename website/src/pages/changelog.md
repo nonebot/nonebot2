@@ -22,6 +22,10 @@ toc_max_heading_level: 2
 - Plugin: cloudfare R2 客服端 [@noneflow](https://github.com/noneflow) ([#2806](https://github.com/nonebot/nonebot2/pull/2806))
 - Plugin: AnyMate小助手 [@noneflow](https://github.com/noneflow) ([#2761](https://github.com/nonebot/nonebot2/pull/2761))
 
+### 🍻 机器人发布
+
+- Bot: 星辰 Bot [@noneflow](https://github.com/noneflow) ([#2824](https://github.com/nonebot/nonebot2/pull/2824))
+
 ## v2.3.2
 
 ### 🐛 Bug 修复
