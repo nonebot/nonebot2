@@ -15,6 +15,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: wordle [@noneflow](https://github.com/noneflow) ([#2818](https://github.com/nonebot/nonebot2/pull/2818))
 - Plugin: 再润 [@noneflow](https://github.com/noneflow) ([#2816](https://github.com/nonebot/nonebot2/pull/2816))
 - Plugin: 漫展/展览查询 [@noneflow](https://github.com/noneflow) ([#2811](https://github.com/nonebot/nonebot2/pull/2811))
 - Plugin: 鸣潮wiki [@noneflow](https://github.com/noneflow) ([#2804](https://github.com/nonebot/nonebot2/pull/2804))
