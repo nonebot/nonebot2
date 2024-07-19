@@ -6497,5 +6497,12 @@
     "author": "shiyihang2007",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_daily_oil_price",
+    "project_link": "nonebot-plugin-daily-oil-price",
+    "author": "wyeeeee",
+    "tags": [],
+    "is_official": false
   }
 ]
