@@ -1,0 +1,41 @@
+name: Site Deploy (Preview CI)
+
+on:
+  pull_request:
+
+jobs:
+  preview-ci:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pull-request-preview-${{ github.event.number }}
+      cancel-in-progress: true
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+          fetch-depth: 0
+
+      - name: Setup Python Environment
+        uses: ./.github/actions/setup-python
+
+      - name: Setup Node Environment
+        uses: ./.github/actions/setup-node
+
+      - name: Build API Doc
+        uses: ./.github/actions/build-api-doc
+
+      - name: Build Doc
+        run: yarn build
+
+      - name: Export Context
+        run: |
+          echo "PR_NUMBER=${{ github.event.number }}" >> ./action.env
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: website-preview
+          path: |
+            ./website/build
+            ./action.env
