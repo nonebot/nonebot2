@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🐛 Bug 修复
+
+- Fix: 错误的类型标注和 annotated 处理 [@yanyongyu](https://github.com/yanyongyu) ([#2828](https://github.com/nonebot/nonebot2/pull/2828))
+
 ### 💫 杂项
 
 - Plugin: 移除 kanonbot 插件 [@SuperGuGuGu](https://github.com/SuperGuGuGu) ([#2819](https://github.com/nonebot/nonebot2/pull/2819))
