@@ -39,3 +39,4 @@ jobs:
           path: |
             ./website/build
             ./action.env
+          retention-days: 1
