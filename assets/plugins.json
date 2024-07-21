@@ -6525,5 +6525,12 @@
     "author": "This-is-XiaoDeng",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_exe_code",
+    "project_link": "nonebot-plugin-exe-code",
+    "author": "wyf7685",
+    "tags": [],
+    "is_official": false
   }
 ]
