@@ -6511,5 +6511,12 @@
     "author": "Cvandia",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_weiweibot",
+    "project_link": "nonebot-plugin-weiweibot",
+    "author": "SwedishDoveCooker",
+    "tags": [],
+    "is_official": false
   }
 ]
