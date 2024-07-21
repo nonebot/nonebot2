@@ -1,0 +1,96 @@
+name: Site Deploy (Preview CD)
+
+on:
+  workflow_run:
+    workflows: ["Site Deploy (Preview CI)"]
+    types:
+      - completed
+
+jobs:
+  preview-cd:
+    runs-on: ubuntu-latest
+    concurrency:
+      group: pull-request-preview-${{ github.event.workflow_run.head_repository.full_name }}-${{ github.event.workflow_run.head_branch }}
+      cancel-in-progress: true
+
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+
+    environment: pull request
+
+    permissions:
+      actions: read
+      statuses: write
+      pull-requests: write
+
+    steps:
+      - name: Set Commit Status
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.repos.createCommitStatus({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              sha: context.payload.workflow_run.head_sha,
+              context: 'Website Preview',
+              description: 'Deploying...',
+              state: 'pending',
+            })
+
+      - name: Download Artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: website-preview
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          run-id: ${{ github.event.workflow_run.id }}
+
+      - name: Restore Context and Set Deploy Name
+        run: |
+          cat action.env >> $GITHUB_ENV
+          echo "DEPLOY_NAME=deploy-preview-${{ env.PR_NUMBER }}" >> $GITHUB_ENV
+
+      - name: Deploy to Netlify
+        id: deploy
+        uses: nwtgck/actions-netlify@v3
+        with:
+          publish-dir: ./website/build
+          production-deploy: false
+          deploy-message: "Deploy ${{ env.DEPLOY_NAME }}@${{ github.event.workflow_run.head_sha }}"
+          alias: ${{ env.DEPLOY_NAME }}
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.SITE_ID }}
+
+      # action netlify has no pull request context, so we need to comment by ourselves
+      - name: Comment on Pull Request
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          header: website
+          number: ${{ env.PR_NUMBER }}
+          message: |
+            :rocket: Deployed to ${{ steps.deploy.outputs.deploy-url }}
+
+      - name: Set Commit Status
+        uses: actions/github-script@v7
+        if: always()
+        with:
+          script: |
+            if (context.job.status === 'success') {
+              github.repos.createCommitStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                sha: context.payload.workflow_run.head_sha,
+                context: 'Website Preview',
+                description: `Deployed to ${{ steps.deploy.outputs.deploy-url }}`,
+                state: 'success',
+                target_url: `${{ steps.deploy.outputs.deploy-url }}`,
+              })
+            } else {
+              github.repos.createCommitStatus({
+                owner: context.repo.owner,
+                repo: context.repo.repo,
+                sha: context.payload.workflow_run.head_sha,
+                context: 'Website Preview',
+                description: 'Deploy ' + context.job.status,
+                state: 'failure',
+              })
+            }
