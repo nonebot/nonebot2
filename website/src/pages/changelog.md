@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: Minecraft_QQBot [@noneflow](https://github.com/noneflow) ([#2837](https://github.com/nonebot/nonebot2/pull/2837))
 - Bot: 星辰 Bot [@noneflow](https://github.com/noneflow) ([#2824](https://github.com/nonebot/nonebot2/pull/2824))
 
 ## v2.3.2
