@@ -6504,5 +6504,12 @@
     "author": "wyeeeee",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_game_torrent",
+    "project_link": "nonebot-plugin-game-torrent",
+    "author": "Cvandia",
+    "tags": [],
+    "is_official": false
   }
 ]
