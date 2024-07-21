@@ -615,5 +615,22 @@
     "homepage": "https://github.com/StarXinXin/StarsBot",
     "tags": [],
     "is_official": false
+  },
+  {
+    "name": "Minecraft_QQBot",
+    "desc": "基于 NoneBot2 和 Mcdr 的多服互联 QQ 机器人。",
+    "author": "Lonely-Sails",
+    "homepage": "https://github.com/Lonely-Sails/Minecraft_QQBot",
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#ea5252"
+      },
+      {
+        "label": "Mcdr",
+        "color": "#37a7e7"
+      }
+    ],
+    "is_official": false
   }
 ]
