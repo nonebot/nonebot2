@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-autopush [@noneflow](https://github.com/noneflow) ([#2833](https://github.com/nonebot/nonebot2/pull/2833))
 - Plugin: vv_helper [@noneflow](https://github.com/noneflow) ([#2825](https://github.com/nonebot/nonebot2/pull/2825))
 - Plugin: nonebot_plugin_game_torrent [@noneflow](https://github.com/noneflow) ([#2827](https://github.com/nonebot/nonebot2/pull/2827))
 - Plugin: 每日油价 [@noneflow](https://github.com/noneflow) ([#2822](https://github.com/nonebot/nonebot2/pull/2822))
