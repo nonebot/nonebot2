@@ -6518,5 +6518,12 @@
     "author": "SwedishDoveCooker",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_autopush",
+    "project_link": "nonebot-plugin-autopush",
+    "author": "This-is-XiaoDeng",
+    "tags": [],
+    "is_official": false
   }
 ]
