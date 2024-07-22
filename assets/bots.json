@@ -618,16 +618,16 @@
   },
   {
     "name": "Minecraft_QQBot",
-    "desc": "基于 NoneBot2 和 Mcdr 的多服互联 QQ 机器人。",
+    "desc": "基于 NoneBot2 的 Minecraft 群服互联 QQ 机器人，支持多服务器多种方式连接。",
     "author": "Lonely-Sails",
-    "homepage": "https://github.com/Lonely-Sails/Minecraft_QQBot",
+    "homepage": "https://github.com/Minecraft-QQBot/BotServer",
     "tags": [
       {
         "label": "Minecraft",
         "color": "#ea5252"
       },
       {
-        "label": "Mcdr",
+        "label": "娱乐",
         "color": "#37a7e7"
       }
     ],
