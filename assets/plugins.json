@@ -6539,5 +6539,21 @@
     "author": "tkgs0",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cogvideox",
+    "project_link": "nonebot-plugin-cogvideox",
+    "author": "Alpaca4610",
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      },
+      {
+        "label": "视频生成",
+        "color": "#1a30b7"
+      }
+    ],
+    "is_official": false
   }
 ]
