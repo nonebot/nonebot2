@@ -20,6 +20,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: GPT-SoVITS 语音合成 [@noneflow](https://github.com/noneflow) ([#2847](https://github.com/nonebot/nonebot2/pull/2847))
 - Plugin: 基于清影的AI视频生成 [@noneflow](https://github.com/noneflow) ([#2843](https://github.com/nonebot/nonebot2/pull/2843))
 - Plugin: 命令行 [@noneflow](https://github.com/noneflow) ([#2840](https://github.com/nonebot/nonebot2/pull/2840))
 - Plugin: exe_code [@noneflow](https://github.com/noneflow) ([#2835](https://github.com/nonebot/nonebot2/pull/2835))
