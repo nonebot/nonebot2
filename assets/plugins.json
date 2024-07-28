@@ -6555,5 +6555,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_gpt_sovits",
+    "project_link": "nonebot-plugin-gpt-sovits",
+    "author": "zhaomaoniu",
+    "tags": [
+      {
+        "label": "GPT-SoVITS",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
