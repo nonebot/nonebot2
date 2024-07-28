@@ -6567,5 +6567,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_naturel_gpt_plus",
+    "project_link": "nonebot-plugin-naturel-gpt-plus",
+    "author": "Zhou-Shilin",
+    "tags": [
+      {
+        "label": "ChatGPT",
+        "color": "#ea5252"
+      },
+      {
+        "label": "t:chatgpt",
+        "color": "#7552ea"
+      },
+      {
+        "label": "OpenAi",
+        "color": "#a07eff"
+      }
+    ],
+    "is_official": false
   }
 ]
