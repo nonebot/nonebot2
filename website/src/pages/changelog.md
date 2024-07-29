@@ -9,10 +9,46 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 错误的类型标注和 annotated 处理 [@yanyongyu](https://github.com/yanyongyu) ([#2828](https://github.com/nonebot/nonebot2/pull/2828))
+
+### 💫 杂项
+
+- Bot: 更新 Minecraft QQBot 信息 [@Lonely-Sails](https://github.com/Lonely-Sails) ([#2838](https://github.com/nonebot/nonebot2/pull/2838))
+- Plugin: 移除 kanonbot 插件 [@SuperGuGuGu](https://github.com/SuperGuGuGu) ([#2819](https://github.com/nonebot/nonebot2/pull/2819))
+- Plugin: 更新插件 sparkapi 信息 [@CCLMSY](https://github.com/CCLMSY) ([#2812](https://github.com/nonebot/nonebot2/pull/2812))
+- Plugin: 修改插件 miragetank \& charpic 信息 [@1umine](https://github.com/1umine) ([#2807](https://github.com/nonebot/nonebot2/pull/2807))
+
+### 🍻 插件发布
+
+- Plugin: GPT-SoVITS 语音合成 [@noneflow](https://github.com/noneflow) ([#2847](https://github.com/nonebot/nonebot2/pull/2847))
+- Plugin: 基于清影的AI视频生成 [@noneflow](https://github.com/noneflow) ([#2843](https://github.com/nonebot/nonebot2/pull/2843))
+- Plugin: 命令行 [@noneflow](https://github.com/noneflow) ([#2840](https://github.com/nonebot/nonebot2/pull/2840))
+- Plugin: exe_code [@noneflow](https://github.com/noneflow) ([#2835](https://github.com/nonebot/nonebot2/pull/2835))
+- Plugin: nonebot-plugin-autopush [@noneflow](https://github.com/noneflow) ([#2833](https://github.com/nonebot/nonebot2/pull/2833))
+- Plugin: vv_helper [@noneflow](https://github.com/noneflow) ([#2825](https://github.com/nonebot/nonebot2/pull/2825))
+- Plugin: nonebot_plugin_game_torrent [@noneflow](https://github.com/noneflow) ([#2827](https://github.com/nonebot/nonebot2/pull/2827))
+- Plugin: 每日油价 [@noneflow](https://github.com/noneflow) ([#2822](https://github.com/nonebot/nonebot2/pull/2822))
+- Plugin: wordle [@noneflow](https://github.com/noneflow) ([#2818](https://github.com/nonebot/nonebot2/pull/2818))
+- Plugin: 再润 [@noneflow](https://github.com/noneflow) ([#2816](https://github.com/nonebot/nonebot2/pull/2816))
+- Plugin: 漫展/展览查询 [@noneflow](https://github.com/noneflow) ([#2811](https://github.com/nonebot/nonebot2/pull/2811))
+- Plugin: 鸣潮wiki [@noneflow](https://github.com/noneflow) ([#2804](https://github.com/nonebot/nonebot2/pull/2804))
+- Plugin: cloudfare R2 客服端 [@noneflow](https://github.com/noneflow) ([#2806](https://github.com/nonebot/nonebot2/pull/2806))
+- Plugin: AnyMate小助手 [@noneflow](https://github.com/noneflow) ([#2761](https://github.com/nonebot/nonebot2/pull/2761))
+
+### 🍻 机器人发布
+
+- Bot: Minecraft_QQBot [@noneflow](https://github.com/noneflow) ([#2837](https://github.com/nonebot/nonebot2/pull/2837))
+- Bot: 星辰 Bot [@noneflow](https://github.com/noneflow) ([#2824](https://github.com/nonebot/nonebot2/pull/2824))
+
+## v2.3.2
+
+### 🐛 Bug 修复
+
 - Fix: 修复 ForwardRef eval 时参数 recursive_guard 缺失 [@he0119](https://github.com/he0119) ([#2778](https://github.com/nonebot/nonebot2/pull/2778))
 
 ### 📝 文档
 
+- Docs: 修改导航栏开源之夏链接 [@KomoriDev](https://github.com/KomoriDev) ([#2798](https://github.com/nonebot/nonebot2/pull/2798))
 - Docs: `on_keyword` 参数类型错误 [@TaskManagerOL](https://github.com/TaskManagerOL) ([#2795](https://github.com/nonebot/nonebot2/pull/2795))
 - Docs: 修复单元测试示例代码 [@mobyw](https://github.com/mobyw) ([#2741](https://github.com/nonebot/nonebot2/pull/2741))
 - Docs: 修改依赖注入定义链接 [@Weltolk](https://github.com/Weltolk) ([#2733](https://github.com/nonebot/nonebot2/pull/2733))

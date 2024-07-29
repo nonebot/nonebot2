@@ -15,7 +15,7 @@ def combine_driver(driver: type[D]) -> type[D]: ...
 
 @overload
 def combine_driver(
-    driver: type[D], _m: type[Mixin], *mixins: type[Mixin]
+    driver: type[D], __m: type[Mixin], /, *mixins: type[Mixin]
 ) -> type["CombinedDriver"]: ...
 
 

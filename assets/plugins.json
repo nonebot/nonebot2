@@ -855,15 +855,33 @@
   {
     "module_name": "nonebot_plugin_charpic",
     "project_link": "nonebot-plugin-charpic",
-    "author": "RafuiiChan",
-    "tags": [],
+    "author": "1umine",
+    "tags": [
+      {
+        "label": "字符画",
+        "color": "#ea5252"
+      },
+      {
+        "label": "多平台适配",
+        "color": "#ea5252"
+      }
+    ],
     "is_official": false
   },
   {
     "module_name": "nonebot_plugin_miragetank",
     "project_link": "nonebot-plugin-miragetank",
-    "author": "RafuiiChan",
-    "tags": [],
+    "author": "1umine",
+    "tags": [
+      {
+        "label": "幻影坦克",
+        "color": "#ea5252"
+      },
+      {
+        "label": "多平台适配",
+        "color": "#ea5252"
+      }
+    ],
     "is_official": false
   },
   {
@@ -4555,18 +4573,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_kanonbot",
-    "project_link": "nonebot-plugin-kanonbot",
-    "author": "SuperGuGuGu",
-    "tags": [
-      {
-        "label": "KanonBot",
-        "color": "#44ddff"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_mcversion",
     "project_link": "nonebot-plugin-mcversion",
     "author": "CN171-1",
@@ -6022,6 +6028,14 @@
       {
         "label": "AI",
         "color": "#00ff00"
+      },
+      {
+        "label": "星火",
+        "color": "#0000ff"
+      },
+      {
+        "label": "Chat",
+        "color": "#ff0000"
       }
     ],
     "is_official": false
@@ -6415,6 +6429,141 @@
       {
         "label": "NapCat",
         "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_anymate",
+    "project_link": "nonebot-plugin-anymate",
+    "author": "QuickLAW",
+    "tags": [
+      {
+        "label": "server",
+        "color": "#ea5252"
+      },
+      {
+        "label": "func",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cfr2",
+    "project_link": "nonebot-plugin-cfr2",
+    "author": "1v7w",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_WWwiki",
+    "project_link": "nonebot-plugin-WWwiki",
+    "author": "shi-yingyingjiang",
+    "tags": [
+      {
+        "label": "鸣潮",
+        "color": "#ea5252"
+      },
+      {
+        "label": "wiki",
+        "color": "#30af29"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_acgnshow",
+    "project_link": "nonebot-plugin-acgnshow",
+    "author": "Asankilp",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#f21010"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_runagain",
+    "project_link": "nonebot-plugin-runagain",
+    "author": "NCBM",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_wordle_simple",
+    "project_link": "nonebot-plugin-wordle-simple",
+    "author": "shiyihang2007",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_daily_oil_price",
+    "project_link": "nonebot-plugin-daily-oil-price",
+    "author": "wyeeeee",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_game_torrent",
+    "project_link": "nonebot-plugin-game-torrent",
+    "author": "Cvandia",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_weiweibot",
+    "project_link": "nonebot-plugin-weiweibot",
+    "author": "SwedishDoveCooker",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_autopush",
+    "project_link": "nonebot-plugin-autopush",
+    "author": "This-is-XiaoDeng",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_exe_code",
+    "project_link": "nonebot-plugin-exe-code",
+    "author": "wyf7685",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_system_command",
+    "project_link": "nonebot-plugin-system-command",
+    "author": "tkgs0",
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cogvideox",
+    "project_link": "nonebot-plugin-cogvideox",
+    "author": "Alpaca4610",
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      },
+      {
+        "label": "视频生成",
+        "color": "#1a30b7"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_gpt_sovits",
+    "project_link": "nonebot-plugin-gpt-sovits",
+    "author": "zhaomaoniu",
+    "tags": [
+      {
+        "label": "GPT-SoVITS",
+        "color": "#000000"
       }
     ],
     "is_official": false
