@@ -55,5 +55,5 @@ weather = on_command("天气", rule=to_me(), aliases={"weather", "查天气"}, p
 
 这样，我们就获得了一个可以响应 `天气`、`weather`、`查天气` 三个命令的响应规则，需要私聊或 `@bot` 时才会响应，优先级为 10（越小越先），阻断事件传播（block=True, 不响应优先级的值更大的matcher）的事件响应器了。这些内容的意义和使用方法将会在后续的章节中一一介绍。
 :::tip 提示
-需要注意的是，不同的辅助函数有不同的可选参数，在使用之前可以参考[事件响应器进阶](../advanced/matcher.md)中的[基本辅助函数](../advanced/matcher.md#基本辅助函数), rule请参考[内置响应规则](../advanced/matcher.md#内置响应规则)或编辑器的提示。
+需要注意的是，不同的辅助函数有不同的可选参数，在使用之前可以参考[事件响应器进阶](../advanced/matcher.md)中的[基本辅助函数](../advanced/matcher.md#基本辅助函数)，rule请参考[内置响应规则](../advanced/matcher.md#内置响应规则)。
 :::

@@ -12,7 +12,7 @@ options:
 
 import Messenger from "@site/src/components/Messenger";
 
-**权限控制**是机器人在实际应用中需要解决的重点问题之一，NoneBot 提供了灵活的权限控制机制 —— `Permission`。
+**权限控制**是机器人在实际应用中需要解决的重点问题之一，NoneBot 提供了灵活的权限控制机制 —— `Permission`。在本章节中，我们将学会如何只允许超级用户通过消息命令设置插件的状态。
 
 类似于响应规则 `Rule`，`Permission` 是由非负整数个 `PermissionChecker` 所共同组成的**用于筛选事件**的对象。但需要特别说明的是，权限和响应规则有如下区别：
 
@@ -29,9 +29,10 @@ import Messenger from "@site/src/components/Messenger";
 
 例如，我们可以在 `weather` 插件中添加一个超级用户可用的指令：
 
-```python {2,8} title=weather/__init__.py
+```python {2,9} title=weather/__init__.py
 from typing import Tuple
 from nonebot.permission import SUPERUSER
+from nonebot.params import CommandArg, Command
 
 manage = on_command(
     ("天气", "启用"),
@@ -44,6 +45,7 @@ manage = on_command(
 async def control(cmd: Tuple[str, str] = Command()):
     _, action = cmd
     if action == "启用":
+        # 请参考 "深入-配置-插件配置"
         plugin_config.weather_plugin_enabled = True
     elif action == "禁用":
         plugin_config.weather_plugin_enabled = False
