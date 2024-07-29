@@ -6567,5 +6567,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_wakatime",
+    "project_link": "nonebot-plugin-wakatime",
+    "author": "KomoriDev",
+    "tags": [
+      {
+        "label": "WakaTime",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
   }
 ]
