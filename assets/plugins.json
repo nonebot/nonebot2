@@ -6579,5 +6579,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sunoai",
+    "project_link": "nonebot-plugin-sunoai",
+    "author": "CCYellowStar2",
+    "tags": [
+      {
+        "label": "SunoAi",
+        "color": "#ea5252"
+      },
+      {
+        "label": "AI歌曲",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
