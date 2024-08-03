@@ -20,6 +20,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: SunoAI音乐生成 [@noneflow](https://github.com/noneflow) ([#2853](https://github.com/nonebot/nonebot2/pull/2853))
 - Plugin: 谁是卷王 [@noneflow](https://github.com/noneflow) ([#2849](https://github.com/nonebot/nonebot2/pull/2849))
 - Plugin: GPT-SoVITS 语音合成 [@noneflow](https://github.com/noneflow) ([#2847](https://github.com/nonebot/nonebot2/pull/2847))
 - Plugin: 基于清影的AI视频生成 [@noneflow](https://github.com/noneflow) ([#2843](https://github.com/nonebot/nonebot2/pull/2843))
