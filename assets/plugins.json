@@ -6595,5 +6595,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "XXQG",
+    "project_link": "XXQG",
+    "author": "TeenStudyFlow",
+    "tags": [
+      {
+        "label": "学习强国",
+        "color": "#e0d31c"
+      }
+    ],
+    "is_official": false
   }
 ]
