@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 修改 nonebot-plugin-fishing 插件作者 [@ALittleBot](https://github.com/ALittleBot) ([#2854](https://github.com/nonebot/nonebot2/pull/2854))
 - Bot: 更新 Minecraft QQBot 信息 [@Lonely-Sails](https://github.com/Lonely-Sails) ([#2838](https://github.com/nonebot/nonebot2/pull/2838))
 - Plugin: 移除 kanonbot 插件 [@SuperGuGuGu](https://github.com/SuperGuGuGu) ([#2819](https://github.com/nonebot/nonebot2/pull/2819))
 - Plugin: 更新插件 sparkapi 信息 [@CCLMSY](https://github.com/CCLMSY) ([#2812](https://github.com/nonebot/nonebot2/pull/2812))
