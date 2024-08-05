@@ -114,7 +114,7 @@ def on(
     rule: Optional[Union[Rule, T_RuleChecker]] = None,
     permission: Optional[Union[Permission, T_PermissionChecker]] = None,
     *,
-    handlers: Optional[list[Union[T_Handler, Dependent]]] = None,
+    handlers: Optional[list[Union[T_Handler, Dependent[Any]]]] = None,
     temp: bool = False,
     expire_time: Optional[Union[datetime, timedelta]] = None,
     priority: int = 1,

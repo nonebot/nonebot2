@@ -102,7 +102,7 @@ class DependParam(Param):
     """
 
     def __init__(
-        self, *args, dependent: Dependent, use_cache: bool, **kwargs: Any
+        self, *args, dependent: Dependent[Any], use_cache: bool, **kwargs: Any
     ) -> None:
         super().__init__(*args, **kwargs)
         self.dependent = dependent
@@ -114,7 +114,7 @@ class DependParam(Param):
     @classmethod
     def _from_field(
         cls,
-        sub_dependent: Dependent,
+        sub_dependent: Dependent[Any],
         use_cache: bool,
         validate: Union[bool, PydanticFieldInfo],
     ) -> Self:
@@ -190,7 +190,7 @@ class DependParam(Param):
         use_cache: bool = self.use_cache
         dependency_cache = {} if dependency_cache is None else dependency_cache
 
-        sub_dependent: Dependent = self.dependent
+        sub_dependent = self.dependent
         call = cast(Callable[..., Any], sub_dependent.call)
 
         # solve sub dependency with current cache
