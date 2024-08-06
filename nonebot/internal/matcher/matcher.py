@@ -76,7 +76,7 @@ T = TypeVar("T")
 current_bot: ContextVar[Bot] = ContextVar("current_bot")
 current_event: ContextVar[Event] = ContextVar("current_event")
 current_matcher: ContextVar["Matcher"] = ContextVar("current_matcher")
-current_handler: ContextVar[Dependent] = ContextVar("current_handler")
+current_handler: ContextVar[Dependent[Any]] = ContextVar("current_handler")
 
 
 @dataclass

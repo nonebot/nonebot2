@@ -574,7 +574,7 @@ async def test_default(app: App):
 async def test_priority():
     from plugins.param.priority import complex_priority
 
-    dependent = Dependent.parse(
+    dependent = Dependent[None].parse(
         call=complex_priority,
         allow_types=[
             DependParam,
