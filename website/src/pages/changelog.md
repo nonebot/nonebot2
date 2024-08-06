@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 添加遗漏的类型标注 [@yanyongyu](https://github.com/yanyongyu) ([#2856](https://github.com/nonebot/nonebot2/pull/2856))
+
 ### 🐛 Bug 修复
 
 - Fix: 错误的类型标注和 annotated 处理 [@yanyongyu](https://github.com/yanyongyu) ([#2828](https://github.com/nonebot/nonebot2/pull/2828))
