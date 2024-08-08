@@ -6539,12 +6539,12 @@
     "author": "tkgs0",
     "tags": [
       {
-	"label": "shell",
-	"color": "#0078d4"
+        "label": "shell",
+        "color": "#0078d4"
       },
       {
-	"label": "cmd",
-	"color": "#24292f"
+        "label": "cmd",
+        "color": "#24292f"
       }
     ],
     "is_official": false
