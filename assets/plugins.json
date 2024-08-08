@@ -6618,5 +6618,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_deer_pipe",
+    "project_link": "nonebot-plugin-deer-pipe",
+    "author": "SamuNatsu",
+    "tags": [],
+    "is_official": false
   }
 ]
