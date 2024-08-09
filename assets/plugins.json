@@ -6537,7 +6537,16 @@
     "module_name": "nonebot_plugin_system_command",
     "project_link": "nonebot-plugin-system-command",
     "author": "tkgs0",
-    "tags": [],
+    "tags": [
+      {
+        "label": "shell",
+        "color": "#0078d4"
+      },
+      {
+        "label": "cmd",
+        "color": "#24292f"
+      }
+    ],
     "is_official": false
   },
   {
