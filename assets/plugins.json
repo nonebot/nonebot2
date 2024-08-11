@@ -6653,5 +6653,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_essence_message",
+    "project_link": "nonebot-plugin-essence-message",
+    "author": "BEISNWKZNAN",
+    "tags": [],
+    "is_official": false
   }
 ]
