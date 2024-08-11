@@ -6641,5 +6641,17 @@
     "author": "iam57ao",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bili_fav_watcher",
+    "project_link": "nonebot-plugin-bili-fav-watcher",
+    "author": "kawaiior",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
