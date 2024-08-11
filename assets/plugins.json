@@ -6634,5 +6634,12 @@
     "author": "SamuNatsu",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_alist",
+    "project_link": "nonebot-plugin-alist",
+    "author": "iam57ao",
+    "tags": [],
+    "is_official": false
   }
 ]
