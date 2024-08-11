@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Alist [@noneflow](https://github.com/noneflow) ([#2865](https://github.com/nonebot/nonebot2/pull/2865))
 - Plugin: 🦌管签到 [@noneflow](https://github.com/noneflow) ([#2859](https://github.com/nonebot/nonebot2/pull/2859))
 - Plugin: 漂流瓶 [@noneflow](https://github.com/noneflow) ([#2861](https://github.com/nonebot/nonebot2/pull/2861))
 - Plugin: 奇怪的小功能 [@noneflow](https://github.com/noneflow) ([#2851](https://github.com/nonebot/nonebot2/pull/2851))
