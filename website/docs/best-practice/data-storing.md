@@ -31,17 +31,17 @@ require("nonebot_plugin_localstore")
 import nonebot_plugin_localstore as store
 
 # 获取插件缓存目录
-cache_dir = store.get_cache_dir("plugin_name")
+cache_dir = store.get_plugin_cache_dir()
 # 获取插件缓存文件
-cache_file = store.get_cache_file("plugin_name", "file_name")
+cache_file = store.get_plugin_cache_file("file_name")
 # 获取插件数据目录
-data_dir = store.get_data_dir("plugin_name")
+data_dir = store.get_plugin_data_dir()
 # 获取插件数据文件
-data_file = store.get_data_file("plugin_name", "file_name")
+data_file = store.get_plugin_data_file("file_name")
 # 获取插件配置目录
-config_dir = store.get_config_dir("plugin_name")
+config_dir = store.get_plugin_config_dir()
 # 获取插件配置文件
-config_file = store.get_config_file("plugin_name", "file_name")
+config_file = store.get_plugin_config_file("file_name")
 ```
 
 :::danger 警告
@@ -53,9 +53,35 @@ config_file = store.get_config_file("plugin_name", "file_name")
 ```python
 from pathlib import Path
 
-data_file = store.get_data_file("plugin_name", "file_name")
+data_file = store.get_plugin_data_file("file_name")
 # 写入文件内容
 data_file.write_text("Hello World!")
 # 读取文件内容
 data = data_file.read_text()
+```
+
+## 配置项
+
+### localstore_cache_dir
+
+自定义缓存目录
+
+```dotenv
+LOCALSTORE_CACHE_DIR=/tmp/cache
+```
+
+### localstore_config_dir
+
+自定义配置目录
+
+```dotenv
+LOCALSTORE_CONFIG_DIR=/tmp/config
+```
+
+### localstore_data_dir
+
+自定义数据目录
+
+```dotenv
+LOCALSTORE_DATA_DIR=/tmp/data
 ```
