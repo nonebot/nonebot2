@@ -16,6 +16,10 @@ toc_max_heading_level: 2
 
 - Fix: 错误的类型标注和 annotated 处理 [@yanyongyu](https://github.com/yanyongyu) ([#2828](https://github.com/nonebot/nonebot2/pull/2828))
 
+### 📝 文档
+
+- Docs: 更新 localstore 插件文档 [@yanyongyu](https://github.com/yanyongyu) ([#2871](https://github.com/nonebot/nonebot2/pull/2871))
+
 ### 💫 杂项
 
 - Plugin: 修改插件 system-command 信息 [@tkgs0](https://github.com/tkgs0) ([#2862](https://github.com/nonebot/nonebot2/pull/2862))
