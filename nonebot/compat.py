@@ -8,17 +8,20 @@ FrontMatter:
 """
 
 from collections.abc import Generator
+from functools import cached_property
 from dataclasses import dataclass, is_dataclass
 from typing_extensions import Self, get_args, get_origin, is_typeddict
 from typing import (
     TYPE_CHECKING,
     Any,
     Union,
+    Generic,
     TypeVar,
     Callable,
     Optional,
     Protocol,
     Annotated,
+    overload,
 )
 
 from pydantic import VERSION, BaseModel
@@ -46,8 +49,8 @@ __all__ = (
     "DEFAULT_CONFIG",
     "FieldInfo",
     "ModelField",
+    "TypeAdapter",
     "extract_field_info",
-    "model_field_validate",
     "model_fields",
     "model_config",
     "model_dump",
@@ -63,9 +66,10 @@ __autodoc__ = {
 
 
 if PYDANTIC_V2:  # pragma: pydantic-v2
+    from pydantic import GetCoreSchemaHandler
+    from pydantic import TypeAdapter as TypeAdapter
     from pydantic_core import CoreSchema, core_schema
     from pydantic._internal._repr import display_as_type
-    from pydantic import TypeAdapter, GetCoreSchemaHandler
     from pydantic.fields import FieldInfo as BaseFieldInfo
 
     Required = Ellipsis
@@ -125,6 +129,25 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             """Construct a ModelField from given infos."""
             return cls._construct(name, annotation, field_info or FieldInfo())
 
+        def __hash__(self) -> int:
+            # Each ModelField is unique for our purposes,
+            # to allow store them in a set.
+            return id(self)
+
+        @cached_property
+        def type_adapter(self) -> TypeAdapter:
+            """TypeAdapter of the field.
+
+            Cache the TypeAdapter to avoid creating it multiple times.
+            Pydantic v2 uses too much cpu time to create TypeAdapter.
+
+            See: https://github.com/pydantic/pydantic/issues/9834
+            """
+            return TypeAdapter(
+                Annotated[self.annotation, self.field_info],
+                config=None if self._annotation_has_config() else DEFAULT_CONFIG,
+            )
+
         def _annotation_has_config(self) -> bool:
             """Check if the annotation has config.
 
@@ -152,10 +175,9 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             """Get the display of the type of the field."""
             return display_as_type(self.annotation)
 
-        def __hash__(self) -> int:
-            # Each ModelField is unique for our purposes,
-            # to allow store them in a set.
-            return id(self)
+        def validate_value(self, value: Any) -> Any:
+            """Validate the value pass to the field."""
+            return self.type_adapter.validate_python(value)
 
     def extract_field_info(field_info: BaseFieldInfo) -> dict[str, Any]:
         """Get FieldInfo init kwargs from a FieldInfo instance."""
@@ -163,15 +185,6 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
         kwargs = field_info._attributes_set.copy()
         kwargs["annotation"] = field_info.rebuild_annotation()
         return kwargs
-
-    def model_field_validate(
-        model_field: ModelField, value: Any, config: Optional[ConfigDict] = None
-    ) -> Any:
-        """Validate the value pass to the field."""
-        type: Any = Annotated[model_field.annotation, model_field.field_info]
-        return TypeAdapter(
-            type, config=None if model_field._annotation_has_config() else config
-        ).validate_python(value)
 
     def model_fields(model: type[BaseModel]) -> list[ModelField]:
         """Get field list of a model."""
@@ -305,6 +318,45 @@ else:  # pragma: pydantic-v1
                 )
             return cls._construct(name, annotation, field_info or FieldInfo())
 
+        def validate_value(self, value: Any) -> Any:
+            """Validate the value pass to the field."""
+            v, errs_ = self.validate(value, {}, loc=())
+            if errs_:
+                raise ValueError(value, self)
+            return v
+
+    class TypeAdapter(Generic[T]):
+        @overload
+        def __init__(
+            self,
+            type: type[T],
+            *,
+            config: Optional[ConfigDict] = ...,
+        ) -> None: ...
+
+        @overload
+        def __init__(
+            self,
+            type: Any,
+            *,
+            config: Optional[ConfigDict] = ...,
+        ) -> None: ...
+
+        def __init__(
+            self,
+            type: Any,
+            *,
+            config: Optional[ConfigDict] = None,
+        ) -> None:
+            self.type = type
+            self.config = config
+
+        def validate_python(self, value: Any) -> T:
+            return type_validate_python(self.type, value)
+
+        def validate_json(self, value: Union[str, bytes]) -> T:
+            return type_validate_json(self.type, value)
+
     def extract_field_info(field_info: BaseFieldInfo) -> dict[str, Any]:
         """Get FieldInfo init kwargs from a FieldInfo instance."""
 
@@ -313,22 +365,6 @@ else:  # pragma: pydantic-v1
         }
         kwargs.update(field_info.extra)
         return kwargs
-
-    def model_field_validate(
-        model_field: ModelField, value: Any, config: Optional[type[ConfigDict]] = None
-    ) -> Any:
-        """Validate the value pass to the field.
-
-        Set config before validate to ensure validate correctly.
-        """
-
-        if model_field.model_config is not config:
-            model_field.set_config(config or ConfigDict)
-
-        v, errs_ = model_field.validate(value, {}, loc=())
-        if errs_:
-            raise ValueError(value, model_field)
-        return v
 
     def model_fields(model: type[BaseModel]) -> list[ModelField]:
         """Get field list of a model."""

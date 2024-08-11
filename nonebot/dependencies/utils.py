@@ -9,9 +9,9 @@ from typing import Any, Callable, ForwardRef
 
 from loguru import logger
 
+from nonebot.compat import ModelField
 from nonebot.exception import TypeMisMatch
 from nonebot.typing import evaluate_forwardref
-from nonebot.compat import DEFAULT_CONFIG, ModelField, model_field_validate
 
 
 def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
@@ -51,6 +51,6 @@ def check_field_type(field: ModelField, value: Any) -> Any:
     """检查字段类型是否匹配"""
 
     try:
-        return model_field_validate(field, value, DEFAULT_CONFIG)
+        return field.validate_value(value)
     except ValueError:
         raise TypeMisMatch(field, value)

@@ -1,13 +1,14 @@
-from typing import Any, Optional
 from dataclasses import dataclass
+from typing import Any, Optional, Annotated
 
 import pytest
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 
 from nonebot.compat import (
     DEFAULT_CONFIG,
     Required,
     FieldInfo,
+    TypeAdapter,
     PydanticUndefined,
     model_dump,
     custom_validation,
@@ -29,6 +30,21 @@ async def test_field_info():
 
     # field info should allow extra attributes
     assert FieldInfo(test="test").extra["test"] == "test"
+
+
+@pytest.mark.asyncio
+async def test_type_adapter():
+    t = TypeAdapter(Annotated[int, FieldInfo(ge=1)])
+
+    assert t.validate_python(2) == 2
+
+    with pytest.raises(ValidationError):
+        t.validate_python(0)
+
+    assert t.validate_json("2") == 2
+
+    with pytest.raises(ValidationError):
+        t.validate_json("0")
 
 
 @pytest.mark.asyncio
