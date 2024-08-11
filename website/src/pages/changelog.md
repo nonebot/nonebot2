@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 优化依赖注入在 pydantic v2 下的性能 [@yanyongyu](https://github.com/yanyongyu) ([#2870](https://github.com/nonebot/nonebot2/pull/2870))
 - Feature: 添加遗漏的类型标注 [@yanyongyu](https://github.com/yanyongyu) ([#2856](https://github.com/nonebot/nonebot2/pull/2856))
 
 ### 🐛 Bug 修复
