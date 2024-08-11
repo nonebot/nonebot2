@@ -60,28 +60,54 @@ data_file.write_text("Hello World!")
 data = data_file.read_text()
 ```
 
+:::note 提示
+
+对于嵌套插件，子插件的存储目录将位于父插件存储目录下。
+
+:::
+
 ## 配置项
 
 ### localstore_cache_dir
 
 自定义缓存目录
 
+默认值：
+
+- macOS: `~/Library/Caches/<AppName>`
+- Unix: `~/.cache/<AppName>` (XDG default)
+- Windows: `C:\Users\<username>\AppData\Local\<AppName>\Cache`
+
 ```dotenv
 LOCALSTORE_CACHE_DIR=/tmp/cache
-```
-
-### localstore_config_dir
-
-自定义配置目录
-
-```dotenv
-LOCALSTORE_CONFIG_DIR=/tmp/config
 ```
 
 ### localstore_data_dir
 
 自定义数据目录
 
+默认值：
+
+- macOS: `~/Library/Application Support/<AppName>`
+- Unix: `~/.local/share/<AppName>` or in $XDG_DATA_HOME, if defined
+- Win XP (not roaming): `C:\Documents and Settings\<username>\Application Data\<AppName>`
+- Win 7 (not roaming): `C:\Users\<username>\AppData\Local\<AppName>`
+
 ```dotenv
 LOCALSTORE_DATA_DIR=/tmp/data
+```
+
+### localstore_config_dir
+
+自定义配置目录
+
+默认值：
+
+- macOS: same as user_data_dir
+- Unix: `~/.config/<AppName>`
+- Win XP (roaming): `C:\Documents and Settings\<username>\Local Settings\Application Data\<AppName>`
+- Win 7 (roaming): `C:\Users\<username>\AppData\Roaming\<AppName>`
+
+```dotenv
+LOCALSTORE_CONFIG_DIR=/tmp/config
 ```
