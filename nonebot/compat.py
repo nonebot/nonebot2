@@ -175,7 +175,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             """Get the display of the type of the field."""
             return display_as_type(self.annotation)
 
-        def validate(self, value: Any) -> Any:
+        def validate_value(self, value: Any) -> Any:
             """Validate the value pass to the field."""
             return self.type_adapter.validate_python(value)
 
@@ -318,9 +318,9 @@ else:  # pragma: pydantic-v1
                 )
             return cls._construct(name, annotation, field_info or FieldInfo())
 
-        def validate(self, value: Any) -> Any:
+        def validate_value(self, value: Any) -> Any:
             """Validate the value pass to the field."""
-            v, errs_ = super().validate(value, {}, loc=())
+            v, errs_ = self.validate(value, {}, loc=())
             if errs_:
                 raise ValueError(value, self)
             return v

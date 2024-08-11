@@ -51,6 +51,6 @@ def check_field_type(field: ModelField, value: Any) -> Any:
     """检查字段类型是否匹配"""
 
     try:
-        return field.validate(value)
+        return field.validate_value(value)
     except ValueError:
         raise TypeMisMatch(field, value)
