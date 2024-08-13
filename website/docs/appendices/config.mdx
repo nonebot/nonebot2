@@ -74,11 +74,11 @@ CUSTOM_CONFIG=config in dotenv
 
 ```bash
 # windows cmd
-set CUSTOM_CONFIG "config in environment variables"
+set CUSTOM_CONFIG 'config in environment variables'
 # windows powershell
-$env:CUSTOM_CONFIG="config in environment variables"
+$Env:CUSTOM_CONFIG='config in environment variables'
 # linux/macOS
-export CUSTOM_CONFIG="config in environment variables"
+export CUSTOM_CONFIG='config in environment variables'
 ```
 
 那最终 NoneBot 所读取的内容为环境变量中的内容，即 `config in environment variables`。
@@ -297,8 +297,10 @@ DRIVER=~fastapi+~httpx+~websockets
   <TabItem value="env" label="系统环境变量">
 
 ```bash
-# windows
+# windows cmd
 set DRIVER '~fastapi+~httpx+~websockets'
+# windows powershell
+$Env:DRIVER='~fastapi+~httpx+~websockets'
 # linux/macOS
 export DRIVER='~fastapi+~httpx+~websockets'
 ```
@@ -333,8 +335,10 @@ HOST=127.0.0.1
   <TabItem value="env" label="系统环境变量">
 
 ```bash
-# windows
+# windows cmd
 set HOST '127.0.0.1'
+# windows powershell
+$Env:HOST='127.0.0.1'
 # linux/macOS
 export HOST='127.0.0.1'
 ```
@@ -369,8 +373,10 @@ PORT=8080
   <TabItem value="env" label="系统环境变量">
 
 ```bash
-# windows
+# windows cmd
 set PORT '8080'
+# windows powershell
+$Env:PORT='8080'
 # linux/macOS
 export PORT='8080'
 ```
@@ -409,8 +415,10 @@ LOG_LEVEL=DEBUG
   <TabItem value="env" label="系统环境变量">
 
 ```bash
-# windows
+# windows cmd
 set LOG_LEVEL 'DEBUG'
+# windows powershell
+$Env:LOG_LEVEL='DEBUG'
 # linux/macOS
 export LOG_LEVEL='DEBUG'
 ```
@@ -445,8 +453,10 @@ API_TIMEOUT=10.0
   <TabItem value="env" label="系统环境变量">
 
 ```bash
-# windows
+# windows cmd
 set API_TIMEOUT '10.0'
+# windows powershell
+$Env:API_TIMEOUT='10.0'
 # linux/macOS
 export API_TIMEOUT='10.0'
 ```
@@ -481,8 +491,10 @@ SUPERUSERS=["123123123"]
   <TabItem value="env" label="系统环境变量">
 
 ```bash
-# windows
+# windows cmd
 set SUPERUSERS '["123123123"]'
+# windows powershell
+$Env:SUPERUSERS='["123123123"]'
 # linux/macOS
 export SUPERUSERS='["123123123"]'
 ```
@@ -517,8 +529,10 @@ NICKNAME=["bot"]
   <TabItem value="env" label="系统环境变量">
 
 ```bash
-# windows
+# windows cmd
 set NICKNAME '["bot"]'
+# windows powershell
+$Env:NICKNAME='["bot"]'
 # linux/macOS
 export NICKNAME='["bot"]'
 ```
@@ -556,9 +570,12 @@ COMMAND_SEP=[".", " "]
   <TabItem value="env" label="系统环境变量">
 
 ```bash
-# windows
+# windows cmd
 set COMMAND_START '["/", ""]'
 set COMMAND_SEP '[".", " "]'
+# windows powershell
+$Env:COMMAND_START='["/", ""]'
+$Env:COMMAND_SEP='[".", " "]'
 # linux/macOS
 export COMMAND_START='["/", ""]'
 export COMMAND_SEP='[".", " "]'
@@ -594,8 +611,10 @@ SESSION_EXPIRE_TIMEOUT=00:02:00
   <TabItem value="env" label="系统环境变量">
 
 ```bash
-# windows
+# windows cmd
 set SESSION_EXPIRE_TIMEOUT '00:02:00'
+# windows powershell
+$Env:SESSION_EXPIRE_TIMEOUT='00:02:00'
 # linux/macOS
 export SESSION_EXPIRE_TIMEOUT='00:02:00'
 ```
