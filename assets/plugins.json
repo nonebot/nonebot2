@@ -6660,5 +6660,17 @@
     "author": "BEISNWKZNAN",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ba_tools",
+    "project_link": "nonebot-plugin-ba-tools",
+    "author": "hanasa2023",
+    "tags": [
+      {
+        "label": "蔚蓝档案",
+        "color": "#00fcf8"
+      }
+    ],
+    "is_official": false
   }
 ]
