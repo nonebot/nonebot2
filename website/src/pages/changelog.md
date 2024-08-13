@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 添加 Windows Powershell 设置环境变量方法 [@LeoQuote](https://github.com/LeoQuote) ([#2874](https://github.com/nonebot/nonebot2/pull/2874))
 - Docs: 更新 localstore 插件文档 [@yanyongyu](https://github.com/yanyongyu) ([#2871](https://github.com/nonebot/nonebot2/pull/2871))
 
 ### 💫 杂项
