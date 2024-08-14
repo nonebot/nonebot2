@@ -6672,5 +6672,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_fakepic",
+    "project_link": "nonebot-plugin-fakepic",
+    "author": "lm175",
+    "tags": [
+      {
+        "label": "图片生成",
+        "color": "#3a82ff"
+      }
+    ],
+    "is_official": false
   }
 ]
