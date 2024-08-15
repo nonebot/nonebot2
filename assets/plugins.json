@@ -6684,5 +6684,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ehentai_search",
+    "project_link": "nonebot-plugin-ehentai-search",
+    "author": "N791",
+    "tags": [
+      {
+        "label": "ehentai",
+        "color": "#f3ed0c"
+      }
+    ],
+    "is_official": false
   }
 ]
