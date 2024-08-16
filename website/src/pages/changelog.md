@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: pokepoke_miss [@noneflow](https://github.com/noneflow) ([#2883](https://github.com/nonebot/nonebot2/pull/2883))
 - Plugin: 聊天截图伪造 [@noneflow](https://github.com/noneflow) ([#2880](https://github.com/nonebot/nonebot2/pull/2880))
 - Plugin: ba-tools [@noneflow](https://github.com/noneflow) ([#2867](https://github.com/nonebot/nonebot2/pull/2867))
 - Plugin: 精华消息管理 [@noneflow](https://github.com/noneflow) ([#2873](https://github.com/nonebot/nonebot2/pull/2873))
