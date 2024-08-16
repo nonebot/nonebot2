@@ -6684,5 +6684,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "pokepoke_miss",
+    "project_link": "pokepoke-miss",
+    "author": "shengwang52005",
+    "tags": [
+      {
+        "label": "舞萌",
+        "color": "#f7fe0e"
+      },
+      {
+        "label": "戳一戳",
+        "color": "#e80606"
+      }
+    ],
+    "is_official": false
   }
 ]
