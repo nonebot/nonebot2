@@ -6712,5 +6712,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "mai2_pcount",
+    "project_link": "mai2_pcount",
+    "author": "shengwang52005",
+    "tags": [
+      {
+        "label": "舞萌",
+        "color": "#eabf0b"
+      },
+      {
+        "label": "机厅",
+        "color": "#a60a25"
+      }
+    ],
+    "is_official": false
   }
 ]
