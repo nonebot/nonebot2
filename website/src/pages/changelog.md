@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: mai2_pcount [@noneflow](https://github.com/noneflow) ([#2891](https://github.com/nonebot/nonebot2/pull/2891))
 - Plugin: nonebot-plugin-ehentai-search [@noneflow](https://github.com/noneflow) ([#2885](https://github.com/nonebot/nonebot2/pull/2885))
 - Plugin: pokepoke_miss [@noneflow](https://github.com/noneflow) ([#2883](https://github.com/nonebot/nonebot2/pull/2883))
 - Plugin: 聊天截图伪造 [@noneflow](https://github.com/noneflow) ([#2880](https://github.com/nonebot/nonebot2/pull/2880))
