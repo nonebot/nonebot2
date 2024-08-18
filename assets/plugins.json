@@ -6763,5 +6763,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_repesix",
+    "project_link": "nonebot-plugin-repesix",
+    "author": "tkgs0",
+    "tags": [],
+    "is_official": false
   }
 ]
