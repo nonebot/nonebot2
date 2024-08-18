@@ -35,3 +35,12 @@ updates:
       actions:
         patterns:
           - "*"
+
+  - package-ecosystem: devcontainers
+    directory: "/"
+    schedule:
+      interval: daily
+    groups:
+      devcontainers:
+        patterns:
+          - "*"
