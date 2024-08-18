@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 🍻 插件发布
+
+- Plugin: 复读6 [@noneflow](https://github.com/noneflow) ([#2900](https://github.com/nonebot/nonebot2/pull/2900))
+
 ## v2.3.3
 
 ### 🚀 新功能
