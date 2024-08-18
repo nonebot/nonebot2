@@ -6770,5 +6770,21 @@
     "author": "tkgs0",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_liteyukibot",
+    "project_link": "nonebot-plugin-liteyukibot",
+    "author": "snowykami",
+    "tags": [
+      {
+        "label": "liteyuki",
+        "color": "#d0e9ff"
+      },
+      {
+        "label": "轻雪",
+        "color": "#a2d8f4"
+      }
+    ],
+    "is_official": false
   }
 ]
