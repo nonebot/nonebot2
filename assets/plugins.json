@@ -6786,5 +6786,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mute",
+    "project_link": "nonebot_plugin_mute",
+    "author": "shengwang52005",
+    "tags": [
+      {
+        "label": "禁言",
+        "color": "#ff0303"
+      },
+      {
+        "label": "娱乐",
+        "color": "#03fff2"
+      }
+    ],
+    "is_official": false
   }
 ]
