@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: LiteyukiBot(plugin) [@noneflow](https://github.com/noneflow) ([#2905](https://github.com/nonebot/nonebot2/pull/2905))
 - Plugin: 复读6 [@noneflow](https://github.com/noneflow) ([#2900](https://github.com/nonebot/nonebot2/pull/2900))
 
 ## v2.3.3
