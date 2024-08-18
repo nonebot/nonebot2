@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot2"
-version = "2.3.2"
+version = "2.3.3"
 description = "An asynchronous python bot framework."
 authors = ["yanyongyu <yyy@nonebot.dev>"]
 license = "MIT"
@@ -44,7 +44,7 @@ uvicorn = { version = ">=0.20.0,<1.0.0", extras = [
 ], optional = true }
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.4.0"
+ruff = "^0.6.0"
 isort = "^5.10.1"
 black = "^24.0.0"
 nonemoji = "^0.1.2"
