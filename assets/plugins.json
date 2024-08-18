@@ -6751,5 +6751,17 @@
     "author": "tkgs0",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_wait_a_minute",
+    "project_link": "nonebot-plugin-wait-a-minute",
+    "author": "shoucandanghehe",
+    "tags": [
+      {
+        "label": "hook",
+        "color": "#ff5349"
+      }
+    ],
+    "is_official": false
   }
 ]
