@@ -6744,5 +6744,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_looklike",
+    "project_link": "nonebot-plugin-looklike",
+    "author": "tkgs0",
+    "tags": [],
+    "is_official": false
   }
 ]
