@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-wait-a-minute [@noneflow](https://github.com/noneflow) ([#2902](https://github.com/nonebot/nonebot2/pull/2902))
 - Plugin: 你看我像 [@noneflow](https://github.com/noneflow) ([#2895](https://github.com/nonebot/nonebot2/pull/2895))
 - Plugin: dify插件 [@noneflow](https://github.com/noneflow) ([#2889](https://github.com/nonebot/nonebot2/pull/2889))
 - Plugin: mai2_pcount [@noneflow](https://github.com/noneflow) ([#2891](https://github.com/nonebot/nonebot2/pull/2891))
