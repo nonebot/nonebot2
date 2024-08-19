@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💫 杂项
+
+- Adapter: 移除社区版 mirai 适配器 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2909](https://github.com/nonebot/nonebot2/pull/2909))
+
 ### 🍻 插件发布
 
 - Plugin: nekro-agent [@noneflow](https://github.com/noneflow) ([#2896](https://github.com/nonebot/nonebot2/pull/2896))
