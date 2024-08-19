@@ -6802,5 +6802,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nekro_agent",
+    "project_link": "nekro-agent",
+    "author": "KroMiose",
+    "tags": [
+      {
+        "label": "Agent",
+        "color": "#ece349"
+      },
+      {
+        "label": "ChatAI",
+        "color": "#3cae69"
+      }
+    ],
+    "is_official": false
   }
 ]
