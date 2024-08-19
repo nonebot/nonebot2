@@ -70,16 +70,6 @@
     "is_official": true
   },
   {
-    "module_name": "nonebot.adapters.mirai2",
-    "project_link": "nonebot_adapter_mirai2",
-    "name": "mirai2",
-    "desc": "为 nonebot2 添加 mirai_api_http2.x的兼容适配器",
-    "author": "ieew",
-    "homepage": "https://github.com/ieew/nonebot_adapter_mirai2",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot.adapters.onebot.v12",
     "project_link": "nonebot-adapter-onebot",
     "name": "OneBot V12",
