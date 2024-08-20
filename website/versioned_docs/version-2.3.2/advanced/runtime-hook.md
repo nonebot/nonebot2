@@ -82,14 +82,16 @@ async def do_something(bot: Bot):
 
 ### 事件预处理
 
-这个钩子函数会在 NoneBot 接收到新的事件时运行。支持依赖注入，可以注入 `Bot` 对象、事件、会话状态。
+这个钩子函数会在 NoneBot 接收到新的事件时运行。支持依赖注入，可以注入 `Bot` 对象、事件、会话状态。在这个钩子函数内抛出 `nonebot.exception.IgnoredException` 会使 NoneBot 忽略该事件。
 
 ```python
+from nonebot.exception import IgnoredException
 from nonebot.message import event_preprocessor
 
 @event_preprocessor
 async def do_something(event: Event):
-    pass
+    if not event.is_tome():
+        raise IgnoredException("some reason")
 ```
 
 ### 事件后处理
@@ -106,14 +108,16 @@ async def do_something(event: Event):
 
 ### 运行预处理
 
-这个钩子函数会在 NoneBot 运行事件响应器前运行。支持依赖注入，可以注入 `Bot` 对象、事件、事件响应器、会话状态。
+这个钩子函数会在 NoneBot 运行事件响应器前运行。支持依赖注入，可以注入 `Bot` 对象、事件、事件响应器、会话状态。在这个钩子函数内抛出 `nonebot.exception.IgnoredException` 也会使 NoneBot 忽略该事件。
 
 ```python
+from nonebot.exception import IgnoredException
 from nonebot.message import run_preprocessor
 
 @run_preprocessor
 async def do_something(event: Event, matcher: Matcher):
-    pass
+    if not event.is_tome():
+        raise IgnoredException("some reason")
 ```
 
 ### 运行后处理
