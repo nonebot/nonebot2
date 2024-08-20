@@ -6818,5 +6818,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_lagrange",
+    "project_link": "nonebot_plugin_lagrange",
+    "author": "Lonely-Sails",
+    "tags": [
+      {
+        "label": "Lagrange",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
