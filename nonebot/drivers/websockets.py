@@ -70,7 +70,7 @@ class Mixin(WebSocketClientMixin):
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
         if setup.proxy is not None:
-            logger.warning("proxy is not supported with websockets driver")
+            logger.warning("proxy is not supported by websockets driver")
         connection = Connect(
             str(setup.url),
             extra_headers={**setup.headers, **setup.cookies.as_header(setup)},
