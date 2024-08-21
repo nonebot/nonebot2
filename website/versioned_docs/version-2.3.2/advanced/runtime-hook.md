@@ -108,11 +108,11 @@ async def do_something(event: Event):
 
 ### 运行预处理
 
-这个钩子函数会在 NoneBot 运行事件响应器前运行。支持依赖注入，可以注入 `Bot` 对象、事件、事件响应器、会话状态。在这个钩子函数内抛出 `nonebot.exception.IgnoredException` 也会使 NoneBot 忽略该事件。
+这个钩子函数会在 NoneBot 运行事件响应器前运行。支持依赖注入，可以注入 `Bot` 对象、事件、事件响应器、会话状态。在这个钩子函数内抛出 `nonebot.exception.IgnoredException` 也会使 NoneBot 忽略本次运行。
 
 ```python
-from nonebot.exception import IgnoredException
 from nonebot.message import run_preprocessor
+from nonebot.exception import IgnoredException
 
 @run_preprocessor
 async def do_something(event: Event, matcher: Matcher):
