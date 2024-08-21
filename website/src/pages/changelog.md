@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: lagrange [@noneflow](https://github.com/noneflow) ([#2898](https://github.com/nonebot/nonebot2/pull/2898))
 - Plugin: nekro-agent [@noneflow](https://github.com/noneflow) ([#2896](https://github.com/nonebot/nonebot2/pull/2896))
 - Plugin: nonebot_plugin_mute [@noneflow](https://github.com/noneflow) ([#2893](https://github.com/nonebot/nonebot2/pull/2893))
 - Plugin: LiteyukiBot(plugin) [@noneflow](https://github.com/noneflow) ([#2905](https://github.com/nonebot/nonebot2/pull/2905))
