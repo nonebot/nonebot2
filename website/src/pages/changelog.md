@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 📝 文档
+
+- Docs: 添加钩子函数 IgnoredException 用法 [@refparo](https://github.com/refparo) ([#2912](https://github.com/nonebot/nonebot2/pull/2912))
+
 ### 💫 杂项
 
 - Adapter: 移除社区版 mirai 适配器 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2909](https://github.com/nonebot/nonebot2/pull/2909))
