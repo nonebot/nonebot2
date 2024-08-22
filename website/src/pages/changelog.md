@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 添加 websockets 驱动器 proxy 连接警告 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#2916](https://github.com/nonebot/nonebot2/pull/2916))
+
 ### 📝 文档
 
 - Docs: 添加钩子函数 IgnoredException 用法 [@refparo](https://github.com/refparo) ([#2912](https://github.com/nonebot/nonebot2/pull/2912))
