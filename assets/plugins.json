@@ -6830,5 +6830,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mccheck",
+    "project_link": "nonebot-plugin-mccheck",
+    "author": "molanp",
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#ea5252"
+      },
+      {
+        "label": "i18n",
+        "color": "#39c5bb"
+      }
+    ],
+    "is_official": false
   }
 ]
