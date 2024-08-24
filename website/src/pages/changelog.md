@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: maimai DX 查分 [@noneflow](https://github.com/noneflow) ([#2921](https://github.com/nonebot/nonebot2/pull/2921))
 - Plugin: Minecraft查服 [@noneflow](https://github.com/noneflow) ([#2882](https://github.com/nonebot/nonebot2/pull/2882))
 - Plugin: lagrange [@noneflow](https://github.com/noneflow) ([#2898](https://github.com/nonebot/nonebot2/pull/2898))
 - Plugin: nekro-agent [@noneflow](https://github.com/noneflow) ([#2896](https://github.com/nonebot/nonebot2/pull/2896))
