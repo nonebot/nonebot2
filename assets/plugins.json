@@ -6846,5 +6846,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_lxns_maimai",
+    "project_link": "nonebot-plugin-lxns-maimai",
+    "author": "KomoriDev",
+    "tags": [
+      {
+        "label": "maimai",
+        "color": "#228be6"
+      }
+    ],
+    "is_official": false
   }
 ]
