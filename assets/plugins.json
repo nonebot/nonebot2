@@ -6858,5 +6858,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sendpic",
+    "project_link": "nonebot-plugin-sendpic",
+    "author": "Funny1Potato",
+    "tags": [],
+    "is_official": false
   }
 ]
