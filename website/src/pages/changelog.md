@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 删除插件 `nonebot-plugin-ntqq-restart` [@kanbereina](https://github.com/kanbereina) ([#2926](https://github.com/nonebot/nonebot2/pull/2926))
 - Adapter: 移除社区版 mirai 适配器 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#2909](https://github.com/nonebot/nonebot2/pull/2909))
 
 ### 🍻 插件发布
