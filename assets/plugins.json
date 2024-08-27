@@ -6861,5 +6861,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_yoyogame",
+    "project_link": "nonebot-plugin-yoyogame",
+    "author": "ChenXu233",
+    "tags": [
+      {
+        "label": "game",
+        "color": "#ea5252"
+      },
+      {
+        "label": "多人游戏",
+        "color": "#73fe1f"
+      }
+    ],
+    "is_official": false
   }
 ]
