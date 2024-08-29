@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 消音器 [@noneflow](https://github.com/noneflow) ([#2919](https://github.com/nonebot/nonebot2/pull/2919))
 - Plugin: 悠悠 [@noneflow](https://github.com/noneflow) ([#2928](https://github.com/nonebot/nonebot2/pull/2928))
 - Plugin: LLOneBot-Master [@noneflow](https://github.com/noneflow) ([#2925](https://github.com/nonebot/nonebot2/pull/2925))
 - Plugin: 无情的发图姬 [@noneflow](https://github.com/noneflow) ([#2923](https://github.com/nonebot/nonebot2/pull/2923))
