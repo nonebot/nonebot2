@@ -6877,5 +6877,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_tea_silencer",
+    "project_link": "nonebot-plugin-tea-silencer",
+    "author": "youlanan",
+    "tags": [
+      {
+        "label": "拦截",
+        "color": "#fe7931"
+      },
+      {
+        "label": "屏蔽",
+        "color": "#31c8fe"
+      }
+    ],
+    "is_official": false
   }
 ]
