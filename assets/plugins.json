@@ -6893,5 +6893,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_avalon",
+    "project_link": "nonebot-plugin-avalon",
+    "author": "SamuNatsu",
+    "tags": [
+      {
+        "label": "game",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
