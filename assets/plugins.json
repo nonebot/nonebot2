@@ -6905,5 +6905,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_werewolf",
+    "project_link": "nonebot-plugin-werewolf",
+    "author": "wyf7685",
+    "tags": [
+      {
+        "label": "game",
+        "color": "#16acf3"
+      },
+      {
+        "label": "狼人杀",
+        "color": "#f3161a"
+      }
+    ],
+    "is_official": false
   }
 ]
