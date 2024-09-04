@@ -279,13 +279,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_simplemusic",
-    "project_link": "nonebot-plugin-simplemusic",
-    "author": "MeetWq",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nb2chan",
     "project_link": "nb2chan",
     "author": "yucongo",
@@ -706,13 +699,6 @@
     "module_name": "nonebot_plugin_leetcode2",
     "project_link": "nonebot-plugin-leetcode2",
     "author": "Nranphy",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_hikarisearch",
-    "project_link": "nonebot-plugin-hikarisearch",
-    "author": "MeetWq",
     "tags": [],
     "is_official": false
   },
