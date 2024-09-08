@@ -6907,5 +6907,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_tarina_lang_turbo",
+    "project_link": "nonebot-plugin-tarina-lang-turbo",
+    "author": "shoucandanghehe",
+    "tags": [
+      {
+        "label": "i18n",
+        "color": "#ea5f52"
+      }
+    ],
+    "is_official": false
   }
 ]
