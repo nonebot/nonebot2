@@ -6919,5 +6919,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-ACGalaxy",
+    "project_link": "nonebot-plugin-ACGalaxy",
+    "author": "zouXH-god",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#52eaea"
+      },
+      {
+        "label": "漫展",
+        "color": "#52ea65"
+      }
+    ],
+    "is_official": false
   }
 ]
