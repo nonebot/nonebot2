@@ -6935,5 +6935,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_QRrender",
+    "project_link": "nonebot-plugin-QRrender",
+    "author": "Funny1Potato",
+    "tags": [
+      {
+        "label": "二维码",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
