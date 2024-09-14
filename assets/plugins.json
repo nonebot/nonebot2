@@ -6947,5 +6947,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_weather_rank",
+    "project_link": "nonebot-plugin-weather-rank",
+    "author": "hanasa2023",
+    "tags": [
+      {
+        "label": "weather",
+        "color": "#43f1ff"
+      },
+      {
+        "label": "天气",
+        "color": "#43f1ff"
+      }
+    ],
+    "is_official": false
   }
 ]
