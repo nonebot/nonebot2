@@ -23,6 +23,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 二维码生成器 [@noneflow](https://github.com/noneflow) ([#2942](https://github.com/nonebot/nonebot2/pull/2942))
 - Plugin: 次元星辰 [@noneflow](https://github.com/noneflow) ([#2935](https://github.com/nonebot/nonebot2/pull/2935))
 - Plugin: nonebot-plugin-tarina-lang-turbo [@noneflow](https://github.com/noneflow) ([#2938](https://github.com/nonebot/nonebot2/pull/2938))
 - Plugin: 狼人杀 [@noneflow](https://github.com/noneflow) ([#2932](https://github.com/nonebot/nonebot2/pull/2932))
