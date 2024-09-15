@@ -1,11 +1,8 @@
-// @ts-check
+import path from "path";
 
-const path = require("path");
+import type { PluginConfig } from "@docusaurus/types";
 
-/**
- * @returns {import('@docusaurus/types').Plugin}
- */
-function webpackPlugin() {
+export default (function webpackPlugin() {
   return {
     name: "webpack-plugin",
     configureWebpack() {
@@ -18,6 +15,4 @@ function webpackPlugin() {
       };
     },
   };
-}
-
-module.exports = webpackPlugin;
+} satisfies PluginConfig);

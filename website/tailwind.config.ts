@@ -1,22 +1,20 @@
-const lightTheme = require("daisyui/src/theming/themes")["[data-theme=light]"];
-const darkTheme = require("daisyui/src/theming/themes")["[data-theme=dark]"];
+const lightTheme = require("daisyui/src/theming/themes")["light"];
+const darkTheme = require("daisyui/src/theming/themes")["dark"];
 
-/**
- * @param {{[key: string]: string}} theme
- * @param {string[]} exclude
- * @returns {{[key: string]: string}}
- */
-function excludeThemeColor(theme, exclude) {
+function excludeThemeColor(
+  theme: { [key: string]: string },
+  exclude: string[]
+): { [key: string]: string } {
   /** @type {typeof theme} */
-  const newObj = {};
+  const newObj: { [key: string]: string } = {};
   for (const key in theme) {
     if (exclude.includes(key)) continue;
-    newObj[key] = theme[key];
+    newObj[key] = theme[key]!;
   }
   return newObj;
 }
 
-module.exports = {
+export default {
   darkMode: ["class", '[data-theme="dark"]'],
   daisyui: {
     themes: [
