@@ -8,11 +8,9 @@
 
  Create as many sidebars as you want.
  */
+import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
 
-// @ts-check
-
-/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
-const sidebars = {
+const sidebars: SidebarsConfig = {
   tutorial: [
     {
       type: "category",
@@ -135,4 +133,4 @@ const sidebars = {
   ],
 };
 
-module.exports = sidebars;
+export default sidebars;
