@@ -291,7 +291,7 @@ msg.extend([Text("text")])
 
 这里额外说明 `UniMessage.template` 的拓展控制符
 
-相比 `Message`，UniMessage 对于 {:XXX} 做了另一类拓展。其能够识别例如 At(xxx, yyy) 或 Emoji(aaa, bbb)的字符串并执行
+相比 `Message`，UniMessage 对于 `{:XXX}` 做了另一类拓展。其能够识别例如 At(xxx, yyy) 或 Emoji(aaa, bbb)的字符串并执行
 
 以 At(...) 为例：
 
@@ -305,7 +305,7 @@ UniMessage(At("user", "123"))
 UniMessage(At("user", "123"))
 ```
 
-而在 `AlconnaMatcher` 中，{:XXX} 更进一步地提供了获取 `event` 和 `bot` 中的属性的功能：
+而在 `AlconnaMatcher` 中，`{:XXX}` 更进一步地提供了获取 `event` 和 `bot` 中的属性的功能：
 
 ```python title=在AlconnaMatcher中使用通用消息段的拓展控制符
 from arclet.alconna import Alconna, Args
