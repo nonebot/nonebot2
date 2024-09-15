@@ -6963,5 +6963,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_witff",
+    "project_link": "nonebot-plugin-witff",
+    "author": "TheChenXI",
+    "tags": [
+      {
+        "label": "furry",
+        "color": "#ea5f52"
+      }
+    ],
+    "is_official": false
   }
 ]
