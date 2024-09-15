@@ -329,6 +329,12 @@ export default async function createConfigAsync() {
 
     plugins: [require("./src/plugins/webpack-plugin.ts")],
 
+    markdown: {
+      mdx1Compat: {
+        headingIds: true,
+      },
+    },
+
     themeConfig,
   } satisfies Config;
 }
