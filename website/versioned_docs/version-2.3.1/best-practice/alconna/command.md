@@ -71,14 +71,14 @@ alc = Alconna(".rd{roll:int}")
 assert alc.parse(".rd123").header["roll"] == 123
 ```
 
-Bracket Header 类似 python 里的 f-string 写法，通过 "{}" 声明匹配类型
+Bracket Header 类似 python 里的 f-string 写法，通过 `"{}"` 声明匹配类型
 
-"{}" 中的内容为 "name:type or pat"：
+`"{}"` 中的内容为 "name:type or pat"：
 
-- "{}", "{:}" ⇔ "(.+)", 占位符
-- "{foo}" ⇔ "(?P&lt;foo&gt;.+)"
-- "{:\d+}" ⇔ "(\d+)"
-- "{foo:int}" ⇔ "(?P&lt;foo&gt;\d+)"，其中 "int" 部分若能转为 `BasePattern` 则读取里面的表达式
+- `"{}"`, `"{:}"` ⇔ `"(.+)"`, 占位符
+- `"{foo}"` ⇔ `"(?P&lt;foo&gt;.+)"`
+- `"{:\d+}"` ⇔ `"(\d+)"`
+- `"{foo:int}"` ⇔ `"(?P&lt;foo&gt;\d+)"`，其中 `"int"` 部分若能转为 `BasePattern` 则读取里面的表达式
 
 ## 参数声明(Args)
 
@@ -321,7 +321,7 @@ opt2 = Option("--foo", default=OptionResult(value=False, args={"bar": 1}))
 - `keep_crlf`: 命令解析时是否保留换行字符
 - `compact`: 命令是否允许第一个参数紧随头部
 - `strict`: 命令是否严格匹配，若为 False 则未知参数将作为名为 $extra 的参数
-- `context_style`: 命令上下文插值的风格，None 为关闭，bracket 为 {...}，parentheses 为 $(...)
+- `context_style`: 命令上下文插值的风格，None 为关闭，bracket 为 `{...}`，parentheses 为 `$(...)`
 - `extra`: 命令的自定义额外信息
 
 元数据一定使用 `meta=...` 形式传入：
