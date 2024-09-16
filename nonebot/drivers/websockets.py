@@ -11,6 +11,8 @@ pip install nonebot2[websockets]
 :::
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 4
     description: nonebot.drivers.websockets 模块
 """
