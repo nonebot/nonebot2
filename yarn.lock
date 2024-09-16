@@ -1916,9 +1916,9 @@
   integrity sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==
 
 "@nullbot/docusaurus-plugin-changelog@^3.0.0":
-  version "3.0.2"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-changelog/-/docusaurus-plugin-changelog-3.0.2.tgz#057490577b9d3c7a897e32e80c54a92e991be5b6"
-  integrity sha512-nlGed3F4eXvTwxsgNxa4S2E2MtBK4yWNCaCBDKFebTSpaBVIZKXA+ZPP1mqLTODW66TzYKfTATTeKqjwvdqb/A==
+  version "3.0.4"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-changelog/-/docusaurus-plugin-changelog-3.0.4.tgz#06cd2c6bb8fcff929a3a7a3a9b77a350475cc767"
+  integrity sha512-uYeXG7ov9kyvE1VEcWo58vmY2gcZ35603hDSDwBLmHjY/gDLrIZWht0OsZyqNoC/oiKDsNMiAdwKWTEEWynzGg==
   dependencies:
     "@docusaurus/core" "3.5.2"
     "@docusaurus/plugin-content-docs" "3.5.2"
@@ -1942,9 +1942,9 @@
     "@docusaurus/plugin-content-docs" "^3.5.2"
 
 "@nullbot/docusaurus-preset-nonepress@^3.0.0":
-  version "3.0.2"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-preset-nonepress/-/docusaurus-preset-nonepress-3.0.2.tgz#0016e33689ff5e1c2b732b538eba68205faba5ab"
-  integrity sha512-83HWaVjdK+kFHAneMdSH6r5R1T2GeU2Bkes4IlzanfiXILZ4pC8yrt+nWeJIbFwaSesdy1gCdEz8Eygs6HqYgQ==
+  version "3.0.3"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-preset-nonepress/-/docusaurus-preset-nonepress-3.0.3.tgz#2a3145b49147b81c84ae9f1b110ccaa15a587710"
+  integrity sha512-WoB4bwpG6uU/HUiUVAxes7KZVeNRvAMKYjWIetyPXnFTLW0LN473ezpdICiVymfbqXh/0wtpAIsPqtY9nWYyAA==
   dependencies:
     "@docusaurus/core" "3.5.2"
     "@docusaurus/plugin-content-docs" "3.5.2"
@@ -1958,12 +1958,12 @@
     "@docusaurus/theme-common" "3.5.2"
     "@docusaurus/theme-search-algolia" "3.5.2"
     "@docusaurus/types" "3.5.2"
-    "@nullbot/docusaurus-theme-nonepress" "^3.0.2"
+    "@nullbot/docusaurus-theme-nonepress" "^3.0.3"
 
-"@nullbot/docusaurus-theme-nonepress@^3.0.2":
-  version "3.0.2"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-theme-nonepress/-/docusaurus-theme-nonepress-3.0.2.tgz#c7b64903b5f80f252a04fccba74d258abc04a252"
-  integrity sha512-rs42OWczxJKJPA4P2IYBxealWtd/H4+ePGbnM6WeZGDeutVvBDJz62EjP5XmcZgusNEWtJqjSKIMJy8l6B1ETw==
+"@nullbot/docusaurus-theme-nonepress@^3.0.3":
+  version "3.0.3"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-theme-nonepress/-/docusaurus-theme-nonepress-3.0.3.tgz#d77098ab34a3e51b830650d7b49eaf274dbfbb76"
+  integrity sha512-RRqcYDlWyGfYMfA9C3zdEKO++ccn/ShSp+I9o6t/pim9FCISjVvSO040sBj9hBojKvejW1qpbZop1kHMYgpcZQ==
   dependencies:
     "@docsearch/react" "3.5.2"
     "@docusaurus/core" "3.5.2"
