@@ -1915,6 +1915,16 @@
   resolved "https://registry.npmjs.org/@nolyfill/is-core-module/-/is-core-module-1.0.39.tgz#3dc35ba0f1e66b403c00b39344f870298ebb1c8e"
   integrity sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==
 
+"@nullbot/docusaurus-plugin-changelog@^3.0.0":
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-changelog/-/docusaurus-plugin-changelog-3.0.2.tgz#057490577b9d3c7a897e32e80c54a92e991be5b6"
+  integrity sha512-nlGed3F4eXvTwxsgNxa4S2E2MtBK4yWNCaCBDKFebTSpaBVIZKXA+ZPP1mqLTODW66TzYKfTATTeKqjwvdqb/A==
+  dependencies:
+    "@docusaurus/core" "3.5.2"
+    "@docusaurus/plugin-content-docs" "3.5.2"
+    "@docusaurus/utils-validation" "3.5.2"
+    fs-extra "^11.2.0"
+
 "@nullbot/docusaurus-plugin-docsmenu@^3.0.2":
   version "3.0.2"
   resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-docsmenu/-/docusaurus-plugin-docsmenu-3.0.2.tgz#598e85e992dba696e8914eb2c9e3db4afc228cd3"

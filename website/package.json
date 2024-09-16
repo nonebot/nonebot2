@@ -24,6 +24,7 @@
   "dependencies": {
     "@docusaurus/core": "^3.5.2",
     "@mdx-js/react": "^3.0.0",
+    "@nullbot/docusaurus-plugin-changelog": "^3.0.0",
     "@nullbot/docusaurus-preset-nonepress": "^3.0.0",
     "@swc/core": "^1.7.26",
     "clsx": "^2.0.0",

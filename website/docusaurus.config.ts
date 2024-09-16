@@ -1,4 +1,5 @@
 import type { Config } from "@docusaurus/types";
+import type { Options as ChangelogOptions } from "@nullbot/docusaurus-plugin-changelog";
 import type * as Preset from "@nullbot/docusaurus-preset-nonepress";
 import { themes } from "prism-react-renderer";
 
@@ -327,7 +328,17 @@ export default async function createConfigAsync() {
       }),
     },
 
-    plugins: [require("./src/plugins/webpack-plugin.ts")],
+    plugins: [
+      require("./src/plugins/webpack-plugin.ts"),
+      [
+        "@nullbot/docusaurus-plugin-changelog",
+        {
+          changelogPath: "website/src/pages/changelog.md",
+          changelogHeader: `description: Changelog
+toc_max_heading_level: 2`,
+        } satisfies ChangelogOptions,
+      ],
+    ],
 
     markdown: {
       mdx1Compat: {
