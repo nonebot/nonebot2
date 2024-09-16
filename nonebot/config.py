@@ -7,6 +7,8 @@ NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及
 详情见 [`pydantic Field Type`](https://pydantic-docs.helpmanual.io/usage/types/) 文档。
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 1
     description: nonebot.config 模块
 """

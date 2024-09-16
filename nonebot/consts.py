@@ -1,6 +1,8 @@
 """本模块包含了 NoneBot 事件处理过程中使用到的常量。
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 9
     description: nonebot.consts 模块
 """

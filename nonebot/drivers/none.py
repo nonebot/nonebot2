@@ -5,6 +5,8 @@
 :::
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 6
     description: nonebot.drivers.none 模块
 """

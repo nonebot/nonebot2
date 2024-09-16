@@ -1,6 +1,8 @@
 """本模块定义插件相关信息。
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 3
     description: nonebot.plugin.model 模块
 """

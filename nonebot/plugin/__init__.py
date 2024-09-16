@@ -32,6 +32,8 @@
 - `PluginMetadata` => {ref}``PluginMetadata` <nonebot.plugin.model.PluginMetadata>`
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 0
     description: nonebot.plugin 模块
 """

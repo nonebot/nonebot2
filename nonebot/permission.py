@@ -5,6 +5,8 @@
 只要有一个 `PermissionChecker` 检查结果为 `True` 时就会继续运行。
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 6
     description: nonebot.permission 模块
 """

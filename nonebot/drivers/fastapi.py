@@ -11,6 +11,8 @@ pip install nonebot2[fastapi]
 :::
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 1
     description: nonebot.drivers.fastapi 模块
 """

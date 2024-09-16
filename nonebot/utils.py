@@ -1,6 +1,8 @@
 """本模块包含了 NoneBot 的一些工具函数
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 8
     description: nonebot.utils 模块
 """
