@@ -1,5 +1,8 @@
-const lightTheme = require("daisyui/src/theming/themes")["light"];
-const darkTheme = require("daisyui/src/theming/themes")["dark"];
+import daisyui from "daisyui";
+import themes from "daisyui/src/theming/themes";
+
+const lightTheme = themes["light"];
+const darkTheme = themes["dark"];
 
 function excludeThemeColor(
   theme: { [key: string]: string },
@@ -15,6 +18,7 @@ function excludeThemeColor(
 }
 
 export default {
+  plugins: [daisyui],
   darkMode: ["class", '[data-theme="dark"]'],
   daisyui: {
     themes: [
@@ -26,6 +30,7 @@ export default {
             "accent-content",
           ]),
           primary: "#ea5252",
+          "primary-content": "#ffffff",
           secondary: "#ef9fbc",
           accent: "#65c3c8",
         },
@@ -38,6 +43,7 @@ export default {
             "accent-content",
           ]),
           primary: "#ea5252",
+          "primary-content": "#ffffff",
           secondary: "#ef9fbc",
           accent: "#65c3c8",
         },
