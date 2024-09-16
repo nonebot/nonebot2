@@ -6975,5 +6975,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_logstream",
+    "project_link": "nonebot-plugin-logstream",
+    "author": "KiKi-XC",
+    "tags": [
+      {
+        "label": "log",
+        "color": "#41fae7"
+      },
+      {
+        "label": "SSE",
+        "color": "#1eefff"
+      }
+    ],
+    "is_official": false
   }
 ]
