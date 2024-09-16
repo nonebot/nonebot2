@@ -11,6 +11,8 @@ pip install nonebot2[aiohttp]
 :::
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 2
     description: nonebot.drivers.aiohttp 模块
 """

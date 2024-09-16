@@ -5,6 +5,8 @@
 只有当所有 `RuleChecker` 检查结果为 `True` 时继续运行。
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 5
     description: nonebot.rule 模块
 """

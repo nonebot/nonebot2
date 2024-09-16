@@ -3,6 +3,8 @@
 各驱动请继承以下基类。
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 0
     description: nonebot.drivers 模块
 """
