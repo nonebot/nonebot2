@@ -333,7 +333,7 @@ export default async function createConfigAsync() {
       [
         "@nullbot/docusaurus-plugin-changelog",
         {
-          changelogPath: "website/src/pages/changelog.md",
+          changelogPath: "src/changelog/changelog.md",
           changelogHeader: `description: Changelog
 toc_max_heading_level: 2`,
         } satisfies ChangelogOptions,
