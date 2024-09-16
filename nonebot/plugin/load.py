@@ -1,6 +1,8 @@
 """本模块定义插件加载接口。
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 1
     description: nonebot.plugin.load 模块
 """
