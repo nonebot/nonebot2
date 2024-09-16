@@ -1,3 +1,4 @@
+import typography from "@tailwindcss/typography";
 import daisyui from "daisyui";
 import themes from "daisyui/src/theming/themes";
 
@@ -18,7 +19,7 @@ function excludeThemeColor(
 }
 
 export default {
-  plugins: [daisyui],
+  plugins: [typography, daisyui],
   darkMode: ["class", '[data-theme="dark"]'],
   daisyui: {
     themes: [
