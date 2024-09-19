@@ -23,6 +23,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: SSE日志输出流 [@noneflow](https://github.com/noneflow) ([#2960](https://github.com/nonebot/nonebot2/pull/2960))
 - Plugin: WITFF [@noneflow](https://github.com/noneflow) ([#2955](https://github.com/nonebot/nonebot2/pull/2955))
 - Plugin: weather-rank [@noneflow](https://github.com/noneflow) ([#2949](https://github.com/nonebot/nonebot2/pull/2949))
 - Plugin: 二维码生成器 [@noneflow](https://github.com/noneflow) ([#2942](https://github.com/nonebot/nonebot2/pull/2942))
