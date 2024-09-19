@@ -632,5 +632,22 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "树才怪BOT",
+    "desc": "玩宝可梦游戏，qq官方机器人",
+    "author": "Treeeeee1101",
+    "homepage": "https://bot.q.qq.com/s/1z7fay0yn?id=102150514",
+    "tags": [
+      {
+        "label": "宝可梦",
+        "color": "#ea5252"
+      },
+      {
+        "label": "游戏",
+        "color": "#5748dd"
+      }
+    ],
+    "is_official": false
   }
 ]
