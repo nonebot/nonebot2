@@ -6991,5 +6991,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_uninfo",
+    "project_link": "nonebot-plugin-uninfo",
+    "author": "RF-Tar-Railt",
+    "tags": [
+      {
+        "label": "跨平台",
+        "color": "#5752ea"
+      },
+      {
+        "label": "用户数据",
+        "color": "#ea52d2"
+      },
+      {
+        "label": "群组频道数据",
+        "color": "#ea7d52"
+      }
+    ],
+    "is_official": false
   }
 ]
