@@ -7011,5 +7011,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_inspect",
+    "project_link": "nonebot-plugin-inspect",
+    "author": "RF-Tar-Railt",
+    "tags": [
+      {
+        "label": "多平台适配",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
