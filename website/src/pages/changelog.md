@@ -23,6 +23,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: inspect [@noneflow](https://github.com/noneflow) ([#2971](https://github.com/nonebot/nonebot2/pull/2971))
 - Plugin: 通用信息 [@noneflow](https://github.com/noneflow) ([#2969](https://github.com/nonebot/nonebot2/pull/2969))
 - Plugin: SSE日志输出流 [@noneflow](https://github.com/noneflow) ([#2960](https://github.com/nonebot/nonebot2/pull/2960))
 - Plugin: WITFF [@noneflow](https://github.com/noneflow) ([#2955](https://github.com/nonebot/nonebot2/pull/2955))
