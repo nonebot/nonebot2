@@ -1916,35 +1916,35 @@
   integrity sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==
 
 "@nullbot/docusaurus-plugin-changelog@^3.0.0":
-  version "3.0.6"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-changelog/-/docusaurus-plugin-changelog-3.0.6.tgz#439e3fb1d57caff8fb2117f8fadcd655bd3c507e"
-  integrity sha512-PDuQ5N7yPme7Z7qQ8IlsxOx4blusJKgflGQPajrAd62aOAxzQFPxDcfOt73AMdWu3I5SskX6mR7AyDiO6MMwyQ==
+  version "3.0.7"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-changelog/-/docusaurus-plugin-changelog-3.0.7.tgz#d7e5b006f4e17a28c8c1f42cfcb4ff05be48c286"
+  integrity sha512-2+qzFN7KHn/XuuzXSaaD8hXYYuqjpdiEiWaXaTWyWRpl2jXX/snl/gnXBgfFFri3RlI0Txzon8p4RtmcDsc9HQ==
   dependencies:
     "@docusaurus/core" "3.5.2"
     "@docusaurus/plugin-content-docs" "3.5.2"
     "@docusaurus/utils-validation" "3.5.2"
     fs-extra "^11.2.0"
 
-"@nullbot/docusaurus-plugin-docsmenu@^3.0.6":
-  version "3.0.6"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-docsmenu/-/docusaurus-plugin-docsmenu-3.0.6.tgz#ac8230c84b359f9ec0e14bc266a53cd5595d9ada"
-  integrity sha512-eY5/z8+6GW+SAvbXCICCp2IMTbHbP9XPDyMPhLsxcgzv5ACFpjdEiyvneDDYoskNB+yG0DrelfhqsKFo+4XRCw==
+"@nullbot/docusaurus-plugin-docsmenu@^3.0.7":
+  version "3.0.7"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-docsmenu/-/docusaurus-plugin-docsmenu-3.0.7.tgz#d5eb4b05f002a8c0bb858472e8898315d451fb41"
+  integrity sha512-fHLu+HcG7dKu9EQ37yQFSrhoaBjHK4G9PyV/WZnyXkN+Gxa08wXlgWsS/LpSpO3qdfr9zZmJONduqO8XJFADhw==
   dependencies:
     "@docusaurus/core" "^3.5.2"
     "@docusaurus/plugin-content-docs" "^3.5.2"
 
-"@nullbot/docusaurus-plugin-getsidebar@^3.0.6":
-  version "3.0.6"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-getsidebar/-/docusaurus-plugin-getsidebar-3.0.6.tgz#735a80c1cf81cd3b05d5231a8d76ee09f4334d6c"
-  integrity sha512-3rRzWZO3bouSoDTqZ/No/odQ332B7gkVR20tX5Zxk8TxQkMxe3bV3iIs4ppYvI+bvSzZLN0Lf3XwBa5LVdOlRg==
+"@nullbot/docusaurus-plugin-getsidebar@^3.0.7":
+  version "3.0.7"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-plugin-getsidebar/-/docusaurus-plugin-getsidebar-3.0.7.tgz#75acd10e24670b4e106ad72b4e8fe6f013f63f87"
+  integrity sha512-1bCOvdKtckH0cjsRDSnWHwTeYF6Kh2rgH5izVrp1Y5TqJ7Ix/Z3QrKevknV7nG08uXq4YWbZVl5goMg6GZNOpw==
   dependencies:
     "@docusaurus/core" "^3.5.2"
     "@docusaurus/plugin-content-docs" "^3.5.2"
 
 "@nullbot/docusaurus-preset-nonepress@^3.0.0":
-  version "3.0.6"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-preset-nonepress/-/docusaurus-preset-nonepress-3.0.6.tgz#307bf323d93935d69480b98a252b5321ce548abc"
-  integrity sha512-yXq6nFhJ4+8oFQDphgoLDS52dDN4mJ8Ugi8+KbY7UdwOXBT+iUJzrhUzbIsz3Enaqmr12xX8+r2xqND2I+B2kw==
+  version "3.0.7"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-preset-nonepress/-/docusaurus-preset-nonepress-3.0.7.tgz#fd0ec43a21c4e969147227e08075557a0a951786"
+  integrity sha512-YRrPJmTO1ym9jLQCLb33VzCVkg7wDP/cRQWl6luDZCTmtoSkHautDVmaWa8eAl3sZIFSagPt4Zw2uZB7IVhwBA==
   dependencies:
     "@docusaurus/core" "3.5.2"
     "@docusaurus/plugin-content-docs" "3.5.2"
@@ -1958,12 +1958,12 @@
     "@docusaurus/theme-common" "3.5.2"
     "@docusaurus/theme-search-algolia" "3.5.2"
     "@docusaurus/types" "3.5.2"
-    "@nullbot/docusaurus-theme-nonepress" "^3.0.6"
+    "@nullbot/docusaurus-theme-nonepress" "^3.0.7"
 
-"@nullbot/docusaurus-theme-nonepress@^3.0.6":
-  version "3.0.6"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-theme-nonepress/-/docusaurus-theme-nonepress-3.0.6.tgz#06c8f903247627a67539e559afca1b69f79bd3e3"
-  integrity sha512-fnymD/yrVFjSNs5li5cF8i9RKp43uJSNjxKZ1EcGWoK35FoIVHPRwDEkvSMWPSqWolKpJhW2xe5QCAAkyoYfxw==
+"@nullbot/docusaurus-theme-nonepress@^3.0.7":
+  version "3.0.7"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-theme-nonepress/-/docusaurus-theme-nonepress-3.0.7.tgz#ef317c92e2c31bc0a3e7598e5437b0e2f93721e5"
+  integrity sha512-MoLC+btH6X3Qr0fgAhtymz1xKuvm6Ppwbq1vzebrLq1v/+v/LD8YWz2c0XrmRYYaQYRNGaKve6Cutfs2BahM4Q==
   dependencies:
     "@docsearch/react" "3.5.2"
     "@docusaurus/core" "3.5.2"
@@ -1984,8 +1984,8 @@
     "@fortawesome/free-solid-svg-icons" "^6.4.0"
     "@fortawesome/react-fontawesome" "^0.2.0"
     "@mdx-js/react" "^3.0.0"
-    "@nullbot/docusaurus-plugin-docsmenu" "^3.0.6"
-    "@nullbot/docusaurus-plugin-getsidebar" "^3.0.6"
+    "@nullbot/docusaurus-plugin-docsmenu" "^3.0.7"
+    "@nullbot/docusaurus-plugin-getsidebar" "^3.0.7"
     "@tailwindcss/typography" "^0.5.0"
     algoliasearch "^4.18.0"
     algoliasearch-helper "^3.13.3"
@@ -2007,9 +2007,9 @@
     utility-types "^3.10.0"
 
 "@nullbot/docusaurus-tsconfig@^3.0.0":
-  version "3.0.6"
-  resolved "https://registry.npmjs.org/@nullbot/docusaurus-tsconfig/-/docusaurus-tsconfig-3.0.6.tgz#fd0176c2098be54d0456ba0a740ec6cfd359f91a"
-  integrity sha512-nIgig7NUJfqbXJNhHnSGNjLvtSu1ZQepIp9M7jCyPzu03hVZIX90yQeO62FhsWIAILHXLAe7/qqsAA9IuDZE+g==
+  version "3.0.7"
+  resolved "https://registry.npmjs.org/@nullbot/docusaurus-tsconfig/-/docusaurus-tsconfig-3.0.7.tgz#8a861f39c601da1d88fc4c02babad0ff7a3c833b"
+  integrity sha512-qoYW3EvvaGygdo2HY6z9Fz1R5CD0GkG+h+m4ltWMJ+7KJ7QNHZbexkR3yKN91dqbj6hW5402BVjs1G88M/wODA==
 
 "@pkgjs/parseargs@^0.11.0":
   version "0.11.0"
@@ -2043,9 +2043,9 @@
     config-chain "^1.1.11"
 
 "@polka/url@^1.0.0-next.24":
-  version "1.0.0-next.27"
-  resolved "https://registry.npmjs.org/@polka/url/-/url-1.0.0-next.27.tgz#527e8df13dea13ab68d347d20ba9432cadb867a8"
-  integrity sha512-MU0SYgcrBdSVLu7Tfow3VY4z1odzlaTYRjt3WQ0z8XbjDWReuy+EALt2HdjhrwD2HPiW2GY+KTSw4HLv4C/EOA==
+  version "1.0.0-next.28"
+  resolved "https://registry.npmjs.org/@polka/url/-/url-1.0.0-next.28.tgz#d45e01c4a56f143ee69c54dd6b12eade9e270a73"
+  integrity sha512-8LduaNlMZGwdZ6qWrKlfa+2M4gahzFkprZiAt2TF8uS0qQgBizKXpXURqvTJ4WtmupWxaLqjRb2UCTe72mu+Aw==
 
 "@rtsao/scc@^1.1.0":
   version "1.1.0"
@@ -2359,9 +2359,9 @@
     "@types/estree" "*"
 
 "@types/estree@*", "@types/estree@^1.0.0", "@types/estree@^1.0.5":
-  version "1.0.5"
-  resolved "https://registry.npmjs.org/@types/estree/-/estree-1.0.5.tgz#a6ce3e556e00fd9895dd872dd172ad0d4bd687f4"
-  integrity sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==
+  version "1.0.6"
+  resolved "https://registry.npmjs.org/@types/estree/-/estree-1.0.6.tgz#628effeeae2064a1b4e79f78e81d87b7e5fc7b50"
+  integrity sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==
 
 "@types/express-serve-static-core@*", "@types/express-serve-static-core@^4.17.33":
   version "4.19.5"
@@ -2562,9 +2562,9 @@
     "@types/react" "*"
 
 "@types/react@*":
-  version "18.3.7"
-  resolved "https://registry.npmjs.org/@types/react/-/react-18.3.7.tgz#6decbfbb01f8d82d56ff5403394121940faa6569"
-  integrity sha512-KUnDCJF5+AiZd8owLIeVHqmW9yM4sqmDVf2JRJiBMFkGvkoZ4/WyV2lL4zVsoinmRS/W3FeEdZLEWFRofnT2FQ==
+  version "18.3.8"
+  resolved "https://registry.npmjs.org/@types/react/-/react-18.3.8.tgz#1672ab19993f8aca7c7dc844c07d5d9e467d5a79"
+  integrity sha512-syBUrW3/XpnW4WJ41Pft+I+aPoDVbrBVQGEnbD7NijDGlVC+8gV/XKRY+7vMDlfPpbwYt0l1vd/Sj8bJGMbs9Q==
   dependencies:
     "@types/prop-types" "*"
     csstype "^3.0.2"
@@ -3538,9 +3538,9 @@ caniuse-api@^3.0.0:
     lodash.uniq "^4.5.0"
 
 caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001646:
-  version "1.0.30001660"
-  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001660.tgz#31218de3463fabb44d0b7607b652e56edf2e2355"
-  integrity sha512-GacvNTTuATm26qC74pt+ad1fW15mlQ/zuTzzY1ZoIzECTP8HURDfF43kNxPgf7H1jmelCBQTTbBNxdSXOA7Bqg==
+  version "1.0.30001662"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001662.tgz#3574b22dfec54a3f3b6787331da1040fe8e763ec"
+  integrity sha512-sgMUVwLmGseH8ZIrm1d51UbrhqMCH3jvS7gF/M6byuHOnKyLOBL7W8yz5V02OHwgLGA36o/AFhWzzh4uc5aqTA==
 
 ccount@^2.0.0:
   version "2.0.1"
@@ -4511,9 +4511,9 @@ ee-first@1.1.1:
   integrity sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==
 
 electron-to-chromium@^1.5.4:
-  version "1.5.25"
-  resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.25.tgz#492ade1cde401332b9b75aa0c55fd5e1550ca66c"
-  integrity sha512-kMb204zvK3PsSlgvvwzI3wBIcAw15tRkYk+NQdsjdDtcQWTp2RABbMQ9rUBy8KNEOM+/E6ep+XC3AykiWZld4g==
+  version "1.5.27"
+  resolved "https://registry.npmjs.org/electron-to-chromium/-/electron-to-chromium-1.5.27.tgz#5203ce5d6054857d84ba84d3681cbe59132ade78"
+  integrity sha512-o37j1vZqCoEgBuWWXLHQgTN/KDKe7zwpiY5CPeq2RvUqOyJw9xnrULzZAEVQ5p4h+zjMk7hgtOoPdnLxr7m/jw==
 
 emoji-regex@^8.0.0:
   version "8.0.0"
@@ -7236,9 +7236,9 @@ micromark-core-commonmark@^2.0.0:
     micromark-util-types "^2.0.0"
 
 micromark-extension-directive@^3.0.0:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/micromark-extension-directive/-/micromark-extension-directive-3.0.1.tgz#67b3985bb991a69dbcae52664c57ee54b22f635a"
-  integrity sha512-VGV2uxUzhEZmaP7NSFo2vtq7M2nUD+WfmYQD+d8i/1nHbzE+rMy9uzTvUybBbNiVbrhOZibg3gbyoARGqgDWyg==
+  version "3.0.2"
+  resolved "https://registry.npmjs.org/micromark-extension-directive/-/micromark-extension-directive-3.0.2.tgz#2eb61985d1995a7c1ff7621676a4f32af29409e8"
+  integrity sha512-wjcXHgk+PPdmvR58Le9d7zQYWy+vKEU9Se44p2CrCDPiLr2FMyiT4Fyb5UFKFC66wGB3kPlgD7q3TnoqPS7SZA==
   dependencies:
     devlop "^1.0.0"
     micromark-factory-space "^2.0.0"
@@ -7817,9 +7817,9 @@ no-case@^3.0.4:
     tslib "^2.0.3"
 
 node-abi@^3.3.0:
-  version "3.67.0"
-  resolved "https://registry.npmjs.org/node-abi/-/node-abi-3.67.0.tgz#1d159907f18d18e18809dbbb5df47ed2426a08df"
-  integrity sha512-bLn/fU/ALVBE9wj+p4Y21ZJWYFjUXLXPi/IewyLZkx3ApxKDNBWCKdReeKOtD8dWpOdDCeMyLh6ZewzcLsG2Nw==
+  version "3.68.0"
+  resolved "https://registry.npmjs.org/node-abi/-/node-abi-3.68.0.tgz#8f37fb02ecf4f43ebe694090dcb52e0c4cc4ba25"
+  integrity sha512-7vbj10trelExNjFSBm5kTvZXXa7pZyKWx9RCKIyqe6I9Ev3IzGpQoqBP3a+cOdxY+pWj6VkP28n/2wWysBHD/A==
   dependencies:
     semver "^7.3.5"
 
@@ -9263,9 +9263,9 @@ remark-parse@^11.0.0:
     unified "^11.0.0"
 
 remark-rehype@^11.0.0:
-  version "11.1.0"
-  resolved "https://registry.npmjs.org/remark-rehype/-/remark-rehype-11.1.0.tgz#d5f264f42bcbd4d300f030975609d01a1697ccdc"
-  integrity sha512-z3tJrAs2kIs1AqIIy6pzHmAHlF1hWQ+OdY4/hv+Wxe35EhyLKcajL33iUEn3ScxtFox9nUvRufR/Zre8Q08H/g==
+  version "11.1.1"
+  resolved "https://registry.npmjs.org/remark-rehype/-/remark-rehype-11.1.1.tgz#f864dd2947889a11997c0a2667cd6b38f685bca7"
+  integrity sha512-g/osARvjkBXb6Wo0XvAeXQohVta8i84ACbenPpoSsxTOQH/Ae0/RGP4WZgnMH5pMLpsj4FG7OHmcIcXxpza8eQ==
   dependencies:
     "@types/hast" "^3.0.0"
     "@types/mdast" "^4.0.0"
