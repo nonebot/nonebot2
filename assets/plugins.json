@@ -7037,5 +7037,17 @@
     "author": "yao-yun",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_calc_game",
+    "project_link": "nonebot-plugin-calc-game",
+    "author": "Yurchiu",
+    "tags": [
+      {
+        "label": "game",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
