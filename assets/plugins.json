@@ -7049,5 +7049,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_fun_content",
+    "project_link": "nonebot-plugin-fun-content",
+    "author": "chsiyu",
+    "tags": [],
+    "is_official": false
   }
 ]
