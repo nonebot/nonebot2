@@ -23,6 +23,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 趣味内容插件 [@noneflow](https://github.com/noneflow) ([#2981](https://github.com/nonebot/nonebot2/pull/2981))
 - Plugin: 计算器：游戏 [@noneflow](https://github.com/noneflow) ([#2976](https://github.com/nonebot/nonebot2/pull/2976))
 - Plugin: nonebot-plugin-yareminder [@noneflow](https://github.com/noneflow) ([#2964](https://github.com/nonebot/nonebot2/pull/2964))
 - Plugin: 批量撤回 [@noneflow](https://github.com/noneflow) ([#2966](https://github.com/nonebot/nonebot2/pull/2966))
