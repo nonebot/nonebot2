@@ -7056,5 +7056,12 @@
     "author": "chsiyu",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_pjsk_helper",
+    "project_link": "nonebot-plugin-pjsk-helper",
+    "author": "Atr1ck",
+    "tags": [],
+    "is_official": false
   }
 ]
