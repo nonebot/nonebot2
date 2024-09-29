@@ -7063,5 +7063,17 @@
     "author": "Atr1ck",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_brecreport",
+    "project_link": "nonebot-plugin-brecreport",
+    "author": "A-nemon-e",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#f77979"
+      }
+    ],
+    "is_official": false
   }
 ]
