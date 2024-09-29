@@ -7075,5 +7075,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_githubmodels",
+    "project_link": "nonebot-plugin-githubmodels",
+    "author": "lyqgzbl",
+    "tags": [],
+    "is_official": false
   }
 ]
