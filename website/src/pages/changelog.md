@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 给我点颜色瞧瞧 [@noneflow](https://github.com/noneflow) ([#2984](https://github.com/nonebot/nonebot2/pull/2984))
 - Plugin: pjsk-helper [@noneflow](https://github.com/noneflow) ([#2980](https://github.com/nonebot/nonebot2/pull/2980))
 - Plugin: 趣味内容插件 [@noneflow](https://github.com/noneflow) ([#2981](https://github.com/nonebot/nonebot2/pull/2981))
 - Plugin: 计算器：游戏 [@noneflow](https://github.com/noneflow) ([#2976](https://github.com/nonebot/nonebot2/pull/2976))
