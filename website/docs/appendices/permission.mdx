@@ -29,8 +29,9 @@ import Messenger from "@site/src/components/Messenger";
 
 例如，我们可以在 `weather` 插件中添加一个超级用户可用的指令：
 
-```python {2,8} title=weather/__init__.py
+```python {3,9} title=weather/__init__.py
 from typing import Tuple
+from nonebot.params import Command
 from nonebot.permission import SUPERUSER
 
 manage = on_command(

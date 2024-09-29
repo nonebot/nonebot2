@@ -20,7 +20,11 @@ options:
 
 `RuleChecker` 是一个返回值为 `bool` 类型的依赖函数，即 `RuleChecker` 支持依赖注入。我们可以根据上一节中添加的[配置项](./config.mdx#插件配置)，在 `weather` 插件目录中编写一个响应规则：
 
-```python {3,4} title=weather/__init__.py
+```python {7,8} title=weather/__init__.py
+from nonebot import get_plugin_config
+
+from .config import Config
+
 plugin_config = get_plugin_config(Config)
 
 async def is_enable() -> bool:
@@ -54,8 +58,11 @@ weather = on_command("天气", rule=rule)
 
 在定义响应规则时，我们可以将规则进行细分，来更好地复用规则。而在使用时，我们需要合并多个规则。除了使用 `Rule` 对象来组合多个 `RuleChecker` 外，我们还可以对 `Rule` 对象进行合并。在原 `weather` 插件中，我们可以将 `rule=to_me()` 与 `rule=is_enable` 使用 `&` 运算符合并：
 
-```python {10} title=weather/__init__.py
+```python {13} title=weather/__init__.py
 from nonebot.rule import to_me
+from nonebot import get_plugin_config
+
+from .config import Config
 
 plugin_config = get_plugin_config(Config)
 
@@ -66,7 +73,7 @@ weather = on_command(
     "天气",
     rule=to_me() & is_enable,
     aliases={"weather", "查天气"},
-    priority=plugin_config.weather_command_priority
+    priority=plugin_config.weather_command_priority,
     block=True,
 )
 ```

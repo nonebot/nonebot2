@@ -178,7 +178,7 @@ nonebot.init(_env_file=".env.dev")
 
 这将忽略在 `.env` 文件或环境变量中指定的 `ENVIRONMENT` 配置项。
 
-## 读取配置项
+## 读取全局配置项
 
 NoneBot 的全局配置对象可以通过 `driver` 获取，如：
 
@@ -198,7 +198,7 @@ superusers = config.superusers
 
 ## 插件配置
 
-在一个涉及大量配置项的项目中，通过直接读取配置项的方式显然并不高效。同时，由于额外的全局配置项没有预先定义，开发时编辑器将无法提示字段与类型，并且运行时没有对配置项直接进行合法性检查。那么就需要一种方式来规范定义插件配置项。
+在一个涉及大量配置项的项目中，通过直接读取全局配置项的方式显然并不高效。同时，由于额外的全局配置项没有预先定义，开发时编辑器将无法提示字段与类型，并且运行时没有对配置项直接进行合法性检查。那么就需要一种方式来规范定义插件配置项。
 
 在 NoneBot 中，我们使用强大高效的 `pydantic` 来定义配置模型，这个模型可以被用于配置的读取和类型检查等。例如在 `weather` 插件目录中新建 `config.py` 来定义一个模型：
 
@@ -220,7 +220,7 @@ class Config(BaseModel):
 
 在 `config.py` 中，我们定义了一个 `Config` 类，它继承自 `pydantic.BaseModel`，并定义了一些配置项。在 `Config` 类中，我们还定义了一个 `check_priority` 方法，它用于检查 `weather_command_priority` 配置项的合法性。更多关于 `pydantic` 的编写方式，可以参考 [pydantic 官方文档](https://docs.pydantic.dev/)。
 
-在定义好配置模型后，我们可以在插件加载时获取全局配置，导入插件自身的配置模型并使用：
+在定义好配置模型后，我们可以在插件加载时通过配置模型获取插件配置：
 
 ```python {5,11} title=weather/__init__.py
 from nonebot import get_plugin_config
