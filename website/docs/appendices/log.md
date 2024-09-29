@@ -86,15 +86,6 @@ logger.add(
 logger.add("error.log", level="ERROR", format=default_format, rotation="1 week")
 ```
 
-如果需要输出指定等级的日志到文件，请参考以下代码
-
-```python
-from loguru import logger
-logger.level("CUSTOM", no=25, color="<yellow>")
-logger.add("data/loguru_CUSTOM.log", level="CUSTOM", filter=lambda record: record["level"].name == "CUSTOM")
-logger.log("CUSTOM", "log content")
-```
-
 更多日志处理器的使用方法请参考 [Loguru 文档](https://loguru.readthedocs.io/)。
 
 ## 重定向 logging 日志

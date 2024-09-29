@@ -78,7 +78,7 @@ NoneBot 为四种类型的事件响应器提供了五个基本的辅助函数：
 ## 内置响应规则
 
 :::tip
-[合并响应规则](../appendices/rule.md#合并响应规则)
+响应规则的使用方法可以参考 [深入 - 响应规则](../appendices/rule.md)。
 :::
 
 ### `startswith`
