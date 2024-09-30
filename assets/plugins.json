@@ -7082,5 +7082,17 @@
     "author": "lyqgzbl",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_beatsaberscore",
+    "project_link": "nonebot-plugin-beatsaberscore",
+    "author": "qwq12738qwq",
+    "tags": [
+      {
+        "label": "Beat Saber",
+        "color": "#456df1"
+      }
+    ],
+    "is_official": false
   }
 ]
