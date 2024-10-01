@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Beat Saber查分器 [@noneflow](https://github.com/noneflow) ([#2974](https://github.com/nonebot/nonebot2/pull/2974))
 - Plugin: githubmodels [@noneflow](https://github.com/noneflow) ([#2945](https://github.com/nonebot/nonebot2/pull/2945))
 - Plugin: 给我点颜色瞧瞧 [@noneflow](https://github.com/noneflow) ([#2984](https://github.com/nonebot/nonebot2/pull/2984))
 - Plugin: pjsk-helper [@noneflow](https://github.com/noneflow) ([#2980](https://github.com/nonebot/nonebot2/pull/2980))
