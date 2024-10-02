@@ -7110,5 +7110,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nonechat",
+    "project_link": "nonebot-plugin-nonechat",
+    "author": "hanasa2023",
+    "tags": [
+      {
+        "label": "LLM",
+        "color": "#52eacf"
+      }
+    ],
+    "is_official": false
   }
 ]
