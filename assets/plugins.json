@@ -7094,5 +7094,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_SimpleToWrite",
+    "project_link": "nonebot-plugin-SimpleToWrite",
+    "author": "STESmly",
+    "tags": [
+      {
+        "label": "编写简化",
+        "color": "#104772"
+      },
+      {
+        "label": "小白向推荐",
+        "color": "#149581"
+      }
+    ],
+    "is_official": false
   }
 ]
