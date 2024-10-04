@@ -7138,5 +7138,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_osu_match_monitor",
+    "project_link": "nonebot-plugin-osu-match-monitor",
+    "author": "Sevenyine",
+    "tags": [
+      {
+        "label": "OSU",
+        "color": "#da6699"
+      }
+    ],
+    "is_official": false
   }
 ]
