@@ -7122,5 +7122,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_marshoai",
+    "project_link": "nonebot-plugin-marshoai",
+    "author": "Asankilp",
+    "tags": [
+      {
+        "label": "猫娘",
+        "color": "#e6a432"
+      },
+      {
+        "label": "AI",
+        "color": "#32c3e6"
+      }
+    ],
+    "is_official": false
   }
 ]
