@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: osu! Match Monitor [@noneflow](https://github.com/noneflow) ([#2985](https://github.com/nonebot/nonebot2/pull/2985))
 - Plugin: Marsho AI插件 [@noneflow](https://github.com/noneflow) ([#2993](https://github.com/nonebot/nonebot2/pull/2993))
 - Plugin: nonechat [@noneflow](https://github.com/noneflow) ([#2990](https://github.com/nonebot/nonebot2/pull/2990))
 - Plugin: nonebot_plugin_SimpleToWrite [@noneflow](https://github.com/noneflow) ([#2995](https://github.com/nonebot/nonebot2/pull/2995))
