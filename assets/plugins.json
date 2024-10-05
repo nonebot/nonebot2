@@ -7150,5 +7150,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_lolinfo",
+    "project_link": "nonebot-plugin-lolinfo",
+    "author": "Shadow403",
+    "tags": [
+      {
+        "label": "LOL",
+        "color": "#02ceff"
+      },
+      {
+        "label": "英雄联盟",
+        "color": "#ff02fb"
+      }
+    ],
+    "is_official": false
   }
 ]
