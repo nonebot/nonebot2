@@ -7166,5 +7166,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bf5_grouptools",
+    "project_link": "nonebot_plugin_bf5_grouptools",
+    "author": "Lonely-Sails",
+    "tags": [
+      {
+        "label": "战地五",
+        "color": "#529aea"
+      }
+    ],
+    "is_official": false
   }
 ]
