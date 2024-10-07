@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: MinecraftWatcher [@noneflow](https://github.com/noneflow) ([#3010](https://github.com/nonebot/nonebot2/pull/3010))
 - Plugin: BF5_grouptools [@noneflow](https://github.com/noneflow) ([#3004](https://github.com/nonebot/nonebot2/pull/3004))
 - Plugin: lolinfo [@noneflow](https://github.com/noneflow) ([#2997](https://github.com/nonebot/nonebot2/pull/2997))
 - Plugin: osu! Match Monitor [@noneflow](https://github.com/noneflow) ([#2985](https://github.com/nonebot/nonebot2/pull/2985))
