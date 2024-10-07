@@ -7178,5 +7178,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mc_watcher",
+    "project_link": "nonebot_plugin_mc_watcher",
+    "author": "Lonely-Sails",
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#d79f10"
+      }
+    ],
+    "is_official": false
   }
 ]
