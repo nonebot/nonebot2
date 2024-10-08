@@ -11,6 +11,8 @@ pip install nonebot2[quart]
 :::
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 5
     description: nonebot.drivers.quart 模块
 """
