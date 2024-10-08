@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot_plugin_BFVsearch [@noneflow](https://github.com/noneflow) ([#3008](https://github.com/nonebot/nonebot2/pull/3008))
 - Plugin: lingyi_chat [@noneflow](https://github.com/noneflow) ([#3006](https://github.com/nonebot/nonebot2/pull/3006))
 - Plugin: ZXPM插件管理 [@noneflow](https://github.com/noneflow) ([#3003](https://github.com/nonebot/nonebot2/pull/3003))
 - Plugin: MinecraftWatcher [@noneflow](https://github.com/noneflow) ([#3010](https://github.com/nonebot/nonebot2/pull/3010))
