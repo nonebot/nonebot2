@@ -7210,5 +7210,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_lingyi_chat",
+    "project_link": "nonebot-plugin-lingyi-chat",
+    "author": "yeying-xingchen",
+    "tags": [
+      {
+        "label": "ChatGPT",
+        "color": "#ea5252"
+      },
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
