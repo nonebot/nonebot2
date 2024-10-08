@@ -7226,5 +7226,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bfvsearch",
+    "project_link": "nonebot_plugin_bfvsearch",
+    "author": "swallow513",
+    "tags": [
+      {
+        "label": "战地五",
+        "color": "#529aea"
+      }
+    ],
+    "is_official": false
   }
 ]
