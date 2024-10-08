@@ -25,7 +25,7 @@ function StorePage({ title, children }: Props): JSX.Element {
   )!;
 
   return (
-    <Page hideTableOfContents reduceContentWidth={false}>
+    <Page hideTableOfContents reduceContentWidth={false} sidebarId={SIDEBAR_ID}>
       <SidebarContentFiller items={sidebarItems} />
       <article className="prose max-w-full">
         <h1 className="store-title">{title}</h1>
