@@ -7238,5 +7238,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_safeR18",
+    "project_link": "nonebot-plugin-safer18",
+    "author": "ChenXu233",
+    "tags": [
+      {
+        "label": "图片",
+        "color": "#76ecfd"
+      },
+      {
+        "label": "R18",
+        "color": "#fd0004"
+      }
+    ],
+    "is_official": false
   }
 ]
