@@ -7254,5 +7254,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_updater",
+    "project_link": "nonebot-plugin-updater",
+    "author": "hanasa2023",
+    "tags": [
+      {
+        "label": "插件更新",
+        "color": "#dd2200"
+      }
+    ],
+    "is_official": false
   }
 ]
