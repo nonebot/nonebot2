@@ -7266,5 +7266,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_npu",
+    "project_link": "nonebot-plugin-npu",
+    "author": "qllokirin",
+    "tags": [
+      {
+        "label": "西工大",
+        "color": "#66ccff"
+      }
+    ],
+    "is_official": false
   }
 ]
