@@ -7278,5 +7278,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_running_state",
+    "project_link": "nonebot-plugin-running-state",
+    "author": "zhongwen-4",
+    "tags": [
+      {
+        "label": "server",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
