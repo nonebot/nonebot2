@@ -93,7 +93,7 @@ const footer: Preset.ThemeConfig["footer"] = {
       items: [
         { label: "Introduction", to: "/docs/" },
         { label: "QuickStart", to: "/docs/quick-start" },
-        { label: "Changelog", to: "/changelog" },
+        { label: "Changelog", to: "/docs/next/changelog" },
       ],
     },
     {
