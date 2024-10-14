@@ -7290,5 +7290,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_zxreport",
+    "project_link": "nonebot-plugin-zxreport",
+    "author": "HibiKier",
+    "tags": [
+      {
+        "label": "小真寻",
+        "color": "#fbe4e4"
+      },
+      {
+        "label": "多平台适配",
+        "color": "#ea5252"
+      },
+      {
+        "label": "日报",
+        "color": "#dd628b"
+      }
+    ],
+    "is_official": false
   }
 ]
