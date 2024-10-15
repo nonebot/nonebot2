@@ -1,7 +1,7 @@
 import React from "react";
 
+import { useDocsVersionCandidates } from "@docusaurus/plugin-content-docs/client";
 import { PageMetadata } from "@docusaurus/theme-common";
-import { useDocsVersionCandidates } from "@docusaurus/theme-common/internal";
 import { useVersionedSidebar } from "@nullbot/docusaurus-plugin-getsidebar/client";
 import { SidebarContentFiller } from "@nullbot/docusaurus-theme-nonepress/contexts";
 
@@ -25,7 +25,7 @@ function StorePage({ title, children }: Props): JSX.Element {
   )!;
 
   return (
-    <Page hideTableOfContents reduceContentWidth={false}>
+    <Page hideTableOfContents reduceContentWidth={false} sidebarId={SIDEBAR_ID}>
       <SidebarContentFiller items={sidebarItems} />
       <article className="prose max-w-full">
         <h1 className="store-title">{title}</h1>

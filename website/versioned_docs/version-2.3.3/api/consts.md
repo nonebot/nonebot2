@@ -9,7 +9,7 @@ description: nonebot.consts 模块
 
 ## _var_ `RECEIVE_KEY` {#RECEIVE-KEY}
 
-- **类型:** Literal['\_receive\_{id}']
+- **类型:** Literal['\_receive\_\{id\}']
 
 - **说明:** `receive` 存储 key
 
@@ -21,7 +21,7 @@ description: nonebot.consts 模块
 
 ## _var_ `ARG_KEY` {#ARG-KEY}
 
-- **类型:** Literal['{key}']
+- **类型:** Literal['\{key\}']
 
 - **说明:** `arg` 存储 key
 

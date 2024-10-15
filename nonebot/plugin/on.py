@@ -1,6 +1,8 @@
 """本模块定义事件响应器便携定义函数。
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 2
     description: nonebot.plugin.on 模块
 """

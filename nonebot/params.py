@@ -1,6 +1,8 @@
 """本模块定义了依赖注入的各类参数。
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 4
     description: nonebot.params 模块
 """
