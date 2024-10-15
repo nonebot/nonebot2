@@ -2,14 +2,13 @@ import typography from "@tailwindcss/typography";
 import daisyui from "daisyui";
 import themes from "daisyui/src/theming/themes";
 
-const lightTheme = themes["light"];
-const darkTheme = themes["dark"];
+const lightTheme = themes.light;
+const darkTheme = themes.dark;
 
 function excludeThemeColor(
   theme: { [key: string]: string },
   exclude: string[]
 ): { [key: string]: string } {
-  /** @type {typeof theme} */
   const newObj: { [key: string]: string } = {};
   for (const key in theme) {
     if (exclude.includes(key)) continue;
@@ -20,8 +19,8 @@ function excludeThemeColor(
 
 export default {
   plugins: [typography, daisyui],
-  darkMode: ["class", '[data-theme="dark"]'],
   daisyui: {
+    base: false,
     themes: [
       {
         light: {
@@ -52,4 +51,5 @@ export default {
     ],
     darkTheme: false,
   },
+  darkMode: ["class", '[data-theme="dark"]'],
 };
