@@ -7310,5 +7310,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_buy",
+    "project_link": "nonebot-plugin-buy",
+    "author": "Onimaimai",
+    "tags": [],
+    "is_official": false
   }
 ]
