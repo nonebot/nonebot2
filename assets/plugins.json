@@ -7317,5 +7317,17 @@
     "author": "Onimaimai",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nailongremove",
+    "project_link": "nonebot-plugin-nailongremove",
+    "author": "Refound-445",
+    "tags": [
+      {
+        "label": "图像分类模型",
+        "color": "#5269ea"
+      }
+    ],
+    "is_official": false
   }
 ]
