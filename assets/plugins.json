@@ -7341,5 +7341,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_jtj",
+    "project_link": "nonebot-plugin-jtj",
+    "author": "Onimaimai",
+    "tags": [],
+    "is_official": false
   }
 ]
