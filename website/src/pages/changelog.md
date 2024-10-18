@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 团购 [@noneflow](https://github.com/noneflow) ([#3027](https://github.com/nonebot/nonebot2/pull/3027))
 - Plugin: 真寻日报 [@noneflow](https://github.com/noneflow) ([#3021](https://github.com/nonebot/nonebot2/pull/3021))
 - Plugin: 运行状态 [@noneflow](https://github.com/noneflow) ([#3019](https://github.com/nonebot/nonebot2/pull/3019))
 - Plugin: 西工大翱翔门户成绩监控 [@noneflow](https://github.com/noneflow) ([#3013](https://github.com/nonebot/nonebot2/pull/3013))
