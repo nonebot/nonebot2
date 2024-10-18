@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 机厅 [@noneflow](https://github.com/noneflow) ([#3029](https://github.com/nonebot/nonebot2/pull/3029))
 - Plugin: PM帮助 [@noneflow](https://github.com/noneflow) ([#3023](https://github.com/nonebot/nonebot2/pull/3023))
 - Plugin: NailongRemove [@noneflow](https://github.com/noneflow) ([#2972](https://github.com/nonebot/nonebot2/pull/2972))
 - Plugin: 团购 [@noneflow](https://github.com/noneflow) ([#3027](https://github.com/nonebot/nonebot2/pull/3027))
