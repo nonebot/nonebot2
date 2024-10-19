@@ -7360,5 +7360,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_boom",
+    "project_link": "nonebot-plugin-boom",
+    "author": "yeying-xingchen",
+    "tags": [
+      {
+        "label": "unsafe",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
