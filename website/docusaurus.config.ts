@@ -335,7 +335,9 @@ export default async function createConfigAsync() {
         {
           changelogPath: "src/changelog/changelog.md",
           changelogHeader: `description: Changelog
-toc_max_heading_level: 2`,
+toc_max_heading_level: 2
+sidebar_custom_props:
+  sidebar_id: changelog`,
         } satisfies ChangelogOptions,
       ],
     ],
