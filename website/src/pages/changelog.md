@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: boom [@noneflow](https://github.com/noneflow) ([#3017](https://github.com/nonebot/nonebot2/pull/3017))
 - Plugin: 恶魔轮盘赌 [@noneflow](https://github.com/noneflow) ([#3033](https://github.com/nonebot/nonebot2/pull/3033))
 - Plugin: 机厅 [@noneflow](https://github.com/noneflow) ([#3029](https://github.com/nonebot/nonebot2/pull/3029))
 - Plugin: PM帮助 [@noneflow](https://github.com/noneflow) ([#3023](https://github.com/nonebot/nonebot2/pull/3023))
