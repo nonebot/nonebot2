@@ -7348,5 +7348,17 @@
     "author": "Onimaimai",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_BR",
+    "project_link": "nonebot_plugin_BR",
+    "author": "Agnes4m",
+    "tags": [
+      {
+        "label": "游戏",
+        "color": "#fa0404"
+      }
+    ],
+    "is_official": false
   }
 ]
