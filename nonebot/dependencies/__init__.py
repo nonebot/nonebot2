@@ -6,11 +6,13 @@ FrontMatter:
 """
 
 import abc
-import asyncio
 import inspect
+from functools import partial
 from dataclasses import field, dataclass
 from collections.abc import Iterable, Awaitable
 from typing import Any, Generic, TypeVar, Callable, Optional, cast
+
+import anyio
 
 from nonebot.log import logger
 from nonebot.typing import _DependentCallable
@@ -164,10 +166,13 @@ class Dependent(Generic[R]):
         return cls(call, params, parameterless_params)
 
     async def check(self, **params: Any) -> None:
-        await asyncio.gather(*(param._check(**params) for param in self.parameterless))
-        await asyncio.gather(
-            *(cast(Param, param.field_info)._check(**params) for param in self.params)
-        )
+        async with anyio.create_task_group() as tg:
+            for param in self.parameterless:
+                tg.start_soon(partial(param._check, **params))
+
+        async with anyio.create_task_group() as tg:
+            for param in self.params:
+                tg.start_soon(partial(cast(Param, param.field_info)._check, **params))
 
     async def _solve_field(self, field: ModelField, params: dict[str, Any]) -> Any:
         param = cast(Param, field.field_info)
@@ -183,10 +188,17 @@ class Dependent(Generic[R]):
             await param._solve(**params)
 
         # solve param values
-        values = await asyncio.gather(
-            *(self._solve_field(field, params) for field in self.params)
-        )
-        return {field.name: value for field, value in zip(self.params, values)}
+        result: dict[str, Any] = {}
+
+        async def _solve_field(field: ModelField, params: dict[str, Any]) -> None:
+            value = await self._solve_field(field, params)
+            result[field.name] = value
+
+        async with anyio.create_task_group() as tg:
+            for field in self.params:
+                tg.start_soon(_solve_field, field, params)
+
+        return result
 
 
 __autodoc__ = {"CustomConfig": False}

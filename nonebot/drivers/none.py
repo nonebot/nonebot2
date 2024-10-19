@@ -10,9 +10,12 @@ FrontMatter:
 """
 
 import signal
-import asyncio
-import threading
+from typing import Optional
 from typing_extensions import override
+
+import anyio
+from anyio.abc import TaskGroup
+from exceptiongroup import BaseExceptionGroup, catch
 
 from nonebot.log import logger
 from nonebot.consts import WINDOWS
@@ -33,8 +36,8 @@ class Driver(BaseDriver):
     def __init__(self, env: Env, config: Config):
         super().__init__(env, config)
 
-        self.should_exit: asyncio.Event = asyncio.Event()
-        self.force_exit: bool = False
+        self.should_exit: anyio.Event = anyio.Event()
+        self.force_exit: anyio.Event = anyio.Event()
 
     @property
     @override
@@ -52,84 +55,105 @@ class Driver(BaseDriver):
     def run(self, *args, **kwargs):
         """启动 none driver"""
         super().run(*args, **kwargs)
-        loop = asyncio.get_event_loop()
-        loop.run_until_complete(self._serve())
+        anyio.run(self._serve)
 
     async def _serve(self):
-        self._install_signal_handlers()
-        await self._startup()
-        if self.should_exit.is_set():
-            return
-        await self._main_loop()
-        await self._shutdown()
+        async with anyio.create_task_group() as driver_tg:
+            driver_tg.start_soon(self._handle_signals)
+
+            # wait for startup complete or exit
+            async with anyio.create_task_group() as start_tg:
+                start_tg.start_soon(self._listen_exit, start_tg)
+
+                await self._startup()
+                start_tg.cancel_scope.cancel()
+
+            if self.should_exit.is_set():
+                return
+
+            await self._listen_exit()
+
+            await self._shutdown()
+
+            driver_tg.cancel_scope.cancel()
+
+    async def _handle_signals(self):
+        try:
+            with anyio.open_signal_receiver(*HANDLED_SIGNALS) as signal_receiver:
+                async for sig in signal_receiver:
+                    self.exit(force=self.should_exit.is_set())
+        except NotImplementedError:
+            # Windows
+            for sig in HANDLED_SIGNALS:
+                signal.signal(sig, self._handle_legacy_signal)
+
+    # backport for Windows signal handling
+    def _handle_legacy_signal(self, sig, frame):
+        self.exit(force=self.should_exit.is_set())
 
     async def _startup(self):
-        try:
-            await self._lifespan.startup()
-        except Exception as e:
-            logger.opt(colors=True, exception=e).error(
+        def handle_exception(exc_group: BaseExceptionGroup) -> None:
+            self.should_exit.set()
+
+            for exc in exc_group.exceptions:
+                logger.opt(colors=True, exception=exc).error(
+                    "<r><bg #f8bbd0>Error occurred while running startup hook."
+                    "</bg #f8bbd0></r>"
+                )
+            logger.error(
                 "<r><bg #f8bbd0>Application startup failed. "
                 "Exiting.</bg #f8bbd0></r>"
             )
-            self.should_exit.set()
-            return
 
-        logger.info("Application startup completed.")
+        with catch({Exception: handle_exception}):
+            await self._lifespan.startup()
 
-    async def _main_loop(self):
+        if not self.should_exit.is_set():
+            logger.info("Application startup completed.")
+
+    async def _listen_exit(self, tg: Optional[TaskGroup] = None):
         await self.should_exit.wait()
+
+        if tg is not None:
+            tg.cancel_scope.cancel()
 
     async def _shutdown(self):
         logger.info("Shutting down")
 
-        logger.info("Waiting for application shutdown.")
+        # wait for shutdown complete or force exit
+        async with anyio.create_task_group() as tg:
+            tg.start_soon(self._listen_force_exit, tg)
 
-        try:
-            await self._lifespan.shutdown()
-        except Exception as e:
-            logger.opt(colors=True, exception=e).error(
-                "<r><bg #f8bbd0>Error when running shutdown function. "
-                "Ignored!</bg #f8bbd0></r>"
-            )
+            logger.info("Waiting for application shutdown. (CTRL+C to force quit)")
 
-        for task in asyncio.all_tasks():
-            if task is not asyncio.current_task() and not task.done():
-                task.cancel()
-        await asyncio.sleep(0.1)
+            error_occurred: bool = False
 
-        tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
-        if tasks and not self.force_exit:
-            logger.info("Waiting for tasks to finish. (CTRL+C to force quit)")
-        while tasks and not self.force_exit:
-            await asyncio.sleep(0.1)
-            tasks = [t for t in asyncio.all_tasks() if t is not asyncio.current_task()]
+            def handle_exception(exc_group: BaseExceptionGroup) -> None:
+                nonlocal error_occurred
 
-        for task in tasks:
-            task.cancel()
+                error_occurred = True
 
-        await asyncio.gather(*tasks, return_exceptions=True)
+                for exc in exc_group.exceptions:
+                    logger.opt(colors=True, exception=exc).error(
+                        "<r><bg #f8bbd0>Error occurred while running shutdown hook."
+                        "</bg #f8bbd0></r>"
+                    )
+                logger.error(
+                    "<r><bg #f8bbd0>Application shutdown failed. "
+                    "Exiting.</bg #f8bbd0></r>"
+                )
 
-        logger.info("Application shutdown complete.")
-        loop = asyncio.get_event_loop()
-        loop.stop()
+            with catch({Exception: handle_exception}):
+                await self._lifespan.shutdown()
 
-    def _install_signal_handlers(self) -> None:
-        if threading.current_thread() is not threading.main_thread():
-            # Signals can only be listened to from the main thread.
-            return
+            if not error_occurred:
+                logger.info("Application shutdown complete.")
 
-        loop = asyncio.get_event_loop()
+            tg.cancel_scope.cancel()
 
-        try:
-            for sig in HANDLED_SIGNALS:
-                loop.add_signal_handler(sig, self._handle_exit, sig, None)
-        except NotImplementedError:
-            # Windows
-            for sig in HANDLED_SIGNALS:
-                signal.signal(sig, self._handle_exit)
-
-    def _handle_exit(self, sig, frame):
-        self.exit(force=self.should_exit.is_set())
+    async def _listen_force_exit(self, tg: TaskGroup):
+        await self.force_exit.wait()
+        tg.cancel_scope.cancel()
 
     def exit(self, force: bool = False):
         """退出 none driver
@@ -140,4 +164,4 @@ class Driver(BaseDriver):
         if not self.should_exit.is_set():
             self.should_exit.set()
         if force:
-            self.force_exit = True
+            self.force_exit.set()

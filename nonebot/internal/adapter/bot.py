@@ -1,7 +1,9 @@
 import abc
-import asyncio
 from functools import partial
 from typing import TYPE_CHECKING, Any, Union, ClassVar, Optional, Protocol
+
+import anyio
+from exceptiongroup import BaseExceptionGroup, catch
 
 from nonebot.log import logger
 from nonebot.config import Config
@@ -76,21 +78,45 @@ class Bot(abc.ABC):
         skip_calling_api: bool = False
         exception: Optional[Exception] = None
 
-        if coros := [hook(self, api, data) for hook in self._calling_api_hook]:
-            try:
-                logger.debug("Running CallingAPI hooks...")
-                await asyncio.gather(*coros)
-            except MockApiException as e:
-                skip_calling_api = True
-                result = e.result
-                logger.debug(
-                    f"Calling API {api} is cancelled. Return {result} instead."
-                )
-            except Exception as e:
-                logger.opt(colors=True, exception=e).error(
-                    "<r><bg #f8bbd0>Error when running CallingAPI hook. "
-                    "Running cancelled!</bg #f8bbd0></r>"
-                )
+        if self._calling_api_hook:
+            logger.debug("Running CallingAPI hooks...")
+
+            def _handle_mock_api_exception(exc_group: BaseExceptionGroup) -> None:
+                nonlocal skip_calling_api, result
+
+                excs = [
+                    exc
+                    for exc in exc_group.exceptions
+                    if isinstance(exc, MockApiException)
+                ]
+                if len(excs) > 1:
+                    logger.warning(
+                        "Multiple hooks want to mock API result. Use the first one."
+                    )
+                elif excs:
+                    skip_calling_api = True
+                    result = excs[0].result
+
+                    logger.debug(
+                        f"Calling API {api} is cancelled. Return {result!r} instead."
+                    )
+
+            def _handle_exception(exc_group: BaseExceptionGroup) -> None:
+                for exc in exc_group.exceptions:
+                    logger.opt(colors=True, exception=exc).error(
+                        "<r><bg #f8bbd0>Error when running CallingAPI hook. "
+                        "Running cancelled!</bg #f8bbd0></r>"
+                    )
+
+            with catch(
+                {
+                    MockApiException: _handle_mock_api_exception,
+                    Exception: _handle_exception,
+                }
+            ):
+                async with anyio.create_task_group() as tg:
+                    for hook in self._calling_api_hook:
+                        tg.start_soon(hook, self, api, data)
 
         if not skip_calling_api:
             try:
@@ -98,25 +124,43 @@ class Bot(abc.ABC):
             except Exception as e:
                 exception = e
 
-        if coros := [
-            hook(self, exception, api, data, result) for hook in self._called_api_hook
-        ]:
-            try:
-                logger.debug("Running CalledAPI hooks...")
-                await asyncio.gather(*coros)
-            except MockApiException as e:
-                # mock api result
-                result = e.result
-                # ignore exception
-                exception = None
-                logger.debug(
-                    f"Calling API {api} result is mocked. Return {result} instead."
-                )
-            except Exception as e:
-                logger.opt(colors=True, exception=e).error(
-                    "<r><bg #f8bbd0>Error when running CalledAPI hook. "
-                    "Running cancelled!</bg #f8bbd0></r>"
-                )
+        if self._called_api_hook:
+            logger.debug("Running CalledAPI hooks...")
+
+            def _handle_mock_api_exception(exc_group: BaseExceptionGroup) -> None:
+                nonlocal result
+
+                excs = [
+                    exc
+                    for exc in exc_group.exceptions
+                    if isinstance(exc, MockApiException)
+                ]
+                if len(excs) > 1:
+                    logger.warning(
+                        "Multiple hooks want to mock API result. Use the first one."
+                    )
+                elif excs:
+                    result = excs[0].result
+                    logger.debug(
+                        f"Calling API {api} result is mocked. Return {result} instead."
+                    )
+
+            def _handle_exception(exc_group: BaseExceptionGroup) -> None:
+                for exc in exc_group.exceptions:
+                    logger.opt(colors=True, exception=exc).error(
+                        "<r><bg #f8bbd0>Error when running CalledAPI hook. "
+                        "Running cancelled!</bg #f8bbd0></r>"
+                    )
+
+            with catch(
+                {
+                    MockApiException: _handle_mock_api_exception,
+                    Exception: _handle_exception,
+                }
+            ):
+                async with anyio.create_task_group() as tg:
+                    for hook in self._called_api_hook:
+                        tg.start_soon(hook, self, exception, api, data, result)
 
         if exception:
             raise exception
