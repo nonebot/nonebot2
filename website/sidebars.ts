@@ -137,7 +137,6 @@ const sidebars: SidebarsConfig = {
       ],
     },
   ],
-
   changelog: [
     {
       type: "category",
