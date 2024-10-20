@@ -7383,5 +7383,21 @@
     "author": "Onimaimai",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bilimusic",
+    "project_link": "nonebot_plugin_bilimusic",
+    "author": "Lonely-Sails",
+    "tags": [
+      {
+        "label": "Bilibili",
+        "color": "#52d5ea"
+      },
+      {
+        "label": "Music",
+        "color": "#ea52ca"
+      }
+    ],
+    "is_official": false
   }
 ]
