@@ -25,6 +25,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Gotify [@noneflow](https://github.com/noneflow) ([#3043](https://github.com/nonebot/nonebot2/pull/3043))
 - Plugin: 涩图插件 [@noneflow](https://github.com/noneflow) ([#3039](https://github.com/nonebot/nonebot2/pull/3039))
 - Plugin: boom [@noneflow](https://github.com/noneflow) ([#3017](https://github.com/nonebot/nonebot2/pull/3017))
 - Plugin: 恶魔轮盘赌 [@noneflow](https://github.com/noneflow) ([#3033](https://github.com/nonebot/nonebot2/pull/3033))
