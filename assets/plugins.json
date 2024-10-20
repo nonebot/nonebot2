@@ -7383,5 +7383,21 @@
     "author": "Onimaimai",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_fishspeech_tts",
+    "project_link": "nonebot-plugin-fishspeech-tts",
+    "author": "Cvandia",
+    "tags": [
+      {
+        "label": "TTS",
+        "color": "#23e907"
+      },
+      {
+        "label": "语音合成",
+        "color": "#e9297f"
+      }
+    ],
+    "is_official": false
   }
 ]
