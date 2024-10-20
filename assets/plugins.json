@@ -7360,5 +7360,21 @@
     "author": "zhongwen-4",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_gotify",
+    "project_link": "nonebot-plugin-gotify",
+    "author": "snowykami",
+    "tags": [
+      {
+        "label": "gotify",
+        "color": "#6eddff"
+      },
+      {
+        "label": "通知推送",
+        "color": "#6eddff"
+      }
+    ],
+    "is_official": false
   }
 ]
