@@ -7376,5 +7376,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_voicemusic",
+    "project_link": "nonebot-plugin-voicemusic",
+    "author": "Onimaimai",
+    "tags": [],
+    "is_official": false
   }
 ]
