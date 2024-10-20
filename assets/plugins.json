@@ -1744,18 +1744,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_sqlalchemy",
-    "project_link": "nonebot-plugin-sqlalchemy",
-    "author": "ssttkkl",
-    "tags": [
-      {
-        "label": "sql",
-        "color": "#ad1717"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_blacklist",
     "project_link": "nonebot-plugin-blacklist",
     "author": "tkgs0",
@@ -4144,13 +4132,6 @@
     "module_name": "nonebot_plugin_follow_withdraw",
     "project_link": "nonebot-plugin-follow-withdraw",
     "author": "CMHopeSunshine",
-    "tags": [],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_error_alert",
-    "project_link": "nonebot-plugin-error-alert",
-    "author": "ssttkkl",
     "tags": [],
     "is_official": false
   },
