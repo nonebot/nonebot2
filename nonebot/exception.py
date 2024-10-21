@@ -25,6 +25,8 @@ NoneBotException
 ```
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 10
     description: nonebot.exception 模块
 """

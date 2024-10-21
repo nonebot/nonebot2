@@ -8,11 +8,15 @@
 
  Create as many sidebars as you want.
  */
+import path from "path";
 
-// @ts-check
+import type { SidebarsConfig } from "@docusaurus/plugin-content-docs";
+import { getChangelogItemsSync } from "@nullbot/docusaurus-plugin-changelog";
 
-/** @type {import('@docusaurus/plugin-content-docs').SidebarsConfig} */
-const sidebars = {
+const changelogPath = path.join(__dirname, "src/changelog/changelog.md");
+const changelogItems = getChangelogItemsSync(changelogPath, 10);
+
+const sidebars: SidebarsConfig = {
   tutorial: [
     {
       type: "category",
@@ -133,6 +137,22 @@ const sidebars = {
       ],
     },
   ],
+  changelog: [
+    {
+      type: "category",
+      label: "更新日志",
+      collapsible: false,
+      items: changelogItems.map<{ type: "link"; label: string; href: string }>(
+        (chunk, index) => ({
+          type: "link",
+          label: chunk[0]!.title,
+          href: `/changelog/${
+            index > 0 ? encodeURIComponent(chunk[0]!.title) : ""
+          }`,
+        })
+      ),
+    },
+  ],
 };
 
-module.exports = sidebars;
+export default sidebars;

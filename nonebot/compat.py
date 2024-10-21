@@ -3,6 +3,8 @@
 为兼容 Pydantic V1 与 V2 版本，定义了一系列兼容函数与类供使用。
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 16
     description: nonebot.compat 模块
 """

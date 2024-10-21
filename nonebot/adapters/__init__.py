@@ -3,6 +3,8 @@
 使用 {ref}`nonebot.drivers.Driver.register_adapter` 注册适配器。
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 0
     description: nonebot.adapters 模块
 """
