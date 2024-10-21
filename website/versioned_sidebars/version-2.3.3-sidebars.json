@@ -123,5 +123,35 @@
         }
       ]
     }
+  ],
+  "changelog": [
+    {
+      "type": "category",
+      "label": "更新日志",
+      "collapsible": false,
+      "items": [
+        {
+          "type": "link",
+          "label": "最近更新",
+          "href": "/changelog/"
+        },
+        {
+          "type": "link",
+          "label": "v2.1.0",
+          "href": "/changelog/v2.1.0"
+        },
+        {
+          "type": "link",
+          "label": "v2.0.0-beta.2",
+          "href": "/changelog/v2.0.0-beta.2"
+        },
+        {
+          "type": "link",
+          "label": "v2.0.0a7",
+          "href": "/changelog/v2.0.0a7"
+        }
+      ],
+      "collapsed": false
+    }
   ]
 }
