@@ -7399,5 +7399,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ddrace",
+    "project_link": "nonebot-plugin-ddrace",
+    "author": "gongfuture",
+    "tags": [],
+    "is_official": false
   }
 ]
