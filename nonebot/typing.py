@@ -32,18 +32,6 @@ P = ParamSpec("P")
 T_Wrapped: TypeAlias = t.Callable[P, T]
 
 
-def overrides(InterfaceClass: object):
-    """标记一个方法为父类 interface 的 implement"""
-
-    warnings.warn(
-        "overrides is deprecated and will be removed in a future version, "
-        "use @typing_extensions.override instead. "
-        "See [PEP 698](https://peps.python.org/pep-0698/) for more details.",
-        DeprecationWarning,
-    )
-    return override
-
-
 if sys.version_info < (3, 10):
 
     def type_has_args(type_: type[t.Any]) -> bool:
