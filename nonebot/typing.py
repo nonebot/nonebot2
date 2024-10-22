@@ -14,11 +14,10 @@ FrontMatter:
 
 import sys
 import types
-import warnings
 import typing as t
 import typing_extensions as t_ext
 from typing import TYPE_CHECKING, TypeVar
-from typing_extensions import ParamSpec, TypeAlias, get_args, override, get_origin
+from typing_extensions import ParamSpec, TypeAlias, get_args, get_origin
 
 if TYPE_CHECKING:
     from asyncio import Task
