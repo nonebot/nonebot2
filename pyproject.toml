@@ -21,7 +21,7 @@ include = ["nonebot/py.typed"]
 
 [tool.poetry.urls]
 "Bug Tracker" = "https://github.com/nonebot/nonebot2/issues"
-"Changelog" = "https://nonebot.dev/docs/next/changelog"
+"Changelog" = "https://nonebot.dev/changelog"
 "Funding" = "https://afdian.com/@nonebot"
 
 [tool.poetry.dependencies]
