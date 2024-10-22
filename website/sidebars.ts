@@ -22,7 +22,7 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "开始",
       collapsible: false,
-      items: ["index", "quick-start", "editor-support"],
+      items: ["index", "quick-start", "store"],
     },
     {
       type: "category",
