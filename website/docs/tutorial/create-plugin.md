@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 2
 description: 创建并加载自定义插件
 
 options:
@@ -64,7 +64,7 @@ options:
 :::
 
 :::caution 注意
-如果在之前的[创建项目](./application.md)章节中手动创建了相关文件，那么你需要做出如下修改：
+如果在[手动创建项目](../advanced/application.md)章节中手动创建了相关文件，那么你需要做出如下修改：
 
 1. 在项目目录中创建一个两层文件夹 `awesome_bot/plugins`
 

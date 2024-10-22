@@ -1,6 +1,11 @@
 ---
-sidebar_position: 2
+sidebar_position: 0
 description: 配置编辑器以获得最佳体验
+
+options:
+  menu:
+    - category: tutorial
+      weight: 20
 ---
 
 # 编辑器支持

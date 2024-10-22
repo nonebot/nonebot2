@@ -1,5 +1,5 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 description: 填写与获取插件相关的信息
 
 options:

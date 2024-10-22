@@ -9,7 +9,7 @@ description: 使用 sentry 进行错误跟踪
 
 ## 安装插件
 
-在使用前请先安装 `nonebot-plugin-sentry` 插件至项目环境中，可参考[获取商店插件](../tutorial/store.mdx#安装插件)来了解并选择安装插件的方式。如：
+在使用前请先安装 `nonebot-plugin-sentry` 插件至项目环境中，可参考[获取商店插件](../store.mdx#安装插件)来了解并选择安装插件的方式。如：
 
 在**项目目录**下执行以下命令：
 
