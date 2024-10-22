@@ -92,17 +92,19 @@ class Bot(abc.ABC):
                     for exc in flatten_exception_group(exc_group)
                     if isinstance(exc, MockApiException)
                 ]
-                if len(excs) > 1:
+                if not excs:
+                    return
+                elif len(excs) > 1:
                     logger.warning(
                         "Multiple hooks want to mock API result. Use the first one."
                     )
-                elif excs:
-                    skip_calling_api = True
-                    result = excs[0].result
 
-                    logger.debug(
-                        f"Calling API {api} is cancelled. Return {result!r} instead."
-                    )
+                skip_calling_api = True
+                result = excs[0].result
+
+                logger.debug(
+                    f"Calling API {api} is cancelled. Return {result!r} instead."
+                )
 
             def _handle_exception(exc_group: BaseExceptionGroup[Exception]) -> None:
                 for exc in flatten_exception_group(exc_group):
@@ -140,16 +142,18 @@ class Bot(abc.ABC):
                     for exc in flatten_exception_group(exc_group)
                     if isinstance(exc, MockApiException)
                 ]
-                if len(excs) > 1:
+                if not excs:
+                    return
+                elif len(excs) > 1:
                     logger.warning(
                         "Multiple hooks want to mock API result. Use the first one."
                     )
-                elif excs:
-                    result = excs[0].result
-                    exception = None
-                    logger.debug(
-                        f"Calling API {api} result is mocked. Return {result} instead."
-                    )
+
+                result = excs[0].result
+                exception = None
+                logger.debug(
+                    f"Calling API {api} result is mocked. Return {result} instead."
+                )
 
             def _handle_exception(exc_group: BaseExceptionGroup[Exception]) -> None:
                 for exc in flatten_exception_group(exc_group):
