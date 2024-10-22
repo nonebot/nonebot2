@@ -7399,5 +7399,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_summary",
+    "project_link": "nonebot-plugin-summary",
+    "author": "ChenXu233",
+    "tags": [
+      {
+        "label": "省流",
+        "color": "#57f99a"
+      },
+      {
+        "label": "AI",
+        "color": "#c0d048"
+      }
+    ],
+    "is_official": false
   }
 ]
