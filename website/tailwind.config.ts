@@ -1,24 +1,26 @@
-const lightTheme = require("daisyui/src/theming/themes")["[data-theme=light]"];
-const darkTheme = require("daisyui/src/theming/themes")["[data-theme=dark]"];
+import typography from "@tailwindcss/typography";
+import daisyui from "daisyui";
+import themes from "daisyui/src/theming/themes";
 
-/**
- * @param {{[key: string]: string}} theme
- * @param {string[]} exclude
- * @returns {{[key: string]: string}}
- */
-function excludeThemeColor(theme, exclude) {
-  /** @type {typeof theme} */
-  const newObj = {};
+const lightTheme = themes.light;
+const darkTheme = themes.dark;
+
+function excludeThemeColor(
+  theme: { [key: string]: string },
+  exclude: string[]
+): { [key: string]: string } {
+  const newObj: { [key: string]: string } = {};
   for (const key in theme) {
     if (exclude.includes(key)) continue;
-    newObj[key] = theme[key];
+    newObj[key] = theme[key]!;
   }
   return newObj;
 }
 
-module.exports = {
-  darkMode: ["class", '[data-theme="dark"]'],
+export default {
+  plugins: [typography, daisyui],
   daisyui: {
+    base: false,
     themes: [
       {
         light: {
@@ -28,6 +30,7 @@ module.exports = {
             "accent-content",
           ]),
           primary: "#ea5252",
+          "primary-content": "#ffffff",
           secondary: "#ef9fbc",
           accent: "#65c3c8",
         },
@@ -40,10 +43,13 @@ module.exports = {
             "accent-content",
           ]),
           primary: "#ea5252",
+          "primary-content": "#ffffff",
           secondary: "#ef9fbc",
           accent: "#65c3c8",
         },
       },
     ],
+    darkTheme: false,
   },
+  darkMode: ["class", '[data-theme="dark"]'],
 };

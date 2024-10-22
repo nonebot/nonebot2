@@ -6,6 +6,8 @@
 [`typing`](https://docs.python.org/3/library/typing.html)。
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 11
     description: nonebot.typing 模块
 """

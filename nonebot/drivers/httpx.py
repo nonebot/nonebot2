@@ -11,6 +11,8 @@ pip install nonebot2[httpx]
 :::
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 3
     description: nonebot.drivers.httpx 模块
 """

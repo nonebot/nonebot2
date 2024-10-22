@@ -39,6 +39,8 @@
 - `require` => {ref}``require` <nonebot.plugin.load.require>`
 
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 0
     description: nonebot 模块
 """

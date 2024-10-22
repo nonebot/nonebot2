@@ -7,6 +7,7 @@ docs_build/_build
 !tests/.env
 .docusaurus
 website/docs/api/**/*.md
+website/src/pages/changelog/**/*
 
 # Created by https://www.toptal.com/developers/gitignore/api/python,node,visualstudiocode,jetbrains,macos,windows,linux
 # Edit at https://www.toptal.com/developers/gitignore?templates=python,node,visualstudiocode,jetbrains,macos,windows,linux

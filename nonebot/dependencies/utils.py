@@ -1,5 +1,7 @@
 """
 FrontMatter:
+    mdx:
+        format: md
     sidebar_position: 1
     description: nonebot.dependencies.utils 模块
 """
