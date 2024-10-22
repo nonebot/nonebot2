@@ -18,7 +18,7 @@ NoneBot 基于 Python [asyncio](https://docs.python.org/zh-cn/3/library/asyncio.
 
 ### 完整的类型注解
 
-NoneBot 参考 [PEP 484](https://www.python.org/dev/peps/pep-0484/) 等 PEP 完整实现了类型注解，通过 Pyright（Pylance） 检查。配合编辑器的类型推导功能，能将绝大多数的 Bug 杜绝在编辑器中（[编辑器支持](./editor-support)）。
+NoneBot 参考 [PEP 484](https://www.python.org/dev/peps/pep-0484/) 等 PEP 完整实现了类型注解，通过 Pyright（Pylance） 检查。配合编辑器的类型推导功能，能将绝大多数的 Bug 杜绝在编辑器中（[编辑器支持](./tutorial/editor-support)）。
 
 ### 开箱即用
 
