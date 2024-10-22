@@ -19,12 +19,17 @@ from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.dependencies import Dependent
 from nonebot.matcher import Matcher, matchers
-from nonebot.utils import escape_tag, run_coro_with_catch, run_coro_with_shield
 from nonebot.exception import (
     NoLogException,
     StopPropagation,
     IgnoredException,
     SkippedException,
+)
+from nonebot.utils import (
+    escape_tag,
+    run_coro_with_catch,
+    run_coro_with_shield,
+    flatten_exception_group,
 )
 from nonebot.typing import (
     T_State,
@@ -126,15 +131,15 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
 
 
 def _handle_ignored_exception(msg: str) -> Callable[[BaseExceptionGroup], None]:
-    def _handle(exc_group: BaseExceptionGroup) -> None:
+    def _handle(exc_group: BaseExceptionGroup[IgnoredException]) -> None:
         logger.opt(colors=True).info(msg)
 
     return _handle
 
 
 def _handle_exception(msg: str) -> Callable[[BaseExceptionGroup], None]:
-    def _handle(exc_group: BaseExceptionGroup) -> None:
-        for exc in exc_group.exceptions:
+    def _handle(exc_group: BaseExceptionGroup[Exception]) -> None:
+        for exc in flatten_exception_group(exc_group):
             logger.opt(colors=True, exception=exc).error(msg)
 
     return _handle
@@ -445,8 +450,9 @@ async def _run_matcher(
 
     exception = None
 
+    logger.debug(f"Running {matcher}")
+
     try:
-        logger.debug(f"Running {matcher}")
         await matcher.run(bot, event, state, stack, dependency_cache)
     except Exception as e:
         logger.opt(colors=True, exception=e).error(

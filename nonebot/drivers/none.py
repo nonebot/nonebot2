@@ -21,6 +21,7 @@ from nonebot.log import logger
 from nonebot.consts import WINDOWS
 from nonebot.config import Env, Config
 from nonebot.drivers import Driver as BaseDriver
+from nonebot.utils import flatten_exception_group
 
 HANDLED_SIGNALS = (
     signal.SIGINT,  # Unix signal 2. Sent by Ctrl+C.
@@ -92,10 +93,10 @@ class Driver(BaseDriver):
         self.exit(force=self.should_exit.is_set())
 
     async def _startup(self):
-        def handle_exception(exc_group: BaseExceptionGroup) -> None:
+        def handle_exception(exc_group: BaseExceptionGroup[Exception]) -> None:
             self.should_exit.set()
 
-            for exc in exc_group.exceptions:
+            for exc in flatten_exception_group(exc_group):
                 logger.opt(colors=True, exception=exc).error(
                     "<r><bg #f8bbd0>Error occurred while running startup hook."
                     "</bg #f8bbd0></r>"
@@ -128,12 +129,12 @@ class Driver(BaseDriver):
 
             error_occurred: bool = False
 
-            def handle_exception(exc_group: BaseExceptionGroup) -> None:
+            def handle_exception(exc_group: BaseExceptionGroup[Exception]) -> None:
                 nonlocal error_occurred
 
                 error_occurred = True
 
-                for exc in exc_group.exceptions:
+                for exc in flatten_exception_group(exc_group):
                     logger.opt(colors=True, exception=exc).error(
                         "<r><bg #f8bbd0>Error occurred while running shutdown hook."
                         "</bg #f8bbd0></r>"

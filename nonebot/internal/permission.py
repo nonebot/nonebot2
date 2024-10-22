@@ -76,13 +76,15 @@ class Permission:
 
         async def _run_checker(checker: Dependent[bool]) -> None:
             nonlocal result
-            result |= await run_coro_with_catch(
+            # calculate the result first to avoid data racing
+            is_passed = await run_coro_with_catch(
                 checker(
                     bot=bot, event=event, stack=stack, dependency_cache=dependency_cache
                 ),
                 (SkippedException,),
                 False,
             )
+            result |= is_passed
 
         async with anyio.create_task_group() as tg:
             for checker in self.checkers:

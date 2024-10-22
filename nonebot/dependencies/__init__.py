@@ -13,12 +13,13 @@ from collections.abc import Iterable, Awaitable
 from typing import Any, Generic, TypeVar, Callable, Optional, cast
 
 import anyio
+from exceptiongroup import BaseExceptionGroup, catch
 
 from nonebot.log import logger
 from nonebot.typing import _DependentCallable
 from nonebot.exception import SkippedException
-from nonebot.utils import run_sync, is_coroutine_callable
 from nonebot.compat import FieldInfo, ModelField, PydanticUndefined
+from nonebot.utils import run_sync, is_coroutine_callable, flatten_exception_group
 
 from .utils import check_field_type, get_typed_signature
 
@@ -84,7 +85,16 @@ class Dependent(Generic[R]):
         )
 
     async def __call__(self, **kwargs: Any) -> R:
-        try:
+        exception: Optional[BaseExceptionGroup[SkippedException]] = None
+
+        def _handle_skipped(exc_group: BaseExceptionGroup[SkippedException]):
+            nonlocal exception
+            exception = exc_group
+            # raise one of the exceptions instead
+            excs = list(flatten_exception_group(exc_group))
+            logger.trace(f"{self} skipped due to {excs}")
+
+        with catch({SkippedException: _handle_skipped}):
             # do pre-check
             await self.check(**kwargs)
 
@@ -96,9 +106,8 @@ class Dependent(Generic[R]):
                 return await cast(Callable[..., Awaitable[R]], self.call)(**values)
             else:
                 return await run_sync(cast(Callable[..., R], self.call))(**values)
-        except SkippedException as e:
-            logger.trace(f"{self} skipped due to {e}")
-            raise
+
+        raise exception
 
     @staticmethod
     def parse_params(

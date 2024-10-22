@@ -14,8 +14,10 @@ from typing import (
 )
 
 import anyio
+from exceptiongroup import BaseExceptionGroup, catch
 from pydantic.fields import FieldInfo as PydanticFieldInfo
 
+from nonebot.exception import SkippedException
 from nonebot.dependencies import Param, Dependent
 from nonebot.dependencies.utils import check_field_type
 from nonebot.compat import FieldInfo, ModelField, PydanticUndefined, extract_field_info
@@ -264,11 +266,21 @@ class DependParam(Param):
         call = cast(Callable[..., Any], sub_dependent.call)
 
         # solve sub dependency with current cache
-        sub_values = await sub_dependent.solve(
-            stack=stack,
-            dependency_cache=dependency_cache,
-            **kwargs,
-        )
+        exc: Optional[BaseExceptionGroup[SkippedException]] = None
+
+        def _handle_skipped(exc_group: BaseExceptionGroup[SkippedException]):
+            nonlocal exc
+            exc = exc_group
+
+        with catch({SkippedException: _handle_skipped}):
+            sub_values = await sub_dependent.solve(
+                stack=stack,
+                dependency_cache=dependency_cache,
+                **kwargs,
+            )
+
+        if exc is not None:
+            raise exc
 
         # run dependency function
         if use_cache and call in dependency_cache:

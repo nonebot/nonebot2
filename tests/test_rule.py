@@ -49,7 +49,7 @@ from nonebot.rule import (
 )
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_rule(app: App):
     async def falsy():
         return False
@@ -81,7 +81,7 @@ async def test_rule(app: App):
         assert await Rule(truthy, skipped)(bot, event, {}) is False
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_trie(app: App):
     TrieRule.add_prefix("/fake-prefix", TRIE_VALUE("/", ("fake-prefix",)))
 
@@ -146,7 +146,7 @@ async def test_trie(app: App):
     del TrieRule.prefix["/fake-prefix"]
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     ("msg", "ignorecase", "type", "text", "expected"),
     [
@@ -186,7 +186,7 @@ async def test_startswith(
         assert await dependent(event=event, state=state) == expected
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     ("msg", "ignorecase", "type", "text", "expected"),
     [
@@ -226,7 +226,7 @@ async def test_endswith(
         assert await dependent(event=event, state=state) == expected
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     ("msg", "ignorecase", "type", "text", "expected"),
     [
@@ -266,7 +266,7 @@ async def test_fullmatch(
         assert await dependent(event=event, state=state) == expected
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     ("kws", "type", "text", "expected"),
     [
@@ -298,7 +298,7 @@ async def test_keyword(
         assert await dependent(event=event, state=state) == expected
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     ("cmds", "force_whitespace", "cmd", "whitespace", "arg_text", "expected"),
     [
@@ -344,7 +344,7 @@ async def test_command(
     assert await dependent(state=state) == expected
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_shell_command():
     state: T_State
     CMD = ("test",)
@@ -451,7 +451,7 @@ async def test_shell_command():
     assert state[SHELL_ARGS].status != 0
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     ("pattern", "type", "text", "expected", "matched"),
     [
@@ -494,7 +494,7 @@ async def test_regex(
         assert result.span() == matched.span()
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize("expected", [True, False])
 async def test_to_me(expected: bool):
     test_to_me = to_me()
@@ -507,7 +507,7 @@ async def test_to_me(expected: bool):
     assert await dependent(event=event) == expected
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_is_type():
     Event1 = make_fake_event()
     Event2 = make_fake_event()

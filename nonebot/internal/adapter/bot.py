@@ -8,6 +8,7 @@ from exceptiongroup import BaseExceptionGroup, catch
 from nonebot.log import logger
 from nonebot.config import Config
 from nonebot.exception import MockApiException
+from nonebot.utils import flatten_exception_group
 from nonebot.typing import T_CalledAPIHook, T_CallingAPIHook
 
 if TYPE_CHECKING:
@@ -81,12 +82,14 @@ class Bot(abc.ABC):
         if self._calling_api_hook:
             logger.debug("Running CallingAPI hooks...")
 
-            def _handle_mock_api_exception(exc_group: BaseExceptionGroup) -> None:
+            def _handle_mock_api_exception(
+                exc_group: BaseExceptionGroup[MockApiException],
+            ) -> None:
                 nonlocal skip_calling_api, result
 
                 excs = [
                     exc
-                    for exc in exc_group.exceptions
+                    for exc in flatten_exception_group(exc_group)
                     if isinstance(exc, MockApiException)
                 ]
                 if len(excs) > 1:
@@ -101,8 +104,8 @@ class Bot(abc.ABC):
                         f"Calling API {api} is cancelled. Return {result!r} instead."
                     )
 
-            def _handle_exception(exc_group: BaseExceptionGroup) -> None:
-                for exc in exc_group.exceptions:
+            def _handle_exception(exc_group: BaseExceptionGroup[Exception]) -> None:
+                for exc in flatten_exception_group(exc_group):
                     logger.opt(colors=True, exception=exc).error(
                         "<r><bg #f8bbd0>Error when running CallingAPI hook. "
                         "Running cancelled!</bg #f8bbd0></r>"
@@ -127,12 +130,14 @@ class Bot(abc.ABC):
         if self._called_api_hook:
             logger.debug("Running CalledAPI hooks...")
 
-            def _handle_mock_api_exception(exc_group: BaseExceptionGroup) -> None:
-                nonlocal result
+            def _handle_mock_api_exception(
+                exc_group: BaseExceptionGroup[MockApiException],
+            ) -> None:
+                nonlocal result, exception
 
                 excs = [
                     exc
-                    for exc in exc_group.exceptions
+                    for exc in flatten_exception_group(exc_group)
                     if isinstance(exc, MockApiException)
                 ]
                 if len(excs) > 1:
@@ -141,12 +146,13 @@ class Bot(abc.ABC):
                     )
                 elif excs:
                     result = excs[0].result
+                    exception = None
                     logger.debug(
                         f"Calling API {api} result is mocked. Return {result} instead."
                     )
 
-            def _handle_exception(exc_group: BaseExceptionGroup) -> None:
-                for exc in exc_group.exceptions:
+            def _handle_exception(exc_group: BaseExceptionGroup[Exception]) -> None:
+                for exc in flatten_exception_group(exc_group):
                     logger.opt(colors=True, exception=exc).error(
                         "<r><bg #f8bbd0>Error when running CalledAPI hook. "
                         "Running cancelled!</bg #f8bbd0></r>"

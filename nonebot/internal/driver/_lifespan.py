@@ -82,6 +82,8 @@ class Lifespan:
         with suppress(Exception):
             await self.task_group.__aexit__(exc_type, exc_val, exc_tb)
 
+        self._task_group = None
+
         if self._shutdown_funcs:
             # reverse shutdown funcs to ensure stack order
             await self._run_lifespan_func(reversed(self._shutdown_funcs))

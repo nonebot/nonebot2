@@ -7,7 +7,7 @@ from nonebot.adapters import Bot
 from nonebot.exception import MockApiException
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_bot_call_api(app: App):
     async with app.test_api() as ctx:
         bot = ctx.create_bot()
@@ -23,7 +23,7 @@ async def test_bot_call_api(app: App):
             await bot.call_api("test")
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_bot_calling_api_hook_simple(app: App):
     runned: bool = False
 
@@ -49,7 +49,7 @@ async def test_bot_calling_api_hook_simple(app: App):
         assert result is True
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_bot_calling_api_hook_mock(app: App):
     runned: bool = False
 
@@ -76,7 +76,7 @@ async def test_bot_calling_api_hook_mock(app: App):
         assert result is False
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_bot_called_api_hook_simple(app: App):
     runned: bool = False
 
@@ -108,7 +108,7 @@ async def test_bot_called_api_hook_simple(app: App):
         assert result is True
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_bot_called_api_hook_mock(app: App):
     runned: bool = False
 

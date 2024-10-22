@@ -18,7 +18,6 @@ from nonebot.rule import (
 )
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize(
     ("matcher_name", "pre_rule_factory", "has_permission"),
     [
@@ -102,7 +101,7 @@ from nonebot.rule import (
         pytest.param("matcher_group_on_type", lambda e: IsTypeRule(e), True),
     ],
 )
-async def test_on(
+def test_on(
     matcher_name: str,
     pre_rule_factory: Optional[Callable[[type[Event]], T_RuleChecker]],
     has_permission: bool,
@@ -150,8 +149,7 @@ async def test_on(
     assert matcher.module_name == "plugins.plugin.matchers"
 
 
-@pytest.mark.asyncio
-async def test_runtime_on():
+def test_runtime_on():
     import plugins.plugin.matchers as module
     from plugins.plugin.matchers import matcher_on_factory
 

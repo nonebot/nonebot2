@@ -5,7 +5,7 @@ import pytest
 from utils import make_fake_event
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_matcher_mutex():
     from nonebot.plugins.single_session import matcher_mutex, _running_matcher
 

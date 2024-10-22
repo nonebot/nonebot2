@@ -13,8 +13,8 @@ from nonebot.log import logger
 from nonebot.config import Env, Config
 from nonebot.dependencies import Dependent
 from nonebot.exception import SkippedException
-from nonebot.utils import escape_tag, run_coro_with_catch
 from nonebot.internal.params import BotParam, DependParam, DefaultParam
+from nonebot.utils import escape_tag, run_coro_with_catch, flatten_exception_group
 from nonebot.typing import (
     T_DependencyCache,
     T_BotConnectionHook,
@@ -159,7 +159,7 @@ class Driver(abc.ABC):
         self._bots[bot.self_id] = bot
 
         def handle_exception(exc_group: BaseExceptionGroup) -> None:
-            for exc in exc_group.exceptions:
+            for exc in flatten_exception_group(exc_group):
                 logger.opt(colors=True, exception=exc).error(
                     "<r><bg #f8bbd0>"
                     "Error when running WebSocketConnection hook:"
@@ -187,7 +187,7 @@ class Driver(abc.ABC):
             del self._bots[bot.self_id]
 
         def handle_exception(exc_group: BaseExceptionGroup) -> None:
-            for exc in exc_group.exceptions:
+            for exc in flatten_exception_group(exc_group):
                 logger.opt(colors=True, exception=exc).error(
                     "<r><bg #f8bbd0>"
                     "Error when running WebSocketDisConnection hook:"

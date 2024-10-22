@@ -22,11 +22,13 @@ from typing import (  # noqa: UP035
     overload,
 )
 
+from exceptiongroup import BaseExceptionGroup, catch
+
 from nonebot.log import logger
 from nonebot.internal.rule import Rule
-from nonebot.utils import classproperty
 from nonebot.dependencies import Param, Dependent
 from nonebot.internal.permission import User, Permission
+from nonebot.utils import classproperty, flatten_exception_group
 from nonebot.internal.adapter import (
     Bot,
     Event,
@@ -812,28 +814,34 @@ class Matcher(metaclass=MatcherMeta):
             f"bot={bot}, event={event!r}, state={state!r}"
         )
 
+        def _handle_stop_propagation(exc_group: BaseExceptionGroup[StopPropagation]):
+            self.block = True
+
         with self.ensure_context(bot, event):
             try:
-                # Refresh preprocess state
-                self.state.update(state)
+                with catch({StopPropagation: _handle_stop_propagation}):
+                    # Refresh preprocess state
+                    self.state.update(state)
 
-                while self.remain_handlers:
-                    handler = self.remain_handlers.pop(0)
-                    current_handler.set(handler)
-                    logger.debug(f"Running handler {handler}")
-                    try:
-                        await handler(
-                            matcher=self,
-                            bot=bot,
-                            event=event,
-                            state=self.state,
-                            stack=stack,
-                            dependency_cache=dependency_cache,
-                        )
-                    except SkippedException:
-                        logger.debug(f"Handler {handler} skipped")
-            except StopPropagation:
-                self.block = True
+                    while self.remain_handlers:
+                        handler = self.remain_handlers.pop(0)
+                        current_handler.set(handler)
+                        logger.debug(f"Running handler {handler}")
+
+                        def _handle_skipped(
+                            exc_group: BaseExceptionGroup[SkippedException],
+                        ):
+                            logger.debug(f"Handler {handler} skipped")
+
+                        with catch({SkippedException: _handle_skipped}):
+                            await handler(
+                                matcher=self,
+                                bot=bot,
+                                event=event,
+                                state=self.state,
+                                stack=stack,
+                                dependency_cache=dependency_cache,
+                            )
             finally:
                 logger.info(f"{self} running complete")
 
@@ -846,10 +854,54 @@ class Matcher(metaclass=MatcherMeta):
         stack: Optional[AsyncExitStack] = None,
         dependency_cache: Optional[T_DependencyCache] = None,
     ):
-        try:
+        exc: Optional[Union[FinishedException, RejectedException, PausedException]] = (
+            None
+        )
+
+        def _handle_special_exception(
+            exc_group: BaseExceptionGroup[
+                Union[FinishedException, RejectedException, PausedException]
+            ]
+        ):
+            nonlocal exc
+            excs = list(flatten_exception_group(exc_group))
+            if len(excs) > 1:
+                logger.warning(
+                    "Multiple session control exceptions occurred. "
+                    "NoneBot will choose the proper one."
+                )
+                finished_exc = next(
+                    (e for e in excs if isinstance(e, FinishedException)),
+                    None,
+                )
+                rejected_exc = next(
+                    (e for e in excs if isinstance(e, RejectedException)),
+                    None,
+                )
+                paused_exc = next(
+                    (e for e in excs if isinstance(e, PausedException)),
+                    None,
+                )
+                exc = finished_exc or rejected_exc or paused_exc
+            elif isinstance(
+                excs[0], (FinishedException, RejectedException, PausedException)
+            ):
+                exc = excs[0]
+
+        with catch(
+            {
+                (
+                    FinishedException,
+                    RejectedException,
+                    PausedException,
+                ): _handle_special_exception
+            }
+        ):
             await self.simple_run(bot, event, state, stack, dependency_cache)
 
-        except RejectedException:
+        if isinstance(exc, FinishedException):
+            pass
+        elif isinstance(exc, RejectedException):
             await self.resolve_reject()
             type_ = await self.update_type(bot, event, stack, dependency_cache)
             permission = await self.update_permission(
@@ -870,7 +922,7 @@ class Matcher(metaclass=MatcherMeta):
                 default_type_updater=self.__class__._default_type_updater,
                 default_permission_updater=self.__class__._default_permission_updater,
             )
-        except PausedException:
+        elif isinstance(exc, PausedException):
             type_ = await self.update_type(bot, event, stack, dependency_cache)
             permission = await self.update_permission(
                 bot, event, stack, dependency_cache
@@ -890,5 +942,3 @@ class Matcher(metaclass=MatcherMeta):
                 default_type_updater=self.__class__._default_type_updater,
                 default_permission_updater=self.__class__._default_permission_updater,
             )
-        except FinishedException:
-            pass

@@ -74,21 +74,25 @@ class Rule:
         if not self.checkers:
             return True
 
-        result = False
+        result = True
 
-        def _handle_skipped_exception(exc_group: BaseExceptionGroup) -> None:
+        def _handle_skipped_exception(
+            exc_group: BaseExceptionGroup[SkippedException],
+        ) -> None:
             nonlocal result
             result = False
 
         async def _run_checker(checker: Dependent[bool]) -> None:
             nonlocal result
-            result &= await checker(
+            # calculate the result first to avoid data racing
+            is_passed = await checker(
                 bot=bot,
                 event=event,
                 state=state,
                 stack=stack,
                 dependency_cache=dependency_cache,
             )
+            result &= is_passed
 
         with catch({SkippedException: _handle_skipped_exception}):
             async with anyio.create_task_group() as tg:
