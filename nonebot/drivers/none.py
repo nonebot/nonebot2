@@ -61,22 +61,7 @@ class Driver(BaseDriver):
     async def _serve(self):
         async with anyio.create_task_group() as driver_tg:
             driver_tg.start_soon(self._handle_signals)
-
-            # wait for startup complete or exit
-            async with anyio.create_task_group() as start_tg:
-                start_tg.start_soon(self._listen_exit, start_tg)
-
-                await self._startup()
-                start_tg.cancel_scope.cancel()
-
-            if self.should_exit.is_set():
-                return
-
-            await self._listen_exit()
-
-            await self._shutdown()
-
-            driver_tg.cancel_scope.cancel()
+            driver_tg.start_soon(self._handle_lifespan, driver_tg)
 
     async def _handle_signals(self):
         try:
@@ -91,6 +76,20 @@ class Driver(BaseDriver):
     # backport for Windows signal handling
     def _handle_legacy_signal(self, sig, frame):
         self.exit(force=self.should_exit.is_set())
+
+    async def _handle_lifespan(self, tg: TaskGroup):
+        try:
+            await self._startup()
+
+            if self.should_exit.is_set():
+                return
+
+            await self._listen_exit()
+
+            tg.start_soon(self._listen_force_exit, tg)
+            await self._shutdown()
+        finally:
+            tg.cancel_scope.cancel()
 
     async def _startup(self):
         def handle_exception(exc_group: BaseExceptionGroup[Exception]) -> None:
@@ -120,37 +119,30 @@ class Driver(BaseDriver):
 
     async def _shutdown(self):
         logger.info("Shutting down")
+        logger.info("Waiting for application shutdown. (CTRL+C to force quit)")
 
-        # wait for shutdown complete or force exit
-        async with anyio.create_task_group() as tg:
-            tg.start_soon(self._listen_force_exit, tg)
+        error_occurred: bool = False
 
-            logger.info("Waiting for application shutdown. (CTRL+C to force quit)")
+        def handle_exception(exc_group: BaseExceptionGroup[Exception]) -> None:
+            nonlocal error_occurred
 
-            error_occurred: bool = False
+            error_occurred = True
 
-            def handle_exception(exc_group: BaseExceptionGroup[Exception]) -> None:
-                nonlocal error_occurred
-
-                error_occurred = True
-
-                for exc in flatten_exception_group(exc_group):
-                    logger.opt(colors=True, exception=exc).error(
-                        "<r><bg #f8bbd0>Error occurred while running shutdown hook."
-                        "</bg #f8bbd0></r>"
-                    )
-                logger.error(
-                    "<r><bg #f8bbd0>Application shutdown failed. "
-                    "Exiting.</bg #f8bbd0></r>"
+            for exc in flatten_exception_group(exc_group):
+                logger.opt(colors=True, exception=exc).error(
+                    "<r><bg #f8bbd0>Error occurred while running shutdown hook."
+                    "</bg #f8bbd0></r>"
                 )
+            logger.error(
+                "<r><bg #f8bbd0>Application shutdown failed. "
+                "Exiting.</bg #f8bbd0></r>"
+            )
 
-            with catch({Exception: handle_exception}):
-                await self._lifespan.shutdown()
+        with catch({Exception: handle_exception}):
+            await self._lifespan.shutdown()
 
-            if not error_occurred:
-                logger.info("Application shutdown complete.")
-
-            tg.cancel_scope.cancel()
+        if not error_occurred:
+            logger.info("Application shutdown complete.")
 
     async def _listen_force_exit(self, tg: TaskGroup):
         await self.force_exit.wait()
