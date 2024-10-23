@@ -7447,5 +7447,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_prevent_withdrawal",
+    "project_link": "nonebot-prevent-withdrawal",
+    "author": "zhongwen-4",
+    "tags": [],
+    "is_official": false
   }
 ]
