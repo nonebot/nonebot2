@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot_plugin_mai_arcade [@noneflow](https://github.com/noneflow) ([#3047](https://github.com/nonebot/nonebot2/pull/3047))
 - Plugin: DDNet 成绩查询 [@noneflow](https://github.com/noneflow) ([#3031](https://github.com/nonebot/nonebot2/pull/3031))
 - Plugin: 省流 [@noneflow](https://github.com/noneflow) ([#3052](https://github.com/nonebot/nonebot2/pull/3052))
 - Plugin: FishSpeechTTS [@noneflow](https://github.com/noneflow) ([#3050](https://github.com/nonebot/nonebot2/pull/3050))
