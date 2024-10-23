@@ -7415,5 +7415,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_ddrace",
+    "project_link": "nonebot-plugin-ddrace",
+    "author": "gongfuture",
+    "tags": [
+      {
+        "label": "game",
+        "color": "#ea5252"
+      },
+      {
+        "label": "DDNet",
+        "color": "#f39c12"
+      }
+    ],
+    "is_official": false
   }
 ]
