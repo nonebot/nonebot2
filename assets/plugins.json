@@ -7431,5 +7431,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mai_arcade",
+    "project_link": "nonebot-plugin-mai-arcade",
+    "author": "YuuzukiRin",
+    "tags": [
+      {
+        "label": "maimai",
+        "color": "#ea5252"
+      },
+      {
+        "label": "arcade",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
