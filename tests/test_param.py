@@ -2,6 +2,7 @@ import re
 
 import pytest
 from nonebug import App
+from exceptiongroup import BaseExceptionGroup
 
 from nonebot.matcher import Matcher
 from nonebot.dependencies import Dependent
@@ -36,7 +37,7 @@ from nonebot.consts import (
 UNKNOWN_PARAM = "Unknown parameter"
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_depend(app: App):
     from plugins.param.param_depend import (
         ClassDependency,
@@ -90,36 +91,47 @@ async def test_depend(app: App):
 
     assert runned == [1, 1, 1]
 
+    runned.clear()
+
     async with app.test_dependent(
         annotated_class_depend, allow_types=[DependParam]
     ) as ctx:
         ctx.should_return(ClassDependency(x=1, y=2))
 
-    with pytest.raises(TypeMisMatch):  # noqa: PT012
+    with pytest.raises((TypeMisMatch, BaseExceptionGroup)) as exc_info:  # noqa: PT012
         async with app.test_dependent(
             sub_type_mismatch, allow_types=[DependParam, BotParam]
         ) as ctx:
             bot = ctx.create_bot()
             ctx.pass_params(bot=bot)
 
+    if isinstance(exc_info.value, BaseExceptionGroup):
+        assert exc_info.group_contains(TypeMisMatch)
+
     async with app.test_dependent(validate, allow_types=[DependParam]) as ctx:
         ctx.should_return(1)
 
-    with pytest.raises(TypeMisMatch):
+    with pytest.raises((TypeMisMatch, BaseExceptionGroup)) as exc_info:
         async with app.test_dependent(validate_fail, allow_types=[DependParam]) as ctx:
             ...
+
+    if isinstance(exc_info.value, BaseExceptionGroup):
+        assert exc_info.group_contains(TypeMisMatch)
 
     async with app.test_dependent(validate_field, allow_types=[DependParam]) as ctx:
         ctx.should_return(1)
 
-    with pytest.raises(TypeMisMatch):
+    with pytest.raises((TypeMisMatch, BaseExceptionGroup)) as exc_info:
         async with app.test_dependent(
             validate_field_fail, allow_types=[DependParam]
         ) as ctx:
             ...
 
+    if isinstance(exc_info.value, BaseExceptionGroup):
+        assert exc_info.group_contains(TypeMisMatch)
 
-@pytest.mark.asyncio
+
+@pytest.mark.anyio
 async def test_bot(app: App):
     from plugins.param.param_bot import (
         FooBot,
@@ -157,10 +169,13 @@ async def test_bot(app: App):
         ctx.pass_params(bot=bot)
         ctx.should_return(bot)
 
-    with pytest.raises(TypeMisMatch):  # noqa: PT012
+    with pytest.raises((TypeMisMatch, BaseExceptionGroup)) as exc_info:  # noqa: PT012
         async with app.test_dependent(sub_bot, allow_types=[BotParam]) as ctx:
             bot = ctx.create_bot()
             ctx.pass_params(bot=bot)
+
+    if isinstance(exc_info.value, BaseExceptionGroup):
+        assert exc_info.group_contains(TypeMisMatch)
 
     async with app.test_dependent(union_bot, allow_types=[BotParam]) as ctx:
         bot = ctx.create_bot(base=FooBot)
@@ -181,7 +196,7 @@ async def test_bot(app: App):
         app.test_dependent(not_bot, allow_types=[BotParam])
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_event(app: App):
     from plugins.param.param_event import (
         FooEvent,
@@ -223,9 +238,12 @@ async def test_event(app: App):
         ctx.pass_params(event=fake_fooevent)
         ctx.should_return(fake_fooevent)
 
-    with pytest.raises(TypeMisMatch):
+    with pytest.raises((TypeMisMatch, BaseExceptionGroup)) as exc_info:
         async with app.test_dependent(sub_event, allow_types=[EventParam]) as ctx:
             ctx.pass_params(event=fake_event)
+
+    if isinstance(exc_info.value, BaseExceptionGroup):
+        assert exc_info.group_contains(TypeMisMatch)
 
     async with app.test_dependent(union_event, allow_types=[EventParam]) as ctx:
         ctx.pass_params(event=fake_fooevent)
@@ -267,7 +285,7 @@ async def test_event(app: App):
         ctx.should_return(fake_event.is_tome())
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_state(app: App):
     from plugins.param.param_state import (
         state,
@@ -418,7 +436,7 @@ async def test_state(app: App):
         ctx.should_return(fake_state[KEYWORD_KEY])
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_matcher(app: App):
     from plugins.param.param_matcher import (
         FooMatcher,
@@ -457,9 +475,12 @@ async def test_matcher(app: App):
         ctx.pass_params(matcher=foo_matcher)
         ctx.should_return(foo_matcher)
 
-    with pytest.raises(TypeMisMatch):
+    with pytest.raises((TypeMisMatch, BaseExceptionGroup)) as exc_info:
         async with app.test_dependent(sub_matcher, allow_types=[MatcherParam]) as ctx:
             ctx.pass_params(matcher=fake_matcher)
+
+    if isinstance(exc_info.value, BaseExceptionGroup):
+        assert exc_info.group_contains(TypeMisMatch)
 
     async with app.test_dependent(union_matcher, allow_types=[MatcherParam]) as ctx:
         ctx.pass_params(matcher=foo_matcher)
@@ -496,7 +517,7 @@ async def test_matcher(app: App):
         ctx.should_return(event_next)
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_arg(app: App):
     from plugins.param.param_arg import (
         arg,
@@ -548,7 +569,7 @@ async def test_arg(app: App):
         ctx.should_return(message.extract_plain_text())
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_exception(app: App):
     from plugins.param.param_exception import exc, legacy_exc
 
@@ -562,7 +583,7 @@ async def test_exception(app: App):
         ctx.should_return(exception)
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_default(app: App):
     from plugins.param.param_default import default
 
@@ -570,8 +591,7 @@ async def test_default(app: App):
         ctx.should_return(1)
 
 
-@pytest.mark.asyncio
-async def test_priority():
+def test_priority():
     from plugins.param.priority import complex_priority
 
     dependent = Dependent[None].parse(

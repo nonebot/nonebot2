@@ -17,14 +17,12 @@ from nonebot.compat import (
 )
 
 
-@pytest.mark.asyncio
-async def test_default_config():
+def test_default_config():
     assert DEFAULT_CONFIG.get("extra") == "allow"
     assert DEFAULT_CONFIG.get("arbitrary_types_allowed") is True
 
 
-@pytest.mark.asyncio
-async def test_field_info():
+def test_field_info():
     # required should be convert to PydanticUndefined
     assert FieldInfo(Required).default is PydanticUndefined
 
@@ -32,8 +30,7 @@ async def test_field_info():
     assert FieldInfo(test="test").extra["test"] == "test"
 
 
-@pytest.mark.asyncio
-async def test_type_adapter():
+def test_type_adapter():
     t = TypeAdapter(Annotated[int, FieldInfo(ge=1)])
 
     assert t.validate_python(2) == 2
@@ -47,8 +44,7 @@ async def test_type_adapter():
         t.validate_json("0")
 
 
-@pytest.mark.asyncio
-async def test_model_dump():
+def test_model_dump():
     class TestModel(BaseModel):
         test1: int
         test2: int
@@ -57,8 +53,7 @@ async def test_model_dump():
     assert model_dump(TestModel(test1=1, test2=2), exclude={"test1"}) == {"test2": 2}
 
 
-@pytest.mark.asyncio
-async def test_custom_validation():
+def test_custom_validation():
     called = []
 
     @custom_validation
@@ -85,8 +80,7 @@ async def test_custom_validation():
     assert called == [1, 2]
 
 
-@pytest.mark.asyncio
-async def test_validate_json():
+def test_validate_json():
     class TestModel(BaseModel):
         test1: int
         test2: str

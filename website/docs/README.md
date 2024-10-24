@@ -14,7 +14,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
 
 ### 异步优先
 
-NoneBot 基于 Python [asyncio](https://docs.python.org/zh-cn/3/library/asyncio.html) 编写，并在异步机制的基础上进行了一定程度的同步函数兼容。
+NoneBot 基于 Python [asyncio](https://docs.python.org/zh-cn/3/library/asyncio.html) / [trio](https://trio.readthedocs.io/en/stable/) 编写，并在异步机制的基础上进行了一定程度的同步函数兼容。
 
 ### 完整的类型注解
 

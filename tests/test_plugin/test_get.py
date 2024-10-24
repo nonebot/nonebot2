@@ -1,12 +1,10 @@
-import pytest
 from pydantic import BaseModel
 
 import nonebot
 from nonebot.plugin import PluginManager, _managers
 
 
-@pytest.mark.asyncio
-async def test_get_plugin():
+def test_get_plugin():
     # check simple plugin
     plugin = nonebot.get_plugin("export")
     assert plugin
@@ -22,8 +20,7 @@ async def test_get_plugin():
     assert plugin.module_name == "plugins.nested.plugins.nested_subplugin"
 
 
-@pytest.mark.asyncio
-async def test_get_plugin_by_module_name():
+def test_get_plugin_by_module_name():
     # check get plugin by exact module name
     plugin = nonebot.get_plugin_by_module_name("plugins.nested")
     assert plugin
@@ -48,8 +45,7 @@ async def test_get_plugin_by_module_name():
     assert plugin.module_name == "plugins.nested.plugins.nested_subplugin"
 
 
-@pytest.mark.asyncio
-async def test_get_available_plugin():
+def test_get_available_plugin():
     old_managers = _managers.copy()
     _managers.clear()
     try:
@@ -63,8 +59,7 @@ async def test_get_available_plugin():
         _managers.extend(old_managers)
 
 
-@pytest.mark.asyncio
-async def test_get_plugin_config():
+def test_get_plugin_config():
     class Config(BaseModel):
         plugin_config: int
 

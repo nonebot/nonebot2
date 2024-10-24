@@ -1,15 +1,44 @@
 import sys
 from pathlib import Path
+from functools import wraps
 from dataclasses import asdict
+from typing import TypeVar, Callable
+from typing_extensions import ParamSpec
 
 import pytest
 
 import nonebot
-from nonebot.plugin import Plugin, PluginManager, _managers, inherit_supported_adapters
+from nonebot.plugin import (
+    Plugin,
+    PluginManager,
+    _plugins,
+    _managers,
+    inherit_supported_adapters,
+)
+
+P = ParamSpec("P")
+R = TypeVar("R")
 
 
-@pytest.mark.asyncio
-async def test_load_plugin():
+def _recover(func: Callable[P, R]) -> Callable[P, R]:
+
+    @wraps(func)
+    def _wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
+        origin_managers = _managers.copy()
+        origin_plugins = _plugins.copy()
+        try:
+            return func(*args, **kwargs)
+        finally:
+            _managers.clear()
+            _managers.extend(origin_managers)
+            _plugins.clear()
+            _plugins.update(origin_plugins)
+
+    return _wrapper
+
+
+@_recover
+def test_load_plugin():
     # check regular
     assert nonebot.load_plugin("dynamic.simple")
 
@@ -20,8 +49,7 @@ async def test_load_plugin():
     assert nonebot.load_plugin("some_plugin_not_exist") is None
 
 
-@pytest.mark.asyncio
-async def test_load_plugins(load_plugin: set[Plugin], load_builtin_plugin: set[Plugin]):
+def test_load_plugins(load_plugin: set[Plugin], load_builtin_plugin: set[Plugin]):
     loaded_plugins = {
         plugin for plugin in nonebot.get_loaded_plugins() if not plugin.parent_plugin
     }
@@ -44,8 +72,7 @@ async def test_load_plugins(load_plugin: set[Plugin], load_builtin_plugin: set[P
         PluginManager(search_path=["plugins"]).load_all_plugins()
 
 
-@pytest.mark.asyncio
-async def test_load_nested_plugin():
+def test_load_nested_plugin():
     parent_plugin = nonebot.get_plugin("nested")
     sub_plugin = nonebot.get_plugin("nested:nested_subplugin")
     sub_plugin2 = nonebot.get_plugin("nested:nested_subplugin2")
@@ -57,16 +84,16 @@ async def test_load_nested_plugin():
     assert parent_plugin.sub_plugins == {sub_plugin, sub_plugin2}
 
 
-@pytest.mark.asyncio
-async def test_load_json():
+@_recover
+def test_load_json():
     nonebot.load_from_json("./plugins.json")
 
     with pytest.raises(TypeError):
         nonebot.load_from_json("./plugins.invalid.json")
 
 
-@pytest.mark.asyncio
-async def test_load_toml():
+@_recover
+def test_load_toml():
     nonebot.load_from_toml("./plugins.toml")
 
     with pytest.raises(ValueError, match="Cannot find"):
@@ -76,52 +103,54 @@ async def test_load_toml():
         nonebot.load_from_toml("./plugins.invalid.toml")
 
 
-@pytest.mark.asyncio
-async def test_bad_plugin():
+@_recover
+def test_bad_plugin():
     nonebot.load_plugins("bad_plugins")
 
     assert nonebot.get_plugin("bad_plugin") is None
 
 
-@pytest.mark.asyncio
-async def test_require_loaded(monkeypatch: pytest.MonkeyPatch):
+@_recover
+def test_require_loaded(monkeypatch: pytest.MonkeyPatch):
     def _patched_find(name: str):
         pytest.fail("require existing plugin should not call find_manager_by_name")
 
-    monkeypatch.setattr("nonebot.plugin.load._find_manager_by_name", _patched_find)
+    with monkeypatch.context() as m:
+        m.setattr("nonebot.plugin.load._find_manager_by_name", _patched_find)
 
-    # require use module name
-    nonebot.require("plugins.export")
-    # require use plugin id
-    nonebot.require("export")
-    nonebot.require("nested:nested_subplugin")
+        # require use module name
+        nonebot.require("plugins.export")
+        # require use plugin id
+        nonebot.require("export")
+        nonebot.require("nested:nested_subplugin")
 
 
-@pytest.mark.asyncio
-async def test_require_not_loaded(monkeypatch: pytest.MonkeyPatch):
-    m = PluginManager(["dynamic.require_not_loaded"], ["dynamic/require_not_loaded/"])
-    _managers.append(m)
+@_recover
+def test_require_not_loaded(monkeypatch: pytest.MonkeyPatch):
+    pm = PluginManager(["dynamic.require_not_loaded"], ["dynamic/require_not_loaded/"])
+    _managers.append(pm)
     num_managers = len(_managers)
 
     origin_load = PluginManager.load_plugin
 
     def _patched_load(self: PluginManager, name: str):
-        assert self is m
+        assert self is pm
         return origin_load(self, name)
 
-    monkeypatch.setattr(PluginManager, "load_plugin", _patched_load)
+    with monkeypatch.context() as m:
+        m.setattr(PluginManager, "load_plugin", _patched_load)
 
-    # require standalone plugin
-    nonebot.require("dynamic.require_not_loaded")
-    # require searched plugin
-    nonebot.require("dynamic.require_not_loaded.subplugin1")
-    nonebot.require("require_not_loaded:subplugin2")
+        # require standalone plugin
+        nonebot.require("dynamic.require_not_loaded")
+        # require searched plugin
+        nonebot.require("dynamic.require_not_loaded.subplugin1")
+        nonebot.require("require_not_loaded:subplugin2")
 
     assert len(_managers) == num_managers
 
 
-@pytest.mark.asyncio
-async def test_require_not_declared():
+@_recover
+def test_require_not_declared():
     num_managers = len(_managers)
 
     nonebot.require("dynamic.require_not_declared")
@@ -130,14 +159,13 @@ async def test_require_not_declared():
     assert _managers[-1].plugins == {"dynamic.require_not_declared"}
 
 
-@pytest.mark.asyncio
-async def test_require_not_found():
+@_recover
+def test_require_not_found():
     with pytest.raises(RuntimeError):
         nonebot.require("some_plugin_not_exist")
 
 
-@pytest.mark.asyncio
-async def test_plugin_metadata():
+def test_plugin_metadata():
     from plugins.metadata import Config, FakeAdapter
 
     plugin = nonebot.get_plugin("metadata")
@@ -157,8 +185,7 @@ async def test_plugin_metadata():
     assert plugin.metadata.get_supported_adapters() == {FakeAdapter}
 
 
-@pytest.mark.asyncio
-async def test_inherit_supported_adapters_not_found():
+def test_inherit_supported_adapters_not_found():
     with pytest.raises(RuntimeError):
         inherit_supported_adapters("some_plugin_not_exist")
 
@@ -166,7 +193,6 @@ async def test_inherit_supported_adapters_not_found():
         inherit_supported_adapters("export")
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize(
     ("inherit_plugins", "expected"),
     [
@@ -233,7 +259,7 @@ async def test_inherit_supported_adapters_not_found():
         ),
     ],
 )
-async def test_inherit_supported_adapters_combine(
+def test_inherit_supported_adapters_combine(
     inherit_plugins: tuple[str], expected: set[str]
 ):
     assert inherit_supported_adapters(*inherit_plugins) == expected

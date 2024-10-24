@@ -22,7 +22,7 @@ from . import _managers, get_plugin, _module_name_to_plugin_id
 try:  # pragma: py-gte-311
     import tomllib  # pyright: ignore[reportMissingImports]
 except ModuleNotFoundError:  # pragma: py-lt-311
-    import tomli as tomllib
+    import tomli as tomllib  # pyright: ignore[reportMissingImports]
 
 
 def load_plugin(module_path: Union[str, Path]) -> Optional[Plugin]:

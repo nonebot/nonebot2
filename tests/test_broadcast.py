@@ -25,7 +25,7 @@ async def _dependency() -> int:
     return 1
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_event_preprocessor(app: App, monkeypatch: pytest.MonkeyPatch):
     with monkeypatch.context() as m:
         m.setattr(message, "_event_preprocessors", set())
@@ -58,7 +58,7 @@ async def test_event_preprocessor(app: App, monkeypatch: pytest.MonkeyPatch):
         assert runned, "event_preprocessor should runned"
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_event_preprocessor_ignore(app: App, monkeypatch: pytest.MonkeyPatch):
     with monkeypatch.context() as m:
         m.setattr(message, "_event_preprocessors", set())
@@ -88,7 +88,7 @@ async def test_event_preprocessor_ignore(app: App, monkeypatch: pytest.MonkeyPat
         assert not runned, "matcher should not runned"
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_event_preprocessor_exception(
     app: App, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ):
@@ -132,7 +132,7 @@ async def test_event_preprocessor_exception(
         assert "RuntimeError: test" in capsys.readouterr().out
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_event_postprocessor(app: App, monkeypatch: pytest.MonkeyPatch):
     with monkeypatch.context() as m:
         m.setattr(message, "_event_postprocessors", set())
@@ -165,7 +165,7 @@ async def test_event_postprocessor(app: App, monkeypatch: pytest.MonkeyPatch):
         assert runned, "event_postprocessor should runned"
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_event_postprocessor_exception(
     app: App, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ):
@@ -202,7 +202,7 @@ async def test_event_postprocessor_exception(
         assert "RuntimeError: test" in capsys.readouterr().out
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_run_preprocessor(app: App, monkeypatch: pytest.MonkeyPatch):
     with monkeypatch.context() as m:
         m.setattr(message, "_run_preprocessors", set())
@@ -239,7 +239,7 @@ async def test_run_preprocessor(app: App, monkeypatch: pytest.MonkeyPatch):
         assert runned, "run_preprocessor should runned"
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_run_preprocessor_ignore(app: App, monkeypatch: pytest.MonkeyPatch):
     with monkeypatch.context() as m:
         m.setattr(message, "_run_preprocessors", set())
@@ -269,7 +269,7 @@ async def test_run_preprocessor_ignore(app: App, monkeypatch: pytest.MonkeyPatch
         assert not runned, "matcher should not runned"
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_run_preprocessor_exception(
     app: App, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ):
@@ -313,7 +313,7 @@ async def test_run_preprocessor_exception(
         assert "RuntimeError: test" in capsys.readouterr().out
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_run_postprocessor(app: App, monkeypatch: pytest.MonkeyPatch):
     with monkeypatch.context() as m:
         m.setattr(message, "_run_postprocessors", set())
@@ -351,7 +351,7 @@ async def test_run_postprocessor(app: App, monkeypatch: pytest.MonkeyPatch):
         assert runned, "run_postprocessor should runned"
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_run_postprocessor_exception(
     app: App, monkeypatch: pytest.MonkeyPatch, capsys: pytest.CaptureFixture[str]
 ):

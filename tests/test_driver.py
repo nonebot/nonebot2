@@ -1,8 +1,8 @@
 import json
-import asyncio
 from typing import Any, Optional
 from http.cookies import SimpleCookie
 
+import anyio
 import pytest
 from nonebug import App
 
@@ -25,7 +25,7 @@ from nonebot.drivers import (
 )
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     "driver", [pytest.param("nonebot.drivers.none:Driver", id="none")], indirect=True
 )
@@ -59,22 +59,22 @@ async def test_lifespan(driver: Driver):
 
     @driver.on_shutdown
     async def _shutdown1():
-        assert shutdown_log == []
+        assert shutdown_log == [2]
         shutdown_log.append(1)
 
     @driver.on_shutdown
     async def _shutdown2():
-        assert shutdown_log == [1]
+        assert shutdown_log == []
         shutdown_log.append(2)
 
     async with driver._lifespan:
         assert start_log == [1, 2]
         assert ready_log == [1, 2]
 
-    assert shutdown_log == [1, 2]
+    assert shutdown_log == [2, 1]
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     "driver",
     [
@@ -99,10 +99,10 @@ async def test_http_server(app: App, driver: Driver):
         assert response.status_code == 200
         assert response.text == "test"
 
-    await asyncio.sleep(1)
+    await anyio.sleep(1)
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     "driver",
     [
@@ -155,10 +155,10 @@ async def test_websocket_server(app: App, driver: Driver):
 
             await ws.close(code=1000)
 
-    await asyncio.sleep(1)
+    await anyio.sleep(1)
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     "driver",
     [
@@ -171,9 +171,10 @@ async def test_cross_context(app: App, driver: Driver):
     assert isinstance(driver, ASGIMixin)
 
     ws: Optional[WebSocket] = None
-    ws_ready = asyncio.Event()
-    ws_should_close = asyncio.Event()
+    ws_ready = anyio.Event()
+    ws_should_close = anyio.Event()
 
+    # create a background task before the ws connection established
     async def background_task():
         try:
             await ws_ready.wait()
@@ -184,8 +185,6 @@ async def test_cross_context(app: App, driver: Driver):
             assert data == "pong"
         finally:
             ws_should_close.set()
-
-    task = asyncio.create_task(background_task())
 
     async def _handle_ws(websocket: WebSocket) -> None:
         nonlocal ws
@@ -199,7 +198,9 @@ async def test_cross_context(app: App, driver: Driver):
     ws_setup = WebSocketServerSetup(URL("/ws_test"), "ws_test", _handle_ws)
     driver.setup_websocket_server(ws_setup)
 
-    async with app.test_server(driver.asgi) as ctx:
+    async with anyio.create_task_group() as tg, app.test_server(driver.asgi) as ctx:
+        tg.start_soon(background_task)
+
         client = ctx.get_client()
 
         async with client.websocket_connect("/ws_test") as websocket:
@@ -211,11 +212,10 @@ async def test_cross_context(app: App, driver: Driver):
                 if not e.args or "websocket.close" not in str(e.args[0]):
                     raise
 
-    await task
-    await asyncio.sleep(1)
+    await anyio.sleep(1)
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     "driver",
     [
@@ -304,10 +304,10 @@ async def test_http_client(driver: Driver, server_url: URL):
         "test3": "test",
     }, "file parsing error"
 
-    await asyncio.sleep(1)
+    await anyio.sleep(1)
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     "driver",
     [
@@ -419,10 +419,10 @@ async def test_http_client_session(driver: Driver, server_url: URL):
             "test3": "test",
         }, "file parsing error"
 
-    await asyncio.sleep(1)
+    await anyio.sleep(1)
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     "driver",
     [
@@ -452,10 +452,9 @@ async def test_websocket_client(driver: Driver, server_url: URL):
         with pytest.raises(WebSocketClosed, match=r"code=1000"):
             await ws.receive()
 
-    await asyncio.sleep(1)
+    await anyio.sleep(1)
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize(
     ("driver", "driver_type"),
     [
@@ -472,11 +471,11 @@ async def test_websocket_client(driver: Driver, server_url: URL):
     ],
     indirect=["driver"],
 )
-async def test_combine_driver(driver: Driver, driver_type: str):
+def test_combine_driver(driver: Driver, driver_type: str):
     assert driver.type == driver_type
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_bot_connect_hook(app: App, driver: Driver):
     with pytest.MonkeyPatch.context() as m:
         conn_hooks: set[Dependent[Any]] = set()
@@ -533,7 +532,7 @@ async def test_bot_connect_hook(app: App, driver: Driver):
         async with app.test_api() as ctx:
             bot = ctx.create_bot()
 
-        await asyncio.sleep(1)
+        await anyio.sleep(1)
 
         if not conn_should_be_called:
             pytest.fail("on_bot_connect hook not called")

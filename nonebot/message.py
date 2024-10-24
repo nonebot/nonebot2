@@ -9,22 +9,29 @@ FrontMatter:
     description: nonebot.message 模块
 """
 
-import asyncio
 import contextlib
 from datetime import datetime
 from contextlib import AsyncExitStack
-from typing import TYPE_CHECKING, Any, Optional
+from typing import TYPE_CHECKING, Any, Callable, Optional
+
+import anyio
+from exceptiongroup import BaseExceptionGroup, catch
 
 from nonebot.log import logger
 from nonebot.rule import TrieRule
 from nonebot.dependencies import Dependent
 from nonebot.matcher import Matcher, matchers
-from nonebot.utils import escape_tag, run_coro_with_catch
 from nonebot.exception import (
     NoLogException,
     StopPropagation,
     IgnoredException,
     SkippedException,
+)
+from nonebot.utils import (
+    escape_tag,
+    run_coro_with_catch,
+    run_coro_with_shield,
+    flatten_exception_group,
 )
 from nonebot.typing import (
     T_State,
@@ -125,6 +132,21 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
     return func
 
 
+def _handle_ignored_exception(msg: str) -> Callable[[BaseExceptionGroup], None]:
+    def _handle(exc_group: BaseExceptionGroup[IgnoredException]) -> None:
+        logger.opt(colors=True).info(msg)
+
+    return _handle
+
+
+def _handle_exception(msg: str) -> Callable[[BaseExceptionGroup], None]:
+    def _handle(exc_group: BaseExceptionGroup[Exception]) -> None:
+        for exc in flatten_exception_group(exc_group):
+            logger.opt(colors=True, exception=exc).error(msg)
+
+    return _handle
+
+
 async def _apply_event_preprocessors(
     bot: "Bot",
     event: "Event",
@@ -152,10 +174,21 @@ async def _apply_event_preprocessors(
     if show_log:
         logger.debug("Running PreProcessors...")
 
-    try:
-        await asyncio.gather(
-            *(
-                run_coro_with_catch(
+    with catch(
+        {
+            IgnoredException: _handle_ignored_exception(
+                f"Event {escape_tag(event.get_event_name())} is <b>ignored</b>"
+            ),
+            Exception: _handle_exception(
+                "<r><bg #f8bbd0>Error when running EventPreProcessors. "
+                "Event ignored!</bg #f8bbd0></r>"
+            ),
+        }
+    ):
+        async with anyio.create_task_group() as tg:
+            for proc in _event_preprocessors:
+                tg.start_soon(
+                    run_coro_with_catch,
                     proc(
                         bot=bot,
                         event=event,
@@ -165,22 +198,10 @@ async def _apply_event_preprocessors(
                     ),
                     (SkippedException,),
                 )
-                for proc in _event_preprocessors
-            )
-        )
-    except IgnoredException:
-        logger.opt(colors=True).info(
-            f"Event {escape_tag(event.get_event_name())} is <b>ignored</b>"
-        )
-        return False
-    except Exception as e:
-        logger.opt(colors=True, exception=e).error(
-            "<r><bg #f8bbd0>Error when running EventPreProcessors. "
-            "Event ignored!</bg #f8bbd0></r>"
-        )
-        return False
 
-    return True
+        return True
+
+    return False
 
 
 async def _apply_event_postprocessors(
@@ -207,10 +228,17 @@ async def _apply_event_postprocessors(
     if show_log:
         logger.debug("Running PostProcessors...")
 
-    try:
-        await asyncio.gather(
-            *(
-                run_coro_with_catch(
+    with catch(
+        {
+            Exception: _handle_exception(
+                "<r><bg #f8bbd0>Error when running EventPostProcessors</bg #f8bbd0></r>"
+            )
+        }
+    ):
+        async with anyio.create_task_group() as tg:
+            for proc in _event_postprocessors:
+                tg.start_soon(
+                    run_coro_with_catch,
                     proc(
                         bot=bot,
                         event=event,
@@ -220,13 +248,6 @@ async def _apply_event_postprocessors(
                     ),
                     (SkippedException,),
                 )
-                for proc in _event_postprocessors
-            )
-        )
-    except Exception as e:
-        logger.opt(colors=True, exception=e).error(
-            "<r><bg #f8bbd0>Error when running EventPostProcessors</bg #f8bbd0></r>"
-        )
 
 
 async def _apply_run_preprocessors(
@@ -254,35 +275,38 @@ async def _apply_run_preprocessors(
         return True
 
     # ensure matcher function can be correctly called
-    with matcher.ensure_context(bot, event):
-        try:
-            await asyncio.gather(
-                *(
-                    run_coro_with_catch(
-                        proc(
-                            matcher=matcher,
-                            bot=bot,
-                            event=event,
-                            state=state,
-                            stack=stack,
-                            dependency_cache=dependency_cache,
-                        ),
-                        (SkippedException,),
-                    )
-                    for proc in _run_preprocessors
+    with (
+        matcher.ensure_context(bot, event),
+        catch(
+            {
+                IgnoredException: _handle_ignored_exception(
+                    f"{matcher} running is <b>cancelled</b>"
+                ),
+                Exception: _handle_exception(
+                    "<r><bg #f8bbd0>Error when running RunPreProcessors. "
+                    "Running cancelled!</bg #f8bbd0></r>"
+                ),
+            }
+        ),
+    ):
+        async with anyio.create_task_group() as tg:
+            for proc in _run_preprocessors:
+                tg.start_soon(
+                    run_coro_with_catch,
+                    proc(
+                        matcher=matcher,
+                        bot=bot,
+                        event=event,
+                        state=state,
+                        stack=stack,
+                        dependency_cache=dependency_cache,
+                    ),
+                    (SkippedException,),
                 )
-            )
-        except IgnoredException:
-            logger.opt(colors=True).info(f"{matcher} running is <b>cancelled</b>")
-            return False
-        except Exception as e:
-            logger.opt(colors=True, exception=e).error(
-                "<r><bg #f8bbd0>Error when running RunPreProcessors. "
-                "Running cancelled!</bg #f8bbd0></r>"
-            )
-            return False
 
-    return True
+        return True
+
+    return False
 
 
 async def _apply_run_postprocessors(
@@ -306,29 +330,32 @@ async def _apply_run_postprocessors(
     if not _run_postprocessors:
         return
 
-    with matcher.ensure_context(bot, event):
-        try:
-            await asyncio.gather(
-                *(
-                    run_coro_with_catch(
-                        proc(
-                            matcher=matcher,
-                            exception=exception,
-                            bot=bot,
-                            event=event,
-                            state=matcher.state,
-                            stack=stack,
-                            dependency_cache=dependency_cache,
-                        ),
-                        (SkippedException,),
-                    )
-                    for proc in _run_postprocessors
+    with (
+        matcher.ensure_context(bot, event),
+        catch(
+            {
+                Exception: _handle_exception(
+                    "<r><bg #f8bbd0>Error when running RunPostProcessors"
+                    "</bg #f8bbd0></r>"
                 )
-            )
-        except Exception as e:
-            logger.opt(colors=True, exception=e).error(
-                "<r><bg #f8bbd0>Error when running RunPostProcessors</bg #f8bbd0></r>"
-            )
+            }
+        ),
+    ):
+        async with anyio.create_task_group() as tg:
+            for proc in _run_postprocessors:
+                tg.start_soon(
+                    run_coro_with_catch,
+                    proc(
+                        matcher=matcher,
+                        exception=exception,
+                        bot=bot,
+                        event=event,
+                        state=matcher.state,
+                        stack=stack,
+                        dependency_cache=dependency_cache,
+                    ),
+                    (SkippedException,),
+                )
 
 
 async def _check_matcher(
@@ -425,8 +452,9 @@ async def _run_matcher(
 
     exception = None
 
+    logger.debug(f"Running {matcher}")
+
     try:
-        logger.debug(f"Running {matcher}")
         await matcher.run(bot, event, state, stack, dependency_cache)
     except Exception as e:
         logger.opt(colors=True, exception=e).error(
@@ -494,8 +522,7 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
 
     用法:
         ```python
-        import asyncio
-        asyncio.create_task(handle_event(bot, event))
+        driver.task_group.start_soon(handle_event, bot, event)
         ```
     """
     show_log = True
@@ -530,6 +557,13 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
             )
 
         break_flag = False
+
+        def _handle_stop_propagation(exc_group: BaseExceptionGroup) -> None:
+            nonlocal break_flag
+
+            break_flag = True
+            logger.debug("Stop event propagation")
+
         # iterate through all priority until stop propagation
         for priority in sorted(matchers.keys()):
             if break_flag:
@@ -538,23 +572,30 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
             if show_log:
                 logger.debug(f"Checking for matchers in priority {priority}...")
 
-            pending_tasks = [
-                check_and_run_matcher(
-                    matcher, bot, event, state.copy(), stack, dependency_cache
-                )
-                for matcher in matchers[priority]
-            ]
-            results = await asyncio.gather(*pending_tasks, return_exceptions=True)
-            for result in results:
-                if not isinstance(result, Exception):
-                    continue
-                if isinstance(result, StopPropagation):
-                    break_flag = True
-                    logger.debug("Stop event propagation")
-                else:
-                    logger.opt(colors=True, exception=result).error(
+            if not (priority_matchers := matchers[priority]):
+                continue
+
+            with catch(
+                {
+                    StopPropagation: _handle_stop_propagation,
+                    Exception: _handle_exception(
                         "<r><bg #f8bbd0>Error when checking Matcher.</bg #f8bbd0></r>"
-                    )
+                    ),
+                }
+            ):
+                async with anyio.create_task_group() as tg:
+                    for matcher in priority_matchers:
+                        tg.start_soon(
+                            run_coro_with_shield,
+                            check_and_run_matcher(
+                                matcher,
+                                bot,
+                                event,
+                                state.copy(),
+                                stack,
+                                dependency_cache,
+                            ),
+                        )
 
         if show_log:
             logger.debug("Checking for matchers completed")

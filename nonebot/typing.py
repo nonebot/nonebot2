@@ -21,10 +21,9 @@ from typing import TYPE_CHECKING, TypeVar
 from typing_extensions import ParamSpec, TypeAlias, get_args, override, get_origin
 
 if TYPE_CHECKING:
-    from asyncio import Task
-
     from nonebot.adapters import Bot
     from nonebot.permission import Permission
+    from nonebot.internal.params import DependencyCache
 
 T = TypeVar("T")
 P = ParamSpec("P")
@@ -258,5 +257,5 @@ T_PermissionUpdater: TypeAlias = _DependentCallable["Permission"]
 - MatcherParam: Matcher 对象
 - DefaultParam: 带有默认值的参数
 """
-T_DependencyCache: TypeAlias = dict[_DependentCallable[t.Any], "Task[t.Any]"]
+T_DependencyCache: TypeAlias = dict[_DependentCallable[t.Any], "DependencyCache"]
 """依赖缓存, 用于存储依赖函数的返回值"""

@@ -4,7 +4,7 @@ from nonebug import App
 from utils import FakeMessage, FakeMessageSegment, make_fake_event
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_echo(app: App):
     from nonebot.plugins.echo import echo
 
