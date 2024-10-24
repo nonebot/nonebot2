@@ -632,5 +632,22 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "小安提Bot",
+    "desc": "服务于音游 舞萌DX 的多功能Bot",
+    "author": "Ant1816",
+    "homepage": "https://github.com/Ant1816/Ant1Bot",
+    "tags": [
+      {
+        "label": "maimaiDX",
+        "color": "#52ea9a"
+      },
+      {
+        "label": "音游",
+        "color": "#f74b18"
+      }
+    ],
+    "is_official": false
   }
 ]
