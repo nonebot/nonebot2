@@ -61,6 +61,7 @@ class Driver(BaseDriver):
     async def _serve(self):
         async with anyio.create_task_group() as driver_tg:
             driver_tg.start_soon(self._handle_signals)
+            driver_tg.start_soon(self._listen_force_exit, driver_tg)
             driver_tg.start_soon(self._handle_lifespan, driver_tg)
 
     async def _handle_signals(self):
@@ -86,7 +87,6 @@ class Driver(BaseDriver):
 
             await self._listen_exit()
 
-            tg.start_soon(self._listen_force_exit, tg)
             await self._shutdown()
         finally:
             tg.cancel_scope.cancel()

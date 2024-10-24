@@ -57,13 +57,13 @@ class Lifespan:
                 await run_sync(cast(SYNC_LIFESPAN_FUNC, func))()
 
     async def startup(self) -> None:
-        # run startup funcs
-        if self._startup_funcs:
-            await self._run_lifespan_func(self._startup_funcs)
-
         # create background task group
         self.task_group = anyio.create_task_group()
         await self.task_group.__aenter__()
+
+        # run startup funcs
+        if self._startup_funcs:
+            await self._run_lifespan_func(self._startup_funcs)
 
         # run ready funcs
         if self._ready_funcs:
@@ -76,6 +76,10 @@ class Lifespan:
         exc_val: Optional[BaseException] = None,
         exc_tb: Optional[TracebackType] = None,
     ) -> None:
+        if self._shutdown_funcs:
+            # reverse shutdown funcs to ensure stack order
+            await self._run_lifespan_func(reversed(self._shutdown_funcs))
+
         # shutdown background task group
         self.task_group.cancel_scope.cancel()
 
@@ -83,10 +87,6 @@ class Lifespan:
             await self.task_group.__aexit__(exc_type, exc_val, exc_tb)
 
         self._task_group = None
-
-        if self._shutdown_funcs:
-            # reverse shutdown funcs to ensure stack order
-            await self._run_lifespan_func(reversed(self._shutdown_funcs))
 
     async def __aenter__(self) -> None:
         await self.startup()
