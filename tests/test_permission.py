@@ -22,7 +22,7 @@ from nonebot.permission import (
 )
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_permission(app: App):
     async def falsy():
         return False
@@ -54,7 +54,7 @@ async def test_permission(app: App):
         assert await Permission(truthy, skipped)(bot, event) is True
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(("type", "expected"), [("message", True), ("notice", False)])
 async def test_message(type: str, expected: bool):
     dependent = next(iter(MESSAGE.checkers))
@@ -66,7 +66,7 @@ async def test_message(type: str, expected: bool):
     assert await dependent(event=event) == expected
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(("type", "expected"), [("message", False), ("notice", True)])
 async def test_notice(type: str, expected: bool):
     dependent = next(iter(NOTICE.checkers))
@@ -78,7 +78,7 @@ async def test_notice(type: str, expected: bool):
     assert await dependent(event=event) == expected
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(("type", "expected"), [("message", False), ("request", True)])
 async def test_request(type: str, expected: bool):
     dependent = next(iter(REQUEST.checkers))
@@ -90,7 +90,7 @@ async def test_request(type: str, expected: bool):
     assert await dependent(event=event) == expected
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     ("type", "expected"), [("message", False), ("meta_event", True)]
 )
@@ -104,7 +104,7 @@ async def test_metaevent(type: str, expected: bool):
     assert await dependent(event=event) == expected
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     ("type", "user_id", "expected"),
     [
@@ -128,7 +128,7 @@ async def test_superuser(app: App, type: str, user_id: str, expected: bool):
         assert await dependent(bot=bot, event=event) == expected
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     ("session_ids", "session_id", "expected"),
     [

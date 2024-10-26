@@ -17,7 +17,7 @@ from nonebot.drivers import (
 )
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 async def test_adapter_connect(app: App, driver: Driver):
     last_connect_bot: Optional[Bot] = None
     last_disconnect_bot: Optional[Bot] = None
@@ -45,7 +45,6 @@ async def test_adapter_connect(app: App, driver: Driver):
         assert bot.self_id not in adapter.bots
 
 
-@pytest.mark.asyncio
 @pytest.mark.parametrize(
     "driver",
     [
@@ -75,7 +74,7 @@ async def test_adapter_connect(app: App, driver: Driver):
     ],
     indirect=True,
 )
-async def test_adapter_server(driver: Driver):
+def test_adapter_server(driver: Driver):
     last_http_setup: Optional[HTTPServerSetup] = None
     last_ws_setup: Optional[WebSocketServerSetup] = None
 
@@ -112,7 +111,7 @@ async def test_adapter_server(driver: Driver):
         assert last_ws_setup is setup
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     "driver",
     [
@@ -159,7 +158,7 @@ async def test_adapter_http_client(driver: Driver):
         assert last_request is request
 
 
-@pytest.mark.asyncio
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     "driver",
     [

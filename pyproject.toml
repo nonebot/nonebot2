@@ -27,7 +27,9 @@ include = ["nonebot/py.typed"]
 [tool.poetry.dependencies]
 python = "^3.9"
 yarl = "^1.7.2"
+anyio = "^4.4.0"
 pygtrie = "^2.4.1"
+exceptiongroup = "^1.2.2"
 loguru = ">=0.6.0,<1.0.0"
 python-dotenv = ">=0.21.0,<2.0.0"
 typing-extensions = ">=4.4.0,<5.0.0"
@@ -65,7 +67,6 @@ fastapi = ["fastapi", "uvicorn"]
 all = ["fastapi", "quart", "aiohttp", "httpx", "websockets", "uvicorn"]
 
 [tool.pytest.ini_options]
-asyncio_mode = "strict"
 addopts = "--cov=nonebot --cov-report=term-missing"
 filterwarnings = ["error", "ignore::DeprecationWarning"]
 

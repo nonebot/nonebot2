@@ -50,16 +50,14 @@ class ExampleWithoutDelimiter(Example):
             env_nested_delimiter = None
 
 
-@pytest.mark.asyncio
-async def test_config_no_env():
+def test_config_no_env():
     config = Example(_env_file=None)
     assert config.simple == ""
     with pytest.raises(AttributeError):
         config.common_config
 
 
-@pytest.mark.asyncio
-async def test_config_with_env():
+def test_config_with_env():
     config = Example(_env_file=(".env", ".env.example"))
     assert config.simple == "simple"
 
@@ -102,8 +100,7 @@ async def test_config_with_env():
         config.other_nested_inner__b
 
 
-@pytest.mark.asyncio
-async def test_config_error_env():
+def test_config_error_env():
     with pytest.MonkeyPatch().context() as m:
         m.setenv("COMPLEX", "not json")
 
@@ -111,8 +108,7 @@ async def test_config_error_env():
             Example(_env_file=(".env", ".env.example"))
 
 
-@pytest.mark.asyncio
-async def test_config_without_delimiter():
+def test_config_without_delimiter():
     config = ExampleWithoutDelimiter()
     assert config.nested.a == 1
     assert config.nested.b == 0
