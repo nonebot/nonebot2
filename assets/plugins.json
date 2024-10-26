@@ -7498,5 +7498,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_partner_join",
+    "project_link": "nonebot-plugin-partner-join",
+    "author": "YuuzukiRin",
+    "tags": [
+      {
+        "label": "maimai",
+        "color": "#a1b5e8"
+      },
+      {
+        "label": "picture",
+        "color": "#a1b5e8"
+      }
+    ],
+    "is_official": false
   }
 ]
