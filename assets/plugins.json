@@ -7514,5 +7514,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_searchgames",
+    "project_link": "nonebot-plugin-searchgames",
+    "author": "NYAGO666",
+    "tags": [
+      {
+        "label": "Steam",
+        "color": "#27b962"
+      },
+      {
+        "label": "Switch",
+        "color": "#27b962"
+      }
+    ],
+    "is_official": false
   }
 ]
