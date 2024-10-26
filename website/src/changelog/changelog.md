@@ -27,6 +27,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Bot的消息也是消息 [@noneflow](https://github.com/noneflow) ([#3064](https://github.com/nonebot/nonebot2/pull/3064))
 - Plugin: BiliMusic Downloader [@noneflow](https://github.com/noneflow) ([#3046](https://github.com/nonebot/nonebot2/pull/3046))
 - Plugin: 防撤回 [@noneflow](https://github.com/noneflow) ([#3055](https://github.com/nonebot/nonebot2/pull/3055))
 - Plugin: nonebot_plugin_mai_arcade [@noneflow](https://github.com/noneflow) ([#3047](https://github.com/nonebot/nonebot2/pull/3047))
