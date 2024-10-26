@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: BiliMusic Downloader [@noneflow](https://github.com/noneflow) ([#3046](https://github.com/nonebot/nonebot2/pull/3046))
 - Plugin: 防撤回 [@noneflow](https://github.com/noneflow) ([#3055](https://github.com/nonebot/nonebot2/pull/3055))
 - Plugin: nonebot_plugin_mai_arcade [@noneflow](https://github.com/noneflow) ([#3047](https://github.com/nonebot/nonebot2/pull/3047))
 - Plugin: DDNet 成绩查询 [@noneflow](https://github.com/noneflow) ([#3031](https://github.com/nonebot/nonebot2/pull/3031))
