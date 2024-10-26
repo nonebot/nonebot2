@@ -7482,5 +7482,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_pong",
+    "project_link": "nonebot-plugin-pong",
+    "author": "eya46",
+    "tags": [
+      {
+        "label": "ping",
+        "color": "#ff0000"
+      },
+      {
+        "label": "pong",
+        "color": "#0000ff"
+      }
+    ],
+    "is_official": false
   }
 ]
