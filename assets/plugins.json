@@ -7514,5 +7514,25 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_zxpix",
+    "project_link": "nonebot-plugin-zxpix",
+    "author": "HibiKier",
+    "tags": [
+      {
+        "label": "小真寻",
+        "color": "#fbe4e4"
+      },
+      {
+        "label": "多平台适配",
+        "color": "#ea5252"
+      },
+      {
+        "label": "xp",
+        "color": "#e96ab5"
+      }
+    ],
+    "is_official": false
   }
 ]
