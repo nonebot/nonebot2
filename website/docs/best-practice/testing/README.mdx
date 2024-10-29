@@ -74,7 +74,16 @@ pip install pytest-asyncio
 
 ## 配置测试
 
-在开始测试之前，我们需要对测试进行一些配置，以正确启动我们的机器人。在 `tests` 目录下新建 `conftest.py` 文件，添加以下内容：
+在开始测试之前，我们需要对测试进行一些配置，以正确启动我们的机器人。
+
+首先我们需要配置 pytest-asyncio，在 `pyproject.toml` 的 pytest 配置部分添加：
+
+```toml
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+```
+
+然后，我们在 `tests` 目录下新建 `conftest.py` 文件，添加以下内容：
 
 ```python title=tests/conftest.py
 import pytest
