@@ -12,6 +12,10 @@ toc_max_heading_level: 2
 - Feature: 迁移至结构化并发框架 AnyIO [@yanyongyu](https://github.com/yanyongyu) ([#3053](https://github.com/nonebot/nonebot2/pull/3053))
 - Feature: 添加 websockets 驱动器 proxy 连接警告 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#2916](https://github.com/nonebot/nonebot2/pull/2916))
 
+### 🐛 Bug 修复
+
+- Fix: 修复结构化并发子依赖取消缓存问题 [@yanyongyu](https://github.com/yanyongyu) ([#3084](https://github.com/nonebot/nonebot2/pull/3084))
+
 ### 📝 文档
 
 - Docs: 升级到 Docusaurus V3 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2956](https://github.com/nonebot/nonebot2/pull/2956))
