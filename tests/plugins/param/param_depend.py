@@ -119,7 +119,7 @@ def _dep_mismatch():
 
 async def cache_exception_func1(
     dep: int = Depends(_dep),
-    mismatch: bytes = Depends(_dep_mismatch),
+    mismatch: dict = Depends(_dep_mismatch),
 ):
     raise RuntimeError("Never reach here")
 
