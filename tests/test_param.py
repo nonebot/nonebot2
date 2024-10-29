@@ -51,6 +51,8 @@ async def test_depend(app: App):
         annotated_depend,
         sub_type_mismatch,
         validate_field_fail,
+        cache_exception_func1,
+        cache_exception_func2,
         annotated_class_depend,
         annotated_multi_depend,
         annotated_prior_depend,
@@ -129,6 +131,26 @@ async def test_depend(app: App):
 
     if isinstance(exc_info.value, BaseExceptionGroup):
         assert exc_info.group_contains(TypeMisMatch)
+
+    # test cache reuse when exception raised
+    dependency_cache = {}
+    with pytest.raises((TypeMisMatch, BaseExceptionGroup)) as exc_info:
+        async with app.test_dependent(
+            cache_exception_func1, allow_types=[DependParam]
+        ) as ctx:
+            ctx.pass_params(dependency_cache=dependency_cache)
+
+    if isinstance(exc_info.value, BaseExceptionGroup):
+        assert exc_info.group_contains(TypeMisMatch)
+
+    # dependency solve tasks should be shielded even if one of them raises an exception
+    assert len(dependency_cache) == 2
+
+    async with app.test_dependent(
+        cache_exception_func2, allow_types=[DependParam]
+    ) as ctx:
+        ctx.pass_params(dependency_cache=dependency_cache)
+        ctx.should_return(1)
 
 
 @pytest.mark.anyio

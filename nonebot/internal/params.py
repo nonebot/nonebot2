@@ -115,6 +115,9 @@ class DependencyCache:
         self._exception: Optional[BaseException] = None
         self._waiter = anyio.Event()
 
+    def done(self) -> bool:
+        return self._state == CacheState.FINISHED
+
     def result(self) -> Any:
         """获取子依赖结果"""
 
@@ -304,11 +307,18 @@ class DependParam(Param):
         dependency_cache[call] = cache = DependencyCache()
         try:
             result = await target
-            cache.set_result(result)
-            return result
-        except BaseException as e:
+        except Exception as e:
             cache.set_exception(e)
             raise
+        except BaseException as e:
+            cache.set_exception(e)
+            # remove cache when base exception occurs
+            # e.g. CancelledError
+            dependency_cache.pop(call, None)
+            raise
+        else:
+            cache.set_result(result)
+            return result
 
     @override
     async def _check(self, **kwargs: Any) -> None:

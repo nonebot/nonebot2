@@ -1,6 +1,7 @@
 from typing import Annotated
 from dataclasses import dataclass
 
+import anyio
 from pydantic import Field
 
 from nonebot import on_message
@@ -105,3 +106,26 @@ async def validate_field(x: int = Depends(lambda: "1", validate=Field(gt=0))):
 
 async def validate_field_fail(x: int = Depends(lambda: "0", validate=Field(gt=0))):
     return x
+
+
+async def _dep():
+    await anyio.sleep(1)
+    return 1
+
+
+def _dep_mismatch():
+    return 1
+
+
+async def cache_exception_func1(
+    dep: int = Depends(_dep),
+    mismatch: bytes = Depends(_dep_mismatch),
+):
+    raise RuntimeError("Never reach here")
+
+
+async def cache_exception_func2(
+    dep: int = Depends(_dep),
+    match: int = Depends(_dep_mismatch),
+):
+    return dep

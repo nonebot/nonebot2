@@ -21,7 +21,12 @@ from nonebot.log import logger
 from nonebot.typing import _DependentCallable
 from nonebot.exception import SkippedException
 from nonebot.compat import FieldInfo, ModelField, PydanticUndefined
-from nonebot.utils import run_sync, is_coroutine_callable, flatten_exception_group
+from nonebot.utils import (
+    run_sync,
+    run_coro_with_shield,
+    is_coroutine_callable,
+    flatten_exception_group,
+)
 
 from .utils import check_field_type, get_typed_signature
 
@@ -207,7 +212,10 @@ class Dependent(Generic[R]):
 
         async with anyio.create_task_group() as tg:
             for field in self.params:
-                tg.start_soon(_solve_field, field, params)
+                # shield the task to prevent cancellation
+                # when one of the tasks raises an exception
+                # this will improve the dependency cache reusability
+                tg.start_soon(run_coro_with_shield, _solve_field(field, params))
 
         return result
 
