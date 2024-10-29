@@ -649,5 +649,13 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "name": "CanrotBot",
+    "desc": "有很多实用功能的bot，也有很多没什么用的娱乐功能；接入了大模型，并且有一部分功能可以被大模型调用。主打一个全都有（",
+    "author": "wangyw15",
+    "homepage": "https://github.com/wangyw15/CanrotBot",
+    "tags": [],
+    "is_official": false
   }
 ]
