@@ -97,6 +97,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: CanrotBot [@noneflow](https://github.com/noneflow) ([#3086](https://github.com/nonebot/nonebot2/pull/3086))
 - Bot: 小安提Bot [@noneflow](https://github.com/noneflow) ([#3061](https://github.com/nonebot/nonebot2/pull/3061))
 
 ## v2.3.3
