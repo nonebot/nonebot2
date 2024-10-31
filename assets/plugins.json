@@ -7546,5 +7546,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_wife",
+    "project_link": "nonebot-plugin-wife",
+    "author": "tkgs0",
+    "tags": [],
+    "is_official": false
   }
 ]
