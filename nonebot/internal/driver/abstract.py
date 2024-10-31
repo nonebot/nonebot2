@@ -158,6 +158,9 @@ class Driver(abc.ABC):
             raise RuntimeError(f"Duplicate bot connection with id {bot.self_id}")
         self._bots[bot.self_id] = bot
 
+        if not self._bot_connection_hook:
+            return
+
         def handle_exception(exc_group: BaseExceptionGroup) -> None:
             for exc in flatten_exception_group(exc_group):
                 logger.opt(colors=True, exception=exc).error(
@@ -185,6 +188,9 @@ class Driver(abc.ABC):
         """在连接断开后，调用该函数来注销 bot 对象"""
         if bot.self_id in self._bots:
             del self._bots[bot.self_id]
+
+        if not self._bot_disconnection_hook:
+            return
 
         def handle_exception(exc_group: BaseExceptionGroup) -> None:
             for exc in flatten_exception_group(exc_group):

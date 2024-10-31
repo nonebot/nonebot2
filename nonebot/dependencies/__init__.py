@@ -182,13 +182,17 @@ class Dependent(Generic[R]):
         return cls(call, params, parameterless_params)
 
     async def check(self, **params: Any) -> None:
-        async with anyio.create_task_group() as tg:
-            for param in self.parameterless:
-                tg.start_soon(partial(param._check, **params))
+        if self.parameterless:
+            async with anyio.create_task_group() as tg:
+                for param in self.parameterless:
+                    tg.start_soon(partial(param._check, **params))
 
-        async with anyio.create_task_group() as tg:
-            for param in self.params:
-                tg.start_soon(partial(cast(Param, param.field_info)._check, **params))
+        if self.params:
+            async with anyio.create_task_group() as tg:
+                for param in self.params:
+                    tg.start_soon(
+                        partial(cast(Param, param.field_info)._check, **params)
+                    )
 
     async def _solve_field(self, field: ModelField, params: dict[str, Any]) -> Any:
         param = cast(Param, field.field_info)
@@ -205,6 +209,8 @@ class Dependent(Generic[R]):
 
         # solve param values
         result: dict[str, Any] = {}
+        if not self.params:
+            return result
 
         async def _solve_field(field: ModelField, params: dict[str, Any]) -> None:
             value = await self._solve_field(field, params)
