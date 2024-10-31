@@ -7553,5 +7553,21 @@
     "author": "tkgs0",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_comfyui",
+    "project_link": "nonebot-plugin-comfyui",
+    "author": "DiaoDaiaChan",
+    "tags": [
+      {
+        "label": "comfyui",
+        "color": "#ea5252"
+      },
+      {
+        "label": "AI绘图",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
