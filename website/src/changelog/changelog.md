@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复侧边栏滚动 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3062](https://github.com/nonebot/nonebot2/pull/3062))
 - Docs: 升级到 Docusaurus V3 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#2956](https://github.com/nonebot/nonebot2/pull/2956))
 - Docs: 修改文档示例代码与部分表述 [@yixinNB](https://github.com/yixinNB) ([#2797](https://github.com/nonebot/nonebot2/pull/2797))
 - Docs: 添加钩子函数 IgnoredException 用法 [@refparo](https://github.com/refparo) ([#2912](https://github.com/nonebot/nonebot2/pull/2912))
