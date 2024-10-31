@@ -34,6 +34,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 每日wife [@noneflow](https://github.com/noneflow) ([#3094](https://github.com/nonebot/nonebot2/pull/3094))
 - Plugin: nonebot_plugin_impart [@noneflow](https://github.com/noneflow) ([#3079](https://github.com/nonebot/nonebot2/pull/3079))
 - Plugin: Pix图库 [@noneflow](https://github.com/noneflow) ([#3083](https://github.com/nonebot/nonebot2/pull/3083))
 - Plugin: nonebot_plugin_partner_join [@noneflow](https://github.com/noneflow) ([#3051](https://github.com/nonebot/nonebot2/pull/3051))
