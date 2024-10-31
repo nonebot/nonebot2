@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 跳过部分非必要的 task group 创建 [@yanyongyu](https://github.com/yanyongyu) ([#3095](https://github.com/nonebot/nonebot2/pull/3095))
 - Feature: 迁移至结构化并发框架 AnyIO [@yanyongyu](https://github.com/yanyongyu) ([#3053](https://github.com/nonebot/nonebot2/pull/3053))
 - Feature: 添加 websockets 驱动器 proxy 连接警告 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#2916](https://github.com/nonebot/nonebot2/pull/2916))
 
