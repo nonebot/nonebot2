@@ -74,7 +74,17 @@ pip install pytest-asyncio
 
 ## 配置测试
 
-在开始测试之前，我们需要对测试进行一些配置，以正确启动我们的机器人。在 `tests` 目录下新建 `conftest.py` 文件，添加以下内容：
+在开始测试之前，我们需要对测试进行一些配置，以正确启动我们的机器人。
+
+首先我们需要配置 pytest-asyncio，在 `pyproject.toml` 的 pytest 配置部分添加：
+
+```toml
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+```
+
+然后，我们在 `tests` 目录下新建 `conftest.py` 文件，添加以下内容：
 
 ```python title=tests/conftest.py
 import pytest
@@ -83,7 +93,7 @@ import nonebot
 from nonebot.adapters.console import Adapter as ConsoleAdapter
 
 @pytest.fixture(scope="session", autouse=True)
-def load_bot():
+async def after_nonebot_init(after_nonebot_init: None):
     # 加载适配器
     driver = nonebot.get_driver()
     driver.register_adapter(ConsoleAdapter)
@@ -94,15 +104,26 @@ def load_bot():
 
 这样，我们就可以在测试中使用机器人的插件了。通常，我们不需要自行初始化 NoneBot，NoneBug 已经为我们运行了 `nonebot.init()`。如果需要自定义 NoneBot 初始化的参数，我们可以在 `conftest.py` 中添加 `pytest_configure` 钩子函数。例如，我们可以修改 NoneBot 配置环境为 `test` 并从环境变量中输入配置：
 
-```python {3,5,7-9} title=tests/conftest.py
+```python {4,6,8-10} title=tests/conftest.py
 import os
 
+import pytest
 from nonebug import NONEBOT_INIT_KWARGS
 
 os.environ["ENVIRONMENT"] = "test"
 
 def pytest_configure(config: pytest.Config):
     config.stash[NONEBOT_INIT_KWARGS] = {"secret": os.getenv("INPUT_SECRET")}
+```
+
+NoneBug 默认也会为我们管理 lifespan 的 startup 与 shutdown。如果不希望 NoneBug 管理 lifespan，你可以在 `pytest_configure` 里添加以下配置：
+
+```python
+import pytest
+from nonebug import NONEBOT_START_LIFESPAN
+
+def pytest_configure(config: pytest.Config):
+    config.stash[NONEBOT_START_LIFESPAN] = False
 ```
 
 ## 编写插件测试
