@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复侧边栏折叠状态问题 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3101](https://github.com/nonebot/nonebot2/pull/3101))
 - Docs: Changelog 按页码挂载 route [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3100](https://github.com/nonebot/nonebot2/pull/3100))
 - Docs: 修复 changelog 链接 [@yanyongyu](https://github.com/yanyongyu) ([#3098](https://github.com/nonebot/nonebot2/pull/3098))
 
