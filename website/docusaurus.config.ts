@@ -337,7 +337,8 @@ export default async function createConfigAsync() {
           changelogHeader: `description: Changelog
 toc_max_heading_level: 2
 sidebar_custom_props:
-  sidebar_id: changelog`,
+  sidebar_id: changelog
+  sidebar_version: current`,
         } satisfies ChangelogOptions,
       ],
     ],
