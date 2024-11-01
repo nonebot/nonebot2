@@ -7569,5 +7569,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_omb",
+    "project_link": "nonebot-plugin-omb",
+    "author": "eya46",
+    "tags": [
+      {
+        "label": "人机合一",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
