@@ -146,9 +146,7 @@ const sidebars: SidebarsConfig = {
         (chunk, index) => ({
           type: "link",
           label: chunk[0]!.title,
-          href: `/changelog/${
-            index > 0 ? encodeURIComponent(chunk[0]!.title) : ""
-          }`,
+          href: `/changelog/${index > 0 ? index.toString() : ""}`,
         })
       ),
     },
