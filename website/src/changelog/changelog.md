@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 📝 文档
+
+- Docs: 修复 changelog 链接 [@yanyongyu](https://github.com/yanyongyu) ([#3098](https://github.com/nonebot/nonebot2/pull/3098))
+
 ## v2.4.0
 
 ### 🚀 新功能
