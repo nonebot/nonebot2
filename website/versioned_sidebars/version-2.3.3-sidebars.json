@@ -138,17 +138,17 @@
         {
           "type": "link",
           "label": "v2.1.0",
-          "href": "/changelog/v2.1.0"
+          "href": "/changelog/1"
         },
         {
           "type": "link",
           "label": "v2.0.0-beta.2",
-          "href": "/changelog/v2.0.0-beta.2"
+          "href": "/changelog/2"
         },
         {
           "type": "link",
           "label": "v2.0.0a7",
-          "href": "/changelog/v2.0.0a7"
+          "href": "/changelog/3"
         }
       ],
       "collapsed": false
