@@ -1,8 +1,8 @@
 import React from "react";
 
 import "./styles.css";
-import type { Props } from "@theme/TOC/Container";
-import OriginTOCContainer from "@theme-original/TOC/Container";
+import type { Props } from "@theme/Page/TOC/Container";
+import OriginTOCContainer from "@theme-original/Page/TOC/Container";
 
 export default function TOCContainer({
   children,
