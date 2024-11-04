@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复 wwads 造成的 client 水合不匹配 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3106](https://github.com/nonebot/nonebot2/pull/3106))
 - Docs: 修复 wwads [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3105](https://github.com/nonebot/nonebot2/pull/3105))
 - Docs: 修复侧边栏折叠状态问题 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3101](https://github.com/nonebot/nonebot2/pull/3101))
 - Docs: Changelog 按页码挂载 route [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3100](https://github.com/nonebot/nonebot2/pull/3100))
