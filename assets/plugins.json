@@ -7581,5 +7581,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_leetcodeAPI_KHASA",
+    "project_link": "nonebot-plugin-leetcodeAPI-KHASA",
+    "author": "KhasAlushird",
+    "tags": [
+      {
+        "label": "leetcode",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
