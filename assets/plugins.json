@@ -7593,5 +7593,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_pypistats",
+    "project_link": "nonebot-plugin-pypistats",
+    "author": "zhongwen-4",
+    "tags": [],
+    "is_official": false
   }
 ]
