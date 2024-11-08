@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: PyPi下载统计 [@noneflow](https://github.com/noneflow) ([#3109](https://github.com/nonebot/nonebot2/pull/3109))
 - Plugin: nonebot-plugin-leetcodeapi-khasa [@noneflow](https://github.com/noneflow) ([#3077](https://github.com/nonebot/nonebot2/pull/3077))
 - Plugin: Ohh My Bot [@noneflow](https://github.com/noneflow) ([#3089](https://github.com/nonebot/nonebot2/pull/3089))
 
