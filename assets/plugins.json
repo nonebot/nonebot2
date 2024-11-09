@@ -6814,22 +6814,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_llob_master",
-    "project_link": "nonebot-plugin-llob-master",
-    "author": "kanbereina",
-    "tags": [
-      {
-        "label": "LLOneBot",
-        "color": "#e3e9e9"
-      },
-      {
-        "label": "Windows",
-        "color": "#1da6eb"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_yoyogame",
     "project_link": "nonebot-plugin-yoyogame",
     "author": "ChenXu233",
