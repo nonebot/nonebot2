@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 提升已加载的适配器日志等级 [@yanyongyu](https://github.com/yanyongyu) ([#3110](https://github.com/nonebot/nonebot2/pull/3110))
+
 ### 📝 文档
 
 - Docs: 修复 wwads 造成的 client 水合不匹配 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3106](https://github.com/nonebot/nonebot2/pull/3106))
