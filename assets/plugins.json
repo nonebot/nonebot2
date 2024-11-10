@@ -7600,5 +7600,21 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_bililivedm",
+    "project_link": "nonebot-plugin-bililivedm",
+    "author": "STESmly",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#ea5252"
+      },
+      {
+        "label": "全平台可用",
+        "color": "#232a7a"
+      }
+    ],
+    "is_official": false
   }
 ]
