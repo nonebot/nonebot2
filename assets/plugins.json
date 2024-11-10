@@ -7584,5 +7584,21 @@
     "author": "zhongwen-4",
     "tags": [],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_better_broadcast",
+    "project_link": "nonebot-plugin-better-broadcast",
+    "author": "captain-wangrun-cn",
+    "tags": [
+      {
+        "label": "广播",
+        "color": "#1fd5ec"
+      },
+      {
+        "label": "broadcast",
+        "color": "#231fec"
+      }
+    ],
+    "is_official": false
   }
 ]
