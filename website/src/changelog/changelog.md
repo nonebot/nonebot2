@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 删除`function` 插件，添加 `batch-withdrawal` 插件标签 [@zhongwen-4](https://github.com/zhongwen-4) ([#3118](https://github.com/nonebot/nonebot2/pull/3118))
 - Plugin: 删除插件 `nonebot-plugin-llob-master` [@kanbereina](https://github.com/kanbereina) ([#3115](https://github.com/nonebot/nonebot2/pull/3115))
 
 ### 🍻 插件发布
