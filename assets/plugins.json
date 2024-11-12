@@ -7616,5 +7616,17 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_text_ban",
+    "project_link": "nonebot-plugin-text-ban",
+    "author": "zhongwen-4",
+    "tags": [
+      {
+        "label": "群管",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
