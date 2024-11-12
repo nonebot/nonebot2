@@ -25,6 +25,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 违禁词撤回 [@noneflow](https://github.com/noneflow) ([#3117](https://github.com/nonebot/nonebot2/pull/3117))
 - Plugin: b站弹幕监控 [@noneflow](https://github.com/noneflow) ([#3091](https://github.com/nonebot/nonebot2/pull/3091))
 - Plugin: nonebot_plugin_better_broadcast [@noneflow](https://github.com/noneflow) ([#3114](https://github.com/nonebot/nonebot2/pull/3114))
 - Plugin: PyPi下载统计 [@noneflow](https://github.com/noneflow) ([#3109](https://github.com/nonebot/nonebot2/pull/3109))
