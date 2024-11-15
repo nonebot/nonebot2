@@ -657,5 +657,18 @@
     "homepage": "https://github.com/wangyw15/CanrotBot",
     "tags": [],
     "is_official": false
+  },
+  {
+    "name": "Mio澪",
+    "desc": "超可爱多功能Qbot",
+    "author": "EienSakura",
+    "homepage": "https://github.com/EienSakura/mio",
+    "tags": [
+      {
+        "label": "娱乐",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
   }
 ]
