@@ -33,6 +33,10 @@ toc_max_heading_level: 2
 - Plugin: nonebot-plugin-leetcodeapi-khasa [@noneflow](https://github.com/noneflow) ([#3077](https://github.com/nonebot/nonebot2/pull/3077))
 - Plugin: Ohh My Bot [@noneflow](https://github.com/noneflow) ([#3089](https://github.com/nonebot/nonebot2/pull/3089))
 
+### 🍻 机器人发布
+
+- Bot: Mio澪 [@noneflow](https://github.com/noneflow) ([#3121](https://github.com/nonebot/nonebot2/pull/3121))
+
 ## v2.4.0
 
 ### 🚀 新功能
