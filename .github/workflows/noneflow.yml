@@ -15,9 +15,9 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  check:
+  noneflow:
     runs-on: ubuntu-latest
-    name: check
+    name: noneflow
     # do not run on forked PRs, do not run on not related issues, do not run on pr comments
     if: |
       !(
@@ -36,70 +36,6 @@ jobs:
           github.event_name == 'issue_comment' && github.event.issue.pull_request
         )
       )
-    steps:
-      - run: echo "Check passed"
-  reaction:
-    runs-on: ubuntu-latest
-    name: reaction
-    needs: check
-    if: |
-      (
-        github.event_name == 'issue_comment' &&
-        github.event.action == 'created'
-      ) ||
-      (
-        github.event_name == 'issues' &&
-        github.event.action == 'opened'
-      )
-    steps:
-      - name: Generate token
-        id: generate-token
-        uses: tibdex/github-app-token@v2
-        with:
-          app_id: ${{ secrets.APP_ID }}
-          private_key: ${{ secrets.APP_KEY }}
-
-      - name: Reaction on issue
-        if: github.event_name == 'issues'
-        run: |
-          gh api --method POST /repos/${{ github.repository }}/issues/${{ github.event.issue.number }}/reactions -f "content=rocket"
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-
-      - name: Reaction on issue comment
-        if: github.event_name == 'issue_comment'
-        run: |
-          gh api --method POST /repos/${{ github.repository }}/issues/comments/${{ github.event.comment.id }}/reactions -f "content=rocket"
-        env:
-          GH_TOKEN: ${{ steps.generate-token.outputs.token }}
-  plugin_test:
-    runs-on: ubuntu-latest
-    name: nonebot2 plugin test
-    needs: check
-    permissions:
-      issues: read
-    outputs:
-      result: ${{ steps.plugin-test.outputs.RESULT }}
-      output: ${{ steps.plugin-test.outputs.OUTPUT }}
-      metadata: ${{ steps.plugin-test.outputs.METADATA }}
-    steps:
-      - name: Install Poetry
-        if: ${{ !startsWith(github.event_name, 'pull_request') }}
-        run: pipx install poetry
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.x"
-
-      - name: Test Plugin
-        id: plugin-test
-        run: |
-          curl -sSL https://github.com/nonebot/noneflow/releases/latest/download/plugin_test.py | python -
-  noneflow:
-    runs-on: ubuntu-latest
-    name: noneflow
-    needs: plugin_test
     steps:
       - name: Generate token
         id: generate-token
@@ -125,14 +61,12 @@ jobs:
           config: >
             {
               "base": "master",
-              "plugin_path": "assets/plugins.json",
-              "bot_path": "assets/bots.json",
-              "adapter_path": "assets/adapters.json"
+              "plugin_path": "assets/plugins.json5",
+              "bot_path": "assets/bots.json5",
+              "adapter_path": "assets/adapters.json5",
+              "registry_repository": "nonebot/registry"
             }
         env:
-          PLUGIN_TEST_RESULT: ${{ needs.plugin_test.outputs.result }}
-          PLUGIN_TEST_OUTPUT: ${{ needs.plugin_test.outputs.output }}
-          PLUGIN_TEST_METADATA: ${{ needs.plugin_test.outputs.metadata }}
           APP_ID: ${{ secrets.APP_ID }}
           PRIVATE_KEY: ${{ secrets.APP_KEY }}
           PRE_COMMIT_HOME: /github/workspace/.cache/.pre-commit
