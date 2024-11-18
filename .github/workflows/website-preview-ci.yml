@@ -30,7 +30,7 @@ jobs:
 
       - name: Export Context
         run: |
-          echo "PR_NUMBER=${{ github.event.number }}" >> ./action.env
+          echo "${{ github.event.pull_request.number }}" > ./pr-number
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
@@ -38,5 +38,5 @@ jobs:
           name: website-preview
           path: |
             ./website/build
-            ./action.env
+            ./pr-number
           retention-days: 1

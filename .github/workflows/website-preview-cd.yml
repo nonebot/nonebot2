@@ -45,11 +45,16 @@ jobs:
 
       - name: Restore Context
         run: |
-          cat action.env >> $GITHUB_ENV
+          PR_NUMBER=$(cat ./pr-number)
+          if ! [[ "${PR_NUMBER}" =~ ^[0-9]+$ ]]; then
+            echo "Invalid PR number: ${PR_NUMBER}"
+            exit 1
+          fi
+          echo "PR_NUMBER=${PR_NUMBER}" >> "${GITHUB_ENV}"
 
       - name: Set Deploy Name
         run: |
-          echo "DEPLOY_NAME=deploy-preview-${{ env.PR_NUMBER }}" >> $GITHUB_ENV
+          echo "DEPLOY_NAME=deploy-preview-${PR_NUMBER}" >> "${GITHUB_ENV}"
 
       - name: Deploy to Netlify
         id: deploy
