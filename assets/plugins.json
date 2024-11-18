@@ -7642,5 +7642,12 @@
       }
     ],
     "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_kindness_lesson",
+    "project_link": "nonebot-plugin-kindness-lesson",
+    "author": "zhaomaoniu",
+    "tags": [],
+    "is_official": false
   }
 ]
