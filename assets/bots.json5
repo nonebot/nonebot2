@@ -2,7 +2,7 @@
   {
     "name": "HarukaBot",
     "desc": "将B站UP主的动态和直播信息推送至QQ",
-    "author": "SK-415",
+    "author_id": 36433929,
     "homepage": "https://github.com/SK-415/HarukaBot",
     "tags": [],
     "is_official": false
@@ -10,7 +10,7 @@
   {
     "name": "Omega Miya",
     "desc": "B站推送Pixiv搜图识番求签抽卡表情包还有其他杂七杂八的功能",
-    "author": "Ailitonia",
+    "author_id": 41713304,
     "homepage": "https://github.com/Ailitonia/omega-miya",
     "tags": [],
     "is_official": false
@@ -18,7 +18,7 @@
   {
     "name": "Github Bot",
     "desc": "在QQ获取/处理Github repo/pr/issue",
-    "author": "yanyongyu",
+    "author_id": 42488585,
     "homepage": "https://github.com/cscs181/QQ-GitHub-Bot",
     "tags": [],
     "is_official": false
@@ -26,7 +26,7 @@
   {
     "name": "YanXiBot",
     "desc": "动漫资源查找与娱乐机器人",
-    "author": "Melodyknit",
+    "author_id": 50488999,
     "homepage": "https://github.com/Melodyknit/YanXiBot",
     "tags": [],
     "is_official": false
@@ -34,7 +34,7 @@
   {
     "name": "绪山真寻bot",
     "desc": "含有不少的娱乐功能同时稍稍有一些实用的功能 :P",
-    "author": "HibiKier",
+    "author_id": 45528451,
     "homepage": "https://github.com/HibiKier/zhenxun_bot",
     "tags": [],
     "is_official": false
@@ -42,7 +42,7 @@
   {
     "name": "ATRI",
     "desc": "高性能文爱萝卜子，糅杂了各类有趣小功能",
-    "author": "Kyomotoi",
+    "author_id": 37587870,
     "homepage": "https://github.com/Kyomotoi/ATRI",
     "tags": [],
     "is_official": false
@@ -50,7 +50,7 @@
   {
     "name": "dumbot傻瓜机器人",
     "desc": "猜一猜游戏、新闻一览、英文每日一词一短语等等，含一键启动及docker容器部署就绪",
-    "author": "ffreemt",
+    "author_id": 52522252,
     "homepage": "https://github.com/ffreemt/koyeb-nb2",
     "tags": [],
     "is_official": false
@@ -58,7 +58,7 @@
   {
     "name": "DicePP",
     "desc": "TRPG骰娘, 带先攻, 查询等功能, 主要面向DND5E. 面对骰主推出的船新版本, 内置Windows/Linux详细部署指南以及方便的自定义骰娘方法, 从回复文本到查询资料库都可轻松配置~",
-    "author": "pear-studio",
+    "author_id": 88259371,
     "homepage": "https://github.com/pear-studio/nonebot-dicepp",
     "tags": [],
     "is_official": false
@@ -66,7 +66,7 @@
   {
     "name": "SetuBot",
     "desc": "每个群配置文件独立,可以控制频率,socks http代理,R18开关,支持多tag,自建API lolicon Pixiv热度榜",
-    "author": "yuban10703",
+    "author_id": 39484884,
     "homepage": "https://github.com/yuban10703/setu-nonebot2",
     "tags": [],
     "is_official": false
@@ -74,7 +74,7 @@
   {
     "name": "剑网三bot",
     "desc": "网络游戏《剑侠情缘三》的群聊机器人，数据使用：www.jx3api.com",
-    "author": "JustUndertaker",
+    "author_id": 37363867,
     "homepage": "https://github.com/JustUndertaker/mini_jx3_bot",
     "tags": [
       {
@@ -87,7 +87,7 @@
   {
     "name": "PixivBot",
     "desc": "顾名思义是Pixiv的bot（随机推荐插画、随机指定关键词插画、随机书签、查看排行榜、查看指定id插画）",
-    "author": "ssttkkl",
+    "author_id": 17331698,
     "homepage": "https://github.com/ssttkkl/PixivBot",
     "tags": [],
     "is_official": false
@@ -95,7 +95,7 @@
   {
     "name": "SeaBot_QQ",
     "desc": "一个能够获取新闻资讯并推送至QQ的群聊机器人。",
-    "author": "B1ue1nWh1te",
+    "author_id": 31682561,
     "homepage": "https://github.com/B1ue1nWh1te/SeaBot_QQ",
     "tags": [],
     "is_official": false
@@ -103,7 +103,7 @@
   {
     "name": "琪露诺Bot",
     "desc": "用QQ机器人控制Minecraft服务器！服务器状态查询/服务器白名单/插件列表/玩家查询/转发服务器消息/执行指令...   其他实用娱乐功能，三步即可成功部署的QQ bot",
-    "author": "summerkirakira",
+    "author_id": 56951617,
     "homepage": "https://github.com/summerkirakira/CirnoBot",
     "tags": [
       {
@@ -116,7 +116,7 @@
   {
     "name": "Inkar Suki",
     "desc": "一个十分方便的Bot，支持包括Webhook、群管、剑网3等一系列功能，持续更新中……",
-    "author": "HornCopper",
+    "author_id": 68726147,
     "homepage": "https://github.com/HornCopper/Inkar-Suki",
     "tags": [
       {
@@ -137,7 +137,7 @@
   {
     "name": "屑岛风Bot",
     "desc": "自家用屑Bot",
-    "author": "kexue-z",
+    "author_id": 71873002,
     "homepage": "https://github.com/kexue-z/Dao-bot",
     "tags": [],
     "is_official": false
@@ -145,7 +145,7 @@
   {
     "name": "LiteyukiBot-轻雪机器人",
     "desc": "一个有各种琐事功能的bot，有AI接口，能陪聊",
-    "author": "snowyfirefly",
+    "author_id": 79104275,
     "homepage": "https://github.com/snowyfirefly/Liteyuki",
     "tags": [
       {
@@ -162,7 +162,7 @@
   {
     "name": "nya_bot",
     "desc": "喵服——战魂铭人联机服务器兼机器人",
-    "author": "nikissXI",
+    "author_id": 31379266,
     "homepage": "https://github.com/nikissXI/nya_bot",
     "tags": [
       {
@@ -175,7 +175,7 @@
   {
     "name": "真宵Bot",
     "desc": "专注群聊的QQ机器人",
-    "author": "Shine-Light",
+    "author_id": 71173418,
     "homepage": "https://github.com/Shine-Light/Nonebot_Bot_MayaFey",
     "tags": [
       {
@@ -196,7 +196,7 @@
   {
     "name": "SkadiBot",
     "desc": "明日方舟主题机器人—斯卡蒂",
-    "author": "yuyuziYYZ",
+    "author_id": 101615359,
     "homepage": "https://github.com/yuyuziYYZ/skadi_bot",
     "tags": [
       {
@@ -217,7 +217,7 @@
   {
     "name": "小白机器人",
     "desc": "一个高度依赖数据库的群管理机器人",
-    "author": "SDIJF1521",
+    "author_id": 69745333,
     "homepage": "https://github.com/SDIJF1521/qqai",
     "tags": [
       {
@@ -234,7 +234,7 @@
   {
     "name": "LittlePaimon",
     "desc": "小派蒙，多功能原神机器人。",
-    "author": "CMHopeSunshine",
+    "author_id": 63870437,
     "homepage": "https://github.com/CMHopeSunshine/LittlePaimon",
     "tags": [
       {
@@ -247,7 +247,7 @@
   {
     "name": "IdhagnBot",
     "desc": "🐱🤖 一个以娱乐功能为主的缝合怪（划掉）QQ机器人，包含一定Furry要素但是不会卖萌（就是逊啦！）",
-    "author": "su226",
+    "author_id": 17371317,
     "homepage": "https://github.com/su226/IdhagnBot",
     "tags": [],
     "is_official": false
@@ -255,7 +255,7 @@
   {
     "name": "hsbot",
     "desc": "服务于《炉石传说》玩家的机器人，上线至今已有加入十余个个炉石相关群聊，上千名用户使用，响应请求数万次。 数据使用：HSreplay, Fbigame, Hearthstone API",
-    "author": "gzy02",
+    "author_id": 67055520,
     "homepage": "https://github.com/gzy02/hsbot",
     "tags": [
       {
@@ -268,7 +268,7 @@
   {
     "name": "Bread Dog Bot",
     "desc": "Terraria TShock QQ 机器人",
-    "author": "Qianyiovo",
+    "author_id": 160252668,
     "homepage": "https://github.com/Qianyiovo/bread_dog_bot",
     "tags": [
       {
@@ -289,7 +289,7 @@
   {
     "name": "RanBot",
     "desc": "不@会很安静的Bot",
-    "author": "IAXRetailer",
+    "author_id": 88923783,
     "homepage": "https://github.com/Hecatia-Hell-Workshop/RanBot",
     "tags": [],
     "is_official": false
@@ -297,7 +297,7 @@
   {
     "name": "辞辞(cici)Bot",
     "desc": "一个集成娱乐和群管为一体的机器人",
-    "author": "mengxinyuan638",
+    "author_id": 90902259,
     "homepage": "https://github.com/mengxinyuan638/cici-bot",
     "tags": [
       {
@@ -318,7 +318,7 @@
   {
     "name": "SuzunoBot",
     "desc": "多功能音游bot，主要服务maimaiDX、Arcaea",
-    "author": "Rinfair-CSP-A016",
+    "author_id": 29980586,
     "homepage": "https://github.com/Rinfair-CSP-A016/SuzunoBot-AGLAS",
     "tags": [
       {
@@ -339,7 +339,7 @@
   {
     "name": "青岚",
     "desc": "基于NoneBot的与Minecraft Server互通消息的机器人",
-    "author": "17TheWord",
+    "author_id": 54731914,
     "homepage": "https://github.com/17TheWord/qinglan_bot",
     "tags": [
       {
@@ -352,7 +352,7 @@
   {
     "name": "ChensQBOTv2",
     "desc": "多功能QQ群机器人，权限管理/联ban/社工等等等等，以及拥有一个强大的开发者",
-    "author": "cnchens",
+    "author_id": 116929900,
     "homepage": "https://github.com/cnchens/ChensQBOTv2",
     "tags": [],
     "is_official": false
@@ -360,7 +360,7 @@
   {
     "name": "koishi",
     "desc": "支持爬取 codeforces, atcoder, 牛客上程序设计赛事的 bot。",
-    "author": "CupidsBow",
+    "author_id": 71639222,
     "homepage": "https://github.com/CupidsBow/koishi",
     "tags": [
       {
@@ -381,7 +381,7 @@
   {
     "name": "脑积水",
     "desc": "一个超级缝合怪...",
-    "author": "zhulinyv",
+    "author_id": 66541860,
     "homepage": "https://github.com/zhulinyv/NJS",
     "tags": [
       {
@@ -394,7 +394,7 @@
   {
     "name": "LOVE酱",
     "desc": "为铁锈战争游戏群服务的虚拟少女,内置了爬取铁锈房间列表功能,以及游戏内单位查询功能,并制作了教学系统以及铁锈相关游戏群的收集功能。",
-    "author": "allureluoli",
+    "author_id": 106828088,
     "homepage": "https://github.com/allureluoli/LOVE-",
     "tags": [
       {
@@ -411,7 +411,7 @@
   {
     "name": "fubot",
     "desc": "基于nonebot与go-cqhttp的QQ娱乐bot，提供群日常娱乐功能与舞萌DX游戏相关的信息查询功能。",
-    "author": "HCskia",
+    "author_id": 54059896,
     "homepage": "https://github.com/HCskia/fu-Bot",
     "tags": [
       {
@@ -424,7 +424,7 @@
   {
     "name": "桃桃酱",
     "desc": "一个会拆家的高性能缝合萝卜子",
-    "author": "tkgs0",
+    "author_id": 107618388,
     "homepage": "https://github.com/tkgs0/Momoko",
     "tags": [],
     "is_official": false
@@ -432,7 +432,7 @@
   {
     "name": "CoolQBot",
     "desc": "基于 NoneBot2 的聊天机器人",
-    "author": "he0119",
+    "author_id": 5219550,
     "homepage": "https://github.com/he0119/CoolQBot",
     "tags": [],
     "is_official": false
@@ -440,7 +440,7 @@
   {
     "name": "XDbot2",
     "desc": "简单的QQ功能型机器人",
-    "author": "This-is-XiaoDeng",
+    "author_id": 104149371,
     "homepage": "https://github.com/ITCraftDevelopmentTeam/XDbot2",
     "tags": [],
     "is_official": false
@@ -448,7 +448,7 @@
   {
     "name": "March7th",
     "desc": "三月七 - 崩坏：星穹铁道机器人",
-    "author": "mobyw",
+    "author_id": 44370805,
     "homepage": "https://github.com/Mar-7th/March7th",
     "tags": [
       {
@@ -465,7 +465,7 @@
   {
     "name": "ay机器人",
     "desc": "codeforces和洛谷卷王监视、股票监控、ai聊天",
-    "author": "863109569",
+    "author_id": 77315378,
     "homepage": "https://github.com/863109569/qqbot",
     "tags": [
       {
@@ -486,7 +486,7 @@
   {
     "name": "狐尾",
     "desc": "一个整合了兽云祭api的机器人，支持账号令牌操作，以及上传兽图",
-    "author": "bingqiu456",
+    "author_id": 99388013,
     "homepage": "https://github.com/bingqiu456/shouyun",
     "tags": [
       {
@@ -499,7 +499,7 @@
   {
     "name": "ReimeiBot-黎明机器人",
     "desc": "流星飞逝，黎明终将到来。",
-    "author": "ThirdBlood",
+    "author_id": 65395090,
     "homepage": "https://github.com/3rdBit/ReimeiBot",
     "tags": [],
     "is_official": false
@@ -507,7 +507,7 @@
   {
     "name": "web_bot",
     "desc": "把机器人搬到网络上",
-    "author": "wsdtl",
+    "author_id": 63489103,
     "homepage": "https://github.com/wsdtl/web_bot",
     "tags": [
       {
@@ -520,7 +520,7 @@
   {
     "name": "林汐",
     "desc": "多平台功能型Bot",
-    "author": "mute23-code",
+    "author_id": 110453675,
     "homepage": "https://github.com/netsora/SoraBot",
     "tags": [
       {
@@ -537,7 +537,7 @@
   {
     "name": "米缸",
     "desc": "基于nonebot2的米缸Bot",
-    "author": "LambdaYH",
+    "author_id": 13503375,
     "homepage": "https://github.com/LambdaYH/MigangBot",
     "tags": [],
     "is_official": false
@@ -545,7 +545,7 @@
   {
     "name": "不正经的妹妹",
     "desc": "一款功能丰富、简单易用、自定义性强、扩展性强的可爱的QQ娱乐机器人",
-    "author": "itsevin",
+    "author_id": 104713034,
     "homepage": "https://github.com/itsevin/sister_bot",
     "tags": [],
     "is_official": false
@@ -553,7 +553,7 @@
   {
     "name": "星见Kirami",
     "desc": "🌟 读作 Kirami，写作星见，简明轻快的聊天机器人应用。",
-    "author": "A-kirami",
+    "author_id": 66513481,
     "homepage": "https://kiramibot.dev/",
     "tags": [],
     "is_official": false
@@ -561,7 +561,7 @@
   {
     "name": "OCNbot",
     "desc": "OI Contest Notifier bot，一个可以推送洛谷、cf、atcoder、牛客比赛通知的bot",
-    "author": "ACnoway",
+    "author_id": 91535478,
     "homepage": "https://github.com/ACnoway/OCNbot",
     "tags": [
       {
@@ -578,7 +578,7 @@
   {
     "name": "妃爱",
     "desc": "超可爱的妃爱QQ群聊机器人",
-    "author": "jiangyuxiaoxiao",
+    "author_id": 52267304,
     "homepage": "https://github.com/jiangyuxiaoxiao/Hiyori",
     "tags": [],
     "is_official": false
@@ -586,7 +586,7 @@
   {
     "name": "芙芙",
     "desc": "供 Mooncell Wiki 协作使用的跨平台机器人",
-    "author": "StarHeartHunt",
+    "author_id": 14922941,
     "homepage": "https://github.com/MooncellWiki/BotFooChan",
     "tags": [],
     "is_official": false
@@ -594,7 +594,7 @@
   {
     "name": "Sakiko",
     "desc": "基于 LiteLoaderBDS 的 Minecraft 基岩版 Bot",
-    "author": "zhaomaoniu",
+    "author_id": 55650833,
     "homepage": "https://github.com/zhaomaoniu/Sakiko",
     "tags": [
       {
@@ -609,17 +609,9 @@
     "is_official": false
   },
   {
-    "name": "星辰 Bot",
-    "desc": "欢迎使用 星辰 Bot 项目！这是一款基于 NoneBot2 打造的智能 QQ 机器人，旨在为用户提供丰富的功能体验。无论是获取一言的灵感，探索历史上的今天，还是穿梭60s世界，星辰 Bot 为您打开了全新的交流之门。快来尝试吧！",
-    "author": "StarXinXin",
-    "homepage": "https://github.com/StarXinXin/StarsBot",
-    "tags": [],
-    "is_official": false
-  },
-  {
     "name": "Minecraft_QQBot",
     "desc": "基于 NoneBot2 的 Minecraft 群服互联 QQ 机器人，支持多服务器多种方式连接。",
-    "author": "Lonely-Sails",
+    "author_id": 90964775,
     "homepage": "https://github.com/Minecraft-QQBot/BotServer",
     "tags": [
       {
@@ -636,7 +628,7 @@
   {
     "name": "小安提Bot",
     "desc": "服务于音游 舞萌DX 的多功能Bot",
-    "author": "Ant1816",
+    "author_id": 186144551,
     "homepage": "https://github.com/Ant1816/Ant1Bot",
     "tags": [
       {
@@ -653,7 +645,7 @@
   {
     "name": "CanrotBot",
     "desc": "有很多实用功能的bot，也有很多没什么用的娱乐功能；接入了大模型，并且有一部分功能可以被大模型调用。主打一个全都有（",
-    "author": "wangyw15",
+    "author_id": 18070676,
     "homepage": "https://github.com/wangyw15/CanrotBot",
     "tags": [],
     "is_official": false
@@ -661,7 +653,7 @@
   {
     "name": "Mio澪",
     "desc": "超可爱多功能Qbot",
-    "author": "EienSakura",
+    "author_id": 50508678,
     "homepage": "https://github.com/EienSakura/mio",
     "tags": [
       {
@@ -670,5 +662,5 @@
       }
     ],
     "is_official": false
-  }
+  },
 ]
