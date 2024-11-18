@@ -4,7 +4,7 @@
     "project_link": "",
     "name": "None",
     "desc": "None 驱动器",
-    "author": "yanyongyu",
+    "author_id": 42488585,
     "homepage": "/docs/advanced/driver",
     "tags": [],
     "is_official": true
@@ -14,7 +14,7 @@
     "project_link": "nonebot2[fastapi]",
     "name": "FastAPI",
     "desc": "FastAPI 驱动器",
-    "author": "yanyongyu",
+    "author_id": 42488585,
     "homepage": "/docs/advanced/driver",
     "tags": [],
     "is_official": true
@@ -24,7 +24,7 @@
     "project_link": "nonebot2[quart]",
     "name": "Quart",
     "desc": "Quart 驱动器",
-    "author": "yanyongyu",
+    "author_id": 42488585,
     "homepage": "/docs/advanced/driver",
     "tags": [],
     "is_official": true
@@ -34,7 +34,7 @@
     "project_link": "nonebot2[httpx]",
     "name": "HTTPX",
     "desc": "HTTPX 驱动器",
-    "author": "yanyongyu",
+    "author_id": 42488585,
     "homepage": "/docs/advanced/driver",
     "tags": [],
     "is_official": true
@@ -44,7 +44,7 @@
     "project_link": "nonebot2[websockets]",
     "name": "websockets",
     "desc": "websockets 驱动器",
-    "author": "yanyongyu",
+    "author_id": 42488585,
     "homepage": "/docs/advanced/driver",
     "tags": [],
     "is_official": true
@@ -54,9 +54,9 @@
     "project_link": "nonebot2[aiohttp]",
     "name": "AIOHTTP",
     "desc": "AIOHTTP 驱动器",
-    "author": "yanyongyu",
+    "author_id": 42488585,
     "homepage": "/docs/advanced/driver",
     "tags": [],
     "is_official": true
-  }
+  },
 ]

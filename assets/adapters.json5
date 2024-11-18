@@ -4,7 +4,7 @@
     "project_link": "nonebot-adapter-onebot",
     "name": "OneBot V11",
     "desc": "OneBot V11 协议",
-    "author": "yanyongyu",
+    "author_id": 42488585,
     "homepage": "https://onebot.adapters.nonebot.dev/",
     "tags": [],
     "is_official": true
@@ -14,7 +14,7 @@
     "project_link": "nonebot-adapter-ding",
     "name": "钉钉",
     "desc": "钉钉协议",
-    "author": "Artin",
+    "author_id": 1184028,
     "homepage": "https://github.com/nonebot/adapter-ding",
     "tags": [],
     "is_official": true
@@ -24,7 +24,7 @@
     "project_link": "nonebot-adapter-feishu",
     "name": "飞书",
     "desc": "飞书协议",
-    "author": "StarHeartHunt",
+    "author_id": 14922941,
     "homepage": "https://github.com/nonebot/adapter-feishu",
     "tags": [],
     "is_official": true
@@ -34,7 +34,7 @@
     "project_link": "nonebot-adapter-telegram",
     "name": "Telegram",
     "desc": "Telegram 协议",
-    "author": "j1g5awi",
+    "author_id": 50312681,
     "homepage": "https://github.com/nonebot/adapter-telegram",
     "tags": [],
     "is_official": true
@@ -44,7 +44,7 @@
     "project_link": "nonebot-adapter-qq",
     "name": "QQ",
     "desc": "QQ 官方机器人",
-    "author": "yanyongyu",
+    "author_id": 42488585,
     "homepage": "https://github.com/nonebot/adapter-qq",
     "tags": [],
     "is_official": true
@@ -54,7 +54,7 @@
     "project_link": "nonebot-adapter-kaiheila",
     "name": "开黑啦",
     "desc": "开黑啦协议适配",
-    "author": "Tian-que",
+    "author_id": 37477320,
     "homepage": "https://github.com/Tian-que/nonebot-adapter-kaiheila",
     "tags": [],
     "is_official": false
@@ -64,7 +64,7 @@
     "project_link": "nonebot-adapter-mirai",
     "name": "Mirai",
     "desc": "mirai-api-http v2 协议适配",
-    "author": "RF-Tar-Railt",
+    "author_id": 42648639,
     "homepage": "https://github.com/nonebot/adapter-mirai",
     "tags": [],
     "is_official": true
@@ -74,7 +74,7 @@
     "project_link": "nonebot-adapter-onebot",
     "name": "OneBot V12",
     "desc": "OneBot V12 协议",
-    "author": "yanyongyu",
+    "author_id": 42488585,
     "homepage": "https://onebot.adapters.nonebot.dev/",
     "tags": [],
     "is_official": true
@@ -84,7 +84,7 @@
     "project_link": "nonebot-adapter-console",
     "name": "Console",
     "desc": "基于终端的交互式适配器",
-    "author": "Melodyknit",
+    "author_id": 50488999,
     "homepage": "https://github.com/nonebot/adapter-console",
     "tags": [],
     "is_official": true
@@ -94,7 +94,7 @@
     "project_link": "nonebot-adapter-github",
     "name": "GitHub",
     "desc": "GitHub APP & OAuth APP integration",
-    "author": "yanyongyu",
+    "author_id": 42488585,
     "homepage": "https://github.com/nonebot/adapter-github",
     "tags": [],
     "is_official": true
@@ -104,7 +104,7 @@
     "project_link": "nonebot-adapter-ntchat",
     "name": "Ntchat",
     "desc": "pc hook的微信客户端适配",
-    "author": "JustUndertaker",
+    "author_id": 37363867,
     "homepage": "https://github.com/JustUndertaker/adapter-ntchat",
     "tags": [
       {
@@ -119,7 +119,7 @@
     "project_link": "nonebot-adapter-minecraft",
     "name": "Minecraft",
     "desc": "MineCraft通信适配，支持Rcon",
-    "author": "17TheWord",
+    "author_id": 54731914,
     "homepage": "https://github.com/17TheWord/nonebot-adapter-minecraft",
     "tags": [
       {
@@ -134,7 +134,7 @@
     "project_link": "nonebot-adapter-bilibili",
     "name": "BilibiliLive",
     "desc": "b站直播间ws协议",
-    "author": "wwweww",
+    "author_id": 39620657,
     "homepage": "https://github.com/wwweww/adapter-bilibili",
     "tags": [],
     "is_official": false
@@ -144,7 +144,7 @@
     "project_link": "nonebot-adapter-walleq",
     "name": "Walle-Q",
     "desc": "内置 QQ 协议实现",
-    "author": "abrahum",
+    "author_id": 18395948,
     "homepage": "https://github.com/onebot-walle/nonebot_adapter_walleq",
     "tags": [
       {
@@ -159,7 +159,7 @@
     "project_link": "nonebot-adapter-villa",
     "name": "大别野",
     "desc": "米游社大别野官方Bot适配",
-    "author": "CMHopeSunshine",
+    "author_id": 63870437,
     "homepage": "https://github.com/CMHopeSunshine/nonebot-adapter-villa",
     "tags": [
       {
@@ -174,7 +174,7 @@
     "project_link": "nonebot-adapter-red",
     "name": "RedProtocol",
     "desc": "QQNT RedProtocol 适配",
-    "author": "zhaomaoniu",
+    "author_id": 55650833,
     "homepage": "https://github.com/nonebot/adapter-red",
     "tags": [],
     "is_official": true
@@ -184,7 +184,7 @@
     "project_link": "nonebot-adapter-discord",
     "name": "Discord",
     "desc": "Discord 官方 Bot 协议适配",
-    "author": "CMHopeSunshine",
+    "author_id": 63870437,
     "homepage": "https://github.com/nonebot/adapter-discord",
     "tags": [],
     "is_official": true
@@ -194,7 +194,7 @@
     "project_link": "nonebot-adapter-satori",
     "name": "Satori",
     "desc": "Satori 协议适配器",
-    "author": "RF-Tar-Railt",
+    "author_id": 42648639,
     "homepage": "https://github.com/nonebot/adapter-satori",
     "tags": [
       {
@@ -209,7 +209,7 @@
     "project_link": "nonebot-adapter-dodo",
     "name": "DoDo",
     "desc": "DoDo Bot 协议适配器",
-    "author": "CMHopeSunshine",
+    "author_id": 63870437,
     "homepage": "https://github.com/nonebot/adapter-dodo",
     "tags": [],
     "is_official": true
@@ -219,7 +219,7 @@
     "project_link": "nonebot-adapter-rocketchat",
     "name": "RocketChat",
     "desc": "RocketChat adapter for nonebot2",
-    "author": "IllTamer",
+    "author_id": 78360471,
     "homepage": "https://github.com/IUnlimit/nonebot-adapter-rocketchat",
     "tags": [],
     "is_official": false
@@ -229,7 +229,7 @@
     "project_link": "nonebot-adapter-kritor",
     "name": "Kritor",
     "desc": "Kritor 协议适配",
-    "author": "RF-Tar-Railt",
+    "author_id": 42648639,
     "homepage": "https://github.com/nonebot/adapter-kritor",
     "tags": [
       {
@@ -244,9 +244,9 @@
     "project_link": "nonebot-adapter-tailchat",
     "name": "Tailchat",
     "desc": "Tailchat 适配器",
-    "author": "eya46",
+    "author_id": 61458340,
     "homepage": "https://github.com/eya46/nonebot-adapter-tailchat",
     "tags": [],
     "is_official": false
-  }
+  },
 ]
