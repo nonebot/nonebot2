@@ -249,4 +249,14 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot.adapters.mail",
+    "project_link": "nonebot-adapter-mail",
+    "name": "Mail",
+    "desc": "邮件收发协议",
+    "author_id": 44370805,
+    "homepage": "https://github.com/mobyw/nonebot-adapter-mail",
+    "tags": [],
+    "is_official": false
+  },
 ]
