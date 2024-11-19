@@ -150,7 +150,7 @@
   },
   {
     "module_name": "nonebot_plugin_biliav",
-    "project_link": "nonebot-plugin-biliav",
+    "project_link": "nonebot_plugin_biliav",
     "author_id": 9247530,
     "tags": [],
     "is_official": false
@@ -210,14 +210,14 @@
   },
   {
     "module_name": "nonebot_plugin_alias",
-    "project_link": "nonebot-plugin-alias",
+    "project_link": "nonebot_plugin_alias",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
   },
   {
     "module_name": "nonebot_plugin_withdraw",
-    "project_link": "nonebot-plugin-withdraw",
+    "project_link": "nonebot_plugin_withdraw",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
@@ -308,7 +308,7 @@
   },
   {
     "module_name": "nonebot_plugin_shindan",
-    "project_link": "nonebot-plugin-shindan",
+    "project_link": "nonebot_plugin_shindan",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
@@ -341,14 +341,14 @@
   },
   {
     "module_name": "nonebot_plugin_lolmatch",
-    "project_link": "nonebot-plugin-lolmatch",
+    "project_link": "nonebot_plugin_lolmatch",
     "author_id": 35657483,
     "tags": [],
     "is_official": false
   },
   {
     "module_name": "OlivOS.nonebot",
-    "project_link": "olivos.nb2",
+    "project_link": "OlivOS.nb2",
     "author_id": 50312681,
     "tags": [
       {
@@ -374,7 +374,7 @@
   },
   {
     "module_name": "nonebot_plugin_memes",
-    "project_link": "nonebot-plugin-memes",
+    "project_link": "nonebot_plugin_memes",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
@@ -402,7 +402,7 @@
   },
   {
     "module_name": "nonebot_plugin_roll",
-    "project_link": "nonebot-plugin-roll",
+    "project_link": "nonebot_plugin_roll",
     "author_id": 69038090,
     "tags": [
       {
@@ -414,7 +414,7 @@
   },
   {
     "module_name": "nonebot_plugin_crazy_thursday",
-    "project_link": "nonebot-plugin-crazy-thursday",
+    "project_link": "nonebot_plugin_crazy_thursday",
     "author_id": 69038090,
     "tags": [
       {
@@ -433,7 +433,7 @@
   },
   {
     "module_name": "nonebot_plugin_remake",
-    "project_link": "nonebot-plugin-remake",
+    "project_link": "nonebot_plugin_remake",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
@@ -464,7 +464,7 @@
   },
   {
     "module_name": "nonebot_plugin_tarot",
-    "project_link": "nonebot-plugin-tarot",
+    "project_link": "nonebot_plugin_tarot",
     "author_id": 69038090,
     "tags": [
       {
@@ -476,7 +476,7 @@
   },
   {
     "module_name": "nonebot_plugin_emojimix",
-    "project_link": "nonebot-plugin-emojimix",
+    "project_link": "nonebot_plugin_emojimix",
     "author_id": 33149974,
     "tags": [
       {
@@ -507,7 +507,7 @@
   },
   {
     "module_name": "nonebot_plugin_boardgame",
-    "project_link": "nonebot-plugin-boardgame",
+    "project_link": "nonebot_plugin_boardgame",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
@@ -521,7 +521,7 @@
   },
   {
     "module_name": "nonebot_plugin_chatrecorder",
-    "project_link": "nonebot-plugin-chatrecorder",
+    "project_link": "nonebot_plugin_chatrecorder",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
@@ -582,7 +582,7 @@
   },
   {
     "module_name": "YetAnotherPicSearch",
-    "project_link": "yetanotherpicsearch",
+    "project_link": "YetAnotherPicSearch",
     "author_id": 23137034,
     "tags": [],
     "is_official": false
@@ -690,7 +690,7 @@
   },
   {
     "module_name": "nonebot_plugin_ddcheck",
-    "project_link": "nonebot-plugin-ddcheck",
+    "project_link": "nonebot_plugin_ddcheck",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
@@ -716,7 +716,7 @@
   },
   {
     "module_name": "nonebot_plugin_wordle",
-    "project_link": "nonebot-plugin-wordle",
+    "project_link": "nonebot_plugin_wordle",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
@@ -749,21 +749,21 @@
   },
   {
     "module_name": "nonebot_plugin_handle",
-    "project_link": "nonebot-plugin-handle",
+    "project_link": "nonebot_plugin_handle",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
   },
   {
     "module_name": "nonebot_plugin_minesweeper",
-    "project_link": "nonebot-plugin-minesweeper",
+    "project_link": "nonebot_plugin_minesweeper",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
   },
   {
     "module_name": "nonebot_plugin_draw",
-    "project_link": "nonebot_plugin_draw",
+    "project_link": "nonebot-plugin-draw",
     "author_id": 98812723,
     "tags": [],
     "is_official": false
@@ -826,14 +826,14 @@
   },
   {
     "module_name": "nonebot_plugin_cchess",
-    "project_link": "nonebot-plugin-cchess",
+    "project_link": "nonebot_plugin_cchess",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
   },
   {
     "module_name": "nonebot_plugin_chess",
-    "project_link": "nonebot-plugin-chess",
+    "project_link": "nonebot_plugin_chess",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
@@ -928,14 +928,14 @@
   },
   {
     "module_name": "nonebot_plugin_bilibili_viode",
-    "project_link": "nonebot_plugin_bilibili_viode",
+    "project_link": "nonebot-plugin-bilibili-viode",
     "author_id": 61133548,
     "tags": [],
     "is_official": false
   },
   {
     "module_name": "nonebot_plugin_imagetools",
-    "project_link": "nonebot-plugin-imagetools",
+    "project_link": "nonebot_plugin_imagetools",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
@@ -1008,7 +1008,7 @@
   },
   {
     "module_name": "nonebot_plugin_BitTorrent",
-    "project_link": "nonebot_plugin_BitTorrent",
+    "project_link": "nonebot-plugin-BitTorrent",
     "author_id": 87489040,
     "tags": [],
     "is_official": false
@@ -1038,7 +1038,7 @@
   },
   {
     "module_name": "nonebot_plugin_PicMenu",
-    "project_link": "nonebot_plugin_PicMenu",
+    "project_link": "nonebot-plugin-PicMenu",
     "author_id": 61297321,
     "tags": [
       {
@@ -1050,7 +1050,7 @@
   },
   {
     "module_name": "nonebot_plugin_horserace",
-    "project_link": "nonebot_plugin_horserace",
+    "project_link": "nonebot-plugin-horserace",
     "author_id": 105840558,
     "tags": [],
     "is_official": false
@@ -1090,14 +1090,14 @@
   },
   {
     "module_name": "nonebot_plugin_kawaii_robot",
-    "project_link": "nonebot_plugin_kawaii_robot",
+    "project_link": "nonebot-plugin-kawaii-robot",
     "author_id": 51886078,
     "tags": [],
     "is_official": false
   },
   {
     "module_name": "nonebot_plugin_addFriend",
-    "project_link": "nonebot_plugin_addFriend",
+    "project_link": "nonebot-plugin-addfriend",
     "author_id": 77319678,
     "tags": [],
     "is_official": false
@@ -1116,7 +1116,7 @@
   },
   {
     "module_name": "nonebot_plugin_easyCommand",
-    "project_link": "nonebot_plugin_easyCommand",
+    "project_link": "nonebot-plugin-easycommand",
     "author_id": 77319678,
     "tags": [],
     "is_official": false
@@ -1213,7 +1213,7 @@
   },
   {
     "module_name": "nonebot_plugin_game_collection",
-    "project_link": "nonebot_plugin_game_collection",
+    "project_link": "nonebot-plugin-game-collection",
     "author_id": 51886078,
     "tags": [],
     "is_official": false
@@ -1467,7 +1467,7 @@
   },
   {
     "module_name": "nonebot_plugin_RealESRGAN",
-    "project_link": "nonebot_plugin_RealESRGAN",
+    "project_link": "nonebot-plugin-RealESRGAN",
     "author_id": 78833215,
     "tags": [
       {
@@ -1518,7 +1518,7 @@
   },
   {
     "module_name": "nonebot_plugin_bottle",
-    "project_link": "nonebot-plugin-bottle",
+    "project_link": "nonebot_plugin_bottle",
     "author_id": 97968466,
     "tags": [
       {
@@ -1581,7 +1581,7 @@
   },
   {
     "module_name": "nonebot_plugin_makemidi",
-    "project_link": "nonebot_plugin_makemidi",
+    "project_link": "nonebot-plugin-makemidi",
     "author_id": 79776324,
     "tags": [
       {
@@ -1675,7 +1675,7 @@
   },
   {
     "module_name": "ayaka_games",
-    "project_link": "ayaka_games",
+    "project_link": "ayaka-games",
     "author_id": 47290820,
     "tags": [
       {
@@ -1840,7 +1840,7 @@
   },
   {
     "module_name": "nonebot_plugin_searchBiliInfo",
-    "project_link": "nonebot-plugin-searchBiliInfo",
+    "project_link": "nonebot-plugin-searchbiliinfo",
     "author_id": 40910637,
     "tags": [
       {
@@ -2109,7 +2109,7 @@
   },
   {
     "module_name": "nonebot_plugin_mc_server_status",
-    "project_link": "nonebot-plugin-mc-server-status",
+    "project_link": "nonebot_plugin_mc_server_status",
     "author_id": 31379266,
     "tags": [
       {
@@ -2149,7 +2149,7 @@
   },
   {
     "module_name": "nonebot_plugin_face2cartoonpic",
-    "project_link": "nonebot_plugin_face2cartoonpic",
+    "project_link": "nonebot-plugin-face2cartoonpic",
     "author_id": 96008766,
     "tags": [
       {
@@ -2181,7 +2181,7 @@
   },
   {
     "module_name": "nonebot_plugin_animalVoice",
-    "project_link": "nonebot-plugin-animalVoice",
+    "project_link": "nonebot-plugin-animalvoice",
     "author_id": 96008766,
     "tags": [
       {
@@ -2241,7 +2241,7 @@
   },
   {
     "module_name": "nonebot_plugin_setu_customization",
-    "project_link": "nonebot-plugin-setu-customization",
+    "project_link": "nonebot_plugin_setu_customization",
     "author_id": 31379266,
     "tags": [
       {
@@ -2334,7 +2334,7 @@
   },
   {
     "module_name": "nonebot_plugin_nowtime",
-    "project_link": "nonebot-plugin-nowtime",
+    "project_link": "nonebot_plugin_nowtime",
     "author_id": 106718176,
     "tags": [
       {
@@ -2432,7 +2432,7 @@
   },
   {
     "module_name": "nonebot_plugin_easy_translate",
-    "project_link": "nonebot-plugin-easy-translate",
+    "project_link": "nonebot_plugin_easy_translate",
     "author_id": 31379266,
     "tags": [
       {
@@ -2480,7 +2480,7 @@
   },
   {
     "module_name": "nonebot_plugin_nya_cook_menu",
-    "project_link": "nonebot-plugin-nya-cook-menu",
+    "project_link": "nonebot_plugin_nya_cook_menu",
     "author_id": 31379266,
     "tags": [
       {
@@ -2592,7 +2592,7 @@
   },
   {
     "module_name": "nonebot_plugin_xdu_support",
-    "project_link": "nonebot_plugin_xdu_support",
+    "project_link": "nonebot-plugin-xdu-support",
     "author_id": 75836227,
     "tags": [
       {
@@ -2702,7 +2702,7 @@
   },
   {
     "module_name": "nonebot_plugin_setu_collection",
-    "project_link": "nonebot-plugin-setu-collection",
+    "project_link": "nonebot_plugin_setu_collection",
     "author_id": 51886078,
     "tags": [
       {
@@ -2802,7 +2802,7 @@
   },
   {
     "module_name": "nonebot_plugin_acm_reminder",
-    "project_link": "nonebot-plugin-acm-reminder",
+    "project_link": "nonebot_plugin_acm_reminder",
     "author_id": 63897047,
     "tags": [
       {
@@ -2919,7 +2919,7 @@
   },
   {
     "module_name": "nonebot_plugin_xiuxian_2",
-    "project_link": "nonebot_plugin_xiuxian_2",
+    "project_link": "nonebot-plugin-xiuxian-2",
     "author_id": 88731921,
     "tags": [
       {
@@ -3252,7 +3252,7 @@
   },
   {
     "module_name": "nonebot_plugin_memes_api",
-    "project_link": "nonebot-plugin-memes-api",
+    "project_link": "nonebot_plugin_memes_api",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
@@ -3533,7 +3533,7 @@
   },
   {
     "module_name": "nonebot_plugin_SDGPT",
-    "project_link": "nonebot-plugin-SDGPT",
+    "project_link": "nonebot-plugin-sdgpt",
     "author_id": 52259890,
     "tags": [
       {
@@ -3569,18 +3569,6 @@
       {
         "label": "FF14",
         "color": "#5282ea"
-      }
-    ],
-    "is_official": false
-  },
-  {
-    "module_name": "nonebot_plugin_talk_with_chatgpt",
-    "project_link": "nonebot-plugin-talk-with-chatgpt",
-    "author_id": 31379266,
-    "tags": [
-      {
-        "label": "chatgpt",
-        "color": "#1a834e"
       }
     ],
     "is_official": false
@@ -3894,7 +3882,7 @@
   },
   {
     "module_name": "nonebot_plugin_session",
-    "project_link": "nonebot-plugin-session",
+    "project_link": "nonebot_plugin_session",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
@@ -4169,7 +4157,7 @@
   },
   {
     "module_name": "nonebot_plugin_userinfo",
-    "project_link": "nonebot-plugin-userinfo",
+    "project_link": "nonebot_plugin_userinfo",
     "author_id": 33149974,
     "tags": [],
     "is_official": false
@@ -4433,7 +4421,7 @@
   },
   {
     "module_name": "nonebot_plugin_BotMailNotice",
-    "project_link": "nonebot-plugin-BotMailNotice",
+    "project_link": "nonebot-plugin-botmailnotice",
     "author_id": 78628186,
     "tags": [
       {
@@ -4851,7 +4839,7 @@
   },
   {
     "module_name": "TeenStudy",
-    "project_link": "teenstudy",
+    "project_link": "TeenStudy",
     "author_id": 143619319,
     "tags": [
       {
@@ -4954,7 +4942,7 @@
   },
   {
     "module_name": "nonebot_plugin_eop_ai",
-    "project_link": "nonebot-plugin-eop-ai",
+    "project_link": "nonebot_plugin_eop_ai",
     "author_id": 31379266,
     "tags": [
       {
@@ -5064,7 +5052,7 @@
   },
   {
     "module_name": "nonebot_plugin_getbapics",
-    "project_link": "nonebot-plugin-getbapics",
+    "project_link": "nonebot_plugin_getbapics",
     "author_id": 144128876,
     "tags": [
       {
@@ -5837,7 +5825,7 @@
   },
   {
     "module_name": "nonebot_plugin_helpwithpic",
-    "project_link": "nonebot-plugin-HelpWithPic",
+    "project_link": "nonebot-plugin-helpwithpic",
     "author_id": 106443696,
     "tags": [
       {
@@ -6554,7 +6542,7 @@
   },
   {
     "module_name": "nonebot_plugin_web_bottle",
-    "project_link": "nonebot-plugin-web-bottle",
+    "project_link": "nonebot_plugin_web_bottle",
     "author_id": 107746729,
     "tags": [
       {
@@ -6627,7 +6615,7 @@
   },
   {
     "module_name": "pokepoke_miss",
-    "project_link": "pokepoke-miss",
+    "project_link": "pokepoke_miss",
     "author_id": 140364698,
     "tags": [
       {
@@ -7192,7 +7180,7 @@
   },
   {
     "module_name": "nonebot_plugin_bfvsearch",
-    "project_link": "nonebot_plugin_bfvsearch",
+    "project_link": "nonebot-plugin-bfvsearch",
     "author_id": 166974448,
     "tags": [
       {
