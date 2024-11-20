@@ -39,6 +39,10 @@ toc_max_heading_level: 2
 
 - Bot: Mio澪 [@noneflow](https://github.com/noneflow) ([#3121](https://github.com/nonebot/nonebot2/pull/3121))
 
+### 🍻 适配器发布
+
+- Adapter: Mail [@noneflow](https://github.com/noneflow) ([#3129](https://github.com/nonebot/nonebot2/pull/3129))
+
 ## v2.4.0
 
 ### 🚀 新功能
