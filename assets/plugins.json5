@@ -7638,4 +7638,20 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_manageweb",
+    "project_link": "nonebot-plugin-manageweb",
+    "author_id": 110460087,
+    "tags": [
+      {
+        "label": "webui",
+        "color": "#ea5252"
+      },
+      {
+        "label": "插件更新",
+        "color": "#505d4d"
+      }
+    ],
+    "is_official": false
+  },
 ]
