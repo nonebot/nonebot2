@@ -1658,7 +1658,7 @@
     webpack "^5.95.0"
     webpackbar "^6.0.1"
 
-"@docusaurus/core@3.6.2", "@docusaurus/core@^3.5.2", "@docusaurus/core@^3.6.2":
+"@docusaurus/core@3.6.2", "@docusaurus/core@^3.6.2":
   version "3.6.2"
   resolved "https://registry.npmjs.org/@docusaurus/core/-/core-3.6.2.tgz#78628790f255555bb4c81e5952d16ea1412c4548"
   integrity sha512-irMts/mGLZv8dWcy0WUtbY/U6b5qIfHgQd1/kXMyAxUJo99fL0wFSqhMI+tcxjk0HYy427MXerLMqFJj+Arg1w==
@@ -1717,6 +1717,21 @@
     postcss-sort-media-queries "^5.2.0"
     tslib "^2.6.0"
 
+"@docusaurus/faster@^3.6.2":
+  version "3.6.2"
+  resolved "https://registry.npmjs.org/@docusaurus/faster/-/faster-3.6.2.tgz#45b1354e56782e23113578c192cd1f7d18a1d9cf"
+  integrity sha512-r+soceklUKPaP6KRh5JXsN/Y6WBAqbsi6It/TuLppHNpSwZF/kZzSCvjG+XigIr92G2bdHUDpPocFOfNrANv0w==
+  dependencies:
+    "@docusaurus/types" "3.6.2"
+    "@rspack/core" "^1.1.1"
+    "@swc/core" "^1.7.39"
+    "@swc/html" "^1.7.39"
+    browserslist "^4.24.2"
+    lightningcss "^1.27.0"
+    swc-loader "^0.2.6"
+    tslib "^2.6.0"
+    webpack "^5.95.0"
+
 "@docusaurus/logger@3.6.2":
   version "3.6.2"
   resolved "https://registry.npmjs.org/@docusaurus/logger/-/logger-3.6.2.tgz#4f73f82b33e1d432f3940fc208b3c0646ca5549c"
@@ -1766,7 +1781,7 @@
     vfile "^6.0.1"
     webpack "^5.88.1"
 
-"@docusaurus/module-type-aliases@3.6.2", "@docusaurus/module-type-aliases@^3.5.2":
+"@docusaurus/module-type-aliases@3.6.2", "@docusaurus/module-type-aliases@^3.6.2":
   version "3.6.2"
   resolved "https://registry.npmjs.org/@docusaurus/module-type-aliases/-/module-type-aliases-3.6.2.tgz#7432618696668acc9a7cfb47de66c6987cd57680"
   integrity sha512-NrJkL2rLTCjHtWOqUvWzwqvJrsKLj0gVJeV6q5yeKdKKgItietcTf2fTRkM9LHKSUN8CBDXxwHABeQvTahvmXQ==
@@ -2260,6 +2275,34 @@
   dependencies:
     "@types/mdx" "^2.0.0"
 
+"@module-federation/runtime-tools@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.npmjs.org/@module-federation/runtime-tools/-/runtime-tools-0.5.1.tgz#1b1f93837159a6bf0c0ba78730d589a5a8f74aa3"
+  integrity sha512-nfBedkoZ3/SWyO0hnmaxuz0R0iGPSikHZOAZ0N/dVSQaIzlffUo35B5nlC2wgWIc0JdMZfkwkjZRrnuuDIJbzg==
+  dependencies:
+    "@module-federation/runtime" "0.5.1"
+    "@module-federation/webpack-bundler-runtime" "0.5.1"
+
+"@module-federation/runtime@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.npmjs.org/@module-federation/runtime/-/runtime-0.5.1.tgz#b548a75e2068952ff66ad717cbf73fc921edd5d7"
+  integrity sha512-xgiMUWwGLWDrvZc9JibuEbXIbhXg6z2oUkemogSvQ4LKvrl/n0kbqP1Blk669mXzyWbqtSp6PpvNdwaE1aN5xQ==
+  dependencies:
+    "@module-federation/sdk" "0.5.1"
+
+"@module-federation/sdk@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.npmjs.org/@module-federation/sdk/-/sdk-0.5.1.tgz#6c0a4053c23fa84db7aae7e4736496c541de7191"
+  integrity sha512-exvchtjNURJJkpqjQ3/opdbfeT2wPKvrbnGnyRkrwW5o3FH1LaST1tkiNviT6OXTexGaVc2DahbdniQHVtQ7pA==
+
+"@module-federation/webpack-bundler-runtime@0.5.1":
+  version "0.5.1"
+  resolved "https://registry.npmjs.org/@module-federation/webpack-bundler-runtime/-/webpack-bundler-runtime-0.5.1.tgz#ef626af0d57e3568c474d66d7d3797366e09cafd"
+  integrity sha512-mMhRFH0k2VjwHt3Jol9JkUsmI/4XlrAoBG3E0o7HoyoPYv1UFOWyqAflfANcUPgbYpvqmyLzDcO+3IT36LXnrA==
+  dependencies:
+    "@module-federation/runtime" "0.5.1"
+    "@module-federation/sdk" "0.5.1"
+
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
   resolved "https://registry.npmjs.org/@nodelib/fs.scandir/-/fs.scandir-2.1.5.tgz#7619c2eb21b25483f6d167548b4cfd5a7488c3d5"
@@ -2417,6 +2460,81 @@
   version "1.0.0-next.28"
   resolved "https://registry.npmjs.org/@polka/url/-/url-1.0.0-next.28.tgz#d45e01c4a56f143ee69c54dd6b12eade9e270a73"
   integrity sha512-8LduaNlMZGwdZ6qWrKlfa+2M4gahzFkprZiAt2TF8uS0qQgBizKXpXURqvTJ4WtmupWxaLqjRb2UCTe72mu+Aw==
+
+"@rspack/binding-darwin-arm64@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/@rspack/binding-darwin-arm64/-/binding-darwin-arm64-1.1.3.tgz#17059d6f3d4d74fd174926d88edb9ac58cfe863e"
+  integrity sha512-gpLUBMDAS/uEcnE+ODy1ILTeyp1oM4QCq8rRhKHuOfsIe1AZ9Mct59v2omIE/r+R4dnbJ0ikIpto9qJZ6P2u1A==
+
+"@rspack/binding-darwin-x64@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/@rspack/binding-darwin-x64/-/binding-darwin-x64-1.1.3.tgz#62895c939d03f0681db00d3a1864853b0a059fd8"
+  integrity sha512-m1G7SzkRfr1oLgghbAxUwj1J7hSKhtskQZiVeqe5tewKimFr6xLpKSTLTnEtlW0gdGNf1+dRMX/4kLMwhOdY7g==
+
+"@rspack/binding-linux-arm64-gnu@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/@rspack/binding-linux-arm64-gnu/-/binding-linux-arm64-gnu-1.1.3.tgz#0ea68af571f5ce9a1a46f6b89ef34cfd4c351ef9"
+  integrity sha512-MpOrO1oppxAm8J1ztNz6G5DG/oL9ZLHmIz9vYNV6PKnk+MPhCXqfhFmQ2hZm5VIVKuOobfYEJiDUqKg2MLg8gA==
+
+"@rspack/binding-linux-arm64-musl@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/@rspack/binding-linux-arm64-musl/-/binding-linux-arm64-musl-1.1.3.tgz#b841499d9769c12cd9b87cea724dbd10210e73c6"
+  integrity sha512-PnUDC1JxT6a5hJW0hhJ9ubWk3R+nk7eLXyNaORHyQH4k8o89Zm5GYoKnDgO4eRy41NB9/aBJQJRGSRn0iAsZgw==
+
+"@rspack/binding-linux-x64-gnu@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/@rspack/binding-linux-x64-gnu/-/binding-linux-x64-gnu-1.1.3.tgz#1ca6f4e4f747ec80e0dbeff17b383fdea051ca69"
+  integrity sha512-+6JgyKXOp2QrHzlru95mge70tDkYlaY4NNE9xyrdj6PgTnM9cVPx4sLVhHC9+tWXaTFnccfEe9Tt6LjKnjHGaA==
+
+"@rspack/binding-linux-x64-musl@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/@rspack/binding-linux-x64-musl/-/binding-linux-x64-musl-1.1.3.tgz#469a0bd9638df5327ff0ae31a344b17a300d6ebd"
+  integrity sha512-X0TJTVL1Roqq/tvN26QO4u62x2xp5tE0dlhwhbeCHrBdgBzc+PHvcv/8lclRcq6lDPzceAgcnNX/+RbWg0DzKg==
+
+"@rspack/binding-win32-arm64-msvc@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/@rspack/binding-win32-arm64-msvc/-/binding-win32-arm64-msvc-1.1.3.tgz#2bba8f0571747d501dc41dd0d2b6a59a95c7b09b"
+  integrity sha512-Lvpp5Q30YiPNkuOFPawp2al2CTWElPeG3X0E9LFIfPdVkLc/e2nkf5a6zSYtnbD2oaskzQIYN/k27fWqWWcVHA==
+
+"@rspack/binding-win32-ia32-msvc@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/@rspack/binding-win32-ia32-msvc/-/binding-win32-ia32-msvc-1.1.3.tgz#961f4ba7aeb9ef7808efdcf55193382be5b14166"
+  integrity sha512-tC+xXcbTRX7l+NFnlGK8UhDIJrKma7S/MA1KDol23/I3Vw67EcaHDwG+q2v7uiJsxn9XooIOSCJhPKmUUfZNXg==
+
+"@rspack/binding-win32-x64-msvc@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/@rspack/binding-win32-x64-msvc/-/binding-win32-x64-msvc-1.1.3.tgz#ec4fe49bc06c945fc5cac0286641ce84c7c619a0"
+  integrity sha512-jeRaPJtsD/+m1QINgoDMA6D3kOcTwSHVmGSxR6fznLA5BKa76m8lewuALYxHHq9/qcgwJ4e6UtiwrO2JL3vxVQ==
+
+"@rspack/binding@1.1.3":
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/@rspack/binding/-/binding-1.1.3.tgz#601e32f5642fb4f1904b1ca0712d4e0dc312d755"
+  integrity sha512-fB1ziJ1UXO2P4ZDO+dviSNuxknUqrz6QQ6QGfpC+S1ClUy1HOhHXss/Yn78B/R9py6dlqZzmhmhz2d+XzFVApA==
+  optionalDependencies:
+    "@rspack/binding-darwin-arm64" "1.1.3"
+    "@rspack/binding-darwin-x64" "1.1.3"
+    "@rspack/binding-linux-arm64-gnu" "1.1.3"
+    "@rspack/binding-linux-arm64-musl" "1.1.3"
+    "@rspack/binding-linux-x64-gnu" "1.1.3"
+    "@rspack/binding-linux-x64-musl" "1.1.3"
+    "@rspack/binding-win32-arm64-msvc" "1.1.3"
+    "@rspack/binding-win32-ia32-msvc" "1.1.3"
+    "@rspack/binding-win32-x64-msvc" "1.1.3"
+
+"@rspack/core@^1.1.1":
+  version "1.1.3"
+  resolved "https://registry.npmjs.org/@rspack/core/-/core-1.1.3.tgz#4ca0c9c51d2b124d0c75b7c3c739866e56a53a12"
+  integrity sha512-LdM1mAlBtEh9ozbpyWVW5uuL+aJMjYqd531pH5/i/EPDKNrOLrQWVNMa2dh07qLwJZXoTFMf7LWA7QNsmBUPJg==
+  dependencies:
+    "@module-federation/runtime-tools" "0.5.1"
+    "@rspack/binding" "1.1.3"
+    "@rspack/lite-tapable" "1.0.1"
+    caniuse-lite "^1.0.30001616"
+
+"@rspack/lite-tapable@1.0.1":
+  version "1.0.1"
+  resolved "https://registry.npmjs.org/@rspack/lite-tapable/-/lite-tapable-1.0.1.tgz#d4540a5d28bd6177164bc0ba0bee4bdec0458591"
+  integrity sha512-VynGOEsVw2s8TAlLf/uESfrgfrq2+rcXB1muPJYBWbsm1Oa6r5qVQhjA5ggM6z/coYPrsVMgovl3Ff7Q7OCp1w==
 
 "@rtsao/scc@^1.1.0":
   version "1.1.0"
@@ -2625,7 +2743,7 @@
   resolved "https://registry.npmjs.org/@swc/core-win32-x64-msvc/-/core-win32-x64-msvc-1.9.2.tgz#f609fefac8f412b445cb0a2bfec73a657e41d4db"
   integrity sha512-ik/k+JjRJBFkXARukdU82tSVx0CbExFQoQ78qTO682esbYXzjdB5eLVkoUbwen299pnfr88Kn4kyIqFPTje8Xw==
 
-"@swc/core@^1.7.26":
+"@swc/core@^1.7.26", "@swc/core@^1.7.39":
   version "1.9.2"
   resolved "https://registry.npmjs.org/@swc/core/-/core-1.9.2.tgz#226bdc5033ba0af85c0bf814b16bdc1df0070d35"
   integrity sha512-dYyEkO6mRYtZFpnOsnYzv9rY69fHAHoawYOjGOEcxk9WYtaJhowMdP/w6NcOKnz2G7GlZaenjkzkMa6ZeQeMsg==
@@ -2648,6 +2766,74 @@
   version "0.1.3"
   resolved "https://registry.npmjs.org/@swc/counter/-/counter-0.1.3.tgz#cc7463bd02949611c6329596fccd2b0ec782b0e9"
   integrity sha512-e2BR4lsJkkRlKZ/qCHPw9ZaSxc0MVUd7gtbtaB7aMvHeJVYe8sOB8DBZkP2DtISHGSku9sCK6T6cnY0CtXrOCQ==
+
+"@swc/html-darwin-arm64@1.9.2":
+  version "1.9.2"
+  resolved "https://registry.npmjs.org/@swc/html-darwin-arm64/-/html-darwin-arm64-1.9.2.tgz#e052dbfdec5b1bc7b634dfb56e5ad96e9199a7c5"
+  integrity sha512-ZUdSXezeJrYgzrUv5alsjBI5wPMks/DyskHypOD6XwFJq1rFYRlFkiiwgf1U/uVSZnseIoXezBURnPliWpkrHQ==
+
+"@swc/html-darwin-x64@1.9.2":
+  version "1.9.2"
+  resolved "https://registry.npmjs.org/@swc/html-darwin-x64/-/html-darwin-x64-1.9.2.tgz#080f4f8941c2a3e8dc38a14317f7db8c86abd969"
+  integrity sha512-5/8xDeP10VjEP5MhMAe83EDeh3rlB+BHbZB6mVFxP1NuEfY1DlW+z3+wPKp0qsvkPcK+82nZu43hystTkCXHhQ==
+
+"@swc/html-linux-arm-gnueabihf@1.9.2":
+  version "1.9.2"
+  resolved "https://registry.npmjs.org/@swc/html-linux-arm-gnueabihf/-/html-linux-arm-gnueabihf-1.9.2.tgz#4bdf5aaeee4847bb2d347fde95e3feb349c840b8"
+  integrity sha512-AJQ8FpbVC2hx0upqe15b/i8PUpye5B8W0sEw8bOz/PAV7Ub+P+qFXBPmu1qFz+GLtIE+yAvhA8GRrReXJvALQQ==
+
+"@swc/html-linux-arm64-gnu@1.9.2":
+  version "1.9.2"
+  resolved "https://registry.npmjs.org/@swc/html-linux-arm64-gnu/-/html-linux-arm64-gnu-1.9.2.tgz#c5dc27816da799059711d80f82aae3fca0fa794a"
+  integrity sha512-rhTeDQjXo9gYK8OPGTsgXl1a0pKPnXLHeF2DfRGpAdOqChRdS3GEOX2Qawl7+fRjJ5UGs0/lOXo+BWwVcPyrSw==
+
+"@swc/html-linux-arm64-musl@1.9.2":
+  version "1.9.2"
+  resolved "https://registry.npmjs.org/@swc/html-linux-arm64-musl/-/html-linux-arm64-musl-1.9.2.tgz#e3405436a58de42c1b090beeb6aa6bab53693f4e"
+  integrity sha512-zJGhfYARjVaQ1bJ0NBsmoG7GYqXx/Qi5WnDEvq+jK5Ue9u6++Xeit5X9vVx67+B20w0ecngM5RqD9Yoc34MT4g==
+
+"@swc/html-linux-x64-gnu@1.9.2":
+  version "1.9.2"
+  resolved "https://registry.npmjs.org/@swc/html-linux-x64-gnu/-/html-linux-x64-gnu-1.9.2.tgz#c55b94201fa6074b26e4e44021ba78873e54e921"
+  integrity sha512-acbKaR7/dnYJ8g0GeQGEmWTmMuEMr3+8blJJ/ksxHjIopsWjNplLaKNCM8GfvF7vjIr9zgtLgP3NB+e3OLagKg==
+
+"@swc/html-linux-x64-musl@1.9.2":
+  version "1.9.2"
+  resolved "https://registry.npmjs.org/@swc/html-linux-x64-musl/-/html-linux-x64-musl-1.9.2.tgz#871d43bc06e4821df54aa99eee54a5e73fdbd826"
+  integrity sha512-wuNhqpkN1ZZWj/4RGHH+Cz1tjs7NfEu53en13YzDjwfPxsIfnbksQ0UD/uEVp8l8alsniJ9EokzXgfenmjDvlQ==
+
+"@swc/html-win32-arm64-msvc@1.9.2":
+  version "1.9.2"
+  resolved "https://registry.npmjs.org/@swc/html-win32-arm64-msvc/-/html-win32-arm64-msvc-1.9.2.tgz#50a97fd439266a6e186bc1ca44f31a84b161b0f9"
+  integrity sha512-x2H2aWZX4HbU09rDWsf6W7fS0ApJwNBlthBDlMZj6gGzTgkRQtNwD/gpg3eRZmu5DxsnmBZ2a/rxxiU1IMv5mA==
+
+"@swc/html-win32-ia32-msvc@1.9.2":
+  version "1.9.2"
+  resolved "https://registry.npmjs.org/@swc/html-win32-ia32-msvc/-/html-win32-ia32-msvc-1.9.2.tgz#7627258c4ecc1a9ee1f1523ef51889d66726cb87"
+  integrity sha512-4bMY6HHAEVtX8buJm69XVs5sucxce9gyEzcNCXy2rfXAG9kxClE/ZbMWhXl3z6nYRWKBuoPoaL2eio1dEAvyTQ==
+
+"@swc/html-win32-x64-msvc@1.9.2":
+  version "1.9.2"
+  resolved "https://registry.npmjs.org/@swc/html-win32-x64-msvc/-/html-win32-x64-msvc-1.9.2.tgz#e06e2cbef0d36fa0cb9c7d572b965719fe983bec"
+  integrity sha512-HbxGfXT3KzSlo8uvoiQL8Q9ZnWzxHGYoe2emwFS5FeQuR01LMF0MWB3r2NhAYGx+DlD2h/3BR/hSM1qiDjl9VQ==
+
+"@swc/html@^1.7.39":
+  version "1.9.2"
+  resolved "https://registry.npmjs.org/@swc/html/-/html-1.9.2.tgz#064bb4d0ce452f1dfe4f44c1a4e46df631e7b0ba"
+  integrity sha512-HoRqmYbxribu9thQ8vDshh6mgVcs2MSF0lEdoRBUBGcXbLwOMdCQMncbJoVguy0ehmmOzBwt+9qnP58IY+RWbg==
+  dependencies:
+    "@swc/counter" "^0.1.3"
+  optionalDependencies:
+    "@swc/html-darwin-arm64" "1.9.2"
+    "@swc/html-darwin-x64" "1.9.2"
+    "@swc/html-linux-arm-gnueabihf" "1.9.2"
+    "@swc/html-linux-arm64-gnu" "1.9.2"
+    "@swc/html-linux-arm64-musl" "1.9.2"
+    "@swc/html-linux-x64-gnu" "1.9.2"
+    "@swc/html-linux-x64-musl" "1.9.2"
+    "@swc/html-win32-arm64-msvc" "1.9.2"
+    "@swc/html-win32-ia32-msvc" "1.9.2"
+    "@swc/html-win32-x64-msvc" "1.9.2"
 
 "@swc/types@^0.1.15":
   version "0.1.17"
@@ -3960,7 +4146,7 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001646, caniuse-lite@^1.0.30001669:
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30001616, caniuse-lite@^1.0.30001646, caniuse-lite@^1.0.30001669:
   version "1.0.30001683"
   resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001683.tgz#7f026a2d5d319a9cf8915a1451173052caaadc81"
   integrity sha512-iqmNnThZ0n70mNwvxpEC2nBJ037ZHZUoBI5Gorh1Mw6IlEAZujEoU1tXA628iZfzm7R9FvFzxbfdgml82a3k8Q==
@@ -4759,6 +4945,11 @@ destroy@1.2.0:
   version "1.2.0"
   resolved "https://registry.npmjs.org/destroy/-/destroy-1.2.0.tgz#4803735509ad8be552934c67df614f94e66fa015"
   integrity sha512-2sJGJTaXIIaR1w4iJSNoN0hnMY7Gpc/n8D4qSCJw8QqFWXf7cuAgnEHxBpweaVcPevC2l3KpjYCx3NypQQgaJg==
+
+detect-libc@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.npmjs.org/detect-libc/-/detect-libc-1.0.3.tgz#fa137c4bd698edf55cd5cd02ac559f91a4c4ba9b"
+  integrity sha512-pGjwhsmsp4kL2RTz08wcOlGN83otlqHeD/Z5T8GXZB+/YcpQ/dgo+lbU8ZsGxV0HIvqqxo9l7mqYwyYMD9bKDg==
 
 detect-libc@^2.0.0, detect-libc@^2.0.2:
   version "2.0.3"
@@ -7170,6 +7361,74 @@ levn@^0.4.1:
   dependencies:
     prelude-ls "^1.2.1"
     type-check "~0.4.0"
+
+lightningcss-darwin-arm64@1.28.1:
+  version "1.28.1"
+  resolved "https://registry.npmjs.org/lightningcss-darwin-arm64/-/lightningcss-darwin-arm64-1.28.1.tgz#043c30e2d22ee68beb7f8782e96390821ba8ab34"
+  integrity sha512-VG3vvzM0m/rguCdm76DdobNeNJnHK+jWcdkNLFWHLh9YCotRvbRIt45JxwcHlIF8TDqWStVLTdghq5NaigVCBQ==
+
+lightningcss-darwin-x64@1.28.1:
+  version "1.28.1"
+  resolved "https://registry.npmjs.org/lightningcss-darwin-x64/-/lightningcss-darwin-x64-1.28.1.tgz#c0f975759af364699fdbd7a4756ac66767ed9767"
+  integrity sha512-O7ORdislvKfMohFl4Iq7fxKqdJOuuxArcglVI3amuFO5DJ0wfV3Gxgi1JRo49slfr7OVzJQEHLG4muTWYM5cTQ==
+
+lightningcss-freebsd-x64@1.28.1:
+  version "1.28.1"
+  resolved "https://registry.npmjs.org/lightningcss-freebsd-x64/-/lightningcss-freebsd-x64-1.28.1.tgz#f8eb8b63845a88d32eed71a594cf224f6c7ea4fd"
+  integrity sha512-b7sF89B31kYYijxVcFO7l5u6UNA862YstNu+3YbLl/IQKzveL4a5cwR5cdpG+OOhErg/c2u9WCmzZoX2I5GBvw==
+
+lightningcss-linux-arm-gnueabihf@1.28.1:
+  version "1.28.1"
+  resolved "https://registry.npmjs.org/lightningcss-linux-arm-gnueabihf/-/lightningcss-linux-arm-gnueabihf-1.28.1.tgz#726dfdb2db6ba3a7bb2169e5724d826cb585a76d"
+  integrity sha512-p61kXwvhUDLLzkWHjzSFfUBW/F0iy3jr3CWi3k8SKULtJEsJXTI9DqRm9EixxMSe2AMBQBt4auTYiQL4B1N51A==
+
+lightningcss-linux-arm64-gnu@1.28.1:
+  version "1.28.1"
+  resolved "https://registry.npmjs.org/lightningcss-linux-arm64-gnu/-/lightningcss-linux-arm64-gnu-1.28.1.tgz#9f4e4450617230ea557abb5ffd5d26b2047e9b62"
+  integrity sha512-iO+fN9hOMmzfwqcG2/BgUtMKD48H2JO/SXU44fyIwpY2veb65QF5xiRrQ9l1FwIxbGK3231KBYCtAqv+xf+NsQ==
+
+lightningcss-linux-arm64-musl@1.28.1:
+  version "1.28.1"
+  resolved "https://registry.npmjs.org/lightningcss-linux-arm64-musl/-/lightningcss-linux-arm64-musl-1.28.1.tgz#9d2561d8a5ecfb3f1f18651da0acc592e837ea3a"
+  integrity sha512-dnMHeXEmCUzHHZjaDpQBYuBKcN9nPC3nPFKl70bcj5Bkn5EmkcgEqm5p035LKOgvAwk1XwLpQCML6pXmCwz0NQ==
+
+lightningcss-linux-x64-gnu@1.28.1:
+  version "1.28.1"
+  resolved "https://registry.npmjs.org/lightningcss-linux-x64-gnu/-/lightningcss-linux-x64-gnu-1.28.1.tgz#91d0a41d6dd40d8965cb6c1fbd4d40e6b3460384"
+  integrity sha512-7vWDISaMUn+oo2TwRdf2hl/BLdPxvywv9JKEqNZB/0K7bXwV4XE9wN/C2sAp1gGuh6QBA8lpjF4JIPt3HNlCHA==
+
+lightningcss-linux-x64-musl@1.28.1:
+  version "1.28.1"
+  resolved "https://registry.npmjs.org/lightningcss-linux-x64-musl/-/lightningcss-linux-x64-musl-1.28.1.tgz#f1a9d0cafc1eb7ec72ef4f2a3a81b5631060c461"
+  integrity sha512-IHCu9tVGP+x5BCpA2rF3D04DBokcBza/a8AuHQU+1AiMKubuMegPwcL7RatBgK4ztFHeYnnD5NdhwhRfYMAtNA==
+
+lightningcss-win32-arm64-msvc@1.28.1:
+  version "1.28.1"
+  resolved "https://registry.npmjs.org/lightningcss-win32-arm64-msvc/-/lightningcss-win32-arm64-msvc-1.28.1.tgz#c21f7683648a9e4d856737fc22c3eca908c773b6"
+  integrity sha512-Erm72kHmMg/3h350PTseskz+eEGBM17Fuu79WW2Qqt0BfWSF1jHHc12lkJCWMYl5jcBHPs5yZdgNHtJ7IJS3Uw==
+
+lightningcss-win32-x64-msvc@1.28.1:
+  version "1.28.1"
+  resolved "https://registry.npmjs.org/lightningcss-win32-x64-msvc/-/lightningcss-win32-x64-msvc-1.28.1.tgz#7afe4f4128bf6b75a570e8585d287040243f7881"
+  integrity sha512-ZPQtvx+uQBzrSdHH8p4H3M9Alue+x369TPZAA3b4K3d92FPhpZCuBG04+HQzspam9sVeID9mI6f3VRAs2ezaEA==
+
+lightningcss@^1.27.0:
+  version "1.28.1"
+  resolved "https://registry.npmjs.org/lightningcss/-/lightningcss-1.28.1.tgz#311b44052e4dcb17e31929a584a9a68864a456ed"
+  integrity sha512-KRDkHlLlNj3DWh79CDt93fPlRJh2W1AuHV0ZSZAMMuN7lqlsZTV5842idfS1urWG8q9tc17velp1gCXhY7sLnQ==
+  dependencies:
+    detect-libc "^1.0.3"
+  optionalDependencies:
+    lightningcss-darwin-arm64 "1.28.1"
+    lightningcss-darwin-x64 "1.28.1"
+    lightningcss-freebsd-x64 "1.28.1"
+    lightningcss-linux-arm-gnueabihf "1.28.1"
+    lightningcss-linux-arm64-gnu "1.28.1"
+    lightningcss-linux-arm64-musl "1.28.1"
+    lightningcss-linux-x64-gnu "1.28.1"
+    lightningcss-linux-x64-musl "1.28.1"
+    lightningcss-win32-arm64-msvc "1.28.1"
+    lightningcss-win32-x64-msvc "1.28.1"
 
 lilconfig@^2.1.0:
   version "2.1.0"

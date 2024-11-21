@@ -22,7 +22,7 @@
     "typecheck": "tsc"
   },
   "dependencies": {
-    "@docusaurus/core": "^3.5.2",
+    "@docusaurus/core": "^3.6.2",
     "@mdx-js/react": "^3.0.0",
     "@nullbot/docusaurus-plugin-changelog": "^3.0.0",
     "@nullbot/docusaurus-preset-nonepress": "^3.0.0",
@@ -38,7 +38,8 @@
     "swc-loader": "^0.2.6"
   },
   "devDependencies": {
-    "@docusaurus/module-type-aliases": "^3.5.2",
+    "@docusaurus/faster": "^3.6.2",
+    "@docusaurus/module-type-aliases": "^3.6.2",
     "@nullbot/docusaurus-tsconfig": "^3.0.0",
     "@types/react-color": "^3.0.10",
     "asciinema-player": "^3.5.0",
