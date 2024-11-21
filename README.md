@@ -133,6 +133,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
   |                       Villa（[仓库](https://github.com/CMHopeSunshine/nonebot-adapter-villa)）                        |  ❌  |                     米游社大别野 Bot 协议，官方已下线                     |
   | Rocket.Chat（[仓库](https://github.com/IUnlimit/nonebot-adapter-rocketchat)，[协议](https://developer.rocket.chat/)） |  ↗️  |                     Rocket.Chat Bot 协议，由社区贡献                      |
   |     Tailchat（[仓库](https://github.com/eya46/nonebot-adapter-tailchat)，[协议](https://tailchat.msgbyte.com/)）      |  ↗️  |                  Tailchat 开放平台 Bot 协议，由社区贡献                   |
+  |                             Mail（[仓库](https://github.com/mobyw/nonebot-adapter-mail)）                             |  ↗️  |                         邮件收发协议，由社区贡献                          |
 
 - 坚实后盾：支持多种 web 框架，可自定义替换、组合
 
