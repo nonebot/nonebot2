@@ -48,11 +48,20 @@ jobs:
           cd ./envs/${{ matrix.env }}
           poetry run bash "../../scripts/run-tests.sh"
 
+      - name: Upload test results
+        uses: codecov/test-results-action@v1
+        with:
+          env_vars: OS,PYTHON_VERSION,PYDANTIC_VERSION
+          flags: unittests
+        env:
+          CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
+
       - name: Upload coverage report
         uses: codecov/codecov-action@v5
         with:
           env_vars: OS,PYTHON_VERSION,PYDANTIC_VERSION
           files: ./tests/coverage.xml
           flags: unittests
+          fail_ci_if_error: true
         env:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
