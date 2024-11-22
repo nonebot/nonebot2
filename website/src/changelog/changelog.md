@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 移除侧栏遮罩及启用构建加速 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3135](https://github.com/nonebot/nonebot2/pull/3135))
 - Docs: 添加 Mail 适配器说明 [@mobyw](https://github.com/mobyw) ([#3134](https://github.com/nonebot/nonebot2/pull/3134))
 - Docs: 修复 wwads 造成的 client 水合不匹配 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3106](https://github.com/nonebot/nonebot2/pull/3106))
 - Docs: 修复 wwads [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3105](https://github.com/nonebot/nonebot2/pull/3105))
