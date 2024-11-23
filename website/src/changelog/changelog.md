@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Feature: 提升已加载的适配器日志等级 [@yanyongyu](https://github.com/yanyongyu) ([#3110](https://github.com/nonebot/nonebot2/pull/3110))
 
+### 🐛 Bug 修复
+
+- Fix: 屏蔽 pydantic 2.10.0 [@yanyongyu](https://github.com/yanyongyu) ([#3137](https://github.com/nonebot/nonebot2/pull/3137))
+
 ### 📝 文档
 
 - Docs: 移除侧栏遮罩及启用构建加速 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3135](https://github.com/nonebot/nonebot2/pull/3135))
