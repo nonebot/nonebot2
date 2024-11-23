@@ -33,6 +33,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-api-scheduler [@noneflow](https://github.com/noneflow) ([#3133](https://github.com/nonebot/nonebot2/pull/3133))
 - Plugin: nb商店插件安装器web版 [@noneflow](https://github.com/noneflow) ([#3126](https://github.com/nonebot/nonebot2/pull/3126))
 - Plugin: 恩情课文 [@noneflow](https://github.com/noneflow) ([#3123](https://github.com/nonebot/nonebot2/pull/3123))
 - Plugin: 自动点赞订阅赞 [@noneflow](https://github.com/noneflow) ([#3103](https://github.com/nonebot/nonebot2/pull/3103))
