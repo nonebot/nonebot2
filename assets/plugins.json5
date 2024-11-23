@@ -7654,4 +7654,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_api_scheduler",
+    "project_link": "nonebot-plugin-api-scheduler",
+    "author_id": 68597153,
+    "tags": [
+      {
+        "label": "scheduler",
+        "color": "#ea5252"
+      },
+      {
+        "label": "api",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
