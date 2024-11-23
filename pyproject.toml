@@ -33,8 +33,8 @@ exceptiongroup = "^1.2.2"
 loguru = ">=0.6.0,<1.0.0"
 python-dotenv = ">=0.21.0,<2.0.0"
 typing-extensions = ">=4.4.0,<5.0.0"
-pydantic = ">=1.10.0,<3.0.0,!=2.5.0,!=2.5.1"
 tomli = { version = "^2.0.1", python = "<3.11" }
+pydantic = ">=1.10.0,<3.0.0,!=2.5.0,!=2.5.1,!=2.10.0"
 
 websockets = { version = ">=10.0", optional = true }
 Quart = { version = ">=0.18.0,<1.0.0", optional = true }
@@ -50,7 +50,7 @@ ruff = "^0.7.0"
 isort = "^5.10.1"
 black = "^24.0.0"
 nonemoji = "^0.1.2"
-pre-commit = "^3.0.0"
+pre-commit = "^4.0.0"
 
 [tool.poetry.group.test.dependencies]
 nonebot-test = { path = "./envs/test/", develop = false }
