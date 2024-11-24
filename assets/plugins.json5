@@ -7682,4 +7682,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_zepplife",
+    "project_link": "nonebot-plugin-zepplife",
+    "author_id": 137581352,
+    "tags": [
+      {
+        "label": "运动",
+        "color": "#34cb0e"
+      }
+    ],
+    "is_official": false
+  },
 ]
