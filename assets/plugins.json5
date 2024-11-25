@@ -7694,4 +7694,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_hyp",
+    "project_link": "nonebot-plugin-hyp",
+    "author_id": 87823528,
+    "tags": [
+      {
+        "label": "Hypixel",
+        "color": "#d5a446"
+      }
+    ],
+    "is_official": false
+  },
 ]
