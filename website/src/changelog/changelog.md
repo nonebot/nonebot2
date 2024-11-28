@@ -33,6 +33,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-hyp [@noneflow](https://github.com/noneflow) ([#3140](https://github.com/nonebot/nonebot2/pull/3140))
 - Plugin: nonebot-plugin-zepplife [@noneflow](https://github.com/noneflow) ([#3132](https://github.com/nonebot/nonebot2/pull/3132))
 - Plugin: 权限控制 [@noneflow](https://github.com/noneflow) ([#3112](https://github.com/nonebot/nonebot2/pull/3112))
 - Plugin: nonebot-plugin-api-scheduler [@noneflow](https://github.com/noneflow) ([#3133](https://github.com/nonebot/nonebot2/pull/3133))
