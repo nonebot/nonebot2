@@ -82,6 +82,8 @@ class Session(HTTPClientSession):
             data=setup.data,
             files=setup.files,
             json=setup.json,
+            # ensure the params priority
+            params=setup.url.raw_query_string,
             headers=tuple(setup.headers.items()),
             cookies=setup.cookies.jar,
             timeout=setup.timeout,

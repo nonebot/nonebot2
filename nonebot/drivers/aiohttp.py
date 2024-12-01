@@ -90,9 +90,7 @@ class Session(HTTPClientSession):
     @override
     async def request(self, setup: Request) -> Response:
         if self._params:
-            params = self._params.copy()
-            params.update(setup.url.query)
-            url = setup.url.with_query(params)
+            url = setup.url.with_query({**self._params, **setup.url.query})
         else:
             url = setup.url
 
