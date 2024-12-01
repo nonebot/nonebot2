@@ -45,18 +45,18 @@ FrontMatter:
     description: nonebot 模块
 """
 
-import os
 from importlib.metadata import version
-from typing import Any, Union, TypeVar, Optional, overload
+import os
+from typing import Any, Optional, TypeVar, Union, overload
 
 import loguru
 
+from nonebot.adapters import Adapter, Bot
 from nonebot.compat import model_dump
+from nonebot.config import DOTENV_TYPE, Config, Env
+from nonebot.drivers import ASGIMixin, Driver, combine_driver
 from nonebot.log import logger as logger
-from nonebot.adapters import Bot, Adapter
-from nonebot.config import DOTENV_TYPE, Env, Config
 from nonebot.utils import escape_tag, resolve_dot_notation
-from nonebot.drivers import Driver, ASGIMixin, combine_driver
 
 try:
     __version__ = version("nonebot2")
@@ -337,31 +337,31 @@ def run(*args: Any, **kwargs: Any) -> None:
     get_driver().run(*args, **kwargs)
 
 
-from nonebot.plugin import on as on
-from nonebot.plugin import on_type as on_type
-from nonebot.plugin import require as require
-from nonebot.plugin import on_regex as on_regex
-from nonebot.plugin import on_notice as on_notice
-from nonebot.plugin import get_plugin as get_plugin
-from nonebot.plugin import on_command as on_command
-from nonebot.plugin import on_keyword as on_keyword
-from nonebot.plugin import on_message as on_message
-from nonebot.plugin import on_request as on_request
-from nonebot.plugin import load_plugin as load_plugin
-from nonebot.plugin import on_endswith as on_endswith
 from nonebot.plugin import CommandGroup as CommandGroup
 from nonebot.plugin import MatcherGroup as MatcherGroup
-from nonebot.plugin import load_plugins as load_plugins
-from nonebot.plugin import on_fullmatch as on_fullmatch
-from nonebot.plugin import on_metaevent as on_metaevent
-from nonebot.plugin import on_startswith as on_startswith
-from nonebot.plugin import load_from_json as load_from_json
-from nonebot.plugin import load_from_toml as load_from_toml
-from nonebot.plugin import load_all_plugins as load_all_plugins
-from nonebot.plugin import on_shell_command as on_shell_command
-from nonebot.plugin import get_plugin_config as get_plugin_config
+from nonebot.plugin import get_available_plugin_names as get_available_plugin_names
 from nonebot.plugin import get_loaded_plugins as get_loaded_plugins
+from nonebot.plugin import get_plugin as get_plugin
+from nonebot.plugin import get_plugin_by_module_name as get_plugin_by_module_name
+from nonebot.plugin import get_plugin_config as get_plugin_config
+from nonebot.plugin import load_all_plugins as load_all_plugins
 from nonebot.plugin import load_builtin_plugin as load_builtin_plugin
 from nonebot.plugin import load_builtin_plugins as load_builtin_plugins
-from nonebot.plugin import get_plugin_by_module_name as get_plugin_by_module_name
-from nonebot.plugin import get_available_plugin_names as get_available_plugin_names
+from nonebot.plugin import load_from_json as load_from_json
+from nonebot.plugin import load_from_toml as load_from_toml
+from nonebot.plugin import load_plugin as load_plugin
+from nonebot.plugin import load_plugins as load_plugins
+from nonebot.plugin import on as on
+from nonebot.plugin import on_command as on_command
+from nonebot.plugin import on_endswith as on_endswith
+from nonebot.plugin import on_fullmatch as on_fullmatch
+from nonebot.plugin import on_keyword as on_keyword
+from nonebot.plugin import on_message as on_message
+from nonebot.plugin import on_metaevent as on_metaevent
+from nonebot.plugin import on_notice as on_notice
+from nonebot.plugin import on_regex as on_regex
+from nonebot.plugin import on_request as on_request
+from nonebot.plugin import on_shell_command as on_shell_command
+from nonebot.plugin import on_startswith as on_startswith
+from nonebot.plugin import on_type as on_type
+from nonebot.plugin import require as require

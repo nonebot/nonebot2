@@ -1,5 +1,5 @@
-from typing import TYPE_CHECKING, Union, TypeVar, Optional, overload
-from collections.abc import Iterator, KeysView, ItemsView, ValuesView, MutableMapping
+from collections.abc import ItemsView, Iterator, KeysView, MutableMapping, ValuesView
+from typing import TYPE_CHECKING, Optional, TypeVar, Union, overload
 
 from .provider import DEFAULT_PROVIDER_CLASS, MatcherProvider
 
@@ -74,9 +74,9 @@ class MatcherManager(MutableMapping[int, list[type["Matcher"]]]):
         self.provider.clear()
 
     def update(  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, __m: MutableMapping[int, list[type["Matcher"]]]
+        self, m: MutableMapping[int, list[type["Matcher"]]], /
     ) -> None:
-        self.provider.update(__m)
+        self.provider.update(m)
 
     def setdefault(
         self, key: int, default: list[type["Matcher"]]

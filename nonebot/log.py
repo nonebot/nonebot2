@@ -14,9 +14,9 @@ FrontMatter:
     description: nonebot.log 模块
 """
 
-import sys
 import inspect
 import logging
+import sys
 from typing import TYPE_CHECKING
 
 import loguru

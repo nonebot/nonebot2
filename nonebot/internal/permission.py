@@ -1,16 +1,16 @@
-from typing_extensions import Self
 from contextlib import AsyncExitStack
-from typing import Union, ClassVar, NoReturn, Optional
+from typing import ClassVar, NoReturn, Optional, Union
+from typing_extensions import Self
 
 import anyio
 
 from nonebot.dependencies import Dependent
-from nonebot.utils import run_coro_with_catch
 from nonebot.exception import SkippedException
 from nonebot.typing import T_DependencyCache, T_PermissionChecker
+from nonebot.utils import run_coro_with_catch
 
 from .adapter import Bot, Event
-from .params import Param, BotParam, EventParam, DependParam, DefaultParam
+from .params import BotParam, DefaultParam, DependParam, EventParam, Param
 
 
 class Permission:
@@ -124,7 +124,7 @@ class User:
         perm: 需同时满足的权限
     """
 
-    __slots__ = ("users", "perm")
+    __slots__ = ("perm", "users")
 
     def __init__(
         self, users: tuple[str, ...], perm: Optional[Permission] = None

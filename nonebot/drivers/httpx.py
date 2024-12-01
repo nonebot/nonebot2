@@ -17,22 +17,22 @@ FrontMatter:
     description: nonebot.drivers.httpx 模块
 """
 
+from typing import TYPE_CHECKING, Optional, Union
 from typing_extensions import override
-from typing import TYPE_CHECKING, Union, Optional
 
 from multidict import CIMultiDict
 
-from nonebot.drivers.none import Driver as NoneDriver
-from nonebot.internal.driver import Cookies, QueryTypes, CookieTypes, HeaderTypes
 from nonebot.drivers import (
     URL,
-    Request,
-    Response,
-    HTTPVersion,
     HTTPClientMixin,
     HTTPClientSession,
+    HTTPVersion,
+    Request,
+    Response,
     combine_driver,
 )
+from nonebot.drivers.none import Driver as NoneDriver
+from nonebot.internal.driver import Cookies, CookieTypes, HeaderTypes, QueryTypes
 
 try:
     import httpx

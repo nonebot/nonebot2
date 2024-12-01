@@ -1,20 +1,20 @@
-from typing import Optional
 from contextlib import asynccontextmanager
+from typing import Optional
 
-import pytest
 from nonebug import App
+import pytest
 
-from utils import FakeAdapter
 from nonebot.adapters import Bot
 from nonebot.drivers import (
     URL,
     Driver,
+    HTTPServerSetup,
     Request,
     Response,
     WebSocket,
-    HTTPServerSetup,
     WebSocketServerSetup,
 )
+from utils import FakeAdapter
 
 
 @pytest.mark.anyio

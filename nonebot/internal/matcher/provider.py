@@ -1,7 +1,7 @@
 import abc
-from typing import TYPE_CHECKING
 from collections import defaultdict
 from collections.abc import Mapping, MutableMapping
+from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
     from .matcher import Matcher

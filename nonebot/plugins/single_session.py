@@ -1,9 +1,9 @@
 from collections.abc import AsyncGenerator
 
 from nonebot.adapters import Event
+from nonebot.message import IgnoredException, event_preprocessor
 from nonebot.params import Depends
 from nonebot.plugin import PluginMetadata
-from nonebot.message import IgnoredException, event_preprocessor
 
 __plugin_meta__ = PluginMetadata(
     name="唯一会话",

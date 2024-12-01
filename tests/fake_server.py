@@ -1,15 +1,20 @@
-import json
 import base64
+import json
 import socket
-from typing import Union, TypeVar
+from typing import TypeVar, Union
 
-from wsproto.events import Ping
 from werkzeug import Request, Response
 from werkzeug.datastructures import MultiDict
-from wsproto.frame_protocol import CloseReason
+from wsproto import ConnectionType, WSConnection
+from wsproto.events import (
+    AcceptConnection,
+    BytesMessage,
+    CloseConnection,
+    Ping,
+    TextMessage,
+)
 from wsproto.events import Request as WSRequest
-from wsproto import WSConnection, ConnectionType
-from wsproto.events import TextMessage, BytesMessage, CloseConnection, AcceptConnection
+from wsproto.frame_protocol import CloseReason
 
 K = TypeVar("K")
 V = TypeVar("V")

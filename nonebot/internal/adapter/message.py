@@ -1,18 +1,18 @@
 import abc
-from copy import deepcopy
-from typing_extensions import Self
 from collections.abc import Iterable
-from dataclasses import field, asdict, dataclass
+from copy import deepcopy
+from dataclasses import asdict, dataclass, field
 from typing import (  # noqa: UP035
     Any,
-    Type,
-    Union,
     Generic,
-    TypeVar,
     Optional,
     SupportsIndex,
+    Type,
+    TypeVar,
+    Union,
     overload,
 )
+from typing_extensions import Self
 
 from nonebot.compat import custom_validation, type_validate_python
 
@@ -329,8 +329,9 @@ class Message(list[TMS], abc.ABC):
             return self[type_]
 
         iterator, filtered = (
-            seg for seg in self if seg.type == type_
-        ), self.__class__()
+            (seg for seg in self if seg.type == type_),
+            self.__class__(),
+        )
         for _ in range(count):
             seg = next(iterator, None)
             if seg is None:

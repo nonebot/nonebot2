@@ -1,4 +1,4 @@
-from typing import Union, TypeVar
+from typing import TypeVar, Union
 
 from nonebot.adapters import Bot
 

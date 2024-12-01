@@ -1,8 +1,8 @@
-import sys
-from pathlib import Path
-from functools import wraps
 from dataclasses import asdict
-from typing import TypeVar, Callable
+from functools import wraps
+from pathlib import Path
+import sys
+from typing import Callable, TypeVar
 from typing_extensions import ParamSpec
 
 import pytest
@@ -11,8 +11,8 @@ import nonebot
 from nonebot.plugin import (
     Plugin,
     PluginManager,
-    _plugins,
     _managers,
+    _plugins,
     inherit_supported_adapters,
 )
 
@@ -21,7 +21,6 @@ R = TypeVar("R")
 
 
 def _recover(func: Callable[P, R]) -> Callable[P, R]:
-
     @wraps(func)
     def _wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
         origin_managers = _managers.copy()

@@ -1,24 +1,24 @@
 import sys
 from typing import Optional
 
-import pytest
 from nonebug import App
+import pytest
 
 from nonebot import on_message
-import nonebot.message as message
-from utils import make_fake_event
-from nonebot.params import Depends
-from nonebot.typing import T_State
-from nonebot.matcher import Matcher
 from nonebot.adapters import Bot, Event
 from nonebot.exception import IgnoredException
-from nonebot.log import logger, default_filter, default_format
+from nonebot.log import default_filter, default_format, logger
+from nonebot.matcher import Matcher
+import nonebot.message as message
 from nonebot.message import (
-    run_preprocessor,
-    run_postprocessor,
-    event_preprocessor,
     event_postprocessor,
+    event_preprocessor,
+    run_postprocessor,
+    run_preprocessor,
 )
+from nonebot.params import Depends
+from nonebot.typing import T_State
+from utils import make_fake_event
 
 
 async def _dependency() -> int:

@@ -38,10 +38,10 @@ FrontMatter:
     description: nonebot.plugin 模块
 """
 
+from contextvars import ContextVar
 from itertools import chain
 from types import ModuleType
-from contextvars import ContextVar
-from typing import TypeVar, Optional
+from typing import Optional, TypeVar
 
 from pydantic import BaseModel
 
@@ -175,30 +175,30 @@ def get_plugin_config(config: type[C]) -> C:
     return type_validate_python(config, model_dump(get_driver().config))
 
 
-from .on import on as on
-from .manager import PluginManager
-from .on import on_type as on_type
-from .model import Plugin as Plugin
-from .load import require as require
-from .on import on_regex as on_regex
-from .on import on_notice as on_notice
-from .on import on_command as on_command
-from .on import on_keyword as on_keyword
-from .on import on_message as on_message
-from .on import on_request as on_request
-from .on import on_endswith as on_endswith
-from .load import load_plugin as load_plugin
-from .on import CommandGroup as CommandGroup
-from .on import MatcherGroup as MatcherGroup
-from .on import on_fullmatch as on_fullmatch
-from .on import on_metaevent as on_metaevent
-from .load import load_plugins as load_plugins
-from .on import on_startswith as on_startswith
-from .load import load_from_json as load_from_json
-from .load import load_from_toml as load_from_toml
-from .model import PluginMetadata as PluginMetadata
-from .on import on_shell_command as on_shell_command
+from .load import inherit_supported_adapters as inherit_supported_adapters
 from .load import load_all_plugins as load_all_plugins
 from .load import load_builtin_plugin as load_builtin_plugin
 from .load import load_builtin_plugins as load_builtin_plugins
-from .load import inherit_supported_adapters as inherit_supported_adapters
+from .load import load_from_json as load_from_json
+from .load import load_from_toml as load_from_toml
+from .load import load_plugin as load_plugin
+from .load import load_plugins as load_plugins
+from .load import require as require
+from .manager import PluginManager
+from .model import Plugin as Plugin
+from .model import PluginMetadata as PluginMetadata
+from .on import CommandGroup as CommandGroup
+from .on import MatcherGroup as MatcherGroup
+from .on import on as on
+from .on import on_command as on_command
+from .on import on_endswith as on_endswith
+from .on import on_fullmatch as on_fullmatch
+from .on import on_keyword as on_keyword
+from .on import on_message as on_message
+from .on import on_metaevent as on_metaevent
+from .on import on_notice as on_notice
+from .on import on_regex as on_regex
+from .on import on_request as on_request
+from .on import on_shell_command as on_shell_command
+from .on import on_startswith as on_startswith
+from .on import on_type as on_type

@@ -1,8 +1,8 @@
-from typing import Union, TypeVar
+from typing import TypeVar, Union
 
 from nonebot.adapters import Event
 from nonebot.matcher import Matcher
-from nonebot.params import Received, LastReceived
+from nonebot.params import LastReceived, Received
 
 
 async def matcher(m: Matcher) -> Matcher:

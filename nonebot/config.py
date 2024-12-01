@@ -13,23 +13,20 @@ FrontMatter:
     description: nonebot.config 模块
 """
 
-import os
 import abc
-import json
-from pathlib import Path
+from collections.abc import Mapping
 from datetime import timedelta
 from ipaddress import IPv4Address
-from collections.abc import Mapping
-from typing import TYPE_CHECKING, Any, Union, Optional
+import json
+import os
+from pathlib import Path
+from typing import TYPE_CHECKING, Any, Optional, Union
 from typing_extensions import TypeAlias, get_args, get_origin
 
 from dotenv import dotenv_values
-from pydantic import Field, BaseModel
+from pydantic import BaseModel, Field
 from pydantic.networks import IPvAnyAddress
 
-from nonebot.log import logger
-from nonebot.typing import origin_is_union
-from nonebot.utils import deep_update, type_is_complex, lenient_issubclass
 from nonebot.compat import (
     PYDANTIC_V2,
     ConfigDict,
@@ -39,6 +36,9 @@ from nonebot.compat import (
     model_config,
     model_fields,
 )
+from nonebot.log import logger
+from nonebot.typing import origin_is_union
+from nonebot.utils import deep_update, lenient_issubclass, type_is_complex
 
 DOTENV_TYPE: TypeAlias = Union[
     Path, str, list[Union[Path, str]], tuple[Union[Path, str], ...]

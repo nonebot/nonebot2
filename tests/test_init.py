@@ -1,17 +1,17 @@
-import pytest
 from nonebug import App
+import pytest
 
 import nonebot
-from nonebot.drivers import Driver, ASGIMixin, ReverseDriver
 from nonebot import (
-    get_app,
-    get_bot,
-    get_asgi,
-    get_bots,
-    get_driver,
     get_adapter,
     get_adapters,
+    get_app,
+    get_asgi,
+    get_bot,
+    get_bots,
+    get_driver,
 )
+from nonebot.drivers import ASGIMixin, Driver, ReverseDriver
 
 
 def test_init():

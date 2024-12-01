@@ -1,20 +1,19 @@
+from _string import formatter_field_name_split  # type: ignore
+from collections.abc import Mapping, Sequence
 import functools
 from string import Formatter
-from typing_extensions import TypeAlias
-from collections.abc import Mapping, Sequence
 from typing import (
     TYPE_CHECKING,
     Any,
-    Union,
-    Generic,
-    TypeVar,
     Callable,
+    Generic,
     Optional,
+    TypeVar,
+    Union,
     cast,
     overload,
 )
-
-from _string import formatter_field_name_split  # type: ignore
+from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
     from .message import Message, MessageSegment

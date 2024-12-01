@@ -19,30 +19,29 @@ FrontMatter:
 
 import asyncio
 from functools import wraps
+from typing import Any, Optional, Union, cast
 from typing_extensions import override
-from typing import Any, Union, Optional, cast
 
 from pydantic import BaseModel
 
-from nonebot.config import Env
-from nonebot.drivers import ASGIMixin
-from nonebot.exception import WebSocketClosed
-from nonebot.internal.driver import FileTypes
-from nonebot.drivers import Driver as BaseDriver
+from nonebot.compat import model_dump, type_validate_python
 from nonebot.config import Config as NoneBotConfig
+from nonebot.config import Env
+from nonebot.drivers import ASGIMixin, HTTPServerSetup, WebSocketServerSetup
+from nonebot.drivers import Driver as BaseDriver
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.compat import model_dump, type_validate_python
-from nonebot.drivers import HTTPServerSetup, WebSocketServerSetup
+from nonebot.exception import WebSocketClosed
+from nonebot.internal.driver import FileTypes
 
 try:
-    import uvicorn
+    from quart import Quart, Request, Response
+    from quart import Websocket as QuartWebSocket
     from quart import request as _request
     from quart.ctx import WebsocketContext
-    from quart.globals import websocket_ctx
-    from quart import Quart, Request, Response
     from quart.datastructures import FileStorage
-    from quart import Websocket as QuartWebSocket
+    from quart.globals import websocket_ctx
+    import uvicorn
 except ModuleNotFoundError as e:  # pragma: no cover
     raise ImportError(
         "Please install Quart first to use this driver. "

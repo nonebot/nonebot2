@@ -17,25 +17,27 @@ FrontMatter:
     description: nonebot.drivers.aiohttp 模块
 """
 
-from typing_extensions import override
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import TYPE_CHECKING, Union, Optional
+from typing import TYPE_CHECKING, Optional, Union
+from typing_extensions import override
 
 from multidict import CIMultiDict
 
-from nonebot.exception import WebSocketClosed
-from nonebot.drivers import URL, Request, Response
-from nonebot.drivers.none import Driver as NoneDriver
-from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.internal.driver import Cookies, QueryTypes, CookieTypes, HeaderTypes
 from nonebot.drivers import (
-    HTTPVersion,
+    URL,
     HTTPClientMixin,
     HTTPClientSession,
+    HTTPVersion,
+    Request,
+    Response,
     WebSocketClientMixin,
     combine_driver,
 )
+from nonebot.drivers import WebSocket as BaseWebSocket
+from nonebot.drivers.none import Driver as NoneDriver
+from nonebot.exception import WebSocketClosed
+from nonebot.internal.driver import Cookies, CookieTypes, HeaderTypes, QueryTypes
 
 try:
     import aiohttp
@@ -174,7 +176,7 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
             async with session.ws_connect(
                 setup.url,
                 method=setup.method,
-                timeout=setup.timeout or 10,
+                timeout=setup.timeout or 10,  # type: ignore
                 headers=setup.headers,
                 proxy=setup.proxy,
             ) as ws:

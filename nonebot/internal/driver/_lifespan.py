@@ -1,13 +1,13 @@
+from collections.abc import Awaitable, Iterable
 from types import TracebackType
+from typing import Any, Callable, Optional, Union, cast
 from typing_extensions import TypeAlias
-from collections.abc import Iterable, Awaitable
-from typing import Any, Union, Callable, Optional, cast
 
 import anyio
 from anyio.abc import TaskGroup
 from exceptiongroup import suppress
 
-from nonebot.utils import run_sync, is_coroutine_callable
+from nonebot.utils import is_coroutine_callable, run_sync
 
 SYNC_LIFESPAN_FUNC: TypeAlias = Callable[[], Any]
 ASYNC_LIFESPAN_FUNC: TypeAlias = Callable[[], Awaitable[Any]]

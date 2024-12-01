@@ -3,8 +3,8 @@ from typing import Any, TypeVar
 
 from pydantic import BaseModel
 
-from nonebot.utils import DataclassEncoder
 from nonebot.compat import PYDANTIC_V2, ConfigDict
+from nonebot.utils import DataclassEncoder
 
 from .message import Message
 

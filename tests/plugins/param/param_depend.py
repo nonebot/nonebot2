@@ -1,5 +1,5 @@
-from typing import Annotated
 from dataclasses import dataclass
+from typing import Annotated
 
 import anyio
 from pydantic import Field
@@ -74,13 +74,13 @@ async def annotated_class_depend(c: Annotated[ClassDependency, Depends()]):
 
 # test dependency priority
 async def annotated_prior_depend(
-    x: Annotated[int, Depends(lambda: 2)] = Depends(dependency)
+    x: Annotated[int, Depends(lambda: 2)] = Depends(dependency),
 ):
     return x
 
 
 async def annotated_multi_depend(
-    x: Annotated[Annotated[int, Depends(lambda: 2)], Depends(dependency)]
+    x: Annotated[Annotated[int, Depends(lambda: 2)], Depends(dependency)],
 ):
     return x
 

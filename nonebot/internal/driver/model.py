@@ -1,14 +1,14 @@
 import abc
-import urllib.request
-from enum import Enum
+from collections.abc import Awaitable, Iterator, Mapping, MutableMapping
 from dataclasses import dataclass
-from typing_extensions import TypeAlias
+from enum import Enum
 from http.cookiejar import Cookie, CookieJar
-from typing import IO, Any, Union, Callable, Optional
-from collections.abc import Mapping, Iterator, Awaitable, MutableMapping
+from typing import IO, Any, Callable, Optional, Union
+from typing_extensions import TypeAlias
+import urllib.request
 
-from yarl import URL as URL
 from multidict import CIMultiDict
+from yarl import URL as URL
 
 RawURL: TypeAlias = tuple[bytes, bytes, Optional[int], bytes]
 

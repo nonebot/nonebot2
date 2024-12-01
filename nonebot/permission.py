@@ -11,11 +11,11 @@ FrontMatter:
     description: nonebot.permission 模块
 """
 
-from nonebot.params import EventType
 from nonebot.adapters import Bot, Event
 from nonebot.internal.permission import USER as USER
-from nonebot.internal.permission import User as User
 from nonebot.internal.permission import Permission as Permission
+from nonebot.internal.permission import User as User
+from nonebot.params import EventType
 
 
 class Message:

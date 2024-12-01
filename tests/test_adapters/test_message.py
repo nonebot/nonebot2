@@ -1,9 +1,9 @@
-import pytest
 from pydantic import ValidationError
+import pytest
 
+from nonebot.adapters import Message, MessageSegment
 from nonebot.compat import type_validate_python
 from utils import FakeMessage, FakeMessageSegment
-from nonebot.adapters import Message, MessageSegment
 
 
 def test_segment_data():

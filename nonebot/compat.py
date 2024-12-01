@@ -10,21 +10,21 @@ FrontMatter:
 """
 
 from collections.abc import Generator
-from functools import cached_property
 from dataclasses import dataclass, is_dataclass
-from typing_extensions import Self, get_args, get_origin, is_typeddict
+from functools import cached_property
 from typing import (
     TYPE_CHECKING,
+    Annotated,
     Any,
-    Union,
-    Generic,
-    TypeVar,
     Callable,
+    Generic,
     Optional,
     Protocol,
-    Annotated,
+    TypeVar,
+    Union,
     overload,
 )
+from typing_extensions import Self, get_args, get_origin, is_typeddict
 
 from pydantic import VERSION, BaseModel
 
@@ -44,21 +44,21 @@ if TYPE_CHECKING:
 
 
 __all__ = (
-    "Required",
-    "PydanticUndefined",
-    "PydanticUndefinedType",
-    "ConfigDict",
     "DEFAULT_CONFIG",
+    "ConfigDict",
     "FieldInfo",
     "ModelField",
+    "PydanticUndefined",
+    "PydanticUndefinedType",
+    "Required",
     "TypeAdapter",
+    "custom_validation",
     "extract_field_info",
-    "model_fields",
     "model_config",
     "model_dump",
-    "type_validate_python",
+    "model_fields",
     "type_validate_json",
-    "custom_validation",
+    "type_validate_python",
 )
 
 __autodoc__ = {
@@ -70,9 +70,9 @@ __autodoc__ = {
 if PYDANTIC_V2:  # pragma: pydantic-v2
     from pydantic import GetCoreSchemaHandler
     from pydantic import TypeAdapter as TypeAdapter
-    from pydantic_core import CoreSchema, core_schema
     from pydantic._internal._repr import display_as_type
     from pydantic.fields import FieldInfo as BaseFieldInfo
+    from pydantic_core import CoreSchema, core_schema
 
     Required = Ellipsis
     """Alias of Ellipsis for compatibility with pydantic v1"""
@@ -253,9 +253,8 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
         return class_
 
 else:  # pragma: pydantic-v1
-    from pydantic import Extra
-    from pydantic import parse_obj_as, parse_raw_as
     from pydantic import BaseConfig as PydanticConfig
+    from pydantic import Extra, parse_obj_as, parse_raw_as
     from pydantic.fields import FieldInfo as BaseFieldInfo
     from pydantic.fields import ModelField as BaseModelField
     from pydantic.schema import get_annotation_from_field_info

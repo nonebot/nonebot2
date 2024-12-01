@@ -1,0 +1,5 @@
+[tool.ruff]
+extend = "../pyproject.toml"
+
+[tool.ruff.lint.isort]
+known-first-party = ["nonebot", "fake_server", "utils"]

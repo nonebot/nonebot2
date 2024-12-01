@@ -1,8 +1,8 @@
 from nonebot import on_command
-from nonebot.rule import to_me
 from nonebot.adapters import Message
 from nonebot.params import CommandArg
 from nonebot.plugin import PluginMetadata
+from nonebot.rule import to_me
 
 __plugin_meta__ = PluginMetadata(
     name="echo",

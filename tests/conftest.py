@@ -1,20 +1,20 @@
-import os
-import threading
-from pathlib import Path
-from functools import wraps
 from collections.abc import Generator
+from functools import wraps
+import os
+from pathlib import Path
+import threading
+from typing import TYPE_CHECKING, Callable, TypeVar
 from typing_extensions import ParamSpec
-from typing import TYPE_CHECKING, TypeVar, Callable
 
-import pytest
 from nonebug import NONEBOT_INIT_KWARGS
+import pytest
 from werkzeug.serving import BaseWSGIServer, make_server
 
-import nonebot
-from nonebot.config import Env
 from fake_server import request_handler
-from nonebot.drivers import URL, Driver
+import nonebot
 from nonebot import _resolve_combine_expr
+from nonebot.config import Env
+from nonebot.drivers import URL, Driver
 
 os.environ["CONFIG_FROM_ENV"] = '{"test": "test"}'
 os.environ["CONFIG_OVERRIDE"] = "new"

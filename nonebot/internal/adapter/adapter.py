@@ -1,21 +1,21 @@
 import abc
-from typing import Any
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
+from typing import Any
 
 from nonebot.config import Config
-from nonebot.internal.driver._lifespan import LIFESPAN_FUNC
 from nonebot.internal.driver import (
-    Driver,
-    Request,
-    Response,
     ASGIMixin,
-    WebSocket,
+    Driver,
     HTTPClientMixin,
     HTTPServerSetup,
+    Request,
+    Response,
+    WebSocket,
     WebSocketClientMixin,
     WebSocketServerSetup,
 )
+from nonebot.internal.driver._lifespan import LIFESPAN_FUNC
 
 from .bot import Bot
 

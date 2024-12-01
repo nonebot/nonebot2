@@ -17,19 +17,18 @@ FrontMatter:
     description: nonebot.drivers.websockets 模块
 """
 
-import logging
-from functools import wraps
+from collections.abc import AsyncGenerator, Coroutine
 from contextlib import asynccontextmanager
+from functools import wraps
+import logging
+from typing import TYPE_CHECKING, Any, Callable, TypeVar, Union
 from typing_extensions import ParamSpec, override
-from collections.abc import Coroutine, AsyncGenerator
-from typing import TYPE_CHECKING, Any, Union, TypeVar, Callable
 
-from nonebot.drivers import Request
-from nonebot.log import LoguruHandler
-from nonebot.exception import WebSocketClosed
-from nonebot.drivers.none import Driver as NoneDriver
+from nonebot.drivers import Request, WebSocketClientMixin, combine_driver
 from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.drivers import WebSocketClientMixin, combine_driver
+from nonebot.drivers.none import Driver as NoneDriver
+from nonebot.exception import WebSocketClosed
+from nonebot.log import LoguruHandler
 
 try:
     from websockets.exceptions import ConnectionClosed
@@ -48,7 +47,7 @@ logger.addHandler(LoguruHandler())
 
 
 def catch_closed(
-    func: Callable[P, Coroutine[Any, Any, T]]
+    func: Callable[P, Coroutine[Any, Any, T]],
 ) -> Callable[P, Coroutine[Any, Any, T]]:
     @wraps(func)
     async def decorator(*args: P.args, **kwargs: P.kwargs) -> T:
