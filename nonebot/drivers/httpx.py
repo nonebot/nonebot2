@@ -102,7 +102,7 @@ class Session(HTTPClientSession):
             headers=self._headers,
             cookies=self._cookies.jar,
             http2=self._version == HTTPVersion.H2,
-            proxies=self._proxy,
+            proxy=self._proxy,
             follow_redirects=True,
         )
         await self._client.__aenter__()
