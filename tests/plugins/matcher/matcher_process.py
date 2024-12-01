@@ -1,7 +1,7 @@
 from nonebot import on_message
-from nonebot.matcher import Matcher
 from nonebot.adapters import Event, Message
-from nonebot.params import ArgStr, Received, EventMessage, LastReceived
+from nonebot.matcher import Matcher
+from nonebot.params import ArgStr, EventMessage, LastReceived, Received
 
 test_handle = on_message()
 

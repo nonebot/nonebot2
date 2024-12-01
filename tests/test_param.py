@@ -1,38 +1,38 @@
 import re
 
-import pytest
-from nonebug import App
 from exceptiongroup import BaseExceptionGroup
+from nonebug import App
+import pytest
 
-from nonebot.matcher import Matcher
+from nonebot.consts import (
+    CMD_ARG_KEY,
+    CMD_KEY,
+    CMD_START_KEY,
+    CMD_WHITESPACE_KEY,
+    ENDSWITH_KEY,
+    FULLMATCH_KEY,
+    KEYWORD_KEY,
+    PREFIX_KEY,
+    RAW_CMD_KEY,
+    REGEX_MATCHED,
+    SHELL_ARGS,
+    SHELL_ARGV,
+    STARTSWITH_KEY,
+)
 from nonebot.dependencies import Dependent
 from nonebot.exception import TypeMisMatch
-from utils import FakeMessage, make_fake_event
+from nonebot.matcher import Matcher
 from nonebot.params import (
     ArgParam,
     BotParam,
-    EventParam,
-    StateParam,
-    DependParam,
     DefaultParam,
-    MatcherParam,
+    DependParam,
+    EventParam,
     ExceptionParam,
+    MatcherParam,
+    StateParam,
 )
-from nonebot.consts import (
-    CMD_KEY,
-    PREFIX_KEY,
-    SHELL_ARGS,
-    SHELL_ARGV,
-    CMD_ARG_KEY,
-    KEYWORD_KEY,
-    RAW_CMD_KEY,
-    ENDSWITH_KEY,
-    CMD_START_KEY,
-    FULLMATCH_KEY,
-    REGEX_MATCHED,
-    STARTSWITH_KEY,
-    CMD_WHITESPACE_KEY,
-)
+from utils import FakeMessage, make_fake_event
 
 UNKNOWN_PARAM = "Unknown parameter"
 
@@ -41,21 +41,21 @@ UNKNOWN_PARAM = "Unknown parameter"
 async def test_depend(app: App):
     from plugins.param.param_depend import (
         ClassDependency,
-        runned,
-        depends,
-        validate,
-        class_depend,
-        test_depends,
-        validate_fail,
-        validate_field,
-        annotated_depend,
-        sub_type_mismatch,
-        validate_field_fail,
-        cache_exception_func1,
-        cache_exception_func2,
         annotated_class_depend,
+        annotated_depend,
         annotated_multi_depend,
         annotated_prior_depend,
+        cache_exception_func1,
+        cache_exception_func2,
+        class_depend,
+        depends,
+        runned,
+        sub_type_mismatch,
+        test_depends,
+        validate,
+        validate_fail,
+        validate_field,
+        validate_field_fail,
     )
 
     async with app.test_dependent(depends, allow_types=[DependParam]) as ctx:
@@ -157,15 +157,15 @@ async def test_depend(app: App):
 async def test_bot(app: App):
     from plugins.param.param_bot import (
         FooBot,
+        generic_bot,
+        generic_bot_none,
         get_bot,
+        legacy_bot,
         not_bot,
+        not_legacy_bot,
+        postpone_bot,
         sub_bot,
         union_bot,
-        legacy_bot,
-        generic_bot,
-        postpone_bot,
-        not_legacy_bot,
-        generic_bot_none,
     )
 
     async with app.test_dependent(get_bot, allow_types=[BotParam]) as ctx:
@@ -223,18 +223,18 @@ async def test_event(app: App):
     from plugins.param.param_event import (
         FooEvent,
         event,
-        not_event,
-        sub_event,
-        event_type,
-        event_to_me,
-        union_event,
-        legacy_event,
         event_message,
-        generic_event,
-        postpone_event,
         event_plain_text,
-        not_legacy_event,
+        event_to_me,
+        event_type,
+        generic_event,
         generic_event_none,
+        legacy_event,
+        not_event,
+        not_legacy_event,
+        postpone_event,
+        sub_event,
+        union_event,
     )
 
     fake_message = FakeMessage("text")
@@ -310,25 +310,25 @@ async def test_event(app: App):
 @pytest.mark.anyio
 async def test_state(app: App):
     from plugins.param.param_state import (
-        state,
         command,
-        keyword,
+        command_arg,
+        command_start,
+        command_whitespace,
         endswith,
         fullmatch,
-        regex_str,
-        regex_dict,
-        startswith,
-        command_arg,
-        raw_command,
-        regex_group,
+        keyword,
         legacy_state,
-        command_start,
-        regex_matched,
-        postpone_state,
         not_legacy_state,
-        command_whitespace,
+        postpone_state,
+        raw_command,
+        regex_dict,
+        regex_group,
+        regex_matched,
+        regex_str,
         shell_command_args,
         shell_command_argv,
+        startswith,
+        state,
     )
 
     fake_message = FakeMessage("text")
@@ -462,17 +462,17 @@ async def test_state(app: App):
 async def test_matcher(app: App):
     from plugins.param.param_matcher import (
         FooMatcher,
-        matcher,
-        receive,
-        not_matcher,
-        sub_matcher,
-        last_receive,
-        union_matcher,
-        legacy_matcher,
         generic_matcher,
-        postpone_matcher,
-        not_legacy_matcher,
         generic_matcher_none,
+        last_receive,
+        legacy_matcher,
+        matcher,
+        not_legacy_matcher,
+        not_matcher,
+        postpone_matcher,
+        receive,
+        sub_matcher,
+        union_matcher,
     )
 
     fake_matcher = Matcher()
@@ -542,14 +542,14 @@ async def test_matcher(app: App):
 @pytest.mark.anyio
 async def test_arg(app: App):
     from plugins.param.param_arg import (
-        arg,
-        arg_str,
         annotated_arg,
-        arg_plain_text,
+        annotated_arg_plain_text,
         annotated_arg_str,
         annotated_multi_arg,
         annotated_prior_arg,
-        annotated_arg_plain_text,
+        arg,
+        arg_plain_text,
+        arg_str,
     )
 
     matcher = Matcher()

@@ -1,7 +1,7 @@
 from typing import Annotated
 
 from nonebot.adapters import Message
-from nonebot.params import Arg, ArgStr, ArgPlainText
+from nonebot.params import Arg, ArgPlainText, ArgStr
 
 
 async def arg(key: Message = Arg()) -> Message:
@@ -34,6 +34,6 @@ async def annotated_prior_arg(key: Annotated[str, ArgStr("foo")] = ArgPlainText(
 
 
 async def annotated_multi_arg(
-    key: Annotated[Annotated[str, ArgStr("foo")], ArgPlainText()]
+    key: Annotated[Annotated[str, ArgStr("foo")], ArgPlainText()],
 ):
     return key

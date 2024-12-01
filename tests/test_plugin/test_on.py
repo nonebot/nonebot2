@@ -4,18 +4,18 @@ import pytest
 
 import nonebot
 from nonebot.adapters import Event
-from nonebot.typing import T_RuleChecker
 from nonebot.matcher import Matcher, matchers
 from nonebot.rule import (
-    RegexRule,
-    IsTypeRule,
     CommandRule,
     EndswithRule,
-    KeywordsRule,
     FullmatchRule,
-    StartswithRule,
+    IsTypeRule,
+    KeywordsRule,
+    RegexRule,
     ShellCommandRule,
+    StartswithRule,
 )
+from nonebot.typing import T_RuleChecker
 
 
 @pytest.mark.parametrize(
@@ -109,12 +109,12 @@ def test_on(
     import plugins.plugin.matchers as module
     from plugins.plugin.matchers import (
         TestEvent,
+        expire_time,
+        handler,
+        permission,
+        priority,
         rule,
         state,
-        handler,
-        priority,
-        permission,
-        expire_time,
     )
 
     matcher = getattr(module, matcher_name)

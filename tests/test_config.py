@@ -1,10 +1,10 @@
-from typing import TYPE_CHECKING, Union, Optional
+from typing import TYPE_CHECKING, Optional, Union
 
+from pydantic import BaseModel, Field
 import pytest
-from pydantic import Field, BaseModel
 
 from nonebot.compat import PYDANTIC_V2
-from nonebot.config import DOTENV_TYPE, BaseSettings, SettingsError, SettingsConfig
+from nonebot.config import DOTENV_TYPE, BaseSettings, SettingsConfig, SettingsError
 
 
 class Simple(BaseModel):

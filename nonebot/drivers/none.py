@@ -19,10 +19,10 @@ import anyio
 from anyio.abc import TaskGroup
 from exceptiongroup import BaseExceptionGroup, catch
 
-from nonebot.log import logger
+from nonebot.config import Config, Env
 from nonebot.consts import WINDOWS
-from nonebot.config import Env, Config
 from nonebot.drivers import Driver as BaseDriver
+from nonebot.log import logger
 from nonebot.utils import flatten_exception_group
 
 HANDLED_SIGNALS = (

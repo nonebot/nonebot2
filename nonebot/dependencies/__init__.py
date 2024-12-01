@@ -8,24 +8,24 @@ FrontMatter:
 """
 
 import abc
-import inspect
+from collections.abc import Awaitable, Iterable
+from dataclasses import dataclass, field
 from functools import partial
-from dataclasses import field, dataclass
-from collections.abc import Iterable, Awaitable
-from typing import Any, Generic, TypeVar, Callable, Optional, cast
+import inspect
+from typing import Any, Callable, Generic, Optional, TypeVar, cast
 
 import anyio
 from exceptiongroup import BaseExceptionGroup, catch
 
+from nonebot.compat import FieldInfo, ModelField, PydanticUndefined
+from nonebot.exception import SkippedException
 from nonebot.log import logger
 from nonebot.typing import _DependentCallable
-from nonebot.exception import SkippedException
-from nonebot.compat import FieldInfo, ModelField, PydanticUndefined
 from nonebot.utils import (
-    run_sync,
-    run_coro_with_shield,
-    is_coroutine_callable,
     flatten_exception_group,
+    is_coroutine_callable,
+    run_coro_with_shield,
+    run_sync,
 )
 
 from .utils import check_field_type, get_typed_signature

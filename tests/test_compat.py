@@ -1,17 +1,17 @@
 from dataclasses import dataclass
-from typing import Any, Optional, Annotated
+from typing import Annotated, Any, Optional
 
-import pytest
 from pydantic import BaseModel, ValidationError
+import pytest
 
 from nonebot.compat import (
     DEFAULT_CONFIG,
-    Required,
     FieldInfo,
-    TypeAdapter,
     PydanticUndefined,
-    model_dump,
+    Required,
+    TypeAdapter,
     custom_validation,
+    model_dump,
     type_validate_json,
     type_validate_python,
 )

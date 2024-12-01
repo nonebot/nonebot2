@@ -14,16 +14,16 @@ FrontMatter:
 
 import sys
 import types
-import warnings
 import typing as t
-import typing_extensions as t_ext
 from typing import TYPE_CHECKING, TypeVar
-from typing_extensions import ParamSpec, TypeAlias, get_args, override, get_origin
+import typing_extensions as t_ext
+from typing_extensions import ParamSpec, TypeAlias, get_args, get_origin, override
+import warnings
 
 if TYPE_CHECKING:
     from nonebot.adapters import Bot
-    from nonebot.permission import Permission
     from nonebot.internal.params import DependencyCache
+    from nonebot.permission import Permission
 
 T = TypeVar("T")
 P = ParamSpec("P")

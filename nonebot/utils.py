@@ -7,32 +7,32 @@ FrontMatter:
     description: nonebot.utils 模块
 """
 
-import re
-import json
-import inspect
-import importlib
-import contextlib
-import dataclasses
-from pathlib import Path
 from collections import deque
-from functools import wraps, partial
+from collections.abc import AsyncGenerator, Coroutine, Generator, Mapping, Sequence
+import contextlib
 from contextlib import AbstractContextManager, asynccontextmanager
-from typing_extensions import ParamSpec, get_args, override, get_origin
-from typing import Any, Union, Generic, TypeVar, Callable, Optional, overload
-from collections.abc import Mapping, Sequence, Coroutine, Generator, AsyncGenerator
+import dataclasses
+from functools import partial, wraps
+import importlib
+import inspect
+import json
+from pathlib import Path
+import re
+from typing import Any, Callable, Generic, Optional, TypeVar, Union, overload
+from typing_extensions import ParamSpec, get_args, get_origin, override
 
 import anyio
 import anyio.to_thread
-from pydantic import BaseModel
 from exceptiongroup import BaseExceptionGroup, catch
+from pydantic import BaseModel
 
 from nonebot.log import logger
 from nonebot.typing import (
-    is_none_type,
-    type_has_args,
-    origin_is_union,
-    origin_is_literal,
     all_literal_values,
+    is_none_type,
+    origin_is_literal,
+    origin_is_union,
+    type_has_args,
 )
 
 P = ParamSpec("P")

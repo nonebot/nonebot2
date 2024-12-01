@@ -7,17 +7,17 @@ FrontMatter:
     description: nonebot.plugin.load 模块
 """
 
+from collections.abc import Iterable
 import json
 from pathlib import Path
 from types import ModuleType
-from typing import Union, Optional
-from collections.abc import Iterable
+from typing import Optional, Union
 
 from nonebot.utils import path_to_module_name
 
-from .model import Plugin
+from . import _managers, _module_name_to_plugin_id, get_plugin
 from .manager import PluginManager
-from . import _managers, get_plugin, _module_name_to_plugin_id
+from .model import Plugin
 
 try:  # pragma: py-gte-311
     import tomllib  # pyright: ignore[reportMissingImports]

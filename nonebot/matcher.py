@@ -7,16 +7,16 @@ FrontMatter:
     description: nonebot.matcher 模块
 """
 
+from nonebot.internal.matcher import DEFAULT_PROVIDER_CLASS as DEFAULT_PROVIDER_CLASS
 from nonebot.internal.matcher import Matcher as Matcher
-from nonebot.internal.matcher import matchers as matchers
-from nonebot.internal.matcher import current_bot as current_bot
-from nonebot.internal.matcher import MatcherSource as MatcherSource
-from nonebot.internal.matcher import current_event as current_event
 from nonebot.internal.matcher import MatcherManager as MatcherManager
 from nonebot.internal.matcher import MatcherProvider as MatcherProvider
+from nonebot.internal.matcher import MatcherSource as MatcherSource
+from nonebot.internal.matcher import current_bot as current_bot
+from nonebot.internal.matcher import current_event as current_event
 from nonebot.internal.matcher import current_handler as current_handler
 from nonebot.internal.matcher import current_matcher as current_matcher
-from nonebot.internal.matcher import DEFAULT_PROVIDER_CLASS as DEFAULT_PROVIDER_CLASS
+from nonebot.internal.matcher import matchers as matchers
 
 __autodoc__ = {
     "Matcher": True,

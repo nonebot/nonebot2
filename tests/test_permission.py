@@ -1,25 +1,25 @@
 from typing import Optional
 
-import pytest
 from nonebug import App
+import pytest
 
-from utils import make_fake_event
 from nonebot.exception import SkippedException
 from nonebot.permission import (
-    USER,
-    NOTICE,
     MESSAGE,
-    REQUEST,
     METAEVENT,
+    NOTICE,
+    REQUEST,
     SUPERUSER,
-    User,
-    Notice,
+    USER,
     Message,
-    Request,
     MetaEvent,
-    SuperUser,
+    Notice,
     Permission,
+    Request,
+    SuperUser,
+    User,
 )
+from utils import make_fake_event
 
 
 @pytest.mark.anyio

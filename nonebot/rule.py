@@ -11,24 +11,23 @@ FrontMatter:
     description: nonebot.rule 模块
 """
 
+from argparse import Action, ArgumentError
+from argparse import ArgumentParser as ArgParser
+from argparse import Namespace as Namespace
+from collections.abc import Sequence
+from contextvars import ContextVar
+from gettext import gettext
+from itertools import chain, product
 import re
 import shlex
-from argparse import Action
-from gettext import gettext
-from argparse import ArgumentError
-from contextvars import ContextVar
-from collections.abc import Sequence
-from itertools import chain, product
-from argparse import Namespace as Namespace
-from argparse import ArgumentParser as ArgParser
 from typing import (
     IO,
     TYPE_CHECKING,
-    Union,
-    TypeVar,
+    NamedTuple,
     Optional,
     TypedDict,
-    NamedTuple,
+    TypeVar,
+    Union,
     cast,
     overload,
 )
@@ -36,27 +35,27 @@ from typing import (
 from pygtrie import CharTrie
 
 from nonebot import get_driver
-from nonebot.log import logger
-from nonebot.typing import T_State
-from nonebot.exception import ParserExit
-from nonebot.internal.rule import Rule as Rule
 from nonebot.adapters import Bot, Event, Message, MessageSegment
-from nonebot.params import Command, EventToMe, CommandArg, CommandWhitespace
 from nonebot.consts import (
+    CMD_ARG_KEY,
     CMD_KEY,
+    CMD_START_KEY,
+    CMD_WHITESPACE_KEY,
+    ENDSWITH_KEY,
+    FULLMATCH_KEY,
+    KEYWORD_KEY,
     PREFIX_KEY,
+    RAW_CMD_KEY,
+    REGEX_MATCHED,
     SHELL_ARGS,
     SHELL_ARGV,
-    CMD_ARG_KEY,
-    KEYWORD_KEY,
-    RAW_CMD_KEY,
-    ENDSWITH_KEY,
-    CMD_START_KEY,
-    FULLMATCH_KEY,
-    REGEX_MATCHED,
     STARTSWITH_KEY,
-    CMD_WHITESPACE_KEY,
 )
+from nonebot.exception import ParserExit
+from nonebot.internal.rule import Rule as Rule
+from nonebot.log import logger
+from nonebot.params import Command, CommandArg, CommandWhitespace, EventToMe
+from nonebot.typing import T_State
 
 T = TypeVar("T")
 
@@ -146,7 +145,7 @@ class StartswithRule:
         ignorecase: 是否忽略大小写
     """
 
-    __slots__ = ("msg", "ignorecase")
+    __slots__ = ("ignorecase", "msg")
 
     def __init__(self, msg: tuple[str, ...], ignorecase: bool = False):
         self.msg = msg
@@ -201,7 +200,7 @@ class EndswithRule:
         ignorecase: 是否忽略大小写
     """
 
-    __slots__ = ("msg", "ignorecase")
+    __slots__ = ("ignorecase", "msg")
 
     def __init__(self, msg: tuple[str, ...], ignorecase: bool = False):
         self.msg = msg
@@ -256,7 +255,7 @@ class FullmatchRule:
         ignorecase: 是否忽略大小写
     """
 
-    __slots__ = ("msg", "ignorecase")
+    __slots__ = ("ignorecase", "msg")
 
     def __init__(self, msg: tuple[str, ...], ignorecase: bool = False):
         self.msg = tuple(map(str.casefold, msg) if ignorecase else msg)
@@ -655,7 +654,7 @@ class RegexRule:
         flags: 正则表达式标记
     """
 
-    __slots__ = ("regex", "flags")
+    __slots__ = ("flags", "regex")
 
     def __init__(self, regex: str, flags: int = 0):
         self.regex = regex

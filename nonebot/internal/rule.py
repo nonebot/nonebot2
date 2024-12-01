@@ -1,15 +1,15 @@
 from contextlib import AsyncExitStack
-from typing import Union, ClassVar, NoReturn, Optional
+from typing import ClassVar, NoReturn, Optional, Union
 
 import anyio
 from exceptiongroup import BaseExceptionGroup, catch
 
 from nonebot.dependencies import Dependent
 from nonebot.exception import SkippedException
-from nonebot.typing import T_State, T_RuleChecker, T_DependencyCache
+from nonebot.typing import T_DependencyCache, T_RuleChecker, T_State
 
 from .adapter import Bot, Event
-from .params import Param, BotParam, EventParam, StateParam, DependParam, DefaultParam
+from .params import BotParam, DefaultParam, DependParam, EventParam, Param, StateParam
 
 
 class Rule:

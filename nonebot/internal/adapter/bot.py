@@ -1,19 +1,19 @@
 import abc
 from functools import partial
-from typing import TYPE_CHECKING, Any, Union, ClassVar, Optional, Protocol
+from typing import TYPE_CHECKING, Any, ClassVar, Optional, Protocol, Union
 
 import anyio
 from exceptiongroup import BaseExceptionGroup, catch
 
-from nonebot.log import logger
 from nonebot.config import Config
 from nonebot.exception import MockApiException
-from nonebot.utils import flatten_exception_group
+from nonebot.log import logger
 from nonebot.typing import T_CalledAPIHook, T_CallingAPIHook
+from nonebot.utils import flatten_exception_group
 
 if TYPE_CHECKING:
-    from .event import Event
     from .adapter import Adapter
+    from .event import Event
     from .message import Message, MessageSegment
 
     class _ApiCall(Protocol):

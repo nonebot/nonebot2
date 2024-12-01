@@ -1,28 +1,28 @@
+from http.cookies import SimpleCookie
 import json
 from typing import Any, Optional
-from http.cookies import SimpleCookie
 
 import anyio
-import pytest
 from nonebug import App
+import pytest
 
-from utils import FakeAdapter
 from nonebot.adapters import Bot
-from nonebot.params import Depends
 from nonebot.dependencies import Dependent
-from nonebot.exception import WebSocketClosed
 from nonebot.drivers import (
     URL,
-    Driver,
-    Request,
-    Response,
     ASGIMixin,
-    WebSocket,
+    Driver,
     HTTPClientMixin,
     HTTPServerSetup,
+    Request,
+    Response,
+    WebSocket,
     WebSocketClientMixin,
     WebSocketServerSetup,
 )
+from nonebot.exception import WebSocketClosed
+from nonebot.params import Depends
+from utils import FakeAdapter
 
 
 @pytest.mark.anyio

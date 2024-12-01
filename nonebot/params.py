@@ -8,38 +8,38 @@ FrontMatter:
 """
 
 from re import Match
-from typing import Any, Union, Literal, Callable, Optional, overload
+from typing import Any, Callable, Literal, Optional, Union, overload
 
-from nonebot.typing import T_State
-from nonebot.matcher import Matcher
-from nonebot.internal.params import Arg as Arg
-from nonebot.internal.params import ArgStr as ArgStr
-from nonebot.internal.params import Depends as Depends
-from nonebot.internal.params import ArgParam as ArgParam
-from nonebot.internal.params import BotParam as BotParam
 from nonebot.adapters import Event, Message, MessageSegment
-from nonebot.internal.params import EventParam as EventParam
-from nonebot.internal.params import StateParam as StateParam
-from nonebot.internal.params import DependParam as DependParam
-from nonebot.internal.params import ArgPlainText as ArgPlainText
-from nonebot.internal.params import DefaultParam as DefaultParam
-from nonebot.internal.params import MatcherParam as MatcherParam
-from nonebot.internal.params import ExceptionParam as ExceptionParam
 from nonebot.consts import (
+    CMD_ARG_KEY,
     CMD_KEY,
+    CMD_START_KEY,
+    CMD_WHITESPACE_KEY,
+    ENDSWITH_KEY,
+    FULLMATCH_KEY,
+    KEYWORD_KEY,
     PREFIX_KEY,
+    RAW_CMD_KEY,
+    REGEX_MATCHED,
     SHELL_ARGS,
     SHELL_ARGV,
-    CMD_ARG_KEY,
-    KEYWORD_KEY,
-    RAW_CMD_KEY,
-    ENDSWITH_KEY,
-    CMD_START_KEY,
-    FULLMATCH_KEY,
-    REGEX_MATCHED,
     STARTSWITH_KEY,
-    CMD_WHITESPACE_KEY,
 )
+from nonebot.internal.params import Arg as Arg
+from nonebot.internal.params import ArgParam as ArgParam
+from nonebot.internal.params import ArgPlainText as ArgPlainText
+from nonebot.internal.params import ArgStr as ArgStr
+from nonebot.internal.params import BotParam as BotParam
+from nonebot.internal.params import DefaultParam as DefaultParam
+from nonebot.internal.params import DependParam as DependParam
+from nonebot.internal.params import Depends as Depends
+from nonebot.internal.params import EventParam as EventParam
+from nonebot.internal.params import ExceptionParam as ExceptionParam
+from nonebot.internal.params import MatcherParam as MatcherParam
+from nonebot.internal.params import StateParam as StateParam
+from nonebot.matcher import Matcher
+from nonebot.typing import T_State
 
 
 async def _event_type(event: Event) -> str:
@@ -151,7 +151,7 @@ def RegexMatched() -> Match[str]:
 
 
 def _regex_str(
-    groups: tuple[Union[str, int], ...]
+    groups: tuple[Union[str, int], ...],
 ) -> Callable[[T_State], Union[str, tuple[Union[str, Any], ...], Any]]:
     def _regex_str_dependency(
         state: T_State,
@@ -162,16 +162,16 @@ def _regex_str(
 
 
 @overload
-def RegexStr(__group: Literal[0] = 0) -> str: ...
+def RegexStr(group: Literal[0] = 0, /) -> str: ...
 
 
 @overload
-def RegexStr(__group: Union[str, int]) -> Union[str, Any]: ...
+def RegexStr(group: Union[str, int], /) -> Union[str, Any]: ...
 
 
 @overload
 def RegexStr(
-    __group1: Union[str, int], __group2: Union[str, int], *groups: Union[str, int]
+    group1: Union[str, int], group2: Union[str, int], /, *groups: Union[str, int]
 ) -> tuple[Union[str, Any], ...]: ...
 
 

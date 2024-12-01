@@ -8,9 +8,9 @@ FrontMatter:
 """
 
 import contextlib
+from dataclasses import dataclass, field
 from types import ModuleType
-from dataclasses import field, dataclass
-from typing import TYPE_CHECKING, Any, Type, Optional  # noqa: UP035
+from typing import TYPE_CHECKING, Any, Optional, Type  # noqa: UP035
 
 from pydantic import BaseModel
 

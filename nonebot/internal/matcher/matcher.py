@@ -1,34 +1,44 @@
-import sys
-import inspect
-import warnings
-from pathlib import Path
-from types import ModuleType
-from dataclasses import dataclass
-from contextvars import ContextVar
-from typing_extensions import Self
 from collections.abc import Iterable
-from datetime import datetime, timedelta
 from contextlib import AsyncExitStack, contextmanager
+from contextvars import ContextVar
+from dataclasses import dataclass
+from datetime import datetime, timedelta
+import inspect
+from pathlib import Path
+import sys
+from types import ModuleType
 from typing import (  # noqa: UP035
     TYPE_CHECKING,
     Any,
-    Type,
-    Union,
-    TypeVar,
     Callable,
     ClassVar,
     NoReturn,
     Optional,
+    Type,
+    TypeVar,
+    Union,
     overload,
 )
+from typing_extensions import Self
+import warnings
 
 from exceptiongroup import BaseExceptionGroup, catch
 
-from nonebot.log import logger
-from nonebot.internal.rule import Rule
-from nonebot.dependencies import Param, Dependent
-from nonebot.internal.permission import User, Permission
-from nonebot.utils import classproperty, flatten_exception_group
+from nonebot.consts import (
+    ARG_KEY,
+    LAST_RECEIVE_KEY,
+    RECEIVE_KEY,
+    REJECT_CACHE_TARGET,
+    REJECT_TARGET,
+)
+from nonebot.dependencies import Dependent, Param
+from nonebot.exception import (
+    FinishedException,
+    PausedException,
+    RejectedException,
+    SkippedException,
+    StopPropagation,
+)
 from nonebot.internal.adapter import (
     Bot,
     Event,
@@ -36,37 +46,27 @@ from nonebot.internal.adapter import (
     MessageSegment,
     MessageTemplate,
 )
-from nonebot.typing import (
-    T_State,
-    T_Handler,
-    T_TypeUpdater,
-    T_DependencyCache,
-    T_PermissionUpdater,
-)
-from nonebot.consts import (
-    ARG_KEY,
-    RECEIVE_KEY,
-    REJECT_TARGET,
-    LAST_RECEIVE_KEY,
-    REJECT_CACHE_TARGET,
-)
-from nonebot.exception import (
-    PausedException,
-    StopPropagation,
-    SkippedException,
-    FinishedException,
-    RejectedException,
-)
 from nonebot.internal.params import (
-    Depends,
     ArgParam,
     BotParam,
-    EventParam,
-    StateParam,
-    DependParam,
     DefaultParam,
+    DependParam,
+    Depends,
+    EventParam,
     MatcherParam,
+    StateParam,
 )
+from nonebot.internal.permission import Permission, User
+from nonebot.internal.rule import Rule
+from nonebot.log import logger
+from nonebot.typing import (
+    T_DependencyCache,
+    T_Handler,
+    T_PermissionUpdater,
+    T_State,
+    T_TypeUpdater,
+)
+from nonebot.utils import classproperty, flatten_exception_group
 
 from . import matchers
 
@@ -861,7 +861,7 @@ class Matcher(metaclass=MatcherMeta):
         def _handle_special_exception(
             exc_group: BaseExceptionGroup[
                 Union[FinishedException, RejectedException, PausedException]
-            ]
+            ],
         ):
             nonlocal exc
             excs = list(flatten_exception_group(exc_group))

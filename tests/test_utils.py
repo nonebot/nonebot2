@@ -1,15 +1,15 @@
 import json
-from typing import Dict, List, Union, Literal, TypeVar, ClassVar  # noqa: UP035
+from typing import ClassVar, Dict, List, Literal, TypeVar, Union  # noqa: UP035
 
-from utils import FakeMessage, FakeMessageSegment
 from nonebot.utils import (
     DataclassEncoder,
     escape_tag,
-    is_gen_callable,
+    generic_check_issubclass,
     is_async_gen_callable,
     is_coroutine_callable,
-    generic_check_issubclass,
+    is_gen_callable,
 )
+from utils import FakeMessage, FakeMessageSegment
 
 
 def test_loguru_escape_tag():

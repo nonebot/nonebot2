@@ -9,28 +9,28 @@ FrontMatter:
     description: nonebot.plugin.manager 模块
 """
 
-import sys
-import pkgutil
-import importlib
-from pathlib import Path
-from itertools import chain
-from typing import Optional
-from types import ModuleType
-from importlib.abc import MetaPathFinder
 from collections.abc import Iterable, Sequence
+import importlib
+from importlib.abc import MetaPathFinder
 from importlib.machinery import PathFinder, SourceFileLoader
+from itertools import chain
+from pathlib import Path
+import pkgutil
+import sys
+from types import ModuleType
+from typing import Optional
 
 from nonebot.log import logger
 from nonebot.utils import escape_tag, path_to_module_name
 
-from .model import Plugin, PluginMetadata
 from . import (
+    _current_plugin,
     _managers,
+    _module_name_to_plugin_id,
     _new_plugin,
     _revert_plugin,
-    _current_plugin,
-    _module_name_to_plugin_id,
 )
+from .model import Plugin, PluginMetadata
 
 
 class PluginManager:

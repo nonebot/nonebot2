@@ -1,7 +1,7 @@
-from typing import Union, TypeVar
+from typing import TypeVar, Union
 
 from nonebot.adapters import Event, Message
-from nonebot.params import EventToMe, EventType, EventMessage, EventPlainText
+from nonebot.params import EventMessage, EventPlainText, EventToMe, EventType
 
 
 async def event(e: Event) -> Event:

@@ -1,52 +1,52 @@
 import re
 from re import Match
-from typing import Union, Optional
+from typing import Optional, Union
 
-import pytest
 from nonebug import App
+import pytest
 
-from nonebot.typing import T_State
-from nonebot.exception import ParserExit, SkippedException
-from utils import FakeMessage, FakeMessageSegment, make_fake_event
 from nonebot.consts import (
-    CMD_KEY,
-    PREFIX_KEY,
-    SHELL_ARGS,
-    SHELL_ARGV,
     CMD_ARG_KEY,
-    KEYWORD_KEY,
+    CMD_KEY,
+    CMD_WHITESPACE_KEY,
     ENDSWITH_KEY,
     FULLMATCH_KEY,
+    KEYWORD_KEY,
+    PREFIX_KEY,
     REGEX_MATCHED,
+    SHELL_ARGS,
+    SHELL_ARGV,
     STARTSWITH_KEY,
-    CMD_WHITESPACE_KEY,
 )
+from nonebot.exception import ParserExit, SkippedException
 from nonebot.rule import (
     CMD_RESULT,
     TRIE_VALUE,
-    Rule,
-    ToMeRule,
-    TrieRule,
-    Namespace,
-    RegexRule,
-    IsTypeRule,
+    ArgumentParser,
     CommandRule,
     EndswithRule,
-    KeywordsRule,
     FullmatchRule,
-    ArgumentParser,
-    StartswithRule,
+    IsTypeRule,
+    KeywordsRule,
+    Namespace,
+    RegexRule,
+    Rule,
     ShellCommandRule,
-    regex,
-    to_me,
+    StartswithRule,
+    ToMeRule,
+    TrieRule,
     command,
-    is_type,
-    keyword,
     endswith,
     fullmatch,
-    startswith,
+    is_type,
+    keyword,
+    regex,
     shell_command,
+    startswith,
+    to_me,
 )
+from nonebot.typing import T_State
+from utils import FakeMessage, FakeMessageSegment, make_fake_event
 
 
 @pytest.mark.anyio

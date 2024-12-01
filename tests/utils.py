@@ -1,10 +1,10 @@
-from typing import Union, Optional
+from collections.abc import Iterable, Mapping
+from typing import Optional, Union
 from typing_extensions import override
-from collections.abc import Mapping, Iterable
 
-from pydantic import Extra, create_model
+from pydantic import create_model
 
-from nonebot.adapters import Bot, Event, Adapter, Message, MessageSegment
+from nonebot.adapters import Adapter, Bot, Event, Message, MessageSegment
 
 
 def escape_text(s: str, *, escape_comma: bool = True) -> str:
@@ -89,7 +89,7 @@ def make_fake_event(
 ) -> type[Event]:
     Base = _base or Event
 
-    class FakeEvent(Base, extra=Extra.forbid):
+    class FakeEvent(Base):
         @override
         def get_type(self) -> str:
             return _type

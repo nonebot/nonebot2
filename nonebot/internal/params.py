@@ -1,46 +1,46 @@
-import inspect
+from contextlib import AsyncExitStack, asynccontextmanager, contextmanager
 from enum import Enum
-from typing_extensions import Self, get_args, override, get_origin
-from contextlib import AsyncExitStack, contextmanager, asynccontextmanager
+import inspect
 from typing import (
     TYPE_CHECKING,
-    Any,
-    Union,
-    Literal,
-    Callable,
-    Optional,
     Annotated,
+    Any,
+    Callable,
+    Literal,
+    Optional,
+    Union,
     cast,
 )
+from typing_extensions import Self, get_args, get_origin, override
 
 import anyio
 from exceptiongroup import BaseExceptionGroup, catch
 from pydantic.fields import FieldInfo as PydanticFieldInfo
 
-from nonebot.exception import SkippedException
-from nonebot.dependencies import Param, Dependent
-from nonebot.dependencies.utils import check_field_type
 from nonebot.compat import FieldInfo, ModelField, PydanticUndefined, extract_field_info
+from nonebot.dependencies import Dependent, Param
+from nonebot.dependencies.utils import check_field_type
+from nonebot.exception import SkippedException
 from nonebot.typing import (
     _STATE_FLAG,
-    T_State,
-    T_Handler,
     T_DependencyCache,
+    T_Handler,
+    T_State,
     origin_is_annotated,
 )
 from nonebot.utils import (
+    generic_check_issubclass,
     get_name,
-    run_sync,
-    is_gen_callable,
-    run_sync_ctx_manager,
     is_async_gen_callable,
     is_coroutine_callable,
-    generic_check_issubclass,
+    is_gen_callable,
+    run_sync,
+    run_sync_ctx_manager,
 )
 
 if TYPE_CHECKING:
-    from nonebot.matcher import Matcher
     from nonebot.adapters import Bot, Event
+    from nonebot.matcher import Matcher
 
 
 class DependsInner:

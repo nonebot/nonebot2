@@ -17,30 +17,29 @@ FrontMatter:
     description: nonebot.drivers.fastapi 模块
 """
 
-import logging
 import contextlib
 from functools import wraps
+import logging
+from typing import Any, Optional, Union
 from typing_extensions import override
-from typing import Any, Union, Optional
 
 from pydantic import BaseModel
 
-from nonebot.config import Env
-from nonebot.drivers import ASGIMixin
-from nonebot.exception import WebSocketClosed
-from nonebot.internal.driver import FileTypes
-from nonebot.drivers import Driver as BaseDriver
+from nonebot.compat import model_dump, type_validate_python
 from nonebot.config import Config as NoneBotConfig
+from nonebot.config import Env
+from nonebot.drivers import ASGIMixin, HTTPServerSetup, WebSocketServerSetup
+from nonebot.drivers import Driver as BaseDriver
 from nonebot.drivers import Request as BaseRequest
 from nonebot.drivers import WebSocket as BaseWebSocket
-from nonebot.compat import model_dump, type_validate_python
-from nonebot.drivers import HTTPServerSetup, WebSocketServerSetup
+from nonebot.exception import WebSocketClosed
+from nonebot.internal.driver import FileTypes
 
 try:
-    import uvicorn
-    from fastapi.responses import Response
     from fastapi import FastAPI, Request, UploadFile, status
-    from starlette.websockets import WebSocket, WebSocketState, WebSocketDisconnect
+    from fastapi.responses import Response
+    from starlette.websockets import WebSocket, WebSocketDisconnect, WebSocketState
+    import uvicorn
 except ModuleNotFoundError as e:  # pragma: no cover
     raise ImportError(
         "Please install FastAPI first to use this driver. "

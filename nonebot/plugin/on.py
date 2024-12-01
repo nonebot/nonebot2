@@ -7,34 +7,34 @@ FrontMatter:
     description: nonebot.plugin.on 模块
 """
 
-import re
-import inspect
-import warnings
-from types import ModuleType
-from typing import Any, Union, Optional
 from datetime import datetime, timedelta
+import inspect
+import re
+from types import ModuleType
+from typing import Any, Optional, Union
+import warnings
 
 from nonebot.adapters import Event
-from nonebot.permission import Permission
 from nonebot.dependencies import Dependent
 from nonebot.matcher import Matcher, MatcherSource
-from nonebot.typing import T_State, T_Handler, T_RuleChecker, T_PermissionChecker
+from nonebot.permission import Permission
 from nonebot.rule import (
-    Rule,
     ArgumentParser,
-    regex,
+    Rule,
     command,
-    is_type,
-    keyword,
     endswith,
     fullmatch,
-    startswith,
+    is_type,
+    keyword,
+    regex,
     shell_command,
+    startswith,
 )
+from nonebot.typing import T_Handler, T_PermissionChecker, T_RuleChecker, T_State
 
-from .model import Plugin
-from .manager import _current_plugin
 from . import get_plugin_by_module_name
+from .manager import _current_plugin
+from .model import Plugin
 
 
 def store_matcher(matcher: type[Matcher]) -> None:

@@ -1,41 +1,41 @@
 import abc
-from types import TracebackType
 from collections.abc import AsyncGenerator
-from typing_extensions import Self, TypeAlias
 from contextlib import AsyncExitStack, asynccontextmanager
-from typing import TYPE_CHECKING, Any, Union, ClassVar, Optional
+from types import TracebackType
+from typing import TYPE_CHECKING, Any, ClassVar, Optional, Union
+from typing_extensions import Self, TypeAlias
 
-from anyio.abc import TaskGroup
 from anyio import CancelScope, create_task_group
+from anyio.abc import TaskGroup
 from exceptiongroup import BaseExceptionGroup, catch
 
-from nonebot.log import logger
-from nonebot.config import Env, Config
+from nonebot.config import Config, Env
 from nonebot.dependencies import Dependent
 from nonebot.exception import SkippedException
-from nonebot.internal.params import BotParam, DependParam, DefaultParam
-from nonebot.utils import escape_tag, run_coro_with_catch, flatten_exception_group
+from nonebot.internal.params import BotParam, DefaultParam, DependParam
+from nonebot.log import logger
 from nonebot.typing import (
-    T_DependencyCache,
     T_BotConnectionHook,
     T_BotDisconnectionHook,
+    T_DependencyCache,
 )
+from nonebot.utils import escape_tag, flatten_exception_group, run_coro_with_catch
 
 from ._lifespan import LIFESPAN_FUNC, Lifespan
 from .model import (
+    CookieTypes,
+    HeaderTypes,
+    HTTPServerSetup,
+    HTTPVersion,
+    QueryTypes,
     Request,
     Response,
     WebSocket,
-    QueryTypes,
-    CookieTypes,
-    HeaderTypes,
-    HTTPVersion,
-    HTTPServerSetup,
     WebSocketServerSetup,
 )
 
 if TYPE_CHECKING:
-    from nonebot.internal.adapter import Bot, Adapter
+    from nonebot.internal.adapter import Adapter, Bot
 
 
 BOT_HOOK_PARAMS = [DependParam, BotParam, DefaultParam]

@@ -1,8 +1,8 @@
 from typing import Any, Optional
 
 import anyio
-import pytest
 from nonebug import App
+import pytest
 
 from nonebot.adapters import Bot
 from nonebot.exception import MockApiException
