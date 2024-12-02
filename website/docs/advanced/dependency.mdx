@@ -1224,6 +1224,37 @@ async def _(foo: Event = LastReceived()): ...
   </TabItem>
 </Tabs>
 
+### ReceivePromptResult
+
+获取某次 `receive` 发送提示消息的结果。
+
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
+
+```python {6}
+from typing import Any, Annotated
+
+from nonebot.params import ReceivePromptResult
+
+@matcher.receive("id", prompt="prompt")
+async def _(result: Annotated[Any, ReceivePromptResult("id")]): ...
+```
+
+  </TabItem>
+  <TabItem value="no-annotated" label="Without Annotated">
+
+```python {6}
+from typing import Any
+
+from nonebot.params import ReceivePromptResult
+
+@matcher.receive("id", prompt="prompt")
+async def _(result: Any = ReceivePromptResult("id")): ...
+```
+
+  </TabItem>
+</Tabs>
+
 ### Arg
 
 获取某次 `got` 接收的参数。如果 `Arg` 参数留空，则使用函数的参数名作为要获取的参数。
@@ -1314,6 +1345,78 @@ from nonebot.params import ArgPlainText
 @matcher.got("key")
 async def _(key: str = ArgPlainText()): ...
 async def _(foo: str = ArgPlainText("key")): ...
+```
+
+  </TabItem>
+</Tabs>
+
+### ArgPromptResult
+
+获取某次 `got` 发送提示消息的结果。如果 `Arg` 参数留空，则使用函数的参数名作为要获取的参数。
+
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
+
+```python {6,7}
+from typing import Any, Annotated
+
+from nonebot.params import ArgPromptResult
+
+@matcher.got("key", prompt="prompt")
+async def _(result: Annotated[Any, ArgPromptResult()]): ...
+async def _(result: Annotated[Any, ArgPromptResult("key")]): ...
+```
+
+  </TabItem>
+  <TabItem value="no-annotated" label="Without Annotated">
+
+```python {6,7}
+from typing import Any
+
+from nonebot.params import ArgPromptResult
+
+@matcher.got("key", prompt="prompt")
+async def _(result: Any = ArgPromptResult()): ...
+async def _(result: Any = ArgPromptResult("key")): ...
+```
+
+  </TabItem>
+</Tabs>
+
+### PausePromptResult
+
+获取最近一次 `pause` 发送提示消息的结果。
+
+<Tabs groupId="annotated">
+  <TabItem value="annotated" label="Use Annotated" default>
+
+```python {6}
+from typing import Any, Annotated
+
+from nonebot.params import PausePromptResult
+
+@matcher.handle()
+async def _():
+    await matcher.pause(prompt="prompt")
+
+@matcher.handle()
+async def _(result: Annotated[Any, PausePromptResult()]): ...
+```
+
+  </TabItem>
+  <TabItem value="no-annotated" label="Without Annotated">
+
+```python {6}
+from typing import Any
+
+from nonebot.params import PausePromptResult
+
+@matcher.handle()
+async def _():
+    await matcher.pause(prompt="prompt")
+
+@matcher.handle()
+async def _(result: Any = PausePromptResult()): ...
 ```
 
   </TabItem>

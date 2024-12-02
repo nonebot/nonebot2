@@ -22,6 +22,10 @@ REJECT_TARGET: Literal["_current_target"] = "_current_target"
 """当前 `reject` 目标存储 key"""
 REJECT_CACHE_TARGET: Literal["_next_target"] = "_next_target"
 """下一个 `reject` 目标存储 key"""
+PAUSE_PROMPT_RESULT_KEY: Literal["_pause_{key}_result"] = "_pause_{key}_result"
+"""`pause` prompt 发送结果存储 key"""
+REJECT_PROMPT_RESULT_KEY: Literal["_reject_{key}_result"] = "_reject_{key}_result"
+"""`reject` prompt 发送结果存储 key"""
 
 # used by Rule
 PREFIX_KEY: Literal["_prefix"] = "_prefix"

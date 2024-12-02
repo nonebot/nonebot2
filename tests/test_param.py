@@ -5,6 +5,7 @@ from nonebug import App
 import pytest
 
 from nonebot.consts import (
+    ARG_KEY,
     CMD_ARG_KEY,
     CMD_KEY,
     CMD_START_KEY,
@@ -12,9 +13,12 @@ from nonebot.consts import (
     ENDSWITH_KEY,
     FULLMATCH_KEY,
     KEYWORD_KEY,
+    PAUSE_PROMPT_RESULT_KEY,
     PREFIX_KEY,
     RAW_CMD_KEY,
+    RECEIVE_KEY,
     REGEX_MATCHED,
+    REJECT_PROMPT_RESULT_KEY,
     SHELL_ARGS,
     SHELL_ARGV,
     STARTSWITH_KEY,
@@ -469,8 +473,10 @@ async def test_matcher(app: App):
         matcher,
         not_legacy_matcher,
         not_matcher,
+        pause_prompt_result,
         postpone_matcher,
         receive,
+        receive_prompt_result,
         sub_matcher,
         union_matcher,
     )
@@ -538,12 +544,31 @@ async def test_matcher(app: App):
         ctx.pass_params(matcher=fake_matcher)
         ctx.should_return(event_next)
 
+    fake_matcher.state[
+        REJECT_PROMPT_RESULT_KEY.format(key=RECEIVE_KEY.format(id="test"))
+    ] = True
+
+    async with app.test_dependent(
+        receive_prompt_result, allow_types=[MatcherParam, DependParam]
+    ) as ctx:
+        ctx.pass_params(matcher=fake_matcher)
+        ctx.should_return(True)
+
+    fake_matcher.state[PAUSE_PROMPT_RESULT_KEY] = True
+
+    async with app.test_dependent(
+        pause_prompt_result, allow_types=[MatcherParam, DependParam]
+    ) as ctx:
+        ctx.pass_params(matcher=fake_matcher)
+        ctx.should_return(True)
+
 
 @pytest.mark.anyio
 async def test_arg(app: App):
     from plugins.param.param_arg import (
         annotated_arg,
         annotated_arg_plain_text,
+        annotated_arg_prompt_result,
         annotated_arg_str,
         annotated_multi_arg,
         annotated_prior_arg,
@@ -555,6 +580,7 @@ async def test_arg(app: App):
     matcher = Matcher()
     message = FakeMessage("text")
     matcher.set_arg("key", message)
+    matcher.state[REJECT_PROMPT_RESULT_KEY.format(key=ARG_KEY.format(key="key"))] = True
 
     async with app.test_dependent(arg, allow_types=[ArgParam]) as ctx:
         ctx.pass_params(matcher=matcher)
@@ -581,6 +607,12 @@ async def test_arg(app: App):
     ) as ctx:
         ctx.pass_params(matcher=matcher)
         ctx.should_return(message.extract_plain_text())
+
+    async with app.test_dependent(
+        annotated_arg_prompt_result, allow_types=[ArgParam]
+    ) as ctx:
+        ctx.pass_params(matcher=matcher)
+        ctx.should_return(True)
 
     async with app.test_dependent(annotated_multi_arg, allow_types=[ArgParam]) as ctx:
         ctx.pass_params(matcher=matcher)
