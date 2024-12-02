@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: httpx proxy 与 aiohttp timeout 参数新版本修改 [@yanyongyu](https://github.com/yanyongyu) ([#3152](https://github.com/nonebot/nonebot2/pull/3152))
 - Fix: 屏蔽 pydantic 2.10.0 [@yanyongyu](https://github.com/yanyongyu) ([#3137](https://github.com/nonebot/nonebot2/pull/3137))
 
 ### 📝 文档
