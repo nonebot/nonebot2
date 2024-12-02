@@ -90,9 +90,7 @@ class Session(HTTPClientSession):
     @override
     async def request(self, setup: Request) -> Response:
         if self._params:
-            params = self._params.copy()
-            params.update(setup.url.query)
-            url = setup.url.with_query(params)
+            url = setup.url.with_query({**self._params, **setup.url.query})
         else:
             url = setup.url
 
@@ -172,11 +170,13 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
         else:
             raise RuntimeError(f"Unsupported HTTP version: {setup.version}")
 
+        timeout = aiohttp.ClientWSTimeout(ws_close=setup.timeout or 10.0)  # type: ignore
+
         async with aiohttp.ClientSession(version=version, trust_env=True) as session:
             async with session.ws_connect(
                 setup.url,
                 method=setup.method,
-                timeout=setup.timeout or 10,  # type: ignore
+                timeout=timeout,
                 headers=setup.headers,
                 proxy=setup.proxy,
             ) as ws:
