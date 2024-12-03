@@ -7726,4 +7726,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_resolver2",
+    "project_link": "nonebot-plugin-resolver2",
+    "author_id": 64878354,
+    "tags": [
+      {
+        "label": "音频",
+        "color": "#cb324f"
+      },
+      {
+        "label": "视频",
+        "color": "#cb324f"
+      },
+      {
+        "label": "bilibili",
+        "color": "#ec3658"
+      }
+    ],
+    "is_official": false
+  },
 ]
