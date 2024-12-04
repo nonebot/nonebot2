@@ -656,8 +656,13 @@ class Matcher(metaclass=MatcherMeta):
                 请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()
-        matcher.set_target(ARG_KEY.format(key=key))
-        await cls.reject(prompt, **kwargs)
+        arg_key = ARG_KEY.format(key=key)
+        matcher.set_target(arg_key)
+
+        if prompt is not None:
+            result = await cls.send(prompt, **kwargs)
+            matcher.state[REJECT_PROMPT_RESULT_KEY.format(key=arg_key)] = result
+        raise RejectedException
 
     @classmethod
     async def reject_receive(
@@ -676,8 +681,13 @@ class Matcher(metaclass=MatcherMeta):
                 请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()
-        matcher.set_target(RECEIVE_KEY.format(id=id))
-        await cls.reject(prompt, **kwargs)
+        receive_key = RECEIVE_KEY.format(id=id)
+        matcher.set_target(receive_key)
+
+        if prompt is not None:
+            result = await cls.send(prompt, **kwargs)
+            matcher.state[REJECT_PROMPT_RESULT_KEY.format(key=receive_key)] = result
+        raise RejectedException
 
     @classmethod
     def skip(cls) -> NoReturn:

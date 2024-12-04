@@ -1,3 +1,4 @@
+from contextlib import suppress
 import re
 
 from exceptiongroup import BaseExceptionGroup
@@ -13,18 +14,16 @@ from nonebot.consts import (
     ENDSWITH_KEY,
     FULLMATCH_KEY,
     KEYWORD_KEY,
-    PAUSE_PROMPT_RESULT_KEY,
     PREFIX_KEY,
     RAW_CMD_KEY,
     RECEIVE_KEY,
     REGEX_MATCHED,
-    REJECT_PROMPT_RESULT_KEY,
     SHELL_ARGS,
     SHELL_ARGV,
     STARTSWITH_KEY,
 )
 from nonebot.dependencies import Dependent
-from nonebot.exception import TypeMisMatch
+from nonebot.exception import PausedException, RejectedException, TypeMisMatch
 from nonebot.matcher import Matcher
 from nonebot.params import (
     ArgParam,
@@ -544,9 +543,14 @@ async def test_matcher(app: App):
         ctx.pass_params(matcher=fake_matcher)
         ctx.should_return(event_next)
 
-    fake_matcher.state[
-        REJECT_PROMPT_RESULT_KEY.format(key=RECEIVE_KEY.format(id="test"))
-    ] = True
+    fake_matcher.set_target(RECEIVE_KEY.format(id="test"), cache=False)
+
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        ctx.should_call_send(event, "test", result=True, bot=bot)
+        with fake_matcher.ensure_context(bot, event):
+            with suppress(RejectedException):
+                await fake_matcher.reject("test")
 
     async with app.test_dependent(
         receive_prompt_result, allow_types=[MatcherParam, DependParam]
@@ -554,7 +558,13 @@ async def test_matcher(app: App):
         ctx.pass_params(matcher=fake_matcher)
         ctx.should_return(True)
 
-    fake_matcher.state[PAUSE_PROMPT_RESULT_KEY] = True
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        ctx.should_call_send(event, "test", result=True, bot=bot)
+        with fake_matcher.ensure_context(bot, event):
+            fake_matcher.set_target("test")
+            with suppress(PausedException):
+                await fake_matcher.pause("test")
 
     async with app.test_dependent(
         pause_prompt_result, allow_types=[MatcherParam, DependParam]
@@ -578,9 +588,9 @@ async def test_arg(app: App):
     )
 
     matcher = Matcher()
+    event = make_fake_event()()
     message = FakeMessage("text")
     matcher.set_arg("key", message)
-    matcher.state[REJECT_PROMPT_RESULT_KEY.format(key=ARG_KEY.format(key="key"))] = True
 
     async with app.test_dependent(arg, allow_types=[ArgParam]) as ctx:
         ctx.pass_params(matcher=matcher)
@@ -607,6 +617,15 @@ async def test_arg(app: App):
     ) as ctx:
         ctx.pass_params(matcher=matcher)
         ctx.should_return(message.extract_plain_text())
+
+    matcher.set_target(ARG_KEY.format(key="key"), cache=False)
+
+    async with app.test_api() as ctx:
+        bot = ctx.create_bot()
+        ctx.should_call_send(event, "test", result=True, bot=bot)
+        with matcher.ensure_context(bot, event):
+            with suppress(RejectedException):
+                await matcher.reject("test")
 
     async with app.test_dependent(
         annotated_arg_prompt_result, allow_types=[ArgParam]
