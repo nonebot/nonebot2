@@ -36,6 +36,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 链接分享解析器重制版 [@noneflow](https://github.com/noneflow) ([#3154](https://github.com/nonebot/nonebot2/pull/3154))
 - Plugin: ZXWB词库问答 [@noneflow](https://github.com/noneflow) ([#3143](https://github.com/nonebot/nonebot2/pull/3143))
 - Plugin: nonebot-plugin-hyp [@noneflow](https://github.com/noneflow) ([#3140](https://github.com/nonebot/nonebot2/pull/3140))
 - Plugin: nonebot-plugin-zepplife [@noneflow](https://github.com/noneflow) ([#3132](https://github.com/nonebot/nonebot2/pull/3132))
