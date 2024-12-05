@@ -7746,4 +7746,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_water_geoup_stats",
+    "project_link": "nonebot-plugin-water-geoup-stats",
+    "author_id": 114509415,
+    "tags": [],
+    "is_official": false
+  },
 ]
