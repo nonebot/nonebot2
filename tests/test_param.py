@@ -560,7 +560,7 @@ async def test_matcher(app: App):
 
     async with app.test_api() as ctx:
         bot = ctx.create_bot()
-        ctx.should_call_send(event, "test", result=True, bot=bot)
+        ctx.should_call_send(event, "test", result=False, bot=bot)
         with fake_matcher.ensure_context(bot, event):
             fake_matcher.set_target("test")
             with suppress(PausedException):
@@ -570,7 +570,7 @@ async def test_matcher(app: App):
         pause_prompt_result, allow_types=[MatcherParam, DependParam]
     ) as ctx:
         ctx.pass_params(matcher=fake_matcher)
-        ctx.should_return(True)
+        ctx.should_return(False)
 
 
 @pytest.mark.anyio
@@ -622,7 +622,7 @@ async def test_arg(app: App):
 
     async with app.test_api() as ctx:
         bot = ctx.create_bot()
-        ctx.should_call_send(event, "test", result=True, bot=bot)
+        ctx.should_call_send(event, "test", result="arg", bot=bot)
         with matcher.ensure_context(bot, event):
             with suppress(RejectedException):
                 await matcher.reject("test")
@@ -631,7 +631,7 @@ async def test_arg(app: App):
         annotated_arg_prompt_result, allow_types=[ArgParam]
     ) as ctx:
         ctx.pass_params(matcher=matcher)
-        ctx.should_return(True)
+        ctx.should_return("arg")
 
     async with app.test_dependent(annotated_multi_arg, allow_types=[ArgParam]) as ctx:
         ctx.pass_params(matcher=matcher)
