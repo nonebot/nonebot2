@@ -49,12 +49,6 @@ jobs:
         with:
           token: ${{ steps.generate-token.outputs.token }}
 
-      - name: Cache pre-commit hooks
-        uses: actions/cache@v4
-        with:
-          path: .cache/.pre-commit
-          key: noneflow-${{ runner.os }}-${{ hashFiles('.pre-commit-config.yaml') }}
-
       - name: NoneFlow
         uses: docker://ghcr.io/nonebot/noneflow:latest
         with:
@@ -69,7 +63,3 @@ jobs:
         env:
           APP_ID: ${{ secrets.APP_ID }}
           PRIVATE_KEY: ${{ secrets.APP_KEY }}
-          PRE_COMMIT_HOME: /github/workspace/.cache/.pre-commit
-
-      - name: Fix permission
-        run: sudo chown -R $(whoami):$(id -ng) .cache/.pre-commit
