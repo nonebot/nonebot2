@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 存储 matcher 发送 prompt 的结果 [@yanyongyu](https://github.com/yanyongyu) ([#3155](https://github.com/nonebot/nonebot2/pull/3155))
 - Feature: 提升已加载的适配器日志等级 [@yanyongyu](https://github.com/yanyongyu) ([#3110](https://github.com/nonebot/nonebot2/pull/3110))
 
 ### 🐛 Bug 修复
