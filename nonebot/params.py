@@ -19,9 +19,12 @@ from nonebot.consts import (
     ENDSWITH_KEY,
     FULLMATCH_KEY,
     KEYWORD_KEY,
+    PAUSE_PROMPT_RESULT_KEY,
     PREFIX_KEY,
     RAW_CMD_KEY,
+    RECEIVE_KEY,
     REGEX_MATCHED,
+    REJECT_PROMPT_RESULT_KEY,
     SHELL_ARGS,
     SHELL_ARGV,
     STARTSWITH_KEY,
@@ -29,6 +32,7 @@ from nonebot.consts import (
 from nonebot.internal.params import Arg as Arg
 from nonebot.internal.params import ArgParam as ArgParam
 from nonebot.internal.params import ArgPlainText as ArgPlainText
+from nonebot.internal.params import ArgPromptResult as ArgPromptResult
 from nonebot.internal.params import ArgStr as ArgStr
 from nonebot.internal.params import BotParam as BotParam
 from nonebot.internal.params import DefaultParam as DefaultParam
@@ -252,6 +256,26 @@ def LastReceived(default: Any = None) -> Any:
     return Depends(_last_received, use_cache=False)
 
 
+def ReceivePromptResult(id: Optional[str] = None) -> Any:
+    """`receive` prompt 发送结果"""
+
+    def _receive_prompt_result(matcher: "Matcher") -> Any:
+        return matcher.state.get(
+            REJECT_PROMPT_RESULT_KEY.format(key=RECEIVE_KEY.format(id=id))
+        )
+
+    return Depends(_receive_prompt_result, use_cache=False)
+
+
+def PausePromptResult() -> Any:
+    """`pause` prompt 发送结果"""
+
+    def _pause_prompt_result(matcher: "Matcher") -> Any:
+        return matcher.state.get(PAUSE_PROMPT_RESULT_KEY)
+
+    return Depends(_pause_prompt_result, use_cache=False)
+
+
 __autodoc__ = {
     "Arg": True,
     "ArgStr": True,
@@ -265,4 +289,5 @@ __autodoc__ = {
     "DefaultParam": True,
     "MatcherParam": True,
     "ExceptionParam": True,
+    "ArgPromptResult": True,
 }

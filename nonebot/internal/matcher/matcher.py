@@ -27,8 +27,10 @@ from exceptiongroup import BaseExceptionGroup, catch
 from nonebot.consts import (
     ARG_KEY,
     LAST_RECEIVE_KEY,
+    PAUSE_PROMPT_RESULT_KEY,
     RECEIVE_KEY,
     REJECT_CACHE_TARGET,
+    REJECT_PROMPT_RESULT_KEY,
     REJECT_TARGET,
 )
 from nonebot.dependencies import Dependent, Param
@@ -560,8 +562,8 @@ class Matcher(metaclass=MatcherMeta):
         """
         bot = current_bot.get()
         event = current_event.get()
-        state = current_matcher.get().state
         if isinstance(message, MessageTemplate):
+            state = current_matcher.get().state
             _message = message.format(**state)
         else:
             _message = message
@@ -597,8 +599,15 @@ class Matcher(metaclass=MatcherMeta):
             kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，
                 请参考对应 adapter 的 bot 对象 api
         """
+        try:
+            matcher = current_matcher.get()
+        except Exception:
+            matcher = None
+
         if prompt is not None:
-            await cls.send(prompt, **kwargs)
+            result = await cls.send(prompt, **kwargs)
+            if matcher is not None:
+                matcher.state[PAUSE_PROMPT_RESULT_KEY] = result
         raise PausedException
 
     @classmethod
@@ -615,8 +624,19 @@ class Matcher(metaclass=MatcherMeta):
             kwargs: {ref}`nonebot.adapters.Bot.send` 的参数，
                 请参考对应 adapter 的 bot 对象 api
         """
+        try:
+            matcher = current_matcher.get()
+            key = matcher.get_target()
+        except Exception:
+            matcher = None
+            key = None
+
+        key = REJECT_PROMPT_RESULT_KEY.format(key=key) if key is not None else None
+
         if prompt is not None:
-            await cls.send(prompt, **kwargs)
+            result = await cls.send(prompt, **kwargs)
+            if key is not None and matcher:
+                matcher.state[key] = result
         raise RejectedException
 
     @classmethod
@@ -636,9 +656,12 @@ class Matcher(metaclass=MatcherMeta):
                 请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()
-        matcher.set_target(ARG_KEY.format(key=key))
+        arg_key = ARG_KEY.format(key=key)
+        matcher.set_target(arg_key)
+
         if prompt is not None:
-            await cls.send(prompt, **kwargs)
+            result = await cls.send(prompt, **kwargs)
+            matcher.state[REJECT_PROMPT_RESULT_KEY.format(key=arg_key)] = result
         raise RejectedException
 
     @classmethod
@@ -658,9 +681,12 @@ class Matcher(metaclass=MatcherMeta):
                 请参考对应 adapter 的 bot 对象 api
         """
         matcher = current_matcher.get()
-        matcher.set_target(RECEIVE_KEY.format(id=id))
+        receive_key = RECEIVE_KEY.format(id=id)
+        matcher.set_target(receive_key)
+
         if prompt is not None:
-            await cls.send(prompt, **kwargs)
+            result = await cls.send(prompt, **kwargs)
+            matcher.state[REJECT_PROMPT_RESULT_KEY.format(key=receive_key)] = result
         raise RejectedException
 
     @classmethod

@@ -1,8 +1,13 @@
-from typing import TypeVar, Union
+from typing import Any, TypeVar, Union
 
 from nonebot.adapters import Event
 from nonebot.matcher import Matcher
-from nonebot.params import LastReceived, Received
+from nonebot.params import (
+    LastReceived,
+    PausePromptResult,
+    Received,
+    ReceivePromptResult,
+)
 
 
 async def matcher(m: Matcher) -> Matcher:
@@ -59,3 +64,11 @@ async def receive(e: Event = Received("test")) -> Event:
 
 async def last_receive(e: Event = LastReceived()) -> Event:
     return e
+
+
+async def receive_prompt_result(result: Any = ReceivePromptResult("test")) -> Any:
+    return result
+
+
+async def pause_prompt_result(result: Any = PausePromptResult()) -> Any:
+    return result
