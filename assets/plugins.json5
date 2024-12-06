@@ -7753,4 +7753,20 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_pcr_sign",
+    "project_link": "nonebot-plugin-pcr-sign",
+    "author_id": 80870777,
+    "tags": [
+      {
+        "label": "PCR",
+        "color": "#ea5252"
+      },
+      {
+        "label": "签到",
+        "color": "#aeeaa8"
+      }
+    ],
+    "is_official": false
+  },
 ]
