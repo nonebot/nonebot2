@@ -38,6 +38,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: PCR签到重制版 [@noneflow](https://github.com/noneflow) ([#3157](https://github.com/nonebot/nonebot2/pull/3157))
 - Plugin: 发言统计 [@noneflow](https://github.com/noneflow) ([#3162](https://github.com/nonebot/nonebot2/pull/3162))
 - Plugin: 链接分享解析器重制版 [@noneflow](https://github.com/noneflow) ([#3154](https://github.com/nonebot/nonebot2/pull/3154))
 - Plugin: ZXWB词库问答 [@noneflow](https://github.com/noneflow) ([#3143](https://github.com/nonebot/nonebot2/pull/3143))
