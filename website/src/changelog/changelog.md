@@ -31,6 +31,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 移除插件 riffusion [@lgc2333](https://github.com/lgc2333) ([#3171](https://github.com/nonebot/nonebot2/pull/3171))
 - CI: 删除 NoneFlow 中关于 pre-commit 的部分 [@he0119](https://github.com/he0119) ([#3166](https://github.com/nonebot/nonebot2/pull/3166))
 - Develop: 完全使用 ruff 替代 isort 与 black [@yanyongyu](https://github.com/yanyongyu) ([#3151](https://github.com/nonebot/nonebot2/pull/3151))
 - Plugin: 删除`function` 插件，添加 `batch-withdrawal` 插件标签 [@zhongwen-4](https://github.com/zhongwen-4) ([#3118](https://github.com/nonebot/nonebot2/pull/3118))
