@@ -7757,4 +7757,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_emojilike",
+    "project_link": "nonebot-plugin-emojilike",
+    "author_id": 64878354,
+    "tags": [
+      {
+        "label": "赞",
+        "color": "#e8ec2a"
+      },
+      {
+        "label": "emoji",
+        "color": "#e5e861"
+      }
+    ],
+    "is_official": false
+  },
 ]
