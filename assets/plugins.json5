@@ -5216,18 +5216,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_riffusion",
-    "project_link": "nonebot-plugin-riffusion",
-    "author_id": 59048777,
-    "tags": [
-      {
-        "label": "Riffusion",
-        "color": "#4b39cb"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_phigros",
     "project_link": "nonebot-plugin-phigros",
     "author_id": 96647974,
