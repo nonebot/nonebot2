@@ -7769,4 +7769,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_specify_broadcast",
+    "project_link": "nonebot-plugin-specify-broadcast",
+    "author_id": 30348215,
+    "tags": [
+      {
+        "label": "广播",
+        "color": "#5dbe8a"
+      }
+    ],
+    "is_official": false
+  },
 ]
