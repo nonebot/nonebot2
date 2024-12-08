@@ -1,7 +1,7 @@
 name: 发布插件
 title: "Plugin: {name}"
 description: 发布插件到 NoneBot 官方商店
-labels: ["Plugin"]
+labels: ["Plugin", "Publish"]
 body:
   - type: input
     id: pypi
