@@ -7773,4 +7773,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot-plugin-multimodal-gemini",
+    "project_link": "nonebot-plugin-multimodal-gemini",
+    "author_id": 33365787,
+    "tags": [
+      {
+        "label": "Gemini",
+        "color": "#368bd1"
+      },
+      {
+        "label": "AI",
+        "color": "#368bd1"
+      },
+      {
+        "label": "GPT",
+        "color": "#368bd1"
+      }
+    ],
+    "is_official": false
+  },
 ]
