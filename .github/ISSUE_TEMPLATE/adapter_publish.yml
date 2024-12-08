@@ -1,7 +1,7 @@
 name: 发布适配器
 title: "Adapter: {name}"
 description: 发布适配器到 NoneBot 官方商店
-labels: ["Adapter"]
+labels: ["Adapter", "Publish"]
 body:
   - type: input
     id: name
