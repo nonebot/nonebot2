@@ -40,6 +40,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 谷歌 Gemini 多模态助手 [@noneflow](https://github.com/noneflow) ([#3165](https://github.com/nonebot/nonebot2/pull/3165))
 - Plugin: 名片赞，表情回应插件 [@noneflow](https://github.com/noneflow) ([#3170](https://github.com/nonebot/nonebot2/pull/3170))
 - Plugin: PCR签到重制版 [@noneflow](https://github.com/noneflow) ([#3157](https://github.com/nonebot/nonebot2/pull/3157))
 - Plugin: 发言统计 [@noneflow](https://github.com/noneflow) ([#3162](https://github.com/nonebot/nonebot2/pull/3162))
