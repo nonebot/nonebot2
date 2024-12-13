@@ -7793,4 +7793,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_csgomarket",
+    "project_link": "nonebot-plugin-csgomarket",
+    "author_id": 188882430,
+    "tags": [
+      {
+        "label": "CSGO",
+        "color": "#fb9f29"
+      }
+    ],
+    "is_official": false
+  },
 ]
