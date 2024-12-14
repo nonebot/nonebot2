@@ -7805,4 +7805,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_nailongmagic",
+    "project_link": "nonebot-plugin-nailongmagic",
+    "author_id": 137168144,
+    "tags": [
+      {
+        "label": "SD",
+        "color": "#3645e3"
+      },
+      {
+        "label": "nailong",
+        "color": "#edd81b"
+      },
+      {
+        "label": "func",
+        "color": "#43ed1b"
+      }
+    ],
+    "is_official": false
+  },
 ]
