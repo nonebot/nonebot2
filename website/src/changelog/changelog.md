@@ -40,6 +40,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 奶龙魔法 [@noneflow](https://github.com/noneflow) ([#3175](https://github.com/nonebot/nonebot2/pull/3175))
 - Plugin: CSGO_MARKET [@noneflow](https://github.com/noneflow) ([#3148](https://github.com/nonebot/nonebot2/pull/3148))
 - Plugin: 谷歌 Gemini 多模态助手 [@noneflow](https://github.com/noneflow) ([#3165](https://github.com/nonebot/nonebot2/pull/3165))
 - Plugin: 名片赞，表情回应插件 [@noneflow](https://github.com/noneflow) ([#3170](https://github.com/nonebot/nonebot2/pull/3170))
