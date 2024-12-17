@@ -7825,4 +7825,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_amitabha",
+    "project_link": "nonebot-plugin-amitabha",
+    "author_id": 53631287,
+    "tags": [
+      {
+        "label": "念佛",
+        "color": "#fae1a9"
+      },
+      {
+        "label": "阿弥陀佛",
+        "color": "#fab6a9"
+      }
+    ],
+    "is_official": false
+  },
 ]
