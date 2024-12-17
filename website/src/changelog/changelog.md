@@ -40,6 +40,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-ollama [@noneflow](https://github.com/noneflow) ([#3182](https://github.com/nonebot/nonebot2/pull/3182))
 - Plugin: 南无阿弥陀佛 [@noneflow](https://github.com/noneflow) ([#3178](https://github.com/nonebot/nonebot2/pull/3178))
 - Plugin: 奶龙魔法 [@noneflow](https://github.com/noneflow) ([#3175](https://github.com/nonebot/nonebot2/pull/3175))
 - Plugin: CSGO_MARKET [@noneflow](https://github.com/noneflow) ([#3148](https://github.com/nonebot/nonebot2/pull/3148))
