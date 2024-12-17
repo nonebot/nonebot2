@@ -7857,4 +7857,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_picstatus_template_zhenxun",
+    "project_link": "nonebot-plugin-picstatus-template-zhenxun",
+    "author_id": 59048777,
+    "tags": [
+      {
+        "label": "PicStatus",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
