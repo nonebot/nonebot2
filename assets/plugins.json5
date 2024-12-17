@@ -7841,4 +7841,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ollama",
+    "project_link": "nonebot-plugin-ollama",
+    "author_id": 189951286,
+    "tags": [
+      {
+        "label": "LLM",
+        "color": "#da56f6"
+      },
+      {
+        "label": "AI",
+        "color": "#56f65f"
+      }
+    ],
+    "is_official": false
+  },
 ]
