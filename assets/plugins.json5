@@ -7869,4 +7869,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_arcaea_sticker",
+    "project_link": "nonebot-plugin-arcaea-sticker",
+    "author_id": 106399011,
+    "tags": [
+      {
+        "label": "Arcaea",
+        "color": "#1f1e33"
+      },
+      {
+        "label": "表情包",
+        "color": "#d560e2"
+      }
+    ],
+    "is_official": false
+  },
 ]
