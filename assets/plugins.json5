@@ -7885,4 +7885,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_simple_block",
+    "project_link": "nonebot-plugin-simple-block",
+    "author_id": 98072207,
+    "tags": [
+      {
+        "label": "阻断",
+        "color": "#1c999e"
+      },
+      {
+        "label": "调试",
+        "color": "#eda509"
+      }
+    ],
+    "is_official": false
+  },
 ]
