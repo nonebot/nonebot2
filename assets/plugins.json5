@@ -7901,4 +7901,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_add_friends",
+    "project_link": "nonebot-plugin-add-friends",
+    "author_id": 48401273,
+    "tags": [
+      {
+        "label": "同意好友",
+        "color": "#04ff48"
+      },
+      {
+        "label": "加群邀请",
+        "color": "#0ecdf7"
+      }
+    ],
+    "is_official": false
+  },
 ]
