@@ -40,6 +40,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 简易群聊屏蔽 [@noneflow](https://github.com/noneflow) ([#3196](https://github.com/nonebot/nonebot2/pull/3196))
 - Plugin: Arcaea表情包生成器 [@noneflow](https://github.com/noneflow) ([#3160](https://github.com/nonebot/nonebot2/pull/3160))
 - Plugin: PicStatus Template ZhenXun [@noneflow](https://github.com/noneflow) ([#3192](https://github.com/nonebot/nonebot2/pull/3192))
 - Plugin: nonebot-plugin-ollama [@noneflow](https://github.com/noneflow) ([#3182](https://github.com/nonebot/nonebot2/pull/3182))
