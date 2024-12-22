@@ -40,6 +40,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 求生之路addons文件管理 [@noneflow](https://github.com/noneflow) ([#3194](https://github.com/nonebot/nonebot2/pull/3194))
 - Plugin: 好友与群邀请管理 [@noneflow](https://github.com/noneflow) ([#3190](https://github.com/nonebot/nonebot2/pull/3190))
 - Plugin: 简易群聊屏蔽 [@noneflow](https://github.com/noneflow) ([#3196](https://github.com/nonebot/nonebot2/pull/3196))
 - Plugin: Arcaea表情包生成器 [@noneflow](https://github.com/noneflow) ([#3160](https://github.com/nonebot/nonebot2/pull/3160))
