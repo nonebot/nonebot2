@@ -7929,4 +7929,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_flo_luck",
+    "project_link": "nonebot-plugin-flo-luck",
+    "author_id": 188882430,
+    "tags": [
+      {
+        "label": "jrrp",
+        "color": "#52eae7"
+      }
+    ],
+    "is_official": false
+  },
 ]
