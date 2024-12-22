@@ -111,3 +111,45 @@ LOCALSTORE_DATA_DIR=/tmp/data
 ```dotenv
 LOCALSTORE_CONFIG_DIR=/tmp/config
 ```
+
+### localstore_plugin_cache_dir
+
+自定义插件缓存目录
+
+默认值：`{}`
+
+```dotenv
+LOCALSTORE_PLUGIN_CACHE_DIR='
+{
+  "plugin_id": "/tmp/plugin_cache"
+}
+'
+```
+
+### localstore_plugin_data_dir
+
+自定义插件数据目录
+
+默认值：`{}`
+
+```dotenv
+LOCALSTORE_PLUGIN_DATA_DIR='
+{
+  "plugin_id": "/tmp/plugin_data"
+}
+'
+```
+
+### localstore_plugin_config_dir
+
+自定义插件配置目录
+
+默认值：`{}`
+
+```dotenv
+LOCALSTORE_PLUGIN_CONFIG_DIR='
+{
+  "plugin_id": "/tmp/plugin_config"
+}
+'
+```
