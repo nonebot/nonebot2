@@ -41,6 +41,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-flo-luck [@noneflow](https://github.com/noneflow) ([#3188](https://github.com/nonebot/nonebot2/pull/3188))
 - Plugin: 求生之路addons文件管理 [@noneflow](https://github.com/noneflow) ([#3194](https://github.com/nonebot/nonebot2/pull/3194))
 - Plugin: 好友与群邀请管理 [@noneflow](https://github.com/noneflow) ([#3190](https://github.com/nonebot/nonebot2/pull/3190))
 - Plugin: 简易群聊屏蔽 [@noneflow](https://github.com/noneflow) ([#3196](https://github.com/nonebot/nonebot2/pull/3196))
