@@ -7917,4 +7917,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_addons_manager",
+    "project_link": "nonebot-plugin-addons-manager",
+    "author_id": 131855327,
+    "tags": [
+      {
+        "label": "求生之路",
+        "color": "#ffff6e"
+      }
+    ],
+    "is_official": false
+  },
 ]
