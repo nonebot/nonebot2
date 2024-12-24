@@ -7965,4 +7965,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_pjsekaihelper",
+    "project_link": "nonebot-plugin-pjsekaihelper",
+    "author_id": 186144551,
+    "tags": [
+      {
+        "label": "pjsk",
+        "color": "#ea5252"
+      },
+      {
+        "label": "世界计划",
+        "color": "#52ea5a"
+      },
+      {
+        "label": "音游",
+        "color": "#52c5ea"
+      }
+    ],
+    "is_official": false
+  },
 ]
