@@ -7953,4 +7953,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_prometheus",
+    "project_link": "nonebot-plugin-prometheus",
+    "author_id": 143583484,
+    "tags": [
+      {
+        "label": "server",
+        "color": "#f94300"
+      }
+    ],
+    "is_official": false
+  },
 ]
