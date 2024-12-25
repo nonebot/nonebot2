@@ -41,6 +41,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot_plugin_pjsekaihelper [@noneflow](https://github.com/noneflow) ([#3180](https://github.com/nonebot/nonebot2/pull/3180))
 - Plugin: Prometheus 监控 [@noneflow](https://github.com/noneflow) ([#3199](https://github.com/nonebot/nonebot2/pull/3199))
 - Plugin: 加群自动审批 [@noneflow](https://github.com/noneflow) ([#3201](https://github.com/nonebot/nonebot2/pull/3201))
 - Plugin: nonebot-plugin-flo-luck [@noneflow](https://github.com/noneflow) ([#3188](https://github.com/nonebot/nonebot2/pull/3188))
