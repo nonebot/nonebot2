@@ -7985,4 +7985,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_quark",
+    "project_link": "nonebot-plugin-quark",
+    "author_id": 64878354,
+    "tags": [
+      {
+        "label": "search",
+        "color": "#e1cfcf"
+      },
+      {
+        "label": "quark",
+        "color": "#cfbfbf"
+      }
+    ],
+    "is_official": false
+  },
 ]
