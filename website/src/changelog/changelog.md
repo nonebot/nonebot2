@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 🍻 插件发布
+
+- Plugin: 夸克搜 [@noneflow](https://github.com/noneflow) ([#3203](https://github.com/nonebot/nonebot2/pull/3203))
+
 ## v2.4.1
 
 ### 🚀 新功能
