@@ -8001,4 +8001,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_zxui",
+    "project_link": "nonebot-plugin-zxui",
+    "author_id": 45528451,
+    "tags": [
+      {
+        "label": "小真寻",
+        "color": "#fbe4e4"
+      },
+      {
+        "label": "WebUi",
+        "color": "#2bcaca"
+      }
+    ],
+    "is_official": false
+  },
 ]
