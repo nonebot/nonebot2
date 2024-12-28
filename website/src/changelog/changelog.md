@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 他们在聊什么 [@noneflow](https://github.com/noneflow) ([#3210](https://github.com/nonebot/nonebot2/pull/3210))
 - Plugin: 小真寻的WebUi [@noneflow](https://github.com/noneflow) ([#3206](https://github.com/nonebot/nonebot2/pull/3206))
 - Plugin: 夸克搜 [@noneflow](https://github.com/noneflow) ([#3203](https://github.com/nonebot/nonebot2/pull/3203))
 
