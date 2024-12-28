@@ -8017,4 +8017,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_whats_talk_gemini",
+    "project_link": "nonebot-plugin-whats-talk-gemini",
+    "author_id": 48401273,
+    "tags": [
+      {
+        "label": "群聊总结",
+        "color": "#03f744"
+      },
+      {
+        "label": "AI",
+        "color": "#feee06"
+      },
+      {
+        "label": "Gemini",
+        "color": "#0609fe"
+      }
+    ],
+    "is_official": false
+  },
 ]
