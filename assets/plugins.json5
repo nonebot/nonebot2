@@ -8037,4 +8037,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_liarsbar",
+    "project_link": "nonebot-plugin-liarsbar",
+    "author_id": 101725770,
+    "tags": [
+      {
+        "label": "game",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
