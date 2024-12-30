@@ -8049,4 +8049,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_litestore",
+    "project_link": "nonebot-plugin-litestore",
+    "author_id": 121220148,
+    "tags": [
+      {
+        "label": "store",
+        "color": "#51deda"
+      },
+      {
+        "label": "lite",
+        "color": "#e6ebeb"
+      },
+      {
+        "label": "lib",
+        "color": "#cc5741"
+      }
+    ],
+    "is_official": false
+  },
 ]
