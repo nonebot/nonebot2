@@ -8061,4 +8061,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_qbittorrent_manager",
+    "project_link": "nonebot-plugin-qbittorrent-manager",
+    "author_id": 109544213,
+    "tags": [
+      {
+        "label": "文件下载",
+        "color": "#4985d1"
+      },
+      {
+        "label": "跨平台",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
