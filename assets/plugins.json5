@@ -8049,4 +8049,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_number_detection",
+    "project_link": "nonebot-plugin-number-detection",
+    "author_id": 114509415,
+    "tags": [
+      {
+        "label": "群管",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
