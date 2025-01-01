@@ -8077,4 +8077,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_checkbpm",
+    "project_link": "nonebot-plugin-checkbpm",
+    "author_id": 186144551,
+    "tags": [
+      {
+        "label": "music",
+        "color": "#ea5252"
+      },
+      {
+        "label": "bpm",
+        "color": "#ea5252"
+      },
+      {
+        "label": "tool",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
