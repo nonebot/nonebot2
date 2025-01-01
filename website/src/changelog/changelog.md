@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 音频文件BPM计算器 [@noneflow](https://github.com/noneflow) ([#3217](https://github.com/nonebot/nonebot2/pull/3217))
 - Plugin: nonebot_plugin_qbittorrent_manager [@noneflow](https://github.com/noneflow) ([#3208](https://github.com/nonebot/nonebot2/pull/3208))
 - Plugin: 群成员检测 dev版 [@noneflow](https://github.com/noneflow) ([#3214](https://github.com/nonebot/nonebot2/pull/3214))
 - Plugin: Liar's Bar [@noneflow](https://github.com/noneflow) ([#3212](https://github.com/nonebot/nonebot2/pull/3212))
