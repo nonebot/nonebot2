@@ -8097,4 +8097,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_envious",
+    "project_link": "nonebot-plugin-envious",
+    "author_id": 64878354,
+    "tags": [
+      {
+        "label": "羡慕",
+        "color": "#d84848"
+      }
+    ],
+    "is_official": false
+  },
 ]
