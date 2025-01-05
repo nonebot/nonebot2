@@ -8116,4 +8116,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_emlp_Lightweight",
+    "project_link": "nonebot-plugin-emlp-Lightweight",
+    "author_id": 174641131,
+    "tags": [
+      {
+        "label": "恶魔轮盘",
+        "color": "#ea5252"
+      },
+      {
+        "label": "高自由度",
+        "color": "#3b35ac"
+      },
+      {
+        "label": "全平台",
+        "color": "#41d7a7"
+      }
+    ],
+    "is_official": false
+  },
 ]
