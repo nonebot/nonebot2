@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 恶魔轮盘轻量版 [@noneflow](https://github.com/noneflow) ([#3224](https://github.com/nonebot/nonebot2/pull/3224))
 - Plugin: 羡慕 koishi [@noneflow](https://github.com/noneflow) ([#3234](https://github.com/nonebot/nonebot2/pull/3234))
 - Plugin: 每日天文一图 [@noneflow](https://github.com/noneflow) ([#3229](https://github.com/nonebot/nonebot2/pull/3229))
 - Plugin: 音频文件BPM计算器 [@noneflow](https://github.com/noneflow) ([#3217](https://github.com/nonebot/nonebot2/pull/3217))
