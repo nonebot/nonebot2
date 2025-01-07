@@ -8136,4 +8136,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_summary_group",
+    "project_link": "nonebot-plugin-summary-group",
+    "author_id": 85243954,
+    "tags": [
+      {
+        "label": "群聊总结",
+        "color": "#b8e994"
+      },
+      {
+        "label": "AI",
+        "color": "#1289a7"
+      },
+      {
+        "label": "分析",
+        "color": "#0652dd"
+      }
+    ],
+    "is_official": false
+  },
 ]
