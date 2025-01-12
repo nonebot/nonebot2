@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💫 杂项
+
+- Plugin: 删除插件 nonebot_plugin_clovers [@KarisAya](https://github.com/KarisAya) ([#3254](https://github.com/nonebot/nonebot2/pull/3254))
+
 ### 🍻 插件发布
 
 - Plugin: 群聊总结 [@noneflow](https://github.com/noneflow) ([#3242](https://github.com/nonebot/nonebot2/pull/3242))
