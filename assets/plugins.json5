@@ -8189,4 +8189,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_fortnite",
+    "project_link": "nonebot-plugin-fortnite",
+    "author_id": 64878354,
+    "tags": [
+      {
+        "label": "EPIC",
+        "color": "#0b0b11"
+      },
+      {
+        "label": "堡垒之夜",
+        "color": "#23a5c2"
+      },
+      {
+        "label": "Fortnite",
+        "color": "#23a5c2"
+      }
+    ],
+    "is_official": false
+  },
 ]
