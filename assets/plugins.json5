@@ -8149,4 +8149,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_palworld",
+    "project_link": "nonebot-plugin-palworld",
+    "author_id": 121207415,
+    "tags": [
+      {
+        "label": "palworld",
+        "color": "#006cff"
+      }
+    ],
+    "is_official": false
+  },
 ]
