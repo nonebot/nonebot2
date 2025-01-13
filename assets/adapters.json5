@@ -259,4 +259,14 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot.adapters.heybox",
+    "project_link": "nonebot-adapter-heybox",
+    "name": "黑盒语音",
+    "desc": "黑盒语音机器人适配",
+    "author_id": 54730982,
+    "homepage": "https://github.com/lclbm/adapter-heybox",
+    "tags": [],
+    "is_official": false
+  },
 ]
