@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-pictranslator [@noneflow](https://github.com/noneflow) ([#3257](https://github.com/nonebot/nonebot2/pull/3257))
 - Plugin: 玉！ [@noneflow](https://github.com/noneflow) ([#3247](https://github.com/nonebot/nonebot2/pull/3247))
 - Plugin: nonebot_plugin_palworld [@noneflow](https://github.com/noneflow) ([#3244](https://github.com/nonebot/nonebot2/pull/3244))
 - Plugin: 群聊总结 [@noneflow](https://github.com/noneflow) ([#3242](https://github.com/nonebot/nonebot2/pull/3242))
