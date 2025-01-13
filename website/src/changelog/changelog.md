@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot_plugin_palworld [@noneflow](https://github.com/noneflow) ([#3244](https://github.com/nonebot/nonebot2/pull/3244))
 - Plugin: 群聊总结 [@noneflow](https://github.com/noneflow) ([#3242](https://github.com/nonebot/nonebot2/pull/3242))
 - Plugin: 恶魔轮盘轻量版 [@noneflow](https://github.com/noneflow) ([#3224](https://github.com/nonebot/nonebot2/pull/3224))
 - Plugin: 羡慕 koishi [@noneflow](https://github.com/noneflow) ([#3234](https://github.com/nonebot/nonebot2/pull/3234))
