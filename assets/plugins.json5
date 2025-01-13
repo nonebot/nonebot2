@@ -8161,4 +8161,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_llm_jade",
+    "project_link": "nonebot-plugin-llm-jade",
+    "author_id": 96647974,
+    "tags": [
+      {
+        "label": "玉",
+        "color": "#1fe792"
+      }
+    ],
+    "is_official": false
+  },
 ]
