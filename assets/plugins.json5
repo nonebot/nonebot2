@@ -8173,4 +8173,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_pictranslator",
+    "project_link": "nonebot-plugin-pictranslator",
+    "author_id": 75929887,
+    "tags": [
+      {
+        "label": "翻译",
+        "color": "#ea5252"
+      },
+      {
+        "label": "图片翻译",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
