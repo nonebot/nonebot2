@@ -134,6 +134,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
   | Rocket.Chat（[仓库](https://github.com/IUnlimit/nonebot-adapter-rocketchat)，[协议](https://developer.rocket.chat/)） |  ↗️  |                     Rocket.Chat Bot 协议，由社区贡献                      |
   |     Tailchat（[仓库](https://github.com/eya46/nonebot-adapter-tailchat)，[协议](https://tailchat.msgbyte.com/)）      |  ↗️  |                  Tailchat 开放平台 Bot 协议，由社区贡献                   |
   |                             Mail（[仓库](https://github.com/mobyw/nonebot-adapter-mail)）                             |  ↗️  |                         邮件收发协议，由社区贡献                          |
+  |     黑盒语音（[仓库](https://github.com/lclbm/adapter-heybox)，[协议](https://github.com/QingFengOpen/HeychatDoc)）     |  ↗️  |                       黑盒语音Bot协议，由社区贡献                             |
 
 - 坚实后盾：支持多种 web 框架，可自定义替换、组合
 
