@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Remove nonebot_plugin_bili_push [@noneflow](https://github.com/noneflow) ([#3260](https://github.com/nonebot/nonebot2/pull/3260))
 - Plugin: 堡垒之夜游戏插件 [@noneflow](https://github.com/noneflow) ([#3251](https://github.com/nonebot/nonebot2/pull/3251))
 - Plugin: nonebot-plugin-pictranslator [@noneflow](https://github.com/noneflow) ([#3257](https://github.com/nonebot/nonebot2/pull/3257))
 - Plugin: 玉！ [@noneflow](https://github.com/noneflow) ([#3247](https://github.com/nonebot/nonebot2/pull/3247))
