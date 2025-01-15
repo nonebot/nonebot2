@@ -4093,18 +4093,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_bili_push",
-    "project_link": "nonebot-plugin-bili-push",
-    "author_id": 109544213,
-    "tags": [
-      {
-        "label": "bilibili",
-        "color": "#de5d92"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_warthunder_player_check",
     "project_link": "nonebot-plugin-warthunder-player-check",
     "author_id": 110895144,
