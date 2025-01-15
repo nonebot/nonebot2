@@ -269,4 +269,19 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot.adapters.wxmp",
+    "project_link": "nonebot-adapter-wxmp",
+    "name": "WXMP",
+    "desc": "微信公众平台 客服适配器",
+    "author_id": 60175467,
+    "homepage": "https://github.com/YangRucheng/nonebot-adapter-wxmp",
+    "tags": [
+      {
+        "label": "微信公众平台",
+        "color": "#843dbc"
+      }
+    ],
+    "is_official": false
+  },
 ]
