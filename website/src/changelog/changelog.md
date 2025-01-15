@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 📝 文档
+
+- Docs: 添加 黑盒语音 适配器描述 [@lclbm](https://github.com/lclbm) ([#3259](https://github.com/nonebot/nonebot2/pull/3259))
+
 ### 💫 杂项
 
 - Plugin: 删除插件 nonebot_plugin_clovers [@KarisAya](https://github.com/KarisAya) ([#3254](https://github.com/nonebot/nonebot2/pull/3254))
