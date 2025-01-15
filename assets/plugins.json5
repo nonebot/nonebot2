@@ -8197,4 +8197,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_groups_aichat",
+    "project_link": "nonebot-plugin-groups-aichat",
+    "author_id": 51886078,
+    "tags": [
+      {
+        "label": "腾讯混元",
+        "color": "#157bff"
+      },
+      {
+        "label": "通义千问",
+        "color": "#5416ff"
+      },
+      {
+        "label": "Gemini",
+        "color": "#59fb51"
+      }
+    ],
+    "is_official": false
+  },
 ]
