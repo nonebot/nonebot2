@@ -663,4 +663,17 @@
     ],
     "is_official": false
   },
+  {
+    "name": "AntiFraudBot",
+    "desc": "反诈机器人",
+    "author_id": 104713034,
+    "homepage": "https://github.com/itsevin/AntiFraudBot",
+    "tags": [
+      {
+        "label": "反诈",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
