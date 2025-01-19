@@ -34,6 +34,10 @@ toc_max_heading_level: 2
 - Plugin: 小真寻的WebUi [@noneflow](https://github.com/noneflow) ([#3206](https://github.com/nonebot/nonebot2/pull/3206))
 - Plugin: 夸克搜 [@noneflow](https://github.com/noneflow) ([#3203](https://github.com/nonebot/nonebot2/pull/3203))
 
+### 🍻 机器人发布
+
+- Bot: AntiFraudBot [@noneflow](https://github.com/noneflow) ([#3263](https://github.com/nonebot/nonebot2/pull/3263))
+
 ### 🍻 适配器发布
 
 - Adapter: 黑盒语音 [@noneflow](https://github.com/noneflow) ([#3249](https://github.com/nonebot/nonebot2/pull/3249))
