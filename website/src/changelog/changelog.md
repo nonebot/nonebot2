@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Plugin: 删除 bawiki [@lgc2333](https://github.com/lgc2333) ([#3265](https://github.com/nonebot/nonebot2/pull/3265))
 - Plugin: 删除插件 nonebot_plugin_clovers [@KarisAya](https://github.com/KarisAya) ([#3254](https://github.com/nonebot/nonebot2/pull/3254))
 
 ### 🍻 插件发布
