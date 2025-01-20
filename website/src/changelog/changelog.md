@@ -17,30 +17,31 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
-- Plugin: Remove nonebot_plugin_bili_push [@noneflow](https://github.com/noneflow) ([#3260](https://github.com/nonebot/nonebot2/pull/3260))
-- Plugin: 堡垒之夜游戏插件 [@noneflow](https://github.com/noneflow) ([#3251](https://github.com/nonebot/nonebot2/pull/3251))
-- Plugin: nonebot-plugin-pictranslator [@noneflow](https://github.com/noneflow) ([#3257](https://github.com/nonebot/nonebot2/pull/3257))
-- Plugin: 玉！ [@noneflow](https://github.com/noneflow) ([#3247](https://github.com/nonebot/nonebot2/pull/3247))
-- Plugin: nonebot_plugin_palworld [@noneflow](https://github.com/noneflow) ([#3244](https://github.com/nonebot/nonebot2/pull/3244))
-- Plugin: 群聊总结 [@noneflow](https://github.com/noneflow) ([#3242](https://github.com/nonebot/nonebot2/pull/3242))
-- Plugin: 恶魔轮盘轻量版 [@noneflow](https://github.com/noneflow) ([#3224](https://github.com/nonebot/nonebot2/pull/3224))
-- Plugin: 羡慕 koishi [@noneflow](https://github.com/noneflow) ([#3234](https://github.com/nonebot/nonebot2/pull/3234))
-- Plugin: 每日天文一图 [@noneflow](https://github.com/noneflow) ([#3229](https://github.com/nonebot/nonebot2/pull/3229))
-- Plugin: 音频文件BPM计算器 [@noneflow](https://github.com/noneflow) ([#3217](https://github.com/nonebot/nonebot2/pull/3217))
-- Plugin: nonebot_plugin_qbittorrent_manager [@noneflow](https://github.com/noneflow) ([#3208](https://github.com/nonebot/nonebot2/pull/3208))
-- Plugin: 群成员检测 dev版 [@noneflow](https://github.com/noneflow) ([#3214](https://github.com/nonebot/nonebot2/pull/3214))
-- Plugin: Liar's Bar [@noneflow](https://github.com/noneflow) ([#3212](https://github.com/nonebot/nonebot2/pull/3212))
-- Plugin: 他们在聊什么 [@noneflow](https://github.com/noneflow) ([#3210](https://github.com/nonebot/nonebot2/pull/3210))
-- Plugin: 小真寻的WebUi [@noneflow](https://github.com/noneflow) ([#3206](https://github.com/nonebot/nonebot2/pull/3206))
-- Plugin: 夸克搜 [@noneflow](https://github.com/noneflow) ([#3203](https://github.com/nonebot/nonebot2/pull/3203))
+- Plugin: Remove nonebot_plugin_bili_push [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3260](https://github.com/nonebot/nonebot2/pull/3260))
+- Plugin: 堡垒之夜游戏插件 [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3251](https://github.com/nonebot/nonebot2/pull/3251))
+- Plugin: nonebot-plugin-pictranslator [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3257](https://github.com/nonebot/nonebot2/pull/3257))
+- Plugin: 玉！ [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3247](https://github.com/nonebot/nonebot2/pull/3247))
+- Plugin: nonebot_plugin_palworld [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3244](https://github.com/nonebot/nonebot2/pull/3244))
+- Plugin: 群聊总结 [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3242](https://github.com/nonebot/nonebot2/pull/3242))
+- Plugin: 恶魔轮盘轻量版 [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3224](https://github.com/nonebot/nonebot2/pull/3224))
+- Plugin: 羡慕 koishi [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3234](https://github.com/nonebot/nonebot2/pull/3234))
+- Plugin: 每日天文一图 [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3229](https://github.com/nonebot/nonebot2/pull/3229))
+- Plugin: 音频文件BPM计算器 [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3217](https://github.com/nonebot/nonebot2/pull/3217))
+- Plugin: nonebot_plugin_qbittorrent_manager [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3208](https://github.com/nonebot/nonebot2/pull/3208))
+- Plugin: 群成员检测 dev版 [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3214](https://github.com/nonebot/nonebot2/pull/3214))
+- Plugin: Liar's Bar [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3212](https://github.com/nonebot/nonebot2/pull/3212))
+- Plugin: 他们在聊什么 [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3210](https://github.com/nonebot/nonebot2/pull/3210))
+- Plugin: 小真寻的WebUi [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3206](https://github.com/nonebot/nonebot2/pull/3206))
+- Plugin: 夸克搜 [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3203](https://github.com/nonebot/nonebot2/pull/3203))
 
 ### 🍻 机器人发布
 
-- Bot: AntiFraudBot [@noneflow](https://github.com/noneflow) ([#3263](https://github.com/nonebot/nonebot2/pull/3263))
+- Bot: AntiFraudBot [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3263](https://github.com/nonebot/nonebot2/pull/3263))
 
 ### 🍻 适配器发布
 
-- Adapter: 黑盒语音 [@noneflow](https://github.com/noneflow) ([#3249](https://github.com/nonebot/nonebot2/pull/3249))
+- Adapter: WXMP [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3219](https://github.com/nonebot/nonebot2/pull/3219))
+- Adapter: 黑盒语音 [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3249](https://github.com/nonebot/nonebot2/pull/3249))
 
 ## v2.4.1
 
