@@ -1145,22 +1145,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_bawiki",
-    "project_link": "nonebot-plugin-bawiki",
-    "author_id": 59048777,
-    "tags": [
-      {
-        "label": "碧蓝档案",
-        "color": "#00d7fb"
-      },
-      {
-        "label": "蔚藍檔案",
-        "color": "#00d7fb"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_mcqq",
     "project_link": "nonebot-plugin-mcqq",
     "author_id": 54731914,
