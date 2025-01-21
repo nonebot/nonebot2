@@ -38,6 +38,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: Nekro Agent Bot [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3267](https://github.com/nonebot/nonebot2/pull/3267))
 - Bot: AntiFraudBot [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3263](https://github.com/nonebot/nonebot2/pull/3263))
 
 ### 🍻 适配器发布
