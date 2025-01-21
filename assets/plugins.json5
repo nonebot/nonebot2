@@ -8181,4 +8181,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_neuro_draw",
+    "project_link": "nonebot-plugin-neuro-draw",
+    "author_id": 55650833,
+    "tags": [
+      {
+        "label": "Neuro-sama",
+        "color": "#ed5c5c"
+      }
+    ],
+    "is_official": false
+  },
 ]
