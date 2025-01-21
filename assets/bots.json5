@@ -676,4 +676,25 @@
     ],
     "is_official": false
   },
+  {
+    "name": "Nekro Agent Bot",
+    "desc": "基于生成式人工智能与沙盒技术的 Nekro Agent 代理执行 AI 机器人，支持聊天、识图、通用文件处理等扩展能力，提供了 WebUI 维护界面、一键部署脚本",
+    "author_id": 57167362,
+    "homepage": "https://github.com/KroMiose/nekro-agent",
+    "tags": [
+      {
+        "label": "聊天",
+        "color": "#c65856"
+      },
+      {
+        "label": "大模型",
+        "color": "#46a34c"
+      },
+      {
+        "label": "WebUI",
+        "color": "#4a96c6"
+      }
+    ],
+    "is_official": false
+  },
 ]
