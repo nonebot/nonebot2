@@ -8193,4 +8193,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_remind",
+    "project_link": "nonebot-plugin-remind",
+    "author_id": 137194341,
+    "tags": [],
+    "is_official": false
+  },
 ]
