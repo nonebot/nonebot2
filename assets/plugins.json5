@@ -8200,4 +8200,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_joke",
+    "project_link": "nonebot-plugin-joke",
+    "author_id": 137194341,
+    "tags": [
+      {
+        "label": "joke",
+        "color": "#0b48a9"
+      }
+    ],
+    "is_official": false
+  },
 ]
