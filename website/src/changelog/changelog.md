@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 定时提醒 [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3275](https://github.com/nonebot/nonebot2/pull/3275))
 - Plugin: NeuroDraw [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3269](https://github.com/nonebot/nonebot2/pull/3269))
 - Plugin: Remove nonebot_plugin_bili_push [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3260](https://github.com/nonebot/nonebot2/pull/3260))
 - Plugin: 堡垒之夜游戏插件 [@[noneflow[bot]](https://github.com/apps/noneflow)](<https://github.com/[noneflow[bot]](https://github.com/apps/noneflow)>) ([#3251](https://github.com/nonebot/nonebot2/pull/3251))
