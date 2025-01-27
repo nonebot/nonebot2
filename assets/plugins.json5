@@ -8236,4 +8236,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_bot_tap",
+    "project_link": "nonebot-plugin-bot-tap",
+    "author_id": 96647974,
+    "tags": [
+      {
+        "label": "Bot",
+        "color": "#57a4ce"
+      },
+      {
+        "label": "管理",
+        "color": "#57ce66"
+      }
+    ],
+    "is_official": false
+  },
 ]
