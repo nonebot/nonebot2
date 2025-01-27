@@ -8236,4 +8236,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_furryyunhei",
+    "project_link": "nonebot-plugin-furryyunhei",
+    "author_id": 193674838,
+    "tags": [],
+    "is_official": false
+  },
 ]
