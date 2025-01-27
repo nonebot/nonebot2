@@ -27,4 +27,4 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Run Ruff Lint
-        uses: chartboost/ruff-action@v1
+        uses: astral-sh/ruff-action@v3
