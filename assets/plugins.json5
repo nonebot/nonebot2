@@ -8224,4 +8224,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_deepseek",
+    "project_link": "nonebot-plugin-deepseek",
+    "author_id": 110453675,
+    "tags": [
+      {
+        "label": "DeepSeek",
+        "color": "#4d6bfe"
+      }
+    ],
+    "is_official": false
+  },
 ]
