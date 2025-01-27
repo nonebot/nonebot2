@@ -8236,4 +8236,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_helldivers_tools",
+    "project_link": "nonebot-plugin-helldivers-tools",
+    "author_id": 99017826,
+    "tags": [
+      {
+        "label": "绝地潜兵",
+        "color": "#c78787"
+      }
+    ],
+    "is_official": false
+  },
 ]
