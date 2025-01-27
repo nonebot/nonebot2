@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- CI: 使用官方版本 ruff action [@yanyongyu](https://github.com/yanyongyu) ([#3286](https://github.com/nonebot/nonebot2/pull/3286))
 - CI: pyright 版本与 pylance 保持一致 [@yanyongyu](https://github.com/yanyongyu) ([#3285](https://github.com/nonebot/nonebot2/pull/3285))
 - CI: 临时降级 release-drafter [@yanyongyu](https://github.com/yanyongyu) ([#3284](https://github.com/nonebot/nonebot2/pull/3284))
 - Plugin: 删除 bawiki [@lgc2333](https://github.com/lgc2333) ([#3265](https://github.com/nonebot/nonebot2/pull/3265))
