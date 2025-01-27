@@ -8212,4 +8212,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_group_file_admin",
+    "project_link": "nonebot-plugin-group-file-admin",
+    "author_id": 114509415,
+    "tags": [
+      {
+        "label": "群管",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
