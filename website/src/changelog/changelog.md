@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: DeepSeek [@noneflow](https://github.com/noneflow) ([#3281](https://github.com/nonebot/nonebot2/pull/3281))
 - Plugin: 群文件管理 [@noneflow](https://github.com/noneflow) ([#3271](https://github.com/nonebot/nonebot2/pull/3271))
 - Plugin: 中英文笑话 [@noneflow](https://github.com/noneflow) ([#3277](https://github.com/nonebot/nonebot2/pull/3277))
 - Plugin: 定时提醒 [@noneflow](https://github.com/noneflow) ([#3275](https://github.com/nonebot/nonebot2/pull/3275))
