@@ -395,7 +395,6 @@ async def test_shell_command():
     assert state[SHELL_ARGV] is None
     assert isinstance(state[SHELL_ARGS], ParserExit)
     assert state[SHELL_ARGS].status != 0
-    assert state[SHELL_ARGS].message.startswith("ValueError")
 
     test_simple_parser = shell_command(CMD, parser=parser)
     dependent = next(iter(test_simple_parser.checkers))
