@@ -380,8 +380,6 @@ async def test_shell_command():
     state = {PREFIX_KEY: {CMD_KEY: CMD, CMD_ARG_KEY: message}}
     assert await dependent(event=event, state=state)
     assert state[SHELL_ARGV] is None
-    assert isinstance(state[SHELL_ARGS], ParserExit)
-    assert state[SHELL_ARGS].status != 0
 
     parser = ArgumentParser("test")
     parser.add_argument("-a", required=True)
@@ -396,6 +394,8 @@ async def test_shell_command():
     assert await dependent(event=event, state=state)
     assert state[SHELL_ARGV] is None
     assert isinstance(state[SHELL_ARGS], ParserExit)
+    assert state[SHELL_ARGS].status != 0
+    assert state[SHELL_ARGS].message.startswith("ValueError")
 
     test_simple_parser = shell_command(CMD, parser=parser)
     dependent = next(iter(test_simple_parser.checkers))
