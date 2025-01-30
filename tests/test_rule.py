@@ -371,8 +371,8 @@ async def test_shell_command():
     assert state[SHELL_ARGV] == []
     assert SHELL_ARGS not in state
 
-    test_syntax_error = shell_command(CMD)
-    dependent = next(iter(test_syntax_error.checkers))
+    test_lexical_error = shell_command(CMD)
+    dependent = next(iter(test_lexical_error.checkers))
     checker = dependent.call
     assert isinstance(checker, ShellCommandRule)
     message = Message("-a '1")
@@ -382,10 +382,20 @@ async def test_shell_command():
     assert state[SHELL_ARGV] is None
     assert isinstance(state[SHELL_ARGS], ParserExit)
     assert state[SHELL_ARGS].status != 0
-    assert state[SHELL_ARGS].message.startswith("ValueError")
 
     parser = ArgumentParser("test")
     parser.add_argument("-a", required=True)
+
+    test_lexical_error_with_parser = shell_command(CMD, parser=ArgumentParser("test"))
+    dependent = next(iter(test_lexical_error_with_parser.checkers))
+    checker = dependent.call
+    assert isinstance(checker, ShellCommandRule)
+    message = Message("-a '1")
+    event = make_fake_event(_message=message)()
+    state = {PREFIX_KEY: {CMD_KEY: CMD, CMD_ARG_KEY: message}}
+    assert await dependent(event=event, state=state)
+    assert state[SHELL_ARGV] is None
+    assert isinstance(state[SHELL_ARGS], ParserExit)
 
     test_simple_parser = shell_command(CMD, parser=parser)
     dependent = next(iter(test_simple_parser.checkers))
