@@ -567,10 +567,11 @@ class ShellCommandRule:
                 )
             )
         except Exception as e:
-            # shlex may raise value error when syntax error
-            state[SHELL_ARGS] = ParserExit(status=2, message=str(e))
-            # we need to set SHELL_ARGV to empty list to avoid key error
-            state[SHELL_ARGV] = []
+            # set SHELL_ARGV to none indicating shlex error
+            state[SHELL_ARGV] = None
+            # ensure SHELL_ARGS is set to ParserExit if parser is provided
+            if self.parser:
+                state[SHELL_ARGS] = ParserExit(status=2, message=str(e))
             return True
 
         if self.parser:

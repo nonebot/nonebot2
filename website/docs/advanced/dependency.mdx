@@ -843,21 +843,39 @@ async def _(foo: str = CommandWhitespace()): ...
 
 ### ShellCommandArgv
 
-获取 shell 命令解析前的参数列表，列表中可能包含文本字符串和富文本消息段（如：图片）。
+获取 shell 命令解析前的参数列表，列表中可能包含文本字符串和富文本消息段（如：图片）。当词法解析出错的时候，返回值将为 `None`。通过重载机制即可处理两种不同的情况。
 
 <Tabs groupId="python">
   <TabItem value="3.10" label="Python 3.10+" default>
 
 ```python {4}
 from typing import Annotated
-from nonebot.params import ShellCommandArgs
+from nonebot import on_shell_command
+from nonebot.params import ShellCommandArgv
 
+matcher = on_shell_command("cmd")
+
+# 解析失败
+@matcher.handle()
+async def _(foo: Annotated[None, ShellCommandArgv()]): ...
+
+# 解析成功
+@matcher.handle()
 async def _(foo: Annotated[list[str | MessageSegment], ShellCommandArgv()]): ...
 ```
 
 ```python {4}
-from nonebot.params import ShellCommandArgs
+from nonebot import on_shell_command
+from nonebot.params import ShellCommandArgv
 
+matcher = on_shell_command("cmd")
+
+# 解析失败
+@matcher.handle()
+async def _(foo: None = ShellCommandArgv()): ...
+
+# 解析成功
+@matcher.handle()
 async def _(foo: list[str | MessageSegment] = ShellCommandArgv()): ...
 ```
 
@@ -866,15 +884,33 @@ async def _(foo: list[str | MessageSegment] = ShellCommandArgv()): ...
 
 ```python {4}
 from typing import Union, Annotated
-from nonebot.params import ShellCommandArgs
+from nonebot import on_shell_command
+from nonebot.params import ShellCommandArgv
 
+matcher = on_shell_command("cmd")
+
+# 解析失败
+@matcher.handle()
+async def _(foo: Annotated[None, ShellCommandArgv()]): ...
+
+# 解析成功
+@matcher.handle()
 async def _(foo: Annotated[list[Union[str, MessageSegment]], ShellCommandArgv()]): ...
 ```
 
 ```python {4}
 from typing import Union
-from nonebot.params import ShellCommandArgs
+from nonebot import on_shell_command
+from nonebot.params import ShellCommandArgv
 
+matcher = on_shell_command("cmd")
+
+# 解析失败
+@matcher.handle()
+async def _(foo: None = ShellCommandArgv()): ...
+
+# 解析成功
+@matcher.handle()
 async def _(foo: list[Union[str, MessageSegment]] = ShellCommandArgv()): ...
 ```
 
@@ -886,7 +922,7 @@ async def _(foo: list[Union[str, MessageSegment]] = ShellCommandArgv()): ...
 获取 shell 命令解析后的参数 Namespace，支持 MessageSegment 富文本（如：图片）。
 
 :::tip 提示
-如果参数解析成功，则为 parser 返回的 Namespace；如果参数解析失败，则为 [`ParserExit`](../api/exception.md#ParserExit) 异常，并携带错误码与错误信息。通过重载机制即可处理两种不同的情况。
+如果参数解析成功，则为 parser 返回的 Namespace；如果参数解析失败，则为 [`ParserExit`](../api/exception.md#ParserExit) 异常，并携带错误码与错误信息。在前置词法解析失败时，返回值也为 [`ParserExit`](../api/exception.md#ParserExit) 异常。通过重载机制即可处理两种不同的情况。
 
 由于 `ArgumentParser` 在解析到 `--help` 参数时也会抛出异常，这种情况下错误码为 `0` 且错误信息即为帮助信息。
 :::
