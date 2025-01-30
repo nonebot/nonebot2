@@ -8252,4 +8252,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_track_anime",
+    "project_link": "nonebot-plugin-track-anime",
+    "author_id": 113231410,
+    "tags": [
+      {
+        "label": "追番工具",
+        "color": "#c78787"
+      }
+    ],
+    "is_official": false
+  },
 ]
