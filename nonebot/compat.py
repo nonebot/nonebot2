@@ -398,9 +398,17 @@ else:  # pragma: pydantic-v1
         check_fields: Optional[bool] = None,
     ):
         if mode == "before":
-            return validator(field, *fields, pre=True, check_fields=check_fields or True, allow_reuse=True)
+            return validator(
+                field,
+                *fields,
+                pre=True,
+                check_fields=check_fields or True,
+                allow_reuse=True,
+            )
         else:
-            return validator(field, *fields, check_fields=check_fields or True, allow_reuse=True)
+            return validator(
+                field, *fields, check_fields=check_fields or True, allow_reuse=True
+            )
 
     def model_fields(model: type[BaseModel]) -> list[ModelField]:
         """Get field list of a model."""
