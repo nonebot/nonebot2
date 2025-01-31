@@ -97,7 +97,10 @@ def test_model_validator():
         @model_validator(mode="after")
         @classmethod
         def test_validator_after(cls, data: Any) -> Any:
-            if data.bar == "test":
+            if isinstance(data, dict):
+                if data["bar"] == "test":
+                    raise ValueError("bar should not be test")
+            elif data.bar == "test":
                 raise ValueError("bar should not be test")
             return data
 
