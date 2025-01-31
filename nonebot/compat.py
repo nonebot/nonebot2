@@ -387,7 +387,7 @@ else:  # pragma: pydantic-v1
         field: str,
         /,
         *fields: str,
-        mode: Literal["after"],
+        mode: Literal["after"] = ...,
         check_fields: Optional[bool] = None,
     ): ...
 
@@ -395,7 +395,7 @@ else:  # pragma: pydantic-v1
         field: str,
         /,
         *fields: str,
-        mode: Literal["before", "after"],
+        mode: Literal["before", "after"] = "after",
         check_fields: Optional[bool] = None,
     ):
         if mode == "before":

@@ -7,11 +7,13 @@ import pytest
 from nonebot.compat import (
     DEFAULT_CONFIG,
     FieldInfo,
+    field_validator,
     PydanticUndefined,
     Required,
     TypeAdapter,
     custom_validation,
     model_dump,
+    model_validator,
     type_validate_json,
     type_validate_python,
 )
@@ -28,6 +30,32 @@ def test_field_info():
 
     # field info should allow extra attributes
     assert FieldInfo(test="test").extra["test"] == "test"
+
+
+def test_field_validator():
+    class TestModel(BaseModel):
+        foo: int
+        bar: str
+
+        @field_validator("foo")
+        @classmethod
+        def test_validator(cls, v: Any) -> Any:
+            if v > 0:
+                return v
+            raise ValueError("test must be greater than 0")
+
+        @field_validator("bar", mode="before")
+        @classmethod
+        def test_validator_before(cls, v: Any) -> Any:
+            if not isinstance(v, str):
+                v = str(v)
+            return v
+
+    assert TestModel(foo=1, bar="test").foo == 1
+    assert TestModel(foo=1, bar=123).bar == "123"
+
+    with pytest.raises(ValidationError):
+        TestModel(foo=0, bar="test")
 
 
 def test_type_adapter():
@@ -51,6 +79,30 @@ def test_model_dump():
 
     assert model_dump(TestModel(test1=1, test2=2), include={"test1"}) == {"test1": 1}
     assert model_dump(TestModel(test1=1, test2=2), exclude={"test1"}) == {"test2": 2}
+
+
+def test_model_validator():
+    class TestModel(BaseModel):
+        foo: int
+        bar: str
+
+        @model_validator(mode="before")
+        @classmethod
+        def test_validator_before(cls, data: Any) -> Any:
+            if isinstance(data, dict):
+                if "foo" not in data:
+                    data["foo"] = 1
+            return data
+
+        @model_validator(mode="after")
+        def test_validator_after(self):
+            if self.bar == "test":
+                raise ValueError("bar should not be test")
+
+    assert type_validate_python(TestModel, {"bar": "aaa"}).foo == 1
+
+    with pytest.raises(ValidationError):
+        type_validate_python(TestModel, {"foo": 1, "bar": "test"})
 
 
 def test_custom_validation():
