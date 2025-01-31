@@ -7,11 +7,11 @@ import pytest
 from nonebot.compat import (
     DEFAULT_CONFIG,
     FieldInfo,
-    field_validator,
     PydanticUndefined,
     Required,
     TypeAdapter,
     custom_validation,
+    field_validator,
     model_dump,
     model_validator,
     type_validate_json,
