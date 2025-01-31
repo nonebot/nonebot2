@@ -18,6 +18,7 @@ from typing import (
     Any,
     Callable,
     Generic,
+    Literal,
     Optional,
     Protocol,
     TypeVar,
@@ -45,6 +46,7 @@ if TYPE_CHECKING:
 
 __all__ = (
     "DEFAULT_CONFIG",
+    "PYDANTIC_V2",
     "ConfigDict",
     "FieldInfo",
     "ModelField",
@@ -54,9 +56,11 @@ __all__ = (
     "TypeAdapter",
     "custom_validation",
     "extract_field_info",
+    "field_validator",
     "model_config",
     "model_dump",
     "model_fields",
+    "model_validator",
     "type_validate_json",
     "type_validate_python",
 )
@@ -70,6 +74,8 @@ __autodoc__ = {
 if PYDANTIC_V2:  # pragma: pydantic-v2
     from pydantic import GetCoreSchemaHandler
     from pydantic import TypeAdapter as TypeAdapter
+    from pydantic import field_validator as field_validator
+    from pydantic import model_validator as model_validator
     from pydantic._internal._repr import display_as_type
     from pydantic.fields import FieldInfo as BaseFieldInfo
     from pydantic_core import CoreSchema, core_schema
@@ -254,7 +260,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
 
 else:  # pragma: pydantic-v1
     from pydantic import BaseConfig as PydanticConfig
-    from pydantic import Extra, parse_obj_as, parse_raw_as
+    from pydantic import Extra, parse_obj_as, parse_raw_as, root_validator, validator
     from pydantic.fields import FieldInfo as BaseFieldInfo
     from pydantic.fields import ModelField as BaseModelField
     from pydantic.schema import get_annotation_from_field_info
@@ -367,6 +373,44 @@ else:  # pragma: pydantic-v1
         kwargs.update(field_info.extra)
         return kwargs
 
+    @overload
+    def field_validator(
+        field: str,
+        /,
+        *fields: str,
+        mode: Literal["before"],
+        check_fields: Optional[bool] = None,
+    ): ...
+
+    @overload
+    def field_validator(
+        field: str,
+        /,
+        *fields: str,
+        mode: Literal["after"] = ...,
+        check_fields: Optional[bool] = None,
+    ): ...
+
+    def field_validator(
+        field: str,
+        /,
+        *fields: str,
+        mode: Literal["before", "after"] = "after",
+        check_fields: Optional[bool] = None,
+    ):
+        if mode == "before":
+            return validator(
+                field,
+                *fields,
+                pre=True,
+                check_fields=check_fields or True,
+                allow_reuse=True,
+            )
+        else:
+            return validator(
+                field, *fields, check_fields=check_fields or True, allow_reuse=True
+            )
+
     def model_fields(model: type[BaseModel]) -> list[ModelField]:
         """Get field list of a model."""
 
@@ -403,6 +447,18 @@ else:  # pragma: pydantic-v1
             exclude_defaults=exclude_defaults,
             exclude_none=exclude_none,
         )
+
+    @overload
+    def model_validator(*, mode: Literal["before"]): ...
+
+    @overload
+    def model_validator(*, mode: Literal["after"]): ...
+
+    def model_validator(*, mode: Literal["before", "after"]):
+        if mode == "before":
+            return root_validator(pre=True, allow_reuse=True)
+        else:
+            return root_validator(skip_on_failure=True, allow_reuse=True)
 
     def type_validate_python(type_: type[T], data: Any) -> T:
         """Validate data with given type."""
