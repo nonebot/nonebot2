@@ -18,6 +18,7 @@ from typing import (
     Any,
     Callable,
     Generic,
+    Literal,
     Optional,
     Protocol,
     TypeVar,
