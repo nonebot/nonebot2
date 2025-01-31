@@ -51,8 +51,8 @@ def test_field_validator():
                 v = str(v)
             return v
 
-    assert TestModel(foo=1, bar="test").foo == 1
-    assert TestModel(foo=1, bar=123).bar == "123"
+    assert type_validate_python(TestModel, {"foo": 1, "bar": "test"}).foo == 1
+    assert type_validate_python(TestModel, {"foo": 1, "bar": 123}).bar == "123"
 
     with pytest.raises(ValidationError):
         TestModel(foo=0, bar="test")
@@ -95,9 +95,11 @@ def test_model_validator():
             return data
 
         @model_validator(mode="after")
-        def test_validator_after(self):
-            if self.bar == "test":
+        @classmethod
+        def test_validator_after(cls, data: Any) -> Any:
+            if data.bar == "test":
                 raise ValueError("bar should not be test")
+            return data
 
     assert type_validate_python(TestModel, {"bar": "aaa"}).foo == 1
 
