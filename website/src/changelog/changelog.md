@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 添加 pydantic validator 兼容函数 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#3291](https://github.com/nonebot/nonebot2/pull/3291))
+
 ### 📝 文档
 
 - Docs: 添加 微信公众平台 适配器描述 [@YangRucheng](https://github.com/YangRucheng) ([#3264](https://github.com/nonebot/nonebot2/pull/3264))
