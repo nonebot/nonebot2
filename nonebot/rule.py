@@ -557,12 +557,22 @@ class ShellCommandRule:
         if cmd not in self.cmds or msg is None:
             return False
 
-        state[SHELL_ARGV] = list(
-            chain.from_iterable(
-                shlex.split(str(seg)) if cast(MessageSegment, seg).is_text() else (seg,)
-                for seg in msg
+        try:
+            state[SHELL_ARGV] = list(
+                chain.from_iterable(
+                    shlex.split(str(seg))
+                    if cast(MessageSegment, seg).is_text()
+                    else (seg,)
+                    for seg in msg
+                )
             )
-        )
+        except Exception as e:
+            # set SHELL_ARGV to none indicating shlex error
+            state[SHELL_ARGV] = None
+            # ensure SHELL_ARGS is set to ParserExit if parser is provided
+            if self.parser:
+                state[SHELL_ARGS] = ParserExit(status=2, message=str(e))
+            return True
 
         if self.parser:
             t = parser_message.set("")
