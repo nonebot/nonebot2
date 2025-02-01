@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Feature: 添加 pydantic validator 兼容函数 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#3291](https://github.com/nonebot/nonebot2/pull/3291))
 
+### 🐛 Bug 修复
+
+- Fix: shell command 词法解析错误未捕获 [@yanyongyu](https://github.com/yanyongyu) ([#3290](https://github.com/nonebot/nonebot2/pull/3290))
+
 ### 📝 文档
 
 - Docs: 添加 微信公众平台 适配器描述 [@YangRucheng](https://github.com/YangRucheng) ([#3264](https://github.com/nonebot/nonebot2/pull/3264))
