@@ -8264,4 +8264,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_groups_aichat",
+    "project_link": "nonebot-plugin-groups-aichat",
+    "author_id": 51886078,
+    "tags": [
+      {
+        "label": "ChatGPT",
+        "color": "#33cc99"
+      },
+      {
+        "label": "Gemini",
+        "color": "#59fb51"
+      },
+      {
+        "label": "DeepSeek",
+        "color": "#3399aa"
+      }
+    ],
+    "is_official": false
+  },
 ]
