@@ -8284,4 +8284,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ACMD",
+    "project_link": "nonebot_plugin_ACMD",
+    "author_id": 78413699,
+    "tags": [
+      {
+        "label": "ACMD",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
