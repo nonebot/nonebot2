@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: SuggarChat OpenAI协议聊天插件 [@noneflow](https://github.com/noneflow) ([#3222](https://github.com/nonebot/nonebot2/pull/3222))
 - Plugin: nonebot-plugin-ACMD [@noneflow](https://github.com/noneflow) ([#3283](https://github.com/nonebot/nonebot2/pull/3283))
 - Plugin: AI群聊机器人 [@noneflow](https://github.com/noneflow) ([#3258](https://github.com/nonebot/nonebot2/pull/3258))
 - Plugin: 追番小工具 [@noneflow](https://github.com/noneflow) ([#3279](https://github.com/nonebot/nonebot2/pull/3279))
