@@ -103,8 +103,7 @@ class Driver(BaseDriver):
                     "</bg #f8bbd0></r>"
                 )
             logger.error(
-                "<r><bg #f8bbd0>Application startup failed. "
-                "Exiting.</bg #f8bbd0></r>"
+                "<r><bg #f8bbd0>Application startup failed. Exiting.</bg #f8bbd0></r>"
             )
 
         with catch({Exception: handle_exception}):
@@ -136,8 +135,7 @@ class Driver(BaseDriver):
                     "</bg #f8bbd0></r>"
                 )
             logger.error(
-                "<r><bg #f8bbd0>Application shutdown failed. "
-                "Exiting.</bg #f8bbd0></r>"
+                "<r><bg #f8bbd0>Application shutdown failed. Exiting.</bg #f8bbd0></r>"
             )
 
         with catch({Exception: handle_exception}):

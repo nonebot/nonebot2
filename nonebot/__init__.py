@@ -190,9 +190,9 @@ def get_asgi() -> Any:
         ```
     """
     driver = get_driver()
-    assert isinstance(
-        driver, ASGIMixin
-    ), "asgi object is only available for asgi driver"
+    assert isinstance(driver, ASGIMixin), (
+        "asgi object is only available for asgi driver"
+    )
     return driver.asgi
 
 
