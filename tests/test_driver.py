@@ -251,9 +251,9 @@ async def test_http_client(driver: Driver, server_url: URL):
         cookies={"session": "test"},
         content="test",
     )
-    assert (
-        request.url == request_raw_url.url
-    ), "request.url should be equal to request_raw_url.url"
+    assert request.url == request_raw_url.url, (
+        "request.url should be equal to request_raw_url.url"
+    )
     assert response.status_code == 200
     assert response.content
     data = json.loads(response.content)

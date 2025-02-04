@@ -31,8 +31,7 @@ def init():
     if host in {"0.0.0.0", "127.0.0.1"}:
         host = "localhost"
     logger.opt(colors=True).info(
-        f"Nonebot docs will be running at: "
-        f"<b><u>http://{host}:{port}/website/</u></b>"
+        f"Nonebot docs will be running at: <b><u>http://{host}:{port}/website/</u></b>"
     )
 
 

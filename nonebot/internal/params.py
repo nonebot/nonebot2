@@ -228,9 +228,9 @@ class DependParam(Param):
         dependency: T_Handler
         # sub dependency is not specified, use type annotation
         if depends_inner.dependency is None:
-            assert (
-                type_annotation is not inspect.Signature.empty
-            ), "Dependency cannot be empty"
+            assert type_annotation is not inspect.Signature.empty, (
+                "Dependency cannot be empty"
+            )
             dependency = type_annotation
         else:
             dependency = depends_inner.dependency
@@ -291,9 +291,9 @@ class DependParam(Param):
             return await dependency_cache[call].wait()
 
         if is_gen_callable(call) or is_async_gen_callable(call):
-            assert isinstance(
-                stack, AsyncExitStack
-            ), "Generator dependency should be called in context"
+            assert isinstance(stack, AsyncExitStack), (
+                "Generator dependency should be called in context"
+            )
             if is_gen_callable(call):
                 cm = run_sync_ctx_manager(contextmanager(call)(**sub_values))
             else:
