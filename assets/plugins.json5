@@ -8318,4 +8318,24 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_VividusFakeAI",
+    "project_link": "nonebot-plugin-vividusfakeai",
+    "author_id": 78413699,
+    "tags": [
+      {
+        "label": "调情",
+        "color": "#eded0b"
+      },
+      {
+        "label": "群友",
+        "color": "#ed0b1f"
+      },
+      {
+        "label": "Play",
+        "color": "#4eed0b"
+      }
+    ],
+    "is_official": false
+  },
 ]
