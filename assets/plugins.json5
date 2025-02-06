@@ -8318,4 +8318,20 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_repeater_count",
+    "project_link": "nonebot-plugin-repeater-count",
+    "author_id": 161749485,
+    "tags": [
+      {
+        "label": "log",
+        "color": "#ea5252"
+      },
+      {
+        "label": "复读",
+        "color": "#4dd1ca"
+      }
+    ],
+    "is_official": false
+  },
 ]
