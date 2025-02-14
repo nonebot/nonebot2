@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: llmchat [@noneflow](https://github.com/noneflow) ([#3309](https://github.com/nonebot/nonebot2/pull/3309))
 - Plugin: [ 缩写翻译 ] 能不能好好说话 - nbnhhsh [@noneflow](https://github.com/noneflow) ([#3296](https://github.com/nonebot/nonebot2/pull/3296))
 - Plugin: SuggarChat OpenAI协议聊天插件 [@noneflow](https://github.com/noneflow) ([#3222](https://github.com/nonebot/nonebot2/pull/3222))
 - Plugin: nonebot-plugin-ACMD [@noneflow](https://github.com/noneflow) ([#3283](https://github.com/nonebot/nonebot2/pull/3283))
