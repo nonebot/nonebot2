@@ -8318,4 +8318,24 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_llmchat",
+    "project_link": "nonebot-plugin-llmchat",
+    "author_id": 87348379,
+    "tags": [
+      {
+        "label": "DeepSeek",
+        "color": "#45beff"
+      },
+      {
+        "label": "LLM",
+        "color": "#ff6dea"
+      },
+      {
+        "label": "ChatGPT",
+        "color": "#9eff6d"
+      }
+    ],
+    "is_official": false
+  },
 ]
