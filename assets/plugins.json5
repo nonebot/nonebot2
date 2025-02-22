@@ -8345,4 +8345,24 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_luoguluck",
+    "project_link": "nonebot-plugin-luoguluck",
+    "author_id": 67693593,
+    "tags": [
+      {
+        "label": "运势",
+        "color": "#ea5252"
+      },
+      {
+        "label": "占卜",
+        "color": "#ea5252"
+      },
+      {
+        "label": "洛谷",
+        "color": "#0950b8"
+      }
+    ],
+    "is_official": false
+  },
 ]
