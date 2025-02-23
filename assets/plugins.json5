@@ -4289,22 +4289,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_pjsk",
-    "project_link": "nonebot-plugin-pjsk",
-    "author_id": 70925546,
-    "tags": [
-      {
-        "label": "pjsk",
-        "color": "#e852eb"
-      },
-      {
-        "label": "啤酒烧烤",
-        "color": "#e852eb"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_mongodb",
     "project_link": "nonebot-plugin-mongodb",
     "author_id": 40534114,
