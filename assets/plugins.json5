@@ -8349,4 +8349,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_vocu",
+    "project_link": "nonebot-plugin-vocu",
+    "author_id": 64878354,
+    "tags": [
+      {
+        "label": "TTS",
+        "color": "#4e61a5"
+      },
+      {
+        "label": "语音",
+        "color": "#667dd0"
+      }
+    ],
+    "is_official": false
+  },
 ]
