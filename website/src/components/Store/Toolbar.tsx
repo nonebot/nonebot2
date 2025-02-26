@@ -12,6 +12,13 @@ export type Filter = {
   onSubmit: (query: string) => void;
 };
 
+export type Sorter = {
+  label: string;
+  icon: IconProp;
+  active: boolean;
+  onClick: () => void;
+};
+
 export type Action = {
   label: string;
   icon: IconProp;
@@ -20,6 +27,7 @@ export type Action = {
 
 export type Props = {
   filters?: Filter[];
+  sorter?: Sorter;
   action?: Action;
   className?: string;
 };
@@ -96,6 +104,7 @@ function ToolbarFilter({
 
 export default function StoreToolbar({
   filters,
+  sorter,
   action,
   className,
 }: Props): React.ReactNode | null {
@@ -110,6 +119,20 @@ export default function StoreToolbar({
           {filters.map((filter, index) => (
             <ToolbarFilter key={index} {...filter} />
           ))}
+        </div>
+      )}
+      {sorter && (
+        <div className="store-toolbar-sorter">
+          <button
+            className={clsx(
+              "btn btn-sm btn-primary no-animation mr-2",
+              !sorter.active && "btn-outline"
+            )}
+            onClick={sorter.onClick}
+          >
+            <FontAwesomeIcon icon={sorter.icon} />
+            {sorter.label}
+          </button>
         </div>
       )}
       {action && (
