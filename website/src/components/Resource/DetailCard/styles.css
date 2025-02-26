@@ -24,7 +24,7 @@
   }
 
   &-actions {
-    @apply flex items-center gap-x-2 ml-auto;
+    @apply flex items-center gap-x-2 lg:ml-auto;
 
     &-button {
       @apply btn btn-sm;
@@ -51,11 +51,15 @@
     }
 
     &-right {
-      @apply flex flex-col justify-start gap-y-2 lg:basis-1/4 max-w-[45%];
+      @apply flex flex-col justify-start gap-y-2 lg:basis-1/4 lg:max-w-[45%];
     }
   }
 
   &-meta-item {
     @apply text-sm truncate;
+
+    &-link {
+      @apply hover:text-primary hover:transition;
+    }
   }
 }
