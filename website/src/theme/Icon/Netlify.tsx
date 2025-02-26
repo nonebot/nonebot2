@@ -2,7 +2,7 @@ import React, { type ComponentProps } from "react";
 
 export interface Props extends Omit<ComponentProps<"svg">, "viewBox"> {}
 
-export default function IconNetlify(props: Props): JSX.Element {
+export default function IconNetlify(props: Props): React.ReactNode {
   return (
     <svg viewBox="0 0 256 105" xmlns="http://www.w3.org/2000/svg" {...props}>
       <g clipPath="url(#clip0_236_25)">

@@ -31,7 +31,7 @@ export default function Paginate({
   setPage,
   previousEnabled,
   nextEnabled,
-}: Props): JSX.Element {
+}: Props): React.ReactNode {
   // const [containerElement, setContainerElement] = useState<HTMLElement | null>(
   //   null
   // );

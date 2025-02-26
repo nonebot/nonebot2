@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import Translate from "@docusaurus/Translate";
+import Translate, { translate } from "@docusaurus/Translate";
 import { usePagination } from "react-use-pagination";
 
 import Admonition from "@theme/Admonition";
@@ -11,14 +11,18 @@ import Paginate from "@/components/Paginate";
 import ResourceCard from "@/components/Resource/Card";
 import ResourceDetailCard from "@/components/Resource/DetailCard";
 import Searcher from "@/components/Searcher";
-import StoreToolbar, { type Action } from "@/components/Store/Toolbar";
+import StoreToolbar, {
+  type Action,
+  type Sorter,
+} from "@/components/Store/Toolbar";
 import { authorFilter, tagFilter } from "@/libs/filter";
 import { useSearchControl } from "@/libs/search";
+import { SortMode } from "@/libs/sorter";
 import { fetchRegistryData, loadFailedTitle } from "@/libs/store";
 import { useToolbar } from "@/libs/toolbar";
 import type { Plugin } from "@/types/plugin";
 
-export default function PluginPage(): JSX.Element {
+export default function PluginPage(): React.ReactNode {
   const [plugins, setPlugins] = useState<Plugin[] | null>(null);
   const pluginCount = plugins?.length ?? 0;
   const loading = plugins === null;
@@ -27,6 +31,38 @@ export default function PluginPage(): JSX.Element {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const [isOpenCardModal, setIsOpenCardModal] = useState<boolean>(false);
   const [clickedPlugin, setClickedPlugin] = useState<Plugin | null>(null);
+  const [sortMode, setSortMode] = useState<SortMode>(SortMode.Default);
+
+  const sorterTool: Sorter = {
+    label:
+      sortMode === SortMode.Default
+        ? translate({
+            id: "pages.store.sorter.label.default",
+            description: "The label of default sorter",
+            message: "默认顺序",
+          })
+        : translate({
+            id: "pages.store.sorter.label.updateDesc",
+            description: "The label of updateDesc sorter",
+            message: "更新时间倒序",
+          }),
+    icon: ["fas", "sort-amount-down"],
+    active: sortMode === SortMode.UpdateDesc,
+    onClick: () => {
+      setSortMode(
+        sortMode === SortMode.Default ? SortMode.UpdateDesc : SortMode.Default
+      );
+    },
+  };
+
+  const getSortedPlugins = (plugins: Plugin[]): Plugin[] => {
+    if (sortMode === SortMode.UpdateDesc) {
+      return [...plugins].sort(
+        (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
+      );
+    }
+    return plugins;
+  };
 
   const {
     filteredResources: filteredPlugins,
@@ -37,7 +73,7 @@ export default function PluginPage(): JSX.Element {
     onSearchBackspace,
     onSearchClear,
     onSearchTagClick,
-  } = useSearchControl<Plugin>(plugins ?? []);
+  } = useSearchControl<Plugin>(getSortedPlugins(plugins ?? []));
   const filteredPluginCount = filteredPlugins.length;
 
   const {
@@ -134,6 +170,7 @@ export default function PluginPage(): JSX.Element {
       <StoreToolbar
         className="not-prose"
         filters={filterTools}
+        sorter={sorterTool}
         action={actionTool}
       />
 

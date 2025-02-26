@@ -1,5 +1,13 @@
-import { authorFilter, tagFilter, type Filter } from "./filter";
+import { translate } from "@docusaurus/Translate";
+
+import {
+  authorFilter,
+  tagFilter,
+  validStatusFilter,
+  type Filter,
+} from "./filter";
 import type { Resource } from "./store";
+import { ValidStatus } from "./valid";
 
 import type { Filter as FilterTool } from "@/components/Store/Toolbar";
 
@@ -38,7 +46,41 @@ export function useToolbar<T extends Resource = Resource>({
     },
   };
 
+  const validateStatusFilterMapping: Record<string, ValidStatus> = {
+    [translate({
+      id: "pages.store.filter.validateStatusDisplayName.valid",
+      description: "The display name of validateStatus filter",
+      message: "通过",
+    })]: ValidStatus.VALID,
+    [translate({
+      id: "pages.store.filter.validateStatusDisplayName.invalid",
+      description: "The display name of validateStatus filter",
+      message: "未通过",
+    })]: ValidStatus.INVALID,
+    [translate({
+      id: "pages.store.filter.validateStatusDisplayName.skip",
+      description: "The display name of validateStatus filter",
+      message: "跳过",
+    })]: ValidStatus.SKIP,
+    [translate({
+      id: "pages.store.filter.validateStatusDisplayName.missing",
+      description: "The display name of validateStatus filter",
+      message: "缺失",
+    })]: ValidStatus.MISSING,
+  };
+
+  const validStatusFilterTool: FilterTool = {
+    label: "状态",
+    icon: ["fas", "plug"],
+    choices: Object.keys(validateStatusFilterMapping),
+    onSubmit: (type: string) => {
+      const validStatus = validateStatusFilterMapping[type];
+      if (!validStatus) return;
+      addFilter(validStatusFilter(validStatus));
+    },
+  };
+
   return {
-    filters: [authorFilterTool, tagFilterTool],
+    filters: [authorFilterTool, tagFilterTool, validStatusFilterTool],
   };
 }

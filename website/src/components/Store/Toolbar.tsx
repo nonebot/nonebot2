@@ -12,6 +12,13 @@ export type Filter = {
   onSubmit: (query: string) => void;
 };
 
+export type Sorter = {
+  label: string;
+  icon: IconProp;
+  active: boolean;
+  onClick: () => void;
+};
+
 export type Action = {
   label: string;
   icon: IconProp;
@@ -20,6 +27,7 @@ export type Action = {
 
 export type Props = {
   filters?: Filter[];
+  sorter?: Sorter;
   action?: Action;
   className?: string;
 };
@@ -29,7 +37,7 @@ function ToolbarFilter({
   icon,
   choices,
   onSubmit,
-}: Filter): JSX.Element {
+}: Filter): React.ReactNode {
   const [query, setQuery] = useState<string>("");
 
   const filteredChoices = choices
@@ -96,33 +104,65 @@ function ToolbarFilter({
 
 export default function StoreToolbar({
   filters,
+  sorter,
   action,
   className,
-}: Props): JSX.Element | null {
+}: Props): React.ReactNode | null {
   if (!(filters && filters.length > 0) && !action) {
     return null;
   }
 
   return (
-    <div className={clsx("store-toolbar", className)}>
-      {filters && filters.length > 0 && (
+    <>
+      <div className={clsx("store-toolbar", className)}>
         <div className="store-toolbar-filters">
-          {filters.map((filter, index) => (
+          {filters?.map((filter, index) => (
             <ToolbarFilter key={index} {...filter} />
           ))}
+          {sorter && (
+            <div className="store-toolbar-sorter store-toolbar-sorter-desktop">
+              <button
+                className={clsx(
+                  "btn btn-sm btn-primary no-animation mr-2",
+                  !sorter.active && "btn-outline"
+                )}
+                onClick={sorter.onClick}
+              >
+                <FontAwesomeIcon icon={sorter.icon} />
+                {sorter.label}
+              </button>
+            </div>
+          )}
         </div>
-      )}
-      {action && (
-        <div className="store-toolbar-action">
-          <button
-            className="btn btn-sm btn-primary no-animation"
-            onClick={action.onClick}
-          >
-            <FontAwesomeIcon icon={action.icon} />
-            {action.label}
-          </button>
-        </div>
-      )}
-    </div>
+
+        {action && (
+          <div className="store-toolbar-action">
+            <button
+              className="btn btn-sm btn-primary no-animation"
+              onClick={action.onClick}
+            >
+              <FontAwesomeIcon icon={action.icon} />
+              {action.label}
+            </button>
+          </div>
+        )}
+      </div>
+      <div className={clsx("store-toolbar store-toolbar-second", className)}>
+        {sorter && (
+          <div className="store-toolbar-sorter">
+            <button
+              className={clsx(
+                "btn btn-sm btn-primary no-animation mr-2",
+                !sorter.active && "btn-outline"
+              )}
+              onClick={sorter.onClick}
+            >
+              <FontAwesomeIcon icon={sorter.icon} />
+              {sorter.label}
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 }

@@ -25,7 +25,7 @@ export type Props = {
 export default function AsciinemaContainer({
   url,
   options = {},
-}: Props): JSX.Element {
+}: Props): React.ReactNode {
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {

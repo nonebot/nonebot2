@@ -15,7 +15,7 @@ import { useSearchControl } from "@/libs/search";
 import { fetchRegistryData, loadFailedTitle } from "@/libs/store";
 import type { Driver } from "@/types/driver";
 
-export default function DriverPage(): JSX.Element {
+export default function DriverPage(): React.ReactNode {
   const [drivers, setDrivers] = useState<Driver[] | null>(null);
   const driverCount = drivers?.length ?? 0;
   const loading = drivers === null;

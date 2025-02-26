@@ -2,7 +2,7 @@ import React from "react";
 
 import { Form } from ".";
 
-export default function BotForm(): JSX.Element {
+export default function BotForm(): React.ReactNode {
   const formItems = [
     {
       name: "基本信息",

@@ -5,7 +5,7 @@ import { translate } from "@docusaurus/Translate";
 import BotPageContent from "@/components/Store/Content/Bot";
 import StoreLayout from "@/components/Store/Layout";
 
-export default function StoreBots(): JSX.Element {
+export default function StoreBots(): React.ReactNode {
   const title = translate({
     id: "pages.store.bot.title",
     message: "机器人商店",

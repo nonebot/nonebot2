@@ -72,6 +72,15 @@ export default function ResourceDetailCard({ resource }: Props) {
     }
   };
 
+  const getPluginStatusUpdatedTime = (resource: Resource) => {
+    switch (resource.resourceType) {
+      case "plugin":
+        return new Date(resource.time).toLocaleString();
+      default:
+        return null;
+    }
+  };
+
   const fetchPypiProject = (projectName: string) =>
     fetch(`https://pypi.org/pypi/${projectName}/json`)
       .then((response) => response.json())
@@ -99,8 +108,9 @@ export default function ResourceDetailCard({ resource }: Props) {
 
   const projectLink = getProjectLink(resource) || "无";
   const moduleName = getModuleName(resource) || "无";
-  const homepageLink = getHomepageLink(resource) || undefined;
-  const pypiProjectLink = getPypiProjectLink(resource) || undefined;
+  const homepageLink = getHomepageLink(resource);
+  const pypiProjectLink = getPypiProjectLink(resource);
+  const updatedTime = getPluginStatusUpdatedTime(resource);
 
   return (
     <>
@@ -183,31 +193,39 @@ export default function ResourceDetailCard({ resource }: Props) {
             {(pypiData && pypiData.info.version) || "无"}
           </div>
 
-          <div className="detail-card-meta-item">
-            <FontAwesomeIcon fixedWidth icon={["fas", "fingerprint"]} />{" "}
-            <a
-              href={homepageLink}
-              target="_blank"
-              rel="noreferrer"
-              className={homepageLink && "hover:underline hover:text-primary"}
-            >
-              {moduleName}
-            </a>
-          </div>
+          {homepageLink && (
+            <div className="detail-card-meta-item">
+              <FontAwesomeIcon fixedWidth icon={["fas", "fingerprint"]} />{" "}
+              <a
+                href={homepageLink}
+                target="_blank"
+                rel="noreferrer"
+                className="detail-card-meta-item-link"
+              >
+                {moduleName}
+              </a>
+            </div>
+          )}
+
+          {pypiProjectLink && (
+            <div className="detail-card-meta-item">
+              <FontAwesomeIcon fixedWidth icon={["fas", "cubes"]} />{" "}
+              <a
+                href={pypiProjectLink}
+                target="_blank"
+                rel="noreferrer"
+                className="detail-card-meta-item-link"
+              >
+                {projectLink}
+              </a>
+            </div>
+          )}
 
           <div className="detail-card-meta-item">
-            <FontAwesomeIcon fixedWidth icon={["fas", "cubes"]} />{" "}
-            <a
-              href={pypiProjectLink}
-              target="_blank"
-              rel="noreferrer"
-              className={
-                pypiProjectLink && "hover:underline hover:text-primary"
-              }
-            >
-              {projectLink}
-            </a>
+            <FontAwesomeIcon fixedWidth icon={["fas", "clock-rotate-left"]} />{" "}
+            {updatedTime}
           </div>
+
           <div className="detail-card-actions">
             <ValidStatus
               resource={resource}

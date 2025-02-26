@@ -5,7 +5,7 @@ import { translate } from "@docusaurus/Translate";
 import AdapterPageContent from "@/components/Store/Content/Adapter";
 import StoreLayout from "@/components/Store/Layout";
 
-export default function StoreAdapters(): JSX.Element {
+export default function StoreAdapters(): React.ReactNode {
   const title = translate({
     id: "pages.store.adapter.title",
     message: "适配器商店",

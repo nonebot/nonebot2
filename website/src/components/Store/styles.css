@@ -14,6 +14,18 @@
   &-toolbar {
     @apply flex items-center justify-center my-4;
 
+    &-second {
+      @apply lg:hidden;
+    }
+
+    &-sorter {
+      @apply max-lg:flex-1;
+
+      &-desktop {
+        @apply max-lg:hidden;
+      }
+    }
+
     &-filters {
       @apply flex grow gap-2;
     }

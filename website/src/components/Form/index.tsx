@@ -32,7 +32,7 @@ export function Form({
   children,
   formItems,
   handleSubmit,
-}: Props): JSX.Element {
+}: Props): React.ReactNode {
   const [currentStep, setCurrentStep] = useState<number>(0);
   const [result, setResult] = useState<Record<string, string>>({});
   const [allowTags, setAllowTags] = useState<TagType[]>([]);
@@ -125,7 +125,7 @@ export function FormItem({
   allowTags: TagType[];
   result: Record<string, string>;
   setResult: (key: string, value: string) => void;
-}): JSX.Element {
+}): React.ReactNode {
   return (
     <>
       <label className="label">

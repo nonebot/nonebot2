@@ -2,7 +2,7 @@ import React, { type ComponentProps } from "react";
 
 export interface Props extends Omit<ComponentProps<"svg">, "viewBox"> {}
 
-export default function IconCloudflare(props: Props): JSX.Element {
+export default function IconCloudflare(props: Props): React.ReactNode {
   return (
     <svg
       viewBox="0 0 651.29 94.76"

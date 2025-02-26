@@ -15,7 +15,7 @@ export default function Tag({
 }: TagType & {
   className?: string;
   onClick?: React.MouseEventHandler<HTMLSpanElement>;
-}): JSX.Element {
+}): React.ReactNode {
   return (
     <span
       className={clsx("tag", className)}
