@@ -44,8 +44,9 @@ export const validStatusFilter = <T extends Resource = Resource>(
   id: `validStatus-${validStatus}`,
   displayName: validStatusDisplayName[validStatus],
   filter: (resource: Resource): boolean =>
-    resource.resourceType === "plugin" &&
-    getValidStatus(resource) === validStatus,
+    resource.resourceType === "plugin"
+      ? getValidStatus(resource) === validStatus
+      : true,
 });
 
 export const tagFilter = <T extends Resource = Resource>(
