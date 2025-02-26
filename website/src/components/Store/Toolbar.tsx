@@ -120,21 +120,20 @@ export default function StoreToolbar({
             {filters.map((filter, index) => (
               <ToolbarFilter key={index} {...filter} />
             ))}
-          </div>
-        )}
-
-        {sorter && (
-          <div className="store-toolbar-sorter max-lg:hidden">
-            <button
-              className={clsx(
-                "btn btn-sm btn-primary no-animation mr-2",
-                !sorter.active && "btn-outline"
-              )}
-              onClick={sorter.onClick}
-            >
-              <FontAwesomeIcon icon={sorter.icon} />
-              {sorter.label}
-            </button>
+            {sorter && (
+              <div className="store-toolbar-sorter store-toolbar-sorter-desktop">
+                <button
+                  className={clsx(
+                    "btn btn-sm btn-primary no-animation mr-2",
+                    !sorter.active && "btn-outline"
+                  )}
+                  onClick={sorter.onClick}
+                >
+                  <FontAwesomeIcon icon={sorter.icon} />
+                  {sorter.label}
+                </button>
+              </div>
+            )}
           </div>
         )}
 

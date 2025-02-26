@@ -20,6 +20,10 @@
 
     &-sorter {
       @apply max-lg:flex-1;
+
+      &-desktop {
+        @apply max-lg:hidden;
+      }
     }
 
     &-filters {
