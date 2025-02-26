@@ -113,39 +113,43 @@ export default function StoreToolbar({
   }
 
   return (
-    <div className={clsx("store-toolbar", className)}>
-      {filters && filters.length > 0 && (
-        <div className="store-toolbar-filters">
-          {filters.map((filter, index) => (
-            <ToolbarFilter key={index} {...filter} />
-          ))}
-        </div>
-      )}
-      {sorter && (
-        <div className="store-toolbar-sorter">
-          <button
-            className={clsx(
-              "btn btn-sm btn-primary no-animation mr-2",
-              !sorter.active && "btn-outline"
-            )}
-            onClick={sorter.onClick}
-          >
-            <FontAwesomeIcon icon={sorter.icon} />
-            {sorter.label}
-          </button>
-        </div>
-      )}
-      {action && (
-        <div className="store-toolbar-action">
-          <button
-            className="btn btn-sm btn-primary no-animation"
-            onClick={action.onClick}
-          >
-            <FontAwesomeIcon icon={action.icon} />
-            {action.label}
-          </button>
-        </div>
-      )}
-    </div>
+    <>
+      <div className={clsx("store-toolbar", className)}>
+        {filters && filters.length > 0 && (
+          <div className="store-toolbar-filters">
+            {filters.map((filter, index) => (
+              <ToolbarFilter key={index} {...filter} />
+            ))}
+          </div>
+        )}
+        {action && (
+          <div className="store-toolbar-action">
+            <button
+              className="btn btn-sm btn-primary no-animation"
+              onClick={action.onClick}
+            >
+              <FontAwesomeIcon icon={action.icon} />
+              {action.label}
+            </button>
+          </div>
+        )}
+      </div>
+      <div className={clsx("store-toolbar", className)}>
+        {sorter && (
+          <div className="store-toolbar-sorter">
+            <button
+              className={clsx(
+                "btn btn-sm btn-primary no-animation mr-2",
+                !sorter.active && "btn-outline"
+              )}
+              onClick={sorter.onClick}
+            >
+              <FontAwesomeIcon icon={sorter.icon} />
+              {sorter.label}
+            </button>
+          </div>
+        )}
+      </div>
+    </>
   );
 }

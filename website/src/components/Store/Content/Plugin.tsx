@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
 
-import Translate from "@docusaurus/Translate";
+import Translate, { translate } from "@docusaurus/Translate";
 import { usePagination } from "react-use-pagination";
 
 import Admonition from "@theme/Admonition";
@@ -11,7 +11,10 @@ import Paginate from "@/components/Paginate";
 import ResourceCard from "@/components/Resource/Card";
 import ResourceDetailCard from "@/components/Resource/DetailCard";
 import Searcher from "@/components/Searcher";
-import StoreToolbar, { type Action } from "@/components/Store/Toolbar";
+import StoreToolbar, {
+  type Action,
+  type Sorter,
+} from "@/components/Store/Toolbar";
 import { authorFilter, tagFilter } from "@/libs/filter";
 import { useSearchControl } from "@/libs/search";
 import { SortMode } from "@/libs/sorter";
@@ -30,8 +33,19 @@ export default function PluginPage(): React.ReactNode {
   const [clickedPlugin, setClickedPlugin] = useState<Plugin | null>(null);
   const [sortMode, setSortMode] = useState<SortMode>(SortMode.Default);
 
-  const sorterTool = {
-    label: "更新时间倒序",
+  const sorterTool: Sorter = {
+    label:
+      sortMode === SortMode.Default
+        ? translate({
+            id: "pages.store.sorter.label.default",
+            description: "The label of default sorter",
+            message: "默认顺序",
+          })
+        : translate({
+            id: "pages.store.sorter.label.updateDesc",
+            description: "The label of updateDesc sorter",
+            message: "更新时间倒序",
+          }),
     icon: ["fas", "sort-amount-down"],
     active: sortMode === SortMode.UpdateDesc,
     onClick: () => {
