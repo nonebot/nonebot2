@@ -2,9 +2,9 @@ import React from "react";
 
 import clsx from "clsx";
 
-import "./styles.css";
 import { pickTextColor } from "@/libs/color";
 import type { Tag } from "@/types/tag";
+import "./styles.css";
 
 export type Props = Tag & {
   className?: string;
@@ -16,7 +16,7 @@ export default function ResourceTag({
   color,
   className,
   onClick,
-}: Props): JSX.Element {
+}: Props): React.ReactNode {
   return (
     <span
       className={clsx("resource-tag", className)}

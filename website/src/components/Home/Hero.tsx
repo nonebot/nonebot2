@@ -10,7 +10,7 @@ import copy from "copy-text-to-clipboard";
 import IconCopy from "@theme/Icon/Copy";
 import IconSuccess from "@theme/Icon/Success";
 
-function HomeHeroInstallButton(): JSX.Element {
+function HomeHeroInstallButton(): React.ReactNode {
   const code = "pipx run nb-cli create";
 
   const [isCopied, setIsCopied] = useState(false);
@@ -37,7 +37,7 @@ function HomeHeroInstallButton(): JSX.Element {
   );
 }
 
-function HomeHero(): JSX.Element {
+function HomeHero(): React.ReactNode {
   const {
     siteConfig: { tagline },
   } = useDocusaurusContext();

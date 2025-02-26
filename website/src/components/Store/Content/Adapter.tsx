@@ -18,7 +18,7 @@ import { fetchRegistryData, loadFailedTitle } from "@/libs/store";
 import { useToolbar } from "@/libs/toolbar";
 import type { Adapter } from "@/types/adapter";
 
-export default function AdapterPage(): JSX.Element {
+export default function AdapterPage(): React.ReactNode {
   const [adapters, setAdapters] = useState<Adapter[] | null>(null);
   const adapterCount = adapters?.length ?? 0;
   const loading = adapters === null;

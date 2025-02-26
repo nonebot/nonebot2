@@ -22,7 +22,7 @@ export default function Modal({
   useCustomTitle,
   backdropExit,
   title,
-}: Props): JSX.Element {
+}: Props): React.ReactNode {
   const [transitionClass, setTransitionClass] = useState<string>("");
 
   const onFadeIn = () => setTransitionClass("fade-in");

@@ -29,7 +29,7 @@ function ToolbarFilter({
   icon,
   choices,
   onSubmit,
-}: Filter): JSX.Element {
+}: Filter): React.ReactNode {
   const [query, setQuery] = useState<string>("");
 
   const filteredChoices = choices
@@ -98,7 +98,7 @@ export default function StoreToolbar({
   filters,
   action,
   className,
-}: Props): JSX.Element | null {
+}: Props): React.ReactNode | null {
   if (!(filters && filters.length > 0) && !action) {
     return null;
   }

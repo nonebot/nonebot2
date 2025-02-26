@@ -16,7 +16,7 @@ export function HomeFeature({
   description,
   annotaion,
   children,
-}: Feature): JSX.Element {
+}: Feature): React.ReactNode {
   return (
     <div className="flex flex-col items-center justify-center p-4">
       <p className="text-sm text-base-content/70 font-medium tracking-wide uppercase">
@@ -32,7 +32,7 @@ export function HomeFeature({
   );
 }
 
-function HomeFeatureSingleColumn(props: Feature): JSX.Element {
+function HomeFeatureSingleColumn(props: Feature): React.ReactNode {
   return (
     <div className="grid grid-cols-1 px-4 py-8 md:px-16 mx-auto">
       <HomeFeature {...props} />
@@ -46,7 +46,7 @@ function HomeFeatureDoubleColumn({
 }: {
   features: [Feature, Feature];
   children?: [React.ReactNode, React.ReactNode];
-}): JSX.Element {
+}): React.ReactNode {
   const [children1, children2] = children ?? [];
 
   return (
@@ -57,7 +57,7 @@ function HomeFeatureDoubleColumn({
   );
 }
 
-function HomeFeatures(): JSX.Element {
+function HomeFeatures(): React.ReactNode {
   return (
     <>
       <HomeFeatureSingleColumn

@@ -18,7 +18,7 @@ export type Props = {
 export default function TagFormItem({
   allowTags,
   onTagUpdate,
-}: Props): JSX.Element {
+}: Props): React.ReactNode {
   const [tags, setTags] = useState<TagType[]>([]);
   const [label, setLabel] = useState<TagType["label"]>("");
   const [color, setColor] = useState<TagType["color"]>("#ea5252");

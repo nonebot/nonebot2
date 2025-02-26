@@ -2,9 +2,9 @@ import React, { useRef } from "react";
 
 import clsx from "clsx";
 
-import "./styles.css";
 import { translate } from "@docusaurus/Translate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import "./styles.css";
 
 export type Props = {
   onChange: (value: string) => void;
@@ -28,7 +28,7 @@ export default function Searcher({
   className,
   placeholder,
   disabled = false,
-}: Props): JSX.Element {
+}: Props): React.ReactNode {
   const ref = useRef<HTMLInputElement>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLInputElement>) => {
@@ -85,6 +85,10 @@ export default function Searcher({
             onClick={() => onTagClick(index)}
           >
             {tag}
+            <FontAwesomeIcon
+              className="searcher-action-icon close ml-1"
+              icon={["fas", "xmark"]}
+            />
           </div>
         ))}
         <input

@@ -18,7 +18,7 @@ import { fetchRegistryData, loadFailedTitle } from "@/libs/store";
 import { useToolbar } from "@/libs/toolbar";
 import type { Plugin } from "@/types/plugin";
 
-export default function PluginPage(): JSX.Element {
+export default function PluginPage(): React.ReactNode {
   const [plugins, setPlugins] = useState<Plugin[] | null>(null);
   const pluginCount = plugins?.length ?? 0;
   const loading = plugins === null;

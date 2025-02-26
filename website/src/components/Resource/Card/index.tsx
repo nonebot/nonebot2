@@ -5,10 +5,10 @@ import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import "./styles.css";
 import Tag from "@/components/Resource/Tag";
 import ValidStatus from "@/components/Resource/ValidStatus";
 import type { Resource } from "@/libs/store";
+import "./styles.css";
 
 export type Props = {
   resource: Resource;
@@ -24,7 +24,7 @@ export default function ResourceCard({
   onTagClick,
   onAuthorClick,
   className,
-}: Props): JSX.Element {
+}: Props): React.ReactNode {
   const isGithub = /^https:\/\/github.com\/[^/]+\/[^/]+/.test(
     resource.homepage
   );

@@ -17,7 +17,7 @@ import { fetchRegistryData, loadFailedTitle } from "@/libs/store";
 import { useToolbar } from "@/libs/toolbar";
 import type { Bot } from "@/types/bot";
 
-export default function PluginPage(): JSX.Element {
+export default function PluginPage(): React.ReactNode {
   const [bots, setBots] = useState<Bot[] | null>(null);
   const botCount = bots?.length ?? 0;
   const loading = bots === null;

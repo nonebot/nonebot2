@@ -2,7 +2,7 @@ import React from "react";
 
 import { Form } from ".";
 
-export default function PluginForm(): JSX.Element {
+export default function PluginForm(): React.ReactNode {
   const formItems = [
     {
       name: "包信息",

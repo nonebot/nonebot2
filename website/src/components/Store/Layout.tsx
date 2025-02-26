@@ -18,7 +18,7 @@ type Props = {
   children: React.ReactNode;
 };
 
-function StorePage({ title, children }: Props): JSX.Element {
+function StorePage({ title, children }: Props): React.ReactNode {
   const sidebarItems = useVersionedSidebar(
     useDocsVersionCandidates()[0].name,
     SIDEBAR_ID
@@ -35,7 +35,10 @@ function StorePage({ title, children }: Props): JSX.Element {
   );
 }
 
-export default function StoreLayout({ title, ...props }: Props): JSX.Element {
+export default function StoreLayout({
+  title,
+  ...props
+}: Props): React.ReactNode {
   return (
     <>
       <PageMetadata title={title} />

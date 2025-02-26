@@ -13,37 +13,38 @@
     "docusaurus": "docusaurus",
     "start": "docusaurus start --host 0.0.0.0 --port 3000",
     "build": "docusaurus build",
+    "build:fast": "cross-env BUILD_FAST=true yarn build",
+    "build:fast:rsdoctor": "cross-env BUILD_FAST=true RSDOCTOR=true yarn build",
+    "build:fast:profile": "cross-env BUILD_FAST=true node --cpu-prof --cpu-prof-dir .cpu-prof ./node_modules/.bin/docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
     "clear": "docusaurus clear",
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc"
+    "typecheck": "tsc",
+    "prettier": "prettier --config ../.prettierrc --write ."
   },
   "dependencies": {
-    "@docusaurus/core": "^3.6.2",
+    "@docusaurus/core": "^3.7.0",
     "@mdx-js/react": "^3.0.0",
     "@nullbot/docusaurus-plugin-changelog": "^3.0.0",
     "@nullbot/docusaurus-preset-nonepress": "^3.0.0",
-    "@swc/core": "^1.7.26",
     "clsx": "^2.0.0",
     "copy-text-to-clipboard": "^3.2.0",
     "prism-react-renderer": "^2.3.0",
-    "raw-loader": "^4.0.2",
-    "react": "^18.0.0",
+    "react": "^19.0.0",
     "react-color": "^2.19.3",
-    "react-dom": "^18.0.0",
-    "react-use-pagination": "^2.0.1",
-    "swc-loader": "^0.2.6"
+    "react-dom": "^19.0.0",
+    "react-use-pagination": "^2.0.1"
   },
   "devDependencies": {
-    "@docusaurus/faster": "^3.6.2",
-    "@docusaurus/module-type-aliases": "^3.6.2",
+    "@docusaurus/faster": "^3.7.0",
+    "@docusaurus/module-type-aliases": "^3.7.0",
     "@nullbot/docusaurus-tsconfig": "^3.0.0",
     "@types/react-color": "^3.0.10",
     "asciinema-player": "^3.5.0",
-    "typescript": "~5.5.2"
+    "typescript": "~5.7.2"
   },
   "browserslist": {
     "production": [

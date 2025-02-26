@@ -9,7 +9,7 @@ import "./styles.css";
 export default function TOCContainer({
   children,
   ...props
-}: Props): JSX.Element {
+}: Props): React.ReactNode {
   const windowSize = useWindowSize();
   const isClient = windowSize !== "ssr";
 

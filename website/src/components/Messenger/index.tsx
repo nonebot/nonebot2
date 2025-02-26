@@ -6,8 +6,8 @@ import useBaseUrl from "@docusaurus/useBaseUrl";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNonepressThemeConfig } from "@nullbot/docusaurus-theme-nonepress/client";
 
-import "./styles.css";
 import ThemedImage from "@theme/ThemedImage";
+import "./styles.css";
 
 export type Message = {
   msg: string;
@@ -19,7 +19,7 @@ function MessageBox({
   msg,
   position = "left",
   monospace = false,
-}: Message): JSX.Element {
+}: Message): React.ReactNode {
   const {
     navbar: { logo },
   } = useNonepressThemeConfig();
@@ -63,7 +63,7 @@ export default function Messenger({
   msgs = [],
 }: {
   msgs?: Message[];
-}): JSX.Element {
+}): React.ReactNode {
   return (
     <div className="messenger-container">
       <header className="messenger-title">

@@ -5,7 +5,7 @@ import { translate } from "@docusaurus/Translate";
 import DriverPageContent from "@/components/Store/Content/Driver";
 import StoreLayout from "@/components/Store/Layout";
 
-export default function StoreDrivers(): JSX.Element {
+export default function StoreDrivers(): React.ReactNode {
   const title = translate({
     id: "pages.store.driver.title",
     message: "驱动器商店",

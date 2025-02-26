@@ -5,7 +5,7 @@ import { translate } from "@docusaurus/Translate";
 import PluginPageContent from "@/components/Store/Content/Plugin";
 import StoreLayout from "@/components/Store/Layout";
 
-export default function StorePlugins(): JSX.Element {
+export default function StorePlugins(): React.ReactNode {
   const title = translate({
     id: "pages.store.plugin.title",
     message: "插件商店",
