@@ -122,6 +122,22 @@ export default function StoreToolbar({
             ))}
           </div>
         )}
+
+        {sorter && (
+          <div className="store-toolbar-sorter max-lg:hidden">
+            <button
+              className={clsx(
+                "btn btn-sm btn-primary no-animation mr-2",
+                !sorter.active && "btn-outline"
+              )}
+              onClick={sorter.onClick}
+            >
+              <FontAwesomeIcon icon={sorter.icon} />
+              {sorter.label}
+            </button>
+          </div>
+        )}
+
         {action && (
           <div className="store-toolbar-action">
             <button
@@ -134,7 +150,7 @@ export default function StoreToolbar({
           </div>
         )}
       </div>
-      <div className={clsx("store-toolbar", className)}>
+      <div className={clsx("store-toolbar store-toolbar-second", className)}>
         {sorter && (
           <div className="store-toolbar-sorter">
             <button

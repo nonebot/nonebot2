@@ -14,8 +14,12 @@
   &-toolbar {
     @apply flex items-center justify-center my-4;
 
-    &-sorter{
-      @apply flex-1;
+    &-second {
+      @apply lg:hidden;
+    }
+
+    &-sorter {
+      @apply max-lg:flex-1;
     }
 
     &-filters {
