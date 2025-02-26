@@ -8365,4 +8365,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_aitalk",
+    "project_link": "nonebot-plugin-aitalk",
+    "author_id": 98072207,
+    "tags": [
+      {
+        "label": "LLM",
+        "color": "#ea5252"
+      },
+      {
+        "label": "OpenAI",
+        "color": "#52dfea"
+      },
+      {
+        "label": "DeepSeek",
+        "color": "#9686bb"
+      }
+    ],
+    "is_official": false
+  },
 ]
