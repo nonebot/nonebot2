@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 群昵称更新 [@noneflow](https://github.com/noneflow) ([#3336](https://github.com/nonebot/nonebot2/pull/3336))
 - Plugin: 简易AI聊天 [@noneflow](https://github.com/noneflow) ([#3327](https://github.com/nonebot/nonebot2/pull/3327))
 - Plugin: Vocu 语音插件 [@noneflow](https://github.com/noneflow) ([#3322](https://github.com/nonebot/nonebot2/pull/3322))
 - Plugin: LuoguLuck|洛谷运势 [@noneflow](https://github.com/noneflow) ([#3320](https://github.com/nonebot/nonebot2/pull/3320))
