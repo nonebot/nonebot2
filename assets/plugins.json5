@@ -8397,4 +8397,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_meme_stickers",
+    "project_link": "nonebot-plugin-meme-stickers",
+    "author_id": 59048777,
+    "tags": [
+      {
+        "label": "PJSK",
+        "color": "#ea5252"
+      },
+      {
+        "label": "Arcaea",
+        "color": "#ea5252"
+      },
+      {
+        "label": "表情包",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
