@@ -8385,4 +8385,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_timed_nickname_updater",
+    "project_link": "nonebot-plugin-timed-nickname-updater",
+    "author_id": 85243954,
+    "tags": [
+      {
+        "label": "群昵称",
+        "color": "#2bcbba"
+      }
+    ],
+    "is_official": false
+  },
 ]
