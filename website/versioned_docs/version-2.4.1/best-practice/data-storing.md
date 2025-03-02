@@ -68,6 +68,16 @@ data = data_file.read_text()
 
 ## 配置项
 
+### localstore_use_cwd
+
+使用当前工作目录作为数据存储目录
+
+默认值：`False`
+
+```dotenv
+LOCALSTORE_USE_CWD=true
+```
+
 ### localstore_cache_dir
 
 自定义缓存目录
