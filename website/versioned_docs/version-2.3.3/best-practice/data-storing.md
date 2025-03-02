@@ -68,15 +68,27 @@ data = data_file.read_text()
 
 ## 配置项
 
+### localstore_use_cwd
+
+使用当前工作目录作为数据存储目录，以下数据目录配置项默认值将会对应变更
+
+默认值：`False`
+
+```dotenv
+LOCALSTORE_USE_CWD=true
+```
+
 ### localstore_cache_dir
 
 自定义缓存目录
 
 默认值：
 
-- macOS: `~/Library/Caches/<AppName>`
-- Unix: `~/.cache/<AppName>` (XDG default)
-- Windows: `C:\Users\<username>\AppData\Local\<AppName>\Cache`
+当 `localstore_use_cwd` 为 `True` 时，缓存目录为 `<current_working_directory>/cache`，否则：
+
+- macOS: `~/Library/Caches/nonebot2`
+- Unix: `~/.cache/nonebot2` (XDG default)
+- Windows: `C:\Users\<username>\AppData\Local\nonebot2\Cache`
 
 ```dotenv
 LOCALSTORE_CACHE_DIR=/tmp/cache
@@ -88,10 +100,12 @@ LOCALSTORE_CACHE_DIR=/tmp/cache
 
 默认值：
 
-- macOS: `~/Library/Application Support/<AppName>`
-- Unix: `~/.local/share/<AppName>` or in $XDG_DATA_HOME, if defined
-- Win XP (not roaming): `C:\Documents and Settings\<username>\Application Data\<AppName>`
-- Win 7 (not roaming): `C:\Users\<username>\AppData\Local\<AppName>`
+当 `localstore_use_cwd` 为 `True` 时，数据目录为 `<current_working_directory>/data`，否则：
+
+- macOS: `~/Library/Application Support/nonebot2`
+- Unix: `~/.local/share/nonebot2` or in $XDG_DATA_HOME, if defined
+- Win XP (not roaming): `C:\Documents and Settings\<username>\Application Data\nonebot2`
+- Win 7 (not roaming): `C:\Users\<username>\AppData\Local\nonebot2`
 
 ```dotenv
 LOCALSTORE_DATA_DIR=/tmp/data
@@ -103,10 +117,12 @@ LOCALSTORE_DATA_DIR=/tmp/data
 
 默认值：
 
+当 `localstore_use_cwd` 为 `True` 时，配置目录为 `<current_working_directory>/config`，否则：
+
 - macOS: same as user_data_dir
-- Unix: `~/.config/<AppName>`
-- Win XP (roaming): `C:\Documents and Settings\<username>\Local Settings\Application Data\<AppName>`
-- Win 7 (roaming): `C:\Users\<username>\AppData\Roaming\<AppName>`
+- Unix: `~/.config/nonebot2`
+- Win XP (roaming): `C:\Documents and Settings\<username>\Local Settings\Application Data\nonebot2`
+- Win 7 (roaming): `C:\Users\<username>\AppData\Roaming\nonebot2`
 
 ```dotenv
 LOCALSTORE_CONFIG_DIR=/tmp/config
