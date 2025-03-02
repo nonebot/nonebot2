@@ -35,6 +35,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-whois [@noneflow](https://github.com/noneflow) ([#3330](https://github.com/nonebot/nonebot2/pull/3330))
 - Plugin: Meme Stickers [@noneflow](https://github.com/noneflow) ([#3333](https://github.com/nonebot/nonebot2/pull/3333))
 - Plugin: 群昵称更新 [@noneflow](https://github.com/noneflow) ([#3336](https://github.com/nonebot/nonebot2/pull/3336))
 - Plugin: 简易AI聊天 [@noneflow](https://github.com/noneflow) ([#3327](https://github.com/nonebot/nonebot2/pull/3327))
