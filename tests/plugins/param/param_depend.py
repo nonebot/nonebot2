@@ -33,8 +33,8 @@ async def gen_async():
 
 @dataclass
 class ClassDependency:
-    x: int = Depends(gen_sync)  # noqa: RUF009
-    y: int = Depends(gen_async)  # noqa: RUF009
+    x: int = Depends(gen_sync)
+    y: int = Depends(gen_async)
 
 
 class FooBot(Bot): ...
