@@ -34,7 +34,7 @@
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-regexp": "^1.15.0",
     "prettier": "^3.0.3",
-    "pyright": "^1.1.317",
+    "pyright": "1.1.393",
     "stylelint": "^15.10.3",
     "stylelint-config-standard": "^34.0.0",
     "stylelint-prettier": "^4.0.2"
