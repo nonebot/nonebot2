@@ -9431,10 +9431,10 @@ pupa@^3.1.0:
   dependencies:
     escape-goat "^4.0.0"
 
-pyright@^1.1.317:
-  version "1.1.395"
-  resolved "https://registry.npmjs.org/pyright/-/pyright-1.1.395.tgz#b10c5dda15c3b6281090bf3eb8f5a4c8d535a7a3"
-  integrity sha512-QLu+YtuW3aL+pUTkzEJ2te0xfVAjSOd2KFkVy/xXTota7BrAQPtgXDnxfsbU8uzGT6OpCxF7HQaVWLV9OyRM/A==
+pyright@1.1.393:
+  version "1.1.393"
+  resolved "https://registry.npmjs.org/pyright/-/pyright-1.1.393.tgz#adb5a653777f806f533eff977635cca434c334e0"
+  integrity sha512-v/pB9W2RXelj7Ye+3xTmsJdrgojcp77fQqE0Y+uXsSaRq5WQKgtLcuAE4tXF7YKSwSKmc4YiqlliZvp7OFh71w==
   optionalDependencies:
     fsevents "~2.3.3"
 

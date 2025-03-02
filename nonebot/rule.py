@@ -509,7 +509,7 @@ class ArgumentParser(ArgParser):
             super()._parse_optional(arg_string) if isinstance(arg_string, str) else None
         )
 
-    def _print_message(self, message: str, file: Optional[IO[str]] = None):
+    def _print_message(self, message: str, file: Optional[IO[str]] = None):  # type: ignore
         if (msg := parser_message.get(None)) is not None:
             parser_message.set(msg + message)
         else:
