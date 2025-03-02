@@ -208,7 +208,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
 
         env_vars = self._parse_env_vars(os.environ)
         env_file_vars = self._read_env_files()
-        env_vars = {**env_file_vars, **env_vars}
+        env_vars = {**env_vars, **env_file_vars}
 
         for field in model_fields(self.settings_cls):
             field_name = field.name
