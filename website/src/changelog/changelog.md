@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 添加 localstore `use_cwd` 配置项文档 [@yanyongyu](https://github.com/yanyongyu) ([#3345](https://github.com/nonebot/nonebot2/pull/3345))
 - Docs: 商店插件可用性筛选 \& 更新排序 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3334](https://github.com/nonebot/nonebot2/pull/3334))
 - Docs: 添加 微信公众平台 适配器描述 [@YangRucheng](https://github.com/YangRucheng) ([#3264](https://github.com/nonebot/nonebot2/pull/3264))
 - Docs: 添加 黑盒语音 适配器描述 [@lclbm](https://github.com/lclbm) ([#3259](https://github.com/nonebot/nonebot2/pull/3259))
