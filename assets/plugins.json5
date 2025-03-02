@@ -8429,4 +8429,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_tangkiller",
+    "project_link": "nonebot-plugin-tangkiller",
+    "author_id": 85243954,
+    "tags": [],
+    "is_official": false
+  },
 ]
