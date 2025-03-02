@@ -8417,4 +8417,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_whois",
+    "project_link": "nonebot-plugin-whois",
+    "author_id": 157226607,
+    "tags": [
+      {
+        "label": "域名",
+        "color": "#14ff22"
+      }
+    ],
+    "is_official": false
+  },
 ]
