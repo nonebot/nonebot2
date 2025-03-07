@@ -35,6 +35,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 卡bin查询 [@noneflow](https://github.com/noneflow) ([#3324](https://github.com/nonebot/nonebot2/pull/3324))
 - Plugin: 唐菲检测 [@noneflow](https://github.com/noneflow) ([#3338](https://github.com/nonebot/nonebot2/pull/3338))
 - Plugin: nonebot-plugin-whois [@noneflow](https://github.com/noneflow) ([#3330](https://github.com/nonebot/nonebot2/pull/3330))
 - Plugin: Meme Stickers [@noneflow](https://github.com/noneflow) ([#3333](https://github.com/nonebot/nonebot2/pull/3333))
