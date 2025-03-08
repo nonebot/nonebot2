@@ -8448,4 +8448,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_chatgpt_api",
+    "project_link": "nonebot-plugin-chatgpt-api",
+    "author_id": 66420814,
+    "tags": [
+      {
+        "label": "ChatGPT",
+        "color": "#000000"
+      },
+      {
+        "label": "DeepSeek",
+        "color": "#4d6bfe"
+      },
+      {
+        "label": "OpenAI",
+        "color": "#01a47e"
+      }
+    ],
+    "is_official": false
+  },
 ]
