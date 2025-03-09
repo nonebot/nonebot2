@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-// @ts-expect-error: we need to make package have type: module
 import copy from "copy-text-to-clipboard";
 
-import type { Resource } from "@/libs/store";
 import Tag from "@/components/Resource/Tag";
 import ValidStatus from "@/components/Resource/ValidStatus";
+import type { Resource } from "@/libs/store";
 
 import type { PyPIData } from "./types";
 
-import "./styles.css";
 import Avatar from "../Avatar";
+import "./styles.css";
 
 export type Props = {
   resource: Resource;
