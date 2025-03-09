@@ -120,6 +120,7 @@ export default function ResourceDetailCard({ resource }: Props) {
       <div className="detail-card-header">
         <Avatar
           className="detail-card-avatar"
+          key={resource.author}
           authorLink={authorLink}
           authorAvatar={authorAvatar}
         />

@@ -103,6 +103,7 @@ export default function ResourceCard({
           <div className="resource-card-footer-group">
             <Avatar
               className="resource-card-footer-avatar"
+              key={resource.author}
               authorAvatar={authorAvatar}
               authorLink={authorLink}
             />
