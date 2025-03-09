@@ -3,6 +3,7 @@ import React, { useCallback } from "react";
 import clsx from "clsx";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import type { usePagination } from "react-use-pagination";
 
 import "./styles.css";
@@ -66,7 +67,7 @@ export default function Paginate({
   const even = MAX_LENGTH % 2 === 0 ? 1 : 0;
   const left = Math.floor(MAX_LENGTH / 2);
   const right = totalPages - left + even + 1;
-  currentPage = currentPage + 1;
+  currentPage += 1;
 
   if (totalPages <= MAX_LENGTH) {
     pages.push(...range(1, totalPages));

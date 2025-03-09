@@ -4,7 +4,6 @@ import Translate from "@docusaurus/Translate";
 import { usePagination } from "react-use-pagination";
 
 import Admonition from "@theme/Admonition";
-
 import AdapterForm from "@/components/Form/Adapter";
 import Modal from "@/components/Modal";
 import Paginate from "@/components/Paginate";
@@ -16,6 +15,7 @@ import { authorFilter, tagFilter } from "@/libs/filter";
 import { useSearchControl } from "@/libs/search";
 import { fetchRegistryData, loadFailedTitle } from "@/libs/store";
 import { useToolbar } from "@/libs/toolbar";
+
 import type { Adapter } from "@/types/adapter";
 
 export default function AdapterPage(): React.ReactNode {
@@ -146,7 +146,7 @@ export default function AdapterPage(): React.ReactNode {
         </Admonition>
       ) : loading ? (
         <p className="store-loading-container">
-          <span className="loading loading-dots loading-lg store-loading"></span>
+          <span className="loading loading-dots loading-lg store-loading" />
         </p>
       ) : (
         <div className="store-container">

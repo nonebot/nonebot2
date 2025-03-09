@@ -32,5 +32,5 @@ export default function AsciinemaContainer({
     AsciinemaPlayer.create(url, ref.current, options);
   }, [url, options]);
 
-  return <div ref={ref} className="not-prose ap-container"></div>;
+  return <div ref={ref} className="not-prose ap-container" />;
 }

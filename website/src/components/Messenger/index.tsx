@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNonepressThemeConfig } from "@nullbot/docusaurus-theme-nonepress/client";
 
 import ThemedImage from "@theme/ThemedImage";
+
 import "./styles.css";
 
 export type Message = {
@@ -54,7 +55,7 @@ function MessageBox({
         dangerouslySetInnerHTML={{
           __html: msg.replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;"),
         }}
-      ></div>
+       />
     </div>
   );
 }

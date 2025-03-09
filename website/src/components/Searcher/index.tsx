@@ -4,6 +4,7 @@ import clsx from "clsx";
 
 import { translate } from "@docusaurus/Translate";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import "./styles.css";
 
 export type Props = {

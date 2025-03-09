@@ -1,9 +1,11 @@
 import React from "react";
 
 import BrowserOnly from "@docusaurus/BrowserOnly";
+
 import "asciinema-player/dist/bundle/asciinema-player.css";
 
 import type { Props } from "./container";
+
 import "./styles.css";
 
 export type { Props } from "./container";
