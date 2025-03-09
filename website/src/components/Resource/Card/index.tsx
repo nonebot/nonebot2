@@ -5,9 +5,11 @@ import clsx from "clsx";
 import Link from "@docusaurus/Link";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+import Avatar from "@/components/Resource/Avatar";
 import Tag from "@/components/Resource/Tag";
 import ValidStatus from "@/components/Resource/ValidStatus";
 import type { Resource } from "@/libs/store";
+
 import "./styles.css";
 
 export type Props = {
@@ -73,7 +75,7 @@ export default function ResourceCard({
             />
           ))}
         </div>
-        <div className="divider resource-card-footer-divider"></div>
+        <div className="divider resource-card-footer-divider" />
         <div className="resource-card-footer-info">
           <div className="resource-card-footer-group">
             <Link href={resource.homepage}>
@@ -99,13 +101,11 @@ export default function ResourceCard({
             )}
           </div>
           <div className="resource-card-footer-group">
-            <div className="avatar">
-              <div className="resource-card-footer-avatar">
-                <Link href={authorLink}>
-                  <img src={authorAvatar} key={resource.author} />
-                </Link>
-              </div>
-            </div>
+            <Avatar
+              className="resource-card-footer-avatar"
+              authorAvatar={authorAvatar}
+              authorLink={authorLink}
+            />
             <span
               className="resource-card-footer-author"
               onClick={onAuthorClick}

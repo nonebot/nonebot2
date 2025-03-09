@@ -4,13 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 // @ts-expect-error: we need to make package have type: module
 import copy from "copy-text-to-clipboard";
 
-import { PyPIData } from "./types";
-
+import type { Resource } from "@/libs/store";
 import Tag from "@/components/Resource/Tag";
 import ValidStatus from "@/components/Resource/ValidStatus";
-import type { Resource } from "@/libs/store";
+
+import type { PyPIData } from "./types";
 
 import "./styles.css";
+import Avatar from "../Avatar";
 
 export type Props = {
   resource: Resource;
@@ -97,11 +98,13 @@ export default function ResourceDetailCard({ resource }: Props) {
 
   useEffect(() => {
     const fetchingTasks: Promise<void>[] = [];
-    if (resource.resourceType === "bot" || resource.resourceType === "driver")
+    if (resource.resourceType === "bot" || resource.resourceType === "driver") {
       return;
+    }
 
-    if (resource.project_link)
+    if (resource.project_link) {
       fetchingTasks.push(fetchPypiProject(resource.project_link));
+    }
 
     Promise.all(fetchingTasks);
   }, [resource]);
@@ -115,10 +118,10 @@ export default function ResourceDetailCard({ resource }: Props) {
   return (
     <>
       <div className="detail-card-header">
-        <img
-          src={authorAvatar}
+        <Avatar
           className="detail-card-avatar"
-          decoding="async"
+          authorLink={authorLink}
+          authorAvatar={authorAvatar}
         />
         <div className="detail-card-title">
           <span className="detail-card-title-main flex items-center gap-x-1">
@@ -152,7 +155,7 @@ export default function ResourceDetailCard({ resource }: Props) {
           </button>
         </div>
       </div>
-      <div className="divider detail-card-header-divider"></div>
+      <div className="divider detail-card-header-divider" />
       <div className="detail-card-body">
         <div className="detail-card-body-left">
           <span className="h-full">{resource.desc}</span>
