@@ -6,7 +6,6 @@ import { pickTextColor } from "@/libs/color";
 
 import type { Tag } from "@/types/tag";
 
-
 import "./styles.css";
 
 export type Props = Tag & {

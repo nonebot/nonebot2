@@ -76,7 +76,9 @@ export function useToolbar<T extends Resource = Resource>({
     choices: Object.keys(validateStatusFilterMapping),
     onSubmit: (type: string) => {
       const validStatus = validateStatusFilterMapping[type];
-      if (!validStatus) {return;}
+      if (!validStatus) {
+        return;
+      }
       addFilter(validStatusFilter(validStatus));
     },
   };

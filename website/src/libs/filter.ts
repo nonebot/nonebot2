@@ -8,7 +8,6 @@ import { ValidStatus } from "./valid";
 
 import type { Resource } from "./store";
 
-
 export type Filter<T extends Resource = Resource> = {
   type: string;
   id: string;
@@ -104,7 +103,9 @@ export const queryFilter = <T extends Resource = Resource>(
   id: `query-${query}`,
   displayName: query,
   filter: (resource: Resource): boolean => {
-    if (!query) {return true;}
+    if (!query) {
+      return true;
+    }
     const queryLower = query.toLowerCase();
     const pluginMatch =
       resource.resourceType === "plugin" &&
@@ -143,7 +144,9 @@ export function useFilteredResources<T extends Resource>(
 
   const addFilter = useCallback(
     (filter: Filter<T>) => {
-      if (filters.some((f) => f.id === filter.id)) {return;}
+      if (filters.some((f) => f.id === filter.id)) {
+        return;
+      }
       setFilters((filters) => [...filters, filter]);
     },
     [filters, setFilters]

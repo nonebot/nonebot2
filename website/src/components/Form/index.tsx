@@ -4,7 +4,6 @@ import clsx from "clsx";
 
 import "./styles.css";
 
-
 import type { Resource } from "@/libs/store";
 import { fetchRegistryData } from "@/libs/store";
 
@@ -64,9 +63,10 @@ export function Form({
     const currentStepNames = formItems[currentStep].items.map(
       (item) => item.name
     );
-    if (currentStepNames.every((name) => result[name]))
-      {setCurrentStep(currentStep + 1);}
-    else {}
+    if (currentStepNames.every((name) => result[name])) {
+      setCurrentStep(currentStep + 1);
+    } else {
+    }
   };
   const onPrev = () => currentStep > 0 && setCurrentStep(currentStep - 1);
   const onNext = () =>

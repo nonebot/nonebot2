@@ -30,10 +30,11 @@ export async function fetchRegistryData<T extends RegistryDataType>(
   ).catch((e) => {
     throw new Error(`Failed to fetch ${dataType}s: ${e}`);
   });
-  if (!resp.ok)
-    {throw new Error(
+  if (!resp.ok) {
+    throw new Error(
       `Failed to fetch ${dataType}s: ${resp.status} ${resp.statusText}`
-    );}
+    );
+  }
   const data = (await resp.json()) as RegistryDataResponseTypes[T];
   return data.map(
     (resource) => ({ ...resource, resourceType: dataType }) as ResourceTypes[T]

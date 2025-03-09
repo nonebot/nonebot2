@@ -55,7 +55,7 @@ function MessageBox({
         dangerouslySetInnerHTML={{
           __html: msg.replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;"),
         }}
-       />
+      />
     </div>
   );
 }

@@ -12,8 +12,12 @@ import type { IconName } from "@fortawesome/fontawesome-common-types";
 export const getValidStatus = (resource: Resource) => {
   switch (resource.resourceType) {
     case "plugin":
-      if (resource.skip_test) {return ValidStatus.SKIP;}
-      if (resource.valid) {return ValidStatus.VALID;}
+      if (resource.skip_test) {
+        return ValidStatus.SKIP;
+      }
+      if (resource.valid) {
+        return ValidStatus.VALID;
+      }
       return ValidStatus.INVALID;
     default:
       return ValidStatus.MISSING;
