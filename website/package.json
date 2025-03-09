@@ -27,6 +27,7 @@
   },
   "dependencies": {
     "@docusaurus/core": "^3.7.0",
+    "@docusaurus/eslint-plugin": "3.7.0",
     "@mdx-js/react": "^3.0.0",
     "@nullbot/docusaurus-plugin-changelog": "^3.0.0",
     "@nullbot/docusaurus-preset-nonepress": "^3.0.0",

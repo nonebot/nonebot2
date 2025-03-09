@@ -8,7 +8,8 @@ import { ChromePicker, type ColorResult } from "react-color";
 import "./styles.css";
 
 import TagComponent from "@/components/Tag";
-import { Tag as TagType } from "@/types/tag";
+
+import type { Tag as TagType } from "@/types/tag";
 
 export type Props = {
   allowTags: TagType[];
@@ -103,7 +104,7 @@ export default function TagFormItem({
         <ChromePicker
           className="my-4 fix-input-color"
           color={color}
-          disableAlpha={true}
+          disableAlpha
           onChangeComplete={onChangeColor}
         />
       </div>

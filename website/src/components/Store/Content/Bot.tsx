@@ -4,7 +4,6 @@ import Translate from "@docusaurus/Translate";
 import { usePagination } from "react-use-pagination";
 
 import Admonition from "@theme/Admonition";
-
 import BotForm from "@/components/Form/Bot";
 import Modal from "@/components/Modal";
 import Paginate from "@/components/Paginate";
@@ -15,6 +14,7 @@ import { authorFilter, tagFilter } from "@/libs/filter";
 import { useSearchControl } from "@/libs/search";
 import { fetchRegistryData, loadFailedTitle } from "@/libs/store";
 import { useToolbar } from "@/libs/toolbar";
+
 import type { Bot } from "@/types/bot";
 
 export default function PluginPage(): React.ReactNode {
@@ -138,7 +138,7 @@ export default function PluginPage(): React.ReactNode {
         </Admonition>
       ) : loading ? (
         <p className="store-loading-container">
-          <span className="loading loading-dots loading-lg store-loading"></span>
+          <span className="loading loading-dots loading-lg store-loading" />
         </p>
       ) : (
         <div className="store-container">

@@ -4,10 +4,13 @@ import clsx from "clsx";
 
 import "./styles.css";
 
+
+import type { Resource } from "@/libs/store";
+import { fetchRegistryData } from "@/libs/store";
+
 import TagFormItem from "./Items/Tag";
 
-import { fetchRegistryData, Resource } from "@/libs/store";
-import { Tag as TagType } from "@/types/tag";
+import type { Tag as TagType } from "@/types/tag";
 
 export type FormItemData = {
   type: string;
@@ -62,8 +65,8 @@ export function Form({
       (item) => item.name
     );
     if (currentStepNames.every((name) => result[name]))
-      setCurrentStep(currentStep + 1);
-    else return;
+      {setCurrentStep(currentStep + 1);}
+    else {}
   };
   const onPrev = () => currentStep > 0 && setCurrentStep(currentStep - 1);
   const onNext = () =>

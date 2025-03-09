@@ -2,17 +2,18 @@ import React from "react";
 
 import clsx from "clsx";
 
-import type { IconName } from "@fortawesome/fontawesome-common-types";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { Resource } from "@/libs/store";
+import type { Resource } from "@/libs/store";
 import { ValidStatus } from "@/libs/valid";
+
+import type { IconName } from "@fortawesome/fontawesome-common-types";
 
 export const getValidStatus = (resource: Resource) => {
   switch (resource.resourceType) {
     case "plugin":
-      if (resource.skip_test) return ValidStatus.SKIP;
-      if (resource.valid) return ValidStatus.VALID;
+      if (resource.skip_test) {return ValidStatus.SKIP;}
+      if (resource.valid) {return ValidStatus.VALID;}
       return ValidStatus.INVALID;
     default:
       return ValidStatus.MISSING;
