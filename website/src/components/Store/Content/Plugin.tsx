@@ -4,7 +4,6 @@ import Translate, { translate } from "@docusaurus/Translate";
 import { usePagination } from "react-use-pagination";
 
 import Admonition from "@theme/Admonition";
-
 import PluginForm from "@/components/Form/Plugin";
 import Modal from "@/components/Modal";
 import Paginate from "@/components/Paginate";
@@ -20,6 +19,7 @@ import { useSearchControl } from "@/libs/search";
 import { SortMode } from "@/libs/sorter";
 import { fetchRegistryData, loadFailedTitle } from "@/libs/store";
 import { useToolbar } from "@/libs/toolbar";
+
 import type { Plugin } from "@/types/plugin";
 
 export default function PluginPage(): React.ReactNode {
@@ -149,7 +149,7 @@ export default function PluginPage(): React.ReactNode {
           <Translate
             id="pages.store.plugin.searchInfo"
             description="Plugins search info of the plugin store page"
-            values={{ pluginCount, filteredPluginCount: filteredPluginCount }}
+            values={{ pluginCount, filteredPluginCount }}
           >
             {"当前共有 {filteredPluginCount} / {pluginCount} 个插件"}
           </Translate>
@@ -180,7 +180,7 @@ export default function PluginPage(): React.ReactNode {
         </Admonition>
       ) : loading ? (
         <p className="store-loading-container">
-          <span className="loading loading-dots loading-lg store-loading"></span>
+          <span className="loading loading-dots loading-lg store-loading" />
         </p>
       ) : (
         <div className="store-container">

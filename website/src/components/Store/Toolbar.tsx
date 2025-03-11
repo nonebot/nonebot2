@@ -2,8 +2,9 @@ import React, { useState } from "react";
 
 import clsx from "clsx";
 
-import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import type { IconProp } from "@fortawesome/fontawesome-svg-core";
 
 export type Filter = {
   label: string;

@@ -1,15 +1,16 @@
 import { translate } from "@docusaurus/Translate";
 
+import type { Filter as FilterTool } from "@/components/Store/Toolbar";
+
 import {
   authorFilter,
   tagFilter,
   validStatusFilter,
   type Filter,
 } from "./filter";
-import type { Resource } from "./store";
 import { ValidStatus } from "./valid";
 
-import type { Filter as FilterTool } from "@/components/Store/Toolbar";
+import type { Resource } from "./store";
 
 type Props<T extends Resource = Resource> = {
   resources: T[];
@@ -75,7 +76,9 @@ export function useToolbar<T extends Resource = Resource>({
     choices: Object.keys(validateStatusFilterMapping),
     onSubmit: (type: string) => {
       const validStatus = validateStatusFilterMapping[type];
-      if (!validStatus) return;
+      if (!validStatus) {
+        return;
+      }
       addFilter(validStatusFilter(validStatus));
     },
   };

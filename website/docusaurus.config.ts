@@ -1,7 +1,8 @@
+import { themes } from "prism-react-renderer";
+
 import type { Config } from "@docusaurus/types";
 import type { Options as ChangelogOptions } from "@nullbot/docusaurus-plugin-changelog";
 import type * as Preset from "@nullbot/docusaurus-preset-nonepress";
-import { themes } from "prism-react-renderer";
 
 // color mode config
 const colorMode: Preset.ThemeConfig["colorMode"] = {

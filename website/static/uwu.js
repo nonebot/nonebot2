@@ -1,2 +1,3 @@
-if (location.search.includes("?uwu"))
+if (location.search.includes("?uwu")) {
   document.documentElement.setAttribute("data-uwu", "true");
+}

@@ -11,7 +11,9 @@ function excludeThemeColor(
 ): { [key: string]: string } {
   const newObj: { [key: string]: string } = {};
   for (const key in theme) {
-    if (exclude.includes(key)) continue;
+    if (exclude.includes(key)) {
+      continue;
+    }
     newObj[key] = theme[key]!;
   }
   return newObj;

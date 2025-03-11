@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 
 import { type Filter, useFilteredResources, queryFilter } from "./filter";
+
 import type { Resource } from "./store";
 
 type useSearchControlReturn<T extends Resource> = {
@@ -42,7 +43,9 @@ export function useSearchControl<T extends Resource>(
 
       const newFilter = queryFilter<T>(newQuery);
       // do nothing if filter is not changed
-      if (currentFilter?.id === newFilter.id) return;
+      if (currentFilter?.id === newFilter.id) {
+        return;
+      }
 
       // remove old currentFilter
       currentFilter && removeFilter(currentFilter);
