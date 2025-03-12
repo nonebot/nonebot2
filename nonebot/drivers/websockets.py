@@ -48,8 +48,8 @@ logger.addHandler(LoguruHandler())
 
 
 def catch_closed(
-    func: Callable[P, CoroutineType[Any, Any, T]],
-) -> Callable[P, CoroutineType[Any, Any, T]]:
+    func: Callable[P, "CoroutineType[Any, Any, T]"],
+) -> Callable[P, "CoroutineType[Any, Any, T]"]:
     @wraps(func)
     async def decorator(*args: P.args, **kwargs: P.kwargs) -> T:
         try:
