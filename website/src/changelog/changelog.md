@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 添加第三方插件模版 [@fllesser](https://github.com/fllesser) ([#3361](https://github.com/nonebot/nonebot2/pull/3361))
 - Docs: 商店头像 skeleton [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3362](https://github.com/nonebot/nonebot2/pull/3362))
 - Docs: 添加 localstore `use_cwd` 配置项文档 [@yanyongyu](https://github.com/yanyongyu) ([#3345](https://github.com/nonebot/nonebot2/pull/3345))
 - Docs: 商店插件可用性筛选 \& 更新排序 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3334](https://github.com/nonebot/nonebot2/pull/3334))
