@@ -253,6 +253,8 @@ async def run_coro_with_shield(coro: Coroutine[Any, Any, T]) -> T:
     with anyio.CancelScope(shield=True):
         return await coro
 
+    raise RuntimeError("This should not happen")
+
 
 def flatten_exception_group(
     exc_group: BaseExceptionGroup[E],
