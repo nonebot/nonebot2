@@ -17,10 +17,11 @@ FrontMatter:
     description: nonebot.drivers.websockets 模块
 """
 
-from collections.abc import AsyncGenerator, Coroutine
+from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
 from functools import wraps
 import logging
+from types import CoroutineType
 from typing import TYPE_CHECKING, Any, Callable, TypeVar, Union
 from typing_extensions import ParamSpec, override
 
@@ -47,8 +48,8 @@ logger.addHandler(LoguruHandler())
 
 
 def catch_closed(
-    func: Callable[P, Coroutine[Any, Any, T]],
-) -> Callable[P, Coroutine[Any, Any, T]]:
+    func: Callable[P, "CoroutineType[Any, Any, T]"],
+) -> Callable[P, "CoroutineType[Any, Any, T]"]:
     @wraps(func)
     async def decorator(*args: P.args, **kwargs: P.kwargs) -> T:
         try:
