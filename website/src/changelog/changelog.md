@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Lint: 修复 async 函数返回值 [@yanyongyu](https://github.com/yanyongyu) ([#3364](https://github.com/nonebot/nonebot2/pull/3364))
 - Fix: 修复 pyright 类型推导问题 [@yanyongyu](https://github.com/yanyongyu) ([#3347](https://github.com/nonebot/nonebot2/pull/3347))
 - Fix: 修复 ruff lint 错误 [@yanyongyu](https://github.com/yanyongyu) ([#3346](https://github.com/nonebot/nonebot2/pull/3346))
 - Plugin: 删除插件 `pjsk` [@lgc2333](https://github.com/lgc2333) ([#3332](https://github.com/nonebot/nonebot2/pull/3332))
