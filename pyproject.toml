@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "nonebot2"
-version = "2.4.1"
+version = "2.4.2"
 description = "An asynchronous python bot framework."
 authors = ["yanyongyu <yyy@nonebot.dev>"]
 license = "MIT"
@@ -111,7 +111,6 @@ mark-parentheses = false
 
 [tool.ruff.lint.pyupgrade]
 keep-runtime-typing = true
-
 
 [tool.pyright]
 pythonVersion = "3.9"
