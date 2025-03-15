@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 📝 文档
+
+- Docs: 添加 Gewechat 适配器描述 [@Shine-Light](https://github.com/Shine-Light) ([#3372](https://github.com/nonebot/nonebot2/pull/3372))
+
 ### 🍻 插件发布
 
 - Plugin: maimai猜歌小游戏 [@noneflow](https://github.com/noneflow) ([#3318](https://github.com/nonebot/nonebot2/pull/3318))
