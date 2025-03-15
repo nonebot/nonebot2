@@ -8480,4 +8480,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_aiochatllm",
+    "project_link": "nonebot-plugin-aiochatllm",
+    "author_id": 176760093,
+    "tags": [
+      {
+        "label": "LLM",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
