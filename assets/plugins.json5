@@ -8512,4 +8512,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_paminet_nodirtymsg",
+    "project_link": "nonebot-plugin-paminet-nodirtymsg",
+    "author_id": 141894077,
+    "tags": [
+      {
+        "label": "群管",
+        "color": "#ff0000"
+      }
+    ],
+    "is_official": false
+  },
 ]
