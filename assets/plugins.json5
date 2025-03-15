@@ -8480,4 +8480,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_suggaradapter_cf",
+    "project_link": "nonebot-plugin-suggaradapter-cf",
+    "author_id": 67693593,
+    "tags": [
+      {
+        "label": "suggar",
+        "color": "#ea5252"
+      },
+      {
+        "label": "Chat",
+        "color": "#ea5252"
+      },
+      {
+        "label": "CloudFlare",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
