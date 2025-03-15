@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 🍻 插件发布
+
+- Plugin: 拟人回复bot [@noneflow](https://github.com/noneflow) ([#3353](https://github.com/nonebot/nonebot2/pull/3353))
+
 ## v2.4.2
 
 ### 🚀 新功能
