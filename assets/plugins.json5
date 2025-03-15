@@ -8492,4 +8492,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_guess_song",
+    "project_link": "nonebot-plugin-guess-song",
+    "author_id": 116427400,
+    "tags": [
+      {
+        "label": "maimai",
+        "color": "#17bcff"
+      },
+      {
+        "label": "音游",
+        "color": "#ff9122"
+      },
+      {
+        "label": "猜歌",
+        "color": "#ff2e5c"
+      }
+    ],
+    "is_official": false
+  },
 ]
