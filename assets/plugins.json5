@@ -8468,4 +8468,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_random_reply",
+    "project_link": "nonebot-plugin-random-reply",
+    "author_id": 16055526,
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
