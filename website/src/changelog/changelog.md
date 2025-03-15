@@ -13,6 +13,10 @@ toc_max_heading_level: 2
 - Plugin: nonebot-plugin-aiochatllm [@noneflow](https://github.com/noneflow) ([#3358](https://github.com/nonebot/nonebot2/pull/3358))
 - Plugin: 拟人回复bot [@noneflow](https://github.com/noneflow) ([#3353](https://github.com/nonebot/nonebot2/pull/3353))
 
+### 🍻 适配器发布
+
+- Adapter: Gewechat [@noneflow](https://github.com/noneflow) ([#3306](https://github.com/nonebot/nonebot2/pull/3306))
+
 ## v2.4.2
 
 ### 🚀 新功能
