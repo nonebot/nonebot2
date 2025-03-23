@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: SuggarChat CloudFlare协议扩展附属插件 [@noneflow](https://github.com/noneflow) ([#3371](https://github.com/nonebot/nonebot2/pull/3371))
 - Plugin: No Dirty Message [@noneflow](https://github.com/noneflow) ([#3360](https://github.com/nonebot/nonebot2/pull/3360))
 - Plugin: maimai猜歌小游戏 [@noneflow](https://github.com/noneflow) ([#3318](https://github.com/nonebot/nonebot2/pull/3318))
 - Plugin: nonebot-plugin-aiochatllm [@noneflow](https://github.com/noneflow) ([#3358](https://github.com/nonebot/nonebot2/pull/3358))
