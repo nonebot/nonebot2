@@ -8540,4 +8540,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_llm_plugins_call",
+    "project_link": "nonebot-plugin-llm-plugins-call",
+    "author_id": 16055526,
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      },
+      {
+        "label": "工具调用",
+        "color": "#586fd9"
+      }
+    ],
+    "is_official": false
+  },
 ]
