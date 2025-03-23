@@ -8524,4 +8524,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_suggarex_cf",
+    "project_link": "nonebot-plugin-suggarex-cf",
+    "author_id": 67693593,
+    "tags": [
+      {
+        "label": "Suggar",
+        "color": "#ea5252"
+      },
+      {
+        "label": "CloudFlare",
+        "color": "#ced23c"
+      }
+    ],
+    "is_official": false
+  },
 ]
