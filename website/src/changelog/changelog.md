@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 丁真语音生成器 [@noneflow](https://github.com/noneflow) ([#3316](https://github.com/nonebot/nonebot2/pull/3316))
 - Plugin: LLM调用nonebot插件 [@noneflow](https://github.com/noneflow) ([#3380](https://github.com/nonebot/nonebot2/pull/3380))
 - Plugin: SuggarChat CloudFlare协议扩展附属插件 [@noneflow](https://github.com/noneflow) ([#3371](https://github.com/nonebot/nonebot2/pull/3371))
 - Plugin: No Dirty Message [@noneflow](https://github.com/noneflow) ([#3360](https://github.com/nonebot/nonebot2/pull/3360))
