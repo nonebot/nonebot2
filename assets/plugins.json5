@@ -8576,4 +8576,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_gold_price",
+    "project_link": "nonebot-plugin-gold-price",
+    "author_id": 96228495,
+    "tags": [],
+    "is_official": false
+  },
 ]
