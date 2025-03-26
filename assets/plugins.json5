@@ -8583,4 +8583,11 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_whoasked",
+    "project_link": "nonebot-plugin-whoasked",
+    "author_id": 163709829,
+    "tags": [],
+    "is_official": false
+  },
 ]
