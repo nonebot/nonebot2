@@ -8590,4 +8590,24 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_moellmchats",
+    "project_link": "nonebot-plugin-moellmchats",
+    "author_id": 31814960,
+    "tags": [
+      {
+        "label": "DeepSeek",
+        "color": "#3586ff"
+      },
+      {
+        "label": "LLM",
+        "color": "#ea5252"
+      },
+      {
+        "label": "ChatGPT",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
+  },
 ]
