@@ -6,6 +6,7 @@ import { useVersionedSidebar } from "@nullbot/docusaurus-plugin-getsidebar/clien
 import { SidebarContentFiller } from "@nullbot/docusaurus-theme-nonepress/contexts";
 
 import BackToTopButton from "@theme/BackToTopButton";
+import Heading from "@theme/Heading";
 import Layout from "@theme/Layout";
 import Page from "@theme/Page";
 
@@ -28,7 +29,9 @@ function StorePage({ title, children }: Props): React.ReactNode {
     <Page hideTableOfContents reduceContentWidth={false} sidebarId={SIDEBAR_ID}>
       <SidebarContentFiller items={sidebarItems} />
       <article className="prose max-w-full">
-        <h1 className="store-title">{title}</h1>
+        <Heading as="h1" className="store-title">
+          {title}
+        </Heading>
         {children}
       </article>
     </Page>
