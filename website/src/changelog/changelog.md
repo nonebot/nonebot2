@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: MoEllm聊天 [@noneflow](https://github.com/noneflow) ([#3351](https://github.com/nonebot/nonebot2/pull/3351))
 - Plugin: whoasked [@noneflow](https://github.com/noneflow) ([#3367](https://github.com/nonebot/nonebot2/pull/3367))
 - Plugin: 金价查询 [@noneflow](https://github.com/noneflow) ([#3378](https://github.com/nonebot/nonebot2/pull/3378))
 - Plugin: 丁真语音生成器 [@noneflow](https://github.com/noneflow) ([#3316](https://github.com/nonebot/nonebot2/pull/3316))
