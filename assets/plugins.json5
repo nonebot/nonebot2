@@ -8610,4 +8610,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_mclib",
+    "project_link": "nonebot-plugin-mclib",
+    "author_id": 67693593,
+    "tags": [
+      {
+        "label": "MC",
+        "color": "#ea5252"
+      },
+      {
+        "label": "我的世界",
+        "color": "#ea5252"
+      },
+      {
+        "label": "MC服务器查询",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
