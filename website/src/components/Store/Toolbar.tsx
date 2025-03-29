@@ -74,7 +74,7 @@ function ToolbarFilter({
         tabIndex={0}
       >
         <FontAwesomeIcon icon={icon} />
-        {label}
+        <span className="hidden sm:block">{label}</span>
       </label>
       <div className="dropdown-content store-toolbar-dropdown">
         <input
