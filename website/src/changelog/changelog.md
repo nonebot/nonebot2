@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 修复移动端侧边栏折叠状态异常 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3414](https://github.com/nonebot/nonebot2/pull/3414))
 - Docs: 添加 Gewechat 适配器描述 [@Shine-Light](https://github.com/Shine-Light) ([#3372](https://github.com/nonebot/nonebot2/pull/3372))
 
 ### 🍻 插件发布
