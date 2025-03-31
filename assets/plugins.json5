@@ -8622,4 +8622,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_jmdownload",
+    "project_link": "nonebot-plugin-jmdownload",
+    "author_id": 89532126,
+    "tags": [
+      {
+        "label": "func",
+        "color": "#f3d667"
+      },
+      {
+        "label": "JMComic",
+        "color": "#f3d667"
+      }
+    ],
+    "is_official": false
+  },
 ]
