@@ -20,7 +20,7 @@ jobs:
     name: Ruff Lint
     runs-on: ubuntu-latest
     concurrency:
-      group: pyright-${{ github.ref }}
+      group: ruff-${{ github.ref }}
       cancel-in-progress: true
 
     steps:
