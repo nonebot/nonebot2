@@ -12,6 +12,10 @@ toc_max_heading_level: 2
 - Docs: 修复移动端侧边栏折叠状态异常 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3414](https://github.com/nonebot/nonebot2/pull/3414))
 - Docs: 添加 Gewechat 适配器描述 [@Shine-Light](https://github.com/Shine-Light) ([#3372](https://github.com/nonebot/nonebot2/pull/3372))
 
+### 💫 杂项
+
+- CI: 修复 Ruff 并发组名称 [@KomoriDev](https://github.com/KomoriDev) ([#3434](https://github.com/nonebot/nonebot2/pull/3434))
+
 ### 🍻 插件发布
 
 - Plugin: JMComic插件 [@noneflow](https://github.com/noneflow) ([#3398](https://github.com/nonebot/nonebot2/pull/3398))
