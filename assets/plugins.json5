@@ -8622,4 +8622,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_github_release_notifier",
+    "project_link": "nonebot-plugin-github-release-notifier",
+    "author_id": 80151962,
+    "tags": [
+      {
+        "label": " Github",
+        "color": "#ea5252"
+      },
+      {
+        "label": "Github",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
