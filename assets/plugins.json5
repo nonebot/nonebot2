@@ -8622,4 +8622,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_argot",
+    "project_link": "nonebot-plugin-argot",
+    "author_id": 110453675,
+    "tags": [
+      {
+        "label": "👁️",
+        "color": "#e74f88"
+      },
+      {
+        "label": "🤫",
+        "color": "#ffd8b8"
+      }
+    ],
+    "is_official": false
+  },
 ]
