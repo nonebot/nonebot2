@@ -175,8 +175,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
                 continue
 
             # delete from file vars when used
-            if env_name in env_file_vars:
-                del env_file_vars[env_name]
+            env_file_vars.pop(env_name, None)
 
             _, *keys, last_key = env_name.split(self.env_nested_delimiter)
             env_var = result

@@ -51,10 +51,10 @@ class MessageSegment(abc.ABC, Generic[TM]):
     ) -> bool:
         return not self == other
 
-    def __add__(self: TMS, other: Union[str, TMS, Iterable[TMS]]) -> TM:
+    def __add__(self, other: Union[str, Self, Iterable[Self]]) -> TM:
         return self.get_message_class()(self) + other
 
-    def __radd__(self: TMS, other: Union[str, TMS, Iterable[TMS]]) -> TM:
+    def __radd__(self, other: Union[str, Self, Iterable[Self]]) -> TM:
         return self.get_message_class()(other) + self
 
     @classmethod
@@ -87,7 +87,7 @@ class MessageSegment(abc.ABC, Generic[TM]):
     def items(self):
         return asdict(self).items()
 
-    def join(self: TMS, iterable: Iterable[Union[TMS, TM]]) -> TM:
+    def join(self, iterable: Iterable[Union[Self, TM]]) -> TM:
         return self.get_message_class()(self).join(iterable)
 
     def copy(self) -> Self:
