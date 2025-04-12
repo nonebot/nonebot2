@@ -8634,4 +8634,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_zssm",
+    "project_link": "nonebot-plugin-zssm",
+    "author_id": 59153990,
+    "tags": [
+      {
+        "label": "func",
+        "color": "#961d1d"
+      },
+      {
+        "label": "ai",
+        "color": "#5bd46c"
+      },
+      {
+        "label": "deepseek",
+        "color": "#4b57ed"
+      }
+    ],
+    "is_official": false
+  },
 ]
