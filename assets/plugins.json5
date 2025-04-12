@@ -8622,4 +8622,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_aiqqbot",
+    "project_link": "nonebot-plugin-aiqqbot",
+    "author_id": 91716649,
+    "tags": [
+      {
+        "label": "OpenAI",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
