@@ -8674,4 +8674,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_oi_helper",
+    "project_link": "nonebot-plugin-oi-helper",
+    "author_id": 78906287,
+    "tags": [
+      {
+        "label": "ACM",
+        "color": "#ea5252"
+      },
+      {
+        "label": "OI",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
