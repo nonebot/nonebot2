@@ -8622,4 +8622,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_jm",
+    "project_link": "nonebot-plugin-jm",
+    "author_id": 85243954,
+    "tags": [
+      {
+        "label": "禁漫",
+        "color": "#f3d667"
+      }
+    ],
+    "is_official": false
+  },
 ]
