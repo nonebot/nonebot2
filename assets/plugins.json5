@@ -8654,4 +8654,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_gemini_vision",
+    "project_link": "nonebot-plugin-gemini-vision",
+    "author_id": 98764734,
+    "tags": [
+      {
+        "label": "Gemini",
+        "color": "#ea5252"
+      },
+      {
+        "label": "vision",
+        "color": "#ea5252"
+      },
+      {
+        "label": "ai",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
