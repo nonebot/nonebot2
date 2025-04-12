@@ -1,0 +1,41 @@
+---
+sidebar_position: 6
+description: 内置组件
+---
+import Messenger from "@site/src/components/Messenger";
+
+# 内置组件
+
+`nonebot_plugin_alconna` 插件提供了一系列内置组件以提升开发者和用户体验。
+
+## 内置插件
+
+类似于 Nonebot 本身提供的内置插件，`nonebot_plugin_alconna` 提供了多个内置插件。
+
+### 加载
+
+你可以用本插件的 `load_builtin_plugin(s)` 来加载它们：
+
+```python
+from nonebot_plugin_alconna import load_builtin_plugin, load_builtin_plugins
+
+load_builtin_plugins("echo")
+load_builtin_plugins("help", "with")
+```
+
+### 使用
+
+`help` 插件能列出所有 Alconna 指令。
+
+<Messenger
+  msgs={[
+    { position: "right", msg: "/帮助" },
+    {
+      position: "left",
+      msg: "# 当前可用的命令有:\n 0 /echo : echo 指令\n 1 /help : 显示所有命令帮助\n# 输入'命令名 -h|--help' 查看特定命令的语法",
+    },
+    { position: "right", msg: "/echo [图片]" },
+    { position: "left", msg: "[图片]" },
+  ]}
+/>
+

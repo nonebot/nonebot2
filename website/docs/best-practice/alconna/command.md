@@ -7,7 +7,7 @@ description: Alconna 基本介绍
 
 [`Alconna`](https://github.com/ArcletProject/Alconna) 隶属于 `ArcletProject`，是一个简单、灵活、高效的命令参数解析器, 并且不局限于解析命令式字符串。
 
-我们通过一个例子来讲解 **Alconna** 的核心 —— `Args`, `Subcommand`, `Option`：
+我们先通过一个例子来讲解 **Alconna** 的核心 —— `Args`, `Subcommand`, `Option`：
 
 ```python
 from arclet.alconna import Alconna, Args, Subcommand, Option
@@ -38,20 +38,22 @@ print(res.all_matched_args)
 
 命令头是指命令的前缀 (Prefix) 与命令名 (Command) 的组合，例如 !help 中的 ! 与 help。
 
-|             前缀             |   命令名   |                          匹配内容                           |       说明       |
-| :--------------------------: | :--------: | :---------------------------------------------------------: | :--------------: |
-|              -               |   "foo"    |                           `"foo"`                           | 无前缀的纯文字头 |
-|              -               |    123     |                            `123`                            |  无前缀的元素头  |
-|              -               | "re:\d{2}" |                           `"32"`                            |  无前缀的正则头  |
-|              -               |    int     |                      `123` 或 `"456"`                       |  无前缀的类型头  |
-|         [int, bool]          |     -      |                       `True` 或 `123`                       |  无名的元素类头  |
-|        ["foo", "bar"]        |     -      |                     `"foo"` 或 `"bar"`                      |  无名的纯文字头  |
-|        ["foo", "bar"]        |   "baz"    |                  `"foobaz"` 或 `"barbaz"`                   |     纯文字头     |
-|         [int, bool]          |   "foo"    |             `[123, "foo"]` 或 `[False, "foo"]`              |      类型头      |
-|         [123, 4567]          |   "foo"    |              `[123, "foo"]` 或 `[4567, "foo"]`              |      元素头      |
-|      [nepattern.NUMBER]      |   "bar"    |            `[123, "bar"]` 或 `[123.456, "bar"]`             |     表达式头     |
-|         [123, "foo"]         |   "bar"    |      `[123, "bar"]` 或 `"foobar"` 或 `["foo", "bar"]`       |      混合头      |
-| [(int, "foo"), (456, "bar")] |   "baz"    | `[123, "foobaz"]` 或 `[456, "foobaz"]` 或 `[456, "barbaz"]` |       对头       |
+命令构造时, `Alconna([prefix], command)` 与 `Alconna(command, [prefix])` 是等价的。
+
+|              前缀              |    命令名     |                           匹配内容                            |    说明    |
+|:----------------------------:|:----------:|:---------------------------------------------------------:|:--------:|
+|             不传入              |   "foo"    |                          `"foo"`                          | 无前缀的纯文字头 |
+|             不传入              |    123     |                           `123`                           | 无前缀的元素头  |
+|             不传入              | "re:\d{2}" |                          `"32"`                           | 无前缀的正则头  |
+|             不传入              |    int     |                      `123` 或 `"456"`                      | 无前缀的类型头  |
+|         [int, bool]          |    不传入     |                      `True` 或 `123`                       | 无名的元素类头  |
+|        ["foo", "bar"]        |    不传入     |                     `"foo"` 或 `"bar"`                     | 无名的纯文字头  |
+|        ["foo", "bar"]        |   "baz"    |                  `"foobaz"` 或 `"barbaz"`                  |   纯文字头   |
+|         [int, bool]          |   "foo"    |             `[123, "foo"]` 或 `[False, "foo"]`             |   类型头    |
+|         [123, 4567]          |   "foo"    |             `[123, "foo"]` 或 `[4567, "foo"]`              |   元素头    |
+|      [nepattern.NUMBER]      |   "bar"    |            `[123, "bar"]` 或 `[123.456, "bar"]`            |   表达式头   |
+|         [123, "foo"]         |   "bar"    |      `[123, "bar"]` 或 `"foobar"` 或 `["foo", "bar"]`       |   混合头    |
+| [(int, "foo"), (456, "bar")] |   "baz"    | `[123, "foobaz"]` 或 `[456, "foobaz"]` 或 `[456, "barbaz"]` |    对头    |
 
 对于无前缀的类型头，此时会将传入的值尝试转为 BasePattern，例如 `int` 会转为 `nepattern.INTEGER`。如此该命令头会匹配对应的类型， 例如 `int` 会匹配 `123` 或 `"456"`，但不会匹配 `"foo"`。解析后，Alconna 会将命令头匹配到的值转为对应的类型，例如 `int` 会将 `"123"` 转为 `123`。
 
@@ -64,9 +66,6 @@ print(res.all_matched_args)
 除了通过传入 `re:xxx` 来使用正则表达式外，Alconna 还提供了一种更加简洁的方式来使用正则表达式，称为 Bracket Header：
 
 ```python
-from alconna import Alconna
-
-
 alc = Alconna(".rd{roll:int}")
 assert alc.parse(".rd123").header["roll"] == 123
 ```

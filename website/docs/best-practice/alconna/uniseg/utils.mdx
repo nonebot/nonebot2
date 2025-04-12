@@ -1,0 +1,104 @@
+---
+sidebar_position: 4
+description: 辅助模型
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+# 辅助模型
+
+`uniseg` 模块同时提供了获取消息事件 id 与消息发送对象的方法:
+
+<Tabs groupId="get_unimsg">
+<TabItem value="depend" label="使用依赖注入">
+
+通过提供的 `MessageTarget`, `MessageId` 或 `MsgTarget`, `MsgId` 依赖注入器来获取消息事件 id 与消息发送对象。
+
+```python
+from nonebot_plugin_alconna.uniseg import MessageId, MsgTarget
+
+
+matcher = on_xxx(...)
+
+@matcher.handle()
+asycn def _(target: MsgTarget, msg_id: MessageId):
+    ...
+```
+
+</TabItem>
+<TabItem value="method" label="使用 UniMessage 的方法">
+
+```python
+from nonebot import Event, Bot
+from nonebot_plugin_alconna.uniseg import UniMessage, Target
+
+
+matcher = on_xxx(...)
+
+@matcher.handle()
+asycn def _(bot: Bot, event: Event):
+    target: Target = UniMessage.get_target(event, bot)
+    msg_id: str = UniMessage.get_message_id(event, bot)
+
+```
+
+</TabItem>
+</Tabs>
+
+`send`, `get_target`, `get_message_id` 中与 `event`, `bot` 相关的参数都会尝试从上下文中获取对象。
+
+## 消息发送对象
+
+消息发送对象是用来描述响应消息时的发送对象或者主动发送消息时的目标对象的对象，它包含了以下属性：
+
+```python
+class Target:
+    id: str
+    """目标id；若为群聊则为group_id或者channel_id，若为私聊则为user_id"""
+    parent_id: str
+    """父级id；若为频道则为guild_id，其他情况下可能为空字符串（例如 Feishu 下可作为部门 id）"""
+    channel: bool
+    """是否为频道，仅当目标平台符合频道概念时"""
+    private: bool
+    """是否为私聊"""
+    source: str
+    """可能的事件id"""
+    self_id: Union[str, None]
+    """机器人id，若为 None 则 Bot 对象会随机选择"""
+    selector: Union[Callable[[Bot], Awaitable[bool]], None]
+    """选择器，用于在多个 Bot 对象中选择特定 Bot"""
+    extra: Dict[str, Any]
+    """额外信息，用于适配器扩展"""
+```
+
+其构造时需要如下参数：
+
+- `id` 为目标id；若为群聊则为 group_id 或者 channel_id，若为私聊则为user_id
+- `parent_id` 为父级id；若为频道则为 guild_id，其他情况下可能为空字符串（例如 Feishu 下可作为部门 id）
+- `channel` 为是否为频道，仅当目标平台符合频道概念时
+- `private` 为是否为私聊
+- `source` 为可能的事件id
+- `self_id` 为机器人id，若为 None 则 Bot 对象会随机选择
+- `selector` 为选择器，用于在多个 Bot 对象中选择特定 Bot
+- `scope` 为适配器范围，用于传入内置的特定选择器
+- `adapter` 为适配器名称，若为 None 则需要明确指定 Bot 对象
+- `platform` 为平台名称，仅当目标适配器存在多个平台时使用
+- `extra` 为额外信息，用于适配器扩展
+
+通过 `Target` 对象，我们可以在 `UniMessage.send` 中指定发送对象：
+
+```python
+from nonebot_plugin_alconna.uniseg import UniMessage, MsgTarget, Target, SupportScope
+
+
+matcher = on_xxx(...)
+
+@matcher.handle()
+async def _(target: MsgTarget):
+    await UniMessage("Hello!").send(target=target)
+    target1 = Target("xxxx", scope=SupportScope.qq_client)
+    await UniMessage("Hello!").send(target=target1)
+```
+
+
