@@ -15,18 +15,18 @@ import TabItem from "@theme/TabItem";
 <Tabs groupId="get_unimsg">
 <TabItem value="depend" label="使用依赖注入">
 
-通过提供的 `UniversalMessage` 或 `UniMsg` 依赖注入器来获取 `UniMessage`。
+通过提供的 `UniversalMessage` 或基于 [`Annotated` 支持](https://github.com/nonebot/nonebot2/pull/1832)的 `UniMsg` 依赖注入器来获取 `UniMessage`。
 
 ```python
-from nonebot_plugin_alconna.uniseg import UniMsg, At, Reply
+from nonebot_plugin_alconna.uniseg import UniMsg, At, Text
 
 
 matcher = on_xxx(...)
 
 @matcher.handle()
 async def _(msg: UniMsg):
-    reply = msg[Reply, 0]
-    print(reply.origin)
+    text = msg[Text, 0]
+    print(text.text)
     if msg.has(At):
         ats = msg.get(At)
         print(ats)
@@ -72,7 +72,7 @@ async def handle_test():
     await test.send(await UniMessage(Image(path="path/to/img")).export())
 ```
 
-除此之外 `UniMessage.send` 方法基于 `UniMessage.export` 并调用各适配器下的发送消息方法，返回一个 `Receipt` 对象，用于修改/撤回消息：
+除此之外 `UniMessage.send`, `.finish` 方法基于 `UniMessage.export` 并调用各适配器下的发送消息方法，返回一个 `Receipt` 对象，用于修改/撤回/表态消息：
 
 ```python
 from nonebot import Bot, on_command
@@ -85,6 +85,21 @@ test = on_command("test")
 async def handle():
     receipt = await UniMessage.text("hello!").send(at_sender=True, reply_to=True)
     await receipt.recall(delay=1)
+```
+
+`UniMessage.send` 的定义如下：
+
+```python
+async def send(
+    self,
+    target: Event | Target | None = None,
+    bot: Bot | None = None,
+    fallback: bool | FallbackStrategy = FallbackStrategy.rollback,
+    at_sender: str | bool = False,
+    reply_to: str | bool | Reply | None = False,
+    **kwargs: Any,
+) -> Receipt:
+    ...
 ```
 
 而在 `AlconnaMatcher` 下，`got`, `send`, `reject` 等可以发送消息的方法皆支持使用 `UniMessage`，不需要手动调用 export 方法：
@@ -130,6 +145,30 @@ async def on_startup():
 
 :::
 
+### Receipt 对象
+
+`send` 方法返回的 `Receipt` 对象可以用于修改/撤回/表态消息：
+
+```python
+async def handle():
+    receipt = await UniMessage.text("hello!").send(at_sender=True, reply_to=True)
+    await receipt.recall(delay=1)
+    recept1 = await UniMessage.text("hello!").send(at_sender=True, reply_to=True)
+    await recept1.edit("world!")
+```
+
+`Receipt` 对象拥有以下方法：
+- `recallable`: 表明是否可以撤回
+- `recall`: 撤回消息
+- `editable`: 表明是否可以修改
+- `edit`: 修改消息
+- `reactionable`: 表明是否可以表态
+- `reaction`: 表态消息
+- `get_reply`: 生成对已经发送的消息的回复元素
+- `send`, `finish`: 发送消息
+- `reply`: 回复已经发送的消息
+
+
 ## 构造
 
 如同 `Message`, `UniMessage` 可以传入单个字符串/消息段，或可迭代的字符串/消息段：
@@ -153,43 +192,6 @@ msg = UniMessage.text("Hello").at("124").image(path="/path/to/img")
 assert msg == UniMessage(
     ["Hello", At("user", "124"), Image(path="/path/to/img")]
 )
-```
-
-### 拼接消息
-
-`str`、`UniMessage`、`Segment` 对象之间可以直接相加，相加均会返回一个新的 `UniMessage` 对象：
-
-```python
-# 消息序列与消息段相加
-UniMessage("text") + Text("text")
-# 消息序列与字符串相加
-UniMessage([Text("text")]) + "text"
-# 消息序列与消息序列相加
-UniMessage("text") + UniMessage([Text("text")])
-# 字符串与消息序列相加
-"text" + UniMessage([Text("text")])
-# 消息段与消息段相加
-Text("text") + Text("text")
-# 消息段与字符串相加
-Text("text") + "text"
-# 消息段与消息序列相加
-Text("text") + UniMessage([Text("text")])
-# 字符串与消息段相加
-"text" + Text("text")
-```
-
-如果需要在当前消息序列后直接拼接新的消息段，可以使用 `Message.append`、`Message.extend` 方法，或者使用自加：
-
-```python
-msg = UniMessage([Text("text")])
-# 自加
-msg += "text"
-msg += Text("text")
-msg += UniMessage([Text("text")])
-# 附加
-msg.append(Text("text"))
-# 扩展
-msg.extend([Text("text")])
 ```
 
 ### 使用消息模板
@@ -238,6 +240,52 @@ async def tt():
 
 另外也有 `$message_id` 与 `$target` 两个特殊值。
 
+:::tip
+
+注意到上述代码中的 `{target}` 了吗？
+
+在 `AlconnaMatcher` 中，`UniMessage.template` 的格式化方法会自动将 `Arparma.all_matched_args`、 `state` 中的变量传入到 `format` 方法中，因此你可以直接使用上述变量。
+
+:::
+
+
+### 拼接消息
+
+`str`、`UniMessage`、`Segment` 对象之间可以直接相加，相加均会返回一个新的 `UniMessage` 对象：
+
+```python
+# 消息序列与消息段相加
+UniMessage("text") + Text("text")
+# 消息序列与字符串相加
+UniMessage([Text("text")]) + "text"
+# 消息序列与消息序列相加
+UniMessage("text") + UniMessage([Text("text")])
+# 字符串与消息序列相加
+"text" + UniMessage([Text("text")])
+# 消息段与消息段相加
+Text("text") + Text("text")
+# 消息段与字符串相加
+Text("text") + "text"
+# 消息段与消息序列相加
+Text("text") + UniMessage([Text("text")])
+# 字符串与消息段相加
+"text" + Text("text")
+```
+
+如果需要在当前消息序列后直接拼接新的消息段，可以使用 `Message.append`、`Message.extend` 方法，或者使用自加：
+
+```python
+msg = UniMessage([Text("text")])
+# 自加
+msg += "text"
+msg += Text("text")
+msg += UniMessage([Text("text")])
+# 附加
+msg.append(Text("text"))
+# 扩展
+msg.extend([Text("text")])
+```
+
 ### 检查消息段
 
 我们可以通过 `in` 运算符或消息序列的 `has` 方法来：
@@ -263,9 +311,6 @@ message.only(Text)
 类似于 `Message.extract_plain_text()`，用于获取通用消息的纯文本：
 
 ```python
-from nonebot_plugin_alconna.uniseg import UniMessage, At
-
-
 # 提取消息纯文本字符串
 assert UniMessage(
     [At("user", "1234"), "text"]
@@ -286,9 +331,6 @@ for segment in message:  # type: Segment
 消息序列对列表的索引与切片进行了增强，在原有列表 `int` 索引与 `slice` 切片的基础上，支持 `type` 过滤索引与切片：
 
 ```python
-from nonebot_plugin_alconna.uniseg import UniMessage, At, Text, Reply
-
-
 message = UniMessage(
     [
         Reply(...),
@@ -316,6 +358,12 @@ message.include(Text, At)
 message.exclude(Reply)
 ```
 
+或者使用 `filter` 方法：
+
+```python
+message.filter(lambda x: isinstance(x, At) and x.flag == "user")  # 仅保留 At("user", xxx) 的消息段
+```
+
 同样的，消息序列对列表的 `index`、`count` 方法也进行了增强，可以用于索引指定类型的消息段：
 
 ```python
@@ -332,17 +380,80 @@ message.count(Text) == 2
 message.get(Text, 1) == UniMessage([Text("test1")])
 ```
 
-## 消息发送
+### 嵌套提取
 
-前面提到，通用消息可用 `UniMessage.send` 发送自身：
+消息序列的 `select` 方法可以递归地从消息中选择指定类型的消息段：
 
 ```python
-async def send(
-    self,
-    target: Union[Event, Target, None] = None,
-    bot: Optional[Bot] = None,
-    fallback: bool = True,
-    at_sender: Union[str, bool] = False,
-    reply_to: Union[str, bool] = False,
-) -> Receipt:
+message = UniMessage(
+    [
+        Text("text1"),
+        Image(url="url1")(
+            Text("text2"),
+        )
+    ]
+)
+assert message.select(Text) == UniMessage(
+    [
+        Text("text1"),
+        Text("text2")
+    ]
+)
 ```
+
+### 转换
+
+消息序列的 `map` 方法可以简单地将消息段转换为指定类型的数据：
+
+```python
+# 转换消息段为另一类型的消息段，此时返回结果仍是 UniMessage
+message.map(lambda x: Text(x.target))  # 转换为 Text 消息段
+# 转换消息段为另一类型的数据，此时返回结果为 list[T]
+message.map(lambda x: x.target)  # 转换为 list[str]
+```
+
+在此之上，消息序列还提供了 `transform` 和 `transform_async` 方法，允许你传入转换规则，将消息段转换为另一类型的消息段，并返回一个新的消息序列：
+
+```python
+rule = {
+    "text": True,
+    "at": lambda attrs, children: Text(attrs["target"])
+}
+message.transform(rule)
+```
+
+转换规则的类型一般为 `dict[str, Transformer]`，以消息元素类型的名称为键，定义方式如下：
+
+```typescript
+type Fragment = Segment | Segment[]
+type Render<T> = (attrs: dict, children: Segment[]) => T
+type Transformer = boolean | Fragment | Render<boolean | Fragment>
+```
+
+
+### 字符串操作
+
+类似于 `str`，消息序列可以通过如下方法来操作消息内的文本部分：
+- `split`,
+- `replace`,
+- `startwith`, `endswith`,
+- `removeprefix`, `removesuffix`,
+- `strip`, `lstrip`, `rstrip`,
+
+```python
+msg = UniMessage.text("foo bar").at("1234").text("baz qux")
+# 分割，返回分割结果，类型为 list[UniMessage]
+parts = msg.split(" ")
+# 替换，返回替换结果，类型为 UniMessage。新文本可以用 str 或 Text 来替换
+new_msg = msg.replace("ba", "baaa")
+# 前缀/后缀检查
+msg.startswith("foo")  # True
+msg.endswith("qux")  # True
+# 去除前缀/后缀
+msg1 = msg.removeprefix("foo")  # UniMessage([Text(" bar"), At("user", "1234"), Text("baz qux")])
+msg2 = msg.removesuffix("qux")  # UniMessage([Text("foo bar"), At("user", "1234"), Text("baz ")])
+# 去除空格
+msg1 = msg1.lstrip()  # UniMessage([Text("bar"), At("user", "1234"), Text("baz qux")])
+msg2 = msg2.rstrip()  # UniMessage([Text("foo bar"), At("user", "1234"), Text("baz")])
+```
+

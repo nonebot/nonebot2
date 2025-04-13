@@ -270,7 +270,7 @@ opt2 = Option("--foo", default=OptionResult(value=False, args={"bar": 1}))
 - `append`，`append_value`
 - `count`
 
-## 解析结果(Arparma)
+## 解析结果
 
 `Alconna.parse` 会返回由 **Arparma** 承载的解析结果
 
