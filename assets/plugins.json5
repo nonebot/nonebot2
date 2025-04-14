@@ -8718,4 +8718,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_testhkk",
+    "project_link": "nonebot-plugin-testhkk",
+    "author_id": 157194530,
+    "tags": [],
+    "is_official": false
+  },
 ]
