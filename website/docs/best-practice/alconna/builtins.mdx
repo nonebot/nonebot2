@@ -25,6 +25,19 @@ load_builtin_plugins("help", "with")
 
 ### 使用
 
+#### echo
+
+`echo` 插件能将用户发送的消息原样返回。
+
+<Messenger
+  msgs={[
+    { position: "right", msg: "/echo hello world!" },
+    { position: "left", msg: "hello world!" },
+  ]}
+/>
+
+#### help
+
 `help` 插件能列出所有 Alconna 指令。
 
 <Messenger
@@ -41,9 +54,10 @@ load_builtin_plugins("help", "with")
 
 ## 内置匹配拓展
 
-目前插件提供了 4 个内置的 `Extension`，它们在 `nonebot_plugin_alconna.builtins.extensions` 下：
+目前插件提供了 5 个内置的 `Extension`，它们在 `nonebot_plugin_alconna.builtins.extensions` 下：
 
 - `ReplyRecordExtension`: 将消息事件中的回复暂存在 extension 中，使得解析用的消息不带回复信息，同时可以在后续的处理中获取回复信息。
+- `ReplyMergeExtension`: 将消息事件中的回复指向的原消息合并到当前消息中作为一部分参数。
 - `DiscordSlashExtension`: 将 Alconna 的命令自动转换为 Discord 的 Slash Command，并将 Slash Command 的交互事件转换为消息交给 Alconna 处理。
 - `MarkdownOutputExtension`: 将 Alconna 的自动输出转换为 Markdown 格式
 - `TelegramSlashExtension`: 将 Alconna 的命令注册在 Telegram 上以获得提示。
@@ -73,3 +87,11 @@ async def add(plugin: Match[str], priority: Match[int]):
 async def remove(plugin: Match[str], time: Match[int]):
     await matcher.finish(f"removed {plugin.result} with {time.result if time.available else -1}")
 ```
+
+## 内置自定义消息段
+
+目前插件提供了 3 个内置的 `Segment`，它们在 `nonebot_plugin_alconna.builtins.segments` 下：
+
+- `Markdown`: 可以传入 **markdown模板** 的元素
+- `MarketFace`: 特指 QQ 的商城表情
+- `MusicShare`: 特指 QQ 的音乐分享卡片

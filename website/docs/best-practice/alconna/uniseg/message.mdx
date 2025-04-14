@@ -286,6 +286,8 @@ msg.append(Text("text"))
 msg.extend([Text("text")])
 ```
 
+## 操作
+
 ### 检查消息段
 
 我们可以通过 `in` 运算符或消息序列的 `has` 方法来：
@@ -457,3 +459,38 @@ msg1 = msg1.lstrip()  # UniMessage([Text("bar"), At("user", "1234"), Text("baz q
 msg2 = msg2.rstrip()  # UniMessage([Text("foo bar"), At("user", "1234"), Text("baz")])
 ```
 
+## 持久化
+
+特别的，`UniMessage` 还支持消息持久化，具体来说为 `dump` 与 `load` 方法：
+
+```python
+msg = UniMessage.text("Hello").image(url="url")
+data = msg.dump()  # [{"type": "text", "text": "Hello"}, {"type": "image", "url": "url"}]
+
+assert UniMessage.load(data) == msg
+```
+
+### dump
+
+`dump` 方法的定义如下：
+
+```python
+def dump(self, media_save_dir: str | Path | bool | None = None, json: bool = False) -> str | list[dict[str, Any]]: ...
+```
+
+其中，`media_save_dir` 用于指定持久化的媒体文件存储目录:
+- 若 `media_save_dir` 为 str 或 Path，则会将媒体文件保存到指定目录下。
+- 若 `media_save_dir` 为 False，则不会保存媒体文件。
+- 若 `media_save_dir` 为 True，则会将文件数据转为 base64 编码。
+- 若不指定 `media_save_dir`，则会尝试导入 [`nonebot_plugin_localstore`](../../data-storing.md) 并使用其提供的路径。否则 (即 `localstore` 未安装)，将会尝试使用当前工作目录。
+
+### load
+
+`load` 方法的定义如下：
+
+```python
+@classmethod
+def load(cls, data: str | list[dict[str, Any]]) -> UniMessage: ...
+```
+
+其中 `data` 应符合 JSON 格式。

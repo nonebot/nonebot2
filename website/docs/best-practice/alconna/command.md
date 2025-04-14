@@ -205,6 +205,18 @@ args = Args["foo", BasePattern("@\d+")]
 
 :::
 
+#### AllParam
+
+`AllParam` 是一个特殊的标注，用于告知解析器该参数接收命令中在此位置之后的所有参数并**结束解析**，可以认为是**泛匹配参数**。
+
+`AllParam` 可直接使用 (`Args["xxx", AllParam]`), 也可以传入指定的接收类型 (`Args["xxx", AllParam(str)]`)。
+
+:::tip
+
+在 `nonebot_plugin_alconna` 下，`AllParam` 的返回值为 [`UniMessage`](./uniseg/message.mdx)
+
+:::
+
 ### default
 
 `default` 传入的是该参数的默认值或者 `Field`，以携带对于该参数的更多信息。

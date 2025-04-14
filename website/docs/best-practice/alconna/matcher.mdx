@@ -237,7 +237,7 @@ def assign(
     ...
 ```
 
-- `path`: 指定的[`查询路径`](./command.md#路径查询)
+- `path`: 指定的[查询路径](./command.md#路径查询)
   - "$main" 表示没有任何选项/子命令匹配的时候
   - "\~XX" 时会把 "\~" 替换为父级路径
 - `value`: 可能的指定查询值
@@ -274,7 +274,7 @@ async def handle_list(): ...
 
 `dispatch` 的参数与 `assign` 相同。
 
-当使用 `dispatch` 时，`父级路径` 表示为传入 `dispatch` 的 `path`:
+当使用 `dispatch` 时，父级路径表示为传入 `dispatch` 的 `path`:
 
 ```python
 rg_add_cmd = rg.dispatch("add")
@@ -401,7 +401,7 @@ demo:
 
 <Messenger
   msgs={[
-    { position: "right", msg: "/角色组 添加 foo" },
+    { position: "right", msg: "/role-group add foo" },
     { position: "left", msg: "Add foo successfully!" },
   ]}
 />

@@ -73,6 +73,21 @@ book = (
 )
 ```
 
+### 参数类型
+
+`Command` 的参数类型也如 `koishi` 一样，**必选参数** 用尖括号包裹，**可选参数** 用方括号包裹:
+- `foo` 表示参数 `foo`, 类型为 Any
+- `foo:int` 表示参数 `foo`, 类型为 int
+- `foo:int=1` 表示参数 `foo`, 类型为 int, 默认值为 1
+- `...foo` 表示[泛匹配参数](command.md#allparam)
+- `foo:str+`, `foo:str*` 表示[变长参数](command.md#multivar-与-keywordvar) `foo`, 类型为 str
+- `foo:+str`, `foo:text` 表示参数 `foo`, 类型为 str, 并且将包含空格 (即将变长参数的结果用空格合并)
+
+特别的，针对类型部分，本插件拓展了如下内容:
+- `foo:At`, `foo:Image`, ... 表示类型为[通用消息段](./uniseg/segment.md)
+- `foo:select(Image).first` 表示获取子元素类型
+- `foo:Dot(Image, 'url')` 表示类型为 `Image`，并且只获取 `url` 属性
+
 ### 从文件加载
 
 `Command` 支持读取 `json` 或 `yaml` 文件来加载命令：
