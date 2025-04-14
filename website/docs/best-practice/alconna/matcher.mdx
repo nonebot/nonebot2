@@ -4,6 +4,8 @@ description: 响应规则的使用
 ---
 
 import Messenger from "@site/src/components/Messenger";
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 # `on_alconna` 响应器
 
@@ -160,6 +162,7 @@ async def handle(
   - 当 `key` 存在于命令的上下文中时，会注入对应的值
   - 当 `key` 存在于 `Arparma` 的 `all_matched_args` 中时，会注入对应的值, 类似于 `Match` 的用法，但当该值不存在时将跳过响应器。
   - 当 `key` 属于 `got_path` 的参数时，会注入对应的值
+  - 当 `key` 被某个 `Extension.before_catch` 确认为需要注入的参数时，会调用 `Extension.catch` 来注入对应的值
 
 :::note
 
@@ -234,12 +237,29 @@ def assign(
     ...
 ```
 
-- `path`: 指定的查询路径
+- `path`: 指定的[`查询路径`](./command.md#路径查询)
   - "$main" 表示没有任何选项/子命令匹配的时候
-  - "~XX" 时会把 "~" 替换为父级路径
+  - "\~XX" 时会把 "\~" 替换为父级路径
 - `value`: 可能的指定查询值
 - `or_not`: 是否同时处理没有查询成功的情况
 - `additional`: 额外的条件检查函数
+
+例如：
+
+```python
+# 处理没有任何选项/子命令匹配的情况
+@rg.assign("$main")
+async def handle_main(): ...
+
+# 处理 list 选项
+@rg.assign("list")
+async def handle_list(): ...
+
+# 处理 add 选项，且 name 为 admin
+@rg.assign("add.name", "admin")
+async def handle_add_admin(): ...
+```
+
 
 ### `dispatch` 方法
 
@@ -249,13 +269,38 @@ def assign(
 rg_list_cmd = rg.dispatch("list")
 
 @rg_list_cmd.handle()
-async def list_(result: CommandResult):
-    ...
+async def handle_list(): ...
 ```
+
+`dispatch` 的参数与 `assign` 相同。
+
+当使用 `dispatch` 时，`父级路径` 表示为传入 `dispatch` 的 `path`:
+
+```python
+rg_add_cmd = rg.dispatch("add")
+
+# 此时 ~name 表示 add.name
+@rg_add_cmd.assign("~name", "admin")
+async def handle_add_admin(): ...
+```
+
+:::tip
+
+在 `dispatch` 下, `Query` 的 `path` 也同样支持 `~` 前缀来表示父级路径
+
+```python
+@rg_add_cmd.assign("~name", "admin")
+async def handle_add_admin(target: Query[tuple[At, ...]] = Query("~target")):
+    if target.available:
+        await rg.send(f"添加成功: {target.result}")
+```
+
+:::
+
 
 ### `got_path` 方法
 
-另外，`AlconnaMatcher` 有类似于 `got` 的 `got_path`：
+另外，`AlconnaMatcher` 有类似于 [`got`](../../appendices/session-control.mdx#got) 的 `got_path` 与配套的 `get_path_arg`, `set_path_arg`：
 
 ```python
 from nonebot_plugin_alconna import At, Match, UniMessage, on_alconna
@@ -277,32 +322,28 @@ async def tt(target: Union[str, At]):
 
 `got_path` 会获取消息的最后一个消息段并转为 path 对应的类型，例如示例中 `target` 对应的 Arg 里要求 str 或 At，则 got 后用户输入的消息只有为 text 或 at 才能进入处理函数。
 
-:::tip
+`got_path` 中可以使用依赖注入函数 `AlconnaArg`, 类似于 [`Arg`](../../advanced/dependency.mdx#arg).
 
-`path` 支持 ~XXX 语法，其会把 ~ 替换为可能的父级路径：
+
+### `prompt` 方法
+
+基于 [`Waiter`](https://github.com/RF-Tar-Railt/nonebot-plugin-waiter) 插件，`AlconnaMatcher` 提供了 `prompt` 方法来实现更灵活的交互式提示。
 
 ```python
- pip = Alconna(
-     "pip",
-     Subcommand(
-         "install",
-         Args["pak", str],
-         Option("--upgrade|-U"),
-         Option("--force-reinstall"),
-     ),
-     Subcommand("list", Option("--out-dated")),
- )
-
- pipcmd = on_alconna(pip)
- pip_install_cmd = pipcmd.dispatch("install")
+from nonebot_plugin_alconna import At, Match, UniMessage, on_alconna
 
 
- @pip_install_cmd.assign("~upgrade")
- async def pip1_u(pak: Query[str] = Query("~pak")):
-     await pip_install_cmd.finish(f"pip upgrading {pak.result}...")
+test_cmd = on_alconna(Alconna("test", Args["target?", Union[str, At]]))
+
+@test_cmd.handle()
+async def tt_h(target: Match[Union[str, At]]):
+    if target.available:
+        await test_cmd.finish(UniMessage(["ok\n", target]))
+    resp = await test_cmd.prompt("请输入目标", timeout=30)  # 等待 30 秒
+    if resp is None:
+        await test_cmd.finish("超时")
+    await test_cmd.finish(UniMessage(["ok\n", resp[-1]]))
 ```
-
-:::
 
 ## 返回值中间件
 
@@ -323,9 +364,95 @@ async def mask_h(matcher: AlconnaMatcher, img: Match[bytes] = AlconnaMatch("img"
 
 其中，`image_fetch` 是一个中间件，其接受一个 `Image` 对象，并提取图片的二进制数据返回。
 
+## i18n
+
+本插件基于 `tarina.lang` 模块提供了 i18n 的支持，参见 [Lang 用法](https://github.com/nonebot/plugin-alconna/discussions/50)。
+
+当你编写完语言文件后，你便可以通过 `AlconnaMatcher.i18n` 来快速地将语言文件中的内容转为 UniMessage.
+
+<Tabs groupId="i18n">
+<TabItem value="zh" label="中文">
+
+```yaml title="zh-CN.yml"
+# 中文语言文件
+demo:
+  command:
+    role-group:
+      add: 添加 {name} 成功!
+```
+
+<Messenger
+  msgs={[
+    { position: "right", msg: "/角色组 添加 foo" },
+    { position: "left", msg: "添加 foo 成功!" },
+  ]}
+/>
+
+</TabItem>
+<TabItem value="en" label="英文">
+
+```yaml title="en-US.yml"
+# 英文语言文件
+demo:
+  command:
+    role-group:
+      add: Add {name} successfully!
+```
+
+<Messenger
+  msgs={[
+    { position: "right", msg: "/角色组 添加 foo" },
+    { position: "left", msg: "Add foo successfully!" },
+  ]}
+/>
+</TabItem>
+</Tabs>
+
+```python title="使用 i18n"
+@rg.assign("add")
+async def handle_add(name: str):
+    await rg.i18n("demo", "command.role-group.add", name=name).finish()
+```
+
+## 匹配测试
+
+`AlconnaMatcher.test` 方法允许你在 NoneBot 启动时对命令进行测试。
+
+```python
+def test(
+    cls,
+    message: str | UniMessage,
+    expected: dict[str, Any] | None = None,
+    prefix: bool = True
+): ...
+```
+- `message`: 测试的消息
+- `expected`: 预期的解析结果，若为 None 则表示只测试是否匹配
+- `prefix`: 是否使用命令前缀，默认为 True
+
 ## 匹配拓展
 
 本插件提供了一个 `Extension` 类，其用于自定义 AlconnaMatcher 的部分行为
+
+目前 `Extension` 的功能有：
+
+- `validate`: 对于事件的来源适配器或 bot 选择是否接受响应
+- `output_converter`: 输出信息的自定义转换方法
+- `message_provider`: 从传入事件中自定义提取消息的方法
+- `receive_provider`: 对传入的消息 (UniMessage) 的额外处理
+- `context_provider`: 对命令上下文的额外处理
+- `permission_check`: 命令对消息解析并确认头部匹配（即确认选择响应）时对发送者的权限判断
+- `parse_wrapper`: 对命令解析结果的额外处理
+- `send_wrapper`: 对发送的消息 (Message 或 UniMessage) 的额外处理
+- `before_catch`: 自定义依赖注入的绑定确认函数
+- `catch`: 自定义依赖注入处理函数
+- `post_init`: 响应器创建后对命令对象的额外处理
+
+:::tip
+
+全局的 Extension 可延迟加载 (即若有全局拓展加载于部分 AlconnaMatcher 之后，这部分响应器会被追加拓展)
+
+:::
 
 例如一个 `LLMExtension` 可以如下实现 (仅举例)：
 
@@ -368,25 +495,120 @@ matcher = on_alconna(
 
 那么添加了 `LLMExtension` 的响应器便能接受任何能通过 llm 翻译为具体命令的自然语言消息，同时可以在响应器中为所有 `llm` 参数注入模型变量。
 
-目前 `Extension` 的功能有：
+### validate
 
-- `validate`: 对于事件的来源适配器或 bot 选择是否接受响应
-- `output_converter`: 输出信息的自定义转换方法
-- `message_provider`: 从传入事件中自定义提取消息的方法
-- `receive_provider`: 对传入的消息 (Message 或 UniMessage) 的额外处理
-- `context_provider`: 对命令上下文的额外处理
-- `permission_check`: 命令对消息解析并确认头部匹配（即确认选择响应）时对发送者的权限判断
-- `parse_wrapper`: 对命令解析结果的额外处理
-- `send_wrapper`: 对发送的消息 (Message 或 UniMessage) 的额外处理
-- `before_catch`: 自定义依赖注入的绑定确认函数
-- `catch`: 自定义依赖注入处理函数
-- `post_init`: 响应器创建后对命令对象的额外处理
+```python
+def validate(self, bot: Bot, event: Event) -> bool: ...
+```
 
-:::tip
+默认情况下，`validate` 方法会筛选 `event.get_type()` 为 `message` 的情况，表示接受消息事件。
 
-全局的 Extension 可延迟加载 (即若有全局拓展加载于部分 AlconnaMatcher 之后，这部分响应器会被追加拓展)
+### output_converter
+
+```python
+async def output_converter(self, output_type: OutputType, content: str) -> UniMessage: ...
+```
+
+依据输出信息的类型，将字符串转换为消息对象以便发送。
+
+其中 `OutputType` 为 "help", "shortcut", "completion", "error" 其中之一。
+
+该方法只会调用一次，即对于多个 Extension，选择优先级靠前且实现了该方法的 Extension。
+
+### message_provider
+
+```python
+async def message_provider(
+    self, event: Event, state: T_State, bot: Bot, use_origin: bool = False
+) -> UniMessage | None:...
+```
+
+该方法用于从事件中提取消息，默认情况下会使用 `event.get_message()` 来获取消息。
+
+该方法可能会调用多次，即对于多个 Extension，选择优先级靠前且实现了该方法的 Extension，若调用的返回值不为 `None` 则作为结果。
+
+:::caution
+
+该方法的默认实现对结果 (UniMessage) 会进行缓存。`Extension` 的实现也应尽量实现缓存机制。
 
 :::
+
+### receive_provider
+
+```python
+async def receive_provider(self, bot: Bot, event: Event, command: Alconna, receive: UniMessage) -> UniMessage: ...
+```
+
+该方法用于对传入的消息 (UniMessage) 进行额外处理，默认情况下会返回原始消息。
+
+该方法会调用多次，即对于多个 Extension，前一个 Extension 的返回值会作为下一个 Extension 的输入。
+
+### context_provider
+
+```python
+async def context_provider(self, ctx: dict[str, Any], bot: Bot, event: Event, state: T_State) -> dict[str, Any]:
+```
+
+该方法用于提取命令上下文，默认情况下会返回 `ctx` 本身。
+
+该方法会调用多次，即对于多个 Extension，前一个 Extension 的返回值会作为下一个 Extension 的输入。
+
+### permission_check
+
+```python
+async def permission_check(self, bot: Bot, event: Event, command: Alconna) -> bool: ...
+```
+
+该方法用于对发送者的权限进行检查，默认情况下会返回 `True`。
+
+该方法可能会调用多次，即对于多个 Extension，若调用的返回值不为 `True` 则结束判断。
+
+### parse_wrapper
+
+```python
+async def parse_wrapper(self, bot: Bot, state: T_State, event: Event, res: Arparma) -> None: ...
+```
+
+该方法用于对命令解析结果进行额外处理。
+
+该方法会调用多次，即对于多个 Extension，会并发地调用该方法。
+
+### send_wrapper
+
+```python
+async def send_wrapper(self, bot: Bot, event: Event, send: TMessage) -> TMessage: ...
+```
+
+该方法用于对 `AlconnaMatcher.send` 或 `UniMessage.send` 发送的消息 (str 或 Message 或 UniMessage) 进行额外处理，默认情况下会返回原始消息。
+
+该方法会调用多次，即对于多个 Extension，前一个 Extension 的返回值会作为下一个 Extension 的输入。
+
+由于需要保证输入与输出的类型一致，该方法内需要自行判断类型。
+
+### before_catch
+
+```python
+def before_catch(self, name: str, annotation: type, default: Any) -> bool: ...
+```
+
+该方法用于响应函数中某个参数是否需要绑定到该 Extension 上。
+
+### catch
+
+```python
+async def catch(self, interface: Interface) -> Any: ...
+```
+
+该方法用于注入经过 `before_catch` 确认的参数。其中 `Interface` 的定义为
+
+```python
+class Interface(Generic[TE]):
+    event: TE
+    state: T_State
+    name: str
+    annotation: Any
+    default: Any
+```
 
 ## 补全会话
 
@@ -444,4 +666,6 @@ class CompConfig(TypedDict):
     """禁用的指令"""
     lite: NotRequired[bool]
     """是否使用简洁版本的补全会话（相当于同时配置 disables、hides、hide_tabs）"""
+    block: NotRequired[bool]
+    """进行补全会话时是否阻塞响应器"""
 ```

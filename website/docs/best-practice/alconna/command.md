@@ -291,18 +291,31 @@ opt2 = Option("--foo", default=OptionResult(value=False, args={"bar": 1}))
   - other_args: 除主参数外的其他解析结果
   - all_matched_args: 所有 Args 的解析结果
 
+### 路径查询
+
 `Arparma` 同时提供了便捷的查询方法 `query[type]()`，会根据传入的 `path` 查找参数并返回
 
 `path` 支持如下:
 
 - `main_args`, `options`, ...: 返回对应的属性
 - `args`: 返回 all_matched_args
-- `main_args.xxx`, `options.xxx`, ...: 返回字典中 `xxx`键对应的值
-- `args.xxx`: 返回 all_matched_args 中 `xxx`键对应的值
-- `options.foo`, `foo`: 返回选项 `foo` 的解析结果 (OptionResult)
-- `options.foo.value`, `foo.value`: 返回选项 `foo` 的解析值
-- `options.foo.args`, `foo.args`: 返回选项 `foo` 的解析参数字典
-- `options.foo.args.bar`, `foo.bar`: 返回选项 `foo` 的参数字典中 `bar` 键对应的值 ...
+- `args.<key>`: 返回 all_matched_args 中 `key` 键对应的值
+- `main_args.<key>`: 返回主命令的解析参数字典中 `key` 键对应的值
+- `<node>`: 返回选项/子命令 `node` 的解析结果 (OptionResult | SubcommandResult)
+- `<node>.value`: 返回选项/子命令 `node` 的解析值
+- `<node>.args`: 返回选项/子命令 `node` 的解析参数字典
+- `<node>.<key>`, `<node>.args.<key>`: 返回选项/子命令 `node` 的参数字典中 `key` 键对应的值
+
+以及:
+
+- `options.<opt>`: 返回选项 `opt` 的解析结果 (OptionResult)
+- `options.<opt>.value`: 返回选项 `opt` 的解析值
+- `options.<opt>.args`: 返回选项 `opt` 的解析参数字典
+- `options.<opt>.<key>`, `options.<node>.args.<key>`: 返回选项 `opt` 的参数字典中 `key` 键对应的值
+- `subcommands.<subcmd>`: 返回子命令 `subcmd` 的解析结果 (SubcommandResult)
+- `subcommands.<subcmd>.value`: 返回子命令 `subcmd` 的解析值
+- `subcommands.<subcmd>.args`: 返回子命令 `subcmd` 的解析参数字典
+- `subcommands.<subcmd>.<key>`, `subcommands.<node>.args.<key>`: 返回子命令 `subcmd` 的参数字典中 `key` 键对应的值
 
 ## 元数据(CommandMeta)
 

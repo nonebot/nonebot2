@@ -39,7 +39,7 @@ async def echo_exit(msg: Match[str] = AlconnaMatch("msg")):
 
 ## 类 Koishi 构造器
 
-本插件提供了一个 `Command` 构造器，其基于 `arclet.alconna.tools` 中的 `AlconnaString`， 以类似 `Koishi` 中注册命令的方式来构建一个 **AlconnaMatcher** ：
+本插件提供了一个 `Command` 构造器，其基于 `arclet.alconna.tools` 中的 `AlconnaString`， 以类似 `Koishi` 中[注册命令](https://koishi.chat/zh-CN/guide/basic/command.html)的方式来构建一个 **AlconnaMatcher** ：
 
 ```python
 from nonebot_plugin_alconna import Command, Arparma
