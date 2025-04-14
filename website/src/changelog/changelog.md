@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: MC服务器/玩家查询 [@noneflow](https://github.com/noneflow) ([#3422](https://github.com/nonebot/nonebot2/pull/3422))
 - Plugin: none_plugin_oi_helper [@noneflow](https://github.com/noneflow) ([#3416](https://github.com/nonebot/nonebot2/pull/3416))
 - Plugin: Gemini Vision [@noneflow](https://github.com/noneflow) ([#3413](https://github.com/nonebot/nonebot2/pull/3413))
 - Plugin: nonebot-plugin-zssm [@noneflow](https://github.com/noneflow) ([#3403](https://github.com/nonebot/nonebot2/pull/3403))
