@@ -101,6 +101,15 @@ async def send(
 ) -> Receipt:
     ...
 ```
+- `target`: 发送目标，支持事件和[发送对象](./utils.mdx#发送对象)，不传入时会尝试从响应器上下文中获取。
+- `bot`: 发送消息使用的 Bot 对象，若不传入则会尝试从响应器上下文中获取。
+- `fallback`: [回退策略](#回退策略)。
+- `at_sender`: 是否提醒发送者，默认为 `False`。当类型为 `str` 时，表示指定用户的 id。
+- `reply_to`: 是否回复消息，默认为 `False`。
+  - `str` 表示消息 id。
+  - `bool` 表示是否回复当前消息。此时 `target` 不能是[发送对象](./utils.mdx#发送对象)。
+  - `Reply` 表示直接使用回复元素。
+- `**kwargs`: 各 `Bot.send` 的特定参数。
 
 而在 `AlconnaMatcher` 下，`got`, `send`, `reject` 等可以发送消息的方法皆支持使用 `UniMessage`，不需要手动调用 export 方法：
 
@@ -121,6 +130,17 @@ async def tt_h(matcher: AlconnaMatcher, target: Match[At]):
 async def tt(target: At):
     await test_cmd.send(UniMessage([target, "\ndone."]))
 ```
+
+### 回退策略
+
+`send` 方法的 `fallback` 参数用于指定回退策略（即当前适配器不支持的消息段如何处理）：
+- `FallbackStrategy.ignore`: 忽略未转换的消息段
+- `FallbackStrategy.to_text`: 将未转换的消息段转为文本元素
+- `FallbackStrategy.rollback`: 从未转换消息段的子元素中提取可能的可发送消息段
+- `FallbackStrategy.forbid`: 抛出异常
+- `FallbackStrategy.auto`: 插件自动选择策略
+
+另外 `fallback` 传入 `bool` 时，`True` 等价于 `FallbackStrategy.auto`，`False` 等价于 `FallbackStrategy.forbid`。
 
 ### 主动发送消息
 

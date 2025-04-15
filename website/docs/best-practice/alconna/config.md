@@ -73,7 +73,7 @@ description: 配置项
 - **类型**: `bool`
 - **默认值**: `False`
 
-是否启动时拉取一次发送对象列表。
+是否启动时拉取一次[发送对象](./uniseg/utils.mdx#发送对象)列表。
 
 
 ## alconna_builtin_plugins
