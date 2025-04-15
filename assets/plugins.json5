@@ -8725,4 +8725,20 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_error_report",
+    "project_link": "nonebot-plugin-error-report",
+    "author_id": 121207415,
+    "tags": [
+      {
+        "label": "跨平台",
+        "color": "#52b2ea"
+      },
+      {
+        "label": "Alconna",
+        "color": "#eabd52"
+      }
+    ],
+    "is_official": false
+  },
 ]
