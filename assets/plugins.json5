@@ -8757,4 +8757,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_skland",
+    "project_link": "nonebot-plugin-skland",
+    "author_id": 80870777,
+    "tags": [
+      {
+        "label": "森空岛",
+        "color": "#bfec00"
+      },
+      {
+        "label": "明日方舟",
+        "color": "#67fdfe"
+      }
+    ],
+    "is_official": false
+  },
 ]
