@@ -8741,4 +8741,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_asmr100",
+    "project_link": "nonebot-plugin-asmr100",
+    "author_id": 95261137,
+    "tags": [
+      {
+        "label": "asmr",
+        "color": "#52b4ea"
+      },
+      {
+        "label": "R18",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
