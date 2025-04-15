@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 暗语消息 [@noneflow](https://github.com/noneflow) ([#3433](https://github.com/nonebot/nonebot2/pull/3433))
 - Plugin: 森空岛 [@noneflow](https://github.com/noneflow) ([#3420](https://github.com/nonebot/nonebot2/pull/3420))
 - Plugin: asmr100 [@noneflow](https://github.com/noneflow) ([#3418](https://github.com/nonebot/nonebot2/pull/3418))
 - Plugin: 报错处理器 [@noneflow](https://github.com/noneflow) ([#3411](https://github.com/nonebot/nonebot2/pull/3411))
