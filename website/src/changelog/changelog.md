@@ -18,6 +18,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 报错处理器 [@noneflow](https://github.com/noneflow) ([#3411](https://github.com/nonebot/nonebot2/pull/3411))
 - Plugin: AI 群聊助手 [@noneflow](https://github.com/noneflow) ([#3424](https://github.com/nonebot/nonebot2/pull/3424))
 - Plugin: nonebot-plugin-furryyunhei [@noneflow](https://github.com/noneflow) ([#3383](https://github.com/nonebot/nonebot2/pull/3383))
 - Plugin: MC服务器/玩家查询 [@noneflow](https://github.com/noneflow) ([#3422](https://github.com/nonebot/nonebot2/pull/3422))
