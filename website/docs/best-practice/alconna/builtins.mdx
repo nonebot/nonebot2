@@ -33,12 +33,14 @@ load_builtin_plugins("help", "with")
   msgs={[
     { position: "right", msg: "/echo hello world!" },
     { position: "left", msg: "hello world!" },
+    { position: "right", msg: "/echo [图片]" },
+    { position: "left", msg: "[图片]" },
   ]}
 />
 
 #### help
 
-`help` 插件能列出所有 Alconna 指令。
+`help` 插件能列出所有 Alconna 指令。同时还能查询某个指令对应的插件信息。
 
 <Messenger
   msgs={[
@@ -47,8 +49,11 @@ load_builtin_plugins("help", "with")
       position: "left",
       msg: "# 当前可用的命令有:\n 0 /echo : echo 指令\n 1 /help : 显示所有命令帮助\n# 输入'命令名 -h|--help' 查看特定命令的语法",
     },
-    { position: "right", msg: "/echo [图片]" },
-    { position: "left", msg: "[图片]" },
+    { position: "right", msg: "/help --plugin-info echo" },
+    {
+      position: "left",
+      msg: "插件名称: echo\n插件标识: nonebot_plugin_alconna:echo\n插件模块: nonebot-plugin-alconna\n插件版本: 0.57.2\n插件路径: nonebot_plugin_alconna.builtins.plugins.echo",
+    },
   ]}
 />
 
