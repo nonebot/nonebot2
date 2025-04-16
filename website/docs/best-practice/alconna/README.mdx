@@ -1,32 +1,52 @@
----
-sidebar_position: 1
-description: Alconna 命令解析拓展
-
-slug: /best-practice/alconna/
----
-
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
 # Alconna 插件
 
-[`nonebot-plugin-alconna`](https://github.com/nonebot/plugin-alconna) 是一类提供了拓展响应规则的插件。
-该插件使用 [Alconna](https://github.com/ArcletProject/Alconna) 作为命令解析器，
-是一个简单、灵活、高效的命令参数解析器，并且不局限于解析命令式字符串。
+[`nonebot-plugin-alconna`](https://github.com/nonebot/plugin-alconna) 是一类极大地提升了 NoneBot 开发体验的插件。
 
-该插件提供了一类新的事件响应器辅助函数 `on_alconna`，以及 `AlconnaResult` 等依赖注入函数。
+该插件可分为三个部分：
+- 增强的命令解析: 基于 [Alconna](https://github.com/ArcletProject/Alconna), 提供一类新的事件响应器辅助函数 `on_alconna`. 相比 `on_command`, `on_shell`, `on_regex` 等函数，`on_alconna` 提供了更强大的命令解析能力与诸多特性。
+- 通用消息组件: 实现了跨平台接收、发送、撤回、编辑、表态消息的功能。
+  - `UniMessage` 通用消息模型，支持各适配器下的消息转换和导出，发送。
+  - `Text`, `Image`, `At` 等通用消息段模型，既与 `UniMessage` 配合使用，又能用于 `Alconna` 的命令解析。
+  - `message_recall`, `message_edit`, `message_reaction` 等功能函数。
+  - `Target` 通用消息目标模型，并通过该模型进行主动消息发送。
+  - `UniMsg`, `MsgId`, `MsgTarget`, `at_in`, `at_me` 等提供给 nonebot 使用的依赖注入和 `Rule`。
+- 内置功能插件：基于上述部分实现的内置功能插件。
+  - `echo`: 通过 `on_alconna` 实现的 echo 插件，支持回显回复消息。
+  - `help`: 列出所有 `on_alconna` 事件响应器的帮助信息或其对应的插件信息。
+  - `lang`: 切换 `Alconna` 使用的语言
+  - `switch`: 禁用/启用某个指令
+  - `with`: 针对具有多个子命令的指令，通过 `with` 在当前会话中载入命令头以节省输入。
 
-该插件声明了一个 `Matcher` 的子类 `AlconnaMatcher`，并在 `AlconnaMatcher` 中添加了一些新的方法，例如：
+以最新版本为例 (v0.57), 本插件已支持 NoneBot 生态中几乎所有的适配器, 包括:
 
-- `assign`：基于 `Alconna` 解析结果，执行满足目标路径的处理函数
-- `dispatch`：类似 `CommandGroup`，对目标路径创建一个新的 `AlconnaMatcher`，并将解析结果分配给该 `AlconnaMatcher`
-- `got_path`：类似 `got`，但是可以指定目标路径，并且能够验证解析结果是否可用
-- ...
+| 协议名称                                                                | 路径                                   |
+|---------------------------------------------------------------------|--------------------------------------|
+| [OneBot 协议](https://onebot.dev/)                                    | adapters.onebot11, adapters.onebot12 |
+| [Telegram](https://core.telegram.org/bots/api)                      | adapters.telegram                    |
+| [飞书](https://open.feishu.cn/document/home/index)                    | adapters.feishu                      |
+| [GitHub](https://docs.github.com/en/developers/apps)                | adapters.github                      |
+| [QQ bot](https://github.com/nonebot/adapter-qq)                     | adapters.qq                          |
+| [钉钉](https://open.dingtalk.com/document/)                           | adapters.ding                        |
+| [Console](https://github.com/nonebot/adapter-console)               | adapters.console                     |
+| [开黑啦](https://developer.kookapp.cn/)                                | adapters.kook                        |
+| [Mirai](https://docs.mirai.mamoe.net/mirai-api-http/)               | adapters.mirai                       |
+| [Ntchat](https://github.com/JustUndertaker/adapter-ntchat)          | adapters.ntchat                      |
+| [MineCraft](https://github.com/17TheWord/nonebot-adapter-minecraft) | adapters.minecraft                   |
+| [Walle-Q](https://github.com/onebot-walle/nonebot_adapter_walleq)   | adapters.onebot12                    |
+| [Discord](https://github.com/nonebot/adapter-discord)               | adapters.discord                     |
+| [Red 协议](https://github.com/nonebot/adapter-red)                    | adapters.red                         |
+| [Satori](https://github.com/nonebot/adapter-satori)                 | adapters.satori                      |
+| [Dodo IM](https://github.com/nonebot/adapter-dodo)                  | adapters.dodo                        |
+| [Kritor](https://github.com/nonebot/adapter-kritor)                 | adapters.kritor                      |
+| [Tailchat](https://github.com/eya46/nonebot-adapter-tailchat)       | adapters.tailchat                    |
+| [Mail](https://github.com/mobyw/nonebot-adapter-mail)               | adapters.mail                        |
+| [微信公众号](https://github.com/YangRucheng/nonebot-adapter-wxmp)        | adapters.wxmp                        |
+| [黑盒语音](https://github.com/lclbm/adapter-heybox)                     | adapters.heybox                      |
+| [Gewechat](https://github.com/Shine-Light/nonebot-adapter-gewechat) | adapters.gewechat                    |
 
-基于 `Alconna` 的特性，该插件同时提供了一系列便捷的消息段标注。
-标注可用于在 `Alconna` 中匹配消息中除 text 外的其他消息段，也可用于快速创建各适配器下的消息段。所有标注位于 `nonebot_plugin_alconna.adapters` 中。
-
-该插件同时通过提供 `UniMessage` (通用消息模型) 实现了**跨平台接收和发送消息**的功能。
 
 ## 安装插件
 
@@ -61,14 +81,14 @@ pdm add nonebot-plugin-alconna
 
 ## 导入插件
 
-由于 `nonebot-plugin-alconna` 作为插件，因此需要在使用前对其进行**加载**并**导入**其中的 `on_alconna` 来使用命令拓展。使用 `require` 方法可轻松完成这一过程，可参考 [跨插件访问](../../advanced/requiring.md) 一节进行了解。
+由于 `nonebot-plugin-alconna` 作为插件，因此需要在使用前对其进行**加载**。使用 `require` 方法可轻松完成这一过程，可参考 [跨插件访问](../../advanced/requiring.md) 一节进行了解。
 
 ```python
 from nonebot import require
 
 require("nonebot_plugin_alconna")
 
-from nonebot_plugin_alconna import on_alconna
+from nonebot_plugin_alconna import ...
 ```
 
 ## 使用插件

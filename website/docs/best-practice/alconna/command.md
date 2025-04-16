@@ -7,7 +7,7 @@ description: Alconna 基本介绍
 
 [`Alconna`](https://github.com/ArcletProject/Alconna) 隶属于 `ArcletProject`，是一个简单、灵活、高效的命令参数解析器, 并且不局限于解析命令式字符串。
 
-我们通过一个例子来讲解 **Alconna** 的核心 —— `Args`, `Subcommand`, `Option`：
+我们先通过一个例子来讲解 **Alconna** 的核心 —— `Args`, `Subcommand`, `Option`：
 
 ```python
 from arclet.alconna import Alconna, Args, Subcommand, Option
@@ -38,20 +38,22 @@ print(res.all_matched_args)
 
 命令头是指命令的前缀 (Prefix) 与命令名 (Command) 的组合，例如 !help 中的 ! 与 help。
 
-|             前缀             |   命令名   |                          匹配内容                           |       说明       |
-| :--------------------------: | :--------: | :---------------------------------------------------------: | :--------------: |
-|              -               |   "foo"    |                           `"foo"`                           | 无前缀的纯文字头 |
-|              -               |    123     |                            `123`                            |  无前缀的元素头  |
-|              -               | "re:\d{2}" |                           `"32"`                            |  无前缀的正则头  |
-|              -               |    int     |                      `123` 或 `"456"`                       |  无前缀的类型头  |
-|         [int, bool]          |     -      |                       `True` 或 `123`                       |  无名的元素类头  |
-|        ["foo", "bar"]        |     -      |                     `"foo"` 或 `"bar"`                      |  无名的纯文字头  |
-|        ["foo", "bar"]        |   "baz"    |                  `"foobaz"` 或 `"barbaz"`                   |     纯文字头     |
-|         [int, bool]          |   "foo"    |             `[123, "foo"]` 或 `[False, "foo"]`              |      类型头      |
-|         [123, 4567]          |   "foo"    |              `[123, "foo"]` 或 `[4567, "foo"]`              |      元素头      |
-|      [nepattern.NUMBER]      |   "bar"    |            `[123, "bar"]` 或 `[123.456, "bar"]`             |     表达式头     |
-|         [123, "foo"]         |   "bar"    |      `[123, "bar"]` 或 `"foobar"` 或 `["foo", "bar"]`       |      混合头      |
-| [(int, "foo"), (456, "bar")] |   "baz"    | `[123, "foobaz"]` 或 `[456, "foobaz"]` 或 `[456, "barbaz"]` |       对头       |
+命令构造时, `Alconna([prefix], command)` 与 `Alconna(command, [prefix])` 是等价的。
+
+|              前缀              |    命令名     |                           匹配内容                            |    说明    |
+|:----------------------------:|:----------:|:---------------------------------------------------------:|:--------:|
+|             不传入              |   "foo"    |                          `"foo"`                          | 无前缀的纯文字头 |
+|             不传入              |    123     |                           `123`                           | 无前缀的元素头  |
+|             不传入              | "re:\d{2}" |                          `"32"`                           | 无前缀的正则头  |
+|             不传入              |    int     |                      `123` 或 `"456"`                      | 无前缀的类型头  |
+|         [int, bool]          |    不传入     |                      `True` 或 `123`                       | 无名的元素类头  |
+|        ["foo", "bar"]        |    不传入     |                     `"foo"` 或 `"bar"`                     | 无名的纯文字头  |
+|        ["foo", "bar"]        |   "baz"    |                  `"foobaz"` 或 `"barbaz"`                  |   纯文字头   |
+|         [int, bool]          |   "foo"    |             `[123, "foo"]` 或 `[False, "foo"]`             |   类型头    |
+|         [123, 4567]          |   "foo"    |             `[123, "foo"]` 或 `[4567, "foo"]`              |   元素头    |
+|      [nepattern.NUMBER]      |   "bar"    |            `[123, "bar"]` 或 `[123.456, "bar"]`            |   表达式头   |
+|         [123, "foo"]         |   "bar"    |      `[123, "bar"]` 或 `"foobar"` 或 `["foo", "bar"]`       |   混合头    |
+| [(int, "foo"), (456, "bar")] |   "baz"    | `[123, "foobaz"]` 或 `[456, "foobaz"]` 或 `[456, "barbaz"]` |    对头    |
 
 对于无前缀的类型头，此时会将传入的值尝试转为 BasePattern，例如 `int` 会转为 `nepattern.INTEGER`。如此该命令头会匹配对应的类型， 例如 `int` 会匹配 `123` 或 `"456"`，但不会匹配 `"foo"`。解析后，Alconna 会将命令头匹配到的值转为对应的类型，例如 `int` 会将 `"123"` 转为 `123`。
 
@@ -64,9 +66,6 @@ print(res.all_matched_args)
 除了通过传入 `re:xxx` 来使用正则表达式外，Alconna 还提供了一种更加简洁的方式来使用正则表达式，称为 Bracket Header：
 
 ```python
-from alconna import Alconna
-
-
 alc = Alconna(".rd{roll:int}")
 assert alc.parse(".rd123").header["roll"] == 123
 ```
@@ -206,6 +205,18 @@ args = Args["foo", BasePattern("@\d+")]
 
 :::
 
+#### AllParam
+
+`AllParam` 是一个特殊的标注，用于告知解析器该参数接收命令中在此位置之后的所有参数并**结束解析**，可以认为是**泛匹配参数**。
+
+`AllParam` 可直接使用 (`Args["xxx", AllParam]`), 也可以传入指定的接收类型 (`Args["xxx", AllParam(str)]`)。
+
+:::tip
+
+在 `nonebot_plugin_alconna` 下，`AllParam` 的返回值为 [`UniMessage`](./uniseg/message.mdx)
+
+:::
+
 ### default
 
 `default` 传入的是该参数的默认值或者 `Field`，以携带对于该参数的更多信息。
@@ -271,7 +282,7 @@ opt2 = Option("--foo", default=OptionResult(value=False, args={"bar": 1}))
 - `append`，`append_value`
 - `count`
 
-## 解析结果(Arparma)
+## 解析结果
 
 `Alconna.parse` 会返回由 **Arparma** 承载的解析结果
 
@@ -292,18 +303,31 @@ opt2 = Option("--foo", default=OptionResult(value=False, args={"bar": 1}))
   - other_args: 除主参数外的其他解析结果
   - all_matched_args: 所有 Args 的解析结果
 
+### 路径查询
+
 `Arparma` 同时提供了便捷的查询方法 `query[type]()`，会根据传入的 `path` 查找参数并返回
 
 `path` 支持如下:
 
 - `main_args`, `options`, ...: 返回对应的属性
 - `args`: 返回 all_matched_args
-- `main_args.xxx`, `options.xxx`, ...: 返回字典中 `xxx`键对应的值
-- `args.xxx`: 返回 all_matched_args 中 `xxx`键对应的值
-- `options.foo`, `foo`: 返回选项 `foo` 的解析结果 (OptionResult)
-- `options.foo.value`, `foo.value`: 返回选项 `foo` 的解析值
-- `options.foo.args`, `foo.args`: 返回选项 `foo` 的解析参数字典
-- `options.foo.args.bar`, `foo.bar`: 返回选项 `foo` 的参数字典中 `bar` 键对应的值 ...
+- `args.<key>`: 返回 all_matched_args 中 `key` 键对应的值
+- `main_args.<key>`: 返回主命令的解析参数字典中 `key` 键对应的值
+- `<node>`: 返回选项/子命令 `node` 的解析结果 (OptionResult | SubcommandResult)
+- `<node>.value`: 返回选项/子命令 `node` 的解析值
+- `<node>.args`: 返回选项/子命令 `node` 的解析参数字典
+- `<node>.<key>`, `<node>.args.<key>`: 返回选项/子命令 `node` 的参数字典中 `key` 键对应的值
+
+以及:
+
+- `options.<opt>`: 返回选项 `opt` 的解析结果 (OptionResult)
+- `options.<opt>.value`: 返回选项 `opt` 的解析值
+- `options.<opt>.args`: 返回选项 `opt` 的解析参数字典
+- `options.<opt>.<key>`, `options.<node>.args.<key>`: 返回选项 `opt` 的参数字典中 `key` 键对应的值
+- `subcommands.<subcmd>`: 返回子命令 `subcmd` 的解析结果 (SubcommandResult)
+- `subcommands.<subcmd>.value`: 返回子命令 `subcmd` 的解析值
+- `subcommands.<subcmd>.args`: 返回子命令 `subcmd` 的解析参数字典
+- `subcommands.<subcmd>.<key>`, `subcommands.<node>.args.<key>`: 返回子命令 `subcmd` 的参数字典中 `key` 键对应的值
 
 ## 元数据(CommandMeta)
 
