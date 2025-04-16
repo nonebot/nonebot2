@@ -101,6 +101,7 @@ async def send(
 ) -> Receipt:
     ...
 ```
+
 - `target`: 发送目标，支持事件和[发送对象](./utils.mdx#发送对象)，不传入时会尝试从响应器上下文中获取。
 - `bot`: 发送消息使用的 Bot 对象，若不传入则会尝试从响应器上下文中获取。
 - `fallback`: [回退策略](#回退策略)。
@@ -134,6 +135,7 @@ async def tt(target: At):
 ### 回退策略
 
 `send` 方法的 `fallback` 参数用于指定回退策略（即当前适配器不支持的消息段如何处理）：
+
 - `FallbackStrategy.ignore`: 忽略未转换的消息段
 - `FallbackStrategy.to_text`: 将未转换的消息段转为文本元素
 - `FallbackStrategy.rollback`: 从未转换消息段的子元素中提取可能的可发送消息段
@@ -178,6 +180,7 @@ async def handle():
 ```
 
 `Receipt` 对象拥有以下方法：
+
 - `recallable`: 表明是否可以撤回
 - `recall`: 撤回消息
 - `editable`: 表明是否可以修改
@@ -187,7 +190,6 @@ async def handle():
 - `get_reply`: 生成对已经发送的消息的回复元素
 - `send`, `finish`: 发送消息
 - `reply`: 回复已经发送的消息
-
 
 ## 构造
 
@@ -267,7 +269,6 @@ async def tt():
 在 `AlconnaMatcher` 中，`UniMessage.template` 的格式化方法会自动将 `Arparma.all_matched_args`、 `state` 中的变量传入到 `format` 方法中，因此你可以直接使用上述变量。
 
 :::
-
 
 ### 拼接消息
 
@@ -447,15 +448,15 @@ message.transform(rule)
 转换规则的类型一般为 `dict[str, Transformer]`，以消息元素类型的名称为键，定义方式如下：
 
 ```typescript
-type Fragment = Segment | Segment[]
-type Render<T> = (attrs: dict, children: Segment[]) => T
-type Transformer = boolean | Fragment | Render<boolean | Fragment>
+type Fragment = Segment | Segment[];
+type Render<T> = (attrs: dict, children: Segment[]) => T;
+type Transformer = boolean | Fragment | Render<boolean | Fragment>;
 ```
-
 
 ### 字符串操作
 
 类似于 `str`，消息序列可以通过如下方法来操作消息内的文本部分：
+
 - `split`,
 - `replace`,
 - `startwith`, `endswith`,
@@ -499,6 +500,7 @@ def dump(self, media_save_dir: str | Path | bool | None = None, json: bool = Fal
 ```
 
 其中，`media_save_dir` 用于指定持久化的媒体文件存储目录:
+
 - 若 `media_save_dir` 为 str 或 Path，则会将媒体文件保存到指定目录下。
 - 若 `media_save_dir` 为 False，则不会保存媒体文件。
 - 若 `media_save_dir` 为 True，则会将文件数据转为 base64 编码。

@@ -6,6 +6,7 @@ import TabItem from "@theme/TabItem";
 [`nonebot-plugin-alconna`](https://github.com/nonebot/plugin-alconna) 是一类极大地提升了 NoneBot 开发体验的插件。
 
 该插件可分为三个部分：
+
 - 增强的命令解析: 基于 [Alconna](https://github.com/ArcletProject/Alconna), 提供一类新的事件响应器辅助函数 `on_alconna`. 相比 `on_command`, `on_shell`, `on_regex` 等函数，`on_alconna` 提供了更强大的命令解析能力与诸多特性。
 - 通用消息组件: 实现了跨平台接收、发送、撤回、编辑、表态消息的功能。
   - `UniMessage` 通用消息模型，支持各适配器下的消息转换和导出，发送。
@@ -22,31 +23,30 @@ import TabItem from "@theme/TabItem";
 
 以最新版本为例 (v0.57), 本插件已支持 NoneBot 生态中几乎所有的适配器, 包括:
 
-| 协议名称                                                                | 路径                                   |
-|---------------------------------------------------------------------|--------------------------------------|
-| [OneBot 协议](https://onebot.dev/)                                    | adapters.onebot11, adapters.onebot12 |
+| 协议名称                                                            | 路径                                 |
+| ------------------------------------------------------------------- | ------------------------------------ |
+| [OneBot 协议](https://onebot.dev/)                                  | adapters.onebot11, adapters.onebot12 |
 | [Telegram](https://core.telegram.org/bots/api)                      | adapters.telegram                    |
-| [飞书](https://open.feishu.cn/document/home/index)                    | adapters.feishu                      |
+| [飞书](https://open.feishu.cn/document/home/index)                  | adapters.feishu                      |
 | [GitHub](https://docs.github.com/en/developers/apps)                | adapters.github                      |
 | [QQ bot](https://github.com/nonebot/adapter-qq)                     | adapters.qq                          |
-| [钉钉](https://open.dingtalk.com/document/)                           | adapters.ding                        |
+| [钉钉](https://open.dingtalk.com/document/)                         | adapters.ding                        |
 | [Console](https://github.com/nonebot/adapter-console)               | adapters.console                     |
-| [开黑啦](https://developer.kookapp.cn/)                                | adapters.kook                        |
+| [开黑啦](https://developer.kookapp.cn/)                             | adapters.kook                        |
 | [Mirai](https://docs.mirai.mamoe.net/mirai-api-http/)               | adapters.mirai                       |
 | [Ntchat](https://github.com/JustUndertaker/adapter-ntchat)          | adapters.ntchat                      |
 | [MineCraft](https://github.com/17TheWord/nonebot-adapter-minecraft) | adapters.minecraft                   |
 | [Walle-Q](https://github.com/onebot-walle/nonebot_adapter_walleq)   | adapters.onebot12                    |
 | [Discord](https://github.com/nonebot/adapter-discord)               | adapters.discord                     |
-| [Red 协议](https://github.com/nonebot/adapter-red)                    | adapters.red                         |
+| [Red 协议](https://github.com/nonebot/adapter-red)                  | adapters.red                         |
 | [Satori](https://github.com/nonebot/adapter-satori)                 | adapters.satori                      |
 | [Dodo IM](https://github.com/nonebot/adapter-dodo)                  | adapters.dodo                        |
 | [Kritor](https://github.com/nonebot/adapter-kritor)                 | adapters.kritor                      |
 | [Tailchat](https://github.com/eya46/nonebot-adapter-tailchat)       | adapters.tailchat                    |
 | [Mail](https://github.com/mobyw/nonebot-adapter-mail)               | adapters.mail                        |
-| [微信公众号](https://github.com/YangRucheng/nonebot-adapter-wxmp)        | adapters.wxmp                        |
-| [黑盒语音](https://github.com/lclbm/adapter-heybox)                     | adapters.heybox                      |
+| [微信公众号](https://github.com/YangRucheng/nonebot-adapter-wxmp)   | adapters.wxmp                        |
+| [黑盒语音](https://github.com/lclbm/adapter-heybox)                 | adapters.heybox                      |
 | [Gewechat](https://github.com/Shine-Light/nonebot-adapter-gewechat) | adapters.gewechat                    |
-
 
 ## 安装插件
 

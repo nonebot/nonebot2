@@ -78,7 +78,6 @@ description: 配置项
 
 是否启动时拉取一次[发送对象](./uniseg/utils.mdx#发送对象)列表。
 
-
 ## alconna_builtin_plugins
 
 - **类型**: `set[str]`
@@ -92,6 +91,7 @@ description: 配置项
 - **默认值**: `"default"`
 
 命令冲突解决策略，决定当不同插件之间或者同一插件之间存在两个以上相同的命令时的处理方式：
+
 - `default`: 默认处理方式，保留两个命令
 - `raise`: 抛出异常
 - `ignore`: 忽略较新的命令

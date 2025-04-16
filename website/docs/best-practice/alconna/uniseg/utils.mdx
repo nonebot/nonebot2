@@ -16,7 +16,6 @@ import TabItem from "@theme/TabItem";
 
 :::
 
-
 ## 消息事件 ID
 
 消息事件 ID 是用来标识当前消息事件的唯一 ID，通常用于回复/撤回/编辑/表态当前消息。
@@ -175,7 +174,6 @@ async def _():
 若配置了 [`alconna_apply_fetch_targets`](../config.md#alconna_apply_fetch_targets) 选项，则在启动时会主动拉取一次发送对象列表。即对于
 某一主动构造的 `Target` 对象，插件将其与拉取下来的众多发送对象进行匹配，并选择第一个符合条件的发送对象，以选择对应的 Bot 对象。
 
-
 ## 撤回消息
 
 通过 `message_recall` 方法来撤回消息事件。
@@ -271,6 +269,7 @@ async def message_reaction(
 ## 响应规则
 
 `uniseg` 模块提供了两个响应规则：
+
 - `at_in`: 是否在消息中 @ 了指定的用户
 - `at_me`: 是否在消息中 @ 了机器人
 

@@ -61,7 +61,6 @@ async def _(name: str, target: Match[tuple[At, ...]]):
   ]}
 />
 
-
 ## 声明
 
 `on_alconna` 的参数如下:
@@ -148,6 +147,7 @@ async def handle(
 ```
 
 `AlconnaMatcher` 的依赖注入拓展支持以下情况：
+
 - `xxx: CommandResult`
 - `xxx: Arparma`：命令的[解析结果](./command.md#解析结果)
 - `xxx: Duplication`：命令的解析结果的 [`Duplication`](./command.md#Duplication)
@@ -260,7 +260,6 @@ async def handle_list(): ...
 async def handle_add_admin(): ...
 ```
 
-
 ### `dispatch` 方法
 
 此外，使用 `.dispatch` 还能像 `CommandGroup` 一样为每个分发设置独立的 matcher：
@@ -297,7 +296,6 @@ async def handle_add_admin(target: Query[tuple[At, ...]] = Query("~target")):
 
 :::
 
-
 ### `got_path` 方法
 
 另外，`AlconnaMatcher` 有类似于 [`got`](../../appendices/session-control.mdx#got) 的 `got_path` 与配套的 `get_path_arg`, `set_path_arg`：
@@ -323,7 +321,6 @@ async def tt(target: Union[str, At]):
 `got_path` 会获取消息的最后一个消息段并转为 path 对应的类型，例如示例中 `target` 对应的 Arg 里要求 str 或 At，则 got 后用户输入的消息只有为 text 或 at 才能进入处理函数。
 
 `got_path` 中可以使用依赖注入函数 `AlconnaArg`, 类似于 [`Arg`](../../advanced/dependency.mdx#arg).
-
 
 ### `prompt` 方法
 
@@ -426,6 +423,7 @@ def test(
     prefix: bool = True
 ): ...
 ```
+
 - `message`: 测试的消息
 - `expected`: 预期的解析结果，若为 None 则表示只测试是否匹配
 - `prefix`: 是否使用命令前缀，默认为 True

@@ -2,6 +2,7 @@
 sidebar_position: 7
 description: 内置组件
 ---
+
 import Messenger from "@site/src/components/Messenger";
 
 # 内置组件
@@ -149,7 +150,7 @@ i18n配置相关功能
     },
     { position: "right", msg: "/with lang" },
     { position: "left", msg: "设置前缀成功" },
-    { position: "right", msg: "list"},
+    { position: "right", msg: "list" },
     {
       position: "left",
       msg: "支持的语言列表:\n * en-US\n * zh-CN",
@@ -229,6 +230,7 @@ async def handle(content: Match[str]):
 ```
 
 其构造时可传入两个参数:
+
 - `add_left`: 否在当前消息的左侧合并回复消息，默认为 False
 - `sep`: 合并时的分隔符，默认为空格
 
@@ -265,6 +267,7 @@ async def remove(plugin: Match[str], time: Match[int]):
 `MarkdownOutputExtension` 可将 Alconna 的自动输出转换为 Markdown 格式
 
 其构造时可传入两个参数:
+
 - `escape_dot`: 是否转义句中的点号（用来避免被识别为 url）
 - `text_to_image` 将文本转换为图片的函数，可不传入。一般用来设置渲染 markdown 为图片的函数
 

@@ -35,7 +35,7 @@ class Text(Segment):
     """Text对象, 表示一类文本元素"""
     text: str
     styles: dict[tuple[int, int], list[str]]
-    
+
     def cover(self, text: str): ...
     def mark(self, start: Optional[int] = None, end: Optional[int] = None, *styles: str): ...
 
