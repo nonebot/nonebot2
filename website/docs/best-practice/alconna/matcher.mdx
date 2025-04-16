@@ -450,6 +450,15 @@ def test(
 
 :::tip
 
+Extension 可以通过 `add_global_extension` 方法来全局添加。
+
+```python
+from nonebot_plugin_alconna import add_global_extension
+from nonebot_plugin_alconna.builtins.extensions.telegram import TelegramSlashExtension
+
+add_global_extension(TelegramSlashExtension)
+```
+
 全局的 Extension 可延迟加载 (即若有全局拓展加载于部分 AlconnaMatcher 之后，这部分响应器会被追加拓展)
 
 :::

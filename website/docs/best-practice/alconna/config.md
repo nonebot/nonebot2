@@ -45,7 +45,10 @@ description: 配置项
 - **类型**: `list[str]`
 - **默认值**: `[]`
 
-全局加载的扩展，路径以 . 分隔，如 `foo.bar.baz:DemoExtension`。
+全局加载的扩展，其读取路径以 . 分隔，如 `foo.bar.baz:DemoExtension`。
+
+对于内置扩展，路径为 `nonebot_plugin_alconna.builtins.extensions` 下的模块名，如 `ReplyMergeExtension`，可以使用 `@` 来缩写路径，
+如 `@reply:ReplyMergeExtension`。
 
 ## alconna_context_style
 
