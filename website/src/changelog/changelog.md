@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: mcmod百科插件 [@noneflow](https://github.com/noneflow) ([#3443](https://github.com/nonebot/nonebot2/pull/3443))
 - Plugin: LaTeX 在线渲染插件 [@noneflow](https://github.com/noneflow) ([#3314](https://github.com/nonebot/nonebot2/pull/3314))
 - Plugin: nonebot-plugin-anywhere-llm [@noneflow](https://github.com/noneflow) ([#3393](https://github.com/nonebot/nonebot2/pull/3393))
 - Plugin: 贴吧监控 [@noneflow](https://github.com/noneflow) ([#3375](https://github.com/nonebot/nonebot2/pull/3375))
