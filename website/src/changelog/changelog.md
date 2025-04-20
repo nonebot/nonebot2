@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-anywhere-llm [@noneflow](https://github.com/noneflow) ([#3393](https://github.com/nonebot/nonebot2/pull/3393))
 - Plugin: 贴吧监控 [@noneflow](https://github.com/noneflow) ([#3375](https://github.com/nonebot/nonebot2/pull/3375))
 - Plugin: bfvservermap [@noneflow](https://github.com/noneflow) ([#3451](https://github.com/nonebot/nonebot2/pull/3451))
 - Plugin: github_release_notifier [@noneflow](https://github.com/noneflow) ([#3388](https://github.com/nonebot/nonebot2/pull/3388))
