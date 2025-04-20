@@ -8836,4 +8836,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_latex",
+    "project_link": "nonebot-plugin-latex",
+    "author_id": 71250018,
+    "tags": [
+      {
+        "label": "LaTeX",
+        "color": "#007af9"
+      }
+    ],
+    "is_official": false
+  },
 ]
