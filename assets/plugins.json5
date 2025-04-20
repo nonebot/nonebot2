@@ -8867,4 +8867,11 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_custom_face",
+    "project_link": "nonebot-plugin-custom-face",
+    "author_id": 109930302,
+    "tags": [],
+    "is_official": false
+  },
 ]
