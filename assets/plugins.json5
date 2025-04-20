@@ -8860,4 +8860,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_revolver",
+    "project_link": "nonebot-plugin-revolver",
+    "author_id": 68112346,
+    "tags": [],
+    "is_official": false
+  },
 ]
