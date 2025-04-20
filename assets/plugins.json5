@@ -8813,4 +8813,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_tieba_monitor",
+    "project_link": "nonebot-plugin-tieba-monitor",
+    "author_id": 104332832,
+    "tags": [],
+    "is_official": false
+  },
 ]
