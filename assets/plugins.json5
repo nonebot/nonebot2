@@ -8820,4 +8820,20 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_anywhere_llm",
+    "project_link": "nonebot-plugin-anywhere-llm",
+    "author_id": 57753690,
+    "tags": [
+      {
+        "label": "DeepSeek",
+        "color": "#5852f7"
+      },
+      {
+        "label": "LLM",
+        "color": "#f75297"
+      }
+    ],
+    "is_official": false
+  },
 ]
