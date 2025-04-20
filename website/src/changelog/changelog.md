@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: bfvservermap [@noneflow](https://github.com/noneflow) ([#3451](https://github.com/nonebot/nonebot2/pull/3451))
 - Plugin: github_release_notifier [@noneflow](https://github.com/noneflow) ([#3388](https://github.com/nonebot/nonebot2/pull/3388))
 - Plugin: 暗语消息 [@noneflow](https://github.com/noneflow) ([#3433](https://github.com/nonebot/nonebot2/pull/3433))
 - Plugin: 森空岛 [@noneflow](https://github.com/noneflow) ([#3420](https://github.com/nonebot/nonebot2/pull/3420))
