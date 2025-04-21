@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-jmcomic [@noneflow](https://github.com/noneflow) ([#3391](https://github.com/nonebot/nonebot2/pull/3391))
 - Plugin: nonebot-plugin-custom-face [@noneflow](https://github.com/noneflow) ([#3449](https://github.com/nonebot/nonebot2/pull/3449))
 - Plugin: 简易左轮禁言 [@noneflow](https://github.com/noneflow) ([#3453](https://github.com/nonebot/nonebot2/pull/3453))
 - Plugin: mcmod百科插件 [@noneflow](https://github.com/noneflow) ([#3443](https://github.com/nonebot/nonebot2/pull/3443))
