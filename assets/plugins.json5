@@ -8874,4 +8874,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_jmcomic",
+    "project_link": "nonebot-plugin-jmcomic",
+    "author_id": 66541860,
+    "tags": [
+      {
+        "label": "禁漫",
+        "color": "#f3d667"
+      }
+    ],
+    "is_official": false
+  },
 ]
