@@ -8886,4 +8886,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_taygedo_helper",
+    "project_link": "nonebot-plugin-taygedo-helper",
+    "author_id": 61410850,
+    "tags": [
+      {
+        "label": "幻塔",
+        "color": "#ea5252"
+      },
+      {
+        "label": "塔吉多",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
