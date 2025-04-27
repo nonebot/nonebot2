@@ -8902,4 +8902,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ban_sticker",
+    "project_link": "nonebot-plugin-ban-sticker",
+    "author_id": 57578111,
+    "tags": [],
+    "is_official": false
+  },
 ]
