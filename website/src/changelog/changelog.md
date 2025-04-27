@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-ban-sticker [@noneflow](https://github.com/noneflow) ([#3429](https://github.com/nonebot/nonebot2/pull/3429))
 - Plugin: 塔吉多助手 [@noneflow](https://github.com/noneflow) ([#3455](https://github.com/nonebot/nonebot2/pull/3455))
 - Plugin: nonebot-plugin-jmcomic [@noneflow](https://github.com/noneflow) ([#3391](https://github.com/nonebot/nonebot2/pull/3391))
 - Plugin: nonebot-plugin-custom-face [@noneflow](https://github.com/noneflow) ([#3449](https://github.com/nonebot/nonebot2/pull/3449))
