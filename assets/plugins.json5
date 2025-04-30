@@ -8909,4 +8909,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_hitokoto_plus",
+    "project_link": "nonebot-plugin-hitokoto-plus",
+    "author_id": 163709829,
+    "tags": [
+      {
+        "label": "一言",
+        "color": "#7d24d5"
+      }
+    ],
+    "is_official": false
+  },
 ]
