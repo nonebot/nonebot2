@@ -8921,4 +8921,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_poker",
+    "project_link": "nonebot-plugin-poker",
+    "author_id": 138541077,
+    "tags": [
+      {
+        "label": "小游戏",
+        "color": "#ea5252"
+      },
+      {
+        "label": "对战",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
