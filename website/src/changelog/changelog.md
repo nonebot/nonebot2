@@ -20,6 +20,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 词库语言进阶版 [@noneflow](https://github.com/noneflow) ([#3459](https://github.com/nonebot/nonebot2/pull/3459))
 - Plugin: nonebot-plugin-mhguesser [@noneflow](https://github.com/noneflow) ([#3464](https://github.com/nonebot/nonebot2/pull/3464))
 - Plugin: 扑克对决 [@noneflow](https://github.com/noneflow) ([#3409](https://github.com/nonebot/nonebot2/pull/3409))
 - Plugin: 一言+ [@noneflow](https://github.com/noneflow) ([#3444](https://github.com/nonebot/nonebot2/pull/3444))
