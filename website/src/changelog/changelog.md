@@ -20,6 +20,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-mhguesser [@noneflow](https://github.com/noneflow) ([#3464](https://github.com/nonebot/nonebot2/pull/3464))
 - Plugin: 扑克对决 [@noneflow](https://github.com/noneflow) ([#3409](https://github.com/nonebot/nonebot2/pull/3409))
 - Plugin: 一言+ [@noneflow](https://github.com/noneflow) ([#3444](https://github.com/nonebot/nonebot2/pull/3444))
 - Plugin: nonebot-plugin-ban-sticker [@noneflow](https://github.com/noneflow) ([#3429](https://github.com/nonebot/nonebot2/pull/3429))
