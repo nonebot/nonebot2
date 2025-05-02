@@ -8949,4 +8949,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ciku",
+    "project_link": "nonebot-plugin-ciku",
+    "author_id": 174641131,
+    "tags": [
+      {
+        "label": "词库",
+        "color": "#ea5252"
+      },
+      {
+        "label": "小白推荐",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
