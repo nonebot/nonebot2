@@ -8937,4 +8937,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_mhguesser",
+    "project_link": "nonebot-plugin-mhguesser",
+    "author_id": 53973735,
+    "tags": [
+      {
+        "label": "怪物猎人",
+        "color": "#b128a2"
+      }
+    ],
+    "is_official": false
+  },
 ]
