@@ -8965,4 +8965,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_noadpls",
+    "project_link": "nonebot-plugin-noadpls",
+    "author_id": 60888755,
+    "tags": [],
+    "is_official": false
+  },
 ]
