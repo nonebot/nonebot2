@@ -8972,4 +8972,20 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_sideload",
+    "project_link": "nonebot-plugin-sideload",
+    "author_id": 96647974,
+    "tags": [
+      {
+        "label": "Web",
+        "color": "#52eada"
+      },
+      {
+        "label": "聊天",
+        "color": "#85ea52"
+      }
+    ],
+    "is_official": false
+  },
 ]
