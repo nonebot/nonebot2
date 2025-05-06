@@ -8988,4 +8988,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_paper",
+    "project_link": "nonebot-plugin-paper",
+    "author_id": 73932916,
+    "tags": [
+      {
+        "label": "arxiv",
+        "color": "#1c1a17"
+      }
+    ],
+    "is_official": false
+  },
 ]
