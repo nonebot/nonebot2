@@ -9007,4 +9007,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_qqdetail",
+    "project_link": "nonebot-plugin-qqdetail",
+    "author_id": 144674902,
+    "tags": [
+      {
+        "label": "qq",
+        "color": "#52eabc"
+      }
+    ],
+    "is_official": false
+  },
 ]
