@@ -9000,4 +9000,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_dorodoro",
+    "project_link": "nonebot-plugin-dorodoro",
+    "author_id": 93612024,
+    "tags": [],
+    "is_official": false
+  },
 ]
