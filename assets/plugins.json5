@@ -9007,4 +9007,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_farm",
+    "project_link": "nonebot-plugin-farm",
+    "author_id": 51057547,
+    "tags": [
+      {
+        "label": "种地",
+        "color": "#90ee90"
+      }
+    ],
+    "is_official": false
+  },
 ]
