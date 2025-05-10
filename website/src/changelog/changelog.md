@@ -20,6 +20,9 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: doro大冒险 [@noneflow](https://github.com/noneflow) ([#3465](https://github.com/nonebot/nonebot2/pull/3465))
+- Plugin: nonebot_plugin_paper [@noneflow](https://github.com/noneflow) ([#3431](https://github.com/nonebot/nonebot2/pull/3431))
+- Plugin: Web侧载 [@noneflow](https://github.com/noneflow) ([#3470](https://github.com/nonebot/nonebot2/pull/3470))
 - Plugin: 群聊广告哒咩 [@noneflow](https://github.com/noneflow) ([#3446](https://github.com/nonebot/nonebot2/pull/3446))
 - Plugin: 词库语言进阶版 [@noneflow](https://github.com/noneflow) ([#3459](https://github.com/nonebot/nonebot2/pull/3459))
 - Plugin: nonebot-plugin-mhguesser [@noneflow](https://github.com/noneflow) ([#3464](https://github.com/nonebot/nonebot2/pull/3464))
