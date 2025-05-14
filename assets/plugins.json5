@@ -9019,4 +9019,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_multi_source_daily",
+    "project_link": "nonebot-plugin-multi-source-daily",
+    "author_id": 32546670,
+    "tags": [
+      {
+        "label": "日报",
+        "color": "#ea5252"
+      },
+      {
+        "label": "news",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
