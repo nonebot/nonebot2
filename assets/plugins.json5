@@ -9019,4 +9019,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ds_baisuwen",
+    "project_link": "nonebot-plugin-ds-baisuwen",
+    "author_id": 124354633,
+    "tags": [
+      {
+        "label": "DeepSeek",
+        "color": "#ea5252"
+      },
+      {
+        "label": "赛博群友",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
