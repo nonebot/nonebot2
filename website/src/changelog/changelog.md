@@ -20,6 +20,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: QQ账号详细信息查询 [@noneflow](https://github.com/noneflow) ([#3472](https://github.com/nonebot/nonebot2/pull/3472))
 - Plugin: doro大冒险 [@noneflow](https://github.com/noneflow) ([#3465](https://github.com/nonebot/nonebot2/pull/3465))
 - Plugin: nonebot_plugin_paper [@noneflow](https://github.com/noneflow) ([#3431](https://github.com/nonebot/nonebot2/pull/3431))
 - Plugin: Web侧载 [@noneflow](https://github.com/noneflow) ([#3470](https://github.com/nonebot/nonebot2/pull/3470))
