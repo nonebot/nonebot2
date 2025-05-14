@@ -9019,4 +9019,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_jmcomicdownload",
+    "project_link": "nonebot-plugin-jmcomicdownload",
+    "author_id": 96321623,
+    "tags": [
+      {
+        "label": "jm",
+        "color": "#ea5252"
+      },
+      {
+        "label": "禁漫",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
