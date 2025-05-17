@@ -9035,4 +9035,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_fix_qq_img_ssl",
+    "project_link": "nonebot-plugin-fix-qq-img-ssl",
+    "author_id": 59048777,
+    "tags": [
+      {
+        "label": "SSL",
+        "color": "#ea5252"
+      },
+      {
+        "label": "qq",
+        "color": "#52eabc"
+      }
+    ],
+    "is_official": false
+  },
 ]
