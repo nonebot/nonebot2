@@ -299,4 +299,14 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot.adapters.milky",
+    "project_link": "nonebot-adapter-milky",
+    "name": "nonebot-adapter-milky",
+    "desc": "Milky 协议适配器",
+    "author_id": 42648639,
+    "homepage": "https://github.com/nonebot/adapter-milky",
+    "tags": [],
+    "is_official": false
+  },
 ]
