@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 增加 `Milky` 适配器说明 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#3492](https://github.com/nonebot/nonebot2/pull/3492))
 - Docs: 添加 OSPP 2025 项目 [@yanyongyu](https://github.com/yanyongyu) ([#3466](https://github.com/nonebot/nonebot2/pull/3466))
 - Docs: 更新最佳实践 `Alconna` 章节 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#3447](https://github.com/nonebot/nonebot2/pull/3447))
 - Docs: 修复移动端侧边栏折叠状态异常 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3414](https://github.com/nonebot/nonebot2/pull/3414))
