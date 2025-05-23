@@ -9063,4 +9063,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ehentai",
+    "project_link": "nonebot-plugin-ehentai",
+    "author_id": 35657483,
+    "tags": [
+      {
+        "label": "ehentai",
+        "color": "#e3e0d1"
+      }
+    ],
+    "is_official": false
+  },
 ]
