@@ -1,5 +1,5 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 description: 编写与加载嵌套插件
 
 options:
