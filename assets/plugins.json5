@@ -9075,4 +9075,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_picmenu_next",
+    "project_link": "nonebot-plugin-picmenu-next",
+    "author_id": 59048777,
+    "tags": [
+      {
+        "label": "帮助",
+        "color": "#ea5252"
+      },
+      {
+        "label": "菜单",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
