@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: PicMenu Next [@noneflow](https://github.com/noneflow) ([#3488](https://github.com/nonebot/nonebot2/pull/3488))
 - Plugin: nonebot-plugin-ehentai [@noneflow](https://github.com/noneflow) ([#3475](https://github.com/nonebot/nonebot2/pull/3475))
 - Plugin: 真寻农场 [@noneflow](https://github.com/noneflow) ([#3477](https://github.com/nonebot/nonebot2/pull/3477))
 - Plugin: 修复 QQ 图床 SSL 错误 [@noneflow](https://github.com/noneflow) ([#3482](https://github.com/nonebot/nonebot2/pull/3482))
