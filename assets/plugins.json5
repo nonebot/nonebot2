@@ -9111,4 +9111,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_clovers",
+    "project_link": "nonebot-plugin-clovers",
+    "author_id": 51886078,
+    "tags": [
+      {
+        "label": "clovers",
+        "color": "#00cc33"
+      }
+    ],
+    "is_official": false
+  },
 ]
