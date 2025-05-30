@@ -9123,4 +9123,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_pokemonle",
+    "project_link": "nonebot-plugin-pokemonle",
+    "author_id": 53973735,
+    "tags": [
+      {
+        "label": "宝可梦",
+        "color": "#fff160"
+      }
+    ],
+    "is_official": false
+  },
 ]
