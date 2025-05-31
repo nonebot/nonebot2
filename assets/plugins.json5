@@ -9123,4 +9123,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_df_armor_repair_simulator",
+    "project_link": "nonebot-plugin-df-armor-repair-simulator",
+    "author_id": 109930302,
+    "tags": [
+      {
+        "label": "Tool",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
