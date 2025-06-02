@@ -9147,4 +9147,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ark_roulette",
+    "project_link": "nonebot-plugin-ark-roulette",
+    "author_id": 68112346,
+    "tags": [],
+    "is_official": false
+  },
 ]
