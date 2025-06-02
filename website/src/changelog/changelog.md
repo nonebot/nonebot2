@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-emojilike-automonkey [@noneflow](https://github.com/noneflow) ([#3386](https://github.com/nonebot/nonebot2/pull/3386))
 - Plugin: bfvplayerlist [@noneflow](https://github.com/noneflow) ([#3450](https://github.com/nonebot/nonebot2/pull/3450))
 - Plugin: nonebot-plugin-pokemonle [@noneflow](https://github.com/noneflow) ([#3504](https://github.com/nonebot/nonebot2/pull/3504))
 - Plugin: NoneBotCloversClient [@noneflow](https://github.com/noneflow) ([#3494](https://github.com/nonebot/nonebot2/pull/3494))
