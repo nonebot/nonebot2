@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-pokemonle [@noneflow](https://github.com/noneflow) ([#3504](https://github.com/nonebot/nonebot2/pull/3504))
 - Plugin: NoneBotCloversClient [@noneflow](https://github.com/noneflow) ([#3494](https://github.com/nonebot/nonebot2/pull/3494))
 - Plugin: NYATuringTest [@noneflow](https://github.com/noneflow) ([#3479](https://github.com/nonebot/nonebot2/pull/3479))
 - Plugin: PicMenu Next [@noneflow](https://github.com/noneflow) ([#3488](https://github.com/nonebot/nonebot2/pull/3488))
