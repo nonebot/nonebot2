@@ -9135,4 +9135,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_bfvplayerlist",
+    "project_link": "nonebot-plugin-bfvplayerlist",
+    "author_id": 163698589,
+    "tags": [
+      {
+        "label": "战地五",
+        "color": "#529aea"
+      }
+    ],
+    "is_official": false
+  },
 ]
