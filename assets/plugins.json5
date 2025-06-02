@@ -9147,4 +9147,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_emojilike_automonkey",
+    "project_link": "nonebot-plugin-emojilike-automonkey",
+    "author_id": 109930302,
+    "tags": [
+      {
+        "label": "emoji",
+        "color": "#6677ff"
+      }
+    ],
+    "is_official": false
+  },
 ]
