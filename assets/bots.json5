@@ -705,4 +705,21 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "name": "LiteBot",
+    "desc": "Web功能/MC/数据功能Bot",
+    "author_id": 67693593,
+    "homepage": "https://github.com/LiteSuggarDEV/LiteBot-NEO/",
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#ea5252"
+      },
+      {
+        "label": "Web",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
