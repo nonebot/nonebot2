@@ -77,6 +77,10 @@ toc_max_heading_level: 2
 - Plugin: nonebot-plugin-aiochatllm [@noneflow](https://github.com/noneflow) ([#3358](https://github.com/nonebot/nonebot2/pull/3358))
 - Plugin: 拟人回复bot [@noneflow](https://github.com/noneflow) ([#3353](https://github.com/nonebot/nonebot2/pull/3353))
 
+### 🍻 机器人发布
+
+- Bot: LiteBot [@noneflow](https://github.com/noneflow) ([#3514](https://github.com/nonebot/nonebot2/pull/3514))
+
 ### 🍻 适配器发布
 
 - Adapter: nonebot-adapter-milky [@noneflow](https://github.com/noneflow) ([#3491](https://github.com/nonebot/nonebot2/pull/3491))
