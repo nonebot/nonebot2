@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Develop: 修复 devcontainer feature 配置 [@yanyongyu](https://github.com/yanyongyu) ([#3515](https://github.com/nonebot/nonebot2/pull/3515))
 - CI: 修复 Ruff 并发组名称 [@KomoriDev](https://github.com/KomoriDev) ([#3434](https://github.com/nonebot/nonebot2/pull/3434))
 
 ### 🍻 插件发布
