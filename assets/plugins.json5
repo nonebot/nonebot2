@@ -9171,4 +9171,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_hacker_news",
+    "project_link": "nonebot-plugin-hacker-news",
+    "author_id": 36318991,
+    "tags": [
+      {
+        "label": "broadcast",
+        "color": "#ea5252"
+      },
+      {
+        "label": "news",
+        "color": "#f59a10"
+      }
+    ],
+    "is_official": false
+  },
 ]
