@@ -9187,4 +9187,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_limiter",
+    "project_link": "nonebot-plugin-limiter",
+    "author_id": 98752512,
+    "tags": [
+      {
+        "label": "cooldown",
+        "color": "#527aea"
+      }
+    ],
+    "is_official": false
+  },
 ]
