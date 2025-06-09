@@ -285,21 +285,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot.adapters.gewechat",
-    "project_link": "nonebot-adapter-gewechat",
-    "name": "Gewechat",
-    "desc": "Gewechat 微信协议适配器",
-    "author_id": 71173418,
-    "homepage": "https://github.com/Shine-Light/nonebot-adapter-gewechat",
-    "tags": [
-      {
-        "label": "微信",
-        "color": "#79ea52"
-      }
-    ],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot.adapters.milky",
     "project_link": "nonebot-adapter-milky",
     "name": "nonebot-adapter-milky",
