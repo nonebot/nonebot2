@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 命令冷却 [@noneflow](https://github.com/noneflow) ([#3499](https://github.com/nonebot/nonebot2/pull/3499))
 - Plugin: Hacker News [@noneflow](https://github.com/noneflow) ([#3502](https://github.com/nonebot/nonebot2/pull/3502))
 - Plugin: nonebot_plugin_df_armor_repair_simulator [@noneflow](https://github.com/noneflow) ([#3506](https://github.com/nonebot/nonebot2/pull/3506))
 - Plugin: nonebot-plugin-emojilike-automonkey [@noneflow](https://github.com/noneflow) ([#3386](https://github.com/nonebot/nonebot2/pull/3386))
