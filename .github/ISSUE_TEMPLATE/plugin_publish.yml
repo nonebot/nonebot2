@@ -15,8 +15,8 @@ body:
   - type: input
     id: module
     attributes:
-      label: 插件 import 包名
-      description: 插件 import 包名
+      label: 插件模块名
+      description: 加载插件时所使用的名称
       placeholder: e.g. nonebot_plugin_xxx
     validations:
       required: true
