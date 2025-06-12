@@ -722,4 +722,17 @@
     ],
     "is_official": false
   },
+  {
+    "name": "Muicebot",
+    "desc": "Muice-Chatbot 的 Nonebot2 实现，支持调用主流大模型，支持 Function Call 和内置 MCP Host 实现",
+    "author_id": 72406624,
+    "homepage": "https://github.com/Moemu/MuiceBot",
+    "tags": [
+      {
+        "label": "LLM",
+        "color": "#3e97ff"
+      }
+    ],
+    "is_official": false
+  },
 ]
