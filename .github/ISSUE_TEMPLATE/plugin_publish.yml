@@ -8,7 +8,8 @@ body:
       value: |
         # 发布须知
 
-        请在发布前阅读 [NoneBot 插件发布流程指导](https://nonebot.dev/docs/developer/plugin-publishing) 并确保满足其中所述条件
+        非特殊情况下，请通过 [NoneBot 插件商店](https://nonebot.dev/store/plugins) 的发布表单进行插件发布信息填写。
+        在发布前请阅读 [NoneBot 插件发布流程指导](https://nonebot.dev/docs/developer/plugin-publishing) 并确保满足其中所述条件。
 
   - type: input
     id: pypi

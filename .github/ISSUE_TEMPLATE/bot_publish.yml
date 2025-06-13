@@ -3,6 +3,13 @@ title: "Bot: {name}"
 description: 发布机器人到 NoneBot 官方商店
 labels: ["Bot", "Publish"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        # 发布须知
+
+        非特殊情况下，请通过 [NoneBot 机器人商店](https://nonebot.dev/store/bots) 的发布表单进行插件发布信息填写。
+
   - type: input
     id: name
     attributes:
