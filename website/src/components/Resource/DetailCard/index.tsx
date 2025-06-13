@@ -203,7 +203,7 @@ export default function ResourceDetailCard({ resource }: Props) {
                 href={homepageLink}
                 target="_blank"
                 rel="noreferrer"
-                className=""
+                className="detail-card-meta-item-link"
               >
                 {moduleName}
               </a>
