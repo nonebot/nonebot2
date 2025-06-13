@@ -80,6 +80,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: Muicebot [@noneflow](https://github.com/noneflow) ([#3523](https://github.com/nonebot/nonebot2/pull/3523))
 - Bot: LiteBot [@noneflow](https://github.com/noneflow) ([#3514](https://github.com/nonebot/nonebot2/pull/3514))
 
 ### 🍻 适配器发布
