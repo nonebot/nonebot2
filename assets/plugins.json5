@@ -9199,4 +9199,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_uptime_kuma_puller",
+    "project_link": "nonebot-plugin-uptime-kuma-puller",
+    "author_id": 162992527,
+    "tags": [
+      {
+        "label": "监控抓取器",
+        "color": "#7d24d5"
+      }
+    ],
+    "is_official": false
+  },
 ]
