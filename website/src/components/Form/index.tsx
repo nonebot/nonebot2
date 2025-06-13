@@ -24,6 +24,7 @@ export type FormItemGroup = {
 
 export type Props = {
   children?: React.ReactNode;
+  description?: React.ReactNode;
   type: Resource["resourceType"];
   formItems: FormItemGroup[];
   handleSubmit: (result: Record<string, string>) => void;
@@ -32,6 +33,7 @@ export type Props = {
 export function Form({
   type,
   children,
+  description,
   formItems,
   handleSubmit,
 }: Props): React.ReactNode {
@@ -65,7 +67,6 @@ export function Form({
     );
     if (currentStepNames.every((name) => result[name])) {
       setCurrentStep(currentStep + 1);
-    } else {
     }
   };
   const onPrev = () => currentStep > 0 && setCurrentStep(currentStep - 1);
@@ -86,6 +87,9 @@ export function Form({
           </li>
         ))}
       </ul>
+      {description && currentStep === 0 && (
+        <div className="form-description">{description}</div>
+      )}
       <div className="form-control w-full min-h-[300px]">
         {children ||
           formItems[currentStep].items.map((item) => (
