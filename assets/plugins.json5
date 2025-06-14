@@ -9199,4 +9199,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_zzzpanel",
+    "project_link": "nonebot-plugin-zzzpanel",
+    "author_id": 174641131,
+    "tags": [
+      {
+        "label": "米哈游",
+        "color": "#ea5252"
+      },
+      {
+        "label": "绝区零",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
