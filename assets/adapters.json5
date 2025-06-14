@@ -294,4 +294,23 @@
     "tags": [],
     "is_official": true
   },
+  {
+    "module_name": "nonebot.adapters.efchat",
+    "project_link": "nonebot-adapter-efchat",
+    "name": "nonebot-adapter-efchat",
+    "desc": "适用于EFChat(恒五聊)聊天室的nonebot适配器",
+    "author_id": 104612722,
+    "homepage": "https://github.com/molanp/nonebot_adapter_efchat",
+    "tags": [
+      {
+        "label": "EFChat",
+        "color": "#ac6161"
+      },
+      {
+        "label": "恒五聊",
+        "color": "#cc99ff"
+      }
+    ],
+    "is_official": false
+  },
 ]
