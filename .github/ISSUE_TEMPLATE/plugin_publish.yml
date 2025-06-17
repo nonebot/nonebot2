@@ -3,6 +3,14 @@ title: "Plugin: {name}"
 description: 发布插件到 NoneBot 官方商店
 labels: ["Plugin", "Publish"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        # 发布须知
+
+        非特殊情况下，请通过 [NoneBot 插件商店](https://nonebot.dev/store/plugins) 的发布表单进行插件发布信息填写。
+        在发布前请阅读 [NoneBot 插件发布流程指导](https://nonebot.dev/docs/developer/plugin-publishing) 并确保满足其中所述条件。
+
   - type: input
     id: pypi
     attributes:
@@ -15,9 +23,9 @@ body:
   - type: input
     id: module
     attributes:
-      label: 插件 import 包名
-      description: 插件 import 包名
-      placeholder: e.g. nonebot_plugin_xxx
+      label: 插件模块名
+      description: 加载插件时所使用的模块名称
+      placeholder: e.g. nonebot_plugin_apscheduler
     validations:
       required: true
 

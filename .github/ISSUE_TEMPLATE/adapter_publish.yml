@@ -3,6 +3,13 @@ title: "Adapter: {name}"
 description: 发布适配器到 NoneBot 官方商店
 labels: ["Adapter", "Publish"]
 body:
+  - type: markdown
+    attributes:
+      value: |
+        # 发布须知
+
+        非特殊情况下，请通过 [NoneBot 适配器商店](https://nonebot.dev/store/adapters) 的发布表单进行插件发布信息填写。
+
   - type: input
     id: name
     attributes:
