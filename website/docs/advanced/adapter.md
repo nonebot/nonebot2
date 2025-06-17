@@ -1,5 +1,5 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 description: 注册适配器与指定平台交互
 
 options:
