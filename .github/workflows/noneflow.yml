@@ -3,16 +3,16 @@ name: NoneFlow
 on:
   issues:
     types: [opened, reopened, edited]
-  pull_request_target:
-    types: [closed]
   issue_comment:
     types: [created]
+  pull_request_target:
+    types: [closed]
   pull_request_review:
     types: [submitted]
 
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event.issue.number || github.run_id }}
-  cancel-in-progress: false
+  group: ${{ github.workflow }}-${{ github.event.issue.number && format('publish/issue{0}', github.event.issue.number) || github.head_ref || github.run_id }}
+  cancel-in-progress: ${{ startsWith(github.head_ref, 'publish/issue')}}
 
 jobs:
   noneflow:
@@ -58,8 +58,16 @@ jobs:
               "plugin_path": "assets/plugins.json5",
               "bot_path": "assets/bots.json5",
               "adapter_path": "assets/adapters.json5",
-              "registry_repository": "nonebot/registry"
+              "registry_repository": "nonebot/registry",
+              "artifact_path": "artifact"
             }
         env:
           APP_ID: ${{ secrets.APP_ID }}
           PRIVATE_KEY: ${{ secrets.APP_KEY }}
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: noneflow
+          path: artifact/*
+          if-no-files-found: ignore
