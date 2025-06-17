@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- CI: 适配 NoneFlow 4.4.0 [@he0119](https://github.com/he0119) ([#3539](https://github.com/nonebot/nonebot2/pull/3539))
 - Develop: 修复 devcontainer feature 配置 [@yanyongyu](https://github.com/yanyongyu) ([#3515](https://github.com/nonebot/nonebot2/pull/3515))
 - CI: 修复 Ruff 并发组名称 [@KomoriDev](https://github.com/KomoriDev) ([#3434](https://github.com/nonebot/nonebot2/pull/3434))
 
