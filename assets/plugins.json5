@@ -9215,4 +9215,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_NobleDuel",
+    "project_link": "nonebot-plugin-NobleDuel",
+    "author_id": 105113722,
+    "tags": [
+      {
+        "label": "贵族决斗",
+        "color": "#527dea"
+      },
+      {
+        "label": "恶魔轮盘",
+        "color": "#ea5255"
+      },
+      {
+        "label": "养成",
+        "color": "#82ea52"
+      }
+    ],
+    "is_official": false
+  },
 ]
