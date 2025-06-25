@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot_plugin_sunset_reminder [@noneflow](https://github.com/noneflow) ([#3538](https://github.com/nonebot/nonebot2/pull/3538))
 - Plugin: nonebot-plugin-NobleDuel [@noneflow](https://github.com/noneflow) ([#3521](https://github.com/nonebot/nonebot2/pull/3521))
 - Plugin: 绝区零角色数据获取 [@noneflow](https://github.com/noneflow) ([#3512](https://github.com/nonebot/nonebot2/pull/3512))
 - Plugin: 命令冷却 [@noneflow](https://github.com/noneflow) ([#3499](https://github.com/nonebot/nonebot2/pull/3499))
