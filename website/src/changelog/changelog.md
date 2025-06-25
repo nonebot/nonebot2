@@ -89,6 +89,7 @@ toc_max_heading_level: 2
 
 ### 🍻 适配器发布
 
+- Adapter: nonebot-adapter-efchat [@noneflow](https://github.com/noneflow) ([#3496](https://github.com/nonebot/nonebot2/pull/3496))
 - Adapter: 删除 Gewechat 适配器 [@Shine-Light](https://github.com/Shine-Light) ([#3516](https://github.com/nonebot/nonebot2/pull/3516))
 - Adapter: nonebot-adapter-milky [@noneflow](https://github.com/noneflow) ([#3491](https://github.com/nonebot/nonebot2/pull/3491))
 - Adapter: Gewechat [@noneflow](https://github.com/noneflow) ([#3306](https://github.com/nonebot/nonebot2/pull/3306))
