@@ -9235,4 +9235,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_sunset_reminder",
+    "project_link": "nonebot-plugin-sunset-reminder",
+    "author_id": 80151962,
+    "tags": [
+      {
+        "label": "火烧云",
+        "color": "#ff9c00"
+      }
+    ],
+    "is_official": false
+  },
 ]
