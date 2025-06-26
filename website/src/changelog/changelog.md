@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 增加 `EFChat` 适配器说明 [@molanp](https://github.com/molanp) ([#3544](https://github.com/nonebot/nonebot2/pull/3544))
 - Docs: 插件发布表单描述优化 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3520](https://github.com/nonebot/nonebot2/pull/3520))
 - Docs: 增加 `Milky` 适配器说明 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#3492](https://github.com/nonebot/nonebot2/pull/3492))
 - Docs: 添加 OSPP 2025 项目 [@yanyongyu](https://github.com/yanyongyu) ([#3466](https://github.com/nonebot/nonebot2/pull/3466))
