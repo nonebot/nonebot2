@@ -138,6 +138,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
   |     黑盒语音（[仓库](https://github.com/lclbm/adapter-heybox)，[协议](https://github.com/QingFengOpen/HeychatDoc)）     |  ↗️  |                       黑盒语音机器人协议，由社区贡献                             |
   | 微信公众平台（[仓库](https://github.com/YangRucheng/nonebot-adapter-wxmp)，[协议](https://developers.weixin.qq.com/doc/)）|  ↗️  |                       微信公众平台协议，由社区贡献                             |
   | Gewechat（[仓库](https://github.com/Shine-Light/nonebot-adapter-gewechat)，[协议](https://github.com/Devo919/Gewechat)）|  ❌  |                      Gewechat 微信协议，Gewechat不再维护及可用                            |
+  |  EFChat（[仓库](https://github.com/molanp/nonebot_adapter_efchat)，[协议](https://irinu-live.melon.fish/efc-help/)）   |  ↗️  |                            恒五聊平台协议，由社区贡献                          |
 
 - 坚实后盾：支持多种 web 框架，可自定义替换、组合
 
