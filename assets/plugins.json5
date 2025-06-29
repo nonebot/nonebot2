@@ -9247,4 +9247,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_binance",
+    "project_link": "nonebot-plugin-binance",
+    "author_id": 96228495,
+    "tags": [
+      {
+        "label": "binance",
+        "color": "#ea5252"
+      },
+      {
+        "label": "币安",
+        "color": "#e9ea52"
+      }
+    ],
+    "is_official": false
+  },
 ]
