@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 依赖注入扩展 [@noneflow](https://github.com/noneflow) ([#3552](https://github.com/nonebot/nonebot2/pull/3552))
 - Plugin: nonebot-plugin-orm [@noneflow](https://github.com/noneflow) ([#3557](https://github.com/nonebot/nonebot2/pull/3557))
 - Plugin: 币安小助手 [@noneflow](https://github.com/noneflow) ([#3525](https://github.com/nonebot/nonebot2/pull/3525))
 - Plugin: nonebot_plugin_sunset_reminder [@noneflow](https://github.com/noneflow) ([#3538](https://github.com/nonebot/nonebot2/pull/3538))
