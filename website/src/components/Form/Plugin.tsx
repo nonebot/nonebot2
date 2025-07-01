@@ -21,9 +21,6 @@ export default function PluginForm(): React.ReactNode {
   const handleSubmit = (result: Record<string, string>) => {
     window.open(
       `https://github.com/nonebot/nonebot2/issues/new?${new URLSearchParams({
-        assignees: "",
-        labels: "Plugin",
-        projects: "",
         template: "plugin_publish.yml",
         title: `Plugin: ${result.pypi}`,
         ...result,

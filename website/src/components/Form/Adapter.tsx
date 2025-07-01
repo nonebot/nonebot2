@@ -35,9 +35,6 @@ export default function AdapterForm(): React.ReactNode {
   const handleSubmit = (result: Record<string, string>) => {
     window.open(
       `https://github.com/nonebot/nonebot2/issues/new?${new URLSearchParams({
-        assignees: "",
-        labels: "Adapter",
-        projects: "",
         template: "adapter_publish.yml",
         title: `Adapter: ${result.name}`,
         ...result,
