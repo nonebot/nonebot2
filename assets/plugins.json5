@@ -9263,4 +9263,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_orm",
+    "project_link": "nonebot-plugin-orm",
+    "author_id": 45716046,
+    "tags": [],
+    "is_official": false
+  },
 ]
