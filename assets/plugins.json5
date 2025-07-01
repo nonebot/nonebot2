@@ -9270,4 +9270,11 @@
     "tags": [],
     "is_official": true
   },
+  {
+    "module_name": "nonebot_plugin_exdi",
+    "project_link": "nonebot-plugin-exdi",
+    "author_id": 122149478,
+    "tags": [],
+    "is_official": false
+  },
 ]
