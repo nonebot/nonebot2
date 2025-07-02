@@ -256,6 +256,17 @@ class HTTPClientSession(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
+    async def stream_request(
+        self,
+        setup: Request,
+        *,
+        chunk_size: int = 1024,
+    ) -> AsyncGenerator[Response, None]:
+        """发送一个 HTTP 流式请求"""
+        raise NotImplementedError
+        yield  # used for static type checking's generator detection
+
+    @abc.abstractmethod
     async def setup(self) -> None:
         """初始化会话"""
         raise NotImplementedError
@@ -285,6 +296,17 @@ class HTTPClientMixin(ForwardMixin):
     async def request(self, setup: Request) -> Response:
         """发送一个 HTTP 请求"""
         raise NotImplementedError
+
+    @abc.abstractmethod
+    async def stream_request(
+        self,
+        setup: Request,
+        *,
+        chunk_size: int = 1024,
+    ) -> AsyncGenerator[Response, None]:
+        """发送一个 HTTP 流式请求"""
+        raise NotImplementedError
+        yield  # used for static type checking's generator detection
 
     @abc.abstractmethod
     def get_session(

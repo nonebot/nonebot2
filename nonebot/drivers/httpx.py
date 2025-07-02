@@ -17,6 +17,7 @@ FrontMatter:
     description: nonebot.drivers.httpx 模块
 """
 
+from collections.abc import AsyncGenerator
 from typing import TYPE_CHECKING, Optional, Union
 from typing_extensions import override
 
@@ -96,6 +97,34 @@ class Session(HTTPClientSession):
         )
 
     @override
+    async def stream_request(
+        self,
+        setup: Request,
+        *,
+        chunk_size: int = 1024,
+    ) -> AsyncGenerator[Response, None]:
+        async with self.client.stream(
+            setup.method,
+            str(setup.url),
+            content=setup.content,
+            data=setup.data,
+            files=setup.files,
+            json=setup.json,
+            # ensure the params priority
+            params=setup.url.raw_query_string,
+            headers=tuple(setup.headers.items()),
+            cookies=setup.cookies.jar,
+            timeout=setup.timeout,
+        ) as response:
+            async for chunk in response.aiter_bytes(chunk_size=chunk_size):
+                yield Response(
+                    response.status_code,
+                    headers=response.headers.multi_items(),
+                    content=chunk,
+                    request=setup,
+                )
+
+    @override
     async def setup(self) -> None:
         if self._client is not None:
             raise RuntimeError("Session has already been initialized")
@@ -132,6 +161,21 @@ class Mixin(HTTPClientMixin):
             version=setup.version, proxy=setup.proxy
         ) as session:
             return await session.request(setup)
+
+    @override
+    async def stream_request(
+        self,
+        setup: Request,
+        *,
+        chunk_size: int = 1024,
+    ) -> AsyncGenerator[Response, None]:
+        async with self.get_session(
+            version=setup.version, proxy=setup.proxy
+        ) as session:
+            async for response in session.stream_request(
+                setup, chunk_size=chunk_size
+            ):
+                yield response
 
     @override
     def get_session(
