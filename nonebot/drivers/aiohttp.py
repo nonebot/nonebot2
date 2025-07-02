@@ -212,9 +212,7 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
         chunk_size: int = 1024,
     ) -> AsyncGenerator[Response, None]:
         async with self.get_session() as session:
-            async for response in session.stream_request(
-                setup, chunk_size=chunk_size
-            ):
+            async for response in session.stream_request(setup, chunk_size=chunk_size):
                 yield response
 
     @override
