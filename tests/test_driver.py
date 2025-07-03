@@ -304,6 +304,28 @@ async def test_http_client(driver: Driver, server_url: URL):
         "test3": "test",
     }, "file parsing error"
 
+    # post with stream request
+    request = Request(
+        "POST",
+        server_url,
+        params={"param": "stream"},
+        headers={"X-Test": "stream"},
+        cookies={"session": "stream"},
+        content="stream_test" * 1024,
+    )
+    chunks = []
+    async for resp in driver.stream_request(request, chunk_size=4):
+        assert resp.status_code == 200
+        assert resp.content
+        chunks.append(resp.content)
+    data = b"".join(chunks)
+    json_data = json.loads(data)
+    assert json_data["method"] == "POST"
+    assert json_data["args"] == {"param": "stream"}
+    assert json_data["headers"].get("X-Test") == "stream"
+    assert json_data["headers"].get("Cookie") == "session=stream"
+    assert json_data["data"] == "stream_test" * 1024
+
     await anyio.sleep(1)
 
 
@@ -418,6 +440,33 @@ async def test_http_client_session(driver: Driver, server_url: URL):
             "test2": "test",
             "test3": "test",
         }, "file parsing error"
+
+    # post with stream request
+    async with session as session:
+        request = Request(
+            "POST",
+            server_url,
+            params={"param": "stream"},
+            headers={"X-Test": "stream"},
+            cookies={"cookie": "stream"},
+            content="stream_test" * 1024,
+        )
+        chunks = []
+        async for resp in session.stream_request(request, chunk_size=4):
+            assert resp.status_code == 200
+            assert resp.content
+            chunks.append(resp.content)
+        data = b"".join(chunks)
+        json_data = json.loads(data)
+        assert json_data["method"] == "POST"
+        assert json_data["args"] == {"session": "test", "param": "stream"}
+        assert json_data["headers"].get("X-Session") == "test"
+        assert json_data["headers"].get("X-Test") == "stream"
+        assert {
+            key: cookie.value
+            for key, cookie in SimpleCookie(json_data["headers"].get("Cookie")).items()
+        } == {"session": "test", "cookie": "stream"}
+        assert json_data["data"] == "stream_test" * 1024
 
     await anyio.sleep(1)
 
