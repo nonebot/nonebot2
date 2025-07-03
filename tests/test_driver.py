@@ -304,7 +304,7 @@ async def test_http_client(driver: Driver, server_url: URL):
         "test3": "test",
     }, "file parsing error"
 
-    # post with stream request
+    # post stream request with query, headers, cookies and content
     request = Request(
         "POST",
         server_url,
@@ -318,13 +318,59 @@ async def test_http_client(driver: Driver, server_url: URL):
         assert resp.status_code == 200
         assert resp.content
         chunks.append(resp.content)
-    data = b"".join(chunks)
-    json_data = json.loads(data)
-    assert json_data["method"] == "POST"
-    assert json_data["args"] == {"param": "stream"}
-    assert json_data["headers"].get("X-Test") == "stream"
-    assert json_data["headers"].get("Cookie") == "session=stream"
-    assert json_data["data"] == "stream_test" * 1024
+    data = json.loads(b"".join(chunks))
+    assert data["method"] == "POST"
+    assert data["args"] == {"param": "stream"}
+    assert data["headers"].get("X-Test") == "stream"
+    assert data["headers"].get("Cookie") == "session=stream"
+    assert data["data"] == "stream_test" * 1024
+
+    # post stream request with data body
+    request = Request("POST", server_url, data={"form": "test"})
+    chunks = []
+    async for resp in driver.stream_request(request, chunk_size=4):
+        assert resp.status_code == 200
+        assert resp.content
+        chunks.append(resp.content)
+    data = json.loads(b"".join(chunks))
+    assert data["method"] == "POST"
+    assert data["form"] == {"form": "test"}
+
+    # post stream request with json body
+    request = Request("POST", server_url, json={"json": "test"})
+    chunks = []
+    async for resp in driver.stream_request(request, chunk_size=4):
+        assert resp.status_code == 200
+        assert resp.content
+        chunks.append(resp.content)
+    data = json.loads(b"".join(chunks))
+    assert data["method"] == "POST"
+    assert data["json"] == {"json": "test"}
+
+    # post stream request with files and form data
+    request = Request(
+        "POST",
+        server_url,
+        data={"form": "test"},
+        files=[
+            ("test1", b"test"),
+            ("test2", ("test.txt", b"test")),
+            ("test3", ("test.txt", b"test", "text/plain")),
+        ],
+    )
+    chunks = []
+    async for resp in driver.stream_request(request, chunk_size=4):
+        assert response.status_code == 200
+        assert response.content
+        chunks.append(resp.content)
+    data = json.loads(b"".join(chunks))
+    assert data["method"] == "POST"
+    assert data["form"] == {"form": "test"}
+    assert data["files"] == {
+        "test1": "test",
+        "test2": "test",
+        "test3": "test",
+    }, "file parsing error"
 
     await anyio.sleep(1)
 
@@ -441,8 +487,7 @@ async def test_http_client_session(driver: Driver, server_url: URL):
             "test3": "test",
         }, "file parsing error"
 
-    # post with stream request
-    async with session as session:
+        # post stream request with query, headers, cookies and content
         request = Request(
             "POST",
             server_url,
@@ -456,17 +501,81 @@ async def test_http_client_session(driver: Driver, server_url: URL):
             assert resp.status_code == 200
             assert resp.content
             chunks.append(resp.content)
-        data = b"".join(chunks)
-        json_data = json.loads(data)
-        assert json_data["method"] == "POST"
-        assert json_data["args"] == {"session": "test", "param": "stream"}
-        assert json_data["headers"].get("X-Session") == "test"
-        assert json_data["headers"].get("X-Test") == "stream"
+        data = json.loads(b"".join(chunks))
+        assert data["method"] == "POST"
+        assert data["args"] == {"session": "test", "param": "stream"}
+        assert data["headers"].get("X-Session") == "test"
+        assert data["headers"].get("X-Test") == "stream"
         assert {
             key: cookie.value
-            for key, cookie in SimpleCookie(json_data["headers"].get("Cookie")).items()
+            for key, cookie in SimpleCookie(data["headers"].get("Cookie")).items()
         } == {"session": "test", "cookie": "stream"}
-        assert json_data["data"] == "stream_test" * 1024
+        assert data["data"] == "stream_test" * 1024
+
+        # post stream request with data body
+        request = Request("POST", server_url, data={"form": "test"})
+        chunks = []
+        async for resp in session.stream_request(request, chunk_size=4):
+            assert resp.status_code == 200
+            assert resp.content
+            chunks.append(resp.content)
+        data = json.loads(b"".join(chunks))
+        assert data["method"] == "POST"
+        assert data["args"] == {"session": "test"}
+        assert data["headers"].get("X-Session") == "test"
+        assert {
+            key: cookie.value
+            for key, cookie in SimpleCookie(data["headers"].get("Cookie")).items()
+        } == {"session": "test"}
+        assert data["form"] == {"form": "test"}
+
+        # post stream request with json body
+        request = Request("POST", server_url, json={"json": "test"})
+        chunks = []
+        async for resp in session.stream_request(request, chunk_size=4):
+            assert resp.status_code == 200
+            assert resp.content
+            chunks.append(resp.content)
+        data = json.loads(b"".join(chunks))
+        assert data["method"] == "POST"
+        assert data["args"] == {"session": "test"}
+        assert data["headers"].get("X-Session") == "test"
+        assert {
+            key: cookie.value
+            for key, cookie in SimpleCookie(data["headers"].get("Cookie")).items()
+        } == {"session": "test"}
+        assert data["json"] == {"json": "test"}
+
+        # post stream request with files and form data
+        request = Request(
+            "POST",
+            server_url,
+            data={"form": "test"},
+            files=[
+                ("test1", b"test"),
+                ("test2", ("test.txt", b"test")),
+                ("test3", ("test.txt", b"test", "text/plain")),
+            ],
+        )
+        chunks = []
+        async for resp in session.stream_request(request, chunk_size=4):
+            assert resp.status_code == 200
+            assert resp.content
+            chunks.append(resp.content)
+        data = json.loads(b"".join(chunks))
+        assert data["method"] == "POST"
+        assert data["args"] == {"session": "test"}
+        assert data["headers"].get("X-Session") == "test"
+        assert {
+            key: cookie.value
+            for key, cookie in SimpleCookie(data["headers"].get("Cookie")).items()
+        } == {"session": "test"}
+        assert data["form"] == {"form": "test"}
+        assert data["files"] == {
+            "test1": "test",
+            "test2": "test",
+            "test3": "test",
+        }, "file parsing error"
 
     await anyio.sleep(1)
 
