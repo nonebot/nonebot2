@@ -28,6 +28,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 喜（悲）报生成器 [@noneflow](https://github.com/noneflow) ([#3527](https://github.com/nonebot/nonebot2/pull/3527))
 - Plugin: 依赖注入扩展 [@noneflow](https://github.com/noneflow) ([#3552](https://github.com/nonebot/nonebot2/pull/3552))
 - Plugin: nonebot-plugin-orm [@noneflow](https://github.com/noneflow) ([#3557](https://github.com/nonebot/nonebot2/pull/3557))
 - Plugin: 币安小助手 [@noneflow](https://github.com/noneflow) ([#3525](https://github.com/nonebot/nonebot2/pull/3525))
