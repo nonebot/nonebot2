@@ -161,10 +161,11 @@ class Session(HTTPClientSession):
             proxy=setup.proxy or self._proxy,
             timeout=timeout,
         ) as response:
+            response_headers = response.headers.copy()
             async for chunk in response.content.iter_chunked(chunk_size):
                 yield Response(
                     response.status,
-                    headers=response.headers.copy(),
+                    headers=response_headers,
                     content=chunk,
                     request=setup,
                 )

@@ -116,10 +116,11 @@ class Session(HTTPClientSession):
             cookies=setup.cookies.jar,
             timeout=setup.timeout,
         ) as response:
+            response_headers = response.headers.multi_items()
             async for chunk in response.aiter_bytes(chunk_size=chunk_size):
                 yield Response(
                     response.status_code,
-                    headers=response.headers.multi_items(),
+                    headers=response_headers,
                     content=chunk,
                     request=setup,
                 )
