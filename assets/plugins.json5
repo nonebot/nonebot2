@@ -9273,4 +9273,11 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_xibao",
+    "project_link": "nonebot-plugin-xibao",
+    "author_id": 176733343,
+    "tags": [],
+    "is_official": false
+  },
 ]
