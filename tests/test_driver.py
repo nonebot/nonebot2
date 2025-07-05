@@ -318,6 +318,7 @@ async def test_http_client(driver: Driver, server_url: URL):
         assert resp.status_code == 200
         assert resp.content
         chunks.append(resp.content)
+    assert all(len(chunk) == 4 for chunk in chunks[:-1])
     data = json.loads(b"".join(chunks))
     assert data["method"] == "POST"
     assert data["args"] == {"param": "stream"}
@@ -332,6 +333,7 @@ async def test_http_client(driver: Driver, server_url: URL):
         assert resp.status_code == 200
         assert resp.content
         chunks.append(resp.content)
+    assert all(len(chunk) == 4 for chunk in chunks[:-1])
     data = json.loads(b"".join(chunks))
     assert data["method"] == "POST"
     assert data["form"] == {"form": "test"}
@@ -343,6 +345,7 @@ async def test_http_client(driver: Driver, server_url: URL):
         assert resp.status_code == 200
         assert resp.content
         chunks.append(resp.content)
+    assert all(len(chunk) == 4 for chunk in chunks[:-1])
     data = json.loads(b"".join(chunks))
     assert data["method"] == "POST"
     assert data["json"] == {"json": "test"}
@@ -363,6 +366,7 @@ async def test_http_client(driver: Driver, server_url: URL):
         assert response.status_code == 200
         assert response.content
         chunks.append(resp.content)
+    assert all(len(chunk) == 4 for chunk in chunks[:-1])
     data = json.loads(b"".join(chunks))
     assert data["method"] == "POST"
     assert data["form"] == {"form": "test"}
@@ -501,6 +505,7 @@ async def test_http_client_session(driver: Driver, server_url: URL):
             assert resp.status_code == 200
             assert resp.content
             chunks.append(resp.content)
+        assert all(len(chunk) == 4 for chunk in chunks[:-1])
         data = json.loads(b"".join(chunks))
         assert data["method"] == "POST"
         assert data["args"] == {"session": "test", "param": "stream"}
@@ -519,6 +524,7 @@ async def test_http_client_session(driver: Driver, server_url: URL):
             assert resp.status_code == 200
             assert resp.content
             chunks.append(resp.content)
+        assert all(len(chunk) == 4 for chunk in chunks[:-1])
         data = json.loads(b"".join(chunks))
         assert data["method"] == "POST"
         assert data["args"] == {"session": "test"}
@@ -536,6 +542,7 @@ async def test_http_client_session(driver: Driver, server_url: URL):
             assert resp.status_code == 200
             assert resp.content
             chunks.append(resp.content)
+        assert all(len(chunk) == 4 for chunk in chunks[:-1])
         data = json.loads(b"".join(chunks))
         assert data["method"] == "POST"
         assert data["args"] == {"session": "test"}
@@ -562,6 +569,7 @@ async def test_http_client_session(driver: Driver, server_url: URL):
             assert resp.status_code == 200
             assert resp.content
             chunks.append(resp.content)
+        assert all(len(chunk) == 4 for chunk in chunks[:-1])
         data = json.loads(b"".join(chunks))
         assert data["method"] == "POST"
         assert data["args"] == {"session": "test"}
