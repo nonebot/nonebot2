@@ -9280,4 +9280,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_vv",
+    "project_link": "nonebot-plugin-vv",
+    "author_id": 85243954,
+    "tags": [
+      {
+        "label": "表情包",
+        "color": "#b9f6ca"
+      }
+    ],
+    "is_official": false
+  },
 ]
