@@ -126,6 +126,51 @@ class Session(HTTPClientSession):
             )
 
     @override
+    async def stream_request(
+        self,
+        setup: Request,
+        *,
+        chunk_size: int = 1024,
+    ) -> AsyncGenerator[Response, None]:
+        if self._params:
+            url = setup.url.with_query({**self._params, **setup.url.query})
+        else:
+            url = setup.url
+
+        data = setup.data
+        if setup.files:
+            data = aiohttp.FormData(data or {}, quote_fields=False)
+            for name, file in setup.files:
+                data.add_field(name, file[1], content_type=file[2], filename=file[0])
+
+        cookies = (
+            (cookie.name, cookie.value)
+            for cookie in setup.cookies
+            if cookie.value is not None
+        )
+
+        timeout = aiohttp.ClientTimeout(setup.timeout)
+
+        async with self.client.request(
+            setup.method,
+            url,
+            data=setup.content or data,
+            json=setup.json,
+            cookies=cookies,
+            headers=setup.headers,
+            proxy=setup.proxy or self._proxy,
+            timeout=timeout,
+        ) as response:
+            response_headers = response.headers.copy()
+            async for chunk in response.content.iter_chunked(chunk_size):
+                yield Response(
+                    response.status,
+                    headers=response_headers,
+                    content=chunk,
+                    request=setup,
+                )
+
+    @override
     async def setup(self) -> None:
         if self._client is not None:
             raise RuntimeError("Session has already been initialized")
@@ -159,6 +204,17 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
     async def request(self, setup: Request) -> Response:
         async with self.get_session() as session:
             return await session.request(setup)
+
+    @override
+    async def stream_request(
+        self,
+        setup: Request,
+        *,
+        chunk_size: int = 1024,
+    ) -> AsyncGenerator[Response, None]:
+        async with self.get_session() as session:
+            async for response in session.stream_request(setup, chunk_size=chunk_size):
+                yield response
 
     @override
     @asynccontextmanager
