@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 为 `HTTPClient` 等内置驱动器添加流式请求方法 [@Ailitonia](https://github.com/Ailitonia) ([#3560](https://github.com/nonebot/nonebot2/pull/3560))
+
 ### 📝 文档
 
 - Docs: 修复组织成员提交 issue 时不遵守表单 [@ProgramRipper](https://github.com/ProgramRipper) ([#3558](https://github.com/nonebot/nonebot2/pull/3558))
