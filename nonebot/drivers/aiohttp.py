@@ -37,7 +37,7 @@ from nonebot.drivers import (
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.exception import WebSocketClosed
-from nonebot.internal.driver import Cookies, CookieTypes, HeaderTypes, QueryTypes
+from nonebot.internal.driver import Cookies, CookieTypes, HeaderTypes, QueryTypes, Timeout, TimeoutTypes
 
 try:
     import aiohttp
@@ -56,7 +56,7 @@ class Session(HTTPClientSession):
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
         version: Union[str, HTTPVersion] = HTTPVersion.H11,
-        timeout: Optional[float] = None,
+        timeout: TimeoutTypes = None,
         proxy: Optional[str] = None,
     ):
         self._client: Optional[aiohttp.ClientSession] = None
@@ -106,7 +106,14 @@ class Session(HTTPClientSession):
             if cookie.value is not None
         )
 
-        timeout = aiohttp.ClientTimeout(setup.timeout)
+        if isinstance(setup.timeout, Timeout):
+            timeout = aiohttp.ClientTimeout(
+                total=setup.timeout.total,
+                connect=setup.timeout.connect,
+                sock_read=setup.timeout.read
+            )
+        else:
+            timeout = aiohttp.ClientTimeout(setup.timeout)
 
         async with await self.client.request(
             setup.method,
@@ -149,7 +156,14 @@ class Session(HTTPClientSession):
             if cookie.value is not None
         )
 
-        timeout = aiohttp.ClientTimeout(setup.timeout)
+        if isinstance(setup.timeout, Timeout):
+            timeout = aiohttp.ClientTimeout(
+                total=setup.timeout.total,
+                connect=setup.timeout.connect,
+                sock_read=setup.timeout.read
+            )
+        else:
+            timeout = aiohttp.ClientTimeout(setup.timeout)
 
         async with self.client.request(
             setup.method,
@@ -245,7 +259,7 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
         version: Union[str, HTTPVersion] = HTTPVersion.H11,
-        timeout: Optional[float] = None,
+        timeout: TimeoutTypes = None,
         proxy: Optional[str] = None,
     ) -> Session:
         return Session(

@@ -33,7 +33,7 @@ from nonebot.drivers import (
     combine_driver,
 )
 from nonebot.drivers.none import Driver as NoneDriver
-from nonebot.internal.driver import Cookies, CookieTypes, HeaderTypes, QueryTypes
+from nonebot.internal.driver import Cookies, CookieTypes, HeaderTypes, QueryTypes, Timeout, TimeoutTypes
 
 try:
     import httpx
@@ -52,7 +52,7 @@ class Session(HTTPClientSession):
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
         version: Union[str, HTTPVersion] = HTTPVersion.H11,
-        timeout: Optional[float] = None,
+        timeout: TimeoutTypes = None,
         proxy: Optional[str] = None,
     ):
         self._client: Optional[httpx.AsyncClient] = None
@@ -76,6 +76,15 @@ class Session(HTTPClientSession):
 
     @override
     async def request(self, setup: Request) -> Response:
+        if isinstance(setup.timeout, Timeout):
+            timeout = httpx.Timeout(
+                timeout=setup.timeout.total,
+                connect=setup.timeout.connect,
+                read=setup.timeout.read
+            )
+        else:
+            timeout = httpx.Timeout(setup.timeout)
+
         response = await self.client.request(
             setup.method,
             str(setup.url),
@@ -87,7 +96,7 @@ class Session(HTTPClientSession):
             params=setup.url.raw_query_string,
             headers=tuple(setup.headers.items()),
             cookies=setup.cookies.jar,
-            timeout=setup.timeout,
+            timeout=timeout,
         )
         return Response(
             response.status_code,
@@ -103,6 +112,15 @@ class Session(HTTPClientSession):
         *,
         chunk_size: int = 1024,
     ) -> AsyncGenerator[Response, None]:
+        if isinstance(setup.timeout, Timeout):
+            timeout = httpx.Timeout(
+                timeout=setup.timeout.total,
+                connect=setup.timeout.connect,
+                read=setup.timeout.read
+            )
+        else:
+            timeout = httpx.Timeout(setup.timeout)
+
         async with self.client.stream(
             setup.method,
             str(setup.url),
@@ -114,7 +132,7 @@ class Session(HTTPClientSession):
             params=setup.url.raw_query_string,
             headers=tuple(setup.headers.items()),
             cookies=setup.cookies.jar,
-            timeout=setup.timeout,
+            timeout=timeout,
         ) as response:
             response_headers = response.headers.multi_items()
             async for chunk in response.aiter_bytes(chunk_size=chunk_size):
@@ -183,7 +201,7 @@ class Mixin(HTTPClientMixin):
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
         version: Union[str, HTTPVersion] = HTTPVersion.H11,
-        timeout: Optional[float] = None,
+        timeout: TimeoutTypes = None,
         proxy: Optional[str] = None,
     ) -> Session:
         return Session(
