@@ -256,7 +256,9 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
             raise RuntimeError(f"Unsupported HTTP version: {setup.version}")
 
         if isinstance(setup.timeout, Timeout):
-            timeout = aiohttp.ClientWSTimeout(ws_receive=setup.timeout.read, ws_close=setup.timeout.total)  # type: ignore
+            timeout = aiohttp.ClientWSTimeout(
+                ws_receive=setup.timeout.read, ws_close=setup.timeout.total
+            )  # type: ignore
         else:
             timeout = aiohttp.ClientWSTimeout(ws_close=setup.timeout or 10.0)  # type: ignore
 
