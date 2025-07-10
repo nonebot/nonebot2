@@ -42,7 +42,7 @@ FileTypes: TypeAlias = Union[
     FileType,
 ]
 FilesTypes: TypeAlias = Union[dict[str, FileTypes], list[tuple[str, FileTypes]], None]
-TimeoutTypes: TypeAlias = Union[Optional[float], "Timeout"]
+TimeoutTypes: TypeAlias = Union[float, "Timeout", None]
 
 
 class HTTPVersion(Enum):
