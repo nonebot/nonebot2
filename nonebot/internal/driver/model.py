@@ -51,16 +51,13 @@ class HTTPVersion(Enum):
     H2 = "2"
 
 
+@dataclass
 class Timeout:
-    def __init__(
-        self,
-        total: Optional[float] = None,
-        connect: Optional[float] = None,
-        read: Optional[float] = None,
-    ):
-        self.total = total
-        self.connect = connect
-        self.read = read
+    """Request 超时配置。"""
+
+    total: Optional[float] = None
+    connect: Optional[float] = None
+    read: Optional[float] = None
 
 
 class Request:
