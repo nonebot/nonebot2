@@ -72,7 +72,16 @@ class Session(HTTPClientSession):
         )
         self._cookies = Cookies(cookies)
         self._version = HTTPVersion(version)
-        self._timeout = timeout
+
+        if isinstance(timeout, Timeout):
+            self._timeout = httpx.Timeout(
+                timeout=timeout.total,
+                connect=timeout.connect,
+                read=timeout.read,
+            )
+        else:
+            self._timeout = httpx.Timeout(timeout)
+
         self._proxy = proxy
 
     @property

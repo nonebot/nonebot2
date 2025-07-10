@@ -85,7 +85,15 @@ class Session(HTTPClientSession):
         else:
             raise RuntimeError(f"Unsupported HTTP version: {version}")
 
-        self._timeout = timeout
+        if isinstance(timeout, Timeout):
+            self._timeout = aiohttp.ClientTimeout(
+                total=timeout.total,
+                connect=timeout.connect,
+                sock_read=timeout.read,
+            )
+        else:
+            self._timeout = aiohttp.ClientTimeout(timeout)
+
         self._proxy = proxy
 
     @property
@@ -247,7 +255,10 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
         else:
             raise RuntimeError(f"Unsupported HTTP version: {setup.version}")
 
-        timeout = aiohttp.ClientWSTimeout(ws_close=setup.timeout or 10.0)  # type: ignore
+        if isinstance(setup.timeout, Timeout):
+            timeout = aiohttp.ClientWSTimeout(ws_receive=setup.timeout.read, ws_close=setup.timeout.total)  # type: ignore
+        else:
+            timeout = aiohttp.ClientWSTimeout(ws_close=setup.timeout or 10.0)  # type: ignore
 
         async with aiohttp.ClientSession(version=version, trust_env=True) as session:
             async with session.ws_connect(
