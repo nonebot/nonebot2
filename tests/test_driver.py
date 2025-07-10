@@ -16,6 +16,7 @@ from nonebot.drivers import (
     HTTPServerSetup,
     Request,
     Response,
+    Timeout,
     WebSocket,
     WebSocketClientMixin,
     WebSocketServerSetup,
@@ -235,6 +236,7 @@ async def test_http_client(driver: Driver, server_url: URL):
         headers={"X-Test": "test"},
         cookies={"session": "test"},
         content="test",
+        timeout=Timeout(total=4, connect=2, read=2),
     )
     response = await driver.request(request)
     assert server_url.host is not None
@@ -250,6 +252,7 @@ async def test_http_client(driver: Driver, server_url: URL):
         headers={"X-Test": "test"},
         cookies={"session": "test"},
         content="test",
+        timeout=Timeout(total=4, connect=2, read=2),
     )
     assert request.url == request_raw_url.url, (
         "request.url should be equal to request_raw_url.url"
@@ -312,6 +315,7 @@ async def test_http_client(driver: Driver, server_url: URL):
         headers={"X-Test": "stream"},
         cookies={"session": "stream"},
         content="stream_test" * 1024,
+        timeout=Timeout(total=4, connect=2, read=2),
     )
     chunks = []
     async for resp in driver.stream_request(request, chunk_size=4):
@@ -414,6 +418,7 @@ async def test_http_client_session(driver: Driver, server_url: URL):
             headers={"X-Test": "test"},
             cookies={"cookie": "test"},
             content="test",
+            timeout=Timeout(total=4, connect=2, read=2),
         )
         response = await session.request(request)
         assert response.status_code == 200
@@ -499,6 +504,7 @@ async def test_http_client_session(driver: Driver, server_url: URL):
             headers={"X-Test": "stream"},
             cookies={"cookie": "stream"},
             content="stream_test" * 1024,
+            timeout=Timeout(total=4, connect=2, read=2),
         )
         chunks = []
         async for resp in session.stream_request(request, chunk_size=4):
