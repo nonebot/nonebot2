@@ -9292,4 +9292,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_deltaforce_simulator",
+    "project_link": "nonebot-plugin-deltaforce-simulator",
+    "author_id": 16055526,
+    "tags": [
+      {
+        "label": "三角洲",
+        "color": "#457a47"
+      }
+    ],
+    "is_official": false
+  },
 ]
