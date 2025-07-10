@@ -9304,4 +9304,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_qqessentials",
+    "project_link": "nonebot-plugin-qqessentials",
+    "author_id": 162931251,
+    "tags": [
+      {
+        "label": "群管",
+        "color": "#528aea"
+      },
+      {
+        "label": "娱乐",
+        "color": "#ea52e5"
+      },
+      {
+        "label": "基础",
+        "color": "#ce2629"
+      }
+    ],
+    "is_official": false
+  },
 ]
