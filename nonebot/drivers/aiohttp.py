@@ -37,7 +37,14 @@ from nonebot.drivers import (
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.exception import WebSocketClosed
-from nonebot.internal.driver import Cookies, CookieTypes, HeaderTypes, QueryTypes, Timeout, TimeoutTypes
+from nonebot.internal.driver import (
+    Cookies,
+    CookieTypes,
+    HeaderTypes,
+    QueryTypes,
+    Timeout,
+    TimeoutTypes,
+)
 
 try:
     import aiohttp
@@ -110,7 +117,7 @@ class Session(HTTPClientSession):
             timeout = aiohttp.ClientTimeout(
                 total=setup.timeout.total,
                 connect=setup.timeout.connect,
-                sock_read=setup.timeout.read
+                sock_read=setup.timeout.read,
             )
         else:
             timeout = aiohttp.ClientTimeout(setup.timeout)
@@ -160,7 +167,7 @@ class Session(HTTPClientSession):
             timeout = aiohttp.ClientTimeout(
                 total=setup.timeout.total,
                 connect=setup.timeout.connect,
-                sock_read=setup.timeout.read
+                sock_read=setup.timeout.read,
             )
         else:
             timeout = aiohttp.ClientTimeout(setup.timeout)

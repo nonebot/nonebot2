@@ -33,7 +33,14 @@ from nonebot.drivers import (
     combine_driver,
 )
 from nonebot.drivers.none import Driver as NoneDriver
-from nonebot.internal.driver import Cookies, CookieTypes, HeaderTypes, QueryTypes, Timeout, TimeoutTypes
+from nonebot.internal.driver import (
+    Cookies,
+    CookieTypes,
+    HeaderTypes,
+    QueryTypes,
+    Timeout,
+    TimeoutTypes,
+)
 
 try:
     import httpx
@@ -80,7 +87,7 @@ class Session(HTTPClientSession):
             timeout = httpx.Timeout(
                 timeout=setup.timeout.total,
                 connect=setup.timeout.connect,
-                read=setup.timeout.read
+                read=setup.timeout.read,
             )
         else:
             timeout = httpx.Timeout(setup.timeout)
@@ -116,7 +123,7 @@ class Session(HTTPClientSession):
             timeout = httpx.Timeout(
                 timeout=setup.timeout.total,
                 connect=setup.timeout.connect,
-                read=setup.timeout.read
+                read=setup.timeout.read,
             )
         else:
             timeout = httpx.Timeout(setup.timeout)
