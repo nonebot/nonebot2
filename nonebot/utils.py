@@ -279,7 +279,7 @@ def path_to_module_name(path: Path) -> str:
     if rel_path.stem == "__init__":
         return ".".join(rel_path.parts[:-1])
     else:
-        return ".".join(rel_path.parts[:-1] + (rel_path.stem,))
+        return ".".join((*rel_path.parts[:-1], rel_path.stem))
 
 
 def resolve_dot_notation(
