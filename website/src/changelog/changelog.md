@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 三角洲鼠鼠偷吃模拟器 [@noneflow](https://github.com/noneflow) ([#3541](https://github.com/nonebot/nonebot2/pull/3541))
 - Plugin: 维维表情包搜索器 [@noneflow](https://github.com/noneflow) ([#3546](https://github.com/nonebot/nonebot2/pull/3546))
 - Plugin: 喜（悲）报生成器 [@noneflow](https://github.com/noneflow) ([#3527](https://github.com/nonebot/nonebot2/pull/3527))
 - Plugin: 依赖注入扩展 [@noneflow](https://github.com/noneflow) ([#3552](https://github.com/nonebot/nonebot2/pull/3552))
