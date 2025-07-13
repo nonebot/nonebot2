@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Fix: `RUF005` tuple 拼接 [@Ailitonia](https://github.com/Ailitonia) ([#3572](https://github.com/nonebot/nonebot2/pull/3572))
 - Plugin: 更新插件维护情况 [@Agnes4m](https://github.com/Agnes4m) ([#3555](https://github.com/nonebot/nonebot2/pull/3555))
 - Plugin: 修改 nailong 插件作者 [@superbot-ai445](https://github.com/superbot-ai445) ([#3554](https://github.com/nonebot/nonebot2/pull/3554))
 - CI: 适配 NoneFlow 4.4.0 [@he0119](https://github.com/he0119) ([#3539](https://github.com/nonebot/nonebot2/pull/3539))
