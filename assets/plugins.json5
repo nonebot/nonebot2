@@ -9304,4 +9304,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_nsfw_detector",
+    "project_link": "nonebot-plugin-nsfw-detector",
+    "author_id": 63098778,
+    "tags": [
+      {
+        "label": "nsfw",
+        "color": "#ea5252"
+      },
+      {
+        "label": "群管",
+        "color": "#45cf65"
+      }
+    ],
+    "is_official": false
+  },
 ]
