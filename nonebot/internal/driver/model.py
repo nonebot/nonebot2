@@ -42,12 +42,22 @@ FileTypes: TypeAlias = Union[
     FileType,
 ]
 FilesTypes: TypeAlias = Union[dict[str, FileTypes], list[tuple[str, FileTypes]], None]
+TimeoutTypes: TypeAlias = Union[float, "Timeout", None]
 
 
 class HTTPVersion(Enum):
     H10 = "1.0"
     H11 = "1.1"
     H2 = "2"
+
+
+@dataclass
+class Timeout:
+    """Request 超时配置。"""
+
+    total: Optional[float] = None
+    connect: Optional[float] = None
+    read: Optional[float] = None
 
 
 class Request:
@@ -64,7 +74,7 @@ class Request:
         json: Any = None,
         files: FilesTypes = None,
         version: Union[str, HTTPVersion] = HTTPVersion.H11,
-        timeout: Optional[float] = None,
+        timeout: TimeoutTypes = None,
         proxy: Optional[str] = None,
     ):
         # method
@@ -76,7 +86,7 @@ class Request:
         # http version
         self.version: HTTPVersion = HTTPVersion(version)
         # timeout
-        self.timeout: Optional[float] = timeout
+        self.timeout: TimeoutTypes = timeout
         # proxy
         self.proxy: Optional[str] = proxy
 

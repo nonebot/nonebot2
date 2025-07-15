@@ -30,6 +30,7 @@ from .model import (
     QueryTypes,
     Request,
     Response,
+    TimeoutTypes,
     WebSocket,
     WebSocketServerSetup,
 )
@@ -245,7 +246,7 @@ class HTTPClientSession(abc.ABC):
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
         version: Union[str, HTTPVersion] = HTTPVersion.H11,
-        timeout: Optional[float] = None,
+        timeout: TimeoutTypes = None,
         proxy: Optional[str] = None,
     ):
         raise NotImplementedError
@@ -315,7 +316,7 @@ class HTTPClientMixin(ForwardMixin):
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
         version: Union[str, HTTPVersion] = HTTPVersion.H11,
-        timeout: Optional[float] = None,
+        timeout: TimeoutTypes = None,
         proxy: Optional[str] = None,
     ) -> HTTPClientSession:
         """获取一个 HTTP 会话"""

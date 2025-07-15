@@ -25,7 +25,7 @@ from types import CoroutineType
 from typing import TYPE_CHECKING, Any, Callable, TypeVar, Union
 from typing_extensions import ParamSpec, override
 
-from nonebot.drivers import Request, WebSocketClientMixin, combine_driver
+from nonebot.drivers import Request, Timeout, WebSocketClientMixin, combine_driver
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.exception import WebSocketClosed
@@ -73,10 +73,16 @@ class Mixin(WebSocketClientMixin):
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
         if setup.proxy is not None:
             logger.warning("proxy is not supported by websockets driver")
+
+        if isinstance(setup.timeout, Timeout):
+            timeout = setup.timeout.total or setup.timeout.connect or setup.timeout.read
+        else:
+            timeout = setup.timeout
+
         connection = Connect(
             str(setup.url),
             extra_headers={**setup.headers, **setup.cookies.as_header(setup)},
-            open_timeout=setup.timeout,
+            open_timeout=timeout,
         )
         async with connection as ws:
             yield WebSocket(request=setup, websocket=ws)

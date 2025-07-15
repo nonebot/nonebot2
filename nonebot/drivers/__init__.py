@@ -24,6 +24,7 @@ from nonebot.internal.driver import Request as Request
 from nonebot.internal.driver import Response as Response
 from nonebot.internal.driver import ReverseDriver as ReverseDriver
 from nonebot.internal.driver import ReverseMixin as ReverseMixin
+from nonebot.internal.driver import Timeout as Timeout
 from nonebot.internal.driver import WebSocket as WebSocket
 from nonebot.internal.driver import WebSocketClientMixin as WebSocketClientMixin
 from nonebot.internal.driver import WebSocketServerSetup as WebSocketServerSetup
@@ -34,6 +35,7 @@ __autodoc__ = {
     "Cookies": True,
     "Request": True,
     "Response": True,
+    "Timeout": True,
     "WebSocket": True,
     "HTTPVersion": True,
     "Driver": True,

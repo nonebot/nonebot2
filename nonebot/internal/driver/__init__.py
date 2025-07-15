@@ -27,5 +27,7 @@ from .model import RawURL as RawURL
 from .model import Request as Request
 from .model import Response as Response
 from .model import SimpleQuery as SimpleQuery
+from .model import Timeout as Timeout
+from .model import TimeoutTypes as TimeoutTypes
 from .model import WebSocket as WebSocket
 from .model import WebSocketServerSetup as WebSocketServerSetup
