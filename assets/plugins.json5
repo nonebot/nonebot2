@@ -9320,4 +9320,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_lazytea",
+    "project_link": "nonebot_plugin_lazytea",
+    "author_id": 78413699,
+    "tags": [
+      {
+        "label": "GUI",
+        "color": "#ea5252"
+      },
+      {
+        "label": "图形化",
+        "color": "#52e9ea"
+      }
+    ],
+    "is_official": false
+  },
 ]
