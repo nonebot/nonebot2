@@ -9304,4 +9304,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_liteperm",
+    "project_link": "nonebot_plugin_liteperm",
+    "author_id": 67693593,
+    "tags": [
+      {
+        "label": "权限控制",
+        "color": "#ea5252"
+      },
+      {
+        "label": "管理",
+        "color": "#d7ae22"
+      }
+    ],
+    "is_official": false
+  },
 ]
