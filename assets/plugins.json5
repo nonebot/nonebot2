@@ -9320,4 +9320,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_value",
+    "project_link": "nonebot-plugin-value",
+    "author_id": 67693593,
+    "tags": [
+      {
+        "label": "value",
+        "color": "#d10a0a"
+      },
+      {
+        "label": "货币",
+        "color": "#3c0eff"
+      },
+      {
+        "label": "经济",
+        "color": "#1b9f1d"
+      }
+    ],
+    "is_official": false
+  },
 ]
