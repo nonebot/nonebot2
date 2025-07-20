@@ -9336,4 +9336,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_jd_sign",
+    "project_link": "nonebot-plugin-jd-sign",
+    "author_id": 116647809,
+    "tags": [
+      {
+        "label": "签到",
+        "color": "#ea5252"
+      },
+      {
+        "label": "京东",
+        "color": "#5294ea"
+      }
+    ],
+    "is_official": false
+  },
 ]
