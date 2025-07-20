@@ -82,6 +82,7 @@ class Plugin:
     sub_plugins: set["Plugin"] = field(default_factory=set)
     """子插件集合"""
     metadata: Optional[PluginMetadata] = None
+    """插件元信息"""
 
     @property
     def id_(self) -> str:
