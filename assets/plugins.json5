@@ -9336,4 +9336,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_flomic",
+    "project_link": "nonebot-plugin-flomic",
+    "author_id": 188882430,
+    "tags": [],
+    "is_official": false
+  },
 ]
