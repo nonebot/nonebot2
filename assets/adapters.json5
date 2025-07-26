@@ -313,4 +313,14 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot.adapters.vocechat",
+    "project_link": "nonebot-adapter-vocechat",
+    "name": "nonebot-adapter-vocechat",
+    "desc": "Vocechat 协议适配器",
+    "author_id": 56059687,
+    "homepage": "https://github.com/5656565566/nonebot-adapter-vocechat",
+    "tags": [],
+    "is_official": false
+  },
 ]
