@@ -35,6 +35,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-flomic [@noneflow](https://github.com/noneflow) ([#3529](https://github.com/nonebot/nonebot2/pull/3529))
 - Plugin: LazyTea [@noneflow](https://github.com/noneflow) ([#3548](https://github.com/nonebot/nonebot2/pull/3548))
 - Plugin: LitePerm 权限管理插件 [@noneflow](https://github.com/noneflow) ([#3562](https://github.com/nonebot/nonebot2/pull/3562))
 - Plugin: 三角洲鼠鼠偷吃模拟器 [@noneflow](https://github.com/noneflow) ([#3541](https://github.com/nonebot/nonebot2/pull/3541))
