@@ -9343,4 +9343,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_fishing2",
+    "project_link": "nonebot-plugin-fishing2",
+    "author_id": 49135577,
+    "tags": [
+      {
+        "label": "钓鱼",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
