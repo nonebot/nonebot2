@@ -21,7 +21,7 @@ import TabItem from "@theme/TabItem";
   - `switch`: 禁用/启用某个指令
   - `with`: 针对具有多个子命令的指令，通过 `with` 在当前会话中载入命令头以节省输入。
 
-以最新版本为例 (v0.57), 本插件已支持 NoneBot 生态中几乎所有的适配器, 包括:
+以最新版本为例 (v0.59), 本插件已支持 NoneBot 生态中几乎所有的适配器, 包括:
 
 | 协议名称                                                            | 路径                                 |
 | ------------------------------------------------------------------- | ------------------------------------ |
@@ -46,7 +46,8 @@ import TabItem from "@theme/TabItem";
 | [Mail](https://github.com/mobyw/nonebot-adapter-mail)               | adapters.mail                        |
 | [微信公众号](https://github.com/YangRucheng/nonebot-adapter-wxmp)   | adapters.wxmp                        |
 | [黑盒语音](https://github.com/lclbm/adapter-heybox)                 | adapters.heybox                      |
-| [Gewechat](https://github.com/Shine-Light/nonebot-adapter-gewechat) | adapters.gewechat                    |
+| [Milky](https://github.com/nonebot/adapter-milky)                   | adapters.milky                       |
+| [EFChat](https://github.com/molanp/nonebot_adapter_efchat)          | adapters.efchat                      |
 
 ## 安装插件
 
@@ -148,7 +149,7 @@ async def got_location(location: str):
 
 在上面的代码中，我们使用 `Alconna` 来解析命令，`on_alconna` 用来创建响应器，使用 `Match` 来获取解析结果。
 
-关于更多 `Alconna` 的使用方法，可参考 [Alconna 文档](https://arclet.top/docs/tutorial/alconna)，
+关于更多 `Alconna` 的使用方法，可参考 [Alconna 文档](https://arclet.top/tutorial/alconna)，
 或阅读 [Alconna 基本介绍](./command.md) 一节。
 
 关于更多 `on_alconna` 的使用方法，可参考 [插件文档](https://github.com/nonebot/plugin-alconna/blob/master/docs.md)，
