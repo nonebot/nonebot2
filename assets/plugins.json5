@@ -9355,4 +9355,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_zzz_avatar_panel",
+    "project_link": "nonebot-plugin-zzz-avatar-panel",
+    "author_id": 126453704,
+    "tags": [
+      {
+        "label": "ZZZ",
+        "color": "#ea5252"
+      },
+      {
+        "label": "绝区零",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
