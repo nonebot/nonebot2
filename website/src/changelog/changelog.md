@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 更新 Alconna 主页面 [@RF-Tar-Railt](https://github.com/RF-Tar-Railt) ([#3598](https://github.com/nonebot/nonebot2/pull/3598))
 - Docs: 添加插件 metadata 缺失的 docstring [@yanyongyu](https://github.com/yanyongyu) ([#3583](https://github.com/nonebot/nonebot2/pull/3583))
 - Docs: 修复组织成员提交 issue 时不遵守表单 [@ProgramRipper](https://github.com/ProgramRipper) ([#3558](https://github.com/nonebot/nonebot2/pull/3558))
 - Docs: 增加 `EFChat` 适配器说明 [@molanp](https://github.com/molanp) ([#3544](https://github.com/nonebot/nonebot2/pull/3544))
