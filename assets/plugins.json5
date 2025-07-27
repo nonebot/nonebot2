@@ -9375,4 +9375,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_guess_disease",
+    "project_link": "nonebot-plugin-guess-disease",
+    "author_id": 68677053,
+    "tags": [],
+    "is_official": false
+  },
 ]
