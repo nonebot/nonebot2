@@ -36,6 +36,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 猜猜病 [@noneflow](https://github.com/noneflow) ([#3585](https://github.com/nonebot/nonebot2/pull/3585))
 - Plugin: LLM-Helper [@noneflow](https://github.com/noneflow) ([#3569](https://github.com/nonebot/nonebot2/pull/3569))
 - Plugin: 更好的电子钓鱼 [@noneflow](https://github.com/noneflow) ([#3576](https://github.com/nonebot/nonebot2/pull/3576))
 - Plugin: nonebot-plugin-flomic [@noneflow](https://github.com/noneflow) ([#3529](https://github.com/nonebot/nonebot2/pull/3529))
