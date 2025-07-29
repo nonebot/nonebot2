@@ -735,4 +735,12 @@
     ],
     "is_official": false
   },
+  {
+    "name": "JM",
+    "desc": "JM",
+    "author_id": 223385841,
+    "homepage": "https://github.com/zhenxun-org/zhenxun_bot",
+    "tags": [],
+    "is_official": false
+  },
 ]
