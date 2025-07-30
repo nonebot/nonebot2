@@ -96,7 +96,7 @@ class WebSocket(BaseWebSocket):
     @property
     @override
     def closed(self) -> bool:
-        return self.websocket.closed
+        return self.websocket.close_code is not None
 
     @override
     async def accept(self):
