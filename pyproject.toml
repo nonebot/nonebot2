@@ -36,7 +36,7 @@ typing-extensions = ">=4.4.0,<5.0.0"
 tomli = { version = "^2.0.1", python = "<3.11" }
 pydantic = ">=1.10.0,<3.0.0,!=2.5.0,!=2.5.1,!=2.10.0,!=2.10.1"
 
-websockets = { version = ">=10.0", optional = true }
+websockets = { version = ">=15.0", optional = true }
 Quart = { version = ">=0.18.0,<1.0.0", optional = true }
 fastapi = { version = ">=0.93.0,<1.0.0", optional = true }
 aiohttp = { version = "^3.11.0", extras = ["speedups"], optional = true }
@@ -46,7 +46,7 @@ uvicorn = { version = ">=0.20.0,<1.0.0", extras = [
 ], optional = true }
 
 [tool.poetry.group.dev.dependencies]
-ruff = "^0.9.0"
+ruff = "^0.12.0"
 nonemoji = "^0.1.2"
 pre-commit = "^4.0.0"
 
