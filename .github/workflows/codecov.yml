@@ -25,7 +25,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.9", "3.10", "3.11", "3.12", "3.13", "3.13t"]
         os: [ubuntu-latest, windows-latest, macos-latest]
         env: [pydantic-v1, pydantic-v2]
     env:
