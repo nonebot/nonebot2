@@ -71,9 +71,6 @@ Funding = "https://afdian.com/@nonebot"
 default-groups = ["dev", "test", "docs"]
 conflicts = [[{ group = "pydantic-v1" }, { group = "pydantic-v2" }]]
 
-[tool.uv.sources]
-nonebot-test = { path = "./envs/test/", editable = false }
-
 [tool.uv.build-backend]
 module-name = "nonebot"
 module-root = ""
