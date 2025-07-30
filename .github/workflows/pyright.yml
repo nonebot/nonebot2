@@ -34,7 +34,6 @@ jobs:
         uses: ./.github/actions/setup-python
         with:
           env-dir: ./envs/${{ matrix.env }}
-          no-root: true
 
       - run: |
           (cd ./envs/${{ matrix.env }} && echo "$(poetry env info --path)/bin" >> $GITHUB_PATH)

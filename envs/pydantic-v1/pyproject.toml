@@ -1,18 +1,21 @@
-[tool.poetry]
+[project]
 name = "nonebot-pydantic-v1"
 version = "0.1.0"
 description = "Private pydantic v1 test env for nonebot"
-authors = ["yanyongyu <yyy@nonebot.dev>"]
+authors = [{ name = "yanyongyu", email = "yyy@nonebot.dev" }]
 license = "MIT"
+requires-python = ">=3.9, <4.0"
+package = false
 
-[tool.poetry.dependencies]
-python = "^3.9"
+[dependency-groups]
+dev = [
+  "nonebot-test",
+  "nonebot2[all]",
+  "pydantic >=1.0.0, <2.0.0",
+]
 
-[tool.poetry.group.dev.dependencies]
-pydantic = "^1.0.0"
-nonebot-test = { path = "../test/", develop = false }
-nonebot2 = { path = "../../", extras = ["all"], develop = true }
+[tool.uv]
 
-[build-system]
-requires = ["poetry-core"]
-build-backend = "poetry.core.masonry.api"
+[tool.uv.sources]
+nonebot2 = { path = "../../", editable = true }
+nonebot-test = { path = "../test/", editable = false }

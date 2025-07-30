@@ -5,36 +5,24 @@ inputs:
   python-version:
     description: Python version
     required: false
-    default: "3.10"
+    default: "3.12"
   env-dir:
     description: Environment directory
     required: false
     default: "."
-  no-root:
-    description: Do not install package in the environment
-    required: false
-    default: "false"
 
 runs:
   using: "composite"
   steps:
-    - name: Install poetry
-      run: pipx install poetry
-      shell: bash
-
-    - uses: actions/setup-python@v5
+    - uses: astral-sh/setup-uv@v6
       with:
         python-version: ${{ inputs.python-version }}
-        cache: "poetry"
-        cache-dependency-path: |
-          ./poetry.lock
-          ${{ inputs.env-dir }}/poetry.lock
+        working-directory: ${{ inputs.env-dir }}
+        cache-dependency-glob: |
+          ./uv.lock
+          ${{ inputs.env-dir }}/uv.lock
 
     - run: |
         cd ${{ inputs.env-dir }}
-        if [ "${{ inputs.no-root }}" = "true" ]; then
-          poetry install --all-extras --no-root
-        else
-          poetry install --all-extras
-        fi
+        uv sync --all-extras --locked
       shell: bash

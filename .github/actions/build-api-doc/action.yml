@@ -5,7 +5,7 @@ runs:
   using: "composite"
   steps:
     - run: |
-        poetry run nb-autodoc nonebot \
+        uv run nb-autodoc nonebot \
           -s nonebot.plugins \
           -u nonebot.internal \
           -u nonebot.internal.*

@@ -1,13 +1,10 @@
-[tool.poetry]
+[project]
 name = "nonebot2"
 version = "2.4.2"
 description = "An asynchronous python bot framework."
-authors = ["yanyongyu <yyy@nonebot.dev>"]
+authors = [{ name = "yanyongyu", email = "yyy@nonebot.dev" }]
 license = "MIT"
 readme = "README.md"
-homepage = "https://nonebot.dev/"
-repository = "https://github.com/nonebot/nonebot2"
-documentation = "https://nonebot.dev/"
 keywords = ["bot", "qq", "qqbot", "mirai", "coolq"]
 classifiers = [
   "Development Status :: 5 - Production/Stable",
@@ -16,53 +13,69 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
 ]
-packages = [{ include = "nonebot" }]
-include = ["nonebot/py.typed"]
+requires-python = ">=3.9, <4.0"
+dependencies = [
+  "yarl >=1.7.2, <2.0.0",
+  "anyio >=4.4.0, <5.0.0",
+  "loguru >=0.6.0, <1.0.0",
+  "pygtrie >=2.4.1, <3.0.0",
+  "exceptiongroup >=1.2.2, <2.0.0",
+  "python-dotenv >=0.21.0, <2.0.0",
+  "typing-extensions >=4.4.0, <5.0.0",
+  "tomli >=2.0.1, <3.0.0; python_version < '3.11'",
+  "pydantic >=1.10.0, <3.0.0, !=2.5.0, !=2.5.1, !=2.10.0, !=2.10.1",
+]
 
-[tool.poetry.urls]
+[project.optional-dependencies]
+websockets = ["websockets >=15.0"]
+httpx = ["httpx[http2] >=0.26.0, <1.0.0"]
+aiohttp = ["aiohttp[speedups] >=3.11.0, <4.0.0"]
+quart = [
+  "Quart >=0.18.0, <1.0.0",
+  "uvicorn[standard] >=0.20.0, <1.0.0"
+]
+fastapi = [
+  "fastapi >=0.93.0, <1.0.0",
+  "uvicorn[standard] >=0.20.0, <1.0.0",
+]
+all = [
+  "websockets >=15.0",
+  "fastapi >=0.93.0, <1.0.0",
+  "httpx[http2] >=0.26.0, <1.0.0",
+  "aiohttp[speedups] >=3.11.0, <4.0.0",
+  "uvicorn[standard] >=0.20.0, <1.0.0",
+]
+
+[dependency-groups]
+dev = [
+  "ruff >=0.12.0, <0.13.0",
+  "nonemoji >=0.1.2, <0.2.0",
+  "pre-commit >=4.0.0, <5.0.0",
+]
+test = ["nonebot-test"]
+docs = ["nb-autodoc >=1.0.0a5, <2.0.0"]
+
+[project.urls]
+Homepage = "https://nonebot.dev/"
+Repository = "https://github.com/nonebot/nonebot2"
+Documentation = "https://nonebot.dev/"
 "Bug Tracker" = "https://github.com/nonebot/nonebot2/issues"
-"Changelog" = "https://nonebot.dev/changelog"
-"Funding" = "https://afdian.com/@nonebot"
+Changelog = "https://nonebot.dev/changelog"
+Funding = "https://afdian.com/@nonebot"
 
-[tool.poetry.dependencies]
-python = "^3.9"
-yarl = "^1.7.2"
-anyio = "^4.4.0"
-pygtrie = "^2.4.1"
-exceptiongroup = "^1.2.2"
-loguru = ">=0.6.0,<1.0.0"
-python-dotenv = ">=0.21.0,<2.0.0"
-typing-extensions = ">=4.4.0,<5.0.0"
-tomli = { version = "^2.0.1", python = "<3.11" }
-pydantic = ">=1.10.0,<3.0.0,!=2.5.0,!=2.5.1,!=2.10.0,!=2.10.1"
+[tool.uv]
+default-groups = [
+  "dev",
+  "test",
+  "docs",
+]
 
-websockets = { version = ">=15.0", optional = true }
-Quart = { version = ">=0.18.0,<1.0.0", optional = true }
-fastapi = { version = ">=0.93.0,<1.0.0", optional = true }
-aiohttp = { version = "^3.11.0", extras = ["speedups"], optional = true }
-httpx = { version = ">=0.26.0,<1.0.0", extras = ["http2"], optional = true }
-uvicorn = { version = ">=0.20.0,<1.0.0", extras = [
-  "standard",
-], optional = true }
+[tool.uv.sources]
+nonebot-test = { path = "./envs/test/", editable = false }
 
-[tool.poetry.group.dev.dependencies]
-ruff = "^0.12.0"
-nonemoji = "^0.1.2"
-pre-commit = "^4.0.0"
-
-[tool.poetry.group.test.dependencies]
-nonebot-test = { path = "./envs/test/", develop = false }
-
-[tool.poetry.group.docs.dependencies]
-nb-autodoc = "^1.0.0a5"
-
-[tool.poetry.extras]
-httpx = ["httpx"]
-aiohttp = ["aiohttp"]
-websockets = ["websockets"]
-quart = ["quart", "uvicorn"]
-fastapi = ["fastapi", "uvicorn"]
-all = ["fastapi", "quart", "aiohttp", "httpx", "websockets", "uvicorn"]
+[tool.uv.build-backend]
+module-name = "nonebot"
+module-root = ""
 
 [tool.pytest.ini_options]
 addopts = "--cov=nonebot --cov-report=term-missing"
@@ -128,5 +141,5 @@ reportShadowedImports = false
 disableBytesTypePromotions = true
 
 [build-system]
-requires = ["poetry_core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build >=0.8.3, <0.9.0"]
+build-backend = "uv_build"
