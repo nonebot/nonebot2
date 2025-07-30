@@ -1,9 +1,11 @@
 #! /usr/bin/env bash
 
+set -e
+
 # cd to the root of the project
 cd "$(dirname "$0")/.."
 
-poetry run nb-autodoc nonebot \
+nb-autodoc nonebot \
   -s nonebot.plugins \
   -u nonebot.internal \
   -u nonebot.internal.*

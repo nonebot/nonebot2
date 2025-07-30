@@ -27,7 +27,7 @@ jobs:
       - name: Build API Doc
         uses: ./.github/actions/build-api-doc
 
-      - run: echo "TAG_NAME=v$(poetry version -s)" >> $GITHUB_ENV
+      - run: echo "TAG_NAME=v$(uv version --short)" >> $GITHUB_ENV
 
       - name: Archive Changelog
         uses: docker://ghcr.io/nonebot/auto-changelog:master
@@ -39,7 +39,7 @@ jobs:
 
       - name: Archive Files
         run: |
-          yarn archive $(poetry version -s)
+          yarn archive $(uv version --short)
           yarn prettier
 
       - name: Push Tag
@@ -47,6 +47,6 @@ jobs:
           git config user.name noneflow[bot]
           git config user.email 129742071+noneflow[bot]@users.noreply.github.com
           git add .
-          git commit -m ":bookmark: Release $(poetry version -s)"
+          git commit -m ":bookmark: Release $(uv version --short)"
           git tag ${{ env.TAG_NAME }}
           git push && git push --tags
