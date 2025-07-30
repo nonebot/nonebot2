@@ -40,12 +40,11 @@ jobs:
         uses: ./.github/actions/setup-python
         with:
           python-version: ${{ matrix.python-version }}
-          env-dir: ./envs/${{ matrix.env }}
+          env-group: ${{ matrix.env }}
 
       - name: Run Pytest
         run: |
-          cd ./envs/${{ matrix.env }}
-          uv run ../../scripts/run-tests.sh
+          uv run ./scripts/run-tests.sh
 
       - name: Upload test results
         uses: codecov/test-results-action@v1

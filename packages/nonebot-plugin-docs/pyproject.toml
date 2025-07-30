@@ -1,22 +1,24 @@
-[tool.poetry]
+[project]
 name = "nonebot-plugin-docs"
 version = "2.0.0"
 description = "View NoneBot2 Docs Locally"
-authors = ["yanyongyu <yyy@nonebot.dev>"]
-license = "MIT"
+authors = [{ name = "yanyongyu", email = "yyy@nonebot.dev" }]
 readme = "README.md"
-homepage = "https://github.com/nonebot/nonebot2/blob/master/packages/nonebot-plugin-docs"
-repository = "https://github.com/nonebot/nonebot2"
+license = "MIT"
 keywords = ["nonebot", "nonebot2", "docs"]
-include = ["nonebot_plugin_docs/dist/**/*"]
+requires-python = ">=3.9, <4.0"
+dependencies = ["nonebot2 >=2.0.0, <3.0.0"]
 
+[project.urls]
+Homepage = "https://github.com/nonebot/nonebot2/blob/master/packages/nonebot-plugin-docs"
+Repository = "https://github.com/nonebot/nonebot2"
 
-[tool.poetry.dependencies]
-python = "^3.9"
-nonebot2 = "^2.0.0"
+[dependency-groups]
+dev = []
 
-[tool.poetry.dev-dependencies]
+[tool.uv.build-backend]
+module-root = ""
 
 [build-system]
-requires = ["poetry-core>=1.0.0"]
-build-backend = "poetry.core.masonry.api"
+requires = ["uv_build >=0.8.3, <0.9.0"]
+build-backend = "uv_build"

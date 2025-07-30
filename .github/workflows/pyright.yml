@@ -13,7 +13,7 @@ on:
       - ".github/actions/setup-python/**"
       - ".github/workflows/pyright.yml"
       - "pyproject.toml"
-      - "poetry.lock"
+      - "uv.lock"
 
 jobs:
   pyright:
@@ -33,10 +33,10 @@ jobs:
       - name: Setup Python environment
         uses: ./.github/actions/setup-python
         with:
-          env-dir: ./envs/${{ matrix.env }}
+          env-group: ${{ matrix.env }}
 
       - run: |
-          (cd ./envs/${{ matrix.env }} && echo "$(poetry env info --path)/bin" >> $GITHUB_PATH)
+          echo "$PWD/.venv/bin" >> $GITHUB_PATH
           if [ "${{ matrix.env }}" = "pydantic-v1" ]; then
             sed -i 's/PYDANTIC_V2 = true/PYDANTIC_V2 = false/g' ./pyproject.toml
           fi

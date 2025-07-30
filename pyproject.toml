@@ -30,14 +30,8 @@ dependencies = [
 websockets = ["websockets >=15.0"]
 httpx = ["httpx[http2] >=0.26.0, <1.0.0"]
 aiohttp = ["aiohttp[speedups] >=3.11.0, <4.0.0"]
-quart = [
-  "Quart >=0.18.0, <1.0.0",
-  "uvicorn[standard] >=0.20.0, <1.0.0"
-]
-fastapi = [
-  "fastapi >=0.93.0, <1.0.0",
-  "uvicorn[standard] >=0.20.0, <1.0.0",
-]
+quart = ["Quart >=0.18.0, <1.0.0", "uvicorn[standard] >=0.20.0, <1.0.0"]
+fastapi = ["fastapi >=0.93.0, <1.0.0", "uvicorn[standard] >=0.20.0, <1.0.0"]
 all = [
   "websockets >=15.0",
   "fastapi >=0.93.0, <1.0.0",
@@ -52,8 +46,18 @@ dev = [
   "nonemoji >=0.1.2, <0.2.0",
   "pre-commit >=4.0.0, <5.0.0",
 ]
-test = ["nonebot-test"]
+test = [
+  "trio >=0.27.0",
+  "nonebug >=0.4.1, <0.5.0",
+  "wsproto >=1.2.0, <2.0.0",
+  "werkzeug >=2.3.6, <4.0.0",
+  "pytest-cov >=6.0.0, <7.0.0",
+  "pytest-xdist >=3.0.2, <4.0.0",
+  "coverage-conditional-plugin >=0.9.0, <0.10.0",
+]
 docs = ["nb-autodoc >=1.0.0a5, <2.0.0"]
+pydantic-v1 = ["pydantic >=1.10.0, <2.0.0"]
+pydantic-v2 = ["pydantic >=2.0.0, <3.0.0"]
 
 [project.urls]
 Homepage = "https://nonebot.dev/"
@@ -64,11 +68,8 @@ Changelog = "https://nonebot.dev/changelog"
 Funding = "https://afdian.com/@nonebot"
 
 [tool.uv]
-default-groups = [
-  "dev",
-  "test",
-  "docs",
-]
+default-groups = ["dev", "test", "docs"]
+conflicts = [[{ group = "pydantic-v1" }, { group = "pydantic-v2" }]]
 
 [tool.uv.sources]
 nonebot-test = { path = "./envs/test/", editable = false }
