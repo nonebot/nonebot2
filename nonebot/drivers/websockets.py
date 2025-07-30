@@ -32,8 +32,7 @@ from nonebot.exception import WebSocketClosed
 from nonebot.log import LoguruHandler
 
 try:
-    from websockets.exceptions import ConnectionClosed
-    from websockets.legacy.client import Connect, WebSocketClientProtocol
+    from websockets import ClientConnection, ConnectionClosed, connect
 except ModuleNotFoundError as e:  # pragma: no cover
     raise ImportError(
         "Please install websockets first to use this driver. "
@@ -71,17 +70,15 @@ class Mixin(WebSocketClientMixin):
     @override
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
-        if setup.proxy is not None:
-            logger.warning("proxy is not supported by websockets driver")
-
         if isinstance(setup.timeout, Timeout):
             timeout = setup.timeout.total or setup.timeout.connect or setup.timeout.read
         else:
             timeout = setup.timeout
 
-        connection = Connect(
+        connection = connect(
             str(setup.url),
-            extra_headers={**setup.headers, **setup.cookies.as_header(setup)},
+            additional_headers={**setup.headers, **setup.cookies.as_header(setup)},
+            proxy=setup.proxy if setup.proxy is not None else True,
             open_timeout=timeout,
         )
         async with connection as ws:
@@ -92,14 +89,14 @@ class WebSocket(BaseWebSocket):
     """Websockets WebSocket Wrapper"""
 
     @override
-    def __init__(self, *, request: Request, websocket: WebSocketClientProtocol):
+    def __init__(self, *, request: Request, websocket: ClientConnection):
         super().__init__(request=request)
         self.websocket = websocket
 
     @property
     @override
     def closed(self) -> bool:
-        return self.websocket.closed
+        return self.websocket.close_code is not None
 
     @override
     async def accept(self):
