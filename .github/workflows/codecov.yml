@@ -44,7 +44,7 @@ jobs:
 
       - name: Run Pytest
         run: |
-          uv run ./scripts/run-tests.sh
+          uv run --no-sync bash ./scripts/run-tests.sh
 
       - name: Upload test results
         uses: codecov/test-results-action@v1
