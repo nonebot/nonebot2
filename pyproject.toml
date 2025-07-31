@@ -68,6 +68,7 @@ Changelog = "https://nonebot.dev/changelog"
 Funding = "https://afdian.com/@nonebot"
 
 [tool.uv]
+required-version = ">=0.8.0"
 default-groups = ["dev", "test", "docs"]
 conflicts = [[{ group = "pydantic-v1" }, { group = "pydantic-v2" }]]
 
