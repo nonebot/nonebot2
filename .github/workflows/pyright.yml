@@ -36,7 +36,7 @@ jobs:
           env-group: ${{ matrix.env }}
 
       - run: |
-          echo "$(realpath .venv/bin)" >> $GITHUB_PATH
+          echo "$(dirname $(uv python find))" >> $GITHUB_PATH
           if [ "${{ matrix.env }}" = "pydantic-v1" ]; then
             sed -i 's/PYDANTIC_V2 = true/PYDANTIC_V2 = false/g' ./pyproject.toml
           fi
