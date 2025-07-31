@@ -97,7 +97,18 @@ def generic_check_issubclass(
       则会检查其 `__bound__` 或 `__constraints__`
       是否是 class_or_tuple 中一个类型的子类或 None。
     """
-    if not type_has_args(cls):
+    # if the target is a TypeVar, we check it first
+    if isinstance(cls, TypeVar):
+        if cls.__constraints__:
+            return all(
+                is_none_type(type_) or generic_check_issubclass(type_, class_or_tuple)
+                for type_ in cls.__constraints__
+            )
+        elif cls.__bound__:
+            return generic_check_issubclass(cls.__bound__, class_or_tuple)
+        return False
+    # elif the target is not a generic type, we check it directly
+    elif not type_has_args(cls):
         with contextlib.suppress(TypeError):
             return issubclass(cls, class_or_tuple)
 
@@ -119,14 +130,6 @@ def generic_check_issubclass(
             return issubclass(origin, class_or_tuple)
         except TypeError:
             return False
-    elif isinstance(cls, TypeVar):
-        if cls.__constraints__:
-            return all(
-                is_none_type(type_) or generic_check_issubclass(type_, class_or_tuple)
-                for type_ in cls.__constraints__
-            )
-        elif cls.__bound__:
-            return generic_check_issubclass(cls.__bound__, class_or_tuple)
     return False
 
 

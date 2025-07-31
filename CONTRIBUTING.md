@@ -18,15 +18,15 @@
 
 ## Pull Request
 
-NoneBot 使用 [poetry](https://python-poetry.org/) 管理项目依赖，由于 pre-commit 也经其管理，所以在此一并说明。
+NoneBot 使用 [uv](https://docs.astral.sh/uv/) 管理项目依赖，由于 pre-commit 也经其管理，所以在此一并说明。
 
-下面的命令能在已安装 poetry 和 yarn 的情况下帮你快速配置开发环境。
+下面的命令能在已安装 uv 和 yarn 的情况下帮你快速配置开发环境。
 
 ```bash
 # 安装 python 依赖
-poetry install
+uv sync --all-extras
 # 安装 pre-commit git hook
-pre-commit install
+uv run pre-commit install
 ```
 
 ### 使用 GitHub Codespaces（Dev Container）

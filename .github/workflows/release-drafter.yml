@@ -84,7 +84,7 @@ jobs:
       - name: Get Version
         id: version
         run: |
-          echo "VERSION=$(poetry version -s)" >> $GITHUB_OUTPUT
+          echo "VERSION=$(uv version --short)" >> $GITHUB_OUTPUT
           echo "TAG_VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
           echo "TAG_NAME=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
 
@@ -102,10 +102,8 @@ jobs:
 
       - name: Build Package
         run: |
-          poetry build
-
-      - name: Publish package to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+          uv build
+          uv publish
 
       - name: Publish package to GitHub
         run: |
@@ -117,13 +115,9 @@ jobs:
         run: |
           yarn build:plugin --out-dir ../packages/nonebot-plugin-docs/nonebot_plugin_docs/dist
           cd packages/nonebot-plugin-docs/
-          poetry version ${{ steps.version.outputs.VERSION }}
-          poetry build
-
-      - name: Publish Doc Package to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          packages-dir: packages/nonebot-plugin-docs/dist/
+          uv version ${{ steps.version.outputs.VERSION }}
+          uv build
+          uv publish
 
       - name: Publish Doc Package to GitHub
         run: |

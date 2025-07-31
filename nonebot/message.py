@@ -132,14 +132,16 @@ def run_postprocessor(func: T_RunPostProcessor) -> T_RunPostProcessor:
     return func
 
 
-def _handle_ignored_exception(msg: str) -> Callable[[BaseExceptionGroup], None]:
+def _handle_ignored_exception(
+    msg: str,
+) -> Callable[[BaseExceptionGroup[IgnoredException]], None]:
     def _handle(exc_group: BaseExceptionGroup[IgnoredException]) -> None:
         logger.opt(colors=True).info(msg)
 
     return _handle
 
 
-def _handle_exception(msg: str) -> Callable[[BaseExceptionGroup], None]:
+def _handle_exception(msg: str) -> Callable[[BaseExceptionGroup[Exception]], None]:
     def _handle(exc_group: BaseExceptionGroup[Exception]) -> None:
         for exc in flatten_exception_group(exc_group):
             logger.opt(colors=True, exception=exc).error(msg)
