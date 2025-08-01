@@ -9382,4 +9382,20 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_delta_helper",
+    "project_link": "nonebot-plugin-delta-helper",
+    "author_id": 61410850,
+    "tags": [
+      {
+        "label": "deltaforce",
+        "color": "#ea5252"
+      },
+      {
+        "label": "三角洲行动",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
