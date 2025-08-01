@@ -9398,4 +9398,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_mcping",
+    "project_link": "mcping-nonebot2",
+    "author_id": 26276037,
+    "tags": [
+      {
+        "label": "mcping",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
