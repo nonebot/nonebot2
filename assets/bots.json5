@@ -735,4 +735,12 @@
     ],
     "is_official": false
   },
+  {
+    "name": "nsybot",
+    "desc": "定时获取推特/bilibili等平台用户文章并推送到QQ群",
+    "author_id": 148176849,
+    "homepage": "https://github.com/AhsokaTano26/nsybot",
+    "tags": [],
+    "is_official": false
+  },
 ]
