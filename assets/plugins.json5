@@ -9405,4 +9405,20 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_lazytea_shell_extension",
+    "project_link": "nonebot_plugin_lazytea_shell_extension",
+    "author_id": 78413699,
+    "tags": [
+      {
+        "label": "GUI",
+        "color": "#53f047"
+      },
+      {
+        "label": "管理",
+        "color": "#fff29e"
+      }
+    ],
+    "is_official": false
+  },
 ]
