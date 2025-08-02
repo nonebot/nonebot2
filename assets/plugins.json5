@@ -9421,4 +9421,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_baize",
+    "project_link": "nonebot-plugin-baize",
+    "author_id": 99971730,
+    "tags": [
+      {
+        "label": "群管",
+        "color": "#52d4ea"
+      }
+    ],
+    "is_official": false
+  },
 ]
