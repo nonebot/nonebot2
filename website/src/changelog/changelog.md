@@ -38,6 +38,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: LazyTea命令拓展 [@noneflow](https://github.com/noneflow) ([#3604](https://github.com/nonebot/nonebot2/pull/3604))
 - Plugin: AWS Manager [@noneflow](https://github.com/noneflow) ([#3550](https://github.com/nonebot/nonebot2/pull/3550))
 - Plugin: 三角洲助手 [@noneflow](https://github.com/noneflow) ([#3590](https://github.com/nonebot/nonebot2/pull/3590))
 - Plugin: 猜猜病 [@noneflow](https://github.com/noneflow) ([#3585](https://github.com/nonebot/nonebot2/pull/3585))
