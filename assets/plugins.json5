@@ -9398,4 +9398,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_awsmgmt",
+    "project_link": "nonebot-plugin-awsmgmt",
+    "author_id": 20412597,
+    "tags": [],
+    "is_official": false
+  },
 ]
