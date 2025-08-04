@@ -9421,4 +9421,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_nmcweather",
+    "project_link": "nonebot-plugin-nmcweather",
+    "author_id": 65002276,
+    "tags": [
+      {
+        "label": "weather",
+        "color": "#05f73c"
+      },
+      {
+        "label": "天气",
+        "color": "#08f9c7"
+      }
+    ],
+    "is_official": false
+  },
 ]
