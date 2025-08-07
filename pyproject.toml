@@ -1,6 +1,6 @@
 [project]
 name = "nonebot2"
-version = "2.4.2"
+version = "2.4.3"
 description = "An asynchronous python bot framework."
 authors = [{ name = "yanyongyu", email = "yyy@nonebot.dev" }]
 license = "MIT"
