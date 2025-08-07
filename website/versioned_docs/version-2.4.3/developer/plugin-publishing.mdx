@@ -1,0 +1,206 @@
+---
+sidebar_position: 0
+description: 在商店发布自己的插件
+---
+
+# 发布插件
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+NoneBot 为开发者提供了分享插件给大家使用的方式——商店。本章节将会介绍如何将我们写好的插件发布到商店。
+
+:::tip 提示
+本章节仅包含插件发布流程指导，插件开发请查阅前述章节。
+:::
+
+## 准备工作
+
+### 插件命名规范
+
+NoneBot 插件使用下述命名规范：
+
+- 对于**项目名**，建议统一以 `nonebot-plugin-` 开头，之后为拟定的插件名字，词间用横杠 `-` 分隔；
+  - **项目名**用于代码仓库名称、PyPI 包的发布名称等；
+  - 本文使用 `nonebot-plugin-{your-plugin-name}` 为例。
+- 对于**模块名**，建议与**项目名**一致，但词间用下划线 `_` 分隔，即统一以 `nonebot_plugin_` 开头，之后为拟定的插件名字；
+  - **模块名**用于程序导入使用，应为插件文件（夹）的名称；
+  - 本文使用 `nonebot_plugin_{your_plugin_name}` 为例。
+
+### 项目结构
+
+:::tip 提示
+本段所述的项目结构仅作推荐，不做强制要求，保证实际可用性即可。
+:::
+
+插件程序本身结构可参考[插件结构](../tutorial/create-plugin.md#插件结构)一节，唯一区别在于，插件包可以直接处于项目顶层。
+
+插件项目的一种组织结构如下：
+
+```tree
+📦 nonebot-plugin-{your-plugin-name}
+├── 📂 nonebot_plugin_{your_plugin_name}
+│   ├── 📜 __init__.py
+│   └── 📜 config.py
+├── 📜 pyproject.toml
+└── 📜 README.md
+```
+
+#### 第三方项目模板
+
+一些社区用户可能会分享自己制作的项目模板方便大家使用，如：
+
+- [A-kirami/nonebot-plugin-template](https://github.com/A-kirami/nonebot-plugin-template)
+- [RF-Tar-Railt/nonebot-plugin-template](https://github.com/RF-Tar-Railt/nonebot-plugin-template)
+- [fllesser/nonebot-plugin-template](https://github.com/fllesser/nonebot-plugin-template)
+
+:::tip 提示
+本文档**不保证**第三方模板的适用性。
+
+根据项目模板提供的使用指导补全/修改相应内容后上传到 GitHub 即可。
+:::
+
+### 插件依赖
+
+本段指导填写插件依赖，避免不正确的依赖信息导致插件无法正常工作。
+
+依赖填写的基本原则：程序直接导入了什么第三方库，就添加什么第三方包依赖；能用哪些第三方库的特性，就根据使用的特性锁定第三方包版本。
+
+:::caution 注意
+
+1. 插件需要添加 `nonebot2` 为依赖以避免“幽灵依赖”；
+2. 插件需要将使用的适配器加入依赖列表，如：使用 OneBot 适配器的插件应添加 `nonebot-adapter-onebot` 依赖；
+3. 由于 `nonebot` 是指 `nonebot1` **而非** `nonebot2`，因此要注意**不要**将 `nonebot` 添加为插件的依赖，以免造成冲突；
+4. 尽可能避免使用 `==` 锁定单一版本，增强与其它插件的兼容性。
+
+:::
+
+### 填写插件元数据
+
+请注意，插件发布要求**必须**填写元数据才能通过审核。
+
+下面是一个示例：
+
+```python title=nonebot_plugin_{your_plugin_name}/__init__.py
+from nonebot.plugin import PluginMetadata
+
+from .config import Config
+
+__plugin_meta__ = PluginMetadata(
+    name="{插件名称}",
+    description="{插件介绍}",
+    usage="{插件用法}",
+
+    type="{插件分类}",
+    # 发布必填，当前有效类型有：`library`（为其他插件编写提供功能），`application`（向机器人用户提供功能）。
+
+    homepage="{项目主页}",
+    # 发布必填。
+
+    config=Config,
+    # 插件配置项类，如无需配置可不填写。
+
+    supported_adapters={"~onebot.v11", "~telegram"},
+    # 支持的适配器集合，其中 `~` 在此处代表前缀 `nonebot.adapters.`，其余适配器亦按此格式填写。
+    # 若插件可以保证兼容所有适配器（即仅使用基本适配器功能）可不填写，否则应该列出插件支持的适配器。
+)
+```
+
+:::caution 注意
+`__plugin_meta__` 变量**必须**处于插件最外层（如 `__init__.py` 中），否则无法正常识别。
+
+一般做法是在 `__init__.py` 中定义 `__plugin_meta__`。
+:::
+
+:::tip 提示
+带花括号 `{}` 的内容需要自行替换，注意**一定要把原有的花括号去掉**。
+:::
+
+### 准备项目主页
+
+通常可以使用 GitHub 项目页面作为项目主页，在 `README.md` 文件中编写插件介绍等内容。
+
+内容大致包括：
+
+- 插件功能介绍
+- 安装方法（建议至少有 `nb-cli` 方式安装，**不要**使用旧式的 `bot.py` 配置）
+- 插件配置项（若无可跳过）
+- 插件设置的触发规则（若无可跳过）
+- 插件的其它用法（按需编写）
+
+:::tip 提示
+可以参考[第三方项目模板](#第三方项目模板)。
+:::
+
+### 发布至 [PyPI](https://pypi.org)
+
+根据选用的构建系统，在项目的 `pyproject.toml` 中填入必要信息后进行构建与发布。
+
+:::tip 提示
+不同构建工具的使用可能存在差别。本文仅以 [`pdm`](https://pdm.fming.dev/latest/),
+[`poetry`](https://python-poetry.org/docs/), [`setuptools`](https://setuptools.pypa.io/en/latest/)
+构建系统**本地构建与发布**为示例讲解，其余构建/管理工具等和自动化构建的用法请读者自行探索。
+:::
+
+<Tabs groupId="publishMethod">
+  <TabItem value="poetry" label="Poetry" default>
+
+```bash
+poetry publish --build  # 构建并发布
+
+# 等效于以下两个命令
+poetry build            # 只构建
+poetry publish          # 只发布先前的构建
+```
+
+  </TabItem>
+
+  <TabItem value="pdm" label="PDM" default>
+
+```bash
+pdm publish             # 构建并发布
+
+# 等效于以下两个命令
+pdm build               # 只构建
+pdm publish --no-build  # 只发布先前的构建
+```
+
+  </TabItem>
+
+  <TabItem value="setuptools" label="Setuptools (PEP 517)" default>
+
+```bash
+pip install build twine             # 安装通用构建与发布工具
+
+python -m build --sdist --wheel .   # 只构建
+twine upload dist/*                 # 只发布先前的构建
+```
+
+  </TabItem>
+</Tabs>
+
+:::tip 提示
+发布前建议自行测试构建包是否可用，避免遗漏代码文件或资源文件等问题。
+:::
+
+## 商店审核
+
+### 提交申请
+
+完成在 PyPI 的插件发布流程后，前往[商店](/store/plugins)页面，切换到插件页签，点击 **发布插件** 按钮。
+
+在弹出的插件信息提交表单内，填入您所要发布的相应插件信息。请注意，如果插件需要必要配置项才能正常导入，请在“插件配置项”中填写必要的内容（请勿填写密钥等敏感信息）。
+
+完成填写后，点击 **发布** 按钮，这将自动跳转 NoneBot 仓库内的“发布插件”页面。确认信息无误后点击页面下方的 `Submit new issue` 按钮进行最终提交即可。
+
+### 等待插件审核
+
+插件发布 Issue 创建后，将会经过 **NoneFlow Bot** 的自动前置检查，以确保插件信息正确无误、插件能被正确加载。
+
+:::tip 提示
+若插件检查未通过或信息有误，**不必**关闭当前 Issue。只需更新插件并上传到 PyPI/修改信息后勾选插件测试勾选框即可重新触发插件检查。
+:::
+
+之后，NoneBot 的维护者和一些插件开发者会初步检查插件代码，帮助减少该插件的问题。
+
+完成这些步骤后，您的插件将会被自动合并到[商店](/store/plugins)，而您也将成为 [**NoneBot 贡献者**](https://github.com/nonebot/nonebot2/graphs/contributors)的一员。
