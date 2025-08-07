@@ -1,5 +1,6 @@
 from contextlib import suppress
 import re
+import sys
 
 from exceptiongroup import BaseExceptionGroup
 from nonebug import App
@@ -157,6 +158,22 @@ async def test_depend(app: App):
 
 
 @pytest.mark.anyio
+@pytest.mark.skipif(
+    sys.version_info < (3, 12), reason="TypeAlias requires Python 3.12 or higher"
+)
+async def test_aliased_depend(app: App):
+    from python_3_12.plugins.aliased_param.param_depend import aliased_depends, runned
+
+    async with app.test_dependent(aliased_depends, allow_types=[DependParam]) as ctx:
+        ctx.should_return(1)
+
+    assert len(runned) == 1
+    assert runned[0] == 1
+
+    runned.clear()
+
+
+@pytest.mark.anyio
 async def test_bot(app: App):
     from plugins.param.param_bot import (
         FooBot,
@@ -219,6 +236,19 @@ async def test_bot(app: App):
 
     with pytest.raises(ValueError, match=UNKNOWN_PARAM):
         app.test_dependent(not_bot, allow_types=[BotParam])
+
+
+@pytest.mark.anyio
+@pytest.mark.skipif(
+    sys.version_info < (3, 12), reason="TypeAlias requires Python 3.12 or higher"
+)
+async def test_aliased_bot(app: App):
+    from python_3_12.plugins.aliased_param.param_bot import get_aliased_bot
+
+    async with app.test_dependent(get_aliased_bot, allow_types=[BotParam]) as ctx:
+        bot = ctx.create_bot()
+        ctx.pass_params(bot=bot)
+        ctx.should_return(bot)
 
 
 @pytest.mark.anyio
@@ -308,6 +338,21 @@ async def test_event(app: App):
     ) as ctx:
         ctx.pass_params(event=fake_event)
         ctx.should_return(fake_event.is_tome())
+
+
+@pytest.mark.anyio
+@pytest.mark.skipif(
+    sys.version_info < (3, 12), reason="TypeAlias requires Python 3.12 or higher"
+)
+async def test_aliased_event(app: App):
+    from python_3_12.plugins.aliased_param.param_event import aliased_event
+
+    fake_message = FakeMessage("text")
+    fake_event = make_fake_event(_message=fake_message)()
+
+    async with app.test_dependent(aliased_event, allow_types=[EventParam]) as ctx:
+        ctx.pass_params(event=fake_event)
+        ctx.should_return(fake_event)
 
 
 @pytest.mark.anyio
@@ -462,6 +507,37 @@ async def test_state(app: App):
 
 
 @pytest.mark.anyio
+@pytest.mark.skipif(
+    sys.version_info < (3, 12), reason="TypeAlias requires Python 3.12 or higher"
+)
+async def test_aliased_state(app: App):
+    from python_3_12.plugins.aliased_param.param_state import aliased_state
+
+    fake_message = FakeMessage("text")
+    fake_matched = re.match(r"\[cq:(?P<type>.*?),(?P<arg>.*?)\]", "[cq:test,arg=value]")
+    fake_state = {
+        PREFIX_KEY: {
+            CMD_KEY: ("cmd",),
+            RAW_CMD_KEY: "/cmd",
+            CMD_START_KEY: "/",
+            CMD_ARG_KEY: fake_message,
+            CMD_WHITESPACE_KEY: " ",
+        },
+        SHELL_ARGV: ["-h"],
+        SHELL_ARGS: {"help": True},
+        REGEX_MATCHED: fake_matched,
+        STARTSWITH_KEY: "startswith",
+        ENDSWITH_KEY: "endswith",
+        FULLMATCH_KEY: "fullmatch",
+        KEYWORD_KEY: "keyword",
+    }
+
+    async with app.test_dependent(aliased_state, allow_types=[StateParam]) as ctx:
+        ctx.pass_params(state=fake_state)
+        ctx.should_return(fake_state)
+
+
+@pytest.mark.anyio
 async def test_matcher(app: App):
     from plugins.param.param_matcher import (
         FooMatcher,
@@ -574,6 +650,20 @@ async def test_matcher(app: App):
 
 
 @pytest.mark.anyio
+@pytest.mark.skipif(
+    sys.version_info < (3, 12), reason="TypeAlias requires Python 3.12 or higher"
+)
+async def test_aliased_matcher(app: App):
+    from python_3_12.plugins.aliased_param.param_matcher import aliased_matcher
+
+    fake_matcher = Matcher()
+
+    async with app.test_dependent(aliased_matcher, allow_types=[MatcherParam]) as ctx:
+        ctx.pass_params(matcher=fake_matcher)
+        ctx.should_return(fake_matcher)
+
+
+@pytest.mark.anyio
 async def test_arg(app: App):
     from plugins.param.param_arg import (
         annotated_arg,
@@ -643,15 +733,46 @@ async def test_arg(app: App):
 
 
 @pytest.mark.anyio
+@pytest.mark.skipif(
+    sys.version_info < (3, 12), reason="TypeAlias requires Python 3.12 or higher"
+)
+async def test_aliased_arg(app: App):
+    from python_3_12.plugins.aliased_param.param_arg import aliased_arg
+
+    matcher = Matcher()
+    message = FakeMessage("text")
+    matcher.set_arg("key", message)
+
+    async with app.test_dependent(aliased_arg, allow_types=[ArgParam]) as ctx:
+        ctx.pass_params(matcher=matcher)
+        ctx.should_return(message)
+
+
+@pytest.mark.anyio
 async def test_exception(app: App):
     from plugins.param.param_exception import exc, legacy_exc
 
     exception = ValueError("test")
+
     async with app.test_dependent(exc, allow_types=[ExceptionParam]) as ctx:
         ctx.pass_params(exception=exception)
         ctx.should_return(exception)
 
     async with app.test_dependent(legacy_exc, allow_types=[ExceptionParam]) as ctx:
+        ctx.pass_params(exception=exception)
+        ctx.should_return(exception)
+
+
+@pytest.mark.anyio
+@pytest.mark.skipif(
+    sys.version_info < (3, 12), reason="TypeAlias requires Python 3.12 or higher"
+)
+async def test_aliased_exception(app: App):
+    from python_3_12.plugins.aliased_param.param_exception import aliased_exc
+
+    exception = ValueError("test")
+
+    async with app.test_dependent(aliased_exc, allow_types=[ExceptionParam]) as ctx:
         ctx.pass_params(exception=exception)
         ctx.should_return(exception)
 

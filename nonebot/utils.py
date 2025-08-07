@@ -89,13 +89,15 @@ def generic_check_issubclass(
 
     特别的：
 
+    - 如果 cls 是 `typing.TypeVar` 类型，
+      则会检查其 `__bound__` 或 `__constraints__`
+      是否是 class_or_tuple 中一个类型的子类或 None。
     - 如果 cls 是 `typing.Union` 或 `types.UnionType` 类型，
       则会检查其中的所有类型是否是 class_or_tuple 中一个类型的子类或 None。
     - 如果 cls 是 `typing.Literal` 类型，
       则会检查其中的所有值是否是 class_or_tuple 中一个类型的实例。
-    - 如果 cls 是 `typing.TypeVar` 类型，
-      则会检查其 `__bound__` 或 `__constraints__`
-      是否是 class_or_tuple 中一个类型的子类或 None。
+    - 如果 cls 是 `typing.List`、`typing.Dict` 等泛型类型，
+      则会检查其原始类型是否是 class_or_tuple 中一个类型的子类。
     """
     # if the target is a TypeVar, we check it first
     if isinstance(cls, TypeVar):

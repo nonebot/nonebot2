@@ -2,6 +2,7 @@ from collections.abc import Generator
 from functools import wraps
 import os
 from pathlib import Path
+import sys
 import threading
 from typing import TYPE_CHECKING, Callable, TypeVar
 from typing_extensions import ParamSpec
@@ -67,7 +68,14 @@ def run_once(func: Callable[P, R]) -> Callable[P, R]:
 @run_once
 def load_plugin(anyio_backend, nonebug_init: None) -> set["Plugin"]:
     # preload global plugins
-    return nonebot.load_plugins(str(Path(__file__).parent / "plugins"))
+    plugins: set["Plugin"] = set()
+    plugins |= nonebot.load_plugins(str(Path(__file__).parent / "plugins"))
+    if sys.version_info >= (3, 12):
+        # preload python 3.12 plugins
+        plugins |= nonebot.load_plugins(
+            str(Path(__file__).parent / "python_3_12" / "plugins")
+        )
+    return plugins
 
 
 @pytest.fixture(scope="session", autouse=True)

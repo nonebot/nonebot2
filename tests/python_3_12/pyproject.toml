@@ -1,0 +1,3 @@
+[tool.ruff]
+extend = "../pyproject.toml"
+target-version = "py312"
