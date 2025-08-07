@@ -7,13 +7,14 @@ FrontMatter:
 """
 
 import inspect
-from typing import Any, Callable, ForwardRef
+from typing import Any, Callable, ForwardRef, cast
+from typing_extensions import TypeAliasType
 
 from loguru import logger
 
 from nonebot.compat import ModelField
 from nonebot.exception import TypeMisMatch
-from nonebot.typing import evaluate_forwardref
+from nonebot.typing import evaluate_forwardref, is_type_alias_type
 
 
 def get_typed_signature(call: Callable[..., Any]) -> inspect.Signature:
@@ -46,6 +47,9 @@ def get_typed_annotation(param: inspect.Parameter, globalns: dict[str, Any]) -> 
                 f'Unknown ForwardRef["{param.annotation}"] for parameter {param.name}'
             )
             return inspect.Parameter.empty
+    if is_type_alias_type(annotation):
+        # Python 3.12+ supports PEP 695 TypeAliasType
+        annotation = cast(TypeAliasType, annotation).__value__
     return annotation
 
 
