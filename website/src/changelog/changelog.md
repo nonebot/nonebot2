@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: MC玩家皮肤渲染 [@noneflow](https://github.com/noneflow) ([#3613](https://github.com/nonebot/nonebot2/pull/3613))
 - Plugin: EconomyValue [@noneflow](https://github.com/noneflow) ([#3566](https://github.com/nonebot/nonebot2/pull/3566))
 
 ## v2.4.3
