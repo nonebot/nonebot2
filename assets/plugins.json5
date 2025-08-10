@@ -9464,4 +9464,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_mcplayer_render",
+    "project_link": "nonebot-plugin-mcplayer-render",
+    "author_id": 49135577,
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
