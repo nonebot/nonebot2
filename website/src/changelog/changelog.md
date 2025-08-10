@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 🍻 插件发布
+
+- Plugin: EconomyValue [@noneflow](https://github.com/noneflow) ([#3566](https://github.com/nonebot/nonebot2/pull/3566))
+
 ## v2.4.3
 
 ### 🚀 新功能
