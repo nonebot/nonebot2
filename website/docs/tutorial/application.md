@@ -50,19 +50,24 @@ options:
 
 2. 安装 nonebot2 以及驱动器，以 fastapi 为例
 
-   windows 平台：
+<Tabs groupId="platform">
+  <TabItem value="windows" label="windows 平台" default>
 
-   ```bash
-   pip install "nonebot2[fastapi]"
-   ```
+```bash
+pip install "nonebot2[fastapi]"
+```
 
-   linux/macOS 平台：
+  </TabItem>
+  <TabItem value="linux/macOS" label="linux/macOS">
 
-   ```bash
-   pip install 'nonebot2[fastapi]'
-   ```
+```bash
+pip install 'nonebot2[fastapi]'
+```
 
-   更多驱动器包名可以在 [驱动器商店](/store/drivers) 中找到，请替换上文方括号中的内容。
+  </TabItem>
+</Tabs>
+
+更多驱动器包名可以在 [驱动器商店](/store/drivers) 中找到，请替换上文方括号中的内容。
 
 3. 安装适配器，以 nonebot-adapter-console 为例
 
@@ -121,7 +126,8 @@ if __name__ == "__main__":
 
 在**项目文件夹**中，使用配置好环境的 Python 解释器运行入口文件:
 
-windows 平台：
+<Tabs groupId="platform">
+  <TabItem value="windows" label="windows 平台" default>
 
 ```bash
 # 激活虚拟环境（未使用虚拟环境时跳过此行）
@@ -130,7 +136,8 @@ windows 平台：
 python bot.py
 ```
 
-linux/macOS 平台：
+  </TabItem>
+  <TabItem value="linux/macOS" label="linux/macOS">
 
 ```bash
 # 激活虚拟环境（未使用虚拟环境时跳过此行）
@@ -138,5 +145,8 @@ source .venv/bin/activate
 # 运行机器人
 python bot.py
 ```
+
+  </TabItem>
+</Tabs>
 
 如果你后续使用了 `nb-cli` ，你仍可以使用 `nb run` 命令来运行机器人，`nb-cli` 会自动检测入口文件 `bot.py` 是否存在并运行。同时，你也可以使用 `nb run --reload` 来自动检测代码的更改并自动重新运行入口文件。
