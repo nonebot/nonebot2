@@ -30,35 +30,53 @@ options:
 
 1. （可选）创建虚拟环境，以 venv 为例
 
+   windows 平台：
+
    ```bash
+   # 创建虚拟环境
    python -m venv .venv --prompt nonebot2
-   # windows
+   # 激活虚拟环境
    .venv\Scripts\activate
-   # linux/macOS
+   ```
+
+   linux/macOS 平台：
+
+   ```bash
+   # 创建虚拟环境
+   python -m venv .venv --prompt nonebot2
+   # 激活虚拟环境
    source .venv/bin/activate
    ```
 
-2. 安装 nonebot2 以及驱动器
+2. 安装 nonebot2 以及驱动器，以 fastapi 为例
+
+   windows 平台：
+
+   ```bash
+   pip install "nonebot2[fastapi]"
+   ```
+
+   linux/macOS 平台：
 
    ```bash
    pip install 'nonebot2[fastapi]'
    ```
 
-   驱动器包名可以在 [驱动器商店](/store/drivers) 中找到。
+   更多驱动器包名可以在 [驱动器商店](/store/drivers) 中找到，请替换上文方括号中的内容。
 
-3. 安装适配器
+3. 安装适配器，以 nonebot-adapter-console 为例
 
    ```bash
    pip install nonebot-adapter-console
    ```
 
-   适配器包名可以在 [适配器商店](/store/adapters) 中找到。
+   更多适配器包名可以在 [适配器商店](/store/adapters) 中找到。
 
 ## 创建配置文件
 
 配置文件用于存放 NoneBot 运行所需要的配置项，使用 [`pydantic`](https://docs.pydantic.dev/) 以及 [`python-dotenv`](https://saurabh-kumar.com/python-dotenv/) 来读取配置。配置项需符合 dotenv 格式，复杂类型数据需使用 JSON 格式填写。具体可选配置方式以及配置项详情参考[配置](../appendices/config.mdx)。
 
-在**项目文件夹**中创建一个 `.env` 文本文件，并写入以下内容:
+在**项目文件夹**中创建一个名为 `.env` 的文件，并写入以下内容:
 
 ```bash title=.env
 HOST=0.0.0.0  # 配置 NoneBot 监听的 IP / 主机名
@@ -101,9 +119,23 @@ if __name__ == "__main__":
 
 ## 运行机器人
 
-在**项目文件夹**中，使用配置好环境的 Python 解释器运行入口文件（如果使用虚拟环境，请先激活虚拟环境）:
+在**项目文件夹**中，使用配置好环境的 Python 解释器运行入口文件:
+
+windows 平台：
 
 ```bash
+# 激活虚拟环境（未使用虚拟环境时跳过此行）
+.venv\Scripts\activate
+# 运行机器人
+python bot.py
+```
+
+linux/macOS 平台：
+
+```bash
+# 激活虚拟环境（未使用虚拟环境时跳过此行）
+source .venv/bin/activate
+# 运行机器人
 python bot.py
 ```
 
