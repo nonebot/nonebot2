@@ -323,4 +323,19 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot.adapters.bilibili_live",
+    "project_link": "nonebot-adapter-bilibili-live",
+    "name": "B站直播间",
+    "desc": "B 站直播间协议（Web API/开放平台）支持",
+    "author_id": 68982190,
+    "homepage": "https://github.com/MingxuanGame/nonebot-adapter-bilibili-live",
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#ff6699"
+      }
+    ],
+    "is_official": false
+  },
 ]
