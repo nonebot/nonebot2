@@ -12,6 +12,10 @@ toc_max_heading_level: 2
 - Plugin: MC玩家皮肤渲染 [@noneflow](https://github.com/noneflow) ([#3613](https://github.com/nonebot/nonebot2/pull/3613))
 - Plugin: EconomyValue [@noneflow](https://github.com/noneflow) ([#3566](https://github.com/nonebot/nonebot2/pull/3566))
 
+### 🍻 适配器发布
+
+- Adapter: nonebot-adapter-vocechat [@noneflow](https://github.com/noneflow) ([#3536](https://github.com/nonebot/nonebot2/pull/3536))
+
 ## v2.4.3
 
 ### 🚀 新功能
