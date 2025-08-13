@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 📝 文档
+
+- Docs: 增加 VoceChat 适配器说明 [@5656565566](https://github.com/5656565566) ([#3627](https://github.com/nonebot/nonebot2/pull/3627))
+
 ### 🍻 插件发布
 
 - Plugin: MC玩家皮肤渲染 [@noneflow](https://github.com/noneflow) ([#3613](https://github.com/nonebot/nonebot2/pull/3613))
