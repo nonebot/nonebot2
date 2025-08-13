@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 🍻 适配器发布
 
+- Adapter: B站直播间 [@noneflow](https://github.com/noneflow) ([#3592](https://github.com/nonebot/nonebot2/pull/3592))
 - Adapter: nonebot-adapter-vocechat [@noneflow](https://github.com/noneflow) ([#3536](https://github.com/nonebot/nonebot2/pull/3536))
 
 ## v2.4.3
