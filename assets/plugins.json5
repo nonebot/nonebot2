@@ -9483,4 +9483,24 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_who_is_spy",
+    "project_link": "nonebot-plugin-who-is-spy",
+    "author_id": 144591143,
+    "tags": [
+      {
+        "label": "game",
+        "color": "#ea5252"
+      },
+      {
+        "label": "谁是卧底",
+        "color": "#6252ea"
+      },
+      {
+        "label": "游戏",
+        "color": "#ea52cd"
+      }
+    ],
+    "is_official": false
+  },
 ]
