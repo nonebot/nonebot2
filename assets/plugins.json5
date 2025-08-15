@@ -9483,4 +9483,20 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_huaer_bot",
+    "project_link": "nonebot-plugin-huaer-bot",
+    "author_id": 216365707,
+    "tags": [
+      {
+        "label": "LLM",
+        "color": "#0583b3"
+      },
+      {
+        "label": "RAG",
+        "color": "#00ff4d"
+      }
+    ],
+    "is_official": false
+  },
 ]
