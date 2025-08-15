@@ -9483,4 +9483,20 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_sell_poor",
+    "project_link": "nonebot-plugin-sell-poor",
+    "author_id": 96647974,
+    "tags": [
+      {
+        "label": "卖弱",
+        "color": "#ea5252"
+      },
+      {
+        "label": "😭😭😭",
+        "color": "#52eaba"
+      }
+    ],
+    "is_official": false
+  },
 ]
