@@ -129,7 +129,6 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
   |     开黑啦（[仓库](https://github.com/Tian-que/nonebot-adapter-kaiheila)，[协议](https://developer.kookapp.cn/)）     |  ↗️  |                                由社区贡献                                 |
   |                          Ntchat（[仓库](https://github.com/JustUndertaker/adapter-ntchat)）                           |  ↗️  |                           微信协议，由社区贡献                            |
   |                      MineCraft（[仓库](https://github.com/17TheWord/nonebot-adapter-minecraft)）                      |  ↗️  |                                由社区贡献                                 |
-  |                          BiliBili Live（[仓库](https://github.com/wwweww/adapter-bilibili)）                          |  ↗️  |                                由社区贡献                                 |
   |                       Walle-Q（[仓库](https://github.com/onebot-walle/nonebot_adapter_walleq)）                       |  ↗️  |                            QQ 协议，由社区贡献                            |
   |                       Villa（[仓库](https://github.com/CMHopeSunshine/nonebot-adapter-villa)）                        |  ❌  |                     米游社大别野 Bot 协议，官方已下线                     |
   | Rocket.Chat（[仓库](https://github.com/IUnlimit/nonebot-adapter-rocketchat)，[协议](https://developer.rocket.chat/)） |  ↗️  |                     Rocket.Chat Bot 协议，由社区贡献                      |
@@ -140,6 +139,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
   | Gewechat（[仓库](https://github.com/Shine-Light/nonebot-adapter-gewechat)，[协议](https://github.com/Devo919/Gewechat)）|  ❌  |                      Gewechat 微信协议，Gewechat不再维护及可用                            |
   |  EFChat（[仓库](https://github.com/molanp/nonebot_adapter_efchat)，[协议](https://irinu-live.melon.fish/efc-help/)）   |  ↗️  |                            恒五聊平台协议，由社区贡献                          |
   |  VoceChat （[仓库](https://github.com/5656565566/nonebot-adapter-vocechat)，[协议](https://doc.voce.chat/zh-cn/bot/bot-and-webhook)）   |  ↗️  |                            VoceChat 平台协议，由社区贡献                          |
+  |  B站直播间（[仓库](https://github.com/MingxuanGame/nonebot-adapter-bilibili-live)，[Web API 协议](https://github.com/SocialSisterYi/bilibili-API-collect/blob/master/docs/live)，[开放平台协议](https://open-live.bilibili.com/document)）   |  ↗️  |                            B站直播间（Web API/开放平台）协议，由社区贡献                          |
 
 - 坚实后盾：支持多种 web 框架，可自定义替换、组合
 
