@@ -9483,4 +9483,20 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_simple_setu",
+    "project_link": "nonebot-plugin-simple-setu",
+    "author_id": 178264759,
+    "tags": [
+      {
+        "label": "pixiv",
+        "color": "#00f5ed"
+      },
+      {
+        "label": "色图",
+        "color": "#ed0823"
+      }
+    ],
+    "is_official": false
+  },
 ]
