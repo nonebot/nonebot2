@@ -9499,4 +9499,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot-plugin-anipusher",
+    "project_link": "nonebot-plugin-anipusher",
+    "author_id": 32594985,
+    "tags": [
+      {
+        "label": "Emby",
+        "color": "#0b8a31"
+      },
+      {
+        "label": "AniRss",
+        "color": "#0b8a31"
+      }
+    ],
+    "is_official": false
+  },
 ]
