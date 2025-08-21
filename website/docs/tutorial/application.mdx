@@ -33,8 +33,8 @@ import TabItem from "@theme/TabItem";
 
 1. （可选）创建虚拟环境，以 venv 为例
 
-<Tabs groupId="platform">
-  <TabItem value="windows" label="windows 平台" default>
+   <Tabs groupId="platform">
+     <TabItem value="windows" label="Windows" default>
 
    ```bash
    # 创建虚拟环境
@@ -42,8 +42,9 @@ import TabItem from "@theme/TabItem";
    # 激活虚拟环境
    .venv\Scripts\activate
    ```
-  </TabItem>
-  <TabItem value="linux/macOS" label="linux/macOS">
+
+     </TabItem>
+     <TabItem value="linux/macos" label="Linux/macOS">
 
    ```bash
    # 创建虚拟环境
@@ -52,37 +53,37 @@ import TabItem from "@theme/TabItem";
    source .venv/bin/activate
    ```
 
-  </TabItem>
-</Tabs>
+     </TabItem>
+   </Tabs>
 
-2. 安装 nonebot2 以及驱动器，以 fastapi 为例
+2. 安装 nonebot2 以及驱动器，以 Fastapi 驱动器为例
 
-<Tabs groupId="platform">
-  <TabItem value="windows" label="windows 平台" default>
+   <Tabs groupId="platform">
+     <TabItem value="windows" label="Windows" default>
 
-```bash
-pip install "nonebot2[fastapi]"
-```
+   ```bash
+   pip install "nonebot2[fastapi]"
+   ```
 
-  </TabItem>
-  <TabItem value="linux/macOS" label="linux/macOS">
+     </TabItem>
+     <TabItem value="linux/macos" label="Linux/macOS">
 
-```bash
-pip install 'nonebot2[fastapi]'
-```
+   ```bash
+   pip install 'nonebot2[fastapi]'
+   ```
 
-  </TabItem>
-</Tabs>
+     </TabItem>
+   </Tabs>
 
-更多驱动器包名可以在 [驱动器商店](/store/drivers) 中找到，请替换上文方括号中的内容。
+   驱动器包名可以在 [驱动器商店](/store/drivers) 中找到，请替换上文方括号中的内容。
 
-3. 安装适配器，以 nonebot-adapter-console 为例
+3. 安装适配器，以 Console 适配器为例
 
    ```bash
    pip install nonebot-adapter-console
    ```
 
-   更多适配器包名可以在 [适配器商店](/store/adapters) 中找到。
+   适配器包名可以在 [适配器商店](/store/adapters) 中找到。
 
 ## 创建配置文件
 
@@ -134,7 +135,7 @@ if __name__ == "__main__":
 在**项目文件夹**中，使用配置好环境的 Python 解释器运行入口文件:
 
 <Tabs groupId="platform">
-  <TabItem value="windows" label="windows 平台" default>
+  <TabItem value="windows" label="Windows" default>
 
 ```bash
 # 激活虚拟环境（未使用虚拟环境时跳过此行）
@@ -144,7 +145,7 @@ python bot.py
 ```
 
   </TabItem>
-  <TabItem value="linux/macOS" label="linux/macOS">
+  <TabItem value="linux/macos" label="Linux/macOS">
 
 ```bash
 # 激活虚拟环境（未使用虚拟环境时跳过此行）
