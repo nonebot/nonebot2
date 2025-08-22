@@ -743,4 +743,25 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "name": "Amrita",
+    "desc": "LLM聊天机器人框架",
+    "author_id": 67693593,
+    "homepage": "https://github.com/LiteSuggarDEV/Amrita",
+    "tags": [
+      {
+        "label": "聊天",
+        "color": "#ea5252"
+      },
+      {
+        "label": "LLM",
+        "color": "#5c86db"
+      },
+      {
+        "label": "快捷部署",
+        "color": "#eebe0b"
+      }
+    ],
+    "is_official": false
+  },
 ]
