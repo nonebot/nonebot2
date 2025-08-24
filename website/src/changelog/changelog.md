@@ -22,6 +22,10 @@ toc_max_heading_level: 2
 - Plugin: MC玩家皮肤渲染 [@noneflow](https://github.com/noneflow) ([#3613](https://github.com/nonebot/nonebot2/pull/3613))
 - Plugin: EconomyValue [@noneflow](https://github.com/noneflow) ([#3566](https://github.com/nonebot/nonebot2/pull/3566))
 
+### 🍻 机器人发布
+
+- Bot: Amrita [@noneflow](https://github.com/noneflow) ([#3641](https://github.com/nonebot/nonebot2/pull/3641))
+
 ### 🍻 适配器发布
 
 - Adapter: B站直播间 [@noneflow](https://github.com/noneflow) ([#3592](https://github.com/nonebot/nonebot2/pull/3592))
