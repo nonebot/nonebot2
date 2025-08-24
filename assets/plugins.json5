@@ -5252,13 +5252,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_pingti",
-    "project_link": "nonebot-plugin-pingti",
-    "author_id": 59048777,
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_wx4",
     "project_link": "nonebot-plugin-wx4",
     "author_id": 72342321,
