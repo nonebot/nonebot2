@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 更新文档《手动创建项目》 [@Chen-Luan](https://github.com/Chen-Luan) ([#3623](https://github.com/nonebot/nonebot2/pull/3623))
 - Docs: 增加 B站直播间 适配器说明 [@MingxuanGame](https://github.com/MingxuanGame) ([#3636](https://github.com/nonebot/nonebot2/pull/3636))
 - Docs: 增加 VoceChat 适配器说明 [@5656565566](https://github.com/5656565566) ([#3627](https://github.com/nonebot/nonebot2/pull/3627))
 
