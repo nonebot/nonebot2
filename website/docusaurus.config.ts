@@ -200,7 +200,7 @@ export default async function createConfigAsync() {
     organizationName: "nonebot", // Usually your GitHub org/user name.
     projectName: "nonebot2", // Usually your repo name.
 
-    onBrokenLinks: "throw",
+    onBrokenLinks: "warn",
     onBrokenMarkdownLinks: "warn",
 
     // Even if you don't use internalization, you can use this field to set useful
