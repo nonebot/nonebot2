@@ -18,7 +18,6 @@ None 驱动适配
 - **说明:** None 驱动框架
 
 - **参数**
-
   - `env` ([Env](../config.md#Env))
 
   - `config` ([Config](../config.md#Config))
@@ -40,13 +39,11 @@ None 驱动适配
 - **说明:** 启动 none driver
 
 - **参数**
-
   - `*args`
 
   - `**kwargs`
 
 - **返回**
-
   - untyped
 
 ### _method_ `exit(force=False)` {#Driver-exit}
@@ -54,9 +51,7 @@ None 驱动适配
 - **说明:** 退出 none driver
 
 - **参数**
-
   - `force` (bool): 强制退出
 
 - **返回**
-
   - untyped

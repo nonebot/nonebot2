@@ -14,11 +14,9 @@ description: nonebot.params 模块
 - **说明:** Arg 参数消息
 
 - **参数**
-
   - `key` (str | None)
 
 - **返回**
-
   - Any
 
 ## _class_ `ArgParam(*args, key, type, **kwargs)` {#ArgParam}
@@ -33,7 +31,6 @@ description: nonebot.params 模块
   留空则会根据参数名称获取。
 
 - **参数**
-
   - `*args`
 
   - `key` (str)
@@ -47,11 +44,9 @@ description: nonebot.params 模块
 - **说明:** Arg 参数消息纯文本
 
 - **参数**
-
   - `key` (str | None)
 
 - **返回**
-
   - str
 
 ## _def_ `ArgPromptResult(key=None)` {#ArgPromptResult}
@@ -59,11 +54,9 @@ description: nonebot.params 模块
 - **说明:** `arg` prompt 发送结果
 
 - **参数**
-
   - `key` (str | None)
 
 - **返回**
-
   - Any
 
 ## _def_ `ArgStr(key=None)` {#ArgStr}
@@ -71,11 +64,9 @@ description: nonebot.params 模块
 - **说明:** Arg 参数消息文本
 
 - **参数**
-
   - `key` (str | None)
 
 - **返回**
-
   - str
 
 ## _class_ `BotParam(*args, checker=None, **kwargs)` {#BotParam}
@@ -89,7 +80,6 @@ description: nonebot.params 模块
   为保证兼容性，本注入还会解析名为 `bot` 且没有类型注解的参数。
 
 - **参数**
-
   - `*args`
 
   - `checker` ([ModelField](compat.md#ModelField) | None)
@@ -107,7 +97,6 @@ description: nonebot.params 模块
   本注入参数应该具有最低优先级，因此应该在所有其他注入参数之后使用。
 
 - **参数**
-
   - `*args`
 
   - `validate` (bool)
@@ -125,7 +114,6 @@ description: nonebot.params 模块
   本注入应该具有最高优先级，因此应该在其他参数之前检查。
 
 - **参数**
-
   - `*args`
 
   - `dependent` ([Dependent](dependencies/index.md#Dependent)[Any])
@@ -139,7 +127,6 @@ description: nonebot.params 模块
 - **说明:** 子依赖装饰器
 
 - **参数**
-
   - `dependency` ([T_Handler](typing.md#T-Handler) | None): 依赖函数。默认为参数的类型注释。
 
   - `use_cache` (bool): 是否使用缓存。默认为 `True`。
@@ -147,7 +134,6 @@ description: nonebot.params 模块
   - `validate` (bool | PydanticFieldInfo): 是否使用 Pydantic 类型校验。默认为 `False`。
 
 - **返回**
-
   - Any
 
 - **用法**
@@ -180,7 +166,6 @@ description: nonebot.params 模块
   为保证兼容性，本注入还会解析名为 `event` 且没有类型注解的参数。
 
 - **参数**
-
   - `*args`
 
   - `checker` ([ModelField](compat.md#ModelField) | None)
@@ -198,7 +183,6 @@ description: nonebot.params 模块
   为保证兼容性，本注入还会解析名为 `exception` 且没有类型注解的参数。
 
 - **参数**
-
   - `*args`
 
   - `validate` (bool)
@@ -216,7 +200,6 @@ description: nonebot.params 模块
   为保证兼容性，本注入还会解析名为 `matcher` 且没有类型注解的参数。
 
 - **参数**
-
   - `*args`
 
   - `checker` ([ModelField](compat.md#ModelField) | None)
@@ -234,7 +217,6 @@ description: nonebot.params 模块
   为保证兼容性，本注入还会解析名为 `state` 且没有类型注解的参数。
 
 - **参数**
-
   - `*args`
 
   - `validate` (bool)
@@ -250,7 +232,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - str
 
 ## _def_ `EventMessage()` {#EventMessage}
@@ -262,7 +243,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - Any
 
 ## _def_ `EventPlainText()` {#EventPlainText}
@@ -274,7 +254,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - str
 
 ## _def_ `EventToMe()` {#EventToMe}
@@ -286,7 +265,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - bool
 
 ## _def_ `Command()` {#Command}
@@ -298,7 +276,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - tuple[str, ...]
 
 ## _def_ `RawCommand()` {#RawCommand}
@@ -310,7 +287,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - str
 
 ## _def_ `CommandArg()` {#CommandArg}
@@ -322,7 +298,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - Any
 
 ## _def_ `CommandStart()` {#CommandStart}
@@ -334,7 +309,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - str
 
 ## _def_ `CommandWhitespace()` {#CommandWhitespace}
@@ -346,7 +320,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - str
 
 ## _def_ `ShellCommandArgs()` {#ShellCommandArgs}
@@ -358,7 +331,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - Any
 
 ## _def_ `ShellCommandArgv()` {#ShellCommandArgv}
@@ -370,7 +342,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - Any
 
 ## _def_ `RegexMatched()` {#RegexMatched}
@@ -382,7 +353,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - Match[str]
 
 ## _def_ `RegexStr(*groups)` {#RegexStr}
@@ -392,29 +362,21 @@ description: nonebot.params 模块
 - **重载**
 
   **1.** `(group, /) -> str`
-
   - **参数**
-
     - `group` (Literal[0])
 
   - **返回**
-
     - str
 
   **2.** `(group, /) -> str | Any`
-
   - **参数**
-
     - `group` (str | int)
 
   - **返回**
-
     - str | Any
 
   **3.** `(group1, group2, /, *groups) -> tuple[str | Any, ...]`
-
   - **参数**
-
     - `group1` (str | int)
 
     - `group2` (str | int)
@@ -422,7 +384,6 @@ description: nonebot.params 模块
     - `*groups` (str | int)
 
   - **返回**
-
     - tuple[str | Any, ...]
 
 ## _def_ `RegexGroup()` {#RegexGroup}
@@ -434,7 +395,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - tuple[Any, ...]
 
 ## _def_ `RegexDict()` {#RegexDict}
@@ -446,7 +406,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - dict[str, Any]
 
 ## _def_ `Startswith()` {#Startswith}
@@ -458,7 +417,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - str
 
 ## _def_ `Endswith()` {#Endswith}
@@ -470,7 +428,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - str
 
 ## _def_ `Fullmatch()` {#Fullmatch}
@@ -482,7 +439,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - str
 
 ## _def_ `Keyword()` {#Keyword}
@@ -494,7 +450,6 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - str
 
 ## _def_ `Received(id=None, default=None)` {#Received}
@@ -502,13 +457,11 @@ description: nonebot.params 模块
 - **说明:** `receive` 事件参数
 
 - **参数**
-
   - `id` (str | None)
 
   - `default` (Any)
 
 - **返回**
-
   - Any
 
 ## _def_ `LastReceived(default=None)` {#LastReceived}
@@ -516,11 +469,9 @@ description: nonebot.params 模块
 - **说明:** `last_receive` 事件参数
 
 - **参数**
-
   - `default` (Any)
 
 - **返回**
-
   - Any
 
 ## _def_ `ReceivePromptResult(id=None)` {#ReceivePromptResult}
@@ -528,11 +479,9 @@ description: nonebot.params 模块
 - **说明:** `receive` prompt 发送结果
 
 - **参数**
-
   - `id` (str | None)
 
 - **返回**
-
   - Any
 
 ## _def_ `PausePromptResult()` {#PausePromptResult}
@@ -544,5 +493,4 @@ description: nonebot.params 模块
   empty
 
 - **返回**
-
   - Any

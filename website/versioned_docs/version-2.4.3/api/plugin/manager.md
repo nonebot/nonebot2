@@ -16,7 +16,6 @@ description: nonebot.plugin.manager 模块
 - **说明:** 插件管理器。
 
 - **参数**
-
   - `plugins` (Iterable[str] | None): 独立插件模块名集合。
 
   - `search_path` (Iterable[str] | None): 插件搜索路径（文件夹），相对于当前工作目录。
@@ -54,11 +53,9 @@ description: nonebot.plugin.manager 模块
   可以使用完整插件模块名或者插件标识符加载。
 
 - **参数**
-
   - `name` (str): 插件名称或插件标识符。
 
 - **返回**
-
   - [Plugin](model.md#Plugin) | None
 
 ### _method_ `load_all_plugins()` {#PluginManager-load-all-plugins}
@@ -70,7 +67,6 @@ description: nonebot.plugin.manager 模块
   empty
 
 - **返回**
-
   - set[[Plugin](model.md#Plugin)]
 
 ## _class_ `PluginFinder(<auto>)` {#PluginFinder}
@@ -82,7 +78,6 @@ description: nonebot.plugin.manager 模块
 ### _method_ `find_spec(fullname, path, target=None)` {#PluginFinder-find-spec}
 
 - **参数**
-
   - `fullname` (str)
 
   - `path` (Sequence[str] | None)
@@ -90,13 +85,11 @@ description: nonebot.plugin.manager 模块
   - `target` (ModuleType | None)
 
 - **返回**
-
   - untyped
 
 ## _class_ `PluginLoader(manager, fullname, path)` {#PluginLoader}
 
 - **参数**
-
   - `manager` (PluginManager)
 
   - `fullname` (str)
@@ -106,19 +99,15 @@ description: nonebot.plugin.manager 模块
 ### _method_ `create_module(spec)` {#PluginLoader-create-module}
 
 - **参数**
-
   - `spec`
 
 - **返回**
-
   - ModuleType | None
 
 ### _method_ `exec_module(module)` {#PluginLoader-exec-module}
 
 - **参数**
-
   - `module` (ModuleType)
 
 - **返回**
-
   - None

@@ -19,31 +19,25 @@ description: nonebot.typing 模块
 - **说明:** 标记一个方法为父类 interface 的 implement
 
 - **参数**
-
   - `InterfaceClass` (object)
 
 - **返回**
-
   - untyped
 
 ## _def_ `type_has_args(type_)` {#type-has-args}
 
 - **参数**
-
   - `type_` (type[Any])
 
 - **返回**
-
   - bool
 
 ## _def_ `origin_is_union(origin)` {#origin-is-union}
 
 - **参数**
-
   - `origin` (type[Any] | None)
 
 - **返回**
-
   - bool
 
 ## _def_ `origin_is_literal(origin)` {#origin-is-literal}
@@ -51,11 +45,9 @@ description: nonebot.typing 模块
 - **说明:** 判断是否是 Literal 类型
 
 - **参数**
-
   - `origin` (type[Any] | None)
 
 - **返回**
-
   - bool
 
 ## _def_ `all_literal_values(type_)` {#all-literal-values}
@@ -63,11 +55,9 @@ description: nonebot.typing 模块
 - **说明:** 获取 Literal 类型包含的所有值
 
 - **参数**
-
   - `type_` (type[Any])
 
 - **返回**
-
   - list[Any]
 
 ## _def_ `origin_is_annotated(origin)` {#origin-is-annotated}
@@ -75,11 +65,9 @@ description: nonebot.typing 模块
 - **说明:** 判断是否是 Annotated 类型
 
 - **参数**
-
   - `origin` (type[Any] | None)
 
 - **返回**
-
   - bool
 
 ## _def_ `is_none_type(type_)` {#is-none-type}
@@ -87,27 +75,22 @@ description: nonebot.typing 模块
 - **说明:** 判断是否是 None 类型
 
 - **参数**
-
   - `type_` (type[Any])
 
 - **返回**
-
   - bool
 
 ## _def_ `is_type_alias_type(type_)` {#is-type-alias-type}
 
 - **参数**
-
   - `type_` (type[Any])
 
 - **返回**
-
   - bool
 
 ## _def_ `evaluate_forwardref(ref, globalns, localns)` {#evaluate-forwardref}
 
 - **参数**
-
   - `ref` (ForwardRef)
 
   - `globalns` (dict[str, Any])
@@ -115,7 +98,6 @@ description: nonebot.typing 模块
   - `localns` (dict[str, Any])
 
 - **返回**
-
   - Any
 
 ## _class_ `StateFlag(<auto>)` {#StateFlag}
@@ -139,7 +121,6 @@ description: nonebot.typing 模块
   Bot 连接建立时钩子函数
 
   依赖参数:
-
   - DependParam: 子依赖参数
   - BotParam: Bot 对象
   - DefaultParam: 带有默认值的参数
@@ -153,7 +134,6 @@ description: nonebot.typing 模块
   Bot 连接断开时钩子函数
 
   依赖参数:
-
   - DependParam: 子依赖参数
   - BotParam: Bot 对象
   - DefaultParam: 带有默认值的参数
@@ -179,7 +159,6 @@ description: nonebot.typing 模块
   事件预处理函数 EventPreProcessor 类型
 
   依赖参数:
-
   - DependParam: 子依赖参数
   - BotParam: Bot 对象
   - EventParam: Event 对象
@@ -195,7 +174,6 @@ description: nonebot.typing 模块
   事件后处理函数 EventPostProcessor 类型
 
   依赖参数:
-
   - DependParam: 子依赖参数
   - BotParam: Bot 对象
   - EventParam: Event 对象
@@ -211,7 +189,6 @@ description: nonebot.typing 模块
   事件响应器运行前预处理函数 RunPreProcessor 类型
 
   依赖参数:
-
   - DependParam: 子依赖参数
   - BotParam: Bot 对象
   - EventParam: Event 对象
@@ -228,7 +205,6 @@ description: nonebot.typing 模块
   事件响应器运行后后处理函数 RunPostProcessor 类型
 
   依赖参数:
-
   - DependParam: 子依赖参数
   - BotParam: Bot 对象
   - EventParam: Event 对象
@@ -246,7 +222,6 @@ description: nonebot.typing 模块
   RuleChecker 即判断是否响应事件的处理函数。
 
   依赖参数:
-
   - DependParam: 子依赖参数
   - BotParam: Bot 对象
   - EventParam: Event 对象
@@ -262,7 +237,6 @@ description: nonebot.typing 模块
   PermissionChecker 即判断事件是否满足权限的处理函数。
 
   依赖参数:
-
   - DependParam: 子依赖参数
   - BotParam: Bot 对象
   - EventParam: Event 对象
@@ -283,7 +257,6 @@ description: nonebot.typing 模块
   TypeUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新响应的事件类型。 默认会更新为 `message`。
 
   依赖参数:
-
   - DependParam: 子依赖参数
   - BotParam: Bot 对象
   - EventParam: Event 对象
@@ -300,7 +273,6 @@ description: nonebot.typing 模块
   PermissionUpdater 在 Matcher.pause, Matcher.reject 时被运行，用于更新会话对象权限。 默认会更新为当前事件的触发对象。
 
   依赖参数:
-
   - DependParam: 子依赖参数
   - BotParam: Bot 对象
   - EventParam: Event 对象

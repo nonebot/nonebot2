@@ -22,7 +22,6 @@ description: nonebot.rule 模块
   当事件传递时，在 [Matcher](matcher.md#Matcher) 运行前进行检查。
 
 - **参数**
-
   - `*checkers` ([T_RuleChecker](typing.md#T-RuleChecker) | [Dependent](dependencies/index.md#Dependent)[bool]): RuleChecker
 
 - **用法**
@@ -44,7 +43,6 @@ description: nonebot.rule 模块
 - **说明:** 检查是否符合所有规则
 
 - **参数**
-
   - `bot` ([Bot](adapters/index.md#Bot)): Bot 对象
 
   - `event` ([Event](adapters/index.md#Event)): Event 对象
@@ -56,7 +54,6 @@ description: nonebot.rule 模块
   - `dependency_cache` ([T_DependencyCache](typing.md#T-DependencyCache) | None): 依赖缓存
 
 - **返回**
-
   - bool
 
 ## _class_ `CMD_RESULT(<auto>)` {#CMD-RESULT}
@@ -78,7 +75,6 @@ description: nonebot.rule 模块
 - **说明:** 检查消息纯文本是否以指定字符串开头。
 
 - **参数**
-
   - `msg` (tuple[str, ...]): 指定消息开头字符串元组
 
   - `ignorecase` (bool): 是否忽略大小写
@@ -88,13 +84,11 @@ description: nonebot.rule 模块
 - **说明:** 匹配消息纯文本开头。
 
 - **参数**
-
   - `msg` (str | tuple[str, ...]): 指定消息开头字符串元组
 
   - `ignorecase` (bool): 是否忽略大小写
 
 - **返回**
-
   - [Rule](#Rule)
 
 ## _class_ `EndswithRule(msg, ignorecase=False)` {#EndswithRule}
@@ -102,7 +96,6 @@ description: nonebot.rule 模块
 - **说明:** 检查消息纯文本是否以指定字符串结尾。
 
 - **参数**
-
   - `msg` (tuple[str, ...]): 指定消息结尾字符串元组
 
   - `ignorecase` (bool): 是否忽略大小写
@@ -112,13 +105,11 @@ description: nonebot.rule 模块
 - **说明:** 匹配消息纯文本结尾。
 
 - **参数**
-
   - `msg` (str | tuple[str, ...]): 指定消息开头字符串元组
 
   - `ignorecase` (bool): 是否忽略大小写
 
 - **返回**
-
   - [Rule](#Rule)
 
 ## _class_ `FullmatchRule(msg, ignorecase=False)` {#FullmatchRule}
@@ -126,7 +117,6 @@ description: nonebot.rule 模块
 - **说明:** 检查消息纯文本是否与指定字符串全匹配。
 
 - **参数**
-
   - `msg` (tuple[str, ...]): 指定消息全匹配字符串元组
 
   - `ignorecase` (bool): 是否忽略大小写
@@ -136,13 +126,11 @@ description: nonebot.rule 模块
 - **说明:** 完全匹配消息。
 
 - **参数**
-
   - `msg` (str | tuple[str, ...]): 指定消息全匹配字符串元组
 
   - `ignorecase` (bool): 是否忽略大小写
 
 - **返回**
-
   - [Rule](#Rule)
 
 ## _class_ `KeywordsRule(*keywords)` {#KeywordsRule}
@@ -150,7 +138,6 @@ description: nonebot.rule 模块
 - **说明:** 检查消息纯文本是否包含指定关键字。
 
 - **参数**
-
   - `*keywords` (str): 指定关键字元组
 
 ## _def_ `keyword(*keywords)` {#keyword}
@@ -158,11 +145,9 @@ description: nonebot.rule 模块
 - **说明:** 匹配消息纯文本关键词。
 
 - **参数**
-
   - `*keywords` (str): 指定关键字元组
 
 - **返回**
-
   - [Rule](#Rule)
 
 ## _class_ `CommandRule(cmds, force_whitespace=None)` {#CommandRule}
@@ -170,7 +155,6 @@ description: nonebot.rule 模块
 - **说明:** 检查消息是否为指定命令。
 
 - **参数**
-
   - `cmds` (list[tuple[str, ...]]): 指定命令元组列表
 
   - `force_whitespace` (str | bool | None): 是否强制命令后必须有指定空白符
@@ -189,13 +173,11 @@ description: nonebot.rule 模块
   通过 [CommandArg](params.md#CommandArg) 获取匹配成功的命令参数。
 
 - **参数**
-
   - `*cmds` (str | tuple[str, ...]): 命令文本或命令元组
 
   - `force_whitespace` (str | bool | None): 是否强制命令后必须有指定空白符
 
 - **返回**
-
   - [Rule](#Rule)
 
 - **用法**
@@ -231,37 +213,28 @@ description: nonebot.rule 模块
 - **重载**
 
   **1.** `(args=None, namespace=None) -> tuple[Namespace, list[str | MessageSegment]]`
-
   - **参数**
-
     - `args` (Sequence[str | [MessageSegment](adapters/index.md#MessageSegment)] | None)
 
     - `namespace` (None)
 
   - **返回**
-
     - tuple[Namespace, list[str | [MessageSegment](adapters/index.md#MessageSegment)]]
 
   **2.** `(args, namespace) -> tuple[T, list[str | MessageSegment]]`
-
   - **参数**
-
     - `args` (Sequence[str | [MessageSegment](adapters/index.md#MessageSegment)] | None)
 
     - `namespace` (T)
 
   - **返回**
-
     - tuple[T, list[str | [MessageSegment](adapters/index.md#MessageSegment)]]
 
   **3.** `(*, namespace) -> tuple[T, list[str | MessageSegment]]`
-
   - **参数**
-
     - `namespace` (T)
 
   - **返回**
-
     - tuple[T, list[str | [MessageSegment](adapters/index.md#MessageSegment)]]
 
 ## _class_ `ShellCommandRule(cmds, parser)` {#ShellCommandRule}
@@ -269,7 +242,6 @@ description: nonebot.rule 模块
 - **说明:** 检查消息是否为指定 shell 命令。
 
 - **参数**
-
   - `cmds` (list[tuple[str, ...]]): 指定命令元组列表
 
   - `parser` (ArgumentParser | None): 可选参数解析器
@@ -298,13 +270,11 @@ description: nonebot.rule 模块
   :::
 
 - **参数**
-
   - `*cmds` (str | tuple[str, ...]): 命令文本或命令元组
 
   - `parser` (ArgumentParser | None): [ArgumentParser](#ArgumentParser) 对象
 
 - **返回**
-
   - [Rule](#Rule)
 
 - **用法**
@@ -330,7 +300,6 @@ description: nonebot.rule 模块
 - **说明:** 检查消息字符串是否符合指定正则表达式。
 
 - **参数**
-
   - `regex` (str): 正则表达式
 
   - `flags` (int): 正则表达式标记
@@ -346,13 +315,11 @@ description: nonebot.rule 模块
   通过 [RegexDict](params.md#RegexDict) 获取匹配成功的 group 字典。
 
 - **参数**
-
   - `regex` (str): 正则表达式
 
   - `flags` (int | re.RegexFlag): 正则表达式标记
 
 - **返回**
-
   - [Rule](#Rule)
 
 :::tip 提示
@@ -380,7 +347,6 @@ description: nonebot.rule 模块
   empty
 
 - **返回**
-
   - [Rule](#Rule)
 
 ## _class_ `IsTypeRule(*types)` {#IsTypeRule}
@@ -388,7 +354,6 @@ description: nonebot.rule 模块
 - **说明:** 检查事件类型是否为指定类型。
 
 - **参数**
-
   - `*types` (type[[Event](adapters/index.md#Event)])
 
 ## _def_ `is_type(*types)` {#is-type}
@@ -396,9 +361,7 @@ description: nonebot.rule 模块
 - **说明:** 匹配事件类型。
 
 - **参数**
-
   - `*types` (type[[Event](adapters/index.md#Event)]): 事件类型
 
 - **返回**
-
   - [Rule](#Rule)

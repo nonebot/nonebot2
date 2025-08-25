@@ -40,11 +40,9 @@ description: nonebot.drivers 模块
 - **说明:** 设置一个 HTTP 服务器路由配置
 
 - **参数**
-
   - `setup` ([HTTPServerSetup](#HTTPServerSetup))
 
 - **返回**
-
   - None
 
 ### _abstract method_ `setup_websocket_server(setup)` {#ASGIMixin-setup-websocket-server}
@@ -52,23 +50,19 @@ description: nonebot.drivers 模块
 - **说明:** 设置一个 WebSocket 服务器路由配置
 
 - **参数**
-
   - `setup` ([WebSocketServerSetup](#WebSocketServerSetup))
 
 - **返回**
-
   - None
 
 ## _class_ `Cookies(cookies=None)` {#Cookies}
 
 - **参数**
-
   - `cookies` (CookieTypes)
 
 ### _method_ `set(name, value, domain="", path="/")` {#Cookies-set}
 
 - **参数**
-
   - `name` (str)
 
   - `value` (str)
@@ -78,13 +72,11 @@ description: nonebot.drivers 模块
   - `path` (str)
 
 - **返回**
-
   - None
 
 ### _method_ `get(name, default=None, domain=None, path=None)` {#Cookies-get}
 
 - **参数**
-
   - `name` (str)
 
   - `default` (str | None)
@@ -94,13 +86,11 @@ description: nonebot.drivers 模块
   - `path` (str | None)
 
 - **返回**
-
   - str | None
 
 ### _method_ `delete(name, domain=None, path=None)` {#Cookies-delete}
 
 - **参数**
-
   - `name` (str)
 
   - `domain` (str | None)
@@ -108,39 +98,32 @@ description: nonebot.drivers 模块
   - `path` (str | None)
 
 - **返回**
-
   - None
 
 ### _method_ `clear(domain=None, path=None)` {#Cookies-clear}
 
 - **参数**
-
   - `domain` (str | None)
 
   - `path` (str | None)
 
 - **返回**
-
   - None
 
 ### _method_ `update(cookies=None)` {#Cookies-update}
 
 - **参数**
-
   - `cookies` (CookieTypes)
 
 - **返回**
-
   - None
 
 ### _method_ `as_header(request)` {#Cookies-as-header}
 
 - **参数**
-
   - `request` (Request)
 
 - **返回**
-
   - dict[str, str]
 
 ## _abstract class_ `Driver(env, config)` {#Driver}
@@ -152,7 +135,6 @@ description: nonebot.drivers 模块
   驱动器控制框架的启动和停止，适配器的注册，以及机器人生命周期管理。
 
 - **参数**
-
   - `env` ([Env](../config.md#Env)): 包含环境信息的 Env 对象
 
   - `config` ([Config](../config.md#Config)): 包含配置信息的 Config 对象
@@ -180,13 +162,11 @@ description: nonebot.drivers 模块
 - **说明:** 注册一个协议适配器
 
 - **参数**
-
   - `adapter` (type[[Adapter](../adapters/index.md#Adapter)]): 适配器类
 
   - `**kwargs`: 其他传递给适配器的参数
 
 - **返回**
-
   - None
 
 ### _abstract property_ `type` {#Driver-type}
@@ -206,13 +186,11 @@ description: nonebot.drivers 模块
 - **说明:** 启动驱动框架
 
 - **参数**
-
   - `*args`
 
   - `**kwargs`
 
 - **返回**
-
   - untyped
 
 ### _method_ `on_startup(func)` {#Driver-on-startup}
@@ -220,11 +198,9 @@ description: nonebot.drivers 模块
 - **说明:** 注册一个启动时执行的函数
 
 - **参数**
-
   - `func` (LIFESPAN_FUNC)
 
 - **返回**
-
   - LIFESPAN_FUNC
 
 ### _method_ `on_shutdown(func)` {#Driver-on-shutdown}
@@ -232,11 +208,9 @@ description: nonebot.drivers 模块
 - **说明:** 注册一个停止时执行的函数
 
 - **参数**
-
   - `func` (LIFESPAN_FUNC)
 
 - **返回**
-
   - LIFESPAN_FUNC
 
 ### _classmethod_ `on_bot_connect(func)` {#Driver-on-bot-connect}
@@ -246,15 +220,12 @@ description: nonebot.drivers 模块
   装饰一个函数使他在 bot 连接成功时执行。
 
   钩子函数参数:
-
   - bot: 当前连接上的 Bot 对象
 
 - **参数**
-
   - `func` ([T_BotConnectionHook](../typing.md#T-BotConnectionHook))
 
 - **返回**
-
   - [T_BotConnectionHook](../typing.md#T-BotConnectionHook)
 
 ### _classmethod_ `on_bot_disconnect(func)` {#Driver-on-bot-disconnect}
@@ -264,15 +235,12 @@ description: nonebot.drivers 模块
   装饰一个函数使他在 bot 连接断开时执行。
 
   钩子函数参数:
-
   - bot: 当前连接上的 Bot 对象
 
 - **参数**
-
   - `func` ([T_BotDisconnectionHook](../typing.md#T-BotDisconnectionHook))
 
 - **返回**
-
   - [T_BotDisconnectionHook](../typing.md#T-BotDisconnectionHook)
 
 ## _var_ `ForwardDriver` {#ForwardDriver}
@@ -306,11 +274,9 @@ description: nonebot.drivers 模块
 - **说明:** 发送一个 HTTP 请求
 
 - **参数**
-
   - `setup` ([Request](#Request))
 
 - **返回**
-
   - [Response](#Response)
 
 ### _abstract method_ `get_session(params=None, headers=None, cookies=None, version=HTTPVersion.H11, timeout=None, proxy=None)` {#HTTPClientMixin-get-session}
@@ -318,7 +284,6 @@ description: nonebot.drivers 模块
 - **说明:** 获取一个 HTTP 会话
 
 - **参数**
-
   - `params` (QueryTypes)
 
   - `headers` (HeaderTypes)
@@ -332,7 +297,6 @@ description: nonebot.drivers 模块
   - `proxy` (str | None)
 
 - **返回**
-
   - HTTPClientSession
 
 ## _class_ `HTTPServerSetup(<auto>)` {#HTTPServerSetup}
@@ -350,7 +314,6 @@ description: nonebot.drivers 模块
 - **参数**
 
   auto
-
   - `H10: '1.0'`
 
   - `H11: '1.1'`
@@ -374,7 +337,6 @@ description: nonebot.drivers 模块
 ## _class_ `Request(method, url, *, params=None, headers=None, cookies=None, content=None, data=None, json=None, files=None, version=HTTPVersion.H11, timeout=None, proxy=None)` {#Request}
 
 - **参数**
-
   - `method` (str | bytes)
 
   - `url` (URL | str | RawURL)
@@ -402,7 +364,6 @@ description: nonebot.drivers 模块
 ## _class_ `Response(status_code, *, headers=None, content=None, request=None)` {#Response}
 
 - **参数**
-
   - `status_code` (int)
 
   - `headers` (HeaderTypes)
@@ -432,7 +393,6 @@ description: nonebot.drivers 模块
 ## _abstract class_ `WebSocket(*, request)` {#WebSocket}
 
 - **参数**
-
   - `request` (Request)
 
 ### _abstract property_ `closed` {#WebSocket-closed}
@@ -450,7 +410,6 @@ description: nonebot.drivers 模块
   empty
 
 - **返回**
-
   - None
 
 ### _abstract async method_ `close(code=1000, reason="")` {#WebSocket-close}
@@ -458,13 +417,11 @@ description: nonebot.drivers 模块
 - **说明:** 关闭 WebSocket 连接请求
 
 - **参数**
-
   - `code` (int)
 
   - `reason` (str)
 
 - **返回**
-
   - None
 
 ### _abstract async method_ `receive()` {#WebSocket-receive}
@@ -476,7 +433,6 @@ description: nonebot.drivers 模块
   empty
 
 - **返回**
-
   - str | bytes
 
 ### _abstract async method_ `receive_text()` {#WebSocket-receive-text}
@@ -488,7 +444,6 @@ description: nonebot.drivers 模块
   empty
 
 - **返回**
-
   - str
 
 ### _abstract async method_ `receive_bytes()` {#WebSocket-receive-bytes}
@@ -500,7 +455,6 @@ description: nonebot.drivers 模块
   empty
 
 - **返回**
-
   - bytes
 
 ### _async method_ `send(data)` {#WebSocket-send}
@@ -508,11 +462,9 @@ description: nonebot.drivers 模块
 - **说明:** 发送一条 WebSocket text/bytes 信息
 
 - **参数**
-
   - `data` (str | bytes)
 
 - **返回**
-
   - None
 
 ### _abstract async method_ `send_text(data)` {#WebSocket-send-text}
@@ -520,11 +472,9 @@ description: nonebot.drivers 模块
 - **说明:** 发送一条 WebSocket text 信息
 
 - **参数**
-
   - `data` (str)
 
 - **返回**
-
   - None
 
 ### _abstract async method_ `send_bytes(data)` {#WebSocket-send-bytes}
@@ -532,11 +482,9 @@ description: nonebot.drivers 模块
 - **说明:** 发送一条 WebSocket binary 信息
 
 - **参数**
-
   - `data` (bytes)
 
 - **返回**
-
   - None
 
 ## _abstract class_ `WebSocketClientMixin(<auto>)` {#WebSocketClientMixin}
@@ -552,11 +500,9 @@ description: nonebot.drivers 模块
 - **说明:** 发起一个 WebSocket 连接
 
 - **参数**
-
   - `setup` ([Request](#Request))
 
 - **返回**
-
   - AsyncGenerator[[WebSocket](#WebSocket), None]
 
 ## _class_ `WebSocketServerSetup(<auto>)` {#WebSocketServerSetup}
@@ -574,19 +520,14 @@ description: nonebot.drivers 模块
 - **重载**
 
   **1.** `(driver) -> type[D]`
-
   - **参数**
-
     - `driver` (type[D])
 
   - **返回**
-
     - type[D]
 
   **2.** `(driver, __m, /, *mixins) -> type[CombinedDriver]`
-
   - **参数**
-
     - `driver` (type[D])
 
     - `__m` (type[[Mixin](#Mixin)])
@@ -594,5 +535,4 @@ description: nonebot.drivers 模块
     - `*mixins` (type[[Mixin](#Mixin)])
 
   - **返回**
-
     - type[CombinedDriver]

@@ -76,7 +76,6 @@ description: nonebot.matcher 模块
 - **说明:** 创建一个新的事件响应器，并存储至 `matchers <#matchers>`\_
 
 - **参数**
-
   - `type_` (str): 事件响应器类型，与 `event.get_type()` 一致时触发，空字符串表示任意
 
   - `rule` ([Rule](rule.md#Rule) | None): 匹配规则
@@ -106,7 +105,6 @@ description: nonebot.matcher 模块
   - `default_permission_updater` ([T_PermissionUpdater](typing.md#T-PermissionUpdater) | [Dependent](dependencies/index.md#Dependent)[[Permission](permission.md#Permission)] | None): 默认会话权限更新函数
 
 - **返回**
-
   - type[Matcher]: 新的事件响应器类
 
 ### _classmethod_ `destroy()` {#Matcher-destroy}
@@ -118,7 +116,6 @@ description: nonebot.matcher 模块
   empty
 
 - **返回**
-
   - None
 
 ### _classmethod_ `check_perm(bot, event, stack=None, dependency_cache=None)` {#Matcher-check-perm}
@@ -126,7 +123,6 @@ description: nonebot.matcher 模块
 - **说明:** 检查是否满足触发权限
 
 - **参数**
-
   - `bot` ([Bot](adapters/index.md#Bot)): Bot 对象
 
   - `event` ([Event](adapters/index.md#Event)): 上报事件
@@ -136,7 +132,6 @@ description: nonebot.matcher 模块
   - `dependency_cache` ([T_DependencyCache](typing.md#T-DependencyCache) | None): 依赖缓存
 
 - **返回**
-
   - bool: 是否满足权限
 
 ### _classmethod_ `check_rule(bot, event, state, stack=None, dependency_cache=None)` {#Matcher-check-rule}
@@ -144,7 +139,6 @@ description: nonebot.matcher 模块
 - **说明:** 检查是否满足匹配规则
 
 - **参数**
-
   - `bot` ([Bot](adapters/index.md#Bot)): Bot 对象
 
   - `event` ([Event](adapters/index.md#Event)): 上报事件
@@ -156,7 +150,6 @@ description: nonebot.matcher 模块
   - `dependency_cache` ([T_DependencyCache](typing.md#T-DependencyCache) | None): 依赖缓存
 
 - **返回**
-
   - bool: 是否满足匹配规则
 
 ### _classmethod_ `type_updater(func)` {#Matcher-type-updater}
@@ -164,11 +157,9 @@ description: nonebot.matcher 模块
 - **说明:** 装饰一个函数来更改当前事件响应器的默认响应事件类型更新函数
 
 - **参数**
-
   - `func` ([T_TypeUpdater](typing.md#T-TypeUpdater)): 响应事件类型更新函数
 
 - **返回**
-
   - [T_TypeUpdater](typing.md#T-TypeUpdater)
 
 ### _classmethod_ `permission_updater(func)` {#Matcher-permission-updater}
@@ -176,23 +167,19 @@ description: nonebot.matcher 模块
 - **说明:** 装饰一个函数来更改当前事件响应器的默认会话权限更新函数
 
 - **参数**
-
   - `func` ([T_PermissionUpdater](typing.md#T-PermissionUpdater)): 会话权限更新函数
 
 - **返回**
-
   - [T_PermissionUpdater](typing.md#T-PermissionUpdater)
 
 ### _classmethod_ `append_handler(handler, parameterless=None)` {#Matcher-append-handler}
 
 - **参数**
-
   - `handler` ([T_Handler](typing.md#T-Handler))
 
   - `parameterless` (Iterable[Any] | None)
 
 - **返回**
-
   - [Dependent](dependencies/index.md#Dependent)[Any]
 
 ### _classmethod_ `handle(parameterless=None)` {#Matcher-handle}
@@ -200,11 +187,9 @@ description: nonebot.matcher 模块
 - **说明:** 装饰一个函数来向事件响应器直接添加一个处理函数
 
 - **参数**
-
   - `parameterless` (Iterable[Any] | None): 非参数类型依赖列表
 
 - **返回**
-
   - ([T_Handler](typing.md#T-Handler)) -> [T_Handler](typing.md#T-Handler)
 
 ### _classmethod_ `receive(id="", parameterless=None)` {#Matcher-receive}
@@ -212,13 +197,11 @@ description: nonebot.matcher 模块
 - **说明:** 装饰一个函数来指示 NoneBot 在接收用户新的一条消息后继续运行该函数
 
 - **参数**
-
   - `id` (str): 消息 ID
 
   - `parameterless` (Iterable[Any] | None): 非参数类型依赖列表
 
 - **返回**
-
   - ([T_Handler](typing.md#T-Handler)) -> [T_Handler](typing.md#T-Handler)
 
 ### _classmethod_ `got(key, prompt=None, parameterless=None)` {#Matcher-got}
@@ -231,7 +214,6 @@ description: nonebot.matcher 模块
   如果 `key` 已存在则直接继续运行
 
 - **参数**
-
   - `key` (str): 参数名
 
   - `prompt` (str | [Message](adapters/index.md#Message) | [MessageSegment](adapters/index.md#MessageSegment) | [MessageTemplate](adapters/index.md#MessageTemplate) | None): 在参数不存在时向用户发送的消息
@@ -239,7 +221,6 @@ description: nonebot.matcher 模块
   - `parameterless` (Iterable[Any] | None): 非参数类型依赖列表
 
 - **返回**
-
   - ([T_Handler](typing.md#T-Handler)) -> [T_Handler](typing.md#T-Handler)
 
 ### _classmethod_ `send(message, **kwargs)` {#Matcher-send}
@@ -247,13 +228,11 @@ description: nonebot.matcher 模块
 - **说明:** 发送一条消息给当前交互用户
 
 - **参数**
-
   - `message` (str | [Message](adapters/index.md#Message) | [MessageSegment](adapters/index.md#MessageSegment) | [MessageTemplate](adapters/index.md#MessageTemplate)): 消息内容
 
   - `**kwargs` (Any): [Bot.send](adapters/index.md#Bot-send) 的参数， 请参考对应 adapter 的 bot 对象 api
 
 - **返回**
-
   - Any
 
 ### _classmethod_ `finish(message=None, **kwargs)` {#Matcher-finish}
@@ -261,13 +240,11 @@ description: nonebot.matcher 模块
 - **说明:** 发送一条消息给当前交互用户并结束当前事件响应器
 
 - **参数**
-
   - `message` (str | [Message](adapters/index.md#Message) | [MessageSegment](adapters/index.md#MessageSegment) | [MessageTemplate](adapters/index.md#MessageTemplate) | None): 消息内容
 
   - `**kwargs`: [Bot.send](adapters/index.md#Bot-send) 的参数， 请参考对应 adapter 的 bot 对象 api
 
 - **返回**
-
   - NoReturn
 
 ### _classmethod_ `pause(prompt=None, **kwargs)` {#Matcher-pause}
@@ -275,13 +252,11 @@ description: nonebot.matcher 模块
 - **说明:** 发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续下一个处理函数
 
 - **参数**
-
   - `prompt` (str | [Message](adapters/index.md#Message) | [MessageSegment](adapters/index.md#MessageSegment) | [MessageTemplate](adapters/index.md#MessageTemplate) | None): 消息内容
 
   - `**kwargs`: [Bot.send](adapters/index.md#Bot-send) 的参数， 请参考对应 adapter 的 bot 对象 api
 
 - **返回**
-
   - NoReturn
 
 ### _classmethod_ `reject(prompt=None, **kwargs)` {#Matcher-reject}
@@ -289,13 +264,11 @@ description: nonebot.matcher 模块
 - **说明:** 最近使用 `got` / `receive` 接收的消息不符合预期， 发送一条消息给当前交互用户并将当前事件处理流程中断在当前位置，在接收用户新的一个事件后从头开始执行当前处理函数
 
 - **参数**
-
   - `prompt` (str | [Message](adapters/index.md#Message) | [MessageSegment](adapters/index.md#MessageSegment) | [MessageTemplate](adapters/index.md#MessageTemplate) | None): 消息内容
 
   - `**kwargs`: [Bot.send](adapters/index.md#Bot-send) 的参数， 请参考对应 adapter 的 bot 对象 api
 
 - **返回**
-
   - NoReturn
 
 ### _classmethod_ `reject_arg(key, prompt=None, **kwargs)` {#Matcher-reject-arg}
@@ -303,7 +276,6 @@ description: nonebot.matcher 模块
 - **说明:** 最近使用 `got` 接收的消息不符合预期， 发送一条消息给当前交互用户并将当前事件处理流程中断在当前位置，在接收用户新的一条消息后从头开始执行当前处理函数
 
 - **参数**
-
   - `key` (str): 参数名
 
   - `prompt` (str | [Message](adapters/index.md#Message) | [MessageSegment](adapters/index.md#MessageSegment) | [MessageTemplate](adapters/index.md#MessageTemplate) | None): 消息内容
@@ -311,7 +283,6 @@ description: nonebot.matcher 模块
   - `**kwargs`: [Bot.send](adapters/index.md#Bot-send) 的参数， 请参考对应 adapter 的 bot 对象 api
 
 - **返回**
-
   - NoReturn
 
 ### _classmethod_ `reject_receive(id="", prompt=None, **kwargs)` {#Matcher-reject-receive}
@@ -319,7 +290,6 @@ description: nonebot.matcher 模块
 - **说明:** 最近使用 `receive` 接收的消息不符合预期， 发送一条消息给当前交互用户并将当前事件处理流程中断在当前位置，在接收用户新的一个事件后从头开始执行当前处理函数
 
 - **参数**
-
   - `id` (str): 消息 id
 
   - `prompt` (str | [Message](adapters/index.md#Message) | [MessageSegment](adapters/index.md#MessageSegment) | [MessageTemplate](adapters/index.md#MessageTemplate) | None): 消息内容
@@ -327,7 +297,6 @@ description: nonebot.matcher 模块
   - `**kwargs`: [Bot.send](adapters/index.md#Bot-send) 的参数， 请参考对应 adapter 的 bot 对象 api
 
 - **返回**
-
   - NoReturn
 
 ### _classmethod_ `skip()` {#Matcher-skip}
@@ -343,7 +312,6 @@ description: nonebot.matcher 模块
   empty
 
 - **返回**
-
   - NoReturn
 
 ### _method_ `get_receive(id, default=None)` {#Matcher-get-receive}
@@ -357,25 +325,19 @@ description: nonebot.matcher 模块
 - **重载**
 
   **1.** `(id) -> Event | None`
-
   - **参数**
-
     - `id` (str)
 
   - **返回**
-
     - [Event](adapters/index.md#Event) | None
 
   **2.** `(id, default) -> Event | T`
-
   - **参数**
-
     - `id` (str)
 
     - `default` (T)
 
   - **返回**
-
     - [Event](adapters/index.md#Event) | T
 
 ### _method_ `set_receive(id, event)` {#Matcher-set-receive}
@@ -383,13 +345,11 @@ description: nonebot.matcher 模块
 - **说明:** 设置一个 `receive` 事件
 
 - **参数**
-
   - `id` (str)
 
   - `event` ([Event](adapters/index.md#Event))
 
 - **返回**
-
   - None
 
 ### _method_ `get_last_receive(default=None)` {#Matcher-get-last-receive}
@@ -403,23 +363,18 @@ description: nonebot.matcher 模块
 - **重载**
 
   **1.** `() -> Event | None`
-
   - **参数**
 
     empty
 
   - **返回**
-
     - [Event](adapters/index.md#Event) | None
 
   **2.** `(default) -> Event | T`
-
   - **参数**
-
     - `default` (T)
 
   - **返回**
-
     - [Event](adapters/index.md#Event) | T
 
 ### _method_ `get_arg(key, default=None)` {#Matcher-get-arg}
@@ -433,25 +388,19 @@ description: nonebot.matcher 模块
 - **重载**
 
   **1.** `(key) -> Message | None`
-
   - **参数**
-
     - `key` (str)
 
   - **返回**
-
     - [Message](adapters/index.md#Message) | None
 
   **2.** `(key, default) -> Message | T`
-
   - **参数**
-
     - `key` (str)
 
     - `default` (T)
 
   - **返回**
-
     - [Message](adapters/index.md#Message) | T
 
 ### _method_ `set_arg(key, message)` {#Matcher-set-arg}
@@ -459,25 +408,21 @@ description: nonebot.matcher 模块
 - **说明:** 设置一个 `got` 消息
 
 - **参数**
-
   - `key` (str)
 
   - `message` ([Message](adapters/index.md#Message))
 
 - **返回**
-
   - None
 
 ### _method_ `set_target(target, cache=True)` {#Matcher-set-target}
 
 - **参数**
-
   - `target` (str)
 
   - `cache` (bool)
 
 - **返回**
-
   - None
 
 ### _method_ `get_target(default=None)` {#Matcher-get-target}
@@ -485,23 +430,18 @@ description: nonebot.matcher 模块
 - **重载**
 
   **1.** `() -> str | None`
-
   - **参数**
 
     empty
 
   - **返回**
-
     - str | None
 
   **2.** `(default) -> str | T`
-
   - **参数**
-
     - `default` (T)
 
   - **返回**
-
     - str | T
 
 ### _method_ `stop_propagation()` {#Matcher-stop-propagation}
@@ -513,13 +453,11 @@ description: nonebot.matcher 模块
   empty
 
 - **返回**
-
   - untyped
 
 ### _async method_ `update_type(bot, event, stack=None, dependency_cache=None)` {#Matcher-update-type}
 
 - **参数**
-
   - `bot` ([Bot](adapters/index.md#Bot))
 
   - `event` ([Event](adapters/index.md#Event))
@@ -529,13 +467,11 @@ description: nonebot.matcher 模块
   - `dependency_cache` ([T_DependencyCache](typing.md#T-DependencyCache) | None)
 
 - **返回**
-
   - str
 
 ### _async method_ `update_permission(bot, event, stack=None, dependency_cache=None)` {#Matcher-update-permission}
 
 - **参数**
-
   - `bot` ([Bot](adapters/index.md#Bot))
 
   - `event` ([Event](adapters/index.md#Event))
@@ -545,7 +481,6 @@ description: nonebot.matcher 模块
   - `dependency_cache` ([T_DependencyCache](typing.md#T-DependencyCache) | None)
 
 - **返回**
-
   - [Permission](permission.md#Permission)
 
 ### _async method_ `resolve_reject()` {#Matcher-resolve-reject}
@@ -555,25 +490,21 @@ description: nonebot.matcher 模块
   empty
 
 - **返回**
-
   - untyped
 
 ### _method_ `ensure_context(bot, event)` {#Matcher-ensure-context}
 
 - **参数**
-
   - `bot` ([Bot](adapters/index.md#Bot))
 
   - `event` ([Event](adapters/index.md#Event))
 
 - **返回**
-
   - untyped
 
 ### _async method_ `simple_run(bot, event, state, stack=None, dependency_cache=None)` {#Matcher-simple-run}
 
 - **参数**
-
   - `bot` ([Bot](adapters/index.md#Bot))
 
   - `event` ([Event](adapters/index.md#Event))
@@ -585,13 +516,11 @@ description: nonebot.matcher 模块
   - `dependency_cache` ([T_DependencyCache](typing.md#T-DependencyCache) | None)
 
 - **返回**
-
   - untyped
 
 ### _async method_ `run(bot, event, state, stack=None, dependency_cache=None)` {#Matcher-run}
 
 - **参数**
-
   - `bot` ([Bot](adapters/index.md#Bot))
 
   - `event` ([Event](adapters/index.md#Event))
@@ -603,7 +532,6 @@ description: nonebot.matcher 模块
   - `dependency_cache` ([T_DependencyCache](typing.md#T-DependencyCache) | None)
 
 - **返回**
-
   - untyped
 
 ## _class_ `MatcherManager()` {#MatcherManager}
@@ -625,7 +553,6 @@ description: nonebot.matcher 模块
   empty
 
 - **返回**
-
   - KeysView[int]
 
 ### _method_ `values()` {#MatcherManager-values}
@@ -635,7 +562,6 @@ description: nonebot.matcher 模块
   empty
 
 - **返回**
-
   - ValuesView[list[type[[Matcher](#Matcher)]]]
 
 ### _method_ `items()` {#MatcherManager-items}
@@ -645,7 +571,6 @@ description: nonebot.matcher 模块
   empty
 
 - **返回**
-
   - ItemsView[int, list[type[[Matcher](#Matcher)]]]
 
 ### _method_ `get(key, default=None)` {#MatcherManager-get}
@@ -653,35 +578,27 @@ description: nonebot.matcher 模块
 - **重载**
 
   **1.** `(key) -> list[type[Matcher]] | None`
-
   - **参数**
-
     - `key` (int)
 
   - **返回**
-
     - list[type[[Matcher](#Matcher)]] | None
 
   **2.** `(key, default) -> list[type[Matcher]] | T`
-
   - **参数**
-
     - `key` (int)
 
     - `default` (T)
 
   - **返回**
-
     - list[type[[Matcher](#Matcher)]] | T
 
 ### _method_ `pop(key)` {#MatcherManager-pop}
 
 - **参数**
-
   - `key` (int)
 
 - **返回**
-
   - list[type[[Matcher](#Matcher)]]
 
 ### _method_ `popitem()` {#MatcherManager-popitem}
@@ -691,7 +608,6 @@ description: nonebot.matcher 模块
   empty
 
 - **返回**
-
   - tuple[int, list[type[[Matcher](#Matcher)]]]
 
 ### _method_ `clear()` {#MatcherManager-clear}
@@ -701,29 +617,24 @@ description: nonebot.matcher 模块
   empty
 
 - **返回**
-
   - None
 
 ### _method_ `update(m, /)` {#MatcherManager-update}
 
 - **参数**
-
   - `m` (MutableMapping[int, list[type[[Matcher](#Matcher)]]])
 
 - **返回**
-
   - None
 
 ### _method_ `setdefault(key, default)` {#MatcherManager-setdefault}
 
 - **参数**
-
   - `key` (int)
 
   - `default` (list[type[[Matcher](#Matcher)]])
 
 - **返回**
-
   - list[type[[Matcher](#Matcher)]]
 
 ### _method_ `set_provider(provider_class)` {#MatcherManager-set-provider}
@@ -731,11 +642,9 @@ description: nonebot.matcher 模块
 - **说明:** 设置事件响应器存储器
 
 - **参数**
-
   - `provider_class` (type[[MatcherProvider](#MatcherProvider)]): 事件响应器存储器类
 
 - **返回**
-
   - None
 
 ## _abstract class_ `MatcherProvider(matchers)` {#MatcherProvider}
@@ -743,7 +652,6 @@ description: nonebot.matcher 模块
 - **说明:** 事件响应器存储器基类
 
 - **参数**
-
   - `matchers` (Mapping[int, list[type[[Matcher](#Matcher)]]]): 当前存储器中已有的事件响应器
 
 ## _var_ `matchers` {#matchers}

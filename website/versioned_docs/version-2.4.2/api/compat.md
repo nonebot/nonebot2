@@ -36,7 +36,6 @@ description: nonebot.compat 模块
 - **说明:** FieldInfo class with extra property for compatibility with pydantic v1
 
 - **参数**
-
   - `default` (Any)
 
   - `**kwargs` (Any)
@@ -82,7 +81,6 @@ description: nonebot.compat 模块
 - **说明:** Construct a ModelField from given infos.
 
 - **参数**
-
   - `name` (str)
 
   - `annotation` (Any)
@@ -90,7 +88,6 @@ description: nonebot.compat 模块
   - `field_info` (FieldInfo | None)
 
 - **返回**
-
   - Self
 
 ### _method_ `get_default()` {#ModelField-get-default}
@@ -102,7 +99,6 @@ description: nonebot.compat 模块
   empty
 
 - **返回**
-
   - Any
 
 ### _method_ `validate_value(value)` {#ModelField-validate-value}
@@ -110,11 +106,9 @@ description: nonebot.compat 模块
 - **说明:** Validate the value pass to the field.
 
 - **参数**
-
   - `value` (Any)
 
 - **返回**
-
   - Any
 
 ## _def_ `extract_field_info(field_info)` {#extract-field-info}
@@ -122,11 +116,9 @@ description: nonebot.compat 模块
 - **说明:** Get FieldInfo init kwargs from a FieldInfo instance.
 
 - **参数**
-
   - `field_info` (BaseFieldInfo)
 
 - **返回**
-
   - dict[str, Any]
 
 ## _def_ `model_fields(model)` {#model-fields}
@@ -134,11 +126,9 @@ description: nonebot.compat 模块
 - **说明:** Get field list of a model.
 
 - **参数**
-
   - `model` (type[BaseModel])
 
 - **返回**
-
   - list[ModelField]
 
 ## _def_ `model_config(model)` {#model-config}
@@ -146,17 +136,14 @@ description: nonebot.compat 模块
 - **说明:** Get config of a model.
 
 - **参数**
-
   - `model` (type[BaseModel])
 
 - **返回**
-
   - Any
 
 ## _def_ `model_dump(model, include=None, exclude=None, by_alias=False, exclude_unset=False, exclude_defaults=False, exclude_none=False)` {#model-dump}
 
 - **参数**
-
   - `model` (BaseModel)
 
   - `include` (set[str] | None)
@@ -172,7 +159,6 @@ description: nonebot.compat 模块
   - `exclude_none` (bool)
 
 - **返回**
-
   - dict[str, Any]
 
 ## _def_ `type_validate_python(type_, data)` {#type-validate-python}
@@ -180,13 +166,11 @@ description: nonebot.compat 模块
 - **说明:** Validate data with given type.
 
 - **参数**
-
   - `type_` (type[T])
 
   - `data` (Any)
 
 - **返回**
-
   - T
 
 ## _def_ `type_validate_json(type_, data)` {#type-validate-json}
@@ -194,13 +178,11 @@ description: nonebot.compat 模块
 - **说明:** Validate JSON with given type.
 
 - **参数**
-
   - `type_` (type[T])
 
   - `data` (str | bytes)
 
 - **返回**
-
   - T
 
 ## _def_ `custom_validation(class_)` {#custom-validation}
@@ -208,9 +190,7 @@ description: nonebot.compat 模块
 - **说明:** Use pydantic v1 like validator generator in pydantic v2
 
 - **参数**
-
   - `class_` (type[CVC])
 
 - **返回**
-
   - type[CVC]

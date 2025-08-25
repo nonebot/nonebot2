@@ -20,7 +20,6 @@ description: nonebot.adapters 模块
   通常，在 Adapter 中编写协议通信相关代码，如: 建立通信连接、处理接收与发送 data 等。
 
 - **参数**
-
   - `driver` ([Driver](../drivers/index.md#Driver)): [Driver](../drivers/index.md#Driver) 实例
 
   - `**kwargs` (Any): 其他由 [Driver.register_adapter](../drivers/index.md#Driver-register-adapter) 传入的额外参数
@@ -46,7 +45,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - str
 
 ### _property_ `config` {#Adapter-config}
@@ -64,11 +62,9 @@ description: nonebot.adapters 模块
   当有新的 [Bot](#Bot) 实例连接建立成功时调用。
 
 - **参数**
-
   - `bot` ([Bot](#Bot)): [Bot](#Bot) 实例
 
 - **返回**
-
   - None
 
 ### _method_ `bot_disconnect(bot)` {#Adapter-bot-disconnect}
@@ -80,11 +76,9 @@ description: nonebot.adapters 模块
   当有 [Bot](#Bot) 实例连接断开时调用。
 
 - **参数**
-
   - `bot` ([Bot](#Bot)): [Bot](#Bot) 实例
 
 - **返回**
-
   - None
 
 ### _method_ `setup_http_server(setup)` {#Adapter-setup-http-server}
@@ -92,11 +86,9 @@ description: nonebot.adapters 模块
 - **说明:** 设置一个 HTTP 服务器路由配置
 
 - **参数**
-
   - `setup` ([HTTPServerSetup](../drivers/index.md#HTTPServerSetup))
 
 - **返回**
-
   - untyped
 
 ### _method_ `setup_websocket_server(setup)` {#Adapter-setup-websocket-server}
@@ -104,11 +96,9 @@ description: nonebot.adapters 模块
 - **说明:** 设置一个 WebSocket 服务器路由配置
 
 - **参数**
-
   - `setup` ([WebSocketServerSetup](../drivers/index.md#WebSocketServerSetup))
 
 - **返回**
-
   - untyped
 
 ### _async method_ `request(setup)` {#Adapter-request}
@@ -116,11 +106,9 @@ description: nonebot.adapters 模块
 - **说明:** 进行一个 HTTP 客户端请求
 
 - **参数**
-
   - `setup` ([Request](../drivers/index.md#Request))
 
 - **返回**
-
   - [Response](../drivers/index.md#Response)
 
 ### _method_ `websocket(setup)` {#Adapter-websocket}
@@ -128,21 +116,17 @@ description: nonebot.adapters 模块
 - **说明:** 建立一个 WebSocket 客户端连接请求
 
 - **参数**
-
   - `setup` ([Request](../drivers/index.md#Request))
 
 - **返回**
-
   - AsyncGenerator[[WebSocket](../drivers/index.md#WebSocket), None]
 
 ### _method_ `on_ready(func)` {#Adapter-on-ready}
 
 - **参数**
-
   - `func` (LIFESPAN_FUNC)
 
 - **返回**
-
   - LIFESPAN_FUNC
 
 ## _abstract class_ `Bot(adapter, self_id)` {#Bot}
@@ -154,7 +138,6 @@ description: nonebot.adapters 模块
   用于处理上报消息，并提供 API 调用接口。
 
 - **参数**
-
   - `adapter` ([Adapter](#Adapter)): 协议适配器实例
 
   - `self_id` (str): 机器人 ID
@@ -188,13 +171,11 @@ description: nonebot.adapters 模块
 - **说明:** 调用机器人 API 接口，可以通过该函数或直接通过 bot 属性进行调用
 
 - **参数**
-
   - `api` (str): API 名称
 
   - `**data` (Any): API 数据
 
 - **返回**
-
   - Any
 
 - **用法**
@@ -209,7 +190,6 @@ description: nonebot.adapters 模块
 - **说明:** 调用机器人基础发送消息接口
 
 - **参数**
-
   - `event` ([Event](#Event)): 上报事件
 
   - `message` (str | [Message](#Message) | [MessageSegment](#MessageSegment)): 要发送的消息
@@ -217,7 +197,6 @@ description: nonebot.adapters 模块
   - `**kwargs` (Any): 任意额外参数
 
 - **返回**
-
   - Any
 
 ### _classmethod_ `on_calling_api(func)` {#Bot-on-calling-api}
@@ -227,17 +206,14 @@ description: nonebot.adapters 模块
   调用 api 预处理。
 
   钩子函数参数:
-
   - bot: 当前 bot 对象
   - api: 调用的 api 名称
   - data: api 调用的参数字典
 
 - **参数**
-
   - `func` ([T_CallingAPIHook](../typing.md#T-CallingAPIHook))
 
 - **返回**
-
   - [T_CallingAPIHook](../typing.md#T-CallingAPIHook)
 
 ### _classmethod_ `on_called_api(func)` {#Bot-on-called-api}
@@ -247,7 +223,6 @@ description: nonebot.adapters 模块
   调用 api 后处理。
 
   钩子函数参数:
-
   - bot: 当前 bot 对象
   - exception: 调用 api 时发生的错误
   - api: 调用的 api 名称
@@ -255,11 +230,9 @@ description: nonebot.adapters 模块
   - result: api 调用的返回
 
 - **参数**
-
   - `func` ([T_CalledAPIHook](../typing.md#T-CalledAPIHook))
 
 - **返回**
-
   - [T_CalledAPIHook](../typing.md#T-CalledAPIHook)
 
 ## _abstract class_ `Event(<auto>)` {#Event}
@@ -279,7 +252,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - str
 
 ### _abstract method_ `get_event_name()` {#Event-get-event-name}
@@ -291,7 +263,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - str
 
 ### _abstract method_ `get_event_description()` {#Event-get-event-description}
@@ -303,7 +274,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - str
 
 ### _method_ `get_log_string()` {#Event-get-log-string}
@@ -320,11 +290,9 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - str
 
 - **异常**
-
   - NoLogException: 希望 NoneBot 隐藏该事件日志
 
 ### _abstract method_ `get_user_id()` {#Event-get-user-id}
@@ -336,7 +304,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - str
 
 ### _abstract method_ `get_session_id()` {#Event-get-session-id}
@@ -348,7 +315,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - str
 
 ### _abstract method_ `get_message()` {#Event-get-message}
@@ -360,7 +326,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - [Message](#Message)
 
 ### _method_ `get_plaintext()` {#Event-get-plaintext}
@@ -376,7 +341,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - str
 
 ### _abstract method_ `is_tome()` {#Event-is-tome}
@@ -388,7 +352,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - bool
 
 ## _abstract class_ `Message(<auto>)` {#Message}
@@ -396,7 +359,6 @@ description: nonebot.adapters 模块
 - **说明:** 消息序列
 
 - **参数**
-
   - `message`: 消息内容
 
 ### _classmethod_ `template(format_string)` {#Message-template}
@@ -410,11 +372,9 @@ description: nonebot.adapters 模块
   可以通过该消息类型的 `MessageSegment` 工厂方法创建消息。
 
 - **参数**
-
   - `format_string` (str | TM): 格式化模板
 
 - **返回**
-
   - [MessageTemplate](#MessageTemplate)[Self]: 消息格式化器
 
 ### _abstract classmethod_ `get_segment_class()` {#Message-get-segment-class}
@@ -426,7 +386,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - type[TMS]
 
 ### _abstract staticmethod_ `_construct(msg)` {#Message--construct}
@@ -434,11 +393,9 @@ description: nonebot.adapters 模块
 - **说明:** 构造消息数组
 
 - **参数**
-
   - `msg` (str)
 
 - **返回**
-
   - Iterable[TMS]
 
 ### _method_ `__getitem__(args)` {#Message---getitem--}
@@ -446,53 +403,38 @@ description: nonebot.adapters 模块
 - **重载**
 
   **1.** `(args) -> Self`
-
   - **参数**
-
     - `args` (str): 消息段类型
 
   - **返回**
-
     - Self: 所有类型为 `args` 的消息段
 
   **2.** `(args) -> TMS`
-
   - **参数**
-
     - `args` (tuple[str, int]): 消息段类型和索引
 
   - **返回**
-
     - TMS: 类型为 `args[0]` 的消息段第 `args[1]` 个
 
   **3.** `(args) -> Self`
-
   - **参数**
-
     - `args` (tuple[str, slice]): 消息段类型和切片
 
   - **返回**
-
     - Self: 类型为 `args[0]` 的消息段切片 `args[1]`
 
   **4.** `(args) -> TMS`
-
   - **参数**
-
     - `args` (int): 索引
 
   - **返回**
-
     - TMS: 第 `args` 个消息段
 
   **5.** `(args) -> Self`
-
   - **参数**
-
     - `args` (slice): 切片
 
   - **返回**
-
     - Self: 消息切片 `args`
 
 ### _method_ `__contains__(value)` {#Message---contains--}
@@ -500,11 +442,9 @@ description: nonebot.adapters 模块
 - **说明:** 检查消息段是否存在
 
 - **参数**
-
   - `value` (TMS | str): 消息段或消息段类型
 
 - **返回**
-
   - bool: 消息内是否存在给定消息段或给定类型的消息段
 
 ### _method_ `has(value)` {#Message-has}
@@ -512,11 +452,9 @@ description: nonebot.adapters 模块
 - **说明:** 与 [`__contains__`](#Message---contains--) 相同
 
 - **参数**
-
   - `value` (TMS | str)
 
 - **返回**
-
   - bool
 
 ### _method_ `index(value, *args)` {#Message-index}
@@ -524,7 +462,6 @@ description: nonebot.adapters 模块
 - **说明:** 索引消息段
 
 - **参数**
-
   - `value` (TMS | str): 消息段或者消息段类型
 
   - `*args` (SupportsIndex)
@@ -532,11 +469,9 @@ description: nonebot.adapters 模块
   - `arg`: start 与 end
 
 - **返回**
-
   - int: 索引 index
 
 - **异常**
-
   - ValueError: 消息段不存在
 
 ### _method_ `get(type_, count=None)` {#Message-get}
@@ -544,13 +479,11 @@ description: nonebot.adapters 模块
 - **说明:** 获取指定类型的消息段
 
 - **参数**
-
   - `type_` (str): 消息段类型
 
   - `count` (int | None): 获取个数
 
 - **返回**
-
   - Self: 构建的新消息
 
 ### _method_ `count(value)` {#Message-count}
@@ -558,11 +491,9 @@ description: nonebot.adapters 模块
 - **说明:** 计算指定消息段的个数
 
 - **参数**
-
   - `value` (TMS | str): 消息段或消息段类型
 
 - **返回**
-
   - int: 个数
 
 ### _method_ `only(value)` {#Message-only}
@@ -570,11 +501,9 @@ description: nonebot.adapters 模块
 - **说明:** 检查消息中是否仅包含指定消息段
 
 - **参数**
-
   - `value` (TMS | str): 指定消息段或消息段类型
 
 - **返回**
-
   - bool: 是否仅包含指定消息段
 
 ### _method_ `append(obj)` {#Message-append}
@@ -582,11 +511,9 @@ description: nonebot.adapters 模块
 - **说明:** 添加一个消息段到消息数组末尾。
 
 - **参数**
-
   - `obj` (str | TMS): 要添加的消息段
 
 - **返回**
-
   - Self
 
 ### _method_ `extend(obj)` {#Message-extend}
@@ -594,11 +521,9 @@ description: nonebot.adapters 模块
 - **说明:** 拼接一个消息数组或多个消息段到消息数组末尾。
 
 - **参数**
-
   - `obj` (Self | Iterable[TMS]): 要添加的消息数组
 
 - **返回**
-
   - Self
 
 ### _method_ `join(iterable)` {#Message-join}
@@ -606,11 +531,9 @@ description: nonebot.adapters 模块
 - **说明:** 将多个消息连接并将自身作为分割
 
 - **参数**
-
   - `iterable` (Iterable[TMS | Self]): 要连接的消息
 
 - **返回**
-
   - Self: 连接后的消息
 
 ### _method_ `copy()` {#Message-copy}
@@ -622,7 +545,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - Self
 
 ### _method_ `include(*types)` {#Message-include}
@@ -630,11 +552,9 @@ description: nonebot.adapters 模块
 - **说明:** 过滤消息
 
 - **参数**
-
   - `*types` (str): 包含的消息段类型
 
 - **返回**
-
   - Self: 新构造的消息
 
 ### _method_ `exclude(*types)` {#Message-exclude}
@@ -642,11 +562,9 @@ description: nonebot.adapters 模块
 - **说明:** 过滤消息
 
 - **参数**
-
   - `*types` (str): 不包含的消息段类型
 
 - **返回**
-
   - Self: 新构造的消息
 
 ### _method_ `extract_plain_text()` {#Message-extract-plain-text}
@@ -658,7 +576,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - str
 
 ## _abstract class_ `MessageSegment(<auto>)` {#MessageSegment}
@@ -690,7 +607,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - type[TM]
 
 ### _abstract method_ `__str__()` {#MessageSegment---str--}
@@ -702,29 +618,24 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - str
 
 ### _method_ `__add__(other)` {#MessageSegment---add--}
 
 - **参数**
-
   - `other` (str | Self | Iterable[Self])
 
 - **返回**
-
   - TM
 
 ### _method_ `get(key, default=None)` {#MessageSegment-get}
 
 - **参数**
-
   - `key` (str)
 
   - `default` (Any)
 
 - **返回**
-
   - untyped
 
 ### _method_ `keys()` {#MessageSegment-keys}
@@ -734,7 +645,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - untyped
 
 ### _method_ `values()` {#MessageSegment-values}
@@ -744,7 +654,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - untyped
 
 ### _method_ `items()` {#MessageSegment-items}
@@ -754,17 +663,14 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - untyped
 
 ### _method_ `join(iterable)` {#MessageSegment-join}
 
 - **参数**
-
   - `iterable` (Iterable[Self | TM])
 
 - **返回**
-
   - TM
 
 ### _method_ `copy()` {#MessageSegment-copy}
@@ -774,7 +680,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - Self
 
 ### _abstract method_ `is_text()` {#MessageSegment-is-text}
@@ -786,7 +691,6 @@ description: nonebot.adapters 模块
   empty
 
 - **返回**
-
   - bool
 
 ## _class_ `MessageTemplate(template, factory=str, private_getattr=False)` {#MessageTemplate}
@@ -794,7 +698,6 @@ description: nonebot.adapters 模块
 - **说明:** 消息模板格式化实现类。
 
 - **参数**
-
   - `template` (str | TM): 模板
 
   - `factory` (type[str] | type[TM]): 消息类型工厂，默认为 `str`
@@ -804,13 +707,11 @@ description: nonebot.adapters 模块
 ### _method_ `add_format_spec(spec, name=None)` {#MessageTemplate-add-format-spec}
 
 - **参数**
-
   - `spec` (FormatSpecFunc_T)
 
   - `name` (str | None)
 
 - **返回**
-
   - FormatSpecFunc_T
 
 ### _method_ `format(*args, **kwargs)` {#MessageTemplate-format}
@@ -818,13 +719,11 @@ description: nonebot.adapters 模块
 - **说明:** 根据传入参数和模板生成消息对象
 
 - **参数**
-
   - `*args`
 
   - `**kwargs`
 
 - **返回**
-
   - TF
 
 ### _method_ `format_map(mapping)` {#MessageTemplate-format-map}
@@ -832,17 +731,14 @@ description: nonebot.adapters 模块
 - **说明:** 根据传入字典和模板生成消息对象, 在传入字段名不是有效标识符时有用
 
 - **参数**
-
   - `mapping` (Mapping[str, Any])
 
 - **返回**
-
   - TF
 
 ### _method_ `vformat(format_string, args, kwargs)` {#MessageTemplate-vformat}
 
 - **参数**
-
   - `format_string` (str)
 
   - `args` (Sequence[Any])
@@ -850,13 +746,11 @@ description: nonebot.adapters 模块
   - `kwargs` (Mapping[str, Any])
 
 - **返回**
-
   - TF
 
 ### _method_ `get_field(field_name, args, kwargs)` {#MessageTemplate-get-field}
 
 - **参数**
-
   - `field_name` (str)
 
   - `args` (Sequence[Any])
@@ -864,17 +758,14 @@ description: nonebot.adapters 模块
   - `kwargs` (Mapping[str, Any])
 
 - **返回**
-
   - tuple[Any, int | str]
 
 ### _method_ `format_field(value, format_spec)` {#MessageTemplate-format-field}
 
 - **参数**
-
   - `value` (Any)
 
   - `format_spec` (str)
 
 - **返回**
-
   - Any

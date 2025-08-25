@@ -80,7 +80,6 @@ description: nonebot.plugin.model 模块
   empty
 
 - **返回**
-
   - set[type[[Adapter](../adapters/index.md#Adapter)]] | None
 
 ## _class_ `Plugin(<auto>)` {#Plugin}

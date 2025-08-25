@@ -62,7 +62,6 @@ NoneBotException
 - **说明:** 指示 NoneBot 应该忽略该事件。可由 PreProcessor 抛出。
 
 - **参数**
-
   - `reason`: 忽略事件的原因
 
 ## _class_ `SkippedException(<auto>)` {#SkippedException}
@@ -101,7 +100,6 @@ NoneBotException
 - **说明:** 指示 NoneBot 阻止本次 API 调用或修改本次调用返回值，并返回自定义内容。 可由 api hook 抛出。
 
 - **参数**
-
   - `result`: 返回的内容
 
 ## _class_ `StopPropagation(<auto>)` {#StopPropagation}
@@ -200,7 +198,6 @@ NoneBotException
 - **说明:** 代表 `Adapter` 抛出的异常，所有的 `Adapter` 都要在内部继承自这个 `Exception`。
 
 - **参数**
-
   - `adapter_name`: 标识 adapter
 
 ## _class_ `NoLogException(<auto>)` {#NoLogException}

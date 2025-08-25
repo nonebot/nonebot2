@@ -289,7 +289,6 @@ opt2 = Option("--foo", default=OptionResult(value=False, args={"bar": 1}))
 `Arparma` 有如下属性：
 
 - 调试类
-
   - matched: 是否匹配成功
   - error_data: 解析失败时剩余的数据
   - error_info: 解析失败时的异常内容

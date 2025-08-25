@@ -22,7 +22,6 @@ description: nonebot.permission 模块
   如果 `perm` 中仅有 `User` 类型的权限检查函数，则会去除原有检查函数的会话 ID 限制。
 
 - **参数**
-
   - `*users` (str)
 
   - `perm` (Permission | None): 需要同时满足的权限
@@ -30,7 +29,6 @@ description: nonebot.permission 模块
   - `user`: 会话白名单
 
 - **返回**
-
   - untyped
 
 ## _class_ `Permission(*checkers)` {#Permission}
@@ -42,7 +40,6 @@ description: nonebot.permission 模块
   当事件传递时，在 [Matcher](matcher.md#Matcher) 运行前进行检查。
 
 - **参数**
-
   - `*checkers` ([T_PermissionChecker](typing.md#T-PermissionChecker) | [Dependent](dependencies/index.md#Dependent)[bool]): PermissionChecker
 
 - **用法**
@@ -64,7 +61,6 @@ description: nonebot.permission 模块
 - **说明:** 检查是否满足某个权限。
 
 - **参数**
-
   - `bot` ([Bot](adapters/index.md#Bot)): Bot 对象
 
   - `event` ([Event](adapters/index.md#Event)): Event 对象
@@ -74,7 +70,6 @@ description: nonebot.permission 模块
   - `dependency_cache` ([T_DependencyCache](typing.md#T-DependencyCache) | None): 依赖缓存
 
 - **返回**
-
   - bool
 
 ## _class_ `User(users, perm=None)` {#User}
@@ -82,7 +77,6 @@ description: nonebot.permission 模块
 - **说明:** 检查当前事件是否属于指定会话。
 
 - **参数**
-
   - `users` (tuple[str, ...]): 会话 ID 元组
 
   - `perm` (Permission | None): 需同时满足的权限
@@ -96,13 +90,11 @@ description: nonebot.permission 模块
   如果 `perm` 中仅有 `User` 类型的权限检查函数，则会去除原有的会话 ID 限制。
 
 - **参数**
-
   - `event` ([Event](adapters/index.md#Event)): Event 对象
 
   - `perm` (Permission | None): 需同时满足的权限
 
 - **返回**
-
   - Self
 
 ### _classmethod_ `from_permission(*users, perm=None)` {#User-from-permission}
@@ -114,13 +106,11 @@ description: nonebot.permission 模块
   如果 `perm` 中仅有 `User` 类型的权限检查函数，则会去除原有的会话 ID 限制。
 
 - **参数**
-
   - `*users` (str): 会话白名单
 
   - `perm` (Permission | None): 需同时满足的权限
 
 - **返回**
-
   - Self
 
 ## _class_ `Message(<auto>)` {#Message}

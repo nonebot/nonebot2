@@ -92,7 +92,6 @@ pip install nonebot2[fastapi]
 - **说明:** FastAPI 驱动框架。
 
 - **参数**
-
   - `env` ([Env](../config.md#Env))
 
   - `config` (NoneBotConfig)
@@ -124,21 +123,17 @@ pip install nonebot2[fastapi]
 ### _method_ `setup_http_server(setup)` {#Driver-setup-http-server}
 
 - **参数**
-
   - `setup` ([HTTPServerSetup](index.md#HTTPServerSetup))
 
 - **返回**
-
   - untyped
 
 ### _method_ `setup_websocket_server(setup)` {#Driver-setup-websocket-server}
 
 - **参数**
-
   - `setup` ([WebSocketServerSetup](index.md#WebSocketServerSetup))
 
 - **返回**
-
   - None
 
 ### _method_ `run(host=None, port=None, *args, app=None, **kwargs)` {#Driver-run}
@@ -146,7 +141,6 @@ pip install nonebot2[fastapi]
 - **说明:** 使用 `uvicorn` 启动 FastAPI
 
 - **参数**
-
   - `host` (str | None)
 
   - `port` (int | None)
@@ -158,7 +152,6 @@ pip install nonebot2[fastapi]
   - `**kwargs`
 
 - **返回**
-
   - untyped
 
 ## _class_ `FastAPIWebSocket(*, request, websocket)` {#FastAPIWebSocket}
@@ -166,7 +159,6 @@ pip install nonebot2[fastapi]
 - **说明:** FastAPI WebSocket Wrapper
 
 - **参数**
-
   - `request` (BaseRequest)
 
   - `websocket` ([WebSocket](index.md#WebSocket))
@@ -178,19 +170,16 @@ pip install nonebot2[fastapi]
   empty
 
 - **返回**
-
   - None
 
 ### _async method_ `close(code=status.WS_1000_NORMAL_CLOSURE, reason="")` {#FastAPIWebSocket-close}
 
 - **参数**
-
   - `code` (int)
 
   - `reason` (str)
 
 - **返回**
-
   - None
 
 ### _async method_ `receive()` {#FastAPIWebSocket-receive}
@@ -200,7 +189,6 @@ pip install nonebot2[fastapi]
   empty
 
 - **返回**
-
   - str | bytes
 
 ### _async method_ `receive_text()` {#FastAPIWebSocket-receive-text}
@@ -210,7 +198,6 @@ pip install nonebot2[fastapi]
   empty
 
 - **返回**
-
   - str
 
 ### _async method_ `receive_bytes()` {#FastAPIWebSocket-receive-bytes}
@@ -220,25 +207,20 @@ pip install nonebot2[fastapi]
   empty
 
 - **返回**
-
   - bytes
 
 ### _async method_ `send_text(data)` {#FastAPIWebSocket-send-text}
 
 - **参数**
-
   - `data` (str)
 
 - **返回**
-
   - None
 
 ### _async method_ `send_bytes(data)` {#FastAPIWebSocket-send-bytes}
 
 - **参数**
-
   - `data` (bytes)
 
 - **返回**
-
   - None

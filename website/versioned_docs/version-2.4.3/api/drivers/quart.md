@@ -68,7 +68,6 @@ pip install nonebot2[quart]
 - **说明:** Quart 驱动框架
 
 - **参数**
-
   - `env` ([Env](../config.md#Env))
 
   - `config` (NoneBotConfig)
@@ -100,21 +99,17 @@ pip install nonebot2[quart]
 ### _method_ `setup_http_server(setup)` {#Driver-setup-http-server}
 
 - **参数**
-
   - `setup` ([HTTPServerSetup](index.md#HTTPServerSetup))
 
 - **返回**
-
   - untyped
 
 ### _method_ `setup_websocket_server(setup)` {#Driver-setup-websocket-server}
 
 - **参数**
-
   - `setup` ([WebSocketServerSetup](index.md#WebSocketServerSetup))
 
 - **返回**
-
   - None
 
 ### _method_ `run(host=None, port=None, *args, app=None, **kwargs)` {#Driver-run}
@@ -122,7 +117,6 @@ pip install nonebot2[quart]
 - **说明:** 使用 `uvicorn` 启动 Quart
 
 - **参数**
-
   - `host` (str | None)
 
   - `port` (int | None)
@@ -134,7 +128,6 @@ pip install nonebot2[quart]
   - `**kwargs`
 
 - **返回**
-
   - untyped
 
 ## _class_ `WebSocket(*, request, websocket_ctx)` {#WebSocket}
@@ -142,7 +135,6 @@ pip install nonebot2[quart]
 - **说明:** Quart WebSocket Wrapper
 
 - **参数**
-
   - `request` (BaseRequest)
 
   - `websocket_ctx` (WebsocketContext)
@@ -154,19 +146,16 @@ pip install nonebot2[quart]
   empty
 
 - **返回**
-
   - untyped
 
 ### _async method_ `close(code=1000, reason="")` {#WebSocket-close}
 
 - **参数**
-
   - `code` (int)
 
   - `reason` (str)
 
 - **返回**
-
   - untyped
 
 ### _async method_ `receive()` {#WebSocket-receive}
@@ -176,7 +165,6 @@ pip install nonebot2[quart]
   empty
 
 - **返回**
-
   - str | bytes
 
 ### _async method_ `receive_text()` {#WebSocket-receive-text}
@@ -186,7 +174,6 @@ pip install nonebot2[quart]
   empty
 
 - **返回**
-
   - str
 
 ### _async method_ `receive_bytes()` {#WebSocket-receive-bytes}
@@ -196,25 +183,20 @@ pip install nonebot2[quart]
   empty
 
 - **返回**
-
   - bytes
 
 ### _async method_ `send_text(data)` {#WebSocket-send-text}
 
 - **参数**
-
   - `data` (str)
 
 - **返回**
-
   - untyped
 
 ### _async method_ `send_bytes(data)` {#WebSocket-send-bytes}
 
 - **参数**
-
   - `data` (bytes)
 
 - **返回**
-
   - untyped

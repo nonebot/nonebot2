@@ -24,7 +24,6 @@ NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及
   将会从 **环境变量** > **dotenv 配置文件** 的优先级读取环境信息。
 
 - **参数**
-
   - `_env_file` (DOTENV_TYPE | None)
 
   - `_env_file_encoding` (str | None)
@@ -55,7 +54,6 @@ NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及
   配置方法参考: [配置](https://nonebot.dev/docs/appendices/config)
 
 - **参数**
-
   - `_env_file` (DOTENV_TYPE | None)
 
   - `_env_file_encoding` (str | None)

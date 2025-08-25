@@ -155,7 +155,6 @@ async def test_example(app: App):
 1. `should_call_send`
 
    定义事件响应器预期发送的消息，即通过[事件响应器操作 send](../../appendices/session-control.mdx#send)进行的操作。`should_call_send` 有四个参数：
-
    - `event`：回复的目标事件。
    - `message`：预期的消息对象，可以是 `str`、`Message` 或 `MessageSegment`。
    - `result`：send 的返回值，将会返回给插件。
@@ -164,7 +163,6 @@ async def test_example(app: App):
 
 2. `should_call_api`
    定义事件响应器预期调用的平台 API 接口，即通过[调用平台 API](../../appendices/api-calling.mdx#调用平台-api)进行的操作。`should_call_api` 有四个参数：
-
    - `api`：API 名称。
    - `data`：预期的请求数据。
    - `result`：call_api 的返回值，将会返回给插件。

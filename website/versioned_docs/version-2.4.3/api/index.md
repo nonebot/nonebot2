@@ -60,11 +60,9 @@ description: nonebot 模块
   empty
 
 - **返回**
-
   - [Driver](drivers/index.md#Driver): 全局 [Driver](drivers/index.md#Driver) 对象
 
 - **异常**
-
   - ValueError: 全局 [Driver](drivers/index.md#Driver) 对象尚未初始化 ([nonebot.init](#init) 尚未调用)
 
 - **用法**
@@ -80,27 +78,20 @@ description: nonebot 模块
 - **重载**
 
   **1.** `(name) -> Adapter`
-
   - **参数**
-
     - `name` (str): 适配器名称
 
   - **返回**
-
     - [Adapter](adapters/index.md#Adapter): 指定名称的 [Adapter](adapters/index.md#Adapter) 对象
 
   **2.** `(name) -> A`
-
   - **参数**
-
     - `name` (type[A]): 适配器类型
 
   - **返回**
-
     - A: 指定类型的 [Adapter](adapters/index.md#Adapter) 对象
 
 - **异常**
-
   - ValueError: 指定的 [Adapter](adapters/index.md#Adapter) 未注册
 
   - ValueError: 全局 [Driver](drivers/index.md#Driver) 对象尚未初始化 ([nonebot.init](#init) 尚未调用)
@@ -121,11 +112,9 @@ description: nonebot 模块
   empty
 
 - **返回**
-
   - dict[str, [Adapter](adapters/index.md#Adapter)]: 所有 [Adapter](adapters/index.md#Adapter) 实例字典
 
 - **异常**
-
   - ValueError: 全局 [Driver](drivers/index.md#Driver) 对象尚未初始化 ([nonebot.init](#init) 尚未调用)
 
 - **用法**
@@ -143,11 +132,9 @@ description: nonebot 模块
   empty
 
 - **返回**
-
   - Any: Server App 对象
 
 - **异常**
-
   - AssertionError: 全局 Driver 对象不是 [ASGIMixin](drivers/index.md#ASGIMixin) 类型
 
   - ValueError: 全局 [Driver](drivers/index.md#Driver) 对象尚未初始化 ([nonebot.init](#init) 尚未调用)
@@ -167,11 +154,9 @@ description: nonebot 模块
   empty
 
 - **返回**
-
   - Any: ASGI 对象
 
 - **异常**
-
   - AssertionError: 全局 Driver 对象不是 [ASGIMixin](drivers/index.md#ASGIMixin) 类型
 
   - ValueError: 全局 [Driver](drivers/index.md#Driver) 对象尚未初始化 ([nonebot.init](#init) 尚未调用)
@@ -192,15 +177,12 @@ description: nonebot 模块
   当不提供时，返回一个 [Bot](adapters/index.md#Bot)。
 
 - **参数**
-
   - `self_id` (str | None): 用来识别 [Bot](adapters/index.md#Bot) 的 [Bot.self_id](adapters/index.md#Bot-self-id) 属性
 
 - **返回**
-
   - [Bot](adapters/index.md#Bot): [Bot](adapters/index.md#Bot) 对象
 
 - **异常**
-
   - KeyError: 对应 self_id 的 Bot 不存在
 
   - ValueError: 没有传入 self_id 且没有 Bot 可用
@@ -224,13 +206,11 @@ description: nonebot 模块
   empty
 
 - **返回**
-
   - dict[str, [Bot](adapters/index.md#Bot)]: 一个以 [Bot.self_id](adapters/index.md#Bot-self-id) 为键
 
     [Bot](adapters/index.md#Bot) 对象为值的字典
 
 - **异常**
-
   - ValueError: 全局 [Driver](drivers/index.md#Driver) 对象尚未初始化 ([nonebot.init](#init) 尚未调用)
 
 - **用法**
@@ -250,13 +230,11 @@ description: nonebot 模块
   也可以传入自定义的 `_env_file` 来指定 NoneBot 从该文件读取配置。
 
 - **参数**
-
   - `_env_file` (DOTENV_TYPE | None): 配置文件名，默认从 `.env.{env_name}` 中读取配置
 
   - `**kwargs` (Any): 任意变量，将会存储到 [Driver.config](drivers/index.md#Driver-config) 对象里
 
 - **返回**
-
   - None
 
 - **用法**
@@ -270,13 +248,11 @@ description: nonebot 模块
 - **说明:** 启动 NoneBot，即运行全局 [Driver](drivers/index.md#Driver) 对象。
 
 - **参数**
-
   - `*args` (Any): 传入 [Driver.run](drivers/index.md#Driver-run) 的位置参数
 
   - `**kwargs` (Any): 传入 [Driver.run](drivers/index.md#Driver-run) 的命名参数
 
 - **返回**
-
   - None
 
 - **用法**

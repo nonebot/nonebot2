@@ -51,11 +51,9 @@ description: nonebot.plugin 模块
   如果为嵌套的子插件，标识符为 `父插件标识符:子插件文件(夹)名`。
 
 - **参数**
-
   - `plugin_id` (str): 插件标识符，即 [Plugin.id\_](model.md#Plugin-id-)。
 
 - **返回**
-
   - [Plugin](model.md#Plugin) | None
 
 ## _def_ `get_plugin_by_module_name(module_name)` {#get-plugin-by-module-name}
@@ -67,11 +65,9 @@ description: nonebot.plugin 模块
   如果提供的模块名为某个插件的子模块，同样会返回该插件。
 
 - **参数**
-
   - `module_name` (str): 模块名，即 [Plugin.module_name](model.md#Plugin-module-name)。
 
 - **返回**
-
   - [Plugin](model.md#Plugin) | None
 
 ## _def_ `get_loaded_plugins()` {#get-loaded-plugins}
@@ -83,7 +79,6 @@ description: nonebot.plugin 模块
   empty
 
 - **返回**
-
   - set[[Plugin](model.md#Plugin)]
 
 ## _def_ `get_available_plugin_names()` {#get-available-plugin-names}
@@ -95,7 +90,6 @@ description: nonebot.plugin 模块
   empty
 
 - **返回**
-
   - set[str]
 
 ## _def_ `get_plugin_config(config)` {#get-plugin-config}
@@ -103,9 +97,7 @@ description: nonebot.plugin 模块
 - **说明:** 从全局配置获取当前插件需要的配置项。
 
 - **参数**
-
   - `config` (type[C])
 
 - **返回**
-
   - C

@@ -22,11 +22,9 @@ pip install nonebot2[websockets]
 ## _def_ `catch_closed(func)` {#catch-closed}
 
 - **参数**
-
   - `func` ((P) -> Coroutine[Any, Any, T])
 
 - **返回**
-
   - (P) -> Coroutine[Any, Any, T]
 
 ## _class_ `Mixin(<auto>)` {#Mixin}
@@ -40,11 +38,9 @@ pip install nonebot2[websockets]
 ### _method_ `websocket(setup)` {#Mixin-websocket}
 
 - **参数**
-
   - `setup` ([Request](index.md#Request))
 
 - **返回**
-
   - AsyncGenerator[[WebSocket](index.md#WebSocket), None]
 
 ## _class_ `WebSocket(*, request, websocket)` {#WebSocket}
@@ -52,7 +48,6 @@ pip install nonebot2[websockets]
 - **说明:** Websockets WebSocket Wrapper
 
 - **参数**
-
   - `request` ([Request](index.md#Request))
 
   - `websocket` (WebSocketClientProtocol)
@@ -64,19 +59,16 @@ pip install nonebot2[websockets]
   empty
 
 - **返回**
-
   - untyped
 
 ### _async method_ `close(code=1000, reason="")` {#WebSocket-close}
 
 - **参数**
-
   - `code` (int)
 
   - `reason` (str)
 
 - **返回**
-
   - untyped
 
 ### _async method_ `receive()` {#WebSocket-receive}
@@ -86,7 +78,6 @@ pip install nonebot2[websockets]
   empty
 
 - **返回**
-
   - str | bytes
 
 ### _async method_ `receive_text()` {#WebSocket-receive-text}
@@ -96,7 +87,6 @@ pip install nonebot2[websockets]
   empty
 
 - **返回**
-
   - str
 
 ### _async method_ `receive_bytes()` {#WebSocket-receive-bytes}
@@ -106,33 +96,27 @@ pip install nonebot2[websockets]
   empty
 
 - **返回**
-
   - bytes
 
 ### _async method_ `send_text(data)` {#WebSocket-send-text}
 
 - **参数**
-
   - `data` (str)
 
 - **返回**
-
   - None
 
 ### _async method_ `send_bytes(data)` {#WebSocket-send-bytes}
 
 - **参数**
-
   - `data` (bytes)
 
 - **返回**
-
   - None
 
 ## _class_ `Driver(env, config)` {#Driver}
 
 - **参数**
-
   - `env` ([Env](../config.md#Env))
 
   - `config` ([Config](../config.md#Config))

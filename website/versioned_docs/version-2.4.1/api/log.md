@@ -25,7 +25,6 @@ NoneBot 使用 [`loguru`][loguru] 来记录日志信息。
   NoneBot 日志记录器对象。
 
   默认信息:
-
   - 格式: `[%(asctime)s %(name)s] %(levelname)s: %(message)s`
   - 等级: `INFO` ，根据 `config.log_level` 配置改变
   - 输出: 输出至 stdout
@@ -47,11 +46,9 @@ NoneBot 使用 [`loguru`][loguru] 来记录日志信息。
 ### _method_ `emit(record)` {#LoguruHandler-emit}
 
 - **参数**
-
   - `record` (logging.LogRecord)
 
 - **返回**
-
   - untyped
 
 ## _def_ `default_filter(record)` {#default-filter}
@@ -59,11 +56,9 @@ NoneBot 使用 [`loguru`][loguru] 来记录日志信息。
 - **说明:** 默认的日志过滤器，根据 `config.log_level` 配置改变日志等级。
 
 - **参数**
-
   - `record` (Record)
 
 - **返回**
-
   - untyped
 
 ## _var_ `default_format` {#default-format}
