@@ -300,6 +300,7 @@ export default async function createConfigAsync() {
 
     future: {
       experimental_faster: true,
+      v4: true,
     },
 
     plugins: [
