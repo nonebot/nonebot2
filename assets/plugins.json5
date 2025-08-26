@@ -9529,4 +9529,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_abs",
+    "project_link": "nonebot-plugin-abs",
+    "author_id": 64878354,
+    "tags": [
+      {
+        "label": "abstract",
+        "color": "#edf119"
+      }
+    ],
+    "is_official": false
+  },
 ]
