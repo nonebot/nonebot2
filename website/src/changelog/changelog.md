@@ -14,6 +14,10 @@ toc_max_heading_level: 2
 - Docs: 增加 B站直播间 适配器说明 [@MingxuanGame](https://github.com/MingxuanGame) ([#3636](https://github.com/nonebot/nonebot2/pull/3636))
 - Docs: 增加 VoceChat 适配器说明 [@5656565566](https://github.com/5656565566) ([#3627](https://github.com/nonebot/nonebot2/pull/3627))
 
+### 💫 杂项
+
+- CI: 测试矩阵加入 Python 3.13 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3605](https://github.com/nonebot/nonebot2/pull/3605))
+
 ### 🍻 插件发布
 
 - Plugin: HuaEr聊天bot [@noneflow](https://github.com/noneflow) ([#3564](https://github.com/nonebot/nonebot2/pull/3564))
