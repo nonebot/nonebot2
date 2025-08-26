@@ -20,6 +20,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 卖若插件 [@noneflow](https://github.com/noneflow) ([#3631](https://github.com/nonebot/nonebot2/pull/3631))
 - Plugin: HuaEr聊天bot [@noneflow](https://github.com/noneflow) ([#3564](https://github.com/nonebot/nonebot2/pull/3564))
 - Plugin: Remove nonebot_plugin_cnrail [@noneflow](https://github.com/noneflow) ([#3645](https://github.com/nonebot/nonebot2/pull/3645))
 - Plugin: Remove nonebot_plugin_pingti [@noneflow](https://github.com/noneflow) ([#3646](https://github.com/nonebot/nonebot2/pull/3646))
