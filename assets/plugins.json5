@@ -9560,4 +9560,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_elf_rss_next",
+    "project_link": "nonebot-plugin-elf-rss-next",
+    "author_id": 45394586,
+    "tags": [
+      {
+        "label": "RSS",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
