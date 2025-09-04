@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- CI: 升级文档构建 node 版本 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3668](https://github.com/nonebot/nonebot2/pull/3668))
 - CI: 测试矩阵加入 Python 3.13 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3605](https://github.com/nonebot/nonebot2/pull/3605))
 
 ### 🍻 插件发布
