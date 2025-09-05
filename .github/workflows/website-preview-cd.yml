@@ -24,7 +24,7 @@ jobs:
 
     steps:
       - name: Set Commit Status
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         with:
           script: |
             github.rest.repos.createCommitStatus({
@@ -78,7 +78,7 @@ jobs:
             :rocket: Deployed to ${{ steps.deploy.outputs.deploy-url }}
 
       - name: Set Commit Status
-        uses: actions/github-script@v7
+        uses: actions/github-script@v8
         if: always()
         with:
           script: |
