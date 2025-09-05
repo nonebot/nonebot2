@@ -9580,4 +9580,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_algo",
+    "project_link": "nonebot-plugin-algo",
+    "author_id": 188494207,
+    "tags": [
+      {
+        "label": "算法竞赛",
+        "color": "#52c5ea"
+      },
+      {
+        "label": "ACM",
+        "color": "#eb0e31"
+      }
+    ],
+    "is_official": false
+  },
 ]
