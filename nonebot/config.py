@@ -87,6 +87,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
         env_file_encoding: Optional[str] = None,
         case_sensitive: Optional[bool] = None,
         env_nested_delimiter: Optional[str] = None,
+        env_greedy_load: Optional[bool] = None,
     ) -> None:
         super().__init__(settings_cls)
         self.env_file = (
@@ -108,6 +109,11 @@ class DotEnvSettingsSource(BaseSettingsSource):
             env_nested_delimiter
             if env_nested_delimiter is not None
             else self.config.get("env_nested_delimiter", None)
+        )
+        self.env_greedy_load = (
+            env_greedy_load
+            if env_greedy_load is not None
+            else self.config.get("env_greedy_load", False)
         )
 
     def _apply_case_sensitive(self, var_name: str) -> str:
@@ -210,7 +216,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
         env_vars = {**env_file_vars, **env_vars}
 
         for field in model_fields(self.settings_cls):
-            field_name = field.name
+            field_name = self._parse_field_name(field)
             env_name = self._apply_case_sensitive(field_name)
 
             # try get values from env vars
@@ -255,7 +261,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
                 d[field_name] = env_val
 
         # remain user custom config
-        for env_name in env_file_vars:
+        for env_name in env_file_vars if not self.env_greedy_load else env_vars:
             env_val = env_vars[env_name]
             if env_val and (val_striped := env_val.strip()):
                 # there's a value, decode that as JSON
@@ -283,6 +289,9 @@ class DotEnvSettingsSource(BaseSettingsSource):
 
         return d
 
+    def _parse_field_name(self, field: ModelField) -> str:
+        return field.field_info.alias or field.name
+
 
 if PYDANTIC_V2:  # pragma: pydantic-v2
 
@@ -291,6 +300,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
         env_file_encoding: str
         case_sensitive: bool
         env_nested_delimiter: Optional[str]
+        env_greedy_load: bool
 
 else:  # pragma: pydantic-v1
 
@@ -299,6 +309,7 @@ else:  # pragma: pydantic-v1
         env_file_encoding: str
         case_sensitive: bool
         env_nested_delimiter: Optional[str]
+        env_greedy_load: bool
 
 
 class BaseSettings(BaseModel):
@@ -314,6 +325,7 @@ class BaseSettings(BaseModel):
             env_file_encoding="utf-8",
             case_sensitive=False,
             env_nested_delimiter="__",
+            env_greedy_load=False,
         )
     else:  # pragma: pydantic-v1
 
@@ -323,12 +335,14 @@ class BaseSettings(BaseModel):
             env_file_encoding = "utf-8"
             case_sensitive = False
             env_nested_delimiter = "__"
+            env_greedy_load = False
 
     def __init__(
         __settings_self__,  # pyright: ignore[reportSelfClsParameterName]
         _env_file: Optional[DOTENV_TYPE] = ENV_FILE_SENTINEL,
         _env_file_encoding: Optional[str] = None,
         _env_nested_delimiter: Optional[str] = None,
+        _env_greedy_load: Optional[bool] = None,
         **values: Any,
     ) -> None:
         super().__init__(
@@ -337,6 +351,7 @@ class BaseSettings(BaseModel):
                 env_file=_env_file,
                 env_file_encoding=_env_file_encoding,
                 env_nested_delimiter=_env_nested_delimiter,
+                env_greedy_load=_env_greedy_load,
             )
         )
 
@@ -346,6 +361,7 @@ class BaseSettings(BaseModel):
         env_file: Optional[DOTENV_TYPE] = None,
         env_file_encoding: Optional[str] = None,
         env_nested_delimiter: Optional[str] = None,
+        env_greedy_load: Optional[bool] = None,
     ) -> dict[str, Any]:
         init_settings = InitSettingsSource(self.__class__, init_kwargs=init_kwargs)
         env_settings = DotEnvSettingsSource(
@@ -353,6 +369,7 @@ class BaseSettings(BaseModel):
             env_file=env_file,
             env_file_encoding=env_file_encoding,
             env_nested_delimiter=env_nested_delimiter,
+            env_greedy_load=env_greedy_load,
         )
         return deep_update(env_settings(), init_settings())
 
@@ -368,6 +385,12 @@ class Env(BaseSettings):
 
     NoneBot 将从 `.env.{environment}` 文件中加载配置。
     """
+    greedy_load: bool = Field(default=False, alias="env_greedy_load")
+    """是否启用贪婪加载模式。
+
+    启用后，NoneBot 将会加载所有环境变量，
+    而不仅仅是当前 `.env.{environment}` 文件中声明的变量。
+    """
 
 
 class Config(BaseSettings):
@@ -381,6 +404,7 @@ class Config(BaseSettings):
 
     if TYPE_CHECKING:
         _env_file: Optional[DOTENV_TYPE] = ".env", ".env.prod"
+        _env_greedy_load: bool = False
 
     # nonebot configs
     driver: str = "~fastapi"

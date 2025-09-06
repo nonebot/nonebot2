@@ -305,6 +305,7 @@ def init(*, _env_file: Optional[DOTENV_TYPE] = None, **kwargs: Any) -> None:
                 if isinstance(_env_file, (str, os.PathLike))
                 else _env_file
             ),
+            _env_greedy_load=env.greedy_load,
         )
 
         logger.configure(
@@ -312,6 +313,9 @@ def init(*, _env_file: Optional[DOTENV_TYPE] = None, **kwargs: Any) -> None:
         )
         logger.opt(colors=True).info(
             f"Current <y><b>Env: {escape_tag(env.environment)}</b></y>"
+        )
+        logger.opt(colors=True).info(
+            f"Loading <y><b>Env Greedy Load: {env.greedy_load}</b></y>"
         )
         logger.opt(colors=True).debug(
             f"Loaded <y><b>Config</b></y>: {escape_tag(str(model_dump(config)))}"
