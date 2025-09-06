@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 图片手办化 [@noneflow](https://github.com/noneflow) ([#3662](https://github.com/nonebot/nonebot2/pull/3662))
 - Plugin: Akash Image Generator [@noneflow](https://github.com/noneflow) ([#3651](https://github.com/nonebot/nonebot2/pull/3651))
 - Plugin: 让我看看！！ [@noneflow](https://github.com/noneflow) ([#3648](https://github.com/nonebot/nonebot2/pull/3648))
 - Plugin: ImageLibrary [@noneflow](https://github.com/noneflow) ([#3620](https://github.com/nonebot/nonebot2/pull/3620))
