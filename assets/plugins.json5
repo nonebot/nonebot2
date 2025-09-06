@@ -9608,4 +9608,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_bafortune",
+    "project_link": "nonebot-plugin-bafortune",
+    "author_id": 98072207,
+    "tags": [
+      {
+        "label": "碧蓝档案",
+        "color": "#2b8dce"
+      },
+      {
+        "label": "今日运势",
+        "color": "#ce2b2b"
+      },
+      {
+        "label": "多平台适配",
+        "color": "#c2ce2b"
+      }
+    ],
+    "is_official": false
+  },
 ]
