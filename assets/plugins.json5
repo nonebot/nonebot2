@@ -9596,4 +9596,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_distributed_blacklist",
+    "project_link": "nonebot-plugin-distributed-blacklist",
+    "author_id": 65720409,
+    "tags": [
+      {
+        "label": "blacklist",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
+  },
 ]
