@@ -85,6 +85,7 @@ export CUSTOM_CONFIG='config in environment variables'
 
 :::caution 注意
 NoneBot 不会自发读取未被定义的配置项的环境变量，如果需要读取某一环境变量需要在 dotenv 配置文件中进行声明。
+如果希望 Nonebot 在启动时读取所有的系统环境变量，需要配置环境变量 `ENV_GREEDY_LOAD=true`
 :::
 
 ### dotenv 配置文件
@@ -630,3 +631,14 @@ nonebot.init(session_expire_timeout=120)
 
   </TabItem>
 </Tabs>
+
+### Env Greedy Load
+
+- **类型**: `bool`
+- **默认值**: `False`
+
+是否读取系统中的所有环境变量，默认关闭。
+
+未启用时，Nonebot仅会读取在 dotenv 配置文件中声明过的环境变量。
+
+如果你的 Nonebot 在 Docker 中运行，可以考虑启用。
