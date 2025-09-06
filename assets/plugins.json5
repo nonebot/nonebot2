@@ -9580,4 +9580,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_figurine",
+    "project_link": "nonebot-plugin-figurine",
+    "author_id": 99017826,
+    "tags": [
+      {
+        "label": "figurine",
+        "color": "#ea5252"
+      },
+      {
+        "label": "手办",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
