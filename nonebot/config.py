@@ -14,14 +14,15 @@ FrontMatter:
 """
 
 import abc
-from collections.abc import Mapping
+from collections.abc import Iterable, Mapping
 from datetime import timedelta
+from functools import lru_cache
 from ipaddress import IPv4Address
 import json
 import os
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Optional, Union
-from typing_extensions import TypeAlias, get_args, get_origin
+from typing_extensions import TypeAlias, get_args, get_origin, override
 
 from dotenv import dotenv_values
 from pydantic import BaseModel, Field
@@ -45,6 +46,8 @@ DOTENV_TYPE: TypeAlias = Union[
 ]
 
 ENV_FILE_SENTINEL = Path("")
+
+cachable_dotenv_values = lru_cache(maxsize=20)(dotenv_values)
 
 
 class SettingsError(ValueError): ...
@@ -79,7 +82,7 @@ class InitSettingsSource(BaseSettingsSource):
         return f"InitSettingsSource(init_kwargs={self.init_kwargs!r})"
 
 
-class DotEnvSettingsSource(BaseSettingsSource):
+class EnvSettingsSource(BaseSettingsSource):
     def __init__(
         self,
         settings_cls: type["BaseSettings"],
@@ -110,6 +113,11 @@ class DotEnvSettingsSource(BaseSettingsSource):
             else self.config.get("env_nested_delimiter", None)
         )
 
+    @abc.abstractmethod
+    def get_setting_fields(self) -> Iterable[ModelField]:
+        """获取配置类的字段信息"""
+        raise NotImplementedError
+
     def _apply_case_sensitive(self, var_name: str) -> str:
         return var_name if self.case_sensitive else var_name.lower()
 
@@ -130,7 +138,8 @@ class DotEnvSettingsSource(BaseSettingsSource):
         }
 
     def _read_env_file(self, file_path: Path) -> dict[str, Optional[str]]:
-        file_vars = dotenv_values(file_path, encoding=self.env_file_encoding)
+        file_vars = cachable_dotenv_values(file_path, encoding=self.env_file_encoding)
+        logger.trace(f"Loaded env file '{file_path}': {file_vars}")
         return self._parse_env_vars(file_vars)
 
     def _read_env_files(self) -> dict[str, Optional[str]]:
@@ -209,8 +218,8 @@ class DotEnvSettingsSource(BaseSettingsSource):
         env_file_vars = self._read_env_files()
         env_vars = {**env_file_vars, **env_vars}
 
-        for field in model_fields(self.settings_cls):
-            field_name = field.name
+        for field in self.get_setting_fields():
+            field_name = self._parse_field_name(field)
             env_name = self._apply_case_sensitive(field_name)
 
             # try get values from env vars
@@ -282,6 +291,53 @@ class DotEnvSettingsSource(BaseSettingsSource):
                 d[env_name] = env_val
 
         return d
+
+    def _parse_field_name(self, field: ModelField) -> str:
+        return field.field_info.alias or field.name
+
+
+class DotEnvSettingsSource(EnvSettingsSource):
+    def __init__(
+        self,
+        settings_cls: type["BaseSettings"],
+        env_file: Optional[DOTENV_TYPE] = ENV_FILE_SENTINEL,
+        env_file_encoding: Optional[str] = None,
+        case_sensitive: Optional[bool] = None,
+        env_nested_delimiter: Optional[str] = None,
+    ) -> None:
+        super().__init__(
+            settings_cls,
+            env_file,
+            env_file_encoding,
+            case_sensitive,
+            env_nested_delimiter,
+        )
+
+    @override
+    def get_setting_fields(self) -> Iterable[ModelField]:
+        return model_fields(self.settings_cls)
+
+
+class PluginEnvSettingsSource(EnvSettingsSource):
+    def __init__(
+        self,
+        config_cls: type[BaseModel],
+        driver_config: "Config",
+        env_file: Optional[DOTENV_TYPE] = ENV_FILE_SENTINEL,
+    ) -> None:
+        setting_config: "SettingsConfig" = model_config(driver_config.__class__)
+        super().__init__(
+            BaseSettings,
+            env_file=env_file,
+            env_file_encoding=setting_config.get("env_file_encoding", "utf-8"),
+            case_sensitive=setting_config.get("case_sensitive", False),
+            env_nested_delimiter=setting_config.get("env_nested_delimiter", None),
+        )
+        self.config_cls = config_cls
+
+    @override
+    def get_setting_fields(self) -> Iterable[ModelField]:
+        return model_fields(self.config_cls)
 
 
 if PYDANTIC_V2:  # pragma: pydantic-v2

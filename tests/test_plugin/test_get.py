@@ -1,6 +1,8 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+import pytest
 
 import nonebot
+from nonebot.compat import model_dump
 from nonebot.plugin import PluginManager, _managers
 
 
@@ -67,3 +69,30 @@ def test_get_plugin_config():
     config = nonebot.get_plugin_config(Config)
     assert isinstance(config, Config)
     assert config.plugin_config == 1
+
+
+def test_plugin_load_env_config(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setenv("TEST_CONFIG_ONE", "no_dummy_val")
+    monkeypatch.setenv("TEST_CONFIG__TWO", "two")
+    monkeypatch.setenv("TEST_CFG_THREE", "33")
+
+    class CfgTwo(BaseModel):
+        two: str = "dummy_val"
+
+    class Config(BaseModel):
+        test_config_one: str = "dummy_val"
+        test_config: CfgTwo = Field(default_factory=CfgTwo)
+        test_config_three: int = Field(alias="TEST_CFG_THREE", default=3)
+
+    global_config = nonebot.get_driver().config
+    assert "test_config_one" not in model_dump(global_config)
+    assert "TEST_CONFIG_ONE" not in model_dump(global_config)
+    assert "test_config" not in model_dump(global_config)
+    assert "TEST_CONFIG" not in model_dump(global_config)
+    assert "test_config_three" not in model_dump(global_config)
+    assert "TEST_CFG_THREE" not in model_dump(global_config)
+
+    config = nonebot.get_plugin_config(Config)
+    assert config.test_config_one == "no_dummy_val"
+    assert config.test_config.two == "two"
+    assert config.test_config_three == 33
