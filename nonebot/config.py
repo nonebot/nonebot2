@@ -297,22 +297,6 @@ class EnvSettingsSource(BaseSettingsSource):
 
 
 class DotEnvSettingsSource(EnvSettingsSource):
-    def __init__(
-        self,
-        settings_cls: type["BaseSettings"],
-        env_file: Optional[DOTENV_TYPE] = ENV_FILE_SENTINEL,
-        env_file_encoding: Optional[str] = None,
-        case_sensitive: Optional[bool] = None,
-        env_nested_delimiter: Optional[str] = None,
-    ) -> None:
-        super().__init__(
-            settings_cls,
-            env_file,
-            env_file_encoding,
-            case_sensitive,
-            env_nested_delimiter,
-        )
-
     @override
     def get_setting_fields(self) -> Iterable[ModelField]:
         return model_fields(self.settings_cls)
