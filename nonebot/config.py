@@ -329,8 +329,8 @@ class PluginEnvSettingsSource(EnvSettingsSource):
         super().__init__(
             BaseSettings,
             env_file=env_file,
-            env_file_encoding=setting_config.get("env_file_encoding", "utf-8"),
-            case_sensitive=setting_config.get("case_sensitive", False),
+            env_file_encoding=setting_config.get("env_file_encoding", None),
+            case_sensitive=setting_config.get("case_sensitive", None),
             env_nested_delimiter=setting_config.get("env_nested_delimiter", None),
         )
         self.config_cls = config_cls
