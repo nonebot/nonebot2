@@ -75,6 +75,7 @@ def test_plugin_load_env_config(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setenv("TEST_CONFIG_ONE", "no_dummy_val")
     monkeypatch.setenv("TEST_CONFIG__TWO", "two")
     monkeypatch.setenv("TEST_CFG_THREE", "33")
+    monkeypatch.setenv("CONFIG_FROM_INIT", "impossible")
 
     class CfgTwo(BaseModel):
         two: str = "dummy_val"
@@ -83,6 +84,7 @@ def test_plugin_load_env_config(monkeypatch: pytest.MonkeyPatch):
         test_config_one: str = "dummy_val"
         test_config: CfgTwo = Field(default_factory=CfgTwo)
         test_config_three: int = Field(alias="TEST_CFG_THREE", default=3)
+        config_from_init: str = "dummy_val"
 
     global_config = nonebot.get_driver().config
     assert "test_config_one" not in model_dump(global_config)
@@ -96,3 +98,4 @@ def test_plugin_load_env_config(monkeypatch: pytest.MonkeyPatch):
     assert config.test_config_one == "no_dummy_val"
     assert config.test_config.two == "two"
     assert config.test_config_three == 33
+    assert config.config_from_init == "init"

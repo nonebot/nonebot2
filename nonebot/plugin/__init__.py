@@ -46,7 +46,7 @@ from typing import Optional, TypeVar
 from pydantic import BaseModel
 
 from nonebot import get_driver
-from nonebot.compat import type_validate_python
+from nonebot.compat import model_dump, type_validate_python
 from nonebot.config import PluginEnvSettingsSource
 
 C = TypeVar("C", bound=BaseModel)
@@ -177,7 +177,8 @@ def get_plugin_config(config: type[C]) -> C:
     env_settings = PluginEnvSettingsSource(
         config, driver.config, env_file=(".env", f".env.{driver.env}")
     )
-    return type_validate_python(config, env_settings())
+    config_vars = {**env_settings(), **model_dump(driver.config)}
+    return type_validate_python(config, config_vars)
 
 
 from .load import inherit_supported_adapters as inherit_supported_adapters
