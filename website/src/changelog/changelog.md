@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 蔚蓝档案今日运势 [@noneflow](https://github.com/noneflow) ([#3653](https://github.com/nonebot/nonebot2/pull/3653))
 - Plugin: 分布式黑名单插件 [@noneflow](https://github.com/noneflow) ([#3655](https://github.com/nonebot/nonebot2/pull/3655))
 - Plugin: 图片手办化 [@noneflow](https://github.com/noneflow) ([#3662](https://github.com/nonebot/nonebot2/pull/3662))
 - Plugin: Akash Image Generator [@noneflow](https://github.com/noneflow) ([#3651](https://github.com/nonebot/nonebot2/pull/3651))
