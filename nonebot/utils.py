@@ -12,7 +12,7 @@ from collections.abc import AsyncGenerator, Coroutine, Generator, Mapping, Seque
 import contextlib
 from contextlib import AbstractContextManager, asynccontextmanager
 import dataclasses
-from functools import partial, wraps
+from functools import lru_cache, partial, wraps
 import importlib
 import inspect
 import json
@@ -345,3 +345,15 @@ def logger_wrapper(logger_name: str):
         )
 
     return log
+
+
+def cache(user_function: Callable[P, R], /) -> Callable[P, R]:
+    """等价于 `functools.cache`。为了更好的类型提示而进行重新实现
+
+    参数:
+        user_function: 需要使用缓存的待装饰函数
+
+    返回:
+        被装饰的函数
+    """
+    return lru_cache(maxsize=None)(user_function)  # pyright: ignore[reportReturnType]

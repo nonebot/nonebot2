@@ -39,7 +39,6 @@ FrontMatter:
 """
 
 from contextvars import ContextVar
-from functools import cache
 from itertools import chain
 from types import ModuleType
 from typing import Optional, TypeVar
@@ -49,6 +48,7 @@ from pydantic import BaseModel
 from nonebot import get_driver
 from nonebot.compat import type_validate_python
 from nonebot.config import PluginEnvSettingsSource
+from nonebot.utils import cache
 
 C = TypeVar("C", bound=BaseModel)
 

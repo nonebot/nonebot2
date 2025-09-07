@@ -17,7 +17,6 @@ import abc
 from collections import ChainMap
 from collections.abc import Iterable, Mapping
 from datetime import timedelta
-from functools import cache
 from ipaddress import IPv4Address
 import json
 import os
@@ -41,7 +40,7 @@ from nonebot.compat import (
 )
 from nonebot.log import logger
 from nonebot.typing import origin_is_union
-from nonebot.utils import deep_update, lenient_issubclass, type_is_complex
+from nonebot.utils import cache, deep_update, lenient_issubclass, type_is_complex
 
 DOTENV_TYPE: TypeAlias = Union[
     Path, str, list[Union[Path, str]], tuple[Union[Path, str], ...]
