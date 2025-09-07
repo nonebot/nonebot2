@@ -9628,4 +9628,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_repeat_checker",
+    "project_link": "nonebot-plugin-repeat-checker",
+    "author_id": 56631400,
+    "tags": [
+      {
+        "label": "复读",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
