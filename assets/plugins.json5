@@ -9640,4 +9640,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_quark_autosave",
+    "project_link": "nonebot-plugin-quark-autosave",
+    "author_id": 64878354,
+    "tags": [
+      {
+        "label": "quark",
+        "color": "#593dc3"
+      },
+      {
+        "label": "夸克",
+        "color": "#6542eb"
+      },
+      {
+        "label": "网盘",
+        "color": "#235c84"
+      }
+    ],
+    "is_official": false
+  },
 ]
