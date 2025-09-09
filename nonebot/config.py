@@ -14,14 +14,15 @@ FrontMatter:
 """
 
 import abc
-from collections.abc import Mapping
+from collections import ChainMap
+from collections.abc import Iterable, Mapping
 from datetime import timedelta
 from ipaddress import IPv4Address
 import json
 import os
 from pathlib import Path
 from typing import TYPE_CHECKING, Any, Optional, Union
-from typing_extensions import TypeAlias, get_args, get_origin
+from typing_extensions import TypeAlias, get_args, get_origin, override
 
 from dotenv import dotenv_values
 from pydantic import BaseModel, Field
@@ -34,11 +35,12 @@ from nonebot.compat import (
     PydanticUndefined,
     PydanticUndefinedType,
     model_config,
+    model_dump,
     model_fields,
 )
 from nonebot.log import logger
 from nonebot.typing import origin_is_union
-from nonebot.utils import deep_update, lenient_issubclass, type_is_complex
+from nonebot.utils import cache, deep_update, lenient_issubclass, type_is_complex
 
 DOTENV_TYPE: TypeAlias = Union[
     Path, str, list[Union[Path, str]], tuple[Union[Path, str], ...]
@@ -79,26 +81,14 @@ class InitSettingsSource(BaseSettingsSource):
         return f"InitSettingsSource(init_kwargs={self.init_kwargs!r})"
 
 
-class DotEnvSettingsSource(BaseSettingsSource):
+class EnvSettingsSource(BaseSettingsSource):
     def __init__(
         self,
         settings_cls: type["BaseSettings"],
-        env_file: Optional[DOTENV_TYPE] = ENV_FILE_SENTINEL,
-        env_file_encoding: Optional[str] = None,
         case_sensitive: Optional[bool] = None,
         env_nested_delimiter: Optional[str] = None,
     ) -> None:
         super().__init__(settings_cls)
-        self.env_file = (
-            env_file
-            if env_file is not ENV_FILE_SENTINEL
-            else self.config.get("env_file", (".env",))
-        )
-        self.env_file_encoding = (
-            env_file_encoding
-            if env_file_encoding is not None
-            else self.config.get("env_file_encoding", "utf-8")
-        )
         self.case_sensitive = (
             case_sensitive
             if case_sensitive is not None
@@ -109,6 +99,26 @@ class DotEnvSettingsSource(BaseSettingsSource):
             if env_nested_delimiter is not None
             else self.config.get("env_nested_delimiter", None)
         )
+
+    @property
+    @abc.abstractmethod
+    def config_id(self) -> str:
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_env_vars(self) -> Mapping[str, Optional[str]]:
+        """获取环境变量映射"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_setting_fields(self) -> Iterable[ModelField]:
+        """获取配置类的字段信息"""
+        raise NotImplementedError
+
+    @abc.abstractmethod
+    def get_remain_config(self, used_env_vars: set[str]) -> Iterable[str]:
+        """获取剩余的用户自定义配置项名称"""
+        raise NotImplementedError
 
     def _apply_case_sensitive(self, var_name: str) -> str:
         return var_name if self.case_sensitive else var_name.lower()
@@ -129,25 +139,6 @@ class DotEnvSettingsSource(BaseSettingsSource):
             self._apply_case_sensitive(key): value for key, value in env_vars.items()
         }
 
-    def _read_env_file(self, file_path: Path) -> dict[str, Optional[str]]:
-        file_vars = dotenv_values(file_path, encoding=self.env_file_encoding)
-        return self._parse_env_vars(file_vars)
-
-    def _read_env_files(self) -> dict[str, Optional[str]]:
-        env_files = self.env_file
-        if env_files is None:
-            return {}
-
-        if isinstance(env_files, (str, os.PathLike)):
-            env_files = [env_files]
-
-        dotenv_vars: dict[str, Optional[str]] = {}
-        for env_file in env_files:
-            env_path = Path(env_file).expanduser()
-            if env_path.is_file():
-                dotenv_vars.update(self._read_env_file(env_path))
-        return dotenv_vars
-
     def _next_field(
         self, field: Optional[ModelField], key: str
     ) -> Optional[ModelField]:
@@ -162,8 +153,8 @@ class DotEnvSettingsSource(BaseSettingsSource):
     def _explode_env_vars(
         self,
         field: ModelField,
-        env_vars: dict[str, Optional[str]],
-        env_file_vars: dict[str, Optional[str]],
+        env_vars: Mapping[str, Optional[str]],
+        used_env_vars: set[str],
     ) -> dict[str, Any]:
         if self.env_nested_delimiter is None:
             return {}
@@ -174,8 +165,8 @@ class DotEnvSettingsSource(BaseSettingsSource):
             if not env_name.startswith(prefix):
                 continue
 
-            # delete from file vars when used
-            env_file_vars.pop(env_name, None)
+            # record vars when used
+            used_env_vars.add(env_name)
 
             _, *keys, last_key = env_name.split(self.env_nested_delimiter)
             env_var = result
@@ -205,26 +196,24 @@ class DotEnvSettingsSource(BaseSettingsSource):
 
         d: dict[str, Any] = {}
 
-        env_vars = self._parse_env_vars(os.environ)
-        env_file_vars = self._read_env_files()
-        env_vars = {**env_file_vars, **env_vars}
+        env_vars = self.get_env_vars()
+        used_env_vars = set[str]()
 
-        for field in model_fields(self.settings_cls):
-            field_name = field.name
+        for field in self.get_setting_fields():
+            field_name = self._parse_field_name(field)
             env_name = self._apply_case_sensitive(field_name)
 
             # try get values from env vars
             env_val = env_vars.get(env_name, PydanticUndefined)
-            # delete from file vars when used
-            if env_name in env_file_vars:
-                del env_file_vars[env_name]
+            # record vars when used
+            used_env_vars.add(env_name)
 
             is_complex, allow_parse_failure = self._field_is_complex(field)
             if is_complex:
                 if isinstance(env_val, PydanticUndefinedType):
                     # field is complex but no value found so far, try explode_env_vars
                     if env_val_built := self._explode_env_vars(
-                        field, env_vars, env_file_vars
+                        field, env_vars, used_env_vars
                     ):
                         d[field_name] = env_val_built
                 elif env_val is None:
@@ -245,7 +234,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
                         # try explode_env_vars to find more sub-values
                         d[field_name] = deep_update(
                             env_val,
-                            self._explode_env_vars(field, env_vars, env_file_vars),
+                            self._explode_env_vars(field, env_vars, used_env_vars),
                         )
                     else:
                         d[field_name] = env_val
@@ -255,7 +244,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
                 d[field_name] = env_val
 
         # remain user custom config
-        for env_name in env_file_vars:
+        for env_name in self.get_remain_config(used_env_vars):
             env_val = env_vars[env_name]
             if env_val and (val_striped := env_val.strip()):
                 # there's a value, decode that as JSON
@@ -281,7 +270,124 @@ class DotEnvSettingsSource(BaseSettingsSource):
             elif not nested_keys:
                 d[env_name] = env_val
 
+        logger.debug(f"{self.config_id} loaded config from env: {d}")
         return d
+
+    def _parse_field_name(self, field: ModelField) -> str:
+        return field.field_info.alias or field.name
+
+
+class DotEnvSettingsSource(EnvSettingsSource):
+    def __init__(
+        self,
+        settings_cls: type["BaseSettings"],
+        env_file: Optional[DOTENV_TYPE] = ENV_FILE_SENTINEL,
+        env_file_encoding: Optional[str] = None,
+        case_sensitive: Optional[bool] = None,
+        env_nested_delimiter: Optional[str] = None,
+    ) -> None:
+        super().__init__(settings_cls, case_sensitive, env_nested_delimiter)
+        self.env_file = (
+            env_file
+            if env_file is not ENV_FILE_SENTINEL
+            else self.config.get("env_file", (".env",))
+        )
+        self.env_file_encoding = (
+            env_file_encoding
+            if env_file_encoding is not None
+            else self.config.get("env_file_encoding", "utf-8")
+        )
+
+    def _read_env_file(self, file_path: Path) -> dict[str, Optional[str]]:
+        file_vars = dotenv_values(file_path, encoding=self.env_file_encoding)
+        logger.warning(f"Loaded env file '{file_path}': {file_vars}")
+        return self._parse_env_vars(file_vars)
+
+    @cache
+    def _read_env_files(self) -> dict[str, Optional[str]]:
+        env_files = self.env_file
+        if env_files is None:
+            return {}
+
+        if isinstance(env_files, (str, os.PathLike)):
+            env_files = [env_files]
+
+        dotenv_vars: dict[str, Optional[str]] = {}
+        for env_file in env_files:
+            env_path = Path(env_file).expanduser()
+            if env_path.is_file():
+                dotenv_vars.update(self._read_env_file(env_path))
+        return dotenv_vars
+
+    @property
+    @override
+    def config_id(self) -> str:
+        return (
+            f"{self.__class__.__name__}"
+            f"({self.settings_cls.__module__}.{self.settings_cls.__name__})"
+        )
+
+    @override
+    def get_setting_fields(self) -> Iterable[ModelField]:
+        return model_fields(self.settings_cls)
+
+    @override
+    def get_env_vars(self) -> Mapping[str, Optional[str]]:
+        env_vars = self._parse_env_vars(os.environ)
+        env_file_vars = self._read_env_files()
+        return ChainMap(env_vars, env_file_vars)
+
+    @override
+    def get_remain_config(self, used_env_vars: set[str]) -> Iterable[str]:
+        return (
+            env_var
+            for env_var in self._read_env_files()
+            if env_var not in used_env_vars
+        )
+
+
+class PluginEnvSettingsSource(EnvSettingsSource):
+    def __init__(
+        self,
+        config_cls: type[BaseModel],
+        driver_config: "Config",
+    ) -> None:
+        setting_config: "SettingsConfig" = model_config(driver_config.__class__)
+        super().__init__(
+            BaseSettings,
+            case_sensitive=setting_config.get("case_sensitive", None),
+            env_nested_delimiter=setting_config.get("env_nested_delimiter", None),
+        )
+        self.config_cls = config_cls
+        self.driver_config = model_dump(driver_config)
+
+    @property
+    @override
+    def config_id(self) -> str:
+        return (
+            f"{self.__class__.__name__}"
+            f"({self.config_cls.__module__}.{self.config_cls.__name__})"
+        )
+
+    @override
+    def get_setting_fields(self) -> Iterable[ModelField]:
+        return model_fields(self.config_cls)
+
+    @override
+    def get_env_vars(self) -> Mapping[str, Optional[str]]:
+        env_vars = self._parse_env_vars(os.environ)
+        return ChainMap(self.driver_config, env_vars)
+
+    @override
+    def get_remain_config(self, used_env_vars: set[str]) -> Iterable[str]:
+        return (
+            name
+            for name in (
+                self._apply_case_sensitive(self._parse_field_name(f))
+                for f in model_fields(self.config_cls)
+            )
+            if name not in used_env_vars
+        )
 
 
 if PYDANTIC_V2:  # pragma: pydantic-v2
