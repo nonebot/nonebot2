@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 谁是卧底小游戏 [@noneflow](https://github.com/noneflow) ([#3629](https://github.com/nonebot/nonebot2/pull/3629))
 - Plugin: 夸克自动转存 [@noneflow](https://github.com/noneflow) ([#3671](https://github.com/nonebot/nonebot2/pull/3671))
 - Plugin: 禁止复读 [@noneflow](https://github.com/noneflow) ([#3644](https://github.com/nonebot/nonebot2/pull/3644))
 - Plugin: 蔚蓝档案今日运势 [@noneflow](https://github.com/noneflow) ([#3653](https://github.com/nonebot/nonebot2/pull/3653))
