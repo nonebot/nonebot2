@@ -9676,4 +9676,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_dst_qq",
+    "project_link": "nonebot-plugin-dst-qq",
+    "author_id": 145603392,
+    "tags": [
+      {
+        "label": "server",
+        "color": "#52ea9d"
+      }
+    ],
+    "is_official": false
+  },
 ]
