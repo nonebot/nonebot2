@@ -22,6 +22,8 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 复盘打卡 [@noneflow](https://github.com/noneflow) ([#3681](https://github.com/nonebot/nonebot2/pull/3681))
+- Plugin: DMP 饥荒管理平台机器人 [@noneflow](https://github.com/noneflow) ([#3616](https://github.com/nonebot/nonebot2/pull/3616))
 - Plugin: 谁是卧底小游戏 [@noneflow](https://github.com/noneflow) ([#3629](https://github.com/nonebot/nonebot2/pull/3629))
 - Plugin: 夸克自动转存 [@noneflow](https://github.com/noneflow) ([#3671](https://github.com/nonebot/nonebot2/pull/3671))
 - Plugin: 禁止复读 [@noneflow](https://github.com/noneflow) ([#3644](https://github.com/nonebot/nonebot2/pull/3644))
