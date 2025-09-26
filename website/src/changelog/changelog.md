@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 言令 [@noneflow](https://github.com/noneflow) ([#3675](https://github.com/nonebot/nonebot2/pull/3675))
 - Plugin: 算法比赛助手 [@noneflow](https://github.com/noneflow) ([#3672](https://github.com/nonebot/nonebot2/pull/3672))
 - Plugin: 复盘打卡 [@noneflow](https://github.com/noneflow) ([#3681](https://github.com/nonebot/nonebot2/pull/3681))
 - Plugin: DMP 饥荒管理平台机器人 [@noneflow](https://github.com/noneflow) ([#3616](https://github.com/nonebot/nonebot2/pull/3616))
