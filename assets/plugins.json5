@@ -9688,4 +9688,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_fupan",
+    "project_link": "nonebot-plugin-fupan",
+    "author_id": 867749,
+    "tags": [
+      {
+        "label": "股票",
+        "color": "#ea5252"
+      },
+      {
+        "label": "打卡",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
