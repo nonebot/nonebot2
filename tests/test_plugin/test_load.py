@@ -93,6 +93,8 @@ def test_load_json():
 
 @_recover
 def test_load_toml():
+    nonebot.load_from_toml("./plugins.legacy.toml")
+
     nonebot.load_from_toml("./plugins.toml")
 
     with pytest.raises(ValueError, match="Cannot find"):
