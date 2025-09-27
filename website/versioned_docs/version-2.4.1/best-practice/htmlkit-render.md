@@ -28,7 +28,7 @@ nb plugin install nonebot-plugin-htmlkit
 
 如果需要访问 http(s) 链接，NoneBot 需要客户端型驱动器（Forward）。内置的驱动器有 `~httpx` 与 `~aiohttp`。
 
-详见[选择驱动器](../advanced/driver.md#选择驱动器)。
+详见[选择驱动器](../advanced/driver.md)。
 
 :::
 
