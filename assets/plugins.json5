@@ -9732,4 +9732,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_htmlkit",
+    "project_link": "nonebot-plugin-htmlkit",
+    "author_id": 50769752,
+    "tags": [
+      {
+        "label": "模板渲染",
+        "color": "#a57021"
+      },
+      {
+        "label": "图片生成",
+        "color": "#74c817"
+      },
+      {
+        "label": "HTML渲染",
+        "color": "#199579"
+      }
+    ],
+    "is_official": false
+  },
 ]
