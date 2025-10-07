@@ -1,15 +1,17 @@
 ---
 sidebar_position: 8
-description: 基于 HTML 和 CSS 语法的轻量化绘图
+description: 轻量化 HTML 绘图
 ---
 
-# 基于 HTML 和 CSS 语法的轻量化绘图
+# 轻量化 HTML 绘图
 
 图片是机器人交互中不可或缺的一部分，对于信息展示的直观性、美观性有很大的作用。
 基于 PIL 直接绘制图片具有良好的性能和存储开销，但是难以调试、维护过程式的绘图代码。
-使用社区提供的基于 `playwright` 的 `htmlrender` 插件可以通过调用浏览器方便地从 HTML 和 CSS 绘制图片，且能够直接通过 JS 对网页效果进行编程，但是它占用的存储和内存空间相对可观。
+使用浏览器渲染类插件可以方便地绘制网页，且能够直接通过 JS 对网页效果进行编程，但是它占用的存储和内存空间相对可观。
 
-NoneBot 提供的 `nonebot-plugin-htmlkit` 提供了另一种基于 HTML 和 CSS 语法的轻量化绘图选择：它基于 `litehtml` 解析库，无须安装额外的依赖即可使用，没有进程间通信带来的额外开销，且安装用的 wheel 文件大小仅有约 5 MB 大小。
+NoneBot 提供的 `nonebot-plugin-htmlkit` 提供了另一种基于 HTML 和 CSS 语法的轻量化绘图选择：它基于 `litehtml` 解析库，无须安装额外的依赖即可使用，没有进程间通信带来的额外开销，且在支持 `webp` `avif` 等丰富图片格式的前提下，安装用的 wheel 文件大小仅有约 10 MB。
+
+作为粗略的性能参考，在一台 Ryzen 7 9700X 的 Windows 电脑上，渲染 [PEP 7](https://peps.python.org/pep-0007/) 的 HTML 页面（分辨率为 800x5788，大小约 1.4MB，从本地文件系统读取 CSS）大约需要 100ms，每个渲染任务内存最高占用约为 40MB.
 
 ## 安装插件
 
@@ -22,11 +24,16 @@ NoneBot 提供的 `nonebot-plugin-htmlkit` 提供了另一种基于 HTML 和 CSS
 nb plugin install nonebot-plugin-htmlkit
 ```
 
-`nonebot-plugin-htmlkit` 插件兼容 Windows x64, macOS arm64, manylinux x64 与 manylinux arm64 系统架构。
+`nonebot-plugin-htmlkit` 插件目前兼容以下系统架构：
+
+- Windows x64
+- macOS arm64（M-系列芯片）
+- Linux x64 （非 Alpine 等 musl 系发行版）
+- Linux arm64 （非 Alpine 等 musl 系发行版）
 
 :::caution 访问网络内容
 
-如果需要访问 http(s) 链接，NoneBot 需要客户端型驱动器（Forward）。内置的驱动器有 `~httpx` 与 `~aiohttp`。
+如果需要访问网络资源（如 http(s) 网页内容），NoneBot 需要客户端型驱动器（Forward）。内置的驱动器有 `~httpx` 与 `~aiohttp`。
 
 详见[选择驱动器](../advanced/driver.md)。
 
@@ -52,6 +59,8 @@ from nonebot_plugin_htmlkit import html_to_pic, md_to_pic, template_to_pic, text
 
 `nonebot-plugin-htmlkit` 主要提供以下**异步**渲染函数：
 
+#### html_to_pic
+
 ``` python
 async def html_to_pic(
     html: str,
@@ -70,7 +79,8 @@ async def html_to_pic(
     img_fetch_fn: ImgFetchFn = combined_img_fetcher,
     css_fetch_fn: CSSFetchFn = combined_css_fetcher,
     urljoin_fn: Callable[[str, str], str] = urllib3.parse.urljoin,
-) -> bytes
+) -> bytes:
+    ...
 ```
 
 最核心的渲染函数。
@@ -87,6 +97,8 @@ async def html_to_pic(
 
 以下为辅助的封装函数，关键字参数若未特殊说明均与 `html_to_pic` 含义相同。
 
+#### text_to_pic
+
 ```python
 async def text_to_pic(
     text: str,
@@ -96,12 +108,15 @@ async def text_to_pic(
     allow_refit: bool = True,
     image_format: Literal["png", "jpeg"] = "png",
     jpeg_quality: int = 100,
-) -> bytes
+) -> bytes:
+    ...
 ```
 
 可用于渲染多行文本。
 
 `text` 会被放置于 `<div id="main" class="main-box"> <div class="text">` 中，可据此编写 CSS 来改变文本表现。
+
+#### md_to_pic
 
 ```python
 async def md_to_pic(
@@ -114,16 +129,19 @@ async def md_to_pic(
     allow_refit: bool = True,
     image_format: Literal["png", "jpeg"] = "png",
     jpeg_quality: int = 100,
-) -> bytes
+) -> bytes:
+    ...
 ```
 
 可用于渲染 Markdown 文本。默认为 GitHub Markdown Light 风格，支持基于 `pygments` 的代码高亮。
 
 `md` 和 `md_path` 二选一，前者设置时应为 Markdown 的文本，后者设置时应为指向 Markdown 文本文件的路径。
 
+#### template_to_pic
+
 ```python
 async def template_to_pic(
-    template_path: str,
+    template_path: str | PathLike[str] | Sequence[str | PathLike[str]],
     template_name: str,
     templates: Mapping[Any, Any],
     filters: None | Mapping[str, Any] = None,
@@ -136,7 +154,8 @@ async def template_to_pic(
     allow_refit: bool = True,
     image_format: Literal["png", "jpeg"] = "png",
     jpeg_quality: int = 100,
-) -> bytes
+) -> bytes:
+    ...
 ```
 
 渲染 jinja2 模板。
