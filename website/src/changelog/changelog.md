@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 怪物猎人集会码插件 [@noneflow](https://github.com/noneflow) ([#3684](https://github.com/nonebot/nonebot2/pull/3684))
 - Plugin: nonebot-plugin-htmlkit [@noneflow](https://github.com/noneflow) ([#3695](https://github.com/nonebot/nonebot2/pull/3695))
 - Plugin: 言令 [@noneflow](https://github.com/noneflow) ([#3675](https://github.com/nonebot/nonebot2/pull/3675))
 - Plugin: 算法比赛助手 [@noneflow](https://github.com/noneflow) ([#3672](https://github.com/nonebot/nonebot2/pull/3672))
