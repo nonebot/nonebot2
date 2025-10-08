@@ -111,16 +111,20 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> set[Plugin]:
         encoding: 指定 toml 文件编码
 
     用法:
+        新格式:
+
         ```toml title=pyproject.toml
-        ### 新格式
         [tool.nonebot]
         plugin_dirs = ["some_dir"]
 
         [tool.nonebot.plugins]
         some-store-plugin = ["some_store_plugin"]
         "@local" = ["some_local_plugin"]
+        ```
 
-        ### 旧格式
+        旧格式:
+
+        ```toml title=pyproject.toml
         [tool.nonebot]
         plugins = ["some_plugin"]
         plugin_dirs = ["some_dir"]
