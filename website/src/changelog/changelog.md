@@ -7,8 +7,13 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 更新 NB-CLI 新版插件加载格式与文档 [@NCBM](https://github.com/NCBM) ([#3614](https://github.com/nonebot/nonebot2/pull/3614))
+
 ### 📝 文档
 
+- Feature: 更新 NB-CLI 新版插件加载格式与文档 [@NCBM](https://github.com/NCBM) ([#3614](https://github.com/nonebot/nonebot2/pull/3614))
 - Docs: 添加 htmlkit 文档至最佳实践 [@BlueGlassBlock](https://github.com/BlueGlassBlock) ([#3682](https://github.com/nonebot/nonebot2/pull/3682))
 - Docs: 修复 userinfo 插件链接 [@XieXiLin2](https://github.com/XieXiLin2) ([#3660](https://github.com/nonebot/nonebot2/pull/3660))
 - Docs: 升级 docusaurus 3.8.1 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3649](https://github.com/nonebot/nonebot2/pull/3649))
