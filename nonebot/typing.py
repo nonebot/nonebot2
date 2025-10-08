@@ -89,7 +89,7 @@ def origin_is_annotated(origin: t.Optional[type[t.Any]]) -> bool:
     return origin is t_ext.Annotated
 
 
-NONE_TYPES = {None, type(None), t.Literal[None], t_ext.Literal[None]}  # noqa: PYI016
+NONE_TYPES = {None, type(None), None, None}
 if sys.version_info >= (3, 10):
     NONE_TYPES.add(types.NoneType)
 
