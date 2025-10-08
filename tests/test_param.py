@@ -42,6 +42,10 @@ UNKNOWN_PARAM = "Unknown parameter"
 
 
 @pytest.mark.anyio
+@pytest.mark.xfail(
+    ((3, 13) <= sys.version_info < (3, 13, 8)) or (3, 14) <= sys.version_info,
+    reason="CPython Bug, see python/cpython#137317, python/cpython#137862",
+)
 async def test_depend(app: App):
     from plugins.param.param_depend import (
         ClassDependency,
