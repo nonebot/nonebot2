@@ -8,11 +8,13 @@ FrontMatter:
 """
 
 from collections.abc import Iterable
+from itertools import chain
 import json
 from pathlib import Path
 from types import ModuleType
 from typing import Optional, Union
 
+from nonebot.log import logger
 from nonebot.utils import path_to_module_name
 
 from . import _managers, _module_name_to_plugin_id, get_plugin
@@ -108,6 +110,19 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> set[Plugin]:
         encoding: 指定 toml 文件编码
 
     用法:
+        新格式:
+
+        ```toml title=pyproject.toml
+        [tool.nonebot]
+        plugin_dirs = ["some_dir"]
+
+        [tool.nonebot.plugins]
+        some-store-plugin = ["some_store_plugin"]
+        "@local" = ["some_local_plugin"]
+        ```
+
+        旧格式:
+
         ```toml title=pyproject.toml
         [tool.nonebot]
         plugins = ["some_plugin"]
@@ -126,11 +141,22 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> set[Plugin]:
         raise ValueError("Cannot find '[tool.nonebot]' in given toml file!")
     if not isinstance(nonebot_data, dict):
         raise TypeError("'[tool.nonebot]' must be a Table!")
-    plugins = nonebot_data.get("plugins", [])
+    plugins = nonebot_data.get("plugins", {})
     plugin_dirs = nonebot_data.get("plugin_dirs", [])
-    assert isinstance(plugins, list), "plugins must be a list of plugin name"
+    assert isinstance(plugins, (list, dict)), (
+        "plugins must be a list or a dict of plugin name"
+    )
     assert isinstance(plugin_dirs, list), "plugin_dirs must be a list of directories"
-    return load_all_plugins(plugins, plugin_dirs)
+    if isinstance(plugins, list):
+        logger.warning("Legacy project format found! Upgrade with `nb upgrade-format`.")
+    return load_all_plugins(
+        set(
+            chain.from_iterable(plugins.values())
+            if isinstance(plugins, dict)
+            else plugins
+        ),
+        plugin_dirs,
+    )
 
 
 def load_builtin_plugin(name: str) -> Optional[Plugin]:

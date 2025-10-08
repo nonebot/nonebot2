@@ -189,12 +189,16 @@ nonebot.load_from_json("plugin_config.json", encoding="utf-8")
 
 ### `load_from_toml`
 
-通过 TOML 文件加载插件，是 [`load_all_plugins`](#load_all_plugins) 的 TOML 变种。通过读取 TOML 文件中的 `[tool.nonebot]` Table 中的 `plugins` 和 `plugin_dirs` Array 进行加载。例如：
+通过 TOML 文件加载插件，是 [`load_all_plugins`](#load_all_plugins) 的 TOML 变种。通过读取 TOML 文件中的 `[tool.nonebot]` Table 中的 `plugin_dirs` Array 与
+`[tool.nonebot.plugins]` Table 中的多个 Array 进行加载。例如：
 
 ```toml title=plugin_config.toml
 [tool.nonebot]
-plugins = ["path.to.your.plugin"]
 plugin_dirs = ["path/to/your/plugins"]
+
+[tool.nonebot.plugins]
+"@local" = ["path.to.your.plugin"]  # 本地插件等非插件商店来源的插件
+"nonebot-plugin-someplugin" = ["nonebot_plugin_someplugin"]  # 插件商店来源的插件
 ```
 
 ```python

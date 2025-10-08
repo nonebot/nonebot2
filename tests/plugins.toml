@@ -1,3 +1,5 @@
 [tool.nonebot]
-plugins = []
 plugin_dirs = []
+
+[tool.nonebot.plugins]
+"@local" = []
