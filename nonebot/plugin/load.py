@@ -8,9 +8,8 @@ FrontMatter:
 """
 
 from collections.abc import Iterable
-import functools
+from itertools import chain
 import json
-import operator
 from pathlib import Path
 from types import ModuleType
 from typing import Optional, Union
@@ -152,7 +151,7 @@ def load_from_toml(file_path: str, encoding: str = "utf-8") -> set[Plugin]:
         logger.warning("Legacy project format found! Upgrade with `nb upgrade-format`.")
     return load_all_plugins(
         set(
-            functools.reduce(operator.iadd, plugins.values(), [])
+            chain.from_iterable(plugins.values())
             if isinstance(plugins, dict)
             else plugins
         ),
