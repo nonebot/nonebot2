@@ -9764,4 +9764,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_funticon",
+    "project_link": "nonebot_plugin_funticon",
+    "author_id": 178790876,
+    "tags": [],
+    "is_official": false
+  },
 ]
