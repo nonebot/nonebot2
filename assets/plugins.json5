@@ -9764,4 +9764,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_parser",
+    "project_link": "nonebot-plugin-parser",
+    "author_id": 64878354,
+    "tags": [
+      {
+        "label": "图集",
+        "color": "#263bd5"
+      },
+      {
+        "label": "视频",
+        "color": "#152ac0"
+      },
+      {
+        "label": "解析",
+        "color": "#152ac0"
+      }
+    ],
+    "is_official": false
+  },
 ]
