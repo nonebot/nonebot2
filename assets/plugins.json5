@@ -9750,7 +9750,7 @@
         "color": "#199579"
       }
     ],
-    "is_official": false
+    "is_official": true
   },
   {
     "module_name": "nonebot_plugin_mhcodes",
