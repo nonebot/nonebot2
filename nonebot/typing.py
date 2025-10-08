@@ -89,7 +89,7 @@ def origin_is_annotated(origin: t.Optional[type[t.Any]]) -> bool:
     return origin is t_ext.Annotated
 
 
-NONE_TYPES = {None, type(None), t.Literal[None], t_ext.Literal[None]}  # noqa: PYI061
+NONE_TYPES = {None, type(None), t.Literal[None], t_ext.Literal[None]}
 if sys.version_info >= (3, 10):
     NONE_TYPES.add(types.NoneType)
 
@@ -104,6 +104,7 @@ if sys.version_info < (3, 12):
     def is_type_alias_type(type_: type[t.Any]) -> bool:
         """判断是否是 TypeAliasType 类型"""
         return isinstance(type_, t_ext.TypeAliasType)
+
 else:
 
     def is_type_alias_type(type_: type[t.Any]) -> bool:
