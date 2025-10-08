@@ -9784,4 +9784,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_comment_analysis",
+    "project_link": "nonebot-plugin-comment-analysis",
+    "author_id": 113231410,
+    "tags": [
+      {
+        "label": "ai分析",
+        "color": "#52c5ea"
+      },
+      {
+        "label": "弹幕评论",
+        "color": "#eb0e31"
+      }
+    ],
+    "is_official": false
+  },
 ]
