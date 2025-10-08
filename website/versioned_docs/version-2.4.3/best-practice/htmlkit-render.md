@@ -15,7 +15,6 @@ NoneBot 提供的 `nonebot-plugin-htmlkit` 提供了另一种基于 HTML 和 CSS
 
 ## 安装插件
 
-
 在使用前请先安装 `nonebot-plugin-htmlkit` 插件至项目环境中，可参考[获取商店插件](../tutorial/store.mdx#安装插件)来了解并选择安装插件的方式。如：
 
 在**项目目录**下执行以下命令：
@@ -61,7 +60,7 @@ from nonebot_plugin_htmlkit import html_to_pic, md_to_pic, template_to_pic, text
 
 #### html_to_pic
 
-``` python
+```python
 async def html_to_pic(
     html: str,
     *,

@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 添加 htmlkit 文档至最佳实践 [@BlueGlassBlock](https://github.com/BlueGlassBlock) ([#3682](https://github.com/nonebot/nonebot2/pull/3682))
 - Docs: 修复 userinfo 插件链接 [@XieXiLin2](https://github.com/XieXiLin2) ([#3660](https://github.com/nonebot/nonebot2/pull/3660))
 - Docs: 升级 docusaurus 3.8.1 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3649](https://github.com/nonebot/nonebot2/pull/3649))
 - Docs: 更新文档《手动创建项目》 [@Chen-Luan](https://github.com/Chen-Luan) ([#3623](https://github.com/nonebot/nonebot2/pull/3623))
