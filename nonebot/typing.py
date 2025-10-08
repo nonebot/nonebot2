@@ -104,6 +104,7 @@ if sys.version_info < (3, 12):
     def is_type_alias_type(type_: type[t.Any]) -> bool:
         """判断是否是 TypeAliasType 类型"""
         return isinstance(type_, t_ext.TypeAliasType)
+
 else:
 
     def is_type_alias_type(type_: type[t.Any]) -> bool:
