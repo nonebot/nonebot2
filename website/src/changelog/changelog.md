@@ -29,6 +29,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: kook卡片消息编写适配插件 [@noneflow](https://github.com/noneflow) ([#3708](https://github.com/nonebot/nonebot2/pull/3708))
 - Plugin: 链接分享自动解析 [@noneflow](https://github.com/noneflow) ([#3706](https://github.com/nonebot/nonebot2/pull/3706))
 - Plugin: 怪物猎人集会码插件 [@noneflow](https://github.com/noneflow) ([#3684](https://github.com/nonebot/nonebot2/pull/3684))
 - Plugin: nonebot-plugin-htmlkit [@noneflow](https://github.com/noneflow) ([#3695](https://github.com/nonebot/nonebot2/pull/3695))
