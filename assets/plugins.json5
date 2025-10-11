@@ -9824,4 +9824,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_memory",
+    "project_link": "nonebot-plugin-memory",
+    "author_id": 175703143,
+    "tags": [
+      {
+        "label": "log",
+        "color": "#336daf"
+      },
+      {
+        "label": "func",
+        "color": "#5bd0a2"
+      }
+    ],
+    "is_official": false
+  },
 ]
