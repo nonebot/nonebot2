@@ -29,6 +29,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 远程文件打开 [@noneflow](https://github.com/noneflow) ([#3717](https://github.com/nonebot/nonebot2/pull/3717))
 - Plugin: MC新闻更新检测 [@noneflow](https://github.com/noneflow) ([#3699](https://github.com/nonebot/nonebot2/pull/3699))
 - Plugin: kook卡片消息编写适配插件 [@noneflow](https://github.com/noneflow) ([#3708](https://github.com/nonebot/nonebot2/pull/3708))
 - Plugin: 链接分享自动解析 [@noneflow](https://github.com/noneflow) ([#3706](https://github.com/nonebot/nonebot2/pull/3706))
