@@ -9796,4 +9796,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_mcnews",
+    "project_link": "nonebot-plugin-mcnews",
+    "author_id": 110646806,
+    "tags": [
+      {
+        "label": "MC",
+        "color": "#52e7ea"
+      },
+      {
+        "label": "新闻",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
