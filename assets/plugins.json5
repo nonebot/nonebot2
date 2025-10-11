@@ -9840,4 +9840,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_pxchat",
+    "project_link": "nonebot-plugin-pxchat",
+    "author_id": 112293881,
+    "tags": [
+      {
+        "label": "chat",
+        "color": "#52eab7"
+      },
+      {
+        "label": "deepseek",
+        "color": "#52ddea"
+      },
+      {
+        "label": "mcp",
+        "color": "#5292ea"
+      }
+    ],
+    "is_official": false
+  },
 ]
