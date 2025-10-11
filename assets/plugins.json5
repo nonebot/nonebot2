@@ -9812,4 +9812,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot-plugin-msglogger",
+    "project_link": "nonebot-plugin-msglogger",
+    "author_id": 71204348,
+    "tags": [
+      {
+        "label": "消息记录",
+        "color": "#eb1919"
+      },
+      {
+        "label": "群信息记录",
+        "color": "#633fef"
+      },
+      {
+        "label": "图片保存",
+        "color": "#0af70a"
+      }
+    ],
+    "is_official": false
+  },
 ]
