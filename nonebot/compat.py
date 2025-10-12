@@ -302,7 +302,7 @@ else:  # pragma: pydantic-v1
 
         @classmethod
         def _inherit_construct(
-            cls, field_info: Optional[FieldInfo] = None, **kwargs: Any
+            cls, field_info: Optional[BaseFieldInfo] = None, **kwargs: Any
         ):
             if field_info:
                 init_kwargs = {
