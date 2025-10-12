@@ -17,7 +17,7 @@ import anyio
 from exceptiongroup import BaseExceptionGroup, catch
 from pydantic.fields import FieldInfo as PydanticFieldInfo
 
-from nonebot.compat import FieldInfo, ModelField, PydanticUndefined, extract_field_info
+from nonebot.compat import FieldInfo, ModelField, PydanticUndefined
 from nonebot.consts import ARG_KEY, REJECT_PROMPT_RESULT_KEY
 from nonebot.dependencies import Dependent, Param
 from nonebot.dependencies.utils import check_field_type
@@ -194,15 +194,12 @@ class DependParam(Param):
         use_cache: bool,
         validate: Union[bool, PydanticFieldInfo],
     ) -> Self:
-        kwargs = {}
-        if isinstance(validate, PydanticFieldInfo):
-            kwargs.update(extract_field_info(validate))
-
-        kwargs["validate"] = bool(validate)
-        kwargs["dependent"] = sub_dependent
-        kwargs["use_cache"] = use_cache
-
-        return cls(**kwargs)
+        return cls._inherit_construct(
+            validate if isinstance(validate, PydanticFieldInfo) else None,
+            dependent=sub_dependent,
+            use_cache=use_cache,
+            validate=bool(validate),
+        )
 
     @classmethod
     @override

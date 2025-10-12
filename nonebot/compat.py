@@ -55,7 +55,6 @@ __all__ = (
     "Required",
     "TypeAdapter",
     "custom_validation",
-    "extract_field_info",
     "field_validator",
     "model_config",
     "model_dump",
@@ -95,7 +94,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
     DEFAULT_CONFIG = ConfigDict(extra="allow", arbitrary_types_allowed=True)
     """Default config for validations"""
 
-    class FieldInfo(BaseFieldInfo):
+    class FieldInfo(BaseFieldInfo):  # pyright: ignore[reportGeneralTypeIssues]
         """FieldInfo class with extra property for compatibility with pydantic v1"""
 
         # make default can be positional argument
@@ -114,6 +113,20 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             # https://peps.python.org/pep-0709/
             slots = super().__slots__
             return {k: v for k, v in self._attributes_set.items() if k not in slots}
+
+        @classmethod
+        def _inherit_construct(
+            cls, field_info: Optional[BaseFieldInfo] = None, **kwargs: Any
+        ) -> Self:
+            init_kwargs = {}
+            if field_info:
+                init_kwargs.update(field_info._attributes_set)
+            init_kwargs.update(kwargs)
+
+            instance = cls(**init_kwargs)
+            if field_info:
+                instance.metadata = field_info.metadata
+            return instance
 
     @dataclass
     class ModelField:
@@ -187,13 +200,6 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             """Validate the value pass to the field."""
             return self.type_adapter.validate_python(value)
 
-    def extract_field_info(field_info: BaseFieldInfo) -> dict[str, Any]:
-        """Get FieldInfo init kwargs from a FieldInfo instance."""
-
-        kwargs = field_info._attributes_set.copy()
-        kwargs["annotation"] = field_info.rebuild_annotation()
-        return kwargs
-
     def model_fields(model: type[BaseModel]) -> list[ModelField]:
         """Get field list of a model."""
 
@@ -201,7 +207,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
             ModelField._construct(
                 name=name,
                 annotation=field_info.rebuild_annotation(),
-                field_info=FieldInfo(**extract_field_info(field_info)),
+                field_info=FieldInfo._inherit_construct(field_info),
             )
             for name, field_info in model.model_fields.items()
         ]
@@ -294,6 +300,22 @@ else:  # pragma: pydantic-v1
                 default = PydanticUndefined
             super().__init__(default, **kwargs)
 
+        @classmethod
+        def _inherit_construct(
+            cls, field_info: Optional[FieldInfo] = None, **kwargs: Any
+        ):
+            if field_info:
+                init_kwargs = {
+                    s: getattr(field_info, s)
+                    for s in field_info.__slots__
+                    if s != "extra"
+                }
+                init_kwargs.update(field_info.extra)
+            else:
+                init_kwargs = {}
+            init_kwargs.update(kwargs)
+            return cls(**init_kwargs)
+
     class ModelField(BaseModelField):
         @classmethod
         def _construct(cls, name: str, annotation: Any, field_info: FieldInfo) -> Self:
@@ -364,15 +386,6 @@ else:  # pragma: pydantic-v1
         def validate_json(self, value: Union[str, bytes]) -> T:
             return type_validate_json(self.type, value)
 
-    def extract_field_info(field_info: BaseFieldInfo) -> dict[str, Any]:
-        """Get FieldInfo init kwargs from a FieldInfo instance."""
-
-        kwargs = {
-            s: getattr(field_info, s) for s in field_info.__slots__ if s != "extra"
-        }
-        kwargs.update(field_info.extra)
-        return kwargs
-
     @overload
     def field_validator(
         field: str,
@@ -419,9 +432,7 @@ else:  # pragma: pydantic-v1
             ModelField._construct(
                 name=model_field.name,
                 annotation=model_field.annotation,
-                field_info=FieldInfo(
-                    **extract_field_info(model_field.field_info),
-                ),
+                field_info=FieldInfo._inherit_construct(model_field.field_info),
             )
             for model_field in model.__fields__.values()
         ]
