@@ -29,6 +29,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: pxchat [@noneflow](https://github.com/noneflow) ([#3712](https://github.com/nonebot/nonebot2/pull/3712))
 - Plugin: nonebot-plugin-memory [@noneflow](https://github.com/noneflow) ([#3701](https://github.com/nonebot/nonebot2/pull/3701))
 - Plugin: 远程文件打开 [@noneflow](https://github.com/noneflow) ([#3717](https://github.com/nonebot/nonebot2/pull/3717))
 - Plugin: MC新闻更新检测 [@noneflow](https://github.com/noneflow) ([#3699](https://github.com/nonebot/nonebot2/pull/3699))
