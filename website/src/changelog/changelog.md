@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Feature: 更新 NB-CLI 新版插件加载格式与文档 [@NCBM](https://github.com/NCBM) ([#3614](https://github.com/nonebot/nonebot2/pull/3614))
 
+### 🐛 Bug 修复
+
+- Fix: 兼容 pydantic v2.12 `FieldInfo` 改动 [@yanyongyu](https://github.com/yanyongyu) ([#3722](https://github.com/nonebot/nonebot2/pull/3722))
+
 ### 📝 文档
 
 - Feature: 更新 NB-CLI 新版插件加载格式与文档 [@NCBM](https://github.com/NCBM) ([#3614](https://github.com/nonebot/nonebot2/pull/3614))
