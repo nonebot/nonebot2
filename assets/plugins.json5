@@ -9867,4 +9867,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_arkguesser",
+    "project_link": "nonebot-plugin-arkguesser",
+    "author_id": 225500959,
+    "tags": [
+      {
+        "label": "Arknights",
+        "color": "#655cf9"
+      }
+    ],
+    "is_official": false
+  },
 ]
