@@ -9860,4 +9860,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_daily_bing",
+    "project_link": "nonebot-plugin-daily-bing",
+    "author_id": 122811297,
+    "tags": [],
+    "is_official": false
+  },
 ]
