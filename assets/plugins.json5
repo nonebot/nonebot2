@@ -9867,4 +9867,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_mcmotd",
+    "project_link": "nonebot-plugin-mcmotd",
+    "author_id": 108086130,
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#4bc622"
+      }
+    ],
+    "is_official": false
+  },
 ]
