@@ -177,6 +177,7 @@ def get_plugin_config(config: type[C]) -> C:
     return type_validate_python(
         config,
         BaseSettings._settings_build_values(
+            config,
             model_dump(global_config),
             env_file=global_config._env_file,
             env_file_encoding=global_config._env_file_encoding,

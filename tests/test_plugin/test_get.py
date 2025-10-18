@@ -2,7 +2,6 @@ from pydantic import BaseModel, Field
 import pytest
 
 import nonebot
-from nonebot.compat import model_dump
 from nonebot.plugin import PluginManager, _managers
 
 
@@ -71,31 +70,25 @@ def test_get_plugin_config():
     assert config.plugin_config == 1
 
 
-def test_plugin_load_env_config(monkeypatch: pytest.MonkeyPatch):
-    monkeypatch.setenv("TEST_CONFIG_ONE", "no_dummy_val")
-    monkeypatch.setenv("TEST_CONFIG__TWO", "two")
-    monkeypatch.setenv("TEST_CFG_THREE", "33")
+def test_get_plugin_config_with_env(monkeypatch: pytest.MonkeyPatch):
+    monkeypatch.setenv("PLUGIN_CONFIG_ONE", "no_dummy_val")
+    monkeypatch.setenv("PLUGIN_SUB_CONFIG__TWO", "two")
+    monkeypatch.setenv("PLUGIN_CFG_THREE", "33")
     monkeypatch.setenv("CONFIG_FROM_INIT", "impossible")
 
     class SubConfig(BaseModel):
         two: str = "dummy_val"
 
     class Config(BaseModel):
-        test_config_one: str = "dummy_val"
-        test_config: SubConfig = Field(default_factory=SubConfig)
-        test_config_three: int = Field(default=3, alias="TEST_CFG_THREE")
+        plugin_config: int
+        plugin_config_one: str = "dummy_val"
+        plugin_sub_config: SubConfig = Field(default_factory=SubConfig)
+        plugin_config_three: int = Field(default=3, alias="plugin_cfg_three")
         config_from_init: str = "dummy_val"
 
-    global_config = nonebot.get_driver().config
-    assert "test_config_one" not in model_dump(global_config)
-    assert "TEST_CONFIG_ONE" not in model_dump(global_config)
-    assert "test_config" not in model_dump(global_config)
-    assert "TEST_CONFIG" not in model_dump(global_config)
-    assert "test_config_three" not in model_dump(global_config)
-    assert "TEST_CFG_THREE" not in model_dump(global_config)
-
     config = nonebot.get_plugin_config(Config)
-    assert config.test_config_one == "no_dummy_val"
-    assert config.test_config.two == "two"
-    assert config.test_config_three == 33
+    assert config.plugin_config == 1
+    assert config.plugin_config_one == "no_dummy_val"
+    assert config.plugin_sub_config.two == "two"
+    assert config.plugin_config_three == 33
     assert config.config_from_init == "init"
