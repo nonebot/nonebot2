@@ -9887,4 +9887,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot-plugin-msglogger",
+    "project_link": "nonebot-plugin-msglogger",
+    "author_id": 71204348,
+    "tags": [
+      {
+        "label": "消息记录",
+        "color": "#ea5252"
+      },
+      {
+        "label": "图片存储",
+        "color": "#5c59ea"
+      },
+      {
+        "label": "群聊消息保存",
+        "color": "#32e319"
+      }
+    ],
+    "is_official": false
+  },
 ]
