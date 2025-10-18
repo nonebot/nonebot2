@@ -9608,4 +9608,263 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_bafortune",
+    "project_link": "nonebot-plugin-bafortune",
+    "author_id": 98072207,
+    "tags": [
+      {
+        "label": "碧蓝档案",
+        "color": "#2b8dce"
+      },
+      {
+        "label": "今日运势",
+        "color": "#ce2b2b"
+      },
+      {
+        "label": "多平台适配",
+        "color": "#c2ce2b"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_repeat_checker",
+    "project_link": "nonebot-plugin-repeat-checker",
+    "author_id": 56631400,
+    "tags": [
+      {
+        "label": "复读",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_quark_autosave",
+    "project_link": "nonebot-plugin-quark-autosave",
+    "author_id": 64878354,
+    "tags": [
+      {
+        "label": "quark",
+        "color": "#593dc3"
+      },
+      {
+        "label": "夸克",
+        "color": "#6542eb"
+      },
+      {
+        "label": "网盘",
+        "color": "#235c84"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_who_is_spy",
+    "project_link": "nonebot-plugin-who-is-spy",
+    "author_id": 144591143,
+    "tags": [
+      {
+        "label": "game",
+        "color": "#ea5252"
+      },
+      {
+        "label": "游戏",
+        "color": "#ea52cd"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_dst_qq",
+    "project_link": "nonebot-plugin-dst-qq",
+    "author_id": 145603392,
+    "tags": [
+      {
+        "label": "server",
+        "color": "#52ea9d"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_fupan",
+    "project_link": "nonebot-plugin-fupan",
+    "author_id": 867749,
+    "tags": [
+      {
+        "label": "股票",
+        "color": "#ea5252"
+      },
+      {
+        "label": "打卡",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_algo",
+    "project_link": "nonebot-plugin-algo",
+    "author_id": 188494207,
+    "tags": [
+      {
+        "label": "算法竞赛",
+        "color": "#52c5ea"
+      },
+      {
+        "label": "ACM",
+        "color": "#eb0e31"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_llm_extension",
+    "project_link": "nonebot-plugin-llm-extension",
+    "author_id": 110453675,
+    "tags": [
+      {
+        "label": "🇦🇮",
+        "color": "#f0f0f0"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_htmlkit",
+    "project_link": "nonebot-plugin-htmlkit",
+    "author_id": 50769752,
+    "tags": [
+      {
+        "label": "模板渲染",
+        "color": "#a57021"
+      },
+      {
+        "label": "图片生成",
+        "color": "#74c817"
+      },
+      {
+        "label": "HTML渲染",
+        "color": "#199579"
+      }
+    ],
+    "is_official": true
+  },
+  {
+    "module_name": "nonebot_plugin_mhcodes",
+    "project_link": "nonebot-plugin-mhcodes",
+    "author_id": 99017826,
+    "tags": [
+      {
+        "label": "怪物猎人",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_parser",
+    "project_link": "nonebot-plugin-parser",
+    "author_id": 64878354,
+    "tags": [
+      {
+        "label": "图集",
+        "color": "#263bd5"
+      },
+      {
+        "label": "视频",
+        "color": "#152ac0"
+      },
+      {
+        "label": "解析",
+        "color": "#152ac0"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_kookcardmessage",
+    "project_link": "nonebot-plugin-kookcardmessage",
+    "author_id": 174641131,
+    "tags": [
+      {
+        "label": "kook",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mcnews",
+    "project_link": "nonebot-plugin-mcnews",
+    "author_id": 110646806,
+    "tags": [
+      {
+        "label": "MC",
+        "color": "#52e7ea"
+      },
+      {
+        "label": "新闻",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_open_file",
+    "project_link": "nonebot-plugin-open-file",
+    "author_id": 131272574,
+    "tags": [
+      {
+        "label": "file",
+        "color": "#a50a0a"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_memory",
+    "project_link": "nonebot-plugin-memory",
+    "author_id": 175703143,
+    "tags": [
+      {
+        "label": "log",
+        "color": "#336daf"
+      },
+      {
+        "label": "func",
+        "color": "#5bd0a2"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_pxchat",
+    "project_link": "nonebot-plugin-pxchat",
+    "author_id": 112293881,
+    "tags": [
+      {
+        "label": "chat",
+        "color": "#52eab7"
+      },
+      {
+        "label": "deepseek",
+        "color": "#52ddea"
+      },
+      {
+        "label": "mcp",
+        "color": "#5292ea"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_daily_bing",
+    "project_link": "nonebot-plugin-daily-bing",
+    "author_id": 122811297,
+    "tags": [],
+    "is_official": false
+  },
 ]

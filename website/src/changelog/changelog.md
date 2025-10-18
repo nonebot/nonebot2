@@ -7,8 +7,18 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: 更新 NB-CLI 新版插件加载格式与文档 [@NCBM](https://github.com/NCBM) ([#3614](https://github.com/nonebot/nonebot2/pull/3614))
+
+### 🐛 Bug 修复
+
+- Fix: 兼容 pydantic v2.12 `FieldInfo` 改动 [@yanyongyu](https://github.com/yanyongyu) ([#3722](https://github.com/nonebot/nonebot2/pull/3722))
+
 ### 📝 文档
 
+- Feature: 更新 NB-CLI 新版插件加载格式与文档 [@NCBM](https://github.com/NCBM) ([#3614](https://github.com/nonebot/nonebot2/pull/3614))
+- Docs: 添加 htmlkit 文档至最佳实践 [@BlueGlassBlock](https://github.com/BlueGlassBlock) ([#3682](https://github.com/nonebot/nonebot2/pull/3682))
 - Docs: 修复 userinfo 插件链接 [@XieXiLin2](https://github.com/XieXiLin2) ([#3660](https://github.com/nonebot/nonebot2/pull/3660))
 - Docs: 升级 docusaurus 3.8.1 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3649](https://github.com/nonebot/nonebot2/pull/3649))
 - Docs: 更新文档《手动创建项目》 [@Chen-Luan](https://github.com/Chen-Luan) ([#3623](https://github.com/nonebot/nonebot2/pull/3623))
@@ -17,11 +27,29 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- CI: 严格约束 `test_depend` CPython 版本范围 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3713](https://github.com/nonebot/nonebot2/pull/3713))
 - CI: 升级文档构建 node 版本 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3668](https://github.com/nonebot/nonebot2/pull/3668))
 - CI: 测试矩阵加入 Python 3.13 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3605](https://github.com/nonebot/nonebot2/pull/3605))
 
 ### 🍻 插件发布
 
+- Plugin: 每日必应壁纸 [@noneflow](https://github.com/noneflow) ([#3721](https://github.com/nonebot/nonebot2/pull/3721))
+- Plugin: pxchat [@noneflow](https://github.com/noneflow) ([#3712](https://github.com/nonebot/nonebot2/pull/3712))
+- Plugin: nonebot-plugin-memory [@noneflow](https://github.com/noneflow) ([#3701](https://github.com/nonebot/nonebot2/pull/3701))
+- Plugin: 远程文件打开 [@noneflow](https://github.com/noneflow) ([#3717](https://github.com/nonebot/nonebot2/pull/3717))
+- Plugin: MC新闻更新检测 [@noneflow](https://github.com/noneflow) ([#3699](https://github.com/nonebot/nonebot2/pull/3699))
+- Plugin: kook卡片消息编写适配插件 [@noneflow](https://github.com/noneflow) ([#3708](https://github.com/nonebot/nonebot2/pull/3708))
+- Plugin: 链接分享自动解析 [@noneflow](https://github.com/noneflow) ([#3706](https://github.com/nonebot/nonebot2/pull/3706))
+- Plugin: 怪物猎人集会码插件 [@noneflow](https://github.com/noneflow) ([#3684](https://github.com/nonebot/nonebot2/pull/3684))
+- Plugin: nonebot-plugin-htmlkit [@noneflow](https://github.com/noneflow) ([#3695](https://github.com/nonebot/nonebot2/pull/3695))
+- Plugin: 言令 [@noneflow](https://github.com/noneflow) ([#3675](https://github.com/nonebot/nonebot2/pull/3675))
+- Plugin: 算法比赛助手 [@noneflow](https://github.com/noneflow) ([#3672](https://github.com/nonebot/nonebot2/pull/3672))
+- Plugin: 复盘打卡 [@noneflow](https://github.com/noneflow) ([#3681](https://github.com/nonebot/nonebot2/pull/3681))
+- Plugin: DMP 饥荒管理平台机器人 [@noneflow](https://github.com/noneflow) ([#3616](https://github.com/nonebot/nonebot2/pull/3616))
+- Plugin: 谁是卧底小游戏 [@noneflow](https://github.com/noneflow) ([#3629](https://github.com/nonebot/nonebot2/pull/3629))
+- Plugin: 夸克自动转存 [@noneflow](https://github.com/noneflow) ([#3671](https://github.com/nonebot/nonebot2/pull/3671))
+- Plugin: 禁止复读 [@noneflow](https://github.com/noneflow) ([#3644](https://github.com/nonebot/nonebot2/pull/3644))
+- Plugin: 蔚蓝档案今日运势 [@noneflow](https://github.com/noneflow) ([#3653](https://github.com/nonebot/nonebot2/pull/3653))
 - Plugin: 分布式黑名单插件 [@noneflow](https://github.com/noneflow) ([#3655](https://github.com/nonebot/nonebot2/pull/3655))
 - Plugin: 图片手办化 [@noneflow](https://github.com/noneflow) ([#3662](https://github.com/nonebot/nonebot2/pull/3662))
 - Plugin: Akash Image Generator [@noneflow](https://github.com/noneflow) ([#3651](https://github.com/nonebot/nonebot2/pull/3651))
