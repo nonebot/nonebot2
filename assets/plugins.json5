@@ -9867,4 +9867,24 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ai_turtle_soup",
+    "project_link": "nonebot-plugin-ai-turtle-soup",
+    "author_id": 68174188,
+    "tags": [
+      {
+        "label": "群聊小游戏",
+        "color": "#ea5252"
+      },
+      {
+        "label": "海龟汤",
+        "color": "#ea5252"
+      },
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
