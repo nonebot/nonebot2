@@ -34,6 +34,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 海龟汤游戏 [@noneflow](https://github.com/noneflow) ([#3697](https://github.com/nonebot/nonebot2/pull/3697))
 - Plugin: 每日必应壁纸 [@noneflow](https://github.com/noneflow) ([#3721](https://github.com/nonebot/nonebot2/pull/3721))
 - Plugin: pxchat [@noneflow](https://github.com/noneflow) ([#3712](https://github.com/nonebot/nonebot2/pull/3712))
 - Plugin: nonebot-plugin-memory [@noneflow](https://github.com/noneflow) ([#3701](https://github.com/nonebot/nonebot2/pull/3701))
