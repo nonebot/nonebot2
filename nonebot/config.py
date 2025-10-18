@@ -344,16 +344,17 @@ class BaseSettings(BaseModel):
         __settings_self__._env_file_encoding = _env_file_encoding
         __settings_self__._env_nested_delimiter = _env_nested_delimiter
 
+    @classmethod
     def _settings_build_values(
-        self,
+        cls,
         init_kwargs: dict[str, Any],
         env_file: Optional[DOTENV_TYPE] = None,
         env_file_encoding: Optional[str] = None,
         env_nested_delimiter: Optional[str] = None,
     ) -> dict[str, Any]:
-        init_settings = InitSettingsSource(self.__class__, init_kwargs=init_kwargs)
+        init_settings = InitSettingsSource(cls, init_kwargs=init_kwargs)
         env_settings = DotEnvSettingsSource(
-            self.__class__,
+            cls,
             env_file=env_file,
             env_file_encoding=env_file_encoding,
             env_nested_delimiter=env_nested_delimiter,
