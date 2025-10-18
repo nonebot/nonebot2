@@ -37,7 +37,7 @@ class Example(BaseSettings):
     complex_union: Union[int, list[int]] = 1
     nested: Simple = Simple()
     nested_inner: Simple = Simple()
-    aliased_simple: str = Field(alias="alias_simple")
+    aliased_simple: str = Field(default="", alias="alias_simple")
 
 
 class ExampleWithoutDelimiter(Example):
