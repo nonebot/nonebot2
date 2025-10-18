@@ -47,6 +47,7 @@ from pydantic import BaseModel
 
 from nonebot import get_driver
 from nonebot.compat import model_dump, type_validate_python
+from nonebot.config import BaseSettings
 
 C = TypeVar("C", bound=BaseModel)
 
@@ -172,7 +173,17 @@ def get_available_plugin_names() -> set[str]:
 
 def get_plugin_config(config: type[C]) -> C:
     """从全局配置获取当前插件需要的配置项。"""
-    return type_validate_python(config, model_dump(get_driver().config))
+    global_config = get_driver().config
+    return type_validate_python(
+        config,
+        BaseSettings._settings_build_values(
+            config,
+            model_dump(global_config),
+            env_file=global_config._env_file,
+            env_file_encoding=global_config._env_file_encoding,
+            env_nested_delimiter=global_config._env_nested_delimiter,
+        ),
+    )
 
 
 from .load import inherit_supported_adapters as inherit_supported_adapters

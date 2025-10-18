@@ -37,6 +37,7 @@ class Example(BaseSettings):
     complex_union: Union[int, list[int]] = 1
     nested: Simple = Simple()
     nested_inner: Simple = Simple()
+    aliased_simple: str = Field(default="", alias="alias_simple")
 
 
 class ExampleWithoutDelimiter(Example):
@@ -84,6 +85,8 @@ def test_config_with_env():
         config.nested_inner__a
     with pytest.raises(AttributeError):
         config.nested_inner__b
+
+    assert config.aliased_simple == "aliased_simple"
 
     assert config.common_config == "common"
 
