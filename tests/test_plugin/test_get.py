@@ -77,13 +77,13 @@ def test_plugin_load_env_config(monkeypatch: pytest.MonkeyPatch):
     monkeypatch.setenv("TEST_CFG_THREE", "33")
     monkeypatch.setenv("CONFIG_FROM_INIT", "impossible")
 
-    class CfgTwo(BaseModel):
+    class SubConfig(BaseModel):
         two: str = "dummy_val"
 
     class Config(BaseModel):
         test_config_one: str = "dummy_val"
-        test_config: CfgTwo = Field(default_factory=CfgTwo)
-        test_config_three: int = Field(alias="TEST_CFG_THREE", default=3)
+        test_config: SubConfig = Field(default_factory=SubConfig)
+        test_config_three: int = Field(default=3, alias="TEST_CFG_THREE")
         config_from_init: str = "dummy_val"
 
     global_config = nonebot.get_driver().config

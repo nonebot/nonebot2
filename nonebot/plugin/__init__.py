@@ -46,9 +46,8 @@ from typing import Optional, TypeVar
 from pydantic import BaseModel
 
 from nonebot import get_driver
-from nonebot.compat import type_validate_python
-from nonebot.config import PluginEnvSettingsSource
-from nonebot.utils import cache
+from nonebot.compat import model_dump, type_validate_python
+from nonebot.config import DotEnvSettingsSource, InitSettingsSource
 
 C = TypeVar("C", bound=BaseModel)
 
@@ -172,12 +171,21 @@ def get_available_plugin_names() -> set[str]:
     return {*chain.from_iterable(manager.available_plugins for manager in _managers)}
 
 
-@cache
 def get_plugin_config(config: type[C]) -> C:
     """从全局配置获取当前插件需要的配置项。"""
-    driver = get_driver()
-    env_setting = PluginEnvSettingsSource(config, driver.config)
-    return type_validate_python(config, env_setting())
+    global_config = get_driver().config
+    return type_validate_python(
+        config,
+        {
+            **DotEnvSettingsSource(
+                config,
+                env_file=global_config._env_file,
+                env_file_encoding=global_config._env_file_encoding,
+                env_nested_delimiter=global_config._env_nested_delimiter,
+            )(),
+            **InitSettingsSource(config, model_dump(global_config))(),
+        },
+    )
 
 
 from .load import inherit_supported_adapters as inherit_supported_adapters
