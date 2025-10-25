@@ -577,7 +577,7 @@ class Message(BaseMessage[MessageSegment]):
 然后根据平台具体的消息类型，来实现各种 `MessageSegment` 消息段，具体可以参考以下适配器：
 
 - [OneBot](https://github.com/nonebot/adapter-onebot/blob/master/nonebot/adapters/onebot/v11/message.py#L77-L261)
-- [QQGuild](https://github.com/nonebot/adapter-qqguild/blob/master/nonebot/adapters/qqguild/message.py#L22-L150)
+- [QQ](https://github.com/nonebot/adapter-qq/blob/master/nonebot/adapters/qqguild/message.py#L22-L150)
 - [Telegram](https://github.com/nonebot/adapter-telegram/blob/beta/nonebot/adapters/telegram/message.py#L43-L250)
 
 ## 适配器测试
