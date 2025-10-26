@@ -96,7 +96,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
     DEFAULT_CONFIG = ConfigDict(extra="allow", arbitrary_types_allowed=True)
     """Default config for validations"""
 
-    def _get_lagacy_union_field(func: Callable[P, T]) -> Callable[P, T]:
+    def _get_legacy_union_field(func: Callable[P, T]) -> Callable[P, T]:
         @wraps(func)
         def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
             kwargs["union_mode"] = "left_to_right"
