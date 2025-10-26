@@ -14,6 +14,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: log level 配置项无法使用 int 类型配置 [@yanyongyu](https://github.com/yanyongyu) ([#3732](https://github.com/nonebot/nonebot2/pull/3732))
 - Fix: 兼容 pydantic v2.12 `FieldInfo` 改动 [@yanyongyu](https://github.com/yanyongyu) ([#3722](https://github.com/nonebot/nonebot2/pull/3722))
 
 ### 📝 文档
