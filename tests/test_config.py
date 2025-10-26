@@ -3,7 +3,7 @@ from typing import TYPE_CHECKING, Optional, Union
 from pydantic import BaseModel, Field
 import pytest
 
-from nonebot.compat import PYDANTIC_V2
+from nonebot.compat import PYDANTIC_V2, LegacyUnionField
 from nonebot.config import DOTENV_TYPE, BaseSettings, SettingsConfig, SettingsError
 
 
@@ -32,6 +32,7 @@ class Example(BaseSettings):
             env_nested_delimiter = "__"
 
     simple: str = ""
+    int_str: Union[int, str] = LegacyUnionField("")
     complex: list[int] = Field(default=[1])
     complex_none: Optional[list[int]] = None
     complex_union: Union[int, list[int]] = 1
@@ -61,6 +62,8 @@ def test_config_no_env():
 def test_config_with_env():
     config = Example(_env_file=(".env", ".env.example"))
     assert config.simple == "simple"
+
+    assert config.int_str == 123
 
     assert config.complex == [1, 2, 3]
 

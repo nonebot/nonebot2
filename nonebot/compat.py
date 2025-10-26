@@ -11,7 +11,7 @@ FrontMatter:
 
 from collections.abc import Generator
 from dataclasses import dataclass, is_dataclass
-from functools import cached_property
+from functools import cached_property, wraps
 from typing import (
     TYPE_CHECKING,
     Annotated,
@@ -25,13 +25,14 @@ from typing import (
     Union,
     overload,
 )
-from typing_extensions import Self, get_args, get_origin, is_typeddict
+from typing_extensions import ParamSpec, Self, get_args, get_origin, is_typeddict
 
 from pydantic import VERSION, BaseModel
 
 from nonebot.typing import origin_is_annotated
 
 T = TypeVar("T")
+P = ParamSpec("P")
 
 PYDANTIC_V2 = int(VERSION.split(".", 1)[0]) == 2
 
@@ -49,6 +50,7 @@ __all__ = (
     "PYDANTIC_V2",
     "ConfigDict",
     "FieldInfo",
+    "LegacyUnionField",
     "ModelField",
     "PydanticUndefined",
     "PydanticUndefinedType",
@@ -67,11 +69,12 @@ __all__ = (
 __autodoc__ = {
     "PydanticUndefined": "Pydantic Undefined object",
     "PydanticUndefinedType": "Pydantic Undefined type",
+    "LegacyUnionField": "Mark field to use legacy left to right union mode",
 }
 
 
 if PYDANTIC_V2:  # pragma: pydantic-v2
-    from pydantic import GetCoreSchemaHandler
+    from pydantic import Field, GetCoreSchemaHandler
     from pydantic import TypeAdapter as TypeAdapter
     from pydantic import field_validator as field_validator
     from pydantic import model_validator as model_validator
@@ -93,6 +96,16 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
 
     DEFAULT_CONFIG = ConfigDict(extra="allow", arbitrary_types_allowed=True)
     """Default config for validations"""
+
+    def _get_lagacy_union_field(func: Callable[P, T]) -> Callable[P, T]:
+        @wraps(func)
+        def wrapper(*args: P.args, **kwargs: P.kwargs) -> T:
+            kwargs["union_mode"] = "left_to_right"
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    LegacyUnionField = _get_lagacy_union_field(Field)
 
     class FieldInfo(BaseFieldInfo):  # pyright: ignore[reportGeneralTypeIssues]
         """FieldInfo class with extra property for compatibility with pydantic v1"""
@@ -291,6 +304,8 @@ else:  # pragma: pydantic-v1
     class DEFAULT_CONFIG(ConfigDict):
         extra = Extra.allow
         arbitrary_types_allowed = True
+
+    from pydantic.fields import Field as LegacyUnionField
 
     class FieldInfo(BaseFieldInfo):
         def __init__(self, default: Any = PydanticUndefined, **kwargs: Any):

@@ -30,6 +30,7 @@ from pydantic.networks import IPvAnyAddress
 from nonebot.compat import (
     PYDANTIC_V2,
     ConfigDict,
+    LegacyUnionField,
     ModelField,
     PydanticUndefined,
     PydanticUndefinedType,
@@ -424,7 +425,7 @@ class Config(BaseSettings):
     """NoneBot {ref}`nonebot.drivers.ReverseDriver` 服务端监听的 IP/主机名。"""
     port: int = Field(default=8080, ge=1, le=65535)
     """NoneBot {ref}`nonebot.drivers.ReverseDriver` 服务端监听的端口。"""
-    log_level: Union[int, str] = "INFO"
+    log_level: Union[int, str] = LegacyUnionField("INFO")
     """NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称。
 
     参考 [记录日志](https://nonebot.dev/docs/appendices/log)，[loguru 日志等级](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
