@@ -69,7 +69,6 @@ __all__ = (
 __autodoc__ = {
     "PydanticUndefined": "Pydantic Undefined object",
     "PydanticUndefinedType": "Pydantic Undefined type",
-    "LegacyUnionField": "Mark field to use legacy left to right union mode",
 }
 
 
@@ -106,6 +105,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
         return wrapper
 
     LegacyUnionField = _get_lagacy_union_field(Field)
+    LegacyUnionField.__doc__ = "Mark field to use legacy left to right union mode"
 
     class FieldInfo(BaseFieldInfo):  # pyright: ignore[reportGeneralTypeIssues]
         """FieldInfo class with extra property for compatibility with pydantic v1"""
