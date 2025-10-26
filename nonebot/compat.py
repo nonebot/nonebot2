@@ -104,7 +104,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
 
         return wrapper
 
-    LegacyUnionField = _get_lagacy_union_field(Field)
+    LegacyUnionField = _get_legacy_union_field(Field)
     LegacyUnionField.__doc__ = "Mark field to use legacy left to right union mode"
 
     class FieldInfo(BaseFieldInfo):  # pyright: ignore[reportGeneralTypeIssues]
