@@ -32,7 +32,7 @@ class Example(BaseSettings):
             env_nested_delimiter = "__"
 
     simple: str = ""
-    int_str: Union[int, str] = LegacyUnionField("")
+    int_str: Union[int, str] = LegacyUnionField(default="")
     complex: list[int] = Field(default=[1])
     complex_none: Optional[list[int]] = None
     complex_union: Union[int, list[int]] = 1
