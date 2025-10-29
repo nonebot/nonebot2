@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 更新适配器编写指南中的链接 [@xjh2009](https://github.com/xjh2009) ([#3731](https://github.com/nonebot/nonebot2/pull/3731))
 - Feature: 更新 NB-CLI 新版插件加载格式与文档 [@NCBM](https://github.com/NCBM) ([#3614](https://github.com/nonebot/nonebot2/pull/3614))
 - Docs: 添加 htmlkit 文档至最佳实践 [@BlueGlassBlock](https://github.com/BlueGlassBlock) ([#3682](https://github.com/nonebot/nonebot2/pull/3682))
 - Docs: 修复 userinfo 插件链接 [@XieXiLin2](https://github.com/XieXiLin2) ([#3660](https://github.com/nonebot/nonebot2/pull/3660))
