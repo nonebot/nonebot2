@@ -9887,4 +9887,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_bili_helper",
+    "project_link": "nonebot-plugin-bili-helper",
+    "author_id": 4216470,
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#ea5252"
+      },
+      {
+        "label": "B站",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
