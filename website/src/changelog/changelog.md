@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 📝 文档
+
+- Docs: 修复格式化导致的语法错误 [@yanyongyu](https://github.com/yanyongyu) ([#3737](https://github.com/nonebot/nonebot2/pull/3737))
+
 ## v2.4.4
 
 ### 🚀 新功能
