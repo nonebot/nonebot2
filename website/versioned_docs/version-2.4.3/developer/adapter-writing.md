@@ -375,14 +375,16 @@ class Adapter(BaseAdapter):
 
 Websocket:
 
-- [OneBot V11](https://github.com/nonebot/adapter-onebot/blob/master/nonebot/adapters/onebot/v11/adapter.py#L127)
-- [OneBot V12](https://github.com/nonebot/adapter-onebot/blob/master/nonebot/adapters/onebot/v12/adapter.py#L162)
+- [OneBot V11](https://github.com/nonebot/adapter-onebot/blob/54270edbbdb2a71332d744f90b1a3d7f4bf6463a/nonebot/adapters/onebot/v11/adapter.py#L167-L177)
+- [OneBot V12](https://github.com/nonebot/adapter-onebot/blob/54270edbbdb2a71332d744f90b1a3d7f4bf6463a/nonebot/adapters/onebot/v12/adapter.py#L204-L218)
 
 HTTP:
 
-- [QQ](https://github.com/nonebot/adapter-qq/blob/master/nonebot/adapters/qq/adapter.py#L354)
-- [Telegram](https://github.com/nonebot/adapter-telegram/blob/beta/nonebot/adapters/telegram/adapter.py#L145)
-- [飞书](https://github.com/nonebot/adapter-feishu/blob/master/nonebot/adapters/feishu/adapter.py#L158)
+- [OneBot V11](https://github.com/nonebot/adapter-onebot/blob/54270edbbdb2a71332d744f90b1a3d7f4bf6463a/nonebot/adapters/onebot/v11/adapter.py#L179-L215)
+- [OneBot V12](https://github.com/nonebot/adapter-onebot/blob/54270edbbdb2a71332d744f90b1a3d7f4bf6463a/nonebot/adapters/onebot/v12/adapter.py#L220-L266)
+- [QQ](https://github.com/nonebot/adapter-qq/blob/dc5d437e101f0e3db542de3300758a035ed7036e/nonebot/adapters/qq/adapter.py#L599-L605)
+- [Telegram](https://github.com/nonebot/adapter-telegram/blob/4a8633627e619245516767f5503dec2f58fe2193/nonebot/adapters/telegram/adapter.py#L148-L253)
+- [飞书](https://github.com/nonebot/adapter-feishu/blob/f8ab05e6d57a5e9013b944b0d019ca777725dfb0/nonebot/adapters/feishu/adapter.py#L201-L218)
 
 ### Bot
 
@@ -576,9 +578,9 @@ class Message(BaseMessage[MessageSegment]):
 
 然后根据平台具体的消息类型，来实现各种 `MessageSegment` 消息段，具体可以参考以下适配器：
 
-- [OneBot](https://github.com/nonebot/adapter-onebot/blob/master/nonebot/adapters/onebot/v11/message.py#L77-L261)
-- [QQ](https://github.com/nonebot/adapter-qq/blob/master/nonebot/adapters/qq/message.py#L22-L150)
-- [Telegram](https://github.com/nonebot/adapter-telegram/blob/beta/nonebot/adapters/telegram/message.py#L43-L250)
+- [OneBot V11](https://github.com/nonebot/adapter-onebot/blob/54270edbbdb2a71332d744f90b1a3d7f4bf6463a/nonebot/adapters/onebot/v11/message.py#L25-L259)
+- [QQ](https://github.com/nonebot/adapter-qq/blob/dc5d437e101f0e3db542de3300758a035ed7036e/nonebot/adapters/qq/message.py#L30-L520)
+- [Telegram](https://github.com/nonebot/adapter-telegram/blob/4a8633627e619245516767f5503dec2f58fe2193/nonebot/adapters/telegram/message.py#L13-L414)
 
 ## 适配器测试
 
