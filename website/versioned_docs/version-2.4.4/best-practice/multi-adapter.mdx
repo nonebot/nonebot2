@@ -1,0 +1,208 @@
+---
+sidebar_position: 4
+description: 插件跨平台支持
+---
+
+# 插件跨平台支持
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+## 使用 NoneBot 本身
+
+由于不同平台的事件与接口之间，存在着极大的差异性，NoneBot 通过[重载](../appendices/overload.md)的方式，使得插件可以在不同平台上正确响应。但为了减少跨平台的兼容性问题，我们应该尽可能的使用基类方法实现原生跨平台，而不是使用特定平台的方法。当基类方法无法满足需求时，我们可以使用依赖注入的方式，将特定平台的事件或机器人注入到事件处理函数中，实现针对特定平台的处理。
+
+:::tip 提示
+如果需要在多平台上**使用**跨平台插件，首先应该根据[注册适配器](../advanced/adapter.md#注册适配器)一节，为机器人注册各平台对应的适配器。
+:::
+
+### 基于基类的跨平台
+
+在[事件通用信息](../advanced/adapter.md#获取事件通用信息)中，我们了解了事件基类能够提供的通用信息。同时，[事件响应器操作](../appendices/session-control.mdx#更多事件响应器操作)也为我们提供了基本的用户交互方式。使用这些方法，可以让我们的插件运行在任何平台上。例如，一个简单的命令处理插件：
+
+```python {5,11}
+from nonebot import on_command
+from nonebot.adapters import Event
+
+async def is_blacklisted(event: Event) -> bool:
+    return event.get_user_id() not in BLACKLIST
+
+weather = on_command("天气", rule=is_blacklisted, priority=10, block=True)
+
+@weather.handle()
+async def handle_function():
+    await weather.finish("今天的天气是...")
+```
+
+由于此插件仅使用了事件通用信息和事件响应器操作的纯文本交互方式，这些方法不使用特定平台的信息或接口，因此是原生跨平台的，并不需要额外处理。但在一些较为复杂的需求下，例如发送图片消息时，并非所有平台都具有统一的接口，因此基类便无能为力，我们需要引入特定平台的适配器了。
+
+### 基于重载的跨平台
+
+重载是 NoneBot 跨平台操作的核心，在[事件类型与重载](../appendices/overload.md#重载)一节中，我们初步了解了如何通过类型注解来实现针对不同平台事件的处理方式。在[依赖注入](../advanced/dependency.mdx)一节中，我们又对依赖注入的使用方法进行了详细的介绍。结合这两节内容，我们可以实现更复杂的跨平台操作。
+
+#### 处理近似事件
+
+对于一系列**差异不大**的事件，我们往往具有相同的处理逻辑。这时，我们不希望将相同的逻辑编写两遍，而应该复用代码，以实现在同一个事件处理函数中处理多个近似事件。我们可以使用[事件重载](../advanced/dependency.mdx#event)的特性来实现这一功能。例如：
+
+<Tabs groupId="python">
+  <TabItem value="3.10" label="Python 3.10+" default>
+
+```python
+from nonebot import on_command
+from nonebot.adapters import Message
+from nonebot.params import CommandArg
+from nonebot.adapters.onebot.v11 import MessageEvent as OnebotV11MessageEvent
+from nonebot.adapters.onebot.v12 import MessageEvent as OnebotV12MessageEvent
+
+echo = on_command("echo", priority=10, block=True)
+
+@echo.handle()
+async def handle_function(event: OnebotV11MessageEvent | OnebotV12MessageEvent, args: Message = CommandArg()):
+    await echo.finish(args)
+```
+
+  </TabItem>
+  <TabItem value="3.9" label="Python 3.9">
+
+```python
+from typing import Union
+
+from nonebot import on_command
+from nonebot.adapters import Message
+from nonebot.params import CommandArg
+from nonebot.adapters.onebot.v11 import MessageEvent as OnebotV11MessageEvent
+from nonebot.adapters.onebot.v12 import MessageEvent as OnebotV12MessageEvent
+
+echo = on_command("echo", priority=10, block=True)
+
+@echo.handle()
+async def handle_function(event: Union[OnebotV11MessageEvent, OnebotV12MessageEvent], args: Message = CommandArg()):
+    await echo.finish(args)
+```
+
+  </TabItem>
+</Tabs>
+
+#### 在依赖注入中使用重载
+
+NoneBot 依赖注入系统提供了自定义子依赖的方法，子依赖的类型同样会影响到事件处理函数的重载行为。例如：
+
+```python
+from datetime import datetime
+
+from nonebot import on_command
+from nonebot.adapters.console import MessageEvent
+
+echo = on_command("echo", priority=10, block=True)
+
+def get_event_time(event: MessageEvent):
+    return event.time
+
+# 处理控制台消息事件
+@echo.handle()
+async def handle_function(time: datetime = Depends(get_event_time)):
+    await echo.finish(time.strftime("%Y-%m-%d %H:%M:%S"))
+```
+
+示例中 ，我们为 `handle_function` 事件处理函数注入了自定义的 `get_event_time` 子依赖，而此子依赖注入参数为 Console 适配器的 `MessageEvent`。因此 `handle_function` 仅会响应 Console 适配器的 `MessageEvent` ，而不能响应其他事件。
+
+#### 处理多平台事件
+
+不同平台的事件之间，往往存在着极大的差异性。为了满足我们插件的跨平台运行，通常我们需要抽离业务逻辑，以保证代码的复用性。一个合理的做法是，在事件响应器的处理流程中，首先先针对不同平台的事件分别进行处理，提取出核心业务逻辑所需要的信息；然后再将这些信息传递给业务逻辑处理函数；最后将业务逻辑的输出以各平台合适的方式返回给用户。也就是说，与平台绑定的处理部分应该与平台无关部分尽量分离。例如：
+
+```python
+import inspect
+
+from nonebot import on_command
+from nonebot.typing import T_State
+from nonebot.matcher import Matcher
+from nonebot.adapters import Message
+from nonebot.params import CommandArg, ArgPlainText
+from nonebot.adapters.console import Bot as ConsoleBot
+from nonebot.adapters.onebot.v11 import Bot as OnebotBot
+from nonebot.adapters.console import MessageSegment as ConsoleMessageSegment
+
+weather = on_command("天气", priority=10, block=True)
+
+@weather.handle()
+async def handle_function(matcher: Matcher, args: Message = CommandArg()):
+    if args.extract_plain_text():
+        matcher.set_arg("location", args)
+
+
+async def get_weather(state: T_State, location: str = ArgPlainText()):
+    if location not in ["北京", "上海", "广州", "深圳"]:
+        await weather.reject(f"你想查询的城市 {location} 暂不支持，请重新输入！")
+
+    state["weather"] = "⛅ 多云 20℃~24℃"
+
+
+# 处理控制台询问
+@weather.got(
+    "location",
+    prompt=ConsoleMessageSegment.emoji("question") + "请输入地名",
+    parameterless=[Depends(get_weather)],
+)
+async def handle_console(bot: ConsoleBot):
+    pass
+
+# 处理 OneBot 询问
+@weather.got(
+    "location",
+    prompt="请输入地名",
+    parameterless=[Depends(get_weather)],
+)
+async def handle_onebot(bot: OnebotBot):
+    pass
+
+# 通过依赖注入或事件处理函数来进行业务逻辑处理
+
+# 处理控制台回复
+@weather.handle()
+async def handle_console_reply(bot: ConsoleBot, state: T_State, location: str = ArgPlainText()):
+    await weather.send(
+        ConsoleMessageSegment.markdown(
+            inspect.cleandoc(
+                f"""
+                # {location}
+
+                - 今天
+
+                   {state['weather']}
+                """
+            )
+        )
+    )
+
+# 处理 OneBot 回复
+@weather.handle()
+async def handle_onebot_reply(bot: OnebotBot, state: T_State, location: str = ArgPlainText()):
+    await weather.send(f"今天{location}的天气是{state['weather']}")
+```
+
+## 使用插件
+
+得益于众多开发者为 NoneBot 社区做出的贡献，我们可以通过一系列插件来完成跨平台插件的开发。
+
+这些插件可以分为三类：
+
+### 事件处理
+
+- [all4one](https://github.com/nonepkg/nonebot-plugin-all4one): 将不同平台的事件转为符合 OneBot V12 协议的插件
+  - 支持的适配器: OneBot V11/V12, Discord, QQ, Telegram
+
+### 消息处理
+
+- [alconna](https://github.com/nonebot/plugin-alconna): 对几乎所有适配器中消息的收发、撤回、编辑、表态的统一插件
+  - 支持的适配器: OneBot V11/V12, Telegram, Feishu, Github, QQ, Ding, Console, Kaiheila, Mirai, NtChat, Minecraft, Discord, Satori, Red, Dodo, Kritor, Tailchat, Mail, WXMP, Heybox, Gewechat
+- [send-anything-anywhere](https://github.com/felinae98/nonebot-plugin-send-anything-anywhere): 帮助处理不同适配器消息的适配和发送的插件
+  - 支持的适配器: OneBot V11/V12, Kaiheila, Telegram, Feishu, Red, DoDo, Satori, QQ, Discord
+
+### 会话信息提取
+
+- [uninfo](https://github.com/RF-Tar-Railt/nonebot-plugin-uninfo): 多平台的会话信息(用户、群组、频道)获取插件
+  - 支持的适配器: OneBot V11/V12, Telegram, Feishu, QQ, Console, Kaiheila, Mirai, Minecraft, Discord, Satori, Dodo, Kritor, Mail, WXMP, Gewechat
+- [session](https://github.com/noneplugin/nonebot-plugin-session): 会话信息提取与会话 id 定义插件
+  - 支持的适配器: OneBot V11/V12, Console, Kaiheila, Telegram, Feishu, Red, DoDo, Satori, QQ, Discord
+- [userinfo](https://github.com/noneplugin/nonebot-plugin-userinfo: 用户信息获取插件
+  - 支持的适配器: OneBot V11/V12, Console, Kaiheila, Telegram, Feishu, Red, DoDo, Satori, QQ, Discord
