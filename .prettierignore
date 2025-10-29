@@ -1,2 +1,3 @@
 .github/**/*.md
 website/docs/tutorial/application.mdx
+website/versioned_docs/*/tutorial/application.mdx
