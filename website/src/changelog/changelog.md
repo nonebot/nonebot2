@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Docs: 修复格式化导致的语法错误 [@yanyongyu](https://github.com/yanyongyu) ([#3737](https://github.com/nonebot/nonebot2/pull/3737))
 
+### 🍻 插件发布
+
+- Plugin: B站解析助手 [@noneflow](https://github.com/noneflow) ([#3728](https://github.com/nonebot/nonebot2/pull/3728))
+
 ## v2.4.4
 
 ### 🚀 新功能
