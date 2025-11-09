@@ -9903,4 +9903,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_markdown2img",
+    "project_link": "nonebot-plugin-markdown2img",
+    "author_id": 96008766,
+    "tags": [
+      {
+        "label": "markdown",
+        "color": "#ea5252"
+      },
+      {
+        "label": "func",
+        "color": "#0fe16e"
+      }
+    ],
+    "is_official": false
+  },
 ]
