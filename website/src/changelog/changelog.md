@@ -16,6 +16,10 @@ toc_max_heading_level: 2
 - Plugin: nonebot_plugin_markdown2img [@noneflow](https://github.com/noneflow) ([#3730](https://github.com/nonebot/nonebot2/pull/3730))
 - Plugin: B站解析助手 [@noneflow](https://github.com/noneflow) ([#3728](https://github.com/nonebot/nonebot2/pull/3728))
 
+### 🍻 适配器发布
+
+- Adapter: 云湖适配器 [@noneflow](https://github.com/noneflow) ([#3741](https://github.com/nonebot/nonebot2/pull/3741))
+
 ## v2.4.4
 
 ### 🚀 新功能
