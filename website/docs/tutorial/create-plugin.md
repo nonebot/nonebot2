@@ -48,8 +48,10 @@ options:
 
    ```tree title=Project
    📦 awesome-bot
+   ├── 📂 .venv
    ├── 📂 awesome_bot
    │   └── 📂 plugins
+   ├── 📜 .env.prod
    ├── 📜 pyproject.toml
    └── 📜 README.md
    ```
@@ -91,18 +93,20 @@ options:
 $ nb plugin create
 [?] 插件名称: weather
 [?] 使用嵌套插件? (y/N) N
-[?] 输出目录: awesome_bot/plugins
+[?] 请输入插件存储位置: awesome_bot/plugins
 ```
 
 `nb-cli` 会在 `awesome_bot/plugins` 目录下创建一个名为 `weather` 的文件夹，其中包含的文件将在稍后章节中用到。
 
 ```tree title=Project
 📦 awesome-bot
+├── 📂 .venv
 ├── 📂 awesome_bot
 │   └── 📂 plugins
-|       └── 📂 foo
+|       └── 📂 weather
 |           ├── 📜 __init__.py
 |           └── 📜 config.py
+├── 📜 .env.prod
 ├── 📜 pyproject.toml
 └── 📜 README.md
 ```
