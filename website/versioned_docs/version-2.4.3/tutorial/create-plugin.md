@@ -66,7 +66,7 @@ options:
 :::
 
 :::caution 注意
-如果在之前的[创建项目](./application.mdx)章节中手动创建了相关文件，那么你需要做出如下修改：
+如果在之前的[创建项目](./application.md)章节中手动创建了相关文件，那么你需要做出如下修改：
 
 1. 在项目目录中创建一个两层文件夹 `awesome_bot/plugins`
 
