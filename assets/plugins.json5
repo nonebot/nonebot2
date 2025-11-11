@@ -9919,4 +9919,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_jrrp3",
+    "project_link": "nonebot-plugin-jrrp3",
+    "author_id": 79314033,
+    "tags": [],
+    "is_official": false
+  },
 ]
