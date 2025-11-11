@@ -345,5 +345,5 @@ Message(
 ```python title=使用消息段的拓展控制符
 >>> from nonebot.adapters.console import Message, MessageSegment
 >>> Message.template("{name:emoji}").format(name='tada')
-Message(MessageSegment(type='emoji', data={'name': 'tada'}))
+Message(MessageSegment(type='emoji', data={'emoji': 'tada'}))
 ```
