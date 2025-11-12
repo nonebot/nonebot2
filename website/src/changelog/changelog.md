@@ -12,6 +12,10 @@ toc_max_heading_level: 2
 - Docs: 修复插件编写准备文档中的文本错误 [@Xfjie314](https://github.com/Xfjie314) ([#3746](https://github.com/nonebot/nonebot2/pull/3746))
 - Docs: 修复格式化导致的语法错误 [@yanyongyu](https://github.com/yanyongyu) ([#3737](https://github.com/nonebot/nonebot2/pull/3737))
 
+### 💫 杂项
+
+- Plugin: 删除插件 nonebot_plugin_acmd [@hlfzsi](https://github.com/hlfzsi) ([#3750](https://github.com/nonebot/nonebot2/pull/3750))
+
 ### 🍻 插件发布
 
 - Plugin: 每日人品 [@noneflow](https://github.com/noneflow) ([#3735](https://github.com/nonebot/nonebot2/pull/3735))
