@@ -8251,13 +8251,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_ACMD",
-    "project_link": "nonebot_plugin_ACMD",
-    "author_id": 78413699,
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_suggarchat",
     "project_link": "nonebot-plugin-suggarchat",
     "author_id": 67693593,
