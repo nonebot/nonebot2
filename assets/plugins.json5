@@ -9919,4 +9919,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_image_symmetry",
+    "project_link": "nonebot-plugin-image-symmetry",
+    "author_id": 79314033,
+    "tags": [
+      {
+        "label": "image",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
