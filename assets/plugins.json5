@@ -9931,4 +9931,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_manosaba_memes",
+    "project_link": "nonebot-plugin-manosaba-memes",
+    "author_id": 55650833,
+    "tags": [
+      {
+        "label": "魔法少女的魔法审判",
+        "color": "#de7d92"
+      }
+    ],
+    "is_official": false
+  },
 ]
