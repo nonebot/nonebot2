@@ -9943,4 +9943,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_course_schedule",
+    "project_link": "nonebot-plugin-course-schedule",
+    "author_id": 49135577,
+    "tags": [
+      {
+        "label": "课表",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
