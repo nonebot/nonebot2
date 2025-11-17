@@ -18,6 +18,8 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 电子课程表 [@noneflow](https://github.com/noneflow) ([#3743](https://github.com/nonebot/nonebot2/pull/3743))
+- Plugin: 魔裁 Memes [@noneflow](https://github.com/noneflow) ([#3755](https://github.com/nonebot/nonebot2/pull/3755))
 - Plugin: 图像对称处理 [@noneflow](https://github.com/noneflow) ([#3748](https://github.com/nonebot/nonebot2/pull/3748))
 - Plugin: 每日人品 [@noneflow](https://github.com/noneflow) ([#3735](https://github.com/nonebot/nonebot2/pull/3735))
 - Plugin: nonebot_plugin_markdown2img [@noneflow](https://github.com/noneflow) ([#3730](https://github.com/nonebot/nonebot2/pull/3730))
