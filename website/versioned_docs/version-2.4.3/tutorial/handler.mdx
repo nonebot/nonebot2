@@ -27,8 +27,8 @@ import Messenger from "@site/src/components/Messenger";
 顾名思义，“事件处理函数装饰器”是一个[装饰器（decorator）](https://docs.python.org/zh-cn/3/glossary.html#term-decorator)，那么它的使用方法也同[函数定义](https://docs.python.org/zh-cn/3/reference/compound_stmts.html#function-definitions)中所展示的包装用法相同。例如：
 
 ```python {6-8} title=weather/__init__.py
+from nonebot import on_command
 from nonebot.rule import to_me
-from nonebot.plugin import on_command
 
 weather = on_command("天气", rule=to_me(), aliases={"weather", "查天气"}, priority=10, block=True)
 
@@ -46,8 +46,8 @@ async def handle_function():
 事件响应器操作与事件处理函数装饰器类似，通常作为事件响应器 `Matcher` 的[类方法](https://docs.python.org/zh-cn/3/library/functions.html#classmethod)存在，因此事件响应器操作的调用方法也是 `Matcher.func()` 的形式。不过不同的是，事件响应器操作并不是装饰器，因此并不需要@进行标注。
 
 ```python {8,9} title=weather/__init__.py
+from nonebot import on_command
 from nonebot.rule import to_me
-from nonebot.plugin import on_command
 
 weather = on_command("天气", rule=to_me(), aliases={"weather", "查天气"}, priority=10, block=True)
 
