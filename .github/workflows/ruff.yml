@@ -24,7 +24,7 @@ jobs:
       cancel-in-progress: true
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v6
 
       - name: Run Ruff Lint
         uses: astral-sh/ruff-action@v3
