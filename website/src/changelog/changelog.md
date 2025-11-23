@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: manosoba-reply-generator [@noneflow](https://github.com/noneflow) ([#3753](https://github.com/nonebot/nonebot2/pull/3753))
 - Plugin: 模板绘图 [@noneflow](https://github.com/noneflow) ([#3752](https://github.com/nonebot/nonebot2/pull/3752))
 - Plugin: iPinfo [@noneflow](https://github.com/noneflow) ([#3759](https://github.com/nonebot/nonebot2/pull/3759))
 - Plugin: 电子课程表 [@noneflow](https://github.com/noneflow) ([#3743](https://github.com/nonebot/nonebot2/pull/3743))
