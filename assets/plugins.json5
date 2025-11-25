@@ -9986,4 +9986,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_anans_sketchbook",
+    "project_link": "nonebot-plugin-anans-sketchbook",
+    "author_id": 64982342,
+    "tags": [
+      {
+        "label": "魔法少女的魔女审判",
+        "color": "#d07e82"
+      },
+      {
+        "label": "夏目安安",
+        "color": "#6a5acd"
+      },
+      {
+        "label": "表情包",
+        "color": "#ca64dc"
+      }
+    ],
+    "is_official": false
+  },
 ]
