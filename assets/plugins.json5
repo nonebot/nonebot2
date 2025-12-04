@@ -10018,4 +10018,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_terralink",
+    "project_link": "nonebot-plugin-terralink",
+    "author_id": 96228495,
+    "tags": [
+      {
+        "label": "泰拉瑞亚",
+        "color": "#b6e161"
+      },
+      {
+        "label": "群服互通",
+        "color": "#669ed7"
+      },
+      {
+        "label": "Terraria",
+        "color": "#df6262"
+      }
+    ],
+    "is_official": false
+  },
 ]
