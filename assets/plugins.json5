@@ -10038,4 +10038,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_mcserver_status_check",
+    "project_link": "nonebot-plugin-mcserver-status-check",
+    "author_id": 153894603,
+    "tags": [
+      {
+        "label": "MC",
+        "color": "#ea5252"
+      },
+      {
+        "label": "Minecraft",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
