@@ -10050,4 +10050,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_omikuji",
+    "project_link": "nonebot-plugin-omikuji",
+    "author_id": 67693593,
+    "tags": [
+      {
+        "label": "御神签",
+        "color": "#ea5252"
+      },
+      {
+        "label": "运势",
+        "color": "#0bc2af"
+      },
+      {
+        "label": "占卜",
+        "color": "#811eee"
+      }
+    ],
+    "is_official": false
+  },
 ]
