@@ -37,7 +37,7 @@ jobs:
             })
 
       - name: Download Artifact
-        uses: actions/download-artifact@v6
+        uses: actions/download-artifact@v7
         with:
           name: website-preview
           github-token: ${{ secrets.GITHUB_TOKEN }}
