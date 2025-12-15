@@ -33,7 +33,7 @@ jobs:
           echo "${{ github.event.pull_request.number }}" > ./pr-number
 
       - name: Upload Artifact
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         with:
           name: website-preview
           path: |
