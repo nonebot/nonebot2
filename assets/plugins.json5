@@ -10070,4 +10070,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_rollpig",
+    "project_link": "nonebot-plugin-rollpig",
+    "author_id": 30120610,
+    "tags": [
+      {
+        "label": "pig",
+        "color": "#fdd7e4"
+      }
+    ],
+    "is_official": false
+  },
 ]
