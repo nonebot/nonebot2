@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 今天是什么小猪 [@noneflow](https://github.com/noneflow) ([#3773](https://github.com/nonebot/nonebot2/pull/3773))
 - Plugin: 御神签 [@noneflow](https://github.com/noneflow) ([#3777](https://github.com/nonebot/nonebot2/pull/3777))
 - Plugin: 火车迷铁路工具箱 [@noneflow](https://github.com/noneflow) ([#3770](https://github.com/nonebot/nonebot2/pull/3770))
 - Plugin: TerraLink [@noneflow](https://github.com/noneflow) ([#3775](https://github.com/nonebot/nonebot2/pull/3775))
