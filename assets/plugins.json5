@@ -10110,4 +10110,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_perithacus",
+    "project_link": "nonebot-plugin-pErithacus",
+    "author_id": 21017431,
+    "tags": [
+      {
+        "label": "chat",
+        "color": "#ea5252"
+      },
+      {
+        "label": "自动回复",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
