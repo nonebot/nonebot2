@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: MC服务器状态查询 [@noneflow](https://github.com/noneflow) ([#3781](https://github.com/nonebot/nonebot2/pull/3781))
 - Plugin: Instagram RapidAPI 解析 [@noneflow](https://github.com/noneflow) ([#3784](https://github.com/nonebot/nonebot2/pull/3784))
 - Plugin: 今天是什么小猪 [@noneflow](https://github.com/noneflow) ([#3773](https://github.com/nonebot/nonebot2/pull/3773))
 - Plugin: 御神签 [@noneflow](https://github.com/noneflow) ([#3777](https://github.com/nonebot/nonebot2/pull/3777))
