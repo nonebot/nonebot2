@@ -10138,4 +10138,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_xiaohongshu",
+    "project_link": "nonebot-plugin-xiaohongshu",
+    "author_id": 49683326,
+    "tags": [
+      {
+        "label": "小红书",
+        "color": "#ea5252"
+      },
+      {
+        "label": "xhslink",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
