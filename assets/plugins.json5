@@ -10138,4 +10138,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_jimeng",
+    "project_link": "nonebot-plugin-jimeng",
+    "author_id": 104259619,
+    "tags": [
+      {
+        "label": "OpenAi",
+        "color": "#1d7374"
+      },
+      {
+        "label": "绘画",
+        "color": "#8b1bb4"
+      }
+    ],
+    "is_official": false
+  },
 ]
