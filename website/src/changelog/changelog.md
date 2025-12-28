@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 即梦绘画 [@noneflow](https://github.com/noneflow) ([#3797](https://github.com/nonebot/nonebot2/pull/3797))
 - Plugin: 快捷回复 [@noneflow](https://github.com/noneflow) ([#3795](https://github.com/nonebot/nonebot2/pull/3795))
 - Plugin: pErithacus [@noneflow](https://github.com/noneflow) ([#3767](https://github.com/nonebot/nonebot2/pull/3767))
 - Plugin: MC服务器状态查询 [@noneflow](https://github.com/noneflow) ([#3781](https://github.com/nonebot/nonebot2/pull/3781))
