@@ -10154,4 +10154,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_boardgamehelper",
+    "project_link": "nonebot-plugin-boardgamehelper",
+    "author_id": 60382099,
+    "tags": [],
+    "is_official": false
+  },
 ]
