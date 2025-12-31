@@ -10161,4 +10161,11 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ai_groupmate",
+    "project_link": "nonebot-plugin-ai-groupmate",
+    "author_id": 30517062,
+    "tags": [],
+    "is_official": false
+  },
 ]
