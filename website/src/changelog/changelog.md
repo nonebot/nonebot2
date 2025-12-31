@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-ai-groupmate [@noneflow](https://github.com/noneflow) ([#3766](https://github.com/nonebot/nonebot2/pull/3766))
 - Plugin: nonebot_plugin_boardgamehelper [@noneflow](https://github.com/noneflow) ([#3800](https://github.com/nonebot/nonebot2/pull/3800))
 - Plugin: 即梦绘画 [@noneflow](https://github.com/noneflow) ([#3797](https://github.com/nonebot/nonebot2/pull/3797))
 - Plugin: 快捷回复 [@noneflow](https://github.com/noneflow) ([#3795](https://github.com/nonebot/nonebot2/pull/3795))
