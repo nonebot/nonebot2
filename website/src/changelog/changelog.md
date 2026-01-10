@@ -15,6 +15,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- CI: 修改 `test_depend` cpython 版本范围 [@yanyongyu](https://github.com/yanyongyu) ([#3828](https://github.com/nonebot/nonebot2/pull/3828))
 - Plugin: 删除插件 nonebot_plugin_acmd [@hlfzsi](https://github.com/hlfzsi) ([#3750](https://github.com/nonebot/nonebot2/pull/3750))
 
 ### 🍻 插件发布
