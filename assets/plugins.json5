@@ -10180,4 +10180,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_word_censor",
+    "project_link": "nonebot-plugin-word-censor",
+    "author_id": 99163726,
+    "tags": [
+      {
+        "label": "rule",
+        "color": "#ea5252"
+      },
+      {
+        "label": "黑名单",
+        "color": "#000000"
+      }
+    ],
+    "is_official": false
+  },
 ]
