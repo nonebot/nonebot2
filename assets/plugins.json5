@@ -10196,4 +10196,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_internet_outage",
+    "project_link": "nonebot-plugin-internet-outage",
+    "author_id": 110646806,
+    "tags": [
+      {
+        "label": "Cloudflare",
+        "color": "#f97316"
+      },
+      {
+        "label": "网络中断监测",
+        "color": "#dc2626"
+      }
+    ],
+    "is_official": false
+  },
 ]
