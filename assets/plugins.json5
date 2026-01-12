@@ -10196,4 +10196,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_group_relay",
+    "project_link": "nonebot-plugin-group-relay",
+    "author_id": 86188856,
+    "tags": [
+      {
+        "label": "func",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
