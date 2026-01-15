@@ -10224,4 +10224,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_tavily",
+    "project_link": "nonebot-plugin-tavily",
+    "author_id": 1080807,
+    "tags": [
+      {
+        "label": "search",
+        "color": "#39c5bb"
+      }
+    ],
+    "is_official": false
+  },
 ]
