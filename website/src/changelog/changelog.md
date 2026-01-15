@@ -20,6 +20,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 群消息中继 [@noneflow](https://github.com/noneflow) ([#3804](https://github.com/nonebot/nonebot2/pull/3804))
 - Plugin: 互联网异常事件监测 [@noneflow](https://github.com/noneflow) ([#3831](https://github.com/nonebot/nonebot2/pull/3831))
 - Plugin: 词汇黑名单审查 [@noneflow](https://github.com/noneflow) ([#3817](https://github.com/nonebot/nonebot2/pull/3817))
 - Plugin: 汉化进度记录 [@noneflow](https://github.com/noneflow) ([#3807](https://github.com/nonebot/nonebot2/pull/3807))
