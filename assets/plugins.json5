@@ -10236,4 +10236,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_bf6_stats",
+    "project_link": "nonebot-plugin-bf6-stats",
+    "author_id": 202926395,
+    "tags": [
+      {
+        "label": "bf6",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
