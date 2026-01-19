@@ -10236,4 +10236,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_adsblocker",
+    "project_link": "nonebot-plugin-adsblocker",
+    "author_id": 110215026,
+    "tags": [
+      {
+        "label": "群助手",
+        "color": "#ea5252"
+      },
+      {
+        "label": "实用",
+        "color": "#ea5252"
+      },
+      {
+        "label": "广告拦截",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
