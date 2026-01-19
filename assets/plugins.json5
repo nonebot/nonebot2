@@ -10236,4 +10236,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_image_summary",
+    "project_link": "nonebot-plugin-image-summary",
+    "author_id": 107745057,
+    "tags": [
+      {
+        "label": "图片外显",
+        "color": "#a061eb"
+      }
+    ],
+    "is_official": false
+  },
 ]
