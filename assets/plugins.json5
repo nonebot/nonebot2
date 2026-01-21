@@ -10248,4 +10248,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_bili2mp4",
+    "project_link": "nonebot-plugin-bili2mp4",
+    "author_id": 181480818,
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#ff6699"
+      },
+      {
+        "label": "mp4",
+        "color": "#ff6699"
+      },
+      {
+        "label": "小程序",
+        "color": "#ff6699"
+      }
+    ],
+    "is_official": false
+  },
 ]
