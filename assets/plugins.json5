@@ -10268,4 +10268,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_qqmusic_reco",
+    "project_link": "nonebot-plugin-qqmusic-reco",
+    "author_id": 99163726,
+    "tags": [
+      {
+        "label": "music",
+        "color": "#ea5252"
+      },
+      {
+        "label": "recommend",
+        "color": "#beeb0c"
+      }
+    ],
+    "is_official": false
+  },
 ]
