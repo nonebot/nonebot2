@@ -32,7 +32,7 @@ jobs:
       - name: Setup Node Environment
         uses: ./.github/actions/setup-node
 
-      - uses: release-drafter/release-drafter@v6.0.0
+      - uses: release-drafter/release-drafter@v6.2.0
         id: release-drafter
         env:
           GITHUB_TOKEN: ${{ steps.generate-token.outputs.token }}
@@ -92,7 +92,7 @@ jobs:
         if: steps.version.outputs.VERSION != steps.version.outputs.TAG_VERSION
         run: exit 1
 
-      - uses: release-drafter/release-drafter@v6.0.0
+      - uses: release-drafter/release-drafter@v6.2.0
         with:
           name: Release ${{ steps.version.outputs.TAG_NAME }} 🌈
           tag: ${{ steps.version.outputs.TAG_NAME }}
