@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 基于QQ音乐歌单的音乐推荐 [@noneflow](https://github.com/noneflow) ([#3838](https://github.com/nonebot/nonebot2/pull/3838))
 - Plugin: nonebot-plugin-bili2mp4 [@noneflow](https://github.com/noneflow) ([#3792](https://github.com/nonebot/nonebot2/pull/3792))
 - Plugin: 战地6战绩查询 [@noneflow](https://github.com/noneflow) ([#3815](https://github.com/nonebot/nonebot2/pull/3815))
 - Plugin: Tavily Search [@noneflow](https://github.com/noneflow) ([#3834](https://github.com/nonebot/nonebot2/pull/3834))
