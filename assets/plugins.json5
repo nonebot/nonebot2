@@ -10284,4 +10284,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_osugreek",
+    "project_link": "nonebot-plugin-osugreek",
+    "author_id": 64720173,
+    "tags": [
+      {
+        "label": "osu",
+        "color": "#ff66aa"
+      }
+    ],
+    "is_official": false
+  },
 ]
