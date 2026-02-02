@@ -10296,4 +10296,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_nearcade_reporter",
+    "project_link": "nonebot-plugin-nearcade-reporter",
+    "author_id": 91889128,
+    "tags": [
+      {
+        "label": "maimai",
+        "color": "#ea5252"
+      },
+      {
+        "label": "nearcade",
+        "color": "#b050ff"
+      },
+      {
+        "label": "机厅人数",
+        "color": "#b050ff"
+      }
+    ],
+    "is_official": false
+  },
 ]
