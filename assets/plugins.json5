@@ -10296,4 +10296,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_uniconf",
+    "project_link": "nonebot-plugin-uniconf",
+    "author_id": 67693593,
+    "tags": [
+      {
+        "label": "config",
+        "color": "#0cccff"
+      },
+      {
+        "label": "配置文件",
+        "color": "#c3ff0c"
+      },
+      {
+        "label": "API",
+        "color": "#ffff00"
+      }
+    ],
+    "is_official": false
+  },
 ]
