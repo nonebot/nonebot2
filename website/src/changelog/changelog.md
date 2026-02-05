@@ -21,6 +21,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Uniconfig-配置文件管理器 [@noneflow](https://github.com/noneflow) ([#3849](https://github.com/nonebot/nonebot2/pull/3849))
 - Plugin: osugreek [@noneflow](https://github.com/noneflow) ([#3836](https://github.com/nonebot/nonebot2/pull/3836))
 - Plugin: 基于QQ音乐歌单的音乐推荐 [@noneflow](https://github.com/noneflow) ([#3838](https://github.com/nonebot/nonebot2/pull/3838))
 - Plugin: nonebot-plugin-bili2mp4 [@noneflow](https://github.com/noneflow) ([#3792](https://github.com/nonebot/nonebot2/pull/3792))
