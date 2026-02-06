@@ -8744,6 +8744,10 @@
       {
         "label": "明日方舟",
         "color": "#67fdfe"
+      },
+      {
+        "label": "终末地",
+        "color": "#e3d600"
       }
     ],
     "is_official": false
