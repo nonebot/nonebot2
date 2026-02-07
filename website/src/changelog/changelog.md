@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: MCP Client [@noneflow](https://github.com/noneflow) ([#3842](https://github.com/nonebot/nonebot2/pull/3842))
 - Plugin: Dice Helper [@noneflow](https://github.com/noneflow) ([#3840](https://github.com/nonebot/nonebot2/pull/3840))
 - Plugin: Uniconfig-配置文件管理器 [@noneflow](https://github.com/noneflow) ([#3849](https://github.com/nonebot/nonebot2/pull/3849))
 - Plugin: osugreek [@noneflow](https://github.com/noneflow) ([#3836](https://github.com/nonebot/nonebot2/pull/3836))
