@@ -10327,4 +10327,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_mcpclient",
+    "project_link": "nonebot-plugin-mcpclient",
+    "author_id": 1080807,
+    "tags": [
+      {
+        "label": "mcp",
+        "color": "#243576"
+      }
+    ],
+    "is_official": false
+  },
 ]
