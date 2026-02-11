@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 群聊拟人 [@noneflow](https://github.com/noneflow) ([#3820](https://github.com/nonebot/nonebot2/pull/3820))
 - Plugin: BitTorrent磁力搜索 [@noneflow](https://github.com/noneflow) ([#3844](https://github.com/nonebot/nonebot2/pull/3844))
 - Plugin: MCP Client [@noneflow](https://github.com/noneflow) ([#3842](https://github.com/nonebot/nonebot2/pull/3842))
 - Plugin: Dice Helper [@noneflow](https://github.com/noneflow) ([#3840](https://github.com/nonebot/nonebot2/pull/3840))
