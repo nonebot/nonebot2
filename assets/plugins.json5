@@ -10351,4 +10351,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_personification",
+    "project_link": "nonebot-plugin-shiro-personification",
+    "author_id": 114895516,
+    "tags": [],
+    "is_official": false
+  },
 ]
