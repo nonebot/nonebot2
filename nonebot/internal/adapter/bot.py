@@ -1,6 +1,6 @@
 import abc
 from functools import partial
-from typing import TYPE_CHECKING, Any, ClassVar, Protocol, Union
+from typing import TYPE_CHECKING, Any, ClassVar, Protocol
 
 import anyio
 from exceptiongroup import BaseExceptionGroup, catch
@@ -180,7 +180,7 @@ class Bot(abc.ABC):
     async def send(
         self,
         event: "Event",
-        message: Union[str, "Message", "MessageSegment"],
+        message: "str | Message | MessageSegment",
         **kwargs: Any,
     ) -> Any:
         """调用机器人基础发送消息接口

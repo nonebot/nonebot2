@@ -10,7 +10,7 @@ FrontMatter:
 import contextlib
 from dataclasses import dataclass, field
 from types import ModuleType
-from typing import TYPE_CHECKING, Any, Optional, Type  # noqa: UP035
+from typing import TYPE_CHECKING, Any, Type  # noqa: UP035
 
 from pydantic import BaseModel
 
@@ -77,7 +77,7 @@ class Plugin:
     """导入该插件的插件管理器"""
     matcher: set[type[Matcher]] = field(default_factory=set)
     """插件加载时定义的 `Matcher`"""
-    parent_plugin: Optional["Plugin"] = None
+    parent_plugin: "Plugin | None" = None
     """父插件"""
     sub_plugins: set["Plugin"] = field(default_factory=set)
     """子插件集合"""

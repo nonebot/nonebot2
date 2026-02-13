@@ -1,5 +1,5 @@
 from contextlib import AsyncExitStack
-from typing import ClassVar, NoReturn, Union
+from typing import ClassVar, NoReturn
 from typing_extensions import Self
 
 import anyio
@@ -95,9 +95,7 @@ class Permission:
     def __and__(self, other: object) -> NoReturn:
         raise RuntimeError("And operation between Permissions is not allowed.")
 
-    def __or__(
-        self, other: Union["Permission", T_PermissionChecker] | None
-    ) -> "Permission":
+    def __or__(self, other: "Permission | T_PermissionChecker | None") -> "Permission":
         if other is None:
             return self
         elif isinstance(other, Permission):
@@ -105,9 +103,7 @@ class Permission:
         else:
             return Permission(*self.checkers, other)
 
-    def __ror__(
-        self, other: Union["Permission", T_PermissionChecker] | None
-    ) -> "Permission":
+    def __ror__(self, other: "Permission | T_PermissionChecker | None") -> "Permission":
         if other is None:
             return self
         elif isinstance(other, Permission):

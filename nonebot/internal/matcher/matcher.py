@@ -13,7 +13,6 @@ from typing import (  # noqa: UP035
     Callable,
     ClassVar,
     NoReturn,
-    Optional,
     Type,
     TypeVar,
     overload,
@@ -94,7 +93,7 @@ class MatcherSource:
     """事件响应器所在行号"""
 
     @property
-    def plugin(self) -> Optional["Plugin"]:
+    def plugin(self) -> "Plugin | None":
         """事件响应器所在插件"""
         from nonebot.plugin import get_plugin
 
@@ -203,7 +202,7 @@ class Matcher(metaclass=MatcherMeta):
         priority: int = 1,
         block: bool = False,
         *,
-        plugin: Optional["Plugin"] = None,
+        plugin: "Plugin | None" = None,
         module: ModuleType | None = None,
         source: MatcherSource | None = None,
         expire_time: datetime | timedelta | None = None,
@@ -331,7 +330,7 @@ class Matcher(metaclass=MatcherMeta):
         matchers[cls.priority].remove(cls)
 
     @classproperty
-    def plugin(cls) -> Optional["Plugin"]:
+    def plugin(cls) -> "Plugin | None":
         """事件响应器所在插件"""
         return cls._source and cls._source.plugin
 
