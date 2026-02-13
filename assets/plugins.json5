@@ -10358,4 +10358,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_shiro_web_console",
+    "project_link": "nonebot-plugin-shiro-web-console",
+    "author_id": 114895516,
+    "tags": [
+      {
+        "label": "WebUi",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
