@@ -65,7 +65,7 @@ except Exception:  # pragma: no cover
 
 A = TypeVar("A", bound=Adapter)
 
-_driver: Optional[Driver] = None
+_driver: Driver | None = None
 
 
 def get_driver() -> Driver:
@@ -112,7 +112,7 @@ def get_adapter(name: type[A]) -> A:
     """
 
 
-def get_adapter(name: Union[str, type[Adapter]]) -> Adapter:
+def get_adapter(name: str | type[Adapter]) -> Adapter:
     """获取已注册的 {ref}`nonebot.adapters.Adapter` 实例。
 
     异常:
@@ -196,7 +196,7 @@ def get_asgi() -> Any:
     return driver.asgi
 
 
-def get_bot(self_id: Optional[str] = None) -> Bot:
+def get_bot(self_id: str | None = None) -> Bot:
     """获取一个连接到 NoneBot 的 {ref}`nonebot.adapters.Bot` 对象。
 
     当提供 `self_id` 时，此函数是 `get_bots()[self_id]` 的简写；
@@ -277,7 +277,7 @@ def _log_patcher(record: "loguru.Record"):
     )
 
 
-def init(*, _env_file: Optional[DOTENV_TYPE] = None, **kwargs: Any) -> None:
+def init(*, _env_file: DOTENV_TYPE | None = None, **kwargs: Any) -> None:
     """初始化 NoneBot 以及 全局 {ref}`nonebot.drivers.Driver` 对象。
 
     NoneBot 将会从 .env 文件中读取环境信息，并使用相应的 env 文件配置。

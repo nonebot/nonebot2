@@ -9,10 +9,11 @@ FrontMatter:
     description: nonebot.message 模块
 """
 
+from collections.abc import Callable
 import contextlib
 from contextlib import AsyncExitStack
 from datetime import datetime
-from typing import TYPE_CHECKING, Any, Callable, Optional
+from typing import TYPE_CHECKING, Any
 
 import anyio
 from exceptiongroup import BaseExceptionGroup, catch
@@ -153,8 +154,8 @@ async def _apply_event_preprocessors(
     bot: "Bot",
     event: "Event",
     state: T_State,
-    stack: Optional[AsyncExitStack] = None,
-    dependency_cache: Optional[T_DependencyCache] = None,
+    stack: AsyncExitStack | None = None,
+    dependency_cache: T_DependencyCache | None = None,
     show_log: bool = True,
 ) -> bool:
     """运行事件预处理。
@@ -210,8 +211,8 @@ async def _apply_event_postprocessors(
     bot: "Bot",
     event: "Event",
     state: T_State,
-    stack: Optional[AsyncExitStack] = None,
-    dependency_cache: Optional[T_DependencyCache] = None,
+    stack: AsyncExitStack | None = None,
+    dependency_cache: T_DependencyCache | None = None,
     show_log: bool = True,
 ) -> None:
     """运行事件后处理。
@@ -257,8 +258,8 @@ async def _apply_run_preprocessors(
     event: "Event",
     state: T_State,
     matcher: Matcher,
-    stack: Optional[AsyncExitStack] = None,
-    dependency_cache: Optional[T_DependencyCache] = None,
+    stack: AsyncExitStack | None = None,
+    dependency_cache: T_DependencyCache | None = None,
 ) -> bool:
     """运行事件响应器运行前处理。
 
@@ -315,9 +316,9 @@ async def _apply_run_postprocessors(
     bot: "Bot",
     event: "Event",
     matcher: Matcher,
-    exception: Optional[Exception] = None,
-    stack: Optional[AsyncExitStack] = None,
-    dependency_cache: Optional[T_DependencyCache] = None,
+    exception: Exception | None = None,
+    stack: AsyncExitStack | None = None,
+    dependency_cache: T_DependencyCache | None = None,
 ) -> None:
     """运行事件响应器运行后处理。
 
@@ -365,8 +366,8 @@ async def _check_matcher(
     bot: "Bot",
     event: "Event",
     state: T_State,
-    stack: Optional[AsyncExitStack] = None,
-    dependency_cache: Optional[T_DependencyCache] = None,
+    stack: AsyncExitStack | None = None,
+    dependency_cache: T_DependencyCache | None = None,
 ) -> bool:
     """检查事件响应器是否符合运行条件。
 
@@ -416,8 +417,8 @@ async def _run_matcher(
     bot: "Bot",
     event: "Event",
     state: T_State,
-    stack: Optional[AsyncExitStack] = None,
-    dependency_cache: Optional[T_DependencyCache] = None,
+    stack: AsyncExitStack | None = None,
+    dependency_cache: T_DependencyCache | None = None,
 ) -> None:
     """运行事件响应器。
 
@@ -482,8 +483,8 @@ async def check_and_run_matcher(
     bot: "Bot",
     event: "Event",
     state: T_State,
-    stack: Optional[AsyncExitStack] = None,
-    dependency_cache: Optional[T_DependencyCache] = None,
+    stack: AsyncExitStack | None = None,
+    dependency_cache: T_DependencyCache | None = None,
 ) -> None:
     """检查并运行事件响应器。
 

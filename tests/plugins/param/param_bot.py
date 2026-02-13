@@ -1,4 +1,4 @@
-from typing import TypeVar, Union
+from typing import TypeVar
 
 from nonebot.adapters import Bot
 
@@ -28,7 +28,7 @@ async def sub_bot(b: FooBot) -> FooBot:
 class BarBot(Bot): ...
 
 
-async def union_bot(b: Union[FooBot, BarBot]) -> Union[FooBot, BarBot]:
+async def union_bot(b: FooBot | BarBot) -> FooBot | BarBot:
     return b
 
 
@@ -46,4 +46,4 @@ async def generic_bot_none(b: CB) -> CB:
     return b
 
 
-async def not_bot(b: Union[int, Bot]): ...
+async def not_bot(b: int | Bot): ...

@@ -5,11 +5,9 @@ from dataclasses import asdict, dataclass, field
 from typing import (  # noqa: UP035
     Any,
     Generic,
-    Optional,
     SupportsIndex,
     Type,
     TypeVar,
-    Union,
     overload,
 )
 from typing_extensions import Self
@@ -51,10 +49,10 @@ class MessageSegment(abc.ABC, Generic[TM]):
     ) -> bool:
         return not self == other
 
-    def __add__(self, other: Union[str, Self, Iterable[Self]]) -> TM:
+    def __add__(self, other: str | Self | Iterable[Self]) -> TM:
         return self.get_message_class()(self) + other
 
-    def __radd__(self, other: Union[str, Self, Iterable[Self]]) -> TM:
+    def __radd__(self, other: str | Self | Iterable[Self]) -> TM:
         return self.get_message_class()(other) + self
 
     @classmethod
@@ -87,7 +85,7 @@ class MessageSegment(abc.ABC, Generic[TM]):
     def items(self):
         return asdict(self).items()
 
-    def join(self, iterable: Iterable[Union[Self, TM]]) -> TM:
+    def join(self, iterable: Iterable[Self | TM]) -> TM:
         return self.get_message_class()(self).join(iterable)
 
     def copy(self) -> Self:
@@ -109,7 +107,7 @@ class Message(list[TMS], abc.ABC):
 
     def __init__(
         self,
-        message: Union[str, None, Iterable[TMS], TMS] = None,
+        message: str | None | Iterable[TMS] | TMS = None,
     ):
         super().__init__()
         if message is None:
@@ -124,7 +122,7 @@ class Message(list[TMS], abc.ABC):
             self.extend(self._construct(message))  # pragma: no cover
 
     @classmethod
-    def template(cls, format_string: Union[str, TM]) -> MessageTemplate[Self]:
+    def template(cls, format_string: str | TM) -> MessageTemplate[Self]:
         """创建消息模板。
 
         用法和 `str.format` 大致相同，支持以 `Message` 对象作为消息模板并输出消息对象。
@@ -177,17 +175,17 @@ class Message(list[TMS], abc.ABC):
         raise NotImplementedError
 
     def __add__(  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, other: Union[str, TMS, Iterable[TMS]]
+        self, other: str | TMS | Iterable[TMS]
     ) -> Self:
         result = self.copy()
         result += other
         return result
 
-    def __radd__(self, other: Union[str, TMS, Iterable[TMS]]) -> Self:
+    def __radd__(self, other: str | TMS | Iterable[TMS]) -> Self:
         result = self.__class__(other)
         return result + self
 
-    def __iadd__(self, other: Union[str, TMS, Iterable[TMS]]) -> Self:
+    def __iadd__(self, other: str | TMS | Iterable[TMS]) -> Self:
         if isinstance(other, str):
             self.extend(self._construct(other))
         elif isinstance(other, MessageSegment):
@@ -255,14 +253,8 @@ class Message(list[TMS], abc.ABC):
 
     def __getitem__(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
-        args: Union[
-            str,
-            tuple[str, int],
-            tuple[str, slice],
-            int,
-            slice,
-        ],
-    ) -> Union[TMS, Self]:
+        args: str | tuple[str, int] | tuple[str, slice] | int | slice,
+    ) -> TMS | Self:
         arg1, arg2 = args if isinstance(args, tuple) else (args, None)
         if isinstance(arg1, int) and arg2 is None:
             return super().__getitem__(arg1)
@@ -278,7 +270,7 @@ class Message(list[TMS], abc.ABC):
             raise ValueError("Incorrect arguments to slice")  # pragma: no cover
 
     def __contains__(  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, value: Union[TMS, str]
+        self, value: TMS | str
     ) -> bool:
         """检查消息段是否存在
 
@@ -291,11 +283,11 @@ class Message(list[TMS], abc.ABC):
             return next((seg for seg in self if seg.type == value), None) is not None
         return super().__contains__(value)
 
-    def has(self, value: Union[TMS, str]) -> bool:
+    def has(self, value: TMS | str) -> bool:
         """与 {ref}``__contains__` <nonebot.adapters.Message.__contains__>` 相同"""
         return value in self
 
-    def index(self, value: Union[TMS, str], *args: SupportsIndex) -> int:
+    def index(self, value: TMS | str, *args: SupportsIndex) -> int:
         """索引消息段
 
         参数:
@@ -315,7 +307,7 @@ class Message(list[TMS], abc.ABC):
             return super().index(first_segment, *args)
         return super().index(value, *args)
 
-    def get(self, type_: str, count: Optional[int] = None) -> Self:
+    def get(self, type_: str, count: int | None = None) -> Self:
         """获取指定类型的消息段
 
         参数:
@@ -339,7 +331,7 @@ class Message(list[TMS], abc.ABC):
             filtered.append(seg)
         return filtered
 
-    def count(self, value: Union[TMS, str]) -> int:
+    def count(self, value: TMS | str) -> int:
         """计算指定消息段的个数
 
         参数:
@@ -350,7 +342,7 @@ class Message(list[TMS], abc.ABC):
         """
         return len(self[value]) if isinstance(value, str) else super().count(value)
 
-    def only(self, value: Union[TMS, str]) -> bool:
+    def only(self, value: TMS | str) -> bool:
         """检查消息中是否仅包含指定消息段
 
         参数:
@@ -364,7 +356,7 @@ class Message(list[TMS], abc.ABC):
         return all(seg == value for seg in self)
 
     def append(  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, obj: Union[str, TMS]
+        self, obj: str | TMS
     ) -> Self:
         """添加一个消息段到消息数组末尾。
 
@@ -380,7 +372,7 @@ class Message(list[TMS], abc.ABC):
         return self
 
     def extend(  # pyright: ignore[reportIncompatibleMethodOverride]
-        self, obj: Union[Self, Iterable[TMS]]
+        self, obj: Self | Iterable[TMS]
     ) -> Self:
         """拼接一个消息数组或多个消息段到消息数组末尾。
 
@@ -391,7 +383,7 @@ class Message(list[TMS], abc.ABC):
             self.append(segment)
         return self
 
-    def join(self, iterable: Iterable[Union[TMS, Self]]) -> Self:
+    def join(self, iterable: Iterable[TMS | Self]) -> Self:
         """将多个消息连接并将自身作为分割
 
         参数:

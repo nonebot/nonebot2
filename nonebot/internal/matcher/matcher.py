@@ -16,7 +16,6 @@ from typing import (  # noqa: UP035
     Optional,
     Type,
     TypeVar,
-    Union,
     overload,
 )
 from typing_extensions import Self
@@ -87,11 +86,11 @@ current_handler: ContextVar[Dependent[Any]] = ContextVar("current_handler")
 class MatcherSource:
     """Matcher 源代码上下文信息"""
 
-    plugin_id: Optional[str] = None
+    plugin_id: str | None = None
     """事件响应器所在插件标识符"""
-    module_name: Optional[str] = None
+    module_name: str | None = None
     """事件响应器所在插件模块的路径名"""
-    lineno: Optional[int] = None
+    lineno: int | None = None
     """事件响应器所在行号"""
 
     @property
@@ -103,17 +102,17 @@ class MatcherSource:
             return get_plugin(self.plugin_id)
 
     @property
-    def plugin_name(self) -> Optional[str]:
+    def plugin_name(self) -> str | None:
         """事件响应器所在插件名"""
         return self.plugin and self.plugin.name
 
     @property
-    def module(self) -> Optional[ModuleType]:
+    def module(self) -> ModuleType | None:
         if self.module_name is not None:
             return sys.modules.get(self.module_name)
 
     @property
-    def file(self) -> Optional[Path]:
+    def file(self) -> Path | None:
         if self.module is not None and (file := inspect.getsourcefile(self.module)):
             return Path(file).absolute()
 
@@ -121,8 +120,8 @@ class MatcherSource:
 class MatcherMeta(type):
     if TYPE_CHECKING:
         type: str
-        _source: Optional[MatcherSource]
-        module_name: Optional[str]
+        _source: MatcherSource | None
+        module_name: str | None
 
     def __repr__(self) -> str:
         return (
@@ -140,7 +139,7 @@ class MatcherMeta(type):
 class Matcher(metaclass=MatcherMeta):
     """事件响应器类"""
 
-    _source: ClassVar[Optional[MatcherSource]] = None
+    _source: ClassVar[MatcherSource | None] = None
 
     type: ClassVar[str] = ""
     """事件响应器类型"""
@@ -156,15 +155,15 @@ class Matcher(metaclass=MatcherMeta):
     """事件响应器是否阻止事件传播"""
     temp: ClassVar[bool] = False
     """事件响应器是否为临时"""
-    expire_time: ClassVar[Optional[datetime]] = None
+    expire_time: ClassVar[datetime | None] = None
     """事件响应器过期时间点"""
 
     _default_state: ClassVar[T_State] = {}
     """事件响应器默认状态"""
 
-    _default_type_updater: ClassVar[Optional[Dependent[str]]] = None
+    _default_type_updater: ClassVar[Dependent[str] | None] = None
     """事件响应器类型更新函数"""
-    _default_permission_updater: ClassVar[Optional[Dependent[Permission]]] = None
+    _default_permission_updater: ClassVar[Dependent[Permission] | None] = None
     """事件响应器权限更新函数"""
 
     HANDLER_PARAM_TYPES: ClassVar[tuple[Type[Param], ...]] = (  # noqa: UP006
@@ -197,22 +196,20 @@ class Matcher(metaclass=MatcherMeta):
     def new(
         cls,
         type_: str = "",
-        rule: Optional[Rule] = None,
-        permission: Optional[Permission] = None,
-        handlers: Optional[list[Union[T_Handler, Dependent[Any]]]] = None,
+        rule: Rule | None = None,
+        permission: Permission | None = None,
+        handlers: list[T_Handler | Dependent[Any]] | None = None,
         temp: bool = False,
         priority: int = 1,
         block: bool = False,
         *,
         plugin: Optional["Plugin"] = None,
-        module: Optional[ModuleType] = None,
-        source: Optional[MatcherSource] = None,
-        expire_time: Optional[Union[datetime, timedelta]] = None,
-        default_state: Optional[T_State] = None,
-        default_type_updater: Optional[Union[T_TypeUpdater, Dependent[str]]] = None,
-        default_permission_updater: Optional[
-            Union[T_PermissionUpdater, Dependent[Permission]]
-        ] = None,
+        module: ModuleType | None = None,
+        source: MatcherSource | None = None,
+        expire_time: datetime | timedelta | None = None,
+        default_state: T_State | None = None,
+        default_type_updater: T_TypeUpdater | Dependent[str] | None = None,
+        default_permission_updater: T_PermissionUpdater | Dependent[Permission] | None = None,
     ) -> Type[Self]:  # noqa: UP006
         """
         创建一个新的事件响应器，并存储至 `matchers <#matchers>`_
@@ -337,22 +334,22 @@ class Matcher(metaclass=MatcherMeta):
         return cls._source and cls._source.plugin
 
     @classproperty
-    def plugin_id(cls) -> Optional[str]:
+    def plugin_id(cls) -> str | None:
         """事件响应器所在插件标识符"""
         return cls._source and cls._source.plugin_id
 
     @classproperty
-    def plugin_name(cls) -> Optional[str]:
+    def plugin_name(cls) -> str | None:
         """事件响应器所在插件名"""
         return cls._source and cls._source.plugin_name
 
     @classproperty
-    def module(cls) -> Optional[ModuleType]:
+    def module(cls) -> ModuleType | None:
         """事件响应器所在插件模块"""
         return cls._source and cls._source.module
 
     @classproperty
-    def module_name(cls) -> Optional[str]:
+    def module_name(cls) -> str | None:
         """事件响应器所在插件模块路径"""
         return cls._source and cls._source.module_name
 
@@ -361,8 +358,8 @@ class Matcher(metaclass=MatcherMeta):
         cls,
         bot: Bot,
         event: Event,
-        stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[T_DependencyCache] = None,
+        stack: AsyncExitStack | None = None,
+        dependency_cache: T_DependencyCache | None = None,
     ) -> bool:
         """检查是否满足触发权限
 
@@ -386,8 +383,8 @@ class Matcher(metaclass=MatcherMeta):
         bot: Bot,
         event: Event,
         state: T_State,
-        stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[T_DependencyCache] = None,
+        stack: AsyncExitStack | None = None,
+        dependency_cache: T_DependencyCache | None = None,
     ) -> bool:
         """检查是否满足匹配规则
 
@@ -432,7 +429,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def append_handler(
-        cls, handler: T_Handler, parameterless: Optional[Iterable[Any]] = None
+        cls, handler: T_Handler, parameterless: Iterable[Any] | None = None
     ) -> Dependent[Any]:
         handler_ = Dependent[Any].parse(
             call=handler,
@@ -444,7 +441,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def handle(
-        cls, parameterless: Optional[Iterable[Any]] = None
+        cls, parameterless: Iterable[Any] | None = None
     ) -> Callable[[T_Handler], T_Handler]:
         """装饰一个函数来向事件响应器直接添加一个处理函数
 
@@ -460,7 +457,7 @@ class Matcher(metaclass=MatcherMeta):
 
     @classmethod
     def receive(
-        cls, id: str = "", parameterless: Optional[Iterable[Any]] = None
+        cls, id: str = "", parameterless: Iterable[Any] | None = None
     ) -> Callable[[T_Handler], T_Handler]:
         """装饰一个函数来指示 NoneBot 在接收用户新的一条消息后继续运行该函数
 
@@ -503,8 +500,8 @@ class Matcher(metaclass=MatcherMeta):
     def got(
         cls,
         key: str,
-        prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
-        parameterless: Optional[Iterable[Any]] = None,
+        prompt: str | Message | MessageSegment | MessageTemplate | None = None,
+        parameterless: Iterable[Any] | None = None,
     ) -> Callable[[T_Handler], T_Handler]:
         """装饰一个函数来指示 NoneBot 获取一个参数 `key`
 
@@ -550,7 +547,7 @@ class Matcher(metaclass=MatcherMeta):
     @classmethod
     async def send(
         cls,
-        message: Union[str, Message, MessageSegment, MessageTemplate],
+        message: str | Message | MessageSegment | MessageTemplate,
         **kwargs: Any,
     ) -> Any:
         """发送一条消息给当前交互用户
@@ -572,7 +569,7 @@ class Matcher(metaclass=MatcherMeta):
     @classmethod
     async def finish(
         cls,
-        message: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
+        message: str | Message | MessageSegment | MessageTemplate | None = None,
         **kwargs,
     ) -> NoReturn:
         """发送一条消息给当前交互用户并结束当前事件响应器
@@ -589,7 +586,7 @@ class Matcher(metaclass=MatcherMeta):
     @classmethod
     async def pause(
         cls,
-        prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
+        prompt: str | Message | MessageSegment | MessageTemplate | None = None,
         **kwargs,
     ) -> NoReturn:
         """发送一条消息给当前交互用户并暂停事件响应器，在接收用户新的一条消息后继续下一个处理函数
@@ -613,7 +610,7 @@ class Matcher(metaclass=MatcherMeta):
     @classmethod
     async def reject(
         cls,
-        prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
+        prompt: str | Message | MessageSegment | MessageTemplate | None = None,
         **kwargs,
     ) -> NoReturn:
         """最近使用 `got` / `receive` 接收的消息不符合预期，
@@ -643,7 +640,7 @@ class Matcher(metaclass=MatcherMeta):
     async def reject_arg(
         cls,
         key: str,
-        prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
+        prompt: str | Message | MessageSegment | MessageTemplate | None = None,
         **kwargs,
     ) -> NoReturn:
         """最近使用 `got` 接收的消息不符合预期，
@@ -668,7 +665,7 @@ class Matcher(metaclass=MatcherMeta):
     async def reject_receive(
         cls,
         id: str = "",
-        prompt: Optional[Union[str, Message, MessageSegment, MessageTemplate]] = None,
+        prompt: str | Message | MessageSegment | MessageTemplate | None = None,
         **kwargs,
     ) -> NoReturn:
         """最近使用 `receive` 接收的消息不符合预期，
@@ -698,14 +695,14 @@ class Matcher(metaclass=MatcherMeta):
         raise SkippedException
 
     @overload
-    def get_receive(self, id: str) -> Union[Event, None]: ...
+    def get_receive(self, id: str) -> Event | None: ...
 
     @overload
-    def get_receive(self, id: str, default: T) -> Union[Event, T]: ...
+    def get_receive(self, id: str, default: T) -> Event | T: ...
 
     def get_receive(
-        self, id: str, default: Optional[T] = None
-    ) -> Optional[Union[Event, T]]:
+        self, id: str, default: T | None = None
+    ) -> Event | T | None:
         """获取一个 `receive` 事件
 
         如果没有找到对应的事件，返回 `default` 值
@@ -718,14 +715,14 @@ class Matcher(metaclass=MatcherMeta):
         self.state[LAST_RECEIVE_KEY] = event
 
     @overload
-    def get_last_receive(self) -> Union[Event, None]: ...
+    def get_last_receive(self) -> Event | None: ...
 
     @overload
-    def get_last_receive(self, default: T) -> Union[Event, T]: ...
+    def get_last_receive(self, default: T) -> Event | T: ...
 
     def get_last_receive(
-        self, default: Optional[T] = None
-    ) -> Optional[Union[Event, T]]:
+        self, default: T | None = None
+    ) -> Event | T | None:
         """获取最近一次 `receive` 事件
 
         如果没有事件，返回 `default` 值
@@ -733,14 +730,14 @@ class Matcher(metaclass=MatcherMeta):
         return self.state.get(LAST_RECEIVE_KEY, default)
 
     @overload
-    def get_arg(self, key: str) -> Union[Message, None]: ...
+    def get_arg(self, key: str) -> Message | None: ...
 
     @overload
-    def get_arg(self, key: str, default: T) -> Union[Message, T]: ...
+    def get_arg(self, key: str, default: T) -> Message | T: ...
 
     def get_arg(
-        self, key: str, default: Optional[T] = None
-    ) -> Optional[Union[Message, T]]:
+        self, key: str, default: T | None = None
+    ) -> Message | T | None:
         """获取一个 `got` 消息
 
         如果没有找到对应的消息，返回 `default` 值
@@ -758,12 +755,12 @@ class Matcher(metaclass=MatcherMeta):
             self.state[REJECT_TARGET] = target
 
     @overload
-    def get_target(self) -> Union[str, None]: ...
+    def get_target(self) -> str | None: ...
 
     @overload
-    def get_target(self, default: T) -> Union[str, T]: ...
+    def get_target(self, default: T) -> str | T: ...
 
-    def get_target(self, default: Optional[T] = None) -> Optional[Union[str, T]]:
+    def get_target(self, default: T | None = None) -> str | T | None:
         return self.state.get(REJECT_TARGET, default)
 
     def stop_propagation(self):
@@ -774,8 +771,8 @@ class Matcher(metaclass=MatcherMeta):
         self,
         bot: Bot,
         event: Event,
-        stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[T_DependencyCache] = None,
+        stack: AsyncExitStack | None = None,
+        dependency_cache: T_DependencyCache | None = None,
     ) -> str:
         updater = self.__class__._default_type_updater
         return (
@@ -795,8 +792,8 @@ class Matcher(metaclass=MatcherMeta):
         self,
         bot: Bot,
         event: Event,
-        stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[T_DependencyCache] = None,
+        stack: AsyncExitStack | None = None,
+        dependency_cache: T_DependencyCache | None = None,
     ) -> Permission:
         if updater := self.__class__._default_permission_updater:
             return await updater(
@@ -832,8 +829,8 @@ class Matcher(metaclass=MatcherMeta):
         bot: Bot,
         event: Event,
         state: T_State,
-        stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[T_DependencyCache] = None,
+        stack: AsyncExitStack | None = None,
+        dependency_cache: T_DependencyCache | None = None,
     ):
         logger.trace(
             f"{self} run with incoming args: "
@@ -877,16 +874,16 @@ class Matcher(metaclass=MatcherMeta):
         bot: Bot,
         event: Event,
         state: T_State,
-        stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[T_DependencyCache] = None,
+        stack: AsyncExitStack | None = None,
+        dependency_cache: T_DependencyCache | None = None,
     ):
-        exc: Optional[Union[FinishedException, RejectedException, PausedException]] = (
+        exc: FinishedException | RejectedException | PausedException | None = (
             None
         )
 
         def _handle_special_exception(
             exc_group: BaseExceptionGroup[
-                Union[FinishedException, RejectedException, PausedException]
+                FinishedException | RejectedException | PausedException
             ],
         ):
             nonlocal exc

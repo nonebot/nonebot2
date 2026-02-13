@@ -1,4 +1,4 @@
-from typing import TypeVar, Union
+from typing import TypeVar
 
 from nonebot.adapters import Event, Message
 from nonebot.params import EventMessage, EventPlainText, EventToMe, EventType
@@ -29,7 +29,7 @@ async def sub_event(e: FooEvent) -> FooEvent:
 class BarEvent(Event): ...
 
 
-async def union_event(e: Union[FooEvent, BarEvent]) -> Union[FooEvent, BarEvent]:
+async def union_event(e: FooEvent | BarEvent) -> FooEvent | BarEvent:
     return e
 
 
@@ -47,7 +47,7 @@ async def generic_event_none(e: CE) -> CE:
     return e
 
 
-async def not_event(e: Union[int, Event]): ...
+async def not_event(e: int | Event): ...
 
 
 async def event_type(t: str = EventType()) -> str:

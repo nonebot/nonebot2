@@ -15,9 +15,9 @@ FrontMatter:
 import sys
 import types
 import typing as t
-from typing import TYPE_CHECKING, TypeVar
+from typing import TYPE_CHECKING, TypeAlias, TypeVar, get_args, get_origin
 import typing_extensions as t_ext
-from typing_extensions import ParamSpec, TypeAlias, get_args, get_origin, override
+from typing_extensions import ParamSpec, override
 import warnings
 
 if TYPE_CHECKING:
@@ -57,17 +57,17 @@ else:
 
 if sys.version_info < (3, 10):
 
-    def origin_is_union(origin: t.Optional[type[t.Any]]) -> bool:
+    def origin_is_union(origin: type[t.Any] | None) -> bool:
         """判断是否是 Union 类型"""
         return origin is t.Union
 
 else:
 
-    def origin_is_union(origin: t.Optional[type[t.Any]]) -> bool:
+    def origin_is_union(origin: type[t.Any] | None) -> bool:
         return origin is t.Union or origin is types.UnionType
 
 
-def origin_is_literal(origin: t.Optional[type[t.Any]]) -> bool:
+def origin_is_literal(origin: type[t.Any] | None) -> bool:
     """判断是否是 Literal 类型"""
     return origin is t.Literal or origin is t_ext.Literal
 
@@ -84,7 +84,7 @@ def all_literal_values(type_: type[t.Any]) -> list[t.Any]:
     return [x for value in _literal_values(type_) for x in all_literal_values(value)]
 
 
-def origin_is_annotated(origin: t.Optional[type[t.Any]]) -> bool:
+def origin_is_annotated(origin: type[t.Any] | None) -> bool:
     """判断是否是 Annotated 类型"""
     return origin is t_ext.Annotated
 
@@ -133,9 +133,7 @@ _STATE_FLAG = StateFlag()
 T_State: TypeAlias = t.Annotated[dict[t.Any, t.Any], _STATE_FLAG]
 """事件处理状态 State 类型"""
 
-_DependentCallable: TypeAlias = t.Union[
-    t.Callable[..., T], t.Callable[..., t.Awaitable[T]]
-]
+_DependentCallable: TypeAlias = t.Callable[..., T] | t.Callable[..., t.Awaitable[T]]
 
 # driver hooks
 T_BotConnectionHook: TypeAlias = _DependentCallable[t.Any]
@@ -163,7 +161,7 @@ T_CallingAPIHook: TypeAlias = t.Callable[
 ]
 """`bot.call_api` 钩子函数"""
 T_CalledAPIHook: TypeAlias = t.Callable[
-    ["Bot", t.Optional[Exception], str, dict[str, t.Any], t.Any], t.Awaitable[t.Any]
+    ["Bot", Exception | None, str, dict[str, t.Any], t.Any], t.Awaitable[t.Any]
 ]
 """`bot.call_api` 后执行的函数，参数分别为 bot, exception, api, data, result"""
 

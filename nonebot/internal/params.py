@@ -1,3 +1,4 @@
+from collections.abc import Callable
 from contextlib import AsyncExitStack, asynccontextmanager, contextmanager
 from enum import Enum
 import inspect
@@ -5,13 +6,13 @@ from typing import (
     TYPE_CHECKING,
     Annotated,
     Any,
-    Callable,
     Literal,
     Optional,
-    Union,
     cast,
+    get_args,
+    get_origin,
 )
-from typing_extensions import Self, get_args, get_origin, override
+from typing_extensions import Self, override
 
 import anyio
 from exceptiongroup import BaseExceptionGroup, catch
@@ -47,10 +48,10 @@ if TYPE_CHECKING:
 class DependsInner:
     def __init__(
         self,
-        dependency: Optional[T_Handler] = None,
+        dependency: T_Handler | None = None,
         *,
         use_cache: bool = True,
-        validate: Union[bool, PydanticFieldInfo] = False,
+        validate: bool | PydanticFieldInfo = False,
     ) -> None:
         self.dependency = dependency
         self.use_cache = use_cache
@@ -64,10 +65,10 @@ class DependsInner:
 
 
 def Depends(
-    dependency: Optional[T_Handler] = None,
+    dependency: T_Handler | None = None,
     *,
     use_cache: bool = True,
-    validate: Union[bool, PydanticFieldInfo] = False,
+    validate: bool | PydanticFieldInfo = False,
 ) -> Any:
     """子依赖装饰器
 
@@ -113,7 +114,7 @@ class DependencyCache:
     def __init__(self):
         self._state = CacheState.PENDING
         self._result: Any = None
-        self._exception: Optional[BaseException] = None
+        self._exception: BaseException | None = None
         self._waiter = anyio.Event()
 
     def done(self) -> bool:
@@ -129,7 +130,7 @@ class DependencyCache:
             raise self._exception
         return self._result
 
-    def exception(self) -> Optional[BaseException]:
+    def exception(self) -> BaseException | None:
         """获取子依赖异常"""
 
         if self._state != CacheState.FINISHED:
@@ -192,7 +193,7 @@ class DependParam(Param):
         cls,
         sub_dependent: Dependent[Any],
         use_cache: bool,
-        validate: Union[bool, PydanticFieldInfo],
+        validate: bool | PydanticFieldInfo,
     ) -> Self:
         return cls._inherit_construct(
             validate if isinstance(validate, PydanticFieldInfo) else None,
@@ -205,7 +206,7 @@ class DependParam(Param):
     @override
     def _check_param(
         cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
-    ) -> Optional[Self]:
+    ) -> Self | None:
         type_annotation, depends_inner = param.annotation, None
         # extract type annotation and dependency from Annotated
         if get_origin(param.annotation) is Annotated:
@@ -256,8 +257,8 @@ class DependParam(Param):
     @override
     async def _solve(
         self,
-        stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[T_DependencyCache] = None,
+        stack: AsyncExitStack | None = None,
+        dependency_cache: T_DependencyCache | None = None,
         **kwargs: Any,
     ) -> Any:
         use_cache: bool = self.use_cache
@@ -267,7 +268,7 @@ class DependParam(Param):
         call = cast(Callable[..., Any], sub_dependent.call)
 
         # solve sub dependency with current cache
-        exc: Optional[BaseExceptionGroup[SkippedException]] = None
+        exc: BaseExceptionGroup[SkippedException] | None = None
 
         def _handle_skipped(exc_group: BaseExceptionGroup[SkippedException]):
             nonlocal exc
@@ -333,7 +334,7 @@ class BotParam(Param):
     """
 
     def __init__(
-        self, *args, checker: Optional[ModelField] = None, **kwargs: Any
+        self, *args, checker: ModelField | None = None, **kwargs: Any
     ) -> None:
         super().__init__(*args, **kwargs)
         self.checker = checker
@@ -349,12 +350,12 @@ class BotParam(Param):
     @override
     def _check_param(
         cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
-    ) -> Optional[Self]:
+    ) -> Self | None:
         from nonebot.adapters import Bot
 
         # param type is Bot(s) or subclass(es) of Bot or None
         if generic_check_issubclass(param.annotation, Bot):
-            checker: Optional[ModelField] = None
+            checker: ModelField | None = None
             if param.annotation is not Bot:
                 checker = ModelField.construct(
                     name=param.name, annotation=param.annotation, field_info=FieldInfo()
@@ -387,7 +388,7 @@ class EventParam(Param):
     """
 
     def __init__(
-        self, *args, checker: Optional[ModelField] = None, **kwargs: Any
+        self, *args, checker: ModelField | None = None, **kwargs: Any
     ) -> None:
         super().__init__(*args, **kwargs)
         self.checker = checker
@@ -403,12 +404,12 @@ class EventParam(Param):
     @override
     def _check_param(
         cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
-    ) -> Optional[Self]:
+    ) -> Self | None:
         from nonebot.adapters import Event
 
         # param type is Event(s) or subclass(es) of Event or None
         if generic_check_issubclass(param.annotation, Event):
-            checker: Optional[ModelField] = None
+            checker: ModelField | None = None
             if param.annotation is not Event:
                 checker = ModelField.construct(
                     name=param.name, annotation=param.annotation, field_info=FieldInfo()
@@ -447,7 +448,7 @@ class StateParam(Param):
     @override
     def _check_param(
         cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
-    ) -> Optional[Self]:
+    ) -> Self | None:
         # param type is T_State
         if origin_is_annotated(
             get_origin(param.annotation)
@@ -473,7 +474,7 @@ class MatcherParam(Param):
     """
 
     def __init__(
-        self, *args, checker: Optional[ModelField] = None, **kwargs: Any
+        self, *args, checker: ModelField | None = None, **kwargs: Any
     ) -> None:
         super().__init__(*args, **kwargs)
         self.checker = checker
@@ -489,12 +490,12 @@ class MatcherParam(Param):
     @override
     def _check_param(
         cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
-    ) -> Optional[Self]:
+    ) -> Self | None:
         from nonebot.matcher import Matcher
 
         # param type is Matcher(s) or subclass(es) of Matcher or None
         if generic_check_issubclass(param.annotation, Matcher):
-            checker: Optional[ModelField] = None
+            checker: ModelField | None = None
             if param.annotation is not Matcher:
                 checker = ModelField.construct(
                     name=param.name, annotation=param.annotation, field_info=FieldInfo()
@@ -520,31 +521,31 @@ class MatcherParam(Param):
 
 class ArgInner:
     def __init__(
-        self, key: Optional[str], type: Literal["message", "str", "plaintext", "prompt"]
+        self, key: str | None, type: Literal["message", "str", "plaintext", "prompt"]
     ) -> None:
-        self.key: Optional[str] = key
+        self.key: str | None = key
         self.type: Literal["message", "str", "plaintext", "prompt"] = type
 
     def __repr__(self) -> str:
         return f"ArgInner(key={self.key!r}, type={self.type!r})"
 
 
-def Arg(key: Optional[str] = None) -> Any:
+def Arg(key: str | None = None) -> Any:
     """Arg 参数消息"""
     return ArgInner(key, "message")
 
 
-def ArgStr(key: Optional[str] = None) -> str:
+def ArgStr(key: str | None = None) -> str:
     """Arg 参数消息文本"""
     return ArgInner(key, "str")  # type: ignore
 
 
-def ArgPlainText(key: Optional[str] = None) -> str:
+def ArgPlainText(key: str | None = None) -> str:
     """Arg 参数消息纯文本"""
     return ArgInner(key, "plaintext")  # type: ignore
 
 
-def ArgPromptResult(key: Optional[str] = None) -> Any:
+def ArgPromptResult(key: str | None = None) -> Any:
     """`arg` prompt 发送结果"""
     return ArgInner(key, "prompt")
 
@@ -576,7 +577,7 @@ class ArgParam(Param):
     @override
     def _check_param(
         cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
-    ) -> Optional[Self]:
+    ) -> Self | None:
         if isinstance(param.default, ArgInner):
             return cls(key=param.default.key or param.name, type=param.default.type)
         elif get_origin(param.annotation) is Annotated:
@@ -601,15 +602,15 @@ class ArgParam(Param):
     def _solve_message(self, matcher: "Matcher") -> Optional["Message"]:
         return matcher.get_arg(self.key)
 
-    def _solve_str(self, matcher: "Matcher") -> Optional[str]:
+    def _solve_str(self, matcher: "Matcher") -> str | None:
         message = matcher.get_arg(self.key)
         return str(message) if message is not None else None
 
-    def _solve_plaintext(self, matcher: "Matcher") -> Optional[str]:
+    def _solve_plaintext(self, matcher: "Matcher") -> str | None:
         message = matcher.get_arg(self.key)
         return message.extract_plain_text() if message is not None else None
 
-    def _solve_prompt(self, matcher: "Matcher") -> Optional[Any]:
+    def _solve_prompt(self, matcher: "Matcher") -> Any | None:
         return matcher.state.get(
             REJECT_PROMPT_RESULT_KEY.format(key=ARG_KEY.format(key=self.key))
         )
@@ -630,7 +631,7 @@ class ExceptionParam(Param):
     @override
     def _check_param(
         cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
-    ) -> Optional[Self]:
+    ) -> Self | None:
         # param type is Exception(s) or subclass(es) of Exception or None
         if generic_check_issubclass(param.annotation, Exception):
             return cls()
@@ -639,7 +640,7 @@ class ExceptionParam(Param):
             return cls()
 
     @override
-    async def _solve(self, exception: Optional[Exception] = None, **kwargs: Any) -> Any:
+    async def _solve(self, exception: Exception | None = None, **kwargs: Any) -> Any:
         return exception
 
 
@@ -658,7 +659,7 @@ class DefaultParam(Param):
     @override
     def _check_param(
         cls, param: inspect.Parameter, allow_types: tuple[type[Param], ...]
-    ) -> Optional[Self]:
+    ) -> Self | None:
         if param.default != param.empty:
             return cls(default=param.default)
 

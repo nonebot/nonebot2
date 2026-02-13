@@ -1,8 +1,9 @@
+from collections.abc import Callable
 from dataclasses import asdict
 from functools import wraps
 from pathlib import Path
 import sys
-from typing import Callable, TypeVar
+from typing import TypeVar
 from typing_extensions import ParamSpec
 
 import pytest

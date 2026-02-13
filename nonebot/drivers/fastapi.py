@@ -20,7 +20,7 @@ FrontMatter:
 import contextlib
 from functools import wraps
 import logging
-from typing import Any, Optional, Union
+from typing import Any
 from typing_extensions import override
 
 from pydantic import BaseModel
@@ -63,23 +63,23 @@ def catch_closed(func):
 class Config(BaseModel):
     """FastAPI 驱动框架设置，详情参考 FastAPI 文档"""
 
-    fastapi_openapi_url: Optional[str] = None
+    fastapi_openapi_url: str | None = None
     """`openapi.json` 地址，默认为 `None` 即关闭"""
-    fastapi_docs_url: Optional[str] = None
+    fastapi_docs_url: str | None = None
     """`swagger` 地址，默认为 `None` 即关闭"""
-    fastapi_redoc_url: Optional[str] = None
+    fastapi_redoc_url: str | None = None
     """`redoc` 地址，默认为 `None` 即关闭"""
     fastapi_include_adapter_schema: bool = True
     """是否包含适配器路由的 schema，默认为 `True`"""
     fastapi_reload: bool = False
     """开启/关闭冷重载"""
-    fastapi_reload_dirs: Optional[list[str]] = None
+    fastapi_reload_dirs: list[str] | None = None
     """重载监控文件夹列表，默认为 uvicorn 默认值"""
     fastapi_reload_delay: float = 0.25
     """重载延迟，默认为 uvicorn 默认值"""
-    fastapi_reload_includes: Optional[list[str]] = None
+    fastapi_reload_includes: list[str] | None = None
     """要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
-    fastapi_reload_excludes: Optional[list[str]] = None
+    fastapi_reload_excludes: list[str] | None = None
     """不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
     fastapi_extra: dict[str, Any] = {}
     """传递给 `FastAPI` 的其他参数。"""
@@ -160,10 +160,10 @@ class Driver(BaseDriver, ASGIMixin):
     @override
     def run(
         self,
-        host: Optional[str] = None,
-        port: Optional[int] = None,
+        host: str | None = None,
+        port: int | None = None,
         *args,
-        app: Optional[str] = None,
+        app: str | None = None,
         **kwargs,
     ):
         """使用 `uvicorn` 启动 FastAPI"""
@@ -206,8 +206,8 @@ class Driver(BaseDriver, ASGIMixin):
         with contextlib.suppress(Exception):
             json = await request.json()
 
-        data: Optional[dict] = None
-        files: Optional[list[tuple[str, FileTypes]]] = None
+        data: dict | None = None
+        files: list[tuple[str, FileTypes]] | None = None
         with contextlib.suppress(Exception):
             form = await request.form()
             data = {}
@@ -280,7 +280,7 @@ class FastAPIWebSocket(BaseWebSocket):
         await self.websocket.close(code, reason)
 
     @override
-    async def receive(self) -> Union[str, bytes]:
+    async def receive(self) -> str | bytes:
         # assert self.websocket.application_state == WebSocketState.CONNECTED
         msg = await self.websocket.receive()
         if msg["type"] == "websocket.disconnect":

@@ -1,6 +1,6 @@
 from http.cookies import SimpleCookie
 import json
-from typing import Any, Optional
+from typing import Any
 
 from aiohttp import ClientSession, ClientWebSocketResponse, WSMessage, WSMsgType
 import anyio
@@ -173,7 +173,7 @@ async def test_websocket_server(app: App, driver: Driver):
 async def test_cross_context(app: App, driver: Driver):
     assert isinstance(driver, ASGIMixin)
 
-    ws: Optional[WebSocket] = None
+    ws: WebSocket | None = None
     ws_ready = anyio.Event()
     ws_should_close = anyio.Event()
 

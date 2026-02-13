@@ -1,5 +1,5 @@
 from contextlib import AsyncExitStack
-from typing import ClassVar, NoReturn, Optional, Union
+from typing import ClassVar, NoReturn, Union
 from typing_extensions import Self
 
 import anyio
@@ -38,7 +38,7 @@ class Permission:
         DefaultParam,
     ]
 
-    def __init__(self, *checkers: Union[T_PermissionChecker, Dependent[bool]]) -> None:
+    def __init__(self, *checkers: T_PermissionChecker | Dependent[bool]) -> None:
         self.checkers: set[Dependent[bool]] = {
             (
                 checker
@@ -58,8 +58,8 @@ class Permission:
         self,
         bot: Bot,
         event: Event,
-        stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[T_DependencyCache] = None,
+        stack: AsyncExitStack | None = None,
+        dependency_cache: T_DependencyCache | None = None,
     ) -> bool:
         """检查是否满足某个权限。
 
@@ -96,7 +96,7 @@ class Permission:
         raise RuntimeError("And operation between Permissions is not allowed.")
 
     def __or__(
-        self, other: Optional[Union["Permission", T_PermissionChecker]]
+        self, other: Union["Permission", T_PermissionChecker] | None
     ) -> "Permission":
         if other is None:
             return self
@@ -106,7 +106,7 @@ class Permission:
             return Permission(*self.checkers, other)
 
     def __ror__(
-        self, other: Optional[Union["Permission", T_PermissionChecker]]
+        self, other: Union["Permission", T_PermissionChecker] | None
     ) -> "Permission":
         if other is None:
             return self
@@ -127,7 +127,7 @@ class User:
     __slots__ = ("perm", "users")
 
     def __init__(
-        self, users: tuple[str, ...], perm: Optional[Permission] = None
+        self, users: tuple[str, ...], perm: Permission | None = None
     ) -> None:
         self.users = users
         self.perm = perm
@@ -149,7 +149,7 @@ class User:
         )
 
     @classmethod
-    def _clean_permission(cls, perm: Permission) -> Optional[Permission]:
+    def _clean_permission(cls, perm: Permission) -> Permission | None:
         if len(perm.checkers) == 1 and isinstance(
             user_perm := next(iter(perm.checkers)).call, cls
         ):
@@ -157,7 +157,7 @@ class User:
         return perm
 
     @classmethod
-    def from_event(cls, event: Event, perm: Optional[Permission] = None) -> Self:
+    def from_event(cls, event: Event, perm: Permission | None = None) -> Self:
         """从事件中获取会话 ID。
 
         如果 `perm` 中仅有 `User` 类型的权限检查函数，则会去除原有的会话 ID 限制。
@@ -169,7 +169,7 @@ class User:
         return cls((event.get_session_id(),), perm=perm and cls._clean_permission(perm))
 
     @classmethod
-    def from_permission(cls, *users: str, perm: Optional[Permission] = None) -> Self:
+    def from_permission(cls, *users: str, perm: Permission | None = None) -> Self:
         """指定会话与权限。
 
         如果 `perm` 中仅有 `User` 类型的权限检查函数，则会去除原有的会话 ID 限制。
@@ -181,7 +181,7 @@ class User:
         return cls(users, perm=perm and cls._clean_permission(perm))
 
 
-def USER(*users: str, perm: Optional[Permission] = None):
+def USER(*users: str, perm: Permission | None = None):
     """匹配当前事件属于指定会话。
 
     如果 `perm` 中仅有 `User` 类型的权限检查函数，则会去除原有检查函数的会话 ID 限制。
