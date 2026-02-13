@@ -130,9 +130,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
                 dotenv_vars.update(self._read_env_file(env_path))
         return dotenv_vars
 
-    def _next_field(
-        self, field: ModelField | None, key: str
-    ) -> ModelField | None:
+    def _next_field(self, field: ModelField | None, key: str) -> ModelField | None:
         if not field or origin_is_union(get_origin(field.annotation)):
             return None
         elif field.annotation and lenient_issubclass(field.annotation, BaseModel):

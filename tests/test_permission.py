@@ -1,4 +1,3 @@
-
 from nonebug import App
 import pytest
 

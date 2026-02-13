@@ -68,9 +68,7 @@ class FakeMessage(Message[FakeMessageSegment]):
         return
 
     @override
-    def __add__(
-        self, other: str | FakeMessageSegment | Iterable[FakeMessageSegment]
-    ):
+    def __add__(self, other: str | FakeMessageSegment | Iterable[FakeMessageSegment]):
         other = escape_text(other) if isinstance(other, str) else other
         return super().__add__(other)
 

@@ -126,9 +126,7 @@ class User:
 
     __slots__ = ("perm", "users")
 
-    def __init__(
-        self, users: tuple[str, ...], perm: Permission | None = None
-    ) -> None:
+    def __init__(self, users: tuple[str, ...], perm: Permission | None = None) -> None:
         self.users = users
         self.perm = perm
 

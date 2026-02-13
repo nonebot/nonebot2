@@ -333,9 +333,7 @@ class BotParam(Param):
     为保证兼容性，本注入还会解析名为 `bot` 且没有类型注解的参数。
     """
 
-    def __init__(
-        self, *args, checker: ModelField | None = None, **kwargs: Any
-    ) -> None:
+    def __init__(self, *args, checker: ModelField | None = None, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.checker = checker
 
@@ -387,9 +385,7 @@ class EventParam(Param):
     为保证兼容性，本注入还会解析名为 `event` 且没有类型注解的参数。
     """
 
-    def __init__(
-        self, *args, checker: ModelField | None = None, **kwargs: Any
-    ) -> None:
+    def __init__(self, *args, checker: ModelField | None = None, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.checker = checker
 
@@ -473,9 +469,7 @@ class MatcherParam(Param):
     为保证兼容性，本注入还会解析名为 `matcher` 且没有类型注解的参数。
     """
 
-    def __init__(
-        self, *args, checker: ModelField | None = None, **kwargs: Any
-    ) -> None:
+    def __init__(self, *args, checker: ModelField | None = None, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)
         self.checker = checker
 

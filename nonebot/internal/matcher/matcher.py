@@ -209,7 +209,9 @@ class Matcher(metaclass=MatcherMeta):
         expire_time: datetime | timedelta | None = None,
         default_state: T_State | None = None,
         default_type_updater: T_TypeUpdater | Dependent[str] | None = None,
-        default_permission_updater: T_PermissionUpdater | Dependent[Permission] | None = None,
+        default_permission_updater: T_PermissionUpdater
+        | Dependent[Permission]
+        | None = None,
     ) -> Type[Self]:  # noqa: UP006
         """
         创建一个新的事件响应器，并存储至 `matchers <#matchers>`_
@@ -700,9 +702,7 @@ class Matcher(metaclass=MatcherMeta):
     @overload
     def get_receive(self, id: str, default: T) -> Event | T: ...
 
-    def get_receive(
-        self, id: str, default: T | None = None
-    ) -> Event | T | None:
+    def get_receive(self, id: str, default: T | None = None) -> Event | T | None:
         """获取一个 `receive` 事件
 
         如果没有找到对应的事件，返回 `default` 值
@@ -720,9 +720,7 @@ class Matcher(metaclass=MatcherMeta):
     @overload
     def get_last_receive(self, default: T) -> Event | T: ...
 
-    def get_last_receive(
-        self, default: T | None = None
-    ) -> Event | T | None:
+    def get_last_receive(self, default: T | None = None) -> Event | T | None:
         """获取最近一次 `receive` 事件
 
         如果没有事件，返回 `default` 值
@@ -735,9 +733,7 @@ class Matcher(metaclass=MatcherMeta):
     @overload
     def get_arg(self, key: str, default: T) -> Message | T: ...
 
-    def get_arg(
-        self, key: str, default: T | None = None
-    ) -> Message | T | None:
+    def get_arg(self, key: str, default: T | None = None) -> Message | T | None:
         """获取一个 `got` 消息
 
         如果没有找到对应的消息，返回 `default` 值
@@ -877,9 +873,7 @@ class Matcher(metaclass=MatcherMeta):
         stack: AsyncExitStack | None = None,
         dependency_cache: T_DependencyCache | None = None,
     ):
-        exc: FinishedException | RejectedException | PausedException | None = (
-            None
-        )
+        exc: FinishedException | RejectedException | PausedException | None = None
 
         def _handle_special_exception(
             exc_group: BaseExceptionGroup[
