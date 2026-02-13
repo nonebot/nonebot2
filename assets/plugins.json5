@@ -10370,4 +10370,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_mc_whitelist_controller",
+    "project_link": "nonebot-plugin-mc-whitelist-controller",
+    "author_id": 51502183,
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#ea5252"
+      },
+      {
+        "label": "MC",
+        "color": "#ea5252"
+      },
+      {
+        "label": "server",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
