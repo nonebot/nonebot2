@@ -1,6 +1,6 @@
 from http.cookies import SimpleCookie
 import json
-from typing import Any, Optional
+from typing import Any, Optional, cast
 
 import anyio
 from nonebug import App
@@ -630,6 +630,8 @@ async def test_websocket_client(driver: Driver, server_url: URL):
 @pytest.mark.anyio
 async def test_aiohttp_websocket_closed_frame() -> None:
     aiohttp = pytest.importorskip("aiohttp")
+    from aiohttp import ClientSession, ClientWebSocketResponse
+
     from nonebot.drivers.aiohttp import WebSocket as AiohttpWebSocket
 
     class DummyWS:
@@ -645,8 +647,8 @@ async def test_aiohttp_websocket_closed_frame() -> None:
 
     ws = AiohttpWebSocket(
         request=Request("GET", "ws://example.com"),
-        session=object(),
-        websocket=DummyWS(),
+        session=cast(ClientSession, object()),
+        websocket=cast(ClientWebSocketResponse, DummyWS()),
     )
 
     with pytest.raises(WebSocketClosed, match=r"code=1006"):
