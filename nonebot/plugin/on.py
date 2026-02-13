@@ -515,9 +515,7 @@ class CommandGroup(_Group):
         self.matchers.append(matcher)
         return matcher
 
-    def shell_command(
-        self, cmd: str | tuple[str, ...], **kwargs
-    ) -> type[Matcher]:
+    def shell_command(self, cmd: str | tuple[str, ...], **kwargs) -> type[Matcher]:
         """注册一个新的 `shell_like` 命令。新参数将会覆盖命令组默认值
 
         参数:
@@ -641,9 +639,7 @@ class MatcherGroup(_Group):
         self.matchers.append(matcher)
         return matcher
 
-    def on_startswith(
-        self, msg: str | tuple[str, ...], **kwargs
-    ) -> type[Matcher]:
+    def on_startswith(self, msg: str | tuple[str, ...], **kwargs) -> type[Matcher]:
         """注册一个消息事件响应器，并且当消息的**文本部分**以指定内容开头时响应。
 
         参数:

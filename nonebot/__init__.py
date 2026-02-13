@@ -47,7 +47,7 @@ FrontMatter:
 
 from importlib.metadata import version
 import os
-from typing import Any, Optional, TypeVar, Union, overload
+from typing import Any, TypeVar, overload
 
 import loguru
 

@@ -13,9 +13,13 @@ RawURL: TypeAlias = tuple[bytes, bytes, int | None, bytes]
 
 SimpleQuery: TypeAlias = str | int | float
 QueryVariable: TypeAlias = SimpleQuery | list[SimpleQuery]
-QueryTypes: TypeAlias = None | str | Mapping[str, QueryVariable] | list[tuple[str, SimpleQuery]]
+QueryTypes: TypeAlias = (
+    None | str | Mapping[str, QueryVariable] | list[tuple[str, SimpleQuery]]
+)
 
-HeaderTypes: TypeAlias = None | CIMultiDict[str] | dict[str, str] | list[tuple[str, str]]
+HeaderTypes: TypeAlias = (
+    None | CIMultiDict[str] | dict[str, str] | list[tuple[str, str]]
+)
 
 CookieTypes: TypeAlias = Union[
     None, "Cookies", CookieJar, dict[str, str], list[tuple[str, str]]

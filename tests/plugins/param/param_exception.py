@@ -1,5 +1,3 @@
-
-
 async def exc(e: Exception, x: ValueError | TypeError) -> Exception:
     assert e == x
     return e
