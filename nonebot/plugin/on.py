@@ -99,7 +99,7 @@ def get_matcher_source(depth: int = 0) -> MatcherSource | None:
     module_name = (module := inspect.getmodule(frame)) and module.__name__
 
     # matcher defined when plugin loading
-    plugin: "Plugin" | None = _current_plugin.get()
+    plugin: Plugin | None = _current_plugin.get()
     # matcher defined when plugin running
     if plugin is None and module_name:
         plugin = get_plugin_by_module_name(module_name)
