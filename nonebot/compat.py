@@ -9,23 +9,22 @@ FrontMatter:
     description: nonebot.compat 模块
 """
 
-from collections.abc import Generator
+from collections.abc import Callable, Generator
 from dataclasses import dataclass, is_dataclass
 from functools import cached_property, wraps
 from typing import (
     TYPE_CHECKING,
     Annotated,
     Any,
-    Callable,
     Generic,
     Literal,
-    Optional,
     Protocol,
     TypeVar,
-    Union,
+    get_args,
+    get_origin,
     overload,
 )
-from typing_extensions import ParamSpec, Self, get_args, get_origin, is_typeddict
+from typing_extensions import ParamSpec, Self, is_typeddict
 
 from pydantic import VERSION, BaseModel
 
@@ -129,7 +128,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
 
         @classmethod
         def _inherit_construct(
-            cls, field_info: Optional[BaseFieldInfo] = None, **kwargs: Any
+            cls, field_info: BaseFieldInfo | None = None, **kwargs: Any
         ) -> Self:
             init_kwargs = {}
             if field_info:
@@ -158,7 +157,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
 
         @classmethod
         def construct(
-            cls, name: str, annotation: Any, field_info: Optional[FieldInfo] = None
+            cls, name: str, annotation: Any, field_info: FieldInfo | None = None
         ) -> Self:
             """Construct a ModelField from given infos."""
             return cls._construct(name, annotation, field_info or FieldInfo())
@@ -231,8 +230,8 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
 
     def model_dump(
         model: BaseModel,
-        include: Optional[set[str]] = None,
-        exclude: Optional[set[str]] = None,
+        include: set[str] | None = None,
+        exclude: set[str] | None = None,
         by_alias: bool = False,
         exclude_unset: bool = False,
         exclude_defaults: bool = False,
@@ -251,7 +250,7 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
         """Validate data with given type."""
         return TypeAdapter(type_).validate_python(data)
 
-    def type_validate_json(type_: type[T], data: Union[str, bytes]) -> T:
+    def type_validate_json(type_: type[T], data: str | bytes) -> T:
         """Validate JSON with given type."""
         return TypeAdapter(type_).validate_json(data)
 
@@ -317,7 +316,7 @@ else:  # pragma: pydantic-v1
 
         @classmethod
         def _inherit_construct(
-            cls, field_info: Optional[BaseFieldInfo] = None, **kwargs: Any
+            cls, field_info: BaseFieldInfo | None = None, **kwargs: Any
         ):
             if field_info:
                 init_kwargs = {
@@ -350,7 +349,7 @@ else:  # pragma: pydantic-v1
 
         @classmethod
         def construct(
-            cls, name: str, annotation: Any, field_info: Optional[FieldInfo] = None
+            cls, name: str, annotation: Any, field_info: FieldInfo | None = None
         ) -> Self:
             """Construct a ModelField from given infos.
 
@@ -375,7 +374,7 @@ else:  # pragma: pydantic-v1
             self,
             type: type[T],
             *,
-            config: Optional[ConfigDict] = ...,
+            config: ConfigDict | None = ...,
         ) -> None: ...
 
         @overload
@@ -383,14 +382,14 @@ else:  # pragma: pydantic-v1
             self,
             type: Any,
             *,
-            config: Optional[ConfigDict] = ...,
+            config: ConfigDict | None = ...,
         ) -> None: ...
 
         def __init__(
             self,
             type: Any,
             *,
-            config: Optional[ConfigDict] = None,
+            config: ConfigDict | None = None,
         ) -> None:
             self.type = type
             self.config = config
@@ -398,7 +397,7 @@ else:  # pragma: pydantic-v1
         def validate_python(self, value: Any) -> T:
             return type_validate_python(self.type, value)
 
-        def validate_json(self, value: Union[str, bytes]) -> T:
+        def validate_json(self, value: str | bytes) -> T:
             return type_validate_json(self.type, value)
 
     @overload
@@ -407,7 +406,7 @@ else:  # pragma: pydantic-v1
         /,
         *fields: str,
         mode: Literal["before"],
-        check_fields: Optional[bool] = None,
+        check_fields: bool | None = None,
     ): ...
 
     @overload
@@ -416,7 +415,7 @@ else:  # pragma: pydantic-v1
         /,
         *fields: str,
         mode: Literal["after"] = ...,
-        check_fields: Optional[bool] = None,
+        check_fields: bool | None = None,
     ): ...
 
     def field_validator(
@@ -424,7 +423,7 @@ else:  # pragma: pydantic-v1
         /,
         *fields: str,
         mode: Literal["before", "after"] = "after",
-        check_fields: Optional[bool] = None,
+        check_fields: bool | None = None,
     ):
         if mode == "before":
             return validator(
@@ -458,8 +457,8 @@ else:  # pragma: pydantic-v1
 
     def model_dump(
         model: BaseModel,
-        include: Optional[set[str]] = None,
-        exclude: Optional[set[str]] = None,
+        include: set[str] | None = None,
+        exclude: set[str] | None = None,
         by_alias: bool = False,
         exclude_unset: bool = False,
         exclude_defaults: bool = False,
@@ -490,7 +489,7 @@ else:  # pragma: pydantic-v1
         """Validate data with given type."""
         return parse_obj_as(type_, data)
 
-    def type_validate_json(type_: type[T], data: Union[str, bytes]) -> T:
+    def type_validate_json(type_: type[T], data: str | bytes) -> T:
         """Validate JSON with given type."""
         return parse_raw_as(type_, data)
 

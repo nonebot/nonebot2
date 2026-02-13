@@ -1,19 +1,16 @@
 from _string import formatter_field_name_split  # type: ignore
-from collections.abc import Mapping, Sequence
+from collections.abc import Callable, Mapping, Sequence
 import functools
 from string import Formatter
 from typing import (
     TYPE_CHECKING,
     Any,
-    Callable,
     Generic,
-    Optional,
+    TypeAlias,
     TypeVar,
-    Union,
     cast,
     overload,
 )
-from typing_extensions import TypeAlias
 
 if TYPE_CHECKING:
     from .message import Message, MessageSegment
@@ -50,15 +47,15 @@ class MessageTemplate(Formatter, Generic[TF]):
     @overload
     def __init__(
         self: "MessageTemplate[TM]",
-        template: Union[str, TM],
+        template: str | TM,
         factory: type[TM],
         private_getattr: bool = False,
     ) -> None: ...
 
     def __init__(
         self,
-        template: Union[str, TM],
-        factory: Union[type[str], type[TM]] = str,
+        template: str | TM,
+        factory: type[str] | type[TM] = str,
         private_getattr: bool = False,
     ) -> None:
         self.template: TF = template  # type: ignore
@@ -70,7 +67,7 @@ class MessageTemplate(Formatter, Generic[TF]):
         return f"MessageTemplate({self.template!r}, factory={self.factory!r})"
 
     def add_format_spec(
-        self, spec: FormatSpecFunc_T, name: Optional[str] = None
+        self, spec: FormatSpecFunc_T, name: str | None = None
     ) -> FormatSpecFunc_T:
         name = name or spec.__name__
         if name in self.format_specs:
@@ -126,7 +123,7 @@ class MessageTemplate(Formatter, Generic[TF]):
         format_string: str,
         args: Sequence[Any],
         kwargs: Mapping[str, Any],
-        used_args: set[Union[int, str]],
+        used_args: set[int | str],
         auto_arg_index: int = 0,
     ) -> tuple[TF, int]:
         results: list[Any] = [self.factory()]
@@ -180,7 +177,7 @@ class MessageTemplate(Formatter, Generic[TF]):
 
     def get_field(
         self, field_name: str, args: Sequence[Any], kwargs: Mapping[str, Any]
-    ) -> tuple[Any, Union[int, str]]:
+    ) -> tuple[Any, int | str]:
         first, rest = formatter_field_name_split(field_name)
         obj = self.get_value(first, args, kwargs)
 
@@ -192,7 +189,7 @@ class MessageTemplate(Formatter, Generic[TF]):
         return obj, first
 
     def format_field(self, value: Any, format_spec: str) -> Any:
-        formatter: Optional[FormatSpecFunc] = self.format_specs.get(format_spec)
+        formatter: FormatSpecFunc | None = self.format_specs.get(format_spec)
         if formatter is None and not issubclass(self.factory, str):
             segment_class: type["MessageSegment"] = self.factory.get_segment_class()
             method = getattr(segment_class, format_spec, None)

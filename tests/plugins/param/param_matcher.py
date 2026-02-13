@@ -1,4 +1,4 @@
-from typing import Any, TypeVar, Union
+from typing import Any, TypeVar
 
 from nonebot.adapters import Event
 from nonebot.matcher import Matcher
@@ -36,8 +36,8 @@ class BarMatcher(Matcher): ...
 
 
 async def union_matcher(
-    m: Union[FooMatcher, BarMatcher],
-) -> Union[FooMatcher, BarMatcher]:
+    m: FooMatcher | BarMatcher,
+) -> FooMatcher | BarMatcher:
     return m
 
 
@@ -55,7 +55,7 @@ async def generic_matcher_none(m: CM) -> CM:
     return m
 
 
-async def not_matcher(m: Union[int, Matcher]): ...
+async def not_matcher(m: int | Matcher): ...
 
 
 async def receive(e: Event = Received("test")) -> Event:

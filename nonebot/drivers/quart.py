@@ -19,7 +19,7 @@ FrontMatter:
 
 import asyncio
 from functools import wraps
-from typing import Any, Optional, Union, cast
+from typing import Any, cast
 from typing_extensions import override
 
 from pydantic import BaseModel
@@ -65,13 +65,13 @@ class Config(BaseModel):
 
     quart_reload: bool = False
     """开启/关闭冷重载"""
-    quart_reload_dirs: Optional[list[str]] = None
+    quart_reload_dirs: list[str] | None = None
     """重载监控文件夹列表，默认为 uvicorn 默认值"""
     quart_reload_delay: float = 0.25
     """重载延迟，默认为 uvicorn 默认值"""
-    quart_reload_includes: Optional[list[str]] = None
+    quart_reload_includes: list[str] | None = None
     """要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
-    quart_reload_excludes: Optional[list[str]] = None
+    quart_reload_excludes: list[str] | None = None
     """不要监听的文件列表，支持 glob pattern，默认为 uvicorn 默认值"""
     quart_extra: dict[str, Any] = {}
     """传递给 `Quart` 的其他参数。"""
@@ -141,10 +141,10 @@ class Driver(BaseDriver, ASGIMixin):
     @override
     def run(
         self,
-        host: Optional[str] = None,
-        port: Optional[int] = None,
+        host: str | None = None,
+        port: int | None = None,
         *args,
-        app: Optional[str] = None,
+        app: str | None = None,
         **kwargs,
     ):
         """使用 `uvicorn` 启动 Quart"""
@@ -257,7 +257,7 @@ class WebSocket(BaseWebSocket):
 
     @override
     @catch_closed
-    async def receive(self) -> Union[str, bytes]:
+    async def receive(self) -> str | bytes:
         return await self.websocket.receive()
 
     @override

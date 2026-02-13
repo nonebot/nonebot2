@@ -2,8 +2,8 @@ import abc
 from collections.abc import AsyncGenerator
 from contextlib import AsyncExitStack, asynccontextmanager
 from types import TracebackType
-from typing import TYPE_CHECKING, Any, ClassVar, Optional, Union
-from typing_extensions import Self, TypeAlias
+from typing import TYPE_CHECKING, Any, ClassVar, TypeAlias
+from typing_extensions import Self
 
 from anyio import CancelScope, create_task_group
 from anyio.abc import TaskGroup
@@ -245,9 +245,9 @@ class HTTPClientSession(abc.ABC):
         params: QueryTypes = None,
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
-        version: Union[str, HTTPVersion] = HTTPVersion.H11,
+        version: str | HTTPVersion = HTTPVersion.H11,
         timeout: TimeoutTypes = None,
-        proxy: Optional[str] = None,
+        proxy: str | None = None,
     ):
         raise NotImplementedError
 
@@ -283,9 +283,9 @@ class HTTPClientSession(abc.ABC):
 
     async def __aexit__(
         self,
-        exc_type: Optional[type[BaseException]],
-        exc: Optional[BaseException],
-        tb: Optional[TracebackType],
+        exc_type: type[BaseException] | None,
+        exc: BaseException | None,
+        tb: TracebackType | None,
     ) -> None:
         await self.close()
 
@@ -315,9 +315,9 @@ class HTTPClientMixin(ForwardMixin):
         params: QueryTypes = None,
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
-        version: Union[str, HTTPVersion] = HTTPVersion.H11,
+        version: str | HTTPVersion = HTTPVersion.H11,
         timeout: TimeoutTypes = None,
-        proxy: Optional[str] = None,
+        proxy: str | None = None,
     ) -> HTTPClientSession:
         """获取一个 HTTP 会话"""
         raise NotImplementedError

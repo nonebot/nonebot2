@@ -6,8 +6,9 @@ FrontMatter:
     description: nonebot.dependencies.utils 模块
 """
 
+from collections.abc import Callable
 import inspect
-from typing import Any, Callable, ForwardRef, cast
+from typing import Any, ForwardRef, cast
 from typing_extensions import TypeAliasType
 
 from loguru import logger

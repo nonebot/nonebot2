@@ -19,7 +19,7 @@ FrontMatter:
 
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING
 from typing_extensions import override
 
 from multidict import CIMultiDict
@@ -62,11 +62,11 @@ class Session(HTTPClientSession):
         params: QueryTypes = None,
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
-        version: Union[str, HTTPVersion] = HTTPVersion.H11,
+        version: str | HTTPVersion = HTTPVersion.H11,
         timeout: TimeoutTypes = None,
-        proxy: Optional[str] = None,
+        proxy: str | None = None,
     ):
-        self._client: Optional[aiohttp.ClientSession] = None
+        self._client: aiohttp.ClientSession | None = None
 
         self._params = URL.build(query=params).query if params is not None else None
 
@@ -279,9 +279,9 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
         params: QueryTypes = None,
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
-        version: Union[str, HTTPVersion] = HTTPVersion.H11,
+        version: str | HTTPVersion = HTTPVersion.H11,
         timeout: TimeoutTypes = None,
-        proxy: Optional[str] = None,
+        proxy: str | None = None,
     ) -> Session:
         return Session(
             params=params,

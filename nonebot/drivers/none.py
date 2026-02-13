@@ -12,7 +12,6 @@ FrontMatter:
 """
 
 import signal
-from typing import Optional
 from typing_extensions import override
 
 import anyio
@@ -112,7 +111,7 @@ class Driver(BaseDriver):
         if not self.should_exit.is_set():
             logger.info("Application startup completed.")
 
-    async def _listen_exit(self, tg: Optional[TaskGroup] = None):
+    async def _listen_exit(self, tg: TaskGroup | None = None):
         await self.should_exit.wait()
 
         if tg is not None:

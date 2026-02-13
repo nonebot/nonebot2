@@ -1,10 +1,10 @@
-from collections.abc import Generator
+from collections.abc import Callable, Generator
 from functools import wraps
 import os
 from pathlib import Path
 import sys
 import threading
-from typing import TYPE_CHECKING, Callable, TypeVar
+from typing import TYPE_CHECKING, TypeVar
 from typing_extensions import ParamSpec
 
 from nonebug import NONEBOT_INIT_KWARGS

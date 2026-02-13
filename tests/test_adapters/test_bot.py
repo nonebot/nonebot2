@@ -1,4 +1,4 @@
-from typing import Any, Optional
+from typing import Any
 
 import anyio
 from nonebug import App
@@ -123,7 +123,7 @@ async def test_bot_called_api_hook_simple(app: App):
 
     async def called_api_hook(
         bot: Bot,
-        exception: Optional[Exception],
+        exception: Exception | None,
         api: str,
         data: dict[str, Any],
         result: Any,
@@ -155,7 +155,7 @@ async def test_bot_called_api_hook_mock(app: App):
 
     async def called_api_hook(
         bot: Bot,
-        exception: Optional[Exception],
+        exception: Exception | None,
         api: str,
         data: dict[str, Any],
         result: Any,
@@ -201,7 +201,7 @@ async def test_bot_called_api_hook_multi_mock(app: App):
 
     async def called_api_hook1(
         bot: Bot,
-        exception: Optional[Exception],
+        exception: Exception | None,
         api: str,
         data: dict[str, Any],
         result: Any,
@@ -214,7 +214,7 @@ async def test_bot_called_api_hook_multi_mock(app: App):
 
     async def called_api_hook2(
         bot: Bot,
-        exception: Optional[Exception],
+        exception: Exception | None,
         api: str,
         data: dict[str, Any],
         result: Any,

@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, TypeVar, Union, overload
+from typing import TYPE_CHECKING, TypeVar, overload
 
 from .abstract import Driver, Mixin
 
@@ -21,7 +21,7 @@ def combine_driver(
 
 def combine_driver(
     driver: type[D], *mixins: type[Mixin]
-) -> Union[type[D], type["CombinedDriver"]]:
+) -> type[D] | type["CombinedDriver"]:
     """将一个驱动器和多个混入类合并。"""
     # check first
     if not issubclass(driver, Driver):
