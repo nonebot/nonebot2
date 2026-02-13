@@ -43,28 +43,12 @@ def overrides(InterfaceClass: object):
     return override
 
 
-if sys.version_info < (3, 10):
-
-    def type_has_args(type_: type[t.Any]) -> bool:
-        """判断类型是否有参数"""
-        return isinstance(type_, (t._GenericAlias, types.GenericAlias))  # type: ignore
-
-else:
-
-    def type_has_args(type_: type[t.Any]) -> bool:
-        return isinstance(type_, (t._GenericAlias, types.GenericAlias, types.UnionType))  # type: ignore
+def type_has_args(type_: type[t.Any]) -> bool:
+    return isinstance(type_, (t._GenericAlias, types.GenericAlias, types.UnionType))  # type: ignore
 
 
-if sys.version_info < (3, 10):
-
-    def origin_is_union(origin: type[t.Any] | None) -> bool:
-        """判断是否是 Union 类型"""
-        return origin is t.Union
-
-else:
-
-    def origin_is_union(origin: type[t.Any] | None) -> bool:
-        return origin is t.Union or origin is types.UnionType
+def origin_is_union(origin: type[t.Any] | None) -> bool:
+    return origin is t.Union or origin is types.UnionType
 
 
 def origin_is_literal(origin: type[t.Any] | None) -> bool:
@@ -89,9 +73,7 @@ def origin_is_annotated(origin: type[t.Any] | None) -> bool:
     return origin is t_ext.Annotated
 
 
-NONE_TYPES = {None, type(None), t.Literal[None], t_ext.Literal[None]}  # noqa: PYI061
-if sys.version_info >= (3, 10):
-    NONE_TYPES.add(types.NoneType)
+NONE_TYPES = {None, type(None), t.Literal[None], t_ext.Literal[None], types.NoneType}  # noqa: PYI061
 
 
 def is_none_type(type_: type[t.Any]) -> bool:
