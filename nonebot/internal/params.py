@@ -7,7 +7,6 @@ from typing import (
     Annotated,
     Any,
     Literal,
-    Optional,
     cast,
     get_args,
     get_origin,
@@ -246,7 +245,7 @@ class DependParam(Param):
     @override
     def _check_parameterless(
         cls, value: Any, allow_types: tuple[type[Param], ...]
-    ) -> Optional["Param"]:
+    ) -> "Param | None":
         if isinstance(value, DependsInner):
             assert value.dependency, "Dependency cannot be empty"
             dependent = Dependent[Any].parse(
@@ -593,7 +592,7 @@ class ArgParam(Param):
         else:
             raise ValueError(f"Unknown Arg type: {self.type}")
 
-    def _solve_message(self, matcher: "Matcher") -> Optional["Message"]:
+    def _solve_message(self, matcher: "Matcher") -> "Message | None":
         return matcher.get_arg(self.key)
 
     def _solve_str(self, matcher: "Matcher") -> str | None:

@@ -3,7 +3,7 @@ from collections.abc import Awaitable, Callable, Iterator, Mapping, MutableMappi
 from dataclasses import dataclass
 from enum import Enum
 from http.cookiejar import Cookie, CookieJar
-from typing import IO, Any, TypeAlias, Union
+from typing import IO, Any, TypeAlias
 import urllib.request
 
 from multidict import CIMultiDict
@@ -21,9 +21,9 @@ HeaderTypes: TypeAlias = (
     None | CIMultiDict[str] | dict[str, str] | list[tuple[str, str]]
 )
 
-CookieTypes: TypeAlias = Union[
-    None, "Cookies", CookieJar, dict[str, str], list[tuple[str, str]]
-]
+CookieTypes: TypeAlias = (
+    "None | Cookies | CookieJar | dict[str, str] | list[tuple[str, str]]"
+)
 
 ContentTypes: TypeAlias = str | bytes | None
 DataTypes: TypeAlias = dict | None
@@ -35,7 +35,7 @@ FileTypes: TypeAlias = (
     | FileType  # (filename, file (or bytes), content_type)
 )
 FilesTypes: TypeAlias = dict[str, FileTypes] | list[tuple[str, FileTypes]] | None
-TimeoutTypes: TypeAlias = Union[float, "Timeout", None]
+TimeoutTypes: TypeAlias = "float | Timeout | None"
 
 
 class HTTPVersion(Enum):
@@ -57,7 +57,7 @@ class Request:
     def __init__(
         self,
         method: str | bytes,
-        url: Union["URL", str, RawURL],
+        url: "URL | str | RawURL",
         *,
         params: QueryTypes = None,
         headers: HeaderTypes = None,

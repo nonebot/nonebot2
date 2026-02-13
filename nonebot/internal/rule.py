@@ -1,5 +1,5 @@
 from contextlib import AsyncExitStack
-from typing import ClassVar, NoReturn, Union
+from typing import ClassVar, NoReturn
 
 import anyio
 from exceptiongroup import BaseExceptionGroup, catch
@@ -101,7 +101,7 @@ class Rule:
 
         return result
 
-    def __and__(self, other: Union["Rule", T_RuleChecker] | None) -> "Rule":
+    def __and__(self, other: "Rule | T_RuleChecker | None") -> "Rule":
         if other is None:
             return self
         elif isinstance(other, Rule):
@@ -109,7 +109,7 @@ class Rule:
         else:
             return Rule(*self.checkers, other)
 
-    def __rand__(self, other: Union["Rule", T_RuleChecker] | None) -> "Rule":
+    def __rand__(self, other: "Rule | T_RuleChecker | None") -> "Rule":
         if other is None:
             return self
         elif isinstance(other, Rule):

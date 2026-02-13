@@ -12,7 +12,7 @@ from collections.abc import Awaitable, Callable, Iterable
 from dataclasses import dataclass, field
 from functools import partial
 import inspect
-from typing import Any, Generic, Optional, TypeVar, cast
+from typing import Any, Generic, TypeVar, cast
 
 import anyio
 from exceptiongroup import BaseExceptionGroup, catch
@@ -47,13 +47,13 @@ class Param(abc.ABC, FieldInfo):
     @classmethod
     def _check_param(
         cls, param: inspect.Parameter, allow_types: tuple[type["Param"], ...]
-    ) -> Optional["Param"]:
+    ) -> "Param | None":
         return
 
     @classmethod
     def _check_parameterless(
         cls, value: Any, allow_types: tuple[type["Param"], ...]
-    ) -> Optional["Param"]:
+    ) -> "Param | None":
         return
 
     @abc.abstractmethod
