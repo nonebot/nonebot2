@@ -627,6 +627,32 @@ async def test_websocket_client(driver: Driver, server_url: URL):
     await anyio.sleep(1)
 
 
+@pytest.mark.anyio
+async def test_aiohttp_websocket_closed_frame() -> None:
+    aiohttp = pytest.importorskip("aiohttp")
+    from nonebot.drivers.aiohttp import WebSocket as AiohttpWebSocket
+
+    class DummyWS:
+        close_code = None
+        closed = True
+
+        async def receive(self):
+            class Message:
+                type = aiohttp.WSMsgType.CLOSED
+                data = None
+
+            return Message()
+
+    ws = AiohttpWebSocket(
+        request=Request("GET", "ws://example.com"),
+        session=object(),
+        websocket=DummyWS(),
+    )
+
+    with pytest.raises(WebSocketClosed, match=r"code=1006"):
+        await ws.receive()
+
+
 @pytest.mark.parametrize(
     ("driver", "driver_type"),
     [
