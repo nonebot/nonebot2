@@ -1391,15 +1391,15 @@ wheels = [
 
 [[package]]
 name = "nb-autodoc"
-version = "1.0.0a7"
+version = "1.0.3"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a3/d9/be84ebb0e7b4b67307e3bc1cf13deb941fed8f30d0d339d4de1d9ae141a6/nb-autodoc-1.0.0a7.tar.gz", hash = "sha256:16cf127a3574dcd1e7e495ce992406bb2783245062033fef54b741fdf9b29f7e", size = 62878, upload-time = "2023-06-23T15:05:27.882Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/0a/b7/46978e3423b8311e1599967c4b91a6c5233b9e2d853aa99a8aef4de4b8fa/nb_autodoc-1.0.3.tar.gz", hash = "sha256:8bb90a20820280adf12a0aad1b94603e9f0c65750d81af8378c6dd6cfb0be400", size = 62703, upload-time = "2025-12-01T08:52:16.891Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/79/2b/9b1e33c6bd6786d450b0c44b4b52f8829130506a6832c62b18b8bff25a1a/nb_autodoc-1.0.0a7-py3-none-any.whl", hash = "sha256:789a17c0fa5e4c071cf65402d59444828b56b245aa7ec01c80640ce6bbe347b3", size = 52886, upload-time = "2023-06-23T15:05:25.488Z" },
+    { url = "https://files.pythonhosted.org/packages/dc/70/ce9c943da109599649efed7ca1d8e549515f60de9c8a046e93fe17b10ad4/nb_autodoc-1.0.3-py3-none-any.whl", hash = "sha256:6b5d1d244ee5c5ae896e0c6683193df64e47497986beceaeed2a76ae7235c06b", size = 53029, upload-time = "2025-12-01T08:52:15.301Z" },
 ]
 
 [[package]]
@@ -1516,7 +1516,7 @@ provides-extras = ["websockets", "httpx", "aiohttp", "quart", "fastapi", "all"]
 [package.metadata.requires-dev]
 dev = [
     { name = "coverage-conditional-plugin", specifier = ">=0.9.0,<0.10.0" },
-    { name = "nb-autodoc", specifier = ">=1.0.0a5,<2.0.0" },
+    { name = "nb-autodoc", specifier = ">=1.0.3,<2.0.0" },
     { name = "nonebug", specifier = ">=0.4.1,<0.5.0" },
     { name = "nonemoji", specifier = ">=0.1.2,<0.2.0" },
     { name = "pre-commit", specifier = ">=4.0.0,<5.0.0" },
@@ -1527,7 +1527,7 @@ dev = [
     { name = "werkzeug", specifier = ">=2.3.6,<4.0.0" },
     { name = "wsproto", specifier = ">=1.2.0,<2.0.0" },
 ]
-docs = [{ name = "nb-autodoc", specifier = ">=1.0.0a5,<2.0.0" }]
+docs = [{ name = "nb-autodoc", specifier = ">=1.0.3,<2.0.0" }]
 pydantic-v1 = [{ name = "pydantic", specifier = ">=1.10.0,<2.0.0" }]
 pydantic-v2 = [{ name = "pydantic", specifier = ">=2.0.0,<3.0.0" }]
 test = [
@@ -1921,10 +1921,10 @@ resolution-markers = [
     "python_full_version < '3.14'",
 ]
 dependencies = [
-    { name = "annotated-types" },
-    { name = "pydantic-core" },
-    { name = "typing-extensions" },
-    { name = "typing-inspection" },
+    { name = "annotated-types", marker = "extra == 'group-8-nonebot2-pydantic-v2' or extra != 'group-8-nonebot2-pydantic-v1'" },
+    { name = "pydantic-core", marker = "extra == 'group-8-nonebot2-pydantic-v2' or extra != 'group-8-nonebot2-pydantic-v1'" },
+    { name = "typing-extensions", marker = "extra == 'group-8-nonebot2-pydantic-v2' or extra != 'group-8-nonebot2-pydantic-v1'" },
+    { name = "typing-inspection", marker = "extra == 'group-8-nonebot2-pydantic-v2' or extra != 'group-8-nonebot2-pydantic-v1'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f3/1e/4f0a3233767010308f2fd6bd0814597e3f63f1dc98304a9112b8759df4ff/pydantic-2.12.3.tar.gz", hash = "sha256:1da1c82b0fc140bb0103bc1441ffe062154c8d38491189751ee00fd8ca65ce74", size = 819383, upload-time = "2025-10-17T15:04:21.222Z" }
 wheels = [
@@ -1936,7 +1936,7 @@ name = "pydantic-core"
 version = "2.41.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions" },
+    { name = "typing-extensions", marker = "extra == 'group-8-nonebot2-pydantic-v2' or extra != 'group-8-nonebot2-pydantic-v1'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/df/18/d0944e8eaaa3efd0a91b0f1fc537d3be55ad35091b6a87638211ba691964/pydantic_core-2.41.4.tar.gz", hash = "sha256:70e47929a9d4a1905a67e4b687d5946026390568a8e952b92824118063cee4d5", size = 457557, upload-time = "2025-10-14T10:23:47.909Z" }
 wheels = [
@@ -2278,8 +2278,8 @@ name = "taskgroup"
 version = "0.2.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "exceptiongroup" },
-    { name = "typing-extensions" },
+    { name = "exceptiongroup", marker = "python_full_version < '3.14' or (extra == 'group-8-nonebot2-pydantic-v1' and extra == 'group-8-nonebot2-pydantic-v2')" },
+    { name = "typing-extensions", marker = "python_full_version < '3.14' or (extra == 'group-8-nonebot2-pydantic-v1' and extra == 'group-8-nonebot2-pydantic-v2')" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/f0/8d/e218e0160cc1b692e6e0e5ba34e8865dbb171efeb5fc9a704544b3020605/taskgroup-0.2.2.tar.gz", hash = "sha256:078483ac3e78f2e3f973e2edbf6941374fbea81b9c5d0a96f51d297717f4752d", size = 11504, upload-time = "2025-01-03T09:24:13.761Z" }
 wheels = [
@@ -2367,7 +2367,7 @@ name = "typing-inspection"
 version = "0.4.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions" },
+    { name = "typing-extensions", marker = "extra == 'group-8-nonebot2-pydantic-v2' or extra != 'group-8-nonebot2-pydantic-v1'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/55/e3/70399cb7dd41c10ac53367ae42139cf4b1ca5f36bb3dc6c9d33acdb43655/typing_inspection-0.4.2.tar.gz", hash = "sha256:ba561c48a67c5958007083d386c3295464928b01faa735ab8547c5692e87f464", size = 75949, upload-time = "2025-10-01T02:14:41.687Z" }
 wheels = [
