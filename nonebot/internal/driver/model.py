@@ -29,14 +29,11 @@ ContentTypes: TypeAlias = str | bytes | None
 DataTypes: TypeAlias = dict | None
 FileContent: TypeAlias = IO[bytes] | bytes
 FileType: TypeAlias = tuple[str | None, FileContent, str | None]
-FileTypes: TypeAlias = Union[
-    # file (or bytes)
-    FileContent,
-    # (filename, file (or bytes))
-    tuple[str | None, FileContent],
-    # (filename, file (or bytes), content_type)
-    FileType,
-]
+FileTypes: TypeAlias = (
+    FileContent  # file (or bytes)
+    | tuple[str | None, FileContent]  # (filename, file (or bytes))
+    | FileType  # (filename, file (or bytes), content_type)
+)
 FilesTypes: TypeAlias = dict[str, FileTypes] | list[tuple[str, FileTypes]] | None
 TimeoutTypes: TypeAlias = Union[float, "Timeout", None]
 
