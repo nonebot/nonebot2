@@ -9,6 +9,16 @@ import urllib.request
 from multidict import CIMultiDict
 from yarl import URL as URL
 
+
+@dataclass
+class Timeout:
+    """Request 超时配置。"""
+
+    total: float | None = None
+    connect: float | None = None
+    read: float | None = None
+
+
 RawURL: TypeAlias = tuple[bytes, bytes, int | None, bytes]
 
 SimpleQuery: TypeAlias = str | int | float
@@ -35,22 +45,13 @@ FileTypes: TypeAlias = (
     | FileType  # (filename, file (or bytes), content_type)
 )
 FilesTypes: TypeAlias = dict[str, FileTypes] | list[tuple[str, FileTypes]] | None
-TimeoutTypes: TypeAlias = "float | Timeout | None"
+TimeoutTypes: TypeAlias = float | Timeout | None
 
 
 class HTTPVersion(Enum):
     H10 = "1.0"
     H11 = "1.1"
     H2 = "2"
-
-
-@dataclass
-class Timeout:
-    """Request 超时配置。"""
-
-    total: float | None = None
-    connect: float | None = None
-    read: float | None = None
 
 
 class Request:
