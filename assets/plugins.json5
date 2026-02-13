@@ -10370,4 +10370,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_doroending",
+    "project_link": "nonebot-plugin-doroending",
+    "author_id": 127853582,
+    "tags": [
+      {
+        "label": "doro",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
