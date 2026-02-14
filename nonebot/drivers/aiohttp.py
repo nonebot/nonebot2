@@ -323,7 +323,11 @@ class WebSocket(BaseWebSocket):
 
     async def _receive(self) -> aiohttp.WSMessage:
         msg = await self.websocket.receive()
-        if msg.type in (aiohttp.WSMsgType.CLOSE, aiohttp.WSMsgType.CLOSING):
+        if msg.type in (
+            aiohttp.WSMsgType.CLOSE,
+            aiohttp.WSMsgType.CLOSING,
+            aiohttp.WSMsgType.CLOSED,
+        ):
             raise WebSocketClosed(self.websocket.close_code or 1006)
         return msg
 
