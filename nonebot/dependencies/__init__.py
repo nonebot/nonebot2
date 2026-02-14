@@ -8,11 +8,11 @@ FrontMatter:
 """
 
 import abc
-from collections.abc import Awaitable, Iterable
+from collections.abc import Awaitable, Callable, Iterable
 from dataclasses import dataclass, field
 from functools import partial
 import inspect
-from typing import Any, Callable, Generic, Optional, TypeVar, cast
+from typing import Any, Generic, TypeVar, cast
 
 import anyio
 from exceptiongroup import BaseExceptionGroup, catch
@@ -47,13 +47,13 @@ class Param(abc.ABC, FieldInfo):
     @classmethod
     def _check_param(
         cls, param: inspect.Parameter, allow_types: tuple[type["Param"], ...]
-    ) -> Optional["Param"]:
+    ) -> "Param | None":
         return
 
     @classmethod
     def _check_parameterless(
         cls, value: Any, allow_types: tuple[type["Param"], ...]
-    ) -> Optional["Param"]:
+    ) -> "Param | None":
         return
 
     @abc.abstractmethod
@@ -92,7 +92,7 @@ class Dependent(Generic[R]):
         )
 
     async def __call__(self, **kwargs: Any) -> R:
-        exception: Optional[BaseExceptionGroup[SkippedException]] = None
+        exception: BaseExceptionGroup[SkippedException] | None = None
 
         def _handle_skipped(exc_group: BaseExceptionGroup[SkippedException]):
             nonlocal exception
@@ -167,7 +167,7 @@ class Dependent(Generic[R]):
         cls,
         *,
         call: _DependentCallable[R],
-        parameterless: Optional[Iterable[Any]] = None,
+        parameterless: Iterable[Any] | None = None,
         allow_types: Iterable[type[Param]],
     ) -> "Dependent[R]":
         allow_types = tuple(allow_types)

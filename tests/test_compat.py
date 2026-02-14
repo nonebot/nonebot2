@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Annotated, Any, Optional
+from typing import Annotated, Any
 
 from pydantic import BaseModel, ValidationError
 import pytest
@@ -144,7 +144,7 @@ def test_validate_json():
         test3: bool
         test4: dict
         test5: list
-        test6: Optional[int]
+        test6: int | None
 
     assert type_validate_json(
         TestModel,

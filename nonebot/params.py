@@ -7,8 +7,9 @@ FrontMatter:
     description: nonebot.params 模块
 """
 
+from collections.abc import Callable
 from re import Match
-from typing import Any, Callable, Literal, Optional, Union, overload
+from typing import Any, Literal, overload
 
 from nonebot.adapters import Event, Message, MessageSegment
 from nonebot.consts import (
@@ -136,7 +137,7 @@ def ShellCommandArgs() -> Any:
     return Depends(_shell_command_args, use_cache=False)
 
 
-def _shell_command_argv(state: T_State) -> list[Union[str, MessageSegment]]:
+def _shell_command_argv(state: T_State) -> list[str | MessageSegment]:
     return state[SHELL_ARGV]
 
 
@@ -155,11 +156,11 @@ def RegexMatched() -> Match[str]:
 
 
 def _regex_str(
-    groups: tuple[Union[str, int], ...],
-) -> Callable[[T_State], Union[str, tuple[Union[str, Any], ...], Any]]:
+    groups: tuple[str | int, ...],
+) -> Callable[[T_State], str | tuple[str | Any, ...] | Any]:
     def _regex_str_dependency(
         state: T_State,
-    ) -> Union[str, tuple[Union[str, Any], ...], Any]:
+    ) -> str | tuple[str | Any, ...] | Any:
         return _regex_matched(state).group(*groups)
 
     return _regex_str_dependency
@@ -170,16 +171,16 @@ def RegexStr(group: Literal[0] = 0, /) -> str: ...
 
 
 @overload
-def RegexStr(group: Union[str, int], /) -> Union[str, Any]: ...
+def RegexStr(group: str | int, /) -> str | Any: ...
 
 
 @overload
 def RegexStr(
-    group1: Union[str, int], group2: Union[str, int], /, *groups: Union[str, int]
-) -> tuple[Union[str, Any], ...]: ...
+    group1: str | int, group2: str | int, /, *groups: str | int
+) -> tuple[str | Any, ...]: ...
 
 
-def RegexStr(*groups: Union[str, int]) -> Union[str, tuple[Union[str, Any], ...], Any]:
+def RegexStr(*groups: str | int) -> str | tuple[str | Any, ...] | Any:
     """正则匹配结果文本"""
     return Depends(_regex_str(groups), use_cache=False)
 
@@ -238,7 +239,7 @@ def Keyword() -> str:
     return Depends(_keyword, use_cache=False)
 
 
-def Received(id: Optional[str] = None, default: Any = None) -> Any:
+def Received(id: str | None = None, default: Any = None) -> Any:
     """`receive` 事件参数"""
 
     def _received(matcher: "Matcher") -> Any:
@@ -256,7 +257,7 @@ def LastReceived(default: Any = None) -> Any:
     return Depends(_last_received, use_cache=False)
 
 
-def ReceivePromptResult(id: Optional[str] = None) -> Any:
+def ReceivePromptResult(id: str | None = None) -> Any:
     """`receive` prompt 发送结果"""
 
     def _receive_prompt_result(matcher: "Matcher") -> Any:

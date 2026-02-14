@@ -20,8 +20,7 @@ from ipaddress import IPv4Address
 import json
 import os
 from pathlib import Path
-from typing import TYPE_CHECKING, Any, Optional, Union
-from typing_extensions import TypeAlias, get_args, get_origin
+from typing import TYPE_CHECKING, Any, TypeAlias, get_args, get_origin
 
 from dotenv import dotenv_values
 from pydantic import BaseModel, Field
@@ -41,9 +40,7 @@ from nonebot.log import logger
 from nonebot.typing import origin_is_union
 from nonebot.utils import deep_update, lenient_issubclass, type_is_complex
 
-DOTENV_TYPE: TypeAlias = Union[
-    Path, str, list[Union[Path, str]], tuple[Union[Path, str], ...]
-]
+DOTENV_TYPE: TypeAlias = Path | str | list[Path | str] | tuple[Path | str, ...]
 
 ENV_FILE_SENTINEL = Path("")
 
@@ -84,10 +81,10 @@ class DotEnvSettingsSource(BaseSettingsSource):
     def __init__(
         self,
         settings_cls: type[BaseModel],
-        env_file: Optional[DOTENV_TYPE],
+        env_file: DOTENV_TYPE | None,
         env_file_encoding: str,
-        case_sensitive: Optional[bool] = False,
-        env_nested_delimiter: Optional[str] = None,
+        case_sensitive: bool | None = False,
+        env_nested_delimiter: str | None = None,
     ) -> None:
         super().__init__(settings_cls)
         self.env_file = env_file
@@ -108,17 +105,17 @@ class DotEnvSettingsSource(BaseSettingsSource):
         return False, False
 
     def _parse_env_vars(
-        self, env_vars: Mapping[str, Optional[str]]
-    ) -> dict[str, Optional[str]]:
+        self, env_vars: Mapping[str, str | None]
+    ) -> dict[str, str | None]:
         return {
             self._apply_case_sensitive(key): value for key, value in env_vars.items()
         }
 
-    def _read_env_file(self, file_path: Path) -> dict[str, Optional[str]]:
+    def _read_env_file(self, file_path: Path) -> dict[str, str | None]:
         file_vars = dotenv_values(file_path, encoding=self.env_file_encoding)
         return self._parse_env_vars(file_vars)
 
-    def _read_env_files(self) -> dict[str, Optional[str]]:
+    def _read_env_files(self) -> dict[str, str | None]:
         env_files = self.env_file
         if env_files is None:
             return {}
@@ -126,16 +123,14 @@ class DotEnvSettingsSource(BaseSettingsSource):
         if isinstance(env_files, (str, os.PathLike)):
             env_files = [env_files]
 
-        dotenv_vars: dict[str, Optional[str]] = {}
+        dotenv_vars: dict[str, str | None] = {}
         for env_file in env_files:
             env_path = Path(env_file).expanduser()
             if env_path.is_file():
                 dotenv_vars.update(self._read_env_file(env_path))
         return dotenv_vars
 
-    def _next_field(
-        self, field: Optional[ModelField], key: str
-    ) -> Optional[ModelField]:
+    def _next_field(self, field: ModelField | None, key: str) -> ModelField | None:
         if not field or origin_is_union(get_origin(field.annotation)):
             return None
         elif field.annotation and lenient_issubclass(field.annotation, BaseModel):
@@ -147,8 +142,8 @@ class DotEnvSettingsSource(BaseSettingsSource):
     def _explode_env_vars(
         self,
         field: ModelField,
-        env_vars: dict[str, Optional[str]],
-        env_file_vars: dict[str, Optional[str]],
+        env_vars: dict[str, str | None],
+        env_file_vars: dict[str, str | None],
     ) -> dict[str, Any]:
         if self.env_nested_delimiter is None:
             return {}
@@ -164,7 +159,7 @@ class DotEnvSettingsSource(BaseSettingsSource):
 
             _, *keys, last_key = env_name.split(self.env_nested_delimiter)
             env_var = result
-            target_field: Optional[ModelField] = field
+            target_field: ModelField | None = field
             for key in keys:
                 target_field = self._next_field(target_field, key)
                 env_var = env_var.setdefault(key, {})
@@ -293,18 +288,18 @@ class DotEnvSettingsSource(BaseSettingsSource):
 if PYDANTIC_V2:  # pragma: pydantic-v2
 
     class SettingsConfig(ConfigDict, total=False):
-        env_file: Optional[DOTENV_TYPE]
+        env_file: DOTENV_TYPE | None
         env_file_encoding: str
         case_sensitive: bool
-        env_nested_delimiter: Optional[str]
+        env_nested_delimiter: str | None
 
 else:  # pragma: pydantic-v1
 
     class SettingsConfig(ConfigDict):
-        env_file: Optional[DOTENV_TYPE]
+        env_file: DOTENV_TYPE | None
         env_file_encoding: str
         case_sensitive: bool
-        env_nested_delimiter: Optional[str]
+        env_nested_delimiter: str | None
 
 
 class BaseSettings(BaseModel):
@@ -332,9 +327,9 @@ class BaseSettings(BaseModel):
 
     def __init__(
         __settings_self__,  # pyright: ignore[reportSelfClsParameterName]
-        _env_file: Optional[DOTENV_TYPE] = ENV_FILE_SENTINEL,
-        _env_file_encoding: Optional[str] = None,
-        _env_nested_delimiter: Optional[str] = None,
+        _env_file: DOTENV_TYPE | None = ENV_FILE_SENTINEL,
+        _env_file_encoding: str | None = None,
+        _env_nested_delimiter: str | None = None,
         **values: Any,
     ) -> None:
         settings_config = model_config(__settings_self__.__class__)
@@ -372,9 +367,9 @@ class BaseSettings(BaseModel):
     def _settings_build_values(
         settings_cls: type[BaseModel],
         init_kwargs: dict[str, Any],
-        env_file: Optional[DOTENV_TYPE],
+        env_file: DOTENV_TYPE | None,
         env_file_encoding: str,
-        env_nested_delimiter: Optional[str],
+        env_nested_delimiter: str | None,
     ) -> dict[str, Any]:
         init_settings = InitSettingsSource(settings_cls, init_kwargs=init_kwargs)
         env_settings = DotEnvSettingsSource(
@@ -409,7 +404,7 @@ class Config(BaseSettings):
     """
 
     if TYPE_CHECKING:
-        _env_file: Optional[DOTENV_TYPE] = ".env", ".env.prod"
+        _env_file: DOTENV_TYPE | None = ".env", ".env.prod"
 
     # nonebot configs
     driver: str = "~fastapi"
@@ -425,7 +420,7 @@ class Config(BaseSettings):
     """NoneBot {ref}`nonebot.drivers.ReverseDriver` 服务端监听的 IP/主机名。"""
     port: int = Field(default=8080, ge=1, le=65535)
     """NoneBot {ref}`nonebot.drivers.ReverseDriver` 服务端监听的端口。"""
-    log_level: Union[int, str] = LegacyUnionField(default="INFO")
+    log_level: int | str = LegacyUnionField(default="INFO")
     """NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称。
 
     参考 [记录日志](https://nonebot.dev/docs/appendices/log)，[loguru 日志等级](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
@@ -442,7 +437,7 @@ class Config(BaseSettings):
     """
 
     # bot connection configs
-    api_timeout: Optional[float] = 30.0
+    api_timeout: float | None = 30.0
     """API 请求超时时间，单位: 秒。"""
 
     # bot runtime configs

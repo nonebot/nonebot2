@@ -1,6 +1,6 @@
 from http.cookies import SimpleCookie
 import json
-from typing import Any, Optional
+from typing import Any
 
 from aiohttp import ClientSession, ClientWebSocketResponse, WSMessage, WSMsgType
 import anyio
@@ -173,7 +173,7 @@ async def test_websocket_server(app: App, driver: Driver):
 async def test_cross_context(app: App, driver: Driver):
     assert isinstance(driver, ASGIMixin)
 
-    ws: Optional[WebSocket] = None
+    ws: WebSocket | None = None
     ws_ready = anyio.Event()
     ws_should_close = anyio.Event()
 
@@ -651,7 +651,7 @@ async def test_aiohttp_websocket_close_frame(msg_type: str) -> None:
         def closed(self) -> bool:
             return True
 
-        async def receive(self, timeout: Optional[float] = None) -> WSMessage:  # noqa: ASYNC109
+        async def receive(self, timeout: float | None = None) -> WSMessage:  # noqa: ASYNC109
             return WSMessage(type=WSMsgType[msg_type], data=None, extra=None)
 
     async with ClientSession() as session:

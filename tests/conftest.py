@@ -1,10 +1,11 @@
-from collections.abc import Generator
+from collections.abc import Callable, Generator
 from functools import wraps
 import os
 from pathlib import Path
 import sys
 import threading
-from typing import TYPE_CHECKING, Callable, TypeVar
+from types import EllipsisType
+from typing import TYPE_CHECKING, TypeVar
 from typing_extensions import ParamSpec
 
 from nonebug import NONEBOT_INIT_KWARGS
@@ -50,12 +51,12 @@ def anyio_backend(request: pytest.FixtureRequest):
 
 
 def run_once(func: Callable[P, R]) -> Callable[P, R]:
-    result = ...
+    result: R | EllipsisType = ...
 
     @wraps(func)
     def _wrapper(*args: P.args, **kwargs: P.kwargs) -> R:
         nonlocal result
-        if result is not Ellipsis:
+        if result is not ...:
             return result
 
         result = func(*args, **kwargs)

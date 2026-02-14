@@ -18,7 +18,7 @@ FrontMatter:
 """
 
 from collections.abc import AsyncGenerator
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING
 from typing_extensions import override
 
 from multidict import CIMultiDict
@@ -58,11 +58,11 @@ class Session(HTTPClientSession):
         params: QueryTypes = None,
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
-        version: Union[str, HTTPVersion] = HTTPVersion.H11,
+        version: str | HTTPVersion = HTTPVersion.H11,
         timeout: TimeoutTypes = None,
-        proxy: Optional[str] = None,
+        proxy: str | None = None,
     ):
-        self._client: Optional[httpx.AsyncClient] = None
+        self._client: httpx.AsyncClient | None = None
 
         self._params = (
             tuple(URL.build(query=params).query.items()) if params is not None else None
@@ -216,9 +216,9 @@ class Mixin(HTTPClientMixin):
         params: QueryTypes = None,
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
-        version: Union[str, HTTPVersion] = HTTPVersion.H11,
+        version: str | HTTPVersion = HTTPVersion.H11,
         timeout: TimeoutTypes = None,
-        proxy: Optional[str] = None,
+        proxy: str | None = None,
     ) -> Session:
         return Session(
             params=params,

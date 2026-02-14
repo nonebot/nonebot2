@@ -17,12 +17,12 @@ FrontMatter:
     description: nonebot.drivers.websockets 模块
 """
 
-from collections.abc import AsyncGenerator
+from collections.abc import AsyncGenerator, Callable
 from contextlib import asynccontextmanager
 from functools import wraps
 import logging
 from types import CoroutineType
-from typing import TYPE_CHECKING, Any, Callable, TypeVar, Union
+from typing import TYPE_CHECKING, Any, TypeVar
 from typing_extensions import ParamSpec, override
 
 from nonebot.drivers import Request, Timeout, WebSocketClientMixin, combine_driver
@@ -108,7 +108,7 @@ class WebSocket(BaseWebSocket):
 
     @override
     @catch_closed
-    async def receive(self) -> Union[str, bytes]:
+    async def receive(self) -> str | bytes:
         return await self.websocket.recv()
 
     @override

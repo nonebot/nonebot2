@@ -23,7 +23,8 @@ def test_loguru_escape_tag():
 def test_generic_check_issubclass():
     assert generic_check_issubclass(int, (int, float))
     assert not generic_check_issubclass(str, (int, float))
-    assert generic_check_issubclass(Union[int, float, None], (int, float))
+    assert generic_check_issubclass(Union[int, float, None], (int, float))  # noqa: UP007
+    assert generic_check_issubclass(int | float | None, (int, float))
     assert generic_check_issubclass(Literal[1, 2, 3], int)
     assert not generic_check_issubclass(Literal[1, 2, "3"], int)
     assert generic_check_issubclass(List[int], list)  # noqa: UP006

@@ -1,5 +1,4 @@
 import sys
-from typing import Optional
 
 from nonebug import App
 import pytest
@@ -326,7 +325,7 @@ async def test_run_postprocessor(app: App, monkeypatch: pytest.MonkeyPatch):
             event: Event,
             state: T_State,
             matcher: Matcher,
-            exception: Optional[Exception],
+            exception: Exception | None,
             sub: int = Depends(_dependency),
             default: int = 1,
         ):

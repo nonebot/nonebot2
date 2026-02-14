@@ -13,7 +13,7 @@ classifiers = [
   "Operating System :: OS Independent",
   "Programming Language :: Python :: 3",
 ]
-requires-python = ">=3.9, <4.0"
+requires-python = ">=3.10, <4.0"
 dependencies = [
   "yarl >=1.7.2, <2.0.0",
   "anyio >=4.4.0, <5.0.0",
@@ -57,7 +57,7 @@ test = [
   "pytest-xdist >=3.0.2, <4.0.0",
   "coverage-conditional-plugin >=0.9.0, <0.10.0",
 ]
-docs = ["nb-autodoc >=1.0.0a5, <2.0.0"]
+docs = ["nb-autodoc >=1.0.3, <2.0.0"]
 pydantic-v1 = ["pydantic >=1.10.0, <2.0.0"]
 pydantic-v2 = ["pydantic >=2.0.0, <3.0.0"]
 
@@ -83,7 +83,6 @@ filterwarnings = ["error", "ignore::DeprecationWarning"]
 
 [tool.ruff]
 line-length = 88
-target-version = "py39"
 
 [tool.ruff.format]
 line-ending = "lf"
@@ -126,7 +125,7 @@ mark-parentheses = false
 keep-runtime-typing = true
 
 [tool.pyright]
-pythonVersion = "3.9"
+pythonVersion = "3.10"
 pythonPlatform = "All"
 defineConstant = { PYDANTIC_V2 = true }
 executionEnvironments = [

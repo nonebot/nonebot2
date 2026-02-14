@@ -1,6 +1,6 @@
 import abc
 from functools import partial
-from typing import TYPE_CHECKING, Any, ClassVar, Optional, Protocol, Union
+from typing import TYPE_CHECKING, Any, ClassVar, Protocol
 
 import anyio
 from exceptiongroup import BaseExceptionGroup, catch
@@ -77,7 +77,7 @@ class Bot(abc.ABC):
 
         result: Any = None
         skip_calling_api: bool = False
-        exception: Optional[Exception] = None
+        exception: Exception | None = None
 
         if self._calling_api_hook:
             logger.debug("Running CallingAPI hooks...")
@@ -180,7 +180,7 @@ class Bot(abc.ABC):
     async def send(
         self,
         event: "Event",
-        message: Union[str, "Message", "MessageSegment"],
+        message: "str | Message | MessageSegment",
         **kwargs: Any,
     ) -> Any:
         """调用机器人基础发送消息接口

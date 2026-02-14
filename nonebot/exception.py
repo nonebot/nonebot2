@@ -31,7 +31,7 @@ FrontMatter:
     description: nonebot.exception 模块
 """
 
-from typing import Any, Optional
+from typing import Any
 
 from nonebot.compat import ModelField
 
@@ -47,7 +47,7 @@ class NoneBotException(Exception):
 class ParserExit(NoneBotException):
     """{ref}`nonebot.rule.shell_command` 处理消息失败时返回的异常。"""
 
-    def __init__(self, status: int = 0, message: Optional[str] = None) -> None:
+    def __init__(self, status: int = 0, message: str | None = None) -> None:
         self.status = status
         self.message = message
 
@@ -232,7 +232,7 @@ class DriverException(NoneBotException):
 class WebSocketClosed(DriverException):
     """WebSocket 连接已关闭。"""
 
-    def __init__(self, code: int, reason: Optional[str] = None) -> None:
+    def __init__(self, code: int, reason: str | None = None) -> None:
         self.code = code
         self.reason = reason
 

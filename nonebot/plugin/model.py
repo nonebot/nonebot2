@@ -10,7 +10,7 @@ FrontMatter:
 import contextlib
 from dataclasses import dataclass, field
 from types import ModuleType
-from typing import TYPE_CHECKING, Any, Optional, Type  # noqa: UP035
+from typing import TYPE_CHECKING, Any, Type  # noqa: UP035
 
 from pydantic import BaseModel
 
@@ -33,13 +33,13 @@ class PluginMetadata:
     """插件功能介绍"""
     usage: str
     """插件使用方法"""
-    type: Optional[str] = None
+    type: str | None = None
     """插件类型，用于商店分类"""
-    homepage: Optional[str] = None
+    homepage: str | None = None
     """插件主页"""
-    config: Optional[Type[BaseModel]] = None  # noqa: UP006
+    config: Type[BaseModel] | None = None  # noqa: UP006
     """插件配置项"""
-    supported_adapters: Optional[set[str]] = None
+    supported_adapters: set[str] | None = None
     """插件支持的适配器模块路径
 
     格式为 `<module>[:<Adapter>]`，`~` 为 `nonebot.adapters.` 的缩写。
@@ -49,7 +49,7 @@ class PluginMetadata:
     extra: dict[Any, Any] = field(default_factory=dict)
     """插件额外信息，可由插件编写者自由扩展定义"""
 
-    def get_supported_adapters(self) -> Optional[set[Type["Adapter"]]]:  # noqa: UP006
+    def get_supported_adapters(self) -> set[Type["Adapter"]] | None:  # noqa: UP006
         """获取当前已安装的插件支持适配器类列表"""
         if self.supported_adapters is None:
             return None
@@ -77,11 +77,11 @@ class Plugin:
     """导入该插件的插件管理器"""
     matcher: set[type[Matcher]] = field(default_factory=set)
     """插件加载时定义的 `Matcher`"""
-    parent_plugin: Optional["Plugin"] = None
+    parent_plugin: "Plugin | None" = None
     """父插件"""
     sub_plugins: set["Plugin"] = field(default_factory=set)
     """子插件集合"""
-    metadata: Optional[PluginMetadata] = None
+    metadata: PluginMetadata | None = None
     """插件元信息"""
 
     @property

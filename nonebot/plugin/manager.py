@@ -18,7 +18,6 @@ from pathlib import Path
 import pkgutil
 import sys
 from types import ModuleType
-from typing import Optional
 
 from nonebot.log import logger
 from nonebot.utils import escape_tag, path_to_module_name
@@ -43,8 +42,8 @@ class PluginManager:
 
     def __init__(
         self,
-        plugins: Optional[Iterable[str]] = None,
-        search_path: Optional[Iterable[str]] = None,
+        plugins: Iterable[str] | None = None,
+        search_path: Iterable[str] | None = None,
     ):
         # simple plugin not in search path
         self.plugins: set[str] = set(plugins or [])
@@ -154,7 +153,7 @@ class PluginManager:
 
         return self.available_plugins
 
-    def load_plugin(self, name: str) -> Optional[Plugin]:
+    def load_plugin(self, name: str) -> Plugin | None:
         """加载指定插件。
 
         可以使用完整插件模块名或者插件标识符加载。
@@ -211,8 +210,8 @@ class PluginFinder(MetaPathFinder):
     def find_spec(
         self,
         fullname: str,
-        path: Optional[Sequence[str]],
-        target: Optional[ModuleType] = None,
+        path: Sequence[str] | None,
+        target: ModuleType | None = None,
     ):
         if _managers:
             module_spec = PathFinder.find_spec(fullname, path, target)
@@ -235,7 +234,7 @@ class PluginLoader(SourceFileLoader):
         self.loaded = False
         super().__init__(fullname, path)
 
-    def create_module(self, spec) -> Optional[ModuleType]:
+    def create_module(self, spec) -> ModuleType | None:
         if self.name in sys.modules:
             self.loaded = True
             return sys.modules[self.name]
@@ -263,7 +262,7 @@ class PluginLoader(SourceFileLoader):
             _current_plugin.reset(_plugin_token)
 
         # get plugin metadata
-        metadata: Optional[PluginMetadata] = getattr(module, "__plugin_meta__", None)
+        metadata: PluginMetadata | None = getattr(module, "__plugin_meta__", None)
         plugin.metadata = metadata
 
         return
