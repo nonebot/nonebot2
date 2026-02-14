@@ -629,8 +629,7 @@ async def test_websocket_client(driver: Driver, server_url: URL):
 
 @pytest.mark.anyio
 async def test_aiohttp_websocket_closed_frame() -> None:
-    aiohttp = pytest.importorskip("aiohttp")
-    from aiohttp import ClientSession, ClientWebSocketResponse
+    from aiohttp import ClientSession, ClientWebSocketResponse, WSMsgType
 
     from nonebot.drivers.aiohttp import WebSocket as AiohttpWebSocket
 
@@ -640,7 +639,7 @@ async def test_aiohttp_websocket_closed_frame() -> None:
 
         async def receive(self):
             class Message:
-                type = aiohttp.WSMsgType.CLOSED
+                type = WSMsgType.CLOSED
                 data = None
 
             return Message()
