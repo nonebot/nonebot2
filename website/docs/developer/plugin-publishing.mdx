@@ -418,7 +418,7 @@ __plugin_meta__ = PluginMetadata(
 
     supported_adapters={"~onebot.v11"},
     # 支持的适配器集合，其中 `~` 在此处代表前缀 `nonebot.adapters.`，其余适配器亦按此格式填写。
-    # 若插件只使用了 NoneBot 2 基本抽象，应显式填写 None，否则应该列出插件支持的适配器。
+    # 若插件只使用了 NoneBot 基本抽象，应显式填写 None，否则应该列出插件支持的适配器。
 )
 ```
 
@@ -486,7 +486,7 @@ __plugin_meta__ = PluginMetadata(
 
 ### 避免误用同步操作
 
-NoneBot 2 是一个异步框架，插件中**禁止**使用任何可能阻塞事件循环的同步操作，例如：
+NoneBot 是一个异步框架，插件中**禁止**使用任何可能阻塞事件循环的同步操作，例如：
 - 同步 HTTP 请求（如 `requests` 库）；
 - 同步文件操作（如 `open()` 函数）；
 - 其他可能阻塞事件循环的操作。
@@ -514,6 +514,6 @@ NoneBot 2 是一个异步框架，插件中**禁止**使用任何可能阻塞事
 若插件检查未通过或信息有误，**不必**关闭当前 Issue。只需更新插件并上传到 PyPI/修改信息后勾选插件测试勾选框即可重新触发插件检查。
 :::
 
-之后，NoneBot 的维护者和一些志愿者者会初步检查插件代码，帮助减少该插件的问题。
+之后，NoneBot 的维护者和一些志愿者会初步检查插件代码，帮助减少该插件的问题。
 
 完成这些步骤后，您的插件将会被自动合并到[商店](/store/plugins)，而您也将成为 [**NoneBot 贡献者**](https://github.com/nonebot/nonebot2/graphs/contributors)的一员。
