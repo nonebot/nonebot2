@@ -8,7 +8,13 @@ description: 在商店发布自己的插件
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-NoneBot 为开发者提供了分享插件给大家使用的方式——商店。本章节将会介绍如何将我们写好的插件发布到商店。
+NoneBot 为开发者提供了分享插件的官方商店。本指南囊括**从创建项目到发布到 PyPI，最终提交商店审核**的全过程。
+
+:::warning 警告
+如果你的插件只是满足自用需求，则完全可以选择**不发布插件**。发布插件**不是**使用插件的必要条件。
+
+NoneBot 社区对于插件有一定质量要求，对于不符合要求的插件，社区成员有权要求整改，直至符合要求后才能通过审核；如果长期未更新整改，社区有权关闭当前请求，之后如需发布请重新提交发布插件请求。相应的质量要求会在本章节介绍。
+:::
 
 :::tip 提示
 本章节仅包含插件发布流程指导，插件开发请查阅前述章节。
@@ -30,7 +36,7 @@ NoneBot 插件使用下述命名规范：
 ### 项目结构
 
 :::tip 提示
-本段所述的项目结构仅作推荐，不做强制要求，保证实际可用性即可。
+本段所述的项目结构仅作推荐，不做强制要求。
 :::
 
 插件程序本身结构可参考[插件结构](../tutorial/create-plugin.md#插件结构)一节，唯一区别在于，插件包可以直接处于项目顶层。
@@ -46,98 +52,267 @@ NoneBot 插件使用下述命名规范：
 └── 📜 README.md
 ```
 
-#### 第三方项目模板
+功能开发可以在 `__init__.py` 中进行或在包内部创建其他模块并在 `__init__.py` 中导入。
 
-一些社区用户可能会分享自己制作的项目模板方便大家使用，如：
+### 从项目模板开始
 
-- [A-kirami/nonebot-plugin-template](https://github.com/A-kirami/nonebot-plugin-template)
+为降低新手门槛，我们提供三条清晰、完整、可复制的发布路径。
+
+:::tip 提示
+你只需选择一条与你习惯一致的路径，**完整跟随即可成功发布**。无需在不同工具间切换或猜测配置。
+:::
+
+NoneBot 生态目前有如下插件项目模板：
+
 - [RF-Tar-Railt/nonebot-plugin-template](https://github.com/RF-Tar-Railt/nonebot-plugin-template)
+
+  此路径使用 **PDM** 项目管理器，符合 PEP 621 标准，自动化程度高。
+
 - [fllesser/nonebot-plugin-template](https://github.com/fllesser/nonebot-plugin-template)
 
+  此路径使用 **uv** 项目管理器和 **PoeThePoet** 任务运行器，构建速度快，适合追求效率的开发者。
+
+- [A-kirami/nonebot-plugin-template](https://github.com/A-kirami/nonebot-plugin-template)
+
+  此路径使用 **Poetry** 项目管理器，适合熟悉传统 Python 生态的开发者。
+
+#### 1. 创建项目
+
+1. 访问上述三个模板之一。
+2. 点击 **“Use this template”** → **“Create a new repository”**。
+3. 仓库名称填写：`nonebot-plugin-{your-plugin-name}`（此部分以 `nonebot-plugin-weather` 为例）。
+4. 点击 **“Create repository from template”**。
+
+#### 2. 配置发布权限
+
+1. 进入新仓库 → **Settings** → **Actions** → **General**。
+2. 在 **Workflow permissions** 下，勾选 **“Read and write permissions”** → 点击 **Save**。
+
+#### 3. 全局替换项目信息
+
+在仓库中点击 **“Add file”** → **“Create new file”**，创建一个空文件 `LICENSE`，选择开源协议并提交（此操作会触发工作流）。
+
+然后在本地克隆仓库，使用编辑器对以下内容进行**全局替换**：
+
 :::tip 提示
-本文档**不保证**第三方模板的适用性。
-
-根据项目模板提供的使用指导补全/修改相应内容后上传到 GitHub 即可。
+此部分以“天气插件”为例，实际的替换内容应该根据你所创建的插件名称等相应调整。
 :::
 
-### 插件依赖
+| 原内容                         | 替换为                             |
+| ------------------------------ | ---------------------------------- |
+| `nonebot-plugin-template`      | `nonebot-plugin-weather`           |
+| `nonebot_plugin_template`      | `nonebot_plugin_weather`           |
+| `<your_plugin_humanized_name>` | `天气查询`                         |
+| `<your_plugin_description>`    | `查询指定城市的实时天气与未来预报` |
+| `<your_github>`                | `你的GitHub用户名`                 |
+| `<your_email>`                 | `你的邮箱`                         |
 
-本段指导填写插件依赖，避免不正确的依赖信息导致插件无法正常工作。
+#### 4. 安装依赖与开发
 
-依赖填写的基本原则：程序直接导入了什么第三方库，就添加什么第三方包依赖；能用哪些第三方库的特性，就根据使用的特性锁定第三方包版本。
+<Tabs groupId="publish-path" defaultValue="pdm" values={[
+  {label: 'PDM + RF-Tar-Railt 模板', value: 'pdm'},
+  {label: 'uv + fllesser 模板', value: 'uv'},
+  {label: 'Poetry + A-kirami 模板', value: 'poetry'},
+]}>
+  <TabItem value="pdm" label="PDM + RF-Tar-Railt 模板">
 
-:::caution 注意
+```bash
+# 安装 PDM（若未安装）
+curl -sSL https://pdm-project.org/install-pdm.py | python3 -
 
-1. 插件需要添加 `nonebot2` 为依赖以避免“幽灵依赖”；
-2. 插件需要将使用的适配器加入依赖列表，如：使用 OneBot 适配器的插件应添加 `nonebot-adapter-onebot` 依赖；
-3. 由于 `nonebot` 是指 `nonebot1` **而非** `nonebot2`，因此要注意**不要**将 `nonebot` 添加为插件的依赖，以免造成冲突；
-4. 尽可能避免使用 `==` 锁定单一版本，增强与其它插件的兼容性。
+# 安装项目依赖（自动创建虚拟环境）
+pdm sync
 
-:::
-
-### 填写插件元数据
-
-请注意，插件发布要求**必须**填写元数据才能通过审核。
-
-下面是一个示例：
-
-```python title=nonebot_plugin_{your_plugin_name}/__init__.py
-from nonebot.plugin import PluginMetadata
-
-from .config import Config
-
-__plugin_meta__ = PluginMetadata(
-    name="{插件名称}",
-    description="{插件介绍}",
-    usage="{插件用法}",
-
-    type="{插件分类}",
-    # 发布必填，当前有效类型有：`library`（为其他插件编写提供功能），`application`（向机器人用户提供功能）。
-
-    homepage="{项目主页}",
-    # 发布必填。
-
-    config=Config,
-    # 插件配置项类，如无需配置可不填写。
-
-    supported_adapters={"~onebot.v11", "~telegram"},
-    # 支持的适配器集合，其中 `~` 在此处代表前缀 `nonebot.adapters.`，其余适配器亦按此格式填写。
-    # 若插件可以保证兼容所有适配器（即仅使用基本适配器功能）可不填写，否则应该列出插件支持的适配器。
-)
+# 添加新依赖（如 httpx）
+pdm add httpx
 ```
 
-:::caution 注意
-`__plugin_meta__` 变量**必须**处于插件最外层（如 `__init__.py` 中），否则无法正常识别。
+</TabItem>
 
-一般做法是在 `__init__.py` 中定义 `__plugin_meta__`。
-:::
+  <TabItem value="uv" label="uv + fllesser 模板">
 
-:::tip 提示
-带花括号 `{}` 的内容需要自行替换，注意**一定要把原有的花括号去掉**。
-:::
+```bash
+# 安装 uv（Windows）
+powershell -c "irm https://astral.sh/uv/install.ps1 | iex"
 
-### 准备项目主页
+# 安装 uv（macOS/Linux）
+curl -LsSf https://astral.sh/uv/install.sh | sh
 
-通常可以使用 GitHub 项目页面作为项目主页，在 `README.md` 文件中编写插件介绍等内容。
+# 安装所有依赖（含 dev）
+uv sync --all-groups -p 3.12
 
-内容大致包括：
+# 添加新依赖
+uv add httpx
+```
 
-- 插件功能介绍
-- 安装方法（建议至少有 `nb-cli` 方式安装，**不要**使用旧式的 `bot.py` 配置）
-- 插件配置项（若无可跳过）
-- 插件设置的触发规则（若无可跳过）
-- 插件的其它用法（按需编写）
+</TabItem>
 
-:::tip 提示
-可以参考[第三方项目模板](#第三方项目模板)。
-:::
+  <TabItem value="poetry" label="Poetry + A-kirami 模板">
 
-### 发布至 [PyPI](https://pypi.org)
+```bash
+# 安装 Poetry（推荐方式）
+curl -sSL https://install.python-poetry.org | python3 -
 
+# 安装项目依赖
+poetry install
+
+# 添加新依赖
+poetry add httpx
+```
+
+</TabItem>
+</Tabs>
+
+#### 5. 更新版本并发布
+
+<Tabs
+  groupId="publish-path-bump"
+  defaultValue="bump-my-version"
+  values={[
+    { label: "使用 bump-my-version", value: "bump-my-version" },
+    { label: "使用项目管理器", value: "bump-manager" },
+    { label: "手动更新版本", value: "bump-manual" },
+  ]}
+>
+  <TabItem value="bump-my-version" label="使用 bump-my-version">
+
+[bump-my-version](https://github.com/callowayproject/bump-my-version) 是一个功能强大、可配置的 Python 项目版本更新工具，支持自动提交到 Git 等 VCS。
+
+<Tabs groupId="publish-path" defaultValue="pdm" values={[
+  {label: 'PDM + RF-Tar-Railt 模板', value: 'pdm'},
+  {label: 'uv + fllesser 模板', value: 'uv'},
+  {label: 'Poetry + A-kirami 模板', value: 'poetry'},
+]}>
+  <TabItem value="pdm" label="PDM + RF-Tar-Railt 模板">
+
+```bash
+# 安装 bump-my-version
+pdm add --dev bump-my-version
+
+# 更新 patch 版本
+pdm run bump patch
+
+# 推送 tag 触发发布
+git push origin --tags
+```
+
+</TabItem>
+
+  <TabItem value="uv" label="uv + fllesser 模板">
+
+```bash
+# 更新 patch 版本
+uv run poe bump patch
+
+# 推送 tag 触发发布
+git push origin --tags
+```
+
+</TabItem>
+
+  <TabItem value="poetry" label="Poetry + A-kirami 模板">
+
+```bash
+# 安装 bump-my-version
+poetry add --dev bump-my-version
+
+# 更新 patch 版本
+poetry run bump patch
+
+# 推送 tag 触发发布
+git push origin --tags
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+  <TabItem value="bump-manager" label="使用项目管理器">
+
+<Tabs groupId="publish-path" defaultValue="pdm" values={[
+  {label: 'PDM + RF-Tar-Railt 模板', value: 'pdm'},
+  {label: 'uv + fllesser 模板', value: 'uv'},
+  {label: 'Poetry + A-kirami 模板', value: 'poetry'},
+]}>
+  <TabItem value="pdm" label="PDM + RF-Tar-Railt 模板">
+
+需要安装 PDM 插件 [pdm-bump](https://github.com/carstencodes/pdm-bump)。
+
+```bash
+# 安装 pdm-bump
+pdm self add pdm-bump
+
+# 更新 patch 版本
+pdm bump patch
+
+# 推送 tag 触发发布
+git push origin --tags
+```
+
+</TabItem>
+
+  <TabItem value="uv" label="uv + fllesser 模板">
+
+```bash
+# 更新 patch 版本
+uv version --bump patch
+
+# 创建相应提交与标签
+git add pyproject.toml
+git commit -m "chore: release v0.1.1"  # 替换为实际的版本号
+git tag v0.1.1  # 替换为实际的版本号
+
+# 推送 tag 触发发布
+git push origin --tags
+```
+
+</TabItem>
+
+  <TabItem value="poetry" label="Poetry + A-kirami 模板">
+
+```bash
+# 更新版本（自动提交并打标签）
+poetry version patch
+
+# 推送 tag 触发发布
+git push origin --tags
+```
+
+</TabItem>
+</Tabs>
+
+</TabItem>
+  <TabItem value="bump-manual" label="手动更新版本">
+
+手动更新 `pyproject.toml` 中的 `version` 字段，然后推送 tag 触发发布工作流
+
+```bash
+git add pyproject.toml
+git commit -m "chore: release v0.1.1"  # 替换为实际的版本号
+git tag v0.1.1  # 替换为实际的版本号
+git push origin --tags
+```
+
+</TabItem>
+</Tabs>
+
+推送 `v*` 标签后，模板提供的 GitHub Actions 工作流将自动构建并发布到 PyPI。
+
+#### 6. 发布到 [PyPI](https://pypi.org)
+
+<Tabs groupId="publish-method" defaultValue="template" values={[
+  {label: '使用模板的自动发布工作流', value: 'template'},
+  {label: '手动发布', value: 'manual'},
+]}>
+  <TabItem value="template" label="使用模板的自动发布工作流">
+不同模板使用的发布方式可能不同，具体配置流程参考对应模板的详细使用指南。
+</TabItem>
+
+  <TabItem value="manual" label="手动发布">
 根据选用的构建系统，在项目的 `pyproject.toml` 中填入必要信息后进行构建与发布。
 
 :::tip 提示
-不同构建工具的使用可能存在差别。本文仅以 [`pdm`](https://pdm.fming.dev/latest/),
+不同构建工具的使用可能存在差别。本文仅以 [`pdm`](https://pdm-project.org/zh/latest/),
 [`poetry`](https://python-poetry.org/docs/), [`setuptools`](https://setuptools.pypa.io/en/latest/)
 构建系统**本地构建与发布**为示例讲解，其余构建/管理工具等和自动化构建的用法请读者自行探索。
 :::
@@ -179,9 +354,147 @@ twine upload dist/*                 # 只发布先前的构建
   </TabItem>
 </Tabs>
 
+</TabItem>
+</Tabs>
+
 :::tip 提示
 发布前建议自行测试构建包是否可用，避免遗漏代码文件或资源文件等问题。
 :::
+
+## 基本要求
+
+无论你选择哪条路径，以下内容**必须**完成，否则无法通过商店自动检查：
+
+### 能够正确加载
+
+插件包必须能够被 NoneBot 正确加载，在商店审核中会通过 **NoneFlow** 自动化加载测试进行。
+
+#### 依赖其他插件
+
+如果插件依赖其他插件提供的功能，则**必须**在代码中使用 `require()` 来引入该插件，然后才能 `import` 该插件提供的功能。具体细节参阅[跨插件访问](../advanced/requiring.md) 。
+
+使用示例如下：
+
+```python title=nonebot_plugin_weather/__init__.py
+from nonebot import require
+
+require("nonebot_plugin_apscheduler")
+
+from nonebot_plugin_apscheduler import scheduler
+```
+
+#### 不能零配置加载的插件
+
+如果插件需要必要配置项才能正常导入，则**必须**在插件元数据中填写 `config` 字段，并且在商店提交表单中填写必要的配置项内容。
+
+但一种更好的做法是，**将插件设计为零配置即可加载**（允许缺少必要配置项时插件仍能正常导入，但不执行需要相应配置项的功能），尤其是对于一些必要配置含有敏感信息（如密钥、Token、API Key 等）的插件。这样可以避免在商店提交表单时填写敏感信息的风险。
+
+### 插件元数据
+
+插件包**必须**填写元数据才能通过 **NoneFlow** 自动化检查。
+
+下面是一个示例：
+
+```python title=nonebot_plugin_weather/__init__.py
+from nonebot.plugin import PluginMetadata
+
+from .config import Config
+
+__plugin_meta__ = PluginMetadata(
+    # 基本信息（必填）
+    name="天气查询",  # 插件名称
+    description="查询指定城市的实时天气与未来预报",  # 插件介绍
+    usage="发送【天气 城市名】获取天气信息",  # 插件用法
+
+    # 发布额外信息
+    type="application",  # 插件分类
+    # 发布必填，当前有效类型有：`library`（为其他插件编写提供功能），`application`（向机器人用户提供功能）。
+
+    homepage="https://github.com/你的用户名/nonebot-plugin-weather",
+    # 发布必填。
+
+    config=Config,
+    # 插件配置项类，如无需配置可不填写。
+
+    supported_adapters={"~onebot.v11"},
+    # 支持的适配器集合，其中 `~` 在此处代表前缀 `nonebot.adapters.`，其余适配器亦按此格式填写。
+    # 若插件只使用了 NoneBot 2 基本抽象，应显式填写 None，否则应该列出插件支持的适配器。
+)
+```
+
+:::caution 注意
+`__plugin_meta__` 变量**必须**处于插件最外层（如 `__init__.py` 中），否则无法正常识别。
+
+一般做法是在 `__init__.py` 中定义 `__plugin_meta__`。
+:::
+
+#### 继承其他插件支持的适配器
+
+如果你的插件依赖于其他插件提供的支持功能，而其他插件可能支持更少的适配器，这时就应该使用
+[inherit_supported_adapters()](../api/plugin/load#inherit-supported-adapters) 函数来继承其他插件支持的适配器。
+
+示例用法如下：
+
+```python title=nonebot_plugin_weather/__init__.py
+from nonebot import require
+from nonebot.plugin import PluginMetadata, inherit_supported_adapters
+
+from .config import Config
+
+require("nonebot_plugin_alconna")  # 必须先 require 才能被 inherit_supported_adapters 处理
+
+__plugin_meta__ = PluginMetadata(
+    name="天气查询",
+    description="查询指定城市的实时天气与未来预报",
+    usage="发送【天气 城市名】获取天气信息",
+    type="application",
+    homepage="https://github.com/你的用户名/nonebot-plugin-weather",
+    config=Config,
+
+    supported_adapters=inherit_supported_adapters("nonebot_plugin_alconna"),
+    # 继承 nonebot_plugin_alconna 插件的适配器支持列表
+)
+```
+
+## 质量要求
+
+以下内容**强烈建议**完成，否则社区成员有权要求整改：
+
+### 准备项目主页
+
+通常可以使用 GitHub 项目页面作为项目主页，在 `README.md` 文件中编写插件介绍等内容。
+
+内容大致包括：
+
+- 插件功能介绍；
+- 安装方法
+  - **必须**有 NB-CLI 方式安装
+  - 可选依赖可以给出其他安装方式
+  - **不得**使用旧式的 `bot.py` 配置
+- 插件配置项（如 `Config` 类字段，若无可跳过）
+- 插件设置的触发规则（若无可跳过）
+- 插件的其它用法（按需编写）
+- 效果图、权限说明（按需编写）
+
+### 依赖管理原则
+
+- **必须**包含 `nonebot2`。
+- **必须**将插件直接使用的适配器加入依赖列表，如：使用 OneBot 适配器的插件应添加 `nonebot-adapter-onebot` 依赖；
+- **禁止**使用 `==` 锁定单一版本，使用 `>=` 或 `~=`。
+- **禁止**添加 `nonebot`（V1）作为依赖。
+- 所有在代码中 `import` 的第三方库，必须在 `pyproject.toml` 的 `dependencies` 中列出。
+
+### 避免误用同步操作
+
+NoneBot 2 是一个异步框架，插件中**禁止**使用任何可能阻塞事件循环的同步操作，例如：
+- 同步 HTTP 请求（如 `requests` 库）；
+- 同步文件操作（如 `open()` 函数）；
+- 其他可能阻塞事件循环的操作。
+
+| 操作类别 | 禁止的同步操作示例 | 推荐的异步操作示例 |
+| --- | --- | --- |
+| HTTP 请求 | `requests.get("https://api.example.com/data")` | `async with httpx.AsyncClient() as client: response = await client.get("https://api.example.com/data")` |
+| 文件操作 | `with open("data.txt", "r") as file: data = file.read()` | `async with aiofiles.open("data.txt", "r") as file: data = await file.read()` |
 
 ## 商店审核
 
@@ -201,6 +514,6 @@ twine upload dist/*                 # 只发布先前的构建
 若插件检查未通过或信息有误，**不必**关闭当前 Issue。只需更新插件并上传到 PyPI/修改信息后勾选插件测试勾选框即可重新触发插件检查。
 :::
 
-之后，NoneBot 的维护者和一些插件开发者会初步检查插件代码，帮助减少该插件的问题。
+之后，NoneBot 的维护者和一些志愿者者会初步检查插件代码，帮助减少该插件的问题。
 
 完成这些步骤后，您的插件将会被自动合并到[商店](/store/plugins)，而您也将成为 [**NoneBot 贡献者**](https://github.com/nonebot/nonebot2/graphs/contributors)的一员。
