@@ -651,7 +651,7 @@ async def test_aiohttp_websocket_close_frame(msg_type: str) -> None:
         def closed(self) -> bool:
             return True
 
-        async def receive(self, timeout: Optional[float] = None) -> WSMessage:  # noqa: ASYNC109
+        async def receive(self, timeout: float | None = None) -> WSMessage:  # noqa: ASYNC109
             return WSMessage(type=WSMsgType[msg_type], data=None, extra=None)
 
     async with ClientSession() as session:
