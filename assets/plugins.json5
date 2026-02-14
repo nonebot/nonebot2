@@ -10370,4 +10370,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_peek",
+    "project_link": "nonebot-plugin-peek",
+    "author_id": 74812967,
+    "tags": [],
+    "is_official": false
+  },
 ]
