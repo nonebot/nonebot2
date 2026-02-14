@@ -1,6 +1,6 @@
 from http.cookies import SimpleCookie
 import json
-from typing import Any, Optional, cast
+from typing import Any, Optional
 
 import anyio
 from nonebug import App
@@ -628,30 +628,43 @@ async def test_websocket_client(driver: Driver, server_url: URL):
 
 
 @pytest.mark.anyio
-async def test_aiohttp_websocket_closed_frame() -> None:
-    from aiohttp import ClientSession, ClientWebSocketResponse, WSMsgType
+@pytest.mark.parametrize(
+    ("msg_type"),
+    [
+        pytest.param("CLOSE", id="aiohttp-close"),
+        pytest.param("CLOSING", id="aiohttp-closing"),
+        pytest.param("CLOSED", id="aiohttp-closed"),
+    ],
+)
+async def test_aiohttp_websocket_close_frame(msg_type: str) -> None:
+    from aiohttp import ClientSession, ClientWebSocketResponse, WSMessage, WSMsgType
 
     from nonebot.drivers.aiohttp import WebSocket as AiohttpWebSocket
 
-    class DummyWS:
-        close_code = None
-        closed = True
+    class DummyWS(ClientWebSocketResponse):
+        def __init__(self) -> None:
+            pass
 
-        async def receive(self):
-            class Message:
-                type = WSMsgType.CLOSED
-                data = None
+        @property
+        def close_code(self) -> None:
+            return None
 
-            return Message()
+        @property
+        def closed(self) -> bool:
+            return True
 
-    ws = AiohttpWebSocket(
-        request=Request("GET", "ws://example.com"),
-        session=cast(ClientSession, object()),
-        websocket=cast(ClientWebSocketResponse, DummyWS()),
-    )
+        async def receive(self, timeout: Optional[float] = None) -> WSMessage:  # noqa: ASYNC109
+            return WSMessage(type=WSMsgType[msg_type], data=None, extra=None)
 
-    with pytest.raises(WebSocketClosed, match=r"code=1006"):
-        await ws.receive()
+    async with ClientSession() as session:
+        ws = AiohttpWebSocket(
+            request=Request("GET", "ws://example.com"),
+            session=session,
+            websocket=DummyWS(),
+        )
+
+        with pytest.raises(WebSocketClosed, match=r"code=1006"):
+            await ws.receive()
 
 
 @pytest.mark.parametrize(
