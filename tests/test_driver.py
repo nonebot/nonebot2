@@ -2,6 +2,7 @@ from http.cookies import SimpleCookie
 import json
 from typing import Any, Optional
 
+from aiohttp import ClientSession, ClientWebSocketResponse, WSMessage, WSMsgType
 import anyio
 from nonebug import App
 import pytest
@@ -21,6 +22,7 @@ from nonebot.drivers import (
     WebSocketClientMixin,
     WebSocketServerSetup,
 )
+from nonebot.drivers.aiohttp import WebSocket as AiohttpWebSocket
 from nonebot.exception import WebSocketClosed
 from nonebot.params import Depends
 from utils import FakeAdapter
@@ -637,10 +639,6 @@ async def test_websocket_client(driver: Driver, server_url: URL):
     ],
 )
 async def test_aiohttp_websocket_close_frame(msg_type: str) -> None:
-    from aiohttp import ClientSession, ClientWebSocketResponse, WSMessage, WSMsgType
-
-    from nonebot.drivers.aiohttp import WebSocket as AiohttpWebSocket
-
     class DummyWS(ClientWebSocketResponse):
         def __init__(self) -> None:
             pass
