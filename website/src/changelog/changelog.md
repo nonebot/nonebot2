@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🐛 Bug 修复
+
+- Fix: aiohttp 驱动未处理 WSMsgType.CLOSED 类型 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#3862](https://github.com/nonebot/nonebot2/pull/3862))
+
 ### 📝 文档
 
 - Docs: Docker 部署镜像添加 latest tag [@AhsokaTano26](https://github.com/AhsokaTano26) ([#3787](https://github.com/nonebot/nonebot2/pull/3787))
