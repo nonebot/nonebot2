@@ -43,6 +43,6 @@ jobs:
         shell: bash
 
       - name: Run Pyright
-        uses: jakebailey/pyright-action@v2
+        uses: jakebailey/pyright-action@v3
         with:
           pylance-version: latest-release
