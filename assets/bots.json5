@@ -764,4 +764,21 @@
     ],
     "is_official": false
   },
+  {
+    "name": "零界bot",
+    "desc": "群管，云黑，ai聊天等功能",
+    "author_id": 261619329,
+    "homepage": "https://github.com/weibai-furry/lj-bot",
+    "tags": [
+      {
+        "label": "云黑",
+        "color": "#ea5252"
+      },
+      {
+        "label": "ai聊天",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
