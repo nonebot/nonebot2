@@ -10401,4 +10401,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_maimaimonitor",
+    "project_link": "nonebot-plugin-maimaimonitor",
+    "author_id": 141206905,
+    "tags": [
+      {
+        "label": "maimai",
+        "color": "#39c5bb"
+      }
+    ],
+    "is_official": false
+  },
 ]
