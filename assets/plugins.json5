@@ -10408,4 +10408,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_rikka",
+    "project_link": "nonebot-plugin-rikka",
+    "author_id": 72406624,
+    "tags": [
+      {
+        "label": "maimai",
+        "color": "#60bacf"
+      }
+    ],
+    "is_official": false
+  },
 ]
