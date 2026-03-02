@@ -764,4 +764,17 @@
     ],
     "is_official": false
   },
+  {
+    "name": "Rosmontis.io",
+    "desc": "简单的机器人",
+    "author_id": 225668725,
+    "homepage": "https://github.com/com-wuqi/Rosmontis.io",
+    "tags": [
+      {
+        "label": "可爱",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
