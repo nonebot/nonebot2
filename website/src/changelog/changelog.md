@@ -31,6 +31,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: The Betterest Mute Cat [@noneflow](https://github.com/noneflow) ([#3869](https://github.com/nonebot/nonebot2/pull/3869))
 - Plugin: nonebot-plugin-cardimg [@noneflow](https://github.com/noneflow) ([#3857](https://github.com/nonebot/nonebot2/pull/3857))
 - Plugin: Nonebot-Plugin-Rikka [@noneflow](https://github.com/noneflow) ([#3875](https://github.com/nonebot/nonebot2/pull/3875))
 - Plugin: nonebot-plugin-peek [@noneflow](https://github.com/noneflow) ([#3859](https://github.com/nonebot/nonebot2/pull/3859))
