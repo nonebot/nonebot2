@@ -10487,4 +10487,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "endfield",
+    "project_link": "nonebot-plugin-endfield",
+    "author_id": 96970949,
+    "tags": [
+      {
+        "label": "终末地",
+        "color": "#ffd700"
+      }
+    ],
+    "is_official": false
+  },
 ]
