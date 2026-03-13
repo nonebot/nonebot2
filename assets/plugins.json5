@@ -10487,4 +10487,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_cs2bridge",
+    "project_link": "nonebot-plugin-cs2bridge",
+    "author_id": 264679009,
+    "tags": [],
+    "is_official": false
+  },
 ]
