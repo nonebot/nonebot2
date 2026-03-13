@@ -70,7 +70,7 @@ jobs:
 
       # action netlify has no pull request context, so we need to comment by ourselves
       - name: Comment on Pull Request
-        uses: marocchino/sticky-pull-request-comment@v2
+        uses: marocchino/sticky-pull-request-comment@v3
         with:
           header: website
           number: ${{ env.PR_NUMBER }}
