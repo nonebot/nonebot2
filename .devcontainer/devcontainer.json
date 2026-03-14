@@ -6,7 +6,7 @@
     "ghcr.io/devcontainers/features/node:1": {},
     "ghcr.io/meaningful-ooo/devcontainer-features/fish:2": {}
   },
-  "postCreateCommand": "./scripts/setup-envs.sh",
+  "postCreateCommand": "corepack enable && COREPACK_ENABLE_DOWNLOAD_PROMPT=0 ./scripts/setup-envs.sh",
   "customizations": {
     "vscode": {
       "settings": {
