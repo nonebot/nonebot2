@@ -46,7 +46,7 @@ __plugin_meta__ = PluginMetadata(
 )
 ```
 
-我们可以看到，插件元数据 `PluginMetadata` 有三个基本属性：插件名称、插件描述、插件使用方法。除此之外，还有几个可选的属性（具体填写见[发布插件](../developer/plugin-publishing.mdx#填写插件元数据)章节）：
+我们可以看到，插件元数据 `PluginMetadata` 有三个基本属性：插件名称、插件描述、插件使用方法。除此之外，还有几个可选的属性（具体填写见[发布插件](../developer/plugin-publishing.mdx#插件元数据)章节）：
 
 - `type`：插件类别，发布插件必填。当前有效类别有：`library`（为其他插件编写提供功能），`application`（向机器人用户提供功能）；
 - `homepage`：插件项目主页，发布插件必填；
