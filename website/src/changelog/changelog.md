@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Remove: 移除 Python 3.9 支持 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#3860](https://github.com/nonebot/nonebot2/pull/3860))
 
+### 🚀 新功能
+
+- Feature: 放宽 pydantic compat model dump 类型 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#3898](https://github.com/nonebot/nonebot2/pull/3898))
+
 ### 🐛 Bug 修复
 
 - Fix: aiohttp 驱动未处理 WSMsgType.CLOSED 类型 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#3862](https://github.com/nonebot/nonebot2/pull/3862))
