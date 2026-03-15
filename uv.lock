@@ -1391,15 +1391,15 @@ wheels = [
 
 [[package]]
 name = "nb-autodoc"
-version = "1.0.3"
+version = "1.0.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "click" },
     { name = "typing-extensions" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/0a/b7/46978e3423b8311e1599967c4b91a6c5233b9e2d853aa99a8aef4de4b8fa/nb_autodoc-1.0.3.tar.gz", hash = "sha256:8bb90a20820280adf12a0aad1b94603e9f0c65750d81af8378c6dd6cfb0be400", size = 62703, upload-time = "2025-12-01T08:52:16.891Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/fc/36/07ffb6434e5a8554f89a5e1f405da67df8399b2f18a221199a3012e10010/nb_autodoc-1.0.4.tar.gz", hash = "sha256:57566cc074aa46de5d367bc6406364ade87956f7d0e6e30ce5fc2af64af912a0", size = 62982, upload-time = "2026-03-15T11:18:07.647Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/dc/70/ce9c943da109599649efed7ca1d8e549515f60de9c8a046e93fe17b10ad4/nb_autodoc-1.0.3-py3-none-any.whl", hash = "sha256:6b5d1d244ee5c5ae896e0c6683193df64e47497986beceaeed2a76ae7235c06b", size = 53029, upload-time = "2025-12-01T08:52:15.301Z" },
+    { url = "https://files.pythonhosted.org/packages/3d/69/8c46be71fab80e7fee5b474eccf2efd234d5c72022a834807d54766199ba/nb_autodoc-1.0.4-py3-none-any.whl", hash = "sha256:68a75ee461dfc895efd5c31ced653dc7de1983605f65e701541d0eb172290032", size = 53035, upload-time = "2026-03-15T11:18:06.26Z" },
 ]
 
 [[package]]
@@ -1516,7 +1516,7 @@ provides-extras = ["websockets", "httpx", "aiohttp", "quart", "fastapi", "all"]
 [package.metadata.requires-dev]
 dev = [
     { name = "coverage-conditional-plugin", specifier = ">=0.9.0,<0.10.0" },
-    { name = "nb-autodoc", specifier = ">=1.0.3,<2.0.0" },
+    { name = "nb-autodoc", specifier = ">=1.0.4,<2.0.0" },
     { name = "nonebug", specifier = ">=0.4.1,<0.5.0" },
     { name = "nonemoji", specifier = ">=0.1.2,<0.2.0" },
     { name = "pre-commit", specifier = ">=4.0.0,<5.0.0" },
@@ -1527,7 +1527,7 @@ dev = [
     { name = "werkzeug", specifier = ">=2.3.6,<4.0.0" },
     { name = "wsproto", specifier = ">=1.2.0,<2.0.0" },
 ]
-docs = [{ name = "nb-autodoc", specifier = ">=1.0.3,<2.0.0" }]
+docs = [{ name = "nb-autodoc", specifier = ">=1.0.4,<2.0.0" }]
 pydantic-v1 = [{ name = "pydantic", specifier = ">=1.10.0,<2.0.0" }]
 pydantic-v2 = [{ name = "pydantic", specifier = ">=2.0.0,<3.0.0" }]
 test = [
