@@ -19,7 +19,9 @@ from typing import (
     Generic,
     Literal,
     Protocol,
+    TypeAlias,
     TypeVar,
+    cast,
     get_args,
     get_origin,
     overload,
@@ -42,6 +44,16 @@ if TYPE_CHECKING:
         def __get_validators__(cls) -> Generator[Callable[..., Any], None, None]: ...
 
     CVC = TypeVar("CVC", bound=_CustomValidationClass)
+
+
+ModelDumpIncEx: TypeAlias = (
+    set[int]
+    | set[str]
+    | dict[int, "ModelDumpIncEx"]
+    | dict[str, "ModelDumpIncEx"]
+    | None
+)
+"""Common include/exclude shape accepted by all supported pydantic versions."""
 
 
 __all__ = (
@@ -230,16 +242,17 @@ if PYDANTIC_V2:  # pragma: pydantic-v2
 
     def model_dump(
         model: BaseModel,
-        include: set[str] | None = None,
-        exclude: set[str] | None = None,
+        include: ModelDumpIncEx = None,
+        exclude: ModelDumpIncEx = None,
         by_alias: bool = False,
         exclude_unset: bool = False,
         exclude_defaults: bool = False,
         exclude_none: bool = False,
     ) -> dict[str, Any]:
         return model.model_dump(
-            include=include,
-            exclude=exclude,
+            # Nested types cannot be inferred correctly
+            include=cast(Any, include),
+            exclude=cast(Any, exclude),
             by_alias=by_alias,
             exclude_unset=exclude_unset,
             exclude_defaults=exclude_defaults,
@@ -457,16 +470,16 @@ else:  # pragma: pydantic-v1
 
     def model_dump(
         model: BaseModel,
-        include: set[str] | None = None,
-        exclude: set[str] | None = None,
+        include: ModelDumpIncEx = None,
+        exclude: ModelDumpIncEx = None,
         by_alias: bool = False,
         exclude_unset: bool = False,
         exclude_defaults: bool = False,
         exclude_none: bool = False,
     ) -> dict[str, Any]:
         return model.dict(
-            include=include,
-            exclude=exclude,
+            include=cast(Any, include),
+            exclude=cast(Any, exclude),
             by_alias=by_alias,
             exclude_unset=exclude_unset,
             exclude_defaults=exclude_defaults,
