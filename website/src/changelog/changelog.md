@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Codex [@noneflow](https://github.com/noneflow) ([#3889](https://github.com/nonebot/nonebot2/pull/3889))
 - Plugin: nonebot-plugin-nbnhhsh [@noneflow](https://github.com/noneflow) ([#3887](https://github.com/nonebot/nonebot2/pull/3887))
 - Plugin: mc服务器白名单管理工具 [@noneflow](https://github.com/noneflow) ([#3813](https://github.com/nonebot/nonebot2/pull/3813))
 - Plugin: 特朗普社媒监控 [@noneflow](https://github.com/noneflow) ([#3882](https://github.com/nonebot/nonebot2/pull/3882))
