@@ -10514,4 +10514,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_sentry_transaction",
+    "project_link": "nonebot-plugin-sentry-transaction",
+    "author_id": 51957264,
+    "tags": [
+      {
+        "label": "sentry",
+        "color": "#ea5252"
+      },
+      {
+        "label": "hook",
+        "color": "#3fb568"
+      }
+    ],
+    "is_official": false
+  },
 ]
