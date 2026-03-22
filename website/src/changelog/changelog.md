@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Endfield [@noneflow](https://github.com/noneflow) ([#3884](https://github.com/nonebot/nonebot2/pull/3884))
 - Plugin: AppStore游戏榜单 [@noneflow](https://github.com/noneflow) ([#3896](https://github.com/nonebot/nonebot2/pull/3896))
 - Plugin: 全自动膜拜机 [@noneflow](https://github.com/noneflow) ([#3906](https://github.com/nonebot/nonebot2/pull/3906))
 - Plugin: 计算器：游戏 [@noneflow](https://github.com/noneflow) ([#3904](https://github.com/nonebot/nonebot2/pull/3904))
