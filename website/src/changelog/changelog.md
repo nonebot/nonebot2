@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 全自动膜拜机 [@noneflow](https://github.com/noneflow) ([#3906](https://github.com/nonebot/nonebot2/pull/3906))
 - Plugin: 计算器：游戏 [@noneflow](https://github.com/noneflow) ([#3904](https://github.com/nonebot/nonebot2/pull/3904))
 - Plugin: nonebot-plugin-sentry-transaction [@noneflow](https://github.com/noneflow) ([#3912](https://github.com/nonebot/nonebot2/pull/3912))
 - Plugin: Codex [@noneflow](https://github.com/noneflow) ([#3889](https://github.com/nonebot/nonebot2/pull/3889))
