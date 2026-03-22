@@ -10542,4 +10542,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_qwqa",
+    "project_link": "nonebot-plugin-qwqa",
+    "author_id": 114509415,
+    "tags": [],
+    "is_official": false
+  },
 ]
