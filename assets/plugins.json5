@@ -10549,4 +10549,11 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_appstore_gameranking",
+    "project_link": "nonebot-plugin-appstore-gameranking",
+    "author_id": 47425055,
+    "tags": [],
+    "is_official": false
+  },
 ]
