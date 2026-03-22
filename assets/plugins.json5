@@ -10530,4 +10530,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_calcgame_new",
+    "project_link": "nonebot-plugin-calcgame-new",
+    "author_id": 143202058,
+    "tags": [
+      {
+        "label": "game",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
