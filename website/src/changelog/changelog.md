@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 舞萌服务器监控 [@noneflow](https://github.com/noneflow) ([#3910](https://github.com/nonebot/nonebot2/pull/3910))
 - Plugin: Endfield [@noneflow](https://github.com/noneflow) ([#3884](https://github.com/nonebot/nonebot2/pull/3884))
 - Plugin: AppStore游戏榜单 [@noneflow](https://github.com/noneflow) ([#3896](https://github.com/nonebot/nonebot2/pull/3896))
 - Plugin: 全自动膜拜机 [@noneflow](https://github.com/noneflow) ([#3906](https://github.com/nonebot/nonebot2/pull/3906))
