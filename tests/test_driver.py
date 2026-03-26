@@ -605,9 +605,10 @@ async def test_aiohttp_stream_request_skip_empty_chunk() -> None:
                 yield chunk
 
     class _FakeResponse:
-        status = 200
-        headers = {"x-test": "1"}
-        content = _FakeContent()
+        def __init__(self) -> None:
+            self.status = 200
+            self.headers = {"x-test": "1"}
+            self.content = _FakeContent()
 
     class _FakeRequestContext:
         async def __aenter__(self) -> _FakeResponse:
