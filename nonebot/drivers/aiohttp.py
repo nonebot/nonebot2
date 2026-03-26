@@ -191,11 +191,26 @@ class Session(HTTPClientSession):
             timeout=timeout,
         ) as response:
             response_headers = response.headers.copy()
+            # aiohttp does not guarantee fixed-size chunks; re-chunk to exact size
+            buffer = bytearray()
             async for chunk in response.content.iter_chunked(chunk_size):
+                if not chunk:
+                    continue
+                buffer.extend(chunk)
+                while len(buffer) >= chunk_size:
+                    out = bytes(buffer[:chunk_size])
+                    del buffer[:chunk_size]
+                    yield Response(
+                        response.status,
+                        headers=response_headers,
+                        content=out,
+                        request=setup,
+                    )
+            if buffer:
                 yield Response(
                     response.status,
                     headers=response_headers,
-                    content=chunk,
+                    content=bytes(buffer),
                     request=setup,
                 )
 
