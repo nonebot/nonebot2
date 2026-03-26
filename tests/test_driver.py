@@ -624,7 +624,9 @@ async def test_aiohttp_stream_request_skip_empty_chunk() -> None:
     session._client = _FakeClient()  # type: ignore[assignment]
 
     chunks = []
-    async for resp in session.stream_request(Request("GET", "https://example.com"), chunk_size=2):
+    async for resp in session.stream_request(
+        Request("GET", "https://example.com"), chunk_size=2
+    ):
         assert resp.status_code == 200
         assert resp.content
         chunks.append(resp.content)
