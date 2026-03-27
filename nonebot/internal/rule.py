@@ -1,5 +1,5 @@
 from contextlib import AsyncExitStack
-from typing import ClassVar, NoReturn, Optional, Union
+from typing import ClassVar, NoReturn
 
 import anyio
 from exceptiongroup import BaseExceptionGroup, catch
@@ -38,7 +38,7 @@ class Rule:
         DefaultParam,
     ]
 
-    def __init__(self, *checkers: Union[T_RuleChecker, Dependent[bool]]) -> None:
+    def __init__(self, *checkers: T_RuleChecker | Dependent[bool]) -> None:
         self.checkers: set[Dependent[bool]] = {
             (
                 checker
@@ -59,8 +59,8 @@ class Rule:
         bot: Bot,
         event: Event,
         state: T_State,
-        stack: Optional[AsyncExitStack] = None,
-        dependency_cache: Optional[T_DependencyCache] = None,
+        stack: AsyncExitStack | None = None,
+        dependency_cache: T_DependencyCache | None = None,
     ) -> bool:
         """检查是否符合所有规则
 
@@ -101,7 +101,7 @@ class Rule:
 
         return result
 
-    def __and__(self, other: Optional[Union["Rule", T_RuleChecker]]) -> "Rule":
+    def __and__(self, other: "Rule | T_RuleChecker | None") -> "Rule":
         if other is None:
             return self
         elif isinstance(other, Rule):
@@ -109,7 +109,7 @@ class Rule:
         else:
             return Rule(*self.checkers, other)
 
-    def __rand__(self, other: Optional[Union["Rule", T_RuleChecker]]) -> "Rule":
+    def __rand__(self, other: "Rule | T_RuleChecker | None") -> "Rule":
         if other is None:
             return self
         elif isinstance(other, Rule):

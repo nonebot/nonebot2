@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 import inspect
 import re
 from types import ModuleType
-from typing import Any, Optional, Union
+from typing import Any
 import warnings
 
 from nonebot.adapters import Event
@@ -48,7 +48,7 @@ def store_matcher(matcher: type[Matcher]) -> None:
         plugin.matcher.add(matcher)
 
 
-def get_matcher_plugin(depth: int = 1) -> Optional[Plugin]:  # pragma: no cover
+def get_matcher_plugin(depth: int = 1) -> Plugin | None:  # pragma: no cover
     """获取事件响应器定义所在插件。
 
     **Deprecated**, 请使用 {ref}`nonebot.plugin.on.get_matcher_source` 获取信息。
@@ -63,7 +63,7 @@ def get_matcher_plugin(depth: int = 1) -> Optional[Plugin]:  # pragma: no cover
     return (source := get_matcher_source(depth + 1)) and source.plugin
 
 
-def get_matcher_module(depth: int = 1) -> Optional[ModuleType]:  # pragma: no cover
+def get_matcher_module(depth: int = 1) -> ModuleType | None:  # pragma: no cover
     """获取事件响应器定义所在模块。
 
     **Deprecated**, 请使用 {ref}`nonebot.plugin.on.get_matcher_source` 获取信息。
@@ -78,7 +78,7 @@ def get_matcher_module(depth: int = 1) -> Optional[ModuleType]:  # pragma: no co
     return (source := get_matcher_source(depth + 1)) and source.module
 
 
-def get_matcher_source(depth: int = 0) -> Optional[MatcherSource]:
+def get_matcher_source(depth: int = 0) -> MatcherSource | None:
     """获取事件响应器定义所在源码信息。
 
     参数:
@@ -99,7 +99,7 @@ def get_matcher_source(depth: int = 0) -> Optional[MatcherSource]:
     module_name = (module := inspect.getmodule(frame)) and module.__name__
 
     # matcher defined when plugin loading
-    plugin: Optional["Plugin"] = _current_plugin.get()
+    plugin: Plugin | None = _current_plugin.get()
     # matcher defined when plugin running
     if plugin is None and module_name:
         plugin = get_plugin_by_module_name(module_name)
@@ -113,15 +113,15 @@ def get_matcher_source(depth: int = 0) -> Optional[MatcherSource]:
 
 def on(
     type: str = "",
-    rule: Optional[Union[Rule, T_RuleChecker]] = None,
-    permission: Optional[Union[Permission, T_PermissionChecker]] = None,
+    rule: Rule | T_RuleChecker | None = None,
+    permission: Permission | T_PermissionChecker | None = None,
     *,
-    handlers: Optional[list[Union[T_Handler, Dependent[Any]]]] = None,
+    handlers: list[T_Handler | Dependent[Any]] | None = None,
     temp: bool = False,
-    expire_time: Optional[Union[datetime, timedelta]] = None,
+    expire_time: datetime | timedelta | None = None,
     priority: int = 1,
     block: bool = False,
-    state: Optional[T_State] = None,
+    state: T_State | None = None,
     _depth: int = 0,
 ) -> type[Matcher]:
     """注册一个基础事件响应器，可自定义类型。
@@ -219,8 +219,8 @@ def on_request(*args, _depth: int = 0, **kwargs) -> type[Matcher]:
 
 
 def on_startswith(
-    msg: Union[str, tuple[str, ...]],
-    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    msg: str | tuple[str, ...],
+    rule: Rule | T_RuleChecker | None = None,
     ignorecase: bool = False,
     _depth: int = 0,
     **kwargs,
@@ -243,8 +243,8 @@ def on_startswith(
 
 
 def on_endswith(
-    msg: Union[str, tuple[str, ...]],
-    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    msg: str | tuple[str, ...],
+    rule: Rule | T_RuleChecker | None = None,
     ignorecase: bool = False,
     _depth: int = 0,
     **kwargs,
@@ -267,8 +267,8 @@ def on_endswith(
 
 
 def on_fullmatch(
-    msg: Union[str, tuple[str, ...]],
-    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    msg: str | tuple[str, ...],
+    rule: Rule | T_RuleChecker | None = None,
     ignorecase: bool = False,
     _depth: int = 0,
     **kwargs,
@@ -292,7 +292,7 @@ def on_fullmatch(
 
 def on_keyword(
     keywords: set[str],
-    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    rule: Rule | T_RuleChecker | None = None,
     _depth: int = 0,
     **kwargs,
 ) -> type[Matcher]:
@@ -313,10 +313,10 @@ def on_keyword(
 
 
 def on_command(
-    cmd: Union[str, tuple[str, ...]],
-    rule: Optional[Union[Rule, T_RuleChecker]] = None,
-    aliases: Optional[set[Union[str, tuple[str, ...]]]] = None,
-    force_whitespace: Optional[Union[str, bool]] = None,
+    cmd: str | tuple[str, ...],
+    rule: Rule | T_RuleChecker | None = None,
+    aliases: set[str | tuple[str, ...]] | None = None,
+    force_whitespace: str | bool | None = None,
     _depth: int = 0,
     **kwargs,
 ) -> type[Matcher]:
@@ -348,10 +348,10 @@ def on_command(
 
 
 def on_shell_command(
-    cmd: Union[str, tuple[str, ...]],
-    rule: Optional[Union[Rule, T_RuleChecker]] = None,
-    aliases: Optional[set[Union[str, tuple[str, ...]]]] = None,
-    parser: Optional[ArgumentParser] = None,
+    cmd: str | tuple[str, ...],
+    rule: Rule | T_RuleChecker | None = None,
+    aliases: set[str | tuple[str, ...]] | None = None,
+    parser: ArgumentParser | None = None,
     _depth: int = 0,
     **kwargs,
 ) -> type[Matcher]:
@@ -386,8 +386,8 @@ def on_shell_command(
 
 def on_regex(
     pattern: str,
-    flags: Union[int, re.RegexFlag] = 0,
-    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    flags: int | re.RegexFlag = 0,
+    rule: Rule | T_RuleChecker | None = None,
     _depth: int = 0,
     **kwargs,
 ) -> type[Matcher]:
@@ -411,8 +411,8 @@ def on_regex(
 
 
 def on_type(
-    types: Union[type[Event], tuple[type[Event], ...]],
-    rule: Optional[Union[Rule, T_RuleChecker]] = None,
+    types: type[Event] | tuple[type[Event], ...],
+    rule: Rule | T_RuleChecker | None = None,
     *,
     _depth: int = 0,
     **kwargs,
@@ -443,7 +443,7 @@ class _Group:
         """其他传递给 `on` 的参数默认值"""
 
     def _get_final_kwargs(
-        self, update: dict[str, Any], *, exclude: Optional[set[str]] = None
+        self, update: dict[str, Any], *, exclude: set[str] | None = None
     ) -> dict[str, Any]:
         """获取最终传递给 `on` 的参数
 
@@ -477,7 +477,7 @@ class CommandGroup(_Group):
     """
 
     def __init__(
-        self, cmd: Union[str, tuple[str, ...]], prefix_aliases: bool = False, **kwargs
+        self, cmd: str | tuple[str, ...], prefix_aliases: bool = False, **kwargs
     ):
         """命令前缀"""
         super().__init__(**kwargs)
@@ -488,7 +488,7 @@ class CommandGroup(_Group):
     def __repr__(self) -> str:
         return f"CommandGroup(cmd={self.basecmd}, matchers={len(self.matchers)})"
 
-    def command(self, cmd: Union[str, tuple[str, ...]], **kwargs) -> type[Matcher]:
+    def command(self, cmd: str | tuple[str, ...], **kwargs) -> type[Matcher]:
         """注册一个新的命令。新参数将会覆盖命令组默认值
 
         参数:
@@ -515,9 +515,7 @@ class CommandGroup(_Group):
         self.matchers.append(matcher)
         return matcher
 
-    def shell_command(
-        self, cmd: Union[str, tuple[str, ...]], **kwargs
-    ) -> type[Matcher]:
+    def shell_command(self, cmd: str | tuple[str, ...], **kwargs) -> type[Matcher]:
         """注册一个新的 `shell_like` 命令。新参数将会覆盖命令组默认值
 
         参数:
@@ -641,9 +639,7 @@ class MatcherGroup(_Group):
         self.matchers.append(matcher)
         return matcher
 
-    def on_startswith(
-        self, msg: Union[str, tuple[str, ...]], **kwargs
-    ) -> type[Matcher]:
+    def on_startswith(self, msg: str | tuple[str, ...], **kwargs) -> type[Matcher]:
         """注册一个消息事件响应器，并且当消息的**文本部分**以指定内容开头时响应。
 
         参数:
@@ -663,7 +659,7 @@ class MatcherGroup(_Group):
         self.matchers.append(matcher)
         return matcher
 
-    def on_endswith(self, msg: Union[str, tuple[str, ...]], **kwargs) -> type[Matcher]:
+    def on_endswith(self, msg: str | tuple[str, ...], **kwargs) -> type[Matcher]:
         """注册一个消息事件响应器，并且当消息的**文本部分**以指定内容结尾时响应。
 
         参数:
@@ -683,7 +679,7 @@ class MatcherGroup(_Group):
         self.matchers.append(matcher)
         return matcher
 
-    def on_fullmatch(self, msg: Union[str, tuple[str, ...]], **kwargs) -> type[Matcher]:
+    def on_fullmatch(self, msg: str | tuple[str, ...], **kwargs) -> type[Matcher]:
         """注册一个消息事件响应器，并且当消息的**文本部分**与指定内容完全一致时响应。
 
         参数:
@@ -724,9 +720,9 @@ class MatcherGroup(_Group):
 
     def on_command(
         self,
-        cmd: Union[str, tuple[str, ...]],
-        aliases: Optional[set[Union[str, tuple[str, ...]]]] = None,
-        force_whitespace: Optional[Union[str, bool]] = None,
+        cmd: str | tuple[str, ...],
+        aliases: set[str | tuple[str, ...]] | None = None,
+        force_whitespace: str | bool | None = None,
         **kwargs,
     ) -> type[Matcher]:
         """注册一个消息事件响应器，并且当消息以指定命令开头时响应。
@@ -755,9 +751,9 @@ class MatcherGroup(_Group):
 
     def on_shell_command(
         self,
-        cmd: Union[str, tuple[str, ...]],
-        aliases: Optional[set[Union[str, tuple[str, ...]]]] = None,
-        parser: Optional[ArgumentParser] = None,
+        cmd: str | tuple[str, ...],
+        aliases: set[str | tuple[str, ...]] | None = None,
+        parser: ArgumentParser | None = None,
         **kwargs,
     ) -> type[Matcher]:
         """注册一个支持 `shell_like` 解析参数的命令消息事件响应器。
@@ -786,7 +782,7 @@ class MatcherGroup(_Group):
         return matcher
 
     def on_regex(
-        self, pattern: str, flags: Union[int, re.RegexFlag] = 0, **kwargs
+        self, pattern: str, flags: int | re.RegexFlag = 0, **kwargs
     ) -> type[Matcher]:
         """注册一个消息事件响应器，并且当消息匹配正则表达式时响应。
 
@@ -810,7 +806,7 @@ class MatcherGroup(_Group):
         return matcher
 
     def on_type(
-        self, types: Union[type[Event], tuple[type[Event]]], **kwargs
+        self, types: type[Event] | tuple[type[Event]], **kwargs
     ) -> type[Matcher]:
         """注册一个事件响应器，并且当事件为指定类型时响应。
 

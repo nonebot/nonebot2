@@ -1,4 +1,4 @@
-from typing import Callable, Optional
+from collections.abc import Callable
 
 import pytest
 
@@ -103,7 +103,7 @@ from nonebot.typing import T_RuleChecker
 )
 def test_on(
     matcher_name: str,
-    pre_rule_factory: Optional[Callable[[type[Event]], T_RuleChecker]],
+    pre_rule_factory: Callable[[type[Event]], T_RuleChecker] | None,
     has_permission: bool,
 ):
     import plugins.plugin.matchers as module

@@ -1,48 +1,51 @@
 import abc
-from collections.abc import Awaitable, Iterator, Mapping, MutableMapping
+from collections.abc import Awaitable, Callable, Iterator, Mapping, MutableMapping
 from dataclasses import dataclass
 from enum import Enum
 from http.cookiejar import Cookie, CookieJar
-from typing import IO, Any, Callable, Optional, Union
-from typing_extensions import TypeAlias
+from typing import IO, Any, TypeAlias
 import urllib.request
 
 from multidict import CIMultiDict
 from yarl import URL as URL
 
-RawURL: TypeAlias = tuple[bytes, bytes, Optional[int], bytes]
 
-SimpleQuery: TypeAlias = Union[str, int, float]
-QueryVariable: TypeAlias = Union[SimpleQuery, list[SimpleQuery]]
-QueryTypes: TypeAlias = Union[
-    None, str, Mapping[str, QueryVariable], list[tuple[str, SimpleQuery]]
-]
+@dataclass
+class Timeout:
+    """Request 超时配置。"""
 
-HeaderTypes: TypeAlias = Union[
-    None,
-    CIMultiDict[str],
-    dict[str, str],
-    list[tuple[str, str]],
-]
+    total: float | None = None
+    connect: float | None = None
+    read: float | None = None
 
-CookieTypes: TypeAlias = Union[
-    None, "Cookies", CookieJar, dict[str, str], list[tuple[str, str]]
-]
 
-ContentTypes: TypeAlias = Union[str, bytes, None]
-DataTypes: TypeAlias = Union[dict, None]
-FileContent: TypeAlias = Union[IO[bytes], bytes]
-FileType: TypeAlias = tuple[Optional[str], FileContent, Optional[str]]
-FileTypes: TypeAlias = Union[
-    # file (or bytes)
-    FileContent,
-    # (filename, file (or bytes))
-    tuple[Optional[str], FileContent],
-    # (filename, file (or bytes), content_type)
-    FileType,
-]
-FilesTypes: TypeAlias = Union[dict[str, FileTypes], list[tuple[str, FileTypes]], None]
-TimeoutTypes: TypeAlias = Union[float, "Timeout", None]
+RawURL: TypeAlias = tuple[bytes, bytes, int | None, bytes]
+
+SimpleQuery: TypeAlias = str | int | float
+QueryVariable: TypeAlias = SimpleQuery | list[SimpleQuery]
+QueryTypes: TypeAlias = (
+    None | str | Mapping[str, QueryVariable] | list[tuple[str, SimpleQuery]]
+)
+
+HeaderTypes: TypeAlias = (
+    None | CIMultiDict[str] | dict[str, str] | list[tuple[str, str]]
+)
+
+CookieTypes: TypeAlias = (
+    "None | Cookies | CookieJar | dict[str, str] | list[tuple[str, str]]"
+)
+
+ContentTypes: TypeAlias = str | bytes | None
+DataTypes: TypeAlias = dict | None
+FileContent: TypeAlias = IO[bytes] | bytes
+FileType: TypeAlias = tuple[str | None, FileContent, str | None]
+FileTypes: TypeAlias = (
+    FileContent  # file (or bytes)
+    | tuple[str | None, FileContent]  # (filename, file (or bytes))
+    | FileType  # (filename, file (or bytes), content_type)
+)
+FilesTypes: TypeAlias = dict[str, FileTypes] | list[tuple[str, FileTypes]] | None
+TimeoutTypes: TypeAlias = float | Timeout | None
 
 
 class HTTPVersion(Enum):
@@ -51,20 +54,11 @@ class HTTPVersion(Enum):
     H2 = "2"
 
 
-@dataclass
-class Timeout:
-    """Request 超时配置。"""
-
-    total: Optional[float] = None
-    connect: Optional[float] = None
-    read: Optional[float] = None
-
-
 class Request:
     def __init__(
         self,
-        method: Union[str, bytes],
-        url: Union["URL", str, RawURL],
+        method: str | bytes,
+        url: "URL | str | RawURL",
         *,
         params: QueryTypes = None,
         headers: HeaderTypes = None,
@@ -73,9 +67,9 @@ class Request:
         data: DataTypes = None,
         json: Any = None,
         files: FilesTypes = None,
-        version: Union[str, HTTPVersion] = HTTPVersion.H11,
+        version: str | HTTPVersion = HTTPVersion.H11,
         timeout: TimeoutTypes = None,
-        proxy: Optional[str] = None,
+        proxy: str | None = None,
     ):
         # method
         self.method: str = (
@@ -88,7 +82,7 @@ class Request:
         # timeout
         self.timeout: TimeoutTypes = timeout
         # proxy
-        self.proxy: Optional[str] = proxy
+        self.proxy: str | None = proxy
 
         # url
         if isinstance(url, tuple):
@@ -117,7 +111,7 @@ class Request:
         self.content: ContentTypes = content
         self.data: DataTypes = data
         self.json: Any = json
-        self.files: Optional[list[tuple[str, FileType]]] = None
+        self.files: list[tuple[str, FileType]] | None = None
         if files:
             self.files = []
             files_ = files.items() if isinstance(files, dict) else files
@@ -140,7 +134,7 @@ class Response:
         *,
         headers: HeaderTypes = None,
         content: ContentTypes = None,
-        request: Optional[Request] = None,
+        request: Request | None = None,
     ):
         # status code
         self.status_code: int = status_code
@@ -153,7 +147,7 @@ class Response:
         self.content: ContentTypes = content
 
         # request
-        self.request: Optional[Request] = request
+        self.request: Request | None = request
 
     def __repr__(self) -> str:
         return f"{self.__class__.__name__}(status_code={self.status_code!r})"
@@ -183,7 +177,7 @@ class WebSocket(abc.ABC):
         raise NotImplementedError
 
     @abc.abstractmethod
-    async def receive(self) -> Union[str, bytes]:
+    async def receive(self) -> str | bytes:
         """接收一条 WebSocket text/bytes 信息"""
         raise NotImplementedError
 
@@ -197,7 +191,7 @@ class WebSocket(abc.ABC):
         """接收一条 WebSocket binary 信息"""
         raise NotImplementedError
 
-    async def send(self, data: Union[str, bytes]) -> None:
+    async def send(self, data: str | bytes) -> None:
         """发送一条 WebSocket text/bytes 信息"""
         if isinstance(data, str):
             await self.send_text(data)
@@ -258,11 +252,11 @@ class Cookies(MutableMapping):
     def get(  # pyright: ignore[reportIncompatibleMethodOverride]
         self,
         name: str,
-        default: Optional[str] = None,
-        domain: Optional[str] = None,
-        path: Optional[str] = None,
-    ) -> Optional[str]:
-        value: Optional[str] = None
+        default: str | None = None,
+        domain: str | None = None,
+        path: str | None = None,
+    ) -> str | None:
+        value: str | None = None
         for cookie in self.jar:
             if (
                 cookie.name == name
@@ -277,7 +271,7 @@ class Cookies(MutableMapping):
         return default if value is None else value
 
     def delete(
-        self, name: str, domain: Optional[str] = None, path: Optional[str] = None
+        self, name: str, domain: str | None = None, path: str | None = None
     ) -> None:
         if domain is not None and path is not None:
             return self.jar.clear(domain, path, name)
@@ -293,7 +287,7 @@ class Cookies(MutableMapping):
         for cookie in remove:
             self.jar.clear(cookie.domain, cookie.path, cookie.name)
 
-    def clear(self, domain: Optional[str] = None, path: Optional[str] = None) -> None:
+    def clear(self, domain: str | None = None, path: str | None = None) -> None:
         self.jar.clear(domain, path)
 
     def update(  # pyright: ignore[reportIncompatibleMethodOverride]

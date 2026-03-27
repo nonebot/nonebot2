@@ -1,5 +1,4 @@
 from contextlib import asynccontextmanager
-from typing import Optional
 
 from nonebug import App
 import pytest
@@ -19,8 +18,8 @@ from utils import FakeAdapter
 
 @pytest.mark.anyio
 async def test_adapter_connect(app: App, driver: Driver):
-    last_connect_bot: Optional[Bot] = None
-    last_disconnect_bot: Optional[Bot] = None
+    last_connect_bot: Bot | None = None
+    last_disconnect_bot: Bot | None = None
 
     def _fake_bot_connect(bot: Bot):
         nonlocal last_connect_bot
@@ -75,8 +74,8 @@ async def test_adapter_connect(app: App, driver: Driver):
     indirect=True,
 )
 def test_adapter_server(driver: Driver):
-    last_http_setup: Optional[HTTPServerSetup] = None
-    last_ws_setup: Optional[WebSocketServerSetup] = None
+    last_http_setup: HTTPServerSetup | None = None
+    last_ws_setup: WebSocketServerSetup | None = None
 
     def _fake_setup_http_server(setup: HTTPServerSetup):
         nonlocal last_http_setup
@@ -142,7 +141,7 @@ def test_adapter_server(driver: Driver):
     indirect=True,
 )
 async def test_adapter_http_client(driver: Driver):
-    last_request: Optional[Request] = None
+    last_request: Request | None = None
 
     async def _fake_request(request: Request):
         nonlocal last_request
@@ -190,7 +189,7 @@ async def test_adapter_http_client(driver: Driver):
 )
 async def test_adapter_websocket_client(driver: Driver):
     _fake_ws = object()
-    _last_request: Optional[Request] = None
+    _last_request: Request | None = None
 
     @asynccontextmanager
     async def _fake_websocket(setup: Request):

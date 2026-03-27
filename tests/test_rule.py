@@ -1,6 +1,5 @@
 import re
 from re import Match
-from typing import Optional, Union
 
 from nonebug import App
 import pytest
@@ -163,10 +162,10 @@ async def test_trie(app: App):
     ],
 )
 async def test_startswith(
-    msg: Union[str, tuple[str, ...]],
+    msg: str | tuple[str, ...],
     ignorecase: bool,
     type: str,
-    text: Optional[str],
+    text: str | None,
     expected: bool,
 ):
     test_startswith = startswith(msg, ignorecase)
@@ -203,10 +202,10 @@ async def test_startswith(
     ],
 )
 async def test_endswith(
-    msg: Union[str, tuple[str, ...]],
+    msg: str | tuple[str, ...],
     ignorecase: bool,
     type: str,
-    text: Optional[str],
+    text: str | None,
     expected: bool,
 ):
     test_endswith = endswith(msg, ignorecase)
@@ -243,10 +242,10 @@ async def test_endswith(
     ],
 )
 async def test_fullmatch(
-    msg: Union[str, tuple[str, ...]],
+    msg: str | tuple[str, ...],
     ignorecase: bool,
     type: str,
-    text: Optional[str],
+    text: str | None,
     expected: bool,
 ):
     test_fullmatch = fullmatch(msg, ignorecase)
@@ -281,7 +280,7 @@ async def test_fullmatch(
 async def test_keyword(
     kws: tuple[str, ...],
     type: str,
-    text: Optional[str],
+    text: str | None,
     expected: bool,
 ):
     test_keyword = keyword(*kws)
@@ -324,10 +323,10 @@ async def test_keyword(
 )
 async def test_command(
     cmds: tuple[tuple[str, ...]],
-    force_whitespace: Optional[Union[str, bool]],
+    force_whitespace: str | bool | None,
     cmd: tuple[str, ...],
-    whitespace: Optional[str],
-    arg_text: Optional[str],
+    whitespace: str | None,
+    arg_text: str | None,
     expected: bool,
 ):
     test_command = command(*cmds, force_whitespace=force_whitespace)
@@ -492,9 +491,9 @@ async def test_shell_command():
 async def test_regex(
     pattern: str,
     type: str,
-    text: Optional[str],
+    text: str | None,
     expected: bool,
-    matched: Optional[Match[str]],
+    matched: Match[str] | None,
 ):
     test_regex = regex(pattern)
     dependent = next(iter(test_regex.checkers))
@@ -507,7 +506,7 @@ async def test_regex(
     event = make_fake_event(_type=type, _message=message)()
     state = {}
     assert await dependent(event=event, state=state) == expected
-    result: Optional[Match[str]] = state.get(REGEX_MATCHED)
+    result: Match[str] | None = state.get(REGEX_MATCHED)
     if matched is None:
         assert result is None
     else:

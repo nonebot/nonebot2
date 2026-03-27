@@ -1,4 +1,4 @@
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING
 
 from pydantic import BaseModel, Field
 import pytest
@@ -16,8 +16,8 @@ class Simple(BaseModel):
 
 class Example(BaseSettings):
     if TYPE_CHECKING:
-        _env_file: Optional[DOTENV_TYPE] = ".env", ".env.example"
-        _env_nested_delimiter: Optional[str] = "__"
+        _env_file: DOTENV_TYPE | None = ".env", ".env.example"
+        _env_nested_delimiter: str | None = "__"
 
     if PYDANTIC_V2:
         model_config = SettingsConfig(
@@ -32,10 +32,10 @@ class Example(BaseSettings):
             env_nested_delimiter = "__"
 
     simple: str = ""
-    int_str: Union[int, str] = LegacyUnionField(default="")
+    int_str: int | str = LegacyUnionField(default="")
     complex: list[int] = Field(default=[1])
-    complex_none: Optional[list[int]] = None
-    complex_union: Union[int, list[int]] = 1
+    complex_none: list[int] | None = None
+    complex_union: int | list[int] = 1
     nested: Simple = Simple()
     nested_inner: Simple = Simple()
     aliased_simple: str = Field(default="", alias="alias_simple")

@@ -1,7 +1,8 @@
 from http.cookies import SimpleCookie
 import json
-from typing import Any, Optional
+from typing import Any
 
+from aiohttp import ClientSession, ClientWebSocketResponse, WSMessage, WSMsgType
 import anyio
 from nonebug import App
 import pytest
@@ -21,6 +22,8 @@ from nonebot.drivers import (
     WebSocketClientMixin,
     WebSocketServerSetup,
 )
+from nonebot.drivers.aiohttp import Session as AiohttpSession
+from nonebot.drivers.aiohttp import WebSocket as AiohttpWebSocket
 from nonebot.exception import WebSocketClosed
 from nonebot.params import Depends
 from utils import FakeAdapter
@@ -171,7 +174,7 @@ async def test_websocket_server(app: App, driver: Driver):
 async def test_cross_context(app: App, driver: Driver):
     assert isinstance(driver, ASGIMixin)
 
-    ws: Optional[WebSocket] = None
+    ws: WebSocket | None = None
     ws_ready = anyio.Event()
     ws_should_close = anyio.Event()
 
@@ -595,6 +598,46 @@ async def test_http_client_session(driver: Driver, server_url: URL):
 
 
 @pytest.mark.anyio
+async def test_aiohttp_stream_request_skip_empty_chunk() -> None:
+    class _FakeContent:
+        async def iter_chunked(self, _: int):
+            for chunk in (b"ab", b"", b"cd", b"e"):
+                yield chunk
+
+    class _FakeResponse:
+        def __init__(self) -> None:
+            self.status = 200
+            self.headers = {"x-test": "1"}
+            self.content = _FakeContent()
+
+    class _FakeRequestContext:
+        async def __aenter__(self) -> _FakeResponse:
+            return _FakeResponse()
+
+        async def __aexit__(self, *args: object) -> bool:
+            return False
+
+    class _FakeClient:
+        def request(self, *args: object, **kwargs: object) -> _FakeRequestContext:
+            return _FakeRequestContext()
+
+    session = AiohttpSession()
+    session._client = _FakeClient()  # type: ignore[assignment]
+
+    chunks = []
+    async for resp in session.stream_request(
+        Request("GET", "https://example.com"), chunk_size=2
+    ):
+        assert resp.status_code == 200
+        assert resp.content
+        chunks.append(resp.content)
+
+    assert chunks == [b"ab", b"cd", b"e"]
+    assert b"".join(chunks) == b"abcde"
+    assert all(len(chunk) == 2 for chunk in chunks[:-1])
+
+
+@pytest.mark.anyio
 @pytest.mark.parametrize(
     "driver",
     [
@@ -625,6 +668,42 @@ async def test_websocket_client(driver: Driver, server_url: URL):
             await ws.receive()
 
     await anyio.sleep(1)
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    ("msg_type"),
+    [
+        pytest.param("CLOSE", id="aiohttp-close"),
+        pytest.param("CLOSING", id="aiohttp-closing"),
+        pytest.param("CLOSED", id="aiohttp-closed"),
+    ],
+)
+async def test_aiohttp_websocket_close_frame(msg_type: str) -> None:
+    class DummyWS(ClientWebSocketResponse):
+        def __init__(self) -> None:
+            pass
+
+        @property
+        def close_code(self) -> None:
+            return None
+
+        @property
+        def closed(self) -> bool:
+            return True
+
+        async def receive(self, timeout: float | None = None) -> WSMessage:  # noqa: ASYNC109
+            return WSMessage(type=WSMsgType[msg_type], data=None, extra=None)
+
+    async with ClientSession() as session:
+        ws = AiohttpWebSocket(
+            request=Request("GET", "ws://example.com"),
+            session=session,
+            websocket=DummyWS(),
+        )
+
+        with pytest.raises(WebSocketClosed, match=r"code=1006"):
+            await ws.receive()
 
 
 @pytest.mark.parametrize(

@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from typing import Annotated, Any, Optional
+from typing import Annotated, Any
 
 from pydantic import BaseModel, ValidationError
 import pytest
@@ -73,12 +73,41 @@ def test_type_adapter():
 
 
 def test_model_dump():
+    class NestedModel(BaseModel):
+        hidden: int
+        shown: int
+
     class TestModel(BaseModel):
         test1: int
         test2: int
+        nested: NestedModel
+        items: list[NestedModel]
 
-    assert model_dump(TestModel(test1=1, test2=2), include={"test1"}) == {"test1": 1}
-    assert model_dump(TestModel(test1=1, test2=2), exclude={"test1"}) == {"test2": 2}
+    model = TestModel(
+        test1=1,
+        test2=2,
+        nested=NestedModel(hidden=3, shown=4),
+        items=[NestedModel(hidden=5, shown=6)],
+    )
+
+    assert model_dump(model, include={"test1"}) == {"test1": 1}
+    assert model_dump(model, exclude={"test1"}) == {
+        "test2": 2,
+        "nested": {"hidden": 3, "shown": 4},
+        "items": [{"hidden": 5, "shown": 6}],
+    }
+    assert model_dump(model, exclude={"nested": {"hidden"}}) == {
+        "test1": 1,
+        "test2": 2,
+        "nested": {"shown": 4},
+        "items": [{"hidden": 5, "shown": 6}],
+    }
+    assert model_dump(model, exclude={"items": {"__all__": {"hidden"}}}) == {
+        "test1": 1,
+        "test2": 2,
+        "nested": {"hidden": 3, "shown": 4},
+        "items": [{"shown": 6}],
+    }
 
 
 def test_model_validator():
@@ -144,7 +173,7 @@ def test_validate_json():
         test3: bool
         test4: dict
         test5: list
-        test6: Optional[int]
+        test6: int | None
 
     assert type_validate_json(
         TestModel,

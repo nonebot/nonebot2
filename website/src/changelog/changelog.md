@@ -7,8 +7,23 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💥 破坏性变更
+
+- Remove: 移除 Python 3.9 支持 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#3860](https://github.com/nonebot/nonebot2/pull/3860))
+
+### 🚀 新功能
+
+- Feature: 放宽 pydantic compat model dump 类型 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#3898](https://github.com/nonebot/nonebot2/pull/3898))
+
+### 🐛 Bug 修复
+
+- Fix: 修复 aiohttp 流式响应分块大小不固定问题 [@KeepingRunning](https://github.com/KeepingRunning) ([#3919](https://github.com/nonebot/nonebot2/pull/3919))
+- Fix: aiohttp 驱动未处理 WSMsgType.CLOSED 类型 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#3862](https://github.com/nonebot/nonebot2/pull/3862))
+
 ### 📝 文档
 
+- Docs: 修复插件元数据链接错误 [@yanyongyu](https://github.com/yanyongyu) ([#3894](https://github.com/nonebot/nonebot2/pull/3894))
+- Docs: 完善对「发布插件」章节的文档描述 [@NCBM](https://github.com/NCBM) ([#3865](https://github.com/nonebot/nonebot2/pull/3865))
 - Docs: Docker 部署镜像添加 latest tag [@AhsokaTano26](https://github.com/AhsokaTano26) ([#3787](https://github.com/nonebot/nonebot2/pull/3787))
 - Docs: 调整文档 `on_command` import 路径 [@Xfjie314](https://github.com/Xfjie314) ([#3747](https://github.com/nonebot/nonebot2/pull/3747))
 - Docs: 修复插件编写准备文档中的文本错误 [@Xfjie314](https://github.com/Xfjie314) ([#3746](https://github.com/nonebot/nonebot2/pull/3746))
@@ -16,12 +31,31 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Dev: 修复 devcontainer corepack 安装 yarn 卡死 [@yanyongyu](https://github.com/yanyongyu) ([#3893](https://github.com/nonebot/nonebot2/pull/3893))
 - Plugin: skland 插件添加标签 [@FrostN0v0](https://github.com/FrostN0v0) ([#3853](https://github.com/nonebot/nonebot2/pull/3853))
 - CI: 修改 `test_depend` cpython 版本范围 [@yanyongyu](https://github.com/yanyongyu) ([#3828](https://github.com/nonebot/nonebot2/pull/3828))
 - Plugin: 删除插件 nonebot_plugin_acmd [@hlfzsi](https://github.com/hlfzsi) ([#3750](https://github.com/nonebot/nonebot2/pull/3750))
 
 ### 🍻 插件发布
 
+- Plugin: CS2 Radar [@noneflow](https://github.com/noneflow) ([#3908](https://github.com/nonebot/nonebot2/pull/3908))
+- Plugin: 舞萌服务器监控 [@noneflow](https://github.com/noneflow) ([#3910](https://github.com/nonebot/nonebot2/pull/3910))
+- Plugin: Endfield [@noneflow](https://github.com/noneflow) ([#3884](https://github.com/nonebot/nonebot2/pull/3884))
+- Plugin: AppStore游戏榜单 [@noneflow](https://github.com/noneflow) ([#3896](https://github.com/nonebot/nonebot2/pull/3896))
+- Plugin: 全自动膜拜机 [@noneflow](https://github.com/noneflow) ([#3906](https://github.com/nonebot/nonebot2/pull/3906))
+- Plugin: 计算器：游戏 [@noneflow](https://github.com/noneflow) ([#3904](https://github.com/nonebot/nonebot2/pull/3904))
+- Plugin: nonebot-plugin-sentry-transaction [@noneflow](https://github.com/noneflow) ([#3912](https://github.com/nonebot/nonebot2/pull/3912))
+- Plugin: Codex [@noneflow](https://github.com/noneflow) ([#3889](https://github.com/nonebot/nonebot2/pull/3889))
+- Plugin: nonebot-plugin-nbnhhsh [@noneflow](https://github.com/noneflow) ([#3887](https://github.com/nonebot/nonebot2/pull/3887))
+- Plugin: mc服务器白名单管理工具 [@noneflow](https://github.com/noneflow) ([#3813](https://github.com/nonebot/nonebot2/pull/3813))
+- Plugin: 特朗普社媒监控 [@noneflow](https://github.com/noneflow) ([#3882](https://github.com/nonebot/nonebot2/pull/3882))
+- Plugin: The Betterest Mute Cat [@noneflow](https://github.com/noneflow) ([#3869](https://github.com/nonebot/nonebot2/pull/3869))
+- Plugin: nonebot-plugin-cardimg [@noneflow](https://github.com/noneflow) ([#3857](https://github.com/nonebot/nonebot2/pull/3857))
+- Plugin: Nonebot-Plugin-Rikka [@noneflow](https://github.com/noneflow) ([#3875](https://github.com/nonebot/nonebot2/pull/3875))
+- Plugin: nonebot-plugin-peek [@noneflow](https://github.com/noneflow) ([#3859](https://github.com/nonebot/nonebot2/pull/3859))
+- Plugin: 自动合成emoji [@noneflow](https://github.com/noneflow) ([#3867](https://github.com/nonebot/nonebot2/pull/3867))
+- Plugin: 今日doro结局 [@noneflow](https://github.com/noneflow) ([#3852](https://github.com/nonebot/nonebot2/pull/3852))
+- Plugin: Phira Server Manager [@noneflow](https://github.com/noneflow) ([#3855](https://github.com/nonebot/nonebot2/pull/3855))
 - Plugin: Shiro Web Console [@noneflow](https://github.com/noneflow) ([#3832](https://github.com/nonebot/nonebot2/pull/3832))
 - Plugin: 群聊拟人 [@noneflow](https://github.com/noneflow) ([#3820](https://github.com/nonebot/nonebot2/pull/3820))
 - Plugin: BitTorrent磁力搜索 [@noneflow](https://github.com/noneflow) ([#3844](https://github.com/nonebot/nonebot2/pull/3844))
@@ -59,6 +93,10 @@ toc_max_heading_level: 2
 - Plugin: 每日人品 [@noneflow](https://github.com/noneflow) ([#3735](https://github.com/nonebot/nonebot2/pull/3735))
 - Plugin: nonebot_plugin_markdown2img [@noneflow](https://github.com/noneflow) ([#3730](https://github.com/nonebot/nonebot2/pull/3730))
 - Plugin: B站解析助手 [@noneflow](https://github.com/noneflow) ([#3728](https://github.com/nonebot/nonebot2/pull/3728))
+
+### 🍻 机器人发布
+
+- Bot: Rosmontis.io [@noneflow](https://github.com/noneflow) ([#3878](https://github.com/nonebot/nonebot2/pull/3878))
 
 ### 🍻 适配器发布
 

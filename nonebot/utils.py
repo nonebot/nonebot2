@@ -8,7 +8,14 @@ FrontMatter:
 """
 
 from collections import deque
-from collections.abc import AsyncGenerator, Coroutine, Generator, Mapping, Sequence
+from collections.abc import (
+    AsyncGenerator,
+    Callable,
+    Coroutine,
+    Generator,
+    Mapping,
+    Sequence,
+)
 import contextlib
 from contextlib import AbstractContextManager, asynccontextmanager
 import dataclasses
@@ -18,8 +25,15 @@ import inspect
 import json
 from pathlib import Path
 import re
-from typing import Any, Callable, Generic, Optional, TypeVar, Union, overload
-from typing_extensions import ParamSpec, get_args, get_origin, override
+from typing import (
+    Any,
+    Generic,
+    TypeVar,
+    get_args,
+    get_origin,
+    overload,
+)
+from typing_extensions import ParamSpec, override
 
 import anyio
 import anyio.to_thread
@@ -73,7 +87,7 @@ def deep_update(
 
 
 def lenient_issubclass(
-    cls: Any, class_or_tuple: Union[type[Any], tuple[type[Any], ...]]
+    cls: Any, class_or_tuple: type[Any] | tuple[type[Any], ...]
 ) -> bool:
     """检查 cls 是否是 class_or_tuple 中的一个类型子类并忽略类型错误。"""
     try:
@@ -83,7 +97,7 @@ def lenient_issubclass(
 
 
 def generic_check_issubclass(
-    cls: Any, class_or_tuple: Union[type[Any], tuple[type[Any], ...]]
+    cls: Any, class_or_tuple: type[Any] | tuple[type[Any], ...]
 ) -> bool:
     """检查 cls 是否是 class_or_tuple 中的一个类型子类。
 
@@ -141,7 +155,7 @@ def type_is_complex(type_: type[Any]) -> bool:
     return _type_is_complex_inner(type_) or _type_is_complex_inner(origin)
 
 
-def _type_is_complex_inner(type_: Optional[type[Any]]) -> bool:
+def _type_is_complex_inner(type_: type[Any] | None) -> bool:
     if lenient_issubclass(type_, (str, bytes)):
         return False
 
@@ -212,7 +226,7 @@ async def run_coro_with_catch(
     coro: Coroutine[Any, Any, T],
     exc: tuple[type[Exception], ...],
     return_on_err: None = None,
-) -> Union[T, None]: ...
+) -> T | None: ...
 
 
 @overload
@@ -220,14 +234,14 @@ async def run_coro_with_catch(
     coro: Coroutine[Any, Any, T],
     exc: tuple[type[Exception], ...],
     return_on_err: R,
-) -> Union[T, R]: ...
+) -> T | R: ...
 
 
 async def run_coro_with_catch(
     coro: Coroutine[Any, Any, T],
     exc: tuple[type[Exception], ...],
-    return_on_err: Optional[R] = None,
-) -> Optional[Union[T, R]]:
+    return_on_err: R | None = None,
+) -> T | R | None:
     """运行协程并当遇到指定异常时返回指定值。
 
     参数:
@@ -288,7 +302,7 @@ def path_to_module_name(path: Path) -> str:
 
 
 def resolve_dot_notation(
-    obj_str: str, default_attr: str, default_prefix: Optional[str] = None
+    obj_str: str, default_attr: str, default_prefix: str | None = None
 ) -> Any:
     """解析并导入点分表示法的对象"""
     modulename, _, cls = obj_str.partition(":")
@@ -309,7 +323,7 @@ class classproperty(Generic[T]):
     def __init__(self, func: Callable[[Any], T]) -> None:
         self.func = func
 
-    def __get__(self, instance: Any, owner: Optional[type[Any]] = None) -> T:
+    def __get__(self, instance: Any, owner: type[Any] | None = None) -> T:
         return self.func(type(instance) if owner is None else owner)
 
 
@@ -339,7 +353,7 @@ def logger_wrapper(logger_name: str):
         - exception: 异常信息
     """
 
-    def log(level: str, message: str, exception: Optional[Exception] = None):
+    def log(level: str, message: str, exception: Exception | None = None):
         logger.opt(colors=True, exception=exception).log(
             level, f"<m>{escape_tag(logger_name)}</m> | {message}"
         )

@@ -1,7 +1,6 @@
-from collections.abc import Awaitable, Iterable
+from collections.abc import Awaitable, Callable, Iterable
 from types import TracebackType
-from typing import Any, Callable, Optional, Union, cast
-from typing_extensions import TypeAlias
+from typing import Any, TypeAlias, cast
 
 import anyio
 from anyio.abc import TaskGroup
@@ -11,12 +10,12 @@ from nonebot.utils import is_coroutine_callable, run_sync
 
 SYNC_LIFESPAN_FUNC: TypeAlias = Callable[[], Any]
 ASYNC_LIFESPAN_FUNC: TypeAlias = Callable[[], Awaitable[Any]]
-LIFESPAN_FUNC: TypeAlias = Union[SYNC_LIFESPAN_FUNC, ASYNC_LIFESPAN_FUNC]
+LIFESPAN_FUNC: TypeAlias = SYNC_LIFESPAN_FUNC | ASYNC_LIFESPAN_FUNC
 
 
 class Lifespan:
     def __init__(self) -> None:
-        self._task_group: Optional[TaskGroup] = None
+        self._task_group: TaskGroup | None = None
 
         self._startup_funcs: list[LIFESPAN_FUNC] = []
         self._ready_funcs: list[LIFESPAN_FUNC] = []
@@ -72,9 +71,9 @@ class Lifespan:
     async def shutdown(
         self,
         *,
-        exc_type: Optional[type[BaseException]] = None,
-        exc_val: Optional[BaseException] = None,
-        exc_tb: Optional[TracebackType] = None,
+        exc_type: type[BaseException] | None = None,
+        exc_val: BaseException | None = None,
+        exc_tb: TracebackType | None = None,
     ) -> None:
         if self._shutdown_funcs:
             # reverse shutdown funcs to ensure stack order
@@ -93,8 +92,8 @@ class Lifespan:
 
     async def __aexit__(
         self,
-        exc_type: Optional[type[BaseException]],
-        exc_val: Optional[BaseException],
-        exc_tb: Optional[TracebackType],
+        exc_type: type[BaseException] | None,
+        exc_val: BaseException | None,
+        exc_tb: TracebackType | None,
     ) -> None:
         await self.shutdown(exc_type=exc_type, exc_val=exc_val, exc_tb=exc_tb)

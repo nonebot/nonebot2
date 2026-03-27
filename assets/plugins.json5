@@ -10370,4 +10370,234 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_nodejsphira",
+    "project_link": "nonebot-plugin-nodejsphira",
+    "author_id": 75435667,
+    "tags": [
+      {
+        "label": "server",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_doroending",
+    "project_link": "nonebot-plugin-doroending",
+    "author_id": 127853582,
+    "tags": [
+      {
+        "label": "doro",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_auto_emojimix",
+    "project_link": "nonebot-plugin-auto-emojimix",
+    "author_id": 74812967,
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_peek",
+    "project_link": "nonebot-plugin-peek",
+    "author_id": 74812967,
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_rikka",
+    "project_link": "nonebot-plugin-rikka",
+    "author_id": 72406624,
+    "tags": [
+      {
+        "label": "maimai",
+        "color": "#60bacf"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cardimg",
+    "project_link": "nonebot-plugin-cardimg",
+    "author_id": 99666950,
+    "tags": [
+      {
+        "label": "模板渲染",
+        "color": "#dec7ef"
+      },
+      {
+        "label": "图片生成",
+        "color": "#f8d8cf"
+      },
+      {
+        "label": "HTML渲染",
+        "color": "#c2dff2"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mute_cat",
+    "project_link": "nonebot-plugin-mute-cat",
+    "author_id": 199351962,
+    "tags": [
+      {
+        "label": "工具",
+        "color": "#ea5252"
+      },
+      {
+        "label": "群管理",
+        "color": "#52eacf"
+      },
+      {
+        "label": "禁言",
+        "color": "#830daa"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot-plugin-trumpwatcher",
+    "project_link": "nonebot-plugin-trumpwatcher",
+    "author_id": 42519315,
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_mc_whitelist_controller",
+    "project_link": "nonebot-plugin-mc-whitelist-controller",
+    "author_id": 51502183,
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#ea5252"
+      },
+      {
+        "label": "MC",
+        "color": "#ea5252"
+      },
+      {
+        "label": "server",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_nbnhhsh",
+    "project_link": "nonebot-plugin-nbnhhsh",
+    "author_id": 24908800,
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_codex",
+    "project_link": "nonebot-plugin-codex",
+    "author_id": 98325911,
+    "tags": [
+      {
+        "label": "OpenAI",
+        "color": "#ea5252"
+      },
+      {
+        "label": "Codex",
+        "color": "#6fd8fc"
+      },
+      {
+        "label": "VibeCoding",
+        "color": "#74fc6f"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_sentry_transaction",
+    "project_link": "nonebot-plugin-sentry-transaction",
+    "author_id": 51957264,
+    "tags": [
+      {
+        "label": "sentry",
+        "color": "#ea5252"
+      },
+      {
+        "label": "hook",
+        "color": "#3fb568"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_calcgame_new",
+    "project_link": "nonebot-plugin-calcgame-new",
+    "author_id": 143202058,
+    "tags": [
+      {
+        "label": "game",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_qwqa",
+    "project_link": "nonebot-plugin-qwqa",
+    "author_id": 114509415,
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_appstore_gameranking",
+    "project_link": "nonebot-plugin-appstore-gameranking",
+    "author_id": 47425055,
+    "tags": [],
+    "is_official": false
+  },
+  {
+    "module_name": "endfield",
+    "project_link": "nonebot-plugin-endfield",
+    "author_id": 96970949,
+    "tags": [
+      {
+        "label": "终末地",
+        "color": "#ffd700"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_maimaimonitor",
+    "project_link": "nonebot-plugin-maimaimonitor",
+    "author_id": 141206905,
+    "tags": [
+      {
+        "label": "舞萌",
+        "color": "#ea5252"
+      },
+      {
+        "label": "maimai",
+        "color": "#ea5252"
+      },
+      {
+        "label": "服务器状态",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
+  {
+    "module_name": "nonebot_plugin_cs2radar",
+    "project_link": "nonebot-plugin-cs2radar",
+    "author_id": 114895516,
+    "tags": [
+      {
+        "label": "反恐精英",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]

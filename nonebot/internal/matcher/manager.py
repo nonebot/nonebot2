@@ -1,5 +1,5 @@
 from collections.abc import ItemsView, Iterator, KeysView, MutableMapping, ValuesView
-from typing import TYPE_CHECKING, Optional, TypeVar, Union, overload
+from typing import TYPE_CHECKING, TypeVar, overload
 
 from .provider import DEFAULT_PROVIDER_CLASS, MatcherProvider
 
@@ -52,7 +52,7 @@ class MatcherManager(MutableMapping[int, list[type["Matcher"]]]):
         return self.provider.items()
 
     @overload
-    def get(self, key: int) -> Optional[list[type["Matcher"]]]: ...
+    def get(self, key: int) -> list[type["Matcher"]] | None: ...
 
     @overload
     def get(
@@ -60,11 +60,11 @@ class MatcherManager(MutableMapping[int, list[type["Matcher"]]]):
     ) -> list[type["Matcher"]]: ...
 
     @overload
-    def get(self, key: int, default: T) -> Union[list[type["Matcher"]], T]: ...
+    def get(self, key: int, default: T) -> list[type["Matcher"]] | T: ...
 
     def get(
-        self, key: int, default: Optional[T] = None
-    ) -> Optional[Union[list[type["Matcher"]], T]]:
+        self, key: int, default: T | None = None
+    ) -> list[type["Matcher"]] | T | None:
         return self.provider.get(key, default)
 
     def pop(  # pyright: ignore[reportIncompatibleMethodOverride]

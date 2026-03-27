@@ -41,7 +41,7 @@ FrontMatter:
 from contextvars import ContextVar
 from itertools import chain
 from types import ModuleType
-from typing import Optional, TypeVar
+from typing import TypeVar
 
 from pydantic import BaseModel
 
@@ -53,7 +53,7 @@ C = TypeVar("C", bound=BaseModel)
 
 _plugins: dict[str, "Plugin"] = {}
 _managers: list["PluginManager"] = []
-_current_plugin: ContextVar[Optional["Plugin"]] = ContextVar(
+_current_plugin: ContextVar["Plugin | None"] = ContextVar(
     "_current_plugin", default=None
 )
 
@@ -71,8 +71,8 @@ def _controlled_modules() -> dict[str, str]:
 
 
 def _find_parent_plugin_id(
-    module_name: str, controlled_modules: Optional[dict[str, str]] = None
-) -> Optional[str]:
+    module_name: str, controlled_modules: dict[str, str] | None = None
+) -> str | None:
     if controlled_modules is None:
         controlled_modules = _controlled_modules()
     available = {
@@ -85,7 +85,7 @@ def _find_parent_plugin_id(
 
 
 def _module_name_to_plugin_id(
-    module_name: str, controlled_modules: Optional[dict[str, str]] = None
+    module_name: str, controlled_modules: dict[str, str] | None = None
 ) -> str:
     plugin_name = _module_name_to_plugin_name(module_name)
     if parent_plugin_id := _find_parent_plugin_id(module_name, controlled_modules):
@@ -132,7 +132,7 @@ def _revert_plugin(plugin: "Plugin") -> None:
         parent_plugin.sub_plugins.discard(plugin)
 
 
-def get_plugin(plugin_id: str) -> Optional["Plugin"]:
+def get_plugin(plugin_id: str) -> "Plugin | None":
     """获取已经导入的某个插件。
 
     如果为 `load_plugins` 文件夹导入的插件，则为文件(夹)名。
@@ -145,7 +145,7 @@ def get_plugin(plugin_id: str) -> Optional["Plugin"]:
     return _plugins.get(plugin_id)
 
 
-def get_plugin_by_module_name(module_name: str) -> Optional["Plugin"]:
+def get_plugin_by_module_name(module_name: str) -> "Plugin | None":
     """通过模块名获取已经导入的某个插件。
 
     如果提供的模块名为某个插件的子模块，同样会返回该插件。

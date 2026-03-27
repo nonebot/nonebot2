@@ -1,5 +1,3 @@
-from typing import Optional
-
 from nonebot.adapters import Bot, Event, Message
 from nonebot.matcher import Matcher
 from nonebot.params import Arg, Depends
@@ -12,11 +10,11 @@ def dependency():
 
 async def complex_priority(
     sub: int = Depends(dependency),
-    bot: Optional[Bot] = None,
-    event: Optional[Event] = None,
+    bot: Bot | None = None,
+    event: Event | None = None,
     state: T_State = {},
-    matcher: Optional[Matcher] = None,
+    matcher: Matcher | None = None,
     arg: Message = Arg(),
-    exception: Optional[Exception] = None,
+    exception: Exception | None = None,
     default: int = 1,
 ): ...
