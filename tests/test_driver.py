@@ -22,6 +22,7 @@ from nonebot.drivers import (
     WebSocketClientMixin,
     WebSocketServerSetup,
 )
+from nonebot.drivers.aiohttp import Session as AiohttpSession
 from nonebot.drivers.aiohttp import WebSocket as AiohttpWebSocket
 from nonebot.exception import WebSocketClosed
 from nonebot.params import Depends
@@ -594,6 +595,46 @@ async def test_http_client_session(driver: Driver, server_url: URL):
         }, "file parsing error"
 
     await anyio.sleep(1)
+
+
+@pytest.mark.anyio
+async def test_aiohttp_stream_request_skip_empty_chunk() -> None:
+    class _FakeContent:
+        async def iter_chunked(self, _: int):
+            for chunk in (b"ab", b"", b"cd", b"e"):
+                yield chunk
+
+    class _FakeResponse:
+        def __init__(self) -> None:
+            self.status = 200
+            self.headers = {"x-test": "1"}
+            self.content = _FakeContent()
+
+    class _FakeRequestContext:
+        async def __aenter__(self) -> _FakeResponse:
+            return _FakeResponse()
+
+        async def __aexit__(self, *args: object) -> bool:
+            return False
+
+    class _FakeClient:
+        def request(self, *args: object, **kwargs: object) -> _FakeRequestContext:
+            return _FakeRequestContext()
+
+    session = AiohttpSession()
+    session._client = _FakeClient()  # type: ignore[assignment]
+
+    chunks = []
+    async for resp in session.stream_request(
+        Request("GET", "https://example.com"), chunk_size=2
+    ):
+        assert resp.status_code == 200
+        assert resp.content
+        chunks.append(resp.content)
+
+    assert chunks == [b"ab", b"cd", b"e"]
+    assert b"".join(chunks) == b"abcde"
+    assert all(len(chunk) == 2 for chunk in chunks[:-1])
 
 
 @pytest.mark.anyio
