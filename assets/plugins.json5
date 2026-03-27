@@ -10600,4 +10600,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_bilibili_live_notify",
+    "project_link": "nonebot-plugin-bilibili-live-notify",
+    "author_id": 44470606,
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#00a1d6"
+      }
+    ],
+    "is_official": false
+  },
 ]
