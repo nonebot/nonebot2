@@ -10588,4 +10588,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_cs2radar",
+    "project_link": "nonebot-plugin-cs2radar",
+    "author_id": 114895516,
+    "tags": [
+      {
+        "label": "反恐精英",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
