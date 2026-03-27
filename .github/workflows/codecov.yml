@@ -56,7 +56,7 @@ jobs:
           CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Upload coverage report
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           env_vars: OS,PYTHON_VERSION,PYDANTIC_VERSION
           files: ./tests/coverage.xml
