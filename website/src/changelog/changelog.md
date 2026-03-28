@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 升级 Docusaurus 3.9.2 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3861](https://github.com/nonebot/nonebot2/pull/3861))
 - Docs: 修复插件元数据链接错误 [@yanyongyu](https://github.com/yanyongyu) ([#3894](https://github.com/nonebot/nonebot2/pull/3894))
 - Docs: 完善对「发布插件」章节的文档描述 [@NCBM](https://github.com/NCBM) ([#3865](https://github.com/nonebot/nonebot2/pull/3865))
 - Docs: Docker 部署镜像添加 latest tag [@AhsokaTano26](https://github.com/AhsokaTano26) ([#3787](https://github.com/nonebot/nonebot2/pull/3787))
