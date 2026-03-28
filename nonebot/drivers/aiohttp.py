@@ -273,7 +273,7 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
         if isinstance(setup.timeout, Timeout):
             timeout = aiohttp.ClientWSTimeout(
                 ws_receive=setup.timeout.read,  # type: ignore
-                ws_close=setup.timeout.total or setup.timeout.close,  # type: ignore
+                ws_close=setup.timeout.close or setup.timeout.total,  # type: ignore
             )
         else:
             timeout = aiohttp.ClientWSTimeout(ws_close=setup.timeout or 10.0)  # type: ignore
