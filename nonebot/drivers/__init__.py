@@ -9,6 +9,7 @@ FrontMatter:
     description: nonebot.drivers 模块
 """
 
+from nonebot.internal.driver import UNSET as UNSET
 from nonebot.internal.driver import URL as URL
 from nonebot.internal.driver import ASGIMixin as ASGIMixin
 from nonebot.internal.driver import Cookies as Cookies
@@ -25,6 +26,7 @@ from nonebot.internal.driver import Response as Response
 from nonebot.internal.driver import ReverseDriver as ReverseDriver
 from nonebot.internal.driver import ReverseMixin as ReverseMixin
 from nonebot.internal.driver import Timeout as Timeout
+from nonebot.internal.driver import Unset as Unset
 from nonebot.internal.driver import WebSocket as WebSocket
 from nonebot.internal.driver import WebSocketClientMixin as WebSocketClientMixin
 from nonebot.internal.driver import WebSocketServerSetup as WebSocketServerSetup

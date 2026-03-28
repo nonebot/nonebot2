@@ -25,7 +25,13 @@ from types import CoroutineType
 from typing import TYPE_CHECKING, Any, TypeVar
 from typing_extensions import ParamSpec, override
 
-from nonebot.drivers import Request, Timeout, WebSocketClientMixin, combine_driver
+from nonebot.drivers import (
+    Request,
+    Timeout,
+    Unset,
+    WebSocketClientMixin,
+    combine_driver,
+)
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.exception import WebSocketClosed
@@ -71,18 +77,25 @@ class Mixin(WebSocketClientMixin):
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
         if isinstance(setup.timeout, Timeout):
-            timeout = setup.timeout.total or setup.timeout.connect or setup.timeout.read
-            close_timeout = setup.timeout.close
+            timeout_kwargs: dict[str, Any] = {}
+            open_timeout = (
+                setup.timeout.total or setup.timeout.connect or setup.timeout.read
+            )
+            if not isinstance(open_timeout, Unset):
+                timeout_kwargs["open_timeout"] = open_timeout
+            if not isinstance(setup.timeout.close, Unset):
+                timeout_kwargs["close_timeout"] = setup.timeout.close
         else:
-            timeout = setup.timeout
-            close_timeout = setup.timeout or 10.0
+            timeout_kwargs = {
+                "open_timeout": setup.timeout,
+                "close_timeout": setup.timeout or 10.0,
+            }
 
         connection = connect(
             str(setup.url),
             additional_headers={**setup.headers, **setup.cookies.as_header(setup)},
             proxy=setup.proxy if setup.proxy is not None else True,
-            open_timeout=timeout,
-            close_timeout=close_timeout,
+            **timeout_kwargs,
         )
         async with connection as ws:
             yield WebSocket(request=setup, websocket=ws)

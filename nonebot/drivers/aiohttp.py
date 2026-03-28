@@ -19,7 +19,7 @@ FrontMatter:
 
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Any
 from typing_extensions import override
 
 from multidict import CIMultiDict
@@ -44,6 +44,7 @@ from nonebot.internal.driver import (
     QueryTypes,
     Timeout,
     TimeoutTypes,
+    Unset,
 )
 
 try:
@@ -86,11 +87,14 @@ class Session(HTTPClientSession):
             raise RuntimeError(f"Unsupported HTTP version: {version}")
 
         if isinstance(timeout, Timeout):
-            self._timeout = aiohttp.ClientTimeout(
-                total=timeout.total,
-                connect=timeout.connect,
-                sock_read=timeout.read,
-            )
+            timeout_kwargs: dict[str, Any] = {}
+            if not isinstance(timeout.total, Unset):
+                timeout_kwargs["total"] = timeout.total
+            if not isinstance(timeout.connect, Unset):
+                timeout_kwargs["connect"] = timeout.connect
+            if not isinstance(timeout.read, Unset):
+                timeout_kwargs["sock_read"] = timeout.read
+            self._timeout = aiohttp.ClientTimeout(**timeout_kwargs)
         else:
             self._timeout = aiohttp.ClientTimeout(timeout)
 
@@ -122,11 +126,14 @@ class Session(HTTPClientSession):
         )
 
         if isinstance(setup.timeout, Timeout):
-            timeout = aiohttp.ClientTimeout(
-                total=setup.timeout.total,
-                connect=setup.timeout.connect,
-                sock_read=setup.timeout.read,
-            )
+            timeout_kwargs: dict[str, Any] = {}
+            if not isinstance(setup.timeout.total, Unset):
+                timeout_kwargs["total"] = setup.timeout.total
+            if not isinstance(setup.timeout.connect, Unset):
+                timeout_kwargs["connect"] = setup.timeout.connect
+            if not isinstance(setup.timeout.read, Unset):
+                timeout_kwargs["sock_read"] = setup.timeout.read
+            timeout = aiohttp.ClientTimeout(**timeout_kwargs)
         else:
             timeout = aiohttp.ClientTimeout(setup.timeout)
 
@@ -172,11 +179,14 @@ class Session(HTTPClientSession):
         )
 
         if isinstance(setup.timeout, Timeout):
-            timeout = aiohttp.ClientTimeout(
-                total=setup.timeout.total,
-                connect=setup.timeout.connect,
-                sock_read=setup.timeout.read,
-            )
+            timeout_kwargs: dict[str, Any] = {}
+            if not isinstance(setup.timeout.total, Unset):
+                timeout_kwargs["total"] = setup.timeout.total
+            if not isinstance(setup.timeout.connect, Unset):
+                timeout_kwargs["connect"] = setup.timeout.connect
+            if not isinstance(setup.timeout.read, Unset):
+                timeout_kwargs["sock_read"] = setup.timeout.read
+            timeout = aiohttp.ClientTimeout(**timeout_kwargs)
         else:
             timeout = aiohttp.ClientTimeout(setup.timeout)
 

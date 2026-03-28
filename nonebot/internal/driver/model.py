@@ -4,20 +4,42 @@ from dataclasses import dataclass
 from enum import Enum
 from http.cookiejar import Cookie, CookieJar
 from typing import IO, Any, TypeAlias
+from typing_extensions import Self
 import urllib.request
 
 from multidict import CIMultiDict
 from yarl import URL as URL
 
 
+class Unset:
+    """Sentinel for unset timeout fields."""
+
+    __slots__ = ()
+    _instance: Self | None = None
+
+    def __new__(cls) -> Self:
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
+
+    def __repr__(self) -> str:
+        return "UNSET"
+
+    def __bool__(self) -> bool:
+        return False
+
+
+UNSET = Unset()
+
+
 @dataclass
 class Timeout:
     """Request 超时配置。"""
 
-    total: float | None = None
-    connect: float | None = None
-    read: float | None = None
-    close: float | None = None
+    total: float | None | Unset = UNSET
+    connect: float | None | Unset = UNSET
+    read: float | None | Unset = UNSET
+    close: float | None | Unset = UNSET
 
 
 RawURL: TypeAlias = tuple[bytes, bytes, int | None, bytes]
