@@ -17,7 +17,7 @@ class Timeout:
     total: float | None = None
     connect: float | None = None
     read: float | None = None
-    close: float | None = 10.0
+    close: float | None = None
 
 
 RawURL: TypeAlias = tuple[bytes, bytes, int | None, bytes]
