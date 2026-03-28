@@ -10,6 +10,7 @@ import pytest
 from nonebot.adapters import Bot
 from nonebot.dependencies import Dependent
 from nonebot.drivers import (
+    UNSET,
     URL,
     ASGIMixin,
     Driver,
@@ -18,6 +19,7 @@ from nonebot.drivers import (
     Request,
     Response,
     Timeout,
+    Unset,
     WebSocket,
     WebSocketClientMixin,
     WebSocketServerSetup,
@@ -704,6 +706,108 @@ async def test_aiohttp_websocket_close_frame(msg_type: str) -> None:
 
         with pytest.raises(WebSocketClosed, match=r"code=1006"):
             await ws.receive()
+
+
+def test_unset_sentinel():
+    assert UNSET is Unset()
+    assert repr(UNSET) == "UNSET"
+    assert not UNSET
+    assert bool(UNSET) is False
+
+
+def test_timeout_unset_vs_none():
+    # default: all fields are UNSET
+    t = Timeout()
+    assert isinstance(t.total, Unset)
+    assert isinstance(t.connect, Unset)
+    assert isinstance(t.read, Unset)
+    assert isinstance(t.close, Unset)
+
+    # explicitly set to None
+    t = Timeout(close=None)
+    assert t.close is None
+    assert not isinstance(t.close, Unset)
+
+    # explicitly set to a value
+    t = Timeout(total=5.0, close=None)
+    assert t.total == 5.0
+    assert t.close is None
+    assert isinstance(t.connect, Unset)
+    assert isinstance(t.read, Unset)
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    "driver",
+    [
+        pytest.param("nonebot.drivers.httpx:Driver", id="httpx"),
+        pytest.param("nonebot.drivers.aiohttp:Driver", id="aiohttp"),
+    ],
+    indirect=True,
+)
+async def test_http_client_timeout_unset(driver: Driver, server_url: URL):
+    """HTTP requests work with fully unset, partial, and None timeout fields."""
+    assert isinstance(driver, HTTPClientMixin)
+
+    # all fields unset — library defaults should apply
+    request = Request("POST", server_url, content="test", timeout=Timeout())
+    response = await driver.request(request)
+    assert response.status_code == 200
+
+    # only total set
+    request = Request("POST", server_url, content="test", timeout=Timeout(total=10.0))
+    response = await driver.request(request)
+    assert response.status_code == 200
+
+    # explicit None (no timeout)
+    request = Request(
+        "POST", server_url, content="test", timeout=Timeout(total=None, read=None)
+    )
+    response = await driver.request(request)
+    assert response.status_code == 200
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    "driver",
+    [
+        pytest.param("nonebot.drivers.websockets:Driver", id="websockets"),
+        pytest.param("nonebot.drivers.aiohttp:Driver", id="aiohttp"),
+    ],
+    indirect=True,
+)
+async def test_websocket_client_timeout_unset(driver: Driver, server_url: URL):
+    """WebSocket connections work with fully unset, partial, and None timeout fields."""
+    assert isinstance(driver, WebSocketClientMixin)
+
+    ws_url = server_url.with_scheme("ws")
+
+    # all fields unset
+    request = Request("GET", ws_url, timeout=Timeout())
+    async with driver.websocket(request) as ws:
+        await ws.send("quit")
+        with pytest.raises(WebSocketClosed):
+            await ws.receive()
+
+    await anyio.sleep(1)
+
+    # close explicitly set to None (no close timeout)
+    request = Request("GET", ws_url, timeout=Timeout(close=None))
+    async with driver.websocket(request) as ws:
+        await ws.send("quit")
+        with pytest.raises(WebSocketClosed):
+            await ws.receive()
+
+    await anyio.sleep(1)
+
+    # partial: only total set
+    request = Request("GET", ws_url, timeout=Timeout(total=10.0))
+    async with driver.websocket(request) as ws:
+        await ws.send("quit")
+        with pytest.raises(WebSocketClosed):
+            await ws.receive()
+
+    await anyio.sleep(1)
 
 
 @pytest.mark.parametrize(
