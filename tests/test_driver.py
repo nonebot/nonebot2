@@ -766,6 +766,32 @@ async def test_http_client_timeout_unset(driver: Driver, server_url: URL):
     response = await driver.request(request)
     assert response.status_code == 200
 
+    # stream_request with unset timeout
+    request = Request("POST", server_url, content="test", timeout=Timeout())
+    async for resp in driver.stream_request(request, chunk_size=1024):
+        assert resp.status_code == 200
+
+    # stream_request with partial timeout
+    request = Request(
+        "POST", server_url, content="test", timeout=Timeout(total=10.0, read=None)
+    )
+    async for resp in driver.stream_request(request, chunk_size=1024):
+        assert resp.status_code == 200
+
+    # session with Timeout object
+    session = driver.get_session(timeout=Timeout(total=10.0, connect=5.0, read=5.0))
+    async with session:
+        request = Request("POST", server_url, content="test")
+        response = await session.request(request)
+        assert response.status_code == 200
+
+    # session with fully unset Timeout
+    session = driver.get_session(timeout=Timeout())
+    async with session:
+        request = Request("POST", server_url, content="test")
+        response = await session.request(request)
+        assert response.status_code == 200
+
 
 @pytest.mark.anyio
 @pytest.mark.parametrize(
@@ -802,6 +828,15 @@ async def test_websocket_client_timeout_unset(driver: Driver, server_url: URL):
 
     # partial: only total set
     request = Request("GET", ws_url, timeout=Timeout(total=10.0))
+    async with driver.websocket(request) as ws:
+        await ws.send("quit")
+        with pytest.raises(WebSocketClosed):
+            await ws.receive()
+
+    await anyio.sleep(1)
+
+    # read and close explicitly set
+    request = Request("GET", ws_url, timeout=Timeout(read=5.0, close=5.0))
     async with driver.websocket(request) as ws:
         await ws.send("quit")
         with pytest.raises(WebSocketClosed):
