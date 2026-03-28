@@ -12,7 +12,7 @@ from yarl import URL as URL
 
 
 class Unset:
-    """Sentinel for unset timeout fields."""
+    """Sentinel for unset fields."""
 
     __slots__ = ()
     _instance: Self | None = None
