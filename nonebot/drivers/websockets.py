@@ -72,7 +72,7 @@ class Mixin(WebSocketClientMixin):
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
         if isinstance(setup.timeout, Timeout):
             timeout = setup.timeout.total or setup.timeout.connect or setup.timeout.read
-            close_timeout = setup.timeout.total
+            close_timeout = setup.timeout.total or 10.0
         else:
             timeout = setup.timeout
             close_timeout = setup.timeout or 10.0
