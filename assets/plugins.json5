@@ -10620,4 +10620,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_l4d2_bot",
+    "project_link": "nonebot-plugin-l4d2-bot",
+    "author_id": 98641772,
+    "tags": [
+      {
+        "label": "l4d2",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
