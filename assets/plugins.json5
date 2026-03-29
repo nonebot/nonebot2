@@ -10600,4 +10600,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "onebot_plugin_ts3_tracker",
+    "project_link": "nonebot-plugin-ts3-tracker",
+    "author_id": 219686092,
+    "tags": [
+      {
+        "label": "TS3",
+        "color": "#ea5252"
+      },
+      {
+        "label": "teamspeak",
+        "color": "#ea5252"
+      },
+      {
+        "label": "语音",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
