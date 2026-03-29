@@ -39,6 +39,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: TS3 Tracker [@noneflow](https://github.com/noneflow) ([#3902](https://github.com/nonebot/nonebot2/pull/3902))
 - Plugin: CS2 Radar [@noneflow](https://github.com/noneflow) ([#3908](https://github.com/nonebot/nonebot2/pull/3908))
 - Plugin: 舞萌服务器监控 [@noneflow](https://github.com/noneflow) ([#3910](https://github.com/nonebot/nonebot2/pull/3910))
 - Plugin: Endfield [@noneflow](https://github.com/noneflow) ([#3884](https://github.com/nonebot/nonebot2/pull/3884))
