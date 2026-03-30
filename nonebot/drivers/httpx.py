@@ -82,7 +82,11 @@ class Session(HTTPClientSession):
                 timeout_kwargs["connect"] = timeout.connect
             if not isinstance(timeout.read, Unset):
                 timeout_kwargs["read"] = timeout.read
-            self._timeout = httpx.Timeout(**timeout_kwargs) if timeout_kwargs else None
+            self._timeout = (
+                httpx.Timeout(**timeout_kwargs)
+                if timeout_kwargs
+                else httpx.USE_CLIENT_DEFAULT
+            )
         else:
             self._timeout = httpx.Timeout(timeout)
 
@@ -104,7 +108,11 @@ class Session(HTTPClientSession):
                 timeout_kwargs["connect"] = setup.timeout.connect
             if not isinstance(setup.timeout.read, Unset):
                 timeout_kwargs["read"] = setup.timeout.read
-            timeout = httpx.Timeout(**timeout_kwargs) if timeout_kwargs else None
+            timeout = (
+                httpx.Timeout(**timeout_kwargs)
+                if timeout_kwargs
+                else httpx.USE_CLIENT_DEFAULT
+            )
         else:
             timeout = httpx.Timeout(setup.timeout)
 
@@ -143,7 +151,11 @@ class Session(HTTPClientSession):
                 timeout_kwargs["connect"] = setup.timeout.connect
             if not isinstance(setup.timeout.read, Unset):
                 timeout_kwargs["read"] = setup.timeout.read
-            timeout = httpx.Timeout(**timeout_kwargs) if timeout_kwargs else None
+            timeout = (
+                httpx.Timeout(**timeout_kwargs)
+                if timeout_kwargs
+                else httpx.USE_CLIENT_DEFAULT
+            )
         else:
             timeout = httpx.Timeout(setup.timeout)
 

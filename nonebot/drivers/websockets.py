@@ -88,7 +88,7 @@ class Mixin(WebSocketClientMixin):
         else:
             timeout_kwargs = {
                 "open_timeout": setup.timeout,
-                "close_timeout": setup.timeout or 10.0,
+                "close_timeout": setup.timeout if setup.timeout is not None else 10.0,
             }
 
         connection = connect(
