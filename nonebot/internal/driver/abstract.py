@@ -19,7 +19,13 @@ from nonebot.typing import (
     T_BotDisconnectionHook,
     T_DependencyCache,
 )
-from nonebot.utils import UNSET, UnsetType, escape_tag, flatten_exception_group, run_coro_with_catch
+from nonebot.utils import (
+    UNSET,
+    UnsetType,
+    escape_tag,
+    flatten_exception_group,
+    run_coro_with_catch,
+)
 
 from ._lifespan import LIFESPAN_FUNC, Lifespan
 from .model import (

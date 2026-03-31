@@ -18,7 +18,7 @@ FrontMatter:
 """
 
 from collections.abc import AsyncGenerator
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 from typing_extensions import override
 
 from multidict import CIMultiDict
@@ -126,7 +126,7 @@ class Session(HTTPClientSession):
                 _timeout = httpx.Timeout(**timeout_kwargs)
         elif timeout is not UNSET:
             _timeout = httpx.Timeout(timeout)
-        
+
         if _timeout is None:
             return self._timeout
         return _timeout

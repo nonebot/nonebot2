@@ -19,7 +19,7 @@ FrontMatter:
 
 from collections.abc import AsyncGenerator
 from contextlib import asynccontextmanager
-from typing import TYPE_CHECKING, Any
+from typing import TYPE_CHECKING
 from typing_extensions import override
 
 from multidict import CIMultiDict
@@ -100,7 +100,7 @@ class Session(HTTPClientSession):
                 _timeout = aiohttp.ClientTimeout(**timeout_kwargs)
         elif timeout is not UNSET:
             _timeout = aiohttp.ClientTimeout(connect=timeout, sock_read=timeout)
-        
+
         if _timeout is None:
             _timeout = aiohttp.ClientTimeout(
                 **exclude_unset(

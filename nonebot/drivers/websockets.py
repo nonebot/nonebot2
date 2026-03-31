@@ -78,21 +78,22 @@ class Mixin(WebSocketClientMixin):
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
         if isinstance(setup.timeout, Timeout):
-            open_timeout = setup.timeout.connect or setup.timeout.read or setup.timeout.total
+            open_timeout = (
+                setup.timeout.connect or setup.timeout.read or setup.timeout.total
+            )
             timeout_kwargs: dict[str, float | None] = exclude_unset(
-                {
-                    "open_timeout": open_timeout,
-                    "close_timeout": setup.timeout.close
-                }
+                {"open_timeout": open_timeout, "close_timeout": setup.timeout.close}
             )
         elif setup.timeout is not UNSET:
             timeout_kwargs = {
                 "open_timeout": setup.timeout,
                 "close_timeout": setup.timeout,
             }
-        
+
         if not timeout_kwargs:
-            open_timeout = DEFAULT_TIMEOUT.connect or DEFAULT_TIMEOUT.read or DEFAULT_TIMEOUT.total
+            open_timeout = (
+                DEFAULT_TIMEOUT.connect or DEFAULT_TIMEOUT.read or DEFAULT_TIMEOUT.total
+            )
             timeout_kwargs = exclude_unset(
                 {
                     "open_timeout": open_timeout,
