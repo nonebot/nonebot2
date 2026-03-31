@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 修正 http/websocket client timeout [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3923](https://github.com/nonebot/nonebot2/pull/3923))
 - Fix: 修复 aiohttp 流式响应分块大小不固定问题 [@KeepingRunning](https://github.com/KeepingRunning) ([#3919](https://github.com/nonebot/nonebot2/pull/3919))
 - Fix: aiohttp 驱动未处理 WSMsgType.CLOSED 类型 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#3862](https://github.com/nonebot/nonebot2/pull/3862))
 
