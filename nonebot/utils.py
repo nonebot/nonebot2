@@ -28,8 +28,8 @@ import re
 from typing import (
     Any,
     Generic,
-    TypeVar,
     Literal,
+    TypeVar,
     final,
     get_args,
     get_origin,
