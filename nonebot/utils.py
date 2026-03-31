@@ -106,7 +106,7 @@ def exclude_unset(data: Any) -> Any:
             (k, exclude_unset(v)) for k, v in data.items() if v is not UNSET
         )
     elif isinstance(data, list):
-        return data.__class__(exclude_unset(i) for i in data)
+        return data.__class__(exclude_unset(i) for i in data if i is not UNSET)
     elif data is UNSET:
         return None
     return data

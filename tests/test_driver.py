@@ -737,50 +737,91 @@ def test_timeout_unset_vs_none():
     ],
     indirect=True,
 )
-async def test_http_client_timeout_unset(driver: Driver, server_url: URL):
+async def test_http_client_timeout(driver: Driver, server_url: URL):
     """HTTP requests work with fully unset, partial, and None timeout fields."""
     assert isinstance(driver, HTTPClientMixin)
 
-    # all fields unset — library defaults should apply
+    # timeout not set, default timeout should apply
+    request = Request("POST", server_url, content="test")
+    response = await driver.request(request)
+    assert response.status_code == 200
+    async for resp in driver.stream_request(request, chunk_size=1024):
+        assert resp.status_code == 200
+
+    # timeout is float or none
+    request = Request("POST", server_url, content="test", timeout=10.0)
+    response = await driver.request(request)
+    assert response.status_code == 200
+    async for resp in driver.stream_request(request, chunk_size=1024):
+        assert resp.status_code == 200
+
+    # all fields unset, default timeout should apply
     request = Request("POST", server_url, content="test", timeout=Timeout())
     response = await driver.request(request)
     assert response.status_code == 200
+    async for resp in driver.stream_request(request, chunk_size=1024):
+        assert resp.status_code == 200
 
     # only total set
     request = Request("POST", server_url, content="test", timeout=Timeout(total=10.0))
     response = await driver.request(request)
     assert response.status_code == 200
+    async for resp in driver.stream_request(request, chunk_size=1024):
+        assert resp.status_code == 200
 
     # explicit None (no timeout)
     request = Request(
-        "POST", server_url, content="test", timeout=Timeout(total=None, read=None)
+        "POST",
+        server_url,
+        content="test",
+        timeout=Timeout(total=None, connect=None, read=None),
     )
     response = await driver.request(request)
     assert response.status_code == 200
-
-    # stream_request with unset timeout
-    request = Request("POST", server_url, content="test", timeout=Timeout())
     async for resp in driver.stream_request(request, chunk_size=1024):
         assert resp.status_code == 200
 
-    # stream_request with partial timeout
-    request = Request(
-        "POST", server_url, content="test", timeout=Timeout(total=10.0, read=None)
-    )
-    async for resp in driver.stream_request(request, chunk_size=1024):
-        assert resp.status_code == 200
+    # session with timeout not set
+    session = driver.get_session()
+    async with session:
+        request = Request("POST", server_url, content="test")
+        response = await session.request(request)
+        assert response.status_code == 200
 
-    # session with Timeout object
+    # session with float or none timeout
+    session = driver.get_session(timeout=10.0)
+    async with session:
+        request = Request("POST", server_url, content="test")
+        response = await session.request(request)
+        assert response.status_code == 200
+
+    # session with fully unset timeout
+    session = driver.get_session(timeout=Timeout())
+    async with session:
+        request = Request("POST", server_url, content="test")
+        response = await session.request(request)
+        assert response.status_code == 200
+
+    # session with timeout
     session = driver.get_session(timeout=Timeout(total=10.0, connect=5.0, read=5.0))
     async with session:
         request = Request("POST", server_url, content="test")
         response = await session.request(request)
         assert response.status_code == 200
 
-    # session with fully unset Timeout
-    session = driver.get_session(timeout=Timeout())
+    # session with timeout override
+    session = driver.get_session(timeout=Timeout(total=10.0))
     async with session:
-        request = Request("POST", server_url, content="test")
+        request = Request(
+            "POST", server_url, content="test", timeout=Timeout(total=20.0)
+        )
+        response = await session.request(request)
+        assert response.status_code == 200
+
+    # session with timeout float override
+    session = driver.get_session(timeout=Timeout(total=10.0))
+    async with session:
+        request = Request("POST", server_url, content="test", timeout=20.0)
         response = await session.request(request)
         assert response.status_code == 200
 
@@ -794,13 +835,31 @@ async def test_http_client_timeout_unset(driver: Driver, server_url: URL):
     ],
     indirect=True,
 )
-async def test_websocket_client_timeout_unset(driver: Driver, server_url: URL):
+async def test_websocket_client_timeout(driver: Driver, server_url: URL):
     """WebSocket connections work with fully unset, partial, and None timeout fields."""
     assert isinstance(driver, WebSocketClientMixin)
 
     ws_url = server_url.with_scheme("ws")
 
-    # all fields unset
+    # timeout not set, default timeout should apply
+    request = Request("GET", ws_url)
+    async with driver.websocket(request) as ws:
+        await ws.send("quit")
+        with pytest.raises(WebSocketClosed):
+            await ws.receive()
+
+    await anyio.sleep(1)
+
+    # timeout is float or none
+    request = Request("GET", ws_url, timeout=10.0)
+    async with driver.websocket(request) as ws:
+        await ws.send("quit")
+        with pytest.raises(WebSocketClosed):
+            await ws.receive()
+
+    await anyio.sleep(1)
+
+    # all fields unset, default timeout should apply
     request = Request("GET", ws_url, timeout=Timeout())
     async with driver.websocket(request) as ws:
         await ws.send("quit")
@@ -811,24 +870,6 @@ async def test_websocket_client_timeout_unset(driver: Driver, server_url: URL):
 
     # close explicitly set to None (no close timeout)
     request = Request("GET", ws_url, timeout=Timeout(close=None))
-    async with driver.websocket(request) as ws:
-        await ws.send("quit")
-        with pytest.raises(WebSocketClosed):
-            await ws.receive()
-
-    await anyio.sleep(1)
-
-    # partial: only total set
-    request = Request("GET", ws_url, timeout=Timeout(total=10.0))
-    async with driver.websocket(request) as ws:
-        await ws.send("quit")
-        with pytest.raises(WebSocketClosed):
-            await ws.receive()
-
-    await anyio.sleep(1)
-
-    # read and close explicitly set
-    request = Request("GET", ws_url, timeout=Timeout(read=5.0, close=5.0))
     async with driver.websocket(request) as ws:
         await ws.send("quit")
         with pytest.raises(WebSocketClosed):
