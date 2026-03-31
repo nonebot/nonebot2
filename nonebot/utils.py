@@ -29,6 +29,7 @@ from typing import (
     Any,
     Generic,
     TypeVar,
+    final,
     get_args,
     get_origin,
     overload,
@@ -49,12 +50,49 @@ from nonebot.typing import (
     type_has_args,
 )
 
+from .compat import custom_validation
+
 P = ParamSpec("P")
 R = TypeVar("R")
 T = TypeVar("T")
 K = TypeVar("K")
 V = TypeVar("V")
 E = TypeVar("E", bound=BaseException)
+
+
+@final
+@custom_validation
+class Unset(Enum):
+    _UNSET = "<UNSET>"
+
+    def __repr__(self) -> str:
+        return "<UNSET>"
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
+    def __bool__(self) -> Literal[False]:
+        return False
+
+    def __copy__(self):
+        return self._UNSET
+
+    def __deepcopy__(self, memo: dict[int, Any]):
+        return self._UNSET
+
+    @classmethod
+    def __get_validators__(cls):
+        yield cls._validate
+
+    @classmethod
+    def _validate(cls, value: Any):
+        if value is not cls._UNSET:
+            raise ValueError(f"{value!r} is not UNSET")
+        return value
+
+UnsetType: TypeAlias = Literal[Unset._UNSET]
+
+UNSET: final = Unset._UNSET
 
 
 def escape_tag(s: str) -> str:

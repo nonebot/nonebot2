@@ -34,14 +34,15 @@ from nonebot.drivers import (
 )
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.internal.driver import (
+    DEFAULT_TIMEOUT,
     Cookies,
     CookieTypes,
     HeaderTypes,
     QueryTypes,
     Timeout,
     TimeoutTypes,
-    Unset,
 )
+from nonebot.utils import UNSET, UnsetType
 
 try:
     import httpx
@@ -60,7 +61,7 @@ class Session(HTTPClientSession):
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
         version: str | HTTPVersion = HTTPVersion.H11,
-        timeout: TimeoutTypes = None,
+        timeout: TimeoutTypes | UnsetType = UNSET,
         proxy: str | None = None,
     ):
         self._client: httpx.AsyncClient | None = None
@@ -74,19 +75,22 @@ class Session(HTTPClientSession):
         self._cookies = Cookies(cookies)
         self._version = HTTPVersion(version)
 
+        timeout = DEFAULT_TIMEOUT if timeout is UNSET else timeout
         if isinstance(timeout, Timeout):
             timeout_kwargs: dict[str, Any] = {}
-            if not isinstance(timeout.total, Unset):
-                timeout_kwargs["timeout"] = timeout.total
-            if not isinstance(timeout.connect, Unset):
+            if timeout.total is not UNSET:
+                avg_timeout = None if timeout.total is None else timeout.total / 4
+                timeout_kwargs["timeout"] = avg_timeout
+            if timeout.connect is not UNSET:
                 timeout_kwargs["connect"] = timeout.connect
-            if not isinstance(timeout.read, Unset):
+            if timeout.read is not UNSET:
                 timeout_kwargs["read"] = timeout.read
-            self._timeout = (
-                httpx.Timeout(**timeout_kwargs)
-                if timeout_kwargs
-                else httpx.USE_CLIENT_DEFAULT
-            )
+            if not timeout_kwargs:
+                avg_timeout = None if DEFAULT_TIMEOUT.total is None else DEFAULT_TIMEOUT.total / 4
+                timeout_kwargs["timeout"] = avg_timeout
+                timeout_kwargs["connect"] = DEFAULT_TIMEOUT.connect
+                timeout_kwargs["read"] = DEFAULT_TIMEOUT.read
+            self._timeout = httpx.Timeout(**timeout_kwargs)
         else:
             self._timeout = httpx.Timeout(timeout)
 
@@ -100,21 +104,24 @@ class Session(HTTPClientSession):
 
     @override
     async def request(self, setup: Request) -> Response:
-        if isinstance(setup.timeout, Timeout):
+        _timeout = self._timeout if setup.timeout is UNSET else setup.timeout
+        if isinstance(_timeout, Timeout):
             timeout_kwargs: dict[str, Any] = {}
-            if not isinstance(setup.timeout.total, Unset):
-                timeout_kwargs["timeout"] = setup.timeout.total
-            if not isinstance(setup.timeout.connect, Unset):
-                timeout_kwargs["connect"] = setup.timeout.connect
-            if not isinstance(setup.timeout.read, Unset):
-                timeout_kwargs["read"] = setup.timeout.read
-            timeout = (
-                httpx.Timeout(**timeout_kwargs)
-                if timeout_kwargs
-                else httpx.USE_CLIENT_DEFAULT
-            )
+            if _timeout.total is not UNSET:
+                avg_timeout = None if _timeout.total is None else _timeout.total / 4
+                timeout_kwargs["timeout"] = avg_timeout
+            if _timeout.connect is not UNSET:
+                timeout_kwargs["connect"] = _timeout.connect
+            if _timeout.read is not UNSET:
+                timeout_kwargs["read"] = _timeout.read
+            if not timeout_kwargs:
+                avg_timeout = None if DEFAULT_TIMEOUT.total is None else DEFAULT_TIMEOUT.total / 4
+                timeout_kwargs["timeout"] = avg_timeout
+                timeout_kwargs["connect"] = DEFAULT_TIMEOUT.connect
+                timeout_kwargs["read"] = DEFAULT_TIMEOUT.read
+            timeout = httpx.Timeout(**timeout_kwargs)
         else:
-            timeout = httpx.Timeout(setup.timeout)
+            timeout = httpx.Timeout(timeout)
 
         response = await self.client.request(
             setup.method,
@@ -143,21 +150,24 @@ class Session(HTTPClientSession):
         *,
         chunk_size: int = 1024,
     ) -> AsyncGenerator[Response, None]:
-        if isinstance(setup.timeout, Timeout):
+        _timeout = self._timeout if setup.timeout is UNSET else setup.timeout
+        if isinstance(_timeout, Timeout):
             timeout_kwargs: dict[str, Any] = {}
-            if not isinstance(setup.timeout.total, Unset):
-                timeout_kwargs["timeout"] = setup.timeout.total
-            if not isinstance(setup.timeout.connect, Unset):
-                timeout_kwargs["connect"] = setup.timeout.connect
-            if not isinstance(setup.timeout.read, Unset):
-                timeout_kwargs["read"] = setup.timeout.read
-            timeout = (
-                httpx.Timeout(**timeout_kwargs)
-                if timeout_kwargs
-                else httpx.USE_CLIENT_DEFAULT
-            )
+            if _timeout.total is not UNSET:
+                avg_timeout = None if _timeout.total is None else _timeout.total / 4
+                timeout_kwargs["timeout"] = avg_timeout
+            if _timeout.connect is not UNSET:
+                timeout_kwargs["connect"] = _timeout.connect
+            if _timeout.read is not UNSET:
+                timeout_kwargs["read"] = _timeout.read
+            if not timeout_kwargs:
+                avg_timeout = None if DEFAULT_TIMEOUT.total is None else DEFAULT_TIMEOUT.total / 4
+                timeout_kwargs["timeout"] = avg_timeout
+                timeout_kwargs["connect"] = DEFAULT_TIMEOUT.connect
+                timeout_kwargs["read"] = DEFAULT_TIMEOUT.read
+            timeout = httpx.Timeout(**timeout_kwargs)
         else:
-            timeout = httpx.Timeout(setup.timeout)
+            timeout = httpx.Timeout(timeout)
 
         async with self.client.stream(
             setup.method,

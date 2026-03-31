@@ -10,36 +10,20 @@ import urllib.request
 from multidict import CIMultiDict
 from yarl import URL as URL
 
-
-class Unset:
-    """Sentinel for unset fields."""
-
-    __slots__ = ()
-    _instance: Self | None = None
-
-    def __new__(cls) -> Self:
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-        return cls._instance
-
-    def __repr__(self) -> str:
-        return "UNSET"
-
-    def __bool__(self) -> bool:
-        return False
-
-
-UNSET = Unset()
+from nonebot.utils import UNSET, UnsetType
 
 
 @dataclass
 class Timeout:
     """Request 超时配置。"""
 
-    total: float | None | Unset = UNSET
-    connect: float | None | Unset = UNSET
-    read: float | None | Unset = UNSET
-    close: float | None | Unset = UNSET
+    total: float | None | UnsetType = UNSET
+    connect: float | None | UnsetType = UNSET
+    read: float | None | UnsetType = UNSET
+    close: float | None | UnsetType = UNSET
+
+
+DEFAULT_TIMEOUT = Timeout(total=None, connect=5.0, read=30.0, close=10.0)
 
 
 RawURL: TypeAlias = tuple[bytes, bytes, int | None, bytes]
@@ -91,7 +75,7 @@ class Request:
         json: Any = None,
         files: FilesTypes = None,
         version: str | HTTPVersion = HTTPVersion.H11,
-        timeout: TimeoutTypes = None,
+        timeout: TimeoutTypes | UnsetType = UNSET,
         proxy: str | None = None,
     ):
         # method
@@ -103,7 +87,7 @@ class Request:
         # http version
         self.version: HTTPVersion = HTTPVersion(version)
         # timeout
-        self.timeout: TimeoutTypes = timeout
+        self.timeout: TimeoutTypes | UnsetType = timeout
         # proxy
         self.proxy: str | None = proxy
 

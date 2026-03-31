@@ -25,17 +25,12 @@ from types import CoroutineType
 from typing import TYPE_CHECKING, Any, TypeVar
 from typing_extensions import ParamSpec, override
 
-from nonebot.drivers import (
-    Request,
-    Timeout,
-    Unset,
-    WebSocketClientMixin,
-    combine_driver,
-)
+from nonebot.drivers import DEFAULT_TIMEOUT, Request, Timeout, WebSocketClientMixin, combine_driver
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.exception import WebSocketClosed
 from nonebot.log import LoguruHandler
+from nonebot.utils import UNSET, UnsetType
 
 try:
     from websockets import ClientConnection, ConnectionClosed, connect
@@ -76,19 +71,17 @@ class Mixin(WebSocketClientMixin):
     @override
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
-        if isinstance(setup.timeout, Timeout):
+        timeout = DEFAULT_TIMEOUT if setup.timeout is UNSET else setup.timeout
+        if isinstance(timeout, Timeout):
             timeout_kwargs: dict[str, Any] = {}
-            open_timeout = (
-                setup.timeout.total or setup.timeout.connect or setup.timeout.read
-            )
-            if not isinstance(open_timeout, Unset):
+            open_timeout = timeout.connect or timeout.read or timeout.total
+            if open_timeout is not UNSET:
                 timeout_kwargs["open_timeout"] = open_timeout
-            if not isinstance(setup.timeout.close, Unset):
-                timeout_kwargs["close_timeout"] = setup.timeout.close
+            if timeout.close is not UNSET:
+                timeout_kwargs["close_timeout"] = timeout.close
         else:
             timeout_kwargs = {
-                "open_timeout": setup.timeout,
-                "close_timeout": setup.timeout if setup.timeout is not None else 10.0,
+                "open_timeout": setup.timeout, "close_timeout": setup.timeout
             }
 
         connection = connect(

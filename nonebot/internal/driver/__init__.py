@@ -9,7 +9,7 @@ from .abstract import ReverseDriver as ReverseDriver
 from .abstract import ReverseMixin as ReverseMixin
 from .abstract import WebSocketClientMixin as WebSocketClientMixin
 from .combine import combine_driver as combine_driver
-from .model import UNSET as UNSET
+from .model import DEFAULT_TIMEOUT as DEFAULT_TIMEOUT
 from .model import URL as URL
 from .model import ContentTypes as ContentTypes
 from .model import Cookies as Cookies
@@ -30,6 +30,5 @@ from .model import Response as Response
 from .model import SimpleQuery as SimpleQuery
 from .model import Timeout as Timeout
 from .model import TimeoutTypes as TimeoutTypes
-from .model import Unset as Unset
 from .model import WebSocket as WebSocket
 from .model import WebSocketServerSetup as WebSocketServerSetup
