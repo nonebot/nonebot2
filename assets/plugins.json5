@@ -8298,13 +8298,6 @@
     "is_official": false
   },
   {
-    "module_name": "nonebot_plugin_session_config",
-    "project_link": "nonebot-plugin-session-config",
-    "author_id": 157892771,
-    "tags": [],
-    "is_official": false
-  },
-  {
     "module_name": "nonebot_plugin_luoguluck",
     "project_link": "nonebot-plugin-luoguluck",
     "author_id": 67693593,
