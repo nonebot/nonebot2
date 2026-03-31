@@ -306,9 +306,7 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
                 timeout_kwargs["ws_close"] = ws_close
             timeout = aiohttp.ClientWSTimeout(**timeout_kwargs)  # type: ignore
         else:
-            timeout = aiohttp.ClientWSTimeout(
-                ws_receive=_timeout, ws_close=_timeout
-            )
+            timeout = aiohttp.ClientWSTimeout(ws_receive=_timeout, ws_close=_timeout)
 
         async with aiohttp.ClientSession(version=version, trust_env=True) as session:
             async with session.ws_connect(

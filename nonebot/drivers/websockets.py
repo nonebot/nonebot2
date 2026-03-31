@@ -25,12 +25,18 @@ from types import CoroutineType
 from typing import TYPE_CHECKING, Any, TypeVar
 from typing_extensions import ParamSpec, override
 
-from nonebot.drivers import DEFAULT_TIMEOUT, Request, Timeout, WebSocketClientMixin, combine_driver
+from nonebot.drivers import (
+    DEFAULT_TIMEOUT,
+    Request,
+    Timeout,
+    WebSocketClientMixin,
+    combine_driver,
+)
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.exception import WebSocketClosed
 from nonebot.log import LoguruHandler
-from nonebot.utils import UNSET, UnsetType
+from nonebot.utils import UNSET
 
 try:
     from websockets import ClientConnection, ConnectionClosed, connect
@@ -81,7 +87,8 @@ class Mixin(WebSocketClientMixin):
                 timeout_kwargs["close_timeout"] = timeout.close
         else:
             timeout_kwargs = {
-                "open_timeout": setup.timeout, "close_timeout": setup.timeout
+                "open_timeout": setup.timeout,
+                "close_timeout": setup.timeout,
             }
 
         connection = connect(

@@ -90,6 +90,7 @@ class Unset(Enum):
             raise ValueError(f"{value!r} is not UNSET")
         return value
 
+
 UnsetType: TypeAlias = Literal[Unset._UNSET]
 
 UNSET: final = Unset._UNSET

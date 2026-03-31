@@ -4,7 +4,6 @@ from dataclasses import dataclass
 from enum import Enum
 from http.cookiejar import Cookie, CookieJar
 from typing import IO, Any, TypeAlias
-from typing_extensions import Self
 import urllib.request
 
 from multidict import CIMultiDict

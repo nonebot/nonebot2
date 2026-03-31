@@ -86,7 +86,9 @@ class Session(HTTPClientSession):
             if timeout.read is not UNSET:
                 timeout_kwargs["read"] = timeout.read
             if not timeout_kwargs:
-                avg_timeout = None if DEFAULT_TIMEOUT.total is None else DEFAULT_TIMEOUT.total / 4
+                avg_timeout = (
+                    None if DEFAULT_TIMEOUT.total is None else DEFAULT_TIMEOUT.total / 4
+                )
                 timeout_kwargs["timeout"] = avg_timeout
                 timeout_kwargs["connect"] = DEFAULT_TIMEOUT.connect
                 timeout_kwargs["read"] = DEFAULT_TIMEOUT.read
@@ -115,7 +117,9 @@ class Session(HTTPClientSession):
             if _timeout.read is not UNSET:
                 timeout_kwargs["read"] = _timeout.read
             if not timeout_kwargs:
-                avg_timeout = None if DEFAULT_TIMEOUT.total is None else DEFAULT_TIMEOUT.total / 4
+                avg_timeout = (
+                    None if DEFAULT_TIMEOUT.total is None else DEFAULT_TIMEOUT.total / 4
+                )
                 timeout_kwargs["timeout"] = avg_timeout
                 timeout_kwargs["connect"] = DEFAULT_TIMEOUT.connect
                 timeout_kwargs["read"] = DEFAULT_TIMEOUT.read
@@ -161,7 +165,9 @@ class Session(HTTPClientSession):
             if _timeout.read is not UNSET:
                 timeout_kwargs["read"] = _timeout.read
             if not timeout_kwargs:
-                avg_timeout = None if DEFAULT_TIMEOUT.total is None else DEFAULT_TIMEOUT.total / 4
+                avg_timeout = (
+                    None if DEFAULT_TIMEOUT.total is None else DEFAULT_TIMEOUT.total / 4
+                )
                 timeout_kwargs["timeout"] = avg_timeout
                 timeout_kwargs["connect"] = DEFAULT_TIMEOUT.connect
                 timeout_kwargs["read"] = DEFAULT_TIMEOUT.read
