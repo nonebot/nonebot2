@@ -339,7 +339,7 @@
     "is_official": false
   },
   {
-    "module_name": "yunhu",
+    "module_name": "nonebot.adapters.yunhu",
     "project_link": "nonebot-adapter-yunhu",
     "name": "云湖适配器",
     "desc": "云湖的NoneBot适配器",
