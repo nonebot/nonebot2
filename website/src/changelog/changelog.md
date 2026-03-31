@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- Fix: 修正云湖适配器的 module_name [@he0119](https://github.com/he0119) ([#3937](https://github.com/nonebot/nonebot2/pull/3937))
 - Dev: 修复 devcontainer corepack 安装 yarn 卡死 [@yanyongyu](https://github.com/yanyongyu) ([#3893](https://github.com/nonebot/nonebot2/pull/3893))
 - Plugin: skland 插件添加标签 [@FrostN0v0](https://github.com/FrostN0v0) ([#3853](https://github.com/nonebot/nonebot2/pull/3853))
 - CI: 修改 `test_depend` cpython 版本范围 [@yanyongyu](https://github.com/yanyongyu) ([#3828](https://github.com/nonebot/nonebot2/pull/3828))
