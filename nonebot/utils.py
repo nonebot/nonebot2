@@ -100,6 +100,18 @@ UnsetType: TypeAlias = Literal[Unset._UNSET]
 UNSET: Final[UnsetType] = Unset._UNSET
 
 
+def exclude_unset(data: Any) -> Any:
+    if isinstance(data, dict):
+        return data.__class__(
+            (k, exclude_unset(v)) for k, v in data.items() if v is not UNSET
+        )
+    elif isinstance(data, list):
+        return data.__class__(exclude_unset(i) for i in data)
+    elif data is UNSET:
+        return None
+    return data
+
+
 def escape_tag(s: str) -> str:
     """用于记录带颜色日志时转义 `<tag>` 类型特殊标签
 

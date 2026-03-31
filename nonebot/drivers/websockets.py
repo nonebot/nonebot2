@@ -36,7 +36,7 @@ from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.exception import WebSocketClosed
 from nonebot.log import LoguruHandler
-from nonebot.utils import UNSET
+from nonebot.utils import UNSET, exclude_unset
 
 try:
     from websockets import ClientConnection, ConnectionClosed, connect
@@ -77,19 +77,28 @@ class Mixin(WebSocketClientMixin):
     @override
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
-        timeout = DEFAULT_TIMEOUT if setup.timeout is UNSET else setup.timeout
-        if isinstance(timeout, Timeout):
-            timeout_kwargs: dict[str, Any] = {}
-            open_timeout = timeout.connect or timeout.read or timeout.total
-            if open_timeout is not UNSET:
-                timeout_kwargs["open_timeout"] = open_timeout
-            if timeout.close is not UNSET:
-                timeout_kwargs["close_timeout"] = timeout.close
-        else:
+        if isinstance(setup.timeout, Timeout):
+            open_timeout = setup.timeout.connect or setup.timeout.read or setup.timeout.total
+            timeout_kwargs: dict[str, float | None] = exclude_unset(
+                {
+                    "open_timeout": open_timeout,
+                    "close_timeout": setup.timeout.close
+                }
+            )
+        elif setup.timeout is not UNSET:
             timeout_kwargs = {
                 "open_timeout": setup.timeout,
                 "close_timeout": setup.timeout,
             }
+        
+        if not timeout_kwargs:
+            open_timeout = DEFAULT_TIMEOUT.connect or DEFAULT_TIMEOUT.read or DEFAULT_TIMEOUT.total
+            timeout_kwargs = exclude_unset(
+                {
+                    "open_timeout": open_timeout,
+                    "close_timeout": DEFAULT_TIMEOUT.close,
+                }
+            )
 
         connection = connect(
             str(setup.url),

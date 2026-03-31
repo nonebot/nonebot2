@@ -19,7 +19,7 @@ from nonebot.typing import (
     T_BotDisconnectionHook,
     T_DependencyCache,
 )
-from nonebot.utils import escape_tag, flatten_exception_group, run_coro_with_catch
+from nonebot.utils import UNSET, UnsetType, escape_tag, flatten_exception_group, run_coro_with_catch
 
 from ._lifespan import LIFESPAN_FUNC, Lifespan
 from .model import (
@@ -246,7 +246,7 @@ class HTTPClientSession(abc.ABC):
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
         version: str | HTTPVersion = HTTPVersion.H11,
-        timeout: TimeoutTypes = None,
+        timeout: TimeoutTypes | UnsetType = UNSET,
         proxy: str | None = None,
     ):
         raise NotImplementedError
