@@ -29,6 +29,7 @@ from typing import (
     Any,
     Generic,
     TypeVar,
+    Literal,
     final,
     get_args,
     get_origin,
