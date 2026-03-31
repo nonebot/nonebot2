@@ -9,14 +9,20 @@ import urllib.request
 from multidict import CIMultiDict
 from yarl import URL as URL
 
+from nonebot.utils import UNSET, UnsetType
+
 
 @dataclass
 class Timeout:
     """Request 超时配置。"""
 
-    total: float | None = None
-    connect: float | None = None
-    read: float | None = None
+    total: float | None | UnsetType = UNSET
+    connect: float | None | UnsetType = UNSET
+    read: float | None | UnsetType = UNSET
+    close: float | None | UnsetType = UNSET
+
+
+DEFAULT_TIMEOUT = Timeout(total=None, connect=5.0, read=30.0, close=10.0)
 
 
 RawURL: TypeAlias = tuple[bytes, bytes, int | None, bytes]
@@ -68,7 +74,7 @@ class Request:
         json: Any = None,
         files: FilesTypes = None,
         version: str | HTTPVersion = HTTPVersion.H11,
-        timeout: TimeoutTypes = None,
+        timeout: TimeoutTypes | UnsetType = UNSET,
         proxy: str | None = None,
     ):
         # method
@@ -80,7 +86,7 @@ class Request:
         # http version
         self.version: HTTPVersion = HTTPVersion(version)
         # timeout
-        self.timeout: TimeoutTypes = timeout
+        self.timeout: TimeoutTypes | UnsetType = timeout
         # proxy
         self.proxy: str | None = proxy
 

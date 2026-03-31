@@ -38,6 +38,7 @@ from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.exception import WebSocketClosed
 from nonebot.internal.driver import (
+    DEFAULT_TIMEOUT,
     Cookies,
     CookieTypes,
     HeaderTypes,
@@ -45,6 +46,7 @@ from nonebot.internal.driver import (
     Timeout,
     TimeoutTypes,
 )
+from nonebot.utils import UNSET, UnsetType, exclude_unset
 
 try:
     import aiohttp
@@ -63,7 +65,7 @@ class Session(HTTPClientSession):
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
         version: str | HTTPVersion = HTTPVersion.H11,
-        timeout: TimeoutTypes = None,
+        timeout: TimeoutTypes | UnsetType = UNSET,
         proxy: str | None = None,
     ):
         self._client: aiohttp.ClientSession | None = None
@@ -85,15 +87,32 @@ class Session(HTTPClientSession):
         else:
             raise RuntimeError(f"Unsupported HTTP version: {version}")
 
+        _timeout = None
         if isinstance(timeout, Timeout):
-            self._timeout = aiohttp.ClientTimeout(
-                total=timeout.total,
-                connect=timeout.connect,
-                sock_read=timeout.read,
+            timeout_kwargs: dict[str, float | None] = exclude_unset(
+                {
+                    "total": timeout.total,
+                    "connect": timeout.connect,
+                    "sock_read": timeout.read,
+                }
             )
-        else:
-            self._timeout = aiohttp.ClientTimeout(timeout)
+            if timeout_kwargs:
+                _timeout = aiohttp.ClientTimeout(**timeout_kwargs)  # type: ignore
+        elif timeout is not UNSET:
+            _timeout = aiohttp.ClientTimeout(connect=timeout, sock_read=timeout)
 
+        if _timeout is None:
+            _timeout = aiohttp.ClientTimeout(
+                **exclude_unset(
+                    {
+                        "total": DEFAULT_TIMEOUT.total,
+                        "connect": DEFAULT_TIMEOUT.connect,
+                        "sock_read": DEFAULT_TIMEOUT.read,
+                    }
+                )
+            )
+
+        self._timeout = _timeout
         self._proxy = proxy
 
     @property
@@ -101,6 +120,25 @@ class Session(HTTPClientSession):
         if self._client is None:
             raise RuntimeError("Session is not initialized")
         return self._client
+
+    def _get_timeout(self, timeout: TimeoutTypes | UnsetType) -> aiohttp.ClientTimeout:
+        _timeout = None
+        if isinstance(timeout, Timeout):
+            timeout_kwargs: dict[str, float | None] = exclude_unset(
+                {
+                    "total": timeout.total,
+                    "connect": timeout.connect,
+                    "sock_read": timeout.read,
+                }
+            )
+            if timeout_kwargs:
+                _timeout = aiohttp.ClientTimeout(**timeout_kwargs)  # type: ignore
+        elif timeout is not UNSET:
+            _timeout = aiohttp.ClientTimeout(connect=timeout, sock_read=timeout)
+
+        if _timeout is None:
+            return self._timeout
+        return _timeout
 
     @override
     async def request(self, setup: Request) -> Response:
@@ -121,15 +159,6 @@ class Session(HTTPClientSession):
             if cookie.value is not None
         )
 
-        if isinstance(setup.timeout, Timeout):
-            timeout = aiohttp.ClientTimeout(
-                total=setup.timeout.total,
-                connect=setup.timeout.connect,
-                sock_read=setup.timeout.read,
-            )
-        else:
-            timeout = aiohttp.ClientTimeout(setup.timeout)
-
         async with await self.client.request(
             setup.method,
             url,
@@ -138,7 +167,7 @@ class Session(HTTPClientSession):
             cookies=cookies,
             headers=setup.headers,
             proxy=setup.proxy or self._proxy,
-            timeout=timeout,
+            timeout=self._get_timeout(setup.timeout),
         ) as response:
             return Response(
                 response.status,
@@ -171,15 +200,6 @@ class Session(HTTPClientSession):
             if cookie.value is not None
         )
 
-        if isinstance(setup.timeout, Timeout):
-            timeout = aiohttp.ClientTimeout(
-                total=setup.timeout.total,
-                connect=setup.timeout.connect,
-                sock_read=setup.timeout.read,
-            )
-        else:
-            timeout = aiohttp.ClientTimeout(setup.timeout)
-
         async with self.client.request(
             setup.method,
             url,
@@ -188,7 +208,7 @@ class Session(HTTPClientSession):
             cookies=cookies,
             headers=setup.headers,
             proxy=setup.proxy or self._proxy,
-            timeout=timeout,
+            timeout=self._get_timeout(setup.timeout),
         ) as response:
             response_headers = response.headers.copy()
             # aiohttp does not guarantee fixed-size chunks; re-chunk to exact size
@@ -270,13 +290,39 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
         else:
             raise RuntimeError(f"Unsupported HTTP version: {setup.version}")
 
+        timeout = None
         if isinstance(setup.timeout, Timeout):
-            timeout = aiohttp.ClientWSTimeout(
-                ws_receive=setup.timeout.read,  # type: ignore
-                ws_close=setup.timeout.total,  # type: ignore
+            timeout_kwargs: dict[str, float | None] = exclude_unset(
+                {
+                    "ws_receive": setup.timeout.read,
+                    "ws_close": (
+                        setup.timeout.total
+                        if setup.timeout.close is UNSET
+                        else setup.timeout.close
+                    ),
+                }
             )
-        else:
-            timeout = aiohttp.ClientWSTimeout(ws_close=setup.timeout or 10.0)  # type: ignore
+            if timeout_kwargs:
+                timeout = aiohttp.ClientWSTimeout(**timeout_kwargs)
+        elif setup.timeout is not UNSET:
+            timeout = aiohttp.ClientWSTimeout(
+                ws_receive=setup.timeout,  # type: ignore
+                ws_close=setup.timeout,  # type: ignore
+            )
+
+        if timeout is None:
+            timeout = aiohttp.ClientWSTimeout(
+                **exclude_unset(
+                    {
+                        "ws_receive": DEFAULT_TIMEOUT.read,
+                        "ws_close": (
+                            DEFAULT_TIMEOUT.total
+                            if DEFAULT_TIMEOUT.close is UNSET
+                            else DEFAULT_TIMEOUT.close
+                        ),
+                    }
+                )
+            )
 
         async with aiohttp.ClientSession(version=version, trust_env=True) as session:
             async with session.ws_connect(
@@ -295,7 +341,7 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
         headers: HeaderTypes = None,
         cookies: CookieTypes = None,
         version: str | HTTPVersion = HTTPVersion.H11,
-        timeout: TimeoutTypes = None,
+        timeout: TimeoutTypes | UnsetType = UNSET,
         proxy: str | None = None,
     ) -> Session:
         return Session(

@@ -19,6 +19,7 @@ from collections.abc import (
 import contextlib
 from contextlib import AbstractContextManager, asynccontextmanager
 import dataclasses
+from enum import Enum
 from functools import partial, wraps
 import importlib
 import inspect
@@ -27,8 +28,12 @@ from pathlib import Path
 import re
 from typing import (
     Any,
+    Final,
     Generic,
+    Literal,
+    TypeAlias,
     TypeVar,
+    final,
     get_args,
     get_origin,
     overload,
@@ -49,12 +54,62 @@ from nonebot.typing import (
     type_has_args,
 )
 
+from .compat import custom_validation
+
 P = ParamSpec("P")
 R = TypeVar("R")
 T = TypeVar("T")
 K = TypeVar("K")
 V = TypeVar("V")
 E = TypeVar("E", bound=BaseException)
+
+
+@final
+@custom_validation
+class Unset(Enum):
+    _UNSET = "<UNSET>"
+
+    def __repr__(self) -> str:
+        return "<UNSET>"
+
+    def __str__(self) -> str:
+        return self.__repr__()
+
+    def __bool__(self) -> Literal[False]:
+        return False
+
+    def __copy__(self):
+        return self._UNSET
+
+    def __deepcopy__(self, memo: dict[int, Any]):
+        return self._UNSET
+
+    @classmethod
+    def __get_validators__(cls):
+        yield cls._validate
+
+    @classmethod
+    def _validate(cls, value: Any):
+        if value is not cls._UNSET:
+            raise ValueError(f"{value!r} is not UNSET")
+        return value
+
+
+UnsetType: TypeAlias = Literal[Unset._UNSET]
+
+UNSET: Final[UnsetType] = Unset._UNSET
+
+
+def exclude_unset(data: Any) -> Any:
+    if isinstance(data, dict):
+        return data.__class__(
+            (k, exclude_unset(v)) for k, v in data.items() if v is not UNSET
+        )
+    elif isinstance(data, list):
+        return data.__class__(exclude_unset(i) for i in data if i is not UNSET)
+    elif data is UNSET:
+        return None
+    return data
 
 
 def escape_tag(s: str) -> str:

@@ -25,11 +25,18 @@ from types import CoroutineType
 from typing import TYPE_CHECKING, Any, TypeVar
 from typing_extensions import ParamSpec, override
 
-from nonebot.drivers import Request, Timeout, WebSocketClientMixin, combine_driver
+from nonebot.drivers import (
+    DEFAULT_TIMEOUT,
+    Request,
+    Timeout,
+    WebSocketClientMixin,
+    combine_driver,
+)
 from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.exception import WebSocketClosed
 from nonebot.log import LoguruHandler
+from nonebot.utils import UNSET, exclude_unset
 
 try:
     from websockets import ClientConnection, ConnectionClosed, connect
@@ -70,16 +77,36 @@ class Mixin(WebSocketClientMixin):
     @override
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
+        timeout_kwargs: dict[str, float | None] = {}
         if isinstance(setup.timeout, Timeout):
-            timeout = setup.timeout.total or setup.timeout.connect or setup.timeout.read
-        else:
-            timeout = setup.timeout
+            open_timeout = (
+                setup.timeout.connect or setup.timeout.read or setup.timeout.total
+            )
+            timeout_kwargs = exclude_unset(
+                {"open_timeout": open_timeout, "close_timeout": setup.timeout.close}
+            )
+        elif setup.timeout is not UNSET:
+            timeout_kwargs = {
+                "open_timeout": setup.timeout,
+                "close_timeout": setup.timeout,
+            }
+
+        if not timeout_kwargs:
+            open_timeout = (
+                DEFAULT_TIMEOUT.connect or DEFAULT_TIMEOUT.read or DEFAULT_TIMEOUT.total
+            )
+            timeout_kwargs = exclude_unset(
+                {
+                    "open_timeout": open_timeout,
+                    "close_timeout": DEFAULT_TIMEOUT.close,
+                }
+            )
 
         connection = connect(
             str(setup.url),
             additional_headers={**setup.headers, **setup.cookies.as_header(setup)},
             proxy=setup.proxy if setup.proxy is not None else True,
-            open_timeout=timeout,
+            **timeout_kwargs,  # type: ignore
         )
         async with connection as ws:
             yield WebSocket(request=setup, websocket=ws)

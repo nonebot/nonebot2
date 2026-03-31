@@ -1,15 +1,48 @@
+import copy
 import json
+import pickle
 from typing import ClassVar, Dict, List, Literal, TypeVar, Union  # noqa: UP035
 
+from pydantic import ValidationError
+import pytest
+
+from nonebot.compat import type_validate_python
 from nonebot.utils import (
+    UNSET,
     DataclassEncoder,
+    Unset,
+    UnsetType,
     escape_tag,
+    exclude_unset,
     generic_check_issubclass,
     is_async_gen_callable,
     is_coroutine_callable,
     is_gen_callable,
 )
 from utils import FakeMessage, FakeMessageSegment
+
+
+def test_unset():
+    assert isinstance(UNSET, Unset)
+    assert bool(UNSET) is False
+    assert copy.copy(UNSET) is UNSET
+    assert copy.deepcopy(UNSET) is UNSET
+    assert pickle.loads(pickle.dumps(UNSET)) is UNSET
+    assert type_validate_python(UnsetType, UNSET) is UNSET
+
+    with pytest.raises(ValidationError):
+        type_validate_python(UnsetType, 123)
+
+
+def test_exclude_unset():
+    assert exclude_unset({"a": 1, "b": UNSET, "c": None, "d": {"x": UNSET}}) == {
+        "a": 1,
+        "c": None,
+        "d": {},
+    }
+    assert exclude_unset([1, UNSET, None, {"x": UNSET}]) == [1, None, {}]
+    assert exclude_unset(UNSET) is None
+    assert exclude_unset(123) == 123
 
 
 def test_loguru_escape_tag():
