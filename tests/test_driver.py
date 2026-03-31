@@ -10,7 +10,6 @@ import pytest
 from nonebot.adapters import Bot
 from nonebot.dependencies import Dependent
 from nonebot.drivers import (
-    UNSET,
     URL,
     ASGIMixin,
     Driver,
@@ -19,7 +18,6 @@ from nonebot.drivers import (
     Request,
     Response,
     Timeout,
-    Unset,
     WebSocket,
     WebSocketClientMixin,
     WebSocketServerSetup,
@@ -28,6 +26,7 @@ from nonebot.drivers.aiohttp import Session as AiohttpSession
 from nonebot.drivers.aiohttp import WebSocket as AiohttpWebSocket
 from nonebot.exception import WebSocketClosed
 from nonebot.params import Depends
+from nonebot.utils import UNSET
 from utils import FakeAdapter
 
 
@@ -708,32 +707,25 @@ async def test_aiohttp_websocket_close_frame(msg_type: str) -> None:
             await ws.receive()
 
 
-def test_unset_sentinel():
-    assert UNSET is Unset()
-    assert repr(UNSET) == "UNSET"
-    assert not UNSET
-    assert bool(UNSET) is False
-
-
 def test_timeout_unset_vs_none():
     # default: all fields are UNSET
     t = Timeout()
-    assert isinstance(t.total, Unset)
-    assert isinstance(t.connect, Unset)
-    assert isinstance(t.read, Unset)
-    assert isinstance(t.close, Unset)
+    assert t.total is UNSET
+    assert t.connect is UNSET
+    assert t.read is UNSET
+    assert t.close is UNSET
 
     # explicitly set to None
     t = Timeout(close=None)
     assert t.close is None
-    assert not isinstance(t.close, Unset)
+    assert t.close is not UNSET
 
     # explicitly set to a value
     t = Timeout(total=5.0, close=None)
     assert t.total == 5.0
     assert t.close is None
-    assert isinstance(t.connect, Unset)
-    assert isinstance(t.read, Unset)
+    assert t.connect is UNSET
+    assert t.read is UNSET
 
 
 @pytest.mark.anyio
