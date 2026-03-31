@@ -132,7 +132,10 @@ class Session(HTTPClientSession):
         )
 
         _timeout = self._timeout if setup.timeout is UNSET else setup.timeout
-        if isinstance(_timeout, Timeout):
+
+        if isinstance(_timeout, aiohttp.ClientTimeout):
+            timeout = _timeout
+        elif isinstance(_timeout, Timeout):
             timeout_kwargs: dict[str, Any] = {}
             if _timeout.total is not UNSET:
                 timeout_kwargs["total"] = _timeout.total
@@ -190,7 +193,10 @@ class Session(HTTPClientSession):
         )
 
         _timeout = self._timeout if setup.timeout is UNSET else setup.timeout
-        if isinstance(_timeout, Timeout):
+
+        if isinstance(_timeout, aiohttp.ClientTimeout):
+            timeout = _timeout
+        elif isinstance(_timeout, Timeout):
             timeout_kwargs: dict[str, Any] = {}
             if _timeout.total is not UNSET:
                 timeout_kwargs["total"] = _timeout.total
@@ -306,7 +312,7 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
                 timeout_kwargs["ws_close"] = ws_close
             timeout = aiohttp.ClientWSTimeout(**timeout_kwargs)  # type: ignore
         else:
-            timeout = aiohttp.ClientWSTimeout(ws_receive=_timeout, ws_close=_timeout)
+            timeout = aiohttp.ClientWSTimeout(ws_receive=_timeout, ws_close=_timeout)  # type: ignore
 
         async with aiohttp.ClientSession(version=version, trust_env=True) as session:
             async with session.ws_connect(

@@ -19,6 +19,7 @@ from collections.abc import (
 import contextlib
 from contextlib import AbstractContextManager, asynccontextmanager
 import dataclasses
+from enum import Enum
 from functools import partial, wraps
 import importlib
 import inspect
@@ -27,8 +28,10 @@ from pathlib import Path
 import re
 from typing import (
     Any,
+    Final,
     Generic,
     Literal,
+    TypeAlias,
     TypeVar,
     final,
     get_args,
@@ -94,7 +97,7 @@ class Unset(Enum):
 
 UnsetType: TypeAlias = Literal[Unset._UNSET]
 
-UNSET: final = Unset._UNSET
+UNSET: Final[UnsetType] = Unset._UNSET
 
 
 def escape_tag(s: str) -> str:

@@ -85,7 +85,7 @@ class Session(HTTPClientSession):
                 timeout_kwargs["connect"] = timeout.connect
             if timeout.read is not UNSET:
                 timeout_kwargs["read"] = timeout.read
-            if not timeout_kwargs:
+            if not timeout_kwargs and DEFAULT_TIMEOUT.total is not UNSET:
                 avg_timeout = (
                     None if DEFAULT_TIMEOUT.total is None else DEFAULT_TIMEOUT.total / 4
                 )
@@ -116,7 +116,7 @@ class Session(HTTPClientSession):
                 timeout_kwargs["connect"] = _timeout.connect
             if _timeout.read is not UNSET:
                 timeout_kwargs["read"] = _timeout.read
-            if not timeout_kwargs:
+            if not timeout_kwargs and DEFAULT_TIMEOUT.total is not UNSET:
                 avg_timeout = (
                     None if DEFAULT_TIMEOUT.total is None else DEFAULT_TIMEOUT.total / 4
                 )
@@ -125,7 +125,7 @@ class Session(HTTPClientSession):
                 timeout_kwargs["read"] = DEFAULT_TIMEOUT.read
             timeout = httpx.Timeout(**timeout_kwargs)
         else:
-            timeout = httpx.Timeout(timeout)
+            timeout = httpx.Timeout(_timeout)
 
         response = await self.client.request(
             setup.method,
@@ -164,7 +164,7 @@ class Session(HTTPClientSession):
                 timeout_kwargs["connect"] = _timeout.connect
             if _timeout.read is not UNSET:
                 timeout_kwargs["read"] = _timeout.read
-            if not timeout_kwargs:
+            if not timeout_kwargs and DEFAULT_TIMEOUT.total is not UNSET:
                 avg_timeout = (
                     None if DEFAULT_TIMEOUT.total is None else DEFAULT_TIMEOUT.total / 4
                 )
@@ -173,7 +173,7 @@ class Session(HTTPClientSession):
                 timeout_kwargs["read"] = DEFAULT_TIMEOUT.read
             timeout = httpx.Timeout(**timeout_kwargs)
         else:
-            timeout = httpx.Timeout(timeout)
+            timeout = httpx.Timeout(_timeout)
 
         async with self.client.stream(
             setup.method,
