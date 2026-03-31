@@ -102,7 +102,7 @@ class Session(HTTPClientSession):
                 )
             )
 
-        self._timeout = timeout
+        self._timeout = _timeout
         self._proxy = proxy
 
     @property

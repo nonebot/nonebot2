@@ -77,11 +77,12 @@ class Mixin(WebSocketClientMixin):
     @override
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
+        timeout_kwargs: dict[str, float | None] = {}
         if isinstance(setup.timeout, Timeout):
             open_timeout = (
                 setup.timeout.connect or setup.timeout.read or setup.timeout.total
             )
-            timeout_kwargs: dict[str, float | None] = exclude_unset(
+            timeout_kwargs = exclude_unset(
                 {"open_timeout": open_timeout, "close_timeout": setup.timeout.close}
             )
         elif setup.timeout is not UNSET:
@@ -105,7 +106,7 @@ class Mixin(WebSocketClientMixin):
             str(setup.url),
             additional_headers={**setup.headers, **setup.cookies.as_header(setup)},
             proxy=setup.proxy if setup.proxy is not None else True,
-            **timeout_kwargs,
+            **timeout_kwargs,  # type: ignore
         )
         async with connection as ws:
             yield WebSocket(request=setup, websocket=ws)

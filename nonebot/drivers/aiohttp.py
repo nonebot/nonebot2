@@ -97,7 +97,7 @@ class Session(HTTPClientSession):
                 }
             )
             if timeout_kwargs:
-                _timeout = aiohttp.ClientTimeout(**timeout_kwargs)
+                _timeout = aiohttp.ClientTimeout(**timeout_kwargs)  # type: ignore
         elif timeout is not UNSET:
             _timeout = aiohttp.ClientTimeout(connect=timeout, sock_read=timeout)
 
@@ -132,7 +132,7 @@ class Session(HTTPClientSession):
                 }
             )
             if timeout_kwargs:
-                _timeout = aiohttp.ClientTimeout(**timeout_kwargs)
+                _timeout = aiohttp.ClientTimeout(**timeout_kwargs)  # type: ignore
         elif timeout is not UNSET:
             _timeout = aiohttp.ClientTimeout(connect=timeout, sock_read=timeout)
 
@@ -303,9 +303,12 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
                 }
             )
             if timeout_kwargs:
-                timeout = aiohttp.ClientWSTimeout(**timeout_kwargs)  # type: ignore
+                timeout = aiohttp.ClientWSTimeout(**timeout_kwargs)
         elif setup.timeout is not UNSET:
-            timeout = aiohttp.ClientWSTimeout(ws_receive=_timeout, ws_close=_timeout)  # type: ignore
+            timeout = aiohttp.ClientWSTimeout(
+                ws_receive=setup.timeout,  # type: ignore
+                ws_close=setup.timeout,  # type: ignore
+            )
 
         if timeout is None:
             timeout = aiohttp.ClientWSTimeout(
