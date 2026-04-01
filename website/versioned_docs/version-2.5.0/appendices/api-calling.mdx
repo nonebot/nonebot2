@@ -1,0 +1,131 @@
+---
+sidebar_position: 4
+description: 使用平台接口，完成更多功能
+
+options:
+  menu:
+    - category: appendices
+      weight: 50
+---
+
+# 使用平台接口
+
+import Messenger from "@/components/Messenger";
+
+在 NoneBot 中，除了使用事件响应器操作发送文本消息外，我们还可以直接通过使用协议适配器提供的方法来使用平台特定的接口，完成发送特殊消息、获取信息等其他平台提供的功能。同时，在部分无法使用事件响应器的情况中，例如[定时任务](../best-practice/scheduler.md)，我们也可以使用平台接口来完成需要的功能。
+
+## 发送平台特殊消息
+
+在之前的章节中，我们介绍了如何向用户发送文本消息以及[如何处理平台消息](../tutorial/message.md)，现在我们来向用户发送平台特殊消息。
+
+:::caution 注意
+在以下的示例中，我们将使用 `Console` 协议适配器来演示如何发送平台消息。在实际使用中，你需要确保你使用的**消息序列类型**与你所要发送的**平台类型**一致。
+:::
+
+```python {4,7-17} title=weather/__init__.py
+import inspect
+from nonebot.adapters.console import MessageSegment
+
+@weather.got("location", prompt=MessageSegment.emoji("question") + "请输入地名")
+async def got_location(location: str = ArgPlainText()):
+    result = await weather.send(
+        MessageSegment.markdown(
+            inspect.cleandoc(
+                f"""
+                # {location}
+
+                - 今天
+
+                   ⛅ 多云 20℃~24℃
+                """
+            )
+        )
+    )
+```
+
+<Messenger
+  msgs={[
+    { position: "right", msg: "/天气" },
+    { position: "left", msg: "❓请输入地名" },
+    { position: "right", msg: "北京" },
+    {
+      position: "left",
+      monospace: true,
+      msg: "┏━━━━━━━━━━━━━━━━┓\n┃      北京       ┃\n┗━━━━━━━━━━━━━━━━┛\n• 今天\n⛅ 多云 20℃~24℃",
+    },
+  ]}
+/>
+
+在上面的示例中，我们使用了 `Console` 协议适配器提供的 `MessageSegment` 类来发送平台特定的消息 `emoji` 和 `markdown`。这两种消息可以显示在终端中，但是无法在其他平台上使用。在事件响应器操作中，我们可以使用 `str`、消息序列、消息段、消息模板四种类型来发送消息，但其中只有 `str` 和[纯文本形式的消息模板类型](../tutorial/message.md#使用消息模板)消息可以在所有平台上使用。
+
+`send` 事件响应器操作实际上是由协议适配器通过调用平台 API 来实现的，通常会将 API 调用的结果作为返回值返回。
+
+## 调用平台 API
+
+在 NoneBot 中，我们可以通过 `Bot` 对象来调用协议适配器支持的平台 API，来完成更多的功能。
+
+### 获取 Bot
+
+在调用平台 API 之前，我们首先要获得 Bot 对象。有两种方式可以获得 Bot 对象。
+
+在事件处理流程的上下文中，我们可以直接使用依赖注入 Bot 来获取：
+
+```python {1,4} title=weather/__init__.py
+from nonebot.adapters import Bot
+
+@weather.got("location", prompt="请输入地名")
+async def got_location(bot: Bot, location: str = ArgPlainText()):
+    ...
+```
+
+依赖注入会确保你获得的 Bot 对象与类型注解的 Bot 类型一致。也就是说，如果你使用的是 Bot 基类，将会允许任何平台的 Bot 对象；如果你使用的是平台特定的 Bot 类型，将会只允许该平台的 Bot 对象，其他类型的 Bot 将会跳过这个事件处理函数。更多详情请参考[事件处理重载](./overload.md)。
+
+在其他情况下，我们可以通过 NoneBot 提供的方法来获取 Bot 对象，这些方法将会在[使用适配器](../advanced/adapter.md#获取-bot-对象)中详细介绍：
+
+```python {4,6}
+from nonebot import get_bot
+
+# 获取当前所有 Bot 中的第一个
+bot = get_bot()
+# 获取指定 ID 的 Bot
+bot = get_bot("bot_id")
+```
+
+### 调用 API
+
+在获得 Bot 对象后，我们可以通过 Bot 的实例方法来调用平台 API：
+
+```python {2,5}
+# 通过 bot.api_name(**kwargs) 的方法调用 API
+result = await bot.get_user_info(user_id=12345678)
+
+# 通过 bot.call_api(api_name, **kwargs) 的方法调用 API
+result = await bot.call_api("get_user_info", user_id=12345678)
+```
+
+:::caution 注意
+实际可以使用的 API 以及参数取决于平台提供的接口以及协议适配器的实现，请参考协议适配器以及平台文档。
+:::
+
+在了解了如何调用 API 后，我们可以来改进 `weather` 插件，使得消息发送后，调用 `Console` 接口响铃提醒机器人用户：
+
+```python {4,18} title=weather/__init__.py
+from nonebot.adapters.console import Bot, MessageSegment
+
+@weather.got("location", prompt=MessageSegment.emoji("question") + "请输入地名")
+async def got_location(bot: Bot, location: str = ArgPlainText()):
+    await weather.send(
+        MessageSegment.markdown(
+            inspect.cleandoc(
+                f"""
+                # {location}
+
+                - 今天
+
+                   ⛅ 多云 20℃~24℃
+                """
+            )
+        )
+    )
+    await bot.bell()
+```

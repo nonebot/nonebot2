@@ -1,0 +1,638 @@
+---
+sidebar_position: 0
+description: 读取用户配置来控制插件行为
+
+options:
+  menu:
+    - category: appendices
+      weight: 10
+---
+
+# 配置
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+配置是项目中非常重要的一部分，为了方便我们控制机器人的行为，NoneBot 提供了一套配置系统。下面我们将会补充[指南](../quick-start.mdx)中的天气插件，使其能够读取用户配置。在这之前，我们需要先了解一下配置系统，如果你已经了解了 NoneBot 中的配置方法，可以跳转到[编写插件配置](#插件配置)。
+
+NoneBot 使用 [`pydantic`](https://docs.pydantic.dev/) 以及 [`python-dotenv`](https://saurabh-kumar.com/python-dotenv/) 来读取 dotenv 配置文件以及环境变量，从而控制机器人行为。配置文件需要符合 dotenv 格式，复杂数据类型需使用 JSON 格式或 [pydantic 支持格式](https://docs.pydantic.dev/usage/types/)填写。
+
+NoneBot 内置的配置项列表及含义可以在[内置配置项](#内置配置项)中查看。
+
+:::caution 注意
+
+NoneBot 自 2.2.0 起兼容了 Pydantic v1 与 v2 版本，以下文档中 Pydantic 相关示例均采用 v2 版本用法。
+
+如果在使用商店或其他第三方插件的过程中遇到 Pydantic 相关警告或报错，例如：
+
+```python
+pydantic_core._pydantic_core.ValidationError: 1 validation error for Config
+  Input should be a valid dictionary or instance of Config [type=model_type, input_value=Config(...), input_type=Config]
+```
+
+请考虑降级 Pydantic 至 v1 版本：
+
+```bash
+pip install --force-reinstall 'pydantic~=1.10'
+```
+
+:::
+
+## 配置项的加载
+
+在 NoneBot 中，我们可以把配置途径分为 **直接传入**、**系统环境变量**、**dotenv 配置文件** 三种，其加载优先级依次由高到低。
+
+### 直接传入
+
+在 NoneBot 初始化的过程中，可以通过 `nonebot.init()` 传入任意合法的 Python 变量，也可以在初始化完成后直接赋值。
+
+通常，在初始化前的传参会在机器人的入口文件（如 `bot.py`）中进行，而初始化后的赋值可以在任何地方进行。
+
+```python {4,8,9} title=bot.py
+import nonebot
+
+# 初始化时
+nonebot.init(custom_config1="config on init")
+
+# 初始化后
+config = nonebot.get_driver().config
+config.custom_config1 = "changed after init"
+config.custom_config2 = "new config after init"
+```
+
+### 系统环境变量
+
+在 dotenv 配置文件中定义的配置项，也会在环境变量中进行寻找。如果在环境变量中发现同名配置项（大小写不敏感），将会覆盖 dotenv 中所填值。
+
+例如，在 dotenv 配置文件中存在配置项 `custom_config`：
+
+```dotenv
+CUSTOM_CONFIG=config in dotenv
+```
+
+同时，设置环境变量：
+
+```bash
+# windows cmd
+set CUSTOM_CONFIG 'config in environment variables'
+# windows powershell
+$Env:CUSTOM_CONFIG='config in environment variables'
+# linux/macOS
+export CUSTOM_CONFIG='config in environment variables'
+```
+
+那最终 NoneBot 所读取的内容为环境变量中的内容，即 `config in environment variables`。
+
+:::caution 注意
+如果一个环境变量既不是 NoneBot 的[**内置配置项**](#内置配置项)，也不是任何插件所定义的[**插件配置**](#插件配置)，那么 NoneBot 不会自发读取该环境变量，需要在 dotenv 配置文件中先行声明。
+:::
+
+### dotenv 配置文件
+
+dotenv 是一种便捷的跨平台配置通用模式，也是我们推荐的配置方式。
+
+NoneBot 在启动时将会从系统环境变量或者 `.env` 文件中寻找配置项 `ENVIRONMENT` （大小写不敏感），默认值为 `prod`。这将决定 NoneBot 后续进一步加载环境配置的文件路径 `.env.{ENVIRONMENT}`。
+
+#### 配置项解析
+
+dotenv 文件中的配置值使用 JSON 进行解析。如果配置项值无法被解析，将作为**字符串**处理。例如：
+
+```dotenv
+STRING_CONFIG=some string
+LIST_CONFIG=[1, 2, 3]
+DICT_CONFIG={"key": "value"}
+MULTILINE_CONFIG='
+[
+  {
+    "item_key": "item_value"
+  }
+]
+'
+EMPTY_CONFIG=
+NULL_CONFIG
+```
+
+将被解析为：
+
+```python
+dotenv_config = {
+    "string_config": "some string",
+    "list_config": [1, 2, 3],
+    "dict_config": {"key": "value"},
+    "multiline_config": [{"item_key": "item_value"}],
+    "empty_config": "",
+    "null_config": None
+}
+```
+
+特别的，NoneBot 支持使用 `env_nested_delimiter` 配置嵌套字典，在层与层之间使用 `__` 分隔即可：
+
+```dotenv
+DICT={"k1": "v1", "k2": null}
+DICT__K2=v2
+DICT__K3=v3
+DICT__INNER__K4=v4
+```
+
+将被解析为：
+
+```python
+dotenv_config = {
+    "dict": {
+        "k1": "v1",
+        "k2": "v2",
+        "k3": "v3",
+        "inner": {
+            "k4": "v4"
+        }
+    }
+}
+```
+
+#### .env 文件
+
+`.env` 文件是基础配置文件，该文件中的配置项在不同环境下都会被加载，但会被 `.env.{ENVIRONMENT}` 文件中的配置所**覆盖**。
+
+我们可以在 `.env` 文件中写入当前的环境信息：
+
+```dotenv
+ENVIRONMENT=dev
+COMMON_CONFIG=common config  # 这个配置项在任何环境中都会被加载
+```
+
+这样，我们在启动 NoneBot 时就会从 `.env.dev` 文件中加载剩余配置项。
+
+:::tip 提示
+在生产环境中，可以通过设置环境变量 `ENVIRONMENT=prod` 来确保 NoneBot 读取正确的环境配置。
+:::
+
+#### .env.\{ENVIRONMENT\} 文件
+
+`.env.{ENVIRONMENT}` 文件类似于预设，可以让我们在多套不同的配置方案中灵活切换，默认 NoneBot 会读取 `.env.prod` 配置。如果你使用了 `nb-cli` 创建 `simple` 项目，那么将含有两套预设配置：`.env.dev` 和 `.env.prod`。
+
+在 NoneBot 初始化时，可以指定加载某个环境配置文件：
+
+```python
+nonebot.init(_env_file=".env.dev")
+```
+
+这将忽略在 `.env` 文件或环境变量中指定的 `ENVIRONMENT` 配置项。
+
+## 读取全局配置项
+
+NoneBot 的全局配置对象可以通过 `driver` 获取，如：
+
+```python
+import nonebot
+
+config = nonebot.get_driver().config
+```
+
+如果我们需要获取某个配置项，可以直接通过 `config` 对象的属性访问：
+
+```python
+superusers = config.superusers
+```
+
+如果配置项不存在，将会抛出异常。
+
+## 插件配置
+
+在一个涉及大量配置项的项目中，通过直接读取全局配置项的方式显然并不高效。同时，由于额外的全局配置项没有预先定义，开发时编辑器将无法提示字段与类型，并且运行时没有对配置项直接进行合法性检查。那么就需要一种方式来规范定义插件配置项。
+
+在 NoneBot 中，我们使用强大高效的 `pydantic` 来定义配置模型，这个模型可以被用于配置的读取和类型检查等。例如在 `weather` 插件目录中新建 `config.py` 来定义一个模型：
+
+```python title=weather/config.py
+from pydantic import BaseModel, field_validator
+
+class Config(BaseModel):
+    weather_api_key: str
+    weather_command_priority: int = 10
+    weather_plugin_enabled: bool = True
+
+    @field_validator("weather_command_priority")
+    @classmethod
+    def check_priority(cls, v: int) -> int:
+        if v >= 1:
+            return v
+        raise ValueError("weather command priority must greater than 1")
+```
+
+在 `config.py` 中，我们定义了一个 `Config` 类，它继承自 `pydantic.BaseModel`，并定义了一些配置项。在 `Config` 类中，我们还定义了一个 `check_priority` 方法，它用于检查 `weather_command_priority` 配置项的合法性。更多关于 `pydantic` 的编写方式，可以参考 [pydantic 官方文档](https://docs.pydantic.dev/)。
+
+在定义好配置模型后，我们可以在插件加载时通过配置模型获取插件配置：
+
+```python {5,11} title=weather/__init__.py
+from nonebot import get_plugin_config
+
+from .config import Config
+
+plugin_config = get_plugin_config(Config)
+
+weather = on_command(
+    "天气",
+    rule=to_me(),
+    aliases={"weather", "查天气"},
+    priority=plugin_config.weather_command_priority,
+    block=True,
+)
+```
+
+然后，我们便可以从 `plugin_config` 中读取配置了，例如 `plugin_config.weather_api_key`。
+
+这种方式可以简洁、高效地读取配置项，同时也可以设置默认值或者在运行时对配置项进行合法性检查，防止由于配置项导致的插件出错等情况出现。
+
+:::tip 可配置的事件响应优先级
+发布插件应该为自身的事件响应器提供可配置的优先级，以便插件使用者可以自定义多个插件间的响应顺序。
+:::
+
+:::tip 插件配置获取逻辑
+无论是否在 dotenv 文件中声明了插件配置项，使用 `get_plugin_config` 获取插件配置模型中定义的配置项时都遵循[**配置项的加载**](#配置项的加载)一节中的优先级顺序进行读取。
+:::
+
+### 避免插件配置名称冲突
+
+由于插件配置项是从全局配置和环境变量中读取的，通常我们需要在配置项名称前面添加前缀名，以防止配置项冲突。例如在上方的示例中，我们就添加了配置项前缀 `weather_`。但是这样会导致使用配置项时变量名过长，此时我们可以使用 `pydantic` 的 `alias` 或者通过配置 scope 来简化配置项名称。这里我们以 scope 配置为例：
+
+```python title=weather/config.py
+from pydantic import BaseModel
+
+class ScopedConfig(BaseModel):
+    api_key: str
+    command_priority: int = 10
+    plugin_enabled: bool = True
+
+class Config(BaseModel):
+    weather: ScopedConfig
+```
+
+```python title=weather/__init__.py
+from nonebot import get_plugin_config
+
+from .config import Config
+
+plugin_config = get_plugin_config(Config).weather
+```
+
+这样我们就可以省略插件配置项名称中的前缀 `weather_` 了。但需要注意的是，如果我们使用了 scope 配置，那么在配置文件中也需要使用 [`env_nested_delimiter` 格式](#配置项解析)，例如：
+
+```dotenv
+WEATHER__API_KEY=123456
+WEATHER__COMMAND_PRIORITY=10
+```
+
+## 内置配置项
+
+配置项 API 文档可以前往 [Config 类](../api/config.md#Config)查看。
+
+### Driver
+
+- **类型**: `str`
+- **默认值**: `"~fastapi"`
+
+NoneBot 运行所使用的驱动器。具体配置方法可以参考[安装驱动器](../tutorial/store.mdx#安装驱动器)和[选择驱动器](../advanced/driver.md)。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+DRIVER=~fastapi+~httpx+~websockets
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows cmd
+set DRIVER '~fastapi+~httpx+~websockets'
+# windows powershell
+$Env:DRIVER='~fastapi+~httpx+~websockets'
+# linux/macOS
+export DRIVER='~fastapi+~httpx+~websockets'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python title=bot.py
+import nonebot
+
+nonebot.init(driver="~fastapi+~httpx+~websockets")
+```
+
+  </TabItem>
+</Tabs>
+
+### Host
+
+- **类型**: `IPvAnyAddress`
+- **默认值**: `127.0.0.1`
+
+当 NoneBot 作为服务端时，监听的 IP / 主机名。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+HOST=127.0.0.1
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows cmd
+set HOST '127.0.0.1'
+# windows powershell
+$Env:HOST='127.0.0.1'
+# linux/macOS
+export HOST='127.0.0.1'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python title=bot.py
+import nonebot
+
+nonebot.init(host="127.0.0.1")
+```
+
+  </TabItem>
+</Tabs>
+
+### Port
+
+- **类型**: `int` (1 ~ 65535)
+- **默认值**: `8080`
+
+当 NoneBot 作为服务端时，监听的端口。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+PORT=8080
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows cmd
+set PORT '8080'
+# windows powershell
+$Env:PORT='8080'
+# linux/macOS
+export PORT='8080'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python title=bot.py
+import nonebot
+
+nonebot.init(port=8080)
+```
+
+  </TabItem>
+</Tabs>
+
+### Log Level
+
+- **类型**: `int | str`
+- **默认值**: `INFO`
+
+NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称。具体等级对照表参考 [loguru 日志等级](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
+
+:::tip 提示
+日志等级名称应为大写，如 `INFO`。
+:::
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+LOG_LEVEL=DEBUG
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows cmd
+set LOG_LEVEL 'DEBUG'
+# windows powershell
+$Env:LOG_LEVEL='DEBUG'
+# linux/macOS
+export LOG_LEVEL='DEBUG'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python title=bot.py
+import nonebot
+
+nonebot.init(log_level="DEBUG")
+```
+
+  </TabItem>
+</Tabs>
+
+### API Timeout
+
+- **类型**: `float | None`
+- **默认值**: `30.0`
+
+调用平台接口的超时时间，单位为秒。`None` 表示不设置超时时间。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+API_TIMEOUT=10.0
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows cmd
+set API_TIMEOUT '10.0'
+# windows powershell
+$Env:API_TIMEOUT='10.0'
+# linux/macOS
+export API_TIMEOUT='10.0'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python title=bot.py
+import nonebot
+
+nonebot.init(api_timeout=10.0)
+```
+
+  </TabItem>
+</Tabs>
+
+### SuperUsers
+
+- **类型**: `set[str]`
+- **默认值**: `set()`
+
+机器人超级用户，可以使用权限 [`SUPERUSER`](../api/permission.md#SUPERUSER)。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+SUPERUSERS=["123123123"]
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows cmd
+set SUPERUSERS '["123123123"]'
+# windows powershell
+$Env:SUPERUSERS='["123123123"]'
+# linux/macOS
+export SUPERUSERS='["123123123"]'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python title=bot.py
+import nonebot
+
+nonebot.init(superusers={"123123123"})
+```
+
+  </TabItem>
+</Tabs>
+
+### Nickname
+
+- **类型**: `set[str]`
+- **默认值**: `set()`
+
+机器人昵称，通常协议适配器会根据用户是否 @bot 或者是否以机器人昵称开头来判断是否是向机器人发送的消息。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+NICKNAME=["bot"]
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows cmd
+set NICKNAME '["bot"]'
+# windows powershell
+$Env:NICKNAME='["bot"]'
+# linux/macOS
+export NICKNAME='["bot"]'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python title=bot.py
+import nonebot
+
+nonebot.init(nickname={"bot"})
+```
+
+  </TabItem>
+</Tabs>
+
+### Command Start 和 Command Separator
+
+- **类型**: `set[str]`
+- **默认值**:
+  - Command Start: `{"/"}`
+  - Command Separator: `{"."}`
+
+命令消息的起始符和分隔符。用于 [`command`](../advanced/matcher.md#command) 规则。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+COMMAND_START=["/", ""]
+COMMAND_SEP=[".", " "]
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows cmd
+set COMMAND_START '["/", ""]'
+set COMMAND_SEP '[".", " "]'
+# windows powershell
+$Env:COMMAND_START='["/", ""]'
+$Env:COMMAND_SEP='[".", " "]'
+# linux/macOS
+export COMMAND_START='["/", ""]'
+export COMMAND_SEP='[".", " "]'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python title=bot.py
+import nonebot
+
+nonebot.init(command_start={"/", ""}, command_sep={".", " "})
+```
+
+  </TabItem>
+</Tabs>
+
+### Session Expire Timeout
+
+- **类型**: `timedelta`
+- **默认值**: `timedelta(minutes=2)`
+
+用户会话超时时间，配置格式参考 [Datetime Types](https://docs.pydantic.dev/latest/api/standard_library_types/#datetimetimedelta)。
+
+<Tabs groupId="configMethod">
+  <TabItem value="dotenv" label="dotenv" default>
+
+```dotenv
+SESSION_EXPIRE_TIMEOUT=00:02:00
+```
+
+  </TabItem>
+  <TabItem value="env" label="系统环境变量">
+
+```bash
+# windows cmd
+set SESSION_EXPIRE_TIMEOUT '00:02:00'
+# windows powershell
+$Env:SESSION_EXPIRE_TIMEOUT='00:02:00'
+# linux/macOS
+export SESSION_EXPIRE_TIMEOUT='00:02:00'
+```
+
+  </TabItem>
+  <TabItem value="init" label="直接传入">
+
+```python title=bot.py
+import nonebot
+
+nonebot.init(session_expire_timeout=120)
+```
+
+  </TabItem>
+</Tabs>

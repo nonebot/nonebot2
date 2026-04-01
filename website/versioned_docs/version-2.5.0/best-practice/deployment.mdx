@@ -1,0 +1,300 @@
+---
+sidebar_position: 3
+description: 部署你的机器人
+---
+
+# 部署
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+在编写完成各类插件后，我们需要长期运行机器人来使得用户能够正常使用。通常，我们会使用云服务器来部署机器人。
+
+我们在开发插件时，机器人运行的环境称为开发环境；而在部署后，机器人运行的环境称为生产环境。与开发环境不同的是，在生产环境中，开发者通常不能随意地修改/添加/删除代码，开启或停止服务。
+
+## 部署前准备
+
+### 项目依赖管理
+
+由于部署后的机器人运行在生产环境中，因此，为确保机器人能够正常运行，我们需要保证机器人的运行环境与开发环境一致。我们可以通过以下几种方式来进行依赖管理：
+
+<Tabs groupId="tool">
+  <TabItem value="poetry" label="Poetry" default>
+
+[Poetry](https://python-poetry.org/) 是一个 Python 项目的依赖管理工具。它可以通过声明项目所依赖的库，为你管理（安装/更新）它们。Poetry 提供了一个 `poetry.lock` 文件，以确保可重复安装，并可以构建用于分发的项目。
+
+Poetry 会在安装依赖时自动生成 `poetry.lock` 文件，在**项目目录**下执行以下命令：
+
+```bash
+# 初始化 poetry 配置
+poetry init
+# 添加项目依赖，这里以 nonebot2[fastapi] 为例
+poetry add nonebot2[fastapi]
+```
+
+  </TabItem>
+  <TabItem value="pdm" label="PDM">
+
+[PDM](https://pdm.fming.dev/) 是一个现代 Python 项目的依赖管理工具。它采用 [PEP621](https://www.python.org/dev/peps/pep-0621/) 标准，依赖解析快速；同时支持 [PEP582](https://www.python.org/dev/peps/pep-0582/) 和 [virtualenv](https://virtualenv.pypa.io/)。PDM 提供了一个 `pdm.lock` 文件，以确保可重复安装，并可以构建用于分发的项目。
+
+PDM 会在安装依赖时自动生成 `pdm.lock` 文件，在**项目目录**下执行以下命令：
+
+```bash
+# 初始化 pdm 配置
+pdm init
+# 添加项目依赖，这里以 nonebot2[fastapi] 为例
+pdm add nonebot2[fastapi]
+```
+
+  </TabItem>
+  <TabItem value="pip" label="pip">
+
+[pip](https://pip.pypa.io/) 是 Python 包管理工具。他并不是一个依赖管理工具，为了尽可能保证环境的一致性，我们可以使用 `requirements.txt` 文件来声明依赖。
+
+```bash
+pip freeze > requirements.txt
+```
+
+  </TabItem>
+</Tabs>
+
+### 安装 Docker
+
+[Docker](https://www.docker.com/) 是一个应用容器引擎，可以让开发者打包应用以及依赖包到一个可移植的镜像中，然后发布到服务器上。
+
+我们可以参考 [Docker 官方文档](https://docs.docker.com/get-docker/) 来安装 Docker 。
+
+在 Linux 上，我们可以使用以下一键脚本来安装 Docker 以及 Docker Compose Plugin：
+
+```bash
+curl -fsSL https://get.docker.com | sh -s -- --mirror Aliyun
+```
+
+在 Windows/macOS 上，我们可以使用 [Docker Desktop](https://docs.docker.com/desktop/) 来安装 Docker 以及 Docker Compose Plugin。
+
+### 安装脚手架 Docker 插件
+
+我们可以使用 [nb-cli-plugin-docker](https://github.com/nonebot/cli-plugin-docker) 来快速部署机器人。
+
+插件可以帮助我们生成配置文件并构建 Docker 镜像，以及启动/停止/重启机器人。使用以下命令安装脚手架 Docker 插件：
+
+```bash
+nb self install nb-cli-plugin-docker
+```
+
+## Docker 部署
+
+### 快速部署
+
+使用脚手架命令即可一键生成配置并部署：
+
+```bash
+nb docker up
+```
+
+当看到 `Running` 字样时，说明机器人已经启动成功。我们可以通过以下命令来查看机器人的运行日志：
+
+<Tabs groupId="deploy-tool">
+  <TabItem value="nb-cli" label="NB CLI" default>
+
+```bash
+nb docker logs
+```
+
+  </TabItem>
+  <TabItem value="docker-compose" label="Docker Compose">
+
+```bash
+docker compose logs
+```
+
+  </TabItem>
+</Tabs>
+
+如果需要停止机器人，我们可以使用以下命令：
+
+<Tabs groupId="deploy-tool">
+  <TabItem value="nb-cli" label="NB CLI" default>
+
+```bash
+nb docker down
+```
+
+  </TabItem>
+  <TabItem value="docker-compose" label="Docker Compose">
+
+```bash
+docker compose down
+```
+
+  </TabItem>
+</Tabs>
+
+### 自定义部署
+
+在部分情况下，我们需要事先生成 Docker 配置文件，再到生产环境进行部署；或者自动生成的配置文件并不能满足复杂场景，需要根据实际需求手动修改配置文件。我们可以使用以下命令来生成基础配置文件：
+
+```bash
+nb docker generate
+```
+
+nb-cli 将会在项目目录下生成 `docker-compose.yml` 和 `Dockerfile` 等配置文件。在 nb-cli 完成配置文件的生成后，我们可以根据部署环境的实际情况使用 nb-cli 或者 Docker Compose 来启动机器人。
+
+我们可以参考 [Dockerfile 文件规范](https://docs.docker.com/engine/reference/builder/)和 [Compose 文件规范](https://docs.docker.com/compose/compose-file/)修改这两个文件。
+
+修改完成后我们可以直接启动或者手动构建镜像：
+
+<Tabs groupId="deploy-tool">
+  <TabItem value="nb-cli" label="NB CLI" default>
+
+```bash
+# 启动机器人
+nb docker up
+# 手动构建镜像
+nb docker build
+```
+
+  </TabItem>
+  <TabItem value="docker-compose" label="Docker Compose">
+
+```bash
+# 启动机器人
+docker compose up -d
+# 手动构建镜像
+docker compose build
+```
+
+  </TabItem>
+</Tabs>
+
+### 持续集成
+
+我们可以使用 GitHub Actions 来实现持续集成（CI），我们只需要在 GitHub 上发布 Release 即可自动构建镜像并推送至镜像仓库。
+
+首先，我们需要在 [Docker Hub](https://hub.docker.com/) （或者其他平台，如：[GitHub Packages](https://github.com/features/packages)、[阿里云容器镜像服务](https://www.alibabacloud.com/zh/product/container-registry)等）上创建镜像仓库，用于存放镜像。
+
+前往项目仓库的 `Settings` > `Secrets` > `actions` 栏目 `New Repository Secret` 添加构建所需的密钥：
+
+- `DOCKERHUB_USERNAME`: 你的 Docker Hub 用户名
+- `DOCKERHUB_TOKEN`: 你的 Docker Hub PAT（[创建方法](https://docs.docker.com/docker-hub/access-tokens/)）
+
+将以下文件添加至**项目目录**下的 `.github/workflows/` 目录下，并将文件中高亮行中的仓库名称替换为你的仓库名称：
+
+```yaml title=.github/workflows/build.yml
+name: Docker Hub Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+
+      - name: Setup Docker
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      - name: Generate Tags
+        uses: docker/metadata-action@v4
+        id: metadata
+        with:
+          images: |
+            # highlight-next-line
+            {organization}/{repository}
+          tags: |
+            type=semver,pattern={{version}}
+            type=semver,pattern={{major}}.{{minor}}
+            type=sha
+            type=raw,value=latest
+
+      - name: Build and Publish
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: ${{ steps.metadata.outputs.tags }}
+          labels: ${{ steps.metadata.outputs.labels }}
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+```
+
+### 持续部署
+
+在完成发布并构建镜像后，我们可以自动将镜像部署到服务器上。
+
+前往项目仓库的 `Settings` > `Secrets` > `actions` 栏目 `New Repository Secret` 添加部署所需的密钥：
+
+- `DEPLOY_HOST`: 部署服务器的 SSH 地址
+- `DEPLOY_USER`: 部署服务器用户名
+- `DEPLOY_KEY`: 部署服务器私钥（[创建方法](https://github.com/appleboy/ssh-action#setting-up-a-ssh-key)）
+- `DEPLOY_PATH`: 部署服务器上的项目路径
+
+将以下文件添加至**项目目录**下的 `.github/workflows/` 目录下，在构建成功后触发部署：
+
+```yaml title=.github/workflows/deploy.yml
+name: Deploy
+
+on:
+  workflow_run:
+    workflows:
+      - Docker Hub Release
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    steps:
+      - name: Start Deployment
+        uses: bobheadxi/deployments@v1
+        id: deployment
+        with:
+          step: start
+          token: ${{ secrets.GITHUB_TOKEN }}
+          env: bot
+
+      - name: Run Remote SSH Command
+        uses: appleboy/ssh-action@master
+        env:
+          DEPLOY_PATH: ${{ secrets.DEPLOY_PATH }}
+        with:
+          host: ${{ secrets.DEPLOY_HOST }}
+          username: ${{ secrets.DEPLOY_USER }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          envs: DEPLOY_PATH
+          script: |
+            cd $DEPLOY_PATH
+            docker compose up -d --pull always
+
+      - name: update deployment status
+        uses: bobheadxi/deployments@v0.6.2
+        if: always()
+        with:
+          step: finish
+          token: ${{ secrets.GITHUB_TOKEN }}
+          status: ${{ job.status }}
+          env: ${{ steps.deployment.outputs.env }}
+          deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+```
+
+将上一部分的 `docker-compose.yml` 文件以及 `.env.prod` 配置文件添加至 `DEPLOY_PATH` 目录下，并修改 `docker-compose.yml` 文件中的镜像配置，替换为 Docker Hub 的仓库名称：
+
+```diff
+- build: .
++ image: {organization}/{repository}:latest
+```

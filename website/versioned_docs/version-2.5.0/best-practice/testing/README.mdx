@@ -1,0 +1,240 @@
+---
+sidebar_position: 1
+description: 使用 NoneBug 进行单元测试
+
+slug: /best-practice/testing/
+---
+
+# 配置与测试事件响应器
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+> 在计算机编程中，单元测试（Unit Testing）又称为模块测试，是针对程序模块（软件设计的最小单位）来进行正确性检验的测试工作。
+
+为了保证代码的正确运行，我们不仅需要对错误进行跟踪，还需要对代码进行正确性检验，也就是测试。NoneBot 提供了一个测试工具——NoneBug，它是一个 [pytest](https://docs.pytest.org/en/stable/) 插件，可以帮助我们便捷地进行单元测试。
+
+:::tip 提示
+建议在阅读本文档前先阅读 [pytest 官方文档](https://docs.pytest.org/en/stable/)来了解 pytest 的相关术语和基本用法。
+:::
+
+## 安装 NoneBug
+
+在**项目目录**下激活虚拟环境后运行以下命令安装 NoneBug：
+
+<Tabs groupId="tool">
+  <TabItem value="poetry" label="Poetry" default>
+
+```bash
+poetry add nonebug -G test
+```
+
+  </TabItem>
+  <TabItem value="pdm" label="PDM">
+
+```bash
+pdm add nonebug -dG test
+```
+
+  </TabItem>
+  <TabItem value="pip" label="pip">
+
+```bash
+pip install nonebug
+```
+
+  </TabItem>
+</Tabs>
+
+要运行 NoneBug 测试，还需要额外安装 pytest 异步插件 `pytest-asyncio` 或 `anyio` 以支持异步测试。文档中，我们以 `pytest-asyncio` 为例：
+
+<Tabs groupId="tool">
+  <TabItem value="poetry" label="Poetry" default>
+
+```bash
+poetry add pytest-asyncio -G test
+```
+
+  </TabItem>
+  <TabItem value="pdm" label="PDM">
+
+```bash
+pdm add pytest-asyncio -dG test
+```
+
+  </TabItem>
+  <TabItem value="pip" label="pip">
+
+```bash
+pip install pytest-asyncio
+```
+
+  </TabItem>
+</Tabs>
+
+## 配置测试
+
+在开始测试之前，我们需要对测试进行一些配置，以正确启动我们的机器人。
+
+首先我们需要配置 pytest-asyncio，在 `pyproject.toml` 的 pytest 配置部分添加：
+
+```toml
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "session"
+```
+
+然后，我们在 `tests` 目录下新建 `conftest.py` 文件，添加以下内容：
+
+```python title=tests/conftest.py
+import pytest
+import nonebot
+from pytest_asyncio import is_async_test
+# 导入适配器
+from nonebot.adapters.console import Adapter as ConsoleAdapter
+
+def pytest_collection_modifyitems(items: list[pytest.Item]):
+    pytest_asyncio_tests = (item for item in items if is_async_test(item))
+    session_scope_marker = pytest.mark.asyncio(loop_scope="session")
+    for async_test in pytest_asyncio_tests:
+        async_test.add_marker(session_scope_marker, append=False)
+
+@pytest.fixture(scope="session", autouse=True)
+async def after_nonebot_init(after_nonebot_init: None):
+    # 加载适配器
+    driver = nonebot.get_driver()
+    driver.register_adapter(ConsoleAdapter)
+
+    # 加载插件
+    nonebot.load_from_toml("pyproject.toml")
+```
+
+这样，我们就可以在测试中使用机器人的插件了。通常，我们不需要自行初始化 NoneBot，NoneBug 已经为我们运行了 `nonebot.init()`。如果需要自定义 NoneBot 初始化的参数，我们可以在 `conftest.py` 中添加 `pytest_configure` 钩子函数。例如，我们可以修改 NoneBot 配置环境为 `test` 并从环境变量中输入配置：
+
+```python {4,6,8-10} title=tests/conftest.py
+import os
+
+import pytest
+from nonebug import NONEBOT_INIT_KWARGS
+
+os.environ["ENVIRONMENT"] = "test"
+
+def pytest_configure(config: pytest.Config):
+    config.stash[NONEBOT_INIT_KWARGS] = {"secret": os.getenv("INPUT_SECRET")}
+```
+
+NoneBug 默认也会为我们管理 lifespan 的 startup 与 shutdown。如果不希望 NoneBug 管理 lifespan，你可以在 `pytest_configure` 里添加以下配置：
+
+```python
+import pytest
+from nonebug import NONEBOT_START_LIFESPAN
+
+def pytest_configure(config: pytest.Config):
+    config.stash[NONEBOT_START_LIFESPAN] = False
+```
+
+## 编写插件测试
+
+在配置完成插件加载后，我们就可以在测试中使用插件了。NoneBug 通过 pytest fixture `app` 提供各种测试方法，我们可以在测试中使用它来测试插件。现在，我们创建一个测试脚本来测试[深入指南](../../appendices/session-control.mdx)中编写的天气插件。首先，我们先要导入我们需要的模块：
+
+<details>
+  <summary>插件示例</summary>
+
+```python title=weather/__init__.py
+from nonebot import on_command
+from nonebot.rule import to_me
+from nonebot.matcher import Matcher
+from nonebot.adapters import Message
+from nonebot.params import CommandArg, ArgPlainText
+
+weather = on_command("天气", rule=to_me(), aliases={"weather", "天气预报"})
+
+@weather.handle()
+async def handle_function(matcher: Matcher, args: Message = CommandArg()):
+    if args.extract_plain_text():
+        matcher.set_arg("location", args)
+
+@weather.got("location", prompt="请输入地名")
+async def got_location(location: str = ArgPlainText()):
+    if location not in ["北京", "上海", "广州", "深圳"]:
+        await weather.reject(f"你想查询的城市 {location} 暂不支持，请重新输入！")
+    await weather.finish(f"今天{location}的天气是...")
+```
+
+</details>
+
+```python {4,5,9,11-16} title=tests/test_weather.py
+from datetime import datetime
+
+import pytest
+from nonebug import App
+from nonebot.adapters.console import User, Message, MessageEvent
+
+@pytest.mark.asyncio
+async def test_weather(app: App):
+    from awesome_bot.plugins.weather import weather
+
+    event = MessageEvent(
+        time=datetime.now(),
+        self_id="test",
+        message=Message("/天气 北京"),
+        user=User(id="user"),
+    )
+```
+
+在上面的代码中，我们引入了 NoneBug 的测试 `App` 对象，以及必要的适配器消息与事件定义等。在测试函数 `test_weather` 中，我们导入了要进行测试的事件响应器 `weather`。请注意，由于需要等待 NoneBot 初始化并加载插件完毕，插件内容必须在**测试函数内部**进行导入。然后，我们创建了一个 `MessageEvent` 事件对象，它模拟了一个用户发送了 `/天气 北京` 的消息。接下来，我们使用 `app.test_matcher` 方法来测试 `weather` 事件响应器：
+
+```python {11-15} title=tests/test_weather.py
+@pytest.mark.asyncio
+async def test_weather(app: App):
+    from awesome_bot.plugins.weather import weather
+
+    event = MessageEvent(
+        time=datetime.now(),
+        self_id="test",
+        message=Message("/天气 北京"),
+        user=User(id="user"),
+    )
+    async with app.test_matcher(weather) as ctx:
+        bot = ctx.create_bot()
+        ctx.receive_event(bot, event)
+        ctx.should_call_send(event, "今天北京的天气是...", result=None)
+        ctx.should_finished(weather)
+```
+
+这里我们使用 `async with` 语句并通过参数指定要测试的事件响应器 `weather` 来进入测试上下文。在测试上下文中，我们可以使用 `ctx.create_bot` 方法创建一个虚拟的机器人实例，并使用 `ctx.receive_event` 方法来模拟机器人接收到消息事件。然后，我们就可以定义预期行为来测试机器人是否正确运行。在上面的代码中，我们使用 `ctx.should_call_send` 方法来断言机器人应该发送 `今天北京的天气是...` 这条消息，并且将发送函数的调用结果作为第三个参数返回给事件处理函数。如果断言失败，测试将会不通过。我们也可以使用 `ctx.should_finished` 方法来断言机器人应该结束会话。
+
+为了测试更复杂的情况，我们可以为添加更多的测试用例。例如，我们可以测试用户输入了一个不支持的地名时机器人的反应：
+
+```python {17-21,23-26} title=tests/test_weather.py
+def make_event(message: str = "") -> MessageEvent:
+    return MessageEvent(
+        time=datetime.now(),
+        self_id="test",
+        message=Message(message),
+        user=User(id="user"),
+    )
+
+@pytest.mark.asyncio
+async def test_weather(app: App):
+    from awesome_bot.plugins.weather import weather
+
+    async with app.test_matcher(weather) as ctx:
+        ...  # 省略前面的测试用例
+
+    async with app.test_matcher(weather) as ctx:
+        bot = ctx.create_bot()
+        event = make_event("/天气 南京")
+        ctx.receive_event(bot, event)
+        ctx.should_call_send(event, "你想查询的城市 南京 暂不支持，请重新输入！", result=None)
+        ctx.should_rejected(weather)
+
+        event = make_event("北京")
+        ctx.receive_event(bot, event)
+        ctx.should_call_send(event, "今天北京的天气是...", result=None)
+        ctx.should_finished(weather)
+```
+
+在上面的代码中，我们使用 `ctx.should_rejected` 来断言机器人应该请求用户重新输入。然后，我们再次使用 `ctx.receive_event` 方法来模拟用户回复了 `北京`，并使用 `ctx.should_finished` 来断言机器人应该结束会话。
+
+更多的 NoneBug 用法将在后续章节中介绍。

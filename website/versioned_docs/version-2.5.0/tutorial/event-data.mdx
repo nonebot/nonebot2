@@ -1,0 +1,65 @@
+---
+sidebar_position: 6
+description: 通过依赖注入获取所需事件信息
+
+options:
+  menu:
+    - category: tutorial
+      weight: 80
+---
+
+# 获取事件信息
+
+import Messenger from "@site/src/components/Messenger";
+
+在 NoneBot 事件处理流程中，获取事件信息并做出对应的操作是非常常见的场景。本章节中我们将介绍如何通过**依赖注入**获取事件信息。
+
+## 认识依赖注入
+
+在事件处理流程中，事件响应器具有自己独立的上下文，例如：当前响应的事件、收到事件的机器人或者其他处理流程中新增的信息等。这些数据可以根据我们的需求，通过依赖注入的方式，在执行事件处理流程中注入到事件处理函数中。
+
+相对于传统的信息获取方法，通过依赖注入获取信息的最大特色在于**按需获取**。如果该事件处理函数不需要任何额外信息即可运行，那么可以不进行依赖注入。如果事件处理函数需要额外的数据，可以通过依赖注入的方式灵活的标注出需要的依赖，在函数运行时便会被按需注入。
+
+## 使用依赖注入
+
+使用依赖注入获取上下文信息的方法十分简单，我们仅需要在函数的参数中声明所需的依赖，并正确的将函数添加为事件处理依赖即可。在 NoneBot 中，我们可以直接使用 `nonebot.params` 模块中定义的参数类型来声明依赖。
+
+例如，我们可以继续改进上一章节中的 `weather` 插件，使其可以获取到 `天气` 命令的地名参数，并根据地名返回天气信息。
+
+```python {9,11} title=weather/__init__.py
+from nonebot import on_command
+from nonebot.rule import to_me
+from nonebot.adapters import Message
+from nonebot.params import CommandArg
+
+weather = on_command("天气", rule=to_me(), aliases={"weather", "查天气"}, priority=10, block=True)
+
+@weather.handle()
+async def handle_function(args: Message = CommandArg()):
+    # 提取参数纯文本作为地名，并判断是否有效
+    if location := args.extract_plain_text():
+        await weather.finish(f"今天{location}的天气是...")
+    else:
+        await weather.finish("请输入地名")
+```
+
+如上方示例所示，我们使用了 `args` 作为注入参数名，注入的内容为 `CommandArg()`，也就是**消息命令后跟随的内容**。在这个示例中，我们获得的参数会被检查是否有效，对无效参数则会结束事件。
+
+:::tip 提示
+命令与参数之间可以不需要空格，`CommandArg()` 获取的信息为命令后跟随的内容并去除了头部空白符。例如：`/天气 上海` 消息的参数为 `上海`。
+:::
+
+:::tip 提示
+`:=` 是 Python 3.8 引入的新语法 [Assignment Expressions](https://docs.python.org/zh-cn/3/reference/expressions.html#assignment-expressions)，也称为海象表达式，可以在表达式中直接赋值。
+:::
+
+<Messenger
+  msgs={[
+    { position: "right", msg: "/天气" },
+    { position: "left", msg: "请输入地名" },
+    { position: "right", msg: "/天气 上海" },
+    { position: "left", msg: "今天上海的天气是..." },
+  ]}
+/>
+
+NoneBot 提供了多种依赖注入类型，可以获取不同的信息，具体内容可参考[依赖注入](../advanced/dependency.mdx)。

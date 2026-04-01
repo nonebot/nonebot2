@@ -1,0 +1,87 @@
+---
+sidebar_position: 5
+description: 处理接收到的特定事件
+
+options:
+  menu:
+    - category: tutorial
+      weight: 70
+---
+
+# 事件处理
+
+import Messenger from "@site/src/components/Messenger";
+
+在我们收到事件，并被某个事件响应器正确响应后，便正式开启了对于这个事件的**处理流程**。
+
+## 认识事件处理流程
+
+就像我们在解决问题时需要遵循流程一样，处理一个事件也需要一套流程。在事件响应器对一个事件进行响应之后，会依次执行一系列的**事件处理依赖**（通常是函数）。简单来说，事件处理流程并不是一个函数、一个对象或一个方法，而是一整套由开发者设计的流程。
+
+在这个流程中，我们**目前**只需要了解两个概念：函数形式的“事件处理依赖”（下称“事件处理函数”）和“事件响应器操作”。
+
+## 事件处理函数
+
+在事件响应器中，事件处理流程可以由一个或多个“事件处理函数”组成，这些事件处理函数将会按照顺序依次对事件进行处理，直到全部执行完成或被中断。我们可以采用事件响应器的“事件处理函数装饰器”来添加这些“事件处理函数”。
+
+顾名思义，“事件处理函数装饰器”是一个[装饰器（decorator）](https://docs.python.org/zh-cn/3/glossary.html#term-decorator)，那么它的使用方法也同[函数定义](https://docs.python.org/zh-cn/3/reference/compound_stmts.html#function-definitions)中所展示的包装用法相同。例如：
+
+```python {6-8} title=weather/__init__.py
+from nonebot import on_command
+from nonebot.rule import to_me
+
+weather = on_command("天气", rule=to_me(), aliases={"weather", "查天气"}, priority=10, block=True)
+
+@weather.handle()
+async def handle_function():
+    pass  # do something here
+```
+
+如上方示例所示，我们使用 `weather` 响应器的 `handle` 装饰器装饰了一个函数 `handle_function`。`handle_function` 函数会被添加到 `weather` 的事件处理流程中。在 `weather` 响应器被触发之后，将会依次调用 `weather` 响应器的事件处理函数，即 `handle_function` 来对事件进行处理。
+
+## 事件响应器操作
+
+在事件处理流程中，我们可以使用事件响应器操作来进行一些交互或改变事件处理流程，例如向机器人用户发送消息或提前结束事件处理流程等。
+
+事件响应器操作与事件处理函数装饰器类似，通常作为事件响应器 `Matcher` 的[类方法](https://docs.python.org/zh-cn/3/library/functions.html#classmethod)存在，因此事件响应器操作的调用方法也是 `Matcher.func()` 的形式。不过不同的是，事件响应器操作并不是装饰器，因此并不需要@进行标注。
+
+```python {8,9} title=weather/__init__.py
+from nonebot import on_command
+from nonebot.rule import to_me
+
+weather = on_command("天气", rule=to_me(), aliases={"weather", "查天气"}, priority=10, block=True)
+
+@weather.handle()
+async def handle_function():
+    # await weather.send("天气是...")
+    await weather.finish("天气是...")
+```
+
+如上方示例所示，我们使用 `weather` 响应器的 `finish` 操作方法向机器人用户回复了 `天气是...` 并结束了事件处理流程。效果如下：
+
+<Messenger
+  msgs={[
+    { position: "right", msg: "/天气" },
+    { position: "left", msg: "天气是..." },
+  ]}
+/>
+
+值得注意的是，在执行 `finish` 方法时，NoneBot 会在向机器人用户发送消息内容后抛出 `FinishedException` 异常来结束事件响应流程。也就是说，在 `finish` 被执行后，后续的程序是不会被执行的。如果你需要回复机器人用户消息但不想事件处理流程结束，可以使用注释的部分中展示的 `send` 方法。
+
+:::danger 警告
+由于 `finish` 是通过抛出 `FinishedException` 异常来结束事件的，因此异常可能会被未加限制的 `try-except` 捕获，影响事件处理流程正确处理，导致无法正常结束此事件。请务必在异常捕获中指定错误类型或排除所有 [MatcherException](../api/exception.md#MatcherException) 类型的异常（如下所示），或将 `finish` 移出捕获范围进行使用。
+
+```python
+from nonebot.exception import MatcherException
+
+try:
+    await weather.finish("天气是...")
+except MatcherException:
+    raise
+except Exception as e:
+    pass # do something here
+```
+
+:::
+
+目前 NoneBot 提供了多种事件响应器操作，其中包括用于机器人用户交互与流程控制两大类，进阶使用方法可以查看[会话控制](../appendices/session-control.mdx)。

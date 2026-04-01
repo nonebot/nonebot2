@@ -1,0 +1,117 @@
+---
+sidebar_position: 5
+description: 控制事件响应器的权限
+
+options:
+  menu:
+    - category: appendices
+      weight: 60
+---
+
+# 权限控制
+
+import Messenger from "@site/src/components/Messenger";
+
+**权限控制**是机器人在实际应用中需要解决的重点问题之一，NoneBot 提供了灵活的权限控制机制 —— `Permission`。
+
+类似于响应规则 `Rule`，`Permission` 是由非负整数个 `PermissionChecker` 所共同组成的**用于筛选事件**的对象。但需要特别说明的是，权限和响应规则有如下区别：
+
+1. 权限检查**先于**响应规则检查
+2. `Permission` 只需**其中一个** `PermissionChecker` 返回 `True` 时就会检查通过
+3. 权限检查进行时，上下文中并不存在会话状态 `state`
+4. `Rule` 仅在**初次触发**事件响应器时进行检查，在余下的会话中并不会限制事件；而 `Permission` 会**持续生效**，在连续对话中一直对事件主体加以限制。
+
+## 基础使用
+
+通常情况下，`Permission` 更侧重于对于**触发事件的机器人用户**的筛选，例如由 NoneBot 自身提供的 `SUPERUSER` 权限，便是筛选出会话发起者是否为超级用户。它可以对输入的用户进行鉴别，如果符合要求则会被认为通过并返回 `True`，反之则返回 `False`。
+
+简单来说，`Permission` 是一个用于筛选出符合要求的用户的机制，可以通过 `Permission` 精确的控制响应对象的覆盖范围，从而拒绝掉我们所不希望的事件。
+
+例如，我们可以在 `weather` 插件中添加一个超级用户可用的指令：
+
+```python {3,9} title=weather/__init__.py
+from typing import Tuple
+from nonebot.params import Command
+from nonebot.permission import SUPERUSER
+
+manage = on_command(
+    ("天气", "启用"),
+    rule=to_me(),
+    aliases={("天气", "禁用")},
+    permission=SUPERUSER,
+)
+
+@manage.handle()
+async def control(cmd: Tuple[str, str] = Command()):
+    _, action = cmd
+    if action == "启用":
+        plugin_config.weather_plugin_enabled = True
+    elif action == "禁用":
+        plugin_config.weather_plugin_enabled = False
+    await manage.finish(f"天气插件已{action}")
+```
+
+如上方示例所示，在注册事件响应器时，我们设置了 `permission` 参数，那么这个事件处理器在触发事件前的检查阶段会对用户身份进行验证，如果不符合我们设置的条件（此处即为**超级用户**）则不会响应。此时，我们向机器人发送 `/天气.禁用` 指令，机器人不会有任何响应，因为我们还不是机器人的超级管理员。我们在 dotenv 文件中设置了 `SUPERUSERS` 配置项之后，机器人就会响应我们的指令了。
+
+```dotenv title=.env
+SUPERUSERS=["console_user"]
+```
+
+<Messenger
+  msgs={[
+    { position: "right", msg: "/天气.禁用" },
+    { position: "left", msg: "天气插件已禁用" },
+    { position: "right", msg: "/天气.启用" },
+    { position: "left", msg: "天气插件已启用" },
+  ]}
+/>
+
+## 自定义权限
+
+与事件响应规则类似，`PermissionChecker` 也是一个返回值为 `bool` 类型的依赖函数，即 `PermissionChecker` 支持依赖注入。例如，我们可以限制用户的指令调用次数：
+
+```python title=weather/__init__.py
+from nonebot.adapters import Event
+
+fake_db: Dict[str, int] = {}
+
+async def limit_permission(event: Event):
+    count = fake_db.setdefault(event.get_user_id(), 100)
+    if count > 0:
+        fake_db[event.get_user_id()] -= 1
+        return True
+    return False
+
+weather = on_command("天气", permission=limit_permission)
+```
+
+## 权限组合
+
+权限之间可以通过 `|` 运算符进行组合，使得任意一个权限检查返回 `True` 时通过。例如：
+
+```python {4-6}
+perm1 = Permission(foo_checker)
+perm2 = Permission(bar_checker)
+
+perm = perm1 | perm2
+perm = perm1 | bar_checker
+perm = foo_checker | perm2
+```
+
+同样的，我们也无需担心组合了一个 `None` 值，`Permission` 会自动忽略 `None` 值。
+
+```python
+assert (perm | None) is perm
+```
+
+## 主动使用权限
+
+除了在事件响应器中使用权限外，我们也可以主动使用权限来判断事件是否符合条件。例如：
+
+```python {3}
+perm = Permission(some_checker)
+
+result: bool = await perm(bot, event)
+```
+
+我们只需要传入 `Bot` 实例、事件，`Permission` 会并发调用所有 `PermissionChecker` 进行检查，并返回结果。
