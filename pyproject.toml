@@ -1,6 +1,6 @@
 [project]
 name = "nonebot2"
-version = "2.4.4"
+version = "2.5.0"
 description = "An asynchronous python bot framework."
 authors = [{ name = "yanyongyu", email = "yyy@nonebot.dev" }]
 license = "MIT"
@@ -44,7 +44,7 @@ all = [
 dev = [
   { include-group = "test" },
   { include-group = "docs" },
-  "ruff >=0.14.0, <0.15.0",
+  "ruff >=0.15.0, <0.16.0",
   "nonemoji >=0.1.2, <0.2.0",
   "pre-commit >=4.0.0, <5.0.0",
 ]
