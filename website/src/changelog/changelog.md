@@ -5,6 +5,12 @@ toc_max_heading_level: 2
 
 # 更新日志
 
+## 最近更新
+
+### 💫 杂项
+
+- CI: 移除 Pull Request Target 触发器 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3946](https://github.com/nonebot/nonebot2/pull/3946))
+
 ## v2.5.0
 
 ### 💥 破坏性变更
