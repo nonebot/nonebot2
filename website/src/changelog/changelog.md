@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - CI: 移除 Pull Request Target 触发器 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3946](https://github.com/nonebot/nonebot2/pull/3946))
 
+### 🍻 插件发布
+
+- Plugin: 会话配置 [@noneflow](https://github.com/noneflow) ([#3938](https://github.com/nonebot/nonebot2/pull/3938))
+
 ## v2.5.0
 
 ### 💥 破坏性变更
