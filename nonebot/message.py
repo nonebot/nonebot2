@@ -474,9 +474,6 @@ async def _run_matcher(
         dependency_cache=dependency_cache,
     )
 
-    if matcher.block:
-        raise StopPropagation
-
 
 async def check_and_run_matcher(
     Matcher: type[Matcher],
@@ -588,9 +585,18 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
             ):
                 async with anyio.create_task_group() as tg:
                     for matcher in priority_matchers:
+                        if not await _check_matcher(
+                            Matcher=Matcher,
+                            bot=bot,
+                            event=event,
+                            state=state,
+                            stack=stack,
+                            dependency_cache=dependency_cache,
+                        ):
+                            continue
                         tg.start_soon(
                             run_coro_with_shield,
-                            check_and_run_matcher(
+                            _run_matcher(
                                 matcher,
                                 bot,
                                 event,
@@ -599,6 +605,9 @@ async def handle_event(bot: "Bot", event: "Event") -> None:
                                 dependency_cache,
                             ),
                         )
+
+                        if matcher.block:
+                            raise StopPropagation
 
         if show_log:
             logger.debug("Checking for matchers completed")
