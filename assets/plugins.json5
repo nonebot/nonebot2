@@ -10625,4 +10625,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_12306_ticket",
+    "project_link": "nonebot-plugin-12306-ticket",
+    "author_id": 51502183,
+    "tags": [
+      {
+        "label": "中国铁路",
+        "color": "#5257ea"
+      },
+      {
+        "label": "12306",
+        "color": "#5257ea"
+      }
+    ],
+    "is_official": false
+  },
 ]
