@@ -10641,4 +10641,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_tg_stickers_downloads",
+    "project_link": "nonebot-plugin-tg-stickers-downloads",
+    "author_id": 122811297,
+    "tags": [],
+    "is_official": false
+  },
 ]
