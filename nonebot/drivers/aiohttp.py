@@ -324,6 +324,10 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
                 )
             )
 
+        autoping = True
+        if setup.ping_interval is not UNSET:
+            autoping = setup.ping_interval is not None
+
         async with aiohttp.ClientSession(version=version, trust_env=True) as session:
             async with session.ws_connect(
                 setup.url,
@@ -331,6 +335,7 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
                 timeout=timeout,
                 headers=setup.headers,
                 proxy=setup.proxy,
+                autoping=autoping,
             ) as ws:
                 yield WebSocket(request=setup, session=session, websocket=ws)
 

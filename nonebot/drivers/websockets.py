@@ -83,7 +83,11 @@ class Mixin(WebSocketClientMixin):
                 setup.timeout.connect or setup.timeout.read or setup.timeout.total
             )
             timeout_kwargs = exclude_unset(
-                {"open_timeout": open_timeout, "close_timeout": setup.timeout.close}
+                {
+                    "open_timeout": open_timeout,
+                    "close_timeout": setup.timeout.close,
+                    "ping_timeout": setup.timeout.ping,
+                }
             )
         elif setup.timeout is not UNSET:
             timeout_kwargs = {
@@ -102,11 +106,18 @@ class Mixin(WebSocketClientMixin):
                 }
             )
 
+        kwargs = exclude_unset(
+            {
+                **timeout_kwargs,
+                "ping_interval": setup.ping_interval,
+            }
+        )
+
         connection = connect(
             str(setup.url),
             additional_headers={**setup.headers, **setup.cookies.as_header(setup)},
             proxy=setup.proxy if setup.proxy is not None else True,
-            **timeout_kwargs,  # type: ignore
+            **kwargs,  # type: ignore
         )
         async with connection as ws:
             yield WebSocket(request=setup, websocket=ws)
