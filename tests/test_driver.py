@@ -878,6 +878,49 @@ async def test_websocket_client_timeout(driver: Driver, server_url: URL):
     await anyio.sleep(1)
 
 
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    "driver",
+    [
+        pytest.param("nonebot.drivers.websockets:Driver", id="websockets"),
+        pytest.param("nonebot.drivers.aiohttp:Driver", id="aiohttp"),
+    ],
+    indirect=True,
+)
+async def test_websocket_client_ping_interval(driver: Driver, server_url: URL):
+    """WebSocket connections work with different ping_interval settings."""
+    assert isinstance(driver, WebSocketClientMixin)
+
+    ws_url = server_url.with_scheme("ws")
+
+    # ping_interval not set (UNSET), default behavior
+    request = Request("GET", ws_url)
+    async with driver.websocket(request) as ws:
+        await ws.send("quit")
+        with pytest.raises(WebSocketClosed):
+            await ws.receive()
+
+    await anyio.sleep(1)
+
+    # ping_interval explicitly set to None (disable ping)
+    request = Request("GET", ws_url, ping_interval=None)
+    async with driver.websocket(request) as ws:
+        await ws.send("quit")
+        with pytest.raises(WebSocketClosed):
+            await ws.receive()
+
+    await anyio.sleep(1)
+
+    # ping_interval set to a float value
+    request = Request("GET", ws_url, ping_interval=20.0)
+    async with driver.websocket(request) as ws:
+        await ws.send("quit")
+        with pytest.raises(WebSocketClosed):
+            await ws.receive()
+
+    await anyio.sleep(1)
+
+
 @pytest.mark.parametrize(
     ("driver", "driver_type"),
     [
