@@ -10648,4 +10648,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_bot_monitor",
+    "project_link": "nonebot-plugin-bot-monitor",
+    "author_id": 62124595,
+    "tags": [
+      {
+        "label": "monitor",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
