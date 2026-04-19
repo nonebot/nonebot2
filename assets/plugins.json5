@@ -10672,4 +10672,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_arkguesser",
+    "project_link": "nonebot-plugin-arkguesser",
+    "author_id": 225500959,
+    "tags": [
+      {
+        "label": "明日方舟 ",
+        "color": "#ea5252"
+      },
+      {
+        "label": "猜谜",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
