@@ -10700,4 +10700,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_dancecube",
+    "project_link": "nonebot-plugin-dancecube",
+    "author_id": 25610914,
+    "tags": [
+      {
+        "label": "音游",
+        "color": "#ea5252"
+      },
+      {
+        "label": "舞立方",
+        "color": "#377aba"
+      }
+    ],
+    "is_official": false
+  },
 ]
