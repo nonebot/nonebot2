@@ -10660,4 +10660,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_dingtalk_logger",
+    "project_link": "nonebot-plugin-dingtalk-logger",
+    "author_id": 41439182,
+    "tags": [
+      {
+        "label": "DingTalk",
+        "color": "#007fff"
+      }
+    ],
+    "is_official": false
+  },
 ]
