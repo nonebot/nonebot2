@@ -344,7 +344,7 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
                 timeout=timeout,
                 headers=setup.headers,
                 proxy=setup.proxy,
-                autoping=autoping,
+                autoping=heartbeat is not None,
                 heartbeat=heartbeat,
             ) as ws:
                 yield WebSocket(request=setup, session=session, websocket=ws)
