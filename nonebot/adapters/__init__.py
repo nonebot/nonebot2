@@ -23,7 +23,6 @@ __autodoc__ = {
     "Message": True,
     "Message.__getitem__": True,
     "Message.__contains__": True,
-    "Message._construct": True,
     "MessageSegment": True,
     "MessageSegment.__str__": True,
     "MessageSegment.__add__": True,

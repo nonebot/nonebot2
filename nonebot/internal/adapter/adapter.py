@@ -73,13 +73,13 @@ class Adapter(abc.ABC):
             raise RuntimeError(f"{bot} not found in adapter {self.get_name()}")
         self.driver._bot_disconnect(bot)
 
-    def setup_http_server(self, setup: HTTPServerSetup):
+    def setup_http_server(self, setup: HTTPServerSetup) -> None:
         """设置一个 HTTP 服务器路由配置"""
         if not isinstance(self.driver, ASGIMixin):
             raise TypeError("Current driver does not support http server")
         self.driver.setup_http_server(setup)
 
-    def setup_websocket_server(self, setup: WebSocketServerSetup):
+    def setup_websocket_server(self, setup: WebSocketServerSetup) -> None:
         """设置一个 WebSocket 服务器路由配置"""
         if not isinstance(self.driver, ASGIMixin):
             raise TypeError("Current driver does not support websocket server")
