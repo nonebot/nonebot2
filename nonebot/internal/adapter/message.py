@@ -1,7 +1,7 @@
 import abc
 from collections.abc import Iterable
 from copy import deepcopy
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from typing import (  # noqa: UP035
     Any,
     Generic,
