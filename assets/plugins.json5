@@ -10688,4 +10688,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_quotation",
+    "project_link": "nonebot-plugin-quotation",
+    "author_id": 41883458,
+    "tags": [
+      {
+        "label": "语录",
+        "color": "#2aa7dd"
+      }
+    ],
+    "is_official": false
+  },
 ]
