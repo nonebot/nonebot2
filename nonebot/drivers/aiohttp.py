@@ -326,8 +326,10 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
             )
 
         autoping = True
+        heartbeat = None
         if setup.ping_interval is not UNSET:
             autoping = setup.ping_interval is not None
+            heartbeat = setup.ping_interval
 
         if isinstance(setup.timeout, Timeout) and setup.timeout.ping is not UNSET:
             logger.warning(
@@ -343,6 +345,7 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
                 headers=setup.headers,
                 proxy=setup.proxy,
                 autoping=autoping,
+                heartbeat=heartbeat,
             ) as ws:
                 yield WebSocket(request=setup, session=session, websocket=ws)
 
