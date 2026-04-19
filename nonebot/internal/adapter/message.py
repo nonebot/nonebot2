@@ -74,16 +74,16 @@ class MessageSegment(abc.ABC, Generic[TM]):
         return cls(type=value["type"], data=value.get("data", {}))
 
     def get(self, key: str, default: Any = None):
-        return asdict(self).get(key, default)
+        return self.data.get(key, default)
 
     def keys(self):
-        return asdict(self).keys()
+        return self.data.keys()
 
     def values(self):
-        return asdict(self).values()
+        return self.data.values()
 
     def items(self):
-        return asdict(self).items()
+        return self.data.items()
 
     def join(self, iterable: Iterable[Self | TM]) -> TM:
         return self.get_message_class()(self).join(iterable)

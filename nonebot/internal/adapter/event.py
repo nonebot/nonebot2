@@ -81,7 +81,10 @@ class Event(abc.ABC, BaseModel):
 
         通常不需要修改，默认通过 `get_message().extract_plain_text` 获取。
         """
-        return self.get_message().extract_plain_text()
+        message = self.get_message()
+        if message is None:
+            return ""
+        return message.extract_plain_text()
 
     @abc.abstractmethod
     def is_tome(self) -> bool:
