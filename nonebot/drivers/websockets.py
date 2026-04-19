@@ -103,6 +103,7 @@ class Mixin(WebSocketClientMixin):
                 {
                     "open_timeout": open_timeout,
                     "close_timeout": DEFAULT_TIMEOUT.close,
+                    "ping_timeout": DEFAULT_TIMEOUT.ping,
                 }
             )
 

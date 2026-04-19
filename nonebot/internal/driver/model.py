@@ -23,7 +23,7 @@ class Timeout:
     ping: float | None | UnsetType = UNSET
 
 
-DEFAULT_TIMEOUT = Timeout(total=None, connect=5.0, read=30.0, close=10.0)
+DEFAULT_TIMEOUT = Timeout(total=None, connect=5.0, read=30.0, close=10.0, ping=20.0)
 
 
 RawURL: TypeAlias = tuple[bytes, bytes, int | None, bytes]
