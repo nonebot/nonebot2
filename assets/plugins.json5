@@ -10716,4 +10716,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_suda_electricity",
+    "project_link": "nonebot_plugin_suda_electricity",
+    "author_id": 78413699,
+    "tags": [
+      {
+        "label": "苏州大学",
+        "color": "#e13667"
+      },
+      {
+        "label": "电费",
+        "color": "#243b83"
+      }
+    ],
+    "is_official": false
+  },
 ]
