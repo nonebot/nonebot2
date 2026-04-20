@@ -36,7 +36,7 @@ from nonebot.drivers import WebSocket as BaseWebSocket
 from nonebot.drivers.none import Driver as NoneDriver
 from nonebot.exception import WebSocketClosed
 from nonebot.log import LoguruHandler
-from nonebot.utils import UNSET, exclude_unset
+from nonebot.utils import UNSET, UnsetType, exclude_unset
 
 try:
     from websockets import ClientConnection, ConnectionClosed, connect
@@ -77,14 +77,17 @@ class Mixin(WebSocketClientMixin):
     @override
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
-        timeout_kwargs: dict[str, float | None] = {}
+        timeout_kwargs: dict[str, float | None | UnsetType] = {}
         if isinstance(setup.timeout, Timeout):
             open_timeout = (
                 setup.timeout.connect or setup.timeout.read or setup.timeout.total
             )
-            timeout_kwargs = exclude_unset(
-                {"open_timeout": open_timeout, "close_timeout": setup.timeout.close}
-            )
+            timeout_kwargs = {
+                "open_timeout": open_timeout,
+                "close_timeout": setup.timeout.close,
+                "ping_timeout": setup.timeout.ping,
+            }
+
         elif setup.timeout is not UNSET:
             timeout_kwargs = {
                 "open_timeout": setup.timeout,
@@ -95,18 +98,24 @@ class Mixin(WebSocketClientMixin):
             open_timeout = (
                 DEFAULT_TIMEOUT.connect or DEFAULT_TIMEOUT.read or DEFAULT_TIMEOUT.total
             )
-            timeout_kwargs = exclude_unset(
-                {
-                    "open_timeout": open_timeout,
-                    "close_timeout": DEFAULT_TIMEOUT.close,
-                }
-            )
+            timeout_kwargs = {
+                "open_timeout": open_timeout,
+                "close_timeout": DEFAULT_TIMEOUT.close,
+                "ping_timeout": DEFAULT_TIMEOUT.ping,
+            }
+
+        kwargs = exclude_unset(
+            {
+                **timeout_kwargs,
+                "ping_interval": setup.ping_interval,
+            }
+        )
 
         connection = connect(
             str(setup.url),
             additional_headers={**setup.headers, **setup.cookies.as_header(setup)},
             proxy=setup.proxy if setup.proxy is not None else True,
-            **timeout_kwargs,  # type: ignore
+            **kwargs,  # type: ignore
         )
         async with connection as ws:
             yield WebSocket(request=setup, websocket=ws)

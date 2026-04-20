@@ -20,9 +20,10 @@ class Timeout:
     connect: float | None | UnsetType = UNSET
     read: float | None | UnsetType = UNSET
     close: float | None | UnsetType = UNSET
+    ping: float | None | UnsetType = UNSET
 
 
-DEFAULT_TIMEOUT = Timeout(total=None, connect=5.0, read=30.0, close=10.0)
+DEFAULT_TIMEOUT = Timeout(total=None, connect=5.0, read=30.0, close=10.0, ping=20.0)
 
 
 RawURL: TypeAlias = tuple[bytes, bytes, int | None, bytes]
@@ -52,6 +53,7 @@ FileTypes: TypeAlias = (
 )
 FilesTypes: TypeAlias = dict[str, FileTypes] | list[tuple[str, FileTypes]] | None
 TimeoutTypes: TypeAlias = float | Timeout | None
+PingIntervalTypes: TypeAlias = float | None
 
 
 class HTTPVersion(Enum):
@@ -76,6 +78,7 @@ class Request:
         version: str | HTTPVersion = HTTPVersion.H11,
         timeout: TimeoutTypes | UnsetType = UNSET,
         proxy: str | None = None,
+        ping_interval: PingIntervalTypes | UnsetType = UNSET,
     ):
         # method
         self.method: str = (
@@ -89,6 +92,8 @@ class Request:
         self.timeout: TimeoutTypes | UnsetType = timeout
         # proxy
         self.proxy: str | None = proxy
+        # ping interval
+        self.ping_interval: PingIntervalTypes | UnsetType = ping_interval
 
         # url
         if isinstance(url, tuple):

@@ -46,6 +46,7 @@ from nonebot.internal.driver import (
     Timeout,
     TimeoutTypes,
 )
+from nonebot.log import logger
 from nonebot.utils import UNSET, UnsetType, exclude_unset
 
 try:
@@ -324,6 +325,16 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
                 )
             )
 
+        heartbeat = None
+        if setup.ping_interval is not UNSET:
+            heartbeat = setup.ping_interval
+
+        if isinstance(setup.timeout, Timeout) and setup.timeout.ping is not UNSET:
+            logger.warning(
+                "aiohttp driver does not expose a separate ping timeout; "
+                "the configured ping timeout will be ignored."
+            )
+
         async with aiohttp.ClientSession(version=version, trust_env=True) as session:
             async with session.ws_connect(
                 setup.url,
@@ -331,6 +342,8 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
                 timeout=timeout,
                 headers=setup.headers,
                 proxy=setup.proxy,
+                autoping=heartbeat is not None,
+                heartbeat=heartbeat,
             ) as ws:
                 yield WebSocket(request=setup, session=session, websocket=ws)
 
