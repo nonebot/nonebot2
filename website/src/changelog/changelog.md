@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 🚀 新功能
+
+- Feature: WS 支持 ping interval/timeout 配置 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3964](https://github.com/nonebot/nonebot2/pull/3964))
+
 ### 💫 杂项
 
 - CI: 移除 Pull Request Target 触发器 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3946](https://github.com/nonebot/nonebot2/pull/3946))
