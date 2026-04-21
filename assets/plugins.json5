@@ -10732,4 +10732,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_amrita",
+    "project_link": "nonebot-plugin-amrita",
+    "author_id": 67693593,
+    "tags": [
+      {
+        "label": "agent",
+        "color": "#ea5252"
+      },
+      {
+        "label": "ai",
+        "color": "#ea5252"
+      },
+      {
+        "label": "LLM",
+        "color": "#1313e6"
+      }
+    ],
+    "is_official": false
+  },
 ]
