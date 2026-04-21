@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 苏大电费查询 [@noneflow](https://github.com/noneflow) ([#3966](https://github.com/nonebot/nonebot2/pull/3966))
 - Plugin: 舞立方插件 [@noneflow](https://github.com/noneflow) ([#3956](https://github.com/nonebot/nonebot2/pull/3956))
 - Plugin: 语录插件 [@noneflow](https://github.com/noneflow) ([#3963](https://github.com/nonebot/nonebot2/pull/3963))
 - Plugin: 明日方舟猜干员游戏 [@noneflow](https://github.com/noneflow) ([#3939](https://github.com/nonebot/nonebot2/pull/3939))
