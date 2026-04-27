@@ -10752,4 +10752,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_osumania_toolkit",
+    "project_link": "nonebot-plugin-osumania-toolkit",
+    "author_id": 95923342,
+    "tags": [
+      {
+        "label": "osu!mania",
+        "color": "#ea5252"
+      },
+      {
+        "label": "func",
+        "color": "#ea5252"
+      },
+      {
+        "label": "tool",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
