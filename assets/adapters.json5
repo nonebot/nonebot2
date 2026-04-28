@@ -353,4 +353,19 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot.adapters.wxclaw",
+    "project_link": "nonebot-adapter-wxclaw",
+    "name": "WxClaw",
+    "desc": "基于 openclaw-weixin 协议的 NoneBot2 微信智能体适配器",
+    "author_id": 51957264,
+    "homepage": "https://github.com/shoucandanghehe/nonebot-adapter-wxclaw",
+    "tags": [
+      {
+        "label": "微信",
+        "color": "#1aad19"
+      }
+    ],
+    "is_official": false
+  },
 ]
