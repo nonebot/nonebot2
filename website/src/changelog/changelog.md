@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 酷我音乐 [@noneflow](https://github.com/noneflow) ([#3975](https://github.com/nonebot/nonebot2/pull/3975))
 - Plugin: osu!mania 工具箱 [@noneflow](https://github.com/noneflow) ([#3977](https://github.com/nonebot/nonebot2/pull/3977))
 - Plugin: LibAmritaCore [@noneflow](https://github.com/noneflow) ([#3942](https://github.com/nonebot/nonebot2/pull/3942))
 - Plugin: 苏大电费查询 [@noneflow](https://github.com/noneflow) ([#3966](https://github.com/nonebot/nonebot2/pull/3966))
