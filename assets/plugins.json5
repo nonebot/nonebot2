@@ -10772,4 +10772,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_kuwo",
+    "project_link": "nonebot-plugin-kuwo",
+    "author_id": 144674902,
+    "tags": [
+      {
+        "label": "music",
+        "color": "#52e7ea"
+      },
+      {
+        "label": "kuwo",
+        "color": "#ddf106"
+      }
+    ],
+    "is_official": false
+  },
 ]
