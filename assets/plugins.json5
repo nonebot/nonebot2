@@ -10788,4 +10788,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_skland_cos",
+    "project_link": "nonebot-plugin-skland-cos",
+    "author_id": 207130548,
+    "tags": [
+      {
+        "label": "skland",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
