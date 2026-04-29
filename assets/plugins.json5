@@ -10788,4 +10788,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_uma",
+    "project_link": "nb-plugin-uma",
+    "author_id": 30062345,
+    "tags": [],
+    "is_official": false
+  },
 ]
