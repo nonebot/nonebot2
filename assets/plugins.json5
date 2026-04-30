@@ -10788,4 +10788,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_gkmsCalculator",
+    "project_link": "nonebot-plugin-gkmscalculator",
+    "author_id": 40885778,
+    "tags": [
+      {
+        "label": "学园偶像大师",
+        "color": "#ff5c00"
+      },
+      {
+        "label": "学马仕",
+        "color": "#ff5c00"
+      },
+      {
+        "label": "算分",
+        "color": "#ff5c00"
+      }
+    ],
+    "is_official": false
+  },
 ]
