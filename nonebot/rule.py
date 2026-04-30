@@ -677,8 +677,7 @@ class CommandRegexRule:
 
     def __repr__(self) -> str:
         return (
-            f"CommandRegex(cmds={self.cmds}, regex={self.regex!r}, "
-            f"flags={self.flags})"
+            f"CommandRegex(cmds={self.cmds}, regex={self.regex!r}, flags={self.flags})"
         )
 
     def __eq__(self, other: object) -> bool:

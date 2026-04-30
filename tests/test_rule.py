@@ -350,13 +350,27 @@ async def test_command(
     ("cmds", "pattern", "flags", "cmd", "arg_text", "expected", "matched_groups"),
     [
         # command + regex match
-        ((("remind",),), r"^(.+) in (\d+)m$", 0, ("remind",), "buy milk in 30m",
-         True, ("buy milk", "30")),
+        (
+            (("remind",),),
+            r"^(.+) in (\d+)m$",
+            0,
+            ("remind",),
+            "buy milk in 30m",
+            True,
+            ("buy milk", "30"),
+        ),
         # command match but regex does not match
         ((("remind",),), r"^(.+) in (\d+)m$", 0, ("remind",), "buy milk", False, None),
         # regex matches but command does not match
-        ((("remind",),), r"^(.+) in (\d+)m$", 0, ("foo",), "buy milk in 30m",
-         False, None),
+        (
+            (("remind",),),
+            r"^(.+) in (\d+)m$",
+            0,
+            ("foo",),
+            "buy milk in 30m",
+            False,
+            None,
+        ),
         # command does not match (None)
         ((("remind",),), r".*", 0, None, "anything", False, None),
         # multiple commands - second matches
