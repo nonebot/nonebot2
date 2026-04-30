@@ -654,6 +654,118 @@ def shell_command(
     return Rule(ShellCommandRule(commands, parser))
 
 
+class CommandRegexRule:
+    """检查消息是否为指定命令，且命令参数符合指定的正则表达式。
+
+    参数:
+        cmds: 指定命令元组列表
+        regex: 命令参数的正则表达式
+        flags: 正则表达式标记
+    """
+
+    __slots__ = ("cmds", "flags", "regex")
+
+    def __init__(
+        self,
+        cmds: list[tuple[str, ...]],
+        regex: str,
+        flags: int = 0,
+    ):
+        self.cmds = tuple(cmds)
+        self.regex = regex
+        self.flags = flags
+
+    def __repr__(self) -> str:
+        return (
+            f"CommandRegex(cmds={self.cmds}, regex={self.regex!r}, "
+            f"flags={self.flags})"
+        )
+
+    def __eq__(self, other: object) -> bool:
+        return (
+            isinstance(other, CommandRegexRule)
+            and frozenset(self.cmds) == frozenset(other.cmds)
+            and self.regex == other.regex
+            and self.flags == other.flags
+        )
+
+    def __hash__(self) -> int:
+        return hash((frozenset(self.cmds), self.regex, self.flags))
+
+    async def __call__(
+        self,
+        state: T_State,
+        cmd: tuple[str, ...] | None = Command(),
+        cmd_arg: Message | None = CommandArg(),
+    ) -> bool:
+        if cmd not in self.cmds:
+            return False
+        arg_text = "" if cmd_arg is None else str(cmd_arg)
+        if matched := re.search(self.regex, arg_text, self.flags):
+            state[REGEX_MATCHED] = matched
+            return True
+        return False
+
+
+def command_regex(
+    *cmds: str | tuple[str, ...],
+    regex: str,
+    flags: int | re.RegexFlag = 0,
+) -> Rule:
+    """匹配消息命令，并对命令参数进行正则匹配。
+
+    根据配置里提供的 {ref}``command_start` <nonebot.config.Config.command_start>`,
+    {ref}``command_sep` <nonebot.config.Config.command_sep>` 判断消息是否为命令，
+    随后对命令参数（{ref}`nonebot.params.CommandArg`）使用 `re.search`
+    检查是否匹配指定正则表达式。
+
+    可以通过 {ref}`nonebot.params.Command` 获取匹配成功的命令（例: `("remind",)`），
+    通过 {ref}`nonebot.params.RawCommand` 获取匹配成功的原始命令文本（例: `"/remind"`），
+    通过 {ref}`nonebot.params.CommandArg` 获取匹配成功的命令参数，
+    通过 {ref}`nonebot.params.RegexStr` 获取匹配成功的字符串，
+    通过 {ref}`nonebot.params.RegexGroup` 获取匹配成功的 group 元组,
+    通过 {ref}`nonebot.params.RegexDict` 获取匹配成功的 group 字典。
+
+    参数:
+        cmds: 命令文本或命令元组
+        regex: 命令参数的正则表达式
+        flags: 正则表达式标记
+
+    用法:
+        使用默认 `command_start`, `command_sep` 配置情况下：
+
+        命令 `("remind",)` 配合正则 `r"^(.+) in (\\d+)m$"` 可以匹配:
+        `/remind buy milk in 30m`，并通过 group 获取 `("buy milk", "30")`。
+
+    :::tip 提示
+    正则表达式匹配使用 `search` 而非 `match`，如需从头匹配请使用 `r"^xxx"` 来确保匹配开头。
+    匹配的对象是 `CommandArg` 的字符串形式（不含命令本身），同 {ref}`nonebot.rule.regex`
+    一样使用 `Message` 的 `str` 字符串。
+    :::
+    """
+
+    config = get_driver().config
+    command_start = config.command_start
+    command_sep = config.command_sep
+    commands: list[tuple[str, ...]] = []
+    for command in cmds:
+        if isinstance(command, str):
+            command = (command,)
+
+        commands.append(command)
+
+        if len(command) == 1:
+            for start in command_start:
+                TrieRule.add_prefix(f"{start}{command[0]}", TRIE_VALUE(start, command))
+        else:
+            for start, sep in product(command_start, command_sep):
+                TrieRule.add_prefix(
+                    f"{start}{sep.join(command)}", TRIE_VALUE(start, command)
+                )
+
+    return Rule(CommandRegexRule(commands, regex, flags))
+
+
 class RegexRule:
     """检查消息字符串是否符合指定正则表达式。
 

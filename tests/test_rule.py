@@ -22,6 +22,7 @@ from nonebot.rule import (
     CMD_RESULT,
     TRIE_VALUE,
     ArgumentParser,
+    CommandRegexRule,
     CommandRule,
     EndswithRule,
     FullmatchRule,
@@ -35,6 +36,7 @@ from nonebot.rule import (
     ToMeRule,
     TrieRule,
     command,
+    command_regex,
     endswith,
     fullmatch,
     is_type,
@@ -341,6 +343,91 @@ async def test_command(
         PREFIX_KEY: {CMD_KEY: cmd, CMD_WHITESPACE_KEY: whitespace, CMD_ARG_KEY: arg}
     }
     assert await dependent(state=state) == expected
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    ("cmds", "pattern", "flags", "cmd", "arg_text", "expected", "matched_groups"),
+    [
+        # command + regex match
+        ((("remind",),), r"^(.+) in (\d+)m$", 0, ("remind",), "buy milk in 30m",
+         True, ("buy milk", "30")),
+        # command match but regex does not match
+        ((("remind",),), r"^(.+) in (\d+)m$", 0, ("remind",), "buy milk", False, None),
+        # regex matches but command does not match
+        ((("remind",),), r"^(.+) in (\d+)m$", 0, ("foo",), "buy milk in 30m",
+         False, None),
+        # command does not match (None)
+        ((("remind",),), r".*", 0, None, "anything", False, None),
+        # multiple commands - second matches
+        ((("ping",), ("pong",)), r"^\d+$", 0, ("pong",), "123", True, ("123",)),
+        # multiple commands - none matches
+        ((("ping",), ("pong",)), r"^\d+$", 0, ("ping",), "abc", False, None),
+        # search semantics: pattern matches anywhere in arg
+        ((("test",),), r"\d+", 0, ("test",), "hello42world", True, ("42",)),
+        # nested command tuple
+        ((("a", "b"),), r"^foo$", 0, ("a", "b"), "foo", True, ()),
+        # empty arg with pattern requiring chars
+        ((("test",),), r".+", 0, ("test",), None, False, None),
+        # case-insensitive flag
+        ((("greet",),), r"^hello$", re.IGNORECASE, ("greet",), "HELLO", True, ()),
+    ],
+)
+async def test_command_regex(
+    cmds: tuple[tuple[str, ...]],
+    pattern: str,
+    flags: int,
+    cmd: tuple[str, ...] | None,
+    arg_text: str | None,
+    expected: bool,
+    matched_groups: tuple[str, ...] | None,
+):
+    test_cmd_regex = command_regex(*cmds, regex=pattern, flags=flags)
+    dependent = next(iter(test_cmd_regex.checkers))
+    checker = dependent.call
+
+    assert isinstance(checker, CommandRegexRule)
+    assert checker.cmds == cmds
+    assert checker.regex == pattern
+    assert checker.flags == flags
+
+    arg = arg_text if arg_text is None else FakeMessage(arg_text)
+    state: T_State = {PREFIX_KEY: {CMD_KEY: cmd, CMD_ARG_KEY: arg}}
+    result = await dependent(state=state)
+    assert result == expected
+
+    if expected:
+        assert REGEX_MATCHED in state
+        assert state[REGEX_MATCHED].groups() == matched_groups
+    else:
+        assert REGEX_MATCHED not in state
+
+
+@pytest.mark.anyio
+async def test_command_regex_eq_hash():
+    rule_a = command_regex("foo", regex=r"\d+")
+    rule_b = command_regex("foo", regex=r"\d+")
+    rule_c = command_regex("foo", regex=r"[a-z]+")
+    rule_d = command_regex("bar", regex=r"\d+")
+    rule_e = command_regex("foo", regex=r"\d+", flags=re.IGNORECASE)
+
+    checker_a = next(iter(rule_a.checkers)).call
+    checker_b = next(iter(rule_b.checkers)).call
+    checker_c = next(iter(rule_c.checkers)).call
+    checker_d = next(iter(rule_d.checkers)).call
+    checker_e = next(iter(rule_e.checkers)).call
+
+    assert checker_a == checker_b
+    assert hash(checker_a) == hash(checker_b)
+    assert checker_a != checker_c
+    assert checker_a != checker_d
+    assert checker_a != checker_e
+    assert checker_a != "not-a-rule"
+
+    repr_str = repr(checker_a)
+    assert "CommandRegex" in repr_str
+    assert "foo" in repr_str
+    assert r"\d+" in repr_str
 
 
 @pytest.mark.anyio
