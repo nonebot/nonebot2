@@ -368,4 +368,19 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot.adapters.wechatclaw",
+    "project_link": "nonebot-adapter-wechatclaw",
+    "name": "WeChatClaw",
+    "desc": "通过 微信ClawBot 连接微信",
+    "author_id": 99632363,
+    "homepage": "https://github.com/Decrabbityyy/adapter-wechatclaw",
+    "tags": [
+      {
+        "label": "微信",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
