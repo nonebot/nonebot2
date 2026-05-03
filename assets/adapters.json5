@@ -368,4 +368,19 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot.adapters.claweixin",
+    "project_link": "nonebot-adapter-claweixin",
+    "name": "nonebot-adapter-claweixin",
+    "desc": "微信 clawbot 协议适配器",
+    "author_id": 56059687,
+    "homepage": "https://github.com/5656565566/nonebot-adapter-claweixin",
+    "tags": [
+      {
+        "label": "微信",
+        "color": "#53279f"
+      }
+    ],
+    "is_official": false
+  },
 ]
