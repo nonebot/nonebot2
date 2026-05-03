@@ -30,6 +30,10 @@ toc_max_heading_level: 2
 - Plugin: 12306车票查询 [@noneflow](https://github.com/noneflow) ([#3948](https://github.com/nonebot/nonebot2/pull/3948))
 - Plugin: 会话配置 [@noneflow](https://github.com/noneflow) ([#3938](https://github.com/nonebot/nonebot2/pull/3938))
 
+### 🍻 适配器发布
+
+- Adapter: WxClaw [@noneflow](https://github.com/noneflow) ([#3944](https://github.com/nonebot/nonebot2/pull/3944))
+
 ## v2.5.0
 
 ### 💥 破坏性变更
