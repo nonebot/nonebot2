@@ -10788,4 +10788,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_hermes",
+    "project_link": "nonebot-plugin-hermes",
+    "author_id": 1080807,
+    "tags": [
+      {
+        "label": "hermes",
+        "color": "#cf3131"
+      }
+    ],
+    "is_official": false
+  },
 ]
