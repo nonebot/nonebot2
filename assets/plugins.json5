@@ -10819,4 +10819,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_nospam",
+    "project_link": "nonebot-plugin-nospam",
+    "author_id": 110141765,
+    "tags": [
+      {
+        "label": "群管理",
+        "color": "#4aef2b"
+      }
+    ],
+    "is_official": false
+  },
 ]
