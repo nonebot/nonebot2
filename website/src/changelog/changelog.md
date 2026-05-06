@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 赛马娘插件 [@noneflow](https://github.com/noneflow) ([#3983](https://github.com/nonebot/nonebot2/pull/3983))
 - Plugin: Hermes Agent [@noneflow](https://github.com/noneflow) ([#3988](https://github.com/nonebot/nonebot2/pull/3988))
 - Plugin: 酷我音乐 [@noneflow](https://github.com/noneflow) ([#3975](https://github.com/nonebot/nonebot2/pull/3975))
 - Plugin: osu!mania 工具箱 [@noneflow](https://github.com/noneflow) ([#3977](https://github.com/nonebot/nonebot2/pull/3977))
