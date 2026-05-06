@@ -10807,4 +10807,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_namepy",
+    "project_link": "nonebot-plugin-namepy",
+    "author_id": 175370943,
+    "tags": [
+      {
+        "label": "命名工具",
+        "color": "#5fa8d3"
+      }
+    ],
+    "is_official": false
+  },
 ]
