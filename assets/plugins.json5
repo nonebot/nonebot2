@@ -10819,4 +10819,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_doubao_draw",
+    "project_link": "nonebot-plugin-doubao-draw",
+    "author_id": 98315493,
+    "tags": [],
+    "is_official": false
+  },
 ]
