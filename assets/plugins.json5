@@ -10819,4 +10819,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_anti_recall",
+    "project_link": "nonebot-plugin-anti-recall-ltd",
+    "author_id": 277260326,
+    "tags": [],
+    "is_official": false
+  },
 ]
