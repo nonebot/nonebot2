@@ -10819,4 +10819,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot-plugin-bililive",
+    "project_link": "nonebot-plugin-bililive",
+    "author_id": 271566727,
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
