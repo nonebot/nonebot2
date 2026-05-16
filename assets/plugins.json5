@@ -10843,4 +10843,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_b50_analysis",
+    "project_link": "nonebot-plugin-b50-analysis",
+    "author_id": 145742863,
+    "tags": [
+      {
+        "label": "maimai",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
