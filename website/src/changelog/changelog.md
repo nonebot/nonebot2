@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: BiliLive [@noneflow](https://github.com/noneflow) ([#3970](https://github.com/nonebot/nonebot2/pull/3970))
 - Plugin: dot-skill 角色扮演 [@noneflow](https://github.com/noneflow) ([#3996](https://github.com/nonebot/nonebot2/pull/3996))
 - Plugin: 编程命名风格转换 [@noneflow](https://github.com/noneflow) ([#3990](https://github.com/nonebot/nonebot2/pull/3990))
 - Plugin: 赛马娘插件 [@noneflow](https://github.com/noneflow) ([#3983](https://github.com/nonebot/nonebot2/pull/3983))
