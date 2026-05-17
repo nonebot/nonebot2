@@ -10855,4 +10855,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_picstatus_ng",
+    "project_link": "nonebot-plugin-picstatus-ng",
+    "author_id": 72241996,
+    "tags": [
+      {
+        "label": "server",
+        "color": "#8bff00"
+      },
+      {
+        "label": "PicStatus",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
