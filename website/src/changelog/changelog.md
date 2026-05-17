@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 猫猫糕公开版 [@noneflow](https://github.com/noneflow) ([#4011](https://github.com/nonebot/nonebot2/pull/4011))
 - Plugin: PicStatus-ng [@noneflow](https://github.com/noneflow) ([#4004](https://github.com/nonebot/nonebot2/pull/4004))
 - Plugin: B50分析 [@noneflow](https://github.com/noneflow) ([#4002](https://github.com/nonebot/nonebot2/pull/4002))
 - Plugin: BiliLive [@noneflow](https://github.com/noneflow) ([#3970](https://github.com/nonebot/nonebot2/pull/3970))
