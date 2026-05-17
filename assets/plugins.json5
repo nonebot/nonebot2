@@ -10883,4 +10883,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_onebot2tg",
+    "project_link": "nonebot-plugin-onebot2tg",
+    "author_id": 50368309,
+    "tags": [
+      {
+        "label": "telegram",
+        "color": "#ea5252"
+      },
+      {
+        "label": "qq",
+        "color": "#ea5252"
+      },
+      {
+        "label": "QQ群",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
