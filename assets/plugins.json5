@@ -10871,4 +10871,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_catcake",
+    "project_link": "nonebot-plugin-catcake",
+    "author_id": 191975746,
+    "tags": [
+      {
+        "label": "崩坏:星穹铁道",
+        "color": "#d01b7a"
+      }
+    ],
+    "is_official": false
+  },
 ]
