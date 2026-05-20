@@ -10903,4 +10903,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_set_essence_msg",
+    "project_link": "nonebot-plugin-set-essence-msg",
+    "author_id": 32678715,
+    "tags": [
+      {
+        "label": "精华消息",
+        "color": "#ea5252"
+      },
+      {
+        "label": "群管理",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
