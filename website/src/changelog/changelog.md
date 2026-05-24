@@ -17,6 +17,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 舞萌排行榜 [@noneflow](https://github.com/noneflow) ([#4013](https://github.com/nonebot/nonebot2/pull/4013))
 - Plugin: 精华消息管理 [@noneflow](https://github.com/noneflow) ([#4015](https://github.com/nonebot/nonebot2/pull/4015))
 - Plugin: nonebot-plugin-onebot2tg [@noneflow](https://github.com/noneflow) ([#4020](https://github.com/nonebot/nonebot2/pull/4020))
 - Plugin: 猫猫糕公开版 [@noneflow](https://github.com/noneflow) ([#4011](https://github.com/nonebot/nonebot2/pull/4011))
