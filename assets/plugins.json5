@@ -10919,4 +10919,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_maimai_raking",
+    "project_link": "nonebot-plugin-maimai-raking",
+    "author_id": 72530683,
+    "tags": [
+      {
+        "label": "maimai",
+        "color": "#ea5252"
+      },
+      {
+        "label": "舞萌",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
