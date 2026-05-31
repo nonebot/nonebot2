@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Feature: WS 支持 ping interval/timeout 配置 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3964](https://github.com/nonebot/nonebot2/pull/3964))
 
+### 📝 文档
+
+- Docs: 添加 WxClaw 适配器 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#4032](https://github.com/nonebot/nonebot2/pull/4032))
+
 ### 💫 杂项
 
 - CI: 移除 Pull Request Target 触发器 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3946](https://github.com/nonebot/nonebot2/pull/3946))
