@@ -368,4 +368,19 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot.adapters.matrix",
+    "project_link": "nonebot-adapter-matrix",
+    "name": "Matrix",
+    "desc": "Matrix 协议适配",
+    "author_id": 39023210,
+    "homepage": "https://github.com/elysia-best/adapter-matrix",
+    "tags": [
+      {
+        "label": "matrix",
+        "color": "#81d4fa"
+      }
+    ],
+    "is_official": false
+  },
 ]
