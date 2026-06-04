@@ -49,6 +49,7 @@ toc_max_heading_level: 2
 
 ### 🍻 适配器发布
 
+- Adapter: Matrix [@noneflow](https://github.com/noneflow) ([#4037](https://github.com/nonebot/nonebot2/pull/4037))
 - Adapter: WxClaw [@noneflow](https://github.com/noneflow) ([#3944](https://github.com/nonebot/nonebot2/pull/3944))
 
 ## v2.5.0
