@@ -141,6 +141,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
   |  EFChat（[仓库](https://github.com/molanp/nonebot_adapter_efchat)，[协议](https://irinu-live.melon.fish/efc-help/)）   |  ↗️  |                            恒五聊平台协议，由社区贡献                          |
   |  VoceChat （[仓库](https://github.com/5656565566/nonebot-adapter-vocechat)，[协议](https://doc.voce.chat/zh-cn/bot/bot-and-webhook)）   |  ↗️  |                            VoceChat 平台协议，由社区贡献                          |
   |  B站直播间（[仓库](https://github.com/MingxuanGame/nonebot-adapter-bilibili-live)，[Web API 协议](https://github.com/SocialSisterYi/bilibili-API-collect/blob/master/docs/live)，[开放平台协议](https://open-live.bilibili.com/document)）   |  ↗️  |                            B站直播间（Web API/开放平台）协议，由社区贡献                          |
+  |  Matrix ([仓库](https://github.com/elysia-best/adapter-matrix)，[协议](https://spec.matrix.org/v1.18/)) | ↗️ | Matrix 协议，由社区贡献 |
 
 - 坚实后盾：支持多种 web 框架，可自定义替换、组合
 
