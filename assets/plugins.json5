@@ -10959,4 +10959,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_just_enough_katakanas",
+    "project_link": "nonebot-plugin-just-enough-katakanas",
+    "author_id": 122146865,
+    "tags": [],
+    "is_official": false
+  },
 ]
