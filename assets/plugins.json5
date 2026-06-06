@@ -10966,4 +10966,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_class_schedule",
+    "project_link": "nonebot-plugin-class-schedule",
+    "author_id": 141488560,
+    "tags": [
+      {
+        "label": "课程表",
+        "color": "#1eb5f6"
+      }
+    ],
+    "is_official": false
+  },
 ]
