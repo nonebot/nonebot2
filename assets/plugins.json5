@@ -10978,4 +10978,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_paiping",
+    "project_link": "nonebot-plugin-paiping",
+    "author_id": 152146621,
+    "tags": [
+      {
+        "label": "拍屏",
+        "color": "#ea5252"
+      },
+      {
+        "label": "OpenCV",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
