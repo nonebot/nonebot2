@@ -13,6 +13,7 @@ toc_max_heading_level: 2
 
 ### 📝 文档
 
+- Docs: 添加 Matrix 适配器至 README [@elysia-best](https://github.com/elysia-best) ([#4045](https://github.com/nonebot/nonebot2/pull/4045))
 - Docs: 添加 WxClaw 适配器 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#4032](https://github.com/nonebot/nonebot2/pull/4032))
 
 ### 💫 杂项
