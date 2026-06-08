@@ -58,7 +58,7 @@ jobs:
 
       - name: Deploy to Netlify
         id: deploy
-        uses: nwtgck/actions-netlify@v3
+        uses: nwtgck/actions-netlify@v4
         with:
           publish-dir: ./website/build
           production-deploy: false
