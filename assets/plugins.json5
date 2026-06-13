@@ -11005,4 +11005,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_depsafe",
+    "project_link": "nonebot-plugin-depsafe",
+    "author_id": 208776160,
+    "tags": [
+      {
+        "label": "security",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
