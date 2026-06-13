@@ -10978,4 +10978,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ret2shell",
+    "project_link": "nonebot-plugin-ret2shell",
+    "author_id": 53389305,
+    "tags": [],
+    "is_official": false
+  },
 ]
