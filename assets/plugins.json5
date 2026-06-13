@@ -10985,4 +10985,24 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_uptimekuma",
+    "project_link": "nonebot-plugin-uptimekuma",
+    "author_id": 51957264,
+    "tags": [
+      {
+        "label": "UptimeKuma",
+        "color": "#e04c4c"
+      },
+      {
+        "label": "监控",
+        "color": "#76dc39"
+      },
+      {
+        "label": "server",
+        "color": "#96f9b7"
+      }
+    ],
+    "is_official": false
+  },
 ]
