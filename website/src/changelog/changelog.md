@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Ret 2 Shell 播报与查询 [@noneflow](https://github.com/noneflow) ([#4009](https://github.com/nonebot/nonebot2/pull/4009))
 - Plugin: 课程表插件 [@noneflow](https://github.com/noneflow) ([#4029](https://github.com/nonebot/nonebot2/pull/4029))
 - Plugin: Just Enough Katakanas [@noneflow](https://github.com/noneflow) ([#4039](https://github.com/nonebot/nonebot2/pull/4039))
 - Plugin: 群热度统计 [@noneflow](https://github.com/noneflow) ([#4017](https://github.com/nonebot/nonebot2/pull/4017))
