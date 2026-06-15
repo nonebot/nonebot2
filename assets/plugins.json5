@@ -11033,4 +11033,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_astra_bot",
+    "project_link": "nonebot-plugin-astra-bot",
+    "author_id": 197712452,
+    "tags": [
+      {
+        "label": "ChatBot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "OneBot V11",
+        "color": "#4bcb55"
+      }
+    ],
+    "is_official": false
+  },
 ]
