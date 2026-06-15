@@ -22,6 +22,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 哔哩哔哩文件下载器 [@noneflow](https://github.com/noneflow) ([#4018](https://github.com/nonebot/nonebot2/pull/4018))
 - Plugin: 开源依赖安全助手 [@noneflow](https://github.com/noneflow) ([#4044](https://github.com/nonebot/nonebot2/pull/4044))
 - Plugin: Uptime Kuma [@noneflow](https://github.com/noneflow) ([#4042](https://github.com/nonebot/nonebot2/pull/4042))
 - Plugin: Ret 2 Shell 播报与查询 [@noneflow](https://github.com/noneflow) ([#4009](https://github.com/nonebot/nonebot2/pull/4009))
