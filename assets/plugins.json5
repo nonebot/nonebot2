@@ -11017,4 +11017,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_bilibili_downloader",
+    "project_link": "nonebot-plugin-bilidownloader-woju",
+    "author_id": 277260326,
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#ea5252"
+      },
+      {
+        "label": "download",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
