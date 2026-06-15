@@ -11033,4 +11033,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_mail",
+    "project_link": "nonebot-plugin-mail",
+    "author_id": 86997355,
+    "tags": [
+      {
+        "label": "邮件",
+        "color": "#ea5252"
+      },
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      },
+      {
+        "label": "notion",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
