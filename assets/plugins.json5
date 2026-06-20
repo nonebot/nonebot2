@@ -11033,4 +11033,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_keyreply",
+    "project_link": "nonebot-plugin-keyreply",
+    "author_id": 69074603,
+    "tags": [],
+    "is_official": false
+  },
 ]
