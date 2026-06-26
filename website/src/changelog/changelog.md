@@ -11,6 +11,10 @@ toc_max_heading_level: 2
 
 - Feature: WS 支持 ping interval/timeout 配置 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3964](https://github.com/nonebot/nonebot2/pull/3964))
 
+### 🐛 Bug 修复
+
+- Fix: WebSocket 基类 typo [@MelodyYuuka](https://github.com/MelodyYuuka) ([#4095](https://github.com/nonebot/nonebot2/pull/4095))
+
 ### 📝 文档
 
 - Docs: 添加 Matrix 适配器至 README [@elysia-best](https://github.com/elysia-best) ([#4045](https://github.com/nonebot/nonebot2/pull/4045))
