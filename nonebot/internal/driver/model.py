@@ -209,7 +209,7 @@ class WebSocket(abc.ABC):
         elif isinstance(data, bytes):
             await self.send_bytes(data)
         else:
-            raise TypeError("WebSocker send method expects str or bytes!")
+            raise TypeError("WebSocket send method expects str or bytes!")
 
     @abc.abstractmethod
     async def send_text(self, data: str) -> None:
