@@ -11132,4 +11132,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_bawiki_revive",
+    "project_link": "nonebot-plugin-bawiki-revive",
+    "author_id": 59048777,
+    "tags": [
+      {
+        "label": "蔚蓝档案",
+        "color": "#2bcef3"
+      },
+      {
+        "label": "Blue",
+        "color": "#2bcef3"
+      },
+      {
+        "label": "Archive",
+        "color": "#2bcef3"
+      }
+    ],
+    "is_official": false
+  },
 ]
