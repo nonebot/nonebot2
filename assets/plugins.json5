@@ -11080,4 +11080,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_anime",
+    "project_link": "nonebot-plugin-anime",
+    "author_id": 289417791,
+    "tags": [
+      {
+        "label": "anime",
+        "color": "#f280f1"
+      }
+    ],
+    "is_official": false
+  },
 ]
