@@ -26,6 +26,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 抽奖报名 [@noneflow](https://github.com/noneflow) ([#4053](https://github.com/nonebot/nonebot2/pull/4053))
 - Plugin: nonebot-plugin-anime [@noneflow](https://github.com/noneflow) ([#4049](https://github.com/nonebot/nonebot2/pull/4049))
 - Plugin: VOICEVOX BRIDGE [@noneflow](https://github.com/noneflow) ([#4047](https://github.com/nonebot/nonebot2/pull/4047))
 - Plugin: 帮撤回 [@noneflow](https://github.com/noneflow) ([#4071](https://github.com/nonebot/nonebot2/pull/4071))
