@@ -11092,4 +11092,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_lottery_signup",
+    "project_link": "nonebot-plugin-lottery-signup",
+    "author_id": 86997355,
+    "tags": [
+      {
+        "label": "抽奖",
+        "color": "#edb711"
+      },
+      {
+        "label": "报名",
+        "color": "#cb50e5"
+      },
+      {
+        "label": "定时",
+        "color": "#e59250"
+      }
+    ],
+    "is_official": false
+  },
 ]
