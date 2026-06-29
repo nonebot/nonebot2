@@ -9706,6 +9706,14 @@
       {
         "label": "ACM",
         "color": "#eb0e31"
+      },
+      {
+        "label": "Codeforces",
+        "color": "#52EACF"
+      },
+      {
+        "label": "洛谷",
+        "color": "#5280ea"
       }
     ],
     "is_official": false
