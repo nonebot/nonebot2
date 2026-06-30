@@ -11152,4 +11152,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_proxy_probe",
+    "project_link": "nonebot-plugin-proxy-probe",
+    "author_id": 86997355,
+    "tags": [
+      {
+        "label": "proxy",
+        "color": "#e7e373"
+      },
+      {
+        "label": "probe",
+        "color": "#b6e773"
+      },
+      {
+        "label": "校园网",
+        "color": "#73e7c7"
+      }
+    ],
+    "is_official": false
+  },
 ]
