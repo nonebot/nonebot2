@@ -11152,4 +11152,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_hibank",
+    "project_link": "nonebot-plugin-hibank",
+    "author_id": 86997355,
+    "tags": [
+      {
+        "label": "银行",
+        "color": "#ea5252"
+      },
+      {
+        "label": "卡友",
+        "color": "#f5cd4c"
+      },
+      {
+        "label": "标记",
+        "color": "#f04cf5"
+      }
+    ],
+    "is_official": false
+  },
 ]
