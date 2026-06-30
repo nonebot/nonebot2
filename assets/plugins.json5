@@ -11152,4 +11152,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_smart_message_storage",
+    "project_link": "nonebot-plugin-smart-message-storage",
+    "author_id": 86997355,
+    "tags": [
+      {
+        "label": "ai",
+        "color": "#d65b5b"
+      },
+      {
+        "label": "message",
+        "color": "#d6b05b"
+      },
+      {
+        "label": "storage",
+        "color": "#906eef"
+      }
+    ],
+    "is_official": false
+  },
 ]
