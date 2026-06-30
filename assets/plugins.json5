@@ -11152,4 +11152,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_bilibili",
+    "project_link": "nonebot-plugin-bilibili",
+    "author_id": 58089816,
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
