@@ -11152,4 +11152,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_picstatus_re",
+    "project_link": "nonebot-plugin-picstatus-re",
+    "author_id": 69074603,
+    "tags": [],
+    "is_official": false
+  },
 ]
