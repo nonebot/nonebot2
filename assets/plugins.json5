@@ -11152,4 +11152,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_rollpig_plus",
+    "project_link": "nonebot-plugin-rollpig-plus",
+    "author_id": 89476718,
+    "tags": [
+      {
+        "label": "pig",
+        "color": "#f9cf06"
+      }
+    ],
+    "is_official": false
+  },
 ]
