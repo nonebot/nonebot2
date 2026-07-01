@@ -11152,4 +11152,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_slot_machine",
+    "project_link": "nonebot-plugin-slot-machine",
+    "author_id": 114509415,
+    "tags": [
+      {
+        "label": "game",
+        "color": "#f25555"
+      }
+    ],
+    "is_official": false
+  },
 ]
