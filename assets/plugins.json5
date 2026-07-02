@@ -9706,6 +9706,18 @@
       {
         "label": "ACM",
         "color": "#eb0e31"
+      },
+      {
+        "label": "Codeforces",
+        "color": "#52EACF"
+      },
+      {
+        "label": "洛谷",
+        "color": "#5280ea"
+      },
+      {
+        "label": "比赛推送",
+        "color": "#55ea52"
       }
     ],
     "is_official": false
