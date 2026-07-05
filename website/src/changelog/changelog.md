@@ -27,6 +27,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Roblox查询插件 [@noneflow](https://github.com/noneflow) ([#4086](https://github.com/nonebot/nonebot2/pull/4086))
 - Plugin: BAWiki Revive [@noneflow](https://github.com/noneflow) ([#4081](https://github.com/nonebot/nonebot2/pull/4081))
 - Plugin: nonebot-plugin-mail [@noneflow](https://github.com/noneflow) ([#4058](https://github.com/nonebot/nonebot2/pull/4058))
 - Plugin: 抽奖报名 [@noneflow](https://github.com/noneflow) ([#4053](https://github.com/nonebot/nonebot2/pull/4053))
