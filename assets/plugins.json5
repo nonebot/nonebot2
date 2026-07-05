@@ -11164,4 +11164,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_roblox_search",
+    "project_link": "nonebot-plugin-roblox-search",
+    "author_id": 260114511,
+    "tags": [
+      {
+        "label": "func",
+        "color": "#ea5252"
+      },
+      {
+        "label": "信息",
+        "color": "#ea5252"
+      },
+      {
+        "label": "查询",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
