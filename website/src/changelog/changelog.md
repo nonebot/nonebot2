@@ -27,6 +27,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: pxchat-enhanced [@noneflow](https://github.com/noneflow) ([#4088](https://github.com/nonebot/nonebot2/pull/4088))
 - Plugin: B站查询与提醒 [@noneflow](https://github.com/noneflow) ([#4077](https://github.com/nonebot/nonebot2/pull/4077))
 - Plugin: Roblox查询插件 [@noneflow](https://github.com/noneflow) ([#4086](https://github.com/nonebot/nonebot2/pull/4086))
 - Plugin: BAWiki Revive [@noneflow](https://github.com/noneflow) ([#4081](https://github.com/nonebot/nonebot2/pull/4081))
