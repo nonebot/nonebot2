@@ -11196,4 +11196,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_pxchat_enhanced",
+    "project_link": "nonebot-plugin-pxchat-enhanced",
+    "author_id": 62325100,
+    "tags": [
+      {
+        "label": "ai",
+        "color": "#ea5252"
+      },
+      {
+        "label": "ChatBot",
+        "color": "#52eac2"
+      }
+    ],
+    "is_official": false
+  },
 ]
