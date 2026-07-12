@@ -11267,4 +11267,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_shitbot",
+    "project_link": "nonebot-plugin-shitbot",
+    "author_id": 130885773,
+    "tags": [
+      {
+        "label": "Bot",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
