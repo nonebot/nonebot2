@@ -27,6 +27,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: shitbot [@noneflow](https://github.com/noneflow) ([#4056](https://github.com/nonebot/nonebot2/pull/4056))
 - Plugin: PicStatus-Re [@noneflow](https://github.com/noneflow) ([#4099](https://github.com/nonebot/nonebot2/pull/4099))
 - Plugin: GSPanel Lite [@noneflow](https://github.com/noneflow) ([#4051](https://github.com/nonebot/nonebot2/pull/4051))
 - Plugin: 群聊史官 [@noneflow](https://github.com/noneflow) ([#4060](https://github.com/nonebot/nonebot2/pull/4060))
