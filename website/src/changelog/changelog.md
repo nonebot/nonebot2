@@ -27,6 +27,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Git 仓库订阅拉取 [@noneflow](https://github.com/noneflow) ([#4083](https://github.com/nonebot/nonebot2/pull/4083))
 - Plugin: shitbot [@noneflow](https://github.com/noneflow) ([#4056](https://github.com/nonebot/nonebot2/pull/4056))
 - Plugin: PicStatus-Re [@noneflow](https://github.com/noneflow) ([#4099](https://github.com/nonebot/nonebot2/pull/4099))
 - Plugin: GSPanel Lite [@noneflow](https://github.com/noneflow) ([#4051](https://github.com/nonebot/nonebot2/pull/4051))
