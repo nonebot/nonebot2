@@ -11306,4 +11306,24 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ruok",
+    "project_link": "nonebot-plugin-ruok",
+    "author_id": 122146865,
+    "tags": [
+      {
+        "label": "webui",
+        "color": "#42dce1"
+      },
+      {
+        "label": "用户上报",
+        "color": "#425be1"
+      },
+      {
+        "label": "异常处理",
+        "color": "#e14245"
+      }
+    ],
+    "is_official": false
+  },
 ]
