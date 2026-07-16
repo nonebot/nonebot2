@@ -27,6 +27,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Nonebot, RUOK? [@noneflow](https://github.com/noneflow) ([#4104](https://github.com/nonebot/nonebot2/pull/4104))
 - Plugin: ZikeQuote3 [@noneflow](https://github.com/noneflow) ([#4024](https://github.com/nonebot/nonebot2/pull/4024))
 - Plugin: Git 仓库订阅拉取 [@noneflow](https://github.com/noneflow) ([#4083](https://github.com/nonebot/nonebot2/pull/4083))
 - Plugin: shitbot [@noneflow](https://github.com/noneflow) ([#4056](https://github.com/nonebot/nonebot2/pull/4056))
