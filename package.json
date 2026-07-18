@@ -1,19 +1,16 @@
 {
   "name": "root",
   "private": true,
-  "packageManager": "yarn@1.22.22",
-  "workspaces": [
-    "website"
-  ],
+  "packageManager": "pnpm@11.14.0",
   "scripts": {
-    "archive": "yarn workspace nonebot docusaurus docs:version",
-    "build": "yarn workspace nonebot build",
-    "build:plugin": "cross-env BASE_URL='/website/' yarn workspace nonebot build",
-    "start": "yarn workspace nonebot start",
-    "serve": "yarn workspace nonebot serve",
-    "clear": "yarn workspace nonebot clear",
+    "archive": "pnpm --filter nonebot docusaurus docs:version",
+    "build": "pnpm --filter nonebot build",
+    "build:plugin": "cross-env BASE_URL='/website/' pnpm --filter nonebot build",
+    "start": "pnpm --filter nonebot start",
+    "serve": "pnpm --filter nonebot serve",
+    "clear": "pnpm --filter nonebot clear",
     "prettier": "prettier --config ./.prettierrc --write \"./website/\"",
-    "lint": "yarn lint:js && yarn lint:style",
+    "lint": "pnpm lint:js && pnpm lint:style",
     "lint:js": "eslint --cache --report-unused-disable-directives \"**/*.{js,jsx,ts,tsx,mjs}\"",
     "lint:js:fix": "eslint --cache --report-unused-disable-directives --fix \"**/*.{js,jsx,ts,tsx,mjs}\"",
     "lint:style": "stylelint \"**/*.css\"",

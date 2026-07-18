@@ -201,7 +201,6 @@ export default async function createConfigAsync() {
     projectName: "nonebot2", // Usually your repo name.
 
     onBrokenLinks: "throw",
-    onBrokenMarkdownLinks: "warn",
 
     // Even if you don't use internalization, you can use this field to set useful
     // metadata like html lang. For example, if your site is Chinese, you may want
@@ -299,7 +298,7 @@ export default async function createConfigAsync() {
     ],
 
     future: {
-      experimental_faster: true,
+      faster: true,
       v4: true,
     },
 
@@ -321,6 +320,9 @@ sidebar_custom_props:
     markdown: {
       mdx1Compat: {
         headingIds: true,
+      },
+      hooks: {
+        onBrokenMarkdownLinks: "warn",
       },
     },
 

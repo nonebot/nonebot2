@@ -4,10 +4,12 @@ description: Setup Node
 runs:
   using: "composite"
   steps:
+    - uses: pnpm/action-setup@v4
+
     - uses: actions/setup-node@v7
       with:
         node-version: lts/*
-        cache: yarn
+        cache: pnpm
 
-    - run: yarn install --frozen-lockfile
+    - run: pnpm install --frozen-lockfile
       shell: bash
