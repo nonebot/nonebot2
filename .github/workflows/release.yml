@@ -39,8 +39,8 @@ jobs:
 
       - name: Archive Files
         run: |
-          yarn archive $(uv version --short)
-          yarn prettier
+          pnpm archive $(uv version --short)
+          pnpm prettier
 
       - name: Push Tag
         run: |

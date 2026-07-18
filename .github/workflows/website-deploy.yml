@@ -27,7 +27,7 @@ jobs:
         uses: ./.github/actions/build-api-doc
 
       - name: Build Doc
-        run: yarn build
+        run: pnpm build
 
       - name: Get Branch Name
         run: echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV

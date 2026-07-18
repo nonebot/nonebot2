@@ -10,4 +10,4 @@ nb-autodoc nonebot \
   -u nonebot.internal \
   -u nonebot.internal.*
 cp -r ./build/nonebot/* ./website/docs/api/
-yarn prettier
+pnpm prettier

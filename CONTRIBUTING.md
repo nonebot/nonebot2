@@ -20,7 +20,7 @@
 
 NoneBot 使用 [uv](https://docs.astral.sh/uv/) 管理项目依赖，由于 pre-commit 也经其管理，所以在此一并说明。
 
-下面的命令能在已安装 uv 和 yarn 的情况下帮你快速配置开发环境。
+下面的命令能在已安装 uv 和 pnpm 的情况下帮你快速配置开发环境。
 
 ```bash
 # 安装 python 依赖
@@ -55,11 +55,11 @@ nonemoji commit [-e EMOJI] [-m MESSAGE] [-- ...]
 
 NoneBot2 的文档使用 [docusaurus](https://docusaurus.io/)，它有一些 [Markdown 特性](https://docusaurus.io/zh-CN/docs/markdown-features) 可能会帮助到你。
 
-如果你需要在本地预览修改后的文档，可以使用 yarn 安装文档依赖后启动 dev server，如下所示：
+如果你需要在本地预览修改后的文档，可以使用 pnpm 安装文档依赖后启动 dev server，如下所示：
 
 ```bash
-yarn install
-yarn start
+pnpm install
+pnpm start
 ```
 
 NoneBot2 文档并没有具体的行文风格规范，但我们建议你尽量写得简单易懂。

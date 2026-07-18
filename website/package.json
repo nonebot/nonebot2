@@ -13,8 +13,8 @@
     "docusaurus": "docusaurus",
     "start": "docusaurus start --host 0.0.0.0 --port 3000",
     "build": "docusaurus build",
-    "build:fast": "cross-env BUILD_FAST=true yarn build",
-    "build:fast:rsdoctor": "cross-env BUILD_FAST=true RSDOCTOR=true yarn build",
+    "build:fast": "cross-env BUILD_FAST=true pnpm build",
+    "build:fast:rsdoctor": "cross-env BUILD_FAST=true RSDOCTOR=true pnpm build",
     "build:fast:profile": "cross-env BUILD_FAST=true node --cpu-prof --cpu-prof-dir .cpu-prof ./node_modules/.bin/docusaurus build",
     "swizzle": "docusaurus swizzle",
     "deploy": "docusaurus deploy",
@@ -26,11 +26,11 @@
     "prettier": "prettier --config ../.prettierrc --write ."
   },
   "dependencies": {
-    "@docusaurus/core": "^3.7.0",
-    "@docusaurus/eslint-plugin": "3.7.0",
+    "@docusaurus/core": "3.10.2",
+    "@docusaurus/eslint-plugin": "3.10.2",
     "@mdx-js/react": "^3.0.0",
-    "@nullbot/docusaurus-plugin-changelog": "^3.0.0",
-    "@nullbot/docusaurus-preset-nonepress": "^3.0.0",
+    "@nullbot/docusaurus-plugin-changelog": "^3.7.0",
+    "@nullbot/docusaurus-preset-nonepress": "^3.7.0",
     "clsx": "^2.0.0",
     "copy-text-to-clipboard": "^3.2.0",
     "prism-react-renderer": "^2.3.0",
@@ -40,9 +40,9 @@
     "react-use-pagination": "^2.0.1"
   },
   "devDependencies": {
-    "@docusaurus/faster": "^3.7.0",
-    "@docusaurus/module-type-aliases": "^3.7.0",
-    "@nullbot/docusaurus-tsconfig": "^3.0.0",
+    "@docusaurus/faster": "3.10.2",
+    "@docusaurus/module-type-aliases": "3.10.2",
+    "@nullbot/docusaurus-tsconfig": "^3.7.0",
     "@types/react-color": "^3.0.10",
     "asciinema-player": "^3.5.0",
     "typescript": "~5.7.2"
@@ -60,6 +60,6 @@
     ]
   },
   "engines": {
-    "node": ">=18.0"
+    "node": ">=20.0"
   }
 }

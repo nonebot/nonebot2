@@ -1,0 +1,15 @@
+nodeLinker: "hoisted"
+
+packages:
+  - "website"
+
+allowBuilds:
+  "@swc/core": false
+  core-js: false
+  core-js-pure: false
+  # sharp@0.32 (required by @docusaurus/plugin-ideal-image) downloads libvips
+  # in its install script and doesn't work without it
+  sharp: true
+
+minimumReleaseAgeExclude:
+  - "@nullbot/*"
