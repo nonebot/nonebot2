@@ -8,7 +8,7 @@ description: 用户指南
 `nonebot-plugin-orm` 功能强大且复杂，使用上有一定难度。
 不过，对于用户而言，只需要掌握部分功能即可。
 
-:::caution 注意
+:::warning 注意
 请注意区分插件的项目名（如：`nonebot-plugin-wordcloud`）和模块名（如：`nonebot_plugin_wordcloud`）。`nonebot-plugin-orm` 中统一使用插件模块名。参见 [插件命名规范](../../developer/plugin-publishing#插件命名规范)。
 :::
 
@@ -152,7 +152,7 @@ SQLALCHEMY_ENGINE_OPTIONS='{
 SQLALCHEMY_ECHO=true
 ```
 
-:::caution 注意
+:::warning 注意
 以上配置之间有覆盖关系，遵循特殊优先于一般的原则，具体为 [`sqlalchemy_database_url`](#sqlalchemy_database_url) > [`sqlalchemy_bind`](#sqlalchemy_bind) > [`sqlalchemy_echo`](#sqlalchemy_echo) > [`sqlalchemy_engine_options`](#sqlalchemy_engine_options)。
 但覆盖顺序并非显而易见，出于清晰考虑，请只配置必要的选项。
 :::

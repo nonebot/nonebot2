@@ -51,7 +51,7 @@ description: 配置编辑器以获得最佳体验
 
    如果您是高级用户，希望尝试 Pylance 的替代方案，或遇到 Pylance 在特定环境下的兼容性问题，可以考虑使用 BasedPyright。
 
-:::caution 提示
+:::warning 提示
 为避免 `Pylance` 和 `BasedPyright` 相互冲突导致配置混乱甚至异常，脚手架默认不允许在创建项目时同时配置这两者。
 
 如果确实需要同时使用，请在创建项目时选择 Pylance/Pyright 并根据[相关文档](https://docs.basedpyright.com/latest/installation/ides/#vscode-vscodium)进行手动配置。
