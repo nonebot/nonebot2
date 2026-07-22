@@ -249,10 +249,9 @@ export default async function createConfigAsync() {
     presets: [
       [
         "@nullbot/docusaurus-preset-nonepress",
-        /** @type {import('@nullbot/docusaurus-preset-nonepress').Options} */
         {
           docs: {
-            sidebarPath: require.resolve("./sidebars.js"),
+            sidebarPath: require.resolve("./sidebars.ts"),
             // Please change this to your repo.
             editUrl: "https://github.com/nonebot/nonebot2/edit/master/website/",
             showLastUpdateAuthor: true,
@@ -293,7 +292,7 @@ export default async function createConfigAsync() {
           gtag: {
             trackingID: "G-MRS1GMZG0F",
           },
-        },
+        } satisfies Preset.Options,
       ],
     ],
 
