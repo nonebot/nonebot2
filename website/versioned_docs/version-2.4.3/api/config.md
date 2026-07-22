@@ -98,7 +98,7 @@ NoneBot 使用 [`pydantic`](https://pydantic-docs.helpmanual.io/) 以及
 
   参考 [记录日志](https://nonebot.dev/docs/appendices/log)，[loguru 日志等级](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
 
-  :::tip 提示
+  :::tip[提示]
   日志等级名称应为大写，如 `INFO`。
   :::
 

@@ -12,11 +12,11 @@ options:
 
 驱动器 (Driver) 是机器人运行的基石，它是机器人初始化的第一步，主要负责数据收发。
 
-:::info 提示
+:::info[提示]
 驱动器的选择通常与机器人所使用的协议适配器相关，如果不知道该选择哪个驱动器，可以先阅读相关协议适配器文档说明。
 :::
 
-:::tip 提示
+:::tip[提示]
 如何**安装**驱动器请参考[安装驱动器](../tutorial/store.mdx#安装驱动器)。
 :::
 
@@ -118,7 +118,7 @@ DRIVER=~fastapi
 
 ##### `fastapi_reload`
 
-:::warning 警告
+:::warning[警告]
 不推荐开启该配置项，在 Windows 平台上开启该功能有可能会造成预料之外的影响！替代方案：使用 `nb-cli` 命令行工具以及参数 `--reload` 启动 NoneBot。
 
 ```bash
@@ -200,7 +200,7 @@ DRIVER=~quart
 
 ##### `quart_reload`
 
-:::warning 警告
+:::warning[警告]
 不推荐开启该配置项，在 Windows 平台上开启该功能有可能会造成预料之外的影响！替代方案：使用 `nb-cli` 命令行工具以及参数 `--reload` 启动 NoneBot。
 
 ```bash
@@ -252,7 +252,7 @@ nonebot.run(app="bot:app")
 
 **类型：**HTTP 客户端驱动器
 
-:::warning 注意
+:::warning[注意]
 本驱动器仅支持 HTTP 请求，不支持 WebSocket 连接请求。
 :::
 
@@ -266,7 +266,7 @@ DRIVER=~httpx
 
 **类型：**WebSocket 客户端驱动器
 
-:::warning 注意
+:::warning[注意]
 本驱动器仅支持 WebSocket 连接请求，不支持 HTTP 请求。
 :::
 

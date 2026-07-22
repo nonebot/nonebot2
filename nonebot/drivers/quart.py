@@ -6,7 +6,7 @@ nb driver install quart
 pip install nonebot2[quart]
 ```
 
-:::tip 提示
+:::tip[提示]
 本驱动仅支持服务端连接
 :::
 

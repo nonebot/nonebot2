@@ -6,7 +6,7 @@ nb driver install httpx
 pip install nonebot2[httpx]
 ```
 
-:::tip 提示
+:::tip[提示]
 本驱动仅支持客户端 HTTP 连接
 :::
 

@@ -41,7 +41,7 @@ options:
 
 ## 创建插件
 
-:::warning 注意
+:::warning[注意]
 如果在之前的[快速上手](../quick-start.mdx)章节中已经使用 `bootstrap` 模板创建了项目，那么你需要做出如下修改：
 
 1. 在项目目录中创建一个两层文件夹 `awesome_bot/plugins`
@@ -65,7 +65,7 @@ options:
 
 :::
 
-:::warning 注意
+:::warning[注意]
 如果在之前的[创建项目](./application.mdx)章节中手动创建了相关文件，那么你需要做出如下修改：
 
 1. 在项目目录中创建一个两层文件夹 `awesome_bot/plugins`
@@ -113,7 +113,7 @@ $ nb plugin create
 
 ## 加载插件
 
-:::danger 警告
+:::danger[警告]
 请勿在插件被加载前 `import` 插件模块，这会导致 NoneBot 无法将其转换为插件而出现意料之外的情况。
 :::
 
@@ -148,7 +148,7 @@ nonebot.load_plugin("path.to.your.plugin")  # 加载第三方插件
 nonebot.load_plugin(Path("./path/to/your/plugin.py"))  # 加载项目插件
 ```
 
-:::warning 注意
+:::warning[注意]
 请注意，本地插件的路径应该为相对机器人 **入口文件（通常为 bot.py）** 可导入的，例如在项目 `plugins` 目录下。
 :::
 
@@ -160,7 +160,7 @@ nonebot.load_plugin(Path("./path/to/your/plugin.py"))  # 加载项目插件
 nonebot.load_plugins("src/plugins", "path/to/your/plugins")
 ```
 
-:::warning 注意
+:::warning[注意]
 请注意，插件目录应该为相对机器人 **入口文件（通常为 bot.py）** 可导入的，例如在项目 `plugins` 目录下。
 :::
 
@@ -187,7 +187,7 @@ nonebot.load_all_plugins(["path.to.your.plugin"], ["path/to/your/plugins"])
 nonebot.load_from_json("plugin_config.json", encoding="utf-8")
 ```
 
-:::tip 提示
+:::tip[提示]
 如果 JSON 配置文件中的字段无法满足你的需求，可以使用 [`load_all_plugins`](#load_all_plugins) 方法自行读取配置来加载插件。
 :::
 
@@ -209,7 +209,7 @@ plugin_dirs = ["path/to/your/plugins"]
 nonebot.load_from_toml("plugin_config.toml", encoding="utf-8")
 ```
 
-:::tip 提示
+:::tip[提示]
 如果 TOML 配置文件中的字段无法满足你的需求，可以使用 [`load_all_plugins`](#load_all_plugins) 方法自行读取配置来加载插件。
 :::
 

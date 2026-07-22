@@ -412,7 +412,7 @@ def command(
         命令 `("test",)` 可以匹配: `/test` 开头的消息
         命令 `("test", "sub")` 可以匹配: `/test.sub` 开头的消息
 
-    :::tip 提示
+    :::tip[提示]
     命令内容与后续消息间无需空格!
     :::
     """
@@ -603,7 +603,7 @@ def shell_command(
     通过 {ref}`nonebot.params.ShellCommandArgs` 获取解析后的参数字典
     （例: `{"arg": "arg", "h": True}`）。
 
-    :::warning 警告
+    :::warning[警告]
     如果参数解析失败，则通过 {ref}`nonebot.params.ShellCommandArgs`
     获取的将是 {ref}`nonebot.exception.ParserExit` 异常。
     :::
@@ -625,7 +625,7 @@ def shell_command(
         rule = shell_command("ls", parser=parser)
         ```
 
-    :::tip 提示
+    :::tip[提示]
     命令内容与后续消息间无需空格!
     :::
     """
@@ -704,11 +704,11 @@ def regex(regex: str, flags: int | re.RegexFlag = 0) -> Rule:
         regex: 正则表达式
         flags: 正则表达式标记
 
-    :::tip 提示
+    :::tip[提示]
     正则表达式匹配使用 search 而非 match，如需从头匹配请使用 `r"^xxx"` 来确保匹配开头
     :::
 
-    :::tip 提示
+    :::tip[提示]
     正则表达式匹配使用 `EventMessage` 的 `str` 字符串，
     而非 `EventMessage` 的 `PlainText` 纯文本字符串
     :::

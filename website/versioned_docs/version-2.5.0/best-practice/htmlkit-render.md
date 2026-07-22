@@ -30,7 +30,7 @@ nb plugin install nonebot-plugin-htmlkit
 - Linux x64 （非 Alpine 等 musl 系发行版）
 - Linux arm64 （非 Alpine 等 musl 系发行版）
 
-:::warning 访问网络内容
+:::warning[访问网络内容]
 
 如果需要访问网络资源（如 http(s) 网页内容），NoneBot 需要客户端型驱动器（Forward）。内置的驱动器有 `~httpx` 与 `~aiohttp`。
 

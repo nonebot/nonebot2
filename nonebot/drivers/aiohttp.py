@@ -6,7 +6,7 @@ nb driver install aiohttp
 pip install nonebot2[aiohttp]
 ```
 
-:::tip 提示
+:::tip[提示]
 本驱动仅支持客户端连接
 :::
 
