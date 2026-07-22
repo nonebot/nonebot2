@@ -28,6 +28,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Palworld [@noneflow](https://github.com/noneflow) ([#4114](https://github.com/nonebot/nonebot2/pull/4114))
 - Plugin: 今天是什么小猪（今日小猪）Plus [@noneflow](https://github.com/noneflow) ([#4097](https://github.com/nonebot/nonebot2/pull/4097))
 - Plugin: Nonebot, RUOK? [@noneflow](https://github.com/noneflow) ([#4104](https://github.com/nonebot/nonebot2/pull/4104))
 - Plugin: ZikeQuote3 [@noneflow](https://github.com/noneflow) ([#4024](https://github.com/nonebot/nonebot2/pull/4024))
