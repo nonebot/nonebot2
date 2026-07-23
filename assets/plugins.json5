@@ -11357,4 +11357,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_aigf",
+    "project_link": "nonebot-plugin-aigf",
+    "author_id": 162463571,
+    "tags": [
+      {
+        "label": "LLM",
+        "color": "#ea5252"
+      },
+      {
+        "label": "记忆",
+        "color": "#0d81b9"
+      },
+      {
+        "label": "表情包",
+        "color": "#0db917"
+      }
+    ],
+    "is_official": false
+  },
 ]
