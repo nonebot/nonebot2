@@ -11357,4 +11357,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_aawarframe",
+    "project_link": "nonebot-plugin-aawarframe",
+    "author_id": 35626312,
+    "tags": [
+      {
+        "label": "Warframe",
+        "color": "#edaaaa"
+      }
+    ],
+    "is_official": false
+  },
 ]
