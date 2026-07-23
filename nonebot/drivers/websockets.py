@@ -6,7 +6,7 @@ nb driver install websockets
 pip install nonebot2[websockets]
 ```
 
-:::tip 提示
+:::tip[提示]
 本驱动仅支持客户端 WebSocket 连接
 :::
 

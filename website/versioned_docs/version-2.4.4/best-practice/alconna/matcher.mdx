@@ -534,7 +534,7 @@ async def message_provider(
 
 该方法可能会调用多次，即对于多个 Extension，选择优先级靠前且实现了该方法的 Extension，若调用的返回值不为 `None` 则作为结果。
 
-:::caution
+:::warning
 
 该方法的默认实现对结果 (UniMessage) 会进行缓存。`Extension` 的实现也应尽量实现缓存机制。
 

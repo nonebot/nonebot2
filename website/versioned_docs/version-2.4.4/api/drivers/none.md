@@ -9,7 +9,7 @@ description: nonebot.drivers.none 模块
 
 None 驱动适配
 
-:::tip 提示
+:::tip[提示]
 本驱动不支持任何服务器或客户端连接
 :::
 

@@ -12,7 +12,7 @@ options:
 
 在[指南](../tutorial/matcher.md)与[深入](../appendices/rule.md)中，我们已经介绍了事件响应器的基本用法以及响应规则、权限控制等功能。在这一节中，我们将介绍事件响应器的组成，内置的响应规则，与第三方响应规则拓展。
 
-:::tip 提示
+:::tip[提示]
 事件响应器允许继承，你可以通过直接继承 `Matcher` 类来创建一个新的事件响应器。
 :::
 
@@ -228,7 +228,7 @@ matcher = on_shell_command("cmd", parser=parser)
 
 `regex` 响应规则用于匹配消息是否与指定正则表达式匹配。
 
-:::tip 提示
+:::tip[提示]
 正则表达式匹配使用 search 而非 match，如需从头匹配请使用 `r"^xxx"` 模式来确保匹配开头。
 :::
 

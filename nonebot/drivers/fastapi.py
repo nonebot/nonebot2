@@ -6,7 +6,7 @@ nb driver install fastapi
 pip install nonebot2[fastapi]
 ```
 
-:::tip 提示
+:::tip[提示]
 本驱动仅支持服务端连接
 :::
 
