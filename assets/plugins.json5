@@ -11357,4 +11357,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_cs2match",
+    "project_link": "nonebot-plugin-cs2match",
+    "author_id": 65395090,
+    "tags": [
+      {
+        "label": "CS2",
+        "color": "#ffa200"
+      },
+      {
+        "label": "CSGO",
+        "color": "#0900ff"
+      },
+      {
+        "label": "CS:GO",
+        "color": "#ff00c5"
+      }
+    ],
+    "is_official": false
+  },
 ]
