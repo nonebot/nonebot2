@@ -11357,4 +11357,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_R6States",
+    "project_link": "nonebot-plugin-R6States",
+    "author_id": 82685282,
+    "tags": [
+      {
+        "label": "战绩",
+        "color": "#ea5252"
+      },
+      {
+        "label": "彩六",
+        "color": "#ff3d2c"
+      }
+    ],
+    "is_official": false
+  },
 ]
