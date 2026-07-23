@@ -11357,4 +11357,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot-plugin-asf",
+    "project_link": "nonebot-plugin-asf",
+    "author_id": 867749,
+    "tags": [
+      {
+        "label": "asf",
+        "color": "#ea5252"
+      },
+      {
+        "label": "steam",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
