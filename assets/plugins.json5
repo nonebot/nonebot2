@@ -11357,4 +11357,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_llm_qa_system",
+    "project_link": "nonebot-plugin-llm-qa-system",
+    "author_id": 109930302,
+    "tags": [
+      {
+        "label": "QA",
+        "color": "#66ccff"
+      },
+      {
+        "label": "RAG",
+        "color": "#66ccff"
+      },
+      {
+        "label": "Ollama",
+        "color": "#66ccff"
+      }
+    ],
+    "is_official": false
+  },
 ]
