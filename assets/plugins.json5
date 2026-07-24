@@ -11357,4 +11357,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_sues_bill",
+    "project_link": "nonebot-plugin-sues-bill",
+    "author_id": 73696247,
+    "tags": [
+      {
+        "label": "SUES",
+        "color": "#123297"
+      },
+      {
+        "label": "大学校园",
+        "color": "#b7e9c0"
+      }
+    ],
+    "is_official": false
+  },
 ]
