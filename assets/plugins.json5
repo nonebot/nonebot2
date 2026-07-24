@@ -11357,4 +11357,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_yijing",
+    "project_link": "nonebot-plugin-yijing",
+    "author_id": 96228495,
+    "tags": [
+      {
+        "label": "易经",
+        "color": "#aad84a"
+      },
+      {
+        "label": "周易",
+        "color": "#5cb95d"
+      },
+      {
+        "label": "抽签娱乐",
+        "color": "#d66dc6"
+      }
+    ],
+    "is_official": false
+  },
 ]
