@@ -1,0 +1,7 @@
+# Stylelint runs on everything by default; we only lint CSS files.
+*
+!*/
+!*.css
+build
+coverage
+packages/nonebot-plugin-docs/

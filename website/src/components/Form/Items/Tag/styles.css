@@ -29,6 +29,7 @@
 
 .fix-input-color {
   @apply !text-base-content !bg-base-100;
+
   input {
     @apply !text-base-content !bg-base-100;
   }
