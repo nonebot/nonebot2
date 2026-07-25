@@ -26,7 +26,7 @@ export type Props = Pick<
 export default function Paginate({
   className,
   totalPages,
-  currentPage,
+  currentPage: currentPageProp,
   setPreviousPage,
   setNextPage,
   setPage,
@@ -67,7 +67,7 @@ export default function Paginate({
   const even = MAX_LENGTH % 2 === 0 ? 1 : 0;
   const left = Math.floor(MAX_LENGTH / 2);
   const right = totalPages - left + even + 1;
-  currentPage += 1;
+  const currentPage = currentPageProp + 1;
 
   if (totalPages <= MAX_LENGTH) {
     pages.push(...range(1, totalPages));
