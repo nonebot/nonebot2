@@ -16,7 +16,7 @@ type useSearchControlReturn<T extends Resource> = {
 };
 
 export function useSearchControl<T extends Resource>(
-  resources: T[]
+  resources: T[],
 ): useSearchControlReturn<T> {
   const [currentFilter, setCurrentFilter] = useState<Filter<T> | null>(null);
 
@@ -28,7 +28,7 @@ export function useSearchControl<T extends Resource>(
 
   useEffect(() => {
     setSearcherFilters(
-      filters.filter((f) => !(currentFilter && f === currentFilter))
+      filters.filter((f) => !(currentFilter && f === currentFilter)),
     );
   }, [filters, currentFilter]);
 
@@ -53,7 +53,7 @@ export function useSearchControl<T extends Resource>(
       setCurrentFilter(newFilter);
       addFilter(newFilter);
     },
-    [currentFilter, setCurrentFilter, addFilter, removeFilter]
+    [currentFilter, setCurrentFilter, addFilter, removeFilter],
   );
 
   const onSearchQuerySubmit = useCallback(() => {
@@ -75,7 +75,7 @@ export function useSearchControl<T extends Resource>(
     (index: number) => {
       removeFilter(searcherFilters[index]);
     },
-    [removeFilter, searcherFilters]
+    [removeFilter, searcherFilters],
   );
 
   return {

@@ -37,7 +37,7 @@ function MessageBox({
         <div
           className={clsx(
             "messenger-chat-avatar",
-            isRight && "messenger-chat-avatar-user"
+            isRight && "messenger-chat-avatar-user",
           )}
         >
           {isRight ? (
@@ -50,7 +50,7 @@ function MessageBox({
       <div
         className={clsx(
           "chat-bubble messenger-chat-bubble",
-          monospace && "font-mono"
+          monospace && "font-mono",
         )}
         dangerouslySetInnerHTML={{
           __html: msg.replace(/\n/g, "<br/>").replace(/ /g, "&nbsp;"),

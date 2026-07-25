@@ -110,7 +110,7 @@ export default function Paginate({
             className={clsx(
               "paginate-button",
               typeof page !== "number" && "ellipsis",
-              currentPage === page && "active"
+              currentPage === page && "active",
             )}
             onClick={() =>
               typeof page === "number" &&

@@ -148,7 +148,7 @@ const sidebars: SidebarsConfig = {
           type: "link",
           label: chunk[0]!.title,
           href: `/changelog/${index > 0 ? index.toString() : ""}`,
-        })
+        }),
       ),
     },
   ],

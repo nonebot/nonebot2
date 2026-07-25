@@ -22,7 +22,7 @@ type Props = {
 function StorePage({ title, children }: Props): React.ReactNode {
   const sidebarItems = useVersionedSidebar(
     useDocsVersionCandidates()[0].name,
-    SIDEBAR_ID
+    SIDEBAR_ID,
   )!;
 
   return (

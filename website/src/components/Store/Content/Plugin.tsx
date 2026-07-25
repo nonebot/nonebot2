@@ -50,7 +50,7 @@ export default function PluginPage(): React.ReactNode {
     active: sortMode === SortMode.UpdateDesc,
     onClick: () => {
       setSortMode(
-        sortMode === SortMode.Default ? SortMode.UpdateDesc : SortMode.Default
+        sortMode === SortMode.Default ? SortMode.UpdateDesc : SortMode.Default,
       );
     },
   };
@@ -58,7 +58,7 @@ export default function PluginPage(): React.ReactNode {
   const getSortedPlugins = (plugins: Plugin[]): Plugin[] => {
     if (sortMode === SortMode.UpdateDesc) {
       return [...plugins].sort(
-        (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
+        (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime(),
       );
     }
     return plugins;
@@ -124,14 +124,14 @@ export default function PluginPage(): React.ReactNode {
     (tag: string) => {
       addFilter(tagFilter(tag));
     },
-    [addFilter]
+    [addFilter],
   );
 
   const onCardAuthorClick = useCallback(
     (author: string) => {
       addFilter(authorFilter(author));
     },
-    [addFilter]
+    [addFilter],
   );
 
   return (

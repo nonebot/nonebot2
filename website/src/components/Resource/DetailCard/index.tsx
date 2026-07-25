@@ -180,7 +180,7 @@ export default function ResourceDetailCard({ resource }: Props) {
               `${
                 pypiData.releases[pypiData.info.version].reduce(
                   (acc, curr) => acc + curr.size,
-                  0
+                  0,
                 ) / 1000
               }K`) ||
               "无"}

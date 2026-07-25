@@ -32,7 +32,7 @@ export default function BotForm(): React.ReactNode {
         template: "bot_publish.yml",
         title: `Bot: ${result.name}`,
         ...result,
-      })}`
+      })}`,
     );
   };
 

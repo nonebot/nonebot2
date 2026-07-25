@@ -24,7 +24,7 @@ export default function PluginForm(): React.ReactNode {
         template: "plugin_publish.yml",
         title: `Plugin: ${result.pypi}`,
         ...result,
-      })}`
+      })}`,
     );
   };
 

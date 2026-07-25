@@ -28,7 +28,7 @@ export default function ResourceCard({
   className,
 }: Props): React.ReactNode {
   const isGithub = /^https:\/\/github.com\/[^/]+\/[^/]+/.test(
-    resource.homepage
+    resource.homepage,
   );
 
   const isPlugin = resource.resourceType === "plugin";

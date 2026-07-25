@@ -21,7 +21,7 @@ export default function Avatar({ authorLink, authorAvatar, className }: Props) {
               <div
                 className={clsx(
                   "absolute inset-0 rounded-full bg-gray-200",
-                  "animate-pulse"
+                  "animate-pulse",
                 )}
               />
             )}
@@ -31,7 +31,7 @@ export default function Avatar({ authorLink, authorAvatar, className }: Props) {
               className={clsx(
                 "w-full h-full rounded-full object-cover",
                 "transition-opacity duration-300",
-                loaded ? "opacity-100" : "opacity-0"
+                loaded ? "opacity-100" : "opacity-0",
               )}
               alt="Avatar"
             />

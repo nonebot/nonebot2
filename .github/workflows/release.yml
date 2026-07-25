@@ -40,7 +40,7 @@ jobs:
       - name: Archive Files
         run: |
           pnpm archive $(uv version --short)
-          pnpm prettier
+          pnpm format
 
       - name: Push Tag
         run: |

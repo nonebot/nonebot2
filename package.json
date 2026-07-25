@@ -9,7 +9,8 @@
     "start": "pnpm --filter nonebot start",
     "serve": "pnpm --filter nonebot serve",
     "clear": "pnpm --filter nonebot clear",
-    "prettier": "prettier --config ./.prettierrc --write \"./website/\"",
+    "format": "oxfmt .",
+    "format:diff": "oxfmt --list-different .",
     "lint": "pnpm lint:js && pnpm lint:style",
     "lint:ci": "pnpm lint:js --quiet && pnpm lint:style",
     "lint:js": "eslint --cache --report-unused-disable-directives \"**/*.{js,jsx,ts,tsx,mjs}\"",
@@ -31,9 +32,10 @@
     "eslint-plugin-regexp": "^3.1.0",
     "globals": "^17.6.0",
     "jiti": "^2.7.0",
-    "prettier": "^3.0.3",
+    "oxfmt": "^0.60.0",
     "pyright": "1.1.393",
     "stylelint": "^17.12.0",
-    "stylelint-config-standard": "^40.0.0"
+    "stylelint-config-standard": "^40.0.0",
+    "typescript-eslint": "^8.59.3"
   }
 }
