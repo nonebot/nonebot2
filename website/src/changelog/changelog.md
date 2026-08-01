@@ -29,6 +29,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot_plugin_astra_bot [@noneflow](https://github.com/noneflow) ([#4034](https://github.com/nonebot/nonebot2/pull/4034))
 - Plugin: 彩六数据查询 [@noneflow](https://github.com/noneflow) ([#4073](https://github.com/nonebot/nonebot2/pull/4073))
 - Plugin: 老虎机 [@noneflow](https://github.com/noneflow) ([#4102](https://github.com/nonebot/nonebot2/pull/4102))
 - Plugin: Palworld [@noneflow](https://github.com/noneflow) ([#4114](https://github.com/nonebot/nonebot2/pull/4114))
