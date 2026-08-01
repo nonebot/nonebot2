@@ -88,14 +88,14 @@ export default function AdapterPage(): React.ReactNode {
     (tag: string) => {
       addFilter(tagFilter(tag));
     },
-    [addFilter]
+    [addFilter],
   );
 
   const onCardAuthorClick = useCallback(
     (author: string) => {
       addFilter(authorFilter(author));
     },
-    [addFilter]
+    [addFilter],
   );
 
   return (

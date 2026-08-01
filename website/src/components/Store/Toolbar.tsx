@@ -125,7 +125,7 @@ export default function StoreToolbar({
               <button
                 className={clsx(
                   "btn btn-sm btn-primary no-animation mr-2",
-                  !sorter.active && "btn-outline"
+                  !sorter.active && "btn-outline",
                 )}
                 onClick={sorter.onClick}
               >
@@ -154,7 +154,7 @@ export default function StoreToolbar({
             <button
               className={clsx(
                 "btn btn-sm btn-primary no-animation mr-2",
-                !sorter.active && "btn-outline"
+                !sorter.active && "btn-outline",
               )}
               onClick={sorter.onClick}
             >

@@ -39,8 +39,8 @@ export function useToolbar<T extends Resource = Resource>({
     icon: ["fas", "tag"],
     choices: Array.from(
       new Set(
-        resources.flatMap((resource) => resource.tags.map((tag) => tag.label))
-      )
+        resources.flatMap((resource) => resource.tags.map((tag) => tag.label)),
+      ),
     ),
     onSubmit: (tag: string) => {
       addFilter(tagFilter(tag));

@@ -161,7 +161,7 @@ async def on_startup():
     await UniMessage("Hello!").send(target=target)
 ```
 
-:::caution
+:::warning
 
 在响应器以外的地方，除非启用了 `alconna_apply_fetch_targets` 配置项，否则 `bot` 参数必须手动传入。
 

@@ -27,8 +27,8 @@ export default function TagFormItem({
     new Set(
       allowTags
         .filter((tag) => tag.label.toLocaleLowerCase().includes(label))
-        .map((e) => e.label)
-    )
+        .map((e) => e.label),
+    ),
   ).slice(0, 5);
 
   const validateTag = () => {

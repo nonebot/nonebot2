@@ -35,7 +35,7 @@ async def got_location():
 
 在上面的代码中，我们使用 `got` 事件响应器操作来向用户发送 `prompt` 消息，并等待用户的回复。用户的回复消息将会被作为 `location` 参数存储于事件响应器状态中。
 
-:::tip 提示
+:::tip[提示]
 事件处理函数根据定义的顺序依次执行。
 :::
 
@@ -67,7 +67,7 @@ async def got_location(location: str = ArgPlainText()):
 
 在上面的代码中，我们在 `got_location` 函数中定义了一个依赖注入参数 `location`，他的值将会是用户回复的消息纯文本信息。获取到用户输入的地名参数后，我们就可以进行天气查询并回复了。
 
-:::tip 提示
+:::tip[提示]
 如果想要获取用户回复的消息对象 `Message` ，可以使用 `Arg` 依赖注入。
 :::
 
@@ -130,7 +130,7 @@ async def got_location(location: str = ArgPlainText()):
 
 事件响应器操作可以分为两大类：**交互操作**和**流程控制操作**。我们可以通过交互操作来与用户进行交互，而流程控制操作则可以用来控制事件处理流程的执行。
 
-:::tip 提示
+:::tip[提示]
 事件处理流程按照事件处理函数添加顺序执行，已经结束的事件处理函数不可能被恢复执行。
 :::
 
@@ -322,7 +322,7 @@ async def _(matcher: Matcher):
     matcher.stop_propagation()
 ```
 
-:::caution 注意
+:::warning[注意]
 `stop_propagation` 操作是实例方法，需要先通过依赖注入获取事件响应器实例再进行调用。
 :::
 

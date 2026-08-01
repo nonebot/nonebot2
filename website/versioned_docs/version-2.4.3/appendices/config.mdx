@@ -19,7 +19,7 @@ NoneBot 使用 [`pydantic`](https://docs.pydantic.dev/) 以及 [`python-dotenv`]
 
 NoneBot 内置的配置项列表及含义可以在[内置配置项](#内置配置项)中查看。
 
-:::caution 注意
+:::warning[注意]
 
 NoneBot 自 2.2.0 起兼容了 Pydantic v1 与 v2 版本，以下文档中 Pydantic 相关示例均采用 v2 版本用法。
 
@@ -83,7 +83,7 @@ export CUSTOM_CONFIG='config in environment variables'
 
 那最终 NoneBot 所读取的内容为环境变量中的内容，即 `config in environment variables`。
 
-:::caution 注意
+:::warning[注意]
 NoneBot 不会自发读取未被定义的配置项的环境变量，如果需要读取某一环境变量需要在 dotenv 配置文件中进行声明。
 :::
 
@@ -162,7 +162,7 @@ COMMON_CONFIG=common config  # 这个配置项在任何环境中都会被加载
 
 这样，我们在启动 NoneBot 时就会从 `.env.dev` 文件中加载剩余配置项。
 
-:::tip 提示
+:::tip[提示]
 在生产环境中，可以通过设置环境变量 `ENVIRONMENT=prod` 来确保 NoneBot 读取正确的环境配置。
 :::
 
@@ -242,7 +242,7 @@ weather = on_command(
 
 这种方式可以简洁、高效地读取配置项，同时也可以设置默认值或者在运行时对配置项进行合法性检查，防止由于配置项导致的插件出错等情况出现。
 
-:::tip 提示
+:::tip[提示]
 发布插件应该为自身的事件响应器提供可配置的优先级，以便插件使用者可以自定义多个插件间的响应顺序。
 :::
 
@@ -400,7 +400,7 @@ nonebot.init(port=8080)
 
 NoneBot 日志输出等级，可以为 `int` 类型等级或等级名称。具体等级对照表参考 [loguru 日志等级](https://loguru.readthedocs.io/en/stable/api/logger.html#levels)。
 
-:::tip 提示
+:::tip[提示]
 日志等级名称应为大写，如 `INFO`。
 :::
 

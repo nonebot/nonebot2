@@ -49,8 +49,8 @@ export function Form({
           data
             .filter((item) => item.tags.length > 0)
             .map((ele) => ele.tags)
-            .flat()
-        )
+            .flat(),
+        ),
       )
       .catch((e) => {
         console.error(e);
@@ -63,7 +63,7 @@ export function Form({
 
   const handleNextStep = () => {
     const currentStepNames = formItems[currentStep].items.map(
-      (item) => item.name
+      (item) => item.name,
     );
     if (currentStepNames.every((name) => result[name])) {
       setCurrentStep(currentStep + 1);

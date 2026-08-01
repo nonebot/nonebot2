@@ -44,7 +44,7 @@ config_dir = store.get_plugin_config_dir()
 config_file = store.get_plugin_config_file("file_name")
 ```
 
-:::danger 警告
+:::danger[警告]
 在 Windows 和 macOS 系统下，插件的数据目录和配置目录是同一个目录，因此在使用时需要注意避免文件名冲突。
 :::
 
@@ -60,7 +60,7 @@ data_file.write_text("Hello World!")
 data = data_file.read_text()
 ```
 
-:::note 提示
+:::note[提示]
 
 对于嵌套插件，子插件的存储目录将位于父插件存储目录下。
 

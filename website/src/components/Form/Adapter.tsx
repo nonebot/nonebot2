@@ -38,7 +38,7 @@ export default function AdapterForm(): React.ReactNode {
         template: "adapter_publish.yml",
         title: `Adapter: ${result.name}`,
         ...result,
-      })}`
+      })}`,
     );
   };
 

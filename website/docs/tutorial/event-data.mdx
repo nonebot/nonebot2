@@ -45,11 +45,11 @@ async def handle_function(args: Message = CommandArg()):
 
 如上方示例所示，我们使用了 `args` 作为注入参数名，注入的内容为 `CommandArg()`，也就是**消息命令后跟随的内容**。在这个示例中，我们获得的参数会被检查是否有效，对无效参数则会结束事件。
 
-:::tip 提示
+:::tip[提示]
 命令与参数之间可以不需要空格，`CommandArg()` 获取的信息为命令后跟随的内容并去除了头部空白符。例如：`/天气 上海` 消息的参数为 `上海`。
 :::
 
-:::tip 提示
+:::tip[提示]
 `:=` 是 Python 3.8 引入的新语法 [Assignment Expressions](https://docs.python.org/zh-cn/3/reference/expressions.html#assignment-expressions)，也称为海象表达式，可以在表达式中直接赋值。
 :::
 

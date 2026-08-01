@@ -187,7 +187,7 @@ description: nonebot.rule 模块
   命令 `("test",)` 可以匹配: `/test` 开头的消息
   命令 `("test", "sub")` 可以匹配: `/test.sub` 开头的消息
 
-:::tip 提示
+:::tip[提示]
 命令内容与后续消息间无需空格!
 :::
 
@@ -264,7 +264,7 @@ description: nonebot.rule 模块
   通过 [ShellCommandArgs](params.md#ShellCommandArgs) 获取解析后的参数字典
   （例: `{"arg": "arg", "h": True}`）。
 
-  :::caution 警告
+  :::warning[警告]
   如果参数解析失败，则通过 [ShellCommandArgs](params.md#ShellCommandArgs)
   获取的将是 [ParserExit](exception.md#ParserExit) 异常。
   :::
@@ -291,7 +291,7 @@ description: nonebot.rule 模块
   rule = shell_command("ls", parser=parser)
   ```
 
-:::tip 提示
+:::tip[提示]
 命令内容与后续消息间无需空格!
 :::
 
@@ -322,10 +322,10 @@ description: nonebot.rule 模块
 - **返回**
   - [Rule](#Rule)
 
-:::tip 提示
+:::tip[提示]
 正则表达式匹配使用 search 而非 match，如需从头匹配请使用 `r"^xxx"` 来确保匹配开头
 :::
-:::tip 提示
+:::tip[提示]
 正则表达式匹配使用 `EventMessage` 的 `str` 字符串，
 而非 `EventMessage` 的 `PlainText` 纯文本字符串
 :::

@@ -22,15 +22,13 @@
     "serve": "docusaurus serve",
     "write-translations": "docusaurus write-translations",
     "write-heading-ids": "docusaurus write-heading-ids",
-    "typecheck": "tsc",
-    "prettier": "prettier --config ../.prettierrc --write ."
+    "typecheck": "tsc"
   },
   "dependencies": {
     "@docusaurus/core": "3.10.2",
-    "@docusaurus/eslint-plugin": "3.10.2",
     "@mdx-js/react": "^3.0.0",
-    "@nullbot/docusaurus-plugin-changelog": "^3.7.0",
-    "@nullbot/docusaurus-preset-nonepress": "^3.7.0",
+    "@nullbot/docusaurus-plugin-changelog": "^3.8.0",
+    "@nullbot/docusaurus-preset-nonepress": "^3.8.0",
     "clsx": "^2.0.0",
     "copy-text-to-clipboard": "^3.2.0",
     "prism-react-renderer": "^2.3.0",
@@ -42,7 +40,7 @@
   "devDependencies": {
     "@docusaurus/faster": "3.10.2",
     "@docusaurus/module-type-aliases": "3.10.2",
-    "@nullbot/docusaurus-tsconfig": "^3.7.0",
+    "@nullbot/docusaurus-tsconfig": "^3.8.0",
     "@types/react-color": "^3.0.10",
     "asciinema-player": "^3.5.0",
     "typescript": "~5.7.2"

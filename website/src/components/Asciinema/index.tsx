@@ -20,7 +20,6 @@ export default function Asciinema(props: Props): React.ReactNode {
       }
     >
       {() => {
-        // eslint-disable-next-line @typescript-eslint/no-var-requires
         const AsciinemaContainer = require("./container.tsx").default;
         return <AsciinemaContainer {...props} />;
       }}

@@ -39,7 +39,7 @@ const validStatusDisplayName = {
 };
 
 export const validStatusFilter = <T extends Resource = Resource>(
-  validStatus: ValidStatus
+  validStatus: ValidStatus,
 ): Filter<T> => ({
   type: "validStatus",
   id: `validStatus-${validStatus}`,
@@ -51,7 +51,7 @@ export const validStatusFilter = <T extends Resource = Resource>(
 });
 
 export const tagFilter = <T extends Resource = Resource>(
-  tag: string
+  tag: string,
 ): Filter<T> => ({
   type: "tag",
   id: `tag-${tag}`,
@@ -61,14 +61,14 @@ export const tagFilter = <T extends Resource = Resource>(
       description: "The display name of tag filter",
       message: "标签: {tag}",
     },
-    { tag }
+    { tag },
   ),
   filter: (resource: Resource): boolean =>
     resource.tags.map((tag) => tag.label).includes(tag),
 });
 
 export const officialFilter = <T extends Resource = Resource>(
-  official: boolean = true
+  official: boolean = true,
 ): Filter<T> => ({
   type: "official",
   id: `official-${official}`,
@@ -81,7 +81,7 @@ export const officialFilter = <T extends Resource = Resource>(
 });
 
 export const authorFilter = <T extends Resource = Resource>(
-  author: string
+  author: string,
 ): Filter<T> => ({
   type: "author",
   id: `author-${author}`,
@@ -91,13 +91,13 @@ export const authorFilter = <T extends Resource = Resource>(
       description: "The display name of author filter",
       message: "作者: {author}",
     },
-    { author }
+    { author },
   ),
   filter: (resource: Resource): boolean => resource.author === author,
 });
 
 export const queryFilter = <T extends Resource = Resource>(
-  query: string
+  query: string,
 ): Filter<T> => ({
   type: "query",
   id: `query-${query}`,
@@ -123,10 +123,10 @@ export const queryFilter = <T extends Resource = Resource>(
 
 export function filterResources<T extends Resource>(
   resources: T[],
-  filters: Filter<T>[]
+  filters: Filter<T>[],
 ): T[] {
   return resources.filter((resource) =>
-    filters.every((filter) => filter.filter(resource))
+    filters.every((filter) => filter.filter(resource)),
   );
 }
 
@@ -138,7 +138,7 @@ type useFilteredResourcesReturn<T extends Resource> = {
 };
 
 export function useFilteredResources<T extends Resource>(
-  resources: T[]
+  resources: T[],
 ): useFilteredResourcesReturn<T> {
   const [filters, setFilters] = useState<Filter<T>[]>([]);
 
@@ -149,22 +149,22 @@ export function useFilteredResources<T extends Resource>(
       }
       setFilters((filters) => [...filters, filter]);
     },
-    [filters, setFilters]
+    [filters, setFilters],
   );
   const removeFilter = useCallback(
     (filter: Filter<T> | string) => {
       setFilters((filters) =>
         filters.filter((f) =>
-          typeof filter === "string" ? f.id !== filter : f !== filter
-        )
+          typeof filter === "string" ? f.id !== filter : f !== filter,
+        ),
       );
     },
-    [setFilters]
+    [setFilters],
   );
 
   const filteredResources = useCallback(
     () => filterResources(resources, filters),
-    [resources, filters]
+    [resources, filters],
   );
 
   return {

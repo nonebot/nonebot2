@@ -40,6 +40,6 @@
     "importHelpers": true,
     "noEmitHelpers": true
   },
-  "include": ["./**/.eslintrc.js", "./**/.stylelintrc.js"],
+  "include": ["eslint.config.ts", "eslint.rules.ts", "./**/.stylelintrc.js"],
   "exclude": ["node_modules", "**/lib/**/*"]
 }
