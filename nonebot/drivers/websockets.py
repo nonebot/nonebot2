@@ -77,7 +77,7 @@ class Mixin(WebSocketClientMixin):
     @override
     @asynccontextmanager
     async def websocket(self, setup: Request) -> AsyncGenerator["WebSocket", None]:
-        timeout_kwargs: dict[str, float | None | UnsetType] = {}
+        timeout_kwargs: dict[str, float | UnsetType | None] = {}
         if isinstance(setup.timeout, Timeout):
             open_timeout = (
                 setup.timeout.connect or setup.timeout.read or setup.timeout.total
