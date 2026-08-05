@@ -24,6 +24,7 @@ toc_max_heading_level: 2
 
 ### 💫 杂项
 
+- CI: 用 pull_request 替代 pull_request_target [@he0119](https://github.com/he0119) ([#4140](https://github.com/nonebot/nonebot2/pull/4140))
 - Plugin: 修改插件 algo 信息 [@Tabris-ZX](https://github.com/Tabris-ZX) ([#4100](https://github.com/nonebot/nonebot2/pull/4100))
 - CI: 移除 Pull Request Target 触发器 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3946](https://github.com/nonebot/nonebot2/pull/3946))
 
