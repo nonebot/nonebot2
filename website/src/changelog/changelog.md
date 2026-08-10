@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: CS2赛事助手 [@noneflow](https://github.com/noneflow) ([#4112](https://github.com/nonebot/nonebot2/pull/4112))
 - Plugin: HiBank 城市银行查询 [@noneflow](https://github.com/noneflow) ([#4094](https://github.com/nonebot/nonebot2/pull/4094))
 - Plugin: 代理扫描 [@noneflow](https://github.com/noneflow) ([#4091](https://github.com/nonebot/nonebot2/pull/4091))
 - Plugin: nonebot_plugin_astra_bot [@noneflow](https://github.com/noneflow) ([#4034](https://github.com/nonebot/nonebot2/pull/4034))
