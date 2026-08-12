@@ -777,4 +777,25 @@
     ],
     "is_official": false
   },
+  {
+    "name": "MC-UniBot",
+    "desc": "MC 群服互通机器人，支持多平台、多服务端，拥有较为完善的 WebUi 体验。",
+    "author_id": 90964775,
+    "homepage": "https://github.com/MineJPGcraft/UniBot",
+    "tags": [
+      {
+        "label": "Minecraft",
+        "color": "#ea5252"
+      },
+      {
+        "label": "QQ",
+        "color": "#527fea"
+      },
+      {
+        "label": "QQ 官方机器人",
+        "color": "#8f52ea"
+      }
+    ],
+    "is_official": false
+  },
 ]
