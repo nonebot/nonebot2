@@ -798,4 +798,12 @@
     ],
     "is_official": false
   },
+  {
+    "name": "Pallas-Bot",
+    "desc": "《明日方舟》帕拉斯 Bot",
+    "author_id": 62124595,
+    "homepage": "https://github.com/PallasBot/Pallas-Bot",
+    "tags": [],
+    "is_official": false
+  },
 ]
