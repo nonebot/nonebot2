@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: nonebot-plugin-llm-qa-system [@noneflow](https://github.com/noneflow) ([#4117](https://github.com/nonebot/nonebot2/pull/4117))
 - Plugin: SUES校园服务 [@noneflow](https://github.com/noneflow) ([#4107](https://github.com/nonebot/nonebot2/pull/4107))
 - Plugin: CNRail [@noneflow](https://github.com/noneflow) ([#4135](https://github.com/nonebot/nonebot2/pull/4135))
 - Plugin: 智能消息存储 [@noneflow](https://github.com/noneflow) ([#4092](https://github.com/nonebot/nonebot2/pull/4092))
