@@ -11576,4 +11576,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_livetennis",
+    "project_link": "nonebot-plugin-livetennis",
+    "author_id": 118375461,
+    "tags": [
+      {
+        "label": "tennis",
+        "color": "#4a90d9"
+      },
+      {
+        "label": "sports",
+        "color": "#3e7c4a"
+      }
+    ],
+    "is_official": false
+  },
 ]
