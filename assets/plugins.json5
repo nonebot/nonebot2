@@ -11576,4 +11576,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_maestro",
+    "project_link": "nonebot-plugin-maestro",
+    "author_id": 121220148,
+    "tags": [
+      {
+        "label": "QQ官方机器人",
+        "color": "#43bbf7"
+      },
+      {
+        "label": "指令面板",
+        "color": "#f954c4"
+      },
+      {
+        "label": "WebUI",
+        "color": "#a2f954"
+      }
+    ],
+    "is_official": false
+  },
 ]
