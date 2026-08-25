@@ -11588,4 +11588,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_autospeak",
+    "project_link": "nonebot-plugin-autospeak",
+    "author_id": 61231159,
+    "tags": [
+      {
+        "label": "定时发送",
+        "color": "#ea5252"
+      },
+      {
+        "label": "自动化",
+        "color": "#f87575"
+      }
+    ],
+    "is_official": false
+  },
 ]
