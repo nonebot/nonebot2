@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: Live Tennis 网球比分 [@noneflow](https://github.com/noneflow) ([#4153](https://github.com/nonebot/nonebot2/pull/4153))
 - Plugin: Napcat QRCode [@noneflow](https://github.com/noneflow) ([#4148](https://github.com/nonebot/nonebot2/pull/4148))
 - Plugin: AutoSpeak [@noneflow](https://github.com/noneflow) ([#4146](https://github.com/nonebot/nonebot2/pull/4146))
 - Plugin: Bilibili 动态/直播订阅 [@noneflow](https://github.com/noneflow) ([#4075](https://github.com/nonebot/nonebot2/pull/4075))
