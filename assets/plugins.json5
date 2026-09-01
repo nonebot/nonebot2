@@ -11632,4 +11632,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_mimo_console",
+    "project_link": "nonebot-plugin-mimo-console",
+    "author_id": 278909251,
+    "tags": [
+      {
+        "label": "webui",
+        "color": "#6366f1"
+      },
+      {
+        "label": "管理",
+        "color": "#3b82f6"
+      },
+      {
+        "label": "运维",
+        "color": "#14b8a6"
+      }
+    ],
+    "is_official": false
+  },
 ]
