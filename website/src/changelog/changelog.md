@@ -30,6 +30,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 退休倒计时 [@noneflow](https://github.com/noneflow) ([#4159](https://github.com/nonebot/nonebot2/pull/4159))
 - Plugin: Mimo Console [@noneflow](https://github.com/noneflow) ([#4132](https://github.com/nonebot/nonebot2/pull/4132))
 - Plugin: Live Tennis 网球比分 [@noneflow](https://github.com/noneflow) ([#4153](https://github.com/nonebot/nonebot2/pull/4153))
 - Plugin: Napcat QRCode [@noneflow](https://github.com/noneflow) ([#4148](https://github.com/nonebot/nonebot2/pull/4148))
