@@ -104,6 +104,7 @@ toc_max_heading_level: 2
 
 ### 🍻 机器人发布
 
+- Bot: ATRI-LK [@noneflow](https://github.com/noneflow) ([#4170](https://github.com/nonebot/nonebot2/pull/4170))
 - Bot: Pallas-Bot [@noneflow](https://github.com/noneflow) ([#4157](https://github.com/nonebot/nonebot2/pull/4157))
 - Bot: MC-UniBot [@noneflow](https://github.com/noneflow) ([#4144](https://github.com/nonebot/nonebot2/pull/4144))
 
