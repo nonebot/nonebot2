@@ -11671,4 +11671,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_hsy",
+    "project_link": "nonebot-plugin-hsy",
+    "author_id": 91947491,
+    "tags": [
+      {
+        "label": "hsy",
+        "color": "#e80e0e"
+      },
+      {
+        "label": "sunset",
+        "color": "#f80f0f"
+      },
+      {
+        "label": "晚霞",
+        "color": "#f80f0f"
+      }
+    ],
+    "is_official": false
+  },
 ]
