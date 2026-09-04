@@ -11671,4 +11671,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_komari_status",
+    "project_link": "nonebot-plugin-komari-status",
+    "author_id": 88136148,
+    "tags": [
+      {
+        "label": "server",
+        "color": "#f9f9f9"
+      }
+    ],
+    "is_official": false
+  },
 ]
