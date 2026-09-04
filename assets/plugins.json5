@@ -11671,4 +11671,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_aigf_master",
+    "project_link": "nonebot-plugin-aigf-master",
+    "author_id": 162463571,
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#04addc"
+      },
+      {
+        "label": "拟人",
+        "color": "#04f21a"
+      },
+      {
+        "label": "丰富能力",
+        "color": "#f20429"
+      }
+    ],
+    "is_official": false
+  },
 ]
