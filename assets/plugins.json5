@@ -11671,4 +11671,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_lsay",
+    "project_link": "nonebot-plugin-lsay",
+    "author_id": 91947491,
+    "tags": [
+      {
+        "label": "胡乱说",
+        "color": "#338f23"
+      },
+      {
+        "label": "乱说话",
+        "color": "#7dc970"
+      },
+      {
+        "label": "随机发言",
+        "color": "#b2ddaa"
+      }
+    ],
+    "is_official": false
+  },
 ]
