@@ -11659,4 +11659,16 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_chikari_yinpa",
+    "project_link": "nonebot-plugin-chikari-yinpa-fix",
+    "author_id": 193193424,
+    "tags": [
+      {
+        "label": "yinpa",
+        "color": "#ebc010"
+      }
+    ],
+    "is_official": false
+  },
 ]
