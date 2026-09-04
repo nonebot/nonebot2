@@ -11671,4 +11671,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_advisor",
+    "project_link": "nonebot-plugin-advisor",
+    "author_id": 90964775,
+    "tags": [
+      {
+        "label": "跨平台",
+        "color": "#a32525"
+      },
+      {
+        "label": "客服",
+        "color": "#2580a3"
+      },
+      {
+        "label": "LLM",
+        "color": "#a39625"
+      }
+    ],
+    "is_official": false
+  },
 ]
