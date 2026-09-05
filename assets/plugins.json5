@@ -11671,4 +11671,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_varolant",
+    "project_link": "nonebot-plugin-varolant",
+    "author_id": 100058663,
+    "tags": [
+      {
+        "label": "无畏契约",
+        "color": "#ff4655"
+      }
+    ],
+    "is_official": false
+  },
 ]
