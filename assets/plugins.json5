@@ -11683,4 +11683,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_bilinovel",
+    "project_link": "nonebot-plugin-bilinovel",
+    "author_id": 243095803,
+    "tags": [
+      {
+        "label": "哔哩轻小说",
+        "color": "#f76bac"
+      }
+    ],
+    "is_official": false
+  },
 ]
