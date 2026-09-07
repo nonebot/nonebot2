@@ -45,14 +45,11 @@ message = UniMessage(
 ```python
 from nonebot_plugin_alconna import Button, UniMessage
 
-message = (
-    UniMessage.text("hello world")
-    .keyboard(
-        Button("link1", url="https://example.com/1"),
-        Button("link2", url="https://example.com/2"),
-        Button("link3", url="https://example.com/3"),
-        row=3,
-    )
+message = UniMessage.text("hello world").keyboard(
+    Button("link1", url="https://example.com/1"),
+    Button("link2", url="https://example.com/2"),
+    Button("link3", url="https://example.com/3"),
+    row=3,
 )
 ```
 
@@ -94,6 +91,7 @@ async def _():
 ```python
 from nonebot_plugin_alconna import message_recall, message_edit, message_reaction
 
+
 @matcher.handle()
 async def _():
     await message_edit(UniMessage.text("hello world"))
@@ -120,9 +118,9 @@ async def _():
 ```python
 from nonebot_plugin_alconna import UniMsg
 
+
 @matcher.handle()
-async def _(msg: UniMsg):
-    ...
+async def _(msg: UniMsg): ...
 ```
 
 然后你可以通过 `UniMessage` 的方法来处理消息.
@@ -182,6 +180,7 @@ async def _(msg: UniMsg):
 ```python
 from nonebot_plugin_alconna import UniMsg
 
+
 @matcher.handle()
 async def _(msg: UniMsg):
     data: list[dict] = msg.dump()
@@ -192,6 +191,7 @@ async def _(msg: UniMsg):
 
 ```python
 from nonebot_plugin_alconna import UniMessage
+
 
 @matcher.handle()
 async def _():

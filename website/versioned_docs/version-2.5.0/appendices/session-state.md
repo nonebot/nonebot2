@@ -17,6 +17,7 @@ NoneBot 中的会话状态是一个字典，可以通过类型 `T_State` 来获�
 ```python
 from nonebot.typing import T_State
 
+
 @matcher.got("key", prompt="请输入密码")
 async def _(state: T_State, key: str = ArgPlainText()):
     if key != "some password":
@@ -34,9 +35,11 @@ async def _(state: T_State, key: str = ArgPlainText()):
 ```python
 from nonebot.typing import T_State
 
+
 @matcher.handle()
 async def _(state: T_State):
     state["key"] = "value"
+
 
 @matcher.handle()
 async def _(state: T_State):
@@ -49,9 +52,11 @@ async def _(state: T_State):
 from nonebot.typing import T_State
 from nonebot.adapters import MessageTemplate
 
+
 @matcher.handle()
 async def _(state: T_State):
     state["username"] = "user"
+
 
 @matcher.got("password", prompt=MessageTemplate("请输入 {username} 的密码"))
 async def _():

@@ -29,10 +29,10 @@ from nonebot_plugin_alconna import on_alconna, AlconnaMatch, Match
 
 echo = on_alconna(Alconna("echo", Args["msg", str]))
 
+
 @echo.handle()
 async def echo_exit(msg: Match[str] = AlconnaMatch("msg")):
     await echo.finish(msg.result)
-
 ```
 
 相比于 `on_alconna`， `funcommand` 增加了三个参数 `name`, `prefixes` 和 `description`。
@@ -53,6 +53,7 @@ book = (
     .shortcut("测试", {"args": ["--anonymous"]})
     .build()
 )
+
 
 @book.handle()
 async def _(arp: Arparma):

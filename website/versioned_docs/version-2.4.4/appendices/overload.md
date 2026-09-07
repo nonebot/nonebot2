@@ -21,6 +21,7 @@ options:
 ```python {4} title=weather/__init__.py
 from nonebot.adapters.console import MessageEvent
 
+
 @weather.got("location", prompt="请输入地名")
 async def got_location(event: MessageEvent, location: str = ArgPlainText()):
     await weather.finish(f"{event.time.strftime('%Y-%m-%d')} {location} 的天气是...")
@@ -39,9 +40,11 @@ async def got_location(event: MessageEvent, location: str = ArgPlainText()):
 ```python {4,8}
 from nonebot.adapters.onebot.v11 import PrivateMessageEvent, GroupMessageEvent
 
+
 @matcher.handle()
 async def handle_private(event: PrivateMessageEvent):
     await matcher.finish("私聊消息")
+
 
 @matcher.handle()
 async def handle_group(event: GroupMessageEvent):
@@ -54,9 +57,11 @@ async def handle_group(event: GroupMessageEvent):
 from nonebot.adapters.console import Bot as ConsoleBot
 from nonebot.adapters.onebot.v11 import Bot as OneBot
 
+
 @matcher.handle()
 async def handle_console(bot: ConsoleBot):
     await bot.bell()
+
 
 @matcher.handle()
 async def handle_onebot(bot: OneBot):

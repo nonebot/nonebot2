@@ -81,6 +81,7 @@ except Exception as e:
 ```python title=config.py
 from pydantic import BaseModel
 
+
 class Config(BaseModel):
     xxx_id: str
     xxx_token: str
@@ -101,6 +102,7 @@ from nonebot import get_plugin_config
 from nonebot.adapters import Adapter as BaseAdapter
 
 from .config import Config
+
 
 class Adapter(BaseAdapter):
     @override
@@ -208,8 +210,9 @@ from nonebot.drivers import (
     ASGIMixin,
     WebSocket,
     HTTPServerSetup,
-    WebSocketServerSetup
+    WebSocketServerSetup,
 )
+
 
 class Adapter(BaseAdapter):
     @override
@@ -242,7 +245,6 @@ class Adapter(BaseAdapter):
         )
         self.setup_websocket_server(ws_setup)
 
-
     async def _handle_http(self, request: Request) -> Response:
         """HTTP 路由处理函数，只有一个类型为 Request 的参数，且返回值类型为 Response"""
         ...
@@ -270,8 +272,8 @@ class Adapter(BaseAdapter):
 ```python {7,8,11} title=adapter.py
 from .bot import Bot
 
-class Adapter(BaseAdapter):
 
+class Adapter(BaseAdapter):
     def _handle_connect(self):
         bot_id = ...  # 通过配置或者平台 API 等方式，获取到 Bot 的 ID
         bot = Bot(self, self_id=bot_id)  # 实例化 Bot
@@ -295,8 +297,8 @@ from .bot import Bot
 from .event import Event
 from .log import log
 
-class Adapter(BaseAdapter):
 
+class Adapter(BaseAdapter):
     @classmethod
     def payload_to_event(cls, payload: Dict[str, Any]) -> Event:
         """根据平台事件的特性，转换平台 payload 为具体 Event
@@ -315,7 +317,6 @@ class Adapter(BaseAdapter):
             )
             # 也可以尝试转为基础 Event 进行处理
             return type_validate_python(Event, payload)
-
 
     async def _forward(self, bot: Bot):
 
@@ -337,8 +338,8 @@ from nonebot.drivers import Request, WebSocket
 
 from .bot import Bot
 
-class Adapter(BaseAdapter):
 
+class Adapter(BaseAdapter):
     @override
     async def _call_api(self, bot: Bot, api: str, **data: Any) -> Any:
         log("DEBUG", f"Calling API <y>{api}</y>")  # 给予日志提示
@@ -355,7 +356,6 @@ class Adapter(BaseAdapter):
         )
         # 发送请求，返回结果
         return await self.driver.request(request)
-
 
         # 采用 WebSocket 通信的方式，可以直接调用 send 方法发送数据
         # 通过某种方式获取到 bot 对应的 websocket 对象
@@ -450,8 +450,8 @@ from typing_extensions import override
 from nonebot.compat import model_dump
 from nonebot.adapters import Event as BaseEvent
 
-class Event(BaseEvent):
 
+class Event(BaseEvent):
     @override
     def get_event_name(self) -> str:
         # 返回事件的名称，用于日志打印
@@ -488,6 +488,7 @@ class Event(BaseEvent):
 ```python {7,16,20,25,34,42} title=event.py
 from .message import Message
 
+
 class HeartbeatEvent(Event):
     """心跳时间，通常为元事件"""
 
@@ -495,8 +496,10 @@ class HeartbeatEvent(Event):
     def get_type(self) -> str:
         return "meta_event"
 
+
 class MessageEvent(Event):
     """消息事件"""
+
     message_id: str
     user_id: str
 
@@ -513,8 +516,10 @@ class MessageEvent(Event):
     def get_user_id(self) -> str:
         return self.user_id
 
+
 class JoinRoomEvent(Event):
     """加入房间事件，通常为通知事件"""
+
     user_id: str
     room_id: str
 
@@ -522,8 +527,10 @@ class JoinRoomEvent(Event):
     def get_type(self) -> str:
         return "notice"
 
+
 class ApplyAddFriendEvent(Event):
     """申请添加好友事件，通常为请求事件"""
+
     user_id: str
 
     @override
@@ -543,6 +550,7 @@ from nonebot.utils import escape_tag
 
 from nonebot.adapters import Message as BaseMessage
 from nonebot.adapters import MessageSegment as BaseMessageSegment
+
 
 class MessageSegment(BaseMessageSegment["Message"]):
     @classmethod
@@ -591,6 +599,7 @@ class Message(BaseMessage[MessageSegment]):
    ```python title=tests/conftest.py
    from pathlib import Path
    import nonebot.adapters
+
    nonebot.adapters.__path__.append(  # type: ignore
        str((Path(__file__).parent.parent / "nonebot" / "adapters").resolve())
    )

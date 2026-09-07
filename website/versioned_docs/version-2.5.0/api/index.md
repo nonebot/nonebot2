@@ -100,6 +100,7 @@ description: nonebot 模块
 
   ```python
   from nonebot.adapters.console import Adapter
+
   adapter = nonebot.get_adapter(Adapter)
   ```
 

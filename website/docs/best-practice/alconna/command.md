@@ -20,7 +20,7 @@ alc = Alconna(
         Args["package", str],
         Option("-r|--requirement", Args["file", str]),
         Option("-i|--index-url", Args["url", str]),
-    )
+    ),
 )
 
 res = alc.parse("pip install nonebot2 -i URL")
@@ -113,8 +113,8 @@ from arclet.alconna import Alconna, Args
 
 
 alc = Alconna("test", Args["foo", str])
-alc.parse("test --foo abc") # 错误
-alc.parse("test abc") # 正确
+alc.parse("test --foo abc")  # 错误
+alc.parse("test abc")  # 正确
 ```
 
 若需要 `test --foo abc`，你应该使用 `Option`：
@@ -383,20 +383,33 @@ alc = Alconna(..., meta=CommandMeta("foo", example="bar"))
 from arclet.alconna import Alconna, namespace, Namespace, Subcommand, Args, config
 
 
-ns = Namespace("foo", prefixes=["/"])  # 创建 "foo"命名空间配置, 它要求创建的Alconna的主命令前缀必须是/
+ns = Namespace(
+    "foo", prefixes=["/"]
+)  # 创建 "foo"命名空间配置, 它要求创建的Alconna的主命令前缀必须是/
 
-alc = Alconna("pip", Subcommand("install", Args["package", str]), namespace=ns) # 在创建Alconna时候传入命名空间以替换默认命名空间
+alc = Alconna(
+    "pip", Subcommand("install", Args["package", str]), namespace=ns
+)  # 在创建Alconna时候传入命名空间以替换默认命名空间
 
 # 可以通过with方式创建命名空间
 with namespace("bar") as np1:
-    np1.prefixes = ["!"]    # 以上下文管理器方式配置命名空间，此时配置会自动注入上下文内创建的命令
+    np1.prefixes = [
+        "!"
+    ]  # 以上下文管理器方式配置命名空间，此时配置会自动注入上下文内创建的命令
     np1.formatter_type = ShellTextFormatter  # 设置此命名空间下的命令的 formatter 默认为 ShellTextFormatter
-    np1.builtin_option_name["help"] = {"帮助", "-h"}  # 设置此命名空间下的命令的帮助选项名称
+    np1.builtin_option_name["help"] = {
+        "帮助",
+        "-h",
+    }  # 设置此命名空间下的命令的帮助选项名称
 
 # 你还可以使用config来管理所有命名空间并切换至任意命名空间
 config.namespaces["foo"] = ns  # 将命名空间挂载到 config 上
 
-alc = Alconna("pip", Subcommand("install", Args["package", str]), namespace=config.namespaces["foo"]) # 也是同样可以切换到"foo"命名空间
+alc = Alconna(
+    "pip",
+    Subcommand("install", Args["package", str]),
+    namespace=config.namespaces["foo"],
+)  # 也是同样可以切换到"foo"命名空间
 ```
 
 ### 修改默认的命名空间
@@ -466,12 +479,14 @@ alc = Alconna("eval", Args["content", str])
 alc.shortcut("echo", {"command": "eval print(\\'{*}\\')"})
 # 'Alconna::eval 的快捷指令: "echo" 添加成功'
 
-alc.shortcut("echo", delete=True) # 删除快捷指令
+alc.shortcut("echo", delete=True)  # 删除快捷指令
 # 'Alconna::eval 的快捷指令: "echo" 删除成功'
 
-@alc.bind() # 绑定一个命令执行器, 若匹配成功则会传入参数, 自动执行命令执行器
+
+@alc.bind()  # 绑定一个命令执行器, 若匹配成功则会传入参数, 自动执行命令执行器
 def cb(content: str):
     eval(content, {}, {})
+
 
 alc.parse('eval print(\\"hello world\\")')
 # hello world
@@ -523,7 +538,12 @@ alc.parse("eval --shortcut list")
 from arclet.alconna import Alconna, Option, CommandMeta, Args
 
 
-alc = Alconna("test", Args["foo", int], Option("BAR", Args["baz", str], compact=True), meta=CommandMeta(compact=True))
+alc = Alconna(
+    "test",
+    Args["foo", int],
+    Option("BAR", Args["baz", str], compact=True),
+    meta=CommandMeta(compact=True),
+)
 
 assert alc.parse("test123 BARabc").matched
 ```
@@ -534,7 +554,9 @@ assert alc.parse("test123 BARabc").matched
 from arclet.alconna import Alconna, Option, Args, append
 
 
-alc = Alconna("gcc", Option("--flag|-F", Args["content", str], action=append, compact=True))
+alc = Alconna(
+    "gcc", Option("--flag|-F", Args["content", str], action=append, compact=True)
+)
 print(alc.parse("gcc -Fabc -Fdef -Fxyz").query[list]("flag.content"))
 # ['abc', 'def', 'xyz']
 ```
@@ -577,7 +599,7 @@ from arclet.alconna import Alconna, Args, Option
 alc = Alconna("test", Args["abc", int]) + Option("foo") + Option("bar")
 alc.parse("test --comp")
 
-'''
+"""
 output
 
 以下是建议的输入：
@@ -588,7 +610,7 @@ output
 * --shortcut
 * foo
 * bar
-'''
+"""
 ```
 
 ## Duplication
@@ -600,7 +622,16 @@ output
 以pip为例，其对应的 Duplication 应如下构造:
 
 ```python
-from arclet.alconna import Alconna, Args, Option, OptionResult, Duplication, SubcommandStub, Subcommand, count
+from arclet.alconna import (
+    Alconna,
+    Args,
+    Option,
+    OptionResult,
+    Duplication,
+    SubcommandStub,
+    Subcommand,
+    count,
+)
 
 
 class MyDup(Duplication):
@@ -620,7 +651,7 @@ alc = Alconna(
     Option("-v|--verbose", action=count),
 )
 
-res = alc.parse("pip -v install ...") # 不使用duplication获得的提示较少
+res = alc.parse("pip -v install ...")  # 不使用duplication获得的提示较少
 print(res.query("install"))
 # (value=Ellipsis args={'package': '...'} options={} subcommands={})
 

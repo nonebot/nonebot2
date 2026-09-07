@@ -174,9 +174,7 @@ message = Message(
 # 索引
 message[0] == MessageSegment.text("test")
 # 切片
-message[0:2] == Message(
-    [MessageSegment.text("test"), MessageSegment.markdown("test2")]
-)
+message[0:2] == Message([MessageSegment.text("test"), MessageSegment.markdown("test2")])
 # 类型过滤
 message["markdown"] == Message(
     [MessageSegment.markdown("test2"), MessageSegment.markdown("test3")]
@@ -262,7 +260,7 @@ msg = seg.join(
                 MessageSegment.text("second"),
                 MessageSegment.text("third"),
             ]
-        )
+        ),
     ]
 )
 msg == Message(

@@ -27,8 +27,10 @@ from .config import Config
 
 plugin_config = get_plugin_config(Config)
 
+
 async def is_enable() -> bool:
     return plugin_config.weather_plugin_enabled
+
 
 weather = on_command("天气", rule=is_enable)
 ```
@@ -43,11 +45,14 @@ weather = on_command("天气", rule=is_enable)
 from nonebot.rule import Rule
 from nonebot.adapters import Event
 
+
 async def is_enable() -> bool:
     return plugin_config.weather_plugin_enabled
 
+
 async def is_blacklisted(event: Event) -> bool:
     return event.get_user_id() not in BLACKLIST
+
 
 rule = Rule(is_enable, is_blacklisted)
 
@@ -66,8 +71,10 @@ from .config import Config
 
 plugin_config = get_plugin_config(Config)
 
+
 async def is_enable() -> bool:
     return plugin_config.weather_plugin_enabled
+
 
 weather = on_command(
     "天气",
