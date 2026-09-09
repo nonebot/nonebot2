@@ -11683,4 +11683,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_dbd",
+    "project_link": "nonebot-plugin-dbdmap",
+    "author_id": 269097297,
+    "tags": [
+      {
+        "label": "game",
+        "color": "#ea5252"
+      },
+      {
+        "label": "query",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
