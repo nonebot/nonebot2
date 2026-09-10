@@ -11683,4 +11683,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_dnddicer",
+    "project_link": "nonebot-plugin-dnddicer",
+    "author_id": 137194341,
+    "tags": [
+      {
+        "label": "dnd",
+        "color": "#c42323"
+      },
+      {
+        "label": "dice",
+        "color": "#23c42e"
+      },
+      {
+        "label": "trpg",
+        "color": "#1a5499"
+      }
+    ],
+    "is_official": false
+  },
 ]
