@@ -29,6 +29,7 @@ from nonebot import get_driver
 
 driver = get_driver()
 
+
 @driver.on_startup
 async def do_something():
     pass
@@ -42,6 +43,7 @@ async def do_something():
 from nonebot import get_driver
 
 driver = get_driver()
+
 
 @driver.on_shutdown
 async def do_something():
@@ -57,6 +59,7 @@ from nonebot import get_driver
 
 driver = get_driver()
 
+
 @driver.on_bot_connect
 async def do_something(bot: Bot):
     pass
@@ -70,6 +73,7 @@ async def do_something(bot: Bot):
 from nonebot import get_driver
 
 driver = get_driver()
+
 
 @driver.on_bot_disconnect
 async def do_something(bot: Bot):
@@ -88,6 +92,7 @@ async def do_something(bot: Bot):
 from nonebot.exception import IgnoredException
 from nonebot.message import event_preprocessor
 
+
 @event_preprocessor
 async def do_something(event: Event):
     if not event.is_tome():
@@ -100,6 +105,7 @@ async def do_something(event: Event):
 
 ```python
 from nonebot.message import event_postprocessor
+
 
 @event_postprocessor
 async def do_something(event: Event):
@@ -114,6 +120,7 @@ async def do_something(event: Event):
 from nonebot.message import run_preprocessor
 from nonebot.exception import IgnoredException
 
+
 @run_preprocessor
 async def do_something(event: Event, matcher: Matcher):
     if not event.is_tome():
@@ -127,6 +134,7 @@ async def do_something(event: Event, matcher: Matcher):
 ```python
 from nonebot.message import run_postprocessor
 
+
 @run_postprocessor
 async def do_something(event: Event, matcher: Matcher, exception: Optional[Exception]):
     pass
@@ -139,6 +147,7 @@ async def do_something(event: Event, matcher: Matcher, exception: Optional[Excep
 ```python
 from nonebot.adapters import Bot
 from nonebot.exception import MockApiException
+
 
 @Bot.on_calling_api
 async def handle_api_call(bot: Bot, api: str, data: Dict[str, Any]):
@@ -154,9 +163,14 @@ async def handle_api_call(bot: Bot, api: str, data: Dict[str, Any]):
 from nonebot.adapters import Bot
 from nonebot.exception import MockApiException
 
+
 @Bot.on_called_api
 async def handle_api_result(
-    bot: Bot, exception: Optional[Exception], api: str, data: Dict[str, Any], result: Any
+    bot: Bot,
+    exception: Optional[Exception],
+    api: str,
+    data: Dict[str, Any],
+    result: Any,
 ):
     if not exception and api == "send_msg":
         raise MockApiException(result={**result, "message_id": 123})

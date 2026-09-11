@@ -23,8 +23,8 @@ NoneBot 默认使用 Python 的字典将事件响应器存储于内存中，但�
 ```python
 from nonebot.matcher import MatcherProvider
 
-class CustomProvider(MatcherProvider):
-    ...
+
+class CustomProvider(MatcherProvider): ...
 ```
 
 ## 设置存储提供者

@@ -21,6 +21,7 @@ options:
 ```python {3-5}
 foo = on_message()
 
+
 @foo.type_updater
 async def _() -> str:
     return "notice"
@@ -37,6 +38,7 @@ from nonebot.permission import User
 
 foo = on_message()
 
+
 @foo.permission_updater
 async def _(event: Event, matcher: Matcher) -> Permission:
     return Permission(User.from_event(event, perm=matcher.permission))
@@ -48,6 +50,7 @@ async def _(event: Event, matcher: Matcher) -> Permission:
 from nonebot.permission import USER
 
 foo = on_message()
+
 
 @foo.permission_updater
 async def _(matcher: Matcher) -> Permission:

@@ -119,6 +119,8 @@ NoneBotException
 
   ```python
   matcher = on_notice(block=True)
+
+
   # 或者
   @matcher.handle()
   async def handler(matcher: Matcher):

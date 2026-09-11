@@ -78,8 +78,7 @@ async def html_to_pic(
     img_fetch_fn: ImgFetchFn = combined_img_fetcher,
     css_fetch_fn: CSSFetchFn = combined_css_fetcher,
     urljoin_fn: Callable[[str, str], str] = urllib3.parse.urljoin,
-) -> bytes:
-    ...
+) -> bytes: ...
 ```
 
 最核心的渲染函数。
@@ -107,8 +106,7 @@ async def text_to_pic(
     allow_refit: bool = True,
     image_format: Literal["png", "jpeg"] = "png",
     jpeg_quality: int = 100,
-) -> bytes:
-    ...
+) -> bytes: ...
 ```
 
 可用于渲染多行文本。
@@ -128,8 +126,7 @@ async def md_to_pic(
     allow_refit: bool = True,
     image_format: Literal["png", "jpeg"] = "png",
     jpeg_quality: int = 100,
-) -> bytes:
-    ...
+) -> bytes: ...
 ```
 
 可用于渲染 Markdown 文本。默认为 GitHub Markdown Light 风格，支持基于 `pygments` 的代码高亮。
@@ -153,8 +150,7 @@ async def template_to_pic(
     allow_refit: bool = True,
     image_format: Literal["png", "jpeg"] = "png",
     jpeg_quality: int = 100,
-) -> bytes:
-    ...
+) -> bytes: ...
 ```
 
 渲染 jinja2 模板。

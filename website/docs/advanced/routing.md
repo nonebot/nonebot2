@@ -48,8 +48,10 @@ NoneBot 兼容层定义了两个数据类 `HTTPServerSetup` 和 `WebSocketServer
 from nonebot import get_driver
 from nonebot.drivers import URL, Request, Response, ASGIMixin, HTTPServerSetup
 
+
 async def hello(request: Request) -> Response:
     return Response(200, content="Hello, world!")
+
 
 if isinstance((driver := get_driver()), ASGIMixin):
     driver.setup_http_server(
@@ -78,12 +80,13 @@ if isinstance((driver := get_driver()), ASGIMixin):
 from nonebot import get_driver
 from nonebot.drivers import URL, ASGIMixin, WebSocket, WebSocketServerSetup
 
+
 async def ws_handler(ws: WebSocket):
     await ws.accept()
     try:
-      while True:
-          data = await ws.receive()
-          await ws.send(data)
+        while True:
+            data = await ws.receive()
+            await ws.send(data)
     except WebSocketClosed as e:
         # handle closed
         ...
@@ -91,6 +94,7 @@ async def ws_handler(ws: WebSocket):
         with contextlib.suppress(Exception):
             await websocket.close()
         # do some cleanup
+
 
 if isinstance((driver := get_driver()), ASGIMixin):
     driver.setup_websocket_server(
@@ -128,6 +132,7 @@ import nonebot
 from fastapi import FastAPI
 
 app: FastAPI = nonebot.get_app()
+
 
 @app.get("/api")
 async def custom_api():

@@ -142,17 +142,18 @@ description: nonebot.params 模块
   def depend_func() -> Any:
       return ...
 
+
   def depend_gen_func():
       try:
           yield ...
       finally:
           ...
 
+
   async def handler(
       param_name: Any = Depends(depend_func),
       gen: Any = Depends(depend_gen_func),
-  ):
-      ...
+  ): ...
   ```
 
 ## _class_ `EventParam(*args, checker=None, **kwargs)` {#EventParam}

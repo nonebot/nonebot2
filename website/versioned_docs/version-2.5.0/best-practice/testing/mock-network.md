@@ -25,6 +25,7 @@ NoneBot 中的网络通信主要包括以下几种：
 ```python {5,6} title=tests/test_http_server.py
 from nonebug import App
 
+
 @pytest.mark.asyncio
 async def test_http_server(app: App):
     async with app.test_server() as ctx:
@@ -44,6 +45,7 @@ async with app.test_server(asgi=asgi_app) as ctx:
 import nonebot
 from nonebug import App
 from nonebot.adapters.fake import Adapter
+
 
 @pytest.mark.asyncio
 async def test_http_server(app: App):
@@ -71,6 +73,7 @@ async def test_http_server(app: App):
 import nonebot
 from nonebug import App
 from nonebot.adapters.fake import Adapter
+
 
 @pytest.mark.asyncio
 async def test_ws_server(app: App):

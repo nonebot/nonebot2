@@ -155,7 +155,9 @@ op.create_table(  # CREATE TABLE
     "weather_weather",  # weather_weather
     sa.Column("location", sa.String(), nullable=False),  # location VARCHAR NOT NULL,
     sa.Column("weather", sa.String(), nullable=False),  # weather VARCHAR NOT NULL,
-    sa.PrimaryKeyConstraint("location", name=op.f("pk_weather_weather")),  # CONSTRAINT pk_weather_weather PRIMARY KEY (location)
+    sa.PrimaryKeyConstraint(
+        "location", name=op.f("pk_weather_weather")
+    ),  # CONSTRAINT pk_weather_weather PRIMARY KEY (location)
     info={"bind_key": "weather"},
 )
 # ### end Alembic commands ###
@@ -245,7 +247,9 @@ from nonebot.typing import T_State
 
 
 @weather.got("location", prompt="请输入地名")
-async def _(state: T_State, session: async_scoped_session, location: str = ArgPlainText()):
+async def _(
+    state: T_State, session: async_scoped_session, location: str = ArgPlainText()
+):
     wea = await session.get(Weather, location)
 
     if not wea:
@@ -348,13 +352,16 @@ async def _(
 ```python title=weather/__init__.py {5} showLineNumbers
 from collections.abc import Sequence
 
+
 @weather.handle()
 async def _(
     weas: Sequence[Weather] = SQLDepends(
         select(Weather).where(Weather.weather == Depends(extract_arg_plain_text))
     ),
 ):
-    await weather.send(f"今天的天气是{weas[0].weather}的城市有{'，'.join(wea.location for wea in weas)}")
+    await weather.send(
+        f"今天的天气是{weas[0].weather}的城市有{'，'.join(wea.location for wea in weas)}"
+    )
 ```
 
 支持的类型标注请参见 [依赖注入](dependency)。
@@ -363,6 +370,7 @@ async def _(
 
 ```python title=weather/__init__.py {5-6,10} showLineNumbers
 from collections.abc import Sequence
+
 
 class Weather(Model):
     location: Mapped[str] = mapped_column(primary_key=True)
