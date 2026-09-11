@@ -11683,4 +11683,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_cave",
+    "project_link": "nonebot-plugin-cave-rebuilt",
+    "author_id": 85006030,
+    "tags": [
+      {
+        "label": "投稿",
+        "color": "#ea5252"
+      },
+      {
+        "label": "娱乐",
+        "color": "#3b82f6"
+      },
+      {
+        "label": "OneBot V11",
+        "color": "#3b82f6"
+      }
+    ],
+    "is_official": false
+  },
 ]
