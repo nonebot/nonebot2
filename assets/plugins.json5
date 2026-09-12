@@ -11683,4 +11683,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_jmcomic_pdf",
+    "project_link": "nonebot-plugin-jmcomic-pdf",
+    "author_id": 72439328,
+    "tags": [
+      {
+        "label": "jmcomic",
+        "color": "#ea5252"
+      },
+      {
+        "label": "jm",
+        "color": "#ea5252"
+      },
+      {
+        "label": "pdf",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
