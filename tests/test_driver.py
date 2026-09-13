@@ -225,6 +225,7 @@ async def test_cross_context(app: App, driver: Driver):
     "driver",
     [
         pytest.param("nonebot.drivers.httpx:Driver", id="httpx"),
+        pytest.param("nonebot.drivers.httpx2:Driver", id="httpx2"),
         pytest.param("nonebot.drivers.aiohttp:Driver", id="aiohttp"),
     ],
     indirect=True,
@@ -392,6 +393,7 @@ async def test_http_client(driver: Driver, server_url: URL):
     "driver",
     [
         pytest.param("nonebot.drivers.httpx:Driver", id="httpx"),
+        pytest.param("nonebot.drivers.httpx2:Driver", id="httpx2"),
         pytest.param("nonebot.drivers.aiohttp:Driver", id="aiohttp"),
     ],
     indirect=True,
@@ -733,6 +735,7 @@ def test_timeout_unset_vs_none():
     "driver",
     [
         pytest.param("nonebot.drivers.httpx:Driver", id="httpx"),
+        pytest.param("nonebot.drivers.httpx2:Driver", id="httpx2"),
         pytest.param("nonebot.drivers.aiohttp:Driver", id="aiohttp"),
     ],
     indirect=True,

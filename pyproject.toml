@@ -29,6 +29,7 @@ dependencies = [
 [project.optional-dependencies]
 websockets = ["websockets >=15.0"]
 httpx = ["httpx[http2] >=0.26.0, <1.0.0"]
+httpx2 = ["httpx2[http2] >=2.0.0, <3.0.0"]
 aiohttp = ["aiohttp[speedups] >=3.11.0, <4.0.0"]
 quart = ["Quart >=0.18.0, <1.0.0", "uvicorn[standard] >=0.20.0, <1.0.0"]
 fastapi = ["fastapi >=0.93.0, <1.0.0", "uvicorn[standard] >=0.20.0, <1.0.0"]
@@ -36,6 +37,7 @@ all = [
   "websockets >=15.0",
   "fastapi >=0.93.0, <1.0.0",
   "httpx[http2] >=0.26.0, <1.0.0",
+  "httpx2[http2] >=2.0.0, <3.0.0",
   "aiohttp[speedups] >=3.11.0, <4.0.0",
   "uvicorn[standard] >=0.20.0, <1.0.0",
 ]

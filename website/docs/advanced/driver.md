@@ -262,6 +262,20 @@ nonebot.run(app="bot:app")
 DRIVER=~httpx
 ```
 
+### HTTPX2
+
+**类型：**HTTP 客户端驱动器
+
+:::warning[注意]
+本驱动器仅支持 HTTP 请求，不支持 WebSocket 连接请求。
+:::
+
+> [HTTPX2](https://github.com/pydantic/httpx2) is a fully featured HTTP client library for Python. It includes an integrated command line client, has support for both HTTP/1.1 and HTTP/2, and provides both sync and async APIs.
+
+```env
+DRIVER=~httpx2
+```
+
 ### websockets
 
 **类型：**WebSocket 客户端驱动器
