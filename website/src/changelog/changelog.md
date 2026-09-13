@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 添加 httpx2 驱动器支持 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#4194](https://github.com/nonebot/nonebot2/pull/4194))
 - Feature: WS 支持 ping interval/timeout 配置 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3964](https://github.com/nonebot/nonebot2/pull/3964))
 
 ### 🐛 Bug 修复
