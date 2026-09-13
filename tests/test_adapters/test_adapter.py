@@ -57,6 +57,13 @@ async def test_adapter_connect(app: App, driver: Driver):
             ),
         ),
         pytest.param(
+            "nonebot.drivers.httpx2:Driver",
+            id="httpx2",
+            marks=pytest.mark.xfail(
+                reason="not a server", raises=TypeError, strict=True
+            ),
+        ),
+        pytest.param(
             "nonebot.drivers.websockets:Driver",
             id="websockets",
             marks=pytest.mark.xfail(
@@ -129,6 +136,7 @@ def test_adapter_server(driver: Driver):
             ),
         ),
         pytest.param("nonebot.drivers.httpx:Driver", id="httpx"),
+        pytest.param("nonebot.drivers.httpx2:Driver", id="httpx2"),
         pytest.param(
             "nonebot.drivers.websockets:Driver",
             id="websockets",
@@ -178,6 +186,13 @@ async def test_adapter_http_client(driver: Driver):
         pytest.param(
             "nonebot.drivers.httpx:Driver",
             id="httpx",
+            marks=pytest.mark.xfail(
+                reason="not a websocket client", raises=TypeError, strict=True
+            ),
+        ),
+        pytest.param(
+            "nonebot.drivers.httpx2:Driver",
+            id="httpx2",
             marks=pytest.mark.xfail(
                 reason="not a websocket client", raises=TypeError, strict=True
             ),

@@ -40,6 +40,16 @@
     "is_official": true
   },
   {
+    "module_name": "~httpx2",
+    "project_link": "nonebot2[httpx2]",
+    "name": "HTTPX2",
+    "desc": "HTTPX2 驱动器",
+    "author_id": 42488585,
+    "homepage": "/docs/advanced/driver",
+    "tags": [],
+    "is_official": true
+  },
+  {
     "module_name": "~websockets",
     "project_link": "nonebot2[websockets]",
     "name": "websockets",

@@ -151,6 +151,7 @@ NoneBot2 是一个现代、跨平台、可扩展的 Python 聊天机器人框架
   | [Quart](https://quart.palletsprojects.com/en/latest/)（异步 Flask） | 服务端 |
   |           [aiohttp](https://docs.aiohttp.org/en/stable/)            | 客户端 |
   |               [httpx](https://www.python-httpx.org/)                | 客户端 |
+  |             [httpx2](https://github.com/pydantic/httpx2)             | 客户端 |
   |     [websockets](https://websockets.readthedocs.io/en/stable/)      | 客户端 |
 
 更多：[概览](https://nonebot.dev/docs/)
