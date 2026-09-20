@@ -31,6 +31,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: LLM 客服 [@noneflow](https://github.com/noneflow) ([#4175](https://github.com/nonebot/nonebot2/pull/4175))
 - Plugin: AI群友（增强版） [@noneflow](https://github.com/noneflow) ([#4172](https://github.com/nonebot/nonebot2/pull/4172))
 - Plugin: nonebot-plugin-onebot-luckperms [@noneflow](https://github.com/noneflow) ([#4109](https://github.com/nonebot/nonebot2/pull/4109))
 - Plugin: Komari 探针状态截图 [@noneflow](https://github.com/noneflow) ([#4161](https://github.com/nonebot/nonebot2/pull/4161))
