@@ -31,6 +31,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 屠龙骰 [@noneflow](https://github.com/noneflow) ([#4185](https://github.com/nonebot/nonebot2/pull/4185))
 - Plugin: Maestro [@noneflow](https://github.com/noneflow) ([#4155](https://github.com/nonebot/nonebot2/pull/4155))
 - Plugin: LLM 客服 [@noneflow](https://github.com/noneflow) ([#4175](https://github.com/nonebot/nonebot2/pull/4175))
 - Plugin: AI群友（增强版） [@noneflow](https://github.com/noneflow) ([#4172](https://github.com/nonebot/nonebot2/pull/4172))
