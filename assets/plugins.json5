@@ -11803,4 +11803,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_status_zmd",
+    "project_link": "nonebot-plugin-status-zmd",
+    "author_id": 162463571,
+    "tags": [
+      {
+        "label": "server",
+        "color": "#12cb00"
+      },
+      {
+        "label": "终末地",
+        "color": "#ffdc00"
+      }
+    ],
+    "is_official": false
+  },
 ]
