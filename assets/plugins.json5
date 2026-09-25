@@ -11803,4 +11803,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_wuwa_emoji",
+    "project_link": "nonebot-plugin-wuwa-emoji",
+    "author_id": 170526229,
+    "tags": [],
+    "is_official": false
+  },
 ]
