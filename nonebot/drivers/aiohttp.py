@@ -169,6 +169,7 @@ class Session(HTTPClientSession):
             headers=setup.headers,
             proxy=setup.proxy or self._proxy,
             timeout=self._get_timeout(setup.timeout),
+            allow_redirects=setup.auto_redirects,
         ) as response:
             return Response(
                 response.status,
@@ -210,6 +211,7 @@ class Session(HTTPClientSession):
             headers=setup.headers,
             proxy=setup.proxy or self._proxy,
             timeout=self._get_timeout(setup.timeout),
+            allow_redirects=setup.auto_redirects,
         ) as response:
             response_headers = response.headers.copy()
             # aiohttp does not guarantee fixed-size chunks; re-chunk to exact size
