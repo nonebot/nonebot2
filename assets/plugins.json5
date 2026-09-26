@@ -11803,4 +11803,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ayasanko_chat",
+    "project_link": "nonebot-plugin-ayasanko-chat",
+    "author_id": 334168753,
+    "tags": [
+      {
+        "label": "chat",
+        "color": "#ea5252"
+      },
+      {
+        "label": "ai",
+        "color": "#ea5252"
+      },
+      {
+        "label": "DeepSeek",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
