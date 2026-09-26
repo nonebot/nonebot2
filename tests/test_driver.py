@@ -372,8 +372,8 @@ async def test_http_client(driver: Driver, server_url: URL):
     )
     chunks = []
     async for resp in driver.stream_request(request, chunk_size=4):
-        assert response.status_code == 200
-        assert response.content
+        assert resp.status_code == 200
+        assert resp.content
         chunks.append(resp.content)
     assert all(len(chunk) == 4 for chunk in chunks[:-1])
     data = json.loads(b"".join(chunks))
@@ -384,6 +384,62 @@ async def test_http_client(driver: Driver, server_url: URL):
         "test2": "test",
         "test3": "test",
     }, "file parsing error"
+
+    await anyio.sleep(1)
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    "driver",
+    [
+        pytest.param("nonebot.drivers.httpx:Driver", id="httpx"),
+        pytest.param("nonebot.drivers.httpx2:Driver", id="httpx2"),
+        pytest.param("nonebot.drivers.aiohttp:Driver", id="aiohttp"),
+    ],
+    indirect=True,
+)
+async def test_http_client_redirects(driver: Driver, server_url: URL):
+    assert isinstance(driver, HTTPClientMixin)
+
+    redirect_url = server_url.join(URL("/redirect"))
+
+    # follow redirects by default
+    request = Request("GET", redirect_url)
+    assert request.auto_redirects is True
+    response = await driver.request(request)
+    assert response.status_code == 200
+    assert response.content
+    data = json.loads(response.content)
+    assert data["method"] == "GET"
+    assert URL(data["url"]).path == "/"
+
+    # disable auto redirects
+    request = Request("GET", redirect_url, auto_redirects=False)
+    assert request.auto_redirects is False
+    response = await driver.request(request)
+    assert response.status_code == 302
+    assert response.headers["Location"] == "/"
+    assert response.content == b"redirecting"
+
+    # stream request following redirects
+    request = Request("GET", redirect_url)
+    chunks = []
+    async for resp in driver.stream_request(request, chunk_size=4):
+        assert resp.status_code == 200
+        assert resp.content
+        chunks.append(resp.content)
+    data = json.loads(b"".join(chunks))
+    assert data["method"] == "GET"
+    assert URL(data["url"]).path == "/"
+
+    # stream request without auto redirects
+    request = Request("GET", redirect_url, auto_redirects=False)
+    chunks = []
+    async for resp in driver.stream_request(request, chunk_size=4):
+        assert resp.status_code == 302
+        assert resp.content
+        chunks.append(resp.content)
+    assert b"".join(chunks) == b"redirecting"
 
     await anyio.sleep(1)
 
@@ -596,6 +652,64 @@ async def test_http_client_session(driver: Driver, server_url: URL):
             "test2": "test",
             "test3": "test",
         }, "file parsing error"
+
+    await anyio.sleep(1)
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
+    "driver",
+    [
+        pytest.param("nonebot.drivers.httpx:Driver", id="httpx"),
+        pytest.param("nonebot.drivers.httpx2:Driver", id="httpx2"),
+        pytest.param("nonebot.drivers.aiohttp:Driver", id="aiohttp"),
+    ],
+    indirect=True,
+)
+async def test_http_client_session_redirects(driver: Driver, server_url: URL):
+    assert isinstance(driver, HTTPClientMixin)
+
+    redirect_url = server_url.join(URL("/redirect"))
+
+    session = driver.get_session()
+    async with session:
+        # follow redirects by default
+        request = Request("GET", redirect_url)
+        assert request.auto_redirects is True
+        response = await session.request(request)
+        assert response.status_code == 200
+        assert response.content
+        data = json.loads(response.content)
+        assert data["method"] == "GET"
+        assert URL(data["url"]).path == "/"
+
+        # disable auto redirects
+        request = Request("GET", redirect_url, auto_redirects=False)
+        assert request.auto_redirects is False
+        response = await session.request(request)
+        assert response.status_code == 302
+        assert response.headers["Location"] == "/"
+        assert response.content == b"redirecting"
+
+        # stream request following redirects
+        request = Request("GET", redirect_url)
+        chunks = []
+        async for resp in session.stream_request(request, chunk_size=4):
+            assert resp.status_code == 200
+            assert resp.content
+            chunks.append(resp.content)
+        data = json.loads(b"".join(chunks))
+        assert data["method"] == "GET"
+        assert URL(data["url"]).path == "/"
+
+        # stream request without auto redirects
+        request = Request("GET", redirect_url, auto_redirects=False)
+        chunks = []
+        async for resp in session.stream_request(request, chunk_size=4):
+            assert resp.status_code == 302
+            assert resp.content
+            chunks.append(resp.content)
+        assert b"".join(chunks) == b"redirecting"
 
     await anyio.sleep(1)
 

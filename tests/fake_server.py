@@ -79,6 +79,10 @@ def http_echo(request: Request) -> Response:
     )
 
 
+def http_redirect(request: Request) -> Response:
+    return Response("redirecting", status=302, headers={"Location": "/"})
+
+
 def websocket_echo(request: Request) -> Response:
     stream = request.environ["werkzeug.socket"]
 
@@ -137,5 +141,7 @@ def websocket_echo(request: Request) -> Response:
 def request_handler(request: Request) -> Response:
     if request.headers.get("Connection") == "Upgrade":
         return websocket_echo(request)
+    elif request.path == "/redirect":
+        return http_redirect(request)
     else:
         return http_echo(request)
