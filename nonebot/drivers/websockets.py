@@ -111,6 +111,12 @@ class Mixin(WebSocketClientMixin):
             }
         )
 
+        if setup.auto_redirects is not UNSET:
+            logger.warning(
+                "websockets driver websocket method does not expose "
+                "redirects parameter; the configured auto_redirects will be ignored."
+            )
+
         connection = connect(
             str(setup.url),
             additional_headers={**setup.headers, **setup.cookies.as_header(setup)},
