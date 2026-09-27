@@ -79,7 +79,7 @@ class Request:
         timeout: TimeoutTypes | UnsetType = UNSET,
         proxy: str | None = None,
         ping_interval: PingIntervalTypes | UnsetType = UNSET,
-        auto_redirects: bool = True,
+        auto_redirects: bool | UnsetType = UNSET,
     ):
         # method
         self.method: str = (
@@ -96,7 +96,7 @@ class Request:
         # ping interval
         self.ping_interval: PingIntervalTypes | UnsetType = ping_interval
         # auto redirects
-        self.auto_redirects: bool = auto_redirects
+        self.auto_redirects: bool | UnsetType = auto_redirects
 
         # url
         if isinstance(url, tuple):

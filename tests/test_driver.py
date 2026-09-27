@@ -405,7 +405,7 @@ async def test_http_client_redirects(driver: Driver, server_url: URL):
 
     # follow redirects by default
     request = Request("GET", redirect_url)
-    assert request.auto_redirects is True
+    assert request.auto_redirects is UNSET
     response = await driver.request(request)
     assert response.status_code == 200
     assert response.content
@@ -675,7 +675,7 @@ async def test_http_client_session_redirects(driver: Driver, server_url: URL):
     async with session:
         # follow redirects by default
         request = Request("GET", redirect_url)
-        assert request.auto_redirects is True
+        assert request.auto_redirects is UNSET
         response = await session.request(request)
         assert response.status_code == 200
         assert response.content

@@ -169,7 +169,7 @@ class Session(HTTPClientSession):
             headers=setup.headers,
             proxy=setup.proxy or self._proxy,
             timeout=self._get_timeout(setup.timeout),
-            allow_redirects=setup.auto_redirects,
+            **exclude_unset({"allow_redirects": setup.auto_redirects}),
         ) as response:
             return Response(
                 response.status,
@@ -211,7 +211,7 @@ class Session(HTTPClientSession):
             headers=setup.headers,
             proxy=setup.proxy or self._proxy,
             timeout=self._get_timeout(setup.timeout),
-            allow_redirects=setup.auto_redirects,
+            **exclude_unset({"allow_redirects": setup.auto_redirects}),
         ) as response:
             response_headers = response.headers.copy()
             # aiohttp does not guarantee fixed-size chunks; re-chunk to exact size
@@ -335,6 +335,12 @@ class Mixin(HTTPClientMixin, WebSocketClientMixin):
             logger.warning(
                 "aiohttp driver does not expose a separate ping timeout; "
                 "the configured ping timeout will be ignored."
+            )
+
+        if setup.auto_redirects is not UNSET:
+            logger.warning(
+                "aiohttp driver websocket method does not expose redirects parameter; "
+                "the configured auto_redirects will be ignored."
             )
 
         async with aiohttp.ClientSession(version=version, trust_env=True) as session:

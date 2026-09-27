@@ -145,7 +145,7 @@ class Session(HTTPClientSession):
             headers=tuple(setup.headers.items()),
             cookies=setup.cookies.jar,
             timeout=self._get_timeout(setup.timeout),
-            follow_redirects=setup.auto_redirects,
+            **exclude_unset({"follow_redirects": setup.auto_redirects}),
         )
         return Response(
             response.status_code,
@@ -173,7 +173,7 @@ class Session(HTTPClientSession):
             headers=tuple(setup.headers.items()),
             cookies=setup.cookies.jar,
             timeout=self._get_timeout(setup.timeout),
-            follow_redirects=setup.auto_redirects,
+            **exclude_unset({"follow_redirects": setup.auto_redirects}),
         ) as response:
             response_headers = response.headers.multi_items()
             async for chunk in response.aiter_bytes(chunk_size=chunk_size):
