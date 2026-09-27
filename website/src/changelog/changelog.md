@@ -9,6 +9,7 @@ toc_max_heading_level: 2
 
 ### 🚀 新功能
 
+- Feature: 为内置驱动器请求方法添加 `auto_redirects` 参数, 以便控制重定向行为 [@Ailitonia](https://github.com/Ailitonia) ([#4201](https://github.com/nonebot/nonebot2/pull/4201))
 - Feature: 添加 httpx2 驱动器支持 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#4194](https://github.com/nonebot/nonebot2/pull/4194))
 - Feature: WS 支持 ping interval/timeout 配置 [@StarHeartHunt](https://github.com/StarHeartHunt) ([#3964](https://github.com/nonebot/nonebot2/pull/3964))
 
