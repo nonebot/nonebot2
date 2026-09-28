@@ -11815,4 +11815,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_set_title",
+    "project_link": "nonebot-plugin-set-title",
+    "author_id": 60287508,
+    "tags": [
+      {
+        "label": "批量QQ群头衔",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
