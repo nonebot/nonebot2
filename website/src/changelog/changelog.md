@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 无畏契约助手 [@noneflow](https://github.com/noneflow) ([#4166](https://github.com/nonebot/nonebot2/pull/4166))
 - Plugin: 易经起卦解卦 [@noneflow](https://github.com/noneflow) ([#4116](https://github.com/nonebot/nonebot2/pull/4116))
 - Plugin: 屠龙骰 [@noneflow](https://github.com/noneflow) ([#4185](https://github.com/nonebot/nonebot2/pull/4185))
 - Plugin: Maestro [@noneflow](https://github.com/noneflow) ([#4155](https://github.com/nonebot/nonebot2/pull/4155))
