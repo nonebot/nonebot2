@@ -11815,4 +11815,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_pixiv_dl",
+    "project_link": "nonebot-plugin-pixiv-dl",
+    "author_id": 105411098,
+    "tags": [
+      {
+        "label": "pixiv",
+        "color": "#202ed4"
+      }
+    ],
+    "is_official": false
+  },
 ]
