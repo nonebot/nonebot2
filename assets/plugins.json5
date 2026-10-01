@@ -11815,4 +11815,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_botui",
+    "project_link": "nonebot-plugin-botui",
+    "author_id": 90964775,
+    "tags": [
+      {
+        "label": "Bot",
+        "color": "#ea5252"
+      },
+      {
+        "label": "WebUI",
+        "color": "#5285ea"
+      },
+      {
+        "label": "QQ",
+        "color": "#ea52da"
+      }
+    ],
+    "is_official": false
+  },
 ]
