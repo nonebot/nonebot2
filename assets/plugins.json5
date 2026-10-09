@@ -11822,4 +11822,20 @@
     "tags": [],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_agent_chat",
+    "project_link": "nonebot-plugin-agent-chat",
+    "author_id": 36481080,
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      },
+      {
+        "label": "LLM",
+        "color": "#4a90d9"
+      }
+    ],
+    "is_official": false
+  },
 ]
