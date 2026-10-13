@@ -1,6 +1,5 @@
 from contextlib import AsyncExitStack
-from typing import ClassVar, NoReturn
-from typing_extensions import Self
+from typing import ClassVar, NoReturn, Self
 
 import anyio
 

@@ -16,7 +16,7 @@ from datetime import datetime
 from typing import TYPE_CHECKING, Any
 
 import anyio
-from exceptiongroup import BaseExceptionGroup, catch
+from exceptiongroup import catch
 
 from nonebot.dependencies import Dependent
 from nonebot.exception import (

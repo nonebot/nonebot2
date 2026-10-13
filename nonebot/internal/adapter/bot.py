@@ -3,7 +3,7 @@ from functools import partial
 from typing import TYPE_CHECKING, Any, ClassVar, Protocol
 
 import anyio
-from exceptiongroup import BaseExceptionGroup, catch
+from exceptiongroup import catch
 
 from nonebot.config import Config
 from nonebot.exception import MockApiException

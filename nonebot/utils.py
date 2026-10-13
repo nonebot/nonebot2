@@ -42,7 +42,7 @@ from typing_extensions import ParamSpec, override
 
 import anyio
 import anyio.to_thread
-from exceptiongroup import BaseExceptionGroup, catch
+from exceptiongroup import catch
 from pydantic import BaseModel
 
 from nonebot.log import logger

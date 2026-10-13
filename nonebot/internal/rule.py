@@ -2,7 +2,7 @@ from contextlib import AsyncExitStack
 from typing import ClassVar, NoReturn
 
 import anyio
-from exceptiongroup import BaseExceptionGroup, catch
+from exceptiongroup import catch
 
 from nonebot.dependencies import Dependent
 from nonebot.exception import SkippedException

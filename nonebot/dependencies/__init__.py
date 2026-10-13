@@ -15,7 +15,7 @@ import inspect
 from typing import Any, Generic, TypeVar, cast
 
 import anyio
-from exceptiongroup import BaseExceptionGroup, catch
+from exceptiongroup import catch
 
 from nonebot.compat import FieldInfo, ModelField, PydanticUndefined
 from nonebot.exception import SkippedException

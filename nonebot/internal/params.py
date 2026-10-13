@@ -7,14 +7,15 @@ from typing import (
     Annotated,
     Any,
     Literal,
+    Self,
     cast,
     get_args,
     get_origin,
 )
-from typing_extensions import Self, override
+from typing_extensions import override
 
 import anyio
-from exceptiongroup import BaseExceptionGroup, catch
+from exceptiongroup import catch
 from pydantic.fields import FieldInfo as PydanticFieldInfo
 
 from nonebot.compat import FieldInfo, ModelField, PydanticUndefined
@@ -97,7 +98,8 @@ def Depends(
     return DependsInner(dependency, use_cache=use_cache, validate=validate)
 
 
-class CacheState(str, Enum):
+# Keep Enum string formatting in cache state errors.
+class CacheState(str, Enum):  # noqa: UP042
     """子依赖缓存状态"""
 
     PENDING = "PENDING"
