@@ -5,8 +5,7 @@ from pathlib import Path
 import sys
 import threading
 from types import EllipsisType
-from typing import TYPE_CHECKING, TypeVar
-from typing_extensions import ParamSpec
+from typing import TYPE_CHECKING, ParamSpec, TypeVar
 
 from nonebug import NONEBOT_INIT_KWARGS
 import pytest

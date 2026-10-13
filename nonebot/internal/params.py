@@ -15,7 +15,6 @@ from typing import (
 from typing_extensions import override
 
 import anyio
-from exceptiongroup import catch
 from pydantic.fields import FieldInfo as PydanticFieldInfo
 
 from nonebot.compat import FieldInfo, ModelField, PydanticUndefined
@@ -271,54 +270,53 @@ class DependParam(Param):
         # solve sub dependency with current cache
         exc: BaseExceptionGroup[SkippedException] | None = None
 
-        def _handle_skipped(exc_group: BaseExceptionGroup[SkippedException]):
-            nonlocal exc
-            exc = exc_group
-
-        with catch({SkippedException: _handle_skipped}):
+        try:
             sub_values = await sub_dependent.solve(
                 stack=stack,
                 dependency_cache=dependency_cache,
                 **kwargs,
             )
+        except* SkippedException as exc_group:
+            exc = exc_group
+
+        else:
+            # run dependency function
+            if use_cache and call in dependency_cache:
+                return await dependency_cache[call].wait()
+
+            if is_gen_callable(call) or is_async_gen_callable(call):
+                assert isinstance(stack, AsyncExitStack), (
+                    "Generator dependency should be called in context"
+                )
+                if is_gen_callable(call):
+                    cm = run_sync_ctx_manager(contextmanager(call)(**sub_values))
+                else:
+                    cm = asynccontextmanager(call)(**sub_values)
+
+                target = stack.enter_async_context(cm)
+            elif is_coroutine_callable(call):
+                target = call(**sub_values)
+            else:
+                target = run_sync(call)(**sub_values)
+
+            dependency_cache[call] = cache = DependencyCache()
+            try:
+                result = await target
+            except Exception as e:
+                cache.set_exception(e)
+                raise
+            except BaseException as e:
+                cache.set_exception(e)
+                # remove cache when base exception occurs
+                # e.g. CancelledError
+                dependency_cache.pop(call, None)
+                raise
+            else:
+                cache.set_result(result)
+                return result
 
         if exc is not None:
             raise exc
-
-        # run dependency function
-        if use_cache and call in dependency_cache:
-            return await dependency_cache[call].wait()
-
-        if is_gen_callable(call) or is_async_gen_callable(call):
-            assert isinstance(stack, AsyncExitStack), (
-                "Generator dependency should be called in context"
-            )
-            if is_gen_callable(call):
-                cm = run_sync_ctx_manager(contextmanager(call)(**sub_values))
-            else:
-                cm = asynccontextmanager(call)(**sub_values)
-
-            target = stack.enter_async_context(cm)
-        elif is_coroutine_callable(call):
-            target = call(**sub_values)
-        else:
-            target = run_sync(call)(**sub_values)
-
-        dependency_cache[call] = cache = DependencyCache()
-        try:
-            result = await target
-        except Exception as e:
-            cache.set_exception(e)
-            raise
-        except BaseException as e:
-            cache.set_exception(e)
-            # remove cache when base exception occurs
-            # e.g. CancelledError
-            dependency_cache.pop(call, None)
-            raise
-        else:
-            cache.set_result(result)
-            return result
 
     @override
     async def _check(self, **kwargs: Any) -> None:

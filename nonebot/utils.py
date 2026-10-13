@@ -31,6 +31,7 @@ from typing import (
     Final,
     Generic,
     Literal,
+    ParamSpec,
     TypeAlias,
     TypeVar,
     final,
@@ -38,11 +39,10 @@ from typing import (
     get_origin,
     overload,
 )
-from typing_extensions import ParamSpec, override
+from typing_extensions import override
 
 import anyio
 import anyio.to_thread
-from exceptiongroup import catch
 from pydantic import BaseModel
 
 from nonebot.log import logger
@@ -308,8 +308,10 @@ async def run_coro_with_catch(
         协程的返回值或发生异常时的指定值
     """
 
-    with catch({exc: lambda exc_group: None}):
+    try:
         return await coro
+    except* exc:
+        pass
 
     return return_on_err
 

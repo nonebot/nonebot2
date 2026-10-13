@@ -6,7 +6,6 @@ from typing import TYPE_CHECKING, Any, ClassVar, Self, TypeAlias
 
 from anyio import CancelScope, create_task_group
 from anyio.abc import TaskGroup
-from exceptiongroup import catch
 
 from nonebot.config import Config, Env
 from nonebot.dependencies import Dependent
@@ -167,25 +166,27 @@ class Driver(abc.ABC):
         if not self._bot_connection_hook:
             return
 
-        def handle_exception(exc_group: BaseExceptionGroup) -> None:
-            for exc in flatten_exception_group(exc_group):
-                logger.opt(colors=True, exception=exc).error(
-                    "<r><bg #f8bbd0>"
-                    "Error when running WebSocketConnection hook:"
-                    "</bg #f8bbd0></r>"
-                )
-
         async def _run_hook(bot: "Bot") -> None:
             dependency_cache: T_DependencyCache = {}
-            with CancelScope(shield=True), catch({Exception: handle_exception}):
-                async with AsyncExitStack() as stack, create_task_group() as tg:
-                    for hook in self._bot_connection_hook:
-                        tg.start_soon(
-                            run_coro_with_catch,
-                            hook(
-                                bot=bot, stack=stack, dependency_cache=dependency_cache
-                            ),
-                            (SkippedException,),
+            with CancelScope(shield=True):
+                try:
+                    async with AsyncExitStack() as stack, create_task_group() as tg:
+                        for hook in self._bot_connection_hook:
+                            tg.start_soon(
+                                run_coro_with_catch,
+                                hook(
+                                    bot=bot,
+                                    stack=stack,
+                                    dependency_cache=dependency_cache,
+                                ),
+                                (SkippedException,),
+                            )
+                except* Exception as exc_group:
+                    for exc in flatten_exception_group(exc_group):
+                        logger.opt(colors=True, exception=exc).error(
+                            "<r><bg #f8bbd0>"
+                            "Error when running WebSocketConnection hook:"
+                            "</bg #f8bbd0></r>"
                         )
 
         self.task_group.start_soon(_run_hook, bot)
@@ -198,26 +199,28 @@ class Driver(abc.ABC):
         if not self._bot_disconnection_hook:
             return
 
-        def handle_exception(exc_group: BaseExceptionGroup) -> None:
-            for exc in flatten_exception_group(exc_group):
-                logger.opt(colors=True, exception=exc).error(
-                    "<r><bg #f8bbd0>"
-                    "Error when running WebSocketDisConnection hook:"
-                    "</bg #f8bbd0></r>"
-                )
-
         async def _run_hook(bot: "Bot") -> None:
             dependency_cache: T_DependencyCache = {}
             # shield cancellation to ensure bot disconnect hooks are always run
-            with CancelScope(shield=True), catch({Exception: handle_exception}):
-                async with create_task_group() as tg, AsyncExitStack() as stack:
-                    for hook in self._bot_disconnection_hook:
-                        tg.start_soon(
-                            run_coro_with_catch,
-                            hook(
-                                bot=bot, stack=stack, dependency_cache=dependency_cache
-                            ),
-                            (SkippedException,),
+            with CancelScope(shield=True):
+                try:
+                    async with create_task_group() as tg, AsyncExitStack() as stack:
+                        for hook in self._bot_disconnection_hook:
+                            tg.start_soon(
+                                run_coro_with_catch,
+                                hook(
+                                    bot=bot,
+                                    stack=stack,
+                                    dependency_cache=dependency_cache,
+                                ),
+                                (SkippedException,),
+                            )
+                except* Exception as exc_group:
+                    for exc in flatten_exception_group(exc_group):
+                        logger.opt(colors=True, exception=exc).error(
+                            "<r><bg #f8bbd0>"
+                            "Error when running WebSocketDisConnection hook:"
+                            "</bg #f8bbd0></r>"
                         )
 
         self.task_group.start_soon(_run_hook, bot)

@@ -18,6 +18,7 @@ from typing import (
     Any,
     Generic,
     Literal,
+    ParamSpec,
     Protocol,
     Self,
     TypeAlias,
@@ -27,7 +28,7 @@ from typing import (
     get_origin,
     overload,
 )
-from typing_extensions import ParamSpec, is_typeddict
+from typing_extensions import is_typeddict
 
 from pydantic import VERSION, BaseModel
 

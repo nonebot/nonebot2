@@ -15,9 +15,9 @@ FrontMatter:
 import sys
 import types
 import typing as t
-from typing import TYPE_CHECKING, TypeAlias, TypeVar, get_args, get_origin
+from typing import TYPE_CHECKING, ParamSpec, TypeAlias, TypeVar, get_args, get_origin
 import typing_extensions as t_ext
-from typing_extensions import ParamSpec, override
+from typing_extensions import override
 import warnings
 
 if TYPE_CHECKING:
@@ -53,7 +53,7 @@ def origin_is_union(origin: type[t.Any] | None) -> bool:
 
 def origin_is_literal(origin: type[t.Any] | None) -> bool:
     """判断是否是 Literal 类型"""
-    return origin is t.Literal or origin is t_ext.Literal
+    return origin is t.Literal
 
 
 def _literal_values(type_: type[t.Any]) -> tuple[t.Any, ...]:
@@ -70,10 +70,10 @@ def all_literal_values(type_: type[t.Any]) -> list[t.Any]:
 
 def origin_is_annotated(origin: type[t.Any] | None) -> bool:
     """判断是否是 Annotated 类型"""
-    return origin is t_ext.Annotated
+    return origin is t.Annotated
 
 
-NONE_TYPES = {None, type(None), t.Literal[None], t_ext.Literal[None], types.NoneType}  # noqa: PYI061
+NONE_TYPES = {None, types.NoneType, t.Literal[None]}  # noqa: PYI061
 
 
 def is_none_type(type_: type[t.Any]) -> bool:

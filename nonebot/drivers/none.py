@@ -16,7 +16,6 @@ from typing_extensions import override
 
 import anyio
 from anyio.abc import TaskGroup
-from exceptiongroup import catch
 
 from nonebot.config import Config, Env
 from nonebot.consts import WINDOWS
@@ -93,7 +92,9 @@ class Driver(BaseDriver):
             tg.cancel_scope.cancel()
 
     async def _startup(self):
-        def handle_exception(exc_group: BaseExceptionGroup[Exception]) -> None:
+        try:
+            await self._lifespan.startup()
+        except* Exception as exc_group:
             self.should_exit.set()
 
             for exc in flatten_exception_group(exc_group):
@@ -104,9 +105,6 @@ class Driver(BaseDriver):
             logger.error(
                 "<r><bg #f8bbd0>Application startup failed. Exiting.</bg #f8bbd0></r>"
             )
-
-        with catch({Exception: handle_exception}):
-            await self._lifespan.startup()
 
         if not self.should_exit.is_set():
             logger.info("Application startup completed.")
@@ -123,9 +121,9 @@ class Driver(BaseDriver):
 
         error_occurred: bool = False
 
-        def handle_exception(exc_group: BaseExceptionGroup[Exception]) -> None:
-            nonlocal error_occurred
-
+        try:
+            await self._lifespan.shutdown()
+        except* Exception as exc_group:
             error_occurred = True
 
             for exc in flatten_exception_group(exc_group):
@@ -136,9 +134,6 @@ class Driver(BaseDriver):
             logger.error(
                 "<r><bg #f8bbd0>Application shutdown failed. Exiting.</bg #f8bbd0></r>"
             )
-
-        with catch({Exception: handle_exception}):
-            await self._lifespan.shutdown()
 
         if not error_occurred:
             logger.info("Application shutdown complete.")

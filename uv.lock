@@ -717,18 +717,6 @@ wheels = [
 ]
 
 [[package]]
-name = "exceptiongroup"
-version = "1.3.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "typing-extensions", marker = "python_full_version < '3.13' or (extra == 'group-8-nonebot2-pydantic-v1' and extra == 'group-8-nonebot2-pydantic-v2')" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/50/79/66800aadf48771f6b62f7eb014e352e5d06856655206165d775e675a02c9/exceptiongroup-1.3.1.tar.gz", hash = "sha256:8b412432c6055b0b7d14c310000ae93352ed6754f70fa8f7c34141f91c4e3219", size = 30371, upload-time = "2025-11-21T23:01:54.787Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/8a/0e/97c33bf5009bdbac74fd2beace167cab3f978feb69cc36f1ef79360d6c4e/exceptiongroup-1.3.1-py3-none-any.whl", hash = "sha256:a7a39a3bd276781e98394987d3a5701d0c4edffb633bb7a5144577f82c773598", size = 16740, upload-time = "2025-11-21T23:01:53.443Z" },
-]
-
-[[package]]
 name = "execnet"
 version = "2.1.2"
 source = { registry = "https://pypi.org/simple" }
@@ -1370,7 +1358,6 @@ version = "2.5.0"
 source = { editable = "." }
 dependencies = [
     { name = "anyio" },
-    { name = "exceptiongroup" },
     { name = "loguru" },
     { name = "pydantic", version = "1.10.26", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-8-nonebot2-pydantic-v1'" },
     { name = "pydantic", version = "2.13.4", source = { registry = "https://pypi.org/simple" }, marker = "extra == 'group-8-nonebot2-pydantic-v2' or extra != 'group-8-nonebot2-pydantic-v1'" },
@@ -1450,7 +1437,6 @@ requires-dist = [
     { name = "aiohttp", extras = ["speedups"], marker = "extra == 'aiohttp'", specifier = ">=3.11.0,<4.0.0" },
     { name = "aiohttp", extras = ["speedups"], marker = "extra == 'all'", specifier = ">=3.11.0,<4.0.0" },
     { name = "anyio", specifier = ">=4.4.0,<5.0.0" },
-    { name = "exceptiongroup", specifier = ">=1.2.2,<2.0.0" },
     { name = "fastapi", marker = "extra == 'all'", specifier = ">=0.93.0,<1.0.0" },
     { name = "fastapi", marker = "extra == 'fastapi'", specifier = ">=0.93.0,<1.0.0" },
     { name = "httpx", extras = ["http2"], marker = "extra == 'all'", specifier = ">=0.26.0,<1.0.0" },
@@ -1858,10 +1844,10 @@ resolution-markers = [
     "(python_full_version < '3.13' and sys_platform != 'emscripten') or (python_full_version < '3.12' and sys_platform == 'emscripten')",
 ]
 dependencies = [
-    { name = "annotated-types" },
-    { name = "pydantic-core" },
-    { name = "typing-extensions" },
-    { name = "typing-inspection" },
+    { name = "annotated-types", marker = "extra == 'group-8-nonebot2-pydantic-v2' or extra != 'group-8-nonebot2-pydantic-v1'" },
+    { name = "pydantic-core", marker = "extra == 'group-8-nonebot2-pydantic-v2' or extra != 'group-8-nonebot2-pydantic-v1'" },
+    { name = "typing-extensions", marker = "extra == 'group-8-nonebot2-pydantic-v2' or extra != 'group-8-nonebot2-pydantic-v1'" },
+    { name = "typing-inspection", marker = "extra == 'group-8-nonebot2-pydantic-v2' or extra != 'group-8-nonebot2-pydantic-v1'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/18/a5/b60d21ac674192f8ab0ba4e9fd860690f9b4a6e51ca5df118733b487d8d6/pydantic-2.13.4.tar.gz", hash = "sha256:c40756b57adaa8b1efeeced5c196f3f3b7c435f90e84ea7f443901bec8099ef6", size = 844775, upload-time = "2026-05-06T13:43:05.343Z" }
 wheels = [
@@ -1873,7 +1859,7 @@ name = "pydantic-core"
 version = "2.46.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions" },
+    { name = "typing-extensions", marker = "extra == 'group-8-nonebot2-pydantic-v2' or extra != 'group-8-nonebot2-pydantic-v1'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/9d/56/921726b776ace8d8f5db44c4ef961006580d91dc52b803c489fafd1aa249/pydantic_core-2.46.4.tar.gz", hash = "sha256:62f875393d7f270851f20523dd2e29f082bcc82292d66db2b64ea71f64b6e1c1", size = 471464, upload-time = "2026-05-06T13:37:06.98Z" }
 wheels = [
@@ -2322,7 +2308,7 @@ name = "typing-inspection"
 version = "0.4.2"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "typing-extensions" },
+    { name = "typing-extensions", marker = "extra == 'group-8-nonebot2-pydantic-v2' or extra != 'group-8-nonebot2-pydantic-v1'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/55/e3/70399cb7dd41c10ac53367ae42139cf4b1ca5f36bb3dc6c9d33acdb43655/typing_inspection-0.4.2.tar.gz", hash = "sha256:ba561c48a67c5958007083d386c3295464928b01faa735ab8547c5692e87f464", size = 75949, upload-time = "2025-10-01T02:14:41.687Z" }
 wheels = [
