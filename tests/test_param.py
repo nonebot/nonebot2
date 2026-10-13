@@ -2,7 +2,6 @@ from contextlib import suppress
 import re
 import sys
 
-from exceptiongroup import BaseExceptionGroup
 from nonebug import App
 import pytest
 

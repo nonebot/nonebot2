@@ -16,7 +16,7 @@ from typing_extensions import override
 
 import anyio
 from anyio.abc import TaskGroup
-from exceptiongroup import BaseExceptionGroup, catch
+from exceptiongroup import catch
 
 from nonebot.config import Config, Env
 from nonebot.consts import WINDOWS

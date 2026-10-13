@@ -13,14 +13,14 @@ from typing import (  # noqa: UP035
     Callable,
     ClassVar,
     NoReturn,
+    Self,
     Type,
     TypeVar,
     overload,
 )
-from typing_extensions import Self
 import warnings
 
-from exceptiongroup import BaseExceptionGroup, catch
+from exceptiongroup import catch
 
 from nonebot.consts import (
     ARG_KEY,

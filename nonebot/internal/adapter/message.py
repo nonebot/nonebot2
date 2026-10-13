@@ -5,12 +5,12 @@ from dataclasses import asdict, dataclass, field
 from typing import (  # noqa: UP035
     Any,
     Generic,
+    Self,
     SupportsIndex,
     Type,
     TypeVar,
     overload,
 )
-from typing_extensions import Self
 
 from nonebot.compat import custom_validation, type_validate_python
 
