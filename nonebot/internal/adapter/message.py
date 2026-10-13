@@ -107,7 +107,7 @@ class Message(list[TMS], abc.ABC):
 
     def __init__(
         self,
-        message: str | None | Iterable[TMS] | TMS = None,
+        message: str | Iterable[TMS] | TMS | None = None,
     ):
         super().__init__()
         if message is None:
