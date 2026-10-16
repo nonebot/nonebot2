@@ -2,12 +2,11 @@ import abc
 from collections.abc import AsyncGenerator
 from contextlib import AsyncExitStack, asynccontextmanager
 from types import TracebackType
-from typing import TYPE_CHECKING, Any, ClassVar, TypeAlias
-from typing_extensions import Self
+from typing import TYPE_CHECKING, Any, ClassVar, Self, TypeAlias
 
 from anyio import CancelScope, create_task_group
 from anyio.abc import TaskGroup
-from exceptiongroup import BaseExceptionGroup, catch
+from exceptiongroup import catch
 
 from nonebot.config import Config, Env
 from nonebot.dependencies import Dependent

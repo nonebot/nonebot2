@@ -5,12 +5,12 @@ from dataclasses import asdict, dataclass, field
 from typing import (  # noqa: UP035
     Any,
     Generic,
+    Self,
     SupportsIndex,
     Type,
     TypeVar,
     overload,
 )
-from typing_extensions import Self
 
 from nonebot.compat import custom_validation, type_validate_python
 
@@ -107,7 +107,7 @@ class Message(list[TMS], abc.ABC):
 
     def __init__(
         self,
-        message: str | None | Iterable[TMS] | TMS = None,
+        message: str | Iterable[TMS] | TMS | None = None,
     ):
         super().__init__()
         if message is None:

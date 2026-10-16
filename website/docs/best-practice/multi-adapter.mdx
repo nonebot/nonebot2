@@ -5,9 +5,6 @@ description: 插件跨平台支持
 
 # 插件跨平台支持
 
-import Tabs from "@theme/Tabs";
-import TabItem from "@theme/TabItem";
-
 ## 使用 NoneBot 本身
 
 由于不同平台的事件与接口之间，存在着极大的差异性，NoneBot 通过[重载](../appendices/overload.md)的方式，使得插件可以在不同平台上正确响应。但为了减少跨平台的兼容性问题，我们应该尽可能的使用基类方法实现原生跨平台，而不是使用特定平台的方法。当基类方法无法满足需求时，我们可以使用依赖注入的方式，将特定平台的事件或机器人注入到事件处理函数中，实现针对特定平台的处理。
@@ -44,9 +41,6 @@ async def handle_function():
 
 对于一系列**差异不大**的事件，我们往往具有相同的处理逻辑。这时，我们不希望将相同的逻辑编写两遍，而应该复用代码，以实现在同一个事件处理函数中处理多个近似事件。我们可以使用[事件重载](../advanced/dependency.mdx#event)的特性来实现这一功能。例如：
 
-<Tabs groupId="python">
-  <TabItem value="3.10" label="Python 3.10+" default>
-
 ```python
 from nonebot import on_command
 from nonebot.adapters import Message
@@ -60,28 +54,6 @@ echo = on_command("echo", priority=10, block=True)
 async def handle_function(event: OnebotV11MessageEvent | OnebotV12MessageEvent, args: Message = CommandArg()):
     await echo.finish(args)
 ```
-
-  </TabItem>
-  <TabItem value="3.9" label="Python 3.9">
-
-```python
-from typing import Union
-
-from nonebot import on_command
-from nonebot.adapters import Message
-from nonebot.params import CommandArg
-from nonebot.adapters.onebot.v11 import MessageEvent as OnebotV11MessageEvent
-from nonebot.adapters.onebot.v12 import MessageEvent as OnebotV12MessageEvent
-
-echo = on_command("echo", priority=10, block=True)
-
-@echo.handle()
-async def handle_function(event: Union[OnebotV11MessageEvent, OnebotV12MessageEvent], args: Message = CommandArg()):
-    await echo.finish(args)
-```
-
-  </TabItem>
-</Tabs>
 
 #### 在依赖注入中使用重载
 

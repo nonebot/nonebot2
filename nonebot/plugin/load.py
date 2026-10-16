@@ -11,6 +11,7 @@ from collections.abc import Iterable
 from itertools import chain
 import json
 from pathlib import Path
+import tomllib
 from types import ModuleType
 
 from nonebot.log import logger
@@ -19,11 +20,6 @@ from nonebot.utils import path_to_module_name
 from . import _managers, _module_name_to_plugin_id, get_plugin
 from .manager import PluginManager
 from .model import Plugin
-
-try:  # pragma: py-gte-311
-    import tomllib  # pyright: ignore[reportMissingImports]
-except ModuleNotFoundError:  # pragma: py-lt-311
-    import tomli as tomllib  # pyright: ignore[reportMissingImports]
 
 
 def load_plugin(module_path: str | Path) -> Plugin | None:
