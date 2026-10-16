@@ -32,6 +32,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 改群名 [@noneflow](https://github.com/noneflow) ([#4205](https://github.com/nonebot/nonebot2/pull/4205))
 - Plugin: Status-Zmd [@noneflow](https://github.com/noneflow) ([#4197](https://github.com/nonebot/nonebot2/pull/4197))
 - Plugin: Xbox 状态 [@noneflow](https://github.com/noneflow) ([#4209](https://github.com/nonebot/nonebot2/pull/4209))
 - Plugin: 鸣潮表情包插件 [@noneflow](https://github.com/noneflow) ([#4199](https://github.com/nonebot/nonebot2/pull/4199))
