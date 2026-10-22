@@ -11866,4 +11866,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_volt_toy",
+    "project_link": "nonebot-plugin-volt-toy",
+    "author_id": 162463571,
+    "tags": [
+      {
+        "label": "电",
+        "color": "#ffff00"
+      },
+      {
+        "label": "小游戏",
+        "color": "#00ff32"
+      }
+    ],
+    "is_official": false
+  },
 ]
