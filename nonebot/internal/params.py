@@ -1,6 +1,6 @@
 from collections.abc import Callable
 from contextlib import AsyncExitStack, asynccontextmanager, contextmanager
-from enum import Enum
+from enum import StrEnum
 import inspect
 from typing import (
     TYPE_CHECKING,
@@ -97,8 +97,7 @@ def Depends(
     return DependsInner(dependency, use_cache=use_cache, validate=validate)
 
 
-# Keep Enum string formatting in cache state errors.
-class CacheState(str, Enum):  # noqa: UP042
+class CacheState(StrEnum):
     """子依赖缓存状态"""
 
     PENDING = "PENDING"
