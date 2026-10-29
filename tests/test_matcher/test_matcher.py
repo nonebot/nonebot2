@@ -350,6 +350,27 @@ async def test_datetime_expire(app: App):
 
 
 @pytest.mark.anyio
+async def test_aware_datetime_expire(app: App):
+    from plugins.matcher.matcher_expire import test_aware_datetime_matcher
+
+    event = make_fake_event()()
+    with app.provider.context(
+        {test_aware_datetime_matcher.priority: [test_aware_datetime_matcher]}
+    ):
+        async with app.test_matcher(test_aware_datetime_matcher) as ctx:
+            bot = ctx.create_bot()
+            assert (
+                test_aware_datetime_matcher
+                in matchers[test_aware_datetime_matcher.priority]
+            )
+            await check_and_run_matcher(test_aware_datetime_matcher, bot, event, {})
+            assert (
+                test_aware_datetime_matcher
+                not in matchers[test_aware_datetime_matcher.priority]
+            )
+
+
+@pytest.mark.anyio
 async def test_timedelta_expire(app: App):
     from plugins.matcher.matcher_expire import test_timedelta_matcher
 
