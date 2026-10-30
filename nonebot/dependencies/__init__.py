@@ -15,7 +15,6 @@ import inspect
 from typing import Any, Generic, TypeVar, cast
 
 import anyio
-from exceptiongroup import BaseExceptionGroup, catch
 
 from nonebot.compat import FieldInfo, ModelField, PydanticUndefined
 from nonebot.exception import SkippedException
@@ -94,14 +93,7 @@ class Dependent(Generic[R]):
     async def __call__(self, **kwargs: Any) -> R:
         exception: BaseExceptionGroup[SkippedException] | None = None
 
-        def _handle_skipped(exc_group: BaseExceptionGroup[SkippedException]):
-            nonlocal exception
-            exception = exc_group
-            # raise one of the exceptions instead
-            excs = list(flatten_exception_group(exc_group))
-            logger.trace(f"{self} skipped due to {excs}")
-
-        with catch({SkippedException: _handle_skipped}):
+        try:
             # do pre-check
             await self.check(**kwargs)
 
@@ -113,6 +105,10 @@ class Dependent(Generic[R]):
                 return await cast(Callable[..., Awaitable[R]], self.call)(**values)
             else:
                 return await run_sync(cast(Callable[..., R], self.call))(**values)
+        except* SkippedException as exc_group:
+            exception = exc_group
+            excs = list(flatten_exception_group(exc_group))
+            logger.trace(f"{self} skipped due to {excs}")
 
         raise exception
 

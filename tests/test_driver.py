@@ -81,6 +81,31 @@ async def test_lifespan(driver: Driver):
 
 @pytest.mark.anyio
 @pytest.mark.parametrize(
+    "driver", [pytest.param("nonebot.drivers.none:Driver", id="none")], indirect=True
+)
+async def test_lifespan_exception_group(driver: Driver):
+    started = anyio.Event()
+
+    async def background():
+        started.set()
+        try:
+            await anyio.sleep_forever()
+        finally:
+            raise BaseExceptionGroup(
+                "cleanup", [ValueError("cleanup failed"), BaseException("abort")]
+            )
+
+    with pytest.raises(BaseExceptionGroup) as exc_info:  # noqa: PT012
+        async with driver._lifespan:
+            driver.task_group.start_soon(background)
+            await started.wait()
+
+    assert exc_info.group_contains(BaseException, match="abort")
+    assert not exc_info.group_contains(ValueError)
+
+
+@pytest.mark.anyio
+@pytest.mark.parametrize(
     "driver",
     [
         pytest.param("nonebot.drivers.fastapi:Driver", id="fastapi"),
