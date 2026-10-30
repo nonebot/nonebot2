@@ -11918,4 +11918,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_parsehub",
+    "project_link": "nonebot-plugin-parsehub",
+    "author_id": 24908800,
+    "tags": [
+      {
+        "label": "视频解析",
+        "color": "#ea5252"
+      },
+      {
+        "label": "抖音",
+        "color": "#ea5252"
+      },
+      {
+        "label": "bilibili",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
