@@ -11918,4 +11918,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_myom",
+    "project_link": "nonebot-plugin-myom",
+    "author_id": 115728836,
+    "tags": [
+      {
+        "label": "AI",
+        "color": "#ea5252"
+      },
+      {
+        "label": "Chatbot",
+        "color": "#52c7ea"
+      },
+      {
+        "label": "LLM",
+        "color": "#5dea52"
+      }
+    ],
+    "is_official": false
+  },
 ]
