@@ -11918,4 +11918,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ifollow",
+    "project_link": "nonebot-plugin-ifollow",
+    "author_id": 24908800,
+    "tags": [
+      {
+        "label": "bilibili",
+        "color": "#ea5252"
+      },
+      {
+        "label": "抖音",
+        "color": "#ea5252"
+      },
+      {
+        "label": "视频订阅",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
