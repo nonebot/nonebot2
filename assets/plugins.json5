@@ -11918,4 +11918,11 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_number_meme",
+    "project_link": "nonebot-plugin-number-meme",
+    "author_id": 141153058,
+    "tags": [],
+    "is_official": false
+  },
 ]
