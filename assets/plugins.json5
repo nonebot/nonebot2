@@ -11918,4 +11918,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_zhihu_parser",
+    "project_link": "nonebot-plugin-zhihu-parser",
+    "author_id": 69190444,
+    "tags": [
+      {
+        "label": "知乎",
+        "color": "#0084ff"
+      },
+      {
+        "label": "解析",
+        "color": "#ff5809"
+      }
+    ],
+    "is_official": false
+  },
 ]
