@@ -11918,4 +11918,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_weather_fighter",
+    "project_link": "nonebot-plugin-weather-fighter",
+    "author_id": 172130062,
+    "tags": [
+      {
+        "label": "天气",
+        "color": "#ff0000"
+      },
+      {
+        "label": "game",
+        "color": "#00ecff"
+      },
+      {
+        "label": "股票",
+        "color": "#0dff00"
+      }
+    ],
+    "is_official": false
+  },
 ]
