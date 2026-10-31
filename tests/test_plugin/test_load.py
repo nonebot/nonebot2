@@ -3,8 +3,7 @@ from dataclasses import asdict
 from functools import wraps
 from pathlib import Path
 import sys
-from typing import TypeVar
-from typing_extensions import ParamSpec
+from typing import ParamSpec, TypeVar
 
 import pytest
 

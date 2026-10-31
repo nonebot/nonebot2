@@ -4,7 +4,6 @@ from typing import Any, TypeAlias, cast
 
 import anyio
 from anyio.abc import TaskGroup
-from exceptiongroup import suppress
 
 from nonebot.utils import is_coroutine_callable, run_sync
 
@@ -82,8 +81,10 @@ class Lifespan:
         # shutdown background task group
         self.task_group.cancel_scope.cancel()
 
-        with suppress(Exception):
+        try:
             await self.task_group.__aexit__(exc_type, exc_val, exc_tb)
+        except* Exception:
+            pass
 
         self._task_group = None
 

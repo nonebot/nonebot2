@@ -72,11 +72,11 @@ jobs:
 如果项目还需要考虑跨平台和跨 Python 版本兼容，测试矩阵中还需要增加这两个维度。
 但是，我们没必要在所有平台和 Python 版本上运行所有数据库的测试，因为很显然，PostgreSQL 和 MySQL 这类独立的数据库后端不会受平台和 Python 影响，而且 Github Actions 的非 Linux 平台不支持运行独立服务：
 
-|             | Python 3.9 | Python 3.10 | Python 3.11 | Python 3.12                 |
-| ----------- | ---------- | ----------- | ----------- | --------------------------- |
-| **Linux**   | SQLite     | SQLite      | SQLite      | SQLite / PostgreSQL / MySQL |
-| **Windows** | SQLite     | SQLite      | SQLite      | SQLite                      |
-| **macOS**   | SQLite     | SQLite      | SQLite      | SQLite                      |
+|             | Python 3.11 | Python 3.12                 |
+| ----------- | ----------- | --------------------------- |
+| **Linux**   | SQLite      | SQLite / PostgreSQL / MySQL |
+| **Windows** | SQLite      | SQLite                      |
+| **macOS**   | SQLite      | SQLite                      |
 
 ```yaml title=.github/workflows/test.yml {12-24} showLineNumbers
 name: Test
@@ -93,7 +93,7 @@ jobs:
     strategy:
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.11", "3.12"]
         db: ["sqlite+aiosqlite:///db.sqlite3"]
 
         include:

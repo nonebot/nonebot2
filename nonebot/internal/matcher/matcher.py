@@ -13,14 +13,12 @@ from typing import (  # noqa: UP035
     Callable,
     ClassVar,
     NoReturn,
+    Self,
     Type,
     TypeVar,
     overload,
 )
-from typing_extensions import Self
 import warnings
-
-from exceptiongroup import BaseExceptionGroup, catch
 
 from nonebot.consts import (
     ARG_KEY,
@@ -832,34 +830,29 @@ class Matcher(metaclass=MatcherMeta):
             f"bot={bot}, event={event!r}, state={state!r}"
         )
 
-        def _handle_stop_propagation(exc_group: BaseExceptionGroup[StopPropagation]):
-            self.block = True
-
         with self.ensure_context(bot, event):
             try:
-                with catch({StopPropagation: _handle_stop_propagation}):
-                    # Refresh preprocess state
-                    self.state.update(state)
+                # Refresh preprocess state
+                self.state.update(state)
 
-                    while self.remain_handlers:
-                        handler = self.remain_handlers.pop(0)
-                        current_handler.set(handler)
-                        logger.debug(f"Running handler {handler}")
+                while self.remain_handlers:
+                    handler = self.remain_handlers.pop(0)
+                    current_handler.set(handler)
+                    logger.debug(f"Running handler {handler}")
 
-                        def _handle_skipped(
-                            exc_group: BaseExceptionGroup[SkippedException],
-                        ):
-                            logger.debug(f"Handler {handler} skipped")
-
-                        with catch({SkippedException: _handle_skipped}):
-                            await handler(
-                                matcher=self,
-                                bot=bot,
-                                event=event,
-                                state=self.state,
-                                stack=stack,
-                                dependency_cache=dependency_cache,
-                            )
+                    try:
+                        await handler(
+                            matcher=self,
+                            bot=bot,
+                            event=event,
+                            state=self.state,
+                            stack=stack,
+                            dependency_cache=dependency_cache,
+                        )
+                    except* SkippedException:
+                        logger.debug(f"Handler {handler} skipped")
+            except* StopPropagation:
+                self.block = True
             finally:
                 logger.info(f"{self} running complete")
 
@@ -874,12 +867,13 @@ class Matcher(metaclass=MatcherMeta):
     ):
         exc: FinishedException | RejectedException | PausedException | None = None
 
-        def _handle_special_exception(
-            exc_group: BaseExceptionGroup[
-                FinishedException | RejectedException | PausedException
-            ],
-        ):
-            nonlocal exc
+        try:
+            await self.simple_run(bot, event, state, stack, dependency_cache)
+        except* (
+            FinishedException,
+            RejectedException,
+            PausedException,
+        ) as exc_group:
             excs = list(flatten_exception_group(exc_group))
             if len(excs) > 1:
                 logger.warning(
@@ -903,17 +897,6 @@ class Matcher(metaclass=MatcherMeta):
                 excs[0], (FinishedException, RejectedException, PausedException)
             ):
                 exc = excs[0]
-
-        with catch(
-            {
-                (
-                    FinishedException,
-                    RejectedException,
-                    PausedException,
-                ): _handle_special_exception
-            }
-        ):
-            await self.simple_run(bot, event, state, stack, dependency_cache)
 
         if isinstance(exc, FinishedException):
             pass

@@ -1,4 +1,4 @@
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 
 from nonebot import (
     CommandGroup,
@@ -33,7 +33,7 @@ async def handler():
     return
 
 
-expire_time = datetime.now(timezone.utc)
+expire_time = datetime.now(UTC)
 priority = 100
 state = {"test": "test"}
 

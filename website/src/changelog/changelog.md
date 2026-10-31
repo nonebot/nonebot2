@@ -7,6 +7,10 @@ toc_max_heading_level: 2
 
 ## 最近更新
 
+### 💥 破坏性变更
+
+- Remove: 移除 Python 3.10 支持 [@shoucandanghehe](https://github.com/shoucandanghehe) ([#4219](https://github.com/nonebot/nonebot2/pull/4219))
+
 ### 🚀 新功能
 
 - Feature: 为内置驱动器请求方法添加 `auto_redirects` 参数, 以便控制重定向行为 [@Ailitonia](https://github.com/Ailitonia) ([#4201](https://github.com/nonebot/nonebot2/pull/4201))
@@ -32,6 +36,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: BotUI 控制台 [@noneflow](https://github.com/noneflow) ([#4213](https://github.com/nonebot/nonebot2/pull/4213))
 - Plugin: GitHub 发布推送 [@noneflow](https://github.com/noneflow) ([#4187](https://github.com/nonebot/nonebot2/pull/4187))
 - Plugin: Agent Chat [@noneflow](https://github.com/noneflow) ([#4216](https://github.com/nonebot/nonebot2/pull/4216))
 - Plugin: 改群名 [@noneflow](https://github.com/noneflow) ([#4205](https://github.com/nonebot/nonebot2/pull/4205))

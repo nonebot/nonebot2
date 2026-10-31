@@ -22,8 +22,8 @@ from contextlib import asynccontextmanager
 from functools import wraps
 import logging
 from types import CoroutineType
-from typing import TYPE_CHECKING, Any, TypeVar
-from typing_extensions import ParamSpec, override
+from typing import TYPE_CHECKING, Any, ParamSpec, TypeVar
+from typing_extensions import override
 
 from nonebot.drivers import (
     DEFAULT_TIMEOUT,
