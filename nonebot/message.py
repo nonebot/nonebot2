@@ -361,7 +361,10 @@ async def _check_matcher(
     返回:
         bool: 是否符合运行条件
     """
-    if Matcher.expire_time and datetime.now() > Matcher.expire_time:
+    if (
+        Matcher.expire_time
+        and datetime.now(Matcher.expire_time.tzinfo) > Matcher.expire_time
+    ):
         with contextlib.suppress(Exception):
             Matcher.destroy()
         return False
