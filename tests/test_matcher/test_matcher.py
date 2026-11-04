@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 from pathlib import Path
 import sys
 
@@ -352,6 +353,10 @@ async def test_datetime_expire(app: App):
 @pytest.mark.anyio
 async def test_aware_datetime_expire(app: App):
     from plugins.matcher.matcher_expire import test_aware_datetime_matcher
+
+    assert test_aware_datetime_matcher.expire_time == datetime(
+        2000, 11, 5, 6, 30, tzinfo=UTC
+    )
 
     event = make_fake_event()()
     with app.provider.context(
