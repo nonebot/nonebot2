@@ -19,6 +19,7 @@ toc_max_heading_level: 2
 
 ### 🐛 Bug 修复
 
+- Fix: 支持带时区的 expire_time 过期判断 [@mayuriphad](https://github.com/mayuriphad) ([#4237](https://github.com/nonebot/nonebot2/pull/4237))
 - Fix: WebSocket 基类 typo [@MelodyYuuka](https://github.com/MelodyYuuka) ([#4095](https://github.com/nonebot/nonebot2/pull/4095))
 
 ### 📝 文档
