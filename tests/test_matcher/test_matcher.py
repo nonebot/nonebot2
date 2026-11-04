@@ -1,3 +1,4 @@
+from datetime import UTC, datetime
 from pathlib import Path
 import sys
 
@@ -347,6 +348,31 @@ async def test_datetime_expire(app: App):
             assert test_datetime_matcher in matchers[test_datetime_matcher.priority]
             await check_and_run_matcher(test_datetime_matcher, bot, event, {})
             assert test_datetime_matcher not in matchers[test_datetime_matcher.priority]
+
+
+@pytest.mark.anyio
+async def test_aware_datetime_expire(app: App):
+    from plugins.matcher.matcher_expire import test_aware_datetime_matcher
+
+    assert test_aware_datetime_matcher.expire_time == datetime(
+        2000, 11, 5, 6, 30, tzinfo=UTC
+    )
+
+    event = make_fake_event()()
+    with app.provider.context(
+        {test_aware_datetime_matcher.priority: [test_aware_datetime_matcher]}
+    ):
+        async with app.test_matcher(test_aware_datetime_matcher) as ctx:
+            bot = ctx.create_bot()
+            assert (
+                test_aware_datetime_matcher
+                in matchers[test_aware_datetime_matcher.priority]
+            )
+            await check_and_run_matcher(test_aware_datetime_matcher, bot, event, {})
+            assert (
+                test_aware_datetime_matcher
+                not in matchers[test_aware_datetime_matcher.priority]
+            )
 
 
 @pytest.mark.anyio

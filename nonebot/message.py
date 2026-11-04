@@ -11,7 +11,7 @@ FrontMatter:
 
 import contextlib
 from contextlib import AsyncExitStack
-from datetime import datetime
+from datetime import UTC, datetime
 from typing import TYPE_CHECKING, Any
 
 import anyio
@@ -361,10 +361,18 @@ async def _check_matcher(
     返回:
         bool: 是否符合运行条件
     """
-    if Matcher.expire_time and datetime.now() > Matcher.expire_time:
-        with contextlib.suppress(Exception):
-            Matcher.destroy()
-        return False
+    if Matcher.expire_time:
+        expire_time = Matcher.expire_time
+        if expire_time.utcoffset() is not None:
+            expire_time = expire_time.astimezone(UTC)
+            now = datetime.now(UTC)
+        else:
+            now = datetime.now()
+
+        if now > expire_time:
+            with contextlib.suppress(Exception):
+                Matcher.destroy()
+            return False
 
     try:
         if not await Matcher.check_perm(bot, event, stack, dependency_cache):

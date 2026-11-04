@@ -51,6 +51,7 @@ dev = [
 test = [
   "trio >=0.27.0",
   "nonebug >=0.4.1, <0.5.0",
+  "tzdata >=2024.1",
   "wsproto >=1.2.0, <2.0.0",
   "werkzeug >=2.3.6, <4.0.0",
   "pytest-cov >=7.0.0, <8.0.0",

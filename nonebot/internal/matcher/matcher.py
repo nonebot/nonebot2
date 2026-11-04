@@ -2,7 +2,7 @@ from collections.abc import Iterable
 from contextlib import AsyncExitStack, contextmanager
 from contextvars import ContextVar
 from dataclasses import dataclass
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 import inspect
 from pathlib import Path
 import sys
@@ -256,6 +256,9 @@ class Matcher(metaclass=MatcherMeta):
             if plugin is not None or module is not None
             else None
         )
+
+        if isinstance(expire_time, datetime) and expire_time.utcoffset() is not None:
+            expire_time = expire_time.astimezone(UTC)
 
         NewMatcher = type(
             cls.__name__,
