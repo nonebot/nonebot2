@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 火烧云 [@noneflow](https://github.com/noneflow) ([#4163](https://github.com/nonebot/nonebot2/pull/4163))
 - Plugin: 胡乱说 [@noneflow](https://github.com/noneflow) ([#4168](https://github.com/nonebot/nonebot2/pull/4168))
 - Plugin: BotUI 控制台 [@noneflow](https://github.com/noneflow) ([#4213](https://github.com/nonebot/nonebot2/pull/4213))
 - Plugin: GitHub 发布推送 [@noneflow](https://github.com/noneflow) ([#4187](https://github.com/nonebot/nonebot2/pull/4187))
