@@ -11958,4 +11958,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_mortis_analysis",
+    "project_link": "nonebot-plugin-mortis-analysis",
+    "author_id": 192905674,
+    "tags": [
+      {
+        "label": "视频",
+        "color": "#56aa30"
+      },
+      {
+        "label": "bilibili",
+        "color": "#56aa30"
+      },
+      {
+        "label": "解析",
+        "color": "#56aa30"
+      }
+    ],
+    "is_official": false
+  },
 ]
