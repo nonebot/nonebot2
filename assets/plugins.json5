@@ -12034,4 +12034,24 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_animeapi",
+    "project_link": "nonebot-plugin-animeapi",
+    "author_id": 354796000,
+    "tags": [
+      {
+        "label": "AI绘画",
+        "color": "#ea5252"
+      },
+      {
+        "label": "动漫",
+        "color": "#52a8ea"
+      },
+      {
+        "label": "图片生成",
+        "color": "#56aa30"
+      }
+    ],
+    "is_official": false
+  },
 ]
