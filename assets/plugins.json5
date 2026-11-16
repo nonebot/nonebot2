@@ -12034,4 +12034,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_yrr_fortune",
+    "project_link": "nonebot-plugin-yrr-fortune",
+    "author_id": 122205537,
+    "tags": [
+      {
+        "label": "娱乐",
+        "color": "#ea5252"
+      },
+      {
+        "label": "运势",
+        "color": "#a55eea"
+      }
+    ],
+    "is_official": false
+  },
 ]
