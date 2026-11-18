@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: 小睦解析 [@noneflow](https://github.com/noneflow) ([#4241](https://github.com/nonebot/nonebot2/pull/4241))
 - Plugin: 数字论证计算器 [@noneflow](https://github.com/noneflow) ([#4239](https://github.com/nonebot/nonebot2/pull/4239))
 - Plugin: AI 群友（MYOM） [@noneflow](https://github.com/noneflow) ([#4233](https://github.com/nonebot/nonebot2/pull/4233))
 - Plugin: Volt-Toy 电击群友 [@noneflow](https://github.com/noneflow) ([#4226](https://github.com/nonebot/nonebot2/pull/4226))
