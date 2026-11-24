@@ -12077,4 +12077,20 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_ccb",
+    "project_link": "nonebot-plugin-ccb",
+    "author_id": 46518540,
+    "tags": [
+      {
+        "label": "game",
+        "color": "#ea5252"
+      },
+      {
+        "label": "群聊小游戏",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
