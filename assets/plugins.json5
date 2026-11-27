@@ -12109,4 +12109,16 @@
     ],
     "is_official": false
   },
+  {
+    "module_name": "nonebot_plugin_acemusic",
+    "project_link": "nonebot-plugin-acemusic",
+    "author_id": 8678661,
+    "tags": [
+      {
+        "label": "音乐",
+        "color": "#ea5252"
+      }
+    ],
+    "is_official": false
+  },
 ]
