@@ -37,6 +37,7 @@ toc_max_heading_level: 2
 
 ### 🍻 插件发布
 
+- Plugin: YRR_运势 [@noneflow](https://github.com/noneflow) ([#4252](https://github.com/nonebot/nonebot2/pull/4252))
 - Plugin: ccb [@noneflow](https://github.com/noneflow) ([#4248](https://github.com/nonebot/nonebot2/pull/4248))
 - Plugin: 知乎解析 [@noneflow](https://github.com/noneflow) ([#4231](https://github.com/nonebot/nonebot2/pull/4231))
 - Plugin: 小睦解析 [@noneflow](https://github.com/noneflow) ([#4241](https://github.com/nonebot/nonebot2/pull/4241))
